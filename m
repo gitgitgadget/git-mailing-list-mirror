@@ -2,99 +2,94 @@ Return-Path: <SRS0=9JxE=D5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E2BCC388F7
-	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 12:06:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6751BC388F7
+	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 12:27:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E6F7E221FE
-	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 12:06:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EEB4521707
+	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 12:27:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=altairengineering.onmicrosoft.com header.i=@altairengineering.onmicrosoft.com header.b="JcA6qNwV"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Oa752Kme"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2897840AbgJVMGC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Oct 2020 08:06:02 -0400
-Received: from mail-dm6nam10on2102.outbound.protection.outlook.com ([40.107.93.102]:33952
-        "EHLO NAM10-DM6-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S2897837AbgJVMGC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Oct 2020 08:06:02 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=JtZ8CT53gYT4FJrIYgzY0jE5DPLgRUdVybP/qKUWZlQ8LsKJ3bN+p9es4K8hfkv+IRY6JUspW+SyXGERDxbNvcgR6U2+OUIW1QrP1soU8niiDPMrCJFeGQqF/6w7R0qEb++sFmN6oHv4UBiPumJI4T2qTWoP5rQtIHA9lYJkI9jkjL9Yo6OddI2MibA+rEos/4i498WX0/9Wn35eeuKicLibpp+iCnWSehmBNXVW/zxLbWerpuQPREgfdy2rQrpkYWrInCII853yF+xjDUsCuSkVoWEgwSdSgXgtxy08Lb8pyMA6akzCqUsJUT774ENyLvc1jwSthv9OGPEFYnW3Ow==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eSsV/vWsKL8MH786VNL2ZPgRbuvlByLTKAUXuNBziLg=;
- b=GdHi+dTt3QyF3VZXpcQsnbNX7+A/URUjSo+oNObuRujW8f2tCs7eckg29XdP0rTdQxPhmhyTHdI0kxvPiizuFIAVP5gNVQhJPokdy7/3044KGhuTl1YLRrZmgVx5a/KYDgCxmqsTX9RcfOeX5GqTTmOq0A7VRDrLVo7LXnhXc8gJeDnl3ayGywelJhyOrcl7tYyBDl66mbWSyuKPEt4Ekri2ILu72/+sD2dKbD3HgQusCwYhnrk+ALEj61i3LThmxvQxj/TKsvmBkEt55REIMZ+FPSTq9fK3+bRhkdRsuowi+UQqLIilH1azqktp9dlTWl05K5Gmr1c8e1kCwPF0Ug==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=altair.de; dmarc=pass action=none header.from=altair.de;
- dkim=pass header.d=altair.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=altairengineering.onmicrosoft.com;
- s=selector2-altairengineering-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eSsV/vWsKL8MH786VNL2ZPgRbuvlByLTKAUXuNBziLg=;
- b=JcA6qNwVNgRgVf+ggH2sloHJn07o+c+SB8lWXumRDmcTVfPoRI1IwI4LuZQW6RsaNi+++NFjEoG4GOyliX5TCpiIidQVm4I2odf2aZAkX5OXLZjEOm0Brb0HYiqCn3qq/zOWgvzbo7z8GRxgWt2EGsAPN8DwFQPDut/ZFyYGQg0=
-Received: from DM5PR03MB2826.namprd03.prod.outlook.com (2603:10b6:3:121::19)
- by DM6PR03MB3755.namprd03.prod.outlook.com (2603:10b6:5:4d::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3477.23; Thu, 22 Oct
- 2020 12:06:00 +0000
-Received: from DM5PR03MB2826.namprd03.prod.outlook.com
- ([fe80::6c66:3392:3508:95e9]) by DM5PR03MB2826.namprd03.prod.outlook.com
- ([fe80::6c66:3392:3508:95e9%11]) with mapi id 15.20.3477.029; Thu, 22 Oct
- 2020 12:06:00 +0000
-From:   Frank Illenseer <illenseer@altair.de>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: Git Alias not working in worktree
-Thread-Topic: Git Alias not working in worktree
-Thread-Index: AdaTV73poiKNnKCUSXa2AlwjpbGP8AAAzTGgAAwLeIACTYdMUALqdVnw
-Date:   Thu, 22 Oct 2020 12:06:00 +0000
-Message-ID: <DM5PR03MB2826382CD1A5AA8F3ED60FD9B51D0@DM5PR03MB2826.namprd03.prod.outlook.com>
-References: <DM5PR03MB2826A616AC30710E169B7237B5360@DM5PR03MB2826.namprd03.prod.outlook.com>
- <DM5PR03MB2826C04CC5AAF3B61BDDAFE2B5360@DM5PR03MB2826.namprd03.prod.outlook.com>
- <20200925222801.GC1392312@camp.crustytoothpaste.net>
- <DM5PR03MB28262362A9D3B0EDECBE6106B50A0@DM5PR03MB2826.namprd03.prod.outlook.com>
-In-Reply-To: <DM5PR03MB28262362A9D3B0EDECBE6106B50A0@DM5PR03MB2826.namprd03.prod.outlook.com>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: vger.kernel.org; dkim=none (message not signed)
- header.d=none;vger.kernel.org; dmarc=none action=none header.from=altair.de;
-x-originating-ip: [195.145.7.156]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 3957461a-1a14-45e2-d137-08d87682d756
-x-ms-traffictypediagnostic: DM6PR03MB3755:
-x-microsoft-antispam-prvs: <DM6PR03MB375595BA10D3F97A68CE9644B51D0@DM6PR03MB3755.namprd03.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: kX0LUKpBaugwpC5wZdpYtV/w61jt9vSrGWN5GLrju+eO2rqKhvtqQkCXOdLY5X4BJWZeK1mpXrfMNb/5Lek6IKYdhcIMXO5lSaWdw4UyIJbUNvcyWvRW+F5E7wrWynUm4lhsZO8Gz5lqWz/m7v9qcIcUl2NJ4WUeOpSr2X3l7jQO1uLs7/FHTA5Quu1pz2hRPv6GBvzxc62li3wCKPQ8zCNsOfWLq6+Qj5nYkVV9pM8pa79r/UMhUnt1iJFKw6kC3o5O5s3qJCCJY824K9c7DlHjVA6y3Z3uNMDHrTptolji8aoOfcojDF+u4AUl/Tvr
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM5PR03MB2826.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(376002)(346002)(396003)(39850400004)(136003)(366004)(7696005)(33656002)(6506007)(26005)(2906002)(316002)(6916009)(64756008)(478600001)(66476007)(66946007)(558084003)(55016002)(66556008)(52536014)(9686003)(76116006)(66446008)(5660300002)(186003)(71200400001)(8676002)(8936002)(86362001);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: lpIXn/Le5xfxKThw6TKi7rqNoOIoO4xOuV595/xzxFRsn/lxlI02YDUJf3FVDBUpUkHZ2hZLanyJ40AdoBXJuEHz9WSV4F+Uq4RbUubE9QDrQpRP6ioniBy2Cd5/f5tTLEO7e5SjInsyny9VcDQEi37eteZRqJmqTRcQApCl9a7j1WlAzKpgzNM6dRdOtgwmHGT6dFKSwph3QTWrx0yrZnYt5Za+qL80xAawrVpk2KExmz3SyQFNB29RjFwo0MsP4NBYRCXKrphLPuE84bSp0nkAag+7bSJb00++N+7Epe9IkcJoqC2ApNUXmL3ZT0Tiivb6MwX1N8dWRPncXMqxBXJdaLBhDGDUKXD1iO0EShOCZheo1/3ZuU51c+3HYhmCa5xD8QHA43WTNsrbvDvPdpuZDF0lqvjdWa/GZ5vEyploZDUAeOIqnDhPww1OuUGB91F9HaMP2ymgoJHs78snkuV4YcMTjD2lTzFZwbtKAmBs49y8bRMi+/1mrqKc8FC+Z34RwJgmQBuiCaOaDxsCqiiqS0ZudRRSB8mPS7thj5Abkz1Ay/bZ65UJNHHTxg8wMfWrn+W9Kt4IfMKf2DhQbZSaevFo0iwh62KXXpL3ymOI7gb6TNl4aRJj7wu864DBZzjmcdhyBWyKK6NM1A6MJQ==
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S2898169AbgJVM1e (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Oct 2020 08:27:34 -0400
+Received: from mout.gmx.net ([212.227.17.22]:33273 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2898151AbgJVM1e (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Oct 2020 08:27:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1603369650;
+        bh=Vmh2jnvzAChQ2qkP15RSxph6OTDqS3XFPAn17pv0AXw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Oa752KmeAY/AM59aekwFuZqFMuT1WMEOl47EdTpkWwkxG8rRdgwf2O0GFCXR2ICmw
+         MUl8e5myqKKANEIDEta+lzB5qMYJVjXYt11hHUJHrkH4QCjf7JuGaV0kWZ+2Da8xmc
+         l/5QSnAzEu7BcfhDIg/DBqJIr3rT+OCtX6GWXyMo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.26.25.62] ([213.196.212.45]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MEUz4-1kcf5U36DK-00G5Kg; Thu, 22
+ Oct 2020 14:27:30 +0200
+Date:   Thu, 22 Oct 2020 14:27:31 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 04/10] t4013: prepare for the new default branch name
+ "main"
+In-Reply-To: <xmqqtuun43ri.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2010221425380.56@tvgsbejvaqbjf.bet>
+References: <pull.758.git.1603135902.gitgitgadget@gmail.com> <baeb01f70646ce0c7564f1a1f820fb011e124d97.1603135902.git.gitgitgadget@gmail.com> <xmqqtuun43ri.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-X-OriginatorOrg: altair.de
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM5PR03MB2826.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3957461a-1a14-45e2-d137-08d87682d756
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Oct 2020 12:06:00.3042
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 2bae5b57-0eb8-48fb-ba47-990259da89d2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: WLAxvaoJOJSUWQff84ev/FMSLm2lv4fYTPAPIQMjF+fWcyaPF3jEvXtO+/CxaxxoI13OhRYvW31dBOrYOXw6mLxFllLR9Yt6l5RhmPxQvnU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR03MB3755
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:kdr1ymnmm9IjrZoZ0GyEni9e0U3aM8+dSAr5TQYaytp9PWdbqpR
+ OtAsa2AQH2aGExh8s+dTuPoJf9AJITGDJRD6EuQO/Jdnzhc7bkeR0tnGqMDBAaKKaL9+i/r
+ jsWvl5hTaW36ZOTFFUnGsslW+hjOMZmtg1LSlOa7EDl0uHLQvgsyMlvyo/NO9vXECHv2iID
+ 4oXreAeQj2LVl4lkpsjUQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:tuTvJpSgh90=:qhRRSqCU2o1YHhE55vPCcU
+ 49yN/63XfspNsS1QchzUpqjzsAlAhHEI+8pkZNteZ9Bj9So9a1ic2T+9Gh2gT5EVsaeDNTeF8
+ unvDS1CfrLu0DTymHiJaXcwNmVRs224SzFANvL9IF9EQx0YzgfewYrjqizkQAw8mItDIo8GwU
+ D4wvSXwA/uRogVKzdBycmxVdGBiDzNcdue7QUS+VeA5jATl/pr6WQO5W41Yu1d2BxKRRfjMVY
+ pFYWShorhWStqhmCrbuN/hSt3T63UZfaI0yLeHUsN/DoZZhpuWZ4LI5UBOv4kz520qvwNymcB
+ dnWAPrtyc7pmMaKYHWdC+L+fPd2tAPlR59/BYfj7tIGAp3UlbcmgQ60RaTUp/IQxndE+tsrbd
+ dkdUPylieRFdABqt63Bg8Z1hKHEgCBtmnpvwipgUbMTgWI4E8mpGLoybTgzgl3Ry3SRVatvdb
+ 44BNoC+As3eqIIH1bSnYnKROEmPrjL8V+R+rDPLMeAOpXNgzjyulLTQkHCMpkTLHFPYo2bdLE
+ 4FHK8RV1rQZ+ON+3jO6J5j/P/9EiK/BggxBUBxa8uCUtJmTYIkDUGRMeFYP04wWtbV+FZl4Kx
+ SEVznsWHrGx4IeZe+v6NL9SrwrGE5MS4Ucizt11w77MADLpcdKUGEDzblKlPC3LPSWbOhE64Z
+ JWuBfIESxIG791CCfKNhn1pFJrA/8IJqUgy0T589briTyEJHCQGhbZC5ulX0A5FCuaMz9PCYF
+ 5HIfpTTHTpetskKmHH8BqSANSG/4opdFdf2mkPqraz203yLyyRJOvVP6zw24oYoJ/SJtbq5q6
+ s3ueE8aae7xy7XzQp9aeXLHWFJNBlCB/pPwmtx6QIriUbnNohcAZeh6JLRp8BduzdKrV0xrTo
+ TUTPapiJZXPT8qO9pAytrLCRLzm+i7bzBzPvhJjLc=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGkgQWxsLA0KDQpEb2VzIGFueW9uZSBoYXZlIGFueSBpZGVhIGFzIHRvIHdoeSB0aGUgYWxpYXMg
-ZGVmaW5pdGlvbnMgZnJvbSB0aGUgY29uZmlnIG9mIGEgd29ya3RyZWUgaXMgbm90IHdvcmtpbmc/
-IC0gSSB3b3VsZCBzdGlsbCBiZSBpbnRlcmVzdGVkIGluIGEgc29sdXRpb24gdG8gZ2V0IHRoaXMg
-d29ya2luZy4NCg0KVGhhbmtzIGFuZCBiZXN0IHJlZ2FyZHMsDQpGcmFuaw0K
+Hi Junio,
+
+On Wed, 21 Oct 2020, Junio C Hamano wrote:
+
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > This patch is a bit involved, mainly because the default branch name i=
+s
+> > not only hard-coded in the script `t4013-diff-various.sh` itself, and
+> > not only in the support files in `t/t4013/`, but also in the _file
+> > names_ in `t/t4013/`.
+>
+> There are some stuff in flight; let's hold this step before they
+> graduate to avoid clashing.
+
+Fair enough. I described the commands I ran to bring this patch about, and
+I can just as easily run the same commands once the dust settled a bit.
+
+Thanks,
+Dscho
