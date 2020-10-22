@@ -7,113 +7,112 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C75C3C388F9
-	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 20:31:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BE5EC388F7
+	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 20:59:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7A89D24248
-	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 20:31:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D35C020874
+	for <git@archiver.kernel.org>; Thu, 22 Oct 2020 20:59:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kKTpG3zZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lWE3M1Wh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S371728AbgJVUbu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Oct 2020 16:31:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33138 "EHLO
+        id S372073AbgJVU7b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Oct 2020 16:59:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2897070AbgJVUbu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Oct 2020 16:31:50 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC72AC0613CE
-        for <git@vger.kernel.org>; Thu, 22 Oct 2020 13:31:49 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id h21so3067327iob.10
-        for <git@vger.kernel.org>; Thu, 22 Oct 2020 13:31:49 -0700 (PDT)
+        with ESMTP id S2897292AbgJVU7a (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Oct 2020 16:59:30 -0400
+Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2683EC0613CE
+        for <git@vger.kernel.org>; Thu, 22 Oct 2020 13:59:29 -0700 (PDT)
+Received: by mail-oi1-x241.google.com with SMTP id 16so3273499oix.9
+        for <git@vger.kernel.org>; Thu, 22 Oct 2020 13:59:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=9Mh6RAGVWCUeMv0NQu4hal2VakWB+eGI8D2tclKN1Xs=;
-        b=kKTpG3zZ8YpfFAt2hxIViXHL85n/zojh76FJ4BI0doH/ONz5PJUdyhCd58Ze5/aWXT
-         WS2k6g0Be7tj2h32YDlb/89PErjKavzXJ+AWOS7yybS4tkW5vrO2f+kWKgVCcuJkYHzS
-         5Wvyk5W4Gf9zTkpow3AvEa62ZinvK9dMArqduKv9A226ADRV//D6pXS1r8T1gt65fsNP
-         I72ZhP1zSgNEpOWwLZFx0sgkv2iAGXxnr0f2VMS8o89Lj39iplgg8/y78VHtkSwXsGW8
-         AraRTD/PihXR1FZ00/hDJCtS91+GQHZ6g+in3zk6WcfNRpDbkn6PZbpoTmtFqvmOMVu5
-         Sf7w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=PKYyjYnXqU1sgiwZJaZVO6N/I0klS+YYLBZn/4G2Slc=;
+        b=lWE3M1Wh0Cvxonu8GenGkernEwyKmSHehyL6Rad0o2huRjdMUQ6g0ktttV2Dkc0tSH
+         T19ycMQ/lo8gANtU2G+DVt8NTnSzdU+mTMRGZcBr0qpnqpu9p3rcEUfq2Xo0l6tiCkfk
+         kF7BgQrmAjgI3HVNzg7OC4bBnvTsOz0B1WtQr3dDbn+swZbsQ3qiWcys6z58LBmJyx/Z
+         BG9HwAMJExelGtJtkXsr6McyzRizbUUSh5YUiD0NXWvOND3QLNxz81a8k1e/vgghN+oJ
+         NcQj2x942rDNjtXJKwyPED+gdhJidZs/czDc3+sOHRSBJtgJ9O59hbWBbGi7xbCzzBwN
+         sZ6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=9Mh6RAGVWCUeMv0NQu4hal2VakWB+eGI8D2tclKN1Xs=;
-        b=mDZ17Y9nK0nlJmjY5zF04TW/qt92qmiOdHXvSDzPLA56Pjtd47ThL0BsEvu+3hx5WJ
-         tHQyH+/ilWG2PHSQV274egfEw2SlbPs3JOnw3PE7578M1phFYAWDFqiTqg0a9qXEhrXD
-         cQkIz/AHcRxHSOCNYx0VDKg06ePZbdyxdMUHu9JglJ4Biz6UFUC7++qP1h0MxS7vreYw
-         iyLmcOR+skfhShTIWUkgv+Wh8KOuzo+QKJXk4R64vt0FzmvP5Ass0ZQHmu99DaHwoW9i
-         ofMmCanasPUKti1FwMeFccKJOdncz0AenwUFKJeMIIsleQSLArVWCW0diBEhUqKTqnok
-         TewA==
-X-Gm-Message-State: AOAM530SG29aetOhyw2wZlbpqwWXFOss2GMqF5cZunCkV1PblmjkjXqc
-        T5PNyRYjAdkM6zulCvQTWchtwtyut+75C6f3kxNXK0TFLa1I+9Gk
-X-Google-Smtp-Source: ABdhPJymvqhKHryBgx55Hjeiz0L+oPaYJ5Gww8fYIrvkKnQY1J2bRmOIAvmNNMBFH85xgFBBNAgAx4Jj8lC5Lg5t344=
-X-Received: by 2002:a6b:c3c9:: with SMTP id t192mr3096940iof.207.1603398708979;
- Thu, 22 Oct 2020 13:31:48 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=PKYyjYnXqU1sgiwZJaZVO6N/I0klS+YYLBZn/4G2Slc=;
+        b=PddnUzBNGWRvi8SVdVok+j6uo+gR1WSvloNPpc/ocDIYpUglEPpLu4xpR+HnKjQ0XN
+         rNW+QLrXZG4lOO97NQeZjP3/aQ9rF045q8IogzsUaV86suZMr7jkUO8tFiW46v7f29JE
+         /guUl1F44tY8uvEgp5gZMJPgX38vdWP5uphfx4SK7Mc0JC/UeqrHK/w+tbQKRRO0EwpI
+         A/ov/e4Mg8+UrJVXxAF8mwf1mV9j+e3AghYvxeTaeSks3N3GPYYfJXqnNZww1qcQZfzO
+         6lU+ZYKd1OmyKBHsG65DjMpNc8wdZOwXQ3ctaWCHOH3SKPEffCxNXskDfqDA4rU7DF4V
+         aq3Q==
+X-Gm-Message-State: AOAM533JN3i811W5HKDZzfoVvdjTz/Ft9g+KLElutmsczbTczMWHxYgo
+        AaY/Yx0VuDnIMr9AZPY2MOxH7nDQhEPaXtr9kV0=
+X-Google-Smtp-Source: ABdhPJy0ILdiyMR7s3tmihFJE9rHcGin+dHjEGDJMVv5hQMe6oMJTX983RNnTvGFOAO/1AzMwMhfnZYQlTF76Cr3BVw=
+X-Received: by 2002:aca:c5ce:: with SMTP id v197mr2422399oif.93.1603400368508;
+ Thu, 22 Oct 2020 13:59:28 -0700 (PDT)
 MIME-Version: 1.0
-From:   "herr.kaste" <herr.kaste@gmail.com>
-Date:   Thu, 22 Oct 2020 22:31:22 +0200
-Message-ID: <CAFzd1+62PmHBoVpMw-y4TC=bmc8N0wDpF2jQa7XGz2e+7Dos6A@mail.gmail.com>
-Subject: ORIG_HEAD after rebase is confusing
-To:     git@vger.kernel.org
+References: <pull.767.git.1603303474.gitgitgadget@gmail.com>
+ <pull.767.v2.git.1603326066.gitgitgadget@gmail.com> <20201022174043.GA775513@nand.local>
+ <xmqqblgum7qk.fsf@gitster.c.googlers.com> <20201022183822.GA781760@nand.local>
+ <xmqq7drim5st.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq7drim5st.fsf@gitster.c.googlers.com>
+From:   Nipunn Koorapati <nipunn1313@gmail.com>
+Date:   Thu, 22 Oct 2020 21:59:15 +0100
+Message-ID: <CAN8Z4-Vb3qc7eyzczEC7hcf3DmHEXkcV1AGRfC_L0uFKDU2W5A@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] fsmonitor inline / testing cleanup
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Nipunn Koorapati via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reading the git rebase manual and some answer on stackoverflow I assumed
-`ORIG_HEAD` will point to the original HEAD, the tip of the branch *before*
-I started rebasing.  But it doesn't seem so.
+> from Taylor
+> I'm still iffy on whether or not this series makes sense to apply
+> without the rest of the code that depends on it
 
-For example, I have this:
+Sorry for confusion. I don't think we should assume there is more code coming
+related to this. I think this is intended to stand on its own.
+It's not a required dependency either. Rather, it's motivated by
+simplicity
+- remove the dir.h dependency from fsmonitor.h.
+- Keep implementation in fsmonitor.c and definitions in fsmonitor.h
 
+> From Junio
+> Those without fsmonitor would pay the call/return cost for no good
+> reason if core_fsmonitor is not set, and checking that on the caller
+> side may make a big difference.  How big?  That needs measurement.
 
-  $ git log --graph --all --oneline
-  * 9830f9f (master) X
-  | * fb7b6a6 (HEAD -> feature) D
-  | * 46b7a7a C
-  | * da5e4c7 B
-  | * 5c135da A
-  |/
-  * 6848823 Init
+Noted! This is not called out or measured - it is simply assumed based
+on earlier
+conversation. I should be able to run the fsmonitor perf suite before/after this
+change and include the results in the commit message.
 
-  $ git rebase master
-  Successfully rebased and updated refs/heads/feature.
+> This is a tangent, but with or without inlining, I find it iffy to
+> see that untracked_cache_invalidate_path() is called only when
+> fsmonitor is in use.  Does untracked_cache depend on fsmonitor for
+> its correct operation?  Why is it OK not to invlidate when the
+> caller would tell fsmonitor that a path is invalid if fsmonitor were
+> in use?  The call is a statement of fact that the path is no longer
+> valid, and that bit of information would be useful to the parts of
+> the system outside fsmonitor, no?  Puzzled....
 
-  $ git rev-parse ORIG_HEAD
-  da5e4c7e9eb3b10c1efa08c534b9c9e4b92d9fd7
+I did some source diving in an attempt to understand what's happening here.
+I believe that untracked_cache_invalidate_path() is called in dir.c
+whenever an entry is added or removed from
+a directory.
+This is an additional call when fsmonitor is enabled - because
+fsmonitor's whole purpose
+is to avoid the lstat on the other path. There is a nice explanation
+in the original commit message
 
-  $ git reflog
-  a647bd7 (HEAD -> feature) HEAD@{0}: rebase (finish): returning to
-refs/heads/feature
-  a647bd7 (HEAD -> feature) HEAD@{1}: rebase (pick): D
-  2f458e8 HEAD@{2}: rebase (pick): C
-  0aa2160 HEAD@{3}: rebase (pick): B
-  b957fc7 HEAD@{4}: rebase (pick): A
-  9830f9f (master) HEAD@{5}: rebase (start): checkout master
-  fb7b6a6 HEAD@{6}: checkout: moving from master to feature
-  9830f9f (master) HEAD@{7}: commit: X
-  6848823 HEAD@{8}: checkout: moving from feature to master
-  fb7b6a6 HEAD@{9}: commit: D
-  46b7a7a HEAD@{10}: commit: C
-  da5e4c7 HEAD@{11}: commit: B
-  5c135da HEAD@{12}: commit: A
-  6848823 HEAD@{13}: checkout: moving from master to feature
-  6848823 HEAD@{14}: commit (initial): Init
+Commit 883e248b (fsmonitor: teach git to optionally utilize a file
+system monitor to speed up detecting new or changed files.,
+2017-09-22)
 
-So `ORIG_HEAD` here points to the original B commit.  (I expected the D.)
-Honestly, this doesn't make much sense to me in that I don't know *why* it
-even chooses B which is a middle commit in the chain.  (And from reading the
-source `sequencer.c` I can't deduce it either.)
-
-  $ git --version
-  git version 2.29.0.windows.1
-
-What I actually wanted to do was `git reset --hard ORIG_HEAD` fwiw.  And for
-example `git diff HEAD..ORIG_HEAD` to check for unwanted changes after a merge
-conflict.
-
-
-Regards,
-Caspar Duregger
+--Nipunn
