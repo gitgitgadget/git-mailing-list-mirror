@@ -2,637 +2,170 @@ Return-Path: <SRS0=cWhr=D6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,LOTS_OF_MONEY,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DATE_IN_PAST_06_12,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3ED12C388F9
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 11:18:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BF44C4363A
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 12:47:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AF26A2084C
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 11:18:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BF33521D43
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 12:47:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nxRD1rJS"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="EvaPSS2F"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S462862AbgJWLSu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Oct 2020 07:18:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56290 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S462815AbgJWLSu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Oct 2020 07:18:50 -0400
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4CEBC0613CE
-        for <git@vger.kernel.org>; Fri, 23 Oct 2020 04:18:49 -0700 (PDT)
-Received: by mail-pf1-x442.google.com with SMTP id y14so904817pfp.13
-        for <git@vger.kernel.org>; Fri, 23 Oct 2020 04:18:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=lFX/90YK6TNcplSHueti3TQnJCA87rxEpf8HK4DSlZE=;
-        b=nxRD1rJS60hH1Ec2de1aj5p80Dbv2AuEftWurxP90SbzPWZMmWCjXHGgXbTPqWiFXM
-         bwvMH+n0wCtxNCrYKdap3uP+CKdPI64oQ8jy1UzkdVpj3AiO8UlOlkjfU1Eja2SFV457
-         /Eni6I+rrE7TumKexBMbFCRCaXXQCzI7VjnpFRVf7ZjOm4iE7gdXAXAZHFPxy+1RiNwz
-         W4pi0sHGeUaSqKKYWSDDTGuy76DyOfUJ2/8L9y5UHAATkP6VWcvTVLFE5hbMZ1B9/bjD
-         2aWK5e67JlkrxIuOgb0Kbzcmsp6PPxhq4bDXSAoTDhLI5bgL256n0VYFgBi8HjutOj4I
-         VgEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=lFX/90YK6TNcplSHueti3TQnJCA87rxEpf8HK4DSlZE=;
-        b=EWc1jVNqEuct+zoqCmyDx5CnXTGTAIP77acflKDZGdj0r3A9wX/alEpZO+HaU1Dh6s
-         p0tUya0Nvsu1YLSLRzVIQvlKkVomR4Dg6cL6jAGIKp8qtv/n8X4Sd7GDJtr3eH9Ts0qv
-         F1kQ6QoECBRYy0/9ujALxc79Rm+87i7fbIQwHoqcSm+2WzO+TzQGZSgotXus6+F5RsvW
-         1cqamn4qMZODVxl0IGMVKPG8E6S8bhNws7jbXqJPbDxjsrSLfESn65lKsJWRtciPEh0l
-         9V8v7Al/WY+GYJtag03S9GEUxZgSnQXyfMyZTU7O+ekXfNXF2wnaTeud/DyTxJ/no7S0
-         TEKw==
-X-Gm-Message-State: AOAM5303Cb7ftHcddvaeNWnRCH01/jyGhLYcX9uECoZFURwLafen5AXk
-        PR/Zxz/46rcWMuRUWhk+ifJTGKCXztlPGw==
-X-Google-Smtp-Source: ABdhPJwVOn5ibCU2Akre0e17ROvCd/Bn9szbxZ6kjdU5D/59DVjPk4x5PnN2A2CDJWlsu/qVmnkqpw==
-X-Received: by 2002:a17:90a:ce0e:: with SMTP id f14mr1932131pju.94.1603451928976;
-        Fri, 23 Oct 2020 04:18:48 -0700 (PDT)
-Received: from localhost.localdomain ([42.108.201.82])
-        by smtp.gmail.com with ESMTPSA id q35sm2181940pja.28.2020.10.23.04.18.47
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 23 Oct 2020 04:18:48 -0700 (PDT)
-From:   Sangeeta Jain <sangunb09@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Sangeeta Jain <sangunb09@gmail.com>
-Subject: [Outreachy] [PATCH v4] diff: do not show submodule with untracked files as "-dirty"
-Date:   Fri, 23 Oct 2020 16:48:27 +0530
-Message-Id: <20201023111827.40188-1-sangunb09@gmail.com>
-X-Mailer: git-send-email 2.21.1 (Apple Git-122.3)
-In-Reply-To: <pull.751.git.1602781723670.gitgitgadget@gmail.com>
-References: <pull.751.git.1602781723670.gitgitgadget@gmail.com>
+        id S464041AbgJWMrn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Oct 2020 08:47:43 -0400
+Received: from mout.gmx.net ([212.227.15.19]:44063 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S464010AbgJWMrm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Oct 2020 08:47:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1603457254;
+        bh=OtP9N08bksFwBKWxNMptIC6yCH2L9Y8l7DKKhNS8O78=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=EvaPSS2FuRJRlDQ3v/240gTm9cftwJOQIxaIqVV0/QIij69Dxc/qOrNrgF++4zJcN
+         6Q55OXqvt2lnZyjCkICK0TlnJsGI7Bz3GBJ2YiIxXKf1LQFR90Bei5aqTYB3p8SeOc
+         qpEMhgE4dciG40Q0xFNfukTWi/nWuT9oIR7nRurs=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.26.25.62] ([89.1.213.182]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Md6Qr-1jwKoQ4Atf-00aEY8; Fri, 23
+ Oct 2020 14:47:34 +0200
+Date:   Fri, 23 Oct 2020 07:36:25 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v2 3/3] sideband: add defense against packets missing a
+ band designator
+In-Reply-To: <20201023084827.GE4012156@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2010230732250.56@tvgsbejvaqbjf.bet>
+References: <pull.753.git.1602600323973.gitgitgadget@gmail.com> <pull.753.v2.git.1603136142.gitgitgadget@gmail.com> <c61e560451c4d7f101a23acec69117ddac563330.1603136143.git.gitgitgadget@gmail.com> <20201023084827.GE4012156@coredump.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:rpSa20mq/yaO0p3dDeQgVpB37TJZ6iv6t+fEPNvnOKn/gGd9mNl
+ hNrbPR8zuvtDdcMYG9aNjRsBcOFj0LRYlrPEtl8mlcs0Ce0NZx9wi/NpXiaD5llNA1XReTV
+ YoQ5qxiJQE5+/0ltvc606kptZxbHsiHUnbCTWQXoDNRDeVKx+8nIdRe56OKOyEjj+4Lejne
+ PH+BU4ukF/r2Dh29u9d2w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:OSRS2xcJeBo=:7wTBw6rxPZSeo/jyKW0xpi
+ 1hEeozPI6ZHaqujj2YkEspcOQVP3TiLorkV1ERzDlvAqPiAZ6MZGTez+qdL5crsrDrzY/ybgl
+ dqceg0eVcruY3/Wr9FBorXSqHr3vYsu5L9SaFYmUURpQMS5/Hh42E4Tu5ly8Oo2MPsQJVpA2a
+ +9vxM2Y4i71d4OiATgot9OiQ7PnbCXsZ6t4vmh41+en6Yv/GKHwNGl3Ecv/vn5z88NzjasEgp
+ 7yX73u7iJip8BvtuO//oNKAma58ySydcGGvO5CDGcpTZTd76EIoYL+A/NWIXQMJMq5GQnDDDz
+ 71FKdA4mUo2YHGq7LrmOacrOlZGT29mP915UKUjqwLZ0GQw7IkW6B/qazHv4UUfQUzIQEePvy
+ 0L0F/uUAPUGEYYISw3ENsjoXTxBNwXkrMhqNYIsmDxbNFOjUAhA/VndmRVzyPGlM7IoPk2Xi6
+ mFK9vaU41RjXOX3KISzgwJTUHcfDSilWzYDTGTepGlxTSu6MXCvWFeS1QgW/ZEmESnLq44Lt9
+ CgQOnXVNay4mOjpelwrdSHRAI0jiOTv0LlK27fFfQ8uYGcgOpwJ2QLR7o/EGL1N1K9InD9C4x
+ USzKuudCo1iEMpzfhQppY66pulR98j8IMry834tlhrpHmrHrJMuTW5m8e7XXayfWm+xmnv/y+
+ lYGimRGzxaTnSPbpfQ210x0gISriNmrXpbDxBzALSVWPQD/TrBsSivNqJLPrUTv1aEGN0I2sW
+ VQmASt82TwxSnVub8J2+yjUKGdoB4TAA3fwMGgWPjb5T80lYFrQFejwNHXUr5tm2IxjpbPzw1
+ Z+3SnqjVwkoQgViM/xRI8Nfm2cvWN/6F2+M9pRRwa5rKxJOywyHx3mmGRjPiDf+kLpRHVOqDs
+ IKC4qa5RbpD6UcgcN0fBAeOsa4buIzXuxvHGYo1jk=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make `--ignore-submodules=untracked` the default for `git diff` when
-there is no configuration variable or command line option, so that the
-command would not give '-dirty' suffix to a submodule whose working
-tree has untracked files, to make it consistent with `git
-describe --dirty` that is run in the submodule working tree.
+Hi Peff,
 
-Signed-off-by: Sangeeta Jain <sangunb09@gmail.com>
----
- diff.c                                       |   3 +
- diff.h                                       |   1 +
- submodule.c                                  |   5 +-
- t/t3701-add-interactive.sh                   |   2 +-
- t/t4027-diff-submodule.sh                    |  15 ++-
- t/t4041-diff-submodule-option.sh             |  16 +--
- t/t4060-diff-submodule-option-diff-format.sh |  16 +--
- t/t7064-wtstatus-pv2.sh                      |  52 ++++++++++
- t/t7506-status-submodule.sh                  | 102 ++++++++++++++++---
- 9 files changed, 179 insertions(+), 33 deletions(-)
+On Fri, 23 Oct 2020, Jeff King wrote:
 
-diff --git a/diff.c b/diff.c
-index 2bb2f8f57e..5a80695da8 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4585,6 +4585,9 @@ void repo_diff_setup(struct repository *r, struct diff_options *options)
- 		DIFF_XDL_SET(options, INDENT_HEURISTIC);
- 
- 	options->orderfile = diff_order_file_cfg;
-+	
-+	if (!options->flags.ignore_submodule_set)
-+		options->flags.ignore_untracked_in_submodules = 1;
- 
- 	if (diff_no_prefix) {
- 		options->a_prefix = options->b_prefix = "";
-diff --git a/diff.h b/diff.h
-index 11de52e9e9..1e18e6b1c3 100644
---- a/diff.h
-+++ b/diff.h
-@@ -178,6 +178,7 @@ struct diff_flags {
- 	unsigned diff_from_contents;
- 	unsigned dirty_submodules;
- 	unsigned ignore_untracked_in_submodules;
-+	unsigned ignore_submodule_set;
- 	unsigned ignore_dirty_submodules;
- 	unsigned override_submodule_config;
- 	unsigned dirstat_by_line;
-diff --git a/submodule.c b/submodule.c
-index b3bb59f066..30c42cbffe 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -420,6 +420,7 @@ const char *submodule_strategy_to_string(const struct submodule_update_strategy
- void handle_ignore_submodules_arg(struct diff_options *diffopt,
- 				  const char *arg)
- {
-+	diffopt->flags.ignore_submodule_set = 1;
- 	diffopt->flags.ignore_submodules = 0;
- 	diffopt->flags.ignore_untracked_in_submodules = 0;
- 	diffopt->flags.ignore_dirty_submodules = 0;
-@@ -1677,7 +1678,9 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
- 
- 	strvec_pushl(&cp.args, "status", "--porcelain=2", NULL);
- 	if (ignore_untracked)
--		strvec_push(&cp.args, "-uno");
-+		strvec_push (&cp.args, "-uno");
-+	else
-+		strvec_push (&cp.args, "--ignore-submodules=none");
- 
- 	prepare_submodule_repo_env(&cp.env_array);
- 	cp.git_cmd = 1;
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index ca04fac417..98e46ad1ae 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -761,7 +761,7 @@ test_expect_success 'setup different kinds of dirty submodules' '
- 		echo dirty >>initial &&
- 		: >untracked
- 	) &&
--	git -C for-submodules diff-files --name-only >actual &&
-+	git -C for-submodules diff-files --name-only --ignore-submodules=none >actual &&
- 	cat >expected <<-\EOF &&
- 	dirty-both-ways
- 	dirty-head
-diff --git a/t/t4027-diff-submodule.sh b/t/t4027-diff-submodule.sh
-index d7145ccca4..6432b4331f 100755
---- a/t/t4027-diff-submodule.sh
-+++ b/t/t4027-diff-submodule.sh
-@@ -93,10 +93,19 @@ test_expect_success 'git diff HEAD with dirty submodule (untracked)' '
- 	) &&
- 	git diff HEAD >actual &&
- 	sed -e "1,/^@@/d" actual >actual.body &&
--	expect_from_to >expect.body $subtip $subprev-dirty &&
-+	expect_from_to >expect.body $subtip $subprev &&
- 	test_cmp expect.body actual.body
- '
- 
-+test_expect_success 'git diff HEAD with dirty submodule (untracked) (none ignored)' '
-+	git config diff.ignoreSubmodules none &&
-+	git diff HEAD >actual &&
-+	sed -e "1,/^@@/d" actual >actual.body &&
-+	expect_from_to >expect.body $subtip $subprev-dirty &&
-+	test_cmp expect.body actual.body &&
-+	git config --unset diff.ignoreSubmodules
-+'
-+
- test_expect_success 'git diff HEAD with dirty submodule (work tree, refs match)' '
- 	git commit -m "x" sub &&
- 	echo >>sub/world &&
-@@ -168,13 +177,13 @@ test_expect_success 'git diff HEAD with dirty submodule (untracked, refs match)'
- 		git clean -qfdx &&
- 		>cruft
- 	) &&
--	git diff HEAD >actual &&
-+	git diff --ignore-submodules=none HEAD >actual &&
- 	sed -e "1,/^@@/d" actual >actual.body &&
- 	expect_from_to >expect.body $subprev $subprev-dirty &&
- 	test_cmp expect.body actual.body &&
- 	git diff --ignore-submodules=all HEAD >actual2 &&
- 	test_must_be_empty actual2 &&
--	git diff --ignore-submodules=untracked HEAD >actual3 &&
-+	git diff HEAD >actual3 &&
- 	test_must_be_empty actual3 &&
- 	git diff --ignore-submodules=dirty HEAD >actual4 &&
- 	test_must_be_empty actual4
-diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
-index f852136585..bb368b685d 100755
---- a/t/t4041-diff-submodule-option.sh
-+++ b/t/t4041-diff-submodule-option.sh
-@@ -262,7 +262,7 @@ test_expect_success 'submodule is up to date' '
- 
- test_expect_success 'submodule contains untracked content' '
- 	echo new > sm1/new-file &&
--	git diff-index -p --submodule=log HEAD >actual &&
-+	git diff-index -p --submodule=log HEAD --ignore-submodules=none >actual &&
- 	cat >expected <<-EOF &&
- 	Submodule sm1 contains untracked content
- 	EOF
-@@ -270,7 +270,7 @@ test_expect_success 'submodule contains untracked content' '
- '
- 
- test_expect_success 'submodule contains untracked content (untracked ignored)' '
--	git diff-index -p --ignore-submodules=untracked --submodule=log HEAD >actual &&
-+	git diff-index -p --submodule=log HEAD >actual &&
- 	test_must_be_empty actual
- '
- 
-@@ -286,7 +286,7 @@ test_expect_success 'submodule contains untracked content (all ignored)' '
- 
- test_expect_success 'submodule contains untracked and modified content' '
- 	echo new > sm1/foo6 &&
--	git diff-index -p --submodule=log HEAD >actual &&
-+	git diff-index -p --submodule=log HEAD --ignore-submodules=none >actual &&
- 	cat >expected <<-EOF &&
- 	Submodule sm1 contains untracked content
- 	Submodule sm1 contains modified content
-@@ -296,7 +296,7 @@ test_expect_success 'submodule contains untracked and modified content' '
- 
- test_expect_success 'submodule contains untracked and modified content (untracked ignored)' '
- 	echo new > sm1/foo6 &&
--	git diff-index -p --ignore-submodules=untracked --submodule=log HEAD >actual &&
-+	git diff-index -p --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
- 	Submodule sm1 contains modified content
- 	EOF
-@@ -337,7 +337,7 @@ test_expect_success 'submodule is modified' '
- 
- test_expect_success 'modified submodule contains untracked content' '
- 	echo new > sm1/new-file &&
--	git diff-index -p --submodule=log HEAD >actual &&
-+	git diff-index -p  --ignore-submodules=none --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
- 	Submodule sm1 contains untracked content
- 	Submodule sm1 $head6..$head8:
-@@ -347,7 +347,7 @@ test_expect_success 'modified submodule contains untracked content' '
- '
- 
- test_expect_success 'modified submodule contains untracked content (untracked ignored)' '
--	git diff-index -p --ignore-submodules=untracked --submodule=log HEAD >actual &&
-+	git diff-index -p --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
- 	Submodule sm1 $head6..$head8:
- 	  > change
-@@ -371,7 +371,7 @@ test_expect_success 'modified submodule contains untracked content (all ignored)
- 
- test_expect_success 'modified submodule contains untracked and modified content' '
- 	echo modification >> sm1/foo6 &&
--	git diff-index -p --submodule=log HEAD >actual &&
-+	git diff-index -p --ignore-submodules=none --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
- 	Submodule sm1 contains untracked content
- 	Submodule sm1 contains modified content
-@@ -383,7 +383,7 @@ test_expect_success 'modified submodule contains untracked and modified content'
- 
- test_expect_success 'modified submodule contains untracked and modified content (untracked ignored)' '
- 	echo modification >> sm1/foo6 &&
--	git diff-index -p --ignore-submodules=untracked --submodule=log HEAD >actual &&
-+	git diff-index -p --submodule=log HEAD >actual &&
- 	cat >expected <<-EOF &&
- 	Submodule sm1 contains modified content
- 	Submodule sm1 $head6..$head8:
-diff --git a/t/t4060-diff-submodule-option-diff-format.sh b/t/t4060-diff-submodule-option-diff-format.sh
-index fc8229c726..dc7b242697 100755
---- a/t/t4060-diff-submodule-option-diff-format.sh
-+++ b/t/t4060-diff-submodule-option-diff-format.sh
-@@ -409,7 +409,7 @@ test_expect_success 'submodule is up to date' '
- 
- test_expect_success 'submodule contains untracked content' '
- 	echo new > sm1/new-file &&
--	git diff-index -p --submodule=diff HEAD >actual &&
-+	git diff-index -p --ignore-submodules=none --submodule=diff HEAD >actual &&
- 	cat >expected <<-EOF &&
- 	Submodule sm1 contains untracked content
- 	EOF
-@@ -417,7 +417,7 @@ test_expect_success 'submodule contains untracked content' '
- '
- 
- test_expect_success 'submodule contains untracked content (untracked ignored)' '
--	git diff-index -p --ignore-submodules=untracked --submodule=diff HEAD >actual &&
-+	git diff-index -p --submodule=diff HEAD >actual &&
- 	test_must_be_empty actual
- '
- 
-@@ -433,7 +433,7 @@ test_expect_success 'submodule contains untracked content (all ignored)' '
- 
- test_expect_success 'submodule contains untracked and modified content' '
- 	echo new > sm1/foo6 &&
--	git diff-index -p --submodule=diff HEAD >actual &&
-+	git diff-index -p --ignore-submodules=none --submodule=diff HEAD >actual &&
- 	cat >expected <<-EOF &&
- 	Submodule sm1 contains untracked content
- 	Submodule sm1 contains modified content
-@@ -451,7 +451,7 @@ test_expect_success 'submodule contains untracked and modified content' '
- # NOT OK
- test_expect_success 'submodule contains untracked and modified content (untracked ignored)' '
- 	echo new > sm1/foo6 &&
--	git diff-index -p --ignore-submodules=untracked --submodule=diff HEAD >actual &&
-+	git diff-index -p --submodule=diff HEAD >actual &&
- 	cat >expected <<-EOF &&
- 	Submodule sm1 contains modified content
- 	diff --git a/sm1/foo6 b/sm1/foo6
-@@ -512,7 +512,7 @@ test_expect_success 'submodule is modified' '
- 
- test_expect_success 'modified submodule contains untracked content' '
- 	echo new > sm1/new-file &&
--	git diff-index -p --submodule=diff HEAD >actual &&
-+	git diff-index -p --ignore-submodules=none --submodule=diff HEAD >actual &&
- 	cat >expected <<-EOF &&
- 	Submodule sm1 contains untracked content
- 	Submodule sm1 $head7..$head8:
-@@ -528,7 +528,7 @@ test_expect_success 'modified submodule contains untracked content' '
- '
- 
- test_expect_success 'modified submodule contains untracked content (untracked ignored)' '
--	git diff-index -p --ignore-submodules=untracked --submodule=diff HEAD >actual &&
-+	git diff-index -p --submodule=diff HEAD >actual &&
- 	cat >expected <<-EOF &&
- 	Submodule sm1 $head7..$head8:
- 	diff --git a/sm1/foo6 b/sm1/foo6
-@@ -564,7 +564,7 @@ test_expect_success 'modified submodule contains untracked content (all ignored)
- 
- test_expect_success 'modified submodule contains untracked and modified content' '
- 	echo modification >> sm1/foo6 &&
--	git diff-index -p --submodule=diff HEAD >actual &&
-+	git diff-index -p --ignore-submodules=none --submodule=diff HEAD >actual &&
- 	cat >expected <<-EOF &&
- 	Submodule sm1 contains untracked content
- 	Submodule sm1 contains modified content
-@@ -583,7 +583,7 @@ test_expect_success 'modified submodule contains untracked and modified content'
- 
- test_expect_success 'modified submodule contains untracked and modified content (untracked ignored)' '
- 	echo modification >> sm1/foo6 &&
--	git diff-index -p --ignore-submodules=untracked --submodule=diff HEAD >actual &&
-+	git diff-index -p --submodule=diff HEAD >actual &&
- 	cat >expected <<-EOF &&
- 	Submodule sm1 contains modified content
- 	Submodule sm1 $head7..$head8:
-diff --git a/t/t7064-wtstatus-pv2.sh b/t/t7064-wtstatus-pv2.sh
-index 537787e598..78cd86be3a 100755
---- a/t/t7064-wtstatus-pv2.sh
-+++ b/t/t7064-wtstatus-pv2.sh
-@@ -503,6 +503,31 @@ test_expect_success 'untracked changes in added submodule (AM S..U)' '
- 		1 AM S..U 000000 160000 160000 $ZERO_OID $HSUB sub1
- 		EOF
- 
-+		git status --porcelain=v2 --branch --untracked-files=all --ignore-submodules=none >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'untracked changes in added submodule (A. S...) (untracked ignored)' '
-+	(	cd super_repo &&
-+		## create untracked file in the submodule.
-+		(	cd sub1 &&
-+			echo "xxxx" >file_in_sub
-+		) &&
-+
-+		HMOD=$(git hash-object -t blob -- .gitmodules) &&
-+		HSUP=$(git rev-parse HEAD) &&
-+		HSUB=$HSUP &&
-+
-+		cat >expect <<-EOF &&
-+		# branch.oid $HSUP
-+		# branch.head master
-+		# branch.upstream origin/master
-+		# branch.ab +0 -0
-+		1 A. N... 000000 100644 100644 $ZERO_OID $HMOD .gitmodules
-+		1 A. S... 000000 160000 160000 $ZERO_OID $HSUB sub1
-+		EOF
-+
- 		git status --porcelain=v2 --branch --untracked-files=all >actual &&
- 		test_cmp expect actual
- 	)
-@@ -582,6 +607,33 @@ test_expect_success 'staged and untracked changes in added submodule (AM S.MU)'
- 		1 AM S.MU 000000 160000 160000 $ZERO_OID $HSUB sub1
- 		EOF
- 
-+		git status --porcelain=v2 --branch --untracked-files=all --ignore-submodules=none >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'staged and untracked changes in added submodule (AM S.M.) (untracked ignored)' '
-+	(	cd super_repo &&
-+		(	cd sub1 &&
-+			## stage new changes in tracked file.
-+			git add file_in_sub &&
-+			## create new untracked file.
-+			echo "yyyy" >>another_file_in_sub
-+		) &&
-+
-+		HMOD=$(git hash-object -t blob -- .gitmodules) &&
-+		HSUP=$(git rev-parse HEAD) &&
-+		HSUB=$HSUP &&
-+
-+		cat >expect <<-EOF &&
-+		# branch.oid $HSUP
-+		# branch.head master
-+		# branch.upstream origin/master
-+		# branch.ab +0 -0
-+		1 A. N... 000000 100644 100644 $ZERO_OID $HMOD .gitmodules
-+		1 AM S.M. 000000 160000 160000 $ZERO_OID $HSUB sub1
-+		EOF
-+
- 		git status --porcelain=v2 --branch --untracked-files=all >actual &&
- 		test_cmp expect actual
- 	)
-diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
-index 3fcb44767f..72da00a962 100755
---- a/t/t7506-status-submodule.sh
-+++ b/t/t7506-status-submodule.sh
-@@ -94,36 +94,60 @@ test_expect_success 'status with added file in submodule (short)' '
- test_expect_success 'status with untracked file in submodule' '
- 	(cd sub && git reset --hard) &&
- 	echo "content" >sub/new-file &&
--	git status >output &&
-+	git status --ignore-submodules=none >output &&
- 	test_i18ngrep "modified:   sub (untracked content)" output
- '
- 
-+test_expect_success 'status with untracked file in submodule (untracked ignored)' '
-+	(cd sub && git reset --hard) &&
-+	echo "content" >sub/new-file &&
-+	git status >output &&
-+	test_i18ngrep "^nothing to commit" output
-+'
-+
- test_expect_success 'status -uno with untracked file in submodule' '
- 	git status -uno >output &&
- 	test_i18ngrep "^nothing to commit" output
- '
- 
- test_expect_success 'status with untracked file in submodule (porcelain)' '
--	git status --porcelain >output &&
-+	git status --porcelain --ignore-submodules=none >output &&
- 	diff output - <<-\EOF
- 	 M sub
- 	EOF
- '
- 
-+test_expect_success 'status with untracked file in submodule (porcelain) (untracked ignored)' '
-+	git status --porcelain >output &&
-+	test_must_be_empty output
-+'
-+
- test_expect_success 'status with untracked file in submodule (short)' '
--	git status --short >output &&
-+	git status --short --ignore-submodules=none >output &&
- 	diff output - <<-\EOF
- 	 ? sub
- 	EOF
- '
- 
-+test_expect_success 'status with untracked file in submodule (short) (untracked ignored)' '
-+	git status --short >output &&
-+	test_must_be_empty output
-+'
-+
- test_expect_success 'status with added and untracked file in submodule' '
- 	(cd sub && git reset --hard && echo >foo && git add foo) &&
- 	echo "content" >sub/new-file &&
--	git status >output &&
-+	git status --ignore-submodules=none >output &&
- 	test_i18ngrep "modified:   sub (modified content, untracked content)" output
- '
- 
-+test_expect_success 'status with added and untracked file in submodule (untracked ignored)' '
-+	(cd sub && git reset --hard && echo >foo && git add foo) &&
-+	echo "content" >sub/new-file &&
-+	git status >output &&
-+	test_i18ngrep "modified:   sub (modified content)" output
-+'
-+
- test_expect_success 'status with added and untracked file in submodule (porcelain)' '
- 	(cd sub && git reset --hard && echo >foo && git add foo) &&
- 	echo "content" >sub/new-file &&
-@@ -168,10 +192,17 @@ test_expect_success 'status with added file in modified submodule (porcelain)' '
- test_expect_success 'status with untracked file in modified submodule' '
- 	(cd sub && git reset --hard) &&
- 	echo "content" >sub/new-file &&
--	git status >output &&
-+	git status --ignore-submodules=none >output &&
- 	test_i18ngrep "modified:   sub (new commits, untracked content)" output
- '
- 
-+test_expect_success 'status with untracked file in modified submodule (untracked ignored)' '
-+	(cd sub && git reset --hard) &&
-+	echo "content" >sub/new-file &&
-+	git status >output &&
-+	test_i18ngrep "modified:   sub (new commits)" output
-+'
-+
- test_expect_success 'status with untracked file in modified submodule (porcelain)' '
- 	git status --porcelain >output &&
- 	diff output - <<-\EOF
-@@ -182,10 +213,17 @@ test_expect_success 'status with untracked file in modified submodule (porcelain
- test_expect_success 'status with added and untracked file in modified submodule' '
- 	(cd sub && git reset --hard && echo >foo && git add foo) &&
- 	echo "content" >sub/new-file &&
--	git status >output &&
-+	git status --ignore-submodules=none >output &&
- 	test_i18ngrep "modified:   sub (new commits, modified content, untracked content)" output
- '
- 
-+test_expect_success 'status with added and untracked file in modified submodule (untracked ignored)' '
-+	(cd sub && git reset --hard && echo >foo && git add foo) &&
-+	echo "content" >sub/new-file &&
-+	git status >output &&
-+	test_i18ngrep "modified:   sub (new commits, modified content)" output
-+'
-+
- test_expect_success 'status with added and untracked file in modified submodule (porcelain)' '
- 	(cd sub && git reset --hard && echo >foo && git add foo) &&
- 	echo "content" >sub/new-file &&
-@@ -349,7 +387,7 @@ test_expect_success 'setup superproject with untracked file in nested submodule'
- '
- 
- test_expect_success 'status with untracked file in nested submodule (porcelain)' '
--	git -C super status --porcelain >output &&
-+	git -C super status --porcelain --ignore-submodules=none >output &&
- 	diff output - <<-\EOF
- 	 M sub1
- 	 M sub2
-@@ -357,8 +395,13 @@ test_expect_success 'status with untracked file in nested submodule (porcelain)'
- 	EOF
- '
- 
-+test_expect_success 'status with untracked file in nested submodule (porcelain) (untracked ignored)' '
-+	git -C super status --porcelain >output &&
-+	test_must_be_empty output
-+'
-+
- test_expect_success 'status with untracked file in nested submodule (porcelain=2)' '
--	git -C super status --porcelain=2 >output &&
-+	git -C super status --porcelain=2 --ignore-submodules=none >output &&
- 	sanitize_output output &&
- 	diff output - <<-\EOF
- 	1 .M S..U 160000 160000 160000 HASH HASH sub1
-@@ -367,8 +410,13 @@ test_expect_success 'status with untracked file in nested submodule (porcelain=2
- 	EOF
- '
- 
-+test_expect_success 'status with untracked file in nested submodule (porcelain=2) (untracked ignored)' '
-+	git -C super status --porcelain=2 >output &&
-+	test_must_be_empty output
-+'
-+
- test_expect_success 'status with untracked file in nested submodule (short)' '
--	git -C super status --short >output &&
-+	git -C super status --short --ignore-submodules=none >output &&
- 	diff output - <<-\EOF
- 	 ? sub1
- 	 ? sub2
-@@ -376,13 +424,18 @@ test_expect_success 'status with untracked file in nested submodule (short)' '
- 	EOF
- '
- 
-+test_expect_success 'status with untracked file in nested submodule (short) (untracked ignored)' '
-+	git -C super status --short >output &&
-+	test_must_be_empty output
-+'
-+
- test_expect_success 'setup superproject with modified file in nested submodule' '
- 	git -C super/sub1/sub2 add file &&
- 	git -C super/sub2 add file
- '
- 
- test_expect_success 'status with added file in nested submodule (porcelain)' '
--	git -C super status --porcelain >output &&
-+	git -C super status --porcelain --ignore-submodules=none >output &&
- 	diff output - <<-\EOF
- 	 M sub1
- 	 M sub2
-@@ -390,8 +443,16 @@ test_expect_success 'status with added file in nested submodule (porcelain)' '
- 	EOF
- '
- 
-+test_expect_success 'status with added file in nested submodule (porcelain) (untracked ignored)' '
-+	git -C super status --porcelain >output &&
-+	diff output - <<-\EOF
-+	 M sub1
-+	 M sub2
-+	EOF
-+'
-+
- test_expect_success 'status with added file in nested submodule (porcelain=2)' '
--	git -C super status --porcelain=2 >output &&
-+	git -C super status --porcelain=2 --ignore-submodules=none >output &&
- 	sanitize_output output &&
- 	diff output - <<-\EOF
- 	1 .M S.M. 160000 160000 160000 HASH HASH sub1
-@@ -400,8 +461,17 @@ test_expect_success 'status with added file in nested submodule (porcelain=2)' '
- 	EOF
- '
- 
-+test_expect_success 'status with added file in nested submodule (porcelain=2) (untracked ignored)' '
-+	git -C super status --porcelain=2 >output &&
-+	sanitize_output output &&
-+	diff output - <<-\EOF
-+	1 .M S.M. 160000 160000 160000 HASH HASH sub1
-+	1 .M S.M. 160000 160000 160000 HASH HASH sub2
-+	EOF
-+'
-+
- test_expect_success 'status with added file in nested submodule (short)' '
--	git -C super status --short >output &&
-+	git -C super status --short --ignore-submodules=none >output &&
- 	diff output - <<-\EOF
- 	 m sub1
- 	 m sub2
-@@ -409,4 +479,12 @@ test_expect_success 'status with added file in nested submodule (short)' '
- 	EOF
- '
- 
-+test_expect_success 'status with added file in nested submodule (short) (untracked ignored)' '
-+	git -C super status --short >output &&
-+	diff output - <<-\EOF
-+	 m sub1
-+	 m sub2
-+	EOF
-+'
-+
- test_done
--- 
-2.21.1 (Apple Git-122.3)
+> On Mon, Oct 19, 2020 at 07:35:42PM +0000, Johannes Schindelin via GitGit=
+Gadget wrote:
+>
+> > diff --git a/pkt-line.c b/pkt-line.c
+> > index 657a702927..f72048f623 100644
+> > --- a/pkt-line.c
+> > +++ b/pkt-line.c
+> > @@ -461,8 +461,10 @@ int recv_sideband(const char *me, int in_stream, =
+int out)
+> >  	enum sideband_type sideband_type;
+> >
+> >  	while (1) {
+> > -		len =3D packet_read(in_stream, NULL, NULL, buf, LARGE_PACKET_MAX,
+> > -				  0);
+> > +		int status =3D packet_read_with_status(in_stream, NULL, NULL, buf,
+> > +						     LARGE_PACKET_MAX, &len, 0);
+> > +		if (!len && status =3D=3D PACKET_READ_NORMAL)
+> > +			BUG("missing band designator");
+> >  		if (!demultiplex_sideband(me, buf, len, 0, &scratch,
+> >  					  &sideband_type))
+>
+> I also wonder if this status-check should be pushed down into
+> demultiplex_sideband() by passing "status",
 
+I tried that, but as mentioned in the commit message, fbd76cd450
+(sideband: reverse its dependency on pkt-line, 2019-01-16) went out of its
+way to _stop_ the code inside `demultiplex_sideband()` from relying on
+anything in `pkt-line.h`. And that `PACKET_READ_NORMAL` and
+`PACKET_READ_EOF` _is_ from `pkt-line.h`.
+
+Ciao,
+Dscho
+
+> for two reasons:
+>
+>   1. So we don't have to repeat it (though it isn't that big)
+>
+>   2. The other half of this weirdness is that if we get an early EOF,
+>      we'll hit the "missing sideband designator" die() message. But
+>      that's not really what happened; we probably got a network hangup.
+>      And we could distinguish that case by checking for status =3D=3D
+>      PACKET_READ_EOF and provide a better message.
+>
+> Something like this (completely untested):
+>
+> diff --git a/sideband.c b/sideband.c
+> index 0a60662fa6..6ad15ed581 100644
+> --- a/sideband.c
+> +++ b/sideband.c
+> @@ -115,6 +115,7 @@ static void maybe_colorize_sideband(struct strbuf *d=
+est, const char *src, int n)
+>  #define DUMB_SUFFIX "        "
+>
+>  int demultiplex_sideband(const char *me, char *buf, int len,
+> +			 enum packet_read_status status,
+>  			 int die_on_error,
+>  			 struct strbuf *scratch,
+>  			 enum sideband_type *sideband_type)
+> @@ -130,17 +131,29 @@ int demultiplex_sideband(const char *me, char *buf=
+, int len,
+>  			suffix =3D DUMB_SUFFIX;
+>  	}
+>
+> -	if (len =3D=3D 0) {
+> -		*sideband_type =3D SIDEBAND_FLUSH;
+> -		goto cleanup;
+> -	}
+> -	if (len < 1) {
+> +	if (status =3D=3D PACKET_READ_EOF) {
+>  		strbuf_addf(scratch,
+> -			    "%s%s: protocol error: no band designator",
+> +			    "%s%s: protocol error: eof while reading packet",
+>  			    scratch->len ? "\n" : "", me);
+>  		*sideband_type =3D SIDEBAND_PROTOCOL_ERROR;
+>  		goto cleanup;
+>  	}
+> +
+> +	if (len < 0)
+> +		BUG("negative length on non-eof packet read");
+> +
+> +	if (len =3D=3D 0) {
+> +		if (status =3D=3D PACKET_READ_NORMAL) {
+> +			strbuf_addf(scratch,
+> +				    "%s%s protocol error: no band designator",
+> +				    scratch->len ? "\n" : "", me);
+> +			*sideband_type =3D SIDEBAND_PROTOCOL_ERROR;
+> +		} else {
+> +			*sideband_type =3D SIDEBAND_FLUSH;
+> +		}
+> +		goto cleanup;
+> +	}
+> +
+>  	band =3D buf[0] & 0xff;
+>  	buf[len] =3D '\0';
+>  	len--;
+>
