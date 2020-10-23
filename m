@@ -2,170 +2,205 @@ Return-Path: <SRS0=cWhr=D6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DATE_IN_PAST_06_12,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BF44C4363A
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 12:47:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE711C5517A
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 14:00:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BF33521D43
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 12:47:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4199B208C3
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 14:00:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="EvaPSS2F"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lZXPi/8F"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S464041AbgJWMrn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Oct 2020 08:47:43 -0400
-Received: from mout.gmx.net ([212.227.15.19]:44063 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S464010AbgJWMrm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Oct 2020 08:47:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1603457254;
-        bh=OtP9N08bksFwBKWxNMptIC6yCH2L9Y8l7DKKhNS8O78=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=EvaPSS2FuRJRlDQ3v/240gTm9cftwJOQIxaIqVV0/QIij69Dxc/qOrNrgF++4zJcN
-         6Q55OXqvt2lnZyjCkICK0TlnJsGI7Bz3GBJ2YiIxXKf1LQFR90Bei5aqTYB3p8SeOc
-         qpEMhgE4dciG40Q0xFNfukTWi/nWuT9oIR7nRurs=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.25.62] ([89.1.213.182]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Md6Qr-1jwKoQ4Atf-00aEY8; Fri, 23
- Oct 2020 14:47:34 +0200
-Date:   Fri, 23 Oct 2020 07:36:25 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v2 3/3] sideband: add defense against packets missing a
- band designator
-In-Reply-To: <20201023084827.GE4012156@coredump.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.2010230732250.56@tvgsbejvaqbjf.bet>
-References: <pull.753.git.1602600323973.gitgitgadget@gmail.com> <pull.753.v2.git.1603136142.gitgitgadget@gmail.com> <c61e560451c4d7f101a23acec69117ddac563330.1603136143.git.gitgitgadget@gmail.com> <20201023084827.GE4012156@coredump.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1750231AbgJWOAK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Oct 2020 10:00:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53224 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750228AbgJWOAJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Oct 2020 10:00:09 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76C4AC0613CE
+        for <git@vger.kernel.org>; Fri, 23 Oct 2020 07:00:09 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id a72so1580305wme.5
+        for <git@vger.kernel.org>; Fri, 23 Oct 2020 07:00:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=b1AT7RwLtpI62zICegS/eZm4EEVSMdhJUJLZ33iZV1I=;
+        b=lZXPi/8Fm7mxGet4pA6ajD6hEoVO1RuLx7kkRx3RCd9u8SaQtN/6vqtETngQ7X97Fu
+         E4OAZhjICFj6zLesm7lMilYZlK3PMiw+DA/1EBz8xCHsaQ1rrVjKrQKa6mLWCDYUBbl2
+         iEUuuuuRkLUDUUTn7C5JWA6KSuerc3MCbIno1hJuEAtvcQlxiGfBo34ytISA46xmvMGR
+         tNhr4kW4wkLfnB3jFRcFYKDwVU70wkyo6Gt5KWtRhlEtSAXtRGBwQe8ubBIhw0vEUhXM
+         2pqbFoplSfG2DF0iANURgJ+RRiKMB0T7VDtHP8D4bKVesgzVAA1q8rn0k8PGQpFOVCih
+         TXBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=b1AT7RwLtpI62zICegS/eZm4EEVSMdhJUJLZ33iZV1I=;
+        b=jOXwmGuygI+ItkLgiYjRJBQG1rcQX962OmLXxZX4boJR9r8ViwK5Rk1uE2PAsTIfG1
+         fVks3QYet8K3OYCaPPP1O630/CKge4llT1KsvtqYcofeEhNvrpHgj7UhcXx6qot3xpIx
+         nDKghxIp6YiKUu6rt3iQl5WhTonO6v+cU/IJeJsbOtYfpU2OBO02EgNELFf/g6hnGfSm
+         W/DV+EGWaE1gLQY4w5+qtGQBCp0ekoOu76SlTTr4DyVVItPnHVJMTkv46eo8iAa0Qr82
+         3v8sqVI+KX8uk08AHmaLU0OaTgGZUIQgkIWfHsMiA3d4sdCITc1Bv0bcJtS44ttX7pTY
+         yI9w==
+X-Gm-Message-State: AOAM53185gSFaGMsOpEM5RZVGSSjWmhpDAC6ZZqVS28yTTPWufjWqRXe
+        8IDt8NAQxA7+hBH/EenyfX9XOrc7Ao0=
+X-Google-Smtp-Source: ABdhPJzozOaRUUkbH9ntKBlFQCgN0ZYv0E01XZfsaYhib+x9rXwDAJmNaMeUDq7laYJu6xt3+6UZfg==
+X-Received: by 2002:a1c:20ce:: with SMTP id g197mr2459833wmg.18.1603461607846;
+        Fri, 23 Oct 2020 07:00:07 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d20sm3889552wra.38.2020.10.23.07.00.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 Oct 2020 07:00:07 -0700 (PDT)
+Message-Id: <pull.758.v2.git.1603461606.gitgitgadget@gmail.com>
+In-Reply-To: <pull.758.git.1603135902.gitgitgadget@gmail.com>
+References: <pull.758.git.1603135902.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 23 Oct 2020 13:59:57 +0000
+Subject: [PATCH v2 0/9] Prepare for changing the default branch name main (last manual part)
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:rpSa20mq/yaO0p3dDeQgVpB37TJZ6iv6t+fEPNvnOKn/gGd9mNl
- hNrbPR8zuvtDdcMYG9aNjRsBcOFj0LRYlrPEtl8mlcs0Ce0NZx9wi/NpXiaD5llNA1XReTV
- YoQ5qxiJQE5+/0ltvc606kptZxbHsiHUnbCTWQXoDNRDeVKx+8nIdRe56OKOyEjj+4Lejne
- PH+BU4ukF/r2Dh29u9d2w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:OSRS2xcJeBo=:7wTBw6rxPZSeo/jyKW0xpi
- 1hEeozPI6ZHaqujj2YkEspcOQVP3TiLorkV1ERzDlvAqPiAZ6MZGTez+qdL5crsrDrzY/ybgl
- dqceg0eVcruY3/Wr9FBorXSqHr3vYsu5L9SaFYmUURpQMS5/Hh42E4Tu5ly8Oo2MPsQJVpA2a
- +9vxM2Y4i71d4OiATgot9OiQ7PnbCXsZ6t4vmh41+en6Yv/GKHwNGl3Ecv/vn5z88NzjasEgp
- 7yX73u7iJip8BvtuO//oNKAma58ySydcGGvO5CDGcpTZTd76EIoYL+A/NWIXQMJMq5GQnDDDz
- 71FKdA4mUo2YHGq7LrmOacrOlZGT29mP915UKUjqwLZ0GQw7IkW6B/qazHv4UUfQUzIQEePvy
- 0L0F/uUAPUGEYYISw3ENsjoXTxBNwXkrMhqNYIsmDxbNFOjUAhA/VndmRVzyPGlM7IoPk2Xi6
- mFK9vaU41RjXOX3KISzgwJTUHcfDSilWzYDTGTepGlxTSu6MXCvWFeS1QgW/ZEmESnLq44Lt9
- CgQOnXVNay4mOjpelwrdSHRAI0jiOTv0LlK27fFfQ8uYGcgOpwJ2QLR7o/EGL1N1K9InD9C4x
- USzKuudCo1iEMpzfhQppY66pulR98j8IMry834tlhrpHmrHrJMuTW5m8e7XXayfWm+xmnv/y+
- lYGimRGzxaTnSPbpfQ210x0gISriNmrXpbDxBzALSVWPQD/TrBsSivNqJLPrUTv1aEGN0I2sW
- VQmASt82TwxSnVub8J2+yjUKGdoB4TAA3fwMGgWPjb5T80lYFrQFejwNHXUr5tm2IxjpbPzw1
- Z+3SnqjVwkoQgViM/xRI8Nfm2cvWN/6F2+M9pRRwa5rKxJOywyHx3mmGRjPiDf+kLpRHVOqDs
- IKC4qa5RbpD6UcgcN0fBAeOsa4buIzXuxvHGYo1jk=
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+In preparation for changing the default of init.defaultBranch to main, here
+are a couple of manual adjustments that cannot be automated (i.e., these
+adjustments are not mere search-and-replaces).
 
-On Fri, 23 Oct 2020, Jeff King wrote:
+This patch series is based on js/default-branch-name-part-3, and is part of
+the larger effort tracked at https://github.com/gitgitgadget/git/pull/655.
 
-> On Mon, Oct 19, 2020 at 07:35:42PM +0000, Johannes Schindelin via GitGit=
-Gadget wrote:
->
-> > diff --git a/pkt-line.c b/pkt-line.c
-> > index 657a702927..f72048f623 100644
-> > --- a/pkt-line.c
-> > +++ b/pkt-line.c
-> > @@ -461,8 +461,10 @@ int recv_sideband(const char *me, int in_stream, =
-int out)
-> >  	enum sideband_type sideband_type;
-> >
-> >  	while (1) {
-> > -		len =3D packet_read(in_stream, NULL, NULL, buf, LARGE_PACKET_MAX,
-> > -				  0);
-> > +		int status =3D packet_read_with_status(in_stream, NULL, NULL, buf,
-> > +						     LARGE_PACKET_MAX, &len, 0);
-> > +		if (!len && status =3D=3D PACKET_READ_NORMAL)
-> > +			BUG("missing band designator");
-> >  		if (!demultiplex_sideband(me, buf, len, 0, &scratch,
-> >  					  &sideband_type))
->
-> I also wonder if this status-check should be pushed down into
-> demultiplex_sideband() by passing "status",
+The next patch series will be largely automated search-and-replaces;
+Obviously, the search-and-replace was the easy part, the manual inspection
+whether the changes are actually correct was much more involved.
 
-I tried that, but as mentioned in the commit message, fbd76cd450
-(sideband: reverse its dependency on pkt-line, 2019-01-16) went out of its
-way to _stop_ the code inside `demultiplex_sideband()` from relying on
-anything in `pkt-line.h`. And that `PACKET_READ_NORMAL` and
-`PACKET_READ_EOF` _is_ from `pkt-line.h`.
+What to expect next, after this patch series? Essentially, there is the
+large patch series that adjusts the entire test suite, with two patch series
+extracted from that effort: t5411 and t5515 simply require too large
+patches, and will therefore be presented as the next patch series after this
+one.
 
-Ciao,
-Dscho
+Changes since v1:
 
-> for two reasons:
->
->   1. So we don't have to repeat it (though it isn't that big)
->
->   2. The other half of this weirdness is that if we get an early EOF,
->      we'll hit the "missing sideband designator" die() message. But
->      that's not really what happened; we probably got a network hangup.
->      And we could distinguish that case by checking for status =3D=3D
->      PACKET_READ_EOF and provide a better message.
->
-> Something like this (completely untested):
->
-> diff --git a/sideband.c b/sideband.c
-> index 0a60662fa6..6ad15ed581 100644
-> --- a/sideband.c
-> +++ b/sideband.c
-> @@ -115,6 +115,7 @@ static void maybe_colorize_sideband(struct strbuf *d=
-est, const char *src, int n)
->  #define DUMB_SUFFIX "        "
->
->  int demultiplex_sideband(const char *me, char *buf, int len,
-> +			 enum packet_read_status status,
->  			 int die_on_error,
->  			 struct strbuf *scratch,
->  			 enum sideband_type *sideband_type)
-> @@ -130,17 +131,29 @@ int demultiplex_sideband(const char *me, char *buf=
-, int len,
->  			suffix =3D DUMB_SUFFIX;
->  	}
->
-> -	if (len =3D=3D 0) {
-> -		*sideband_type =3D SIDEBAND_FLUSH;
-> -		goto cleanup;
-> -	}
-> -	if (len < 1) {
-> +	if (status =3D=3D PACKET_READ_EOF) {
->  		strbuf_addf(scratch,
-> -			    "%s%s: protocol error: no band designator",
-> +			    "%s%s: protocol error: eof while reading packet",
->  			    scratch->len ? "\n" : "", me);
->  		*sideband_type =3D SIDEBAND_PROTOCOL_ERROR;
->  		goto cleanup;
->  	}
-> +
-> +	if (len < 0)
-> +		BUG("negative length on non-eof packet read");
-> +
-> +	if (len =3D=3D 0) {
-> +		if (status =3D=3D PACKET_READ_NORMAL) {
-> +			strbuf_addf(scratch,
-> +				    "%s%s protocol error: no band designator",
-> +				    scratch->len ? "\n" : "", me);
-> +			*sideband_type =3D SIDEBAND_PROTOCOL_ERROR;
-> +		} else {
-> +			*sideband_type =3D SIDEBAND_FLUSH;
-> +		}
-> +		goto cleanup;
-> +	}
-> +
->  	band =3D buf[0] & 0xff;
->  	buf[len] =3D '\0';
->  	len--;
->
+ * The t4013 patch was moved out of this patch series, to be re-submitted at
+   a later date, to avoid clashing with other patches in seen.
+ * The commit message of 'fmt-merge-msg: also suppress "into main" by
+   default' was adjusted to mention that we do the same for main as we do
+   for master.
+ * The t5703 patch now uses rain instead of none, to be closer to the
+   default branch name.
+ * The glob in t6200 was tightened to avoid matching maint.
+ * The commit message of 't3200: prepare for main being shorter than master'
+   stopped talking about main2 (which itself was a left-over from a previous
+   iteration of a previous patch series).
+
+Johannes Schindelin (9):
+  fmt-merge-msg: also suppress "into main" by default
+  t9801: use `--` in preparation for default branch rename
+  tests: start moving to a different default main branch name
+  t6200: adjust suppression pattern to also match "main"
+  t5703: adjust a test case for the upcoming default branch name
+  t3200: prepare for `main` being shorter than `master`
+  t9902: prepare a test for the upcoming default branch name
+  tests: prepare aligned mentions of the default branch name
+  t1400: prepare for `main` being default branch name
+
+ fmt-merge-msg.c                    |  4 +-
+ refs.c                             |  5 ++-
+ t/lib-submodule-update.sh          |  2 +-
+ t/t0001-init.sh                    | 13 ++++--
+ t/t1400-update-ref.sh              | 10 ++---
+ t/t3200-branch.sh                  | 16 +++----
+ t/t3201-branch-contains.sh         |  8 ++--
+ t/t3203-branch-output.sh           |  4 +-
+ t/t3205-branch-color.sh            |  8 ++--
+ t/t5505-remote.sh                  | 30 ++++++-------
+ t/t5510-fetch.sh                   |  8 ++--
+ t/t5526-fetch-submodules.sh        | 70 +++++++++++++++---------------
+ t/t5606-clone-options.sh           |  3 ++
+ t/t5703-upload-pack-ref-in-want.sh |  6 +--
+ t/t6200-fmt-merge-msg.sh           |  2 +-
+ t/t6302-for-each-ref-filter.sh     | 24 +++++-----
+ t/t9801-git-p4-branch.sh           | 12 ++---
+ t/t9902-completion.sh              |  6 +--
+ t/test-lib.sh                      |  7 +++
+ 19 files changed, 130 insertions(+), 108 deletions(-)
+
+
+base-commit: 538228ed23a1d5e17e89bb17086d4dda51325bd8
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-758%2Fdscho%2Fprepare-for-main-branch-manual-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-758/dscho/prepare-for-main-branch-manual-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/758
+
+Range-diff vs v1:
+
+  1:  cf950c6f6a !  1:  bd2c72a348 fmt-merge-msg: also suppress "into main" by default
+     @@ Commit message
+          fmt-merge-msg: also suppress "into main" by default
+      
+          In preparation for changing the default branch name to `main`, let's
+     -    skip the suffix "into main" in merge commit messages.
+     +    skip the suffix "into main" in merge commit messages, the same way that
+     +    "into master" has been skipped by default.
+      
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+  2:  5849eda331 =  2:  e819084eb3 t9801: use `--` in preparation for default branch rename
+  3:  d9469202c2 =  3:  9c608c311e tests: start moving to a different default main branch name
+  4:  baeb01f706 <  -:  ---------- t4013: prepare for the new default branch name "main"
+  5:  7860d8d7df !  4:  9bd0a89a79 t6200: adjust suppression pattern to also match "main"
+     @@ t/t6200-fmt-merge-msg.sh: test_expect_success 'merge.suppressDest configuration'
+       	grep -e "Merge branch .side. into master$" actual &&
+       
+      -	git -c merge.suppressDest="ma??er" fmt-merge-msg <.git/FETCH_HEAD >full.3 &&
+     -+	git -c merge.suppressDest="ma*" fmt-merge-msg <.git/FETCH_HEAD >full.3 &&
+     ++	git -c merge.suppressDest="ma?*[rn]" fmt-merge-msg <.git/FETCH_HEAD >full.3 &&
+       	head -n1 full.3 >actual &&
+       	grep -e "Merge branch .side." actual &&
+       	! grep -e " into master$" actual
+  6:  0d2511d18f !  5:  b557ea5ac0 t5703: adjust a test case for the upcoming default branch name
+     @@ t/t5703-upload-pack-ref-in-want.sh: test_expect_success 'server is initially beh
+       	rm -rf local &&
+       	cp -r "$LOCAL_PRISTINE" local &&
+      -	echo "s/master/raster/" >"$HTTPD_ROOT_PATH/one-time-perl" &&
+     -+	echo "s/main/none/" >"$HTTPD_ROOT_PATH/one-time-perl" &&
+     ++	echo "s/main/rain/" >"$HTTPD_ROOT_PATH/one-time-perl" &&
+       	test_must_fail git -C local fetch 2>err &&
+       
+      -	test_i18ngrep "fatal: remote error: unknown ref refs/heads/raster" err
+     -+	test_i18ngrep "fatal: remote error: unknown ref refs/heads/none" err
+     ++	test_i18ngrep "fatal: remote error: unknown ref refs/heads/rain" err
+       '
+       
+       # DO NOT add non-httpd-specific tests here, because the last part of this
+  7:  e1740bb7d7 !  6:  959a770c23 t3200: prepare for `main` being shorter than `master`
+     @@ Commit message
+      
+          In the test case adjusted by this patch, we want to cut just after the
+          longest shown ref name. Since `main` is shorter than `master`, we need
+     -    to decrease the number of characters. Since `main2` is shown, too, and
+     +    to decrease the number of characters. Since `topic` is shown, too, and
+          since that is only one character shorter than `master`, we decrement the
+     -    length by one.
+     +    length by one instead of two.
+      
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+  8:  1641d1950d =  7:  8db960009d t9902: prepare a test for the upcoming default branch name
+  9:  5c29a89d88 =  8:  d15e39bb73 tests: prepare aligned mentions of the default branch name
+ 10:  66365bce55 =  9:  e542010fdd t1400: prepare for `main` being default branch name
+
+-- 
+gitgitgadget
