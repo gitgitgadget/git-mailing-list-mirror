@@ -2,148 +2,122 @@ Return-Path: <SRS0=cWhr=D6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8F39C4363A
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 17:36:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 336E3C4363A
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 17:40:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6AA5620EDD
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 17:36:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C954A21527
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 17:40:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="L0FaFCuX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GfcTiykv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753589AbgJWRgg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Oct 2020 13:36:36 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53881 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753585AbgJWRgg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Oct 2020 13:36:36 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 321E9F18F2;
-        Fri, 23 Oct 2020 13:36:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=pkiOcEOezjk9
-        OyOw9vPVa6NOmRY=; b=L0FaFCuXIhj1N34/B0wcJSdVbufZ5S4Nzx/okobGXH7d
-        8ldEcNSonf6NaOrSll2RRqgyo4Zqr4wl30DQHS6cEX0B3kYZXm/6jSQrTqki+4Re
-        nUylFBY3XHNURAz9NRyno/T+mYjfF9e+D+4lJ/1D062ytkgH8wFnSsWJS3QtJzI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ewDBJ9
-        Ut862sx8iDDNzchOtoQCK32un1rIGdBkZmUqNtt6QsT8a7bFqO2X6/MK4z8V3QzS
-        3WAWDVv73fyS1e04GdtY4SxBqIUUbPh5d8oZ8w3J95Um9FJ3cvYC6uzoTSbHn+2v
-        jua+uouZzj2dHS4l11tkn9fnNorBdgFiQEomU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2A127F18F1;
-        Fri, 23 Oct 2020 13:36:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 56AABF18F0;
-        Fri, 23 Oct 2020 13:36:28 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Han-Wen Nienhuys <hanwen@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 05/13] reftable: utility functions
-References: <4190da597e65bce072fa3c37c9410a56def4b489.1601568663.git.gitgitgadget@gmail.com>
-        <20201008014855.1416580-1-jonathantanmy@google.com>
-        <CAFQ2z_MRzz41x0Osvf6unvQ4Bk-RsA9NxbWZWpfwwJ2D=4Pv7A@mail.gmail.com>
-        <873625i9tc.fsf@evledraar.gmail.com>
-Date:   Fri, 23 Oct 2020 10:36:26 -0700
-In-Reply-To: <873625i9tc.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Fri, 23 Oct 2020 11:13:51 +0200")
-Message-ID: <xmqqlffwhmjp.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1753668AbgJWRkk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Oct 2020 13:40:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59548 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S462038AbgJWRkk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Oct 2020 13:40:40 -0400
+Received: from mail-oo1-xc43.google.com (mail-oo1-xc43.google.com [IPv6:2607:f8b0:4864:20::c43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29001C0613CE
+        for <git@vger.kernel.org>; Fri, 23 Oct 2020 10:40:40 -0700 (PDT)
+Received: by mail-oo1-xc43.google.com with SMTP id j6so585919oot.3
+        for <git@vger.kernel.org>; Fri, 23 Oct 2020 10:40:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=zYuKDdC6fJf36mARsm7uTUkOLMPL8ye9TGtboHZ4vP0=;
+        b=GfcTiykvNwy3kGnZgE3+E2QqvJL5lgKcffz9AggKYod1085hG02uc4JMu+IrKcN5Ox
+         nTTg9mtpNofKga9b8E56V0bL3YvGjX+sAALppEb416DWCGXuG1OemQqSwu5Ud6Uv8yCl
+         EN3+aSbwNunZe195c2gHil/Hz1qRM+/fXtfBD8pRkUG5beqQrlTfxqkpjmfAwL9IhcUu
+         jwtWIQ3yOMkOpPi81MRDiBiU9LEaMPcJulSeDH2klEUpCf0Ao0JXxsrR8OgQ0rUArnTj
+         N+PBaSkWk7NKGqMlb4JbwWMc/Cc9TNC1xVaB3SCY5nxIkZ/946A+4A6TZ3OAbpDyG4MZ
+         rJPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=zYuKDdC6fJf36mARsm7uTUkOLMPL8ye9TGtboHZ4vP0=;
+        b=tV8eFkQb618lo4mWcRaZla/GmSq4hQL3xZDpGwvlJXedoTDtNbXnDabXjZD8+loK/U
+         Qa88p3h8fEZDELXoCcbxRq36Kisy9H7FVxw+uTduPtr301uLJH7oI7F6KvGJrjANGHi/
+         AmBMl7mUgiGezP9Ohn70kIbFR6m8KZAkjcdRreLPlF0Mfuhukb89phKkK0WmBfVx91rd
+         GmHw7bWizQyEyoMw4dnr4MxkR7dU5JN9R1OdR9P05rNn1Ab/fUMVGyUqsUkR2wcq3Xhm
+         i+J1X8yn1PnF2u5kntR30YLtNeMQM3C0DjquOHrU0xj29Wb54mDbEzAEtZ7Sl1j98lAy
+         CPhg==
+X-Gm-Message-State: AOAM533Znk88BLWH70JEGTB6I/FVBXf6+8NeseRdj0E5p5qpXERYe+Zm
+        atzdN55RGxbB1BkgTiJstCxmwRas9ZOeA12hK10TA2ericN0lw==
+X-Google-Smtp-Source: ABdhPJy06gDfT4k9eus/yzgwxY32NEjRgYVrPs73aWPVhTJQOI97tzNDK0ahokAfyPdhJCfsEh/gVBTiL2Z+KVTl7Po=
+X-Received: by 2002:a4a:b443:: with SMTP id h3mr2607779ooo.45.1603474839469;
+ Fri, 23 Oct 2020 10:40:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 47F7BC42-1556-11EB-BAA1-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <pull.769.git.1603468885.gitgitgadget@gmail.com> <9394d526f1425fcf6b8865b53b737ba81c11dd80.1603468885.git.gitgitgadget@gmail.com>
+In-Reply-To: <9394d526f1425fcf6b8865b53b737ba81c11dd80.1603468885.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 23 Oct 2020 10:40:28 -0700
+Message-ID: <CABPp-BEhjecB7_juP3cSuF7MUHKbPXqAxKgKstPZw2ezHXputw@mail.gmail.com>
+Subject: Re: [PATCH 2/9] merge tests: expect improved directory/file conflict
+ handling in ort
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-
-> It's not just about the number of lines, but things coming up in grep,
-> and now unique code really stands out (e.g. strbuf_add_void, should
-> probably be just added to the main strbuf.h if it's needed...), and of
-> course the cost of attention of eyeballing an already big series on the
-> ML & the churn every time we have updates.
-
-These are all valid concerns.
-
-> Overall I'm all for having this carved out in its own directory at a
-> cost of a bit more maintenance burden if it can be shared with libgit2 =
-&
-> be a standalone library.
-
-Do you mean by "this" the reftable stuff as a whole, or only the
-duplicated support library part?  If the latter is split out of what
-we import as our reftable/ directory, and stored in a separate
-directory that we do not have to import (because we have strbuf and
-other stuff) but other people may choose to use (because they may
-not have strbuf and other stuff), that may work.  Also, if the
-contents of reftable/ directory wants a pluggable allocator, the
-main code can be written to call reftable_malloc (or whatever), with
-a thin shim to interface with us (i.e. reftable_malloc() would be
-implemented as a thin wrapper around xmalloc() for us) which is
-stored in a separate directory just for us to interface with the
-main reftable library.  For libgit2, there will be a separate
-directory that uses a different implementation of reftable_malloc()
-that would let them plug their preferred allocator.  An arrangement
-like that might work.
-
-I do not offhand know if that kind of overhead is worth the trouble
-or if there are better ways, though.
-
-> I am concerned that it seems this code can't be maintained in git.git b=
-y
-> anyone not willing to sign a contract with Google.
-
-It can be maintained in git.git; the trouble comes when they want to
-update us.
-
-I however suspect that, as the primary intended audience, it is hard
-to imagine that the reftable library as a standalone project will be
-successful without going through the usual reviews and testing in
-git.git.  So even though there exists github.com/google/reftable
-repository, its contents may not matter very much in practice,
-unless they come here and beg for the change we make ourselves
-anyway.  Perhaps I am being naive.  I dunno.
-
-> I sent a tiny PR for
-> a typo fix at [1] and got directed to sign [2] before someone at Google
-> could look at it. I see brian raised this before in [3] but there wasn'=
-t
-> a reply to that point.
+On Fri, Oct 23, 2020 at 9:01 AM Elijah Newren via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> Is there some summary of how this part of integrating it is supposed to
-> work going forward?
-
-Yeah, thanks for raising a good point.  We definitely need to figure
-this part out.
-
-> At first glance that seems like a recipe for perma-forking this pretty
-> much from day one, i.e.:
+> From: Elijah Newren <newren@gmail.com>
 >
->  A. Upstream changes happen
->  B. We get a patch to the bundled library to this ML
->  =3D=3D> Google employees maintaining A can't even look at B
->  =3D=3D> Patch B can't be integrated into A
+> merge-recursive.c is built on the idea of running unpack_trees() and
+> then "doing minor touch-ups" to get the result.  Unfortunately,
+> unpack_trees() was run in an update-as-it-goes mode, leading
+> merge-recursive.c to follow suit and end up with an immediate evaluation
+> and fix-it-up-as-you-go design.  Some things like directory/file
+> conflicts are not well representable in the index data structure, and
+> required special extra code to handle.  But then when it was discovered
+> that rename/delete conflicts could also be involved in directory/file
+> conflicts, the special directory/file conflict handling code had to be
+> copied to the rename/delete codepath.  ...and then it had to be copied
+> for modify/delete, and for rename/rename(1to2) conflicts, ...and yet it
+> still missed some.  Further, when it was discovered that there were also
+> file/submodule conflicts and submodule/directory conflicts, we needed to
+> copy the special submodule handling code to all the special cases
+> throughout the codebase.
 >
-> 1. https://github.com/google/reftable/pull/2
-> 2. https://cla.developers.google.com/about/google-individual
-> 3. https://lore.kernel.org/git/20200512233741.GB6605@camp.crustytoothpa=
-ste.net/
+> And then it was discovered that our handling of directory/file conflicts
+> was suboptimal because it would create untracked files to store the
+> contents of the conflicting file, which would not be cleaned up if
+> someone were to run a 'git merge --abort' or 'git rebase --abort'.  It
+> was also difficult or scary to try to add or remove the index entries
+> corresponding to these files given the directory/file conflict in the
+> index.  But changing merge-recursive.c to handle these correctly was a
+> royal pain because there were so many sites in the code with similar but
+> not identical code for handling directory/file/submodule conflicts that
+> would all need to be updated.
+>
+> I have worked hard to push all directory/file/submodule conflict
+> handling in merge-ort through a single codepath, and avoid creating
+> untracked files for storing tracked content (it does record things at
+> alternate paths, but makes sure they have higher-order stages in the
+> index).
+>
+> Since updating merge-recursive is too much work and we don't want to
+> destabilize it, instead update the testsuite to have different
+> expectations for relevant directory/file/submodule conflict tests.
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+
+Perhaps I should also mention that these changes to directory/file
+conflict handling were discussed previously in the thread at
+https://lore.kernel.org/git/xmqqbmabcuhf.fsf@gitster-ct.c.googlers.com/.
+I just never got around to a complete implementation within
+merge-recursive.c, but did implement it in merge-ort.c
+
+I still haven't gotten around to fixing up git-mv and git-rm as
+suggested by Junio in that thread; but at least I've finally gotten
+the merge machinery side written...
