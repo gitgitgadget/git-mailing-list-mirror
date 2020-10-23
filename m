@@ -2,150 +2,162 @@ Return-Path: <SRS0=cWhr=D6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D544C55178
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 09:13:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BED1C55178
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 10:10:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3014124182
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 09:13:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9BED520874
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 10:10:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r6yEYZgg"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pi32d9KV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S461215AbgJWJN4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Oct 2020 05:13:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37010 "EHLO
+        id S461923AbgJWKKY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Oct 2020 06:10:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S461148AbgJWJN4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Oct 2020 05:13:56 -0400
-Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8A48C0613CE
-        for <git@vger.kernel.org>; Fri, 23 Oct 2020 02:13:55 -0700 (PDT)
-Received: by mail-ed1-x541.google.com with SMTP id bc23so847145edb.5
-        for <git@vger.kernel.org>; Fri, 23 Oct 2020 02:13:55 -0700 (PDT)
+        with ESMTP id S461863AbgJWKKW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Oct 2020 06:10:22 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0B76C0613CE
+        for <git@vger.kernel.org>; Fri, 23 Oct 2020 03:10:21 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id t9so1133520wrq.11
+        for <git@vger.kernel.org>; Fri, 23 Oct 2020 03:10:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=Av1wqLsNGVi/TRziXeIrRKokSpQSW8sp/ypvZS5jxT8=;
-        b=r6yEYZggCOfn+ItxiG8h+Sq408zUkfw42VDEQ6WVdkG/MJEJrKMcli7acPGuEgigBx
-         mHTmt3aBzVa+w5P1FWXqwHM+1lqNtsjr/3SktgOqUTw83EICasN8n50EsUKkrDth4pMD
-         /yD3iW+SDK85TWLkAL1ceFWyN32GB8LaOEO2q4wlikb0UZpTpDx0I0nABfMQxwR/KWvw
-         LVjbXUS/84Gd9Ue2YjYwxIGstAIQQNCSAHUyAYqBDUu5zD2g4Idv2rYJxjDmokC3o4E3
-         E81+/vI/dtov+zwGxjNW9VzvAc0yVlvv5YkFQlMJOfdxccZt3PexMDFVByIN/vOFEOvt
-         YQLQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=LqQHwbxwvjM+IZ0gntaQSbMAtfFcycs2fHN0tZ8KbUw=;
+        b=Pi32d9KV7f7B5uVY/fFbF1cOjAusXVzqaDfZHS5IR2Ar/xsG2iB+NB+J+KpjSNJi2P
+         /CZtUCyGL0eEU7xEQT3gujCMYXevcwJHwrZgc9wFXBml5kPMS6Wn5geLX/1HlzehDxUf
+         dKqouRmkgI17jWIDD4uUZLjUrjdjBheiANqB6k4ugF2nKZU8Rb09GTQma/uMm7dJus6B
+         AHglrPOpRWgXvL1Ff+3QjGoTu/1iu/5cW8WGMj9snfhvDlxciZ+Xaj+ZWD/oV9n7O9or
+         X5+MPqR6ezbW7cZTBysX4CCftkrrIttwA/92deXgkuZ8pcX7czmY+R72S8yBVnMqySZx
+         Dkcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=Av1wqLsNGVi/TRziXeIrRKokSpQSW8sp/ypvZS5jxT8=;
-        b=DlQO+R+o+gypPysCJ/igFoWGx1bSP2E96m5MMUCFgqx62skhGLu6/T1lbFP75PQdWO
-         QYs7TzJcBpflACBKH4NLxahc944/hYATUS+8K+AArBqe0NHPs1BhCCXRH0nziv2Q8Kpj
-         ipZKRM+swGQ7Qo7dmyiX1yHnlw1PxKrU+05XQA2IpmQTauIBWdxKgZGTbs770Bj4wh7b
-         8I/mjb0wzb8LKPHQtN/oobL5wt4ZogCPIybg2RBM2VjAWL+g374dy5Et7iMcHSRG4sDq
-         GKIs3LVhNFIsu83SzBF0yy+qVvN6zHrACcXKAuZZ3CZRDh1DRyvSYh7ZkKz29lAugQiV
-         vKCg==
-X-Gm-Message-State: AOAM531zpJ5cVNX51M5UpMMhlEHdDhfTJr30xO0rjedOBq4reit3JdoA
-        5RjLgn/YyQ+BZYB5ZgECa/M=
-X-Google-Smtp-Source: ABdhPJwU8/vyvV01kAVSZRDkdZO0FsA1eN37D87Pel3N+fZbY1d1RnejqzA3UpdIWO7KbqqYrHi0mw==
-X-Received: by 2002:a50:9519:: with SMTP id u25mr1306413eda.102.1603444434299;
-        Fri, 23 Oct 2020 02:13:54 -0700 (PDT)
-Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id se12sm462775ejb.37.2020.10.23.02.13.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2020 02:13:52 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 05/13] reftable: utility functions
-References: <4190da597e65bce072fa3c37c9410a56def4b489.1601568663.git.gitgitgadget@gmail.com> <20201008014855.1416580-1-jonathantanmy@google.com> <CAFQ2z_MRzz41x0Osvf6unvQ4Bk-RsA9NxbWZWpfwwJ2D=4Pv7A@mail.gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 26.3; mu4e 1.4.13
-In-reply-to: <CAFQ2z_MRzz41x0Osvf6unvQ4Bk-RsA9NxbWZWpfwwJ2D=4Pv7A@mail.gmail.com>
-Date:   Fri, 23 Oct 2020 11:13:51 +0200
-Message-ID: <873625i9tc.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=LqQHwbxwvjM+IZ0gntaQSbMAtfFcycs2fHN0tZ8KbUw=;
+        b=YVZrVHYfK017+hpdutrBhctdG8AeBVpamIIyzradbjYppLANVvagV+7SJUbObiW8zn
+         9upmc7RjBhRIpGTbC4aHv6aLYk6oIUd4DvHVZkRWt7QK+ESqVE+3uITqEK/GBKJYrMc/
+         WIVZxV8SRTlo1iYKoe+j1orw8as8MKNKBWonJM0mALD4fjxlxnMOMmcwJ+JL6JHODCW/
+         W5kNcxrEq2+AJOUQ6xeJl9BUE4j6Gecmprmw06qGRcVmBkGTeWZXoJJQ2s0k1N4f22oj
+         pLr6Yc4MSFIDJrgL+WhZbJzpV+22flX+vcXvX48zU4aAPeYR9yO7zQvGeP/b58GlzAEM
+         G7yg==
+X-Gm-Message-State: AOAM531NywnjFyVkwLP5psRswL7rqxUSX6to+vzgqEwVwioOsKIGj0k1
+        ealtbLP9aZucUfWOUjQyisO1cka8x+k=
+X-Google-Smtp-Source: ABdhPJyXQu7DN6tSrJR+nrRhlwxbnm1zWaUzaWH/KpigSXp5i5J5o6GweaM/mAyGI1z07zeVpJ6i2g==
+X-Received: by 2002:a5d:4cd1:: with SMTP id c17mr1816115wrt.109.1603447820060;
+        Fri, 23 Oct 2020 03:10:20 -0700 (PDT)
+Received: from [192.168.1.201] (13.45.90.146.dyn.plus.net. [146.90.45.13])
+        by smtp.googlemail.com with ESMTPSA id d30sm2422766wrc.19.2020.10.23.03.10.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 23 Oct 2020 03:10:19 -0700 (PDT)
+Subject: Re: [PATCH 1/3] t3436: check --committer-date-is-author-date result
+ more carefully
+To:     Jeff King <peff@peff.net>, VenomVendor <info@venomvendor.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+References: <20201023070747.GA2198273@coredump.intra.peff.net>
+ <20201023070843.GA2913115@coredump.intra.peff.net>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <845a14f1-5ce8-2c2f-a847-6d5d1550ba70@gmail.com>
+Date:   Fri, 23 Oct 2020 11:10:18 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20201023070843.GA2913115@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Peff
 
-On Sat, Oct 10 2020, Han-Wen Nienhuys wrote:
+Thanks for fixing this embarrassing mistake and strengthening the tests, 
+the first three patches look fine to me. We don't check the committer 
+name and email in t4150-am.sh which we probably should do (the rebase 
+tests were based on those) though that can wait as some of the rebase 
+tests are testing the am implementation.
 
-> On Thu, Oct 8, 2020 at 3:48 AM Jonathan Tan <jonathantanmy@google.com> wrote:
->>
->> > From: Han-Wen Nienhuys <hanwen@google.com>
->> >
->> > This commit provides basic utility classes for the reftable library.
->> >
->> > Since the reftable library must compile standalone, there may be some overlap
->> > with git-core utility functions.
->
->> I think duplicating things like strbuf is an unnecessary burden if Git
->> is to maintain this library. Something like "reftable will only import
->> git-compat-util.h and strbuf.h, and any project that wants to use
->> reftable must make sure that these functions and data structures are
->> available" would be more plausible.
->
-> Sure, but how do we ensure that the directory won't take on
-> dependencies beyond these headers? I am worried that I will be
-> involved in a tedious back & forth process to keep updates going into
-> libgit2 and/or also have to keep maintaining
-> github.com/google/reftable.
->
-> FWIW, the duplication is really tiny: according to
->
->  $ wc $(grep -l REFTABLE_STANDALONE *[ch])
->
-> it's just 431 lines of code.
+Thanks again
 
-Why import the dead code at all? If I add this to your update script:
+Phillip
 
-    # Not a general solution, but works for the specific code here.
-    perl -0777 -pi -e 's[(#ifndef REFTABLE_STANDALONE\n.*?\n#else\n).*?(?=\n#endif)][$1/* Removed upstream code for git.git import */]gs' reftable/system.h
-    perl -0777 -pi -e 's[(?<=#ifdef REFTABLE_STANDALONE\n).*?(?=\n#endif)][/* Removed upstream code for git.git import */]gs' reftable/strbuf.c reftable/compat.h
-    perl -0777 -pi -e 's[(?<=#ifdef REFTABLE_STANDALONE\n).*?(?=\n#else)][/* Removed upstream code for git.git import */]gs' reftable/compat.c reftable/strbuf.h
+On 23/10/2020 08:08, Jeff King wrote:
+> After running "rebase --committer-date-is-author-date", we confirm that
+> the committer date is the same as the author date. However, we don't
+> look at any other parts of the committer ident line to make sure we
+> didn't screw them up. And indeed, there are a few bugs here. Depending
+> on the rebase backend in use, we may accidentally use the author email
+> instead of the committer's, or even an empty string.
+> 
+> Let's teach our test_ctime_is_atime helper to check the committer name
+> and email, which reveals several failing tests.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>   t/t3436-rebase-more-options.sh | 14 +++++++-------
+>   1 file changed, 7 insertions(+), 7 deletions(-)
+> 
+> diff --git a/t/t3436-rebase-more-options.sh b/t/t3436-rebase-more-options.sh
+> index 996e82787e..6f2f49717b 100755
+> --- a/t/t3436-rebase-more-options.sh
+> +++ b/t/t3436-rebase-more-options.sh
+> @@ -65,31 +65,31 @@ test_expect_success '--ignore-whitespace is remembered when continuing' '
+>   '
+>   
+>   test_ctime_is_atime () {
+> -	git log $1 --format=%ai >authortime &&
+> -	git log $1 --format=%ci >committertime &&
+> +	git log $1 --format="$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> %ai" >authortime &&
+> +	git log $1 --format="%cn <%ce> %ci" >committertime &&
+>   	test_cmp authortime committertime
+>   }
+>   
+> -test_expect_success '--committer-date-is-author-date works with apply backend' '
+> +test_expect_failure '--committer-date-is-author-date works with apply backend' '
+>   	GIT_AUTHOR_DATE="@1234 +0300" git commit --amend --reset-author &&
+>   	git rebase --apply --committer-date-is-author-date HEAD^ &&
+>   	test_ctime_is_atime -1
+>   '
+>   
+> -test_expect_success '--committer-date-is-author-date works with merge backend' '
+> +test_expect_failure '--committer-date-is-author-date works with merge backend' '
+>   	GIT_AUTHOR_DATE="@1234 +0300" git commit --amend --reset-author &&
+>   	git rebase -m --committer-date-is-author-date HEAD^ &&
+>   	test_ctime_is_atime -1
+>   '
+>   
+> -test_expect_success '--committer-date-is-author-date works with rebase -r' '
+> +test_expect_failure '--committer-date-is-author-date works with rebase -r' '
+>   	git checkout side &&
+>   	GIT_AUTHOR_DATE="@1234 +0300" git merge --no-ff commit3 &&
+>   	git rebase -r --root --committer-date-is-author-date &&
+>   	test_ctime_is_atime
+>   '
+>   
+> -test_expect_success '--committer-date-is-author-date works when forking merge' '
+> +test_expect_failure '--committer-date-is-author-date works when forking merge' '
+>   	git checkout side &&
+>   	GIT_AUTHOR_DATE="@1234 +0300" git merge --no-ff commit3 &&
+>   	PATH="./test-bin:$PATH" git rebase -r --root --strategy=test \
+> @@ -145,7 +145,7 @@ test_expect_success '--reset-author-date works with rebase -r' '
+>   	test_atime_is_ignored
+>   '
+>   
+> -test_expect_success '--reset-author-date with --committer-date-is-author-date works' '
+> +test_expect_failure '--reset-author-date with --committer-date-is-author-date works' '
+>   	test_must_fail git rebase -m --committer-date-is-author-date \
+>   		--reset-author-date --onto commit2^^ commit2^ commit3 &&
+>   	git checkout --theirs foo &&
+> 
 
-It's now 157 lines instead of 431.
-
-I think doing that with a tiny bit more complexity in the update.sh
-script is a much lower maintenance burden.
-
-It's not just about the number of lines, but things coming up in grep,
-and now unique code really stands out (e.g. strbuf_add_void, should
-probably be just added to the main strbuf.h if it's needed...), and of
-course the cost of attention of eyeballing an already big series on the
-ML & the churn every time we have updates.
-
-Overall I'm all for having this carved out in its own directory at a
-cost of a bit more maintenance burden if it can be shared with libgit2 &
-be a standalone library.
-
-I am concerned that it seems this code can't be maintained in git.git by
-anyone not willing to sign a contract with Google. I sent a tiny PR for
-a typo fix at [1] and got directed to sign [2] before someone at Google
-could look at it. I see brian raised this before in [3] but there wasn't
-a reply to that point.
-
-Is there some summary of how this part of integrating it is supposed to
-work going forward?
-
-At first glance that seems like a recipe for perma-forking this pretty
-much from day one, i.e.:
-
- A. Upstream changes happen
- B. We get a patch to the bundled library to this ML
- ==> Google employees maintaining A can't even look at B
- ==> Patch B can't be integrated into A
-
-1. https://github.com/google/reftable/pull/2
-2. https://cla.developers.google.com/about/google-individual
-3. https://lore.kernel.org/git/20200512233741.GB6605@camp.crustytoothpaste.net/
