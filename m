@@ -2,229 +2,190 @@ Return-Path: <SRS0=cWhr=D6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBE4EC388F9
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 07:26:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A074FC388F9
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 07:45:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8E6C02177B
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 07:26:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4AEB02177B
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 07:45:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S374239AbgJWH0c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Oct 2020 03:26:32 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40210 "EHLO cloud.peff.net"
+        id S375813AbgJWHpM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Oct 2020 03:45:12 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40222 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S368666AbgJWH0c (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Oct 2020 03:26:32 -0400
-Received: (qmail 26594 invoked by uid 109); 23 Oct 2020 07:26:30 -0000
+        id S374437AbgJWHpL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Oct 2020 03:45:11 -0400
+Received: (qmail 26712 invoked by uid 109); 23 Oct 2020 07:45:11 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 23 Oct 2020 07:26:30 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 23 Oct 2020 07:45:11 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13626 invoked by uid 111); 23 Oct 2020 07:26:30 -0000
+Received: (qmail 14490 invoked by uid 111); 23 Oct 2020 07:45:11 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 23 Oct 2020 03:26:30 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 23 Oct 2020 03:45:11 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 23 Oct 2020 03:26:30 -0400
+Date:   Fri, 23 Oct 2020 03:45:10 -0400
 From:   Jeff King <peff@peff.net>
 To:     VenomVendor <info@venomvendor.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Subject: [PATCH 4/3] am, sequencer: stop parsing our own committer ident
-Message-ID: <20201023072630.GA2918369@coredump.intra.peff.net>
+Subject: Re: [PATCH 4/3] am, sequencer: stop parsing our own committer ident
+Message-ID: <20201023074510.GB2918369@coredump.intra.peff.net>
 References: <20201023070747.GA2198273@coredump.intra.peff.net>
  <20201023070939.GB2913115@coredump.intra.peff.net>
+ <20201023072630.GA2918369@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20201023070939.GB2913115@coredump.intra.peff.net>
+In-Reply-To: <20201023072630.GA2918369@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 23, 2020 at 03:09:39AM -0400, Jeff King wrote:
+On Fri, Oct 23, 2020 at 03:26:30AM -0400, Jeff King wrote:
 
-> Commit e8cbe2118a (am: stop exporting GIT_COMMITTER_DATE, 2020-08-17)
-> rewrote the code for setting the committer date to use fmt_ident(),
-> rather than setting an environment variable and letting commit_tree()
-> handle it. But it introduced two bugs:
-> 
->   - we use the author email string instead of the committer email
-> 
->   - when parsing the committer ident, we used the wrong variable to
->     compute the length of the email, resulting in it always being a
->     zero-length string
+> By the way, I wondered why we needed to do this parsing at all. The
+> patch below does this in a much simpler way. It's a little bit ugly, I
+> think, because we have to call getenv() ourselves. But that's the way
+> fmt_ident() has always worked. We could probably improve that now that
+> it takes a whose_ident flag (before that, it had no idea if we wanted
+> author or committer ident).
 
-By the way, I wondered why we needed to do this parsing at all. The
-patch below does this in a much simpler way. It's a little bit ugly, I
-think, because we have to call getenv() ourselves. But that's the way
-fmt_ident() has always worked. We could probably improve that now that
-it takes a whose_ident flag (before that, it had no idea if we wanted
-author or committer ident).
+I took a brief look at refactoring fmt_ident() to auto-fill from the
+environment variables (patch below). It's mostly sensible for
+name/email, because callers pass either the environment variables or
+some custom-provided value. But for the date, we sometimes pass NULL to
+mean "use the current time, even if $GIT_*_DATE is set". I'm not 100%
+sure that isn't a bug, though.
 
-This is on top of the fixes (but we'd perhaps just want to do those on
-'maint' as the minimal fix).
-
--- >8 --
-Subject: [PATCH 4/3] am, sequencer: stop parsing our own committer ident
-
-For the --committer-date-is-author-date option of git-am and git-rebase,
-we format the committer ident, then re-parse it to find the name and
-email, and then feed those back to fmt_ident().
-
-We can simplify this by handling it all at the time of the fmt_ident()
-call. We pass in the appropriate getenv() results, and if they're not
-present, then our WANT_COMMITTER_IDENT flag tells fmt_ident() to fill in
-the appropriate value from the config. Which is exactly what
-git_committer_ident() was doing under the hood.
-
-Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/am.c | 19 +++----------------
- sequencer.c  | 28 ++--------------------------
- sequencer.h  |  2 --
- 3 files changed, 5 insertions(+), 44 deletions(-)
+ builtin/am.c |  4 +--
+ ident.c      | 47 ++++++++++++++++-------------------
+ sequencer.c  |  4 +--
+ 3 files changed, 23 insertions(+), 32 deletions(-)
 
 diff --git a/builtin/am.c b/builtin/am.c
-index 4949535a7f..52206bc56b 100644
+index 52206bc56b..9f0d1b4859 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -98,8 +98,6 @@ struct am_state {
- 	char *author_name;
- 	char *author_email;
- 	char *author_date;
--	char *committer_name;
--	char *committer_email;
- 	char *msg;
- 	size_t msg_len;
- 
-@@ -132,8 +130,6 @@ struct am_state {
-  */
- static void am_state_init(struct am_state *state)
- {
--	const char *committer;
--	struct ident_split id;
- 	int gpgsign;
- 
- 	memset(state, 0, sizeof(*state));
-@@ -154,14 +150,6 @@ static void am_state_init(struct am_state *state)
- 
- 	if (!git_config_get_bool("commit.gpgsign", &gpgsign))
- 		state->sign_commit = gpgsign ? "" : NULL;
--
--	committer = git_committer_info(IDENT_STRICT);
--	if (split_ident_line(&id, committer, strlen(committer)) < 0)
--		die(_("invalid committer: %s"), committer);
--	state->committer_name =
--		xmemdupz(id.name_begin, id.name_end - id.name_begin);
--	state->committer_email =
--		xmemdupz(id.mail_begin, id.mail_end - id.mail_begin);
- }
- 
- /**
-@@ -173,8 +161,6 @@ static void am_state_release(struct am_state *state)
- 	free(state->author_name);
- 	free(state->author_email);
- 	free(state->author_date);
--	free(state->committer_name);
--	free(state->committer_email);
- 	free(state->msg);
- 	strvec_clear(&state->git_apply_opts);
- }
-@@ -1594,8 +1580,9 @@ static void do_commit(const struct am_state *state)
+@@ -1580,9 +1580,7 @@ static void do_commit(const struct am_state *state)
  			IDENT_STRICT);
  
  	if (state->committer_date_is_author_date)
--		committer = fmt_ident(state->committer_name,
--				      state->committer_email, WANT_COMMITTER_IDENT,
-+		committer = fmt_ident(getenv("GIT_COMMITTER_NAME"),
-+				      getenv("GIT_COMMITTER_EMAIL"),
-+				      WANT_COMMITTER_IDENT,
+-		committer = fmt_ident(getenv("GIT_COMMITTER_NAME"),
+-				      getenv("GIT_COMMITTER_EMAIL"),
+-				      WANT_COMMITTER_IDENT,
++		committer = fmt_ident(NULL, NULL, WANT_COMMITTER_IDENT,
  				      state->ignore_date ? NULL
  							 : state->author_date,
  				      IDENT_STRICT);
+diff --git a/ident.c b/ident.c
+index 6aba4b5cb6..7743c1ed05 100644
+--- a/ident.c
++++ b/ident.c
+@@ -384,6 +384,12 @@ const char *fmt_ident(const char *name, const char *email,
+ 	struct strbuf *ident = &ident_pool[index];
+ 	index = (index + 1) % ARRAY_SIZE(ident_pool);
+ 
++	if (!email) {
++		if (whose_ident == WANT_AUTHOR_IDENT)
++			email = getenv("GIT_AUTHOR_EMAIL");
++		else if (whose_ident == WANT_COMMITTER_IDENT)
++			email = getenv("GIT_COMMITTER_EMAIL");
++	}
+ 	if (!email) {
+ 		if (whose_ident == WANT_AUTHOR_IDENT && git_author_email.len)
+ 			email = git_author_email.buf;
+@@ -405,6 +411,12 @@ const char *fmt_ident(const char *name, const char *email,
+ 
+ 	if (want_name) {
+ 		int using_default = 0;
++		if (!name) {
++			if (whose_ident == WANT_AUTHOR_IDENT)
++				name = getenv("GIT_AUTHOR_NAME");
++			else if (whose_ident == WANT_COMMITTER_IDENT)
++				name = getenv("GIT_COMMITTER_NAME");
++		}
+ 		if (!name) {
+ 			if (whose_ident == WANT_AUTHOR_IDENT && git_author_name.len)
+ 				name = git_author_name.buf;
+@@ -449,6 +461,12 @@ const char *fmt_ident(const char *name, const char *email,
+ 		strbuf_addch(ident, '>');
+ 	if (want_date) {
+ 		strbuf_addch(ident, ' ');
++		if (!date_str) {
++			if (whose_ident == WANT_AUTHOR_IDENT)
++				date_str = getenv("GIT_AUTHOR_DATE");
++			else if (whose_ident == WANT_COMMITTER_IDENT)
++				date_str = getenv("GIT_COMMITTER_DATE");
++		}
+ 		if (date_str && date_str[0]) {
+ 			if (parse_date(date_str, ident) < 0)
+ 				die(_("invalid date format: %s"), date_str);
+@@ -462,22 +480,7 @@ const char *fmt_ident(const char *name, const char *email,
+ 
+ const char *fmt_name(enum want_ident whose_ident)
+ {
+-	char *name = NULL;
+-	char *email = NULL;
+-
+-	switch (whose_ident) {
+-	case WANT_BLANK_IDENT:
+-		break;
+-	case WANT_AUTHOR_IDENT:
+-		name = getenv("GIT_AUTHOR_NAME");
+-		email = getenv("GIT_AUTHOR_EMAIL");
+-		break;
+-	case WANT_COMMITTER_IDENT:
+-		name = getenv("GIT_COMMITTER_NAME");
+-		email = getenv("GIT_COMMITTER_EMAIL");
+-		break;
+-	}
+-	return fmt_ident(name, email, whose_ident, NULL,
++	return fmt_ident(NULL, NULL, whose_ident, NULL,
+ 			IDENT_STRICT | IDENT_NO_DATE);
+ }
+ 
+@@ -487,11 +490,7 @@ const char *git_author_info(int flag)
+ 		author_ident_explicitly_given |= IDENT_NAME_GIVEN;
+ 	if (getenv("GIT_AUTHOR_EMAIL"))
+ 		author_ident_explicitly_given |= IDENT_MAIL_GIVEN;
+-	return fmt_ident(getenv("GIT_AUTHOR_NAME"),
+-			 getenv("GIT_AUTHOR_EMAIL"),
+-			 WANT_AUTHOR_IDENT,
+-			 getenv("GIT_AUTHOR_DATE"),
+-			 flag);
++	return fmt_ident(NULL, NULL, WANT_AUTHOR_IDENT, NULL, flag);
+ }
+ 
+ const char *git_committer_info(int flag)
+@@ -500,11 +499,7 @@ const char *git_committer_info(int flag)
+ 		committer_ident_explicitly_given |= IDENT_NAME_GIVEN;
+ 	if (getenv("GIT_COMMITTER_EMAIL"))
+ 		committer_ident_explicitly_given |= IDENT_MAIL_GIVEN;
+-	return fmt_ident(getenv("GIT_COMMITTER_NAME"),
+-			 getenv("GIT_COMMITTER_EMAIL"),
+-			 WANT_COMMITTER_IDENT,
+-			 getenv("GIT_COMMITTER_DATE"),
+-			 flag);
++	return fmt_ident(NULL, NULL, WANT_COMMITTER_IDENT, NULL, flag);
+ }
+ 
+ static int ident_is_sufficient(int user_ident_explicitly_given)
 diff --git a/sequencer.c b/sequencer.c
-index d76cbded00..07321a7d95 100644
+index 07321a7d95..6a8a5c077b 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -314,8 +314,6 @@ int sequencer_remove_state(struct replay_opts *opts)
- 		}
- 	}
- 
--	free(opts->committer_name);
--	free(opts->committer_email);
- 	free(opts->gpg_sign);
- 	free(opts->strategy);
- 	for (i = 0; i < opts->xopts_nr; i++)
-@@ -1460,8 +1458,8 @@ static int try_to_commit(struct repository *r,
+@@ -1458,9 +1458,7 @@ static int try_to_commit(struct repository *r,
  		} else {
  			reset_ident_date();
  		}
--		committer = fmt_ident(opts->committer_name,
--				      opts->committer_email,
-+		committer = fmt_ident(getenv("GIT_COMMITTER_NAME"),
-+				      getenv("GIT_COMMITTER_EMAIL"),
- 				      WANT_COMMITTER_IDENT,
+-		committer = fmt_ident(getenv("GIT_COMMITTER_NAME"),
+-				      getenv("GIT_COMMITTER_EMAIL"),
+-				      WANT_COMMITTER_IDENT,
++		committer = fmt_ident(NULL, NULL, WANT_COMMITTER_IDENT,
  				      opts->ignore_date ? NULL : date.buf,
  				      IDENT_STRICT);
-@@ -4467,22 +4465,6 @@ static int commit_staged_changes(struct repository *r,
- 	return 0;
- }
- 
--static int init_committer(struct replay_opts *opts)
--{
--	struct ident_split id;
--	const char *committer;
--
--	committer = git_committer_info(IDENT_STRICT);
--	if (split_ident_line(&id, committer, strlen(committer)) < 0)
--		return error(_("invalid committer '%s'"), committer);
--	opts->committer_name =
--		xmemdupz(id.name_begin, id.name_end - id.name_begin);
--	opts->committer_email =
--		xmemdupz(id.mail_begin, id.mail_end - id.mail_begin);
--
--	return 0;
--}
--
- int sequencer_continue(struct repository *r, struct replay_opts *opts)
- {
- 	struct todo_list todo_list = TODO_LIST_INIT;
-@@ -4494,9 +4476,6 @@ int sequencer_continue(struct repository *r, struct replay_opts *opts)
- 	if (read_populate_opts(opts))
- 		return -1;
- 	if (is_rebase_i(opts)) {
--		if (opts->committer_date_is_author_date && init_committer(opts))
--			return -1;
--
- 		if ((res = read_populate_todo(r, &todo_list, opts)))
- 			goto release_todo_list;
- 
-@@ -5391,9 +5370,6 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
- 
- 	res = -1;
- 
--	if (opts->committer_date_is_author_date && init_committer(opts))
--		goto cleanup;
--
- 	if (checkout_onto(r, opts, onto_name, &oid, orig_head))
- 		goto cleanup;
- 
-diff --git a/sequencer.h b/sequencer.h
-index b2a501e445..f925e349c5 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -50,8 +50,6 @@ struct replay_opts {
- 
- 	int mainline;
- 
--	char *committer_name;
--	char *committer_email;
- 	char *gpg_sign;
- 	enum commit_msg_cleanup_mode default_msg_cleanup;
- 	int explicit_cleanup;
--- 
-2.29.0.583.g8e3ac41d8f
-
+ 		strbuf_release(&date);
