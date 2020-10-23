@@ -2,103 +2,133 @@ Return-Path: <SRS0=cWhr=D6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33716C388F9
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 17:29:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC49BC4363A
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 17:32:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AFD1B21527
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 17:29:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54E6A20EDD
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 17:32:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="w6hwfniz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dw6UHPuW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S464763AbgJWR3P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Oct 2020 13:29:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57782 "EHLO
+        id S461602AbgJWRc4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Oct 2020 13:32:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S465904AbgJWR3O (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Oct 2020 13:29:14 -0400
-Received: from mail-qv1-xf41.google.com (mail-qv1-xf41.google.com [IPv6:2607:f8b0:4864:20::f41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D712C0613CE
-        for <git@vger.kernel.org>; Fri, 23 Oct 2020 10:29:14 -0700 (PDT)
-Received: by mail-qv1-xf41.google.com with SMTP id de3so1066168qvb.5
-        for <git@vger.kernel.org>; Fri, 23 Oct 2020 10:29:14 -0700 (PDT)
+        with ESMTP id S461541AbgJWRc4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Oct 2020 13:32:56 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2138AC0613CE
+        for <git@vger.kernel.org>; Fri, 23 Oct 2020 10:32:54 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id j7so2914986wrt.9
+        for <git@vger.kernel.org>; Fri, 23 Oct 2020 10:32:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=hQW++4o/AICdEVu7u8osm8epthW7ZriE3uNiO5TUUGY=;
-        b=w6hwfnizddPCtkH1nu5c+UEimnkqHLrBfsjzG2/y2QQnU+oqHYpdb4CQiq/qUT4PjT
-         5S4guZ568MK+kb1DSCa5jDiBdioR3OS65W2CnFI+GtKa5HgivaPv1Pjkjnndf+SS1E5h
-         96wDSig3YrgiPOJ3tI8geqEHsGLqbqaVbU4tGVJ5QcH27RvMyLD1WkRhIyf9KtGL0lsN
-         XFKOQ+5J4HU0Ueyju+fa4UbeW59aVrBCu9IsasvAuxyVIkqhWWqteIN3O6LKaTlaWFGq
-         ldBE9XCI8jkie9clzWoue5sp/lham3vLrY/jy2Xk5M5RNZ3kvUe8MeRsuuX0rxD7WCjx
-         duOg==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=3k+q4zb652o8tirgYjP5kSwj+KlVf3mVWsGoQnJiIgQ=;
+        b=dw6UHPuWaMT4yQcysO3FcuiQl/4ShCLaPXMz2q4no37H1/c9jWmxFlEVrQ7/T5wPHP
+         Yqpwlh5Afv3fsdC6Nxamzfbc3mrt7I+HsoNGS0VlquX6McSF2BHHr/j21qtf6fu8LhzM
+         rHPibIAP25JytMJIG//HzbBu/35bjJg+REf0meyjIK34EYPyVzwJjKpf9P49Re9uLdTi
+         KpkxI6njk2Fj/lI1CtJJZbOOpnXqxROjQOJuqeCr5uJ5ptoVF+60PDmkneWIjEzt4IO0
+         SDloJcF8Yl1grPWw8fkoMF7IJgv1i8uDbr3cZr+MsG3sOjdQ8tDC/j4PzaxvG/xS6dZe
+         W19A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=hQW++4o/AICdEVu7u8osm8epthW7ZriE3uNiO5TUUGY=;
-        b=ABZFfqFRtpz+Vjf6cqW+wG/iZSr0fBNVpNhCIV1bdv2Q+dPQSPbmEgFIKEiAZDpAe2
-         iPfLoaNfPtV+vJO+QuD9vlZH01NO+lOdfB75u/PkNejIpjTzhFHJwL/mh04Xz5swJ/mJ
-         RjgoTTuybjgNGdY2fAfMv5M/eNXEBnXe8bA9MTlSbKJTxFkrGGbiFghJht6OFw35Jv4k
-         tI2NboZj5zOxLI/NmbHzSo/wWm3LKNBOLdX4OmFpMyLvtajUlxJVXxmudntGf4OJ+wWF
-         OyQymd9L7BheF7LTwTSJL4NNqJhIWLxgg3IelZY1YmTao++k742XSCkKnk87lU/5i9zx
-         qNOg==
-X-Gm-Message-State: AOAM532QuggWct6GaEh6IZHoP0MMWJM28pp+x7NzBhaEei5s2BnqB2Rs
-        J2PDSAV6i9kK1unMxc4sdDyTPYilXI2FUIxw
-X-Google-Smtp-Source: ABdhPJwGf9ygiZz6Dis859Q3W6I+vC7Tv2wQLaK/hKTo0POu/jx176ephzsM735DczZiKidPjJZgzg==
-X-Received: by 2002:a0c:8644:: with SMTP id p62mr100380qva.30.1603474153704;
-        Fri, 23 Oct 2020 10:29:13 -0700 (PDT)
-Received: from localhost ([2605:9480:22e:ff10:eda0:8d26:51d2:6e87])
-        by smtp.gmail.com with ESMTPSA id h141sm1168536qke.41.2020.10.23.10.29.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2020 10:29:13 -0700 (PDT)
-Date:   Fri, 23 Oct 2020 13:29:10 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=3k+q4zb652o8tirgYjP5kSwj+KlVf3mVWsGoQnJiIgQ=;
+        b=rOFGMLnyvZCc9LOw0DucfvC8qnKsUYWOG8n+1SYW92VpSV1rT8dDhs4eIMKii2pt4W
+         H2bWfZGBHQUPfx46F7ZBJs/DSrL4A2yPe2XT2ro7SN45RWJ8D2AjAgMgx6t4Z5IjweRo
+         IAnfZNfdGs0BWTY7lK0EvV9h5OhSifEpymGaxXv0YJhavVryaj6k0r+GGZdDhhkVMb51
+         912uzDrrI7x8VIbSndSbaAaPo8a+LtfsnlvZzFnFG84jGXGaH8wqCqoTWA3hdo4kJHhg
+         DWXCdDddxSsL2pCc6SrcPu8ddivj5z2uCT17dTISFZFcG+5qqMPYn0p++jY7/QKcykvr
+         yHxg==
+X-Gm-Message-State: AOAM533IgKSUnOWNzRxNTmU4iCvtPtuS9BYbAfSAoZwLkz0JPvkcyU4b
+        25mXc9rw2h+IrDNi3xSH9wMQCZE3dB8=
+X-Google-Smtp-Source: ABdhPJwd9/hmGrb4q2bPOJBzQsGkRtT5LYa4fsoPkh4MDpR12Jsh6hb7ga9JZoDei/9QAsiTcWBXiw==
+X-Received: by 2002:adf:df03:: with SMTP id y3mr3730200wrl.70.1603474372588;
+        Fri, 23 Oct 2020 10:32:52 -0700 (PDT)
+Received: from [192.168.1.201] (13.45.90.146.dyn.plus.net. [146.90.45.13])
+        by smtp.googlemail.com with ESMTPSA id 1sm4923597wre.61.2020.10.23.10.32.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 23 Oct 2020 10:32:52 -0700 (PDT)
+Subject: Re: committer-date-is-author-date flag removes email in "Commit"
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 Cc:     VenomVendor <info@venomvendor.com>,
-        Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Subject: Re: [PATCH 4/3] am, sequencer: stop parsing our own committer ident
-Message-ID: <X5MS5l2bbRczcdgF@nand.local>
-References: <20201023070747.GA2198273@coredump.intra.peff.net>
- <20201023070939.GB2913115@coredump.intra.peff.net>
- <20201023072630.GA2918369@coredump.intra.peff.net>
- <20201023074510.GB2918369@coredump.intra.peff.net>
+References: <e08df0d5792ab70a9158be32cfa28696@venomvendor.com>
+ <20201023070747.GA2198273@coredump.intra.peff.net>
+ <xmqqmu0dhsoz.fsf@gitster.c.googlers.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <58e83ad2-14a2-5ace-c1fd-8224625a0f97@gmail.com>
+Date:   Fri, 23 Oct 2020 18:32:51 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20201023074510.GB2918369@coredump.intra.peff.net>
+In-Reply-To: <xmqqmu0dhsoz.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 23, 2020 at 03:45:10AM -0400, Jeff King wrote:
-> On Fri, Oct 23, 2020 at 03:26:30AM -0400, Jeff King wrote:
->
-> > By the way, I wondered why we needed to do this parsing at all. The
-> > patch below does this in a much simpler way. It's a little bit ugly, I
-> > think, because we have to call getenv() ourselves. But that's the way
-> > fmt_ident() has always worked. We could probably improve that now that
-> > it takes a whose_ident flag (before that, it had no idea if we wanted
-> > author or committer ident).
->
-> I took a brief look at refactoring fmt_ident() to auto-fill from the
-> environment variables (patch below). It's mostly sensible for
-> name/email, because callers pass either the environment variables or
-> some custom-provided value. But for the date, we sometimes pass NULL to
-> mean "use the current time, even if $GIT_*_DATE is set". I'm not 100%
-> sure that isn't a bug, though.
+On 23/10/2020 16:23, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+>> On Fri, Oct 23, 2020 at 11:18:51AM +0530, VenomVendor wrote:
+>>
+>>> What did you do before the bug happened? (Steps to reproduce your issue)
+>>> * Create empty repo using `git init`
+>>> * Make few commits, at least two
+>>> * execute `git log --format=fuller`
+>>> * Notice the log, with "Author", "AuthorDate", "Commit", "CommitDate"
+>>> * Note, "Commit"
+>>> * execute `git rebase --committer-date-is-author-date HEAD~1`
+>>> * execute `git log --format=fuller`
+>>> * Note, email from "Commit" is empty <>
+>>
+>> Thanks for a clear report. I was able to easily reproduce the problem.
+>> There are actually two related bugs here, and they're both regressions
+>> in v2.29.0.
+>>
+>>    [1/3]: t3436: check --committer-date-is-author-date result more carefully
+>>    [2/3]: am: fix broken email with --committer-date-is-author-date
+>>    [3/3]: rebase: fix broken email with --committer-date-is-author-date
+> 
+> Thanks for taking quick care of this.  It counts as an embarrasing
+> brown-paper-bag bug; it is a bit surprising that nobody noticed it
+> while the original change was discussed.
 
-That seems like an area where further investigation would be helpful.
-In the meantime (especially if this is something that Junio wants to
-queue and call v2.29.2), I'd be happy with the four patches you posted
-(but waiting on this one below).
+It is indeed embarrassing. That change only appeared in the last round 
+of patches and unfortunately I think most people had stopped looking 
+them it by then as their comments had been addressed in previous rounds.
 
-Thanks for investigating.
+> I wonder if we even needed to do the original change to begin with
+> (stopping to export means not giving information to the hooks), but
+> that is a separate matter.
 
-Thanks,
-Taylor
+I think the main motivation was to stop polluting the environment of 
+exec commands
+
+Best Wishes
+
+Phillip
+
+> Will take a look and queue.  Thanks.
+> 
+>>
+>>   builtin/am.c                   | 4 ++--
+>>   sequencer.c                    | 2 +-
+>>   t/t3436-rebase-more-options.sh | 4 ++--
+>>   3 files changed, 5 insertions(+), 5 deletions(-)
+>>
+>> -Peff
+
