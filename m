@@ -7,101 +7,94 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BC16C4363A
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 15:23:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C77F3C4363A
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 15:27:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AC0BE20E65
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 15:23:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6EF3F20E65
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 15:27:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="L+ZWje+g"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jgOkIzbs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S465724AbgJWPXo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Oct 2020 11:23:44 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63219 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S465721AbgJWPXn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Oct 2020 11:23:43 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 80DA68A042;
-        Fri, 23 Oct 2020 11:23:41 -0400 (EDT)
+        id S1750874AbgJWP1o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Oct 2020 11:27:44 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59589 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750870AbgJWP1n (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Oct 2020 11:27:43 -0400
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0ADE8F0406;
+        Fri, 23 Oct 2020 11:27:42 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=S3k98IOdTBYc8iSy4dJWqR89mLw=; b=L+ZWje
-        +gBdHG00F62l+oxKbGEeJHbq6DwCA8Qd+83TJRuTl7e7PNvLJGL+8Qro9muJHw+D
-        V0aNgOTMu8qRWKTnTq56dqj6YJMcK12e2k1xMo+hv+tpClq4ZmEC8UWCz+TLpxz6
-        Jb03r9HxiYCJDWVf6agKZD4FRvgOO14e+AOfk=
+        :content-type; s=sasl; bh=DeOLwJvwyOO2F7xXITHNOpk+a8A=; b=jgOkIz
+        bsoGbZH4QPb2fV5GRbTIdp9z0dghZuCJ2RrxDhP+VsOkSDucOqEEQBgNe31u2AiF
+        7+qoQu09ISAvP8s32i7gCJgsKvO/Jki0Fef0rB4aHE9VW3x0e/lAMJM1Gr+dy5PC
+        00N98tAjj9GGw7RrZvevRWH91TQlwp/6L8+VI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ZVDeRWJesFuNKaOWYOIIRDIOyW6Y4GSp
-        KbBukSln5CimVGEED62rNJI259joMSdU58qIF14jIwBegRf+edYPVKKJH3zGgN/N
-        VeU230oQ7b7HL1n6bPpo1oI6MU0euTKocVGqlAbGGH6uVk97lZZbiu8x18P2BUJk
-        Nq7RCJFyYYI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 77C018A041;
-        Fri, 23 Oct 2020 11:23:41 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=FeftpBtZAaXbUHEt37h9UQZnDbhEN33z
+        tuWjfjS53OFDfP0lTHu1lXAEaWSF7MWrBgCgwrZQmvV8kCotEUSSHj4FMMdiS18Y
+        g2R+xCKOcyjUDiRyLgXfoC01EMMf3Cb/dmx7of2/KTzdNSzLESGxmLocO+h2Yw/9
+        pNpCdMtYI48=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 040DBF0403;
+        Fri, 23 Oct 2020 11:27:42 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EF71D8A040;
-        Fri, 23 Oct 2020 11:23:40 -0400 (EDT)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 43D9DF0400;
+        Fri, 23 Oct 2020 11:27:39 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     VenomVendor <info@venomvendor.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Subject: Re: committer-date-is-author-date flag removes email in "Commit"
-References: <e08df0d5792ab70a9158be32cfa28696@venomvendor.com>
-        <20201023070747.GA2198273@coredump.intra.peff.net>
-Date:   Fri, 23 Oct 2020 08:23:40 -0700
-In-Reply-To: <20201023070747.GA2198273@coredump.intra.peff.net> (Jeff King's
-        message of "Fri, 23 Oct 2020 03:07:47 -0400")
-Message-ID: <xmqqmu0dhsoz.fsf@gitster.c.googlers.com>
+Cc:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2020, #03; Mon, 19)
+References: <xmqqr1put77h.fsf@gitster.c.googlers.com>
+        <20201023080202.GA4012156@coredump.intra.peff.net>
+Date:   Fri, 23 Oct 2020 08:27:37 -0700
+In-Reply-To: <20201023080202.GA4012156@coredump.intra.peff.net> (Jeff King's
+        message of "Fri, 23 Oct 2020 04:02:02 -0400")
+Message-ID: <xmqqimb1hsie.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BB0AA46E-1543-11EB-815D-D152C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 491419DE-1544-11EB-A804-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> On Fri, Oct 23, 2020 at 11:18:51AM +0530, VenomVendor wrote:
+> On Mon, Oct 19, 2020 at 11:13:22AM -0700, Junio C Hamano wrote:
 >
->> What did you do before the bug happened? (Steps to reproduce your issue)
->> * Create empty repo using `git init`
->> * Make few commits, at least two
->> * execute `git log --format=fuller`
->> * Notice the log, with "Author", "AuthorDate", "Commit", "CommitDate"
->> * Note, "Commit"
->> * execute `git rebase --committer-date-is-author-date HEAD~1`
->> * execute `git log --format=fuller`
->> * Note, email from "Commit" is empty <>
+>> * en/strmap (2020-10-13) 10 commits
+>>  - strmap: enable allocations to come from a mem_pool
+>>  - strmap: add a strset sub-type
+>>  - strmap: add functions facilitating use as a string->int map
+>>  - strmap: enable faster clearing and reusing of strmaps
+>>  - strmap: add more utility functions
+>>  - strmap: new utility functions
+>>  - hashmap: introduce a new hashmap_partial_clear()
+>>  - hashmap: allow re-use after hashmap_free()
+>>  - hashmap: adjust spacing to fix argument alignment
+>>  - hashmap: add usage documentation explaining hashmap_free[_entries]()
+>> 
+>>  A speciailization of hashmap that uses a string as key has been
+>>  introduced.  Hopefully it will see wider use over time.
+>> 
+>>  Will merge to 'next'.
 >
-> Thanks for a clear report. I was able to easily reproduce the problem.
-> There are actually two related bugs here, and they're both regressions
-> in v2.29.0.
+> I haven't gotten a chance to look at this carefully yet, but note that
+> the strset here sort-of conflicts with the one I added recently in
+> builtin/shortlog.c (already in master). I think the compiler won't
+> complain because they never show up in the same translation unit, but we
+> should avoid having two almost-the-same types in the codebase.
 >
->   [1/3]: t3436: check --committer-date-is-author-date result more carefully
->   [2/3]: am: fix broken email with --committer-date-is-author-date
->   [3/3]: rebase: fix broken email with --committer-date-is-author-date
+> I suspect my "check_and_add" function could be folded into Elijah's
+> implementation. The other big difference is that mine uses the
+> FLEX_ALLOC approach, and his doesn't. I haven't digested the code and
+> discussion around that from Elijah's series yet.
 
-Thanks for taking quick care of this.  It counts as an embarrasing
-brown-paper-bag bug; it is a bit surprising that nobody noticed it
-while the original change was discussed.
-
-I wonder if we even needed to do the original change to begin with
-(stopping to export means not giving information to the hooks), but
-that is a separate matter.
-
-Will take a look and queue.  Thanks.
-
->
->  builtin/am.c                   | 4 ++--
->  sequencer.c                    | 2 +-
->  t/t3436-rebase-more-options.sh | 4 ++--
->  3 files changed, 5 insertions(+), 5 deletions(-)
->
-> -Peff
+Will take a look at them again.  Thanks.
