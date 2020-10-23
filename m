@@ -2,91 +2,123 @@ Return-Path: <SRS0=cWhr=D6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81A33C5517A
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 20:22:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A2B3C388F9
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 20:50:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0DB2F20897
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 20:22:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DDF7420882
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 20:50:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FsHixOPG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XUkHHE9j"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756023AbgJWUWm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Oct 2020 16:22:42 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50511 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755998AbgJWUWm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Oct 2020 16:22:42 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7DDAD8C90A;
-        Fri, 23 Oct 2020 16:22:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=T7Kk24N2qAMgFLLsBZalDUsd0aA=; b=FsHixOPG+C4JoXG1F7o4
-        vitMYM7/QgOZos5+ABqkt1HFgo3gwGMve7Gr6ch4veZZFxo8WasbDlzgvWmKSWEl
-        w7gRDsLKHnZATdDPZrYopeU0DcHUuCHMo9GjdsjGUZAW9zgZKqa3DzcLmMx+BuY0
-        x5e1G5koMfPvxNtsbZwY+Dk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=K2q65hWsI3wmwWWlp4BtefF7yRMqQY738cmnSVRBEKFoXu
-        Ayoc0TrPsbK6H8lx+0VHpXlKRtf2UrezoKSPwajbA0ozitbx7TxoqIooxOIf9Sh6
-        f5Y4ghc9T2wS3DsWZ/hiPjly4gAeBPaDUHK5BvKW8vmt2Wu2V2XrEIT6Rti5Y=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 758CE8C908;
-        Fri, 23 Oct 2020 16:22:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 01EE88C907;
-        Fri, 23 Oct 2020 16:22:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sangeeta NB <sangunb09@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v4] diff: do not show submodule with untracked files as
- "-dirty"
-References: <pull.751.git.1602781723670.gitgitgadget@gmail.com>
-        <20201023111711.38739-1-sangunb09@gmail.com>
-        <xmqq7drhhr5o.fsf@gitster.c.googlers.com>
-        <CAHjREB5Uye1b=bVZsAc1WPcrWrqxnrMZxBtLT345CrpU7gTpVg@mail.gmail.com>
-Date:   Fri, 23 Oct 2020 13:22:38 -0700
-Message-ID: <xmqqtuukg0a9.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1756391AbgJWUu2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Oct 2020 16:50:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60702 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756388AbgJWUu1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Oct 2020 16:50:27 -0400
+Received: from mail-ua1-x92a.google.com (mail-ua1-x92a.google.com [IPv6:2607:f8b0:4864:20::92a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 930CCC0613CE
+        for <git@vger.kernel.org>; Fri, 23 Oct 2020 13:50:27 -0700 (PDT)
+Received: by mail-ua1-x92a.google.com with SMTP id f20so804741uap.2
+        for <git@vger.kernel.org>; Fri, 23 Oct 2020 13:50:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=dw7kEIwIKTd6dFGWtlO1RXQi7ErjEvCeFd6EY5ar+xs=;
+        b=XUkHHE9jk0vF/xXENQrjoEOuc6GYB08R5MMFmWCtM9YY4n/w27EqMw2x+EMc3xio6s
+         wHhL4p21qkBbZmO8+w+sRJe6a9CSGIrnHFfNO22o3WNnXjk1CMyKUVhdDh2vrEAUVf4/
+         iw+qQxRS47EmLto6wLRo7wYDeie28Ejl91SHXMt2/wrF5jVwPtmu4Fzi82szbjwjiAhH
+         tuV8OErs4ZGYijCOLJgOds6GgL5dISq30iqbevZ8deHriYNyTztvi3dXPTZAQW/vbABr
+         66TduimJWtbIZBqbBITx0U2P4jVp+FGGON2hmvyx4GHpy2eYOzNbRN5voXudD6f4UT5k
+         An/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=dw7kEIwIKTd6dFGWtlO1RXQi7ErjEvCeFd6EY5ar+xs=;
+        b=IUUihay1jgeT/CtYzTc0E+9NhHAnps+f3uTZrC6iSB0gOKFVnPNLbGUmOkzMbPnavt
+         ebPWmRTCXKj39r22ncxutgm2YQcxBoH234JHuBy+P7CVNb9Tfz97D14LfXEAv/hM42D8
+         V3bydQ5UNTxb6etQbUqrUddsDLKc0P0dEt8eC+dO1Wcf4bL8+OmrKOxuPof/sdnI4h4y
+         ltJ8wdOlEumcPTBAC79Fi0N8jMCgCKWPYgLNktZY9c89Vl3JECa/swldRDWniBR05QUV
+         oVwW6Cunbno+Zv3ZhAe9cZcskwdXbK1Q+qtk/ZWB164FxNdzAyazL3hD5Xg6EmnRRhIj
+         D7Zw==
+X-Gm-Message-State: AOAM5324wky+zp07kkvxHMQowYLDnM/eBUXT+i8jWtPCq0nxtjouhwaa
+        ZaGp6IJAlzIzX2BJSognFX3InWs31b2pR835QOaGfmqsyklKNQ==
+X-Google-Smtp-Source: ABdhPJzP2/J1WB7o2KVtsZBy7vmfdKHYUyNSrY2zA8Wlwrl0y1lsnn7shhYV9XGXdS0o2rC82tSSMexT2X3CSK7cv70=
+X-Received: by 2002:ab0:200c:: with SMTP id v12mr3274162uak.53.1603486226489;
+ Fri, 23 Oct 2020 13:50:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7EF05FB2-156D-11EB-824D-D152C8D8090B-77302942!pb-smtp1.pobox.com
+References: <CAKuTeyftpz8mQiiy2S56pxmW0fzCENAQ8=gmaTE5a-Ef5g216g@mail.gmail.com>
+ <000601d6a883$66d8e180$348aa480$@nexbridge.com> <CAKuTeyc6WhEguV2mi_eg8JYrhri0inBJE-xHL3ZbFRGuYsyaDw@mail.gmail.com>
+ <007901d6a8bf$0f9d3830$2ed7a890$@nexbridge.com>
+In-Reply-To: <007901d6a8bf$0f9d3830$2ed7a890$@nexbridge.com>
+From:   Adrien Berchet <adrien.berchet@gmail.com>
+Date:   Fri, 23 Oct 2020 22:49:50 +0200
+Message-ID: <CAKuTeye+kuT=zr6FoyTq8P9wj_1PnKqTdrX5sOtKhq0Z+rRaAw@mail.gmail.com>
+Subject: Re: [bug] Cloning SSH repo into /tmp
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sangeeta NB <sangunb09@gmail.com> writes:
+I don't know and... I am not able to reproduce this bahaviour after
+rebooting this machine... I don't know what happened, I will tell you
+if it happens again and if I find in which conditions it happens.
+Thanks!
 
->> By the way, in builtin/describe.c there is an invocation of
->> "diff-index" without any --ignore-submodules=<what> option.
->>
->>         /* diff-index command arguments to check if working tree is dirty. */
->>         static const char *diff_index_args[] = {
->>                 "diff-index", "--quiet", "HEAD", "--", NULL
->>         };
->>
->> Would the behaviour of diff-index invocation in "git describe --dirty"
->> affected by the change of the default in any way?
+
+Le ven. 23 oct. 2020 =C3=A0 00:02, Randall S. Becker
+<rsbecker@nexbridge.com> a =C3=A9crit :
 >
-> I don't think so because describe was already behaving in the way that
-> we won't. We changed the behavior of git diff to match it with that.
-> So it doesn't make sense to add anything to that. Tell me if I am
-> missing something.
-
-How does "describe" see if the working tree is dirty?  What
-mechanism does it use?  Doesn't it run the "diff-index" command
-internally?
-
-And with this patch, aren't you changing the default behaviour of
-"diff" family of commands by touching repo_diff_setup() function?
-How does it not affect the behaviour of the "diff-index" command,
-hence the input "git describe" uses to formulate its output?
+> On October 22, 2020 5:27 PM, Adrien Berchet wrote:
+> >
+> > I encountered this behaviour on Linux Mint 20. But I just tried on
+> > RedHatEnterpriseServer 7.6 and I could not reproduce this behaviour.
+>
+> I wonder whether there's something strange about how Mint partitions the =
+disk, and whether /tmp is somehow configured weirdly on your machine.
+>
+> > Le jeu. 22 oct. 2020 =C3=A0 16:55, Randall S. Becker <rsbecker@nexbridg=
+e.com> a
+> > =C3=A9crit :
+> >
+> > >
+> > > On October 22, 2020 6:28 AM, Adrien Berchet wrote:
+> > > > I encountered a quite weird bug when I tried to clone a repository
+> > > > into the /tmp folder (I just wanted to test something, so I was wor=
+king in
+> > /tmp).
+> > > >
+> > > > I run the following command in /tmp :
+> > > >     git clone ssh://[user]@[host]/project/[project_name]
+> > > > and I got the following error:
+> > > >     fatal: the protocol '/tmp/ssh' is not supported
+> > > >
+> > > > I got the same result if a run the following command from /tmp
+> > directory:
+> > > >     git clone ssh://[user]@[host]/project/[project_name]
+> > > > /tmp/project_name
+> > > >
+> > > > Nevertheless, the command works in other directories. Even the
+> > > > second command works when run from another directory (this
+> > command:
+> > > > git clone ssh://[user]@[host]/project/[project_name]
+> > /tmp/project_name).
+> > > >
+> > > > It is very specific and can easily be worked around so it is no big
+> > > > deal but I preferred reporting this in case it hides something else=
+.
+> > >
+> > > What platform are you running on? I have experienced similar when /tm=
+p is
+> > linked to a separate file system with complex ACLs.
+>
