@@ -2,99 +2,109 @@ Return-Path: <SRS0=cWhr=D6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C77F3C4363A
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 15:27:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE3E2C4363A
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 15:43:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6EF3F20E65
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 15:27:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9BA6321D47
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 15:43:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jgOkIzbs"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rtFJEbi2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750874AbgJWP1o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Oct 2020 11:27:44 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59589 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750870AbgJWP1n (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Oct 2020 11:27:43 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0ADE8F0406;
-        Fri, 23 Oct 2020 11:27:42 -0400 (EDT)
+        id S463274AbgJWPnK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Oct 2020 11:43:10 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64430 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S369960AbgJWPnJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Oct 2020 11:43:09 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 31E4DF7904;
+        Fri, 23 Oct 2020 11:43:07 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DeOLwJvwyOO2F7xXITHNOpk+a8A=; b=jgOkIz
-        bsoGbZH4QPb2fV5GRbTIdp9z0dghZuCJ2RrxDhP+VsOkSDucOqEEQBgNe31u2AiF
-        7+qoQu09ISAvP8s32i7gCJgsKvO/Jki0Fef0rB4aHE9VW3x0e/lAMJM1Gr+dy5PC
-        00N98tAjj9GGw7RrZvevRWH91TQlwp/6L8+VI=
+        :content-type; s=sasl; bh=V57HdDIsYILXEjzx7GT4dPlOgyc=; b=rtFJEb
+        i26CSAJncEDJ+rRmH6uHllRvbJB9tb7b7AGAqnWblFoJ9JIKvGPxEoyB6RD2BIcq
+        nc+BHERn/UjG5BWYZrmlekOD1Nq6i+sjYfpjyV01PKIT3bDG8aMs83xUMBgxmWkv
+        qNu9qmak/aSQCrY6D+i4Bk7vCAs51A4la8Hck=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FeftpBtZAaXbUHEt37h9UQZnDbhEN33z
-        tuWjfjS53OFDfP0lTHu1lXAEaWSF7MWrBgCgwrZQmvV8kCotEUSSHj4FMMdiS18Y
-        g2R+xCKOcyjUDiRyLgXfoC01EMMf3Cb/dmx7of2/KTzdNSzLESGxmLocO+h2Yw/9
-        pNpCdMtYI48=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 040DBF0403;
-        Fri, 23 Oct 2020 11:27:42 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=XZePo5RTnNkiGV0lZZLjbYKpFjV+ZwpD
+        0CRebSBk1pnqxlH2McSlpgB7Na5KujL+Kr9l0zUJpCDGqp0WYLakU4qEuwd0FT8r
+        QcDeQMINggVt9KO3SDUsK+HRxSZw+TQ7u8g0yOB65gVRha/JUHFIuD9Zfe85Sv6E
+        CL5jKrztKxA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2A0DBF7903;
+        Fri, 23 Oct 2020 11:43:07 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 43D9DF0400;
-        Fri, 23 Oct 2020 11:27:39 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6D9A4F7902;
+        Fri, 23 Oct 2020 11:43:04 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Oct 2020, #03; Mon, 19)
-References: <xmqqr1put77h.fsf@gitster.c.googlers.com>
-        <20201023080202.GA4012156@coredump.intra.peff.net>
-Date:   Fri, 23 Oct 2020 08:27:37 -0700
-In-Reply-To: <20201023080202.GA4012156@coredump.intra.peff.net> (Jeff King's
-        message of "Fri, 23 Oct 2020 04:02:02 -0400")
-Message-ID: <xmqqimb1hsie.fsf@gitster.c.googlers.com>
+To:     Sangeeta NB <sangunb09@gmail.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>, phillip.wood@dunelm.org.uk,
+        Sangeeta via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH][OUTREACHY] bisect: allow `git bisect` to run from
+ subdirectory
+References: <pull.765.git.1603271344522.gitgitgadget@gmail.com>
+        <2f71d0c4-a5de-c22b-9cbe-a9efcb3cd21d@gmail.com>
+        <20201021162044.GB111581@nand.local>
+        <xmqqr1pr73ve.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2010221047550.56@tvgsbejvaqbjf.bet>
+        <cfe33eef-974d-8ff9-ebb4-d1153abd497c@gmail.com>
+        <xmqq7drinqxv.fsf@gitster.c.googlers.com>
+        <CAHjREB7+3QtPw6X33GEB8SiDjSfvNhb15+_rpy=McmqBdcMebQ@mail.gmail.com>
+Date:   Fri, 23 Oct 2020 08:43:02 -0700
+In-Reply-To: <CAHjREB7+3QtPw6X33GEB8SiDjSfvNhb15+_rpy=McmqBdcMebQ@mail.gmail.com>
+        (Sangeeta NB's message of "Fri, 23 Oct 2020 16:29:52 +0530")
+Message-ID: <xmqqeelphrsp.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 491419DE-1544-11EB-A804-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 70860FB6-1546-11EB-B8A6-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Sangeeta NB <sangunb09@gmail.com> writes:
 
-> On Mon, Oct 19, 2020 at 11:13:22AM -0700, Junio C Hamano wrote:
->
->> * en/strmap (2020-10-13) 10 commits
->>  - strmap: enable allocations to come from a mem_pool
->>  - strmap: add a strset sub-type
->>  - strmap: add functions facilitating use as a string->int map
->>  - strmap: enable faster clearing and reusing of strmaps
->>  - strmap: add more utility functions
->>  - strmap: new utility functions
->>  - hashmap: introduce a new hashmap_partial_clear()
->>  - hashmap: allow re-use after hashmap_free()
->>  - hashmap: adjust spacing to fix argument alignment
->>  - hashmap: add usage documentation explaining hashmap_free[_entries]()
->> 
->>  A speciailization of hashmap that uses a string as key has been
->>  introduced.  Hopefully it will see wider use over time.
->> 
->>  Will merge to 'next'.
->
-> I haven't gotten a chance to look at this carefully yet, but note that
-> the strset here sort-of conflicts with the one I added recently in
-> builtin/shortlog.c (already in master). I think the compiler won't
-> complain because they never show up in the same translation unit, but we
-> should avoid having two almost-the-same types in the codebase.
->
-> I suspect my "check_and_add" function could be folded into Elijah's
-> implementation. The other big difference is that mine uses the
-> FLEX_ALLOC approach, and his doesn't. I haven't digested the code and
-> discussion around that from Elijah's series yet.
+> Yes, I agree. We need to make some changes in `git rebase` to make it
+> work from the subdirectory, but that doesn't mean that we should
+> completely restrict it from running in the subdirectory, and the same
+> follows for `git bisect`.
 
-Will take a look at them again.  Thanks.
+You actually don't have to make "bisect" work from the subdirectory.
+
+You instead can detect the case where your $cwd may be made to
+disappear, and allow "git bisect" to continue if you are certain
+that you are not in the funny situation.  You need to protect the
+user from funny situation by refusing to run from a subdirectory
+only when needed.
+
+Besides, as Phillip mentioned, there is a big difference between two
+commands, isn't it?
+
+"git rebase" would ask for help to the end-user by returning the
+control when anything goes wrong (e.g. it may not be able to replay
+a commit while the user is sitting in a directory that has already
+gone), but "git bisect run" would just interpret any failure, not
+just the ones that are caused by genuine test failure but caused by
+$cwd going away, as "we saw a bad revision".  It would cause a lot
+of wasted cycles, instead of immediately stopping when there is
+trouble.  So the first thing that has to happen if we want to allow
+"bisect" to run from anywhere is to teach it to detect when the $cwd
+went away, and stop to give control back to the user to deal with
+the situation (it might be the matter of "cd /path/to/top" at that
+point), instead of blindly continuing.  Only after that is in place,
+we can safely allow it to start from a subdirectory.
+
+Thanks.
