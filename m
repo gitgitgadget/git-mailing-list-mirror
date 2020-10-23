@@ -2,85 +2,112 @@ Return-Path: <SRS0=cWhr=D6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EE0CC388F9
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 20:12:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE2A5C56201
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 20:18:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2834420897
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 20:12:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8C03B20756
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 20:18:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WpcpD4dt"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="g2JxXj/a"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755872AbgJWUMz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Oct 2020 16:12:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54938 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755840AbgJWUMy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Oct 2020 16:12:54 -0400
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83C73C0613CE
-        for <git@vger.kernel.org>; Fri, 23 Oct 2020 13:12:54 -0700 (PDT)
-Received: by mail-ot1-x342.google.com with SMTP id 32so2490323otm.3
-        for <git@vger.kernel.org>; Fri, 23 Oct 2020 13:12:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=QIsLlEpyjM8Nl/93W+chDF4gyh42gcV1lGPcwVpx+MU=;
-        b=WpcpD4dtLdCidN59Js42nyaW4Wr3/WpT/MrlSaVZ0EjLI7GcZzKB9QwJPnjIdfgJq1
-         hEi96a0oJJihXYGX+x0h7Gy1OqogOXy0cQAsDoGQ3DsY4i8UySFmTBGrS3JyIEdt7ev4
-         8Xr+W7RyOF2WWEoBNpB6RvpAZBRwHW+qP1VS3XF201vFaYKKyfdeAtc3bUAmcuPKNNb0
-         cbX5MJBB0GWkYxpU95jmlZMP0IyZ655ipeKPA2Qd4pcXkiCurSPO2EXN94+iE6ygF4ZX
-         OdMs+OfOLJ0FGzMKtHBUAdYmZ9V2aY0S1hGtkHtObMslvHkX+wwoTK19SpC0jTFnt7DK
-         xeig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QIsLlEpyjM8Nl/93W+chDF4gyh42gcV1lGPcwVpx+MU=;
-        b=oyJnE9scdQLEQeRcHE8GAlrh1p3ZHJW67n/hLlWdBXDSh233HilZ5ypTU8+OtTCVwk
-         3EnMkGIBZyrE9TTjcBfoiEUpPalzJ770h2u613kJSo5mGi9Lzu5vU490+Ev77fvBDObd
-         yPDR/+mIZHfm7WPVaZY9aNB7ZgScG4KQBGlNKrIW3SVhiSV33eUpmem6GE9Eumg7X0YE
-         +Iv+f20NHYMIoAMcSyhmeZgpmZDtuYjWM9RvSN3n2P/xRK0ZX5AufD2pS8nyuSWgn2Wq
-         stBW26Oa0VsFMCYdkLP9GRWmWNhIin27DYvGjQ68zAngrqLMfODhoHDwc8FhJ7b1FmHI
-         6uMQ==
-X-Gm-Message-State: AOAM5324hpz1VMWs4Kz2WyRJkk2rfC+3fwtzu/9BvjrbNgS3kZbnzV1G
-        N+P7lMUqXwdjeGCh4OJ+2hqZZIQaCvG0WF1dS931EsriLpI=
-X-Google-Smtp-Source: ABdhPJzv3VNAa9Kob3+1uqfTF3Qp4Bbe2S1/tHicxLRCBYYmSe1eE/sRQ5SkOGbKc4CtI0H24tI+s7/BYjX3CkCyctI=
-X-Received: by 2002:a9d:6003:: with SMTP id h3mr3221702otj.345.1603483973844;
- Fri, 23 Oct 2020 13:12:53 -0700 (PDT)
+        id S1756005AbgJWUSW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Oct 2020 16:18:22 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55673 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750409AbgJWUSU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Oct 2020 16:18:20 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2D825945D3;
+        Fri, 23 Oct 2020 16:18:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Py4b4YjbXTZhwGugd5qgkJtsP/I=; b=g2JxXj
+        /aUGWCJBlN61ZapphRBI3L4DmJ+WOdweD7r2vfeKEX1nLwxItZXzaIhX/RTSlV3f
+        kT88lwXm1iLbxpng3urlDAIruSnOTVrnAmrxtSA7BGo4BhRSW4LPASzU/FARUzwy
+        p9lxd5LyrAxZAtvFqq99Wl1+RBOdz5s1VMup0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=XZ9ZfORyrgXkPw7xfugsAU7HLyDajf0Z
+        YjpQFYUWXapTsSVqe8rdMhnw8MEbJL8hf3GYoIIen8H3noEUF2mqgeTxwFztLlG0
+        uQEyCm53Uqd8Eg8++NlG1zADJ3iWjGYJGYDwopDdQAJUsDsOYNOakF9PRVsuDm+0
+        6jwQdcbhjEM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 26062945D2;
+        Fri, 23 Oct 2020 16:18:16 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9ABA5945D0;
+        Fri, 23 Oct 2020 16:18:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] apply: clarify description of --index
+References: <xmqqzh4dk3ey.fsf@gitster.c.googlers.com>
+        <23806f2c-df96-b105-3b85-f40b0e8ec7ca@kdbg.org>
+        <xmqqzh4dhurk.fsf@gitster.c.googlers.com>
+        <92f3ec02-14f2-482c-5754-5bff0db9d634@kdbg.org>
+Date:   Fri, 23 Oct 2020 13:18:14 -0700
+In-Reply-To: <92f3ec02-14f2-482c-5754-5bff0db9d634@kdbg.org> (Johannes Sixt's
+        message of "Fri, 23 Oct 2020 20:08:52 +0200")
+Message-ID: <xmqq4kmkhf21.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.769.git.1603468885.gitgitgadget@gmail.com> <2659d1cb987735ec123ca7a82ed7e058e4d6bef0.1603468885.git.gitgitgadget@gmail.com>
-In-Reply-To: <2659d1cb987735ec123ca7a82ed7e058e4d6bef0.1603468885.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 23 Oct 2020 13:12:43 -0700
-Message-ID: <CABPp-BHJyVbXp1bnN4uBMAgfx8i_4hCksAQbEjc_BG+1J+4xXw@mail.gmail.com>
-Subject: Re: [PATCH 9/9] t6423: add more details about direct resolution of directories
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: E1F5195A-156C-11EB-BB77-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 23, 2020 at 9:01 AM Elijah Newren via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Elijah Newren <newren@gmail.com>
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  t/t6423-merge-rename-directories.sh | 37 ++++++++++++++++-------------
->  1 file changed, 21 insertions(+), 16 deletions(-)
+Johannes Sixt <j6t@kdbg.org> writes:
 
-Whoops, I had meant for this last patch to be kept local for now and
-only send it in after adding more of the merge-ort implementation.  To
-make matters worse, it's slightly out of date with what I have on my
-'ort' branch.  Oh, well, I guess it doesn't hurt...at least not if I
-get the up-to-date version of the changes.  I'll include those in v2,
-along with the small change Junio highlighted for patch 1, but wait a
-few days for more feedback to come in on this series.
+> Am 23.10.20 um 16:38 schrieb Junio C Hamano:
+>> Johannes Sixt <j6t@kdbg.org> writes:
+>> 
+>>>> -	Apply the patch to both the index and the working tree (or
+>>>> -	merely check that it would apply cleanly to both if `--check` is
+>>>> -	in effect). Note that `--index` expects index entries and
+>>>> -	working tree copies for relevant paths to be identical (their
+>>>> -	contents and metadata such as file mode must match), and will
+>>>> -	raise an error if they are not, even if the patch would apply
+>>>> -	cleanly to both the index and the working tree in isolation.
+>>>> +	After making sure the paths the patch touches in the working
+>>>> +	tree have no modifications relative to their index entries,
+>>>> +	apply the patch both to the index entries and to the working
+>>>> +	tree files or see if it applies	cleanly, when `--check` is in
+>>>> +	effect.
+>>>
+>>> I don't think that this is an improvement. The purpose of --index *is*
+>>> to apply the patch to both index and worktree, and that should be
+>>> mentioned first. The check that both are identical, is a prerequisite
+>>> and not the primary objective of the option.
+>> 
+>> Yeah, but this was an attempt to clarify what that "apply to both",
+>> which is the central part of the operation, exactly means.
+>> 
+>> The only mode of operation we offer is that we start from identical
+>> index and working tree, and make the same change so that we arrive
+>> at the same outcome.  It is not like you can have some changes in
+>> the working tree file as long as they do not overlap and collide
+>> with the incoming patch, make the same change with the patch to
+>> arrive at different contents as the outcome.  We explicitly forbid
+>> that, but "apply to both" does not exactly tell it to the readers.
+>
+> Your have point that the original text muddies the preconditions a bit,
+> but I still think that "what it does" must be the first thing to be
+> mentioned, and the preconditions the second.
+
+Yeah.  I offhand do not think of a better phrasing within the
+constraint that "apply to only identical state" must be said after
+saying "to both the index and the working tree", though, so I'll
+leave it up to the list's wisdom ;-)
+
+Thanks.
