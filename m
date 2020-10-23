@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96929C388F9
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 11:17:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3ED12C388F9
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 11:18:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 30C6520829
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 11:17:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AF26A2084C
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 11:18:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uvpekPKV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nxRD1rJS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S462852AbgJWLRU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Oct 2020 07:17:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56058 "EHLO
+        id S462862AbgJWLSu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Oct 2020 07:18:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S462817AbgJWLRU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Oct 2020 07:17:20 -0400
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0ED9C0613CE
-        for <git@vger.kernel.org>; Fri, 23 Oct 2020 04:17:19 -0700 (PDT)
-Received: by mail-pg1-x544.google.com with SMTP id o3so957697pgr.11
-        for <git@vger.kernel.org>; Fri, 23 Oct 2020 04:17:19 -0700 (PDT)
+        with ESMTP id S462815AbgJWLSu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Oct 2020 07:18:50 -0400
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4CEBC0613CE
+        for <git@vger.kernel.org>; Fri, 23 Oct 2020 04:18:49 -0700 (PDT)
+Received: by mail-pf1-x442.google.com with SMTP id y14so904817pfp.13
+        for <git@vger.kernel.org>; Fri, 23 Oct 2020 04:18:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=/eTsX07C0aMyjUnaRKvjrdN2s4ZhKTEkMkl002/UYbQ=;
-        b=uvpekPKVtVrPo74ARkz8VtqqyP1pdnrO2JutwSLz1vLPt/7k4QdFiTYCHq1CX6+EeL
-         eJ2uLJ0jfn/URwaiPTolXuYtv2/ey8VpRP/hSS6GvrFoa5Iu0T7g4AG4PDC8v8MU/qUr
-         iGKBlWn6P5Qx9aqD524doeqRighUfdCH5yNaMfYLNcY1zGKspNH2JQgOtN9yh2NUyz/M
-         drKIhgS6uX4S0h02sBO88ngnMCMjtTBYARiNuiyUH53f04UaD5yaFQtVgUsrcrx4Clnz
-         HcKOhL5dn/vmAATrKRHYid5LBrcdLunRn2zbThyW/EdWLquGfikBs+XdOTHVl7sIQm0D
-         moTA==
+        bh=lFX/90YK6TNcplSHueti3TQnJCA87rxEpf8HK4DSlZE=;
+        b=nxRD1rJS60hH1Ec2de1aj5p80Dbv2AuEftWurxP90SbzPWZMmWCjXHGgXbTPqWiFXM
+         bwvMH+n0wCtxNCrYKdap3uP+CKdPI64oQ8jy1UzkdVpj3AiO8UlOlkjfU1Eja2SFV457
+         /Eni6I+rrE7TumKexBMbFCRCaXXQCzI7VjnpFRVf7ZjOm4iE7gdXAXAZHFPxy+1RiNwz
+         W4pi0sHGeUaSqKKYWSDDTGuy76DyOfUJ2/8L9y5UHAATkP6VWcvTVLFE5hbMZ1B9/bjD
+         2aWK5e67JlkrxIuOgb0Kbzcmsp6PPxhq4bDXSAoTDhLI5bgL256n0VYFgBi8HjutOj4I
+         VgEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=/eTsX07C0aMyjUnaRKvjrdN2s4ZhKTEkMkl002/UYbQ=;
-        b=qUfX1yx4pZjptijxoA3R2nMXBIiBXcHLqfY1GgLn5C/f/oBhsTjP4XXS4kNfCQqcvK
-         xHMCoSRfpK/fpuJM345Y5ZSNcBzXYMQl03VH9SkkDOOk4fMT9N56Hlih60eJlDMqFBeL
-         8lPIHURwCfr3xsPZL5Iu1BJ5QN9pVMRqQnsiODEMx9AavVwr7vbFYbvr2IaIWoSxqC2D
-         X8+vEBuVGZ4TvMTqEYgQyY6mp9yR1zkBJQkh2XZi5/oZy70yKfpkWyboLYxuB/2ONXCQ
-         zUelIcrIdPZ7BrivvRvlpPuhIVytWv7MmkyJD0v3LMDqpVahTM8e9O+lDejV8LopXbvM
-         lSyQ==
-X-Gm-Message-State: AOAM533ps+OmXP1SNxas0uawJhJ0E3A9LLqdwYt/cnV2228aC6lpr+UD
-        sX371yK18B/HixE5IUMvKfCFTdYC4/jgBg==
-X-Google-Smtp-Source: ABdhPJyJlelwVFhcgq038ejCw627vccR0fHgDPDRWEr5PG7MVV3LhWa96PcpnB5uXrlOUMs9vIzfiw==
-X-Received: by 2002:a17:90b:604:: with SMTP id gb4mr1917623pjb.24.1603451838920;
-        Fri, 23 Oct 2020 04:17:18 -0700 (PDT)
+        bh=lFX/90YK6TNcplSHueti3TQnJCA87rxEpf8HK4DSlZE=;
+        b=EWc1jVNqEuct+zoqCmyDx5CnXTGTAIP77acflKDZGdj0r3A9wX/alEpZO+HaU1Dh6s
+         p0tUya0Nvsu1YLSLRzVIQvlKkVomR4Dg6cL6jAGIKp8qtv/n8X4Sd7GDJtr3eH9Ts0qv
+         F1kQ6QoECBRYy0/9ujALxc79Rm+87i7fbIQwHoqcSm+2WzO+TzQGZSgotXus6+F5RsvW
+         1cqamn4qMZODVxl0IGMVKPG8E6S8bhNws7jbXqJPbDxjsrSLfESn65lKsJWRtciPEh0l
+         9V8v7Al/WY+GYJtag03S9GEUxZgSnQXyfMyZTU7O+ekXfNXF2wnaTeud/DyTxJ/no7S0
+         TEKw==
+X-Gm-Message-State: AOAM5303Cb7ftHcddvaeNWnRCH01/jyGhLYcX9uECoZFURwLafen5AXk
+        PR/Zxz/46rcWMuRUWhk+ifJTGKCXztlPGw==
+X-Google-Smtp-Source: ABdhPJwVOn5ibCU2Akre0e17ROvCd/Bn9szbxZ6kjdU5D/59DVjPk4x5PnN2A2CDJWlsu/qVmnkqpw==
+X-Received: by 2002:a17:90a:ce0e:: with SMTP id f14mr1932131pju.94.1603451928976;
+        Fri, 23 Oct 2020 04:18:48 -0700 (PDT)
 Received: from localhost.localdomain ([42.108.201.82])
-        by smtp.gmail.com with ESMTPSA id z142sm1793475pfc.179.2020.10.23.04.17.16
+        by smtp.gmail.com with ESMTPSA id q35sm2181940pja.28.2020.10.23.04.18.47
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 23 Oct 2020 04:17:18 -0700 (PDT)
+        Fri, 23 Oct 2020 04:18:48 -0700 (PDT)
 From:   Sangeeta Jain <sangunb09@gmail.com>
 To:     git@vger.kernel.org
-Cc:     sangu09 <sangunb09@gmail.com>
-Subject: [PATCH v4] diff: do not show submodule with untracked files as "-dirty"
-Date:   Fri, 23 Oct 2020 16:47:11 +0530
-Message-Id: <20201023111711.38739-1-sangunb09@gmail.com>
+Cc:     Sangeeta Jain <sangunb09@gmail.com>
+Subject: [Outreachy] [PATCH v4] diff: do not show submodule with untracked files as "-dirty"
+Date:   Fri, 23 Oct 2020 16:48:27 +0530
+Message-Id: <20201023111827.40188-1-sangunb09@gmail.com>
 X-Mailer: git-send-email 2.21.1 (Apple Git-122.3)
 In-Reply-To: <pull.751.git.1602781723670.gitgitgadget@gmail.com>
 References: <pull.751.git.1602781723670.gitgitgadget@gmail.com>
@@ -72,8 +72,6 @@ Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-
-From: sangu09 <sangunb09@gmail.com>
 
 Make `--ignore-submodules=untracked` the default for `git diff` when
 there is no configuration variable or command line option, so that the
