@@ -2,122 +2,89 @@ Return-Path: <SRS0=cWhr=D6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 336E3C4363A
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 17:40:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F145C4363A
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 17:59:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C954A21527
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 17:40:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E1AC722254
+	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 17:59:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GfcTiykv"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="x2KPP0SJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753668AbgJWRkk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Oct 2020 13:40:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59548 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S462038AbgJWRkk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Oct 2020 13:40:40 -0400
-Received: from mail-oo1-xc43.google.com (mail-oo1-xc43.google.com [IPv6:2607:f8b0:4864:20::c43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29001C0613CE
-        for <git@vger.kernel.org>; Fri, 23 Oct 2020 10:40:40 -0700 (PDT)
-Received: by mail-oo1-xc43.google.com with SMTP id j6so585919oot.3
-        for <git@vger.kernel.org>; Fri, 23 Oct 2020 10:40:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=zYuKDdC6fJf36mARsm7uTUkOLMPL8ye9TGtboHZ4vP0=;
-        b=GfcTiykvNwy3kGnZgE3+E2QqvJL5lgKcffz9AggKYod1085hG02uc4JMu+IrKcN5Ox
-         nTTg9mtpNofKga9b8E56V0bL3YvGjX+sAALppEb416DWCGXuG1OemQqSwu5Ud6Uv8yCl
-         EN3+aSbwNunZe195c2gHil/Hz1qRM+/fXtfBD8pRkUG5beqQrlTfxqkpjmfAwL9IhcUu
-         jwtWIQ3yOMkOpPi81MRDiBiU9LEaMPcJulSeDH2klEUpCf0Ao0JXxsrR8OgQ0rUArnTj
-         N+PBaSkWk7NKGqMlb4JbwWMc/Cc9TNC1xVaB3SCY5nxIkZ/946A+4A6TZ3OAbpDyG4MZ
-         rJPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zYuKDdC6fJf36mARsm7uTUkOLMPL8ye9TGtboHZ4vP0=;
-        b=tV8eFkQb618lo4mWcRaZla/GmSq4hQL3xZDpGwvlJXedoTDtNbXnDabXjZD8+loK/U
-         Qa88p3h8fEZDELXoCcbxRq36Kisy9H7FVxw+uTduPtr301uLJH7oI7F6KvGJrjANGHi/
-         AmBMl7mUgiGezP9Ohn70kIbFR6m8KZAkjcdRreLPlF0Mfuhukb89phKkK0WmBfVx91rd
-         GmHw7bWizQyEyoMw4dnr4MxkR7dU5JN9R1OdR9P05rNn1Ab/fUMVGyUqsUkR2wcq3Xhm
-         i+J1X8yn1PnF2u5kntR30YLtNeMQM3C0DjquOHrU0xj29Wb54mDbEzAEtZ7Sl1j98lAy
-         CPhg==
-X-Gm-Message-State: AOAM533Znk88BLWH70JEGTB6I/FVBXf6+8NeseRdj0E5p5qpXERYe+Zm
-        atzdN55RGxbB1BkgTiJstCxmwRas9ZOeA12hK10TA2ericN0lw==
-X-Google-Smtp-Source: ABdhPJy06gDfT4k9eus/yzgwxY32NEjRgYVrPs73aWPVhTJQOI97tzNDK0ahokAfyPdhJCfsEh/gVBTiL2Z+KVTl7Po=
-X-Received: by 2002:a4a:b443:: with SMTP id h3mr2607779ooo.45.1603474839469;
- Fri, 23 Oct 2020 10:40:39 -0700 (PDT)
+        id S1754103AbgJWR7r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Oct 2020 13:59:47 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52352 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754099AbgJWR7q (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Oct 2020 13:59:46 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 76FFF8B65A;
+        Fri, 23 Oct 2020 13:59:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=MeKAqbEbjSrlQuYGkB6OzPlK3kg=; b=x2KPP0
+        SJkY2jc2tx66ogry4NATGjy7w9Dbv5hJLp1QHOHzp5r6fPTS7V6Wwvs4hhG2QVIj
+        6UTDbB7VQk15XfoUoDGEcBPzd31dQTN4XonbcLEuV+DoU02RNjZd6SPLUSnGkdjd
+        25OgxM1hA3Yw9lndMd8LKGSpI1Ofp9ATz/UmU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=yVwlbcZ70+Bl1m4K8aDbhjnqWJj2CVFW
+        u9rmrHjKw3bqHwi29Es6DAHXojbcKwkbaj/lLYcqSUdfR99bRpdt0Qn3sZYf0D/C
+        Z09BJqNBSVXqxGgLCaGEzNWJvAlT3K+s4eripfGOsQmndTjUhplLX/uXaR0++nml
+        vRjCPFocj5I=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6E6FE8B659;
+        Fri, 23 Oct 2020 13:59:44 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EB83F8B658;
+        Fri, 23 Oct 2020 13:59:43 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Jeff King <peff@peff.net>, VenomVendor <info@venomvendor.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+Subject: Re: committer-date-is-author-date flag removes email in "Commit"
+References: <e08df0d5792ab70a9158be32cfa28696@venomvendor.com>
+        <20201023070747.GA2198273@coredump.intra.peff.net>
+        <xmqqmu0dhsoz.fsf@gitster.c.googlers.com>
+        <58e83ad2-14a2-5ace-c1fd-8224625a0f97@gmail.com>
+Date:   Fri, 23 Oct 2020 10:59:43 -0700
+In-Reply-To: <58e83ad2-14a2-5ace-c1fd-8224625a0f97@gmail.com> (Phillip Wood's
+        message of "Fri, 23 Oct 2020 18:32:51 +0100")
+Message-ID: <xmqqh7qkhlgw.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.769.git.1603468885.gitgitgadget@gmail.com> <9394d526f1425fcf6b8865b53b737ba81c11dd80.1603468885.git.gitgitgadget@gmail.com>
-In-Reply-To: <9394d526f1425fcf6b8865b53b737ba81c11dd80.1603468885.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 23 Oct 2020 10:40:28 -0700
-Message-ID: <CABPp-BEhjecB7_juP3cSuF7MUHKbPXqAxKgKstPZw2ezHXputw@mail.gmail.com>
-Subject: Re: [PATCH 2/9] merge tests: expect improved directory/file conflict
- handling in ort
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 87D0DAE4-1559-11EB-840A-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 23, 2020 at 9:01 AM Elijah Newren via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Elijah Newren <newren@gmail.com>
->
-> merge-recursive.c is built on the idea of running unpack_trees() and
-> then "doing minor touch-ups" to get the result.  Unfortunately,
-> unpack_trees() was run in an update-as-it-goes mode, leading
-> merge-recursive.c to follow suit and end up with an immediate evaluation
-> and fix-it-up-as-you-go design.  Some things like directory/file
-> conflicts are not well representable in the index data structure, and
-> required special extra code to handle.  But then when it was discovered
-> that rename/delete conflicts could also be involved in directory/file
-> conflicts, the special directory/file conflict handling code had to be
-> copied to the rename/delete codepath.  ...and then it had to be copied
-> for modify/delete, and for rename/rename(1to2) conflicts, ...and yet it
-> still missed some.  Further, when it was discovered that there were also
-> file/submodule conflicts and submodule/directory conflicts, we needed to
-> copy the special submodule handling code to all the special cases
-> throughout the codebase.
->
-> And then it was discovered that our handling of directory/file conflicts
-> was suboptimal because it would create untracked files to store the
-> contents of the conflicting file, which would not be cleaned up if
-> someone were to run a 'git merge --abort' or 'git rebase --abort'.  It
-> was also difficult or scary to try to add or remove the index entries
-> corresponding to these files given the directory/file conflict in the
-> index.  But changing merge-recursive.c to handle these correctly was a
-> royal pain because there were so many sites in the code with similar but
-> not identical code for handling directory/file/submodule conflicts that
-> would all need to be updated.
->
-> I have worked hard to push all directory/file/submodule conflict
-> handling in merge-ort through a single codepath, and avoid creating
-> untracked files for storing tracked content (it does record things at
-> alternate paths, but makes sure they have higher-order stages in the
-> index).
->
-> Since updating merge-recursive is too much work and we don't want to
-> destabilize it, instead update the testsuite to have different
-> expectations for relevant directory/file/submodule conflict tests.
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Perhaps I should also mention that these changes to directory/file
-conflict handling were discussed previously in the thread at
-https://lore.kernel.org/git/xmqqbmabcuhf.fsf@gitster-ct.c.googlers.com/.
-I just never got around to a complete implementation within
-merge-recursive.c, but did implement it in merge-ort.c
+>> I wonder if we even needed to do the original change to begin with
+>> (stopping to export means not giving information to the hooks), but
+>> that is a separate matter.
+>
+> I think the main motivation was to stop polluting the environment of
+> exec commands
 
-I still haven't gotten around to fixing up git-mv and git-rm as
-suggested by Junio in that thread; but at least I've finally gotten
-the merge machinery side written...
+As long as the information that used to be exported can be learned
+by the hook script when/if it wants to (how?  read the original
+commit object with "git show -s --format=..."?  How would it know
+which one is the original commit?), it is fine.
+
+If not, a script that does not want the exported environment
+variable can easily ignore it (just "unset" it) but to a script that
+wanted to learn the information that used to be in the environment
+variable, it's not "stop polluting" but "lose information", and that
+is where my earlier "I wonder" comes from.
+
+
