@@ -2,212 +2,405 @@ Return-Path: <SRS0=1Io1=D7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-8.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1583AC2D0A3
-	for <git@archiver.kernel.org>; Sat, 24 Oct 2020 17:11:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A18ADC2D0A3
+	for <git@archiver.kernel.org>; Sat, 24 Oct 2020 17:52:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ABE9C21D81
-	for <git@archiver.kernel.org>; Sat, 24 Oct 2020 17:11:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 45CAD22254
+	for <git@archiver.kernel.org>; Sat, 24 Oct 2020 17:52:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="P6Ql7OSR"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="IFuXJsXA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760427AbgJXRHE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 24 Oct 2020 13:07:04 -0400
-Received: from mout.web.de ([212.227.15.4]:55645 "EHLO mout.web.de"
+        id S1762748AbgJXRw5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Oct 2020 13:52:57 -0400
+Received: from mout.web.de ([212.227.15.3]:54331 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1760048AbgJXRHD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Oct 2020 13:07:03 -0400
+        id S1762745AbgJXRw4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Oct 2020 13:52:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1603559218;
-        bh=mTkhNQgNloX1cByRtapwlHQPY72y4Ak72JrjkNwch1E=;
-        h=X-UI-Sender-Class:Subject:To:References:From:Cc:Date:In-Reply-To;
-        b=P6Ql7OSReGcta4X1ZrmYLheM73M0uUbK1XR910kcW0MEHHwZYUgB/rqLPKo3k3DA9
-         HxRTEer/Y/Ezd1WXu9IjabGWu1un61szX64BmMgTrgYTsVYmewZttjA3v+EjqGtj2q
-         1U0PQX65OTN1zo3k3czI81tPUORFKR3GUDNBMWCo=
+        s=dbaedf251592; t=1603561969;
+        bh=Mlg5/zB1HBAc1fHSv3R7PS8m8aKBShSwvckrYVd9TBA=;
+        h=X-UI-Sender-Class:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=IFuXJsXAHsTD+P3spaTp+F5IWM73YXZHWwnWmoBtiIrXzKUwjz5k5gZC+CQZl0B+h
+         nxhgMDsxUxshaAi9wHWzVX4KBkYjC/bZU4h7iDHK3eCXfSCsb4eHROG1NettGjSwsf
+         o3O0uLNg7AUO7eKk9/lIknM7F9NiCX+cb1slDkT4=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.17.45]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MZims-1kpXFn45ks-00LWlH; Sat, 24
- Oct 2020 19:06:58 +0200
-Subject: Re: [bug] Stashes lost after out-of-memory situation
-To:     Marek Mrva <mrva@eof-studios.com>, git@vger.kernel.org
-References: <65a3061a-47ef-9ca6-2468-5449cfc5b37c@eof-studios.com>
+Received: from [192.168.178.26] ([79.203.17.45]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lcxjk-1k65NR2Kgq-00iGXN; Sat, 24
+ Oct 2020 19:52:49 +0200
+Subject: Re: [ANNOUNCE] Git v2.29.0-rc1
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>
-Message-ID: <618d66a8-e2c1-241c-5200-2298bfe24ac0@web.de>
-Date:   Sat, 24 Oct 2020 19:06:48 +0200
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <xmqq7drzv1bn.fsf@gitster.c.googlers.com>
+ <ce8f482f-9a78-6867-38ae-601bcc2c9f66@web.de>
+ <xmqqmu0rqu8h.fsf@gitster.c.googlers.com>
+ <61bafa3b-bd23-f01f-9a4a-c348b7588f37@web.de>
+Message-ID: <e135ac82-49f1-e06c-45d7-6b3b9f9837c6@web.de>
+Date:   Sat, 24 Oct 2020 19:52:49 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.12.0
 MIME-Version: 1.0
-In-Reply-To: <65a3061a-47ef-9ca6-2468-5449cfc5b37c@eof-studios.com>
+In-Reply-To: <61bafa3b-bd23-f01f-9a4a-c348b7588f37@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:BUstU8USyusiLV4OeEnCZwvVDl0IJVeGvo9sWATSPvBtE0Wx73Q
- 2YruYyf57rBQfM2Op7b1/6vGhM3mz1YGy93F1DxAvje43zI2wNwJ+l4vk1N+0Phx+hrdszR
- qBn523kG/HjWC+qm6+lGKzQlPV46ON2kqkm0GLdDRuB0vOHoXIamlYpaXwdBWdAqEQBHzGJ
- FjHsZ+59vlIo6rY0x69xg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:+CfyyMCNKiI=:NBlS+rRHw5oP3tTKh6M7hO
- uC5qP/bG+KeYWU+cS+O2c9H3NA2rAcEFMxXk20MqHqXOqhtj1IyVN2x3nHY7F5O4Jro5aYHNJ
- BAc0oDeDLSWddtQzR0kaYKCiThJEltd2O8Z+vr+d5TSvYfg8OSr5dhqQqzHKXCgSKDCjjlVVu
- Eb4wy1EYAKsD4gLssX0ZuaB0f4d5GQr6mdBLmfnqFGTSOz48+TI4m6xL1TWmaYMm5AjTxf4b9
- xgM41MaJ9TK4wubCUhX5tg05LpYttVoIAPk+LUBcs4tG70XBdjiHHp8HBlddM1GDc1M68gzBl
- M+X4AuvBxXegqn+OXzvuU0vihVdDDwod5h9BLoqLJ1XA3Zk4PNb1n/adVHlEIPUD+CB7IsfXk
- qgNGNDgcSfBV8RNTrAf0048XBN2wfe0eMCM4lSKhXVEx8sB79PFPoCFP2wJ0GpjJptJtaKDIK
- ncn1W1/RmT7+OomQD7bCVgNkA7eqqmLTTcLNWkRTj2kdGsRxZN9drKkMlHNI/ABWY9/bAICyh
- PDb+3DcsxNaWZfK+wgTPXTmdkQr2TwGFzGcjsGn17oIFEzbShptICtBnaOBtRQAdfCDbnKLB0
- yrq+1Jk0ZIoYgCFzZD/y2thD1FZ7W6la2tqSXrGMY1Shp5PFDCe5blBZah4h0yZ/IVRygaS9R
- ZZ9zzvY/WRvJ2oLE+eccbUA40WBDa1dfp8R4IqKTHDycOSIarLV+ZLbeQ26HHGinovcwnejSa
- CMoEP+xO8zJ2aRheSwT7ZI7MfUHrC3DpqxApuQ1ZGIS2x5Kc6uK1KMdwQYvQzgQzuGisKwKxi
- mdpFwKK3v/A+V2Ch2cnfGYaB+i4wipIdFXO0zbYZUz4RrcMfE03+mA+tdv+7EVIi+jrjkM7bb
- ccNrGdDYCe4vBBO3o1ig==
+X-Provags-ID: V03:K1:lu3nM4b0c+fEDdF36zqc4LO9ze/PNIC+/Jtu5YKEmpjsQkq//dR
+ mTCgcKfPI1QgPeiUNaALc2ehnhs2aMqTADRwTAMIyng7ro6tRztUHE1V3IkX0AJMaOnDqOB
+ aAorXKePoevKJiRxsGlMS6JYQbFaKxG16aUsGa4hC9AGmYBbYP0PlJ0YMoRK1E30PfIAhLf
+ 8euSJD+16qAWdBJgCZ0lw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:vSIma0KAKzs=:+HKSCN2/sFfDMCu1Q9tOT+
+ NehcTKGf7l+iZ8u9n4YD6pESSf/mwhzm7b1k9F1gK5TfJwwqcrgwDZaRV+6gtW5P5RVYgd1LP
+ GN00gDL2PPM0GEJXRHXiLY1Z5aU1zVpnOsSTCeYVYl/MVgvOCicfqBIXbNYubAeJductd6/GV
+ VPA4rgdAFj8RuJHUXnlnYiCWs1ZJPLCY7AR/rdrY1f/hjWdtvY0oIaPZEOa1uqD9oNFsY5Hmn
+ B1KlYUiKtpnWeUkWTIS2y1nJaK2KMwnN1mfk638yD+FHLnzAPUDTSMWgHrP0LX1wEpfcylRsh
+ tzatnuZEKT5mUdDNhkwRSGH1Qx5m74Gw/8KpZ2bUihebvoRXm5S9sxwzRcdbayOxFAc5N7+VJ
+ Zc52ZPT7UnTF49/2wJ/Wzi+L87a6J75yRaCN9UDMubz1QngE9muTJ9AjYbh4l9FFV6J8BS3j/
+ /bzYoyGgjDoG4t08xo6+drb7p/IeBE+7u6isB4LV32hf2YLUg7ZwhZIu62k0mQnR57ZoLi8nT
+ m2CO2qTH+2RiXht3faXCzTB1jJLZhQ80QOVhQHOx6ykJIUx8mM+ZRwIQ0wuVrf9e5ahvhN0AM
+ MCBDTnP3JdvCn8YBhbSlcwhF/e+4jZgt/+BczFKz61AhrmDZOT5sx4OBqHpBHHGyM9i3y1X+l
+ ds4ROGbS03qGSBChaIwzNL2z3v3Gm+T1eLiuWkYFN+fTMchVxdCyDcX+xyFrZXN/I5CkeeL0d
+ gOYVFRNXKAQ8s6V+JOkziTt7dWs2qrBJENgB16tbeufxMB+FZ452Cr2Hh7zdbA5G/ubSxabvM
+ bVQpRgSyDjvNbT3SUbuf/o1Seg/2k1/wmV+sQsFUy7FW1MNUcORRPstqZpaFQsUObgOu5Zr6e
+ 77kgwFpYeY1glO1K4HGQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 23.10.20 um 16:53 schrieb Marek Mrva:
-> Hello, hopefully this is the correct mailing list - apologies if it is n=
-ot.
-
-You came to the right place.
-
-> After issuing "git stash pop" while being low on memory, the following w=
-as printed to the console:
+Am 12.10.20 um 21:19 schrieb Ren=C3=A9 Scharfe:
+> Am 12.10.20 um 18:33 schrieb Junio C Hamano:
+>> If this "feature" were experimental and if the experiment turns out
+>> to be a failure, would we have a viable alternative definition?
+>>
+>> Perhaps "--add-file names an untracked file in the working tree and
+>> the single '--prefix' that is used for entries that come from the
+>> tree object is applied"?  Or perhaps remove --add-file entirely as a
+>> failed experiment?
 >
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0 [main] git 2061 fhandler_disk_file::fix=
-up_mmap_after_fork: requested 0x6FFFC1550000 !=3D 0x0 mem alloc base 0x0, =
-state 0x10000,
-> size 17545957736448, Win32 error 1455
-> =C2=A0 36836 [main] git 2061 C:\cygwin64\bin\git.exe: *** fatal error in=
- forked process - recreate_mmaps_after_fork_failed
-> =C2=A0 37523 [main] git 2061 cygwin_exception::open_stackdumpfile: Dumpi=
-ng stack trace to git.exe.stackdump
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0 [main] git 2056 dofork: child -1 - fork=
-ed process 12100 died unexpectedly, retry 0, exit code 0x100, errno 11
-> error: cannot fork() for status: Resource temporarily unavailable
-> Dropped refs/stash@{0} (06d44ccc5ed2ac93b370100f481147ae4f0065db)
-> error: cannot fork() for rev-parse: Resource temporarily unavailable
+> Removing --add-file entirely is certainly possible, but it's used in the
+> Makefile now and I can't imagine what would make its disposal necessary.
 >
-> Afterwards, the result of "git stash list" is empty, even though there u=
-sed to be more than 10+ stashes saved.
+> Turning it into a standard OPT_STRING_LIST option for full untracked
+> paths and using the last --prefix value for all archive entries would be
+> a more straightforward UI and might be versatile enough.
 
-How horrible!
+Here's how that would have looked, but it seems I'm too late.
 
-> Obviously while being low on memory, one should not expect commands
-> to run properly. Losing all the *other* stashes could hopefully be
-> somehow avoided, if possible.
+The Makefile rules get a bit more fragile because the version files are
+special and the simpler --add-file forces us to create them at their
+actual place if not present, which can lead to problems (stuck version)
+if we don't delete them afterwards.  Avoiding that was the reason for
+the more complicated version that ended up in v2.29.  That fragility
+could be defused by teaching GIT-VERSION-GEN about version_is_generated.
 
-Of course.
+Anyway, at this point I'm OK with keeping the released version to avoid
+additional confusion.
 
-> It is worth mentioning this happened in a cygwin environment on Windows.
->
-> Any help would be greatly appreciated! :)
 
-Before any repair attempt please make a backup of the whole repository.
+ Documentation/git-archive.txt |  4 +--
+ Makefile                      | 52 +++++++++++++++------------
+ archive.c                     | 83 ++++++++++++++++----------------------=
+-----
+ t/t5000-tar-tree.sh           | 11 ------
+ t/t5003-archive-zip.sh        | 10 ------
+ 5 files changed, 61 insertions(+), 99 deletions(-)
 
-You may be able to recover the lost stacks using git fsck, which can
-show dangling commits, i.e. commits that are no longer referenced.
-They will be cleaned up eventually by git gc, so avoid running that
-until you recovered as many of them as possible.
+diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
+index 9f8172828d..b221dd5e3d 100644
+=2D-- a/Documentation/git-archive.txt
++++ b/Documentation/git-archive.txt
+@@ -57,9 +57,7 @@ OPTIONS
 
-The manpage of git stash says:
+ --add-file=3D<file>::
+ 	Add a non-tracked file to the archive.  Can be repeated to add
+-	multiple files.  The path of the file in the archive is built
+-	by concatenating the value for `--prefix` (if any) and the
+-	basename of <file>.
++	multiple files.
 
-  Recovering stash entries that were cleared/dropped erroneously::
+ --worktree-attributes::
+ 	Look for attributes in .gitattributes files in the working tree
+diff --git a/Makefile b/Makefile
+index 1fb0ec1705..33fd806bc6 100644
+=2D-- a/Makefile
++++ b/Makefile
+@@ -3050,34 +3050,41 @@ quick-install-html:
 
-  If you mistakenly drop or clear stash entries, they cannot be recovered
-  through the normal safety mechanisms.  However, you can try the
-  following incantation to get a list of stash entries that are still in
-  your repository, but not reachable any more:
+ ### Maintainer's dist rules
 
-  ----------------------------------------------------------------
-  git fsck --unreachable |
-  grep commit | cut -d\  -f3 |
-  xargs git log --merges --no-walk --grep=3DWIP
-  ----------------------------------------------------------------
++version:
++	touch version_is_generated
++	echo $(GIT_VERSION) > version
++
++git-gui/version:
++	touch git-gui/version_is_generated
++	$(MAKE) -C git-gui TARDIR=3D. dist-version
++
++define version_clean_script =3D
++if test -f version_is_generated; then \
++	$(RM) version version_is_generated; \
++fi
++if test -f git-gui/version_is_generated; then \
++	$(RM) git-gui/version git-gui/version_is_generated; \
++fi
++endef
++
+ # Allow tweaking to hide local environment effects, like perm bits.
+ # With GNU tar, "--mode=3Du+rwX,og+rX,og-w" would be a good idea, for exa=
+mple.
+ TAR_DIST_EXTRA_OPTS =3D
+ GIT_TARNAME =3D git-$(GIT_VERSION)
+-GIT_ARCHIVE_EXTRA_FILES =3D \
+-	--prefix=3D$(GIT_TARNAME)/ \
+-	--add-file=3Dconfigure \
+-	--add-file=3D$(GIT_TARNAME)/version \
+-	--prefix=3D$(GIT_TARNAME)/git-gui/ \
+-	--add-file=3D$(GIT_TARNAME)/git-gui/version
++GIT_ARCHIVE_EXTRA_FILES =3D configure version git-gui/version
+ ifdef DC_SHA1_SUBMODULE
+-GIT_ARCHIVE_EXTRA_FILES +=3D \
+-	--prefix=3D$(GIT_TARNAME)/sha1collisiondetection/ \
+-	--add-file=3Dsha1collisiondetection/LICENSE.txt \
+-	--prefix=3D$(GIT_TARNAME)/sha1collisiondetection/lib/ \
+-	--add-file=3Dsha1collisiondetection/lib/sha1.c \
+-	--add-file=3Dsha1collisiondetection/lib/sha1.h \
+-	--add-file=3Dsha1collisiondetection/lib/ubc_check.c \
+-	--add-file=3Dsha1collisiondetection/lib/ubc_check.h
+-endif
+-dist: git-archive$(X) configure
+-	@mkdir -p $(GIT_TARNAME)
+-	@echo $(GIT_VERSION) > $(GIT_TARNAME)/version
+-	@$(MAKE) -C git-gui TARDIR=3D../$(GIT_TARNAME)/git-gui dist-version
++GIT_ARCHIVE_EXTRA_FILES +=3D sha1collisiondetection/LICENSE.txt \
++			   sha1collisiondetection/lib/sha1.c \
++			   sha1collisiondetection/lib/sha1.h \
++			   sha1collisiondetection/lib/ubc_check.c \
++			   sha1collisiondetection/lib/ubc_check.h
++endif
++dist: git-archive$(X) configure version git-gui/version
+ 	./git-archive --format=3Dtar \
+-		$(GIT_ARCHIVE_EXTRA_FILES) \
+-		--prefix=3D$(GIT_TARNAME)/ HEAD^{tree} > $(GIT_TARNAME).tar
+-	@$(RM) -r $(GIT_TARNAME)
++		$(subst $(space),$(space)--add-file=3D,$(space)$(GIT_ARCHIVE_EXTRA_FILE=
+S)) \
++		--prefix=3D$(GIT_TARNAME)/ HEAD^{tree} > $(GIT_TARNAME).tar || \
++	$(RM) $(GIT_TARNAME).tar
++	$(version_clean_script)
+ 	gzip -f -9 $(GIT_TARNAME).tar
 
-You are basically looking for merges with two parents and your stash
-message as commit message.  See the manpage for some more details.
-
-You could use them to rebuild .git/logs/refs/stash manually, or to
-apply them with git cherry-pick -m1.
-
-Good luck!
-
-So why did this happen?  Looks like stash calls rev-parse to see if a
-stash pop removed the last stash and in that case proceeds to delete the
-stash ref and its reflog.  A failure of rev-parse is interpreted as no
-stashes being left.  This can be triggered by other reasons (like OOM),
-so this is dangerously fragile.  Let's make that check more precise.
-
-=2D- >8 --
-Subject: [PATCH] stash: simplify reflog emptiness check
-
-Calling rev-parse to check if the drop subcommand removed the last stash
-and treating its failure as confirmation is fragile, as the command can
-fail for other reasons, e.g. because the system is out of memory.
-Directly check if the reflog is empty instead, which is more robust.
-
-Reported-by: Marek Mrva <mrva@eof-studios.com>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- builtin/stash.c | 27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
-
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 3f811f3050..24ddb1bffa 100644
-=2D-- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -534,11 +534,22 @@ static int apply_stash(int argc, const char **argv, =
-const char *prefix)
- 	return ret;
+ rpm::
+@@ -3164,6 +3171,7 @@ endif
+ 	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-LDFLAGS GIT-BUILD-OPTIONS
+ 	$(RM) GIT-USER-AGENT GIT-PREFIX
+ 	$(RM) GIT-SCRIPT-DEFINES GIT-PERL-DEFINES GIT-PERL-HEADER GIT-PYTHON-VAR=
+S
++	$(version_clean_script)
+ ifdef MSVC
+ 	$(RM) $(patsubst %.o,%.o.pdb,$(OBJECTS))
+ 	$(RM) $(patsubst %.exe,%.pdb,$(OTHER_PROGRAMS))
+diff --git a/archive.c b/archive.c
+index 3c1541af9e..bb56b27581 100644
+=2D-- a/archive.c
++++ b/archive.c
+@@ -267,8 +267,8 @@ static int queue_or_write_archive_entry(const struct o=
+bject_id *oid,
  }
 
-+static int reject_reflog_ent(struct object_id *ooid, struct object_id *no=
-id,
-+			     const char *email, timestamp_t timestamp, int tz,
-+			     const char *message, void *cb_data)
-+{
-+	return 1;
-+}
-+
-+static int reflog_is_empty(const char *refname)
-+{
-+	return !for_each_reflog_ent(refname, reject_reflog_ent, NULL);
-+}
-+
- static int do_drop_stash(struct stash_info *info, int quiet)
- {
- 	int ret;
- 	struct child_process cp_reflog =3D CHILD_PROCESS_INIT;
--	struct child_process cp =3D CHILD_PROCESS_INIT;
+ struct extra_file_info {
+-	char *base;
+-	struct stat stat;
++	unsigned int mode;
++	size_t size;
+ };
 
- 	/*
- 	 * reflog does not provide a simple function for deleting refs. One will
-@@ -559,19 +570,7 @@ static int do_drop_stash(struct stash_info *info, int=
- quiet)
- 			     info->revision.buf);
- 	}
+ int write_archive_entries(struct archiver_args *args,
+@@ -278,7 +278,6 @@ int write_archive_entries(struct archiver_args *args,
+ 	struct unpack_trees_options opts;
+ 	struct tree_desc t;
+ 	int err;
+-	struct strbuf path_in_archive =3D STRBUF_INIT;
+ 	struct strbuf content =3D STRBUF_INIT;
+ 	struct object_id fake_oid =3D null_oid;
+ 	int i;
+@@ -331,27 +330,24 @@ int write_archive_entries(struct archiver_args *args=
+,
+ 	for (i =3D 0; i < args->extra_files.nr; i++) {
+ 		struct string_list_item *item =3D args->extra_files.items + i;
+ 		char *path =3D item->string;
++		char *path_on_disk =3D prefix_filename(args->prefix, path);
++		char *path_in_archive =3D prefix_filename(args->base, path);
+ 		struct extra_file_info *info =3D item->util;
 
--	/*
--	 * This could easily be replaced by get_oid, but currently it will throw
--	 * a fatal error when a reflog is empty, which we can not recover from.
--	 */
--	cp.git_cmd =3D 1;
--	/* Even though --quiet is specified, rev-parse still outputs the hash */
--	cp.no_stdout =3D 1;
--	strvec_pushl(&cp.args, "rev-parse", "--verify", "--quiet", NULL);
--	strvec_pushf(&cp.args, "%s@{0}", ref_stash);
--	ret =3D run_command(&cp);
+ 		put_be64(fake_oid.hash, i + 1);
+
+-		strbuf_reset(&path_in_archive);
+-		if (info->base)
+-			strbuf_addstr(&path_in_archive, info->base);
+-		strbuf_addstr(&path_in_archive, basename(path));
 -
--	/* do_clear_stash if we just dropped the last stash entry */
--	if (ret)
-+	if (reflog_is_empty(ref_stash))
- 		do_clear_stash();
+ 		strbuf_reset(&content);
+-		if (strbuf_read_file(&content, path, info->stat.st_size) < 0)
++		if (strbuf_read_file(&content, path_on_disk, info->size) < 0)
+ 			err =3D error_errno(_("could not read '%s'"), path);
+ 		else
+-			err =3D write_entry(args, &fake_oid, path_in_archive.buf,
+-					  path_in_archive.len,
+-					  info->stat.st_mode,
++			err =3D write_entry(args, &fake_oid, path_in_archive,
++					  strlen(path_in_archive), info->mode,
+ 					  content.buf, content.len);
++		free(path_on_disk);
++		free(path_in_archive);
+ 		if (err)
+ 			break;
+ 	}
+-	strbuf_release(&path_in_archive);
+ 	strbuf_release(&content);
 
- 	return 0;
-=2D-
-2.28.0
+ 	return err;
+@@ -493,42 +489,6 @@ static void parse_treeish_arg(const char **argv,
+ 	ar_args->time =3D archive_time;
+ }
+
+-static void extra_file_info_clear(void *util, const char *str)
+-{
+-	struct extra_file_info *info =3D util;
+-	free(info->base);
+-	free(info);
+-}
+-
+-static int add_file_cb(const struct option *opt, const char *arg, int uns=
+et)
+-{
+-	struct archiver_args *args =3D opt->value;
+-	const char **basep =3D (const char **)opt->defval;
+-	const char *base =3D *basep;
+-	char *path;
+-	struct string_list_item *item;
+-	struct extra_file_info *info;
+-
+-	if (unset) {
+-		string_list_clear_func(&args->extra_files,
+-				       extra_file_info_clear);
+-		return 0;
+-	}
+-
+-	if (!arg)
+-		return -1;
+-
+-	path =3D prefix_filename(args->prefix, arg);
+-	item =3D string_list_append_nodup(&args->extra_files, path);
+-	item->util =3D info =3D xmalloc(sizeof(*info));
+-	info->base =3D xstrdup_or_null(base);
+-	if (stat(path, &info->stat))
+-		die(_("File not found: %s"), path);
+-	if (!S_ISREG(info->stat.st_mode))
+-		die(_("Not a regular file: %s"), path);
+-	return 0;
+-}
+-
+ #define OPT__COMPR(s, v, h, p) \
+ 	OPT_SET_INT_F(s, NULL, v, h, p, PARSE_OPT_NONEG)
+ #define OPT__COMPR_HIDDEN(s, v, p) \
+@@ -548,14 +508,14 @@ static int parse_archive_args(int argc, const char *=
+*argv,
+ 	int i;
+ 	int list =3D 0;
+ 	int worktree_attributes =3D 0;
++	struct string_list_item *item;
+ 	struct option opts[] =3D {
+ 		OPT_GROUP(""),
+ 		OPT_STRING(0, "format", &format, N_("fmt"), N_("archive format")),
+ 		OPT_STRING(0, "prefix", &base, N_("prefix"),
+ 			N_("prepend prefix to each pathname in the archive")),
+-		{ OPTION_CALLBACK, 0, "add-file", args, N_("file"),
+-		  N_("add untracked file to archive"), 0, add_file_cb,
+-		  (intptr_t)&base },
++		OPT_STRING_LIST(0, "add-file", &args->extra_files, N_("file"),
++				N_("add untracked file to archive")),
+ 		OPT_STRING('o', "output", &output, N_("file"),
+ 			N_("write the archive to this file")),
+ 		OPT_BOOL(0, "worktree-attributes", &worktree_attributes,
+@@ -593,6 +553,23 @@ static int parse_archive_args(int argc, const char **=
+argv,
+ 	if (is_remote && args->extra_files.nr)
+ 		die(_("Options --add-file and --remote cannot be used together"));
+
++	for_each_string_list_item(item, &args->extra_files) {
++		char *path;
++		struct stat st;
++		struct extra_file_info *info;
++
++		path =3D prefix_filename(args->prefix, item->string);
++		if (lstat(path, &st))
++			die(_("File not found: %s"), item->string);
++		if (!S_ISREG(st.st_mode))
++			die(_("Not a regular file: %s"), item->string);
++		free(path);
++
++		item->util =3D info =3D xmalloc(sizeof(*info));
++		info->mode =3D canon_mode(st.st_mode);
++		info->size =3D st.st_size;
++	}
++
+ 	if (!base)
+ 		base =3D "";
+
+@@ -661,7 +638,7 @@ int write_archive(int argc, const char **argv, const c=
+har *prefix,
+
+ 	rc =3D ar->write_archive(ar, &args);
+
+-	string_list_clear_func(&args.extra_files, extra_file_info_clear);
++	string_list_clear(&args.extra_files, 1);
+
+ 	return rc;
+ }
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 3ebb0d3b65..a090712ddb 100755
+=2D-- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -182,17 +182,6 @@ test_expect_success 'git archive --add-file' '
+ check_tar with_untracked
+ check_added with_untracked untracked untracked
+
+-test_expect_success 'git archive --add-file twice' '
+-	echo untracked >untracked &&
+-	git archive --prefix=3Done/ --add-file=3Duntracked \
+-		--prefix=3Dtwo/ --add-file=3Duntracked \
+-		--prefix=3D HEAD >with_untracked2.tar
+-'
+-
+-check_tar with_untracked2
+-check_added with_untracked2 untracked one/untracked
+-check_added with_untracked2 untracked two/untracked
+-
+ test_expect_success 'git archive on large files' '
+     test_config core.bigfilethreshold 1 &&
+     git archive HEAD >b3.tar &&
+diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
+index 1e6d18b140..a9a44f2760 100755
+=2D-- a/t/t5003-archive-zip.sh
++++ b/t/t5003-archive-zip.sh
+@@ -206,14 +206,4 @@ test_expect_success 'git archive --format=3Dzip --add=
+-file' '
+ check_zip with_untracked
+ check_added with_untracked untracked untracked
+
+-test_expect_success 'git archive --format=3Dzip --add-file twice' '
+-	echo untracked >untracked &&
+-	git archive --format=3Dzip --prefix=3Done/ --add-file=3Duntracked \
+-		--prefix=3Dtwo/ --add-file=3Duntracked \
+-		--prefix=3D HEAD >with_untracked2.zip
+-'
+-check_zip with_untracked2
+-check_added with_untracked2 untracked one/untracked
+-check_added with_untracked2 untracked two/untracked
+-
+ test_done
