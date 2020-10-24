@@ -2,119 +2,121 @@ Return-Path: <SRS0=1Io1=D7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84092C2D0A3
-	for <git@archiver.kernel.org>; Sat, 24 Oct 2020 07:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE821C4363A
+	for <git@archiver.kernel.org>; Sat, 24 Oct 2020 10:47:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4055520936
-	for <git@archiver.kernel.org>; Sat, 24 Oct 2020 07:41:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 997BC2176B
+	for <git@archiver.kernel.org>; Sat, 24 Oct 2020 10:47:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="t2l69jbo"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BQTHJ05G"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759902AbgJXHll (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 24 Oct 2020 03:41:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47720 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1759899AbgJXHlk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Oct 2020 03:41:40 -0400
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E86C6C0613CE
-        for <git@vger.kernel.org>; Sat, 24 Oct 2020 00:41:39 -0700 (PDT)
-Received: by mail-ej1-x644.google.com with SMTP id ce10so5535613ejc.5
-        for <git@vger.kernel.org>; Sat, 24 Oct 2020 00:41:39 -0700 (PDT)
+        id S1761061AbgJXKr0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Oct 2020 06:47:26 -0400
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:40315 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1759092AbgJXKrZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Oct 2020 06:47:25 -0400
+Received: by mail-lj1-f193.google.com with SMTP id 23so4298537ljv.7
+        for <git@vger.kernel.org>; Sat, 24 Oct 2020 03:47:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=UvC2c5YuWlBf9igPR4E3REGoy1TEHkHMmQlqj4YbamM=;
-        b=t2l69jboYv4G9uYjU2RZ235xNtc3xO5OVJ8zv43MyIZj0eMeir5hB+4EsJZ+eerQ+s
-         UaHb+ooC6KUD8+KYY0ltOkgHw9aOK98MYZpYZZGmWGZ02H45QJV+t0P6EgMbHKWbU2J6
-         ybDrNKj/u4OmKLWScfwdEtAPlP2rY+2TSuUYelewQV+4aLXosPNTrf4LoMFDCh9BZudD
-         HVpubCMaoLOUJf8WGmJKEXdP+kAsePabRE0tPvWC+DysCpeEIy/GJvUBaF6LEsltwDsD
-         N0qtXBWVyCdaK7cNf8u5mwH2Ha2zYOZbBz6/zXcaONXEFJTOUMBqn8KbpP0Ej7khTN7i
-         2VBg==
+         :cc;
+        bh=73Sfse/iSuzumSU26pmE/Ev2N6pop1KfgWCZvGYjFmM=;
+        b=BQTHJ05Gb+zlVeBn6PHOLhh8QuuvSde4yRSEUiRiyE0E7wh+1vNV781jd1R46tSLXq
+         KWByJzHSjfHd9cf57Hlc9/+tqHAyjDqFBr9RcJcQJPlHQQcbrOyVt3O1Ke9LN5q1uyUV
+         sFiX2reTzR3bqxVnVq/8tBiqc21Ifyr/+5YdRHKzhxfhi0sc5XIQPV8XuBcXMKVxzD/Y
+         J3LBybkhQa5UfaK0BR1oG0fsbO1hUPZhh2caNwKFfTH/Rh5naSdKmRt1+VXzjEGeyu1g
+         iG8p0Rf7bRUdE2aZdKRYWCJVWhP8G4gDqH5fYdLmveZvOCKGUzTjX9/1sYwypIRfDhcn
+         oi0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=UvC2c5YuWlBf9igPR4E3REGoy1TEHkHMmQlqj4YbamM=;
-        b=Uoo1Ay8yLeJGaoCRcPwtt5Qma55e16s0BZcdq8/mCxww5h6xDAFhPpjk7KDKji5/Zo
-         7rJQcx20upZHHZP1s6GdobaBARw96vxX/BSeCO1NyRwbJthDV3jcqw20z5QC5chodCcG
-         /VPqiasbIIhpJn6owq8q3gZ5JRsoGzHw0oob1I76HSJuDfshqoX+a9MIsS9mHFtIf6zW
-         RxguoUn/Ro36sbS352A/ziNmhEl4/BEDp9apVk9xGdu+stGioY1EbwIuua5ApGVCVt2L
-         f6P4v+8YXLuXtn53gAPylAiB/7GbL68DFU8csAe0ei+jRuyWnxC1MjZvejgpbgjSRdQf
-         ep4w==
-X-Gm-Message-State: AOAM533F/OrJ+carAJsqfUBrQzvtwrhRwRDuat4CdbHUN4vy/3zJ4mpf
-        bIhP8pEc0dH6VWPdc/Vi7z3A0AJbPhakBNimeXs=
-X-Google-Smtp-Source: ABdhPJzjUipHniPGps7QSpJ0tTQGf3QLgrZjQilNaRmBDyBdjyl+WBour/WN66q6w22VkkJCp+qXJzaoO7VKolKcYHo=
-X-Received: by 2002:a17:906:c20f:: with SMTP id d15mr5645410ejz.341.1603525298669;
- Sat, 24 Oct 2020 00:41:38 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=73Sfse/iSuzumSU26pmE/Ev2N6pop1KfgWCZvGYjFmM=;
+        b=sGoPy1e3VOxDQQXp/h/nyNtwskWZE5DLnFajfFMRvVIATQr23dp4jq819B8qHxThMG
+         oYdUQ28UONqlc7kwxyu2pJNBoEG8pQPVYxvRlcD94BBzP4N3PZJD0CudWdnkl4QDVJL4
+         78r2c2KytX/TGSHatmnX+u1ipxmYb6hteyhqjQHGV9rvtmugA6uwpfrglib7OJyJUcX5
+         xSowsXIhaq9x7vfhAoAl2MMhU7mdCUCPVU8CmMzNvnjkfzKUzXC9Tndha4No/rKmuuQV
+         uj+S9wUP+J6oF0/MAzk5YZ/Wi4S3c/idlXidQ/XffDo+TYBL0XcdJPjxE2RVnoNyI+A8
+         dRsQ==
+X-Gm-Message-State: AOAM530gV9cMvfj541bMMDWNXrD0NzKg3QRVuKL1UC9oZzW4ygNPCs6c
+        Rk8A7mt4b7umNVXC5QJeWiCDJjeddVegPjGzlRc=
+X-Google-Smtp-Source: ABdhPJzUKQQfzEvpwViUjf0UqLMh3g643x5ZUt2G25jOcOmbbzfeincuqobpepdE+vRPqc+YkMV0dNWP0TNVkLILm6g=
+X-Received: by 2002:a2e:b8d0:: with SMTP id s16mr2549406ljp.198.1603536382915;
+ Sat, 24 Oct 2020 03:46:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <20201022103806.26680-1-szeder.dev@gmail.com> <xmqqv9f2mb61.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqv9f2mb61.fsf@gitster.c.googlers.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 24 Oct 2020 09:41:27 +0200
-Message-ID: <CAP8UFD30NZREjE+_WHKyAhkHAi1TjHQo7iXd9xkvHj9stjT=9A@mail.gmail.com>
-Subject: Re: [PATCH] bisect: loosen halfway() check for a large number of commits
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git <git@vger.kernel.org>
+References: <pull.895.git.git.1603286555.gitgitgadget@gmail.com> <54ef18182cf3a4b5d02889c139e495fa68588652.1603286555.git.gitgitgadget@gmail.com>
+In-Reply-To: <54ef18182cf3a4b5d02889c139e495fa68588652.1603286555.git.gitgitgadget@gmail.com>
+From:   Peter Baumann <peter.baumann@gmail.com>
+Date:   Sat, 24 Oct 2020 12:46:12 +0200
+Message-ID: <CAJm9OHcEGfkgEsTZhD4qKG9Ns5fu=COToWz0XkHhPuJ_DtGzgA@mail.gmail.com>
+Subject: Re: [PATCH 1/4] merge-ort: barebones API of new merge strategy with
+ empty implementation
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 22, 2020 at 8:20 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
->
-> > However, when we have thousands of commits it's not all that important
-> > to find the _exact_ halfway point, a few commits more or less doesn't
-> > make any real difference for the bisection.
->
-> Cute idea.
+Am Do., 22. Okt. 2020 um 03:28 Uhr schrieb Elijah Newren via
+GitGitGadget <gitgitgadget@gmail.com>:
+[... snipping a lot of unneeded context ...]
+> diff --git a/merge-ort.h b/merge-ort.h
+> new file mode 100644
+> index 0000000000..9c655cd3ad
+> --- /dev/null
+> +++ b/merge-ort.h
+> @@ -0,0 +1,49 @@
+> +#ifndef MERGE_ORT_H
+> +#define MERGE_ORT_H
+> +
+> +#include "merge-recursive.h"
+> +
+> +struct commit;
+> +struct tree;
+> +
+> +struct merge_result {
+> +       /* whether the merge is clean */
+> +       int clean;
+> +
+> +       /* Result of merge.  If !clean, represents what would go in worktree */
+> +       struct tree *tree;
+> +
+> +       /*
+> +        * Additional metadata used by merge_switch_to_result() or future calls
+> +        * to merge_inmemory_*().
+> +        */
+> +       unsigned _;
+> +       void *priv;
+> +};
+> +
+> +/* rename-detecting three-way merge, no recursion. */
+                                                                   ^^^^^^^^^^^^^
+> +void merge_inmemory_recursive(struct merge_options *opt,
+                                           ^^^^^^^^^
+> +                             struct commit_list *merge_bases,
+> +                             struct commit *side1,
+> +                             struct commit *side2,
+> +                             struct merge_result *result);
+> +
+> +/* rename-detecting three-way merge with recursive ancestor consolidation. */
+                                                                  ^^^^^^^^^^^^^
+> +void merge_inmemory_nonrecursive(struct merge_options *opt,
+                                            ^^^^^^^^^^^^
+> +                                struct tree *merge_base,
+> +                                struct tree *side1,
+> +                                struct tree *side2,
+> +                                struct merge_result *result);
+> +
 
-I like the idea too.
+The comments don't fit to the actually method name. I assume they
+should be switched?
 
-> > So I ran some tests to see how often that happens: picked random good
-> > and bad starting revisions at least 50k commits apart and a random
-> > first bad commit in between in git.git, and used 'git bisect run git
-> > merge-base --is-ancestor HEAD $first_bad_commit' to check the number
-> > of necessary bisection steps.  After repeating all this 1000 times
-> > both with and without this patch I found that:
-> >
-> >   - 146 cases needed one more bisection step than before, 149 cases
-> >     needed one less step, while in the remaining 705 cases the number
-> >     of steps didn't change.  So the number of bisection steps does
-> >     indeed change in a non-negligible number of cases, but it seems
-> >     that the average number of steps doesn't change in the long run.
->
-> It somehow is a bit surprising that there are cases that need fewer
-> steps, but I guess that is how rounding-error cuts both ways?
-
-When there are 50k commits span between the initial good and bad, I
-don't expect to see any statistically significant result by trying it
-1k times only. My guess is that you might start seeing something
-significant only when the number of tries is a multiple of the span
-between the initial good and bad.
-
-There is some cost on average even if it's small (and gets smaller
-when the span increases) of not using the best halfway commit, so the
-overall gain depends on how long it takes (and possibly how much it
-costs) to run the test script (or maybe to manually test).
-Unfortunately without any hint from the user or without recording how
-long the test script lasts (which doesn't cover manual testing) we
-cannot know this cost of testing which could change a lot between use
-cases.
-
-> Mildly (only because such a bisection session over a long span is
-> rarer) excited to see this RFC completed ;-)
-
-In projects like the Linux kernel where there are around 10k commits
-between 2 feature releases, such bisections over a long span might
-actually happen quite often.
+-Peter
