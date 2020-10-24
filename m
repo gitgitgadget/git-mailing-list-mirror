@@ -1,105 +1,120 @@
-Return-Path: <SRS0=cWhr=D6=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=1Io1=D7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A55B9C388F9
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 22:49:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84092C2D0A3
+	for <git@archiver.kernel.org>; Sat, 24 Oct 2020 07:41:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5EDBC2137B
-	for <git@archiver.kernel.org>; Fri, 23 Oct 2020 22:49:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4055520936
+	for <git@archiver.kernel.org>; Sat, 24 Oct 2020 07:41:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="FOczWPXF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="t2l69jbo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758358AbgJWWtc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Oct 2020 18:49:32 -0400
-Received: from mout.gmx.net ([212.227.15.15]:58617 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1758354AbgJWWtc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Oct 2020 18:49:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1603493370;
-        bh=Xrf6GA8Wltm6XQYrmtFDvDqmGtGw/hcARAduo11yjm4=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=FOczWPXFigkvnm0XU9ZUhIQ3yREvg5H9u+xawiYNYxn+CIIQIayy+sYzyFf3BwRAP
-         epBLK86oas2BiE9a0neqdPBZ3EZBQgHSeYdJEgQF1XHly2f5Jc4sANQWsyv/z9wJEE
-         blovg9crW6vOxjtP8bGlaZVxUfnKCRjepOUUO06Y=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from fv-az767.5i32r34sfccedp3ryyffs2gw5c.bx.internal.cloudapp.net
- ([40.88.32.124]) by mail.gmx.com (mrgmx004 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 1N3se2-1kNOe13o92-00zm4q; Sat, 24 Oct 2020 00:49:30 +0200
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.29.1
-Date:   Fri, 23 Oct 2020 22:49:27 +0000
-Message-Id: <20201023224927.7224-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.29.0
-Content-Type: text/plain; charset=UTF-8
+        id S1759902AbgJXHll (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Oct 2020 03:41:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47720 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1759899AbgJXHlk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Oct 2020 03:41:40 -0400
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E86C6C0613CE
+        for <git@vger.kernel.org>; Sat, 24 Oct 2020 00:41:39 -0700 (PDT)
+Received: by mail-ej1-x644.google.com with SMTP id ce10so5535613ejc.5
+        for <git@vger.kernel.org>; Sat, 24 Oct 2020 00:41:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=UvC2c5YuWlBf9igPR4E3REGoy1TEHkHMmQlqj4YbamM=;
+        b=t2l69jboYv4G9uYjU2RZ235xNtc3xO5OVJ8zv43MyIZj0eMeir5hB+4EsJZ+eerQ+s
+         UaHb+ooC6KUD8+KYY0ltOkgHw9aOK98MYZpYZZGmWGZ02H45QJV+t0P6EgMbHKWbU2J6
+         ybDrNKj/u4OmKLWScfwdEtAPlP2rY+2TSuUYelewQV+4aLXosPNTrf4LoMFDCh9BZudD
+         HVpubCMaoLOUJf8WGmJKEXdP+kAsePabRE0tPvWC+DysCpeEIy/GJvUBaF6LEsltwDsD
+         N0qtXBWVyCdaK7cNf8u5mwH2Ha2zYOZbBz6/zXcaONXEFJTOUMBqn8KbpP0Ej7khTN7i
+         2VBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=UvC2c5YuWlBf9igPR4E3REGoy1TEHkHMmQlqj4YbamM=;
+        b=Uoo1Ay8yLeJGaoCRcPwtt5Qma55e16s0BZcdq8/mCxww5h6xDAFhPpjk7KDKji5/Zo
+         7rJQcx20upZHHZP1s6GdobaBARw96vxX/BSeCO1NyRwbJthDV3jcqw20z5QC5chodCcG
+         /VPqiasbIIhpJn6owq8q3gZ5JRsoGzHw0oob1I76HSJuDfshqoX+a9MIsS9mHFtIf6zW
+         RxguoUn/Ro36sbS352A/ziNmhEl4/BEDp9apVk9xGdu+stGioY1EbwIuua5ApGVCVt2L
+         f6P4v+8YXLuXtn53gAPylAiB/7GbL68DFU8csAe0ei+jRuyWnxC1MjZvejgpbgjSRdQf
+         ep4w==
+X-Gm-Message-State: AOAM533F/OrJ+carAJsqfUBrQzvtwrhRwRDuat4CdbHUN4vy/3zJ4mpf
+        bIhP8pEc0dH6VWPdc/Vi7z3A0AJbPhakBNimeXs=
+X-Google-Smtp-Source: ABdhPJzjUipHniPGps7QSpJ0tTQGf3QLgrZjQilNaRmBDyBdjyl+WBour/WN66q6w22VkkJCp+qXJzaoO7VKolKcYHo=
+X-Received: by 2002:a17:906:c20f:: with SMTP id d15mr5645410ejz.341.1603525298669;
+ Sat, 24 Oct 2020 00:41:38 -0700 (PDT)
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:wVshTucey0D1D7bfDG0KCB/Qf050EIdWOIarDhWv1jETOlyI81/
- /SowgXpQrQgI5BDUWMCQi8mDBSH/PSnvoKOJgOFjYqAkRe9MrkHp+nyDuBCZZTDB2zyKg7k
- 0/XEIHywfzYlu7gKdWJoQMqLcZo+zL9MDjdIHQb0xQwtEByFjaREfnpqZfu5Mq1oNIKj1sj
- CdWfdDspyLwGcCn5dmU4Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:tIH+/PH0j5w=:AeKXkA46Hd8gZUAZvV43N/
- 38Kiv10Co+Z4s+jAAQPJ8sDUTm1f7CaDpY9EcCfZnG7L1nJKcItTM0S8f1G+5ECAP/AlN57Op
- 9dkuA4FnUu2Jn6gOs+NNRy5llWkjMk5ij613PHqQ8nk97OezeM2rf6/S5YJ3NXpxuSpSsszM2
- LxkXMgXpz2s0kQNpZEoCUj1cWjg6p2M3uahv5vkqn67dfwg/leY214QMU72talCfAaMULx0HV
- 1oUTTby/E2nD41Gw2dAwHgSadrpzAlaBsfvQ+RgemUYOgqoIfMdREyzfnm/hlcexp2gqysLhF
- 6kDApvr0i3Ef5DX95dDEBQaEIQ+kUoEDQSUxZ4uOqnUaHLOF223+wKJjYcMAWtr0OOHRw5Y3z
- 5BIq6ZUvbnFTgrC/vyDnrM0sqTAg2ZwlLgXKl6tQWdvJOuGiB4qspLCFv6DjY1SPStOainB09
- oDi556D3jBf45/e7Qoboc00HJ6q3d7R9CvKMs5/G/c1twVAt5p/SJ2SYfHlQ9XikQuNStvwWR
- JOHQJkTfcFmYSMphyYP7vQmOlcKn4hs0uxzzYRV5e6lGn0HbGBqghaXjuzyHG7vT3u2lY801P
- fNPVKlTnU4v2h/k2WeM1r0NompuQye9/7BemuBRDXsVUl9TF2pyAKFMvJTjvAKRrJzOrslsAc
- 2ADUwjspbnVzyz5hFL9SwUcqfexhHiP/pa3SYcde1E4/wLCyv4UoA8qTDjnjmUAUBgucaVYb4
- syWXz9RKAdoftWmWd9fX2JIAR148iH245n2H2Dot6VsGuILDPHanC7b/FVncbzxh5wQXn+42y
- V/YXaBbq2YsFt0bY0oLkJTmvz2qlt2QRSCXkwB8BduhQf9LDnS4TzWkdqxFE1QxwZHKt5CoOH
- zufgGRCtVtoGwC2n3U0yzIV4qKOP0xkJJNGDorkNk=
+References: <20201022103806.26680-1-szeder.dev@gmail.com> <xmqqv9f2mb61.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqv9f2mb61.fsf@gitster.c.googlers.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 24 Oct 2020 09:41:27 +0200
+Message-ID: <CAP8UFD30NZREjE+_WHKyAhkHAi1TjHQo7iXd9xkvHj9stjT=9A@mail.gmail.com>
+Subject: Re: [PATCH] bisect: loosen halfway() check for a large number of commits
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+On Thu, Oct 22, 2020 at 8:20 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+>
+> > However, when we have thousands of commits it's not all that important
+> > to find the _exact_ halfway point, a few commits more or less doesn't
+> > make any real difference for the bisection.
+>
+> Cute idea.
 
-I hereby announce that Git for Windows 2.29.1 is available from:
+I like the idea too.
 
-    https://gitforwindows.org/
+> > So I ran some tests to see how often that happens: picked random good
+> > and bad starting revisions at least 50k commits apart and a random
+> > first bad commit in between in git.git, and used 'git bisect run git
+> > merge-base --is-ancestor HEAD $first_bad_commit' to check the number
+> > of necessary bisection steps.  After repeating all this 1000 times
+> > both with and without this patch I found that:
+> >
+> >   - 146 cases needed one more bisection step than before, 149 cases
+> >     needed one less step, while in the remaining 705 cases the number
+> >     of steps didn't change.  So the number of bisection steps does
+> >     indeed change in a non-negligible number of cases, but it seems
+> >     that the average number of steps doesn't change in the long run.
+>
+> It somehow is a bit surprising that there are cases that need fewer
+> steps, but I guess that is how rounding-error cuts both ways?
 
-Changes since Git for Windows v2.29.0 (October 19th 2020)
+When there are 50k commits span between the initial good and bad, I
+don't expect to see any statistically significant result by trying it
+1k times only. My guess is that you might start seeing something
+significant only when the number of tries is a multiple of the span
+between the initial good and bad.
 
-Important note: v2.29.0 and v2.29.1 upgrade existing users of Git
-Credential Manager for Windows (which was just deprecated) to Git
-Credential Manager Core ("GCM Core", which is the designated successor
-of the former). This is necessary because GitHub deprecated
-password-based authentication and intends to remove support for it
-soon, and GCM Core is prepared for this change.
+There is some cost on average even if it's small (and gets smaller
+when the span increases) of not using the best halfway commit, so the
+overall gain depends on how long it takes (and possibly how much it
+costs) to run the test script (or maybe to manually test).
+Unfortunately without any hint from the user or without recording how
+long the test script lasts (which doesn't cover manual testing) we
+cannot know this cost of testing which could change a lot between use
+cases.
 
-Also, as of v2.29.0, the option to override the branch name used by git
-init for the initial branch is featured prominently in the installer.
+> Mildly (only because such a bisection session over a long span is
+> rarer) excited to see this RFC completed ;-)
 
-New Features
-
-  * Comes with Git v2.29.1.
-  * The MSYS2 runtime now optionally supports creating Cygwin-style
-    symbolic links (via setting the environment variable MSYS=
-    winsymlinks:sysfile).
-
-Git-2.29.1-64-bit.exe | a24d4069ae1267bc302556c49cad50a4f1672d70794e5d4d25b20d1cccf5c4c8
-Git-2.29.1-32-bit.exe | 1b75f2c56041b048b197ee1d11af3d0875bb414d63e734453dd4b05b9fd24e28
-PortableGit-2.29.1-64-bit.7z.exe | e4ddaf8d7ee1ef633c6631747a12624ffb1f076e91e22cad1add322fee6bfedc
-PortableGit-2.29.1-32-bit.7z.exe | 9edab85c5383680a64c98ddab9354469e675e0b3fd4afe18c62f65e758540ae6
-MinGit-2.29.1-64-bit.zip | 6aab2a1acce11a765d4dff2b9b5c8fe0feda5ff4067f16a696893786a3bf94c3
-MinGit-2.29.1-32-bit.zip | d67d7853552c39267216869de4ca5a95557c4001f6bd6f221bb4eae9aa8a66c0
-MinGit-2.29.1-busybox-64-bit.zip | 7890ab11efab10af4a1a075289c9b34e95666e6c208ab791d6d52697d4c03797
-MinGit-2.29.1-busybox-32-bit.zip | 91e55d05213d0d0b86e9290c76e112c6de72cacd991b96b827224060f3912353
-Git-2.29.1-64-bit.tar.bz2 | cfe155a6f63605fbf3c378cbe010d7a31913302842bef798dd6beaa7f9e958c5
-Git-2.29.1-32-bit.tar.bz2 | 5add752eb3a3461e888d3289025079253a31ad96a8bc381b11006231795a9219
-
-Ciao,
-Johannes
+In projects like the Linux kernel where there are around 10k commits
+between 2 feature releases, such bisections over a long span might
+actually happen quite often.
