@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2188EC4363A
-	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 03:14:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FC40C2D0A3
+	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 03:14:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CC8C420936
-	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 03:14:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2990A20936
+	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 03:14:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PhOinPD5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PyGBwbta"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1766853AbgJYDOL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 24 Oct 2020 23:14:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58294 "EHLO
+        id S1766859AbgJYDON (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Oct 2020 23:14:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1766850AbgJYDOK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Oct 2020 23:14:10 -0400
-Received: from mail-oo1-xc44.google.com (mail-oo1-xc44.google.com [IPv6:2607:f8b0:4864:20::c44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 997F1C0613D5
-        for <git@vger.kernel.org>; Sat, 24 Oct 2020 20:14:10 -0700 (PDT)
-Received: by mail-oo1-xc44.google.com with SMTP id j6so1552412oot.3
-        for <git@vger.kernel.org>; Sat, 24 Oct 2020 20:14:10 -0700 (PDT)
+        with ESMTP id S1766849AbgJYDOJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Oct 2020 23:14:09 -0400
+Received: from mail-oo1-xc42.google.com (mail-oo1-xc42.google.com [IPv6:2607:f8b0:4864:20::c42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18D40C0613D4
+        for <git@vger.kernel.org>; Sat, 24 Oct 2020 20:14:09 -0700 (PDT)
+Received: by mail-oo1-xc42.google.com with SMTP id v123so1555337ooa.5
+        for <git@vger.kernel.org>; Sat, 24 Oct 2020 20:14:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=DNIK1e9CQuZfwAqrisDNxC3kemDUT/aDUy5+puQzhOY=;
-        b=PhOinPD5YOXfyeubd64bfkXE2Dg+OkNXkRu4ycgaq0OIDYxBC5FD4pEeyVh3HqkA9e
-         Vng5c7EOEG7MLTWcOBO7xBwf4OoXw2OSozFtfv8/9Dy4nLftupa2h8Gk+hRMLLuO8fY2
-         LobO//vZHlhu1mfFspd35Q5tknPX9EJbwyH5ksVHUdrxHe2O+WCHjLU9xg/lDeCEymNo
-         vpJAcpn0BIku9hkf+gx7MZZaxL7XK3lzEaxedUuUOQXsbbG96ArsqBG3t5E9saribO/U
-         2mCcmYzN8SV4A5UGLRymMClonzOst+rZqejXMeF7M1KBfxdhBqxXLcQUOkN7BHcc1Lzb
-         LqMg==
+        bh=YkhluwteQ5rcvV0BPWK7M7XpbHit4oZpMwJLu5ec1Do=;
+        b=PyGBwbtaNyWbFCJUJGJvErinoqc2l452xT/vQDQEFvzurJl4JTjkw6njKhqSLaadxj
+         2qMsXx5MMn9PkjeD+3oKnnKQ7GTgNOokTGRyH2TFyXW4CNIZI0bPubb2tU+l1ugOa5V2
+         hFksyVOlGPJe988VkC4a5g3YtkVHjlCOrIhEW/0lW6TqwA35iNEabCNsfwQ+/fcc5KiE
+         ZJvCQ1DxmiTWIe0DZ3lnVwbp+NQ6GStovHnVI82qtEcF0X8jxgjQ9nGPdT6xXmt2KejS
+         3TVxqB2InO8QHerx62I4BjbwZuBFw7I+NB4VRC3HV0FZhPj4XibjDpu878NU8tTDero6
+         +V0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=DNIK1e9CQuZfwAqrisDNxC3kemDUT/aDUy5+puQzhOY=;
-        b=KvQtdyZxrWQXJYAJKbr4Zvl1xNgUFmLBZ4w7j5Cf+spt13gxpj7kFg5W2DOTICxsG9
-         ZVdH9DTOw6N34crl+viFU/PycCnliPSwJg6l0SMWhoGwwJISNrse7gw2UpDQuMJ0gqIa
-         +FIMuZC2eUhVrXAUqTRSFkZK4arMq6ACM4zLVpcDG+zpjBh7tF/COSnjrBmXX3TbJoeT
-         p3oa9X74jvr8IHLkyGJhiz6AN/aNVHNQsNLoJvYaVjbAutjYuJs6s+tc59+JV7JX2Oxn
-         ukdp/WtjIsmKhGrNpFITxTAN6l2VLi89BVVdt95eeGcCH/MRhKJQ0LLJyuJDG93OOZN+
-         wE/g==
-X-Gm-Message-State: AOAM533/bRTBTSZA6JByVrTgvFqdkjmSwKV87P7UQTmhUbsH7qrzSNyH
-        oEG1unbAnhy/HIRjjBb+moLOE21lREQZwQ==
-X-Google-Smtp-Source: ABdhPJy45NhoEHj+f0IRcwx0O8fsQtDPv03OQ4cuuGQe2wMpucPtURWatVqxzxHXq9COw1KfInpyoA==
-X-Received: by 2002:a4a:be92:: with SMTP id o18mr2832840oop.22.1603595649752;
-        Sat, 24 Oct 2020 20:14:09 -0700 (PDT)
+        bh=YkhluwteQ5rcvV0BPWK7M7XpbHit4oZpMwJLu5ec1Do=;
+        b=SSzXN7c6ZTvZZhYp4tXlDCIkIXWOULpD+Ju1hk16vm1WZZX7J4V5PBCdT8VrJDBjo/
+         +SrTlRvOfLMHCWNGr7JUUjcKiUViBmsympQMZ2gWeEuSjq0CuV2pGkKCi+WyOxk8qmfZ
+         djEZJcywbk+n06yN8WFVdxXntmIxlIQ1AAVZTW8xfRRNE0K6Z/DH4oQUZ49bM26e2Dn7
+         KC7IAj24erqUnZtrBCyeC0xnEYGhPMQi9Vyqs1qI7qM7eDggFNzi2Z7zaDuj0WUctJEb
+         eQSq6T7BrIc+84tE8+hEI/T4bz9AnKLpnuGNM5N1Ck8B+VLhEc84da7s2m79C7RWkJsf
+         e3UQ==
+X-Gm-Message-State: AOAM533OJHwCEE0pcl/PN75WwfToQMKajYAqQsI2gWPKihuY3ef9Xwnv
+        3C8WPZqMjIhEOiRB+PJtpfJzBfdm0jVnuQ==
+X-Google-Smtp-Source: ABdhPJzk5JKehiMOdskpP9Mk7hPetVnqd5npN4RUVsW7BTyX2+c5cCeo8p0sF8LUCMaUpzT2+H5Idw==
+X-Received: by 2002:a05:6820:30e:: with SMTP id l14mr8119667ooe.57.1603595648256;
+        Sat, 24 Oct 2020 20:14:08 -0700 (PDT)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id e78sm78875ote.50.2020.10.24.20.14.08
+        by smtp.gmail.com with ESMTPSA id u26sm1702325ote.60.2020.10.24.20.14.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Oct 2020 20:14:09 -0700 (PDT)
+        Sat, 24 Oct 2020 20:14:07 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 16/29] completion: zsh: simplify direct compadd
-Date:   Sat, 24 Oct 2020 22:13:30 -0500
-Message-Id: <20201025031343.346913-17-felipe.contreras@gmail.com>
+Subject: [PATCH v2 15/29] completion: zsh: simplify compadd functions
+Date:   Sat, 24 Oct 2020 22:13:29 -0500
+Message-Id: <20201025031343.346913-16-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.29.0
 In-Reply-To: <20201025031343.346913-1-felipe.contreras@gmail.com>
 References: <20201025031343.346913-1-felipe.contreras@gmail.com>
@@ -75,27 +75,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of manually removing the suffix so zsh can add its own, we can
-tell zsh to add no suffix, so we don't have to remove it.
+We don't need to override IFS, zsh has a native way of splitting by new
+lines: the expansion flag (f).
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.zsh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/completion/git-completion.zsh | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
 diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index 2f20fe386a..b955404fdd 100644
+index 088bf7f759..2f20fe386a 100644
 --- a/contrib/completion/git-completion.zsh
 +++ b/contrib/completion/git-completion.zsh
-@@ -94,7 +94,7 @@ __gitcomp_direct ()
+@@ -93,9 +93,8 @@ __gitcomp_direct ()
+ {
  	emulate -L zsh
  
+-	local IFS=$'\n'
  	compset -P '*[=:]'
--	compadd -Q -- ${${(f)1}% } && _ret=0
-+	compadd -Q -S '' -- ${(f)1} && _ret=0
+-	compadd -Q -- ${${=1}% } && _ret=0
++	compadd -Q -- ${${(f)1}% } && _ret=0
  }
  
  __gitcomp_direct_append ()
+@@ -107,34 +106,30 @@ __gitcomp_nl ()
+ {
+ 	emulate -L zsh
+ 
+-	local IFS=$'\n'
+ 	compset -P '*[=:]'
+-	compadd -Q -S "${4- }" -p "${2-}" -- ${=1} && _ret=0
++	compadd -Q -S "${4- }" -p "${2-}" -- ${(f)1} && _ret=0
+ }
+ 
+ __gitcomp_nl_append ()
+ {
+ 	emulate -L zsh
+ 
+-	local IFS=$'\n'
+ 	compset -P '*[=:]'
+-	compadd -Q -S "${4- }" -p "${2-}" -- ${=1} && _ret=0
++	compadd -Q -S "${4- }" -p "${2-}" -- ${(f)1} && _ret=0
+ }
+ 
+ __gitcomp_file_direct ()
+ {
+ 	emulate -L zsh
+ 
+-	local IFS=$'\n'
+-	compadd -f -- ${=1} && _ret=0
++	compadd -f -- ${(f)1} && _ret=0
+ }
+ 
+ __gitcomp_file ()
+ {
+ 	emulate -L zsh
+ 
+-	local IFS=$'\n'
+-	compadd -p "${2-}" -f -- ${=1} && _ret=0
++	compadd -p "${2-}" -f -- ${(f)1} && _ret=0
+ }
+ 
+ __git_zsh_bash_func ()
 -- 
 2.29.0
 
