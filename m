@@ -2,169 +2,121 @@ Return-Path: <SRS0=tbmj=EA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02084C4363A
-	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 03:13:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27101C2D0A3
+	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 03:13:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2A0920882
-	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 03:13:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DDEFB20882
+	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 03:13:56 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZHGc5puI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1766809AbgJYDGn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 24 Oct 2020 23:06:43 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:56298 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731804AbgJYDGm (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 24 Oct 2020 23:06:42 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 495E06042C;
-        Sun, 25 Oct 2020 03:06:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1603595171;
-        bh=k6sQ5tF4bJltpNTswaWL85wvviv/8Bq9L4cbK3RWpT0=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=H4wrGfhoCIe4OEtlon/Me8R9/qv6DfCtgIMCdD6inLxKCvqknZxRS2ITvnQ5l7bAb
-         h8Ba1y7JSi811JMA6mxXQ9Wun4ch1qoNE/MhjYWTM6eU/qr9tLpwtFwvHYZOolX+m0
-         qSjXFInhMMrMwSOTJP1eUhOWhyGhlZr7ZOwGlsn4slQj3uoqVHLKKgRg+Q1jjCTo85
-         0YlWTJ93k6ZsKARzp2dxyK0b+V/auI1KwXGDSdvhj6jDrDIsRHv8uUVGpxp3RByTU4
-         OJuMYLnII4va5nIKT24TV3V/jTs74nRNGZ+nMkpuS19/EItNM58GFyWD1blIypa5Tc
-         9HkhgyCiRkboU8i7gVpzI0xKA1GjNKPOQnKU+6QVMigvt3QidIQkXhAq4O/hoTfL6g
-         xvtM7s5GCskhJvTGMeZqQNlowZrF1x2bOOjd46MXKP3xrsWE+2LtnvpMXEMsI0VufR
-         six9mvVImEFmM6jbFu97mtP+kxMqKrgP3q7sBTMsv04J7Lu+1V8
-Date:   Sun, 25 Oct 2020 03:06:06 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     hv@crypt.org, git@vger.kernel.org
-Subject: Re: safer git?
-Message-ID: <20201025030606.GF860779@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>, hv@crypt.org,
-        git@vger.kernel.org
-References: <202010242019.09OKJTP13180@crypt.org>
- <016001d6aa52$b1cbc510$15634f30$@nexbridge.com>
+        id S1766824AbgJYDNx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Oct 2020 23:13:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58240 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731837AbgJYDNx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Oct 2020 23:13:53 -0400
+Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6319C0613D0
+        for <git@vger.kernel.org>; Sat, 24 Oct 2020 20:13:52 -0700 (PDT)
+Received: by mail-oi1-x241.google.com with SMTP id l4so6922615oii.13
+        for <git@vger.kernel.org>; Sat, 24 Oct 2020 20:13:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=lhUPGPVcJ1UohPkAjY7ALwU4faSqEsmKFU1bWSltr9E=;
+        b=ZHGc5puI8nypnFuHfEpct3IMzUtiqkTKVOONFR1eyb2i2VJSlFeUmU14ifI9JOWEfO
+         pOEMBT3Riu57S3eUPmLsGKqJ7bSYqz8uXZthqAV8RVbhbQ2yzWXP6MAKmkAfylpruJhU
+         xdThhM6LjhO8wIPJ/JF/FklQ/tccIGy3qpvjz4sWY/pW9X0kCjmFOj4VxdFR2bOTfBP7
+         qaXRpSpTJCpj9Hje0TSHN5G+yQoh4l6us9x7/Sr9wge72eofuUeiQr6m16NpTnnqI5Ko
+         oYrla6tT2S0fsmM1P5QtKjQ1lYpev7WXHv+ydU6IEu2H13Zeilk6v1wUVN0lWJe8ORFn
+         kyRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=lhUPGPVcJ1UohPkAjY7ALwU4faSqEsmKFU1bWSltr9E=;
+        b=VH8CL1vlFAiA4UPILPh2wjmmOy0V+ydcfyMvFsMt+XwCLmAsMthl79NRRVCbL2FN06
+         lK7xTTLA8aCGz6+K6HG4sGbnf+jsVRCFY2UIwRpbeqalXwyzP2EPjnhIC49iLW1ndQ7X
+         IQ3H8sFq/xYIuRLO3R+N1OvmiKJ4nqMMhapmNU7PEuO23paKCnIu4dwySUq6XCBJ7i4D
+         /FR02y8kz0Z78XdWafyElW/sU8z9h8bpDlGJcGPQ3L3r5VKJMaomB8kfmk6v1UM7x+ap
+         Zkt93pXxFec5vikWp+pWFUFJAoPpUrvEMdkxTZhNPPa3WP4iYaTJBJSfyrB+pYK2l2mm
+         egtw==
+X-Gm-Message-State: AOAM530ZuGgexNHPZq5k0yXw/5+7W5VKiA0J5qLElOobfHBDQP8yklUy
+        90OQi7VdNdrTqEQFdHGLNwFoId7isWa/Cw==
+X-Google-Smtp-Source: ABdhPJx7t0fDHSZ9f4tUElAx8cc5tH3fHqXnDSTS8H6lQo77JlhL9hxUbEKvfzzdADsc7m/tlnUXUw==
+X-Received: by 2002:aca:750b:: with SMTP id q11mr7636725oic.163.1603595631879;
+        Sat, 24 Oct 2020 20:13:51 -0700 (PDT)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id t65sm1867374oib.50.2020.10.24.20.13.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 24 Oct 2020 20:13:51 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v2 04/29] completion: zsh: reorganize install instructions
+Date:   Sat, 24 Oct 2020 22:13:18 -0500
+Message-Id: <20201025031343.346913-5-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.29.0
+In-Reply-To: <20201025031343.346913-1-felipe.contreras@gmail.com>
+References: <20201025031343.346913-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="27ZtN5FSuKKSZcBU"
-Content-Disposition: inline
-In-Reply-To: <016001d6aa52$b1cbc510$15634f30$@nexbridge.com>
-User-Agent: Mutt/1.14.6 (2020-07-11)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Start with the most important thing; the proper location of this script,
+then follow with the location of the slave script (git-completion.bash).
 
---27ZtN5FSuKKSZcBU
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/completion/git-completion.zsh | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-[I somehow didn't get the original message, so replying inline below.]
+diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
+index 712ce2f4d1..05ccaac194 100644
+--- a/contrib/completion/git-completion.zsh
++++ b/contrib/completion/git-completion.zsh
+@@ -4,13 +4,6 @@
+ #
+ # Copyright (c) 2012-2013 Felipe Contreras <felipe.contreras@gmail.com>
+ #
+-# You need git's bash completion script installed somewhere, by default it
+-# would be the location bash-completion uses.
+-#
+-# If your script is somewhere else, you can configure it on your ~/.zshrc:
+-#
+-#  zstyle ':completion:*:*:git:*' script ~/.git-completion.bash
+-#
+ # The recommended way to install this script is to make a copy of it as a
+ # file named '_git' inside any directory in your fpath.
+ #
+@@ -18,6 +11,15 @@
+ # and then add the following to your ~/.zshrc file:
+ #
+ #  fpath=(~/.zsh $fpath)
++#
++# You need git's bash completion script installed. By default bash-completion's
++# location will be used (e.g. /usr/share/bash-completion/completions/git).
++#
++# If your bash completion script is somewhere else, you can specify the
++# location in your ~/.zshrc:
++#
++#  zstyle ':completion:*:*:git:*' script ~/.git-completion.bash
++#
+ 
+ complete ()
+ {
+-- 
+2.29.0
 
-On 2020-10-24 at 22:11:54, Randall S. Becker wrote:
-> On October 24, 2020 4:19 PM, hv@crypt.org wrote:
-> > Q: Is there a mode in which I can run git that would make it a bit
-> > more robust
-> > against crashes, at the cost of being a bit slower?
-> >=20
-> >=20
-> > The primary symptom is that files modified shortly before a crash
-> > show up existing but zero-length after the crash. For source files I
-> > mostly know what to do in that situation, but `git fsck` shows a lot
-> > of files under '.git/objects' that are empty, which seems to make
-> > things hard to recover:
-> >=20
-> > % git fsck
-> > error: object file
-> > .git/objects/0e/f31631726cea2e9bf89d7bbe7b924b5282d533 is empty
-> > error: unable to mmap
-> > .git/objects/0e/f31631726cea2e9bf89d7bbe7b924b5282d533: No such file
-> > or directory
-> > error: 0ef31631726cea2e9bf89d7bbe7b924b5282d533: object corrupt or
-> > missing: .git/objects/0e/f31631726cea2e9bf89d7bbe7b924b5282d533
-> > [... a dozen similar entries ...]
-> > error: object file
-> > .git/objects/f5/a9d125645e69a0e40f9bf7a8c90b1c1c4a4ea5 is empty
-> > error: unable to mmap
-> > .git/objects/f5/a9d125645e69a0e40f9bf7a8c90b1c1c4a4ea5: No such file or
-> > directory
-> > error: f5a9d125645e69a0e40f9bf7a8c90b1c1c4a4ea5: object corrupt or
-> > missing: .git/objects/f5/a9d125645e69a0e40f9bf7a8c90b1c1c4a4ea5
-> > Checking object directories: 100% (256/256), done.
-> > Checking objects: 100% (1577/1577), done.
-> > error: refs/stash: invalid sha1 pointer
-> > 0000000000000000000000000000000000000000
-> > error: bad ref for .git/logs/refs/stash
-> > dangling commit 1c0ea4e6159952501957012d2b9db7d68b52d107
-> > %
-
-You can try setting core.fsyncObjectFiles to true.  That's the only knob
-that Git has for that at the moment, although there was some discussion
-about adding a new feature for other files[0].
-
-I suspect a lot of the zero-byte files and any files that end up as
-all-zeros are due to your file system.  The default file system on
-Ubuntu is ext4, IIRC, and if that's what you're using, you can set
-data=3Djournal instead of data=3Dordered as a mount option.  For the root
-file system, you'll need to pass rootflags=3Ddata=3Djournal as a kernel
-boot option.
-
-That may be significantly slower, but until you get your hardware
-problem sorted out, it may very well be worth it for you.  I'd try this
-option before the one below because it'll have less of an impact on
-performance and may solve most or all of your problems.
-
-> > Last time I checked out the previous state from github in a new directo=
-ry
-> and
-> > was able to find and copy over most of my work before continuing. On th=
-is
-> > occasion I did a `git stash save` shortly before the crash, and I'm not
-> sure
-> > how to get that back. I see Ren=C3=83=C2=A9 Scharfe's suggestion of:
-> >   git fsck --unreachable |
-> >   grep commit | cut -d\  -f3 |
-> >   xargs git log --merges --no-walk --grep=3DWIP from a recent message, =
-but
-> > that is only showing me an older stash item.
->=20
-> I would suggest turning off write-through buffering on your disk. Let wri=
-tes
-> complete immediately instead of being deferred to sync. Also, this does f=
-eel
-> like a disk issue, so fsck or chkdsk /f (or whatever) on your disk urgent=
-ly.
-
-Turning off buffering and caching for your disk drive may make things
-_really_ slow, but it will definitely improve data integrity.
-
-I know hardware problems are always a hassle, so I hope you get things
-figured out and fixed soon.
-
-[0] I admit I am not running the very latest version and the new feature
-may have already landed; if so, I apologize for the out-of-date
-information and for not keeping up with the list.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---27ZtN5FSuKKSZcBU
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX5TrnQAKCRB8DEliiIei
-gcH2AP4zD6ERPxOMNgt5+v5o5D3RTPv49h50LVoaqcI8grmiiwEA0J813Ij3XTX+
-xXlc9+u7fWlASSOTUMOdH51OhFUnvw0=
-=gsaP
------END PGP SIGNATURE-----
-
---27ZtN5FSuKKSZcBU--
