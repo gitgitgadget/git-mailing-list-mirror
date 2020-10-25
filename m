@@ -2,75 +2,66 @@ Return-Path: <SRS0=tbmj=EA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5797C388F7
-	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 12:31:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB9E1C388F7
+	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 13:40:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 773DF20795
-	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 12:31:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7D0E7222B9
+	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 13:40:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1415707AbgJYM16 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Oct 2020 08:27:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57856 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1415704AbgJYM16 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Oct 2020 08:27:58 -0400
-Received: from wp156.webpack.hosteurope.de (wp156.webpack.hosteurope.de [IPv6:2a01:488:42:1000:50ed:84a3::])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF858C0613CE
-        for <git@vger.kernel.org>; Sun, 25 Oct 2020 05:27:57 -0700 (PDT)
-Received: from p5099125b.dip0.t-ipconnect.de ([80.153.18.91] helo=[192.168.100.43]); authenticated
-        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1kWf7n-0007fT-03; Sun, 25 Oct 2020 13:27:51 +0100
-Subject: Re: [bug] Stashes lost after out-of-memory situation
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Marek Mrva <mrva@eof-studios.com>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <65a3061a-47ef-9ca6-2468-5449cfc5b37c@eof-studios.com>
- <618d66a8-e2c1-241c-5200-2298bfe24ac0@web.de>
-From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Message-ID: <5a3db65b-1877-c5be-8077-2926637fba6e@virtuell-zuhause.de>
-Date:   Sun, 25 Oct 2020 13:27:48 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.0
-MIME-Version: 1.0
-In-Reply-To: <618d66a8-e2c1-241c-5200-2298bfe24ac0@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1603628877;6e2dbf5d;
-X-HE-SMSGID: 1kWf7n-0007fT-03
+        id S1416385AbgJYNke (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Oct 2020 09:40:34 -0400
+Received: from crypt.org ([89.187.75.214]:42616 "EHLO crypt.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1416382AbgJYNkd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Oct 2020 09:40:33 -0400
+Received: from crypt.org (crypt.org [127.0.0.1])
+        by crypt.org (8.11.6/8.11.2) with ESMTP id 09PCjIP26203;
+        Sun, 25 Oct 2020 12:45:18 GMT
+Message-Id: <202010251245.09PCjIP26203@crypt.org>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>, hv@crypt.org,
+        git@vger.kernel.org
+Subject: Re: safer git? 
+In-Reply-To: <20201025030606.GF860779@camp.crustytoothpaste.net> 
+Date:   Sun, 25 Oct 2020 12:45:18 +0000
+From:   hv@crypt.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/24/2020 7:06 PM, René Scharfe wrote:
+"brian m. carlson" wrote:
+:You can try setting core.fsyncObjectFiles to true.
 
-[...]
+Super, that's exactly the sort of thing I was hoping to find.
 
-> Looks like stash calls rev-parse to see if a
-> stash pop removed the last stash and in that case proceeds to delete the
-> stash ref and its reflog
+:I suspect a lot of the zero-byte files and any files that end up as
+:all-zeros are due to your file system.  The default file system on
+:Ubuntu is ext4, IIRC, and if that's what you're using, you can set
+:data=journal instead of data=ordered as a mount option.
 
-I was a bit suprised to learn that removing the last stash entry also
-removes it from the reflog.
+It is indeed ext4. I'll consider this option; for now I've turned off
+write caching as suggested by Randall, which feels like a lighter-weight
+approach that should give almost all of the benefit.
 
-Wouldn't it be more convenient if it would be kept in the reflog even
-after popping?
+:"Randall S. Becker" wrote:
+:> I would suggest turning off write-through buffering on your disk. Let writes
+:> complete immediately instead of being deferred to sync. Also, this does feel
+:> like a disk issue, so fsck or chkdsk /f (or whatever) on your disk urgently.
 
-So that in cases like
+fsck doesn't seem to be complaining, but I've set it to run every
+20 mounts. What I do see is a handful of "orphaned inodes" being
+reclaimed on boot after every crash.
 
-git init
-echo 1 > test
-git add test
-git commit -m "one" test
-echo 2 > test
-git stash
-git checkout .
-git stash pop
-git checkout .
-git reflog -p
+:Turning off buffering and caching for your disk drive may make things
+:_really_ slow, but it will definitely improve data integrity.
 
-my once stashed change would still be in the reflog?
+I haven't noticed a big slowdown so far; I'm rarely doing a _lot_ of
+writes.
+
+Thanks greatly to both of you for the suggestions.
+
+Hugo
