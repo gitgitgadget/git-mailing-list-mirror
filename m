@@ -8,65 +8,64 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04E29C56201
-	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 03:14:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1CADC55179
+	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 03:14:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BDFE822260
+	by mail.kernel.org (Postfix) with ESMTP id 9BFA320936
 	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 03:14:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GihXQZL2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oq3X1xuN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1766840AbgJYDOC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 24 Oct 2020 23:14:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58232 "EHLO
+        id S1766842AbgJYDOD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Oct 2020 23:14:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1766825AbgJYDOB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Oct 2020 23:14:01 -0400
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29CA1C0613CE
-        for <git@vger.kernel.org>; Sat, 24 Oct 2020 20:13:51 -0700 (PDT)
-Received: by mail-ot1-x344.google.com with SMTP id x7so887711ota.0
-        for <git@vger.kernel.org>; Sat, 24 Oct 2020 20:13:51 -0700 (PDT)
+        with ESMTP id S1766837AbgJYDOC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Oct 2020 23:14:02 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA651C0613CE
+        for <git@vger.kernel.org>; Sat, 24 Oct 2020 20:14:01 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id 32so5123640otm.3
+        for <git@vger.kernel.org>; Sat, 24 Oct 2020 20:14:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aGA+vh4pwS05AX6WR8w1fgNifpIZvH7XjfOtj1s0RJY=;
-        b=GihXQZL2Xe8dcJUfwKXkp+CKvVxSuaK5SVr+zBDsDGv/FJd7mMudjHc3R/knk4VPsf
-         Mkv2HJVgjfwDHyM6goW8JHziMYVRj+1HEhvFLcZ1NJjtc/W8Qv9W8aB32rmUnBbAA8P2
-         J4Y8xNuvB4jwQx3WOhsqJNYBL/rOr0vX50bTnfUOq5OYiNRUrGyMwjXoUOHW1mYFA72N
-         7m3Wx1xcEytv9UIytUidqFDV0IcKkjJ8kiu7zYiqJLxsUZyNuDiUOuMYBqoA7pOTGPz6
-         Ynz6xlEru0lxPYuzS24/ifSqt7x7bKXK4ERCSe86ori9hYdWv+U1y0zpm5cq4hmLfW6H
-         Ds8g==
+        bh=ZO6KUkuVfULWoaGZ56IxJadVwdlwGesrdAW4aReFdO4=;
+        b=oq3X1xuNVT3tLmtinW6XCxXUvs7W1ewxX0UurKBF011lAOV+kUfZ/ZKg7d1i2Hkxr5
+         o+qgYhciHDt02lJwk0aM8D1z/+EC3OUI+TgfSeBIzaw6opG9Bx/YEylHKAFNxJMMlGKF
+         9wX0d3Lmvpp5xv/tTN9Hxg5iaDontP5dLxDWOINGZPYt+19SBnOU63j0xubi1kb4tE80
+         ASTCS7JpQltmtQ8fE2l2c3flkuZclTs4o9YBDGLFmeGwIHwwl4EECFymCMDvRZ+/kXRU
+         8iQuC7jAx//rMWt1/cVah1DAcbG5dfW2P1MNBaRTtlQeMMwBa4CwDiSVlwxObr39Z+Cl
+         3geg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aGA+vh4pwS05AX6WR8w1fgNifpIZvH7XjfOtj1s0RJY=;
-        b=HBSNyJlBmTSRvbOtdVYYqVpUSYxR6LlZIuoWGOwQI2bPlbvNUjIDbXxFCBYiknNKdx
-         UsI9V0bGUyjOHLaAd7tsOqxKmNHhZGBJ6ythxYO6V/HUIcpCB1enb6cE/zO0FwFCP8Vl
-         sfePT4NdGdA7p+D5Iw51s/2oydxxyJu4JkODmcMtrTynbIYpYVLLERBx0pNY80fG4lI4
-         yhUMFtIACpVq2qpwGlfxDCtpxdDj16PS2Z4vDfGm8rx/KPXswVqZOOSPSnb+aiOqkPG3
-         QQag6V8ydIR6oXmjUey4xmQc3OSIQnLS67+7GU3ZVTB0SHUiMikunCjyrHZSDlaZFdU9
-         RFQQ==
-X-Gm-Message-State: AOAM532NalDiDy/kdLTy3Y9tOMscK9GK2ElEkuqh3Q+NE3n00CCnOUL2
-        TlYowOK0Rhf50ZztU19TywZqoYKD+57rDg==
-X-Google-Smtp-Source: ABdhPJx7RVjEFeZi+HlY0e8Ou/y52uEVtobn+BOHEH/oyAcnd2n81KxszCsZDlYVG/v2uwi2/lvrOA==
-X-Received: by 2002:a9d:734f:: with SMTP id l15mr8776224otk.260.1603595630337;
-        Sat, 24 Oct 2020 20:13:50 -0700 (PDT)
+        bh=ZO6KUkuVfULWoaGZ56IxJadVwdlwGesrdAW4aReFdO4=;
+        b=rcqpyDX9saqHUnE6hHuw1emCaaERnEe3tUBMEiq4kX7bMZeCd+pqnhxdMaC0zFdXF/
+         hPXOqaYUbDQjjDH3IuYIxTNr2qhfkTTAjtaTzVSdfrSDnVkNK+2iZ58WFQmfLuqpOxqz
+         lbeJpLr05pkVmeNvsuXvsdqHs+lWlJrjngEsrGGi5fOYd9y9mHfy5YCattg9aCsUX6c1
+         TeLlm0kGZ58nzIRRrdcHDKYnLVV+KH+I1xprtwq+teURV3URKbpY8zbaME3oiohK+LZC
+         gcECw0EoMBSD7AvNPefs8kuFUDoxwDphas6EoKsYKNhp24QT2xspUmyMtOgdJjNmFBcf
+         LCNQ==
+X-Gm-Message-State: AOAM533ialQq6MSoWSS/FJexXNbFiOuUSSVUrbwrHdugqRvvOHwc+bun
+        fIFeT2v2oikUkAi67dtysAkWvXhBX0wG7Q==
+X-Google-Smtp-Source: ABdhPJwdzwehgu1L/N/0LhnPvI9jfgMMapUDJ8/mVMbtysv3XfxXX3trW/SGQqaPLIpfINY/fxOMEA==
+X-Received: by 2002:a9d:4f15:: with SMTP id d21mr6551959otl.166.1603595640963;
+        Sat, 24 Oct 2020 20:14:00 -0700 (PDT)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id j84sm1903095oia.25.2020.10.24.20.13.49
+        by smtp.gmail.com with ESMTPSA id m65sm1680258otc.36.2020.10.24.20.14.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Oct 2020 20:13:49 -0700 (PDT)
+        Sat, 24 Oct 2020 20:14:00 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Peter van der Does <peter@avirtualhome.com>
-Subject: [PATCH v2 03/29] completion: zsh: fix bash script extension
-Date:   Sat, 24 Oct 2020 22:13:17 -0500
-Message-Id: <20201025031343.346913-4-felipe.contreras@gmail.com>
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v2 10/29] completion: bash: remove zsh wrapper
+Date:   Sat, 24 Oct 2020 22:13:24 -0500
+Message-Id: <20201025031343.346913-11-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.29.0
 In-Reply-To: <20201025031343.346913-1-felipe.contreras@gmail.com>
 References: <20201025031343.346913-1-felipe.contreras@gmail.com>
@@ -76,36 +75,119 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit 0e5ed7cca3 wrongly changed the extension of the bash script
-to .zsh; the zstyle configuration is for the slave script (bash), not
-the master one (zsh).
+It has been deprecated for more than eight years now, it's never up to
+date, and it's a hassle to maintain.
 
-For example it could be:
+It's time to move on.
 
-  zstyle ':completion:*:*:git:*' script ~/.git-completion.bash
-
-The extension doesn't really matter, but it confuses people into
-thinking it's a zsh script; it's not.
-
-Cc: Peter van der Does <peter@avirtualhome.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.zsh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/completion/git-completion.bash | 92 +-------------------------
+ 1 file changed, 2 insertions(+), 90 deletions(-)
 
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index 6d451355fd..712ce2f4d1 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -9,7 +9,7 @@
- #
- # If your script is somewhere else, you can configure it on your ~/.zshrc:
- #
--#  zstyle ':completion:*:*:git:*' script ~/.git-completion.zsh
-+#  zstyle ':completion:*:*:git:*' script ~/.git-completion.bash
- #
- # The recommended way to install this script is to make a copy of it as a
- # file named '_git' inside any directory in your fpath.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 40affd40e2..26d6ee20b0 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -3458,96 +3458,8 @@ __gitk_main ()
+ 	__git_complete_revlist
+ }
+ 
+-if [[ -n ${ZSH_VERSION-} ]] &&
+-   # Don't define these functions when sourced from 'git-completion.zsh',
+-   # it has its own implementations.
+-   [[ -z ${GIT_SOURCING_ZSH_COMPLETION-} ]]; then
+-	echo "WARNING: this script is deprecated, please see git-completion.zsh" 1>&2
+-
+-	autoload -U +X compinit && compinit
+-
+-	__gitcomp ()
+-	{
+-		emulate -L zsh
+-
+-		local cur_="${3-$cur}"
+-
+-		case "$cur_" in
+-		--*=)
+-			;;
+-		*)
+-			local c IFS=$' \t\n'
+-			local -a array
+-			for c in ${=1}; do
+-				c="$c${4-}"
+-				case $c in
+-				--*=*|*.) ;;
+-				*) c="$c " ;;
+-				esac
+-				array[${#array[@]}+1]="$c"
+-			done
+-			compset -P '*[=:]'
+-			compadd -Q -S '' -p "${2-}" -a -- array && _ret=0
+-			;;
+-		esac
+-	}
+-
+-	__gitcomp_direct ()
+-	{
+-		emulate -L zsh
+-
+-		local IFS=$'\n'
+-		compset -P '*[=:]'
+-		compadd -Q -- ${${=1}% } && _ret=0
+-	}
+-
+-	__gitcomp_nl ()
+-	{
+-		emulate -L zsh
+-
+-		local IFS=$'\n'
+-		compset -P '*[=:]'
+-		compadd -Q -S "${4- }" -p "${2-}" -- ${=1} && _ret=0
+-	}
+-
+-	__gitcomp_nl_append ()
+-	{
+-		emulate -L zsh
+-
+-		local IFS=$'\n'
+-		compadd -Q -S "${4- }" -p "${2-}" -- ${=1} && _ret=0
+-	}
+-
+-	__gitcomp_file_direct ()
+-	{
+-		emulate -L zsh
+-
+-		local IFS=$'\n'
+-		compset -P '*[=:]'
+-		compadd -f -- ${=1} && _ret=0
+-	}
+-
+-	__gitcomp_file ()
+-	{
+-		emulate -L zsh
+-
+-		local IFS=$'\n'
+-		compset -P '*[=:]'
+-		compadd -p "${2-}" -f -- ${=1} && _ret=0
+-	}
+-
+-	_git ()
+-	{
+-		local _ret=1 cur cword prev
+-		cur=${words[CURRENT]}
+-		prev=${words[CURRENT-1]}
+-		let cword=CURRENT-1
+-		emulate ksh -c __${service}_main
+-		let _ret && _default && _ret=0
+-		return _ret
+-	}
+-
+-	compdef _git git gitk
++if [[ -n ${ZSH_VERSION-} && -z ${GIT_SOURCING_ZSH_COMPLETION-} ]]; then
++	echo "ERROR: this script is obsolete, please see git-completion.zsh" 1>&2
+ 	return
+ fi
+ 
 -- 
 2.29.0
 
