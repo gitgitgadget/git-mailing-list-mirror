@@ -2,129 +2,92 @@ Return-Path: <SRS0=tbmj=EA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 078B2C388F7
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91FBBC5517A
 	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 22:42:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D5394222EC
-	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 22:42:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 66563222EC
+	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 22:42:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1420320AbgJYWmP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Oct 2020 18:42:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38832 "EHLO
+        id S1420327AbgJYWmQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Oct 2020 18:42:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1420312AbgJYWmO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Oct 2020 18:42:14 -0400
+        with ESMTP id S1420323AbgJYWmP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Oct 2020 18:42:15 -0400
 Received: from 0x63.nu (0x63.nu [IPv6:2a02:750:9::199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02F15C0613CE
-        for <git@vger.kernel.org>; Sun, 25 Oct 2020 15:42:14 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CA44C061755
+        for <git@vger.kernel.org>; Sun, 25 Oct 2020 15:42:15 -0700 (PDT)
 Received: from ip6-localhost ([::1] helo=localhost.localdomain)
         by 0x63.nu with esmtp (Exim 4.90_1)
         (envelope-from <anders@0x63.nu>)
-        id 1kWnXo-0007u5-Jw; Sun, 25 Oct 2020 22:27:16 +0100
+        id 1kWnXl-0007u5-3G; Sun, 25 Oct 2020 22:27:13 +0100
 From:   Anders Waldenborg <anders@0x63.nu>
 To:     git@vger.kernel.org
 Cc:     Anders Waldenborg <anders@0x63.nu>, christian.couder@gmail.com,
         peff@peff.net, jonathantanmy@google.com
-Subject: [PATCH 01/21] trailer: change token_{from,matches}_item into taking conf_info
-Date:   Sun, 25 Oct 2020 22:26:32 +0100
-Message-Id: <20201025212652.3003036-2-anders@0x63.nu>
+Subject: [PATCH 00/21] trailer fixes
+Date:   Sun, 25 Oct 2020 22:26:31 +0100
+Message-Id: <20201025212652.3003036-1-anders@0x63.nu>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201025212652.3003036-1-anders@0x63.nu>
-References: <20201025212652.3003036-1-anders@0x63.nu>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: ::1
 X-SA-Exim-Mail-From: anders@0x63.nu
-X-SA-Exim-Scanned: No (on st.localdomain)
-        by 0x63.nu with esmtp (Exim 4.90_1)
-        (envelope-from <anders@0x63.nu>)
-        id 1kWnXo-0007u5-Jw; Sun, 25 Oct 2020 22:27:16 +0100
+X-SA-Exim-Scanned: No (on 0x63.nu); SAEximRunCond expanded to false
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-); SAEximRunCond expanded to false
 
-These functions don't use anything from the arg_item except the conf,
-so make them take conf as argument instead. This will allow them to be
-used on other things that has a conf_info.
+This patch series contains a bunch fo trailer related changes. Sparked
+from this thread:
+  https://public-inbox.org/git/87blk0rjob.fsf@0x63.nu/T/#r3dc3e4fa67b6fba95e4b2ea2c1cf1672af55a9ee
 
-No functional change intended.
+Most commits are refactors preparing for the others, the actual user
+visible changes are:
+ * Allow using aliases in pretty formatting '%(trailer:key=foo)`
+ * Fixes related to matching prefix rather than full trailer
+ * Tighten up "canonicalization" of trailers
+ * Add --(no-)canonicalize
 
-Signed-off-by: Anders Waldenborg <anders@0x63.nu>
----
- trailer.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+Anders Waldenborg (21):
+  trailer: change token_{from,matches}_item into taking conf_info
+  trailer: don't use 'struct arg_item' for storing config
+  doc: mention canonicalization in git i-t manual
+  pretty: allow using aliases in %(trailer:key=xyz)
+  trailer: rename 'free_all' to 'free_all_trailer_items'
+  t4205: add test for trailer in log with nonstandard separator
+  trailer: simplify 'arg_item' lifetime
+  trailer: keep track of conf in trailer_item
+  trailer: refactor print_tok_val into taking item
+  trailer: move trailer token canonicalization print time
+  trailer: remember separator used in input
+  trailer: handle configured nondefault separators explicitly
+  trailer: add option to make canonicalization optional
+  trailer: move skipping of blank lines to own loop when finding trailer
+  trailer: factor out classify_trailer_line
+  t7513: add failing test for configured trailing line classification
+  trailer: don't treat line with prefix of known trailer as known
+  trailer: factor out config lookup to separate function
+  trailer: move config lookup out of parse_trailer
+  trailer: add failing tests for matching trailers against input
+  trailer: only do prefix matching for configured trailers on
+    commandline
 
-diff --git a/trailer.c b/trailer.c
-index 3f7391d793..efb88c2008 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -574,20 +574,20 @@ static void ensure_configured(void)
- 	configured = 1;
- }
- 
--static const char *token_from_item(struct arg_item *item, char *tok)
-+static const char *token_from_conf(const struct conf_info *conf, char *tok)
- {
--	if (item->conf.key)
--		return item->conf.key;
-+	if (conf->key)
-+		return conf->key;
- 	if (tok)
- 		return tok;
--	return item->conf.name;
-+	return conf->name;
- }
- 
--static int token_matches_item(const char *tok, struct arg_item *item, size_t tok_len)
-+static int token_matches_conf(const char *tok, const struct conf_info *conf, size_t tok_len)
- {
--	if (!strncasecmp(tok, item->conf.name, tok_len))
-+	if (!strncasecmp(tok, conf->name, tok_len))
- 		return 1;
--	return item->conf.key ? !strncasecmp(tok, item->conf.key, tok_len) : 0;
-+	return conf->key ? !strncasecmp(tok, conf->key, tok_len) : 0;
- }
- 
- /*
-@@ -650,11 +650,11 @@ static void parse_trailer(struct strbuf *tok, struct strbuf *val,
- 		*conf = &default_conf_info;
- 	list_for_each(pos, &conf_head) {
- 		item = list_entry(pos, struct arg_item, list);
--		if (token_matches_item(tok->buf, item, tok_len)) {
-+		if (token_matches_conf(tok->buf, &item->conf, tok_len)) {
- 			char *tok_buf = strbuf_detach(tok, NULL);
- 			if (conf)
- 				*conf = &item->conf;
--			strbuf_addstr(tok, token_from_item(item, tok_buf));
-+			strbuf_addstr(tok, token_from_conf(&item->conf, tok_buf));
- 			free(tok_buf);
- 			break;
- 		}
-@@ -710,7 +710,7 @@ static void process_command_line_args(struct list_head *arg_head,
- 		item = list_entry(pos, struct arg_item, list);
- 		if (item->conf.command)
- 			add_arg_item(arg_head,
--				     xstrdup(token_from_item(item, NULL)),
-+				     xstrdup(token_from_conf(&item->conf, NULL)),
- 				     xstrdup(""),
- 				     &item->conf, NULL);
- 	}
-@@ -879,7 +879,7 @@ static size_t find_trailer_start(const char *buf, size_t len)
- 			list_for_each(pos, &conf_head) {
- 				struct arg_item *item;
- 				item = list_entry(pos, struct arg_item, list);
--				if (token_matches_item(bol, item,
-+				if (token_matches_conf(bol, &item->conf,
- 						       separator_pos)) {
- 					recognized_prefix = 1;
- 					break;
+ Documentation/git-interpret-trailers.txt |  10 +-
+ Documentation/pretty-formats.txt         |   4 +-
+ builtin/interpret-trailers.c             |   3 +
+ pretty.c                                 |   5 +-
+ t/t4205-log-pretty-formats.sh            |  18 ++
+ t/t7513-interpret-trailers.sh            | 120 ++++++++
+ trailer.c                                | 374 ++++++++++++++---------
+ trailer.h                                |   3 +-
+ 8 files changed, 386 insertions(+), 151 deletions(-)
+
 -- 
 2.25.1
 
