@@ -2,158 +2,107 @@ Return-Path: <SRS0=tbmj=EA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65903C4363A
-	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 22:42:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D86CFC4363A
+	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 23:02:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3D135222EC
-	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 22:42:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E72F20790
+	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 23:02:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1420332AbgJYWmT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Oct 2020 18:42:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38806 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1420303AbgJYWmH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Oct 2020 18:42:07 -0400
-Received: from 0x63.nu (0x63.nu [IPv6:2a02:750:9::199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B073C061755
-        for <git@vger.kernel.org>; Sun, 25 Oct 2020 15:42:07 -0700 (PDT)
-Received: from ip6-localhost ([::1] helo=localhost.localdomain)
-        by 0x63.nu with esmtp (Exim 4.90_1)
-        (envelope-from <anders@0x63.nu>)
-        id 1kWnXs-0007u5-DU; Sun, 25 Oct 2020 22:27:20 +0100
-From:   Anders Waldenborg <anders@0x63.nu>
+        id S1419329AbgJYXCn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Oct 2020 19:02:43 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:56812 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1418851AbgJYXCm (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 25 Oct 2020 19:02:42 -0400
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C87176074C
+        for <git@vger.kernel.org>; Sun, 25 Oct 2020 23:02:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1603666930;
+        bh=xAzWw84ETZVwzQh0t9GiRhQNsgM8VxIVHl9veRQpZi4=;
+        h=Date:From:To:Subject:References:Content-Type:Content-Disposition:
+         In-Reply-To:From:Reply-To:Subject:Date:To:CC:Resent-Date:
+         Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=1c8xVctYaktU0QLNAc5Loy50hop6GH2BLSLUJTxpG/q2bEhn5Ev5bHsm30bGO3Ojx
+         C8+fWADkPL6yik8t1Kevzku0tAcYkQsOZjiBCKFQzS9dq7iR5FsbYmRIM1r9EcJO3i
+         qPV5c4gbAwsNFCRHiGaYy8QX5HDX5DPWCe9QkQOt7/9m94FuID3j58tQV9hZjvrZHS
+         DM7IQxmeJ8QJk607Wg1sr+KXYSIN3gEPx3/msw6U7XH0vYX8McvDiMdpwEGY8TN7U/
+         L02sOyaUbjt1Y10JiS6PEGqlY/q+8/RTKk36ko4M9MNKUUZmlLXxttH5w+4+J8Iut8
+         6Dk3G8hgHKug1OZ2vMOrEsm+1xqi70P3ryrJnHTeL4TUtZbJiFCgCGrtitYaXoD2c+
+         kNV/9PQoNM4K/5SgJG2PDcItVX1QokakAO7T9ytsU0Vu3R4UA6dtMlE2+Az9o0R/Ze
+         LLeKiW06Dp4WEKMobvkW7YRkkp91cLLm7w8bqlmHz5LlVfqTAsb
+Date:   Sun, 25 Oct 2020 23:02:03 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
-Cc:     Anders Waldenborg <anders@0x63.nu>, christian.couder@gmail.com,
-        peff@peff.net, jonathantanmy@google.com
-Subject: [PATCH 21/21] trailer: only do prefix matching for configured trailers on commandline
-Date:   Sun, 25 Oct 2020 22:26:52 +0100
-Message-Id: <20201025212652.3003036-22-anders@0x63.nu>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20201025212652.3003036-1-anders@0x63.nu>
-References: <20201025212652.3003036-1-anders@0x63.nu>
+Subject: Re: Do porcelain command require lock management?
+Message-ID: <20201025230203.GH860779@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+References: <20201024144637.cvwa22f2y4tvfn4z@chatter.i7.local>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: ::1
-X-SA-Exim-Mail-From: anders@0x63.nu
-X-SA-Exim-Scanned: No (on st.localdomain)
-        by 0x63.nu with esmtp (Exim 4.90_1)
-        (envelope-from <anders@0x63.nu>)
-        id 1kWnXs-0007u5-DU; Sun, 25 Oct 2020 22:27:20 +0100
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="4C6bbPZ6c/S1npyF"
+Content-Disposition: inline
+In-Reply-To: <20201024144637.cvwa22f2y4tvfn4z@chatter.i7.local>
+User-Agent: Mutt/1.14.6 (2020-07-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-); SAEximRunCond expanded to false
 
-If there is a trailer "foobar" in configuration a trailer "foo" in
-input shouldn't match that, except in `--trailer` arguments as a
-shortcut.
+--4C6bbPZ6c/S1npyF
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Anders Waldenborg <anders@0x63.nu>
----
- t/t7513-interpret-trailers.sh | 17 +++++++++++++----
- trailer.c                     | 14 +++++++++-----
- 2 files changed, 22 insertions(+), 9 deletions(-)
+On 2020-10-24 at 14:46:37, Konstantin Ryabitsev wrote:
+> Hello:
+>=20
+> A script I'm writing performs a succession of porcelain commands to
+> create a commit in a bare git repository:
+>=20
+> git hash-object
+> git mktree
+> git commit-tree
+> git update-ref
+>=20
+> Do I need to manage external locking around these commands to avoid any
+> concurrency problems, or will git take care of that?
 
-diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-index a99d6d7e3b..9e06fa4454 100755
---- a/t/t7513-interpret-trailers.sh
-+++ b/t/t7513-interpret-trailers.sh
-@@ -151,8 +151,7 @@ test_expect_success 'spelling and separators are not canonicalized with --parse
- 	test_cmp expected actual
- '
- 
--# Matching currently is prefix matching, causing "This-trailer" to be normalized too
--test_expect_failure 'config option matches exact only' '
-+test_expect_success 'config option matches exact only' '
- 	cat >patch <<-\EOF &&
- 
- 		This-trailer: a
-@@ -171,8 +170,7 @@ test_expect_failure 'config option matches exact only' '
- 	test_cmp expected actual
- '
- 
--# Matching currently uses the config key even if key value is different
--test_expect_failure 'config option matches exact only' '
-+test_expect_success 'config option matches exact only' '
- 	cat >patch <<-\EOF &&
- 
- 		Ticket: 1234
-@@ -550,6 +548,17 @@ test_expect_success 'with config setup' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'trailer on commandline can be prefix of configured' '
-+	cat >expected <<-\EOF &&
-+
-+		Acked-by: 10
-+	EOF
-+	git interpret-trailers --trailer "A=10" empty >actual &&
-+	test_cmp expected actual
-+'
-+
-+
-+
- test_expect_success 'with config setup and ":=" as separators' '
- 	git config trailer.separators ":=" &&
- 	git config trailer.ack.key "Acked-by= " &&
-diff --git a/trailer.c b/trailer.c
-index 0db3bba3b1..b00b35ea0e 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -605,14 +605,18 @@ static int token_matches_conf(const char *tok, const struct conf_info *conf, siz
- 	return conf->key ? !strncasecmp(tok, conf->key, tok_len) : 0;
- }
- 
--static const struct conf_info *lookup_conf_for_tok(const struct strbuf *tok)
-+static const struct conf_info *lookup_conf_for_tok(const struct strbuf *tok, int strict)
- {
- 	struct conf_info_item *item;
- 	struct list_head *pos;
- 
- 	list_for_each(pos, &conf_head) {
- 		item = list_entry(pos, struct conf_info_item, list);
--		if (token_matches_conf(tok->buf, &item->conf, tok->len)) {
-+		if (strict) {
-+			const char *match = item->conf.key ? item->conf.key : item->conf.name;
-+			if (!strcasecmp(match, tok->buf))
-+				return &item->conf;
-+		} else if (token_matches_conf(tok->buf, &item->conf, tok->len)) {
- 			return &item->conf;
- 		}
- 	}
-@@ -750,7 +754,7 @@ static void process_command_line_args(struct list_head *arg_head,
- 		} else {
- 			parse_trailer(&tok, &val, NULL, tr->text,
- 				      separator_pos);
--			conf = lookup_conf_for_tok(&tok);
-+			conf = lookup_conf_for_tok(&tok, 0);
- 			add_arg_item(arg_head,
- 				     strbuf_detach(&tok, NULL),
- 				     strbuf_detach(&val, NULL),
-@@ -1025,7 +1029,7 @@ static size_t process_input_file(FILE *outfile,
- 			const struct conf_info *conf;
- 			parse_trailer(&tok, &val, &sep, trailer,
- 				      separator_pos);
--			conf = lookup_conf_for_tok(&tok);
-+			conf = lookup_conf_for_tok(&tok, 1);
- 			if (opts->unfold)
- 				unfold_value(&val);
- 			add_trailer_item(head,
-@@ -1220,7 +1224,7 @@ static void format_trailer_info(struct strbuf *out,
- 			const struct conf_info *conf;
- 
- 			parse_trailer(&tok, &val, NULL, trailer, separator_pos);
--			conf = lookup_conf_for_tok(&tok);
-+			conf = lookup_conf_for_tok(&tok, 1);
- 			if (!opts->filter ||
- 			    opts->filter(&tok, conf ? conf->name : NULL, opts->filter_data)) {
- 				if (opts->unfold)
--- 
-2.25.1
+I'm almost certain that Git will do the same locking and object creation
+semantics that it does in porcelain commands as in the plumbing commands
+you're using.  For example, I happen to know that all loose object
+creation goes through one function, which should gracefully handle
+concurrent accesses.  Git is in general safe against concurrent accesses
+and is designed not to lose or corrupt data in this case.
 
+However, I will point out that ref updates may conflict and if so, Git
+will fail instead of waiting.  So while your repository will remain
+consistent and won't experience corruption, that doesn't mean that all
+operations will complete successfully.  Some sort of retry mechanism or
+other error handling will probably be warranted.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--4C6bbPZ6c/S1npyF
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX5YD6gAKCRB8DEliiIei
+gR76AP9LONGN2B3gAYV+LGm4RRVJQYohIYPfUZybFPhsjAWUtAD+PyEbA3CrLMZX
+dUnkmWEs0RSbASL1NTtcw4fkw3VZCQo=
+=Y94n
+-----END PGP SIGNATURE-----
+
+--4C6bbPZ6c/S1npyF--
