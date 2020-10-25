@@ -2,110 +2,89 @@ Return-Path: <SRS0=tbmj=EA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7A80C4363A
-	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 03:14:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2179C4363A
+	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 03:29:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8498B20936
-	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 03:14:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A37CB20882
+	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 03:29:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cfy05UGK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O7JKRwoA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1766908AbgJYDOm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 24 Oct 2020 23:14:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58366 "EHLO
+        id S1762860AbgJYD31 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Oct 2020 23:29:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1766896AbgJYDOa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Oct 2020 23:14:30 -0400
-Received: from mail-oo1-xc43.google.com (mail-oo1-xc43.google.com [IPv6:2607:f8b0:4864:20::c43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51131C0613CE
-        for <git@vger.kernel.org>; Sat, 24 Oct 2020 20:14:30 -0700 (PDT)
-Received: by mail-oo1-xc43.google.com with SMTP id n2so1549053ooo.8
-        for <git@vger.kernel.org>; Sat, 24 Oct 2020 20:14:30 -0700 (PDT)
+        with ESMTP id S1762849AbgJYD31 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Oct 2020 23:29:27 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA329C0613CE
+        for <git@vger.kernel.org>; Sat, 24 Oct 2020 20:29:26 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id n6so8281023wrm.13
+        for <git@vger.kernel.org>; Sat, 24 Oct 2020 20:29:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=IpYxavsTVxlyOo6i67ilYnK0thPLivsx6u0u0MGtU1Q=;
-        b=cfy05UGKuk55WCkXWqeZ45I2tEBOxwfp7//K0ocxXa/daOPS67FVy4pZPepL3OaL2h
-         isTsyac1UP3xtp7fBqs/aJXjIFvjVfJl7LNlQEB0F669PUPfahwUqwVlcP7kvCAcF04O
-         cFJQdQq5wpygucDYRDhJVwJYwzQ6QMD/fKqp/IqYsT3PY0Q95IGu5hQwmp3glPor+6ys
-         ivETkCkND49t+f91d7KTYfumgpSjNOQiHEKhVBnnbmOOGrbbOCfG1eKcj9ryvYJb4UtU
-         j+IyNJ43K33otCAV5sp2WffZNT+pVJaDQX8v6pCf8B2KAjh84dL1W+C195TtZzzK+J4V
-         71ng==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2kcjgPb1Zfi9s/aTlH5yfS8pOqpUDV2jaYfjYbETRNs=;
+        b=O7JKRwoA79AxVnYKHKIwtKXfE8kWb+SWP0jmWIGnOIrhxQVexqHkkAdfUWZ6jjEx4b
+         SG/tX2frIO1mymaOhzra3LAjoeRfc8lvvGSwleQg5CUab6ZZqfSAgyJc0Wnz3P5h7udN
+         S2vg0bzCsOZVV4GHQ3kABf/Os67I4DLM5DZWZsGrcpgW9pfW2zM/QxhVZHVllts5WpPj
+         k8nBpruY4x7Uh2Di1tGST/K30yxWIpNpLk8/RWqwugbAqsQdQVUB7YZIjo/nvkEK+h7j
+         GyVCbBjVAogNYjF9NPBQP1dKplsagPmRBJ7ygEvVAWbeHV+2VbgAjRm2PzS6SWMkrvrf
+         h7tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=IpYxavsTVxlyOo6i67ilYnK0thPLivsx6u0u0MGtU1Q=;
-        b=d3/n0zQ08SXlNADWERLZk//7ql6otnxSvWXCUwPExGvMrU70E5vdn5zlvXdVJSeSMh
-         iuD97GcA1DcP1EKYF5AvH71rN1ZDJ8r6EbSd8arILu23C5SQ7R4MLzYV02d8CdzbG5Lb
-         79zVIbIg1Y6ci4Fc7R35F18t+25QXg+0qKuq9gOLjpUgPiykJsHu1fEdeIaupkMzVCli
-         +QE6cmxpfvKb1C2MEF+EhVwjVYjq7SGz7s4Wyj5zDKz8paIZNpxfrDjgpwx8lB9FURzK
-         2h2Jo0NCMJjG7b6wGUNfOV4MERicdmyiqrI92SjEHHx5YRQcWDhOvQtd1e8By8uQik0d
-         L7VQ==
-X-Gm-Message-State: AOAM531Ks0GmU1c6rEzhx3rrbnPRhfLYe4xGcW2cxjCTB12llZHlAU34
-        cY5qGcVqhGCojaz4cDStMddiIMJ0ij0Gyw==
-X-Google-Smtp-Source: ABdhPJzwnTNxRdqY/k69M0TRQNGHJbSHOBtcEact6BwiRKYqULkbvh8gFIt+iVTQSCZ2EVWUgmbQQw==
-X-Received: by 2002:a4a:d554:: with SMTP id q20mr3967448oos.23.1603595669536;
-        Sat, 24 Oct 2020 20:14:29 -0700 (PDT)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id q14sm1887392oic.38.2020.10.24.20.14.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Oct 2020 20:14:29 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 29/29] Update copyright notices
-Date:   Sat, 24 Oct 2020 22:13:43 -0500
-Message-Id: <20201025031343.346913-30-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.29.0
-In-Reply-To: <20201025031343.346913-1-felipe.contreras@gmail.com>
-References: <20201025031343.346913-1-felipe.contreras@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2kcjgPb1Zfi9s/aTlH5yfS8pOqpUDV2jaYfjYbETRNs=;
+        b=fnnY6jGNMB9gRvKHXM7S0dPHK48q+JNxuld/BkGclzV63TbrciJpA3Tec89da4zYHf
+         3adzMNapwFvGLXZ7CiBB8k+9gdjl/6GnXb2PxB37wczOZXM8GFqsMew/wnrN6sP1WTN+
+         jZvxwuCWHHS21YRVt61y5WxdlinLk20EfaDY4nKHrdcEG8jQo3ZmUMR/zOLr/+o4jAF/
+         TflsSwiHVgNdyjqMdABtPZ3fwea0/4FWbs4t5kd7SAHKspmnEorUya5MMPPWTASQvWjt
+         Tu9W0Cv0b+RUWYQCWSwxjSarQ1/HRJDTfXbBdXRTKR1qGKU9nClAu4xuWZcEbeBYj1t2
+         wXuw==
+X-Gm-Message-State: AOAM530ml7pMcSX7OBztB/q9fkQz5m1Z6La2pFuIaQf8261t5OgonurQ
+        HerW+ZlpbKE298F13y+QuUOgnY9lSw4sTnf7ngk=
+X-Google-Smtp-Source: ABdhPJxNFLzAh12XE9Mhnj9yAz1KZ0eaOkuDtHHtrWjjbA7DpJ3uYIGkUE3Nla0Nxyss5SBwXSVs2lAOUBA6KnBM8QU=
+X-Received: by 2002:adf:ff8e:: with SMTP id j14mr11150928wrr.255.1603596565443;
+ Sat, 24 Oct 2020 20:29:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.814.git.git.1593687080695.gitgitgadget@gmail.com>
+ <xmqqr1to8dv9.fsf@gitster.c.googlers.com> <abc4ab95-ed65-1d6b-e964-73734c08cda9@haller-berlin.de>
+In-Reply-To: <abc4ab95-ed65-1d6b-e964-73734c08cda9@haller-berlin.de>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Sat, 24 Oct 2020 22:29:14 -0500
+Message-ID: <CAMP44s3=CUmx_7DCExK7L4trZvQTxO67Qk20eexsP3su-3RyKQ@mail.gmail.com>
+Subject: Re: [PATCH] Fix zsh installation instructions
+To:     Stefan Haller <lists@haller-berlin.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Alexey via GitGitGadget <gitgitgadget@gmail.com>,
+        Git <git@vger.kernel.org>, Alexey <lesha.ogonkov@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/completion/git-completion.zsh | 2 +-
- t/t9902-completion.sh                 | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+On Wed, Oct 14, 2020 at 12:39 PM Stefan Haller <lists@haller-berlin.de> wrote:
 
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index 9fc9f2db21..d25f8691ef 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -2,7 +2,7 @@
- 
- # zsh completion wrapper for git
- #
--# Copyright (c) 2012-2013 Felipe Contreras <felipe.contreras@gmail.com>
-+# Copyright (c) 2012-2020 Felipe Contreras <felipe.contreras@gmail.com>
- #
- # The recommended way to install this script is to make a copy of it as a
- # file named '_git' inside any directory in your fpath.
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 7b7bc6e4bd..caf4e9101f 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1,6 +1,6 @@
- #!/bin/sh
- #
--# Copyright (c) 2012 Felipe Contreras
-+# Copyright (c) 2012-2020 Felipe Contreras
- #
- 
- test_description='test bash completion'
+> Yes, the change is sane. The wrong file extension (.zsh vs. .bash) was a
+> documentation bug that I had noticed myself, but forgot to submit a
+> patch for.
+
+Yes, a patch was wrongly applied that changed it from .sh to .zsh.
+
+> The other hunk (adding compinit) is not so important to me; I suppose it
+> was not in the original version because most zsh users already have this
+> in their .zshrc anyway. But it's not wrong, and doesn't hurt to have
+> here, I guess.
+
+If you don't have compinit, then how is the '_git' script being loaded
+in the first place?
+
 -- 
-2.29.0
-
+Felipe Contreras
