@@ -2,134 +2,93 @@ Return-Path: <SRS0=tbmj=EA=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03E11C388F7
-	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 15:17:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37DAAC388F7
+	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 15:42:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B4D9A208A9
-	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 15:17:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E1DA92080A
+	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 15:42:57 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="n8u6JMzj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1416970AbgJYPRx convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sun, 25 Oct 2020 11:17:53 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:30405 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1416967AbgJYPRx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Oct 2020 11:17:53 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.189.82])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 09PFHaBK075807
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sun, 25 Oct 2020 11:17:36 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'brian m. carlson'" <sandals@crustytoothpaste.net>
-Cc:     <hv@crypt.org>, <git@vger.kernel.org>
-References: <202010242019.09OKJTP13180@crypt.org> <016001d6aa52$b1cbc510$15634f30$@nexbridge.com> <20201025030606.GF860779@camp.crustytoothpaste.net>
-In-Reply-To: <20201025030606.GF860779@camp.crustytoothpaste.net>
-Subject: RE: safer git?
-Date:   Sun, 25 Oct 2020 11:17:30 -0400
-Message-ID: <017f01d6aae1$f870e4c0$e952ae40$@nexbridge.com>
+        id S1417027AbgJYPm4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Oct 2020 11:42:56 -0400
+Received: from mout.web.de ([212.227.15.4]:36051 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1417004AbgJYPm4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Oct 2020 11:42:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1603640570;
+        bh=tHVclN/EM/8I2jBcewG2SjxPsRzN6ITz0nkYNdH/oUY=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=n8u6JMzjqQIvcboqSY2LvQee5uyj4yGF3kafELpn1r4fzt4H9/O9WXCpSsjKduBzK
+         BiXiejNbMBVI6W4PFXdQfex59rl7N1V+vU+stXbtwX3z9+sxw0xi8cJ3RBXB0QXrJw
+         DJvusmMrenXvcpJ/X8d4yzqz/UbUyWI1eS3Okl9o=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.17.45]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LZvfZ-1k71S30dP3-00loFU; Sun, 25
+ Oct 2020 16:42:50 +0100
+Subject: Re: [bug] Stashes lost after out-of-memory situation
+To:     Thomas Braun <thomas.braun@virtuell-zuhause.de>,
+        Marek Mrva <mrva@eof-studios.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <65a3061a-47ef-9ca6-2468-5449cfc5b37c@eof-studios.com>
+ <618d66a8-e2c1-241c-5200-2298bfe24ac0@web.de>
+ <5a3db65b-1877-c5be-8077-2926637fba6e@virtuell-zuhause.de>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <22f34328-1e87-aa4b-3893-564dff1fb893@web.de>
+Date:   Sun, 25 Oct 2020 16:42:20 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQG0te9slIV6tbfjyjRjcOVBcUwWFAJTrrciAi2KMCypyE2xQA==
-Content-Language: en-ca
+In-Reply-To: <5a3db65b-1877-c5be-8077-2926637fba6e@virtuell-zuhause.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:ORXAmeGP3uKZV2hdX/os3Jiirk93QjX/bEj1aWkiq7s86uz0OFc
+ Zn4IdpNtDa8A9VuTD8IPE0nwSiKJmZ3pCcnNwJbwHyJF6OecCZv7b2/12+U9wMyG83kGW1f
+ PCExO969t2mn97+gpRziqp4PKDywr2STFcDq0BtjrjeM2LCciii95niv+PmKRLa7knLNS5M
+ +jDkWCNvqSs9srg28jFew==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:GFDDXtTCR1k=:9/NxaLSWW/rldboDr36G6f
+ 8h5mCMwn4P9sVHU2uKXTwHcNsZJJGqe/i/LBdTVwUTL4UCoBx3ebjtxeTZK5og2giWzg78LfL
+ WTn+9beUMgU3+uGI4d0Afez1/PyI5E8/eoVCem80+1XQMQ68epTj7dG/cnP+YwZzE4eLxe8PI
+ JPqrzhJTrDv/DNoBUq1S4eWM+SqJedQMW0Dz+x2GLr4N74vC+Yq6OmGBv+6386HRklnAju9uk
+ FoO8cwVNtXIBfRnzo43d8kpCsB/k7c0bvioojctKPVQiZ9NIAMpqmptaASO6fBPNhEsv++/SV
+ UwXJ9+ajzmgPHtMPZLA29+w7polBET/LoIkqC1au7/Yqpk4+B9J2NflFButWeB4LQYXpdwbOU
+ whwUn4zYbEpQbYm83sNsMlvfAY58GpU8A6KR8gxVh+sOlDSjP+gK+Y95VaSOSOI+f5H3S0B6p
+ EDc6ewnazlf5ErOpmcyRa2htf/jxLrQljUhiOCGc87n7RTlXZngCRVkD4OdF5MxsZSSxeg+4c
+ bJgAjnMID2NzOV2RGMdz7TGzuh9gn5ceNPpJ+laxf4rdrbg5JrErV9+Hd6otA94laptdU8orU
+ YqBPQ9+O8KTapzTEoL9zggXJmn0vM4E6rsTlv0J0F+KiLwREOA8plLYHxpJQtuvmt8kJRONHc
+ uFY8qbTyrjqhBDxjmA5vZncY87D5TVezTteJlb2geAHnyiy62MjNR7qBQT9NWL73wznuDvaOw
+ T/tSucbo2OoxESCMGJQtvZbbLbbhJSIkb1afjwikIvIgi54qJQz9iql2jWo+F/HQVMMgeonq+
+ ZdoOqgEpp1RLHod9mkJrm6M0ydlW2As8MczklzIhcNMz57shAkkr9HH9px20BzEZ5IINbrCQB
+ cxX2j7B9FhVheHUsVTNg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On October 24, 2020 11:06 PM, brian m. carlson wrote:
-> [I somehow didn't get the original message, so replying inline below.]
-> 
-> On 2020-10-24 at 22:11:54, Randall S. Becker wrote:
-> > On October 24, 2020 4:19 PM, hv@crypt.org wrote:
-> > > Q: Is there a mode in which I can run git that would make it a bit
-> > > more robust against crashes, at the cost of being a bit slower?
-> > >
-> > >
-> > > The primary symptom is that files modified shortly before a crash
-> > > show up existing but zero-length after the crash. For source files I
-> > > mostly know what to do in that situation, but `git fsck` shows a lot
-> > > of files under '.git/objects' that are empty, which seems to make
-> > > things hard to recover:
-> > >
-> > > % git fsck
-> > > error: object file
-> > > .git/objects/0e/f31631726cea2e9bf89d7bbe7b924b5282d533 is empty
-> > > error: unable to mmap
-> > > .git/objects/0e/f31631726cea2e9bf89d7bbe7b924b5282d533: No such
-> file
-> > > or directory
-> > > error: 0ef31631726cea2e9bf89d7bbe7b924b5282d533: object corrupt or
-> > > missing: .git/objects/0e/f31631726cea2e9bf89d7bbe7b924b5282d533
-> > > [... a dozen similar entries ...]
-> > > error: object file
-> > > .git/objects/f5/a9d125645e69a0e40f9bf7a8c90b1c1c4a4ea5 is empty
-> > > error: unable to mmap
-> > > .git/objects/f5/a9d125645e69a0e40f9bf7a8c90b1c1c4a4ea5: No such
-> file
-> > > or directory
-> > > error: f5a9d125645e69a0e40f9bf7a8c90b1c1c4a4ea5: object corrupt or
-> > > missing: .git/objects/f5/a9d125645e69a0e40f9bf7a8c90b1c1c4a4ea5
-> > > Checking object directories: 100% (256/256), done.
-> > > Checking objects: 100% (1577/1577), done.
-> > > error: refs/stash: invalid sha1 pointer
-> > > 0000000000000000000000000000000000000000
-> > > error: bad ref for .git/logs/refs/stash dangling commit
-> > > 1c0ea4e6159952501957012d2b9db7d68b52d107
-> > > %
-> 
-> You can try setting core.fsyncObjectFiles to true.  That's the only knob that
-> Git has for that at the moment, although there was some discussion about
-> adding a new feature for other files[0].
-> 
-> I suspect a lot of the zero-byte files and any files that end up as all-zeros are
-> due to your file system.  The default file system on Ubuntu is ext4, IIRC, and
-> if that's what you're using, you can set data=journal instead of data=ordered
-> as a mount option.  For the root file system, you'll need to pass
-> rootflags=data=journal as a kernel boot option.
-> 
-> That may be significantly slower, but until you get your hardware problem
-> sorted out, it may very well be worth it for you.  I'd try this option before the
-> one below because it'll have less of an impact on performance and may solve
-> most or all of your problems.
-> 
-> > > Last time I checked out the previous state from github in a new
-> > > directory
-> > and
-> > > was able to find and copy over most of my work before continuing. On
-> > > this occasion I did a `git stash save` shortly before the crash, and
-> > > I'm not
-> > sure
-> > > how to get that back. I see RenÃ© Scharfe's suggestion of:
-> > >   git fsck --unreachable |
-> > >   grep commit | cut -d\  -f3 |
-> > >   xargs git log --merges --no-walk --grep=WIP from a recent message,
-> > > but that is only showing me an older stash item.
-> >
-> > I would suggest turning off write-through buffering on your disk. Let
-> > writes complete immediately instead of being deferred to sync. Also,
-> > this does feel like a disk issue, so fsck or chkdsk /f (or whatever) on your
-> disk urgently.
-> 
-> Turning off buffering and caching for your disk drive may make things
-> _really_ slow, but it will definitely improve data integrity.
-> 
-> I know hardware problems are always a hassle, so I hope you get things
-> figured out and fixed soon.
-> 
-> [0] I admit I am not running the very latest version and the new feature may
-> have already landed; if so, I apologize for the out-of-date information and
-> for not keeping up with the list.
+Am 25.10.20 um 13:27 schrieb Thomas Braun:
+> On 10/24/2020 7:06 PM, Ren=C3=A9 Scharfe wrote:
+>
+> [...]
+>
+>> Looks like stash calls rev-parse to see if a
+>> stash pop removed the last stash and in that case proceeds to delete th=
+e
+>> stash ref and its reflog
+>
+> I was a bit suprised to learn that removing the last stash entry also
+> removes it from the reflog.
+>
+> Wouldn't it be more convenient if it would be kept in the reflog even
+> after popping?
 
-Thanks for pointing out the git knob. I didn't know about that one and it seems helpful in general.
+The log of the stash ref is separate from the normal reflog.  Popping
+a stash doesn't remove anything from the latter.
 
-Regards,
-Randall
+Ren=C3=A9
 
