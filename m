@@ -7,85 +7,91 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FFE7C4363A
-	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 03:40:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF702C4363A
+	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 03:46:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 486D920770
-	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 03:40:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7D94521734
+	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 03:46:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JfRawL4F"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oqRTLR4d"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1766955AbgJYDkS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 24 Oct 2020 23:40:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34048 "EHLO
+        id S1763105AbgJYDqc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Oct 2020 23:46:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1766952AbgJYDkS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Oct 2020 23:40:18 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0E8AC0613CE
-        for <git@vger.kernel.org>; Sat, 24 Oct 2020 20:40:17 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id c194so7844359wme.2
-        for <git@vger.kernel.org>; Sat, 24 Oct 2020 20:40:17 -0700 (PDT)
+        with ESMTP id S1728502AbgJYDqc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Oct 2020 23:46:32 -0400
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15DBBC0613CE
+        for <git@vger.kernel.org>; Sat, 24 Oct 2020 20:46:32 -0700 (PDT)
+Received: by mail-wr1-x443.google.com with SMTP id s9so8286331wro.8
+        for <git@vger.kernel.org>; Sat, 24 Oct 2020 20:46:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=7QU3yNcJGNX+IDKmCtYovd+vhvG6yjXr68LB6IcKlM4=;
-        b=JfRawL4FoI7dpywAB7Vzv6r1A6nxG+aczevVtE3R4voacCSX6zH3LZzYoNRK0TbPxZ
-         l69NB/DwkzJiSn8zcANHidKl3MKC4jirTf7uslpAV37D2bb79xACIg0AuKpwAsAonBFc
-         2w02d0I2e/Stu3IVDyfi4ieIXOt0jIohbnOsmBoMlMh+S6ujrtZn96gaRVR1gUg3HGNl
-         OOTLsZSFeGR9z7DNzHSvUN04eoiO5CcKTM2yP+uWbA2+1aRp4DoA4jtmTwfcOe1XxliJ
-         2cA9kTb3N7nCLM7adjm85CrjCveJ1B+MTTnA4yhaLJR+KBqrUJ3REsn82hpI94zp0Gft
-         lU6w==
+         :cc;
+        bh=ndIhhKx1x5FaH4QOt5Tx5BmUW3eaBVhw52q8N0iOQAk=;
+        b=oqRTLR4d/R/uw5GBSNByxJJAdQfQ9cpKAfTghenBhbKiv3w6HtDeJkHNR49wIeZUs6
+         wqb1/c/PInjyfWFGmudqrkgOzWLckujf3+xmjmifzL228jcZ26cvF+VADjOWNdZ89cIA
+         rIHDrYijQHdpkRBixbIy/pod6xUdpvrZXfcCbzgkFsTO9osFEXCjLLU+Uj4OS8A+6bs+
+         bzYuGdz3ClMTmMN3DWt/5klROGxJPvcYpzgNZ+2pk3YRVspbq3KEceR9Bw8v11JdSf60
+         wTuHy1c4aUYiTv+EqnGtAB6Bk568aEjShKvZTlnx7fI0oZnv52zY08JdKm2yQXT3DChV
+         JkEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=7QU3yNcJGNX+IDKmCtYovd+vhvG6yjXr68LB6IcKlM4=;
-        b=Iz5zIwVV5E9XjKQOTgRFBgV/nAYBPRFNDSZAN+S+EzeS2srYnBINPLYiwVxvij2kMe
-         Zr3b2FfEZYZdk86rwHN/TULtV2ZoKctdq6EKSoWbh5uftuKCB374h7YmN0ppE94GDAzA
-         pioypt4bxQqYq6bj/XnxHyVBGVe+cc8HUXL5WGd3Thgc9E5AtnZ7EVB4HhS67XSHpCNL
-         J0DY1S1iEWKaVgtwSjKD+vbl57Fb7BWZtJnea707HfJ4M+jGlAp1wAmu7gOZe7a+hoNq
-         SnhB66/9rhIXzameXo4noz5HUxrBS2dHSziCztWN6PgZhzS/QBzGa22f7fOnIK2kx8Z+
-         zTbQ==
-X-Gm-Message-State: AOAM533D01CurP8ec3Z5D1sPnY8UrEdNksiRtj3h9tBXKA5fgXeuFmuN
-        DFDwqC9qQGcojeGQkX0Ym+Baettc2e+6T8cVrvM=
-X-Google-Smtp-Source: ABdhPJyCSsCmz7wonnCSsOC1nMNyBdR9HrOkSnxZ2zg8tTYwZPPaXnGUXqZa4do9XhMEJAfkqHX+CMyykjWYx2lNpJs=
-X-Received: by 2002:a1c:de8a:: with SMTP id v132mr9422328wmg.173.1603597216515;
- Sat, 24 Oct 2020 20:40:16 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=ndIhhKx1x5FaH4QOt5Tx5BmUW3eaBVhw52q8N0iOQAk=;
+        b=HMbfPszj0VYOMalBCHeVmmq+TfhsVZ6GuPrbA5sCuIQQUzfbf8JuJj892GfdFUSHvg
+         Gfn6Irhp4g+7dvSVApcAnxEYoq7krcioolE7mJtNKNP0tREwlzfnG9jioa/4QhWliK9T
+         QUXbZJgh4ctmCwJl3DbRm/fvVmhX8GxpUMw/5Flvxqgz0TsPvPCLNXxw7w8vRYblb2wO
+         TJA6B+obJe9hqarI/O6PvBMklllwMPrBqpOIbyCpZ+/EUey+bkNM/7Uydrsk1kvRlnfp
+         XsFRyQvZXcKx/XY4+rtjQacFoHfSkEtOIdJyJd54N5fWgmqtaOu0qLl4YiEEg9u2E/mD
+         ic9g==
+X-Gm-Message-State: AOAM533Y1QQvZp66A/SCCCF7sXS1vyIORbWEwDJ9euHYfQM4uWVypTjs
+        t0MIzDVeLCMm6CjpqnWupqy11p0bm9G0S2aWA0M=
+X-Google-Smtp-Source: ABdhPJx7kGqMfaYU9PuKK5dkge6SXlnDnG7QesLzDrvbmJXGt6tRxuZZLVYjHiqLJeOYWKK60zQn15t4aU7Vc2GiFJ8=
+X-Received: by 2002:adf:e885:: with SMTP id d5mr10721545wrm.100.1603597590736;
+ Sat, 24 Oct 2020 20:46:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.367.git.gitgitgadget@gmail.com> <pull.367.v2.git.gitgitgadget@gmail.com>
- <3f994f3b9a49c42bb8b605459817e54479327dc7.1570816467.git.gitgitgadget@gmail.com>
- <20191014234439.GT29845@szeder.dev>
-In-Reply-To: <20191014234439.GT29845@szeder.dev>
+References: <20190621223107.8022-1-felipe.contreras@gmail.com> <xmqqk1cz0zz1.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqk1cz0zz1.fsf@gitster-ct.c.googlers.com>
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Sat, 24 Oct 2020 22:40:05 -0500
-Message-ID: <CAMP44s3UA-eVGJ1fwYwQCaJEKaD4MzDWds311bhdNPb1WFy01A@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] doc: Change zsh git completion file name
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Maxim Belsky via GitGitGadget <gitgitgadget@gmail.com>,
-        Git <git@vger.kernel.org>, Max Belsky <public.belsky@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
+Date:   Sat, 24 Oct 2020 22:46:19 -0500
+Message-ID: <CAMP44s3wqxTmgQpMgk2cM33EvtwrvvXYv4_90GKGmHb8yJHAKg@mail.gmail.com>
+Subject: Re: [PATCH 00/14] completion: a bunch of updates
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 15, 2019 at 3:22 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
-ote:
+On Wed, Jul 3, 2019 at 12:50 PM Junio C Hamano <gitster@pobox.com> wrote:
 
-> Instructing users to copy our completion script to
-> '~/.zsh/git-completion.zsh' goes against this convention.
->
-> More importantly, it appears that this is more than a mere convention,
-> maybe a requirement even; at least renaming our zsh completion script
-> to follow the convention (IOW following the current install
-> instructions) makes it work all of a sudden:
+> But we haven't seen any response to the earlier zsh specific
+> patches.  Does it mean that nobody other than Felipe cares about
+> having a working Git completion for zsh?  Or does it mean that all
+> users other than Felipe are happy with the current Git completion
+> for zsh and it works very well for them already?  Or somewhere in
+> between?
 
-It is a requirement. If the file is not named '_git' it will never be
-autoloaded. The whole point of naming it that way is that it's loaded
-after typing 'git<tab>'.
+The answer is obvious: the set of zsh users and the set of git
+developers don't overlap.
 
---=20
+> What I am trying to get at is if we would want to keep the earlier
+> zsh parts of the series, but with nobody seemingly interested in, it
+> is hard for me to justify queuing them.
+
+You are asking in the wrong forum.
+
+I would gladly point you to *dozens* of issues reported in Stack
+Overflow and Oh-My-Zsh if you don't believe me.
+
+Or you could just install zsh and see the issues for yourself.
+
+-- 
 Felipe Contreras
