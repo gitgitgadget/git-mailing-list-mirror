@@ -2,110 +2,97 @@ Return-Path: <SRS0=PD7l=EB=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1341EC4363A
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 16:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F339C2D0A3
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 16:25:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C741B241A4
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 16:09:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3255222284
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 16:25:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UkFEPbKr"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="iEbNeRAY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1785032AbgJZQJY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Oct 2020 12:09:24 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:52926 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1785022AbgJZQJY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Oct 2020 12:09:24 -0400
-Received: by mail-wm1-f68.google.com with SMTP id c194so12235017wme.2
-        for <git@vger.kernel.org>; Mon, 26 Oct 2020 09:09:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=KQ/Om1iJNa++UOs6ipGuMhVM81spY9yADMMzBFismRs=;
-        b=UkFEPbKrM21h6vEIme2BuyGyOjUZHhnt4g719mNM2Dn4czpIR5jY7NKaVpfkvKayFo
-         IO53CfdrycD952jowHAWdD4IW/xhoEq/Xp/zkSjP/WZ1bErkLOaggN2WX5C0M4pOlx36
-         7pGNiVQTc5njGwgFvr3zTwlZXZOR4NI0Mh52f9q7LKO2M5UaTqJdda3XHXaIAOavQXjr
-         f7fRztv3lzhsc+sPFhfxRu2TyX0RDg+dkd9DOpXJVJP1cZOolQ2Cg9W0bfNDPTxqRicf
-         NK30+5+z42hVxE5DaejoPRV0unwgoNUK2qhaLegxsgWYCEoRe6ulh2VCa3ucYuS9xBUu
-         +RNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=KQ/Om1iJNa++UOs6ipGuMhVM81spY9yADMMzBFismRs=;
-        b=L7URBveVGgCvxXc8l02KfZqRITGduut/qmKc7808AYgkxY8KPktHbgt7q3YX/KmbKb
-         Y+3rSO2PirVg426TFXlBr3HjA4hBdZ41pS5VifPkavka3I5jrxqf42Rv5/wbVvIRvcWQ
-         o0YgN+NIu/blp3BLzaQ8CqQYWN+KJakcZJ92hOc1CHYbakg2mfRK8HWcukEujyexkf3J
-         /1GAtWK6EdP6IaID0H07DDq6awaoGAaXjnXJSNrjbDAXSacfIOgXb+YEa8eREua8+Hhe
-         LkQPUdjR6LZjH5o5XVQSXYUPDrHdsNQRCxJvlhZR+PQfT4HcuQhtGKYMq4Pin2QXy7pJ
-         tMVA==
-X-Gm-Message-State: AOAM531O9ThlWWyvxcvVEkiQ9hw55Qp8QzZ4phl34mGaAxc1sn17O5ij
-        N6POPi72yBh8hTLv8NrZaX4OPegIPOI=
-X-Google-Smtp-Source: ABdhPJxoDJ6htJO7w0r5lmNzG/guuaZpNEeyLvjrRA7GI/a0ibQIYSvsUgJ9wEDaa265y/pzKwEcpQ==
-X-Received: by 2002:a1c:cc01:: with SMTP id h1mr17648201wmb.114.1603728558583;
-        Mon, 26 Oct 2020 09:09:18 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t19sm19526065wmj.42.2020.10.26.09.09.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Oct 2020 09:09:18 -0700 (PDT)
-Message-Id: <9ffcc5b78e358d0ed4da2c52ba87174dc94e544c.1603728555.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.753.v3.git.1603728555.gitgitgadget@gmail.com>
-References: <pull.753.v2.git.1603136142.gitgitgadget@gmail.com>
-        <pull.753.v3.git.1603728555.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 26 Oct 2020 16:09:15 +0000
-Subject: [PATCH v3 2/2] sideband: report unhandled incomplete sideband
- messages as bugs
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1785914AbgJZQZ3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Oct 2020 12:25:29 -0400
+Received: from mout.gmx.net ([212.227.17.20]:49979 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1785800AbgJZQZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Oct 2020 12:25:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1603729504;
+        bh=OTBUCGIcEBEtN+El3nqSuZXwX/1hS2IkCkpednEyYJI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=iEbNeRAYwZRfAZtUgmTBPxjCdXxY3rlLh3PWL5WlskVt5ZhIR3BB+gMwV6tCnRt4g
+         mEgcy9fLNXD2oLcfxE154rvT4oMPZt1VH83dcgW6QTfW9Z98qQLqLL6CJMpxLyVDFm
+         Ye743ZTpDqXabTBwTVZwke6AQufvUjPmeAWcpydY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.26.25.62] ([89.1.213.122]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MHoRK-1kZmze0FjK-00Ew99; Mon, 26
+ Oct 2020 17:25:04 +0100
+Date:   Mon, 26 Oct 2020 17:25:01 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     VenomVendor <info@venomvendor.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+Subject: Re: [PATCH 4/3] am, sequencer: stop parsing our own committer
+ ident
+In-Reply-To: <20201023074510.GB2918369@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2010261722230.56@tvgsbejvaqbjf.bet>
+References: <20201023070747.GA2198273@coredump.intra.peff.net> <20201023070939.GB2913115@coredump.intra.peff.net> <20201023072630.GA2918369@coredump.intra.peff.net> <20201023074510.GB2918369@coredump.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:7FtOQieXq0n/W2R427K/rUbdOFnZJviAmWhzwOi6az3MCA0e8ge
+ NmfcPmRY+cACvwJxtQxGb6xauKa6zE/QSfYdA1St4JDp5iwNtq7kKgoFkL3R404Lof/H0zZ
+ /Ym9yIjMnKrpIIlzuseudI5yFnzRHhxiTMqkDVg+HlC00y1bw+aIgdlBlYr+RgOrRaohBF3
+ 8/zj/KspQd9Cmo3lMKOOg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:O6hz8w6rjUk=:HUegh4fMrLA3YfTYFczmRD
+ KsF/ggpJpEkQTne7bu3y6vRBgFdnyAElU8mLbc08LL7NqemDuKxEubot6aQloQrV0J6fnDq3v
+ ACM0fxDJ0T/D3/FtLgFz7Sj08LFUcfYWr1B18CsIZG/EcRFNgdiwyzjHdix3I716nwSxp5QU2
+ mJndxgqxv38i+kPwopqNavh0lMRsOtPmcQpQkYck8EylBBhiDhY/nOVcQrKYv6rnrA39FNMPc
+ CCA3SG1xb9+G0nSggr0YFrONdQw9Sovw+Pu6lhx7CYfmBAXnSDC+QmB6sJaE2eBXqvnWItd9C
+ oNu+XD4HVYSKj3nsVgh6ZAzLPc57hlBemhfApy9s+PkgJ8uU4McRY/b/21ZAjbyNV3IH4FyYp
+ xvGgKC1HIn4jxynAeTS5/ADt1BiBA9F7Bv8UR5nXfZKFEc+HM4uWzKkQW6ax+siFF6MHpHAMH
+ bgWKYa7jvZZOas2woao1svZqJBT4fzpvgBUxWAANTneHsFxgpXj8lOPgbIJ586069swBDNCD+
+ 6ih6tPABJeuLJYKbPGp6fXforngah64Oc558UGvvobZEAh41jjh+vh2BoK68rQoe2+aHXoCgL
+ YpVbsuEVOv8YvSuhyCAADenjlUuXucTanefrLPc10rihKgc1/VxAJ7nV16Eajq+gA055vC1MO
+ cqrNYXPzbNdHXOt2dSXqm15S3T4D1UtzNO+XmCCu3IW12G2y06ti86dSkoN/8G16wy3DW2xUT
+ NCqX1i5rt58NsQ07N8RtiFjuELOps5qGDRZ1HE3MiOXwrZmLhf2Dm5M9+gmAOtWYwRKGBEKFY
+ TNFZyyVf2ykZg+YHrm7ByYLsYHlm26FbBPib6/Bf+082+YKoYwkX66RFjJqQUWXZ41Rc4gF0N
+ peyKmZN1BhETwtvGYrDSKgXXUYoksEeodwKTvUono=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Peff,
 
-It was pretty tricky to verify that incomplete sideband messages are
-handled correctly by the `recv_sideband()`/`demultiplex_sideband()`
-code: they have to be flushed out at the end of the loop in
-`recv_sideband()`, but the actual flushing is done by the
-`demultiplex_sideband()` function (which therefore has to know somehow
-that the loop will be done after it returns).
+On Fri, 23 Oct 2020, Jeff King wrote:
 
-To catch future bugs where incomplete sideband messages might not be
-shown by mistake, let's catch that condition and report a bug.
+> diff --git a/ident.c b/ident.c
+> index 6aba4b5cb6..7743c1ed05 100644
+> --- a/ident.c
+> +++ b/ident.c
+> @@ -384,6 +384,12 @@ const char *fmt_ident(const char *name, const char =
+*email,
+>  	struct strbuf *ident =3D &ident_pool[index];
+>  	index =3D (index + 1) % ARRAY_SIZE(ident_pool);
+>
+> +	if (!email) {
+> +		if (whose_ident =3D=3D WANT_AUTHOR_IDENT)
+> +			email =3D getenv("GIT_AUTHOR_EMAIL");
+> +		else if (whose_ident =3D=3D WANT_COMMITTER_IDENT)
+> +			email =3D getenv("GIT_COMMITTER_EMAIL");
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- pkt-line.c | 3 +++
- 1 file changed, 3 insertions(+)
+I *guess* that this is a strict improvement, calling `getenv()` much
+closer to the time the value is actually used (and hence avoiding the
+problem where pointers returned by `getenv()` get stale due to environment
+changes).
 
-diff --git a/pkt-line.c b/pkt-line.c
-index 844c253ccd..657a702927 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -471,6 +471,9 @@ int recv_sideband(const char *me, int in_stream, int out)
- 			write_or_die(out, buf + 1, len - 1);
- 			break;
- 		default: /* errors: message already written */
-+			if (scratch.len > 0)
-+				BUG("unhandled incomplete sideband: '%s'",
-+				    scratch.buf);
- 			return sideband_type;
- 		}
- 	}
--- 
-gitgitgadget
+Thanks,
+Dscho
