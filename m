@@ -2,219 +2,152 @@ Return-Path: <SRS0=PD7l=EB=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 360F7C4363A
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 21:19:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04CCAC4363A
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 21:25:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D8838207F7
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 21:19:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A74502084C
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 21:25:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P78h+sLZ"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QHipl2oS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731254AbgJZVS7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Oct 2020 17:18:59 -0400
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:40213 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730452AbgJZVS7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Oct 2020 17:18:59 -0400
-Received: by mail-ot1-f65.google.com with SMTP id f97so9345066otb.7
-        for <git@vger.kernel.org>; Mon, 26 Oct 2020 14:18:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WGy80/MGsM6XIggDc0J/AXIUbuatTzbNVPzg6c86jfs=;
-        b=P78h+sLZaoybHudBb/1UsEytGyk5rYbKcjL3I+j12DXo0PVt5aGSCyeotuL01YLnDc
-         XjacSRLm2IQVAQKx3Q5+/2cY3C16zgQN6lyElwV7BPWOBMpFLT8UwD1y3ZeONkPdZE0Y
-         HB7poP3Hp1Qo7QPegEONjGpTrXicF0KXZqSSkQ81ou0z0qAguYoXSv61Vp+V5USAwtUy
-         zTLa1z3gUR3ndGI6oAtdeX/W/Sh2re/cHD8YJeCPINEIH1orRbtA/ZRaqv9OD5CFKi62
-         hhMXOnQktVJ1YJjqEyqc0FRy/4UCtOnJQxW9JD55FTC4hpYlkU/kZgGYCNVba6KQYtne
-         +AEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WGy80/MGsM6XIggDc0J/AXIUbuatTzbNVPzg6c86jfs=;
-        b=ZHY7Ku6KGMEFsJErdWE66LCeYKI54v8DK+1+H43zoaiaJgG3NpQEror0A/XRlWrUkN
-         Qz60Ux1YWNFxCSuIfkRXv6Hu81Rw15xrfY3xZXfKcvuHnegWG5gOVuN8sDsKdVqzoi/h
-         83FCzi/Udwe1ZY+In/DCLLVLDCXvNqHf7MswW5UpSP3WHtpU9ABm+GsaH59tQaPtAGAr
-         5JHdtFSUgJgq7gnDLLVaYVI9YNAHty5Zx+EPX0UV9FN9Tk5ME8LJqQPNcZKCIWVniLsm
-         1yNXLvJApXdviA4y0kJHYlLRgQvO1HBIWoI8CuDsRPirNQ4UMkbMBa5s6sbtX6caIfsJ
-         ln1Q==
-X-Gm-Message-State: AOAM532epRg3mkLRdjZHVUoQaGh2IKEiwzM27E5V/VydFy3mPamek9qw
-        +1NaPNqo3BYGrz/Uj8xhCrS8tdabpg0XIywIrag=
-X-Google-Smtp-Source: ABdhPJw16OOktgtayeGrgwyKEuRvybJO4h2Savro6bj9p+hM7qLwtx3xzKwdS0WjNSD8zRPadhKB34KZseKidDzbKjI=
-X-Received: by 2002:a05:6830:2389:: with SMTP id l9mr16733825ots.316.1603747137782;
- Mon, 26 Oct 2020 14:18:57 -0700 (PDT)
+        id S1732730AbgJZVZA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Oct 2020 17:25:00 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51660 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732700AbgJZVZA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Oct 2020 17:25:00 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3DA80E497A;
+        Mon, 26 Oct 2020 17:24:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+qRjrRNkDNgwJRUrFICqBdcLos0=; b=QHipl2
+        oSgb9yBmlyad2kFJJMPptzvjbp8cTiSh+CBwjyeicj1AHljsalFhTci3ha58um0D
+        eB75cdR1qR/5uDbTx6Bwezkcj2XHKy42vcFBf0PH5LSwW3puQ1XHxvFB9WriGv/q
+        AH2BYGvN0yJDVA0Pwvy/uo51RuGZGwQyxhQ7E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=oovNYbx2qjchj0Kvd6cOOx8KBNEX5t5Z
+        sAeprlEtRnnOF4T/SH4oDS7Ad+fOqpmEfAp3TvEUc6KcANB2MibvLdUxzxuCtLOs
+        7gwb8N+TqPmh9SljJ/ssyn2726by4vzjxn0gmc1dSNKQrESyH5mJgfk43g2SvfUJ
+        BlB32IZC7Eo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 37DF5E4979;
+        Mon, 26 Oct 2020 17:24:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6F7D3E4977;
+        Mon, 26 Oct 2020 17:24:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Joey S <jgsal@protonmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [OUTREACHY][PATCH v2] t7006: Use test_path_is_* functions in
+ test script
+References: <KHJW7elqEfVsIp1V0WKPRVAB5xqCDJjjqLv8flthlDiSsSWjND-VVGG2zL-xOYMstk-q0JR3OiSggcMlFgzkIKm2podjzAyamb0pW-wx1ZY=@protonmail.com>
+        <20201026205028.GC2645313@google.com>
+Date:   Mon, 26 Oct 2020 14:24:52 -0700
+In-Reply-To: <20201026205028.GC2645313@google.com> (Jonathan Nieder's message
+        of "Mon, 26 Oct 2020 13:50:28 -0700")
+Message-ID: <xmqqwnzcd6jf.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.895.git.git.1603286555.gitgitgadget@gmail.com>
- <pull.895.v2.git.git.1603731448.gitgitgadget@gmail.com> <b9e73975eab1f349be678779ff57155feb4c3501.1603731448.git.gitgitgadget@gmail.com>
- <xmqqa6w8emxn.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqa6w8emxn.fsf@gitster.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 26 Oct 2020 14:18:46 -0700
-Message-ID: <CABPp-BFtzeOHS=ptgzkrpOL3gwvE6bSaRgxLO1QJ284J08i-mA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] merge-ort: barebones API of new merge strategy
- with empty implementation
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Peter Baumann <peter.baumann@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: B0AD9130-17D1-11EB-9683-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 26, 2020 at 1:45 PM Junio C Hamano <gitster@pobox.com> wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
+
+> Overall (as someone who's worked a bit with this test script before),
+> looks good to me.  Thanks for your work.
 >
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> -		${if_local_config}test -e core.pager_used
+>> +		${if_local_config}test_path_is_file core.pager_used
 >
-> > + *   git merge [-s recursive]
-> > + *
-> > + * with
-> > + *
-> > + *   git merge -s ort
-> > + *
-> > + * Note: git's parser allows the space between '-s' and its argument to be
-> > + * missing.  (Should I have backronymed "ham", "alsa", "kip", "nap, "alvo",
-> > + * "cale", "peedy", or "ins" instead of "ort"?)
+> This bit is a little subtle: ${if_local_config} is either '' or '! ',
+> and in the latter case the benefit of test_path_is_file printing a
+> message if and only if the result is false goes away.
 >
-> One thing that is quite unpleasant is "git grep ort" gives us too
-> many hits already, and it will be hard to locate ort related changes
-> with "git log --grep=ort", as the name is too short to serve as an
-> effective way to limit the search.
+> Would the following, squashed in, make sense?
 
-Suggestions for an alternative name?  merge-pandemic.c since it was
-mostly written during the pandemic?
+Thanks for a great suggestion.  The if_local_config thing was
+inherited and not a problem introduced by Joey, but it is a good
+idea to clean it up at the same time, I think.
 
-I'm really not good at naming things...
 
-> > diff --git a/merge-ort.h b/merge-ort.h
-> > new file mode 100644
-> > index 0000000000..47d30cf538
-> > --- /dev/null
-> > +++ b/merge-ort.h
-> > @@ -0,0 +1,49 @@
-> > +#ifndef MERGE_ORT_H
-> > +#define MERGE_ORT_H
-> > +
-> > +#include "merge-recursive.h"
-> > +
-> > +struct commit;
-> > +struct tree;
-> > +
-> > +struct merge_result {
-> > +     /* whether the merge is clean */
-> > +     int clean;
-> > +
-> > +     /* Result of merge.  If !clean, represents what would go in worktree */
-> > +     struct tree *tree;
+
+> Thanks,
+> Jonathan
 >
-> Curious.  Because there is no way for "struct tree" to hold an
-> in-core pointer to a "struct blob" (iow, for a blob to be in a
-> "struct tree", it has to have been assigned an object name), unless
-> we are using the "pretend" mechanism, which has its own downsides,
-> we are committed to create a throw-away blob objects with conflict
-> markers in them, and write them to the object store.
-
-This is something merge-recursive already does (and I've copied some
-of that code over, around merge_3way() and the call to
-write_object_file() with the results).  I thought the reasoning behind
-this was memory -- we're okay assuming any given file fits in memory
-(and perhaps up to three copies of it so we can do a three-way merge),
-but we're not okay assuming all (changed) files from a commit
-simultaneously fit in memory.
-
-> If we were writing a new merge machinery from scratch, I would have
-> preferred a truly in-core implementation that does not have to write
-> out to the object store but if this makes the implementation simpler,
-> perhaps it is a small enough price to pay.
-
-I thought about that early on, but I was worried about out-of-memory
-situations if we attempt to do truly in-memory, at least for large
-changes in large repositories.
-
-And as you have seen above, I do rely on being able to create trees.
-
-> > +     /*
-> > +      * Additional metadata used by merge_switch_to_result() or future calls
-> > +      * to merge_inmemory_*().  Not for external use.
-> > +      */
-> > +     void *priv;
-> > +     unsigned ate;
->
-> I'd prefer to see this named not so cute.  Will we hang random
-> variations of things, or would this be better to be made into a
-> pointer to union, with an enum that tells us which kind it is in
-> use?
-
-I don't understand the union suggestion.  Both fields are used.
-
-Would you object if 'ate' was named '_'?  That was my original name,
-but Taylor didn't like it.  It is used on about 4 lines of code, I'm
-99.9% sure it will never be used in additional locations, and callers
-shouldn't mess with it.  I just don't have a good name for it.  I
-guess maybe I should just call it "properly_initialized" or something.
-
-> > +};
->
->
-> > +/* rename-detecting three-way merge with recursive ancestor consolidation. */
-> > +void merge_inmemory_recursive(struct merge_options *opt,
-> > +                           struct commit_list *merge_bases,
-> > +                           struct commit *side1,
-> > +                           struct commit *side2,
-> > +                           struct merge_result *result);
->
-> I've seen "incore" spelled as a squashed-into-a-single-word, but not
-> "in_memory".
-
-I can add an underscore.  Or switch to incore.  Preference?
-
-> > +/* rename-detecting three-way merge, no recursion. */
-> > +void merge_inmemory_nonrecursive(struct merge_options *opt,
-> > +                              struct tree *merge_base,
-> > +                              struct tree *side1,
-> > +                              struct tree *side2,
-> > +                              struct merge_result *result);
-> > +
-> > +/* Update the working tree and index from head to result after inmemory merge */
-> > +void merge_switch_to_result(struct merge_options *opt,
-> > +                         struct tree *head,
-> > +                         struct merge_result *result,
-> > +                         int update_worktree_and_index,
-> > +                         int display_update_msgs);
->
-> To those who have known how our merge works, a natural expectation
-> for an "in-core" merge is that when the "in-core" merge finishes,
-> the index would hold the higher stages for the conflicted paths, and
-> cleanly merged paths would have the result at stage 0, and there is
-> an extra thing that we haven't had that represents what the working
-> tree files for conflicted paths should look like (historically we
-> wrote out the conflicted result to the working tree files---being
-> in-core operation we cannot afford to), so that (1) cleanly merged
-> paths can be externalized by writing from their stage 0 entries and
-> (2) contents with conflicts can be externalized by that "extra
-> thing".
->
-> But this helper says "working tree and index" are both updated, so
-> the "in-core" merge it expects must have not just the working tree
-> result (in result->tree, as the comment in the structure says) but
-> also how the higher stages of the index should look like somewhere
-> in the result structure.  How the latter is done is not at all clear
-> at this point in the mock-up.  Leaving it opaque is fine, but the
-> function, and the result structure, deserve clarification to avoid
-> confusing readers by highlighting how it is different from the
-> traditional ways (e.g. "we don't touch the index at all---instead we
-> store that in the priv/ate fields", if that is what is going on).
-
-Yes, your reading is correct.  We don't touch the index (or any index,
-or any cache_entry) at all.  Among other things, data that can be used
-to update the index are in the "priv" field.
-
-I'll try to add some notes to the file.
+> diff --git i/t/t7006-pager.sh w/t/t7006-pager.sh
+> index fdb450e446a..11327944741 100755
+> --- i/t/t7006-pager.sh
+> +++ w/t/t7006-pager.sh
+> @@ -411,13 +411,13 @@ test_PAGER_overrides() {
+>  }
+>  
+>  test_core_pager_overrides() {
+> -	if_local_config=
+> +	pager_wanted=true
+>  	used_if_wanted='overrides PAGER'
+>  	test_core_pager "$@"
+>  }
+>  
+>  test_local_config_ignored() {
+> -	if_local_config='! '
+> +	pager_wanted=
+>  	used_if_wanted='is not used'
+>  	test_core_pager "$@"
+>  }
+> @@ -432,18 +432,23 @@ test_core_pager() {
+>  		export PAGER &&
+>  		test_config core.pager 'wc >core.pager_used' &&
+>  		$full_command &&
+> -		${if_local_config}test_path_is_file core.pager_used
+> +		if test -n '$pager_wanted'
+> +		then
+> +			test_path_is_file core.pager_used
+> +		else
+> +			test_path_is_missing core.pager_used
+> +		fi
+>  	"
+>  }
+>  
+>  test_core_pager_subdir() {
+> -	if_local_config=
+> +	pager_wanted=true
+>  	used_if_wanted='overrides PAGER'
+>  	test_pager_subdir_helper "$@"
+>  }
+>  
+>  test_no_local_config_subdir() {
+> -	if_local_config='! '
+> +	pager_wanted=
+>  	used_if_wanted='is not used'
+>  	test_pager_subdir_helper "$@"
+>  }
+> @@ -464,7 +469,12 @@ test_pager_subdir_helper() {
+>  			cd sub &&
+>  			$full_command
+>  		) &&
+> -		${if_local_config}test_path_is_file core.pager_used
+> +		if test -n '$pager_wanted'
+> +		then
+> +			test_path_is_file core.pager_used
+> +		else
+> +			test_path_is_missing core.pager_used
+> +		fi
+>  	"
+>  }
+>  
