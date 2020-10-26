@@ -2,177 +2,159 @@ Return-Path: <SRS0=PD7l=EB=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B215C4363A
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 14:57:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F188EC4363A
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 15:08:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6010522263
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 14:57:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B3A602224A
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 15:08:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qER4CQj2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kpx/lJep"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1782254AbgJZO5M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Oct 2020 10:57:12 -0400
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:37790 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1782231AbgJZO5M (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Oct 2020 10:57:12 -0400
-Received: by mail-oi1-f193.google.com with SMTP id f7so10759221oib.4
-        for <git@vger.kernel.org>; Mon, 26 Oct 2020 07:57:11 -0700 (PDT)
+        id S1783194AbgJZPIX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Oct 2020 11:08:23 -0400
+Received: from mail-wr1-f41.google.com ([209.85.221.41]:40515 "EHLO
+        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729820AbgJZPIS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Oct 2020 11:08:18 -0400
+Received: by mail-wr1-f41.google.com with SMTP id h5so12991490wrv.7
+        for <git@vger.kernel.org>; Mon, 26 Oct 2020 08:08:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Q0iAo8L5BKJCw0woSFu3CP9vn9sMX0XuO9UjcFTjeNU=;
-        b=qER4CQj2xAo1JWxLJVnnwf6L/vWP70NU661UqCWnosLGoJhtGP42SCTrk/78k+DKJr
-         xqllPWlLwWTO0el3F3xoCSqUmtVXezapnae7IuYTLOPZkmc505JFVBvXlV97Df9Bt9q6
-         yHnAaBzXk6sBjzMPDMvjGvOwsz7wiYpagZx/CRXddc4gy18x4mMDreSrDoxsuzM3bI5/
-         1sOhvWNmWlrqOv+YlGu5F6tXCqNMvjHUNYlafIWiMvmh1TNQmn8DTG3DuyyfkOhyUPKo
-         c8EHZnLibs0wIUotMobTELLJR9dHwrZTP+pjSHnC5vpg3ahwa/xa+vsy1qzY9hbXq/RC
-         RXCg==
+        h=to:from:openpgp:autocrypt:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=5ZhFBWr2n6/dy2cqrVQXuGzfRigZBMl34bEay9yjZQ4=;
+        b=kpx/lJepKrW99dEIMCuyDyz1L8HscN4P2NXANnzG0th3jTG81fQWQ3MR1yjbOa7noc
+         wLN6mhPNw7kENG/0FnvoP+UorVzZrRbOTiUkXj/ZAjflwTTGt9FVKVjwhbyow9Y9rGYS
+         ljv0r276dozVbU8f0g3Vb90sWz6SMM05Wyay5IuUkt08u3mcLvbALGSZh+4aBiPHaNyl
+         ClI293GaXG7CN3owWodrrYtZoW/810whjh8r/ibJUHuPIZpBoygF24XtwBl5uEW0/S3d
+         nSqMVBKx8u5LnbxoGn2wueJenX37cPi7JMSmazwDBkS+Q4o5l3x3syMWXwSUmeSqMo33
+         DPTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Q0iAo8L5BKJCw0woSFu3CP9vn9sMX0XuO9UjcFTjeNU=;
-        b=BhchL5zI14saeU3guPa+XUzGjpxgYllH/ggjjgDtpmDzb6AhJYJRs0gGua+sEeEGzd
-         SUMInQocZ/XSpT0jkTdR+krHGgnO3indT1fqlimAQ3HfL7mCtud1E7j9RnnSs6Svdt74
-         s9UFrCaaq8QpBRKu664tf+fOu+65Q93FW+oyjF+X14rublZzNjrdnfp6PpbNpxL3xOsv
-         hx28WuJGsbieW4bV66VZbx17kzBb+spJ1bZcoJdPA5ywb1AdPX1gHpwe8KGzbpmFZjUM
-         aUXEPq3B3Co3QtZgA1ovSYsPbepGU8zNd2IOkNOro+At7t6+a+tp8bEeooXTMu6IQaHm
-         ec0A==
-X-Gm-Message-State: AOAM533caVoSbvx6zxq7lzPvy4AgMSrWF836h4svXFDQpA7I8b4wnK1R
-        7RD86aBsCxbkEmT2yBsH4yYYXmkYHjiaCSaYCG8I9jfJx20=
-X-Google-Smtp-Source: ABdhPJwocyDb2MabdpUJ1aUUxZ0UdWCPA9aJ8+1aaWoljJZ9nbkLd3nNaONx7heCgULVsKeTJ7WfyVOWqOWeBUcpcPY=
-X-Received: by 2002:aca:b4d7:: with SMTP id d206mr5563355oif.39.1603724230435;
- Mon, 26 Oct 2020 07:57:10 -0700 (PDT)
+        h=x-gm-message-state:to:from:openpgp:autocrypt:subject:message-id
+         :date:user-agent:mime-version:content-language
+         :content-transfer-encoding;
+        bh=5ZhFBWr2n6/dy2cqrVQXuGzfRigZBMl34bEay9yjZQ4=;
+        b=BOTb35+HWQStzbmGM5otc1w1y720jsiPg+XZhRdUUm/49XH+9w+iVhJ0aEOocT5dUE
+         ms6lkoWK1882fTJAPLPVjwdXMCjS66gz/IRIj7U0JhqLW/4NZ2nOL1prthkhkS1Yma4w
+         Hv33sdyAIE9RudghnMM9rUfhO2DUNSrWsBWEM4ksbg/8OR/fEhv/5T9p2A7FlDlNp936
+         XCPkHPjoYfwOTOESEaBKpCgnPoUA3XwMCGdVr8g2o01xpcMMjR9zylIFTe8Lw8Xo5Nci
+         PaEyhixqJ/rBfP+xDBFd6ZOyLtmKUfRaVSkZrqMQ2Y79dd/40hIh3+M7Y06H1f19vT7F
+         3Ebg==
+X-Gm-Message-State: AOAM531uGyXjR4fBGOeHFPE4qfp9t7yfDM4POMP33eYuKjqped7Gtzd6
+        IgUKYm8NLDvAZCzxRmsgPsc=
+X-Google-Smtp-Source: ABdhPJz+R9L/fKIdRonBNaNgkfrEA+yaP+u6S44lEb2THKpBGWAmBFv8WlexPMdugx4kyIwA09WWMA==
+X-Received: by 2002:adf:82ab:: with SMTP id 40mr18062762wrc.420.1603724895620;
+        Mon, 26 Oct 2020 08:08:15 -0700 (PDT)
+Received: from [192.168.178.32] (pd9e1c454.dip0.t-ipconnect.de. [217.225.196.84])
+        by smtp.gmail.com with ESMTPSA id s2sm20410761wmh.9.2020.10.26.08.08.14
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 26 Oct 2020 08:08:14 -0700 (PDT)
+To:     GIT Mailing-list <git@vger.kernel.org>
+From:   Ephrim Khong <dr.khong@gmail.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=dr.khong@gmail.com; keydata=
+ mQENBF2KH3QBCACy66z3LoDOvFnn3Jl07bZvGy8IWXoClBLBEVQEDMgX6/2VskvAiDFYXjYY
+ CBnpMZS7pkHyMj2nAuk8rfz8ofhTMxW1YthQGAGJt0eYMp9dymKG4O9c6Lzwlb54lwWet1AE
+ x326ePst0QaBkvksN8HmoqNrTZVth2U+IiAI5y7RJB65ZsXmHoXBt4pfPEoQ01WFTXBrQ2ZR
+ LHcweZQdU1uhwPjCB6JV9pNTclzFfQyqqga/JbbDbbplhL5XhA15VJq+3CJSM3Y0M1UGEOUv
+ 5dcWC15x65jlX4yDIrXUYkWq48byHlC8B75n9EnMAvmkFZ09ntSjwsRJmLILxr8cz9jtABEB
+ AAG0H0JlcnRyYW0gRHJvc3QgPGRyb3N0QG12dGVjLmNvbT6JAVQEEwEIAD4WIQS1maF3SJAK
+ Ql3nP+zsYjhbV87efwUCXYofdAIbAwUJA8OCLAULCQgHAgYVCgkICwIEFgIDAQIeAQIXgAAK
+ CRDsYjhbV87ef8CdB/0SR6LhFh7ll8S2uTgwU8giPMuhUN2ZVgr6xVpfI0w5+307BcDLA7az
+ JVvRtsSCHHNoZYOvtTq8C+PaiijKkTz30Cn/DYonLe77WAx5WDDvcOxHwrAA1lH8sXJ1QsSw
+ B6CExXNHdGu/WeDSErLRUwcf65sIJvS41ZNu2jIOBWxYwXgYFt8Onur8ClqEj4fmMkClb0hD
+ gXhgI4iDEM8D5brvd2IoMw7yWZA6awHpDja2SgfambGZ+2kgwEp5UQ3aa3A+s+/wM9Yd5Mv4
+ RO2B+BlcEkEPV1OQw7egJW7+C3y7LTozkmzaKK+P3pVbsbP1EkVcnLrGgKvpLm0hChDrD35O
+ uQENBF2KH3QBCADTEdr/rxzjxh2VBvyq84iHZYsBflSFIefM/dpyJb3a2/gdikAlbHmMJGL6
+ jCZC2mneQ2wNjzsFNQKH714RojYjYYgtNpsDvoB51+gc9Erm38rXWXe9EgXKw2DR7KiSh2D0
+ UvwMFgOcUT07e3pbBqzJMe0FN0AXiYWD4xH4zo0gBTbj20iigcNaBvHGRYobHg+ODHg1CXjg
+ 1ViO8JeVXyM1u3ENR35oTzAuCO3Hc9A9fUZk7L8A2ORK/Lgorig/6LZx/xnh6T2DUl8XADo8
+ rgm2Tov6bNQUKdVFybnSMUusNWfcHid3YJ3XeGZsHEj6vlR09sXMqTO+yH3/4J71iu83ABEB
+ AAGJATwEGAEIACYWIQS1maF3SJAKQl3nP+zsYjhbV87efwUCXYofdAIbDAUJA8OCLAAKCRDs
+ YjhbV87ef3+fB/9rWJ68qI7TVsLlRNYicAaJdRSfsIPjYKsUPpYGLvyX6MTSWHwwD7+WzbHy
+ KAuw+sycGfnelxY2+bUCE10+XxSWIE2lShPafmnLIFz6BES6hdjTSuYVRz8+SnxDU6IxjfWi
+ xJbMjw5ha52GWKq75tRMeKnEOJpCFiNtAi3yvOPlov+qP3RP7mLtXISjW35GYQfJK0GTH8tR
+ QJKz22iL7huh4BXe4E1jZoNjuIO0UTP5/koARaHJx2OGwXO1jYEvvYeYphXkJNl8vlY4OaSf
+ kOW/ulC2xjVKJyhYU/fvkRR/xQNgOK2CqMhFtzG2SkAIKjlSw5J2neRzmgxQOzLdtdhV
+Subject: Tracking a merge bug
+Message-ID: <120922f1-67a9-9ae2-2e9c-56e20935e0f9@gmail.com>
+Date:   Mon, 26 Oct 2020 16:08:13 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.1
 MIME-Version: 1.0
-References: <pull.769.git.1603468885.gitgitgadget@gmail.com>
- <a8d4825a323d5c1e7b2dc1edc8621c51c030ae1e.1603468885.git.gitgitgadget@gmail.com>
- <20201024104910.GA15823@danh.dev> <CABPp-BHgJrQMNEm7-y7nStVjcAedsNKH+bHNM9V34netTN+NTQ@mail.gmail.com>
- <20201025134905.GB15823@danh.dev>
-In-Reply-To: <20201025134905.GB15823@danh.dev>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 26 Oct 2020 07:56:59 -0700
-Message-ID: <CABPp-BEmJA92tDymypgJqGmi=eMsvU+eP=KeTKvKcJEvFVztEA@mail.gmail.com>
-Subject: Re: [PATCH 1/9] t/: new helper for tests that pass with ort but fail
- with recursive
-To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 25, 2020 at 6:49 AM =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh
-<congdanhqx@gmail.com> wrote:
->
-> On 2020-10-24 09:53:18-0700, Elijah Newren <newren@gmail.com> wrote:
-> > On Sat, Oct 24, 2020 at 3:49 AM =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng D=
-anh
-> > <congdanhqx@gmail.com> wrote:
-> > >
-> > > On 2020-10-23 16:01:16+0000, Elijah Newren via GitGitGadget <gitgitga=
-dget@gmail.com> wrote:
-> > > > +test_expect_merge_algorithm () {
-> > > > +     status_for_recursive=3D$1
-> > > > +     shift
-> > > > +     status_for_ort=3D$1
-> > > > +     shift
-> > > > +
-> > > > +     if test "$GIT_TEST_MERGE_ALGORITHM" =3D ort
-> > > > +     then
-> > > > +             test_expect_${status_for_ort} "$@"
-> > > > +     else
-> > > > +             test_expect_${status_for_recursive} "$@"
-> > > > -test_expect_failure 'check symlink modify/modify' '
-> > > > +test_expect_merge_algorithm failure success 'check symlink modify/=
-modify' '
-> > >
-> > > I find this series of "failure success" hard to decode without
-> > > understanding what it would be, then I need to keep rememberring whic=
-h
-> > > status is corresponding with with algorithm.
-> > >
-> > > Perhaps this patch is a bit easier to read. This is largely based on
-> > > your patch. (I haven't read other patches, yet).
-> > >
-> > > What do you think?
-> >
-> > It is easier to read and I think something along these lines would
-> > make a lot of sense if this weren't a transient change (the idea is to
-> > eventually drop the recursive backend in favor of ort, and then these
-> > can all switch to just using test_expect_success).  Maybe it still
-> > makes sense to make further changes here anyway, but if we do go this
-> > route, there are 1-2 things we can/should change:
-> >
-> > First, while a lot of my contributions aren't that important, and the
->
-> Mine aren't that important, either
->
-> > new test_expect_* function certainly falls in that category, one of
-> > the driving goals behind a new merge algorithm was fixing up edge and
-> > corner cases that were just too problematic in the recursive backend.
-> > Thus, the patch where I get to flip the test expectation is one that I
-> > care about more than most out of the (I'm guessing on this number)
->
-> Make sense.
->
-> > 100+ patches that will be part of this new merge algorithm.  Having
-> > you take over ownership of that patch thus isn't right; we should
-> > instead keep my original patch and apply your suggested changes on top
-> > (or have a patch from you introducing a new function first, and then
-> > have a patch from me using it to flip test expectations on top).
->
-> You can take back the ownership, the patch was based on yours, anyway.
->
-> I wrote like that since I need to rewrite part of the message to match
-> with my changes ;)
->
-> No need to generate extra noise of additional patch.
+Dear All,
 
-Just to be clear, others have made suggestions like yours in the past
-where they've taken over ownership of a patch in a series and I've
-been totally fine with it.  Your suggestion to do the same would have
-been fine here, but I'm just kinda attached to being able to flip the
-test expectation for these tests; I've been working towards it for a
-_long_ time.
+I am trying to find the root cause for what I believe might be a strange
+bug in git merge.  I have a feature branch A which branched off master
+not too long ago, and want to bring it up to date with master:
 
-I think an extra patch, attributed to you, actually makes the most sense he=
-re.
+    git checkout A
+    git merge master
 
-> > Second, I think that lines like
-> >     test_expect_merge_success recursive=3Dfailure ...
-> > read like a contradiction and are also confusing.  I think it'd be
-> > better if it read something like
-> >     test_expect_merge recursive=3Dfailure ort=3Dsuccess ...
-> > or something along those lines.
->
-> When I wrote the patch, I was expecting something like
->
->         test_expect_merge_success recursive=3Dfailure,other=3Dfailure ...
->
-> in order to merge all algorithm into single parameters.
->
-> How about something like:
->
->         test_expect_merge_success exception=3Drecursive,other ...
->
-> Not that we have "other" algorithm to begin with.
+which yields
 
-Sure, sounds great.  I wouldn't spend any time trying to make it work
-with a 3rd backend, though.  The goal is to have two merge backends
-only long enough for people to become comfortable with the new backend
-and discover any unknown issues with it that we can fix, then we'll
-rip it out the old "recursive" backend and we'll translate any
-requests for "recursive" to mean "ort".  We'll also rip the
-test_expect_merge_success() function out since it'll be unneeded (so
-efforts towards future proofing of that function will be wasted).
-Then years will go by before another merge backend comes along, if one
-ever does.
+    Removing somefile
+    Removing anotherfile
+    error: add_cacheinfo failed to refresh for path 'c/d/e.sh'; merge
+aborting.
+
+the offending file, c/d/e.sh, does not exist in my feature branch but
+was added to master since branching off. After aborting, the working
+directory is in an inconsistent state and c/d/e.sh exists with the
+correct content.
+
+Below is a stacktrace - the merger handles the file as a rename
+(apparently there is a similar / identical file 'c/f/g.sh' that is
+renamed to 'c/d/e.sh'), but that fails because the file has MODE_CHANGED
+set. (Which appears strange - at the time where the merge is aborting,
+the file apparently was already written to the working directory. Is it
+renaming two different files to the same target file?).
+
+Any hint is appreciated, especially where to look: Is the root cause
+more likely to be at the filesystem level (the stat returns something
+off), or in the merge logic? What else could be wrong here?
+
+
+The stacktrace looks roughly as follows:
+
+-> read-cache.c, ie_modified(): ie_match_stat returned 63, which is
+		MTIME_CHANGED	| CTIME_CHANGED | OWNER_CHANGED |
+		MODE_CHANGED | INODE_CHANGED | DATA_CHANGED
+	and is_modified() returns 63 because MODE_CHANGED is set.
+
+-> read-cache.c, refresh_cache_ent(): at the call to ie_modified
+
+-> read-cache.c, refresh_cache_entry()
+
+-> merge-recursive.c, add_cacheinfo(), is in the refresh-path (i.e.
+make_cache_entry() worked, but refresh_cache_entry() will fail)
+
+-> merge-recursive.c, update_file_flags(), after the update_index: label
+
+-> merge-recursive.c, update_file()
+
+-> merge-recursive.c, handle_content_merge() is in the very last
+update_file() call, close to the end of the function
+
+-> merge-recursive.c, handle_rename_normal()
+
+-> merge-recursive.c, process_entry()
+	is in the RENAME_NORMAL / RENAME_ONE_FILE_TO_ONE block
+
+-> [...]
+
+Thanks
+- Eph
