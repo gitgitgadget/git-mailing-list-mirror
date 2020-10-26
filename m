@@ -2,84 +2,91 @@ Return-Path: <SRS0=PD7l=EB=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-13.4 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C9FAC4363A
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 17:12:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90AB8C5DF9D
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 17:21:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B7CC32070E
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 17:12:52 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WeSGMae/"
+	by mail.kernel.org (Postfix) with ESMTP id 58FCD20882
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 17:21:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1787401AbgJZRMv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Oct 2020 13:12:51 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58499 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1787390AbgJZRMs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Oct 2020 13:12:48 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EB1AD90298;
-        Mon, 26 Oct 2020 13:12:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=09RB1cLrAnXDbWnBw9+ACsyU5oA=; b=WeSGMa
-        e/a3aEtW1IfKBIpgPggxSWFP7+W0UTQxe6wMOg1VX/ME8LoGCQ/L4Uczdm8pCNGK
-        gnF9HRIxe2tNK95R2uzheW/2G7Lc8gENFPsV8CndAvOnXREY5AGkmHFuRTlgy1N+
-        bNnXy8vhncsA+owvBJH43rOm/1+Fl+V9gHP3c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=v0z/0q3VpB5gqhiHb8BCV0Q0fLy/YOHH
-        SmkXn1fVM15hMmXP39TjwZWblmdSPAxW1+AI35QFJgrrcYLA1TU/DkUknfNa6cCq
-        7oQrDWj26/QJHMo22ast2OtT0JRUO1HLjcoW/+CF5giL/Qf/uCoY+bDi9wUDHjsd
-        CsOYxZ/5pVg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E26CE90297;
-        Mon, 26 Oct 2020 13:12:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6DD8190296;
-        Mon, 26 Oct 2020 13:12:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     VenomVendor <info@venomvendor.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Subject: Re: [PATCH 4/3] am, sequencer: stop parsing our own committer ident
-References: <20201023070747.GA2198273@coredump.intra.peff.net>
-        <20201023070939.GB2913115@coredump.intra.peff.net>
-        <20201023072630.GA2918369@coredump.intra.peff.net>
-Date:   Mon, 26 Oct 2020 10:12:45 -0700
-In-Reply-To: <20201023072630.GA2918369@coredump.intra.peff.net> (Jeff King's
-        message of "Fri, 23 Oct 2020 03:26:30 -0400")
-Message-ID: <xmqqft60gbci.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1787623AbgJZRVL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Oct 2020 13:21:11 -0400
+Received: from dd36226.kasserver.com ([85.13.153.21]:48072 "EHLO
+        dd36226.kasserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1775598AbgJZRVK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Oct 2020 13:21:10 -0400
+Received: from client3368.fritz.box (i5C74449E.versanet.de [92.116.68.158])
+        by dd36226.kasserver.com (Postfix) with ESMTPSA id 7E4FA3C0333;
+        Mon, 26 Oct 2020 18:21:08 +0100 (CET)
+Subject: Re: [PATCH] gitk: macOS: ignore osascript errors
+To:     Beat Bolli <dev+git@drbeat.li>, paulus@ozlabs.org
+Cc:     git@vger.kernel.org
+References: <20201025175149.11853-1-dev+git@drbeat.li>
+From:   Stefan Haller <lists@haller-berlin.de>
+Message-ID: <c4ca1c3b-0563-c35b-5bc0-5accddd0ad3a@haller-berlin.de>
+Date:   Mon, 26 Oct 2020 18:21:07 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.12.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 77AF8014-17AE-11EB-BBEE-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+In-Reply-To: <20201025175149.11853-1-dev+git@drbeat.li>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 25.10.20 18:51, Beat Bolli wrote:
+> Starting gitk on a macOS 10.14.6 (Mojave) system fails with the error
+> 
+>      Error in startup script: 2020-10-25 17:16:44.568 osascript[36810:18758270]
+>      Error loading /Library/QuickTime/EyeTV MPEG Support.component/Contents/MacOS/EyeTV MPEG Support:
+>      dlopen(/Library/QuickTime/EyeTV MPEG Support.component/Contents/MacOS/EyeTV MPEG Support, 0x0106):
+>      code signature in (/Library/QuickTime/EyeTV MPEG Support.component/Contents/MacOS/EyeTV MPEG Support)
+>      not valid for use in process: mapping process is a platform binary, but mapped file is not
+>      [[this same message repeated dozens of times]]
 
-> By the way, I wondered why we needed to do this parsing at all. The
-> patch below does this in a much simpler way. It's a little bit ugly, I
-> think, because we have to call getenv() ourselves. But that's the way
-> fmt_ident() has always worked. We could probably improve that now that
-> it takes a whose_ident flag (before that, it had no idea if we wanted
-> author or committer ident).
->
-> This is on top of the fixes (but we'd perhaps just want to do those on
-> 'maint' as the minimal fix).
+While the code change itself makes sense to me, the justification is a 
+bit strange. This error message suggests that something is messed up on 
+your system. Your commit message makes it sound as if all people on 
+macOS 10.14.6 get this error, which is not the case.
 
-This could be the nicest step in the whole series, but let's leave
-it out of the branch meant for 'maint'.
+> Ignore errors from the osascript invocation, especially because this macOS
+> version seems to correctly place the gitk window in the foreground.
 
-Thanks.
+Whether gitk comes to the foreground on start depends on the Tcl/Tk 
+version, not the macOS version. With Tk 8.6 it does, so it might 
+actually be nice to add a version check here. (I'm not requesting that 
+you actually do that as part of this patch; just saying.)
+
+> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+> ---
+>   gitk | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/gitk b/gitk
+> index 23d9dd1..8551711 100755
+> --- a/gitk
+> +++ b/gitk
+> @@ -12290,11 +12290,11 @@ if {[catch {package require Tk 8.4} err]} {
+>   
+>   # on OSX bring the current Wish process window to front
+>   if {[tk windowingsystem] eq "aqua"} {
+> -    exec osascript -e [format {
+> +    catch { exec osascript -e [format {
+>           tell application "System Events"
+>               set frontmost of processes whose unix id is %d to true
+>           end tell
+> -    } [pid] ]
+> +    } [pid] ] }
+>   }
+
+Like I said, the change itself looks good to me, especially since the 
+corresponding code in git gui is also guarded by a catch.
+
+Best,
+Stefan
