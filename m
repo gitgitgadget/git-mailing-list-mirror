@@ -2,117 +2,147 @@ Return-Path: <SRS0=PD7l=EB=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.4 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F122C4363A
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 22:10:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 578D9C4363A
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 22:18:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0BD3820874
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 22:10:50 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YN4ECcGW"
+	by mail.kernel.org (Postfix) with ESMTP id 0E2BE20878
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 22:18:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392223AbgJZWKt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Oct 2020 18:10:49 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64802 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392164AbgJZWKs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Oct 2020 18:10:48 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id DF46A10E082;
-        Mon, 26 Oct 2020 18:10:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VyunnMGyFNg/LAjTyHm0n+P68RA=; b=YN4ECc
-        GWGs2UZ4jgJzzRwN3N5UVuqo3OdGpEKNHQPne5RBPPY5y+GuEFRE8WedU54NKoPb
-        5A3UEU0QQMxRXVfYoPpPW/DUUe9K1gRI8uDheRfE8Nps0vEdZsrJaFOsvICcM4UU
-        EAXA7aqfuPfLw8Zueo/kkgd3/cGiyjYLHpHfk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=CATbnrnXzWO6kc7Wwt/JAEiR1m5F7X3d
-        IJL56q35PEoD7vDv+GFI8kDZpJXNcA7mgKIgKDHmLdzOLwkhfc96xAy91Z58F+qd
-        /2h/CIdKbqiRWhq/I203I9X2oL3X/zY5Z6V+yNy24khc6UV+t6Ngxb6JHlAkwMno
-        ZHFx8L37dJ4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D79EC10E081;
-        Mon, 26 Oct 2020 18:10:46 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1F32910E07F;
-        Mon, 26 Oct 2020 18:10:44 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Peter Baumann <peter.baumann@gmail.com>
-Subject: Re: [PATCH v2 1/4] merge-ort: barebones API of new merge strategy
- with empty implementation
-References: <pull.895.git.git.1603286555.gitgitgadget@gmail.com>
-        <pull.895.v2.git.git.1603731448.gitgitgadget@gmail.com>
-        <b9e73975eab1f349be678779ff57155feb4c3501.1603731448.git.gitgitgadget@gmail.com>
-        <xmqqa6w8emxn.fsf@gitster.c.googlers.com>
-        <CABPp-BFtzeOHS=ptgzkrpOL3gwvE6bSaRgxLO1QJ284J08i-mA@mail.gmail.com>
-Date:   Mon, 26 Oct 2020 15:10:42 -0700
-In-Reply-To: <CABPp-BFtzeOHS=ptgzkrpOL3gwvE6bSaRgxLO1QJ284J08i-mA@mail.gmail.com>
-        (Elijah Newren's message of "Mon, 26 Oct 2020 14:18:46 -0700")
-Message-ID: <xmqqsga0d4f1.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S2392831AbgJZWSY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Oct 2020 18:18:24 -0400
+Received: from smtp.hosts.co.uk ([85.233.160.19]:27456 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2392812AbgJZWSX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Oct 2020 18:18:23 -0400
+Received: from host-89-243-187-160.as13285.net ([89.243.187.160] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1kXAok-000A5L-CJ; Mon, 26 Oct 2020 22:18:19 +0000
+Subject: Re: [PATCH] documentation symlink restrictions for .git* files
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+References: <20201005071751.GA2290770@coredump.intra.peff.net>
+ <20201005121609.GA2907272@coredump.intra.peff.net>
+ <6c0a0036-e217-a334-2a74-dd59a4592c1f@iee.email>
+ <20201023081711.GB4012156@coredump.intra.peff.net>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <8bb54778-507c-2e3f-d35a-5e32edb8bee7@iee.email>
+Date:   Mon, 26 Oct 2020 22:18:18 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 179C3FC6-17D8-11EB-8AB3-E43E2BB96649-77302942!pb-smtp20.pobox.com
+In-Reply-To: <20201023081711.GB4012156@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
-
->> > +     /*
->> > +      * Additional metadata used by merge_switch_to_result() or future calls
->> > +      * to merge_inmemory_*().  Not for external use.
->> > +      */
->> > +     void *priv;
->> > +     unsigned ate;
+On 23/10/2020 09:17, Jeff King wrote:
+> On Wed, Oct 21, 2020 at 12:19:25AM +0100, Philip Oakley wrote:
+>
+>> On 05/10/2020 13:16, Jeff King wrote:
+>>> On Mon, Oct 05, 2020 at 03:17:51AM -0400, Jeff King wrote:
+>>>
+>>>> About 2 years ago as part of a security release we made it illegal to
+>>>> have a symlinked .gitmodules file (refusing it both in the index and via
+>>>> fsck). At the time we discussed (on the security list) outlawing
+>>>> symlinks for other .git files in the same way, but we decided not to do
+>>>> so as part of the security release, as it wasn't strictly necessary.
+>> Is this something that should be recorded in the documentation, either as a
+>> simple (sensible) limitation, or explicitly as a security related safety
+>> measure?
 >>
->> I'd prefer to see this named not so cute.  Will we hang random
->> variations of things, or would this be better to be made into a
->> pointer to union, with an enum that tells us which kind it is in
->> use?
+>> I didn't see any changes to the .txt docs in the change list below.
+> Yeah, that's a good point.
 >
-> I don't understand the union suggestion.  Both fields are used.
-
-I thought "priv" shouldn't be "anything goes, so it is 'void *'" but
-is probably a "union { ... } priv;" with associated enum next to it
-that tells which one of the possibilities in the union is in effect.
-
-> Would you object if 'ate' was named '_'?
-
-Either is horrible name.
-
->> > +/* rename-detecting three-way merge with recursive ancestor consolidation. */
->> > +void merge_inmemory_recursive(struct merge_options *opt,
->> > +                           struct commit_list *merge_bases,
->> > +                           struct commit *side1,
->> > +                           struct commit *side2,
->> > +                           struct merge_result *result);
->>
->> I've seen "incore" spelled as a squashed-into-a-single-word, but not
->> "in_memory".
+> How about this (on top of jk/symlinked-dotgitx-files)?
 >
-> I can add an underscore.  Or switch to incore.  Preference?
-
-Anything shorter would get my vote.
-
-> Yes, your reading is correct.  We don't touch the index (or any index,
-> or any cache_entry) at all.  Among other things, data that can be used
-> to update the index are in the "priv" field.
+> -- >8 --
+> Subject: [PATCH] documentation symlink restrictions for .git* files
 >
-> I'll try to add some notes to the file.
+> We outlawed symbolic link versions of various .git files in 10ecfa7649
+> (verify_path: disallow symlinks in .gitmodules, 2018-05-04) and
+> dd4c2fe66b (verify_path(): disallow symlinks in .gitattributes and
+> .gitignore, 2020-10-05). The reasons are discussed in detail there, but
+> we never adjusted the documentation to let users know.
+>
+> This hasn't been a big deal since the point is that such setups were
+> mildly broken and thought to be unusual anyway. But it certainly doesn't
+> hurt to be clear and explicit about it.
+>
+> Suggested-by: Philip Oakley <philipoakley@iee.email>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  Documentation/gitattributes.txt | 7 +++++++
+>  Documentation/gitignore.txt     | 5 +++++
+>  Documentation/gitmodules.txt    | 8 ++++++++
+>  3 files changed, 20 insertions(+)
+>
+> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+> index 2d0a03715b..9a2ce4f1ea 100644
+> --- a/Documentation/gitattributes.txt
+> +++ b/Documentation/gitattributes.txt
+> @@ -1241,6 +1241,13 @@ to:
+>  [attr]binary -diff -merge -text
+>  ------------
+>  
+> +NOTES
+> +-----
+> +
+> +Note that Git does not allow a `.gitattributes` file within the working
+> +tree to be a symbolic link, and will refuse to check out such a tree
+> +entry.  This keeps behavior consistent when the file is accessed from
+> +the index or a tree versus from the filesystem.
+>  
+>  EXAMPLES
+>  --------
+> diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+> index d47b1ae296..7e9a1d49d6 100644
+> --- a/Documentation/gitignore.txt
+> +++ b/Documentation/gitignore.txt
+> @@ -149,6 +149,11 @@ not tracked by Git remain untracked.
+>  To stop tracking a file that is currently tracked, use
+>  'git rm --cached'.
+>  
+> +Note that Git does not allow a `.gitignore` file within the working tree
+> +to be a symbolic link, and will refuse to check out such a tree entry.
+> +This keeps behavior consistent when the file is accessed from the index
+> +or a tree versus from the filesystem.
+> +
+>  EXAMPLES
+>  --------
+>  
+> diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
+> index 539b4e1997..2b884be3c7 100644
+> --- a/Documentation/gitmodules.txt
+> +++ b/Documentation/gitmodules.txt
+> @@ -98,6 +98,14 @@ submodule.<name>.shallow::
+>  	shallow clone (with a history depth of 1) unless the user explicitly
+>  	asks for a non-shallow clone.
+>  
+> +NOTES
+> +-----
+> +
+> +Note that Git does not allow the `.gitmodules` file within a working
+> +tree to be a symbolic link, and will refuse to check out such a tree
+> +entry. This keeps behavior consistent when the file is accessed from the
+> +index or a tree versus from the filesystem, and helps Git reliably
+> +enforce security checks of the file contents.
+>  
+>  EXAMPLES
+>  --------
+The text looks good to me, with security point explicitly mentioned just
+for .gitmodules file.
 
-Sounds good.
+However, is placing the Note so far down appropriate (.gitattributes and
+.gitignore), given that there is within the descriptions a discussion of
+the priority order for finding those files?
+
+Philip
