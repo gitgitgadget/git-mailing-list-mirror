@@ -2,62 +2,61 @@ Return-Path: <SRS0=PD7l=EB=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EC6FC4363A
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 11:56:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BCDEDC55178
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 12:14:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 286A2223AB
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 11:56:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C2D322400
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 12:14:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cOF8Cbik"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WtmOo+v/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1774567AbgJZL4Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Oct 2020 07:56:24 -0400
-Received: from mail-ej1-f68.google.com ([209.85.218.68]:34316 "EHLO
-        mail-ej1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391540AbgJZL4Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Oct 2020 07:56:24 -0400
-Received: by mail-ej1-f68.google.com with SMTP id gs25so13018861ejb.1
-        for <git@vger.kernel.org>; Mon, 26 Oct 2020 04:56:22 -0700 (PDT)
+        id S1774883AbgJZMOT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Oct 2020 08:14:19 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:47060 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1774876AbgJZMOP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Oct 2020 08:14:15 -0400
+Received: by mail-ed1-f67.google.com with SMTP id 33so8996770edq.13
+        for <git@vger.kernel.org>; Mon, 26 Oct 2020 05:14:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=w3Nh4Np4KlVXwdur8dUZXNaSPSP9oK5jAFwrYRjCSRI=;
-        b=cOF8CbikbgEnj4M4C5tZKBmIMSw2yVwLUoTgSYzTd3TlJTRXYLoyxQEGM51ald1vVS
-         3zVd9LDj8Wg1Sdlz5RlK70HJXM/CtvbRAcUPnN0IoLQSxsFkCV1c4eHDv9Tz+krAz2lt
-         5ZBir/PtaRNOFQk8RwkWbBxq0q1bExAolUs/VDPj6ClOWOPUndxOi7eEddjUs+64TFE5
-         eYFYOx3kDw+eF5agNXyThDWDRn9tcG4G4kPg0mmIKHWLWw26r8F8P00H6NzrKknyRHmV
-         x8mwehicZ22BA9JJ70whtuV4zj5dUPDt+aQp/POyvUrBk49gTeNEcFbWoobmScSvBupv
-         qSKg==
+        bh=VJzWHqfgmljVtwnAhw1hb0B7BgTYB/uNS1t24W3I/dI=;
+        b=WtmOo+v/40IgYnQdVnd4k1KomjRFj8I1efL+JJpRpgRY0LaTFx49mKRFwIxz77PoWG
+         UuYS5qF1Licz+V+a/cRAR0TQP3cVxaePVOnKnI2YuAPCbToCAq0sJOddGheQxo/Dz/ma
+         5ZzNxSw3mkt7oiBajZ2OXBkDypMYnRHt3eBmejmVWNMewQ3Xq7hjCUCA1i165ok6piS+
+         CwDiiho4LijRGp3/oLHbib5riVcXk2dGzobuRLS761Zpi9pyk+UC+ZFcrsjtwCAlmxki
+         TTSkmyDrkaXgIEUT+6UKJ7baZg2KUrzo5N3ddQWLJYDoEORktpvC1/jD1zoY6EKflRSy
+         YB+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=w3Nh4Np4KlVXwdur8dUZXNaSPSP9oK5jAFwrYRjCSRI=;
-        b=cb0uBEXM28uG+nQOqPOPbgOBjqEtP+r3z4RMmJtE8unpKmMyj8lscWVHQkt1axpk0D
-         b7xnwFhdvISF0VD2LBAsJS3XLFZjI9JGneFrMI/45nDCWJ/vLSU2SobuWUV4RJbSCUH7
-         jU+v/S45MgzvLEcPjUf6T6v5nKQruNqTq90QqH1uCARbmBCn04ZT1/pzdmFov0muvppc
-         +I+O40P36isY+WEOehtiO7okF3YijM9J3t0FxyOeiCL8AFO/mgtwPi8OMZiR3lbp01t/
-         LqM/dHECAtE2IhnmJ+0QP6BL6ZjcX2HcxtMsoAJ27aXbht8aUFKs1i77CdXsLbLbn8XN
-         ZP6Q==
-X-Gm-Message-State: AOAM531i6QFhTS5Jnpth2VfnE8fOvg0u037nmjIA5UT1D1Ym5S/6/fA2
-        hIhvNdgMQU8ZdRWO9B2dYra4vKqdCzPOHgQLpvw/GQX8jCk=
-X-Google-Smtp-Source: ABdhPJyFXIHImq17USYcQFMFgckds3TMHogwd3uwTdG4tTsplYFDrLA5ILAUjbjBxCTSEZPjFMIz5rHa1NNScZhZK7A=
-X-Received: by 2002:a17:906:da1d:: with SMTP id fi29mr15323667ejb.160.1603713382033;
- Mon, 26 Oct 2020 04:56:22 -0700 (PDT)
+        bh=VJzWHqfgmljVtwnAhw1hb0B7BgTYB/uNS1t24W3I/dI=;
+        b=oCKVh0GPQ7XwTyuI8EeL5j4Fm/wGqb7rA+915mDK6nXRNSvrpENv0Wt3/nnElsvT7+
+         82I2VwIe6x2NWeMyf1Xge2DwDpxVe5xYy6BkzpDQTaJrirzryyEaKXYDBNFEseE7/lkE
+         mGyrlzO9B5WFpq60C2qikd7QoMRXTYTNjZbPA16niqXmeNFU0dW0Ml0cw7JnwWkicIEt
+         /sm9fP5m+vsQ4gdMjzOn2T8k+dWuW866RaP+MA6ACDMn/4w9A///loGRT2aGY8S7OX5Q
+         SYErx7ci8ifxRCsp2fcdjzPtqax/NFBBpzJ4ZvvS/xyxtoD8A1kU7wwpTTkwsVSHKKyQ
+         bziw==
+X-Gm-Message-State: AOAM5316Hy5nI7lN8aCZ9CCMXrSJrCeAj5ZsgfY4ugHZsyZQH7uhfyxY
+        ugIfPar2p6XBnsgBCHPUqY2c6baFu/mQ71hZY94=
+X-Google-Smtp-Source: ABdhPJzi8Y3SXIBTMA3R+vzMG/GK1QCC3Mwg4g/YwWQMs/CsWuSefSvbJAE0+AItEe8Joy8X7lDbv9QHAvqsKUqoOQQ=
+X-Received: by 2002:aa7:dd8d:: with SMTP id g13mr3061091edv.87.1603714452960;
+ Mon, 26 Oct 2020 05:14:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <20201025212652.3003036-1-anders@0x63.nu> <20201025212652.3003036-2-anders@0x63.nu>
-In-Reply-To: <20201025212652.3003036-2-anders@0x63.nu>
+References: <20201025212652.3003036-1-anders@0x63.nu> <20201025212652.3003036-4-anders@0x63.nu>
+In-Reply-To: <20201025212652.3003036-4-anders@0x63.nu>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 26 Oct 2020 12:56:10 +0100
-Message-ID: <CAP8UFD0J+hfARYWmaj51wzUT-Y-nD=9RyvyFqrzsUYMd48WKPg@mail.gmail.com>
-Subject: Re: [PATCH 01/21] trailer: change token_{from,matches}_item into
- taking conf_info
+Date:   Mon, 26 Oct 2020 13:14:01 +0100
+Message-ID: <CAP8UFD3=HLzG=b61DQYQfAErOg+KXAg-8x06MpDLi+1=NcgejQ@mail.gmail.com>
+Subject: Re: [PATCH 03/21] doc: mention canonicalization in git i-t manual
 To:     Anders Waldenborg <anders@0x63.nu>
 Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Jonathan Tan <jonathantanmy@google.com>
@@ -67,14 +66,34 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Sun, Oct 25, 2020 at 10:27 PM Anders Waldenborg <anders@0x63.nu> wrote:
+
+> diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
+> index 96ec6499f0..a4be8aed66 100644
+> --- a/Documentation/git-interpret-trailers.txt
+> +++ b/Documentation/git-interpret-trailers.txt
+> @@ -25,6 +25,11 @@ Otherwise, this command applies the arguments passed using the
+>  `--trailer` option, if any, to the commit message part of each input
+>  file. The result is emitted on the standard output.
 >
-> ); SAEximRunCond expanded to false
+> +When trailers read from input they will be changed into "canonical"
 
-Do you have a way to avoid the above line? It shouldn't be in the
-commit message after applying this.
+Do you mean "When trailers are read from standard input"?
 
-> These functions don't use anything from the arg_item except the conf,
-> so make them take conf as argument instead. This will allow them to be
-> used on other things that has a conf_info.
+> +form if the trailer has a corresponding 'trailer.<token>.key'
+> +configuration value.
 
-s/has/have/
+This doesn't explain what the canonical form is. So maybe something like:
+
+"When there is a 'trailer.<token>.key' configuration value defined,
+this value becomes the canonical form of the <token> trailer, so when
+a trailer matching <token> is read from standard input, it is changed
+to this canonical value."
+
+> This means that it will use the exact spelling
+> +(upper case vs lower case and separator) defined in configuration.
+
+Maybe:
+
+"This means that the key part of the trailer will use the exact
+spelling (upper case vs lower case and separator) defined in the
+configuration."
