@@ -1,108 +1,139 @@
-Return-Path: <SRS0=tbmj=EA=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=PD7l=EB=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-14.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D86CFC4363A
-	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 23:02:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B4B6C2D0A3
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 04:14:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9E72F20790
-	for <git@archiver.kernel.org>; Sun, 25 Oct 2020 23:02:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E0A652225E
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 04:14:48 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="kLpPv6pW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1419329AbgJYXCn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Oct 2020 19:02:43 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:56812 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1418851AbgJYXCm (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 25 Oct 2020 19:02:42 -0400
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C87176074C
-        for <git@vger.kernel.org>; Sun, 25 Oct 2020 23:02:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1603666930;
-        bh=xAzWw84ETZVwzQh0t9GiRhQNsgM8VxIVHl9veRQpZi4=;
-        h=Date:From:To:Subject:References:Content-Type:Content-Disposition:
-         In-Reply-To:From:Reply-To:Subject:Date:To:CC:Resent-Date:
-         Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=1c8xVctYaktU0QLNAc5Loy50hop6GH2BLSLUJTxpG/q2bEhn5Ev5bHsm30bGO3Ojx
-         C8+fWADkPL6yik8t1Kevzku0tAcYkQsOZjiBCKFQzS9dq7iR5FsbYmRIM1r9EcJO3i
-         qPV5c4gbAwsNFCRHiGaYy8QX5HDX5DPWCe9QkQOt7/9m94FuID3j58tQV9hZjvrZHS
-         DM7IQxmeJ8QJk607Wg1sr+KXYSIN3gEPx3/msw6U7XH0vYX8McvDiMdpwEGY8TN7U/
-         L02sOyaUbjt1Y10JiS6PEGqlY/q+8/RTKk36ko4M9MNKUUZmlLXxttH5w+4+J8Iut8
-         6Dk3G8hgHKug1OZ2vMOrEsm+1xqi70P3ryrJnHTeL4TUtZbJiFCgCGrtitYaXoD2c+
-         kNV/9PQoNM4K/5SgJG2PDcItVX1QokakAO7T9ytsU0Vu3R4UA6dtMlE2+Az9o0R/Ze
-         LLeKiW06Dp4WEKMobvkW7YRkkp91cLLm7w8bqlmHz5LlVfqTAsb
-Date:   Sun, 25 Oct 2020 23:02:03 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Subject: Re: Do porcelain command require lock management?
-Message-ID: <20201025230203.GH860779@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-References: <20201024144637.cvwa22f2y4tvfn4z@chatter.i7.local>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="4C6bbPZ6c/S1npyF"
-Content-Disposition: inline
-In-Reply-To: <20201024144637.cvwa22f2y4tvfn4z@chatter.i7.local>
-User-Agent: Mutt/1.14.6 (2020-07-11)
+        id S1422044AbgJZEOr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Oct 2020 00:14:47 -0400
+Received: from mail-io1-f73.google.com ([209.85.166.73]:43666 "EHLO
+        mail-io1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1422104AbgJZEOp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Oct 2020 00:14:45 -0400
+Received: by mail-io1-f73.google.com with SMTP id f5so5085601iok.10
+        for <git@vger.kernel.org>; Sun, 25 Oct 2020 21:14:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=4hNBZ6qbe9zEE0H1VRLvrA5Wk/JdlnHHj4vFuHm2olw=;
+        b=kLpPv6pWoiYIEqCrfqep0kN6bu5fP7N3OvwzMcZTyTapQyGqAj+yukgMCCZsp7zVV/
+         33r0Eewc/fOa9ZePCyNODhuck4vmOogidgCM+Rf1gXrxKLBLhG+SuaEsjLWTy9FfOTQR
+         WamlSs7SQ/rk5Sb7X35Fk/L9l+aHP30c+vp3+GmNaQbmH5j3yUUwM75y7ZwtpNskUjTg
+         A55VMXWRJwKtN+Asa/lCBgY+aekRcVI6N8leYmxZW/SWWa9tNI6tMBxJ4JaP1vlgOQB2
+         pstwU5W+dH7VICTjwt2TYl7iKTduFySvb8uOWvZv4XbYkMscCAhdEk8hlpv3SH+BMMCY
+         p6Ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=4hNBZ6qbe9zEE0H1VRLvrA5Wk/JdlnHHj4vFuHm2olw=;
+        b=inIooGAFlVepojwfokcTkBRvE5OVZjMWBV983ASQBvqv0LOE0KSllWpnGL9/hfEMS1
+         zYRK4j1z74w3kR77289jh7Xatus/JotjLxn5wvemoofxzep2WNL7X8Hrmnc6QXYIuTv/
+         FHCxUHYYoemsCpt1NyiHRuE4fEVA3idqlSloS1psBopIux5C/RxvsY4TZAHkDhRvqqCX
+         KhaLTRoTNIDNR5r03zekYOEqB+Q3tPcCuSTFYOBVGm3yfYIh/SUVLGJ5CX/bugXp3NGi
+         KUaguYrmLoQ3WNohHz6Xq7ydukX8tJSzf3zp/UtvmOAWeT+XhkDpf5ubPz3v4G/k1/4P
+         Tc5w==
+X-Gm-Message-State: AOAM5335rLCv2zPC3L0UcYCPKnPfMzVYlxjPgzeocg6UcsfDxUevsDrG
+        QSujqcGREb8BEEEhYaGYWq/hdczgmJvd
+X-Google-Smtp-Source: ABdhPJxZQatiDoh7rVZnFTfQALryTKAWS8/CH6mfDac9gJJ7QsUF7glg52CceGJ6Z7NJOYf3kpXbyBJvM0t4
+Sender: "shengfa via sendgmr" <shengfa@lins.c.googlers.com>
+X-Received: from lins.c.googlers.com ([fda3:e722:ac3:10:2b:ff92:c0a8:cb])
+ (user=shengfa job=sendgmr) by 2002:a02:5849:: with SMTP id
+ f70mr9856710jab.97.1603685684506; Sun, 25 Oct 2020 21:14:44 -0700 (PDT)
+Date:   Mon, 26 Oct 2020 04:14:43 +0000
+In-Reply-To: <xmqqd01ans4h.fsf@gitster.c.googlers.com>
+Message-Id: <20201026041443.1362933-1-shengfa@google.com>
+Mime-Version: 1.0
+References: <xmqqd01ans4h.fsf@gitster.c.googlers.com>
+X-Mailer: git-send-email 2.29.0.rc1.297.gfa9743e501-goog
+Subject: Re: [WIP v2 1/2] Adding a record-time-zone command option for commit
+From:   Shengfa Lin <shengfa@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, jrnieder@gmail.com, nathaniel@google.com,
+        rsbecker@nexbridge.com, sandals@crustytoothpaste.net,
+        santiago@nyu.edu, shengfa@google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+>> Yes, we could check it in datestamp(), but ... 
+>>
+>>> Initially, I thought this would be sufficient to show "-0000" in commit log
+>>> message. However, I found that the show_date function is used for "decoding";
+>>> converting timestamp and tz to more readable format. Then I realize the
+>>> function won't distinguish between +0 and -0 as it only takes in a tz as
+>>> argument. As a result,...
+>>
+>> ... I would have imagined that you do not have to deal with all
+>> those complications if you don't hook this to such a low level of
+>> the call graph.  That is why I wondered:
+>> ...
+>
+> Let me answer some of my puzzlement myself; that is, I would have
+> understood the change well if it were explained to me this way, and
+> if that explanation matched what the patches did ;-)
 
---4C6bbPZ6c/S1npyF
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yes, I agree.
 
-On 2020-10-24 at 14:46:37, Konstantin Ryabitsev wrote:
-> Hello:
->=20
-> A script I'm writing performs a succession of porcelain commands to
-> create a commit in a bare git repository:
->=20
-> git hash-object
-> git mktree
-> git commit-tree
-> git update-ref
->=20
-> Do I need to manage external locking around these commands to avoid any
-> concurrency problems, or will git take care of that?
+> The topic has two major parts.
+> 
+> The code that prepares the timestamp to be recorded for the current
+> user, who wants to record an anonymous timezone "-0000", is one (and
+> the easier) part.  And this part could be done all inside
+> ident_default_date() without touching anything in date.c; when we
+> need to call datestamp(), we are getting the current time for the
+> current user, so we can mask the timezone.
 
-I'm almost certain that Git will do the same locking and object creation
-semantics that it does in porcelain commands as in the plumbing commands
-you're using.  For example, I happen to know that all loose object
-creation goes through one function, which should gracefully handle
-concurrent accesses.  Git is in general safe against concurrent accesses
-and is designed not to lose or corrupt data in this case.
+So for this part, there is no need to modify datestamp in dates.c.
+We could modify ident_default_date buf after datestamp to set the last
+5 bytes to "-0000" using strcpy.
 
-However, I will point out that ref updates may conflict and if so, Git
-will fail instead of waiting.  So while your repository will remain
-consistent and won't experience corruption, that doesn't mean that all
-operations will complete successfully.  Some sort of retry mechanism or
-other error handling will probably be warranted.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
+> The other part is that we need to read the timestamp from existing
+> records, and if we choose to distinguish between timestamp in UTC
+> and timestamp with anonymous timezone, we'd need to devise a way to
+> encode the anonymous timezone differently.  It is where the extra
+> bit that says "this bit does not usually mean anything but only when
+> the offset (which is a signed integer whose valid range is set to
+> between -2400 to +2400 by date.c::match_tz()) is zero, and this bit
+> is set, the zone is anonymous" comes in.
 
---4C6bbPZ6c/S1npyF
-Content-Type: application/pgp-signature; name="signature.asc"
+Yes, that's correct.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
+> 	Side note.  I suspect the damage to the callchain can be
+> 	limited much narrower if we didn't add this bit throughout
+> 	the API.  What if we instead pick a number outside the valid
+> 	range of offsets, say -10000, as a sentinel value and passed
+> 	that throughout the code when we want an anonymous zone?
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX5YD6gAKCRB8DEliiIei
-gR76AP9LONGN2B3gAYV+LGm4RRVJQYohIYPfUZybFPhsjAWUtAD+PyEbA3CrLMZX
-dUnkmWEs0RSbASL1NTtcw4fkw3VZCQo=
-=Y94n
------END PGP SIGNATURE-----
+Good idea.
 
---4C6bbPZ6c/S1npyF--
+> 	The functions in the callchain that care about the timezone
+> 	must understand how anonymous zone is encoded anyway, so to
+> 	them it's a matter of using an int plus one bit or using an
+> 	int that can have a special value.  But other functions in
+> 	the callchain whose sole purpose (with respect to the
+> 	timezone information) is to pass it between their caller and
+> 	their callee as an opaque piece of data, using just a single
+> 	integer is much less error prone---the patch does not have
+> 	to touch them at all.
+
+That would be easier to follow and requires less changes as well.
+
+> Thanks.
+
+Thanks for the clarification. Now I think we have a much better
+understanding. I will try to do a better job describing patches
+next time.
