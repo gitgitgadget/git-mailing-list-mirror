@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B67AC388F9
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 17:02:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C58D5C4363A
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 17:02:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 01609206D4
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 17:02:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 72C53206D4
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 17:02:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DHUt3Xx9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jo5LRL2m"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1787099AbgJZRCz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Oct 2020 13:02:55 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:38300 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1775586AbgJZRBv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Oct 2020 13:01:51 -0400
-Received: by mail-wr1-f68.google.com with SMTP id n18so13487970wrs.5
-        for <git@vger.kernel.org>; Mon, 26 Oct 2020 10:01:49 -0700 (PDT)
+        id S1787110AbgJZRC6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Oct 2020 13:02:58 -0400
+Received: from mail-wr1-f45.google.com ([209.85.221.45]:42453 "EHLO
+        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1775563AbgJZRBu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Oct 2020 13:01:50 -0400
+Received: by mail-wr1-f45.google.com with SMTP id j7so13457915wrt.9
+        for <git@vger.kernel.org>; Mon, 26 Oct 2020 10:01:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=7yt+yRyOLDBn/1W1vYjwIwKEYGvE1UbR4AYeCBJ5bbE=;
-        b=DHUt3Xx9WqRkZBgEoImXvKFNEjenPI2wz5r9Z8Gne5SP+UFXSBAJ2wOLNbwj+BoQoI
-         yQ0scc/XW0WQtpN5tiSOT9/EYm6M9DahxQuqGdLAg1bJLL5usN85no0fjnz/6hO2V89+
-         uRHzYho1qHX/HH5U6koHi4DQGkpMCJk2axOcAlRP6rpp/K6VYOSIrgIj0DiMxRTz5bUQ
-         tDzNLojKMAjSqqzwLLCiI5HV/IF7+BAId7erFKrILmFSm1Ne3ME+Ax0QXfB9uoEZZQxj
-         SAHe6RatZCmfjs//Q7FJJNxrQNjTWV77YaqeN75q1VplUJbErbstu2RxPRDdqreaIPd2
-         KQ1Q==
+        bh=IbldBUddQMWoaIEhgGq+1MyKNKDj1MRvtrCVJEMMQOo=;
+        b=jo5LRL2mCB8bvNi3jzPAWewCzF0GROKgHsb3NOv9sdTeO5NsOtPnsyH6K9c9vr0W0B
+         VhGS50H4UbSX9OLNf7CI8jH66f1Ms2jXbs1jZCjZiUHUn4g1FY9wB/dQBAwUiGVescJF
+         ptJzpwkPITGIVesE03ZiHm1d5J8Z2iUHlitOq3jlvHpx4eNV/a3kp4GBooJAEdTknxD4
+         djzy+WaPJtaBNZzLB3aRFPQzAraPOy9EOehJsFYS2gCigC8sNnRYupd+5ThYHKSQTTa8
+         PYHAXf/Rt4aFjcb15qpeoJKHd1lP8ZInoNPIqL0HBfXjTk4j8I4wumFgJigHNt5dGrvr
+         LBGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7yt+yRyOLDBn/1W1vYjwIwKEYGvE1UbR4AYeCBJ5bbE=;
-        b=EfMK7BXXYOY5K9O3vv647UhyMORp2Q8bDjhiieVEuaHRkMmMyvP7fB6h7fAZtvPqmv
-         hsiwJE/4Yk1ZOjYVFrv7yJoN5kCmOc5LyBD2t8g+WQE23OBXfH1vdlK3Y+16wkyPZWsM
-         KaCuIh0sbkpcGvDj4Gjjro5h5ekwF4HIPFdWU1iq8dsPuPbJvU5N5tu86pYiPDTiA0au
-         TxbG0jk0m1e06W6Y941O1s82yyYWejiUZT+WGeZrv8/q9LS6Qke4xu5S4S7vCu7tdxBM
-         K3tbslyURyFEuS4mzGb9wxMX+esLkSTRWJ8VNeu+pGvEeWZ5hOuMnwS2heKAJtI1a+oJ
-         9JSA==
-X-Gm-Message-State: AOAM5313b97eiHYUFb7rEr8AYNauU9mKBDm0kSrh1HWA7zZp25J/EIBb
-        VjKgNQtE7a+adOb5jHpnlxi4fnRoP1c=
-X-Google-Smtp-Source: ABdhPJypHNJsw7FZIb9K+5+ssi6t5gT1X41kLdJUJEEGS3ZuvjRSNwwoBJtKETXUXuo6xF8UpY7Q+Q==
-X-Received: by 2002:adf:92a1:: with SMTP id 30mr19016694wrn.269.1603731708230;
-        Mon, 26 Oct 2020 10:01:48 -0700 (PDT)
+        bh=IbldBUddQMWoaIEhgGq+1MyKNKDj1MRvtrCVJEMMQOo=;
+        b=lviaQzxXXn883sJb7ATA6r+6bYREPk7mHfsDQDFLlhb/2Yw5tiGbidwZjBmCoDSPGQ
+         aAlb7qg4lcMdsOp0HFrkTndGbjc28Lra+8D/dgbf0vgej3VfpC3fgyMenWAOPlbv5ycm
+         neu+d8sJRPNbilycu9obwKe4WbH7EhB2wBJCSFYZ3V2XoF6H2yqkGOAXJ71gfnz9Mw8S
+         ZECbJG58URewCKvT7lTJQufoig3fxROtu6n66nUH4+laGOeyqV85viuVwUCDPqJoK8nl
+         AKamrpURWxt1tvWr0qXYSGoOmEDOSfTUPlFzuFyoclOHfNEz2YBMmrYkb20r+Do3J6lE
+         b5LA==
+X-Gm-Message-State: AOAM533sg4irzwJKYCQPmdBdWiwxwtmGdjIXep9G7QVaeB3lO+OKPaoI
+        nisN5X6MqVUSws/YAJWYPCzh1OBL8io=
+X-Google-Smtp-Source: ABdhPJy4iImEgQ4k+F24BzOsR4GlpKG5uf9CvJECA7RwA9vqvn4EXHnMqFn0fhyv5SqTkcfvFRpagg==
+X-Received: by 2002:adf:fe81:: with SMTP id l1mr18779275wrr.11.1603731706781;
+        Mon, 26 Oct 2020 10:01:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q10sm23123162wrp.83.2020.10.26.10.01.46
+        by smtp.gmail.com with ESMTPSA id n62sm23544842wmb.10.2020.10.26.10.01.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Oct 2020 10:01:47 -0700 (PDT)
-Message-Id: <f27f12e8e50e56c010c29caa00296475d4de205b.1603731704.git.gitgitgadget@gmail.com>
+        Mon, 26 Oct 2020 10:01:46 -0700 (PDT)
+Message-Id: <f5d32952629e58074032e5c736b7f0405d935f5d.1603731704.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.769.v2.git.1603731704.gitgitgadget@gmail.com>
 References: <pull.769.git.1603468885.gitgitgadget@gmail.com>
         <pull.769.v2.git.1603731704.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 26 Oct 2020 17:01:37 +0000
-Subject: [PATCH v2 2/9] merge tests: expect improved directory/file conflict
- handling in ort
+Date:   Mon, 26 Oct 2020 17:01:36 +0000
+Subject: [PATCH v2 1/9] t/: new helper for tests that pass with ort but fail
+ with recursive
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,676 +78,247 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-merge-recursive.c is built on the idea of running unpack_trees() and
-then "doing minor touch-ups" to get the result.  Unfortunately,
-unpack_trees() was run in an update-as-it-goes mode, leading
-merge-recursive.c to follow suit and end up with an immediate evaluation
-and fix-it-up-as-you-go design.  Some things like directory/file
-conflicts are not well representable in the index data structure, and
-required special extra code to handle.  But then when it was discovered
-that rename/delete conflicts could also be involved in directory/file
-conflicts, the special directory/file conflict handling code had to be
-copied to the rename/delete codepath.  ...and then it had to be copied
-for modify/delete, and for rename/rename(1to2) conflicts, ...and yet it
-still missed some.  Further, when it was discovered that there were also
-file/submodule conflicts and submodule/directory conflicts, we needed to
-copy the special submodule handling code to all the special cases
-throughout the codebase.
-
-And then it was discovered that our handling of directory/file conflicts
-was suboptimal because it would create untracked files to store the
-contents of the conflicting file, which would not be cleaned up if
-someone were to run a 'git merge --abort' or 'git rebase --abort'.  It
-was also difficult or scary to try to add or remove the index entries
-corresponding to these files given the directory/file conflict in the
-index.  But changing merge-recursive.c to handle these correctly was a
-royal pain because there were so many sites in the code with similar but
-not identical code for handling directory/file/submodule conflicts that
-would all need to be updated.
-
-I have worked hard to push all directory/file/submodule conflict
-handling in merge-ort through a single codepath, and avoid creating
-untracked files for storing tracked content (it does record things at
-alternate paths, but makes sure they have higher-order stages in the
-index).
-
-Since updating merge-recursive is too much work and we don't want to
-destabilize it, instead update the testsuite to have different
-expectations for relevant directory/file/submodule conflict tests.
+There are a number of tests that the "recursive" backend does not handle
+correctly but which the redesign in "ort" will.  Add a new helper in
+lib-merge.sh for selecting a different test expectation based on the
+setting of GIT_TEST_MERGE_ALGORITHM, and use it in various testcases to
+document which ones we expect to fail under recursive but pass under
+ort.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6400-merge-df.sh                  |  14 +-
- t/t6402-merge-rename.sh              | 108 ++++++++++++----
- t/t6416-recursive-corner-cases.sh    | 185 +++++++++++++++++++--------
- t/t6422-merge-rename-corner-cases.sh |  30 +++--
- t/t6423-merge-rename-directories.sh  |  53 +++++---
- t/t7610-mergetool.sh                 |  32 ++++-
- 6 files changed, 314 insertions(+), 108 deletions(-)
+ t/lib-merge.sh                         | 13 +++++++++++++
+ t/t6416-recursive-corner-cases.sh      | 11 ++++++-----
+ t/t6422-merge-rename-corner-cases.sh   |  7 ++++---
+ t/t6423-merge-rename-directories.sh    | 13 +++++++------
+ t/t6426-merge-skip-unneeded-updates.sh |  3 ++-
+ t/t6430-merge-recursive.sh             |  3 ++-
+ 6 files changed, 34 insertions(+), 16 deletions(-)
+ create mode 100644 t/lib-merge.sh
 
-diff --git a/t/t6400-merge-df.sh b/t/t6400-merge-df.sh
-index f1b84617af..9da0838216 100755
---- a/t/t6400-merge-df.sh
-+++ b/t/t6400-merge-df.sh
-@@ -81,7 +81,12 @@ test_expect_success 'modify/delete + directory/file conflict' '
- 
- 	test 5 -eq $(git ls-files -s | wc -l) &&
- 	test 4 -eq $(git ls-files -u | wc -l) &&
--	test 1 -eq $(git ls-files -o | wc -l) &&
-+	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+	then
-+		test 0 -eq $(git ls-files -o | wc -l)
-+	else
-+		test 1 -eq $(git ls-files -o | wc -l)
-+	fi &&
- 
- 	test_path_is_file letters/file &&
- 	test_path_is_file letters.txt &&
-@@ -97,7 +102,12 @@ test_expect_success 'modify/delete + directory/file conflict; other way' '
- 
- 	test 5 -eq $(git ls-files -s | wc -l) &&
- 	test 4 -eq $(git ls-files -u | wc -l) &&
--	test 1 -eq $(git ls-files -o | wc -l) &&
-+	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+	then
-+		test 0 -eq $(git ls-files -o | wc -l)
-+	else
-+		test 1 -eq $(git ls-files -o | wc -l)
-+	fi &&
- 
- 	test_path_is_file letters/file &&
- 	test_path_is_file letters.txt &&
-diff --git a/t/t6402-merge-rename.sh b/t/t6402-merge-rename.sh
-index bbbba3dcbf..47d4434d64 100755
---- a/t/t6402-merge-rename.sh
-+++ b/t/t6402-merge-rename.sh
-@@ -397,7 +397,12 @@ test_expect_success 'Rename+D/F conflict; renamed file cannot merge and dir in t
- 	test_must_fail git merge --strategy=recursive dir-in-way &&
- 
- 	test 5 -eq "$(git ls-files -u | wc -l)" &&
--	test 3 -eq "$(git ls-files -u dir | grep -v file-in-the-way | wc -l)" &&
-+	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+	then
-+		test 3 -eq "$(git ls-files -u dir~HEAD | wc -l)"
-+	else
-+		test 3 -eq "$(git ls-files -u dir | grep -v file-in-the-way | wc -l)"
-+	fi &&
- 	test 2 -eq "$(git ls-files -u dir/file-in-the-way | wc -l)" &&
- 
- 	test_must_fail git diff --quiet &&
-@@ -415,7 +420,12 @@ test_expect_success 'Same as previous, but merged other way' '
- 	test_must_fail git merge --strategy=recursive renamed-file-has-conflicts &&
- 
- 	test 5 -eq "$(git ls-files -u | wc -l)" &&
--	test 3 -eq "$(git ls-files -u dir | grep -v file-in-the-way | wc -l)" &&
-+	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+	then
-+		test 3 -eq "$(git ls-files -u dir~renamed-file-has-conflicts | wc -l)"
-+	else
-+		test 3 -eq "$(git ls-files -u dir | grep -v file-in-the-way | wc -l)"
-+	fi &&
- 	test 2 -eq "$(git ls-files -u dir/file-in-the-way | wc -l)" &&
- 
- 	test_must_fail git diff --quiet &&
-@@ -471,7 +481,12 @@ test_expect_success 'both rename source and destination involved in D/F conflict
- 	git checkout -q rename-dest^0 &&
- 	test_must_fail git merge --strategy=recursive source-conflict &&
- 
--	test 1 -eq "$(git ls-files -u | wc -l)" &&
-+	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+	then
-+		test 2 -eq "$(git ls-files -u | wc -l)"
-+	else
-+		test 1 -eq "$(git ls-files -u | wc -l)"
-+	fi &&
- 
- 	test_must_fail git diff --quiet &&
- 
-@@ -505,34 +520,63 @@ test_expect_success 'setup pair rename to parent of other (D/F conflicts)' '
- 	git commit -m "Rename one/file -> two"
- '
- 
--test_expect_success 'pair rename to parent of other (D/F conflicts) w/ untracked dir' '
--	git checkout -q rename-one^0 &&
--	mkdir one &&
--	test_must_fail git merge --strategy=recursive rename-two &&
-+if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+then
-+	test_expect_success 'pair rename to parent of other (D/F conflicts) w/ untracked dir' '
-+		git checkout -q rename-one^0 &&
-+		mkdir one &&
-+		test_must_fail git merge --strategy=recursive rename-two &&
- 
--	test 2 -eq "$(git ls-files -u | wc -l)" &&
--	test 1 -eq "$(git ls-files -u one | wc -l)" &&
--	test 1 -eq "$(git ls-files -u two | wc -l)" &&
-+		test 4 -eq "$(git ls-files -u | wc -l)" &&
-+		test 2 -eq "$(git ls-files -u one | wc -l)" &&
-+		test 2 -eq "$(git ls-files -u two | wc -l)" &&
- 
--	test_must_fail git diff --quiet &&
-+		test_must_fail git diff --quiet &&
- 
--	test 4 -eq $(find . | grep -v .git | wc -l) &&
-+		test 3 -eq $(find . | grep -v .git | wc -l) &&
- 
--	test_path_is_dir one &&
--	test_path_is_file one~rename-two &&
--	test_path_is_file two &&
--	test "other" = $(cat one~rename-two) &&
--	test "stuff" = $(cat two)
--'
-+		test_path_is_file one &&
-+		test_path_is_file two &&
-+		test "other" = $(cat one) &&
-+		test "stuff" = $(cat two)
-+	'
-+else
-+	test_expect_success 'pair rename to parent of other (D/F conflicts) w/ untracked dir' '
-+		git checkout -q rename-one^0 &&
-+		mkdir one &&
-+		test_must_fail git merge --strategy=recursive rename-two &&
+diff --git a/t/lib-merge.sh b/t/lib-merge.sh
+new file mode 100644
+index 0000000000..8734ebfc17
+--- /dev/null
++++ b/t/lib-merge.sh
+@@ -0,0 +1,13 @@
++# Helper functions used by merge tests.
 +
-+		test 2 -eq "$(git ls-files -u | wc -l)" &&
-+		test 1 -eq "$(git ls-files -u one | wc -l)" &&
-+		test 1 -eq "$(git ls-files -u two | wc -l)" &&
++test_expect_merge_algorithm () {
++	status_for_recursive=$1 status_for_ort=$2
++	shift 2
 +
-+		test_must_fail git diff --quiet &&
-+
-+		test 4 -eq $(find . | grep -v .git | wc -l) &&
-+
-+		test_path_is_dir one &&
-+		test_path_is_file one~rename-two &&
-+		test_path_is_file two &&
-+		test "other" = $(cat one~rename-two) &&
-+		test "stuff" = $(cat two)
-+	'
-+fi
- 
- test_expect_success 'pair rename to parent of other (D/F conflicts) w/ clean start' '
- 	git reset --hard &&
- 	git clean -fdqx &&
- 	test_must_fail git merge --strategy=recursive rename-two &&
- 
--	test 2 -eq "$(git ls-files -u | wc -l)" &&
--	test 1 -eq "$(git ls-files -u one | wc -l)" &&
--	test 1 -eq "$(git ls-files -u two | wc -l)" &&
 +	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
 +	then
-+		test 4 -eq "$(git ls-files -u | wc -l)" &&
-+		test 2 -eq "$(git ls-files -u one | wc -l)" &&
-+		test 2 -eq "$(git ls-files -u two | wc -l)"
++		test_expect_${status_for_ort} "$@"
 +	else
-+		test 2 -eq "$(git ls-files -u | wc -l)" &&
-+		test 1 -eq "$(git ls-files -u one | wc -l)" &&
-+		test 1 -eq "$(git ls-files -u two | wc -l)"
-+	fi &&
- 
- 	test_must_fail git diff --quiet &&
- 
-@@ -572,12 +616,22 @@ test_expect_success 'check handling of differently renamed file with D/F conflic
- 	git checkout -q first-rename^0 &&
- 	test_must_fail git merge --strategy=recursive second-rename &&
- 
--	test 5 -eq "$(git ls-files -s | wc -l)" &&
--	test 3 -eq "$(git ls-files -u | wc -l)" &&
--	test 1 -eq "$(git ls-files -u one | wc -l)" &&
--	test 1 -eq "$(git ls-files -u two | wc -l)" &&
--	test 1 -eq "$(git ls-files -u original | wc -l)" &&
--	test 2 -eq "$(git ls-files -o | wc -l)" &&
-+	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+	then
-+		test 5 -eq "$(git ls-files -s | wc -l)" &&
-+		test 3 -eq "$(git ls-files -u | wc -l)" &&
-+		test 1 -eq "$(git ls-files -u one~HEAD | wc -l)" &&
-+		test 1 -eq "$(git ls-files -u two~second-rename | wc -l)" &&
-+		test 1 -eq "$(git ls-files -u original | wc -l)" &&
-+		test 0 -eq "$(git ls-files -o | wc -l)"
-+	else
-+		test 5 -eq "$(git ls-files -s | wc -l)" &&
-+		test 3 -eq "$(git ls-files -u | wc -l)" &&
-+		test 1 -eq "$(git ls-files -u one | wc -l)" &&
-+		test 1 -eq "$(git ls-files -u two | wc -l)" &&
-+		test 1 -eq "$(git ls-files -u original | wc -l)" &&
-+		test 2 -eq "$(git ls-files -o | wc -l)"
-+	fi &&
- 
- 	test_path_is_file one/file &&
- 	test_path_is_file two/file &&
++		test_expect_${status_for_recursive} "$@"
++	fi
++}
 diff --git a/t/t6416-recursive-corner-cases.sh b/t/t6416-recursive-corner-cases.sh
-index 8b3a4fc843..0317e83970 100755
+index fd98989b14..8b3a4fc843 100755
 --- a/t/t6416-recursive-corner-cases.sh
 +++ b/t/t6416-recursive-corner-cases.sh
-@@ -538,9 +538,15 @@ test_expect_success 'setup differently handled merges of directory/file conflict
+@@ -3,6 +3,7 @@
+ test_description='recursive merge corner cases involving criss-cross merges'
  
- 		git checkout B^0 &&
- 		test_must_fail git merge C^0 &&
--		git clean -fd &&
--		git rm -rf a/ &&
--		git rm a &&
-+		if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+		then
-+			git rm -rf a/ &&
-+			git rm a~HEAD
-+		else
-+			git clean -fd &&
-+			git rm -rf a/ &&
-+			git rm a
-+		fi &&
- 		git cat-file -p B:a >a2 &&
- 		git add a2 &&
- 		git commit -m D2 &&
-@@ -559,7 +565,12 @@ test_expect_success 'setup differently handled merges of directory/file conflict
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-merge.sh
  
- 		git checkout C^0 &&
- 		test_must_fail git merge B^0 &&
--		git clean -fd &&
-+		if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+		then
-+			git rm a~B^0
-+		else
-+			git clean -fd
-+		fi &&
- 		git rm -rf a/ &&
- 		test_write_lines 1 2 3 4 5 6 7 8 >a &&
- 		git add a &&
-@@ -568,9 +579,15 @@ test_expect_success 'setup differently handled merges of directory/file conflict
- 
- 		git checkout C^0 &&
- 		test_must_fail git merge B^0 &&
--		git clean -fd &&
--		git rm -rf a/ &&
--		git rm a &&
-+		if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+		then
-+			git rm -rf a/ &&
-+			git rm a~B^0
-+		else
-+			git clean -fd &&
-+			git rm -rf a/ &&
-+			git rm a
-+		fi &&
- 		test_write_lines 1 2 3 4 5 6 7 8 >a2 &&
- 		git add a2 &&
- 		git commit -m E4 &&
-@@ -588,18 +605,34 @@ test_expect_success 'merge of D1 & E1 fails but has appropriate contents' '
- 
- 		test_must_fail git merge -s recursive E1^0 &&
- 
--		git ls-files -s >out &&
--		test_line_count = 2 out &&
--		git ls-files -u >out &&
--		test_line_count = 1 out &&
--		git ls-files -o >out &&
--		test_line_count = 1 out &&
--
--		git rev-parse >expect    \
--			A:ignore-me  B:a &&
--		git rev-parse   >actual   \
--			:0:ignore-me :2:a &&
--		test_cmp expect actual
-+		if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+		then
-+			git ls-files -s >out &&
-+			test_line_count = 3 out &&
-+			git ls-files -u >out &&
-+			test_line_count = 2 out &&
-+			git ls-files -o >out &&
-+			test_line_count = 1 out &&
-+
-+			git rev-parse >expect    \
-+				A:ignore-me  B:a  D1:a &&
-+			git rev-parse   >actual   \
-+				:0:ignore-me :1:a :2:a &&
-+			test_cmp expect actual
-+		else
-+			git ls-files -s >out &&
-+			test_line_count = 2 out &&
-+			git ls-files -u >out &&
-+			test_line_count = 1 out &&
-+			git ls-files -o >out &&
-+			test_line_count = 1 out &&
-+
-+			git rev-parse >expect    \
-+				A:ignore-me  B:a &&
-+			git rev-parse   >actual   \
-+				:0:ignore-me :2:a &&
-+			test_cmp expect actual
-+		fi
+ #
+ #  L1  L2
+@@ -1069,7 +1070,7 @@ test_expect_success 'setup symlink modify/modify' '
  	)
  '
  
-@@ -613,18 +646,34 @@ test_expect_success 'merge of E1 & D1 fails but has appropriate contents' '
+-test_expect_failure 'check symlink modify/modify' '
++test_expect_merge_algorithm failure success 'check symlink modify/modify' '
+ 	(
+ 		cd symlink-modify-modify &&
  
- 		test_must_fail git merge -s recursive D1^0 &&
- 
--		git ls-files -s >out &&
--		test_line_count = 2 out &&
--		git ls-files -u >out &&
--		test_line_count = 1 out &&
--		git ls-files -o >out &&
--		test_line_count = 1 out &&
--
--		git rev-parse >expect    \
--			A:ignore-me  B:a &&
--		git rev-parse   >actual   \
--			:0:ignore-me :3:a &&
--		test_cmp expect actual
-+		if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+		then
-+			git ls-files -s >out &&
-+			test_line_count = 3 out &&
-+			git ls-files -u >out &&
-+			test_line_count = 2 out &&
-+			git ls-files -o >out &&
-+			test_line_count = 1 out &&
-+
-+			git rev-parse >expect    \
-+				A:ignore-me  B:a  D1:a &&
-+			git rev-parse   >actual   \
-+				:0:ignore-me :1:a :3:a &&
-+			test_cmp expect actual
-+		else
-+			git ls-files -s >out &&
-+			test_line_count = 2 out &&
-+			git ls-files -u >out &&
-+			test_line_count = 1 out &&
-+			git ls-files -o >out &&
-+			test_line_count = 1 out &&
-+
-+			git rev-parse >expect    \
-+				A:ignore-me  B:a &&
-+			git rev-parse   >actual   \
-+				:0:ignore-me :3:a &&
-+			test_cmp expect actual
-+		fi
+@@ -1135,7 +1136,7 @@ test_expect_success 'setup symlink add/add' '
  	)
  '
  
-@@ -638,17 +687,32 @@ test_expect_success 'merge of D1 & E2 fails but has appropriate contents' '
+-test_expect_failure 'check symlink add/add' '
++test_expect_merge_algorithm failure success 'check symlink add/add' '
+ 	(
+ 		cd symlink-add-add &&
  
- 		test_must_fail git merge -s recursive E2^0 &&
+@@ -1223,7 +1224,7 @@ test_expect_success 'setup submodule modify/modify' '
+ 	)
+ '
  
--		git ls-files -s >out &&
--		test_line_count = 4 out &&
--		git ls-files -u >out &&
--		test_line_count = 3 out &&
--		git ls-files -o >out &&
--		test_line_count = 2 out &&
--
--		git rev-parse >expect    \
--			B:a   E2:a/file  C:a/file   A:ignore-me &&
--		git rev-parse   >actual   \
--			:2:a  :3:a/file  :1:a/file  :0:ignore-me &&
-+		if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+		then
-+			git ls-files -s >out &&
-+			test_line_count = 5 out &&
-+			git ls-files -u >out &&
-+			test_line_count = 4 out &&
-+			git ls-files -o >out &&
-+			test_line_count = 1 out &&
-+
-+			git rev-parse >expect    \
-+				B:a       D1:a      E2:a/file  C:a/file   A:ignore-me &&
-+			git rev-parse   >actual   \
-+				:1:a~HEAD :2:a~HEAD :3:a/file  :1:a/file  :0:ignore-me
-+		else
-+			git ls-files -s >out &&
-+			test_line_count = 4 out &&
-+			git ls-files -u >out &&
-+			test_line_count = 3 out &&
-+			git ls-files -o >out &&
-+			test_line_count = 2 out &&
-+
-+			git rev-parse >expect    \
-+				B:a    E2:a/file  C:a/file   A:ignore-me &&
-+			git rev-parse   >actual   \
-+				:2:a   :3:a/file  :1:a/file  :0:ignore-me
-+		fi &&
- 		test_cmp expect actual &&
+-test_expect_failure 'check submodule modify/modify' '
++test_expect_merge_algorithm failure success 'check submodule modify/modify' '
+ 	(
+ 		cd submodule-modify-modify &&
  
- 		test_path_is_file a~HEAD
-@@ -665,17 +729,32 @@ test_expect_success 'merge of E2 & D1 fails but has appropriate contents' '
+@@ -1311,7 +1312,7 @@ test_expect_success 'setup submodule add/add' '
+ 	)
+ '
  
- 		test_must_fail git merge -s recursive D1^0 &&
+-test_expect_failure 'check submodule add/add' '
++test_expect_merge_algorithm failure success 'check submodule add/add' '
+ 	(
+ 		cd submodule-add-add &&
  
--		git ls-files -s >out &&
--		test_line_count = 4 out &&
--		git ls-files -u >out &&
--		test_line_count = 3 out &&
--		git ls-files -o >out &&
--		test_line_count = 2 out &&
--
--		git rev-parse >expect    \
--			B:a   E2:a/file  C:a/file   A:ignore-me &&
--		git rev-parse   >actual   \
--			:3:a  :2:a/file  :1:a/file  :0:ignore-me &&
-+		if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+		then
-+			git ls-files -s >out &&
-+			test_line_count = 5 out &&
-+			git ls-files -u >out &&
-+			test_line_count = 4 out &&
-+			git ls-files -o >out &&
-+			test_line_count = 1 out &&
-+
-+			git rev-parse >expect    \
-+				B:a       D1:a      E2:a/file  C:a/file   A:ignore-me &&
-+			git rev-parse   >actual   \
-+				:1:a~D1^0 :3:a~D1^0 :2:a/file  :1:a/file  :0:ignore-me
-+		else
-+			git ls-files -s >out &&
-+			test_line_count = 4 out &&
-+			git ls-files -u >out &&
-+			test_line_count = 3 out &&
-+			git ls-files -o >out &&
-+			test_line_count = 2 out &&
-+
-+			git rev-parse >expect    \
-+				B:a   E2:a/file  C:a/file   A:ignore-me &&
-+			git rev-parse   >actual   \
-+				:3:a  :2:a/file  :1:a/file  :0:ignore-me
-+		fi &&
- 		test_cmp expect actual &&
+@@ -1386,7 +1387,7 @@ test_expect_success 'setup conflicting entry types (submodule vs symlink)' '
+ 	)
+ '
  
- 		test_path_is_file a~D1^0
+-test_expect_failure 'check conflicting entry types (submodule vs symlink)' '
++test_expect_merge_algorithm failure success 'check conflicting entry types (submodule vs symlink)' '
+ 	(
+ 		cd submodule-symlink-add-add &&
+ 
 diff --git a/t/t6422-merge-rename-corner-cases.sh b/t/t6422-merge-rename-corner-cases.sh
-index 58729593ba..78bfaf17f0 100755
+index 3375eaf4e7..58729593ba 100755
 --- a/t/t6422-merge-rename-corner-cases.sh
 +++ b/t/t6422-merge-rename-corner-cases.sh
-@@ -313,15 +313,18 @@ test_expect_success 'rename/directory conflict + clean content merge' '
- 		git ls-files -u >out &&
- 		test_line_count = 1 out &&
- 		git ls-files -o >out &&
--		test_line_count = 2 out &&
-+		if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+		then
-+			test_line_count = 1 out
-+		else
-+			test_line_count = 2 out
-+		fi &&
+@@ -4,6 +4,7 @@ test_description="recursive merge corner cases w/ renames but not criss-crosses"
+ # t6036 has corner cases that involve both criss-cross merges and renames
  
- 		echo 0 >expect &&
- 		git cat-file -p base:file >>expect &&
- 		echo 7 >>expect &&
- 		test_cmp expect newfile~HEAD &&
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-merge.sh
  
--		test $(git rev-parse :2:newfile) = $(git hash-object expect) &&
--
- 		test_path_is_file newfile/realfile &&
- 		test_path_is_file newfile~HEAD
+ test_setup_rename_delete_untracked () {
+ 	test_create_repo rename-delete-untracked &&
+@@ -878,7 +879,7 @@ test_setup_rad () {
  	)
-@@ -344,7 +347,12 @@ test_expect_success 'rename/directory conflict + content merge conflict' '
- 		git ls-files -u >out &&
- 		test_line_count = 3 out &&
- 		git ls-files -o >out &&
--		test_line_count = 2 out &&
-+		if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+		then
-+			test_line_count = 1 out
-+		else
-+			test_line_count = 2 out
-+		fi &&
+ }
  
- 		git cat-file -p left-conflict:newfile >left &&
- 		git cat-file -p base:file    >base &&
-@@ -356,10 +364,16 @@ test_expect_success 'rename/directory conflict + content merge conflict' '
- 			left base right &&
- 		test_cmp left newfile~HEAD &&
+-test_expect_failure 'rad-check: rename/add/delete conflict' '
++test_expect_merge_algorithm failure success 'rad-check: rename/add/delete conflict' '
+ 	test_setup_rad &&
+ 	(
+ 		cd rad &&
+@@ -951,7 +952,7 @@ test_setup_rrdd () {
+ 	)
+ }
  
--		git rev-parse >expect                                 \
--			base:file   left-conflict:newfile  right:file &&
--		git rev-parse >actual                                 \
--			:1:newfile  :2:newfile             :3:newfile &&
-+		git rev-parse >expect   \
-+			base:file       left-conflict:newfile right:file &&
-+		if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+		then
-+			git rev-parse >actual \
-+				:1:newfile~HEAD :2:newfile~HEAD :3:newfile~HEAD
-+		else
-+			git rev-parse >actual \
-+				:1:newfile      :2:newfile      :3:newfile
-+		fi &&
- 		test_cmp expect actual &&
+-test_expect_failure 'rrdd-check: rename/rename(2to1)/delete/delete conflict' '
++test_expect_merge_algorithm failure success 'rrdd-check: rename/rename(2to1)/delete/delete conflict' '
+ 	test_setup_rrdd &&
+ 	(
+ 		cd rrdd &&
+@@ -1040,7 +1041,7 @@ test_setup_mod6 () {
+ 	)
+ }
  
- 		test_path_is_file newfile/realfile &&
+-test_expect_failure 'mod6-check: chains of rename/rename(1to2) and rename/rename(2to1)' '
++test_expect_merge_algorithm failure success 'mod6-check: chains of rename/rename(1to2) and rename/rename(2to1)' '
+ 	test_setup_mod6 &&
+ 	(
+ 		cd mod6 &&
 diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
-index 807a424a52..5ea77564d7 100755
+index 06b46af765..807a424a52 100755
 --- a/t/t6423-merge-rename-directories.sh
 +++ b/t/t6423-merge-rename-directories.sh
-@@ -1177,10 +1177,18 @@ test_expect_success '5d: Directory/file/file conflict due to directory rename' '
- 		git ls-files -u >out &&
- 		test_line_count = 1 out &&
- 		git ls-files -o >out &&
--		test_line_count = 2 out &&
--
--		git rev-parse >actual \
--			:0:y/b :0:y/c :0:z/d :0:y/f :2:y/d :0:y/d/e &&
-+		if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+		then
-+			test_line_count = 1 out &&
-+
-+			git rev-parse >actual \
-+			    :0:y/b :0:y/c :0:z/d :0:y/f :2:y/d~HEAD :0:y/d/e
-+		else
-+			test_line_count = 2 out &&
-+
-+			git rev-parse >actual \
-+			    :0:y/b :0:y/c :0:z/d :0:y/f :2:y/d      :0:y/d/e
-+		fi &&
- 		git rev-parse >expect \
- 			 O:z/b  O:z/c  B:z/d  B:z/f  A:y/d  B:y/d/e &&
- 		test_cmp expect actual &&
-@@ -2017,17 +2025,32 @@ test_expect_success '7e: transitive rename in rename/delete AND dirs in the way'
- 		test_must_fail git -c merge.directoryRenames=true merge -s recursive B^0 >out &&
- 		test_i18ngrep "CONFLICT (rename/delete).*x/d.*y/d" out &&
+@@ -26,6 +26,7 @@ test_description="recursive merge with directory renames"
+ #                     files that might be renamed into each other's paths.)
  
--		git ls-files -s >out &&
--		test_line_count = 5 out &&
--		git ls-files -u >out &&
--		test_line_count = 1 out &&
--		git ls-files -o >out &&
--		test_line_count = 2 out &&
--
--		git rev-parse >actual \
--			:0:x/d/f :0:y/d/g :0:y/b :0:y/c :3:y/d &&
--		git rev-parse >expect \
--			 A:x/d/f  A:y/d/g  O:z/b  O:z/c  O:x/d &&
-+		if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+		then
-+			git ls-files -s >out &&
-+			test_line_count = 6 out &&
-+			git ls-files -u >out &&
-+			test_line_count = 2 out &&
-+			git ls-files -o >out &&
-+			test_line_count = 1 out &&
-+
-+			git rev-parse >actual \
-+				:0:x/d/f :0:y/d/g :0:y/b :0:y/c :1:y/d~B^0 :3:y/d~B^0 &&
-+			git rev-parse >expect \
-+				 A:x/d/f  A:y/d/g  O:z/b  O:z/c  O:x/d      O:x/d
-+		else
-+			git ls-files -s >out &&
-+			test_line_count = 5 out &&
-+			git ls-files -u >out &&
-+			test_line_count = 1 out &&
-+			git ls-files -o >out &&
-+			test_line_count = 2 out &&
-+
-+			git rev-parse >actual \
-+				:0:x/d/f :0:y/d/g :0:y/b :0:y/c :3:y/d &&
-+			git rev-parse >expect \
-+				 A:x/d/f  A:y/d/g  O:z/b  O:z/c  O:x/d
-+		fi &&
- 		test_cmp expect actual &&
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-merge.sh
  
- 		git hash-object y/d~B^0 >actual &&
-diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index ad288ddc69..70afdd06fa 100755
---- a/t/t7610-mergetool.sh
-+++ b/t/t7610-mergetool.sh
-@@ -532,7 +532,14 @@ test_expect_success 'file vs modified submodule' '
- 	yes "" | git mergetool file1 file2 spaced\ name subdir/file3 &&
- 	yes "" | git mergetool both &&
- 	yes "d" | git mergetool file11 file12 &&
--	yes "l" | git mergetool submod &&
-+	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+	then
-+		yes "c" | git mergetool submod~HEAD &&
-+		git rm submod &&
-+		git mv submod~HEAD submod
-+	else
-+		yes "l" | git mergetool submod
-+	fi &&
- 	git submodule update -N &&
- 	echo "not a submodule" >expect &&
- 	test_cmp expect submod &&
-@@ -549,7 +556,15 @@ test_expect_success 'file vs modified submodule' '
- 	yes "" | git mergetool file1 file2 spaced\ name subdir/file3 &&
- 	yes "" | git mergetool both &&
- 	yes "d" | git mergetool file11 file12 &&
--	yes "r" | git mergetool submod &&
-+	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+	then
-+		mv submod submod.orig &&
-+		git rm --cached submod &&
-+		yes "c" | git mergetool submod~test19 &&
-+		git mv submod~test19 submod
-+	else
-+		yes "r" | git mergetool submod
-+	fi &&
- 	test -d submod.orig &&
- 	git submodule update -N &&
- 	echo "not a submodule" >expect &&
-@@ -567,6 +582,10 @@ test_expect_success 'file vs modified submodule' '
- 	yes "" | git mergetool both &&
- 	yes "d" | git mergetool file11 file12 &&
- 	yes "l" | git mergetool submod &&
-+	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+	then
-+		yes "d" | git mergetool submod~test19
-+	fi &&
- 	echo "master submodule" >expect &&
- 	test_cmp expect submod/bar &&
- 	git submodule update -N &&
-@@ -664,7 +683,14 @@ test_expect_success 'directory vs modified submodule' '
- 	test_must_fail git merge master &&
- 	test -n "$(git ls-files -u)" &&
- 	test ! -e submod.orig &&
--	yes "r" | git mergetool submod &&
-+	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
-+	then
-+		yes "r" | git mergetool submod~master &&
-+		git mv submod submod.orig &&
-+		git mv submod~master submod
-+	else
-+		yes "r" | git mergetool submod
-+	fi &&
- 	test -d submod.orig &&
- 	echo "not a submodule" >expect &&
- 	test_cmp expect submod.orig/file16 &&
+ 
+ ###########################################################################
+@@ -1339,7 +1340,7 @@ test_setup_6b1 () {
+ 	)
+ }
+ 
+-test_expect_failure '6b1: Same renames done on both sides, plus another rename' '
++test_expect_merge_algorithm failure success '6b1: Same renames done on both sides, plus another rename' '
+ 	test_setup_6b1 &&
+ 	(
+ 		cd 6b1 &&
+@@ -1412,7 +1413,7 @@ test_setup_6b2 () {
+ 	)
+ }
+ 
+-test_expect_failure '6b2: Same rename done on both sides' '
++test_expect_merge_algorithm failure success '6b2: Same rename done on both sides' '
+ 	test_setup_6b2 &&
+ 	(
+ 		cd 6b2 &&
+@@ -3471,7 +3472,7 @@ test_setup_10e () {
+ 	)
+ }
+ 
+-test_expect_failure '10e: Does git complain about untracked file that is not really in the way?' '
++test_expect_merge_algorithm failure success '10e: Does git complain about untracked file that is not really in the way?' '
+ 	test_setup_10e &&
+ 	(
+ 		cd 10e &&
+@@ -4104,7 +4105,7 @@ test_setup_12b1 () {
+ 	)
+ }
+ 
+-test_expect_failure '12b1: Moving two directory hierarchies into each other' '
++test_expect_merge_algorithm failure success '12b1: Moving two directory hierarchies into each other' '
+ 	test_setup_12b1 &&
+ 	(
+ 		cd 12b1 &&
+@@ -4272,7 +4273,7 @@ test_setup_12c1 () {
+ 	)
+ }
+ 
+-test_expect_failure '12c1: Moving one directory hierarchy into another w/ content merge' '
++test_expect_merge_algorithm failure success '12c1: Moving one directory hierarchy into another w/ content merge' '
+ 	test_setup_12c1 &&
+ 	(
+ 		cd 12c1 &&
+@@ -4632,7 +4633,7 @@ test_setup_12f () {
+ 	)
+ }
+ 
+-test_expect_failure '12f: Trivial directory resolve, caching, all kinds of fun' '
++test_expect_merge_algorithm failure success '12f: Trivial directory resolve, caching, all kinds of fun' '
+ 	test_setup_12f &&
+ 	(
+ 		cd 12f &&
+diff --git a/t/t6426-merge-skip-unneeded-updates.sh b/t/t6426-merge-skip-unneeded-updates.sh
+index 699813671c..d7eeee4310 100755
+--- a/t/t6426-merge-skip-unneeded-updates.sh
++++ b/t/t6426-merge-skip-unneeded-updates.sh
+@@ -23,6 +23,7 @@ test_description="merge cases"
+ #                     files that might be renamed into each other's paths.)
+ 
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-merge.sh
+ 
+ 
+ ###########################################################################
+@@ -666,7 +667,7 @@ test_setup_4a () {
+ #   correct requires doing the merge in-memory first, then realizing that no
+ #   updates to the file are necessary, and thus that we can just leave the path
+ #   alone.
+-test_expect_failure '4a: Change on A, change on B subset of A, dirty mods present' '
++test_expect_merge_algorithm failure success '4a: Change on A, change on B subset of A, dirty mods present' '
+ 	test_setup_4a &&
+ 	(
+ 		cd 4a &&
+diff --git a/t/t6430-merge-recursive.sh b/t/t6430-merge-recursive.sh
+index a328260d42..9c08e63af2 100755
+--- a/t/t6430-merge-recursive.sh
++++ b/t/t6430-merge-recursive.sh
+@@ -3,6 +3,7 @@
+ test_description='merge-recursive backend test'
+ 
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-merge.sh
+ 
+ test_expect_success 'setup 1' '
+ 
+@@ -641,7 +642,7 @@ test_expect_success 'merge-recursive copy vs. rename' '
+ 	test_cmp expected actual
+ '
+ 
+-test_expect_failure 'merge-recursive rename vs. rename/symlink' '
++test_expect_merge_algorithm failure success 'merge-recursive rename vs. rename/symlink' '
+ 
+ 	git checkout -f rename &&
+ 	git merge rename-ln &&
 -- 
 gitgitgadget
 
