@@ -6,94 +6,83 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF097C4363A
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 18:29:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C78A6C4363A
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 18:33:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 55E0A20756
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 18:29:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5955D2076A
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 18:33:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mKlcUkQM"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XcKrBCGl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1789769AbgJZS3g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Oct 2020 14:29:36 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56477 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1784713AbgJZS3g (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Oct 2020 14:29:36 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 68E40E30DC;
-        Mon, 26 Oct 2020 14:29:34 -0400 (EDT)
+        id S1789890AbgJZSdv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Oct 2020 14:33:51 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65060 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1784970AbgJZSdv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Oct 2020 14:33:51 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BFE3F90B1B;
+        Mon, 26 Oct 2020 14:33:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=mzK1WqAwLZNI
-        APSe2b6dPXltsVg=; b=mKlcUkQMD9QZF6uNMyc1RnPOfm8oTFgbdf+7L3GHfaMQ
-        K7Yl20nVCW6K2je3ouDoz/pIzk0eOQr8CpFHDejoCmZ3Pu1Vy8XJDW/bOhg+i9vv
-        6t4Z7Si1ERLJrFGSdUaOCVepfvHm6P4XtnbXx9NzjFi+YeJ589C2OKDRFy2ygTU=
+        :content-type; s=sasl; bh=0ayJwBliB2toAhco51Ak17PHJAg=; b=XcKrBC
+        GlHppW/voEVAHlyjJsRCgVchh0MC7HEIDOzGP+ePSNA70+1YzGDuGzkFze7rBI9R
+        FwMFPDJ4pMJqNs438q7Fe+BdV+hlCDXQQs6I8xHnYYMTxzjmDEBwBJkSop2mnbfa
+        edug8n5mj45FWCPRty1II64WsuKG/jPxu2pjs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=wJQTgQ
-        iZmwYr6BtRzQD7VDBdSuExeEUNWAL7krWlIXQpZ3wGJd/ONVXPgBfjrVK+39T+EC
-        Yq+uLOVeVtil5EtzGNf+/vUCq3HygnMObuMgE8saISMGXYyKA5vReWu2ZK/ciMyR
-        h/C+ONf+CBMIRtFhoPww7z2paWNhYrcxX854g=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 61267E30DB;
-        Mon, 26 Oct 2020 14:29:34 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=RGpAVohnAfTF3m9Kbsp+tcOkCOWQ/nyV
+        cyFMabQCVLHHi1Dyn2QcGJ/n6VVx5elouNBt8Omar1CcNZe7O2fbWQm6WuMmAsi1
+        5xq0ctkWgOh4DAI/glAMZLMmUGvRuJAOx42/CTvAkdLGO+fFrnJ888xBXAsXqCGk
+        hRJOVVlrB0s=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B788990B1A;
+        Mon, 26 Oct 2020 14:33:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9FF74E30D3;
-        Mon, 26 Oct 2020 14:29:31 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 479A190B19;
+        Mon, 26 Oct 2020 14:33:48 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>,
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
         Jeff King <peff@peff.net>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] remote: add meaningful exit code on missing/existing
-References: <20201026144825.26537-1-avarab@gmail.com>
-Date:   Mon, 26 Oct 2020 11:29:30 -0700
-In-Reply-To: <20201026144825.26537-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Mon, 26 Oct 2020 15:48:25 +0100")
-Message-ID: <xmqqlffset85.fsf@gitster.c.googlers.com>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v3 0/2] Work around flakiness in t5500.43
+References: <pull.753.v2.git.1603136142.gitgitgadget@gmail.com>
+        <pull.753.v3.git.1603728555.gitgitgadget@gmail.com>
+Date:   Mon, 26 Oct 2020 11:33:47 -0700
+In-Reply-To: <pull.753.v3.git.1603728555.gitgitgadget@gmail.com> (Johannes
+        Schindelin via GitGitGadget's message of "Mon, 26 Oct 2020 16:09:13
+        +0000")
+Message-ID: <xmqqh7qget10.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3099B1EE-17B9-11EB-8E75-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: C9919F38-17B9-11EB-9F38-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> Change the exit code for the likes of "git remote add/rename" to exit
-> with 2 if the remote in question doesn't exist, and 3 if it
-> does. Before we'd just die() and exit with the general 128 exit code.
+> It seems that this test became flaky only recently, although I have to admit
+> that I have no idea why: the involved code does not seem to have changed
+> recently at all. It should have been fixed by 
+> https://lore.kernel.org/git/20200506220741.71021-1-jonathantanmy@google.com/
+> , but apparently wasn't completely fixed, despite what I said in that
+> thread.
 >
-> This changes the output message from e.g.:
+> Changes since v2:
 >
->     fatal: remote origin already exists.
->
-> To:
->
->     error: remote origin already exists.
->
-> Which I believe is a feature, since we generally use "fatal" for the
-> generic errors, and "error" for the more specific ones with a custom
-> exit code, but this part of the change may break code that already
-> relies on stderr parsing (not that we ever supported that...).
+>  * Dropped patch 3/3 because it was only intended to be defensive
+>    programming, but turned out to be too hard without layering violations.
 
-Sounds like a worthy goal.  One thing that disturbs me somewhat,
-which the time will solve without any of our effort, is how the
-calling scripts and machinery decides when they can start relying on
-the exit codes.  A "git remote tell-me-what-you-can-do" command that
-may or may not say "exitcode" to its standard output is added?
-"test $(git version) -ge 2.30 || old_way"?
+Thanks, the remaining two look identical, so let me preserve the
+timestamps by just dropping the tip one from what is queued, instead
+of queuing these two patches.
 
-The changes to the code all looked quite straight-forward and=20
-the tests look sensible, too.
-
-Thanks.
