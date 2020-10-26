@@ -2,109 +2,179 @@ Return-Path: <SRS0=PD7l=EB=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43619C55178
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 23:32:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1AB9C55178
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 23:52:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 034E720747
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 23:32:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7A4D52222C
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 23:52:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RNTCQ2gN"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="XLr2IdCM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406419AbgJZXce (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Oct 2020 19:32:34 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58474 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2406403AbgJZXce (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Oct 2020 19:32:34 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E819DE595A;
-        Mon, 26 Oct 2020 19:32:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=SJp884EqH+PAHYhX3xJEOT6yirU=; b=RNTCQ2
-        gNIzM55E3/yrlOw/h++Q3WB5tJiXPdNlvscxKB27YVO0GXqxAImHM53eWCAs3JdF
-        HM0JgzAKJ1GXkPM+rYGVfUocpcymYptbVHqtcyY5KFduZF0MuwhiE2M2JR+pUcwq
-        B40uIDytbQu5Pp11K61wKbC0L87T2dJcGKPq4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QbwYpYTEhs4pcWxtacbaYuQ/kuIFDLmM
-        AYM/OOfnMuNsAx0oeqbbEWdaecNGcuiLKkpfx2KQs2XKzW9jI3s/ScZPGeOu8ToC
-        EYoWWjHo+3DKQx4XLWTC34Qza/Rbinz2FCnKzIBRvos8hWkgOK2X524s+aGKo6vb
-        yOc5h7vvuBY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E10F3E5957;
-        Mon, 26 Oct 2020 19:32:31 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 30975E5956;
-        Mon, 26 Oct 2020 19:32:29 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Philip Oakley <philipoakley@iee.email>, git@vger.kernel.org,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] documentation symlink restrictions for .git* files
-References: <20201005071751.GA2290770@coredump.intra.peff.net>
-        <20201005121609.GA2907272@coredump.intra.peff.net>
-        <6c0a0036-e217-a334-2a74-dd59a4592c1f@iee.email>
-        <20201023081711.GB4012156@coredump.intra.peff.net>
-        <8bb54778-507c-2e3f-d35a-5e32edb8bee7@iee.email>
-        <20201026225300.GA23128@coredump.intra.peff.net>
-Date:   Mon, 26 Oct 2020 16:32:27 -0700
-In-Reply-To: <20201026225300.GA23128@coredump.intra.peff.net> (Jeff King's
-        message of "Mon, 26 Oct 2020 18:53:00 -0400")
-Message-ID: <xmqqo8kod0ms.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S2409771AbgJZXwc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Oct 2020 19:52:32 -0400
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:43281 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2409751AbgJZXwa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Oct 2020 19:52:30 -0400
+Received: by mail-qt1-f195.google.com with SMTP id f93so465382qtb.10
+        for <git@vger.kernel.org>; Mon, 26 Oct 2020 16:52:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=p/uuWfqwyEIVQogtmP2qTkJBg//qY3b4pE5x2bWCssA=;
+        b=XLr2IdCM9bczjszIoe2P1NBDaK4W203ZYGzyYZJjAcXZeO8Rev5+VOZvs6yFsLV7DJ
+         xh4UQYLWRLdgGNZGH7MC8Us+/efskAxuWUCktD+Lj+Ba0NPahLFJgZmppNPgTUEYIwmM
+         WIDAQMW3u3o9e00D72YOktiTWVABjXciWXo7Bh1nEppwjaURJStYM1TU1BBWywDk2G0r
+         bLIWvKt1VjUFCKU45anm1o2zRzL2PEDHryW/5QxY3FgUadOpegQb2cmBl9hRYq0EUATX
+         Ln9lmoW0Uj/iZ3JOKxyqlNJq9kEkDICFNcvucktkvdfSL1frh8U9z1jehjJSQR2D7S7k
+         qQ8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=p/uuWfqwyEIVQogtmP2qTkJBg//qY3b4pE5x2bWCssA=;
+        b=cyudLP102Fsy7KhoOe5S+DmYhbAxpv7MfD5hx7HRl4bIVgrE5eQo1nMQTY4oYjq1le
+         uFDMURI92U4aQ866PBtcVA5XfHcPB+/Fb2/eVISWb/kYkTiZMdyM2NPV/7pUnTmPiuvq
+         Uep/0SCCoiugguOrV0yxQDvyyRNSu5oqGZyj0scAT02w+dF5ml8Xn+jE/Z8ngX1LsLy2
+         HDM8l0alEqns8qHknfxFd05RjNP/Bwm6A4TCpKb8xSiPWMJdYS4Bu1/cTeZEdVOav3By
+         f8kiUcEbFBU62bKlhO5dODsYOodT66T4fWXG4WLjDI6SpXmY8f9acA5BkxBSv69S0mUP
+         G4yA==
+X-Gm-Message-State: AOAM533E0kMwYL1oPaKRt+TBVVixdpmTfCxJdlqvv4G0vBgWedzst06/
+        16ah+o98Tckqa4goXEVXF27W+iysVVbS6slm
+X-Google-Smtp-Source: ABdhPJwNqJRjg6iuXPfv6ZpRceVT2Tr7KO+60O7xRyQJyewx8eLpJCVGyqgTuNGAkN+DgxOJ2bQ3AQ==
+X-Received: by 2002:ac8:5c03:: with SMTP id i3mr4390417qti.363.1603756349304;
+        Mon, 26 Oct 2020 16:52:29 -0700 (PDT)
+Received: from localhost ([2605:9480:22e:ff10:4ce9:d5a5:b109:78ba])
+        by smtp.gmail.com with ESMTPSA id d14sm7656151qtr.62.2020.10.26.16.52.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Oct 2020 16:52:28 -0700 (PDT)
+Date:   Mon, 26 Oct 2020 19:52:23 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v4] refs: implement reference transaction hook
+Message-ID: <X5dhN+dsLXlKfukF@nand.local>
+References: <1d1a94426f95d842e0e3ea6a1569c0c45239229c.1591086316.git.ps@pks.im>
+ <55c58e9b09691dc11dea911f26424594fb3922c9.1592549570.git.ps@pks.im>
+ <20201023010315.GA1542721@coredump.intra.peff.net>
+ <xmqqpn59k2xw.fsf@gitster.c.googlers.com>
+ <20201026074303.GA972@ncase>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 834325CC-17E3-11EB-BCC0-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20201026074303.GA972@ncase>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Mon, Oct 26, 2020 at 08:43:03AM +0100, Patrick Steinhardt wrote:
+> @Taylor, given that you've already dug into the code: do you already
+> have plans to post a patch for this?
 
-> Definitely a "NOTES" section should go in that spot, but possibly the
-> text should be in the "DESCRIPTION" section. I was worried about
-> cluttering that early part with a detail that most people wouldn't care
-> too much about.
->
-> Looks like my patch is in 'next'; do you want to propose a patch moving
-> it around on top?
+You are likely in a better position to do that than I am. I am
+unfamiliar enough with the refs.c code to feel confident that my change
+is correct, let alone working. The combination of REF_HAVE_OLD, the lock
+OID, the update OID, and so on is very puzzling.
 
-It probably is possible to tweak the introductory text this way
-without being unnecessarily loud and keep the NOTES section where it
-is.
+Ordinarily, I'd be happy to post a patch after familiarizing myself, but
+right now I don't have the time. So, I may come back to this in six
+months, but I certainly won't feel bad if you beat me to it ;-).
 
-I personally found that the placement of new text was OK, but this
-may be overly compensated by my tendency to discount things that we
-have discussed recently, which our mind often consider (only for
-relative a short moment) as more important than they are, relative
-to other things in the same document.
+In the meantime, I'd be fine to apply Peff's patch with some fix-ups,
+maybe something like what's below the scissors line.
 
- Documentation/gitattributes.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Taylor
 
-diff --git i/Documentation/gitattributes.txt w/Documentation/gitattributes.txt
-index 2d0a03715b..fd2de7344a 100644
---- i/Documentation/gitattributes.txt
-+++ w/Documentation/gitattributes.txt
-@@ -13,8 +13,8 @@ $GIT_DIR/info/attributes, .gitattributes
- DESCRIPTION
- -----------
- 
--A `gitattributes` file is a simple text file that gives
--`attributes` to pathnames.
-+A `gitattributes` file is a simple text file (it cannot be a
-+symbolic link to anything) that gives `attributes` to pathnames.
- 
- Each line in `gitattributes` file is of form:
- 
+--- >8 ---
+
+Subject: [PATCH] t1416: specify pre-state for ref-updates
+
+The ref-transaction hook documentation says that the expected format for
+each line is:
+
+  <old-value> SP <new-value> SP <ref-name> LF
+
+without defining what <old-value> is. It could either be the current
+state of the refs (after locking, but before committing the
+transaction), or the optional caller-provided pre-state.
+
+If <old-value> is to mean the caller-provided pre-state, than $ZERO_OID
+could be taken to mean that the update is allowed to take place without
+requiring the ref to be at some state. On the other hand, if <old-value>
+is taken to mean "the current value of the reference", then that
+requires a behavior change.
+
+But that may only be semi-realistic, since any careful callers are
+likely to pass a pre-state around anyway, and failing to meet that
+pre-state means the hook will not even be invoked.
+
+So, tweak the tests to more closely match how callers will actually
+invoke this hook by providing a pre-state explicitly and then asserting
+that it made its way down to the ref-transaction hook.
+
+If we do decide to go further and implement a behavior change, it would
+make sense to modify the tests to instead look something like:
+
+  for before in "$PRE" ""
+  do
+    cat >expect <<-EOF &&
+      $ZERO_OID $POST_OID HEAD
+      $ZERO_OID $POST_OID refs/heads/master
+      $PRE_OID $POST_OID HEAD
+      $PRE_OID $POST_OID refs/heads/master
+    EOF
+    git reset --hard $PRE &&
+    git update-ref HEAD POST $before &&
+    test_cmp expect actual
+  done
+
+Co-authored-by: Jeff King <peff@peff.net>
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ t/t1416-ref-transaction-hooks.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-hooks.sh
+index f6e741c6c0..74f94e293c 100755
+--- a/t/t1416-ref-transaction-hooks.sh
++++ b/t/t1416-ref-transaction-hooks.sh
+@@ -52,10 +52,10 @@ test_expect_success 'hook gets all queued updates in prepared state' '
+ 		fi
+ 	EOF
+ 	cat >expect <<-EOF &&
+-		$ZERO_OID $POST_OID HEAD
+-		$ZERO_OID $POST_OID refs/heads/master
++		$PRE_OID $POST_OID HEAD
++		$PRE_OID $POST_OID refs/heads/master
+ 	EOF
+-	git update-ref HEAD POST <<-EOF &&
++	git update-ref HEAD POST PRE <<-EOF &&
+ 		update HEAD $ZERO_OID $POST_OID
+ 		update refs/heads/master $ZERO_OID $POST_OID
+ 	EOF
+@@ -75,10 +75,10 @@ test_expect_success 'hook gets all queued updates in committed state' '
+ 		fi
+ 	EOF
+ 	cat >expect <<-EOF &&
+-		$ZERO_OID $POST_OID HEAD
+-		$ZERO_OID $POST_OID refs/heads/master
++		$PRE_OID $POST_OID HEAD
++		$PRE_OID $POST_OID refs/heads/master
+ 	EOF
+-	git update-ref HEAD POST &&
++	git update-ref HEAD POST PRE &&
+ 	test_cmp expect actual
+ '
+
+--
+2.29.1.9.g605042ee00
+
