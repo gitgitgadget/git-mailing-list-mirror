@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCDEDC55178
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 12:14:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E37EC4363A
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 12:38:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7C2D322400
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 12:14:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B7FCC238E6
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 12:38:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WtmOo+v/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p3FaiCkp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1774883AbgJZMOT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Oct 2020 08:14:19 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:47060 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1774876AbgJZMOP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Oct 2020 08:14:15 -0400
-Received: by mail-ed1-f67.google.com with SMTP id 33so8996770edq.13
-        for <git@vger.kernel.org>; Mon, 26 Oct 2020 05:14:14 -0700 (PDT)
+        id S1775339AbgJZMiY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Oct 2020 08:38:24 -0400
+Received: from mail-ej1-f68.google.com ([209.85.218.68]:39512 "EHLO
+        mail-ej1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1775336AbgJZMiX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Oct 2020 08:38:23 -0400
+Received: by mail-ej1-f68.google.com with SMTP id qh17so13215312ejb.6
+        for <git@vger.kernel.org>; Mon, 26 Oct 2020 05:38:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=VJzWHqfgmljVtwnAhw1hb0B7BgTYB/uNS1t24W3I/dI=;
-        b=WtmOo+v/40IgYnQdVnd4k1KomjRFj8I1efL+JJpRpgRY0LaTFx49mKRFwIxz77PoWG
-         UuYS5qF1Licz+V+a/cRAR0TQP3cVxaePVOnKnI2YuAPCbToCAq0sJOddGheQxo/Dz/ma
-         5ZzNxSw3mkt7oiBajZ2OXBkDypMYnRHt3eBmejmVWNMewQ3Xq7hjCUCA1i165ok6piS+
-         CwDiiho4LijRGp3/oLHbib5riVcXk2dGzobuRLS761Zpi9pyk+UC+ZFcrsjtwCAlmxki
-         TTSkmyDrkaXgIEUT+6UKJ7baZg2KUrzo5N3ddQWLJYDoEORktpvC1/jD1zoY6EKflRSy
-         YB+A==
+        bh=JGvvW2/P7g1pd2xtWUrLMqi31nyCnlHSOvrLCdpPeLo=;
+        b=p3FaiCkp56MrF5JKVAamn7qXlv1UBdbZl+EyQK/DqbDzjQ9XrgvLzk2dDBhnJ27WbJ
+         9BVG0qTSc2g1kIKXEE1UFdlXhzq9XROQdbWZoM7byUvwgPOQJFbPMO1uKnuCqbVeu9RV
+         wbnwGhUZCKC1LODP6PDNp7M1zUwQXyVGGlkn9Gw9HiUb6NDmqUZzv/CBChFU8KvSHVEu
+         5cdsblyqh8TwmCW5Vu2/pfZNvGmb4II5FMhFZKzAmcu9rzA1DpycR8WNB9Q283fejm+F
+         VUrMSGiU2yWv/aZFzTuWylBrcEHX9zhkI+UrUJkmAB8Sc64iz08n/fLNhZYqcNvUfw9t
+         3qvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=VJzWHqfgmljVtwnAhw1hb0B7BgTYB/uNS1t24W3I/dI=;
-        b=oCKVh0GPQ7XwTyuI8EeL5j4Fm/wGqb7rA+915mDK6nXRNSvrpENv0Wt3/nnElsvT7+
-         82I2VwIe6x2NWeMyf1Xge2DwDpxVe5xYy6BkzpDQTaJrirzryyEaKXYDBNFEseE7/lkE
-         mGyrlzO9B5WFpq60C2qikd7QoMRXTYTNjZbPA16niqXmeNFU0dW0Ml0cw7JnwWkicIEt
-         /sm9fP5m+vsQ4gdMjzOn2T8k+dWuW866RaP+MA6ACDMn/4w9A///loGRT2aGY8S7OX5Q
-         SYErx7ci8ifxRCsp2fcdjzPtqax/NFBBpzJ4ZvvS/xyxtoD8A1kU7wwpTTkwsVSHKKyQ
-         bziw==
-X-Gm-Message-State: AOAM5316Hy5nI7lN8aCZ9CCMXrSJrCeAj5ZsgfY4ugHZsyZQH7uhfyxY
-        ugIfPar2p6XBnsgBCHPUqY2c6baFu/mQ71hZY94=
-X-Google-Smtp-Source: ABdhPJzi8Y3SXIBTMA3R+vzMG/GK1QCC3Mwg4g/YwWQMs/CsWuSefSvbJAE0+AItEe8Joy8X7lDbv9QHAvqsKUqoOQQ=
-X-Received: by 2002:aa7:dd8d:: with SMTP id g13mr3061091edv.87.1603714452960;
- Mon, 26 Oct 2020 05:14:12 -0700 (PDT)
+        bh=JGvvW2/P7g1pd2xtWUrLMqi31nyCnlHSOvrLCdpPeLo=;
+        b=pp7pWQid0zF/EMJv6yGxBo9aN/cfCtefNu+b/8VO83D/WGrPYAR5Okr88vZ+a+WRLK
+         GJwM5nuK8HTYIshjbdXXlKRJulO4kog4E6kQHyDSbDUmvfMs49NBOhf6rHuUasegJ5E8
+         kgrZM0XWrAMo0Q70CV9CGtpHuPkxprzm2jhfBiUGdXTUYPbO44udLsXvbeajsNb0zE4C
+         cr5tJCBi26PNIk2zODXohYQtQ9GDYqmxyAosXono39nyCh9hC7fDC5s06sdNi44JwzTZ
+         e6qs4PSrtJ/b5eeap045sW64XP1LZ4g50NGRBcFUCw53IPfLPD1I/hNISGXq3HsAcF4n
+         LQig==
+X-Gm-Message-State: AOAM533KiSjF6AxuuNp1OL9bhIadvZpPQUcWhwYC/5GLnMonnFMsXRkv
+        pGNGdDtijT7LQCaApi5bk/JXCf4tBvP3hot9XgU=
+X-Google-Smtp-Source: ABdhPJxf4m97Eha6pWZR61mfhL6wuuPLm47g0ocjlmQvHgggR//yYE/QUOZnyqODCPgEDV5Su4Ax2QZ06smEwyT1vRA=
+X-Received: by 2002:a17:906:da1d:: with SMTP id fi29mr15511200ejb.160.1603715901461;
+ Mon, 26 Oct 2020 05:38:21 -0700 (PDT)
 MIME-Version: 1.0
-References: <20201025212652.3003036-1-anders@0x63.nu> <20201025212652.3003036-4-anders@0x63.nu>
-In-Reply-To: <20201025212652.3003036-4-anders@0x63.nu>
+References: <20201025212652.3003036-1-anders@0x63.nu> <20201025212652.3003036-5-anders@0x63.nu>
+In-Reply-To: <20201025212652.3003036-5-anders@0x63.nu>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 26 Oct 2020 13:14:01 +0100
-Message-ID: <CAP8UFD3=HLzG=b61DQYQfAErOg+KXAg-8x06MpDLi+1=NcgejQ@mail.gmail.com>
-Subject: Re: [PATCH 03/21] doc: mention canonicalization in git i-t manual
+Date:   Mon, 26 Oct 2020 13:38:10 +0100
+Message-ID: <CAP8UFD31UwuiQrWmM7te1Am3i9Ryvi8_XgDLM6B1fs5WUn_GxQ@mail.gmail.com>
+Subject: Re: [PATCH 04/21] pretty: allow using aliases in %(trailer:key=xyz)
 To:     Anders Waldenborg <anders@0x63.nu>
 Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Jonathan Tan <jonathantanmy@google.com>
@@ -67,33 +67,24 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sun, Oct 25, 2020 at 10:27 PM Anders Waldenborg <anders@0x63.nu> wrote:
 
-> diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-> index 96ec6499f0..a4be8aed66 100644
-> --- a/Documentation/git-interpret-trailers.txt
-> +++ b/Documentation/git-interpret-trailers.txt
-> @@ -25,6 +25,11 @@ Otherwise, this command applies the arguments passed using the
->  `--trailer` option, if any, to the commit message part of each input
->  file. The result is emitted on the standard output.
->
-> +When trailers read from input they will be changed into "canonical"
+> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+> index 84bbc7439a..1714fa447d 100644
+> --- a/Documentation/pretty-formats.txt
+> +++ b/Documentation/pretty-formats.txt
+> @@ -256,7 +256,9 @@ endif::git-rev-list[]
+>  ** 'key=<K>': only show trailers with specified key. Matching is done
+>     case-insensitively and trailing colon is optional. If option is
+>     given multiple times trailer lines matching any of the keys are
+> -   shown. This option automatically enables the `only` option so that
+> +   shown. If `trailer.<token>.key` configuration option is set 'token'
 
-Do you mean "When trailers are read from standard input"?
+s/If `trailer.<token>.key`/If the `trailer.<token>.key`/
+s/is set 'token'/is set, '<token>'/
 
-> +form if the trailer has a corresponding 'trailer.<token>.key'
-> +configuration value.
-
-This doesn't explain what the canonical form is. So maybe something like:
-
-"When there is a 'trailer.<token>.key' configuration value defined,
-this value becomes the canonical form of the <token> trailer, so when
-a trailer matching <token> is read from standard input, it is changed
-to this canonical value."
-
-> This means that it will use the exact spelling
-> +(upper case vs lower case and separator) defined in configuration.
+> +   can be used as an alias for showing trailers with the value in
+> +   key.
 
 Maybe:
 
-"This means that the key part of the trailer will use the exact
-spelling (upper case vs lower case and separator) defined in the
-configuration."
+"... for showing trailers case insensitively matching the value of
+this configuration option."
