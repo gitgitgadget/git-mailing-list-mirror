@@ -8,60 +8,59 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17244C5DF9D
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D683FC5DF9E
 	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 19:33:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B96F320872
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 19:33:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 876FA2085B
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 19:33:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k+aSjZtO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f9Hi+RYR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1793178AbgJZTc7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Oct 2020 15:32:59 -0400
-Received: from mail-wm1-f44.google.com ([209.85.128.44]:52700 "EHLO
-        mail-wm1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1793157AbgJZTc6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Oct 2020 15:32:58 -0400
-Received: by mail-wm1-f44.google.com with SMTP id c194so12832911wme.2
-        for <git@vger.kernel.org>; Mon, 26 Oct 2020 12:32:57 -0700 (PDT)
+        id S1793302AbgJZTdj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Oct 2020 15:33:39 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:33226 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1793180AbgJZTdB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Oct 2020 15:33:01 -0400
+Received: by mail-wr1-f65.google.com with SMTP id b8so14089611wrn.0
+        for <git@vger.kernel.org>; Mon, 26 Oct 2020 12:32:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=/aWn/mLews+3vRoUVYodxrwzfdXHwlQxxixYUwKS1M0=;
-        b=k+aSjZtOQEoGSj40YzXoZwNwQH10JLyWCtMXAA6mNKwct8I+N2BeJ493yHEtIdegJ0
-         mhBgGQLbX+YusGLyBs/rIbht6Udo1ArW/aljEZHyTcn3udnsUZH5KvaKprhl1EDzG4aS
-         CV9petF16ttG23TGpIiJG0slHE6ORMmmqmcpDXrnHeEkt9VudKtpEbu1l+XanLWTkVqZ
-         TmzebIlxBW3fUFsXZATus0wBtDPCcig3DUOzY5uWWMYRSICVuCbE9hIllhXmjTY43a82
-         EuSvAPcpCBXkStTvf6CG7RxMn73qsiLondZMWP2T3v8hL78fLlf5M6FSoCfgkdGENYIA
-         e8mw==
+        bh=gCEsUnsq35tyokpp1i/5kDvTkvMw9U8I88ua8VJ0XHc=;
+        b=f9Hi+RYRouM3LRBTEbtqWQxUIm7I4tzQ5Vq9KU49loJ2XVFCARXz54ZQfdlOv7NaUx
+         oWsCfB7krdk1MWaBdBAkp7BsQD+TRLnAi95JebeREmaQbpNcLZtE/AWgtMu1cJScBOOS
+         K1Varufa5ydm2SaazHfcT4rwQrNSg1SJWaA1dUrlJZ278tgglgkODN5V7oYw9J9N9RzD
+         nHCYVb8bLjVXF4D7msYzr3d1NFUqMlxgp6pe8I9/Lpktf8nWqYGzJNyp3S/VJ4ma5os2
+         gBxzbqlOdnzVcdHepLJ1gVYdBXVjf6Xs/KWjtj9y2AGzwbAFZEG5+Qb7kHxXBvA/4c7F
+         NYgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/aWn/mLews+3vRoUVYodxrwzfdXHwlQxxixYUwKS1M0=;
-        b=AAXqXwgbTu79Z0PbsoDlvU4icrWMJkAMxkN47vJKjtkJRAUrjx88FJqEWrl3aXZh+B
-         2E9BIdWAk7i6YX25dh3RgqJZJskA6sxYQQU1lTXStvmur3wf8KtYaet48YWqgSVFpbaI
-         lku2Q5YE4D3KjDJWeaRzF9neeICO4hMdOK3CejC29DoCMUYnZFXZfkqGmZGgQuadOjWM
-         har4qDWgJrSHfjIiMlXGXNilL6i65aVrfCtoJUA8FoEEs2bXcDmShJ69KYv/0CfnqK8B
-         0D/FqxXPVwolPsZJGjAV+HDCdlMdFQa9gvAJ4wvLNg7h5DCwz/F47uF0iUnzL0F+JtI1
-         37zg==
-X-Gm-Message-State: AOAM5317ZDVRXyXC6P2nruwDyqFl2qdE1jXeTSrQQGpB6x2eIBDqehlC
-        DxeUAtZJI923plMn9z6a0o9MYMTTR74=
-X-Google-Smtp-Source: ABdhPJx37IXVHEZK/x5FVY/uIGloPQYV0/eZAHJUBi39Vmee1KtYD+lp+iIc+hegxwjiGDPgQ/WNeA==
-X-Received: by 2002:a1c:5f42:: with SMTP id t63mr17274262wmb.19.1603740776356;
-        Mon, 26 Oct 2020 12:32:56 -0700 (PDT)
+        bh=gCEsUnsq35tyokpp1i/5kDvTkvMw9U8I88ua8VJ0XHc=;
+        b=IBAx0ph/1HYsanbsrCGYSLitXo0B9IBBklTJYOl6uQJRCbtODZYTnCJWM0RfjgbMav
+         XLF/XDCj4j61JZiyCg/NCrBSb5XV/y9xZDtYIbJ0rvSK7zgUZ9OnUrCZAShs+pl8zvWY
+         YmDkXnheNQqJSGF8xx+UPIjV7ti+at7U8bcGnLliJHXXvkwfpY7JO6XoL4cQvTcAHc+T
+         1byNsRiaMVxRj6ba5F7MUBWfIQu7czL9rPqrYhUJEo5iK+DbYm2eTDwHV9I5JdElI+ES
+         PxDL77qn/isTN5fF/r+XQrSHRIurxNLZlEgKyXSNJEnd3erONqNrg2ngRsCV3Y0wu980
+         KhOw==
+X-Gm-Message-State: AOAM531AzO3u9LkGbOgAsy4sApzS52rsnj2boiuCJLOqGuxv95guYhFg
+        y6V5ql+39St7ar8t9N+kLFf8UVDKg3k=
+X-Google-Smtp-Source: ABdhPJxKL/+JOsp0JilelLUWvCLupVioH0OEXCGDaP/LvGMy9Kda6bkXwHpeN631+H2IjE5B51d19Q==
+X-Received: by 2002:adf:94c6:: with SMTP id 64mr19190557wrr.8.1603740778700;
+        Mon, 26 Oct 2020 12:32:58 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c10sm8794225wmb.20.2020.10.26.12.32.55
+        by smtp.gmail.com with ESMTPSA id 205sm23458481wme.38.2020.10.26.12.32.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Oct 2020 12:32:55 -0700 (PDT)
-Message-Id: <34d11447b46b06ae5f4fa8700885bcc8b70a3a43.1603740773.git.gitgitgadget@gmail.com>
+        Mon, 26 Oct 2020 12:32:58 -0700 (PDT)
+Message-Id: <02c2afcb96b7eded3a48cdffb60c5c17f3a7d61a.1603740773.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.772.git.1603740773.gitgitgadget@gmail.com>
 References: <pull.772.git.1603740773.gitgitgadget@gmail.com>
 From:   "Nipunn Koorapati via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 26 Oct 2020 19:32:45 +0000
-Subject: [PATCH 02/10] t/perf/fsmonitor: move watchman setup to
- one-time-repo-setup
+Date:   Mon, 26 Oct 2020 19:32:48 +0000
+Subject: [PATCH 05/10] t/perf/fsmonitor: shorten DESC to basename
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,53 +74,35 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Nipunn Koorapati <nipunn@dropbox.com>
 
-It is only required to be set up once. This prepares for
-testing multiple hooks in one invocation.
+The full name is lengthy and makes it hard to read
+Before:
+7519.3: status (fsmonitor=/home/nipunn/src/server/.git/hooks/rs-git-fsmonitor) 0.02(0.01+0.00)
+
+After
+7519.3: status (fsmonitor=rs-git-fsmonitor) 0.03(0.02+0.00)
 
 Signed-off-by: Nipunn Koorapati <nipunn@dropbox.com>
 ---
- t/perf/p7519-fsmonitor.sh | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ t/perf/p7519-fsmonitor.sh | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
-index 23755012df..4030f569cf 100755
+index aa6b82d756..2c817db1ae 100755
 --- a/t/perf/p7519-fsmonitor.sh
 +++ b/t/perf/p7519-fsmonitor.sh
-@@ -94,7 +94,13 @@ test_expect_success "one time repo setup" '
- 	for i in $(test_seq 1 1000); do touch 1000_files/$i; done &&
- 	for i in $(test_seq 1 10000); do touch 10000_files/$i; done &&
- 	git add 1_file 10_files 100_files 1000_files 10000_files &&
--	git commit -m "Add files"
-+	git commit -m "Add files" &&
-+
-+	# If Watchman exists, watch the work tree and attempt a query.
-+	if test_have_prereq WATCHMAN; then
-+		watchman watch "$GIT_WORK_TREE" &&
-+		watchman watch-list | grep -q -F "$GIT_WORK_TREE"
-+	fi
- '
+@@ -141,7 +141,11 @@ test_perf_w_drop_caches () {
+ }
  
- test_expect_success "setup for fsmonitor" '
-@@ -105,17 +111,13 @@ test_expect_success "setup for fsmonitor" '
- 	else
- 		#
- 		# Choose integration script based on existence of Watchman.
--		# If Watchman exists, watch the work tree and attempt a query.
--		# If everything succeeds, use Watchman integration script,
--		# else fall back to an empty integration script.
-+		# Fall back to an empty integration script.
- 		#
- 		mkdir .git/hooks &&
- 		if test_have_prereq WATCHMAN
- 		then
- 			INTEGRATION_SCRIPT=".git/hooks/fsmonitor-watchman" &&
--			cp "$TEST_DIRECTORY/../templates/hooks--fsmonitor-watchman.sample" "$INTEGRATION_SCRIPT" &&
--			watchman watch "$GIT_WORK_TREE" &&
--			watchman watch-list | grep -q -F "$GIT_WORK_TREE"
-+			cp "$TEST_DIRECTORY/../templates/hooks--fsmonitor-watchman.sample" "$INTEGRATION_SCRIPT"
- 		else
- 			INTEGRATION_SCRIPT=".git/hooks/fsmonitor-empty" &&
- 			write_script "$INTEGRATION_SCRIPT"<<-\EOF
+ test_fsmonitor_suite() {
+-	DESC="fsmonitor=$INTEGRATION_SCRIPT"
++	if test -n "$INTEGRATION_SCRIPT"; then
++		DESC="fsmonitor=$(basename $INTEGRATION_SCRIPT)"
++	else
++		DESC="fsmonitor=disabled"
++	fi
+ 
+ 	test_perf_w_drop_caches "status ($DESC)" '
+ 		git status
 -- 
 gitgitgadget
 
