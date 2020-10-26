@@ -2,153 +2,98 @@ Return-Path: <SRS0=PD7l=EB=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E56E6C4363A
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 18:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF097C4363A
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 18:29:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8A0922087C
-	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 18:24:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 55E0A20756
+	for <git@archiver.kernel.org>; Mon, 26 Oct 2020 18:29:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="HNJT8aNb"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mKlcUkQM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1789472AbgJZSYW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Oct 2020 14:24:22 -0400
-Received: from mail-qt1-f201.google.com ([209.85.160.201]:44967 "EHLO
-        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1788976AbgJZSYW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Oct 2020 14:24:22 -0400
-Received: by mail-qt1-f201.google.com with SMTP id g11so1094152qto.11
-        for <git@vger.kernel.org>; Mon, 26 Oct 2020 11:24:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=OedA7L053onUYaFOFRbEAZ+cu1DRuRAk+JmYDiASaDo=;
-        b=HNJT8aNbUy8BUDkjyJkcY1H2RkyBDEh/8zCroaEOP6+gQ9DpDoKcQgEx8Z+zISCKRe
-         N/RTq1f4lf5R7Qi/2JmXknxWhgxXGWyS3D9D70yZNLWp5TJdzVBdoOPoDrg6CjQfk/nu
-         Rhp5UQAvQM+8jWY3Dc0KDaNp077CQbayCzA0vvu5MAtBIVtoKwgs3WAIut2jrne3JAeR
-         W6NBzYnTCHZgnxZURLEcxiq4RoymTYcbfkvMCTF+UbMkY64Bs1nk92IXwI07KEIxAydd
-         RX41jxIZJY/uYWug/pH/TonA7/cBZe+8URJ5+sZDOHflQQN1x/rzwS665KHRu8Q88gVQ
-         bONw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=OedA7L053onUYaFOFRbEAZ+cu1DRuRAk+JmYDiASaDo=;
-        b=AWyqc9G6ezePmL/58cqQ2d3uMZYyxZ8tHVGS1kQmHCLSMGuibKOfiU46SdsWB0bliQ
-         LcVh+q8WopZpSWdJr9xH6TwfVy+25+i1lpe2ugQ3SY69nIeYqh1Y4v8pQHgnFxcOwQOj
-         P7hOT0OnKdWzB61DjW1cPqfDxZbrLHCWLjhn+kPFf/tIokZSVPRDyWaIbTwurt/dRJnY
-         DVQiv2EIuvp4BmR2oMkWMgb+ho/Uxg0NMHPXDJk3NS5jd8Q+4X6GxuCt7bwArnV/woGr
-         aQcDEOf/fhu7PA3/4EZtSm50INyrcCbBv/LW3+DCfgoiulWRzodUk1x75TmJ6eMi1eDM
-         mEsw==
-X-Gm-Message-State: AOAM531m/hva5/+YN0cjDwBGVHS9tuzgH/PLbIWn8EuLMHpUCy3l9PzW
-        3i10Q2SpVqKZZNh++0XatzYDMKFAqaPpGAIyzYGJ
-X-Google-Smtp-Source: ABdhPJyRhhR/4IFv66X5iu52alAW1VOpg1SQ+LClRhgQeIznvXgMr+bampnI8MNJs1CRcNpft2K353z6ryDGcoN+UOI+
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a0c:aa1e:: with SMTP id
- d30mr14365278qvb.24.1603736660829; Mon, 26 Oct 2020 11:24:20 -0700 (PDT)
-Date:   Mon, 26 Oct 2020 11:24:17 -0700
-In-Reply-To: <aa7b89ee-08aa-7943-6a00-28dcf344426e@syntevo.com>
-Message-Id: <20201026182417.2105954-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <aa7b89ee-08aa-7943-6a00-28dcf344426e@syntevo.com>
-X-Mailer: git-send-email 2.29.0.rc1.297.gfa9743e501-goog
-Subject: Re: Questions about partial clone with '--filter=tree:0'
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     alexandr.miloslavskiy@syntevo.com
-Cc:     git@vger.kernel.org, christian.couder@gmail.com,
-        jonathantanmy@google.com, marc.strapetz@syntevo.com,
-        me@ttaylorr.com
-Content-Type: text/plain; charset="UTF-8"
+        id S1789769AbgJZS3g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Oct 2020 14:29:36 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56477 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1784713AbgJZS3g (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Oct 2020 14:29:36 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 68E40E30DC;
+        Mon, 26 Oct 2020 14:29:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=mzK1WqAwLZNI
+        APSe2b6dPXltsVg=; b=mKlcUkQMD9QZF6uNMyc1RnPOfm8oTFgbdf+7L3GHfaMQ
+        K7Yl20nVCW6K2je3ouDoz/pIzk0eOQr8CpFHDejoCmZ3Pu1Vy8XJDW/bOhg+i9vv
+        6t4Z7Si1ERLJrFGSdUaOCVepfvHm6P4XtnbXx9NzjFi+YeJ589C2OKDRFy2ygTU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=wJQTgQ
+        iZmwYr6BtRzQD7VDBdSuExeEUNWAL7krWlIXQpZ3wGJd/ONVXPgBfjrVK+39T+EC
+        Yq+uLOVeVtil5EtzGNf+/vUCq3HygnMObuMgE8saISMGXYyKA5vReWu2ZK/ciMyR
+        h/C+ONf+CBMIRtFhoPww7z2paWNhYrcxX854g=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 61267E30DB;
+        Mon, 26 Oct 2020 14:29:34 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9FF74E30D3;
+        Mon, 26 Oct 2020 14:29:31 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] remote: add meaningful exit code on missing/existing
+References: <20201026144825.26537-1-avarab@gmail.com>
+Date:   Mon, 26 Oct 2020 11:29:30 -0700
+In-Reply-To: <20201026144825.26537-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Mon, 26 Oct 2020 15:48:25 +0100")
+Message-ID: <xmqqlffset85.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 3099B1EE-17B9-11EB-8E75-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> (1) Is it even considered a realistic use case?
-> -----------------------------------------------
-> Summary: is '--filter=tree:0' a realistic or "crazy" scenario that is
-> not considered worthy of supporting?
-> 
-> I decided to use Linux repo, which is reasonably large, and it seems
-> that '--filter=tree:0' could be desired because it helps with disk
-> space (~0.66gb) and network (~0.54gb):
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-Sorry for the late reply - I have been out of office for a while.
+> Change the exit code for the likes of "git remote add/rename" to exit
+> with 2 if the remote in question doesn't exist, and 3 if it
+> does. Before we'd just die() and exit with the general 128 exit code.
+>
+> This changes the output message from e.g.:
+>
+>     fatal: remote origin already exists.
+>
+> To:
+>
+>     error: remote origin already exists.
+>
+> Which I believe is a feature, since we generally use "fatal" for the
+> generic errors, and "error" for the more specific ones with a custom
+> exit code, but this part of the change may break code that already
+> relies on stderr parsing (not that we ever supported that...).
 
-As Taylor said in another email, it's good for some use cases but
-perhaps not for the "blame" one that you describe later.
+Sounds like a worthy goal.  One thing that disturbs me somewhat,
+which the time will solve without any of our effort, is how the
+calling scripts and machinery decides when they can start relying on
+the exit codes.  A "git remote tell-me-what-you-can-do" command that
+may or may not say "exitcode" to its standard output is added?
+"test $(git version) -ge 2.30 || old_way"?
 
-> (2) A command to enrich repo with trees
-> ---------------------------------------
-> There is no good way to "un-partial" repository that was cloned with
-> '--filter=tree:0' to have all trees, but no blobs.
-> 
-> There seems to be a dirty way of doing that by abusing 'fetch --deepen'
-> which happens to skip "ref tip already present locally" check, but
-> it will also re-download all commits, which means extra ~0.5gb network
-> in case of Linux repo.
+The changes to the code all looked quite straight-forward and=20
+the tests look sensible, too.
 
-That's true. I made some progress with cbe566a071 ("negotiator/noop: add
-noop fetch negotiator", 2020-08-18) (which adds a no-op negotiatior, so
-the client never reports its own commits as "have") but as you said in
-another email, we still run into the problem that if we have the commit
-that we're fetching, we still won't fetch it.
-
-> (3) A command to download ALL trees and/or blobs for a subpath
-> -----------------------------------------------
-> Summary: Running a Blame or file log in '--filter=tree:0' repo is
-> currently very inefficient, up to a point where it can be discussed
-> as not really working.
-> 
-> The suggested command will be able to accept a path and download ALL
-> trees and/or blobs that match it.
-> 
-> This will solve many problems at once:
-> * Solve (2)
-> * Make it possible to prepare for efficient blame and file log
-> * Make a new experience with super-mono-repos, where user will now
->    be able to only download a part of it by path.
-
-To clarify: we partially support the last point - "git clone" now
-supports "--sparse". When used with "--filter", only the blobs in the
-sparse checkout specification will be fetched, so users are already able
-to download only the objects in a specific path. Having said that, I
-think you also want the histories of these objects, so admittedly this
-is not complete for your use case.
-
-> Currently '--filter=sparse:oid' is there to support that, but it is
-> very hard to use on client side, because it requires paths to be
-> already present in a commit on server.
-> 
-> For a possible solution, it sounds reasonable to have such filter:
->    --filter=sparse:pathlist=/1/2'
-> Path list could be delimited with some special character, and paths
-> themselves could be escaped.
-
-Having such an option (and teaching "blame" to use it to prefetch) would
-indeed speed up "blame". But if we implement this, what would happen if
-the user ran "blame" on the same file twice? I can't think of a way of
-preventing the same fetch from happening twice except by checking the
-existence of, say, the last 10 OIDs corresponding to that path. But if
-we have the list of those 10 OIDs, we could just prefetch those 10 OIDs
-without needing a new filter.
-
-Another issue (but a smaller one) is this does not fetch all objects
-necessary if the file being "blame"d has been renamed, but that is
-probably solvable - we can just refetch with the old name.
-
-Another possible solution that has been discussed before (but a much
-more involved one) is to teach Git to be able to serve results of
-computations, and then have "blame" be able to stitch that with local
-data. (For example, "blame" could check the history of a certain path to
-find the commit(s) that the remote has information of, query the remote
-for those commits, and then stitch the results together with local
-history.) This scheme would work not only for "blame" but for things
-like "grep" (with history) and "log -S", whereas
-"--filter=sparse:parthlist" would only work with "blame". But
-admittedly, this solution is more involved.
+Thanks.
