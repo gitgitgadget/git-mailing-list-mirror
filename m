@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05CA4C56201
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 02:08:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8893C4363A
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 02:08:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B9DF420872
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 02:08:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9C57E20872
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 02:08:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CgPikRTs"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f65Is3Dn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2504364AbgJ0CIQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Oct 2020 22:08:16 -0400
-Received: from mail-wm1-f52.google.com ([209.85.128.52]:34973 "EHLO
-        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2504357AbgJ0CIO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Oct 2020 22:08:14 -0400
-Received: by mail-wm1-f52.google.com with SMTP id h22so86082wmb.0
-        for <git@vger.kernel.org>; Mon, 26 Oct 2020 19:08:13 -0700 (PDT)
+        id S2504370AbgJ0CIV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Oct 2020 22:08:21 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:44168 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2504360AbgJ0CIR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Oct 2020 22:08:17 -0400
+Received: by mail-wr1-f66.google.com with SMTP id t9so60844wrq.11
+        for <git@vger.kernel.org>; Mon, 26 Oct 2020 19:08:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=68sc9B/0csd629noV8jhACYBrCHiFf55lnL+7AxCs08=;
-        b=CgPikRTs5lcZHDUwVx/z5CTpUwfD7QyH+LL8Wvptv1056vP9Ar/RWDXswLKGntq0KA
-         6j6tXJaIPaEB8ao6gy06TN3HSPrYOdoZYdoekV6Nng140PkcyE4U5zn7A8TGEVP4BdId
-         WPPEtybmQ1R/dOVNkOWGm4UrzegdOqMhbPXpuIkj3szXceQI34HZ3NwDWUkxbeSDsiVq
-         9l9sWdw8KGf/en6/4PZnS5kttjOZhzokvolFcqc9WfHvaJ2LI75DR8jK7OYL76k2g+HI
-         95nqVzghajfCF3WdEGEg/1rT7c3bgIN6YmO8mysQI+b4szM2FDDfozh9Mbu/WSXCcccO
-         2Cjw==
+        bh=TH48QvsASDnw6z3srdOANPLKrfrUD8Jg9GxDKDN5xG0=;
+        b=f65Is3Dnzy2Ec9MiQ+u9cCLQIWWj0Kky2PWwEV/uSG7bV1JmCT7EQGsaup/pAv1i3q
+         NQKoMdRzh/Iu/WHv40dYar6cnV0ccQlGCAd3clOYaTRqIqje4nvAqY2cY76Myzr7xJWS
+         gPGEgcah18hvntqa2olCkwoYK+P1KGgkVYnzF4iL6DYnLay9yJRyv7Y8AV0oHBbFBtGn
+         x7OptSOBM7eHGnkda49ZuSS/mD62uQqYAqjWQGI8/+N2nGo9dh9JjKayouw/H+oDpxao
+         +8tPNy7MqH9kvWIHjZ8d+G3pVo3IRWe5GnPQoVT0z+y0VNBkycC/u8dZrvunvydLzQQV
+         lT1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=68sc9B/0csd629noV8jhACYBrCHiFf55lnL+7AxCs08=;
-        b=PuxU+NEM8O0ivUaDUojb0VwmNpMMnhzrgTiuuGRMTnJqxP7SOUWY+3XzYPic5cJXKW
-         3EebjzOjYJOWxcauALGJBSgnHV/vtA5lkPVfPGrnlngqi90Af296/NiqQCNKR50vdasK
-         BE8eXwGsAUfhQOvELL5WEwnQniVFZUunwfZUMK9N/0NwLM8AXEJ4okKHUx0Alr5SGnKd
-         CmM79cQ+8/gurjdNI7aRv9Pk133tsz4DwVHF4cJqDaqK4ZJoFvvmCesDCgW6jiUEjuo4
-         6OgQqKuSiAmVespA1S9bMhiGrkZ0dm4dtMp5cyLEUlBAiiOMngdMuWhBznp4ZlYlm7cK
-         cp1Q==
-X-Gm-Message-State: AOAM530+R4BbUE/NBnT1ObE7NEEZ987AazJhzXvksSDjFapiDYF3wv3t
-        D9GKuCu7Dvocl3exE5aVf1mQU5nAug4=
-X-Google-Smtp-Source: ABdhPJzZeOkwbZDbiG3PvHdNnwKn+SOJ1tuEwMJYapfyDpsLWbAFyQeqKc7WPP5grhJEyaI61ugYcQ==
-X-Received: by 2002:a1c:9695:: with SMTP id y143mr103072wmd.146.1603764492447;
-        Mon, 26 Oct 2020 19:08:12 -0700 (PDT)
+        bh=TH48QvsASDnw6z3srdOANPLKrfrUD8Jg9GxDKDN5xG0=;
+        b=gLoOlKh8p51ZaRGLKa7nhLaK+nSjC9ncv4SLF4OTDlREWI+AoBa+3Pu7qDQXl2xNaE
+         AmvOboppka9gOFbCJJkFNq/6haJS+xMLcnU42JX0V1nc+H2LSh0IAq2IAIulkEOtqIEw
+         VQOukeYFerJa40XAJHOP74fKUaS2XFfqwm/QwqYtj6W+vAqCKJVqyHibdQQ1LLgBrQFS
+         2slwawIZ6qhL2WqaenTFjmCfkeIs77SkESmYXMNEXpWMnub2xiLAb8jU7F4fwRzFvI9r
+         e3/zCYcnl6XJcd7gMds+amUalg6cp8JmvE2nxzKNds2YyP2kWelHzSz/LsnBV1TTnzX4
+         JBEQ==
+X-Gm-Message-State: AOAM532Quw69FwnkX2y0pT8nIdDQzWJb6WB/KAcwcNZWEA/w7ICN5XhB
+        AF7wEvqlKyVsEt7n3sAbatBhc3EQ3qU=
+X-Google-Smtp-Source: ABdhPJznFlmqCw5BPOYLqNdgiWCFK6nruPbwsi8SGRWfFwvWt7I0KUxhuQSVPL/UDVahFYIjPTerAw==
+X-Received: by 2002:a5d:6110:: with SMTP id v16mr22447839wrt.219.1603764494300;
+        Mon, 26 Oct 2020 19:08:14 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m12sm58163wmi.33.2020.10.26.19.08.11
+        by smtp.gmail.com with ESMTPSA id y2sm26205653wrh.0.2020.10.26.19.08.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Oct 2020 19:08:11 -0700 (PDT)
-Message-Id: <3357ea415e3437966f15bf73fbbeb21cda3df592.1603764490.git.gitgitgadget@gmail.com>
+        Mon, 26 Oct 2020 19:08:13 -0700 (PDT)
+Message-Id: <27ad7566007676fc69dc28aa3b289547f0ccabca.1603764490.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.895.v3.git.git.1603764490.gitgitgadget@gmail.com>
 References: <pull.895.v2.git.git.1603731448.gitgitgadget@gmail.com>
         <pull.895.v3.git.git.1603764490.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 27 Oct 2020 02:08:07 +0000
-Subject: [PATCH v3 1/4] merge-ort: barebones API of new merge strategy with
- empty implementation
+Date:   Tue, 27 Oct 2020 02:08:09 +0000
+Subject: [PATCH v3 3/4] fast-rebase: demonstrate merge-ort's API via
+ temporary/hidden command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,169 +78,293 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-This is the beginning of a new merge strategy.  While there are some API
-differences, and the implementation has some differences in behavior, it
-is essentially meant as an eventual drop-in replacement for
-merge-recursive.c.  However, it is being built to exist side-by-side
-with merge-recursive so that we have plenty of time to find out how
-those differences pan out in the real world while people can still fall
-back to merge-recursive.  (Also, I intend to avoid modifying
-merge-recursive during this process, to keep it stable.)
+Add a special built-in that is only of use to git-developers and only
+during the development of merge-ort, and which is designed to
+immediately fail and print:
+   git: 'fast-rebase' is not a git command
+unless a special GIT_TEST_MERGE_ALGORITHM environment variable is set.
 
-The primary difference noticable here is that the updating of the
-working tree and index is not done simultaneously with the merge
-algorithm, but is a separate post-processing step.  The new API is
-designed so that one can do repeated merges (e.g. during a rebase or
-cherry-pick) and only update the index and working tree one time at the
-end instead of updating it with every intermediate result.  Also, one
-can perform a merge between two branches, neither of which match the
-index or the working tree, without clobbering the index or working tree.
+This special builtin serves two purposes:
 
-The next three commits will demonstrate various uses of this new API.
+  1) Demonstrate the desired API of merge-ort.  In particular,
+     fast-rebase takes advantage of the separation of the merging
+     operation from the updating of the index and working tree, to
+     allow it to pick N commits, but only update the index and working
+     tree once at the end.  Look for the calls to
+     merge_inmemory_nonrecursive() and merge_switch_to_result().
+
+  2) Provide a convenient benchmark that isn't polluted by the heavy
+     disk writing and forking of unnecessary processes that comes from
+     sequencer.c and merge-recursive.c.  fast-rebase is not meant to
+     replace sequencer.c, just give ideas on how sequencer.c can be
+     changed.  Updating sequencer.c with these goals is probably a
+     large amount of work; writing a simple targeted command with
+     no documentation, less-than-useful help messages, numerous
+     limitations in terms of flags it can accept and situations it can
+     handle, and which is flagged off from users is a much easier
+     interim step.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Makefile    |  1 +
- merge-ort.c | 52 +++++++++++++++++++++++++++++++++++++++++++++++
- merge-ort.h | 58 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 111 insertions(+)
- create mode 100644 merge-ort.c
- create mode 100644 merge-ort.h
+ Makefile              |   1 +
+ builtin.h             |   1 +
+ builtin/fast-rebase.c | 210 ++++++++++++++++++++++++++++++++++++++++++
+ git.c                 |   1 +
+ 4 files changed, 213 insertions(+)
+ create mode 100644 builtin/fast-rebase.c
 
 diff --git a/Makefile b/Makefile
-index 95571ee3fc..088770c2ae 100644
+index 382fe73c76..1b40d780fa 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -921,6 +921,7 @@ LIB_OBJS += mailmap.o
- LIB_OBJS += match-trees.o
- LIB_OBJS += mem-pool.o
- LIB_OBJS += merge-blobs.o
-+LIB_OBJS += merge-ort.o
- LIB_OBJS += merge-recursive.o
- LIB_OBJS += merge.o
- LIB_OBJS += mergesort.o
-diff --git a/merge-ort.c b/merge-ort.c
+@@ -1087,6 +1087,7 @@ BUILTIN_OBJS += builtin/difftool.o
+ BUILTIN_OBJS += builtin/env--helper.o
+ BUILTIN_OBJS += builtin/fast-export.o
+ BUILTIN_OBJS += builtin/fast-import.o
++BUILTIN_OBJS += builtin/fast-rebase.o
+ BUILTIN_OBJS += builtin/fetch-pack.o
+ BUILTIN_OBJS += builtin/fetch.o
+ BUILTIN_OBJS += builtin/fmt-merge-msg.o
+diff --git a/builtin.h b/builtin.h
+index 53fb290963..75ff7dc8a9 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -151,6 +151,7 @@ int cmd_difftool(int argc, const char **argv, const char *prefix);
+ int cmd_env__helper(int argc, const char **argv, const char *prefix);
+ int cmd_fast_export(int argc, const char **argv, const char *prefix);
+ int cmd_fast_import(int argc, const char **argv, const char *prefix);
++int cmd_fast_rebase(int argc, const char **argv, const char *prefix);
+ int cmd_fetch(int argc, const char **argv, const char *prefix);
+ int cmd_fetch_pack(int argc, const char **argv, const char *prefix);
+ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/fast-rebase.c b/builtin/fast-rebase.c
 new file mode 100644
-index 0000000000..b487901d3e
+index 0000000000..b69632054f
 --- /dev/null
-+++ b/merge-ort.c
-@@ -0,0 +1,52 @@
++++ b/builtin/fast-rebase.c
+@@ -0,0 +1,210 @@
 +/*
-+ * "Ostensibly Recursive's Twin" merge strategy, or "ort" for short.  Meant
-+ * as a drop-in replacement for the "recursive" merge strategy, allowing one
-+ * to replace
++ * "git fast-rebase" builtin command
 + *
-+ *   git merge [-s recursive]
++ * FAST: Forking Any Subprocesses (is) Taboo
 + *
-+ * with
-+ *
-+ *   git merge -s ort
-+ *
-+ * Note: git's parser allows the space between '-s' and its argument to be
-+ * missing.  (Should I have backronymed "ham", "alsa", "kip", "nap, "alvo",
-+ * "cale", "peedy", or "ins" instead of "ort"?)
++ * This is meant SOLELY as a demo of what is possible.  sequencer.c and
++ * rebase.c should be refactored to use the ideas here, rather than attempting
++ * to extend this file to replace those (unless Phillip or Dscho say that
++ * refactoring is too hard and we need a clean slate, but I'm guessing that
++ * refactoring is the better route).
 + */
 +
-+#include "cache.h"
++#define USE_THE_INDEX_COMPATIBILITY_MACROS
++#include "builtin.h"
++
++#include "cache-tree.h"
++#include "commit.h"
++#include "lockfile.h"
 +#include "merge-ort.h"
++#include "refs.h"
++#include "revision.h"
++#include "sequencer.h"
++#include "strvec.h"
++#include "tree.h"
 +
-+void merge_switch_to_result(struct merge_options *opt,
-+			    struct tree *head,
-+			    struct merge_result *result,
-+			    int update_worktree_and_index,
-+			    int display_update_msgs)
++static const char *short_commit_name(struct commit *commit)
 +{
-+	die("Not yet implemented");
-+	merge_finalize(opt, result);
++	return find_unique_abbrev(&commit->object.oid, DEFAULT_ABBREV);
 +}
 +
-+void merge_finalize(struct merge_options *opt,
-+		    struct merge_result *result)
++static struct commit *peel_committish(const char *name)
 +{
-+	die("Not yet implemented");
++	struct object *obj;
++	struct object_id oid;
++
++	if (get_oid(name, &oid))
++		return NULL;
++	obj = parse_object(the_repository, &oid);
++	return (struct commit *)peel_to_type(name, 0, obj, OBJ_COMMIT);
 +}
 +
-+void merge_incore_nonrecursive(struct merge_options *opt,
-+			       struct tree *merge_base,
-+			       struct tree *side1,
-+			       struct tree *side2,
-+			       struct merge_result *result)
++static char *get_author(const char *message)
 +{
-+	die("Not yet implemented");
++	size_t len;
++	const char *a;
++
++	a = find_commit_header(message, "author", &len);
++	if (a)
++		return xmemdupz(a, len);
++
++	return NULL;
 +}
 +
-+void merge_incore_recursive(struct merge_options *opt,
-+			    struct commit_list *merge_bases,
-+			    struct commit *side1,
-+			    struct commit *side2,
-+			    struct merge_result *result)
++static struct commit *create_commit(struct tree *tree,
++				    struct commit *based_on,
++				    struct commit *parent)
 +{
-+	die("Not yet implemented");
++	struct object_id ret;
++	struct object *obj;
++	struct commit_list *parents = NULL;
++	char *author;
++	char *sign_commit = NULL;
++	struct commit_extra_header *extra;
++	struct strbuf msg = STRBUF_INIT;
++	const char *out_enc = get_commit_output_encoding();
++	const char *message = logmsg_reencode(based_on, NULL, out_enc);
++	const char *orig_message = NULL;
++	const char *exclude_gpgsig[] = { "gpgsig", NULL };
++
++	commit_list_insert(parent, &parents);
++	extra = read_commit_extra_headers(based_on, exclude_gpgsig);
++	find_commit_subject(message, &orig_message);
++	strbuf_addstr(&msg, orig_message);
++	author = get_author(message);
++	reset_ident_date();
++	if (commit_tree_extended(msg.buf, msg.len, &tree->object.oid, parents,
++				 &ret, author, NULL, sign_commit, extra)) {
++		error(_("failed to write commit object"));
++		return NULL;
++	}
++	free(author);
++	strbuf_release(&msg);
++
++	obj = parse_object(the_repository, &ret);
++	return (struct commit *)obj;
 +}
-diff --git a/merge-ort.h b/merge-ort.h
-new file mode 100644
-index 0000000000..74adccad16
---- /dev/null
-+++ b/merge-ort.h
-@@ -0,0 +1,58 @@
-+#ifndef MERGE_ORT_H
-+#define MERGE_ORT_H
 +
-+#include "merge-recursive.h"
++int cmd_fast_rebase(int argc, const char **argv, const char *prefix)
++{
++	struct commit *onto;
++	struct commit *last_commit = NULL, *last_picked_commit = NULL;
++	struct object_id head;
++	struct lock_file lock = LOCK_INIT;
++	int clean = 1;
++	struct strvec rev_walk_args = STRVEC_INIT;
++	struct rev_info revs;
++	struct commit *commit;
++	struct merge_options merge_opt;
++	struct tree *next_tree, *base_tree, *head_tree;
++	struct merge_result result;
++	struct strbuf reflog_msg = STRBUF_INIT;
++	struct strbuf branch_name = STRBUF_INIT;
 +
-+struct commit;
-+struct tree;
++	if (argc == 2 && !strcmp(argv[1], "-h")) {
++		printf("Sorry, I am not a psychiatrist; I can not give you the help you need.  Oh, you meant usage...\n");
++		exit(129);
++	}
 +
-+struct merge_result {
-+	/* Whether the merge is clean */
-+	int clean;
++	if (!getenv("GIT_TEST_MERGE_ALGORITHM")) {
++		fprintf_ln(stderr, _("git: 'fast-rebase' is not a git command. See 'git --help'."));
++		exit(1);
++	}
 +
-+	/*
-+	 * Result of merge.  If !clean, represents what would go in worktree
-+	 * (thus possibly including files containing conflict markers).
-+	 */
-+	struct tree *tree;
++	if (argc != 5 || strcmp(argv[1], "--onto"))
++		die("usage: read the code, figure out how to use it, then do so");
 +
-+	/*
-+	 * Additional metadata used by merge_switch_to_result() or future calls
-+	 * to merge_incore_*().  Includes data needed to update the index (if
-+	 * !clean) and to print "CONFLICT" messages.  Not for external use.
-+	 */
-+	void *priv;
-+};
++	onto = peel_committish(argv[2]);
++	strbuf_addf(&branch_name, "refs/heads/%s", argv[4]);
 +
-+/*
-+ * rename-detecting three-way merge with recursive ancestor consolidation.
-+ * working tree and index are untouched.
-+ */
-+void merge_incore_recursive(struct merge_options *opt,
-+			    struct commit_list *merge_bases,
-+			    struct commit *side1,
-+			    struct commit *side2,
-+			    struct merge_result *result);
++	/* Sanity check */
++	if (get_oid("HEAD", &head))
++		die(_("Cannot read HEAD"));
++	assert(oideq(&onto->object.oid, &head));
 +
-+/*
-+ * rename-detecting three-way merge, no recursion.
-+ * working tree and index are untouched.
-+ */
-+void merge_incore_nonrecursive(struct merge_options *opt,
-+			       struct tree *merge_base,
-+			       struct tree *side1,
-+			       struct tree *side2,
-+			       struct merge_result *result);
++	hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
++	assert(repo_read_index(the_repository) >= 0);
 +
-+/* Update the working tree and index from head to result after incore merge */
-+void merge_switch_to_result(struct merge_options *opt,
-+			    struct tree *head,
-+			    struct merge_result *result,
-+			    int update_worktree_and_index,
-+			    int display_update_msgs);
++	repo_init_revisions(the_repository, &revs, NULL);
++	revs.verbose_header = 1;
++	revs.max_parents = 1;
++	revs.cherry_mark = 1;
++	revs.limited = 1;
++	revs.reverse = 1;
++	revs.right_only = 1;
++	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
++	revs.topo_order = 1;
++	strvec_pushl(&rev_walk_args, "", argv[4], "--not", argv[3], NULL);
 +
-+/* Do needed cleanup when not calling merge_switch_to_result() */
-+void merge_finalize(struct merge_options *opt,
-+		    struct merge_result *result);
++	if (setup_revisions(rev_walk_args.nr, rev_walk_args.v, &revs, NULL) > 1)
++		return error(_("unhandled options"));
 +
-+#endif
++	strvec_clear(&rev_walk_args);
++
++	if (prepare_revision_walk(&revs) < 0)
++		return error(_("error preparing revisions"));
++
++	init_merge_options(&merge_opt, the_repository);
++	memset(&result, 0, sizeof(result));
++	merge_opt.show_rename_progress = 1;
++	merge_opt.branch1 = "HEAD";
++	head_tree = get_commit_tree(onto);
++	result.tree = head_tree;
++	last_commit = onto;
++	while ((commit = get_revision(&revs))) {
++		struct commit *base;
++
++		fprintf(stderr, "Rebasing %s...\r",
++			oid_to_hex(&commit->object.oid));
++		assert(commit->parents && !commit->parents->next);
++		base = commit->parents->item;
++
++		next_tree = get_commit_tree(commit);
++		base_tree = get_commit_tree(base);
++
++		merge_opt.branch2 = short_commit_name(commit);
++		merge_opt.ancestor = xstrfmt("parent of %s", merge_opt.branch2);
++
++		merge_incore_nonrecursive(&merge_opt,
++					  base_tree,
++					  result.tree,
++					  next_tree,
++					  &result);
++
++		free((char*)merge_opt.ancestor);
++		merge_opt.ancestor = NULL;
++		if (!result.clean)
++			die("Aborting: Hit a conflict and restarting is not implemented.");
++		last_picked_commit = commit;
++		last_commit = create_commit(result.tree, commit, last_commit);
++	}
++	fprintf(stderr, "\nDone.\n");
++	/* TODO: There should be some kind of rev_info_free(&revs) call... */
++	memset(&revs, 0, sizeof(revs));
++
++	merge_switch_to_result(&merge_opt, head_tree, &result, 1, !result.clean);
++
++	if (result.clean < 0)
++		exit(128);
++
++	strbuf_addf(&reflog_msg, "finish rebase %s onto %s",
++		    oid_to_hex(&last_picked_commit->object.oid),
++		    oid_to_hex(&last_commit->object.oid));
++	if (update_ref(reflog_msg.buf, branch_name.buf,
++		       &last_commit->object.oid,
++		       &last_picked_commit->object.oid,
++		       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR)) {
++		error(_("could not update %s"), argv[4]);
++		die("Failed to update %s", argv[4]);
++	}
++	if (create_symref("HEAD", branch_name.buf, reflog_msg.buf) < 0)
++		die(_("unable to update HEAD"));
++	strbuf_release(&reflog_msg);
++	strbuf_release(&branch_name);
++
++	prime_cache_tree(the_repository, the_repository->index, result.tree);
++	if (write_locked_index(&the_index, &lock,
++			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
++		die(_("unable to write %s"), get_index_file());
++	return (clean == 0);
++}
+diff --git a/git.c b/git.c
+index 4bdcdad2cc..af84f11e69 100644
+--- a/git.c
++++ b/git.c
+@@ -512,6 +512,7 @@ static struct cmd_struct commands[] = {
+ 	{ "env--helper", cmd_env__helper },
+ 	{ "fast-export", cmd_fast_export, RUN_SETUP },
+ 	{ "fast-import", cmd_fast_import, RUN_SETUP | NO_PARSEOPT },
++	{ "fast-rebase", cmd_fast_rebase, RUN_SETUP /* | NEED_WORK_TREE */ },
+ 	{ "fetch", cmd_fetch, RUN_SETUP },
+ 	{ "fetch-pack", cmd_fetch_pack, RUN_SETUP | NO_PARSEOPT },
+ 	{ "fmt-merge-msg", cmd_fmt_merge_msg, RUN_SETUP },
 -- 
 gitgitgadget
 
