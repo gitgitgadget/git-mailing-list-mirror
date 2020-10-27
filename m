@@ -2,70 +2,81 @@ Return-Path: <SRS0=IAqa=EC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=BAYES_20,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6ACCC4363A
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 20:10:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C065C388F9
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 20:14:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 51349207E8
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 20:10:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC39420878
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 20:14:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=bakanov-su.20150623.gappssmtp.com header.i=@bakanov-su.20150623.gappssmtp.com header.b="vLZCIKv3"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="aHaSuTL6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S372725AbgJ0UKO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Oct 2020 16:10:14 -0400
-Received: from mail-io1-f46.google.com ([209.85.166.46]:40455 "EHLO
-        mail-io1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S372722AbgJ0UKM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Oct 2020 16:10:12 -0400
-Received: by mail-io1-f46.google.com with SMTP id r9so2943581ioo.7
-        for <git@vger.kernel.org>; Tue, 27 Oct 2020 13:10:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bakanov-su.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=hYNa8Eak/lEgK1xjwfnryGyTzRdQOUhWVTlhypmBu2w=;
-        b=vLZCIKv3AqCD5o8nw8SJG4EWtZePFPh9AOu39Kwk7cqSOXp1SKx9PowdNd97XC1Bgl
-         iE/I1tYKt0mWwL6IP5S9T4IFxqZeW0kZ0k8eeQJUI9AtC02yQnbXFtLrNvnxkks8C/Ma
-         VEKrur32ugRcUwFxhKtmyTnghDptlbTWH46z8nN0c+DrVqnmPPo5pre6+JkVZEhIITro
-         K70qNuuSPYjHclHLw5Wc+ZldZU2G0f9AohIPxvIBBd40cxwCEvpTFLnXKF4H3/VREHsK
-         z6ym8C7dEl48CCbm6A/sPzp5pvv9XVGFLOb/PzNnWdTqw+HOY7bYTqH6M0uI0Q7RcRis
-         sqZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=hYNa8Eak/lEgK1xjwfnryGyTzRdQOUhWVTlhypmBu2w=;
-        b=JR3S12US8xPv9aqu6krcOmybsxySrbeKbRpfVAi4u9YCk/DohGxwZVLBR8adYD4XNs
-         bMaMTsjKZkIOdTRSltZNSVSkYP52jT/kDNSEdlvCcJp0ZRwFPSBJldROtKWbTH8WXH/a
-         Wjb/HWMWYHAqBBBmYrPymJAnbXcB5PCyLJl8f6IBU+GeoRIcgI25SqXCm0Jlq9A1b7QM
-         SJ/cvhOgXfKEmEigJ7JGkbf09L6XYywFcrWwzrw1k+QTLg8REmf5vm6glyVxsNcX0sNY
-         Qf8F1l/sn/8ClK+xOZPv64wgunc2NwIGlUlH9Xfr1p7V0fOnF8VKN9j/8QVn2sCGKXX7
-         JLSQ==
-X-Gm-Message-State: AOAM532YHe5CbBFFOGVl6Jc20dlHHw/Zqeqw0TgAKBgonRTnN6db4KCb
-        KCOc5RsTEU9X2ZblQoAUZngEtsz73RqzOhNceF2JMSu0Kdoa0IdX
-X-Google-Smtp-Source: ABdhPJyILgi62G0L/IvWdy80xWZfd2K/2INRGW5ZV+aLdSMtejvFjyLQcQT6WhSyBaPrFA3oBocRSoDBR94m6NfBoB0=
-X-Received: by 2002:a05:6638:1381:: with SMTP id w1mr4088913jad.79.1603829411612;
- Tue, 27 Oct 2020 13:10:11 -0700 (PDT)
+        id S1831041AbgJ0UOa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Oct 2020 16:14:30 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60736 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1831037AbgJ0UO3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Oct 2020 16:14:29 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 59729806EA;
+        Tue, 27 Oct 2020 16:14:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=rh26ZWGCKUBOxigIYnMWgSgMnKo=; b=aHaSuT
+        L6AeWwc5KbgwhBRlcYC5fhBBi4VKUeWrPhlEgqPer1PYULjzYjpUJ7QodSLcxjU9
+        LOJXXHKNHLhMCJ1kUzwjdGR+WkjHFvI8oKWsKu1FkusMpE5vbRouBeL76zomM0w2
+        nuazdjrDQAT1n0s8EvwmqyVG9Ce+bdsPMP+SY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=TNpLHVPfhwrKU764JnuXPNomaNqGqNR3
+        4gVNA5JVx7KcOfRd3ruaAV/4T6asywiiUBjwGBRNjypFTn8qqkcq5AtG6WOWb2tf
+        0VjFDDI3PMM5MAyQvt7Hp6CK88dkOZbWHwFP+CJfUAij3CKmgRJme3E7qq0DKy7+
+        f5k/9ftC2ec=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4FC34806E9;
+        Tue, 27 Oct 2020 16:14:27 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D4816806E8;
+        Tue, 27 Oct 2020 16:14:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v2 00/29] completion: zsh: latest patches
+References: <20201025031343.346913-1-felipe.contreras@gmail.com>
+Date:   Tue, 27 Oct 2020 13:14:26 -0700
+In-Reply-To: <20201025031343.346913-1-felipe.contreras@gmail.com> (Felipe
+        Contreras's message of "Sat, 24 Oct 2020 22:13:14 -0500")
+Message-ID: <xmqqo8knbf4t.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-From:   Filipp Bakanov <filipp@bakanov.su>
-Date:   Tue, 27 Oct 2020 23:10:00 +0300
-Message-ID: <CAAdniQ5pRHKUU77XVmZkZ_gUgfYYFpo9=Xt2T6EgzJ3hoT0YMg@mail.gmail.com>
-Subject: Proposal: "unadd" command / alias.
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 03412136-1891-11EB-9B54-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi! I suggest to add "unadd" command, that will undo a git add command.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-git unadd path/to/file
+> I've been carrying around these patches for quite some time, many have already
+> been sent, others I refactored to make them more clear.
+>
+> But what is clear is that they are needed. I see a lot of people in different
+> forums (e.g. Stack Overflow, Oh-My-Zsh, etc.) getting bit by many of these
+> issues.
 
-It will be an alias to:
+Is this "v2" an update to the 14-patch series you have a late reply to?
 
-git reset HEAD -- path/to/file
+There is a tiny zsh completion patch in flight, but hopefully it can
+be rebased on this series and graduate together, provided if zsh
+users on the list find the topic as a whole agreeable.
 
-The motivation is that I always forget syntax and have to google each
-time I want to undo accidentally added files. Unadd is just much
-easier to remember and quite obvious.
+Thanks.
