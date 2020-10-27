@@ -7,93 +7,118 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FA1CC55179
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 19:13:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DD0DC4363A
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 20:00:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A80C20756
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 19:13:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 310F72222C
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 20:00:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EnFAuXez"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vayS31FQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1829497AbgJ0TNu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Oct 2020 15:13:50 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57460 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1829496AbgJ0TNI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Oct 2020 15:13:08 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AD39D99F16;
-        Tue, 27 Oct 2020 15:13:05 -0400 (EDT)
+        id S1830603AbgJ0UAS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Oct 2020 16:00:18 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59900 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1823131AbgJ0UAR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Oct 2020 16:00:17 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 27C4780425;
+        Tue, 27 Oct 2020 16:00:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ajOCEhfL2FKVhCauiRD2hP8bJps=; b=EnFAuX
-        ez76t+kCV4NCUbSd4Ju9D6X6j+qZhpIznFJYRq3LtD4XkoADif4we1nQZjRGI3kj
-        QlLAUvkxpFioMaeVrvPGanvzRDR/HUfZcLD2X+smCJP0em96TyjNUtydBQtEKENb
-        mtx/82bKg/CzptgJjjLF8BkYaYG2SvRpQBnVI=
+        :content-type:content-transfer-encoding; s=sasl; bh=+ARFxak29JJc
+        KTGLId14SF8+NRA=; b=vayS31FQ2tpC5AwcaBqE6CLkdh9H9Ml1r/5q0OBqiHyv
+        5rAF56UtJt3gX80HpmnuetQQaY1+Qb3KCvJw4p01xsc4p3uEGreBWurywow6oD/Q
+        t3DvMUJ292W+SQASX/vzPBMjouOyWbkG/wV4Mc0eN39DUquistc6xg8B/PFmoZw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Go8AhjhEG6arbgDKcDPVHEjeQfs4yoY+
-        Z8dA7M33kQOPwxE0kMKae0BlqG9fJgzJ1Ntfg8mHDiKOf+Srd4c4hYiD1RZWVTQp
-        zRSPdNtRw+N50eiMABmKc4zVbaTypFspUMXzV0ua0+zQnXXePP7sIUq2xeQUcw28
-        e4ndBtKJMi0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A1C2199F14;
-        Tue, 27 Oct 2020 15:13:05 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=MefFHh
+        O9DVqcYR89yEJ8KfKHdXpdsViDVNEHRvmLHeWz8iZ+NW94KQ+2SzU/vCAD0hJZMD
+        6J0cOce+ocCGH6do2mcNzEX9xQQshop5hRsKRmpDi30g2845ddi+oKRG0hykdaii
+        RLq8K3j/BF4r+sJZQdsTDvZp1Up+Dz0gxepBQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C7D880424;
+        Tue, 27 Oct 2020 16:00:15 -0400 (EDT)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
+Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D664B99F13;
-        Tue, 27 Oct 2020 15:13:04 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7300B80423;
+        Tue, 27 Oct 2020 16:00:14 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/2] fix error handling in checkout-index
-References: <20201027073000.GA3651896@coredump.intra.peff.net>
-Date:   Tue, 27 Oct 2020 12:13:03 -0700
-In-Reply-To: <20201027073000.GA3651896@coredump.intra.peff.net> (Jeff King's
-        message of "Tue, 27 Oct 2020 03:30:00 -0400")
-Message-ID: <xmqq1rhjcwjk.fsf@gitster.c.googlers.com>
+To:     =?utf-8?B?0JvRkdGI0LAg0J7Qs9C+0L3RjNC60L7Qsg==?= 
+        <lesha.ogonkov@gmail.com>
+Cc:     Stefan Haller <lists@haller-berlin.de>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Alexey via GitGitGadget <gitgitgadget@gmail.com>,
+        Git <git@vger.kernel.org>
+Subject: Re: [PATCH] Fix zsh installation instructions
+References: <pull.814.git.git.1593687080695.gitgitgadget@gmail.com>
+        <xmqqr1to8dv9.fsf@gitster.c.googlers.com>
+        <abc4ab95-ed65-1d6b-e964-73734c08cda9@haller-berlin.de>
+        <CAMP44s3=CUmx_7DCExK7L4trZvQTxO67Qk20eexsP3su-3RyKQ@mail.gmail.com>
+        <abc34ced-0c0f-4024-a50c-30e4ca31b325@haller-berlin.de>
+        <CAKU+SVKad4q-2tTrYXa+DJBz5UJOtndEe3-4Uvnd5GZ92543ng@mail.gmail.com>
+Date:   Tue, 27 Oct 2020 13:00:13 -0700
+In-Reply-To: <CAKU+SVKad4q-2tTrYXa+DJBz5UJOtndEe3-4Uvnd5GZ92543ng@mail.gmail.com>
+        (=?utf-8?B?ItCb0ZHRiNCwINCe0LPQvtC90YzQutC+0LIiJ3M=?= message of "Tue, 27
+ Oct 2020 11:59:20
+        +0300")
+Message-ID: <xmqqwnzbbfsi.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 709E3E5C-1888-11EB-99F6-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 07302802-188F-11EB-ACF5-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+=D0=9B=D1=91=D1=88=D0=B0 =D0=9E=D0=B3=D0=BE=D0=BD=D1=8C=D0=BA=D0=BE=D0=B2=
+  <lesha.ogonkov@gmail.com> writes:
 
-> While working on another topic, I noticed that "git checkout-index --
-> path" does not propagate errors through its exit code. It has been that
-> way for so long that I almost wondered if it is intentional, but I'm
-> pretty sure it's not. A bit scary, though. :)
+> On Tue, 27 Oct 2020 at 11:32, Stefan Haller <lists@haller-berlin.de> wr=
+ote:
+>>
+>> On 25.10.20 4:29, Felipe Contreras wrote:
+>> >> The other hunk (adding compinit) is not so important to me; I suppo=
+se it
+>> >> was not in the original version because most zsh users already have=
+ this
+>> >> in their .zshrc anyway. But it's not wrong, and doesn't hurt to hav=
+e
+>> >> here, I guess.
+>> >
+>> > If you don't have compinit, then how is the '_git' script being load=
+ed
+>> > in the first place?
+>>
+>> I didn't say it's unnecessary to have it in your .zshrc. I just said
+>> it's maybe unnecessary to document it here because most zsh users have
+>> it in their .zshrc already anyway.
+>
+> As an inexperienced zsh user it took me ages to understand why the
+> whole thing is not working.
 
-Quite honestly, at this point, I do not think the intention matters
-any more.  If somebody depends on the behaviour and wrote
+So,... even though it may look to more experienced zsh users that it
+is unnecessary to document it in this file, in your opinion, it is a
+good idea to mention "compinit" to help less experienced users?
 
-    do some thing &&
-    git checkout-index -- $path_that_is_possibly_missing &&
-    do another thing &&
+In any case, the patch in question is the only thing in flight that
+conflicts with Felipe's 29 patch series, and the change to zstyle
+line is common between both efforts, so it is just between adding
+the "autoload -Uz compinit && compinit" near the fpath=3D(...) thing
+or leaving it out.
 
-then this change _will_ be a regression, whether it was originally
-done this way on purpose or not.
-
-I do not think it is the kind of regression that we should avoid,
-though.  I'd say that we should bite the bullet and fix it, as it
-should also be easy to fix/adjust such a collateral damage.  That
-would make the world a better place in the end.
+I'll let those who know zsh to figure it out.  I suspect that the
+resolution would be either to ask Felipe to rebase his on yours,
+rebase yours on top of Felipe's, or just drop yours (if "autoload"
+thing is unnecessary as Stefan suspects---I cannot tell what Felipe
+wants to suggest by his response, between "unless you have compinit
+you wouldn't be using this script so why write it?" and "your users
+need to be taught about the need _somehow_, so why not make this the
+place to do so?").
 
 Thanks.
-
->   [1/2]: checkout-index: drop error message from empty --stage=all
->   [2/2]: checkout-index: propagate errors to exit code
->
->  builtin/checkout-index.c        | 16 ++++++++++++++--
->  t/t2004-checkout-cache-temp.sh  | 10 +++++++++-
->  t/t2006-checkout-index-basic.sh | 11 +++++++++++
->  3 files changed, 34 insertions(+), 3 deletions(-)
->
-> -Peff
