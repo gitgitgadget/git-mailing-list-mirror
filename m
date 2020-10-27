@@ -2,103 +2,155 @@ Return-Path: <SRS0=wsT/=ED=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FF36C55179
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 01:48:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BCD5C388F9
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 01:48:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0B75B22202
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 01:48:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D4FE322202
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 01:48:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yBC8EMaE"
+	dkim=pass (2048-bit key) header.d=bakanov-su.20150623.gappssmtp.com header.i=@bakanov-su.20150623.gappssmtp.com header.b="u5EqTx42"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726026AbgJ1Bi1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Oct 2020 21:38:27 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56887 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1833011AbgJ0XcH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Oct 2020 19:32:07 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 59C8781FD1;
-        Tue, 27 Oct 2020 19:32:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wDnc0O3vWBUtKaTiimyiMfv+0W0=; b=yBC8EM
-        aERNQzQ5VjkOwQZuthyIxeAisuD0Kq+1ffV+uDfTz12vU4DOKfnZ0qumkMmA9VLo
-        uJdVVzFlpx5uNnWiS6TzIsZWQiR9AgJL1SW2Ae7oW3gdonAoFPiVDaAYvmSA5/eO
-        PYJl9HJPyv0Bm7dhrLZ7nxjnvpxEY0HNXpJyU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IsRNgXUPrb6v2ghtt40oGx/G7Ph5Vtlx
-        ERyh6gkhIpADO2Igvyf9KWXFCnJ4nk88hhUVHBIGhNDeDXlWRrTHv0HESwIVnaFj
-        BWf+8VPPxE9Jn3WgJRP07vlU6QM0Sm9ISAQ0FvGTbiktJPd8c4MG6PWe0jEEpdCS
-        R/75ElL6MXk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B50A81FD0;
-        Tue, 27 Oct 2020 19:32:05 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 544D381FCF;
-        Tue, 27 Oct 2020 19:32:04 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Git <git@vger.kernel.org>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 00/14] completion: a bunch of updates
-References: <20190621223107.8022-1-felipe.contreras@gmail.com>
-        <xmqqk1cz0zz1.fsf@gitster-ct.c.googlers.com>
-        <CAMP44s3wqxTmgQpMgk2cM33EvtwrvvXYv4_90GKGmHb8yJHAKg@mail.gmail.com>
-        <xmqqk0vbbep5.fsf@gitster.c.googlers.com>
-        <CAMP44s13nip2_Z1OOFb9iVcrSxQbyJW4cH86J3Ah1p4SmTQWQQ@mail.gmail.com>
-Date:   Tue, 27 Oct 2020 16:32:03 -0700
-In-Reply-To: <CAMP44s13nip2_Z1OOFb9iVcrSxQbyJW4cH86J3Ah1p4SmTQWQQ@mail.gmail.com>
-        (Felipe Contreras's message of "Tue, 27 Oct 2020 16:19:05 -0600")
-Message-ID: <xmqqr1pj9rf0.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726004AbgJ1Bi0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Oct 2020 21:38:26 -0400
+Received: from mail-io1-f68.google.com ([209.85.166.68]:35698 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1832984AbgJ0XOR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Oct 2020 19:14:17 -0400
+Received: by mail-io1-f68.google.com with SMTP id k6so3415793ior.2
+        for <git@vger.kernel.org>; Tue, 27 Oct 2020 16:14:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bakanov-su.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=mPHV1UmE2oNwCW7SahoQzzxJw65xZi8939VN7Hgzptg=;
+        b=u5EqTx42vjl4OlYS1Q7m/M2tF6ZamEZnHwO1ZGBjvyar7YASZ3SljTFR4m2+C4mCpQ
+         0FIy65+hMbA640ROoGRIE/tOcCCFe27epwMbXLeWubbBOMKTjOQWiFNaqC0VHKc0W+tb
+         Qe+y0dn4Ogbm5Pk1UTQR5gYPpk5sxDxOFNpwi7wuamxCENRckf/HjlXMF+ReUjy7DbiE
+         664bRug/W0K/58ljWWoZx/mvpY+L4Bld9AdBeIIs4QJ2QxOaj5B68lXYMMNDQsOH13qe
+         ehwqFLipSNmTK5Z9QM72csOIC45002VTj7EDEvjV8sjBDnK4jfM+FuIQyMeM9FtuyZVo
+         TaBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mPHV1UmE2oNwCW7SahoQzzxJw65xZi8939VN7Hgzptg=;
+        b=rw5tXqJWVNfWxgL2Jd02t/Ep+JciZVjyPyZyp1gekzIffGAjKWa//qI7QvjukuQviT
+         CJ2NYrcqkYudZ1t3aPmGuPsRcGnwLW+8pymwQX/VTJG59U+KQOOH4ItY3EDxcsHzxLTd
+         4Z2KjxNJtL8GFAsWfYHP2bBNKwDMl2IhJt/tv2dlE3SuviSV2sElXrLXD0tVGLNA5Enj
+         6QiVa9vl3Bu+LjbCVTYUNon0mR4BgsryjNjzNpwwc3jx3Le8MkCIYu+OiaWKSIXst/h/
+         q/l7T/wRH2JwpcXJ82QHFgCcJzOkmAKCurNTdB6EiQWbKKO5cSOpnacgOQY1j1Frtk8d
+         6X7g==
+X-Gm-Message-State: AOAM532vHxf+GPBp3TA5wcIrV9xWoWgbFXLs6kH7krzwzRn14/YwekGG
+        kp5tx5rsJuNmIOPbIq3kNvxnNTlmIEd7il7GFzZCGg==
+X-Google-Smtp-Source: ABdhPJwgfPXj6YmjBtqVqkxXD5JIoigY8uS8+GxI4hLCX3bWx4qk4Ty5Tsft8SLfatrXadODLTMY2gtx5qfmPGLK0rw=
+X-Received: by 2002:a6b:8ec7:: with SMTP id q190mr4099841iod.42.1603840456086;
+ Tue, 27 Oct 2020 16:14:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9EDC8D7C-18AC-11EB-A4CC-D152C8D8090B-77302942!pb-smtp1.pobox.com
+References: <CAAdniQ5pRHKUU77XVmZkZ_gUgfYYFpo9=Xt2T6EgzJ3hoT0YMg@mail.gmail.com>
+ <xmqqblgnbea5.fsf@gitster.c.googlers.com> <20201027215638.GI5691@mit.edu>
+ <CAAdniQ4vx4z9KnfvG7thzxf1xBa=P_nnbY1G=RTFUBb4Zxqeaw@mail.gmail.com> <20201027225403.GJ5691@mit.edu>
+In-Reply-To: <20201027225403.GJ5691@mit.edu>
+From:   Filipp Bakanov <filipp@bakanov.su>
+Date:   Wed, 28 Oct 2020 02:14:05 +0300
+Message-ID: <CAAdniQ7o2greovkG-RP-FLwW2OH3YuiORwB+QKgqy=_0aJ4XkQ@mail.gmail.com>
+Subject: Re: Proposal: "unadd" command / alias.
+To:     "Theodore Y. Ts'o" <tytso@mit.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+It's the matter of UX. If many users have to make an alias for the
+same unclear command, at least it's a point to think about making this
+particular command more convenient. As far as I remember, some aliases
+were already added to git by default.
+What's bad with adding a popular (among many users) aliases, if they
+improve UX and make life easier?
 
->> Have you fed your patches to those folks who have dozens of issues
->> and the patches made their life better?
+On Wed, 28 Oct 2020 at 01:54, Theodore Y. Ts'o <tytso@mit.edu> wrote:
 >
-> Yes.
-
-That's good.
-
->> (they will get
->> their zsh/git completion from their distros---I am assuming that the
->> distros get theirs from us in contrib/completion/).
+> On Wed, Oct 28, 2020 at 01:02:11AM +0300, Filipp Bakanov wrote:
+> > >> Indeed, I have a similar alias in my ~/.gitconfig
+> >
+> > Why not just add it to git by default for everybody? revert-file is
+> > also ok, anything except `checkout HEAD --` will be good.
 >
-> I don't know of anyone that relies on the zsh completion shared by
-> their distribution.
-
-Hmph.  If the real users don't get the completion scripts from their
-distribution, is there still a point in having them in my tree?  You
-are certainly not suggesting me to remove contrib/completion/ at
-least for zsh part, but then it is unclear what you want.
-
-Are you saying that by adding the latest and greatest, these real
-users who so far couldn't rely on distros now can start to do so,
-and we'll make their life easier by updating the 29-patch series
-(which I presume is the v2 of this 14-patch series)?
-
-In any case, some Zsh users, even though they are not active
-developers for the completion script, may have something good to
-say, now the 29-patch series has been posted to the list and queued.
-I didn't look at the zsh part, but I didn't find anything glaringly
-wrong in the changes to the bash completion.
-
-Thanks.
+> Because everyone may have their own favorite aliases?  Just because
+> *I* have the following aliases doesn't mean that everyone else would
+> find them useful.
+>
+> [alias]
+>         new = !gitk --all --not ORIG_HEAD
+>         dw = diff --stat --summary
+>         di = diff --stat --summary --cached
+>         dc = describe --contains
+>         revert-file = checkout HEAD --
+>         l  = log --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit
+>         lr = log --reverse --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit
+>         rl  = log -g --pretty=format:'%Cred%h%Creset %gd %gs %Cgreen(%gr)%Creset %s' --abbrev-commit
+>         rl1  = log -g --date=relative --pretty=format:'%Cred%h%Creset %gs %Cgreen%gd%Creset %s' --abbrev-commit
+>         lg  = log --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit
+>         lgt = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit
+>         rlt = log -g --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit
+>         lgt-nc = log --graph --pretty=format:'%h -%d %s (%cr)' --abbrev-commit
+>         st = status -s
+>         recent = for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(committerdate:short) %(refname:short)'
+>         gerrit-clone = !bash ggh gerrit-clone
+>         start = !bash ggh start
+>         upload = !bash ggh upload
+>         prune-branches = !bash ggh prune-branches
+>         fixes = log -1 --pretty=fixes
+>
+> I have a huge number of bash aliases, and that doesn't mean everyone
+> else should have those bash aliases.  For that matter, I have the
+> following in ~/bin/git-rp-ext4 so that I can type "git rp-ext4
+> tags/ext4_for_linus".  But that doesn't mean this script is right for
+> everyone....
+>
+> Cheers,
+>
+>                                         - Ted
+>
+> #!/bin/sh
+>
+> START=origin
+> URL=git://git.kernel.org/pub/scm/linux/kernel/git/tytso/ext4.git
+> END=""
+>
+> print_help ()
+> {
+>     PROG=$(basename "$0")
+>     echo "Usage: $PROG [-n] [--start <START COMMIT>] [--url <URL] [<END COMMIT>]"
+>     exit 1
+> }
+>
+> while [ "$1" != "" ]; do
+>     case $1 in
+>         --start) shift
+>                  START="$1"
+>                  ;;
+>         --url) shift
+>                URL="$1"
+>                ;;
+>         -n) NO_ACTION="echo" ;;
+>         -*) print_help ;;
+>         *)
+>             if test -n "$END"
+>             then
+>                 print_help
+>             else
+>                 END="$1"
+>             fi
+>             ;;
+>     esac
+>     shift
+> done
+>
+> $NO_ACTION git request-pull "$START" "$URL" "$END"
+>
