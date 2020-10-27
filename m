@@ -2,140 +2,72 @@ Return-Path: <SRS0=wsT/=ED=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85144C5517A
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 01:47:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91EE1C388F9
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 01:47:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4F27022202
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 01:47:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E507C20720
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 01:47:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ASKnyemJ"
+	dkim=pass (1024-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="tB23PfSw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726109AbgJ1Bie (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Oct 2020 21:38:34 -0400
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:50877 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1833074AbgJ1AGj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Oct 2020 20:06:39 -0400
-Received: by mail-wm1-f68.google.com with SMTP id 13so2965145wmf.0
-        for <git@vger.kernel.org>; Tue, 27 Oct 2020 17:06:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ow5uyOR/zpDmplmlW2dk8e5QpR63o2hZWI2pSUpQvLs=;
-        b=ASKnyemJoYK3mPPajTGKyqo1LIJfgrMf9de7sP32GphUzCQFZYlreGuIUH9gYK3S1n
-         MmIkUiNp4muvPbUUE84CIqGg1KUgSTOVO4QyOV6jgubD11ColoYW35PewtTdnP4GGL9R
-         MBM9aHlbQaGOFtf/vRVozfcCEIMECv677hbKzat+qXCfkgeVNuW+8hbtTXcGD/hpeJev
-         3+kUbit/aPsLJ0ah7+mBXkx7z7qNOKAZld4zoJZ4zLw4AkW3/ooT74oiaY6nocHFO8M9
-         WwdY4TDTdJfH0tbjRz+1fX89Nz1MBzSUrLLX3CKWu5D2q0umk/gZotVK2OUDHIAlvT8P
-         GBJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ow5uyOR/zpDmplmlW2dk8e5QpR63o2hZWI2pSUpQvLs=;
-        b=bGWm9rMl5FSK1xEZcVtim5RvBhsxi6oTR5vPOAz0K0bIwCN7CT5fOknpdRy982mnCm
-         Y9uWy7aXZtYA36dcoq7oljgX2ybLPUXt+EUxdjIW7vz4o6QeMkLrVmzX/mVulWyyXDB2
-         ziQnZwLCUZ230J5t1FT1KERVuqlIhfgAEpD4yCIShx7PA0sBHrqOMVWb8Ca0oWWnMknk
-         8S+KMQEtvanLiSDR+P+K7oTXaPHxsZpp/llM/Z7DgFcgjQUobiPpsC4Gh/yWmY4la3/y
-         pKMBRfeDoYt9lc7Y4myvXBQ5DAqF+6l/hbaEJ93QRRMnt5zGDO8AIVMEgAf2ECDtxVLU
-         /Clw==
-X-Gm-Message-State: AOAM532XZ9vyGx5rzaQ4NZRR8xyL9/bD9YlfYfbjzYn6tjiSjdPC3vym
-        rmsqdjMuoAb9SMqhLekrhaflUcMFnq9MRB2Kz3c=
-X-Google-Smtp-Source: ABdhPJxqAPP5sCDVSsWXImZDXL8BaKtyosjuN7KBjXb4JPs4PZremS6HObMAAjLolLTi7DWjjlKjl2RjxhwS1WFWwy8=
-X-Received: by 2002:a7b:cc8b:: with SMTP id p11mr5352807wma.100.1603843595561;
- Tue, 27 Oct 2020 17:06:35 -0700 (PDT)
+        id S1726085AbgJ1Bic (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Oct 2020 21:38:32 -0400
+Received: from mail-40132.protonmail.ch ([185.70.40.132]:52233 "EHLO
+        mail-40132.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1833053AbgJ0XqA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Oct 2020 19:46:00 -0400
+Date:   Tue, 27 Oct 2020 23:45:49 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail; t=1603842356;
+        bh=zOA7GZzYzdgafX7216BNlWl6/XpvW+HcgP6Ndi9M/es=;
+        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
+        b=tB23PfSwGqR/J6/XuAzJ9vGwv28FUPdWZYZKgfHGN6p5XIKTyy3Jq1QutsMcMo2OG
+         D4UZ342e2kKVGA7XKRf4ENdfCjcyMOWJ8mg7+fkbZjT2+EkTSxxglLa9RiMIYaF7u5
+         pfO41sh6jkp4ga/OZRorYXB6uVhWpmyAEMlbFJEU=
+To:     Jonathan Nieder <jrnieder@gmail.com>
+From:   Joey Salazar <jgsal@protonmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Reply-To: Joey Salazar <jgsal@protonmail.com>
+Subject: Re: [OUTREACHY][PATCH v2] t7006: Use test_path_is_* functions in test script
+Message-ID: <bixxjcjnQYoZ6CIUQUXdBTaGE7vawm33kqmy3csw7hsPqGQpQNyEhUqBYkvoDgHb8sb3vjLr1KOR3I71-4a4wDKQqTrFocv-eVtGlyE8S84=@protonmail.com>
+In-Reply-To: <20201027001427.GG2645313@google.com>
+References: <KHJW7elqEfVsIp1V0WKPRVAB5xqCDJjjqLv8flthlDiSsSWjND-VVGG2zL-xOYMstk-q0JR3OiSggcMlFgzkIKm2podjzAyamb0pW-wx1ZY=@protonmail.com> <20201026205028.GC2645313@google.com> <xmqqwnzcd6jf.fsf@gitster.c.googlers.com> <Bgt8H4Cev0hu-OKtYHazhsRRIFO_6bAoBqdc4tep09T98tL426R9WXIAMjm7aO4b0uPrZGldPhZ1mV3f9pbS3PDN4bOlb9JkUvvXKtnUFHA=@protonmail.com> <20201026220228.GD2645313@google.com> <AwF-WVCPGK9qyy3lWQ-aYXuvw7HTPjjGuvT4rbPjgoWZE0czToIU-aACj2oyRnkOevGWLQbDgtndt9dkMSGF-SFkNanPgao9yLuVYU1VURI=@protonmail.com> <XDwhHkxbkjL46BTp1WCJ5gJ3UbrMxRGwR2VgeRxehZh0-G07JlxCHrBGCpruqk-OegVspO6LJ0Y3yW9izl97pufYDwOhGaS885_xaVK63vs=@protonmail.com> <20201027001427.GG2645313@google.com>
 MIME-Version: 1.0
-References: <20190621223107.8022-1-felipe.contreras@gmail.com>
- <xmqqk1cz0zz1.fsf@gitster-ct.c.googlers.com> <CAMP44s3wqxTmgQpMgk2cM33EvtwrvvXYv4_90GKGmHb8yJHAKg@mail.gmail.com>
- <xmqqk0vbbep5.fsf@gitster.c.googlers.com> <CAMP44s13nip2_Z1OOFb9iVcrSxQbyJW4cH86J3Ah1p4SmTQWQQ@mail.gmail.com>
- <xmqqr1pj9rf0.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqr1pj9rf0.fsf@gitster.c.googlers.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Tue, 27 Oct 2020 18:06:24 -0600
-Message-ID: <CAMP44s0nxQ8jxxw7wSPOMv9Nx1P7ww3S6dGv27xNVQ_aHTaPng@mail.gmail.com>
-Subject: Re: [PATCH 00/14] completion: a bunch of updates
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 27, 2020 at 5:32 PM Junio C Hamano <gitster@pobox.com> wrote:
+Jonathan Nieder wrote:
+
+> > If `if test -n '$pager_wanted'` is checking if pager_wanted=3Dtrue
+> > before diagnosing core.pager_used, then would;
+> > For other instances when '$pager_wanted' is not empty then `test_path_i=
+s_file`
+> > will diagnose the directory and print a message.
+> > be more accurate?
 >
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> Yes, but because it restates what the patch says instead of describing
+> the "why", it's at the wrong level of abstraction.
+> I think what would make sense is to add a second paragraph describing
+> why the existing code uses ${if_local_config} and why what the new
+> code is doing is better.
 
-> >> (they will get
-> >> their zsh/git completion from their distros---I am assuming that the
-> >> distros get theirs from us in contrib/completion/).
-> >
-> > I don't know of anyone that relies on the zsh completion shared by
-> > their distribution.
->
-> Hmph.  If the real users don't get the completion scripts from their
-> distribution, is there still a point in having them in my tree?  You
-> are certainly not suggesting me to remove contrib/completion/ at
-> least for zsh part, but then it is unclear what you want.
+I see, thank you. I'm now thinking of a paragraph like this (thank you Emil=
+y Shaffer for your guidance in the IRC channel);
+Messages from checks to `${if_local_config}` are also printed when the
+result is false, which can be confusing. Improve readability by
+removing `${if_local_config}` checks and print messages only when a
+pager is wanted.
 
-I didn't say the users didn't get the scripts from the distribution, I
-said I didn't know of anyone that did. I just checked the installation
-instructions of Homebrew, and they do seem to install the zsh
-completion from contrib, whoever, by the time I see the bug reports,
-those users already downloaded the most recent version from GitHub
-[1].
+> Thanks,
+> Jonathan
 
-On the other hand my distribution (Arch Linux) does not enable the zsh
-script by default, it just lies dormant in /usr/share/git/completion,
-which nobody uses. So users in Arch Linux naturally would download the
-latest version from GitHub [1] as well.
-
-So, which distributions package and enable the zsh script by default? Who knows.
-
-I suggested you to graduate those scripts out of contrib so
-distributions would trust the scripts enough to enable them by
-default, but you refused.
-
-What you do with the scripts is up to you, I only know what would
-happen depending on what you do. 1) If you leave them as is, some
-distributions would enable them, others don't, and people will keep
-downloading the scripts from git's GitHub [1]. 2) If you graduate
-them, more--if not all--distributions would enable them by default,
-and less people would download them. 3) If you remove them, people
-would look for another git repository to download those scripts from.
-
-> Are you saying that by adding the latest and greatest, these real
-> users who so far couldn't rely on distros now can start to do so,
-> and we'll make their life easier by updating the 29-patch series
-> (which I presume is the v2 of this 14-patch series)?
-
-No. Many of them will keep downloading the completion from git's
-mirror in GitHub [1].
-
-Unless you graduate the scripts out of contrib.
-
-> In any case, some Zsh users, even though they are not active
-> developers for the completion script, may have something good to
-> say, now the 29-patch series has been posted to the list and queued.
-> I didn't look at the zsh part, but I didn't find anything glaringly
-> wrong in the changes to the bash completion.
-
-That's great. Although I have v3 already, since I found a couple of issues.
-
-I'll send those.
-
-Cheers.
-
-[1] https://github.com/git/git/blob/master/contrib/completion/git-completion.zsh
-
--- 
-Felipe Contreras
+Thank you for your patient input and feedback.
