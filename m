@@ -2,206 +2,140 @@ Return-Path: <SRS0=IAqa=EC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B73AC55178
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 17:49:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C2B7C388F9
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 18:24:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CFE8B2242E
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 17:49:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B54B520773
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 18:24:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kaobZx1h"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iqpAWhE6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1822300AbgJ0RtB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Oct 2020 13:49:01 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:54472 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1822226AbgJ0RsM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Oct 2020 13:48:12 -0400
-Received: by mail-wm1-f66.google.com with SMTP id w23so2194741wmi.4
-        for <git@vger.kernel.org>; Tue, 27 Oct 2020 10:48:11 -0700 (PDT)
+        id S1827192AbgJ0SWC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Oct 2020 14:22:02 -0400
+Received: from mail-wr1-f49.google.com ([209.85.221.49]:37910 "EHLO
+        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753812AbgJ0OCY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Oct 2020 10:02:24 -0400
+Received: by mail-wr1-f49.google.com with SMTP id n18so2052841wrs.5
+        for <git@vger.kernel.org>; Tue, 27 Oct 2020 07:02:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=sxZIbZDhBnDwZ5b71xrw9t0jGXBptDaOOxYuWQpldH8=;
-        b=kaobZx1heZ63rU8HPunrKU9knhbBN+Eo4I1CyGQheMaVck5YEnPl2gjqxiLXBsJA3G
-         cBX9rfTdnc3/g1hs4X8WtaeUbr8EuBnRI2+r/rxTBzCEXKpRv+0GPyoiQiB5XgOjbF88
-         ZHYhKGoIwfNoNf2OZAwgoivQF/FdJ0rLlcvcy58f1eiA09+VxKRGYcrT5mG/7KHcASTY
-         Y6AccGOGx1b5eZGrJza+ZVKRfCK8cQMHix3cCo48oTLoQ0gib6JtiwLftbFu5KZL0rkU
-         BDeywoE2P7sZVjCq3P22b4eyK48lIO3Fcsw++DH0Fmhfoab8LCvFFc42tFkSNhIJrfxy
-         gq1g==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=S6HMBHnVySI2rqEgBg3+alOlWIeaRuyc4pqh+3dqsIo=;
+        b=iqpAWhE6SKTjx5wWxksBwYVAZFwLshED81tqkzcPRPav6FO8+vgpNaYO35GmLzjc76
+         FWqsTPFkIHEBekQIoGTtyeIL7uFzk6vH2kMftoWV0XaEDhsIIaoOoyHV4Fn2u82fyEwo
+         qia49YCRUavgWwwArnSXG3RGb7wv4/2nE6AQcjasm3+IPkDjLaGA74X767aeuF8x0iZO
+         5nohGHeysL35SAqCoeHVa5dmZy7wQHbuATwVUWv4Fk3ecSw47miqUq5p0trkFxLMqAXO
+         w46DgT6LmwAUmxc8oq6CJCHfRVDnGWg/n0GDXrRFepSWa6F7gxJvm9M3P8UiuKky2XGJ
+         j4Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=sxZIbZDhBnDwZ5b71xrw9t0jGXBptDaOOxYuWQpldH8=;
-        b=qCcf5wnasrboAdtc5Do5RXcACse7fuCTjLTAekDOz+UUOoYAZeuwryvDdhpaYgtSZW
-         HUR/sH5uCs9riXkLr0CYLKQVjqFgMsFa0R6gqVrZmWyPBQbYFK9UnFk44W98Q3PduvCW
-         iqHTw1jA00/JNQ4TwxrkKumlyA9/Hvr1KnFBPV5n9yk1bDE4r84yZe8i2pbYC2ECixbC
-         XBmUE4X6p2tQvoOfD8kfaYfc3Nb8LObFS57wMvmjaz9+3nH27f1Ybb7Nv25K2AvW9Di9
-         LvpipKI7PWK8rMR72MDqxc5mnsy6fUMXG9JiY9yVTdCJ4ZGy87g7bJW0MKzJjTUXBoak
-         XlHQ==
-X-Gm-Message-State: AOAM532rST+6By5p0j9sO+ppZV6NY/fDY0rhVC7oMQ8nDLY2Lu2+dNmR
-        TZ7vEjwb4NSnCE83VMZONbUY95pR37g=
-X-Google-Smtp-Source: ABdhPJwhXWBJYsVvWecW+B0uUfWk/9Xo5Xtgytt0911C6cFthYI+PKvuwQlz9RVAbkbKaACm24ABUg==
-X-Received: by 2002:a1c:bc55:: with SMTP id m82mr3797684wmf.159.1603820890873;
-        Tue, 27 Oct 2020 10:48:10 -0700 (PDT)
-Received: from [192.168.1.240] (189.55.7.51.dyn.plus.net. [51.7.55.189])
-        by smtp.gmail.com with ESMTPSA id g8sm3048382wma.36.2020.10.27.10.48.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Oct 2020 10:48:09 -0700 (PDT)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [Outreachy]: Help for Outreachy Application
-To:     Charvi Mendiratta <charvi077@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-References: <CAPSFM5e9tXx_LuwNK+e1wOjaHb6kiTCEt3WeL851KAbTPNsEow@mail.gmail.com>
- <6a2005e7-6b8b-2bf4-91fa-55feadd65897@gmail.com>
- <CAPSFM5fbZN0uv9SgB-d4SR53ZFw8cOkgFmUK-Gns+c=yAmcP1w@mail.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <966470c3-8883-faf1-629f-89fc8d18b339@gmail.com>
-Date:   Tue, 27 Oct 2020 17:48:02 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=S6HMBHnVySI2rqEgBg3+alOlWIeaRuyc4pqh+3dqsIo=;
+        b=MS/ail8EM8YW6FTEypkcdNhbWZYOaeGONoW3QO21ua7TE6hslJQlpz+XA9BO82Qbso
+         jT2V2VkeGx+JDyU8jxjWGeQCfm/9QxSi/YOU+LueSODW/gQZIv69KExCe3GW1H+m078i
+         ei/i82TnRz0dXI1xKb5B5EwsAqvKyMAd5G63Sj/JOaoljqD3WNeUKBXpHC8ThpAiASlK
+         jzPi70mq30e2kvR6SxTImVnJ95YFS3v5CCTOSxolXOUCg8thiR0XKySu4GJM5ITJjaGN
+         xe68NiEJVxHhbs55QKSXllc5SKSP9s991oxHcRfIRf6npNdb20ET/aPqiCkh8nnuAJev
+         OZqQ==
+X-Gm-Message-State: AOAM531oaHkL3XNPw973an0+yYlcpiKKNXMbD1gHArzaU6YN+UQZmgK2
+        b/1uHv0luBrzlILmfm/xE5k15+087X4=
+X-Google-Smtp-Source: ABdhPJz5M4s3Ieheb2INCWTjbMJFEsyVo9U2iLDU5C7Fec/48949Fm9Zx23yfw6HXe9BoxZW9ANymQ==
+X-Received: by 2002:adf:fc8b:: with SMTP id g11mr3107788wrr.300.1603807342018;
+        Tue, 27 Oct 2020 07:02:22 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e7sm2376021wrm.6.2020.10.27.07.02.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Oct 2020 07:02:21 -0700 (PDT)
+Message-Id: <11494a7b79cd5b6fbef51720e7111a94e7bd650e.1603807338.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.773.git.1603807337.gitgitgadget@gmail.com>
+References: <pull.773.git.1603807337.gitgitgadget@gmail.com>
+From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 27 Oct 2020 14:02:16 +0000
+Subject: [PATCH 3/4] rebase -i: use struct object_id when writing state
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <CAPSFM5fbZN0uv9SgB-d4SR53ZFw8cOkgFmUK-Gns+c=yAmcP1w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Caspar Duregger <herr.kaste@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Charvi
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-On 27/10/2020 14:24, Charvi Mendiratta wrote:
-> On Mon, 26 Oct 2020 at 16:06, Phillip Wood <phillip.wood123@gmail.com> wrote:
->> On 25/10/2020 07:43, Charvi Mendiratta wrote:
->>> I have read the Outreachy projects and am interested in the project
->>> "Improve droping and rewording commits in Git interactive rebase". I
->>> spent some time understanding the project and have gone through its
->>> detailed explanation in the issue[2].
->>
->> Thanks for your interest in the project
->>
-> I apologize for late replies, as I thought to spend some more time in
-> understanding the project.
+Rather than passing a string around pass the struct object_id that the
+string was created from call oid_hex() when we write the file.
 
-That's fine, no need to apologize - taking time to understand the 
-project is good
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ builtin/rebase.c | 3 ++-
+ sequencer.c      | 5 +++--
+ sequencer.h      | 2 +-
+ 3 files changed, 6 insertions(+), 4 deletions(-)
 
- >[...]
->>> I also looked into archives of the mailing list and found the
->>> patches[3] submitted by Philip for --reword option in git commit and
->>> need some more pointers about its status and how to start with its
->>> code ?
->>> Also, in the issue[2] as commented by Phillip regarding the patches[4]
->>> that implements reword. I would like to know if I can start with that
->>> mentioned work, if available.
->>
->> Whoever takes on this project is very welcome to use my patches as a
->> starting point. The code in the patches is sound as far as I know and
->> the I believe the test coverage is reasonable (though that would need to
->> be checked). They are lacking any documentation and there has been a
->> change to the way empty commits are handled by rebase since they were
->> written so "rebase -i: always keep empty amend! commits" will need
->> looking at and could probably be dropped.
-> 
-> Okay, I will note these points .
-> 
->> We will also need to decide on the best UI for the --reword idea. My
->> patches were developed a couple of years ago before I was aware of
->> dscho's idea and so implement a slightly different UI to the one
->> outlined in the github issue (they call 'reword!' 'amend!' instead). I'm
->> not that keen on adding another option to `git commit` to create yet
->> another flavor of fixup commit, we'll need to agree a way forward on that[1]
->>
-> 
-> I agree that we need to look into options for creating reword! commit
-> and drop! commit and its integration with interactive rebase .
-> 
-> Also, considering this I think there can be two possibilities :
-> 
-> As mentioned by Junio [1] that we can extend the existing '--fixed <commit>'/
-> '--squash <commit>', to implement reword! commit as mentioned in the issue[2]
-> by Dscho .
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index d975918de6..f94f9fe307 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -296,7 +296,8 @@ static int get_revision_ranges(struct commit *upstream, struct commit *onto,
+ }
+ 
+ static int init_basic_state(struct replay_opts *opts, const char *head_name,
+-			    struct commit *onto, const char *orig_head)
++			    struct commit *onto,
++			    const struct object_id *orig_head)
+ {
+ 	FILE *interactive;
+ 
+diff --git a/sequencer.c b/sequencer.c
+index f79c3df861..2037f0ba66 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2692,7 +2692,7 @@ static void write_strategy_opts(struct replay_opts *opts)
+ }
+ 
+ int write_basic_state(struct replay_opts *opts, const char *head_name,
+-		      struct commit *onto, const char *orig_head)
++		      struct commit *onto, const struct object_id *orig_head)
+ {
+ 	if (head_name)
+ 		write_file(rebase_path_head_name(), "%s\n", head_name);
+@@ -2700,7 +2700,8 @@ int write_basic_state(struct replay_opts *opts, const char *head_name,
+ 		write_file(rebase_path_onto(), "%s\n",
+ 			   oid_to_hex(&onto->object.oid));
+ 	if (orig_head)
+-		write_file(rebase_path_orig_head(), "%s\n", orig_head);
++		write_file(rebase_path_orig_head(), "%s\n",
++			   oid_to_hex(orig_head));
+ 
+ 	if (opts->quiet)
+ 		write_file(rebase_path_quiet(), "%s", "");
+diff --git a/sequencer.h b/sequencer.h
+index ea56825488..cf201f2406 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -227,7 +227,7 @@ int read_author_script(const char *path, char **name, char **email, char **date,
+ 		       int allow_missing);
+ void parse_strategy_opts(struct replay_opts *opts, char *raw_opts);
+ int write_basic_state(struct replay_opts *opts, const char *head_name,
+-		      struct commit *onto, const char *orig_head);
++		      struct commit *onto, const struct object_id *orig_head);
+ void sequencer_post_commit_cleanup(struct repository *r, int verbose);
+ int sequencer_get_last_command(struct repository* r,
+ 			       enum replay_action *action);
+-- 
+gitgitgadget
 
-My concern with the idea of using `--fixup=<commit> --edit` to create a 
-reword! commit is that it is changing existing behavior. I (very) 
-occasionally add some temporary notes to a fixup commit if I know I'm 
-not going to be rebasing for a while, that would still be possible under 
-the new scheme but would require manually editing the subject line.
-
-> or as you have mentioned to change the semantics of
-> 'git commit --fixup/squash".
-
-I think that would require a config variable to opt in which is not ideal.
-
-Since that discussion I've wondered if changing commit to allow 
-`--fixup=reword:<commit>` to create an empty reword! commit that changes 
-the message of <commit> when it is rebased and `--fixup=amend:<commit>` 
-to create a reword! commit that changes the content and message of 
-<commit> when it is rebased. The advantage is that they are backwards 
-compatible and mirror --amend and --reword as suggested in the other 
-thread. We could allow `reword/amend:<commit>` to be abbreviated as 
-`r/a:<commit>`
-
-We also need to decide how to apply a reword! commit when rebasing. My 
-patch series adds a new command 'amend' but I wonder if we should think 
-about using `fixup -C` to reuse the message without editing and `fixup 
--c` to reuse the message and have the user edit it as we do for `merge`
-
-One other point - as the reword! mechanism changes the contents and 
-message of the commit I wonder if we could improve the name - maybe 
-amend! or revise! I'm not sure.
-
-> And, if we consider the above then for drop! commit, I wonder if we
-> can implement
-> it in the same way as mentioned in issue [2] by adding the --drop
-> option to 'git revert'.
-> 
-> Secondly, as you have mentioned here [3], there could be a `rewrite` command
-> as a wrap of `rebase -i` . But regarding this, I want to once confirm
-> if this can be a
-> solution of this project or is it need to be done later on.
-
-The 'rewrite' idea is definitely not part of this project, it's an idea 
-for better history editing in the future.
-
-Best Wishes
-
-Phillip
-
-> Please correct me if I am wrong.
-> 
-> Thanks and Regards,
-> Charvi
-> 
-> [1] https://lore.kernel.org/git/xmqqft77glhn.fsf@gitster.c.googlers.com/
-> [2] https://github.com/gitgitgadget/git/issues/259
-> [3] https://lore.kernel.org/git/95cc6fb2-d1bc-11de-febe-c2b5c78a6850@gmail.com/
-> 
->> Best Wishes
->>
->> Phillip
->>
->> [1]
->> https://lore.kernel.org/git/95cc6fb2-d1bc-11de-febe-c2b5c78a6850@gmail.com
->>
->>>
->>> Thanks and Regards,
->>> Charvi
->>>
->>> [1] https://public-inbox.org/git/20201021124823.2217-1-charvi077@gmail.com/
->>> [2] https://github.com/gitgitgadget/git/issues/259
->>> [3]
->>> https://public-inbox.org/git/pull.736.git.1600695050.gitgitgadget@gmail.com/
->>> [4] https://github.com/phillipwood/git/commits/wip/rebase-amend
->>>
->>
