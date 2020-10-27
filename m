@@ -7,203 +7,149 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0B86C388F9
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 21:10:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB276C4363A
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 21:38:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9A71A20747
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 21:10:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9ABD4207E8
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 21:38:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CFAFLiy7"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bhdjg+kz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1832108AbgJ0VKr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Oct 2020 17:10:47 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51317 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1832105AbgJ0VKr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Oct 2020 17:10:47 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6E841E7D26;
-        Tue, 27 Oct 2020 17:10:42 -0400 (EDT)
+        id S374199AbgJ0ViT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Oct 2020 17:38:19 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53342 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2506147AbgJ0ViT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Oct 2020 17:38:19 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CDB2AF05F4;
+        Tue, 27 Oct 2020 17:38:16 -0400 (EDT)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1qKUUaE8MYgwdowg8u6o6zqRDAI=; b=CFAFLi
-        y7YC45UkOK1rNrPSX8dB6dGLcL7LplCQHzpvcN+ChRRiLrwqB/esj2qgwHoIgspa
-        Ari9t7OJZPyYCjpjGkp4n7XA97KdWrW3qUG4cypSV+HM0dOGO8Be/FMqdwz40FM4
-        627I31kSHRCESI+yTqdXMnMe2L6JZi/x399WE=
+        :content-type; s=sasl; bh=FUE4RjM/iFdA9o/q5LQJ93zyD2Q=; b=bhdjg+
+        kzPM+BjOe44iMWkYD6L0bK/jp7et31EPoy2nE57ZzSXnhvtwvDbVwdY9O4ftWGH+
+        0T/yrDpK97xId9uo6tFKz7iRFDWuHgwfE4K1sIWticOypzp7l6ExMBqm53ITTnKP
+        p6+dR3GDJ9IDpbTfaU44fc1DRzgFNza1vNNz0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=WRSddqwCqrWqSKTyofMlgAyHZ/wJFI6a
-        PfBUkAYTucArvhv0EHYWyVpkE++3lDl8Ni91z4rmYehAfHaTSFnBcAq3O21sasBw
-        ku/+QdZt5UtgYGuUndX6PcgEFexQHu2vRip1gKx29T1xCOxeYPGORd6nUcfZy5Ne
-        /yJANmjGAro=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 672D6E7D25;
-        Tue, 27 Oct 2020 17:10:42 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=tZJ5q8PzC4hqRmcRpULeqC/SNOJCv8I7
+        Du+7RNAZ2j7EFHWCnv88xuM//oKvpcBh8CB8s1U9vy1PP2hAfbBi6+s+iH/mGtZK
+        mygNLsAn44oWR3m/fgkvQtEF9amVg/h/8tH9x0TnXrZBjMZlH29xs5aqtLGKCFNz
+        /RDXPJOSEOs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C7C4CF05F3;
+        Tue, 27 Oct 2020 17:38:16 -0400 (EDT)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B12FCE7D24;
-        Tue, 27 Oct 2020 17:10:39 -0400 (EDT)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 171CDF05F0;
+        Tue, 27 Oct 2020 17:38:14 -0400 (EDT)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Caspar Duregger <herr.kaste@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 1/4] rebase -i: stop overwriting ORIG_HEAD buffer
-References: <pull.773.git.1603807337.gitgitgadget@gmail.com>
-        <24f2c4a62317231f4eabed23bb24d345abc9d67e.1603807338.git.gitgitgadget@gmail.com>
-Date:   Tue, 27 Oct 2020 14:10:38 -0700
-In-Reply-To: <24f2c4a62317231f4eabed23bb24d345abc9d67e.1603807338.git.gitgitgadget@gmail.com>
-        (Phillip Wood via GitGitGadget's message of "Tue, 27 Oct 2020 14:02:14
-        +0000")
-Message-ID: <xmqq7drbbcj5.fsf@gitster.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] sideband: diagnose more incoming packet anomalies
+References: <pull.753.v2.git.1603136142.gitgitgadget@gmail.com>
+        <pull.753.v3.git.1603728555.gitgitgadget@gmail.com>
+        <20201027065250.GB3005508@coredump.intra.peff.net>
+        <20201027071222.GC3005508@coredump.intra.peff.net>
+        <xmqqblgncxap.fsf@gitster.c.googlers.com>
+        <20201027204205.GA643357@coredump.intra.peff.net>
+Date:   Tue, 27 Oct 2020 14:38:12 -0700
+In-Reply-To: <20201027204205.GA643357@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 27 Oct 2020 16:42:05 -0400")
+Message-ID: <xmqqzh479wor.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: DDA22346-1898-11EB-835A-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: B7B6C552-189C-11EB-AF99-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Does this patch seem otherwise worth doing?
 
-My initial impression after seeing the recent report about ORIG_HEAD
-was "hmph, these days, rebasing is done on detached HEAD and the
-final step updates the target branch only once, so @{1} is much
-easier to use---perhaps it is time to deprecate use of ORIG_HEAD?".
-After all, ORIG_HEAD was invented way before we had reflog, and
-given that one of the goal of reflog was to give more general
-recovery mechanism than going back one-step like ORIG_HEAD allowed
-us to, and "rebase" were taught to work on detached HEAD to make
-@{1} more useful, it would not be too bad to eventually retire
-ORIG_HEAD in a distant future, I thought.
+Yeah.
 
-But it is a good initiative anyway to make ORIG_HEAD again work as
-documented.  Thanks for working on it.
+FWIW, I do not find the "dependency" thing disturbing.  sideband is
+an extension of the pkt-line mechansim, so it is natural that it
+depends on pkt-line.  I'd also be happy if enums, structures and
+calls defined in both headers are made available by just including
+one of them (e.g. retire sideband.h, perhaps).
 
-> After rebasing ORIG_HEAD is supposed to point to the old HEAD of the
+> An alternate patch would be to keep the behavior the same and just
+> clarify the code a bit. Something like:
 
-A comma after "rebasing".
+This also looks OK to me from readability's point of view, but it
+does not as much help the end user who is puzzled as the real thing,
+I am afraid.
 
-> rebased branch. Unfortunately the buffer storing the oid was
-> overwritten with a new oid before ORIG_HEAD was created. The buffer is
-> also used when writing .git/rebase-merge/orig-head which is used by
-> `rebase --abort` to restore the previous head. Luckily that file is
-> written before the buffer is overwritten.  As we want the full oid
-> find_unique_abbrev() is replaced with oid_to_hex_r() rather than
-> find_unique_abbrev_r().
+Thanks.
 
-The above is hard to read and understand.  It is unclear where the
-observation of the current behaviour (which is often the explanation
-of the cause of the bug) ends and the description of new behaviour
-begins.
-
-    ... old HEAD of the rebased branch.  The code used
-    find_unique_abbrev() to obtain the object name of the old HEAD
-    and wrote to both .git/rebase-merge/orig-head (used by `rebase
-    --abort` to go back to the previous state) and to ORIG_HEAD.
-    The buffer find_unique_abbrev() gives back is volatile,
-    unfortunately, and was overwritten after the former file is
-    written but before ORIG_FILE is written, leaving an incorrect
-    object name in it.
-
-Up to that point is the observation of the current code, which
-explains where the bug comes from.  Please have a paragraph break
-after that, before explaining the solution, e.g.
-
-    Avoid relying on the volatile buffer of find_unique_abbrev(),
-    and instead supply our own buffer to keep the object name.
-    Because we want to use the full object name, use oid_to_hex_r()
-    instead of find_unique_abbrev_r() to do so.
-
-> I think that all of the users of head_hash should actually be using
-> opts->orig_head instead as passing a string rather than a struct
-> object_id around is a hang over from the scripted implementation. This
-> patch just fixes the immediate bug and adds a regression test based on
-> Caspar's reproduction example. The users will be converted to use
-> struct object_id and head_hash removed in the next few commits.
-
-Makes sense.
-
+> -- >8 --
+> Subject: [PATCH] demultiplex_sideband(): clarify corner cases
 >
-> Reported-by: Caspar Duregger <herr.kaste@gmail.com>
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> The size checks in demultiplex_sideband() are a bit subtle and
+> confusing:
+>
+>   - we consider a zero-length packet ("0004") to be a flush packet, even
+>     though it's not really one. This is perhaps wrong, but it should
+>     never happen in our protocol, and we err on the side of history and
+>     leniency. We'll leave a comment indicating that we expect this case.
+>
+>   - likewise we consider any flush-like packet (e.g., "0001" delim) to
+>     be a flush. I didn't confirm whether this is necessary for normal
+>     protocol usage. It may be for the everything-over-sideband mode
+>     introduced by 0bbc0bc574 ({fetch,upload}-pack: sideband v2 fetch
+>     response, 2019-01-16). Likewise let's leave a comment.
+>
+>   - we check for "len < 1" to see if there's no sideband designator.
+>     That's confusing, because we already covered the "len == 0" case.
+>     What is interesting is the "len < 0" case. But that's not a missing
+>     sideband designator, but rather an error or EOF from the pkt-line
+>     code. This should never happen, though, because our callers instruct
+>     pkt-line to die() on EOF anyway. So let's make it more obvious
+>     that we're looking for a negative value here, and consider it a
+>     BUG() in the caller to pass us garbage.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
 > ---
-
-If you cite "Caspar's repro example" like that in the log message,
-it is incomplete to leave out a URL to the mail archive.
-
-
->  builtin/rebase.c              | 10 +++++-----
->  t/t3404-rebase-interactive.sh | 11 +++++++++++
->  2 files changed, 16 insertions(+), 5 deletions(-)
+>  sideband.c | 15 ++++++++-------
+>  1 file changed, 8 insertions(+), 7 deletions(-)
 >
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index eeca53382f..6def28a533 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -270,15 +270,15 @@ static int edit_todo_file(unsigned flags)
->  }
+> diff --git a/sideband.c b/sideband.c
+> index 0a60662fa6..6ba1925614 100644
+> --- a/sideband.c
+> +++ b/sideband.c
+> @@ -130,17 +130,18 @@ int demultiplex_sideband(const char *me, char *buf, int len,
+>  			suffix = DUMB_SUFFIX;
+>  	}
 >  
->  static int get_revision_ranges(struct commit *upstream, struct commit *onto,
-> -			       struct object_id *orig_head, const char **head_hash,
-> +			       struct object_id *orig_head, char *head_hash,
->  			       char **revisions, char **shortrevisions)
->  {
->  	struct commit *base_rev = upstream ? upstream : onto;
->  	const char *shorthead;
->  
-> -	*head_hash = find_unique_abbrev(orig_head, GIT_MAX_HEXSZ);
-> +	oid_to_hex_r(head_hash, orig_head);
->  	*revisions = xstrfmt("%s...%s", oid_to_hex(&base_rev->object.oid),
-> -						   *head_hash);
-> +						   head_hash);
->  
->  	shorthead = find_unique_abbrev(orig_head, DEFAULT_ABBREV);
->  
-> @@ -327,7 +327,7 @@ static void split_exec_commands(const char *cmd, struct string_list *commands)
->  static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
->  {
->  	int ret;
-> -	const char *head_hash = NULL;
-> +	char head_hash[GIT_MAX_HEXSZ];
->  	char *revisions = NULL, *shortrevisions = NULL;
->  	struct strvec make_script_args = STRVEC_INIT;
->  	struct todo_list todo_list = TODO_LIST_INIT;
-> @@ -335,7 +335,7 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
->  	struct string_list commands = STRING_LIST_INIT_DUP;
->  
->  	if (get_revision_ranges(opts->upstream, opts->onto, &opts->orig_head,
-> -				&head_hash, &revisions, &shortrevisions))
-> +				head_hash, &revisions, &shortrevisions))
->  		return -1;
->  
->  	if (init_basic_state(&replay,
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index 07a1617351..1e56696e4f 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -1797,6 +1797,17 @@ test_expect_success 'todo has correct onto hash' '
->  	test_i18ngrep "^# Rebase ..* onto $onto" actual
->  '
->  
-> +test_expect_success 'ORIG_HEAD is updated correctly' '
-> +	test_when_finished "git checkout master && git branch -D test-orig-head" &&
-> +	git checkout -b test-orig-head A &&
-> +	git commit --allow-empty -m A1 &&
-> +	git commit --allow-empty -m A2 &&
-> +	git commit --allow-empty -m A3 &&
-> +	git commit --allow-empty -m A4 &&
-> +	git rebase master &&
-> +	test_cmp_rev ORIG_HEAD test-orig-head@{1}
-> +'
+> +	if (len < 0)
+> +		BUG("error/eof packet passed to demultiplex_sideband");
 > +
->  # This must be the last test in this file
->  test_expect_success '$EDITOR and friends are unchanged' '
->  	test_editor_unchanged
+>  	if (len == 0) {
+> +		/*
+> +		 * we treat all flush-like packets (flush, delim, etc) and even
+> +		 * empty data packets as a flush
+> +		 */
+>  		*sideband_type = SIDEBAND_FLUSH;
+>  		goto cleanup;
+>  	}
+> -	if (len < 1) {
+> -		strbuf_addf(scratch,
+> -			    "%s%s: protocol error: no band designator",
+> -			    scratch->len ? "\n" : "", me);
+> -		*sideband_type = SIDEBAND_PROTOCOL_ERROR;
+> -		goto cleanup;
+> -	}
+> +
+>  	band = buf[0] & 0xff;
+>  	buf[len] = '\0';
+>  	len--;
