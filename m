@@ -2,61 +2,85 @@ Return-Path: <SRS0=IAqa=EC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,UNWANTED_LANGUAGE_BODY,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57DA0C388F9
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 12:25:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F48AC388F9
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 12:25:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1978422447
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 12:25:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E52CA2245B
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 12:25:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2899821AbgJ0MZO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Oct 2020 08:25:14 -0400
-Received: from mslow2.mail.gandi.net ([217.70.178.242]:34046 "EHLO
+        id S2899747AbgJ0MZw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Oct 2020 08:25:52 -0400
+Received: from mslow2.mail.gandi.net ([217.70.178.242]:36734 "EHLO
         mslow2.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2899815AbgJ0MZN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Oct 2020 08:25:13 -0400
-Received: from relay10.mail.gandi.net (unknown [217.70.178.230])
-        by mslow2.mail.gandi.net (Postfix) with ESMTP id 5CB723A92D8
-        for <git@vger.kernel.org>; Tue, 27 Oct 2020 12:07:04 +0000 (UTC)
-Received: from localhost.localdomain (unknown [82.66.241.80])
-        (Authenticated sender: b@ptistefontaine.fr)
-        by relay10.mail.gandi.net (Postfix) with ESMTPSA id 7BD4024001F;
-        Tue, 27 Oct 2020 12:06:42 +0000 (UTC)
-From:   Baptiste Fontaine <b@ptistefontaine.fr>
-To:     git@vger.kernel.org
-Cc:     Baptiste Fontaine <b@ptistefontaine.fr>
-Subject: [PATCH] l10n: fr.po Fix a typo
-Date:   Tue, 27 Oct 2020 13:06:12 +0100
-Message-Id: <20201027120611.5084-1-b@ptistefontaine.fr>
-X-Mailer: git-send-email 2.28.0
+        with ESMTP id S2440527AbgJ0MZv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Oct 2020 08:25:51 -0400
+Received: from relay12.mail.gandi.net (unknown [217.70.178.232])
+        by mslow2.mail.gandi.net (Postfix) with ESMTP id BD6273A995D
+        for <git@vger.kernel.org>; Tue, 27 Oct 2020 12:10:08 +0000 (UTC)
+Received: from localhost (unknown [103.82.80.101])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay12.mail.gandi.net (Postfix) with ESMTPSA id 39E78200006;
+        Tue, 27 Oct 2020 12:09:45 +0000 (UTC)
+Date:   Tue, 27 Oct 2020 17:39:43 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: Why does git diff-index show intent-to-add file as "Added"?
+Message-ID: <20201027120943.skmx6c3crbtu335o@yadavpratyush.com>
+References: <20201017162111.gvisfz2daqvhnjmb@yadavpratyush.com>
+ <xmqqimb88v35.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqimb88v35.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Baptiste Fontaine <b@ptistefontaine.fr>
----
- po/fr.po | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 17/10/20 01:18PM, Junio C Hamano wrote:
+> Pratyush Yadav <me@yadavpratyush.com> writes:
+> 
+> > In this case, running diff-files gives:
+> >
+> >   :000000 100644 0000000000000000000000000000000000000000 0000000000000000000000000000000000000000 A	foo
+> 
+> Yes, it says "when comparing the index and the working tree, working
+> tree side has it, and the index side does not, so it is an addition".
+> 
+> Of course, if it is truly a new file that the index does not even
+> know about, we'd stay silent, but a path that are marked with i-t-a
+> bit is what the user told us to keey an eye on, so that is what you
+> would get.
+> 
+> > Running diff-index gives:
+> >
+> >   :000000 100644 0000000000000000000000000000000000000000 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 A	foo
+> 
+> If this is "diff-index HEAD", then I think it is expected.  "when
+> comparing the HEAD and the working tree, working tree side has it,
+> and the tree side does not, so it is an addition."  Exactly the same
+> story as "diff-files".
 
-diff --git po/fr.po po/fr.po
-index f510f0bc6f..b1cbaca24d 100644
---- po/fr.po
-+++ po/fr.po
-@@ -8282,7 +8282,7 @@ msgstr ""
- #: sha1-name.c:1717
- #, c-format
- msgid "path '%s' does not exist in '%.*s'"
--msgstr "le chemin '%s' n'existe pas dnas '%.*s'"
-+msgstr "le chemin '%s' n'existe pas dans '%.*s'"
+It is `git diff-index --cached HEAD`.
  
- #: sha1-name.c:1745
- #, c-format
--- 
-2.28.0
+> What should happen in "diff-index --cached HEAD", I offhand do not
+> know.  "diff-index --cached HEAD" is a request to compare two trees,
+> i.e. the tree that _would_ be produced if you wrote the index out as
+> a tree (i.e. "git write-tree") right now, and the tree of HEAD.  So
+> I think it may be sensible for the command to behave as if the i-t-a
+> path does not even exist in the index when it is run with "--cached";
+> I may be missing some subtleties that require us to do something
+> different, but that is what I would think.
 
+This is what I think too. Can we then treat this as a bug, and work on 
+fixing it? Does any subsystem expert have any comments and/or provide 
+extra context?
+
+-- 
+Regards,
+Pratyush Yadav
