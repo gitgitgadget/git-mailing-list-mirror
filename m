@@ -2,260 +2,174 @@ Return-Path: <SRS0=IAqa=EC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B8D5C4363A
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 06:52:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 720A6C55179
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 07:12:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DCC372225C
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 06:52:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4283A20709
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 07:12:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730011AbgJ0Gww (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Oct 2020 02:52:52 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38226 "EHLO cloud.peff.net"
+        id S2507391AbgJ0HMY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Oct 2020 03:12:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38244 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729999AbgJ0Gww (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Oct 2020 02:52:52 -0400
-Received: (qmail 14139 invoked by uid 109); 27 Oct 2020 06:52:50 -0000
+        id S2507377AbgJ0HMY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Oct 2020 03:12:24 -0400
+Received: (qmail 14221 invoked by uid 109); 27 Oct 2020 07:12:23 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 27 Oct 2020 06:52:50 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 27 Oct 2020 07:12:23 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14935 invoked by uid 111); 27 Oct 2020 06:52:50 -0000
+Received: (qmail 15002 invoked by uid 111); 27 Oct 2020 07:12:23 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 27 Oct 2020 02:52:50 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 27 Oct 2020 03:12:23 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 27 Oct 2020 02:52:50 -0400
+Date:   Tue, 27 Oct 2020 03:12:22 -0400
 From:   Jeff King <peff@peff.net>
 To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
         Jonathan Tan <jonathantanmy@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] sideband: diagnose more incoming packet anomalies
-Message-ID: <20201027065250.GB3005508@coredump.intra.peff.net>
+Subject: Re: [PATCH] sideband: diagnose more incoming packet anomalies
+Message-ID: <20201027071222.GC3005508@coredump.intra.peff.net>
 References: <pull.753.v2.git.1603136142.gitgitgadget@gmail.com>
  <pull.753.v3.git.1603728555.gitgitgadget@gmail.com>
+ <20201027065250.GB3005508@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.753.v3.git.1603728555.gitgitgadget@gmail.com>
+In-Reply-To: <20201027065250.GB3005508@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 26, 2020 at 04:09:13PM +0000, Johannes Schindelin via GitGitGadget wrote:
+On Tue, Oct 27, 2020 at 02:52:50AM -0400, Jeff King wrote:
 
-> Changes since v2:
-> 
->  * Dropped patch 3/3 because it was only intended to be defensive
->    programming, but turned out to be too hard without layering violations.
+>   - we'll report an eof with a more detailed "protocol error: eof while
+>     reading sideband packet", rather than the generic "the remote end
+>     hung up unexpectedly"
 
-It is a bit tricky, but here's a working replacement.
+I wasn't sure if "eof" was too jargon-y. This is probably a message
+normal users are likely to see if the network drops out on them.
 
--- >8 --
-Subject: [PATCH] sideband: diagnose more sideband anomalies
+So I'm open to rewording suggestions. Or even dropping the eof bits
+entirely. They do give us better flushing behavior:
 
-In demultiplex_sideband(), there are two oddities when we check an
-incoming packet:
+>   - when we see an eof, we'll flush the sideband scratch buffer, which
+>     may provide some hints from the remote about why they hung up
+>     (though note we already flush on newlines, so it's likely that most
+>     such messages already made it through)
 
-  - if it has zero length, then we assume it's a flush packet. This
-    means we fail to notice the difference between a real flush and a
-    true zero-length packet that's missing its sideband designator. It's
-    not a huge problem in practice because we'd never send a zero-length
-    data packet (even our keepalives are otherwise-empty sideband-1
-    packets).
+But I suspect that's uncommon in practice.
 
-    But it would be nice to detect and report the error, since it's
-    likely to cause other confusion (we think the other side flushed,
-    but they do not).
+>  t/t0070-fundamental.sh | 12 ++++++++++++
 
-  - we try to detect packets missing their designator by checking for
-    "if (len < 1)". But this will never trigger for "len == 0"; we've
-    already detected that and left the function before then.
+I added this to t0070 since that's where your earlier test went. It does
+feel like this isn't quite as "fundamental" as some of the other things
+in that file, though.
 
-    It _could_ detect a negative "len" parameter. But in that case, the
-    error message is wrong. The issue is not "no sideband" but rather
-    "eof while reading the packet". However, this can't actually be
-    triggered in practice, because neither of the two callers uses
-    pkt_read's GENTLE_ON_EOF flag. Which means they'd die with "the
-    remote end hung up unexpectedly" before we even get here.
+> +test_expect_success 'missing sideband designator is reported' '
+> +	printf 0004 >input &&
+> +	test-tool pkt-line receive-sideband <input 2>err &&
+> +	test_i18ngrep "missing sideband" err
+> +'
 
-    So this truly is dead code.
+I found it much more straight-forward to just printf the sample input,
+rather than writing C code to create it, as your test did. It keeps the
+input and expectation together, and makes them easier to extend or
+change.
 
-We can improve these cases by passing in a pkt-line status to the
-demultiplexer, and by having recv_sideband() use GENTLE_ON_EOF. This
-gives us two improvements:
+I wonder if it's worth doing this:
 
-  - we can now reliably detect flush packets, and will report a normal
-    packet missing its sideband designator as an error
+ t/helper/test-pkt-line.c | 16 ----------------
+ t/t0070-fundamental.sh   |  7 ++++++-
+ t/test-lib-functions.sh  | 12 +++++++++++-
+ 3 files changed, 17 insertions(+), 18 deletions(-)
 
-  - we'll report an eof with a more detailed "protocol error: eof while
-    reading sideband packet", rather than the generic "the remote end
-    hung up unexpectedly"
-
-  - when we see an eof, we'll flush the sideband scratch buffer, which
-    may provide some hints from the remote about why they hung up
-    (though note we already flush on newlines, so it's likely that most
-    such messages already made it through)
-
-In some sense this patch goes against fbd76cd450 (sideband: reverse its
-dependency on pkt-line, 2019-01-16), which caused the sideband code not
-to depend on the pkt-line code. But that commit was really just trying
-to deal with the circular header dependency. The two modules are
-conceptually interlinked, and it was just trying to keep things
-compiling. And indeed, there's a sticking point in this patch: because
-pkt-line.h includes sideband.h, we can't add the reverse include we need
-for the sideband code to have an "enum packet_read_status" parameter.
-Nor can we forward declare it, because you can't forward declare an enum
-in C. However, C does guarantee that enums fit in an int, so we can just
-use that type.
-
-One alternative would be for the callers to check themselves that they
-got something sane from the pkt-line code. But besides duplicating
-logic, this gets quite tricky. Any error condition requires flushing the
-sideband #2 scratch buffer, which only demultiplex_sideband() knows how
-to do.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- pkt-line.c             | 14 ++++++++------
- sideband.c             | 29 ++++++++++++++++++++++-------
- sideband.h             |  6 +++++-
- t/t0070-fundamental.sh | 12 ++++++++++++
- 4 files changed, 47 insertions(+), 14 deletions(-)
-
-diff --git a/pkt-line.c b/pkt-line.c
-index 657a702927..d633005ef7 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -461,9 +461,11 @@ int recv_sideband(const char *me, int in_stream, int out)
- 	enum sideband_type sideband_type;
- 
- 	while (1) {
--		len = packet_read(in_stream, NULL, NULL, buf, LARGE_PACKET_MAX,
--				  0);
--		if (!demultiplex_sideband(me, buf, len, 0, &scratch,
-+		int status = packet_read_with_status(in_stream, NULL, NULL,
-+						     buf, LARGE_PACKET_MAX,
-+						     &len,
-+						     PACKET_READ_GENTLE_ON_EOF);
-+		if (!demultiplex_sideband(me, status, buf, len, 0, &scratch,
- 					  &sideband_type))
- 			continue;
- 		switch (sideband_type) {
-@@ -520,9 +522,9 @@ enum packet_read_status packet_reader_read(struct packet_reader *reader)
- 							 reader->options);
- 		if (!reader->use_sideband)
- 			break;
--		if (demultiplex_sideband(reader->me, reader->buffer,
--					 reader->pktlen, 1, &scratch,
--					 &sideband_type))
-+		if (demultiplex_sideband(reader->me, reader->status,
-+					 reader->buffer, reader->pktlen, 1,
-+					 &scratch, &sideband_type))
- 			break;
+diff --git a/t/helper/test-pkt-line.c b/t/helper/test-pkt-line.c
+index 5e638f0b97..0615833bec 100644
+--- a/t/helper/test-pkt-line.c
++++ b/t/helper/test-pkt-line.c
+@@ -84,20 +84,6 @@ static void unpack_sideband(void)
  	}
+ }
  
-diff --git a/sideband.c b/sideband.c
-index a5405b9aaa..a0d3fb9652 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -3,6 +3,7 @@
- #include "config.h"
- #include "sideband.h"
- #include "help.h"
-+#include "pkt-line.h"
- 
- struct keyword_entry {
- 	/*
-@@ -114,7 +115,8 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
- #define ANSI_SUFFIX "\033[K"
- #define DUMB_SUFFIX "        "
- 
--int demultiplex_sideband(const char *me, char *buf, int len,
-+int demultiplex_sideband(const char *me, int status,
-+			 char *buf, int len,
- 			 int die_on_error,
- 			 struct strbuf *scratch,
- 			 enum sideband_type *sideband_type)
-@@ -130,17 +132,30 @@ int demultiplex_sideband(const char *me, char *buf, int len,
- 			suffix = DUMB_SUFFIX;
- 	}
- 
--	if (len == 0) {
--		*sideband_type = SIDEBAND_FLUSH;
--		goto cleanup;
--	}
--	if (len < 1) {
-+	if (status == PACKET_READ_EOF) {
- 		strbuf_addf(scratch,
--			    "%s%s: protocol error: no band designator",
-+			    "%s%s: protocol error: eof while reading sideband packet",
- 			    scratch->len ? "\n" : "", me);
- 		*sideband_type = SIDEBAND_PROTOCOL_ERROR;
- 		goto cleanup;
- 	}
-+
-+	if (len < 0)
-+		BUG("negative length on non-eof packet read");
-+
-+	if (len == 0) {
-+		if (status == PACKET_READ_NORMAL) {
-+			strbuf_addf(scratch,
-+				    "%s%s: protocol error: missing sideband designator",
-+				    scratch->len ? "\n" : "", me);
-+			*sideband_type = SIDEBAND_PROTOCOL_ERROR;
-+		} else {
-+			/* covers flush, delim, etc */
-+			*sideband_type = SIDEBAND_FLUSH;
-+		}
-+		goto cleanup;
-+	}
-+
- 	band = buf[0] & 0xff;
- 	buf[len] = '\0';
- 	len--;
-diff --git a/sideband.h b/sideband.h
-index 227740a58e..5a25331be5 100644
---- a/sideband.h
-+++ b/sideband.h
-@@ -18,8 +18,12 @@ enum sideband_type {
-  *
-  * scratch must be a struct strbuf allocated by the caller. It is used to store
-  * progress messages split across multiple packets.
-+ *
-+ * The "status" parameter is a pkt-line response as returned by
-+ * packet_read_with_status() (e.g., PACKET_READ_NORMAL).
-  */
--int demultiplex_sideband(const char *me, char *buf, int len,
-+int demultiplex_sideband(const char *me, int status,
-+			 char *buf, int len,
- 			 int die_on_error,
- 			 struct strbuf *scratch,
- 			 enum sideband_type *sideband_type);
+-static int send_split_sideband(void)
+-{
+-	const char *part1 = "Hello,";
+-	const char *primary = "\001primary: regular output\n";
+-	const char *part2 = " world!\n";
+-
+-	send_sideband(1, 2, part1, strlen(part1), LARGE_PACKET_MAX);
+-	packet_write(1, primary, strlen(primary));
+-	send_sideband(1, 2, part2, strlen(part2), LARGE_PACKET_MAX);
+-	packet_response_end(1);
+-
+-	return 0;
+-}
+-
+ static int receive_sideband(void)
+ {
+ 	return recv_sideband("sideband", 0, 1);
+@@ -114,8 +100,6 @@ int cmd__pkt_line(int argc, const char **argv)
+ 		unpack();
+ 	else if (!strcmp(argv[1], "unpack-sideband"))
+ 		unpack_sideband();
+-	else if (!strcmp(argv[1], "send-split-sideband"))
+-		send_split_sideband();
+ 	else if (!strcmp(argv[1], "receive-sideband"))
+ 		receive_sideband();
+ 	else
 diff --git a/t/t0070-fundamental.sh b/t/t0070-fundamental.sh
-index 357201640a..936030a5ef 100755
+index 936030a5ef..f9fda8d610 100755
 --- a/t/t0070-fundamental.sh
 +++ b/t/t0070-fundamental.sh
-@@ -40,4 +40,16 @@ test_expect_success 'incomplete sideband messages are reassembled' '
- 	grep "Hello, world" err
+@@ -35,7 +35,12 @@ test_expect_success 'check for a bug in the regex routines' '
  '
  
-+test_expect_success 'eof on sideband message is reported' '
-+	printf 1234 >input &&
-+	test-tool pkt-line receive-sideband <input 2>err &&
-+	test_i18ngrep "eof while reading" err
-+'
+ test_expect_success 'incomplete sideband messages are reassembled' '
+-	test-tool pkt-line send-split-sideband >split-sideband &&
++	{
++		packetize -2 "Hello," &&
++		packetize -1 "primary: regular output" &&
++		packetize -2 " world!" &&
++		printf 0000
++	} >split-sideband &&
+ 	test-tool pkt-line receive-sideband <split-sideband 2>err &&
+ 	grep "Hello, world" err
+ '
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 8d59b90348..c90ea61747 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1427,10 +1427,20 @@ nongit () {
+ # given on stdin, and that empty input becomes an empty packet, not a flush
+ # packet (for that you can just print 0000 yourself).
+ packetize() {
++	band=
++	bandlen=0
++	case "$1" in
++	-[123])
++		band="\\${1#-}"
++		bandlen=1
++		shift
++		;;
++	esac
 +
-+test_expect_success 'missing sideband designator is reported' '
-+	printf 0004 >input &&
-+	test-tool pkt-line receive-sideband <input 2>err &&
-+	test_i18ngrep "missing sideband" err
-+'
-+
- test_done
--- 
-2.29.1.634.g9e41dc1bf2
+ 	if test $# -gt 0
+ 	then
+ 		packet="$*"
+-		printf '%04x%s' "$((4 + ${#packet}))" "$packet"
++		printf "%04x$band%s" "$((4 + $bandlen + ${#packet}))" "$packet"
+ 	else
+ 		perl -e '
+ 			my $packet = do { local $/; <STDIN> };
 
+Teaching packetize() about bands isn't strictly necessary (we could
+printf the band designators ourselves and pipe it into packetize(); that
+would also add the missing newlines, though those do not matter for this
+test).
+
+-Peff
