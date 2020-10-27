@@ -5,294 +5,131 @@ X-Spam-Level:
 X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A086C55178
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 13:42:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9875C55179
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 14:02:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2384521D41
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 13:42:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B361022258
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 14:02:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QjziJSVN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C/K5yZFI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752419AbgJ0NmC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Oct 2020 09:42:02 -0400
-Received: from mail-qk1-f170.google.com ([209.85.222.170]:36252 "EHLO
-        mail-qk1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2409344AbgJ0NmB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Oct 2020 09:42:01 -0400
-Received: by mail-qk1-f170.google.com with SMTP id r7so1138360qkf.3
-        for <git@vger.kernel.org>; Tue, 27 Oct 2020 06:42:00 -0700 (PDT)
+        id S1753188AbgJ0OC3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Oct 2020 10:02:29 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:33130 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753817AbgJ0OC0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Oct 2020 10:02:26 -0400
+Received: by mail-wr1-f65.google.com with SMTP id b8so2086280wrn.0
+        for <git@vger.kernel.org>; Tue, 27 Oct 2020 07:02:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=rgoP1vIHBENF4f+TgeKdF1Mddgu2z+3ZHcJSb2+yG7s=;
-        b=QjziJSVNFDgStqix7XAKAxRtUrKRVVaYKpbGlSL5q0pm65GucUCSw5r3hh0kVLYj5K
-         2rp6Gnaaox34Ag8i59ch1ZDieZEn7kMfFYqGUw9A8ryxR5RQwLlq/qrho9hteVYieMVc
-         80euvKLWPLRyX4FDV8hlbY9nXRABpaTSp58U6oaS5mJ/EmbKSyvWDi6Szg5IpT8h/gKQ
-         casYzBpsxTQj0TYF1OXj1HMkQhNqYdaw/lT806hOKjPhVX6zlQ9zA9KqFGNFPGrnxtLB
-         YPllLsG3Ah+0TN7BigijTPAXFbcZrEoa5yqkWHVPRr9BNPH6VVSfoYNvg3hdT7+Cc1/g
-         peMw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=rVLSZ08PoAMbu5DUrshvpmANiqYNkyELjnoBHDServo=;
+        b=C/K5yZFIDxMZzBNnKWFvZxaabtVLlADtrDfgPG6pfAvv6xXR/NALqPeJr4G8aVZ6Ty
+         Ot/VCEMwnAIQRCw5KGIC8jH8A+cFrOuBmWP/RhPxwF5lYdybF4H0GqvCdcKpm/D7xSMZ
+         W7jKFrNSRQ4lm8zuDZpUr7NzChlFejrNPSTV0sCzgqm+XJWGr4kNWCjvtbMoIh1odbSr
+         nuqRDBJE1SKdH0fNnFhKyKcNXe5DHox/jcIVIqS5txTJ45CwowMXof7Cr8SVOLhAoToD
+         mZuQqLZ8cUizfCg0wyRZzxasOHoBDU7jQ0zTh+wCCsGFGot8wtmjDXA3vUPMBoQRYEEb
+         48xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=rgoP1vIHBENF4f+TgeKdF1Mddgu2z+3ZHcJSb2+yG7s=;
-        b=aHqneKxbkrc8GayjeuN49lDm3s2zUBDmBuCFlEiJ9qtWubLLyWQvge/MetFPAZg3i1
-         T5+d0V7gsom1mujlPFFKInwnuiIvyF7vA7h4ailNEX84H+00vc7TwsWnSXpLnMX3D7Kl
-         3Qj3oKmq3xqys9NqdjCkWr4RhZIZ0PhTwGnyHJqixL8FSp/N1ztbbIGE8Nqm7XUn5DeL
-         CpEVKE5wyzHhtNQ/MrLGiUJAl3hkkDEIKIAb2dhiMIy1nSjNYi4BEWeWLmycgK3Gnbxg
-         8wLBvWwreL32u6chb6A/W4McxnyNr+zFVXwYpsejsrKyn/JQ0AuGR/mds/e01UfnR1H4
-         WEag==
-X-Gm-Message-State: AOAM530hR3t7S60vl/l/2rYD83Er+sJsC9+L9GgOAPPxuzZZphLUDW4k
-        xIkPYeHHTnXjenW/T5FlKhE=
-X-Google-Smtp-Source: ABdhPJyquvRy2kO+5lDYXeYHE3n+TU2r0zPz/Lcv1e02LGwxS5y86b74cLVcNXhbtpOY8X80ZhHvsw==
-X-Received: by 2002:ae9:ea18:: with SMTP id f24mr2036783qkg.135.1603806119807;
-        Tue, 27 Oct 2020 06:41:59 -0700 (PDT)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id f22sm661403qkl.99.2020.10.27.06.41.58
-        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
-        Tue, 27 Oct 2020 06:41:59 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v2 3/3] clone: document partial clone section
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-In-Reply-To: <c1a44a35095e7d681c312ecaa07c46e49f2fae67.1586791560.git.gitgitgadget@gmail.com>
-Date:   Tue, 27 Oct 2020 09:41:55 -0400
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Teng Long <dyroneteng@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <B90939A5-5693-4EB6-8F07-5B50F63B3143@gmail.com>
-References: <pull.745.git.git.1585792946341.gitgitgadget@gmail.com> <pull.745.v2.git.git.1586791560.gitgitgadget@gmail.com> <c1a44a35095e7d681c312ecaa07c46e49f2fae67.1586791560.git.gitgitgadget@gmail.com>
-To:     Dyrone Teng via GitGitGadget <gitgitgadget@gmail.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=rVLSZ08PoAMbu5DUrshvpmANiqYNkyELjnoBHDServo=;
+        b=be5fcCj6SRKbUrXYgAg4pudjRo2tEF3rpm9Hbyp3NRm4ZkVVhfTXNj+xMOhwGZ106D
+         ny2Yn80nAxyZegYfEmgA2Fbxr3tEplQf8wRt3oJJn1Ubu5f2eDBe+JXKzBRvqyJ5ajTW
+         44sAKBXt9yo5dX80BH25iZPOcm0k84kTyM8J9oAD3Ooy7lj3PaZHSiOXIKkDdacXKXlJ
+         ur41BVrAW9DX2eWtwxZRN6/gC8F8Tsb/P8ivUi+lp2SagF91p39/m9ibeIXjsdA8Dloe
+         RP0yzRoZl4l3KKhpUBxnZSwRceeF0iDfaQ3/UfLwy19ADzjEOljw3XMN6IkkPK2jAbql
+         nvyg==
+X-Gm-Message-State: AOAM533Z8lSt3sPIOjWUptNmlpAzXnShsuK8AX7XAFClrxPSrIOSXZv4
+        KO1My2sNTh1lT+Go53F2M8r8FhgiJw4=
+X-Google-Smtp-Source: ABdhPJwh4CWN0rWiDCy/QYdMlUCU8mGDccbH5e0gOkdx1vsrskmFEcRx+t2ZGlvctqFFlGb1Ch+9nw==
+X-Received: by 2002:adf:f9cf:: with SMTP id w15mr3175829wrr.185.1603807343031;
+        Tue, 27 Oct 2020 07:02:23 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id i14sm2056868wml.24.2020.10.27.07.02.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Oct 2020 07:02:22 -0700 (PDT)
+Message-Id: <ed78f8628a67b346ffebaab50ac52cf2a83a6131.1603807338.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.773.git.1603807337.gitgitgadget@gmail.com>
+References: <pull.773.git.1603807337.gitgitgadget@gmail.com>
+From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 27 Oct 2020 14:02:17 +0000
+Subject: [PATCH 4/4] rebase -i: simplify get_revision_ranges()
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Caspar Duregger <herr.kaste@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dyrone,=20
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-> Le 13 avr. 2020 =C3=A0 11:26, Dyrone Teng via GitGitGadget =
-<gitgitgadget@gmail.com> a =C3=A9crit :
->=20
-> From: Dyrone Teng <dyroneteng@gmail.com>
->=20
-> Partial clones are created using 'git clone', but there is no related
-> help information in the git-clone documentation. Add a relevant =
-section
-> to help users understand what partial clones are and how they differ
-> from normal clones.
->=20
-> The section briefly introduces the applicable scenarios and some
-> precautions of partial clone.
+Now that all the external users of head_hash have been converted to
+use a opts->orig_head instead we can stop returning head_hash from
+get_revision_ranges().
 
-"some precautions users should take when using partial clone"=20
-would read better, I think.
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ builtin/rebase.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-> If users want to know more about its
-> technical design and other details, users can view the link of
-> git-partial-clone(7) according to the guidelines in the section.
-
-Note: git-partial-clone(7) does not exist, i.e., there is document
-named 'gitpartial-clone.txt' in 'Documentation/ 'that is listed in the =
-'MAN7_TXT'
-variable of the documentation Makefile. What exists is a document called
-'partial-clone.txt' in the 'technical' folder of the documentation.
-You can do `git grep 'technical/' in 'Documentation/' to see how these =
-pages
-are referred to in the rest of the documentation.
-
-Also, the wording could be better:
-
-"In case users want to know more about the technical design of the =
-partial clone
-feature, add a link to 'technical/partial-clone.txt'."
-
-would be sufficient.
-
->=20
-> Signed-off-by: Dyrone Teng <dyroneteng@gmail.com>
-> ---
-> Documentation/git-clone.txt | 72 +++++++++++++++++++++++++++++++++++++
-> 1 file changed, 72 insertions(+)
->=20
-> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-> index eafa1c39927..a6e13666ea1 100644
-> --- a/Documentation/git-clone.txt
-> +++ b/Documentation/git-clone.txt
-> @@ -310,6 +310,78 @@ or `--mirror` is given)
-> 	for `host.xz:foo/.git`).  Cloning into an existing directory
-> 	is only allowed if the directory is empty.
->=20
-> +Partial Clone
-> +-------------
-> +
-> +By default, `git clone` will download every reachable object, =
-including
-> +every version of every file in the history of the repository. The
-> +**partial clone** feature allows Git to transfer fewer objects and
-> +request them from the remote only when they are needed, so some
-> +reachable objects can be omitted from the initial `git clone` and
-> +subsequent `git fetch` operations.
-> +
-> +To use the partial clone feature, you can run `git clone` with the=20
-> +`--filter=3D<filter-spec>` option. If you want to clone a repository
-> +without download
-
-s/download/downloading/
-
-> any blobs, the form `filter=3Dblob:none` will omit all
-> +the blobs. If the repository has some large blobs and you want to
-> +prevent some large blobs being downloaded by an appropriate =
-threshold,
-
-repeating "some large blobs" two times here feels a little awkward. =
-Maybe:
-
-"If the repository has some large blobs and you want to prevent them =
-from
-being downloaded"
-
-> +the form `--filter=3Dblob:limit=3D<n>[kmg]`omits blobs larger than n =
-bytes
-> +or units (see linkgit:git-rev-list[1]).
-
-I think you could give an example here, and refer to git-rev-list[1] for =
-the full syntax
-(also "or units" is a little unclear here). So maybe something like =
-that:
-
-"the form `--filter=3Dblob:limit=3D1m` would prevent downloading objects =
-bigger than 1 MiB=20
-(see the description of the `--filter=3D<filter-spec>` option in =
-linkgit:git-rev-list[1] for the=20
-full filter syntax)".
-
-> +
-> +As mentioned before, a partially cloned repository may have to =
-request
-> +the missing objects when they are needed. So some 'local' commands =
-may
-> +fail without a network connection to the remote repository.
-> +
-> +For example, The <repository> contains two branches which names =
-'master'
-> +and 'topic. Then, we clone the repository by
-
-wording, and formatting:
-
-For example, let's say a remote repository contains two branches named =
-'master'
-and 'topic'. We clone the repository with
-
-> +
-> +    $ git clone --filter=3Dblob:none --no-checkout <repository>
-> +
-> +With the `--filter=3Dblob:none` option Git will omit all the blobs =
-and
-> +the `--no-checkout` option Git will not perform a checkout of HEAD
-
-some punctuation would help:
-
-With the  `--filter=3Dblob:none` option, Git will omit all the blobs, =
-and
-with `--no-checkout`, Git will not checkout `HEAD`
-
-> +after the clone is complete. Then, we check out the remote tracking
-> +'topic' branch by
-
-Here you are not checking ou the remote-tracking 'topic' branch,
-you are creating a local branch 'topic' that tracks the remote-tracking =
-branch
-'origin/topic'.
-
-> +
-> +    $ git checkout -b topic origin/topic=20
-> +
-> +The output looks like
-> +
-> +------------
-> +    remote: Enumerating objects: 1, done.
-> +    remote: Counting objects: 100% (1/1), done.
-> +    remote: Total 1 (delta 0), reused 0 (delta 0), pack-reused 0
-> +    Receiving objects: 100% (1/1), 43 bytes | 43.00 KiB/s, done.
-> +    Branch 'topic' set up to track remote branch 'topic' from =
-'origin'.
-> +    Switched to a new branch 'topic'
-> +------------
-> +
-> +The output is a bit surprising but it shows how partial clone works.
-> +When we check out the branch 'topic' Git will request the missing =
-blobs
-> +because they are needed. Then, We
-
-s/We/we/
-
-> can switch back to branch 'master' by
-> +
-> +    $ git checkout master
-> +
-> +This time the output looks like
-> +
-> +------------
-> +    Switched to branch 'master'
-> +    Your branch is up to date with 'origin/master'.
-> +------------
-> +
-> +It shows that when we switch back to the previous location, the =
-checkout
-> +is done without a download because the repository has all the blobs =
-that
-> +were downloaded previously.
-> +
-> +`git log` may also make a surprise with partial clones.
-
-"make a surprise" reads awkward. "have surprising behaviour" would be =
-better.
-
-> `git log
-> +-- <pathspec>` will not cause downloads with the blob filters,
-
-I think "if the repository was cloned with `--filter=3Dblob:none`" would =
-be clearer
-than "with the blob filters".
-
-> because
-> +it's only reading commits and trees. In addition
-
-"However, any options" would be more appropriate than "In addition to" =
-here.
-
-> to any options that
-> +require git
-
-s/git/Git/ (and the same thing below)
-
-> to look at the contents of blobs, like "-p" and "--stat"
-> +, options
-
-you don't have to spell out "options" again here. And the options
-should be enclosed in backticks instead of double quotes.
-
-> that cause git to report pathnames, like "--summary" and
-> +"--raw", will trigger lazy/on-demand fetching of blobs, as they are
-> +needed to detect inexact renames.
-> +
-> +linkgit:partial-clone[1]
-
-Again, I'm pretty sure that does not work. You should build the =
-documentation
-locally and check that the links you are adding work. =
-"MyFirstContrbution"=20
-has pointer on how to do that.
-
-
-Thank you for working on that !=20
-It's always great to see people wanting to improve the documentation.
-
-Cheers,
-
-Philippe.
-
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index f94f9fe307..17450e9d9e 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -270,15 +270,14 @@ static int edit_todo_file(unsigned flags)
+ }
+ 
+ static int get_revision_ranges(struct commit *upstream, struct commit *onto,
+-			       struct object_id *orig_head, char *head_hash,
+-			       char **revisions, char **shortrevisions)
++			       struct object_id *orig_head, char **revisions,
++			       char **shortrevisions)
+ {
+ 	struct commit *base_rev = upstream ? upstream : onto;
+ 	const char *shorthead;
+ 
+-	oid_to_hex_r(head_hash, orig_head);
+ 	*revisions = xstrfmt("%s...%s", oid_to_hex(&base_rev->object.oid),
+-						   head_hash);
++			     oid_to_hex(orig_head));
+ 
+ 	shorthead = find_unique_abbrev(orig_head, DEFAULT_ABBREV);
+ 
+@@ -328,7 +327,6 @@ static void split_exec_commands(const char *cmd, struct string_list *commands)
+ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+ {
+ 	int ret;
+-	char head_hash[GIT_MAX_HEXSZ];
+ 	char *revisions = NULL, *shortrevisions = NULL;
+ 	struct strvec make_script_args = STRVEC_INIT;
+ 	struct todo_list todo_list = TODO_LIST_INIT;
+@@ -336,12 +334,12 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+ 	struct string_list commands = STRING_LIST_INIT_DUP;
+ 
+ 	if (get_revision_ranges(opts->upstream, opts->onto, &opts->orig_head,
+-				head_hash, &revisions, &shortrevisions))
++				&revisions, &shortrevisions))
+ 		return -1;
+ 
+ 	if (init_basic_state(&replay,
+ 			     opts->head_name ? opts->head_name : "detached HEAD",
+-			     opts->onto, head_hash)) {
++			     opts->onto, &opts->orig_head)) {
+ 		free(revisions);
+ 		free(shortrevisions);
+ 
+-- 
+gitgitgadget
