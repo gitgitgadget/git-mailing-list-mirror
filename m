@@ -2,91 +2,70 @@ Return-Path: <SRS0=IAqa=EC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=BAYES_20,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C51EC4363A
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 20:06:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6ACCC4363A
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 20:10:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 110BD2223C
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 20:06:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 51349207E8
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 20:10:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Mbh9J3vm"
+	dkim=pass (2048-bit key) header.d=bakanov-su.20150623.gappssmtp.com header.i=@bakanov-su.20150623.gappssmtp.com header.b="vLZCIKv3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2443562AbgJ0UGm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Oct 2020 16:06:42 -0400
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55272 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2440676AbgJ0UGk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Oct 2020 16:06:40 -0400
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 33EB0EF9F7;
-        Tue, 27 Oct 2020 16:06:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LqLugb1biq4SJmBqDWiM5bh00bI=; b=Mbh9J3
-        vmMKULzgg26njmjdbfq5INcdvkaxc+c+Z9xleQf4ApSL3FXWo4fXu1/8crSNDdp8
-        ANjSaijBieoZW/DJI0fVrNEgzJnN6RFI/77thhDUtYFmmxK+LDdjUn3noD5n6kfJ
-        HSCQ173CB/GwUC1dl903trp48HX96V9acvuMg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Z5/Be91/n1BOfVKVie31Z12xoQR8V8p9
-        rFBoebinERS3gj6t90NUkwJrCnC7gcd6ae4MitUMRPbiFmQoKOm8plFSzGXwGW8F
-        Bq2KCyKD2SV4j0hr/IRdWIAnNIccyODoUJytAxpWAi1cvykq+clEHLfGb2N/dHP2
-        Dg4XrHxtp2k=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2C5A8EF9F6;
-        Tue, 27 Oct 2020 16:06:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 627BDEF9F3;
-        Tue, 27 Oct 2020 16:06:35 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: Why does git diff-index show intent-to-add file as "Added"?
-References: <20201017162111.gvisfz2daqvhnjmb@yadavpratyush.com>
-        <xmqqimb88v35.fsf@gitster.c.googlers.com>
-        <20201027120943.skmx6c3crbtu335o@yadavpratyush.com>
-Date:   Tue, 27 Oct 2020 13:06:33 -0700
-In-Reply-To: <20201027120943.skmx6c3crbtu335o@yadavpratyush.com> (Pratyush
-        Yadav's message of "Tue, 27 Oct 2020 17:39:43 +0530")
-Message-ID: <xmqqsg9zbfhy.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S372725AbgJ0UKO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Oct 2020 16:10:14 -0400
+Received: from mail-io1-f46.google.com ([209.85.166.46]:40455 "EHLO
+        mail-io1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S372722AbgJ0UKM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Oct 2020 16:10:12 -0400
+Received: by mail-io1-f46.google.com with SMTP id r9so2943581ioo.7
+        for <git@vger.kernel.org>; Tue, 27 Oct 2020 13:10:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bakanov-su.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=hYNa8Eak/lEgK1xjwfnryGyTzRdQOUhWVTlhypmBu2w=;
+        b=vLZCIKv3AqCD5o8nw8SJG4EWtZePFPh9AOu39Kwk7cqSOXp1SKx9PowdNd97XC1Bgl
+         iE/I1tYKt0mWwL6IP5S9T4IFxqZeW0kZ0k8eeQJUI9AtC02yQnbXFtLrNvnxkks8C/Ma
+         VEKrur32ugRcUwFxhKtmyTnghDptlbTWH46z8nN0c+DrVqnmPPo5pre6+JkVZEhIITro
+         K70qNuuSPYjHclHLw5Wc+ZldZU2G0f9AohIPxvIBBd40cxwCEvpTFLnXKF4H3/VREHsK
+         z6ym8C7dEl48CCbm6A/sPzp5pvv9XVGFLOb/PzNnWdTqw+HOY7bYTqH6M0uI0Q7RcRis
+         sqZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=hYNa8Eak/lEgK1xjwfnryGyTzRdQOUhWVTlhypmBu2w=;
+        b=JR3S12US8xPv9aqu6krcOmybsxySrbeKbRpfVAi4u9YCk/DohGxwZVLBR8adYD4XNs
+         bMaMTsjKZkIOdTRSltZNSVSkYP52jT/kDNSEdlvCcJp0ZRwFPSBJldROtKWbTH8WXH/a
+         Wjb/HWMWYHAqBBBmYrPymJAnbXcB5PCyLJl8f6IBU+GeoRIcgI25SqXCm0Jlq9A1b7QM
+         SJ/cvhOgXfKEmEigJ7JGkbf09L6XYywFcrWwzrw1k+QTLg8REmf5vm6glyVxsNcX0sNY
+         Qf8F1l/sn/8ClK+xOZPv64wgunc2NwIGlUlH9Xfr1p7V0fOnF8VKN9j/8QVn2sCGKXX7
+         JLSQ==
+X-Gm-Message-State: AOAM532YHe5CbBFFOGVl6Jc20dlHHw/Zqeqw0TgAKBgonRTnN6db4KCb
+        KCOc5RsTEU9X2ZblQoAUZngEtsz73RqzOhNceF2JMSu0Kdoa0IdX
+X-Google-Smtp-Source: ABdhPJyILgi62G0L/IvWdy80xWZfd2K/2INRGW5ZV+aLdSMtejvFjyLQcQT6WhSyBaPrFA3oBocRSoDBR94m6NfBoB0=
+X-Received: by 2002:a05:6638:1381:: with SMTP id w1mr4088913jad.79.1603829411612;
+ Tue, 27 Oct 2020 13:10:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EA3CE81A-188F-11EB-85B5-D609E328BF65-77302942!pb-smtp21.pobox.com
+From:   Filipp Bakanov <filipp@bakanov.su>
+Date:   Tue, 27 Oct 2020 23:10:00 +0300
+Message-ID: <CAAdniQ5pRHKUU77XVmZkZ_gUgfYYFpo9=Xt2T6EgzJ3hoT0YMg@mail.gmail.com>
+Subject: Proposal: "unadd" command / alias.
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pratyush Yadav <me@yadavpratyush.com> writes:
+Hi! I suggest to add "unadd" command, that will undo a git add command.
 
-> It is `git diff-index --cached HEAD`.
->  
->> What should happen in "diff-index --cached HEAD", I offhand do not
->> know.  "diff-index --cached HEAD" is a request to compare two trees,
->> i.e. the tree that _would_ be produced if you wrote the index out as
->> a tree (i.e. "git write-tree") right now, and the tree of HEAD.  So
->> I think it may be sensible for the command to behave as if the i-t-a
->> path does not even exist in the index when it is run with "--cached";
->> I may be missing some subtleties that require us to do something
->> different, but that is what I would think.
->
-> This is what I think too. Can we then treat this as a bug, and work on 
-> fixing it? Does any subsystem expert have any comments and/or provide 
-> extra context?
+git unadd path/to/file
 
-I do not think Phillip considers himself an expert in this area, but
-what he pointed out in the thread
+It will be an alias to:
 
-    http://lore.kernel.org/git/xmqqo8kz70xv.fsf@gitster.c.googlers.com/
+git reset HEAD -- path/to/file
 
-is worth listening to.
+The motivation is that I always forget syntax and have to google each
+time I want to undo accidentally added files. Unadd is just much
+easier to remember and quite obvious.
