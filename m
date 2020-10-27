@@ -2,88 +2,87 @@ Return-Path: <SRS0=IAqa=EC=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6CC3C4363A
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 07:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9A12C4363A
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 07:23:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C5FA21655
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 07:13:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AB3D321655
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 07:23:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2507399AbgJ0HNK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Oct 2020 03:13:10 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38256 "EHLO cloud.peff.net"
+        id S2507509AbgJ0HXK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Oct 2020 03:23:10 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38272 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2507397AbgJ0HNK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Oct 2020 03:13:10 -0400
-Received: (qmail 14237 invoked by uid 109); 27 Oct 2020 07:13:09 -0000
+        id S2507506AbgJ0HXK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Oct 2020 03:23:10 -0400
+Received: (qmail 14307 invoked by uid 109); 27 Oct 2020 07:23:09 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 27 Oct 2020 07:13:09 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 27 Oct 2020 07:23:09 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15022 invoked by uid 111); 27 Oct 2020 07:13:09 -0000
+Received: (qmail 15060 invoked by uid 111); 27 Oct 2020 07:23:09 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 27 Oct 2020 03:13:09 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 27 Oct 2020 03:23:09 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 27 Oct 2020 03:13:09 -0400
+Date:   Tue, 27 Oct 2020 03:23:09 -0400
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] sideband: diagnose more incoming packet anomalies
-Message-ID: <20201027071309.GD3005508@coredump.intra.peff.net>
-References: <pull.753.v2.git.1603136142.gitgitgadget@gmail.com>
- <pull.753.v3.git.1603728555.gitgitgadget@gmail.com>
- <20201027065250.GB3005508@coredump.intra.peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     VenomVendor <info@venomvendor.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+Subject: Re: [PATCH 4/3] am, sequencer: stop parsing our own committer ident
+Message-ID: <20201027072309.GE3005508@coredump.intra.peff.net>
+References: <20201023070747.GA2198273@coredump.intra.peff.net>
+ <20201023070939.GB2913115@coredump.intra.peff.net>
+ <20201023072630.GA2918369@coredump.intra.peff.net>
+ <20201023074510.GB2918369@coredump.intra.peff.net>
+ <nycvar.QRO.7.76.6.2010261722230.56@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20201027065250.GB3005508@coredump.intra.peff.net>
+In-Reply-To: <nycvar.QRO.7.76.6.2010261722230.56@tvgsbejvaqbjf.bet>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 27, 2020 at 02:52:50AM -0400, Jeff King wrote:
+On Mon, Oct 26, 2020 at 05:25:01PM +0100, Johannes Schindelin wrote:
 
-> On Mon, Oct 26, 2020 at 04:09:13PM +0000, Johannes Schindelin via GitGitGadget wrote:
+> On Fri, 23 Oct 2020, Jeff King wrote:
 > 
-> > Changes since v2:
-> > 
-> >  * Dropped patch 3/3 because it was only intended to be defensive
-> >    programming, but turned out to be too hard without layering violations.
+> > diff --git a/ident.c b/ident.c
+> > index 6aba4b5cb6..7743c1ed05 100644
+> > --- a/ident.c
+> > +++ b/ident.c
+> > @@ -384,6 +384,12 @@ const char *fmt_ident(const char *name, const char *email,
+> >  	struct strbuf *ident = &ident_pool[index];
+> >  	index = (index + 1) % ARRAY_SIZE(ident_pool);
+> >
+> > +	if (!email) {
+> > +		if (whose_ident == WANT_AUTHOR_IDENT)
+> > +			email = getenv("GIT_AUTHOR_EMAIL");
+> > +		else if (whose_ident == WANT_COMMITTER_IDENT)
+> > +			email = getenv("GIT_COMMITTER_EMAIL");
 > 
-> It is a bit tricky, but here's a working replacement.
+> I *guess* that this is a strict improvement, calling `getenv()` much
+> closer to the time the value is actually used (and hence avoiding the
+> problem where pointers returned by `getenv()` get stale due to environment
+> changes).
 
-And one other small cleanup, worth doing with or without my patch.
+I don't think it changes much in practice. Most of the callers are
+passing the values directly in to this function, and there's not much
+that happens between the function starting and these calls.
 
--- >8 --
-Subject: [PATCH] test-pkt-line: drop colon from sideband identity
+The more worrisome stretch is that we likely call strbuf functions while
+holding on to a getenv() pointer. And those potentially do things like
+xmalloc(), which looks at GIT_ALLOC_LIMIT, etc. But though POSIX
+promises only one getenv() result at a time, we definitely don't adhere
+to that (after all, we routinely pass the results of three separate
+getenv() calls to fmt_ident!). As you well know, because mingw_getenv()
+has a circular buffer hack to deal with this. :)
 
-We pass "sideband: " as our identity for errors to recv_sideband(). But
-it already adds the trailing colon and space. This doesn't invalidate
-any tests, but it looks funny when you examine the test output.
+So it certainly isn't making anything worse, but I'd be surprised if it
+actually helped at all.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/helper/test-pkt-line.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/helper/test-pkt-line.c b/t/helper/test-pkt-line.c
-index 0bf20642be..5e638f0b97 100644
---- a/t/helper/test-pkt-line.c
-+++ b/t/helper/test-pkt-line.c
-@@ -100,7 +100,7 @@ static int send_split_sideband(void)
- 
- static int receive_sideband(void)
- {
--	return recv_sideband("sideband: ", 0, 1);
-+	return recv_sideband("sideband", 0, 1);
- }
- 
- int cmd__pkt_line(int argc, const char **argv)
--- 
-2.29.1.634.g9e41dc1bf2
-
+-Peff
