@@ -6,81 +6,94 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F48AC388F9
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 12:25:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D950C388F9
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 13:03:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E52CA2245B
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 12:25:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C90C620773
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 13:03:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2899747AbgJ0MZw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Oct 2020 08:25:52 -0400
-Received: from mslow2.mail.gandi.net ([217.70.178.242]:36734 "EHLO
+        id S1751666AbgJ0NDw convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 27 Oct 2020 09:03:52 -0400
+Received: from mslow2.mail.gandi.net ([217.70.178.242]:35220 "EHLO
         mslow2.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2440527AbgJ0MZv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Oct 2020 08:25:51 -0400
-Received: from relay12.mail.gandi.net (unknown [217.70.178.232])
-        by mslow2.mail.gandi.net (Postfix) with ESMTP id BD6273A995D
-        for <git@vger.kernel.org>; Tue, 27 Oct 2020 12:10:08 +0000 (UTC)
-Received: from localhost (unknown [103.82.80.101])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay12.mail.gandi.net (Postfix) with ESMTPSA id 39E78200006;
-        Tue, 27 Oct 2020 12:09:45 +0000 (UTC)
-Date:   Tue, 27 Oct 2020 17:39:43 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: Why does git diff-index show intent-to-add file as "Added"?
-Message-ID: <20201027120943.skmx6c3crbtu335o@yadavpratyush.com>
-References: <20201017162111.gvisfz2daqvhnjmb@yadavpratyush.com>
- <xmqqimb88v35.fsf@gitster.c.googlers.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqimb88v35.fsf@gitster.c.googlers.com>
+        with ESMTP id S1751642AbgJ0NDw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Oct 2020 09:03:52 -0400
+Received: from relay8-d.mail.gandi.net (unknown [217.70.183.201])
+        by mslow2.mail.gandi.net (Postfix) with ESMTP id 3BF873A1475
+        for <git@vger.kernel.org>; Tue, 27 Oct 2020 12:39:38 +0000 (UTC)
+X-Originating-IP: 82.66.241.80
+Received: from [192.168.1.27] (unknown [82.66.241.80])
+        (Authenticated sender: b@ptistefontaine.fr)
+        by relay8-d.mail.gandi.net (Postfix) with ESMTPSA id A2B6E1BF215
+        for <git@vger.kernel.org>; Tue, 27 Oct 2020 12:39:16 +0000 (UTC)
+From:   Baptiste Fontaine <b@ptistefontaine.fr>
+Content-Type: text/plain;
+        charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
+Subject: No warning when checking-out a branch with a file that already exists
+ but is not indexed in the current branch
+Message-Id: <ED4DFC77-2135-476E-AA22-7E887B25565D@ptistefontaine.fr>
+Date:   Tue, 27 Oct 2020 13:39:16 +0100
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3608.120.23.2.4)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 17/10/20 01:18PM, Junio C Hamano wrote:
-> Pratyush Yadav <me@yadavpratyush.com> writes:
-> 
-> > In this case, running diff-files gives:
-> >
-> >   :000000 100644 0000000000000000000000000000000000000000 0000000000000000000000000000000000000000 A	foo
-> 
-> Yes, it says "when comparing the index and the working tree, working
-> tree side has it, and the index side does not, so it is an addition".
-> 
-> Of course, if it is truly a new file that the index does not even
-> know about, we'd stay silent, but a path that are marked with i-t-a
-> bit is what the user told us to keey an eye on, so that is what you
-> would get.
-> 
-> > Running diff-index gives:
-> >
-> >   :000000 100644 0000000000000000000000000000000000000000 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 A	foo
-> 
-> If this is "diff-index HEAD", then I think it is expected.  "when
-> comparing the HEAD and the working tree, working tree side has it,
-> and the tree side does not, so it is an addition."  Exactly the same
-> story as "diff-files".
+Hello,
 
-It is `git diff-index --cached HEAD`.
- 
-> What should happen in "diff-index --cached HEAD", I offhand do not
-> know.  "diff-index --cached HEAD" is a request to compare two trees,
-> i.e. the tree that _would_ be produced if you wrote the index out as
-> a tree (i.e. "git write-tree") right now, and the tree of HEAD.  So
-> I think it may be sensible for the command to behave as if the i-t-a
-> path does not even exist in the index when it is run with "--cached";
-> I may be missing some subtleties that require us to do something
-> different, but that is what I would think.
+I’m not sure if this is a bug or expected behavior:
 
-This is what I think too. Can we then treat this as a bug, and work on 
-fixing it? Does any subsystem expert have any comments and/or provide 
-extra context?
+1. Create a sample repo:
 
--- 
+  % git init
+  % touch a.txt
+  % git add a.txt
+  % git commit -m "add a.txt"
+
+2. Create a new branch, in which you add foo.txt:
+
+  % git checkout -b devel
+  % echo "Something" > foo.txt
+  % git add foo.txt
+  % git commit -m "Write something in foo.txt"
+
+3. Go back to the first branch and create an ignored file with the
+   same name:
+
+  % git checkout master
+  % echo foo.txt > .gitignore
+  % git add .gitignore
+  % git commit -m "ignore foo.txt"
+  % echo "Something else" > foo.txt
+  % cat foo.txt
+  Something else
+
+4. Check-out the branch with the indexed file:
+
+  % git checkout devel # <-- no warning here
+  % cat foo.txt
+  Something
+
+5. Check-out again the branch without the indexed file:
+
+  % git checkout master
+  % cat foo.txt
+  cat: foo.txt: No such file or directory
+
+The non-indexed file is now gone, and there was no warning when git
+“took over it” in step 4. As far as I know there’s no way to retrieve
+the "Something else" content.
+
+I’m using git version 2.28.0.
+
+I came to this situation on a repository in which I had a ROADMAP.md
+file on master, which I `git rm --cached` and added to .gitignore on
+devel. I later modified this file, but it was removed when I switched
+on master.
+
+
 Regards,
-Pratyush Yadav
+
+Baptiste Fontaine
