@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8893C4363A
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 02:08:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 652EAC2D0A3
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 02:08:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C57E20872
-	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 02:08:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 13A8520872
+	for <git@archiver.kernel.org>; Tue, 27 Oct 2020 02:08:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f65Is3Dn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UBsn0o2X"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2504370AbgJ0CIV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Oct 2020 22:08:21 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:44168 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2504360AbgJ0CIR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Oct 2020 22:08:17 -0400
-Received: by mail-wr1-f66.google.com with SMTP id t9so60844wrq.11
-        for <git@vger.kernel.org>; Mon, 26 Oct 2020 19:08:15 -0700 (PDT)
+        id S2504372AbgJ0CIW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 26 Oct 2020 22:08:22 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:39783 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2504361AbgJ0CIS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Oct 2020 22:08:18 -0400
+Received: by mail-wr1-f68.google.com with SMTP id y12so88092wrp.6
+        for <git@vger.kernel.org>; Mon, 26 Oct 2020 19:08:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=TH48QvsASDnw6z3srdOANPLKrfrUD8Jg9GxDKDN5xG0=;
-        b=f65Is3Dnzy2Ec9MiQ+u9cCLQIWWj0Kky2PWwEV/uSG7bV1JmCT7EQGsaup/pAv1i3q
-         NQKoMdRzh/Iu/WHv40dYar6cnV0ccQlGCAd3clOYaTRqIqje4nvAqY2cY76Myzr7xJWS
-         gPGEgcah18hvntqa2olCkwoYK+P1KGgkVYnzF4iL6DYnLay9yJRyv7Y8AV0oHBbFBtGn
-         x7OptSOBM7eHGnkda49ZuSS/mD62uQqYAqjWQGI8/+N2nGo9dh9JjKayouw/H+oDpxao
-         +8tPNy7MqH9kvWIHjZ8d+G3pVo3IRWe5GnPQoVT0z+y0VNBkycC/u8dZrvunvydLzQQV
-         lT1w==
+        bh=pyE7JEar/bSn+02XYbIajC3lO1nRr6+UPSJ84nhT10A=;
+        b=UBsn0o2XisEHBwTdPNT9bSV5+7+aDqIjriWBsUuDZMwh2hHV/PPTkz7tzEqDMy/aWZ
+         IjuQixT5WA8QWkGYQG5+7W3CzPJcP88EQVHOjkWiVdTiHCsAp6G+pLfNknK5vURGVPG1
+         Hs4IoJl0oHI7di2e/+jFjhP+fnkwM+S1r22c0+Ki7k1JEA36S/EY5h0SBovNVwCi1fZZ
+         dTCs6pLaw+eXaNG5DsgSbktE9GU2AZ2gKj561nL5a968mqf3BYsUB/gS+9Vg8zG38F9l
+         63+oWheiDP4doiPTLJ4lRg4Hmq34Q/fcjMCCZ9zKFsLDAFE9BvbTtDEnx5Qv7Uhgim8f
+         cUhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=TH48QvsASDnw6z3srdOANPLKrfrUD8Jg9GxDKDN5xG0=;
-        b=gLoOlKh8p51ZaRGLKa7nhLaK+nSjC9ncv4SLF4OTDlREWI+AoBa+3Pu7qDQXl2xNaE
-         AmvOboppka9gOFbCJJkFNq/6haJS+xMLcnU42JX0V1nc+H2LSh0IAq2IAIulkEOtqIEw
-         VQOukeYFerJa40XAJHOP74fKUaS2XFfqwm/QwqYtj6W+vAqCKJVqyHibdQQ1LLgBrQFS
-         2slwawIZ6qhL2WqaenTFjmCfkeIs77SkESmYXMNEXpWMnub2xiLAb8jU7F4fwRzFvI9r
-         e3/zCYcnl6XJcd7gMds+amUalg6cp8JmvE2nxzKNds2YyP2kWelHzSz/LsnBV1TTnzX4
-         JBEQ==
-X-Gm-Message-State: AOAM532Quw69FwnkX2y0pT8nIdDQzWJb6WB/KAcwcNZWEA/w7ICN5XhB
-        AF7wEvqlKyVsEt7n3sAbatBhc3EQ3qU=
-X-Google-Smtp-Source: ABdhPJznFlmqCw5BPOYLqNdgiWCFK6nruPbwsi8SGRWfFwvWt7I0KUxhuQSVPL/UDVahFYIjPTerAw==
-X-Received: by 2002:a5d:6110:: with SMTP id v16mr22447839wrt.219.1603764494300;
-        Mon, 26 Oct 2020 19:08:14 -0700 (PDT)
+        bh=pyE7JEar/bSn+02XYbIajC3lO1nRr6+UPSJ84nhT10A=;
+        b=tLA7Q3KG8pF+CA55rzslf14vvEfn6SjDDrk9IP9cXtIJP7UmfF2ABgrO3k1znYKl0X
+         tidss/E5HIUiLOMxfUERm15N/1e9fxFYYqIokqoMdthkND4Vfjh1DgX6L8rAZebBtsW2
+         CAAV5dS1O4kfnXXzzyv5EYmMqCX4Nv/Dx0PmMmq9KqPdl4baMWhNAo3fmYOL+5rwCTwe
+         1Q4McQlezjdRFDi3KFXWcJByNWDuqyNAaXM4ndALXJ6zwmBxz+XUxqI72HW5rHnc3Cj8
+         MLHr02mg9Ieu7ExzfsnfEnRhcuRzcnypzgGHLKEPdpZA3W75UzhTOs55hd8OvtszCZSs
+         UCKA==
+X-Gm-Message-State: AOAM530naMBBfU9Y6zIXFP8a2+KeZDeqbmh3DnaI+bvu8t3wbw9VGz/W
+        JS24kE8eOB1kdnhx1JtuxfoUC9nLJGs=
+X-Google-Smtp-Source: ABdhPJyP1kKXfdMNLZt94qlj8G1n1a1DJ2Inelj/CEx/VL3ZUbCZ7SUcCFXqk72UBKcAHhfPCrT91g==
+X-Received: by 2002:adf:f007:: with SMTP id j7mr1080409wro.73.1603764495205;
+        Mon, 26 Oct 2020 19:08:15 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y2sm26205653wrh.0.2020.10.26.19.08.13
+        by smtp.gmail.com with ESMTPSA id v19sm58307wmj.31.2020.10.26.19.08.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Oct 2020 19:08:13 -0700 (PDT)
-Message-Id: <27ad7566007676fc69dc28aa3b289547f0ccabca.1603764490.git.gitgitgadget@gmail.com>
+        Mon, 26 Oct 2020 19:08:14 -0700 (PDT)
+Message-Id: <0479d59c33b4bc7543b6a2a5e7c10774f7017dba.1603764490.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.895.v3.git.git.1603764490.gitgitgadget@gmail.com>
 References: <pull.895.v2.git.git.1603731448.gitgitgadget@gmail.com>
         <pull.895.v3.git.git.1603764490.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 27 Oct 2020 02:08:09 +0000
-Subject: [PATCH v3 3/4] fast-rebase: demonstrate merge-ort's API via
- temporary/hidden command
+Date:   Tue, 27 Oct 2020 02:08:10 +0000
+Subject: [PATCH v3 4/4] merge,rebase,revert: select ort or recursive by config
+ or environment
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,293 +78,280 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Add a special built-in that is only of use to git-developers and only
-during the development of merge-ort, and which is designed to
-immediately fail and print:
-   git: 'fast-rebase' is not a git command
-unless a special GIT_TEST_MERGE_ALGORITHM environment variable is set.
+Allow the testsuite to run where it treats requests for "recursive" or
+the default merge algorithm via consulting the environment variable
+GIT_TEST_MERGE_ALGORITHM which is expected to either be "recursive" (the
+old traditional algorithm) or "ort" (the new algorithm).
 
-This special builtin serves two purposes:
+Also, allow folks to pick the new algorithm via config setting.  It
+turns out builtin/merge.c already had a way to allow users to specify a
+different default merge algorithm: pull.twohead.  Rather odd
+configuration name (especially to be in the 'pull' namespace rather than
+'merge') but it's there.  Add that same configuration to rebase,
+cherry-pick, and revert.
 
-  1) Demonstrate the desired API of merge-ort.  In particular,
-     fast-rebase takes advantage of the separation of the merging
-     operation from the updating of the index and working tree, to
-     allow it to pick N commits, but only update the index and working
-     tree once at the end.  Look for the calls to
-     merge_inmemory_nonrecursive() and merge_switch_to_result().
-
-  2) Provide a convenient benchmark that isn't polluted by the heavy
-     disk writing and forking of unnecessary processes that comes from
-     sequencer.c and merge-recursive.c.  fast-rebase is not meant to
-     replace sequencer.c, just give ideas on how sequencer.c can be
-     changed.  Updating sequencer.c with these goals is probably a
-     large amount of work; writing a simple targeted command with
-     no documentation, less-than-useful help messages, numerous
-     limitations in terms of flags it can accept and situations it can
-     handle, and which is flagged off from users is a much easier
-     interim step.
+This required updating the various callsites that called merge_trees()
+or merge_recursive() to conditionally call the new API, so this serves
+as another demonstration of what the new API looks and feels like.
+There are almost certainly some callsites that have not yet been
+modified to work with the new merge algorithm, but this represents the
+ones that I have been testing with thus far.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Makefile              |   1 +
- builtin.h             |   1 +
- builtin/fast-rebase.c | 210 ++++++++++++++++++++++++++++++++++++++++++
- git.c                 |   1 +
- 4 files changed, 213 insertions(+)
- create mode 100644 builtin/fast-rebase.c
+ builtin/merge.c  | 26 ++++++++++++++++--
+ builtin/rebase.c |  9 +++++-
+ builtin/revert.c |  2 ++
+ sequencer.c      | 71 ++++++++++++++++++++++++++++++++++++++++--------
+ 4 files changed, 93 insertions(+), 15 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 382fe73c76..1b40d780fa 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1087,6 +1087,7 @@ BUILTIN_OBJS += builtin/difftool.o
- BUILTIN_OBJS += builtin/env--helper.o
- BUILTIN_OBJS += builtin/fast-export.o
- BUILTIN_OBJS += builtin/fast-import.o
-+BUILTIN_OBJS += builtin/fast-rebase.o
- BUILTIN_OBJS += builtin/fetch-pack.o
- BUILTIN_OBJS += builtin/fetch.o
- BUILTIN_OBJS += builtin/fmt-merge-msg.o
-diff --git a/builtin.h b/builtin.h
-index 53fb290963..75ff7dc8a9 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -151,6 +151,7 @@ int cmd_difftool(int argc, const char **argv, const char *prefix);
- int cmd_env__helper(int argc, const char **argv, const char *prefix);
- int cmd_fast_export(int argc, const char **argv, const char *prefix);
- int cmd_fast_import(int argc, const char **argv, const char *prefix);
-+int cmd_fast_rebase(int argc, const char **argv, const char *prefix);
- int cmd_fetch(int argc, const char **argv, const char *prefix);
- int cmd_fetch_pack(int argc, const char **argv, const char *prefix);
- int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/fast-rebase.c b/builtin/fast-rebase.c
-new file mode 100644
-index 0000000000..b69632054f
---- /dev/null
-+++ b/builtin/fast-rebase.c
-@@ -0,0 +1,210 @@
-+/*
-+ * "git fast-rebase" builtin command
-+ *
-+ * FAST: Forking Any Subprocesses (is) Taboo
-+ *
-+ * This is meant SOLELY as a demo of what is possible.  sequencer.c and
-+ * rebase.c should be refactored to use the ideas here, rather than attempting
-+ * to extend this file to replace those (unless Phillip or Dscho say that
-+ * refactoring is too hard and we need a clean slate, but I'm guessing that
-+ * refactoring is the better route).
-+ */
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 9d5359edc2..87dfc9bc06 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -28,6 +28,7 @@
+ #include "rerere.h"
+ #include "help.h"
+ #include "merge-recursive.h"
++#include "merge-ort-wrappers.h"
+ #include "resolve-undo.h"
+ #include "remote.h"
+ #include "fmt-merge-msg.h"
+@@ -88,6 +89,7 @@ static int no_verify;
+ static struct strategy all_strategy[] = {
+ 	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
+ 	{ "octopus",    DEFAULT_OCTOPUS },
++	{ "ort",        NO_TRIVIAL },
+ 	{ "resolve",    0 },
+ 	{ "ours",       NO_FAST_FORWARD | NO_TRIVIAL },
+ 	{ "subtree",    NO_FAST_FORWARD | NO_TRIVIAL },
+@@ -159,10 +161,17 @@ static struct strategy *get_strategy(const char *name)
+ 	struct strategy *ret;
+ 	static struct cmdnames main_cmds, other_cmds;
+ 	static int loaded;
++	char *default_strategy = getenv("GIT_TEST_MERGE_ALGORITHM");
+ 
+ 	if (!name)
+ 		return NULL;
+ 
++	if (default_strategy &&
++	    !strcmp(default_strategy, "ort") &&
++	    !strcmp(name, "recursive")) {
++		name = "ort";
++	}
 +
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
-+#include "builtin.h"
+ 	for (i = 0; i < ARRAY_SIZE(all_strategy); i++)
+ 		if (!strcmp(name, all_strategy[i].name))
+ 			return &all_strategy[i];
+@@ -701,7 +710,8 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 	if (refresh_and_write_cache(REFRESH_QUIET, SKIP_IF_UNCHANGED, 0) < 0)
+ 		return error(_("Unable to write index."));
+ 
+-	if (!strcmp(strategy, "recursive") || !strcmp(strategy, "subtree")) {
++	if (!strcmp(strategy, "recursive") || !strcmp(strategy, "subtree") ||
++	    !strcmp(strategy, "ort")) {
+ 		struct lock_file lock = LOCK_INIT;
+ 		int clean, x;
+ 		struct commit *result;
+@@ -732,8 +742,12 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 			commit_list_insert(j->item, &reversed);
+ 
+ 		hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
+-		clean = merge_recursive(&o, head,
+-				remoteheads->item, reversed, &result);
++		if (!strcmp(strategy, "ort"))
++			clean = merge_ort_recursive(&o, head, remoteheads->item,
++						    reversed, &result);
++		else
++			clean = merge_recursive(&o, head, remoteheads->item,
++						reversed, &result);
+ 		if (clean < 0)
+ 			exit(128);
+ 		if (write_locked_index(&the_index, &lock,
+@@ -1264,6 +1278,12 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	if (branch)
+ 		skip_prefix(branch, "refs/heads/", &branch);
+ 
++	if (!pull_twohead) {
++		char *default_strategy = getenv("GIT_TEST_MERGE_ALGORITHM");
++		if (default_strategy && !strcmp(default_strategy, "ort"))
++			pull_twohead = "ort";
++	}
 +
-+#include "cache-tree.h"
-+#include "commit.h"
-+#include "lockfile.h"
+ 	init_diff_ui_defaults();
+ 	git_config(git_merge_config, NULL);
+ 
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index eeca53382f..9719aa25da 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -119,6 +119,7 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+ 	struct replay_opts replay = REPLAY_OPTS_INIT;
+ 
+ 	replay.action = REPLAY_INTERACTIVE_REBASE;
++	replay.strategy = NULL;
+ 	sequencer_init_config(&replay);
+ 
+ 	replay.signoff = opts->signoff;
+@@ -136,7 +137,8 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+ 					opts->committer_date_is_author_date;
+ 	replay.ignore_date = opts->ignore_date;
+ 	replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
+-	replay.strategy = opts->strategy;
++	if (opts->strategy)
++		replay.strategy = opts->strategy;
+ 
+ 	if (opts->strategy_opts)
+ 		parse_strategy_opts(&replay, opts->strategy_opts);
+@@ -1771,6 +1773,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 			    options.default_backend);
+ 	}
+ 
++	if (options.type == REBASE_MERGE &&
++	    !options.strategy &&
++	    getenv("GIT_TEST_MERGE_ALGORITHM"))
++		options.strategy = xstrdup(getenv("GIT_TEST_MERGE_ALGORITHM"));
++
+ 	switch (options.type) {
+ 	case REBASE_MERGE:
+ 	case REBASE_PRESERVE_MERGES:
+diff --git a/builtin/revert.c b/builtin/revert.c
+index f61cc5d82c..c7cb0c1a18 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -202,6 +202,8 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
+ 	/* These option values will be free()d */
+ 	opts->gpg_sign = xstrdup_or_null(opts->gpg_sign);
+ 	opts->strategy = xstrdup_or_null(opts->strategy);
++	if (!opts->strategy && getenv("GIT_TEST_MERGE_ALGORITHM"))
++		opts->strategy = xstrdup(getenv("GIT_TEST_MERGE_ALGORITHM"));
+ 
+ 	if (cmd == 'q') {
+ 		int ret = sequencer_remove_state(opts);
+diff --git a/sequencer.c b/sequencer.c
+index 00acb12496..e16d85380c 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -14,7 +14,8 @@
+ #include "diff.h"
+ #include "revision.h"
+ #include "rerere.h"
+-#include "merge-recursive.h"
 +#include "merge-ort.h"
-+#include "refs.h"
-+#include "revision.h"
-+#include "sequencer.h"
-+#include "strvec.h"
-+#include "tree.h"
-+
-+static const char *short_commit_name(struct commit *commit)
-+{
-+	return find_unique_abbrev(&commit->object.oid, DEFAULT_ABBREV);
-+}
-+
-+static struct commit *peel_committish(const char *name)
-+{
-+	struct object *obj;
-+	struct object_id oid;
-+
-+	if (get_oid(name, &oid))
-+		return NULL;
-+	obj = parse_object(the_repository, &oid);
-+	return (struct commit *)peel_to_type(name, 0, obj, OBJ_COMMIT);
-+}
-+
-+static char *get_author(const char *message)
-+{
-+	size_t len;
-+	const char *a;
-+
-+	a = find_commit_header(message, "author", &len);
-+	if (a)
-+		return xmemdupz(a, len);
-+
-+	return NULL;
-+}
-+
-+static struct commit *create_commit(struct tree *tree,
-+				    struct commit *based_on,
-+				    struct commit *parent)
-+{
-+	struct object_id ret;
-+	struct object *obj;
-+	struct commit_list *parents = NULL;
-+	char *author;
-+	char *sign_commit = NULL;
-+	struct commit_extra_header *extra;
-+	struct strbuf msg = STRBUF_INIT;
-+	const char *out_enc = get_commit_output_encoding();
-+	const char *message = logmsg_reencode(based_on, NULL, out_enc);
-+	const char *orig_message = NULL;
-+	const char *exclude_gpgsig[] = { "gpgsig", NULL };
-+
-+	commit_list_insert(parent, &parents);
-+	extra = read_commit_extra_headers(based_on, exclude_gpgsig);
-+	find_commit_subject(message, &orig_message);
-+	strbuf_addstr(&msg, orig_message);
-+	author = get_author(message);
-+	reset_ident_date();
-+	if (commit_tree_extended(msg.buf, msg.len, &tree->object.oid, parents,
-+				 &ret, author, NULL, sign_commit, extra)) {
-+		error(_("failed to write commit object"));
-+		return NULL;
++#include "merge-ort-wrappers.h"
+ #include "refs.h"
+ #include "strvec.h"
+ #include "quote.h"
+@@ -204,6 +205,20 @@ static int git_sequencer_config(const char *k, const char *v, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!opts->strategy && !strcmp(k, "pull.twohead")) {
++		int ret = git_config_string((const char**)&opts->strategy, k, v);
++		if (ret == 0) {
++			/*
++			 * pull.twohead is allowed to be multi-valued; we only
++			 * care about the first value.
++			 */
++			char *tmp = strchr(opts->strategy, ' ');
++			if (tmp)
++				*tmp = '\0';
++		}
++		return ret;
 +	}
-+	free(author);
-+	strbuf_release(&msg);
 +
-+	obj = parse_object(the_repository, &ret);
-+	return (struct commit *)obj;
-+}
-+
-+int cmd_fast_rebase(int argc, const char **argv, const char *prefix)
-+{
-+	struct commit *onto;
-+	struct commit *last_commit = NULL, *last_picked_commit = NULL;
-+	struct object_id head;
-+	struct lock_file lock = LOCK_INIT;
-+	int clean = 1;
-+	struct strvec rev_walk_args = STRVEC_INIT;
-+	struct rev_info revs;
-+	struct commit *commit;
-+	struct merge_options merge_opt;
-+	struct tree *next_tree, *base_tree, *head_tree;
+ 	status = git_gpg_config(k, v, NULL);
+ 	if (status)
+ 		return status;
+@@ -595,8 +610,9 @@ static int do_recursive_merge(struct repository *r,
+ 			      struct replay_opts *opts)
+ {
+ 	struct merge_options o;
 +	struct merge_result result;
-+	struct strbuf reflog_msg = STRBUF_INIT;
-+	struct strbuf branch_name = STRBUF_INIT;
-+
-+	if (argc == 2 && !strcmp(argv[1], "-h")) {
-+		printf("Sorry, I am not a psychiatrist; I can not give you the help you need.  Oh, you meant usage...\n");
-+		exit(129);
+ 	struct tree *next_tree, *base_tree, *head_tree;
+-	int clean;
++	int clean, show_output;
+ 	int i;
+ 	struct lock_file index_lock = LOCK_INIT;
+ 
+@@ -620,12 +636,27 @@ static int do_recursive_merge(struct repository *r,
+ 	for (i = 0; i < opts->xopts_nr; i++)
+ 		parse_merge_opt(&o, opts->xopts[i]);
+ 
+-	clean = merge_trees(&o,
+-			    head_tree,
+-			    next_tree, base_tree);
+-	if (is_rebase_i(opts) && clean <= 0)
+-		fputs(o.obuf.buf, stdout);
+-	strbuf_release(&o.obuf);
++	if (opts->strategy && !strcmp(opts->strategy, "ort")) {
++		memset(&result, 0, sizeof(result));
++		merge_incore_nonrecursive(&o, base_tree, head_tree, next_tree,
++					    &result);
++		show_output = !is_rebase_i(opts) || !result.clean;
++		/*
++		 * TODO: merge_switch_to_result will update index/working tree;
++		 * we only really want to do that if !result.clean || this is
++		 * the final patch to be picked.  But determining this is the
++		 * final patch would take some work, and "head_tree" would need
++		 * to be replace with the tree the index matched before we
++		 * started doing any picks.
++		 */
++		merge_switch_to_result(&o, head_tree, &result, 1, show_output);
++		clean = result.clean;
++	} else {
++		clean = merge_trees(&o, head_tree, next_tree, base_tree);
++		if (is_rebase_i(opts) && clean <= 0)
++			fputs(o.obuf.buf, stdout);
++		strbuf_release(&o.obuf);
 +	}
-+
-+	if (!getenv("GIT_TEST_MERGE_ALGORITHM")) {
-+		fprintf_ln(stderr, _("git: 'fast-rebase' is not a git command. See 'git --help'."));
-+		exit(1);
+ 	if (clean < 0) {
+ 		rollback_lock_file(&index_lock);
+ 		return clean;
+@@ -1991,7 +2022,10 @@ static int do_pick_commit(struct repository *r,
+ 
+ 	if (is_rebase_i(opts) && write_author_script(msg.message) < 0)
+ 		res = -1;
+-	else if (!opts->strategy || !strcmp(opts->strategy, "recursive") || command == TODO_REVERT) {
++	else if (!opts->strategy ||
++		 !strcmp(opts->strategy, "recursive") ||
++		 !strcmp(opts->strategy, "ort") ||
++		 command == TODO_REVERT) {
+ 		res = do_recursive_merge(r, base, next, base_label, next_label,
+ 					 &head, &msgbuf, opts);
+ 		if (res < 0)
+@@ -3485,7 +3519,9 @@ static int do_merge(struct repository *r,
+ 	struct commit_list *bases, *j, *reversed = NULL;
+ 	struct commit_list *to_merge = NULL, **tail = &to_merge;
+ 	const char *strategy = !opts->xopts_nr &&
+-		(!opts->strategy || !strcmp(opts->strategy, "recursive")) ?
++		(!opts->strategy ||
++		 !strcmp(opts->strategy, "recursive") ||
++		 !strcmp(opts->strategy, "ort")) ?
+ 		NULL : opts->strategy;
+ 	struct merge_options o;
+ 	int merge_arg_len, oneline_offset, can_fast_forward, ret, k;
+@@ -3722,7 +3758,20 @@ static int do_merge(struct repository *r,
+ 	o.branch2 = ref_name.buf;
+ 	o.buffer_output = 2;
+ 
+-	ret = merge_recursive(&o, head_commit, merge_commit, reversed, &i);
++	if (opts->strategy && !strcmp(opts->strategy, "ort")) {
++		/*
++		 * TODO: Should use merge_incore_recursive() and
++		 * merge_switch_to_result(), skipping the call to
++		 * merge_switch_to_result() when we don't actually need to
++		 * update the index and working copy immediately.
++		 */
++		ret = merge_ort_recursive(&o,
++					  head_commit, merge_commit, reversed,
++					  &i);
++	} else {
++		ret = merge_recursive(&o, head_commit, merge_commit, reversed,
++				      &i);
 +	}
-+
-+	if (argc != 5 || strcmp(argv[1], "--onto"))
-+		die("usage: read the code, figure out how to use it, then do so");
-+
-+	onto = peel_committish(argv[2]);
-+	strbuf_addf(&branch_name, "refs/heads/%s", argv[4]);
-+
-+	/* Sanity check */
-+	if (get_oid("HEAD", &head))
-+		die(_("Cannot read HEAD"));
-+	assert(oideq(&onto->object.oid, &head));
-+
-+	hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
-+	assert(repo_read_index(the_repository) >= 0);
-+
-+	repo_init_revisions(the_repository, &revs, NULL);
-+	revs.verbose_header = 1;
-+	revs.max_parents = 1;
-+	revs.cherry_mark = 1;
-+	revs.limited = 1;
-+	revs.reverse = 1;
-+	revs.right_only = 1;
-+	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
-+	revs.topo_order = 1;
-+	strvec_pushl(&rev_walk_args, "", argv[4], "--not", argv[3], NULL);
-+
-+	if (setup_revisions(rev_walk_args.nr, rev_walk_args.v, &revs, NULL) > 1)
-+		return error(_("unhandled options"));
-+
-+	strvec_clear(&rev_walk_args);
-+
-+	if (prepare_revision_walk(&revs) < 0)
-+		return error(_("error preparing revisions"));
-+
-+	init_merge_options(&merge_opt, the_repository);
-+	memset(&result, 0, sizeof(result));
-+	merge_opt.show_rename_progress = 1;
-+	merge_opt.branch1 = "HEAD";
-+	head_tree = get_commit_tree(onto);
-+	result.tree = head_tree;
-+	last_commit = onto;
-+	while ((commit = get_revision(&revs))) {
-+		struct commit *base;
-+
-+		fprintf(stderr, "Rebasing %s...\r",
-+			oid_to_hex(&commit->object.oid));
-+		assert(commit->parents && !commit->parents->next);
-+		base = commit->parents->item;
-+
-+		next_tree = get_commit_tree(commit);
-+		base_tree = get_commit_tree(base);
-+
-+		merge_opt.branch2 = short_commit_name(commit);
-+		merge_opt.ancestor = xstrfmt("parent of %s", merge_opt.branch2);
-+
-+		merge_incore_nonrecursive(&merge_opt,
-+					  base_tree,
-+					  result.tree,
-+					  next_tree,
-+					  &result);
-+
-+		free((char*)merge_opt.ancestor);
-+		merge_opt.ancestor = NULL;
-+		if (!result.clean)
-+			die("Aborting: Hit a conflict and restarting is not implemented.");
-+		last_picked_commit = commit;
-+		last_commit = create_commit(result.tree, commit, last_commit);
-+	}
-+	fprintf(stderr, "\nDone.\n");
-+	/* TODO: There should be some kind of rev_info_free(&revs) call... */
-+	memset(&revs, 0, sizeof(revs));
-+
-+	merge_switch_to_result(&merge_opt, head_tree, &result, 1, !result.clean);
-+
-+	if (result.clean < 0)
-+		exit(128);
-+
-+	strbuf_addf(&reflog_msg, "finish rebase %s onto %s",
-+		    oid_to_hex(&last_picked_commit->object.oid),
-+		    oid_to_hex(&last_commit->object.oid));
-+	if (update_ref(reflog_msg.buf, branch_name.buf,
-+		       &last_commit->object.oid,
-+		       &last_picked_commit->object.oid,
-+		       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR)) {
-+		error(_("could not update %s"), argv[4]);
-+		die("Failed to update %s", argv[4]);
-+	}
-+	if (create_symref("HEAD", branch_name.buf, reflog_msg.buf) < 0)
-+		die(_("unable to update HEAD"));
-+	strbuf_release(&reflog_msg);
-+	strbuf_release(&branch_name);
-+
-+	prime_cache_tree(the_repository, the_repository->index, result.tree);
-+	if (write_locked_index(&the_index, &lock,
-+			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
-+		die(_("unable to write %s"), get_index_file());
-+	return (clean == 0);
-+}
-diff --git a/git.c b/git.c
-index 4bdcdad2cc..af84f11e69 100644
---- a/git.c
-+++ b/git.c
-@@ -512,6 +512,7 @@ static struct cmd_struct commands[] = {
- 	{ "env--helper", cmd_env__helper },
- 	{ "fast-export", cmd_fast_export, RUN_SETUP },
- 	{ "fast-import", cmd_fast_import, RUN_SETUP | NO_PARSEOPT },
-+	{ "fast-rebase", cmd_fast_rebase, RUN_SETUP /* | NEED_WORK_TREE */ },
- 	{ "fetch", cmd_fetch, RUN_SETUP },
- 	{ "fetch-pack", cmd_fetch_pack, RUN_SETUP | NO_PARSEOPT },
- 	{ "fmt-merge-msg", cmd_fmt_merge_msg, RUN_SETUP },
+ 	if (ret <= 0)
+ 		fputs(o.obuf.buf, stdout);
+ 	strbuf_release(&o.obuf);
 -- 
 gitgitgadget
-
