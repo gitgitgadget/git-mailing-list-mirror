@@ -2,141 +2,187 @@ Return-Path: <SRS0=wsT/=ED=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC3FEC388F7
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 22:05:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49204C56201
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 22:14:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5818E24754
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 22:05:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E5BE8246CD
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 22:14:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OWL9gP79"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HWf5XZqb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730010AbgJ1WFY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Oct 2020 18:05:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51372 "EHLO
+        id S1731024AbgJ1WOz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Oct 2020 18:14:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730004AbgJ1WFX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Oct 2020 18:05:23 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFD0FC0613CF
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 15:05:22 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 126so741240lfi.8
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 15:05:22 -0700 (PDT)
+        with ESMTP id S1731065AbgJ1WOy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Oct 2020 18:14:54 -0400
+Received: from mail-yb1-xb44.google.com (mail-yb1-xb44.google.com [IPv6:2607:f8b0:4864:20::b44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F088CC0613CF
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 15:14:53 -0700 (PDT)
+Received: by mail-yb1-xb44.google.com with SMTP id o70so518900ybc.1
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 15:14:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding:content-language;
-        bh=TIAmcLWk8H4ss5DQQ5ulPRYFJnlkVwrGf2a2YFkAI2s=;
-        b=OWL9gP79TeCB7W6DhSkrIj0vE7lWGMxXCb2GU7Uksq/fV5lVvFK4cc9n/qR55ys8Mg
-         i2B1Y/vD17AUHgtJ7OWOsi3VC/J/FllxiK1cabL+LBsfLxVyxdTscXKoxmTUCwNU6nL4
-         09bnEgyOdNHU6PbmRQhqafWBHJpe8WLZUu1Z6XqRAYSUYsUSwomNwooJC50Q2uNlP8mr
-         YsNoQVKJZ/yy+1XSQOW1izaenfH5AN4Uwmi4+fYG3tF2d0k90CDjUTtYUm52f+XOAPJU
-         XXRtLgMLvyoba2tk9Z7lto0gCZVw8Cb1aDOgBalcv44a0bJsnLSJ/yaag98ftHKgg0Nr
-         xxKw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mBKckM6il9kb+4KT8vgXFLgwEP4Ax9Qy3RPZQeDM0FI=;
+        b=HWf5XZqbJCjpR3gYdjXCgfgnXGEBIz7ldtwSsBnU0+yzmAp2Efkp1kDVO74Vyd9t9Y
+         qij804jNh0AZl4hY5/EZv2iUyTunCkH7UQKNl7DKYo98OllUcrQz+tu97BlAPlpdX7t/
+         2vxiPgRGc71IDMyXXruEV6sVjzKVjoW+srCTs9sZ3ltYJHuvXLjAcfS/XmOZnRAm6GDn
+         cdVSTg2v8rDhC+NFYokGIvpE8zQikir64t7gmgMGDowZLxak/fNvG0cVmnq13NYtBbkq
+         DEPicyzLgsbCA2TfdQGXLiUBJ7KQQ7/zuXHIKjBt7EdaLy9J8Fgauo5LLkuYAL9j6LIr
+         dKxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding:content-language;
-        bh=TIAmcLWk8H4ss5DQQ5ulPRYFJnlkVwrGf2a2YFkAI2s=;
-        b=fnQZJ8rvAxBb3E3xj1bfLDMlwQEb/EyxBNhsbo+Vpq/+nO8ry21cCCL4dalSi9HF88
-         EGg5qHP/1fDvK0PX9CTde8vEjOVdV79fhP9cKCQZ9OUK60dCAxs7YXt30zzJ6Fwngrfr
-         rcl4Nb1uajAzm2ifS3fNMV7swI0sBAM2aHcU0QWSsVZnyk/QQ07I45Lpr6FdbtnBzd9o
-         HuKzQ/1Qk14WvdmWSK+Soyz1a2MhkjJiPqg3PhhqN9rPhN9qiNJ85PVrdIzZ9aivQueK
-         I4FwD4IxxZdcQJy01pJBITFhoVQwTmkZcGfGJMe9RZfipJ9J6iizQqM/ecSyxa46JbMv
-         +vBA==
-X-Gm-Message-State: AOAM5312fRT71X9cPH7MsPh17gPSWCCZws3zpRwQKbPDaGe/DXQWp1gu
-        6k1Ceod4hhBSDRitRmC6INONFNQH/ws=
-X-Google-Smtp-Source: ABdhPJyGU8Ejfb0KbUFrjIKT5b+BcvDiQFjLkaRBiQjHSGSmciyQHHSBD4xoMSEETyhZ8FHNIyKzhg==
-X-Received: by 2002:a19:4d5:: with SMTP id 204mr461359lfe.104.1603869927234;
-        Wed, 28 Oct 2020 00:25:27 -0700 (PDT)
-Received: from [192.168.0.100] ([88.223.58.41])
-        by smtp.gmail.com with ESMTPSA id m18sm430985lfb.35.2020.10.28.00.25.25
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Oct 2020 00:25:26 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=mBKckM6il9kb+4KT8vgXFLgwEP4Ax9Qy3RPZQeDM0FI=;
+        b=m75JXUKR2P6CLhHE/6TOcNk+JfihAxkrk8oE87iVhWVpCgv0iYuCxFSta/YZmRqzIO
+         X2IduPVEQGoaurWuuPYlXL8wA9AklTFWFW+UM+bCcSCXn0YpNvilUhp/Z+fYJsHZn5gk
+         7QtuUf4UEuEsoTihH8lRYLR8xnjUMgImuwxkG3+MKmWCVb8CSLImh8e6Dgy6izlt83a5
+         3gUAxQqHu0Se2AQVxlkvlL/3c4YG9GDMPpwI3Pzp+KSor4d0rPKQYxxOJUp2/YztMhbf
+         AZI62OxxePF3Smp45PEHBCWfX23sv2QH7eoHFL9+FoFuS2nvJ4tTEW9yD03ZqR/+ezXp
+         lifA==
+X-Gm-Message-State: AOAM531rMXtd7G9naFLKZgLI7Mq58VfH3ZmqtXKYp+j5beVZ/on1+LEl
+        5L+M+HmaWl75s1VxgvItUvBhPloqWb/z3Q==
+X-Google-Smtp-Source: ABdhPJxAXQAI6l2Gi5Q2FzbJ5RwLNLAF9LtXluaygsf9yha5WMpYkg/yFw0CpWPmXskI7ZcldsWUbQ==
+X-Received: by 2002:a4a:e5ce:: with SMTP id r14mr4135135oov.11.1603850834450;
+        Tue, 27 Oct 2020 19:07:14 -0700 (PDT)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id c128sm2384036oob.23.2020.10.27.19.07.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Oct 2020 19:07:13 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
-From:   Zaoshi <kabazaoshi@gmail.com>
-Subject: git mergetool does not work since 2.29.0
-Message-ID: <a284dc99-7da3-a313-6d9b-1dd40cbc5b22@gmail.com>
-Date:   Wed, 28 Oct 2020 09:25:25 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.0
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v3 00/29] completion: zsh: latest patches
+Date:   Tue, 27 Oct 2020 20:06:43 -0600
+Message-Id: <20201028020712.442623-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.29.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Hi,
 
-I have tried using 'git bugreport' but could not figure out how to edit 
-text in the console and send report, so I'm just reusing that form in 
-this email. Let me know if any other information is needed.
+I've been carrying around these patches for quite some time, many have already
+been sent, others I refactored to make them more clear.
 
-What did you do before the bug happened?
-Ran the following commands:
-git checkout mybranch
-git merge master
-git mergetool
+These patches correspond to version 1.1 of git-completion:
 
-What did you expect to happen?
-I expected git to open my configured mergetool
+https://github.com/felipec/git-completion
 
-What happened instead?
-It fails with message "merge of myfile.cs failed"
+Changes since v2:
 
-What's different between what you expected and what actually happened?
-Merge does not work.
+ * Silenced pkg-config command in case of errors
+ * Improved loading of bash script so it's backwards compatible
 
-Anything else you want to add:
-This issue started to happen since git version 2.29.0. Earlier versions 
-work as expected.
+Cheers.
 
-.gitconfig:
-[core]
-     editor = \"C:\\Microsoft VS Code\\Code.exe\" --wait
-[user]
-     name = myname
-     email = myemail
-[fetch]
-     prune = true
-[pull]
-     rebase = true
-[diff]
-     tool = bc4
-[merge]
-     tool = bc4
-[difftool "bc4"]
-     cmd = \"c:\\Program Files\\Beyond Compare 4\\bcomp.exe\" $LOCAL $REMOTE
-     trustExitCode = true
-[mergetool "bc4"]
-     cmd = \"c:\\Program Files\\Beyond Compare 4\\bcomp.exe\" $LOCAL 
-$REMOTE $BASE $MERGED
-     trustExitCode = true
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 26538efb80..49a6ef4236 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -3474,7 +3474,6 @@ __git_func_wrap ()
+ # This is NOT a public function; use at your own risk.
+ __git_complete ()
+ {
+-	test -n "$ZSH_VERSION" && return
+ 	local wrapper="__git_wrap${2}"
+ 	eval "$wrapper () { __git_func_wrap $2 ; }"
+ 	complete -o bashdefault -o default -o nospace -F $wrapper $1 2>/dev/null \
+diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
+index d25f8691ef..e0fda27f4c 100644
+--- a/contrib/completion/git-completion.zsh
++++ b/contrib/completion/git-completion.zsh
+@@ -27,19 +27,26 @@ zstyle -T ':completion:*:*:git:*' tag-order && \
+ zstyle -s ":completion:*:*:git:*" script script
+ if [ -z "$script" ]; then
+ 	local -a locations
+-	local e
++	local e bash_completion
++
++	bash_completion=$(pkg-config --variable=completionsdir bash-completion 2>/dev/null) ||
++		bash_completion='/usr/share/bash-completion/completions/'
++
+ 	locations=(
+ 		"$(dirname ${funcsourcetrace[1]%:*})"/git-completion.bash
+ 		"$HOME/.local/share/bash-completion/completions/git"
+-		"$(pkg-config --variable=completionsdir bash-completion)"/git
+-		'/usr/share/bash-completion/completions/git'
++		"$bash_completion/git"
+ 		'/etc/bash_completion.d/git' # old debian
+ 		)
+ 	for e in $locations; do
+ 		test -f $e && script="$e" && break
+ 	done
+ fi
++
++local old_complete="$functions[complete]"
++functions[complete]=:
+ GIT_SOURCING_ZSH_COMPLETION=y . "$script"
++functions[complete]="$old_complete"
+ 
+ __gitcomp ()
+ {
+@@ -129,7 +136,7 @@ __gitcomp_file_direct ()
+ 
+ _git_zsh ()
+ {
+-	__gitcomp "v1.0"
++	__gitcomp "v1.1"
+ }
+ 
+ __git_complete_command ()
 
-[System Info]
-git version:
-git version 2.29.1.windows.1
-cpu: x86_64
-built from commit: e6d53c456169235fe72602e2b4d985934fa9ad23
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Windows 10.0 19041
-compiler info: gnuc: 10.2
-libc info: no libc information available
-$SHELL (typically, interactive shell): <unset>
 
+Felipe Contreras (29):
+  completion: zsh: fix __gitcomp_direct()
+  completion: zsh: fix name due to broken autoloading
+  completion: zsh: fix bash script extension
+  completion: zsh: reorganize install instructions
+  completion: zsh: fix for directories with spaces
+  completion: zsh: update slave script locations
+  completion: prompt: fix color for Zsh
+  completion: zsh: fix for command aliasing
+  completion: bash: synchronize zsh wrapper
+  completion: bash: remove zsh wrapper
+  completion: zsh: fix completion for --no-.. options
+  completion: fix conflict with bashcomp
+  completion: zsh: add missing direct_append
+  completion: zsh: fix splitting of words
+  completion: zsh: simplify compadd functions
+  completion: zsh: simplify direct compadd
+  completion: zsh: trivial cleanup
+  completion: zsh: simplify nl_append
+  completion: zsh: simplify file_direct
+  completion: zsh: shuffle functions around
+  completion: zsh: refactor command completion
+  completion: zsh: improve command tags
+  completion: zsh: add alias descriptions
+  completion: zsh: trivial simplification
+  completion: zsh: add simple version check
+  completion: bash: trivial cleanup
+  completion: bash: cleanup cygwin check
+  completion: bash: remove old compat wrappers
+  Update copyright notices
 
-[Enabled Hooks]
+ contrib/completion/git-completion.bash | 113 ++------------------
+ contrib/completion/git-completion.zsh  | 141 ++++++++++++++++---------
+ contrib/completion/git-prompt.sh       |  11 +-
+ t/t9902-completion.sh                  |   2 +-
+ 4 files changed, 112 insertions(+), 155 deletions(-)
 
-
-Regards,
-Z
+-- 
+2.29.1
 
