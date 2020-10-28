@@ -2,120 +2,127 @@ Return-Path: <SRS0=wsT/=ED=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D32DDC4363A
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:46:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9250AC55179
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:54:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6B6BD207CD
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:46:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 25F1620684
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:54:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jnQNrHvP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pCh4P3qb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730640AbgJ1Xp7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Oct 2020 19:45:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40036 "EHLO
+        id S2390296AbgJ1XyA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Oct 2020 19:54:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728405AbgJ1Xp6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Oct 2020 19:45:58 -0400
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCD22C0613CF
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 16:45:58 -0700 (PDT)
-Received: by mail-oi1-x241.google.com with SMTP id y186so1435625oia.3
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 16:45:58 -0700 (PDT)
+        with ESMTP id S2390081AbgJ1Xxw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Oct 2020 19:53:52 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 880B4C0613CF
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 16:53:52 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id j7so1402532oie.12
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 16:53:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=nZ+FG+1Hi7umcZDm3yFJ7TGD+Ohtdv4wbLuBKS06dO8=;
-        b=jnQNrHvP94Lu0jRVFUlFMXVK9GIMsKjEzcftwcy6vLlu9Pbh41IBrm98Xj1tTsbM2H
-         dNeKlFqC5orB80BCK4pIcnot0HBFunMzYVDIC9b7gCDG10k2McPUE6oN1FC74bTjp+ow
-         6D5iS+1/yhUYtFU2kvlxqejCzn/Set0GimnL1+4/B5uXeC+j4iff7Q7YaNP9eEfnl7mR
-         O+KgoAfvRBLvCt3D1Dt6k4aIKJZX46IqZttVjcfH2qWY5g14+kQKDhNUPZXjrP+moIH9
-         DkX0mJEBCqvHRXP9/GFUB8ZZzqFZc+JMZkwv+WxK4pykSvo7gaBUTJhHB0dPGLnWYauT
-         VyuA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=KYOiDsxm0R36v5Dec+5BPo4TuwIvPu8SD6WluEmDwIo=;
+        b=pCh4P3qbDDGScO41pqtcbWo+N/ShzyFAS/vS+T3n0QFIRGdUX/SilpzBQ11UgKB4yx
+         ygvfLe7pHWB6kOV4FpHVTEG/yxw55V3R+4xVn8m4DjwuxtbcHrnTR/B0d9qzZXcHEbDc
+         yXkBsWDNE6J+QozY4Jw/qINLkMNFvQwvWTnR4E100Ev215HMM0GqVicg5tc7BsClA5S7
+         mDWmf6ERJNLSnJzFNpimZzaa8wVY0PZFxsBBlUaKgEUNenJsKl6XdNowa2eZeivZ1zmy
+         /V2t1ax+/6f5QVjdmI1ciTksTxWVAvKV7We9h7IY0EtIfcnwCVwsFvllPtSoxabQ+J+v
+         0l8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=nZ+FG+1Hi7umcZDm3yFJ7TGD+Ohtdv4wbLuBKS06dO8=;
-        b=PxXrXT3NdSQ/dAw9eEvYPPXh9sMn3TQkV9MV+3WQGQc6qmaBI2smIEF9kDuS4jugdz
-         0HhLmrxuadS6hkVWkvQQ3iTbEzSYlLxzkRMTx+p57BJBiR5WKgmJhoTCG9Gjhglj1LMc
-         I7hhzwswKkNT+LcThBOGwDJPvK55xF/DpUCQQ0z7UdPnin0fB2QVNysNpGoJXM2UcVTG
-         DvjSQR9W97xhOXNFXsAzcKwEViADhfoqh7L0H6ikolPrJFm6i0XVVS1/UZTjD8AR1t6e
-         TKMenQdM57tvyAbze9a97eO98yCKtVPGkQc/RbKQQZibaiIBSXidcxpe5z6yduWRU86n
-         KiOg==
-X-Gm-Message-State: AOAM533csyfCUpb//e1SQT4wiyH0GXv3WbigIpLePP2MRk6ReimOt/A7
-        36Jh19scZk4+twAC7MiWn0yV5kE2tWWsjX52
-X-Google-Smtp-Source: ABdhPJxTGCrDrPejK22/xx2HJX+dnm7b9kpxdO8rihkrNOLs0kx9wjNGcuuCGM5SPWXfl3u/PAT7cg==
-X-Received: by 2002:aca:b1c2:: with SMTP id a185mr3655547oif.83.1603850836230;
-        Tue, 27 Oct 2020 19:07:16 -0700 (PDT)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id m6sm1871353otm.76.2020.10.27.19.07.15
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=KYOiDsxm0R36v5Dec+5BPo4TuwIvPu8SD6WluEmDwIo=;
+        b=adclVOC6FyG6q6ZioL4MQ5dEHx+t0lH7xBLSmJ6PWIriM2HYfn7YYlTDPcUuau1IJb
+         cxyLj65F09npcOEQITeNXsee+F9zIwh6NZL4GpBE5bNrxqjj3ZOBBygf2z5Oy6F8fDnE
+         CxnrvIzDDUv/3u+ePThQMnRxWuH8QzHNKyz7djGC0mzNwVH8vzelaUnc9/3AKepLT7oT
+         aCT1qur4TA0paSJw3OAjabmRi2O2JgSN4QqKS7oqOQD64GvHxiM9Uu50bFuKJFF8ykaV
+         kaEuKCp+zyNny2v8OiWK4QmJNBSm+1v4l8U/bvR9FCJK5C/A2KUoL8zJa1wvW6Fme2HA
+         lBiQ==
+X-Gm-Message-State: AOAM531Czj0UO0g4Rd1YqKGwXI4hD5sxYw8nx0nCn/66TGwqxdmG8aS0
+        PKNUr2Za1nYbMMAJERbymp7mNGDfbc4=
+X-Google-Smtp-Source: ABdhPJzKfzX4+o+YEi5MPt/G4V9LiwiZi8ki+hUXxkBIM2HOrYbvVfLcHbnDEn5/YAvbpx5mLuaSeg==
+X-Received: by 2002:a17:90a:fa02:: with SMTP id cm2mr3328300pjb.236.1603844348497;
+        Tue, 27 Oct 2020 17:19:08 -0700 (PDT)
+Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
+        by smtp.gmail.com with ESMTPSA id e184sm1234190pfe.146.2020.10.27.17.19.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2020 19:07:15 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
+        Tue, 27 Oct 2020 17:19:07 -0700 (PDT)
+Date:   Tue, 27 Oct 2020 17:19:05 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Joey Salazar <jgsal@protonmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 01/29] completion: zsh: fix __gitcomp_direct()
-Date:   Tue, 27 Oct 2020 20:06:44 -0600
-Message-Id: <20201028020712.442623-2-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.29.1
-In-Reply-To: <20201028020712.442623-1-felipe.contreras@gmail.com>
-References: <20201028020712.442623-1-felipe.contreras@gmail.com>
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [OUTREACHY][PATCH v2] t7006: Use test_path_is_* functions in
+ test script
+Message-ID: <20201028001905.GA1500644@google.com>
+References: <KHJW7elqEfVsIp1V0WKPRVAB5xqCDJjjqLv8flthlDiSsSWjND-VVGG2zL-xOYMstk-q0JR3OiSggcMlFgzkIKm2podjzAyamb0pW-wx1ZY=@protonmail.com>
+ <20201026205028.GC2645313@google.com>
+ <xmqqwnzcd6jf.fsf@gitster.c.googlers.com>
+ <Bgt8H4Cev0hu-OKtYHazhsRRIFO_6bAoBqdc4tep09T98tL426R9WXIAMjm7aO4b0uPrZGldPhZ1mV3f9pbS3PDN4bOlb9JkUvvXKtnUFHA=@protonmail.com>
+ <20201026220228.GD2645313@google.com>
+ <AwF-WVCPGK9qyy3lWQ-aYXuvw7HTPjjGuvT4rbPjgoWZE0czToIU-aACj2oyRnkOevGWLQbDgtndt9dkMSGF-SFkNanPgao9yLuVYU1VURI=@protonmail.com>
+ <XDwhHkxbkjL46BTp1WCJ5gJ3UbrMxRGwR2VgeRxehZh0-G07JlxCHrBGCpruqk-OegVspO6LJ0Y3yW9izl97pufYDwOhGaS885_xaVK63vs=@protonmail.com>
+ <20201027001427.GG2645313@google.com>
+ <bixxjcjnQYoZ6CIUQUXdBTaGE7vawm33kqmy3csw7hsPqGQpQNyEhUqBYkvoDgHb8sb3vjLr1KOR3I71-4a4wDKQqTrFocv-eVtGlyE8S84=@protonmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <bixxjcjnQYoZ6CIUQUXdBTaGE7vawm33kqmy3csw7hsPqGQpQNyEhUqBYkvoDgHb8sb3vjLr1KOR3I71-4a4wDKQqTrFocv-eVtGlyE8S84=@protonmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Many callers append a space suffix, but zsh automatically appends a
-space, making the completion add two spaces, for example:
+Joey Salazar wrote:
 
-  git log ma<tab>
+> I see, thank you. I'm now thinking of a paragraph like this (thank
+> you Emily Shaffer for your guidance in the IRC channel);
+>
+> Messages from checks to `${if_local_config}` are also printed when the
+> result is false, which can be confusing. Improve readability by
+> removing `${if_local_config}` checks and print messages only when a
+> pager is wanted.
 
-Will complete 'master  '.
+I think that's on the right track, though I'm having trouble
+understanding the details of it.  If this goes as part of the same
+patch, we'd want to focus on why we're making this change in the
+context of this commit.  Using an example can make the idea clearer:
 
-Let's remove that extra space.
+	A subtlety: one advantage of helpers such as test_path_is_missing is
+	that they print a diagnostic if and only if the condition fails, which
+	can make the output from a failing test easier to read.  Unfortunately,
+	some helpers in this test communicate whether a configured pager is
+	expected to run using a shell constract that doesn't have that property:
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/completion/git-completion.bash | 2 +-
- contrib/completion/git-completion.zsh  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+		my_generic_helper () {
+			...
+			${if_local_config}test -e core.pager_used
+		}
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 0a96ad87e7..ec7dd12a41 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -3498,7 +3498,7 @@ if [[ -n ${ZSH_VERSION-} ]] &&
- 
- 		local IFS=$'\n'
- 		compset -P '*[=:]'
--		compadd -Q -- ${=1} && _ret=0
-+		compadd -Q -- ${${=1}% } && _ret=0
- 	}
- 
- 	__gitcomp_nl ()
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index ce47e86b60..2cefae943a 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -74,7 +74,7 @@ __gitcomp_direct ()
- 
- 	local IFS=$'\n'
- 	compset -P '*[=:]'
--	compadd -Q -- ${=1} && _ret=0
-+	compadd -Q -- ${${=1}% } && _ret=0
- }
- 
- __gitcomp_nl ()
--- 
-2.29.1
+		...
+		if_local_config='! '
+		my_generic_helper
 
+	Rewriting this to "${if_local_config}test_path_is_file core.pager_used"
+	would print a diagnostic when the file is absent, which is the opposite
+	of what we want.  Make the logic more explicit instead, using "test" to
+	check a variable core_pager_wanted that is nonempty when core.pager is
+	expected to be used.
+
+That said, it looks like js/t7006-cleanup is in "next", indicating
+that it has finished being reviewed and is now safe to build on (see
+https://git-scm.com/docs/SubmittingPatches for more on this subject),
+so it would be even better to make this a patch on top of the existing
+v2 patch after all.
+
+Thanks,
+Jonathan
