@@ -2,110 +2,178 @@ Return-Path: <SRS0=U/aV=EE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A6DFC5517A
-	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:04:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D8CAC4363A
+	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:05:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E092A221F8
-	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:04:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A836220878
+	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:05:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gR5rywWG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R7u8uOJE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727952AbgJ1Vsr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Oct 2020 17:48:47 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60144 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726381AbgJ1Vmr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Oct 2020 17:42:47 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 290E88AF99;
-        Wed, 28 Oct 2020 16:24:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ExFP9sAdXFrUzRmhinXHIUpKuZw=; b=gR5ryw
-        WGpeYmbJlk/SfOumxbalFR/ANpZkPfPiuRhRrYx3K1VGHyzfbIpJElEyFKov2Egl
-        zDgiLdm6oLUT7ezqW9otOxdRAZkZ8Y6j6k81GXzcojtzq9ahJT6Z5ZYNdOAXJhhz
-        55yQ+ewR/Ld7hAjYYYAgVLukWfth73x/OxpCw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Qu+Ag7NXwWvxnfnZ7e63m9n1lAIQDy23
-        BjQBT1ArWuVtxDKCunWM1Jotm7fAyQyxatHpE0GTkgtMWkz0vB9S2byv45R54vEu
-        ClxGH90yqaX9sXYGg2rj5AnFsWwojDoITzIpiahI0PuGgE6ZSLJ3C5vR+eFIZYv6
-        9W8kORphiPc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1F44C8AF98;
-        Wed, 28 Oct 2020 16:24:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 670228AF97;
-        Wed, 28 Oct 2020 16:24:47 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Michael J Gruber <git@grubix.eu>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        John Keeping <john@keeping.me.uk>,
-        Karthik Nayak <karthik.188@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 1/2] ref-filter: handle CRLF at end-of-line more
- gracefully
-References: <pull.576.v3.git.1602526169.gitgitgadget@gmail.com>
-        <pull.576.v4.git.1603335680.gitgitgadget@gmail.com>
-        <03b2d7d78a15d15130a68ed1e6092072aa0807cd.1603335680.git.gitgitgadget@gmail.com>
-        <xmqq8sbxlq62.fsf@gitster.c.googlers.com>
-        <FFAF7079-C759-43F3-96AA-CAF3B73B55B4@gmail.com>
-Date:   Wed, 28 Oct 2020 13:24:46 -0700
-In-Reply-To: <FFAF7079-C759-43F3-96AA-CAF3B73B55B4@gmail.com> (Philippe
-        Blain's message of "Thu, 22 Oct 2020 21:46:26 -0400")
-Message-ID: <xmqq1rhi9jzl.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S2388174AbgJ2CEn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Oct 2020 22:04:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46764 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726272AbgJ1VjG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Oct 2020 17:39:06 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCE78C0613CF
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 14:39:05 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id 13so655366wmf.0
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 14:39:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=bkG1AbO7CDoqXplFXj4nxwr1mT3OVxp12LeC4oSNcYU=;
+        b=R7u8uOJEU94/dOjT6cLQw1wdx+EQJ8LaUGgubI+aTXnP+4S/8B7y2Jt7WZtCVBWt3m
+         mCaww/C7M7VZcHqgcIHbBMd5Wou96hYGw2CPavqnSZGwuHOjGWNIOcRcfX6wdgPeM8Vf
+         KDEoiCZleNW66ONMU5BEAo0e5EWxsu5BEUY1hrtySfNYEwkq+lEMNI4YT3XtdnccFPxf
+         zEyVw/taBmi7JIIYTGyh1PxL2Nxy767OV8si5Wk+sApVFwHRDTUhSHb+qTKAs6QxsPuK
+         pNQj/SSib6Lrzpd2sfrP3bRE25US/c/1gE6cBKBz9qt8De5nE4sqwMXa1IUcx9h7jt6e
+         jv6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=bkG1AbO7CDoqXplFXj4nxwr1mT3OVxp12LeC4oSNcYU=;
+        b=gx2JAApKxTU+c2Bfhst71ePPAeXqaBfNiiyZY3C0LGsHTDRuICUcCzw5eVQqdV4y1+
+         7rCQ2TzlX7aoK5f26n/4VHji13lr7LLhmSfD4bWNu3JGa43z838rk1uTxn02ZkLAqVNN
+         74RrCnGOSHvL/xxhU7OtWYGTvYgE6UmWRYhwMHNj9YsXf2Sjt42RFQ7+vprClpTEBXvv
+         9c6+w5HgrxEsZtwhQtLj22C0hAvgTrTcqp5rN8bO9DsM76o5X80IarBgmf0p9bPwj/0g
+         cDjb47uB9LBMbL8FLVIGynlCWdL+2LAjYFGJaJctEiXKFC2AQrcLgf4qRr5yiXy617Iz
+         Qplg==
+X-Gm-Message-State: AOAM5312sXTg+D83le0a3Bl3Eky4RPLb6hmZKZ4dVKuxnfR7r3KkL+Vx
+        S3yuApw2SKdUZ8tDEYOq3+Vn6yiFA/M=
+X-Google-Smtp-Source: ABdhPJweblCKIqqecDcHVRWVB7WLW5UOik0IHToTayX9hgIqVA9+5CLhC8h4w/GsGOrPQvjeTodEFg==
+X-Received: by 2002:a1c:7708:: with SMTP id t8mr7968636wmi.6.1603889273990;
+        Wed, 28 Oct 2020 05:47:53 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 4sm6796536wrn.48.2020.10.28.05.47.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Oct 2020 05:47:53 -0700 (PDT)
+Message-Id: <7d3fc0a503b160ea15363a4465af4647bce6a30b.1603889270.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.774.git.1603889270.gitgitgadget@gmail.com>
+References: <pull.774.git.1603889270.gitgitgadget@gmail.com>
+From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 28 Oct 2020 12:47:46 +0000
+Subject: [PATCH 2/6] doc: line-range: improve formatting
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9F8C24D0-195B-11EB-9693-D152C8D8090B-77302942!pb-smtp1.pobox.com
+To:     git@vger.kernel.org
+Cc:     Thomas Rast <tr@thomasrast.ch>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philippe Blain <levraiphilippeblain@gmail.com> writes:
+From: Philippe Blain <levraiphilippeblain@gmail.com>
 
->> Having said all that.
->> 
->> Here is how I explained the topic in the "What's cooking" report.
->> 
->>     A commit and tag object may have CR at the end of each and
->>     every line (you can create such an object with hash-object or
->>     using --cleanup=verbatim to decline the default clean-up
->>     action), but it would make it impossible to have a blank line
->>     to separate the title from the body of the message.  Be lenient
->>     and accept a line with lone CR on it as a blank line, too.
->
-> Just for the sake of searchability, I think it would be good to have 
-> CRLF spelled out in this topic description (since I gather this is what 
-> ends up in the release notes). But I don't feel that strongly
-> about that.
->
->> Let's not call this change a "bug fix".  The phrase you used in your
->> title, "more gracefully", is a very good one.
->
-> It was your suggestion ;) 
->
->> In the meantime, I've squashed your "oops forgot ||return 1" change
->> into [PATCH 2/2].
->
-> Thanks for squashing it in.
+Improve the formatting of the description of the line-range option '-L'
+for `git log`, `gitk` and `git blame`:
 
-Squashing in the "oops forgot || return 1" was the only thing I did.
-I did not rewrite (and will not do so myself) the proposed log
-message 1/2, which needs to happen before the topic can hit 'next'.
+- Use bold for <start>, <end> and <funcname>
+- Use backticks for literals
 
-Thanks.
+Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+---
+ Documentation/blame-options.txt      |  4 ++--
+ Documentation/line-range-format.txt  | 24 ++++++++++++------------
+ Documentation/line-range-options.txt |  6 +++---
+ 3 files changed, 17 insertions(+), 17 deletions(-)
+
+diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
+index 88750af7ae..48bf0eeec5 100644
+--- a/Documentation/blame-options.txt
++++ b/Documentation/blame-options.txt
+@@ -14,8 +14,8 @@
+ 	Annotate only the given line range. May be specified multiple times.
+ 	Overlapping ranges are allowed.
+ +
+-<start> and <end> are optional. ``-L <start>'' or ``-L <start>,'' spans from
+-<start> to end of file. ``-L ,<end>'' spans from start of file to <end>.
++'<start>' and '<end>' are optional. `-L <start>` or `-L <start>,` spans from
++'<start>' to end of file. `-L ,<end>` spans from start of file to '<end>'.
+ +
+ include::line-range-format.txt[]
+ 
+diff --git a/Documentation/line-range-format.txt b/Documentation/line-range-format.txt
+index 829676ff98..6ee159b683 100644
+--- a/Documentation/line-range-format.txt
++++ b/Documentation/line-range-format.txt
+@@ -1,30 +1,30 @@
+-<start> and <end> can take one of these forms:
++'<start>' and '<end>' can take one of these forms:
+ 
+ - number
+ +
+-If <start> or <end> is a number, it specifies an
++If '<start>' or '<end>' is a number, it specifies an
+ absolute line number (lines count from 1).
+ +
+ 
+-- /regex/
++- `/regex/`
+ +
+ This form will use the first line matching the given
+-POSIX regex. If <start> is a regex, it will search from the end of
++POSIX regex. If '<start>' is a regex, it will search from the end of
+ the previous `-L` range, if any, otherwise from the start of file.
+-If <start> is ``^/regex/'', it will search from the start of file.
+-If <end> is a regex, it will search
+-starting at the line given by <start>.
++If '<start>' is `^/regex/`, it will search from the start of file.
++If '<end>' is a regex, it will search
++starting at the line given by '<start>'.
+ +
+ 
+ - +offset or -offset
+ +
+-This is only valid for <end> and will specify a number
+-of lines before or after the line given by <start>.
++This is only valid for '<end>' and will specify a number
++of lines before or after the line given by '<start>'.
+ 
+ +
+-If ``:<funcname>'' is given in place of <start> and <end>, it is a
++If "`:<funcname>`" is given in place of '<start>' and '<end>', it is a
+ regular expression that denotes the range from the first funcname line
+-that matches <funcname>, up to the next funcname line. ``:<funcname>''
++that matches '<funcname>', up to the next funcname line. `:<funcname>`
+ searches from the end of the previous `-L` range, if any, otherwise
+-from the start of file. ``^:<funcname>'' searches from the start of
++from the start of file. `^:<funcname>` searches from the start of
+ file.
+diff --git a/Documentation/line-range-options.txt b/Documentation/line-range-options.txt
+index 9e3d98d44f..d2ef1a6d67 100644
+--- a/Documentation/line-range-options.txt
++++ b/Documentation/line-range-options.txt
+@@ -7,12 +7,12 @@ ifdef::gitk[]
+ -L:<funcname>:<file>::
+ endif::gitk[]
+ 
+-	Trace the evolution of the line range given by "<start>,<end>"
+-	(or the function name regex <funcname>) within the <file>.  You may
++	Trace the evolution of the line range given by "'<start>,<end>'"
++	(or the function name regex '<funcname>') within the '<file>'. You may
+ 	not give any pathspec limiters.  This is currently limited to
+ 	a walk starting from a single revision, i.e., you may only
+ 	give zero or one positive revision arguments, and
+-	<start> and <end> (or <funcname>) must exist in the starting revision.
++	'<start>' and '<end>' (or '<funcname>') must exist in the starting revision.
+ 	You can specify this option more than once. Implies `--patch`.
+ 	Patch output can be suppressed using `--no-patch`, but other diff formats
+ 	(namely `--raw`, `--numstat`, `--shortstat`, `--dirstat`, `--summary`,
+-- 
+gitgitgadget
+
