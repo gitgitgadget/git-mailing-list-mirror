@@ -2,155 +2,95 @@ Return-Path: <SRS0=wsT/=ED=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BCD5C388F9
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 01:48:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A4B6C56201
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 21:34:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D4FE322202
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 01:48:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE1CF24844
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 21:34:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=bakanov-su.20150623.gappssmtp.com header.i=@bakanov-su.20150623.gappssmtp.com header.b="u5EqTx42"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="D1i9VY2B"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726004AbgJ1Bi0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Oct 2020 21:38:26 -0400
-Received: from mail-io1-f68.google.com ([209.85.166.68]:35698 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1832984AbgJ0XOR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Oct 2020 19:14:17 -0400
-Received: by mail-io1-f68.google.com with SMTP id k6so3415793ior.2
-        for <git@vger.kernel.org>; Tue, 27 Oct 2020 16:14:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bakanov-su.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mPHV1UmE2oNwCW7SahoQzzxJw65xZi8939VN7Hgzptg=;
-        b=u5EqTx42vjl4OlYS1Q7m/M2tF6ZamEZnHwO1ZGBjvyar7YASZ3SljTFR4m2+C4mCpQ
-         0FIy65+hMbA640ROoGRIE/tOcCCFe27epwMbXLeWubbBOMKTjOQWiFNaqC0VHKc0W+tb
-         Qe+y0dn4Ogbm5Pk1UTQR5gYPpk5sxDxOFNpwi7wuamxCENRckf/HjlXMF+ReUjy7DbiE
-         664bRug/W0K/58ljWWoZx/mvpY+L4Bld9AdBeIIs4QJ2QxOaj5B68lXYMMNDQsOH13qe
-         ehwqFLipSNmTK5Z9QM72csOIC45002VTj7EDEvjV8sjBDnK4jfM+FuIQyMeM9FtuyZVo
-         TaBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mPHV1UmE2oNwCW7SahoQzzxJw65xZi8939VN7Hgzptg=;
-        b=rw5tXqJWVNfWxgL2Jd02t/Ep+JciZVjyPyZyp1gekzIffGAjKWa//qI7QvjukuQviT
-         CJ2NYrcqkYudZ1t3aPmGuPsRcGnwLW+8pymwQX/VTJG59U+KQOOH4ItY3EDxcsHzxLTd
-         4Z2KjxNJtL8GFAsWfYHP2bBNKwDMl2IhJt/tv2dlE3SuviSV2sElXrLXD0tVGLNA5Enj
-         6QiVa9vl3Bu+LjbCVTYUNon0mR4BgsryjNjzNpwwc3jx3Le8MkCIYu+OiaWKSIXst/h/
-         q/l7T/wRH2JwpcXJ82QHFgCcJzOkmAKCurNTdB6EiQWbKKO5cSOpnacgOQY1j1Frtk8d
-         6X7g==
-X-Gm-Message-State: AOAM532vHxf+GPBp3TA5wcIrV9xWoWgbFXLs6kH7krzwzRn14/YwekGG
-        kp5tx5rsJuNmIOPbIq3kNvxnNTlmIEd7il7GFzZCGg==
-X-Google-Smtp-Source: ABdhPJwgfPXj6YmjBtqVqkxXD5JIoigY8uS8+GxI4hLCX3bWx4qk4Ty5Tsft8SLfatrXadODLTMY2gtx5qfmPGLK0rw=
-X-Received: by 2002:a6b:8ec7:: with SMTP id q190mr4099841iod.42.1603840456086;
- Tue, 27 Oct 2020 16:14:16 -0700 (PDT)
+        id S1726514AbgJ1VeH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Oct 2020 17:34:07 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54097 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726309AbgJ1VeF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Oct 2020 17:34:05 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2A9A8F958A;
+        Wed, 28 Oct 2020 15:18:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=z49kEEXeaOkI9Y+SOA/mpXqmgOE=; b=D1i9VY
+        2BmV7pHplm/CEjshEFQ593ErASluz0jMqYTd+J90PPMW9ycmhlNC14pPjWF85NtY
+        5Lc6hU/7g1H/4Pfj+AVWAmXHGyoWQW2qLQGPjVRx53fM5SLCskG94qVJRkXYv2ng
+        WbVdsloyVQ/kxaxI+5T0MXGoUmwfw5p0XvQxw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=O0rEMXuzTp82c9oRDMjg8vEBaf52fOZl
+        5iqzVyfCkdB8U71XPFu3hp6EuOueNElp/jPkybIlwM8NxsXJFNCOBU4JaCdS2h+5
+        MeU2dlEaMYKld7i0sV1scmU5FeAzB+HmHTQN6tUdBdmiejU52nKHgvcVuhCxpe0j
+        /wpZH/D7cMY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 23F5AF9589;
+        Wed, 28 Oct 2020 15:18:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 67570F9584;
+        Wed, 28 Oct 2020 15:18:14 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH v2 7/8] verify_path(): disallow symlinks in
+ .gitattributes and .gitignore
+References: <20201005121609.GA2907272@coredump.intra.peff.net>
+        <20201005121645.GG2907394@coredump.intra.peff.net>
+        <20201027033518.GH2645313@google.com>
+        <20201027075853.GH3005508@coredump.intra.peff.net>
+        <20201027234309.GA1298045@google.com>
+Date:   Wed, 28 Oct 2020 12:18:12 -0700
+In-Reply-To: <20201027234309.GA1298045@google.com> (Jonathan Nieder's message
+        of "Tue, 27 Oct 2020 16:43:09 -0700")
+Message-ID: <xmqqeeli9n2j.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CAAdniQ5pRHKUU77XVmZkZ_gUgfYYFpo9=Xt2T6EgzJ3hoT0YMg@mail.gmail.com>
- <xmqqblgnbea5.fsf@gitster.c.googlers.com> <20201027215638.GI5691@mit.edu>
- <CAAdniQ4vx4z9KnfvG7thzxf1xBa=P_nnbY1G=RTFUBb4Zxqeaw@mail.gmail.com> <20201027225403.GJ5691@mit.edu>
-In-Reply-To: <20201027225403.GJ5691@mit.edu>
-From:   Filipp Bakanov <filipp@bakanov.su>
-Date:   Wed, 28 Oct 2020 02:14:05 +0300
-Message-ID: <CAAdniQ7o2greovkG-RP-FLwW2OH3YuiORwB+QKgqy=_0aJ4XkQ@mail.gmail.com>
-Subject: Re: Proposal: "unadd" command / alias.
-To:     "Theodore Y. Ts'o" <tytso@mit.edu>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 53881CC8-1952-11EB-B016-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It's the matter of UX. If many users have to make an alias for the
-same unclear command, at least it's a point to think about making this
-particular command more convenient. As far as I remember, some aliases
-were already added to git by default.
-What's bad with adding a popular (among many users) aliases, if they
-improve UX and make life easier?
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-On Wed, 28 Oct 2020 at 01:54, Theodore Y. Ts'o <tytso@mit.edu> wrote:
+> Yes.  And to reiterate the point a little: the reason nobody sets
+> transfer.fsckObjects is that we haven't made it easy to distinguish
+> between "hard error, should never be overridden" checks (like
+> BAD_PARENT_SHA1), "new tools shouldn't write these but they exist in
+> important repos like perl.git and anything consuming Git repositories
+> needs to cope with them" (like MISSING_SPACE_BEFORE_DATE from some
+> commits' concatenated authors), and so on.
+
+Hmph, don't we "distinguish" them by setting appropriate default
+levels, though?  Perhaps some classes of errors are set too strict?
+
+>> So I won't be too devastated to remove the symlink checks, or possibly
+>> downgrade them to purely warnings (or "info"; the naming in fsck.c is
+>> confusing, because the transfer operations take even warnings as fatal.
+>> I suspect we could do with some cleanup there).
 >
-> On Wed, Oct 28, 2020 at 01:02:11AM +0300, Filipp Bakanov wrote:
-> > >> Indeed, I have a similar alias in my ~/.gitconfig
-> >
-> > Why not just add it to git by default for everybody? revert-file is
-> > also ok, anything except `checkout HEAD --` will be good.
->
-> Because everyone may have their own favorite aliases?  Just because
-> *I* have the following aliases doesn't mean that everyone else would
-> find them useful.
->
-> [alias]
->         new = !gitk --all --not ORIG_HEAD
->         dw = diff --stat --summary
->         di = diff --stat --summary --cached
->         dc = describe --contains
->         revert-file = checkout HEAD --
->         l  = log --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit
->         lr = log --reverse --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit
->         rl  = log -g --pretty=format:'%Cred%h%Creset %gd %gs %Cgreen(%gr)%Creset %s' --abbrev-commit
->         rl1  = log -g --date=relative --pretty=format:'%Cred%h%Creset %gs %Cgreen%gd%Creset %s' --abbrev-commit
->         lg  = log --graph --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit
->         lgt = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit
->         rlt = log -g --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit
->         lgt-nc = log --graph --pretty=format:'%h -%d %s (%cr)' --abbrev-commit
->         st = status -s
->         recent = for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(committerdate:short) %(refname:short)'
->         gerrit-clone = !bash ggh gerrit-clone
->         start = !bash ggh start
->         upload = !bash ggh upload
->         prune-branches = !bash ggh prune-branches
->         fixes = log -1 --pretty=fixes
->
-> I have a huge number of bash aliases, and that doesn't mean everyone
-> else should have those bash aliases.  For that matter, I have the
-> following in ~/bin/git-rp-ext4 so that I can type "git rp-ext4
-> tags/ext4_for_linus".  But that doesn't mean this script is right for
-> everyone....
->
-> Cheers,
->
->                                         - Ted
->
-> #!/bin/sh
->
-> START=origin
-> URL=git://git.kernel.org/pub/scm/linux/kernel/git/tytso/ext4.git
-> END=""
->
-> print_help ()
-> {
->     PROG=$(basename "$0")
->     echo "Usage: $PROG [-n] [--start <START COMMIT>] [--url <URL] [<END COMMIT>]"
->     exit 1
-> }
->
-> while [ "$1" != "" ]; do
->     case $1 in
->         --start) shift
->                  START="$1"
->                  ;;
->         --url) shift
->                URL="$1"
->                ;;
->         -n) NO_ACTION="echo" ;;
->         -*) print_help ;;
->         *)
->             if test -n "$END"
->             then
->                 print_help
->             else
->                 END="$1"
->             fi
->             ;;
->     esac
->     shift
-> done
->
-> $NO_ACTION git request-pull "$START" "$URL" "$END"
->
+> Downgrading the .gitignore check to warning sounds okay.  .gitmodules
+> would still want to be an error, of course.
+
+.gitattributes (and any other .git<thing> we may have in the
+future), too.
+
+Thanks.
+
