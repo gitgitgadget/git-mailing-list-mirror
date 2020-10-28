@@ -2,110 +2,161 @@ Return-Path: <SRS0=wsT/=ED=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF030C55179
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:14:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4045C4363A
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:20:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 35256206FB
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:14:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 545C020791
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:20:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LFh7PeMG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="He/PKOnl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733140AbgJ1XOR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Oct 2020 19:14:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34778 "EHLO
+        id S1733201AbgJ1XUv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Oct 2020 19:20:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730070AbgJ1XNh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Oct 2020 19:13:37 -0400
-Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97F32C0613CF
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 16:13:37 -0700 (PDT)
-Received: by mail-oi1-x243.google.com with SMTP id k65so1334057oih.8
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 16:13:37 -0700 (PDT)
+        with ESMTP id S1730788AbgJ1XUs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Oct 2020 19:20:48 -0400
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73C0AC0613CF
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 16:20:47 -0700 (PDT)
+Received: by mail-wm1-x343.google.com with SMTP id c16so822937wmd.2
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 16:20:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=7g7dIrWKToJ2N7xelesD6rGIrJ1WvlvSs49fLo3vHP0=;
-        b=LFh7PeMGc3Gg1Gisl/kSSNlkVzMwOq5jauFChv2+TPacZJPtqvEL/E6g+pZW6te5tB
-         F5/PA4Ii1AWkg6hva7ttjzcK+9g9erUs0Kh7WvyCZnJz0ZtcmR5W0i+N075vZLvGZDMw
-         a3J1ynpiYhv3XMF8sJSDJwhrkyI9RY3z3lPg8o0jFy0k2HQobvy9ZV1F6Gf3G4iEcpp+
-         Q+/bY3fX2idLkNR29QBJDtVghruyiX0kXexuJ6pBFhDKxSDZxjfmiJ96vczLTwfhCF8X
-         1txazduULM8v2vP5df7XGPk//IuUVg2VxEgydd4WnxX2rZjVydHBvE8AG/Im1P6wujRj
-         PQ6A==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=YFY34Sv9mxNHpZFo3ZGG6+7MPt1mRoBBhW9cIeemJ7s=;
+        b=He/PKOnlapIyOZPjl887SpOxieA13ZXO0gf8ANcrjSmIQtWMqbN7Y8mZDa+WfRYMTu
+         dJGbOYpc9oUq0iKhLsOqQuojsy7Gok1cHLx2RG6XyQr7aKOgzupvIoDe51sn0kL5BTwS
+         ZqhWuUM3SKQ99XzfWgx17e+dXzpuk26yyQXDqbBve4HNpeTKpYwN0Ebj02XJGVED1doH
+         HDfkloll2F8au24Fs9ddzv7mGsrlD4uSi6SfqemwbsNszqu3fqhJ74aOIk2j+gC3Plpg
+         oGhv8V68D+MG4QoMzrlpaYoWcRiEIF77PrvSDy4gZhtxOvDzw5yLkkjsHglGO561yx4Q
+         syZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7g7dIrWKToJ2N7xelesD6rGIrJ1WvlvSs49fLo3vHP0=;
-        b=YZ0UzB7BKBqRbWr5T96mBmZCtZMxPBDiS8Dh2PG9PBlLACn8/xVomEu0jxtWcR5TYv
-         nYTXmvEXpr0dSjqlvC6AMMjV/mGZm/ZfkxQK0IWibHaS0qbMtiRQiwwOTaJiu91osNHx
-         XHEOGOXU0eLzHoKUahA/IzOnUPo4G5f43hJ5ElMOjDqxdpAWlcBFvH4FkCWj7nK7aUHH
-         ZIJEFkYCIzOxL9yc04vk4Wqo8WjD9laaI3NDbJzyMHRGm2nb3sPwBzrVT7FR/UREo1hI
-         tkEkoXiqYJR/USSR1SjsreTZtFmIQeTj8W2V+nFL1zBfGEWpcY6jLEJdktCfsSXb/NsX
-         ZG1A==
-X-Gm-Message-State: AOAM532cewd41xOTUh5LziPDpm1nJW84VQskM7NqVYQMc3xYakSm3T6p
-        J6Nlo7r5nxhi9NXeh9KW3YIRq6yXg6GRAufY
-X-Google-Smtp-Source: ABdhPJxpCium8d/1MAVfZwHJyIJLtR8WJGbiigQWCm0iw7BEknMH2xQZO0h/L9S5fCQKmjREfVhi+w==
-X-Received: by 2002:aca:ec91:: with SMTP id k139mr396264oih.88.1603850881921;
-        Tue, 27 Oct 2020 19:08:01 -0700 (PDT)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id t17sm2340722oor.3.2020.10.27.19.08.01
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=YFY34Sv9mxNHpZFo3ZGG6+7MPt1mRoBBhW9cIeemJ7s=;
+        b=HM3IwfGEepJMdwrD2U8hvq/WD7yK/3J6YPYW03NTy7IppfAi4ybyX3sWYW8z4OslDm
+         rL1osAj0PmK6N18PG+H1T3UHVs8TtwYpfbp5VKlRRV8pEbkcrJrML8AGG73Sy/JCwBb5
+         2HhdAgukqOzUnZb4+oaQI6TrPTMuqhEu0Hhos2lHCT2OdirOEiJqfka4OjU9vYyMqvqt
+         OryKP8jyiGw+PKD5AdLjwYDJBAvrXzIbnEy5yufr2viBJ96I+Z2doef5gOMvTaEXYYQE
+         8DSaOSIYfN/FKAe6n0HDrBWJ3Xx9h/LOLVc+gIgH0e5rLrhbZO838quLvVQPzM4+XfMJ
+         dUuQ==
+X-Gm-Message-State: AOAM533kjmL+yAGSgSfdrO4DlrOjDI3VSrvBACIH3lF40xihiYBbvyLa
+        e+p5+PQMHLfc+EqYPfKh/zawwiSoIvE=
+X-Google-Smtp-Source: ABdhPJw7gxwX1JpT4Ip1eCqj9zodiGR3jSAwbgPUshpGA8rZued9f5C6fH3gYZoryoEbgoEoZek0Aw==
+X-Received: by 2002:a05:600c:2256:: with SMTP id a22mr8102553wmm.138.1603889277746;
+        Wed, 28 Oct 2020 05:47:57 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k18sm6582769wrx.96.2020.10.28.05.47.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2020 19:08:01 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 29/29] Update copyright notices
-Date:   Tue, 27 Oct 2020 20:07:12 -0600
-Message-Id: <20201028020712.442623-30-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.29.1
-In-Reply-To: <20201028020712.442623-1-felipe.contreras@gmail.com>
-References: <20201028020712.442623-1-felipe.contreras@gmail.com>
-MIME-Version: 1.0
+        Wed, 28 Oct 2020 05:47:57 -0700 (PDT)
+Message-Id: <a1e1c977d0978424fb07c97be0479f43a325cbea.1603889270.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.774.git.1603889270.gitgitgadget@gmail.com>
+References: <pull.774.git.1603889270.gitgitgadget@gmail.com>
+From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 28 Oct 2020 12:47:50 +0000
+Subject: [PATCH 6/6] blame: enable funcname blaming with userdiff driver
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Thomas Rast <tr@thomasrast.ch>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+From: Philippe Blain <levraiphilippeblain@gmail.com>
+
+In blame.c::cmd_blame, we send the 'path' field of the 'sb' 'struct
+blame_scoreboard' as the 'path' argument to
+'line-range.c::parse_range_arg', but 'sb.path' is not set yet; it's set
+to the local variable 'path' a few lines later at line 1137.
+
+This 'path' argument is only used in 'parse_range_arg' if we are blaming
+a funcname, i.e. `git blame -L :<funcname> <path>`, and in that case it
+is sent to 'parse_range_funcname', where it is used to determine if a
+userdiff driver should be used for said <path> to match the given
+funcname.
+
+Since 'path' is yet unset, the userdiff driver is never used, so we fall
+back to the default funcname regex, which is usually not appropriate for
+paths that are set to use a specific userdiff driver, and thus either we
+match some unrelated lines, or we die with
+
+    fatal: -L parameter '<funcname>' starting at line 1: no match
+
+This has been the case ever since `git blame` learned to blame a
+funcname in 13b8f68c1f (log -L: :pattern:file syntax to find by
+funcname, 2013-03-28).
+
+Enable funcname blaming for paths using specific userdiff drivers by
+sending the local variable 'path' to 'parse_range_arg' instead of the
+yet unset 'sb.path'.
+
+Add a regression test in 'annotate-tests.sh', which is sourced in
+t8001-annotate.sh and t8002-blame.sh, leveraging an existing file used
+to test the userdiff patterns in t4018-diff-funcname.
+
+Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- contrib/completion/git-completion.zsh | 2 +-
- t/t9902-completion.sh                 | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ builtin/blame.c     |  2 +-
+ t/annotate-tests.sh | 18 ++++++++++++++++++
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index 811d77cb95..e0fda27f4c 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -2,7 +2,7 @@
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 05f69211dd..917fedc635 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -1104,7 +1104,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 		long bottom, top;
+ 		if (parse_range_arg(range_list.items[range_i].string,
+ 				    nth_line_cb, &sb, lno, anchor,
+-				    &bottom, &top, sb.path,
++				    &bottom, &top, path,
+ 				    the_repository->index))
+ 			usage(blame_usage);
+ 		if ((!lno && (top || bottom)) || lno < bottom)
+diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
+index d933af5714..3aee61d2cc 100644
+--- a/t/annotate-tests.sh
++++ b/t/annotate-tests.sh
+@@ -479,6 +479,24 @@ test_expect_success 'blame -L ^:RE (absolute: end-of-file)' '
+ 	check_count -f hello.c -L$n -L^:ma.. F 4 G 1 H 1
+ '
  
- # zsh completion wrapper for git
- #
--# Copyright (c) 2012-2013 Felipe Contreras <felipe.contreras@gmail.com>
-+# Copyright (c) 2012-2020 Felipe Contreras <felipe.contreras@gmail.com>
- #
- # The recommended way to install this script is to make a copy of it as a
- # file named '_git' inside any directory in your fpath.
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 7b7bc6e4bd..caf4e9101f 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1,6 +1,6 @@
- #!/bin/sh
- #
--# Copyright (c) 2012 Felipe Contreras
-+# Copyright (c) 2012-2020 Felipe Contreras
- #
- 
- test_description='test bash completion'
++test_expect_success 'setup -L :funcname with userdiff driver' '
++	echo "fortran-* diff=fortran" >.gitattributes &&
++	fortran_file=fortran-external-function &&
++	orig_file="$TEST_DIRECTORY/t4018/$fortran_file" &&
++	cp $orig_file . &&
++	git add $fortran_file &&
++	GIT_AUTHOR_NAME="A" GIT_AUTHOR_EMAIL="A@test.git" \
++	git commit -m "add fortran file" &&
++	sed -e "s/ChangeMe/IWasChanged/" <"$orig_file" >$fortran_file &&
++	git add $fortran_file &&
++	GIT_AUTHOR_NAME="B" GIT_AUTHOR_EMAIL="B@test.git" \
++	git commit -m "change fortran file"
++'
++
++test_expect_success 'blame -L :funcname with userdiff driver' '
++	check_count -f fortran-external-function -L:RIGHT A 7 B 1
++'
++
+ test_expect_success 'setup incremental' '
+ 	(
+ 	GIT_AUTHOR_NAME=I &&
 -- 
-2.29.1
-
+gitgitgadget
