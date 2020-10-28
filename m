@@ -2,101 +2,110 @@ Return-Path: <SRS0=wsT/=ED=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E03E3C4363A
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:08:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF030C55179
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:14:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 93AAF20790
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:08:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 35256206FB
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:14:21 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LFh7PeMG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726037AbgJ1XIn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Oct 2020 19:08:43 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40646 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727301AbgJ1XHq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Oct 2020 19:07:46 -0400
-Received: (qmail 23584 invoked by uid 109); 28 Oct 2020 09:41:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 28 Oct 2020 09:41:05 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31471 invoked by uid 111); 28 Oct 2020 09:41:05 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 28 Oct 2020 05:41:05 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 28 Oct 2020 05:41:05 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 7/8] verify_path(): disallow symlinks in
- .gitattributes and .gitignore
-Message-ID: <20201028094105.GA175280@coredump.intra.peff.net>
-References: <20201005121609.GA2907272@coredump.intra.peff.net>
- <20201005121645.GG2907394@coredump.intra.peff.net>
- <20201027033518.GH2645313@google.com>
- <20201027075853.GH3005508@coredump.intra.peff.net>
- <xmqqv9ev9vnf.fsf@gitster.c.googlers.com>
+        id S1733140AbgJ1XOR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Oct 2020 19:14:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34778 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730070AbgJ1XNh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Oct 2020 19:13:37 -0400
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97F32C0613CF
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 16:13:37 -0700 (PDT)
+Received: by mail-oi1-x243.google.com with SMTP id k65so1334057oih.8
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 16:13:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=7g7dIrWKToJ2N7xelesD6rGIrJ1WvlvSs49fLo3vHP0=;
+        b=LFh7PeMGc3Gg1Gisl/kSSNlkVzMwOq5jauFChv2+TPacZJPtqvEL/E6g+pZW6te5tB
+         F5/PA4Ii1AWkg6hva7ttjzcK+9g9erUs0Kh7WvyCZnJz0ZtcmR5W0i+N075vZLvGZDMw
+         a3J1ynpiYhv3XMF8sJSDJwhrkyI9RY3z3lPg8o0jFy0k2HQobvy9ZV1F6Gf3G4iEcpp+
+         Q+/bY3fX2idLkNR29QBJDtVghruyiX0kXexuJ6pBFhDKxSDZxjfmiJ96vczLTwfhCF8X
+         1txazduULM8v2vP5df7XGPk//IuUVg2VxEgydd4WnxX2rZjVydHBvE8AG/Im1P6wujRj
+         PQ6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=7g7dIrWKToJ2N7xelesD6rGIrJ1WvlvSs49fLo3vHP0=;
+        b=YZ0UzB7BKBqRbWr5T96mBmZCtZMxPBDiS8Dh2PG9PBlLACn8/xVomEu0jxtWcR5TYv
+         nYTXmvEXpr0dSjqlvC6AMMjV/mGZm/ZfkxQK0IWibHaS0qbMtiRQiwwOTaJiu91osNHx
+         XHEOGOXU0eLzHoKUahA/IzOnUPo4G5f43hJ5ElMOjDqxdpAWlcBFvH4FkCWj7nK7aUHH
+         ZIJEFkYCIzOxL9yc04vk4Wqo8WjD9laaI3NDbJzyMHRGm2nb3sPwBzrVT7FR/UREo1hI
+         tkEkoXiqYJR/USSR1SjsreTZtFmIQeTj8W2V+nFL1zBfGEWpcY6jLEJdktCfsSXb/NsX
+         ZG1A==
+X-Gm-Message-State: AOAM532cewd41xOTUh5LziPDpm1nJW84VQskM7NqVYQMc3xYakSm3T6p
+        J6Nlo7r5nxhi9NXeh9KW3YIRq6yXg6GRAufY
+X-Google-Smtp-Source: ABdhPJxpCium8d/1MAVfZwHJyIJLtR8WJGbiigQWCm0iw7BEknMH2xQZO0h/L9S5fCQKmjREfVhi+w==
+X-Received: by 2002:aca:ec91:: with SMTP id k139mr396264oih.88.1603850881921;
+        Tue, 27 Oct 2020 19:08:01 -0700 (PDT)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id t17sm2340722oor.3.2020.10.27.19.08.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Oct 2020 19:08:01 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v3 29/29] Update copyright notices
+Date:   Tue, 27 Oct 2020 20:07:12 -0600
+Message-Id: <20201028020712.442623-30-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.29.1
+In-Reply-To: <20201028020712.442623-1-felipe.contreras@gmail.com>
+References: <20201028020712.442623-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqv9ev9vnf.fsf@gitster.c.googlers.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 27, 2020 at 03:00:36PM -0700, Junio C Hamano wrote:
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/completion/git-completion.zsh | 2 +-
+ t/t9902-completion.sh                 | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-> > +	/*
-> > +	 * Now we have a path in "target" that only go down into the tree.
-> > +	 * Disallow any interior "../", like "foo/../bar". These might be
-> > +	 * OK, but we cannot know unless we know whether "foo" is itself a
-> > +	 * symlink. So err on the side of caution.
-> > +	 */
-> > +	while (*target) {
-> > +		const char *v;
-> > +		if (skip_prefix(target, "..", &v) && (!*v || is_dir_sep(*v)))
-> > +			return 1;
-> > +		target++;
-> > +	}
+diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
+index 811d77cb95..e0fda27f4c 100644
+--- a/contrib/completion/git-completion.zsh
++++ b/contrib/completion/git-completion.zsh
+@@ -2,7 +2,7 @@
+ 
+ # zsh completion wrapper for git
+ #
+-# Copyright (c) 2012-2013 Felipe Contreras <felipe.contreras@gmail.com>
++# Copyright (c) 2012-2020 Felipe Contreras <felipe.contreras@gmail.com>
+ #
+ # The recommended way to install this script is to make a copy of it as a
+ # file named '_git' inside any directory in your fpath.
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 7b7bc6e4bd..caf4e9101f 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ #
+-# Copyright (c) 2012 Felipe Contreras
++# Copyright (c) 2012-2020 Felipe Contreras
+ #
+ 
+ test_description='test bash completion'
+-- 
+2.29.1
 
-Just reading over the patch again, I suspect this is overly eager to
-find ".." that is not bordered by a directory separator on the left-hand
-side (e.g., I think it will match "foo../").
-
-> > +int safe_symlink(const char *target, const char *linkpath)
-> > +{
-> > +	if (!allow_external_symlinks &&
-> > +	    symlink_leaves_repo(target, linkpath)) {
-> > +		errno = EPERM;
-> > +		return -1;
-> > +	}
-> > +
-> > +	return symlink(target, linkpath);
-> > +}
-> 
-> OK.  This is only about blocking creation of new symbolic links that
-> goes outside the working tree.  It obviously is a good thing to do.
-> 
-> We have some "symlink safety" in various parts of the system [*1*],
-> and I wonder if we can somehow consolidate the support to a more
-> central place.
-
-Note that it is overly conservative, as described in the comment quoted
-at the top of this email. It's possible that other code might be able to
-be more accurate because it can see "/foo/" in the middle of a symlink
-target and actually _look_ at "foo".  Does it exist, is it a symlink
-itself, etc.
-
-Whereas here we're taking a purely textual look at the target. We have
-to, I think, because we don't know if or when that "foo" will get
-updated. And maybe that same restriction applies to other parts of the
-system, or maybe not.
-
-At any rate, I don't really have plans to push this particular topic
-forward, at least not in the near term. I was mostly sharing it in case
-anybody found it useful. If somebody wants to run with it, please be my
-guest.
-
--Peff
