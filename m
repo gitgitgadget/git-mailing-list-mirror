@@ -2,104 +2,120 @@ Return-Path: <SRS0=wsT/=ED=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0140C388F7
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D32DDC4363A
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:46:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A31E9207BC
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:44:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B6BD207CD
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:46:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iCHONAIK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jnQNrHvP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388023AbgJ1XoO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Oct 2020 19:44:14 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57159 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389602AbgJ1XoM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Oct 2020 19:44:12 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 426B28C6B4;
-        Wed, 28 Oct 2020 19:44:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DdbTimkrMTBDvizrnnooXnp0/3Q=; b=iCHONA
-        IKq2GHib+mwaRog6ub8k7Xb1SF+pqZ1AMzSxAQOb00NgoK23QGvC87mLXZ9OiHbr
-        Y+xb6SB08O7Y0+0vODHbP03XPiOyoMUVSGKvqaanMVuBZU0eALgEvlCad3AooKCM
-        +oufpqM6YjshNtiZ2eB4YVuGxohkYsuUR/K3Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=LCT2XphcrVMheXLXoLo7lQP0ue+Fc9Nt
-        UbmTtHmGYeeRyMNmcmE7x8rOOdKjXfj3XDT59RITZLUWn/kXesW+NX2xo+noKUwN
-        IIlS8C2dUOsVu/zwV34HIIUNggPTcsMgiEO/RsT/NET2p/Av0cZU1yc4dO0KZRz7
-        sciNl/fcCdU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 388C08C6B3;
-        Wed, 28 Oct 2020 19:44:10 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 70E318C6B2;
-        Wed, 28 Oct 2020 19:44:09 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Filipp Bakanov <filipp@bakanov.su>
-Cc:     git@vger.kernel.org
-Subject: Re: Proposal: "unadd" command / alias.
-References: <CAAdniQ5pRHKUU77XVmZkZ_gUgfYYFpo9=Xt2T6EgzJ3hoT0YMg@mail.gmail.com>
-Date:   Wed, 28 Oct 2020 16:44:08 -0700
-In-Reply-To: <CAAdniQ5pRHKUU77XVmZkZ_gUgfYYFpo9=Xt2T6EgzJ3hoT0YMg@mail.gmail.com>
-        (Filipp Bakanov's message of "Tue, 27 Oct 2020 23:10:00 +0300")
-Message-ID: <xmqqmu059arb.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1730640AbgJ1Xp7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Oct 2020 19:45:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40036 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728405AbgJ1Xp6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Oct 2020 19:45:58 -0400
+Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCD22C0613CF
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 16:45:58 -0700 (PDT)
+Received: by mail-oi1-x241.google.com with SMTP id y186so1435625oia.3
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 16:45:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=nZ+FG+1Hi7umcZDm3yFJ7TGD+Ohtdv4wbLuBKS06dO8=;
+        b=jnQNrHvP94Lu0jRVFUlFMXVK9GIMsKjEzcftwcy6vLlu9Pbh41IBrm98Xj1tTsbM2H
+         dNeKlFqC5orB80BCK4pIcnot0HBFunMzYVDIC9b7gCDG10k2McPUE6oN1FC74bTjp+ow
+         6D5iS+1/yhUYtFU2kvlxqejCzn/Set0GimnL1+4/B5uXeC+j4iff7Q7YaNP9eEfnl7mR
+         O+KgoAfvRBLvCt3D1Dt6k4aIKJZX46IqZttVjcfH2qWY5g14+kQKDhNUPZXjrP+moIH9
+         DkX0mJEBCqvHRXP9/GFUB8ZZzqFZc+JMZkwv+WxK4pykSvo7gaBUTJhHB0dPGLnWYauT
+         VyuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=nZ+FG+1Hi7umcZDm3yFJ7TGD+Ohtdv4wbLuBKS06dO8=;
+        b=PxXrXT3NdSQ/dAw9eEvYPPXh9sMn3TQkV9MV+3WQGQc6qmaBI2smIEF9kDuS4jugdz
+         0HhLmrxuadS6hkVWkvQQ3iTbEzSYlLxzkRMTx+p57BJBiR5WKgmJhoTCG9Gjhglj1LMc
+         I7hhzwswKkNT+LcThBOGwDJPvK55xF/DpUCQQ0z7UdPnin0fB2QVNysNpGoJXM2UcVTG
+         DvjSQR9W97xhOXNFXsAzcKwEViADhfoqh7L0H6ikolPrJFm6i0XVVS1/UZTjD8AR1t6e
+         TKMenQdM57tvyAbze9a97eO98yCKtVPGkQc/RbKQQZibaiIBSXidcxpe5z6yduWRU86n
+         KiOg==
+X-Gm-Message-State: AOAM533csyfCUpb//e1SQT4wiyH0GXv3WbigIpLePP2MRk6ReimOt/A7
+        36Jh19scZk4+twAC7MiWn0yV5kE2tWWsjX52
+X-Google-Smtp-Source: ABdhPJxTGCrDrPejK22/xx2HJX+dnm7b9kpxdO8rihkrNOLs0kx9wjNGcuuCGM5SPWXfl3u/PAT7cg==
+X-Received: by 2002:aca:b1c2:: with SMTP id a185mr3655547oif.83.1603850836230;
+        Tue, 27 Oct 2020 19:07:16 -0700 (PDT)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id m6sm1871353otm.76.2020.10.27.19.07.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Oct 2020 19:07:15 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v3 01/29] completion: zsh: fix __gitcomp_direct()
+Date:   Tue, 27 Oct 2020 20:06:44 -0600
+Message-Id: <20201028020712.442623-2-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.29.1
+In-Reply-To: <20201028020712.442623-1-felipe.contreras@gmail.com>
+References: <20201028020712.442623-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 797AAF16-1977-11EB-BFFC-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Filipp Bakanov <filipp@bakanov.su> writes:
+Many callers append a space suffix, but zsh automatically appends a
+space, making the completion add two spaces, for example:
 
-> Hi! I suggest to add "unadd" command, that will undo a git add command.
->
-> git unadd path/to/file
->
-> It will be an alias to:
->
-> git reset HEAD -- path/to/file
->
-> The motivation is that I always forget syntax and have to google each
-> time I want to undo accidentally added files. Unadd is just much
-> easier to remember and quite obvious.
+  git log ma<tab>
 
-I am not sure if the behaviour of the "git reset HEAD -- path" is
-what people would imagine what "unadd" would do, actually.  For
-example, with this sequence:
+Will complete 'master  '.
 
-    $ edit file
-    $ git add file
-    $ edit file
-    $ git add file
-    $ git unadd file
+Let's remove that extra space.
 
-what would be the natural expectation of users after the last
-"unadd" step?  Should it have the result of the first 'add'?  Should
-another "git unadd file" bring the index back to the state before
-the first 'add' was run?
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/completion/git-completion.bash | 2 +-
+ contrib/completion/git-completion.zsh  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-There is no such ambiguity to "reset HEAD -- path".  It tells
-exactly what contents you want to have in the index for the path
-(i.e. the same as what is in HEAD).  There is no "go back to the
-state before the last add", and there is no false hint that such a
-thing might exist.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 0a96ad87e7..ec7dd12a41 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -3498,7 +3498,7 @@ if [[ -n ${ZSH_VERSION-} ]] &&
+ 
+ 		local IFS=$'\n'
+ 		compset -P '*[=:]'
+-		compadd -Q -- ${=1} && _ret=0
++		compadd -Q -- ${${=1}% } && _ret=0
+ 	}
+ 
+ 	__gitcomp_nl ()
+diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
+index ce47e86b60..2cefae943a 100644
+--- a/contrib/completion/git-completion.zsh
++++ b/contrib/completion/git-completion.zsh
+@@ -74,7 +74,7 @@ __gitcomp_direct ()
+ 
+ 	local IFS=$'\n'
+ 	compset -P '*[=:]'
+-	compadd -Q -- ${=1} && _ret=0
++	compadd -Q -- ${${=1}% } && _ret=0
+ }
+ 
+ __gitcomp_nl ()
+-- 
+2.29.1
 
-So, I do not think it is a good idea to even call it "unadd", let
-alone adding an alias that is used outside your immediate circle
-where you can explain what it exactly means to "unadd" by your
-definition.
