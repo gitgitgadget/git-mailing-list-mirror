@@ -2,113 +2,142 @@ Return-Path: <SRS0=wsT/=ED=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MSGID_FROM_MTA_HEADER,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F277BC4363A
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 21:48:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14C3DC4363A
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 21:51:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 955BD2064C
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 21:48:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6087B246CD
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 21:51:02 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Hv1V4vIf";
+	dkim=temperror (0-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HMgli8FZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727784AbgJ1VsX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Oct 2020 17:48:23 -0400
-Received: from mail-eopbgr670094.outbound.protection.outlook.com ([40.107.67.94]:17002
-        "EHLO CAN01-TO1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727421AbgJ1VsU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Oct 2020 17:48:20 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=SZFC7j/fjdkHadgTzPA+t4i/qfLPwr4Xl7Bsgzv4azLWc2sfnPRc/yv8rMcTzxupvtP18LosR7RRbQDCOXq+zCYgQ8HVLXgz6TJymlLNJRwYzWTYfqUavd2sudorCp8FpmP7y9D96cHVKGmFykBsgbMXQPKFMEJ4KlPIztb4f8z1ncnewkjCZo9NRp6WIAZjdH7jVLsPOtCpFUMOudtXbCdnc+FUSr/qE+z981jLvv6uVwJNxP1s4ND2UKnoKJkS9yDJ9E+FheUyzXT8sVzdYHR1q1mY8KPWDQqrMDjFgEMTxNjqR5+209WqOE12WzwCJHH2f2gkQFm06NHVt2RddQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=I8Ubk3ZDSaqApUD2s4uiH5sO3D3HaTu3lMJT7NoPc8Q=;
- b=W9bSQy/j5d3elB4peJzmnch9sbwYhqIYeY8ERc6zscotpOtrQMReVXK/k3WE5Ph4/AIk/1x61GIvTD/P/WY5KfDBJycoIh0q0KiKrh/i89UHBuDA+PboxZDrujkxQzT5BlJcYPmDZoKSmTHvm4pqq0c43bJzeDsJyiFm1ofN5terRK73x6HAhElon6G0KMSt+yS4lTQyGBkPQp1sQ7Unqo0RzV5T1b+23JV2kYT8cm//jeARE1v+YS9zRNByBuCCi+i0gROThmQQ59XmnjoDF27jdi/eR2WFtwkQu/gaAf74OE9KcM+MFSqnScZhhsQkTu5mDWPPoNxo9Gi8AX0PEA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=xiplink.com; dmarc=pass action=none header.from=xiplink.com;
- dkim=pass header.d=xiplink.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xiplink.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=I8Ubk3ZDSaqApUD2s4uiH5sO3D3HaTu3lMJT7NoPc8Q=;
- b=Ktx9Cczd/GeJkneEeqXnBeMRg3/ioD9ZCfjtPfApWJkUPBMAOs9qZngzmrkFGxWUxdSuIUATntDpEA1M9ua7wCJud8ULKG8ZmNw9Bb6ZLW4+hFZzXgCHOtFceMnO0sbtgwZfNGc8bZGd/6s5/bSmlz5LaQXj9sJVYT3qUnMckwDJ6YbNeZog+Agl/OPyWlXUO2WETx5Wymii+hyWtDPY29h4rxgyCpUtCq0CgtuTKhSV6soj+Tfey7PldTdTPVb9m2/1ASBEhQ3BamWsHt2COx3ItnWW8NMsPb1eB/+qAEy1DVpttp+kcAmVhYxjGfy/mKFFv3/VOluanuwlsRr63w==
-Authentication-Results: xiplink.com; dkim=none (message not signed)
- header.d=none;xiplink.com; dmarc=none action=none header.from=xiplink.com;
-Received: from QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c00:30::29)
- by YQXPR01MB2485.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c00:42::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.22; Wed, 28 Oct
- 2020 21:15:25 +0000
-Received: from QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::5164:12ee:f585:5dbf]) by QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::5164:12ee:f585:5dbf%7]) with mapi id 15.20.3499.018; Wed, 28 Oct 2020
- 21:15:25 +0000
-To:     Serg Tereshchenko <serg.partizan@gmail.com>,
-        Pratyush Yadav <me@yadavpratyush.com>
-Cc:     git@vger.kernel.org
-From:   Marc Branchaud <marcnarc@xiplink.com>
-Subject: git-gui: Why are the main panels no longer white?
-Organization: XipLink
-Message-ID: <6a38e92e-ffd5-4b0e-b850-3697e47b2b92@xiplink.com>
-Date:   Wed, 28 Oct 2020 17:15:24 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [192.222.183.158]
-X-ClientProxiedBy: YQBPR01CA0099.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:c01:3::35) To QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:c00:30::29)
+        id S1728108AbgJ1Vuz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Oct 2020 17:50:55 -0400
+Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:34279 "EHLO
+        wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728099AbgJ1Vuy (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 28 Oct 2020 17:50:54 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.west.internal (Postfix) with ESMTP id A2FF8DAA;
+        Wed, 28 Oct 2020 14:22:09 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Wed, 28 Oct 2020 14:22:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm2; bh=5Gb4qsQiO+hbmaNYNG071mZLYxA
+        Oow3K4BgfbwNPDKw=; b=Hv1V4vIfha/uqYAS/Bz5/nAQaIMuFfpSSv6qVJR19BS
+        vFSR/WNk+u1SVUnJvq6n97adeTnljQX2c0cXF5qQ7ef1VTPRGQi7M5f+BHjFFlIu
+        1S/EYHTER+KyRZYuf9WUTSfiVXujOAidmGx1ZzgN33YaqhKKPpq7sY8sGcoC2HME
+        FZhCN2Eo4tS2Q/W7mwOP76BzL3hPfJDCOCSYTP1Bpz7KQrpIne0WrEGbIINTsmMX
+        csd015MIzvS1/+9W0DALG4AdaC4OMjwMwYe5AQnQusD9bF4VCizLzrCMpxYirGOI
+        94xHJ9ShOo1c9VfOJbHr02zNq8+ylqZoPuzgxpjsOOA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=5Gb4qs
+        QiO+hbmaNYNG071mZLYxAOow3K4BgfbwNPDKw=; b=HMgli8FZhaNlGfDHQxcm8q
+        cvB+4cwIsz7VW2fGxaiy7K7f/gCskvqmMwnDgvJZ/jfBt+uYzZHlRgIUr00pWL6Q
+        P0tFWMct9nrAJGzfDJ3wAEjXPgGU3fp7YMeCeOiPct1/frfgVDDGwa7ka6ScAkAx
+        ffbUuLFBFO16/75zbWFXDJIPc73FQuSysmor3ljoASotPGZ+rlFXE+3+lC97PSLM
+        2GOn8xie7/VCJsfsVgcDDRzQiaxPCiR2N1XBqtMLv32gxFBugrWjJoD4MiWKnFjP
+        HwtriE4bmcg9dpaKMjiO5y5dbJhW1W1ELWxMdCwPeKvomMSDE6bLNFCC9LgFoFeA
+        ==
+X-ME-Sender: <xms:0LaZX6hix6zIs6hFDFQp2lndThqvitr-NxGMGQM5nL2m51ZyMinIIQ>
+    <xme:0LaZX7ANXp421kFrZ-KqsEFYyGUHvwmLnDW8TIuiIwM9NA3blDLBt_kd8JL4IRZJl
+    PVM66rwOZSgejEN1Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrledugdduuddtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
+    dvjeektdfhhedvlefgtefgvdettdfhnecukfhppeejjedruddurddukedurdelleenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhm
+X-ME-Proxy: <xmx:0LaZXyFM-CPU5J9-E4tsA_sOSicR81Hjn8Tec9NFAdM5OikayTnczQ>
+    <xmx:0LaZXzR8bXZk5mT0jrgfunOjgVVMneUbplT3TYmZLsRDCAueuVV_dQ>
+    <xmx:0LaZX3xeaJ71k9GW2Gbt1GU1b2NrcWY64hxgZ0Pt5Iro1YBcniXdDQ>
+    <xmx:0baZXy8_2qZ5I4pipa5ySgDNbejYM33bTCYn8inladMKKAymNqb5uQ>
+Received: from vm-mail.pks.im (dynamic-077-011-181-099.77.11.pool.telefonica.de [77.11.181.99])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 2F288306467E;
+        Wed, 28 Oct 2020 14:22:08 -0400 (EDT)
+Received: from localhost (tanuki [10.192.0.23])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 36a38ade (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 28 Oct 2020 18:22:06 +0000 (UTC)
+Date:   Wed, 28 Oct 2020 19:22:16 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v4] refs: implement reference transaction hook
+Message-ID: <20201028182216.GB807@tanuki>
+References: <1d1a94426f95d842e0e3ea6a1569c0c45239229c.1591086316.git.ps@pks.im>
+ <55c58e9b09691dc11dea911f26424594fb3922c9.1592549570.git.ps@pks.im>
+ <20201023010315.GA1542721@coredump.intra.peff.net>
+ <xmqqpn59k2xw.fsf@gitster.c.googlers.com>
+ <20201026074303.GA972@ncase>
+ <X5dhN+dsLXlKfukF@nand.local>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from [192.168.222.18] (192.222.183.158) by YQBPR01CA0099.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c01:3::35) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.18 via Frontend Transport; Wed, 28 Oct 2020 21:15:24 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: f6595c25-7a04-4aae-037d-08d87b869619
-X-MS-TrafficTypeDiagnostic: YQXPR01MB2485:
-X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <YQXPR01MB2485DF3CA7EE61F5D119E844D7170@YQXPR01MB2485.CANPRD01.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:2276;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 5f7e1gaEvDavGQ/X2V2l3qrek1ZD2MprZrRSfwM24aDZIwnD6r07VG55Eyu5O5lDMDv2yfoguycWw2Fpc32/1XK77sCbGae4oDybE+7YhBfR47NV8Adk3vvUCNEu92gUxJ2GKzoU8451ZEKD3W/0mbKFx1er2dPne1MRKAgfZ5hAmnMZT8eN4IRwJSYuPaG9JxyGeTnz5OxJMgm9zp26hEMZ6iLvOjfvQaO41NYqoSGoeaCe7qcY43AB/5x0E7HsN577qMXpfbMPSQjq88f+7hITenKM3estst6vDAypM08ORaMlc069+wAJuxJ1Fy7hDs15LJmmQE5WgFaDlNhAtroQm9im6JcmEfA9DcIQgk71OOUPCoGcCJaC9+8LXhfM
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(39830400003)(346002)(376002)(396003)(136003)(366004)(478600001)(16576012)(8936002)(36756003)(31686004)(6486002)(4744005)(8676002)(316002)(110136005)(26005)(31696002)(66946007)(186003)(16526019)(66476007)(66556008)(86362001)(4326008)(2616005)(956004)(2906002)(5660300002)(52116002)(36916002)(43740500002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData: Xyi7yx/ymy54TinItYwdqZjtYDwjHXm69F7kWiYrTPzABq4ox14RbzXP2ZUAru2MXKDU4SAvt2G+A8AChdu9bMwomdnC2gW2qRV/LLV2RRauWM9ohbiv0yV1CXhjbWJB4zWuj4OFUR3LduCCfZxnlD82aQnZb9sd5w2R9eYSEpbMm0eAQWba9G6Whs8oXMuXvCukrJaOqaKnHlOd7TuDMIIDLcya63+WgYBovbcB82vZIpvHu5szJKDnXjSGcTUt/n5iDAd1xaZHdsRig8hPgSmHDT/JAhxM9sYAqCnzpEnG9M3hujrhGCySaqMzuezf8DyZfgN4RuNykwtLLGWSI3mS9hr4uPQUeF44XtVJTiFk72F3dbb9YprXzR77F5oIXJslAxGp1dBaKBDAJKNQe7JF7nTWtDWQnmLohxfFrcpgNPzM3ONj/vq1eo0JJCxyl4h86f090XRI/RfUjEoEYpJF9oL33Hfh/ignr8NDCu6OsC+69MMuo/kCQK06mK0m5E9GlGn8OV60pF1rj+pfxjZRz40rHar5U6dw63gasBzOGHlgw6Jd57kmVoXSm/zRjiBxno3Ak3HHQ7VvxvH92E91Ta0pEzoMX49oQmpy/RPQSFOcAujWjtCDnjS4PV4bpeGdZr2ipUrbDcYDRKQDKg==
-X-OriginatorOrg: xiplink.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f6595c25-7a04-4aae-037d-08d87b869619
-X-MS-Exchange-CrossTenant-AuthSource: QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Oct 2020 21:15:24.8979
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 14f927ba-c95b-4aa6-b674-375045ee9d4d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 9q3LGN3eYhVJ/XacGByPlFhx+jgBxvzEGQKMGvgNJgqGI2xEPNlpO17W1d3/y37u0BkgGa7V/OVeN/jjeb/SUQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: YQXPR01MB2485
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ghzN8eJ9Qlbqn3iT"
+Content-Disposition: inline
+In-Reply-To: <X5dhN+dsLXlKfukF@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!
 
-I'm using git-gui compiled from git v2.29.0 under Kubuntu 10.04, and the 
-git-gui's four main panels are now some odd grey colour instead of white.
+--ghzN8eJ9Qlbqn3iT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-If I revert git-gui commit c02efc13638447 (git-gui: improve dark mode 
-support) I get my white panels back.
+On Mon, Oct 26, 2020 at 07:52:23PM -0400, Taylor Blau wrote:
+> On Mon, Oct 26, 2020 at 08:43:03AM +0100, Patrick Steinhardt wrote:
+> > @Taylor, given that you've already dug into the code: do you already
+> > have plans to post a patch for this?
+>=20
+> You are likely in a better position to do that than I am. I am
+> unfamiliar enough with the refs.c code to feel confident that my change
+> is correct, let alone working. The combination of REF_HAVE_OLD, the lock
+> OID, the update OID, and so on is very puzzling.
+>=20
+> Ordinarily, I'd be happy to post a patch after familiarizing myself, but
+> right now I don't have the time. So, I may come back to this in six
+> months, but I certainly won't feel bad if you beat me to it ;-).
+>=20
+> In the meantime, I'd be fine to apply Peff's patch with some fix-ups,
+> maybe something like what's below the scissors line.
 
-I'm hoping there's some magic setting I can tweak somewhere to make the 
-panels white, instead of hacking git-gui's code.  But for the life of me 
-I can't figure out where this grey-ish colour is coming from, what 
-"theme" I might be using (I don't bother with "dark mode" stuff), or how 
-to specify the colours *I want* for things like Text.Background "from 
-the option database" (whatever that is).
+Fair enough, let's do it like this and submit the test change first.
+I'll try to squeeze in doing the hook change soonish, but I'm currently
+lacking time myself. So no promise I'll get to it soonish,
+unfortunately.
 
-Can someone direct me onto the right path to fix these colours?
+Patrick
 
-Thanks!
+--ghzN8eJ9Qlbqn3iT
+Content-Type: application/pgp-signature; name="signature.asc"
 
-		M.
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl+ZttcACgkQVbJhu7ck
+PpQQOg/9HTXAtqNXjabkdHbR/kuWg+4KKDu/8JnFEMVZBj5F+i/nV0mhIPderUoT
+Shi0tGpvbUXMfI/CuVj5K5+A2BsWUU3xWlya5yDObJoha2JcyfESiOZ2xkcTDze7
+AUym9nOC9SOVl3MjiTVolm4c8ehmYwg+oAOvmmZJFq0V34IgYTigJM+k5D0WnsPx
+Ab1lVDVweC4XsN7+DtNM672BB6uugn3E8BnAc068jQuQt3/u3qCAJ6Bz1MghkqY/
+zm4i/LeLrTnrbxXSpRSQNsZojJ0Pg2E3mLwktoepiSi7Wj2x9zgVcEqpaa47bRFb
+AoOYHN5xB6xdSzB/4fiV3iLRN6qnzd+dA/O4KDIwDQUdS34mE5T6zWqeXPAbXkx0
++CdfSHL3jtzQtRV/jN8GyuN8vlohhhpcIS8UBsUl6mR2sXwBsOx/G25dHxhKty8V
+LE3SBYm4JKt+62m74qvjKhno9hYlhqYNYvVG4O5wtHUOirhbL4H+xlxRq9sKJGYE
+wwUSPtP6d3PDmcZ/mEMjXdjgUxUwJxmrxEXT3grV1YOT8JaXGIqfRtKdKuOtaH5B
+dfQObNV/M6uDKrr+Q8K2rVSyb7ixeMaAU7qOPuK966p862zRnioVBNjL+RWHTSFs
+y7lgu0xEZM36O3gdgVL/9WwQuOwf443V+8UY+vZKIn0cqJ9bpMY=
+=6FvF
+-----END PGP SIGNATURE-----
+
+--ghzN8eJ9Qlbqn3iT--
