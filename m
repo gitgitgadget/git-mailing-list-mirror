@@ -2,104 +2,292 @@ Return-Path: <SRS0=wsT/=ED=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.5 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2ABBCC388F7
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 22:56:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AD9BC388F7
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:00:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C678220735
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 22:56:04 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iFx7DGhT"
+	by mail.kernel.org (Postfix) with ESMTP id ED93620757
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:00:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389859AbgJ1W4D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Oct 2020 18:56:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60090 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389664AbgJ1W4B (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Oct 2020 18:56:01 -0400
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF068C0613CF
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 15:56:00 -0700 (PDT)
-Received: by mail-lj1-x242.google.com with SMTP id d25so984626ljc.11
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 15:56:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=xEOU9dauF+GcbkdhJf1UaRCxpOTRxUHTnvLX5XbIcW4=;
-        b=iFx7DGhTadjEmL86QpkqCdgKX+ler8EjoR4a5yEKRYKJlB0dzwZ0wZ4fIHVXiVdNoi
-         UERFkEJHBMlcJvY8ooSeyTrqxk48Cdo/r4Ew5MQV4aIaxPjuD0I5h7bOth3viUWP7eNv
-         B8kn/Fzmefmj0IGU35Kieu8CxvueGprXvjppsL/jY0jvDb6i8yPIqmFOuUBCxNHYJpGz
-         ZOdzRlt6yRqgVOk0HO9ooF/ouTCjw7u7G5PWsfUvgIu7uiG1qkd2a94sy7AoyTKdapsi
-         sONx95+0rUA8fRV5DbO9VqVQGl//QziX16M9c8aw2xFl5Pn11BzxmJW/XcTXXMBwA0wI
-         L+Iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=xEOU9dauF+GcbkdhJf1UaRCxpOTRxUHTnvLX5XbIcW4=;
-        b=XtRDr+GwNvRQSibLlXVlDGK5/2v0GMaUyGbruhuTt/c5RYyBVdkclnDmjJRfnLasoR
-         z7n9gT+eth53Eqz509NCdGWfbw80Aps920eRn1nhucHLkiTepzalM9KmklpSYSPbSI5D
-         3XgjHoQJKkQJrwsRd4ZOEvyqkk5XtppTg5/RyyoVQeBy7oQIfAHFXbxYEwV/uDDf8R7b
-         edzCl4PIuGKYo6R68fxd/jt16XFChiulPetCMa6Yc2CwBsXB8Wc2wkNzwuMAtO8jVvxm
-         KQDYOVs3isPyVzba3Ioqy//A84MGqiYWR5UuibmxLPL94VOK66hD3UCd/lZ3wUElkZBu
-         OkSQ==
-X-Gm-Message-State: AOAM533EamY/9dQr0GtFfLqwe3kuPgsBhKbBYTcY6L6FHPq/BDaWU3JK
-        N3uGXHgv79ATN+rBkwlD9sda910WotGrD93Cci+whkwzndOFxQ==
-X-Google-Smtp-Source: ABdhPJzauvY/+Ohs5TYbQqQOLeuQEfSRryMPmeRt+Bm2ewfkwPp4mTSinK56z1x/dlEvS0Coi+MRMJY4ONs3h6wP7nI=
-X-Received: by 2002:a17:906:68c4:: with SMTP id y4mr6750952ejr.197.1603877603954;
- Wed, 28 Oct 2020 02:33:23 -0700 (PDT)
+        id S2389929AbgJ1XAI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Oct 2020 19:00:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40632 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731382AbgJ1XAI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Oct 2020 19:00:08 -0400
+Received: (qmail 23528 invoked by uid 109); 28 Oct 2020 09:33:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 28 Oct 2020 09:33:25 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31431 invoked by uid 111); 28 Oct 2020 09:33:24 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 28 Oct 2020 05:33:24 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 28 Oct 2020 05:33:24 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] sideband: diagnose more incoming packet anomalies
+Message-ID: <20201028093324.GA175617@coredump.intra.peff.net>
+References: <pull.753.v2.git.1603136142.gitgitgadget@gmail.com>
+ <pull.753.v3.git.1603728555.gitgitgadget@gmail.com>
+ <20201027065250.GB3005508@coredump.intra.peff.net>
+ <20201027071222.GC3005508@coredump.intra.peff.net>
+ <xmqqblgncxap.fsf@gitster.c.googlers.com>
+ <20201027204205.GA643357@coredump.intra.peff.net>
+ <xmqqzh479wor.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 28 Oct 2020 10:33:12 +0100
-Message-ID: <CAP8UFD1nCqoxe9pnSo1Q5290x2W8H4YpzQj6DFBzEmNcZan25Q@mail.gmail.com>
-Subject: Draft of Git Rev News edition 68
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Andreas Schwab <schwab@linux-m68k.org>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Thomas Guyot-Sionnest <tguyot@gmail.com>,
-        =?UTF-8?Q?Andreas_Gr=C3=BCnbacher?= <andreas.gruenbacher@gmail.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Taylor Blau <me@ttaylorr.com>, Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqzh479wor.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone!
+On Tue, Oct 27, 2020 at 02:38:12PM -0700, Junio C Hamano wrote:
 
-A draft of a new Git Rev News edition is available here:
+> Jeff King <peff@peff.net> writes:
+> 
+> > Does this patch seem otherwise worth doing?
+> 
+> Yeah.
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-68.md
+OK, here it is, then with that one error message reworded. I dropped
+"protocol error" from that one message, as well. One, because it was
+getting quite long. And two, it's probably _not_ a protocol error, but
+rather a network drop. So just describing what we see on the client
+side is the best strategy.
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+> FWIW, I do not find the "dependency" thing disturbing.  sideband is
+> an extension of the pkt-line mechansim, so it is natural that it
+> depends on pkt-line.  I'd also be happy if enums, structures and
+> calls defined in both headers are made available by just including
+> one of them (e.g. retire sideband.h, perhaps).
 
-  https://github.com/git/git.github.io/issues/460
+I agree with that. Given how easy it was to work around with an int, I'm
+not inclined to spend time going further at this point, but it's
+something to keep in mind.
 
-You can also reply to this email.
+> > An alternate patch would be to keep the behavior the same and just
+> > clarify the code a bit. Something like:
+> 
+> This also looks OK to me from readability's point of view, but it
+> does not as much help the end user who is puzzled as the real thing,
+> I am afraid.
 
-In general all kinds of contributions, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub, and
-so on, are very much appreciated.
+I suspect these cases are rare enough that nobody minds either way. But
+I do think the behavior-changing patch is making us more likely to do
+the right thing. The downside is the risk of some unintended regression,
+but I feel pretty good about it.
 
-I tried to Cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
+-- >8 --
+Subject: [PATCH] sideband: diagnose more sideband anomalies
 
-Jakub, Markus, Kaartic and me plan to publish this edition on Friday
-October 30th.
+In demultiplex_sideband(), there are two oddities when we check an
+incoming packet:
 
-Thanks,
-Christian.
+  - if it has zero length, then we assume it's a flush packet. This
+    means we fail to notice the difference between a real flush and a
+    true zero-length packet that's missing its sideband designator. It's
+    not a huge problem in practice because we'd never send a zero-length
+    data packet (even our keepalives are otherwise-empty sideband-1
+    packets).
+
+    But it would be nice to detect and report the error, since it's
+    likely to cause other confusion (we think the other side flushed,
+    but they do not).
+
+  - we try to detect packets missing their designator by checking for
+    "if (len < 1)". But this will never trigger for "len == 0"; we've
+    already detected that and left the function before then.
+
+    It _could_ detect a negative "len" parameter. But in that case, the
+    error message is wrong. The issue is not "no sideband" but rather
+    "eof while reading the packet". However, this can't actually be
+    triggered in practice, because neither of the two callers uses
+    pkt_read's GENTLE_ON_EOF flag. Which means they'd die with "the
+    remote end hung up unexpectedly" before we even get here.
+
+    So this truly is dead code.
+
+We can improve these cases by passing in a pkt-line status to the
+demultiplexer, and by having recv_sideband() use GENTLE_ON_EOF. This
+gives us two improvements:
+
+  - we can now reliably detect flush packets, and will report a normal
+    packet missing its sideband designator as an error
+
+  - we'll report an eof with a more detailed "protocol error: eof while
+    reading sideband packet", rather than the generic "the remote end
+    hung up unexpectedly"
+
+  - when we see an eof, we'll flush the sideband scratch buffer, which
+    may provide some hints from the remote about why they hung up
+    (though note we already flush on newlines, so it's likely that most
+    such messages already made it through)
+
+In some sense this patch goes against fbd76cd450 (sideband: reverse its
+dependency on pkt-line, 2019-01-16), which caused the sideband code not
+to depend on the pkt-line code. But that commit was really just trying
+to deal with the circular header dependency. The two modules are
+conceptually interlinked, and it was just trying to keep things
+compiling. And indeed, there's a sticking point in this patch: because
+pkt-line.h includes sideband.h, we can't add the reverse include we need
+for the sideband code to have an "enum packet_read_status" parameter.
+Nor can we forward declare it, because you can't forward declare an enum
+in C. However, C does guarantee that enums fit in an int, so we can just
+use that type.
+
+One alternative would be for the callers to check themselves that they
+got something sane from the pkt-line code. But besides duplicating
+logic, this gets quite tricky. Any error condition requires flushing the
+sideband #2 scratch buffer, which only demultiplex_sideband() knows how
+to do.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ pkt-line.c             | 14 ++++++++------
+ sideband.c             | 29 ++++++++++++++++++++++-------
+ sideband.h             |  6 +++++-
+ t/t0070-fundamental.sh | 12 ++++++++++++
+ 4 files changed, 47 insertions(+), 14 deletions(-)
+
+diff --git a/pkt-line.c b/pkt-line.c
+index 657a702927..d633005ef7 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -461,9 +461,11 @@ int recv_sideband(const char *me, int in_stream, int out)
+ 	enum sideband_type sideband_type;
+ 
+ 	while (1) {
+-		len = packet_read(in_stream, NULL, NULL, buf, LARGE_PACKET_MAX,
+-				  0);
+-		if (!demultiplex_sideband(me, buf, len, 0, &scratch,
++		int status = packet_read_with_status(in_stream, NULL, NULL,
++						     buf, LARGE_PACKET_MAX,
++						     &len,
++						     PACKET_READ_GENTLE_ON_EOF);
++		if (!demultiplex_sideband(me, status, buf, len, 0, &scratch,
+ 					  &sideband_type))
+ 			continue;
+ 		switch (sideband_type) {
+@@ -520,9 +522,9 @@ enum packet_read_status packet_reader_read(struct packet_reader *reader)
+ 							 reader->options);
+ 		if (!reader->use_sideband)
+ 			break;
+-		if (demultiplex_sideband(reader->me, reader->buffer,
+-					 reader->pktlen, 1, &scratch,
+-					 &sideband_type))
++		if (demultiplex_sideband(reader->me, reader->status,
++					 reader->buffer, reader->pktlen, 1,
++					 &scratch, &sideband_type))
+ 			break;
+ 	}
+ 
+diff --git a/sideband.c b/sideband.c
+index a5405b9aaa..6f9e026732 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -3,6 +3,7 @@
+ #include "config.h"
+ #include "sideband.h"
+ #include "help.h"
++#include "pkt-line.h"
+ 
+ struct keyword_entry {
+ 	/*
+@@ -114,7 +115,8 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
+ #define ANSI_SUFFIX "\033[K"
+ #define DUMB_SUFFIX "        "
+ 
+-int demultiplex_sideband(const char *me, char *buf, int len,
++int demultiplex_sideband(const char *me, int status,
++			 char *buf, int len,
+ 			 int die_on_error,
+ 			 struct strbuf *scratch,
+ 			 enum sideband_type *sideband_type)
+@@ -130,17 +132,30 @@ int demultiplex_sideband(const char *me, char *buf, int len,
+ 			suffix = DUMB_SUFFIX;
+ 	}
+ 
+-	if (len == 0) {
+-		*sideband_type = SIDEBAND_FLUSH;
+-		goto cleanup;
+-	}
+-	if (len < 1) {
++	if (status == PACKET_READ_EOF) {
+ 		strbuf_addf(scratch,
+-			    "%s%s: protocol error: no band designator",
++			    "%s%s: unexpected disconnect while reading sideband packet",
+ 			    scratch->len ? "\n" : "", me);
+ 		*sideband_type = SIDEBAND_PROTOCOL_ERROR;
+ 		goto cleanup;
+ 	}
++
++	if (len < 0)
++		BUG("negative length on non-eof packet read");
++
++	if (len == 0) {
++		if (status == PACKET_READ_NORMAL) {
++			strbuf_addf(scratch,
++				    "%s%s: protocol error: missing sideband designator",
++				    scratch->len ? "\n" : "", me);
++			*sideband_type = SIDEBAND_PROTOCOL_ERROR;
++		} else {
++			/* covers flush, delim, etc */
++			*sideband_type = SIDEBAND_FLUSH;
++		}
++		goto cleanup;
++	}
++
+ 	band = buf[0] & 0xff;
+ 	buf[len] = '\0';
+ 	len--;
+diff --git a/sideband.h b/sideband.h
+index 227740a58e..5a25331be5 100644
+--- a/sideband.h
++++ b/sideband.h
+@@ -18,8 +18,12 @@ enum sideband_type {
+  *
+  * scratch must be a struct strbuf allocated by the caller. It is used to store
+  * progress messages split across multiple packets.
++ *
++ * The "status" parameter is a pkt-line response as returned by
++ * packet_read_with_status() (e.g., PACKET_READ_NORMAL).
+  */
+-int demultiplex_sideband(const char *me, char *buf, int len,
++int demultiplex_sideband(const char *me, int status,
++			 char *buf, int len,
+ 			 int die_on_error,
+ 			 struct strbuf *scratch,
+ 			 enum sideband_type *sideband_type);
+diff --git a/t/t0070-fundamental.sh b/t/t0070-fundamental.sh
+index 357201640a..8d59905ef0 100755
+--- a/t/t0070-fundamental.sh
++++ b/t/t0070-fundamental.sh
+@@ -40,4 +40,16 @@ test_expect_success 'incomplete sideband messages are reassembled' '
+ 	grep "Hello, world" err
+ '
+ 
++test_expect_success 'eof on sideband message is reported' '
++	printf 1234 >input &&
++	test-tool pkt-line receive-sideband <input 2>err &&
++	test_i18ngrep "unexpected disconnect" err
++'
++
++test_expect_success 'missing sideband designator is reported' '
++	printf 0004 >input &&
++	test-tool pkt-line receive-sideband <input 2>err &&
++	test_i18ngrep "missing sideband" err
++'
++
+ test_done
+-- 
+2.29.1.641.gb6287e56d2
+
