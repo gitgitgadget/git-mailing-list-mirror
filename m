@@ -8,64 +8,61 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6362AC4363A
-	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:05:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5BA3C55179
+	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:14:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 19A3820878
-	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:05:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 85F3A20738
+	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:14:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RP5+Af36"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uRTD7U5x"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729082AbgJ2CFX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Oct 2020 22:05:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46674 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727097AbgJ1Vic (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Oct 2020 17:38:32 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5400C0613CF
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 14:38:32 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id 9so1115655oir.5
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 14:38:32 -0700 (PDT)
+        id S2404338AbgJ2COW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Oct 2020 22:14:22 -0400
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:34670 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726777AbgJ1Vfr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Oct 2020 17:35:47 -0400
+Received: by mail-oi1-f194.google.com with SMTP id z23so1130954oic.1
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 14:35:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=w6Ui3PmfcmaZFFFXz0FUQ4Lr/gNpAFU0/draG+RBXU8=;
-        b=RP5+Af36Be3KNDYtOSoeuCA+vyVPh/DCEPxeZvXXRmqphGpsdIUamqw2oVikkEJ+9h
-         ZIegkGSAqxvB4EEIi2yDRBC8d5ihNsqUv7z7qWetnoHNi696OAuqIS4yWuvp4krkAvQs
-         wkFJcuXV7KXbUya5EVVG4LctkYgVsaWQa6Dd2HIj2Vs4N83sc9Ge1lTiAAY16CeFGYOn
-         BOAEixFC7209Xqha8N6mcKUpDmvXOpgZaMYwLJAmtjVvPMSda38VjD3e6pPQCInZd9hn
-         YmvrE2ioBmOHhmGMhOMM22DxuN9crJEHqchXwl0ms9UwB7BbqwAb2AC3CUuTNKrYNvOL
-         bquQ==
+        bh=oaPxypgvAa8C9LKBaA2PdQDmPILjY+4WEWIl8qkq+dc=;
+        b=uRTD7U5x59EeESKSjUGB7uSi2AIzSsvlyieJDS99LZsj5SrASW/Q+9shOJ3WaLShWS
+         oHK4mGN+ACBIV5PVFqG9TxVGYlHAhVUqJUn7h7AZiYA8YOYJ+IXGN2/9fgpDvh9lhAvK
+         KsG2uBP02PT7ZO6/Euykq18WXYNiCvCoEH73yuzdweNM+35/1U3G/BfT5Y1FXHOqK5X6
+         aDWDGk/yCFiGMS78DOS4NCX0mg4VsQXUeFXEYIC0If7cDj7oLYwvmZqL5EelHPmD3vpS
+         ROh83TUjxz9EOcm2Eem9AiAVQ9iGwHvqnpPurGsNDOZoseAiQ+Q96AaMf2GPeTt2/p2C
+         GLkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=w6Ui3PmfcmaZFFFXz0FUQ4Lr/gNpAFU0/draG+RBXU8=;
-        b=fhs8eBb9jCl6eP5CmDL3yidJxJuccRKfhdWcx+0JPbkHZW1zuPCyvcdl7o+eGDfF8q
-         dNqCJk6Ib5/3eGHXURwcNCvEhPHFqJxL1ky2q9DmRjdKoIE3XMMXfygdo+bWrZIhTh4M
-         0UfvjNfPKD+qmmp7NFoljAKonR5oN8jzktKcC1z4ndDffDblqXXkPTuBiHAyfMKrOBqj
-         sLVsrWsjGKY8h66kH9zHhQFExg0BxsB18vB1IOLpjfOOz92z6BuVhzAaJAWDxma2kcqQ
-         XT0/dBlQUZcmstf5ZiQh5Fuk6VKS76ayndWe4aJSWdOjgjy/qm7Zl+E81OCXgDm30GBO
-         2aEQ==
-X-Gm-Message-State: AOAM532gEiVOSM1G7M8RsBRSzJQzilagOzqVDLQOWXaloBjf2LiQexGv
-        KrXVINvESmMa4KL+e81JXg1XSWA/JcDwYg==
-X-Google-Smtp-Source: ABdhPJySgkC3uFfMb8mbJPMUJkhl+elOgWhTEy+qNDnc+naW8cuqxg9Aa2oMhWQx6SroRrFC1+K0hQ==
-X-Received: by 2002:a05:6808:254:: with SMTP id m20mr3705102oie.139.1603850870659;
-        Tue, 27 Oct 2020 19:07:50 -0700 (PDT)
+        bh=oaPxypgvAa8C9LKBaA2PdQDmPILjY+4WEWIl8qkq+dc=;
+        b=D59ciqLkYVQWNbTcEnk9R5dLTyfVLpp0xWP28KJPBawDjcZhl0svC/vFPai3XEmdQ5
+         ycrjFPp+8dYln3fH1lAqNMFIyNOHO6FkRTHbGggUxg2xOP18Ia8kO75EScfxWwBbS777
+         q/46sj1U+ljZzTd9OmzpYDixivnoLk8KoRs8UVBL3UoTzDlQMKtcFw6Z6s/t2ceQ4wZg
+         WBMsXi6Y1XW7ojnQMkRwTwLa0iriFLkSPeQHCizBLJxA30SeLTN1n48q8JrS5QddqA5u
+         zo2mEFLczUxI4ttILZk1zOlpOZ38yNM9OEMcJw3X5jIsYq2Tk0TUeQXWR2J9x5AkIsTA
+         DN7g==
+X-Gm-Message-State: AOAM533IrFsYQYsu7XVqxsURFOZO/GJXo//vnzLdJb6gprRgm1SZU7J9
+        dIBmI6PEp+4FcfZihgD18XQHzc1vhAeSyQ==
+X-Google-Smtp-Source: ABdhPJzYwOPFvUUwU737puINSNWewxnb1AFXMtsgJWuTrmW170zDjGz7hhO3DxuE19dsmJs9BBlrUQ==
+X-Received: by 2002:aca:f0c5:: with SMTP id o188mr3447996oih.95.1603850865828;
+        Tue, 27 Oct 2020 19:07:45 -0700 (PDT)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id l23sm1722439otk.68.2020.10.27.19.07.49
+        by smtp.gmail.com with ESMTPSA id i16sm1763566otc.71.2020.10.27.19.07.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2020 19:07:50 -0700 (PDT)
+        Tue, 27 Oct 2020 19:07:45 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 22/29] completion: zsh: improve command tags
-Date:   Tue, 27 Oct 2020 20:07:05 -0600
-Message-Id: <20201028020712.442623-23-felipe.contreras@gmail.com>
+Subject: [PATCH v3 19/29] completion: zsh: simplify file_direct
+Date:   Tue, 27 Oct 2020 20:07:02 -0600
+Message-Id: <20201028020712.442623-20-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.29.1
 In-Reply-To: <20201028020712.442623-1-felipe.contreras@gmail.com>
 References: <20201028020712.442623-1-felipe.contreras@gmail.com>
@@ -75,35 +72,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There's no need to use _alternative and repeat a lot of the code.
+It's exactly the same as __gitcomp_file() with no prefix.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.zsh | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ contrib/completion/git-completion.zsh | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index 858864f3fb..22d8e58fcc 100644
+index 7126c75001..4834ebc889 100644
 --- a/contrib/completion/git-completion.zsh
 +++ b/contrib/completion/git-completion.zsh
-@@ -235,10 +235,13 @@ __git_zsh_main ()
+@@ -124,9 +124,7 @@ __gitcomp_nl_append ()
  
- 	case $state in
- 	(command)
--		_alternative \
--                         'alias-commands:alias:__git_zsh_cmd_alias' \
--                         'common-commands:common:__git_zsh_cmd_common' \
--                         'all-commands:all:__git_zsh_cmd_all' && _ret=0
-+		_tags common-commands alias-commands all-commands
-+		while _tags; do
-+			_requested common-commands && __git_zsh_cmd_common
-+			_requested alias-commands && __git_zsh_cmd_alias
-+			_requested all-commands && __git_zsh_cmd_all
-+			let _ret || break
-+		done
- 		;;
- 	(arg)
- 		local command="${words[1]}" __git_dir
+ __gitcomp_file_direct ()
+ {
+-	emulate -L zsh
+-
+-	compadd -f -- ${(f)1} && _ret=0
++	__gitcomp_file "$1" ''
+ }
+ 
+ __gitcomp_file ()
 -- 
 2.29.1
 
