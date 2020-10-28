@@ -2,187 +2,136 @@ Return-Path: <SRS0=wsT/=ED=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49204C56201
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 22:14:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6F1CC55179
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 22:17:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E5BE8246CD
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 22:14:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 51B3724171
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 22:17:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HWf5XZqb"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SW67bX1F"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731024AbgJ1WOz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Oct 2020 18:14:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53054 "EHLO
+        id S1731498AbgJ1WRR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Oct 2020 18:17:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731065AbgJ1WOy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Oct 2020 18:14:54 -0400
-Received: from mail-yb1-xb44.google.com (mail-yb1-xb44.google.com [IPv6:2607:f8b0:4864:20::b44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F088CC0613CF
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 15:14:53 -0700 (PDT)
-Received: by mail-yb1-xb44.google.com with SMTP id o70so518900ybc.1
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 15:14:53 -0700 (PDT)
+        with ESMTP id S1731492AbgJ1WRR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Oct 2020 18:17:17 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB9C6C0613CF
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 15:17:16 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id w23so695825wmi.4
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 15:17:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=mBKckM6il9kb+4KT8vgXFLgwEP4Ax9Qy3RPZQeDM0FI=;
-        b=HWf5XZqbJCjpR3gYdjXCgfgnXGEBIz7ldtwSsBnU0+yzmAp2Efkp1kDVO74Vyd9t9Y
-         qij804jNh0AZl4hY5/EZv2iUyTunCkH7UQKNl7DKYo98OllUcrQz+tu97BlAPlpdX7t/
-         2vxiPgRGc71IDMyXXruEV6sVjzKVjoW+srCTs9sZ3ltYJHuvXLjAcfS/XmOZnRAm6GDn
-         cdVSTg2v8rDhC+NFYokGIvpE8zQikir64t7gmgMGDowZLxak/fNvG0cVmnq13NYtBbkq
-         DEPicyzLgsbCA2TfdQGXLiUBJ7KQQ7/zuXHIKjBt7EdaLy9J8Fgauo5LLkuYAL9j6LIr
-         dKxA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=z+CfMa3aJ+Xl9f/YQzABitecnMXOSPFBfborxxCFsok=;
+        b=SW67bX1F6csUdBUrWGypTdBcRyd5rxzap4y7j1KITREYQTIwH0i9eCw8cQk0UQXjtb
+         I2O6RSqFRUdHlI3V9v2WY8TrxdePKa/flmR9ZOrcVKGkGZpoil2YiCpG7tETBev1u8Ew
+         1ec0yw/lIobjTT9zzcD/2BwnYwptIUF6B/9Rev8FlJND7YKJhS9B84jwG14cM1iP55Eb
+         Xl8UNpYnrDfXeMSa7FDF0ezkYGZ8WAt4xIB9Y+0AC/hULtdihwnhjT3QGmOFYIiZ8OSU
+         mKxQUfL0tRkNs2EF0b/nq4U9NngjLIpAc/3cuwQ31hVps8l3ldUeA5r6pNJpx4keRrPe
+         +nlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=mBKckM6il9kb+4KT8vgXFLgwEP4Ax9Qy3RPZQeDM0FI=;
-        b=m75JXUKR2P6CLhHE/6TOcNk+JfihAxkrk8oE87iVhWVpCgv0iYuCxFSta/YZmRqzIO
-         X2IduPVEQGoaurWuuPYlXL8wA9AklTFWFW+UM+bCcSCXn0YpNvilUhp/Z+fYJsHZn5gk
-         7QtuUf4UEuEsoTihH8lRYLR8xnjUMgImuwxkG3+MKmWCVb8CSLImh8e6Dgy6izlt83a5
-         3gUAxQqHu0Se2AQVxlkvlL/3c4YG9GDMPpwI3Pzp+KSor4d0rPKQYxxOJUp2/YztMhbf
-         AZI62OxxePF3Smp45PEHBCWfX23sv2QH7eoHFL9+FoFuS2nvJ4tTEW9yD03ZqR/+ezXp
-         lifA==
-X-Gm-Message-State: AOAM531rMXtd7G9naFLKZgLI7Mq58VfH3ZmqtXKYp+j5beVZ/on1+LEl
-        5L+M+HmaWl75s1VxgvItUvBhPloqWb/z3Q==
-X-Google-Smtp-Source: ABdhPJxAXQAI6l2Gi5Q2FzbJ5RwLNLAF9LtXluaygsf9yha5WMpYkg/yFw0CpWPmXskI7ZcldsWUbQ==
-X-Received: by 2002:a4a:e5ce:: with SMTP id r14mr4135135oov.11.1603850834450;
-        Tue, 27 Oct 2020 19:07:14 -0700 (PDT)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id c128sm2384036oob.23.2020.10.27.19.07.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2020 19:07:13 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 00/29] completion: zsh: latest patches
-Date:   Tue, 27 Oct 2020 20:06:43 -0600
-Message-Id: <20201028020712.442623-1-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.29.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=z+CfMa3aJ+Xl9f/YQzABitecnMXOSPFBfborxxCFsok=;
+        b=kpVsiQSCu83qugCd2MrVAQq34o7rchhkV1vmKHXtgMuv6NwJkj8bz5mkrIn2XFWub0
+         BPFbqeaYLaJ/Lhy/l/6E0a00kexzF83hw7gOWUeLjeFTIiH+uSTRFlXfQAl6+HTMELlc
+         HrKg/ldOBWgdOTCdna0v/2/rc4mWuj36jRFUnav+XJEeHqZYFset4UC5+3qDY/0g5g2H
+         Ljezr4d+kwjxBQ4Ze2HfVj7yEqxOMyOFK0uTlEmQYTK+hCGOf1XS2UxZb7ZDcz16H0Gi
+         yQTPM5SD/Arw5ew9+K0advZZWZhQFfrAJxl5x02OGpk6qqg32YpSF1ZCfIe5LBAviBoW
+         FByw==
+X-Gm-Message-State: AOAM530NZvBgTkBqAq2Yn6m6o15t81jAj3qR07jg7Gul2V3ky3DQjB4p
+        gYSmbiRLgxoeFYD3OhLDUx2DvDWEzFNZWcDswxueXEnKic142Q==
+X-Google-Smtp-Source: ABdhPJyO32WN58/VzqgoaEax8rMZY4AUrPZdsoMn6uzqxGnyEbl2U4+/EGz5WSok43w+ERhk8zmgtqJEGhG90mZfHOE=
+X-Received: by 2002:a7b:c2fa:: with SMTP id e26mr221542wmk.37.1603902677713;
+ Wed, 28 Oct 2020 09:31:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190621223107.8022-1-felipe.contreras@gmail.com>
+ <xmqqk1cz0zz1.fsf@gitster-ct.c.googlers.com> <CAMP44s3wqxTmgQpMgk2cM33EvtwrvvXYv4_90GKGmHb8yJHAKg@mail.gmail.com>
+ <xmqqk0vbbep5.fsf@gitster.c.googlers.com> <CAMP44s13nip2_Z1OOFb9iVcrSxQbyJW4cH86J3Ah1p4SmTQWQQ@mail.gmail.com>
+ <xmqqr1pj9rf0.fsf@gitster.c.googlers.com> <CAMP44s0nxQ8jxxw7wSPOMv9Nx1P7ww3S6dGv27xNVQ_aHTaPng@mail.gmail.com>
+ <0ec43318-bf83-25c4-a817-a150e2e47546@haller-berlin.de>
+In-Reply-To: <0ec43318-bf83-25c4-a817-a150e2e47546@haller-berlin.de>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Wed, 28 Oct 2020 10:31:06 -0600
+Message-ID: <CAMP44s0+TMhmPYM7omoFhcebMLhZyh6v77WUFNrscRtPNEDNHQ@mail.gmail.com>
+Subject: Re: [PATCH 00/14] completion: a bunch of updates
+To:     Stefan Haller <lists@haller-berlin.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, Oct 28, 2020 at 3:09 AM Stefan Haller <lists@haller-berlin.de> wrote:
+>
+> On 28.10.20 1:06, Felipe Contreras wrote:
 
-I've been carrying around these patches for quite some time, many have already
-been sent, others I refactored to make them more clear.
+> > I didn't say the users didn't get the scripts from the distribution, I
+> > said I didn't know of anyone that did. I just checked the installation
+> > instructions of Homebrew, and they do seem to install the zsh
+> > completion from contrib, whoever, by the time I see the bug reports,
+> > those users already downloaded the most recent version from GitHub
+> > [1].
+>
+> I might not be the representative zsh user, but just as one data point:
+> I have never downloaded the completion scripts from anywhere. I always
+> use the one that comes with my "distro" (which is the Mac git installer,
+> most of the time, which puts it in /usr/local/git/contrib/completion/).
+> I symlink that to ~/.zfunc/_git.
 
-These patches correspond to version 1.1 of git-completion:
+That's interesting. Where did you get the idea to do that?
 
-https://github.com/felipec/git-completion
+> > On the other hand my distribution (Arch Linux) does not enable the zsh
+> > script by default, it just lies dormant in /usr/share/git/completion,
+> > which nobody uses. So users in Arch Linux naturally would download the
+> > latest version from GitHub [1] as well.
+> >
+> > So, which distributions package and enable the zsh script by default? Who knows.
+> >
+> > I suggested you to graduate those scripts out of contrib so
+> > distributions would trust the scripts enough to enable them by
+> > default, but you refused.
+> >
+> > What you do with the scripts is up to you, I only know what would
+> > happen depending on what you do. 1) If you leave them as is, some
+> > distributions would enable them, others don't, and people will keep
+> > downloading the scripts from git's GitHub [1]. 2) If you graduate
+> > them, more--if not all--distributions would enable them by default,
+> > and less people would download them. 3) If you remove them, people
+> > would look for another git repository to download those scripts from.
+>
+> I don't think it makes a difference whether the scripts live in contrib
+> or not. Bash completion is also in contrib, and yet it seems to be
+> shipped and enabled by most distros, as far as I can tell.
 
-Changes since v2:
+Apples and oranges.
 
- * Silenced pkg-config command in case of errors
- * Improved loading of bash script so it's backwards compatible
+There is no default completion for git in bash, neither in bash, nor
+in bash-completion, so if the distribution doesn't install the
+completion in the right place
+(/usr/share/bash-completion/completions/git), then the user would have
+no git completion.
+
+On zsh the situation is different; zsh by default has a git completion
+(/usr/share/zsh/functions/Completion/Unix/_git), and some might argue
+it's more complete than git's zsh completion, so why would
+distribution maintainers chose the one in 'contrib' (an unofficial
+contributed script) over the official one? Indeed they don't, at least
+on Arch Linux.
 
 Cheers.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 26538efb80..49a6ef4236 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -3474,7 +3474,6 @@ __git_func_wrap ()
- # This is NOT a public function; use at your own risk.
- __git_complete ()
- {
--	test -n "$ZSH_VERSION" && return
- 	local wrapper="__git_wrap${2}"
- 	eval "$wrapper () { __git_func_wrap $2 ; }"
- 	complete -o bashdefault -o default -o nospace -F $wrapper $1 2>/dev/null \
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index d25f8691ef..e0fda27f4c 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -27,19 +27,26 @@ zstyle -T ':completion:*:*:git:*' tag-order && \
- zstyle -s ":completion:*:*:git:*" script script
- if [ -z "$script" ]; then
- 	local -a locations
--	local e
-+	local e bash_completion
-+
-+	bash_completion=$(pkg-config --variable=completionsdir bash-completion 2>/dev/null) ||
-+		bash_completion='/usr/share/bash-completion/completions/'
-+
- 	locations=(
- 		"$(dirname ${funcsourcetrace[1]%:*})"/git-completion.bash
- 		"$HOME/.local/share/bash-completion/completions/git"
--		"$(pkg-config --variable=completionsdir bash-completion)"/git
--		'/usr/share/bash-completion/completions/git'
-+		"$bash_completion/git"
- 		'/etc/bash_completion.d/git' # old debian
- 		)
- 	for e in $locations; do
- 		test -f $e && script="$e" && break
- 	done
- fi
-+
-+local old_complete="$functions[complete]"
-+functions[complete]=:
- GIT_SOURCING_ZSH_COMPLETION=y . "$script"
-+functions[complete]="$old_complete"
- 
- __gitcomp ()
- {
-@@ -129,7 +136,7 @@ __gitcomp_file_direct ()
- 
- _git_zsh ()
- {
--	__gitcomp "v1.0"
-+	__gitcomp "v1.1"
- }
- 
- __git_complete_command ()
-
-
-Felipe Contreras (29):
-  completion: zsh: fix __gitcomp_direct()
-  completion: zsh: fix name due to broken autoloading
-  completion: zsh: fix bash script extension
-  completion: zsh: reorganize install instructions
-  completion: zsh: fix for directories with spaces
-  completion: zsh: update slave script locations
-  completion: prompt: fix color for Zsh
-  completion: zsh: fix for command aliasing
-  completion: bash: synchronize zsh wrapper
-  completion: bash: remove zsh wrapper
-  completion: zsh: fix completion for --no-.. options
-  completion: fix conflict with bashcomp
-  completion: zsh: add missing direct_append
-  completion: zsh: fix splitting of words
-  completion: zsh: simplify compadd functions
-  completion: zsh: simplify direct compadd
-  completion: zsh: trivial cleanup
-  completion: zsh: simplify nl_append
-  completion: zsh: simplify file_direct
-  completion: zsh: shuffle functions around
-  completion: zsh: refactor command completion
-  completion: zsh: improve command tags
-  completion: zsh: add alias descriptions
-  completion: zsh: trivial simplification
-  completion: zsh: add simple version check
-  completion: bash: trivial cleanup
-  completion: bash: cleanup cygwin check
-  completion: bash: remove old compat wrappers
-  Update copyright notices
-
- contrib/completion/git-completion.bash | 113 ++------------------
- contrib/completion/git-completion.zsh  | 141 ++++++++++++++++---------
- contrib/completion/git-prompt.sh       |  11 +-
- t/t9902-completion.sh                  |   2 +-
- 4 files changed, 112 insertions(+), 155 deletions(-)
-
 -- 
-2.29.1
-
+Felipe Contreras
