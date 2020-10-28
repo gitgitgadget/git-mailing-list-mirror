@@ -2,109 +2,91 @@ Return-Path: <SRS0=wsT/=ED=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCD98C4363A
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 22:41:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1B54C4363A
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 22:41:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 74EE3218AC
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 22:41:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8B6BC208FE
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 22:41:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XhfKLZLp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ARZ+uJEZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389128AbgJ1Wl1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Oct 2020 18:41:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57652 "EHLO
+        id S2389132AbgJ1Wlk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Oct 2020 18:41:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389104AbgJ1Wl0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Oct 2020 18:41:26 -0400
-Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1313EC0613CF
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 15:41:26 -0700 (PDT)
-Received: by mail-lf1-x144.google.com with SMTP id r127so808521lff.12
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 15:41:25 -0700 (PDT)
+        with ESMTP id S2388986AbgJ1Wiq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Oct 2020 18:38:46 -0400
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA3C6C0613D1
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 15:38:45 -0700 (PDT)
+Received: by mail-wm1-x342.google.com with SMTP id 13so755614wmf.0
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 15:38:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=fYU+dfNBH+rlVl8H7koVwTnKCfmWaaJSBPn9tUjxyu8=;
-        b=XhfKLZLpfuydzZGm/qjrGXME1X+7qdkvo+aV1u8fuYe0ZBssp9BE1vnJNVVc7MrXwN
-         22OvV9U1fyT4xTqwYra9TaWVXunrEuToPrkoHB2dwmCrOLqp29JFj6BjNcPhcxlH1u8i
-         a+JdI9efMHMyqqvTbLMwAYlFSGcmxizUjxZ0oCuorPeqX7a1RqUuNNlqM+0B/wHfsdIj
-         TJSuL5R9oE7v2kh6y1tXSFr9Y9sYZ5je8VjzKEG9Wpoi7BO66iToDln/D24SSOdw9U/3
-         qJb1sOOgxWfwMnSXOXyqC/2HUfxbhm4nVyBy4P7DQDHqA1tJJQxm5OWgwMYcbjJe7qxG
-         F/Jw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=WVtHiJciHGtgOi8YDqV5woZg2lL03DD9QtKZpIc1pZA=;
+        b=ARZ+uJEZTTh7ARXgNENGGO+L5hddbUMDy2W9ioRmCPgjkks+obN2BuqOSL8yVDfPZu
+         MynPY1LZhKk1TXOw9uOWvFeoLD6xve0X7QSKGhSJdb7tKTxA4E4tv1SKZqlsBmuf9xKs
+         ZDk+r2i/gyGJ6M8DuqxKMDK9dVVSH7wpA/YB3gMBqSF/pKC5fqucKYP/AjvrkErVwc7s
+         5RAyCIRv4BhpRM7F3OWi1MDYRnhoeMcxeRhln88txXsqDLuBJPH/rL1vpBbhKkd7u085
+         IeT19seZXPTbVLsGUNngc5g76ReDwPiDwUgSQbmjN3+C8RgLwS34FIp6HNwHh3eobcoh
+         w5MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fYU+dfNBH+rlVl8H7koVwTnKCfmWaaJSBPn9tUjxyu8=;
-        b=VaNRDRQMlwp/1rB+TapVWk4aXkSkVB+EhezkrnSLJbQYlVIEKzeyMw6ckQK7j9Mvwx
-         H8WqcmQfno4KoaG9umk8R8r/r+70OJOiemRf8eRIdVDvY5SDo4GbRzA2SXctTrdlG4gw
-         Qi1qw6lgglognRx7k2YHf/GxGohutmF40sh5oLDMpAq4SKBxuZAVPS3XmEGsZrmR/Y3z
-         k0RHX+oqCoQhdrQl/ZcCCYR/NqXuDAf17+YaF+qocm5YqA7AYnKy77lSD5cajZ25AR7u
-         qIBedy329kuAlY/2J7JdL37oYe06Bf/rS+PF80zJ+T2nN90X3AwKJfjoxyjC8P2wHYTl
-         YgIg==
-X-Gm-Message-State: AOAM533pFKAoOjPr6Cn6cPClXViiDPKUjxfmWfR9L0GALE6hpuAw3xCG
-        d2lRmCwQ8sJphwE/eNbBDwa8VzbfCjE=
-X-Google-Smtp-Source: ABdhPJxHpCNTIkAr8chljrlZ9ILwL4ozJyUfuekxaLA3TaIYEYVvEkDXn4L02+8ITRmSoQCnqRrsEg==
-X-Received: by 2002:a5d:4088:: with SMTP id o8mr9043186wrp.2.1603889275021;
-        Wed, 28 Oct 2020 05:47:55 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c10sm5988393wmb.20.2020.10.28.05.47.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2020 05:47:54 -0700 (PDT)
-Message-Id: <f7b64bf3302f934c44cf9364e4f008bb9ce26def.1603889270.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.774.git.1603889270.gitgitgadget@gmail.com>
-References: <pull.774.git.1603889270.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 28 Oct 2020 12:47:47 +0000
-Subject: [PATCH 3/6] blame-options.txt: also mention 'funcname' in '-L'
- description
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=WVtHiJciHGtgOi8YDqV5woZg2lL03DD9QtKZpIc1pZA=;
+        b=f/QJgM1M2HuqAQR5wCe00rjp1PbtuB1Yg4jaNUyJuOgu845bM6fBACBj/G2Ju8Fl/I
+         h8pJkOGKuNLUzAYepxW+I4K1eQirLDnfwoXEadEqaG5xR9w9YShH1d7QrRqlEk18kdQB
+         aAPTl7tCxe8lD8E/ai45FjTPeUPTDsm4TZO2wqUAnbmWFzLNEONERNB2gWByxJhPA7sc
+         fUAM5+OMx8FpTlHCCrOlSMKZI3RDVvk8xjyDiEq/NvdVNiD0VfJd8iCMZhnaZFSx16fo
+         a8Ru15y3P2gwv9+pwJkUokqYLIsmjFJi3Pt1HiIcs9QBRZSQRDLNPcvSIlE29bn4F7GG
+         62dg==
+X-Gm-Message-State: AOAM533awwR03XEXzBsL9Mf0UoKCSGPCrH+Mwoy/u7N+Xt4uwW53fEe9
+        /PTTmNgBQg+LNrTDQeCcwPoiZbnqH/wXyyTBEn2N1fhLl8U=
+X-Google-Smtp-Source: ABdhPJwnB4l5t5chZkDnvTrTivNARZ2NepX9k1mGKlWgbFXVho246kdZAFwSHur6btqL3qP5RaG70xNrpvVRlKH5NKE=
+X-Received: by 2002:a7b:c2fa:: with SMTP id e26mr5207632wmk.37.1603849718043;
+ Tue, 27 Oct 2020 18:48:38 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Thomas Rast <tr@thomasrast.ch>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+References: <20201025031343.346913-1-felipe.contreras@gmail.com> <xmqqo8knbf4t.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqo8knbf4t.fsf@gitster.c.googlers.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Tue, 27 Oct 2020 19:48:27 -0600
+Message-ID: <CAMP44s3HM5gqZhK8+266jgW1hO1SpoE4+1K-SmCErb7G9YhcBQ@mail.gmail.com>
+Subject: Re: [PATCH v2 00/29] completion: zsh: latest patches
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+On Tue, Oct 27, 2020 at 2:14 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+> > I've been carrying around these patches for quite some time, many have already
+> > been sent, others I refactored to make them more clear.
+> >
+> > But what is clear is that they are needed. I see a lot of people in different
+> > forums (e.g. Stack Overflow, Oh-My-Zsh, etc.) getting bit by many of these
+> > issues.
+>
+> Is this "v2" an update to the 14-patch series you have a late reply to?
+>
+> There is a tiny zsh completion patch in flight, but hopefully it can
+> be rebased on this series and graduate together, provided if zsh
+> users on the list find the topic as a whole agreeable.
 
-Make it clearer that a function can be blamed by feeding `git blame`
-'-L :<funcname>' by mentioning it at the beginnning of the description
-of the '-L' option.
+Yes. That v1 should be dropped, this v2 supersedes that, but I'll send
+v3 in a moment.
 
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
- Documentation/blame-options.txt | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
-index 48bf0eeec5..8b4a90e349 100644
---- a/Documentation/blame-options.txt
-+++ b/Documentation/blame-options.txt
-@@ -11,8 +11,9 @@
- 
- -L <start>,<end>::
- -L :<funcname>::
--	Annotate only the given line range. May be specified multiple times.
--	Overlapping ranges are allowed.
-+	Annotate only the line range given by '<start>,<end>'
-+	(or by the function name regex '<funcname>').
-+	May be specified multiple times. Overlapping ranges are allowed.
- +
- '<start>' and '<end>' are optional. `-L <start>` or `-L <start>,` spans from
- '<start>' to end of file. `-L ,<end>` spans from start of file to '<end>'.
 -- 
-gitgitgadget
-
+Felipe Contreras
