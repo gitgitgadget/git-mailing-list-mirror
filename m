@@ -2,83 +2,97 @@ Return-Path: <SRS0=wsT/=ED=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.2 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AD5FC388F7
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 21:44:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63887C55179
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 21:48:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 371CC246CD
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 21:44:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1EBB224724
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 21:48:04 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lRxH/AFv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726621AbgJ1Vo5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Oct 2020 17:44:57 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:35080 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726243AbgJ1Vo4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Oct 2020 17:44:56 -0400
-Received: by mail-wr1-f65.google.com with SMTP id n15so660059wrq.2
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 14:44:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6GmMgxDqzxhiyc7rmiux9RumsArwmCU7shrr5OXnp9A=;
-        b=ezYyUFpvO4MT0ZXOA9PahZAjHzUer6Qz3TgOO19pEqOYH5nhg9zAbLaNR0dzeIeuhZ
-         vTBVWMqtb2PAtBKtjvO7gwAN+OBUedLWryp+Z1wMkoB9eZop8+790BVDeh6RfDzKVwAi
-         mPByPGymR3JVQbFoOvnHgCkGsyGXJ7t5DhOsGCrta4NERiHPKd0h60Ksn3aci3c9PBbf
-         RTGet/A4Cc8M6go0gbC1iJ+grS5BrmnQN2/qOjMrn5h2MApE9vqitH/J9kxJaiYAB5nX
-         Lo4L9VJCumE6JGXX2YlM026WIJuT7g89+UPqakEFUpne1UIe7og6qUns1WLK1cZEH+cu
-         3lJw==
-X-Gm-Message-State: AOAM5301Zbx+2ZZavwR2e6OpLFit4UoXMNjrslAFOKDdY+1HMAzKhG8v
-        8f6RiURw3V+ioKQ5bHlciJN2U7Ft/ONYiy/zIDca6IzH
-X-Google-Smtp-Source: ABdhPJw6UMu0vp+Zf+RNCq/XIcOJeBDIR+amVa48Vp/kFaf65DzhEM9LH4PQDs66iZgfSYxmcC8U7CFv37TdFfF1QoQ=
-X-Received: by 2002:a17:906:f24b:: with SMTP id gy11mr123022ejb.371.1603906400347;
- Wed, 28 Oct 2020 10:33:20 -0700 (PDT)
+        id S1727037AbgJ1Vrs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Oct 2020 17:47:48 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61223 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727529AbgJ1Vrr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Oct 2020 17:47:47 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 78A3D8AD23;
+        Wed, 28 Oct 2020 16:12:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=AEEylZj6YcJrEaxBo39Wpluii1E=; b=lRxH/A
+        FvjZP2rTsqVBhwmk+pfWbY3u3BMnoZ4KTH5A/mjMXzsLqMtNyb4o95BfbA1ZMvy5
+        D1tg02iBlaNjQaClQqNP4/H4d7TB7dyxaFgR8wqvHWK8nRYTWm30GZi6QUtEa/W9
+        bESlFqx6OnCasCrQ22rtGrRhYSOoxXIPFey54=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=MLzHYgkVXCF6QRV3p/7KitrBKWedUh2a
+        EW8SaMDmaDkU639/VGtZmKzF7Oc/+1PxW+TNTNfT6wsVPHfkwQEmkQG/dvNtZS86
+        q4pN+o2F1NW9XUG3V2kcVTGu189rfBCteOz9UH/AviWNnJiilELTkds7wcMLd/wm
+        xC2srKnhS0o=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 706128AD21;
+        Wed, 28 Oct 2020 16:12:02 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CF5538AD20;
+        Wed, 28 Oct 2020 16:12:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/4] t5411: start using the default branch name "main"
+References: <pull.760.git.1603839487.gitgitgadget@gmail.com>
+        <f997166db4c29d971a2343f70c9d9a0505a8cc4b.1603839487.git.gitgitgadget@gmail.com>
+        <xmqqa6w69l3j.fsf@gitster.c.googlers.com>
+Date:   Wed, 28 Oct 2020 13:12:00 -0700
+In-Reply-To: <xmqqa6w69l3j.fsf@gitster.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 28 Oct 2020 13:00:48 -0700")
+Message-ID: <xmqq5z6u9kkv.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.774.git.1603889270.gitgitgadget@gmail.com> <27ef94e9cc4189c3d74e984437dcce24e1f29678.1603889270.git.gitgitgadget@gmail.com>
-In-Reply-To: <27ef94e9cc4189c3d74e984437dcce24e1f29678.1603889270.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 28 Oct 2020 13:33:09 -0400
-Message-ID: <CAPig+cRFaT9ww3K368b58m-xgW843jhZWjXDspVrfdyYY-_wRA@mail.gmail.com>
-Subject: Re: [PATCH 5/6] line-log: mention both modes in 'blame' and 'log'
- short help
-To:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: D740D30A-1959-11EB-935B-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 28, 2020 at 8:48 AM Philippe Blain via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> 'git blame -h' and 'git log -h' both show '-L <n,m>' and describe this
-> option as "Process only line range n,m, counting from 1". No hint is
-> given that a function name regex can also be used.
+Junio C Hamano <gitster@pobox.com> writes:
+
+>> +test_have_prereq PREPARE_FOR_MAIN_BRANCH || {
+>> +	test_skip="In transit for the default branch name 'main'"
+>> +	test_done
+>> +}
+>> +
 >
-> Use <range> instead, and expand the description of the option to mention
-> both modes. Remove "counting from 1" as it's uneeded; it's uncommon to
-> refer to the first line of a file as "line 0".
->
-> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
-> ---
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> @@ -889,7 +889,8 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
-> -               OPT_STRING_LIST('L', NULL, &range_list, N_("n,m"), N_("Process only line range n,m, counting from 1")),
-> +               OPT_STRING_LIST('L', NULL, &range_list, N_("range"),
-> +                               N_("Process only the given line range (<range>=<start>,<end>) or function (<range>=:<funcname>)")),
+> IOW, I do not see the point in _conditionally_ skipping the rest of
+> the test in this step.  I'd however understand it if we always skip
+> the rest in 1/4 and then enable the rest only when testing with
+> 'main' as the default in 4/4, when all the necessary pieces in
+> t/t5411 have been converted.
 
-The "<range>=" bit is redundant and confusing (and ugly). Considering
-that the description already says "Process only the given line
-_range_", it should be fine to drop the "<range>=" lead-in. Perhaps:
+Another way to protect the test well would be to keep the "unless
+testing with master, skip all" prerequisite check you wrote above,
+but add
 
-    Process only the given line range <start>,<end> or :<funcname>"
+    GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
 
-This might feel too succinct, but that's often true of short -h help.
-Such succinctness is generally acceptable as long as more detailed
-documentation can be discovered easily (such as in the 'man' page).
+immediately before that.  We can flip it to use 'master' at the
+final step in the series.
 
-Same comment regarding the rest of the changes in this patch.
+That way, we will not be affected by the GIT_TEST_* environment
+variable that is passed to these scripts by the tester.  I think
+I'd prefer to do it that way, instead of unconditionally skipping,
+as the result would be more self explanatory.
+
+Thanks.
