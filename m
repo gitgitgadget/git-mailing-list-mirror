@@ -8,64 +8,65 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A74EDC4363A
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:28:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 961D1C55179
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:29:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4E92420796
-	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:28:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 35E85207BC
+	for <git@archiver.kernel.org>; Wed, 28 Oct 2020 23:29:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IOUWnSBh"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nvvVMuns"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390466AbgJ1X26 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Oct 2020 19:28:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37052 "EHLO
+        id S2390472AbgJ1X27 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Oct 2020 19:28:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726133AbgJ1X13 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Oct 2020 19:27:29 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0A39C0613CF
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 16:27:29 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id n15so729327otl.8
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 16:27:29 -0700 (PDT)
+        with ESMTP id S2390455AbgJ1X1B (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Oct 2020 19:27:01 -0400
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52719C0613D1
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 16:27:00 -0700 (PDT)
+Received: by mail-oi1-x244.google.com with SMTP id k27so1346991oij.11
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 16:27:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=T4gV3y6febuEWDZFQZRkrTTArWNaQf9nYjFaOt7OV2w=;
-        b=IOUWnSBhxznANct6CRUli1XBSwKxXJKnBudkiqGULeh3wzKRfehDPurbbs+5ega6ag
-         KmRvLsBsNXYDAzEuUlV76OcFHahQVFk1iaxJRKxg/rI7/5ZZD5vj8cPm8HYaUY3Qlsgy
-         dBbKyQn49f0uh1gYvFH4ezZf2tGwJIM7s/kXbu6FzUaE0YuhwIocQvv+B4OkmOJbQTDg
-         xl1k1AG8yRsfqdpCmFnntXqqCtaGr5oD4PGj+qIeYJ86oL+F/gq4CbKkTq3+Q/VYLpqW
-         0eE/PiXFN43zXj7fg1xhkG1VstrlnDya9W+zFjc9Ps5DuGmksG7Ds9sq8LJUA4THvPuQ
-         wYKQ==
+        bh=NTB0EwlSLfn8A9nFm3XXpQgab7oYL7nI26zwYjOrHZM=;
+        b=nvvVMunsdAlfmnDBDGVrpLNSy9CFW5JoUUVQZnAS+q086R71NIPQ4Mzdhjuqo+G/Ay
+         ljtLszvP0vYD/QxpB3lCNlp95zk3litNEXb6RUUBl5aKRXHvtwIc4cBeikJaKTqJW9hk
+         zEOc2N+fJRhgrJ1razG2Bt5i+fnuj4SSJzsYb9BgEdZrzDb4mbfdv6XxTMb1o60/RmF8
+         9Ss8e9+FX9z7rcVn+o7RT6C/jF4lbMmBJ/bvZkv+t/t5A3GkTQ/NucTCK7X0vkofoKGi
+         Wq97M012GJXBi48mmgigsNS8PG62zoStL9FnXK/3yIJzNwdvqqwEm693nsAs9OM4v0HJ
+         lL5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=T4gV3y6febuEWDZFQZRkrTTArWNaQf9nYjFaOt7OV2w=;
-        b=TjAjmyvGpEWHFo1bl59ZzEs7OhraoFcCxjoG+4NSDUEqywquu1VStltSViE9J6le43
-         Zi+qayzvqbzoZVEo2boU56p5XjgTt3vX3eT7GvpbVNVNji6uLHNL0Zk4tRuLIDPvWA3g
-         Za7YbC4PU2xa/ZRfxA8bv2Kot2pvv+zugS+VJkca+czY1UqIEZVU3RXUmXUHVQDi925l
-         j/zTjY/nUQVaHYnF7m/54v/Yl6EdpdRa7wpfSdc0yRLY+dRvLjdBBP0AR+4fBE1bSA/z
-         Jp/iR4/aOvKK8qd8ed/ZGplYNkWj44CGgWmHi1opSohkBHL1d0yTGT3KIkmlDIwZPwXF
-         MYFg==
-X-Gm-Message-State: AOAM533DArrL7T+Vd0melbB1bEjHRmRqK/dtULpOEIUgB2Y+ZOfOlLr6
-        1RExzjiQLbwjBqOuRQDclGK0tTfv+tSQZ2z3
-X-Google-Smtp-Source: ABdhPJwUaU5kWeHSczCRBH1AojeXhXgUPL6PaCJ+X7QKBEZHfTL5XXOXbZ0ICCPY8GJ4A1ZqAeUcxQ==
-X-Received: by 2002:a05:6830:1c3c:: with SMTP id f28mr3793021ote.188.1603850852515;
-        Tue, 27 Oct 2020 19:07:32 -0700 (PDT)
+        bh=NTB0EwlSLfn8A9nFm3XXpQgab7oYL7nI26zwYjOrHZM=;
+        b=N1tN5y59o+iIBcNoo2K7YVImZEIZcJXJcc1FoiEIrrJd44zfVmnCArz4NYfMIX71xL
+         hAngejLOZms17mRIeG70/BLwueXtK5PEk9qbzWTeANpM3tzjeA3ZEr/7rm9PqC4PLDUB
+         lWI3NhKKaDqFu2idS3Lne78o5gbpeFXEBw6CupwX7XrwAJtCpYsAIfW81XxBRQXQCTyK
+         wd4SfPW5EDhSkQa1WDsRyIcjQztZSO0i5xEkhWNVV7AEO2qtHIzeXNHYzNsPzkJ0EkGg
+         3rtN4MJ0u5I+nftr1+TEVJK9uPZJYBTgYurmy+9gi0UnbOFy58BF2P586ZD0TP3W3Lho
+         Ql8g==
+X-Gm-Message-State: AOAM533BV+6Y1xdqirO84OzETVk4Vmop2x99Lt5BMtERUgM0XepDRU/Y
+        7167WFiGjOsJUU/AltfU/6H5E1LEZ3YFPrYS
+X-Google-Smtp-Source: ABdhPJwe1xx/4swczZucZrUDWp6IQDhKoD5luXbRfDI19wunVUw4/zpVKSjl3vP8SSvWRpxBaE6bgA==
+X-Received: by 2002:aca:1a07:: with SMTP id a7mr3415164oia.169.1603850854102;
+        Tue, 27 Oct 2020 19:07:34 -0700 (PDT)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id p21sm1738283oto.21.2020.10.27.19.07.31
+        by smtp.gmail.com with ESMTPSA id z126sm2347847oiz.41.2020.10.27.19.07.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Oct 2020 19:07:32 -0700 (PDT)
+        Tue, 27 Oct 2020 19:07:33 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 11/29] completion: zsh: fix completion for --no-.. options
-Date:   Tue, 27 Oct 2020 20:06:54 -0600
-Message-Id: <20201028020712.442623-12-felipe.contreras@gmail.com>
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Mark Lodato <lodato@google.com>
+Subject: [PATCH v3 12/29] completion: fix conflict with bashcomp
+Date:   Tue, 27 Oct 2020 20:06:55 -0600
+Message-Id: <20201028020712.442623-13-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.29.1
 In-Reply-To: <20201028020712.442623-1-felipe.contreras@gmail.com>
 References: <20201028020712.442623-1-felipe.contreras@gmail.com>
@@ -75,54 +76,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This was introduced in upstream's bash script, but never in zsh's:
+We don't want to override the 'complete()' function in zsh, which can be
+used by bashcomp.
 
-  b221b5ab9b (completion: collapse extra --no-.. options)
-
-It has been failing since v2.19.
-
+Reported-by: Mark Lodato <lodato@google.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.zsh | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ contrib/completion/git-completion.zsh | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
 diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index f524c6042a..e567062505 100644
+index e567062505..b894cb52db 100644
 --- a/contrib/completion/git-completion.zsh
 +++ b/contrib/completion/git-completion.zsh
-@@ -59,10 +59,32 @@ __gitcomp ()
- 	case "$cur_" in
- 	--*=)
- 		;;
-+	--no-*)
-+		local c IFS=$' \t\n'
-+		local -a array
-+		for c in ${=1}; do
-+			if [[ $c == "--" ]]; then
-+				continue
-+			fi
-+			c="$c${4-}"
-+			case $c in
-+			--*=|*.) ;;
-+			*) c="$c " ;;
-+			esac
-+			array+=("$c")
-+		done
-+		compset -P '*[=:]'
-+		compadd -Q -S '' -p "${2-}" -a -- array && _ret=0
-+		;;
- 	*)
- 		local c IFS=$' \t\n'
- 		local -a array
- 		for c in ${=1}; do
-+			if [[ $c == "--" ]]; then
-+				c="--no-...${4-}"
-+				array+=("$c ")
-+				break
-+			fi
- 			c="$c${4-}"
- 			case $c in
- 			--*=*|*.) ;;
+@@ -21,12 +21,6 @@
+ #  zstyle ':completion:*:*:git:*' script ~/.git-completion.bash
+ #
+ 
+-complete ()
+-{
+-	# do nothing
+-	return 0
+-}
+-
+ zstyle -T ':completion:*:*:git:*' tag-order && \
+ 	zstyle ':completion:*:*:git:*' tag-order 'common-commands'
+ 
+@@ -48,7 +42,11 @@ if [ -z "$script" ]; then
+ 		test -f $e && script="$e" && break
+ 	done
+ fi
++
++local old_complete="$functions[complete]"
++functions[complete]=:
+ GIT_SOURCING_ZSH_COMPLETION=y . "$script"
++functions[complete]="$old_complete"
+ 
+ __gitcomp ()
+ {
 -- 
 2.29.1
 
