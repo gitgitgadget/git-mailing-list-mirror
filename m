@@ -2,97 +2,117 @@ Return-Path: <SRS0=U/aV=EE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19275C55178
-	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 20:43:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A25DC2D0A3
+	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 21:32:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A680D2076E
-	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 20:42:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AE8122087E
+	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 21:32:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Byb7dB7L"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="b6RMx4XD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726635AbgJ2Um4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Oct 2020 16:42:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38880 "EHLO
+        id S1726730AbgJ2Vcn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Oct 2020 17:32:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725820AbgJ2Ul4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Oct 2020 16:41:56 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 842DFC0613CF
-        for <git@vger.kernel.org>; Thu, 29 Oct 2020 13:41:54 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id oq3so3787482ejb.7
-        for <git@vger.kernel.org>; Thu, 29 Oct 2020 13:41:54 -0700 (PDT)
+        with ESMTP id S1726309AbgJ2Vcm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Oct 2020 17:32:42 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEA8AC0613CF
+        for <git@vger.kernel.org>; Thu, 29 Oct 2020 14:32:42 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id j10so4043609ybl.19
+        for <git@vger.kernel.org>; Thu, 29 Oct 2020 14:32:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=x0boLBFpfpLLt9qbMjgYw4CMs4MMdxYZFmrPh8SnE6U=;
-        b=Byb7dB7LvEWpQmFPqcDkiWD0VoJ1N5QkCjIPZwcUqDGJpx9xqQjfy7zsAwMCbZL9yI
-         +NLrSz53i9Ai7X5uELWjb6evebiNTJLBLleTTjt76rZmwOlEJVkxEhnhd7K9T5ceUsI8
-         kKWDjm9il7ugmXpo+Y0YCgWiRudOnfXOil2xH/T+wGrgvkfXdGGJIpMDqzTH8qisrFtc
-         4bFF/0vDdW0W2M7LlVI1uNPsvFLZRoPmcfWINNv7xcQ7yWcxhit5THIKX6IFhp8NE1r5
-         RwQxzDETuhBLQTrAwx2v6ogNcrnhu5iewynuszcOu/61neX0zYyXg3FXEq+Kn3TFNTl7
-         5muA==
+        d=google.com; s=20161025;
+        h=sender:date:message-id:mime-version:subject:from:to;
+        bh=UQ+e3X7zc1/amHIYZgRBuk3LqB9tzEMIRruy9vAB9Zw=;
+        b=b6RMx4XD8xt7+JPkuhJQChEywj0Ictcx5Rq3rftu0RzcvIF1QLFa8X4FsBLfLstEdA
+         Y5lwMiZPX9L9N8ldDhfDkrJwDcZPtmp/SxSRs9kvni/65PpC1uep7lc27vyCAvNH2m3w
+         GFSnOG+UHXeFAoLx5Rbs7WBMLkDQGJ5LZbMN+VweUJRdfxwFibJaOFVhCBcdztYX3fY3
+         ZaE6TGoBR4VEWsUJWC1xqH15N7kUuDme0pggZv7y+z041pz65DANPU7RKUisobQHMIy7
+         1fEyO/WDdjtnOGrPnZwxbv/y4Wl5d4EyO2lYZUzAq5J3k/94T83v0jXv56ZNTlTkSEXh
+         kK7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=x0boLBFpfpLLt9qbMjgYw4CMs4MMdxYZFmrPh8SnE6U=;
-        b=OAW+qgKyAdOVcGxo2aYTHhoQsudxYH480l6ij5MH3Fp690dB5q4pqQXNo4T5ShUyZ8
-         UoM2J3q4CxeQCfzluPC0OAOIzMBqh06ApjffyHSAPw+hZeG5y8UqlEoZS1y+ljLX1Yl1
-         esfIXRk+9T/MhrOIhma3CzrGYp10n/izFb6Y5hRv/EHVFgDh+OZwfPk3ITTyxaipuJBC
-         lOpXpyE1WQM7Z2JZqoHx8+9MjDgpRQeOCijEeLWsGdc6nmQlqpsElEvtXx9CwfzHzvG2
-         g4jAaAS68FJRQJcIYnURWXT7Dx9r6El4n9S9sxKlndTce5ziIax5kt+jtSK1VUG+EKy5
-         PFRQ==
-X-Gm-Message-State: AOAM53072WuZKXWOO18itrCAcwX7ktbpfCLe/qUzl8CZjLzP4ob0Yznl
-        0CnJjE7EUQLF0dtQNadQhyU=
-X-Google-Smtp-Source: ABdhPJx3bkizpNUbmFvn/SX32s3FW+CbxYlTorracVmXvaq5PMmzbhmpPW1beyYColdM3WfdRc6Mow==
-X-Received: by 2002:a17:906:804:: with SMTP id e4mr4648565ejd.420.1604004113262;
-        Thu, 29 Oct 2020 13:41:53 -0700 (PDT)
-Received: from partizan.lan ([46.98.123.221])
-        by smtp.gmail.com with ESMTPSA id nu20sm2006807ejb.109.2020.10.29.13.41.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Oct 2020 13:41:52 -0700 (PDT)
-From:   Serg Tereshchenko <serg.partizan@gmail.com>
-To:     marcnarc@xiplink.com
-Cc:     git@vger.kernel.org, Serg Tereshchenko <serg.partizan@gmail.com>
-Subject: RE: git-gui: Why are the main panels no longer white?
-Date:   Thu, 29 Oct 2020 22:41:49 +0200
-Message-Id: <20201029204149.20232-1-serg.partizan@gmail.com>
-X-Mailer: git-send-email 2.29.1
-In-Reply-To: <619dac64-106c-d6df-b121-ce6589b4af3a@xiplink.com>
-References: <619dac64-106c-d6df-b121-ce6589b4af3a@xiplink.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
+         :to;
+        bh=UQ+e3X7zc1/amHIYZgRBuk3LqB9tzEMIRruy9vAB9Zw=;
+        b=hKHARztnOus4jRCcxDAnx+EZU9c6+HVtoKM9z9Ff1OCJsImuVsysqCM5EPvnRAzDKS
+         zKw44wpHpelU1TDlNUvomdEHGnSkeKTKU0eBnEGR9uuCW1AhiZTRi0eeTI1LwHiyPuNe
+         27PZtuM2Px9Q2apEACWvpiwvEowC3UPxY4yXKNpXXVrwdqPpBRdTdvPjeTcubIsgPDuN
+         D8XNnOmYlYTz3v8/ByLm7mL1ICXS/K48qUhuO9m2nnGiULdyE5VUeUfCJrrL9yb43snv
+         Fw4IbAAmMhMCq6zOjq/19kBG9bRqkdPRtcuyd+ZYl8aCobUtlrXzPdI4Kz4pU+qFhH0K
+         c0gQ==
+X-Gm-Message-State: AOAM532aEJT2rWBcx4xNsXFdS1NfFT//5h4W2X/SJ9bpPXATpcq2be5u
+        cTBdDHO2XWbbHaJlmDHQ8+G4ImZPryrUggZjAdU8GT63Lgm6BjnLrjdsAXlLV8ThJFkHi3by57X
+        LfEbd6DOwIqjXRgcxVEJJHom23VRFSnBUFbH1qRNh317wTG7ulZze4bCvtw7IwtE=
+X-Google-Smtp-Source: ABdhPJyfiUvJhhhKmoKlkJLlRAPT9J8V4aZq85xfn0/oz3i6pnpuQStLbsr4Cpoa1wy8v5PLfWdNykCJcEZX0Q==
+Sender: "steadmon via sendgmr" <steadmon@lunarfall.svl.corp.google.com>
+X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2ce:200:1ea0:b8ff:fe74:b4c1])
+ (user=steadmon job=sendgmr) by 2002:a25:fc0c:: with SMTP id
+ v12mr7938561ybd.351.1604007161924; Thu, 29 Oct 2020 14:32:41 -0700 (PDT)
+Date:   Thu, 29 Oct 2020 14:32:30 -0700
+Message-Id: <cover.1604006121.git.steadmon@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.29.1.341.ge80a0c044ae-goog
+Subject: [PATCH 00/10] Advertise trace2 SID in protocol capabilities
+From:   Josh Steadmon <steadmon@google.com>
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Oh, this git-send-email is terrible. Is there good email client supporting
-plaintext messages which i can use for replying here?
+In order to more easily debug remote operations, it is useful to be able
+to inspect both client-side and server-side traces. This series allows
+clients to record the server's trace2 session ID, and vice versa, by
+advertising the SID in a new "trace2-sid" protocol capability.
 
-I tried to send message, but only footer is delivered. Second try:
+Two questions in particular for reviewers:
 
-> Is there some way I can edit/view the theme definitions?
+1) Is trace2/tr2_sid.h intended to be visible to the rest of the code,
+  or is the trace2/ directory supposed to be opaque implementation
+  detail? If the latter, would it be acceptable to move tr2_sid_get()
+  into trace2.h?
 
-Themes is inside /usr/lib/tk8.6/ttk/, *Theme.tcl
+2) upload-pack generally takes configuration via flags rather than
+  gitconfig. From offline discussions, it sounds like this is an
+  intentional choice to limit potential vulnerability from malicious
+  configs in local repositories accessed via the file:// URL scheme. Is
+  it reasonable to load the trace2.announceSID option from config files
+  in upload-pack, or should this be changed to a flag?
 
-> Unfortunately none of those gives me white panels, although I do see 
-> other visual aspects change under different themes (also, `xrdb -query` 
-> shows that the *Text.Background setting has applied).
 
-This is strange.
 
-I just checked `default` theme, and in my case panels are white by default.
+Josh Steadmon (10):
+  docs: new capability to advertise trace2 SIDs
+  docs: new trace2.advertiseSID option
+  upload-pack: advertise trace2 SID in v0 capabilities
+  receive-pack: advertise trace2 SID in v0 capabilities
+  serve: advertise trace2 SID in v2 capabilities
+  transport: log received server trace2 SID
+  fetch-pack: advertise trace2 SID in capabilities
+  upload-pack, serve: log received client trace2 SID
+  send-pack: advertise trace2 SID in capabilities
+  receive-pack: log received client trace2 SID
 
-I will check it on kubuntu later.
+ Documentation/config/trace2.txt               |  4 +
+ .../technical/protocol-capabilities.txt       | 13 ++-
+ Documentation/technical/protocol-v2.txt       |  9 +++
+ builtin/receive-pack.c                        | 16 ++++
+ fetch-pack.c                                  | 11 +++
+ send-pack.c                                   |  9 +++
+ serve.c                                       | 19 +++++
+ t/t5705-trace2-sid-in-capabilities.sh         | 79 +++++++++++++++++++
+ transport.c                                   | 10 +++
+ upload-pack.c                                 | 23 +++++-
+ 10 files changed, 190 insertions(+), 3 deletions(-)
+ create mode 100755 t/t5705-trace2-sid-in-capabilities.sh
 
-Can you show your `xrdb -query`?
+-- 
+2.29.1.341.ge80a0c044ae-goog
 
---
-Regards,
-Serg Tereshchenko
