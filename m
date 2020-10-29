@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2A56C4363A
-	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:16:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BD30C388F7
+	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:16:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1496420738
+	by mail.kernel.org (Postfix) with ESMTP id BAA0120747
 	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:16:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="llxUlodH"
+	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="oUiw9uYo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391067AbgJ2CQm (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S2391069AbgJ2CQm (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 28 Oct 2020 22:16:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35650 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727871AbgJ2CQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Oct 2020 22:16:29 -0400
-Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81B9EC0613CF
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 19:16:29 -0700 (PDT)
-Received: by mail-qt1-x836.google.com with SMTP id f6so46682qtc.7
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 19:16:29 -0700 (PDT)
+        with ESMTP id S2387999AbgJ2CQZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Oct 2020 22:16:25 -0400
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2628AC0613CF
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 19:16:25 -0700 (PDT)
+Received: by mail-qv1-xf30.google.com with SMTP id w5so747082qvn.12
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 19:16:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ZJH0dcQnUkMYeBvsD6V1EHfXQ/Y49yH3IXl4nhN33iw=;
-        b=llxUlodHAwFFYa7G38NqZttXbYqHzK15+AqKvPuQerjqgTDLrqUf4mjDi83xmLPxfF
-         ymnlRBYG8qkdidW3LQ3FhN03wsEUopAFxfr2k6UoreG0zkZv9mi8YsDJ3TLt68a1GmOb
-         E1BfqjpPcHe4Xo6pE+Ykel1MKZoiZOjwSWCU7CMTqoJ5tV/8cU/z2ZyNdZYqsvs1GGqH
-         4gq5r0ahcUzjAp5cNcqRS8Ht5utEW46pcGo5tXJeCX4bYX07OKXzYhrjgwoa+n1/U2vH
-         XFTrBP3/OjppRlx1Jw6mPphGva/spoGvQxZ28gfjcgkgxc3mVOPhttd+CcAnED1chItR
-         8vuQ==
+        bh=mcECZuewGQIzLYTOXVySAK04qScKz5c+cmRSWyERmok=;
+        b=oUiw9uYoGUk8zS30Z5QA98UoujXbvRa37XSEsSfkRyThdz6vEdDi3jN6MlK+BJCL0g
+         I2FDtR00n1Hpwnaq1D92z80eXoRxRobcIfGOEVNhntxmGZYn2cI1K536yTAtzTdqPGDX
+         rcKeq5n5pfyiL+tSlO5POUwmbEYjEJYPjhAbiI+Ef8IGXJ5D69OsQZKmqEf3TqiRjRv0
+         LD0RcxYwmtitDkdT3/SOTHbAym5yfydqY/2hpFEI83hWgfv7PGFIPtBPKLh6EcFagbIb
+         tk2mhHngK1m0/qUNRvlyii5nnq+pXn5q9GUAeYjlk+crenC+27cIUAicN/XBwSZ9nsgb
+         10JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ZJH0dcQnUkMYeBvsD6V1EHfXQ/Y49yH3IXl4nhN33iw=;
-        b=sxK2nZp4X260spdgkor1RyfylkB5qfn0U55S/1fCeiOoaFr7l35M1hza1zpY9IYI44
-         5/kV1K3rof8aAWsERufPQ3fVR2Ax0LaKhyjjoiPLBkSmADZVW/cw9Xeda8fuyw7WK0W/
-         5OyZQCfIJyb0y5+kHHlaa2xgXZa/WyCV1s8KH0ibkzvp8grmh2cnuUE3C3TyI1Vw9LtX
-         D2NIBsQkaAAMlJK4PWgZrDRWzuAqifHTWz3FLCM0ARzs2yv/zr5jP+rmSkhZYrsZCfi/
-         jG6SSM5s0uysiJ8VRlY3drJRaJp6bVXafcvBG+x7yYGzKQjAn8KkaKJB1t6aUQb+4vls
-         P+rA==
-X-Gm-Message-State: AOAM530v8RoaTJcdfkxWwjN8Oc+1CpmsHUD8Oo9Z+Chi5oU3uhaklC9R
-        LuePE5LekHRPxM9Rf/diVdqZ1ixAxywfFQ==
-X-Google-Smtp-Source: ABdhPJytGvAOxQOzS+ynE0lZNPMUglGepgEQa2j4kMaziiP0pnEiGyjUUhkp6FWGu2H3JAoWuWQrNQ==
-X-Received: by 2002:ac8:7517:: with SMTP id u23mr1766468qtq.261.1603937788148;
-        Wed, 28 Oct 2020 19:16:28 -0700 (PDT)
+        bh=mcECZuewGQIzLYTOXVySAK04qScKz5c+cmRSWyERmok=;
+        b=G2Q6Q7XkylMdzI/na3e/nRP/+ET+qETSsO6feKqGP3j3l0o8zQ++AS5MvuYj/f3fjA
+         45ESV7iJ0WknVVO/pUjGm01Sey1zsplUx6p9jKhPMz+R/21zTVxsjVoHwSFMA+GGFIZB
+         Nmqt/AJCluWqkRFJbTU9TgVQTD7CzEgitsRSSNtyMEZX/a3yEGiavfBCw49VQf+PENAn
+         PCWlYeR8my0gZ6I+QYZXagsT9EWtcvVKhZ+iLa/x4+Dx9N8G6hN3NWYM9DxmfSdPDq9M
+         p3L6BbIbZ4VzJCcJILt9YPtBtt0/xalQSssWemp6Z2gzhKEAyBlYrhtDHVAy0gk/Ljbq
+         +fEA==
+X-Gm-Message-State: AOAM533K5LcUzuc+OAuigrcXrk7L6ymoDidqdX4ZgzDzrQrT7jD1oojS
+        KMz8JooXmZ4Czwbi46/r/Q2OZIKwqHmz0A==
+X-Google-Smtp-Source: ABdhPJxQf/9A4Qn/PsUDxUpGZLHQOyZGcNeIoAU2n0nwEdrNehunx/AXNcSVOknQmXCh7rfybxb9sg==
+X-Received: by 2002:ad4:4841:: with SMTP id t1mr1043677qvy.34.1603937783888;
+        Wed, 28 Oct 2020 19:16:23 -0700 (PDT)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id n201sm608371qka.32.2020.10.28.19.16.24
+        by smtp.gmail.com with ESMTPSA id n201sm608371qka.32.2020.10.28.19.16.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2020 19:16:27 -0700 (PDT)
+        Wed, 28 Oct 2020 19:16:23 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, git@jeffhostetler.com, chriscool@tuxfamily.org,
         peff@peff.net, newren@gmail.com, jrnieder@gmail.com,
         martin.agren@gmail.com
-Subject: [PATCH v3 17/19] parallel-checkout: add tests related to clone collisions
-Date:   Wed, 28 Oct 2020 23:14:54 -0300
-Message-Id: <3d140dcacbd7fd49ea2dfb7bc0839e57b11427de.1603937110.git.matheus.bernardino@usp.br>
+Subject: [PATCH v3 16/19] parallel-checkout: add tests for basic operations
+Date:   Wed, 28 Oct 2020 23:14:53 -0300
+Message-Id: <05299a3cc0ae8ebb55d17ba35adb953aeb003dca.1603937110.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <cover.1603937110.git.matheus.bernardino@usp.br>
 References: <cover.1603937110.git.matheus.bernardino@usp.br>
@@ -74,142 +74,245 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add tests to confirm that path collisions are properly reported during a
-clone operation using parallel-checkout.
+Add tests to populate the working tree during clone and checkout using
+the sequential and parallel modes, to confirm that they produce
+identical results. Also test basic checkout mechanics, such as checking
+for symlinks in the leading directories and the abidance to --force.
+
+Note: some helper functions are added to a common lib file which is only
+included by t2080 for now. But it will also be used by other
+parallel-checkout tests in the following patches.
 
 Original-patch-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- t/lib-parallel-checkout.sh              |  4 +-
- t/t2081-parallel-checkout-collisions.sh | 98 +++++++++++++++++++++++++
- 2 files changed, 100 insertions(+), 2 deletions(-)
- create mode 100755 t/t2081-parallel-checkout-collisions.sh
+ t/lib-parallel-checkout.sh          |  40 +++++++
+ t/t2080-parallel-checkout-basics.sh | 170 ++++++++++++++++++++++++++++
+ 2 files changed, 210 insertions(+)
+ create mode 100644 t/lib-parallel-checkout.sh
+ create mode 100755 t/t2080-parallel-checkout-basics.sh
 
 diff --git a/t/lib-parallel-checkout.sh b/t/lib-parallel-checkout.sh
-index 4dad9043fb..e62a433eb1 100644
---- a/t/lib-parallel-checkout.sh
-+++ b/t/lib-parallel-checkout.sh
-@@ -18,7 +18,7 @@ git_pc()
- 		-c checkout.workers=$workers \
- 		-c checkout.thresholdForParallelism=$threshold \
- 		-c advice.detachedHead=0 \
--		"$@" &&
-+		"$@" 2>&8 &&
- 
- 	# Check that the expected number of workers has been used. Note that it
- 	# can be different from the requested number in two cases: when the
-@@ -28,7 +28,7 @@ git_pc()
- 	local workers_in_trace=$(grep "child_start\[..*\] git checkout--helper" trace | wc -l) &&
- 	test $workers_in_trace -eq $expected_workers &&
- 	rm -f trace
--}
-+} 8>&2 2>&4
- 
- # Verify that both the working tree and the index were created correctly
- verify_checkout()
-diff --git a/t/t2081-parallel-checkout-collisions.sh b/t/t2081-parallel-checkout-collisions.sh
-new file mode 100755
-index 0000000000..5cab2dcd2c
+new file mode 100644
+index 0000000000..4dad9043fb
 --- /dev/null
-+++ b/t/t2081-parallel-checkout-collisions.sh
-@@ -0,0 +1,98 @@
++++ b/t/lib-parallel-checkout.sh
+@@ -0,0 +1,40 @@
++# Helpers for t208* tests
++
++# Runs `git -c checkout.workers=$1 -c checkout.thesholdForParallelism=$2 ${@:4}`
++# and checks that the number of workers spawned is equal to $3.
++#
++git_pc()
++{
++	if test $# -lt 4
++	then
++		BUG "too few arguments to git_pc()"
++	fi &&
++
++	workers=$1 threshold=$2 expected_workers=$3 &&
++	shift 3 &&
++
++	rm -f trace &&
++	GIT_TRACE2="$(pwd)/trace" git \
++		-c checkout.workers=$workers \
++		-c checkout.thresholdForParallelism=$threshold \
++		-c advice.detachedHead=0 \
++		"$@" &&
++
++	# Check that the expected number of workers has been used. Note that it
++	# can be different from the requested number in two cases: when the
++	# threshold is not reached; and when there are not enough
++	# parallel-eligible entries for all workers.
++	#
++	local workers_in_trace=$(grep "child_start\[..*\] git checkout--helper" trace | wc -l) &&
++	test $workers_in_trace -eq $expected_workers &&
++	rm -f trace
++}
++
++# Verify that both the working tree and the index were created correctly
++verify_checkout()
++{
++	git -C "$1" diff-index --quiet HEAD -- &&
++	git -C "$1" diff-index --quiet --cached HEAD -- &&
++	git -C "$1" status --porcelain >"$1".status &&
++	test_must_be_empty "$1".status
++}
+diff --git a/t/t2080-parallel-checkout-basics.sh b/t/t2080-parallel-checkout-basics.sh
+new file mode 100755
+index 0000000000..edea88f14f
+--- /dev/null
++++ b/t/t2080-parallel-checkout-basics.sh
+@@ -0,0 +1,170 @@
 +#!/bin/sh
 +
-+test_description='parallel-checkout collisions
++test_description='parallel-checkout basics
 +
-+When there are path collisions during a clone, Git should report a warning
-+listing all of the colliding entries. The sequential code detects a collision
-+by calling lstat() before trying to open(O_CREAT) the file. Then, to find the
-+colliding pair of an item k, it searches cache_entry[0, k-1].
-+
-+This is not sufficient in parallel checkout since:
-+
-+- A colliding file may be created between the lstat() and open() calls;
-+- A colliding entry might appear in the second half of the cache_entry array.
-+
-+The tests in this file make sure that the collision detection code is extended
-+for parallel checkout.
++Ensure that parallel-checkout basically works on clone and checkout, spawning
++the required number of workers and correctly populating both the index and
++working tree.
 +'
 +
++TEST_NO_CREATE_REPO=1
 +. ./test-lib.sh
 +. "$TEST_DIRECTORY/lib-parallel-checkout.sh"
 +
-+TEST_ROOT="$PWD"
++# Test parallel-checkout with different operations (creation, deletion,
++# modification) and entry types. A branch switch from B1 to B2 will contain:
++#
++# - a (file):      modified
++# - e/x (file):    deleted
++# - b (symlink):   deleted
++# - b/f (file):    created
++# - e (symlink):   created
++# - d (submodule): created
++#
++test_expect_success SYMLINKS 'setup repo for checkout with various operations' '
++	git init various &&
++	(
++		cd various &&
++		git checkout -b B1 &&
++		echo a>a &&
++		mkdir e &&
++		echo e/x >e/x &&
++		ln -s e b &&
++		git add -A &&
++		git commit -m B1 &&
 +
-+test_expect_success CASE_INSENSITIVE_FS 'setup' '
-+	file_x_hex=$(git hash-object -w --stdin </dev/null) &&
-+	file_x_oct=$(echo $file_x_hex | hex2oct) &&
++		git checkout -b B2 &&
++		echo modified >a &&
++		rm -rf e &&
++		rm b &&
++		mkdir b &&
++		echo b/f >b/f &&
++		ln -s b e &&
++		git init d &&
++		test_commit -C d f &&
++		git submodule add ./d &&
++		git add -A &&
++		git commit -m B2 &&
 +
-+	attr_hex=$(echo "file_x filter=logger" | git hash-object -w --stdin) &&
-+	attr_oct=$(echo $attr_hex | hex2oct) &&
-+
-+	printf "100644 FILE_X\0${file_x_oct}" >tree &&
-+	printf "100644 FILE_x\0${file_x_oct}" >>tree &&
-+	printf "100644 file_X\0${file_x_oct}" >>tree &&
-+	printf "100644 file_x\0${file_x_oct}" >>tree &&
-+	printf "100644 .gitattributes\0${attr_oct}" >>tree &&
-+
-+	tree_hex=$(git hash-object -w -t tree --stdin <tree) &&
-+	commit_hex=$(git commit-tree -m collisions $tree_hex) &&
-+	git update-ref refs/heads/collisions $commit_hex &&
-+
-+	write_script "$TEST_ROOT"/logger_script <<-\EOF
-+	echo "$@" >>filter.log
-+	EOF
++		git checkout --recurse-submodules B1
++	)
 +'
 +
-+for mode in parallel sequential-fallback
-+do
++test_expect_success SYMLINKS 'sequential checkout' '
++	cp -R various various_sequential &&
++	git_pc 1 0 0 -C various_sequential checkout --recurse-submodules B2 &&
++	verify_checkout various_sequential
++'
 +
-+	case $mode in
-+	parallel)		workers=2 threshold=0 expected_workers=2 ;;
-+	sequential-fallback)	workers=2 threshold=100 expected_workers=0 ;;
-+	esac
++test_expect_success SYMLINKS 'parallel checkout' '
++	cp -R various various_parallel &&
++	git_pc 2 0 2 -C various_parallel checkout --recurse-submodules B2 &&
++	verify_checkout various_parallel
++'
 +
-+	test_expect_success CASE_INSENSITIVE_FS "collision detection on $mode clone" '
-+		git_pc $workers $threshold $expected_workers \
-+			clone --branch=collisions . $mode 2>$mode.stderr &&
++test_expect_success SYMLINKS 'fallback to sequential checkout (threshold)' '
++	cp -R various various_sequential_fallback &&
++	git_pc 2 100 0 -C various_sequential_fallback checkout --recurse-submodules B2 &&
++	verify_checkout various_sequential_fallback
++'
 +
-+		grep FILE_X $mode.stderr &&
-+		grep FILE_x $mode.stderr &&
-+		grep file_X $mode.stderr &&
-+		grep file_x $mode.stderr &&
-+		test_i18ngrep "the following paths have collided" $mode.stderr
-+	'
++test_expect_success SYMLINKS 'parallel checkout on clone' '
++	git -C various checkout --recurse-submodules B2 &&
++	git_pc 2 0 2 clone --recurse-submodules various various_parallel_clone  &&
++	verify_checkout various_parallel_clone
++'
 +
-+	# The following test ensures that the collision detection code is
-+	# correctly looking for colliding peers in the second half of the
-+	# cache_entry array. This is done by defining a smudge command for the
-+	# *last* array entry, which makes it non-eligible for parallel-checkout.
-+	# The last entry is then checked out *before* any worker is spawned,
-+	# making it succeed and the workers' entries collide.
-+	#
-+	# Note: this test don't work on Windows because, on this system,
-+	# collision detection uses strcmp() when core.ignoreCase=false. And we
-+	# have to set core.ignoreCase=false so that only 'file_x' matches the
-+	# pattern of the filter attribute. But it works on OSX, where collision
-+	# detection uses inode.
-+	#
-+	test_expect_success CASE_INSENSITIVE_FS,!MINGW,!CYGWIN "collision detection on $mode clone w/ filter" '
-+		git_pc $workers $threshold $expected_workers \
-+			-c core.ignoreCase=false \
-+			-c filter.logger.smudge="\"$TEST_ROOT/logger_script\" %f" \
-+			clone --branch=collisions . ${mode}_with_filter \
-+			2>${mode}_with_filter.stderr &&
++test_expect_success SYMLINKS 'fallback to sequential checkout on clone (threshold)' '
++	git -C various checkout --recurse-submodules B2 &&
++	git_pc 2 100 0 clone --recurse-submodules various various_sequential_fallback_clone &&
++	verify_checkout various_sequential_fallback_clone
++'
 +
-+		grep FILE_X ${mode}_with_filter.stderr &&
-+		grep FILE_x ${mode}_with_filter.stderr &&
-+		grep file_X ${mode}_with_filter.stderr &&
-+		grep file_x ${mode}_with_filter.stderr &&
-+		test_i18ngrep "the following paths have collided" ${mode}_with_filter.stderr &&
++# Just to be paranoid, actually compare the working trees' contents directly.
++test_expect_success SYMLINKS 'compare the working trees' '
++	rm -rf various_*/.git &&
++	rm -rf various_*/d/.git &&
 +
-+		# Make sure only "file_x" was filtered
-+		test_path_is_file ${mode}_with_filter/filter.log &&
-+		echo file_x >expected.filter.log &&
-+		test_cmp ${mode}_with_filter/filter.log expected.filter.log
-+	'
-+done
++	diff -r various_sequential various_parallel &&
++	diff -r various_sequential various_sequential_fallback &&
++	diff -r various_sequential various_parallel_clone &&
++	diff -r various_sequential various_sequential_fallback_clone
++'
++
++test_cmp_str()
++{
++	echo "$1" >tmp &&
++	test_cmp tmp "$2"
++}
++
++test_expect_success 'parallel checkout respects --[no]-force' '
++	git init dirty &&
++	(
++		cd dirty &&
++		mkdir D &&
++		test_commit D/F &&
++		test_commit F &&
++
++		echo changed >F.t &&
++		rm -rf D &&
++		echo changed >D &&
++
++		# We expect 0 workers because there is nothing to be updated
++		git_pc 2 0 0 checkout HEAD &&
++		test_path_is_file D &&
++		test_cmp_str changed D &&
++		test_cmp_str changed F.t &&
++
++		git_pc 2 0 2 checkout --force HEAD &&
++		test_path_is_dir D &&
++		test_cmp_str D/F D/F.t &&
++		test_cmp_str F F.t
++	)
++'
++
++test_expect_success SYMLINKS 'parallel checkout checks for symlinks in leading dirs' '
++	git init symlinks &&
++	(
++		cd symlinks &&
++		mkdir D E &&
++
++		# Create two entries in D to have enough work for 2 parallel
++		# workers
++		test_commit D/A &&
++		test_commit D/B &&
++		test_commit E/C &&
++		rm -rf D &&
++		ln -s E D &&
++
++		git_pc 2 0 2 checkout --force HEAD &&
++		! test -L D &&
++		test_cmp_str D/A D/A.t &&
++		test_cmp_str D/B D/B.t
++	)
++'
++
++test_expect_success SYMLINKS,CASE_INSENSITIVE_FS 'symlink colliding with leading dir' '
++	git init colliding-symlink &&
++	(
++		cd colliding-symlink &&
++		file_hex=$(git hash-object -w --stdin </dev/null) &&
++		file_oct=$(echo $file_hex | hex2oct) &&
++
++		sym_hex=$(echo "./D" | git hash-object -w --stdin) &&
++		sym_oct=$(echo $sym_hex | hex2oct) &&
++
++		printf "100644 D/A\0${file_oct}" >tree &&
++		printf "100644 E/B\0${file_oct}" >>tree &&
++		printf "120000 e\0${sym_oct}" >>tree &&
++
++		tree_hex=$(git hash-object -w -t tree --stdin <tree) &&
++		commit_hex=$(git commit-tree -m collisions $tree_hex) &&
++		git update-ref refs/heads/colliding-symlink $commit_hex &&
++
++		git_pc 2 0 2 checkout colliding-symlink &&
++		test_path_is_dir D &&
++		test_path_is_missing D/B
++	)
++'
 +
 +test_done
 -- 
