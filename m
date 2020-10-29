@@ -2,176 +2,139 @@ Return-Path: <SRS0=U/aV=EE=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MSGID_FROM_MTA_HEADER,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DB91C5DF9D
-	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 12:48:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 261DDC4363A
+	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 13:47:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2D44B207DE
-	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 12:48:37 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M7m3Bq4k"
+	by mail.kernel.org (Postfix) with ESMTP id B6ED120709
+	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 13:47:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726360AbgJ2Msf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Oct 2020 08:48:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49508 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726090AbgJ2Mse (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Oct 2020 08:48:34 -0400
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B57EC0613CF
-        for <git@vger.kernel.org>; Thu, 29 Oct 2020 05:48:32 -0700 (PDT)
-Received: by mail-wm1-x341.google.com with SMTP id h22so2307954wmb.0
-        for <git@vger.kernel.org>; Thu, 29 Oct 2020 05:48:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=IqioK9mKrERhzdYImUSricuzyDfKoxn/rb4pHfYr3Nc=;
-        b=M7m3Bq4kHjtchxDHHkmUuT3QHgHTVzsS/T6WflJbVI6gsJcN3hdPUkMRePM3BGre0j
-         F5Q5WhYPRNj16dfm8qSTyG7XNwf00PcaULIvzZw9Po0NHIOgojRdr20EBRFwBclciLa2
-         Ak5AL8xGzfDxj95Mca5gGJwUmZkdb+g9cJ9qVBwrPXFxNOnS1f5aR7u70TwHpN8iIXxO
-         UJhC7wJscEKCYbAEe6YvlWvH1zW8R3cCy8mUZYUn01RctZdmvbEdLlh7NHLKYPqVxz3f
-         w2GKff2vq2XHUhdp2tvo15/PXriW1A0SLHAptpDDDWerSqGwwkoYOmENjXepEq0S0Gha
-         THBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=IqioK9mKrERhzdYImUSricuzyDfKoxn/rb4pHfYr3Nc=;
-        b=UihHE0EhIwPzC5zFg8XGgThAdJKW3kduRlMBVCCtskKnEeY2JU48NmCkCRbHByB0eh
-         UFNsRsNT5OSr+AgQZMCwBWAO+qWMBFVL6ErNcngA1Pv/HqNL0rxqLBKa6gDgz/hPYDiN
-         x0SxH3IVhsG4BzQaLwpeXfM9l382nLcIq2vaF0zSByhZZfkzxSwA8Cuw3bwGQECue7cL
-         xmXOVQX+sY4tkmNYSa/WOmFr4XwXdzNi2pP2m/VMTO63SXhT2BBVBffSg8L6OGoyz6lG
-         VbHWu6y/CAt69J0Ld9zXpTieQ9e40KF8nlJH89jJfoUEYUn5BCb+aLNWyX/k4FJ2eoZU
-         lONw==
-X-Gm-Message-State: AOAM532USAEr5et3dDHtvDjkYPD3Q2byoMlDZqDJQboRT/noSogqdRAT
-        uNVmvXQCILWQnvI3XCBIw7X+kf2zbUU=
-X-Google-Smtp-Source: ABdhPJyUkkTwmSAfz5ZlvPQxbLw0Sl4Ajn1iQShRATYMOqGK6Uq35vO7MW0nCJd97btNy9KEZ/592w==
-X-Received: by 2002:a7b:cb54:: with SMTP id v20mr4276433wmj.149.1603975710610;
-        Thu, 29 Oct 2020 05:48:30 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z11sm4832787wrh.70.2020.10.29.05.48.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Oct 2020 05:48:29 -0700 (PDT)
-Message-Id: <pull.576.v5.git.1603975709.gitgitgadget@gmail.com>
-In-Reply-To: <pull.576.v4.git.1603335680.gitgitgadget@gmail.com>
-References: <pull.576.v4.git.1603335680.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 29 Oct 2020 12:48:27 +0000
-Subject: [PATCH v5 0/2] ref-filter: handle CRLF at end-of-line more gracefully
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1727682AbgJ2Nrq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Oct 2020 09:47:46 -0400
+Received: from mail-eopbgr670108.outbound.protection.outlook.com ([40.107.67.108]:53184
+        "EHLO CAN01-TO1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1727674AbgJ2Nrq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Oct 2020 09:47:46 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ncK1RZ6hlWD8HUM0IWpkplZpDL8vO3LT6X9brBZ6Hhe0/4FEHVf2vRsCxWOrWqt3SBLWpe8NeQqyidmEttjLWTA0f1MOMdXXo2VAt9whxrMUFUcyGYl2GjqP3WgFeAukUKl2vdV7Kby/z+6hyx8u1ZUbG01XYjueX4rugGcH2iNiTAzmcegmIwS0U6g4hzJJ6OQZu+JUZtLd7nP2HDprZ803/MMF4YDnM98ZLjFRByq9cJD/rIvQ/1j6aTksITD3jNEceZvmLhGQSP6oYUPviHPrmG6L0SXCDea2fUdGvtaE4SHhCiWgqnOAsMDt28UPwUsNGaT1n3sY8nX4ryqOWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pFl3liK/ZyphVJswGj844gZqjUQxSNIpVZjJrMgsUbo=;
+ b=ePYsg6HSMutFpiqM0CyxyZzDB7i/kOjeMyx8UB/+CAtGOeQNTEHumcfOoqwxVlZeANzTtI5t2H8uKUk/H/UzUgAJTPoccTi5I+/AIbfbhLPXIeR/r9wOwlpw/nF+WO/1gfwBSF7bx/8r90cIsw7oAnjsR8KpYETHyTLJbTJqylB6VnyRga9rhdHpDlGA6glZ1l/dmwzBVbxeeoxlKitIczK4szKNMuCzd9WGGtesfwWbIpGArAHE9+EIAsOnGPrMoxSeVQEg4QmsitWHcGGwzHS7grQE+1b61It2n1roDgU72CVkAyb0rvguNDm2ZnHl9q/YatD7zbpvdTcPc5BUlg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=xiplink.com; dmarc=pass action=none header.from=xiplink.com;
+ dkim=pass header.d=xiplink.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xiplink.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pFl3liK/ZyphVJswGj844gZqjUQxSNIpVZjJrMgsUbo=;
+ b=O7OPnvvu4hM01GSu6JRLiK99X7Z6cWWCt/3qR+E4FZRzqEIQW8PAxP4AOV8vKtNZjAwTVn2XOzU9Qs4uc9jxs1n1vxAZNoM/LBBegmiW6Av+9VH6+NI488ikZATiOphiblDp3b6PzWn/9TXpF1O317USm9suRe44ZLCASdQWrhJSB+bT/vSND1h+mP0F+qgmlwzRRYQXSHmOYRAcNTVHbBTQlOJwtFDJwGSf4oEKs/+E91/zHuuFJ7H97P+1HBSk19MAz7o7ly2ZUDcpteQDkHIDnjfjhZc3OLQrmgLd4rS2imz+z1zy8CSwextl78dTDwxnGwYUN/hDColq3WRf7A==
+Authentication-Results: xiplink.com; dkim=none (message not signed)
+ header.d=none;xiplink.com; dmarc=none action=none header.from=xiplink.com;
+Received: from QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c00:30::29)
+ by YQXPR01MB2710.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c00:48::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.27; Thu, 29 Oct
+ 2020 13:47:44 +0000
+Received: from QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::5164:12ee:f585:5dbf]) by QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::5164:12ee:f585:5dbf%7]) with mapi id 15.20.3499.018; Thu, 29 Oct 2020
+ 13:47:43 +0000
+Subject: Re: git-gui: Why are the main panels no longer white?
+To:     Serg Tereshchenko <serg.partizan@gmail.com>
+Cc:     git@vger.kernel.org, me@yadavpratyush.com
+References: <6a38e92e-ffd5-4b0e-b850-3697e47b2b92@xiplink.com>
+ <20201029114400.38284-1-serg.partizan@gmail.com>
+From:   Marc Branchaud <marcnarc@xiplink.com>
+Organization: XipLink
+Message-ID: <619dac64-106c-d6df-b121-ce6589b4af3a@xiplink.com>
+Date:   Thu, 29 Oct 2020 09:47:43 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+In-Reply-To: <20201029114400.38284-1-serg.partizan@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [192.222.183.158]
+X-ClientProxiedBy: YQBPR01CA0013.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c01::21)
+ To QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c00:30::29)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from [192.168.222.18] (192.222.183.158) by YQBPR01CA0013.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c01::21) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.18 via Frontend Transport; Thu, 29 Oct 2020 13:47:43 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 734202e3-ce96-4eb8-6542-08d87c11361b
+X-MS-TrafficTypeDiagnostic: YQXPR01MB2710:
+X-MS-Exchange-Transport-Forked: True
+X-Microsoft-Antispam-PRVS: <YQXPR01MB271093F3AD1749BF995FB76BD7140@YQXPR01MB2710.CANPRD01.PROD.OUTLOOK.COM>
+X-MS-Oob-TLC-OOBClassifiers: OLM:7691;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: KdPhfiBGwrGtjxDziCZMsD3JCpMnPFvdLhqJp8eqbUDvZOeNp4TPGTJodsExHd7t9YyfyQ+pahNduecOQB4TwaLqEYwhHjUMq9Uq3nzxOqBSYggWugTe+bxHfqE5sIR8KjpqM1xktj6iK31drQDzMw2iaTA4NN0jBxijWqTrgC8qttH0LnVW+r4cGgmTc2UQ6u75a5yf032Hll0K7R+uLlzp0YM8TFF4PCwVn7TeCmnfvUmGN4zZDMTq2gRFZSvjoqa61ywR3YZkFwY8ipZx3LNa4Gm3XT2+ebAzD9cOxcEUcXxrEHbEw86l5Y3wZ2Vt0ISBSuJUAjOwmt9HYyvVl8LP9PJRCP2+66TeC+fvZRZUJpCUeD+WraJth88rDEmd
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(346002)(366004)(376002)(396003)(39830400003)(136003)(4326008)(4001150100001)(2906002)(31696002)(16576012)(86362001)(316002)(52116002)(6916009)(956004)(6486002)(26005)(186003)(16526019)(2616005)(36916002)(53546011)(83380400001)(478600001)(66946007)(8676002)(8936002)(36756003)(5660300002)(31686004)(66556008)(66476007)(43740500002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData: j4622v0vNTjqqa13s+/UVV6wzCB76/0dlRi3UXNvJhyH/c+RvZ4NrU9XStNymtS8T7PiRE55QLO6/dzUkRq2nFfSLWcrMfe3QcBp5yK81bKf2KsvI6Ky43qUZW57fHwotgn16jdlBNNUb6X2dEYxlnyavUGg3jIyL7AE3Bv3csddIQNe+3CGA2WQ+0ZrXmqbnIAuVmpc1uS7IrCrb5JpHGx11JMKXWEsxSSgfJMWzh8SkoWP2yd3rwAacrAaerp46GjN0cDqicbuVHMGCZ+KsZyublK2fPG9V/0OI0maE7eDq72J1by9puENK/rmQpR1/0vt+6Ca62cPxT/nrHLuIPJMgjzBits6A1ORrMrGF0LTLGEr0Mvpz4rWzbNSfCVCODu4lGasT0n58Azdf0CyAC+T2qSvUpWqoUZmBW+mdpns4k3rgdF4B1XrIaajmcdKIN7B7mcUtuzI3xZh+3+hnQH3FPenLZrzULAmKVdScot3DwTGOQhXUniuBBL/l6pXge2LlI0VcHToANgfLMJmAi0eSbSgGgvvwiFGqKWftMZ43hK56ha1vT7n9zQFn6voKvtfbWT9lQQVPjuG0qHafSS1jhzHXDht/w86lpD0wOEHbB7epLC/d6L1pw5Kbz6TBFCw3upX6VjFuFX+6bE0mA==
+X-OriginatorOrg: xiplink.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 734202e3-ce96-4eb8-6542-08d87c11361b
+X-MS-Exchange-CrossTenant-AuthSource: QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Oct 2020 13:47:43.8837
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 14f927ba-c95b-4aa6-b674-375045ee9d4d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Geek0QLKm5mbd15/p9HXmsm/z96xfx/AAX1JeCH7T9WB2qReuJbPLG/QPvth+rD16a92Sxu4mIhAUfjodmprbQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YQXPR01MB2710
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Changes since v4 :
+On 2020-10-29 7:44 a.m., Serg Tereshchenko wrote:
+> Hi Marc!
+> 
+> What tcl-tk theme are you using? Autodetection supposed to fetch
+> color from TreeView background, and probably your theme using
+> that odd gray for TreeViews.
 
- * tweaked the wording of both commit messages to not call the behaviour a
-   bug
- * added || return 1 in one test - that had already been squashed in by
-   Junio
+Thanks for your reply!  It's been a long, long time since I've had to 
+muck around with a .X* file...
 
+> To set your desired color for background, you can add
+> 
+> *Text.Background: white
+> 
+> to ~/.Xresources; and `xrdb -merge ~/.Xresources` to apply it.
+> 
+> Or, try another theme. This one gives me white background.
+> 
+> *TkTheme: clam
 
-----------------------------------------------------------------------------
+Unfortunately none of those gives me white panels, although I do see 
+other visual aspects change under different themes (also, `xrdb -query` 
+shows that the *Text.Background setting has applied).
 
-The ref-filter code does not correctly handle commit or tag messages that
-use CRLF as the line terminator. Such messages can be created with the
---cleanup=verbatim option of git commit and git tag, or by using git
-commit-tree directly.
+However, saying
+	*background: white
+does the trick!
 
-The function find_subpos in ref-filter.c looks for two consecutive '\n' to
-find the end of the subject line, a sequence which is absent in messages
-using CRLF. This results in the whole message being parsed as the subject
-line (%(contents:subject)), and the body of the message (%(contents:body))
-being empty.
+To narrow the scope of that, I'm going with
+	git-gui*Text.Background: white
 
-Moreover, in copy_subject, '\n' is replaced by space, but '\r' is untouched.
+> To list available themes, run `wish`
+> 
+> ::ttk::themes
 
-This behaviour is a regression for git branch --verbose, which bisects down
-to 949af06 (branch: use ref-filter printing APIs, 2017-01-10).
+I have:
+	classic default clam alt
+"ttk::style theme use" says I'm using the "default" theme.
 
-The first patch hardens the code in ref-filter.c to handle these messages
-more gracefully and adds a test script to check that the ref-filter and
-pretty APIs deal correctly with CRLF messages.
+Is there some way I can edit/view the theme definitions?
 
-The second patch adds tests that check the behaviour of git log andgit show 
-in the presence of CRLF in messages, to prevent futur regressions.
+Thanks for the help!
 
-Cc: Michael J Gruber git@grubix.eu [git@grubix.eu], Matthieu Moy 
-git@matthieu-moy.fr [git@matthieu-moy.fr], John Keeping john@keeping.me.uk
-[john@keeping.me.uk], Karthik Nayak karthik.188@gmail.com
-[karthik.188@gmail.com], Jeff King peff@peff.net [peff@peff.net], Alex
-Henrie alexhenrie24@gmail.com [alexhenrie24@gmail.com]cc: Eric Sunshine 
-sunshine@sunshineco.com [sunshine@sunshineco.com]cc: Junio C Hamano 
-gitster@pobox.com [gitster@pobox.com]
+		M.
 
-Philippe Blain (2):
-  ref-filter: handle CRLF at end-of-line more gracefully
-  log, show: add tests for messages containing CRLF
-
- ref-filter.c             |  36 ++++++-----
- t/t3920-crlf-messages.sh | 126 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 148 insertions(+), 14 deletions(-)
- create mode 100755 t/t3920-crlf-messages.sh
-
-
-base-commit: a5fa49ff0a8f3252c6bff49f92b85e7683868f8a
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-576%2Fphil-blain%2Ffix-branch-verbose-crlf-v5
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-576/phil-blain/fix-branch-verbose-crlf-v5
-Pull-Request: https://github.com/gitgitgadget/git/pull/576
-
-Range-diff vs v4:
-
- 1:  03b2d7d78a ! 1:  06231c315f ref-filter: handle CRLF at end-of-line more gracefully
-     @@ Commit message
-          This impacts the output of `git branch`, `git tag` and `git
-          for-each-ref`.
-      
-     -    This bug is a regression for `git branch --verbose`, which
-     +    This behaviour is a regression for `git branch --verbose`, which
-          bisects down to 949af0684c (branch: use ref-filter printing APIs,
-          2017-01-10).
-      
-     -    Fix this bug in ref-filter by hardening the logic in `copy_subject` and
-     -    `find_subpos` to correctly parse messages containing CRLF.
-     +    Adjust the ref-filter code to be more lenient by hardening the logic in
-     +    `copy_subject` and `find_subpos` to correctly parse messages containing
-     +    CRLF.
-      
-          Add a new test script, 't3920-crlf-messages.sh', to test the behaviour
-          of commands using either the ref-filter or the pretty APIs with messages
- 2:  75a87887be ! 2:  f536fee695 log, show: add tests for messages containing CRLF
-     @@ Metadata
-       ## Commit message ##
-          log, show: add tests for messages containing CRLF
-      
-     -    A previous commit fixed a bug in ref-filter.c causing messages
-     -    containing CRLF to be incorrectly parsed and displayed.
-     +    A previous commit adjusted the code in ref-filter.c so that messages
-     +    containing CRLF are now correctly parsed and displayed.
-      
-          Add tests to also check that `git log` and `git show` correctly handle
-          such messages, to prevent futur regressions if these commands are
-     @@ t/t3920-crlf-messages.sh: test_crlf_subject_body_and_contents tag --list tag-crl
-      +		cut -d" " -f2- <tmp-branch >actual-branch &&
-      +		cut -d" " -f2- <tmp-tag >actual-tag &&
-      +		test_cmp expect actual-branch &&
-     -+		test_cmp expect actual-tag
-     ++		test_cmp expect actual-tag || return 1
-      +	done
-      +'
-      +
-
--- 
-gitgitgadget
