@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03CBDC55179
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39ADBC5517A
 	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:17:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9E6E520738
+	by mail.kernel.org (Postfix) with ESMTP id DB9B42076B
 	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:17:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="t3tR/rt7"
+	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="xy5yM/2M"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403978AbgJ2CRA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Oct 2020 22:17:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35474 "EHLO
+        id S2403954AbgJ2CQ6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Oct 2020 22:16:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728645AbgJ2CPb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Oct 2020 22:15:31 -0400
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D893FC0613CF
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 19:15:30 -0700 (PDT)
-Received: by mail-qt1-x82c.google.com with SMTP id h19so994613qtq.4
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 19:15:30 -0700 (PDT)
+        with ESMTP id S1729539AbgJ2CPf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Oct 2020 22:15:35 -0400
+Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0979C0613CF
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 19:15:35 -0700 (PDT)
+Received: by mail-qt1-x842.google.com with SMTP id i7so985763qti.6
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 19:15:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=w4RWxOAoNb5b+kMQ3sr8xlU7Nfkn7EHNNqWmSKfTHCw=;
-        b=t3tR/rt7wk1eCXgudYUcahM5Z+wdTBPTm8+hliqCvVwac1USNq1zY8Xqs1Mx9DvES3
-         NucAqKvqanZDVJ60XJUSO9vvahnfwbAp4jEr73jfEnhUlJGq91d2ZVePJkp8oqL01sfd
-         j4xXBrXFi3ID7V7+6Abso50R6H3FNnFJQ1ewiJ5/zSvCUfFSSJvp7mZQxW0u5cKncZMm
-         d+27Ad+/It0ksh93Xn25z18nfhutFisaprLbPTfKr/HsoRZUpe5zUkmxNA549X+xl78q
-         oNddj2y1aJY/LS133Ph2OP26xaZA9Z/3SPKcZhL7o2TV4v/zl38Kq1ZS2UsHX3zR3h96
-         CryQ==
+        bh=GslneMXDEueXo3ahHKownahgckpV0kWvLsydXiYzxCk=;
+        b=xy5yM/2MHMRa7Zx5GQT86Fqibk9xzXiC5JFeSk480Qv5U60ndA77RrZwuGhki1vCg4
+         lIwkUCfl5a+AEAiw7u6Yn3lHhDwKDcRGuGkRqCti+gheDp6fl34asUDqa0i3Rp5dsNiR
+         LkcbxRXqhzwsoxWc4xMH+RxDiTo0hfy53UmbS9bLFtScE7WwEXlsMs3CkSgRjeA31q9d
+         cwRQakSJUXHqDKCvG7MmTntk97lQJYJjwahDDi/qPwy7zNks/xZy7A6x10gLBHQI/Kym
+         qkEhuE5tswiE75jssylpQ548mqFUksqyT6ZD/Pir0pHV9XNc5im0XKFxN4BbSZoY7sHJ
+         1QtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=w4RWxOAoNb5b+kMQ3sr8xlU7Nfkn7EHNNqWmSKfTHCw=;
-        b=Kvfa0qPCuStRuzxdBmErRzsjBEQyTi3JmS7WzBmdp4OTFP9xx8LY+ABsP78DwCBqKi
-         Qlwry3TNeLv2dcVKpD87qlgM7c4rMAI0ujHO2a3nGyn1aYsIDJy8VOYi5JQ/nOgWRlR+
-         mqhN6nANsIhoMJThc65p2cVJYjIL2058CE2ifFAnsubCMweVzcHPhoN8ljwnIAJxhwwD
-         SE/hJpyG0H5JhWh3Fx3L6kPRgZG7+jHCJdLpkkgdtj0Wc5tOrGWuNbncyhJdkrIp45vh
-         81U9WZha1vEdKhsaVc8Stc3LVAtmvG1xnts81ISvXEh1HZLULUJkAN3JjuP+s0Gw4WR7
-         GpSw==
-X-Gm-Message-State: AOAM5328YgQU4Hq+6mFUCKakC0+bQR7FhZ3/4SaHQwedj6m2NXy+HAxw
-        qCKim3ZifWf23iyURnP/gABFJDH+bMY47Q==
-X-Google-Smtp-Source: ABdhPJxJYFumPNK3lTTxfDWOvzJpwStTKFs4MmKmFGxzCcBGEEGljQO/eGClhZk6NznQEcpXnZmv+A==
-X-Received: by 2002:ac8:3984:: with SMTP id v4mr1808484qte.240.1603937729668;
-        Wed, 28 Oct 2020 19:15:29 -0700 (PDT)
+        bh=GslneMXDEueXo3ahHKownahgckpV0kWvLsydXiYzxCk=;
+        b=cqbCNbdYe6uu90DJpySFshwJECYJOuAYSeO95pxobywcC/zrBmZ6IBp29vKzzq5jCt
+         Z52/ZQXQrOsuKaKEPsUYXh2/crPojd/purvZ3O8Gqu1sNGY52G4j9cuXj4Yuj/Vaekf/
+         XTwobWQVWF3hrJLgZqTDeVsfZZSlj6IESjnlkZEASx51B4BcgxrVbsccwNoGoZtWgAQ6
+         DqMVYLD/5ygtT3w+edUwlAGFpNLGfVVKCDvB1x1LB/gRak+M5CxAWjUKsajkhJj7mwK7
+         8jxBF8iPOLQR0oxA8kmhAo0Oc1zp6U+dnbUdsJmlerG1vvzFBa2ite2ErQeEH7KNRAhB
+         8cNQ==
+X-Gm-Message-State: AOAM531+L17lgCPwh+OC7+ktdhU0bYicQs9UbQQ9KF9efliHqEk193Gs
+        0svrXPqPZdSAX+PXhSGOBP8KJjza34R4LA==
+X-Google-Smtp-Source: ABdhPJwZ1DJH3CtujZaJcV4wnSNUC4ssf+OgHo96DNxuCDoA8/kPzg5OYeOBZ7MIJ+dTuEFfMG3njA==
+X-Received: by 2002:a05:622a:242:: with SMTP id c2mr1811131qtx.230.1603937734472;
+        Wed, 28 Oct 2020 19:15:34 -0700 (PDT)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id n201sm608371qka.32.2020.10.28.19.15.25
+        by smtp.gmail.com with ESMTPSA id n201sm608371qka.32.2020.10.28.19.15.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2020 19:15:28 -0700 (PDT)
+        Wed, 28 Oct 2020 19:15:33 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, git@jeffhostetler.com, chriscool@tuxfamily.org,
         peff@peff.net, newren@gmail.com, jrnieder@gmail.com,
         martin.agren@gmail.com, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v3 03/19] convert: add get_stream_filter_ca() variant
-Date:   Wed, 28 Oct 2020 23:14:40 -0300
-Message-Id: <c77b16f694cfe8076e66f604c0bbe053f58a2e9e.1603937110.git.matheus.bernardino@usp.br>
+Subject: [PATCH v3 04/19] convert: add conv_attrs classification
+Date:   Wed, 28 Oct 2020 23:14:41 -0300
+Message-Id: <18c3f4247e717a7766f13b4b33a0bbe31aee6b69.1603937110.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <cover.1603937110.git.matheus.bernardino@usp.br>
 References: <cover.1603937110.git.matheus.bernardino@usp.br>
@@ -76,95 +76,105 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Like the previous patch, we will also need to call get_stream_filter()
-with a precomputed `struct conv_attrs`, when we add support for parallel
-checkout workers. So add the _ca() variant which takes the conversion
-attributes struct as a parameter.
+Create `enum conv_attrs_classification` to express the different ways
+that attributes are handled for a blob during checkout.
+
+This will be used in a later commit when deciding whether to add a file
+to the parallel or delayed queue during checkout. For now, we can also
+use it in get_stream_filter_ca() to simplify the function (as the
+classifying logic is the same).
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-[matheus.bernardino: move header comment to ca() variant and reword msg]
+[matheus.bernardino: use classification in get_stream_filter_ca()]
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- convert.c | 28 +++++++++++++++++-----------
- convert.h |  2 ++
- 2 files changed, 19 insertions(+), 11 deletions(-)
+ convert.c | 26 +++++++++++++++++++-------
+ convert.h | 33 +++++++++++++++++++++++++++++++++
+ 2 files changed, 52 insertions(+), 7 deletions(-)
 
 diff --git a/convert.c b/convert.c
-index 191a42a0ae..bd4d3f01cd 100644
+index bd4d3f01cd..c0b45149b5 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -1960,34 +1960,31 @@ static struct stream_filter *ident_filter(const struct object_id *oid)
- }
- 
- /*
-- * Return an appropriately constructed filter for the path, or NULL if
-+ * Return an appropriately constructed filter for the given ca, or NULL if
-  * the contents cannot be filtered without reading the whole thing
-  * in-core.
-  *
-  * Note that you would be crazy to set CRLF, smudge/clean or ident to a
-  * large binary blob you would want us not to slurp into the memory!
-  */
--struct stream_filter *get_stream_filter(const struct index_state *istate,
--					const char *path,
--					const struct object_id *oid)
-+struct stream_filter *get_stream_filter_ca(const struct conv_attrs *ca,
-+					   const struct object_id *oid)
+@@ -1972,13 +1972,7 @@ struct stream_filter *get_stream_filter_ca(const struct conv_attrs *ca,
  {
--	struct conv_attrs ca;
  	struct stream_filter *filter = NULL;
  
--	convert_attrs(istate, &ca, path);
--	if (ca.drv && (ca.drv->process || ca.drv->smudge || ca.drv->clean))
-+	if (ca->drv && (ca->drv->process || ca->drv->smudge || ca->drv->clean))
+-	if (ca->drv && (ca->drv->process || ca->drv->smudge || ca->drv->clean))
+-		return NULL;
+-
+-	if (ca->working_tree_encoding)
+-		return NULL;
+-
+-	if (ca->crlf_action == CRLF_AUTO || ca->crlf_action == CRLF_AUTO_CRLF)
++	if (classify_conv_attrs(ca) != CA_CLASS_STREAMABLE)
  		return NULL;
  
--	if (ca.working_tree_encoding)
-+	if (ca->working_tree_encoding)
- 		return NULL;
- 
--	if (ca.crlf_action == CRLF_AUTO || ca.crlf_action == CRLF_AUTO_CRLF)
-+	if (ca->crlf_action == CRLF_AUTO || ca->crlf_action == CRLF_AUTO_CRLF)
- 		return NULL;
- 
--	if (ca.ident)
-+	if (ca->ident)
- 		filter = ident_filter(oid);
- 
--	if (output_eol(ca.crlf_action) == EOL_CRLF)
-+	if (output_eol(ca->crlf_action) == EOL_CRLF)
- 		filter = cascade_filter(filter, lf_to_crlf_filter());
- 	else
- 		filter = cascade_filter(filter, &null_filter_singleton);
-@@ -1995,6 +1992,15 @@ struct stream_filter *get_stream_filter(const struct index_state *istate,
- 	return filter;
+ 	if (ca->ident)
+@@ -2034,3 +2028,21 @@ void clone_checkout_metadata(struct checkout_metadata *dst,
+ 	if (blob)
+ 		oidcpy(&dst->blob, blob);
  }
- 
-+struct stream_filter *get_stream_filter(const struct index_state *istate,
-+					const char *path,
-+					const struct object_id *oid)
-+{
-+	struct conv_attrs ca;
-+	convert_attrs(istate, &ca, path);
-+	return get_stream_filter_ca(&ca, oid);
-+}
 +
- void free_stream_filter(struct stream_filter *filter)
- {
- 	filter->vtbl->free(filter);
++enum conv_attrs_classification classify_conv_attrs(const struct conv_attrs *ca)
++{
++	if (ca->drv) {
++		if (ca->drv->process)
++			return CA_CLASS_INCORE_PROCESS;
++		if (ca->drv->smudge || ca->drv->clean)
++			return CA_CLASS_INCORE_FILTER;
++	}
++
++	if (ca->working_tree_encoding)
++		return CA_CLASS_INCORE;
++
++	if (ca->crlf_action == CRLF_AUTO || ca->crlf_action == CRLF_AUTO_CRLF)
++		return CA_CLASS_INCORE;
++
++	return CA_CLASS_STREAMABLE;
++}
 diff --git a/convert.h b/convert.h
-index 46d537d1ae..262c1a1d46 100644
+index 262c1a1d46..523ba9b140 100644
 --- a/convert.h
 +++ b/convert.h
-@@ -169,6 +169,8 @@ struct stream_filter; /* opaque */
- struct stream_filter *get_stream_filter(const struct index_state *istate,
- 					const char *path,
- 					const struct object_id *);
-+struct stream_filter *get_stream_filter_ca(const struct conv_attrs *ca,
-+					   const struct object_id *oid);
- void free_stream_filter(struct stream_filter *);
- int is_null_stream_filter(struct stream_filter *);
+@@ -190,4 +190,37 @@ int stream_filter(struct stream_filter *,
+ 		  const char *input, size_t *isize_p,
+ 		  char *output, size_t *osize_p);
  
++enum conv_attrs_classification {
++	/*
++	 * The blob must be loaded into a buffer before it can be
++	 * smudged. All smudging is done in-proc.
++	 */
++	CA_CLASS_INCORE,
++
++	/*
++	 * The blob must be loaded into a buffer, but uses a
++	 * single-file driver filter, such as rot13.
++	 */
++	CA_CLASS_INCORE_FILTER,
++
++	/*
++	 * The blob must be loaded into a buffer, but uses a
++	 * long-running driver process, such as LFS. This might or
++	 * might not use delayed operations. (The important thing is
++	 * that there is a single subordinate long-running process
++	 * handling all associated blobs and in case of delayed
++	 * operations, may hold per-blob state.)
++	 */
++	CA_CLASS_INCORE_PROCESS,
++
++	/*
++	 * The blob can be streamed and smudged without needing to
++	 * completely read it into a buffer.
++	 */
++	CA_CLASS_STREAMABLE,
++};
++
++enum conv_attrs_classification classify_conv_attrs(
++	const struct conv_attrs *ca);
++
+ #endif /* CONVERT_H */
 -- 
 2.28.0
 
