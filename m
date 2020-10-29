@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA70CC55179
-	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:16:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58D47C4363A
+	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:16:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5CBC420738
-	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:16:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F380020738
+	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:16:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="keazu4ve"
+	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="k8PnvXwd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732848AbgJ2CQq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Oct 2020 22:16:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35612 "EHLO
+        id S2391078AbgJ2CQt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Oct 2020 22:16:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729929AbgJ2CQQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Oct 2020 22:16:16 -0400
-Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80494C0613CF
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 19:16:16 -0700 (PDT)
-Received: by mail-qt1-x842.google.com with SMTP id f93so962264qtb.10
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 19:16:16 -0700 (PDT)
+        with ESMTP id S1728811AbgJ2CPz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Oct 2020 22:15:55 -0400
+Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F1B3C0613CF
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 19:15:55 -0700 (PDT)
+Received: by mail-qv1-xf42.google.com with SMTP id d1so160668qvl.6
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 19:15:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GS4h2QNwoW0z+9ey/+u8HNPPBDVmzVwuGUsdvudWn3I=;
-        b=keazu4veC6M1CohyII/Bzok1T23yHpul4GCX+0G+asz3GK2QZ0zYe8ScGhotxpgVtj
-         VgyPPgUbKKFQBwdC1ezoNglsKIedbmgTRgEKBZtYfNfy2bRBtObm6KRQii8shgzK1arQ
-         UaL4r39k1B0aEbksjrcu/j0Z3s1SaNE2kSCXao1M/Gi5OsaL718BbPbl4EucI94M5FgJ
-         UNDtxeRjRqgXQ6w72nd5/vUaQU+jHVsPqk6qiKeLb5BVFGnPzNBcZ72bfwjdhVB4YPtS
-         r9L77kBq5W9EhD24Z2bpl97xgGrRng/UG0izk/hLLzjz2tHUjEX5G/KpRzTdb6y0Ql55
-         AgLw==
+        bh=XYT4R9ALwv2Rpt7TK8K0S9uE1PRUq0gDUVR/1tkQK5U=;
+        b=k8PnvXwd/0el+S1HBmgesjfpP2V1aY6sGZLDAQli/+k1lhUqMiqTMWwInMmRKQZpBI
+         OyxtxQMQDqSpGTNvmWqxf3cJrF2OWxxVo6xzuTyaxk9FEw9sMnYsT6o6n0PKR5d//hfx
+         z/9YK7zavuDxRUQRfHI/UxVJuFL5W+7nQ5GX8cuBCBayQixEZKCCQb6z19zEiSyMY0+N
+         9XeeUTrIWNH0UG++zO+8WQiMoKuQLQFWtj/rCsFR/htiip0Zef6/y2aNSyN9YMTGbDvN
+         IKL2M4ykRT1z0xfXS1tzHHIZH5AB/5hrTAfajdDKtFhgtfbKsEXnN35Ch0EJXOFr4W6D
+         Ly1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=GS4h2QNwoW0z+9ey/+u8HNPPBDVmzVwuGUsdvudWn3I=;
-        b=k7YfkDEVxbBSRTeesKXN23jYycvHpJdVgLWdk5CAXLCQC/J7IoVfjofA8f0GJCynE0
-         62TkWEquGK4ZeC9G2dlOLae6wOZuyTOEIYBUiO5Kq7Z5T7fqTaSsR8mfClvUthBaSGus
-         G5ikkxiofOMN8Mbl1Q/6o3SuzwjCFiiVY8S6ZgG9bmMLLNdpB2YBLK6Z8S3c931RAIoz
-         ZshaxwsH1CU9FJQqriSujOUlPr3AwyEDP5gcVum8dBIvxTbwUvQHv4slX5rmf6vAXi+i
-         dObT2QZO7dB9rEv+m1duUXItptKzvH90vrTi2XvqgUO9szPcpI6j4VUrl1GiEH0nj6pk
-         XV7Q==
-X-Gm-Message-State: AOAM530hxH1vt0vz8wYpT0w4hnHskgRzDINj2UWaLiCqh2o5dEdIdZJ6
-        f/jD7acfwG9EkI9YgQBzZdaDiNbTpoY4mQ==
-X-Google-Smtp-Source: ABdhPJzttrz5K6sYtVYP87CANSniTIUC/NxaVGzqvSRIpydUCdKURBXB9ldZrJmWbripRsJYfEbvsw==
-X-Received: by 2002:ac8:221a:: with SMTP id o26mr1849024qto.116.1603937775315;
-        Wed, 28 Oct 2020 19:16:15 -0700 (PDT)
+        bh=XYT4R9ALwv2Rpt7TK8K0S9uE1PRUq0gDUVR/1tkQK5U=;
+        b=GQ2XSTtMWxDuXmEtS6efrtG9T9Hrlj2ywjTfEp66Ji2jhZVglPJSYSQMHow9UbuBcp
+         Lgqv860qExhGXF5Lz6aejycwFt0xEeaCx2Xi8Zc++oJHQtDzJOprs3dLpFejUt2P9Rwz
+         qF8jyUjE1DX2EGZGgIdW92tn/3pHQart+/XFSkpI5kAlGXz74tmuBplB0zw235E3/abt
+         Sgp1+b2tmY4ipv/ZUtTytaGxHDNh5CGszHtb19bfzErkD+5kVIgU2Fh1N5GEdSzcfvmr
+         MsBkbtFzXngdPGe+64lA37rb+r7qAxIji36h13BbQ1hFzUAwlT9cbWc1PS2L3svaYmI5
+         SNMA==
+X-Gm-Message-State: AOAM532uaGlfDDTFEWMltfZGTp6IyH5FxJdXMCgL9sSEzEG7785stfyf
+        cxiP7lAIoOgy8bRTMUhjKeIAC4q5CX+Gcg==
+X-Google-Smtp-Source: ABdhPJxxqNCtGNN1xBFDZsX0vYCa7LV/UbDNGkc+HSAErkevlozmaIpErYo+G4CeW6dHxGrAC4SMug==
+X-Received: by 2002:ad4:58eb:: with SMTP id di11mr2012329qvb.56.1603937753996;
+        Wed, 28 Oct 2020 19:15:53 -0700 (PDT)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id n201sm608371qka.32.2020.10.28.19.16.11
+        by smtp.gmail.com with ESMTPSA id n201sm608371qka.32.2020.10.28.19.15.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2020 19:16:14 -0700 (PDT)
+        Wed, 28 Oct 2020 19:15:53 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, git@jeffhostetler.com, chriscool@tuxfamily.org,
         peff@peff.net, newren@gmail.com, jrnieder@gmail.com,
         martin.agren@gmail.com
-Subject: [PATCH v3 14/19] builtin/checkout.c: complete parallel checkout support
-Date:   Wed, 28 Oct 2020 23:14:51 -0300
-Message-Id: <d3d561754a4d5599a5e14560c9e0da55ae627ffb.1603937110.git.matheus.bernardino@usp.br>
+Subject: [PATCH v3 09/19] entry: add checkout_entry_ca() which takes preloaded conv_attrs
+Date:   Wed, 28 Oct 2020 23:14:46 -0300
+Message-Id: <e1b886f82320db6fd1b389eb4d63ac45bd5af7b1.1603937110.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <cover.1603937110.git.matheus.bernardino@usp.br>
 References: <cover.1603937110.git.matheus.bernardino@usp.br>
@@ -74,94 +74,98 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There is one code path in builtin/checkout.c which still doesn't benefit
-from parallel checkout because it calls checkout_entry() directly,
-instead of unpack_trees(). Let's add parallel support for this missing
-spot as well. Note: the transient cache entries allocated in
-checkout_merged() are now allocated in a mem_pool which is only
-discarded after parallel checkout finishes. This is done because the
-entries need to be valid when run_parallel_checkout() is called.
+The parallel checkout machinery will call checkout_entry() for entries
+that could not be written in parallel due to path collisions. At this
+point, we will already be holding the conversion attributes for each
+entry, and it would be wasteful to let checkout_entry() load these
+again. Instead, let's add the checkout_entry_ca() variant, which
+optionally takes a preloaded conv_attrs struct.
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- builtin/checkout.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ entry.c | 23 ++++++++++++-----------
+ entry.h | 13 +++++++++++--
+ 2 files changed, 23 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index c0bf5e6711..ddc4079b85 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -27,6 +27,7 @@
- #include "wt-status.h"
- #include "xdiff-interface.h"
- #include "entry.h"
-+#include "parallel-checkout.h"
- 
- static const char * const checkout_usage[] = {
- 	N_("git checkout [<options>] <branch>"),
-@@ -230,7 +231,8 @@ static int checkout_stage(int stage, const struct cache_entry *ce, int pos,
- 		return error(_("path '%s' does not have their version"), ce->name);
- }
- 
--static int checkout_merged(int pos, const struct checkout *state, int *nr_checkouts)
-+static int checkout_merged(int pos, const struct checkout *state,
-+			   int *nr_checkouts, struct mem_pool *ce_mem_pool)
- {
- 	struct cache_entry *ce = active_cache[pos];
- 	const char *path = ce->name;
-@@ -291,11 +293,10 @@ static int checkout_merged(int pos, const struct checkout *state, int *nr_checko
- 	if (write_object_file(result_buf.ptr, result_buf.size, blob_type, &oid))
- 		die(_("Unable to add merge result for '%s'"), path);
- 	free(result_buf.ptr);
--	ce = make_transient_cache_entry(mode, &oid, path, 2, NULL);
-+	ce = make_transient_cache_entry(mode, &oid, path, 2, ce_mem_pool);
- 	if (!ce)
- 		die(_("make_cache_entry failed for path '%s'"), path);
- 	status = checkout_entry(ce, state, NULL, nr_checkouts);
--	discard_cache_entry(ce);
- 	return status;
- }
- 
-@@ -359,16 +360,22 @@ static int checkout_worktree(const struct checkout_opts *opts,
- 	int nr_checkouts = 0, nr_unmerged = 0;
- 	int errs = 0;
- 	int pos;
-+	int pc_workers, pc_threshold;
-+	struct mem_pool ce_mem_pool;
- 
- 	state.force = 1;
- 	state.refresh_cache = 1;
- 	state.istate = &the_index;
- 
-+	mem_pool_init(&ce_mem_pool, 0);
-+	get_parallel_checkout_configs(&pc_workers, &pc_threshold);
- 	init_checkout_metadata(&state.meta, info->refname,
- 			       info->commit ? &info->commit->object.oid : &info->oid,
- 			       NULL);
- 
- 	enable_delayed_checkout(&state);
-+	if (pc_workers > 1)
-+		init_parallel_checkout();
- 	for (pos = 0; pos < active_nr; pos++) {
- 		struct cache_entry *ce = active_cache[pos];
- 		if (ce->ce_flags & CE_MATCHED) {
-@@ -384,10 +391,15 @@ static int checkout_worktree(const struct checkout_opts *opts,
- 						       &nr_checkouts, opts->overlay_mode);
- 			else if (opts->merge)
- 				errs |= checkout_merged(pos, &state,
--							&nr_unmerged);
-+							&nr_unmerged,
-+							&ce_mem_pool);
- 			pos = skip_same_name(ce, pos) - 1;
- 		}
+diff --git a/entry.c b/entry.c
+index 8237859b12..9d79a5671f 100644
+--- a/entry.c
++++ b/entry.c
+@@ -440,12 +440,13 @@ static void mark_colliding_entries(const struct checkout *state,
  	}
-+	if (pc_workers > 1)
-+		errs |= run_parallel_checkout(&state, pc_workers, pc_threshold,
-+					      NULL, NULL);
-+	mem_pool_discard(&ce_mem_pool, should_validate_cache_entries());
- 	remove_marked_cache_entries(&the_index, 1);
- 	remove_scheduled_dirs();
- 	errs |= finish_delayed_checkout(&state, &nr_checkouts);
+ }
+ 
+-int checkout_entry(struct cache_entry *ce, const struct checkout *state,
+-		   char *topath, int *nr_checkouts)
++int checkout_entry_ca(struct cache_entry *ce, struct conv_attrs *ca,
++		      const struct checkout *state, char *topath,
++		      int *nr_checkouts)
+ {
+ 	static struct strbuf path = STRBUF_INIT;
+ 	struct stat st;
+-	struct conv_attrs ca;
++	struct conv_attrs ca_buf;
+ 
+ 	if (ce->ce_flags & CE_WT_REMOVE) {
+ 		if (topath)
+@@ -459,11 +460,11 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state,
+ 	}
+ 
+ 	if (topath) {
+-		if (S_ISREG(ce->ce_mode)) {
+-			convert_attrs(state->istate, &ca, ce->name);
+-			return write_entry(ce, topath, &ca, state, 1);
++		if (S_ISREG(ce->ce_mode) && !ca) {
++			convert_attrs(state->istate, &ca_buf, ce->name);
++			ca = &ca_buf;
+ 		}
+-		return write_entry(ce, topath, NULL, state, 1);
++		return write_entry(ce, topath, ca, state, 1);
+ 	}
+ 
+ 	strbuf_reset(&path);
+@@ -530,12 +531,12 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state,
+ 	if (nr_checkouts)
+ 		(*nr_checkouts)++;
+ 
+-	if (S_ISREG(ce->ce_mode)) {
+-		convert_attrs(state->istate, &ca, ce->name);
+-		return write_entry(ce, path.buf, &ca, state, 0);
++	if (S_ISREG(ce->ce_mode) && !ca) {
++		convert_attrs(state->istate, &ca_buf, ce->name);
++		ca = &ca_buf;
+ 	}
+ 
+-	return write_entry(ce, path.buf, NULL, state, 0);
++	return write_entry(ce, path.buf, ca, state, 0);
+ }
+ 
+ void unlink_entry(const struct cache_entry *ce)
+diff --git a/entry.h b/entry.h
+index 664aed1576..2081fbbbab 100644
+--- a/entry.h
++++ b/entry.h
+@@ -27,9 +27,18 @@ struct checkout {
+  * file named by ce, a temporary file is created by this function and
+  * its name is returned in topath[], which must be able to hold at
+  * least TEMPORARY_FILENAME_LENGTH bytes long.
++ *
++ * With checkout_entry_ca(), callers can optionally pass a preloaded
++ * conv_attrs struct (to avoid reloading it), when ce refers to a
++ * regular file. If ca is NULL, the attributes will be loaded
++ * internally when (and if) needed.
+  */
+-int checkout_entry(struct cache_entry *ce, const struct checkout *state,
+-		   char *topath, int *nr_checkouts);
++#define checkout_entry(ce, state, topath, nr_checkouts) \
++		checkout_entry_ca(ce, NULL, state, topath, nr_checkouts)
++int checkout_entry_ca(struct cache_entry *ce, struct conv_attrs *ca,
++		      const struct checkout *state, char *topath,
++		      int *nr_checkouts);
++
+ void enable_delayed_checkout(struct checkout *state);
+ int finish_delayed_checkout(struct checkout *state, int *nr_checkouts);
+ /*
 -- 
 2.28.0
 
