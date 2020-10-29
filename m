@@ -8,124 +8,296 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDC0BC2D0A3
-	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 12:44:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB5D8C55178
+	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 12:48:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 67CEF20825
-	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 12:44:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 646772076B
+	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 12:48:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eExkhVG1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BUgZ5zr2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726156AbgJ2MoD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Oct 2020 08:44:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48822 "EHLO
+        id S1725904AbgJ2Mse (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Oct 2020 08:48:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725778AbgJ2MoC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Oct 2020 08:44:02 -0400
-Received: from mail-io1-xd41.google.com (mail-io1-xd41.google.com [IPv6:2607:f8b0:4864:20::d41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A44DBC0613CF
-        for <git@vger.kernel.org>; Thu, 29 Oct 2020 05:44:02 -0700 (PDT)
-Received: by mail-io1-xd41.google.com with SMTP id z17so3159578iog.11
-        for <git@vger.kernel.org>; Thu, 29 Oct 2020 05:44:02 -0700 (PDT)
+        with ESMTP id S1725355AbgJ2Msd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Oct 2020 08:48:33 -0400
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0434EC0613D2
+        for <git@vger.kernel.org>; Thu, 29 Oct 2020 05:48:33 -0700 (PDT)
+Received: by mail-wr1-x441.google.com with SMTP id b8so2659059wrn.0
+        for <git@vger.kernel.org>; Thu, 29 Oct 2020 05:48:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=xnbEqEZK6An+4SvQBfEnA9L0fvHXTWXnK0msNRDnNyQ=;
-        b=eExkhVG1GFduNf9K76VrgtfotsEVWqmWaGGeuGbzqSCGwKaWax4wwIryAQoPQm+4Kj
-         9S4ekZaj7SL1R/FHrAw1QMPj4yRRFOmgzBpDo7J3Z+g15uhY7Y/yg1yIsHv7oE5N5qdG
-         8aLZw0J5vpv7imAampCYGzVY9nVaygOLC5YNDirtejC552kCMxpJ/gbSWKnJSjQIpCUe
-         f3RLm4mWkUynOFOIA+9EZ0Bmdrpm3sjHs3LTIKvoKmzE5SWH9eZwrcZO1FC5eyUxvRux
-         w9SqWuNCUrON9hiCjDhWaAbxe1mCGweuz8y9pQJQxysRx0MOisMpxNCcCPgVKtBf6IKy
-         1jWQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=0IUZw8WISCun1chNdvLNvDoqC3+7Qelqg4Brhfvd8nE=;
+        b=BUgZ5zr2AjVmXB2f9o66eDktccVCjVIv7WeaHsQWp0hc/vuLqmSIWfCRDTVD+AztGj
+         sjooT9P1DHYyUEuSJOGNR5lai+3tz8hrjNuKIMPbdY401+eC1xrPl/HsXCR+RldmCTY+
+         oYk+IF4s0z85L+h4HeH2QIb8yptpUGhoNR1G1iisWb0+dV3vVA1qXLW4Hm6sxJqSCFnd
+         77KytRLOY0b0iUXQyZ7H/YZEIDRzfnUwNyLZ1olxTm16Kz2PLDIYU00LdVuHVfH7hGrC
+         5NniVmwlXmC5wQaIDAUf0et2LEcKaSHpEYiqs9721U/6ksaf3AwyjRZLL+29DPt6GLw8
+         1Grw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=xnbEqEZK6An+4SvQBfEnA9L0fvHXTWXnK0msNRDnNyQ=;
-        b=tG/N45ZuKN5nlCL5CG1+xACXxCDUviugLevHTbhIqGZV4+V1g0PY6knEJnVRFJNm9M
-         BtgHyY/5non5GBtbAnCAF7QFl+8j+IlithLEKsDpBwq49wUOM5XE3aYV4oYHdSsVDU8/
-         tAgO82M0fayZOa5nJ8hte+FIWDr0JUG7TDJYKSfe75iEnEDOxaLajbBs/aCxhXHBzJXX
-         obkC6kY0F0/sWILWzAe2+5SvVwOWQHGCro75HyvtYRRt4Dq5u3qtA44uqEAAPK5c+4MW
-         QcioVZkjVY9KM/79MBvG6f24ZMC+dtBEG9yuPOpG2XuykGiQF3R93MHcsw1nXUCHXoIo
-         W2aw==
-X-Gm-Message-State: AOAM531jZtlS4qnglf9yh2Q9fFATNwHpFCfpG1rhTi69xpDQxePzIHXr
-        +ubYqTng1GIUx7Ogwqd8Zu3MDBmIZS3LWQ==
-X-Google-Smtp-Source: ABdhPJzz2UV/2DdvkfuOe5JVvXUfgRKufIcCfELo6zOvnF+XVwKA7mGt9cQW4sGOwXsAjEK3EFrqjg==
-X-Received: by 2002:a02:c6ac:: with SMTP id o12mr3489898jan.21.1603975442059;
-        Thu, 29 Oct 2020 05:44:02 -0700 (PDT)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id j5sm1934683ioa.28.2020.10.29.05.44.00
-        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
-        Thu, 29 Oct 2020 05:44:01 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH 5/6] line-log: mention both modes in 'blame' and 'log' short help
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-In-Reply-To: <CAPig+cRFaT9ww3K368b58m-xgW843jhZWjXDspVrfdyYY-_wRA@mail.gmail.com>
-Date:   Thu, 29 Oct 2020 08:43:53 -0400
-Cc:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Thomas Rast <tr@thomasrast.ch>,
-        =?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <3D7C25D5-E8DE-4414-ADAC-A0E0FA28CC5D@gmail.com>
-References: <pull.774.git.1603889270.gitgitgadget@gmail.com> <27ef94e9cc4189c3d74e984437dcce24e1f29678.1603889270.git.gitgitgadget@gmail.com> <CAPig+cRFaT9ww3K368b58m-xgW843jhZWjXDspVrfdyYY-_wRA@mail.gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=0IUZw8WISCun1chNdvLNvDoqC3+7Qelqg4Brhfvd8nE=;
+        b=JYMzPk3hSFHXLo050azIf/dvgCbDklzam1RdmyjnHWO+KOulDHo9smd0zP0dqZ3Z+C
+         hGntRohV01UHyFrthanENRKLbzcgje61kzu43qoNusha9P4wh74DV90gFQRRv/TRP0o8
+         AgSmb6rJn1s/oitb9x8zbu3RT0kSr4bB9dytUN2tRnLMO0nXpL+swoeWnKEXdLsCA9An
+         HmOQCDreqkJA0q7trgwwTRug0HwiRCyOQSsu4tUdk/eHE6wIZYhGOk5GAiMauX/cspou
+         wVTzR79luWWEJ4z3pjxZRuVI2YFWBiNBkZTTgiQkq4iN9OcecR3v8Gw57D/kgp5nngpe
+         wEbg==
+X-Gm-Message-State: AOAM532M0xNk1ZafWd/s55hKhDnVFnXk9ROTm9sfBGvF1DYj1dsTikoV
+        kcB9rLsrj3xHmCJpTJQPWmmMKaoeQ3E=
+X-Google-Smtp-Source: ABdhPJwYobbaXl/5L+TIwrPLF2wcCOzUAZyWSy7QJ/ppe0vrU/8Rm6x+FLZbURv6DMJ1pwy1WYkySQ==
+X-Received: by 2002:a5d:6cc9:: with SMTP id c9mr5889235wrc.276.1603975711538;
+        Thu, 29 Oct 2020 05:48:31 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y2sm5021545wrh.0.2020.10.29.05.48.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Oct 2020 05:48:30 -0700 (PDT)
+Message-Id: <06231c315ff6e5a1065b5a77350d7cdc307f760b.1603975709.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.576.v5.git.1603975709.gitgitgadget@gmail.com>
+References: <pull.576.v4.git.1603335680.gitgitgadget@gmail.com>
+        <pull.576.v5.git.1603975709.gitgitgadget@gmail.com>
+From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 29 Oct 2020 12:48:28 +0000
+Subject: [PATCH v5 1/2] ref-filter: handle CRLF at end-of-line more gracefully
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,=20
+From: Philippe Blain <levraiphilippeblain@gmail.com>
 
+The ref-filter code does not correctly handle commit or tag messages
+that use CRLF as the line terminator. Such messages can be created with
+the `--cleanup=verbatim` option of `git commit` and `git tag`, or by
+using `git commit-tree` directly.
 
-> Le 28 oct. 2020 =C3=A0 13:33, Eric Sunshine <sunshine@sunshineco.com> =
-a =C3=A9crit :
->=20
-> On Wed, Oct 28, 2020 at 8:48 AM Philippe Blain via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> 'git blame -h' and 'git log -h' both show '-L <n,m>' and describe =
-this
->> option as "Process only line range n,m, counting from 1". No hint is
->> given that a function name regex can also be used.
->>=20
->> Use <range> instead, and expand the description of the option to =
-mention
->> both modes. Remove "counting from 1" as it's uneeded; it's uncommon =
-to
->> refer to the first line of a file as "line 0".
->>=20
->> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
->> ---
->> diff --git a/builtin/blame.c b/builtin/blame.c
->> @@ -889,7 +889,8 @@ int cmd_blame(int argc, const char **argv, const =
-char *prefix)
->> -               OPT_STRING_LIST('L', NULL, &range_list, N_("n,m"), =
-N_("Process only line range n,m, counting from 1")),
->> +               OPT_STRING_LIST('L', NULL, &range_list, N_("range"),
->> +                               N_("Process only the given line range =
-(<range>=3D<start>,<end>) or function (<range>=3D:<funcname>)")),
->=20
-> The "<range>=3D" bit is redundant and confusing (and ugly). =
-Considering
-> that the description already says "Process only the given line
-> _range_", it should be fine to drop the "<range>=3D" lead-in. Perhaps:
->=20
->    Process only the given line range <start>,<end> or :<funcname>"
->=20
-> This might feel too succinct, but that's often true of short -h help.
-> Such succinctness is generally acceptable as long as more detailed
-> documentation can be discovered easily (such as in the 'man' page).
->=20
-> Same comment regarding the rest of the changes in this patch.
+The function `find_subpos` in ref-filter.c looks for two consecutive
+LFs to find the end of the subject line, a sequence which is absent in
+messages using CRLF. This results in the whole message being parsed as
+the subject line (`%(contents:subject)`), and the body of the message
+(`%(contents:body)`) being empty.
 
-Yes, I agree. I've shortened it for v2 (and also made the changes you =
-suggested
-for 2/6 and 4/6.
+Moreover, in `copy_subject`, which wants to return the subject as a
+single line, '\n' is replaced by space, but '\r' is
+untouched.
 
-Thanks for taking a look,
+This impacts the output of `git branch`, `git tag` and `git
+for-each-ref`.
 
-Philippe.
+This behaviour is a regression for `git branch --verbose`, which
+bisects down to 949af0684c (branch: use ref-filter printing APIs,
+2017-01-10).
 
+Adjust the ref-filter code to be more lenient by hardening the logic in
+`copy_subject` and `find_subpos` to correctly parse messages containing
+CRLF.
+
+Add a new test script, 't3920-crlf-messages.sh', to test the behaviour
+of commands using either the ref-filter or the pretty APIs with messages
+using CRLF line endings. The function `test_crlf_subject_body_and_contents`
+can be used to test that the `--format` option of `branch`, `tag`,
+`for-each-ref`, `log` and `show` correctly displays the subject, body
+and raw content of commit and tag messages using CRLF. Test the
+output of `branch`, `tag` and `for-each-ref` with such commits.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+---
+ ref-filter.c             |  36 ++++++++-----
+ t/t3920-crlf-messages.sh | 108 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 130 insertions(+), 14 deletions(-)
+ create mode 100755 t/t3920-crlf-messages.sh
+
+diff --git a/ref-filter.c b/ref-filter.c
+index c62f6b4822..6476686fea 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1097,14 +1097,19 @@ static const char *copy_email(const char *buf, struct used_atom *atom)
+ 
+ static char *copy_subject(const char *buf, unsigned long len)
+ {
+-	char *r = xmemdupz(buf, len);
++	struct strbuf sb = STRBUF_INIT;
+ 	int i;
+ 
+-	for (i = 0; i < len; i++)
+-		if (r[i] == '\n')
+-			r[i] = ' ';
++	for (i = 0; i < len; i++) {
++		if (buf[i] == '\r' && i + 1 < len && buf[i + 1] == '\n')
++			continue; /* ignore CR in CRLF */
+ 
+-	return r;
++		if (buf[i] == '\n')
++			strbuf_addch(&sb, ' ');
++		else
++			strbuf_addch(&sb, buf[i]);
++	}
++	return strbuf_detach(&sb, NULL);
+ }
+ 
+ static void grab_date(const char *buf, struct atom_value *v, const char *atomname)
+@@ -1228,20 +1233,23 @@ static void find_subpos(const char *buf,
+ 
+ 	/* subject is first non-empty line */
+ 	*sub = buf;
+-	/* subject goes to first empty line */
+-	while (buf < *sig && *buf && *buf != '\n') {
+-		eol = strchrnul(buf, '\n');
+-		if (*eol)
+-			eol++;
+-		buf = eol;
+-	}
++	/* subject goes to first empty line before signature begins */
++	if ((eol = strstr(*sub, "\n\n"))) {
++		eol = eol < *sig ? eol : *sig;
++	/* check if message uses CRLF */
++	} else if (! (eol = strstr(*sub, "\r\n\r\n"))) {
++		/* treat whole message as subject */
++		eol = strrchr(*sub, '\0');
++	}
++	buf = eol;
+ 	*sublen = buf - *sub;
+ 	/* drop trailing newline, if present */
+-	if (*sublen && (*sub)[*sublen - 1] == '\n')
++	while (*sublen && ((*sub)[*sublen - 1] == '\n' ||
++			   (*sub)[*sublen - 1] == '\r'))
+ 		*sublen -= 1;
+ 
+ 	/* skip any empty lines */
+-	while (*buf == '\n')
++	while (*buf == '\n' || *buf == '\r')
+ 		buf++;
+ 	*body = buf;
+ 	*bodylen = strlen(buf);
+diff --git a/t/t3920-crlf-messages.sh b/t/t3920-crlf-messages.sh
+new file mode 100755
+index 0000000000..3f0ce02c3f
+--- /dev/null
++++ b/t/t3920-crlf-messages.sh
+@@ -0,0 +1,108 @@
++#!/bin/sh
++
++test_description='Test ref-filter and pretty APIs for commit and tag messages using CRLF'
++. ./test-lib.sh
++
++LIB_CRLF_BRANCHES=""
++
++create_crlf_ref () {
++	branch="$1" &&
++	cat >.crlf-orig-$branch.txt &&
++	cat .crlf-orig-$branch.txt | append_cr >.crlf-message-$branch.txt &&
++	grep 'Subject' .crlf-orig-$branch.txt | tr '\n' ' ' | sed 's/[ ]*$//' | tr -d '\n' >.crlf-subject-$branch.txt &&
++	grep 'Body' .crlf-message-$branch.txt >.crlf-body-$branch.txt || true &&
++	LIB_CRLF_BRANCHES="${LIB_CRLF_BRANCHES} ${branch}" &&
++	test_tick &&
++	hash=$(git commit-tree HEAD^{tree} -p HEAD -F .crlf-message-${branch}.txt) &&
++	git branch ${branch} ${hash} &&
++	git tag tag-${branch} ${branch} -F .crlf-message-${branch}.txt --cleanup=verbatim
++}
++
++create_crlf_refs () {
++	create_crlf_ref crlf <<-\EOF &&
++	Subject first line
++
++	Body first line
++	Body second line
++	EOF
++	create_crlf_ref crlf-empty-lines-after-subject <<-\EOF &&
++	Subject first line
++
++
++	Body first line
++	Body second line
++	EOF
++	create_crlf_ref crlf-two-line-subject <<-\EOF &&
++	Subject first line
++	Subject second line
++
++	Body first line
++	Body second line
++	EOF
++	create_crlf_ref crlf-two-line-subject-no-body <<-\EOF &&
++	Subject first line
++	Subject second line
++	EOF
++	create_crlf_ref crlf-two-line-subject-no-body-trailing-newline <<-\EOF
++	Subject first line
++	Subject second line
++
++	EOF
++}
++
++test_crlf_subject_body_and_contents() {
++	command_and_args="$@" &&
++	command=$1 &&
++	if test ${command} = "branch" || test ${command} = "for-each-ref" || test ${command} = "tag"
++	then
++		atoms="(contents:subject) (contents:body) (contents)"
++	elif test ${command} = "log" || test ${command} = "show"
++	then
++		atoms="s b B"
++	fi &&
++	files="subject body message" &&
++	while test -n "${atoms}"
++	do
++		set ${atoms} && atom=$1 && shift && atoms="$*" &&
++		set ${files} &&	file=$1 && shift && files="$*" &&
++		test_expect_success "${command}: --format='%${atom}' works with messages using CRLF" "
++			rm -f expect &&
++			for ref in ${LIB_CRLF_BRANCHES}
++			do
++				cat .crlf-${file}-\"\${ref}\".txt >>expect &&
++				printf \"\n\" >>expect
++			done &&
++			git $command_and_args --format=\"%${atom}\" >actual &&
++			test_cmp expect actual
++		"
++	done
++}
++
++
++test_expect_success 'Setup refs with commit and tag messages using CRLF' '
++	test_commit inital &&
++	create_crlf_refs
++'
++
++test_expect_success 'branch: --verbose works with messages using CRLF' '
++	rm -f expect &&
++	for branch in $LIB_CRLF_BRANCHES
++	do
++		printf "  " >>expect &&
++		cat .crlf-subject-${branch}.txt >>expect &&
++		printf "\n" >>expect
++	done &&
++	git branch -v >tmp &&
++	# Remove first two columns, and the line for the currently checked out branch
++	current=$(git branch --show-current) &&
++	grep -v $current <tmp | awk "{\$1=\$2=\"\"}1"  >actual &&
++	test_cmp expect actual
++'
++
++test_crlf_subject_body_and_contents branch --list crlf*
++
++test_crlf_subject_body_and_contents tag --list tag-crlf*
++
++test_crlf_subject_body_and_contents for-each-ref refs/heads/crlf*
++
++test_done
+-- 
+gitgitgadget
 
