@@ -7,223 +7,137 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D831C56201
-	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:16:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50394C4363A
+	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:16:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 020002076B
-	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:16:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F2DDF2076B
+	for <git@archiver.kernel.org>; Thu, 29 Oct 2020 02:16:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="WWC23hif"
+	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="wFVOJhnl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391077AbgJ2CQr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Oct 2020 22:16:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35586 "EHLO
+        id S2391085AbgJ2CQ4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Oct 2020 22:16:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729870AbgJ2CQI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Oct 2020 22:16:08 -0400
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3499AC0613CF
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 19:16:08 -0700 (PDT)
-Received: by mail-qk1-x744.google.com with SMTP id b18so866689qkc.9
-        for <git@vger.kernel.org>; Wed, 28 Oct 2020 19:16:08 -0700 (PDT)
+        with ESMTP id S1729725AbgJ2CPt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Oct 2020 22:15:49 -0400
+Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FB62C0613CF
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 19:15:47 -0700 (PDT)
+Received: by mail-qv1-xf42.google.com with SMTP id t20so757464qvv.8
+        for <git@vger.kernel.org>; Wed, 28 Oct 2020 19:15:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=w74KLyxJJrZ35tgyAAxi/gyAxURp+mAbLnstGNoRi3o=;
-        b=WWC23hifQ2zxGXf4XjDVGScxtAe8/RDhDa6iRguGG6xI4fZJKDfDUkw82dyVvIupgQ
-         iYy0aAtM1TMY+oQqXkBz/saAjgsqxZMXnZ10/CritHy1XgV1vyooO38qdYcG7E7mr2zM
-         G7KdFqo4VtDcbV1bVKbH8W1myZ2aPO58mA09kg5ZLuniFevrMaeJEz80S5Rk95Z9q3I6
-         1hPs7Zeqaj41QhiWZEaSiMoABYUMfgQob8Xs5lediQVDS/QgqT9hRVsuA09JLyDsfFNT
-         bkwsx3Tr1PuMpSWDxk9QJ4Ym4yS/T0PXUcguhmv5dlr7sY4dysBUgmm9DQrtaRoR2v3m
-         ujkA==
+        bh=nN6bJrj4N/km2e+ROlSwUAEO25dq+vCA518kUob9Gws=;
+        b=wFVOJhnl6iHEsSMayaEubiH7SFMOUli/rkv9VTIFRr1F7RIP+ZG2xh6tGrgROjRFmC
+         jqfmL81Bto6x3xQEQ6fKHVTuwqwZOKxYy11B8Td4djjf/h2q29pXhzmhWYCDWPQIeX1y
+         tI+RP32DOQGRze8u1YfWcUM4TJcazET0OlklVIV1KakiV7OtSaYIewpLvObu+mFl5Fu4
+         ZNfixdQ7QsiSUbhGKDWobEHKKgmUeriDhWi0IqRb9R+NLvrkz2UklRZudkhZsCA1iRMJ
+         zEx1zLQh7qSQXIFmTUYlKqG0Pngxy/i0GgjK6xy7bSo2Bekz83FsKOgqv413YeabldYp
+         UDXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=w74KLyxJJrZ35tgyAAxi/gyAxURp+mAbLnstGNoRi3o=;
-        b=onqIwFORUnVLalo4kx9jnd2vWhTSvYfZxhy2SchrRvZA+uwuoXRngpz/8sr5oqEJAX
-         L3rG270AjJAuk4FiGUVbaAu9mT+ePWg5eAJ9HNDG4okIzv139ZaplaaQCsZ+AUXduT8H
-         jJJaRr95gglr0uTWxwDjFySHrXniAZEtR+DIH4iS6j1+s44IidcLjtZtqE1o/2NfnsbR
-         svQK67B5JRZGIexy8ETv7UltUpQ7AqqrjrKbjD2LPhq/v0Tv6K1R4UEUzk+xdB85k0Jn
-         FwGZt4pHxexbqj9UqK8aKrwei8KJSYOsD5hvipVXxtT8BLevxN2CoHbFSqPA7mpMV1IH
-         ASjg==
-X-Gm-Message-State: AOAM5336dH5FLS/sL5xTveOkTSPWRcMzbG98FhZzMpBHRkydR54ONyyz
-        b3VH4+QkKf41cp1h4Ii7B0lwVIRWoA9BOQ==
-X-Google-Smtp-Source: ABdhPJzs7lgts87MQV4ng5/H2++YDQy1P6tLQpvmbq181IAlY0YYexv++AGvxLZsXeR31KSok2eCug==
-X-Received: by 2002:a37:448c:: with SMTP id r134mr1735581qka.357.1603937767034;
-        Wed, 28 Oct 2020 19:16:07 -0700 (PDT)
+        bh=nN6bJrj4N/km2e+ROlSwUAEO25dq+vCA518kUob9Gws=;
+        b=HUdyITzgMZtzmrAu/+ahblR3qFClU9pxr5ClWaZDm4pt6W2KqG2EF0IC0yH2sG6oQr
+         846aiWVYfl9vJKKbMtR3pUtWkP8BU6t1/ZEpxJ2bBvKii6JfJLTxjdPdYKHLCiDNT5In
+         0kFKttjk8TayDkq6Sw+nwJxwGMdm4caW9eruondolDG7K4i9uGfb1o685wtxO5Gw4FLR
+         jdv2yGm5rvJdZu+IWUX8ossKJPUuzz893CP5/Ghl8t/rzQE4TMFwAWlMtwNoYA6AVtcL
+         /oXoeXSsYOrYRKxNxFtKJFym644XYuk8RkPTEoYjsa4tgHPeFZ7O3SsHS0NiZuIi1nMC
+         hTBw==
+X-Gm-Message-State: AOAM533zXYoe8kSIe1TcE3xep+IVhtPSJaack/CNO9ukRNNXk5IraFC7
+        fUFs15dPMdSs9CO/bDgxeR6MXZVvLvGrJw==
+X-Google-Smtp-Source: ABdhPJyT4bieDGlyv5BE/Q707KWsuubgLgSo+N6Mj50e+sX1KMa0QDibZPuvlCVzw4qao0EbbIcLPg==
+X-Received: by 2002:a0c:b2c6:: with SMTP id d6mr2474795qvf.38.1603937746420;
+        Wed, 28 Oct 2020 19:15:46 -0700 (PDT)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id n201sm608371qka.32.2020.10.28.19.16.03
+        by smtp.gmail.com with ESMTPSA id n201sm608371qka.32.2020.10.28.19.15.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Oct 2020 19:16:06 -0700 (PDT)
+        Wed, 28 Oct 2020 19:15:45 -0700 (PDT)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, git@jeffhostetler.com, chriscool@tuxfamily.org,
         peff@peff.net, newren@gmail.com, jrnieder@gmail.com,
         martin.agren@gmail.com
-Subject: [PATCH v3 12/19] parallel-checkout: support progress displaying
-Date:   Wed, 28 Oct 2020 23:14:49 -0300
-Message-Id: <9cfeb4821ca88fe25122798239316c4524f28c92.1603937110.git.matheus.bernardino@usp.br>
+Subject: [PATCH v3 07/19] entry: extract cache_entry update from write_entry()
+Date:   Wed, 28 Oct 2020 23:14:44 -0300
+Message-Id: <91ef17f533e6ed8ba2410ca6b966f06ca40973bb.1603937110.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <cover.1603937110.git.matheus.bernardino@usp.br>
 References: <cover.1603937110.git.matheus.bernardino@usp.br>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Original-patch-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+This code will be used by the parallel checkout functions, outside
+entry.c, so extract it to a public function.
+
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- parallel-checkout.c | 34 +++++++++++++++++++++++++++++++---
- parallel-checkout.h |  4 +++-
- unpack-trees.c      | 11 ++++++++---
- 3 files changed, 42 insertions(+), 7 deletions(-)
+ entry.c | 25 ++++++++++++++++---------
+ entry.h |  2 ++
+ 2 files changed, 18 insertions(+), 9 deletions(-)
 
-diff --git a/parallel-checkout.c b/parallel-checkout.c
-index a5508e27c2..c5c449d224 100644
---- a/parallel-checkout.c
-+++ b/parallel-checkout.c
-@@ -2,6 +2,7 @@
- #include "entry.h"
- #include "parallel-checkout.h"
- #include "pkt-line.h"
-+#include "progress.h"
- #include "run-command.h"
- #include "streaming.h"
- #include "thread-utils.h"
-@@ -16,6 +17,8 @@ struct parallel_checkout {
- 	enum pc_status status;
- 	struct parallel_checkout_item *items;
- 	size_t nr, alloc;
-+	struct progress *progress;
-+	unsigned int *progress_cnt;
- };
- 
- static struct parallel_checkout parallel_checkout = { 0 };
-@@ -125,6 +128,20 @@ int enqueue_checkout(struct cache_entry *ce, struct conv_attrs *ca)
- 	return 0;
+diff --git a/entry.c b/entry.c
+index b36071a610..1d2df188e5 100644
+--- a/entry.c
++++ b/entry.c
+@@ -251,6 +251,18 @@ int finish_delayed_checkout(struct checkout *state, int *nr_checkouts)
+ 	return errs;
  }
  
-+size_t pc_queue_size(void)
++void update_ce_after_write(const struct checkout *state, struct cache_entry *ce,
++			   struct stat *st)
 +{
-+	return parallel_checkout.nr;
-+}
-+
-+static void advance_progress_meter(void)
-+{
-+	if (parallel_checkout.progress) {
-+		(*parallel_checkout.progress_cnt)++;
-+		display_progress(parallel_checkout.progress,
-+				 *parallel_checkout.progress_cnt);
++	if (state->refresh_cache) {
++		assert(state->istate);
++		fill_stat_cache_info(state->istate, ce, st);
++		ce->ce_flags |= CE_UPDATE_IN_BASE;
++		mark_fsmonitor_invalid(state->istate, ce);
++		state->istate->cache_changed |= CE_ENTRY_CHANGED;
 +	}
 +}
 +
- static int handle_results(struct checkout *state)
+ static int write_entry(struct cache_entry *ce,
+ 		       char *path, const struct checkout *state, int to_tempfile)
  {
- 	int ret = 0;
-@@ -173,6 +190,7 @@ static int handle_results(struct checkout *state)
- 			 */
- 			ret |= checkout_entry_ca(pc_item->ce, &pc_item->ca,
- 						 state, NULL, NULL);
-+			advance_progress_meter();
- 			break;
- 		case PC_ITEM_PENDING:
- 			have_pending = 1;
-@@ -506,6 +524,9 @@ static void parse_and_save_result(const char *line, int len,
- 	pc_item->status = res->status;
- 	if (st)
- 		pc_item->st = *st;
-+
-+	if (res->status != PC_ITEM_COLLIDED)
-+		advance_progress_meter();
- }
+@@ -371,15 +383,10 @@ static int write_entry(struct cache_entry *ce,
  
- 
-@@ -565,11 +586,16 @@ static void write_items_sequentially(struct checkout *state)
- {
- 	size_t i;
- 
--	for (i = 0; i < parallel_checkout.nr; ++i)
--		write_pc_item(&parallel_checkout.items[i], state);
-+	for (i = 0; i < parallel_checkout.nr; ++i) {
-+		struct parallel_checkout_item *pc_item = &parallel_checkout.items[i];
-+		write_pc_item(pc_item, state);
-+		if (pc_item->status != PC_ITEM_COLLIDED)
-+			advance_progress_meter();
-+	}
- }
- 
--int run_parallel_checkout(struct checkout *state, int num_workers, int threshold)
-+int run_parallel_checkout(struct checkout *state, int num_workers, int threshold,
-+			  struct progress *progress, unsigned int *progress_cnt)
- {
- 	int ret;
- 
-@@ -577,6 +603,8 @@ int run_parallel_checkout(struct checkout *state, int num_workers, int threshold
- 		BUG("cannot run parallel checkout: uninitialized or already running");
- 
- 	parallel_checkout.status = PC_RUNNING;
-+	parallel_checkout.progress = progress;
-+	parallel_checkout.progress_cnt = progress_cnt;
- 
- 	if (parallel_checkout.nr < num_workers)
- 		num_workers = parallel_checkout.nr;
-diff --git a/parallel-checkout.h b/parallel-checkout.h
-index 0c9984584e..6c3a016c0b 100644
---- a/parallel-checkout.h
-+++ b/parallel-checkout.h
-@@ -24,13 +24,15 @@ void init_parallel_checkout(void);
-  * write and return 0.
-  */
- int enqueue_checkout(struct cache_entry *ce, struct conv_attrs *ca);
-+size_t pc_queue_size(void);
- 
- /*
-  * Write all the queued entries, returning 0 on success. If the number of
-  * entries is smaller than the specified threshold, the operation is performed
-  * sequentially.
-  */
--int run_parallel_checkout(struct checkout *state, int num_workers, int threshold);
-+int run_parallel_checkout(struct checkout *state, int num_workers, int threshold,
-+			  struct progress *progress, unsigned int *progress_cnt);
- 
- /****************************************************************
-  * Interface with checkout--helper
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 117ed42370..e05e6ceff2 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -471,17 +471,22 @@ static int check_updates(struct unpack_trees_options *o,
- 		struct cache_entry *ce = index->cache[i];
- 
- 		if (ce->ce_flags & CE_UPDATE) {
-+			size_t last_pc_queue_size = pc_queue_size();
-+
- 			if (ce->ce_flags & CE_WT_REMOVE)
- 				BUG("both update and delete flags are set on %s",
- 				    ce->name);
--			display_progress(progress, ++cnt);
- 			ce->ce_flags &= ~CE_UPDATE;
- 			errs |= checkout_entry(ce, &state, NULL, NULL);
-+
-+			if (last_pc_queue_size == pc_queue_size())
-+				display_progress(progress, ++cnt);
- 		}
+ finish:
+ 	if (state->refresh_cache) {
+-		assert(state->istate);
+-		if (!fstat_done)
+-			if (lstat(ce->name, &st) < 0)
+-				return error_errno("unable to stat just-written file %s",
+-						   ce->name);
+-		fill_stat_cache_info(state->istate, ce, &st);
+-		ce->ce_flags |= CE_UPDATE_IN_BASE;
+-		mark_fsmonitor_invalid(state->istate, ce);
+-		state->istate->cache_changed |= CE_ENTRY_CHANGED;
++		if (!fstat_done && lstat(ce->name, &st) < 0)
++			return error_errno("unable to stat just-written file %s",
++					   ce->name);
++		update_ce_after_write(state, ce , &st);
  	}
--	stop_progress(&progress);
- 	if (pc_workers > 1)
--		errs |= run_parallel_checkout(&state, pc_workers, pc_threshold);
-+		errs |= run_parallel_checkout(&state, pc_workers, pc_threshold,
-+					      progress, &cnt);
-+	stop_progress(&progress);
- 	errs |= finish_delayed_checkout(&state, NULL);
- 	git_attr_set_direction(GIT_ATTR_CHECKIN);
+ delayed:
+ 	return 0;
+diff --git a/entry.h b/entry.h
+index f860e60846..664aed1576 100644
+--- a/entry.h
++++ b/entry.h
+@@ -39,5 +39,7 @@ int finish_delayed_checkout(struct checkout *state, int *nr_checkouts);
+ void unlink_entry(const struct cache_entry *ce);
+ void *read_blob_entry(const struct cache_entry *ce, unsigned long *size);
+ int fstat_checkout_output(int fd, const struct checkout *state, struct stat *st);
++void update_ce_after_write(const struct checkout *state, struct cache_entry *ce,
++			   struct stat *st);
  
+ #endif /* ENTRY_H */
 -- 
 2.28.0
 
