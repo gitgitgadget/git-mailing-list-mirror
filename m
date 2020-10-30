@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8607EC4741F
-	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 16:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D13D1C00A89
+	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 16:43:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 276F420A8B
-	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 16:26:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7397B20725
+	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 16:43:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="grzpOev7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sKEpmzmk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726674AbgJ3Q0P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Oct 2020 12:26:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53206 "EHLO
+        id S1726692AbgJ3Qnp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Oct 2020 12:43:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726424AbgJ3Q0O (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Oct 2020 12:26:14 -0400
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD295C0613CF
-        for <git@vger.kernel.org>; Fri, 30 Oct 2020 09:26:14 -0700 (PDT)
-Received: by mail-oi1-x242.google.com with SMTP id k65so7199238oih.8
-        for <git@vger.kernel.org>; Fri, 30 Oct 2020 09:26:14 -0700 (PDT)
+        with ESMTP id S1725808AbgJ3Qnp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Oct 2020 12:43:45 -0400
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32073C0613CF
+        for <git@vger.kernel.org>; Fri, 30 Oct 2020 09:43:45 -0700 (PDT)
+Received: by mail-ot1-x341.google.com with SMTP id b2so6107375ots.5
+        for <git@vger.kernel.org>; Fri, 30 Oct 2020 09:43:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=D2K7OWsfXKHdYc+ORuDZkDhohuRM2BceAay9hovC4Es=;
-        b=grzpOev7z8RjSeF5EOdU4oTta++gnfMkqLs5LMT3U1Gdt3ghve8EakxzbYmIKYkou1
-         MSt2+6gbfaDkh1Bsex36SGqjnngndrB83TeONTfdGJyVakcl1nP2GXXK6qKloBgbuOi3
-         yvP8ixAoH/lvQcNLolaH436FX6ElbmSxuju6uSHYZQQZb6GBW3tdB2Df5DPZHKp6RjD5
-         CaoHKfuAILtE1f9sujgqjVDpPbyn+0RPFVq/RZp9n6Wu9NwU0Hv4e1H+/n0DASjnXDNf
-         eoyuXgL1/+10+CrqwGIsr4si+GHhdteWRtsjxaHNCJtkF8KEbQ1ifJ2sNAI2gUetyxdL
-         yAaA==
+        bh=Y86LTROoDDdhkKbRUhKxJNu7n7EYHfXLnv21tkrrugc=;
+        b=sKEpmzmk37igS84M69MCYCINNvGh1SMTj3fi5TuTlG4cMqlhYVPysKN3MmM3DGff3s
+         fmuPauhmNKafA7cHakQLesPRsTG6aPwTAEbhN0E5zgmTuPJ6nzXgycz7FMQigQwP65j4
+         M3DT4mlimbl81LtCemSkRoWa9b8OF8RzswYGc2iAzF/514OoSGmGkeZ6ngmeD7fabFg9
+         0eH5MgXl1596TvB7ZlezfCkYFhhqIvh5/2UwmYm4MhWAVL6cBLMkInghWu+8R6i+M6l9
+         b09JpkGT1Wgw3lUA/7voNxk72088IGG99Xor1xfi72zBCJ2h1e1iH1u/rtTUWP7RhntW
+         MBKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=D2K7OWsfXKHdYc+ORuDZkDhohuRM2BceAay9hovC4Es=;
-        b=qwGRMgW+5yPLTvLLsc/L4zue0VEXi0ow4ItFCknK46vlJrub59rbl35mRkFS1wpROO
-         rT5H0FC1nyEvgf7Ba9bP3vFxb9ZK9rACvxw5eyCoCgE0qiRLdcJ64yU74q28UecxLKoh
-         GRpGBo01LdUi4Ip2pA7AtTuPkMeCkj9PgLjHQk8qLU/YcCcEQ73w649GgfkacJGXVgza
-         sQIocrxn5Gpyebnx/qeAeQ7YbTOwLZZp1pslxpSKCM9rnTmuSZUyWsN//PqvG8cyAdv6
-         wAUT/u4udO/OTeivg6XWnJA3tovioISYMP5/IK19E7FUrNUFHufolSwJdIDj494qEw1C
-         ED7A==
-X-Gm-Message-State: AOAM532NEX+jvqg7MsaRwqgRiuPN4cDbLXtoypCTxvtQ6F1DbkO9SmQX
-        SwBBGEZcbdDXRv5Gph8XCqAcKntcOdlqXtL/IH4=
-X-Google-Smtp-Source: ABdhPJzNynJzmZYF/U9UvleCe84RgqHz0ufSUoai7VBjlbWESsqjcU+ndx9boFuJ/I94A4XfVKLzPvtwFBlNyKtfWT0=
-X-Received: by 2002:a05:6808:17:: with SMTP id u23mr2102716oic.31.1604075173950;
- Fri, 30 Oct 2020 09:26:13 -0700 (PDT)
+        bh=Y86LTROoDDdhkKbRUhKxJNu7n7EYHfXLnv21tkrrugc=;
+        b=CgN7sTP3m7+2D96g8dOEiPIRVHeW6oho63EIx8i8PpQiyphU1PcgNPbNJhXby8ypj6
+         jYhAM3960hhd4KzwiBQnvtaajiGbuSH45+qBRQ2l4t9jVvNNPIOPJmGE4ysCOe6Sr9il
+         RgSKEFugY+zusBbomlb1126CWAs23ZjRHxM7XeFvaOdVBsq9hNKmvriZ/57LxIsDPcpz
+         icLRo3vHrfEU93p5L2lAAII9pSp2ofWITunVlWiVcHhd4ZCXGPwibT50ArXsmf+0oTWS
+         SF2hP6tIEGCFSpy6Eznf7UApEP5s/1Q6x3MQLkRTq0TSA/9HTk3yJfO2yFRs7eEVuSKv
+         WbmA==
+X-Gm-Message-State: AOAM531GK8oj+eGKsiB3Z0ORnfpl7XeyCMQvIMUfAme9CkfN/8WuYpkE
+        Lcv0ibbznQYZQX+3mGhFba8nlj9dDY3vJPaye5k=
+X-Google-Smtp-Source: ABdhPJx0gakjqoWPNvKzUwqNTVq8jX4EucEfKy9TC/szEJhHBdt4TDaqdZ10DC7bcqblTKpuM+OQjZIPv9NDz48kfN0=
+X-Received: by 2002:a9d:6003:: with SMTP id h3mr2409196otj.345.1604076224535;
+ Fri, 30 Oct 2020 09:43:44 -0700 (PDT)
 MIME-Version: 1.0
 References: <pull.835.git.git.1598035949.gitgitgadget@gmail.com>
- <pull.835.v2.git.git.1602549650.gitgitgadget@gmail.com> <5c7507f55b09e24c0bfe87cc3df06213cfd1235b.1602549650.git.gitgitgadget@gmail.com>
- <20201030141233.GE3277724@coredump.intra.peff.net>
-In-Reply-To: <20201030141233.GE3277724@coredump.intra.peff.net>
+ <pull.835.v2.git.git.1602549650.gitgitgadget@gmail.com> <61b5bf11103a7bd12de8fd066e128c469da3a0a4.1602549650.git.gitgitgadget@gmail.com>
+ <20201030142350.GF3277724@coredump.intra.peff.net>
+In-Reply-To: <20201030142350.GF3277724@coredump.intra.peff.net>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 30 Oct 2020 09:26:02 -0700
-Message-ID: <CABPp-BGTjUdgmiEneVNsLWyODZtH-d+x6uTFfwbOtyba3K76HQ@mail.gmail.com>
-Subject: Re: [PATCH v2 05/10] strmap: new utility functions
+Date:   Fri, 30 Oct 2020 09:43:33 -0700
+Message-ID: <CABPp-BEBQ0kAQVRuXRoZnRAm_BmAXUKv9XtC+R4UH0VDZBw6Sg@mail.gmail.com>
+Subject: Re: [PATCH v2 06/10] strmap: add more utility functions
 To:     Jeff King <peff@peff.net>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
@@ -70,207 +70,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 30, 2020 at 7:12 AM Jeff King <peff@peff.net> wrote:
+On Fri, Oct 30, 2020 at 7:23 AM Jeff King <peff@peff.net> wrote:
 >
-> On Tue, Oct 13, 2020 at 12:40:45AM +0000, Elijah Newren via GitGitGadget wrote:
+> On Tue, Oct 13, 2020 at 12:40:46AM +0000, Elijah Newren via GitGitGadget wrote:
 >
-> > Add strmap as a new struct and associated utility functions,
-> > specifically for hashmaps that map strings to some value.  The API is
-> > taken directly from Peff's proposal at
-> > https://lore.kernel.org/git/20180906191203.GA26184@sigill.intra.peff.net/
+> > strmap_get_entry() is similar to strmap_get() except that instead of just
+> > returning the void* value that the string maps to, it returns the
+> > strmap_entry that contains both the string and the void* value (or
+> > NULL if the string isn't in the map).  This is helpful because it avoids
+> > multiple lookups, e.g. in some cases a caller would need to call:
+> >   * strmap_contains() to check that the map has an entry for the string
+> >   * strmap_get() to get the void* value
+> >   * <do some work to update the value>
+> >   * strmap_put() to update/overwrite the value
 >
-> This looks overall sane to me. I mentioned elsewhere that we could be
-> using FLEXPTR_ALLOC to save an extra allocation. I think it's easy and
-> worth doing here, as the logic would be completely contained within
-> strmap_put():
+> Oh, I guess I should have read ahead when responding to the last patch. :)
 >
->   if (strdup_strings)
->         FLEXPTR_ALLOC_STR(entry, key, str);
->   else {
->         entry = xmalloc(sizeof(*entry));
->         entry->key = str;
->   }
+> Yes, this function makes perfect sense to have (along with the simpler
+> alternatives for the callers that don't need this complexity).
 >
-> And free_entries() then doesn't even have to care about strdup_strings.
-
-Yeah, as you noted in your review of 10/10 this idea wouldn't play
-well with the later mem_pool changes.
-
-> > A couple of items of note:
-> >
-> >   * Similar to string-list, I have a strdup_strings setting.  However,
-> >     unlike string-list, strmap_init() does not take a parameter for this
-> >     setting and instead automatically sets it to 1; callers who want to
-> >     control this detail need to instead call strmap_ocd_init().
+> >  strmap.c | 20 ++++++++++++++++++++
+> >  strmap.h | 38 ++++++++++++++++++++++++++++++++++++++
 >
-> That seems reasonable. It could just be a parameter, but I like that you
-> push people in the direction of doing the simple and safe thing, rather
-> than having them wonder whether they ought to set strdup_strings or not.
-
-Well, in my first round of the series where I did make it a parameter
-you balked pretty loudly.  ;-)
-
-> >   * I do not have a STRMAP_INIT macro.  I could possibly add one, but
-> >       #define STRMAP_INIT { { NULL, cmp_str_entry, NULL, 0, 0, 0, 0, 0 }, 1 }
-> >     feels a bit unwieldy and possibly error-prone in terms of future
-> >     expansion of the hashmap struct.  The fact that cmp_str_entry needs to
-> >     be in there prevents us from passing all zeros for the hashmap, and makes
-> >     me worry that STRMAP_INIT would just be more trouble than it is worth.
+> The implementation all looks pretty straight-forward.
 >
-> You can actually omit everything after cmp_str_entry, and those fields
-> would all get zero-initialized. But we also allow C99 designed
-> initializers these days. Coupled with the HASHMAP_INIT() I mentioned in
-> the earlier email, you'd have:
->
->   #define STRMAP_INIT { \
->                 .map = HASHMAP_INIT(cmp_strmap_entry, NULL), \
->                 .strdup_strings = 1, \
->           }
->
-> which seems pretty maintainable.
-
-Makes sense; will add.
-
-> > +static int cmp_strmap_entry(const void *hashmap_cmp_fn_data,
-> > +                         const struct hashmap_entry *entry1,
-> > +                         const struct hashmap_entry *entry2,
-> > +                         const void *keydata)
+> > +void strmap_remove(struct strmap *map, const char *str, int free_util)
 > > +{
-> > +     const struct strmap_entry *e1, *e2;
-> > +
-> > +     e1 = container_of(entry1, const struct strmap_entry, ent);
-> > +     e2 = container_of(entry2, const struct strmap_entry, ent);
-> > +     return strcmp(e1->key, e2->key);
+> > +     struct strmap_entry entry, *ret;
+> > +     hashmap_entry_init(&entry.ent, strhash(str));
+> > +     entry.key = str;
+> > +     ret = hashmap_remove_entry(&map->map, &entry, ent, NULL);
+> > +     if (!ret)
+> > +             return;
+> > +     if (free_util)
+> > +             free(ret->value);
+> > +     if (map->strdup_strings)
+> > +             free((char*)ret->key);
+> > +     free(ret);
 > > +}
 >
-> I expected to use keydata here, but it's pretty easy to make a fake
-> strmap_entry because of the use of the "key" pointer. So that makes
-> sense.
+> Another spot that would be simplified by using FLEXPTRs. :)
 >
-> > +static void strmap_free_entries_(struct strmap *map, int free_util)
->
-> You use the term "value" for the mapped-to value in this iteration. So
-> perhaps free_values here (and in other functions) would be a better
-> name?
-
-Oops, yes, definitely.
-
-> > +     /*
-> > +      * We need to iterate over the hashmap entries and free
-> > +      * e->key and e->value ourselves; hashmap has no API to
-> > +      * take care of that for us.  Since we're already iterating over
-> > +      * the hashmap, though, might as well free e too and avoid the need
-> > +      * to make some call into the hashmap API to do that.
-> > +      */
-> > +     hashmap_for_each_entry(&map->map, &iter, e, ent) {
-> > +             if (free_util)
-> > +                     free(e->value);
-> > +             if (map->strdup_strings)
-> > +                     free((char*)e->key);
-> > +             free(e);
-> > +     }
+> > +/*
+> > + * Return whether the strmap is empty.
+> > + */
+> > +static inline int strmap_empty(struct strmap *map)
+> > +{
+> > +     return hashmap_get_size(&map->map) == 0;
 > > +}
 >
-> Yep, makes sense.
+> Maybe:
 >
-> > +void strmap_clear(struct strmap *map, int free_util)
-> > +{
-> > +     strmap_free_entries_(map, free_util);
-> > +     hashmap_free(&map->map);
-> > +}
+>   return strmap_get_size(&map) == 0;
 >
-> This made me wonder about a partial_clear(), but it looks like that
-> comes later.
->
-> > +void *strmap_put(struct strmap *map, const char *str, void *data)
-> > +{
-> > +     struct strmap_entry *entry = find_strmap_entry(map, str);
-> > +     void *old = NULL;
-> > +
-> > +     if (entry) {
-> > +             old = entry->value;
-> > +             entry->value = data;
->
-> Here's a weird hypothetical. If strdup_strings is not set and I do:
->
->   const char *one = xstrdup("foo");
->   const char *two = xstrdup("foo");
->
->   hashmap_put(map, one, x);
->   hashmap_put(map, two, y);
->
-> it's clear that the value should be pointing to "y" afterwards (and you
-> return "x" so the caller can free it or whatever, good).
->
-> But which key should the entry be pointing to? The old one or the new
-> one? I'm trying and failing to think of a case where it would matter.
-> Certainly I could add a free() to the toy above where it would, but it
-> feels like a real caller would have to have pretty convoluted memory
-> lifetime semantics for it to make a difference.
->
-> So I'm not really asking for a particular behavior, but just bringing it
-> up in case you can think of something relevant.
+> would be slightly simpler (and more importantly, show callers the
+> equivalence between the two).
 
-I'll keep mulling it over, but I likewise can't currently think of a
-case where it'd matter.
-
->
-> > +     } else {
-> > +             /*
-> > +              * We won't modify entry->key so it really should be const.
-> > +              */
-> > +             const char *key = str;
->
-> The "should be" here confused me. It _is_ const. I'd probably just
-> delete the comment entirely, but perhaps:
->
->   /*
->    * We'll store a const pointer. For non-duplicated strings, they belong
->    * to the caller and we received them as const in the first place. For
->    * our duplicated ones, they do point to memory we own, but they're
->    * still conceptually constant within the lifetime of an entry.
->    */
->
-> Though it might make more sense in the struct definition, not here.
-
-Either I was (mistakenly) worried about "I'm going to allocate and
-copy, but during the copy it isn't actually const", or this is a
-leftover artifact from some of the other iterations I tried.  Anyway,
-I think this comment isn't useful; I'll just strike it.
-
-> > +void *strmap_get(struct strmap *map, const char *str)
-> > +{
-> > +     struct strmap_entry *entry = find_strmap_entry(map, str);
-> > +     return entry ? entry->value : NULL;
-> > +}
->
-> Just noting that the caller can't tell the difference between "no such
-> entry" and "the entry is storing NULL". I think the simplicity offered
-> by this interface makes it worth having (and being the primary one). If
-> some caller really needs to tell the difference between the two, we can
-> add another function later.
->
-> Obviously they could use strmap_contains(), but that would mean two hash
-> lookups.
-
-Yep, addressed later by strmap_get_entry() in another patch, as you
-noticed in your later review.
+Makes sense; will change it.
 
 > > +/*
-> > + * Same as strmap_init, but for those who want to control the memory management
-> > + * carefully instead of using the default of strdup_strings=1.
-> > + * (OCD = Obsessive Compulsive Disorder, a joke that those who use this function
-> > + * are obsessing over minor details.)
+> > + * iterate through @map using @iter, @var is a pointer to a type strmap_entry
 > > + */
-> > +void strmap_ocd_init(struct strmap *map,
-> > +                  int strdup_strings);
+> > +#define strmap_for_each_entry(mystrmap, iter, var)   \
+> > +     for (var = hashmap_iter_first_entry_offset(&(mystrmap)->map, iter, \
+> > +                                                OFFSETOF_VAR(var, ent)); \
+> > +             var; \
+> > +             var = hashmap_iter_next_entry_offset(iter, \
+> > +                                                  OFFSETOF_VAR(var, ent)))
 >
-> I'm not personally bothered by this name, but I wonder if some people
-> may be (because they have or know somebody who actually has OCD).
+> Makes sense. This is like hashmap_for_each_entry, but we don't need
+> anyone to tell us the offset of "ent" within the struct.
 >
-> Perhaps strmap_init_with_options() would be a better name? It likewise
-> would extend well if we want to add other non-default options later.
+> I suspect we need the same "var = NULL" that hashmap recently got in
+> 0ad621f61e (hashmap_for_each_entry(): workaround MSVC's runtime check
+> failure #3, 2020-09-30). Alternatively, I think you could drop
+> OFFSETOF_VAR completely in favor offsetof(struct strmap_entry, ent).
+>
+> In fact, since we know the correct type for "var", we _could_ declare it
+> ourselves in a new block enclosing the loop. But that is probably making
+> the code too magic; people reading the code would say "huh? where is
+> entry declared?".
 
-Doh!  That's going to push a bunch of lines past 80 characters.  Sigh...
-
-It's probably a better name though; I'll change it.
+Actually, since we know ent is the first entry in strmap, the offset
+is always 0.  So can't we just avoid OFFSETOF_VAR() and offsetof()
+entirely, by just using hashmap_iter_first() and hashmap_iter_next()?
+I'm going to try that.
