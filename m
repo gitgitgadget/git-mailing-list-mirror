@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D79EAC4741F
-	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 03:42:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B64DC4742C
+	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 03:42:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6D1A720738
+	by mail.kernel.org (Postfix) with ESMTP id 04FEA20738
 	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 03:42:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g023wwbF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BR/2QlOn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726253AbgJ3Dmh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Oct 2020 23:42:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47328 "EHLO
+        id S1726279AbgJ3Dmi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Oct 2020 23:42:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725831AbgJ3Dme (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1725853AbgJ3Dme (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 29 Oct 2020 23:42:34 -0400
-Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2A7BC0613D8
-        for <git@vger.kernel.org>; Thu, 29 Oct 2020 20:41:50 -0700 (PDT)
-Received: by mail-oi1-x244.google.com with SMTP id z23so5411845oic.1
-        for <git@vger.kernel.org>; Thu, 29 Oct 2020 20:41:50 -0700 (PDT)
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 633E8C0613D5
+        for <git@vger.kernel.org>; Thu, 29 Oct 2020 20:41:47 -0700 (PDT)
+Received: by mail-ot1-x342.google.com with SMTP id n11so4473674ota.2
+        for <git@vger.kernel.org>; Thu, 29 Oct 2020 20:41:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=oQ3dGlZGxZVT3M098u1YqkVcMHlVyY9FmXORDjr2ygk=;
-        b=g023wwbFKFlGCpSNe/GP2WXHloR3InzR6EiM4JGSQq+gPGr49xCdIsKD4ill0EM0Vl
-         2sZsnxQfy1vARzNV91MyBGejeug5V2yOajbAvpUOGxun4HSV40xrV/Sn6OuijWFGTBfO
-         L7Xv6sLPcrNPmOZXg3edb1vgxuSAjzbX4AQ88uKmkKH7V7beWG9vfX8qTK74A24RjR+P
-         5DrOCqaVeG85JbQ0syotLyxQUZ3biJ4ZmNVgaD+xxrGsmQrPlbhHd51gc44dAfRILhfJ
-         K8h0T3ZI+Abrwc5Ileeb3zaxSeYDH8yJDqNfV7JiAUsn2pFIK2/G7FcXOxJVG8P8ibAc
-         ermw==
+        bh=yK+JG9hRuWwbWaDVifd7XcrTPIdCvS6YG9pr3fsEa0g=;
+        b=BR/2QlOnHF9nre+tlaMxpg2z/DjmRS9McQkYexbFmVQCNUC2EYUIwzphX0E6hrN0ry
+         z+iz1K9Pfku+IF83+sCZjUCZVmh2W1Oy/EHqgqPgaTaGn2qlGr33L+a4v9SvBTzVVSYJ
+         3U4/0Zvuc9gVaAdfaTH67/rx8QOHt37Ra10ad5/NfYNNau7RIEKhl1A9ei5nr20kWx+W
+         3JSCBIsRmxZLO2pGaVVvsDymVQsWMvP6aJQeNmnnVarlY/IYeRUEKXLPRZJIHa+pC+Dj
+         RDFYof7DSmdzrMmWuusC5wlH2ucP0AVOPCl28zsyZbYz3kMB53LvTlhAGEVFGxLG+UJ4
+         grKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=oQ3dGlZGxZVT3M098u1YqkVcMHlVyY9FmXORDjr2ygk=;
-        b=LolllxYnUnh0gU7LIp0wOSZq1lBQu3UgfKBvK6R01xljNFBJSIUbESsc1ZlUnntN4n
-         LhwuTHJapbrTQbIkKn4yDkHp2JRb/XN7Hdriw0s2X8BMI/4JFXrC145o0DefgmNiiZgi
-         VoeXXdGB+XaA9lJqBjQSeohrImKqAfLc3oiVytd49db3oJoZ76FrzfnYCOzpqWuhnHe2
-         VJTuxihqsf8WfFEf18T7jttF2vwwmoladQqAf+/MzRc1M2X9t3qESyzpmtX/OQ0WGMgk
-         OCsYolK4BeaEoz9O7Zmfr7XIKFBaoKMdMECm7ACERORzD3bGcTnaMDGWe4AmQPS0mArC
-         9l6w==
-X-Gm-Message-State: AOAM530ybKjUk6QBh80WcTYjLGK9qLZGU2LRXZXnzDNEfU2s6SIMqoR0
-        pKpDDEsSnq+WDf3zYbU5l3z+mnV+L2RM9w==
-X-Google-Smtp-Source: ABdhPJwKcJ2a8c0oPH5Yh7sPgY1YWheGHB6PqWys2FCmRHY/O1bfelKjahd/7dyWUKnqUS1ydz2L5Q==
-X-Received: by 2002:aca:7592:: with SMTP id q140mr279044oic.87.1604029309845;
-        Thu, 29 Oct 2020 20:41:49 -0700 (PDT)
+        bh=yK+JG9hRuWwbWaDVifd7XcrTPIdCvS6YG9pr3fsEa0g=;
+        b=dMfzeJEKMyW5ZCTqEbq/MG/BWTcSxadPd0NSQNtRS+b/Xowl4UBxr/aaTrRZ8SYEKn
+         Hm35/itIfp6KNCX6g7jCr+a4NbjiPpQ4EDm67NS4lhBYcDrAA6QlK0x8kj4Pd5k2efw/
+         FwIJf8YqTmgCk23f4yle5Nx+H7PS3bpjEKdIDovBppgpCHCp5RTCqwNdf35HmQuX4WUd
+         0yEEI2Oa/kvVgBsRIhZKwf+SS8v/cWy3xUYr3lRK8g2UcVNwErZSYMTYhlcDYcSpsL4n
+         10mAGP/0R3JKkFEOoqC3O51vzqgBDkapG0frn6JEfpDnmSATA6zrNq13zxbfxGRlX2nK
+         sG+A==
+X-Gm-Message-State: AOAM530JWu6GN8jXbwf09wl5NEt2fqKghHtfBlAAglgQlO7DKl3PqitI
+        y+7uZwIv2UWCAw9EaBos0JpXvWX5OikOCA==
+X-Google-Smtp-Source: ABdhPJyVh/BZVYaLmxYk5eEd5NPVlfjk87U5unF13344xOH8dcSetOuaePcJWgpWxegcLdLkOGDeGQ==
+X-Received: by 2002:a9d:7848:: with SMTP id c8mr214937otm.120.1604029306631;
+        Thu, 29 Oct 2020 20:41:46 -0700 (PDT)
 Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
-        by smtp.gmail.com with ESMTPSA id x13sm1047063otg.66.2020.10.29.20.41.48
+        by smtp.gmail.com with ESMTPSA id x13sm1047063otg.66.2020.10.29.20.41.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Oct 2020 20:41:49 -0700 (PDT)
+        Thu, 29 Oct 2020 20:41:46 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH 07/20] merge-ort: avoid repeating fill_tree_descriptor() on the same tree
-Date:   Thu, 29 Oct 2020 20:41:18 -0700
-Message-Id: <20201030034131.1479968-8-newren@gmail.com>
+Subject: [PATCH 04/20] merge-ort: use histogram diff
+Date:   Thu, 29 Oct 2020 20:41:15 -0700
+Message-Id: <20201030034131.1479968-5-newren@gmail.com>
 X-Mailer: git-send-email 2.29.1.56.ga287c268e6.dirty
 In-Reply-To: <20201030034131.1479968-1-newren@gmail.com>
 References: <20201030034131.1479968-1-newren@gmail.com>
@@ -73,61 +73,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Three-way merges, by their nature, are going to often have two or more
-trees match at a given subdirectory.  We can avoid calling
-fill_tree_descriptor() on the same tree by checking when these trees
-match.  Noting when various oids match will also be useful in other
-calculations and optimizations as well.
+I have some ideas for using a histogram diff to improve content merges,
+which fundamentally relies on the idea of a histogram.  Since the diffs
+are never displayed to the user but just used internally for merging,
+the typical user preference shouldn't matter anyway, and I want to make
+sure that all my testing works with this algorithm.
+
+Granted, I don't yet know if those ideas will pan out and I haven't even
+tried any of them out yet, but it's easy to change the diff algorithm in
+the future if needed or wanted.  For now, just set it to histogram.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+ merge-ort.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index d652f1f062..7083388a47 100644
+index bee9507319..e629d7b62c 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -99,6 +99,15 @@ static int collect_merge_info_callback(int n,
- 	unsigned mbase_null = !(mask & 1);
- 	unsigned side1_null = !(mask & 2);
- 	unsigned side2_null = !(mask & 4);
-+	unsigned side1_matches_mbase = (!side1_null && !mbase_null &&
-+					names[0].mode == names[1].mode &&
-+					oideq(&names[0].oid, &names[1].oid));
-+	unsigned side2_matches_mbase = (!side2_null && !mbase_null &&
-+					names[0].mode == names[2].mode &&
-+					oideq(&names[0].oid, &names[2].oid));
-+	unsigned sides_match = (!side1_null && !side2_null &&
-+				names[1].mode == names[2].mode &&
-+				oideq(&names[1].oid, &names[2].oid));
+@@ -21,6 +21,7 @@
+ #include "diffcore.h"
+ #include "strmap.h"
+ #include "tree.h"
++#include "xdiff-interface.h"
  
- 	/* n = 3 is a fundamental assumption. */
- 	if (n != 3)
-@@ -154,10 +163,19 @@ static int collect_merge_info_callback(int n,
- 		newinfo.pathlen = st_add3(newinfo.pathlen, p->pathlen, 1);
+ struct merge_options_internal {
+ 	struct strmap paths;    /* maps path -> (merged|conflict)_info */
+@@ -137,6 +138,9 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
  
- 		for (i = 0; i < 3; i++, dirmask >>= 1) {
--			const struct object_id *oid = NULL;
--			if (dirmask & 1)
--				oid = &names[i].oid;
--			buf[i] = fill_tree_descriptor(opt->repo, t + i, oid);
-+			if (i == 1 && side1_matches_mbase)
-+				t[1] = t[0];
-+			else if (i == 2 && side2_matches_mbase)
-+				t[2] = t[0];
-+			else if (i == 2 && sides_match)
-+				t[2] = t[1];
-+			else {
-+				const struct object_id *oid = NULL;
-+				if (dirmask & 1)
-+					oid = &names[i].oid;
-+				buf[i] = fill_tree_descriptor(opt->repo,
-+							      t + i, oid);
-+			}
- 		}
+ 	assert(opt->priv == NULL);
  
- 		original_dir_name = opti->current_dir_name;
++	/* Default to histogram diff.  Actually, just hardcode it...for now. */
++	opt->xdl_opts = DIFF_WITH_ALG(opt, HISTOGRAM_DIFF);
++
+ 	/* Initialization of opt->priv, our internal merge data */
+ 	opt->priv = xcalloc(1, sizeof(*opt->priv));
+ 	/*
 -- 
 2.29.1.56.ga287c268e6.dirty
 
