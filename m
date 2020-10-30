@@ -2,102 +2,116 @@ Return-Path: <SRS0=4tT/=EF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09937C4363A
-	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 11:21:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 056DEC4363A
+	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 11:22:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 936FC206C1
-	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 11:21:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7476720756
+	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 11:22:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CYm5YMLM"
+	dkim=pass (2048-bit key) header.d=powertools-tech.com header.i=@powertools-tech.com header.b="KuHyZ0Zd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726078AbgJ3LVG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Oct 2020 07:21:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33480 "EHLO
+        id S1726397AbgJ3LWd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Oct 2020 07:22:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725993AbgJ3LVF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Oct 2020 07:21:05 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53573C0613CF
-        for <git@vger.kernel.org>; Fri, 30 Oct 2020 04:11:34 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id v19so1497320lji.5
-        for <git@vger.kernel.org>; Fri, 30 Oct 2020 04:11:34 -0700 (PDT)
+        with ESMTP id S1725355AbgJ3LWd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Oct 2020 07:22:33 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9F68C0613CF
+        for <git@vger.kernel.org>; Fri, 30 Oct 2020 04:22:32 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id i16so638109wrv.1
+        for <git@vger.kernel.org>; Fri, 30 Oct 2020 04:22:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=6xBkE+KS/ATfSSqXYrML/3RDRnGCYDMOwpvD0f45T7M=;
-        b=CYm5YMLMN/esEGVHxg6z4OvfCtzEyVayda4P3e1XiJh2tW07uMUNRUV6jZIlGJ0uoL
-         +d6mzJ3SpMWW4jwzS15OWiMWKEgxku+fUMyPug1JJbZ4C+W/U+nHQEUqTjC36sLW5Mhs
-         9sgmUl7O7/xbcC1P+zVNdnT5z1Ake/+x+GqFKYweDZW09FGd11oFVVqA+CdqsYSugeX2
-         zZZrQEXGAy485tg88xiJF9r5KQZXN5gp0auKESM9IeuuhfmvJ8Y+CujBtBKCnIu+rzmB
-         BNftplj8QC562iEZ/spdLpVGUcHQAoW6SoAZPk52EYOq5bDXIsXxvo/usgeMiR1du7rt
-         uouw==
+        d=powertools-tech.com; s=gsuite;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=4mNxrQmwoEbA2xguQMhtAGcPvKMdogX0ezPVgFlFlSE=;
+        b=KuHyZ0Zd1k0JzogrnwWfrnYQVXjFTeNF2sPBqZdTzdlwRiQRe8uUSnA2gHu67bkJdN
+         SwtDRW5vLijM+0zgWOvLYO6pvneS35rCXY3WyhtexjgzLCjOsxB39ZkNJIJGZtBAbhcR
+         yX74OW+n+HbTQ2/SNc+d8auwKECipy5o03SEEvdeFVHNYw2qKX8IcJ1I5X8Xb/HOsyWH
+         TkLkap006tZ9vQ4AXYkuUHDyS61hwdzxd/KVlQQF+bGlvNWzJNlLFBgbD7TecPKcV2If
+         hyVTsY5igLQgT8du+mTrD2kIoi35aGgBMjo4nEEjtCHrOfLLSTzxjBKmNxagtlF70/LH
+         ETTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6xBkE+KS/ATfSSqXYrML/3RDRnGCYDMOwpvD0f45T7M=;
-        b=GxxAzhYQQvEHyDGSibGUdsrkqYwgp7G1SBzGZrIT84zmloS1Gr2CbrPRMmD0eQ5w8m
-         PfytpSjntBIMHnxOpmA/KHcn0KN9RzRnZqUbw/esWreF0oe9xSIT3xdlKERWZnV3JnbI
-         IQV6gx3r4yVrLNH4z7CHQh/2lnR0fx64fPV21JTuaDsovgkw/GheSeCGFxAdAYkcJLw3
-         E2BhUwgjd5mr+iQALWK+pAgnKtoIB4fhZC90fuLov9zQfVFwUN+j09feANxIb58VJnRF
-         Mmx/uqsM6yZVW3r8ha/oGQ/4C+sv71Gx1tWaJFMS2wLUInmzvY7ujmRJwppQ5DNcpbFx
-         fP8A==
-X-Gm-Message-State: AOAM531gFuPE6kuc62yWxCAILiMlJ+M1qHa0h6zHSMyp7IAksFyM2hdw
-        TeMkpBGmyHqVoal1uuUzyxQEe0O5dQ+cJmqKmWJ0+yxuFek=
-X-Google-Smtp-Source: ABdhPJximbT3LqffMyWX1TlgpC5yE8C80h23GbhMB4/72Ot+BAmrpJhL3+qmxyixAhg7gP2Au0W6E6KDsGx/bbUanrE=
-X-Received: by 2002:a2e:50a:: with SMTP id 10mr733166ljf.55.1604056292185;
- Fri, 30 Oct 2020 04:11:32 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=4mNxrQmwoEbA2xguQMhtAGcPvKMdogX0ezPVgFlFlSE=;
+        b=L9O8dK/C+rxocmV+RSVoFq4uWRnpwigJJUzzhpCQgbTkrXT/XRHZerVnVd+AAspgr1
+         VYF1970jFn76KVhzOMBY4NT//mFDEuIQY3vypu58RWKDG0LGeqG+WFq8XSomVaLxkzs5
+         5woB5tDNocJuedsTSTU9zOb1uaJ81HFMsSdQRAqUjfsLTThtjHb1CjoJHQ6GfWcletqm
+         VyEKYtdfV+ZqnRlO2Xc1rZSr1Hslzqyp+Pedn+Uckr6PD8TiWUAk1C6vJoLq7smAlRyZ
+         s9Egd5z43DaorN3F4GgTaJ/bsnDC3NjaaRuXrOVYTM5PZeXfjUVdXLtVNhVp0RJkQ28w
+         PQXA==
+X-Gm-Message-State: AOAM533bED37JZDr52yD0PcIekiUske2SI/W7Mq/0+D+pQ6MW7JekC1x
+        mr2OBEqA4sW5vUwplUTDoNqMJQ==
+X-Google-Smtp-Source: ABdhPJxK4xJpUzOITiJl9hzMK+kUrN9UOYUoP5ZskWnPralEFUBZ7wqvs4wHpAlv2gJmuKcJoZMXlA==
+X-Received: by 2002:adf:ce12:: with SMTP id p18mr2491584wrn.52.1604056951562;
+        Fri, 30 Oct 2020 04:22:31 -0700 (PDT)
+Received: from localhost ([2001:470:1f21:ea::ffff:dda4])
+        by smtp.gmail.com with ESMTPSA id d142sm4232408wmd.11.2020.10.30.04.22.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Oct 2020 04:22:30 -0700 (PDT)
+Date:   Fri, 30 Oct 2020 11:22:29 +0000
+From:   =?utf-8?B?U2ltw6Nv?= Afonso <simao.afonso@powertools-tech.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: Credential Store: Don't acquire lock when only reading the file
+Message-ID: <20201030112229.3rcyylkuyrlrhn7g@safonso-t430>
+References: <20201029192020.mcri76ylbdure2o7@safonso-t430>
+ <20201030055541.GA3264588@coredump.intra.peff.net>
 MIME-Version: 1.0
-References: <CAGr--=KpNaPFjMOzXzF382cv1p58nMoOPXAm0MCdA8WZMBznVA@mail.gmail.com>
- <20201030105856.ctjkxxwmudaeewpa@yadavpratyush.com>
-In-Reply-To: <20201030105856.ctjkxxwmudaeewpa@yadavpratyush.com>
-From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
-Date:   Fri, 30 Oct 2020 12:11:21 +0100
-Message-ID: <CAGr--=KTbc7zBaYavFPafXjEGT5PJC6UXw7cmW-fSgXpQagKFw@mail.gmail.com>
-Subject: Re: git-gui: How to configure for use in gigantic projects?
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201030055541.GA3264588@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ah, that one changed everything! Thank you Pratyush!
+Hi Jeff, thanks for the fast reply.
 
-On Fri, Oct 30, 2020 at 11:59 AM Pratyush Yadav <me@yadavpratyush.com> wrote:
->
-> Hi Birger,
->
-> On 30/10/20 11:16AM, Birger Skogeng Pedersen wrote:
-> > Hi,
-> >
-> > I would like to use git gui for a project. The problem is that the
-> > repository directory is really gigantic. Doing a scan (F5) takes a
-> > couple of minutes to finish.
-> >
-> > I would like the scan to only focus on files that are specifically
-> > added to the index. In git I do this:
-> >
-> > git config status.showUntrackedFiles no
-> >
-> > git status will then only show status of files that I have
-> > specifically added. So git status completion is instant.
-> >
-> > But this configuration appears to have no effect on git-gui. The scan
-> > is just as slow as before.
-> >
-> > Anything I can do to make git-gui only scan files that are
-> > specifically added, and not look through the whole directory?
->
-> Uncheck "Show untracked files" in options. It is controlled by the
-> config 'gui.displayuntracked'.
->
-> --
-> Regards,
-> Pratyush Yadav
+On 2020-10-30 01:55:41, Jeff King wrote:
+> I agree that "get" should not be taking a lock. And looking at the code,
+> I don't think that it is.
+> 
+> However, after successfully using a password, Git will then trigger each
+> helper with a "store" command. So likely what you are seeing is each
+> fetch telling credential-store to store the successful password.
+
+Ah, the plot thickens. That sounds more like it.
+
+On 2020-10-30 01:55:41, Jeff King wrote:
+> There are a few options here:
+> 
+>   - we could have Git not do that. And indeed, I wrote a patch for that
+>     long ago:
+> 
+>       https://lore.kernel.org/git/20120407033417.GA13914@sigill.intra.peff.net/
+> 
+>     but it turns out that some people rely on it. There were some
+>     options discussed there for moving it forward, but nothing ever
+>     happened.
+> 
+>     Another option that we didn't discuss there: we could remember which
+>     helper gave us the credential and not feed it back to itself. That
+>     would let simple cases work without the extra request, but would let
+>     more complex ones (feeding the result of one helper to another)
+>     continue to work the same.
+
+Right, I did not imagine you could chain credential helpers, but that
+makes sense.
+
+On 2020-10-30 01:55:41, Jeff King wrote:
+> Interested in trying a patch for any of those?
+
+Sounds good to me, I should be able to handle it if you CC/BCC me
+(subscribing to the firehose is a bit too much).
+
+For reference, I'm using:
+
+> $ git --version
+> git version 2.29.1
