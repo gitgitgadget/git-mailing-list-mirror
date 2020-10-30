@@ -2,104 +2,143 @@ Return-Path: <SRS0=4tT/=EF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BBF50C2D0A3
-	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 01:26:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52266C4742C
+	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 01:51:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 474C420731
-	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 01:26:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D2FC520747
+	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 01:51:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=mutual.io header.i=@mutual.io header.b="O7dtvWW7"
+	dkim=pass (1024-bit key) header.d=mutual.io header.i=@mutual.io header.b="a4dTQanh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725797AbgJ3B0T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Oct 2020 21:26:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54526 "EHLO
+        id S1726111AbgJ3BvA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Oct 2020 21:51:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725372AbgJ3B0S (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Oct 2020 21:26:18 -0400
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC73CC0613CF
-        for <git@vger.kernel.org>; Thu, 29 Oct 2020 18:26:16 -0700 (PDT)
-Received: by mail-ej1-x644.google.com with SMTP id za3so6412971ejb.5
-        for <git@vger.kernel.org>; Thu, 29 Oct 2020 18:26:16 -0700 (PDT)
+        with ESMTP id S1725372AbgJ3BvA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Oct 2020 21:51:00 -0400
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29707C0613CF
+        for <git@vger.kernel.org>; Thu, 29 Oct 2020 18:41:27 -0700 (PDT)
+Received: by mail-pf1-x42c.google.com with SMTP id j18so3916517pfa.0
+        for <git@vger.kernel.org>; Thu, 29 Oct 2020 18:41:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=mutual.io; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=XgqTBWHmNumEv+E5rI+t7/tOGCOAv2KXpI58qQMbMyU=;
-        b=O7dtvWW7Yikw80meZsJOe3Ir2Od/8tNQytm57ndcSrWCM3wyA6b4erbQavpW+vbEXT
-         Hs34wMkky3XyCST5SjOrdtBoNrgUjH+mPLrDW1+ARFZM5REma9ep6lPrwlSRbGi0tUO9
-         AZ5AACfXuu/AeSLLMZMvwiAyqZekRPJmtgAcY=
+        h=from:to:cc:subject:date:message-id;
+        bh=uBzOuqw/5ZQBaQciKY7vJIzRT9Kdt3DzX8zHCf4q1u4=;
+        b=a4dTQanhvpDgjcGx+xSnVximI3z+xag2eIEi0ahgPI70Fg0QSfplj+rqLfLjF9pXda
+         VwbeaMOFRnjK1gRzOPxwMCTjYQR5D2Wo4HF/iK4p/gYRCjpxy+T5iir+QNfYZn0YCypK
+         m8BayiLkpITLxPfZK4jefuJZAZC1M4dWMOZZw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=XgqTBWHmNumEv+E5rI+t7/tOGCOAv2KXpI58qQMbMyU=;
-        b=EGbXF9Ha7WaIdsIR4cGqpuuAYbGr8IFmQz3k3L9qVvBibgnG1GB2v5/mJkw1PUw00W
-         MNaMnWX37XB7NKMyXFPxZ4egIeX7/91XWn9PnKqBVlOI+A1fZsYZM6dDe3x/Z8aEvYQC
-         rI9P3BcU2FR7VxWS897HAeHelNCm8xn3kHoX7Fbi2XemaWHaaNJ0Q/uAleKzU3AmdTkz
-         XzLtzFzmh0cSTOeHnxgK+kMPwLXyXZ61JzeNQaa2Kyp1cnAM7XdjsGNf/Us2ueWccNxO
-         VmZ1nXc/kZt7dXMdWpX1fJYk5P0VZVO6O/Wim0WOwhd9QYMVRgGSyk7qtFUzkDGY2sVj
-         Xi0w==
-X-Gm-Message-State: AOAM533csvH+i+NCovkpwIf7FCVyNYUllXA0uWjoESaT2OgoUc/XGKiW
-        A7smerLAt3AIYMjKvbFCb/Y/8pnDtGlag0WV6Zgapg==
-X-Google-Smtp-Source: ABdhPJxH/utTy9tfFZrYCxk7dRRh1hJ9CM3oA8hyhGlolQmhxaxJki7i4khW7ivhZD/KURAbEw0MCYB+tEL0N34a1w4=
-X-Received: by 2002:a17:906:512:: with SMTP id j18mr148140eja.370.1604021175369;
- Thu, 29 Oct 2020 18:26:15 -0700 (PDT)
-MIME-Version: 1.0
-References: <CANo+1gtVRj30-JNPFpqc_m3BSEFzcb8-T+-uJTFvnNuBZYYxQQ@mail.gmail.com>
- <CAGyf7-HOkt3bCkJ+qshb0AFZSt2f=NmvHb3Gh1m2dzLWpYHozQ@mail.gmail.com>
-In-Reply-To: <CAGyf7-HOkt3bCkJ+qshb0AFZSt2f=NmvHb3Gh1m2dzLWpYHozQ@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=uBzOuqw/5ZQBaQciKY7vJIzRT9Kdt3DzX8zHCf4q1u4=;
+        b=a7vG6YPpfO9NI7+GMDfrKyFpIfyAJuDq8V1EHOzzoqFFJXzdwDaEJjrNKtICQqgCsf
+         zjxO7hd8o/eJWkEGM9BPJDXKZlX2e/y963IxLTweS27yHLSt+9iV2hrwtkn39D7Rnf1M
+         UQxy8160iL2ysSFckZ01URYcGCiTcoorLPedzFrmbj583yTqucLxVUTKaOMFMW7vLoKV
+         cvE5Y7GQY+lZT/rV5kl0yKBCPY9ovn18VMIZWiHLGHKX/e5cP2T8ZLCGRqkGBsWwvk/y
+         KrgZg8ximWkdEOXLp2HaGMq5oT53zsch4IrQViO73Kc8DRxt8iPLDbbbNabpq2al/wlq
+         rI9Q==
+X-Gm-Message-State: AOAM530/Mof4AC4Jy8nddjvTAutjp7IEAT64fhXdZQLW9camJG4QqJ6g
+        05oecGy5eA5hjjIRFVxm4u5CXg==
+X-Google-Smtp-Source: ABdhPJzyhRPbxRmTAu47vSThbU/YL6R0ZrsWQMT8phXAXCQAu1bOExmtNB5haKM2JTqnfWCXG1aMKw==
+X-Received: by 2002:a62:4e0f:0:b029:156:13e0:efa7 with SMTP id c15-20020a624e0f0000b029015613e0efa7mr6878644pfb.73.1604022086684;
+        Thu, 29 Oct 2020 18:41:26 -0700 (PDT)
+Received: from shawarma.mutual.io (23-115-137-209.lightspeed.sntcca.sbcglobal.net. [23.115.137.209])
+        by smtp.gmail.com with ESMTPSA id c12sm1105237pjq.50.2020.10.29.18.41.25
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 29 Oct 2020 18:41:26 -0700 (PDT)
+Received: by shawarma.mutual.io (Postfix, from userid 502)
+        id B8B9B20A4345; Thu, 29 Oct 2020 18:41:24 -0700 (PDT)
 From:   Daniel Duvall <dan@mutual.io>
-Date:   Thu, 29 Oct 2020 18:26:04 -0700
-Message-ID: <CANo+1gsdyU5sMRmV5OZxRZm5fqOFL3y-qFQN-PemdPKHFrJ8Mw@mail.gmail.com>
-Subject: Re: [PATCH] Fix upload-pack EOF death in normal stateless negotiation
-To:     Bryan Turner <bturner@atlassian.com>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Daniel Duvall <dan@mutual.io>
+Subject: [PATCH] upload-pack: allow stateless client EOF just prior to haves
+Date:   Thu, 29 Oct 2020 18:40:59 -0700
+Message-Id: <1604022059-18527-1-git-send-email-dan@mutual.io>
+X-Mailer: git-send-email 2.6.1
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks, Bryan. I did read the guide but not thoroughly enough it
-seems. I'll give it another read and re-submit.
+During stateless packfile negotiation, it is normal behavior for
+stateless RPC clients (e.g. git-remote-curl) to send multiple
+upload-pack requests with the first containing only the
+wants/shallows/deepens/filters followed by a flush.
 
-On Thu, Oct 29, 2020, 5:32 PM Bryan Turner <bturner@atlassian.com> wrote:
->
-> On Thu, Oct 29, 2020 at 4:53 PM Daniel Duvall <dan@mutual.io> wrote:
-> >
-> > Hi there,
-> >
-> > I noticed while debugging an issue in Phabricator where shallow git
-> > fetches over HTTP were failing with 500 errors that `git-http-backend`
-> > seemed to exit abnormally after the first request even though the
-> > response was otherwise correct=E2=80=94and when the error is not surfac=
-ed to
-> > the client, the packfile negotiation via `git-remote-curl` seems to
-> > continue normally.[1]
-> >
-> > I think this patch fixes the issue by having `upload-pack` gently
-> > handle EOFs at a specific point in negotiation=E2=80=94after shallow/un=
-shallow
-> > lines have been returned to the client (followed by flush) but before
-> > the client sends its haves.
-> >
-> > This is my first contribution here so hopefully I'm understanding the
-> > packfile negotiation protocol correctly and included my test in the
-> > right place.
->
-> Have you read Documentation/SubmittingPatches? It has some guidelines
-> (like submitting patches inline, rather than as attachments) you'll
-> want to ensure you've followed.
->
-> >
-> > Kindly,
-> > Daniel
-> >
-> > [1] https://discourse.phabricator-community.org/t/git-fetches-with-dept=
-h-over-http-results-in-500-errors/4317
+When run in stateless mode, continuing on without first checking that
+the client request has reached EOF can result in a bad file descriptor
+during get_common_commits.
+
+Instead, upload-pack should gently peek for an EOF between the sending
+of shallow/unshallow lines (followed by flush) and the reading of client
+haves. If the client has hung up at this point, exit normally.
+
+Signed-off-by: Daniel Duvall <dan@mutual.io>
+---
+ t/t9904-upload-pack-stateless-timely-eof.sh | 24 ++++++++++++++++++++++++
+ upload-pack.c                               | 13 ++++++++++++-
+ 2 files changed, 36 insertions(+), 1 deletion(-)
+ create mode 100755 t/t9904-upload-pack-stateless-timely-eof.sh
+
+diff --git a/t/t9904-upload-pack-stateless-timely-eof.sh b/t/t9904-upload-pack-stateless-timely-eof.sh
+new file mode 100755
+index 0000000..f8385a7
+--- /dev/null
++++ b/t/t9904-upload-pack-stateless-timely-eof.sh
+@@ -0,0 +1,24 @@
++#!/bin/sh
++
++test_description='stateless upload-pack gently handles EOF just after want/shallow/depth/flush'
++
++. ./test-lib.sh
++
++D=$(pwd)
++
++test_expect_success 'upload-pack outputs flush and exits ok' '
++	test_commit initial &&
++	head=$(git rev-parse HEAD) &&
++	hexsz=$(test_oid hexsz) &&
++
++	printf "%04xwant %s\n%04xshallow %s\n000ddeepen 1\n0000" \
++		$(($hexsz + 10)) $head $(($hexsz + 13)) $head >request &&
++
++	git upload-pack --stateless-rpc "$(pwd)" <request >actual &&
++
++	printf "0000" >expect &&
++
++	test_cmp expect actual
++'
++
++test_done
+diff --git a/upload-pack.c b/upload-pack.c
+index 3b858eb..2b128e4 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -1344,7 +1344,18 @@ void upload_pack(struct upload_pack_options *options)
+ 				   PACKET_READ_DIE_ON_ERR_PACKET);
+ 
+ 		receive_needs(&data, &reader);
+-		if (data.want_obj.nr) {
++
++		/*
++		 * An EOF at this exact point in negotiation should be
++		 * acceptable from stateless clients as they will consume the
++		 * shallow list before doing subsequent rpc with haves/etc.
++		 */
++		if (data.stateless_rpc)
++			reader.options |= PACKET_READ_GENTLE_ON_EOF;
++
++		if (data.want_obj.nr &&
++		    packet_reader_peek(&reader) != PACKET_READ_EOF) {
++			reader.options ^= PACKET_READ_GENTLE_ON_EOF;
+ 			get_common_commits(&data, &reader);
+ 			create_pack_file(&data, NULL);
+ 		}
+-- 
+2.6.1
+
