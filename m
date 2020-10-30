@@ -2,119 +2,136 @@ Return-Path: <SRS0=4tT/=EF=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4D37C00A89
-	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 19:42:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1A46C00A89
+	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 19:50:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6F08A20739
-	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 19:42:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 35AE720729
+	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 19:50:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TKXAey0D"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gUXC3C+k"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726061AbgJ3Tmo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Oct 2020 15:42:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55470 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727479AbgJ3TlE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Oct 2020 15:41:04 -0400
-Received: from mail-oo1-xc44.google.com (mail-oo1-xc44.google.com [IPv6:2607:f8b0:4864:20::c44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6256C0613CF
-        for <git@vger.kernel.org>; Fri, 30 Oct 2020 12:31:25 -0700 (PDT)
-Received: by mail-oo1-xc44.google.com with SMTP id l26so1845798oop.9
-        for <git@vger.kernel.org>; Fri, 30 Oct 2020 12:31:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=XVLaatggPvSPmPS9s+g2Y1zemjbALAAL7XpRwn8s+xY=;
-        b=TKXAey0DD2Q5dxyxqmvXg9S5jj5284DZICG6suo1wZ8E6jxt1i9tP0ffweNAq0eBKV
-         yMrhN5XCb1h/E2Ac8mJySsqT905S9xXE6fS63595HXd6PfAfgZgVolOs8NaCHO5Zx/i5
-         IbATWyaNcaO38btm57qJe/Ym4KFLCJm8GqtWO1e2+bEgk53I4G9FNKa5xnFmndGVboyc
-         Mu7wjkk0w1w93nxnKnK0AKX1p1XJ9Y9gK9pjuxLkhTFQ3WD8ABeNW77rl1GpgWTmG+8d
-         ppmlygUtgQML6Xg4I5uFC5ziN4coXwxpnMvSV4oa4rpqpwPLaW68mdy0MQxqsMIapnym
-         gDsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=XVLaatggPvSPmPS9s+g2Y1zemjbALAAL7XpRwn8s+xY=;
-        b=fHcPz718t6AMTFCXOmuYzBbJGKbq8xZULId3HIhS/0s/PHqnmZRxZtyXD7SWSQEq27
-         x2PsbXjBIOJIpq72B2sO3g0TOxxONPON+5y9uj5Q2sdObTeVHb+PwHb072OSwoM8Fods
-         erNEhcuE884lB4hWDBvCvIM2S5lh0BOIGujXSv3y1PHkb/a2Ncwx7K/K7CgWXkh6FuNw
-         tDCCX6gNGuLj4fh8MFmJk6r4tqXiLId3DJ+GJDJfJqw9Qn2qRYhNQ76cWC7inqx3X38n
-         nYrBmtDpJKI4DkNrRRnzDN2+jr70IYzL89RDp/FJSW51TC+0m6dj6emuxROPe1jDpgOg
-         9f+g==
-X-Gm-Message-State: AOAM532rlXYL9H37aPGC7IJbxySqV9qH/hDhlDmC2/bEThYwvN4C5vcU
-        j0n51GLom/XuNdbrjIsGGDhTLVne1aWS/X7dMPE=
-X-Google-Smtp-Source: ABdhPJyjaUk2HJygy9Yu65PvzABX1V6GVDAsvEjp1yVu6Yn+nTUdi1LCoGC70NhRf4ooU2kjIuLYhvJEJgiu33CozBY=
-X-Received: by 2002:a4a:b308:: with SMTP id m8mr3174505ooo.7.1604086284977;
- Fri, 30 Oct 2020 12:31:24 -0700 (PDT)
+        id S1726904AbgJ3TuF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Oct 2020 15:50:05 -0400
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51370 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726061AbgJ3TuE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Oct 2020 15:50:04 -0400
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7FD2DECE1C;
+        Fri, 30 Oct 2020 15:50:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=XodB0831q0AJ
+        wjGy/+Bta4gZ9mQ=; b=gUXC3C+kJHQCum9SQ5ygIN3td5TWgnbaAbk1Qi2n94Lu
+        B0vVe/lhb1+ixxPoZ9aaz55aFS3MHVVhWimf4iuaTqCY3dhU+txOgXwFVc+E+NZ1
+        ssmHdWVMNdhVSHuSJmQdBFcfLV9YiNF0YiEqMYP4wJf0iuig2Xox47duWcaD8YY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=bF5K20
+        wST3CSHSkPeQk16gcedcRzcSBI74EYKs2DDWNkSqxyiVIgL4mAsUC+t8X8AT+jh5
+        gemZIBer628Kp7e9oqsHq38NqKnmYgKEjh228q6+FlwOG4uL+Jb7GiOJFFPUPeAj
+        kpu7alaNIm8XgQJ1VlFvqyskQ4JkmO1sfD87I=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 533FBECE1B;
+        Fri, 30 Oct 2020 15:50:01 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 78847ECE17;
+        Fri, 30 Oct 2020 15:49:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Sim=C3=A3o?= Afonso <simao.afonso@powertools-tech.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] credential-store: use timeout when locking file
+References: <20201030180718.4i7txqkgye7r6pkb@safonso-t430>
+Date:   Fri, 30 Oct 2020 12:49:56 -0700
+In-Reply-To: <20201030180718.4i7txqkgye7r6pkb@safonso-t430> (=?utf-8?Q?=22?=
+ =?utf-8?Q?Sim=C3=A3o?= Afonso"'s
+        message of "Fri, 30 Oct 2020 18:07:18 +0000")
+Message-ID: <xmqq361v334r.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.835.git.git.1598035949.gitgitgadget@gmail.com>
- <pull.835.v2.git.git.1602549650.gitgitgadget@gmail.com> <eca4f1ddbaa1cd8dc3fc64dbe9206af538cb317d.1602549650.git.gitgitgadget@gmail.com>
- <20201030145604.GJ3277724@coredump.intra.peff.net>
-In-Reply-To: <20201030145604.GJ3277724@coredump.intra.peff.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 30 Oct 2020 12:31:13 -0700
-Message-ID: <CABPp-BEY5R79WGsMB1y1MEbcvw8EF5-ADxvDPzL+Hn-PiyobsA@mail.gmail.com>
-Subject: Re: [PATCH v2 10/10] strmap: enable allocations to come from a mem_pool
-To:     Jeff King <peff@peff.net>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 17460D86-1AE9-11EB-8637-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 30, 2020 at 7:56 AM Jeff King <peff@peff.net> wrote:
->
-> On Tue, Oct 13, 2020 at 12:40:50AM +0000, Elijah Newren via GitGitGadget wrote:
->
-> > For heavy users of strmaps, allowing the keys and entries to be
-> > allocated from a memory pool can provide significant overhead savings.
-> > Add an option to strmap_ocd_init() to specify a memory pool.
->
-> So this one interacts badly with my FLEXPTR suggestion.
->
-> I guess it provides most of the benefit that FLEXPTR would, because
-> we're getting both the entries and the strings from the mempool. Which
-> really ends up being an almost identical memory layout, since the
-> mempool presumably just gives you the N bytes for the string right after
-> the last thing you allocated, which would be the struct.
->
-> The only downside is that if you don't want to use the mempool (e.g.,
-> because you might actually strmap_remove() things), you don't get the
-> advantage.
->
-> I think we could fall back to a FLEXPTR when there's no mempool (or even
-> when there is, though you'd be on your own to reimplement the
-> computation parts of FLEXPTR_ALLOC). I'm not sure how ugly it would end
-> up.
+Sim=C3=A3o Afonso <simao.afonso@powertools-tech.com> writes:
 
-Yeah, we'd need a mempool-specific reimplementation of FLEXPTR_ALLOC
-with the mempool, and just avoid using it at all whenever
-strdup_strings was 0.  Seems slightly ugly, but maybe it wouldn't be
-too bad.  I could look into it.
+> When holding the lock for rewriting the credential file, use a timeout
+> to avoid race conditions when the credentials file needs to be updated
+> in parallel.
+>
+> An example would be doing `fetch --all` on a repository with several
+> remotes that need credentials, using parallel fetching.
 
-> I haven't used our mem_pool before, but the code all looks quite
-> straightforward to me. I guess the caller is responsible for
-> de-allocating the mempool, which makes sense. It would be nice to see
-> real numbers on how much this helps, but again, you might not have the
-> commits in the right order to easily find out.
+OK.
 
-At the time I implemented it, I did grab some numbers.  It varied
-quite a bit between different cases, since a lot of my strmaps are for
-tracking when special cases arise and we can implement various
-optimizations.  Naturally, a usecase which involves heavier use of
-strmaps will mean greater benefits from using a mempool.  Also, if I
-had implemented it later, after one rename-related optimization I
-hadn't yet discovered at the time, then it would have shown a larger
-relative reduction in overall execution time.  Anyway, at the time I
-put the mempool into strmaps and made use of it in relevant places,
-one of my rebase testcases saw an almost 5% reduction in overall
-execution time.  I'm sure it would have been over 5% if I had
-reordered it to come after my final rename optimization.
+> The timeout is hardcoded to 1 second, since this is just to solve a rac=
+e
+> condition.
+
+It is unclear what this sentence wants to explain.  How does "this
+is to solve a race" justifies the choice of "1 second" (as opposed
+to say 10 seconds or 0.5 second)?  Or is this trying to justify why
+there is no configurability?  If so, why is it OK to hardcode it if
+it is done to solve a race?  Are we assuming certain maximum rate
+of operation that is "reasonable"?
+
+> This was reported here:
+> https://lore.kernel.org/git/20201029192020.mcri76ylbdure2o7@safonso-t43=
+0/
+> ---
+
+Missing sign-off.
+
+cf. https://git-scm.com/docs/SubmittingPatches.html#sign-off
+
+>  builtin/credential-store.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/credential-store.c b/builtin/credential-store.c
+> index 5331ab151..acff4abae 100644
+> --- a/builtin/credential-store.c
+> +++ b/builtin/credential-store.c
+> @@ -58,8 +58,9 @@ static void print_line(struct strbuf *buf)
+>  static void rewrite_credential_file(const char *fn, struct credential =
+*c,
+>  				    struct strbuf *extra)
+>  {
+> -	if (hold_lock_file_for_update(&credential_lock, fn, 0) < 0)
+> -		die_errno("unable to get credential storage lock");
+> +	static long timeout =3D 1000;
+
+Why "static"?  It would make your code easier to follow if you limit
+use of "static" to only cases where you want to take advantage of
+the fact that the value previously left by the earlier call is seen
+by the next call, and/or the address of the variable must be valid
+even after the control returns to the caller.
+
+I would understand if this were "const long timeout =3D 1000".
+
+If this were an identifier with longer lifespan, I would have
+suggested to include some scale in the variable name (e.g.
+timeout_ms to clarify that it is counted in milliseconds), but it is
+just for this short function, so let's say "timeout" is just fine.
+
+> +	if (hold_lock_file_for_update_timeout(&credential_lock, fn, 0, timeou=
+t) < 0)
+> +		die_errno("unable to get credential storage lock in %ld ms", timeout=
+);
+>  	if (extra)
+>  		print_line(extra);
+>  	parse_credential_file(fn, c, NULL, print_line);
+
+Thanks.
