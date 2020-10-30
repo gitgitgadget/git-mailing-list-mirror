@@ -7,109 +7,105 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MSGID_FROM_MTA_HEADER,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E0BEC4363A
-	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 13:58:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40F00C55178
+	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 14:07:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2ADA2076E
-	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 13:58:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DDCC7221FA
+	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 14:07:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726748AbgJ3N6S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Oct 2020 09:58:18 -0400
-Received: from mail-eopbgr670102.outbound.protection.outlook.com ([40.107.67.102]:45912
-        "EHLO CAN01-TO1-obe.outbound.protection.outlook.com"
+        id S1726362AbgJ3OHD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Oct 2020 10:07:03 -0400
+Received: from mail-eopbgr660137.outbound.protection.outlook.com ([40.107.66.137]:50976
+        "EHLO CAN01-QB1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725939AbgJ3N6S (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Oct 2020 09:58:18 -0400
+        id S1725939AbgJ3OHB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Oct 2020 10:07:01 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=k6wThjl0/yORcTq1CgwYOZgotDoK5UsZWfA444iBNsm+tenliv4TWvfA3dzrnFa2HT28XbsLCIBT9QXD/0mWX9P1zYRWe0yBkfzPyLdKFoFaz8Vrzdh+hxZuQfYLNKKmF3J4jO/bdf9Uf1scxDEqMNsQBEoZKWMdxV9kePKlUMBdcSWnGlMexpGTsr33/jgUYxWs91JyZ9y7DU2XVW11QkNQ/nxrXxdx6OYpJ57D3fiwaRBX9OxYBxfv9kf6NDW0Rt6VAK+96YTrj3GnQiSermWZnOLl99QqcQCx6ERKs8wsD3tJ46D5eIIXHs9OFx8GDUb8sfRpBRidzjNcijH4vg==
+ b=WShV/EcxvKap6lCaXxqtjIiQC/8RbpFeGDpRsGevoR+fv1OWMzMgH/MqkxdyxlguWmZ6t8TvVUhbYlUP/jUN0fbxLOi1fsqZIORTNF+va2hLrbxJe55v5GrXbVt3hHl35JSK8qK2pNrG54BYStFK/wkR2K58u/rTfGm4SeO3gGg8F7cGf2ZH+OUa115qP5xgZZz/usr0JY19U4VnPcX1o2uszU6TOqBWUP8H4DP5hXtLfuaZ7beDdaTY05IPKtoebzz6lNiLZCC6fCj/kDlO12PqMRN/GsmsnpMI0JNWkFW4vradoLy+zrIAvdpMqh9impg9adAWJd3mx08szfvduQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7PL3l+M1Id064HD223aTkKpbKO90yfPK8yXZnBeES44=;
- b=hwJzDQ/tz7uUcO4rzWZ4LCnHhCq4aiEU0Vdgdypcd6a0oE9MpjQdcLm0ld0+DWX2d7Gcch99MaxpxhI7PKGaO9XSP64updgjGkdsiIrnNbIL4ttP70FPT7rdiS0S6HVkr7lqCr3ZdhaBsuL+18suh5vOQw6oM//U/9eTA+FYyhzGOzD7GoK6/dJ6GtHcZkM3QW4eJue9SudFrbX7AJcw5dIvlp/26OePmuVu8uSvzDkvFVdq/WxCwgsQXdRIcRuNV3wKCQy4CX/dnufn6GByvMmdMxkn/6CUeY63r08t4NDN+Vs95LxuKC9wI3Al4thCqM24T2m3f+nYC693DleXIg==
+ bh=fhxxN4r2jdZHLCW16kr9YnoTAHsd7n8n6/IOcdZUkp4=;
+ b=nnsHA3qaJCrtRfzX/LYFVI3QQtapnuc3QWYiqqXZv84SwuZ8Oc/3Q0FBE5RKJv+7yFFB9eOXihdjytReyucjEanZ2X7s0sSQoCyBUb/ivEZx+31M+KGi5sZdrvXYiLklbwd456+tr5nZpttIdrr8Mnhg64HeHQ9lolOtkulBR4TcGC98FhGta6qiXvonzZHCkvNbWwd9Jm2moAjAIoBH/t/VX25txBGdzcfDoVGEnVT/4Nv+MJJto9UqwuoUXG+yA357YtxpyNvzhex4mGKNTRTSCFKdbr0c/9uYYoYvzy1PwmdsLF5vASF6myOoGhbn/nvP+mqtokLx+zPGhfv6Bw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=xiplink.com; dmarc=pass action=none header.from=xiplink.com;
  dkim=pass header.d=xiplink.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xiplink.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7PL3l+M1Id064HD223aTkKpbKO90yfPK8yXZnBeES44=;
- b=Kd7Y9S+liv1I8QP7/JE5WQXqX9l/7nPxYXhrfnowhFE9hd1VRR+LH11jd2yU3gX1SyW4zIZxUsu+kSD0ahroUVREpqamteP48KAdJY8yPvaLpoKi0eDS7opwi0ng5qaAikj2uUuxYgR2O7mOE7URMajOaJ5pFUWf+3Fya0hi1gxQF9IRQZ+Cbc+AHwV0ceRjWcaEB9WNhQyK6TsFX8mmtPICArrgV7VjHqdKxjSD4sUaLIS6jOgrKxTnZB7lxTKCjsVnW+j+M2olbKz6CdsBKGV9UllOlJNOzh2W09fccAF8GYlb2ll7QpztVpeeoK8zbffmjuh3TJa7Jj2ZoWGv7g==
+ bh=fhxxN4r2jdZHLCW16kr9YnoTAHsd7n8n6/IOcdZUkp4=;
+ b=mHGStu4qGqbpqgCIDt6A1Cu9eWjHVOGmrlK2oa80xFQfaGA2BGgOPsErVG9Eiok2iS00KLWGMNxt1c6OmCeEOByvnWzkk2+0P3W/o/xo5kwF34tNTYARjM+u6bL2xxCI+ewArKqJDWI9azAd8tot1hcIh9xprA66G51M8VWMXMEm+m/43ateaFlMsiXogpFiSTVwlcl52zhoObskQJl8Kfr6GVnVtp2QGwzHrB8NC81+rLdnHA5tT/P2E3weyBpr6nug8saMOxcmDZXnuPixLgaUpnc9AIjohEa5Fw4qpHBiNGaKYgV+GuYMyX/MrmsSpnREDRtRoGFK47x0h9krAg==
 Authentication-Results: xiplink.com; dkim=none (message not signed)
  header.d=none;xiplink.com; dmarc=none action=none header.from=xiplink.com;
 Received: from QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c00:30::29)
- by YQXPR01MB3432.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c00:52::23) with
+ by QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c00:30::29) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.29; Fri, 30 Oct
- 2020 13:58:15 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.18; Fri, 30 Oct
+ 2020 14:06:04 +0000
 Received: from QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
  ([fe80::5164:12ee:f585:5dbf]) by QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
  ([fe80::5164:12ee:f585:5dbf%7]) with mapi id 15.20.3499.028; Fri, 30 Oct 2020
- 13:58:15 +0000
-Subject: Re: git-gui: Why are the main panels no longer white?
-To:     Serg Tereshchenko <serg.partizan@gmail.com>
-Cc:     git@vger.kernel.org
-References: <b85e0713-81d6-fcf2-6292-1b5acf86650a@xiplink.com>
- <20201029232816.68285-1-serg.partizan@gmail.com>
+ 14:06:04 +0000
+Subject: Re: git-gui: How to configure for use in gigantic projects?
+To:     Birger Skogeng Pedersen <birger.sp@gmail.com>,
+        Git List <git@vger.kernel.org>
+References: <CAGr--=KpNaPFjMOzXzF382cv1p58nMoOPXAm0MCdA8WZMBznVA@mail.gmail.com>
 From:   Marc Branchaud <marcnarc@xiplink.com>
 Organization: XipLink
-Message-ID: <95c91585-5249-b0cd-bd06-a014e8770d37@xiplink.com>
-Date:   Fri, 30 Oct 2020 09:58:14 -0400
+Message-ID: <dc3de1d7-43b2-20da-5e68-2652b35ce784@xiplink.com>
+Date:   Fri, 30 Oct 2020 10:06:01 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.10.0
-In-Reply-To: <20201029232816.68285-1-serg.partizan@gmail.com>
+In-Reply-To: <CAGr--=KpNaPFjMOzXzF382cv1p58nMoOPXAm0MCdA8WZMBznVA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [192.222.183.158]
-X-ClientProxiedBy: YQBPR01CA0118.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:c01:1::18) To QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
+X-ClientProxiedBy: YQBPR01CA0092.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:c01:3::28) To QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
  (2603:10b6:c00:30::29)
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from [192.168.222.18] (192.222.183.158) by YQBPR01CA0118.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c01:1::18) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.18 via Frontend Transport; Fri, 30 Oct 2020 13:58:14 +0000
+Received: from [192.168.222.18] (192.222.183.158) by YQBPR01CA0092.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c01:3::28) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.18 via Frontend Transport; Fri, 30 Oct 2020 14:06:03 +0000
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 226b703c-54da-4447-9c6d-08d87cdbd8d1
-X-MS-TrafficTypeDiagnostic: YQXPR01MB3432:
+X-MS-Office365-Filtering-Correlation-Id: a6810fea-e0c0-4cf5-e1d0-08d87cdcf053
+X-MS-TrafficTypeDiagnostic: QB1PR01MB2451:
 X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <YQXPR01MB3432856AFABA4951A9D53109D7150@YQXPR01MB3432.CANPRD01.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:7691;
+X-Microsoft-Antispam-PRVS: <QB1PR01MB24510F6D15A90D6D3FEAD95FD7150@QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM>
+X-MS-Oob-TLC-OOBClassifiers: OLM:8273;
 X-MS-Exchange-SenderADCheck: 1
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: hLWbfV+oEhV/IdqjNqWEg084dI0o+hOyU5eHOtch1kSsFVe2FSx81Ew1iGqEQxt2fA0HYaGpNEqVkMqtPG7teY73rws6btIMqk8yWVaXy3d12Y+P505MSUVexirbzlRScDkphRED1vLGzCZ5rYIzxUhddENxFlQEjhK+6rFZXHG4SxwUwKVPkc9wPB99mhujnAnz9qlE1l8wFQ487g9knQEfJkJjoi5KWmnDwIbHtE12+UHyJ2eveXPfF5p1l867/sEC9SkKI3BH+lglnp0gE6zRr8jOTikVgNPiRuwM5SrxQ0BKgaUyOGOlsa3FpE2mFopwPs0rfJ+nZ7qwWChHixHt1hI7wjRHFDgzKonlQzJGhTxIvlDI4VM18Yw7VhTR
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(366004)(396003)(346002)(376002)(136003)(39840400004)(8676002)(16576012)(956004)(31696002)(2616005)(8936002)(66946007)(186003)(4001150100001)(316002)(53546011)(4744005)(2906002)(66556008)(478600001)(16526019)(66476007)(36756003)(36916002)(31686004)(6486002)(86362001)(6916009)(4326008)(26005)(52116002)(5660300002)(43740500002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData: aDSKV3q8S0n1op9EDMidCtU+AsEBucMMHKHDtC4qrpCX/8E+xsNef+g218BGn9SbI8wMWZgxV9TDVzNFk6QpC1gXkxlk6UvtGSJ99ujiVH+8fi9kI+SN/Pi1ZJZwh2Ma7thvvbmJq3UsdzkY5gFhcjjmW7JvvtwRes1Q3cWQN+HUkRgv9C2qso6mXWXTu2hMoNdeI5JVTauk3X8KBdEh/2c3E5qMSkvjHKkVAiK4MCgTgSRpMfZhtOqTma4egxMraXevVt1Ma//iU/rwFFidyvPXaCsJUCz9/QIgT7qy/QmXv/O7eu5Z8qDzy7RcqPWpjPehvpfTVZvv/+zIcE2Yx50wSb+33TqJAj7sqBxAZPD2yVJ2QOc8eVFoOP2bGQH+RxM8pbI2sMAgg4h7eAAD57VXrdqJZQ0ZIDzFwZfzg296PuY3prjnnHMUDtdQPqQY4+A9pJMxQ3i+eqOp5tOFk2fz9QhUJEl1tOZ/XOjkOQDLPNJ4fvlvj/cavWj3CEQptZwL7DGDhknVURxZ3P9AJA5whSyyrljybUy8sncJHYL+Y2t0skJ/LfpjgtBIMVT8Z7CNnuacuKXk1LIPf6D23DKrNiQhSkGlGU/RnyAqcTuWrLkf4dKinYIhpVvZnWEtkSrNdK0cIfD0u859m/+l6g==
+X-Microsoft-Antispam-Message-Info: M03fSCh/dgMp9tSNXLfemUGXA/1pieTsjKhusGHp1i/OFG55rV3ejrNMAENTvldDPoNpLfvOvQ3s6/3mKBVl1M4sc9h4kIJVr7auxoBStIQMYG9xb+P5/IWQXLngqPCWkDjMQj2h3Z/Id1wSUBJDHubv6OgJFj66GJT7h/p3uFQhRF29DmyHZajXCPIBf/uMNYm2G1ItneUpC/9xnRiOX5l2JRtb/j+Dp2YsDq6jcmfX20D05jhnM6TRXoTUkAa2gTxYelR31LZlcbRwMAfNPrDer/HrEV5CliJR0AaFMqd+Z4c35nvx1V0BFyJ/1Rxvw2DkyzMi9i3stQm8+j9+0PW09+lUXb4sLsn9NVJxmRnKxyM8uz67JElnTct0Wpcw
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(396003)(376002)(366004)(346002)(136003)(39830400003)(16576012)(110136005)(66946007)(66556008)(66476007)(316002)(478600001)(36756003)(31686004)(2616005)(956004)(5660300002)(4744005)(53546011)(186003)(36916002)(26005)(52116002)(16526019)(31696002)(2906002)(6486002)(83380400001)(8676002)(86362001)(4001150100001)(8936002)(43740500002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData: alxeIQY9MBIrw9CcORFlLd11EMmWbSacu0c/2sZHkVr67bY27jOi/QU0W3oKSZECBcUUvXT87Ky5MF+J24n6QjOr7ubHAZdFZJGRvgkDRoL0uOWUHD7de3YJTq9qd74Tz/PvawNKl5JxaccyKTOMEl+996+8k5vKWqeIc2r6Ghre/eg3xstRzReW1pjeN3/xLmq3NEDdHQAAt1F9Fto9W4xDt27ktEwxChuA+seq8FRGWgfJ3YR3zBTrc8Sdo1M8yBl+h2k5oqofZCFqudX40o5eUKVdsFJiS2zlmdBKDiy5shmu26ZqCSs480wLxVYNY15JMFIcqyNUr0W0imxR6ydYhcChbbSh8YDmuekczddFlEuHYveR4cvrqCZoY2S3M+ezeb9D1xDyH5W3cvEUt+7wUMl9ELMRk/mVshIQ39UzWSl8F0kMsWXvyQqcGkYXM7Ux1d1ZmdUhYdzaeauVmXS7LCFFgJgbgCMqhkJsWl76xAb0Yz1FlphkbB2G24ogQU/y1hyCzHuKAO3+fH9k66Xpia+fMFv0k3C4qaAzUAKa9D/Szq861cLJGyJDA2f9Y4V5V5vIBTk7GFT1Ad2tCBmda8vpV0WvXdN19P1o/Edvs8H+lxsxQprPEE6Lb5grD2E4HhLmj1rDGYKAz9KvBg==
 X-OriginatorOrg: xiplink.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 226b703c-54da-4447-9c6d-08d87cdbd8d1
+X-MS-Exchange-CrossTenant-Network-Message-Id: a6810fea-e0c0-4cf5-e1d0-08d87cdcf053
 X-MS-Exchange-CrossTenant-AuthSource: QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Oct 2020 13:58:15.2751
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Oct 2020 14:06:04.0742
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 14f927ba-c95b-4aa6-b674-375045ee9d4d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 5eQE+4GcTooIeecuw/FoGSAfdcHTQSCZQ4I46VEIrab6pNgBMAt/eR7Exq1Ip+w1zXVBrVWN0xx8SxborTyoMw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: YQXPR01MB3432
+X-MS-Exchange-CrossTenant-UserPrincipalName: bo0l5R56GK05A9GWYRtzwussGHPO8EgvwdNruyBbzux0sxwPNACTEPqvTbUpKvRw8VxGM+kcUbZZ8hi5d7A9Lw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: QB1PR01MB2451
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-10-29 7:28 p.m., Serg Tereshchenko wrote:
+On 2020-10-30 6:16 a.m., Birger Skogeng Pedersen wrote:
+> Hi,
 > 
-> I traced source of the problem:
-> 
->> *background:    #d6d2d0
-> 
-> But if you change this, many backgrounds change color.
-> 
-> Now we need to find right *something*background to set that panel
-> colors. I'll continue search tomorrow.
+> I would like to use git gui for a project. The problem is that the
+> repository directory is really gigantic. Doing a scan (F5) takes a
+> couple of minutes to finish.
 
-I think our emails crossed in the night somewhere...
+I've found that enabling Trust File Modification Time helps, at the cost 
+of git-gui doing (very) occasional rescans when it notices that a file 
+it thought was modified turns out to be unmodified.  As Konstantin said, 
+things generally improve once the initial scan primes the disk cache.  YMMV.
 
-I've found that
-	git-gui*Text.Background
-in ~/.Xresources does the right thing.
+The setting is in the Preferences, or "git config gui.trustmtime true".
 
 		M.
 
