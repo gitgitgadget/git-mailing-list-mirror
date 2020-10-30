@@ -4,103 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59171C00A89
-	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 18:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4321DC4741F
+	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 18:42:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AC1A3206E5
-	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 18:07:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D2CEC206DD
+	for <git@archiver.kernel.org>; Fri, 30 Oct 2020 18:42:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=powertools-tech.com header.i=@powertools-tech.com header.b="booUe86q"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="N1FzetOo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726061AbgJ3SHZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Oct 2020 14:07:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40838 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725808AbgJ3SHZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Oct 2020 14:07:25 -0400
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 891C7C0613CF
-        for <git@vger.kernel.org>; Fri, 30 Oct 2020 11:07:23 -0700 (PDT)
-Received: by mail-wm1-x344.google.com with SMTP id k125so3085275wmf.0
-        for <git@vger.kernel.org>; Fri, 30 Oct 2020 11:07:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=powertools-tech.com; s=gsuite;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=NbU/YIvegXVeGFnwdMpN5cm8mr/TJ5g8lLMikR5PLsk=;
-        b=booUe86q9hUB0TTmpZIbHV1vLvOTnBbc79cYdAVGXH2O0PvPA65ujehjmYDYF3eYyt
-         yQ9Xmu+1CLl1YJYzronrudTFpSLWRpivE0OBh1G9E9gCbd3HQDtPa+GD1rQPzD7ZS+qD
-         vI3pbRKRjTLq5OfdT0dRiddgWkgwl3/vMf0Ak1m4/nm+z8F91OtULfj4QG1dXZo9Z2XP
-         CyLAi9zrkvjXdH2G9+DhSmS/0JmXpXxS28GUtWIz8BIuxVAROllg+WrEGSkfZboTEnU2
-         lhmdS9WF3C4d2wHWrZbZQ1VGubvJpIL1IDhfCOCsaydAcvCH2SHJrOL2x1rf8m0AhroY
-         nREA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=NbU/YIvegXVeGFnwdMpN5cm8mr/TJ5g8lLMikR5PLsk=;
-        b=KgkaqiTb42dlqvhWKmf2GLHfgm6u+r6XS4ed/aIiBrWvYBXkQTPWN8dwjGB93ApD4S
-         GMR38Oa7kTXCrJhLrKPQHm/C2Do6DFzJVTFy1VmZWLAM7lEo+VXuEhFo49KvWixfwsJ4
-         yA60J7y21Yr9bAu8YUIXxLC6L+dZpCaayAZb1BlpHYnZ1tmN6EBlxGlBIdO7j/7PgmoR
-         fmlqd9RX8jhvT9Vcrwgh3VQppGUzAd8f4RAHjU2kI4S1ryX3mlIPaIfWIgXXzUuv/3vQ
-         A/9rN7zmry5GNmllbcLk3M4UelW12+5os+MaZvRr1ZyTyxmuKgx7weDMM9Hhxxc1J2R4
-         k2lw==
-X-Gm-Message-State: AOAM5329+AKnYGU5gMmjHzfOYssCu/j4aYxVUPCH3t8/Ri7C+tK2gTl7
-        5hf1a3FgObtpr/ZIv6y1N2F4iZH9sMdE4yIv
-X-Google-Smtp-Source: ABdhPJzOwvj0EAKo6HCljGs6OGj0ytoCUB7Nu+Pw52qPdCtGkBYz34nTe34FTDejHvUkGdpuOMc9mA==
-X-Received: by 2002:a1c:99d3:: with SMTP id b202mr4050275wme.0.1604081241838;
-        Fri, 30 Oct 2020 11:07:21 -0700 (PDT)
-Received: from localhost ([2001:470:1f21:ea::ffff:dda4])
-        by smtp.gmail.com with ESMTPSA id v24sm11741104wrv.80.2020.10.30.11.07.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Oct 2020 11:07:21 -0700 (PDT)
-Date:   Fri, 30 Oct 2020 18:07:18 +0000
-From:   =?utf-8?B?U2ltw6Nv?= Afonso <simao.afonso@powertools-tech.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>
-Subject: [PATCH] credential-store: use timeout when locking file
-Message-ID: <20201030180718.4i7txqkgye7r6pkb@safonso-t430>
+        id S1727239AbgJ3Smb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Oct 2020 14:42:31 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62169 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725975AbgJ3Sma (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Oct 2020 14:42:30 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CCA4E8626C;
+        Fri, 30 Oct 2020 14:42:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pCMz+dVOTLxwcXk3nkH820KFJgU=; b=N1Fzet
+        Oo7WKUTldg8PTr2LL1PEC1EcvOdj4xmzH+sAoxi848m3gCT6dxI7zi2vlvgmiUY7
+        U1+3aR68BxP0K4ZbytS1jpHy2hTOLLUZm7G457L5UKXmMSfYuok3Qjt1Sr5czR8y
+        ZLh449Ypcp14Wzeft6Rziq1b/nzLYEFolCRDA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=CgwI17vbY4X36KtBwl8jR2a+BOHu5J5Y
+        cCvhZWmVL2rd/0rpVX+pwRlW2AIbxC6Dlfm3LK/wIzkt0wlnvqE68teglTJ2ykZ8
+        FfcoWT6wf7FrdcP8VRMOXWmfcllOWE79ndpG0keArUo+uHwUoAlEeaAOh3+aZk16
+        4Wa7+AuNBP4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C49C48626B;
+        Fri, 30 Oct 2020 14:42:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 55D5D8626A;
+        Fri, 30 Oct 2020 14:42:26 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Daniel Duvall <dan@mutual.io>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] upload-pack: allow stateless client EOF just prior to
+ haves
+References: <1604022059-18527-1-git-send-email-dan@mutual.io>
+        <1604029402-19593-1-git-send-email-dan@mutual.io>
+Date:   Fri, 30 Oct 2020 11:42:25 -0700
+In-Reply-To: <1604029402-19593-1-git-send-email-dan@mutual.io> (Daniel
+        Duvall's message of "Thu, 29 Oct 2020 20:43:22 -0700")
+Message-ID: <xmqq7dr7369a.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain
+X-Pobox-Relay-ID: A801FF92-1ADF-11EB-A450-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When holding the lock for rewriting the credential file, use a timeout
-to avoid race conditions when the credentials file needs to be updated
-in parallel.
+Daniel Duvall <dan@mutual.io> writes:
 
-An example would be doing `fetch --all` on a repository with several
-remotes that need credentials, using parallel fetching.
+> diff --git a/upload-pack.c b/upload-pack.c
+> index 3b858eb..2b128e4 100644
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -1344,7 +1344,18 @@ void upload_pack(struct upload_pack_options *options)
+>  				   PACKET_READ_DIE_ON_ERR_PACKET);
+>  
+>  		receive_needs(&data, &reader);
+> -		if (data.want_obj.nr) {
+> +
+> +		/*
+> +		 * An EOF at this exact point in negotiation should be
+> +		 * acceptable from stateless clients as they will consume the
+> +		 * shallow list before doing subsequent rpc with haves/etc.
+> +		 */
+> +		if (data.stateless_rpc)
+> +			reader.options |= PACKET_READ_GENTLE_ON_EOF;
+> +
+> +		if (data.want_obj.nr &&
+> +		    packet_reader_peek(&reader) != PACKET_READ_EOF) {
+> +			reader.options ^= PACKET_READ_GENTLE_ON_EOF;
 
-The timeout is hardcoded to 1 second, since this is just to solve a race
-condition.
+I am a bit puzzled why it is sensible to
 
-This was reported here:
-https://lore.kernel.org/git/20201029192020.mcri76ylbdure2o7@safonso-t430/
----
- builtin/credential-store.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+  (1) unconditionally
+  (2) toggle
 
-diff --git a/builtin/credential-store.c b/builtin/credential-store.c
-index 5331ab151..acff4abae 100644
---- a/builtin/credential-store.c
-+++ b/builtin/credential-store.c
-@@ -58,8 +58,9 @@ static void print_line(struct strbuf *buf)
- static void rewrite_credential_file(const char *fn, struct credential *c,
- 				    struct strbuf *extra)
- {
--	if (hold_lock_file_for_update(&credential_lock, fn, 0) < 0)
--		die_errno("unable to get credential storage lock");
-+	static long timeout = 1000;
-+	if (hold_lock_file_for_update_timeout(&credential_lock, fn, 0, timeout) < 0)
-+		die_errno("unable to get credential storage lock in %ld ms", timeout);
- 	if (extra)
- 		print_line(extra);
- 	parse_credential_file(fn, c, NULL, print_line);
--- 
-2.29.1
+the GENTLE bit.
 
+>  			get_common_commits(&data, &reader);
+>  			create_pack_file(&data, NULL);
+>  		}
+
+If we are not doing stateless_rpc, we call get_common_commits() with
+a reader that is gentle on eof, which is not an intended behaviour
+change, no?
+
+I would have understood if this were more like
+
+	if (data.stateless_rpc)
+		reader.options |= PACKET_READ_GENTLE_ON_EOF;
+
+	if (data.want_obj.nr &&
+	    packet_reader_peek(&reader) != PACKET_READ_EOF) {
+		if (data.stateless_rpc)
+			reader.options &= ~PACKET_READ_GENTLE_ON_EOF;
+
+i.e. only when we know we set the bit when the bit was originally
+clear, revert to the original state.
+
+	Note. initially I thought we may need to check the original
+	value of the bit in reader.options before flipping it on,
+	but this packet_reader has freshly been initialized in the
+	inner block we see here, so we know that nobody other than
+	this new code would have set the bit.
+
+Or for that matter, just unconditionally turn it off, e.g.
+
+	if (data.want_obj.nr &&
+	    packet_reader_peek(&reader) != PACKET_READ_EOF) {
+		reader.options &= ~PACKET_READ_GENTLE_ON_EOF;
+
+Puzzled...
