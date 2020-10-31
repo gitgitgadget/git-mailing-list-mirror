@@ -2,182 +2,92 @@ Return-Path: <SRS0=d2Ax=EG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70F5FC388F7
-	for <git@archiver.kernel.org>; Sat, 31 Oct 2020 20:31:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7795BC388F7
+	for <git@archiver.kernel.org>; Sat, 31 Oct 2020 21:05:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2618A2072C
-	for <git@archiver.kernel.org>; Sat, 31 Oct 2020 20:31:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 104A2206E3
+	for <git@archiver.kernel.org>; Sat, 31 Oct 2020 21:05:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i/gN0/rr"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="PsO/U0PT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728558AbgJaUbe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 31 Oct 2020 16:31:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58592 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728509AbgJaUbd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Oct 2020 16:31:33 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ABF4C0617A6
-        for <git@vger.kernel.org>; Sat, 31 Oct 2020 13:31:33 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id m26so8885422otk.11
-        for <git@vger.kernel.org>; Sat, 31 Oct 2020 13:31:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Eo8Crgk4re8G8+0Lvv2O1RIYg0uq5ATbJIrgaHoLCDs=;
-        b=i/gN0/rragdyFTfUrNq6imCjueADQIG4SkwYRKarIT2j+ldiNft36plxSeK/Zer4oo
-         3cI+4G9rhWvmgyjzok3WZh237tt40jbz1FVUpO/HbL2P/ZUB2LgXUXQuT+trGSaCuZan
-         X8aR1IuIEN/Ls5F7R4S1VpGmSlCpAtrN6TjS+CRg4q/hMr7AeAfmqEV0pddWTYnOkuR2
-         htZxu00nk04Ct9cL59pZjmnrle17mLbVTQRd9p0yetymb1z9QIZRJsBQFB280BlP9hr2
-         hYbXhXwxpSj6/CL9xsqw6+KV6UFkRB0n0RZXrqUXdfZ5YOW9sDe6d7lStDcF8Ok40sky
-         dyKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Eo8Crgk4re8G8+0Lvv2O1RIYg0uq5ATbJIrgaHoLCDs=;
-        b=CTmqh8tjmGP49Tu8uvMCwvthOjt7dKsq76fUTt3G1O+3sADceCNvYjIjwcyzHSXwME
-         3tPtKy3UcoYaHwktZE6kb+EpCCmfm8yn//s6JvXzTGQJlJLItOV7d/3x8x5u+XmJtq9T
-         zXgZzmjlCsBI67m9c4gVRcnfUcBOpzAEKo3vlQXhiegYRq9jYcmndBk6FX2+hnZ4boG5
-         Lpa01sUoJnWODD3CPpGW2RxKhfn79jCYmVAO83vsiRtkuHzVYyGf7MhHufUoiF8AsBaU
-         pT6gcbitROVFRfPqEBVUs2ChoyA+SYa5t72jnucVUr88JcgSYnlYv7MxeOxL+hsmG6ZR
-         TD8w==
-X-Gm-Message-State: AOAM533dO2m4JbcPJYSgIaEiJKDd5BuH6w0SR0M+ZCJ0DbNEBmShcoGk
-        Bw1m2glE96BdtcC8t80lCWpnYyhZMJ6q6vNEi8LChDx+20fDYA==
-X-Google-Smtp-Source: ABdhPJzNFZkcQ6KObOdGlsczOtJrFrflpSZP9R/3ZDiIiNK+teiRRoVXKE2s/4W/oV0iPkPUJ5M6z4z1n0AH9ALZ/7E=
-X-Received: by 2002:a9d:8d7:: with SMTP id 81mr2168012otf.345.1604176292082;
- Sat, 31 Oct 2020 13:31:32 -0700 (PDT)
+        id S1727301AbgJaVFB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 31 Oct 2020 17:05:01 -0400
+Received: from avasout01.plus.net ([84.93.230.227]:60456 "EHLO
+        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726254AbgJaVFB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Oct 2020 17:05:01 -0400
+Received: from [10.0.2.15] ([195.213.6.50])
+        by smtp with ESMTPA
+        id Yy3Xk1Tqbn8O7Yy3YkHniH; Sat, 31 Oct 2020 21:05:00 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1604178300; bh=tS1fFzkPn0ZNwZ7IQRXd0AN9mB9aVIC8gHDuKvA5dLc=;
+        h=To:Cc:From:Subject:Date;
+        b=PsO/U0PTbMD2bPc6f/S2//oaW2JeqxhyeJ1XXYhR10eQjGFeYnMdh9Holevf6m0JV
+         jJ6xB9mQBLqXwQ6NwQ2SF0OcpvHFvts1QAjTd/LW4a4nkFGfC9R3RLqg5o8s9Iaw1P
+         ERwqDjOGBcNCqYmv3sdZFT72lGAKwcQlS0u3SWAQlq4XNFIqSridELz+8UAzwRNU+i
+         I3D0GKTA2OvFh8ZdfOGzIRPDnj3l2rZHWEPc+psqKCBBQrexjSinTuD5E5OQWkz2hJ
+         BMDGHQAI2Vxv7YdeKSDwlU4zlbW/LuPd7hwAScugNjvloQ3aCDhQVYNvItWAa0uswl
+         G+h4IYbINWcUg==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=Ld6nFgXi c=1 sm=1 tr=0
+ a=n8v6pzUV7wpcOOJT0hzGjw==:117 a=n8v6pzUV7wpcOOJT0hzGjw==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=0N6sMt672HxyIZQyLvgA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+To:     steadmon@google.com
+Cc:     GIT Mailing-list <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] upload-pack.c: fix a sparse warning
+Message-ID: <eaf5ac83-af3f-5028-3a9e-1669c9cde116@ramsayjones.plus.com>
+Date:   Sat, 31 Oct 2020 21:04:58 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-References: <CAHjREB6Hh+urW3j2c9p45ZudSdDv0rUP28Lb4e4TZasqTzRmDA@mail.gmail.com>
- <CABPp-BF3MEAkJmmLv_0fWBJV_2AMqh_8P7Dqk62c2_Uz9Pa3Lw@mail.gmail.com> <6dfa865d-cb32-47fa-b9b4-fe3901a0cf63@gmail.com>
-In-Reply-To: <6dfa865d-cb32-47fa-b9b4-fe3901a0cf63@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 31 Oct 2020 13:31:21 -0700
-Message-ID: <CABPp-BE7+9_AiYCP+m7TOY85d4FWHG4rORk16Z6bsnAWxVPwCg@mail.gmail.com>
-Subject: Re: [Outreachy][Proposal] Accelerate rename detection and the range-diff
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Sangeeta NB <sangunb09@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfEOXalXQ+QWtDchta1gEJNKliSD6FocoNwRlCyUmwATp+jhDVayCkytr2kcsYN5UsN5MuNRJQyGCqeP5u8LCziJGouYPaiGn3dXQGXu09B+9UMUIyaqb
+ KxVQOWt7nk4o+EfT6PfWxvVXIH1Ikq8NgK2qBxMYwesmzs2jxfuBg2ZKWgM4yn0vblEcxjJ2gS2lww==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-On Fri, Oct 30, 2020 at 2:02 AM Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
->
-> Hi Elijah,
->
-> On 26/10/20 10:22 pm, Elijah Newren wrote:
-> >
-> > On Mon, Oct 26, 2020 at 1:44 AM Sangeeta NB <sangunb09@gmail.com> wrote:
-> >>
-> >> I would love to participate in outreachy this year with Git in the
-> >> project "Accelerate rename detection and the range-diff command in
-> >> Git". I have contributed to the microproject "Unify the meaning of
-> >> dirty between diff and describe"[1] which is still under review, but
-> >> through the process, I have got myself familiar with the mailing list
-> >> and patch review system. I am also contributing to another issue[2]
-> >> which is still under discussion[3] about `git bisect` and `git
-> >> rebase`.
-> >>
-> >> [1] https://lore.kernel.org/git/pull.751.git.1602781723670.gitgitgadget@gmail.com
-> >> [2] https://github.com/gitgitgadget/git/issues/486
-> >> [3] https://lore.kernel.org/git/pull.765.git.1603271344522.gitgitgadget@gmail.com/
-> >>
-> >> Coming to the project, I have read more about it[4] and have created
-> >> the initial version for the timeline. I would really love to have
-> >> comments on it.
-> >>
-> >> [4] https://github.com/gitgitgadget/git/issues/519
-> >
-> > I might be the bearer of some bad or concerning news.  This email is
-> > directed more to the mentors and others on the git mailing list, but
-> > obviously may affect you as well:
-> >
-> > I apologize for not stating my concerns more forcefully earlier, but I
-> > didn't have as many details at the time or have an idea how fast
-> > merge-ort could be upstreamed.  Anyway, I'm still concerned that this
-> > might not be a good project for Outreachy due to two factors: unclear
-> > benefit, and conflicts:
-> >
-> > 1) I've got merges down to the point where even if there is a massive
-> > rename of 26000 files (e.g. renaming "drivers/" to "pilots/" in the
-> > linux kernel), rename detection is NOT the long tent pole in a merge.
-> > So although this project is interesting, it's not clear that this
-> > project will help us much.  It might be better to get my changes
-> > merged down and see if there's enough need for additional
-> > optimizations first.
-> >
-> > 2) Ignoring what I've already submitted, the remaining diffstat for
-> > merge-ort is about 5500 lines....
-> >    2a) If I break that ~5500 lines into patches with 50 lines each,
-> > that's 111 patches.  If I assume I can send 10-20 patches per week
-> > without overwhelming folks, that's 6-11 weeks, pulling us somewhere
-> > into mid-December or mid-January.  10-20 patches per week might be
-> > over-optimistic on reviewer fatigue, which would push it out even
-> > further.
-> >    2b) Work is going to soon rotate me onto other non-git projects,
-> > meaning even if the mailing list can review my changes aggressively,
-> > there's a chance I might not be able to keep up on feeding them to the
-> > list.
-> >    2c) diffcore-rename.c is only ~700 lines right now.  My 5500 lines
-> > of changes includes over 1000 new lines for diffcore-rename.c and
-> > about 150 line removals for it.  These changes are spread all over the
-> > file; only four small functions remain untouched.  In fact, I even
-> > made big changes to struct diff_rename_dst too, so any new uses of it
-> > would almost certainly have textual conflicts.
-> >    2d) My diffcore-rename.c changes probably do not make logical sense
-> > to submit first.  They should come after some groundwork is laid for
-> > merge-ort.
-> >
-> > Even though at a high level this project is complementary to the
-> > optimizations I made in my 'merge-ort' work, I fear there will be LOTS
-> > of intermediate conflicts as we both make changes to the same areas
-> > during the same time and make a mess of things.
-> >
->
-> Thanks for the detailed concerns. Some thoughts:
->
-> - Given that a major portion of the project would be to evaluate
->    various algorithms and identifying the most suitable one, I believe
->    implementation conflict shouldn't be a problem as it's expected to
->    start only by late-January. Also, as Christian pointed out elsewhere
->    it might be a good learning experience.
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-"late-January" _might_ be okay, but I'm worried that relying on
-optimistic timelines is a bad idea.  However, if the primary purpose
-is a good learning experience, or if the primary purpose is to
-evaluate different algorithms (i.e. we're not relying on the timelines
-to avoid conflict, it's just a bonus if they don't), then sure, no
-problem there.
+Hi Josh,
 
-> - I do have a concern about one thing, though. For evaluating the
->    algorithm in the context of Git, we might need to do some experimental
->    implementations to get some metrics which would serve as the data that
->    we could use to identify the optimal algorithm. I'm  wondering whether
->    your planned changes might affect that. In the sense that, is there a
->    chance for the evaluation to become obsolete as a consequence of those
->    changes? If yes, what could we do to overcome that? Any thoughts on
->    this would be helpful.
+If you need to re-roll your 'js/trace2-session-id' branch, could you please
+squash this into the relevant patch (commit edb21a501e, "upload-pack, serve:
+log received client trace2 SID", 29-10-2020).
 
-That is certainly a possibility, yes.  One way to address that concern
-is for me to freeze some branch (likely some version that I deploy
-internally at $DAYJOB for testing), and for you to build on that.  If
-all the new merge backend code gets reviewed and upstreamed fast
-enough, and the areas you depend on don't change too drastically based
-on reviewer comments, then building on merge-ort creates no
-impediments for the Outreachy project to get upstreamed at the normal
-time.  I can understand, though, if that plan seems worrisome due to
-worries about how fast the new backend will be upstreamed or how much
-it needs to change in the process; that is, after all, why I raised my
-concerns in the first place.
+Thanks!
+
+ATB,
+Ramsay Jones
+ 
+ upload-pack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/upload-pack.c b/upload-pack.c
+index b7d097bf1b..2996b8083c 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -1111,7 +1111,7 @@ static void receive_needs(struct upload_pack_data *data,
+ 		if (data->allow_filter &&
+ 		    parse_feature_request(features, "filter"))
+ 			data->filter_capability_requested = 1;
+-		if ((arg = parse_feature_value(features, "trace2-sid", &feature_len, 0)))
++		if ((arg = parse_feature_value(features, "trace2-sid", &feature_len, NULL)))
+ 		{
+ 			char *client_sid = xstrndup(arg, feature_len);
+ 			trace2_data_string("trace2", NULL, "client-sid", client_sid);
+-- 
+2.29.0
