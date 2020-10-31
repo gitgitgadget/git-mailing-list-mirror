@@ -2,102 +2,114 @@ Return-Path: <SRS0=d2Ax=EG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F33B3C388F7
-	for <git@archiver.kernel.org>; Sat, 31 Oct 2020 18:58:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30E44C388F7
+	for <git@archiver.kernel.org>; Sat, 31 Oct 2020 19:37:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A03E220706
-	for <git@archiver.kernel.org>; Sat, 31 Oct 2020 18:58:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CFB5B206D8
+	for <git@archiver.kernel.org>; Sat, 31 Oct 2020 19:37:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="l1qd5ZiR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FyYV8TBS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728420AbgJaS6i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 31 Oct 2020 14:58:38 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56616 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726627AbgJaS6i (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Oct 2020 14:58:38 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 624D18FAB8;
-        Sat, 31 Oct 2020 14:58:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=a3GzvdU5evF2FWYNAx8SF+h68aU=; b=l1qd5Z
-        iRivtGlxQPj/GBHnyCXLyqQY4OAA7l0hPN3GlhQCeaA6LOQOqyTevcAApqcOelJD
-        IZfVhCxzoAAyQlXRb6LTZQzsBtfgM8ZBdLDEP5gY78+/e1rqNjWyTaZTkrMl50Fq
-        Bz2OrpAGSrsEeEred3FwuTej3UFiiZfES2dp8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Oc2DNH250SmEaAy7dS12bw9lzP+kVArk
-        x6KboL4lReCL8KuEr9J4STs7xdxJDgbyX0IC7Awrmyn8x+SMx5PGaE2XYwuKAXbu
-        I6BrSCWDo4W/vTSpxerz4pva1aeNTJoBEX1ms1oGnE4N58Yyn+IjFBltjwK0Eu+f
-        4XSBvajTrQg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5A05C8FAB7;
-        Sat, 31 Oct 2020 14:58:34 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D2A5F8FAB6;
-        Sat, 31 Oct 2020 14:58:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 6/6] blame: enable funcname blaming with userdiff driver
-References: <pull.774.git.1603889270.gitgitgadget@gmail.com>
-        <a1e1c977d0978424fb07c97be0479f43a325cbea.1603889270.git.gitgitgadget@gmail.com>
-        <xmqqy2jo6a0z.fsf@gitster.c.googlers.com>
-        <81143637-F77C-49C5-B55A-57E92AC45881@gmail.com>
-Date:   Sat, 31 Oct 2020 11:58:33 -0700
-In-Reply-To: <81143637-F77C-49C5-B55A-57E92AC45881@gmail.com> (Philippe
-        Blain's message of "Sat, 31 Oct 2020 14:02:16 -0400")
-Message-ID: <xmqqimaq43za.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726627AbgJaThw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 31 Oct 2020 15:37:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50366 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725786AbgJaThw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Oct 2020 15:37:52 -0400
+Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D738C0617A6
+        for <git@vger.kernel.org>; Sat, 31 Oct 2020 12:37:52 -0700 (PDT)
+Received: by mail-lf1-x141.google.com with SMTP id y184so10244493lfa.12
+        for <git@vger.kernel.org>; Sat, 31 Oct 2020 12:37:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=87sLlGT6APcy/1ks02GQMf9yIwlV7koDh7ZlbhargT8=;
+        b=FyYV8TBSbcyyonk948JmK3Iw1/BegmDuR4Jsg6g4JQFdHF2QPp42fPBc6bkx27b0Lc
+         ai58zBgmDjrPviVUYvg2WpFdyfzg7Vi++9VwJR78fPPHoimOrWgLqUBgwxJVnawhR9ON
+         kZGL1oQCyfPBB5fmtfjs62ZOx7t3tIDr2FCOEntiyyBIP0T7mQhFFcSaPz6Lrrp0qIuq
+         3JzxcOq/BEFKEnHaHkrXZ1SzcxFv3BtzeGWwINPAkhLvqdAKGOYusvk5bISRRNwZheK8
+         vNpboj+4Bx9ANKACbC7//F1GhYT/s34ZIA6tkK7WO1VGaVAxndTZG6oYN8xaIvy0tFl4
+         UZUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=87sLlGT6APcy/1ks02GQMf9yIwlV7koDh7ZlbhargT8=;
+        b=aA74X31VHWyt25qtlDe90Q8q9CuVsdEO55G3kD1k/mSTwPupg3L46I7A3/KwrTghmh
+         uEtLvJ2Sckz/xxDzVyiin08nzEqXHvLHz4gNu9mUhsds+IP+q6djnp3Bpp/zdqF9ake3
+         D/+AQhU+/iB9TTsmqfamjv+dwnYsGVIBevtKxPiukSktorIizTQwUAndXkrglH4inM5Q
+         dPfSzbCBE7I/EI/5l1Nj22v2h65uJFbrXSG0Ig5MJc3tFPJq8+nWcluEzJWcAaXiTEfn
+         HO9X1beHv1GOx799IR1vLVbw4qgwO8EmS24BXazfztnrPoCl+1HpJ8KgUYE9jT/6njyy
+         17Qg==
+X-Gm-Message-State: AOAM533UgThlEfYS21tR9b+FQq4I9acMlP7HroHJKxZNBm2LDVzOO9M+
+        LYWuZU+LUSFVsCsgxNwom5aDca/WUSA=
+X-Google-Smtp-Source: ABdhPJxBPHEK4VtVCsabLSsEZG1U4z9eEdlQTTl6XQ2utZ+TNSjg21hOsOxteKfLGN2p5x1vCoOPWQ==
+X-Received: by 2002:a05:6512:47b:: with SMTP id x27mr2856245lfd.157.1604173069741;
+        Sat, 31 Oct 2020 12:37:49 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id i19sm1051979lfj.212.2020.10.31.12.37.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 31 Oct 2020 12:37:48 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>
+Subject: [PATCH] doc/diff-options: fix out of place mentions of '--patch/-p'
+Date:   Sat, 31 Oct 2020 22:37:34 +0300
+Message-Id: <20201031193734.22702-1-sorganov@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 131A847C-1BAB-11EB-85D5-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philippe Blain <levraiphilippeblain@gmail.com> writes:
+First, references to --patch and -p appeared in the description of
+git-format-patch, where the options themselves are not included.
 
-> * In patch 6, I considered fixing that bug in a different way by
->   initializing sb.path inside blame.c::setup_scoreboard. This function
->   already receives 'path' as its second argument, so changing that would not
->   impact the API. Probably Thomas thought that sb.path was already
->   initialized in sb when he modified builtin/blame.c::prepare_blame_range 
->   to also send sb.path to line-range.c::parse_range_arg in 13b8f68c1f (log
->   -L: :pattern:file syntax to find by funcname, 2013-03-28). 
->
->   Initializing the path in setup_scoreboard would mean we could also
->   simplify the API of blame.c::setup_blame_bloom_data since it would not
->   need to receive path separately and so its second argument could be
->   removed. I went for the simpler alternative of just sending 'path' to 
->   parse_range_arg instead of sb.path since it felt simpler, but if we feel
->   it would be better to actually initialize sb.path in setup_scoreboard,
->   I'll gladly tweak that for v2.
->
->> But that is merely a potential future clean-up.  The local variable
->> path is still used one more time in the error message given when
->> this parse_range_arg() fails, so at least this change makes the use
->> of path more consistent.  I like the simplicity of this fix.
->
-> I also like its simplicity, and that's why I chose to submit this as v1.
-> But I completely agree with you that it is "dangerous" in the sense
-> that some further modifications to the code could then make the same mistake
-> and use 'sb.path' thinking it is defined when it is not.
->
-> So I'm thinking of instead initializing it in setup_scoreboard for v2.
+Next, the description of --unified option elsewhere had duplicate implied
+statements: "Implies --patch. Implies -p."
 
-That does sound like a sensible way to clean it up.  Thanks.
+Signed-off-by: Sergey Organov <sorganov@gmail.com>
+---
+ Documentation/diff-options.txt | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 573fb9bb71e2..320304033483 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -36,9 +36,9 @@ endif::git-format-patch[]
+ -U<n>::
+ --unified=<n>::
+ 	Generate diffs with <n> lines of context instead of
+-	the usual three. Implies `--patch`.
++	the usual three.
+ ifndef::git-format-patch[]
+-	Implies `-p`.
++	Implies `--patch`.
+ endif::git-format-patch[]
+ 
+ --output=<file>::
+@@ -441,7 +441,10 @@ endif::git-format-patch[]
+ 
+ --binary::
+ 	In addition to `--full-index`, output a binary diff that
+-	can be applied with `git-apply`. Implies `--patch`.
++	can be applied with `git-apply`.
++ifndef::git-format-patch[]
++	Implies `--patch`.
++endif::git-format-patch[]
+ 
+ --abbrev[=<n>]::
+ 	Instead of showing the full 40-byte hexadecimal object
+-- 
+2.25.1
+
