@@ -2,89 +2,239 @@ Return-Path: <SRS0=d2Ax=EG=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5B8CC388F7
-	for <git@archiver.kernel.org>; Sat, 31 Oct 2020 04:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B2F2C388F9
+	for <git@archiver.kernel.org>; Sat, 31 Oct 2020 10:55:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9654D20791
-	for <git@archiver.kernel.org>; Sat, 31 Oct 2020 04:18:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 08C8A20739
+	for <git@archiver.kernel.org>; Sat, 31 Oct 2020 10:55:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZAtt1OLx"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="anrwn1UR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725936AbgJaESB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 31 Oct 2020 00:18:01 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61918 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725794AbgJaESA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Oct 2020 00:18:00 -0400
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 52AE8107CE5;
-        Sat, 31 Oct 2020 00:17:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=byKHU5Oudi8J/R76HcW0a9w9o1c=; b=ZAtt1O
-        LxhT+3Wq4PKyQW7IYYaaPaJ1k0xETfqN0p3UiyEj7xGwGVbGVLuhyp7VtFek7qOX
-        WuXTb3NVmOj/xt9zgGKn/CIuQrb9XxW3jpnTeCCSrAPIf4vPp3tOPNy7o98NXyNH
-        +GRhs9ZYDJ2lyMRYeQo0Gi9l78E8iQKPu01p4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=S4eX0GDzzRMC93iGR2ZjhhRluf78+x7V
-        K3GxmLDQduvCXltFTliPXLW1k4nnAhbG2YkjP4EHA+0BT3oJKOnzBnn3aAIpRF1d
-        Y8wgNLg0JxRCbXYSc9YhxpHMrk6ULf3lwHNPfkAClvv75YtuU8GigcHYrlvn3H6S
-        DxJnyZctXC4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4AF34107CE4;
-        Sat, 31 Oct 2020 00:17:59 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 984FC107CE3;
-        Sat, 31 Oct 2020 00:17:56 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Daniel Duvall <dan@mutual.io>
-Cc:     Git Users <git@vger.kernel.org>
-Subject: Re: [PATCH v2] upload-pack: allow stateless client EOF just prior
- to haves
-References: <1604022059-18527-1-git-send-email-dan@mutual.io>
-        <20201030223504.45978-1-dan@mutual.io>
-        <xmqqzh4346sb.fsf@gitster.c.googlers.com>
-        <CANo+1guedZiZVbnANsSPCiYbKWpJ_tjJ7vc04Ap7EVZzzp869A@mail.gmail.com>
-Date:   Fri, 30 Oct 2020 21:17:54 -0700
-In-Reply-To: <CANo+1guedZiZVbnANsSPCiYbKWpJ_tjJ7vc04Ap7EVZzzp869A@mail.gmail.com>
-        (Daniel Duvall's message of "Fri, 30 Oct 2020 19:42:27 -0700")
-Message-ID: <xmqqv9er3u6l.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726789AbgJaKz4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 31 Oct 2020 06:55:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54334 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726697AbgJaKzz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Oct 2020 06:55:55 -0400
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C3CEC0613D5
+        for <git@vger.kernel.org>; Sat, 31 Oct 2020 03:55:55 -0700 (PDT)
+Received: by mail-wm1-x344.google.com with SMTP id h22so5077839wmb.0
+        for <git@vger.kernel.org>; Sat, 31 Oct 2020 03:55:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=SrYDbbwOoJnhFQ+vUVCSptfPme1Vuax7gioUy9SL2KI=;
+        b=anrwn1URdBS1mDyqRRv50hSji853fqbMN1SYTyKOcOTsUlTMjUI379xUWdbt05+VX4
+         sZWp3AxgpeU35KiGH55lcS62PF3M2gAG7+mD0HbirBVu3f5C8+UswFlSPhocjcsdBrSK
+         Sd4JZhJdE++Y9iCGXQ+CccbZAkmwFBUW97MBMTDtfjeXz1sDYZ7j4aJUMniYIudkkWAA
+         HyRN4wOGtgLPHwqASvTLIpBe1PEAuQOcOhMmH0lQ6kNKdd9zIA0nNjVQN1uRyNcAWvJI
+         98GI6IJAoq8lvylJT8CA8gJoRNlzlrKCFMeZj8KQFCJeRjQAlMJGmhQyf87mR2Iv+4VO
+         kcLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=SrYDbbwOoJnhFQ+vUVCSptfPme1Vuax7gioUy9SL2KI=;
+        b=jXIMHmhMjTZ1wwzixVv2QS5mmhFROj8DYPS57AIPymHmkMdzwPYBFN+y6XKZmpK+Qt
+         440Tj12SJeqai5ik8j7tfg/jHo/sFwnkoMie7v8zDaTVoiFR5vR6ULQSn+wORKt7yHT6
+         jMvSzXDBFwtizbBbjS/cXVJ0bppp0BVDmHzj2px/28fnZDTFdBJ9vfdcJrvbOnrSldzE
+         +acd2QjmPPqmS3IolywRYGeIW1iyOajvCQvGxeMU9atEBcsVxRuvBfxxlRERwD+vFVxM
+         Jasnxhe32SWCkqw4I1u2GI+6o7+1/2TAyZHLAv1iTGRxU6R0jf8IiZjFnIZmyOVoMI2x
+         Q8bg==
+X-Gm-Message-State: AOAM531GrWI3ltCWxueVzGwx5s3onH+JU8KXTpKn4/5I4iLwHQk1zXXI
+        LsTBMnq4W72Ykpw9gigzFD6KAbsZg0Q=
+X-Google-Smtp-Source: ABdhPJyH4dHgYL4S09sMYSbkQobanptvK1zkkE0r/+Va8q1cpdC/8jqb4V5UjqEywLxKKr1e96QmCA==
+X-Received: by 2002:a1c:3846:: with SMTP id f67mr7764843wma.33.1604141754066;
+        Sat, 31 Oct 2020 03:55:54 -0700 (PDT)
+Received: from [192.168.1.201] (189.55.7.51.dyn.plus.net. [51.7.55.189])
+        by smtp.googlemail.com with ESMTPSA id e25sm15653954wrc.76.2020.10.31.03.55.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 31 Oct 2020 03:55:53 -0700 (PDT)
+Subject: Re: [PATCH 1/4] rebase -i: stop overwriting ORIG_HEAD buffer
+To:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Caspar Duregger <herr.kaste@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.773.git.1603807337.gitgitgadget@gmail.com>
+ <24f2c4a62317231f4eabed23bb24d345abc9d67e.1603807338.git.gitgitgadget@gmail.com>
+ <xmqq7drbbcj5.fsf@gitster.c.googlers.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <fa2d75ee-e692-a400-e9f7-8f13a5c220e8@gmail.com>
+Date:   Sat, 31 Oct 2020 10:55:52 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0DA6D976-1B30-11EB-85DB-E43E2BB96649-77302942!pb-smtp20.pobox.com
+In-Reply-To: <xmqq7drbbcj5.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Daniel Duvall <dan@mutual.io> writes:
+On 27/10/2020 21:10, Junio C Hamano wrote:
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> 
+> My initial impression after seeing the recent report about ORIG_HEAD
+> was "hmph, these days, rebasing is done on detached HEAD and the
+> final step updates the target branch only once, so @{1} is much
+> easier to use---perhaps it is time to deprecate use of ORIG_HEAD?".
+> After all, ORIG_HEAD was invented way before we had reflog, and
+> given that one of the goal of reflog was to give more general
+> recovery mechanism than going back one-step like ORIG_HEAD allowed
+> us to, and "rebase" were taught to work on detached HEAD to make
+> @{1} more useful, it would not be too bad to eventually retire
+> ORIG_HEAD in a distant future, I thought.
 
-> On Fri, Oct 30, 2020 at 4:45 PM Junio C Hamano <gitster@pobox.com> wrote:
+Thanks for filling in the history. As reset sets ORIG_HEAD as well as 
+rebase it can be confusing so retiring it in the future maybe a good idea.
+
+> But it is a good initiative anyway to make ORIG_HEAD again work as
+> documented.  Thanks for working on it.
+> 
+>> After rebasing ORIG_HEAD is supposed to point to the old HEAD of the
+> 
+> A comma after "rebasing".
+
+Sure
+
+>> rebased branch. Unfortunately the buffer storing the oid was
+>> overwritten with a new oid before ORIG_HEAD was created. The buffer is
+>> also used when writing .git/rebase-merge/orig-head which is used by
+>> `rebase --abort` to restore the previous head. Luckily that file is
+>> written before the buffer is overwritten.  As we want the full oid
+>> find_unique_abbrev() is replaced with oid_to_hex_r() rather than
+>> find_unique_abbrev_r().
+> 
+> The above is hard to read and understand.  It is unclear where the
+> observation of the current behaviour (which is often the explanation
+> of the cause of the bug) ends and the description of new behaviour
+> begins.
+> 
+>      ... old HEAD of the rebased branch.  The code used
+>      find_unique_abbrev() to obtain the object name of the old HEAD
+>      and wrote to both .git/rebase-merge/orig-head (used by `rebase
+>      --abort` to go back to the previous state) and to ORIG_HEAD.
+>      The buffer find_unique_abbrev() gives back is volatile,
+>      unfortunately, and was overwritten after the former file is
+>      written but before ORIG_FILE is written, leaving an incorrect
+>      object name in it.
+> 
+> Up to that point is the observation of the current code, which
+> explains where the bug comes from.  Please have a paragraph break
+> after that, before explaining the solution, e.g.
+> 
+>      Avoid relying on the volatile buffer of find_unique_abbrev(),
+>      and instead supply our own buffer to keep the object name.
+>      Because we want to use the full object name, use oid_to_hex_r()
+>      instead of find_unique_abbrev_r() to do so.
+
+That's much clearer thanks. I wonder if swapping to oid_to_hex_r() 
+rather than find_unique_abbev_r() is complicating this commit 
+unnecessarily as the code that is changed here is deleted in patch 4, 
+maybe we should do the switch there.
+
+>> I think that all of the users of head_hash should actually be using
+>> opts->orig_head instead as passing a string rather than a struct
+>> object_id around is a hang over from the scripted implementation. This
+>> patch just fixes the immediate bug and adds a regression test based on
+>> Caspar's reproduction example. The users will be converted to use
+>> struct object_id and head_hash removed in the next few commits.
+> 
+> Makes sense.
+> 
 >>
->> >  t/t5705-upload-pack-stateless-shallow-eof.sh | 24 ++++++++++++++++++++
->> >  upload-pack.c                                | 13 ++++++++++-
->> >  2 files changed, 36 insertions(+), 1 deletion(-)
->> >  create mode 100755 t/t5705-upload-pack-stateless-shallow-eof.sh
+>> Reported-by: Caspar Duregger <herr.kaste@gmail.com>
+>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>> ---
+> 
+> If you cite "Caspar's repro example" like that in the log message,
+> it is incomplete to leave out a URL to the mail archive.
+
+Good point I'll add a url
+
+Thanks for your comments
+
+Phillip
+
+>>   builtin/rebase.c              | 10 +++++-----
+>>   t/t3404-rebase-interactive.sh | 11 +++++++++++
+>>   2 files changed, 16 insertions(+), 5 deletions(-)
 >>
->> I'd rather see it folded in an existing test, if it makes sense.
->
-> With v3 I've moved it into t/t5530-upload-pack-error.sh. That test
-> file seemed to mostly contain errant cases, but I thought it might be
-> close enough as this was previously an errant case. If there's a
-> better place for it I'm happy to move it again.
+>> diff --git a/builtin/rebase.c b/builtin/rebase.c
+>> index eeca53382f..6def28a533 100644
+>> --- a/builtin/rebase.c
+>> +++ b/builtin/rebase.c
+>> @@ -270,15 +270,15 @@ static int edit_todo_file(unsigned flags)
+>>   }
+>>   
+>>   static int get_revision_ranges(struct commit *upstream, struct commit *onto,
+>> -			       struct object_id *orig_head, const char **head_hash,
+>> +			       struct object_id *orig_head, char *head_hash,
+>>   			       char **revisions, char **shortrevisions)
+>>   {
+>>   	struct commit *base_rev = upstream ? upstream : onto;
+>>   	const char *shorthead;
+>>   
+>> -	*head_hash = find_unique_abbrev(orig_head, GIT_MAX_HEXSZ);
+>> +	oid_to_hex_r(head_hash, orig_head);
+>>   	*revisions = xstrfmt("%s...%s", oid_to_hex(&base_rev->object.oid),
+>> -						   *head_hash);
+>> +						   head_hash);
+>>   
+>>   	shorthead = find_unique_abbrev(orig_head, DEFAULT_ABBREV);
+>>   
+>> @@ -327,7 +327,7 @@ static void split_exec_commands(const char *cmd, struct string_list *commands)
+>>   static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+>>   {
+>>   	int ret;
+>> -	const char *head_hash = NULL;
+>> +	char head_hash[GIT_MAX_HEXSZ];
+>>   	char *revisions = NULL, *shortrevisions = NULL;
+>>   	struct strvec make_script_args = STRVEC_INIT;
+>>   	struct todo_list todo_list = TODO_LIST_INIT;
+>> @@ -335,7 +335,7 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+>>   	struct string_list commands = STRING_LIST_INIT_DUP;
+>>   
+>>   	if (get_revision_ranges(opts->upstream, opts->onto, &opts->orig_head,
+>> -				&head_hash, &revisions, &shortrevisions))
+>> +				head_hash, &revisions, &shortrevisions))
+>>   		return -1;
+>>   
+>>   	if (init_basic_state(&replay,
+>> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+>> index 07a1617351..1e56696e4f 100755
+>> --- a/t/t3404-rebase-interactive.sh
+>> +++ b/t/t3404-rebase-interactive.sh
+>> @@ -1797,6 +1797,17 @@ test_expect_success 'todo has correct onto hash' '
+>>   	test_i18ngrep "^# Rebase ..* onto $onto" actual
+>>   '
+>>   
+>> +test_expect_success 'ORIG_HEAD is updated correctly' '
+>> +	test_when_finished "git checkout master && git branch -D test-orig-head" &&
+>> +	git checkout -b test-orig-head A &&
+>> +	git commit --allow-empty -m A1 &&
+>> +	git commit --allow-empty -m A2 &&
+>> +	git commit --allow-empty -m A3 &&
+>> +	git commit --allow-empty -m A4 &&
+>> +	git rebase master &&
+>> +	test_cmp_rev ORIG_HEAD test-orig-head@{1}
+>> +'
+>> +
+>>   # This must be the last test in this file
+>>   test_expect_success '$EDITOR and friends are unchanged' '
+>>   	test_editor_unchanged
 
-5530 is good.  It is not too big or full of unrelated tests, and it
-is about sanity in the low level protocol exchange.
-
-Thanks.
