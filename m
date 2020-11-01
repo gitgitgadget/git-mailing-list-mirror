@@ -2,177 +2,168 @@ Return-Path: <SRS0=MFMM=EH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BFB8C5517A
-	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 17:28:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC740C2D0A3
+	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 19:34:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BD2DC22265
-	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 17:28:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5668E208B6
+	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 19:34:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="spfJ7YdE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L2+uMK5K"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727147AbgKAR2x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Nov 2020 12:28:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52742 "EHLO
+        id S1726995AbgKATeF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Nov 2020 14:34:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727024AbgKAR2w (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Nov 2020 12:28:52 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32DBDC0617A6
-        for <git@vger.kernel.org>; Sun,  1 Nov 2020 09:28:52 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id s9so11907913wro.8
-        for <git@vger.kernel.org>; Sun, 01 Nov 2020 09:28:52 -0800 (PST)
+        with ESMTP id S1726790AbgKATeF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Nov 2020 14:34:05 -0500
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF4BEC0617A6
+        for <git@vger.kernel.org>; Sun,  1 Nov 2020 11:34:04 -0800 (PST)
+Received: by mail-lj1-x242.google.com with SMTP id o13so4348472ljj.11
+        for <git@vger.kernel.org>; Sun, 01 Nov 2020 11:34:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=XdA++MRqJSgWVqrx76LuRSmxfv96ZIAz/oLur7BIroQ=;
-        b=spfJ7YdENuL+hJo4nhK7gn8Y0kZ+2rhjQMaDSHM0wUnUUjxI0uSKtTuh77FHdIJkYD
-         oTOsFvKo1F/03pBgJa5asQB7gPx9ME7OE3jwcazoq5TqmlIKYEv4iqiinAP0yRkPmc8Q
-         tu+CcaSVYqaDXMmu+4dt1bouHjGNHydBJPreu5/LHVWBc6DYfrkVbxrDykWfQgZMhIcm
-         IopHGFhg5HBIf00dMR7cZs5KknIFmx/+ZE7fV8dxwI3yDzQ8lG7k0niYEwCRCcPCHhjD
-         zh9WAc0VNs+MoYRaX283WPMrmcPEqp/IXnwc3nK7Cu9VwOSAPmEJjUjNfiXf8vA6aKVT
-         HTGg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cUo6lEOunhjenjOeX9inqQWTBHFG6qpQfZs4YKElddw=;
+        b=L2+uMK5Km5pk5WZyajDNCenIQfGLNGMaWpuxC0hFHQDLeapDn7rAPJSQ7GPrq7aCIT
+         vOLHyTgBmdT2UytoW7i5xlk6kJ8a48OhBP9VFpqRyAo5MxqFulS5QFmSuMEC3D9pxbMX
+         ASLpBBGUZRX5ehrbRyzF2nWMraE+c763Li+LV88R9Zss0mZoLNTPWYOaGCzU3wNSQ1Ii
+         y6kZ597alIynZIv4uLtTiT20ie2HVgZ2TUMT9cA5RRYs118Ws1aSg7CMV1/dFSK/2UJk
+         Uxnyj0LAe9Vje/dQ42vMoigYJ7XmHO4ataAP4zKl4mn4GhHMdROWfivZgUeriU1s0DoI
+         4cxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=XdA++MRqJSgWVqrx76LuRSmxfv96ZIAz/oLur7BIroQ=;
-        b=T4o1T+8MKamRC6DxgUpwBxFPmNWS9QV0wbaZqp8eAxy2RYnn7qYz/j9AcB8Q4tXpXE
-         pI78pfGrx50CyvcRrv1Eiyu+NOs6EoPTbKBpQAhBJ4aPSTz8+Dfl6A0QRpPq901/8K0t
-         AVAoh4vutV/9ThOo6h6eayZVh+zyNjeoVy/KkfzgR7ccLuTPS8/KrV/pOPtaVI+YbGHI
-         3dHDCK20/bf4dSKnaEQ5BKaiu8MPeVA/ucnJUUT0HpTuzSSj2YZbSA0H4Q57cr4rgMl8
-         8Qrqo87cJmR8Haqc+p0qhBczDbhur6UOC2X7Wmb7uJiBBb77XsjdmnEP6O1N06seS18g
-         28Cw==
-X-Gm-Message-State: AOAM531iexgBZi3SviJJxYC10uK3JHSJz7rVVFKMywKi2O8diK1wxz1q
-        h6AazY+PXWrf3OLy1jdd+OtAYo1a264=
-X-Google-Smtp-Source: ABdhPJyG49zsJ4IjasNaHA1EEaDDWCP2tNtrJeBCD9bJwke6hUMjQFUbAxJUrXiXH8M4jNRmcyAsag==
-X-Received: by 2002:adf:914c:: with SMTP id j70mr16249614wrj.170.1604251730697;
-        Sun, 01 Nov 2020 09:28:50 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u15sm19217449wrm.77.2020.11.01.09.28.50
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cUo6lEOunhjenjOeX9inqQWTBHFG6qpQfZs4YKElddw=;
+        b=M29DKtr0wZOLpZTCfFn0lxc85GLuwDWqr2xMYdJeX6hm2/vcPc2rGqj6ilMYTD0C97
+         p26ANSpvDRIffBK5WuOC6Lp4hphXhVDmTPcXPp4cYbX749l2DUhOlrJiGYFBp9kwLF0u
+         mwOu1VJz+Z3nGAy3jk3GMmpOGhtBPK28bI9ssAFroKAC3uddqQc7pfjJbw9DIMkuT7h1
+         1eSlVAYCvB20F0a7e+JTRv745l9XCeWMrHbttbai1wntjeknEplafF1ui5iqZxgM6uoX
+         /NLBlY4DycM9KhOgXhCQw8jEX67qRaibVqyXCEz1xFH8L8SkeQA0V2cG3Ro3Xe+BTpgs
+         K4sQ==
+X-Gm-Message-State: AOAM533gplET7+01Xb2pRFcOH9e18FG3hqxQSmrF+goGxukK8T8Kngjz
+        NM6yE2JbaXFkYm/RKLaQiA8=
+X-Google-Smtp-Source: ABdhPJzZoL8YTdFp3l6swNpNMh8EtquN1p487bBpoP4um/3Ff1RRWH0K/2H5ecSVEUjlzPFdzJSR+w==
+X-Received: by 2002:a2e:894a:: with SMTP id b10mr5360051ljk.159.1604259243270;
+        Sun, 01 Nov 2020 11:34:03 -0800 (PST)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id m12sm1766526ljc.88.2020.11.01.11.34.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Nov 2020 09:28:50 -0800 (PST)
-Message-Id: <6c44b1c576150212cfb23c6f3d0ca3563ddf4556.1604251728.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.774.v2.git.1604251727.gitgitgadget@gmail.com>
-References: <pull.774.git.1603889270.gitgitgadget@gmail.com>
-        <pull.774.v2.git.1604251727.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 01 Nov 2020 17:28:41 +0000
-Subject: [PATCH v2 2/8] doc: line-range: improve formatting
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Sun, 01 Nov 2020 11:34:02 -0800 (PST)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Sergey Organov <sorganov@gmail.com>
+Subject: [PATCH 00/26] git-log: implement new --diff-merge options
+Date:   Sun,  1 Nov 2020 22:33:04 +0300
+Message-Id: <20201101193330.24775-1-sorganov@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+These patch series implement new set of options governing the diff output
+of merge commits, all under the umbrella of the single --diff-merges=<mode>
+option. Most of the new options being synonyms for -m/-c/--cc options,
+there is also additional functionality provided, allowing to get the format
+of "-p --first-parent" without change in history traversal that
+--first-parent option causes.
 
-Improve the formatting of the description of the line-range option '-L'
-for `git log`, `gitk` and `git blame`:
+The net result of these series are the following new options:
 
-- Use bold for <start>, <end> and <funcname>
-- Use backticks for literals
+--diff-merges=	 |  old equivalent
+-----------------+----------------
+first-parent     | --first-parent (only format implications)
+separate         | -m
+combined         | -c
+dense-combined   | --cc
 
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
- Documentation/blame-options.txt      |  4 ++--
- Documentation/line-range-format.txt  | 24 ++++++++++++------------
- Documentation/line-range-options.txt |  6 +++---
- 3 files changed, 17 insertions(+), 17 deletions(-)
+The series also cleanup logic of handling of diff merges options and fix an
+issue found in the original implementation where logically mutually
+exclusive options -m/-c/--cc failed to actually override each other.
 
-diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
-index 88750af7ae..48bf0eeec5 100644
---- a/Documentation/blame-options.txt
-+++ b/Documentation/blame-options.txt
-@@ -14,8 +14,8 @@
- 	Annotate only the given line range. May be specified multiple times.
- 	Overlapping ranges are allowed.
- +
--<start> and <end> are optional. ``-L <start>'' or ``-L <start>,'' spans from
--<start> to end of file. ``-L ,<end>'' spans from start of file to <end>.
-+'<start>' and '<end>' are optional. `-L <start>` or `-L <start>,` spans from
-+'<start>' to end of file. `-L ,<end>` spans from start of file to '<end>'.
- +
- include::line-range-format.txt[]
- 
-diff --git a/Documentation/line-range-format.txt b/Documentation/line-range-format.txt
-index 829676ff98..43759eef89 100644
---- a/Documentation/line-range-format.txt
-+++ b/Documentation/line-range-format.txt
-@@ -1,30 +1,30 @@
--<start> and <end> can take one of these forms:
-+'<start>' and '<end>' can take one of these forms:
- 
- - number
- +
--If <start> or <end> is a number, it specifies an
-+If '<start>' or '<end>' is a number, it specifies an
- absolute line number (lines count from 1).
- +
- 
--- /regex/
-+- `/regex/`
- +
- This form will use the first line matching the given
--POSIX regex. If <start> is a regex, it will search from the end of
-+POSIX regex. If '<start>' is a regex, it will search from the end of
- the previous `-L` range, if any, otherwise from the start of file.
--If <start> is ``^/regex/'', it will search from the start of file.
--If <end> is a regex, it will search
--starting at the line given by <start>.
-+If '<start>' is `^/regex/`, it will search from the start of file.
-+If '<end>' is a regex, it will search
-+starting at the line given by '<start>'.
- +
- 
- - +offset or -offset
- +
--This is only valid for <end> and will specify a number
--of lines before or after the line given by <start>.
-+This is only valid for '<end>' and will specify a number
-+of lines before or after the line given by '<start>'.
- 
- +
--If ``:<funcname>'' is given in place of <start> and <end>, it is a
-+If `:<funcname>` is given in place of '<start>' and '<end>', it is a
- regular expression that denotes the range from the first funcname line
--that matches <funcname>, up to the next funcname line. ``:<funcname>''
-+that matches '<funcname>', up to the next funcname line. `:<funcname>`
- searches from the end of the previous `-L` range, if any, otherwise
--from the start of file. ``^:<funcname>'' searches from the start of
-+from the start of file. `^:<funcname>` searches from the start of
- file.
-diff --git a/Documentation/line-range-options.txt b/Documentation/line-range-options.txt
-index 266263f6b4..1c90127300 100644
---- a/Documentation/line-range-options.txt
-+++ b/Documentation/line-range-options.txt
-@@ -1,12 +1,12 @@
- -L<start>,<end>:<file>::
- -L:<funcname>:<file>::
- 
--	Trace the evolution of the line range given by "<start>,<end>"
--	(or the function name regex <funcname>) within the <file>.  You may
-+	Trace the evolution of the line range given by '<start>,<end>'
-+	(or the function name regex '<funcname>') within the '<file>'. You may
- 	not give any pathspec limiters.  This is currently limited to
- 	a walk starting from a single revision, i.e., you may only
- 	give zero or one positive revision arguments, and
--	<start> and <end> (or <funcname>) must exist in the starting revision.
-+	'<start>' and '<end>' (or '<funcname>') must exist in the starting revision.
- 	You can specify this option more than once. Implies `--patch`.
- 	Patch output can be suppressed using `--no-patch`, but other diff formats
- 	(namely `--raw`, `--numstat`, `--shortstat`, `--dirstat`, `--summary`,
+The series start with the set of pure refactoring commits that are expected
+to introduce no functional changes. These are all commits up to and
+including:
+
+"diff-merges: revise revs->diff flag handling"
+
+The aim of these commits is to isolate options handling for diff merges so
+that it could be easily understood and tweaked to ease introduction of the
+new options.
+
+Then the fix of -m/-c/-cc overriding issue follows, starting with a failing
+test and followed by the fix.
+
+Then follows a little bit of additional refactoring in order to prepare for
+introduction of the new options, and finally the series are finished by the
+implementation, testing, and documentation update for the new options.
+
+Sergey Organov (26):
+  revision: factor out parsing of diff-merge related options
+  revision: factor out setup of diff-merge related settings
+  revision: factor out initialization of diff-merge related settings
+  revision: provide implementation for diff merges tweaks
+  revision: move diff merges functions to its own diff-merges.c
+  diff-merges: rename all functions to have common prefix
+  diff-merges: move checks for first_parent_only out of the module
+  diff-merges: rename diff_merges_default_to_enable() to match semantics
+  diff-merges: re-arrange functions to match the order they are called
+    in
+  diff-merges: new function diff_merges_suppress()
+  diff-merges: new function diff_merges_set_dense_combined_if_unset()
+  diff-merges: introduce revs->first_parent_merges flag
+  diff-merges: revise revs->diff flag handling
+  t4013: support test_expect_failure through ':failure' magic
+  t4013: add tests for -m failing to override -c/--cc
+  diff-merges: fix -m to properly override -c/--cc
+  diff-merges: split 'ignore_merges' field
+  diff-merges: group diff-merge flags next to each other inside
+    'rev_info'
+  diff-merges: get rid of now empty diff_merges_init_revs()
+  diff-merges: refactor opt settings into separate functions
+  diff-merges: make -m/-c/--cc explicitly mutually exclusive
+  diff-merges: implement new values for --diff-merges
+  t4013: add test for --diff-merges=first-parent
+  doc/git-log: describe new --diff-merges options
+  doc/diff-generate-patch: mention new --diff-merges option
+  doc/rev-list-options: document --first-parent implies
+    --diff-merges=first-parent
+
+ Documentation/diff-generate-patch.txt         |   6 +-
+ Documentation/git-log.txt                     |  79 ++++---
+ Documentation/rev-list-options.txt            |   3 +
+ Makefile                                      |   1 +
+ builtin/diff-files.c                          |   5 +-
+ builtin/diff.c                                |   9 +-
+ builtin/log.c                                 |  18 +-
+ builtin/merge.c                               |   3 +-
+ diff-merges.c                                 | 120 +++++++++++
+ diff-merges.h                                 |  18 ++
+ fmt-merge-msg.c                               |   3 +-
+ log-tree.c                                    |  17 +-
+ revision.c                                    |  38 +---
+ revision.h                                    |   7 +-
+ t/t4013-diff-various.sh                       |  10 +-
+ t/t4013/diff.log_--cc_-m_-p_master            | 200 ++++++++++++++++++
+ t/t4013/diff.log_-c_-m_-p_master              | 200 ++++++++++++++++++
+ ...f.log_-p_--diff-merges=first-parent_master | 137 ++++++++++++
+ 18 files changed, 774 insertions(+), 100 deletions(-)
+ create mode 100644 diff-merges.c
+ create mode 100644 diff-merges.h
+ create mode 100644 t/t4013/diff.log_--cc_-m_-p_master
+ create mode 100644 t/t4013/diff.log_-c_-m_-p_master
+ create mode 100644 t/t4013/diff.log_-p_--diff-merges=first-parent_master
+
 -- 
-gitgitgadget
+2.25.1
 
