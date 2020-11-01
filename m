@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46FD1C2D0A3
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBD91C4741F
 	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 19:34:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A1F27208B6
-	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 19:34:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8E45F208B6
+	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 19:34:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HTZeLBbw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PJ3ewDWu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727016AbgKATeH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Nov 2020 14:34:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43616 "EHLO
+        id S1727056AbgKATeI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Nov 2020 14:34:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726790AbgKATeH (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1727033AbgKATeH (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 1 Nov 2020 14:34:07 -0500
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B5E4C061A04
-        for <git@vger.kernel.org>; Sun,  1 Nov 2020 11:34:06 -0800 (PST)
-Received: by mail-lf1-x143.google.com with SMTP id a9so14659056lfc.7
-        for <git@vger.kernel.org>; Sun, 01 Nov 2020 11:34:06 -0800 (PST)
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 925BEC061A04
+        for <git@vger.kernel.org>; Sun,  1 Nov 2020 11:34:07 -0800 (PST)
+Received: by mail-lj1-x242.google.com with SMTP id x6so12678723ljd.3
+        for <git@vger.kernel.org>; Sun, 01 Nov 2020 11:34:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Ima11YA7gg76Alny1FeAIaABExYxDCs74Kr9jE0Z4FA=;
-        b=HTZeLBbwupak8N6UgYHM0k+RTl3gQ+lw3BIjnRAdHkFdWPl5MgKetNbGRfF1jfml33
-         n164tGo7OGnCsew7qc5q0IhQUfOI56R1IWnEtvMChuRP2+E73WcCV+WzUGZs+SfuVMTa
-         vYJbOYbojEQOYzthIu8BidAnfo6oQmPvzeVRqvLaJwT1tRsT7iSlmBA+ttPy0s8sSbkn
-         +wsK937RTK5IYhRTb5Hn1dAz/8fnPDmRcIJA2WBLUJHzkNHtTkKzNXBSbSKWmZWhsZju
-         mV8tD+ycEvY+ibVsCf2qhXCRwDd/Ae+XGnHm9eTYiHiqflqQFxk1epoOIw2qTq37ThXx
-         g6jw==
+        bh=APfTNBqeu4NGszmHhOTAYqEdziEeMIGvS7s1xDEERjc=;
+        b=PJ3ewDWulAm8L6GXthjR8i0tTiNio8Qrr3gmwovopoGTR3QqCM5ZbabZh2VYHD3MBA
+         qxcV8fYORwPzMr4OqVGdnK3H0kQGau4/eCEThV+TLWbgnqOf70JZs78sh5lT2jKaTAx7
+         J/gMo4zd8C85KTTr6rr9FDK4VDNvc0+pUTHp4nUvkgsOhiquREn7X9p0xs00/DJwWV3s
+         AUoayCM8R/IgNQbTlzf7pe8iv95Cu07PNM5t0otGktFWUoN1H3CLqRqf+gYu9lW6Y+dL
+         Pk9DRvLc+wfsSxsJm/dZP+yEJaZwiO55P0iioAOxwB/fy/8Wbb9pne4MC3jKLmwC2zL5
+         1ehw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Ima11YA7gg76Alny1FeAIaABExYxDCs74Kr9jE0Z4FA=;
-        b=I7I7wfI4ukpZBljedJ9ZjLHhzyVcophIc5FDp9yKiFjxFjY7pdJCRcaudNk16ymbF4
-         tujyekab0GRTJN1XEq5dvXe6sU1MihTUS4m0GxWzj0tvgE9lnHMFkmkTQpVKfvYfLP5R
-         49JMg3yRN0OYrHvnwrQOO5LYMSyT1WJqBg07SUfQlPyK8QYAFxRXFfHBOZsTE6M/2iqq
-         vhk2ht31GOUosiANhWwfs0zUDiv+wdPw6kDMmpBA+tOGGfM1b9y4uGEm8/BSKL+D0tYP
-         AC3pZc5RQnOuP4uHbNU4ocJyUSt4tD4MVZTlOJsfi47lJKJTgQXrhmzsWcMCeXeymOZv
-         JYYw==
-X-Gm-Message-State: AOAM5311+UFlnRSWp1a2+xsC2GSqA8WAXGC+6JuI/s6ld78uxgvDpXai
-        sD90JTVJSzcSHWrvqwYrPd8=
-X-Google-Smtp-Source: ABdhPJyUyIy1B2SyCp4uw/GYqx3HBLBwTIuKTgqcTPZNjya2Crrz9q39GfSlLenosnJv/Ur0Ejrt6A==
-X-Received: by 2002:a19:88c6:: with SMTP id k189mr4292129lfd.416.1604259245157;
-        Sun, 01 Nov 2020 11:34:05 -0800 (PST)
+        bh=APfTNBqeu4NGszmHhOTAYqEdziEeMIGvS7s1xDEERjc=;
+        b=SjZJcaKkaQ4bUbRzJZEXKqJgx1Tntm1A+5fNsczUTqzKF4xhs2ezoGhKDRQZb0P6Ih
+         l6syI7V/L/Pv5oaWhmDNFPPVKq1VPQPJXqWI7cd2oCLvJSiU57xp3wBwGkjBITqANyu1
+         bGXl69hVY8AG2yAK7k/V8GA8x3Wnl1JiyQogj55RSTQYYEM/lsBYPPhGvKC3qjgBzq2c
+         sAH+q07gUW+05bOKWi2yMAo2PQTXn8xKqjXxumQDTBpGIR4aYt+QzCJnXiuAXVa+bX7s
+         20P+argF/TWD+EWDeuu8IraWK4fWt+fasfc4y5quaUUq0SCUEwF00gRpboFHvqZLn7Ib
+         f1jw==
+X-Gm-Message-State: AOAM531xBd3vVSD8kUBrhGT0e41bsvY9DN+2GLDkwkrlkIRW0lXEZP/E
+        5HkHpPOX6EYRRaXeGaUP/nM=
+X-Google-Smtp-Source: ABdhPJwxM96xB3FvUH1oHOMP01Ds/98HjO5uuXRkqfznBjFLTZCANVcZh4xQ2O1Uj+yqMMFJEni3aQ==
+X-Received: by 2002:a2e:b530:: with SMTP id z16mr5472534ljm.245.1604259246159;
+        Sun, 01 Nov 2020 11:34:06 -0800 (PST)
 Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id m12sm1766526ljc.88.2020.11.01.11.34.04
+        by smtp.gmail.com with ESMTPSA id m12sm1766526ljc.88.2020.11.01.11.34.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Nov 2020 11:34:04 -0800 (PST)
+        Sun, 01 Nov 2020 11:34:05 -0800 (PST)
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
         Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH 02/26] revision: factor out setup of diff-merge related settings
-Date:   Sun,  1 Nov 2020 22:33:06 +0300
-Message-Id: <20201101193330.24775-3-sorganov@gmail.com>
+Subject: [PATCH 03/26] revision: factor out initialization of diff-merge related settings
+Date:   Sun,  1 Nov 2020 22:33:07 +0300
+Message-Id: <20201101193330.24775-4-sorganov@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20201101193330.24775-1-sorganov@gmail.com>
 References: <20201101193330.24775-1-sorganov@gmail.com>
@@ -74,50 +74,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move all the setting code related to diffing merges into new
-setup_diff_merge_revs() function.
+Move initialization code related to diffing merges into new
+init_diff_merge_revs() function.
 
 Signed-off-by: Sergey Organov <sorganov@gmail.com>
 ---
- revision.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ revision.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/revision.c b/revision.c
-index a09f4872acd7..739295bb9ff4 100644
+index 739295bb9ff4..bc568fb79778 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -2191,6 +2191,16 @@ static int parse_diff_merge_opts(struct rev_info *revs, const char **argv) {
+@@ -1805,6 +1805,8 @@ static int add_parents_only(struct rev_info *revs, const char *arg_, int flags,
  	return 1;
  }
  
-+static void setup_diff_merges_revs(struct rev_info *revs)
-+{
-+	if (revs->combine_merges && revs->ignore_merges < 0)
-+		revs->ignore_merges = 0;
-+	if (revs->ignore_merges < 0)
-+		revs->ignore_merges = 1;
-+	if (revs->combined_all_paths && !revs->combine_merges)
-+		die("--combined-all-paths makes no sense without -c or --cc");
++static void init_diff_merge_revs(struct rev_info *revs);
++
+ void repo_init_revisions(struct repository *r,
+ 			 struct rev_info *revs,
+ 			 const char *prefix)
+@@ -1813,7 +1815,7 @@ void repo_init_revisions(struct repository *r,
+ 
+ 	revs->repo = r;
+ 	revs->abbrev = DEFAULT_ABBREV;
+-	revs->ignore_merges = -1;
++	init_diff_merge_revs(revs);
+ 	revs->simplify_history = 1;
+ 	revs->pruning.repo = r;
+ 	revs->pruning.flags.recursive = 1;
+@@ -2153,6 +2155,10 @@ static void add_message_grep(struct rev_info *revs, const char *pattern)
+ 	add_grep(revs, pattern, GREP_PATTERN_BODY);
+ }
+ 
++static void init_diff_merge_revs(struct rev_info *revs) {
++	revs->ignore_merges = -1;
 +}
 +
- static int handle_revision_opt(struct rev_info *revs, int argc, const char **argv,
- 			       int *unkc, const char **unkv,
- 			       const struct setup_revision_opt* opt)
-@@ -2885,12 +2895,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 			copy_pathspec(&revs->diffopt.pathspec,
- 				      &revs->prune_data);
- 	}
--	if (revs->combine_merges && revs->ignore_merges < 0)
--		revs->ignore_merges = 0;
--	if (revs->ignore_merges < 0)
--		revs->ignore_merges = 1;
--	if (revs->combined_all_paths && !revs->combine_merges)
--		die("--combined-all-paths makes no sense without -c or --cc");
-+
-+	setup_diff_merges_revs(revs);
- 
- 	revs->diffopt.abbrev = revs->abbrev;
- 
+ static int parse_diff_merge_opts(struct rev_info *revs, const char **argv) {
+ 	int argcount;
+ 	const char *optarg;
 -- 
 2.25.1
 
