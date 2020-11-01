@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C4D0C2D0A3
-	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 19:34:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2742DC4741F
+	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 19:34:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A7AE20B1F
+	by mail.kernel.org (Postfix) with ESMTP id C7F4720B1F
 	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 19:34:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qxR3SGBT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uk0tpvGH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727380AbgKATef (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Nov 2020 14:34:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43692 "EHLO
+        id S1727345AbgKATeg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Nov 2020 14:34:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727345AbgKATe1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Nov 2020 14:34:27 -0500
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 790A2C061A47
-        for <git@vger.kernel.org>; Sun,  1 Nov 2020 11:34:27 -0800 (PST)
-Received: by mail-lj1-x243.google.com with SMTP id 23so12637767ljv.7
-        for <git@vger.kernel.org>; Sun, 01 Nov 2020 11:34:27 -0800 (PST)
+        with ESMTP id S1727298AbgKATeV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Nov 2020 14:34:21 -0500
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCF15C061A48
+        for <git@vger.kernel.org>; Sun,  1 Nov 2020 11:34:20 -0800 (PST)
+Received: by mail-lj1-x244.google.com with SMTP id y16so12702599ljk.1
+        for <git@vger.kernel.org>; Sun, 01 Nov 2020 11:34:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9W0hLrOfmJHLxxseRkRkGLHrJsJGZBjpD6R06Vh/aWU=;
-        b=qxR3SGBTBwee0fDnXaaIFwCco01PpcZXHsdYFzy4zby1oXcs+laBy6EdL72yp2Ris9
-         9JOsQwLxrXzOFOBmuxS8A4tFnuyi3BrWYg+Cthans6ulTkNG0gwcxgYw+Ib1Gnm+4RNh
-         vU07wvb44V4nLlQi1pueWCaRfjNUPUPEKpf1aETUZ5VQSkGARGeoqmW0MJXcwQ9u9HCN
-         s7BrUtvMmO1w2PFm+F1OpnQi6LbuAqpRyT7cdvYXqcypbT4OLZvq5SctlqlxWCbS0EiK
-         TVljVgiTSfQNE+Dj6aHusyIFHkbhVHAdKP7CioYJafeJcWsJe69R/B/H48jYopJIlJuO
-         +fhg==
+        bh=4+8V7Y46XOAS5DpdF3SLr1BaTYKu0peNkOrQhxAmHBA=;
+        b=uk0tpvGHQlTtjKLc8EKt9HOwEbJhTnLs4asYbOVIS+gB9zHCEIIV6lp226k3GWXynk
+         19c+Wvs8YhSxayetdGtvS/WekhqAJma89kQ7F8uVfwtRp6NngdLUVvFII36nSq8hI07L
+         UcCm+p/g5pjHPErzoW4YZUWH/51ChW7fhnxkC5WagYGoJpycV11a9vuSPv1rJRq1t04B
+         R701Mvvpoa1Et1myAjPZ898cf4MDeCa1hXU/bfsfhMVdFQDyacGI9FH/Ykd5YTf1wvyp
+         wvm8IcdkFh3nak+FhOwnSKpL2EoG+soFUcVx1gVACYM1QsXomBnrcbag2+xQ0ZJgge9E
+         bxgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9W0hLrOfmJHLxxseRkRkGLHrJsJGZBjpD6R06Vh/aWU=;
-        b=SW6hYQh6U7FnIn0CY2R2sJsTVRDLb4QSPdcKX9lQRcO4dyr7npaMo3LP4PZnxAlFtz
-         Ckho1MxO/2+h9bf5q/I+ng++0NdqARPzkLeAdMMkO3FPFfxfIk7kNl57638UUQ8zCp68
-         qUe2exDhOfTQU4eoi0dZtvtU7RgCxNfpaYfn2k1ygqzZj+EeqPwlk5EA21znam8ofClP
-         y2eB24mhEcyLlmC1fBAmZ93MueoTWumTKin5fK7ui5CiS/9Z7UUHXk5Ys77UefSOgBaQ
-         TwsypTGvkNTkrp3Qewp/ZAlQsGYJBlo/YsobB7wk40tVuq1la/BmBkaa3QC0vw1mOibF
-         I1SA==
-X-Gm-Message-State: AOAM532bEZXnDlG17ZuCAI25skXRNPBuyiqEX0bGnXzXQ/3Qxk0C3oHR
-        OkfjTPmsyc+rNDawcQxxFh8fPgvHZkk=
-X-Google-Smtp-Source: ABdhPJwTnvknYBFhcJR5iGVhsv3OudgGZIOWlJ1R6rnSQcsWNssSPDgo/2JteXHMm00wsBu5tnV95A==
-X-Received: by 2002:a2e:7c01:: with SMTP id x1mr5360556ljc.229.1604259265960;
-        Sun, 01 Nov 2020 11:34:25 -0800 (PST)
+        bh=4+8V7Y46XOAS5DpdF3SLr1BaTYKu0peNkOrQhxAmHBA=;
+        b=B4wE5RsCnpuDcCRCQaCRVhmNBe0SfR9LeP0ob6Now4oIz/YeMHOQ7079vbO/ZVtIPK
+         y0+jdOnIHPGXncUl5b7gJiiPI54judLmAaXKcexe4sM1vMFZ0SaCNRjFlQsD1TEpGuOo
+         jvPd/4fKfjXuHm98HlVC8rEnKT4I8tRs4LsvE4h3CEryC0fMqYti8qdX7mRJVIEkldRe
+         qgL8BObghqJ9GAceb0MdVH70gsdGUS3uGJ7YGFrF+deGgcX2KlGDajjDV4QL1HsBdQ7z
+         yhV6r6XUZLjrZfX8m5rkQHKeAdJ5BQ7I1k3grjIiuyQBUPELf+qL/1qGoT5TembYSWhI
+         vHIw==
+X-Gm-Message-State: AOAM5328UTb8O8KRHdVZDbB4ftXC79T3+WlY8KzjNIlu6E157zFidlGV
+        uf5wTBE5uSSW3P7bklHAIbw=
+X-Google-Smtp-Source: ABdhPJzUArXt2d8sETEGoZhoqDAH6fuwuCy493AG8oWIS/ZnzzxA3tZBsgP8BT2CIZG/njEBqIb1MQ==
+X-Received: by 2002:a05:651c:512:: with SMTP id o18mr4966034ljp.315.1604259259368;
+        Sun, 01 Nov 2020 11:34:19 -0800 (PST)
 Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id m12sm1766526ljc.88.2020.11.01.11.34.25
+        by smtp.gmail.com with ESMTPSA id m12sm1766526ljc.88.2020.11.01.11.34.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Nov 2020 11:34:25 -0800 (PST)
+        Sun, 01 Nov 2020 11:34:18 -0800 (PST)
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
         Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH 24/26] doc/git-log: describe new --diff-merges options
-Date:   Sun,  1 Nov 2020 22:33:28 +0300
-Message-Id: <20201101193330.24775-25-sorganov@gmail.com>
+Subject: [PATCH 17/26] diff-merges: split 'ignore_merges' field
+Date:   Sun,  1 Nov 2020 22:33:21 +0300
+Message-Id: <20201101193330.24775-18-sorganov@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20201101193330.24775-1-sorganov@gmail.com>
 References: <20201101193330.24775-1-sorganov@gmail.com>
@@ -74,109 +74,149 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Describe all the new --diff-merges options in the git-log.txt
+'ignore_meres' was 3-way field that served two distinct purposes that
+we now assign to 2 new independent flags: 'separate_merges', and
+'explicit_diff_merges'.
+
+'separate_merges' tells that we need to output diff format containing
+separate diff for every parent (as opposed to 'combine_merges').
+
+'explicit_diff_merges' tells that at least one of diff-merges options
+has been explicitly specified on the command line, so no defaults
+should apply.
 
 Signed-off-by: Sergey Organov <sorganov@gmail.com>
 ---
- Documentation/git-log.txt | 79 +++++++++++++++++++++++----------------
- 1 file changed, 46 insertions(+), 33 deletions(-)
+ diff-merges.c | 29 ++++++++++++-----------------
+ log-tree.c    | 15 ++++++++-------
+ revision.h    |  3 ++-
+ 3 files changed, 22 insertions(+), 25 deletions(-)
 
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 2b8ac5ff882a..de498a189646 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -120,45 +120,58 @@ DIFF FORMATTING
- By default, `git log` does not generate any diff output. The options
- below can be used to show the changes made by each commit.
+diff --git a/diff-merges.c b/diff-merges.c
+index f2b9ed789ca8..19cdad1aa4a1 100644
+--- a/diff-merges.c
++++ b/diff-merges.c
+@@ -3,7 +3,7 @@
+ #include "revision.h"
  
--Note that unless one of `-c`, `--cc`, or `-m` is given, merge commits
--will never show a diff, even if a diff format like `--patch` is
--selected, nor will they match search options like `-S`. The exception is
--when `--first-parent` is in use, in which merges are treated like normal
--single-parent commits (this can be overridden by providing a
--combined-diff option or with `--no-diff-merges`).
-+Note that unless one of `--diff-merges` variants (including short
-+`-m`, `-c`, and `--cc` options) is explicitly given, merge commits
-+will not show a diff, even if a diff format like `--patch` is
-+selected, nor will they match search options like `-S`. The exception
-+is when `--first-parent` is in use, in which case
-+`--diff-merges=first-parent` is implied.
+ static void suppress(struct rev_info *revs) {
+-	revs->ignore_merges = 1;
++	revs->separate_merges = 0;
+ 	revs->first_parent_merges = 0;
+ 	revs->combine_merges = 0;
+ 	revs->dense_combined_merges = 0;
+@@ -20,7 +20,6 @@ static void set_dense_combined(struct rev_info *revs) {
+  */
  
---c::
--	With this option, diff output for a merge commit
--	shows the differences from each of the parents to the merge result
--	simultaneously instead of showing pairwise diff between a parent
--	and the result one at a time. Furthermore, it lists only files
--	which were modified from all parents.
--
----cc::
--	This flag implies the `-c` option and further compresses the
--	patch output by omitting uninteresting hunks whose contents in
--	the parents have only two variants and the merge result picks
--	one of them without modification.
-+--diff-merges=(off|none|first-parent|separate|combined|dense-combined)::
-+--no-diff-merges::
-+	Specify diff format to be used for merge commits. This has no
-+	effect unless diff output is enabled in the first place (e.g.,
-+	with `--patch` option.)
-++
-+--diff-merges=(off|none):::
-+--no-diff-merges:::
-+	(default) Disable output of diffs for merge commits. Useful to
-+	override implied value.
-++
-+--diff-merges=first-parent:::
-+	This option makes merge commits show the full diff with
-+	respect to the first parent only, exactly like	regular
-+	commits.
-++
-+--diff-merges=separate:::
-+-m:::
-+	This makes merge commits show the full diff with respect to
-+	each of the parents. Separate log entry and diff is generated
-+	for each parent.
-++
-+--diff-merges=combined:::
-+-c:::
-+	With this option, diff output for a merge commit shows the
-+	differences from each of the parents to the merge result
-+	simultaneously instead of showing pairwise diff between a
-+	parent and the result one at a time. Furthermore, it lists
-+	only files which were modified from all parents.
-++
-+--diff-merges=dense-combined:::
-+--cc:::
-+	With this option the output produced by
-+	`--diff-merges=combined` is further compressed by omitting
-+	uninteresting hunks whose contents in the parents have only
-+	two variants and the merge result picks one of them without
-+	modification.
+ void diff_merges_init_revs(struct rev_info *revs) {
+-	revs->ignore_merges = -1;
+ }
  
- --combined-all-paths::
- 	This flag causes combined diffs (used for merge commits) to
- 	list the name of the file from all parents.  It thus only has
--	effect when -c or --cc are specified, and is likely only
--	useful if filename changes are detected (i.e. when either
--	rename or copy detection have been requested).
-+	effect when `--diff-merges=[dense-]combined` is in use, and
-+	is likely only useful if filename changes are detected (i.e.
-+	when either rename or copy detection have been requested).
+ int diff_merges_parse_opts(struct rev_info *revs, const char **argv) {
+@@ -35,7 +34,7 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv) {
+ 		 * family of commands, it means "show full diff for merges". Set
+ 		 * both fields appropriately.
+ 		 */
+-		revs->ignore_merges = 0;
++		revs->separate_merges = 1;
+ 		revs->match_missing = 1;
+ 	} else if (!strcmp(arg, "-c")) {
+ 		revs->dense_combined_merges = 0;
+@@ -55,6 +54,7 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv) {
+ 	} else
+ 		return 0;
  
---m::
--	This flag makes the merge commits show the full diff like
--	regular commits; for each merge parent, a separate log entry
--	and diff is generated. An exception is that only diff against
--	the first parent is shown when `--first-parent` option is given;
--	in that case, the output represents the changes the merge
--	brought _into_ the then-current branch.
--
----diff-merges=off::
----no-diff-merges::
--	Disable output of diffs for merge commits (default). Useful to
--	override `-m`, `-c`, or `--cc`.
++	revs->explicit_diff_merges = 1;
+ 	return 1;
+ }
  
- :git-log: 1
- include::diff-options.txt[]
+@@ -63,20 +63,15 @@ void diff_merges_suppress(struct rev_info *revs) {
+ }
+ 
+ void diff_merges_default_to_first_parent(struct rev_info *revs) {
+-	if (revs->ignore_merges < 0)		/* No -m */
+-		revs->ignore_merges = 0;
+-	if (!revs->combine_merges)		/* No -c/--cc" */
++	if (!revs->explicit_diff_merges)
++		revs->separate_merges = 1;
++	if (revs->separate_merges)
+ 		revs->first_parent_merges = 1;
+ }
+ 
+ void diff_merges_default_to_dense_combined(struct rev_info *revs) {
+-	if (revs->ignore_merges < 0) {		/* No -m */
+-		revs->ignore_merges = 0;
+-		if (!revs->combine_merges) {	/* No -c/--cc" */
+-			revs->combine_merges = 1;
+-			revs->dense_combined_merges = 1;
+-		}
+-	}
++	if (!revs->explicit_diff_merges)
++		set_dense_combined(revs);
+ }
+ 
+ void diff_merges_set_dense_combined_if_unset(struct rev_info *revs) {
+@@ -86,10 +81,10 @@ void diff_merges_set_dense_combined_if_unset(struct rev_info *revs) {
+ 
+ void diff_merges_setup_revs(struct rev_info *revs)
+ {
+-	if (revs->combine_merges && revs->ignore_merges < 0)
+-		revs->ignore_merges = 0;
+-	if (revs->ignore_merges < 0)
+-		revs->ignore_merges = 1;
++	if (revs->combine_merges == 0)
++		revs->dense_combined_merges = 0;
++	if (revs->separate_merges == 0)
++		revs->first_parent_merges = 0;
+ 	if (revs->combined_all_paths && !revs->combine_merges)
+ 		die("--combined-all-paths makes no sense without -c or --cc");
+ 	if (revs->combine_merges)
+diff --git a/log-tree.c b/log-tree.c
+index 3fdc0fc64bfb..f9385b1dae6f 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -918,14 +918,15 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
+ 
+ 	/* More than one parent? */
+ 	if (parents->next) {
+-		if (opt->ignore_merges)
+-			return 0;
+-		else if (opt->combine_merges)
++		if (opt->combine_merges)
+ 			return do_diff_combined(opt, commit);
+-		else if (!opt->first_parent_merges) {
+-			/* If we show multiple diffs, show the parent info */
+-			log->parent = parents->item;
+-		}
++		if (opt->separate_merges) {
++			if (!opt->first_parent_merges) {
++				/* Show parent info for multiple diffs */
++				log->parent = parents->item;
++			}
++		} else
++			return 0;
+ 	}
+ 
+ 	showed_log = 0;
+diff --git a/revision.h b/revision.h
+index ba2aef79215e..fcc532c873d1 100644
+--- a/revision.h
++++ b/revision.h
+@@ -191,12 +191,13 @@ struct rev_info {
+ 			match_missing:1,
+ 			no_commit_id:1,
+ 			verbose_header:1,
++			explicit_diff_merges: 1,
++			separate_merges: 1,
+ 			combine_merges:1,
+ 			combined_all_paths:1,
+ 			dense_combined_merges:1,
+ 			first_parent_merges:1,
+ 			always_show_header:1;
+-	int             ignore_merges:2;
+ 
+ 	/* Format info */
+ 	int		show_notes;
 -- 
 2.25.1
 
