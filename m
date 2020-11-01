@@ -2,138 +2,98 @@ Return-Path: <SRS0=MFMM=EH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6FFDC2D0A3
-	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 07:34:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADE91C2D0A3
+	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 08:15:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 772AB2085B
-	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 07:34:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54CE322274
+	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 08:15:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="a7EH/8AA"
+	dkim=pass (1024-bit key) header.d=mail.utoronto.ca header.i=@mail.utoronto.ca header.b="NJgdQtO/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725937AbgKAHeS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Nov 2020 02:34:18 -0500
-Received: from mout.web.de ([212.227.15.4]:39257 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725930AbgKAHeS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Nov 2020 02:34:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1604216052;
-        bh=DjuKPswAEu7jR/GrpC50iDPJqQ5idqiUXi3gko2Z2u0=;
-        h=X-UI-Sender-Class:From:Subject:To:Cc:Date;
-        b=a7EH/8AAjwp8W95wZ1bPATKCS08nCxXB1AP5478YwDuvtDQpw6WjfycNTwwH9Z42Z
-         rytW/tT8fNgGnYO3IE/TfPDR2vA5o8eKnPKD5EyfPoONcV3E3GcnxCEZTuLB29fqcK
-         vCpcuMIVyHICY5IVGgk4TpiY4diGz61l6Gan3Bkw=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.17.45]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MZUjd-1kndWg3ndl-00LBHN; Sun, 01
- Nov 2020 08:34:11 +0100
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH RESEND] stash: simplify reflog emptiness check
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Marek Mrva <mrva@eof-studios.com>
-X-Mozilla-News-Host: news://nntp.public-inbox.org
-Message-ID: <532cf383-913c-5f33-e143-687f6d51a8da@web.de>
-Date:   Sun, 1 Nov 2020 08:34:07 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        id S1725936AbgKAIEJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Nov 2020 03:04:09 -0500
+Received: from mail-eopbgr670138.outbound.protection.outlook.com ([40.107.67.138]:45760
+        "EHLO CAN01-TO1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1725917AbgKAIEI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Nov 2020 03:04:08 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=nIVEBmnP9wGpGMAGRQtEr/ZxV0G9+bVsJqksofggW3hNPV4pup1iArib+byPdMWbxhh630316tuGNP5UDig4lLGyuTcLJ6kaHeWMjoqstZqdzWu5Ldiny5z/Xoj8deQkQgl03dyRSDt/1Ytn4ztC71qE6kMjpEPV15VFFahodf+mLb/9MgirhfLmgH5J1c0jAuMi/3x1ftTz48FcNNSpHtLMK/sSfVEyBMwLUsfw2SnYHDlraCT6n2Ew2I0LOR+ewXlubJVV78XWZ6uRb9hKw54tkWTUQcwFStlhij73lttVO6sKnveSsViE5AY6MD948dBdajJsT3Z9vsMzMZISJQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zmUIr1+P5tZFDRPocfVi2roKXdnonxCViYdV9bENokk=;
+ b=M0v2ctlI5KRZ5i2xQmi0elC8eWMGL1Z0/oh0GZJ+sKVyX5ryjVJG6XvM6fGfuYGyT/HwImYT2osvJwNwUKnqCZPWmO9RHXoyWN8a2Hb0garyjHOVy7Su2Psy+NjG9YIcE97mtg3DnPiRG2tjwha+NJPU5eYe5HX3kaFNiklnTRJoSL2K2fQt2EIgQUUMuAHofDaByFJnlviJNtXxgbC+oNd7bpNptz0aGfZOoY5Zr2lHnn1Bntrf/6d/+MOqYwj0PqvTMu9pTKZ0TVxDTV2PVX2GOQuPI70I/I+Gwr5YUv9eLWsudpDysrh8hLuJ+/jFscGHIMhASx0Qd7I/XpX6UQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=mail.utoronto.ca; dmarc=pass action=none
+ header.from=mail.utoronto.ca; dkim=pass header.d=mail.utoronto.ca; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mail.utoronto.ca;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zmUIr1+P5tZFDRPocfVi2roKXdnonxCViYdV9bENokk=;
+ b=NJgdQtO//G3hvhiY0hN4Vb83SXHyg77HnoPCZLhS4b8X8/Emrss+EBjykanl55fpdept+s5rpso1JNK9zB3I7bmswSds7YkCVLW3abJu+qttfbLfQKd0bKRsoJsvFx1XDqR/H9jXymYxcr9re/hKE1kMy6fxmIBNqGpILjMmA7g=
+Received: from YTXPR0101MB0717.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b00:7::12)
+ by YTXPR0101MB0717.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b00:7::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.18; Sun, 1 Nov
+ 2020 08:04:05 +0000
+Received: from YTXPR0101MB0717.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::709a:9d3a:6dba:fa2]) by YTXPR0101MB0717.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::709a:9d3a:6dba:fa2%7]) with mapi id 15.20.3499.029; Sun, 1 Nov 2020
+ 08:04:05 +0000
+From:   Sibo Dong <sibo.dong@mail.utoronto.ca>
+To:     "gitster@pobox.com" <gitster@pobox.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitgitgadget@gmail.com" <gitgitgadget@gmail.com>,
+        "sibo.dong@outlook.com" <sibo.dong@outlook.com>
+Subject: Re: [PATCH] git-prompt.sh: make `option` a local variable
+Thread-Topic: [PATCH] git-prompt.sh: make `option` a local variable
+Thread-Index: AQHWsCWRGDRbY3OUYU2suhku0nRwGg==
+Date:   Sun, 1 Nov 2020 08:04:04 +0000
+Message-ID: <1d19cdf35c12b1079cee0861469dc1a652642c82.camel@mail.utoronto.ca>
+In-Reply-To: <xmqqmu02xbe6.fsf@gitster.c.googlers.com>
+Accept-Language: en-CA, en-US
 Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:XhpPDN4IRTYkXQXouBWn/WKhLd2ZPLuImbIuyNB5WQAibkdsjqz
- rxd5vn9GL6FgpPOLgZ/wLQqxcBjQDv++lQwR85N4UnQMITgqqEZt8iKqkVb4z9n6HU1MujF
- gAR9Yjx0EX8XAJC/kEHVOaI1wbkM9RhF1qaP7MDRAHslvlhd3LZQAoLIVrmil/LH+wFd4nE
- Ob8rejaKx5CYN8+rrZ1og==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:5MtMEm7MMOo=:HRMJr///0NO1SyzmJOPyQR
- gir9kI4qZZrgUOyQbiVafPNWGpeppFQAAaDILKqUCc8SyUR4L69SUmHjeARvaKicklgG5c/WZ
- U9fYOtqYa28V0J3e6x48Mzd3lqAHCzqMue5j3LqUXDSsJ7IzsDuAUY0veHo8sr+VDGa68LGD8
- pAP1gZeVvAjgJpPwsw5gTJzDXSaf8MJjPGWAAKzsxZ+wuSQkx5ewFCsfVTgR8j5VINcXRL2wd
- nYdzfOFhlQShQ7WmrE2JypUOTFfxBpupdwOrI/dBBJsCIhPBpvgzSuO2ZTmSCqYXuprjfXTSg
- fG826ORwSFSSFhyjG0TxVC7UxxWW+VyXWumaPRlvUg7WVc+KNcFkv9yFCNCG9Y4eMQRGza9Mk
- nmLY9k8kqxk9hYBNHrAlgA8ym1PK/6DQtJPp5wqp3w2XnFBKzYr4xA2WAdoS+92M2XxdhmK9c
- YDIcvEJ9bJyUTOOuM65/adkjO4yctLThfVNdS7LLi//moUhRHCGuZ8vdfUdQ8RcGfOeymtDqG
- rzAaLJUSMoY6C/yzvjzqHPLrPNbyuxiIhid+TqVQdQXqa/FTRvNlSyIf2hTm08QBQJVfV6D1V
- LRIPxw5ujLUC9vjpgfxuQnYluhkV04KT3oBqsDHtHrYNR2PYYPuoH1kPFnZUqgtkArbpi4e/w
- fxFtti+S79+QVEj0tpSELXcsaYqPzSaEqHYgwtXtLNAEDSdecM/hPKa8IPqzAv2OvPcA4Sb3V
- tplgiMoLs+s+DH4cXmzqtsgMptajRq8nW49TQdUaEXY14jQWfxHpNsd70ESD2npTItb+Ci9dj
- 5XmOeeWi+uoDZzz81ta0Dg9I5vROhDLpkFRjXmc3JttqwsofPyCef1aFSws4r3AmxiCxvYflc
- WCiFplg2YW0zf2Ka3Fpg==
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: pobox.com; dkim=none (message not signed)
+ header.d=none;pobox.com; dmarc=none action=none header.from=mail.utoronto.ca;
+x-originating-ip: [76.64.132.199]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: dc731122-8755-4298-2442-08d87e3cb3b7
+x-ms-traffictypediagnostic: YTXPR0101MB0717:
+x-microsoft-antispam-prvs: <YTXPR0101MB07171760729BD9F6C1035C4DCC130@YTXPR0101MB0717.CANPRD01.PROD.OUTLOOK.COM>
+x-ms-oob-tlc-oobclassifiers: OLM:8273;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: cXEEu0QQwBzdJx/pNjKH1KYl4c4fsK1MG17GMeUFOQq9JVEyV50yIlOvGZn1elsw2qXtiqLy2ZqarlONcoQB143TQ4cBuGFmXIAMOtIC7c1vfmpqTyaCpR6Vmob4BEmeF+azLG+QduxtsixA+kLxBuUXa2Fh0LXEsIZJJQ3GIOObuY/7CGGZgZIlKzN5zfrXS1rcpt4JE1xHc3hzxIgeej/snWq4h1OiEYfV9avvGIsSccFUla1dw3xa3EKFAs+EPe4d1d9F5e2orplxkajpa3bgUZFCDeB1lvijKRyb5rD4qASPWQzV/RxXP03rNr0oTeZ0CZwToap4/LKhCisPaQqeZh5k9HcMgyL2M6deBpAwdNc5mUdxwbihZlVsBEQd
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YTXPR0101MB0717.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(376002)(346002)(136003)(366004)(396003)(39860400002)(186003)(54906003)(71200400001)(478600001)(558084003)(86362001)(44832011)(2906002)(8936002)(786003)(8676002)(316002)(2616005)(64756008)(66556008)(66476007)(6506007)(26005)(6486002)(4326008)(6512007)(76116006)(66946007)(6916009)(5660300002)(66446008)(81973001);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata: thXej/MsIok8idM2y/5+ZwqdFesemdxzNO4AjXelLq7Phjbyv5qEkkyNf50FgGvbRHCO8G/j8CWEWod29gLJxaZ4V5M5dgWIVMxoKUKwrjfHSdDMG7JreUeeEADME1SLPPO43CJV4o9pEq7yr/0FoV8SSCRe6pVCF8Nzrj+28FxX6RHcGFQCLVpcnOrtFx7Yes2vCzz2+rafaZZi7976g+WDznc6yyCPFLvjsofcchzTxdDed6YaIE2Rwf/50gHIn1zxdDsmDyZ3l09pjfCwEJvZDDKcOzKSZXs+ecEAY7wTN9xjV76wacyAXCOSKNbpo7D+IUdNPxbWplOJ+J2+Uk16PptDsmqCms6cDlZvJ97cHJ+uklln7g9LFvdeX7cOi2Q43wMDsDk4G1cM/70AdC7Iz+42+Kh6qUF+T2GJJw4KhzGtY7AZOsL8Pvw7ncOzzVuqHBCg8R51SrIxKqHgi6xh6GFTOZlNRa2E/XASnYtJNPiiYc+xqbdITO91e79ZIZ9XrARhorIXcLiHoQb7aMb3ncOA98T3kLS+1pCEVkKsDGYb+83iRLuqGpMZqLOsGVEWvRf2T0DJHZwf1NOhDiCXvpX3xNk94sie+GMRZQGIjao40o/WIFAU/Ys60Dwd5TQyxkR+iXrCP5aRslz7ZA==
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <C757F8B29B9025499E325F0D5C2CA908@CANPRD01.PROD.OUTLOOK.COM>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: mail.utoronto.ca
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: YTXPR0101MB0717.CANPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: dc731122-8755-4298-2442-08d87e3cb3b7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Nov 2020 08:04:05.0776
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 78aac226-2f03-4b4d-9037-b46d56c55210
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 0UIR25LgZUyYKOccjPmdwWxXsrcQ+fWL4M71LvICePDO7NbYb7hHftZNJxJakWaJRoksPAtX1RCxoQfvwkRsWOntRSiAgR1WM9+QzW16c4o=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YTXPR0101MB0717
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Calling rev-parse to check if the drop subcommand removed the last stash
-and treating its failure as confirmation is fragile, as the command can
-fail for other reasons, e.g. because the system is out of memory.
-Directly check if the reflog is empty instead, which is more robust.
-
-Reported-by: Marek Mrva <mrva@eof-studios.com>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
-Original submission:
-https://public-inbox.org/git/618d66a8-e2c1-241c-5200-2298bfe24ac0@web.de/
-
- builtin/stash.c | 27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
-
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 3f811f3050..24ddb1bffa 100644
-=2D-- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -534,11 +534,22 @@ static int apply_stash(int argc, const char **argv, =
-const char *prefix)
- 	return ret;
- }
-
-+static int reject_reflog_ent(struct object_id *ooid, struct object_id *no=
-id,
-+			     const char *email, timestamp_t timestamp, int tz,
-+			     const char *message, void *cb_data)
-+{
-+	return 1;
-+}
-+
-+static int reflog_is_empty(const char *refname)
-+{
-+	return !for_each_reflog_ent(refname, reject_reflog_ent, NULL);
-+}
-+
- static int do_drop_stash(struct stash_info *info, int quiet)
- {
- 	int ret;
- 	struct child_process cp_reflog =3D CHILD_PROCESS_INIT;
--	struct child_process cp =3D CHILD_PROCESS_INIT;
-
- 	/*
- 	 * reflog does not provide a simple function for deleting refs. One will
-@@ -559,19 +570,7 @@ static int do_drop_stash(struct stash_info *info, int=
- quiet)
- 			     info->revision.buf);
- 	}
-
--	/*
--	 * This could easily be replaced by get_oid, but currently it will throw
--	 * a fatal error when a reflog is empty, which we can not recover from.
--	 */
--	cp.git_cmd =3D 1;
--	/* Even though --quiet is specified, rev-parse still outputs the hash */
--	cp.no_stdout =3D 1;
--	strvec_pushl(&cp.args, "rev-parse", "--verify", "--quiet", NULL);
--	strvec_pushf(&cp.args, "%s@{0}", ref_stash);
--	ret =3D run_command(&cp);
--
--	/* do_clear_stash if we just dropped the last stash entry */
--	if (ret)
-+	if (reflog_is_empty(ref_stash))
- 		do_clear_stash();
-
- 	return 0;
-=2D-
-2.28.0
+VGhhbmsgeW91IGZvciB0aGUgZmVlZGJhY2sgSnVuaW87IEknbSBhIGJpdCBuZXcgdG8gY29udHJp
+YnV0aW5nLiBTaW5jZQ0KeW91J3ZlIGp1c3RpZmllZCB0aGlzIGNoYW5nZSBtdWNoIGJldHRlciB0
+aGFuIEkgaGF2ZSwgaXMgdGhlcmUgYW55IG5lZWQNCmZvciBmdXJ0aGVyIGFjdGlvbiBvbiBteSBw
+YXJ0Pw0KLS0gDQpTaWJvIERvbmcgPHNpYm8uZG9uZ0BtYWlsLnV0b3JvbnRvLmNhPg0KDQo=
