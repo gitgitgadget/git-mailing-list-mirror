@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86FFBC388F9
-	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 19:34:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D978FC2D0A3
+	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 19:34:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 49CFD20B1F
-	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 19:34:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 91A3520B1F
+	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 19:34:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e+OwxhXR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aUDBwpIg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727264AbgKATeQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Nov 2020 14:34:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43648 "EHLO
+        id S1727280AbgKATeS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Nov 2020 14:34:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727211AbgKATeO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Nov 2020 14:34:14 -0500
-Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 481A6C0617A6
-        for <git@vger.kernel.org>; Sun,  1 Nov 2020 11:34:14 -0800 (PST)
-Received: by mail-lf1-x142.google.com with SMTP id l2so14678961lfk.0
-        for <git@vger.kernel.org>; Sun, 01 Nov 2020 11:34:14 -0800 (PST)
+        with ESMTP id S1727149AbgKATeN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Nov 2020 14:34:13 -0500
+Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F749C061A04
+        for <git@vger.kernel.org>; Sun,  1 Nov 2020 11:34:11 -0800 (PST)
+Received: by mail-lf1-x143.google.com with SMTP id f9so14662997lfq.2
+        for <git@vger.kernel.org>; Sun, 01 Nov 2020 11:34:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=W47mVANbyr6U4QjohuRUI5qYDRLcugfgmhMpZzMRKhE=;
-        b=e+OwxhXRGsAHiCQKTfPtVD2uD+6M9jeyctclZI/zty7b306EOige5yo45bKPRg0pbh
-         DizfvxTtdWaSlHHc+RBzLI3z4qHXEqomJU4UGVbxC+ICLgdu2liM/5hcDH/pYTJIDD8c
-         KpckTL4Nk3wz2wO+rj+y+/0aSw6LINnzUjrBV3h6r5CRz+hRXdwNwRumG3VtQsyt1mWI
-         py4T72EgjAgoVcsWkcCXHxXWlZCQfEa1AYBw1G6dIVeYK2la7fkmHt09acrO4eR6kHW1
-         D8MeTBdRHeXcbTVj1wmcTfNIptmEwizXy/Dx5vgLDojszTXdIVfQ/hkfhenyw+wicqc5
-         mHWw==
+        bh=5pCBzPS8bIv9Loi9jdaZq5GcWqyP3eTWThTaodtOZtY=;
+        b=aUDBwpIgZnVJRiX+1fDO5eNTnT6u6ICLK24AI3j1TRbIcvkZVVjA2VOtYByvbhshEV
+         H2izbjGVg4eRIk6vJqZwvQzxzZp64D5137g1d/UX8cbB/92pLDoUPwBqLGwv/KSOJsW8
+         WL5+UfBZxQbqJw/XafIrBin/8OO3BZlV3/SC49RHExvl6csJ5dvoLXzjDDBwr4NDLpQg
+         hvmJuRHMGt9DKxPnWXt1EzRNv0kgRnFDLbXgZb299BR7YHwYm71YQupLUMB3lQEc1qtP
+         Jq7RND6Ua1fWpa3IyJWh6dOtMZ9/rTmA1pSed3cX3A0mM3Wi59H7kOGsYC8TJZx61rvF
+         Y+Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=W47mVANbyr6U4QjohuRUI5qYDRLcugfgmhMpZzMRKhE=;
-        b=agBK89x9aC9gYApWpAzCpNkxGICnsk0YLnKmpsEW91Mr/kvGCoj1ZxOEv9vMLK4ODD
-         oz/ZsdaZ3MGYUgCxnjSkLBkrmGuwICArF0xpIHFcSEfr35sYtt4IJ/JlWrEVr1LbhtFX
-         +Q1G77wcmdcSeaGsiOB7PuE2O/Y9ZO0MgalLgOGMsRjRZM8AWmahB1TV3UvlnYPzlo9q
-         vdVqDsQIb/Mk8uQL0keMQ7nqmrV61PFPyxAwmJpeRd6H8LuKF3cwpaKegRzDmSedTSuy
-         9dQwWlGLYz9/SrTayGiHjpXqfQ4nVWxCm/HiO8bwxIaRIY1ELuPD0zofYDC4uhm4dJUu
-         DCBg==
-X-Gm-Message-State: AOAM530T1h2Y58Gr95vDZGx5+1oioeL5+tKMOaqv5RHFyqGhzN7jnizn
-        36kcLUvILpYYhvNBIJk82Es=
-X-Google-Smtp-Source: ABdhPJwS9HVc+jZ0CbjLncrDpInLQk3Hb1IGtQCRLYL86Yfy6hp6R+Ku/Q/wVrm0C2/ZhWZ0ztS8eQ==
-X-Received: by 2002:a19:4286:: with SMTP id p128mr4363155lfa.5.1604259252756;
-        Sun, 01 Nov 2020 11:34:12 -0800 (PST)
+        bh=5pCBzPS8bIv9Loi9jdaZq5GcWqyP3eTWThTaodtOZtY=;
+        b=rm3xYHaWc+LPy9kzCXHI8V9Ec2Dy/V6oLXKBx0z4uNUrd0gT1jNqwW3J0BTZF5uVYD
+         fR/RWFi14FTamTLlXPyqgIBZkBAX8Js/QCIHS7lrfNjyHIjBAOOtC2fdBNVZDYqY8JeP
+         carlBI3pv99ZzTTQ+Jh/M61Qmsh5FPTFgaVqHQCiYdJHJcXTrKc7HMyoNr70mz2TLDgW
+         s5dZsVS0LQj/0+cY2Eyp/AeyF6pVfrhmOuQLYxkNionokRpohYizWu9Jp1dyJikeF534
+         mfxYUTA3Qtu4+shH0R/HnSxaWBUU+pFgDb7nMVvpfU04ITwmNNl4Rc3TQKhGb71bmnbe
+         82Ug==
+X-Gm-Message-State: AOAM530byBbddj05u59wnqw4qb41F+rl09sYUiOqS4nITEWeVgqfTd0T
+        nN2mmElIfb0lAy5+QaB7VYsjO4In+RM=
+X-Google-Smtp-Source: ABdhPJw/1Eg0NNZ2OpUdeoq1dSA6v2V/Amwqj1Jp+JuO2LYHVfr84Yf860goZStWWWZykUHZ8Xjeyg==
+X-Received: by 2002:ac2:5f09:: with SMTP id 9mr4275488lfq.407.1604259249817;
+        Sun, 01 Nov 2020 11:34:09 -0800 (PST)
 Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id m12sm1766526ljc.88.2020.11.01.11.34.11
+        by smtp.gmail.com with ESMTPSA id m12sm1766526ljc.88.2020.11.01.11.34.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Nov 2020 11:34:12 -0800 (PST)
+        Sun, 01 Nov 2020 11:34:09 -0800 (PST)
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
         Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH 10/26] diff-merges: new function diff_merges_suppress()
-Date:   Sun,  1 Nov 2020 22:33:14 +0300
-Message-Id: <20201101193330.24775-11-sorganov@gmail.com>
+Subject: [PATCH 07/26] diff-merges: move checks for first_parent_only out of the module
+Date:   Sun,  1 Nov 2020 22:33:11 +0300
+Message-Id: <20201101193330.24775-8-sorganov@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20201101193330.24775-1-sorganov@gmail.com>
 References: <20201101193330.24775-1-sorganov@gmail.com>
@@ -74,124 +74,90 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function sets all the relevant flags to disabled state, so that
-no code that checks only one of them get it wrong.
+The checks for first_parent_only don't in fact belong to this module,
+as the primary purpose of this flag is history traversal limiting, so
+get it out of this module and rename the
 
-Then we call this new function everywhere where diff merges output
-suppression is needed.
+diff_merges_first_parent_defaults_to_enable()
+
+to
+
+diff_merges_default_to_enable()
+
+to match new semantics.
 
 Signed-off-by: Sergey Organov <sorganov@gmail.com>
 ---
- builtin/merge.c |  3 ++-
- diff-merges.c   | 18 ++++++++++++++----
- diff-merges.h   |  2 ++
- fmt-merge-msg.c |  3 ++-
- 4 files changed, 20 insertions(+), 6 deletions(-)
+ builtin/log.c |  8 ++++++--
+ diff-merges.c | 10 ++++------
+ diff-merges.h |  2 +-
+ 3 files changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 9d5359edc2f7..1f7b69982b40 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -14,6 +14,7 @@
- #include "lockfile.h"
- #include "run-command.h"
- #include "diff.h"
-+#include "diff-merges.h"
- #include "refs.h"
- #include "refspec.h"
- #include "commit.h"
-@@ -400,7 +401,7 @@ static void squash_message(struct commit *commit, struct commit_list *remotehead
- 	printf(_("Squash commit -- not updating HEAD\n"));
+diff --git a/builtin/log.c b/builtin/log.c
+index 77a7bba543ad..a7791c003c91 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -599,7 +599,10 @@ static int show_tree_object(const struct object_id *oid,
+ static void show_setup_revisions_tweak(struct rev_info *rev,
+ 				       struct setup_revision_opt *opt)
+ {
+-	diff_merges_default_to_dense_combined(rev);
++	if (rev->first_parent_only)
++		diff_merges_default_to_enable(rev);
++	else
++		diff_merges_default_to_dense_combined(rev);
+ 	if (!rev->diffopt.output_format)
+ 		rev->diffopt.output_format = DIFF_FORMAT_PATCH;
+ }
+@@ -724,7 +727,8 @@ static void log_setup_revisions_tweak(struct rev_info *rev,
+ 	if (!rev->diffopt.output_format && rev->combine_merges)
+ 		rev->diffopt.output_format = DIFF_FORMAT_PATCH;
  
- 	repo_init_revisions(the_repository, &rev, NULL);
--	rev.ignore_merges = 1;
-+	diff_merges_suppress(&rev);
- 	rev.commit_format = CMIT_FMT_MEDIUM;
- 
- 	commit->object.flags |= UNINTERESTING;
-diff --git a/diff-merges.c b/diff-merges.c
-index 8536941e0b56..25bd9b12e667 100644
---- a/diff-merges.c
-+++ b/diff-merges.c
-@@ -2,6 +2,13 @@
- 
- #include "revision.h"
- 
-+static void suppress(struct rev_info *revs) {
-+	revs->ignore_merges = 1;
-+	revs->first_parent_merges = 0;
-+	revs->combine_merges = 0;
-+	revs->dense_combined_merges = 0;
-+}
-+
- /*
-  * Public functions. They are in the order they are called.
-  */
-@@ -29,16 +36,15 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv) {
- 		revs->combine_merges = 1;
- 	} else if (!strcmp(arg, "--cc")) {
- 		revs->diff = 1;
--		revs->dense_combined_merges = 1;
--		revs->combine_merges = 1;
-+		set_dense_combined(revs);
- 	} else if (!strcmp(arg, "--no-diff-merges")) {
--		revs->ignore_merges = 1;
-+		suppress(revs);
- 	} else if (!strcmp(arg, "--combined-all-paths")) {
- 		revs->diff = 1;
- 		revs->combined_all_paths = 1;
- 	} else if ((argcount = parse_long_opt("diff-merges", argv, &optarg))) {
- 		if (!strcmp(optarg, "off")) {
--			revs->ignore_merges = 1;
-+			suppress(revs);
- 		} else {
- 			die(_("unknown value for --diff-merges: %s"), optarg);
- 		}
-@@ -48,6 +54,10 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv) {
- 	return 1;
+-	diff_merges_first_parent_defaults_to_enable(rev);
++	if (rev->first_parent_only)
++		diff_merges_default_to_enable(rev);
  }
  
-+void diff_merges_suppress(struct rev_info *revs) {
-+	suppress(revs);
-+}
-+
- void diff_merges_default_to_first_parent(struct rev_info *revs) {
- 	if (revs->ignore_merges < 0)		/* No -m */
+ int cmd_log(int argc, const char **argv, const char *prefix)
+diff --git a/diff-merges.c b/diff-merges.c
+index 85bf0b6d1d1d..9dd472803d15 100644
+--- a/diff-merges.c
++++ b/diff-merges.c
+@@ -54,17 +54,15 @@ void diff_merges_setup_revs(struct rev_info *revs)
+ 		die("--combined-all-paths makes no sense without -c or --cc");
+ }
+ 
+-void diff_merges_first_parent_defaults_to_enable(struct rev_info *revs) {
+-	if (revs->first_parent_only && revs->ignore_merges < 0)
++void diff_merges_default_to_enable(struct rev_info *revs) {
++	if (revs->ignore_merges < 0)		/* No -m */
  		revs->ignore_merges = 0;
+ }
+ 
+ void diff_merges_default_to_dense_combined(struct rev_info *revs) {
+-	if (revs->ignore_merges < 0) {
+-		/* There was no "-m" variant on the command line */
++	if (revs->ignore_merges < 0) {		/* No -m */
+ 		revs->ignore_merges = 0;
+-		if (!revs->first_parent_only && !revs->combine_merges) {
+-			/* No "--first-parent", "-c", or "--cc" */
++		if (!revs->combine_merges) {	/* No -c/--cc" */
+ 			revs->combine_merges = 1;
+ 			revs->dense_combined_merges = 1;
+ 		}
 diff --git a/diff-merges.h b/diff-merges.h
-index 4b023c385d00..32720bc9b40f 100644
+index 648c410497cb..cf411414898d 100644
 --- a/diff-merges.h
 +++ b/diff-merges.h
-@@ -7,6 +7,8 @@ void diff_merges_init_revs(struct rev_info *revs);
- 
- int diff_merges_parse_opts(struct rev_info *revs, const char **argv);
- 
-+void diff_merges_suppress(struct rev_info *revs);
-+
- void diff_merges_default_to_first_parent(struct rev_info *revs);
+@@ -11,7 +11,7 @@ void diff_merges_setup_revs(struct rev_info *revs);
  
  void diff_merges_default_to_dense_combined(struct rev_info *revs);
-diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
-index bd22e1ea8865..abc3403fb820 100644
---- a/fmt-merge-msg.c
-+++ b/fmt-merge-msg.c
-@@ -2,6 +2,7 @@
- #include "refs.h"
- #include "object-store.h"
- #include "diff.h"
-+#include "diff-merges.h"
- #include "revision.h"
- #include "tag.h"
- #include "string-list.h"
-@@ -668,7 +669,7 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
- 		head = lookup_commit_or_die(&head_oid, "HEAD");
- 		repo_init_revisions(the_repository, &rev, NULL);
- 		rev.commit_format = CMIT_FMT_ONELINE;
--		rev.ignore_merges = 1;
-+		diff_merges_suppress(&rev);
- 		rev.limited = 1;
  
- 		strbuf_complete_line(out);
+-void diff_merges_first_parent_defaults_to_enable(struct rev_info *revs);
++void diff_merges_default_to_enable(struct rev_info *revs);
+ 
+ 
+ #endif
 -- 
 2.25.1
 
