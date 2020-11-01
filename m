@@ -2,98 +2,130 @@ Return-Path: <SRS0=MFMM=EH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ADE91C2D0A3
-	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 08:15:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A0C3C2D0A3
+	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 08:54:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 54CE322274
-	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 08:15:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 07F2420882
+	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 08:54:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=mail.utoronto.ca header.i=@mail.utoronto.ca header.b="NJgdQtO/"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="IHIXzXN1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725936AbgKAIEJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Nov 2020 03:04:09 -0500
-Received: from mail-eopbgr670138.outbound.protection.outlook.com ([40.107.67.138]:45760
-        "EHLO CAN01-TO1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725917AbgKAIEI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Nov 2020 03:04:08 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=nIVEBmnP9wGpGMAGRQtEr/ZxV0G9+bVsJqksofggW3hNPV4pup1iArib+byPdMWbxhh630316tuGNP5UDig4lLGyuTcLJ6kaHeWMjoqstZqdzWu5Ldiny5z/Xoj8deQkQgl03dyRSDt/1Ytn4ztC71qE6kMjpEPV15VFFahodf+mLb/9MgirhfLmgH5J1c0jAuMi/3x1ftTz48FcNNSpHtLMK/sSfVEyBMwLUsfw2SnYHDlraCT6n2Ew2I0LOR+ewXlubJVV78XWZ6uRb9hKw54tkWTUQcwFStlhij73lttVO6sKnveSsViE5AY6MD948dBdajJsT3Z9vsMzMZISJQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zmUIr1+P5tZFDRPocfVi2roKXdnonxCViYdV9bENokk=;
- b=M0v2ctlI5KRZ5i2xQmi0elC8eWMGL1Z0/oh0GZJ+sKVyX5ryjVJG6XvM6fGfuYGyT/HwImYT2osvJwNwUKnqCZPWmO9RHXoyWN8a2Hb0garyjHOVy7Su2Psy+NjG9YIcE97mtg3DnPiRG2tjwha+NJPU5eYe5HX3kaFNiklnTRJoSL2K2fQt2EIgQUUMuAHofDaByFJnlviJNtXxgbC+oNd7bpNptz0aGfZOoY5Zr2lHnn1Bntrf/6d/+MOqYwj0PqvTMu9pTKZ0TVxDTV2PVX2GOQuPI70I/I+Gwr5YUv9eLWsudpDysrh8hLuJ+/jFscGHIMhASx0Qd7I/XpX6UQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=mail.utoronto.ca; dmarc=pass action=none
- header.from=mail.utoronto.ca; dkim=pass header.d=mail.utoronto.ca; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mail.utoronto.ca;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zmUIr1+P5tZFDRPocfVi2roKXdnonxCViYdV9bENokk=;
- b=NJgdQtO//G3hvhiY0hN4Vb83SXHyg77HnoPCZLhS4b8X8/Emrss+EBjykanl55fpdept+s5rpso1JNK9zB3I7bmswSds7YkCVLW3abJu+qttfbLfQKd0bKRsoJsvFx1XDqR/H9jXymYxcr9re/hKE1kMy6fxmIBNqGpILjMmA7g=
-Received: from YTXPR0101MB0717.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b00:7::12)
- by YTXPR0101MB0717.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b00:7::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.18; Sun, 1 Nov
- 2020 08:04:05 +0000
-Received: from YTXPR0101MB0717.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::709a:9d3a:6dba:fa2]) by YTXPR0101MB0717.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::709a:9d3a:6dba:fa2%7]) with mapi id 15.20.3499.029; Sun, 1 Nov 2020
- 08:04:05 +0000
-From:   Sibo Dong <sibo.dong@mail.utoronto.ca>
-To:     "gitster@pobox.com" <gitster@pobox.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitgitgadget@gmail.com" <gitgitgadget@gmail.com>,
-        "sibo.dong@outlook.com" <sibo.dong@outlook.com>
-Subject: Re: [PATCH] git-prompt.sh: make `option` a local variable
-Thread-Topic: [PATCH] git-prompt.sh: make `option` a local variable
-Thread-Index: AQHWsCWRGDRbY3OUYU2suhku0nRwGg==
-Date:   Sun, 1 Nov 2020 08:04:04 +0000
-Message-ID: <1d19cdf35c12b1079cee0861469dc1a652642c82.camel@mail.utoronto.ca>
-In-Reply-To: <xmqqmu02xbe6.fsf@gitster.c.googlers.com>
-Accept-Language: en-CA, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: pobox.com; dkim=none (message not signed)
- header.d=none;pobox.com; dmarc=none action=none header.from=mail.utoronto.ca;
-x-originating-ip: [76.64.132.199]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: dc731122-8755-4298-2442-08d87e3cb3b7
-x-ms-traffictypediagnostic: YTXPR0101MB0717:
-x-microsoft-antispam-prvs: <YTXPR0101MB07171760729BD9F6C1035C4DCC130@YTXPR0101MB0717.CANPRD01.PROD.OUTLOOK.COM>
-x-ms-oob-tlc-oobclassifiers: OLM:8273;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: cXEEu0QQwBzdJx/pNjKH1KYl4c4fsK1MG17GMeUFOQq9JVEyV50yIlOvGZn1elsw2qXtiqLy2ZqarlONcoQB143TQ4cBuGFmXIAMOtIC7c1vfmpqTyaCpR6Vmob4BEmeF+azLG+QduxtsixA+kLxBuUXa2Fh0LXEsIZJJQ3GIOObuY/7CGGZgZIlKzN5zfrXS1rcpt4JE1xHc3hzxIgeej/snWq4h1OiEYfV9avvGIsSccFUla1dw3xa3EKFAs+EPe4d1d9F5e2orplxkajpa3bgUZFCDeB1lvijKRyb5rD4qASPWQzV/RxXP03rNr0oTeZ0CZwToap4/LKhCisPaQqeZh5k9HcMgyL2M6deBpAwdNc5mUdxwbihZlVsBEQd
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YTXPR0101MB0717.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(376002)(346002)(136003)(366004)(396003)(39860400002)(186003)(54906003)(71200400001)(478600001)(558084003)(86362001)(44832011)(2906002)(8936002)(786003)(8676002)(316002)(2616005)(64756008)(66556008)(66476007)(6506007)(26005)(6486002)(4326008)(6512007)(76116006)(66946007)(6916009)(5660300002)(66446008)(81973001);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: thXej/MsIok8idM2y/5+ZwqdFesemdxzNO4AjXelLq7Phjbyv5qEkkyNf50FgGvbRHCO8G/j8CWEWod29gLJxaZ4V5M5dgWIVMxoKUKwrjfHSdDMG7JreUeeEADME1SLPPO43CJV4o9pEq7yr/0FoV8SSCRe6pVCF8Nzrj+28FxX6RHcGFQCLVpcnOrtFx7Yes2vCzz2+rafaZZi7976g+WDznc6yyCPFLvjsofcchzTxdDed6YaIE2Rwf/50gHIn1zxdDsmDyZ3l09pjfCwEJvZDDKcOzKSZXs+ecEAY7wTN9xjV76wacyAXCOSKNbpo7D+IUdNPxbWplOJ+J2+Uk16PptDsmqCms6cDlZvJ97cHJ+uklln7g9LFvdeX7cOi2Q43wMDsDk4G1cM/70AdC7Iz+42+Kh6qUF+T2GJJw4KhzGtY7AZOsL8Pvw7ncOzzVuqHBCg8R51SrIxKqHgi6xh6GFTOZlNRa2E/XASnYtJNPiiYc+xqbdITO91e79ZIZ9XrARhorIXcLiHoQb7aMb3ncOA98T3kLS+1pCEVkKsDGYb+83iRLuqGpMZqLOsGVEWvRf2T0DJHZwf1NOhDiCXvpX3xNk94sie+GMRZQGIjao40o/WIFAU/Ys60Dwd5TQyxkR+iXrCP5aRslz7ZA==
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <C757F8B29B9025499E325F0D5C2CA908@CANPRD01.PROD.OUTLOOK.COM>
-Content-Transfer-Encoding: base64
+        id S1726122AbgKAIwS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Nov 2020 03:52:18 -0500
+Received: from mout.web.de ([212.227.15.3]:36657 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726002AbgKAIwR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Nov 2020 03:52:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1604220733;
+        bh=g/yPg4qiW1lJU/wkC69NmxFjLyqqOg51xgO8rcewBtc=;
+        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
+        b=IHIXzXN1VSyOkNBYxd+tnfsO19yAV2yumAzvX/1yjAl8+2f+59Dmcd178+C9Rv9lP
+         ajPY4VSqokM9KfGVN5/WVeAz1QDaG2fcFhqePfoYvgoPyCF6yriZQETLVKCUu7n/51
+         v2pHvOADoHjPHdw5hCzMLpB/En4VyU8a0Jx1bfHs=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.17.45]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LlJzS-1jyQhP0nuo-00b64C; Sun, 01
+ Nov 2020 09:52:13 +0100
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] pack-write: use hashwrite_be32() instead of double-buffering
+ array
+Message-ID: <aec69531-d621-ab26-efd4-96e1ae0ed3a4@web.de>
+Date:   Sun, 1 Nov 2020 09:52:12 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-X-OriginatorOrg: mail.utoronto.ca
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: YTXPR0101MB0717.CANPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: dc731122-8755-4298-2442-08d87e3cb3b7
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Nov 2020 08:04:05.0776
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 78aac226-2f03-4b4d-9037-b46d56c55210
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 0UIR25LgZUyYKOccjPmdwWxXsrcQ+fWL4M71LvICePDO7NbYb7hHftZNJxJakWaJRoksPAtX1RCxoQfvwkRsWOntRSiAgR1WM9+QzW16c4o=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: YTXPR0101MB0717
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:1PtRaepRIvax8bQ9C5WVU5xTSRkl1Y2cL0TI1BfAp/XTbs1T8Z0
+ /choyyXwixAVTLv0MYdzaQK3jCNyaf6uoGPBmjy+CqTrILEmTG7LuLklkWx6eVLLSakEeNy
+ WNyoNTttzGmKgAwFAIbhwbMX5jyZb8+5qD/rctOXbGpQ3x4pzLRw2ExcdmwbPQHu6v+0vRX
+ TDCv59ebJMtQni2fcrNxw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:22xUYg4C0VM=:egjKsCe31dq0wRfDfsPMYM
+ 5rYeyzn5xl9O13S6uEruPfPpsj4fR+hDKf5T00PV8HAbDDI95+1ms8Tgu5Ync4Y+xtV+ufx2J
+ TchjRIIsPn6QwyOV/LSSxt3y06kGmdsdztuuTjCkipeRMtEh8uyEsWB5J+7b+JmJu4bUWTmBA
+ PXDTsKAwO5CaZk9FT0ISurJrEG4fOP1xcPPLorGzQW4vK+UrRxxAI9yCHVGnK+JM2193iZobN
+ vEdxbjWyb/CrZVUyDdBBnj0SFLfTocuKMnWahkGNBCOymU9JjNx6SYM6wvvymZqemfjY1151C
+ hiKNrWkiul/scisBvpuEomBci5OqDAMrfw7zsairOurN+TEUBGWK72tMoO/UM6KwmoyxHV7+l
+ S+Bejg5NIgdF+JO80Xl2y0pquRXkLBmF4+r3rWPaAD0GqnldQyVNgTWh6caFw8azypFNSKeRj
+ k5bdSg3G2AhSp3clidXWAc9ErbDxKpLVQDmhxAfnNNVjBGMu1OBoCjOIey253Qf93nmf7zBrx
+ eoe7LQKWkHUf2JGxhaODeVdVWIMtMYaLFtw+IzGYFaI0KJDvAGAqmFde05TsicBLeuB4dV9X+
+ BtTfUkLLd4LSE/STxnjfSt5JLADPfq0BYYrwGI1ykfx9Qi2fjfHVsDJk9wMxW6yGFl8bZHasF
+ ygoMIaLD8J3S819nZxC2RZTo/n5pKtAWq4h1T9cN4wKF8qMFlUTWxntQwDiU4+lUck74IimdN
+ 8grEOjZvS7M3QOvvyucvnGofr2r5tg9zM4xfVf6smYWuAIfA/pcyRc1fxatFH0BZswJxC7rrj
+ i38Tv9mT1baduDaswgwksT2crm++TxYXQJK1QabebNZQnkl4bJIS+gNp0IKevIcOtuTVeKM8m
+ 8S0DgIieqTKcY+SOoKJg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-VGhhbmsgeW91IGZvciB0aGUgZmVlZGJhY2sgSnVuaW87IEknbSBhIGJpdCBuZXcgdG8gY29udHJp
-YnV0aW5nLiBTaW5jZQ0KeW91J3ZlIGp1c3RpZmllZCB0aGlzIGNoYW5nZSBtdWNoIGJldHRlciB0
-aGFuIEkgaGF2ZSwgaXMgdGhlcmUgYW55IG5lZWQNCmZvciBmdXJ0aGVyIGFjdGlvbiBvbiBteSBw
-YXJ0Pw0KLS0gDQpTaWJvIERvbmcgPHNpYm8uZG9uZ0BtYWlsLnV0b3JvbnRvLmNhPg0KDQo=
+hashwrite() already buffers writes, so pass the fanout table entries
+individually via hashwrite_be32(), which also does the endianess
+conversion for us.  This avoids a memory copy, shortens the code and
+reduces the number of magic numbers.
+
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+Patch generated with -U8 for easier review.
+
+ pack-write.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/pack-write.c b/pack-write.c
+index a6cdb3c67c..23e19cc1ec 100644
+=2D-- a/pack-write.c
++++ b/pack-write.c
+@@ -43,17 +43,16 @@ static int need_large_offset(off_t offset, const struc=
+t pack_idx_option *opts)
+  */
+ const char *write_idx_file(const char *index_name, struct pack_idx_entry =
+**objects,
+ 			   int nr_objects, const struct pack_idx_option *opts,
+ 			   const unsigned char *sha1)
+ {
+ 	struct hashfile *f;
+ 	struct pack_idx_entry **sorted_by_sha, **list, **last;
+ 	off_t last_obj_offset =3D 0;
+-	uint32_t array[256];
+ 	int i, fd;
+ 	uint32_t index_version;
+
+ 	if (nr_objects) {
+ 		sorted_by_sha =3D objects;
+ 		list =3D sorted_by_sha;
+ 		last =3D sorted_by_sha + nr_objects;
+ 		for (i =3D 0; i < nr_objects; ++i) {
+@@ -101,20 +100,19 @@ const char *write_idx_file(const char *index_name, s=
+truct pack_idx_entry **objec
+ 	for (i =3D 0; i < 256; i++) {
+ 		struct pack_idx_entry **next =3D list;
+ 		while (next < last) {
+ 			struct pack_idx_entry *obj =3D *next;
+ 			if (obj->oid.hash[0] !=3D i)
+ 				break;
+ 			next++;
+ 		}
+-		array[i] =3D htonl(next - sorted_by_sha);
++		hashwrite_be32(f, next - sorted_by_sha);
+ 		list =3D next;
+ 	}
+-	hashwrite(f, array, 256 * 4);
+
+ 	/*
+ 	 * Write the actual SHA1 entries..
+ 	 */
+ 	list =3D sorted_by_sha;
+ 	for (i =3D 0; i < nr_objects; i++) {
+ 		struct pack_idx_entry *obj =3D *list++;
+ 		if (index_version < 2)
+=2D-
+2.29.2
