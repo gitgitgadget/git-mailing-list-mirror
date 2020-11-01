@@ -2,69 +2,68 @@ Return-Path: <SRS0=MFMM=EH=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,UNWANTED_LANGUAGE_BODY autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC067C2D0A3
-	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 17:29:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BFB8C5517A
+	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 17:28:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B6E5F22265
-	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 17:29:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BD2DC22265
+	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 17:28:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fd3nOy8K"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="spfJ7YdE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727193AbgKAR3B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Nov 2020 12:29:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52766 "EHLO
+        id S1727147AbgKAR2x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Nov 2020 12:28:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727175AbgKAR25 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Nov 2020 12:28:57 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22588C0617A6
-        for <git@vger.kernel.org>; Sun,  1 Nov 2020 09:28:57 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id w1so11936188wrm.4
-        for <git@vger.kernel.org>; Sun, 01 Nov 2020 09:28:57 -0800 (PST)
+        with ESMTP id S1727024AbgKAR2w (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Nov 2020 12:28:52 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32DBDC0617A6
+        for <git@vger.kernel.org>; Sun,  1 Nov 2020 09:28:52 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id s9so11907913wro.8
+        for <git@vger.kernel.org>; Sun, 01 Nov 2020 09:28:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=KtM3ah1m5iPmVtqoSDImGvgde4PfPAlNe1t2WvU6tiY=;
-        b=fd3nOy8K56FOGYAecHvEkq3xhsFTSb8ddCJaq62N7/JuXPuBK5ZjKK2dfYoNNWBVqR
-         YAWrk/LPLUfKWYJkJuP6cqapsaPuzv+UBJuymKt/tJ+zn+TT8JTpFxeZCbzWeYLg9eLF
-         sVuILYjM/fupeVcMH+8AvASbw9beIGKIWaWEsa0oeI4z5ewAc7f4HQDDr80I5S24JaVJ
-         1s59IID3/J8fNTJ9mxrpB+ARkcwT4xHTqGB00/K/XFtYkklo9BPstKGVWxmnEfI3Jjp6
-         k7xSuj8rxRZnqQw/0kMCQkOnKHKTA/dfmy3xfBxT2g3281WM7f6B6pnY2uEt3NL/H+0q
-         LBkA==
+        bh=XdA++MRqJSgWVqrx76LuRSmxfv96ZIAz/oLur7BIroQ=;
+        b=spfJ7YdENuL+hJo4nhK7gn8Y0kZ+2rhjQMaDSHM0wUnUUjxI0uSKtTuh77FHdIJkYD
+         oTOsFvKo1F/03pBgJa5asQB7gPx9ME7OE3jwcazoq5TqmlIKYEv4iqiinAP0yRkPmc8Q
+         tu+CcaSVYqaDXMmu+4dt1bouHjGNHydBJPreu5/LHVWBc6DYfrkVbxrDykWfQgZMhIcm
+         IopHGFhg5HBIf00dMR7cZs5KknIFmx/+ZE7fV8dxwI3yDzQ8lG7k0niYEwCRCcPCHhjD
+         zh9WAc0VNs+MoYRaX283WPMrmcPEqp/IXnwc3nK7Cu9VwOSAPmEJjUjNfiXf8vA6aKVT
+         HTGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=KtM3ah1m5iPmVtqoSDImGvgde4PfPAlNe1t2WvU6tiY=;
-        b=WoMhEETJwh//pLxWaYa/4xK6bXuF6Ea24k+crF/W6sHEQtjH3NxRea/IDMULbk2VA7
-         ILAW/ev4IEkcAO703p2Uvi8ecvBI8G1/NNzm234mYJOj3N8B5Njn+d6KuXCwUkzJLPEX
-         h2dloN9hu4YR0s+RbXX+IP8Ekx+v6THvAbXe/xe0yf5zTrsuqOP4kDVfLEC9Ox9LwvRJ
-         m9UQ5pFYnGUUv9X5eoTYkrJbSv+dAlC3ZsE3zYco9Gp+v0yHg7tsWYNJyB0mv/PVxnkX
-         +sABFYJgkO7TXi0T52DF6atEtYrPyWWifKpn8g5iW5V89JlL3lc6/RlWP6QOQ8i2pqJ2
-         arkg==
-X-Gm-Message-State: AOAM530zgRQBV0ZUK2yEKBe/wwnp4BkJ5xPDIKVClyVGUV6vnBDwVotv
-        LL1BkPyzHSx79SZ/YLuq8U55Sii/I68=
-X-Google-Smtp-Source: ABdhPJzsVNbKBc/gMtvdpXuXmY/7kshCMIyG6IDl/2goovROvXvauJ2ISNZQb3ajFz0WYtMyp2x5yg==
-X-Received: by 2002:a5d:498a:: with SMTP id r10mr15770404wrq.106.1604251735813;
-        Sun, 01 Nov 2020 09:28:55 -0800 (PST)
+        bh=XdA++MRqJSgWVqrx76LuRSmxfv96ZIAz/oLur7BIroQ=;
+        b=T4o1T+8MKamRC6DxgUpwBxFPmNWS9QV0wbaZqp8eAxy2RYnn7qYz/j9AcB8Q4tXpXE
+         pI78pfGrx50CyvcRrv1Eiyu+NOs6EoPTbKBpQAhBJ4aPSTz8+Dfl6A0QRpPq901/8K0t
+         AVAoh4vutV/9ThOo6h6eayZVh+zyNjeoVy/KkfzgR7ccLuTPS8/KrV/pOPtaVI+YbGHI
+         3dHDCK20/bf4dSKnaEQ5BKaiu8MPeVA/ucnJUUT0HpTuzSSj2YZbSA0H4Q57cr4rgMl8
+         8Qrqo87cJmR8Haqc+p0qhBczDbhur6UOC2X7Wmb7uJiBBb77XsjdmnEP6O1N06seS18g
+         28Cw==
+X-Gm-Message-State: AOAM531iexgBZi3SviJJxYC10uK3JHSJz7rVVFKMywKi2O8diK1wxz1q
+        h6AazY+PXWrf3OLy1jdd+OtAYo1a264=
+X-Google-Smtp-Source: ABdhPJyG49zsJ4IjasNaHA1EEaDDWCP2tNtrJeBCD9bJwke6hUMjQFUbAxJUrXiXH8M4jNRmcyAsag==
+X-Received: by 2002:adf:914c:: with SMTP id j70mr16249614wrj.170.1604251730697;
+        Sun, 01 Nov 2020 09:28:50 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b136sm11885456wmb.21.2020.11.01.09.28.55
+        by smtp.gmail.com with ESMTPSA id u15sm19217449wrm.77.2020.11.01.09.28.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Nov 2020 09:28:55 -0800 (PST)
-Message-Id: <7aca3274d2d25994984cd98f94ed8c3a8411749e.1604251728.git.gitgitgadget@gmail.com>
+        Sun, 01 Nov 2020 09:28:50 -0800 (PST)
+Message-Id: <6c44b1c576150212cfb23c6f3d0ca3563ddf4556.1604251728.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.774.v2.git.1604251727.gitgitgadget@gmail.com>
 References: <pull.774.git.1603889270.gitgitgadget@gmail.com>
         <pull.774.v2.git.1604251727.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 01 Nov 2020 17:28:47 +0000
-Subject: [PATCH v2 8/8] blame: simplify 'setup_blame_bloom_data' interface
+Date:   Sun, 01 Nov 2020 17:28:41 +0000
+Subject: [PATCH v2 2/8] doc: line-range: improve formatting
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,72 +78,101 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-The penultimate commit moved the initialization of 'sb.path' in
-'builtin/blame.c::cmd_blame' before the call to
-'blame.c::setup_blame_bloom_data'. Since 'cmd_blame' is the only caller
-of 'setup_blame_bloom_data', it is now unnecessary for
-'setup_blame_bloom_data' to receive 'path' as a separate argument, as
-'sb.path' is already initialized.
+Improve the formatting of the description of the line-range option '-L'
+for `git log`, `gitk` and `git blame`:
 
-Remove this argument from setup_blame_bloom_data's interface and use the
-'path' field of the 'sb' 'struct blame_scoreboard' instead.
+- Use bold for <start>, <end> and <funcname>
+- Use backticks for literals
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- blame.c         | 5 ++---
- blame.h         | 3 +--
- builtin/blame.c | 2 +-
- 3 files changed, 4 insertions(+), 6 deletions(-)
+ Documentation/blame-options.txt      |  4 ++--
+ Documentation/line-range-format.txt  | 24 ++++++++++++------------
+ Documentation/line-range-options.txt |  6 +++---
+ 3 files changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/blame.c b/blame.c
-index 128cb7ba55..9042aa3f2b 100644
---- a/blame.c
-+++ b/blame.c
-@@ -2887,8 +2887,7 @@ struct blame_entry *blame_entry_prepend(struct blame_entry *head,
- 	return new_head;
- }
+diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
+index 88750af7ae..48bf0eeec5 100644
+--- a/Documentation/blame-options.txt
++++ b/Documentation/blame-options.txt
+@@ -14,8 +14,8 @@
+ 	Annotate only the given line range. May be specified multiple times.
+ 	Overlapping ranges are allowed.
+ +
+-<start> and <end> are optional. ``-L <start>'' or ``-L <start>,'' spans from
+-<start> to end of file. ``-L ,<end>'' spans from start of file to <end>.
++'<start>' and '<end>' are optional. `-L <start>` or `-L <start>,` spans from
++'<start>' to end of file. `-L ,<end>` spans from start of file to '<end>'.
+ +
+ include::line-range-format.txt[]
  
--void setup_blame_bloom_data(struct blame_scoreboard *sb,
--			    const char *path)
-+void setup_blame_bloom_data(struct blame_scoreboard *sb)
- {
- 	struct blame_bloom_data *bd;
- 	struct bloom_filter_settings *bs;
-@@ -2908,7 +2907,7 @@ void setup_blame_bloom_data(struct blame_scoreboard *sb,
- 	bd->nr = 0;
- 	ALLOC_ARRAY(bd->keys, bd->alloc);
+diff --git a/Documentation/line-range-format.txt b/Documentation/line-range-format.txt
+index 829676ff98..43759eef89 100644
+--- a/Documentation/line-range-format.txt
++++ b/Documentation/line-range-format.txt
+@@ -1,30 +1,30 @@
+-<start> and <end> can take one of these forms:
++'<start>' and '<end>' can take one of these forms:
  
--	add_bloom_key(bd, path);
-+	add_bloom_key(bd, sb->path);
+ - number
+ +
+-If <start> or <end> is a number, it specifies an
++If '<start>' or '<end>' is a number, it specifies an
+ absolute line number (lines count from 1).
+ +
  
- 	sb->bloom_data = bd;
- }
-diff --git a/blame.h b/blame.h
-index e8c185c8ef..38bde535b3 100644
---- a/blame.h
-+++ b/blame.h
-@@ -182,8 +182,7 @@ const char *blame_nth_line(struct blame_scoreboard *sb, long lno);
- void init_scoreboard(struct blame_scoreboard *sb);
- void setup_scoreboard(struct blame_scoreboard *sb,
- 		      struct blame_origin **orig);
--void setup_blame_bloom_data(struct blame_scoreboard *sb,
--			    const char *path);
-+void setup_blame_bloom_data(struct blame_scoreboard *sb);
- void cleanup_scoreboard(struct blame_scoreboard *sb);
+-- /regex/
++- `/regex/`
+ +
+ This form will use the first line matching the given
+-POSIX regex. If <start> is a regex, it will search from the end of
++POSIX regex. If '<start>' is a regex, it will search from the end of
+ the previous `-L` range, if any, otherwise from the start of file.
+-If <start> is ``^/regex/'', it will search from the start of file.
+-If <end> is a regex, it will search
+-starting at the line given by <start>.
++If '<start>' is `^/regex/`, it will search from the start of file.
++If '<end>' is a regex, it will search
++starting at the line given by '<start>'.
+ +
  
- struct blame_entry *blame_entry_prepend(struct blame_entry *head,
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 5d8f4c4599..2f8b06e589 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -1092,7 +1092,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	 * for copies.
- 	 */
- 	if (!(opt & PICKAXE_BLAME_COPY))
--		setup_blame_bloom_data(&sb, path);
-+		setup_blame_bloom_data(&sb);
+ - +offset or -offset
+ +
+-This is only valid for <end> and will specify a number
+-of lines before or after the line given by <start>.
++This is only valid for '<end>' and will specify a number
++of lines before or after the line given by '<start>'.
  
- 	lno = sb.num_lines;
+ +
+-If ``:<funcname>'' is given in place of <start> and <end>, it is a
++If `:<funcname>` is given in place of '<start>' and '<end>', it is a
+ regular expression that denotes the range from the first funcname line
+-that matches <funcname>, up to the next funcname line. ``:<funcname>''
++that matches '<funcname>', up to the next funcname line. `:<funcname>`
+ searches from the end of the previous `-L` range, if any, otherwise
+-from the start of file. ``^:<funcname>'' searches from the start of
++from the start of file. `^:<funcname>` searches from the start of
+ file.
+diff --git a/Documentation/line-range-options.txt b/Documentation/line-range-options.txt
+index 266263f6b4..1c90127300 100644
+--- a/Documentation/line-range-options.txt
++++ b/Documentation/line-range-options.txt
+@@ -1,12 +1,12 @@
+ -L<start>,<end>:<file>::
+ -L:<funcname>:<file>::
  
+-	Trace the evolution of the line range given by "<start>,<end>"
+-	(or the function name regex <funcname>) within the <file>.  You may
++	Trace the evolution of the line range given by '<start>,<end>'
++	(or the function name regex '<funcname>') within the '<file>'. You may
+ 	not give any pathspec limiters.  This is currently limited to
+ 	a walk starting from a single revision, i.e., you may only
+ 	give zero or one positive revision arguments, and
+-	<start> and <end> (or <funcname>) must exist in the starting revision.
++	'<start>' and '<end>' (or '<funcname>') must exist in the starting revision.
+ 	You can specify this option more than once. Implies `--patch`.
+ 	Patch output can be suppressed using `--no-patch`, but other diff formats
+ 	(namely `--raw`, `--numstat`, `--shortstat`, `--dirstat`, `--summary`,
 -- 
 gitgitgadget
+
