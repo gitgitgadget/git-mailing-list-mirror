@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E60CC4742C
-	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 19:34:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40F0FC388F9
+	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 19:34:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 059DF20B1F
-	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 19:34:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0830620B1F
+	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 19:34:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hh3ssEP+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oayLES9c"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727386AbgKATeh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Nov 2020 14:34:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43678 "EHLO
+        id S1727390AbgKATei (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Nov 2020 14:34:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727287AbgKATeV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Nov 2020 14:34:21 -0500
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0D1DC061A47
-        for <git@vger.kernel.org>; Sun,  1 Nov 2020 11:34:19 -0800 (PST)
-Received: by mail-lj1-x242.google.com with SMTP id t13so12602705ljk.12
-        for <git@vger.kernel.org>; Sun, 01 Nov 2020 11:34:19 -0800 (PST)
+        with ESMTP id S1727362AbgKATeb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Nov 2020 14:34:31 -0500
+Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A651C0617A6
+        for <git@vger.kernel.org>; Sun,  1 Nov 2020 11:34:29 -0800 (PST)
+Received: by mail-lf1-x144.google.com with SMTP id a7so14617639lfk.9
+        for <git@vger.kernel.org>; Sun, 01 Nov 2020 11:34:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=0S/9aSkb4vHujavlerag9xYD5gdMVALanWm3rUMyrNY=;
-        b=hh3ssEP+Zaqam5ylsMVK0ct7bbAZaohUzUASGwpk82iXBJI6JJGSujcXRgdbCviTM+
-         cvP4k0B6XlesVGOMEPZ0qtsXKH58xKn6SUmZjm7tcq9p0ZQaKazFalXnihvjYRNoyo7b
-         iKkbbjC+Wguy2I0KgsSzLyNr9LSlhnwk8p0Eqw/qhDm8yiAAXf1iDzmwiLJKmF7fBGr6
-         AWAx5svP4zQkLe0Cb6DPe9/sFYLOtb3l1xTdYMxCyxUbDzWKFjU0mfpwmWVu1mDps+4h
-         mW1kSes4dDrHQcLjaesJV+dvVq6JrFiJRNdkwo2t+ZGufcTSSa4ytaWNf9ZtpAgYC0eR
-         5C1g==
+        bh=wH5lezwYC3Zj4pfYQSJSrzR0Zof/a66wlzNTt5jMg30=;
+        b=oayLES9cxh8gwf5iKGMQWbLtI/Fxm8IBdkYSnSD9PD8xxu7XUc3836FYpa0Jy7+S3i
+         kt6Aj2gNqZVKNWaO1N2MnqMGIcAo1jnZpa7SKV4aNL8ut5l4JiDE9H1SELr/DbpvyDGU
+         hwg++miFhS7uJUwcd6cz1IN2Z5f78BQMJlOPfrwVQY717y5KRKSu20NIVVs06/o98p5D
+         2omBOZOZnVxdZYNE4ZxphBksfgKw9UnbjAd1Udr6BRMsBehnfqLO3R47uu0GAhwmZu2K
+         7GEiCsPOyeCRpNuJgRMpbgJygyXkWiEbMgbwpVqQk1yQOzI9pEwEmtyj0S50/G6CVyYq
+         ivpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=0S/9aSkb4vHujavlerag9xYD5gdMVALanWm3rUMyrNY=;
-        b=SoxhrC2BX9Lasx0Ss4Lch/A+bLYsYek0Z9wh4xhiQsHkETEmduIkX/YU5ZpUxyTBJo
-         JWNaMzy2o6mejQ7TNI5tEl/qq9aKl14Gj3luUAi8/hOWTQg0BwwCTxvDU0ivp/hn5xOf
-         RpA0Np6z+1OJDagcvVLm/Z9Aj5af5vxkEahdnm8LR5UZIhJNOyjr2YQlxMSRJDaTxm92
-         DfNgGSJX+AszXT+VIEJejaztoid1iN9CGEZmZE5AselwFLQYd9WubQi683LWPsFQXTV6
-         5PDHKAqqQFgI/rQE0iUQhtXWzv4bxEsGNRTlnbQidZfGsqV9i+/pg8qQ8XJ9gP6N0fH8
-         QKQQ==
-X-Gm-Message-State: AOAM533AU67ujncP03SZiWpY/3hZ6Bef3+KUeJvqeH2JWrRr2TEepdIU
-        T5rVgr+020FTG30fB/sYpPWD99edBq8=
-X-Google-Smtp-Source: ABdhPJzgZ5QdsrhAEOGTKhoufFsJVvds8ptwbiCPE6Qb0uu0i7eO/oqWUo73N9ekSGpvKYvPvV/ybQ==
-X-Received: by 2002:a2e:9159:: with SMTP id q25mr5568315ljg.264.1604259258396;
-        Sun, 01 Nov 2020 11:34:18 -0800 (PST)
+        bh=wH5lezwYC3Zj4pfYQSJSrzR0Zof/a66wlzNTt5jMg30=;
+        b=BHzjA2YHWwpScb7eOELzTkb1JWdwy255sDHiPoP89yqjriVlBeL+gownwRjs/PaQcy
+         fxDemKUNcVAGsiYboUAg7Eu8AthfR7XCaTHMJ0WYNpQGuuRq9UwguuYr30DA/hgTmPvR
+         tLBHh+4BCRasdmoz82GZ5oMyGxn80MID6W4zfg7i+OS3v5vienkHmHXm1Ch04R6yB+uo
+         HwYHtU7O02oo+mEB7cKpkkX4hcsYKWAMQHVJt7+gvl5V3I1m/pdzHxE9mD7MS4G13hXI
+         Bje5RYKmh67CvpsQ2kp6mrtSlA3oLt/+64gl3WCyK83yRjy3T0GzWnFr//vF3zkarycN
+         bA3A==
+X-Gm-Message-State: AOAM533wxdsx9MwGjtonUX5zvDMsNhOuXqBfBLPj0dxhRecxI9iXAY9h
+        6zjWZO4jqFYdUcjchwrqQYc=
+X-Google-Smtp-Source: ABdhPJzOKB9cnFoMtrHp3zEk6KEe+RAwujDNYdh+o1EvMJKsyvR2PkxQTGVAkCLj7MHpY2WVwNu9cQ==
+X-Received: by 2002:a19:4815:: with SMTP id v21mr4935080lfa.603.1604259267850;
+        Sun, 01 Nov 2020 11:34:27 -0800 (PST)
 Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id m12sm1766526ljc.88.2020.11.01.11.34.17
+        by smtp.gmail.com with ESMTPSA id m12sm1766526ljc.88.2020.11.01.11.34.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Nov 2020 11:34:17 -0800 (PST)
+        Sun, 01 Nov 2020 11:34:27 -0800 (PST)
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
         Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH 16/26] diff-merges: fix -m to properly override -c/--cc
-Date:   Sun,  1 Nov 2020 22:33:20 +0300
-Message-Id: <20201101193330.24775-17-sorganov@gmail.com>
+Subject: [PATCH 26/26] doc/rev-list-options: document --first-parent implies --diff-merges=first-parent
+Date:   Sun,  1 Nov 2020 22:33:30 +0300
+Message-Id: <20201101193330.24775-27-sorganov@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20201101193330.24775-1-sorganov@gmail.com>
 References: <20201101193330.24775-1-sorganov@gmail.com>
@@ -74,45 +74,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Logically, -m, -c, --cc specify 3 different formats for representing
-merge commits, yet -m doesn't in fact override -c or --cc, that makes
-no sense.
+Before introduction of new --diff-merges options, --first-parent
+implicitly changed the default diff format for merge commits to
+showing only the diff with respect to the first parent, and there were
+no way to get such format from "git log" without affecting history
+traversal logic that --first-parent causes.
 
-Fix -m to properly override -c/--cc, and change the tests accordingly.
+Now, after introduction of the --diff-merges=first-parent, the
+--first-parent simply implies the former, and this patch corrects
+documentation accordingly.
 
 Signed-off-by: Sergey Organov <sorganov@gmail.com>
 ---
- diff-merges.c           | 1 +
- t/t4013-diff-various.sh | 4 ++--
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ Documentation/rev-list-options.txt | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/diff-merges.c b/diff-merges.c
-index a30c730a457f..f2b9ed789ca8 100644
---- a/diff-merges.c
-+++ b/diff-merges.c
-@@ -29,6 +29,7 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv) {
- 	const char *arg = argv[0];
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 002379056a07..ded383e62ae5 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -129,6 +129,9 @@ parents) and `--max-parents=-1` (negative numbers denote no upper limit).
+ 	adjusting to updated upstream from time to time, and
+ 	this option allows you to ignore the individual commits
+ 	brought in to your history by such a merge.
++ifdef::git-log[]
++	Implies `--diff-merges=first-parent`.
++endif::git-log[]
  
- 	if (!strcmp(arg, "-m")) {
-+		suppress(revs);
- 		/*
- 		 * To "diff-index", "-m" means "match missing", and to the "log"
- 		 * family of commands, it means "show full diff for merges". Set
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 64d9fce44614..8d8178a8a616 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -329,8 +329,8 @@ log --first-parent --diff-merges=off -p master
- log -p --first-parent master
- log -m -p --first-parent master
- log -m -p master
--:failure log --cc -m -p master
--:failure log -c -m -p master
-+log --cc -m -p master
-+log -c -m -p master
- log -SF master
- log -S F master
- log -SF -p master
+ --not::
+ 	Reverses the meaning of the '{caret}' prefix (or lack thereof)
 -- 
 2.25.1
 
