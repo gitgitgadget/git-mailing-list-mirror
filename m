@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FC0AC2D0A3
-	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 17:28:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33B44C4742C
+	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 17:28:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 199802225C
-	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 17:28:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0016822265
+	for <git@archiver.kernel.org>; Sun,  1 Nov 2020 17:28:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NSfSAkB/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ptWka37z"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727081AbgKAR2w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Nov 2020 12:28:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52738 "EHLO
+        id S1727153AbgKAR2y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Nov 2020 12:28:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727024AbgKAR2v (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Nov 2020 12:28:51 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6143BC061A04
-        for <git@vger.kernel.org>; Sun,  1 Nov 2020 09:28:51 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id a9so11892495wrg.12
-        for <git@vger.kernel.org>; Sun, 01 Nov 2020 09:28:51 -0800 (PST)
+        with ESMTP id S1727086AbgKAR2x (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Nov 2020 12:28:53 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EEC5C061A04
+        for <git@vger.kernel.org>; Sun,  1 Nov 2020 09:28:53 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id 13so7246865wmf.0
+        for <git@vger.kernel.org>; Sun, 01 Nov 2020 09:28:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=bJwfGHssSO7FwyQCHCC+rZiTBwG6EPhpyDUb1/9NjEY=;
-        b=NSfSAkB/GFjDyRpTj0vRZ07vteUmJnFJUh9FDwjGqCJ5q3qKnGRz1Ske9wio/+4T8O
-         epBNqa0GN+61HidsKMfw5IAz/LKJi1bYKw5yqh9v21ufzlp2BL/qRUojRr0YO0jGGylf
-         4dYphjr1tvvXEAFefBECR2X4XR0eIbDgrX5pKR8aP8Ak2QC8LFK/Qc7Z3YfxpcmSLQPl
-         Seh7xS7ONr3ZyD8FAoqZ86Lf5g1sN3vRZ9E15QQ0M8+jsRRirTYslBoda2xPJT2jCOX9
-         cr/ehhrLTH1VJ4zj/SpQAejkx4V5p0IPuqx831ACtpBhOzl3g1JMkUbp8k90G8lRvejz
-         NGTQ==
+        bh=SzdJTTCzvY22cpUuKgXDJ1J0DyVQ8i2sAbzsX73+t6I=;
+        b=ptWka37zvg5zrfYvwP4teER0DemTfk9fTsWTM50KUSVT+G10tH4RyeAEUduag9xj47
+         qH3qV7mN2gXTL/r9XEnAc3iEFmSc8TULsrJNF80K8sgw9j4acvLcnyLIpowUi1CAyQf3
+         kB2Mk+NzU+3NH3Gj/2PFSAki3bTf27Hgi5gIYzbZ9q1tOUCNNdEQATUr1wPqcwLj1MTz
+         VKYF/kxVjyk1yhe/zUSAXDO2H2DTgJn0R4/UKS67NMBI65e0qFgzlXufqqZ79gSVgxzQ
+         WyzGjtA+SNgnh0EYjSUpCKWiurL1tvUiIXbyTnlQf7GpSNw3ityl78LT5UzjWgyJAVJl
+         J5DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=bJwfGHssSO7FwyQCHCC+rZiTBwG6EPhpyDUb1/9NjEY=;
-        b=EkaW9c16VwYqhyenbUDkvms5bmXbmGba8e/S2foy78iPoJxYohBVXnSxL0XCHaTImH
-         FgQM6NNM48gVdqQjAPaIlDRAwfMeAuGmMK0Z5Zr/edgSkXhMkBRCMKMNPvdwuplNrH8k
-         AmXsVupndfr0GKu8DMx5wLXyejzh57jOfRFEIlLvFlvvNl7dpiGilUekzpYeypbQ0MTs
-         jUWcQYjvFayR+ViM7nMAxdGtmjxR2mjSj1OvSnyQRBIK5ySA8UBZLNpuiw2kFv1hDENL
-         0ii+eKo845N4ry5xY9OtFbsrH0y0sjxPN9YO7DVhD7xbUqfz1tUDYG+vWPxJvz1TnUiB
-         tQzQ==
-X-Gm-Message-State: AOAM533uQxL+WPU7HTnwd5+nrin8GpCnSMYOXd1pTGcYzlqbdNW2umFH
-        OUg3GIRZn6Sic7+QGwHYeyU1bxAsdkU=
-X-Google-Smtp-Source: ABdhPJyTJrXmdLydSgUJ3Mzuwfjrr6JzkbKBTe8rN5u4Ly1YaMROMcGVQN9TthnIyaqhNQX9zv1yew==
-X-Received: by 2002:adf:c3c6:: with SMTP id d6mr15819849wrg.206.1604251729889;
-        Sun, 01 Nov 2020 09:28:49 -0800 (PST)
+        bh=SzdJTTCzvY22cpUuKgXDJ1J0DyVQ8i2sAbzsX73+t6I=;
+        b=KzferB6KhtAyvR/BF9pMd6futdv9cztLkuwJ0RDNDHg9H7QQw4Brb6LylzfnCYGwEm
+         Z3+PqHv7lYgBzQMuobhUgXyB9kaU6+QzpP8eT/1uXmtlZiJPVAkyOxs/ov2VYge/ZVJW
+         SXzGsViALK2pdjm6luj0bYUbXt0heKw3koIUDtAt1qOnb4AtZGek74BHPZT/sAifXJhq
+         8wSadlqdAbRM918apSra/MOufQtT4dWN3HK3NZ92/Hu+HlO8+md1t8+n6O82PJvuBxu8
+         8m/9jLzXZHxxV4oYrkyRViiizUmIyKmEiidFJZ5z7olHLeQ6B4ytz1isLkUnnjbr/get
+         O9tA==
+X-Gm-Message-State: AOAM531b5Wq5DwRYlySfF6cqUqfJpWQnxkCTKVvlGk3JcS7rZXdHV4nA
+        XybzcJjvxpAPzhBU+Ce+/FkI9Mpzu5c=
+X-Google-Smtp-Source: ABdhPJxen3r5uAh+CugqZuwRz6N8MOVgHL6aNAWtoEzeHbE2bef+cdcE3N2GDc8WwmG7NVeXnYWA8Q==
+X-Received: by 2002:a1c:f002:: with SMTP id a2mr14313021wmb.129.1604251731649;
+        Sun, 01 Nov 2020 09:28:51 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a17sm19311663wra.29.2020.11.01.09.28.49
+        by smtp.gmail.com with ESMTPSA id u81sm2039619wmb.27.2020.11.01.09.28.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Nov 2020 09:28:49 -0800 (PST)
-Message-Id: <b4fa5fb5ae5cb1d23bde1481a73b088826aa3f44.1604251728.git.gitgitgadget@gmail.com>
+        Sun, 01 Nov 2020 09:28:51 -0800 (PST)
+Message-Id: <d38f0f7e268897effa200a4c61c03d5cf082eb13.1604251728.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.774.v2.git.1604251727.gitgitgadget@gmail.com>
 References: <pull.774.git.1603889270.gitgitgadget@gmail.com>
         <pull.774.v2.git.1604251727.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 01 Nov 2020 17:28:40 +0000
-Subject: [PATCH v2 1/8] doc: log, gitk: move '-L' description to
- 'line-range-options.txt'
+Date:   Sun, 01 Nov 2020 17:28:42 +0000
+Subject: [PATCH v2 3/8] blame-options.txt: also mention 'funcname' in '-L'
+ description
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,105 +79,51 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-The description of the '-L' option for `git log` and `gitk` is almost
-the same, but is repeated in both 'git-log.txt' and 'gitk.txt' (the
-difference being that 'git-log.txt' lists the option with a space
-after '-L', while 'gitk.txt' lists it as stuck and notes that `gitk`
-only understands the stuck form).
+Make it clearer that a function can be blamed by feeding `git blame`
+'-L :<funcname>' by mentioning it at the beginnning of the description
+of the '-L' option.
 
-Reduce duplication by creating a new file, 'line-range-options.txt',
-and include it in both files.
-
-To simplify the presentation, only list the stuck form for both
-commands, and remove the note about `gitk` only understanding the stuck
-form.
+Also, in 'line-range-options.txt', which is used for git-log(1) and
+gitk(1), do not parenthesize the mention of the ':<funcname>' mode, to
+place it on equal footing with the '<start>,<end>' mode.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- Documentation/git-log.txt            | 15 +--------------
- Documentation/gitk.txt               | 20 +-------------------
- Documentation/line-range-options.txt | 15 +++++++++++++++
- 3 files changed, 17 insertions(+), 33 deletions(-)
- create mode 100644 Documentation/line-range-options.txt
+ Documentation/blame-options.txt      | 5 +++--
+ Documentation/line-range-options.txt | 4 ++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 2b8ac5ff88..dd189a353a 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -77,20 +77,7 @@ produced by `--stat`, etc.
- 	Intended to speed up tools that read log messages from `git log`
- 	output by allowing them to allocate space in advance.
+diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
+index 48bf0eeec5..dc3bceb6d1 100644
+--- a/Documentation/blame-options.txt
++++ b/Documentation/blame-options.txt
+@@ -11,8 +11,9 @@
  
---L <start>,<end>:<file>::
---L :<funcname>:<file>::
--	Trace the evolution of the line range given by "<start>,<end>"
--	(or the function name regex <funcname>) within the <file>.  You may
--	not give any pathspec limiters.  This is currently limited to
--	a walk starting from a single revision, i.e., you may only
--	give zero or one positive revision arguments, and
--	<start> and <end> (or <funcname>) must exist in the starting revision.
--	You can specify this option more than once. Implies `--patch`.
--	Patch output can be suppressed using `--no-patch`, but other diff formats
--	(namely `--raw`, `--numstat`, `--shortstat`, `--dirstat`, `--summary`,
--	`--name-only`, `--name-status`, `--check`) are not currently implemented.
--+
--include::line-range-format.txt[]
-+include::line-range-options.txt[]
- 
- <revision range>::
- 	Show only commits in the specified revision range.  When no
-diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
-index c653ebb6a8..d50e9ed10e 100644
---- a/Documentation/gitk.txt
-+++ b/Documentation/gitk.txt
-@@ -98,25 +98,7 @@ linkgit:git-rev-list[1] for a complete list.
- 	(See "History simplification" in linkgit:git-log[1] for a more
- 	detailed explanation.)
- 
---L<start>,<end>:<file>::
---L:<funcname>:<file>::
--
--	Trace the evolution of the line range given by "<start>,<end>"
--	(or the function name regex <funcname>) within the <file>.  You may
--	not give any pathspec limiters.  This is currently limited to
--	a walk starting from a single revision, i.e., you may only
--	give zero or one positive revision arguments, and
--	<start> and <end> (or <funcname>) must exist in the starting revision.
--	You can specify this option more than once. Implies `--patch`.
--	Patch output can be suppressed using `--no-patch`, but other diff formats
--	(namely `--raw`, `--numstat`, `--shortstat`, `--dirstat`, `--summary`,
--	`--name-only`, `--name-status`, `--check`) are not currently implemented.
--+
--*Note:* gitk (unlike linkgit:git-log[1]) currently only understands
--this option if you specify it "glued together" with its argument.  Do
--*not* put a space after `-L`.
--+
--include::line-range-format.txt[]
-+include::line-range-options.txt[]
- 
- <revision range>::
- 
+ -L <start>,<end>::
+ -L :<funcname>::
+-	Annotate only the given line range. May be specified multiple times.
+-	Overlapping ranges are allowed.
++	Annotate only the line range given by '<start>,<end>',
++	or by the function name regex '<funcname>'.
++	May be specified multiple times. Overlapping ranges are allowed.
+ +
+ '<start>' and '<end>' are optional. `-L <start>` or `-L <start>,` spans from
+ '<start>' to end of file. `-L ,<end>` spans from start of file to '<end>'.
 diff --git a/Documentation/line-range-options.txt b/Documentation/line-range-options.txt
-new file mode 100644
-index 0000000000..266263f6b4
---- /dev/null
+index 1c90127300..8e295a62b8 100644
+--- a/Documentation/line-range-options.txt
 +++ b/Documentation/line-range-options.txt
-@@ -0,0 +1,15 @@
-+-L<start>,<end>:<file>::
-+-L:<funcname>:<file>::
-+
-+	Trace the evolution of the line range given by "<start>,<end>"
-+	(or the function name regex <funcname>) within the <file>.  You may
-+	not give any pathspec limiters.  This is currently limited to
-+	a walk starting from a single revision, i.e., you may only
-+	give zero or one positive revision arguments, and
-+	<start> and <end> (or <funcname>) must exist in the starting revision.
-+	You can specify this option more than once. Implies `--patch`.
-+	Patch output can be suppressed using `--no-patch`, but other diff formats
-+	(namely `--raw`, `--numstat`, `--shortstat`, `--dirstat`, `--summary`,
-+	`--name-only`, `--name-status`, `--check`) are not currently implemented.
-++
-+include::line-range-format.txt[]
+@@ -1,8 +1,8 @@
+ -L<start>,<end>:<file>::
+ -L:<funcname>:<file>::
+ 
+-	Trace the evolution of the line range given by '<start>,<end>'
+-	(or the function name regex '<funcname>') within the '<file>'. You may
++	Trace the evolution of the line range given by '<start>,<end>',
++	or by the function name regex '<funcname>', within the '<file>'. You may
+ 	not give any pathspec limiters.  This is currently limited to
+ 	a walk starting from a single revision, i.e., you may only
+ 	give zero or one positive revision arguments, and
 -- 
 gitgitgadget
 
