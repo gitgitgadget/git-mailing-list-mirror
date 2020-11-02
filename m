@@ -2,115 +2,93 @@ Return-Path: <SRS0=DNVg=EI=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=BAYES_05,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C70C5C00A89
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 18:11:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4DF0C00A89
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 18:30:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5EC3022226
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 18:11:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4105022245
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 18:30:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Fp8SqqtG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CJnzmjoX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726051AbgKBSLL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Nov 2020 13:11:11 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50676 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725789AbgKBSLL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Nov 2020 13:11:11 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7E18E8D5AD;
-        Mon,  2 Nov 2020 13:11:09 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=0uxXEgYxF9IWB57iGYY2IA3enkQ=; b=Fp8SqqtGxeZfdY7OM1f4
-        6Rd/g35sDhZ3uqTZfXiwmHtw7kjGYY65jUCog/nHQFvbuZUCAIeQjvv23AVaNxIH
-        sepXLj+ctxblZlOj9k31pPrjsaULIo+cwRMFK33Sw0qXt5scBFlNjWeAk1U2C4hn
-        iqR0qsmhP1213Yz8Hb9jTko=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=DQUmuAjj3EWsnRpuW2YITqXpy+SJH2+7G8NwVpuhOZyEnG
-        im4f3CxvaCqMzi8ZrpMiBkIkWHjTBdrz2ULh6ah7SJKKiYuZz8ACb+BsJs4Q7i6l
-        IsFRH0tj8c+/knfTfWmakEinXFKO0/Jp7KDlZUvA6tRk0N+sVioNwAIvFLs5E=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6C5D48D5AB;
-        Mon,  2 Nov 2020 13:11:09 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7C0518D5A9;
-        Mon,  2 Nov 2020 13:11:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] doc/diff-options: fix out of place mentions of
- '--patch/-p'
-References: <20201031193734.22702-1-sorganov@gmail.com>
-Date:   Mon, 02 Nov 2020 10:11:05 -0800
-Message-ID: <xmqq7dr3wrwm.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726337AbgKBSa4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Nov 2020 13:30:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58722 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725789AbgKBSa4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Nov 2020 13:30:56 -0500
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07524C0617A6
+        for <git@vger.kernel.org>; Mon,  2 Nov 2020 10:30:56 -0800 (PST)
+Received: by mail-io1-xd32.google.com with SMTP id p7so15928141ioo.6
+        for <git@vger.kernel.org>; Mon, 02 Nov 2020 10:30:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=rxL4knbf/9Wxvz2xUxPDKTWNWocpdg9k3IKMKmaZ4kQ=;
+        b=CJnzmjoXQhhPfeq6eyUKRVBEnBgIxGzl2MNI+WDJM7Rr/yN+/+KoLa4P9k1Uv9wdRr
+         HewHOQGgIflKDNeKrW4jwUMu9OlWpwq9Dd8f0OScT7rwL6smh2Qa25ooYJYCS16Z5QHo
+         RtMYbQSaGo8yBsiShlq8iv+CBOE6IDK8LXdgQ7xnTn5L8i5BmdvCEs85+Wbd7I3li3eo
+         k34/ycpRpwB0pXpgvGjtPI83G7uIHJzaMM6Fy5lf5OTrBIGms+xCvvWND7YcoZVWyxVx
+         bCe3BpERzFJvUlE7gjqp0l/PapDvZVlgSsTTpz3MRbA6raX54r0BBl4+54HcDCCsjODc
+         delA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=rxL4knbf/9Wxvz2xUxPDKTWNWocpdg9k3IKMKmaZ4kQ=;
+        b=WqigqR5mfGci5TLECmSWpSIA//0gBuI/IQdVfXAmncrgYoElAhq4AYpvrHvk5DpNJH
+         AW3+PKqvOaPTXvnX7Q1UlwvHPG6dHQRAcAYVJykrRfYRrVYtHLRZr+HA6QSyajW+FFgY
+         tpWqRF7qid0TcxixkRgEK63YtpLn6aAdVyA+rx/JXk1Ql8TWMrq4bBFWvI5+C7MaQ2HE
+         9r6bMeu+O2j6pgvxq1eNihJtHCxh1BKdh7TNNqJu+LtolLp3TZtzsKNsWbcUwVjHM1e7
+         db6Je7yeDwor1kJGTwGmbo8rVlLyjywTZf859kfXIun4VsEaHv8ROQUxSGSqboDDLPlj
+         geHA==
+X-Gm-Message-State: AOAM531Rz/dK2mB4Jr5/clTKZgqLagWUYq9+NEfAelqcTt+x/DNRtESh
+        6IIYegUPd+w4ve9KF8rksJiw1C58UGbKOmF7G6D7o93kccWJSb63
+X-Google-Smtp-Source: ABdhPJyVwi2E/Lzco0z/4Vi397xbB5uUyC2J1ykvYO0LX0E9G4gX5j99MZoBE/km+aguEMBOD4j6Sw9snjkElr5sD90=
+X-Received: by 2002:a02:3716:: with SMTP id r22mr12401529jar.12.1604341855196;
+ Mon, 02 Nov 2020 10:30:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C8098586-1D36-11EB-AC24-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+From:   "herr.kaste" <herr.kaste@gmail.com>
+Date:   Mon, 2 Nov 2020 19:30:30 +0100
+Message-ID: <CAFzd1+7xQHgaOYKW7WZaWCPdp85Pfk8k_M-gVtBq6Wf7bbJTzg@mail.gmail.com>
+Subject: BUG: commit-graph.c:1068 when doing `git pull`
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
+Hi all!
 
-> First, references to --patch and -p appeared in the description of
-> git-format-patch, where the options themselves are not included.
+I'm stuck with this error message
 
-Fun.  The -U<n> option in "git diff-index -U9" implicitly turns
-"--patch" on, but it is hard to say that the same option in "git
-format-patch -U9" turns "--patch" on, as it is in effect even
-without the -U<n> option.
+    $ git pull
+    BUG: commit-graph.c:1068: missing parent
+104f5eb377763b2ed9663e8949aed265b69f000f for commit
+c59ed9b7b6d4268ae6cb1069a9b51e02ad9aa1d8
 
-It makes readers wonder what, if anything, needs to be done for "git
-diff -U9", but let's leave it out of the scope of this change, which
-is strict improvement for "format-patch" documentation.
+This happens since the last `fetch --prune origin`.
 
-Thanks.
+If I do it again, I get
 
-> Next, the description of --unified option elsewhere had duplicate implied
-> statements: "Implies --patch. Implies -p."
->
-> Signed-off-by: Sergey Organov <sorganov@gmail.com>
-> ---
->  Documentation/diff-options.txt | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-> index 573fb9bb71e2..320304033483 100644
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -36,9 +36,9 @@ endif::git-format-patch[]
->  -U<n>::
->  --unified=<n>::
->  	Generate diffs with <n> lines of context instead of
-> -	the usual three. Implies `--patch`.
-> +	the usual three.
->  ifndef::git-format-patch[]
-> -	Implies `-p`.
-> +	Implies `--patch`.
->  endif::git-format-patch[]
->  
->  --output=<file>::
-> @@ -441,7 +441,10 @@ endif::git-format-patch[]
->  
->  --binary::
->  	In addition to `--full-index`, output a binary diff that
-> -	can be applied with `git-apply`. Implies `--patch`.
-> +	can be applied with `git-apply`.
-> +ifndef::git-format-patch[]
-> +	Implies `--patch`.
-> +endif::git-format-patch[]
->  
->  --abbrev[=<n>]::
->  	Instead of showing the full 40-byte hexadecimal object
+    $ git pull
+    fatal: Unable to create 'C:/Users/c-flo/AppData/Roaming/Sublime
+Text 3/Packages/GitSavvy/.git/objects/info/commit-graphs/commit-graph-chain.lock':
+File exists.
+    ...
+
+And upon removing that file, I get the first error message again.
+
+I actually don't know yet how to move on from here.  I'm stuck, so I
+appreciate any help.
+
+    $ git --version
+    git version 2.29.2.windows.1
+
+
+Regards
+Caspar Duregger
