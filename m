@@ -2,112 +2,94 @@ Return-Path: <SRS0=DNVg=EI=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A427C2D0A3
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 20:51:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C247C388F9
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 20:56:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2155620657
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 20:51:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3536A206D8
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 20:56:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZZNUUHEp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bzFN8fGz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726694AbgKBUvw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Nov 2020 15:51:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51312 "EHLO
+        id S1725833AbgKBUyj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Nov 2020 15:54:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726489AbgKBUnu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Nov 2020 15:43:50 -0500
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 859BDC0617A6
-        for <git@vger.kernel.org>; Mon,  2 Nov 2020 12:43:50 -0800 (PST)
-Received: by mail-ot1-x32d.google.com with SMTP id k3so2040406otp.12
-        for <git@vger.kernel.org>; Mon, 02 Nov 2020 12:43:50 -0800 (PST)
+        with ESMTP id S1725929AbgKBUyi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Nov 2020 15:54:38 -0500
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12A12C061A04
+        for <git@vger.kernel.org>; Mon,  2 Nov 2020 12:54:38 -0800 (PST)
+Received: by mail-wm1-x343.google.com with SMTP id e2so10790977wme.1
+        for <git@vger.kernel.org>; Mon, 02 Nov 2020 12:54:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/yqyKYTKqHP/rETrVtLz4EZ37hoJzs/dcuPP7BiLhRA=;
-        b=ZZNUUHEp6qCYhEWqHDI6udQiUj3AenmHp2AAFLOH+z4INwBBO4HzrTBjBixEO/cdDp
-         w53XPkltu1kZ2jK+XaiyM3jMm2C7utENGrZY0zgk7+kjlnh+rSMV08fpD3Lc2OzkP3ta
-         pG57oxAjyR0cGT7mPU9D9raxGc7bGuJ17iXjWj/OTFYTNdt9ctdEU3Knh1D2ZlkVzPE6
-         7Xg/zEZAMo3m8vXcrPAN9VQJsaaUsTHsi1vWYuQERjECxZfxVr5PV8foNdDp1WQe+CdE
-         X15L11X7RKbkGLCJe+kJAJ1VhpAS8DhzwwVyLcRN8xzJBhwzeyXKAKb1y+ttgtVeFJhY
-         yrMQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Fa3/8g5/ex4LV5rceHlfN4EeOwZ6B76AGW/Ry4CAXvE=;
+        b=bzFN8fGzLy5fz074XD4M1GGBphvbo7P+VlUlnplINeCFqMkY/foiALmVuFYWM05/cz
+         zH7K4dMp9X+mHCu6RZPs9EK9qB2CFn9s680ajFgrtSRVZpDGieeJBIjPy1u4iHyW9b1L
+         XcOHn6F4hmGPYKnnMnbwIEtHRecfMUWswYexGY2Pne5o/frBlHiWF8cLmLq/hs67BPck
+         rosl8TRXAKXciMMPcwtIiGaBtsQQDBsNrqJjh+sqnK14sbWluRCPCEwD+PgA/dyNvLsP
+         XTXL9vURjd/TLoOL5dkEWxi3p+2Th0fq5i3C6GqeRewU8GjZtqalYDdyaZqt888yeY14
+         5P0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/yqyKYTKqHP/rETrVtLz4EZ37hoJzs/dcuPP7BiLhRA=;
-        b=TLNwNCbBxQc0SzozG8t9Hg7KG6vPVNbvefCjO5UfaP43dn44gnXicUii8+wvPJBLgu
-         5GLz6Pojisa3qMspFknZQTmGVFF0sdObwcIGNafMFoqPn/t0fkje65WaTOlLnSz/UsTG
-         2yaFkJGETarpCCmFz0oy1oA5L/FMJsywPqV1pQ6PC0eCw5Tfakkdwz5iVKvMoPrxCqTX
-         W4ZRLEicQm1TgV8o6VQd3pxwJ/zkcFq+jR1Q+6ELSDXnFtYU+Vh5MQUGDLd32A+7uTpW
-         Ls4v7mkFVBfBz5/DkD/SU81YqV3YtFqVCddlsajalc5Ee8O/OEhZq7vE1dzJ8O9AMs4J
-         uScA==
-X-Gm-Message-State: AOAM532jOmFiiIjNRdDnBjsCiIutafhDZFPuXChLE4aZO4n5njfTiJde
-        hObRUU6XGbxPT/saymIKUowqZMK6XQ3MNQ==
-X-Google-Smtp-Source: ABdhPJwwWeV+CbvZCETP7nJmmyia97PY0D0TZis6rqL1IKWZGbdALWizDqbWnppi/Sk91mGfi6CkPw==
-X-Received: by 2002:a05:6830:615:: with SMTP id w21mr5512395oti.126.1604349829667;
-        Mon, 02 Nov 2020 12:43:49 -0800 (PST)
-Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
-        by smtp.gmail.com with ESMTPSA id t27sm3848512otc.14.2020.11.02.12.43.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2020 12:43:49 -0800 (PST)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2 00/20] fundamentals of merge-ort implementation
-Date:   Mon,  2 Nov 2020 12:43:24 -0800
-Message-Id: <20201102204344.342633-1-newren@gmail.com>
-X-Mailer: git-send-email 2.29.0.471.ga4f56089c0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Fa3/8g5/ex4LV5rceHlfN4EeOwZ6B76AGW/Ry4CAXvE=;
+        b=aTbBG5BOdSD+g8AGgXahrqui52s/hvEigaSglvKcwWEkiLH3fMwp8ta2FNj59MBl3c
+         1AadHC+fF2Hh8IoXd0+w2mzqOJs5Dmx5L2/0JnrSCSdZP4sJKAwqotyDjOdu5WrD1Ow5
+         xx6vyPEcCP71wN1FyAC2RHajXTD46KGYqpQ01z1p4n4RziltPLn3lI1Cd7lX9qWEG1Iq
+         R4xGHFd+xxe5D7rWlqW6ffDrL8C3mZNWo5iE2mPjkPN1R+M3TV6mF4Cy1rCULz4fn1eh
+         fChCXnWNSAnkFUhf6plhHZYrim/MntuRkWqKqRIm6yVvubo1t9CRXA6Sp2+skTs5gs9p
+         4Hjg==
+X-Gm-Message-State: AOAM531HAJtRGiQmG3R2zCgPgAlAEk/LR7PUHY81OqKYXnn9plavJ8TO
+        qIQszdMo3f7kpeDuFFYauGgeRNg03XnJ5uCzQbI=
+X-Google-Smtp-Source: ABdhPJwcacqoPi/oht07i2hSTKw5Uq2lNsuwYPITMpRBbbpoBSI+x7kg8JpLjJWF1FmszM952wNIeOfFYIHCNo8J3Wg=
+X-Received: by 2002:a1c:7e4e:: with SMTP id z75mr4202wmc.55.1604350476871;
+ Mon, 02 Nov 2020 12:54:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.814.git.git.1593687080695.gitgitgadget@gmail.com>
+ <xmqqr1to8dv9.fsf@gitster.c.googlers.com> <abc4ab95-ed65-1d6b-e964-73734c08cda9@haller-berlin.de>
+ <CAMP44s3=CUmx_7DCExK7L4trZvQTxO67Qk20eexsP3su-3RyKQ@mail.gmail.com>
+ <abc34ced-0c0f-4024-a50c-30e4ca31b325@haller-berlin.de> <CAKU+SVKad4q-2tTrYXa+DJBz5UJOtndEe3-4Uvnd5GZ92543ng@mail.gmail.com>
+ <xmqqwnzbbfsi.fsf@gitster.c.googlers.com> <CAMP44s2DR=pV3frOePMbSyikA-KonZ5XWD7o5SqKhUbzohAFtQ@mail.gmail.com>
+ <xmqqtuuc7wgu.fsf@gitster.c.googlers.com> <CAMP44s1+bJMrmJWeAQx18S-=spoKb0BmzWyJ4WgzuE+rNuf0cg@mail.gmail.com>
+In-Reply-To: <CAMP44s1+bJMrmJWeAQx18S-=spoKb0BmzWyJ4WgzuE+rNuf0cg@mail.gmail.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Mon, 2 Nov 2020 14:54:26 -0600
+Message-ID: <CAMP44s2V42MAi5R9XG94MxD9Ap1p6Y9FBAJOL60PSQSZspb3TA@mail.gmail.com>
+Subject: Re: [PATCH] Fix zsh installation instructions
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?0JvRkdGI0LAg0J7Qs9C+0L3RjNC60L7Qsg==?= 
+        <lesha.ogonkov@gmail.com>, Stefan Haller <lists@haller-berlin.de>,
+        Alexey via GitGitGadget <gitgitgadget@gmail.com>,
+        Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series depends on a merge of en/strmap (after updating to v3) and
-en/merge-ort-api-null-impl.
+On Mon, Nov 2, 2020 at 2:49 PM Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
 
-As promised, here's the update of the series due to the strmap
-updates...and two other tiny updates.
+> You don't *need* to run the dialog, just touch a ~/.zshrc file.
+>
+> This should be enough:
+> ---
+> autoload -U compinit && compinit
+> ---
 
-Changes since v1:
-  * updates needed based on changes to made in v3 of strmap series
-  * fixed a typo in a comment
-  * tiny tweak to move a strmap_put() into setup_paths()
+Or put that in /tmp/zsh, and run zsh with:
 
-Elijah Newren (20):
-  merge-ort: setup basic internal data structures
-  merge-ort: add some high-level algorithm structure
-  merge-ort: port merge_start() from merge-recursive
-  merge-ort: use histogram diff
-  merge-ort: add an err() function similar to one from merge-recursive
-  merge-ort: implement a very basic collect_merge_info()
-  merge-ort: avoid repeating fill_tree_descriptor() on the same tree
-  merge-ort: compute a few more useful fields for collect_merge_info
-  merge-ort: record stage and auxiliary info for every path
-  merge-ort: avoid recursing into identical trees
-  merge-ort: add a preliminary simple process_entries() implementation
-  merge-ort: have process_entries operate in a defined order
-  merge-ort: step 1 of tree writing -- record basenames, modes, and oids
-  merge-ort: step 2 of tree writing -- function to create tree object
-  merge-ort: step 3 of tree writing -- handling subdirectories as we go
-  merge-ort: basic outline for merge_switch_to_result()
-  merge-ort: add implementation of checkout()
-  tree: enable cmp_cache_name_compare() to be used elsewhere
-  merge-ort: add implementation of record_unmerged_index_entries()
-  merge-ort: free data structures in merge_finalize()
+    ZDOTDIR=/tmp/zsh zsh -l
 
- merge-ort.c | 929 +++++++++++++++++++++++++++++++++++++++++++++++++++-
- tree.c      |   2 +-
- tree.h      |   2 +
- 3 files changed, 929 insertions(+), 4 deletions(-)
+No contamination needed.
 
 -- 
-2.29.0.471.ga4f56089c0
-
+Felipe Contreras
