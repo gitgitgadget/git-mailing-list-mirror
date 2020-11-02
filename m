@@ -7,87 +7,62 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 178A5C00A89
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 16:15:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6628EC00A89
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 17:35:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C916B2222B
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 16:15:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1398F21D91
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 17:35:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GgPktXLE"
+	dkim=pass (2048-bit key) header.d=me.com header.i=@me.com header.b="pvG6i3X+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726832AbgKBQPc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Nov 2020 11:15:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37196 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726473AbgKBQPb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Nov 2020 11:15:31 -0500
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E1EDC0617A6
-        for <git@vger.kernel.org>; Mon,  2 Nov 2020 08:15:31 -0800 (PST)
-Received: by mail-lj1-x22d.google.com with SMTP id v19so10689475lji.5
-        for <git@vger.kernel.org>; Mon, 02 Nov 2020 08:15:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Vo/hXiwi8cdlXakym/U8Qi/FcBvo9S+QTeddADv/5ic=;
-        b=GgPktXLEOB4zMp1Al2csTh6nIGov7S0L3ZFfI909iCSEEv9NbR6JR+r88/DurN6Wa6
-         4kTef4GEfTGQmiGxgV2DkLuvpn469tCwUqh74MvbC5dnrlhej1m6ONcnKO/aV7j0W1Dn
-         UpzveERQag9t+cAC4wbDhZ7tvV0oCHnNuEn+EHKIzjKGUt2S239pDGnEmOYV2DRdPx6O
-         QnMrzQbg+cBA/Qxpk/BIXAR1VjE5Arwlbrh2hpmfB7Zy3qeQZAeymTQV90ufUIuvgKhU
-         gtJnTbaicQBw/AV2XFH4PCeYtUd61Vu9tT+p17QT6vQFr+Dxe6iXy9CfZuqKTFSnMsQ8
-         slVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=Vo/hXiwi8cdlXakym/U8Qi/FcBvo9S+QTeddADv/5ic=;
-        b=i415cFv1odUcpPbW6bQYN9XR/fWEvSHt8agjUNBviKVlnQM/jzxTr7kWQAOEbC6Nz9
-         e7q7aeDo4s00YlRD18W4pV7s9Exb/Ee8y7BE/zMgmiYWLHvWYbbyAbkogTLPtfPHVgtZ
-         JjYWXxg6Htdp2WdAhgfTZAQSnoh6A5CbyoGjH70IfUBZ/YFW/qtzb/F0LwADVtMOl3Lz
-         MdrDBVIYgoWctZ3KV3AyvE+xF9WbwhyK4dAWqPeqGSLDQOYkM+ang/9S3bfQBix/MbkB
-         /Yz/ONvRH6TXB9qnoP4GweVyQ3z3A4kJlNFyuVmEcqEKaslgpIJn51J4UO92C3ZqjOkZ
-         K7uQ==
-X-Gm-Message-State: AOAM533yYB1yPaLiYXwhilGA253+A5kVKFMWdcTW0foqf8V/WGpRSujb
-        y4TKzpDG6T+RZBO1F0MbzoHHFMsvqI0=
-X-Google-Smtp-Source: ABdhPJxQ239ZinDver+aEIQzdKi8zn90HiK/LcAWYEZCSVlbggl7YnZDN3MrP9xlT1e0zSaIWx/mfA==
-X-Received: by 2002:a2e:88cb:: with SMTP id a11mr7353776ljk.304.1604333728820;
-        Mon, 02 Nov 2020 08:15:28 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id t21sm2415721lfl.64.2020.11.02.08.15.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2020 08:15:27 -0800 (PST)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 17/26] diff-merges: split 'ignore_merges' field
-References: <20201101193330.24775-1-sorganov@gmail.com>
-        <20201101193330.24775-18-sorganov@gmail.com>
-        <a1afac59-35c2-18cc-0d11-38d0b9479bf9@iee.email>
-Date:   Mon, 02 Nov 2020 19:15:27 +0300
-In-Reply-To: <a1afac59-35c2-18cc-0d11-38d0b9479bf9@iee.email> (Philip Oakley's
-        message of "Mon, 2 Nov 2020 10:48:10 +0000")
-Message-ID: <87o8kfohuo.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S1727939AbgKBRfY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Nov 2020 12:35:24 -0500
+Received: from st43p00im-ztdg10061801.me.com ([17.58.63.170]:51914 "EHLO
+        st43p00im-ztdg10061801.me.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727936AbgKBRfX (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 2 Nov 2020 12:35:23 -0500
+X-Greylist: delayed 337 seconds by postgrey-1.27 at vger.kernel.org; Mon, 02 Nov 2020 12:35:23 EST
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
+        t=1604338183; bh=mtUGE592PtslQSkFpr00n9j4iWnGSFaEC86OTmmCBMU=;
+        h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To;
+        b=pvG6i3X+360K8aPMZeXDz923E+2TnFcnKHuS4wPw22lxgkx2h9tUXjb6moj/fSSAn
+         i5m5mOws3uQxnsPCWgS1c5dHWTqPylTfQBbwNPOABLB8Y1Ma3Ss3zmbNvkQjP1R4Ry
+         1AYXG23JIs0ohjJ7f0eh5ZWwtZaqFJzuuXYKrqKcj5ou4cqj3DEW5k4F+ctnXFYFEY
+         MFxuT/wYYGplbM3Ku96K9fgR5d86Um0PQMvcyPGych74g+RkqENnj1gr9MnDm3cm0D
+         SQh9jfSRIOKtFQ7k5//NHILjIJqqWcAlIAn1J4YW4DNJ1Un85pVSCXvLLZTX4lxCaK
+         loPVcxXjZMoIw==
+Received: from [192.168.0.120] (ip98-169-36-218.dc.dc.cox.net [98.169.36.218])
+        by st43p00im-ztdg10061801.me.com (Postfix) with ESMTPSA id 562B98C084A
+        for <git@vger.kernel.org>; Mon,  2 Nov 2020 17:29:42 +0000 (UTC)
+From:   Joe Fabre <joefabre@me.com>
+Content-Type: text/plain;
+        charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
+Subject: Git Help
+Message-Id: <46BA69FB-B082-4575-ACF1-DC959527558E@me.com>
+Date:   Mon, 2 Nov 2020 12:29:42 -0500
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3608.120.23.2.4)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312,18.0.737
+ definitions=2020-11-02_12:2020-11-02,2020-11-02 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=1 malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 clxscore=1011 mlxscore=0
+ mlxlogscore=561 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-2006250000 definitions=main-2011020134
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.email> writes:
+Hi Git!
 
-> micro-nit while browsing..
->> 'ignore_meres' was 3-way field that served two distinct purposes that
-> ignore_merges (missing 'g')
+I need some serious assistance.  I have a local repository on my primary =
+laptop, and that repo folder is shared on the local network. The primary =
+laptop died (grrr); and I want to create a repo on my back up laptop =
+which has access to the shared folder, but no .git file.  Also, I=E2=80=99=
+d like to link it to my GitHub account.
 
-Philip Oakley <philipoakley@iee.email> writes:
+Any ideas?
 
-> micro-nit again:
->> After getting rid of 'ignore_meres' field, the diff_merges_init_revs()
-> merges
-
-Thanks, Philip! Fixed for next re-roll.
-
--- Sergey
+Thanks,
+Joe=
