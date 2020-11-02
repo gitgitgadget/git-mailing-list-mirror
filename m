@@ -2,93 +2,143 @@ Return-Path: <SRS0=DNVg=EI=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=BAYES_05,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4DF0C00A89
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 18:30:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 819A0C00A89
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 18:31:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4105022245
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 18:30:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0F7AD22280
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 18:31:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CJnzmjoX"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TO+a/Pjb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726337AbgKBSa4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Nov 2020 13:30:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58722 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725789AbgKBSa4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Nov 2020 13:30:56 -0500
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07524C0617A6
-        for <git@vger.kernel.org>; Mon,  2 Nov 2020 10:30:56 -0800 (PST)
-Received: by mail-io1-xd32.google.com with SMTP id p7so15928141ioo.6
-        for <git@vger.kernel.org>; Mon, 02 Nov 2020 10:30:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=rxL4knbf/9Wxvz2xUxPDKTWNWocpdg9k3IKMKmaZ4kQ=;
-        b=CJnzmjoXQhhPfeq6eyUKRVBEnBgIxGzl2MNI+WDJM7Rr/yN+/+KoLa4P9k1Uv9wdRr
-         HewHOQGgIflKDNeKrW4jwUMu9OlWpwq9Dd8f0OScT7rwL6smh2Qa25ooYJYCS16Z5QHo
-         RtMYbQSaGo8yBsiShlq8iv+CBOE6IDK8LXdgQ7xnTn5L8i5BmdvCEs85+Wbd7I3li3eo
-         k34/ycpRpwB0pXpgvGjtPI83G7uIHJzaMM6Fy5lf5OTrBIGms+xCvvWND7YcoZVWyxVx
-         bCe3BpERzFJvUlE7gjqp0l/PapDvZVlgSsTTpz3MRbA6raX54r0BBl4+54HcDCCsjODc
-         delA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=rxL4knbf/9Wxvz2xUxPDKTWNWocpdg9k3IKMKmaZ4kQ=;
-        b=WqigqR5mfGci5TLECmSWpSIA//0gBuI/IQdVfXAmncrgYoElAhq4AYpvrHvk5DpNJH
-         AW3+PKqvOaPTXvnX7Q1UlwvHPG6dHQRAcAYVJykrRfYRrVYtHLRZr+HA6QSyajW+FFgY
-         tpWqRF7qid0TcxixkRgEK63YtpLn6aAdVyA+rx/JXk1Ql8TWMrq4bBFWvI5+C7MaQ2HE
-         9r6bMeu+O2j6pgvxq1eNihJtHCxh1BKdh7TNNqJu+LtolLp3TZtzsKNsWbcUwVjHM1e7
-         db6Je7yeDwor1kJGTwGmbo8rVlLyjywTZf859kfXIun4VsEaHv8ROQUxSGSqboDDLPlj
-         geHA==
-X-Gm-Message-State: AOAM531Rz/dK2mB4Jr5/clTKZgqLagWUYq9+NEfAelqcTt+x/DNRtESh
-        6IIYegUPd+w4ve9KF8rksJiw1C58UGbKOmF7G6D7o93kccWJSb63
-X-Google-Smtp-Source: ABdhPJyVwi2E/Lzco0z/4Vi397xbB5uUyC2J1ykvYO0LX0E9G4gX5j99MZoBE/km+aguEMBOD4j6Sw9snjkElr5sD90=
-X-Received: by 2002:a02:3716:: with SMTP id r22mr12401529jar.12.1604341855196;
- Mon, 02 Nov 2020 10:30:55 -0800 (PST)
+        id S1725824AbgKBSbg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Nov 2020 13:31:36 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50850 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725789AbgKBSbf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Nov 2020 13:31:35 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 92A8C8D80B;
+        Mon,  2 Nov 2020 13:31:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=m0i3nRgZncehdQj5B7yjTVvvI3s=; b=TO+a/PjbQIJP20rhIMiy
+        z63MpOGEFnKb9q1oqC8eF+5GR1E/8nK8GBmrdyDZCWXCwIygi6wUbWR/+E0rOSmV
+        T7/+WFChWn7/9jPyk8wYkRmld0pCjeRr79Ily+uuWJlBcW0tD5kHc67V1cekJPiu
+        Gdy2nqNN+wf7NEN/wsenX7k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=F7taY+36laIGqb7od/BP/5U+HSod4DYKz+jBrRm43d5gjS
+        tDhYNh7V9ODNdLKDwwrqFh2FSguKNEWouXYadPysQQutwm0Lgr7PBjANbxqUjQTT
+        SnmA8Uhy12hvGS7UZ7q3yDDZOt7wfNCY4cEam8LAYnNfR79qfShMR3ck4qANY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 894EE8D80A;
+        Mon,  2 Nov 2020 13:31:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EDC2D8D809;
+        Mon,  2 Nov 2020 13:31:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Sathyajith Bhat <sathya@sathyasays.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: Segfault in git when using git logs
+References: <CAMsWJsyPVQWV++gc2YJriEOEWBELa_xj2G0NWFMSgNYt47swiQ@mail.gmail.com>
+        <20201102144321.GA3962443@coredump.intra.peff.net>
+Date:   Mon, 02 Nov 2020 10:31:30 -0800
+Message-ID: <xmqqzh3zvce5.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-From:   "herr.kaste" <herr.kaste@gmail.com>
-Date:   Mon, 2 Nov 2020 19:30:30 +0100
-Message-ID: <CAFzd1+7xQHgaOYKW7WZaWCPdp85Pfk8k_M-gVtBq6Wf7bbJTzg@mail.gmail.com>
-Subject: BUG: commit-graph.c:1068 when doing `git pull`
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: A1360F1C-1D39-11EB-A5CE-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all!
+Jeff King <peff@peff.net> writes:
 
-I'm stuck with this error message
+> That commit causes the line-log to clear the set of pathspecs, but the
+> --follow option requires exactly one pathspec (and it even makes sure
+> the user gives us one, but that happens before we clear it internally).
+> Something like this makes the segfault go away:
+>
+> diff --git a/line-log.c b/line-log.c
+> index 42c5e41f68..f789863928 100644
+> --- a/line-log.c
+> +++ b/line-log.c
+> @@ -847,6 +847,7 @@ static void queue_diffs(struct line_log_data *range,
+>  		clear_pathspec(&opt->pathspec);
+>  		parse_pathspec_from_ranges(&opt->pathspec, range);
+>  	}
+> +	opt->flags.follow_renames = 0;
+>  	DIFF_QUEUE_CLEAR(&diff_queued_diff);
+>  	diff_tree_oid(parent_tree_oid, tree_oid, "", opt);
+>  	if (opt->detect_rename && diff_might_be_rename()) {
+>
+> but I'm not clear on how "--follow" and "-L" are supposed to interact. I
+> wouldn't expect --follow to do anything at all with line-log (nor for it
+> to be useful to specify pathspecs outside of the -L option). So possibly
+> this is restoring the behavior prior to that commit, or possibly it's
+> just papering over a breakage. ;)
 
-    $ git pull
-    BUG: commit-graph.c:1068: missing parent
-104f5eb377763b2ed9663e8949aed265b69f000f for commit
-c59ed9b7b6d4268ae6cb1069a9b51e02ad9aa1d8
+Another option is to catch it as "these options are mutually
+exclusive" error early before the control reaches this deep in the
+codeflow, I would think, but I suspect that some people may
+habitually add the "--follow" option in a context where it does not
+make sense, so "--follow is silently ignored when other options that
+contradict it is in effect at the same time" is OK by me, too.
 
-This happens since the last `fetch --prune origin`.
+I do not know if that is the case offhand, but in the ideal
+world, I would imagine
 
-If I do it again, I get
+	git log -L1,5:hello.c -C -C -- hello.c goodbye.c
+	git log -L1,5:hello.c -C -C
 
-    $ git pull
-    fatal: Unable to create 'C:/Users/c-flo/AppData/Roaming/Sublime
-Text 3/Packages/GitSavvy/.git/objects/info/commit-graphs/commit-graph-chain.lock':
-File exists.
-    ...
+to notice and show that some of these five lines were copied
+when or after hello.c was created, and keep following the
+origin of them in goodbye.c, and
 
-And upon removing that file, I get the first error message again.
+	git log -L1,5:hello.c -C -C
 
-I actually don't know yet how to move on from here.  I'm stuck, so I
-appreciate any help.
+may do the same or find better match outside goodbye.c for
+the origin of these lines and follow them instead, while
 
-    $ git --version
-    git version 2.29.2.windows.1
+	git log -L1,5:hello.c -- hello.c
+	git log -L1,5:hello.c --no-renames
+
+in the same history may say the commit that actually copied
+these lines from goodbye.c just added them directly to hello.c
+instead.
+
+And to extend the imagination a bit more,
+
+	git log -M -L1,5:hello.c
+	git log -L1,5:hello.c
+	git log --follow -L1,5:hello.c
+
+in a different history may notice that hello.c was created
+wholesale by renaming hola.c and follow the changes to these
+five lines down the history.  As -M is in effect by default
+these days, the first two would be equivalent, and "--follow"
+would be a meaningless noiseword in the context of this example
+where we are interested only in a single path hello.c in the
+end result, but in the ideal world, meaningless noiseword
+should become hardless no-op, I would think.
+
+Of course, the above assumes that -L plays well with the
+-M/-C/--follow options and pathspec.  If not, then "they are
+incompatible" would be the more sensible and easy-to-explain
+option.
+
+Thanks.
 
 
-Regards
-Caspar Duregger
