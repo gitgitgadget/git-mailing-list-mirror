@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CBA2DC00A89
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 23:45:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA12CC2D0A3
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 23:45:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 75C3322268
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 23:45:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7A75E2225E
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 23:45:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BGrTsznk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bpVZHj8N"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726877AbgKBXpn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Nov 2020 18:45:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51392 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726140AbgKBXpl (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726492AbgKBXpl (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 2 Nov 2020 18:45:41 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A4C7C0617A6
-        for <git@vger.kernel.org>; Mon,  2 Nov 2020 15:45:41 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id 205so3342799wma.4
-        for <git@vger.kernel.org>; Mon, 02 Nov 2020 15:45:41 -0800 (PST)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51380 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725841AbgKBXpj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Nov 2020 18:45:39 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A855EC0617A6
+        for <git@vger.kernel.org>; Mon,  2 Nov 2020 15:45:38 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id k10so15185151wrw.13
+        for <git@vger.kernel.org>; Mon, 02 Nov 2020 15:45:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=crrilWx3bvKHO/x/02+iz/mTC9rEIdPqTxvt1snKMY0=;
-        b=BGrTsznkjGW384sjeJqhmvUKrrTzg8WJ90aZlHwSloR0CveWoXUP61WGm4zq5lTW7s
-         YaRinG4yWmxojv8FndSrDcxDAdz979LBecRYEzO97ZtEGnC7ncpWCve0gvSnHz29EOOT
-         mY4i51Sz1+0EvNugVJHc8p9QlthEE3y0is9hFo77TBE3jQ8v+c/0pPRfcZ23NmtmjQtt
-         5K1VH3E2SdyCwaP1qM+qVF2JDBFApYRSwjTpxcPd3173Zph1w7/4jyqlth43oYMwylsH
-         N/kUmdrvRwaq/QTBS5lcPj3DJNJH60eBcUlsJWMEuRftU0ZkWsTKrOc7yHKBRd/Sb+Dw
-         69sA==
+        bh=68sc9B/0csd629noV8jhACYBrCHiFf55lnL+7AxCs08=;
+        b=bpVZHj8NetvEY3rRfpEf/Eauxt7NjH4KsL2VYiZNSUEgB88hJmzUPW3PkeVfrPEVKX
+         n1iBMg8Ati+P0AYKc4RGDwpgkYT3tjhXy94E77wMR1y3iCK47m+HfLQEP1VDnCaDbciV
+         4m54WAi/21MAP5WHZh1ZRTLsWbpj1mpNU1ywnvhNfeEt+8atogv1aahFSDXvLpdOzc2O
+         ud869hw+YhPl04ZVCFoogbK3IjfZHHsclcHiUdUShtLUv3X6lhO76TPErrtmR0K5MhBl
+         CSxRu5hHmoRzezI+8SP9i3EG/tVIfX6Q8sZyh00nkvVHuDWn83n+hl2eadPzaCO2DYWp
+         L0sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=crrilWx3bvKHO/x/02+iz/mTC9rEIdPqTxvt1snKMY0=;
-        b=gMj1bv9kbBXiMhkCT1/iX2ym4PlNCGvFW6MvjSXGQw1a3EBFGyxPF3Z6bwJfxbSbmW
-         kdN9fKRPFLysEYum5TYyFmnvqwfRZ5p2NMeSAbQtjhe1QrAbv0/slqXFI98DLhNOf5Rv
-         cUp/OqCzlkh++QRRVIWEOI1SX0ScwT01OVI7rBq9kALs2DBhVezLlcmxhVGM0UjRI+80
-         vB7C0jhAxDRN/uUB0ZjALDi2uSyxKSW8y6J2SsQw0B/b523OyZBsyOCdsEviUqvQZC9N
-         0d7OcAzXO2G7AT8HKXDAgV9Ndvg+FzZ+3nvQALGmbDvr9t4SnNQYyhMcCtegIaoLh+5S
-         UYjA==
-X-Gm-Message-State: AOAM5334JDdtxyMqxy5dGMMj1mr0h+D391MJVXVeRCcR9ZX4PEDfskBc
-        kr5KhLiARTJH0fTL9n8Rhg5jY3JIddo=
-X-Google-Smtp-Source: ABdhPJztYg1q0sTXgX3BnyvIEdtQmil5eg33IyFhNhBU/9k2d4SVvgBeEdPTlQOVLlP+m9SJUt2Pcw==
-X-Received: by 2002:a05:600c:28c1:: with SMTP id h1mr550103wmd.30.1604360739717;
-        Mon, 02 Nov 2020 15:45:39 -0800 (PST)
+        bh=68sc9B/0csd629noV8jhACYBrCHiFf55lnL+7AxCs08=;
+        b=Ife9+g9nxl7I8ZgmpcWd1X60knSFe/KnZa4tsG+SB9dEqiIqAomGaGoPereVyo1m34
+         8Ueltaj4wvM6jMk45YlPAOtjs7Kh+sx5Z4WNC/o8yMqGr6Ec1mhnzyJeMy/d8ZA51ocl
+         dMwiWMapYsYrFlVw9g77I/VuFTO4Lm1sy7lMFy8tWpSI8GrK69gXIadpgiSAo9S81Mpm
+         a8uVRqYHaeMB4yzQM2vLzzk8QwtkFqBC9JEoznGbWAQFamk8HNQZUMWXSXgVlpnm5QuI
+         +fplQorqfqBFFNRoPdBZO60jUR9tg5zAEQlJgKBAbya1yqHBANdwS2vvpXWOBj9QQYY8
+         ZAZg==
+X-Gm-Message-State: AOAM533lMfvXPfTDb5uM3VNoRvCHODpboRAwSEHD0Tbat7EzKOYrgz0f
+        Zv9UIZohbHYf1xhVfBfPfJe45fb7Q2s=
+X-Google-Smtp-Source: ABdhPJzCm72p+BIAaWFYfpKr4TAzLpbKbgyL695g7wm2mkzfYNxlk/y5lnQGPqvuERGtLComHS6t2Q==
+X-Received: by 2002:a5d:5612:: with SMTP id l18mr24101263wrv.372.1604360737180;
+        Mon, 02 Nov 2020 15:45:37 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b7sm23191139wrp.16.2020.11.02.15.45.39
+        by smtp.gmail.com with ESMTPSA id o63sm1053274wmo.2.2020.11.02.15.45.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2020 15:45:39 -0800 (PST)
-Message-Id: <61217a83bd7ff0ce9016eb4df9ded4fdf29a506c.1604360734.git.gitgitgadget@gmail.com>
+        Mon, 02 Nov 2020 15:45:36 -0800 (PST)
+Message-Id: <3357ea415e3437966f15bf73fbbeb21cda3df592.1604360734.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.895.v5.git.git.1604360734.gitgitgadget@gmail.com>
 References: <pull.895.v4.git.git.1604003535.gitgitgadget@gmail.com>
         <pull.895.v5.git.git.1604360734.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 02 Nov 2020 23:45:34 +0000
-Subject: [PATCH v5 4/4] merge,rebase,revert: select ort or recursive by config
- or environment
+Date:   Mon, 02 Nov 2020 23:45:31 +0000
+Subject: [PATCH v5 1/4] merge-ort: barebones API of new merge strategy with
+ empty implementation
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,317 +84,169 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Allow the testsuite to run where it treats requests for "recursive" or
-the default merge algorithm via consulting the environment variable
-GIT_TEST_MERGE_ALGORITHM which is expected to either be "recursive" (the
-old traditional algorithm) or "ort" (the new algorithm).
+This is the beginning of a new merge strategy.  While there are some API
+differences, and the implementation has some differences in behavior, it
+is essentially meant as an eventual drop-in replacement for
+merge-recursive.c.  However, it is being built to exist side-by-side
+with merge-recursive so that we have plenty of time to find out how
+those differences pan out in the real world while people can still fall
+back to merge-recursive.  (Also, I intend to avoid modifying
+merge-recursive during this process, to keep it stable.)
 
-Also, allow folks to pick the new algorithm via config setting.  It
-turns out builtin/merge.c already had a way to allow users to specify a
-different default merge algorithm: pull.twohead.  Rather odd
-configuration name (especially to be in the 'pull' namespace rather than
-'merge') but it's there.  Add that same configuration to rebase,
-cherry-pick, and revert.
+The primary difference noticable here is that the updating of the
+working tree and index is not done simultaneously with the merge
+algorithm, but is a separate post-processing step.  The new API is
+designed so that one can do repeated merges (e.g. during a rebase or
+cherry-pick) and only update the index and working tree one time at the
+end instead of updating it with every intermediate result.  Also, one
+can perform a merge between two branches, neither of which match the
+index or the working tree, without clobbering the index or working tree.
 
-This required updating the various callsites that called merge_trees()
-or merge_recursive() to conditionally call the new API, so this serves
-as another demonstration of what the new API looks and feels like.
-There are almost certainly some callsites that have not yet been
-modified to work with the new merge algorithm, but this represents the
-ones that I have been testing with thus far.
+The next three commits will demonstrate various uses of this new API.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/merge.c  | 26 +++++++++++++++--
- builtin/rebase.c | 13 ++++++++-
- builtin/revert.c |  7 +++++
- sequencer.c      | 72 ++++++++++++++++++++++++++++++++++++++++--------
- sequencer.h      |  1 +
- 5 files changed, 104 insertions(+), 15 deletions(-)
+ Makefile    |  1 +
+ merge-ort.c | 52 +++++++++++++++++++++++++++++++++++++++++++++++
+ merge-ort.h | 58 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 111 insertions(+)
+ create mode 100644 merge-ort.c
+ create mode 100644 merge-ort.h
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 9d5359edc2..87dfc9bc06 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -28,6 +28,7 @@
- #include "rerere.h"
- #include "help.h"
- #include "merge-recursive.h"
-+#include "merge-ort-wrappers.h"
- #include "resolve-undo.h"
- #include "remote.h"
- #include "fmt-merge-msg.h"
-@@ -88,6 +89,7 @@ static int no_verify;
- static struct strategy all_strategy[] = {
- 	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
- 	{ "octopus",    DEFAULT_OCTOPUS },
-+	{ "ort",        NO_TRIVIAL },
- 	{ "resolve",    0 },
- 	{ "ours",       NO_FAST_FORWARD | NO_TRIVIAL },
- 	{ "subtree",    NO_FAST_FORWARD | NO_TRIVIAL },
-@@ -159,10 +161,17 @@ static struct strategy *get_strategy(const char *name)
- 	struct strategy *ret;
- 	static struct cmdnames main_cmds, other_cmds;
- 	static int loaded;
-+	char *default_strategy = getenv("GIT_TEST_MERGE_ALGORITHM");
- 
- 	if (!name)
- 		return NULL;
- 
-+	if (default_strategy &&
-+	    !strcmp(default_strategy, "ort") &&
-+	    !strcmp(name, "recursive")) {
-+		name = "ort";
-+	}
+diff --git a/Makefile b/Makefile
+index 95571ee3fc..088770c2ae 100644
+--- a/Makefile
++++ b/Makefile
+@@ -921,6 +921,7 @@ LIB_OBJS += mailmap.o
+ LIB_OBJS += match-trees.o
+ LIB_OBJS += mem-pool.o
+ LIB_OBJS += merge-blobs.o
++LIB_OBJS += merge-ort.o
+ LIB_OBJS += merge-recursive.o
+ LIB_OBJS += merge.o
+ LIB_OBJS += mergesort.o
+diff --git a/merge-ort.c b/merge-ort.c
+new file mode 100644
+index 0000000000..b487901d3e
+--- /dev/null
++++ b/merge-ort.c
+@@ -0,0 +1,52 @@
++/*
++ * "Ostensibly Recursive's Twin" merge strategy, or "ort" for short.  Meant
++ * as a drop-in replacement for the "recursive" merge strategy, allowing one
++ * to replace
++ *
++ *   git merge [-s recursive]
++ *
++ * with
++ *
++ *   git merge -s ort
++ *
++ * Note: git's parser allows the space between '-s' and its argument to be
++ * missing.  (Should I have backronymed "ham", "alsa", "kip", "nap, "alvo",
++ * "cale", "peedy", or "ins" instead of "ort"?)
++ */
 +
- 	for (i = 0; i < ARRAY_SIZE(all_strategy); i++)
- 		if (!strcmp(name, all_strategy[i].name))
- 			return &all_strategy[i];
-@@ -701,7 +710,8 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
- 	if (refresh_and_write_cache(REFRESH_QUIET, SKIP_IF_UNCHANGED, 0) < 0)
- 		return error(_("Unable to write index."));
- 
--	if (!strcmp(strategy, "recursive") || !strcmp(strategy, "subtree")) {
-+	if (!strcmp(strategy, "recursive") || !strcmp(strategy, "subtree") ||
-+	    !strcmp(strategy, "ort")) {
- 		struct lock_file lock = LOCK_INIT;
- 		int clean, x;
- 		struct commit *result;
-@@ -732,8 +742,12 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
- 			commit_list_insert(j->item, &reversed);
- 
- 		hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
--		clean = merge_recursive(&o, head,
--				remoteheads->item, reversed, &result);
-+		if (!strcmp(strategy, "ort"))
-+			clean = merge_ort_recursive(&o, head, remoteheads->item,
-+						    reversed, &result);
-+		else
-+			clean = merge_recursive(&o, head, remoteheads->item,
-+						reversed, &result);
- 		if (clean < 0)
- 			exit(128);
- 		if (write_locked_index(&the_index, &lock,
-@@ -1264,6 +1278,12 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 	if (branch)
- 		skip_prefix(branch, "refs/heads/", &branch);
- 
-+	if (!pull_twohead) {
-+		char *default_strategy = getenv("GIT_TEST_MERGE_ALGORITHM");
-+		if (default_strategy && !strcmp(default_strategy, "ort"))
-+			pull_twohead = "ort";
-+	}
-+
- 	init_diff_ui_defaults();
- 	git_config(git_merge_config, NULL);
- 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index eeca53382f..4ba5295ddf 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -119,6 +119,7 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
- 	struct replay_opts replay = REPLAY_OPTS_INIT;
- 
- 	replay.action = REPLAY_INTERACTIVE_REBASE;
-+	replay.strategy = NULL;
- 	sequencer_init_config(&replay);
- 
- 	replay.signoff = opts->signoff;
-@@ -136,7 +137,12 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
- 					opts->committer_date_is_author_date;
- 	replay.ignore_date = opts->ignore_date;
- 	replay.gpg_sign = xstrdup_or_null(opts->gpg_sign_opt);
--	replay.strategy = opts->strategy;
-+	if (opts->strategy)
-+		replay.strategy = opts->strategy;
-+	else if (!replay.strategy && replay.default_strategy) {
-+		replay.strategy = replay.default_strategy;
-+		replay.default_strategy = NULL;
-+	}
- 
- 	if (opts->strategy_opts)
- 		parse_strategy_opts(&replay, opts->strategy_opts);
-@@ -1771,6 +1777,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			    options.default_backend);
- 	}
- 
-+	if (options.type == REBASE_MERGE &&
-+	    !options.strategy &&
-+	    getenv("GIT_TEST_MERGE_ALGORITHM"))
-+		options.strategy = xstrdup(getenv("GIT_TEST_MERGE_ALGORITHM"));
-+
- 	switch (options.type) {
- 	case REBASE_MERGE:
- 	case REBASE_PRESERVE_MERGES:
-diff --git a/builtin/revert.c b/builtin/revert.c
-index f61cc5d82c..5b01a9baca 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -172,6 +172,11 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
- 				NULL);
- 	}
- 
-+	if (!opts->strategy && opts->default_strategy) {
-+		opts->strategy = opts->default_strategy;
-+		opts->default_strategy = NULL;
-+	}
-+
- 	if (opts->allow_ff)
- 		verify_opt_compatible(me, "--ff",
- 				"--signoff", opts->signoff,
-@@ -202,6 +207,8 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
- 	/* These option values will be free()d */
- 	opts->gpg_sign = xstrdup_or_null(opts->gpg_sign);
- 	opts->strategy = xstrdup_or_null(opts->strategy);
-+	if (!opts->strategy && getenv("GIT_TEST_MERGE_ALGORITHM"))
-+		opts->strategy = xstrdup(getenv("GIT_TEST_MERGE_ALGORITHM"));
- 
- 	if (cmd == 'q') {
- 		int ret = sequencer_remove_state(opts);
-diff --git a/sequencer.c b/sequencer.c
-index 00acb12496..6b6c15c357 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -14,7 +14,8 @@
- #include "diff.h"
- #include "revision.h"
- #include "rerere.h"
--#include "merge-recursive.h"
++#include "cache.h"
 +#include "merge-ort.h"
-+#include "merge-ort-wrappers.h"
- #include "refs.h"
- #include "strvec.h"
- #include "quote.h"
-@@ -204,6 +205,20 @@ static int git_sequencer_config(const char *k, const char *v, void *cb)
- 		return 0;
- 	}
- 
-+	if (!opts->default_strategy && !strcmp(k, "pull.twohead")) {
-+		int ret = git_config_string((const char**)&opts->default_strategy, k, v);
-+		if (ret == 0) {
-+			/*
-+			 * pull.twohead is allowed to be multi-valued; we only
-+			 * care about the first value.
-+			 */
-+			char *tmp = strchr(opts->default_strategy, ' ');
-+			if (tmp)
-+				*tmp = '\0';
-+		}
-+		return ret;
-+	}
 +
- 	status = git_gpg_config(k, v, NULL);
- 	if (status)
- 		return status;
-@@ -317,6 +332,7 @@ int sequencer_remove_state(struct replay_opts *opts)
- 	free(opts->committer_name);
- 	free(opts->committer_email);
- 	free(opts->gpg_sign);
-+	free(opts->default_strategy);
- 	free(opts->strategy);
- 	for (i = 0; i < opts->xopts_nr; i++)
- 		free(opts->xopts[i]);
-@@ -595,8 +611,9 @@ static int do_recursive_merge(struct repository *r,
- 			      struct replay_opts *opts)
- {
- 	struct merge_options o;
-+	struct merge_result result;
- 	struct tree *next_tree, *base_tree, *head_tree;
--	int clean;
-+	int clean, show_output;
- 	int i;
- 	struct lock_file index_lock = LOCK_INIT;
- 
-@@ -620,12 +637,27 @@ static int do_recursive_merge(struct repository *r,
- 	for (i = 0; i < opts->xopts_nr; i++)
- 		parse_merge_opt(&o, opts->xopts[i]);
- 
--	clean = merge_trees(&o,
--			    head_tree,
--			    next_tree, base_tree);
--	if (is_rebase_i(opts) && clean <= 0)
--		fputs(o.obuf.buf, stdout);
--	strbuf_release(&o.obuf);
-+	if (opts->strategy && !strcmp(opts->strategy, "ort")) {
-+		memset(&result, 0, sizeof(result));
-+		merge_incore_nonrecursive(&o, base_tree, head_tree, next_tree,
-+					    &result);
-+		show_output = !is_rebase_i(opts) || !result.clean;
-+		/*
-+		 * TODO: merge_switch_to_result will update index/working tree;
-+		 * we only really want to do that if !result.clean || this is
-+		 * the final patch to be picked.  But determining this is the
-+		 * final patch would take some work, and "head_tree" would need
-+		 * to be replace with the tree the index matched before we
-+		 * started doing any picks.
-+		 */
-+		merge_switch_to_result(&o, head_tree, &result, 1, show_output);
-+		clean = result.clean;
-+	} else {
-+		clean = merge_trees(&o, head_tree, next_tree, base_tree);
-+		if (is_rebase_i(opts) && clean <= 0)
-+			fputs(o.obuf.buf, stdout);
-+		strbuf_release(&o.obuf);
-+	}
- 	if (clean < 0) {
- 		rollback_lock_file(&index_lock);
- 		return clean;
-@@ -1991,7 +2023,10 @@ static int do_pick_commit(struct repository *r,
- 
- 	if (is_rebase_i(opts) && write_author_script(msg.message) < 0)
- 		res = -1;
--	else if (!opts->strategy || !strcmp(opts->strategy, "recursive") || command == TODO_REVERT) {
-+	else if (!opts->strategy ||
-+		 !strcmp(opts->strategy, "recursive") ||
-+		 !strcmp(opts->strategy, "ort") ||
-+		 command == TODO_REVERT) {
- 		res = do_recursive_merge(r, base, next, base_label, next_label,
- 					 &head, &msgbuf, opts);
- 		if (res < 0)
-@@ -3485,7 +3520,9 @@ static int do_merge(struct repository *r,
- 	struct commit_list *bases, *j, *reversed = NULL;
- 	struct commit_list *to_merge = NULL, **tail = &to_merge;
- 	const char *strategy = !opts->xopts_nr &&
--		(!opts->strategy || !strcmp(opts->strategy, "recursive")) ?
-+		(!opts->strategy ||
-+		 !strcmp(opts->strategy, "recursive") ||
-+		 !strcmp(opts->strategy, "ort")) ?
- 		NULL : opts->strategy;
- 	struct merge_options o;
- 	int merge_arg_len, oneline_offset, can_fast_forward, ret, k;
-@@ -3722,7 +3759,20 @@ static int do_merge(struct repository *r,
- 	o.branch2 = ref_name.buf;
- 	o.buffer_output = 2;
- 
--	ret = merge_recursive(&o, head_commit, merge_commit, reversed, &i);
-+	if (opts->strategy && !strcmp(opts->strategy, "ort")) {
-+		/*
-+		 * TODO: Should use merge_incore_recursive() and
-+		 * merge_switch_to_result(), skipping the call to
-+		 * merge_switch_to_result() when we don't actually need to
-+		 * update the index and working copy immediately.
-+		 */
-+		ret = merge_ort_recursive(&o,
-+					  head_commit, merge_commit, reversed,
-+					  &i);
-+	} else {
-+		ret = merge_recursive(&o, head_commit, merge_commit, reversed,
-+				      &i);
-+	}
- 	if (ret <= 0)
- 		fputs(o.obuf.buf, stdout);
- 	strbuf_release(&o.obuf);
-diff --git a/sequencer.h b/sequencer.h
-index b2a501e445..020b7fa118 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -57,6 +57,7 @@ struct replay_opts {
- 	int explicit_cleanup;
- 
- 	/* Merge strategy */
-+	char *default_strategy;  /* from config options */
- 	char *strategy;
- 	char **xopts;
- 	size_t xopts_nr, xopts_alloc;
++void merge_switch_to_result(struct merge_options *opt,
++			    struct tree *head,
++			    struct merge_result *result,
++			    int update_worktree_and_index,
++			    int display_update_msgs)
++{
++	die("Not yet implemented");
++	merge_finalize(opt, result);
++}
++
++void merge_finalize(struct merge_options *opt,
++		    struct merge_result *result)
++{
++	die("Not yet implemented");
++}
++
++void merge_incore_nonrecursive(struct merge_options *opt,
++			       struct tree *merge_base,
++			       struct tree *side1,
++			       struct tree *side2,
++			       struct merge_result *result)
++{
++	die("Not yet implemented");
++}
++
++void merge_incore_recursive(struct merge_options *opt,
++			    struct commit_list *merge_bases,
++			    struct commit *side1,
++			    struct commit *side2,
++			    struct merge_result *result)
++{
++	die("Not yet implemented");
++}
+diff --git a/merge-ort.h b/merge-ort.h
+new file mode 100644
+index 0000000000..74adccad16
+--- /dev/null
++++ b/merge-ort.h
+@@ -0,0 +1,58 @@
++#ifndef MERGE_ORT_H
++#define MERGE_ORT_H
++
++#include "merge-recursive.h"
++
++struct commit;
++struct tree;
++
++struct merge_result {
++	/* Whether the merge is clean */
++	int clean;
++
++	/*
++	 * Result of merge.  If !clean, represents what would go in worktree
++	 * (thus possibly including files containing conflict markers).
++	 */
++	struct tree *tree;
++
++	/*
++	 * Additional metadata used by merge_switch_to_result() or future calls
++	 * to merge_incore_*().  Includes data needed to update the index (if
++	 * !clean) and to print "CONFLICT" messages.  Not for external use.
++	 */
++	void *priv;
++};
++
++/*
++ * rename-detecting three-way merge with recursive ancestor consolidation.
++ * working tree and index are untouched.
++ */
++void merge_incore_recursive(struct merge_options *opt,
++			    struct commit_list *merge_bases,
++			    struct commit *side1,
++			    struct commit *side2,
++			    struct merge_result *result);
++
++/*
++ * rename-detecting three-way merge, no recursion.
++ * working tree and index are untouched.
++ */
++void merge_incore_nonrecursive(struct merge_options *opt,
++			       struct tree *merge_base,
++			       struct tree *side1,
++			       struct tree *side2,
++			       struct merge_result *result);
++
++/* Update the working tree and index from head to result after incore merge */
++void merge_switch_to_result(struct merge_options *opt,
++			    struct tree *head,
++			    struct merge_result *result,
++			    int update_worktree_and_index,
++			    int display_update_msgs);
++
++/* Do needed cleanup when not calling merge_switch_to_result() */
++void merge_finalize(struct merge_options *opt,
++		    struct merge_result *result);
++
++#endif
 -- 
 gitgitgadget
+
