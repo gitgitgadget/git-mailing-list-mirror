@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-20.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33A69C388F9
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 22:31:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56E2FC2D0A3
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 22:31:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E1D5D22280
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 22:31:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1EF6E22280
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 22:31:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="BBAYstPR"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uTvgDdW8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726690AbgKBWbW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Nov 2020 17:31:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39766 "EHLO
+        id S1726754AbgKBWbZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Nov 2020 17:31:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725833AbgKBWbV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Nov 2020 17:31:21 -0500
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28931C061A47
-        for <git@vger.kernel.org>; Mon,  2 Nov 2020 14:31:20 -0800 (PST)
-Received: by mail-pg1-x549.google.com with SMTP id 19so10138918pgq.18
-        for <git@vger.kernel.org>; Mon, 02 Nov 2020 14:31:20 -0800 (PST)
+        with ESMTP id S1726671AbgKBWbY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Nov 2020 17:31:24 -0500
+Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18956C0617A6
+        for <git@vger.kernel.org>; Mon,  2 Nov 2020 14:31:24 -0800 (PST)
+Received: by mail-qt1-x849.google.com with SMTP id i39so9011255qtb.1
+        for <git@vger.kernel.org>; Mon, 02 Nov 2020 14:31:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to;
-        bh=vy7mkvYBm7mdY0gYwpQpbvWIVN02epUA9FDKba3FbIU=;
-        b=BBAYstPRY1EYdy0JlkNjRIaQlgzywqwnaWsb8dT3c8Y1JvQIOZbsGflILh+LhJftDS
-         WyycZp3hYZfoJB0pRkgS6U0NqCvh3J52YGm1sgBZirhtmqsE9KOnfcsTeVtjrM5nFm/C
-         C9kviHzrIoXphIVj/4WwW5ecZUeuBOIoCraIAd9/HMo7dEOZn4mQmt97gd0lXbUjUpV1
-         VgdEQuIprZJN2/WUSZAYSI68+fgdOBMSEege0tUBjPn7eLxXMwuyYZr9q3awhniQB++6
-         2MaY+Tenx019uL7ini1OrlL9ZUXkehPLnA9y8GM2uGKCxWYSxDqw8J31Eajrwiu2ql/u
-         CCMA==
+        bh=p4L4TRUHpEhevASEZmzr0U4+YvhUsrFw7BKWbkCN5zs=;
+        b=uTvgDdW8mF9wqj8/EwDG1XydXBbCmvqBRuSkYfGYtE1nV/zdEe4QQqccPWjMenD6V+
+         XhXDogG68X7T6Ktwfji5AzCdi6oyDA15AXBgjeHbWNNlYlxvaHvE56J10jqjLV05kCbW
+         31tjWGRwN2cIqT+5b47fiNSogumm5dm8mhfhF4978uoEjMnX6DYBxdvtHtCVXMjDCm3h
+         KccJ7k/EenMYaACF4XPEVX3cy/W8VX2u4fbypWwEB1KszZYqkCMUsIhOWL7sw4B15aVl
+         J/vmHJZv6MIVzhpHuwUIyLrjd4/Nr1qlD4Wj8CGAU9xF8bd2O7FlUmpLt7p4Jmd44k5e
+         3G2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to;
-        bh=vy7mkvYBm7mdY0gYwpQpbvWIVN02epUA9FDKba3FbIU=;
-        b=JzV0q4De+uhNnU4HHWlUtPB6S/gkBqtYV+Ausy0yQF7GXOQEviGNPUhouhLhDNrPvf
-         jhIDS1FLlFDiY6qMUzfeiWxPHZGndJ+uoFlqYjTusGCgD1tFXfFrtNNKbpgTJmhvQqPw
-         ESPphcWW4a39BwENWAH2A63S4MQKExhyN4rf4ZV7SRH28Eaa+a75fKn8t1fyNJieO2HG
-         6otm5Ez+WqtKQP02VcgjnaAEC63F9PyZxFIh0hr487xSUb7GKk8X4jTIcgCrbuutQbjZ
-         sdFM7OZzM+Ep3oLqUVxXnmNTfv+h54E2JsA2qztKQwzUeGz2Ypw5CXz/rptikWpwWWKu
-         GoeQ==
-X-Gm-Message-State: AOAM533la50+Z5rBRzq/jXpu8rfbSM2cBzkv2TTiv+dBpeA4NFPYJED1
-        olZIpP/KI8kgAGU+hcskI6MTK4bEtgBCup5x4eRiQey/I0Ss8q4D7/XNvYLyyeT0daa9k3iTgX2
-        24IUTJrwYnbXRwCuebkhl+PWhU/BltJC8cIAjLHiMIXMAaWnQ04MVdqyA6TinBcY=
-X-Google-Smtp-Source: ABdhPJw0v1wvzyGGf3wwrVuVAu2cK2/Ah0iD4zGa1QdJf6KcNrTDpVsGJSo8CLcIZt++qZS4GLTWs5NHB6VxKg==
+        bh=p4L4TRUHpEhevASEZmzr0U4+YvhUsrFw7BKWbkCN5zs=;
+        b=HBYT7UUz3R1tsXGWQ+cTzmBZAkZPmuQOz6JNND1sMbcxCBVnUgYVEtaKxUwHTSxAou
+         7XYMc7l9LS4UY2tGGDWoWzaVjaLEY9ut9ARSvKp5cdmitQhpWRMkVqW6KbKtjywt2PVa
+         ciC1QaqXEkA8QJM4dDhJ9uI5Ztx+TbgV2EF/VwtoJEs7L4Zb4cdMP7nezC6dG3OwqLNg
+         py/UuHIFaVOizP88oshWNLXGFL5x0wWcbQH66afoZnw33u3iCrI0+jWk6tdZA+7PUIsG
+         5MBQ6rVNExfUUJZI7PBS6AwIllIRWv7eOE5Kkg9OfEez/pIJ7DL8LuKDV3XI7jK7mLw4
+         zT8w==
+X-Gm-Message-State: AOAM530E9F6BUGnR/u30J9SeA29CjMC88y9vooPnPcRas5FM0oLmEXbb
+        Nl6hkQ8fIoXwNOfCOvO1Ra5ozkSQ6Pz/ujJT98tHI+q+4sAwth7E4koWiI7XUtKEY895csRxqUj
+        BoZxJXSYT+3x8xn1gUr6Mz1C5Zy6eMd6Qb3i2G6CNNfKewan0LYzflP/plGXSVc0=
+X-Google-Smtp-Source: ABdhPJycZrPgNq3J7JTYgqScT5o1AovukvH75TvX3H09vGuTl7miuSh3Qo3g+mtoDPfKatiOCy+MkZAHqSEkNQ==
 Sender: "steadmon via sendgmr" <steadmon@lunarfall.svl.corp.google.com>
 X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2ce:200:1ea0:b8ff:fe74:b4c1])
- (user=steadmon job=sendgmr) by 2002:a17:90a:ab16:: with SMTP id
- m22mr350251pjq.219.1604356279596; Mon, 02 Nov 2020 14:31:19 -0800 (PST)
-Date:   Mon,  2 Nov 2020 14:31:02 -0800
+ (user=steadmon job=sendgmr) by 2002:ad4:458d:: with SMTP id
+ x13mr25224947qvu.4.1604356283140; Mon, 02 Nov 2020 14:31:23 -0800 (PST)
+Date:   Mon,  2 Nov 2020 14:31:04 -0800
 In-Reply-To: <cover.1604355792.git.steadmon@google.com>
-Message-Id: <4912af5f2b949b9944b37843a9ebabdd33e66215.1604355792.git.steadmon@google.com>
+Message-Id: <9573428cc02111d3141ec2481bf679b31a5139e2.1604355792.git.steadmon@google.com>
 Mime-Version: 1.0
 References: <cover.1604006121.git.steadmon@google.com> <cover.1604355792.git.steadmon@google.com>
 X-Mailer: git-send-email 2.29.1.341.ge80a0c044ae-goog
-Subject: [PATCH v2 04/11] upload-pack: advertise trace2 SID in v0 capabilities
+Subject: [PATCH v2 06/11] serve: advertise trace2 SID in v2 capabilities
 From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
@@ -71,80 +71,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When trace2 is enabled and trace2.advertiseSID is true, advertise
-upload-pack's trace2 session ID via the new trace2-sid capability.
+When trace2 is enabled and trace2.advertiseSID is true, advertise the
+server's trace2 session ID for all protocol v2 connections via the new
+trace2-sid capability.
 
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- upload-pack.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ serve.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/upload-pack.c b/upload-pack.c
-index 3b858eb457..3bb01c5427 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -110,6 +110,7 @@ struct upload_pack_data {
- 	unsigned done : 1;					/* v2 only */
- 	unsigned allow_ref_in_want : 1;				/* v2 only */
- 	unsigned allow_sideband_all : 1;			/* v2 only */
-+	unsigned advertise_trace2_sid : 1;
- };
+diff --git a/serve.c b/serve.c
+index f6341206c4..b40d7aad34 100644
+--- a/serve.c
++++ b/serve.c
+@@ -8,6 +8,8 @@
+ #include "serve.h"
+ #include "upload-pack.h"
  
- static void upload_pack_data_init(struct upload_pack_data *data)
-@@ -141,6 +142,7 @@ static void upload_pack_data_init(struct upload_pack_data *data)
- 	packet_writer_init(&data->writer, 1);
- 
- 	data->keepalive = 5;
-+	data->advertise_trace2_sid = 0;
++static int advertise_trace2_sid;
++
+ static int always_advertise(struct repository *r,
+ 			    struct strbuf *value)
+ {
+@@ -30,6 +32,15 @@ static int object_format_advertise(struct repository *r,
+ 	return 1;
  }
  
- static void upload_pack_data_clear(struct upload_pack_data *data)
-@@ -1178,6 +1180,11 @@ static void format_symref_info(struct strbuf *buf, struct string_list *symref)
- 		strbuf_addf(buf, " symref=%s:%s", item->string, (char *)item->util);
- }
- 
-+static void format_trace2_info(struct strbuf *buf, struct upload_pack_data *d) {
-+	if (d->advertise_trace2_sid && trace2_is_enabled())
-+		strbuf_addf(buf, " trace2-sid=%s", trace2_session_id());
++static int trace2_advertise(struct repository *r, struct strbuf *value)
++{
++	if (!advertise_trace2_sid || !trace2_is_enabled())
++		return 0;
++	if (value)
++		strbuf_addstr(value, trace2_session_id());
++	return 1;
 +}
 +
- static int send_ref(const char *refname, const struct object_id *oid,
- 		    int flag, void *cb_data)
+ struct protocol_capability {
+ 	/*
+ 	 * The name of the capability.  The server uses this name when
+@@ -66,6 +77,7 @@ static struct protocol_capability capabilities[] = {
+ 	{ "fetch", upload_pack_advertise, upload_pack_v2 },
+ 	{ "server-option", always_advertise, NULL },
+ 	{ "object-format", object_format_advertise, NULL },
++	{ "trace2-sid", trace2_advertise, NULL },
+ };
+ 
+ static void advertise_capabilities(void)
+@@ -261,6 +273,8 @@ static int process_request(void)
+ /* Main serve loop for protocol version 2 */
+ void serve(struct serve_options *options)
  {
-@@ -1193,9 +1200,11 @@ static int send_ref(const char *refname, const struct object_id *oid,
- 
- 	if (capabilities) {
- 		struct strbuf symref_info = STRBUF_INIT;
-+		struct strbuf trace2_info = STRBUF_INIT;
- 
- 		format_symref_info(&symref_info, &data->symref);
--		packet_write_fmt(1, "%s %s%c%s%s%s%s%s%s object-format=%s agent=%s\n",
-+		format_trace2_info(&trace2_info, data);
-+		packet_write_fmt(1, "%s %s%c%s%s%s%s%s%s%s object-format=%s agent=%s\n",
- 			     oid_to_hex(oid), refname_nons,
- 			     0, capabilities,
- 			     (data->allow_uor & ALLOW_TIP_SHA1) ?
-@@ -1205,9 +1214,11 @@ static int send_ref(const char *refname, const struct object_id *oid,
- 			     data->stateless_rpc ? " no-done" : "",
- 			     symref_info.buf,
- 			     data->allow_filter ? " filter" : "",
-+			     trace2_info.buf,
- 			     the_hash_algo->name,
- 			     git_user_agent_sanitized());
- 		strbuf_release(&symref_info);
-+		strbuf_release(&trace2_info);
- 	} else {
- 		packet_write_fmt(1, "%s %s\n", oid_to_hex(oid), refname_nons);
- 	}
-@@ -1299,6 +1310,8 @@ static int upload_pack_config(const char *var, const char *value, void *cb_data)
- 		data->allow_sideband_all = git_config_bool(var, value);
- 	} else if (!strcmp("core.precomposeunicode", var)) {
- 		precomposed_unicode = git_config_bool(var, value);
-+	} else if (!strcmp("trace2.advertisesid", var)) {
-+		data->advertise_trace2_sid = git_config_bool(var, value);
- 	}
- 
- 	if (current_config_scope() != CONFIG_SCOPE_LOCAL &&
++	git_config_get_bool("trace2.advertisesid", &advertise_trace2_sid);
++
+ 	if (options->advertise_capabilities || !options->stateless_rpc) {
+ 		/* serve by default supports v2 */
+ 		packet_write_fmt(1, "version 2\n");
 -- 
 2.29.1.341.ge80a0c044ae-goog
 
