@@ -2,251 +2,255 @@ Return-Path: <SRS0=DNVg=EI=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA12CC2D0A3
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 23:45:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05EDFC00A89
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 23:55:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7A75E2225E
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 23:45:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9CC1C2084C
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 23:55:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bpVZHj8N"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ka+gEgU7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726492AbgKBXpl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Nov 2020 18:45:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51380 "EHLO
+        id S1725942AbgKBXzK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Nov 2020 18:55:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725841AbgKBXpj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Nov 2020 18:45:39 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A855EC0617A6
-        for <git@vger.kernel.org>; Mon,  2 Nov 2020 15:45:38 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id k10so15185151wrw.13
-        for <git@vger.kernel.org>; Mon, 02 Nov 2020 15:45:38 -0800 (PST)
+        with ESMTP id S1725869AbgKBXzK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Nov 2020 18:55:10 -0500
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E016C0617A6
+        for <git@vger.kernel.org>; Mon,  2 Nov 2020 15:55:10 -0800 (PST)
+Received: by mail-wr1-x442.google.com with SMTP id y12so16526203wrp.6
+        for <git@vger.kernel.org>; Mon, 02 Nov 2020 15:55:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=68sc9B/0csd629noV8jhACYBrCHiFf55lnL+7AxCs08=;
-        b=bpVZHj8NetvEY3rRfpEf/Eauxt7NjH4KsL2VYiZNSUEgB88hJmzUPW3PkeVfrPEVKX
-         n1iBMg8Ati+P0AYKc4RGDwpgkYT3tjhXy94E77wMR1y3iCK47m+HfLQEP1VDnCaDbciV
-         4m54WAi/21MAP5WHZh1ZRTLsWbpj1mpNU1ywnvhNfeEt+8atogv1aahFSDXvLpdOzc2O
-         ud869hw+YhPl04ZVCFoogbK3IjfZHHsclcHiUdUShtLUv3X6lhO76TPErrtmR0K5MhBl
-         CSxRu5hHmoRzezI+8SP9i3EG/tVIfX6Q8sZyh00nkvVHuDWn83n+hl2eadPzaCO2DYWp
-         L0sA==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=WWxbselzmMyXpO8ILk+JWT5uEumj71NzslNexNSK5Hs=;
+        b=ka+gEgU77iVlz+KAbPLT4Z0aHTkZ8gRIiHmwKMKigJsbG2dz8AH1b+9a7Wz+xoXb8s
+         /wpBVOwv9jWkidINRJE9MmGxBeO0hXOxaST0mVsa+/cuONIMmXkKpqlU4k91M5flCK5Z
+         1+ufnUuNDNGQaNYsyb81lbkURQTgbiSV3OP0M4QCxy1hvPMw4HVyVEatRoSzb+oA1bwd
+         L0WlkhGzpn/VtSCkVP2BIKYItVFyckXhqqp5/uND+cD5QG7ch8LRBQ0YpIC2Xw3bRvV2
+         89nNFYtaXguDRTo8668Ct8G6r63F7TnAIDj5lY0zNYrgQgUoRPjUbW44L/pspN6ENQCA
+         iH2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=68sc9B/0csd629noV8jhACYBrCHiFf55lnL+7AxCs08=;
-        b=Ife9+g9nxl7I8ZgmpcWd1X60knSFe/KnZa4tsG+SB9dEqiIqAomGaGoPereVyo1m34
-         8Ueltaj4wvM6jMk45YlPAOtjs7Kh+sx5Z4WNC/o8yMqGr6Ec1mhnzyJeMy/d8ZA51ocl
-         dMwiWMapYsYrFlVw9g77I/VuFTO4Lm1sy7lMFy8tWpSI8GrK69gXIadpgiSAo9S81Mpm
-         a8uVRqYHaeMB4yzQM2vLzzk8QwtkFqBC9JEoznGbWAQFamk8HNQZUMWXSXgVlpnm5QuI
-         +fplQorqfqBFFNRoPdBZO60jUR9tg5zAEQlJgKBAbya1yqHBANdwS2vvpXWOBj9QQYY8
-         ZAZg==
-X-Gm-Message-State: AOAM533lMfvXPfTDb5uM3VNoRvCHODpboRAwSEHD0Tbat7EzKOYrgz0f
-        Zv9UIZohbHYf1xhVfBfPfJe45fb7Q2s=
-X-Google-Smtp-Source: ABdhPJzCm72p+BIAaWFYfpKr4TAzLpbKbgyL695g7wm2mkzfYNxlk/y5lnQGPqvuERGtLComHS6t2Q==
-X-Received: by 2002:a5d:5612:: with SMTP id l18mr24101263wrv.372.1604360737180;
-        Mon, 02 Nov 2020 15:45:37 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=WWxbselzmMyXpO8ILk+JWT5uEumj71NzslNexNSK5Hs=;
+        b=neMJcTj5HXbqalTqXi+ohvH7SiHQKPA6dzOp6fZlSUIPJdr7ekO20JvuMUNIZ9ObQu
+         uwbAF9+aviN0DuiJN0f9KakVZHoIHDwYnHNLvkozO+1IwtDTTyjk2HKu7PI+0p+Mn8BM
+         SU5JR1zdGi9YOKOJjv1xz0ZkOW3n8wJ9mp7Rg6HQWpffIqKYiqCZd2VMUu0HurXGyGw9
+         Ypv9AOhEteDv19ScZ47j6yMY+Cm1AtflkZf/JQzGqldxK0ZpZKYm9096QP2jQzOnVfBZ
+         /m6ZaSK6+pHe26JnuqUZuaBBikg9n/sI9sTzdnatcdeSGkIRTC1pjOb4dsrz8wQ4zGYO
+         sYqQ==
+X-Gm-Message-State: AOAM530ayFZb1aCcG7VWlgvZyKwMZMIqeEyDyAb9X8ahw/xZxMfJdZhf
+        Y6HUs/hhKA0XNLFReSDMT8uwOhPuyt8=
+X-Google-Smtp-Source: ABdhPJzNLNA6iJry5PRlYVqCl6biixLZZf/XKnus6/YH5aJbkKuuveTQQWKYavdXCJWvp0/HsbgCqg==
+X-Received: by 2002:adf:e28c:: with SMTP id v12mr22550582wri.230.1604361308673;
+        Mon, 02 Nov 2020 15:55:08 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o63sm1053274wmo.2.2020.11.02.15.45.36
+        by smtp.gmail.com with ESMTPSA id h4sm23824173wrp.52.2020.11.02.15.55.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2020 15:45:36 -0800 (PST)
-Message-Id: <3357ea415e3437966f15bf73fbbeb21cda3df592.1604360734.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.895.v5.git.git.1604360734.gitgitgadget@gmail.com>
-References: <pull.895.v4.git.git.1604003535.gitgitgadget@gmail.com>
-        <pull.895.v5.git.git.1604360734.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 02 Nov 2020 23:45:31 +0000
-Subject: [PATCH v5 1/4] merge-ort: barebones API of new merge strategy with
- empty implementation
+        Mon, 02 Nov 2020 15:55:08 -0800 (PST)
+Message-Id: <pull.761.git.1604361307.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 02 Nov 2020 23:55:03 +0000
+Subject: [PATCH 0/4]  Adjust t5515 for the upcoming change of the default branch name
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>, Taylor Blau <me@ttaylorr.com>,
-        Peter Baumann <peter.baumann@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+To allow for switching the default of init.defaultBranch to main, we adjust
+the test script t5515 and its friends in t/t5515/. This is a large chunk of
+modifications, but happily, most of them are a totally trivial
+search-and-replace.
 
-This is the beginning of a new merge strategy.  While there are some API
-differences, and the implementation has some differences in behavior, it
-is essentially meant as an eventual drop-in replacement for
-merge-recursive.c.  However, it is being built to exist side-by-side
-with merge-recursive so that we have plenty of time to find out how
-those differences pan out in the real world while people can still fall
-back to merge-recursive.  (Also, I intend to avoid modifying
-merge-recursive during this process, to keep it stable.)
+This patch series is part of the over-all effort tracked in 
+https://github.com/gitgitgadget/git/pull/655.
 
-The primary difference noticable here is that the updating of the
-working tree and index is not done simultaneously with the merge
-algorithm, but is a separate post-processing step.  The new API is
-designed so that one can do repeated merges (e.g. during a rebase or
-cherry-pick) and only update the index and working tree one time at the
-end instead of updating it with every intermediate result.  Also, one
-can perform a merge between two branches, neither of which match the
-index or the working tree, without clobbering the index or working tree.
+Johannes Schindelin (4):
+  t5515: use `main` as the name of the main branch for testing (part 1)
+  t5515: use `main` as the name of the main branch for testing (part 2)
+  t5515: use `main` as the name of the main branch for testing (part 3)
+  t5515: use `main` as the name of the main branch for testing
+    (conclusion)
 
-The next three commits will demonstrate various uses of this new API.
+ t/t5515-fetch-merge-logic.sh                  | 27 ++++++++++---------
+ t/t5515/fetch.br-branches-default             |  4 +--
+ t/t5515/fetch.br-branches-default-merge       |  4 +--
+ ...br-branches-default-merge_branches-default |  4 +--
+ t/t5515/fetch.br-branches-default-octopus     |  4 +--
+ ...-branches-default-octopus_branches-default |  4 +--
+ ...fetch.br-branches-default_branches-default |  4 +--
+ t/t5515/fetch.br-branches-one                 |  2 +-
+ t/t5515/fetch.br-branches-one-merge           |  2 +-
+ .../fetch.br-branches-one-merge_branches-one  |  2 +-
+ t/t5515/fetch.br-branches-one-octopus         |  2 +-
+ ...fetch.br-branches-one-octopus_branches-one |  2 +-
+ t/t5515/fetch.br-branches-one_branches-one    |  2 +-
+ t/t5515/fetch.br-config-explicit              |  4 +--
+ t/t5515/fetch.br-config-explicit-merge        |  4 +--
+ ...h.br-config-explicit-merge_config-explicit |  4 +--
+ t/t5515/fetch.br-config-explicit-octopus      |  4 +--
+ ...br-config-explicit-octopus_config-explicit |  4 +--
+ .../fetch.br-config-explicit_config-explicit  |  4 +--
+ t/t5515/fetch.br-config-glob                  |  4 +--
+ t/t5515/fetch.br-config-glob-merge            |  4 +--
+ .../fetch.br-config-glob-merge_config-glob    |  4 +--
+ t/t5515/fetch.br-config-glob-octopus          |  4 +--
+ .../fetch.br-config-glob-octopus_config-glob  |  4 +--
+ t/t5515/fetch.br-config-glob_config-glob      |  4 +--
+ t/t5515/fetch.br-remote-explicit              |  4 +--
+ t/t5515/fetch.br-remote-explicit-merge        |  4 +--
+ ...h.br-remote-explicit-merge_remote-explicit |  4 +--
+ t/t5515/fetch.br-remote-explicit-octopus      |  4 +--
+ ...br-remote-explicit-octopus_remote-explicit |  4 +--
+ .../fetch.br-remote-explicit_remote-explicit  |  4 +--
+ t/t5515/fetch.br-remote-glob                  |  4 +--
+ t/t5515/fetch.br-remote-glob-merge            |  4 +--
+ .../fetch.br-remote-glob-merge_remote-glob    |  4 +--
+ t/t5515/fetch.br-remote-glob-octopus          |  4 +--
+ .../fetch.br-remote-glob-octopus_remote-glob  |  4 +--
+ t/t5515/fetch.br-remote-glob_remote-glob      |  4 +--
+ t/t5515/fetch.br-unconfig                     |  4 +--
+ t/t5515/fetch.br-unconfig_--tags_.._.git      |  2 +-
+ ....._.git_one_tag_tag-one_tag_tag-three-file |  2 +-
+ ...._.git_tag_tag-one-tree_tag_tag-three-file |  2 +-
+ ...unconfig_.._.git_tag_tag-one_tag_tag-three |  2 +-
+ t/t5515/fetch.br-unconfig_branches-default    |  4 +--
+ t/t5515/fetch.br-unconfig_branches-one        |  2 +-
+ t/t5515/fetch.br-unconfig_config-explicit     |  4 +--
+ t/t5515/fetch.br-unconfig_config-glob         |  4 +--
+ t/t5515/fetch.br-unconfig_remote-explicit     |  4 +--
+ t/t5515/fetch.br-unconfig_remote-glob         |  4 +--
+ t/t5515/{fetch.master => fetch.main}          |  6 ++---
+ ...tags_.._.git => fetch.main_--tags_.._.git} |  4 +--
+ ...etch.master_.._.git => fetch.main_.._.git} |  2 +-
+ ...ter_.._.git_one => fetch.main_.._.git_one} |  2 +-
+ ...._.git_one_tag_tag-one_tag_tag-three-file} |  4 +--
+ ...git_one_two => fetch.main_.._.git_one_two} |  2 +-
+ ..._.git_tag_tag-one-tree_tag_tag-three-file} |  4 +--
+ ...ch.main_.._.git_tag_tag-one_tag_tag-three} |  4 +--
+ ...es-default => fetch.main_branches-default} |  6 ++---
+ ...r_branches-one => fetch.main_branches-one} |  4 +--
+ ...ig-explicit => fetch.main_config-explicit} |  6 ++---
+ ...ter_config-glob => fetch.main_config-glob} |  6 ++---
+ ...te-explicit => fetch.main_remote-explicit} |  6 ++---
+ t/t5515/fetch.main_remote-glob                | 11 ++++++++
+ t/t5515/fetch.master_remote-glob              | 11 --------
+ t/t5515/refs.br-branches-default              |  6 ++---
+ t/t5515/refs.br-branches-default-merge        |  6 ++---
+ ...br-branches-default-merge_branches-default |  6 ++---
+ t/t5515/refs.br-branches-default-octopus      |  6 ++---
+ ...-branches-default-octopus_branches-default |  6 ++---
+ .../refs.br-branches-default_branches-default |  6 ++---
+ t/t5515/refs.br-branches-one                  |  4 +--
+ t/t5515/refs.br-branches-one-merge            |  4 +--
+ .../refs.br-branches-one-merge_branches-one   |  4 +--
+ t/t5515/refs.br-branches-one-octopus          |  4 +--
+ .../refs.br-branches-one-octopus_branches-one |  4 +--
+ t/t5515/refs.br-branches-one_branches-one     |  4 +--
+ t/t5515/refs.br-config-explicit               |  6 ++---
+ t/t5515/refs.br-config-explicit-merge         |  6 ++---
+ ...s.br-config-explicit-merge_config-explicit |  6 ++---
+ t/t5515/refs.br-config-explicit-octopus       |  6 ++---
+ ...br-config-explicit-octopus_config-explicit |  6 ++---
+ .../refs.br-config-explicit_config-explicit   |  6 ++---
+ t/t5515/refs.br-config-glob                   |  6 ++---
+ t/t5515/refs.br-config-glob-merge             |  6 ++---
+ t/t5515/refs.br-config-glob-merge_config-glob |  6 ++---
+ t/t5515/refs.br-config-glob-octopus           |  6 ++---
+ .../refs.br-config-glob-octopus_config-glob   |  6 ++---
+ t/t5515/refs.br-config-glob_config-glob       |  6 ++---
+ t/t5515/refs.br-remote-explicit               |  6 ++---
+ t/t5515/refs.br-remote-explicit-merge         |  6 ++---
+ ...s.br-remote-explicit-merge_remote-explicit |  6 ++---
+ t/t5515/refs.br-remote-explicit-octopus       |  6 ++---
+ ...br-remote-explicit-octopus_remote-explicit |  6 ++---
+ .../refs.br-remote-explicit_remote-explicit   |  6 ++---
+ t/t5515/refs.br-remote-glob                   |  6 ++---
+ t/t5515/refs.br-remote-glob-merge             |  6 ++---
+ t/t5515/refs.br-remote-glob-merge_remote-glob |  6 ++---
+ t/t5515/refs.br-remote-glob-octopus           |  6 ++---
+ .../refs.br-remote-glob-octopus_remote-glob   |  6 ++---
+ t/t5515/refs.br-remote-glob_remote-glob       |  6 ++---
+ t/t5515/refs.br-unconfig                      |  4 +--
+ t/t5515/refs.br-unconfig_--tags_.._.git       |  4 +--
+ t/t5515/refs.br-unconfig_.._.git              |  2 +-
+ t/t5515/refs.br-unconfig_.._.git_one          |  2 +-
+ ....._.git_one_tag_tag-one_tag_tag-three-file |  4 +--
+ t/t5515/refs.br-unconfig_.._.git_one_two      |  2 +-
+ ...._.git_tag_tag-one-tree_tag_tag-three-file |  4 +--
+ ...unconfig_.._.git_tag_tag-one_tag_tag-three |  4 +--
+ t/t5515/refs.br-unconfig_branches-default     |  6 ++---
+ t/t5515/refs.br-unconfig_branches-one         |  4 +--
+ t/t5515/refs.br-unconfig_config-explicit      |  6 ++---
+ t/t5515/refs.br-unconfig_config-glob          |  6 ++---
+ t/t5515/refs.br-unconfig_remote-explicit      |  6 ++---
+ t/t5515/refs.br-unconfig_remote-glob          |  6 ++---
+ ...g_tag-one_tag_tag-three-file => refs.main} |  4 +--
+ ...ag-three-file => refs.main_--tags_.._.git} |  4 +--
+ ...ster_.._.git_one_two => refs.main_.._.git} |  2 +-
+ ...s.master_.._.git => refs.main_.._.git_one} |  2 +-
+ ...._.git_one_tag_tag-one_tag_tag-three-file} |  4 +--
+ ..._.._.git_one => refs.main_.._.git_one_two} |  2 +-
+ ..._.git_tag_tag-one-tree_tag_tag-three-file} |  4 +--
+ ...efs.main_.._.git_tag_tag-one_tag_tag-three | 11 ++++++++
+ ...hes-default => refs.main_branches-default} |  6 ++---
+ ...er_branches-one => refs.main_branches-one} |  4 +--
+ ...fig-explicit => refs.main_config-explicit} |  6 ++---
+ ...ster_config-glob => refs.main_config-glob} |  6 ++---
+ ...ote-explicit => refs.main_remote-explicit} |  6 ++---
+ ...ster_remote-glob => refs.main_remote-glob} |  6 ++---
+ ...s.master_.._.git_tag_tag-one_tag_tag-three | 11 --------
+ 128 files changed, 308 insertions(+), 305 deletions(-)
+ rename t/t5515/{fetch.master => fetch.main} (78%)
+ rename t/t5515/{fetch.master_--tags_.._.git => fetch.main_--tags_.._.git} (81%)
+ rename t/t5515/{fetch.master_.._.git => fetch.main_.._.git} (73%)
+ rename t/t5515/{fetch.master_.._.git_one => fetch.main_.._.git_one} (74%)
+ rename t/t5515/{fetch.master_.._.git_one_tag_tag-one_tag_tag-three-file => fetch.main_.._.git_one_tag_tag-one_tag_tag-three-file} (77%)
+ rename t/t5515/{fetch.master_.._.git_one_two => fetch.main_.._.git_one_two} (83%)
+ rename t/t5515/{fetch.master_.._.git_tag_tag-one-tree_tag_tag-three-file => fetch.main_.._.git_tag_tag-one-tree_tag_tag-three-file} (74%)
+ rename t/t5515/{fetch.master_.._.git_tag_tag-one_tag_tag-three => fetch.main_.._.git_tag_tag-one_tag_tag-three} (75%)
+ rename t/t5515/{fetch.master_branches-default => fetch.main_branches-default} (69%)
+ rename t/t5515/{fetch.master_branches-one => fetch.main_branches-one} (81%)
+ rename t/t5515/{fetch.master_config-explicit => fetch.main_config-explicit} (78%)
+ rename t/t5515/{fetch.master_config-glob => fetch.main_config-glob} (77%)
+ rename t/t5515/{fetch.master_remote-explicit => fetch.main_remote-explicit} (78%)
+ create mode 100644 t/t5515/fetch.main_remote-glob
+ delete mode 100644 t/t5515/fetch.master_remote-glob
+ rename t/t5515/{refs.master_.._.git_one_tag_tag-one_tag_tag-three-file => refs.main} (81%)
+ rename t/t5515/{refs.master_.._.git_tag_tag-one-tree_tag_tag-three-file => refs.main_--tags_.._.git} (81%)
+ rename t/t5515/{refs.master_.._.git_one_two => refs.main_.._.git} (79%)
+ rename t/t5515/{refs.master_.._.git => refs.main_.._.git_one} (79%)
+ rename t/t5515/{refs.master => refs.main_.._.git_one_tag_tag-one_tag_tag-three-file} (81%)
+ rename t/t5515/{refs.master_.._.git_one => refs.main_.._.git_one_two} (79%)
+ rename t/t5515/{refs.master_--tags_.._.git => refs.main_.._.git_tag_tag-one-tree_tag_tag-three-file} (81%)
+ create mode 100644 t/t5515/refs.main_.._.git_tag_tag-one_tag_tag-three
+ rename t/t5515/{refs.master_branches-default => refs.main_branches-default} (74%)
+ rename t/t5515/{refs.master_branches-one => refs.main_branches-one} (83%)
+ rename t/t5515/{refs.master_config-explicit => refs.main_config-explicit} (79%)
+ rename t/t5515/{refs.master_config-glob => refs.main_config-glob} (79%)
+ rename t/t5515/{refs.master_remote-explicit => refs.main_remote-explicit} (79%)
+ rename t/t5515/{refs.master_remote-glob => refs.main_remote-glob} (79%)
+ delete mode 100644 t/t5515/refs.master_.._.git_tag_tag-one_tag_tag-three
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- Makefile    |  1 +
- merge-ort.c | 52 +++++++++++++++++++++++++++++++++++++++++++++++
- merge-ort.h | 58 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 111 insertions(+)
- create mode 100644 merge-ort.c
- create mode 100644 merge-ort.h
 
-diff --git a/Makefile b/Makefile
-index 95571ee3fc..088770c2ae 100644
---- a/Makefile
-+++ b/Makefile
-@@ -921,6 +921,7 @@ LIB_OBJS += mailmap.o
- LIB_OBJS += match-trees.o
- LIB_OBJS += mem-pool.o
- LIB_OBJS += merge-blobs.o
-+LIB_OBJS += merge-ort.o
- LIB_OBJS += merge-recursive.o
- LIB_OBJS += merge.o
- LIB_OBJS += mergesort.o
-diff --git a/merge-ort.c b/merge-ort.c
-new file mode 100644
-index 0000000000..b487901d3e
---- /dev/null
-+++ b/merge-ort.c
-@@ -0,0 +1,52 @@
-+/*
-+ * "Ostensibly Recursive's Twin" merge strategy, or "ort" for short.  Meant
-+ * as a drop-in replacement for the "recursive" merge strategy, allowing one
-+ * to replace
-+ *
-+ *   git merge [-s recursive]
-+ *
-+ * with
-+ *
-+ *   git merge -s ort
-+ *
-+ * Note: git's parser allows the space between '-s' and its argument to be
-+ * missing.  (Should I have backronymed "ham", "alsa", "kip", "nap, "alvo",
-+ * "cale", "peedy", or "ins" instead of "ort"?)
-+ */
-+
-+#include "cache.h"
-+#include "merge-ort.h"
-+
-+void merge_switch_to_result(struct merge_options *opt,
-+			    struct tree *head,
-+			    struct merge_result *result,
-+			    int update_worktree_and_index,
-+			    int display_update_msgs)
-+{
-+	die("Not yet implemented");
-+	merge_finalize(opt, result);
-+}
-+
-+void merge_finalize(struct merge_options *opt,
-+		    struct merge_result *result)
-+{
-+	die("Not yet implemented");
-+}
-+
-+void merge_incore_nonrecursive(struct merge_options *opt,
-+			       struct tree *merge_base,
-+			       struct tree *side1,
-+			       struct tree *side2,
-+			       struct merge_result *result)
-+{
-+	die("Not yet implemented");
-+}
-+
-+void merge_incore_recursive(struct merge_options *opt,
-+			    struct commit_list *merge_bases,
-+			    struct commit *side1,
-+			    struct commit *side2,
-+			    struct merge_result *result)
-+{
-+	die("Not yet implemented");
-+}
-diff --git a/merge-ort.h b/merge-ort.h
-new file mode 100644
-index 0000000000..74adccad16
---- /dev/null
-+++ b/merge-ort.h
-@@ -0,0 +1,58 @@
-+#ifndef MERGE_ORT_H
-+#define MERGE_ORT_H
-+
-+#include "merge-recursive.h"
-+
-+struct commit;
-+struct tree;
-+
-+struct merge_result {
-+	/* Whether the merge is clean */
-+	int clean;
-+
-+	/*
-+	 * Result of merge.  If !clean, represents what would go in worktree
-+	 * (thus possibly including files containing conflict markers).
-+	 */
-+	struct tree *tree;
-+
-+	/*
-+	 * Additional metadata used by merge_switch_to_result() or future calls
-+	 * to merge_incore_*().  Includes data needed to update the index (if
-+	 * !clean) and to print "CONFLICT" messages.  Not for external use.
-+	 */
-+	void *priv;
-+};
-+
-+/*
-+ * rename-detecting three-way merge with recursive ancestor consolidation.
-+ * working tree and index are untouched.
-+ */
-+void merge_incore_recursive(struct merge_options *opt,
-+			    struct commit_list *merge_bases,
-+			    struct commit *side1,
-+			    struct commit *side2,
-+			    struct merge_result *result);
-+
-+/*
-+ * rename-detecting three-way merge, no recursion.
-+ * working tree and index are untouched.
-+ */
-+void merge_incore_nonrecursive(struct merge_options *opt,
-+			       struct tree *merge_base,
-+			       struct tree *side1,
-+			       struct tree *side2,
-+			       struct merge_result *result);
-+
-+/* Update the working tree and index from head to result after incore merge */
-+void merge_switch_to_result(struct merge_options *opt,
-+			    struct tree *head,
-+			    struct merge_result *result,
-+			    int update_worktree_and_index,
-+			    int display_update_msgs);
-+
-+/* Do needed cleanup when not calling merge_switch_to_result() */
-+void merge_finalize(struct merge_options *opt,
-+		    struct merge_result *result);
-+
-+#endif
+base-commit: 5d5f4ea30def2ac765c5517f768366524768c110
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-761%2Fdscho%2Fprepare-for-main-branch-t5515-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-761/dscho/prepare-for-main-branch-t5515-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/761
 -- 
 gitgitgadget
-
