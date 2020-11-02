@@ -2,92 +2,82 @@ Return-Path: <SRS0=DNVg=EI=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4D69C00A89
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 22:37:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C725C00A89
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 22:44:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 794FD20870
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 22:37:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E197B2225B
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 22:44:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bNQdYjLw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OouFN0/A"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726655AbgKBWhZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Nov 2020 17:37:25 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:57384 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725807AbgKBWhZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Nov 2020 17:37:25 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 46444102288;
-        Mon,  2 Nov 2020 17:37:23 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZgZ1JDrwERiDNYqkOKhLbU9fA9Y=; b=bNQdYj
-        Lwx7tAcIPL1sz3MkRmJ+rg2XWgFDLTKJQt5kLM1qW+2m1GEKC7cxwjwokr0p18P2
-        9fpXpxaG2tRw2Qqw5qfeNY+23WlScnkqt50mPP/Q97T5IpiP/plq+ynHrDwkG1+f
-        BF/0ns8QsJASGmL4fI10NoJqo+cdLCG+7E1Oc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IepleneKeT+eC0y269pQwunruDh7hVm/
-        1sYWIrRVRkEFj7oxZA1kDg5LIQALIog0heiF6dD73OJYgsSO+tVlQC2denIpEJZ/
-        e9Qt/x3RVujY206Z3R5E4Ns5JM1IpJMacJ7tFOXoBb4gEWYMgMmioCyxc9m6D2tj
-        Jz4IPEazsNE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 23CCE102287;
-        Mon,  2 Nov 2020 17:37:23 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0980C10226F;
-        Mon,  2 Nov 2020 17:37:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     =?utf-8?B?0JvRkdGI0LAg0J7Qs9C+0L3RjNC60L7Qsg==?= 
-        <lesha.ogonkov@gmail.com>, Stefan Haller <lists@haller-berlin.de>,
-        Alexey via GitGitGadget <gitgitgadget@gmail.com>,
-        Git <git@vger.kernel.org>
-Subject: Re: [PATCH] Fix zsh installation instructions
-References: <pull.814.git.git.1593687080695.gitgitgadget@gmail.com>
-        <xmqqr1to8dv9.fsf@gitster.c.googlers.com>
-        <abc4ab95-ed65-1d6b-e964-73734c08cda9@haller-berlin.de>
-        <CAMP44s3=CUmx_7DCExK7L4trZvQTxO67Qk20eexsP3su-3RyKQ@mail.gmail.com>
-        <abc34ced-0c0f-4024-a50c-30e4ca31b325@haller-berlin.de>
-        <CAKU+SVKad4q-2tTrYXa+DJBz5UJOtndEe3-4Uvnd5GZ92543ng@mail.gmail.com>
-        <xmqqwnzbbfsi.fsf@gitster.c.googlers.com>
-        <CAMP44s2DR=pV3frOePMbSyikA-KonZ5XWD7o5SqKhUbzohAFtQ@mail.gmail.com>
-        <xmqqtuuc7wgu.fsf@gitster.c.googlers.com>
-        <CAMP44s1+bJMrmJWeAQx18S-=spoKb0BmzWyJ4WgzuE+rNuf0cg@mail.gmail.com>
-Date:   Mon, 02 Nov 2020 14:37:17 -0800
-In-Reply-To: <CAMP44s1+bJMrmJWeAQx18S-=spoKb0BmzWyJ4WgzuE+rNuf0cg@mail.gmail.com>
-        (Felipe Contreras's message of "Mon, 2 Nov 2020 14:49:51 -0600")
-Message-ID: <xmqq7dr3s7vm.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1725988AbgKBWo4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Nov 2020 17:44:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41890 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725807AbgKBWo4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Nov 2020 17:44:56 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E9F3C0617A6
+        for <git@vger.kernel.org>; Mon,  2 Nov 2020 14:44:56 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id 33so5618022wrl.7
+        for <git@vger.kernel.org>; Mon, 02 Nov 2020 14:44:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=ej7sPf1bY69jzLMwtqOQ9BbSqjv8PiMleOBvgxYS5u0=;
+        b=OouFN0/ASNcoihA2ysL1g5aV6QdXOHTmgelF3UAdQmsE1j0XC8SRKbC5nLr8Kx3bUk
+         9W+ZfnWxTns6TZiTUJTHIifcsPafjMjLVcEJtD9HfwPIh4VNsYfcJaHdZQMpdN5VsW1T
+         fd2gQaSUlBqRCdEr2Eet/Kc81PUMfsivkb2KlPbEb9qq+q6wc09p+bC2EnJ9jQJMElGx
+         cIeklxBvH8Ni4BtCR8NoCRqkmd8wkxajV/jB2IuVz0LhuGG7ylswTVmkk3/EDhK7MbJk
+         WERfzbM2FMvizXAchsc9dt3yv5kQrB751sWwge84qyLcUvXPbDNNI5xWkS4SlDnaUDTe
+         taNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=ej7sPf1bY69jzLMwtqOQ9BbSqjv8PiMleOBvgxYS5u0=;
+        b=RHWYBGG+ALMHeH7YaehvLokhQkW6W9PXIvdNxbVLQUuwT4BUe2sD9jvqiKZvHXbNsN
+         q7Kz6ZQaCWvog59FkfaeiXcystc0ldkvEt7+LIDU/reMPTs7+W8lLYyx6oRMScgnKBmz
+         PDleTredVuCoCW3DK/F5IY7B3qUh3h/sVNscWOzQfG/FaTsynClzYp4pzSBmpCetEvV9
+         FDiRMm01a8wO8KIGoXm/aM7c+Q9Coappc39cT3ItykPszAok3XJ1YXaCH+fKFVJjHinu
+         03nAfIjM/8Vm/sj7Fm2onJDGqlzWbgbbe9Pc57AL1H3vpnO8uuMx6oISnMwN6q7MvnUR
+         ophg==
+X-Gm-Message-State: AOAM532Zxx/kxnsCt2eLuKualA83hHWJXDHn6oOIxSK8GIJLYTqtnBfW
+        BtdAqgqPkufFWuHSN5Yjulk8Gi5W0XKjtcOdWw17QPib7UnrGA==
+X-Google-Smtp-Source: ABdhPJy0dXRzPrTfjPCfVqI5jkYDozGixUXSkXtDztJ7hSsNATo3Pwnb8m0vdCG2sAH1FBirSgSK7nRmIHE+phPHlEY=
+X-Received: by 2002:a5d:424a:: with SMTP id s10mr22726444wrr.130.1604357094700;
+ Mon, 02 Nov 2020 14:44:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F724F9D4-1D5B-11EB-8271-E43E2BB96649-77302942!pb-smtp20.pobox.com
+From:   David Besen <dbesen@gmail.com>
+Date:   Mon, 2 Nov 2020 15:44:43 -0700
+Message-ID: <CAHqVHwt1QJjXCAbDD5ViZ1E_rD8u+H_XeJ=FOv4VFPTS8y3xjg@mail.gmail.com>
+Subject: git clean -Xdf doesn't clean ignored files in subfolders
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Hi!
 
-> This should be enough:
-> ---
-> autoload -U compinit && compinit
-> ---
->
->> Makes sense.  Instead of adjusting my rerere database for that,
->> ejecting lo/zsh-completion topic would be easier---what the other
->> half of that patch does is already in your 29-patch series.
+I'm seeing some unexpected behavior with git clean:
 
-Your 29-patch series is now in 'next'; I have this feeing that
-nobody around here would offer any meaningful reviews on it, so it
-may graduate sooner than the usual topics.
+git init test
+cd test
+echo "ignored.txt" > .gitignore
+mkdir folder
+touch folder/ignored.txt
+git clean -Xdf
 
-Thanks.
+I'd expect this to delete folder/ignored.txt, and instead it doesn't.
+I'm in git 2.29.2 on osx.
+
+I saw that git clean -xdn does delete the file, so if this is a bug
+it's limited to -X.
+
+Thanks!
+Dave
