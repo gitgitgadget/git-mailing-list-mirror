@@ -2,67 +2,69 @@ Return-Path: <SRS0=DNVg=EI=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C632EC00A89
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 23:45:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA734C2D0A3
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 23:45:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 60DE02225E
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 23:45:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7149622268
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 23:45:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n8J2kpT0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ROaMijPY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726013AbgKBXpi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Nov 2020 18:45:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51376 "EHLO
+        id S1726581AbgKBXpl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Nov 2020 18:45:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725841AbgKBXpi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Nov 2020 18:45:38 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C337FC0617A6
-        for <git@vger.kernel.org>; Mon,  2 Nov 2020 15:45:37 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id 33so5726449wrl.7
-        for <git@vger.kernel.org>; Mon, 02 Nov 2020 15:45:37 -0800 (PST)
+        with ESMTP id S1726380AbgKBXpk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Nov 2020 18:45:40 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DC42C061A48
+        for <git@vger.kernel.org>; Mon,  2 Nov 2020 15:45:40 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id y12so16510771wrp.6
+        for <git@vger.kernel.org>; Mon, 02 Nov 2020 15:45:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=hI7cCXdi6R5ujHR9vWmQG88xwGtWx3rJxz6tsaW3ZeA=;
-        b=n8J2kpT0GB4XhlpwAlW0jKtXvCgIXslaPld2+kBu5dgU1i8ujb7UtSChZpnFg0zVFA
-         yJjEdXAu7K6lN6AJWDqVXAHI7i0sK/DIewMKSNbkYeEh6Yq3RkfIWXQRpSeAKFRGnWd+
-         Cx88UlqIZC00a+nN46f043sjJW4n3OzbhslNrFEVmdEEgph2rUIJ827wHcrZUO/rMWni
-         9V0ihlL9PXA5TZ4AwpEMY9Zh6VpoJQcQfUyhJ8U8JzkrL+zE3M/wuDCpMxXa8Cgtc4nP
-         Ykvzc5yp0wEECleS8kVRaLhBfgBy4ZWsib8q1/MbAkTCFcQx8NwrPV1dTEMSq/EENXIe
-         04kA==
+        bh=3UOUvb0C/w+fD2FCxP9MhvlUcs/BBagXvRQQqA42S8E=;
+        b=ROaMijPYMP8DLEH5cNUu3oHxlUvFS3uOzBQbq2iv0jpbFvC+stzqeetJCoEeUtm6Cv
+         8TDlygRobnq9sSVU66sQTE7RbCaUiIgTs8fTBvhpCAdu+XIAh663L+p2mVowWsneESem
+         7fGubHpzRZZMmJD1zEkm/7m04+I14vvFL9Y2HNAbrMNxzEp+yRrW2uvJu97tThZbSTeh
+         8Y7zj928X+0KDW9QlrkTbFTnr1+ZVPK4gTPlp9QDv5+8GbuZx6PTFbh1Pi82//qwNEWV
+         zW/oq9c8gla1D2LuRRwbf776524+mE96XUtPtJCFzhYhOZeQs1yiw7bbhuueobNzHUku
+         g1gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=hI7cCXdi6R5ujHR9vWmQG88xwGtWx3rJxz6tsaW3ZeA=;
-        b=Gx6u9aNmWo2KNsae41AARE6OBCfG7d71WcJ3MauBh8x4S1lX7orgxmSgBnwYOnLf42
-         nzElZclxw/jRjcNoKikIW56kEURwwXrs6k5VX4fZzKwo3QwMOIVjTkcx2vJz7UzJ4Bum
-         vMsDkJ7t9QRLoEdt1rnBAIq8IlPT6MjxJo1L3Pw98sXSLpuN3P+deNfdKImkC+Piec6L
-         NPplkZNeMvmRZLbSV6yj9f7l4N0ek1kitOVcXHFdBBDuddu1GoBlAUUy5T3ZdvLtMicl
-         QWshBzghLmM+8V9tcF2Wtp2OVkatApOnKf0+cEsf737qn1rBg4D6FgcU2JnX80WI4b9Y
-         Q1qg==
-X-Gm-Message-State: AOAM532J7D7/Jslmf5zvYr/d1XUTIUfasv1O6bKKm0SL35T5Wk4cwofY
-        0E4K3e+LRLdnG3g+o56h1APG3bvuqG8=
-X-Google-Smtp-Source: ABdhPJwGok+e+zCLG4+WyxGmHEOHWOy/bIx53bgsFAna/KWk/FPo5i2j2CnRafPXmVi9MCAVD2+p2A==
-X-Received: by 2002:adf:9e48:: with SMTP id v8mr11548205wre.55.1604360736163;
-        Mon, 02 Nov 2020 15:45:36 -0800 (PST)
+        bh=3UOUvb0C/w+fD2FCxP9MhvlUcs/BBagXvRQQqA42S8E=;
+        b=Nh7AiU75QRA7N1krBd84cQTFdQxT1cbJbcOD2Gz55zrCRUnnaHIOcTqtvvjSAm5yhj
+         el9bbGIlBDishaAyZ8Di0tFuJ2suG/xMw2+CBHx2DohyHGE+fT3u3fRlyWQYxybA9rDl
+         hM3n5wmqayBTkGVF0wMDiPPv90p0pCcSvIE78TmyGfiguraX2JFHXyixLapbs1it74Qd
+         zu9JtRQytsgDPBx9QvqZrjFngYprxqT9D+0l29kMIHHNPB2HpvZSRRzwN9AMBeow2oUe
+         rdgVJfd6Cw0uhwRhueHRQXnHqAHfztxg5Ki31eEBrYhPonGkgbvUvjWbad3bVA/PJ3FS
+         PP+w==
+X-Gm-Message-State: AOAM530eoXW34EVjpxTfktIC9IlQZEDZ+mqh8HaZex6ujJ/G+xgb/WR0
+        gwp0hk0eiWdFxTilkaZudD8EklVEUP0=
+X-Google-Smtp-Source: ABdhPJyGSPWhqUcYs9Hf265fs2K4zEr7ncNnuYxrSwiU4oq+huquX0eRoiEEycm9G+E3cxzsxbe5CQ==
+X-Received: by 2002:a05:6000:372:: with SMTP id f18mr18080501wrf.149.1604360738826;
+        Mon, 02 Nov 2020 15:45:38 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r10sm1075400wmg.16.2020.11.02.15.45.35
+        by smtp.gmail.com with ESMTPSA id e11sm22931014wrj.75.2020.11.02.15.45.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2020 15:45:35 -0800 (PST)
-Message-Id: <pull.895.v5.git.git.1604360734.gitgitgadget@gmail.com>
-In-Reply-To: <pull.895.v4.git.git.1604003535.gitgitgadget@gmail.com>
+        Mon, 02 Nov 2020 15:45:38 -0800 (PST)
+Message-Id: <fce0db8778fd4664e7fc4092882ea13c6a01f39e.1604360734.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.895.v5.git.git.1604360734.gitgitgadget@gmail.com>
 References: <pull.895.v4.git.git.1604003535.gitgitgadget@gmail.com>
+        <pull.895.v5.git.git.1604360734.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 02 Nov 2020 23:45:30 +0000
-Subject: [PATCH v5 0/4] Beginning of new merge strategy: New API, empty implementation
+Date:   Mon, 02 Nov 2020 23:45:33 +0000
+Subject: [PATCH v5 3/4] fast-rebase: demonstrate merge-ort's API via new
+ test-tool command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,137 +76,299 @@ Cc:     Elijah Newren <newren@gmail.com>, Taylor Blau <me@ttaylorr.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
         Jacob Keller <jacob.keller@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
         Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In this series, I show the new merge API I have developed in merge-ort, and
-show how it differs from that provided by merge-recursive. I do this in four
-steps, each corresponding to a patch.
+From: Elijah Newren <newren@gmail.com>
 
-Changes since v4:
+Add a new test-tool command named 'fast-rebase', which is a
+super-slimmed down and nowhere near as capable version of 'git rebase'.
+'test-tool fast-rebase' is not currently planned for usage in the
+testsuite, but is here for two purposes:
 
- * Fix a bug where 'cherry-pick --continue' would report 'fatal:
-   cherry-pick: --strategy cannot be used with --continue' when pull.twohead
-   was set to ort (found by user of internal deployment at $DAYJOB)
+  1) Demonstrate the desired API of merge-ort.  In particular,
+     fast-rebase takes advantage of the separation of the merging
+     operation from the updating of the index and working tree, to
+     allow it to pick N commits, but only update the index and working
+     tree once at the end.  Look for the calls to
+     merge_incore_nonrecursive() and merge_switch_to_result().
 
-Elijah Newren (4):
-  merge-ort: barebones API of new merge strategy with empty
-    implementation
-  merge-ort-wrappers: new convience wrappers to mimic the old merge API
-  fast-rebase: demonstrate merge-ort's API via new test-tool command
-  merge,rebase,revert: select ort or recursive by config or environment
+  2) Provide a convenient benchmark that isn't polluted by the heavy
+     disk writing and forking of unnecessary processes that comes from
+     sequencer.c and merge-recursive.c.  fast-rebase is not meant to
+     replace sequencer.c, just give ideas on how sequencer.c can be
+     changed.  Updating sequencer.c with these goals is probably a
+     large amount of work; writing a simple targeted command with
+     no documentation, less-than-useful help messages, numerous
+     limitations in terms of flags it can accept and situations it can
+     handle, and which is flagged off from users is a much easier
+     interim step.
 
- Makefile                    |   3 +
- builtin/merge.c             |  26 ++++-
- builtin/rebase.c            |  13 ++-
- builtin/revert.c            |   7 ++
- merge-ort-wrappers.c        |  62 +++++++++++
- merge-ort-wrappers.h        |  25 +++++
- merge-ort.c                 |  52 +++++++++
- merge-ort.h                 |  58 ++++++++++
- sequencer.c                 |  72 ++++++++++--
- sequencer.h                 |   1 +
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ Makefile                    |   1 +
  t/helper/test-fast-rebase.c | 211 ++++++++++++++++++++++++++++++++++++
  t/helper/test-tool.c        |   1 +
  t/helper/test-tool.h        |   1 +
- 13 files changed, 517 insertions(+), 15 deletions(-)
- create mode 100644 merge-ort-wrappers.c
- create mode 100644 merge-ort-wrappers.h
- create mode 100644 merge-ort.c
- create mode 100644 merge-ort.h
+ 4 files changed, 214 insertions(+)
  create mode 100644 t/helper/test-fast-rebase.c
 
-
-base-commit: 69986e19ffcfb9af674ae5180689ab7bbf92ed28
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-895%2Fnewren%2Fort-api-with-empty-implementation-v5
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-895/newren/ort-api-with-empty-implementation-v5
-Pull-Request: https://github.com/git/git/pull/895
-
-Range-diff vs v4:
-
- 1:  3357ea415e = 1:  3357ea415e merge-ort: barebones API of new merge strategy with empty implementation
- 2:  d7f6a834ab = 2:  d7f6a834ab merge-ort-wrappers: new convience wrappers to mimic the old merge API
- 3:  fce0db8778 = 3:  fce0db8778 fast-rebase: demonstrate merge-ort's API via new test-tool command
- 4:  75d19804bd ! 4:  61217a83bd merge,rebase,revert: select ort or recursive by config or environment
-     @@ builtin/rebase.c: static struct replay_opts get_replay_opts(const struct rebase_
-      -	replay.strategy = opts->strategy;
-      +	if (opts->strategy)
-      +		replay.strategy = opts->strategy;
-     ++	else if (!replay.strategy && replay.default_strategy) {
-     ++		replay.strategy = replay.default_strategy;
-     ++		replay.default_strategy = NULL;
-     ++	}
-       
-       	if (opts->strategy_opts)
-       		parse_strategy_opts(&replay, opts->strategy_opts);
-     @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix
-       	case REBASE_PRESERVE_MERGES:
-      
-       ## builtin/revert.c ##
-     +@@ builtin/revert.c: static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
-     + 				NULL);
-     + 	}
-     + 
-     ++	if (!opts->strategy && opts->default_strategy) {
-     ++		opts->strategy = opts->default_strategy;
-     ++		opts->default_strategy = NULL;
-     ++	}
-     ++
-     + 	if (opts->allow_ff)
-     + 		verify_opt_compatible(me, "--ff",
-     + 				"--signoff", opts->signoff,
-      @@ builtin/revert.c: static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
-       	/* These option values will be free()d */
-       	opts->gpg_sign = xstrdup_or_null(opts->gpg_sign);
-     @@ sequencer.c: static int git_sequencer_config(const char *k, const char *v, void
-       		return 0;
-       	}
-       
-     -+	if (!opts->strategy && !strcmp(k, "pull.twohead")) {
-     -+		int ret = git_config_string((const char**)&opts->strategy, k, v);
-     ++	if (!opts->default_strategy && !strcmp(k, "pull.twohead")) {
-     ++		int ret = git_config_string((const char**)&opts->default_strategy, k, v);
-      +		if (ret == 0) {
-      +			/*
-      +			 * pull.twohead is allowed to be multi-valued; we only
-      +			 * care about the first value.
-      +			 */
-     -+			char *tmp = strchr(opts->strategy, ' ');
-     ++			char *tmp = strchr(opts->default_strategy, ' ');
-      +			if (tmp)
-      +				*tmp = '\0';
-      +		}
-     @@ sequencer.c: static int git_sequencer_config(const char *k, const char *v, void
-       	status = git_gpg_config(k, v, NULL);
-       	if (status)
-       		return status;
-     +@@ sequencer.c: int sequencer_remove_state(struct replay_opts *opts)
-     + 	free(opts->committer_name);
-     + 	free(opts->committer_email);
-     + 	free(opts->gpg_sign);
-     ++	free(opts->default_strategy);
-     + 	free(opts->strategy);
-     + 	for (i = 0; i < opts->xopts_nr; i++)
-     + 		free(opts->xopts[i]);
-      @@ sequencer.c: static int do_recursive_merge(struct repository *r,
-       			      struct replay_opts *opts)
-       {
-     @@ sequencer.c: static int do_merge(struct repository *r,
-       	if (ret <= 0)
-       		fputs(o.obuf.buf, stdout);
-       	strbuf_release(&o.obuf);
-     +
-     + ## sequencer.h ##
-     +@@ sequencer.h: struct replay_opts {
-     + 	int explicit_cleanup;
-     + 
-     + 	/* Merge strategy */
-     ++	char *default_strategy;  /* from config options */
-     + 	char *strategy;
-     + 	char **xopts;
-     + 	size_t xopts_nr, xopts_alloc;
-
+diff --git a/Makefile b/Makefile
+index 382fe73c76..24b9fecc0f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -704,6 +704,7 @@ TEST_BUILTINS_OBJS += test-dump-fsmonitor.o
+ TEST_BUILTINS_OBJS += test-dump-split-index.o
+ TEST_BUILTINS_OBJS += test-dump-untracked-cache.o
+ TEST_BUILTINS_OBJS += test-example-decorate.o
++TEST_BUILTINS_OBJS += test-fast-rebase.o
+ TEST_BUILTINS_OBJS += test-genrandom.o
+ TEST_BUILTINS_OBJS += test-genzeros.o
+ TEST_BUILTINS_OBJS += test-hash-speed.o
+diff --git a/t/helper/test-fast-rebase.c b/t/helper/test-fast-rebase.c
+new file mode 100644
+index 0000000000..373212256a
+--- /dev/null
++++ b/t/helper/test-fast-rebase.c
+@@ -0,0 +1,211 @@
++/*
++ * "git fast-rebase" builtin command
++ *
++ * FAST: Forking Any Subprocesses (is) Taboo
++ *
++ * This is meant SOLELY as a demo of what is possible.  sequencer.c and
++ * rebase.c should be refactored to use the ideas here, rather than attempting
++ * to extend this file to replace those (unless Phillip or Dscho say that
++ * refactoring is too hard and we need a clean slate, but I'm guessing that
++ * refactoring is the better route).
++ */
++
++#define USE_THE_INDEX_COMPATIBILITY_MACROS
++#include "test-tool.h"
++
++#include "cache-tree.h"
++#include "commit.h"
++#include "lockfile.h"
++#include "merge-ort.h"
++#include "refs.h"
++#include "revision.h"
++#include "sequencer.h"
++#include "strvec.h"
++#include "tree.h"
++
++static const char *short_commit_name(struct commit *commit)
++{
++	return find_unique_abbrev(&commit->object.oid, DEFAULT_ABBREV);
++}
++
++static struct commit *peel_committish(const char *name)
++{
++	struct object *obj;
++	struct object_id oid;
++
++	if (get_oid(name, &oid))
++		return NULL;
++	obj = parse_object(the_repository, &oid);
++	return (struct commit *)peel_to_type(name, 0, obj, OBJ_COMMIT);
++}
++
++static char *get_author(const char *message)
++{
++	size_t len;
++	const char *a;
++
++	a = find_commit_header(message, "author", &len);
++	if (a)
++		return xmemdupz(a, len);
++
++	return NULL;
++}
++
++static struct commit *create_commit(struct tree *tree,
++				    struct commit *based_on,
++				    struct commit *parent)
++{
++	struct object_id ret;
++	struct object *obj;
++	struct commit_list *parents = NULL;
++	char *author;
++	char *sign_commit = NULL;
++	struct commit_extra_header *extra;
++	struct strbuf msg = STRBUF_INIT;
++	const char *out_enc = get_commit_output_encoding();
++	const char *message = logmsg_reencode(based_on, NULL, out_enc);
++	const char *orig_message = NULL;
++	const char *exclude_gpgsig[] = { "gpgsig", NULL };
++
++	commit_list_insert(parent, &parents);
++	extra = read_commit_extra_headers(based_on, exclude_gpgsig);
++	find_commit_subject(message, &orig_message);
++	strbuf_addstr(&msg, orig_message);
++	author = get_author(message);
++	reset_ident_date();
++	if (commit_tree_extended(msg.buf, msg.len, &tree->object.oid, parents,
++				 &ret, author, NULL, sign_commit, extra)) {
++		error(_("failed to write commit object"));
++		return NULL;
++	}
++	free(author);
++	strbuf_release(&msg);
++
++	obj = parse_object(the_repository, &ret);
++	return (struct commit *)obj;
++}
++
++int cmd__fast_rebase(int argc, const char **argv)
++{
++	struct commit *onto;
++	struct commit *last_commit = NULL, *last_picked_commit = NULL;
++	struct object_id head;
++	struct lock_file lock = LOCK_INIT;
++	int clean = 1;
++	struct strvec rev_walk_args = STRVEC_INIT;
++	struct rev_info revs;
++	struct commit *commit;
++	struct merge_options merge_opt;
++	struct tree *next_tree, *base_tree, *head_tree;
++	struct merge_result result;
++	struct strbuf reflog_msg = STRBUF_INIT;
++	struct strbuf branch_name = STRBUF_INIT;
++
++	/*
++	 * test-tool stuff doesn't set up the git directory by default; need to
++	 * do that manually.
++	 */
++	setup_git_directory();
++
++	if (argc == 2 && !strcmp(argv[1], "-h")) {
++		printf("Sorry, I am not a psychiatrist; I can not give you the help you need.  Oh, you meant usage...\n");
++		exit(129);
++	}
++
++	if (argc != 5 || strcmp(argv[1], "--onto"))
++		die("usage: read the code, figure out how to use it, then do so");
++
++	onto = peel_committish(argv[2]);
++	strbuf_addf(&branch_name, "refs/heads/%s", argv[4]);
++
++	/* Sanity check */
++	if (get_oid("HEAD", &head))
++		die(_("Cannot read HEAD"));
++	assert(oideq(&onto->object.oid, &head));
++
++	hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
++	assert(repo_read_index(the_repository) >= 0);
++
++	repo_init_revisions(the_repository, &revs, NULL);
++	revs.verbose_header = 1;
++	revs.max_parents = 1;
++	revs.cherry_mark = 1;
++	revs.limited = 1;
++	revs.reverse = 1;
++	revs.right_only = 1;
++	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
++	revs.topo_order = 1;
++	strvec_pushl(&rev_walk_args, "", argv[4], "--not", argv[3], NULL);
++
++	if (setup_revisions(rev_walk_args.nr, rev_walk_args.v, &revs, NULL) > 1)
++		return error(_("unhandled options"));
++
++	strvec_clear(&rev_walk_args);
++
++	if (prepare_revision_walk(&revs) < 0)
++		return error(_("error preparing revisions"));
++
++	init_merge_options(&merge_opt, the_repository);
++	memset(&result, 0, sizeof(result));
++	merge_opt.show_rename_progress = 1;
++	merge_opt.branch1 = "HEAD";
++	head_tree = get_commit_tree(onto);
++	result.tree = head_tree;
++	last_commit = onto;
++	while ((commit = get_revision(&revs))) {
++		struct commit *base;
++
++		fprintf(stderr, "Rebasing %s...\r",
++			oid_to_hex(&commit->object.oid));
++		assert(commit->parents && !commit->parents->next);
++		base = commit->parents->item;
++
++		next_tree = get_commit_tree(commit);
++		base_tree = get_commit_tree(base);
++
++		merge_opt.branch2 = short_commit_name(commit);
++		merge_opt.ancestor = xstrfmt("parent of %s", merge_opt.branch2);
++
++		merge_incore_nonrecursive(&merge_opt,
++					  base_tree,
++					  result.tree,
++					  next_tree,
++					  &result);
++
++		free((char*)merge_opt.ancestor);
++		merge_opt.ancestor = NULL;
++		if (!result.clean)
++			die("Aborting: Hit a conflict and restarting is not implemented.");
++		last_picked_commit = commit;
++		last_commit = create_commit(result.tree, commit, last_commit);
++	}
++	fprintf(stderr, "\nDone.\n");
++	/* TODO: There should be some kind of rev_info_free(&revs) call... */
++	memset(&revs, 0, sizeof(revs));
++
++	merge_switch_to_result(&merge_opt, head_tree, &result, 1, !result.clean);
++
++	if (result.clean < 0)
++		exit(128);
++
++	strbuf_addf(&reflog_msg, "finish rebase %s onto %s",
++		    oid_to_hex(&last_picked_commit->object.oid),
++		    oid_to_hex(&last_commit->object.oid));
++	if (update_ref(reflog_msg.buf, branch_name.buf,
++		       &last_commit->object.oid,
++		       &last_picked_commit->object.oid,
++		       REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR)) {
++		error(_("could not update %s"), argv[4]);
++		die("Failed to update %s", argv[4]);
++	}
++	if (create_symref("HEAD", branch_name.buf, reflog_msg.buf) < 0)
++		die(_("unable to update HEAD"));
++	strbuf_release(&reflog_msg);
++	strbuf_release(&branch_name);
++
++	prime_cache_tree(the_repository, the_repository->index, result.tree);
++	if (write_locked_index(&the_index, &lock,
++			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
++		die(_("unable to write %s"), get_index_file());
++	return (clean == 0);
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index a0d3966b29..8bce7db076 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -28,6 +28,7 @@ static struct test_cmd cmds[] = {
+ 	{ "dump-split-index", cmd__dump_split_index },
+ 	{ "dump-untracked-cache", cmd__dump_untracked_cache },
+ 	{ "example-decorate", cmd__example_decorate },
++	{ "fast-rebase", cmd__fast_rebase },
+ 	{ "genrandom", cmd__genrandom },
+ 	{ "genzeros", cmd__genzeros },
+ 	{ "hashmap", cmd__hashmap },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index 07034d3f38..fd0cafe5ca 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -18,6 +18,7 @@ int cmd__dump_fsmonitor(int argc, const char **argv);
+ int cmd__dump_split_index(int argc, const char **argv);
+ int cmd__dump_untracked_cache(int argc, const char **argv);
+ int cmd__example_decorate(int argc, const char **argv);
++int cmd__fast_rebase(int argc, const char **argv);
+ int cmd__genrandom(int argc, const char **argv);
+ int cmd__genzeros(int argc, const char **argv);
+ int cmd__hashmap(int argc, const char **argv);
 -- 
 gitgitgadget
+
