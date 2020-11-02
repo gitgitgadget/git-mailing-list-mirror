@@ -7,64 +7,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03A65C388F9
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 18:55:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E62B2C56202
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 18:55:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AB8F122268
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 18:55:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 93F7B2225E
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 18:55:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SQHByRsc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M72sFb/7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726600AbgKBSzj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Nov 2020 13:55:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34344 "EHLO
+        id S1726594AbgKBSzh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Nov 2020 13:55:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725801AbgKBSz3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Nov 2020 13:55:29 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AFE7C061A4B
-        for <git@vger.kernel.org>; Mon,  2 Nov 2020 10:55:27 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id w1so15868549wrm.4
-        for <git@vger.kernel.org>; Mon, 02 Nov 2020 10:55:27 -0800 (PST)
+        with ESMTP id S1726236AbgKBSzW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Nov 2020 13:55:22 -0500
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29183C061A04
+        for <git@vger.kernel.org>; Mon,  2 Nov 2020 10:55:22 -0800 (PST)
+Received: by mail-wr1-x444.google.com with SMTP id x7so15867288wrl.3
+        for <git@vger.kernel.org>; Mon, 02 Nov 2020 10:55:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Oxdzbg13YO8U12UWlzUNnE5Q1NvcmWK9n+pCvBDtaLE=;
-        b=SQHByRsc7tESNX590LsRxOQgAUY1klxKjdNYpK3e2OUMfdE65VjAWbxvipP7ZleaGA
-         RQngreGCXCfH0eomBJBhDgMyGm4+L9CU42WW1m0TrestPQ1fEPKXSiH88i1bkKC0jxtY
-         UeB+rIBaLclE+iwLD5YuUhaVf0vXc7lgpTE+35fkyZ9+mzwVIhjH98p0v8XittNSLPkW
-         MgvWLvB+FHjNNq6lepF3Duzb0PBqUg5zYVuyexLyLVepKki7Q3A4PR5RbVyuQGhR9jlI
-         yIeRAbgNDmpw9Ya1N0inkyNaY1cFOkUiGgmOWR+dhflhp2aAINpQWDbU9Hr4IcbampOe
-         PSbw==
+        bh=oEYc2S4ksSfmtDUY2461bdvZotWwPmh9voOUaSelCBs=;
+        b=M72sFb/77Y6ZmuFVCCyRmF7XLt+hfA433cxJejnib0s7C+QarbDRlh0L0ldWXElXC4
+         KJF0H00+Zwv0H5zvjeJdB4/PpspyUioOs9aNXKvqXok8uK3U7OwZ+XzJBq/D2nrQuNqN
+         T/YywIpOf55548XxLSrEhIE2an8w4IOxpAWKLHhyEGIkEarw2fBJWWW7aMm4yZFh0jhb
+         9rXlzi82LPKMVcuAA3kO9YRVwvF3kdLoyltV3JNmHnaKp7BOUrlKqbEmtYfTcM7NbQlu
+         phONxcUyxFetEB4UetBFuPvgO8BNYdRnd5wIkdCiALCVRy1sgy4R1aFMs8lrL6bp5Jkn
+         gf0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Oxdzbg13YO8U12UWlzUNnE5Q1NvcmWK9n+pCvBDtaLE=;
-        b=qYm2VwA4c6C639/RfWsQtrVygr+uOgdCacjoGdRlw7BE0eNQg8EePOs89T4QLuh1pG
-         4PY09anqNQkjwfQTr0tqsWHNKvHrdbb5BsMoTXvD9qPq/Cr6do32pA4E7lUBOyV35G8A
-         DmCVB+PZPqLDFxVSbXSN7YMztmtfjW26fD4czd7xB4DOgtq22EESumBVuffgqPq1LoBh
-         XPVqgvJy5Vm7Z9eo0t9G+nIdDoM5HWVDIBE58nUczxYFCkkgxGvUmG0+KnxwSdjr8HgN
-         EVYpAFdeQgA7k+kyjJmrKMDr1KwLc/6hBpRwnM6vBYH2F9I5TC9oIGEV5hVUTFSqoo8/
-         dkng==
-X-Gm-Message-State: AOAM533TTkSc2MVxNRvgzte014+VfgC0TrvpUluurWavI5WGpklcritq
-        m6kKarWWZ9uI05MTYaacGCbMTlzZ+DE=
-X-Google-Smtp-Source: ABdhPJzvE/sFEwQK1ZA1thimKsUzU965KnGKKtRX/DxYiceM2tZXJcWQB5v9cULqfE4qqa/GrsO7lw==
-X-Received: by 2002:adf:e610:: with SMTP id p16mr15447335wrm.302.1604343325643;
-        Mon, 02 Nov 2020 10:55:25 -0800 (PST)
+        bh=oEYc2S4ksSfmtDUY2461bdvZotWwPmh9voOUaSelCBs=;
+        b=A+DCRQogq7xvYLoYHTIxAT3iYaKj9WlKaUxRYUfMewRoA9LS7pC3yeL03EdWah5XOt
+         krgWIZupHlWmLijpxvqsrHQotNVSH1nXkkLcmQa4Z4j+qd9xgNp/zGETPflkopDKdGYN
+         Q59U1ADvRT0uqqKcDcXwVI2/L7wU4zngPWxSy8MExyWdDnKfRyRZaDeVceWHdk2UROng
+         oNT+HZ2ATQz19L1/+2dvYUeEMPk8Sm2Oj+NF2GivFBarew9uR8wrmAD+IgheH0JGRsJm
+         qerAg0T4lnrIzo9QNYaQ0glD8x/PwFoARxbJ+GStcVR+e4W+OJvzp50u6+7ECmFtf102
+         IQzQ==
+X-Gm-Message-State: AOAM532cZG9ZLK/sEyvakXwYAopId3ds86R4njdjcTe2Z2Eq2SAh2zJu
+        EZiM14BsQF6Cd1IsgP5Gd+g1Ruy/6XM=
+X-Google-Smtp-Source: ABdhPJxO1b2vd44mPbc0KsbUBWoruDbCjPFGwr7PP4Z01k3ns+IYFzyD76bDTSsf0Fi9/9QvByxmCQ==
+X-Received: by 2002:a05:6000:1050:: with SMTP id c16mr21950966wrx.400.1604343320655;
+        Mon, 02 Nov 2020 10:55:20 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x22sm427042wmj.25.2020.11.02.10.55.24
+        by smtp.gmail.com with ESMTPSA id n8sm377160wmc.11.2020.11.02.10.55.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2020 10:55:25 -0800 (PST)
-Message-Id: <7f93cbb525704c0bd254181082e3ed1a2782a2d2.1604343314.git.gitgitgadget@gmail.com>
+        Mon, 02 Nov 2020 10:55:20 -0800 (PST)
+Message-Id: <448d3b219ffebbc0daa4ef033d78fd45693c5ccd.1604343314.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.835.v3.git.git.1604343313.gitgitgadget@gmail.com>
 References: <pull.835.v2.git.git.1602549650.gitgitgadget@gmail.com>
         <pull.835.v3.git.git.1604343313.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 02 Nov 2020 18:55:12 +0000
-Subject: [PATCH v3 12/13] strmap: take advantage of FLEXPTR_ALLOC_STR when
- relevant
+Date:   Mon, 02 Nov 2020 18:55:06 +0000
+Subject: [PATCH v3 06/13] strmap: new utility functions
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,98 +78,215 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-By default, we do not use a mempool and strdup_strings is true; in this
-case, we can avoid both an extra allocation and an extra free by just
-over-allocating for the strmap_entry leaving enough space at the end to
-copy the key.  FLEXPTR_ALLOC_STR exists for exactly this purpose, so
-make use of it.
+Add strmap as a new struct and associated utility functions,
+specifically for hashmaps that map strings to some value.  The API is
+taken directly from Peff's proposal at
+https://lore.kernel.org/git/20180906191203.GA26184@sigill.intra.peff.net/
 
-Also, adjust the case when we are using a memory pool and strdup_strings
-is true to just do one allocation from the memory pool instead of two so
-that the strmap_clear() and strmap_remove() code can just avoid freeing
-the key in all cases.
+Note that similar string-list, I have a strdup_strings setting.
+However, unlike string-list, strmap_init() does not take a parameter for
+this setting and instead automatically sets it to 1; callers who want to
+control this detail need to instead call strmap_init_with_options().
+(Future patches will add additional parameters to
+strmap_init_with_options()).
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- strmap.c | 35 ++++++++++++++++++-----------------
- strmap.h |  1 +
- 2 files changed, 19 insertions(+), 17 deletions(-)
+ Makefile |  1 +
+ strmap.c | 99 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ strmap.h | 65 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 165 insertions(+)
+ create mode 100644 strmap.c
+ create mode 100644 strmap.h
 
+diff --git a/Makefile b/Makefile
+index 95571ee3fc..777a34c01c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1000,6 +1000,7 @@ LIB_OBJS += stable-qsort.o
+ LIB_OBJS += strbuf.o
+ LIB_OBJS += streaming.o
+ LIB_OBJS += string-list.o
++LIB_OBJS += strmap.o
+ LIB_OBJS += strvec.o
+ LIB_OBJS += sub-process.o
+ LIB_OBJS += submodule-config.o
 diff --git a/strmap.c b/strmap.c
-index 34bca92522..9abd47fd4b 100644
---- a/strmap.c
+new file mode 100644
+index 0000000000..53f284eb20
+--- /dev/null
 +++ b/strmap.c
-@@ -59,11 +59,8 @@ static void strmap_free_entries_(struct strmap *map, int free_values)
- 	hashmap_for_each_entry(&map->map, &iter, e, ent) {
- 		if (free_values)
- 			free(e->value);
--		if (!map->pool) {
--			if (map->strdup_strings)
--				free((char*)e->key);
-+		if (!map->pool)
- 			free(e);
--		}
- 	}
- }
- 
-@@ -88,16 +85,23 @@ void *strmap_put(struct strmap *map, const char *str, void *data)
- 		old = entry->value;
- 		entry->value = data;
- 	} else {
--		const char *key = str;
--
--		entry = map->pool ? mem_pool_alloc(map->pool, sizeof(*entry))
--				  : xmalloc(sizeof(*entry));
-+		if (map->strdup_strings) {
-+			if (!map->pool) {
-+				FLEXPTR_ALLOC_STR(entry, key, str);
-+			} else {
-+				/* Remember +1 for nul byte twice below */
-+				size_t len = strlen(str);
-+				entry = mem_pool_alloc(map->pool,
-+					       st_add3(sizeof(*entry), len, 1));
-+				memcpy(entry->keydata, str, len+1);
-+			}
-+		} else if (!map->pool) {
-+			entry = xmalloc(sizeof(*entry));
-+		} else {
-+			entry = mem_pool_alloc(map->pool, sizeof(*entry));
-+		}
- 		hashmap_entry_init(&entry->ent, strhash(str));
--
--		if (map->strdup_strings)
--			key = map->pool ? mem_pool_strdup(map->pool, str)
--					: xstrdup(str);
--		entry->key = key;
-+		entry->key = map->strdup_strings ? entry->keydata : str;
- 		entry->value = data;
- 		hashmap_add(&map->map, &entry->ent);
- 	}
-@@ -130,11 +134,8 @@ void strmap_remove(struct strmap *map, const char *str, int free_value)
- 		return;
- 	if (free_value)
- 		free(ret->value);
--	if (!map->pool) {
--		if (map->strdup_strings)
--			free((char*)ret->key);
-+	if (!map->pool)
- 		free(ret);
--	}
- }
- 
- void strintmap_incr(struct strintmap *map, const char *str, intptr_t amt)
+@@ -0,0 +1,99 @@
++#include "git-compat-util.h"
++#include "strmap.h"
++
++int cmp_strmap_entry(const void *hashmap_cmp_fn_data,
++		     const struct hashmap_entry *entry1,
++		     const struct hashmap_entry *entry2,
++		     const void *keydata)
++{
++	const struct strmap_entry *e1, *e2;
++
++	e1 = container_of(entry1, const struct strmap_entry, ent);
++	e2 = container_of(entry2, const struct strmap_entry, ent);
++	return strcmp(e1->key, e2->key);
++}
++
++static struct strmap_entry *find_strmap_entry(struct strmap *map,
++					      const char *str)
++{
++	struct strmap_entry entry;
++	hashmap_entry_init(&entry.ent, strhash(str));
++	entry.key = str;
++	return hashmap_get_entry(&map->map, &entry, ent, NULL);
++}
++
++void strmap_init(struct strmap *map)
++{
++	strmap_init_with_options(map, 1);
++}
++
++void strmap_init_with_options(struct strmap *map,
++			      int strdup_strings)
++{
++	hashmap_init(&map->map, cmp_strmap_entry, NULL, 0);
++	map->strdup_strings = strdup_strings;
++}
++
++static void strmap_free_entries_(struct strmap *map, int free_values)
++{
++	struct hashmap_iter iter;
++	struct strmap_entry *e;
++
++	if (!map)
++		return;
++
++	/*
++	 * We need to iterate over the hashmap entries and free
++	 * e->key and e->value ourselves; hashmap has no API to
++	 * take care of that for us.  Since we're already iterating over
++	 * the hashmap, though, might as well free e too and avoid the need
++	 * to make some call into the hashmap API to do that.
++	 */
++	hashmap_for_each_entry(&map->map, &iter, e, ent) {
++		if (free_values)
++			free(e->value);
++		if (map->strdup_strings)
++			free((char*)e->key);
++		free(e);
++	}
++}
++
++void strmap_clear(struct strmap *map, int free_values)
++{
++	strmap_free_entries_(map, free_values);
++	hashmap_clear(&map->map);
++}
++
++void *strmap_put(struct strmap *map, const char *str, void *data)
++{
++	struct strmap_entry *entry = find_strmap_entry(map, str);
++	void *old = NULL;
++
++	if (entry) {
++		old = entry->value;
++		entry->value = data;
++	} else {
++		const char *key = str;
++
++		entry = xmalloc(sizeof(*entry));
++		hashmap_entry_init(&entry->ent, strhash(str));
++
++		if (map->strdup_strings)
++			key = xstrdup(str);
++		entry->key = key;
++		entry->value = data;
++		hashmap_add(&map->map, &entry->ent);
++	}
++	return old;
++}
++
++void *strmap_get(struct strmap *map, const char *str)
++{
++	struct strmap_entry *entry = find_strmap_entry(map, str);
++	return entry ? entry->value : NULL;
++}
++
++int strmap_contains(struct strmap *map, const char *str)
++{
++	return find_strmap_entry(map, str) != NULL;
++}
 diff --git a/strmap.h b/strmap.h
-index 6ffa6afb6a..0dd80b276e 100644
---- a/strmap.h
+new file mode 100644
+index 0000000000..96888c23ad
+--- /dev/null
 +++ b/strmap.h
-@@ -14,6 +14,7 @@ struct strmap_entry {
- 	struct hashmap_entry ent;
- 	const char *key;
- 	void *value;
-+	char keydata[FLEX_ARRAY]; /* if strdup_strings=1, key == &keydata[0] */
- };
- 
- int cmp_strmap_entry(const void *hashmap_cmp_fn_data,
+@@ -0,0 +1,65 @@
++#ifndef STRMAP_H
++#define STRMAP_H
++
++#include "hashmap.h"
++
++struct strmap {
++	struct hashmap map;
++	unsigned int strdup_strings:1;
++};
++
++struct strmap_entry {
++	struct hashmap_entry ent;
++	const char *key;
++	void *value;
++};
++
++int cmp_strmap_entry(const void *hashmap_cmp_fn_data,
++		     const struct hashmap_entry *entry1,
++		     const struct hashmap_entry *entry2,
++		     const void *keydata);
++
++#define STRMAP_INIT { \
++			.map = HASHMAP_INIT(cmp_strmap_entry, NULL),  \
++			.strdup_strings = 1,                          \
++		    }
++
++/*
++ * Initialize the members of the strmap.  Any keys added to the strmap will
++ * be strdup'ed with their memory managed by the strmap.
++ */
++void strmap_init(struct strmap *map);
++
++/*
++ * Same as strmap_init, but for those who want to control the memory management
++ * carefully instead of using the default of strdup_strings=1.
++ */
++void strmap_init_with_options(struct strmap *map,
++			      int strdup_strings);
++
++/*
++ * Remove all entries from the map, releasing any allocated resources.
++ */
++void strmap_clear(struct strmap *map, int free_values);
++
++/*
++ * Insert "str" into the map, pointing to "data".
++ *
++ * If an entry for "str" already exists, its data pointer is overwritten, and
++ * the original data pointer returned. Otherwise, returns NULL.
++ */
++void *strmap_put(struct strmap *map, const char *str, void *data);
++
++/*
++ * Return the data pointer mapped by "str", or NULL if the entry does not
++ * exist.
++ */
++void *strmap_get(struct strmap *map, const char *str);
++
++/*
++ * Return non-zero iff "str" is present in the map. This differs from
++ * strmap_get() in that it can distinguish entries with a NULL data pointer.
++ */
++int strmap_contains(struct strmap *map, const char *str);
++
++#endif /* STRMAP_H */
 -- 
 gitgitgadget
 
