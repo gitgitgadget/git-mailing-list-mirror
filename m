@@ -2,88 +2,104 @@ Return-Path: <SRS0=DNVg=EI=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B5E6C00A89
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 18:51:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD0FDC00A89
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 18:52:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD6532225E
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 18:51:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F6BA22245
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 18:52:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Mip8XLxk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ngfZDg6T"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726503AbgKBSvv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Nov 2020 13:51:51 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50127 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726506AbgKBSvv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Nov 2020 13:51:51 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 287D31005F9;
-        Mon,  2 Nov 2020 13:51:49 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=NtNhDXck1/AErEozA6BzrUqV1dE=; b=Mip8XL
-        xkB6OuvvY3DFqjzgVR1GBIUZyZm8LKmscvjIemoiTwO2+FDYYOhGMEqUgBdUcbv/
-        VwaxuD9dofA7OS7VnuQH54xKhy/oVqeBB6a/DH/s6F/mjuKT4ckFMvdi3nDRUzFH
-        rytROk0DNdWpbrn1maTFMwwWFrYMgw6NbxcME=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rrHmXBpT1E0odfPFKqFi4whWWl1Y3dqa
-        6S24b3GYpk6cV4Dgxh5XiDFsyxsVO2B6jir9insw9uEmA6onF9I7u1rk4UmEfkQk
-        nIoBkEEjqkq/ZUZArTChP/fofGnbl5PuHRVMTkQTw8QkQy/tqwArcFH2VqQ7FjWf
-        ReglISvmylI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 20D771005F7;
-        Mon,  2 Nov 2020 13:51:49 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5DD411005F6;
-        Mon,  2 Nov 2020 13:51:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org
-Subject: Re: jc/sequencer-stopped-sha-simplify, was Re: What's cooking in
- git.git (Oct 2020, #04; Tue, 27)
-References: <xmqqsg9rvc9z.fsf@gitster.c.googlers.com>
-        <20201102184634.3280859-1-jonathantanmy@google.com>
-Date:   Mon, 02 Nov 2020 10:51:44 -0800
-In-Reply-To: <20201102184634.3280859-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Mon, 2 Nov 2020 10:46:34 -0800")
-Message-ID: <xmqqo8kfvbgf.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726525AbgKBSwf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Nov 2020 13:52:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33870 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725846AbgKBSwf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Nov 2020 13:52:35 -0500
+Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 141A6C0617A6
+        for <git@vger.kernel.org>; Mon,  2 Nov 2020 10:52:35 -0800 (PST)
+Received: by mail-oi1-x242.google.com with SMTP id s21so15753173oij.0
+        for <git@vger.kernel.org>; Mon, 02 Nov 2020 10:52:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qiYIwZB5EPy+Az0p+mjL84fP+jEl8bMVlNptlLEOCLA=;
+        b=ngfZDg6T09FKxnAIshLidcif6joqw935vMCvA3WTOx8SkFVjRn0SusRw6kweCOVCLX
+         /uWGNZ51PULbkV+nNwzIj6P5R1g1bMynw+GznzHLL4ojw0hEnfpFqWWGzVaqgixVwi8H
+         Fse1bzzHi08+2Z7gAmsjTK5MHQbAoqi4EUEt6ZlnmPF9CszczgfhIR3bCTb3IX+Xwcot
+         FcIXv2C92Rv0Wf23WezatO7ZVYsr8JNRLHb0oTa3JECuB0w338FKdHW3ECPI2nmvnWNu
+         Cis0U80r4yyQ16tc+daDpn6vZ/hS1TP4/jxBLrlsKZiRijp/QrzJFXN4VRR/fHwTWRYc
+         hcDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qiYIwZB5EPy+Az0p+mjL84fP+jEl8bMVlNptlLEOCLA=;
+        b=GeeS2Znf7F/Rvr+bVyfwaUff7EjfS091c5tcEXxpfE9/sehPxuqaVJ6gN/nZn/npOj
+         oLUwR47fAIIlYkcmUuGdaMikC1wm0AHOkTchQJ727x6c0svYoEbvzzNWgT1h0Xn31mfk
+         +wuvc/NLJ2gL2no/7lD9F4UxuOxiK0dZ4vXQX6KkeFYtwqktIBEAS3GUrsMXvHgN9TCI
+         DAbWAoNmuXDqJloKxunssz/u8Z2Lv8Z9OoQg7BwqZ3X8egMu+EC179OghLQd4n8+nocH
+         OhLBT3JXL7QFORo+5tp26jrqilBNRkKa0PEhecrVrEyk95Z6dpj3qtCtYjnDbGruUo7D
+         4UEw==
+X-Gm-Message-State: AOAM533jQjA/cckzvfQMlYiGXh+vLPzEshuxlIK6nO0hJnxyhxSmyDgU
+        g82t5MH1e5fpsrf/5Y4ErTBN5+bL/ygnaOz28uQ=
+X-Google-Smtp-Source: ABdhPJwb3qpNVRkgCNZTLnCTrRFKeApQBJx4GpHY318WHHNJDDU9dCYfKBO/RdZQVhGlV5r1+z9bknktrP56rsEpfbE=
+X-Received: by 2002:a05:6808:17:: with SMTP id u23mr10521824oic.31.1604343154418;
+ Mon, 02 Nov 2020 10:52:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 750D12A2-1D3C-11EB-9549-E43E2BB96649-77302942!pb-smtp20.pobox.com
+References: <pull.895.v3.git.git.1603764490.gitgitgadget@gmail.com>
+ <pull.895.v4.git.git.1604003535.gitgitgadget@gmail.com> <CA+P7+xqFrzT53vx70tRDFgZXM3i2FJJK9CpuJJfkfsN4Qj6ChQ@mail.gmail.com>
+In-Reply-To: <CA+P7+xqFrzT53vx70tRDFgZXM3i2FJJK9CpuJJfkfsN4Qj6ChQ@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 2 Nov 2020 10:52:23 -0800
+Message-ID: <CABPp-BGELtrMa4TK-dkKWxrQ_iQHyEo1yaJBGC_ZyFWG7-9gKg@mail.gmail.com>
+Subject: Re: [PATCH v4 0/4] Beginning of new merge strategy: New API, empty implementation
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Peter Baumann <peter.baumann@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
-
->> I do not mind taking the approach as a prudent and careful thing,
->> but I want the question answered regardless, as I know Jonathan is
->> in a good position to tell if this is just a theoretical issue than
->> I am, and depending on the answer, we may rethink the approach of
->> trying to be overly careful.
+On Mon, Nov 2, 2020 at 1:28 AM Jacob Keller <jacob.keller@gmail.com> wrote:
 >
-> From what I see, this is just a theoretical issue for now. (I spotted it
-> while looking at the code, not because of a bug report.)
+> On Thu, Oct 29, 2020 at 1:34 PM Elijah Newren via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > In this series, I show the new merge API I have developed in merge-ort, and
+> > show how it differs from that provided by merge-recursive. I do this in four
+> > steps, each corresponding to a patch.
+> >
+>
+> I'm definitely excited by this project. I'm curious if you have any
+> further implementation as a WIP that could be played with to see the
+> end result of the new merging?
+>
+> I definitely like this approach where you work in smaller increments
+> to make the implementation easier to review!
 
-If there is no actual damage, then probably the earlier "let's be
-extra careful" Dscho mentioned may equally have been us being
-unnecessarily cautious.  Assuming that you didn't apply this patch
-to the internal version you ship to your developers---if you did,
-then we truly gained no data from this exchange because the original
-tightening had no chance to even cause the damage.
+I usually keep the 'ort' branch of https://github.com/newren/git
+functional (no promises, though).  It has lots of ifdefs, super ugly
+commits, todos & fixmes, and random additional (non-code) files where
+I was tracking various things I was working on, so the code and the
+tree may not be super readable, but it should be usable (and passes
+all the tests) -- just set pull.twohead=ort in your git config, or set
+the environment variable GIT_TEST_MERGE_ALGORITHM=ort.
 
-In any case, let's merge the loosening patch down to 'maint'.
-
-Thanks for being careful.
-.
+One warning: git cherry-pick --continue fails with "Cannot specify
+both --continue and --strategy"; my handling to set a --strategy
+option when pull.twohead was set apparently needs some tweaks.  If you
+spot any bugs or other issues, let me know.
