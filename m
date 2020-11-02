@@ -2,82 +2,117 @@ Return-Path: <SRS0=DNVg=EI=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 878E7C4742C
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 20:40:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D42B6C00A89
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 20:44:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1EA9022275
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 20:40:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6C254206E5
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 20:44:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uXJH3pbs"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VThpurWw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725809AbgKBUkk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Nov 2020 15:40:40 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54944 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725833AbgKBUkB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Nov 2020 15:40:01 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0FDD38E9F1;
-        Mon,  2 Nov 2020 15:39:59 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=nnrKJdhoAr7PvML/g+whGafr9IM=; b=uXJH3pbs+xsqx17T9nfz
-        DADYBj+u9m7rakrMTGbxih54E9tj8KlWGaWCpbhOFeF0YZ4P/+FKLgaaWjK1NGAj
-        EEIQMvb+0x2b+bvfluiYUIeCXmP8MWLyxyhy/nOybPEOwEst/nfU+qt6/zY56HBS
-        t7YJAa5VQRFdmvxttgmeg+o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=vWFUe2asezuImPMx2QpaNX02bCAaKnoxje4u0OMh+zjWT5
-        sQW2x55qRTC+yrtY8B2YJfMuFhpKx0qFfrvZ+cpx5XLBJ4PRhxZqUAxISkUzBsjs
-        JL9/emjjZ6njpcBeJhxTY1XlZJGTIGgbT16mnGe3eDYR02Lo2QbQ5VjP/k7C0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 075A78E9F0;
-        Mon,  2 Nov 2020 15:39:59 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 757448E9EB;
-        Mon,  2 Nov 2020 15:39:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sibo Dong <sibo.dong@mail.utoronto.ca>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitgitgadget@gmail.com" <gitgitgadget@gmail.com>,
-        "sibo.dong@outlook.com" <sibo.dong@outlook.com>
-Subject: Re: [PATCH] git-prompt.sh: make `option` a local variable
-References: <1d19cdf35c12b1079cee0861469dc1a652642c82.camel@mail.utoronto.ca>
-Date:   Mon, 02 Nov 2020 12:39:57 -0800
-Message-ID: <xmqqlffjtrvm.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727065AbgKBUoI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Nov 2020 15:44:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51360 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726988AbgKBUoC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Nov 2020 15:44:02 -0500
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80CBFC0617A6
+        for <git@vger.kernel.org>; Mon,  2 Nov 2020 12:44:00 -0800 (PST)
+Received: by mail-oi1-x244.google.com with SMTP id 9so16034132oir.5
+        for <git@vger.kernel.org>; Mon, 02 Nov 2020 12:44:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=8o3sAg1zpz+tjQUlz9e4oByVDbFxIiaVgYiFPH3mUzE=;
+        b=VThpurWw1efvpu3RmBccfY+dDl465zIhfpsu7TRKGETsDQXnGT0DyLjEY5dM3Bj7/8
+         Z3M5MV78B8aRIYsjrXfvVM9ZbJruIgFP0uTlRWfJOaV4UYnCtCX+lTMo1XITHgq5e13B
+         lWYOHcor376WyjFiXDHM01WsfsB1LlZgIpayLiXjupjHqZ85XFxmnbxsx4exXsjKCBGX
+         FxRkwYpBRYqJJdkpXKNKoBK7aSU0VQ8stnhYmiHq2ttolu67H3Wsdb08Pm+siEhYfN8f
+         rR5q2FZybmMg0XwHvLye89pBCRJTZknS+qfSRUX3KlQ0Kk4elAoUwQbfV8mh3JkEBl7A
+         i37w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=8o3sAg1zpz+tjQUlz9e4oByVDbFxIiaVgYiFPH3mUzE=;
+        b=Ui9XJxRAT3urpSRby7iVwloZtHDr4qivujOBI02m6ivq8bEWII7pW00k+3eYROr3u3
+         u66wOC+mrrohEMPyvl/ROLC7SaaG8gh6uZHdhr0Ds4Fp8yjQxn0z395doOF7z9fU3qR3
+         OW36PSREsLJvJWebUMwM6tfClx1potB1RK3hy0VHzE1DSreN/AU8fpgRRxpHuE2bOdMW
+         DKWmsW1d14lEhftonlNL1MHd29tUxj1vz6KN3NB3TaySzAKt90gjc3xKphdhlF/wJNiS
+         yknlpuSyCGWcKqfcLvajLSlnoffS3n0k0M0zKHXj+SYWiizH9bPjYcCnSE8yCbwh1ZCD
+         cwmA==
+X-Gm-Message-State: AOAM532KPuK2Mg/LjcwTKqluD48jT7k4wollQ/HE4ZSyKAA7RpgNnbs1
+        G/O9wE5ahe7N8q+h1iuPWiXRddhanC+Seg==
+X-Google-Smtp-Source: ABdhPJyQixbM9t1z9+F7WlPdX2VPyQfJS2irQmhfTOMBoiTYh8BmdTSnCc8xiRKJtj4BXPSw3tf+XQ==
+X-Received: by 2002:aca:bad4:: with SMTP id k203mr6334oif.16.1604349839791;
+        Mon, 02 Nov 2020 12:43:59 -0800 (PST)
+Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
+        by smtp.gmail.com with ESMTPSA id t27sm3848512otc.14.2020.11.02.12.43.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Nov 2020 12:43:59 -0800 (PST)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>
+Subject: [PATCH v2 10/20] merge-ort: avoid recursing into identical trees
+Date:   Mon,  2 Nov 2020 12:43:34 -0800
+Message-Id: <20201102204344.342633-11-newren@gmail.com>
+X-Mailer: git-send-email 2.29.0.471.ga4f56089c0
+In-Reply-To: <20201102204344.342633-1-newren@gmail.com>
+References: <20201102204344.342633-1-newren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 92A59EB0-1D4B-11EB-91A9-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sibo Dong <sibo.dong@mail.utoronto.ca> writes:
+When all three trees have the same oid, there is no need to recurse into
+these trees to find that all files within them happen to match.  We can
+just record any one of the trees as the resolution of merging that
+particular path.
 
-> Thank you for the feedback Junio; I'm a bit new to contributing. Since
-> you've justified this change much better than I have, is there any need
-> for further action on my part?
+Immediately resolving trees for other types of trivial tree merges (such
+as one side matches the merge base, or the two sides match each other)
+would prevent us from detecting renames for some paths, and thus prevent
+us from doing three-way content merges for those paths whose renames we
+did not detect.
 
-The reviews by others are offered and taken as input to improve the
-patch(es), but they are merely sugestions.  It is up to the original
-contributors to either disagree and not take them with explanation,
-or agree with and take them to improve their patch(es) before
-sending the next iteration.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ merge-ort.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-So, at least you'd need to say if you agree with the suggested
-change and to what degree.  Since you've done so, I can save one
-roundtrip by rewriting the proposed commit log message myself while
-queuing your patch ;-)
-
-Thanks.
+diff --git a/merge-ort.c b/merge-ort.c
+index bef3c648a0..9900fa1bf8 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -203,6 +203,19 @@ static int collect_merge_info_callback(int n,
+ 	fullpath = xmalloc(len+1);
+ 	make_traverse_path(fullpath, len+1, info, p->path, p->pathlen);
+ 
++	/*
++	 * If mbase, side1, and side2 all match, we can resolve early.  Even
++	 * if these are trees, there will be no renames or anything
++	 * underneath.
++	 */
++	if (side1_matches_mbase && side2_matches_mbase) {
++		/* mbase, side1, & side2 all match; use mbase as resolution */
++		setup_path_info(opt, &pi, dirname, info->pathlen, fullpath,
++				names, names+0, mbase_null, 0,
++				filemask, dirmask, 1);
++		return mask;
++	}
++
+ 	/*
+ 	 * Record information about the path so we can resolve later in
+ 	 * process_entries.
+-- 
+2.29.0.471.ga4f56089c0
 
