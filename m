@@ -2,897 +2,583 @@ Return-Path: <SRS0=DNVg=EI=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7971AC00A89
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 18:55:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CC42C2D0A3
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 18:55:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0BBAD22268
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 18:55:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9C30F22268
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 18:55:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vfDoZnTG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d5wUG/MU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726506AbgKBSz0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Nov 2020 13:55:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34304 "EHLO
+        id S1726088AbgKBSz1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Nov 2020 13:55:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726189AbgKBSzU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Nov 2020 13:55:20 -0500
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1694C0617A6
-        for <git@vger.kernel.org>; Mon,  2 Nov 2020 10:55:18 -0800 (PST)
-Received: by mail-wm1-x344.google.com with SMTP id c18so10441335wme.2
-        for <git@vger.kernel.org>; Mon, 02 Nov 2020 10:55:18 -0800 (PST)
+        with ESMTP id S1726369AbgKBSzW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Nov 2020 13:55:22 -0500
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A89A4C0617A6
+        for <git@vger.kernel.org>; Mon,  2 Nov 2020 10:55:21 -0800 (PST)
+Received: by mail-wr1-x444.google.com with SMTP id w14so15818170wrs.9
+        for <git@vger.kernel.org>; Mon, 02 Nov 2020 10:55:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=d8ltJtEE36EpePnJV3RFDVNCFa7TbkPO5WUq7f0vinY=;
-        b=vfDoZnTGPiqHj0S8pr36UDKxYdRqwEndqy2xL5bbFnPG5SsNYGluIUObULVrwTKNj1
-         4Iu3WoLTIoub+S+1nKQpvWLPW0n6mck3DdmeoOv+l2qVt5lQCzcKnXzJZNy2ZhHJeId8
-         5d9lWLUtuGLA3+bEoC++/59YK7qzUbgqQG7K8ebJ4+vA6fsiSxep1T2hoh64EOJt0o35
-         1z4QetWyf3vbI7dD8hHsvgN+M97TSadjdts7qBstnzn2cJqyehkvKLZv59ce3QpQhs0C
-         5iPmMVkgpzcASWlrsQ3ZWwZzRjMtyEiaWk7b5nAe7F/TTXpzWOm3IjTQ1Iv6VdBEvR5w
-         cx/Q==
+        bh=eD1ODDn8YazYa2TxKvej2ageSWRW9od1dWKHaSlyndc=;
+        b=d5wUG/MU2pRZ8XpHAj7Y+AEdsInDnuP3JWlNblQE7qyldhVDGt//jaAE4n0GHyMS6O
+         nlG1DWa5cajKKAf39OPMG3Ri6xcwrQAU7fZUu+NhdNADtviX2oMC1bovXpLRgDVZn68H
+         xhOFk7wWTJSokIKZfxkfH24n0kDiYjfagvByA9i6oyA/9e0BWmxnZVx0+Fj8ige+Eq+5
+         5+m426XbPxGk6R1TXWkzM0F3y9tivVaz6YyZ6hy1GTVgQpktWNn6VioG9j0xR73HidfX
+         zr01iHTXR4ZX+hiyEl30nGsi5jMq3LaIMbvYUFRm9G1qBY+qHEOzuLAv9I1vBe/0U0cD
+         SPKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=d8ltJtEE36EpePnJV3RFDVNCFa7TbkPO5WUq7f0vinY=;
-        b=YhhVhOW++MfTEZNzKHTmJ/eViVE98+wuq+4zEYH/w3W/EsE+TxhhoQV2q/9s5xsW6o
-         zEut2pH8uh6x8kA4g7ZtFGQ3WDgZ4CWPh3ivSHRjnBJBwYYeko6UXRAA939LvwaWHTcO
-         ZyliwXXZIOKNvtFNQkddym3ugJnvABW8IfgTu1z4+dOlMMeD+9xCqveveEp1Rq3vcRfz
-         VpemRohSANbk+Ti9TrSdlHTx3Hja0fP+lXYTu8nGFsoqPpRLrLjyaz5ozrJJUqdvkhrv
-         wUc6U7Y0TSWcU0aKK4M8ea/md2Uqg0RuTzWLtew2osBt4laksD8q3U8XQQt6M3b7E43N
-         qu9Q==
-X-Gm-Message-State: AOAM531VMTccHO9wblPcpm+xGQOHJTLGRG1TJcidLuqHo0nTIr76zdsC
-        AwNcmfBH13v5yvrA1epQ793uvoqOvAE=
-X-Google-Smtp-Source: ABdhPJzdUztaArPC+BCqGKtutsFKxVbd6Y3IsyC7w6wqc3++5FRlYd4i+pDNwnVU59VVo7rfG7Dn5A==
-X-Received: by 2002:a1c:4306:: with SMTP id q6mr20307566wma.189.1604343315756;
-        Mon, 02 Nov 2020 10:55:15 -0800 (PST)
+        bh=eD1ODDn8YazYa2TxKvej2ageSWRW9od1dWKHaSlyndc=;
+        b=TKrQ3OH2afvHuJ6rK841qzL95KcUlRP6X6DkIYe+JF60Y3wUs5+xqhrP/9ESZZrhHE
+         KdPN0Dd0ZP6a/gSZcSHJtKfaiTW8y/8IKf+O0sEBHgGNQnbI5ilYO+oD7qOI463Y9fqA
+         +0XKEDn+TkJSmI2YLexYFVz0iA7Q1llKULa1lxi1/JG9cWfBLrdEUJ08IzqCnU65N0Z3
+         hG6gneqAq5JpZkU1VQJ8YA9NJxcXBOjzAfaNViscAcm5FrMBAOrpNV/9YacAYC07A8S3
+         misRqu71pBmN82EX19/kzoXmPyy16ny9jn6qnNRAJ5OdVmje7+mYuJcVIpSE1fdzvf2A
+         c2nw==
+X-Gm-Message-State: AOAM532M6nNJkBc/1NZXB23Zp0agFwAmc8K2FVxaGIfGfws/ApuXIohW
+        RCM6IU9H1eUBolLDY0iNBwMUE1+VSSY=
+X-Google-Smtp-Source: ABdhPJxyuTmgf3aC/UsZV/FYf3SlzOnuaetYbTCN7ni+FpSAV0PSbOh3UqjrS/w5nhSkLgZlqcbp/A==
+X-Received: by 2002:a05:6000:10e:: with SMTP id o14mr22276276wrx.225.1604343319959;
+        Mon, 02 Nov 2020 10:55:19 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w1sm12997552wro.44.2020.11.02.10.55.14
+        by smtp.gmail.com with ESMTPSA id l3sm442526wmg.32.2020.11.02.10.55.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2020 10:55:15 -0800 (PST)
-Message-Id: <pull.835.v3.git.git.1604343313.gitgitgadget@gmail.com>
-In-Reply-To: <pull.835.v2.git.git.1602549650.gitgitgadget@gmail.com>
+        Mon, 02 Nov 2020 10:55:19 -0800 (PST)
+Message-Id: <861e8d65ae8065595d9d4ccff5f70155fec408c9.1604343314.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.835.v3.git.git.1604343313.gitgitgadget@gmail.com>
 References: <pull.835.v2.git.git.1602549650.gitgitgadget@gmail.com>
+        <pull.835.v3.git.git.1604343313.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 02 Nov 2020 18:55:00 +0000
-Subject: [PATCH v3 00/13] Add struct strmap and associated utility functions
+Date:   Mon, 02 Nov 2020 18:55:05 +0000
+Subject: [PATCH v3 05/13] hashmap: provide deallocation function names
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
         Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here I introduce a new strmap type (and strintmap and strset), which my new
-merge backed, merge-ort, uses heavily. (I also made significant use of it in
-my changes to diffcore-rename). This strmap type was based on Peff's
-proposal from a couple years ago[1], but has additions that I made as I used
-it, and a number of additions/changes suggested by Peff in his reviews. I
-also start the series off with some changes to hashmap, based on Peff's
-feedback on v1 & v2.
+From: Elijah Newren <newren@gmail.com>
 
-NOTE: My "fundamentals of merge-ort implementation"[2] that depends on this
-series needs to be updated due to these changes. I'll send a reroll for it
-soon.
+hashmap_free(), hashmap_free_entries(), and hashmap_free_() have existed
+for a while, but aren't necessarily the clearest names, especially with
+hashmap_partial_clear() being added to the mix and lazy-initialization
+now being supported.  Peff suggested we adopt the following names[1]:
 
-Changes since v2 (almost all of which were suggestions from Peff):
+  - hashmap_clear() - remove all entries and de-allocate any
+    hashmap-specific data, but be ready for reuse
 
- * Added HASHMAP_INIT() and STR*_INIT() macros (and added a patch converting
-   some existing callsites to use them)
- * Introduced the improved hashmap deallocation function names that Peff
-   suggested and updated the codebase (currently merges cleanly with seen,
-   though there's always a risk someone else is introducing a new one, but
-   it's at least clean right now)
- * Renamed free_util -> free_values, everywhere this time
- * Renamed strmap_ocd_init() -> strmap_init_with_options(). Similar for the
-   other str* subtypes.
- * Implemented strmap_empty() on top of strmap_get_size() instead of
-   hashmap_get_size()
- * Avoided the OFFSETOF_VAR initialization-on-windows concerns by just not
-   using the macro; for strmap_entry, the offset is always 0
- * Stored the default_value for a strintmap in the strintmap rather than
-   requiring it at every call to strintmap_get(). Updated strintmap_incr()
-   to make use of it as well.
- * Add a strset_check_and_add() function to the API
- * Added an extra patch at the end to take advantage of FLEXPTR_ALLOC_STR in
-   the default case to avoid an extra allocation and free.
- * Tweaked some commit messages, fixed a few more argument-alignment issues,
-   removed a bad comment
+  - hashmap_clear_and_free() - ditto, but free the entries themselves
 
-Things that I'm still unsure about:
+  - hashmap_partial_clear() - remove all entries but don't deallocate
+    table
 
- * strintmap_init() takes a default_value parameter, as suggested by Peff.
-   But this makes the function name strintmap_init_with_options() weird,
-   because strintmap_init() already takes one option, so it seems like the
-   name needs to replace "options" with "more_options". But that's kinda
-   ugly too. I'm guessing strintmap_init_with_options() is fine as-is, but
-   I'm wondering if anyone else thinks it looks weird and if so if there is
-   anything I should do about it.
+  - hashmap_partial_clear_and_free() - ditto, but free the entries
 
-Things Peff mentioned on v2 that I did NOT do:
+This patch provides the new names and converts all existing callers over
+to the new naming scheme.
 
- * Peff brought up some questions about mapping strintmap to an int rather
-   than an unsigned or intptr_t. I discussed my rationale in the thread
+[1] https://lore.kernel.org/git/20201030125059.GA3277724@coredump.intra.peff.net/
 
-Things Peff mentioned on v1 that are still not included and which Peff
-didn't comment on for v2, but which may still be worth mentioning again:
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ add-interactive.c       |  2 +-
+ blame.c                 |  2 +-
+ bloom.c                 |  2 +-
+ builtin/fetch.c         |  6 +++---
+ builtin/shortlog.c      |  2 +-
+ config.c                |  2 +-
+ diff.c                  |  4 ++--
+ diffcore-rename.c       |  2 +-
+ dir.c                   |  8 ++++----
+ hashmap.c               |  6 +++---
+ hashmap.h               | 44 +++++++++++++++++++++++++----------------
+ merge-recursive.c       |  6 +++---
+ name-hash.c             |  4 ++--
+ object.c                |  2 +-
+ oidmap.c                |  2 +-
+ patch-ids.c             |  2 +-
+ range-diff.c            |  2 +-
+ ref-filter.c            |  2 +-
+ revision.c              |  2 +-
+ sequencer.c             |  4 ++--
+ submodule-config.c      |  4 ++--
+ t/helper/test-hashmap.c |  6 +++---
+ 22 files changed, 63 insertions(+), 53 deletions(-)
 
- * Peff brought up the idea of having a free_values member instead of having
-   a free_values parameter to strmap_clear(). That'd just mean moving the
-   parameter from strmap_clear() to strmap_init() and would be easy to do,
-   but he sounded like he was just throwing it out as an idea and I didn't
-   have a strong opinion, so I left it as-is. If others have
-   opinions/preferences, changing it is easy right now.
- * Peff early on wanted the strmap_entry type to have a char key[FLEX_ALLOC]
-   instead of having a (const) char *key. I spent a couple more days on this
-   despite him not mentioning it while reviewing v2, and finally got it
-   working this time and running valgrind-free. Note that such a change
-   means always copying the key instead of allowing it as an option. After
-   implementing it, I timed it and it slowed down my important testcase by
-   just over 6%. So I chucked it. I think the FLEXPTR_ALLOC_STR usage in
-   combination with defaulting to strdup_strings=1 gives us most the
-   benefits Peff wanted, while still allowing merge-ort to reuse strings
-   when it's important.
-
-[1] 
-https://lore.kernel.org/git/20180906191203.GA26184@sigill.intra.peff.net/[2] 
-https://lore.kernel.org/git/CABPp-BHKGkx04neULtYUyfiU+z-X7_rxQqriSEjxZjU1oXokOA@mail.gmail.com/T/#t
-[3] 
-https://lore.kernel.org/git/CABPp-BFyqTthyBmp5yt+iUniwTi+=y2QcBcmNnnCy=zvyi3Rbw@mail.gmail.com/
-
-Elijah Newren (13):
-  hashmap: add usage documentation explaining hashmap_free[_entries]()
-  hashmap: adjust spacing to fix argument alignment
-  hashmap: allow re-use after hashmap_free()
-  hashmap: introduce a new hashmap_partial_clear()
-  hashmap: provide deallocation function names
-  strmap: new utility functions
-  strmap: add more utility functions
-  strmap: enable faster clearing and reusing of strmaps
-  strmap: add functions facilitating use as a string->int map
-  strmap: add a strset sub-type
-  strmap: enable allocations to come from a mem_pool
-  strmap: take advantage of FLEXPTR_ALLOC_STR when relevant
-  Use new HASHMAP_INIT macro to simplify hashmap initialization
-
- Makefile                |   1 +
- add-interactive.c       |   2 +-
- attr.c                  |  26 ++--
- blame.c                 |   2 +-
- bloom.c                 |   5 +-
- builtin/difftool.c      |   9 +-
- builtin/fetch.c         |   6 +-
- builtin/shortlog.c      |   2 +-
- config.c                |   2 +-
- diff.c                  |   4 +-
- diffcore-rename.c       |   2 +-
- dir.c                   |   8 +-
- hashmap.c               |  74 +++++++----
- hashmap.h               |  91 ++++++++++---
- merge-recursive.c       |   6 +-
- name-hash.c             |   4 +-
- object.c                |   2 +-
- oidmap.c                |   2 +-
- patch-ids.c             |   2 +-
- range-diff.c            |   6 +-
- ref-filter.c            |   2 +-
- revision.c              |  11 +-
- sequencer.c             |   4 +-
- strmap.c                | 158 +++++++++++++++++++++++
- strmap.h                | 280 ++++++++++++++++++++++++++++++++++++++++
- submodule-config.c      |   4 +-
- t/helper/test-hashmap.c |   9 +-
- 27 files changed, 610 insertions(+), 114 deletions(-)
- create mode 100644 strmap.c
- create mode 100644 strmap.h
-
-
-base-commit: d4a392452e292ff924e79ec8458611c0f679d6d4
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-835%2Fnewren%2Fstrmap-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-835/newren/strmap-v3
-Pull-Request: https://github.com/git/git/pull/835
-
-Range-diff vs v2:
-
-  1:  af6b6fcb46 =  1:  af6b6fcb46 hashmap: add usage documentation explaining hashmap_free[_entries]()
-  2:  75f17619e9 !  2:  591161fd78 hashmap: adjust spacing to fix argument alignment
-     @@ hashmap.c: struct hashmap_entry *hashmap_remove(struct hashmap *map,
-       {
-       	struct hashmap_entry *old = hashmap_remove(map, entry, NULL);
-       	hashmap_add(map, entry);
-     +
-     + ## hashmap.h ##
-     +@@ hashmap.h: struct hashmap {
-     +  * prevent expensive resizing. If 0, the table is dynamically resized.
-     +  */
-     + void hashmap_init(struct hashmap *map,
-     +-			 hashmap_cmp_fn equals_function,
-     +-			 const void *equals_function_data,
-     +-			 size_t initial_size);
-     ++		  hashmap_cmp_fn equals_function,
-     ++		  const void *equals_function_data,
-     ++		  size_t initial_size);
-     + 
-     + /* internal function for freeing hashmap */
-     + void hashmap_free_(struct hashmap *map, ssize_t offset);
-     +@@ hashmap.h: void hashmap_free_(struct hashmap *map, ssize_t offset);
-     +  * and if it is on stack, you can just let it go out of scope).
-     +  */
-     + static inline void hashmap_entry_init(struct hashmap_entry *e,
-     +-					unsigned int hash)
-     ++				      unsigned int hash)
-     + {
-     + 	e->hash = hash;
-     + 	e->next = NULL;
-     +@@ hashmap.h: static inline unsigned int hashmap_get_size(struct hashmap *map)
-     +  * to `hashmap_cmp_fn` to decide whether the entry matches the key.
-     +  */
-     + struct hashmap_entry *hashmap_get(const struct hashmap *map,
-     +-				const struct hashmap_entry *key,
-     +-				const void *keydata);
-     ++				  const struct hashmap_entry *key,
-     ++				  const void *keydata);
-     + 
-     + /*
-     +  * Returns the hashmap entry for the specified hash code and key data,
-     +@@ hashmap.h: static inline struct hashmap_entry *hashmap_get_from_hash(
-     +  * call to `hashmap_get` or `hashmap_get_next`.
-     +  */
-     + struct hashmap_entry *hashmap_get_next(const struct hashmap *map,
-     +-			const struct hashmap_entry *entry);
-     ++				       const struct hashmap_entry *entry);
-     + 
-     + /*
-     +  * Adds a hashmap entry. This allows to add duplicate entries (i.e.
-     +@@ hashmap.h: void hashmap_add(struct hashmap *map, struct hashmap_entry *entry);
-     +  * Returns the replaced entry, or NULL if not found (i.e. the entry was added).
-     +  */
-     + struct hashmap_entry *hashmap_put(struct hashmap *map,
-     +-				struct hashmap_entry *entry);
-     ++				  struct hashmap_entry *entry);
-     + 
-     + /*
-     +  * Adds or replaces a hashmap entry contained within @keyvar,
-     +@@ hashmap.h: struct hashmap_entry *hashmap_put(struct hashmap *map,
-     +  * Argument explanation is the same as in `hashmap_get`.
-     +  */
-     + struct hashmap_entry *hashmap_remove(struct hashmap *map,
-     +-					const struct hashmap_entry *key,
-     +-					const void *keydata);
-     ++				     const struct hashmap_entry *key,
-     ++				     const void *keydata);
-     + 
-     + /*
-     +  * Removes a hashmap entry contained within @keyvar,
-     +@@ hashmap.h: struct hashmap_entry *hashmap_iter_next(struct hashmap_iter *iter);
-     + 
-     + /* Initializes the iterator and returns the first entry, if any. */
-     + static inline struct hashmap_entry *hashmap_iter_first(struct hashmap *map,
-     +-		struct hashmap_iter *iter)
-     ++						       struct hashmap_iter *iter)
-     + {
-     + 	hashmap_iter_init(map, iter);
-     + 	return hashmap_iter_next(iter);
-  3:  a686d0758a !  3:  f2718d036d hashmap: allow re-use after hashmap_free()
-     @@ Commit message
-          Modify these functions to check for a NULL table and automatically
-          allocate as needed.
-      
-     -    I also thought about creating a HASHMAP_INIT macro to allow initializing
-     -    hashmaps on the stack without calling hashmap_init(), but virtually all
-     -    uses of hashmap specify a usecase-specific equals_function which defeats
-     -    the utility of such a macro.
-     +    Also add a HASHMAP_INIT(fn, data) macro for initializing hashmaps on the
-     +    stack without calling hashmap_init().
-      
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-      
-     @@ hashmap.c: struct hashmap_entry *hashmap_remove(struct hashmap *map,
-       	if (!*e)
-       		return NULL;
-       
-     +
-     + ## hashmap.h ##
-     +@@ hashmap.h: struct hashmap {
-     + 
-     + /* hashmap functions */
-     + 
-     ++#define HASHMAP_INIT(fn, data) { .cmpfn = fn, .cmpfn_data = data, \
-     ++				 .do_count_items = 1 }
-     ++
-     + /*
-     +  * Initializes a hashmap structure.
-     +  *
-  4:  061ab45a9b !  4:  61f1da3c51 hashmap: introduce a new hashmap_partial_clear()
-     @@ Commit message
-          hashmap: introduce a new hashmap_partial_clear()
-      
-          merge-ort is a heavy user of strmaps, which are built on hashmap.[ch].
-     -    reset_maps() in merge-ort was taking about 12% of overall runtime in my
-     -    testcase involving rebasing 35 patches of linux.git across a big rename.
-     -    reset_maps() was calling hashmap_free() followed by hashmap_init(),
-     -    meaning that not only was it freeing all the memory associated with each
-     -    of the strmaps just to immediately allocate a new array again, it was
-     -    allocating a new array that wasy likely smaller than needed (thus
-     -    resulting in later need to rehash things).  The ending size of the map
-     -    table on the previous commit was likely almost perfectly sized for the
-     -    next commit we wanted to pick, and not dropping and reallocating the
-     -    table immediately is a win.
-     +    clear_or_reinit_internal_opts() in merge-ort was taking about 12% of
-     +    overall runtime in my testcase involving rebasing 35 patches of
-     +    linux.git across a big rename.  clear_or_reinit_internal_opts() was
-     +    calling hashmap_free() followed by hashmap_init(), meaning that not only
-     +    was it freeing all the memory associated with each of the strmaps just
-     +    to immediately allocate a new array again, it was allocating a new array
-     +    that was likely smaller than needed (thus resulting in later need to
-     +    rehash things).  The ending size of the map table on the previous commit
-     +    was likely almost perfectly sized for the next commit we wanted to pick,
-     +    and not dropping and reallocating the table immediately is a win.
-      
-          Add some new API to hashmap to clear a hashmap of entries without
-          freeing map->table (and instead only zeroing it out like alloc_table()
-     @@ hashmap.c: void hashmap_init(struct hashmap *map, hashmap_cmp_fn equals_function
-      
-       ## hashmap.h ##
-      @@ hashmap.h: void hashmap_init(struct hashmap *map,
-     - 			 const void *equals_function_data,
-     - 			 size_t initial_size);
-     + 		  const void *equals_function_data,
-     + 		  size_t initial_size);
-       
-      -/* internal function for freeing hashmap */
-      +/* internal functions for clearing or freeing hashmap */
-  -:  ---------- >  5:  861e8d65ae hashmap: provide deallocation function names
-  5:  5c7507f55b !  6:  448d3b219f strmap: new utility functions
-     @@ Commit message
-          taken directly from Peff's proposal at
-          https://lore.kernel.org/git/20180906191203.GA26184@sigill.intra.peff.net/
-      
-     -    A couple of items of note:
-     -
-     -      * Similar to string-list, I have a strdup_strings setting.  However,
-     -        unlike string-list, strmap_init() does not take a parameter for this
-     -        setting and instead automatically sets it to 1; callers who want to
-     -        control this detail need to instead call strmap_ocd_init().
-     -
-     -      * I do not have a STRMAP_INIT macro.  I could possibly add one, but
-     -          #define STRMAP_INIT { { NULL, cmp_str_entry, NULL, 0, 0, 0, 0, 0 }, 1 }
-     -        feels a bit unwieldy and possibly error-prone in terms of future
-     -        expansion of the hashmap struct.  The fact that cmp_str_entry needs to
-     -        be in there prevents us from passing all zeros for the hashmap, and makes
-     -        me worry that STRMAP_INIT would just be more trouble than it is worth.
-     +    Note that similar string-list, I have a strdup_strings setting.
-     +    However, unlike string-list, strmap_init() does not take a parameter for
-     +    this setting and instead automatically sets it to 1; callers who want to
-     +    control this detail need to instead call strmap_init_with_options().
-     +    (Future patches will add additional parameters to
-     +    strmap_init_with_options()).
-      
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-      
-     @@ strmap.c (new)
-      +#include "git-compat-util.h"
-      +#include "strmap.h"
-      +
-     -+static int cmp_strmap_entry(const void *hashmap_cmp_fn_data,
-     -+			    const struct hashmap_entry *entry1,
-     -+			    const struct hashmap_entry *entry2,
-     -+			    const void *keydata)
-     ++int cmp_strmap_entry(const void *hashmap_cmp_fn_data,
-     ++		     const struct hashmap_entry *entry1,
-     ++		     const struct hashmap_entry *entry2,
-     ++		     const void *keydata)
-      +{
-      +	const struct strmap_entry *e1, *e2;
-      +
-     @@ strmap.c (new)
-      +
-      +void strmap_init(struct strmap *map)
-      +{
-     -+	strmap_ocd_init(map, 1);
-     ++	strmap_init_with_options(map, 1);
-      +}
-      +
-     -+void strmap_ocd_init(struct strmap *map,
-     -+		     int strdup_strings)
-     ++void strmap_init_with_options(struct strmap *map,
-     ++			      int strdup_strings)
-      +{
-      +	hashmap_init(&map->map, cmp_strmap_entry, NULL, 0);
-      +	map->strdup_strings = strdup_strings;
-      +}
-      +
-     -+static void strmap_free_entries_(struct strmap *map, int free_util)
-     ++static void strmap_free_entries_(struct strmap *map, int free_values)
-      +{
-      +	struct hashmap_iter iter;
-      +	struct strmap_entry *e;
-     @@ strmap.c (new)
-      +	 * to make some call into the hashmap API to do that.
-      +	 */
-      +	hashmap_for_each_entry(&map->map, &iter, e, ent) {
-     -+		if (free_util)
-     ++		if (free_values)
-      +			free(e->value);
-      +		if (map->strdup_strings)
-      +			free((char*)e->key);
-     @@ strmap.c (new)
-      +	}
-      +}
-      +
-     -+void strmap_clear(struct strmap *map, int free_util)
-     ++void strmap_clear(struct strmap *map, int free_values)
-      +{
-     -+	strmap_free_entries_(map, free_util);
-     -+	hashmap_free(&map->map);
-     ++	strmap_free_entries_(map, free_values);
-     ++	hashmap_clear(&map->map);
-      +}
-      +
-      +void *strmap_put(struct strmap *map, const char *str, void *data)
-     @@ strmap.c (new)
-      +		old = entry->value;
-      +		entry->value = data;
-      +	} else {
-     -+		/*
-     -+		 * We won't modify entry->key so it really should be const.
-     -+		 */
-      +		const char *key = str;
-      +
-      +		entry = xmalloc(sizeof(*entry));
-     @@ strmap.h (new)
-      +	void *value;
-      +};
-      +
-     ++int cmp_strmap_entry(const void *hashmap_cmp_fn_data,
-     ++		     const struct hashmap_entry *entry1,
-     ++		     const struct hashmap_entry *entry2,
-     ++		     const void *keydata);
-     ++
-     ++#define STRMAP_INIT { \
-     ++			.map = HASHMAP_INIT(cmp_strmap_entry, NULL),  \
-     ++			.strdup_strings = 1,                          \
-     ++		    }
-     ++
-      +/*
-      + * Initialize the members of the strmap.  Any keys added to the strmap will
-      + * be strdup'ed with their memory managed by the strmap.
-     @@ strmap.h (new)
-      +/*
-      + * Same as strmap_init, but for those who want to control the memory management
-      + * carefully instead of using the default of strdup_strings=1.
-     -+ * (OCD = Obsessive Compulsive Disorder, a joke that those who use this function
-     -+ * are obsessing over minor details.)
-      + */
-     -+void strmap_ocd_init(struct strmap *map,
-     -+		     int strdup_strings);
-     ++void strmap_init_with_options(struct strmap *map,
-     ++			      int strdup_strings);
-      +
-      +/*
-      + * Remove all entries from the map, releasing any allocated resources.
-  6:  61b5bf1110 !  7:  42633b8d03 strmap: add more utility functions
-     @@ Commit message
-          strmap: add more utility functions
-      
-          This adds a number of additional convienence functions I want/need:
-     -      * strmap_empty()
-            * strmap_get_size()
-     +      * strmap_empty()
-            * strmap_remove()
-            * strmap_for_each_entry()
-            * strmap_get_entry()
-     @@ strmap.c: int strmap_contains(struct strmap *map, const char *str)
-       	return find_strmap_entry(map, str) != NULL;
-       }
-      +
-     -+void strmap_remove(struct strmap *map, const char *str, int free_util)
-     ++void strmap_remove(struct strmap *map, const char *str, int free_value)
-      +{
-      +	struct strmap_entry entry, *ret;
-      +	hashmap_entry_init(&entry.ent, strhash(str));
-     @@ strmap.c: int strmap_contains(struct strmap *map, const char *str)
-      +	ret = hashmap_remove_entry(&map->map, &entry, ent, NULL);
-      +	if (!ret)
-      +		return;
-     -+	if (free_util)
-     ++	if (free_value)
-      +		free(ret->value);
-      +	if (map->strdup_strings)
-      +		free((char*)ret->key);
-     @@ strmap.h: void *strmap_get(struct strmap *map, const char *str);
-      +void strmap_remove(struct strmap *map, const char *str, int free_value);
-      +
-      +/*
-     -+ * Return whether the strmap is empty.
-     ++ * Return how many entries the strmap has.
-      + */
-     -+static inline int strmap_empty(struct strmap *map)
-     ++static inline unsigned int strmap_get_size(struct strmap *map)
-      +{
-     -+	return hashmap_get_size(&map->map) == 0;
-     ++	return hashmap_get_size(&map->map);
-      +}
-      +
-      +/*
-     -+ * Return how many entries the strmap has.
-     ++ * Return whether the strmap is empty.
-      + */
-     -+static inline unsigned int strmap_get_size(struct strmap *map)
-     ++static inline int strmap_empty(struct strmap *map)
-      +{
-     -+	return hashmap_get_size(&map->map);
-     ++	return strmap_get_size(map) == 0;
-      +}
-      +
-      +/*
-      + * iterate through @map using @iter, @var is a pointer to a type strmap_entry
-      + */
-      +#define strmap_for_each_entry(mystrmap, iter, var)	\
-     -+	for (var = hashmap_iter_first_entry_offset(&(mystrmap)->map, iter, \
-     -+						   OFFSETOF_VAR(var, ent)); \
-     ++	for (var = hashmap_iter_first_entry_offset(&(mystrmap)->map, iter, 0); \
-      +		var; \
-     -+		var = hashmap_iter_next_entry_offset(iter, \
-     -+						     OFFSETOF_VAR(var, ent)))
-     ++		var = hashmap_iter_next_entry_offset(iter, 0))
-      +
-       #endif /* STRMAP_H */
-  7:  2ebce0c5d8 !  8:  ea942eb803 strmap: enable faster clearing and reusing of strmaps
-     @@ Commit message
-          Introduce strmap_partial_clear() to take advantage of this type of
-          situation; it will act similar to strmap_clear() except that
-          map->table's entries are zeroed instead of map->table being free'd.
-     -    Making use of this function reduced the cost of reset_maps() by about
-     -    20% in mert-ort, and dropped the overall runtime of my rebase testcase
-     -    by just under 2%.
-     +    Making use of this function reduced the cost of
-     +    clear_or_reinit_internal_opts() by about 20% in mert-ort, and dropped
-     +    the overall runtime of my rebase testcase by just under 2%.
-      
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-      
-       ## strmap.c ##
-     -@@ strmap.c: void strmap_clear(struct strmap *map, int free_util)
-     - 	hashmap_free(&map->map);
-     +@@ strmap.c: void strmap_clear(struct strmap *map, int free_values)
-     + 	hashmap_clear(&map->map);
-       }
-       
-     -+void strmap_partial_clear(struct strmap *map, int free_util)
-     ++void strmap_partial_clear(struct strmap *map, int free_values)
-      +{
-     -+	strmap_free_entries_(map, free_util);
-     ++	strmap_free_entries_(map, free_values);
-      +	hashmap_partial_clear(&map->map);
-      +}
-      +
-     @@ strmap.c: void strmap_clear(struct strmap *map, int free_util)
-       	struct strmap_entry *entry = find_strmap_entry(map, str);
-      
-       ## strmap.h ##
-     -@@ strmap.h: void strmap_ocd_init(struct strmap *map,
-     +@@ strmap.h: void strmap_init_with_options(struct strmap *map,
-        */
-       void strmap_clear(struct strmap *map, int free_values);
-       
-  8:  cc8d702f98 !  9:  c1d2172171 strmap: add functions facilitating use as a string->int map
-     @@ Commit message
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-      
-       ## strmap.c ##
-     -@@ strmap.c: void strmap_remove(struct strmap *map, const char *str, int free_util)
-     +@@ strmap.c: void strmap_remove(struct strmap *map, const char *str, int free_value)
-       		free((char*)ret->key);
-       	free(ret);
-       }
-     @@ strmap.c: void strmap_remove(struct strmap *map, const char *str, int free_util)
-      +		*whence += amt;
-      +	}
-      +	else
-     -+		strintmap_set(map, str, amt);
-     ++		strintmap_set(map, str, map->default_value + amt);
-      +}
-      
-       ## strmap.h ##
-     -@@ strmap.h: static inline unsigned int strmap_get_size(struct strmap *map)
-     - 		var = hashmap_iter_next_entry_offset(iter, \
-     - 						     OFFSETOF_VAR(var, ent)))
-     +@@ strmap.h: int cmp_strmap_entry(const void *hashmap_cmp_fn_data,
-     + 			.map = HASHMAP_INIT(cmp_strmap_entry, NULL),  \
-     + 			.strdup_strings = 1,                          \
-     + 		    }
-     ++#define STRINTMAP_INIT { \
-     ++			.map.map = HASHMAP_INIT(cmp_strmap_entry, NULL),  \
-     ++			.map.strdup_strings = 1,                          \
-     ++			.default_value = 0,                               \
-     ++		    }
-     + 
-     + /*
-     +  * Initialize the members of the strmap.  Any keys added to the strmap will
-     +@@ strmap.h: static inline int strmap_empty(struct strmap *map)
-     + 		var; \
-     + 		var = hashmap_iter_next_entry_offset(iter, 0))
-       
-      +
-      +/*
-     @@ strmap.h: static inline unsigned int strmap_get_size(struct strmap *map)
-      +
-      +struct strintmap {
-      +	struct strmap map;
-     ++	int default_value;
-      +};
-      +
-      +#define strintmap_for_each_entry(mystrmap, iter, var)	\
-      +	strmap_for_each_entry(&(mystrmap)->map, iter, var)
-      +
-     -+static inline void strintmap_init(struct strintmap *map)
-     ++static inline void strintmap_init(struct strintmap *map, int default_value)
-      +{
-      +	strmap_init(&map->map);
-     ++	map->default_value = default_value;
-      +}
-      +
-     -+static inline void strintmap_ocd_init(struct strintmap *map,
-     -+				      int strdup_strings)
-     ++static inline void strintmap_init_with_options(struct strintmap *map,
-     ++					       int default_value,
-     ++					       int strdup_strings)
-      +{
-     -+	strmap_ocd_init(&map->map, strdup_strings);
-     ++	strmap_init_with_options(&map->map, strdup_strings);
-     ++	map->default_value = default_value;
-      +}
-      +
-      +static inline void strintmap_clear(struct strintmap *map)
-     @@ strmap.h: static inline unsigned int strmap_get_size(struct strmap *map)
-      +	return strmap_get_size(&map->map);
-      +}
-      +
-     -+static inline int strintmap_get(struct strintmap *map, const char *str,
-     -+				int default_value)
-     ++/*
-     ++ * Returns the value for str in the map.  If str isn't found in the map,
-     ++ * the map's default_value is returned.
-     ++ */
-     ++static inline int strintmap_get(struct strintmap *map, const char *str)
-      +{
-      +	struct strmap_entry *result = strmap_get_entry(&map->map, str);
-      +	if (!result)
-     -+		return default_value;
-     ++		return map->default_value;
-      +	return (intptr_t)result->value;
-      +}
-      +
-     @@ strmap.h: static inline unsigned int strmap_get_size(struct strmap *map)
-      +	strmap_put(&map->map, str, (void *)v);
-      +}
-      +
-     ++/*
-     ++ * Increment the value for str by amt.  If str isn't in the map, add it and
-     ++ * set its value to default_value + amt.
-     ++ */
-      +void strintmap_incr(struct strintmap *map, const char *str, intptr_t amt);
-      +
-       #endif /* STRMAP_H */
-  9:  490d3a42ad ! 10:  0f57735f5e strmap: add a strset sub-type
-     @@ Commit message
-      
-          The difference in usage also results in some differences in API: a few
-          things that aren't necessary or meaningful are dropped (namely, the
-     -    free_util argument to *_clear(), and the *_get() function), and
-     +    free_values argument to *_clear(), and the *_get() function), and
-          strset_add() is chosen as the API instead of strset_put().
-      
-     +    Finally, shortlog already had a more minimal strset API; so this adds a
-     +    strset_check_and_add() function for its benefit to allow it to switch
-     +    over to this strset implementation.
-     +
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-      
-     + ## strmap.c ##
-     +@@ strmap.c: void strintmap_incr(struct strintmap *map, const char *str, intptr_t amt)
-     + 	else
-     + 		strintmap_set(map, str, map->default_value + amt);
-     + }
-     ++
-     ++int strset_check_and_add(struct strset *set, const char *str)
-     ++{
-     ++	if (strset_contains(set, str))
-     ++		return 1;
-     ++	strset_add(set, str);
-     ++	return 0;
-     ++}
-     +
-       ## strmap.h ##
-     -@@ strmap.h: static inline void strintmap_set(struct strintmap *map, const char *str,
-     +@@ strmap.h: int cmp_strmap_entry(const void *hashmap_cmp_fn_data,
-     + 			.map.strdup_strings = 1,                          \
-     + 			.default_value = 0,                               \
-     + 		    }
-     ++#define STRSET_INIT { \
-     ++			.map.map = HASHMAP_INIT(cmp_strmap_entry, NULL),  \
-     ++			.map.strdup_strings = 1,                          \
-     ++		    }
-       
-     + /*
-     +  * Initialize the members of the strmap.  Any keys added to the strmap will
-     +@@ strmap.h: static inline void strintmap_set(struct strintmap *map, const char *str,
-     +  */
-       void strintmap_incr(struct strintmap *map, const char *str, intptr_t amt);
-       
-      +/*
-     @@ strmap.h: static inline void strintmap_set(struct strintmap *map, const char *st
-      +	strmap_init(&set->map);
-      +}
-      +
-     -+static inline void strset_ocd_init(struct strset *set,
-     -+				   int strdup_strings)
-     ++static inline void strset_init_with_options(struct strset *set,
-     ++					    int strdup_strings)
-      +{
-     -+	strmap_ocd_init(&set->map, strdup_strings);
-     ++	strmap_init_with_options(&set->map, strdup_strings);
-      +}
-      +
-      +static inline void strset_clear(struct strset *set)
-     @@ strmap.h: static inline void strintmap_set(struct strintmap *map, const char *st
-      +{
-      +	strmap_put(&set->map, str, NULL);
-      +}
-     ++
-     ++/* Returns 1 if str already in set.  Otherwise adds str to set and returns 0 */
-     ++int strset_check_and_add(struct strset *set, const char *str);
-      +
-       #endif /* STRMAP_H */
- 10:  eca4f1ddba ! 11:  980537e877 strmap: enable allocations to come from a mem_pool
-     @@ Commit message
-      
-          For heavy users of strmaps, allowing the keys and entries to be
-          allocated from a memory pool can provide significant overhead savings.
-     -    Add an option to strmap_ocd_init() to specify a memory pool.
-     +    Add an option to strmap_init_with_options() to specify a memory pool.
-      
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-      
-     @@ strmap.c
-       #include "strmap.h"
-      +#include "mem-pool.h"
-       
-     - static int cmp_strmap_entry(const void *hashmap_cmp_fn_data,
-     - 			    const struct hashmap_entry *entry1,
-     + int cmp_strmap_entry(const void *hashmap_cmp_fn_data,
-     + 		     const struct hashmap_entry *entry1,
-      @@ strmap.c: static struct strmap_entry *find_strmap_entry(struct strmap *map,
-       
-       void strmap_init(struct strmap *map)
-       {
-     --	strmap_ocd_init(map, 1);
-     -+	strmap_ocd_init(map, NULL, 1);
-     +-	strmap_init_with_options(map, 1);
-     ++	strmap_init_with_options(map, NULL, 1);
-       }
-       
-     - void strmap_ocd_init(struct strmap *map,
-     -+		     struct mem_pool *pool,
-     - 		     int strdup_strings)
-     + void strmap_init_with_options(struct strmap *map,
-     ++			      struct mem_pool *pool,
-     + 			      int strdup_strings)
-       {
-       	hashmap_init(&map->map, cmp_strmap_entry, NULL, 0);
-      +	map->pool = pool;
-       	map->strdup_strings = strdup_strings;
-       }
-       
-     -@@ strmap.c: static void strmap_free_entries_(struct strmap *map, int free_util)
-     +@@ strmap.c: static void strmap_free_entries_(struct strmap *map, int free_values)
-       	if (!map)
-       		return;
-       
-     -+	if (!free_util && map->pool)
-     ++	if (!free_values && map->pool)
-      +		/* Memory other than util is owned by and freed with the pool */
-      +		return;
-      +
-       	/*
-       	 * We need to iterate over the hashmap entries and free
-       	 * e->key and e->value ourselves; hashmap has no API to
-     -@@ strmap.c: static void strmap_free_entries_(struct strmap *map, int free_util)
-     +@@ strmap.c: static void strmap_free_entries_(struct strmap *map, int free_values)
-       	hashmap_for_each_entry(&map->map, &iter, e, ent) {
-     - 		if (free_util)
-     + 		if (free_values)
-       			free(e->value);
-      -		if (map->strdup_strings)
-      -			free((char*)e->key);
-     @@ strmap.c: static void strmap_free_entries_(struct strmap *map, int free_util)
-       }
-       
-      @@ strmap.c: void *strmap_put(struct strmap *map, const char *str, void *data)
-     - 		 */
-     + 	} else {
-       		const char *key = str;
-       
-      -		entry = xmalloc(sizeof(*entry));
-     @@ strmap.c: void *strmap_put(struct strmap *map, const char *str, void *data)
-       		entry->key = key;
-       		entry->value = data;
-       		hashmap_add(&map->map, &entry->ent);
-     -@@ strmap.c: void strmap_remove(struct strmap *map, const char *str, int free_util)
-     +@@ strmap.c: void strmap_remove(struct strmap *map, const char *str, int free_value)
-       		return;
-     - 	if (free_util)
-     + 	if (free_value)
-       		free(ret->value);
-      -	if (map->strdup_strings)
-      -		free((char*)ret->key);
-     @@ strmap.h: void strmap_init(struct strmap *map);
-        * Same as strmap_init, but for those who want to control the memory management
-      - * carefully instead of using the default of strdup_strings=1.
-      + * carefully instead of using the default of strdup_strings=1 and pool=NULL.
-     -  * (OCD = Obsessive Compulsive Disorder, a joke that those who use this function
-     -  * are obsessing over minor details.)
-        */
-     - void strmap_ocd_init(struct strmap *map,
-     -+		     struct mem_pool *pool,
-     - 		     int strdup_strings);
-     + void strmap_init_with_options(struct strmap *map,
-     ++			      struct mem_pool *pool,
-     + 			      int strdup_strings);
-       
-       /*
-     -@@ strmap.h: static inline void strintmap_init(struct strintmap *map)
-     - }
-     +@@ strmap.h: static inline void strintmap_init(struct strintmap *map, int default_value)
-       
-     - static inline void strintmap_ocd_init(struct strintmap *map,
-     -+				      struct mem_pool *pool,
-     - 				      int strdup_strings)
-     + static inline void strintmap_init_with_options(struct strintmap *map,
-     + 					       int default_value,
-     ++					       struct mem_pool *pool,
-     + 					       int strdup_strings)
-       {
-     --	strmap_ocd_init(&map->map, strdup_strings);
-     -+	strmap_ocd_init(&map->map, pool, strdup_strings);
-     +-	strmap_init_with_options(&map->map, strdup_strings);
-     ++	strmap_init_with_options(&map->map, pool, strdup_strings);
-     + 	map->default_value = default_value;
-       }
-       
-     - static inline void strintmap_clear(struct strintmap *map)
-      @@ strmap.h: static inline void strset_init(struct strset *set)
-       }
-       
-     - static inline void strset_ocd_init(struct strset *set,
-     -+				   struct mem_pool *pool,
-     - 				   int strdup_strings)
-     + static inline void strset_init_with_options(struct strset *set,
-     ++					    struct mem_pool *pool,
-     + 					    int strdup_strings)
-       {
-     --	strmap_ocd_init(&set->map, strdup_strings);
-     -+	strmap_ocd_init(&set->map, pool, strdup_strings);
-     +-	strmap_init_with_options(&set->map, strdup_strings);
-     ++	strmap_init_with_options(&set->map, pool, strdup_strings);
-       }
-       
-       static inline void strset_clear(struct strset *set)
-  -:  ---------- > 12:  7f93cbb525 strmap: take advantage of FLEXPTR_ALLOC_STR when relevant
-  -:  ---------- > 13:  5f41fc63e5 Use new HASHMAP_INIT macro to simplify hashmap initialization
-
+diff --git a/add-interactive.c b/add-interactive.c
+index 555c4abf32..a14c0feaa2 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -557,7 +557,7 @@ static int get_modified_files(struct repository *r,
+ 		if (ps)
+ 			clear_pathspec(&rev.prune_data);
+ 	}
+-	hashmap_free_entries(&s.file_map, struct pathname_entry, ent);
++	hashmap_clear_and_free(&s.file_map, struct pathname_entry, ent);
+ 	if (unmerged_count)
+ 		*unmerged_count = s.unmerged_count;
+ 	if (binary_count)
+diff --git a/blame.c b/blame.c
+index 686845b2b4..229beb6452 100644
+--- a/blame.c
++++ b/blame.c
+@@ -435,7 +435,7 @@ static void get_fingerprint(struct fingerprint *result,
+ 
+ static void free_fingerprint(struct fingerprint *f)
+ {
+-	hashmap_free(&f->map);
++	hashmap_clear(&f->map);
+ 	free(f->entries);
+ }
+ 
+diff --git a/bloom.c b/bloom.c
+index 68c73200a5..719c313a1c 100644
+--- a/bloom.c
++++ b/bloom.c
+@@ -287,7 +287,7 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
+ 		}
+ 
+ 	cleanup:
+-		hashmap_free_entries(&pathmap, struct pathmap_hash_entry, entry);
++		hashmap_clear_and_free(&pathmap, struct pathmap_hash_entry, entry);
+ 	} else {
+ 		for (i = 0; i < diff_queued_diff.nr; i++)
+ 			diff_free_filepair(diff_queued_diff.queue[i]);
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index f9c3c49f14..ecf8537605 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -393,7 +393,7 @@ static void find_non_local_tags(const struct ref *refs,
+ 		item = refname_hash_add(&remote_refs, ref->name, &ref->old_oid);
+ 		string_list_insert(&remote_refs_list, ref->name);
+ 	}
+-	hashmap_free_entries(&existing_refs, struct refname_hash_entry, ent);
++	hashmap_clear_and_free(&existing_refs, struct refname_hash_entry, ent);
+ 
+ 	/*
+ 	 * We may have a final lightweight tag that needs to be
+@@ -428,7 +428,7 @@ static void find_non_local_tags(const struct ref *refs,
+ 		**tail = rm;
+ 		*tail = &rm->next;
+ 	}
+-	hashmap_free_entries(&remote_refs, struct refname_hash_entry, ent);
++	hashmap_clear_and_free(&remote_refs, struct refname_hash_entry, ent);
+ 	string_list_clear(&remote_refs_list, 0);
+ 	oidset_clear(&fetch_oids);
+ }
+@@ -573,7 +573,7 @@ static struct ref *get_ref_map(struct remote *remote,
+ 		}
+ 	}
+ 	if (existing_refs_populated)
+-		hashmap_free_entries(&existing_refs, struct refname_hash_entry, ent);
++		hashmap_clear_and_free(&existing_refs, struct refname_hash_entry, ent);
+ 
+ 	return ref_map;
+ }
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index 0a5c4968f6..83f0a739b4 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -220,7 +220,7 @@ static void strset_clear(struct strset *ss)
+ {
+ 	if (!ss->map.table)
+ 		return;
+-	hashmap_free_entries(&ss->map, struct strset_item, ent);
++	hashmap_clear_and_free(&ss->map, struct strset_item, ent);
+ }
+ 
+ static void insert_records_from_trailers(struct shortlog *log,
+diff --git a/config.c b/config.c
+index 2bdff4457b..8f324ed3a6 100644
+--- a/config.c
++++ b/config.c
+@@ -1963,7 +1963,7 @@ void git_configset_clear(struct config_set *cs)
+ 		free(entry->key);
+ 		string_list_clear(&entry->value_list, 1);
+ 	}
+-	hashmap_free_entries(&cs->config_hash, struct config_set_element, ent);
++	hashmap_clear_and_free(&cs->config_hash, struct config_set_element, ent);
+ 	cs->hash_initialized = 0;
+ 	free(cs->list.items);
+ 	cs->list.nr = 0;
+diff --git a/diff.c b/diff.c
+index 2bb2f8f57e..8e0e59f5cf 100644
+--- a/diff.c
++++ b/diff.c
+@@ -6289,9 +6289,9 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
+ 			if (o->color_moved == COLOR_MOVED_ZEBRA_DIM)
+ 				dim_moved_lines(o);
+ 
+-			hashmap_free_entries(&add_lines, struct moved_entry,
++			hashmap_clear_and_free(&add_lines, struct moved_entry,
+ 						ent);
+-			hashmap_free_entries(&del_lines, struct moved_entry,
++			hashmap_clear_and_free(&del_lines, struct moved_entry,
+ 						ent);
+ 		}
+ 
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 99e63e90f8..d367a6d244 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -407,7 +407,7 @@ static int find_exact_renames(struct diff_options *options)
+ 		renames += find_identical_files(&file_table, i, options);
+ 
+ 	/* Free the hash data structure and entries */
+-	hashmap_free_entries(&file_table, struct file_similarity, entry);
++	hashmap_clear_and_free(&file_table, struct file_similarity, entry);
+ 
+ 	return renames;
+ }
+diff --git a/dir.c b/dir.c
+index 78387110e6..161dce121e 100644
+--- a/dir.c
++++ b/dir.c
+@@ -817,8 +817,8 @@ static void add_pattern_to_hashsets(struct pattern_list *pl, struct path_pattern
+ 
+ clear_hashmaps:
+ 	warning(_("disabling cone pattern matching"));
+-	hashmap_free_entries(&pl->parent_hashmap, struct pattern_entry, ent);
+-	hashmap_free_entries(&pl->recursive_hashmap, struct pattern_entry, ent);
++	hashmap_clear_and_free(&pl->parent_hashmap, struct pattern_entry, ent);
++	hashmap_clear_and_free(&pl->recursive_hashmap, struct pattern_entry, ent);
+ 	pl->use_cone_patterns = 0;
+ }
+ 
+@@ -921,8 +921,8 @@ void clear_pattern_list(struct pattern_list *pl)
+ 		free(pl->patterns[i]);
+ 	free(pl->patterns);
+ 	free(pl->filebuf);
+-	hashmap_free_entries(&pl->recursive_hashmap, struct pattern_entry, ent);
+-	hashmap_free_entries(&pl->parent_hashmap, struct pattern_entry, ent);
++	hashmap_clear_and_free(&pl->recursive_hashmap, struct pattern_entry, ent);
++	hashmap_clear_and_free(&pl->parent_hashmap, struct pattern_entry, ent);
+ 
+ 	memset(pl, 0, sizeof(*pl));
+ }
+diff --git a/hashmap.c b/hashmap.c
+index 922ed07954..5009471800 100644
+--- a/hashmap.c
++++ b/hashmap.c
+@@ -183,7 +183,7 @@ static void free_individual_entries(struct hashmap *map, ssize_t entry_offset)
+ 	while ((e = hashmap_iter_next(&iter)))
+ 		/*
+ 		 * like container_of, but using caller-calculated
+-		 * offset (caller being hashmap_free_entries)
++		 * offset (caller being hashmap_clear_and_free)
+ 		 */
+ 		free((char *)e - entry_offset);
+ }
+@@ -199,11 +199,11 @@ void hashmap_partial_clear_(struct hashmap *map, ssize_t entry_offset)
+ 	map->private_size = 0;
+ }
+ 
+-void hashmap_free_(struct hashmap *map, ssize_t entry_offset)
++void hashmap_clear_(struct hashmap *map, ssize_t entry_offset)
+ {
+ 	if (!map || !map->table)
+ 		return;
+-	if (entry_offset >= 0)  /* called by hashmap_free_entries */
++	if (entry_offset >= 0)  /* called by hashmap_clear_and_free */
+ 		free_individual_entries(map, entry_offset);
+ 	free(map->table);
+ 	memset(map, 0, sizeof(*map));
+diff --git a/hashmap.h b/hashmap.h
+index e9430d582a..7251687d73 100644
+--- a/hashmap.h
++++ b/hashmap.h
+@@ -96,7 +96,7 @@
+  *         }
+  *
+  *         if (!strcmp("end", action)) {
+- *             hashmap_free_entries(&map, struct long2string, ent);
++ *             hashmap_clear_and_free(&map, struct long2string, ent);
+  *             break;
+  *         }
+  *     }
+@@ -237,7 +237,7 @@ void hashmap_init(struct hashmap *map,
+ 
+ /* internal functions for clearing or freeing hashmap */
+ void hashmap_partial_clear_(struct hashmap *map, ssize_t offset);
+-void hashmap_free_(struct hashmap *map, ssize_t offset);
++void hashmap_clear_(struct hashmap *map, ssize_t offset);
+ 
+ /*
+  * Frees a hashmap structure and allocated memory for the table, but does not
+@@ -253,40 +253,50 @@ void hashmap_free_(struct hashmap *map, ssize_t offset);
+  *      free(e->somefield);
+  *      free(e);
+  *    }
+- *    hashmap_free(map);
++ *    hashmap_clear(map);
+  *
+  * instead of
+  *
+  *    hashmap_for_each_entry(map, hashmap_iter, e, hashmap_entry_name) {
+  *      free(e->somefield);
+  *    }
+- *    hashmap_free_entries(map, struct my_entry_struct, hashmap_entry_name);
++ *    hashmap_clear_and_free(map, struct my_entry_struct, hashmap_entry_name);
+  *
+  * to avoid the implicit extra loop over the entries.  However, if there are
+  * no special fields in your entry that need to be freed beyond the entry
+  * itself, it is probably simpler to avoid the explicit loop and just call
+- * hashmap_free_entries().
++ * hashmap_clear_and_free().
+  */
+-#define hashmap_free(map) hashmap_free_(map, -1)
++#define hashmap_clear(map) hashmap_clear_(map, -1)
+ 
+ /*
+- * Basically the same as calling hashmap_free() followed by hashmap_init(),
+- * but doesn't incur the overhead of deallocating and reallocating
+- * map->table; it leaves map->table allocated and the same size but zeroes
+- * it out so it's ready for use again as an empty map.  As with
+- * hashmap_free(), you may need to free the entries yourself before calling
+- * this function.
++ * Similar to hashmap_clear(), except that the table is no deallocated; it
++ * is merely zeroed out but left the same size as before.  If the hashmap
++ * will be reused, this avoids the overhead of deallocating and
++ * reallocating map->table.  As with hashmap_clear(), you may need to free
++ * the entries yourself before calling this function.
+  */
+ #define hashmap_partial_clear(map) hashmap_partial_clear_(map, -1)
+ 
+ /*
+- * Frees @map and all entries.  @type is the struct type of the entry
+- * where @member is the hashmap_entry struct used to associate with @map.
++ * Similar to hashmap_clear() but also frees all entries.  @type is the
++ * struct type of the entry where @member is the hashmap_entry struct used
++ * to associate with @map.
+  *
+- * See usage note above hashmap_free().
++ * See usage note above hashmap_clear().
+  */
+-#define hashmap_free_entries(map, type, member) \
+-	hashmap_free_(map, offsetof(type, member));
++#define hashmap_clear_and_free(map, type, member) \
++	hashmap_clear_(map, offsetof(type, member))
++
++/*
++ * Similar to hashmap_partial_clear() but also frees all entries.  @type is
++ * the struct type of the entry where @member is the hashmap_entry struct
++ * used to associate with @map.
++ *
++ * See usage note above hashmap_clear().
++ */
++#define hashmap_partial_clear_and_free(map, type, member) \
++	hashmap_partial_clear_(map, offsetof(type, member))
+ 
+ /* hashmap_entry functions */
+ 
+diff --git a/merge-recursive.c b/merge-recursive.c
+index d0214335a7..f736a0f632 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -2651,7 +2651,7 @@ static struct string_list *get_renames(struct merge_options *opt,
+ 		free(e->target_file);
+ 		string_list_clear(&e->source_files, 0);
+ 	}
+-	hashmap_free_entries(&collisions, struct collision_entry, ent);
++	hashmap_clear_and_free(&collisions, struct collision_entry, ent);
+ 	return renames;
+ }
+ 
+@@ -2870,7 +2870,7 @@ static void initial_cleanup_rename(struct diff_queue_struct *pairs,
+ 		strbuf_release(&e->new_dir);
+ 		/* possible_new_dirs already cleared in get_directory_renames */
+ 	}
+-	hashmap_free_entries(dir_renames, struct dir_rename_entry, ent);
++	hashmap_clear_and_free(dir_renames, struct dir_rename_entry, ent);
+ 	free(dir_renames);
+ 
+ 	free(pairs->queue);
+@@ -3497,7 +3497,7 @@ static int merge_trees_internal(struct merge_options *opt,
+ 		string_list_clear(entries, 1);
+ 		free(entries);
+ 
+-		hashmap_free_entries(&opt->priv->current_file_dir_set,
++		hashmap_clear_and_free(&opt->priv->current_file_dir_set,
+ 					struct path_hashmap_entry, e);
+ 
+ 		if (clean < 0) {
+diff --git a/name-hash.c b/name-hash.c
+index fb526a3775..5d3c7b12c1 100644
+--- a/name-hash.c
++++ b/name-hash.c
+@@ -726,6 +726,6 @@ void free_name_hash(struct index_state *istate)
+ 		return;
+ 	istate->name_hash_initialized = 0;
+ 
+-	hashmap_free(&istate->name_hash);
+-	hashmap_free_entries(&istate->dir_hash, struct dir_entry, ent);
++	hashmap_clear(&istate->name_hash);
++	hashmap_clear_and_free(&istate->dir_hash, struct dir_entry, ent);
+ }
+diff --git a/object.c b/object.c
+index 3257518656..b8406409d5 100644
+--- a/object.c
++++ b/object.c
+@@ -532,7 +532,7 @@ void raw_object_store_clear(struct raw_object_store *o)
+ 	close_object_store(o);
+ 	o->packed_git = NULL;
+ 
+-	hashmap_free(&o->pack_map);
++	hashmap_clear(&o->pack_map);
+ }
+ 
+ void parsed_object_pool_clear(struct parsed_object_pool *o)
+diff --git a/oidmap.c b/oidmap.c
+index 423aa014a3..286a04a53c 100644
+--- a/oidmap.c
++++ b/oidmap.c
+@@ -27,7 +27,7 @@ void oidmap_free(struct oidmap *map, int free_entries)
+ 		return;
+ 
+ 	/* TODO: make oidmap itself not depend on struct layouts */
+-	hashmap_free_(&map->map, free_entries ? 0 : -1);
++	hashmap_clear_(&map->map, free_entries ? 0 : -1);
+ }
+ 
+ void *oidmap_get(const struct oidmap *map, const struct object_id *key)
+diff --git a/patch-ids.c b/patch-ids.c
+index 12aa6d494b..21973e4933 100644
+--- a/patch-ids.c
++++ b/patch-ids.c
+@@ -71,7 +71,7 @@ int init_patch_ids(struct repository *r, struct patch_ids *ids)
+ 
+ int free_patch_ids(struct patch_ids *ids)
+ {
+-	hashmap_free_entries(&ids->patches, struct patch_id, ent);
++	hashmap_clear_and_free(&ids->patches, struct patch_id, ent);
+ 	return 0;
+ }
+ 
+diff --git a/range-diff.c b/range-diff.c
+index 24dc435e48..befeecae44 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -266,7 +266,7 @@ static void find_exact_matches(struct string_list *a, struct string_list *b)
+ 		}
+ 	}
+ 
+-	hashmap_free(&map);
++	hashmap_clear(&map);
+ }
+ 
+ static void diffsize_consume(void *data, char *line, unsigned long len)
+diff --git a/ref-filter.c b/ref-filter.c
+index c62f6b4822..5e66b8cd76 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2222,7 +2222,7 @@ void ref_array_clear(struct ref_array *array)
+ 	used_atom_cnt = 0;
+ 
+ 	if (ref_to_worktree_map.worktrees) {
+-		hashmap_free_entries(&(ref_to_worktree_map.map),
++		hashmap_clear_and_free(&(ref_to_worktree_map.map),
+ 					struct ref_to_worktree_entry, ent);
+ 		free_worktrees(ref_to_worktree_map.worktrees);
+ 		ref_to_worktree_map.worktrees = NULL;
+diff --git a/revision.c b/revision.c
+index aa62212040..f27649d45d 100644
+--- a/revision.c
++++ b/revision.c
+@@ -139,7 +139,7 @@ static void paths_and_oids_clear(struct hashmap *map)
+ 		free(entry->path);
+ 	}
+ 
+-	hashmap_free_entries(map, struct path_and_oids_entry, ent);
++	hashmap_clear_and_free(map, struct path_and_oids_entry, ent);
+ }
+ 
+ static void paths_and_oids_insert(struct hashmap *map,
+diff --git a/sequencer.c b/sequencer.c
+index 00acb12496..23a09c3e7a 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -5058,7 +5058,7 @@ static int make_script_with_merges(struct pretty_print_context *pp,
+ 
+ 	oidmap_free(&commit2todo, 1);
+ 	oidmap_free(&state.commit2label, 1);
+-	hashmap_free_entries(&state.labels, struct labels_entry, entry);
++	hashmap_clear_and_free(&state.labels, struct labels_entry, entry);
+ 	strbuf_release(&state.buf);
+ 
+ 	return 0;
+@@ -5577,7 +5577,7 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
+ 	for (i = 0; i < todo_list->nr; i++)
+ 		free(subjects[i]);
+ 	free(subjects);
+-	hashmap_free_entries(&subject2item, struct subject2item_entry, entry);
++	hashmap_clear_and_free(&subject2item, struct subject2item_entry, entry);
+ 
+ 	clear_commit_todo_item(&commit_todo);
+ 
+diff --git a/submodule-config.c b/submodule-config.c
+index c569e22aa3..f502505566 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -103,8 +103,8 @@ static void submodule_cache_clear(struct submodule_cache *cache)
+ 				ent /* member name */)
+ 		free_one_config(entry);
+ 
+-	hashmap_free_entries(&cache->for_path, struct submodule_entry, ent);
+-	hashmap_free_entries(&cache->for_name, struct submodule_entry, ent);
++	hashmap_clear_and_free(&cache->for_path, struct submodule_entry, ent);
++	hashmap_clear_and_free(&cache->for_name, struct submodule_entry, ent);
+ 	cache->initialized = 0;
+ 	cache->gitmodules_read = 0;
+ }
+diff --git a/t/helper/test-hashmap.c b/t/helper/test-hashmap.c
+index f38706216f..2475663b49 100644
+--- a/t/helper/test-hashmap.c
++++ b/t/helper/test-hashmap.c
+@@ -110,7 +110,7 @@ static void perf_hashmap(unsigned int method, unsigned int rounds)
+ 				hashmap_add(&map, &entries[i]->ent);
+ 			}
+ 
+-			hashmap_free(&map);
++			hashmap_clear(&map);
+ 		}
+ 	} else {
+ 		/* test map lookups */
+@@ -130,7 +130,7 @@ static void perf_hashmap(unsigned int method, unsigned int rounds)
+ 			}
+ 		}
+ 
+-		hashmap_free(&map);
++		hashmap_clear(&map);
+ 	}
+ }
+ 
+@@ -262,6 +262,6 @@ int cmd__hashmap(int argc, const char **argv)
+ 	}
+ 
+ 	strbuf_release(&line);
+-	hashmap_free_entries(&map, struct test_entry, ent);
++	hashmap_clear_and_free(&map, struct test_entry, ent);
+ 	return 0;
+ }
 -- 
 gitgitgadget
+
