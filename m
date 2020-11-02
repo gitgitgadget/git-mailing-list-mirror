@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F949C388F9
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 20:44:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14D4DC388F9
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 20:46:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 19F892071A
-	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 20:44:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A2F75206E5
+	for <git@archiver.kernel.org>; Mon,  2 Nov 2020 20:46:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ku9NgP+W"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dXl6UQtl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727265AbgKBUo0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Nov 2020 15:44:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51336 "EHLO
+        id S1727308AbgKBUoe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Nov 2020 15:44:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726938AbgKBUn5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Nov 2020 15:43:57 -0500
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E83BC0617A6
-        for <git@vger.kernel.org>; Mon,  2 Nov 2020 12:43:55 -0800 (PST)
-Received: by mail-ot1-x343.google.com with SMTP id b2so13899309ots.5
-        for <git@vger.kernel.org>; Mon, 02 Nov 2020 12:43:55 -0800 (PST)
+        with ESMTP id S1726711AbgKBUnw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Nov 2020 15:43:52 -0500
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11F63C0617A6
+        for <git@vger.kernel.org>; Mon,  2 Nov 2020 12:43:52 -0800 (PST)
+Received: by mail-ot1-x341.google.com with SMTP id h62so13889113oth.9
+        for <git@vger.kernel.org>; Mon, 02 Nov 2020 12:43:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+kCVfyu3obAf7EB+v3Qn0Io5JqSinEA44RPCaVFdqPE=;
-        b=ku9NgP+WfAigpa2tmCo4xgp3Y5qAvdoMhG4O3e3LNfLguWcYR24BFAlJE+ed9ZQOxp
-         XvqaAvXUTKcuuZLURUoyyzLi9eHp+x8o+oKvouhxEmhVSXULv2L/T5/aCEN01PPAo7KK
-         kB4A+x9Af/BSkQFoJLONN/csR4yQ1vCJVOvGXlzk7uFKafTOeIJUaRBPA3JzyX8/1JvP
-         Lwy8k/7rRsfO7kDzkVmDEPwXOlgEKD8M/6+zsgJ938nQrDeEsdtwKUKXQKDF0cqh/ZU8
-         KEk/TFMK3dZVnJ4n8oiBi3uHBJNhJFVNhpkGbgz/6Ad1t46Xh5DxINiqPWrpUAcdRXo/
-         KnYQ==
+        bh=iDmmdb1yMbAVf8rdFEjA/Su1MuMpaeeULyOhTaFe/Yc=;
+        b=dXl6UQtlQ2sDQyri5OFPjbt6NhtlmuyK3t4lNbh2C+nV20ApevilPETWQo7qddU2E+
+         vFZtGnKdNDt3+bBflnO85CULK9v5aSZeeAciq3jLF+VL5toY3txZ6Z5xTXi1wtosFP4N
+         zozfLVrSB7hnD3txzYZKlEGQt6h75Lt7wJaCk1Z4QlKgoRYXH39wufw6Ov+oSjJCaEzx
+         ZiwtlBcoy8MmnLvjnIRx3eycqhp00XROvX0DZRKcck21y6TMQ2f+10WYBngIQoemOfE0
+         l6xSMvnEodwk+CXGAz+otFGfR2NBEG9ombvzia9dsBAqC2lYjE4R3K3BgPpYu9+lc44i
+         Auvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+kCVfyu3obAf7EB+v3Qn0Io5JqSinEA44RPCaVFdqPE=;
-        b=YKM5sGGQVmL4rNn6JWu6UO89SzohlW1KIWRDEQmtO0Z72DOZMphkfp6YAEF28Y4b6+
-         fbPVXQFvZ8rjvoUCIK0WB9qC9OXnXpb+16/s0en0M/s3H/ASB+9CYMYl09VpQFEKw1M/
-         EBEdmktpEZoF01/ldjd7dhND+jMCspsAegudQuHpeZJXjFZEKtPt6drQpanEP4pCUBet
-         ubCUVkHaV/lbfTZDiW2U43AN9hSswm1Nn2yBvC/N8SYBc0za2Crl0gxAyvx3Ipv5/iry
-         VibBnC3LMhU/GGeuaTUOtwO9op2mR6UGFCINyR1VvlyfFa2I3iDdmxWRcNeQorA/pmQS
-         zMXQ==
-X-Gm-Message-State: AOAM530cx/CqVqCMdER+MTLcBXRTOTbB5PsDI9i3j0bGSMEW8xqTsPDI
-        hyzDTDf6qyxwBeIbT+c1anPlmmE/iOOtPA==
-X-Google-Smtp-Source: ABdhPJwGHeIYv62NKoDnzoGFgxW8REs8u7J7YMaYzaHjRTCViz45YTyQ/aRUveCnSo6jl2CTpeKztA==
-X-Received: by 2002:a9d:6f96:: with SMTP id h22mr12647598otq.344.1604349834741;
-        Mon, 02 Nov 2020 12:43:54 -0800 (PST)
+        bh=iDmmdb1yMbAVf8rdFEjA/Su1MuMpaeeULyOhTaFe/Yc=;
+        b=Qm5bcVy5AF64/PhjPsy1Q4c60Tpb/kwouOsgXVML1FMVCzFZEnpg7oxf+tAEKBDG+U
+         B107rxeOTkM75OjaaCe38ICVPpLxQKxczpyKWiUbATPRQZxYJXLS8yFqZxvZl6Wsm8xW
+         MWjno+ddQ/+rLL2qie5CJSYYysYJJ5qhB4x2e+8ce2KjtLxgzHCYocoJGL7KV/gbou34
+         iq0EwPjPDK89TyJFugz2VWlkJTRlqD/bopIEVQxLh4YJjwSgxQsQbf3SGU/nUK7V19pt
+         FkS8utSIlXT1+llCIkQJE4zvIEnOkgcrYQFmmN2la9vUoEBlGdl0eVK/CtVWBGQNFASP
+         BjLw==
+X-Gm-Message-State: AOAM530MCy3maKWGWfj3P3xLZDJMB31OJ/4H5x+zz1jumSBmqQzuVDki
+        9CkR5gu8nEs3kK6xiOoCB+kEyPXxMwF64A==
+X-Google-Smtp-Source: ABdhPJzBSC6xzlyv+QVRiquoyCuk8CNc3Xk5DWqRgYe4HCMO80+gxcKAeiuFOMRo8HN2J+tEruf85A==
+X-Received: by 2002:a05:6830:2143:: with SMTP id r3mr4388680otd.189.1604349830746;
+        Mon, 02 Nov 2020 12:43:50 -0800 (PST)
 Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
-        by smtp.gmail.com with ESMTPSA id t27sm3848512otc.14.2020.11.02.12.43.53
+        by smtp.gmail.com with ESMTPSA id t27sm3848512otc.14.2020.11.02.12.43.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Nov 2020 12:43:54 -0800 (PST)
+        Mon, 02 Nov 2020 12:43:50 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2 05/20] merge-ort: add an err() function similar to one from merge-recursive
-Date:   Mon,  2 Nov 2020 12:43:29 -0800
-Message-Id: <20201102204344.342633-6-newren@gmail.com>
+Subject: [PATCH v2 01/20] merge-ort: setup basic internal data structures
+Date:   Mon,  2 Nov 2020 12:43:25 -0800
+Message-Id: <20201102204344.342633-2-newren@gmail.com>
 X-Mailer: git-send-email 2.29.0.471.ga4f56089c0
 In-Reply-To: <20201102204344.342633-1-newren@gmail.com>
 References: <20201102204344.342633-1-newren@gmail.com>
@@ -73,69 +73,80 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Various places in merge-recursive used an err() function when it hit
-some kind of unrecoverable error.  That code was from the reusable bits
-of merge-recursive.c that we liked, such as merge_3way, writing object
-files to the object store, reading blobs from the object store, etc.  So
-create a similar function to allow us to port that code over, and use it
-for when we detect problems returned from collect_merge_info()'s
-traverse_trees() call, which we will be adding next.
+Set up some basic internal data structures.  The only carry-over from
+merge-recursive.c is call_depth, though needed_rename_limit will be
+added later.
+
+The central piece of data will definitely be the strmap "paths", which
+will map every relevant pathname under consideration to either a
+merged_info or a conflict_info.  ("unmerged" is a strmap that is a
+subset of "paths".)
+
+merged_info contains all relevant information for a non-conflicted
+entry.  conflict_info contains a merged_info, plus any additional
+information about a conflict such as the higher orders stages involved
+and the names of the paths those came from (handy once renames get
+involved).  If an entry remains conflicted, the merged_info portion of a
+conflict_info will later be filled with whatever version of the file
+should be placed in the working directory (e.g. an as-merged-as-possible
+variation that contains conflict markers).
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ merge-ort.c | 40 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index df97a54773..537da9f6df 100644
+index b487901d3e..9d5ea0930d 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -61,11 +61,28 @@ struct conflict_info {
- 	unsigned match_mask:3;
- };
+@@ -17,6 +17,46 @@
+ #include "cache.h"
+ #include "merge-ort.h"
  
-+static int err(struct merge_options *opt, const char *err, ...)
-+{
-+	va_list params;
-+	struct strbuf sb = STRBUF_INIT;
++#include "strmap.h"
 +
-+	strbuf_addstr(&sb, "error: ");
-+	va_start(params, err);
-+	strbuf_vaddf(&sb, err, params);
-+	va_end(params);
++struct merge_options_internal {
++	struct strmap paths;    /* maps path -> (merged|conflict)_info */
++	struct strmap unmerged; /* maps path -> conflict_info */
++	const char *current_dir_name;
++	int call_depth;
++};
 +
-+	error("%s", sb.buf);
-+	strbuf_release(&sb);
++struct version_info {
++	struct object_id oid;
++	unsigned short mode;
++};
 +
-+	return -1;
-+}
++struct merged_info {
++	struct version_info result;
++	unsigned is_null:1;
++	unsigned clean:1;
++	size_t basename_offset;
++	 /*
++	  * Containing directory name.  Note that we assume directory_name is
++	  * constructed such that
++	  *    strcmp(dir1_name, dir2_name) == 0 iff dir1_name == dir2_name,
++	  * i.e. string equality is equivalent to pointer equality.  For this
++	  * to hold, we have to be careful setting directory_name.
++	  */
++	const char *directory_name;
++};
 +
- static int collect_merge_info(struct merge_options *opt,
- 			      struct tree *merge_base,
- 			      struct tree *side1,
- 			      struct tree *side2)
- {
-+	/* TODO: Implement this using traverse_trees() */
- 	die("Not yet implemented.");
- }
- 
-@@ -167,7 +184,15 @@ static void merge_ort_nonrecursive_internal(struct merge_options *opt,
- {
- 	struct object_id working_tree_oid;
- 
--	collect_merge_info(opt, merge_base, side1, side2);
-+	if (collect_merge_info(opt, merge_base, side1, side2) != 0) {
-+		err(opt, _("collecting merge info failed for trees %s, %s, %s"),
-+		    oid_to_hex(&merge_base->object.oid),
-+		    oid_to_hex(&side1->object.oid),
-+		    oid_to_hex(&side2->object.oid));
-+		result->clean = -1;
-+		return;
-+	}
++struct conflict_info {
++	struct merged_info merged;
++	struct version_info stages[3];
++	const char *pathnames[3];
++	unsigned df_conflict:1;
++	unsigned path_conflict:1;
++	unsigned filemask:3;
++	unsigned dirmask:3;
++	unsigned match_mask:3;
++};
 +
- 	result->clean = detect_and_process_renames(opt, merge_base,
- 						   side1, side2);
- 	process_entries(opt, &working_tree_oid);
+ void merge_switch_to_result(struct merge_options *opt,
+ 			    struct tree *head,
+ 			    struct merge_result *result,
 -- 
 2.29.0.471.ga4f56089c0
 
