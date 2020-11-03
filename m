@@ -2,91 +2,98 @@ Return-Path: <SRS0=XO6Y=EJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2438CC00A89
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 02:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD3B3C00A89
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 03:14:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B224F22265
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 02:50:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 78E23207BB
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 03:14:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MsJiFX7T"
+	dkim=pass (2048-bit key) header.d=barzilay-org.20150623.gappssmtp.com header.i=@barzilay-org.20150623.gappssmtp.com header.b="kN2cl+u0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726038AbgKCCuq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Nov 2020 21:50:46 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52211 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725989AbgKCCuq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Nov 2020 21:50:46 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C41431041D1;
-        Mon,  2 Nov 2020 21:50:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=aIaPeNKkDP7sGoODeUwZCWGKGeo=; b=MsJiFX
-        7T+Y3bkjbi7BgM5fAsZhJD9FZWtxUgntQGDIPQytibdWxGePVYPnKSi3tP2dyLwc
-        PREOrEbtsYgulVJdUfK4kMWu16JJsn+HAT/FWg8dAd6PpsPDWKOv2Zgj2siWFEmN
-        PaFBFPVmRXQxaeM31bXPCcS3TAqVdmpAYCI88=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=X3p7mj+vHA99iMhrDTqXmVXI5KkGAihk
-        gA8Y0nRDo3rCbmrYJ0kyYLMweZT6rn/hbxn8qqC06D7GfdOcymRNleYcepW13VO6
-        m08qb9VoUkMuFHjmrQc4yAD5T0lNQcl/QlUENSHEj5HKiNDFaTrjH/im9eGdDBCI
-        ustJrLoOKwg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BCAC31041D0;
-        Mon,  2 Nov 2020 21:50:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 00CDC1041CF;
-        Mon,  2 Nov 2020 21:50:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH] Makefile: enable -Wsparse-error for DEVELOPER build
-References: <eaf5ac83-af3f-5028-3a9e-1669c9cde116@ramsayjones.plus.com>
-        <xmqqsg9uxchb.fsf@gitster.c.googlers.com>
-        <6676a08d-0c25-14ba-4ea6-677bc7ab0e20@ramsayjones.plus.com>
-        <xmqqh7q7vbah.fsf@gitster.c.googlers.com>
-        <43aadae9-a4c1-f1e4-6902-c05af36fcf19@ramsayjones.plus.com>
-Date:   Mon, 02 Nov 2020 18:50:40 -0800
-In-Reply-To: <43aadae9-a4c1-f1e4-6902-c05af36fcf19@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Tue, 3 Nov 2020 02:04:45 +0000")
-Message-ID: <xmqqtuu7rw5b.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1725953AbgKCDOC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Nov 2020 22:14:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55280 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725913AbgKCDOC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Nov 2020 22:14:02 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8380C0617A6
+        for <git@vger.kernel.org>; Mon,  2 Nov 2020 19:14:00 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id j24so22037367ejc.11
+        for <git@vger.kernel.org>; Mon, 02 Nov 2020 19:14:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=barzilay-org.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=3Jt1HQJhLfq7D9hTgbhrbcygC+EqbzKz85l5NMxSo1E=;
+        b=kN2cl+u0TaARfm/bwg/AnD4R5Md+K3IeD756HIIld7Mb+vioF7aBDVi4WiDlZkd2R/
+         ziQWnAZ1FWV2HD/mgKnjGrwxQY19LVpIeNt8HXz3qB3uXBPoWibevoMLCv2SXBVHZGyR
+         pSinz2gfpty1CnKFiZwvGz+obqQ3INZow4mwBpSO4Yznbi3n1qp6eiX2ijEaIVaJQ0tx
+         oXT7AMSzmh9wLNIV18VsEVSRcs+3HZUFSBdSK3F2ew4SW3oU/e+JYnqvSBWaQk+ejW16
+         g6WCHlQXqECLMFJGfdx6VoXBdBp4nOaOBlbLeZzp3jFVM/ikFEOiqOsPvx1jDh6picxI
+         htig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=3Jt1HQJhLfq7D9hTgbhrbcygC+EqbzKz85l5NMxSo1E=;
+        b=Mmkyzt8beyOyg0NgbopIPHTRxWxvfNYJ9Qf6Etbp3Lnpqk795/YpLBy3b8MuVdYWmS
+         s4gRnIsxK8KmiQGBuX97V1TVaRwQFhTepX5YaEV4Lr9HUcNduU2eSlCTNs2GJJMhoDd6
+         FGE4Yt7crJKmEtes7vZZTahyXZUXCWWRcXhSiwnWNHsHYfGrZTlJEVgJI4ZtTkQEqMI4
+         Koamfdte82d2tcbZeh7YIa7VkUiylXroq3MU5C0HcwbRpmb3v5yN//tajdQI73Gx2ltH
+         OLQUpb7SR6mZ6TkQFmEa/HzUnYW3XPYnJ12MggLEKkhcyPuRyKi3+6ZH5CLKIEfgkUpP
+         DAAg==
+X-Gm-Message-State: AOAM532sPBnhUbaJOeB3T7Q3A15IQeI6+K4P3zz7MkYIA6IaeUWgxmqe
+        j3CqnEpeglqDFUFF2coXtMvonrJyyrov/eh7tYkzurfJ2UXq8A==
+X-Google-Smtp-Source: ABdhPJyYiUARiTAmNjDDXcgiOxfHGuwuuk6B9tOcu6dmLZLXwerYiaQ7jixuF6Pn3NHBLd9x/E3aTGBd2PFlsFrhsIQ=
+X-Received: by 2002:a17:906:b312:: with SMTP id n18mr8781685ejz.353.1604373239332;
+ Mon, 02 Nov 2020 19:13:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5CD12762-1D7F-11EB-B86F-E43E2BB96649-77302942!pb-smtp20.pobox.com
+References: <CALO-guviA4xKjUi0HfA+RLkTPPaQw7KArj__A9fKz0oP3m5MGw@mail.gmail.com>
+ <72cfef26-e986-d34c-eea4-46ec0fda2688@web.de> <CALO-gusRt4J5ar45mo7un-EENyt5cX2SQvcXgyMmaHNZg5bFUg@mail.gmail.com>
+ <xmqqlffjs8ws.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqlffjs8ws.fsf@gitster.c.googlers.com>
+From:   Eli Barzilay <eli@barzilay.org>
+Date:   Mon, 2 Nov 2020 22:14:07 -0500
+Message-ID: <CALO-gusFac+GNrB9Rcbqteyv+gs5h0A-PTxnwRswZMhTnNBFyA@mail.gmail.com>
+Subject: Re: git-diff bug?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+On Mon, Nov 2, 2020 at 5:15 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Eli Barzilay <eli@barzilay.org> writes:
+>
+> > How is it valid?
+>
+> Just this part.  Any patch output that correctly explains how the
+> preimage text changed to the postimage text is a "valid" diff, and
+> that is how Ren=C3=A9 used the word.
 
-> How are you installing sparse? (I am using Linux Mint 20, based on
-> Ubuntu 20.04, whose sparse package version is 0.6.1-2build1 - which
-> is to say too old; you require version 0.6.2 or greater. Building
-> from source, I am currently using v0.6.3-76-gf680124b).
+To be clear, the "valid" in my question is about the correctness of
+the expected behavior, which (as I disclaimed) is likely a problem of
+the text that explains these expectations.  If validity is only about
+the correctness of the resulting transform, then it is obviously
+valid, as well as the other alternatives that you included (and
+therefore this is not the meaning that I used, otherwise I wouldn't
+have sent this).
 
-Built and installed in ~/$arch/gitstuff/bin which is on my $PATH
+In any case, I think that I now see the problem: the (sparse)
+explanation says "Ignore changes whose lines are all blank.".  It
+would have been helpful to clarify with "(but blank likes that are
+*part of* a change are still shown)".
 
-[remote "origin"]
-	url = git://git.kernel.org/pub/scm/devel/sparse/sparse.git
-
-> My concern was more about how the CI system obtains/installs/builds a
-> sufficiently new version of sparse. Otherwise, 'make sparse' won't do
-> very much. ;-)  As I said, I don't know what's involved in getting
-> that to work.
-
-Ah, yes, it would be a disaster to trigger false positive by using
-old version like 0.6.1, so we may end up having to bring our own
-version in, which is more work X-<.
-
-Thanks.
+Thanks,
+--=20
+                   ((x=3D>x(x))(x=3D>x(x)))                  Eli Barzilay:
+                   http://barzilay.org/                  Maze is Life!
