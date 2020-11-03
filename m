@@ -2,161 +2,148 @@ Return-Path: <SRS0=XO6Y=EJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B6EBC2D0A3
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 10:23:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A895C2D0A3
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 10:47:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 40D33206F8
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 10:23:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D505622384
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 10:47:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I5Axxxiv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LQ4/eo8W"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727979AbgKCKXL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Nov 2020 05:23:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36800 "EHLO
+        id S1727246AbgKCKrB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Nov 2020 05:47:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726058AbgKCKXL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Nov 2020 05:23:11 -0500
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B45E3C0617A6
-        for <git@vger.kernel.org>; Tue,  3 Nov 2020 02:23:10 -0800 (PST)
-Received: by mail-wr1-x442.google.com with SMTP id 33so7098488wrl.7
-        for <git@vger.kernel.org>; Tue, 03 Nov 2020 02:23:10 -0800 (PST)
+        with ESMTP id S1726058AbgKCKrB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Nov 2020 05:47:01 -0500
+Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C355C0613D1
+        for <git@vger.kernel.org>; Tue,  3 Nov 2020 02:47:01 -0800 (PST)
+Received: by mail-oi1-x242.google.com with SMTP id 9so17913718oir.5
+        for <git@vger.kernel.org>; Tue, 03 Nov 2020 02:47:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9HcfpX/qo1QY9Oiq+crhRS+EUHryW/RofM/q42KbuMg=;
-        b=I5AxxxivZ7tKOTVd5o8wxAGn3QQClhClh9xhnhrJtAdLsEqU13YcDb23EB7N7cqBnZ
-         xiE7CTlUbc+2eNM3abUi4ieDumiZzpMNMaiJsjaJtUq69PrH314mmxHHdRbjIClAfu3q
-         0iABJAdIghSsYEFn3cjJzk2dARRXltCfPSO2WJQYTOhgdmY20HJnQCQvByN2DcjQS5lD
-         dIEzW/QUKbG4Yt2IRECZJI3IxJo+ek1t79JlZrLVPBIrzXJG7d0DvM/G342xfAhOxN80
-         Zzwb3yHRDHw0YBImjYkTChJU3/Qy93dAxvwYR1rWAFBi5wRKRPTScX1UiiRlucb2fV+J
-         J0sw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dFU0Uw63xJgtP+jcFNmhtacnTAq4KZmDCnN2UucY9B0=;
+        b=LQ4/eo8WiA65717/DG3Bc0u6qC1KQQFGt0gv0LQ2EZXl7mwvTQWQMvqRkoF1hcgPKa
+         lv38CXzqYHA0tN9m9Vtlt4Jy1yVfNLvI6BqEcFXqlHXyZ8pklgvfq5h6SEDGGOKNvl1+
+         HHOj3WCQp8VtWoomFYGRpvvFbhTPmvhPoc3+FNFYzK/Z0YUbt7Mj0Sb9qNwoxSKf+dcg
+         /HCElrpCPX/BxPl92hQhSO+B+ul82+bCp6VFdqyRhcb6zUYJFOgaiHJeFHQZ3L0eT0Y4
+         1m18fk2uEO4g4g0nPqyullrCuEwm0UsW2vL4iSU6pSVuar8hEEUVx0qPtOqMgUiz9zUY
+         dFvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9HcfpX/qo1QY9Oiq+crhRS+EUHryW/RofM/q42KbuMg=;
-        b=NvSZDZT7d5Ajuy/aXrqKvc7v9/5rszVJuJzDMit/ZatVUrKETt3GnK/wcNLPT8SZZu
-         qave0H6apil8nnLV0SXy9GHEyz0uz+ltrUiOSUKulhl/B1+12X51c7EVpO8VRx81dC7e
-         J4usIpiAZpw6KYBYjCEOkIxNgU2+0tgEBXETyGn6Sg/VtN1CRNDomaGE3IQ0RJ2aArSS
-         Vo6SQCBHGu24U21eSMjHMcI8TuL6RMgxzh+ZDJxVIp3zGxsiCxIvWN6pXKDxQJ5G9ovQ
-         3O299a/xXMZmOaeOJBWk4jZGSQDfAZIWJaVn5rbFD7zyakMS3aM5jJ5uECk3OAuH//J2
-         sSJg==
-X-Gm-Message-State: AOAM531dEPNiMU1r2la5cM5XPZPISGNKeltywZ6YwmRZD9NakzWlYMPD
-        Quz7byJnesvmN/CTQlwKGcA=
-X-Google-Smtp-Source: ABdhPJw7+pZwwEvIxLxEJnT4Ii6FpZS3IA46f2VDsHernCqJJFCSkTL3sjxVdHHSb4mVUv9opHjPnQ==
-X-Received: by 2002:a5d:5387:: with SMTP id d7mr25016914wrv.224.1604398989503;
-        Tue, 03 Nov 2020 02:23:09 -0800 (PST)
-Received: from szeder.dev (94-21-29-156.pool.digikabel.hu. [94.21.29.156])
-        by smtp.gmail.com with ESMTPSA id 30sm25413093wrs.84.2020.11.03.02.23.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 03 Nov 2020 02:23:09 -0800 (PST)
-Date:   Tue, 3 Nov 2020 11:23:07 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/4] push: teach --base for ssh:// and file://
-Message-ID: <20201103102307.GI24813@szeder.dev>
-References: <cover.1604362701.git.jonathantanmy@google.com>
- <148e39960a2185d2355cdfe34f8856e708fb1b80.1604362701.git.jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dFU0Uw63xJgtP+jcFNmhtacnTAq4KZmDCnN2UucY9B0=;
+        b=pfv9Z86ILLH7k9Liad/jVx4OXBwvjQzF5tYFupB6o519vpzO6vooYUKx8aTNxi/x5b
+         /GciQgjSCFsCHgPPGBqrao536YGVEPl/mo/PDm0c2CnIW1DRh09mbfBDJ09GYzy+Mm7q
+         y5K17QC7RgdDx7es97uBhvnZ73RCfUvq4if7JUG2FImy0Mq63xAD8MovbYq8vdYkqR4Q
+         fxX4Se9ETofjMALaWOKGN5d2oIarB9ipI1kSak7fkCIarz1J3jZjUGLJ53EX1nXvi1hg
+         Un9bBPQ+dG+12tua2pnr3f7jaaNhBZcDfIrSfJd1XFq+LkD6+cHSyxaJ2Ni4ipGBatV2
+         PzZQ==
+X-Gm-Message-State: AOAM5327ff4+h+IKcHmbWtWAjwyiar2K9hzgaO5RsNZ/ef6Sacng0sKj
+        1SB5DbflaHD8nSMay+GKVDT3VfJpw7lvXkPJv3S+01tmNCwY8A==
+X-Google-Smtp-Source: ABdhPJyw5pdKzKQNfN2EYoNRWPtLNU42eeW0PnK0mZJWhUJ0P8O1ppLvUqpGwXp5r1ubw06+3TPS41PTXH0VotlplAE=
+X-Received: by 2002:a05:6808:578:: with SMTP id j24mr1623768oig.10.1604400420313;
+ Tue, 03 Nov 2020 02:47:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <148e39960a2185d2355cdfe34f8856e708fb1b80.1604362701.git.jonathantanmy@google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <pull.751.git.1602781723670.gitgitgadget@gmail.com> <20201026175742.33356-1-sangunb09@gmail.com>
+In-Reply-To: <20201026175742.33356-1-sangunb09@gmail.com>
+From:   Sangeeta <sangunb09@gmail.com>
+Date:   Tue, 3 Nov 2020 16:16:49 +0530
+Message-ID: <CAHjREB7W2P9_P4LoMHVVzV_YR5-_51zdbRZ0fpEDVkgkd7sh8w@mail.gmail.com>
+Subject: Re: [Outreachy][PATCH v6] diff: do not show submodule with untracked
+ files as "-dirty"
+To:     Git List <git@vger.kernel.org>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 02, 2020 at 04:26:11PM -0800, Jonathan Tan wrote:
-> diff --git a/t/t5700-protocol-v1.sh b/t/t5700-protocol-v1.sh
-> index 022901b9eb..22459d37f5 100755
-> --- a/t/t5700-protocol-v1.sh
-> +++ b/t/t5700-protocol-v1.sh
-> @@ -146,6 +146,56 @@ test_expect_success 'push with file:// using protocol v1' '
->  	grep "push< version 1" log
->  '
->  
-> +test_expect_success 'push with file:// using protocol v1 and --base' '
-> +	test_commit -C file_child four &&
-> +	COMMON_HASH=$(git -C file_child rev-parse three) &&
-> +
-> +	# Push to another branch, as the target repository has the
-> +	# master branch checked out and we cannot push into it.
-> +	GIT_TRACE_PACKET=1 git -C file_child -c protocol.version=1 \
-> +		push --base=three origin HEAD:client_branch_four 2>log &&
-> +
-> +	# Server responded using protocol v1
-> +	grep "push< version 1" log &&
-> +	# Server advertised only the expected object
-> +	grep "$COMMON_HASH .have" log
-> +'
-> +
-> +test_expect_success 'push with file:// using protocol v0 and --base' '
-> +	test_commit -C file_child five &&
-> +	COMMON_HASH=$(git -C file_child rev-parse four) &&
-> +
-> +	# Push to another branch, as the target repository has the
-> +	# master branch checked out and we cannot push into it.
-> +	GIT_TRACE_PACKET=1 git -C file_child -c protocol.version=0 \
-> +		push --base=four origin HEAD:client_branch_five 2>log &&
-> +
-> +	# Server did not respond with any version
-> +	! grep "push< version" log &&
-> +	# Server advertised only the expected object
-> +	grep "$COMMON_HASH .have" log
-> +'
-> +
-> +test_expect_success 'push with invalid --base' '
-> +	test_commit -C file_child six &&
-> +
-> +	# Server does not have "six".
-> +	test_must_fail git -C file_child -c protocol.version=0 \
-> +		push --base=an_invalid_object origin HEAD:client_branch_six 2>log &&
-> +	grep "is not a valid object" log
+Hey Johannes and Junio,
 
-This should rather use 'test_i18ngrep' ...
+In continuation of the discussion from here[1]
 
-> +'
-> +
-> +test_expect_success 'push with --base that does not exist on server' '
-> +	COMMON_HASH=$(git -C file_child rev-parse six) &&
-> +
-> +	# The push still succeeds.
-> +	GIT_TRACE_PACKET=1 git -C file_child -c protocol.version=0 \
-> +		push --base=six origin HEAD:client_branch_six 2>log &&
-> +
-> +	# Server did not advertise "six", since it does not know it
-> +	! grep "$COMMON_HASH .have" log
-> +'
-> +
->  # Test protocol v1 with 'ssh://' transport
->  #
->  test_expect_success 'setup ssh wrapper' '
+[1] https://lore.kernel.org/git/nycvar.QRO.7.76.6.2011020251520.18437@tvgsbejvaqbjf.bet/
 
+> >> * sj/untracked-files-in-submodule-directory-is-not-dirty (2020-10-26) 1 commit
+> >>  - diff: do not show submodule with untracked files as "-dirty"
+> >>
+> >>  "git diff" showed a submodule working tree with untracked cruft as
+> >>  "Submodule commit <objectname>-dirty", but a natural expectation is
+> >>  that the "-dirty" indicator would align with "git describe --dirty",
+> >>  which does not consider having untracked files in the working tree
+> >>  as source of dirtiness.  The inconsistency has been fixed.
+> >>
+> >>  Needs doc update.
 
-> diff --git a/transport.c b/transport.c
-> index ffe2115845..531ca0a834 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -236,6 +236,10 @@ static int set_git_option(struct git_transport_options *opts,
->  		list_objects_filter_die_if_populated(&opts->filter_options);
->  		parse_list_objects_filter(&opts->filter_options, value);
->  		return 0;
-> +	} else if (!strcmp(name, TRANS_OPT_PUSH_BASE)) {
-> +		if (get_oid(value, &opts->push_base))
-> +			die(_("transport: '%s' is not a valid object"), value);
+Do I need to add the doc update in the same patch?
 
-... because the error message here is translated.
+> > I *think* the original rationale for marking submodules with untracked
+> > (_un-ignored_) files was to avoid deleting a submodule that has
+> > uncommitted (because untracked) files.
+>
+> I agree with you that that the motivation was exactly that, but I
+> have a suspicion that its execution was misguided.
 
-> +		return 0;
->  	}
->  	return 1;
->  }
+I am really very sorry if I ended up adding some unwanted code.
+
+>
+> When one has a subdirectory D where one might or might not have an
+> untracked new file that one does not want to lose, but one otherwise
+> would want to clean up (perhaps an errant process created tons of
+> garbage files in the directory), one would not
+>
+>         git diff D
+>
+> to see if there are important changes in that directory before doing
+>
+>         rm -rf D && git checkout D
+>
+> to bring it back to pristine state, exactly because one would not
+> want to lose newly-created but not added files.  One would instead
+> use
+>
+>         git status D
+>
+> for checking.  Why would a user change the habit when D happens to
+> be a submodule?
+>
+> So I would say that "git status [D]", if it does not let the user
+> notice that there is untracked contents in the submodule working
+> tree, would be a bad idea.  "git diff" that ignores untracked paths
+> in the submodule working tree, on the other hand, is a good thing.
+>
+> Now, the patch as-is may change the behaviour of "git status D" in
+> this case, and the internal invocation of diff-files made somewhere
+> in wt-status.c may have to be adjusted to keep such a submodule with
+> forgotten newly created files shown as modified.
+>
+> Further discussion on this should be done on the original review
+> thread for continuity, not here, in any case.
+>
+
+So we want that `git status` should behave in the same way as it was
+behaving before? Can we do this by passing --ignore-submodules=none as
+the default args for status? Another approach might be to figure out
+how the diff is being called(like is this being called from git status
+or git diff) and then add the --ignore-submodules=untracked behavior
+to it accordingly. Though I have no idea how to do that now.
+
+Please correct me if I am completely going in the wrong direction. As
+it is my first time contributing to git, so any help would be greatly
+beneficial for me.
+
+Thanks and regards,
+Sangeeta
