@@ -2,101 +2,110 @@ Return-Path: <SRS0=XO6Y=EJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC056C2D0A3
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 20:07:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6066C2D0A3
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 20:07:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7CC88206DF
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 20:07:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6DA4320E65
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 20:07:21 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gtn+GwT3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728206AbgKCUHJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Nov 2020 15:07:09 -0500
-Received: from dd36226.kasserver.com ([85.13.153.21]:50310 "EHLO
-        dd36226.kasserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725997AbgKCUHJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Nov 2020 15:07:09 -0500
-Received: from client3368.fritz.box (i5C745802.versanet.de [92.116.88.2])
-        by dd36226.kasserver.com (Postfix) with ESMTPSA id 46B8D3C04C2;
-        Tue,  3 Nov 2020 21:07:05 +0100 (CET)
-Subject: Re: [PATCH 00/14] completion: a bunch of updates
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Git <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-References: <20190621223107.8022-1-felipe.contreras@gmail.com>
- <xmqqk1cz0zz1.fsf@gitster-ct.c.googlers.com>
- <CAMP44s3wqxTmgQpMgk2cM33EvtwrvvXYv4_90GKGmHb8yJHAKg@mail.gmail.com>
- <xmqqk0vbbep5.fsf@gitster.c.googlers.com>
- <CAMP44s13nip2_Z1OOFb9iVcrSxQbyJW4cH86J3Ah1p4SmTQWQQ@mail.gmail.com>
- <xmqqr1pj9rf0.fsf@gitster.c.googlers.com>
- <CAMP44s0nxQ8jxxw7wSPOMv9Nx1P7ww3S6dGv27xNVQ_aHTaPng@mail.gmail.com>
- <0ec43318-bf83-25c4-a817-a150e2e47546@haller-berlin.de>
- <CAMP44s0+TMhmPYM7omoFhcebMLhZyh6v77WUFNrscRtPNEDNHQ@mail.gmail.com>
- <xmqqeelh7y23.fsf@gitster.c.googlers.com>
- <010c6222-4365-7446-a666-333ac7b4d415@haller-berlin.de>
- <xmqqh7qb3a3r.fsf@gitster.c.googlers.com>
- <e2b59b69-7fd2-f52c-eb06-6b97e3de557a@haller-berlin.de>
- <xmqqlffis6u0.fsf@gitster.c.googlers.com>
-From:   Stefan Haller <stefan@haller-berlin.de>
-Message-ID: <1815f1ab-b293-e948-9624-76fc83d66d99@haller-berlin.de>
-Date:   Tue, 3 Nov 2020 21:07:04 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.4.0
+        id S1729159AbgKCUHU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Nov 2020 15:07:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43964 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729110AbgKCUHT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Nov 2020 15:07:19 -0500
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D0C7C0613D1
+        for <git@vger.kernel.org>; Tue,  3 Nov 2020 12:07:19 -0800 (PST)
+Received: by mail-ot1-x332.google.com with SMTP id n15so17145051otl.8
+        for <git@vger.kernel.org>; Tue, 03 Nov 2020 12:07:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=7PZBNOtKmmAhsjziXam15560gEdELmhC1qrC7v6lLeg=;
+        b=Gtn+GwT32pCCxEL2suKXPtvuE4LkHaHxmiMu62f0K9WK5xxxwM2QtSv7rbKvCBP6Uc
+         n8XEO3fZQcOoRetHM57kf5zVZGIdJlcotclRtrL6xJLv2ZCVnkE8wrc0GHR3jepxQV7C
+         T4nj297a0D+Dxa7oEDhQJQbrh783wlsM2wYqeE6mr5P3kASqXw/4eoyP9zUq2kZUgo+e
+         SCsq+e7oFKqt/CKJ4nmvQjVU4ScTl9IMcFWMX2X5c5l5eCfok+yJ7kZ/AGY4znbgJ7wq
+         1prrjVXFKwkhvGS1rlz27AzrdmEBYEIcKlVh+DbjTd6HtsIcc7F0+ky0GCQR5ruQ53vT
+         LdOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=7PZBNOtKmmAhsjziXam15560gEdELmhC1qrC7v6lLeg=;
+        b=oaxyGPZv7LX1aCk0mR3skRvcDosPxbsW5pxsaDEmViYeuk4BKqLe5m5Wg0R8+I+Scc
+         bptm4cOeYQ+wTkV8XdJY3TH5yrBsvbAvf9aoRBjQVK4YxBX5DU5lXvuuIKOV7zgXTKs/
+         KpEbA4mCbp/c0w6tCJib99vAct9lc7AKjA2+59QMMbiK4o3aeVbxEGhBdbIFflU0GGzv
+         1JG3BlDM+/CTWBSqoR0fxxXUp7Fk7x+9wiDfs40RtqjY33Yyw4EsF7/e7pk/JRUZVrj8
+         WkMSQGbzgDFLUXXSlvg+uIV0AgiTJUkJBk6peuMegQDzgBXDPg8+Jf0SmkV4YvZQsm9a
+         4ZSQ==
+X-Gm-Message-State: AOAM533ABIovF+HjwCGHKNPoNWJeGlpnHTmKj6k2stA8GfdQP664lwGX
+        53oDhTgXKySCuBbzTZGSUhRpiShE8YHmsQ==
+X-Google-Smtp-Source: ABdhPJxM7VhCrH9gVmTkfICzYkmmw5J9+ooCidmw+06eym3c1BS4tWwmowgY9XhbhHt2oK+xCr9AvQ==
+X-Received: by 2002:a9d:7a7:: with SMTP id 36mr9016082oto.14.1604434038111;
+        Tue, 03 Nov 2020 12:07:18 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
+        by smtp.gmail.com with UTF8SMTPSA id v10sm1022102otq.69.2020.11.03.12.07.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Nov 2020 12:07:17 -0800 (PST)
+Subject: Re: Segfault in git when using git logs
+To:     Jeff King <peff@peff.net>, Sathyajith Bhat <sathya@sathyasays.com>
+Cc:     git@vger.kernel.org
+References: <CAMsWJsyPVQWV++gc2YJriEOEWBELa_xj2G0NWFMSgNYt47swiQ@mail.gmail.com>
+ <0581272e-6ad2-42d9-0196-b804ee304619@gmail.com>
+ <CAMsWJsxyW=JUh=XGCkGG3LhOsZASwFHtx9b6ziNi_uHa918Scw@mail.gmail.com>
+ <20201103192327.GA462936@coredump.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <0b6657a6-afc2-7862-de43-94868f9419a5@gmail.com>
+Date:   Tue, 3 Nov 2020 15:07:15 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101
+ Thunderbird/83.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqlffis6u0.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20201103192327.GA462936@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03.11.20 18:12, Junio C Hamano wrote:
-> Stefan Haller <lists@haller-berlin.de> writes:
+On 11/3/2020 2:23 PM, Jeff King wrote:
+> On Tue, Nov 03, 2020 at 08:55:52PM +0200, Sathyajith Bhat wrote:
 > 
->> Using stuff from oh-my-zsh is not an option for me. I'm not using
->> oh-my-zsh, and I don't want to begin using it just for this one package.
+>> I believe it is GitLens [1] which is causing the incorrect behaviour.
+>> I haven't had any crashes after I disabled GitLens, and that's the
+>> only extension I've had which interacts with scm.
 >>
->> I could use Felipe's version from
->> <https://github.com/felipec/git-completion> (and in fact, that's what
->> I'm doing right now, for testing. Works great. :-)  However, I'd have to
->> remember to manually update it every so often.
->>
->> So yes, I prefer to use the one from git's distribution, because it is
->> automatically kept up to date whenever I update git (as long as I
->> symlink to it rather than copy it.)
+>> [1] https://github.com/eamodio/vscode-gitlens
 > 
-> Thanks for another data point.  
+> That makes sense. It seems pretty clear that its log__file() function
+> will produce this bogus combination. Despite having some indication that
+> it knows about the documentation forbidding it:
 > 
-> You'd need to add to another "as long as", which is "as long as it
-> keeps up with felipec/git-completion".  If we fall bahind, you'd be
-> better off getting updates directly from there, not from us.  
-
-Yes, that's true of course. That's why I'm happy that Felipe contributes
-his version here, and that you are accepting it quickly.
-
-> And I suspect that not many Zsh users want to care about the
-> distinction between the two.  If it were as easy to grab the latest
-> version of Felipe's as an update of Git from your distro, wouldn't
-> most people rather choose to do so?
+>   https://github.com/eamodio/vscode-gitlens/blob/6cfd9fdedd7c6ec3bfa732af7c418bbbecdfba54/src/git/git.ts#L805
 > 
-> If we are not doing much reviews on Zsh completion on this list, due
-> to lack of interest and expertise, then we will either fall behind,
-> or blindly copy, Felipe's repository and republish as a small part
-> of our project, without adding much value ourselves.
-> 
-> Which is not a very happy place for us to be in.  I dunno.
+> I don't know that project's code well enough to say whether there is a
+> higher-level bug there (the issue seems to be the "renames" flag being
+> enabled along with startLine; maybe the caller is wrong to specify
+> both).
 
-I still think it's valuable to do this. And I think the fact that it's
-in contrib makes it less likely that we fall behind, because you can
-just choose to merge updates without very thorough reviews (like with
-the current patch series), which you probably wouldn't feel comfortable
-doing if it had "graduated" out of contrib, as Felipe requests.
+Thanks, both, for confirming the extension and the likely
+line of code causing this problem. I submitted an issue [1]
+on the GitLens repository. I'll continue watching it, but
+feel free to chime in yourself if you are interested.
 
--Stefan
+[1] https://github.com/eamodio/vscode-gitlens/issues/1139
+
+Thanks,
+-Stolee
