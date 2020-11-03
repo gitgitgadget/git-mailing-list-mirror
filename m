@@ -2,87 +2,118 @@ Return-Path: <SRS0=XO6Y=EJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB26CC2D0A3
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 18:57:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64F34C2D0A3
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 19:06:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 890D020870
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 18:57:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0A503216C4
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 19:06:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728527AbgKCS5M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Nov 2020 13:57:12 -0500
-Received: from cloud.peff.net ([104.130.231.41]:46516 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725892AbgKCS5M (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Nov 2020 13:57:12 -0500
-Received: (qmail 6892 invoked by uid 109); 3 Nov 2020 18:57:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 03 Nov 2020 18:57:12 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3590 invoked by uid 111); 3 Nov 2020 18:57:11 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 03 Nov 2020 13:57:11 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 3 Nov 2020 13:57:11 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Sathyajith Bhat <sathya@sathyasays.com>, git@vger.kernel.org
-Subject: Re: Segfault in git when using git logs
-Message-ID: <20201103185711.GA461461@coredump.intra.peff.net>
-References: <CAMsWJsyPVQWV++gc2YJriEOEWBELa_xj2G0NWFMSgNYt47swiQ@mail.gmail.com>
- <20201102144321.GA3962443@coredump.intra.peff.net>
- <20201103101553.GH24813@szeder.dev>
- <20201103182102.GA459792@coredump.intra.peff.net>
- <xmqq361qs31a.fsf@gitster.c.googlers.com>
+        id S1729552AbgKCTGx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Nov 2020 14:06:53 -0500
+Received: from mail-ej1-f65.google.com ([209.85.218.65]:46270 "EHLO
+        mail-ej1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727688AbgKCTGw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Nov 2020 14:06:52 -0500
+Received: by mail-ej1-f65.google.com with SMTP id w13so12331394eju.13
+        for <git@vger.kernel.org>; Tue, 03 Nov 2020 11:06:49 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=wn6YMSF2aaAMXrLLKb3ZzRLJHLcfj4xy7qK8+gEcjZI=;
+        b=uYoim1mAW5xXPqmiKsx7d+GP0GbfyaeujMaczBF94Oq6I7k9YxQjGAI4R+nTfq2hSn
+         ptYb04eBXEDEjaYjTgIkuEFXbQkRpIBQe8myK3eg0A1hBASUTYyH5wvUQ/sSXfZYPiM+
+         0ZTbIfkRZOLLs8hbifUUGcWGXti99mpjgp7xKfYR/8Htx/AhrqXLOLUJeaRJh3Ywt8oG
+         1uTbxo5i6vn5jkxNlEVFMKTwr+vJ5lPK1To0wk97DUyZp2BykO/aubMpp61ICJc8nxTE
+         tlo9pzR4SqKcYgmxvc/YHWeOEIbJzgzcbv4umC88X55PAgIYoHnNMJ/xTvxDOiqTNqFz
+         +kWw==
+X-Gm-Message-State: AOAM531YiuRBs/Tl4O/FAnHVNMlXdGbyEB7yzHkd4KgcuXZH+0aqAoir
+        HOm4POFkHPpLq5FAI0ck+2de8JVMBk6QjfTcSyo=
+X-Google-Smtp-Source: ABdhPJw/meGtc7XQhK+I1I0dOo+4pHjo4A5LlhZpl7x3O4PAk6vRE7IrCDlYIRrRYeUmGMZOTFBvBzGqbg4Rm1bTLhk=
+X-Received: by 2002:a17:906:6949:: with SMTP id c9mr9334389ejs.482.1604430409181;
+ Tue, 03 Nov 2020 11:06:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq361qs31a.fsf@gitster.c.googlers.com>
+References: <pull.776.git.1604412196.gitgitgadget@gmail.com> <a9221cc4aa12192e9a691f8e1b77a3cc2d7e4952.1604412197.git.gitgitgadget@gmail.com>
+In-Reply-To: <a9221cc4aa12192e9a691f8e1b77a3cc2d7e4952.1604412197.git.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 3 Nov 2020 14:06:38 -0500
+Message-ID: <CAPig+cRE3RNkUCrmmTvVC4mm1crT+1OEU5zSwu80pjXmDdAkfg@mail.gmail.com>
+Subject: Re: [PATCH 3/3] maintenance: use Windows scheduled tasks
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Son Luong Ngoc <sluongng@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 03, 2020 at 10:34:09AM -0800, Junio C Hamano wrote:
+On Tue, Nov 3, 2020 at 9:05 AM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> There is a deficiency in the current design. Windows has two kinds of
+> applications: GUI applications that start by "winmain()" and console
+> applications that start by "main()". Console applications are attached
+> to a new Console window if they are not already associated with a GUI
+> application. This means that every hour the scheudled task launches a
+> command window for the scheduled tasks. Not only is this visually
+> obtrusive, but it also takes focus from whatever else the user is
+> doing!
 
-> > On our side, I don't think it would be _wrong_ to catch and disallow the
-> > combination. But it may be nicer to them if we continue to quietly
-> > ignore --follow and the pathspec in that case, for working with older
-> > versions. (OTOH, if I understand correctly they're segfaulting every
-> > time VS Code is used with v2.29 now, so they may have to accept it as an
-> > urgent fix anyway).
-> 
-> So something like this won't harm VS Code more than we currently do,
-> while telling users what is wrong with their command line?
+I wonder if you could use the technique explained in [1] to prevent
+the console window from popping up.
 
-Yeah, I was wondering if we'd want the patch you sent, or if we should
-turn those die() calls into warning() and disable the flags up front.
+[1]: https://pureinfotech.com/prevent-command-window-appearing-scheduled-tasks-windows-10/
 
-> We may still want the "silently disable follow" at low-level
-> protection, but that does not give feedback why the end-user option
-> is silently ignored, so...
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+> @@ -441,6 +441,40 @@ test_expect_success MACOS_MAINTENANCE 'start and stop macOS maintenance' '
+> +test_expect_success MINGW 'start and stop Windows maintenance' '
+> +       echo "echo \$@ >>args" >print-args &&
+> +       chmod a+x print-args &&
 
-I'd be just as happy to leave it out, if we think it isn't triggerable.
-The segfault would let people know we missed a spot. ;)
+Same comments as my review of [2/3] regarding $@ and write_script().
 
-> diff --git c/builtin/log.c w/builtin/log.c
-> index 9f939e6cdf..8811084f02 100644
-> --- c/builtin/log.c
-> +++ w/builtin/log.c
-> @@ -206,6 +206,13 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
->  	if (argc > 1)
->  		die(_("unrecognized argument: %s"), argv[1]);
->  
-> +	if (rev->line_level_traverse) {
-> +		if (rev->diffopt.filter)
-> +			die(_("-L<range>:<file> cannot be used with pathspec"));
+> +       rm -f args &&
+> +       GIT_TEST_CRONTAB="/bin/sh print-args" git maintenance start &&
+> +       cat args &&
 
-Should this be checking rev->diffopt.pathspec.nr?
+Is this 'cat' leftover debugging gunk?
 
-I could well believe that --diff-filter=A does not work with "-L"
-either, but that is a separate story.
+> +       # start registers the repo
+> +       git config --get --global maintenance.repo "$(pwd)" &&
+> +
+> +       rm expect &&
+> +       for frequency in hourly daily weekly
+> +       do
+> +               echo "/create /tn Git Maintenance ($frequency) /f /xml .git/objects/schedule-$frequency.xml" >>expect \
+> +                       || return 1
+> +       done &&
 
--Peff
+Rather than using >> within the loop, it's often simpler to capture
+the output of the for-loop in its entirety:
+
+    for frequency in hourly daily weekly
+    do
+        echo "/create ..." || return 1
+    done >expect &&
+
+However, in this case 'printf' may be even simpler:
+
+    printf "/create /tn ... .git/objects/schedule-%s.xml\n" \
+        hourly daily weekly >expect &&
+
+> +       GIT_TEST_CRONTAB="/bin/sh print-args"  git maintenance stop &&
+
+Too many spaces before the 'git' command.
