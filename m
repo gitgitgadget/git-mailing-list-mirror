@@ -2,100 +2,100 @@ Return-Path: <SRS0=XO6Y=EJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7D0DC2D0A3
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 14:51:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89147C2D0A3
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 15:20:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 64ED122370
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 14:51:03 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M5udLAeX"
+	by mail.kernel.org (Postfix) with ESMTP id 41DAC20757
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 15:20:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728217AbgKCOvC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Nov 2020 09:51:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50440 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728036AbgKCOuB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Nov 2020 09:50:01 -0500
-Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B4A2C0613D1
-        for <git@vger.kernel.org>; Tue,  3 Nov 2020 06:50:01 -0800 (PST)
-Received: by mail-qt1-x842.google.com with SMTP id j62so11771766qtd.0
-        for <git@vger.kernel.org>; Tue, 03 Nov 2020 06:50:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=2zkMZdhtPlplul5v76/8PoV45FgWrSvHFTr+GVk4Y0Q=;
-        b=M5udLAeXU79AnRQe2gg5NX3swQXuG4YKmdOnYXOKjqi9Q1Vc6xaPD7lfFCFSjT0CGr
-         6Pv7FdFpVwDs76yIJaySFl6hvzolNgeuAVNdYOZeo9x4H+DPQV4m9T+KUjkqX84JK1SX
-         F4xgo8iiNoTxttXkOswEV+Fhq1cQBAGc8SMC+VaYMXrut79y2RsrCzm5tHE3UiyLyFtC
-         JQMWJw1OyDhyPMdBrtrCyiG1Rfx2jf7D5lNDHSndLTTn6CL7WzpUZjscES2QfcpZLfZ9
-         qrhE1E848IANbklO8TsL2Lp29B3ASfHGCD46byfw7ScJGRNjrJ2qRe9rvbWpLz1IVsge
-         ePOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=2zkMZdhtPlplul5v76/8PoV45FgWrSvHFTr+GVk4Y0Q=;
-        b=ebkjsLDEkYkgVvisiCjDhgrK4ySF5rkof5D4RV7zrYhj04ExbarjbNWoCdbeXr5VS5
-         J9uz317272Fgbu0JwekdhC81RPipayKsylapiQPZt875pWXaAMosOQ3M+h7w2vBqHmAm
-         bFNg0AHYqajW8HDjIDOYijKiSDx+elLxTqFEXs6yw6DEYGE0JwlOC/jXlCW31zuuFmqk
-         vQecftONkAHXY7hwI2jH/VlCKAoEzRpPhahPTEp4kNFCRDBgPhiojHX0kOMKYv6KZAd8
-         uhMsnTo52oMDC84b7ooklbm1eauC92zUSh+j1sW1Ti/UfiF5rmlbw/7Gilt17yNYBgw4
-         NmPw==
-X-Gm-Message-State: AOAM5332MvKKjMdwExQNY+nV/dKGRm2XxKlBOTFfTt8dJWZLBg0bMhHv
-        0knxVFP3JI1ozq+jco1LWiFwsslrFrxc1w==
-X-Google-Smtp-Source: ABdhPJzHdtoF3zHt//AbM3oi9yAPSvEFC+dqucNLhj6gh7bg6qjjac8XdWCgLc8ivdR0zaXwv9wVKQ==
-X-Received: by 2002:ac8:4791:: with SMTP id k17mr20325538qtq.264.1604415000129;
-        Tue, 03 Nov 2020 06:50:00 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
-        by smtp.gmail.com with UTF8SMTPSA id m6sm10453177qki.112.2020.11.03.06.49.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Nov 2020 06:49:59 -0800 (PST)
-Subject: Re: [PATCH v2 00/20] fundamentals of merge-ort implementation
-To:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-References: <20201102204344.342633-1-newren@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <0197d698-e966-f0bb-4d77-0183e93d9bef@gmail.com>
-Date:   Tue, 3 Nov 2020 09:49:58 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101
- Thunderbird/83.0
+        id S1727857AbgKCPUw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Nov 2020 10:20:52 -0500
+Received: from cloud.peff.net ([104.130.231.41]:46128 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728023AbgKCPTB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Nov 2020 10:19:01 -0500
+Received: (qmail 6141 invoked by uid 109); 3 Nov 2020 15:19:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 03 Nov 2020 15:19:00 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1517 invoked by uid 111); 3 Nov 2020 15:19:00 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 03 Nov 2020 10:19:00 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 3 Nov 2020 10:18:59 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 4/4] Doc: push with --base
+Message-ID: <20201103151859.GA444466@coredump.intra.peff.net>
+References: <cover.1604362701.git.jonathantanmy@google.com>
+ <6250c13897e3cc01f247d80c148cf8dc5e7f3ad0.1604362701.git.jonathantanmy@google.com>
+ <20201103053554.GC948115@google.com>
 MIME-Version: 1.0
-In-Reply-To: <20201102204344.342633-1-newren@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20201103053554.GC948115@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/2/2020 3:43 PM, Elijah Newren wrote:
-> This series depends on a merge of en/strmap (after updating to v3) and
-> en/merge-ort-api-null-impl.
+On Mon, Nov 02, 2020 at 09:35:54PM -0800, Jonathan Nieder wrote:
+
+> I think you're saying that we don't need a "push" v2 because v0
+> already has what a user would want.
 > 
-> As promised, here's the update of the series due to the strmap
-> updates...and two other tiny updates.
+> Git protocol v2 for fetch brought two major changes:
+> 
+> - it changed the response for the initial request, allowing
+>   abbreviating the ref advertisement at last
+> 
+> - it defined a structure for requests and responses, simplifying the
+>   addition of later protocol improvements.  In particular, because the
+>   initial response is a capability advertisement, it allows changing
+>   the ref advertisement format more in the future.
+> 
+> Both of those changes would be valuable for push.  The ref
+> advertisements are large, and matching the structure of commands used
+> by fetchv2 would make debugging easier.
+> 
+> There are some specific applications I'm interested in after that
+> (e.g., pushing symrefs), but the fundamental extensibility improvement
+> is larger than any particular application I could think of.
 
-Hi Elijah,
+You pretty much summed up what I was going to respond. :)
 
-I'm sorry that I've been unavailable to read and review your series
-on this topic. I'm very excited about the opportunities here, and I
-wanted to take your topic and merge it with our microsoft/git fork
-so I could test the performance in a Scalar-enabled monorepo. My
-branch is available in my fork [1]
+But I'd go further here...
 
-[1] https://github.com/derrickstolee/git/tree/merge-ort-vfs
+> That said, I'm not against experimenting with extra parameters before
+> we go there, as a way of getting more information about what a
+> workable negotiation for push looks like.
 
-However, I'm unable to discover how to trigger your ort strategy,
-even for a simple rebase. Perhaps you could supply a recommended
-command for testing?
+I'd prefer to avoid doing this as an extra parameter for a few reasons:
 
-Thanks,
--Stolee
+  - once it's in a released version, it's much harder for us to take it
+    away
+
+  - the extra parameters area is a hack that helped us bootstrap v2. We
+    could probably use the same hack to bootstrap v3, etc. But it has
+    limitations for stuffing in arbitrary data. An obvious one is size.
+    We can transmit a single base, but would be limited if we wanted to
+    be able to send multiple. We already ran into this once with the
+    "symref=foo:bar" capability overflowing pkt-line limits. Here I'm
+    not even sure what the limits might be (it's subject to things like
+    how big an HTTP header a proxy will pass, or how large an
+    environment variable an ssh implementation supports)
+
+  - it potentially pushes more data/work outside of the git protocol
+    itself. E.g., web servers have to translate Git-Protocol headers
+    into the GIT_PROTOCOL environment for v2. I guess this new field
+    works in our tests because we copy the header's value entirely in
+    our apache.conf. But I wonder how many systems in the wild may only
+    work if it contains "version=2".
+
+-Peff
