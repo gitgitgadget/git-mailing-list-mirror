@@ -2,508 +2,164 @@ Return-Path: <SRS0=XO6Y=EJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BFD1C55179
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 14:05:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 324B6C388F7
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 14:24:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AA5A122243
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 14:05:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CF4AF22280
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 14:24:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fz08/kdw"
+	dkim=pass (1024-bit key) header.d=nokia.onmicrosoft.com header.i=@nokia.onmicrosoft.com header.b="JV/6+5GE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729495AbgKCOFC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Nov 2020 09:05:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43082 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729368AbgKCODW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Nov 2020 09:03:22 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C99C2C0617A6
-        for <git@vger.kernel.org>; Tue,  3 Nov 2020 06:03:21 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id e6so1443763wro.1
-        for <git@vger.kernel.org>; Tue, 03 Nov 2020 06:03:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=m8gW5bCgQFFAeBqgmq1s4ELpH4Xy61wnkyZoneclv/g=;
-        b=Fz08/kdwA6jNgrvlbSyp125bg530Pq1Qf+/y6Mv25ZwvsVbMHm1iUccD+h6BHs6e2G
-         Fx2RmzJImI5PDvhBZ7vNIcnmJbqM6Jju0mfGomvRyJh/P6/PLqHzg+FuMLfGD8KY8UGb
-         Nq9y9BRr/K6ebDbMFKjljHcRk1HXUajG+gQINGQ2FH19yIS+quqQ/Gv0zR/hzVqId8ui
-         /P6ox2betp7PTythM8G44/ra2mb+pwv5+oGPfkw4NAfHbfrBfMESPa9SeHrouI9M8GNH
-         rQYZXe/UIq5OpNx/GmxFI1ZX+rWJ6tyc0u1NKOfZUyQDftxFgWaRnRVlgZdAy8/g3W7K
-         98aQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=m8gW5bCgQFFAeBqgmq1s4ELpH4Xy61wnkyZoneclv/g=;
-        b=hXXfRD1Idxzhrb9Dzw0mw83Arnx98y7MlLlpCEGgQ/hX71grEfl48HM2ZIktMZPfqr
-         aDDvHLMqPTxFYyEdO1YXn7ly6rrvsxSCGHXz5C0/qAwW+Gz37pXGmA/B8Pq4XHKwCtEj
-         0OFN7Z2Q7/ilQTA5Nwz7skTC6D1tRkU69KdsI7DDsByjjEX/mKx2mS96B8Mkw+Jw58qx
-         4w7QnORMkH18Tn0hGeI8U9wVjQJFe+pXiGQFOC+/u9G782tlctYORnbslpUCR1RRgt9T
-         o78eFAC4yJ0mK8DmtsDNdJfgm4fblPFm5JqEcfsKSZ5mc7RTVsJsfOtoyJsZsCPRkQZE
-         YBag==
-X-Gm-Message-State: AOAM532+bVCfmjhro9AzjH16CMu4xlZIpnoNdtUraWCYOu0sUVv+/G0i
-        7bsfLWWfXmVwKs8yq/T2R8yF/JCaGIY=
-X-Google-Smtp-Source: ABdhPJysT26RwBmU1YtL3htUr0wI5brV/+2waGISnN+i4p3eMSW3V7Ylv53jpkQSCZjjlwoDJV9m4A==
-X-Received: by 2002:adf:b1d6:: with SMTP id r22mr25299659wra.136.1604412200088;
-        Tue, 03 Nov 2020 06:03:20 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f7sm27432107wrx.64.2020.11.03.06.03.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Nov 2020 06:03:19 -0800 (PST)
-Message-Id: <832fdf16872cbfee4a5e15b559b2b40dabd545f4.1604412197.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.776.git.1604412196.gitgitgadget@gmail.com>
-References: <pull.776.git.1604412196.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 03 Nov 2020 14:03:15 +0000
-Subject: [PATCH 2/3] maintenance: use launchctl on macOS
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1729562AbgKCOYL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Nov 2020 09:24:11 -0500
+Received: from mail-eopbgr00109.outbound.protection.outlook.com ([40.107.0.109]:35173
+        "EHLO EUR02-AM5-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1729585AbgKCOXr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Nov 2020 09:23:47 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=joLMa08m8P0edL8X0yi0/aNvTnKop6gpJ1gvr/AM7CcVH3w7EbbTA/kat6KpJ/2xGZKNQI1jpw/nfOkmManWIX/cj3fTM27PtRI5F4fWd6P8slXJuWtxbb+W41U9b8NjcprdJERZhmACv4iDJPf9sznlcTlCtR4BqU1WhVQsGNxl/iHhhwJiWiMtBWxB4OPdqZFc6U67iomD4i33UdET6pGwCLeU6K/XgvXCt4dmgQvKGuIplNjkHoZIONERIG7vCMmuUgCKHUzNo6GX4GRh4yhPz0KSsZuYPlsuSIkFgecQfA9hFACSDVGhes9Pm2Ajv9EDTboGAlFLDvL06OEV3Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YuHOuAU9rIic9L7tfZiRJpgSbiVRXpIRWxFidY0iao0=;
+ b=POrnBqf1EJY3V3pLaifBBwqtclYh2RMDL0i1I6G+JobgDZ7piKyQV6IuB1z1uOtt4yxsJQjPOzBhf9ZtEqGAH4esqvEutQ9l2TBs2dk/hL1uvFVBMj8J4RO/gTXrLfr6e6LsIFlxH8FFGdKVwIjfK0QlUeOgUQJVMvdOptWHfT+qTFUa8j0jY5NsJXt9+f40NvyGR50zi4NB2eZjKe5KJeBsumo3aWEKMq0UxM8cIHO20wo1cS2zzpf89f1K/yP+H4eucks5cPNeIWhKW7lVSEQ6YM90Z1E/RsoWuEh67fOBcsdJC79RKXDP/D3C8b9Z3slB4X1TM7dgCNSl+Y8sfA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
+ is 131.228.6.101) smtp.rcpttodomain=google.com smtp.mailfrom=nokia.com;
+ dmarc=fail (p=none sp=none pct=100) action=none header.from=nokia.com;
+ dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nokia.onmicrosoft.com;
+ s=selector1-nokia-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YuHOuAU9rIic9L7tfZiRJpgSbiVRXpIRWxFidY0iao0=;
+ b=JV/6+5GEeWutMKqEUaIIkmggDJTKrGmU/rrIEmQvUslMBnVqMrWP/PPpV9+wpTy7luy1k3FClvRXqbl4PMzfGu/erJyQP8biTph1txbgREqsxiCS5Ugj+7nSIZaOL8LbM8tmZu9Vqg4Fn8Zmy8vyuVFYSAlNfAvnrFBCFs7KFyQ=
+Received: from MR2P264CA0127.FRAP264.PROD.OUTLOOK.COM (2603:10a6:500:30::19)
+ by DB7PR07MB6025.eurprd07.prod.outlook.com (2603:10a6:10:85::27) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3541.10; Tue, 3 Nov
+ 2020 14:23:41 +0000
+Received: from VE1EUR03FT046.eop-EUR03.prod.protection.outlook.com
+ (2603:10a6:500:30:cafe::90) by MR2P264CA0127.outlook.office365.com
+ (2603:10a6:500:30::19) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.18 via Frontend
+ Transport; Tue, 3 Nov 2020 14:23:41 +0000
+X-MS-Exchange-Authentication-Results: spf=softfail (sender IP is
+ 131.228.6.101) smtp.mailfrom=nokia.com; google.com; dkim=none (message not
+ signed) header.d=none;google.com; dmarc=fail action=none
+ header.from=nokia.com;
+Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
+ nokia.com discourages use of 131.228.6.101 as permitted sender)
+Received: from fr712usmtp1.zeu.alcatel-lucent.com (131.228.6.101) by
+ VE1EUR03FT046.mail.protection.outlook.com (10.152.19.226) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3520.15 via Frontend Transport; Tue, 3 Nov 2020 14:23:40 +0000
+Received: from ulegcpbofur.emea.nsn-net.net (ulegcpbofur.emea.nsn-net.net [10.151.74.147])
+        by fr712usmtp1.zeu.alcatel-lucent.com (GMO) with ESMTP id 0A3ENbo7005363;
+        Tue, 3 Nov 2020 14:23:37 GMT
+From:   Peter Kaestle <peter.kaestle@nokia.com>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Stefan Beller <sbeller@google.com>
+Cc:     peter.kaestle@nokia.com
+Subject: [REGRESSION FIX 1/2] submodules: test for fetch of non-init subsub-repo
+Date:   Tue,  3 Nov 2020 15:23:18 +0100
+Message-Id: <1604413399-63090-2-git-send-email-peter.kaestle@nokia.com>
+X-Mailer: git-send-email 2.6.2
+In-Reply-To: <1604413399-63090-1-git-send-email-peter.kaestle@nokia.com>
+References: <1604413399-63090-1-git-send-email-peter.kaestle@nokia.com>
+X-EOPAttributedMessage: 0
+X-MS-Office365-Filtering-HT: Tenant
+X-MS-PublicTrafficType: Email
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     jrnieder@gmail.com, jonathantanmy@google.com, sluongng@gmail.com,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng?= Danh 
-        <congdanhqx@gmail.com>,
-        Martin =?UTF-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain
+X-MS-Office365-Filtering-Correlation-Id: 037a6252-417f-4ae6-69a8-08d880041010
+X-MS-TrafficTypeDiagnostic: DB7PR07MB6025:
+X-Microsoft-Antispam-PRVS: <DB7PR07MB6025388774FBB23901003E67EE110@DB7PR07MB6025.eurprd07.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:1775;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: vmp0vsc5/QSlNXhgcfZz+Lh0Aa/BQ/MATPUjTeR6UbBuplm9bsPZZ4sZy+1hzQQYnKrAlOY/2WG86QS7Di0jVz4PGD8owF8DrULiI/Q6P+7ea3wXfnJ1WPJ7ZDrPWKeF/blyBW8OTARrkdMMu1bY9KR8zKKyyqj1F4hEleOk6slItrtK9tdzBONPzk+k1ywyorh2W6g5xHDbUPi8UulrIMPrsXfNrq/ih6KCD726vA0eLaxGXgFIO37WWofr4fgXTPHK4mFngzFFUguKPlzxoLelbGPFjGZGnx8tY+sVyIuUE3LhuXjxI0k5uS0u6ET4goNRDnU1HD5QnDjP5pAe/rvuCJTSAw8RhHKBdQwMF9JefIWjWvoOGJzu2wjdsmTFn3YBUvK2Q1Ok0mxc3AE6Qg==
+X-Forefront-Antispam-Report: CIP:131.228.6.101;CTRY:FI;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:fr712usmtp1.zeu.alcatel-lucent.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(4636009)(39860400002)(136003)(346002)(376002)(396003)(46966005)(36756003)(44832011)(5660300002)(336012)(6666004)(82310400003)(26005)(2616005)(110136005)(186003)(86362001)(4326008)(107886003)(356005)(81166007)(70586007)(82740400003)(70206006)(36906005)(8676002)(2906002)(478600001)(47076004)(8936002)(316002)(83380400001);DIR:OUT;SFP:1102;
+X-OriginatorOrg: nokia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Nov 2020 14:23:40.9741
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 037a6252-417f-4ae6-69a8-08d880041010
+X-MS-Exchange-CrossTenant-Id: 5d471751-9675-428d-917b-70f44f9630b0
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=5d471751-9675-428d-917b-70f44f9630b0;Ip=[131.228.6.101];Helo=[fr712usmtp1.zeu.alcatel-lucent.com]
+X-MS-Exchange-CrossTenant-AuthSource: VE1EUR03FT046.eop-EUR03.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB7PR07MB6025
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+This test case triggers a regression, which was introduced by
+a62387b3fc9f5aeeb04a2db278121d33a9caafa7 in following setup:
+outer_repo/middle_repo/inner_repo and a change in the remote of
+inner_repo happens.  Then it's being fetched by a second clone of the
+outer repo, in which the middle is initialized, but the inner is not.
 
-The existing mechanism for scheduling background maintenance is done
-through cron. The 'crontab -e' command allows updating the schedule
-while cron itself runs those commands. While this is technically
-supported by macOS, it has some significant deficiencies:
+This causes is_empty_dir() in submodule.c:get_next_submodule() to
+check for a directory only existing in the actual worktree, while the
+is_empty_dir() being called from .git/modules.
 
-1. Every run of 'crontab -e' must request elevated privileges through
-   the user interface. When running 'git maintenance start' from the
-   Terminal app, it presents a dialog box saying "Terminal.app would
-   like to administer your computer. Administration can include
-   modifying passwords, networking, and system settings." This is more
-   alarming than what we are hoping to achieve. If this alert had some
-   information about how "git" is trying to run "crontab" then we would
-   have some reason to believe that this dialog might be fine. However,
-   it also doesn't help that some scenarios just leave Git waiting for
-   a response without presenting anything to the user. I experienced
-   this when executing the command from a Bash terminal view inside
-   Visual Studio Code.
-
-2. While cron initializes a user environment enough for "git config
-   --global --show-origin" to show the correct config file information,
-   it does not set up the environment enough for Git Credential Manager
-   Core to load credentials during a 'prefetch' task. My prefetches
-   against private repositories required re-authenticating through UI
-   pop-ups in a way that should not be required.
-
-The solution is to switch from cron to the Apple-recommended [1]
-'launchd' tool.
-
-[1] https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/ScheduledJobs.html
-
-The basics of this tool is that we need to create XML-formatted
-"plist" files inside "~/Library/LaunchAgents/" and then use the
-'launchctl' tool to make launchd aware of them. The plist files
-include all of the scheduling information, along with the command-line
-arguments split across an array of <string> tags.
-
-For example, here is my plist file for the weekly scheduled tasks:
-
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0"><dict>
-<key>Label</key><string>org.git-scm.git.weekly</string>
-<key>ProgramArguments</key>
-<array>
-<string>/usr/local/libexec/git-core/git</string>
-<string>--exec-path=/usr/local/libexec/git-core</string>
-<string>for-each-repo</string>
-<string>--config=maintenance.repo</string>
-<string>maintenance</string>
-<string>run</string>
-<string>--schedule=weekly</string>
-</array>
-<key>StartCalendarInterval</key>
-<array>
-<dict>
-<key>Day</key><integer>0</integer>
-<key>Hour</key><integer>0</integer>
-<key>Minute</key><integer>0</integer>
-</dict>
-</array>
-</dict>
-</plist>
-
-The schedules for the daily and hourly tasks are more complicated
-since we need to use an array for the StartCalendarInterval with
-an entry for each of the six days other than the 0th day (to avoid
-colliding with the weekly task), and each of the 23 hours other
-than the 0th hour (to avoid colliding with the daily task).
-
-The "Label" value is currently filled with "org.git-scm.git.X"
-where X is the frequency. We need a different plist file for each
-frequency.
-
-The launchctl command needs to be aligned with a user id in order
-to initialize the command environment. This must be done using
-the 'launchctl bootstrap' subcommand. This subcommand is new as
-of macOS 10.11, which was released in September 2015. Before that
-release the 'launchctl load' subcommand was recommended. The best
-source of information on this transition I have seen is available
-at [2].
-
-[2] https://babodee.wordpress.com/2016/04/09/launchctl-2-0-syntax/
-
-To remove a schedule, we must run 'launchctl bootout' with a valid
-plist file. We also need to 'bootout' a task before the 'bootstrap'
-subcommand will succeed, if such a task already exists.
-
-We can verify the commands that were run by 'git maintenance start'
-and 'git maintenance stop' by injecting a script that writes the
-command-line arguments into GIT_TEST_CRONTAB.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+Signed-off-by: Peter Kaestle <peter.kaestle@nokia.com>
 ---
- builtin/gc.c           | 209 +++++++++++++++++++++++++++++++++++++++++
- t/t7900-maintenance.sh |  52 +++++++++-
- t/test-lib.sh          |   4 +
- 3 files changed, 262 insertions(+), 3 deletions(-)
+ t/t5526-fetch-submodules.sh | 38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index c1f7d9bdc2..fa0ae63a80 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1491,6 +1491,214 @@ static int maintenance_unregister(void)
- 	return run_command(&config_unset);
- }
- 
-+#if defined(__APPLE__)
-+
-+static char *get_service_name(const char *frequency)
-+{
-+	struct strbuf label = STRBUF_INIT;
-+	strbuf_addf(&label, "org.git-scm.git.%s", frequency);
-+	return strbuf_detach(&label, NULL);
-+}
-+
-+static char *get_service_filename(const char *name)
-+{
-+	char *expanded;
-+	struct strbuf filename = STRBUF_INIT;
-+	strbuf_addf(&filename, "~/Library/LaunchAgents/%s.plist", name);
-+
-+	expanded = expand_user_path(filename.buf, 1);
-+	if (!expanded)
-+		die(_("failed to expand path '%s'"), filename.buf);
-+
-+	strbuf_release(&filename);
-+	return expanded;
-+}
-+
-+static const char *get_frequency(enum schedule_priority schedule)
-+{
-+	switch (schedule) {
-+	case SCHEDULE_HOURLY:
-+		return "hourly";
-+	case SCHEDULE_DAILY:
-+		return "daily";
-+	case SCHEDULE_WEEKLY:
-+		return "weekly";
-+	default:
-+		BUG("invalid schedule %d", schedule);
-+	}
-+}
-+
-+static char *get_uid(void)
-+{
-+	struct strbuf output = STRBUF_INIT;
-+	struct child_process id = CHILD_PROCESS_INIT;
-+
-+	strvec_pushl(&id.args, "/usr/bin/id", "-u", NULL);
-+	if (capture_command(&id, &output, 0))
-+		die(_("failed to discover user id"));
-+
-+	strbuf_trim_trailing_newline(&output);
-+	return strbuf_detach(&output, NULL);
-+}
-+
-+static int bootout(const char *filename)
-+{
-+	int result;
-+	struct strvec args = STRVEC_INIT;
-+	char *uid = get_uid();
-+	const char *launchctl = getenv("GIT_TEST_CRONTAB");
-+	if (!launchctl)
-+		launchctl = "/bin/launchctl";
-+
-+	strvec_split(&args, launchctl);
-+	strvec_push(&args, "bootout");
-+	strvec_pushf(&args, "gui/%s", uid);
-+	strvec_push(&args, filename);
-+
-+	result = run_command_v_opt(args.v, 0);
-+
-+	strvec_clear(&args);
-+	free(uid);
-+	return result;
-+}
-+
-+static int bootstrap(const char *filename)
-+{
-+	int result;
-+	struct strvec args = STRVEC_INIT;
-+	char *uid = get_uid();
-+	const char *launchctl = getenv("GIT_TEST_CRONTAB");
-+	if (!launchctl)
-+		launchctl = "/bin/launchctl";
-+
-+	strvec_split(&args, launchctl);
-+	strvec_push(&args, "bootstrap");
-+	strvec_pushf(&args, "gui/%s", uid);
-+	strvec_push(&args, filename);
-+
-+	result = run_command_v_opt(args.v, 0);
-+
-+	strvec_clear(&args);
-+	free(uid);
-+	return result;
-+}
-+
-+static int remove_plist(enum schedule_priority schedule)
-+{
-+	const char *frequency = get_frequency(schedule);
-+	char *name = get_service_name(frequency);
-+	char *filename = get_service_filename(name);
-+	int result = bootout(filename);
-+	free(filename);
-+	free(name);
-+	return result;
-+}
-+
-+static int remove_plists(void)
-+{
-+	return remove_plist(SCHEDULE_HOURLY) ||
-+		remove_plist(SCHEDULE_DAILY) ||
-+		remove_plist(SCHEDULE_WEEKLY);
-+}
-+
-+static int schedule_plist(const char *exec_path, enum schedule_priority schedule)
-+{
-+	FILE *plist;
-+	int i;
-+	const char *preamble, *repeat;
-+	const char *frequency = get_frequency(schedule);
-+	char *name = get_service_name(frequency);
-+	char *filename = get_service_filename(name);
-+
-+	if (safe_create_leading_directories(filename))
-+		die(_("failed to create directories for '%s'"), filename);
-+	plist = fopen(filename, "w");
-+
-+	if (!plist)
-+		die(_("failed to open '%s'"), filename);
-+
-+	preamble = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-+		   "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"
-+		   "<plist version=\"1.0\">"
-+		   "<dict>\n"
-+		   "<key>Label</key><string>%s</string>\n"
-+		   "<key>ProgramArguments</key>\n"
-+		   "<array>\n"
-+		   "<string>%s/git</string>\n"
-+		   "<string>--exec-path=%s</string>\n"
-+		   "<string>for-each-repo</string>\n"
-+		   "<string>--config=maintenance.repo</string>\n"
-+		   "<string>maintenance</string>\n"
-+		   "<string>run</string>\n"
-+		   "<string>--schedule=%s</string>\n"
-+		   "</array>\n"
-+		   "<key>StartCalendarInterval</key>\n"
-+		   "<array>\n";
-+	fprintf(plist, preamble, name, exec_path, exec_path, frequency);
-+
-+	switch (schedule) {
-+	case SCHEDULE_HOURLY:
-+		repeat = "<dict>\n"
-+			 "<key>Hour</key><integer>%d</integer>\n"
-+			 "<key>Minute</key><integer>0</integer>\n"
-+			 "<dict>\n";
-+		for (i = 1; i <= 23; i++)
-+			fprintf(plist, repeat, i);
-+		break;
-+
-+	case SCHEDULE_DAILY:
-+		repeat = "<dict>\n"
-+			 "<key>Day</key><integer>%d</integer>\n"
-+			 "<key>Hour</key><integer>0</integer>\n"
-+			 "<key>Minute</key><integer>0</integer>\n"
-+			 "</dict>\n";
-+		for (i = 1; i <= 6; i++)
-+			fprintf(plist, repeat, i);
-+		break;
-+
-+	case SCHEDULE_WEEKLY:
-+		fprintf(plist,
-+			"<dict>\n"
-+			"<key>Day</key><integer>0</integer>\n"
-+			"<key>Hour</key><integer>0</integer>\n"
-+			"<key>Minute</key><integer>0</integer>\n"
-+			"</dict>\n");
-+		break;
-+
-+	default:
-+		/* unreachable */
-+		break;
-+	}
-+	fprintf(plist, "</array>\n</dict>\n</plist>\n");
-+
-+	/* bootout might fail if not already running, so ignore */
-+	bootout(filename);
-+	if (bootstrap(filename))
-+		die(_("failed to bootstrap service %s"), filename);
-+
-+	fclose(plist);
-+	free(filename);
-+	free(name);
-+	return 0;
-+}
-+
-+static int add_plists(void)
-+{
-+	const char *exec_path = git_exec_path();
-+
-+	return schedule_plist(exec_path, SCHEDULE_HOURLY) ||
-+		schedule_plist(exec_path, SCHEDULE_DAILY) ||
-+		schedule_plist(exec_path, SCHEDULE_WEEKLY);
-+}
-+
-+static int platform_update_schedule(int run_maintenance, int fd)
-+{
-+	if (run_maintenance)
-+		return add_plists();
-+	else
-+		return remove_plists();
-+}
-+#else
- #define BEGIN_LINE "# BEGIN GIT MAINTENANCE SCHEDULE"
- #define END_LINE "# END GIT MAINTENANCE SCHEDULE"
- 
-@@ -1585,6 +1793,7 @@ static int platform_update_schedule(int run_maintenance, int fd)
- 		fclose(cron_list);
- 	return result;
- }
-+#endif
- 
- static int update_background_schedule(int run_maintenance)
- {
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 20184e96e1..f0210aa206 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -367,7 +367,7 @@ test_expect_success 'register and unregister' '
- 	test_cmp before actual
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index dd8e423..9fbd481 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -719,4 +719,42 @@ test_expect_success 'fetch new submodule commit intermittently referenced by sup
+ 	)
  '
  
--test_expect_success 'start from empty cron table' '
-+test_expect_success !MACOS_MAINTENANCE 'start from empty cron table' '
- 	GIT_TEST_CRONTAB="test-tool crontab cron.txt" git maintenance start &&
- 
- 	# start registers the repo
-@@ -378,7 +378,7 @@ test_expect_success 'start from empty cron table' '
- 	grep "for-each-repo --config=maintenance.repo maintenance run --schedule=weekly" cron.txt
- '
- 
--test_expect_success 'stop from existing schedule' '
-+test_expect_success !MACOS_MAINTENANCE 'stop from existing schedule' '
- 	GIT_TEST_CRONTAB="test-tool crontab cron.txt" git maintenance stop &&
- 
- 	# stop does not unregister the repo
-@@ -389,12 +389,58 @@ test_expect_success 'stop from existing schedule' '
- 	test_must_be_empty cron.txt
- '
- 
--test_expect_success 'start preserves existing schedule' '
-+test_expect_success !MACOS_MAINTENANCE 'start preserves existing schedule' '
- 	echo "Important information!" >cron.txt &&
- 	GIT_TEST_CRONTAB="test-tool crontab cron.txt" git maintenance start &&
- 	grep "Important information!" cron.txt
- '
- 
-+test_expect_success MACOS_MAINTENANCE 'start and stop macOS maintenance' '
-+	echo "#!/bin/sh\necho \$@ >>args" >print-args &&
-+	chmod a+x print-args &&
++add_commit_push()
++{
++	dir="$1"
++	msg="$2"
++	shift 2
++	git -C "$dir" add "$@" &&
++	git -C "$dir" commit -a -m "$msg" &&
++	git -C "$dir" push
++}
 +
-+	rm -f args &&
-+	GIT_TEST_CRONTAB="./print-args" git maintenance start &&
++test_expect_failure 'fetching a superproject containing an uninitialized sub/sub project' '
++	# does not depend on any previous test setups
 +
-+	# start registers the repo
-+	git config --get --global maintenance.repo "$(pwd)" &&
-+
-+	# ~/Library/LaunchAgents
-+	ls "$HOME/Library/LaunchAgents" >actual &&
-+	cat >expect <<-\EOF &&
-+	org.git-scm.git.daily.plist
-+	org.git-scm.git.hourly.plist
-+	org.git-scm.git.weekly.plist
-+	EOF
-+	test_cmp expect actual &&
-+
-+	rm expect &&
-+	for frequency in hourly daily weekly
++	for repo in outer middle inner
 +	do
-+		PLIST="$HOME/Library/LaunchAgents/org.git-scm.git.$frequency.plist" &&
-+		grep schedule=$frequency "$PLIST" &&
-+		echo "bootout gui/$UID $PLIST" >>expect &&
-+		echo "bootstrap gui/$UID $PLIST" >>expect || return 1
++		git init --bare $repo &&
++		git clone $repo ${repo}_content &&
++		echo $repo > ${repo}_content/file &&
++		add_commit_push ${repo}_content "initial" file
 +	done &&
-+	test_cmp expect args &&
 +
-+	rm -f args &&
-+	GIT_TEST_CRONTAB="./print-args"  git maintenance stop &&
++	git clone outer A &&
++	git -C A submodule add "$pwd/middle" &&
++	git -C A/middle/ submodule add "$pwd/inner" &&
++	add_commit_push A/middle/ "adding inner sub" .gitmodules inner &&
++	add_commit_push A/ "adding middle sub" .gitmodules middle &&
 +
-+	# stop does not unregister the repo
-+	git config --get --global maintenance.repo "$(pwd)" &&
++	git clone outer B &&
++	git -C B/ submodule update --init middle &&
 +
-+	# stop does not remove plist files, but boots them out
-+	rm expect &&
-+	for frequency in hourly daily weekly
-+	do
-+		PLIST="$HOME/Library/LaunchAgents/org.git-scm.git.$frequency.plist" &&
-+		grep schedule=$frequency "$PLIST" &&
-+		echo "bootout gui/$UID $PLIST" >>expect || return 1
-+	done &&
-+	test_cmp expect args
++	echo "change on inner repo of A" > A/middle/inner/file &&
++	add_commit_push A/middle/inner "change on inner" file &&
++	add_commit_push A/middle "change on inner" inner &&
++	add_commit_push A "change on inner" middle &&
++
++	git -C B/ fetch
 +'
 +
- test_expect_success 'register preserves existing strategy' '
- 	git config maintenance.strategy none &&
- 	git maintenance register &&
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 4a60d1ed76..620ffbf3af 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1703,6 +1703,10 @@ test_lazy_prereq REBASE_P '
- 	test -z "$GIT_TEST_SKIP_REBASE_P"
- '
- 
-+test_lazy_prereq MACOS_MAINTENANCE '
-+	launchctl list
-+'
-+
- # Ensure that no test accidentally triggers a Git command
- # that runs 'crontab', affecting a user's cron schedule.
- # Tests that verify the cron integration must set this locally
+ test_done
 -- 
-gitgitgadget
+2.6.2
 
