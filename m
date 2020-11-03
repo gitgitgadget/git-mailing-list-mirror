@@ -4,146 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A895C2D0A3
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 10:47:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91A37C2D0A3
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 11:03:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D505622384
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 10:47:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 27E4D208B6
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 11:03:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LQ4/eo8W"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X+7jq5PE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727246AbgKCKrB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Nov 2020 05:47:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41072 "EHLO
+        id S1728014AbgKCLDO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Nov 2020 06:03:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726058AbgKCKrB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Nov 2020 05:47:01 -0500
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C355C0613D1
-        for <git@vger.kernel.org>; Tue,  3 Nov 2020 02:47:01 -0800 (PST)
-Received: by mail-oi1-x242.google.com with SMTP id 9so17913718oir.5
-        for <git@vger.kernel.org>; Tue, 03 Nov 2020 02:47:01 -0800 (PST)
+        with ESMTP id S1727895AbgKCLDN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Nov 2020 06:03:13 -0500
+Received: from mail-io1-xd41.google.com (mail-io1-xd41.google.com [IPv6:2607:f8b0:4864:20::d41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 574C7C0613D1
+        for <git@vger.kernel.org>; Tue,  3 Nov 2020 03:03:12 -0800 (PST)
+Received: by mail-io1-xd41.google.com with SMTP id u62so18007340iod.8
+        for <git@vger.kernel.org>; Tue, 03 Nov 2020 03:03:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=dFU0Uw63xJgtP+jcFNmhtacnTAq4KZmDCnN2UucY9B0=;
-        b=LQ4/eo8WiA65717/DG3Bc0u6qC1KQQFGt0gv0LQ2EZXl7mwvTQWQMvqRkoF1hcgPKa
-         lv38CXzqYHA0tN9m9Vtlt4Jy1yVfNLvI6BqEcFXqlHXyZ8pklgvfq5h6SEDGGOKNvl1+
-         HHOj3WCQp8VtWoomFYGRpvvFbhTPmvhPoc3+FNFYzK/Z0YUbt7Mj0Sb9qNwoxSKf+dcg
-         /HCElrpCPX/BxPl92hQhSO+B+ul82+bCp6VFdqyRhcb6zUYJFOgaiHJeFHQZ3L0eT0Y4
-         1m18fk2uEO4g4g0nPqyullrCuEwm0UsW2vL4iSU6pSVuar8hEEUVx0qPtOqMgUiz9zUY
-         dFvA==
+        bh=v9d4v2OzH78fVzlWt+QfvZ/vvKu9QB5RMPA0Gy/JxUc=;
+        b=X+7jq5PEPDMc+3J7MM8wJnhLIF0FiEtSf4RLKUEZHNsXmMZF0WO5ec7cku1dY1iYG3
+         jeGpQ0QZTEwICXNZ6ApILx3Lo4ac3svdLjZgTGzcqKwnnAJMOazU1oizs6iFQPeMtq05
+         OiKyHHbEWnWd/yrxtqWOIBhc5poPcMoMxcr6Akxdxs0euZuhnWONqtl8aSndBvNMggzx
+         9PSHGWMccKd9JFMC1q/xdVP/4N+viN/nxIL12AspxVeRDDcWZ4ZFN3zamULvxCCXTWpS
+         7G15pAfbn6yJBjQR3Tu+jTNEdFTi0VH6Haol5pE5SRjWEglf1KuKC5ll+mS31RHU3Ruc
+         j3Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=dFU0Uw63xJgtP+jcFNmhtacnTAq4KZmDCnN2UucY9B0=;
-        b=pfv9Z86ILLH7k9Liad/jVx4OXBwvjQzF5tYFupB6o519vpzO6vooYUKx8aTNxi/x5b
-         /GciQgjSCFsCHgPPGBqrao536YGVEPl/mo/PDm0c2CnIW1DRh09mbfBDJ09GYzy+Mm7q
-         y5K17QC7RgdDx7es97uBhvnZ73RCfUvq4if7JUG2FImy0Mq63xAD8MovbYq8vdYkqR4Q
-         fxX4Se9ETofjMALaWOKGN5d2oIarB9ipI1kSak7fkCIarz1J3jZjUGLJ53EX1nXvi1hg
-         Un9bBPQ+dG+12tua2pnr3f7jaaNhBZcDfIrSfJd1XFq+LkD6+cHSyxaJ2Ni4ipGBatV2
-         PzZQ==
-X-Gm-Message-State: AOAM5327ff4+h+IKcHmbWtWAjwyiar2K9hzgaO5RsNZ/ef6Sacng0sKj
-        1SB5DbflaHD8nSMay+GKVDT3VfJpw7lvXkPJv3S+01tmNCwY8A==
-X-Google-Smtp-Source: ABdhPJyw5pdKzKQNfN2EYoNRWPtLNU42eeW0PnK0mZJWhUJ0P8O1ppLvUqpGwXp5r1ubw06+3TPS41PTXH0VotlplAE=
-X-Received: by 2002:a05:6808:578:: with SMTP id j24mr1623768oig.10.1604400420313;
- Tue, 03 Nov 2020 02:47:00 -0800 (PST)
+        bh=v9d4v2OzH78fVzlWt+QfvZ/vvKu9QB5RMPA0Gy/JxUc=;
+        b=GRHMWF6EahyyZA60P929pftGnptLdBiG/5oR4FIfTFTbKZbNnhDVz8irMVVZc7OAvK
+         lk4x9jPOH1fjZVUwOnvSyyZjZ0ovsZ/hrcBLjF/OVRNlz9U/kVBDHOlvQZNd9gYr5D/T
+         C7adO4WnS4X9FgBHYZb36ZdPk+1x7n/u14rgFKEet1qhPLUdpSmg7T86F+5L154/aBd0
+         YQyja1yObPte1zEvKn85Zbss7OOg8/556R9DN5IssWkjZudcN+z+wc+Bc7wzvNQWQkpT
+         iZO2gBBiLUfHXHh/npjJMAv6uGOLnOsvUWMVf+A7TrttbusHgXj4zMcHGeoDXCwbQoG0
+         +k7Q==
+X-Gm-Message-State: AOAM5320TFw2v+s+WZKsoh+RUIYJebUXFA/J3GA1echNB+uksNkEZmxU
+        pTMqiOx2GOjDVhJfOupcrJfCPM5b/KzOgDGigis=
+X-Google-Smtp-Source: ABdhPJwsiQ6Kvliv851gvy8Cib2T9cO/b91MAgdSU7wAbfJ50FZo777msjJ70vU62/iY8EQsz6PB0ioLdU/2pYYczRo=
+X-Received: by 2002:a02:6a25:: with SMTP id l37mr1938172jac.70.1604401391577;
+ Tue, 03 Nov 2020 03:03:11 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.751.git.1602781723670.gitgitgadget@gmail.com> <20201026175742.33356-1-sangunb09@gmail.com>
-In-Reply-To: <20201026175742.33356-1-sangunb09@gmail.com>
-From:   Sangeeta <sangunb09@gmail.com>
-Date:   Tue, 3 Nov 2020 16:16:49 +0530
-Message-ID: <CAHjREB7W2P9_P4LoMHVVzV_YR5-_51zdbRZ0fpEDVkgkd7sh8w@mail.gmail.com>
-Subject: Re: [Outreachy][PATCH v6] diff: do not show submodule with untracked
- files as "-dirty"
-To:     Git List <git@vger.kernel.org>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <pull.773.git.1603807337.gitgitgadget@gmail.com>
+ <24f2c4a62317231f4eabed23bb24d345abc9d67e.1603807338.git.gitgitgadget@gmail.com>
+ <xmqq7drbbcj5.fsf@gitster.c.googlers.com> <CAFzd1+7wzPZa9brWzWzSQdcMEnbEcV28zqBBAV_rsdsKNaKaFg@mail.gmail.com>
+ <xmqqpn4vqogu.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqpn4vqogu.fsf@gitster.c.googlers.com>
+From:   "herr.kaste" <herr.kaste@gmail.com>
+Date:   Tue, 3 Nov 2020 12:02:45 +0100
+Message-ID: <CAFzd1+5D4pHhGf=K0LwaaOUjoBByqsMTpBVtR+Ots6-afBTDEA@mail.gmail.com>
+Subject: Re: [PATCH 1/4] rebase -i: stop overwriting ORIG_HEAD buffer
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Johannes and Junio,
+Am Di., 3. Nov. 2020 um 01:21 Uhr schrieb Junio C Hamano <gitster@pobox.com>:
+>
+> "herr.kaste" <herr.kaste@gmail.com> writes:
+>
+> > Phillip pointed out that ORIG_HEAD is actually not save *if* there is
+> > a `reset` or `rebase --skip` during the rebase.  Otherwise, by design,
+> > ORIG_HEAD would be easier to use, as in the form `<branch_name>@{<n>}`
+> > two things have to be decided and can go wrong.
+>
+> What "two"?  You should be able to just say @{1} regardless---that
+> was the whole point of performing all the intermediate steps while
+> on the detached HEAD so that you can rely on <n> being 1, and @{<num
+> or time>} is a short-hand of <branch>@{<num or time>} for the
+> current branch, and not a short-hand for HEAD@{...}, to help such a
+> use case.
+>
+> Or am I missing something?
 
-In continuation of the discussion from here[1]
+Well, "@{1}" basically means: from the stream of things that happened take
+the first.  It is very natural to refer to the most recent thing differently.
+In practice, until now, I used the {...} form only to refer to older things.
+To put it differently, using {...} I'm researching history.
 
-[1] https://lore.kernel.org/git/nycvar.QRO.7.76.6.2011020251520.18437@tvgsbejvaqbjf.bet/
+From the docs:
 
-> >> * sj/untracked-files-in-submodule-directory-is-not-dirty (2020-10-26) 1 commit
-> >>  - diff: do not show submodule with untracked files as "-dirty"
-> >>
-> >>  "git diff" showed a submodule working tree with untracked cruft as
-> >>  "Submodule commit <objectname>-dirty", but a natural expectation is
-> >>  that the "-dirty" indicator would align with "git describe --dirty",
-> >>  which does not consider having untracked files in the working tree
-> >>  as source of dirtiness.  The inconsistency has been fixed.
-> >>
-> >>  Needs doc update.
+    ORIG_HEAD is created by commands that move your HEAD in a drastic way,
+    to record the position of the HEAD before their operation, so that you
+    can easily change the tip of the branch back to the state before you ran
+    them.
 
-Do I need to add the doc update in the same patch?
-
-> > I *think* the original rationale for marking submodules with untracked
-> > (_un-ignored_) files was to avoid deleting a submodule that has
-> > uncommitted (because untracked) files.
->
-> I agree with you that that the motivation was exactly that, but I
-> have a suspicion that its execution was misguided.
-
-I am really very sorry if I ended up adding some unwanted code.
-
->
-> When one has a subdirectory D where one might or might not have an
-> untracked new file that one does not want to lose, but one otherwise
-> would want to clean up (perhaps an errant process created tons of
-> garbage files in the directory), one would not
->
->         git diff D
->
-> to see if there are important changes in that directory before doing
->
->         rm -rf D && git checkout D
->
-> to bring it back to pristine state, exactly because one would not
-> want to lose newly-created but not added files.  One would instead
-> use
->
->         git status D
->
-> for checking.  Why would a user change the habit when D happens to
-> be a submodule?
->
-> So I would say that "git status [D]", if it does not let the user
-> notice that there is untracked contents in the submodule working
-> tree, would be a bad idea.  "git diff" that ignores untracked paths
-> in the submodule working tree, on the other hand, is a good thing.
->
-> Now, the patch as-is may change the behaviour of "git status D" in
-> this case, and the internal invocation of diff-files made somewhere
-> in wt-status.c may have to be adjusted to keep such a submodule with
-> forgotten newly created files shown as modified.
->
-> Further discussion on this should be done on the original review
-> thread for continuity, not here, in any case.
->
-
-So we want that `git status` should behave in the same way as it was
-behaving before? Can we do this by passing --ignore-submodules=none as
-the default args for status? Another approach might be to figure out
-how the diff is being called(like is this being called from git status
-or git diff) and then add the --ignore-submodules=untracked behavior
-to it accordingly. Though I have no idea how to do that now.
-
-Please correct me if I am completely going in the wrong direction. As
-it is my first time contributing to git, so any help would be greatly
-beneficial for me.
-
-Thanks and regards,
-Sangeeta
+That's just humane.  You do something, and then you revert.  I don't need
+a concept of a written history here, just of recency.
