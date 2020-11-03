@@ -6,116 +6,79 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF3FAC2D0A3
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 16:20:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21F3CC388F9
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 16:24:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 83A7B20773
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 16:20:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CAB0C20674
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 16:24:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728046AbgKCQUO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Nov 2020 11:20:14 -0500
-Received: from cloud.peff.net ([104.130.231.41]:46254 "EHLO cloud.peff.net"
+        id S1728217AbgKCQYc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Nov 2020 11:24:32 -0500
+Received: from cloud.peff.net ([104.130.231.41]:46278 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727479AbgKCQUO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Nov 2020 11:20:14 -0500
-Received: (qmail 6513 invoked by uid 109); 3 Nov 2020 16:20:14 -0000
+        id S1727921AbgKCQYb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Nov 2020 11:24:31 -0500
+Received: (qmail 6538 invoked by uid 109); 3 Nov 2020 16:24:31 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 03 Nov 2020 16:20:14 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 03 Nov 2020 16:24:31 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2115 invoked by uid 111); 3 Nov 2020 16:20:13 -0000
+Received: (qmail 2186 invoked by uid 111); 3 Nov 2020 16:24:30 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 03 Nov 2020 11:20:13 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 03 Nov 2020 11:24:30 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 3 Nov 2020 11:20:13 -0500
+Date:   Tue, 3 Nov 2020 11:24:30 -0500
 From:   Jeff King <peff@peff.net>
 To:     Elijah Newren <newren@gmail.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 08/10] strmap: add functions facilitating use as a
- string->int map
-Message-ID: <20201103162013.GE444466@coredump.intra.peff.net>
+Subject: Re: [PATCH v2 10/10] strmap: enable allocations to come from a
+ mem_pool
+Message-ID: <20201103162430.GF444466@coredump.intra.peff.net>
 References: <pull.835.git.git.1598035949.gitgitgadget@gmail.com>
  <pull.835.v2.git.git.1602549650.gitgitgadget@gmail.com>
- <cc8d702f98f94fd9202d227d19be43a912467e84.1602549650.git.gitgitgadget@gmail.com>
- <20201030143906.GH3277724@coredump.intra.peff.net>
- <CABPp-BFyqTthyBmp5yt+iUniwTi+=y2QcBcmNnnCy=zvyi3Rbw@mail.gmail.com>
+ <eca4f1ddbaa1cd8dc3fc64dbe9206af538cb317d.1602549650.git.gitgitgadget@gmail.com>
+ <20201030145604.GJ3277724@coredump.intra.peff.net>
+ <CABPp-BEY5R79WGsMB1y1MEbcvw8EF5-ADxvDPzL+Hn-PiyobsA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CABPp-BFyqTthyBmp5yt+iUniwTi+=y2QcBcmNnnCy=zvyi3Rbw@mail.gmail.com>
+In-Reply-To: <CABPp-BEY5R79WGsMB1y1MEbcvw8EF5-ADxvDPzL+Hn-PiyobsA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 30, 2020 at 10:28:51AM -0700, Elijah Newren wrote:
+On Fri, Oct 30, 2020 at 12:31:13PM -0700, Elijah Newren wrote:
 
-> > You might want to mention that this _could_ be done as just accessors to
-> > strmap, but using a separate struct provides type safety against
-> > misusing pointers as integers or vice versa.
+> > I think we could fall back to a FLEXPTR when there's no mempool (or even
+> > when there is, though you'd be on your own to reimplement the
+> > computation parts of FLEXPTR_ALLOC). I'm not sure how ugly it would end
+> > up.
 > 
-> If I just did it as accessors, it makes it harder for myself and
-> others to remember what my huge piles of strmaps in merge-ort do; I
-> found that it became easier to follow the code and remember what
-> things were doing when some were marked as strmap, some as strintmap,
-> and some as strset.
+> Yeah, we'd need a mempool-specific reimplementation of FLEXPTR_ALLOC
+> with the mempool, and just avoid using it at all whenever
+> strdup_strings was 0.  Seems slightly ugly, but maybe it wouldn't be
+> too bad.  I could look into it.
 
-Oh, I'm definitely on board with that argument. I was just suggesting
-you might want to put it in the commit message for posterity.
+It looks like you went this route (fall back to FLEXPTR) in the re-roll
+you posted. I haven't looked at it carefully yet, but I suspect it will
+be just fine to me (I probably would have accepted "no, it makes the
+code too ugly; if you want efficiency use a mempool" as well, but I'll
+see how ugly it turned out. ;) ).
 
-> > > +/*
-> > > + * strintmap:
-> > > + *    A map of string -> int, typecasting the void* of strmap to an int.
-> >
-> > Are the size and signedness of an int flexible enough for all uses?
-> 
-> If some users want signed values and others want unsigned, I'm not
-> sure how we can satisfy both.  Maybe make a struintmap?
+> Anyway, at the time I
+> put the mempool into strmaps and made use of it in relevant places,
+> one of my rebase testcases saw an almost 5% reduction in overall
+> execution time.  I'm sure it would have been over 5% if I had
+> reordered it to come after my final rename optimization.
 
-Right, that was sort of my question: do your users actually want it
-signed or not. Sounds like they do want it signed, and don't mind the
-loss of range.
+Thanks, it's nice to have a ballpark like that. It might be worth
+putting it into the commit message, even if it's hand-wavy:
 
-> Perhaps that could be added later if uses come up for it?  Some of my
-> uses need int, the rest of them wouldn't care about int vs unsigned.
+  This seemed to provide about 5% speedup for some rebase test cases I
+  ran. Unfortunately you can't just time this commit and its parent,
+  since we aren't yet actually using strmap in the code yet.
 
-Yeah, if you don't have any callers which care, I'd definitely punt on
-it for now.
-
-> If someone does care about the full range of bits up to 64 on relevant
-> platforms, I guess I should make it strintptr_t_map.
-
-Yeah, that's what I was wondering. I suspect the use case for that is
-pretty narrow, though. If you really care about having a 64-bit value
-for some data, then you probably want it _everywhere_, not just on
-64-bit platforms. I guess the exception would be if you're mapping into
-size_t's or something.
-
-I think my question was as much "did you think about range issues for
-your intended users" as "should we provide more range in this map type".
-And it sounds like you have thought about that, so I'm happy proceeding.
-
-> But besides the
-> egregiously ugly name, one advantage of int over intptr_t (or unsigned
-> over uintptr_t) is that you can use it in a printf easily:
->    printf("Size: %d\n", strintmap_get(&foo, 0));
-> whereas if it strintmap_get() returns an intptr_t, then it's a royal
-> mess to attempt to portably use it without adding additional manual
-> casts.  Maybe I was just missing something obvious, but I couldn't
-> figure out the %d, %ld, %lld, PRIdMAX, etc. choices and get the
-> statement to compile on all platforms, so I'd always just cast to int
-> or unsigned at the time of calling printf.
-
-The right way is:
-
-  printf("Size: %"PRIdMAX", (intmax_t) your_intptr_t);
-
-which will always do the right thing no matter the size (at the minor
-cost of passing a larger-than-necessary parameter, but if you're
-micro-optimizing then calling printf at all is probably already a
-problem).
-
-But yeah, in general using a real "int" is much more convenient and if
-there's no reason to avoid it for range problems, I think it's
-preferable.
+But again, I think the main value of that is during review, so if it
+doesn't make it into the commit message, I'm OK.
 
 -Peff
