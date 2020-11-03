@@ -2,112 +2,242 @@ Return-Path: <SRS0=XO6Y=EJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2DB5C2D0A3
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 11:48:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1840C2D0A3
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 13:54:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 79C86216C4
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 11:48:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 551AC21D91
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 13:54:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ta0ioV+H"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RC73QJoB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728672AbgKCLsL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Nov 2020 06:48:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50454 "EHLO
+        id S1729382AbgKCNyX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Nov 2020 08:54:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727665AbgKCLsK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Nov 2020 06:48:10 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67395C0613D1
-        for <git@vger.kernel.org>; Tue,  3 Nov 2020 03:48:10 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id a9so18178055wrg.12
-        for <git@vger.kernel.org>; Tue, 03 Nov 2020 03:48:10 -0800 (PST)
+        with ESMTP id S1729421AbgKCNxK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Nov 2020 08:53:10 -0500
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED02DC0613D1
+        for <git@vger.kernel.org>; Tue,  3 Nov 2020 05:53:09 -0800 (PST)
+Received: by mail-qt1-x843.google.com with SMTP id h12so11569890qtc.9
+        for <git@vger.kernel.org>; Tue, 03 Nov 2020 05:53:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=XfXPxVx6qUrN2+hCR8Xcy6GyIG84tNvNxfDCkj279lg=;
-        b=ta0ioV+HR50NjSuyLPHCq5JgyxxNfbgBJSkUahPGwEJTucFKlP7YzR9JrMBFWoD5aE
-         Ca8nvSQVDoTjRVIupYjeXylATYg9jdMBk+ERpNWBvD9WMEQSk4lu2NJXzEbEm1F4tg5V
-         +Z88pF2d09w+rgmhyj3OBKmAu3laqGLjVzQm6nTB3YkfZjFhTn4c2XuhGy8Dx9MVgNim
-         35C72P/a6OEwfI3fpsryLqyfEZzEIyPJA6fPg7TEiGK6IOzm8li0nK5ryGIkHmflGjvh
-         6xrsCU8/KtMcDzgCwrVTJoHN9JXQBygHtyxBFmG/ze3T9GKzdap7NKmJOlmQtOwcaPxx
-         /TGA==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=u6nUCbZAiJMTxmdJ7AdhXUP75hkVVIXd0t+5aKgP+W0=;
+        b=RC73QJoBh2RAD/FCe6EVDhJBdz4LlQkF21eBJxZ5hJNmoIZC+SRX/ErbNNiZsm9QER
+         Qii6RVKqY4XtSPnCWMg4bLSw66e+M5sbqNW8dFxZX0XxFCZvqI1uYme/cYi5d+DxDLgn
+         1roaEhKflbLqliSZbdSmlZuUVRMpsX//PYo8FBoz2fgKxvF8MXzms72dBkno3uqZjSWk
+         6smD4pdhugKwCZBtz8IBjAzYdccZR8WTrEWdGG99E7U9w/1hZoqgf+1aQ1V3u2FR6Md/
+         7SrCfy6jdOELSmIYy6COdr+FTVmxMuH41S/tQb10mrOxRZo7eaGyDs754QPZaWVwdpL5
+         X4RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=XfXPxVx6qUrN2+hCR8Xcy6GyIG84tNvNxfDCkj279lg=;
-        b=TKXb/77UKbLh841v09Ho3tIsqb/PnyqkXxVI3IAMaCh8WTN0Upin3tXCks+3Qpmx6A
-         vskvse38aGL0bIrIyE+L+w3kW20iHOlOvCKzHL4+HHek4asJGzuHrDSm5EVnH1sxKYdO
-         5AGj3wYdmgWnjt+vBadzcxlm1iAsPXDhl1vkApP2D8yidfsdBCF1J3vKTp7KewIBakQ1
-         sHhhq4WYczAiO7Fwjdx38ZXZfaR+pEdMnzgnCDKast0Svq4MRCdy+zulnWMRlWMz2Pzm
-         VbNvjr4isOk+dzPTMvLMStaGeUfFOkc3iiwVh0QOHE730Uu2YGD+oOJyavqxKxVeyeOp
-         tpXQ==
-X-Gm-Message-State: AOAM530uxRS4QUOzOFZn4uNmFTMYE6jOJn7UuWIzC7XmFU1188ItDBoS
-        b1D7tfgkm2GNxNRSMLs1Apj5w5T6fbQ=
-X-Google-Smtp-Source: ABdhPJz0LSBfFBz44/J0BR9MIpZ1I2FssrH6ueDnJQz04Y8PrspChwLJaxQdALM35EqF/hqXwfCzBQ==
-X-Received: by 2002:a5d:4747:: with SMTP id o7mr26808051wrs.423.1604404088743;
-        Tue, 03 Nov 2020 03:48:08 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u16sm9993237wrn.55.2020.11.03.03.48.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Nov 2020 03:48:08 -0800 (PST)
-Message-Id: <pull.777.git.1604404087749.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 03 Nov 2020 11:48:07 +0000
-Subject: [PATCH] t2402: fix typo
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=u6nUCbZAiJMTxmdJ7AdhXUP75hkVVIXd0t+5aKgP+W0=;
+        b=OVGb4NL9aMDr2v7irkquc4v7PppcTKsPLbPTgyO1LbHQW4Z2skDu0SDtXhd7qI+ihd
+         IS4d4OcG/KiB/Ba95NLi9zas2P0YYvJs9B80Cm6fVzT1Ib9LF2FRlEikcj2zVAB4DqCc
+         RPLG0+zUg2OwcH88rKhUq5tj2GaNvUTW2Qa8OEJiNCXa3Ae/N2NtJPaabj1R+1SI2Hlz
+         oT8QL1IKFP2nYLU32Wo0NFye2D7/Q1emnlr7KqoSu2xqi1bRpOEQw049NPJpdANRTdSK
+         LT8S9EoUX0FkvP86fAJAwTCw2TlalrhwP0NjeJB/FgdN4deQetxrn1g/0A/PaLy8UEet
+         FO6Q==
+X-Gm-Message-State: AOAM530ORsf6kSiCsfpBTMAYHuZBYl/vt44eMdszjKYTdMRLNF6H//Zg
+        o87LqRXPNpUOhz2tEKepr7X0hJ0dVfuGOQ==
+X-Google-Smtp-Source: ABdhPJyK7YxCtxTJMaQM2mvllJWnQpmH7Mfwe+ROq+1bjaCCCdfed/3dI5ZfdGNKwbmXlKaOLJAibA==
+X-Received: by 2002:ac8:1289:: with SMTP id y9mr17982164qti.330.1604411588746;
+        Tue, 03 Nov 2020 05:53:08 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
+        by smtp.gmail.com with UTF8SMTPSA id z26sm9983112qki.40.2020.11.03.05.53.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Nov 2020 05:53:08 -0800 (PST)
+Subject: Re: [PATCH 4/4] Doc: push with --base
+To:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+References: <cover.1604362701.git.jonathantanmy@google.com>
+ <6250c13897e3cc01f247d80c148cf8dc5e7f3ad0.1604362701.git.jonathantanmy@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <ee98ed69-dc49-af18-71e3-7c6168b5a464@gmail.com>
+Date:   Tue, 3 Nov 2020 08:53:06 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101
+ Thunderbird/83.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Rafael Silva <rafaeloliveira.cs@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+In-Reply-To: <6250c13897e3cc01f247d80c148cf8dc5e7f3ad0.1604362701.git.jonathantanmy@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 11/2/2020 7:26 PM, Jonathan Tan wrote:
+> Includes protocol documentation and a design document.
 
-In c57b3367bed (worktree: teach `list` to annotate locked worktree,
-2020-10-11), we introduced a test case that wanted to talk about
-"worktrees" but talked about "worktress" instead. Let's fix that.
+>  Servers that receive any such Extra Parameters MUST ignore all
+> -unrecognized keys. Currently, the only Extra Parameter recognized is
+> -"version" with a value of '1' or '2'.  See protocol-v2.txt for more
+> -information on protocol version 2.
+> +unrecognized keys. Currently, the only Extra Parameters recognized are
+> +"version" with a value of '1' or '2' and, for push, "base" with an OID.  See
+> +protocol-v2.txt for more information on protocol version 2.
+>  
+>  Git Transport
+>  -------------
+> @@ -506,6 +506,10 @@ real difference is that the capability listing is different - the only
+>  possible values are 'report-status', 'report-status-v2', 'delete-refs',
+>  'ofs-delta', 'atomic' and 'push-options'.
+>  
+> +If a "base=<oid>" Extra Parameter was sent by the client, and the
+> +server recognizes that object, the server MAY send "<oid> .have" in
+> +lieu of all the reference obj-ids and names.
+> +
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    t2402: fix typo
-    
-    Just a fix for a typo introduced in c57b3367bed (worktree: teach list to
-    annotate locked worktree, 2020-10-11).
+nit: no comma before "and the server recognizes" as these are both
+conditions of the "if". My preference is also to include a "then"
+before the result, especially with compound conditions like this.
+Perhaps also make it more active voice while we are here?
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-777%2Fdscho%2Ffix-worktress-typo-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-777/dscho/fix-worktress-typo-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/777
++ If the client sent a "base=<oid>" Extra Parameter and the server
++ recognizes that object, then the server MAY send "<oid> .have" in
++ lieu of all the reference object ids and names.
 
- t/t2402-worktree-list.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> +Push with base design notes
+> +===========================
 
-diff --git a/t/t2402-worktree-list.sh b/t/t2402-worktree-list.sh
-index b85bd2655d..795ddca2e4 100755
---- a/t/t2402-worktree-list.sh
-+++ b/t/t2402-worktree-list.sh
-@@ -61,7 +61,7 @@ test_expect_success '"list" all worktrees --porcelain' '
- 	test_cmp expect actual
- '
- 
--test_expect_success '"list" all worktress with locked annotation' '
-+test_expect_success '"list" all worktrees with locked annotation' '
- 	test_when_finished "rm -rf locked unlocked out && git worktree prune" &&
- 	git worktree add --detach locked master &&
- 	git worktree add --detach unlocked master &&
+Perhaps start with a brief problem statement?
 
-base-commit: c57b3367bed488469d24a21446731e9e71846ded
--- 
-gitgitgadget
++ If a client wishes to push data to a server without first running
++ `git fetch`, then they might not have local copies of the objects
++ at the server's ref tips. The client cannot compute an adequate
++ common base and will send more objects than necessary.
+
+Then,
+
++ The "push with base" feature allows...
+
+> +This feature allows clients, when pushing, to indicate that a
+> +certain object is an ancestor of all pushed commits and that they
+> +believe that the server knows of this object. This in turn allows
+> +servers to send an abbreviated ref advertisement containing only that
+> +object.
+
+Why only one base? Could there be value in sending multiple possible
+bases and the server can report the subset that they know about?
+
+> +Besides bandwidth savings,
+
+It seems you are underselling the bandwidth savings here, because
+we save in both the ref advertisement and the push pack size. It
+might be good to call out both metrics so we can see that the ref
+improvement works even for cases where the client recently fetched
+and can figure out the proper base on its own!
+
+> this also ensures that the ref
+> +advertisement contains information relevant to the client. For
+> +example, at least one project (Gerrit [1]) have included workarounds
+> +to send ancestors of refs that move often, even though the ref
+> +advertisement is only meant to contain refs.
+> +
+> +[1] https://gerrit.googlesource.com/gerrit/+/refs/heads/master/java/com/google/gerrit/server/git/receive/HackPushNegotiateHook.java
+> +
+> +
+> +Design overview
+> +---------------
+> +
+> +The "base" being sent is sent as an Extra Parameter, supported in the
+> +git://, ssh://, and http(s):// protocols. By sending it as an Extra
+> +Parameter, the server is aware of this parameter before it generates
+> +the ref advertisement, thus making it able to tailor the ref
+> +advertisement accordingly. Sending it as an Extra Parameter also makes
+> +this protocol backwards-compatible, as servers will ignore any Extra
+> +Parameters they do not understand. (The push will then proceed as if
+> +neither party had this feature.)
+
+I'm not familiar enough with the extra parameter logic to know if we
+allow multi-valued extra parameters. It would be good to relax the
+"base" parameter to either allow multiple instances of the parameter
+or to have something like a comma-separated list of OIDs be allowed.
+
+This might be particularly important for multiple refs being pushed
+at the same time.
+
+> +The remote helper protocol has been extended to support the
+> +"push-base" capability and an option of the same name. When a remote
+> +helper advertises this capability, it thus indicates that it supports
+> +this option. Git then will send "option push-base" if the user
+> +specifies it when invoking "git push".
+> +
+> +The remote-curl remote helper bundled with Git has been updated to
+> +support this capability and option.> +
+> +
+> +Future work
+> +-----------
+> +
+> +In the future, we might want a way to automatically determine the base
+> +instead of always having the user specify it. However, this does not
+> +make obsolete any of the current work - once the base is automatically
+> +determined, we still need this protocol to communicate it to the
+> +server, and allowing the user to specify the base manually is still
+> +useful.
+
+It is appropriate to separate the protocol ability from the automatic
+computation on the client. It would be nice to know how you expect that
+to work.
+
+For the single-ref push case, my default instinct would be to find a
+merge-base between that ref and all of the remote refs matching the
+remote we are pushing to. Bonus points if we find _all_ (maximal)
+merge-bases!
+
+The equivalent for the multi-ref push might be to find the boundary
+commits from something like the following command:
+
+	git rev-list --boundary \
+		--not refs/remotes/origin/A \
+		--not refs/remotes/origin/B \
+		--not refs/remotes/origin/C \
+		refs/heads/toPush/1 \
+		refs/heads/toPush/2 \
+		refs/heads/toPush/3
+
+But you might have something better in mind.
+
+> +
+> +
+> +Alternatives
+> +------------
+
+Odd to have a single bullet in a bulleted list.
+
+> +- Making a more substantial protocol change like "fetch" protocol v2.
+
+This isn't a full sentence.
+
+Perhaps: "One considered approach was to introduce a multi-phase
+negotiation step similar to how 'git fetch' operates."
+
+> +  This would eliminate the need for some of the remote helper updates;
+> +  as part of the protocol change, the protocol could be made to
+> +  support "stateless-connect" and thus no remote helper updates (like
+> +  "push-base") would be needed. For "fetch", the protocol change has
+> +  enabled features like wanted-refs and packfile-uris, but I do not
+> +  have any similar ideas in mind for "push".
+
+I think that you should mention that a negotiation phase here would
+use significantly more bandwidth to do the ref advertisements on both
+ends with only a rare case that the negotiated bases are better than
+the locally-computed bases. Everything is about tradeoffs here!
+
+I'm generally excited about the opportunities here. I'd love to see
+some measurements for reduced ref advertisements and reduced object
+counts in the pushed pack.
+
+Thanks,
+-Stolee
