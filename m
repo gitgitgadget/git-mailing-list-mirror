@@ -2,86 +2,103 @@ Return-Path: <SRS0=XO6Y=EJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F57BC2D0A3
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 22:02:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED536C2D0A3
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 22:28:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C6B6207BB
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 22:02:56 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HiFqUDiz"
+	by mail.kernel.org (Postfix) with ESMTP id A4CB422403
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 22:28:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729921AbgKCWCz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Nov 2020 17:02:55 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54569 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729860AbgKCWCp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Nov 2020 17:02:45 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6571BE5A4D;
-        Tue,  3 Nov 2020 17:02:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6Ubv2epFbZuuR0dIGaChoGJ6QBg=; b=HiFqUD
-        izdsuMUrhywvQHgx20+Y4QVcadW1Fec+sCRm1Qp9bZ/ms+eXPAVkrrL7WUh5u8Md
-        QeqHzZq6F6Lp2ZHvP39f/TGQFOH5ApboLt8OY/SeuszYapp7C3dt/LauMxrfLv9z
-        EhbdLg8qUkWP10KwGWxr0dv2I8J3Pm88HJ/5w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=CP4UuGn/MN2OLzgPyfiKbHRTyJMjFJ8N
-        W1QOvGunzmDktCCkGFoE5yI826c4CmMyLo6zb0y/S3CkRB3WTRhUoDRoa/gYEkiE
-        bXU4Ow8xRmTwSqGd4TAlfw4Im/iyVU0rh1+geTS/uxxg/iOyZgx8KdLyISAAOzgx
-        9u/3LgqRxb4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5D652E5A4C;
-        Tue,  3 Nov 2020 17:02:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8C8B5E5A4B;
-        Tue,  3 Nov 2020 17:02:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, "Chris. Webster" <chris@webstech.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] ci: make the whitespace checker more robust
-References: <pull.778.git.1604418931303.gitgitgadget@gmail.com>
-Date:   Tue, 03 Nov 2020 14:02:38 -0800
-In-Reply-To: <pull.778.git.1604418931303.gitgitgadget@gmail.com> (Johannes
-        Schindelin via GitGitGadget's message of "Tue, 03 Nov 2020 15:55:31
-        +0000")
-Message-ID: <xmqqsg9qp08x.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1730115AbgKCW2I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Nov 2020 17:28:08 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:44728 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729342AbgKCW2I (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Nov 2020 17:28:08 -0500
+Received: by mail-ed1-f67.google.com with SMTP id w1so19107929edv.11
+        for <git@vger.kernel.org>; Tue, 03 Nov 2020 14:28:07 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=X/oGimBfplFQAVv3pG6XlDqm4VIbl32krxfR9KE8bJM=;
+        b=eI9FeF5S6IWod09/JejwkwIA2v9fLe9IaQHi8zQ0wCGoo/t1Srmr70eP2oUjyKB8rO
+         EXLYA1ztltvH8hZ/OC0EWF8UkdyepsOBLp1NQ0bEJnH/ZPxDG0IfyvkwyJGFDiTKwV8X
+         KOpnh0SHJD3fSLz6BxVhHFxlL9KtvX2N12ZotdJA0cAA/h6WMd2mRECRdUjQS+zzHWmk
+         IB40vRCjQvhmrle73MUWjdeRQ6bwItkC3wEyWqmYC+nd6Ap1uCNpRMEWXNS00cSF4ubN
+         Mnx5hvg0+0kdPQfmmxkOZbBpeTVRiabJMMHccg368aucPOiUyX4W5GE5kjMvBmCga+Hf
+         XmNA==
+X-Gm-Message-State: AOAM533jQNuJ/fz83Vw66dFc9pFeGrNA83Tb2KWotMoRsEEwiM/+2zVb
+        icKjCIpLDUiwXoUp9Kqmzs1GcE5GKhaWRjxJ9tYa8Pq7
+X-Google-Smtp-Source: ABdhPJwMRZfab/thpLszvFhXRGhTJibp1+2Kl75r88N1clQjAIUYuEm7l7OnwL/JQr3EZy8Gi3Wlb7qmIaNoD9NmQk0=
+X-Received: by 2002:aa7:c716:: with SMTP id i22mr22889854edq.94.1604442486488;
+ Tue, 03 Nov 2020 14:28:06 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4AB27760-1E20-11EB-90F0-E43E2BB96649-77302942!pb-smtp20.pobox.com
+References: <pull.776.git.1604412196.gitgitgadget@gmail.com>
+ <832fdf16872cbfee4a5e15b559b2b40dabd545f4.1604412197.git.gitgitgadget@gmail.com>
+ <CAPig+cR1zSqY_y02JBdtjh_+9Pp2dOtGrHHmf-ah5sU6Lhzp6Q@mail.gmail.com> <e493b759-4565-e7d2-4a19-dee23c651119@gmail.com>
+In-Reply-To: <e493b759-4565-e7d2-4a19-dee23c651119@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 3 Nov 2020 17:27:55 -0500
+Message-ID: <CAPig+cSbNGdRA11cMCugJH1HtY65smfuE9ThARX0EvuQZnA5rA@mail.gmail.com>
+Subject: Re: [PATCH 2/3] maintenance: use launchctl on macOS
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Son Luong Ngoc <sluongng@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Tue, Nov 3, 2020 at 4:22 PM Derrick Stolee <stolee@gmail.com> wrote:
+> On 11/3/2020 1:45 PM, Eric Sunshine wrote:
+> > It's not clear whether or not this is saying that git-maintenance will
+> > dynamically adapt to work with modern and older 'launchctl'. A glance
+> > at the actual code reveals that it knows only about modern
+> > 'bootstrap'. Perhaps this could be a bit clearer by saying that it
+> > only supports modern versions, and that support for older versions can
+> > be added later if needed. (For those of us who are stuck with 10-20
+> > year old hardware and OS versions, 2015 isn't that long ago.)
+>
+> Yes, this is a strange place to be. How far do we go back to support
+> as many users as possible? How many users will be simultaneously
+> stuck on an old version of macOS _and_ interested in updating to this
+> latest version of Git? Is that worth the extra functionality to detect
+> the the OS version and change commands?
 
->     One thing we discussed earlier whether the log should be pasted as
->     pre-formatted text or not, and we fell on the side of not pre-formatting
->     it. However, in my tests, this does not look right
->     [https://github.com/dscho/git/pull/18#issuecomment-721160985], and it 
->     looks much better pre-formatted
->     [https://github.com/dscho/git/pull/18#issuecomment-721167209] (even if
->     we unfortunately lose the direct link to the commit
->     [https://github.com/dscho/git/commit/68317764849af81b17c4b31906da20bdf2c52082]
->     ).
+I don't think this patch series needs to answer these questions
+provided that it doesn't close the door to someone adding
+older-version support down the road. My review comment was more about
+the commit message being clearer about the choice -- supporting only
+recent 'launchctl' -- being made by this series. (And perhaps the
+documentation could mention that it requires a reasonably modern
+'launchctl'.)
 
-What is shown in the log are lines from the source files that were
-checked, and we expect our source files are shown and edited in
-monospace with tabwidth=8, I think it does make sense to force the
-"pre-formatted" output.
+> This makes me realize that I should update the documentation to give
+> pointers for how to view the schedules for each platform:
+>
+> - Windows: Open "Task Scheduler"
+> - macOS: 'launchctl list | grep org.git-scm.git'
+> - Others: 'crontab -l'
 
-Thanks.
+Good idea.
+
+I haven't looked at the documentation, but if it doesn't already, I
+wonder if it should give examples of how to set these up by hand or
+how to customize the ones created by git-maintenance itself. I was
+also wondering if git-maintenance could have a mode in which it
+generates the template file(s) for you but doesn't actually
+activate/install it, instead providing instructions for
+activation/installation. That way, people could modify the scheduling
+file before actually activating it. However, this may all be outside
+the scope of the patch series, and could be done later if desired.
