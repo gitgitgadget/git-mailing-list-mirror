@@ -2,201 +2,114 @@ Return-Path: <SRS0=XO6Y=EJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61523C2D0A3
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 18:45:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54144C2D0A3
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 18:46:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 21C9820786
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 18:45:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 00B24216C4
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 18:46:16 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a535k4tr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728621AbgKCSpv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Nov 2020 13:45:51 -0500
-Received: from mail-ej1-f66.google.com ([209.85.218.66]:43003 "EHLO
-        mail-ej1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725892AbgKCSpu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Nov 2020 13:45:50 -0500
-Received: by mail-ej1-f66.google.com with SMTP id i19so14682717ejx.9
-        for <git@vger.kernel.org>; Tue, 03 Nov 2020 10:45:48 -0800 (PST)
+        id S1729303AbgKCSqQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Nov 2020 13:46:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59604 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725892AbgKCSqP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Nov 2020 13:46:15 -0500
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6654C0613D1
+        for <git@vger.kernel.org>; Tue,  3 Nov 2020 10:46:15 -0800 (PST)
+Received: by mail-qk1-x733.google.com with SMTP id p3so15855482qkk.7
+        for <git@vger.kernel.org>; Tue, 03 Nov 2020 10:46:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=EkWHpYw+RPVnEABk6nSQhb073DpN3Zd0bUQ+baxRhi8=;
+        b=a535k4trr+c+usTSMdXAapibBKnHv5a5CdyUvfiTRgxPSkLNlz/DPV4wbdy+UFvJnV
+         HbhsM9JYgwLSNJOpNeiUQwyb5uUH7YHWvE5CyGI90NBDCbBN85Yx447M8tFewBRlpiYz
+         j14Ulz0cOg5tEYkFpFVHS/2iBXjqX/crRHdNRtp6bIbcCu60nm9nQNbGW0+AkQf+pZTr
+         ZpaaIC7WA6wwjggvwjz44sSzhRe/N2jAit/wa1gGGwgI6UIKJ14PUHFmol+jugixplII
+         C48funmhUQaw+rWvXOhfpDWuhv1afpvRv51o7Gd0jR3yMkDGPyZ7U153cFnYtYQ4p2Oh
+         DFTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eCfchY8vKoomyZEejPlW+riTkD0t8tF072SJA8TKKgw=;
-        b=NIfmnyYYfbH5dbYwOycM1KYUwbzyT0jyf9Av7KCiKCZP5r6VRA9E4dJvd4bbtpkzus
-         7WGFJpxHuO6oneL6XPZsrVgAhi20Y/XNEX+Z7eT1E/z5IwrPxrtmMl7KUyuaR2RKs0xl
-         Ls2yWr6b4oHizgWOOIpy64qKuPObkf8u/qI/htCVQOZCTsBn+xAIlqGtu/cZ+cnk8mVP
-         PAEP6OdtIAnow82MPOX3uK0H/E4mrGiwudCD+CdhpsPIMK9+KsON6RkQTrcSOsuM74Wa
-         F8IpHymnaMyzMqxsF4Hv7B0U0OnuShu669nirlS4JiULgX+YK5rF/Q+MHUWGoTle1xTF
-         Y2PQ==
-X-Gm-Message-State: AOAM5302Kpwz/LwHR6QotVxkesWEniZiPm+v0+RiyxgDzqsFe+oxmWSx
-        eZxSqwOExiPeXiaq8Glq/VL0nPBQL1fEwbjtBIU=
-X-Google-Smtp-Source: ABdhPJxP/K4PuObz2lNr6cJKyiOyZTbyfsssLW2EfrUE4oERMQgQ+U06shxOqkrANURne2chhAXhQZhRb03MjV+/opU=
-X-Received: by 2002:a17:906:c357:: with SMTP id ci23mr2737886ejb.311.1604429147699;
- Tue, 03 Nov 2020 10:45:47 -0800 (PST)
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=EkWHpYw+RPVnEABk6nSQhb073DpN3Zd0bUQ+baxRhi8=;
+        b=eSThWrStq9cA+V++9nsgBDKo2s60kiT9zVa/SGqoOBYSZ/WGRYHBzXl6/SMSbOJFyE
+         4yywAlxnRSQWBRhmqLkBvDFF+pUIjxxlsKVmEsP6SSCOabAvS/Dl58rY1bPRJJEZuWML
+         AE4S5CPQwZ4LlFBa8uWQWK+x9P+w6YYDGJf3tuCQyjWsli03gSYinU/HiZgGzmuoRsnn
+         vzF3CGF6Oa6GU9fwOFXy3vLznCZSczLTStkQ2lFlS128SxEfQp+tFXYD5cwkued27Cl/
+         naq24lrrJANyfC6yaEz8fP+gu0+JqLugXc5ERDZMPrGMo9xD9RGyhtxsZSuIYi3peBQY
+         Ix1A==
+X-Gm-Message-State: AOAM531ajNL+KpRzp4spV7jqRWbOFWbSO+Cmg3c24QNlqRRxq/Xt/7/4
+        Buz6n6fZvEgn2Jot1gZ7cy/IyW+EHJQ+Sw==
+X-Google-Smtp-Source: ABdhPJx6xHRAfcA3+myiQmFqMzWSaiLYuesrmUCIJ9itXMybFjTjGkUTMEFS17YbschxAyA6IOrVdg==
+X-Received: by 2002:a05:620a:408f:: with SMTP id f15mr7510435qko.276.1604429174520;
+        Tue, 03 Nov 2020 10:46:14 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
+        by smtp.gmail.com with UTF8SMTPSA id r62sm11400690qkd.80.2020.11.03.10.46.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Nov 2020 10:46:13 -0800 (PST)
+Subject: Re: Segfault in git when using git logs
+To:     Sathyajith Bhat <sathya@sathyasays.com>, git@vger.kernel.org
+References: <CAMsWJsyPVQWV++gc2YJriEOEWBELa_xj2G0NWFMSgNYt47swiQ@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <0581272e-6ad2-42d9-0196-b804ee304619@gmail.com>
+Date:   Tue, 3 Nov 2020 13:46:12 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101
+ Thunderbird/83.0
 MIME-Version: 1.0
-References: <pull.776.git.1604412196.gitgitgadget@gmail.com> <832fdf16872cbfee4a5e15b559b2b40dabd545f4.1604412197.git.gitgitgadget@gmail.com>
-In-Reply-To: <832fdf16872cbfee4a5e15b559b2b40dabd545f4.1604412197.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 3 Nov 2020 13:45:36 -0500
-Message-ID: <CAPig+cR1zSqY_y02JBdtjh_+9Pp2dOtGrHHmf-ah5sU6Lhzp6Q@mail.gmail.com>
-Subject: Re: [PATCH 2/3] maintenance: use launchctl on macOS
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Son Luong Ngoc <sluongng@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAMsWJsyPVQWV++gc2YJriEOEWBELa_xj2G0NWFMSgNYt47swiQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 3, 2020 at 9:05 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> maintenance: use launchctl on macOS
+On 11/2/2020 8:59 AM, Sathyajith Bhat wrote:
+> Anything else you want to add:
 
-A few comments below (not necessarily worth a re-roll)...
+Hi Sathyajith,
 
-> The launchctl command needs to be aligned with a user id in order
-> to initialize the command environment. This must be done using
-> the 'launchctl bootstrap' subcommand. This subcommand is new as
-> of macOS 10.11, which was released in September 2015. Before that
-> release the 'launchctl load' subcommand was recommended. The best
-> source of information on this transition I have seen is available
-> at [2].
+It seems like others have some good approaches to handling
+this segfault and making sure we find the right balance
+between supporting existing behavior and helping callers
+who might be using this command incorrectly.
 
-It's not clear whether or not this is saying that git-maintenance will
-dynamically adapt to work with modern and older 'launchctl'. A glance
-at the actual code reveals that it knows only about modern
-'bootstrap'. Perhaps this could be a bit clearer by saying that it
-only supports modern versions, and that support for older versions can
-be added later if needed. (For those of us who are stuck with 10-20
-year old hardware and OS versions, 2015 isn't that long ago.)
+> Note that I am not calling the git log commands directly, my editor VS
+> Code was repeatedly crashing and I searched in syslog and found this
+> error.
 
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> @@ -1491,6 +1491,214 @@ static int maintenance_unregister(void)
-> +static int bootout(const char *filename)
-> +{
-> +       int result;
-> +       struct strvec args = STRVEC_INIT;
-> +       char *uid = get_uid();
-> +       const char *launchctl = getenv("GIT_TEST_CRONTAB");
-> +       if (!launchctl)
-> +               launchctl = "/bin/launchctl";
-> +
-> +       strvec_split(&args, launchctl);
-> +       strvec_push(&args, "bootout");
-> +       strvec_pushf(&args, "gui/%s", uid);
-> +       strvec_push(&args, filename);
-> +
-> +       result = run_command_v_opt(args.v, 0);
-> +
-> +       strvec_clear(&args);
-> +       free(uid);
-> +       return result;
-> +}
-> +
-> +static int bootstrap(const char *filename)
-> +{
-> +       int result;
-> +       struct strvec args = STRVEC_INIT;
-> +       char *uid = get_uid();
-> +       const char *launchctl = getenv("GIT_TEST_CRONTAB");
-> +       if (!launchctl)
-> +               launchctl = "/bin/launchctl";
-> +
-> +       strvec_split(&args, launchctl);
-> +       strvec_push(&args, "bootstrap");
-> +       strvec_pushf(&args, "gui/%s", uid);
-> +       strvec_push(&args, filename);
-> +
-> +       result = run_command_v_opt(args.v, 0);
-> +
-> +       strvec_clear(&args);
-> +       free(uid);
-> +       return result;
-> +}
+I started filling out an issue on the VS Code GitHub repo
+so they could perhaps fix their usage of "git log" in this case.
+However, I started searching their code for where they might
+be executing the command, and I didn't find anything!
 
-The bootout() and bootstrap() functions seem to be identical except
-for one string literal. Code could be reduced by refactoring and
-passing that string literal in as an argument.
+Is it possible that you have an extension that enables Git
+history commands like this?
 
-> +static int remove_plist(enum schedule_priority schedule)
-> +{
-> +       const char *frequency = get_frequency(schedule);
-> +       char *name = get_service_name(frequency);
-> +       char *filename = get_service_filename(name);
-> +       int result = bootout(filename);
-> +       free(filename);
-> +       free(name);
-> +       return result;
-> +}
+The VS Code bug report issue template [1] has this bit of
+advice to find out if an extension is at fault:
 
-The result of get_service_name() is only ever passed to
-get_service_filename(). If get_service_filename() made the call to
-get_service_name() itself, it would free up callers from having to
-remember to free(name), thus reducing the likelihood of a possible
-leak.
+> <!-- Launch with `code --disable-extensions` to check. -->
+> Does this issue occur when all extensions are disabled?: Yes/No
 
-> +static int schedule_plist(const char *exec_path, enum schedule_priority schedule)
-> +{
-> +       plist = fopen(filename, "w");
-> +
-> +       if (!plist)
-> +               die(_("failed to open '%s'"), filename);
+[1] https://github.com/microsoft/vscode/issues/new?template=bug_report.md
 
-You can replace the fopen() and die() with a single call to xfopen().
+Could you re-launch your editor with "--disable-extensions" to
+see if this is reproduced? Also, which extensions do you have
+installed that might be adding Git command calls? We might need
+to find the extension authors instead of the core editor team.
 
-> +       /* bootout might fail if not already running, so ignore */
-> +       bootout(filename);
-> +       if (bootstrap(filename))
-> +               die(_("failed to bootstrap service %s"), filename);
-
-I'm guessing that 'launchctl bootout' won't print a confusing and
-unexpected error message if the plist is not presently registered?
-
-> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-> @@ -389,12 +389,58 @@ test_expect_success 'stop from existing schedule' '
-> +test_expect_success MACOS_MAINTENANCE 'start and stop macOS maintenance' '
-> +       echo "#!/bin/sh\necho \$@ >>args" >print-args &&
-> +       chmod a+x print-args &&
-
-Note that $@ loses its special magic if not surrounded by quotes, thus
-acts just like $*. So, either use "$@" or $* depending upon your
-requirements, but in the case of 'echo', it's just not going to matter
-at all, so $* is fine.
-
-To construct the script, you can do this instead, which is easier to
-read and handles the 'chmod' for you:
-
-    write_script print-args <<-\EOF
-    echo $* >>args
-    EOF
-
-> +       for frequency in hourly daily weekly
-> +       do
-> +               PLIST="$HOME/Library/LaunchAgents/org.git-scm.git.$frequency.plist" &&
-> +               grep schedule=$frequency "$PLIST" &&
-> +               echo "bootout gui/$UID $PLIST" >>expect &&
-> +               echo "bootstrap gui/$UID $PLIST" >>expect || return 1
-> +       done &&
-
-My gut feeling is that this would be more robust if you manually
-determine UID in the test script the same way as the git-maintenance
-command itself does using '/usr/bin/id -u' rather than relying upon
-inheriting UID from the user's environment.
-
-> +       # stop does not remove plist files, but boots them out
-
-Is this desirable? Should git-maintenance do a better job of cleaning
-up after itself?
+Thanks,
+-Stolee
