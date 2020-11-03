@@ -6,82 +6,76 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80CA1C00A89
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 01:03:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84369C00A89
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 01:08:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 159652225E
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 01:03:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 352EC2224E
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 01:08:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jmDe2V6l"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oa9P3QvN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726114AbgKCBDa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Nov 2020 20:03:30 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61037 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725855AbgKCBDa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Nov 2020 20:03:30 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F3AD290B87;
-        Mon,  2 Nov 2020 20:03:28 -0500 (EST)
+        id S1726482AbgKCBIj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Nov 2020 20:08:39 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63048 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726143AbgKCBIj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Nov 2020 20:08:39 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2A3B81036B8;
+        Mon,  2 Nov 2020 20:08:37 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fJFVBJd/+7b5p03eXJ5854k76jU=; b=jmDe2V
-        6lKX42boJ0d/C2446Ai5ukiFemd7alrfg/1Pp72Oa+36NcdbXTw9UTN46jDaRB9v
-        Bq39P1ba8RHrw5gB3H6dTgjeTuvCJIYCkPfX8bnT2zxVGj807lQpSp8che+39t6U
-        ARz2KO1Gm1vNG9uIM/qYkn7y37X6ijschpr5Y=
+        :content-type; s=sasl; bh=X1ibmi210jfniKZNbwJFymY4N04=; b=oa9P3Q
+        vNCjr7tAV2THeAET1cdw4dxt2i/A/72e0W4Y/EOc0jMMaP+YDMBS3YzEVGihELqg
+        SM6WzB3HtCaTSjkI2hlgWVmtadK33USRmpPN/IWEDKUo6NpdBNkdvQBWQH3o0d9Z
+        9c+wVumYPg2cMTbd+upNWCue5d0NmbIm+tKDw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=P8luILec8nlO7z7JeQeFxXxj5vTkxxWG
-        bCLQFpxeIgzB2k3elFFYwD39jYbAvS2ckos2Mw36XsvdLIuftG9UmyigLhqkjt33
-        Hs7dNDptCdyWkU7TD6MGz4vUg3KJw/EhpqQLkFO8pf1Ay12wOljd075luDwUriPK
-        o/AbTD9UH0A=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EA2F990B86;
-        Mon,  2 Nov 2020 20:03:28 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=m0HJMaf4qSwoFtnNIfvzraQ5aNiI6T/H
+        KcUIki/SSXvuJvEVr5XezfmUeVGhx9OE4nT2UhIdf8pzpTh1E3j7mIO3Rr3W+AD2
+        UV/gomcBb34BXP4V2S1zFpYt//yCblNnWIePdaOJVTJ5AKDWqDUHwBe07o/ppwiR
+        qpgZIHUh2xo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 22D061036B7;
+        Mon,  2 Nov 2020 20:08:37 -0500 (EST)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
+Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6E14F90B85;
-        Mon,  2 Nov 2020 20:03:28 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 489511036B2;
+        Mon,  2 Nov 2020 20:08:34 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Peter Baumann <peter.baumann@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v5 0/4] Beginning of new merge strategy: New API, empty
- implementation
-References: <pull.895.v4.git.git.1604003535.gitgitgadget@gmail.com>
-        <pull.895.v5.git.git.1604360734.gitgitgadget@gmail.com>
-Date:   Mon, 02 Nov 2020 17:03:27 -0800
-In-Reply-To: <pull.895.v5.git.git.1604360734.gitgitgadget@gmail.com> (Elijah
-        Newren via GitGitGadget's message of "Mon, 02 Nov 2020 23:45:30
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/4]  Adjust t5515 for the upcoming change of the
+ default branch name
+References: <pull.761.git.1604361307.gitgitgadget@gmail.com>
+Date:   Mon, 02 Nov 2020 17:08:32 -0800
+In-Reply-To: <pull.761.git.1604361307.gitgitgadget@gmail.com> (Johannes
+        Schindelin via GitGitGadget's message of "Mon, 02 Nov 2020 23:55:03
         +0000")
-Message-ID: <xmqqtuu7p7z4.fsf@gitster.c.googlers.com>
+Message-ID: <xmqqlffjp7qn.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 621F71BA-1D70-11EB-B1A4-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 186B8512-1D71-11EB-BEA6-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> In this series, I show the new merge API I have developed in merge-ort, and
-> show how it differs from that provided by merge-recursive. I do this in four
-> steps, each corresponding to a patch.
->
-> Changes since v4:
->
->  * Fix a bug where 'cherry-pick --continue' would report 'fatal:
->    cherry-pick: --strategy cannot be used with --continue' when pull.twohead
->    was set to ort (found by user of internal deployment at $DAYJOB)
+> To allow for switching the default of init.defaultBranch to main, we adjust
+> the test script t5515 and its friends in t/t5515/. This is a large chunk of
+> modifications, but happily, most of them are a totally trivial
+> search-and-replace.
 
-Will replace.  Thanks.
+Thanks.  I see at the beginning of part #1 the same trick as the
+other series is used to protect the under-construction tests.
+Nicely done.
+
+Will queue.
