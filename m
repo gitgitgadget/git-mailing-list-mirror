@@ -2,143 +2,100 @@ Return-Path: <SRS0=XO6Y=EJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=no
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78D1BC388F7
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 14:24:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7D0DC2D0A3
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 14:51:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3869022280
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 14:24:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 64ED122370
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 14:51:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=nokia.onmicrosoft.com header.i=@nokia.onmicrosoft.com header.b="Rp6Fs0Xn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M5udLAeX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729585AbgKCOYM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Nov 2020 09:24:12 -0500
-Received: from mail-eopbgr130090.outbound.protection.outlook.com ([40.107.13.90]:50820
-        "EHLO EUR01-HE1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1729599AbgKCOXq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Nov 2020 09:23:46 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=AF6Qu/Qz3oEbKKY3OXNPgFst5nFxkwxoWVjDQdwi3wQJvR0vn92NMiXw588SWJRC995XTZbPruBN2Hd5WL7vER193b+h8FPiSDElNa9vZLyv4KaQzqqoV6OdVzfQpw6Gz+Ughwv0KbaUB2oydtaN0vBdFgNRM0gUTziszlZsdSbnzkA1kq1zGXu72XNuNTYppwR5tlV4464cTWOsVzG/R7nHaTzbr+7577kDn/pn456OXQ9ZfbwGUsvM/85kicAXH3HPWa29qcTolxTRI8OyHu6ZADKrOn/UnRhI7D+D1pZIvatN+CPkWu5XLTnUJB+I5IIF8AA7SXu9XKwIIKi3Jw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5NbaT09Y0GoufF70Jt3eGKox8qFsOQpAW+dCpx2oqzA=;
- b=CwtV2LOjw8kjiMktoop9YYWL419bRx/i1Tef99C/ibkBx8ODYyOqxs2pjqA2kyunEDLFg3Sf+1y/X8YbpWXrMOEJy5xi8f5H79ztYFrBsu29GpdYxeLIj60ektzuIk3NDoTYSsxJr+PyBzacWbnFWEhzGpPjL6G+Q4Pvkppcrfwofwms9OCdn1wXsMqgRzZt3Fvi/PdHg+wlfuL3R/QYZkZoiZjKF+PWBm3MlfUSeYdZzvrhGHqqWGZMOqT2u/agcPI3569SOx+W3zfQYffBjbgthtXSG7gm4+1YwNVFI9XuOd0nK5uQLepE6BUuZxeNqhV1oBQfkZ+nm6jGc3gF9w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
- is 131.228.6.101) smtp.rcpttodomain=google.com smtp.mailfrom=nokia.com;
- dmarc=fail (p=none sp=none pct=100) action=none header.from=nokia.com;
- dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nokia.onmicrosoft.com;
- s=selector1-nokia-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5NbaT09Y0GoufF70Jt3eGKox8qFsOQpAW+dCpx2oqzA=;
- b=Rp6Fs0Xnrusax0QBK3u+dpPHOpnUY46WG6KsYebtN+VSQ8B0OYdW6agk0GUPDHupy1HiU7N72B8IVOAkWS+ePgwxZLaM+ITgaWdxTpWOYiYPhv0JPBBlOtfgMp6U4FuA8s1oKMZpuHBnvAJInLd+5miFvBbe+YteTJrTo6Pxa0Y=
-Received: from AM5PR0101CA0020.eurprd01.prod.exchangelabs.com
- (2603:10a6:206:16::33) by HE1PR0701MB2827.eurprd07.prod.outlook.com
- (2603:10a6:3:49::13) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3541.10; Tue, 3 Nov
- 2020 14:23:41 +0000
-Received: from VE1EUR03FT038.eop-EUR03.prod.protection.outlook.com
- (2603:10a6:206:16:cafe::f8) by AM5PR0101CA0020.outlook.office365.com
- (2603:10a6:206:16::33) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.19 via Frontend
- Transport; Tue, 3 Nov 2020 14:23:41 +0000
-X-MS-Exchange-Authentication-Results: spf=softfail (sender IP is
- 131.228.6.101) smtp.mailfrom=nokia.com; google.com; dkim=none (message not
- signed) header.d=none;google.com; dmarc=fail action=none
- header.from=nokia.com;
-Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
- nokia.com discourages use of 131.228.6.101 as permitted sender)
-Received: from fr712usmtp1.zeu.alcatel-lucent.com (131.228.6.101) by
- VE1EUR03FT038.mail.protection.outlook.com (10.152.19.112) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3520.15 via Frontend Transport; Tue, 3 Nov 2020 14:23:41 +0000
-Received: from ulegcpbofur.emea.nsn-net.net (ulegcpbofur.emea.nsn-net.net [10.151.74.147])
-        by fr712usmtp1.zeu.alcatel-lucent.com (GMO) with ESMTP id 0A3ENbo6005363;
-        Tue, 3 Nov 2020 14:23:37 GMT
-From:   Peter Kaestle <peter.kaestle@nokia.com>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>
-Cc:     peter.kaestle@nokia.com
-Subject: [REGRESSION FIX 0/2] Handling regression introduced by a62387b
-Date:   Tue,  3 Nov 2020 15:23:17 +0100
-Message-Id: <1604413399-63090-1-git-send-email-peter.kaestle@nokia.com>
-X-Mailer: git-send-email 2.6.2
-X-EOPAttributedMessage: 0
-X-MS-Office365-Filtering-HT: Tenant
-X-MS-PublicTrafficType: Email
+        id S1728217AbgKCOvC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Nov 2020 09:51:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50440 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728036AbgKCOuB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Nov 2020 09:50:01 -0500
+Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B4A2C0613D1
+        for <git@vger.kernel.org>; Tue,  3 Nov 2020 06:50:01 -0800 (PST)
+Received: by mail-qt1-x842.google.com with SMTP id j62so11771766qtd.0
+        for <git@vger.kernel.org>; Tue, 03 Nov 2020 06:50:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=2zkMZdhtPlplul5v76/8PoV45FgWrSvHFTr+GVk4Y0Q=;
+        b=M5udLAeXU79AnRQe2gg5NX3swQXuG4YKmdOnYXOKjqi9Q1Vc6xaPD7lfFCFSjT0CGr
+         6Pv7FdFpVwDs76yIJaySFl6hvzolNgeuAVNdYOZeo9x4H+DPQV4m9T+KUjkqX84JK1SX
+         F4xgo8iiNoTxttXkOswEV+Fhq1cQBAGc8SMC+VaYMXrut79y2RsrCzm5tHE3UiyLyFtC
+         JQMWJw1OyDhyPMdBrtrCyiG1Rfx2jf7D5lNDHSndLTTn6CL7WzpUZjscES2QfcpZLfZ9
+         qrhE1E848IANbklO8TsL2Lp29B3ASfHGCD46byfw7ScJGRNjrJ2qRe9rvbWpLz1IVsge
+         ePOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=2zkMZdhtPlplul5v76/8PoV45FgWrSvHFTr+GVk4Y0Q=;
+        b=ebkjsLDEkYkgVvisiCjDhgrK4ySF5rkof5D4RV7zrYhj04ExbarjbNWoCdbeXr5VS5
+         J9uz317272Fgbu0JwekdhC81RPipayKsylapiQPZt875pWXaAMosOQ3M+h7w2vBqHmAm
+         bFNg0AHYqajW8HDjIDOYijKiSDx+elLxTqFEXs6yw6DEYGE0JwlOC/jXlCW31zuuFmqk
+         vQecftONkAHXY7hwI2jH/VlCKAoEzRpPhahPTEp4kNFCRDBgPhiojHX0kOMKYv6KZAd8
+         uhMsnTo52oMDC84b7ooklbm1eauC92zUSh+j1sW1Ti/UfiF5rmlbw/7Gilt17yNYBgw4
+         NmPw==
+X-Gm-Message-State: AOAM5332MvKKjMdwExQNY+nV/dKGRm2XxKlBOTFfTt8dJWZLBg0bMhHv
+        0knxVFP3JI1ozq+jco1LWiFwsslrFrxc1w==
+X-Google-Smtp-Source: ABdhPJzHdtoF3zHt//AbM3oi9yAPSvEFC+dqucNLhj6gh7bg6qjjac8XdWCgLc8ivdR0zaXwv9wVKQ==
+X-Received: by 2002:ac8:4791:: with SMTP id k17mr20325538qtq.264.1604415000129;
+        Tue, 03 Nov 2020 06:50:00 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
+        by smtp.gmail.com with UTF8SMTPSA id m6sm10453177qki.112.2020.11.03.06.49.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Nov 2020 06:49:59 -0800 (PST)
+Subject: Re: [PATCH v2 00/20] fundamentals of merge-ort implementation
+To:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+References: <20201102204344.342633-1-newren@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <0197d698-e966-f0bb-4d77-0183e93d9bef@gmail.com>
+Date:   Tue, 3 Nov 2020 09:49:58 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101
+ Thunderbird/83.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: aee9259c-c7b1-4c13-d590-08d880041023
-X-MS-TrafficTypeDiagnostic: HE1PR0701MB2827:
-X-Microsoft-Antispam-PRVS: <HE1PR0701MB28273709B4FDC8ABBE97EECCEE110@HE1PR0701MB2827.eurprd07.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:2887;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: Ul/fINtCflTAqpxs0DOxD623BEUgUy7kxHoY8SEQAXkVGFbQuO2jMMKrHeC4naG2did1Fr+8NXirldkrgUPd9rSboJjS0Mx1nYaQD1sl2lm7xIR5kELvo/xE/vfp1/MS/vt57cX0mJSYrsHp8/aEYalzsbPNwGhwAXJAXTvR0f3GjKA27wUY4Ww0UrQXtvNxauhNDOKTPs7v19pA1gMzdRLqtrD0MgVHjaxiiSWnHBL1Q9zGPXECn9NS9eaObTtxXo2o1Suv9GHbz21MOH2/0vJJs5hcRj/PrKTKoEeNKTBYOzoKywbY3hEJBZZYTWi6E13Qw0Hp9xmwsoeJqDOvmeZoQ+UVV4gGrRe7YDpuffFpDFyHBmDmVytB9d8DCopykztsECxpHxaleLeTIw/52w==
-X-Forefront-Antispam-Report: CIP:131.228.6.101;CTRY:FI;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:fr712usmtp1.zeu.alcatel-lucent.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(4636009)(396003)(39860400002)(136003)(346002)(376002)(46966005)(316002)(36906005)(82740400003)(44832011)(4326008)(47076004)(107886003)(81166007)(2906002)(110136005)(86362001)(6666004)(478600001)(356005)(5660300002)(82310400003)(2616005)(83380400001)(36756003)(8936002)(336012)(8676002)(26005)(186003)(70586007)(70206006);DIR:OUT;SFP:1102;
-X-OriginatorOrg: nokia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Nov 2020 14:23:41.0984
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: aee9259c-c7b1-4c13-d590-08d880041023
-X-MS-Exchange-CrossTenant-Id: 5d471751-9675-428d-917b-70f44f9630b0
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=5d471751-9675-428d-917b-70f44f9630b0;Ip=[131.228.6.101];Helo=[fr712usmtp1.zeu.alcatel-lucent.com]
-X-MS-Exchange-CrossTenant-AuthSource: VE1EUR03FT038.eop-EUR03.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HE1PR0701MB2827
+In-Reply-To: <20201102204344.342633-1-newren@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These two patches introduce a test case which triggers a regression
-introduced by a62387b3fc9f5aeeb04a2db278121d33a9caafa7 and a revert of
-the commit introducing the issue.
+On 11/2/2020 3:43 PM, Elijah Newren wrote:
+> This series depends on a merge of en/strmap (after updating to v3) and
+> en/merge-ort-api-null-impl.
+> 
+> As promised, here's the update of the series due to the strmap
+> updates...and two other tiny updates.
 
+Hi Elijah,
 
-The test case reproduces following scenario:
+I'm sorry that I've been unavailable to read and review your series
+on this topic. I'm very excited about the opportunities here, and I
+wanted to take your topic and merge it with our microsoft/git fork
+so I could test the performance in a Scalar-enabled monorepo. My
+branch is available in my fork [1]
 
-Repository setup:
-superproject/middle_repo/inner_repo
+[1] https://github.com/derrickstolee/git/tree/merge-ort-vfs
 
-Person A and B have both a clone of it, while Person B is not working
-with the inner_repo and thus does not have it initialized in his working
-copy.
+However, I'm unable to discover how to trigger your ort strategy,
+even for a simple rebase. Perhaps you could supply a recommended
+command for testing?
 
-Now person A does a change to the inner_repo and propagates it through
-the middle_repo and the superproject.
-Once person A pushed the changes, a "git fetch" on superproject level of
-person B will return with error saying:
-
-Could not access submodule 'inner_repo'
-Errors during submodule fetch:
-        middle_repo
-
-
-The revert was my quick approach to fix it.  However as I'm not fully
-aware of what the idea was behind handling the submodules inside
-.git/modules instead of the worktree, I don't know whether this is the
-best solution.  Maybe rethinking the whole get_next_submodule()
-algorithm or simply fixing the is_empty_dir() to use the worktree path
-will be a better solution.
-
-best regards,
---peter;
-
-Peter Kaestle (2):
-  submodules: test for fetch of non-init subsub-repo
-  Revert "submodule.c: fetch in submodules git directory instead of in
-    worktree"
-
- submodule.c                 | 14 ++++----------
- t/t5526-fetch-submodules.sh | 38 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 42 insertions(+), 10 deletions(-)
-
--- 
-2.6.2
-
+Thanks,
+-Stolee
