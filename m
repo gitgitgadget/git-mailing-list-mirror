@@ -6,94 +6,77 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4FEAC00A89
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 00:32:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43DCAC00A89
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 00:46:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7A4C322268
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 00:32:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EB78B22258
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 00:46:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YhuJFzNs"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="N2FuGgC0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726026AbgKCAcQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Nov 2020 19:32:16 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61474 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725932AbgKCAcQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Nov 2020 19:32:16 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7782F1030BF;
-        Mon,  2 Nov 2020 19:32:14 -0500 (EST)
+        id S1726026AbgKCAqE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Nov 2020 19:46:04 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64045 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725932AbgKCAqD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Nov 2020 19:46:03 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BC62C908DD;
+        Mon,  2 Nov 2020 19:46:02 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=mID16z8BFWnA
-        oTpRln0EFmKlKhk=; b=YhuJFzNsXfFuoyMiq+IEdlyKfkjmBBvYeFYY8q6yE/Ds
-        nHPBDzMtyzt+7igO62wXLTEfI4do3PAYq+/wsWzqluZNY0UPe6apz4dU3XYtbfSC
-        d070JnCKBgJd0zr4D6uIuw+rKdKKAcgtV3kgKIK3Saxv+XdiNbdx4OXpmCdOZl4=
+        :content-type; s=sasl; bh=/qqDzHM36JkF76a/8x5WHtYpk+M=; b=N2FuGg
+        C0bsNVi0Rpt7hHOufzc+DPB2WbOh4GDq4XOVvKJ76B5hi0pl6aBuyJbUjWJR2W0T
+        tjc8nrJ7UZDq/9PBHH05NTsUEwEkPY+vOvoeN41cAwnswiVK9BoO78zzXkxEV7KL
+        s42Uq4zF9hWRjvhbo7h4EpsX1WZgFG/Lc4Mnk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=xAROoi
-        1rklBljzNzGxSnLlBK/+ohFdBkErj+RioVbngi3YfcGDud8hTxTdwvQIPm8NNLl5
-        2mU0qbidOcRAuzJlccjlDVgDokfZn/psDn1aQdgUBw2P4cDJGpbdnPiQJWaZPRjw
-        bw6aEW4LF3003hs+UFXq/umR3VmA3AgrBL0/k=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 705F51030BD;
-        Mon,  2 Nov 2020 19:32:14 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=YgEsP59/veJuG7y3tN1z2xu6NL6wQe20
+        /ADWDtA/pzoZ7xh3hte62g/D+9RGlf1jCbh/FBYVfPeJApJoncLNA0axUPN+6S9F
+        VbWoU8H3Pkza8MbRtfcdiy4k8GXq6mZ0+lx8yBP9SnVUFP6B3bUfN5zv8r4BduhE
+        ENO6+xFQpWQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B57C3908DC;
+        Mon,  2 Nov 2020 19:46:02 -0500 (EST)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
+Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A5BC21030BC;
-        Mon,  2 Nov 2020 19:32:11 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4573D908DB;
+        Mon,  2 Nov 2020 19:46:02 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: ag/merge-strategies-in-c, was Re: What's cooking in git.git
- (Oct 2020, #04; Tue, 27)
-References: <xmqqmu079rbv.fsf@gitster.c.googlers.com>
-        <nycvar.QRO.7.76.6.2011020333440.18437@tvgsbejvaqbjf.bet>
-        <xmqqv9ensao7.fsf@gitster.c.googlers.com>
-        <693f417c-5612-7878-a055-2810f62af3b4@gmail.com>
-Date:   Mon, 02 Nov 2020 16:32:10 -0800
-In-Reply-To: <693f417c-5612-7878-a055-2810f62af3b4@gmail.com> (Alban Gruin's
-        message of "Mon, 2 Nov 2020 23:31:12 +0100")
-Message-ID: <xmqqlffjqnzp.fsf@gitster.c.googlers.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/4] "Push" protocol change proposal: user-specified base
+References: <cover.1604362701.git.jonathantanmy@google.com>
+Date:   Mon, 02 Nov 2020 16:46:01 -0800
+In-Reply-To: <cover.1604362701.git.jonathantanmy@google.com> (Jonathan Tan's
+        message of "Mon, 2 Nov 2020 16:26:09 -0800")
+Message-ID: <xmqqh7q7qncm.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 037A2992-1D6C-11EB-91E3-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: F28E72DA-1D6D-11EB-B5C4-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alban Gruin <alban.gruin@gmail.com> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
->> I just went back to the thread.
->>=20
->> https://lore.kernel.org/git/20201005122646.27994-1-alban.gruin@gmail.c=
-om/
->>=20
->> It seems that the topic saw quite a few comments and help by Phillip
->> Wood in its earliest iteration, but I didn't see any review from
->> those other than myself on the last iteration v3, and the review
->> comments on the iteration haven't been acted upon yet.
->>=20
->> That was why I threw the topic in "needs review" bucket.  The later
->> half of the series got no comments (I lost steam after reviewing the
->> earlier half) and I suspect they would have be adjusted for fixes
->> and improvements done to polish the earlier parts, so I am not sure
->> where your "ready for 'next'" comes from.
->>=20
->> Thanks.
->
-> Sorry, I am short on time to work on this these days, but I=E2=80=99m s=
-till
-> planning to apply Junio=E2=80=99s latest suggestions.  So I agree with =
-you, this
-> is not yet ready for `next'.
+> At $DAY_JOB, we've noticed some pushes being larger than necessary.
+> Here's a first step towards solving that. In this protocol change, we're
+> allowing the user to specify an ancestor believed to be common
 
-Thanks for a status update.  Be well and happy hacking ;-)
+Is this designed to be a short-term kludge until we have a similar
+"common discovery" negotiation we have on the upload-pack side, or
+do we know some fundamental reason why the "push" side cannot do so?
 
+Just being curious as to what the eventual and ideal future beyond
+"we must have an immediate problem worked around in some way even
+with an ugly hack before the end of this cycle" would be.
+
+Will take a look but not today.
+
+Thanks.
