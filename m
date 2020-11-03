@@ -2,384 +2,257 @@ Return-Path: <SRS0=XO6Y=EJ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD246C4742C
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 03:48:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3121FC388F2
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 05:36:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E91C322277
-	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 03:48:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D9D1F2225E
+	for <git@archiver.kernel.org>; Tue,  3 Nov 2020 05:35:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="fZMSWwW2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R4ZugssV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726988AbgKCDsR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Nov 2020 22:48:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60520 "EHLO
+        id S1727387AbgKCFf6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Nov 2020 00:35:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725980AbgKCDsQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Nov 2020 22:48:16 -0500
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 963AAC0617A6
-        for <git@vger.kernel.org>; Mon,  2 Nov 2020 19:48:14 -0800 (PST)
-Received: by mail-lj1-x244.google.com with SMTP id t13so17405481ljk.12
-        for <git@vger.kernel.org>; Mon, 02 Nov 2020 19:48:14 -0800 (PST)
+        with ESMTP id S1725980AbgKCFf6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Nov 2020 00:35:58 -0500
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1879BC0617A6
+        for <git@vger.kernel.org>; Mon,  2 Nov 2020 21:35:58 -0800 (PST)
+Received: by mail-pl1-x642.google.com with SMTP id w11so8026202pll.8
+        for <git@vger.kernel.org>; Mon, 02 Nov 2020 21:35:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=w/S0PIZxjz2qkS6H00zOLlI5l9uPXalhZqZzKl7H1Ns=;
-        b=fZMSWwW2ap2JGU2sgqV7IS0C8kQkeCoJe7snrwAQpq1gYWFl8v3UCFBK5vBmpw8EUP
-         2JijeBFAMfCCL51Z6cWOkuLu60eQl36ZP44no+OlJOxDZVXB3Qdnvg9COT4Dfqjrg16R
-         1sfwNHUkvmaDOK0KSnjnKu5+Tw0DpKHWhMbfndoyIeo7DKunF+Uv4WJl3ufL43/qJQ7C
-         ZlDEAiNdfHSqxLY/Rd3df13RrcFeN5kr5RKnmX7w+wGy4dG/0q4FE7pBcySqhBop+p+D
-         aofU0aWWpRL9rQ6r0Hx6xKhln/A6FsVRwf6bzundZjv9OIQRHETBIDA09FZupV6Ga7GZ
-         MiUw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=PgZF4TFF1DMU7mNoRzs+zEWUqS3qfgUOgAnFy2vmh0g=;
+        b=R4ZugssVh9z4YYfkEz2Gm3JYkZ09+JxHDJ7uq0Owl6iVIUsSkiwcbsfKXCMZN3UqZB
+         CDBnHeuTBYqkvIZDilFeRzQSiI48QbzNgATUtyspJltDCZ584iZm4XE+FKtuPwcUD1qk
+         Dq5N3kGq+sCEMgb+3qF2WSrVLAPGzmHPViHKzIfPb8UFfaL/kWo9EYH2I0SaR9tKputx
+         wnNvtcyQenhMkMGsifdqWWvC0Ihjm5KOYJ56BhSzA0X2l1Bki6bCezW8yLFZaRBr9hsx
+         B8zgvgRnaf4HiPnmFFnnhJv7SJ/4kUI38+npcorJGAyjHlAy1xd7IGxp3Xerv5mOMr+/
+         GLtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=w/S0PIZxjz2qkS6H00zOLlI5l9uPXalhZqZzKl7H1Ns=;
-        b=Rad40OYir8RaVOO8nEG0HBhnQFgdCCTMODF5Ika4YLdR91p19tD0SL/ASyNKOlN5ye
-         6JGKeccfJ8/MSbRy+rhz2jLtEIualQPq2D2BprAA65DR6WcRn+OGvSTx2JSAI506FdNG
-         Ruse4BTj8cAOLYuqpxF4Plvr8efK+gZ/QL0Q20SsYBUce/6FeUjSROJXe6t+nOmsAgBi
-         GVO+wjXj1Br2oK9UZ5NoW/e/1XhTwEgivf579sN3WK1u5dMo2KAcc8Pbcvs1xW8fdopp
-         QlFKxPl0pU4B846XzpwIr7XpLDeFkKvAM/tsiqRSPmdWaDs/Ad/Kew8nhrC9Vh0DZRGT
-         8Ilw==
-X-Gm-Message-State: AOAM533kZswG2kkjjCk8sKLuaM26Ir9AXglFXofVLJKtlucRgKO7A9qi
-        UEa6nyBhVX3ZbPEmyl9meuxTUoW8166D/lORcNSyjQ==
-X-Google-Smtp-Source: ABdhPJyuLhlt4kQD8KrNJhPwSvkYM4X6CrwUK7GRVDefi2RBbBKnluUzBTDp2phDIcrMdvkYo2r6IVQ4PghLSdxTfp8=
-X-Received: by 2002:a2e:83d0:: with SMTP id s16mr1771729ljh.22.1604375292807;
- Mon, 02 Nov 2020 19:48:12 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=PgZF4TFF1DMU7mNoRzs+zEWUqS3qfgUOgAnFy2vmh0g=;
+        b=j9PWYAAbBP4BoshlLjQ7um3KVh2bHv7L2yeAI02V0YJ5dFZxV2U47t543WXpDoUigF
+         f1T6L1TVFc4cMBbR4IEKumrQ35aImL8rcK0Z+NVPL/vtIDNKOr4Do41YoJPRjsh7gqwY
+         DFI3r7iWTWBQOy7/3+LdEo4a+90EVteSaaogMRaGQrHYwzfiYbTkzGSTG0naYApnkEs/
+         kr60MtHRkn8StCKB4xc4v8JbhjgA/Hkc4HywoKcA5iXu+3TfHlkpEB0AUuzb5KzScRy4
+         SrHiQ8BPfJv5w5377u6h7f9f6B6k7++ucxRFQBQr3eTM60z5UJMH8TbGkv3vsLe/CbB3
+         iOzA==
+X-Gm-Message-State: AOAM531Um/lGtDfS/k7UHHdLzHtoxJpu4NDtGt5PX9jKf7xjsSqzgvvU
+        Dx6u0jFAtzY6Fy8XCvN3O6E=
+X-Google-Smtp-Source: ABdhPJyBxnnaSsRHuneee6RbHKeGx94y8xa47+Uh8TcCLJlKCfDNInxmxW/SJBysAhT3SizTnnmsXA==
+X-Received: by 2002:a17:902:6803:b029:d6:cf9d:2cfb with SMTP id h3-20020a1709026803b02900d6cf9d2cfbmr7298501plk.55.1604381757521;
+        Mon, 02 Nov 2020 21:35:57 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
+        by smtp.gmail.com with ESMTPSA id x18sm16551620pfj.90.2020.11.02.21.35.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Nov 2020 21:35:56 -0800 (PST)
+Date:   Mon, 2 Nov 2020 21:35:54 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 4/4] Doc: push with --base
+Message-ID: <20201103053554.GC948115@google.com>
+References: <cover.1604362701.git.jonathantanmy@google.com>
+ <6250c13897e3cc01f247d80c148cf8dc5e7f3ad0.1604362701.git.jonathantanmy@google.com>
 MIME-Version: 1.0
-References: <cover.1603937110.git.matheus.bernardino@usp.br>
- <2bdc13664e65a25607b8ecb4c0ea54fb2dad482c.1603937110.git.matheus.bernardino@usp.br>
- <xmqq361rv9fa.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq361rv9fa.fsf@gitster.c.googlers.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Tue, 3 Nov 2020 00:48:01 -0300
-Message-ID: <CAHd-oW5H_LLLkbhe+ffAMkpuuuGrNcOYF4sxUV55qyDomOHRug@mail.gmail.com>
-Subject: Re: [PATCH v3 10/19] unpack-trees: add basic support for parallel checkout
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Jeff Hostetler <git@jeffhostetler.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6250c13897e3cc01f247d80c148cf8dc5e7f3ad0.1604362701.git.jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 2, 2020 at 4:35 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Matheus Tavares <matheus.bernardino@usp.br> writes:
-[...]
-> >
-> > @@ -536,6 +546,9 @@ int checkout_entry_ca(struct cache_entry *ce, struct conv_attrs *ca,
-> >               ca = &ca_buf;
-> >       }
-> >
-> > +     if (!enqueue_checkout(ce, ca))
-> > +             return 0;
-> > +
-> >       return write_entry(ce, path.buf, ca, state, 0);
->
-> It it is not wrong but feels strange that paths that cannot be
-> handled by parallel codepath for whatever reason are written using
-> the fallback code, but the fallback actually touches the disk before
-> the queued paths for parallel writeout ;-)
+(+cc: Elijah Newren and Derrick Stolee because of [1])
+Hi,
 
-Yeah... I also considered having a second "sequential_checkout_item"
-queue, and iterating it after the parallel-eligible entries. But I
-thought that it might be better to write the ineligible entries right
-away and save a little memory (especially for the regular files, for
-which we would also have to hold the conversion attributes).
+Jonathan Tan wrote:
 
-With that said, I ended up adding a second queue in part 2, just for
-symlinks. By postponing the checkout of symlinks we can avoid the
-check_leading_dirs() function and the additional lstat() calls in the
-workers. This also makes it possible to create the leading directories
-in parallel (in part 3) with raceproof_create_file(), which is quite
-nice as it only calls stat() when open() fails. And since symlinks
-probably appear in smaller numbers than regular files, this second
-queue should never get too long.
+> Includes protocol documentation and a design document.
 
-> What's the reason why
-> some paths cannot be handled by the new codepath again?
+Thanks for writing this.
 
-Submodules and symlinks are not eligible for parallel checkout mainly
-because it would be hard to detect collisions when they are involved.
-For symlinks, one worker could create the symlink a/b => d right
-before another worker tries to open() and write() a/b/c, which would
-then produce the wrong a/d/c file. And for submodules, we could have a
-worker checking out a submodule S while another worker writes the
-colliding regular file s/f.
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  Documentation/technical/pack-protocol.txt  | 10 ++--
+>  Documentation/technical/push-with-base.txt | 61 ++++++++++++++++++++++
+>  2 files changed, 68 insertions(+), 3 deletions(-)
+>  create mode 100644 Documentation/technical/push-with-base.txt
+> 
+> diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
+> index e13a2c064d..0485616701 100644
+> --- a/Documentation/technical/pack-protocol.txt
+> +++ b/Documentation/technical/pack-protocol.txt
+> @@ -59,9 +59,9 @@ Parameters", and are supported by the Git, SSH, and HTTP protocols.
+>  Each Extra Parameter takes the form of `<key>=<value>` or `<key>`.
+>  
+>  Servers that receive any such Extra Parameters MUST ignore all
+> -unrecognized keys. Currently, the only Extra Parameter recognized is
+> -"version" with a value of '1' or '2'.  See protocol-v2.txt for more
+> -information on protocol version 2.
+> +unrecognized keys. Currently, the only Extra Parameters recognized are
+> +"version" with a value of '1' or '2' and, for push, "base" with an OID.  See
+> +protocol-v2.txt for more information on protocol version 2.
 
-As for regular files, we don't parallelize the checkout of entries
-which require external filters, mainly because we cannot guarantee
-that such filters are parallel-process safe. But also, the
-delayed-checkout queue is incompatible with the parallel-checkout
-queue (in the sense that each entry should only be present in one of
-the two queues).
+It's nice to see an example of extra parameters being useful in
+protocol v0 as well. :)
 
-> Also, can a
-> path that is handled by the fallback code collide with other paths
-> that are handled by the parallel codepath, and what happens for
-> these paths?
+>  
+>  Git Transport
+>  -------------
+> @@ -506,6 +506,10 @@ real difference is that the capability listing is different - the only
+>  possible values are 'report-status', 'report-status-v2', 'delete-refs',
+>  'ofs-delta', 'atomic' and 'push-options'.
+>  
+> +If a "base=<oid>" Extra Parameter was sent by the client, and the
+> +server recognizes that object, the server MAY send "<oid> .have" in
+> +lieu of all the reference obj-ids and names.
+> +
 
-Yes, it can happen. But the parallel-checkout machinery should be
-ready for it. There are two cases:
+Can this only appear once, or is it permitted to pass multiple oids
+this way?
 
-1. Both paths collide in the basename (e.g. a/b and a/B)
-2. One path collide in the dirname (e.g. a/b and a/B/c)
+I'm also curious about what Junio asked about elsewhere in the thread:
+for cases that benefit from more complex negotiation than the client
+proposing a particular oid, what comes next in this roadmap?  I like
+that this is an optional feature so we could clean up later by
+removing support for it; do we expect to?  If we do expect to, is
+there anything we could do to minimize the impact of the feature later
+(e.g. using a less short-and-sweet key name than `base`, maybe)?
 
-For both cases, the collision will happen when trying to write the
-parallel-eligible path. This happens because, for now, all paths that
-are ineligible for parallel-checkout are checked out first. So, in the
-first case, we will detect the collision when open() fails in
-write_pc_item().
+>  Reference Update Request and Packfile Transfer
+>  ----------------------------------------------
+>  
+> diff --git a/Documentation/technical/push-with-base.txt b/Documentation/technical/push-with-base.txt
+> new file mode 100644
+> index 0000000000..d56aa7f900
+> --- /dev/null
+> +++ b/Documentation/technical/push-with-base.txt
+> @@ -0,0 +1,61 @@
+> +Push with base design notes
+> +===========================
+> +
+> +This feature allows clients, when pushing, to indicate that a
+> +certain object is an ancestor of all pushed commits and that they
+> +believe that the server knows of this object. This in turn allows
+> +servers to send an abbreviated ref advertisement containing only that
+> +object.
+> +
+> +Besides bandwidth savings, this also ensures that the ref
+> +advertisement contains information relevant to the client. For
+> +example, at least one project (Gerrit [1]) have included workarounds
+> +to send ancestors of refs that move often, even though the ref
+> +advertisement is only meant to contain refs.
+> +
+> +[1] https://gerrit.googlesource.com/gerrit/+/refs/heads/master/java/com/google/gerrit/server/git/receive/HackPushNegotiateHook.java
+> +
+> +
+> +Design overview
+> +---------------
+> +
+> +The "base" being sent is sent as an Extra Parameter, supported in the
+> +git://, ssh://, and http(s):// protocols. By sending it as an Extra
+> +Parameter, the server is aware of this parameter before it generates
+> +the ref advertisement, thus making it able to tailor the ref
+> +advertisement accordingly. Sending it as an Extra Parameter also makes
+> +this protocol backwards-compatible, as servers will ignore any Extra
+> +Parameters they do not understand. (The push will then proceed as if
+> +neither party had this feature.)
+> +
+> +The remote helper protocol has been extended to support the
+> +"push-base" capability and an option of the same name. When a remote
+> +helper advertises this capability, it thus indicates that it supports
+> +this option. Git then will send "option push-base" if the user
+> +specifies it when invoking "git push".
+> +
+> +The remote-curl remote helper bundled with Git has been updated to
+> +support this capability and option.
 
-The second case is a little trickier, since [in part 1] we create the
-leading directories right before enqueueing an entry for
-parallel-checkout. An ineligible entry could then collide with the
-dirname of an already enqueued parallel-eligible entry, removing (and
-replacing) the created dirs. Also, the ineligible entry could be a
-symlink, and we want to avoid the case of workers writing the entry
-a/b/c at a/d/c due to a symlink in b. These collisions with the
-dirname are detected when has_dirs_only_path() fails in
-check_leading_dirs().
+Since this is an optional remote helper capability, it could be
+removed later.  Good (but the capability and option names would still
+need to be reserved).
 
-Furthermore, there is no risk that has_dirs_only_path() succeeds, but
-then another entry collides with the leading directories before the
-actual checkout. Because, when we start the workers, no file or
-directory is ever removed.
+> +
+> +
+> +Future work
+> +-----------
+> +
+> +In the future, we might want a way to automatically determine the base
+> +instead of always having the user specify it. However, this does not
+> +make obsolete any of the current work - once the base is automatically
+> +determined, we still need this protocol to communicate it to the
+> +server, and allowing the user to specify the base manually is still
+> +useful.
 
-> >  }
-> >
-> > diff --git a/parallel-checkout.c b/parallel-checkout.c
-> > new file mode 100644
-> > index 0000000000..981dbe6ff3
-> > --- /dev/null
-> > +++ b/parallel-checkout.c
-> > @@ -0,0 +1,368 @@
-> > +#include "cache.h"
-> > +#include "entry.h"
-> > +#include "parallel-checkout.h"
-> > +#include "streaming.h"
-> > +
-> > +enum pc_item_status {
-> > +     PC_ITEM_PENDING = 0,
-> > +     PC_ITEM_WRITTEN,
-> > +     /*
-> > +      * The entry could not be written because there was another file
-> > +      * already present in its path or leading directories. Since
-> > +      * checkout_entry_ca() removes such files from the working tree before
-> > +      * enqueueing the entry for parallel checkout, it means that there was
-> > +      * a path collision among the entries being written.
-> > +      */
-> > +     PC_ITEM_COLLIDED,
-> > +     PC_ITEM_FAILED,
-> > +};
-> > +
-> > +struct parallel_checkout_item {
-> > +     /* pointer to a istate->cache[] entry. Not owned by us. */
-> > +     struct cache_entry *ce;
-> > +     struct conv_attrs ca;
-> > +     struct stat st;
-> > +     enum pc_item_status status;
-> > +};
-> > +
-> > +struct parallel_checkout {
-> > +     enum pc_status status;
-> > +     struct parallel_checkout_item *items;
-> > +     size_t nr, alloc;
-> > +};
-> > +
-> > +static struct parallel_checkout parallel_checkout = { 0 };
->
-> Can't we let this handled by BSS by not explicitly giving an initial
-> value?
+Makes sense.  I think this isn't "might", but "would"; most users
+that do not know why their push is slow wouldn't know to use this
+feature.
 
-Good catch, thanks.
+> +
+> +
+> +Alternatives
+> +------------
+> +
+> +- Making a more substantial protocol change like "fetch" protocol v2.
+> +  This would eliminate the need for some of the remote helper updates;
+> +  as part of the protocol change, the protocol could be made to
+> +  support "stateless-connect" and thus no remote helper updates (like
+> +  "push-base") would be needed. For "fetch", the protocol change has
+> +  enabled features like wanted-refs and packfile-uris, but I do not
+> +  have any similar ideas in mind for "push".
 
-> > +enum pc_status parallel_checkout_status(void)
-> > +{
-> > +     return parallel_checkout.status;
-> > +}
-> > +
-> > +void init_parallel_checkout(void)
-> > +{
-> > +     if (parallel_checkout.status != PC_UNINITIALIZED)
-> > +             BUG("parallel checkout already initialized");
-> > +
-> > +     parallel_checkout.status = PC_ACCEPTING_ENTRIES;
-> > +}
-> > +
-> > +static void finish_parallel_checkout(void)
-> > +{
-> > +     if (parallel_checkout.status == PC_UNINITIALIZED)
-> > +             BUG("cannot finish parallel checkout: not initialized yet");
-> > +
-> > +     free(parallel_checkout.items);
-> > +     memset(&parallel_checkout, 0, sizeof(parallel_checkout));
-> > +}
-> > +
-> > +static int is_eligible_for_parallel_checkout(const struct cache_entry *ce,
-> > +                                          const struct conv_attrs *ca)
-> > +{
-> > +     enum conv_attrs_classification c;
-> > +
-> > +     if (!S_ISREG(ce->ce_mode))
-> > +             return 0;
-> > +
-> > +     c = classify_conv_attrs(ca);
-> > +     switch (c) {
-> > +     case CA_CLASS_INCORE:
-> > +             return 1;
-> > +
-> > +     case CA_CLASS_INCORE_FILTER:
-> > +             /*
-> > +              * It would be safe to allow concurrent instances of
-> > +              * single-file smudge filters, like rot13, but we should not
-> > +              * assume that all filters are parallel-process safe. So we
-> > +              * don't allow this.
-> > +              */
-> > +             return 0;
-> > +
-> > +     case CA_CLASS_INCORE_PROCESS:
-> > +             /*
-> > +              * The parallel queue and the delayed queue are not compatible,
-> > +              * so they must be kept completely separated. And we can't tell
-> > +              * if a long-running process will delay its response without
-> > +              * actually asking it to perform the filtering. Therefore, this
-> > +              * type of filter is not allowed in parallel checkout.
-> > +              *
-> > +              * Furthermore, there should only be one instance of the
-> > +              * long-running process filter as we don't know how it is
-> > +              * managing its own concurrency. So, spreading the entries that
-> > +              * requisite such a filter among the parallel workers would
-> > +              * require a lot more inter-process communication. We would
-> > +              * probably have to designate a single process to interact with
-> > +              * the filter and send all the necessary data to it, for each
-> > +              * entry.
-> > +              */
-> > +             return 0;
-> > +
-> > +     case CA_CLASS_STREAMABLE:
-> > +             return 1;
-> > +
-> > +     default:
-> > +             BUG("unsupported conv_attrs classification '%d'", c);
-> > +     }
-> > +}
->
-> OK, the comments fairly clearly explain the reason for each case.
-> Good.
->
-> > +static int handle_results(struct checkout *state)
-> > +{
-> > +     int ret = 0;
-> > +     size_t i;
-> > +     int have_pending = 0;
-> > +
-> > +     /*
-> > +      * We first update the successfully written entries with the collected
-> > +      * stat() data, so that they can be found by mark_colliding_entries(),
-> > +      * in the next loop, when necessary.
-> > +      */
-> > +     for (i = 0; i < parallel_checkout.nr; ++i) {
->
-> We encourage post_increment++ when there is no particular reason to
-> do otherwise in this codebase (I won't repeat in the remainder of
-> this review).
+I think you're saying that we don't need a "push" v2 because v0
+already has what a user would want.
 
-OK, I will fix the pre-increments, thanks.
+Git protocol v2 for fetch brought two major changes:
 
-> > +static int reset_fd(int fd, const char *path)
-> > +{
-> > +     if (lseek(fd, 0, SEEK_SET) != 0)
-> > +             return error_errno("failed to rewind descriptor of %s", path);
-> > +     if (ftruncate(fd, 0))
-> > +             return error_errno("failed to truncate file %s", path);
-> > +     return 0;
-> > +}
->
-> This is in the error codepath when streaming fails, and we'll later
-> attempt the normal "read object in-core, write it out" codepath, but
-> is it enough to just ftruncate() it?  I am wondering why it is OK
-> not to unlink() the failed one---is it the caller who is responsible
-> for opening the file descriptor to write to, and at the layer of the
-> caller of this helper there is no way to re-open it, or something
-> like that?
+- it changed the response for the initial request, allowing
+  abbreviating the ref advertisement at last
 
-Right. We also avoid unlinking the failed one to keep the invariant
-that the first worker to successfully open(O_CREAT | O_EXCL) a file
-has the "ownership" for that path. So other workers that try to open
-the same path will know that there is a collision and can immediately
-abort checking out their entry.
+- it defined a structure for requests and responses, simplifying the
+  addition of later protocol improvements.  In particular, because the
+  initial response is a capability advertisement, it allows changing
+  the ref advertisement format more in the future.
 
->         ... /me looks ahead and it seems the answer is "yes".
->
-> > +static int write_pc_item_to_fd(struct parallel_checkout_item *pc_item, int fd,
-> > +                            const char *path)
-> > ...
-> > +     if (filter) {
-> > +             if (stream_blob_to_fd(fd, &pc_item->ce->oid, filter, 1)) {
-> > +                     /* On error, reset fd to try writing without streaming */
-> > +                     if (reset_fd(fd, path))
-> > +                             return -1;
-> > +             } else {
-> > +                     return 0;
-> > +             }
-> > +     }
-> > +
-> > +     new_blob = read_blob_entry(pc_item->ce, &size);
-> > ...
-> > +     wrote = write_in_full(fd, new_blob, size);
->
-> > +static int check_leading_dirs(const char *path, int len, int prefix_len)
-> > +{
-> > +     const char *slash = path + len;
-> > +
-> > +     while (slash > path && *slash != '/')
-> > +             slash--;
->
-> It is kind of surprising that we do not give us an easy-to-use
-> helper to find the separtor between dirname and basename.  If there
-> were, we do not even need this helper function with an unclear name
-> (i.e. "check" does not mean much to those who are trying to
-> understand the caller---"leading directories are checked for
-> what???" will be their question).
->
-> Perhaps create or find such a helper to remove this function and use
-> has_dirs_only_path() directly in the caller?
+Both of those changes would be valuable for push.  The ref
+advertisements are large, and matching the structure of commands used
+by fetchv2 would make debugging easier.
 
-OK, I'll look into it. It would be better if we can reuse an already
-present helper, since this call to has_dirs_only_path() will be
-removed in part 2.
+There are some specific applications I'm interested in after that
+(e.g., pushing symrefs), but the fundamental extensibility improvement
+is larger than any particular application I could think of.
 
-> > +     return has_dirs_only_path(path, slash - path, prefix_len);
-> > +}
->
-> > +static void write_pc_item(struct parallel_checkout_item *pc_item,
-> > +                       struct checkout *state)
-> > +{
-> > +     unsigned int mode = (pc_item->ce->ce_mode & 0100) ? 0777 : 0666;
-> > +     int fd = -1, fstat_done = 0;
-> > +     struct strbuf path = STRBUF_INIT;
-> > +
-> > +     strbuf_add(&path, state->base_dir, state->base_dir_len);
-> > +     strbuf_add(&path, pc_item->ce->name, pc_item->ce->ce_namelen);
-> > +
-> > +     /*
-> > +      * At this point, leading dirs should have already been created. But if
-> > +      * a symlink being checked out has collided with one of the dirs, due to
-> > +      * file system folding rules, it's possible that the dirs are no longer
->
-> Is "file system folding rule" clear to readers of the code after
-> this patch lands?  It isn't at least to me.
+That said, I'm not against experimenting with extra parameters before
+we go there, as a way of getting more information about what a
+workable negotiation for push looks like.  The push ref advertisement
+serves two roles: it advertises commits, to serve as negotiation, and
+it tells the client the current values of refs they may want to
+update, so they can send an appropriate compare-and-swap command for
+a force-push.  If we have a workable replacement negotiation system,
+then the other role can be replaced with something simpler.  For
+example:
 
-OK, I will rephrase this paragraph to make it clearer.
+- listing ref updates before the pack, to allow the server to bail
+  out early if they would be rejected, and
+
+- allowing an explicit force update of a ref instead of requiring the
+  client to compare-and-swap if they don't care about the old value
+  (but taking care to still make the client "fetch first" when
+  appropriate!)
+
+Thanks,
+Jonathan
+
+[1] https://lore.kernel.org/git/CABPp-BEswHLhymQ1_07g3qqu=7kFR3eQyAHR0qMgSvi6THy=zQ@mail.gmail.com/
