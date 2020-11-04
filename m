@@ -2,96 +2,83 @@ Return-Path: <SRS0=V3lj=EK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED644C2D0A3
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 17:54:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 954F6C2D0A3
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 18:00:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B05C42072E
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 17:54:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 243EE20639
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 18:00:50 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="G3qgMuxz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732143AbgKDRy5 convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 4 Nov 2020 12:54:57 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:40099 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732139AbgKDRy5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Nov 2020 12:54:57 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.189.82])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 0A4Hsrin002499
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 4 Nov 2020 12:54:53 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Alex Marginean'" <alexmarginean16@gmail.com>,
-        <git@vger.kernel.org>
-References: <CALG6MqwdCmwS5D_F9+q6UYzGm5ZzLL7Bi=rD7Ph2XE0uccu+xg@mail.gmail.com> 
-In-Reply-To: 
-Subject: RE: BUG
-Date:   Wed, 4 Nov 2020 12:54:47 -0500
-Message-ID: <037e01d6b2d3$9957f3d0$cc07db70$@nexbridge.com>
+        id S1730044AbgKDSAt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Nov 2020 13:00:49 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55967 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726608AbgKDSAt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Nov 2020 13:00:49 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3067FF70D5;
+        Wed,  4 Nov 2020 13:00:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=w31vsLasKnkmcfJXYv8oLsSrjyI=; b=G3qgMu
+        xzJ/ikmnYnZ0mpcAbS+SpcFHFzaDoeuUYZNfAzNaOf7UowZJ5oXKOsJjGPLhL2w2
+        qCjmj0bOXyvqeqOJXTyn1SwizyEtMeEhF3jwTBJgm42/8Yppo9Idh21KPHenom4w
+        47jhcg9h+bdA/1oDptHmhd2KZrLb6gDGPO3lk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ROD4Y2cLdWlKjM+hyTQCdBjoLyTnPgdx
+        VP3B/3FVVXdnqqeFbL0TziB0GzpH/5ZXNRmNQc/jUbdSm5cdbXIubx/ItrRs0DVr
+        M/ZI55mNls9fZ0SGm3ae1rYjTZWEuDDWH8/8t2EOu5L0LezfRPeT3DiW3PESQXsm
+        DXGW2OzZONg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2961FF70D3;
+        Wed,  4 Nov 2020 13:00:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 746B9F70D1;
+        Wed,  4 Nov 2020 13:00:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Postler <johannes.postler@txture.io>, git@vger.kernel.org
+Subject: Re: [PATCH 3/3] format-patch: support --output option
+References: <20201104132428.GA2491189@coredump.intra.peff.net>
+        <20201104132907.GC3030146@coredump.intra.peff.net>
+Date:   Wed, 04 Nov 2020 10:00:43 -0800
+In-Reply-To: <20201104132907.GC3030146@coredump.intra.peff.net> (Jeff King's
+        message of "Wed, 4 Nov 2020 08:29:07 -0500")
+Message-ID: <xmqq361pngs4.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQGkfuQjgOyOzfuyzQ4KZI4HmvX0TqocmmxQgAAOrgA=
-Content-Language: en-ca
+Content-Type: text/plain
+X-Pobox-Relay-ID: A96F948E-1EC7-11EB-9914-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On November 4, 2020 12:03 PM, I wrote:
-> To: 'Alex Marginean' <alexmarginean16@gmail.com>; 'git@vger.kernel.org'
-> <git@vger.kernel.org>
-> Subject: RE: BUG
-> 
-> On November 4, 2020 11:10 AM, Alex Marginean wrote:
-> > Github has changed the way they name branches, so now instead of the
-> > `master` branch there is the `main` branch however, I'm having some
-> > trouble with the naming
-> >
-> > **Steps to replicate my problem**
-> >
-> > 1. Create a new Github repository and make sure the default branch is
-> > `main` 2. Add something to the repo, a `README.md` file should be enough
-> 3.
-> > Instead of cloning the repo make a new directory with your repo's name
-> > `mkdir <repo_name>` and change the directory to it `cd <repo_name>` 4.
-> > `git init` 5. Add the remote repo with `git remote add origin
-> > <repo_link>` 6. Pull the `main` branch from the remote repo with `git pull
-> origin main`.
-> 
-> Use git init --initial-branch=main
+Jeff King <peff@peff.net> writes:
 
-You could also use git branch -m master main after the git init if your version of git is too old.
+> +test_expect_success 'format-patch --output' '
+> +	rm -fr outfile &&
+> +	git format-patch -3 --stdout HEAD >expect &&
+> +	git format-patch -3 --output=outfile HEAD &&
+> +	test_cmp expect outfile
+> +'
+> +
+> +test_expect_success 'format-patch --cover-letter --output' '
+> +	rm -fr outfile &&
+> +	git format-patch --cover-letter -3 --stdout HEAD >expect &&
+> +	git format-patch --cover-letter -3 --output=outfile HEAD &&
+> +	test_cmp expect outfile
+> +'
 
-> 
-> This assumes a recent version of git.
-> 
-> >
-> > After the step number 6. instead of my branch changing to `main` my
-> > current branch is changed to `master` which has every file and change
-> > of the branch `main`. This is a real problem because if I try to push
-> > changes to `main` although my current branch shows up as `master` it
-> > creates another branch called `master` on Github and the `main`
-> > remains unchanged. Yeah sure I can `git checkout main` after that and
-> > make my changes there but I'm not sure why it defaults to `master` and
-> > copies `main` from Github into local branch `master`.
-> >
-> > P.S. If you were to use `git fetch origin` instead of `git pull origin
-> > <branch_name> and then manually change branch to `main` with `git
-> > checkout main` it would work. Also, if you were to clone the Github
-> > repo using `git clone <link>` you will get the correct current branch that is
-> `main`.
-> 
-> Regards,
-> Randall
-> -- Brief whoami:
->  NonStop developer since approximately 211288444200000000  UNIX
-> developer since approximately 421664400
-> -- In my real life, I talk too much.
-
+It is pleasing to see an obvious and clear demonstration that
+"--output=X" is equivalent to "--stdout >X".
