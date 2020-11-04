@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AC28C388F7
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 20:33:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04C10C2D0A3
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 20:34:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 031C020782
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 20:33:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A4E2520782
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 20:34:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="eFIL1wvy"
+	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="jhzlYodB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732073AbgKDUd5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Nov 2020 15:33:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46466 "EHLO
+        id S1732088AbgKDUd7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Nov 2020 15:33:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728607AbgKDUdy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Nov 2020 15:33:54 -0500
-Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B48BC0613D3
-        for <git@vger.kernel.org>; Wed,  4 Nov 2020 12:33:54 -0800 (PST)
-Received: by mail-qk1-x743.google.com with SMTP id l2so20685360qkf.0
-        for <git@vger.kernel.org>; Wed, 04 Nov 2020 12:33:54 -0800 (PST)
+        with ESMTP id S1732077AbgKDUd6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Nov 2020 15:33:58 -0500
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7864BC0613D3
+        for <git@vger.kernel.org>; Wed,  4 Nov 2020 12:33:57 -0800 (PST)
+Received: by mail-qk1-x741.google.com with SMTP id o205so13856858qke.10
+        for <git@vger.kernel.org>; Wed, 04 Nov 2020 12:33:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TG+HUabaJz0q+hpO92ZhNvJW7axRZAVyBNT9ft6nAJI=;
-        b=eFIL1wvyd+/stJjEDBUdB6T2WCguaIdtw1KFHWiKikEoQkxHSapOI8gqt9JDgEVS1q
-         Mk2gYP8QT4qv/KkG+aKIzkPOo8oyFhhkpXin4w7xrhujcG0LSjVYTnerLWlI6iCd/OSY
-         VFoOsjP7OCW4ZPoG4jbtCWPBQBKQI+CiW0KRd9yd3sxhcgmXn3j0aZK74dmtP3yhAoxf
-         1HS0zdWLekVNnfQgqjUNOLSqWQtnmM7tmXjIUzWLcmGxnw1waI+QQisZoKuGJJoP6kgY
-         3ikBfwYFQvf66YUG9CUuwRKblKVfVwe/BXsudtPtoiltA+ObjwNUPgR1aEPhlJERocw+
-         41dw==
+        bh=DV2DhDO8wquOylpaL4qGrTWwlE3NaLC/vl0Sp9b+4hw=;
+        b=jhzlYodBEeNOZlCbFRaCK7ACsyjtq1C0e0N7JhQGUXyY3n1KUEUHHH72qP9lmJj9Z+
+         ahIg4Ko3BGF6yJhSoV3k+/2x3NEQzeeu9Hxi80BtKUQcMJLNG4RvnI688Sc/JvpZ7DFC
+         Pf4necjErPtAz7R+CDw7r4dqfLPEy7NpVOwhFfdB2eYqLumeqdaumWmeIFHmfVWWY9z9
+         YhKlFmn/PjCWS/FcAX+Rwod2JnJphKYg7v0DS8bq9VROs4PkhKNNR+EaeocoWepjpKUN
+         srhWKSbVfKGIhNZVeO3z1s+fWWhuJSIKGc9cSkOUMDjf/ludh/zU/YEhhPBhdIJcbF32
+         rsCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TG+HUabaJz0q+hpO92ZhNvJW7axRZAVyBNT9ft6nAJI=;
-        b=J7qrdxtnF0EfLc78r/G/kAtNKv9Sw2vElXBDD3ZBIFe/jsxqtPWAdaPvxlL/jVCwec
-         2gV9jhIG+mffaveaVL42ZwUxlPb0CdcTkLFD3c5y5zXccA/KJNnxq/nrESNc2mjaznuX
-         4jBaIhpK57itqKquYbwG4BfDicvZW/QCiiDJwg42cbEjnXOVhD8F+bwGTzeNkwBJUKkM
-         zAOjuLeYCOC6UDsnJ0SzxuSrQG5ugOIojkt8KxQBfbGv6Bj7brHVhazHzjVo0liTB33N
-         amE4RrGLsQTYKt0vR+0fainn0xO5wOx8gzyY4XiDXx+IyUift1R6g36mMGCVGm/ZqQqc
-         ib8Q==
-X-Gm-Message-State: AOAM531zjPj2aHU7ThouZPOHgiande/gb2oREy83QPkUpeBoR7svh598
-        BbY1Rk2ncBbLrck4TOlZ8xns7QqDKSbEVg==
-X-Google-Smtp-Source: ABdhPJzO7A3PrgcI3xxFbtHAOPk0YLk8zAWeGe72+YX/RDd+0pEJq6COdJWMr3DTbuJBLDH84Wfqyw==
-X-Received: by 2002:a37:a54d:: with SMTP id o74mr6566961qke.296.1604522033164;
-        Wed, 04 Nov 2020 12:33:53 -0800 (PST)
+        bh=DV2DhDO8wquOylpaL4qGrTWwlE3NaLC/vl0Sp9b+4hw=;
+        b=sSNIC1IhEDJdik5A2Q4AnphHPv+nv70oneQ1r9+IJf77C7c5N4xqQ85KrexOHm1KSh
+         5INOGFtY9zBA5Hj5vlNLsO515dKeIZ6cdogWENeJbU3pmAmodyl8MuFRded1Znry0FdG
+         oIh7s8YzNV3YdlpwQlq280v/2lKvhqqWlS5tDl01r4y6blSlD9OUpA0oHYtfmwDQJn42
+         kt3Lvp4kHvPqFrwT57527dh0tnbzVatycFLZ5Jz5BKh59PnC3aEzAlNzl9s+6AB/abLb
+         IVJHJ6CeF9/oIZRVl4HRyv/8sa3M8E0o9BmiSFcZYhioNi1Qm9RpxrtRb1GP+j63esob
+         exvw==
+X-Gm-Message-State: AOAM533zoiJZo1Hc/DIXJ9M0IWaJLi2PiH8zGmEv5GdFrxYhBpDy2zQW
+        IVWYYaqRP461MeAb4GT9kiCaPk/ZWQCMNA==
+X-Google-Smtp-Source: ABdhPJwre/vP1QdbbNgp0qU1Lms3Ybs+eMHR54pEIbLIhMYA1lxpqegy6QA1SrCn6kRJkSyXPenp7Q==
+X-Received: by 2002:a05:620a:131c:: with SMTP id o28mr18662460qkj.388.1604522036318;
+        Wed, 04 Nov 2020 12:33:56 -0800 (PST)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id m15sm1100971qtc.90.2020.11.04.12.33.50
+        by smtp.gmail.com with ESMTPSA id m15sm1100971qtc.90.2020.11.04.12.33.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2020 12:33:52 -0800 (PST)
+        Wed, 04 Nov 2020 12:33:55 -0800 (PST)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, git@jeffhostetler.com, chriscool@tuxfamily.org,
         peff@peff.net, newren@gmail.com, jrnieder@gmail.com,
         martin.agren@gmail.com
-Subject: [PATCH v4 06/19] entry: make fstat_output() and read_blob_entry() public
-Date:   Wed,  4 Nov 2020 17:33:05 -0300
-Message-Id: <46ed6274d7bff1747a73f3a032fa907af2082782.1604521275.git.matheus.bernardino@usp.br>
+Subject: [PATCH v4 07/19] entry: extract cache_entry update from write_entry()
+Date:   Wed,  4 Nov 2020 17:33:06 -0300
+Message-Id: <a0479d02ffedccb65a167463228445a6d62c9f96.1604521275.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <cover.1604521275.git.matheus.bernardino@usp.br>
 References: <cover.1604521275.git.matheus.bernardino@usp.br>
@@ -74,68 +74,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These two functions will be used by the parallel checkout code, so let's
-make them public. Note: fstat_output() is renamed to
-fstat_checkout_output(), now that it has become public, seeking to avoid
-future name collisions.
+This code will be used by the parallel checkout functions, outside
+entry.c, so extract it to a public function.
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- entry.c | 8 ++++----
- entry.h | 3 +++
- 2 files changed, 7 insertions(+), 4 deletions(-)
+ entry.c | 25 ++++++++++++++++---------
+ entry.h |  2 ++
+ 2 files changed, 18 insertions(+), 9 deletions(-)
 
 diff --git a/entry.c b/entry.c
-index b0b8099699..b36071a610 100644
+index b36071a610..1d2df188e5 100644
 --- a/entry.c
 +++ b/entry.c
-@@ -84,7 +84,7 @@ static int create_file(const char *path, unsigned int mode)
- 	return open(path, O_WRONLY | O_CREAT | O_EXCL, mode);
+@@ -251,6 +251,18 @@ int finish_delayed_checkout(struct checkout *state, int *nr_checkouts)
+ 	return errs;
  }
  
--static void *read_blob_entry(const struct cache_entry *ce, unsigned long *size)
-+void *read_blob_entry(const struct cache_entry *ce, unsigned long *size)
++void update_ce_after_write(const struct checkout *state, struct cache_entry *ce,
++			   struct stat *st)
++{
++	if (state->refresh_cache) {
++		assert(state->istate);
++		fill_stat_cache_info(state->istate, ce, st);
++		ce->ce_flags |= CE_UPDATE_IN_BASE;
++		mark_fsmonitor_invalid(state->istate, ce);
++		state->istate->cache_changed |= CE_ENTRY_CHANGED;
++	}
++}
++
+ static int write_entry(struct cache_entry *ce,
+ 		       char *path, const struct checkout *state, int to_tempfile)
  {
- 	enum object_type type;
- 	void *blob_data = read_object_file(&ce->oid, &type, size);
-@@ -109,7 +109,7 @@ static int open_output_fd(char *path, const struct cache_entry *ce, int to_tempf
+@@ -371,15 +383,10 @@ static int write_entry(struct cache_entry *ce,
+ 
+ finish:
+ 	if (state->refresh_cache) {
+-		assert(state->istate);
+-		if (!fstat_done)
+-			if (lstat(ce->name, &st) < 0)
+-				return error_errno("unable to stat just-written file %s",
+-						   ce->name);
+-		fill_stat_cache_info(state->istate, ce, &st);
+-		ce->ce_flags |= CE_UPDATE_IN_BASE;
+-		mark_fsmonitor_invalid(state->istate, ce);
+-		state->istate->cache_changed |= CE_ENTRY_CHANGED;
++		if (!fstat_done && lstat(ce->name, &st) < 0)
++			return error_errno("unable to stat just-written file %s",
++					   ce->name);
++		update_ce_after_write(state, ce , &st);
  	}
- }
- 
--static int fstat_output(int fd, const struct checkout *state, struct stat *st)
-+int fstat_checkout_output(int fd, const struct checkout *state, struct stat *st)
- {
- 	/* use fstat() only when path == ce->name */
- 	if (fstat_is_reliable() &&
-@@ -132,7 +132,7 @@ static int streaming_write_entry(const struct cache_entry *ce, char *path,
- 		return -1;
- 
- 	result |= stream_blob_to_fd(fd, &ce->oid, filter, 1);
--	*fstat_done = fstat_output(fd, state, statbuf);
-+	*fstat_done = fstat_checkout_output(fd, state, statbuf);
- 	result |= close(fd);
- 
- 	if (result)
-@@ -346,7 +346,7 @@ static int write_entry(struct cache_entry *ce,
- 
- 		wrote = write_in_full(fd, new_blob, size);
- 		if (!to_tempfile)
--			fstat_done = fstat_output(fd, state, &st);
-+			fstat_done = fstat_checkout_output(fd, state, &st);
- 		close(fd);
- 		free(new_blob);
- 		if (wrote < 0)
+ delayed:
+ 	return 0;
 diff --git a/entry.h b/entry.h
-index acbbb90220..60df93ca78 100644
+index 60df93ca78..ea7290bcd5 100644
 --- a/entry.h
 +++ b/entry.h
-@@ -39,4 +39,7 @@ int finish_delayed_checkout(struct checkout *state, int *nr_checkouts);
-  */
- void unlink_entry(const struct cache_entry *ce);
+@@ -41,5 +41,7 @@ void unlink_entry(const struct cache_entry *ce);
  
-+void *read_blob_entry(const struct cache_entry *ce, unsigned long *size);
-+int fstat_checkout_output(int fd, const struct checkout *state, struct stat *st);
-+
+ void *read_blob_entry(const struct cache_entry *ce, unsigned long *size);
+ int fstat_checkout_output(int fd, const struct checkout *state, struct stat *st);
++void update_ce_after_write(const struct checkout *state, struct cache_entry *ce,
++			   struct stat *st);
+ 
  #endif /* ENTRY_H */
 -- 
 2.28.0
