@@ -4,93 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15B69C4741F
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 22:17:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3344AC388F7
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 22:21:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BDBA920867
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 22:17:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D99F420756
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 22:21:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hmBnKsgK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m4/hmXqw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730888AbgKDWRf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Nov 2020 17:17:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34434 "EHLO
+        id S1728416AbgKDWVM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Nov 2020 17:21:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732051AbgKDWRD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Nov 2020 17:17:03 -0500
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FE0FC0613D3
-        for <git@vger.kernel.org>; Wed,  4 Nov 2020 14:17:03 -0800 (PST)
-Received: by mail-pf1-x443.google.com with SMTP id e7so18458861pfn.12
-        for <git@vger.kernel.org>; Wed, 04 Nov 2020 14:17:03 -0800 (PST)
+        with ESMTP id S1729564AbgKDWUq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Nov 2020 17:20:46 -0500
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3A72C0613D3
+        for <git@vger.kernel.org>; Wed,  4 Nov 2020 14:20:46 -0800 (PST)
+Received: by mail-oi1-x22a.google.com with SMTP id w145so18235331oie.9
+        for <git@vger.kernel.org>; Wed, 04 Nov 2020 14:20:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=I8znQ4kz/49E5RFkMwPl1xnyENLjfggB8HjKwK4g4Ng=;
-        b=hmBnKsgKAP4hyeYRP4EiyQ8TWjGRtFSifiddZM7qFg3bXdxdYK7oNWQB1Ky2f5oykE
-         lSOy7hCi8N4OiHdxtufY+IqHC+rQYRC7cGiODLzolnEFVnIMj/kbN0Nzdq+YfIwinDTK
-         gNVHEVrQ1RIi5jpM3XfM6d69KfuRlM1NgX60SM/9puCgyFXv2n5CxaM//El39f1Ooe0I
-         BLhubpt0wr6AJz1FL6sVU6c1kIPDG18Op0Hbwyk9TYeBwuSVEhu6WbUG4u/fuYhWcbfL
-         ghyDsP2kxMXDI6TZFOgmElkpKkXvpboXJmw/telQXe9TBzu5dTIRBl7x507cYML1MvBQ
-         65gQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FizTCiiKZSDf2HNJh8ezM7QyZV9NKoON5JkBK8EgJzk=;
+        b=m4/hmXqwseYPnD+UPJKhZ6SezyYo5LiRKoFXNVA2lWyohW2qtI38hXVpvOxb+FuaZ3
+         hhF1VpGY5/rbf34CuHjj8828LQhh0xS/Hs8h0Jk20waPB3HHFvAoLBvtME+yWQpz3eLx
+         r0P+zLf4lpqddn22fdL44bXCklkUa9VBSNcaTjHOeJBmY9OT9TOpBCyBFJlGrUdjuk5y
+         cpSK3ETsay1kiZYE9Jp3ii6qgbYpIxTHAK+vKSl4RKgMn9uKmqGTi0ETQMf9F0tbDhog
+         75iTkiXd9dQseRGQAPcc6t5ePRI+78lXWHQbYjGqiFZ5x3qZ6G1C1F7lv+koPFEp77+o
+         m3ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=I8znQ4kz/49E5RFkMwPl1xnyENLjfggB8HjKwK4g4Ng=;
-        b=bJ1WPRGhvRX1eNgAbZ46p5AJoM7qh60XbEJShXJdParp71HyrHqvaY4v4uxa1nbd5u
-         oi/febRPdZ2eTNEk0TEMi1m+DexGoclEsgp3h1gDAK0sECepNq04QNwerrwDSKf/J9Va
-         63Bhfc1CSERr3MwfeVBmjFL4il3/FLaaOTYvTkxZW7EUMMjIUCvkmCRgMp+rFPvjxeet
-         3RMWTzxAw//A9/kaAYxomyGuMmaBcbhufZm3IYk3JN2FvNbuyGcv8BxI6x6GUos4iYP4
-         A+shEva/St/v3J8AvcitzjmXgRrV7Jdh+YBVFPHcGbiO0t6g/VYI/K9LUgfsazgQLTTM
-         ufxg==
-X-Gm-Message-State: AOAM531wOsxrWMIQW6HVwHLjEyMOzl9em1aIEXoBRwY6g6dAmVwsGp2P
-        0QQ3b3dg79UvzYF5batfDwzg95SO1V8=
-X-Google-Smtp-Source: ABdhPJyUeYT7ciIk1OiM1wlWbSj3+CgcN0/neI17ah/eKTzRjneTNCA4nIo5RZakfRqEaDUJQ+m2Xg==
-X-Received: by 2002:a17:90a:3d0f:: with SMTP id h15mr43984pjc.234.1604528222854;
-        Wed, 04 Nov 2020 14:17:02 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
-        by smtp.gmail.com with ESMTPSA id nv7sm2942819pjb.27.2020.11.04.14.17.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2020 14:17:01 -0800 (PST)
-Date:   Wed, 4 Nov 2020 14:16:59 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] rev-parse: add option for absolute or relative path
- formatting
-Message-ID: <20201104221659.GA3183353@google.com>
-References: <20200908185017.2005159-1-sandals@crustytoothpaste.net>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FizTCiiKZSDf2HNJh8ezM7QyZV9NKoON5JkBK8EgJzk=;
+        b=opYS93TKnIESegXQwPCqmjTXzaDY4zHwJt/apIM1SzVxpuJ0Yg3GZOqGeu7gngoJvy
+         9hwwNU3kJT7r07zHGHMohPllZm+FtKHyqDddWHrtBDHHOgufqRYAlTp7Yecrpwg9kbN1
+         Czja6Lnx1AfLurBYu9su84ZZXIBsvsvwoyB5XF75VPx9/a8lcligak8SYSWwbUTWx1EM
+         PP24TeAewMLMGncWEPrZIs6/+/3KjgbldyYbiNC338QzU8BBY+rOnpLRDY/8pFP18BPM
+         ++RjT2ecXlL/Mf0nGXIAURxvdm1I9wtfBh+GghAZZYZZXtQUPD7U3z6i5ngL4AYTPuSj
+         27+g==
+X-Gm-Message-State: AOAM533bTlHRGBoqDNaTFTUZvWZCeedpbzO+sgW4F2LP9A+Nf1D3Beun
+        a4omw8W2cOJf7swETWzaJu2qQrFOZW/V9VyiiDc=
+X-Google-Smtp-Source: ABdhPJyIoAOehhf6SYqU8n/0WuTL59Bk+qCjYpTwqY7QSiHD67MR0MwWaC8RzTWxKL2zdE0TFzV9ufjd9jJBM5LqTCU=
+X-Received: by 2002:a05:6808:17:: with SMTP id u23mr3724272oic.31.1604528446067;
+ Wed, 04 Nov 2020 14:20:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200908185017.2005159-1-sandals@crustytoothpaste.net>
+References: <pull.835.v2.git.git.1602549650.gitgitgadget@gmail.com>
+ <pull.835.v3.git.git.1604343313.gitgitgadget@gmail.com> <20201104205250.GF3629238@coredump.intra.peff.net>
+In-Reply-To: <20201104205250.GF3629238@coredump.intra.peff.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 4 Nov 2020 14:20:35 -0800
+Message-ID: <CABPp-BGSgv07wuLQKTvApzmBEEbd7rnzH_xUSJ6gZGtHO6PXPA@mail.gmail.com>
+Subject: Re: [PATCH v3 00/13] Add struct strmap and associated utility functions
+To:     Jeff King <peff@peff.net>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-brian m. carlson wrote:
+On Wed, Nov 4, 2020 at 12:52 PM Jeff King <peff@peff.net> wrote:
+>
+> On Mon, Nov 02, 2020 at 06:55:00PM +0000, Elijah Newren via GitGitGadget wrote:
+>
+> > Changes since v2 (almost all of which were suggestions from Peff):
+>
+> Thanks again for your work on this series, and your willingness to
+> listen to my various suggestions. ;)
+>
+> This mostly looks good to me. I pointed out a few minor nits in reply to
+> individual patches, but there's at least one correctness problem, so
+> we'll need a v4.
 
-> This impetus for this patch is Git LFS, which is written in Go.  Go
-> lacks a cross-platform way to canonicalize paths in the same way that
-> Git does, so when Git produces relative paths, such as in some cases
-> with --git-common-dir, we end up with problems when users are doing
-> things with unusual paths on Windows, such as when using SUBST or
-> OneDrive or various other edge cases.  Go upstream does not appear eager
-> to address this problem.
+Cool, thanks for the careful reviews; I'll fix it up and send a v4 out.
 
-Can you describe the user-facing symptom?  While reviewing
-https://lore.kernel.org/git/20201009191511.267461-1-sandals@crustytoothpaste.net/
-I'm trying to understand the motivation and I'm getting stuck at
-trying to understand the basics of the problem being solved.
-
-E.g. is this about being able to compare paths, being able to open
-files, resolving symlinks, something else?
-
-Thanks,
-Jonathan
+> > Things that I'm still unsure about:
+> >
+> >  * strintmap_init() takes a default_value parameter, as suggested by Peff.
+> >    But this makes the function name strintmap_init_with_options() weird,
+> >    because strintmap_init() already takes one option, so it seems like the
+> >    name needs to replace "options" with "more_options". But that's kinda
+> >    ugly too. I'm guessing strintmap_init_with_options() is fine as-is, but
+> >    I'm wondering if anyone else thinks it looks weird and if so if there is
+> >    anything I should do about it.
+>
+> You could drop default_value from strintmap_init_with_options(). I'd
+> _guess_ most callers would be happy with 0, but you'd know much better
+> than I what your first crop of callers will want.
+>
+> I'm happy with it either way.
+>
+> > Things Peff mentioned on v2 that I did NOT do:
+> >
+> >  * Peff brought up some questions about mapping strintmap to an int rather
+> >    than an unsigned or intptr_t. I discussed my rationale in the thread
+>
+> Yeah, I'm well convinced that what you have here is fine.
+>
+> > Things Peff mentioned on v1 that are still not included and which Peff
+> > didn't comment on for v2, but which may still be worth mentioning again:
+> >
+> >  * Peff brought up the idea of having a free_values member instead of having
+> >    a free_values parameter to strmap_clear(). That'd just mean moving the
+> >    parameter from strmap_clear() to strmap_init() and would be easy to do,
+> >    but he sounded like he was just throwing it out as an idea and I didn't
+> >    have a strong opinion, so I left it as-is. If others have
+> >    opinions/preferences, changing it is easy right now.
+>
+> Yeah, I was mostly thinking out loud. What you have here looks fine to
+> me.
+>
+> >  * Peff early on wanted the strmap_entry type to have a char key[FLEX_ALLOC]
+> >    instead of having a (const) char *key. I spent a couple more days on this
+> >    despite him not mentioning it while reviewing v2, and finally got it
+> >    working this time and running valgrind-free. Note that such a change
+> >    means always copying the key instead of allowing it as an option. After
+> >    implementing it, I timed it and it slowed down my important testcase by
+> >    just over 6%. So I chucked it. I think the FLEXPTR_ALLOC_STR usage in
+> >    combination with defaulting to strdup_strings=1 gives us most the
+> >    benefits Peff wanted, while still allowing merge-ort to reuse strings
+> >    when it's important.
+>
+> Yes, I'd agree that FLEXPTR is a good middle ground. If I really manage
+> to find a caller later where I think the complexity might be worth
+> saving a few bytes, perhaps I'll try it then and get some real
+> measurements. My guess is that won't ever actually happen. :)
+>
+> -Peff
