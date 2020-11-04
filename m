@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80AEDC388F9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C10A4C4741F
 	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 17:47:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2591820825
+	by mail.kernel.org (Postfix) with ESMTP id 6DF92208C7
 	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 17:47:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZnCnKJ0+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GVH0bI6i"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732116AbgKDRrh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Nov 2020 12:47:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48818 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728679AbgKDRrf (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1730842AbgKDRrf (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 4 Nov 2020 12:47:35 -0500
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EB43C0613D3
-        for <git@vger.kernel.org>; Wed,  4 Nov 2020 09:47:35 -0800 (PST)
-Received: by mail-oi1-x241.google.com with SMTP id 9so23020787oir.5
-        for <git@vger.kernel.org>; Wed, 04 Nov 2020 09:47:35 -0800 (PST)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48812 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730685AbgKDRrd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Nov 2020 12:47:33 -0500
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77353C0613D4
+        for <git@vger.kernel.org>; Wed,  4 Nov 2020 09:47:33 -0800 (PST)
+Received: by mail-ot1-x32d.google.com with SMTP id n11so20108309ota.2
+        for <git@vger.kernel.org>; Wed, 04 Nov 2020 09:47:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7kFlxMX4hnUVT4xhtEwHBGmNeSzM50Kbqe2ph0xHk4I=;
-        b=ZnCnKJ0+IVGnW3OSjIjLWhbwcPXgdZqEqAHUApy0eJ0pAWlJpxjyeATBZjkgz6hNtJ
-         OgROMvFXFJbLmmyJrl510TEBH5QtmWf6QUH9XyeVyopURQ8MSEVKsLyntuQxyily6n5x
-         FfMHvvlYPRLRrsnIY1qs/IxiZm1eaX5h5Y6aKqALYJDXh4Ed39e/189T1SSvh3zr/jsq
-         HFhMMx14kUvnSAqsDMblO3UhYtcd0bBQhN27zN+DC6EaX4smLVpQVM0kYwDjM1gDYVeZ
-         C7EppvMT6IVI9+gwZG21U2YwNSNNGfEry2yqUNQohOWeUAkcFowcPZ0bee7ONkZmJlOC
-         UmKA==
+        bh=AwsMYNgb0G5mnwFqNs/rWgQfqxDQJuNrB9U+MKHVaG4=;
+        b=GVH0bI6ipWKasC4dYIkcLq4sVcuw3x2Koa9H+x7Y78ClNKgRTu7mznsi4UD63NQs22
+         VOMJNXujGewNJUhhywvl7rNU8ZvFZNSr8suMLEXwTZehx6Jx2cyHF66YK19p4qXYG9h5
+         lNfnX9CDKUP1aFlzqgqClcCDxibBI7d/X+tGJFqMo6gp1V5AdpUW/ksHFXUesUIUjBzp
+         M66lNVqQkZcxGdP9NFwejdSoytDVdQxcvAoeLkZadShQv6N+ffd+m86Xu4aoyNNb3knQ
+         sfCoLv8PelbHqDANaKO2OPUYmeKWCOC13VJk3r81ZwlYuD9uSDXxMdORmZyb0kOtwZiU
+         HkdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7kFlxMX4hnUVT4xhtEwHBGmNeSzM50Kbqe2ph0xHk4I=;
-        b=F7DoOyRpbAHfClNCPYvNS+SYeQOWKEUlcA9T35ey5Yht9nq9xB/J+3XFYQJN61GVZK
-         qhoVgwucZbTHsiOBj70l9NOGSPpQABmgHef0r4prB3iOnK3f1z3GKpEc5EY40IisYAeT
-         LXOX3LmoXKLOvPRUhi8TX1xQJXvoO4+trRe0Q6Nvxl1dcYbl9nx8GUnzh3JigsMqrJJG
-         rvaogg8ITqNNyjzf/xNXP0epzb3mLnKplhJVHlsojtQ/LGvFZ7guNvv6ODBeuqjNORL5
-         50z/whbF+r86cl7xJeWf9yUxtGXvmGCtt8UX2/e6ZPmANbe42AbCKoFKQcKj2YvhK2af
-         4jbA==
-X-Gm-Message-State: AOAM531wTG52RULakIcUyV9KeYOIjcNEjhwrEBGEXF9NNpDGZ9hZjyjm
-        lkdhRaplhh4yC7MD3yp9ZpTesJZinQBQWg==
-X-Google-Smtp-Source: ABdhPJzKsNgAK06EaaVgWO2M+3mxR7Q91FfX09yUlQqGuDoUp4Q8GerYqXuJup08FIG9zio6cInstg==
-X-Received: by 2002:aca:b588:: with SMTP id e130mr3481354oif.56.1604512054291;
-        Wed, 04 Nov 2020 09:47:34 -0800 (PST)
+        bh=AwsMYNgb0G5mnwFqNs/rWgQfqxDQJuNrB9U+MKHVaG4=;
+        b=W0VfMBDsbisUUY/c4C2WimbMHesiltVTLuTBAJvVs6XCctrwCuH/XcqIZLyO02tI52
+         /Z0CfQb1s74PuVr4RKOg2UXNG9avDQPl/Ar0+V1btsNwhWjqhnLj2DFXnsbNV5qwrvlP
+         BWHFGqSh/f8IRHjQT2bHGa7OOcfAAIY3gR1B2wGUnhfd4GH9EsxuJF3+dlA/h1mnOS99
+         9SvsuYVP2Lkp/q5X2rrUPi9v7P2Mc9et6m4kZxMdStM0oyEMBUOk1qgTjxpC7TJzAg0q
+         PGO5fdVqdjWR6dVwpkK283mQXkfJCPh+2kGJBR70lMMJy/NTSqBQZCFwGxVsRGw9RrFj
+         ighQ==
+X-Gm-Message-State: AOAM533m6z7hCpje6KoLSWYJMGxYVIJ+7i064L91bdRbxieomDKVOCPr
+        kk/EA11luFBgLwcFr0V3LMjAUo7ZZHsosw==
+X-Google-Smtp-Source: ABdhPJyTCEHuIPm55x0//EGwa40o2ZoLTSqqTSF+TzYevmEKm1FuXR4r3tyJx2A/cpWvWdAWg/tFmQ==
+X-Received: by 2002:a9d:46f:: with SMTP id 102mr3203894otc.293.1604512052650;
+        Wed, 04 Nov 2020 09:47:32 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id t27sm607210otc.14.2020.11.04.09.47.33
+        by smtp.gmail.com with ESMTPSA id v17sm616550ote.40.2020.11.04.09.47.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2020 09:47:33 -0800 (PST)
+        Wed, 04 Nov 2020 09:47:32 -0800 (PST)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 09/10] completion: bash: trivial cleanup
-Date:   Wed,  4 Nov 2020 11:47:15 -0600
-Message-Id: <20201104174716.783348-10-felipe.contreras@gmail.com>
+Subject: [PATCH 08/10] completion: bash: cleanup _get_comp_words_by_ref()
+Date:   Wed,  4 Nov 2020 11:47:14 -0600
+Message-Id: <20201104174716.783348-9-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20201104174716.783348-1-felipe.contreras@gmail.com>
 References: <20201104174716.783348-1-felipe.contreras@gmail.com>
@@ -75,37 +75,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The most typical case first (COMP_WORDBREAKS contains our wanted words).
+Remove temporary variables.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.bash | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ contrib/completion/git-completion.bash | 19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 3666fba8ca..b4e6f82c66 100644
+index f856db148b..3666fba8ca 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -207,9 +207,7 @@ _get_comp_words_by_ref ()
+@@ -202,14 +202,13 @@ __git_dequote ()
+ if ! type _get_comp_words_by_ref >/dev/null 2>&1; then
+ _get_comp_words_by_ref ()
+ {
+-	local words_ cword_
+ 	local exclude i j first
+ 
  	# Which word separators to exclude?
  	exclude="${COMP_WORDBREAKS//[^=:]}"
- 	cword=$COMP_CWORD
--	if [ -z "$exclude" ]; then
--		words=("${COMP_WORDS[@]}")
--	else
-+	if [ -n "$exclude" ]; then
+-	cword_=$COMP_CWORD
++	cword=$COMP_CWORD
+ 	if [ -z "$exclude" ]; then
+-		words_=("${COMP_WORDS[@]}")
++		words=("${COMP_WORDS[@]}")
+ 	else
  		# List of word completion separators has shrunk;
  		# re-assemble words to complete.
- 		for ((i=0, j=0; i < ${#COMP_WORDS[@]}; i++, j++)); do
-@@ -244,6 +242,8 @@ _get_comp_words_by_ref ()
- 				cword=$j
+@@ -229,9 +228,9 @@ _get_comp_words_by_ref ()
+ 					((j--))
+ 				fi
+ 				first=
+-				words_[$j]=${words_[j]}${COMP_WORDS[i]}
++				words[$j]=${words[j]}${COMP_WORDS[i]}
+ 				if [ $i = $COMP_CWORD ]; then
+-					cword_=$j
++					cword=$j
+ 				fi
+ 				if (($i < ${#COMP_WORDS[@]} - 1)); then
+ 					((i++))
+@@ -240,17 +239,15 @@ _get_comp_words_by_ref ()
+ 					break 2
+ 				fi
+ 			done
+-			words_[$j]=${words_[j]}${COMP_WORDS[i]}
++			words[$j]=${words[j]}${COMP_WORDS[i]}
+ 			if [ $i = $COMP_CWORD ]; then
+-				cword_=$j
++				cword=$j
  			fi
  		done
-+	else
-+		words=("${COMP_WORDS[@]}")
  	fi
  
- 	cur=${words[cword]}
+-	cword=$cword_
+-	cur=${words_[cword]}
+-	prev=${words_[cword-1]}
+-	words=("${words_[@]}")
++	cur=${words[cword]}
++	prev=${words[cword-1]}
+ }
+ fi
+ 
 -- 
 2.29.2
 
