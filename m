@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CCECC4741F
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 20:34:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9A55C388F7
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 20:34:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E993720782
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 20:34:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7ED9320782
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 20:34:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="FEN32ODf"
+	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="k/g2ZlE3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732083AbgKDUeC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Nov 2020 15:34:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46490 "EHLO
+        id S1732089AbgKDUeE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Nov 2020 15:34:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732076AbgKDUeB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Nov 2020 15:34:01 -0500
+        with ESMTP id S1728607AbgKDUeE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Nov 2020 15:34:04 -0500
 Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6766C0613D3
-        for <git@vger.kernel.org>; Wed,  4 Nov 2020 12:34:00 -0800 (PST)
-Received: by mail-qt1-x841.google.com with SMTP id i7so13180750qti.6
-        for <git@vger.kernel.org>; Wed, 04 Nov 2020 12:34:00 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0021C0613D3
+        for <git@vger.kernel.org>; Wed,  4 Nov 2020 12:34:03 -0800 (PST)
+Received: by mail-qt1-x841.google.com with SMTP id m14so13151822qtc.12
+        for <git@vger.kernel.org>; Wed, 04 Nov 2020 12:34:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=638udSJyjOOtil7gEWPkk9RlMbg2FCnnrp5f63dL9h4=;
-        b=FEN32ODfuhiPAk9FPfPs+maooP92FJ8LWrfeAXnILuaPTBRPxlyC46G1Ea+kHqrTFG
-         I/d+Fzu3H/XK2PpnKRXufGCwndTjoRQeaHRTZbgZRaci9QhNYHFz9/Ac9rF45NDPJIGH
-         Qs0XqH/y9WPoqyRUmjXsS/6qWqKOWMeoB41kn1h7fe0BnuR5W8luaOefSbeWzB0/lP5z
-         hDzByGtTOo6J8Gc+msX6PHiig90WRvtPiyK8l4pjLAEwtBsXe0l0m4VHLVRZUu9Ei3go
-         VYGgbs/S6gkV0uBiRoTpO/IN8/6VkFWExl9PMebGpt2wpi67z7WJt/BBZjzwWOOr0zt6
-         FfZw==
+        bh=PTcMznac2FNUvXkue419Nx7xciF1IkotZ9JBOYQ3o2g=;
+        b=k/g2ZlE3svn4iJo0TBuY/Mp5S/lv5g6Y0t732b0NI9PclEkCAJXII9MdVj/s2c2KTU
+         D2+ciYmxvsalv7O+129ibWDP8X0vNOmtE95xtVK3jy90vmfERUCmoJQKtwtH5V41+BpP
+         YsZiXxxZStgLcnUkLhD8H4dXHDSAYeEEyY5DBnG/23iXr6BkELdbwYIbKBRzVu4VUGeN
+         CiDITVVMcyBJ2HCq6I4Us54NqHaNz66aNag28ORwoaANRtbhr03z58ZaCclz5+hi7XWd
+         iyA3Uqgs/Ln46gqBAnd2Nwern5ocsT2mygNCINECxOrMmrnj6Txs/FVx4mCBP3s0BoZa
+         UzAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=638udSJyjOOtil7gEWPkk9RlMbg2FCnnrp5f63dL9h4=;
-        b=lqIBrKu+Jv287qmKLCkfHOrju4RnrxxnThFqu+du5dgXeER5GMQUDVeTYHBnLpV/2K
-         fqy1YbDGLh2bOP+bOmp0EaZ2DQuj8ZxP5MA8J8zFOLK+PrLJBp7t1kuXm88gSnAFOxzn
-         0JAyQ3zfm0EEbDYz3vGv6YEtewQK6GjNs5sWYt7+1ogx4Qe2+ZVJZGvuHyL+Bz0+o4yV
-         UkIqnpUeyCtSYsMWL8Gdq+wtDX1P4jZmatKumGih05Emco5/GCERTlz73lfvGDqyVxS4
-         pB8dTX5vDbPoWM1eHyyVLGs2vOEgKblTMbWlLpMV03G3RDNrATwLb0fmnsQ5bNbxcYR1
-         b4bA==
-X-Gm-Message-State: AOAM532Oew0JKE9cnvuAXp/BW5nU2wQOsfyZWClW9ZNvDBp7ePWg4JGG
-        +NXoskDTHCfOco9VEq/u9V9V5mdvl1c1Tg==
-X-Google-Smtp-Source: ABdhPJx9XbI3zSjSMM0NLCI5j7+GTjm+mlFVLKt1f/1SB72JvO8cjXgh29SeuiQM9x6+zIXXa6DcsA==
-X-Received: by 2002:ac8:c08:: with SMTP id k8mr21447106qti.370.1604522039441;
-        Wed, 04 Nov 2020 12:33:59 -0800 (PST)
+        bh=PTcMznac2FNUvXkue419Nx7xciF1IkotZ9JBOYQ3o2g=;
+        b=ccHtCNzgWe2qd11T8PMSiLNPWAtVE/HRuTpKOtQkbCANGa5dUoiiIrnh9Fesnl+ymB
+         es4yNR4sM9xTdVeDvBy8a/i+2udcPwKn8TPoymSGCPE3R5jAkX8ggx7oVSIGHAmbuxua
+         G/hOspUjvL5GmPI1ERFbraXnkTqGydKX1sEnPnjVuuR8bAsi/6PCZoRZkeXwFVXHZJK3
+         +YsC1zejywPY+dEJElB8TJ07JS6iBGOlYTUKsEqP/EF6DKncw1XOqmiUirhBXO+JDoev
+         W9x0p/zss3PpAnkChh4H8eH98boX6kA7FUMjvBssJhJT31MBW5FnQD3yQOiEKiA89wQe
+         KwyQ==
+X-Gm-Message-State: AOAM530S1p+2N7DcwUYrno9nRkGK1A+gj5053VpiVyhVXMAAOjVfj4YH
+        4VDM0KixUqJNd8NPMMZ3M5hT/87N3Q+Dvw==
+X-Google-Smtp-Source: ABdhPJxBKISwxveYtadcYf0FnjPMEPr6mV6H8igx9z5VXrpyaP/Pv0cj45t/dMx5faDWAI//AuiB/Q==
+X-Received: by 2002:ac8:4c8e:: with SMTP id j14mr22016490qtv.223.1604522042701;
+        Wed, 04 Nov 2020 12:34:02 -0800 (PST)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id m15sm1100971qtc.90.2020.11.04.12.33.56
+        by smtp.gmail.com with ESMTPSA id m15sm1100971qtc.90.2020.11.04.12.33.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2020 12:33:58 -0800 (PST)
+        Wed, 04 Nov 2020 12:34:02 -0800 (PST)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, git@jeffhostetler.com, chriscool@tuxfamily.org,
         peff@peff.net, newren@gmail.com, jrnieder@gmail.com,
         martin.agren@gmail.com
-Subject: [PATCH v4 08/19] entry: move conv_attrs lookup up to checkout_entry()
-Date:   Wed,  4 Nov 2020 17:33:07 -0300
-Message-Id: <5c993cc27f67109828390c7856d6c03d4a2cbb32.1604521275.git.matheus.bernardino@usp.br>
+Subject: [PATCH v4 09/19] entry: add checkout_entry_ca() which takes preloaded conv_attrs
+Date:   Wed,  4 Nov 2020 17:33:08 -0300
+Message-Id: <aa635bda21c43e0d82ce21e791df280ee6231d43.1604521275.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <cover.1604521275.git.matheus.bernardino@usp.br>
 References: <cover.1604521275.git.matheus.bernardino@usp.br>
@@ -74,107 +74,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a following patch, checkout_entry() will use conv_attrs to decide
-whether an entry should be enqueued for parallel checkout or not. But
-the attributes lookup only happens lower in this call stack. To avoid
-the unnecessary work of loading the attributes twice, let's move it up
-to checkout_entry(), and pass the loaded struct down to write_entry().
+The parallel checkout machinery will call checkout_entry() for entries
+that could not be written in parallel due to path collisions. At this
+point, we will already be holding the conversion attributes for each
+entry, and it would be wasteful to let checkout_entry() load these
+again. Instead, let's add the checkout_entry_ca() variant, which
+optionally takes a preloaded conv_attrs struct.
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- entry.c | 38 +++++++++++++++++++++++++++-----------
- 1 file changed, 27 insertions(+), 11 deletions(-)
+ entry.c | 13 +++++++------
+ entry.h | 12 ++++++++++--
+ 2 files changed, 17 insertions(+), 8 deletions(-)
 
 diff --git a/entry.c b/entry.c
-index 1d2df188e5..486712c3a9 100644
+index 486712c3a9..9d79a5671f 100644
 --- a/entry.c
 +++ b/entry.c
-@@ -263,8 +263,9 @@ void update_ce_after_write(const struct checkout *state, struct cache_entry *ce,
+@@ -440,12 +440,13 @@ static void mark_colliding_entries(const struct checkout *state,
  	}
  }
  
--static int write_entry(struct cache_entry *ce,
--		       char *path, const struct checkout *state, int to_tempfile)
-+/* Note: ca is used (and required) iff the entry refers to a regular file. */
-+static int write_entry(struct cache_entry *ce, char *path, struct conv_attrs *ca,
-+		       const struct checkout *state, int to_tempfile)
- {
- 	unsigned int ce_mode_s_ifmt = ce->ce_mode & S_IFMT;
- 	struct delayed_checkout *dco = state->delayed_checkout;
-@@ -281,8 +282,7 @@ static int write_entry(struct cache_entry *ce,
- 	clone_checkout_metadata(&meta, &state->meta, &ce->oid);
- 
- 	if (ce_mode_s_ifmt == S_IFREG) {
--		struct stream_filter *filter = get_stream_filter(state->istate, ce->name,
--								 &ce->oid);
-+		struct stream_filter *filter = get_stream_filter_ca(ca, &ce->oid);
- 		if (filter &&
- 		    !streaming_write_entry(ce, path, filter,
- 					   state, to_tempfile,
-@@ -329,14 +329,17 @@ static int write_entry(struct cache_entry *ce,
- 		 * Convert from git internal format to working tree format
- 		 */
- 		if (dco && dco->state != CE_NO_DELAY) {
--			ret = async_convert_to_working_tree(state->istate, ce->name, new_blob,
--							    size, &buf, &meta, dco);
-+			ret = async_convert_to_working_tree_ca(ca, ce->name,
-+							       new_blob, size,
-+							       &buf, &meta, dco);
- 			if (ret && string_list_has_string(&dco->paths, ce->name)) {
- 				free(new_blob);
- 				goto delayed;
- 			}
--		} else
--			ret = convert_to_working_tree(state->istate, ce->name, new_blob, size, &buf, &meta);
-+		} else {
-+			ret = convert_to_working_tree_ca(ca, ce->name, new_blob,
-+							 size, &buf, &meta);
-+		}
- 
- 		if (ret) {
- 			free(new_blob);
-@@ -442,6 +445,7 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state,
+-int checkout_entry(struct cache_entry *ce, const struct checkout *state,
+-		   char *topath, int *nr_checkouts)
++int checkout_entry_ca(struct cache_entry *ce, struct conv_attrs *ca,
++		      const struct checkout *state, char *topath,
++		      int *nr_checkouts)
  {
  	static struct strbuf path = STRBUF_INIT;
  	struct stat st;
-+	struct conv_attrs ca_buf, *ca = NULL;
+-	struct conv_attrs ca_buf, *ca = NULL;
++	struct conv_attrs ca_buf;
  
  	if (ce->ce_flags & CE_WT_REMOVE) {
  		if (topath)
-@@ -454,8 +458,13 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state,
- 		return 0;
+@@ -459,7 +460,7 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state,
  	}
  
--	if (topath)
--		return write_entry(ce, topath, state, 1);
-+	if (topath) {
-+		if (S_ISREG(ce->ce_mode)) {
-+			convert_attrs(state->istate, &ca_buf, ce->name);
-+			ca = &ca_buf;
-+		}
-+		return write_entry(ce, topath, ca, state, 1);
-+	}
- 
- 	strbuf_reset(&path);
- 	strbuf_add(&path, state->base_dir, state->base_dir_len);
-@@ -517,9 +526,16 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state,
- 		return 0;
- 
- 	create_directories(path.buf, path.len, state);
-+
+ 	if (topath) {
+-		if (S_ISREG(ce->ce_mode)) {
++		if (S_ISREG(ce->ce_mode) && !ca) {
+ 			convert_attrs(state->istate, &ca_buf, ce->name);
+ 			ca = &ca_buf;
+ 		}
+@@ -530,12 +531,12 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state,
  	if (nr_checkouts)
  		(*nr_checkouts)++;
--	return write_entry(ce, path.buf, state, 0);
-+
-+	if (S_ISREG(ce->ce_mode)) {
-+		convert_attrs(state->istate, &ca_buf, ce->name);
-+		ca = &ca_buf;
-+	}
-+
-+	return write_entry(ce, path.buf, NULL, state, 0);
+ 
+-	if (S_ISREG(ce->ce_mode)) {
++	if (S_ISREG(ce->ce_mode) && !ca) {
+ 		convert_attrs(state->istate, &ca_buf, ce->name);
+ 		ca = &ca_buf;
+ 	}
+ 
+-	return write_entry(ce, path.buf, NULL, state, 0);
++	return write_entry(ce, path.buf, ca, state, 0);
  }
  
  void unlink_entry(const struct cache_entry *ce)
+diff --git a/entry.h b/entry.h
+index ea7290bcd5..d8244c5db2 100644
+--- a/entry.h
++++ b/entry.h
+@@ -26,9 +26,17 @@ struct checkout {
+  * file named by ce, a temporary file is created by this function and
+  * its name is returned in topath[], which must be able to hold at
+  * least TEMPORARY_FILENAME_LENGTH bytes long.
++ *
++ * With checkout_entry_ca(), callers can optionally pass a preloaded
++ * conv_attrs struct (to avoid reloading it), when ce refers to a
++ * regular file. If ca is NULL, the attributes will be loaded
++ * internally when (and if) needed.
+  */
+-int checkout_entry(struct cache_entry *ce, const struct checkout *state,
+-		   char *topath, int *nr_checkouts);
++#define checkout_entry(ce, state, topath, nr_checkouts) \
++		checkout_entry_ca(ce, NULL, state, topath, nr_checkouts)
++int checkout_entry_ca(struct cache_entry *ce, struct conv_attrs *ca,
++		      const struct checkout *state, char *topath,
++		      int *nr_checkouts);
+ 
+ void enable_delayed_checkout(struct checkout *state);
+ int finish_delayed_checkout(struct checkout *state, int *nr_checkouts);
 -- 
 2.28.0
 
