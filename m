@@ -6,104 +6,102 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48DBCC2D0A3
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 20:52:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF39DC2D0A3
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 21:03:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED5EB2080D
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 20:52:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 74C4F2080D
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 21:03:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732334AbgKDUww (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Nov 2020 15:52:52 -0500
-Received: from cloud.peff.net ([104.130.231.41]:48076 "EHLO cloud.peff.net"
+        id S1731252AbgKDVD3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Nov 2020 16:03:29 -0500
+Received: from cloud.peff.net ([104.130.231.41]:48102 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727013AbgKDUwv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Nov 2020 15:52:51 -0500
-Received: (qmail 11532 invoked by uid 109); 4 Nov 2020 20:52:51 -0000
+        id S1726969AbgKDVD2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Nov 2020 16:03:28 -0500
+Received: (qmail 11591 invoked by uid 109); 4 Nov 2020 21:03:28 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 04 Nov 2020 20:52:51 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 04 Nov 2020 21:03:28 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15975 invoked by uid 111); 4 Nov 2020 20:52:51 -0000
+Received: (qmail 16094 invoked by uid 111); 4 Nov 2020 21:03:27 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 04 Nov 2020 15:52:50 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 04 Nov 2020 16:03:27 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 4 Nov 2020 15:52:50 -0500
+Date:   Wed, 4 Nov 2020 16:03:27 -0500
 From:   Jeff King <peff@peff.net>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v3 00/13] Add struct strmap and associated utility
- functions
-Message-ID: <20201104205250.GF3629238@coredump.intra.peff.net>
-References: <pull.835.v2.git.git.1602549650.gitgitgadget@gmail.com>
- <pull.835.v3.git.git.1604343313.gitgitgadget@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Sathyajith Bhat <sathya@sathyasays.com>, git@vger.kernel.org
+Subject: Re: [PATCH] log: diagnose -L used with pathspec as an error
+Message-ID: <20201104210327.GG3629238@coredump.intra.peff.net>
+References: <20201102144321.GA3962443@coredump.intra.peff.net>
+ <20201103101553.GH24813@szeder.dev>
+ <20201103182102.GA459792@coredump.intra.peff.net>
+ <xmqq361qs31a.fsf@gitster.c.googlers.com>
+ <20201103185711.GA461461@coredump.intra.peff.net>
+ <xmqqimamqjhl.fsf@gitster.c.googlers.com>
+ <xmqq7dr1nh3a.fsf_-_@gitster.c.googlers.com>
+ <20201104194155.GA3060815@coredump.intra.peff.net>
+ <xmqq361onahn.fsf@gitster.c.googlers.com>
+ <xmqqy2jglv29.fsf_-_@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.835.v3.git.git.1604343313.gitgitgadget@gmail.com>
+In-Reply-To: <xmqqy2jglv29.fsf_-_@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 02, 2020 at 06:55:00PM +0000, Elijah Newren via GitGitGadget wrote:
+On Wed, Nov 04, 2020 at 12:35:10PM -0800, Junio C Hamano wrote:
 
-> Changes since v2 (almost all of which were suggestions from Peff):
+> The new tests say they may fail with "-L and --follow being
+> incompatible" instead of "-L and pathspec being imcompatible".
+> Currently the expected failure can come only from the latter, but
+> this is to futureproof them, in case we decide to add code to
+> explicititly die on -L and --follow used together.
 
-Thanks again for your work on this series, and your willingness to
-listen to my various suggestions. ;)
+This explanation makes sense (though s/imcompat/incompat/).
 
-This mostly looks good to me. I pointed out a few minor nits in reply to
-individual patches, but there's at least one correctness problem, so
-we'll need a v4.
+> +test_expect_success 'basic command line parsing' '
+> +	# This may fail due to "no such path a.c in commit", or
+> +	# "-L is incompatible with pathspec", depending on the
+> +	# order the error is checked.  Either is acceptable.
+> +	test_must_fail git log -L1,1:a.c -- a.c &&
+> +
+> +	# This must fail due to "-L is incompatible with pathspec".
+> +	test_must_fail git log -L1,1:b.c -- b.c 2>error &&
+> +	test_i18ngrep "cannot be used with pathspec" error &&
 
-> Things that I'm still unsure about:
-> 
->  * strintmap_init() takes a default_value parameter, as suggested by Peff.
->    But this makes the function name strintmap_init_with_options() weird,
->    because strintmap_init() already takes one option, so it seems like the
->    name needs to replace "options" with "more_options". But that's kinda
->    ugly too. I'm guessing strintmap_init_with_options() is fine as-is, but
->    I'm wondering if anyone else thinks it looks weird and if so if there is
->    anything I should do about it.
+The renaming makes sense...
 
-You could drop default_value from strintmap_init_with_options(). I'd
-_guess_ most callers would be happy with 0, but you'd know much better
-than I what your first crop of callers will want.
+> +
+> +	# Note that incompatibility between -L/--follow is not
+> +	# explicitly checked to avoid redundant code and the comments
+> +	# on the following tests are merely for future-proofing.
 
-I'm happy with it either way.
+...as does this comment to explain the rest of the tests.
 
-> Things Peff mentioned on v2 that I did NOT do:
-> 
->  * Peff brought up some questions about mapping strintmap to an int rather
->    than an unsigned or intptr_t. I discussed my rationale in the thread
+> +	# These must fail due to "follow requires one pathspec", or
+> +	# "-L is incompatible with --follow", depending on the
+> +	# order the error is checked.  Either is acceptable.
+> +	test_must_fail git log -L1,1:b.c --follow &&
+> +	test_must_fail git log --follow -L1,1:b.c &&
+> +
+> +	# This may fail due to "-L is incompatible with pathspec", or
+> +	# "-L is incompatible with --follow", depending on the
+> +	# order the error is checked.  Either is acceptable.
+> +	test_must_fail git log --follow -L1,1:b.c -- b.c
+> +'
 
-Yeah, I'm well convinced that what you have here is fine.
+Though "depending on the order" is a bit of a fiction, because those
+checks do not exist at all. I'm OK with it because the earlier comment
+explains what is going. I guess:
 
-> Things Peff mentioned on v1 that are still not included and which Peff
-> didn't comment on for v2, but which may still be worth mentioning again:
-> 
->  * Peff brought up the idea of having a free_values member instead of having
->    a free_values parameter to strmap_clear(). That'd just mean moving the
->    parameter from strmap_clear() to strmap_init() and would be easy to do,
->    but he sounded like he was just throwing it out as an idea and I didn't
->    have a strong opinion, so I left it as-is. If others have
->    opinions/preferences, changing it is easy right now.
+  # This may fail due to "-L is incompatible with pathspec", or
+  # "-L is incompatible with --follow". We don't have the latter as of
+  # the writing of this test, but either would be acceptable if we added
+  # it.
 
-Yeah, I was mostly thinking out loud. What you have here looks fine to
-me.
-
->  * Peff early on wanted the strmap_entry type to have a char key[FLEX_ALLOC]
->    instead of having a (const) char *key. I spent a couple more days on this
->    despite him not mentioning it while reviewing v2, and finally got it
->    working this time and running valgrind-free. Note that such a change
->    means always copying the key instead of allowing it as an option. After
->    implementing it, I timed it and it slowed down my important testcase by
->    just over 6%. So I chucked it. I think the FLEXPTR_ALLOC_STR usage in
->    combination with defaulting to strdup_strings=1 gives us most the
->    benefits Peff wanted, while still allowing merge-ort to reuse strings
->    when it's important.
-
-Yes, I'd agree that FLEXPTR is a good middle ground. If I really manage
-to find a caller later where I think the complexity might be worth
-saving a few bytes, perhaps I'll try it then and get some real
-measurements. My guess is that won't ever actually happen. :)
+would be an alternative. I doubt it's worth spending too much time
+polishing.
 
 -Peff
