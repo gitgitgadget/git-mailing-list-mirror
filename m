@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AC60C2D0A3
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 20:34:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E79BC2D0A3
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 20:34:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4A6E722206
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 20:34:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4D0E820795
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 20:34:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="V83ZAjei"
+	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="GuFejMMM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732174AbgKDUeZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Nov 2020 15:34:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46568 "EHLO
+        id S1732207AbgKDUeb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Nov 2020 15:34:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732154AbgKDUeX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Nov 2020 15:34:23 -0500
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1457BC0613D4
-        for <git@vger.kernel.org>; Wed,  4 Nov 2020 12:34:23 -0800 (PST)
-Received: by mail-qk1-x744.google.com with SMTP id l2so20686844qkf.0
-        for <git@vger.kernel.org>; Wed, 04 Nov 2020 12:34:23 -0800 (PST)
+        with ESMTP id S1732165AbgKDUea (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Nov 2020 15:34:30 -0500
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0964C0613D3
+        for <git@vger.kernel.org>; Wed,  4 Nov 2020 12:34:29 -0800 (PST)
+Received: by mail-qk1-x735.google.com with SMTP id b18so20622719qkc.9
+        for <git@vger.kernel.org>; Wed, 04 Nov 2020 12:34:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=O9RLtFNMZomD/yozwWMk1L4zZxHAQwyEKgw7IYN/ljU=;
-        b=V83ZAjei55RKdHC3imw5jxy7kvZxBV6wVzleycR7ugRQHjDFiQWwpWwYe1UaD+m2pc
-         DRj5bQrhgWx9pdMl/ZTulvnHmn0mpo6AxFaynz57fROAMZo8Nse7IehMMmU6Ycen3FP5
-         TRZ2wCBim1vACxcumWJP3sxRB1Gcumh0Nr8cDmoogdICsrVcjyartCsfp7iq0Mn14cd2
-         kkHGTu1mQXePybJI7/rIgMXn3lGMWS4s2ALc9IaW8PXQcKTQbwDDp8c/Dekb06MD1jKN
-         ibi0p4LMSoCUIvxI0Y3q56GaxxpNceRcLghdvffCPWXKXuOTkgVPCdKI73gkXq7bZ+3V
-         T+oQ==
+        bh=ZJH0dcQnUkMYeBvsD6V1EHfXQ/Y49yH3IXl4nhN33iw=;
+        b=GuFejMMMTQNSOU3CV1T7a77a06SGSnp1HYwgAkmACxmztYgFLLvGHZlVwRSzkqVDeV
+         RFm3m4utq0FFc1iC5x+h2G/sn2JgpJ2FcWLPTlfjEHYlMe8nxhGBlFS2l4yLdMaX1Zue
+         vyewQ5idqTXU6U5RDAMnHpiwzWECFzhpA/8QuWAxQiNGoW09LTTinjycZnrt/yw1U3Gu
+         WZC/Fo8OLKOaph06kJAdvdXI6cW5uYZfchv2uYqzfcTuEVMbdKmNidleyBxF/BDuSIqn
+         8kL3tYNt2ola//9n5bRNH5r5++6hKU8TzkKZz3eQCilNZWHutSswGbwqDiCGxWSpio3F
+         M1jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=O9RLtFNMZomD/yozwWMk1L4zZxHAQwyEKgw7IYN/ljU=;
-        b=t15aQ9INYPi17nybTRRxBxNRvqBRmZmBDZWxWGVIBUNuhk0Si9L8azVatzMi5TXbqM
-         IHUKHJhPOQtBAiDoIt8AQl74fbaaQbf8eM9mc9eUbsr/r86gbXriE6DpBq7+2ma+UY/H
-         bIDbul9hdxKjfydfFzwHSRgCgaxGO+tc8GemnDRZ0TpKt+B9GMwE5fOj3m36KiUhJADO
-         HWAqYuBmGA8VJ6NR4o3FDmNFfW2EZtcwO1fvwQSWvM2qOVdEH5TzxDsJydCFA80WjLMv
-         fVSuuAuhLQ/WGO4i2t+clMkDJLtVk/xuUebKZogxq7ugled2ltF/RsRRKDHpegCmK4hb
-         +MUQ==
-X-Gm-Message-State: AOAM533xHkNKFshd7WVcw7AtTogf8uebksCl6n3wVibp7wXjVOo0UQqh
-        IUZIL2jn6slLUlNKc8oub/cMxJhMjAvMgg==
-X-Google-Smtp-Source: ABdhPJyGd5DmphjsL/nt6Q+/fQO14dYa8TqyOyxoravbXa1HwT57eRf9fCwaIyfITN2+Wvi8URIqGQ==
-X-Received: by 2002:a05:620a:2144:: with SMTP id m4mr27472618qkm.269.1604522061843;
-        Wed, 04 Nov 2020 12:34:21 -0800 (PST)
+        bh=ZJH0dcQnUkMYeBvsD6V1EHfXQ/Y49yH3IXl4nhN33iw=;
+        b=GaZQ0gYF/P6jc+/iYLgX8nTBV5nX2YWjUOL2CwRf4wv76HAK+Q6nL8GWKBR1a8cVVJ
+         10bUtUkfgmeKiFGTQBFHlp47vje//nfVT+GOgWboz5b/Abo7lfnaRKGyZEq0F1vCSPFU
+         waS7IVHDyYcssryEo6Gn8btayulVzVWvowdnEmc7SCEC8EDQ35hy5KJATZjJXXCUnocY
+         04S/28AQ9y10haoFoSaem4v+v5qV/9P8NCXcLNC31HMBJ5yOcJRUK7zU83FDrDMSNBMB
+         y16jRLRR1EDUJu89m4toc0r1LzTrU4gTZkDRp037l1xIMtEMK/78d8Rah1Pm72/f9src
+         DXkA==
+X-Gm-Message-State: AOAM530T5LMoRWjjFZ7nPJWK66utr1tDbWZu/Qgi9YseOZxXtxZSZvpA
+        1/0ejnq096BxqaNpmOHQcdss2hH7cvHXbQ==
+X-Google-Smtp-Source: ABdhPJx7qd+T8VEahFeUNEz8UMP5OSHZ76GgQv+eoh1sGoveQKHozv4oJvGHkJQXoJt6obnbD38mOQ==
+X-Received: by 2002:a37:6311:: with SMTP id x17mr27037320qkb.323.1604522068407;
+        Wed, 04 Nov 2020 12:34:28 -0800 (PST)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id m15sm1100971qtc.90.2020.11.04.12.34.19
+        by smtp.gmail.com with ESMTPSA id m15sm1100971qtc.90.2020.11.04.12.34.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2020 12:34:21 -0800 (PST)
+        Wed, 04 Nov 2020 12:34:27 -0800 (PST)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, git@jeffhostetler.com, chriscool@tuxfamily.org,
         peff@peff.net, newren@gmail.com, jrnieder@gmail.com,
         martin.agren@gmail.com
-Subject: [PATCH v4 15/19] checkout-index: add parallel checkout support
-Date:   Wed,  4 Nov 2020 17:33:14 -0300
-Message-Id: <a844451e580b6eb2c7c90b00e6a958855a1f85b0.1604521276.git.matheus.bernardino@usp.br>
+Subject: [PATCH v4 17/19] parallel-checkout: add tests related to clone collisions
+Date:   Wed,  4 Nov 2020 17:33:16 -0300
+Message-Id: <c8a2974f814a2d0709c4628933fc240e43a1bfb6.1604521276.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.28.0
 In-Reply-To: <cover.1604521275.git.matheus.bernardino@usp.br>
 References: <cover.1604521275.git.matheus.bernardino@usp.br>
@@ -74,67 +74,144 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Add tests to confirm that path collisions are properly reported during a
+clone operation using parallel-checkout.
+
+Original-patch-by: Jeff Hostetler <jeffhost@microsoft.com>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- builtin/checkout-index.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ t/lib-parallel-checkout.sh              |  4 +-
+ t/t2081-parallel-checkout-collisions.sh | 98 +++++++++++++++++++++++++
+ 2 files changed, 100 insertions(+), 2 deletions(-)
+ create mode 100755 t/t2081-parallel-checkout-collisions.sh
 
-diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
-index 9276ed0258..9a2e255f58 100644
---- a/builtin/checkout-index.c
-+++ b/builtin/checkout-index.c
-@@ -12,6 +12,7 @@
- #include "cache-tree.h"
- #include "parse-options.h"
- #include "entry.h"
-+#include "parallel-checkout.h"
+diff --git a/t/lib-parallel-checkout.sh b/t/lib-parallel-checkout.sh
+index 4dad9043fb..e62a433eb1 100644
+--- a/t/lib-parallel-checkout.sh
++++ b/t/lib-parallel-checkout.sh
+@@ -18,7 +18,7 @@ git_pc()
+ 		-c checkout.workers=$workers \
+ 		-c checkout.thresholdForParallelism=$threshold \
+ 		-c advice.detachedHead=0 \
+-		"$@" &&
++		"$@" 2>&8 &&
  
- #define CHECKOUT_ALL 4
- static int nul_term_line;
-@@ -169,6 +170,7 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
- 	int force = 0, quiet = 0, not_new = 0;
- 	int index_opt = 0;
- 	int err = 0;
-+	int pc_workers, pc_threshold;
- 	struct option builtin_checkout_index_options[] = {
- 		OPT_BOOL('a', "all", &all,
- 			N_("check out all files in the index")),
-@@ -223,6 +225,14 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
- 		hold_locked_index(&lock_file, LOCK_DIE_ON_ERROR);
- 	}
+ 	# Check that the expected number of workers has been used. Note that it
+ 	# can be different from the requested number in two cases: when the
+@@ -28,7 +28,7 @@ git_pc()
+ 	local workers_in_trace=$(grep "child_start\[..*\] git checkout--helper" trace | wc -l) &&
+ 	test $workers_in_trace -eq $expected_workers &&
+ 	rm -f trace
+-}
++} 8>&2 2>&4
  
-+	if (!to_tempfile)
-+		get_parallel_checkout_configs(&pc_workers, &pc_threshold);
-+	else
-+		pc_workers = 1;
+ # Verify that both the working tree and the index were created correctly
+ verify_checkout()
+diff --git a/t/t2081-parallel-checkout-collisions.sh b/t/t2081-parallel-checkout-collisions.sh
+new file mode 100755
+index 0000000000..5cab2dcd2c
+--- /dev/null
++++ b/t/t2081-parallel-checkout-collisions.sh
+@@ -0,0 +1,98 @@
++#!/bin/sh
 +
-+	if (pc_workers > 1)
-+		init_parallel_checkout();
++test_description='parallel-checkout collisions
 +
- 	/* Check out named files first */
- 	for (i = 0; i < argc; i++) {
- 		const char *arg = argv[i];
-@@ -262,12 +272,17 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
- 		strbuf_release(&buf);
- 	}
- 
--	if (err)
--		return 1;
--
- 	if (all)
- 		checkout_all(prefix, prefix_length);
- 
-+	if (pc_workers > 1) {
-+		err |= run_parallel_checkout(&state, pc_workers, pc_threshold,
-+					     NULL, NULL);
-+	}
++When there are path collisions during a clone, Git should report a warning
++listing all of the colliding entries. The sequential code detects a collision
++by calling lstat() before trying to open(O_CREAT) the file. Then, to find the
++colliding pair of an item k, it searches cache_entry[0, k-1].
 +
-+	if (err)
-+		return 1;
++This is not sufficient in parallel checkout since:
 +
- 	if (is_lock_file_locked(&lock_file) &&
- 	    write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
- 		die("Unable to write new index file");
++- A colliding file may be created between the lstat() and open() calls;
++- A colliding entry might appear in the second half of the cache_entry array.
++
++The tests in this file make sure that the collision detection code is extended
++for parallel checkout.
++'
++
++. ./test-lib.sh
++. "$TEST_DIRECTORY/lib-parallel-checkout.sh"
++
++TEST_ROOT="$PWD"
++
++test_expect_success CASE_INSENSITIVE_FS 'setup' '
++	file_x_hex=$(git hash-object -w --stdin </dev/null) &&
++	file_x_oct=$(echo $file_x_hex | hex2oct) &&
++
++	attr_hex=$(echo "file_x filter=logger" | git hash-object -w --stdin) &&
++	attr_oct=$(echo $attr_hex | hex2oct) &&
++
++	printf "100644 FILE_X\0${file_x_oct}" >tree &&
++	printf "100644 FILE_x\0${file_x_oct}" >>tree &&
++	printf "100644 file_X\0${file_x_oct}" >>tree &&
++	printf "100644 file_x\0${file_x_oct}" >>tree &&
++	printf "100644 .gitattributes\0${attr_oct}" >>tree &&
++
++	tree_hex=$(git hash-object -w -t tree --stdin <tree) &&
++	commit_hex=$(git commit-tree -m collisions $tree_hex) &&
++	git update-ref refs/heads/collisions $commit_hex &&
++
++	write_script "$TEST_ROOT"/logger_script <<-\EOF
++	echo "$@" >>filter.log
++	EOF
++'
++
++for mode in parallel sequential-fallback
++do
++
++	case $mode in
++	parallel)		workers=2 threshold=0 expected_workers=2 ;;
++	sequential-fallback)	workers=2 threshold=100 expected_workers=0 ;;
++	esac
++
++	test_expect_success CASE_INSENSITIVE_FS "collision detection on $mode clone" '
++		git_pc $workers $threshold $expected_workers \
++			clone --branch=collisions . $mode 2>$mode.stderr &&
++
++		grep FILE_X $mode.stderr &&
++		grep FILE_x $mode.stderr &&
++		grep file_X $mode.stderr &&
++		grep file_x $mode.stderr &&
++		test_i18ngrep "the following paths have collided" $mode.stderr
++	'
++
++	# The following test ensures that the collision detection code is
++	# correctly looking for colliding peers in the second half of the
++	# cache_entry array. This is done by defining a smudge command for the
++	# *last* array entry, which makes it non-eligible for parallel-checkout.
++	# The last entry is then checked out *before* any worker is spawned,
++	# making it succeed and the workers' entries collide.
++	#
++	# Note: this test don't work on Windows because, on this system,
++	# collision detection uses strcmp() when core.ignoreCase=false. And we
++	# have to set core.ignoreCase=false so that only 'file_x' matches the
++	# pattern of the filter attribute. But it works on OSX, where collision
++	# detection uses inode.
++	#
++	test_expect_success CASE_INSENSITIVE_FS,!MINGW,!CYGWIN "collision detection on $mode clone w/ filter" '
++		git_pc $workers $threshold $expected_workers \
++			-c core.ignoreCase=false \
++			-c filter.logger.smudge="\"$TEST_ROOT/logger_script\" %f" \
++			clone --branch=collisions . ${mode}_with_filter \
++			2>${mode}_with_filter.stderr &&
++
++		grep FILE_X ${mode}_with_filter.stderr &&
++		grep FILE_x ${mode}_with_filter.stderr &&
++		grep file_X ${mode}_with_filter.stderr &&
++		grep file_x ${mode}_with_filter.stderr &&
++		test_i18ngrep "the following paths have collided" ${mode}_with_filter.stderr &&
++
++		# Make sure only "file_x" was filtered
++		test_path_is_file ${mode}_with_filter/filter.log &&
++		echo file_x >expected.filter.log &&
++		test_cmp ${mode}_with_filter/filter.log expected.filter.log
++	'
++done
++
++test_done
 -- 
 2.28.0
 
