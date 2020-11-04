@@ -7,103 +7,89 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0C78C2D0A3
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 16:23:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E5E0C2D0A3
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 16:26:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AAF40206D4
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 16:23:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2E0A6206A5
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 16:26:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fsfXHVgU"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Bl2tS9n9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729676AbgKDQXY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Nov 2020 11:23:24 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55521 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727851AbgKDQXY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Nov 2020 11:23:24 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DC5B1A1AE7;
-        Wed,  4 Nov 2020 11:23:23 -0500 (EST)
+        id S1730853AbgKDQ0e (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Nov 2020 11:26:34 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62042 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731175AbgKDQ02 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Nov 2020 11:26:28 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7C9B684EC8;
+        Wed,  4 Nov 2020 11:26:25 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=25CoKAws7cmo
-        ZYzUxTVVWzWZ5q4=; b=fsfXHVgUUZcLBs+dH15w/hz8sLklw2gzR/BmOvjobxSi
-        AcIgxyWS8cURb7Ajlf2zMJMvdBSFhZE6sFYlDIkad5zRGHEImmDEh+wVEfg3oblo
-        tSOcRN6OhOwJkoZzuOeEqMCb2bkM6ikbfhzigtiQttws16J3uvu+WsPKkre+FIc=
+        :content-type; s=sasl; bh=dOn91M2+tKYDzv9s0d443WVhvAQ=; b=Bl2tS9
+        n9+AlneofnC6GQqrR8AJgWSp4rsRK2r1+3UwthtSfNyzWqT/OttU0E/yTAe6rPTI
+        r3cAi57TkyV4fMtR22skW5yBrKq6DJXidQQ557QyBjdyXnbs60zjgDbLoiX/hmay
+        paXDuoob/GyQeOmlqANPkjDJzwNZmSnwo87lE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=T7Odmo
-        u47xPsi7jFgnc7AIUYaBJc3G9jHGtZXtogDZXecITyBPlQS35cvuIJ33MhwI2nC2
-        mVzi5BbCN66N71jCZn6WGJjykqicSXxBtmNAdpqe9UoWDpviYtY7c8hVTKaZto7+
-        JmjVpxNS9hkl5XeSS9GsW20JcCG7WvRWL9rXs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D0476A1AE6;
-        Wed,  4 Nov 2020 11:23:23 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=xBOY0JRHSaddRsFK6jqnFIZJPhbmBI+c
+        hSsJ+h1U33miwaEQuxOfpNAdVTcydcYy2w8C+/YRtJt3w2382If08f+0rLC06myf
+        d5EWwURMplT44DSxghBKIa5FThGUsb4gYyfak3mAuPkedRQHTqkKmL+8zKkBlSp9
+        40XX4N5BA4g=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7403984EC7;
+        Wed,  4 Nov 2020 11:26:25 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4C5E1A1AE5;
-        Wed,  4 Nov 2020 11:23:23 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F108884EC6;
+        Wed,  4 Nov 2020 11:26:24 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] pack-write: use hashwrite_be32() instead of
- double-buffering array
-References: <aec69531-d621-ab26-efd4-96e1ae0ed3a4@web.de>
-        <20201104133653.GC3030480@coredump.intra.peff.net>
-Date:   Wed, 04 Nov 2020 08:23:22 -0800
-In-Reply-To: <20201104133653.GC3030480@coredump.intra.peff.net> (Jeff King's
-        message of "Wed, 4 Nov 2020 08:36:53 -0500")
-Message-ID: <xmqqmtzxnlad.fsf@gitster.c.googlers.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Sathyajith Bhat <sathya@sathyasays.com>, git@vger.kernel.org
+Subject: Re: Segfault in git when using git logs
+References: <CAMsWJsyPVQWV++gc2YJriEOEWBELa_xj2G0NWFMSgNYt47swiQ@mail.gmail.com>
+        <20201102144321.GA3962443@coredump.intra.peff.net>
+        <20201103101553.GH24813@szeder.dev>
+        <20201103182102.GA459792@coredump.intra.peff.net>
+        <xmqq361qs31a.fsf@gitster.c.googlers.com>
+        <20201103185711.GA461461@coredump.intra.peff.net>
+        <xmqqimamqjhl.fsf@gitster.c.googlers.com>
+        <20201104133129.GA3030480@coredump.intra.peff.net>
+Date:   Wed, 04 Nov 2020 08:26:24 -0800
+In-Reply-To: <20201104133129.GA3030480@coredump.intra.peff.net> (Jeff King's
+        message of "Wed, 4 Nov 2020 08:31:29 -0500")
+Message-ID: <xmqqimalnl5b.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 0F3C8A3C-1EBA-11EB-839E-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7B858EF0-1EBA-11EB-B1CC-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> On Sun, Nov 01, 2020 at 09:52:12AM +0100, Ren=C3=A9 Scharfe wrote:
+> On Tue, Nov 03, 2020 at 12:21:42PM -0800, Junio C Hamano wrote:
 >
->> hashwrite() already buffers writes, so pass the fanout table entries
->> individually via hashwrite_be32(), which also does the endianess
->> conversion for us.  This avoids a memory copy, shortens the code and
->> reduces the number of magic numbers.
+>> >> So something like this won't harm VS Code more than we currently do,
+>> >> while telling users what is wrong with their command line?
+>> >
+>> > Yeah, I was wondering if we'd want the patch you sent, or if we should
+>> > turn those die() calls into warning() and disable the flags up front.
+>> [...]
+>> >> diff --git c/builtin/log.c w/builtin/log.c
 >
-> Yep, this seems trivially correct. The key observation is that we are
-> filling the array in order:
+> Since we now have identified the caller that was passing in the bogus
+> options, and it has already been fixed, I'm inclined to say we should go
+> with your die() patch from earlier (modulo the pathspec.nr fixup) and
+> call it done.
 >
->> @@ -101,20 +100,19 @@ const char *write_idx_file(const char *index_nam=
-e, struct pack_idx_entry **objec
->>  	for (i =3D 0; i < 256; i++) {
->>  		struct pack_idx_entry **next =3D list;
->>  		while (next < last) {
->>  			struct pack_idx_entry *obj =3D *next;
->>  			if (obj->oid.hash[0] !=3D i)
->>  				break;
->>  			next++;
->>  		}
->> -		array[i] =3D htonl(next - sorted_by_sha);
->> +		hashwrite_be32(f, next - sorted_by_sha);
->>  		list =3D next;
->>  	}
->> -	hashwrite(f, array, 256 * 4);
->
-> Perhaps obvious, but I got bit trying to do another similar conversion
-> recently that was filling in the array out-of-order...
+> Do you want to roll that up with a commit message?
 
-Yeah, filling an array out of order and then writing the result in
-order would obviously different from writing out individual pieces
-in the order the original codeflow used to fill the array.  Worse,
-the order the data items are fed to hashwrite() obviously affects
-the hash computed at the end.  An example of too much abstraction
-biting us? ;-)
-
+OK, will try.
 
