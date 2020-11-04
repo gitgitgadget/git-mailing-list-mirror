@@ -2,141 +2,130 @@ Return-Path: <SRS0=V3lj=EK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D99D6C2D0A3
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 01:09:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFA75C2D0A3
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 01:12:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8524B223EA
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 01:09:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 87A17223EA
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 01:12:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M7BeUp7X"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BRaLry9O"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730156AbgKDBJg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Nov 2020 20:09:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34422 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729144AbgKDBJg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Nov 2020 20:09:36 -0500
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63D75C040203
-        for <git@vger.kernel.org>; Tue,  3 Nov 2020 17:09:36 -0800 (PST)
-Received: by mail-pf1-x443.google.com with SMTP id w65so15910525pfd.3
-        for <git@vger.kernel.org>; Tue, 03 Nov 2020 17:09:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=YACmgmRxBGBnGnasXJxedtzIEWJwMVzobcXYqQ83U/U=;
-        b=M7BeUp7XVpRtimL066nWA7NQdRAgVigCFhVN0WANTHF8Fbxmo+aGrrSWF/vEsdQg+0
-         yhCdFgYIUl9vs2WP9809AVxugmdNQuUdfT9QMkaGkCIK++2nrMSp31KF9myjD6uz3NHP
-         h3TJHLMXnk6T1sQGmSAeMd/KElFCs7tVTL0eqJ8OtWeGFdQbJI3cd86MIw46jrg6kHfR
-         zXl+5hfIn7LNZ5SobFHPfYvJYkl1TOjbdrZOz8zzWesuByRO5+LpCwxliVHhE5yjNLWd
-         PLT1z3wdoTbhCdj5Opc9zZBCBdhTzyPNAr/VHHZT96V6KRf3Ob6Mp1Jmg159ICWahnhg
-         DT8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=YACmgmRxBGBnGnasXJxedtzIEWJwMVzobcXYqQ83U/U=;
-        b=oZd3UahkqDEtBl0an2DfrbcVJ5yVTmHDy/FkYffzD6gdTkVEAuYcmUZdVn8W54RyO7
-         X8vpaoYbh8/J/i5tRXQ1Wvm4qfgXGaS8/7gg+bUH1nawzChUKM9GamSrh+m/jsqKRW3G
-         dX41JhxmhktdqDmt8h0KI35mSCtbLFYwR9cyUgOrOmANNjDJxbCquXIPayIGPzq21WHn
-         6NHYhFqpDKVo/yvBm75ul08lPOw6YQ+16l80o7tG00o3E6KlNXWAdLmlgoe0lREavgGg
-         /wDaBHwbr9k+6H3bLUU5yyVhRZg0+//BC3lYXUoG3c9A6otVmTKBgVs/1y2cf7Y4MKoL
-         Pq/Q==
-X-Gm-Message-State: AOAM531nJjnaq5MzWL3wXu0d2D/1Br2BRhvVJpdWj/p/hN8ONqjuNyp0
-        nIBR4pbZvq1sDpkZTh1CZy7sToCX9/A=
-X-Google-Smtp-Source: ABdhPJxk1ubJPHXCmluiEO3XyN7SdAqsiuHeJsowOMuGUJs9B/EXMUjvZysAJBNqfdM9x7pD1Guf8g==
-X-Received: by 2002:a17:90a:648:: with SMTP id q8mr2014792pje.176.1604452175661;
-        Tue, 03 Nov 2020 17:09:35 -0800 (PST)
-Received: from archbookpro.hsd1.ca.comcast.net (c-67-188-114-10.hsd1.ca.comcast.net. [67.188.114.10])
-        by smtp.gmail.com with ESMTPSA id e3sm166573pgm.93.2020.11.03.17.09.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Nov 2020 17:09:34 -0800 (PST)
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>,
-        Paul Mackerras <paulus@ozlabs.org>
-Subject: [PATCH] gitk: replace tabs with spaces (again)
-Date:   Tue,  3 Nov 2020 17:09:27 -0800
-Message-Id: <4c58637d96fe22747cd301e0f2e34d8c8b8f1f93.1604452145.git.liu.denton@gmail.com>
-X-Mailer: git-send-email 2.29.2.286.g8a58376a31
+        id S1730246AbgKDBMr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Nov 2020 20:12:47 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59844 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729144AbgKDBMr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Nov 2020 20:12:47 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 56141F01E4;
+        Tue,  3 Nov 2020 20:12:46 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=JpUtzxVBFTH7
+        dELkHijaWLuQnBc=; b=BRaLry9OD2scwXUYiu//l+G8KihIhKC2dJ8u6kYRSrkh
+        mA4gZ9Fu1xy+qdkwnXOWw0AtYsTWGnTeqOdiihr2utoayPDMpC6U7jIslOuBr9XP
+        vdry9a6wuRhZJdDczHG7k/D3uRalHtOc+gxE7LRuxpp7PrJgSmFwaT72ThagROA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=iL3Rpu
+        OeM6Rd8f3kzWRU9nuYsaMBjz/ECXilUzvWifFxSVyjtCGPaxWOE1+iIA5KaKkWqH
+        ZfOHEsB4cpEmbffyYxE5EjV7cNc4aZcSoJCFOXggNCtVflgnm3AIcxpzv54oh3AQ
+        fof3J9X0W0S9pEbEwRceq5t9VbpeOQQUTIfrY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4E2E3F01E3;
+        Tue,  3 Nov 2020 20:12:46 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9AE30F01E1;
+        Tue,  3 Nov 2020 20:12:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?M=C3=A1rio_Guimar=C3=A3es?= 
+        <mario.luis.guimaraes@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Bug with --abbrev option in git log?
+References: <CAF7CYk51BC0KcsBb0KjKWAj17AMU2c9Y6Y81ddwX6oOAFYhT8w@mail.gmail.com>
+Date:   Tue, 03 Nov 2020 17:12:42 -0800
+In-Reply-To: <CAF7CYk51BC0KcsBb0KjKWAj17AMU2c9Y6Y81ddwX6oOAFYhT8w@mail.gmail.com>
+        (=?utf-8?Q?=22M=C3=A1rio_Guimar=C3=A3es=22's?= message of "Wed, 4 Nov 2020
+ 00:55:36 +0000")
+Message-ID: <xmqqk0v1q60l.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: D772384C-1E3A-11EB-8178-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In e244588eb6 (gitk: replace tabs with spaces, 2020-09-10), tabs were
-replaced with spaces so that indents consistently use spaces. However,
-in 6cd80496e9 (gitk: Resize panes correctly when reducing window size,
-2020-10-03), some tabs were erroneously reintroduced.
+M=C3=A1rio Guimar=C3=A3es  <mario.luis.guimaraes@gmail.com> writes:
 
-Convert these tabs back into spaces.
+> In the Git repository run this command:
+>
+> git log --raw -r -c --abbrev=3D6 --pretty=3Doneline -n1
+> a7144d4bc5ab58f306a1e5c73b27196fb999a63d
 
-This was done mechanically by running:
+This is not one of my object, so above won't be usable as
+reproduction recipe.  But that is OK.
 
-	$ expand -i gitk >gitk.new
-	$ mv gitk.new gitk
-	$ chmod +x gitk
+> What did you expect to happen? (Expected behavior)
+>
+> I was expecting to get this line in the output
+>
+> ::100644 100644 100644 639a41 111378 05ba1d MM Documentation/git-rebase=
+.txt
+>
+> What happened instead? (Actual behavior)
+>
+> I got the following line instead
+>
+> ::100644 100644 100644 639a41 111378 05ba1d3 MM Documentation/git-rebas=
+e.txt
 
-This patch should be empty with `--ignore-all-space`.
+The above command tells us that you locally have an object whose
+name begins with 05ba1d3, which I do not have.  But my history
+shared with the entire world has an object whose name begins with
+05ba1d7, and I am reasonably sure that your repository has it, since
+it is a part of 17f26a9e (git-am: fix shell quoting, 2009-01-14).
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- gitk | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+So in my repository, 05ba1d is enough to uniquely identify 05ba1d7,
+but in your repository 05ba1d is not enough to uniquely identify
+05ba1d3, because 05ba1d7 also exists in your repository.  And when
+the object cannot be uniquely specified with the given abbreviation
+width, Git makes sure its output is usable to uniquely identify the
+object it wants to name.
 
-diff --git a/gitk b/gitk
-index 23d9dd1fe0..c31a8b4e2f 100755
---- a/gitk
-+++ b/gitk
-@@ -2955,9 +2955,9 @@ proc savestuff {w} {
- proc resizeclistpanes {win w} {
-     global oldwidth oldsash use_ttk
-     if {[info exists oldwidth($win)]} {
--	if {[info exists oldsash($win)]} {
--	    set s0 [lindex $oldsash($win) 0]
--	    set s1 [lindex $oldsash($win) 1]
-+        if {[info exists oldsash($win)]} {
-+            set s0 [lindex $oldsash($win) 0]
-+            set s1 [lindex $oldsash($win) 1]
-         } elseif {$use_ttk} {
-             set s0 [$win sashpos 0]
-             set s1 [$win sashpos 1]
-@@ -2992,7 +2992,7 @@ proc resizeclistpanes {win w} {
-             $win sash place 0 $sash0 [lindex $s0 1]
-             $win sash place 1 $sash1 [lindex $s1 1]
-         }
--	set oldsash($win) [list $sash0 $sash1]
-+        set oldsash($win) [list $sash0 $sash1]
-     }
-     set oldwidth($win) $w
- }
-@@ -3000,8 +3000,8 @@ proc resizeclistpanes {win w} {
- proc resizecdetpanes {win w} {
-     global oldwidth oldsash use_ttk
-     if {[info exists oldwidth($win)]} {
--	if {[info exists oldsash($win)]} {
--	    set s0 $oldsash($win)
-+        if {[info exists oldsash($win)]} {
-+            set s0 $oldsash($win)
-         } elseif {$use_ttk} {
-             set s0 [$win sashpos 0]
-         } else {
-@@ -3024,7 +3024,7 @@ proc resizecdetpanes {win w} {
-         } else {
-             $win sash place 0 $sash0 [lindex $s0 1]
-         }
--	set oldsash($win) $sash0
-+        set oldsash($win) $sash0
-     }
-     set oldwidth($win) $w
- }
--- 
-2.29.2.286.g8a58376a31
+In short, I think what you observed is totally expected.
 
+The documentation has some room for improvement, I also think.
+
+How about saying something like this?
+
+
+
+ Documentation/diff-options.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git i/Documentation/diff-options.txt w/Documentation/diff-options.=
+txt
+index ee52b65e46..114e440c5b 100644
+--- i/Documentation/diff-options.txt
++++ w/Documentation/diff-options.txt
+@@ -446,7 +446,8 @@ endif::git-format-patch[]
+ --abbrev[=3D<n>]::
+ 	Instead of showing the full 40-byte hexadecimal object
+ 	name in diff-raw format output and diff-tree header
+-	lines, show only a partial prefix.
++	lines, show only a partial prefix that uses at least '<n>'
++	hexdigits.
+ 	In diff-patch output format, `--full-index` takes higher
+ 	precedence, i.e. if `--full-index` is specified, full blob
+ 	names will be shown regardless of `--abbrev`.
