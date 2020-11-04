@@ -2,88 +2,121 @@ Return-Path: <SRS0=V3lj=EK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC420C2D0A3
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 14:07:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5642FC2D0A3
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 14:17:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6487921734
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 14:07:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D49F1221E2
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 14:17:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=mutual.io header.i=@mutual.io header.b="g39zjRND"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gMk6wL2O"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726746AbgKDOHA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Nov 2020 09:07:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41184 "EHLO
+        id S1726843AbgKDORR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Nov 2020 09:17:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726078AbgKDOG7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Nov 2020 09:06:59 -0500
-Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 374D1C0613D3
-        for <git@vger.kernel.org>; Wed,  4 Nov 2020 06:06:58 -0800 (PST)
-Received: by mail-ej1-x641.google.com with SMTP id w13so16451973eju.13
-        for <git@vger.kernel.org>; Wed, 04 Nov 2020 06:06:58 -0800 (PST)
+        with ESMTP id S1726762AbgKDORR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Nov 2020 09:17:17 -0500
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 053E5C0613D3
+        for <git@vger.kernel.org>; Wed,  4 Nov 2020 06:17:17 -0800 (PST)
+Received: by mail-qt1-x841.google.com with SMTP id h12so12234262qtc.9
+        for <git@vger.kernel.org>; Wed, 04 Nov 2020 06:17:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mutual.io; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=HLmCRr6SAigSJzMh1qaU1rto+e/kOylTzQ1yEqtkMkI=;
-        b=g39zjRNDZpvn2Osx2Rw+aI0oL4v+pRtk7I8GL0XjNRn6Ct3zqfQW0VdETgvMGlHQIR
-         hjUE5Qjqy9rBhQQCukr5oFBYi5v6fnzVXftRryJP2qAeNMnC+4XVqoHKH0gyjEyva2KJ
-         ZhmMeyU4mDfnbsMV0MtUxcWp4r/H9EPWaFKLE=
+        d=gmail.com; s=20161025;
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=AC54I7OuDzbolVAWhCCuNRtN+wvrhSnPzLyGm+95BDs=;
+        b=gMk6wL2Oat/fXOXAT5F6Io15nFbfo4Iy4Z0xAXwccAy5I9WxnYb4b2AVPy6aFXjyBn
+         ToSQLFSRDs0GZE63gM35jDZ1cV/rQ11DDcjdv3jTyUqlEPWbCqLwW64aZXYcu/RyxMTU
+         h7SMwjeoUWX6TI3VLrlIfHUbEqGPXV9xI61ZTa9lzczfJ0Na1iYG96aCKSIAFd1+H87k
+         q4+VLHEAn94JlsoLjDLEHvU+PgJZNX93up3fEg9xHMOPO89EIzKtIKHua3igQih6Ri/L
+         BV8jUBUNUy9+gKjltIZWeLEDCwO7fUmyiUEPoHTuwG+qlvJ6k7/SgOIN7Q6TKBgXj3Xz
+         oq4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=HLmCRr6SAigSJzMh1qaU1rto+e/kOylTzQ1yEqtkMkI=;
-        b=TFt7eMLMbhGORg9tom8qDdwxoXKCPYUwAwNS4O7lfYPJkxjN45qB1qw5INn0tyZ/tX
-         49gcdPNMmfFkBMFeO3IdQGyVtTL1uczGpLpv3hHutUVJk6zxjCGsIUK3Z4c1ooBiD/oF
-         5Twji/+8b3ADBpRP/TG3N5o8ubBq3mIGUVkmPagu7IglIdX+c10YDMKTioR+vL2uJi6L
-         3/HqoM5CtgRuUmeWfvzQItU6tzEn8rcnu9ULcAi8vHy2eg++TBdB8I1hwQn8PUt1OKxV
-         bnFxt9rvEVOovap5+7e8MZZ0uKAHLjWbfVeGsWxrxSmGueVO1255zKI2kM67+/PxOdMw
-         7+xA==
-X-Gm-Message-State: AOAM5315wn8yrN9KhbUqU33+Mz1atT3bTr5QqQDF3m9E/Ivw1oBN+Gcm
-        V0el+2Xnfy56LpqFKwqRqcmosAvllXlT3m7rFzjrlw==
-X-Google-Smtp-Source: ABdhPJwpBKAAelYGuN2Olxjx6OpjknDytT3vvFCo2a/zSXaMs8vqt0OeWNAviU0/Dry40P+zB1udBuw1DfVC88XpJlQ=
-X-Received: by 2002:a17:906:5fd9:: with SMTP id k25mr6955909ejv.166.1604498816922;
- Wed, 04 Nov 2020 06:06:56 -0800 (PST)
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=AC54I7OuDzbolVAWhCCuNRtN+wvrhSnPzLyGm+95BDs=;
+        b=rlyksFSbM3HEZJ4HmE3il51plzxcwBmMw/eTKTqaWSNqjG31JvePPoFMjbrzFAStT7
+         OygiRRy5W5yi+edjDzgI4KWeegMEi2Mf2qzpXrvXehoI2CZNM1vJN0kkP4G6NxxlV2g2
+         3/Fa5hj744SgIG0+gO9tHYJD34eCnzldZINooJFtPhQQBpltIG6MkxLObP340YmqEX3/
+         VPeR9x4/0cav11uoNsiiUJB2zeoFlg1FGmdSifeuJzwxYdBD4L5wq4ymNbDm3suZ61mr
+         zay7SUgXozKtF7cOFfXpV43NFko+W57iSlPsej/wLGlTkzG4ZxtRLZW1Year3/ZOSn5b
+         ssbw==
+X-Gm-Message-State: AOAM5306YJT0iKHSLl8d1lI3KPUQqxxHKfAFE/J6sUtunAoQBmk+2JZk
+        t1sohvmYNNMOQ0uamkR6q2c=
+X-Google-Smtp-Source: ABdhPJyPGMBJjjw+7M79tvhp5AwjbdWgi+nD7B9j7zhHyaRd4XLpGIk/bYvbP28SxkqD4PWXoXi5ZA==
+X-Received: by 2002:aed:2321:: with SMTP id h30mr19338751qtc.213.1604499435990;
+        Wed, 04 Nov 2020 06:17:15 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
+        by smtp.gmail.com with UTF8SMTPSA id o2sm2584258qkd.12.2020.11.04.06.17.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Nov 2020 06:17:15 -0800 (PST)
+Subject: Re: [PATCH 2/3] maintenance: use launchctl on macOS
+From:   Derrick Stolee <stolee@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Son Luong Ngoc <sluongng@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.776.git.1604412196.gitgitgadget@gmail.com>
+ <832fdf16872cbfee4a5e15b559b2b40dabd545f4.1604412197.git.gitgitgadget@gmail.com>
+ <CAPig+cR1zSqY_y02JBdtjh_+9Pp2dOtGrHHmf-ah5sU6Lhzp6Q@mail.gmail.com>
+ <e493b759-4565-e7d2-4a19-dee23c651119@gmail.com>
+Message-ID: <51d193c0-ef0c-aa5c-56c6-388499eaf2a7@gmail.com>
+Date:   Wed, 4 Nov 2020 09:17:13 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101
+ Thunderbird/83.0
 MIME-Version: 1.0
-References: <1604022059-18527-1-git-send-email-dan@mutual.io>
- <20201030044012.GA3259692@coredump.intra.peff.net> <CANo+1gv0otfjRexAVW6E+yPEvGLo55_tQWN-81mQMm4U0seCJQ@mail.gmail.com>
- <20201030090902.GA3268509@coredump.intra.peff.net> <xmqqeelaqh7m.fsf@gitster.c.googlers.com>
- <20201104133342.GB3030480@coredump.intra.peff.net>
-In-Reply-To: <20201104133342.GB3030480@coredump.intra.peff.net>
-From:   Daniel Duvall <dan@mutual.io>
-Date:   Wed, 4 Nov 2020 06:06:44 -0800
-Message-ID: <CANo+1gu2pi+JXV6a3fBFA+w_zCfQb80fJze2T3Ed1ri7+=KZGA@mail.gmail.com>
-Subject: Re: [PATCH] upload-pack: allow stateless client EOF just prior to haves
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <e493b759-4565-e7d2-4a19-dee23c651119@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 4, 2020 at 5:33 AM Jeff King <peff@peff.net> wrote:
->
-> On Tue, Nov 03, 2020 at 01:10:53PM -0800, Junio C Hamano wrote:
->
-> > Yeah, I'd agree that punting on v0 and making sure the current
-> > version would work well is good enough.
-> >
-> > I lost track and am not sure what's the current status of the topic
-> > is.  Is v3 [*1*] the latest and satisfactory one?
->
-> Yeah, I just read over v3 again and it looks good to me. Thanks, Daniel!
->
-> -Peff
+On 11/3/2020 4:21 PM, Derrick Stolee wrote:
+> On 11/3/2020 1:45 PM, Eric Sunshine wrote:
+>> On Tue, Nov 3, 2020 at 9:05 AM Derrick Stolee via GitGitGadget
+>>> +static int remove_plist(enum schedule_priority schedule)
+>>> +{
+>>> +       const char *frequency = get_frequency(schedule);
+>>> +       char *name = get_service_name(frequency);
+>>> +       char *filename = get_service_filename(name);
+>>> +       int result = bootout(filename);
+>>> +       free(filename);
+>>> +       free(name);
+>>> +       return result;
+>>> +}
+>>
+>> The result of get_service_name() is only ever passed to
+>> get_service_filename(). If get_service_filename() made the call to
+>> get_service_name() itself, it would free up callers from having to
+>> remember to free(name), thus reducing the likelihood of a possible
+>> leak.
+> 
+> You're right. In an earlier version I thought I needed to add the
+> name in the XML, but it turns out I did not.
 
-Contributing this tiny patch was a rewarding experience, getting to
-know Git more intimately and collaborating with you all. Thanks so
-much!
+As I go through the effort to remove get_service_name() I find that
+actually the name is used in one place in the XML file:
 
-Kindly,
-Daniel
++		   "<key>Label</key><string>%s</string>\n"
+
+This "Label" should match the filename, I believe. I can still
+be more careful about how often this name is actually required.
+
+Thanks,
+-Stolee
