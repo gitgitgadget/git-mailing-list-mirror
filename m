@@ -2,85 +2,66 @@ Return-Path: <SRS0=V3lj=EK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19F69C2D0A3
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 17:02:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFF4FC2D0A3
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 17:03:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B2EAD20735
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 17:02:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A80120732
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 17:03:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731419AbgKDRCx convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 4 Nov 2020 12:02:53 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:39378 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731283AbgKDRCx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Nov 2020 12:02:53 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.189.82])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 0A4H2n8H000864
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 4 Nov 2020 12:02:50 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Alex Marginean'" <alexmarginean16@gmail.com>,
-        <git@vger.kernel.org>
-References: <CALG6MqwdCmwS5D_F9+q6UYzGm5ZzLL7Bi=rD7Ph2XE0uccu+xg@mail.gmail.com>
-In-Reply-To: <CALG6MqwdCmwS5D_F9+q6UYzGm5ZzLL7Bi=rD7Ph2XE0uccu+xg@mail.gmail.com>
-Subject: RE: BUG
-Date:   Wed, 4 Nov 2020 12:02:43 -0500
-Message-ID: <037901d6b2cc$5362e170$fa28a450$@nexbridge.com>
+        id S1731834AbgKDRDf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Nov 2020 12:03:35 -0500
+Received: from mail-ej1-f65.google.com ([209.85.218.65]:34720 "EHLO
+        mail-ej1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731607AbgKDRDf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Nov 2020 12:03:35 -0500
+Received: by mail-ej1-f65.google.com with SMTP id o9so28689918ejg.1
+        for <git@vger.kernel.org>; Wed, 04 Nov 2020 09:03:34 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=UoUCDcsnbEpJ2pH4+naH9GV4w2OYMsssMUs+daxUzO4=;
+        b=aQeallli7pIENdFeqkNsCcZqc0XKrvu48v5s86ZthCE8q1WDZCp+NSad0IMPiYfMz3
+         EdJsgnKsxok9ZqiCpR63Th3xtiE2F9LsZrpoHx9tf4vz4QeMuV6L3WVsvakqq1fLFNON
+         T+x77d9+9tJM9M4Y3kLaB9IOaxpa1ujvXLM9e4pfYRuJLJulv6bVFaOyQUQOflEuCSps
+         +YqC0XP7DkqWhXRw7KMXQ0wKgLOl84afx7ipqqnQmQzBUvBNZyyViD2LFa1ZgV2wQrPX
+         b/jm9KgCrmPWyWNZmT98moYM2SSYIuQ6QqYUeB9HCHbacmojC+y3sCX1mobwBBL89n7F
+         r1NA==
+X-Gm-Message-State: AOAM530JXAHLnpLZowE48KG8KbpxMSb8Tm+4eynwoRzVBe5cC2IOFWAZ
+        Bx2irtis0mjfD5HKvOq9crndhF73H9DVF9JcH6Y+trLw
+X-Google-Smtp-Source: ABdhPJzcuJ4BfQXcdIIf81N13cdyu556EYICZqJFSOeAnGezHfRtnIF5wErwlWqjYJ2SEjqz5wsN5MCTGv1NrEeQS/0=
+X-Received: by 2002:a17:906:c041:: with SMTP id bm1mr25350340ejb.202.1604509413357;
+ Wed, 04 Nov 2020 09:03:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQGkfuQjgOyOzfuyzQ4KZI4HmvX0TqocmmxQ
-Content-Language: en-ca
+References: <20201104132428.GA2491189@coredump.intra.peff.net> <20201104132737.GB3030146@coredump.intra.peff.net>
+In-Reply-To: <20201104132737.GB3030146@coredump.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 4 Nov 2020 12:03:22 -0500
+Message-ID: <CAPig+cT8BTTwcORWB1zNWFy8DaohyibWFxojDiU-Na933abRqA@mail.gmail.com>
+Subject: Re: [PATCH 2/3] format-patch: tie file-opening logic to output_directory
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Postler <johannes.postler@txture.io>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On November 4, 2020 11:10 AM, Alex Marginean wrote:
-> Github has changed the way they name branches, so now instead of the
-> `master` branch there is the `main` branch however, I'm having some trouble
-> with the naming
-> 
-> **Steps to replicate my problem**
-> 
-> 1. Create a new Github repository and make sure the default branch is `main`
-> 2. Add something to the repo, a `README.md` file should be enough 3.
-> Instead of cloning the repo make a new directory with your repo's name
-> `mkdir <repo_name>` and change the directory to it `cd <repo_name>` 4. `git
-> init` 5. Add the remote repo with `git remote add origin <repo_link>` 6. Pull
-> the `main` branch from the remote repo with `git pull origin main`.
+On Wed, Nov 4, 2020 at 8:27 AM Jeff King <peff@peff.net> wrote:
+> In format-patch we're either outputting to stdout or to individual files
+> in an output directory (which maybe just "./"). Our logic for whether to
 
-Use git init --initial-branch=main
+s/maybe/may be/
 
-This assumes a recent version of git.
-
-> 
-> After the step number 6. instead of my branch changing to `main` my current
-> branch is changed to `master` which has every file and change of the branch
-> `main`. This is a real problem because if I try to push changes to `main`
-> although my current branch shows up as `master` it creates another branch
-> called `master` on Github and the `main` remains unchanged. Yeah sure I can
-> `git checkout main` after that and make my changes there but I'm not sure
-> why it defaults to `master` and copies `main` from Github into local branch
-> `master`.
-> 
-> P.S. If you were to use `git fetch origin` instead of `git pull origin
-> <branch_name> and then manually change branch to `main` with `git
-> checkout main` it would work. Also, if you were to clone the Github repo
-> using `git clone <link>` you will get the correct current branch that is `main`.
-
-Regards,
-Randall
--- Brief whoami:
- NonStop developer since approximately 211288444200000000
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
-
+> open a new file for each patch is checked with "!use_stdout", but it is
+> equally correct to check for a non-NULL output_directory.
+>
+> The distinction will matter when we add a new single-stream output in a
+> future patch, when only one of the three methods will want individual
+> files. Let's swap the logic here in preparation.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
