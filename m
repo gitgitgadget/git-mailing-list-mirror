@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20E74C4741F
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 20:06:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CEE8C5517A
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 20:06:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B82D320739
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 20:06:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9876A20759
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 20:06:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fZS6u1eq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OUJHH+Gr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731414AbgKDUGO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Nov 2020 15:06:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42190 "EHLO
+        id S1731477AbgKDUGS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Nov 2020 15:06:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730933AbgKDUGO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Nov 2020 15:06:14 -0500
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E61B7C061A4A
+        with ESMTP id S1731432AbgKDUGP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Nov 2020 15:06:15 -0500
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04A33C0613D4
         for <git@vger.kernel.org>; Wed,  4 Nov 2020 12:06:12 -0800 (PST)
-Received: by mail-wm1-x342.google.com with SMTP id h22so3516885wmb.0
-        for <git@vger.kernel.org>; Wed, 04 Nov 2020 12:06:12 -0800 (PST)
+Received: by mail-wm1-x341.google.com with SMTP id p22so3588199wmg.3
+        for <git@vger.kernel.org>; Wed, 04 Nov 2020 12:06:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=crAevSGeU87JXXQKVprQEEEipawYMwibuDxb+oIGOQY=;
-        b=fZS6u1eqqIsRFidQv8NzgQZWn18v73MpBUGTVOVAsgqPBhULXNriqvI4fSf+BiS1Tz
-         GyKihujx4e59xKa35bsYXf1OlvDqNs3nin3NMocOoSzxVni39ZeQoz5DW+QWlOb0oP32
-         Z8tL0EelMCvBUL6O3DTNpesegkdJ5L1X4+HEHyX37FLi7VumdKon/LbWG3FqiX14qgqJ
-         ver0zV08rq+ryDEY2yAdXvCCe+Wny1f3WF6LdKuJNtwnzH84o+rTmm349CdlcJpq8ApX
-         DhTu90wiG8tfRzQL5Q8JEtdhfEARkE6n0VvilQVTJTKmW83pGWsZDdnb7UF7gwdSTHPd
-         FkJw==
+        bh=Nly5aoUwoSfFzapqnHpVG8ijbTA7fs42NqNdOyOuJhA=;
+        b=OUJHH+GrgcoleAVfLauivuBs2dXP8T4Cg2WVZOOjAdTNV565EVnLJydwj7fltzCO6K
+         BHlOMfFBioG/PV+FYc66nYTyvQSSaK7x6tK+AYSTGc8y2eF1v5WceueFuKjg7iGh6jk0
+         BZMg8Sll5BubUxI/rNYG+2qXl01ssUR9M4BRO0arbxTKk8qTZXsxB0PIENTiNwPFHMC0
+         bqEmvdEJnTRGk7PmnsUn7yRMxx0s+Tcy9qB5NiSp4pOQlRD+tUEUYGekBmfpdZmrda83
+         +ZbjZzSZv35QwtgaRxJT7cEAbteTO/wqDgatFXsOFWXUWlHLd7BC3P/8nAfsskiWsawE
+         zncA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=crAevSGeU87JXXQKVprQEEEipawYMwibuDxb+oIGOQY=;
-        b=qR5SEotWREhmDF2jSOAmTJAdCLpVeCyG9DTAuuCXIXogtIpDFV8kLgWGZL8nN3Ek3K
-         Mm8TNuZw71gZRs36btF40eUvvQHxIZVqccvSwBZddFzkczl5cwNSyj6gWDgZqZ27Q47m
-         61pXici9OItwaoTEHIhAQx9ZSMNMi9YKnHlhSIk7A+YBWkuWtEhnuRMiPGjG/Er3eLnn
-         n5ca0o8JSXuKhcytoAwapr58SyQ63POxojoSp0qkR4S028N/oUwHv40F+kF/5AwR1oST
-         DZYsYT9NOe3tiCCUwuG2xXHUBgH3hzPsQsOqzwOLYEyLfmIIHmfx/QYPZgkmWrq1K4GN
-         jT4w==
-X-Gm-Message-State: AOAM533U8dnKRcM6bv5UUNfvxl4PY6zi4C9iy/j/wI+vBKwqu/t86AuV
-        VvLFQvoA9r8qPHNd5LO2YqDvd0Yg2Bc=
-X-Google-Smtp-Source: ABdhPJyZH7LBnaXmjxflcynIkgRhPkW/ulCuva9ck+M511fwT+EVHAiYHV47w09iTmoOzqtqDQ428w==
-X-Received: by 2002:a1c:1d51:: with SMTP id d78mr6305619wmd.60.1604520371380;
-        Wed, 04 Nov 2020 12:06:11 -0800 (PST)
+        bh=Nly5aoUwoSfFzapqnHpVG8ijbTA7fs42NqNdOyOuJhA=;
+        b=S6/QgWztia11xCnUJuTWD9mcRrT0aylKcYFBHdOWgzzFbWnTDF0g2IkcQ5F2nTAIAN
+         eKCjPDPq0sxIngUeTjlM6KqbIS3navajhRssncYI8JqzAJfjAXUMOhRcXOvrmz400v5G
+         8He9EpibTjVOL/lhUfgv34je5kcVvWmj9BmN3DZj3C3GIf4uoZ8anwSXCafyDDht1ifK
+         7aLvqjgM3DOMoCcAiOaCqLj8A4wJUZXsXY2GBu3/dxhLl/2jvcP3S49rdoomiWHLCNTF
+         m+YgoDON0mZDIQGGUe1NVsJrMjznPfN7sTjh2BYLfrs1vGyKolbjrmPaLvH6n12S5wfg
+         D3XA==
+X-Gm-Message-State: AOAM533zQkMAsZai/0OpT8HbwyNsWZgopz53/N6K2+Q+HsR/errZrWeG
+        +5TIxaXjiyKu6dAldoC+vROM0BYkaRw=
+X-Google-Smtp-Source: ABdhPJzaxWp5rcY7nC3oJ1EbUFsLjSBpPFR57ZHicMjt73cVpgl/R5zO3uGKydr4VPkIyYRRd+3c/g==
+X-Received: by 2002:a7b:cc94:: with SMTP id p20mr6626490wma.100.1604520370518;
+        Wed, 04 Nov 2020 12:06:10 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f17sm4448721wrm.27.2020.11.04.12.06.10
+        by smtp.gmail.com with ESMTPSA id z6sm3594830wmi.1.2020.11.04.12.06.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 04 Nov 2020 12:06:10 -0800 (PST)
-Message-Id: <709a17372099351af3e3b9f2dddcd9ce220a9fcb.1604520368.git.gitgitgadget@gmail.com>
+Message-Id: <d35f1aa162097d4dfe468b3ac1717bca92a41cfa.1604520368.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.776.v2.git.1604520368.gitgitgadget@gmail.com>
 References: <pull.776.git.1604412196.gitgitgadget@gmail.com>
         <pull.776.v2.git.1604520368.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 04 Nov 2020 20:06:06 +0000
-Subject: [PATCH v2 2/4] maintenance: include 'cron' details in docs
+Date:   Wed, 04 Nov 2020 20:06:05 +0000
+Subject: [PATCH v2 1/4] maintenance: extract platform-specific scheduling
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,87 +85,108 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Advanced and expert users may want to know how 'git maintenance start'
-schedules background maintenance in order to customize their own
-schedules beyond what the maintenance.* config values allow. Start a new
-set of sections in git-maintenance.txt that describe how 'cron' is used
-to run these tasks.
-
-This is particularly valuable for users who want to inspect what Git is
-doing or for users who want to customize the schedule further. Having a
-baseline can provide a way forward for users who have never worked with
-cron schedules.
+The existing schedule mechanism using 'cron' is supported by POSIX
+platforms, but not Windows. It also works slightly differently on
+macOS to significant detriment of the user experience. To allow for
+new implementations on these platforms, extract a method that
+performs the platform-specific scheduling mechanism. This will be
+swapped at compile time with new implementations on specialized
+platforms.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/git-maintenance.txt | 54 +++++++++++++++++++++++++++++++
- 1 file changed, 54 insertions(+)
+ builtin/gc.c | 38 +++++++++++++++++++++-----------------
+ 1 file changed, 21 insertions(+), 17 deletions(-)
 
-diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
-index 6fec1eb8dc..4c7aac877d 100644
---- a/Documentation/git-maintenance.txt
-+++ b/Documentation/git-maintenance.txt
-@@ -218,6 +218,60 @@ Further, the `git gc` command should not be combined with
- but does not take the lock in the same way as `git maintenance run`. If
- possible, use `git maintenance run --task=gc` instead of `git gc`.
+diff --git a/builtin/gc.c b/builtin/gc.c
+index e3098ef6a1..c1f7d9bdc2 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1494,7 +1494,7 @@ static int maintenance_unregister(void)
+ #define BEGIN_LINE "# BEGIN GIT MAINTENANCE SCHEDULE"
+ #define END_LINE "# END GIT MAINTENANCE SCHEDULE"
  
-+The following sections describe the mechanisms put in place to run
-+background maintenance by `git maintenance start` and how to customize
-+them.
-+
-+BACKGROUND MAINTENANCE ON POSIX SYSTEMS
-+---------------------------------------
-+
-+The standard mechanism for scheduling background tasks on POSIX systems
-+is `cron`. This tool executes commands based on a given schedule. The
-+current list of user-scheduled tasks can be found by running `crontab -l`.
-+The schedule written by `git maintenance start` is similar to this:
-+
-+-----------------------------------------------------------------------
-+# BEGIN GIT MAINTENANCE SCHEDULE
-+# The following schedule was created by Git
-+# Any edits made in this region might be
-+# replaced in the future by a Git command.
-+
-+0 1-23 * * * "/<path>/git" --exec-path="/<path>" for-each-repo --config=maintenance.repo maintenance run --schedule=hourly
-+0 0 * * 1-6 "/<path>/git" --exec-path="/<path>" for-each-repo --config=maintenance.repo maintenance run --schedule=daily
-+0 0 * * 0 "/<path>/git" --exec-path="/<path>" for-each-repo --config=maintenance.repo maintenance run --schedule=weekly
-+
-+# END GIT MAINTENANCE SCHEDULE
-+-----------------------------------------------------------------------
-+
-+The comments are used as a region to mark the schedule as written by Git.
-+Any modifications within this region will be completely deleted by
-+`git maintenance stop` or overwritten by `git maintenance start`.
-+
-+The `<path>` string is loaded to specifically use the location for the
-+`git` executable used in the `git maintenance start` command. This allows
-+for multiple versions to be compatible. However, if the same user runs
-+`git maintenance start` with multiple Git executables, then only the
-+latest executable will be used.
-+
-+These commands use `git for-each-repo --config=maintenance.repo` to run
-+`git maintenance run --schedule=<frequency>` on each repository listed in
-+the multi-valued `maintenance.repo` config option. These are typically
-+loaded from the user-specific global config located at `~/.gitconfig`.
-+The `git maintenance` process then determines which maintenance tasks
-+are configured to run on each repository with each `<frequency>` using
-+the `maintenance.<task>.schedule` config options. These values are loaded
-+from the global or repository config values.
-+
-+If the config values are insufficient to achieve your desired background
-+maintenance schedule, then you can create your own schedule. If you run
-+`crontab -e`, then an editor will load with your user-specific `cron`
-+schedule. In that editor, you can add your own schedule lines. You could
-+start by adapting the default schedule listed earlier, or you could read
-+https://man7.org/linux/man-pages/man5/crontab.5.html[the `crontab` documentation]
-+for advanced scheduling techniques. Please do use the full path and
-+`--exec-path` techniques from the default schedule to ensure you are
-+executing the correct binaries in your schedule.
-+
+-static int update_background_schedule(int run_maintenance)
++static int platform_update_schedule(int run_maintenance, int fd)
+ {
+ 	int result = 0;
+ 	int in_old_region = 0;
+@@ -1503,11 +1503,6 @@ static int update_background_schedule(int run_maintenance)
+ 	FILE *cron_list, *cron_in;
+ 	const char *crontab_name;
+ 	struct strbuf line = STRBUF_INIT;
+-	struct lock_file lk;
+-	char *lock_path = xstrfmt("%s/schedule", the_repository->objects->odb->path);
+-
+-	if (hold_lock_file_for_update(&lk, lock_path, LOCK_NO_DEREF) < 0)
+-		return error(_("another process is scheduling background maintenance"));
  
- GIT
- ---
+ 	crontab_name = getenv("GIT_TEST_CRONTAB");
+ 	if (!crontab_name)
+@@ -1516,12 +1511,11 @@ static int update_background_schedule(int run_maintenance)
+ 	strvec_split(&crontab_list.args, crontab_name);
+ 	strvec_push(&crontab_list.args, "-l");
+ 	crontab_list.in = -1;
+-	crontab_list.out = dup(lk.tempfile->fd);
++	crontab_list.out = dup(fd);
+ 	crontab_list.git_cmd = 0;
+ 
+ 	if (start_command(&crontab_list)) {
+-		result = error(_("failed to run 'crontab -l'; your system might not support 'cron'"));
+-		goto cleanup;
++		return error(_("failed to run 'crontab -l'; your system might not support 'cron'"));
+ 	}
+ 
+ 	/* Ignore exit code, as an empty crontab will return error. */
+@@ -1531,7 +1525,7 @@ static int update_background_schedule(int run_maintenance)
+ 	 * Read from the .lock file, filtering out the old
+ 	 * schedule while appending the new schedule.
+ 	 */
+-	cron_list = fdopen(lk.tempfile->fd, "r");
++	cron_list = fdopen(fd, "r");
+ 	rewind(cron_list);
+ 
+ 	strvec_split(&crontab_edit.args, crontab_name);
+@@ -1539,8 +1533,7 @@ static int update_background_schedule(int run_maintenance)
+ 	crontab_edit.git_cmd = 0;
+ 
+ 	if (start_command(&crontab_edit)) {
+-		result = error(_("failed to run 'crontab'; your system might not support 'cron'"));
+-		goto cleanup;
++		return error(_("failed to run 'crontab'; your system might not support 'cron'"));
+ 	}
+ 
+ 	cron_in = fdopen(crontab_edit.in, "w");
+@@ -1586,13 +1579,24 @@ static int update_background_schedule(int run_maintenance)
+ 	close(crontab_edit.in);
+ 
+ done_editing:
+-	if (finish_command(&crontab_edit)) {
++	if (finish_command(&crontab_edit))
+ 		result = error(_("'crontab' died"));
+-		goto cleanup;
+-	}
+-	fclose(cron_list);
++	else
++		fclose(cron_list);
++	return result;
++}
++
++static int update_background_schedule(int run_maintenance)
++{
++	int result;
++	struct lock_file lk;
++	char *lock_path = xstrfmt("%s/schedule", the_repository->objects->odb->path);
++
++	if (hold_lock_file_for_update(&lk, lock_path, LOCK_NO_DEREF) < 0)
++		return error(_("another process is scheduling background maintenance"));
++
++	result = platform_update_schedule(run_maintenance, lk.tempfile->fd);
+ 
+-cleanup:
+ 	rollback_lock_file(&lk);
+ 	return result;
+ }
 -- 
 gitgitgadget
 
