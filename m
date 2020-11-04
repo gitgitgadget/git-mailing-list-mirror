@@ -2,100 +2,96 @@ Return-Path: <SRS0=V3lj=EK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A06D1C2D0A3
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 17:27:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E24B8C2D0A3
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 17:47:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4CF6020759
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 17:27:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 88A13205CA
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 17:47:20 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HPc9CS2v"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730870AbgKDR1n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Nov 2020 12:27:43 -0500
-Received: from mail-ej1-f67.google.com ([209.85.218.67]:37228 "EHLO
-        mail-ej1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726849AbgKDR1n (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Nov 2020 12:27:43 -0500
-Received: by mail-ej1-f67.google.com with SMTP id gn41so13598537ejc.4
-        for <git@vger.kernel.org>; Wed, 04 Nov 2020 09:27:41 -0800 (PST)
+        id S1730524AbgKDRrT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Nov 2020 12:47:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48758 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728679AbgKDRrT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Nov 2020 12:47:19 -0500
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4719EC0613D3
+        for <git@vger.kernel.org>; Wed,  4 Nov 2020 09:47:19 -0800 (PST)
+Received: by mail-ot1-x333.google.com with SMTP id i18so15370533ots.0
+        for <git@vger.kernel.org>; Wed, 04 Nov 2020 09:47:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZSmsfbRk9+mw0rHxMq5DW3jYqwyh5F7RCI3ziVqqZtk=;
+        b=HPc9CS2vGJDgsUwjk2qVt0w9ATQfvDO8gsV4tOKfPJSZXaPkNo5BCmOMeKNhin4gO5
+         N9PpwEpamLnlT+RRGcjIwJuy3qXpTrV0EQxArG2luPVLLlR/sXLbkFV4tOGRfRQRtiad
+         SzJe1jCnkUOY1XPI/zPPPt7QplAkEaJ5baf0pDMGCq7IkULA3m/qVLZGQu8LZNsoMFYB
+         7FAjvqA9f8AMnWA0R1AJvnmTO4MdNj1AJehrMhnjIJdW+2HqtDI+YpPSjEYqkdrIvJgt
+         XCy+/WxMyO04R7/ICpfN9gAVj/FALQbglXJBQI33saF+VelTHB8lptBKaNMCAmumKTRk
+         TDpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8dNLEOcqcnMp1j9aZ5eGR6Fs5IA5ydMQm+++Gm96WlY=;
-        b=FGAWkNH0Q18lcypcx9euauvJz38CZRWLPrOEDRrjk+TZxj95SvjMANyZ7VwsmsvDMF
-         /04MgN0VFDna4tiWFKXPcNlW6hrKuzw7AhsMOCYa6hZTDWCZd8sH+avVZSMyZKAYrxn8
-         iTIuopeao/0JaIsKKiCT8fVUYhYVXX/TiwP0Zu6tekzjxQY3k4vZQqteTOmUVILLc6Le
-         Gw4A7M204GHPDC8zJGyfxISsVwrAgEVRyzfdxbfonD2dLa+xj4R/gqRl+mGni5/UJ0qk
-         SWwwMj/wb7BoQW/2S21bDl6LyqYXHPJvEkRA2pckKtZJihPyBOOqybTPSQSzEuo/iiLx
-         bMyQ==
-X-Gm-Message-State: AOAM530LlslWb5xdgG9Bc2sv1E2+Foa7kagdll/nHZEA3973YgBDCt3Q
-        vCdt5Z0ege89R+fKaAuMas04ZayidPNfWh3ZrQ4=
-X-Google-Smtp-Source: ABdhPJyuOFNmHkuHkQpDRIa8E7ZLrbFlMaWA4tkR49Go8emvTa3j1dlY08zDDpA7aIUTECruPJvF7jjRtrIMyvWvgJw=
-X-Received: by 2002:a17:907:42cf:: with SMTP id nz23mr12730231ejb.138.1604510861088;
- Wed, 04 Nov 2020 09:27:41 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZSmsfbRk9+mw0rHxMq5DW3jYqwyh5F7RCI3ziVqqZtk=;
+        b=q46ewgccHY80mYQHd6ZaLz+s10o4SQKIVSuxKQtkMf++bR+AU4dP72189IBMNFyYYf
+         cLftfk0blvjKbE+0qLNcUJTGeDsuskW5MkR+FqfsEJ/pVwnQb/VCyeoHudhuY3T/29xO
+         7grsCy9kAZdtPJzU8tuE+44wj3Dy32j8S3esq2ycdAXN8jRxD6P/opXzzUciXclOyf6z
+         UIybdp8421yvuE/ST31N/G2NuTGvqEZsp9/vDf9n6wbWf19oKuSqNLSZv9p5F+cdcL2v
+         U6psSZiIpWnj6u0lbOaNUiAzRMTUWsNeWG3oZh+Crvm6PlLu8aCr0IACuFHB2tBXUX2F
+         TXaA==
+X-Gm-Message-State: AOAM533H0XwOhcTlkeyTjICP42dHwLKeISV4A8fmJN9YDJ2ElEQ9Zlth
+        agctk0Jyn2EL70xjAKhl/L3R30UHl603Jg==
+X-Google-Smtp-Source: ABdhPJxvpRTEoQR6qJHWSgZuCdsEnR0u9AQNiAWiUuPWQsrR83MfWf8joVjYut7Bb6IHAPuZMLdPYw==
+X-Received: by 2002:a9d:4d09:: with SMTP id n9mr19821365otf.334.1604512038468;
+        Wed, 04 Nov 2020 09:47:18 -0800 (PST)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id z49sm622889otb.23.2020.11.04.09.47.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Nov 2020 09:47:17 -0800 (PST)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 00/10] completion: bash: general cleanups and reorganizations
+Date:   Wed,  4 Nov 2020 11:47:06 -0600
+Message-Id: <20201104174716.783348-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-References: <20201104132428.GA2491189@coredump.intra.peff.net> <20201104132907.GC3030146@coredump.intra.peff.net>
-In-Reply-To: <20201104132907.GC3030146@coredump.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 4 Nov 2020 12:27:30 -0500
-Message-ID: <CAPig+cQ7t1by2X0xwddyo40sQdb9BPBKmERpqKR6oMD82kUwgg@mail.gmail.com>
-Subject: Re: [PATCH 3/3] format-patch: support --output option
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Postler <johannes.postler@txture.io>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 4, 2020 at 8:29 AM Jeff King <peff@peff.net> wrote:
-> [...]
-> The simplest solution would be to just disallow --output with
-> format-patch, as nobody ever intended it to work. However, we have
-> accidentally documented it (because format-patch includes diff-options).
-> And it does work with "git log", which writes the whole output to the
-> specified file. It's easy enough to make that work for format-patch,
-> too: it's really the same as --stdout, but pointed at a specific file.
-> [...]
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> diff --git a/builtin/log.c b/builtin/log.c
-> @@ -1942,11 +1942,18 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
-> +       } else if (rev.diffopt.close_file) {
-> +               /*
-> +                * The diff code parsed --output; it has already opened the
-> +                * file, but but we must instruct it not to close after each
-> +                * diff.
-> +                */
-> +               rev.diffopt.close_file = 0;
->         } else {
+This patch series removes redundant code (add vs. append functions) and
+reorganizes some ancient code that is only used in one place.
 
-The commit message's justification for supporting --output seems
-reasonable. However, my knee-jerk reaction to the implementation was
-that it feels overly magical and a bit too hacky. I can see the logic
-in it but it also leaves a bad taste when the implementation has to
-"undo" a side-effect of some other piece of code, which makes it feel
-unplanned and fragile. The question which popped into my mind
-immediately was "why not handle --output explicitly via
-builtin_format_patch_options[] along with other first-class options?".
-This review comment may or may not be actionable; it's just expressing
-surprise and a bit of nose-wrinkling I experienced.
 
-> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-> @@ -1919,6 +1919,39 @@ test_expect_success 'format-patch -o overrides format.outputDirectory' '
-> +test_expect_success 'format-patch forbids multiple outputs' '
-> +       rm -fr outfile outdir &&
-> +       test_must_fail \
-> +               git format-patch --stdout --output=outfile &&
-> +       test_must_fail \
-> +               git format-patch --stdout --output-directory=outdir &&
-> +       test_must_fail \
-> +               git format-patch --output=outfile --output-directory=outdir
-> +'
+Felipe Contreras (10):
+  test: completion: add run_func() helper
+  completion: bash: remove non-append functionality
+  completion: bash: get rid of _append() functions
+  completion: bash: get rid of any non-append code
+  completion: bash: do not modify COMP_WORDBREAKS
+  completion: bash: simplify _get_comp_words_by_ref()
+  completion: bash: refactor _get_comp_words_by_ref()
+  completion: bash: cleanup _get_comp_words_by_ref()
+  completion: bash: trivial cleanup
+  completion: bash: move _get_comp_words_by_ref()
 
-I would have expected to see this test added in patch [1/3], and then
-extended by this patch with the addition of the --output case(s).
+ contrib/completion/git-completion.bash | 271 +++++++++----------------
+ t/t9902-completion.sh                  |  81 +++-----
+ 2 files changed, 129 insertions(+), 223 deletions(-)
+
+-- 
+2.29.2
+
