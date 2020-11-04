@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6F33C388F9
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 15:29:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57A10C4742C
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 15:29:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5822A2074F
+	by mail.kernel.org (Postfix) with ESMTP id F30212074B
 	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 15:29:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PLUFkQAn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nmsnTF5N"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730391AbgKDP3w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Nov 2020 10:29:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55184 "EHLO
+        id S1730402AbgKDP3x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Nov 2020 10:29:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730203AbgKDP3t (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Nov 2020 10:29:49 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9674C0613D4
+        with ESMTP id S1730381AbgKDP3s (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Nov 2020 10:29:48 -0500
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64916C0613D3
         for <git@vger.kernel.org>; Wed,  4 Nov 2020 07:29:48 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id n18so22479423wrs.5
+Received: by mail-wr1-x441.google.com with SMTP id 33so11691244wrl.7
         for <git@vger.kernel.org>; Wed, 04 Nov 2020 07:29:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=7P9hAwTawxl1QRpgSseEa6fuJdtQ4i65raTjuP5+wEQ=;
-        b=PLUFkQAnJu6j+BMs4AJzZiyDtHOejvdnomOuv378udhtg6c9kptAEG9ZWOoCCzzdJl
-         ArfM1u3qU373WGFnRanN4VljgHwXUkL8N5fno/brZ64ZuCq2+raK6hoxKfLnTcw1yX6A
-         XDGSfEteHYoocZvxnHQ3BS76IknLCpnz1CQJieNtlzWrvHnvDO34iPtJNM5vLv7++TYy
-         MTg/QAR67+bPeUh3KFph1WYkQR+D80FrGETD45NW0Llwcf+6uydhtZuTjYLYBG0t71Wc
-         GQSB8xYPWYmSpiixrWQIVRtuPKI9JknVQUXiG6+UYds/WsEBz9CaCf2AGIHtDnzVIsIb
-         3wig==
+        bh=ehdXjR7D2CjFEqsLmND7I0tV/HMIGU+V+ilDD5COgc8=;
+        b=nmsnTF5NVNCY3R0c4C1ewe78AcqiH5IcjHpkGQHQ1NEWXrMv9Zd4xHjwKMS5SUPTAe
+         4lDs/RDFNdI1c/TIbkccjefotroCxlZFUDVyJCWDzYAYHlaJZdPmuRgdFpuQc9yUWkyh
+         LbfGbX03cN/bbICai8oajNhGUEnJWb86eBzf9ubBAbzgnKpH3r9wu1yDuk/wo/vvT93O
+         p9ltULn9gPPD1sYI4aB91xtqTrUtPM5djwrekIY3JGiwPMbofw1Spx0JcZpdSpreHGrb
+         Dvyy4vwoII4C/dzSLAcX0CNuyjwJ7F3ZkYbN6X2m6REgHTzrWi51/75SgUE1eu8Y1uap
+         RXXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7P9hAwTawxl1QRpgSseEa6fuJdtQ4i65raTjuP5+wEQ=;
-        b=kn4i4Yr/tepcAI5XZccxXSaUG08CMoYMjBioOuIjVd/wMxjrYh0OVtnEs/JlIaOsHr
-         4syglfTsALRoQo9SRN4hbWomKG7gkFKKzUSoQIh20IiCN7rFOFEv3JZC5PNDHpa+aCT5
-         EG5RnlQ8uecUyj8WS2MYlMq7OwJAeUZDvNbNHpBWtZmCyM2ShtTLBsMNknnqAuWWJo3y
-         81jsu38a1A7iDkBYT8nlSu5FdgFF69hx6QSldJxQtXNY2QOeYazoJXmxvQhN2giBCTzD
-         VZJE31HuFo+RZbWe9/JPU90lXu+xPoi42nsW54xlsS8E3Y446i6bxn4W0agBdjYVhBI2
-         c/lw==
-X-Gm-Message-State: AOAM531B/tF6rbfU2dbTFPTadLYfZQBKfzUwWUQUGAeGfetKGVDuOxZV
-        AxYH5G0QipaTJ0UWpoAkTVNVYuiEVeo=
-X-Google-Smtp-Source: ABdhPJyEbxI9PuUqY2mY1eDocJqCQXf0C+8quhfFGhlseoAVP+FjSjc6QDTTVKqF3Vt+dKACv6McZQ==
-X-Received: by 2002:a5d:6287:: with SMTP id k7mr32430692wru.402.1604503785968;
-        Wed, 04 Nov 2020 07:29:45 -0800 (PST)
+        bh=ehdXjR7D2CjFEqsLmND7I0tV/HMIGU+V+ilDD5COgc8=;
+        b=IOIxpQWqY+TdrJ1PfS3jWv65FRi7IVIev6sWiCD/P32QjXb5C4tlzqofrxFBhwPvEw
+         a2crEHWKNv/oDmwIebPrp0PBizfvNsLDpe3tf4Vn8HxD2L1+J3cXWf4P9+L9LT/vLF4W
+         bmzB4yp0UN+71Z0poMbrd8LtmFYvPVUdBIwBBK+ayjTBUOsFyvOy5cOhu80TMQAR0d5U
+         Bj6h6oEWAM8+/jX7h6Ujd1SObAJ9SRBgBd3NlkWL0sFMzQ/Vd2A7yLX0jlF0ugXHyofw
+         /nMU4L6T1m9kep9JM2H4OTSL+ynYBo612rDDuYTAJDUhDF2mDaHWJrxZZrMSJeXtE1EX
+         zS5A==
+X-Gm-Message-State: AOAM531zZXC4N5Ld134Cf7eLfJWWGG9ekvXkg5QXP66niHhQV6HsTRM9
+        nW+Etd2prlbxgSVEVh/FkJQsq61/51E=
+X-Google-Smtp-Source: ABdhPJwdIkkNFfKLIViKn6IPSfQnMAGrwSHKD/9g6yvjomMwAnG0VmvSqx9ILhQMfzNj4sTigFFaHg==
+X-Received: by 2002:a5d:4103:: with SMTP id l3mr32815826wrp.260.1604503786927;
+        Wed, 04 Nov 2020 07:29:46 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b63sm2971784wme.9.2020.11.04.07.29.45
+        by smtp.gmail.com with ESMTPSA id f8sm2939007wrt.88.2020.11.04.07.29.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2020 07:29:45 -0800 (PST)
-Message-Id: <076d212915c9a1706d18c5b1829bf0bf22bf5095.1604503780.git.gitgitgadget@gmail.com>
+        Wed, 04 Nov 2020 07:29:46 -0800 (PST)
+Message-Id: <faae3ccff53b83aac3b8998fc5259f319fd80fc4.1604503780.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.773.v2.git.1604503780.gitgitgadget@gmail.com>
 References: <pull.773.git.1603807337.gitgitgadget@gmail.com>
         <pull.773.v2.git.1604503780.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 04 Nov 2020 15:29:39 +0000
-Subject: [PATCH v2 3/4] rebase -i: use struct object_id when writing state
+Date:   Wed, 04 Nov 2020 15:29:40 +0000
+Subject: [PATCH v2 4/4] rebase -i: simplify get_revision_ranges()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,75 +79,58 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Rather than passing a string around pass the struct object_id that the
-string was created from call oid_hex() when we write the file.
+Now that all the external users of head_hash have been converted to
+use a opts->orig_head instead we can stop returning head_hash from
+get_revision_ranges().
+
+Because we want to pass the full object names back to the caller in
+`revisions` the find_unique_abbrev_r() call that was used to initialize
+`head_hash` is replaced with oid_to_hex().
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- builtin/rebase.c | 5 +++--
- sequencer.c      | 5 +++--
- sequencer.h      | 2 +-
- 3 files changed, 7 insertions(+), 5 deletions(-)
+ builtin/rebase.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 4e4a5e774e..28e7b7f5ce 100644
+index 28e7b7f5ce..17450e9d9e 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -296,7 +296,8 @@ static int get_revision_ranges(struct commit *upstream, struct commit *onto,
+@@ -270,15 +270,14 @@ static int edit_todo_file(unsigned flags)
  }
  
- static int init_basic_state(struct replay_opts *opts, const char *head_name,
--			    struct commit *onto, const char *orig_head)
-+			    struct commit *onto,
-+			    const struct object_id *orig_head)
+ static int get_revision_ranges(struct commit *upstream, struct commit *onto,
+-			       struct object_id *orig_head, char *head_hash,
+-			       char **revisions, char **shortrevisions)
++			       struct object_id *orig_head, char **revisions,
++			       char **shortrevisions)
  {
- 	FILE *interactive;
+ 	struct commit *base_rev = upstream ? upstream : onto;
+ 	const char *shorthead;
  
-@@ -340,7 +341,7 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+-	find_unique_abbrev_r(head_hash, orig_head, GIT_MAX_HEXSZ);
+ 	*revisions = xstrfmt("%s...%s", oid_to_hex(&base_rev->object.oid),
+-						   head_hash);
++			     oid_to_hex(orig_head));
+ 
+ 	shorthead = find_unique_abbrev(orig_head, DEFAULT_ABBREV);
+ 
+@@ -328,7 +327,6 @@ static void split_exec_commands(const char *cmd, struct string_list *commands)
+ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+ {
+ 	int ret;
+-	char head_hash[GIT_MAX_HEXSZ];
+ 	char *revisions = NULL, *shortrevisions = NULL;
+ 	struct strvec make_script_args = STRVEC_INIT;
+ 	struct todo_list todo_list = TODO_LIST_INIT;
+@@ -336,7 +334,7 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+ 	struct string_list commands = STRING_LIST_INIT_DUP;
+ 
+ 	if (get_revision_ranges(opts->upstream, opts->onto, &opts->orig_head,
+-				head_hash, &revisions, &shortrevisions))
++				&revisions, &shortrevisions))
+ 		return -1;
  
  	if (init_basic_state(&replay,
- 			     opts->head_name ? opts->head_name : "detached HEAD",
--			     opts->onto, head_hash)) {
-+			     opts->onto, &opts->orig_head)) {
- 		free(revisions);
- 		free(shortrevisions);
- 
-diff --git a/sequencer.c b/sequencer.c
-index f79c3df861..2037f0ba66 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2692,7 +2692,7 @@ static void write_strategy_opts(struct replay_opts *opts)
- }
- 
- int write_basic_state(struct replay_opts *opts, const char *head_name,
--		      struct commit *onto, const char *orig_head)
-+		      struct commit *onto, const struct object_id *orig_head)
- {
- 	if (head_name)
- 		write_file(rebase_path_head_name(), "%s\n", head_name);
-@@ -2700,7 +2700,8 @@ int write_basic_state(struct replay_opts *opts, const char *head_name,
- 		write_file(rebase_path_onto(), "%s\n",
- 			   oid_to_hex(&onto->object.oid));
- 	if (orig_head)
--		write_file(rebase_path_orig_head(), "%s\n", orig_head);
-+		write_file(rebase_path_orig_head(), "%s\n",
-+			   oid_to_hex(orig_head));
- 
- 	if (opts->quiet)
- 		write_file(rebase_path_quiet(), "%s", "");
-diff --git a/sequencer.h b/sequencer.h
-index ea56825488..cf201f2406 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -227,7 +227,7 @@ int read_author_script(const char *path, char **name, char **email, char **date,
- 		       int allow_missing);
- void parse_strategy_opts(struct replay_opts *opts, char *raw_opts);
- int write_basic_state(struct replay_opts *opts, const char *head_name,
--		      struct commit *onto, const char *orig_head);
-+		      struct commit *onto, const struct object_id *orig_head);
- void sequencer_post_commit_cleanup(struct repository *r, int verbose);
- int sequencer_get_last_command(struct repository* r,
- 			       enum replay_action *action);
 -- 
 gitgitgadget
-
