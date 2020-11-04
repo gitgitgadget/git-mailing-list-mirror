@@ -2,66 +2,68 @@ Return-Path: <SRS0=V3lj=EK=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFF4FC2D0A3
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 17:03:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0DB5C2D0A3
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 17:13:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A80120732
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 17:03:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AE0042075E
+	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 17:13:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731834AbgKDRDf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Nov 2020 12:03:35 -0500
-Received: from mail-ej1-f65.google.com ([209.85.218.65]:34720 "EHLO
-        mail-ej1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731607AbgKDRDf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Nov 2020 12:03:35 -0500
-Received: by mail-ej1-f65.google.com with SMTP id o9so28689918ejg.1
-        for <git@vger.kernel.org>; Wed, 04 Nov 2020 09:03:34 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UoUCDcsnbEpJ2pH4+naH9GV4w2OYMsssMUs+daxUzO4=;
-        b=aQeallli7pIENdFeqkNsCcZqc0XKrvu48v5s86ZthCE8q1WDZCp+NSad0IMPiYfMz3
-         EdJsgnKsxok9ZqiCpR63Th3xtiE2F9LsZrpoHx9tf4vz4QeMuV6L3WVsvakqq1fLFNON
-         T+x77d9+9tJM9M4Y3kLaB9IOaxpa1ujvXLM9e4pfYRuJLJulv6bVFaOyQUQOflEuCSps
-         +YqC0XP7DkqWhXRw7KMXQ0wKgLOl84afx7ipqqnQmQzBUvBNZyyViD2LFa1ZgV2wQrPX
-         b/jm9KgCrmPWyWNZmT98moYM2SSYIuQ6QqYUeB9HCHbacmojC+y3sCX1mobwBBL89n7F
-         r1NA==
-X-Gm-Message-State: AOAM530JXAHLnpLZowE48KG8KbpxMSb8Tm+4eynwoRzVBe5cC2IOFWAZ
-        Bx2irtis0mjfD5HKvOq9crndhF73H9DVF9JcH6Y+trLw
-X-Google-Smtp-Source: ABdhPJzcuJ4BfQXcdIIf81N13cdyu556EYICZqJFSOeAnGezHfRtnIF5wErwlWqjYJ2SEjqz5wsN5MCTGv1NrEeQS/0=
-X-Received: by 2002:a17:906:c041:: with SMTP id bm1mr25350340ejb.202.1604509413357;
- Wed, 04 Nov 2020 09:03:33 -0800 (PST)
-MIME-Version: 1.0
-References: <20201104132428.GA2491189@coredump.intra.peff.net> <20201104132737.GB3030146@coredump.intra.peff.net>
-In-Reply-To: <20201104132737.GB3030146@coredump.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 4 Nov 2020 12:03:22 -0500
-Message-ID: <CAPig+cT8BTTwcORWB1zNWFy8DaohyibWFxojDiU-Na933abRqA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] format-patch: tie file-opening logic to output_directory
-To:     Jeff King <peff@peff.net>
+        id S1731175AbgKDRNq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Nov 2020 12:13:46 -0500
+Received: from cloud.peff.net ([104.130.231.41]:47508 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730362AbgKDRNq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Nov 2020 12:13:46 -0500
+Received: (qmail 10387 invoked by uid 109); 4 Nov 2020 17:13:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 04 Nov 2020 17:13:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12290 invoked by uid 111); 4 Nov 2020 17:13:45 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 04 Nov 2020 12:13:45 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 4 Nov 2020 12:13:44 -0500
+From:   Jeff King <peff@peff.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Johannes Postler <johannes.postler@txture.io>,
         Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH 1/3] format-patch: refactor output selection
+Message-ID: <20201104171344.GA3047090@coredump.intra.peff.net>
+References: <20201104132428.GA2491189@coredump.intra.peff.net>
+ <20201104132522.GA3030146@coredump.intra.peff.net>
+ <CAPig+cRG4uPL1TDpEOgOZwSEJfyt-d0XmsVz3hcCebgwbO_v_A@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPig+cRG4uPL1TDpEOgOZwSEJfyt-d0XmsVz3hcCebgwbO_v_A@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 4, 2020 at 8:27 AM Jeff King <peff@peff.net> wrote:
-> In format-patch we're either outputting to stdout or to individual files
-> in an output directory (which maybe just "./"). Our logic for whether to
+On Wed, Nov 04, 2020 at 12:01:53PM -0500, Eric Sunshine wrote:
 
-s/maybe/may be/
+> > diff --git a/builtin/log.c b/builtin/log.c
+> > @@ -1942,20 +1942,20 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+> > +       if (use_stdout + !!output_directory > 1)
+> > +               die(_("specify only one of --stdout, --output, and --output-directory"));
+> 
+> Is mention of --output intentional here? The commit message only talks
+> about --stdout and --output-directory.
 
-> open a new file for each patch is checked with "!use_stdout", but it is
-> equally correct to check for a non-NULL output_directory.
->
-> The distinction will matter when we add a new single-stream output in a
-> future patch, when only one of the three methods will want individual
-> files. Let's swap the logic here in preparation.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+Whoops, thanks. I wrote this line after adding the new feature, but
+forgot to revise it when I rebased.
+
+> It's subjective, but "mutually exclusive" sounds a bit more consistent
+> with other similar error messages elsewhere:
+> 
+>     --stdout, --output, and --output-directory are mutually exclusive
+
+Yeah, that reads better. I remember I reworded it a few times to try to
+get it not-awkward, but I'm not sure how I failed to come up with that
+quite obvious wording. ;)
+
+-Peff
