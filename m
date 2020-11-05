@@ -2,105 +2,125 @@ Return-Path: <SRS0=KwJF=EL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C443DC4741F
-	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 21:10:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB079C388F7
+	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 21:16:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 606CC20724
-	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 21:10:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6892F20724
+	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 21:16:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="Fha4rnEU"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rkzqc79h"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732120AbgKEVKy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Nov 2020 16:10:54 -0500
-Received: from avasout03.plus.net ([84.93.230.244]:34338 "EHLO
-        avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726801AbgKEVKx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Nov 2020 16:10:53 -0500
-Received: from [10.0.2.15] ([195.213.6.50])
-        by smtp with ESMTPA
-        id amWxkLtVD99nqamWykhVlp; Thu, 05 Nov 2020 21:10:52 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1604610652; bh=Z7LKfJ7KQswo/vkM/0V0ZpAtVcTp579Ej3IP6KbpB8M=;
-        h=To:Cc:From:Subject:Date;
-        b=Fha4rnEUP1CgCZLT/507FbYBtt115V9drN0JMmbmTw7HYOlenNXyWlItHWhhyZ4yn
-         rQJIsgvwlDMxd2SR+aCKFvTibP2BsFdCFTHH9/Cot8Y4eJpj92xaiTIaOz+584aUlt
-         GGwA1/ac8qZ6Yn0UFsnTQcuthlXdMMRtp3Q01/9HMqxngoIFHwHCeWb9wlUaEAJ/pq
-         yP650HVN2qsTLePcBi5TWx7CGgLZDRhetAWI5fbm0X6UdaOYp9mai6jlSuIGZlmKao
-         fJTu8SJZMD1qzCwfDuZZSdabJ6HREO32/IaYoM6H02WZ8jbE8VXUCrRvUCGiMUVy5k
-         WgpVv+cskcIpQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=Uoz4y94B c=1 sm=1 tr=0
- a=n8v6pzUV7wpcOOJT0hzGjw==:117 a=n8v6pzUV7wpcOOJT0hzGjw==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=GBawf_CGCaMNpgGozlEA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22 a=pHzHmUro8NiASowvMSCR:22 a=xoEH_sTeL_Rfw54TyV31:22
-X-AUTH: ramsayjones@:2500
-To:     GIT Mailing-list <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH 8/8] Makefile: conditionally include GIT-VERSION-FILE
-Message-ID: <75576fd6-29d7-9700-22a0-bcb30b6ba6bb@ramsayjones.plus.com>
-Date:   Thu, 5 Nov 2020 21:10:51 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1731965AbgKEVQ5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Nov 2020 16:16:57 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52872 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726729AbgKEVQ5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Nov 2020 16:16:57 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F132591315;
+        Thu,  5 Nov 2020 16:16:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=wTp0Bdh3uZ6+C+6IF+Q7qs4dx1Q=; b=rkzqc7
+        9hyoY5vNYwus6b8pDjPR55QrUTQmHXMyc8Tn9o8jPumpH/4Zd00Y7+OpaeGi1P6Q
+        /hCVge176F63/TJuov4rbKBnGs4U8FVDuDQUo1xrrzjh7+cfogyUcN9YX+5L/0g/
+        IEt7Cgp/DSrVHgP4mF+VZvoL4PptEFjOWZtBM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZGINZOfP7pUm8jqmrUQOvAE6+jwG+See
+        u5XQKr0PHUK0gz1+yvwLYtTKI+Ezc5ULN0uBgbIQahDS4sXAp3oEZtN1dwwy3o/z
+        p40ZVMHxRWvBRc+ppb3mORo4ABY9K0YQtogIX2eVVjCN91ivy7YfJfWNfLOkNisX
+        /VJ+IUdJCR4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E88F991314;
+        Thu,  5 Nov 2020 16:16:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6024291313;
+        Thu,  5 Nov 2020 16:16:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Hu Keping <hukeping@huawei.com>, git@vger.kernel.org,
+        zhengjunling@huawei.com, zhuangbiaowei@huawei.com,
+        git@stormcloud9.net, rafa.almas@gmail.com, l.s.r@web.de
+Subject: Re: [PATCH] Lengthening FORMAT_PATCH_NAME_MAX to 80
+References: <20201105201548.2333425-1-hukeping@huawei.com>
+        <20201105150149.GA107127@coredump.intra.peff.net>
+Date:   Thu, 05 Nov 2020 13:16:53 -0800
+In-Reply-To: <20201105150149.GA107127@coredump.intra.peff.net> (Jeff King's
+        message of "Thu, 5 Nov 2020 10:01:49 -0500")
+Message-ID: <xmqqimajijwa.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfBmjmEC5qjKLEfaqqNGnmRdZ2gfkgQKrykgzMIbp3SLedPUJJ3PEqqd34EzZYszE5iRV/EppTt01qnBgduH3TDwsbjqDenAU0E8OPEk8C/Qe8YrtJfaD
- ReerLTfG1E9oSTcdCF2zA0kuMd5JYu9XWrwIxjzpOC9jjlDNDaKGXi8BWlsfTTwj2M8/kKYDUtF2bw==
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3AAC6406-1FAC-11EB-88F5-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
-The 'clean' target is still noticeably slow on cygwin, despite the
-improvements made by previous patches. For example, the second
-invocation of 'make clean' below:
+>> Considered the prefix patch number "0001-" would take 5 characters, increase
+>> the FORMAT_PATCH_NAME_MAX to 80.
+>
+> As the code is written now, the length also includes the ".patch"
+> suffix, as well as an extra byte (maybe for a NUL? Once upon a time I
+> imagine we used static buffers, but these days it's all in a strbuf).
+>
+> A simple test with:
+>
+>   git init
+>   for i in $(seq 8); do printf 1234567890; done |
+>   git commit --allow-empty -F -
+>   git format-patch -1
+>
+> shows us generating:
+>
+>   0001-1234567890123456789012345678901234567890123456789012.patch
+>
+> So that's only 52 characters, from our constant of 64. Bumping to 80
+> gives us 66, which is reasonable though probably still involves
+> occasional truncation. But maybe keeping the total length to 80 (79,
+> really, because of the extra byte) may be worth doing.
+>
+> Which is all a long-winded way of saying that your patch seems
+> reasonable to me.
 
-  $ make clean >/dev/null 2>&1
-  $ make clean
-  GIT_VERSION = 2.29.0.7.g273f7f9394
-  ...
-  $
+A devil's advocate thinks that we should shorten it (and rename it
+to format-patch-subject-prefix-length or something) instead.  That
+way, "ls" output can show more than one files on a single line even
+on a 80-column terminal.  The leading digits already guarantee the
+uniqueness anyway.
 
-has been timed at 6.430s on my laptop (on old core i5-4200M @ 2.50GHz,
-8GB RAM, 1TB HDD).
+I do not mind getting rid of the "FORMAT_PATCH_NAME_MAX" constant
+and replacing it with a variable that defaults to 64 and can be
+tweaked by a command line option and/or a configuration variable.
+It does not feel it is worth the effort to replace one hardcoded
+constant with another hardcoded constant.
 
-Notice that the 'clean' target is still causing the $(GIT_VERSION) make
-variable to be set (executing the GIT-VERSION-GEN script in the
-process). However, the last few commits have removed all dependency on
-the $(GIT_VERSION) variable from the 'clean' target. The calculation of
-the git version, in order to set this variable, is thus wasted effort.
+> Looking at the code which uses the constant, I suspect it could also be
+> made simpler:
+>
+>   - the PATH_MAX check in open_next_file() seems pointless. Once upon a
+>     time it mattered for fitting into a PATH_MAX buffer, but these days
+>     we use a dynamic buffer anyway. We are probably better off to just
+>     feed the result to the filesystem and see if it complains (since
+>     either way we are aborting; I'd feel differently if we adjusted our
+>     truncation size)
+>
+>   - the logic in fmt_output_subject() could probably be simpler if the
+>     constant was "here's how long the subject should be", not "here's
+>     how long the whole thing must be".
+>
+> But those are both orthogonal to your patch and can be done separately.
 
-In order to eliminate such wasted effort, use the value of the internal
-$(MAKECMDGOALS) variable to only '-include GIT-VERSION-FILE' when the
-target is not 'clean'. (This drops the time down to 4.064s, on my laptop,
-giving an improvement of 36.80%).
-
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
- Makefile | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/Makefile b/Makefile
-index bc9ce28bc3..ca65259e10 100644
---- a/Makefile
-+++ b/Makefile
-@@ -502,7 +502,9 @@ all::
- 
- GIT-VERSION-FILE: FORCE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
-+ifneq ($(MAKECMDGOALS),clean)
- -include GIT-VERSION-FILE
-+endif
- 
- # Set our default configuration.
- #
--- 
-2.29.0
+Yes, these clean-ups seem worth doing.
