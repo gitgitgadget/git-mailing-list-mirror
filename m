@@ -2,104 +2,82 @@ Return-Path: <SRS0=KwJF=EL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3849DC4741F
-	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 21:22:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1D8AC388F7
+	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 21:24:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C6BCD2083B
-	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 21:22:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5C4C920724
+	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 21:24:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QOnrPT74"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="blewUlMg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732419AbgKEVWb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Nov 2020 16:22:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52938 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732265AbgKEVW1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Nov 2020 16:22:27 -0500
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8607FC0613CF
-        for <git@vger.kernel.org>; Thu,  5 Nov 2020 13:22:27 -0800 (PST)
-Received: by mail-oi1-x241.google.com with SMTP id 9so3210378oir.5
-        for <git@vger.kernel.org>; Thu, 05 Nov 2020 13:22:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=wD8FmPTy457oE43zg+PyRa4eu6DxscZ88XS1hzN6KhI=;
-        b=QOnrPT74rZCeIK/HgOM7xxmBM6HtvBtUNzN3qq1Mlu1Q1Tlp3W1eybePWeN/bHbUrg
-         A4EvCy5yheklc25dmKBnupkplAW5gQOrSK1Nw0PGn0DvNtXbPVO3torC3FJswwEaqEq1
-         9x2zVddIZ+T21XncN6nhV6l1FtjACZUAtvdsYxbTqZG7li3FmRNbAlmcyzytKPlKKmZF
-         NmIPamwxVJB78/Zg1qC37raYmzUPk38rA/4eh4gfh8PoLw678iVvuzBreh3xjMP3ZmnM
-         MxYGWaA2fF07M4o/mLgQeMKrpKVF+AgIccfABjVFJHbaa+dBc8hi73sxOJd3MuXHSUyG
-         2yug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=wD8FmPTy457oE43zg+PyRa4eu6DxscZ88XS1hzN6KhI=;
-        b=K/R7mZqX1eZb8/mS2xGjfah2Oviie5oyWRWNYOX6OODdzIak676neEyWl6W4WFv/Nk
-         2699+zIfXBN0giJuy3rk6AAtgg0TL4LBD/JDoSbZa3yOo6uLas22JnoXXt3MqRVchhto
-         7r0fWcdAz29Mocrd87SNschCciYGCFnV0ATqMpGkym4030Fy3e0hc+B+N7S38ibwaK0Y
-         AU2sNOtJm2e9mJ1S5+pDZKik231G/A61mDNpHfnxT/wNvbCd09f2MTVgtSyT2X+zFkdO
-         phnhXDYWa3qHEqT95IB8djKr4sHcuoYn0Ei0ecLlAqg/jcREcM/oFbyCj+5owzjdWgOw
-         XImw==
-X-Gm-Message-State: AOAM5319DWSPvdBQlNWH7pLUn22bnGAqG+z+ya7SIE/i7QRSBSpm6Chw
-        u6l11BjqiBcVgiyrYvl2l3jiYSfsO1rVChha6Y4=
-X-Google-Smtp-Source: ABdhPJxfmMJk6dLtHKa2JOqhukU3XO8forlowqK55K1IW/koVwftmxydwvm2jYMebv08emjOFYy60kehjrcMjFN4O6k=
-X-Received: by 2002:aca:3b0a:: with SMTP id i10mr915351oia.167.1604611346852;
- Thu, 05 Nov 2020 13:22:26 -0800 (PST)
+        id S1731234AbgKEVYW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Nov 2020 16:24:22 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62990 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726996AbgKEVYW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Nov 2020 16:24:22 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2A957F9E12;
+        Thu,  5 Nov 2020 16:24:20 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jZrwXzSh+XpuqlCe9aq2gDNJF8o=; b=blewUl
+        MgcNHjUCoZi5p8rqTWY0scA+3xYODXAXL1kv75YILrv985ZYUBFn2twR1EaRtBX9
+        7CKM09UGsHLfRqdFnL58K8JFwKVXWz8bcogT1n0uGDaqwyO2hwJjOZlRCaoO5Hs7
+        PABaFG2ymEUCiU2QxIfBYlbP0DVxjjOMp7Mcc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=C7dycR3cj8X9frw/fT8Y1xk8HqKEOta/
+        d5WqMglNqaCBsGrn+XD46EPNTXfRaG9kM7dqOHen8V28RRaQV5jXDP8BO7oOBtU0
+        gch81Z8t5NgiFy/HUz46M3zn8mcDo/KxqRHimRpGGVAPgMmeg02CyfKjQT2H6eZW
+        82sbKbupnUk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 22939F9E10;
+        Thu,  5 Nov 2020 16:24:20 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6CBC7F9E0F;
+        Thu,  5 Nov 2020 16:24:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 02/11] docs: new trace2.advertiseSID option
+References: <cover.1604006121.git.steadmon@google.com>
+        <cover.1604355792.git.steadmon@google.com>
+        <5d5097b67109554e0763724633810ea616b5e2b2.1604355792.git.steadmon@google.com>
+        <xmqq1rhaqfqg.fsf@gitster.c.googlers.com>
+        <20201105192847.GD36751@google.com>
+Date:   Thu, 05 Nov 2020 13:24:15 -0800
+In-Reply-To: <20201105192847.GD36751@google.com> (Josh Steadmon's message of
+        "Thu, 5 Nov 2020 11:28:47 -0800")
+Message-ID: <xmqqeel7ijk0.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.835.v3.git.git.1604343313.gitgitgadget@gmail.com>
- <pull.835.v4.git.git.1604535765.gitgitgadget@gmail.com> <20201105132909.GB91972@coredump.intra.peff.net>
- <xmqq8sbfk0ut.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq8sbfk0ut.fsf@gitster.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 5 Nov 2020 13:22:14 -0800
-Message-ID: <CABPp-BGFa_e-nncnCH5GSjhn47Sxf7Tpn7prsJCWiJo-SWoYNA@mail.gmail.com>
-Subject: Re: [PATCH v4 00/13] Add struct strmap and associated utility functions
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 42BF995A-1FAD-11EB-8AE0-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 5, 2020 at 12:25 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Jeff King <peff@peff.net> writes:
->
-> > Subject: [PATCH] shortlog: drop custom strset implementation
-> >
-> > We can use the strset recently added in strmap.h instead. Note that this
-> > doesn't have a "check_and_add" function. We can easily write the same
-> > thing using separate "contains" and "adds" calls. This is slightly less
-> > efficient, in that it hashes the string twice, but for our use here it
-> > shouldn't be a big deal either way.
-> >
-> > I did leave it as a separate helper function, though, since we use it in
-> > three separate spots (some of which are in the middle of a conditional).
->
-> It makes sense, but check_dup() sounds like its use pattern would be
->
->         if (check_dup(it) == NO_DUP)
->                 add(it);
->
-> where it is more like "add it but just once".
->
-> By the way, is a strset a set or a bag?  If it makes the second add
+Josh Steadmon <steadmon@google.com> writes:
 
-strset is a set; there is no way to get duplicate entries.
+> Yes this makes sense. Do you think it's worthwhile to move all the
+> session ID implementation out of trace2? Right now there are some
+> user-facing bits (environment variables for parent/child SID hierarchy)
+> that specifically mention trace2, and I believe that the repo tool is
+> using it to tie together logs produced by a single repo invocation.
 
-> an no-op, perhaps your check_dup() is what strset_add() should do
-> itself?  What builtin/shortlog.c::check_dup() does smells like it is
-> a workaround for the lack of a naturally-expected feature.
+If somebody other than trace2 starts using session ID, or if we
+introduce a mechanism that allows a session ID assigned without
+enabling the rest of the trace2 machinery, such a separation may
+make sense at the implementation level, but until then, I do not
+think it is worth doing.
 
-Is the expectation that strset_add() would return a boolean for
-whether a new entry was added?
