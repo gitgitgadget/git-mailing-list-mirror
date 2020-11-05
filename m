@@ -2,132 +2,153 @@ Return-Path: <SRS0=KwJF=EL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF85CC388F7
-	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 19:28:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA096C388F7
+	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 19:29:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 48C722078E
-	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 19:28:55 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="sfRV0on+"
+	by mail.kernel.org (Postfix) with ESMTP id 6D3B22078E
+	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 19:29:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732033AbgKET2y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Nov 2020 14:28:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35236 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727851AbgKET2y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Nov 2020 14:28:54 -0500
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BDEEC0613CF
-        for <git@vger.kernel.org>; Thu,  5 Nov 2020 11:28:54 -0800 (PST)
-Received: by mail-pf1-x444.google.com with SMTP id z3so2100292pfz.6
-        for <git@vger.kernel.org>; Thu, 05 Nov 2020 11:28:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=axiZ5jmvr3KrsRLZ2ZX12Me10ioKYUvuB2mBbnKj11o=;
-        b=sfRV0on+cD2N/Y/H710X1D956enNiRd9RMZKxkoaYL7gbwlrZjCTsgiKU3dcJ+1u9O
-         CIZ8IRlMfCVDHD6PYJMSOrBZSm6ut2AiLsAiTcK7EQEyDg2AlB6KJhKDAKzcBuzRzyw3
-         cj/AHHOlSEItt5+tyAf89/1yVWh7pJCXXmVsryj8kLUqCE6PNunBphGVGntxVHF4o6zv
-         dmAC+Uy4tJINz4/Sf902QfjrA6x4/t4FGQFWXLK045tqNIeV2/Ok0ziuYrdUpEjaBYTP
-         gglfK5MPQRFec8Q/GauQ2Xy0gsY8z7GN0M/K08HNeEs6uF/Lx/rKHz/vO4h8AFOQgvs2
-         S2VQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=axiZ5jmvr3KrsRLZ2ZX12Me10ioKYUvuB2mBbnKj11o=;
-        b=RUm6F3Ci+eXBGT4IPJdn3oLdWVBERL0XANgA1nQv3oyDzmeHBi2GyvpUHj8mGeATXH
-         4YJE5PaWLZHhqhOyA/tXXoDb31fp0a4SxxcMrjmijfffwH94c93d7J2CrTY38DRQLZI+
-         W6M08FHDZ3jTG2YFb2WE2HoR/Kjpo0FrS2NJa2mWL1HtwziuLl3AZtQA6FKhmLg3Dyep
-         qYs9Vuj3OASatDK+WfhnyovCLXxvsK2cq9CaPru/1br2OhC6m/YD3cAH0cOck4Zk6Adx
-         2hVvp++JcPUgibQmgmKST4thHCJRSwnMvm32+xyF4h+g34t1lMU30Flh2U1f9IcIqd1E
-         Bzqw==
-X-Gm-Message-State: AOAM530/WmlOm+adAal6DQI3MqBtsk+tFUiFVn9dbJleTxTWUtXXRkuS
-        YsNxkv0u4Q52UyEMEgIaYeysVQ==
-X-Google-Smtp-Source: ABdhPJzbD2xRi3L3y9R+xay063oTV2Mds4YcthYiALl4//JGMC16nGkg404q1NCNjjp3Q3z6xhN8Qg==
-X-Received: by 2002:a63:5fc3:: with SMTP id t186mr3778262pgb.187.1604604533327;
-        Thu, 05 Nov 2020 11:28:53 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:1ea0:b8ff:fe74:b4c1])
-        by smtp.gmail.com with ESMTPSA id 26sm3198586pgm.92.2020.11.05.11.28.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Nov 2020 11:28:52 -0800 (PST)
-Date:   Thu, 5 Nov 2020 11:28:47 -0800
-From:   Josh Steadmon <steadmon@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1732107AbgKET3C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Nov 2020 14:29:02 -0500
+Received: from cloud.peff.net ([104.130.231.41]:49128 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727851AbgKET3C (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Nov 2020 14:29:02 -0500
+Received: (qmail 17313 invoked by uid 109); 5 Nov 2020 19:29:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 05 Nov 2020 19:29:02 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25830 invoked by uid 111); 5 Nov 2020 19:29:01 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Nov 2020 14:29:01 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 5 Nov 2020 14:29:01 -0500
+From:   Jeff King <peff@peff.net>
+To:     Patrick Steinhardt <ps@pks.im>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 02/11] docs: new trace2.advertiseSID option
-Message-ID: <20201105192847.GD36751@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <cover.1604006121.git.steadmon@google.com>
- <cover.1604355792.git.steadmon@google.com>
- <5d5097b67109554e0763724633810ea616b5e2b2.1604355792.git.steadmon@google.com>
- <xmqq1rhaqfqg.fsf@gitster.c.googlers.com>
+Subject: Re: [PATCH 1/2] update-ref: Allow creation of multiple transactions
+Message-ID: <20201105192901.GA121650@coredump.intra.peff.net>
+References: <cover.1604501265.git.ps@pks.im>
+ <eec7c2e8ec3e49b34066190d59fc45276bed637f.1604501265.git.ps@pks.im>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq1rhaqfqg.fsf@gitster.c.googlers.com>
+In-Reply-To: <eec7c2e8ec3e49b34066190d59fc45276bed637f.1604501265.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020.11.03 13:42, Junio C Hamano wrote:
-> Josh Steadmon <steadmon@google.com> writes:
-> 
-> > Document a new config option that allows users to determine whether or
-> > not to advertise their trace2 session IDs to remote Git clients and
-> > servers.
-> 
-> I do not think placeing this in the trace2 hierarchy is a good idea.
-> 
-> It is not like concept of "session" belongs to trace2; each
-> operation we perform inherently is done on behalf of a session.
-> The trace2 subsystem may have been the first to externalize the
-> concept, but even after trace2 gets superseded, we would want to
-> key our log records with some "session ID".  After we introduce
-> an improved mechanism that is successor to trace2, we still would
-> want to exchange some session ID if the advertiseSID option the
-> users define in their repository today (well, maybe in 3 months
-> after this series lands in a released version and widely
-> deployed), no?
+On Wed, Nov 04, 2020 at 03:57:17PM +0100, Patrick Steinhardt wrote:
 
-Yes this makes sense. Do you think it's worthwhile to move all the
-session ID implementation out of trace2? Right now there are some
-user-facing bits (environment variables for parent/child SID hierarchy)
-that specifically mention trace2, and I believe that the repo tool is
-using it to tie together logs produced by a single repo invocation.
-
-> We are not exposing the session ID anywhere but the transports, so
-> how about calling it transport.advertiseSID, perhaps?
-
-Yeah, this sounds good to me. Will change in V3.
-
-> We also may want to call that just "session ID", not "trace2
-> session ID" in the description.
+> While git-update-ref has recently grown commands which allow interactive
+> control of transactions in e48cf33b61 (update-ref: implement interactive
+> transaction handling, 2020-04-02), it is not yet possible to create
+> multiple transactions in a single session. To do so, one currently still
+> needs to invoke the executable multiple times.
 > 
-> Thanks.
-> 
-> > Signed-off-by: Josh Steadmon <steadmon@google.com>
-> > ---
-> >  Documentation/config/trace2.txt | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> >
-> > diff --git a/Documentation/config/trace2.txt b/Documentation/config/trace2.txt
-> > index 01d3afd8a8..3f2e3b4425 100644
-> > --- a/Documentation/config/trace2.txt
-> > +++ b/Documentation/config/trace2.txt
-> > @@ -69,3 +69,7 @@ trace2.maxFiles::
-> >  	write additional traces if we would exceed this many files. Instead,
-> >  	write a sentinel file that will block further tracing to this
-> >  	directory. Defaults to 0, which disables this check.
-> > +
-> > +trace2.advertiseSID::
-> > +	Boolean. When true, client and server processes will advertise their
-> > +	trace2 session IDs to their remote counterpart. Defaults to false.
+> This commit addresses this shortcoming by allowing the "start" command
+> to create a new transaction if the current transaction has already been
+> either committed or aborted.
+
+Thanks for working on this. The amount of change needed is indeed quite
+pleasant.
+
+> diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-ref.txt
+> index d401234b03..48b6683071 100644
+> --- a/Documentation/git-update-ref.txt
+> +++ b/Documentation/git-update-ref.txt
+> @@ -125,7 +125,8 @@ option::
+>  start::
+>  	Start a transaction. In contrast to a non-transactional session, a
+>  	transaction will automatically abort if the session ends without an
+> -	explicit commit.
+> +	explicit commit. This command may create a new empty transaction when
+> +	the current one has been committed or aborted already.
+
+Reading this made me wonder what would happen if we send a "start" when
+the current one _hasn't_ been committed or aborted. I.e., what does:
+
+  git update-ref --stdin <<EOF
+  start
+  create refs/heads/foo ...
+  start
+  commit
+  EOF
+
+do? It turns out that the second start is ignored totally (and the
+commit does indeed update foo). I wonder if we ought to complain about
+it. But that is completely orthogonal to your patch. The behavior is the
+same before and after.
+
+> --- a/builtin/update-ref.c
+> +++ b/builtin/update-ref.c
+> @@ -446,7 +446,18 @@ static void update_refs_stdin(void)
+>  			state = cmd->state;
+>  			break;
+>  		case UPDATE_REFS_CLOSED:
+> -			die("transaction is closed");
+> +			if (cmd->state != UPDATE_REFS_STARTED)
+> +				die("transaction is closed");
+> +
+> +			/*
+> +			 * Open a new transaction if we're currently closed and
+> +			 * get a "start".
+> +			 */
+> +			state = cmd->state;
+> +			transaction = ref_transaction_begin(&err);
+> +			if (!transaction)
+> +				die("%s", err.buf);
+> +
+
+Very nice. This duplicates the state and transaction setup at the start
+of the function, which made me wonder if we could do this:
+
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index bb65129012..140f0d30e9 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -385,14 +385,10 @@ static const struct parse_cmd {
+ static void update_refs_stdin(void)
+ {
+ 	struct strbuf input = STRBUF_INIT, err = STRBUF_INIT;
+-	enum update_refs_state state = UPDATE_REFS_OPEN;
++	enum update_refs_state state = UPDATE_REFS_CLOSED;
+ 	struct ref_transaction *transaction;
+ 	int i, j;
+ 
+-	transaction = ref_transaction_begin(&err);
+-	if (!transaction)
+-		die("%s", err.buf);
+-
+ 	/* Read each line dispatch its command */
+ 	while (!strbuf_getwholeline(&input, stdin, line_termination)) {
+ 		const struct parse_cmd *cmd = NULL;
+
+and just have it auto-open. But of course that doesn't work because we
+might not see an "open" command at all. Traditional callers will start
+with create/update/etc, and our "auto-open" would complain.
+
+> +test_expect_success 'transaction can create and delete' '
+> +	cat >stdin <<-EOF &&
+> +	start
+> +	create refs/heads/create-and-delete $A
+> +	commit
+> +	start
+> +	delete refs/heads/create-and-delete $A
+> +	commit
+> +	EOF
+> +	git update-ref --stdin <stdin >actual &&
+> +	printf "%s: ok\n" start commit start commit >expect &&
+> +	test_path_is_missing .git/refs/heads/create-and-delete
+> +'
+
+The tests all look quite reasonable to me. Touching .git/refs like this
+is a bit gross (and something we may have to deal with if we introduce
+reftables, etc). But it's pretty pervasive in this file, so matching
+the existing style is the best option for now.
+
+-Peff
