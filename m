@@ -2,86 +2,94 @@ Return-Path: <SRS0=KwJF=EL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D57CC388F7
-	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 19:34:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F90BC388F7
+	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 20:25:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED4E420728
-	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 19:34:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DCDC520735
+	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 20:25:18 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qKRSsryl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731965AbgKETe5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Nov 2020 14:34:57 -0500
-Received: from cloud.peff.net ([104.130.231.41]:49138 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726996AbgKETe4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Nov 2020 14:34:56 -0500
-Received: (qmail 17324 invoked by uid 109); 5 Nov 2020 19:34:56 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 05 Nov 2020 19:34:56 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25867 invoked by uid 111); 5 Nov 2020 19:34:55 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Nov 2020 14:34:55 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 5 Nov 2020 14:34:55 -0500
-From:   Jeff King <peff@peff.net>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] p1400: Use `git-update-ref --stdin` to test multiple
- transactions
-Message-ID: <20201105193455.GB121650@coredump.intra.peff.net>
-References: <cover.1604501265.git.ps@pks.im>
- <bfaac619112b04aa6545f229ea60433cbf8da73a.1604501265.git.ps@pks.im>
+        id S1732099AbgKEUZR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Nov 2020 15:25:17 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64404 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726214AbgKEUZR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Nov 2020 15:25:17 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 37C2E7C773;
+        Thu,  5 Nov 2020 15:25:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=oZw31shP0OghJvnHojHgzskqHbg=; b=qKRSsr
+        ylYKIafIqkDqazq3DHPnNZeZINgHQgfyA0Zv278pH1dTNQUI/mE7rEMYqq3RH1fZ
+        8WLLSZoYU5yAvZMZS3etQPRgwcJsKOC+rKln1r/N1baZRKmJScz4m5LPBwJ0rHjD
+        zfbGm3/beF5vy9WnqAG+LOFe/oHrWAPzNlvYo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kcKrrdh46iAyYuhsK6NJrha8W4gURzPO
+        aevEL7gabMWtRQ0K0wEqIBiWNpvA69lpXkcBEoJ8EeZOHQH1OExH1H4ClmQr5iig
+        NpGXTOKocGIXl8plLYwfcWr/3I0MsM7ExM9b3u65cLz72pqjS0rxQkJ4mViy8un1
+        nps7wcGr4dM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2EDF47C771;
+        Thu,  5 Nov 2020 15:25:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A5C0D7C770;
+        Thu,  5 Nov 2020 15:25:15 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v4 00/13] Add struct strmap and associated utility
+ functions
+References: <pull.835.v3.git.git.1604343313.gitgitgadget@gmail.com>
+        <pull.835.v4.git.git.1604535765.gitgitgadget@gmail.com>
+        <20201105132909.GB91972@coredump.intra.peff.net>
+Date:   Thu, 05 Nov 2020 12:25:14 -0800
+In-Reply-To: <20201105132909.GB91972@coredump.intra.peff.net> (Jeff King's
+        message of "Thu, 5 Nov 2020 08:29:09 -0500")
+Message-ID: <xmqq8sbfk0ut.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <bfaac619112b04aa6545f229ea60433cbf8da73a.1604501265.git.ps@pks.im>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 03B1B73C-1FA5-11EB-AFE4-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 04, 2020 at 03:57:22PM +0100, Patrick Steinhardt wrote:
+Jeff King <peff@peff.net> writes:
 
-> In commit 0a0fbbe3ff (refs: remove lookup cache for
-> reference-transaction hook, 2020-08-25), a new benchmark was added to
-> p1400 which has the intention to exercise creation of multiple
-> transactions in a single process. As git-update-ref wasn't yet able to
-> create multiple transactions with a single run we instead used git-push.
-> As its non-atomic version creates a transaction per reference update,
-> this was the best approximation we could make at that point in time.
-> 
-> Now that `git-update-ref --stdin` supports creation of multiple
-> transactions, let's convert the benchmark to use that instead. It has
-> less overhead and it's also a lot clearer what the actual intention is.
+> Subject: [PATCH] shortlog: drop custom strset implementation
+>
+> We can use the strset recently added in strmap.h instead. Note that this
+> doesn't have a "check_and_add" function. We can easily write the same
+> thing using separate "contains" and "adds" calls. This is slightly less
+> efficient, in that it hashes the string twice, but for our use here it
+> shouldn't be a big deal either way.
+>
+> I did leave it as a separate helper function, though, since we use it in
+> three separate spots (some of which are in the middle of a conditional).
 
-Good direction. The diff confused me for a moment...
+It makes sense, but check_dup() sounds like its use pattern would be
 
-> @@ -26,14 +27,7 @@ test_perf "update-ref" '
->  '
->  
->  test_perf "update-ref --stdin" '
-> -	git update-ref --stdin <update &&
-> -	git update-ref --stdin <delete &&
-> -	git update-ref --stdin <create
-> -'
-> -
-> -test_perf "nonatomic push" '
-> -	git push ./target-repo.git $(test_seq 1000) &&
-> -	git push --delete ./target-repo.git $(test_seq 1000)
-> +	git update-ref --stdin <instructions >/dev/null
->  '
+	if (check_dup(it) == NO_DUP)
+		add(it);
 
-...because we're dropping _two_ tests here. But I think they were
-testing the same thing, just with varying degrees of quality.
+where it is more like "add it but just once".
 
-It could possibly be useful to have perf results broken down by
-operation type (create vs delete vs update), but the original certainly
-didn't do that. And it's not clear to me it would actually produce
-interesting results; certainly not related to the hook, but possibly
-related to benchmarking ref updates in general. So I don't think it's
-worth worrying about.
+By the way, is a strset a set or a bag?  If it makes the second add
+an no-op, perhaps your check_dup() is what strset_add() should do
+itself?  What builtin/shortlog.c::check_dup() does smells like it is
+a workaround for the lack of a naturally-expected feature.
 
--Peff
