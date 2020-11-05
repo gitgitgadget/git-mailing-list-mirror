@@ -7,118 +7,178 @@ X-Spam-Status: No, score=-11.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A707C388F7
-	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 21:08:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F965C388F7
+	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 21:09:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 98BBA20728
-	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 21:08:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 025DC20724
+	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 21:09:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="YbEUjY66"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="n6nIYwq8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732086AbgKEVIn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Nov 2020 16:08:43 -0500
-Received: from avasout03.plus.net ([84.93.230.244]:34225 "EHLO
+        id S1731899AbgKEVJx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Nov 2020 16:09:53 -0500
+Received: from avasout03.plus.net ([84.93.230.244]:34282 "EHLO
         avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726729AbgKEVIn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Nov 2020 16:08:43 -0500
+        with ESMTP id S1726729AbgKEVJw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Nov 2020 16:09:52 -0500
 Received: from [10.0.2.15] ([195.213.6.50])
         by smtp with ESMTPA
-        id amUqkLtMT99nqamUrkhVkB; Thu, 05 Nov 2020 21:08:42 +0000
+        id amVykLtRD99nqamVzkhVl1; Thu, 05 Nov 2020 21:09:51 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1604610522; bh=2LJeG7qTZ2YjWCVZAzXCMsM3m4Os1+pFTmUUO+zrb9M=;
+        t=1604610591; bh=VTztjWAe6lDGJM/w9zS9NmRTSoDROmuOcK2soBHh+Og=;
         h=To:Cc:From:Subject:Date;
-        b=YbEUjY66zVDQ0LwDp6levnQ54/9zgJMXMJj3ED2tYJXcQQD2c16chbLpdRoV4iE05
-         FstrQxNLj0T2Mt6GTK7oe1rBPau2P5MTXLm1xR4ej/k5nJfOuUVVrkSZbDAm0drmk9
-         PB3KK58HqKMrDDmIxQJ/rA9uxqc4SGIYflTgEAWl136PqEWw4WYVPvuo20ChPCKaFk
-         OTWuKw1VQvPD8Mn/0TgOwrdCEVlycuzWxkD7k0+YGh/0t3v0ceyO2BZQLpRtfr8iow
-         LfN/IFiNHDNw/n40PGVlipupFt72lGX10gSD23cJ0c4gJrfy+sbKtG2o6XHPGusD4m
-         4rYHlubfH1VpA==
+        b=n6nIYwq8lVq788fUhBzBUjRJdFeL7rXnBjR1HHt9pdNMjRg3+KMBAa0jDjkzQQMb8
+         D68Cyhtg0o+tTOX9hrTXYdFBd1mMclAByORvfdnXs+TVVzmJSErYNeMeWUhP9ebbjj
+         RPiHi4MHtGUE23O5EA7RkdUc5H0BQiUjPLKulHdGb90m4haXrMfHfHff4mOLXQX87Q
+         m+SaGr5uCuzXpsC64wfkJFkz0rt3rFHk54CgTL/lXj9rEefF9kk7qG76gidGltmj7t
+         cz2+fnT5aFSGZGdp/0bnfcGqQVWwbWsVg/xWknLEqIEtCsXO/og5PAEKNLwzYoaC17
+         kCf5PwyLVc4pg==
 X-Clacks-Overhead: "GNU Terry Pratchett"
 X-CM-Score: 0.00
 X-CNFS-Analysis: v=2.3 cv=Uoz4y94B c=1 sm=1 tr=0
  a=n8v6pzUV7wpcOOJT0hzGjw==:117 a=n8v6pzUV7wpcOOJT0hzGjw==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=12cImHxmkD7F_EgP1BAA:9 a=QEXdDO2ut3YA:10
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=S6w345GtZ0HUjcSwCL0A:9 a=QEXdDO2ut3YA:10
  a=yJM6EZoI5SlJf8ks9Ge_:22
 X-AUTH: ramsayjones@:2500
 To:     GIT Mailing-list <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
 From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH 6/8] Makefile: don't use a versioned temp distribution
- directory
-Message-ID: <5add11fe-6d94-f2e0-f91c-360a7844c720@ramsayjones.plus.com>
-Date:   Thu, 5 Nov 2020 21:08:40 +0000
+Subject: [PATCH 7/8] Makefile: don't delete dist tarballs directly by name
+Message-ID: <48fdd198-93ad-7282-27e6-9a0c6de93067@ramsayjones.plus.com>
+Date:   Thu, 5 Nov 2020 21:09:49 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.10.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfBOmjz7Y3PvEPpY9ENNebuPF5dMCD7Nde3uVSaQQW2wt94BsSV8QJmP3Dpa/tTInyVbMplfj7ZLZrdCzQ6G07ufmBAdddLDuBR63s7e9DJZ7pqHg9Wng
- KFf1HdN+a+BqbEtjOFz9hwZ/ox8wh0Vt5eBiN6yw7036DjJ3EQ4o8CybaWO11UmKx/gbIvZzYEwPVQ==
+X-CMAE-Envelope: MS4wfAPZoYqboI/gE1ccq5i1lcN9WVgNygxAslHpr1sZVq9y1QrB6Yp+7vFCeFPdh+4K6wsfzxJlvQiX0IKqDznMf2kUFM165UXAIL4jZfaQV7MfQE7hSJ9q
+ /MPvrIYN22Cu5pGJyHAE/KeuTE1PKW6D6ideMRuJ3sdM8/nkIn+MGm+lVo6wPRxM2nzJKU/BIUkV9w==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-The 'dist' target uses a versioned temp directory, $(GIT_TARNAME), into
-which it copies various files added to the distibution tarball. A future
-patch requires the 'clean' target not to depend on the $(GIT_VERSION)
-variable. However, the $(GIT_TARNAME) variable contains $(GIT_VERSION) in
-its definition.
+A future patch requires the 'clean' target not to depend, either
+directly or indirectly, on the $(GIT_VERSION) variable. However, the
+distribution tarballs, $(GIT_TARNAME).tar.gz, $(htmldocs).tar.gz and
+$(manpages).tar.gz, all depend on $(GIT_VERSION). The 'clean' target
+attempts to remove these tarballs by name and so has the unwanted
+dependency.
 
-Create an '.dist-tmp-dir' directory and copy the various files into this
-now un-versioned directory while creating the distribution tarball. Change
-the 'clean' target to remove the '.dist-tmp-dir' directory, instead of the
-version dependent $(GIT_TARNAME) directory.
+The first attempt to remove this dependency involved creating the
+distribution tarballs in a new top-level directory (e.g. 'dist-tars/'),
+that didn't reference the version number, and could be simply removed
+in the 'clean' target. Unfortunately, this could lead to breaking an
+unknown number of scripts for an unknown number of developers. (This
+actually breaks one of my own scripts!). Despite this being my
+preferred solution, I had to abandon this approach, since I don't know
+what problems it may cause.
+
+The second attempt involved using a wildcard pattern, in place of the
+$(GIT_VERSION) variable, in the distribution tarball filenames. This
+also proved to be an inadequate solution, no matter how elaborate the
+pattern became, because it was always possible that it could lead to
+the removal of some '*.tar.gz' file that would, otherwise, not have
+been removed (eg. git-2.29.0-saved-build.tar.gz).
+
+Also, note that the current 'clean' target requires that you do not move
+the current branch away from the commit you were on, when creating the
+distribution tarballs, before issuing the 'make clean'. If you do so,
+then you will find that the tarballs are not removed:
+
+  $ git checkout nclean
+  ...
+  $ make dist
+  ...
+  $ ls *.tar.gz
+  git-2.29.0.6.g8255a76caf.tar.gz
+  $
+
+  $ git checkout master
+  Switched to branch 'master'
+  Your branch is up to date with 'origin/master'.
+  $ make clean
+  ...
+  rm -f git-2.29.2.154.g8a58376a31.tar.gz
+  rm -f git-htmldocs-2.29.2.154.g8a58376a31.tar.gz git-manpages-2.29.2.154.g8a58376a31.tar.gz
+  ...
+  $
+
+  $ ls *.tar.gz
+  git-2.29.0.6.g8255a76caf.tar.gz
+  $
+
+[I always find the documentation tarballs of the last release intact
+when I am just about to create the new tarballs for this release. This
+means that I invariably remove them by hand.]
+
+In order to remove the version dependency, append the name of each
+distribution tarball created, in the 'dist' and 'doc-dist' targets, to
+a file ('dist-tars'). Then in the 'clean' target, simply iterate through
+the names in this file, if any, removing them as we go. (Not forgetting
+to clean up the 'dist-tars' file as well).
 
 Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
- Makefile | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ .gitignore |  1 +
+ Makefile   | 11 +++++++++--
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
+diff --git a/.gitignore b/.gitignore
+index 6232d33924..425b8cc2a4 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -191,6 +191,7 @@
+ /gitweb/static/gitweb.min.*
+ /config-list.h
+ /command-list.h
++/dist-tars
+ *.tar.gz
+ *.dsc
+ *.deb
 diff --git a/Makefile b/Makefile
-index 09d6f23b88..90e91a2185 100644
+index 90e91a2185..bc9ce28bc3 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -3060,9 +3060,9 @@ GIT_TARNAME = git-$(GIT_VERSION)
- GIT_ARCHIVE_EXTRA_FILES = \
- 	--prefix=$(GIT_TARNAME)/ \
- 	--add-file=configure \
--	--add-file=$(GIT_TARNAME)/version \
-+	--add-file=.dist-tmp-dir/version \
- 	--prefix=$(GIT_TARNAME)/git-gui/ \
--	--add-file=$(GIT_TARNAME)/git-gui/version
-+	--add-file=.dist-tmp-dir/git-gui/version
- ifdef DC_SHA1_SUBMODULE
- GIT_ARCHIVE_EXTRA_FILES += \
- 	--prefix=$(GIT_TARNAME)/sha1collisiondetection/ \
-@@ -3074,13 +3074,14 @@ GIT_ARCHIVE_EXTRA_FILES += \
- 	--add-file=sha1collisiondetection/lib/ubc_check.h
- endif
- dist: git-archive$(X) configure
--	@mkdir -p $(GIT_TARNAME)
--	@echo $(GIT_VERSION) > $(GIT_TARNAME)/version
--	@$(MAKE) -C git-gui TARDIR=../$(GIT_TARNAME)/git-gui dist-version
-+	@$(RM) -r .dist-tmp-dir
-+	@mkdir .dist-tmp-dir
-+	@echo $(GIT_VERSION) > .dist-tmp-dir/version
-+	@$(MAKE) -C git-gui TARDIR=../.dist-tmp-dir/git-gui dist-version
- 	./git-archive --format=tar \
- 		$(GIT_ARCHIVE_EXTRA_FILES) \
+@@ -3083,6 +3083,7 @@ dist: git-archive$(X) configure
  		--prefix=$(GIT_TARNAME)/ HEAD^{tree} > $(GIT_TARNAME).tar
--	@$(RM) -r $(GIT_TARNAME)
-+	@$(RM) -r .dist-tmp-dir
+ 	@$(RM) -r .dist-tmp-dir
  	gzip -f -9 $(GIT_TARNAME).tar
++	@echo $(GIT_TARNAME).tar.gz >>dist-tars
  
  rpm::
-@@ -3149,7 +3150,7 @@ clean: profile-clean coverage-clean cocciclean
- 	$(RM) -r bin-wrappers $(dep_dirs) $(compdb_dir) compile_commands.json
+ 	@echo >&2 "Use distro packaged sources to run rpmbuild"
+@@ -3112,6 +3113,7 @@ dist-doc:
+ 	$(MAKE) -C Documentation WEBDOC_DEST=../.doc-tmp-dir install-webdoc
+ 	cd .doc-tmp-dir && $(TAR) cf ../$(htmldocs).tar $(TAR_DIST_EXTRA_OPTS) .
+ 	gzip -n -9 -f $(htmldocs).tar
++	@echo $(htmldocs).tar.gz >>dist-tars
+ 	:
+ 	$(RM) -r .doc-tmp-dir
+ 	mkdir -p .doc-tmp-dir/man1 .doc-tmp-dir/man5 .doc-tmp-dir/man7
+@@ -3122,6 +3124,7 @@ dist-doc:
+ 		install
+ 	cd .doc-tmp-dir && $(TAR) cf ../$(manpages).tar $(TAR_DIST_EXTRA_OPTS) .
+ 	gzip -n -9 -f $(manpages).tar
++	@echo $(manpages).tar.gz >>dist-tars
+ 	$(RM) -r .doc-tmp-dir
+ 
+ ### Cleaning rules
+@@ -3151,8 +3154,12 @@ clean: profile-clean coverage-clean cocciclean
  	$(RM) -r po/build/
  	$(RM) *.pyc *.pyo */*.pyc */*.pyo $(GENERATED_H) $(ETAGS_TARGET) tags cscope*
--	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
-+	$(RM) -r .dist-tmp-dir .doc-tmp-dir
- 	$(RM) $(GIT_TARNAME).tar.gz
- 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
+ 	$(RM) -r .dist-tmp-dir .doc-tmp-dir
+-	$(RM) $(GIT_TARNAME).tar.gz
+-	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
++	@if test -s dist-tars; then \
++		for i in $$(cat dist-tars); do \
++			$(RM) $$i; \
++		done \
++	fi
++	$(RM) dist-tars
  	$(MAKE) -C Documentation/ clean
+ 	$(RM) Documentation/GIT-EXCLUDED-PROGRAMS
+ ifndef NO_PERL
 -- 
 2.29.0
