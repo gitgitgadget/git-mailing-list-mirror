@@ -2,93 +2,111 @@ Return-Path: <SRS0=KwJF=EL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EACA9C55178
-	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 22:02:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E14FC388F7
+	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 22:09:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 87D6E20728
-	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 22:02:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 34A2D206DC
+	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 22:09:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bQmIK7Iw"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iJd/IxaH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732574AbgKEWCB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Nov 2020 17:02:01 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57242 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731508AbgKEWCB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Nov 2020 17:02:01 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5A149102414;
-        Thu,  5 Nov 2020 17:01:59 -0500 (EST)
+        id S1732636AbgKEWJN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Nov 2020 17:09:13 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59250 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731508AbgKEWJM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Nov 2020 17:09:12 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5994B9180F;
+        Thu,  5 Nov 2020 17:09:08 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=InPp4kaA3nsZ/3s96dl6qgi485E=; b=bQmIK7
-        IwIjnHaZ1DpXBWT0t+LXvCLD+09eDgyLh7pfumBmL9wRkTlXUFMPGDLQHDX4B/vB
-        Y8/BlIKjWbMLRwj0ow+RHTHoWs5yrVhJbbee5lAbMbVPHvQRdHoLMYSoWP4rcS0z
-        dD+gTAQpoBP6Ce2IpG97imIHkKWXCWC/6WZyk=
+        :content-type; s=sasl; bh=0AZ+48zo9FmFI6xawAWLCbp7yPY=; b=iJd/Ix
+        aHYacMs2aegNdcN5ZUh3x3EOjbuZ3rIWpesh6+4dGhF+LNzczRiodv0C6KczCn3H
+        /iJGr6P0BN/0QNH+pek8PZtXwZxB660DZ6mC0+oopva4z8eZxJc9txO60kdK8TiN
+        ji1oO2L8yrRMTmrpDAbTuorFEb1CAvYDpuLIQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=btNSFwStYaekEhEK1XjCq+m/x7mTb/QE
-        K23CpytdxXTgt76InMnjQ3M0WEUhtgV/nU2ZpxKGZpjQZC+90nLDrcG+jN3SRe1y
-        gSMCJwXNc197l4hQ2lCyiRBVBnXK6YFj/jHhZii3/f2kRuLdOGVUWH7OpK4mi0T2
-        Ikn6fu4P3V4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 510A4102412;
-        Thu,  5 Nov 2020 17:01:59 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=Y6YGroTwUFVXmoa9Y5BGaeTEvfsLvUtV
+        JGGXhabCWfA+DC4OYIvgDF+Bvsd3qzlGfkFZkp8RmV9/fBoHzSuAJumZ9t5hLvT4
+        2YO6B3Y7dmq9U8gzEo2oXMWoiP+C8OqrwGYGK+i1SAZQVI95sNnI0Bms2CYlYFj2
+        efNlNU2hpfM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E1759180D;
+        Thu,  5 Nov 2020 17:09:08 -0500 (EST)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
+Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8954D1023DC;
-        Thu,  5 Nov 2020 17:01:56 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4DAF79180B;
+        Thu,  5 Nov 2020 17:09:07 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH 7/8] Makefile: don't delete dist tarballs directly by name
-References: <48fdd198-93ad-7282-27e6-9a0c6de93067@ramsayjones.plus.com>
-Date:   Thu, 05 Nov 2020 14:01:54 -0800
-In-Reply-To: <48fdd198-93ad-7282-27e6-9a0c6de93067@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Thu, 5 Nov 2020 21:09:49 +0000")
-Message-ID: <xmqqr1p7h38t.fsf@gitster.c.googlers.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Stefan Haller <lists@haller-berlin.de>, Git <git@vger.kernel.org>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?B?Tmd1?= =?utf-8?B?eeG7hW4gVGjDoWkgTmfhu41j?= Duy 
+        <pclouds@gmail.com>
+Subject: Re: [PATCH 00/14] completion: a bunch of updates
+References: <20190621223107.8022-1-felipe.contreras@gmail.com>
+        <xmqqk1cz0zz1.fsf@gitster-ct.c.googlers.com>
+        <CAMP44s3wqxTmgQpMgk2cM33EvtwrvvXYv4_90GKGmHb8yJHAKg@mail.gmail.com>
+        <xmqqk0vbbep5.fsf@gitster.c.googlers.com>
+        <CAMP44s13nip2_Z1OOFb9iVcrSxQbyJW4cH86J3Ah1p4SmTQWQQ@mail.gmail.com>
+        <xmqqr1pj9rf0.fsf@gitster.c.googlers.com>
+        <CAMP44s0nxQ8jxxw7wSPOMv9Nx1P7ww3S6dGv27xNVQ_aHTaPng@mail.gmail.com>
+        <0ec43318-bf83-25c4-a817-a150e2e47546@haller-berlin.de>
+        <CAMP44s0+TMhmPYM7omoFhcebMLhZyh6v77WUFNrscRtPNEDNHQ@mail.gmail.com>
+        <xmqqeelh7y23.fsf@gitster.c.googlers.com>
+        <xmqq361x7xj5.fsf@gitster.c.googlers.com>
+        <CAMP44s2bgZbKde-UFL7+sR-7QgEv5Oiho2LTi3RG7S4BD0iuaw@mail.gmail.com>
+        <xmqq7dr3nr9h.fsf@gitster.c.googlers.com>
+        <CAMP44s1RS2-8rOvZLidRjkB=dkBGRpPzhpwpQByDRObP7UMLFw@mail.gmail.com>
+        <xmqqsg9pm1v4.fsf@gitster.c.googlers.com>
+        <CAMP44s3occuUi2no8JfxPreLouvMsKKBcivKbv8XMTToZowz5w@mail.gmail.com>
+Date:   Thu, 05 Nov 2020 14:09:05 -0800
+In-Reply-To: <CAMP44s3occuUi2no8JfxPreLouvMsKKBcivKbv8XMTToZowz5w@mail.gmail.com>
+        (Felipe Contreras's message of "Wed, 4 Nov 2020 19:09:13 -0600")
+Message-ID: <xmqqmtzvh2wu.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8549D5E2-1FB2-11EB-86B0-D609E328BF65-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 8631C43C-1FB3-11EB-BC25-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> diff --git a/.gitignore b/.gitignore
-> index 6232d33924..425b8cc2a4 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -191,6 +191,7 @@
->  /gitweb/static/gitweb.min.*
->  /config-list.h
->  /command-list.h
-> +/dist-tars
->  *.tar.gz
->  *.dsc
->  *.deb
-> diff --git a/Makefile b/Makefile
-> index 90e91a2185..bc9ce28bc3 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -3083,6 +3083,7 @@ dist: git-archive$(X) configure
->  		--prefix=$(GIT_TARNAME)/ HEAD^{tree} > $(GIT_TARNAME).tar
->  	@$(RM) -r .dist-tmp-dir
->  	gzip -f -9 $(GIT_TARNAME).tar
-> +	@echo $(GIT_TARNAME).tar.gz >>dist-tars
+> On Wed, Nov 4, 2020 at 12:08 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> But the take-away I got from your short quote was that I see no
+>> evidence that Zsh folks do not care about usability.
+>
+> This exchange happened 9 years ago, so I wouldn't place too much of a
+> burden on what they actually meant by what they said.
 
-Sorry, but I'd rather not to see such a longer-term "list of files
-to be removed" on the filesystem.  This invites attackers to write a
-rogue test addition that writes into ../../dist-tars something like
-"~/.gitconfig" and wait for me to say "make clean".
+In other words, you are now saying that it does not demonstrate your
+earlier claim that they do not care about usability at all?
+
+> Even if my interpretation of what they said at that point of time is
+> 100% incorrect; it's not a *derogatory* statement; it would simply be
+> an unfactual statement.
+
+So, the short quote given without much context was an attempt to
+mislead those who are reading this discussion?  That sounds even
+worse to me.
+
+In any case, so far you managed to convince me even less that it
+would help the Zsh userbase to carry a "by default has to fall
+behind" copy of what they can get, or their distro packagers can
+package, the latest and greatest directly from your github
+repository as part of the release of this project.
+
+Thanks, and bye for now.
