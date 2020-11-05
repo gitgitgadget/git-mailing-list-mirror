@@ -2,138 +2,122 @@ Return-Path: <SRS0=KwJF=EL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76D01C55179
-	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 18:39:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7602FC55178
+	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 18:45:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1B9502078E
-	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 18:39:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 064552074B
+	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 18:45:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="t0CKbglL"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TbjibdSg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731788AbgKESjd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Nov 2020 13:39:33 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57150 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731758AbgKESjd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Nov 2020 13:39:33 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2B8F1100D83;
-        Thu,  5 Nov 2020 13:39:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6u7ihtRckOter2FVLoCM+CgJbVg=; b=t0CKbg
-        lLe1suYyuQiDZuZhvZsWwhSNz733TcYZsuXB89CkGWe0qWSEGcTvs7KHOd6rAG1J
-        A0R2T8l8YnsS7SKsYgOTrPhvN3TDmSqkQyQd6m1UFz2e1hTu600Hzocdku6qtLjV
-        n7//ERA1NnY25+U8UVvlYvDqi8v57CBCbB5bs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bnxbEQatnQ3zJy/qlgWJfab/tnm3TQdB
-        wsCiPklWCrRxMDEPlUqrSzUDdt//UdTP4JTpRR+xaRjsbJMzbdkdKUkxGoXUptUy
-        hVq0kMJG+3yI8qZ2Y84fGvjCH2Qe/UQfSM3dDzUMMzsqw2cH+tV3L/kMgbmMKuj7
-        2BNML+RyS1I=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 253EE100D82;
-        Thu,  5 Nov 2020 13:39:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6EDFA100D81;
-        Thu,  5 Nov 2020 13:39:28 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH v19 03/10] receive-pack: add new proc-receive hook
-References: <20200824174202.11710-1-worldhello.net@gmail.com>
-        <20200827154551.5966-4-worldhello.net@gmail.com>
-        <nycvar.QRO.7.76.6.2011042236270.18437@tvgsbejvaqbjf.bet>
-        <CANYiYbFcXN_ARmZ70GQkrQ=uFaf7YPObYcopEOFseON6TQzNpQ@mail.gmail.com>
-Date:   Thu, 05 Nov 2020 10:39:26 -0800
-In-Reply-To: <CANYiYbFcXN_ARmZ70GQkrQ=uFaf7YPObYcopEOFseON6TQzNpQ@mail.gmail.com>
-        (Jiang Xin's message of "Thu, 5 Nov 2020 22:54:05 +0800")
-Message-ID: <xmqqo8kbk5r5.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1731234AbgKESpD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Nov 2020 13:45:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56612 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726801AbgKESpC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Nov 2020 13:45:02 -0500
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5839C0613CF
+        for <git@vger.kernel.org>; Thu,  5 Nov 2020 10:45:02 -0800 (PST)
+Received: by mail-pf1-x431.google.com with SMTP id g7so1730166pfc.2
+        for <git@vger.kernel.org>; Thu, 05 Nov 2020 10:45:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=H7TPbQa+iNHz/pcAEboTsPACfKNn/cMmUnncj3iOO94=;
+        b=TbjibdSg4MVbINS4G7tCBw9ofhUPzrh77zS6lQisl2/DaXOD28LguL3GmIBMSZatAL
+         mHoEG38XC4LY291pANxoBILn/BQrha0ZaA10P1TdDyKUH1TLrpUKdiUenfE+ego1RtTw
+         tc+huIgr/Zbb4oNNJ/IOqbQ+Jxd7foSzf4suOC6bhamNPd6hU0YZMbdDR2coH9R46QdI
+         kryI37njdPRLPUlnauaqjOYcWOSZRWvprPhYjvUHvqeU3U47nxYLtwjVIIO6eVhhaaN5
+         ajIpxvs0UhZfOHgt7rS4Ff0tVXIGUh8E0BqIoQUTlG9qDT8RJi88hQ6m5y5QngAmFZhC
+         W0/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=H7TPbQa+iNHz/pcAEboTsPACfKNn/cMmUnncj3iOO94=;
+        b=YYNAYkR0f0Dj5jAbBH9+QRroTIU/Dhv4s7/L/4Os28j0OKg8qEzKO4dIB1wCkp+b8V
+         0CRRZNL1H8r6a0fhwTtiypfFma+T8cx0gohL/fVj5E5UVzCbb3Vgi16n2COrFabfUD2K
+         5vzoYJBIp5TeMkvpqqgtsC/PwQjHIXH+rDmeLpMb+P9LnB1Z64Uduktle/EJt1g6QYq+
+         nrCUivuAWSrBVUrAVPmtfRFL22JwcoAqLeNUceU420HRqfIr5qlrsYMt1Z63aQygz3Vv
+         xw/rbqjd8nBKcbDnK9LWvMTQVJqItNiDTaVliy2eGbKTewb0ACvZCOApSbBsGE0EYAd+
+         SUNw==
+X-Gm-Message-State: AOAM530iTzg/gPNAYMuKW3VTZhFPqVzeH6ajyhhyqVY8EQZ/8rfKxxeZ
+        G0wlrcM96ZIq3xC2AaU8/4XPTRZfQvXpaQ==
+X-Google-Smtp-Source: ABdhPJw3QE1V7b/gQ9/PYMnODplfR+aZ5u6BV7M+xN3nmwH67LfZBtnfX4hKVLVzdFRHpp1KMabCPA==
+X-Received: by 2002:a62:ee06:0:b029:164:20d:183b with SMTP id e6-20020a62ee060000b0290164020d183bmr3867386pfi.4.1604601902141;
+        Thu, 05 Nov 2020 10:45:02 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:1ea0:b8ff:fe74:b4c1])
+        by smtp.gmail.com with ESMTPSA id u24sm3327132pfn.205.2020.11.05.10.45.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Nov 2020 10:45:00 -0800 (PST)
+Date:   Thu, 5 Nov 2020 10:44:55 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 04/11] upload-pack: advertise trace2 SID in v0
+ capabilities
+Message-ID: <20201105184455.GA36751@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <cover.1604006121.git.steadmon@google.com>
+ <cover.1604355792.git.steadmon@google.com>
+ <4912af5f2b949b9944b37843a9ebabdd33e66215.1604355792.git.steadmon@google.com>
+ <xmqqwnz2p0wo.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3C738FD2-1F96-11EB-913F-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqwnz2p0wo.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+On 2020.11.03 13:48, Junio C Hamano wrote:
+> Josh Steadmon <steadmon@google.com> writes:
+> 
+> > When trace2 is enabled and trace2.advertiseSID is true, advertise
+> > upload-pack's trace2 session ID via the new trace2-sid capability.
+> 
+> I would have imagined when advertiseSID is enabled, trace2, at least
+> the part that allocates and assigns the session ID, ought to be
+> enabled automatically.
+> 
+> But the above goes in a different direction and requires both to be
+> enabled.  Any compelling reason behind the choice?
 
-> I think this is the right way to fix this issue, even though I cannot
-> reproduce this issue in my laptop.
+My reasoning was that by advertising the capability, you are telling the
+remote side "I have definitely produced a log using this session ID. If
+you need it later, you can find it with this key". If we advertise a
+session ID even when trace2 is not enabled, the remote side can't be as
+sure that the received session ID actually points to any useful logs on
+the other side.
 
-Perhaps it depends on the size of the pipe buffer and timing of the
-processes getting scheduled?
+Of course, this is a weak guarantee since a client could send whatever
+it likes regardless of whether anything was logged, or one side could
+delete or lose its logs before the other decides it needs to view them.
 
-This is a tangent but I very much like the way comments on a set of
-changes below is given interspersed, explaining why the change in
-each hunk is done next to it.
+I think your idea in a different subthread about having a general
+session ID not tied to trace2 is interesting, and would also be a point
+in favor of changing the current behavior here, but I have some thoughts
+on that point that I'll add in the other subthread.
 
-> 1. In the `run_proc_receive_hook()` function of "receive-pack", should
-> close the input (proc.in) before reading result from "proc-receive":
->
-> --  snip --
-> @@ -1196,11 +1197,12 @@ static int run_proc_receive_hook(struct
-> command *commands,
->                 packet_flush(proc.in);
->         }
->
-> +       close(proc.in);
-> +
->         /* Read result from proc-receive */
->         code = read_proc_receive_report(&reader, commands, &errmsg);
->
->  cleanup:
-> -       close(proc.in);
->         close(proc.out);
->         if (use_sideband)
->                 finish_async(&muxer);
-> -- snap --
->
-> 2. test helper for proc-receive should consume the input stream before
-> die earlier:
->
-> -- snip --
-> @@ -79,9 +79,11 @@ static void proc_receive_read_commands(struct
-> packet_reader *reader,
->                     *p++ != ' ' ||
->                     parse_oid_hex(p, &new_oid, &p) ||
->                     *p++ != ' ' ||
-> -                   die_readline)
-> +                   die_readline) {
-> +                       while (packet_reader_read(reader) != PACKET_READ_EOF);
->                         die("protocol error: expected 'old new ref', got '%s'",
-> -                           reader->line);
-> +                               die_readline? "<call with
-> --die-readline>": reader->line);
-> +               }
->                 refname = p;
->                 FLEX_ALLOC_STR(cmd, ref_name, refname);
->                 oidcpy(&cmd->old_oid, &old_oid);
-> @@ -136,7 +138,7 @@ int cmd__proc_receive(int argc, const char **argv)
->                 usage_msg_opt("Too many arguments.",
-> proc_receive_usage, options);
->         packet_reader_init(&reader, 0, NULL, 0,
->                            PACKET_READ_CHOMP_NEWLINE |
-> -                          PACKET_READ_DIE_ON_ERR_PACKET);
-> +                          PACKET_READ_GENTLE_ON_EOF);
->
->         sigchain_push(SIGPIPE, SIG_IGN);
->         proc_receive_verison(&reader);
-> -- snap --
->
-> I will send a standalone patch using git-send-email command line later.
->
-> --
-> Jiang Xin
+I'm still leaning towards advertising a session ID only if we actually
+produced logs locally, but I'm open to further discussion.
+
+> Does the documentation added by this series make it clear that
+> asking for advertiseSID does NOT automatically enable allocation of
+> session IDs (even if it does not explain why it does not happen)?
+
+In V3 I'll update the docs to call out whichever decision we reach on
+this point.
+
+> Thanks.
+> 
+> 
