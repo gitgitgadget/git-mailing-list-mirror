@@ -1,96 +1,269 @@
-Return-Path: <SRS0=V3lj=EK=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=KwJF=EL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D075C4741F
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 23:58:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8851C2D0A3
+	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 00:24:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2DC9A206E3
-	for <git@archiver.kernel.org>; Wed,  4 Nov 2020 23:58:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 434DA2080D
+	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 00:24:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Sa+ROYCw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fLTLb312"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387712AbgKDX6e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Nov 2020 18:58:34 -0500
-Received: from mout.gmx.net ([212.227.15.18]:44175 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387700AbgKDX6M (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Nov 2020 18:58:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1604534289;
-        bh=wFZ3A6L39yOtR1sSc9XSiNFnLMvIuLklWM/XzZ5R8Qw=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=Sa+ROYCwZ6GMxlXIM7IUFjFoVRFdkulYxJjRuylcVAOc3b8u2nsfUBtXixsOssIVI
-         jNs2U0v2BKNQ+kTukZOlcfmECK0gwuIEov173+vmpvLn5cA4SmCRe7nNOiWl2rIFoe
-         fbiF/vv9tzdvKLR3Vj4G2MFcfoR/o7990m+L4M/Y=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from
- fv-az767-723.w41zzgmn0uwudj0uul5e02fssc.bx.internal.cloudapp.net
- ([23.96.39.132]) by mail.gmx.com (mrgmx004 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 1MaJ7v-1koTRs21xt-00WIgz; Thu, 05 Nov 2020 00:58:09 +0100
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.29.2(2)
-Date:   Wed,  4 Nov 2020 23:58:07 +0000
-Message-Id: <20201104235807.7157-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.29.2
-Content-Type: text/plain; charset=UTF-8
-MIME-Version: 1.0
+        id S1732686AbgKEAY3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Nov 2020 19:24:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54142 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732604AbgKEAXA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Nov 2020 19:23:00 -0500
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F5EEC0613D2
+        for <git@vger.kernel.org>; Wed,  4 Nov 2020 16:23:00 -0800 (PST)
+Received: by mail-wm1-x341.google.com with SMTP id c9so24076wml.5
+        for <git@vger.kernel.org>; Wed, 04 Nov 2020 16:23:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=OA4wQ/JUZvjUd14KqKKplav5D5ohsMHFqJIjlPS/lz8=;
+        b=fLTLb312kptawXSx02SwfPk5rP2oQyD0zSYv6E2XKOfy5vdI3REn07+NMp2D4g5kQ6
+         wawZGq3mhhGZH3mM4YbHL/rWkXR4J+7npuk773KV07159uLgazcWycaOWwniwHE0EI7W
+         UjbFKIivr+Zxxp8geaK8GsgKCv83PbS50g5zwrmJcdZ7mOBdQ+mCSjRgH06M5cWpYnIx
+         agtRkjFQ2lG/Ylc4kErFluUNcO1RfKyR4ncnzd8vbvM0HvQW41eD76upDInaaZaeW/6n
+         +wcIRGyniEFVSwQF/ndRJGCPBLL39bKJDZb7jroGJ2LmoLcm9Wo7jU9o3Vw1StBlNPVc
+         XBuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=OA4wQ/JUZvjUd14KqKKplav5D5ohsMHFqJIjlPS/lz8=;
+        b=e9vrOVCg5nBxxvBCtfzqjEJxGCB9caOVoV10zlNgBDH29EQ3HSVarcLTwHU2aa/sgF
+         yX7/EoLJ44mBcY8K0CKkS782NytXorABxnudG2QqhpOIOpfbZ4u65uoFsX/tlf8Wf+rR
+         Uhl1NCxmqyBYFdfziy2uYuZJc8k2nYQv/89Rf+VUsuMII/s9sxvnoJs34DVme1NnNTi1
+         Z847YIyaOXehBvbp/j0malHlq8+1CRvmQVnkZwkyp+jq7LGU+kmwCZaHqlMXkmfyMRQz
+         hH0TIHR1kk/s6R3jLFSxvkPBED2lEU2zBNcmMBXKdfnG8yH1p5RB0lnBvAStQW1SlDTN
+         2Z0w==
+X-Gm-Message-State: AOAM532UZog1pIoUPTGv5d7YWEYsw/fSxaqpWV3EX7MMEVLmf+KLNqLv
+        F2G+Nw/DFLo7ITJHqOlXh8mpx1FJ9VI=
+X-Google-Smtp-Source: ABdhPJzJGSE/uAzP/FMD2IEZLUzQK3JG9gO2+MFtG5gS4Q+S8NMLFnXXHExcpj3R2XkRAW2wgD6Oaw==
+X-Received: by 2002:a1c:7301:: with SMTP id d1mr50563wmb.141.1604535778651;
+        Wed, 04 Nov 2020 16:22:58 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id s188sm13996wmf.45.2020.11.04.16.22.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Nov 2020 16:22:58 -0800 (PST)
+Message-Id: <617926540b837576a07f8e93272ea729f37077d6.1604535766.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.835.v4.git.git.1604535765.gitgitgadget@gmail.com>
+References: <pull.835.v3.git.git.1604343313.gitgitgadget@gmail.com>
+        <pull.835.v4.git.git.1604535765.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 05 Nov 2020 00:22:45 +0000
+Subject: [PATCH v4 13/13] Use new HASHMAP_INIT macro to simplify hashmap
+ initialization
 Fcc:    Sent
-X-Provags-ID: V03:K1:6eFp/ciSvNZ7GVBpDDRa+kbAGpaY/WD90/kDUn+BkA6i0Rt6aPs
- TuXwXZ9SvfsTAxfJ66QlR2IwsflGkDOspvB9jKMj+oWggmYCT1Z9QQQ0c0aiot6KpklfG7e
- 4TgwE121PgVUMnowe8JmUFSagsOSs1WDKxWFwa3ks3a1hWTEq8rwSO6G1w3oPd+1dtL856o
- 4EOOYAG7lgYfoLPLrTZSw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:UAtZ6aPcs/k=:kt7dIJ0BSOno4r3lE9cRuA
- H7VylZYMuIUZBgcy1yuSN34FLzOv0kJhvDZg170Tkq8lx9iZeP/Yii+6xSUtgavAspFV3/OI7
- J4XFumvra+G6HBs9yU47NNYKXmvoQXi4ovoGGcENK4JwXWdHiXv5kkqXDcaFvt9DP6OhgFpVI
- B7q+gu+twxOYfrjeZyKyk+bV/hnjuOOBlp3cCq/U3CkieXhYNNjlVh80/eDWR0mCE1XGbPieU
- zSMwVBFsB5I923TSZ0HR7Gn6u2hEzpl2UV5j2B5LUB8sqSSFZTQjtEiChtGMdMg+AdwKq/1H/
- 42jojRZ3q9YcQu45qZ8ax1BEWPHWgIqvyIOmzbsrFrdXrlBV5ZDPjJ2y4dtK3FLRVULRdkKdF
- vDiEIRSEAmX73hlD53zVB6ZDDUqq4kaDQYe9Oge+9TSX5/gspeocqFhU3ttLiizo6z1ILsrIO
- Fua6c0+cMKo5oGs0dNa5rGSyBPbFl8KaqzJgWPhTBNcpOu7DIgWvnfLFGhlQkxG3m377VBJkW
- U4QRVkFkIvAiZ6Go8QZ09Tk8Tiv1S8JBxhbYTC7JRr/G2BQ4tkWyDvuguMkyQyzjZgo59GB/C
- CZ80h8j/NO3FgGUNRd3PgvcQkc6gzSOwQWc9QBNZzogkJG+0iVphtzj+tKvnMLFAgSCylC0S8
- oyKs9yuDgZJvBC00NusgFwjY9vc/Lf2FavZm2vM8ziNPpL8e+/ktfZJqtCTBNCqN9wpPgTXnN
- neSrO1yyRFg2m94Ud8cNqrtW+Ub/v4FebiRNvL3B4iqckyQCALdJTcI+Ui3mbhayPmuLn0Z/j
- k2WzYbUohrUf+A6I4JBGl6VUy3TiT7DvgjwdUBl5vnH+bcNEtGjyJWoKTN2SWyX+mfNRGBzWD
- 04Ua649igJBxxDC7wnKqfSvXqEsRcI9O0YyLB1ZQk=
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+From: Elijah Newren <newren@gmail.com>
 
-I hereby announce that Git for Windows 2.29.2(2) is available from:
+Now that hashamp has lazy initialization and a HASHMAP_INIT macro,
+hashmaps allocated on the stack can be initialized without a call to
+hashmap_init() and in some cases makes the code a bit shorter.  Convert
+some callsites over to take advantage of this.
 
-    https://gitforwindows.org/
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ attr.c                  | 26 ++++++++------------------
+ bloom.c                 |  3 +--
+ builtin/difftool.c      |  9 ++++-----
+ range-diff.c            |  4 +---
+ revision.c              |  9 +--------
+ t/helper/test-hashmap.c |  3 +--
+ 6 files changed, 16 insertions(+), 38 deletions(-)
 
-Changes since Git for Windows v2.29.2 (October 30th 2020)
-
-This version includes a new Git LFS version to fix CVE-2020-27955.
-
-New Features
-
-  * Comes with Git Credential Manager Core v2.0.280.19487.
-  * Comes with Git LFS v2.12.1.
-
-Git-2.29.2.2-64-bit.exe | 9ab49d93166d430514b0aaf6dda3fdc6b37e2fe1d0df8ecc04403cd2be40e78b
-Git-2.29.2.2-32-bit.exe | 0a88d826cd4c66d949c054f5830667896fae44fcb29c1698f7ed984df8765029
-PortableGit-2.29.2.2-64-bit.7z.exe | 035bd5e46f1ee797b012801b3ea6c07327ce29720062423d057d4c2d41b92355
-PortableGit-2.29.2.2-32-bit.7z.exe | 7479d7de99175e6fc5277fda14af240089bbd96fd60603e517dfb960213a679d
-MinGit-2.29.2.2-64-bit.zip | 85943737a4fea3c2146f072379ed893b69ae47b9a3cea9772a3302138885f33e
-MinGit-2.29.2.2-32-bit.zip | b498a0bab54340edd75c8483d1a7959d9ef1ddebc3bbb5ec66d82b3021f6bc58
-MinGit-2.29.2.2-busybox-64-bit.zip | 1e2f0cad96fe8314a6f3d4a0948d2a7f55e8d554c441b492519be2b1b2636a32
-MinGit-2.29.2.2-busybox-32-bit.zip | 42c88ca75122e709dfe72b97afad5b64426961d75001a0a219c0b5620fe60f9e
-Git-2.29.2.2-64-bit.tar.bz2 | ee0077dbe362c7a72fd1c6577e8cc29b1c48aace9b403bb8fd21f3abeae85871
-Git-2.29.2.2-32-bit.tar.bz2 | df0df082ef7775697dbf920cae057467582a7dba64727b22e8014d532ee6542e
-
-Ciao,
-Johannes
+diff --git a/attr.c b/attr.c
+index a826b2ef1f..4ef85d668b 100644
+--- a/attr.c
++++ b/attr.c
+@@ -52,13 +52,6 @@ static inline void hashmap_unlock(struct attr_hashmap *map)
+ 	pthread_mutex_unlock(&map->mutex);
+ }
+ 
+-/*
+- * The global dictionary of all interned attributes.  This
+- * is a singleton object which is shared between threads.
+- * Access to this dictionary must be surrounded with a mutex.
+- */
+-static struct attr_hashmap g_attr_hashmap;
+-
+ /* The container for objects stored in "struct attr_hashmap" */
+ struct attr_hash_entry {
+ 	struct hashmap_entry ent;
+@@ -80,11 +73,14 @@ static int attr_hash_entry_cmp(const void *unused_cmp_data,
+ 	return (a->keylen != b->keylen) || strncmp(a->key, b->key, a->keylen);
+ }
+ 
+-/* Initialize an 'attr_hashmap' object */
+-static void attr_hashmap_init(struct attr_hashmap *map)
+-{
+-	hashmap_init(&map->map, attr_hash_entry_cmp, NULL, 0);
+-}
++/*
++ * The global dictionary of all interned attributes.  This
++ * is a singleton object which is shared between threads.
++ * Access to this dictionary must be surrounded with a mutex.
++ */
++static struct attr_hashmap g_attr_hashmap = {
++	HASHMAP_INIT(attr_hash_entry_cmp, NULL)
++};
+ 
+ /*
+  * Retrieve the 'value' stored in a hashmap given the provided 'key'.
+@@ -96,9 +92,6 @@ static void *attr_hashmap_get(struct attr_hashmap *map,
+ 	struct attr_hash_entry k;
+ 	struct attr_hash_entry *e;
+ 
+-	if (!map->map.tablesize)
+-		attr_hashmap_init(map);
+-
+ 	hashmap_entry_init(&k.ent, memhash(key, keylen));
+ 	k.key = key;
+ 	k.keylen = keylen;
+@@ -114,9 +107,6 @@ static void attr_hashmap_add(struct attr_hashmap *map,
+ {
+ 	struct attr_hash_entry *e;
+ 
+-	if (!map->map.tablesize)
+-		attr_hashmap_init(map);
+-
+ 	e = xmalloc(sizeof(struct attr_hash_entry));
+ 	hashmap_entry_init(&e->ent, memhash(key, keylen));
+ 	e->key = key;
+diff --git a/bloom.c b/bloom.c
+index 719c313a1c..b176f28f53 100644
+--- a/bloom.c
++++ b/bloom.c
+@@ -229,10 +229,9 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
+ 	diffcore_std(&diffopt);
+ 
+ 	if (diff_queued_diff.nr <= settings->max_changed_paths) {
+-		struct hashmap pathmap;
++		struct hashmap pathmap = HASHMAP_INIT(pathmap_cmp, NULL);
+ 		struct pathmap_hash_entry *e;
+ 		struct hashmap_iter iter;
+-		hashmap_init(&pathmap, pathmap_cmp, NULL, 0);
+ 
+ 		for (i = 0; i < diff_queued_diff.nr; i++) {
+ 			const char *path = diff_queued_diff.queue[i]->two->path;
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index 7ac432b881..6e18e623fd 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -342,7 +342,10 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 	const char *workdir, *tmp;
+ 	int ret = 0, i;
+ 	FILE *fp;
+-	struct hashmap working_tree_dups, submodules, symlinks2;
++	struct hashmap working_tree_dups = HASHMAP_INIT(working_tree_entry_cmp,
++							NULL);
++	struct hashmap submodules = HASHMAP_INIT(pair_cmp, NULL);
++	struct hashmap symlinks2 = HASHMAP_INIT(pair_cmp, NULL);
+ 	struct hashmap_iter iter;
+ 	struct pair_entry *entry;
+ 	struct index_state wtindex;
+@@ -383,10 +386,6 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 	rdir_len = rdir.len;
+ 	wtdir_len = wtdir.len;
+ 
+-	hashmap_init(&working_tree_dups, working_tree_entry_cmp, NULL, 0);
+-	hashmap_init(&submodules, pair_cmp, NULL, 0);
+-	hashmap_init(&symlinks2, pair_cmp, NULL, 0);
+-
+ 	child.no_stdin = 1;
+ 	child.git_cmd = 1;
+ 	child.use_shell = 0;
+diff --git a/range-diff.c b/range-diff.c
+index befeecae44..b9950f10c8 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -232,11 +232,9 @@ static int patch_util_cmp(const void *dummy, const struct patch_util *a,
+ 
+ static void find_exact_matches(struct string_list *a, struct string_list *b)
+ {
+-	struct hashmap map;
++	struct hashmap map = HASHMAP_INIT((hashmap_cmp_fn)patch_util_cmp, NULL);
+ 	int i;
+ 
+-	hashmap_init(&map, (hashmap_cmp_fn)patch_util_cmp, NULL, 0);
+-
+ 	/* First, add the patches of a to a hash map */
+ 	for (i = 0; i < a->nr; i++) {
+ 		struct patch_util *util = a->items[i].util;
+diff --git a/revision.c b/revision.c
+index f27649d45d..c6e169e3eb 100644
+--- a/revision.c
++++ b/revision.c
+@@ -124,11 +124,6 @@ static int path_and_oids_cmp(const void *hashmap_cmp_fn_data,
+ 	return strcmp(e1->path, e2->path);
+ }
+ 
+-static void paths_and_oids_init(struct hashmap *map)
+-{
+-	hashmap_init(map, path_and_oids_cmp, NULL, 0);
+-}
+-
+ static void paths_and_oids_clear(struct hashmap *map)
+ {
+ 	struct hashmap_iter iter;
+@@ -213,7 +208,7 @@ void mark_trees_uninteresting_sparse(struct repository *r,
+ 				     struct oidset *trees)
+ {
+ 	unsigned has_interesting = 0, has_uninteresting = 0;
+-	struct hashmap map;
++	struct hashmap map = HASHMAP_INIT(path_and_oids_cmp, NULL);
+ 	struct hashmap_iter map_iter;
+ 	struct path_and_oids_entry *entry;
+ 	struct object_id *oid;
+@@ -237,8 +232,6 @@ void mark_trees_uninteresting_sparse(struct repository *r,
+ 	if (!has_uninteresting || !has_interesting)
+ 		return;
+ 
+-	paths_and_oids_init(&map);
+-
+ 	oidset_iter_init(trees, &iter);
+ 	while ((oid = oidset_iter_next(&iter))) {
+ 		struct tree *tree = lookup_tree(r, oid);
+diff --git a/t/helper/test-hashmap.c b/t/helper/test-hashmap.c
+index 2475663b49..36ff07bd4b 100644
+--- a/t/helper/test-hashmap.c
++++ b/t/helper/test-hashmap.c
+@@ -151,12 +151,11 @@ static void perf_hashmap(unsigned int method, unsigned int rounds)
+ int cmd__hashmap(int argc, const char **argv)
+ {
+ 	struct strbuf line = STRBUF_INIT;
+-	struct hashmap map;
+ 	int icase;
++	struct hashmap map = HASHMAP_INIT(test_entry_cmp, &icase);
+ 
+ 	/* init hash map */
+ 	icase = argc > 1 && !strcmp("ignorecase", argv[1]);
+-	hashmap_init(&map, test_entry_cmp, &icase, 0);
+ 
+ 	/* process commands from stdin */
+ 	while (strbuf_getline(&line, stdin) != EOF) {
+-- 
+gitgitgadget
