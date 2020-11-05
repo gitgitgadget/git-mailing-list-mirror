@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48572C4741F
-	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 00:24:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E254C55178
+	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 00:24:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EE06B20825
-	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 00:24:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ACFB620825
+	for <git@archiver.kernel.org>; Thu,  5 Nov 2020 00:24:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zi6RR1DQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="obWQVHBM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732816AbgKEAYl (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1732830AbgKEAYl (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 4 Nov 2020 19:24:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54094 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730131AbgKEAWw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Nov 2020 19:22:52 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81E0BC0613CF
-        for <git@vger.kernel.org>; Wed,  4 Nov 2020 16:22:50 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id x7so400372wrl.3
-        for <git@vger.kernel.org>; Wed, 04 Nov 2020 16:22:50 -0800 (PST)
+        with ESMTP id S1729546AbgKEAWv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Nov 2020 19:22:51 -0500
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FAFCC0613D2
+        for <git@vger.kernel.org>; Wed,  4 Nov 2020 16:22:51 -0800 (PST)
+Received: by mail-wm1-x344.google.com with SMTP id s13so27745wmh.4
+        for <git@vger.kernel.org>; Wed, 04 Nov 2020 16:22:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=lfeFxSmzBLKnFekm6mzwPvSqu+S1DEbaBDz97hV1DAw=;
-        b=Zi6RR1DQkMJPrQ8RJ6J4ZzcfpFXtTg6PnbF30Mr+ulsEuQsrwCTCWnjn8kfGMGmMG7
-         +IqDP7d7p8AIhtiaO7QmHZOj5ZO89eeuHOxX2mVbark5UyqIt7NNe7gme4rjTQO1Pu9P
-         6aY1z6BJk76WxgS2CZZDiBpg+EXY2AczNFR8Tj5CsSA0DYZFQsgBINYnLYbPF2rYgjm4
-         u9RIT7RFER5YwrldtphkjsSq6L3xIIHGwHlaetVfa1AZlqTQwzkag7q0ZjVNWSksyV7x
-         NWrNn5lb1znC+r/qNLP4PxleN77cwGRmD3SUmCYQqs5I8aMSPimy84JG1XbGSsMntVwt
-         A2DA==
+        bh=IEPGTilWFeb/gYnUiQHEDPP0R8dCTuzsEUTPxGrkZm8=;
+        b=obWQVHBM05L2iGmhR1E5lditq9cEjKzG83HrRcnvlogtnS9mEOo+j167/Hi1dcEzak
+         P9YHpPl9c14VOVqzTYQ1BzQLF3XthyCnN7ScVC9NIOHb7FXShcnYJzJ/Om2LZi9CKi1w
+         ttyl98y94E9tVtpO6ur31gdnMOKxP9/2d/KTi49ZLGudlvXZ6vbn2y3wyG4X+XhqCXjC
+         d56A5egJi45lmNDx7ha4o/wHtt+G221QJ077dJxJEzIE/gsVNPWLIAqIysBpWH5MxTj8
+         aMBJnctQ+cAWzVxlWodZvZO3C7ANfixz8g0vh1wgnkGF1Ao7datCwOJEYk3TqBnCijGQ
+         eEQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lfeFxSmzBLKnFekm6mzwPvSqu+S1DEbaBDz97hV1DAw=;
-        b=V13iZJBEIaR80A+0O4EABc8hW8UnNbzPF4p1drmAtVfFB4tnUlENrxoNc9BUaJrEVY
-         5eWvnha6ERrozIedOALlT/AbRt+wagTMRtB4lZ2AjGmbrJOmlno3NQ5NDC4AMV/mFsh4
-         +aEaW4FqziiONybPPNXxYLUlv59VOfoBMVXatGjM6RVEEUwR+SllsB0RgWgAHhNyc7Gd
-         HDvGIpL7u4jYwI2uPkcGPLoDvveY+pOddVNEmJcoBYvWfl/Wfz7gAg/Dx3NtJagOUkwm
-         OcFIlvu/cPVkM018OuA4RJOWX8KDX9UGOmSiTNrcgf+P6sGKKrdVn9rTZ49eNuKrrOnX
-         UOlA==
-X-Gm-Message-State: AOAM5316JoWQT+mVaSwKvNsK0no+b6vqK8HRcD10V3tzi6AQn4+4CDSd
-        3FLiN1ZmaqQl2zcs4XQdImaeAVNQVW0=
-X-Google-Smtp-Source: ABdhPJzQQ94ptIQ8VaCZ8f2uYtrw/yTMZ5jt7pnuhUMYJ7SGdPNvSaccXFP2f0k3an9xHiNgp8ZVtQ==
-X-Received: by 2002:adf:8484:: with SMTP id 4mr605193wrg.334.1604535769075;
+        bh=IEPGTilWFeb/gYnUiQHEDPP0R8dCTuzsEUTPxGrkZm8=;
+        b=fLeGb3uhMTsI4mOoKOHz5uY28sJLS5KNiQHbwtt9WUWpJVCuFnm++OV79U3dzFcyha
+         sdEHoCfuOjxAFyYv++8zesd8JyLgfiH3/n3dbTzYQreK+UWJ0lBHcNdJNBaGV36l7wyz
+         zB9ujyZEw1XMjxVmTUYTgZDfEOxXoMKOU4m0OWQEReC4w+H7oRJJPaqSTLp2f2SU8OJH
+         P3n8dyLkM0LQykZVyHPwdkyjmfFydg99UO47HUzIVqeZU2T2cVAPuxYXRGRYVaaPOpoO
+         EdAGTWGc5HtHtSK+LQe05hvaInHGO+qPztzccmBw27Y8GNBF99tE5HJw/GzIPsN9ievl
+         Na9w==
+X-Gm-Message-State: AOAM532y7Ilc+PExpJw/d1AED7vM9xrTkNKhaUIcD60Dupt8p/ZGI+zB
+        MQ1Og2+zFSkZa5tLr378h1dNhjjJskg=
+X-Google-Smtp-Source: ABdhPJxiGUEJBB8qykQLyqMTBPBnmrpKydVjeTEMmI/esCeJgxE5HSdWSJFpHBhL1Kltcv487FIvXQ==
+X-Received: by 2002:a1c:7515:: with SMTP id o21mr77803wmc.5.1604535769921;
         Wed, 04 Nov 2020 16:22:49 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h4sm4832692wrp.52.2020.11.04.16.22.48
+        by smtp.gmail.com with ESMTPSA id o63sm6421wmo.2.2020.11.04.16.22.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Nov 2020 16:22:48 -0800 (PST)
-Message-Id: <591161fd781b7666ddaa45694eb20610cc359741.1604535765.git.gitgitgadget@gmail.com>
+        Wed, 04 Nov 2020 16:22:49 -0800 (PST)
+Message-Id: <f2718d036dc5d08c2ed416a5ef98c5730bc38cfc.1604535765.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.835.v4.git.git.1604535765.gitgitgadget@gmail.com>
 References: <pull.835.v3.git.git.1604343313.gitgitgadget@gmail.com>
         <pull.835.v4.git.git.1604535765.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 05 Nov 2020 00:22:34 +0000
-Subject: [PATCH v4 02/13] hashmap: adjust spacing to fix argument alignment
+Date:   Thu, 05 Nov 2020 00:22:35 +0000
+Subject: [PATCH v4 03/13] hashmap: allow re-use after hashmap_free()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,152 +78,93 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-No actual code changes; just whitespace adjustments.
+Previously, once map->table had been freed, any calls to hashmap_put(),
+hashmap_get(), or hashmap_remove() would cause a NULL pointer
+dereference (since hashmap_free_() also zeros the memory; without that
+zeroing, calling these functions would cause a use-after-free problem).
+
+Modify these functions to check for a NULL table and automatically
+allocate as needed.
+
+Also add a HASHMAP_INIT(fn, data) macro for initializing hashmaps on the
+stack without calling hashmap_init().
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- hashmap.c | 17 +++++++++--------
- hashmap.h | 22 +++++++++++-----------
- 2 files changed, 20 insertions(+), 19 deletions(-)
+ hashmap.c | 16 ++++++++++++++--
+ hashmap.h |  3 +++
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
 diff --git a/hashmap.c b/hashmap.c
-index 09813e1a46..e44d8a3e85 100644
+index e44d8a3e85..bb7c9979b8 100644
 --- a/hashmap.c
 +++ b/hashmap.c
-@@ -92,8 +92,9 @@ static void alloc_table(struct hashmap *map, unsigned int size)
- }
+@@ -114,6 +114,7 @@ int hashmap_bucket(const struct hashmap *map, unsigned int hash)
  
- static inline int entry_equals(const struct hashmap *map,
--		const struct hashmap_entry *e1, const struct hashmap_entry *e2,
--		const void *keydata)
-+			       const struct hashmap_entry *e1,
-+			       const struct hashmap_entry *e2,
-+			       const void *keydata)
+ static void rehash(struct hashmap *map, unsigned int newsize)
  {
- 	return (e1 == e2) ||
- 	       (e1->hash == e2->hash &&
-@@ -101,7 +102,7 @@ static inline int entry_equals(const struct hashmap *map,
- }
++	/* map->table MUST NOT be NULL when this function is called */
+ 	unsigned int i, oldsize = map->tablesize;
+ 	struct hashmap_entry **oldtable = map->table;
  
- static inline unsigned int bucket(const struct hashmap *map,
--		const struct hashmap_entry *key)
-+				  const struct hashmap_entry *key)
+@@ -134,6 +135,7 @@ static void rehash(struct hashmap *map, unsigned int newsize)
+ static inline struct hashmap_entry **find_entry_ptr(const struct hashmap *map,
+ 		const struct hashmap_entry *key, const void *keydata)
  {
- 	return key->hash & (map->tablesize - 1);
- }
-@@ -148,7 +149,7 @@ static int always_equal(const void *unused_cmp_data,
- }
- 
- void hashmap_init(struct hashmap *map, hashmap_cmp_fn equals_function,
--		const void *cmpfn_data, size_t initial_size)
-+		  const void *cmpfn_data, size_t initial_size)
++	/* map->table MUST NOT be NULL when this function is called */
+ 	struct hashmap_entry **e = &map->table[bucket(map, key)];
+ 	while (*e && !entry_equals(map, *e, key, keydata))
+ 		e = &(*e)->next;
+@@ -196,6 +198,8 @@ struct hashmap_entry *hashmap_get(const struct hashmap *map,
+ 				const struct hashmap_entry *key,
+ 				const void *keydata)
  {
- 	unsigned int size = HASHMAP_INITIAL_SIZE;
- 
-@@ -199,7 +200,7 @@ struct hashmap_entry *hashmap_get(const struct hashmap *map,
++	if (!map->table)
++		return NULL;
+ 	return *find_entry_ptr(map, key, keydata);
  }
  
- struct hashmap_entry *hashmap_get_next(const struct hashmap *map,
--			const struct hashmap_entry *entry)
-+				       const struct hashmap_entry *entry)
+@@ -211,8 +215,12 @@ struct hashmap_entry *hashmap_get_next(const struct hashmap *map,
+ 
+ void hashmap_add(struct hashmap *map, struct hashmap_entry *entry)
  {
- 	struct hashmap_entry *e = entry->next;
- 	for (; e; e = e->next)
-@@ -225,8 +226,8 @@ void hashmap_add(struct hashmap *map, struct hashmap_entry *entry)
- }
+-	unsigned int b = bucket(map, entry);
++	unsigned int b;
++
++	if (!map->table)
++		alloc_table(map, HASHMAP_INITIAL_SIZE);
  
- struct hashmap_entry *hashmap_remove(struct hashmap *map,
--					const struct hashmap_entry *key,
--					const void *keydata)
-+				     const struct hashmap_entry *key,
-+				     const void *keydata)
++	b = bucket(map, entry);
+ 	/* add entry */
+ 	entry->next = map->table[b];
+ 	map->table[b] = entry;
+@@ -230,7 +238,11 @@ struct hashmap_entry *hashmap_remove(struct hashmap *map,
+ 				     const void *keydata)
  {
  	struct hashmap_entry *old;
- 	struct hashmap_entry **e = find_entry_ptr(map, key, keydata);
-@@ -249,7 +250,7 @@ struct hashmap_entry *hashmap_remove(struct hashmap *map,
- }
+-	struct hashmap_entry **e = find_entry_ptr(map, key, keydata);
++	struct hashmap_entry **e;
++
++	if (!map->table)
++		return NULL;
++	e = find_entry_ptr(map, key, keydata);
+ 	if (!*e)
+ 		return NULL;
  
- struct hashmap_entry *hashmap_put(struct hashmap *map,
--				struct hashmap_entry *entry)
-+				  struct hashmap_entry *entry)
- {
- 	struct hashmap_entry *old = hashmap_remove(map, entry, NULL);
- 	hashmap_add(map, entry);
 diff --git a/hashmap.h b/hashmap.h
-index 2994dc7a9c..904f61d6e1 100644
+index 904f61d6e1..3b0f2bcade 100644
 --- a/hashmap.h
 +++ b/hashmap.h
-@@ -228,9 +228,9 @@ struct hashmap {
-  * prevent expensive resizing. If 0, the table is dynamically resized.
-  */
- void hashmap_init(struct hashmap *map,
--			 hashmap_cmp_fn equals_function,
--			 const void *equals_function_data,
--			 size_t initial_size);
-+		  hashmap_cmp_fn equals_function,
-+		  const void *equals_function_data,
-+		  size_t initial_size);
+@@ -210,6 +210,9 @@ struct hashmap {
  
- /* internal function for freeing hashmap */
- void hashmap_free_(struct hashmap *map, ssize_t offset);
-@@ -288,7 +288,7 @@ void hashmap_free_(struct hashmap *map, ssize_t offset);
-  * and if it is on stack, you can just let it go out of scope).
-  */
- static inline void hashmap_entry_init(struct hashmap_entry *e,
--					unsigned int hash)
-+				      unsigned int hash)
- {
- 	e->hash = hash;
- 	e->next = NULL;
-@@ -330,8 +330,8 @@ static inline unsigned int hashmap_get_size(struct hashmap *map)
-  * to `hashmap_cmp_fn` to decide whether the entry matches the key.
-  */
- struct hashmap_entry *hashmap_get(const struct hashmap *map,
--				const struct hashmap_entry *key,
--				const void *keydata);
-+				  const struct hashmap_entry *key,
-+				  const void *keydata);
+ /* hashmap functions */
  
++#define HASHMAP_INIT(fn, data) { .cmpfn = fn, .cmpfn_data = data, \
++				 .do_count_items = 1 }
++
  /*
-  * Returns the hashmap entry for the specified hash code and key data,
-@@ -364,7 +364,7 @@ static inline struct hashmap_entry *hashmap_get_from_hash(
-  * call to `hashmap_get` or `hashmap_get_next`.
-  */
- struct hashmap_entry *hashmap_get_next(const struct hashmap *map,
--			const struct hashmap_entry *entry);
-+				       const struct hashmap_entry *entry);
- 
- /*
-  * Adds a hashmap entry. This allows to add duplicate entries (i.e.
-@@ -384,7 +384,7 @@ void hashmap_add(struct hashmap *map, struct hashmap_entry *entry);
-  * Returns the replaced entry, or NULL if not found (i.e. the entry was added).
-  */
- struct hashmap_entry *hashmap_put(struct hashmap *map,
--				struct hashmap_entry *entry);
-+				  struct hashmap_entry *entry);
- 
- /*
-  * Adds or replaces a hashmap entry contained within @keyvar,
-@@ -406,8 +406,8 @@ struct hashmap_entry *hashmap_put(struct hashmap *map,
-  * Argument explanation is the same as in `hashmap_get`.
-  */
- struct hashmap_entry *hashmap_remove(struct hashmap *map,
--					const struct hashmap_entry *key,
--					const void *keydata);
-+				     const struct hashmap_entry *key,
-+				     const void *keydata);
- 
- /*
-  * Removes a hashmap entry contained within @keyvar,
-@@ -449,7 +449,7 @@ struct hashmap_entry *hashmap_iter_next(struct hashmap_iter *iter);
- 
- /* Initializes the iterator and returns the first entry, if any. */
- static inline struct hashmap_entry *hashmap_iter_first(struct hashmap *map,
--		struct hashmap_iter *iter)
-+						       struct hashmap_iter *iter)
- {
- 	hashmap_iter_init(map, iter);
- 	return hashmap_iter_next(iter);
+  * Initializes a hashmap structure.
+  *
 -- 
 gitgitgadget
 
