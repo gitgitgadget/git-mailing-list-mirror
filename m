@@ -2,153 +2,105 @@ Return-Path: <SRS0=eTRQ=EM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B7B5C2D0A3
-	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 22:19:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0ED35C2D0A3
+	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 22:42:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 233B6206F9
-	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 22:19:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8EED520720
+	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 22:42:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="R1+gmncO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QKXalpc5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729296AbgKFWTl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Nov 2020 17:19:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33368 "EHLO
+        id S1728833AbgKFWms (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Nov 2020 17:42:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729295AbgKFWTi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Nov 2020 17:19:38 -0500
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 597A2C0613CF
-        for <git@vger.kernel.org>; Fri,  6 Nov 2020 14:19:37 -0800 (PST)
-Received: by mail-yb1-xb4a.google.com with SMTP id a12so3309340ybc.20
-        for <git@vger.kernel.org>; Fri, 06 Nov 2020 14:19:37 -0800 (PST)
+        with ESMTP id S1728358AbgKFWmr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Nov 2020 17:42:47 -0500
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 728E1C0613CF
+        for <git@vger.kernel.org>; Fri,  6 Nov 2020 14:42:47 -0800 (PST)
+Received: by mail-qt1-x82c.google.com with SMTP id n63so1965287qte.4
+        for <git@vger.kernel.org>; Fri, 06 Nov 2020 14:42:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=sqUTRcVsRv8RcfOITrWVGfFGAqebKXt4mO6XxW0YB/E=;
-        b=R1+gmncO+EzOfbn+sI7mPWvkLlqkGj9BNNmzFWqGMzobnxbwBaqbNhr/+OIK0kM+V5
-         gs1dPlS5SWGjy8ljFeqRcXnpb1kCVc6OvE54ax5ORNHcNzr0mD0xXsEYbr97wite1JJV
-         6ccQYbhARViq/FD+qvtKdH/NZHFjkpE9p8k1HndWWNLODw1RgbsgKirtEJRMEMvIt4c1
-         +BRrt4yFpABpx7mQoQp8O4+IPMG2tnDZ6Zar2STL45Bf+X0X4AuIO5jok2UcLx3X61bW
-         L8Jc5usn6QtxOXSf7NBejFql9O9gO54fqI+O99FW5cCZEMZ4Ph5ypEjMYxvG3Hjl/eDF
-         Q5Ew==
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:subject:message-id:date:to
+         :mime-version;
+        bh=eiPjHqGGU7XWb5NN4RfuL929DntMJK2uoiGzdUt4+40=;
+        b=QKXalpc5OaaRgqrqiZf33P407YthfO0dvGoOTlXHByyOiwNbsdstGL/IDZu1kFg09L
+         2Rz2lH3B9J/HJBO0HFM8dftSzopo28WpjPmFBqHTNltdwyVnlVmk7Y9vu1HZ9vYO4q3/
+         IoQqwmGcRJlktCmUeRwvo2IQPMGS3B93jgZIZ5D/2RKwJtk6FxPeXFKhDzsRBR/Bsk8U
+         JItFI8uwGMxGF2BiZm1vG5P7kjfdiHfid3Ch20zuR7+UFs10ZYqQXirX2KNdoYSQQten
+         gCBs+GEcMJVjcJhDzfkBJR8AOlfUGFzlm7c9uKampbFALnX0/r2ToWMMzqDFuV3uFfCs
+         teOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=sqUTRcVsRv8RcfOITrWVGfFGAqebKXt4mO6XxW0YB/E=;
-        b=aTT6YbgDvk1OO+oGs56wglnINXRnTrGpCxTbnJpsp3xy7VYgDcEaGk7LgcNq0TFGT6
-         u4vTUfT6O1WJRlObSQgIdNZFPwTAjQKL0I8JkB9MPfH5fXI+JqqfCu/FxiJadhbamX+O
-         RJnqpBg9/FRC3j9fBL3ITNH93iI2QgzvNJx7QEBaDsntOrsIaWWwCGBC/PhTYeBepAtk
-         qh1DqD8ssfGTk1Xv2WDjqXoT++01kK+JwW1tXGtdCpZb83SrccJ5ytn0hlNBq7VecN9O
-         SqtOtNGAM3qomfC/4F8Kz57adKsHAGJ4c+CDZadkOcq1KSJZ+Gt1XwEK7xq9Cjdeyexp
-         ftGw==
-X-Gm-Message-State: AOAM5318C4l5VjKs/j524yeoqxhUzec8PQZflpokh9TMshPLiYN1AmwI
-        OFAQuaBfh67fnzQmaadFR1WWmBSPTLWO75S/7yfH
-X-Google-Smtp-Source: ABdhPJwR+CIJt9yaSQ7ecs21aRAWEchS4bEXGapIMK7Km46yFfSPc0Ubf30mdJw5YdLJtAJlyXjhj39JjQlaHBock28U
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a25:e5c1:: with SMTP id
- c184mr5826668ybh.247.1604701176572; Fri, 06 Nov 2020 14:19:36 -0800 (PST)
-Date:   Fri,  6 Nov 2020 14:19:34 -0800
-In-Reply-To: <20201102204344.342633-7-newren@gmail.com>
-Message-Id: <20201106221934.764672-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20201102204344.342633-7-newren@gmail.com>
-X-Mailer: git-send-email 2.29.1.341.ge80a0c044ae-goog
-Subject: Re: [PATCH v2 06/20] merge-ort: implement a very basic collect_merge_info()
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     newren@gmail.com
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:content-transfer-encoding:subject
+         :message-id:date:to:mime-version;
+        bh=eiPjHqGGU7XWb5NN4RfuL929DntMJK2uoiGzdUt4+40=;
+        b=Od8pWOKGQcNx2rvKGLxO0L9xOJ2E7xZuVChQrSwlWPsgIVntHk3Sbn0JkhPtfm4O1O
+         TlojQvI8+jOFVmlq2xLxi/yCcIu/4V1rIyIeowU/HVgpQUh8WSoR7xwW+s9LmB4bdZJT
+         EUc/wRuqKWkIm9Hb8TZWbdYgta78lsuMaTi/DHfbiZQ/83pN64AFxzmMlm9kmbc4L9Km
+         uYkPDRKdyJCrzK52K1or/5P3yV56esa8gICUXBVpa4rnZilJePI2GCzrbVu1Agqjb26o
+         PK97MhI66/WkZP9l24QqKrLG5waSLxtjAU2lsMV/jBKZ3nDXEW269bGoHaKhSN4AMh65
+         Byxw==
+X-Gm-Message-State: AOAM532669T57NT4HAQvR4FiRm7h1kzR9xqL86MewFrklwHodFX90kTf
+        uVMtujTKvHJrPwbgIFOMFEFHF5csEjE=
+X-Google-Smtp-Source: ABdhPJyx90lPOnnfq6PbKXAWm2HW81nn10QaPwxFu+i3OBS9gCANB0CPqN2/Jx7PGwQv+EpwqbI4BQ==
+X-Received: by 2002:ac8:615c:: with SMTP id d28mr3815152qtm.104.1604702565911;
+        Fri, 06 Nov 2020 14:42:45 -0800 (PST)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id t60sm1433618qtd.65.2020.11.06.14.42.45
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Fri, 06 Nov 2020 14:42:45 -0800 (PST)
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Subject: Completion for aliases that wrap aliases that wrap Git commands
+Message-Id: <9717A684-9304-4A65-8566-19F946098455@gmail.com>
+Date:   Fri, 6 Nov 2020 17:42:43 -0500
+To:     Git mailing list <git@vger.kernel.org>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> diff --git a/merge-ort.c b/merge-ort.c
-> index 537da9f6df..626eb9713e 100644
-> --- a/merge-ort.c
-> +++ b/merge-ort.c
-> @@ -77,13 +77,130 @@ static int err(struct merge_options *opt, const char *err, ...)
->  	return -1;
->  }
->  
-> +static int collect_merge_info_callback(int n,
-> +				       unsigned long mask,
-> +				       unsigned long dirmask,
-> +				       struct name_entry *names,
-> +				       struct traverse_info *info)
-> +{
+Hello all,
 
-[snip]
+I've noticed the following: I have a Git alias that is simply a Git =
+command=20
+with some options, like
 
-> +	unsigned mbase_null = !(mask & 1);
-> +	unsigned side1_null = !(mask & 2);
-> +	unsigned side2_null = !(mask & 4);
+$ git config --get alias.logo
+log --abbrev-commit --decorate --format=3Dformat:'%C(yellow =
+bold)%h%C(reset) %C(normal)%s%C(reset) %C(dim white)%an%C(reset) %C(dim =
+blue)(%ad)%C(reset) %C(auto)%d%C(reset)'
 
-Should these be "int"?
+And another alias that is this previous alias with more options:
 
-> +	/*
-> +	 * A bunch of sanity checks verifying that traverse_trees() calls
-> +	 * us the way I expect.  Could just remove these at some point,
-> +	 * though maybe they are helpful to future code readers.
-> +	 */
-> +	assert(mbase_null == is_null_oid(&names[0].oid));
-> +	assert(side1_null == is_null_oid(&names[1].oid));
-> +	assert(side2_null == is_null_oid(&names[2].oid));
-> +	assert(!mbase_null || !side1_null || !side2_null);
-> +	assert(mask > 0 && mask < 8);
+$ git config --get alias.lg
+logo --first-parent
 
-These were helpful to me.
+When typing 'git logo up[TAB][TAB]', the Bash completion script
+suggests 'upstream' (like if I type 'git log up[TAB][TAB]'),
+but typing 'git lg up[TAB][TAB]' does not suggest anything.
 
-> +	/* Other invariant checks, mostly for documentation purposes. */
-> +	assert(mask == (dirmask | filemask));
+So I'm thinking there is some special logic in the completion script =
+that makes it=20
+work for simple aliases but not for recursive aliases.
 
-But not this - filemask was computed in this function, so I need not
-look elsewhere to see that this is correct.
+I know nothing about Bash completions, but I'm wondering if that feature =
+would
+be possible at all ?
 
-> +	/*
-> +	 * TODO: record information about the path other than all zeros,
-> +	 * so we can resolve later in process_entries.
-> +	 */
-> +	ci = xcalloc(1, sizeof(struct conflict_info));
-> +	strmap_put(&opti->paths, fullpath, ci);
+This is on Bash 4.4.19(1) (not that I think it matters very much...)
 
-OK - so each entry is a full-size conflict_info to store all relevant
-information. Presumably some of these will be converted later into what
-is effectively a struct merged_info (so, the extra struct conflict_info
-fields are unused but memory is still occupied).
+Cheers,
 
-I do see that in patch 10, there is an optimization that directly
-allocates the smaller struct merged_info when it is known at this point
-that there is no conflict.
-
-[snip rest of function]
-
->  static int collect_merge_info(struct merge_options *opt,
->  			      struct tree *merge_base,
->  			      struct tree *side1,
->  			      struct tree *side2)
->  {
-> -	/* TODO: Implement this using traverse_trees() */
-> -	die("Not yet implemented.");
-> +	int ret;
-> +	struct tree_desc t[3];
-> +	struct traverse_info info;
-> +	char *toplevel_dir_placeholder = "";
-> +
-> +	opt->priv->current_dir_name = toplevel_dir_placeholder;
-> +	setup_traverse_info(&info, toplevel_dir_placeholder);
-
-I thought that this was written like this (instead of inlining the 2
-double-quotes) to ensure that the string-equality-is-pointer-equality
-characteristic holds, but I see that that characteristic is for
-directory_name in struct merged_info, not current_dir_name in struct
-merge_options_internal. Any reason for not inlining ""?
-
-[snip rest of function]
+Philippe.=
