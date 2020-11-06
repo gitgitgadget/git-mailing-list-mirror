@@ -2,120 +2,123 @@ Return-Path: <SRS0=eTRQ=EM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CAE66C388F7
-	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 00:51:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33EF9C388F7
+	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 01:26:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5BB9F20759
-	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 00:51:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DD7FF20759
+	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 01:26:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VatjM3dp"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="NZlZLysS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732415AbgKFAvO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Nov 2020 19:51:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57162 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729784AbgKFAvO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Nov 2020 19:51:14 -0500
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B4E2C0613CF
-        for <git@vger.kernel.org>; Thu,  5 Nov 2020 16:51:14 -0800 (PST)
-Received: by mail-pl1-x641.google.com with SMTP id p4so1631614plr.1
-        for <git@vger.kernel.org>; Thu, 05 Nov 2020 16:51:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=9abuu28L4NMfgCPV6H9FFu3pPzhx/U9bat6GfnV0L08=;
-        b=VatjM3dpVFWFCsfjyiAz94cbWe0QTxapeuR7OxDmH4P6ejalBqER/k9dOpKKHlUPXs
-         oMz86ndNIlnVe32tJ7vmqaexYvrONbZ2DYNUwmhgaCWf5mcDywehrhdRhgemKkETT9yC
-         1FW+d6ucI8emguGItOWUh/h4twcT9uhlx2AQcLHqwZlr3NCFX6CBrn5grbF1gvLS+B3o
-         KXPI6Qxtm7jOXMB/HsWhNWO/zS6N1pRcxxhenrFTtrU8VtU/JQHDuJo14++Jd+yzRiAi
-         tcz2toW4oMiHwcrPgHe7+IZzZAumN1SjHnWSi5op6d8eSLPbt5MT+xsNTVkggvZtLZuc
-         +/cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=9abuu28L4NMfgCPV6H9FFu3pPzhx/U9bat6GfnV0L08=;
-        b=T/AwMZUnOaAuHAKm3TZvKgfDOxPlPl8S5k0c+/tz8jgqP5CS/Rdm+v5KxrcZBL+jk0
-         rAKpR4WTed85FOO/XgfItYh2sGAlVyo3+4YErTE4g6HWOMoc8xcQt/VurQI8p653RiKB
-         VscTLwiu0cLHQaVAosItbTR/w3wOGPaUDBoLcEN95cp4HLaOmv5BKtgEgjiPrLAV9k0I
-         LFYVK5TcRXmiVh2dnPEb/J+Y9fLo8g5dYUWO01k/eeCJ6/PhwDj8ZMexKEMnI571c+2T
-         s+K46rRdxAneEEpod+bxNlUDrsNpXw2yjNQPzIuvBdkYE2PIt7VP8Zn4B58875n120f4
-         ma6w==
-X-Gm-Message-State: AOAM530cd42rnJ9oUAFAYpeuz6LHQQOa9k5jgrDQkKZS4rTMrkGVsEAy
-        HzfutXVAyTs2VTtY2/wOkZE1IXtWfTY=
-X-Google-Smtp-Source: ABdhPJwLWLDxvNJ+ey531tYbd+dTg/LbIArED/924xAFU7TRnx/tIlqWaQFFvHpBxYYvfFdpDs930w==
-X-Received: by 2002:a17:902:bc47:b029:d6:d98a:1a68 with SMTP id t7-20020a170902bc47b02900d6d98a1a68mr4395941plz.63.1604623873535;
-        Thu, 05 Nov 2020 16:51:13 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
-        by smtp.gmail.com with ESMTPSA id x19sm3317192pjk.25.2020.11.05.16.51.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Nov 2020 16:51:12 -0800 (PST)
-Date:   Thu, 5 Nov 2020 16:51:10 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] rev-parse: add option for absolute or relative path
- formatting
-Message-ID: <20201106005110.GA3479573@google.com>
-References: <20200908185017.2005159-1-sandals@crustytoothpaste.net>
- <20201104221659.GA3183353@google.com>
- <20201105031153.GA1332931@camp.crustytoothpaste.net>
+        id S1730906AbgKFB0x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Nov 2020 20:26:53 -0500
+Received: from avasout02.plus.net ([212.159.14.17]:57495 "EHLO
+        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730246AbgKFB0x (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Nov 2020 20:26:53 -0500
+Received: from [10.0.2.15] ([80.189.83.69])
+        by smtp with ESMTPA
+        id aqWfkOVSt0K1OaqWgke8GD; Fri, 06 Nov 2020 01:26:51 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1604626011; bh=pIrr0Sbg8drZvwE6x9DzESqhkDm+PG4zsIVPzF21lg0=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=NZlZLysSXcNMZrMQWHJJ/JwbsS6YDCGwGmC7osFyTVB7kRiJZokqhti2+EyWicaFS
+         7NujBxIB5uypgNbCjMpIwud8slQ8tL8hbBpbiyYKkttKOH2oUY1g0Iy+0fdqE4Y6CL
+         ERSMBRairCy6Tes3CHFLjCTuhBm+iQUmS2VJTctm7VACG5pgyoTFeWYL8fMoV1sHHp
+         IANrgsKoXwbpo+FI28WjMy0Z4FEPFQYPniRF9lJYwRDU+XJFeSsTUac9kwuLaKPKVF
+         PR/Gar3A3LKGh0nPeC5zWF3zPac+WwkxdyMRJXx5uTo/SbGd6ul7/GVkV7vR55l0t7
+         p2HMIzeOMDjjw==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=QaP9QvTv c=1 sm=1 tr=0
+ a=VKYMt3kHM3Z9lWmoeJedNA==:117 a=VKYMt3kHM3Z9lWmoeJedNA==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=am6c-Pl-H50Ale08MjkA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [RFC PATCH 0/8] speed up 'make clean'
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>,
+        Pratyush Yadav <me@yadavpratyush.com>,
+        Adam Dinwoodie <adam@dinwoodie.org>
+References: <e1d218bb-7658-565e-0931-2411efbb561c@ramsayjones.plus.com>
+ <xmqq361niifm.fsf@gitster.c.googlers.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <f107d6be-0924-88b0-bd34-582b1eed172b@ramsayjones.plus.com>
+Date:   Fri, 6 Nov 2020 01:26:49 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201105031153.GA1332931@camp.crustytoothpaste.net>
+In-Reply-To: <xmqq361niifm.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfBpCrXmiqnhWp+LelO/yQF+GODRmTPHK3kUpGp3mgikWOFAuzKlQE+C1BrFg3GyYaly6uTYAFO1qQY20iQWcAtEjmSxJo47Z0ycoi5FHspxbomHXS0Bt
+ 1aCPudYazomw7UAxegD4Od/yaKzYbnyL/a6Zy1es0XuI824o52benDuQqXLeMs4gdd0ePnJsFoL9bQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-brian m. carlson wrote:
-> On 2020-11-04 at 22:16:59, Jonathan Nieder wrote:
-> > brian m. carlson wrote:
 
->>> This impetus for this patch is Git LFS, which is written in Go.  Go
->>> lacks a cross-platform way to canonicalize paths in the same way that
->>> Git does, so when Git produces relative paths, such as in some cases
->>> with --git-common-dir, we end up with problems when users are doing
->>> things with unusual paths on Windows, such as when using SUBST
-[...]
->> Can you describe the user-facing symptom?  While reviewing
->> https://lore.kernel.org/git/20201009191511.267461-1-sandals@crustytoothpaste.net/
->> I'm trying to understand the motivation and I'm getting stuck at
->> trying to understand the basics of the problem being solved.
-[...]
-> The goal is to resolve paths the way Git does and allow verify that a
-> path is within the repository.
 
-Ah, thank you.  So if I am understanding the above and [1] correctly,
-this means:
+On 05/11/2020 21:48, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+> 
+>> [Yes, 'cd Documentation; make clean all' will be slower that a doing
+>> separate 'make clean; make', but the extra 10s, or so, will be swamped
+>> by the documentation build time! ;-) ]
+> 
+> Hmph, the "all" part in "make clean all" needs the information we
+> read from these generated files, and time must be spent to generate
+> them whether "make clean all" or "make clean; make all" is used.  In
+> the latter, we may not generate and read them in the first phase,
+> but the second one "make all" would need to do so anyway.  So I am
+> puzzled why "make clean all" needs to be slower---don't we generate
+> and read them only once in either case?
+> 
 
-- when a path is within a repository, converting it to a path relative
-  to the repository root
+Hmm, interesting. I was all ready to explain the results of the
+moc-up of this that I did about a month ago, but thought I should
+just check again ... ;-)
 
-- when a path is not within a repository, learning so
+This time I used the actual Makefile, rather than a moc-up, and got
+different (in some sense, worse) results. What I was going to say
+was, no the doc.dep file gets generated twice - but that is not true. :(
 
-and that making relative paths with ../../ portion that exits the
-repository is *not* an important part of this use case (though it
-could be useful for other things).
+However, if you run 'make clean all', you will not be pleased with
+the results!
 
-[...]
-> This is also generally applicable for scripting, where realpath(1) is
-> not always available (e.g., on macOS), but mostly this is here to make
-> Windows work more nicely, since it has more complex path functionality.
+  $ make clean
+  ...
+  $ make clean all >zzz 2>&1
+  $ grep WARNING zzz | wc -l
+  26
+  $ tail -1 zzz
+  make: *** [Makefile:362: git.1] Error 13
+  $ 
 
-Thanks much.  I think this tells me enough to understand the series.
+If you look at the output, you will see that, while processing the
+'clean' target, the 'doc.dep' file is created, -included, and then
+immediately deleted. While processing the 'all' target I had expected
+the 'doc.dep' file to be recreated - but it isn't. It seems to have
+done the 'drop the internal data, re-read and re-parse' only the
+once, and on the second go round (because it has already generated
+it once) does not re-create and re-read the dependency data again.
+Thus, the 'all' target is executed without any 'doc.dep' data and
+falls over in a heap. :(
 
-Sincerely,
-Jonathan
+[BTW, just doing 'make' does not do a full build. I will look at why
+that is later].
 
-[1] https://github.com/git-lfs/git-lfs/issues/4012 --- thanks to Emily
-for the pointer in [2].
-[2] https://lore.kernel.org/git/20201104230157.GH2774782@google.com/
+Doing 'make clean; make all' works fine, of course.
+
+That will teach me to cut corners! Ho-Hum. Sorry about that.
+
+Thanks.
+
+ATB,
+Ramsay Jones
