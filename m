@@ -2,124 +2,117 @@ Return-Path: <SRS0=eTRQ=EM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AAC3CC2D0A3
-	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 18:06:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 393E6C2D0A3
+	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 18:18:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4C5D9206FA
-	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 18:06:52 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="f3WI6XKD"
+	by mail.kernel.org (Postfix) with ESMTP id E0F7420728
+	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 18:18:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727608AbgKFSGv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Nov 2020 13:06:51 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59398 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727069AbgKFSGu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Nov 2020 13:06:50 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4E045E9BFB;
-        Fri,  6 Nov 2020 13:06:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=jRtqYiBkyJEC
-        wB8hIKfqxWsc5O0=; b=f3WI6XKDh/+v5ptuwyVDO09pHTpCRmvDg1cBjDK5rjEE
-        4AjlhofdLIlDPH/SmNjbeH9kroc+dygxcG3hL3LbjIIiIQKqciYRyhZgIKdW1w9F
-        bVT94h/7JOkN4iGMSF4n9hsjmccdqqZkur8Ecqvod/LHafXLrV6YW11l502++o4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ir2exq
-        qC6QduE1SOntiHH4xIHx3Hw6oEZI+g88XhLCpYtYbLm2tL5O8hcjaOGA/vhyBNPr
-        mu0U1m/7GFTkIp9L1ifaS6ux6VbdQych84yDSEF1ifhB65S6W0LhxQMh7ZBVU2gG
-        ZnTdfQ5c+NJ/PpBHFm3e7WxHjR57hacGxK6lQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4617CE9BFA;
-        Fri,  6 Nov 2020 13:06:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8A884E9BF9;
-        Fri,  6 Nov 2020 13:06:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org,
-        Daniel =?utf-8?Q?H=C3=B6pfl?= <daniel@hoepfl.de>
-Subject: Re: Suppressing filter-branch warning
-References: <20201106090443.GA20407@black.spass-am-geraet.de>
-Date:   Fri, 06 Nov 2020 10:06:42 -0800
-In-Reply-To: <20201106090443.GA20407@black.spass-am-geraet.de> ("Daniel
-        =?utf-8?Q?H=C3=B6pfl=22's?= message of "Fri, 6 Nov 2020 10:04:43 +0100")
-Message-ID: <xmqqo8kafjgt.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727155AbgKFSSG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Nov 2020 13:18:06 -0500
+Received: from cloud.peff.net ([104.130.231.41]:50158 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727183AbgKFSSF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Nov 2020 13:18:05 -0500
+Received: (qmail 20207 invoked by uid 109); 6 Nov 2020 18:18:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 06 Nov 2020 18:18:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2893 invoked by uid 111); 6 Nov 2020 18:18:04 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 06 Nov 2020 13:18:04 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 6 Nov 2020 13:18:04 -0500
+From:   Jeff King <peff@peff.net>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/8] Documentation/Makefile: conditionally include
+ ../GIT-VERSION-FILE
+Message-ID: <20201106181804.GA183267@coredump.intra.peff.net>
+References: <32b7e1dc-8cc3-2236-08b8-4d268bbf8c0b@ramsayjones.plus.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D44C1094-205A-11EB-9142-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <32b7e1dc-8cc3-2236-08b8-4d268bbf8c0b@ramsayjones.plus.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Daniel H=C3=B6pfl <daniel@hoepfl.de> writes:
+On Thu, Nov 05, 2020 at 09:03:49PM +0000, Ramsay Jones wrote:
 
-> Hello there,
->
-> What did you do before the bug happened? (Steps to reproduce your issue=
-)
-> git filter-branch -f --env-filter '' --tag-name-filter cat -- HEAD
->
-> What did you expect to happen? (Expected behavior)
-> See below (difference).
->
-> What happened instead? (Actual behavior)
-> When using git filter-branch, the following message is shown:
->
-> ----------8<-----------------------------------------------------
-> WARNING: git-filter-branch has a glut of gotchas generating mangled his=
-tory
->         rewrites.  Hit Ctrl-C before proceeding to abort, then use an
->         alternative filtering tool such as 'git filter-repo'
->         (https://github.com/newren/git-filter-repo/) instead.  See the
->         filter-branch manual page for more details; to squelch this war=
-ning,
->         set FILTER_BRANCH_SQUELCH_WARNING=3D1.
-> ----------8<-----------------------------------------------------
->
-> You can suppress this by setting the environment variable shown.
->
-> What's different between what you expected and what actually happened?
->
-> Normally, when git introduces this kind of change, there is a
-> git config variable that one can set to suppress it.
-> That way one has fine grade control when to suppress it (one repo only.=
-..globally).
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index 652d57a1b6..5c680024eb 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -272,7 +272,9 @@ install-html: html
+>  ../GIT-VERSION-FILE: FORCE
+>  	$(QUIET_SUBDIR0)../ $(QUIET_SUBDIR1) GIT-VERSION-FILE
+>  
+> +ifneq ($(MAKECMDGOALS),clean)
+>  -include ../GIT-VERSION-FILE
+> +endif
 
-I think this comes from 9df53c5d (Recommend git-filter-repo instead
-of git-filter-branch, 2019-09-04). =20
+Calling out "clean" here specially feels somewhat backwards to me, in
+terms of Makefile design. In an ideal world we provide all of the
+dependencies to "make", and based on the targets we are building, it
+decides what needs to be done.
 
-FWIW, I personally do not think an environment is a worse choice
-over configuration variable in this particular case.  The large
-scale rewriting of the entire history in the repository by its
-nature is an one-off operation that ought to happen only rarely,
-so a one-shot
+This works with normal targets, obviously, but also with variables. If
+we do:
 
-	$ FILTER_BRANCH_SQUELCH_WARNING=3D1 git filter-branch ...
+  FOO = $(shell do-the-thing)
 
-that reminds the user every time would be more appropriate than a
-configuration variable that has a more permanent squelching effect.
+then we execute that command only when $(FOO) is needed[1].
 
-If it were a new command line option may have been even better, as
-an environment variable can be defined in .*rc and forgotten, but a
-command line option needs to be typed every time and would serve as
-a better reminder (yes, I know it can also be aliased away, so it
-may not make much practical difference either way).
+But "include" here is tricky. It is loaded regardless of whether the
+values it contains are needed or not. I wonder if we could do better by
+giving make more information about what we're expecting to get from it.
+I.e., if we wrote:
 
-But I'll let the author of the feature to comment.
+  GIT_VERSION = $(shell awk '{print $3}' GIT-VERSION-FILE)
 
-Thanks.
+Then "make clean", not needing the value of $(GIT_VERSION), wouldn't run
+that shell snippet at all. Of course there's a catch; we are also
+relying on the include to trigger the dependency. So it is really more
+like:
+
+  GIT_VERSION = $(shell make GIT-VERSION-FILE && awk '{print $3}' GIT-VERSION-FILE)
+
+I'm not sure how bad that is. Re-invoking make seems like it could get
+expensive, especially for the common case that we're building actual
+binaries and we _do_ need the version. But we could probably cut "make"
+out of the loop entirely. Generating GIT-VERSION-FILE is already a FORCE
+target, so really:
+
+  GIT_VERSION = $(shell ./GIT-VERSION-GEN)
+
+would be equivalent-ish (with some output changes, and possibly we'd
+want to stash the value in a file for any other scripts to make use of).
+
+This is all just stuff I've written in my editor and not tried. I won't
+be surprised if there are some gotchas. But it at least seems like a
+conceptually cleaner path.
+
+-Peff
+
+[1] Variable assignment actually has a slight problem in the opposite
+    direction: it wants to run the shell snippet every time the variable
+    is referenced. There's a trick to get around that described in
+    0573831950 (Makefile: avoid running curl-config unnecessarily,
+    2020-04-04).
+
+    It's built around evals. In fact, I suspect you could build a
+    function around eval that actually works similar to include, but
+    lazy-loads the file only when one of its stubs is referenced. I.e.,
+    something like:
+
+      GIT_VERSION = $(eval include GIT-VERSION-FILE)
+
+    would probably work (and for other includes, multiple variables
+    could mention the same file; as soon as it gets included, it
+    overwrites the stubs).
