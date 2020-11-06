@@ -2,108 +2,87 @@ Return-Path: <SRS0=eTRQ=EM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AEA8DC388F7
-	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 01:57:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8183DC388F7
+	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 01:58:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5AD08206FB
-	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 01:57:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2428A20719
+	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 01:58:57 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RXyT4RVq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732788AbgKFB5P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Nov 2020 20:57:15 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:35432 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730414AbgKFB5P (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 5 Nov 2020 20:57:15 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1732625AbgKFB64 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Nov 2020 20:58:56 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:55686 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730414AbgKFB6z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Nov 2020 20:58:55 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D342F103C9A;
+        Thu,  5 Nov 2020 20:58:53 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=FW+wtnLUth9b+/hBD04lUg9oueE=; b=RXyT4R
+        VqcQqeMgQPGtvILr2Nb4xCBsnMXVs+u0aPjch77lh43AV8YPcqGts4Jq/K8u09N3
+        kSvP0adyiZ6e5dfp+CMuwpMezbVcfLqKOGnH3CppkfW7omU7OD5fqeqlwltW05LM
+        aPWi4U4sd0K+ysSAYivJjD3ID+7LD/tqQ6TPs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=rFn5PY1FJCYezIr9AOKCN/fUqGT5451I
+        j05WWsHApevTJqEB8onvRdQvmWE5AKLlre58FhTgWHDjvVMTNT86bUv2mvbLWDGq
+        IagnF++R/QwD0JuosmTyMcFt9/iq2N3q7C1ZdUZVeoSCBgDdwjSRHAIsThkjRec/
+        x1lrcClYf7M=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CC92F103C99;
+        Thu,  5 Nov 2020 20:58:53 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6948D60752;
-        Fri,  6 Nov 2020 01:57:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1604627833;
-        bh=SHlQ8oK3bB90Ez8fjlgCMKj6CsuGA3AldPh7nyK5/kY=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=rjQspR9hoRkkzQ2hcX9AqSCXM0bK7dpK3TDkYDDmWY6PkNwqdqw91cFtwEbuFVhJQ
-         yHw4GKwQDd8yF0LpaxGFhyaYcSrWGhf5KCN+z+Ia5bU3MFjeMrH2hDFo6cUmWvLkIQ
-         37r/lQmPEHwtC1ABntVGfkH2TZT3I1JHbI+r1OmmQ0LL83ukMs7bjC/d3Zy7omrkvm
-         kNmEg5ZKflO+E0FsvDvywuOFkWRHVEajpoZ/615zuHKR6R1VGmrhV3JglUFWNxNGSy
-         Y6rpQ0NvxaI43awgUkwyhdRg71LI1X5bIAbO9geZdi/l2co/Ws2ZY2+m8TK3V4Nt5w
-         bk/ot1dqMX4qTJ8hD7k5dLqP+QiaZGDNNyvChyEgJzUU9wM8xqNkPxn71ti7qzEiTj
-         zOfhvhNcM0tHBS3/c+MuP/ICRIlyAAVoe0UBEl18r/CCJM10O43WpDOAZCV+7VS7N3
-         zKVO9skGmelLQ/jgShVnw5modWNkc23Rj6yX4zaJE2kV2Td1Ctm
-Date:   Fri, 6 Nov 2020 01:57:08 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] rev-parse: add option for absolute or relative path
- formatting
-Message-ID: <20201106015708.GB6252@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20200908185017.2005159-1-sandals@crustytoothpaste.net>
- <20201104221659.GA3183353@google.com>
- <20201105031153.GA1332931@camp.crustytoothpaste.net>
- <20201106005110.GA3479573@google.com>
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 21124103C98;
+        Thu,  5 Nov 2020 20:58:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH 7/8] Makefile: don't delete dist tarballs directly by name
+References: <48fdd198-93ad-7282-27e6-9a0c6de93067@ramsayjones.plus.com>
+        <xmqqr1p7h38t.fsf@gitster.c.googlers.com>
+        <xmqqeel7h0aj.fsf@gitster.c.googlers.com>
+        <0cbe821b-092d-a5f9-e2ab-13a3c01e9a02@ramsayjones.plus.com>
+Date:   Thu, 05 Nov 2020 17:58:49 -0800
+In-Reply-To: <0cbe821b-092d-a5f9-e2ab-13a3c01e9a02@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Fri, 6 Nov 2020 01:44:18 +0000")
+Message-ID: <xmqqa6vvgs9y.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="uZ3hkaAS1mZxFaxD"
-Content-Disposition: inline
-In-Reply-To: <20201106005110.GA3479573@google.com>
-User-Agent: Mutt/1.14.6 (2020-07-11)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9DD4B354-1FD3-11EB-A7FD-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
---uZ3hkaAS1mZxFaxD
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I did have a patch #9 that moved the removal of the tarballs from
+> the 'clean' target to the 'distclean' target (that is move the new
+> 'iterate over the dist-tars file' code). However, I wasn't convinced
+> that it was a better place for it.
 
-On 2020-11-06 at 00:51:10, Jonathan Nieder wrote:
-> Ah, thank you.  So if I am understanding the above and [1] correctly,
-> this means:
->=20
-> - when a path is within a repository, converting it to a path relative
->   to the repository root
->=20
-> - when a path is not within a repository, learning so
->=20
-> and that making relative paths with ../../ portion that exits the
-> repository is *not* an important part of this use case (though it
-> could be useful for other things).
+I am not either, other than "things created by 'make distX' cleaned
+by 'make distclean'---that sounds consistent" ;-).
 
-Correct.  I felt that adding an --absolute option would be less
-beneficial than both an absolute and a relative option, so I implemented
-a more generic solution, even though my use case didn't require it.
+> Also, just moving the new removal code would not alter the concerns
+> about it that you express above. So, we need to address that either
+> way.
 
-> Thanks much.  I think this tells me enough to understand the series.
+"make distclean" can still depend on GIT-VERSION-FILE and your daily
+cleaning needs can use "make clean" that cleans only the files that
+can be cleaned without knowing what GIT_VERSION is, no?  That way,
+we do not have to use dist-tars file at all, no?
 
-Sure, thanks for asking.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---uZ3hkaAS1mZxFaxD
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX6StdAAKCRB8DEliiIei
-gUfVAP0UQAASgoVqNVyTs281XggwYiMetQzMzOPDlrsGsHGmGQEAo16iAD0I8z9D
-RVd7tqjlzPwOjpAD2O42VM8i3HiiRQk=
-=J0pC
------END PGP SIGNATURE-----
-
---uZ3hkaAS1mZxFaxD--
