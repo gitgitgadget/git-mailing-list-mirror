@@ -2,104 +2,161 @@ Return-Path: <SRS0=eTRQ=EM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D1FBC2D0A3
-	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 20:23:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D55EC2D0A3
+	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 20:27:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C9DCC208C7
-	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 20:23:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E9A62208C7
+	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 20:27:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="AcCMs2fJ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k7k+vqNe"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728338AbgKFUXw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Nov 2020 15:23:52 -0500
-Received: from avasout01.plus.net ([84.93.230.227]:40178 "EHLO
-        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727129AbgKFUXw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Nov 2020 15:23:52 -0500
-Received: from [10.0.2.15] ([80.189.83.69])
-        by smtp with ESMTPA
-        id b8H0kAOUUn8O7b8H1kLrBH; Fri, 06 Nov 2020 20:23:51 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1604694231; bh=3SwO/4PjS+Z565oUM3lDCjjOC7JmQzHL/MvZA0vXdOY=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=AcCMs2fJFSSfCCQLCND3ZE9e0DU5DwiieoN+/3ARvm3ma/l+iojYZUwg8wpiZ+tRP
-         XZ6tFG+Zi34mZu+oShZTGoFNbvv5jhE+LTbYayUl6CWy8dYOIrIvgwT5QIAxaC+Wwf
-         WiA9fxlDx5jZE1N7ciDHZ5XTmmXm6Edl/u5AtrCvK75Mwt4J5uGdC7/rYwAb7UJGlW
-         ZOAohBOvbuMfq6TRdnvAPIeqBI1Ho9xLSE+BWcSXyOszwrl7waTUYsqw0TyPOmG16n
-         E0uyaJbTKNH8E39Hl43kGyiRKwvIdc9lFw/mDKq0zwHz3ojYUqRLRyxRgNXoAZoqdS
-         tYTQ+ZDqYmmGw==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=Ld6nFgXi c=1 sm=1 tr=0
- a=VKYMt3kHM3Z9lWmoeJedNA==:117 a=VKYMt3kHM3Z9lWmoeJedNA==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=TSwlB427VmZyBJlCq48A:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 7/8] Makefile: don't delete dist tarballs directly by name
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-References: <48fdd198-93ad-7282-27e6-9a0c6de93067@ramsayjones.plus.com>
- <xmqqr1p7h38t.fsf@gitster.c.googlers.com>
- <xmqqeel7h0aj.fsf@gitster.c.googlers.com>
- <0cbe821b-092d-a5f9-e2ab-13a3c01e9a02@ramsayjones.plus.com>
- <xmqqa6vvgs9y.fsf@gitster.c.googlers.com>
- <ec59a5d8-26fc-988e-4458-fd2cd421f9d5@ramsayjones.plus.com>
- <xmqqsg9mfk26.fsf@gitster.c.googlers.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <7ad94f1a-9cc7-5ac9-2859-1d1015ea468f@ramsayjones.plus.com>
-Date:   Fri, 6 Nov 2020 20:23:50 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1728292AbgKFU1U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Nov 2020 15:27:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43970 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728140AbgKFU1T (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Nov 2020 15:27:19 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0F9EC0613CF
+        for <git@vger.kernel.org>; Fri,  6 Nov 2020 12:27:19 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id k26so2685435oiw.0
+        for <git@vger.kernel.org>; Fri, 06 Nov 2020 12:27:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XyrwaVqw8YlSQNsj0OhCyu9BnKiWdXUXu301OGfX1a4=;
+        b=k7k+vqNe0auoCVb9eayC5QVZYigzIIoMK1NpUCw0kgW5crPdr542KmfLshXHp56U72
+         lWlYZDQlJwG+6ndwB5Udwz9mgYNJhQhuZOzOxuS1X+b4BYX/9UQmHs8hjETCS3Sr5GAs
+         wxn9xD1MCU3CJJepfiC8v5zMxYbWxK1hyvw1riuM0ItsH46gvb/cJsszzHK60Pom7Qqj
+         nwT95bpwJEFUeD1RM4/rZ+cUk9khle4GgpcaFYdvnU5tV7BfjGB+CzvU9CRvSSE38A07
+         Iq/5p11CDoxN/uzJXV0s57VcURcorD6tJe+sYdHGAy+lre0w6Jh9TP3UcgTBzpdh5+h/
+         nShQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XyrwaVqw8YlSQNsj0OhCyu9BnKiWdXUXu301OGfX1a4=;
+        b=jTlgS5OtmabfGKLCaROMyJy+YPZ4tZlcwE/hBfwAFLbDQY6/vXekJHfnuS+E0sCBFg
+         JyC65PV5wymTEV4vVoGtRzVe09wcAFWhHdU7r0IELpPEIolMHNdUI2pnBc6sv5ocDUAs
+         dL5MyVs652qpHcn2n5YUqtVy3Ar/fHbscSCnahIw8L+NViJz9dyrHrn6aoy9v0UqWm65
+         6V2XwlahBE3y2yg9S/xkP1/BMCMyUbnp6w+NeXlvrmgE/aZbgJc1/Qw9HW/a3Bu2ttRM
+         XgEbdDA2ZXmF5fEgJ0NDdvRCJblBnxDYjR4Fgd6WBh56meNcLg2JdFb76MdF1deygKkb
+         MNSw==
+X-Gm-Message-State: AOAM531/c1ZI8Bewz6kF5vkLKC5GgtnNrKebYTKIPqkIqvRJ8KxKfnKr
+        X3TU0HKoDr0uHmHsacfdgzxGuOlINhbirHuvK+U=
+X-Google-Smtp-Source: ABdhPJxbZNTWPEbK01QFSGrBQAr6w2Aa+6LUbO5RsshOV0uxovn5tMrHnxNtXLOhlCHtNaVnMoLCJs+xeoLd7BZXvzU=
+X-Received: by 2002:aca:b4d7:: with SMTP id d206mr2290295oif.39.1604694439011;
+ Fri, 06 Nov 2020 12:27:19 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqqsg9mfk26.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfE09OJwNQqepkuLvJL5O+OEvoGSNgBMd8dQiplInKgekiWQZZGEJ/ClAlQLyc5BqBXLVVGh3kwNQPfVNwf8B6wH4EOKw/c5DiOjZANPygMlngStLNK7S
- MnrS4iumEYp7GG5BNp/T7MRzmaoaCCqtvWNfv8sUtPA185IDZ7SyRY8NXPaL5imyR6l+7afstfJM/g==
+References: <1526558917.20201106203213@yandex.ru>
+In-Reply-To: <1526558917.20201106203213@yandex.ru>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 6 Nov 2020 12:27:08 -0800
+Message-ID: <CABPp-BGAJiaU5aeC3sGvp3znQw1esrn9c19gyOZQBymYvNFCaw@mail.gmail.com>
+Subject: Re: git rebase/git rebase --abort cause inconsistent state
+To:     Eugen Konkov <kes-kes@yandex.ru>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Nov 6, 2020 at 10:41 AM Eugen Konkov <kes-kes@yandex.ru> wrote:
+>
+> Hi
+>
+> I try to rebase, get conflicts. So I decide to --abort
+>
+> After --abort I expect state before rebasing, but I get conflicts.
+>
+> I  suppose this  is  because `git rebase` switches to not branch and
+> --abort can not return to branch I was on before rebasing
+>
+> Is this a bug?
+>
+>
+>
+>
+> kes@work ~/t/lib/MaitreD $ git rebase dev local/dev
+> Created autostash: 566876c8
+> warning: Cannot merge binary files: share/ChangeAgreement.docx (HEAD vs. f2442d9a... Update Docs.pm)
+> Auto-merging share/ChangeAgreement.docx
+> CONFLICT (content): Merge conflict in share/ChangeAgreement.docx
+> error: could not apply f2442d9a... Update Docs.pm
+> Resolve all conflicts manually, mark them as resolved with
+> "git add/rm <conflicted_files>", then run "git rebase --continue".
+> You can instead skip this commit: run "git rebase --skip".
+> To abort and get back to the state before "git rebase", run "git rebase --abort".
+> Could not apply f2442d9a... Update Docs.pm
+> kes@work ~/t/lib/MaitreD $ git rebase --abort
+> Applying autostash resulted in conflicts.
+^^^^^^
+
+Looks like you have rebase.autostash set to true and have some
+uncommitted changes before your rebase started; it looks like it was
+the reapplying of that stash at the time you abort is the thing that
+failed.
+
+According to the rebase docs for the --abort flag:
+"If <branch> was provided when the rebase operation was started, then
+HEAD will be reset to <branch>"
+which suggests that the abort should switch you back to the original
+branch, where the application of your local changes should be safe.
+I'll cc the two most prolific committers to builtin/stash.c to get
+their comments.
+
+Some questions they may be interested in, though:  Is this bug
+repeatable?  Can you find steps to reproduce and/or share your
+repository?  Can you verify that you don't get this bug when
+rebase.autostash is off?  What do your local changes before the rebase
+look like and what are the nature of the conflicts afterwards (how
+does a "git diff" before the rebase compare to a "git diff" after)?
 
 
-On 06/11/2020 17:53, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
->> Hmm, so rather than dropping the last two patches, you are suggesting
->> replacing this patch with a patch that moves:
->>
->> 	$(RM) $(GIT_TARNAME).tar.gz
->> 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
->>
->> to the 'distclean' target?
-> 
-> Yup.  FWIW, I consider it a feature that
-> 
->     for m in maint-2.{27,28,29}
->     do
-> 	git checkout "$m" &&
->         make distclean &&
-> 	make dist || break
->     do
-> 
-> gives me three distribution tarballs of from-scratch builds.  It
-> matters when I need to push out releases from multiple maintenance
-> tracks at the same time (think: coordinated security releases).
-
-Ah, yes. I hadn't thought about that kind of usage. Hmm, but in that
-case, wouldn't you rather get rid of the deletion of the tarballs in
-the 'clean' target completely? Then you could either remove them by
-hand (which I actually always do in practice anyway) at a time that
-suits you, or maybe add a new 'clean-tarballs' target.
-
-(That still leaves the issue of how you would identify the tarballs
-in such a target, of course).
-
-ATB,
-Ramsay Jones
-
+> Your changes are safe in the stash.
+> You can run "git stash pop" or "git stash drop" at any time.
+>
+> Here is a tree before rebasing:
+> > a9597aaa (HEAD -> dev) Use DateTime with correct timezone
+> > 822ff801 Add link to Podio into mail
+> > 65575afe Update Docs.pm
+> | < e0003861 (local/dev) Update podio.t - test person contacts
+> | < 28ab8630 Create docdate if agreement is new and update test for that
+> | < 208ead68 Specified checking of person
+> | < f2442d9a Update Docs.pm
+> |/
+> o 6d9c2159 (xtucha/test, xtucha/dev) Leave only one example in month
+>
+> Here is conflicts:
+> HEAD detached from 142c1b15
+> Changes to be committed:
+>   (use "git restore --staged <file>..." to unstage)
+> 1       modified:   ../../Makefile
+> 2       modified:   ../../etc/maitre_d.development.conf
+> 3       modified:   Command/bank_statement.pm
+> 4       modified:   Command/invoicing.pm
+> 5       modified:   Command/reminding.pm
+> 6       modified:   Controller/Cart.pm
+> 7       modified:   Controller/Saldo.pm
+>
+> Unmerged paths:
+>   (use "git restore --staged <file>..." to unstage)
+>   (use "git add <file>..." to mark resolution)
+> 8       both modified:   Controller/Podio.pm
+>
+> $ git --version
+> git version 2.28.0
+>
+>
+> --
+> Best regards,
+> Eugen Konkov
+>
