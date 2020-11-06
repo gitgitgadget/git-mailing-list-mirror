@@ -7,96 +7,99 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 130FEC2D0A3
-	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 19:18:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7728AC2D0A3
+	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 19:30:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8984F2151B
-	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 19:18:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0EBEB20715
+	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 19:30:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="n099d+EL"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kvITyhIZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726075AbgKFTSU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Nov 2020 14:18:20 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58428 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728167AbgKFTSU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Nov 2020 14:18:20 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8FE83EA4F3;
-        Fri,  6 Nov 2020 14:18:18 -0500 (EST)
+        id S1728112AbgKFTaW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Nov 2020 14:30:22 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56661 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726447AbgKFTaV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Nov 2020 14:30:21 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1ADBA101E2B;
+        Fri,  6 Nov 2020 14:30:20 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=C9m5l1jaKq0Iob95OI9FhAKZ6/I=; b=n099d+
-        ELDiDmunGCyHOEFq+hEIzPXF8NahH0ix8Hp5u6FNUI4UAZdntxIIN2X3GXZcDOJI
-        DEs97ohIzraPt+gX2I4XBpcgytIjfZbhu1ZF6JHcTlRYzZXuwgNePDGh7bB36HoQ
-        iJRZzMI/BpzMqvCgN+BfaT9Sa98+HHyFNxXV4=
+        :content-type; s=sasl; bh=hMAUDHpzwbDiIec5u29HkVDGBpo=; b=kvITyh
+        IZhulgdOOMzSKA+psgPfULfVw8N/uHUbEhBF23P3q6UUf2aARK98bBW+2+Lesk7L
+        Q7GyvOok15ufg4sbKguzSFG9oAcxjXYBieQbBXRF9/7AtbU6N8LYzkk8wb273X6W
+        UynCQ4q2W1Q6Yg0b+ljJk9IJsX6rFdeObOisw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ClpO3f9I6PeSzfoebKsUAh10Bade+oHq
-        f0mY1fL617UgH2Un6guIfab1qyVfXZ/m88S/Gt4JMjEup/1AFTu7PHB1ZoLqoGKw
-        wb++3gsxvU7La7ob16nzpNjjy24X24Y+02SPACMUclp6p42bfiPwNKJlfchK/X9R
-        8BUocy3nZNo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8883FEA4F2;
-        Fri,  6 Nov 2020 14:18:18 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=VvC9EafYarnFNQuVFOjIyW9qhbXMxSvB
+        jIznPMnxcFhZFSdoY4dnXqtiEcoDVG97rjwGJzqhj0K3ssu3dqralwmquAS8P8IX
+        4EG0z4uvZdSGhdUlkMIblqoK27zrvVlUBNGHn5xCu8+s2dP9fBQCr2ShMdDQBl/S
+        y3AiEuR4+AY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 13D8D101E2A;
+        Fri,  6 Nov 2020 14:30:20 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D2421EA4F1;
-        Fri,  6 Nov 2020 14:18:15 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 55D5B101E28;
+        Fri,  6 Nov 2020 14:30:17 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jinoh Kang <luke1337@theori.io>
-Cc:     Junio C Hamano <junio@pobox.com>, git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] diff: handle NULL filespecs in run_external_diff
-References: <aeb24944-17af-cf53-93f4-e727f9fe9988@theori.io>
-        <xmqq4km4lppy.fsf@gitster.c.googlers.com>
-        <a0513d6f-1f69-683d-d6c5-75b17b8b6890@theori.io>
-Date:   Fri, 06 Nov 2020 11:18:13 -0800
-In-Reply-To: <a0513d6f-1f69-683d-d6c5-75b17b8b6890@theori.io> (Jinoh Kang's
-        message of "Fri, 6 Nov 2020 17:02:19 +0000")
-Message-ID: <xmqqimaifg5m.fsf@gitster.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: [PATCH 1/2] update-ref: Allow creation of multiple transactions
+References: <cover.1604501265.git.ps@pks.im>
+        <eec7c2e8ec3e49b34066190d59fc45276bed637f.1604501265.git.ps@pks.im>
+        <20201105192901.GA121650@coredump.intra.peff.net>
+        <xmqqa6vvij37.fsf@gitster.c.googlers.com>
+        <20201106175241.GA182486@coredump.intra.peff.net>
+Date:   Fri, 06 Nov 2020 11:30:14 -0800
+In-Reply-To: <20201106175241.GA182486@coredump.intra.peff.net> (Jeff King's
+        message of "Fri, 6 Nov 2020 12:52:41 -0500")
+Message-ID: <xmqqeel6ffll.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: D21B3AAC-2064-11EB-92FD-D609E328BF65-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 802653E2-2066-11EB-A365-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jinoh Kang <luke1337@theori.io> writes:
+Jeff King <peff@peff.net> writes:
 
-> However, I humbly opine that the free() semantics do not apply to
-> `diff_free_filespec_data`; rather, I prefer to see it as a function
-> that simply transitions a diff_filespec from one state to another.
+> On Thu, Nov 05, 2020 at 01:34:20PM -0800, Junio C Hamano wrote:
+>
+>> > The tests all look quite reasonable to me. Touching .git/refs like this
+>> > is a bit gross (and something we may have to deal with if we introduce
+>> > reftables, etc). But it's pretty pervasive in this file, so matching
+>> > the existing style is the best option for now.
+>>  ...
+> Yeah, I agree completely that we could be using rev-parse in this
+> instance. But it's definitely not alone there:
+> ...
 
-The reason why you prefer is unclear, but let's suppress puzzlement
-and read on.
+Yup, this morning I was reviewing what we said in the previous day's
+exchanges and noticed that you weren't advocating but merely saying
+it is not making things worse, and I agree with the assessment.
 
-> I would put the blame on its name, since "data" feels too generic
-> and makes the function sound like freeing the filespec _itself_.
-> diff_filespec carries a lot of other things besides just `data`
-> and `cnt_data`.
+Perhaps two #leftoverbits are to 
 
-It frees resources held by its content data without freeing the
-shell.  "struct diff_filespec" has a handful of pointer fields,
-but data and cnt_data are the only allocated fields, no?
+ (1) clean up this test to create refs using "update-ref", and
+     verify refs using "show-ref --verify".
 
-> I was unable to find any callsites that explicitly check for
-> NULL-ness _immediately_ before calling diff_free_filespec_data.
-
-OK, so a change to make diff_free_filespec_data() more cautious does
-*not* help existing code; it changes the (so far) wrong assumption
-made by 3aef54e8 (diff: munmap() file contents before running
-external diff, 2019-07-11) that calling it with NULL was a safe
-thing to do---after such a change, the assumption two calls added by
-the commit makes become valid.
-
-I dunno.  I am OK with either direction, but it feels to me that
-making the helper more cautious would help us avoid similar
-mistakes in the future.  Dscho, what do you think?
+ (2) If (1) had to leave some direct filesystem access due to the
+     built-in safety that cannot be circumvented, decide which is
+     more appropirate between a test-update-ref test helper only to
+     be used in tests, or a "--force" option usable to corrupt
+     repositories with "update-ref", implement it, and use it to
+     finish cleaning up tests.
 
 Thanks.
+
+
+
+
+
