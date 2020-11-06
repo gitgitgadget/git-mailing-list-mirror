@@ -2,87 +2,110 @@ Return-Path: <SRS0=eTRQ=EM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFC29C2D0A3
-	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 17:52:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B439FC55178
+	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 17:54:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5E3CE206F4
-	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 17:52:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 58532206F4
+	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 17:54:00 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tgdvf4B+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727357AbgKFRwm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Nov 2020 12:52:42 -0500
-Received: from cloud.peff.net ([104.130.231.41]:50092 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725868AbgKFRwm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Nov 2020 12:52:42 -0500
-Received: (qmail 20088 invoked by uid 109); 6 Nov 2020 17:52:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 06 Nov 2020 17:52:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2454 invoked by uid 111); 6 Nov 2020 17:52:41 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 06 Nov 2020 12:52:41 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 6 Nov 2020 12:52:41 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 1/2] update-ref: Allow creation of multiple transactions
-Message-ID: <20201106175241.GA182486@coredump.intra.peff.net>
-References: <cover.1604501265.git.ps@pks.im>
- <eec7c2e8ec3e49b34066190d59fc45276bed637f.1604501265.git.ps@pks.im>
- <20201105192901.GA121650@coredump.intra.peff.net>
- <xmqqa6vvij37.fsf@gitster.c.googlers.com>
+        id S1727827AbgKFRx7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Nov 2020 12:53:59 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64389 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727650AbgKFRx4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Nov 2020 12:53:56 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9FFEE85985;
+        Fri,  6 Nov 2020 12:53:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=MB08M5CFTxpz/2Ib8j8KMnmSzME=; b=tgdvf4
+        B+IuRXKy4K4iPXxj+L9k83RqZrNOIUaCVYapLrwmg3B0bx08tHCaPm5OT5aF5la8
+        7keb49A9TK+GOGWhMyJEimYdqzYg0zsEFdgwhPQJUBulz+T1b1wKqd7CVZjIpfNZ
+        nSwmNf9i93qJxFzvPW3MtVI4X8pFhEEHZpkYA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=qZP5FsvFRB6qrR24UGQxbA66lBtxcZdO
+        eTPK1vnDH5ulYhEPImkEdsDFuBBbcXj1//+hk6oYWD980WeiUSxw40mF4IkMOjFw
+        5TrdDeOeKg8XQRrEUIIQL4VXctKLBZCa3X1lWNVlHJvCCYHz37D+J3KFaipNwslf
+        YCt5mQF4lQA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9925885982;
+        Fri,  6 Nov 2020 12:53:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2424885981;
+        Fri,  6 Nov 2020 12:53:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH 7/8] Makefile: don't delete dist tarballs directly by name
+References: <48fdd198-93ad-7282-27e6-9a0c6de93067@ramsayjones.plus.com>
+        <xmqqr1p7h38t.fsf@gitster.c.googlers.com>
+        <xmqqeel7h0aj.fsf@gitster.c.googlers.com>
+        <0cbe821b-092d-a5f9-e2ab-13a3c01e9a02@ramsayjones.plus.com>
+        <xmqqa6vvgs9y.fsf@gitster.c.googlers.com>
+        <ec59a5d8-26fc-988e-4458-fd2cd421f9d5@ramsayjones.plus.com>
+Date:   Fri, 06 Nov 2020 09:53:53 -0800
+In-Reply-To: <ec59a5d8-26fc-988e-4458-fd2cd421f9d5@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Fri, 6 Nov 2020 02:39:10 +0000")
+Message-ID: <xmqqsg9mfk26.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqa6vvij37.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0917E4F8-2059-11EB-BA5C-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 05, 2020 at 01:34:20PM -0800, Junio C Hamano wrote:
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-> > The tests all look quite reasonable to me. Touching .git/refs like this
-> > is a bit gross (and something we may have to deal with if we introduce
-> > reftables, etc). But it's pretty pervasive in this file, so matching
-> > the existing style is the best option for now.
-> 
-> 
-> Shouldn't "git show-ref --verify" be usable portably across ref backends
-> to test if a well-formed ref was created (or was not created)?
-> 
-> On the ref-creation side, there are cases where we need to directly
-> futz with the filesystem entity.  For example, "git update-ref"
-> cannot be used to place a non-commit at "refs/heads/foo", so
-> something like
-> 
-> 	git rev-parse HEAD^{tree} >.git/refs/heads/bad-branch
-> 
-> cannot be avoided (this is a tangent but we probably should add a
-> way to force setting _any_ value to any ref, that may not even point
-> at an existing object or an object of a wrong type, to help test
-> scripts).
-> 
-> But I do not think this is such a case.
+>> "make distclean" can still depend on GIT-VERSION-FILE and your daily
+>> cleaning needs can use "make clean" that cleans only the files that
+>> can be cleaned without knowing what GIT_VERSION is, no?  That way,
+>> we do not have to use dist-tars file at all, no?
+>
+> Hmm, so rather than dropping the last two patches, you are suggesting
+> replacing this patch with a patch that moves:
+>
+> 	$(RM) $(GIT_TARNAME).tar.gz
+> 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
+>
+> to the 'distclean' target?
 
-Yeah, I agree completely that we could be using rev-parse in this
-instance. But it's definitely not alone there:
+Yup.  FWIW, I consider it a feature that
 
-  $ git grep -c test_path_is.*.git/refs t/t1400-update-ref.sh
-  t/t1400-update-ref.sh:13
+    for m in maint-2.{27,28,29}
+    do
+	git checkout "$m" &&
+        make distclean &&
+	make dist || break
+    do
 
-So it is a question of "do an ugly thing that fits in with neighbors" or
-"be inconsistent but set a good example". And I am OK with either. Of
-course, "improve the neighbors on top" would be better still. :)
+gives me three distribution tarballs of from-scratch builds.  It
+matters when I need to push out releases from multiple maintenance
+tracks at the same time (think: coordinated security releases).
 
--Peff
+I could of course move them away before running distclean in each
+step, but then I'd be following a different workflow from what I
+normally use when cutting a single release---I would rather avoid
+deviating from the routine when I have to be absolutely careful
+(again, think: coordinated security releases).
 
-PS And yeah, I agree in the long run we may need some mechanism to
-   override internal safeties in order to test broken cases with
-   reftable. We have sometimes resorted to manually munging on-disk
-   files in similar tests (e.g., for broken packs, etc), but it gets
-   rather tricky.
+> Well, that would address your concerns, but I was hoping to fix the
+> 'your current branch has to be the same as the one you created the
+> tarballs on' for the '(dist)clean' target to actually remove those
+> files issue.
+
+So we on this part have directly opposing wish, unfortunately.
