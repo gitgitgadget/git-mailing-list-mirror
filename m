@@ -2,114 +2,123 @@ Return-Path: <SRS0=eTRQ=EM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E9F0C4742C
-	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 02:39:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DFF1DC388F7
+	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 02:42:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F382622228
-	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 02:39:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 75DC920782
+	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 02:42:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="Afjh/ygX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oSp5yZWx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725939AbgKFCjO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Nov 2020 21:39:14 -0500
-Received: from avasout02.plus.net ([212.159.14.17]:33088 "EHLO
-        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725847AbgKFCjN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Nov 2020 21:39:13 -0500
-Received: from [10.0.2.15] ([80.189.83.69])
-        by smtp with ESMTPA
-        id aregkOZSF0K1Oarehke9E1; Fri, 06 Nov 2020 02:39:12 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1604630352; bh=tjX5r3e2iSFgrvOBuyHZiTae4KTNtMTcKdxX1kPikkI=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=Afjh/ygXePbZgdkDH066VK26vr96lWsgP4E5lBoFBltROuAxnN702Kl42xGoKW15c
-         I67Ka4kbfdMCfv2+TD9rLW51KD7C8aszqfCjbRyiGfy22Fy901xFyKFd8xUswSPHio
-         ieQ/XMIbAGoPQBd8mFRaJ3Ctdw4wXDnbeuo8fHlPOBpjjnjWZnihcDNfJY9OOMyPGX
-         nxxgruorxH8JQrQ/t/1ta+wfh7cqGJFfDMrlSd5XT1UWQ/Qcj/n8+ZfASj8h7+s75O
-         2EbI8vFEPCiv7zxZ0GD8U9j0emQQ7vbbBDrvurnzT5J1+ZleDklvEojmoqm8OwQjit
-         meTFuhnjj/BTQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=QaP9QvTv c=1 sm=1 tr=0
- a=VKYMt3kHM3Z9lWmoeJedNA==:117 a=VKYMt3kHM3Z9lWmoeJedNA==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=l6qMoqZhj8SvL2nTlFsA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 7/8] Makefile: don't delete dist tarballs directly by name
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-References: <48fdd198-93ad-7282-27e6-9a0c6de93067@ramsayjones.plus.com>
- <xmqqr1p7h38t.fsf@gitster.c.googlers.com>
- <xmqqeel7h0aj.fsf@gitster.c.googlers.com>
- <0cbe821b-092d-a5f9-e2ab-13a3c01e9a02@ramsayjones.plus.com>
- <xmqqa6vvgs9y.fsf@gitster.c.googlers.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <ec59a5d8-26fc-988e-4458-fd2cd421f9d5@ramsayjones.plus.com>
-Date:   Fri, 6 Nov 2020 02:39:10 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1725859AbgKFCmu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Nov 2020 21:42:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46434 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725828AbgKFCmu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Nov 2020 21:42:50 -0500
+Received: from mail-oo1-xc43.google.com (mail-oo1-xc43.google.com [IPv6:2607:f8b0:4864:20::c43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 466D8C0613CF
+        for <git@vger.kernel.org>; Thu,  5 Nov 2020 18:42:50 -0800 (PST)
+Received: by mail-oo1-xc43.google.com with SMTP id v123so6143ooa.5
+        for <git@vger.kernel.org>; Thu, 05 Nov 2020 18:42:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rT+1lD0HAulJnE1Cph0NPrdc/nE4cM934lzyZzlGcwc=;
+        b=oSp5yZWxlSE2+qn2Tl/Q/dHcrlHVxxx+aRnQlZbSjadST4putSGLOwY7N9BQmzToEb
+         +6YQPuxXdD2KDlTIwVn6fCmKXeamxtULs9llrOT1q07wZ3ooat11/g2M2ny7KWM0DyJ0
+         f9l0Gha6mBahMBGBG8hGL03oGD7pryCL0eqKnHjN4cRfcbXxqkoZ278910vXw4aYyyB8
+         hXvBUWbjFB/liDvBuErhOcJJgokpXqgctTEjXRKBiM5tOfWaBaXs+pozaeh18f0tgVhM
+         w4i2kV3mvLCXSENzqdgOeSXPEi2mpKpkfXtzDTJrdXMwuPFH1fdhiXbWWIXAM8TPLTy3
+         BBEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rT+1lD0HAulJnE1Cph0NPrdc/nE4cM934lzyZzlGcwc=;
+        b=bWAEUGr8Qx5RwKluosAZ/BLgIBMD1Bw1wVvZCBnlSiUwgEOaw8vELL4y4kHFUxHxGp
+         ilVR7J1V85EPq0Lk/4rwScrKvGezPmvsb+AZaAQrkpd/EoZXeFgttWHFnjWCfJ6rq6lw
+         STpPzlfaoTc7GJOsl/PhmWvQSmoSHg9t+8ipCaC0PFHH3MmKaM4DGJWitAY5Cph1zjI2
+         5M3VWJ6zg+PGjwF1zQB17FXbWYOupLbUZE9YYdQBRH8rC0nuk/zDRx70xQRInV9QRfgH
+         vbJYQUtHuzLxAcr9EBmTlRAcO1uepWLQPbN7LQ5E3OkNYzBsc3upIicRjygCMh20FAD/
+         KaXQ==
+X-Gm-Message-State: AOAM5327g/DzmpUn6etgxCKFtZgI+oq1IBDqP9iBEtvRZBFdnGT+FCMr
+        Z5vF3uSvywDkWsZ7W3nDXlbG3hpM9B5zrtQB0mA=
+X-Google-Smtp-Source: ABdhPJxZNTdKQSN9G13P4QwrpVTKbHP5Na2LBAbZQwwlVif8Hu7O6RVK5zlR9AzBJq4qcImP3U6qiM/azJYWeCffbLg=
+X-Received: by 2002:a4a:b308:: with SMTP id m8mr3896342ooo.7.1604630569458;
+ Thu, 05 Nov 2020 18:42:49 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqqa6vvgs9y.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfNICWKFCFK0P7ku9Q3yvAd6SgJo4NDTKYCoCl9NQF3MNrUWaJfk7IYa7E8SsGPhb23OOtLKcUhYDGSASlFQVMww6ucMs1SGP7iddOCIKckqInv+0Kxz7
- Jjab2MkUfiMAlYW8caF33QmUBQ08Oa5YZmALdQAXzf+dkAaal5rmnxUEhPYAF9zZUbmQP3A8zXXRlQ==
+References: <pull.835.v4.git.git.1604535765.gitgitgadget@gmail.com>
+ <pull.835.v5.git.git.1604622298.gitgitgadget@gmail.com> <xmqq5z6jgs6f.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq5z6jgs6f.fsf@gitster.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 5 Nov 2020 18:42:38 -0800
+Message-ID: <CABPp-BHoaqGRbfM=5SZ4+s1hQa9eRQsi4kMAb3cZFrP+dqHM0A@mail.gmail.com>
+Subject: Re: [PATCH v5 00/15] Add struct strmap and associated utility functions
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Nov 5, 2020 at 6:00 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > Changes since v4:
+> > ...
+> >  * Add a patch which updates shortlog to use the new strset API.
+>
+> This makes my life so much simpler ;-)
+>
+> Would the implementation be very different from Peff's that you can
+> take the authorship?  Thanks.
+
+Yes; I didn't use his patch, I simply implemented what was needed from
+scratch.  I'm not attached to being author of this though; the changes
+were trivial.  Feel free to change as you see fit.
 
 
-On 06/11/2020 01:58, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
-> 
->> I did have a patch #9 that moved the removal of the tarballs from
->> the 'clean' target to the 'distclean' target (that is move the new
->> 'iterate over the dist-tars file' code). However, I wasn't convinced
->> that it was a better place for it.
-> 
-> I am not either, other than "things created by 'make distX' cleaned
-> by 'make distclean'---that sounds consistent" ;-).
+If more detail is needed...
 
-:-D
+There's only two things in my patch: (1) deleting a bunch of code, (2)
+search and replace strset_check_and_add() with !strset_add().
 
-> 
->> Also, just moving the new removal code would not alter the concerns
->> about it that you express above. So, we need to address that either
->> way.
-> 
-> "make distclean" can still depend on GIT-VERSION-FILE and your daily
-> cleaning needs can use "make clean" that cleans only the files that
-> can be cleaned without knowing what GIT_VERSION is, no?  That way,
-> we do not have to use dist-tars file at all, no?
+His patch has three things: (1) deleting a bunch of code, (2)
+introducing strset_dup() [which may have been a copy of my
+implementation of strset_check_and_add() from an earlier round of the
+series; the code is identical to my implementation, but it's only a
+few lines so he might have just reimplemented it identically], (3)
+search and replace strset_check_and_add() with strset_dup().
 
-Hmm, so rather than dropping the last two patches, you are suggesting
-replacing this patch with a patch that moves:
+If I were to modify his patch into mine (which I didn't do), it'd
+require two things: deleting the strdup() definition and still doing a
+search and replace.  In other words, it'd be approximately equivalent
+work to just doing the patch from scratch.
 
-	$(RM) $(GIT_TARNAME).tar.gz
-	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
+Further, I wrote a patch that was nearly the same as my current
+submission a few days ago, but it used my old strset_check_and_add().
+It triggered some weird windows bug that I think was an infrastructure
+flake, but I was worried at the time that it'd require familiarity
+with shortlog and its tests to address.  Since I didn't think my
+series really depended on that change (shortlog could change to take
+advantage of the new strset later), I just dropped it.  Then after
+further reviews, the series changed a bit more, and Peff at the end
+added a patch to reintroduce strset_check_and_add() with a different
+name and use it, then you suggested to modify strset_add() so it can
+just be used directly.
 
-to the 'distclean' target?
-
-Well, that would address your concerns, but I was hoping to fix the
-'your current branch has to be the same as the one you created the
-tarballs on' for the '(dist)clean' target to actually remove those
-files issue.
-
-As I said in the commit message, my preferred solution was to simply
-put them in a 'dist-tars/' directory. Then you would only delete the
-files actually generated by the 'dist' and 'dist-doc' targets, and
-you could easily remove that directory (be it in 'clean' or 'distclean'
-or 'clean-dist-tars', ...).
-
-Hmm, I wonder if my concerns about that solution are overblown? dunno.
-
-ATB,
-Ramsay Jones
-
+So, at the end, taking my existing patch that pre-dated his submission
+and tweaking it was the easiest route for me.  I didn't actually look
+at his latest patch until after you asked if it was okay for me to
+take the authorship.  I see it as two similar from-scratch
+implementations that were nearly trivial in either event.
