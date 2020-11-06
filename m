@@ -7,94 +7,116 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7EC3C2D0A3
-	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 17:32:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86086C388F2
+	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 17:45:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 60033208C7
-	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 17:32:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C98C217A0
+	for <git@archiver.kernel.org>; Fri,  6 Nov 2020 17:45:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="eSQMZfQM"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oR1AUHQq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726422AbgKFRcV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Nov 2020 12:32:21 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63924 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726034AbgKFRcV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Nov 2020 12:32:21 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 38C65857B6;
-        Fri,  6 Nov 2020 12:32:19 -0500 (EST)
+        id S1727863AbgKFRpJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Nov 2020 12:45:09 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52338 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727852AbgKFRpI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Nov 2020 12:45:08 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A2B4E101249;
+        Fri,  6 Nov 2020 12:45:06 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6ki+UKRspBKW/bWoyViLA9oEHfg=; b=eSQMZf
-        QMaSQnkEhzF6YVK65PPXiCkvhIEUpWQxfnAj1c0iE6NpZdsGr2uQ8LVJ8X1lIFtM
-        WCYjeV0RR9B/yL8fm2zLJopDgNbLpuJsZNV1FjHIFf7NVynlhl/RoSF0EVLzjPOc
-        eHowllH6a0NXJJuHJ02cBbO9ANeM216f0RqI4=
+        :content-type; s=sasl; bh=JSzs63WcahpawIsmQ+54F69X5X8=; b=oR1AUH
+        QqzpUV7og0YZ+9dSD7YScswBb46lLToWCvnZA4G1d6Ni8LU/lVFvrPwrRc4l7TlP
+        LA/J37vBvp9mglxDAQxchL8OddirYKyVLwWDkgSEFBbneu9wNRxLRg7opaeWx/Zg
+        uonD8/1Bp1YDoIFoem4HiFtV+Ydb3WSFRlQKI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=REzd7shhPZVJSjIaMfPZoQtYCa3pHNCJ
-        dL9q6hrI4yO7ff1d1iVLDALKpSNlskUzVnIvI/S3c2vTTJNjYXdCaWiZPdKccJEy
-        0GvyoLXqAEB7aP/E4xgth4JUSyplqv29u2TRtUnn9fGnITftYmT4sXF6edn2dwLF
-        v+DgJ0uCV6M=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 306B6857B5;
-        Fri,  6 Nov 2020 12:32:19 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=nALtY4RCBjbFCx7Wtdbg3Ipp4eLrX6/q
+        6Zn9EV8WxjB/DKio2tg55xUnguUC/YRTUCDxx7aDJ7NZJTZJIMD+HnTeV9xlPLAg
+        3264ORg5KWbBzi2qzoL8MnukNEJMwWCs8CRlPwVkNsYkBSy+PNx+1B6WIWb4TsMG
+        QZ+beYroEp8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 99C90101248;
+        Fri,  6 Nov 2020 12:45:06 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B105A857B3;
-        Fri,  6 Nov 2020 12:32:18 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A721D101247;
+        Fri,  6 Nov 2020 12:45:03 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v5 00/15] Add struct strmap and associated utility
- functions
-References: <pull.835.v4.git.git.1604535765.gitgitgadget@gmail.com>
-        <pull.835.v5.git.git.1604622298.gitgitgadget@gmail.com>
-        <xmqq5z6jgs6f.fsf@gitster.c.googlers.com>
-        <CABPp-BHoaqGRbfM=5SZ4+s1hQa9eRQsi4kMAb3cZFrP+dqHM0A@mail.gmail.com>
-        <20201106024835.GA153035@coredump.intra.peff.net>
-Date:   Fri, 06 Nov 2020 09:32:17 -0800
-In-Reply-To: <20201106024835.GA153035@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 5 Nov 2020 21:48:35 -0500")
-Message-ID: <xmqq1rh6gzmm.fsf@gitster.c.googlers.com>
+To:     hukeping <hukeping@huawei.com>
+Cc:     Jeff King <peff@peff.net>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Zhengjunling (JRing, Task Force)" <zhengjunling@huawei.com>,
+        zhuangbiaowei <zhuangbiaowei@huawei.com>,
+        "git@stormcloud9.net" <git@stormcloud9.net>,
+        "rafa.almas@gmail.com" <rafa.almas@gmail.com>,
+        "l.s.r@web.de" <l.s.r@web.de>
+Subject: Re: [PATCH] Lengthening FORMAT_PATCH_NAME_MAX to 80
+References: <20201105201548.2333425-1-hukeping@huawei.com>
+        <20201105150149.GA107127@coredump.intra.peff.net>
+        <xmqqimajijwa.fsf@gitster.c.googlers.com>
+        <d5338d5f83584f7caf3ff0f4309f2275@huawei.com>
+Date:   Fri, 06 Nov 2020 09:45:01 -0800
+In-Reply-To: <d5338d5f83584f7caf3ff0f4309f2275@huawei.com>
+        (hukeping@huawei.com's message of "Fri, 6 Nov 2020 08:51:32 +0000")
+Message-ID: <xmqqwnyyfkgy.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 04F5AF5C-2056-11EB-96F1-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: CCE93E38-2057-11EB-A5A5-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+hukeping <hukeping@huawei.com> writes:
 
-> On Thu, Nov 05, 2020 at 06:42:38PM -0800, Elijah Newren wrote:
+>>I do not mind getting rid of the "FORMAT_PATCH_NAME_MAX" constant and
+>>replacing it with a variable that defaults to 64 and can be tweaked by a command
+>>line option and/or a configuration variable.
+>>It does not feel it is worth the effort to replace one hardcoded constant with
+>>another hardcoded constant.
+>>
+>>> Looking at the code which uses the constant, I suspect it could also
+>>> be made simpler:
+>>>
+>>>   - the PATH_MAX check in open_next_file() seems pointless. Once upon a
+>>>     time it mattered for fitting into a PATH_MAX buffer, but these days
+>>>     we use a dynamic buffer anyway. We are probably better off to just
+>>>     feed the result to the filesystem and see if it complains (since
+>>>     either way we are aborting; I'd feel differently if we adjusted our
+>>>     truncation size)
+>>>
+>>>   - the logic in fmt_output_subject() could probably be simpler if the
+>>>     constant was "here's how long the subject should be", not "here's
+>>>     how long the whole thing must be".
+>>>
+>>> But those are both orthogonal to your patch and can be done separately.
+>>
+>>Yes, these clean-ups seem worth doing.
 >
->> > > Changes since v4:
->> > > ...
->> > >  * Add a patch which updates shortlog to use the new strset API.
->> >
->> > This makes my life so much simpler ;-)
->> >
->> > Would the implementation be very different from Peff's that you can
->> > take the authorship?  Thanks.
->> 
->> Yes; I didn't use his patch, I simply implemented what was needed from
->> scratch.  I'm not attached to being author of this though; the changes
->> were trivial.  Feel free to change as you see fit.
+> Agreed, and I'd like to do it with two separated commits:
+> - commit-1,  cleanup the open_next_file() by drop the if (filename.len>=..) statements.
 >
-> Yeah, I am fine either way with the authorship here. The patch is
-> trivial, and I was pretty sure you had written the same or similar
-> already. My main point in posting it was to push it over the finish line
-> so we didn't forget. ;)
+> - commit-2,  replace FORMAT_PATCH_NAME_MAX in fmt_output_subject() with a constant
+>   in there and make it to 80(or other value?), and drop FORMAT_PATCH_NAME_MAX
+>   from log-tree.h.
+>
+> Is this works for you?
 
-Yes.  I just was double-checking in case Elijah forgot, as I
-couldn't tell if it was deliberate.  The way you two agree on
-is the best for me, too.
+I am not sure what you meant by "Agreed".  I said two things:
 
-Thanks.
+ - It is dubious that it is worth the effort to replace a hardcoded
+   constant with another.  Making it configurable with command line
+   option and/or configuration variable may be worth doing.
+
+ - Two observations Peff made for further clean-up are probably
+   worth doing.
+
+If you are agreeing to both of the above and following through, then
+yes, it seems like a good plan.  If agreement is only to the former,
+it probably still is worth doing.  Anything else, I don't know.
