@@ -7,112 +7,129 @@ X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B37B3C388F7
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2A03C388F9
 	for <git@archiver.kernel.org>; Sat,  7 Nov 2020 06:26:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7340220723
+	by mail.kernel.org (Postfix) with ESMTP id 46F9420719
 	for <git@archiver.kernel.org>; Sat,  7 Nov 2020 06:26:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HqVoDPD0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fqebL3TP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727380AbgKGGKF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 7 Nov 2020 01:10:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49426 "EHLO
+        id S1727298AbgKGGG1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 7 Nov 2020 01:06:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726320AbgKGGKF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Nov 2020 01:10:05 -0500
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0DE1C0613CF
-        for <git@vger.kernel.org>; Fri,  6 Nov 2020 22:10:04 -0800 (PST)
-Received: by mail-ot1-x343.google.com with SMTP id l36so3438865ota.4
-        for <git@vger.kernel.org>; Fri, 06 Nov 2020 22:10:04 -0800 (PST)
+        with ESMTP id S1727146AbgKGGG0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Nov 2020 01:06:26 -0500
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 991A8C0613CF
+        for <git@vger.kernel.org>; Fri,  6 Nov 2020 22:06:26 -0800 (PST)
+Received: by mail-oi1-x243.google.com with SMTP id m143so3900032oig.7
+        for <git@vger.kernel.org>; Fri, 06 Nov 2020 22:06:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=OvTiINTIbyUYnndgcogzWuNNqjlWZuD6h/tYz4vK/k8=;
-        b=HqVoDPD023qUlVt3xsZispSwbsK9sjNlXxH1+r1dIEQUbdNtH8iN6quls4+Wn8y513
-         o1UHEc8t4HMscEQfyp1uYJldz0iBunDMjv9ybilz/5pPalrkYmjJUPPSZBr2sH+WOBWe
-         mWwOwA8IwvrZwdJ8xrhFMts1VAd3DKy7mfm/n0irrZqTuKLcV2IhqknZ7SEtE0GeENEz
-         MZ1WeJKtO5wtdspa+eWQauHRIM17jDaoa+kgY5Br6Gflx2Okyf/Ju5Mf2Defykr3Gq92
-         EIwwS8OakYndy94IzPro0A0GjE5NCCGCcl3KNYU2kzPptQe8n6hGDc+9nEXiRISq0QMR
-         fmRQ==
+        bh=j19Ne7Ujpl07FHKcUKYNx00z+vwlP95uuR6id8s6vUI=;
+        b=fqebL3TPRvZH9gjvodQ4L4z3bdg18UXragV/ununuNAhEoknlqZDesgsPe+0XlmbWJ
+         13Bj//9jhQoePYmYeYyXdFesf1R3v0qU6pqn6ntxgNHAliuzWksKBiH30RA+eJcz00o/
+         Y+WwVB6uxbjE7RvARt41tfHc763yeTna/IzpT5tCpG2nF1v9HbqQcqVzbIicGFodlXss
+         B3od6xaXkm58/Vj4jJeA2vHtlkt1GYyj7dxBwIMQtamBz2kFhS+FqZEvR8EVW/4/FltZ
+         OH2rXEE51OiFB8JYg5dzlzq5KhfVGu0YSwRgjm69EP4fNtmunSUn2+4pRS3g/WX+aM/u
+         zhtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=OvTiINTIbyUYnndgcogzWuNNqjlWZuD6h/tYz4vK/k8=;
-        b=a6rsoPjOchJ3M3xDLD0U2s2JEFYhN4Tpzgqa3hi1DyJwe2xzIwbNMmvhNQ57E+ICsp
-         UPJdflRffaFcWyk+6RwnXjAwqrcxkWmzBJH9PMOvRx76qZDzu1RRGkM+dXx40vHGjdyT
-         2avJKKEb/GtGVGVOVa6tJpccud1amTjS5HixH7dhEIK0EKNZhATb5ddDAzpx6TJ1kHg1
-         R3XesM1vCRlm14DWFMVPEJ7OheT5SUC3myP2XNFN6ITdQNr9KXUUNH8ZZeu2vXaOPSNt
-         9OuGRJRh7ogK3E2MXFvw13ZcAZdUeX8QZaTHmU4HQKBhlom/wXjM6YLgM5bo3nmjftgf
-         l6vw==
-X-Gm-Message-State: AOAM5314t2DztWoKNt8oGHMbkeHLBlArHHI9oEry8AImti/VcOq57Guj
-        6UgpI2lrSI60aR5FCzY6gtOkHnMO8rNH1XD/IHA=
-X-Google-Smtp-Source: ABdhPJzEdBVlnMSD+kS9YXf0rsGfeCHAg8w1FuTc5uwHScx/Rk7Q/z3PHix6VqhrGvUJfutDpmCeup4PkcoPjdRmUtY=
-X-Received: by 2002:a9d:8d7:: with SMTP id 81mr3533568otf.345.1604729404174;
- Fri, 06 Nov 2020 22:10:04 -0800 (PST)
+        bh=j19Ne7Ujpl07FHKcUKYNx00z+vwlP95uuR6id8s6vUI=;
+        b=l8iTNLm1L+D1c0mhvxD6mXifJciE8yaKhbrnv0yRLvBHMgwtZOAk3D4nqZw2DxldL7
+         /z66CtkeMlpBLyBDoJco77Mk5C2n30e9y/GiAoKexAAtzlbi5xRBqBVjZea754b6+mZD
+         gYW2Nhm35kdXuPmSufR0gjBIfoQywe6sW4xbZIB3wgmKrQ3uTjr0vX3jcmPXv6zyZiEI
+         6rKVYDf8x3lDxqkyu33EKElroGEVKUEdqXYplvdhW0x4p3Z8ffwQEPYAiFzUxE5X54vW
+         bEdsMwhOlLOzrlTXM82ZNSAtIf/nsVshkKRD0AL9/4x9+V4k/37oYMpdfCUprSYGuSTx
+         2ngQ==
+X-Gm-Message-State: AOAM530bru4rVDpCgilACLlhxC3CHKwI6MTjmHC9sg6aHTYq88ylXRsD
+        WePmeKgJeFAQXXsqXEJbgCYbAlnqEkQwazEBSRQ=
+X-Google-Smtp-Source: ABdhPJxHInTDt1tJXQbN1trpuQ2H1CoyPAKfBzmuBoUkX44zAyL5GMW+k1d3blin5cH/X92RMpvihZuTTpbhz8CpzPc=
+X-Received: by 2002:aca:b4d7:: with SMTP id d206mr3448021oif.39.1604729185859;
+ Fri, 06 Nov 2020 22:06:25 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.895.v3.git.git.1603764490.gitgitgadget@gmail.com>
- <pull.895.v4.git.git.1604003535.gitgitgadget@gmail.com> <CA+P7+xqFrzT53vx70tRDFgZXM3i2FJJK9CpuJJfkfsN4Qj6ChQ@mail.gmail.com>
- <CABPp-BGELtrMa4TK-dkKWxrQ_iQHyEo1yaJBGC_ZyFWG7-9gKg@mail.gmail.com>
-In-Reply-To: <CABPp-BGELtrMa4TK-dkKWxrQ_iQHyEo1yaJBGC_ZyFWG7-9gKg@mail.gmail.com>
+References: <20201102204344.342633-1-newren@gmail.com> <0197d698-e966-f0bb-4d77-0183e93d9bef@gmail.com>
+ <CABPp-BESfpqjrskz-UQikEfk_rV_QpQybo_hStVw=K8jXHYmfA@mail.gmail.com>
+In-Reply-To: <CABPp-BESfpqjrskz-UQikEfk_rV_QpQybo_hStVw=K8jXHYmfA@mail.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 6 Nov 2020 22:09:53 -0800
-Message-ID: <CABPp-BFeJFXz2=OyQr4chXrdvL0=S9Z57BfzD5xvKExtQAdjuA@mail.gmail.com>
-Subject: Re: [PATCH v4 0/4] Beginning of new merge strategy: New API, empty implementation
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Peter Baumann <peter.baumann@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Fri, 6 Nov 2020 22:06:14 -0800
+Message-ID: <CABPp-BGvgdK8vEu5+mHjy9=GPg-aVtforC4-AAYgs3RWkBwQJA@mail.gmail.com>
+Subject: Re: [PATCH v2 00/20] fundamentals of merge-ort implementation
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jake,
+Hi Derrick,
 
-On Mon, Nov 2, 2020 at 10:52 AM Elijah Newren <newren@gmail.com> wrote:
+On Tue, Nov 3, 2020 at 8:36 AM Elijah Newren <newren@gmail.com> wrote:
 >
-> On Mon, Nov 2, 2020 at 1:28 AM Jacob Keller <jacob.keller@gmail.com> wrote:
+> On Tue, Nov 3, 2020 at 6:50 AM Derrick Stolee <stolee@gmail.com> wrote:
 > >
-> > On Thu, Oct 29, 2020 at 1:34 PM Elijah Newren via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
+> > On 11/2/2020 3:43 PM, Elijah Newren wrote:
+> > > This series depends on a merge of en/strmap (after updating to v3) and
+> > > en/merge-ort-api-null-impl.
 > > >
-> > > In this series, I show the new merge API I have developed in merge-ort, and
-> > > show how it differs from that provided by merge-recursive. I do this in four
-> > > steps, each corresponding to a patch.
-> > >
+> > > As promised, here's the update of the series due to the strmap
+> > > updates...and two other tiny updates.
 > >
-> > I'm definitely excited by this project. I'm curious if you have any
-> > further implementation as a WIP that could be played with to see the
-> > end result of the new merging?
+> > Hi Elijah,
 > >
-> > I definitely like this approach where you work in smaller increments
-> > to make the implementation easier to review!
+> > I'm sorry that I've been unavailable to read and review your series
+> > on this topic. I'm very excited about the opportunities here, and I
+> > wanted to take your topic and merge it with our microsoft/git fork
+> > so I could test the performance in a Scalar-enabled monorepo. My
+> > branch is available in my fork [1]
+> >
+> > [1] https://github.com/derrickstolee/git/tree/merge-ort-vfs
+> >
+> > However, I'm unable to discover how to trigger your ort strategy,
+> > even for a simple rebase. Perhaps you could supply a recommended
+> > command for testing?
+> >
+> > Thanks,
+> > -Stolee
 >
-> I usually keep the 'ort' branch of https://github.com/newren/git
-> functional (no promises, though).  It has lots of ifdefs, super ugly
-> commits, todos & fixmes, and random additional (non-code) files where
-> I was tracking various things I was working on, so the code and the
-> tree may not be super readable, but it should be usable (and passes
-> all the tests) -- just set pull.twohead=ort in your git config, or set
-> the environment variable GIT_TEST_MERGE_ALGORITHM=ort.
+> If you want to test performance, you shouldn't test this particular
+> submission, you should test the end result which exists as the 'ort'
+> branch of my repo.  It actually passes all the tests rather than just
+> trivial cherry-picks and rebases, and has lots (and lots) of
+> performance work that hasn't even begun at the point of the
+> 'ort-basics' branch.  (However, it also contains some unrelated memory
+> cleanup in revision.c, chdir-notify.c, and a number of other places
+> because I was annoyed that a rebase wouldn't run valgrind-free and
+> made it harder to spot my memory leaks.  And the day I went hunting
+> those memory "leaks", I went and grabbed some unrelated memory leaks
+> too.  If it causes you merge conflicts, let me know and I'll try to
+> create a branch for you that hash the minimal changes outside of
+> merge-ort*.[ch] and diffcore*.[ch])
 >
-> One warning: git cherry-pick --continue fails with "Cannot specify
-> both --continue and --strategy"; my handling to set a --strategy
-> option when pull.twohead was set apparently needs some tweaks.  If you
-> spot any bugs or other issues, let me know.
+> All that said, for testing either branch you just need to first set
+> pull.twohead=ort in your git config (see
+> https://lore.kernel.org/git/61217a83bd7ff0ce9016eb4df9ded4fdf29a506c.1604360734.git.gitgitgadget@gmail.com/),
+> or, if running regression tests, set GIT_TEST_MERGE_ALGORITHM=ort.
 
-In addition to fixing this "cherry-pick --continue" bug last Monday, I
-discovered a bug yesterday while re-merging all the merge commits in
-the linux kernel causing it to fail an assertion.  I'm surprised I
-hadn't hit that sooner, but if you're testing it out you may want to
-update your copy to the latest version of the 'ort' branch (make sure
-it has commit 067e5c1a38, "merge-ort: fix bug with cached_target_names
-not being initialized in redos", 2020-11-06).
+I probably also should have mentioned that merge-ort does not (yet?)
+heed merge.renames configuration setting; it always detects renames.
+I know you run with merge.renames=false, so you won't quite get an
+apples-to-apples comparison.  However, part of my point was I wanted
+to make renames fast enough that they could be left turned on, even
+for the large scale repos, so I'm very interested in your experience.
+If you need an escape hatch, though, just put a "return 1" at the top
+of detect_and_process_renames() to turn it off.
+
+Oh, and I went through and re-merged all the merge commits in the
+linux kernel and found a bug in merge-ort while doing that (causing it
+to die, not to merge badly).  I'm kind of surprised that none of my
+testcases triggered that failure earlier; if you're testing it out,
+you might want to update to get the fix (commit 067e5c1a38,
+"merge-ort: fix bug with cached_target_names not being initialized in
+redos", 2020-11-06).
