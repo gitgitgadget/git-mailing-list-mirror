@@ -2,113 +2,114 @@ Return-Path: <SRS0=euRE=EN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50110C2D0A3
-	for <git@archiver.kernel.org>; Sat,  7 Nov 2020 01:21:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7826EC2D0A3
+	for <git@archiver.kernel.org>; Sat,  7 Nov 2020 01:23:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D648820704
-	for <git@archiver.kernel.org>; Sat,  7 Nov 2020 01:21:49 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eWjsswKg"
+	by mail.kernel.org (Postfix) with ESMTP id 0C2D420825
+	for <git@archiver.kernel.org>; Sat,  7 Nov 2020 01:23:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727264AbgKGBVs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Nov 2020 20:21:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33416 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726447AbgKGBVs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Nov 2020 20:21:48 -0500
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64DEFC0613CF
-        for <git@vger.kernel.org>; Fri,  6 Nov 2020 17:21:48 -0800 (PST)
-Received: by mail-wr1-x444.google.com with SMTP id c17so3086859wrc.11
-        for <git@vger.kernel.org>; Fri, 06 Nov 2020 17:21:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=J/d/s77CA/YgiBC86krNHBmN43FOk4uyvgKJoE6tvek=;
-        b=eWjsswKgwlBOLMVmnYG26aQQ1I7LrI9f6u63lKc1aaJCa8csTK3XLLcrEEymX7VY1S
-         XbHZLsSbSRxWnxovpUEbqJL3yDuawUTPJi2iboRGigHfl7OaPz/zNFAD3V7nQogb4WU8
-         w0hMdOkCIZZHQmBZddEeQWhCGH4fBYv5+I1XrPNeSSrf42G04rOKvZ3slSML0JSA0auz
-         8Ld2FwecIu1KqkEKG4OfY4lmMu/0Jw7iDkR8MYvC9q0bKB0sqL6KJGCaaQaflNFB3R5o
-         vwpnDiubL8YNmqxnltjC0F4HFqLO8UI3jGRgu3TfZZ9Jcysaoh1y2UDatHrpTUzCcqmB
-         fbSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=J/d/s77CA/YgiBC86krNHBmN43FOk4uyvgKJoE6tvek=;
-        b=q4+3wKtZg1kwpYntamZik+dw1dAvk9FJ1HRsiLy3mBlWFl9ORl6wNfArJQhHbgErHy
-         FoR5HFBCOXC5WeAMbNzVwNGs3UuBk0AEU/PnMtWCubuB/dWPcG1NK2u3no6eda/+eeId
-         n+fYFF8ITcH6K41vPX2i3aHughFGr7oVqvHDxgWdvNu4CNiM382Uk74dk4wojr7XnrTM
-         SIsmBwDBKkM6QKNCNJg1EI/7NpkRRn/VieA2u4Nu7TYzfgsFsWrBm69Q6SadlH8ewzW4
-         tJUpIrGCzHrH2UGt74DfIG2JAyAgAkKHUB91uY/LsZM68eOwghPtvwi8oyi+BoWMaLmJ
-         +Pew==
-X-Gm-Message-State: AOAM531eeG4WdR9F2C2VXu26ebXt7v1mh9Y4NJEmyiC4h9pwfYMIHIlL
-        6H0XbzaPv/sGQFREylJXsolZLZtWs+8=
-X-Google-Smtp-Source: ABdhPJxkKOhtmrroGKS2XQiB9WGNqfKaxTsppb+aPK/bmcumCA0vBiiwO0Q5Rb9MfMe42HdTQ+AYdg==
-X-Received: by 2002:a05:6000:1088:: with SMTP id y8mr1071581wrw.207.1604712107053;
-        Fri, 06 Nov 2020 17:21:47 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 18sm4183888wmo.3.2020.11.06.17.21.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Nov 2020 17:21:46 -0800 (PST)
-Message-Id: <pull.781.git.1604712106219.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 07 Nov 2020 01:21:45 +0000
-Subject: [PATCH] ci: avoid using the deprecated `set-env` construct
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     "Chris. Webster" <chris@webstech.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        id S1728079AbgKGBXy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Nov 2020 20:23:54 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:36024 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726447AbgKGBXx (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 6 Nov 2020 20:23:53 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8FCF960427;
+        Sat,  7 Nov 2020 01:23:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1604712232;
+        bh=Ma1YNBbGcqWLryxCVmUeTUQ6D7nG8b1j4mVcIaxDVNQ=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=1Wm5oxZ2HiQ7tQsBwlIqdTxQnVc0A6j2b1U9R3Xe2yZ2ADCKdJvvlDtduN9QXPO65
+         eRwZ1VGJGIIhbJ6ov01wAka6ag99/wnmcrGWDPY0toKVg6Q6glC8uAsQ6plAjjTbe9
+         dD6xD8reWfutDWIDdYPPkTTxyYadnEJCB8tNXqXvUTDdLxPfFIW2AeS+xoaAbL8pQ6
+         bzxVLu4sTGp7Wv9K9934OwtvsyCxCy4skt4L8iRUHxtxUvVwO1wZrJ/1Bbv/ZK+NhA
+         gwhJJidvyBjzK3wVuCQ6mJoAIva3gom8aNKbAHGNYecLXo5dTo2C72LUc0hoIvr2En
+         J6nXrmQANayy4b05b64HkrYy0eOmDXTB07LFdiZwaBzHJriFjArZNsL3B/bMH4RnGA
+         Ur2gbvhPn9PG56fae9Tw82y8LUummX8/6xwZ87xhuGOyIWw57CnHVl/7a9zPWW+1i4
+         Lt9mw0NJcQ79g/EzKpdM73YFnVo7UKXVCyc2JiC4JfhNVWUKfTn
+Date:   Sat, 7 Nov 2020 01:23:45 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
         Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] tests: consolidate the `file_size` function into
+ `test-lib-functions.sh`
+Message-ID: <20201107012345.GD6252@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.780.git.1604711577662.gitgitgadget@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="F8dlzb82+Fcn6AgP"
+Content-Disposition: inline
+In-Reply-To: <pull.780.git.1604711577662.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.14.6 (2020-07-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The `set-env` construct was deprecated as of the announcement in
-https://github.blog/changelog/2020-10-01-github-actions-deprecating-set-env-and-add-path-commands/
+--F8dlzb82+Fcn6AgP
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Let's use the recommended alternative instead.
+On 2020-11-07 at 01:12:57, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>=20
+> In 8de7eeb54b6 (compression: unify pack.compression configuration
+> parsing, 2016-11-15), we introduced identical copies of the `file_size`
+> helper into three test scripts, with the plan to eventually consolidate
+> them into a single copy.
+>=20
+> Let's do that, and adjust the function name to adhere to the `test_*`
+> naming convention.
+>=20
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    ci: avoid using the deprecated set-env construct
-    
-    This avoids an ugly warning (see e.g. this run
-    [https://github.com/gitgitgadget/git/actions/runs/350443139]).
+This seems reasonable.  For a moment, I was going to ask why we didn't
+just use test -s, but then I remembered that test -s doesn't have that
+behavior, Perl's -s does, and you replaced that with the helper for
+efficiency on Windows.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-781%2Fdscho%2Fno-set-env-in-github-workflows-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-781/dscho/no-set-env-in-github-workflows-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/781
+I looked at the patch and it seemed pretty straightforward.
 
- .github/workflows/check-whitespace.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+>     tests: consolidate the file_size function into test-lib-functions.sh
+>=20
+>     My ulterior motive with this patch is not even to address that old
+>     concern, but to avoid having to exclude the code comments from the
+>     upcoming master -> main rename (because those code comments talk about
+>     git/git's main branch, which is called master).
 
-diff --git a/.github/workflows/check-whitespace.yml b/.github/workflows/check-whitespace.yml
-index 9d070b9cdf..c74b47de9e 100644
---- a/.github/workflows/check-whitespace.yml
-+++ b/.github/workflows/check-whitespace.yml
-@@ -14,7 +14,7 @@ jobs:
-     steps:
-     - name: Set commit count
-       shell: bash
--      run: echo "::set-env name=COMMIT_DEPTH::$((1+$COMMITS))"
-+      run: echo "COMMIT_DEPTH=$((1+$COMMITS))" >>$GITHUB_ENV
-       env:
-         COMMITS: ${{ github.event.pull_request.commits }}
- 
+Also a good reason.  Why modify code when you can just delete it?
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
 
-base-commit: 7f7ebe054af6d831b999d6c2241b9227c4e4e08d
--- 
-gitgitgadget
+--F8dlzb82+Fcn6AgP
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX6X3IAAKCRB8DEliiIei
+gaTIAP4zu61TBfv4x4i9hFh4jUYTT2ESUTMRDalGx4YQoz9m2QD/c5iKObPS+YXT
+e6I8K7d1jr4yCv2BK7aNHleCZr2QaQ4=
+=BlVc
+-----END PGP SIGNATURE-----
+
+--F8dlzb82+Fcn6AgP--
