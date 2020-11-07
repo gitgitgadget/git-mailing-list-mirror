@@ -2,134 +2,117 @@ Return-Path: <SRS0=euRE=EN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2A03C388F9
-	for <git@archiver.kernel.org>; Sat,  7 Nov 2020 06:26:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59DF3C55178
+	for <git@archiver.kernel.org>; Sat,  7 Nov 2020 06:57:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 46F9420719
-	for <git@archiver.kernel.org>; Sat,  7 Nov 2020 06:26:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1C47D20888
+	for <git@archiver.kernel.org>; Sat,  7 Nov 2020 06:57:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fqebL3TP"
+	dkim=pass (2048-bit key) header.d=webstech-net.20150623.gappssmtp.com header.i=@webstech-net.20150623.gappssmtp.com header.b="Kz1PQCVB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727298AbgKGGG1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 7 Nov 2020 01:06:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48848 "EHLO
+        id S1727796AbgKGGvg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 7 Nov 2020 01:51:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727146AbgKGGG0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Nov 2020 01:06:26 -0500
-Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 991A8C0613CF
-        for <git@vger.kernel.org>; Fri,  6 Nov 2020 22:06:26 -0800 (PST)
-Received: by mail-oi1-x243.google.com with SMTP id m143so3900032oig.7
-        for <git@vger.kernel.org>; Fri, 06 Nov 2020 22:06:26 -0800 (PST)
+        with ESMTP id S1725985AbgKGGvg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Nov 2020 01:51:36 -0500
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 066CBC0613CF
+        for <git@vger.kernel.org>; Fri,  6 Nov 2020 22:51:35 -0800 (PST)
+Received: by mail-qt1-x843.google.com with SMTP id f93so2452377qtb.10
+        for <git@vger.kernel.org>; Fri, 06 Nov 2020 22:51:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=j19Ne7Ujpl07FHKcUKYNx00z+vwlP95uuR6id8s6vUI=;
-        b=fqebL3TPRvZH9gjvodQ4L4z3bdg18UXragV/ununuNAhEoknlqZDesgsPe+0XlmbWJ
-         13Bj//9jhQoePYmYeYyXdFesf1R3v0qU6pqn6ntxgNHAliuzWksKBiH30RA+eJcz00o/
-         Y+WwVB6uxbjE7RvARt41tfHc763yeTna/IzpT5tCpG2nF1v9HbqQcqVzbIicGFodlXss
-         B3od6xaXkm58/Vj4jJeA2vHtlkt1GYyj7dxBwIMQtamBz2kFhS+FqZEvR8EVW/4/FltZ
-         OH2rXEE51OiFB8JYg5dzlzq5KhfVGu0YSwRgjm69EP4fNtmunSUn2+4pRS3g/WX+aM/u
-         zhtQ==
+        d=webstech-net.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:cc;
+        bh=dyrgy54iVPYiMLe1lv2KyMtVqJpJ/pRinao/FOYbhmI=;
+        b=Kz1PQCVBJ1e6HcQkPUbvY4sLH4KQJ54/2rcASu/fPjhhtINUqnqVb5zZ6XHt1TyUIq
+         JJTEj0W/btYBy9OXsY8FKEMmu7Ycq3nTGCxVUb98uLbAffUYwU0it7D7Zt2YFSEvExyn
+         r7eudsM8mRv7wjpMzR2o8ZBNVz1dcv9OShJhsyJTRx2hyvvAu12CQKuQNZXUgkUYMwNQ
+         wCloTfcU3C0FUO3kclQhIQpp3WzXNQCc6WIILjHGxSMplxhzdSpUyhRvV3r4uNswcVzB
+         pbxSw1oJ3F6y4YCH0RzIgvO9f+5H2cuvln7DUyjx2bQHiDGUoFluMzdVuKZBi1BioCgm
+         mAVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=j19Ne7Ujpl07FHKcUKYNx00z+vwlP95uuR6id8s6vUI=;
-        b=l8iTNLm1L+D1c0mhvxD6mXifJciE8yaKhbrnv0yRLvBHMgwtZOAk3D4nqZw2DxldL7
-         /z66CtkeMlpBLyBDoJco77Mk5C2n30e9y/GiAoKexAAtzlbi5xRBqBVjZea754b6+mZD
-         gYW2Nhm35kdXuPmSufR0gjBIfoQywe6sW4xbZIB3wgmKrQ3uTjr0vX3jcmPXv6zyZiEI
-         6rKVYDf8x3lDxqkyu33EKElroGEVKUEdqXYplvdhW0x4p3Z8ffwQEPYAiFzUxE5X54vW
-         bEdsMwhOlLOzrlTXM82ZNSAtIf/nsVshkKRD0AL9/4x9+V4k/37oYMpdfCUprSYGuSTx
-         2ngQ==
-X-Gm-Message-State: AOAM530bru4rVDpCgilACLlhxC3CHKwI6MTjmHC9sg6aHTYq88ylXRsD
-        WePmeKgJeFAQXXsqXEJbgCYbAlnqEkQwazEBSRQ=
-X-Google-Smtp-Source: ABdhPJxHInTDt1tJXQbN1trpuQ2H1CoyPAKfBzmuBoUkX44zAyL5GMW+k1d3blin5cH/X92RMpvihZuTTpbhz8CpzPc=
-X-Received: by 2002:aca:b4d7:: with SMTP id d206mr3448021oif.39.1604729185859;
- Fri, 06 Nov 2020 22:06:25 -0800 (PST)
+         :message-id:subject:cc;
+        bh=dyrgy54iVPYiMLe1lv2KyMtVqJpJ/pRinao/FOYbhmI=;
+        b=Y0ib8BCMN0sBFiXtBeCP6FmUnvxIHnSU4DntZozev3h1kJkb/iVYEc/uSZxpppbCH8
+         yHz0hvjGgawWmK61qo1yt7zawoBcLTruu8KSAfQWwcEUvo0OF2CiylqKjgRORQ5Ci7K7
+         v2Gy+KrRhocIgnMaL8aJKKj1kDk6bGgNBO7KnPU7wJNhMuk6nEOYI/1i7AaP84YWW1OX
+         6GXp6l4XMjXNyp8HhLVt6jF+inEo9TQPU4i0JkYLd7LohpNq+cVx1dd6IbeHzvjZZsIu
+         1dglm0aLZy/JCwmXXC/DbI2Xtuggp7NW8WVq2z5s77cyshzxYuZsRwAmdIc50rCDXPf8
+         bJSQ==
+X-Gm-Message-State: AOAM531ZWEAJa6ojnXRkZH/zcxHR9RtFyQRW8iIGphZfkTIQCf6TWYx+
+        Y0gdHTq8xh3nCuCN1lBWN1JqaxoNVBYJsk/5joo1t4g5m347jQJ+c6M=
+X-Google-Smtp-Source: ABdhPJzjylFTO0s//OZmhIa48672i4/XDtEZiPmDO5z1CN+GI7mjeOCjqlCck4Xn4RhoDBnDJFlh+37WQLAUnwSU/Wc=
+X-Received: by 2002:ac8:2aad:: with SMTP id b42mr5247956qta.62.1604731894922;
+ Fri, 06 Nov 2020 22:51:34 -0800 (PST)
 MIME-Version: 1.0
-References: <20201102204344.342633-1-newren@gmail.com> <0197d698-e966-f0bb-4d77-0183e93d9bef@gmail.com>
- <CABPp-BESfpqjrskz-UQikEfk_rV_QpQybo_hStVw=K8jXHYmfA@mail.gmail.com>
-In-Reply-To: <CABPp-BESfpqjrskz-UQikEfk_rV_QpQybo_hStVw=K8jXHYmfA@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 6 Nov 2020 22:06:14 -0800
-Message-ID: <CABPp-BGvgdK8vEu5+mHjy9=GPg-aVtforC4-AAYgs3RWkBwQJA@mail.gmail.com>
-Subject: Re: [PATCH v2 00/20] fundamentals of merge-ort implementation
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <pull.781.git.1604712106219.gitgitgadget@gmail.com>
+In-Reply-To: <pull.781.git.1604712106219.gitgitgadget@gmail.com>
+From:   Chris Webster <chris@webstech.net>
+Date:   Fri, 6 Nov 2020 22:51:43 -0800
+Message-ID: <CAGT1KpXgzaFUdvmZXHHTC6r2FjYY_6MCiZPHu++eje1mRJfmPQ@mail.gmail.com>
+Subject: Re: [PATCH] ci: avoid using the deprecated `set-env` construct
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Derrick,
+Looks good.  Doing a similar change in a related repo.
 
-On Tue, Nov 3, 2020 at 8:36 AM Elijah Newren <newren@gmail.com> wrote:
->
-> On Tue, Nov 3, 2020 at 6:50 AM Derrick Stolee <stolee@gmail.com> wrote:
-> >
-> > On 11/2/2020 3:43 PM, Elijah Newren wrote:
-> > > This series depends on a merge of en/strmap (after updating to v3) and
-> > > en/merge-ort-api-null-impl.
-> > >
-> > > As promised, here's the update of the series due to the strmap
-> > > updates...and two other tiny updates.
-> >
-> > Hi Elijah,
-> >
-> > I'm sorry that I've been unavailable to read and review your series
-> > on this topic. I'm very excited about the opportunities here, and I
-> > wanted to take your topic and merge it with our microsoft/git fork
-> > so I could test the performance in a Scalar-enabled monorepo. My
-> > branch is available in my fork [1]
-> >
-> > [1] https://github.com/derrickstolee/git/tree/merge-ort-vfs
-> >
-> > However, I'm unable to discover how to trigger your ort strategy,
-> > even for a simple rebase. Perhaps you could supply a recommended
-> > command for testing?
-> >
-> > Thanks,
-> > -Stolee
->
-> If you want to test performance, you shouldn't test this particular
-> submission, you should test the end result which exists as the 'ort'
-> branch of my repo.  It actually passes all the tests rather than just
-> trivial cherry-picks and rebases, and has lots (and lots) of
-> performance work that hasn't even begun at the point of the
-> 'ort-basics' branch.  (However, it also contains some unrelated memory
-> cleanup in revision.c, chdir-notify.c, and a number of other places
-> because I was annoyed that a rebase wouldn't run valgrind-free and
-> made it harder to spot my memory leaks.  And the day I went hunting
-> those memory "leaks", I went and grabbed some unrelated memory leaks
-> too.  If it causes you merge conflicts, let me know and I'll try to
-> create a branch for you that hash the minimal changes outside of
-> merge-ort*.[ch] and diffcore*.[ch])
->
-> All that said, for testing either branch you just need to first set
-> pull.twohead=ort in your git config (see
-> https://lore.kernel.org/git/61217a83bd7ff0ce9016eb4df9ded4fdf29a506c.1604360734.git.gitgitgadget@gmail.com/),
-> or, if running regression tests, set GIT_TEST_MERGE_ALGORITHM=ort.
+...chris.
 
-I probably also should have mentioned that merge-ort does not (yet?)
-heed merge.renames configuration setting; it always detects renames.
-I know you run with merge.renames=false, so you won't quite get an
-apples-to-apples comparison.  However, part of my point was I wanted
-to make renames fast enough that they could be left turned on, even
-for the large scale repos, so I'm very interested in your experience.
-If you need an escape hatch, though, just put a "return 1" at the top
-of detect_and_process_renames() to turn it off.
+...chris.
+chris@webstech.net
+webstech.com
 
-Oh, and I went through and re-merged all the merge commits in the
-linux kernel and found a bug in merge-ort while doing that (causing it
-to die, not to merge badly).  I'm kind of surprised that none of my
-testcases triggered that failure earlier; if you're testing it out,
-you might want to update to get the fix (commit 067e5c1a38,
-"merge-ort: fix bug with cached_target_names not being initialized in
-redos", 2020-11-06).
+
+On Fri, Nov 6, 2020 at 5:21 PM Johannes Schindelin via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> The `set-env` construct was deprecated as of the announcement in
+> https://github.blog/changelog/2020-10-01-github-actions-deprecating-set-env-and-add-path-commands/
+>
+> Let's use the recommended alternative instead.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>     ci: avoid using the deprecated set-env construct
+>
+>     This avoids an ugly warning (see e.g. this run
+>     [https://github.com/gitgitgadget/git/actions/runs/350443139]).
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-781%2Fdscho%2Fno-set-env-in-github-workflows-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-781/dscho/no-set-env-in-github-workflows-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/781
+>
+>  .github/workflows/check-whitespace.yml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/.github/workflows/check-whitespace.yml b/.github/workflows/check-whitespace.yml
+> index 9d070b9cdf..c74b47de9e 100644
+> --- a/.github/workflows/check-whitespace.yml
+> +++ b/.github/workflows/check-whitespace.yml
+> @@ -14,7 +14,7 @@ jobs:
+>      steps:
+>      - name: Set commit count
+>        shell: bash
+> -      run: echo "::set-env name=COMMIT_DEPTH::$((1+$COMMITS))"
+> +      run: echo "COMMIT_DEPTH=$((1+$COMMITS))" >>$GITHUB_ENV
+>        env:
+>          COMMITS: ${{ github.event.pull_request.commits }}
+>
+>
+> base-commit: 7f7ebe054af6d831b999d6c2241b9227c4e4e08d
+> --
+> gitgitgadget
