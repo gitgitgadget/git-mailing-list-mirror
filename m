@@ -2,258 +2,314 @@ Return-Path: <SRS0=euRE=EN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A1BAC2D0A3
-	for <git@archiver.kernel.org>; Sat,  7 Nov 2020 00:27:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2594C2D0A3
+	for <git@archiver.kernel.org>; Sat,  7 Nov 2020 01:13:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9715020728
-	for <git@archiver.kernel.org>; Sat,  7 Nov 2020 00:27:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6DCE420704
+	for <git@archiver.kernel.org>; Sat,  7 Nov 2020 01:13:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qo7f6Ib5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Alb9Ddtq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728277AbgKGA1H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Nov 2020 19:27:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53202 "EHLO
+        id S1728368AbgKGBNB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Nov 2020 20:13:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726447AbgKGA1G (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Nov 2020 19:27:06 -0500
-Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C2BAC0613CF
-        for <git@vger.kernel.org>; Fri,  6 Nov 2020 16:27:06 -0800 (PST)
-Received: by mail-oi1-x243.google.com with SMTP id u127so3317207oib.6
-        for <git@vger.kernel.org>; Fri, 06 Nov 2020 16:27:06 -0800 (PST)
+        with ESMTP id S1727129AbgKGBNB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Nov 2020 20:13:01 -0500
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0757C0613CF
+        for <git@vger.kernel.org>; Fri,  6 Nov 2020 17:13:00 -0800 (PST)
+Received: by mail-wm1-x342.google.com with SMTP id k18so2909025wmj.5
+        for <git@vger.kernel.org>; Fri, 06 Nov 2020 17:13:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=JLOMGgiMxnOOOtt7mYdeaDDYHBflCz6bA3jlBt1IM/Y=;
-        b=qo7f6Ib5o3vM4QMiuo45TJidZyiLJEy6igyg07Nwg0Qq+wsgXJbM29dG6DULYLoEdO
-         k6CpV9k5kWWkQ+Pb1M9GNxjeIIr3A2jrkTjJ0c4q5OfRZcGEGtF3qminrPOIKFXUF0x8
-         RLqiVq77U9yK1MmckAO7yR5NIxU+5QwgEMxNeuyzZCsLtDWXuGSH+MfhFZqwwY0bip9/
-         9eTKpv+4wn0vPwUEAJcFO2BlmM/JnJoHyPo8ndehDBgN51hxDpYu71lWLHjSd4hWEdUS
-         TCjBQ0kT+HPn/9QJGUwBpBe+YFWiWAcDjtPlBDAsayT4mY3yGr9+6IHVN/T85TfEBN+D
-         uG0g==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=78mvTPwkn+B3J2F5A07nez1KnjIhl5HKAe1rNrFwh+Y=;
+        b=Alb9DdtqL/BokNX4tvKeilQkZYL0fSv8IlKVSqYf69ybm1lmGewbH9VJrqNVkalh6Y
+         yE8TfxYo/EwN4g8F4h+oZ5CfKymXa8hU+yZzYPalUKc99DDpLx44yTB2+VRxAwZqbFnX
+         ouI8bI1IPAuorvjkG+RoIfElEm2lCmPtbP/rFh3lB/pNGjcSY2C7jJl+QnMnf+SBrcZj
+         aXws0Wnh3zLNEEFW85spdMuUYn25IrR7Y0c6+JlYj9ERyVEM+mXgmhmwPGMIxJLFpJPd
+         lcgIm+zyWaQcBcO8nQAy5hOLdPXDuJtzw+qZUGTNLRFiatVwCyZKKK6spqR4cB4u9a4D
+         wMEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=JLOMGgiMxnOOOtt7mYdeaDDYHBflCz6bA3jlBt1IM/Y=;
-        b=tTUwxmXGJgCbaOi1kfn4g6bP3BlVQYE/AJ/MGJ/RDTkuMyHy1oFwNPejm2EQK01gX2
-         sBfdLaVAruRbePjQ3hz9i7HjCx8T4Ho8OYM73iq9xuDiJhyIY9v0mryfk0xUlYfQ91kB
-         EFPbHQ8Bn87hbGAhECmGFkSIyU7xSaPVolgBJFD0lLllAdhAvSdhu9bbE52DYJVQ79Vk
-         vxY9xQsvoqBNkULODxH0rHWxs2Z8NTDdzgwx+7/GBq83Vx+z2u9UfnNUZy2Rt7pilmYD
-         hje5t2/1w3GwicYGOjEhSf/qPBRjK5WTKY1BdWcI1WCJgI3CjiDKROjjTApmiWfXYJhW
-         Lagw==
-X-Gm-Message-State: AOAM532IEMhDJi/bhltzZmyLGUGEQezjwffd23Qc08db35jIZomXMNRZ
-        M/Ho308T8fuztEYvrtyVtRd7VrPiQOIHvUEDBP8=
-X-Google-Smtp-Source: ABdhPJwU7TRuLFYJtqk91WQXunZQXakaBdeY+jiUVSItx2ljxmd8F5nKF1P0A9K/jQn04HuN1W5oYj0cpiR/8d6sUlw=
-X-Received: by 2002:aca:3756:: with SMTP id e83mr2614296oia.31.1604708825818;
- Fri, 06 Nov 2020 16:27:05 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=78mvTPwkn+B3J2F5A07nez1KnjIhl5HKAe1rNrFwh+Y=;
+        b=UQICLn3Bu9u9DW6jfDQ2Z9y3PiUodEWd3J7OaR2BkUmwyzpPXGb7nXw2gMBiLI6+8S
+         zrwp1zk3ZafkpZWkbK/Tbl7jLVKBoz8IxPfOjGvZnAHlWYLvE8v+JceOc08B/ra5T6Ab
+         DC6rKuOBEhDU4BxLFKwuE/UkZk+h+FHQKsUOmsJ3Qwn82K4Xy5ZAM3x1gQ8kkyEgcQlT
+         2vAldVY/T8zlzbsRhb+VfXoro3O/paqa+4QfbzLPSFgtUOP0nvsUl0pfZ+k0nZhKr0on
+         D4zNofTLzDQ8fFaA6wf9xa5nztgA7mfMQeV9nJuh8pITTqFMScnyJhbE28JibsN6iaiC
+         FpLw==
+X-Gm-Message-State: AOAM5338dheLs1Qq7PWfZ4x9VSXWZOrfx6jgSgC5Bn7D18V+QWsqQM8x
+        40HOBpbJwr3z/MX4k3nRM4/0ggZ9dd8=
+X-Google-Smtp-Source: ABdhPJxLh4Ql4Clr9ujTGGFj3yE9dIGTbCKGz1yZ5NLtjit4PHrV1qk/4961yof1uCwnm0eF8SbVsA==
+X-Received: by 2002:a1c:6a0d:: with SMTP id f13mr2252184wmc.172.1604711579176;
+        Fri, 06 Nov 2020 17:12:59 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z2sm4471930wmf.45.2020.11.06.17.12.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Nov 2020 17:12:58 -0800 (PST)
+Message-Id: <pull.780.git.1604711577662.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 07 Nov 2020 01:12:57 +0000
+Subject: [PATCH] tests: consolidate the `file_size` function into
+ `test-lib-functions.sh`
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20201102204344.342633-10-newren@gmail.com> <20201106225828.774616-1-jonathantanmy@google.com>
-In-Reply-To: <20201106225828.774616-1-jonathantanmy@google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 6 Nov 2020 16:26:54 -0800
-Message-ID: <CABPp-BEyosjCpBr-8B19YXZV0mpn3oYAXoaaROKFNZQ+p4ZMnQ@mail.gmail.com>
-Subject: Re: [PATCH v2 09/20] merge-ort: record stage and auxiliary info for
- every path
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 6, 2020 at 2:58 PM Jonathan Tan <jonathantanmy@google.com> wrote:
->
-> > +static void setup_path_info(struct merge_options *opt,
-> > +                         struct string_list_item *result,
-> > +                         const char *current_dir_name,
-> > +                         int current_dir_name_len,
-> > +                         char *fullpath, /* we'll take over ownership */
-> > +                         struct name_entry *names,
-> > +                         struct name_entry *merged_version,
-> > +                         unsigned is_null,     /* boolean */
-> > +                         unsigned df_conflict, /* boolean */
->
-> Booleans could be int, I think?
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-I guess this goes back to the question on patch 6 where you suggested
-I mark some unsigned variables (derived from bit math on other
-unsigned quantities) instead be int.  I guess it could, but I have the
-same question; since "boolean" isn't available in C, does int vs.
-unsigned matter?
+In 8de7eeb54b6 (compression: unify pack.compression configuration
+parsing, 2016-11-15), we introduced identical copies of the `file_size`
+helper into three test scripts, with the plan to eventually consolidate
+them into a single copy.
 
-> > +                         unsigned filemask,
-> > +                         unsigned dirmask,
-> > +                         int resolved          /* boolean */)
-> > +{
-> > +     struct conflict_info *path_info;
-> > +
-> > +     assert(!is_null || resolved);
-> > +     assert(!df_conflict || !resolved); /* df_conflict implies !resolved */
-> > +     assert(resolved == (merged_version != NULL));
-> > +
-> > +     path_info = xcalloc(1, resolved ? sizeof(struct merged_info) :
-> > +                                       sizeof(struct conflict_info));
-> > +     path_info->merged.directory_name = current_dir_name;
-> > +     path_info->merged.basename_offset = current_dir_name_len;
-> > +     path_info->merged.clean = !!resolved;
-> > +     if (resolved) {
-> > +             path_info->merged.result.mode = merged_version->mode;
-> > +             oidcpy(&path_info->merged.result.oid, &merged_version->oid);
-> > +             path_info->merged.is_null = !!is_null;
-> > +     } else {
-> > +             int i;
-> > +
-> > +             for (i = 0; i < 3; i++) {
-> > +                     path_info->pathnames[i] = fullpath;
-> > +                     path_info->stages[i].mode = names[i].mode;
-> > +                     oidcpy(&path_info->stages[i].oid, &names[i].oid);
-> > +             }
-> > +             path_info->filemask = filemask;
-> > +             path_info->dirmask = dirmask;
-> > +             path_info->df_conflict = !!df_conflict;
-> > +     }
-> > +     strmap_put(&opt->priv->paths, fullpath, path_info);
->
-> So these are placed in paths but not unmerged. I'm starting to wonder if
-> struct merge_options_internal should be called merge_options_state or
-> something, and each field having documentation about when they're used
-> (or better yet, have functions like collect_merge_info() return their
-> calculations in return values (which may be "out" parameters) instead of
-> in this struct).
+Let's do that, and adjust the function name to adhere to the `test_*`
+naming convention.
 
-Right, unmerged is only those paths that remain unmerged after all
-steps.  record_unmerged_index_entries() could simply walk over all
-entries in paths and pick out the ones that were unmerged, but
-process_entries() has to walk over all paths, determine whether they
-can be merged, and determine what to record for the resulting tree for
-each path.  So, having it stash away the unmerged stuff is a simple
-optimization.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    tests: consolidate the file_size function into test-lib-functions.sh
+    
+    My ulterior motive with this patch is not even to address that old
+    concern, but to avoid having to exclude the code comments from the
+    upcoming master -> main rename (because those code comments talk about
+    git/git's main branch, which is called master).
 
-Renaming to merge_options_state or even just merge_state would be fine
--- but any renaming done here will also affect merge-recursive.[ch].
-See the definition of merge_options in merge-recursive.  (For history,
-merge-recursive.h stuffed state into merge_options, which risked funny
-misusage patterns and made the API unnecessarily complex...and made it
-suggest that alternative algorithms needed to have the same state.
-So, the state was moved to a merge_options_internal struct.  That's
-not to say we can't rename, but it does need to be done in
-merge-recursive as well.)
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-780%2Fdscho%2Ffile_size-test-function-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-780/dscho/file_size-test-function-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/780
 
-As for having collect_merge_info() return their calculations in return
-values, would that just end with me returning a struct
-merge_options_internal?  Or did you want each return value added to
-the function signature?  Each return value in the function signature
-makes sense right now for this super-simplified initial 20 patches,
-but what about when this data structure gains all kind of
-rename-related state that is collected, updated, and passed between
-these areas?  I'd have a huge number of "out" and "in" fields to every
-function.  Eventually, merge_options_internal (or whatever it might be
-renamed to) expands to the following, where I have to first define an
-extra enum and two extra structs so that you know the definitions of
-new types that show up in merge_options_internal:
+ t/t0021-conversion.sh               | 36 +++++++++++++----------------
+ t/t1050-large.sh                    |  8 +------
+ t/t5315-pack-objects-compression.sh |  8 +------
+ t/t9303-fast-import-compression.sh  | 10 ++------
+ t/test-lib-functions.sh             |  4 ++++
+ 5 files changed, 24 insertions(+), 42 deletions(-)
 
-enum relevance {
-    RELEVANT_NO_MORE = 0,
-    RELEVANT_CONTENT = 1,
-    RELEVANT_LOCATION = 2,
-    RELEVANT_BOTH = 3
-};
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index 4bfffa9c31..f6deaf498b 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -23,10 +23,6 @@ generate_random_characters () {
+ 		perl -pe "s/./chr((ord($&) % 26) + ord('a'))/sge" >"$TEST_ROOT/$NAME"
+ }
+ 
+-file_size () {
+-	test-tool path-utils file-size "$1"
+-}
+-
+ filter_git () {
+ 	rm -f *.log &&
+ 	git "$@"
+@@ -361,9 +357,9 @@ test_expect_success PERL 'required process filter should filter data' '
+ 		cp "$TEST_ROOT/test3 '\''sq'\'',\$x=.o" "testsubdir/test3 '\''sq'\'',\$x=.r" &&
+ 		>test4-empty.r &&
+ 
+-		S=$(file_size test.r) &&
+-		S2=$(file_size test2.r) &&
+-		S3=$(file_size "testsubdir/test3 '\''sq'\'',\$x=.r") &&
++		S=$(test_file_size test.r) &&
++		S2=$(test_file_size test2.r) &&
++		S3=$(test_file_size "testsubdir/test3 '\''sq'\'',\$x=.r") &&
+ 		M=$(git hash-object test.r) &&
+ 		M2=$(git hash-object test2.r) &&
+ 		M3=$(git hash-object "testsubdir/test3 '\''sq'\'',\$x=.r") &&
+@@ -432,9 +428,9 @@ test_expect_success PERL 'required process filter should filter data for various
+ 	(
+ 		cd repo &&
+ 
+-		S=$(file_size test.r) &&
+-		S2=$(file_size test2.r) &&
+-		S3=$(file_size "testsubdir/test3 '\''sq'\'',\$x=.r") &&
++		S=$(test_file_size test.r) &&
++		S2=$(test_file_size test2.r) &&
++		S3=$(test_file_size "testsubdir/test3 '\''sq'\'',\$x=.r") &&
+ 		M=$(git hash-object test.r) &&
+ 		M2=$(git hash-object test2.r) &&
+ 		M3=$(git hash-object "testsubdir/test3 '\''sq'\'',\$x=.r") &&
+@@ -549,7 +545,7 @@ test_expect_success PERL 'required process filter takes precedence' '
+ 
+ 		echo "*.r filter=protocol" >.gitattributes &&
+ 		cp "$TEST_ROOT/test.o" test.r &&
+-		S=$(file_size test.r) &&
++		S=$(test_file_size test.r) &&
+ 
+ 		# Check that the process filter is invoked here
+ 		filter_git add . &&
+@@ -573,7 +569,7 @@ test_expect_success PERL 'required process filter should be used only for "clean
+ 
+ 		echo "*.r filter=protocol" >.gitattributes &&
+ 		cp "$TEST_ROOT/test.o" test.r &&
+-		S=$(file_size test.r) &&
++		S=$(test_file_size test.r) &&
+ 
+ 		filter_git add . &&
+ 		cat >expected.log <<-EOF &&
+@@ -697,9 +693,9 @@ test_expect_success PERL 'process filter should restart after unexpected write f
+ 		echo "this is going to fail" >smudge-write-fail.o &&
+ 		cp smudge-write-fail.o smudge-write-fail.r &&
+ 
+-		S=$(file_size test.r) &&
+-		S2=$(file_size test2.r) &&
+-		SF=$(file_size smudge-write-fail.r) &&
++		S=$(test_file_size test.r) &&
++		S2=$(test_file_size test2.r) &&
++		SF=$(test_file_size smudge-write-fail.r) &&
+ 		M=$(git hash-object test.r) &&
+ 		M2=$(git hash-object test2.r) &&
+ 		MF=$(git hash-object smudge-write-fail.r) &&
+@@ -752,9 +748,9 @@ test_expect_success PERL 'process filter should not be restarted if it signals a
+ 		echo "this will cause an error" >error.o &&
+ 		cp error.o error.r &&
+ 
+-		S=$(file_size test.r) &&
+-		S2=$(file_size test2.r) &&
+-		SE=$(file_size error.r) &&
++		S=$(test_file_size test.r) &&
++		S2=$(test_file_size test2.r) &&
++		SE=$(test_file_size error.r) &&
+ 		M=$(git hash-object test.r) &&
+ 		M2=$(git hash-object test2.r) &&
+ 		ME=$(git hash-object error.r) &&
+@@ -797,7 +793,7 @@ test_expect_success PERL 'process filter abort stops processing of all further f
+ 
+ 		M="blob=$(git hash-object abort.r)" &&
+ 		rm -f debug.log &&
+-		SA=$(file_size abort.r) &&
++		SA=$(test_file_size abort.r) &&
+ 
+ 		git add . &&
+ 		rm -f *.r &&
+@@ -859,7 +855,7 @@ test_expect_success PERL 'delayed checkout in process filter' '
+ 		git commit -m "test commit"
+ 	) &&
+ 
+-	S=$(file_size "$TEST_ROOT/test.o") &&
++	S=$(test_file_size "$TEST_ROOT/test.o") &&
+ 	PM="ref=refs/heads/master treeish=$(git -C repo rev-parse --verify master) " &&
+ 	M="${PM}blob=$(git -C repo rev-parse --verify master:test.a)" &&
+ 	cat >a.exp <<-EOF &&
+diff --git a/t/t1050-large.sh b/t/t1050-large.sh
+index 61e89a8071..4bab6a513c 100755
+--- a/t/t1050-large.sh
++++ b/t/t1050-large.sh
+@@ -5,12 +5,6 @@ test_description='adding and checking out large blobs'
+ 
+ . ./test-lib.sh
+ 
+-# This should be moved to test-lib.sh together with the
+-# copy in t0021 after both topics have graduated to 'master'.
+-file_size () {
+-	test-tool path-utils file-size "$1"
+-}
+-
+ test_expect_success setup '
+ 	# clone does not allow us to pass core.bigfilethreshold to
+ 	# new repos, so set core.bigfilethreshold globally
+@@ -29,7 +23,7 @@ do
+ 	test_expect_success "add with $config" '
+ 		test_when_finished "rm -f .git/objects/pack/pack-*.* .git/index" &&
+ 		git $config add large1 &&
+-		sz=$(file_size .git/objects/pack/pack-*.pack) &&
++		sz=$(test_file_size .git/objects/pack/pack-*.pack) &&
+ 		case "$expect" in
+ 		small) test "$sz" -le 100000 ;;
+ 		large) test "$sz" -ge 100000 ;;
+diff --git a/t/t5315-pack-objects-compression.sh b/t/t5315-pack-objects-compression.sh
+index df970d7584..8bacd96275 100755
+--- a/t/t5315-pack-objects-compression.sh
++++ b/t/t5315-pack-objects-compression.sh
+@@ -4,12 +4,6 @@ test_description='pack-object compression configuration'
+ 
+ . ./test-lib.sh
+ 
+-# This should be moved to test-lib.sh together with the
+-# copy in t0021 after both topics have graduated to 'master'.
+-file_size () {
+-	test-tool path-utils file-size "$1"
+-}
+-
+ test_expect_success setup '
+ 	printf "%2000000s" X |
+ 	git hash-object -w --stdin >object-name &&
+@@ -24,7 +18,7 @@ do
+ 	test_expect_success "pack-objects with $config" '
+ 		test_when_finished "rm -f pack-*.*" &&
+ 		git $config pack-objects pack <object-name &&
+-		sz=$(file_size pack-*.pack) &&
++		sz=$(test_file_size pack-*.pack) &&
+ 		case "$expect" in
+ 		small) test "$sz" -le 100000 ;;
+ 		large) test "$sz" -ge 100000 ;;
+diff --git a/t/t9303-fast-import-compression.sh b/t/t9303-fast-import-compression.sh
+index 5045f02a53..57d916524e 100755
+--- a/t/t9303-fast-import-compression.sh
++++ b/t/t9303-fast-import-compression.sh
+@@ -3,12 +3,6 @@
+ test_description='compression setting of fast-import utility'
+ . ./test-lib.sh
+ 
+-# This should be moved to test-lib.sh together with the
+-# copy in t0021 after both topics have graduated to 'master'.
+-file_size () {
+-	test-tool path-utils file-size "$1"
+-}
+-
+ import_large () {
+ 	(
+ 		echo blob
+@@ -24,7 +18,7 @@ do
+ 		test_when_finished "rm -f .git/objects/pack/pack-*.*" &&
+ 		test_when_finished "rm -rf .git/objects/??" &&
+ 		import_large -c fastimport.unpacklimit=0 $config &&
+-		sz=$(file_size .git/objects/pack/pack-*.pack) &&
++		sz=$(test_file_size .git/objects/pack/pack-*.pack) &&
+ 		case "$expect" in
+ 		small) test "$sz" -le 100000 ;;
+ 		large) test "$sz" -ge 100000 ;;
+@@ -47,7 +41,7 @@ do
+ 		test_when_finished "rm -f .git/objects/pack/pack-*.*" &&
+ 		test_when_finished "rm -rf .git/objects/??" &&
+ 		import_large -c fastimport.unpacklimit=9 $config &&
+-		sz=$(file_size .git/objects/??/????*) &&
++		sz=$(test_file_size .git/objects/??/????*) &&
+ 		case "$expect" in
+ 		small) test "$sz" -le 100000 ;;
+ 		large) test "$sz" -ge 100000 ;;
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 4a35bde145..59bbf75e83 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -783,6 +783,10 @@ test_line_count () {
+ 	fi
+ }
+ 
++test_file_size () {
++	test-tool path-utils file-size "$1"
++}
++
+ # Returns success if a comma separated string of keywords ($1) contains a
+ # given keyword ($2).
+ # Examples:
 
-struct traversal_callback_data {
-    unsigned long mask;
-    unsigned long dirmask;
-    struct name_entry names[3];
-};
-
-struct rename_info {
-    /* For the next six vars, the 0th entry is ignored and unused */
-    struct diff_queue_struct pairs[3]; /* input to & output from
-diffcore_rename */
-    struct strintmap relevant_sources[3];  /* filepath => enum relevance */
-    struct strintmap dirs_removed[3];      /* directory => bool */
-    struct strmap dir_rename_count[3];     /* old_dir => {new_dir => int} */
-    struct strintmap possible_trivial_merges[3]; /* dirname->dir_rename_mask */
-    struct strset target_dirs[3];             /* set of directory paths */
-    unsigned trivial_merges_okay[3];          /* 0 = no, 1 = maybe */
-    /*
-     * dir_rename_mask:
-     *   0: optimization removing unmodified potential rename source okay
-     *   2 or 4: optimization okay, but must check for files added to dir
-     *   7: optimization forbidden; need rename source in case of dir rename
-     */
-    unsigned dir_rename_mask:3;
-
-    /*
-     * dir_rename_mask needs to be coupled with a traversal through trees
-     * that iterates over all files in a given tree before all immediate
-     * subdirectories within that tree.  Since traverse_trees() doesn't do
-     * that naturally, we have a traverse_trees_wrapper() that stores any
-     * immediate subdirectories while traversing files, then traverses the
-     * immediate subdirectories later.
-     */
-    struct traversal_callback_data *callback_data;
-    int callback_data_nr, callback_data_alloc;
-    char *callback_data_traverse_path;
-
-    /*
-     * When doing repeated merges, we can re-use renaming information from
-     * previous merges under special circumstances;
-     */
-    struct tree *merge_trees[3];
-    int cached_pairs_valid_side;
-    struct strmap cached_pairs[3];   /* fullnames -> {rename_path or NULL} */
-    struct strset cached_irrelevant[3]; /* fullnames */
-    struct strset cached_target_names[3]; /* set of target fullnames */
-    /*
-     * And sometimes it pays to detect renames, and then restart the merge
-     * with the renames cached so that we can do trivial tree merging.
-     * Values: 0 = don't bother, 1 = let's do it, 2 = we already did it.
-     */
-    unsigned redo_after_renames;
-};
-
-struct merge_options_internal {
-    struct strmap paths;    /* maps path -> (merged|conflict)_info */
-    struct strmap unmerged; /* maps path -> conflict_info */
-#if USE_MEMORY_POOL
-    struct mem_pool pool;
-#else
-    struct string_list paths_to_free; /* list of strings to free */
-#endif
-    struct rename_info *renames;
-    struct index_state attr_index; /* renormalization weirdly needs one... */
-    struct strmap output;  /* maps path -> conflict messages */
-    const char *current_dir_name;
-    char *toplevel_dir; /* see merge_info.directory_name comment */
-    int call_depth;
-    int needed_rename_limit;
-};
-
-
-> > +     result->string = fullpath;
-> > +     result->util = path_info;
-> > +}
-> > +
-> >  static int collect_merge_info_callback(int n,
-> >                                      unsigned long mask,
-> >                                      unsigned long dirmask,
-> > @@ -91,10 +136,12 @@ static int collect_merge_info_callback(int n,
-> >        */
-> >       struct merge_options *opt = info->data;
-> >       struct merge_options_internal *opti = opt->priv;
-> > -     struct conflict_info *ci;
-> > +     struct string_list_item pi;  /* Path Info */
-> > +     struct conflict_info *ci; /* pi.util when there's a conflict */
->
-> Looking ahead to patch 10, this seems more like "pi.util unless we know
-> for sure that there's no conflict".
-
-That's too long for the line to remain at 80 characters; it's 16
-characters over the limit.  ;-)
+base-commit: 7f7ebe054af6d831b999d6c2241b9227c4e4e08d
+-- 
+gitgitgadget
