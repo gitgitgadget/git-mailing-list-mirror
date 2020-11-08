@@ -2,79 +2,121 @@ Return-Path: <SRS0=1y/A=EO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89771C388F9
-	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 11:19:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7792C388F9
+	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 17:23:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0E325206ED
-	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 11:19:56 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=mozilla.com header.i=@mozilla.com header.b="PqYRBBLO"
+	by mail.kernel.org (Postfix) with ESMTP id 9D1DA206DC
+	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 17:23:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727949AbgKHLPS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Nov 2020 06:15:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36182 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726206AbgKHLPR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Nov 2020 06:15:17 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ECF5C0613CF
-        for <git@vger.kernel.org>; Sun,  8 Nov 2020 03:15:17 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id oq3so8170669ejb.7
-        for <git@vger.kernel.org>; Sun, 08 Nov 2020 03:15:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mozilla.com; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=M380Iicu9R9LcdW4HqPeq1Eo1Y+FzOzL/4Wr4MDsZPY=;
-        b=PqYRBBLORgMw0jxcxf1Xbp1tti4CuO1hkbjCKlWMd7UKezlgnL8K3hQPQKOU5JA/ZD
-         tNT7RVPBAvNAEHUXonYsmfa/0JkRxllW4p+vRIE6NqZBcP4DmowtC4w1z6IcBU8tHDcx
-         Abb0Wl68XsYyS/8CRWwl+FRkNIW3Lws4vcz9M=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=M380Iicu9R9LcdW4HqPeq1Eo1Y+FzOzL/4Wr4MDsZPY=;
-        b=Vv0Ocw4FuUbACfOrnn7JbXnzHOre9dIcOdLiQcAYXv3w4Y6WsjLklBMw/lEPD5nIvd
-         Hasd0PQec2CT6suN6whyHHmhXSfjEzL9VxRudDJ5WGunKeukjUMoc5go7XifICkoTlye
-         i0vGBVyjV+8OcXCQ1OlNAo135pVGZmYqPbINGfStR6uWbRAhN3vEniHRjL963B+4TMJa
-         pCPdFxDvMfa/TDj9/8jc9LQoNXniV9j5IWV77fmsBQ1vOxPd3fLwU4uDSAsz/DWHdGxo
-         FU1ZaGX5Wv3CUjvfwH0eMsggIllTsPFtmHpwLclW+Qbayf5cC5tnLe1J5tVJij9vo5JB
-         RTRA==
-X-Gm-Message-State: AOAM530/JlbjGsdarRD9l3rVbdp0thyWmCsElNYUuAQT+tqREBBrSMNj
-        IUQzt9U67A0CPpUwOX5lYVDt3n9kJxwYzZpflDm0rwpHqfJryOV5
-X-Google-Smtp-Source: ABdhPJyKF8ffSgERPozU3wJ+IG/2Vw3gFlvjybwNNY7L8hSqNPafzbP0lCIPNo8uNijXBLLMeK+KFMxkQj7brLZizI0=
-X-Received: by 2002:a17:906:1390:: with SMTP id f16mr10177022ejc.504.1604834115885;
- Sun, 08 Nov 2020 03:15:15 -0800 (PST)
+        id S1728738AbgKHRXf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Nov 2020 12:23:35 -0500
+Received: from smtp.hosts.co.uk ([85.233.160.19]:53583 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727570AbgKHRXf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Nov 2020 12:23:35 -0500
+Received: from host-89-243-187-160.as13285.net ([89.243.187.160] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1kboPa-0008b6-7H; Sun, 08 Nov 2020 17:23:30 +0000
+Subject: Re: Extending and updating gitglossary (was: Re: [PATCH v4 06/10]
+ commit-graph: implement corrected commit date)
+To:     =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Abhishek Kumar <abhishekkumar8222@gmail.com>, git@vger.kernel.org,
+        Abhishek Kumar via GitGitGadget <gitgitgadget@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+References: <pull.676.v3.git.1597509583.gitgitgadget@gmail.com>
+ <pull.676.v4.git.1602079785.gitgitgadget@gmail.com>
+ <694ef1ec08d9dc96a74a2631b2710ad206397dbc.1602079786.git.gitgitgadget@gmail.com>
+ <85r1pjzejg.fsf@gmail.com> <20201103114432.GA3577@Abhishek-Arch>
+ <85pn4tnk8u.fsf@gmail.com> <efa3488a-3983-3435-e5e4-2eb71e76a33a@iee.email>
+ <xmqqtuu3k6jf.fsf@gitster.c.googlers.com> <85zh3ujq9c.fsf_-_@gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <8d43335d-a0b4-511e-f132-057343234503@iee.email>
+Date:   Sun, 8 Nov 2020 17:23:28 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.1
 MIME-Version: 1.0
-From:   Jean-Yves Avenard <jyavenard@mozilla.com>
-Date:   Sun, 8 Nov 2020 22:15:04 +1100
-Message-ID: <CA+phgpFS_MOKOib5+yAE7U2QPMqMD_t+yXhR29UG9aSO4pgk+A@mail.gmail.com>
-Subject: Request for change 610e2b9240 reversal
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <85zh3ujq9c.fsf_-_@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi
+Hi Jakub,
 
-At Mozilla we use a mercurial repository, however many developers are
-using a git repository; we maintain two git mirrors, mozilla-unified
-accessed via the cinnabar plugin and a geck-dev native git mirror.
+On 06/11/2020 18:26, Jakub Narębski wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>> Philip Oakley <philipoakley@iee.email> writes:
+>>
+>>> This may be not part of the the main project, but could you consider, if
+>>> time permits, also adding some entries into the Git Glossary (`git help
+>>> glossary`) for the various terms we are using here and elsewhere, e.g.
+>>> 'topological levels', 'generation number', 'corrected commit date' (and
+>>> its fancy technical name for the use of date heuristics e.g. the
+>>> 'chronological ordering';).
+>>>
+>>> The glossary can provide a reference, once the issues are resolved. The
+>>> History Simplification and Commit Ordering section of git-log maybe a
+>>> useful guide to some of the terms that would link to the glossary.
+>> Ah, I first thought that Documentation/rev-list-options.txt (which
+>> is the relevant part of "git log" documentation you mention here)
+>> already have references to deep technical terms explained in the
+>> glossary and you are suggesting Abhishek to mimic the arrangement by
+>> adding new and agreed-upon terms to the glossary and referring to
+>> them from the commit-graph documentation updated by this series.
+>>
+>> But sadly that is not the case.  What you are saying is that you
+>> noticed that rev-list-options.txt needs a similar "the terms we use
+>> to explain these two sections should be defined and explained in the
+>> glossary (if they are not) and new references to glossary should be
+>> added there" update.
+>>
+>> In any case, that is a very good suggestion.  I agree that updating
+>> "git log" doc may be outside the scope of Abhishek's theme, but it
+>> would be very good to have such an update by anybody ;-)
+> The only possible problem I see with this suggestion is that some of
+> those terms (like 'topological levels' and 'corrected commit date') are
+> technical terms that should be not of concern for Git user, only for
+> developers working on Git.  (However one could encounter the term
+> "generation number" in `git commit-graph verify` output.)
+However we do mention "topolog*"  in a number of the manual pages, and
+rather less, as yet, in the technical pages.
 
-Our repositories contain a .git-blame-ignore-revs that is used for
-both repositories.
-https://searchfox.org/mozilla-central/source/.git-blame-ignore-revs
+"Lexicographic" and "chronological" are in the same group of fancy
+technical words ;-)
 
-That git was ignoring invalid entries (for the currently in use repo)
-is a requirement for our use.
-Following the merge of 610e2b9240  jc/blame-ignore-fix later we have
-lost the ability to run git blame on any of our files.
+>
+> I don't think adding technical terms that the user won't encounter in
+> the documentation or among messages that Git outputs would be not a good
+> idea.  It could confuse users, rather than help them.
+>
+> Conversely, perhaps we should add Documentation/technical/glossary.txt
+> to help developers.
 
-Could we get that change reversed?
-If it ain't broken, don't fix it as they say.
+I would agree that the Glossary probably ought to be split into the
+primary, secondary and background terms so that the core concepts are
+separated from the academic/developer style terms.
 
-Thank you
-Jean-Yves Avenard
+Git does rip up most of what folks think about version "control",
+usually based on the imperfect replication of physical artefacts.
+>
+> P.S. By the way, when looking at Documentation/glossary-content.txt, I
+> have noticed few obsolescent entries, like "Git archive", few that have
+> description that soon could be or is obsolete and would need updating,
+> like "master" (when default branch switch to "main"), or "object
+> identifier" and "SHA-1" (when Git switches away from SHA-1 as hash
+> function).
+The obsolescent items can be updated. I'm expecting that the 'main' and
+'SHA-' changes will eventually be picked up as part of the respective
+patch series, hopefully as part of the global replacements.
+
+--
+Philip
