@@ -2,121 +2,139 @@ Return-Path: <SRS0=1y/A=EO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7792C388F9
-	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 17:23:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21D2BC388F9
+	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 19:30:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9D1DA206DC
-	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 17:23:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C68D7206F4
+	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 19:30:51 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jKwKJNmT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728738AbgKHRXf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Nov 2020 12:23:35 -0500
-Received: from smtp.hosts.co.uk ([85.233.160.19]:53583 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727570AbgKHRXf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Nov 2020 12:23:35 -0500
-Received: from host-89-243-187-160.as13285.net ([89.243.187.160] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1kboPa-0008b6-7H; Sun, 08 Nov 2020 17:23:30 +0000
-Subject: Re: Extending and updating gitglossary (was: Re: [PATCH v4 06/10]
- commit-graph: implement corrected commit date)
-To:     =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Abhishek Kumar <abhishekkumar8222@gmail.com>, git@vger.kernel.org,
-        Abhishek Kumar via GitGitGadget <gitgitgadget@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-References: <pull.676.v3.git.1597509583.gitgitgadget@gmail.com>
- <pull.676.v4.git.1602079785.gitgitgadget@gmail.com>
- <694ef1ec08d9dc96a74a2631b2710ad206397dbc.1602079786.git.gitgitgadget@gmail.com>
- <85r1pjzejg.fsf@gmail.com> <20201103114432.GA3577@Abhishek-Arch>
- <85pn4tnk8u.fsf@gmail.com> <efa3488a-3983-3435-e5e4-2eb71e76a33a@iee.email>
- <xmqqtuu3k6jf.fsf@gitster.c.googlers.com> <85zh3ujq9c.fsf_-_@gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <8d43335d-a0b4-511e-f132-057343234503@iee.email>
-Date:   Sun, 8 Nov 2020 17:23:28 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.1
+        id S1727999AbgKHTam (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Nov 2020 14:30:42 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60837 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727570AbgKHTam (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Nov 2020 14:30:42 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 38C1788151;
+        Sun,  8 Nov 2020 14:30:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=5I7NkR7VKuSF5KC7YZnCEW61kSI=; b=jKwKJN
+        mTcpidbUe1wW5KsHjbnYv7Q6jgoRR/1PjO6rMbAz9ash+4hYOwC+BWwT4S/a8iEx
+        MNBdGUdn7SYM5VslCRcfcg4gRrK8ivxPTiWSzYzrNyDoW0aDuZsvdyk7D/1SxR42
+        LfrEXYUNm34a+65AMeKQLs01c8tUQUX1FfRBs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=lis4mu9ZAXqyfW4vmJ9KG/DWziAayVMA
+        2+q8jVtcYYqhSSinm5tXf2TFq/0x7nsJ7hw817LHkt6AkQ8gIOAgr37L+TdQifHD
+        hIyXWJOIeiLAGAXskzTLeVeqmp4DZm0q+a9r3tDFNWBbnCOeSYts9500KrrbKyIa
+        wLeuXOmJbMc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 306B888150;
+        Sun,  8 Nov 2020 14:30:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 96BED8814F;
+        Sun,  8 Nov 2020 14:30:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/4] push: teach --base for ssh:// and file://
+References: <cover.1604362701.git.jonathantanmy@google.com>
+        <148e39960a2185d2355cdfe34f8856e708fb1b80.1604362701.git.jonathantanmy@google.com>
+Date:   Sun, 08 Nov 2020 11:30:36 -0800
+In-Reply-To: <148e39960a2185d2355cdfe34f8856e708fb1b80.1604362701.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Mon, 2 Nov 2020 16:26:11 -0800")
+Message-ID: <xmqq4klzejdv.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <85zh3ujq9c.fsf_-_@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+Content-Type: text/plain
+X-Pobox-Relay-ID: E10EB166-21F8-11EB-A6C5-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jakub,
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-On 06/11/2020 18:26, Jakub Narębski wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->> Philip Oakley <philipoakley@iee.email> writes:
->>
->>> This may be not part of the the main project, but could you consider, if
->>> time permits, also adding some entries into the Git Glossary (`git help
->>> glossary`) for the various terms we are using here and elsewhere, e.g.
->>> 'topological levels', 'generation number', 'corrected commit date' (and
->>> its fancy technical name for the use of date heuristics e.g. the
->>> 'chronological ordering';).
->>>
->>> The glossary can provide a reference, once the issues are resolved. The
->>> History Simplification and Commit Ordering section of git-log maybe a
->>> useful guide to some of the terms that would link to the glossary.
->> Ah, I first thought that Documentation/rev-list-options.txt (which
->> is the relevant part of "git log" documentation you mention here)
->> already have references to deep technical terms explained in the
->> glossary and you are suggesting Abhishek to mimic the arrangement by
->> adding new and agreed-upon terms to the glossary and referring to
->> them from the commit-graph documentation updated by this series.
->>
->> But sadly that is not the case.  What you are saying is that you
->> noticed that rev-list-options.txt needs a similar "the terms we use
->> to explain these two sections should be defined and explained in the
->> glossary (if they are not) and new references to glossary should be
->> added there" update.
->>
->> In any case, that is a very good suggestion.  I agree that updating
->> "git log" doc may be outside the scope of Abhishek's theme, but it
->> would be very good to have such an update by anybody ;-)
-> The only possible problem I see with this suggestion is that some of
-> those terms (like 'topological levels' and 'corrected commit date') are
-> technical terms that should be not of concern for Git user, only for
-> developers working on Git.  (However one could encounter the term
-> "generation number" in `git commit-graph verify` output.)
-However we do mention "topolog*"  in a number of the manual pages, and
-rather less, as yet, in the technical pages.
+>  static int do_push(int flags,
+>  		   const struct string_list *push_options,
+> -		   struct remote *remote)
+> +		   struct remote *remote,
+> +		   const char *push_base)
+>  {
+>  	int i, errs;
+>  	const char **url;
+> @@ -405,6 +406,8 @@ static int do_push(int flags,
+>  				transport_get(remote, url[i]);
+>  			if (flags & TRANSPORT_PUSH_OPTIONS)
+>  				transport->push_options = push_options;
+> +			if (push_base)
+> +				transport_set_option(transport, TRANS_OPT_PUSH_BASE, push_base);
+>  			if (push_with_options(transport, push_refspec, flags))
+>  				errs++;
+>  		}
+> @@ -413,6 +416,8 @@ static int do_push(int flags,
+>  			transport_get(remote, NULL);
+>  		if (flags & TRANSPORT_PUSH_OPTIONS)
+>  			transport->push_options = push_options;
+> +		if (push_base)
+> +			transport_set_option(transport, TRANS_OPT_PUSH_BASE, push_base);
+>  		if (push_with_options(transport, push_refspec, flags))
+>  			errs++;
+>  	}
 
-"Lexicographic" and "chronological" are in the same group of fancy
-technical words ;-)
+These just send push_base as-is.
 
->
-> I don't think adding technical terms that the user won't encounter in
-> the documentation or among messages that Git outputs would be not a good
-> idea.  It could confuse users, rather than help them.
->
-> Conversely, perhaps we should add Documentation/technical/glossary.txt
-> to help developers.
+> @@ -526,6 +531,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+>  	struct string_list *push_options;
+>  	const struct string_list_item *item;
+>  	struct remote *remote;
+> +	const char *push_base = NULL;
+>  
+>  	struct option options[] = {
+>  		OPT__VERBOSITY(&verbosity),
+> @@ -562,6 +568,8 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+>  				TRANSPORT_FAMILY_IPV4),
+>  		OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
+>  				TRANSPORT_FAMILY_IPV6),
+> +		OPT_STRING(0, "base", &push_base, N_("revision"),
+> +			   N_("ancestor of commits to be pushed that is believed to be known by the server")),
+>  		OPT_END()
+>  	};
 
-I would agree that the Glossary probably ought to be split into the
-primary, secondary and background terms so that the core concepts are
-separated from the academic/developer style terms.
+And this takes push_base as a string that is not even validated for
+any constraints.
 
-Git does rip up most of what folks think about version "control",
-usually based on the imperfect replication of physical artefacts.
->
-> P.S. By the way, when looking at Documentation/glossary-content.txt, I
-> have noticed few obsolescent entries, like "Git archive", few that have
-> description that soon could be or is obsolete and would need updating,
-> like "master" (when default branch switch to "main"), or "object
-> identifier" and "SHA-1" (when Git switches away from SHA-1 as hash
-> function).
-The obsolescent items can be updated. I'm expecting that the 'main' and
-'SHA-' changes will eventually be picked up as part of the respective
-patch series, hopefully as part of the global replacements.
+> @@ -629,7 +637,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+>  		if (strchr(item->string, '\n'))
+>  			die(_("push options must not have new line characters"));
+>  
+> -	rc = do_push(flags, push_options, remote);
+> +	rc = do_push(flags, push_options, remote, push_base);
 
---
-Philip
+
+And passes that arbitrary cruft given by the user down to the
+transport.
+
+As the spirit of the "base" parameter is to tell the other side that
+it is what the receiving end believes to be common, shouldn't we
+make sure we do have it on our side after getting it from the user
+with OPT_STRING() before passing it down to the transport layer and
+have the transport layer convert it to an object name?  This patch
+assumes that running get_oid_hex() at the transport layer and
+assuming that the transport would keep working on the_repository
+(hence when we say "We expect that the receiving end has 'master'",
+the transport somehow knows that is 'master' in our repository, not
+in a submodule repository, for example), but by converting it to
+full object name early, we do not have to assume transport to stay
+that way.
