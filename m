@@ -2,139 +2,123 @@ Return-Path: <SRS0=1y/A=EO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21D2BC388F9
-	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 19:30:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 729D7C388F9
+	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 19:34:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C68D7206F4
-	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 19:30:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 24107206F4
+	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 19:34:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jKwKJNmT"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hhg2o2Zh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727999AbgKHTam (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Nov 2020 14:30:42 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60837 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727570AbgKHTam (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Nov 2020 14:30:42 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 38C1788151;
-        Sun,  8 Nov 2020 14:30:38 -0500 (EST)
+        id S1728104AbgKHTbX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Nov 2020 14:31:23 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51040 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727570AbgKHTbW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Nov 2020 14:31:22 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C2472FD7A4;
+        Sun,  8 Nov 2020 14:31:20 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5I7NkR7VKuSF5KC7YZnCEW61kSI=; b=jKwKJN
-        mTcpidbUe1wW5KsHjbnYv7Q6jgoRR/1PjO6rMbAz9ash+4hYOwC+BWwT4S/a8iEx
-        MNBdGUdn7SYM5VslCRcfcg4gRrK8ivxPTiWSzYzrNyDoW0aDuZsvdyk7D/1SxR42
-        LfrEXYUNm34a+65AMeKQLs01c8tUQUX1FfRBs=
+        :content-type:content-transfer-encoding; s=sasl; bh=tDRq+chGH657
+        G1ZUjRsccOH5u40=; b=hhg2o2ZhtsqNc2+c9FZTtrQqnWVNKGt3WHrBLXi93bf7
+        k/DYhlsKeI9raSO9EFJRCNNFAApgb2tu712biZN7q1OwtthmNdBVoLf83TK3mm+9
+        OSacH66UEn8dKt5rFb4ikpW5Uy0j0wpfp+wadJah9d0dzf0I6nLl8hhP8s0DjtE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=lis4mu9ZAXqyfW4vmJ9KG/DWziAayVMA
-        2+q8jVtcYYqhSSinm5tXf2TFq/0x7nsJ7hw817LHkt6AkQ8gIOAgr37L+TdQifHD
-        hIyXWJOIeiLAGAXskzTLeVeqmp4DZm0q+a9r3tDFNWBbnCOeSYts9500KrrbKyIa
-        wLeuXOmJbMc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 306B888150;
-        Sun,  8 Nov 2020 14:30:38 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Opnvr4
+        lOn7Y9e2W5zLhMQa3giqgdBjOLkpnZ3lYlDjMrvH8exXftQUSRwh0c2R2CtsfUP4
+        pAXI/ckYbGijU44X2SI0lZYpVFg0USDji4tsmfWJulXK28N2hnPbZ3KeZ8oGIir+
+        CnrSZhgfAxhX/A4ZDQbBBxjvwZ1B80mW0uxrI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AA10BFD7A3;
+        Sun,  8 Nov 2020 14:31:20 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 96BED8814F;
-        Sun,  8 Nov 2020 14:30:37 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 65BC4FD7A2;
+        Sun,  8 Nov 2020 14:31:16 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
 Subject: Re: [PATCH 2/4] push: teach --base for ssh:// and file://
 References: <cover.1604362701.git.jonathantanmy@google.com>
         <148e39960a2185d2355cdfe34f8856e708fb1b80.1604362701.git.jonathantanmy@google.com>
-Date:   Sun, 08 Nov 2020 11:30:36 -0800
-In-Reply-To: <148e39960a2185d2355cdfe34f8856e708fb1b80.1604362701.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Mon, 2 Nov 2020 16:26:11 -0800")
-Message-ID: <xmqq4klzejdv.fsf@gitster.c.googlers.com>
+        <20201103102307.GI24813@szeder.dev>
+Date:   Sun, 08 Nov 2020 11:31:14 -0800
+In-Reply-To: <20201103102307.GI24813@szeder.dev> ("SZEDER =?utf-8?Q?G?=
+ =?utf-8?Q?=C3=A1bor=22's?= message of
+        "Tue, 3 Nov 2020 11:23:07 +0100")
+Message-ID: <xmqqzh3rd4sd.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E10EB166-21F8-11EB-A6C5-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: F82DC15C-21F8-11EB-B38C-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
->  static int do_push(int flags,
->  		   const struct string_list *push_options,
-> -		   struct remote *remote)
-> +		   struct remote *remote,
-> +		   const char *push_base)
->  {
->  	int i, errs;
->  	const char **url;
-> @@ -405,6 +406,8 @@ static int do_push(int flags,
->  				transport_get(remote, url[i]);
->  			if (flags & TRANSPORT_PUSH_OPTIONS)
->  				transport->push_options = push_options;
-> +			if (push_base)
-> +				transport_set_option(transport, TRANS_OPT_PUSH_BASE, push_base);
->  			if (push_with_options(transport, push_refspec, flags))
->  				errs++;
->  		}
-> @@ -413,6 +416,8 @@ static int do_push(int flags,
->  			transport_get(remote, NULL);
->  		if (flags & TRANSPORT_PUSH_OPTIONS)
->  			transport->push_options = push_options;
-> +		if (push_base)
-> +			transport_set_option(transport, TRANS_OPT_PUSH_BASE, push_base);
->  		if (push_with_options(transport, push_refspec, flags))
->  			errs++;
->  	}
+>> +	# Server does not have "six".
+>> +	test_must_fail git -C file_child -c protocol.version=3D0 \
+>> +		push --base=3Dan_invalid_object origin HEAD:client_branch_six 2>log=
+ &&
+>> +	grep "is not a valid object" log
+>
+> This should rather use 'test_i18ngrep' ...
+>
+>> +'
+>> +
+>> +test_expect_success 'push with --base that does not exist on server' =
+'
+>> +	COMMON_HASH=3D$(git -C file_child rev-parse six) &&
+>> +
+>> +	# The push still succeeds.
+>> +	GIT_TRACE_PACKET=3D1 git -C file_child -c protocol.version=3D0 \
+>> +		push --base=3Dsix origin HEAD:client_branch_six 2>log &&
+>> +
+>> +	# Server did not advertise "six", since it does not know it
+>> +	! grep "$COMMON_HASH .have" log
+>> +'
+>> +
+>>  # Test protocol v1 with 'ssh://' transport
+>>  #
+>>  test_expect_success 'setup ssh wrapper' '
+>
+>
+>> diff --git a/transport.c b/transport.c
+>> index ffe2115845..531ca0a834 100644
+>> --- a/transport.c
+>> +++ b/transport.c
+>> @@ -236,6 +236,10 @@ static int set_git_option(struct git_transport_op=
+tions *opts,
+>>  		list_objects_filter_die_if_populated(&opts->filter_options);
+>>  		parse_list_objects_filter(&opts->filter_options, value);
+>>  		return 0;
+>> +	} else if (!strcmp(name, TRANS_OPT_PUSH_BASE)) {
+>> +		if (get_oid(value, &opts->push_base))
+>> +			die(_("transport: '%s' is not a valid object"), value);
+>
+> ... because the error message here is translated.
+>
+>> +		return 0;
+>>  	}
+>>  	return 1;
+>>  }
 
-These just send push_base as-is.
+Yes, and we are getting CI failure ever since we queued this patch.
 
-> @@ -526,6 +531,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
->  	struct string_list *push_options;
->  	const struct string_list_item *item;
->  	struct remote *remote;
-> +	const char *push_base = NULL;
->  
->  	struct option options[] = {
->  		OPT__VERBOSITY(&verbosity),
-> @@ -562,6 +568,8 @@ int cmd_push(int argc, const char **argv, const char *prefix)
->  				TRANSPORT_FAMILY_IPV4),
->  		OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
->  				TRANSPORT_FAMILY_IPV6),
-> +		OPT_STRING(0, "base", &push_base, N_("revision"),
-> +			   N_("ancestor of commits to be pushed that is believed to be known by the server")),
->  		OPT_END()
->  	};
+Let's discard the topic for now.
 
-And this takes push_base as a string that is not even validated for
-any constraints.
-
-> @@ -629,7 +637,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
->  		if (strchr(item->string, '\n'))
->  			die(_("push options must not have new line characters"));
->  
-> -	rc = do_push(flags, push_options, remote);
-> +	rc = do_push(flags, push_options, remote, push_base);
-
-
-And passes that arbitrary cruft given by the user down to the
-transport.
-
-As the spirit of the "base" parameter is to tell the other side that
-it is what the receiving end believes to be common, shouldn't we
-make sure we do have it on our side after getting it from the user
-with OPT_STRING() before passing it down to the transport layer and
-have the transport layer convert it to an object name?  This patch
-assumes that running get_oid_hex() at the transport layer and
-assuming that the transport would keep working on the_repository
-(hence when we say "We expect that the receiving end has 'master'",
-the transport somehow knows that is 'master' in our repository, not
-in a submodule repository, for example), but by converting it to
-full object name early, we do not have to assume transport to stay
-that way.
+Thanks.
