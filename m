@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F0D4C4741F
-	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 21:41:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04435C56201
+	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 21:41:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 17B1720657
-	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 21:41:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B7C0B206F4
+	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 21:41:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UAHbNhfR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vbI4ZzK2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729031AbgKHVlt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Nov 2020 16:41:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48044 "EHLO
+        id S1728978AbgKHVli (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Nov 2020 16:41:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729019AbgKHVlq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Nov 2020 16:41:46 -0500
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6213C0613CF
-        for <git@vger.kernel.org>; Sun,  8 Nov 2020 13:41:45 -0800 (PST)
-Received: by mail-lf1-x143.google.com with SMTP id 74so9573353lfo.5
-        for <git@vger.kernel.org>; Sun, 08 Nov 2020 13:41:45 -0800 (PST)
+        with ESMTP id S1728959AbgKHVlf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Nov 2020 16:41:35 -0500
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com [IPv6:2a00:1450:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3F62C0613CF
+        for <git@vger.kernel.org>; Sun,  8 Nov 2020 13:41:34 -0800 (PST)
+Received: by mail-lj1-x241.google.com with SMTP id s9so6094399ljo.11
+        for <git@vger.kernel.org>; Sun, 08 Nov 2020 13:41:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wH5lezwYC3Zj4pfYQSJSrzR0Zof/a66wlzNTt5jMg30=;
-        b=UAHbNhfR71bOPOYa5xPYTovIdEgNsQgEQi8PuQQbUErGfQTMN9VDDO2pQV0MJ/BJuj
-         u2Hdw3eb5wymvtBZqn9KtbqC07zuLgk+ITtH+g9dqWZv+74NWegQwEob2jmzjL8aIC1o
-         Jbm7GxattFJMI1MF4dDOT733m3QuuPtJWyKF4eRd656gpOVTYN03J4j4YpaqE4s50ADD
-         zsD2M3qGBQ05/aeUunWbuxLVvmmk4e9z6ly7k7dm0Is9IpIh1hP05bP/YxGE3iQZ3FyZ
-         QtYBVDVQYnUvOPZh+v5jNXIFsOkQQl2t6xi4qtyDdkHZmv/iLJN+9/c5n4jgOX/1Db0R
-         an1g==
+        bh=iPZBgNe/CnnTJLkmODqda//1HtZVycy3DAT/Qha+4cE=;
+        b=vbI4ZzK2+TBkoJcMebIrv2BbalV92yP2AzMIiMqHf1/3pHAmLj048+4w+ZM+X4uj+O
+         7RTjQqvIbRDqas6c+il2GIQpXfKHITgUmqaMItfpqnxNa+JJgACqVRDkXbCfoWNLv5M7
+         bzqsKaZp9aSDLly0FA1Wo+jNP+9CVsAV1D4o4+oJKPK9d8AZR/iiCTI28da2+9/ew9ZU
+         89I7ImOp9nNMu/W7BfWWt2R1bPPn7zEJLWWHWSTfAYQJz1aZ7G3gHWUtXMYDb3CHPxkD
+         JFY0+qs+mZ2/zXrs/95dizYBs/CdRFsR2PKaN7mXwle0denmGaZ1Iva7Ibl7RTBOi+i/
+         KwDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wH5lezwYC3Zj4pfYQSJSrzR0Zof/a66wlzNTt5jMg30=;
-        b=pwTXfOMGnzQStvtgttl0qgUqTL3cepei4yIJSgUoMFucXS9NUIuOpabLWGtXqxMgWb
-         irc2k1BQwBK0lbevFpPfkPOrl6X+G7rDb/Ct4EjKmC/ys/3Hi7biLUXeA2DdXfsgAKHv
-         fS5ea6ecNqRqz85ElWSPmMbX/l8e3S5FpcHRJ/gVExOqw6ljwO+fDLdaT+aLQ9KplcDz
-         X2bAAXZNwDqY3IV8gK5UBshsuxGFZwfwHcqxdtV94FCSbKvL8iTNRLE54L5FxjMOTW0i
-         OZDAHjPkPKezEniaK92dgdNzwu8dt1iXEfSHRvB7I1d53xfAWE2XzBxCYWuCXcguFMX9
-         67pQ==
-X-Gm-Message-State: AOAM533acMikc62jANlsUhZAvr4FaBUz0IZA6D+u/Yy3wSlLyZ953jao
-        MJTlc8vkzHCfObNrXr81xH8=
-X-Google-Smtp-Source: ABdhPJw2c956kC9lYa/o6Gx3Dd5Gqf11QQpPcghaoW/vkCxqOzi0M7gj6+Zt3TjfoXNYa3xU56FQVQ==
-X-Received: by 2002:ac2:51db:: with SMTP id u27mr541918lfm.32.1604871704477;
-        Sun, 08 Nov 2020 13:41:44 -0800 (PST)
+        bh=iPZBgNe/CnnTJLkmODqda//1HtZVycy3DAT/Qha+4cE=;
+        b=CflqOZ3H1OcEOcxu9fRjELnchnXmJdJjM+qkM+nwQeM4iAuVpMpQpKPsnB9eMnnEUg
+         23OyOaUCbH1L3yEICCplamc4VTadTy17MlhWE7kOo9T/MHU3CitcWsTTkkKy2PlOqxb+
+         g5bMsXZwsRlFW+ox6R2CAlRXK3M194AH44KwMtKLsjSw0fdFaMzGgsc4dKE9LSTxHF9W
+         8BCf9Y48Uojb8Okz8qIWQ71m0cAm7bJS8OfEGwfVrld2kbpRjm1QjF47Tx9SxP2NRFza
+         W6Cydv/gm6uR0UIDV0B/H2SW3n17bx0tKlB8FAVdqQ/OwOEXavJLqTuUihKi6Susvlaj
+         dOFA==
+X-Gm-Message-State: AOAM531Jmtd3OLbB8H83pFCZSFWbPFaubDhSRY7eDoLwP/whPv2Ca/5k
+        8vwMngL0Nss+t6tWvATGzLw=
+X-Google-Smtp-Source: ABdhPJxl9g+OvGtrJx+cgtBxzv9Z6g8TVclBCsxxequgV72kogBebaXHuHkh/JHuqoH6W/AMOCnhmg==
+X-Received: by 2002:a05:651c:1b7:: with SMTP id c23mr1410083ljn.112.1604871693250;
+        Sun, 08 Nov 2020 13:41:33 -0800 (PST)
 Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id k21sm1937392ljb.43.2020.11.08.13.41.43
+        by smtp.gmail.com with ESMTPSA id k21sm1937392ljb.43.2020.11.08.13.41.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Nov 2020 13:41:43 -0800 (PST)
+        Sun, 08 Nov 2020 13:41:32 -0800 (PST)
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
         git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH v1 26/27] doc/rev-list-options: document --first-parent implies --diff-merges=first-parent
-Date:   Mon,  9 Nov 2020 00:38:37 +0300
-Message-Id: <20201108213838.4880-27-sorganov@gmail.com>
+Subject: [PATCH v1 14/27] t4013: support test_expect_failure through ':failure' magic
+Date:   Mon,  9 Nov 2020 00:38:25 +0300
+Message-Id: <20201108213838.4880-15-sorganov@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20201108213838.4880-1-sorganov@gmail.com>
 References: <20201101193330.24775-1-sorganov@gmail.com>
@@ -75,35 +75,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before introduction of new --diff-merges options, --first-parent
-implicitly changed the default diff format for merge commits to
-showing only the diff with respect to the first parent, and there were
-no way to get such format from "git log" without affecting history
-traversal logic that --first-parent causes.
+Add support to be able to specify expected failure, through :failure
+magic, like this:
 
-Now, after introduction of the --diff-merges=first-parent, the
---first-parent simply implies the former, and this patch corrects
-documentation accordingly.
+:failure cmd args
 
 Signed-off-by: Sergey Organov <sorganov@gmail.com>
 ---
- Documentation/rev-list-options.txt | 3 +++
- 1 file changed, 3 insertions(+)
+ t/t4013-diff-various.sh | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 002379056a07..ded383e62ae5 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -129,6 +129,9 @@ parents) and `--max-parents=-1` (negative numbers denote no upper limit).
- 	adjusting to updated upstream from time to time, and
- 	this option allows you to ignore the individual commits
- 	brought in to your history by such a merge.
-+ifdef::git-log[]
-+	Implies `--diff-merges=first-parent`.
-+endif::git-log[]
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index 5c7b0122b4f1..935d10ac0572 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -174,6 +174,7 @@ process_diffs () {
+ V=$(git version | sed -e 's/^git version //' -e 's/\./\\./g')
+ while read magic cmd
+ do
++	status=success
+ 	case "$magic" in
+ 	'' | '#'*)
+ 		continue ;;
+@@ -182,6 +183,10 @@ do
+ 		label="$magic-$cmd"
+ 		case "$magic" in
+ 		noellipses) ;;
++		failure)
++			status=failure
++			magic=
++			label="$cmd" ;;
+ 		*)
+ 			BUG "unknown magic $magic" ;;
+ 		esac ;;
+@@ -194,7 +199,7 @@ do
+ 	expect="$TEST_DIRECTORY/t4013/diff.$test"
+ 	actual="$pfx-diff.$test"
  
- --not::
- 	Reverses the meaning of the '{caret}' prefix (or lack thereof)
+-	test_expect_success "git $cmd # magic is ${magic:-(not used)}" '
++	test_expect_$status "git $cmd # magic is ${magic:-(not used)}" '
+ 		{
+ 			echo "$ git $cmd"
+ 			case "$magic" in
 -- 
 2.25.1
 
