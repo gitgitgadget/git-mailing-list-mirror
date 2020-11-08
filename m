@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7CE1C56202
-	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 21:41:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF9B8C388F9
+	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 21:41:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7020F206E3
-	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 21:41:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B8CF5206E3
+	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 21:41:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a+n0JqFD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NBQt9vA3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729035AbgKHVlx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Nov 2020 16:41:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48040 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728951AbgKHVlp (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1729008AbgKHVlp (ORCPT <rfc822;git@archiver.kernel.org>);
         Sun, 8 Nov 2020 16:41:45 -0500
-Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F05ECC0613CF
-        for <git@vger.kernel.org>; Sun,  8 Nov 2020 13:41:44 -0800 (PST)
-Received: by mail-lf1-x142.google.com with SMTP id i6so9588224lfd.1
-        for <git@vger.kernel.org>; Sun, 08 Nov 2020 13:41:44 -0800 (PST)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48012 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728951AbgKHVlk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Nov 2020 16:41:40 -0500
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60C8EC0613D3
+        for <git@vger.kernel.org>; Sun,  8 Nov 2020 13:41:38 -0800 (PST)
+Received: by mail-lj1-x242.google.com with SMTP id o24so1133521ljj.6
+        for <git@vger.kernel.org>; Sun, 08 Nov 2020 13:41:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=F7skkKHM5R05UGdkMu1617woWQOZ5h6BpD7foIYbeG8=;
-        b=a+n0JqFDkA8ivX4qrmvKKujhbSRA3jmn0stWt4t4rPm0i3TclwtJJQucXXZqQkXeOK
-         UZeEzDt+oQyGacwGnARv0LXAR2MDYlyL5rgcY5hKJEcrH089lUFrM6QTYQ0nZ9Wkw7+O
-         j0KbSkmqhQpO7TaopNMUYrc3mFo8vWmKE4AudXNxpZuYOSx7f+TKuJfErHTH68ZTMPBh
-         JSfZKaRQogjvQMRMzQ7qEYOvYIJp2BjH3dCS9Fzw8Nr/IoXFR9StkDf6hpG4uCyfmWfz
-         uCyg0F0uTwaovyMWnBs0r4AsowNTdDwTtWmrnWfXO/PJuyCqZqZ49oChSLbswKXCrtIN
-         VDEQ==
+        bh=0W3us1d0G5MzwFNR/Pz+9/j1tIqVyxQx+lyRwVD3uME=;
+        b=NBQt9vA31w/MeMHIpBSh6OK400OHt25OnGnm5pO7eAV7MiunNjJArRQvSPR4PamR/h
+         IvhpNCtLXBoPHEem+o+DiGFdqy6qsaNTgQFqEpoGC4TpQ83lZwQTwXSzKIuaeBqS/pj6
+         /uAxpzMAZc6UkptPBRwHmYssxiSYp/3TTXqSE/2Jz9Nmt6l2pfE3D6cXNLwWEuuP8jK5
+         KhJuo2I8+F3P/1zbUhzor1ZPCPXM80sGeNaLhfGtzCxxMFpbQSR2xGjOqOSZt7ocmE8K
+         Ex44x2EpRNzoTEnSqqGvrEoWQdO8ihuX+l1EF6FO7eqYoecTbIPqTHGybqBCv1WRyM3E
+         WzzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=F7skkKHM5R05UGdkMu1617woWQOZ5h6BpD7foIYbeG8=;
-        b=YkxEPheEE/hZMZ5WWL591vtv173Ji2Z2mu37k5485JgiErnYbZP8C9uXcE9qs74Cd8
-         ZvEbRqiEqp+Nmesw+hiAr8MSUg7oDSzAzYivG4qvlSwWtK31tX5RN+1uhfG4lO9BB4VU
-         PJhvl69agHKwO7+vn607Dcb8tQSxAVaJovmm0CamO2tmIwlhD197c8WOTbpIrGN7FuiP
-         kABbMP2U8GkKD8v96ASrUFj/d+UXxUtf2CzXL30pUeYvm6brXJDIOdjz5UK6sSmW6mdP
-         5Ja5tp3juL8LpR/fJiXvEkHk6vNF26ChhKVBMddOxl0Nt5NHczYARxsD/yTGBCBlaKIL
-         4Hmw==
-X-Gm-Message-State: AOAM531gCtQZxp7/0pS2IunzugewrtSMRCK2mbXhmqyxMRds3hvGblCw
-        M33y6PoJ2v+KoOKLhBjGVTA1z7+pF58=
-X-Google-Smtp-Source: ABdhPJxR0GBnLQp3qpaC/5qwHrG+uB0+fNj2QcN7x/OH0ehfN56Etb0tservhW6yxcnPCdJ5sdC10Q==
-X-Received: by 2002:a19:dce:: with SMTP id 197mr4698042lfn.503.1604871703533;
-        Sun, 08 Nov 2020 13:41:43 -0800 (PST)
+        bh=0W3us1d0G5MzwFNR/Pz+9/j1tIqVyxQx+lyRwVD3uME=;
+        b=CF7lztYP9LN+wqYLF1fqUTGTDcOQuZ7tbr/HlVh4A5Pq3TJAkN8YiE+4ETw79wyG0Z
+         BBNqKFs3nGGcvZ1Ni5xVWVbAY0B/Yv1WU2F4vqA7XmSEqdbOAA0Jj6wwUhIN/qQEtPv+
+         Sg3DoGeBnHtfxrdR57VbQZ5nsoXPKIuJwvrcXP7i/1cSH46GOqZAT2vuaTQaMiJUTz8h
+         d0pnRY3Sk+M2KlmWw7muFiFc4/LC2WBC5D1COT+cpCpNjJfxWSbEpPX5jdlXJ30Z+Nzd
+         r2PnDvOreoG4WmKFjqTT89x87sIhZZelRft8scHqsARJB8EMW8RY0oaU7470coK4u5K0
+         e+TA==
+X-Gm-Message-State: AOAM532wFyi0q/s5YKvYLthn20E6l7GXib57t3jCF1GFfR0rnsKuOtDv
+        GIUsAk+WZRf6Fqw7JgXRsAM=
+X-Google-Smtp-Source: ABdhPJy82miPBLEXjZoYXbOkpvl2WJKhPdzZYTp3Qxm83v4Y+SRLs1XmT/YQk+l4+1VW5a54CQ3sCQ==
+X-Received: by 2002:a2e:90d2:: with SMTP id o18mr4685906ljg.243.1604871696931;
+        Sun, 08 Nov 2020 13:41:36 -0800 (PST)
 Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id k21sm1937392ljb.43.2020.11.08.13.41.42
+        by smtp.gmail.com with ESMTPSA id k21sm1937392ljb.43.2020.11.08.13.41.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Nov 2020 13:41:42 -0800 (PST)
+        Sun, 08 Nov 2020 13:41:36 -0800 (PST)
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
         git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH v1 25/27] doc/diff-generate-patch: mention new --diff-merges option
-Date:   Mon,  9 Nov 2020 00:38:36 +0300
-Message-Id: <20201108213838.4880-26-sorganov@gmail.com>
+Subject: [PATCH v1 18/27] diff-merges: group diff-merge flags next to each other inside 'rev_info'
+Date:   Mon,  9 Nov 2020 00:38:29 +0300
+Message-Id: <20201108213838.4880-19-sorganov@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20201108213838.4880-1-sorganov@gmail.com>
 References: <20201101193330.24775-1-sorganov@gmail.com>
@@ -75,32 +75,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mention --diff-merges instead of -m in a note to merge formats to aid
-discoverability, as -m is now described among --diff-merges options
-anyway.
+The relevant flags were somewhat scattered over definition of 'struct
+rev_info'. Rearrange them to group them together.
 
 Signed-off-by: Sergey Organov <sorganov@gmail.com>
 ---
- Documentation/diff-generate-patch.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ revision.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/diff-generate-patch.txt b/Documentation/diff-generate-patch.txt
-index b10ff4caa6c5..2db8eacc3ec7 100644
---- a/Documentation/diff-generate-patch.txt
-+++ b/Documentation/diff-generate-patch.txt
-@@ -81,9 +81,9 @@ Combined diff format
- Any diff-generating command can take the `-c` or `--cc` option to
- produce a 'combined diff' when showing a merge. This is the default
- format when showing merges with linkgit:git-diff[1] or
--linkgit:git-show[1]. Note also that you can give the `-m` option to any
--of these commands to force generation of diffs with individual parents
--of a merge.
-+linkgit:git-show[1]. Note also that you can give suitable
-+`--diff-merges` option to any of these commands to force generation of
-+diffs in specific format.
+diff --git a/revision.h b/revision.h
+index fcc532c873d1..dcfa14454a55 100644
+--- a/revision.h
++++ b/revision.h
+@@ -191,13 +191,14 @@ struct rev_info {
+ 			match_missing:1,
+ 			no_commit_id:1,
+ 			verbose_header:1,
++			always_show_header:1,
++			/* Diff-merge flags */
+ 			explicit_diff_merges: 1,
+ 			separate_merges: 1,
+ 			combine_merges:1,
+ 			combined_all_paths:1,
+ 			dense_combined_merges:1,
+-			first_parent_merges:1,
+-			always_show_header:1;
++			first_parent_merges:1;
  
- A "combined diff" format looks like this:
- 
+ 	/* Format info */
+ 	int		show_notes;
 -- 
 2.25.1
 
