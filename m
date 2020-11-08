@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AF20C63697
-	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 21:41:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C5F7C56202
+	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 21:41:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E4F9220657
-	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 21:41:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4A2CB20656
+	for <git@archiver.kernel.org>; Sun,  8 Nov 2020 21:41:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vhu5Xk+i"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="emR1w5FO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728953AbgKHVle (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Nov 2020 16:41:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47970 "EHLO
+        id S1729018AbgKHVlq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Nov 2020 16:41:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728928AbgKHVl3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Nov 2020 16:41:29 -0500
-Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com [IPv6:2a00:1450:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F55EC0613D3
-        for <git@vger.kernel.org>; Sun,  8 Nov 2020 13:41:29 -0800 (PST)
-Received: by mail-lj1-x243.google.com with SMTP id y25so6928896lja.9
-        for <git@vger.kernel.org>; Sun, 08 Nov 2020 13:41:28 -0800 (PST)
+        with ESMTP id S1728996AbgKHVln (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Nov 2020 16:41:43 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12F31C0613D2
+        for <git@vger.kernel.org>; Sun,  8 Nov 2020 13:41:43 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id f11so3299450lfs.3
+        for <git@vger.kernel.org>; Sun, 08 Nov 2020 13:41:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=1F97epblfnDEQmCCs3FCvmUL1lsWDWBZOptv0P/Sm44=;
-        b=vhu5Xk+i7p4Gt+azDjp6R4diWy5EXjvECCapiThqVbpbOmc4Pcn9a1vwVsf3ltzvXF
-         NEe9Sc+BnpZfJx9Xb9vLdNfJCCFrCVYxjxUh32ebNB6KqQyZ3zPPA/zKtvAwJ1fVL0bC
-         UqcxXXmwrhGV50Q+1+eIhkHV6BtDSe+Crt9Z8/HlYJvC1Nmkm0U9PeZrtskl2o8FIakX
-         8m2Uocltk9l8sLVNY8IpW/91Cv2pPIZ0jDaklFJzOrcqqkHZT+YXzrPlTVzbJwE52VOC
-         j81N5Qec7WkQ5GHQbQpG29/He+oE4I7+gxYuibehq0AiFLPleJ24qUt7vBkwS9Maq4v3
-         1Chg==
+        bh=VEpf1BvZDlnmGQIdDIY7sWIcaQ1X1Jpqt7apLJCnNBQ=;
+        b=emR1w5FOfnZznXxtCvnVbPiibNR4DJsbWUKVbv6JN49RvQz9So2rdwEA2N1ws3RL12
+         wxKj5178bfKYURCyxxU0utt8UQdbj6v8HsV51YHGuEMYj4frNvTi1WXODtl864U61Fz/
+         CDzfKvgWBIi6XmJTXfbcCjK7JCZMO1C5xJHcS87+qTrz1cJbVzp047VdfkkqyVgqVs5p
+         u1QEfFOXc/cGnNandy6I9pa8lIIbuh1FcJCthDtt7vhP7xGhcVmb3a+pwh33wAM8VRoo
+         PA7rIl+gr091RXB4LL4L147SKwPyA/RTPRgd/u0iy2uN1XJfs8N/PKKC2ogtZ0UItk+i
+         dcow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=1F97epblfnDEQmCCs3FCvmUL1lsWDWBZOptv0P/Sm44=;
-        b=G97G9iC04f/5wZgN+t6p74RtGcYPxbR6Lmsu5olTZl0ZYsKDxtaBvfKqVp3YxxVS3h
-         K33vLGDlE+5bKcMnCsOFFurpT1VGpCPNoX0vIPwRlQyJCqU13nhvqT6J9vzFpYGvT629
-         VtJVwVKtKd43Y2XwXmGGzjop/VOjfI2UvU8R8T+k/nfRde0si6XO4u4kws1Wq3LKRag9
-         W9JWjOPoL47zv9PtNPvwD8GRUvWwfAVXvuBoi+1KoFctOwemam0bMU9xeUTpUfvQny5A
-         ec3xNv3PUjNlIZcDwkcX8aocqtMfS9EB5hD1YRVGaeFgmMnAv2Xacq37VqgLbN3HCVKg
-         RIYQ==
-X-Gm-Message-State: AOAM5327crsNlMccsZ2S0l7RE9Jr54KzpMFdzpqpxjyOvOq8SF68W9IF
-        bxAH8sn9dSbS/f3FnuWyJ4Y=
-X-Google-Smtp-Source: ABdhPJwbwV5p0H3g+5J5k62Nqg6CBOzvulcyqw714l+29Smi+PPqSuUUK8q8Frfx0rNbUmzCt5EHZw==
-X-Received: by 2002:a2e:921a:: with SMTP id k26mr1891899ljg.79.1604871687623;
-        Sun, 08 Nov 2020 13:41:27 -0800 (PST)
+        bh=VEpf1BvZDlnmGQIdDIY7sWIcaQ1X1Jpqt7apLJCnNBQ=;
+        b=pv5WGRINczt4lDgYl8JX6eGJjXJTnFRfayITRk4HRLoVS03Dy2esCDmsuIFd1zDHCw
+         cnItgf2Nw2nFvwgR8D+bxfXbtqa3N6z6TDQBDUcVuIwf2PT2BDV8aEv1vHoxoV9rN4dr
+         H7iwCgd7VeDYt/Sn99h/8jGEQHxZKp56xNA0BrQ3vF8BNoq9UMYnMbRF3L4Y/cg3JyXm
+         haHKXGg8vsBO5PXI7F9WsJ4A1Hprwe8v25UivPXLUTXyL1jZ7BOGhpC69HlL26qH/UV3
+         qOwo+VAyupDjtid76amSVskW5s0PUYEyIgof9ToJhpMzaydjj7iYt0aN6Kj9UBfomkfi
+         T2jw==
+X-Gm-Message-State: AOAM532q2REFxhngmTElP1Gbka9snue2g39ewB07i9bGfhCkAvk9quTN
+        WNH3tJEiucDY3W6Vn2vqwIk=
+X-Google-Smtp-Source: ABdhPJz1XIEapt0QinuYWjJ3swgaLbQqzAv1YqgjacbdmC53Z05CChmb9XzeYF7Y97z0RdcPbiiCPg==
+X-Received: by 2002:ac2:5334:: with SMTP id f20mr1163154lfh.30.1604871701606;
+        Sun, 08 Nov 2020 13:41:41 -0800 (PST)
 Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id k21sm1937392ljb.43.2020.11.08.13.41.26
+        by smtp.gmail.com with ESMTPSA id k21sm1937392ljb.43.2020.11.08.13.41.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Nov 2020 13:41:27 -0800 (PST)
+        Sun, 08 Nov 2020 13:41:41 -0800 (PST)
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
         git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH v1 08/27] diff-merges: rename diff_merges_default_to_enable() to match semantics
-Date:   Mon,  9 Nov 2020 00:38:19 +0300
-Message-Id: <20201108213838.4880-9-sorganov@gmail.com>
+Subject: [PATCH v1 23/27] t4013: add test for --diff-merges=first-parent
+Date:   Mon,  9 Nov 2020 00:38:34 +0300
+Message-Id: <20201108213838.4880-24-sorganov@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20201108213838.4880-1-sorganov@gmail.com>
 References: <20201101193330.24775-1-sorganov@gmail.com>
@@ -75,64 +75,172 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rename diff_merges_default_to_enable() to
-diff_merges_default_to_first_parent() to match its semantics.
+This new option provides essential new functionality, changing diff
+output to first parent only without changing history traversal mode,
+so it deserves its own test.
 
 Signed-off-by: Sergey Organov <sorganov@gmail.com>
 ---
- builtin/log.c | 4 ++--
- diff-merges.c | 2 +-
- diff-merges.h | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ t/t4013-diff-various.sh                       |   1 +
+ ...f.log_-p_--diff-merges=first-parent_master | 137 ++++++++++++++++++
+ 2 files changed, 138 insertions(+)
+ create mode 100644 t/t4013/diff.log_-p_--diff-merges=first-parent_master
 
-diff --git a/builtin/log.c b/builtin/log.c
-index a7791c003c91..63875c3aeec9 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -600,7 +600,7 @@ static void show_setup_revisions_tweak(struct rev_info *rev,
- 				       struct setup_revision_opt *opt)
- {
- 	if (rev->first_parent_only)
--		diff_merges_default_to_enable(rev);
-+		diff_merges_default_to_first_parent(rev);
- 	else
- 		diff_merges_default_to_dense_combined(rev);
- 	if (!rev->diffopt.output_format)
-@@ -728,7 +728,7 @@ static void log_setup_revisions_tweak(struct rev_info *rev,
- 		rev->diffopt.output_format = DIFF_FORMAT_PATCH;
- 
- 	if (rev->first_parent_only)
--		diff_merges_default_to_enable(rev);
-+		diff_merges_default_to_first_parent(rev);
- }
- 
- int cmd_log(int argc, const char **argv, const char *prefix)
-diff --git a/diff-merges.c b/diff-merges.c
-index 9dd472803d15..bb08a92e3b36 100644
---- a/diff-merges.c
-+++ b/diff-merges.c
-@@ -54,7 +54,7 @@ void diff_merges_setup_revs(struct rev_info *revs)
- 		die("--combined-all-paths makes no sense without -c or --cc");
- }
- 
--void diff_merges_default_to_enable(struct rev_info *revs) {
-+void diff_merges_default_to_first_parent(struct rev_info *revs) {
- 	if (revs->ignore_merges < 0)		/* No -m */
- 		revs->ignore_merges = 0;
- }
-diff --git a/diff-merges.h b/diff-merges.h
-index cf411414898d..20b727bd734f 100644
---- a/diff-merges.h
-+++ b/diff-merges.h
-@@ -11,7 +11,7 @@ void diff_merges_setup_revs(struct rev_info *revs);
- 
- void diff_merges_default_to_dense_combined(struct rev_info *revs);
- 
--void diff_merges_default_to_enable(struct rev_info *revs);
-+void diff_merges_default_to_first_parent(struct rev_info *revs);
- 
- 
- #endif
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index 8d8178a8a616..ce56a9349d1c 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -327,6 +327,7 @@ log --no-diff-merges -p --first-parent master
+ log --diff-merges=off -p --first-parent master
+ log --first-parent --diff-merges=off -p master
+ log -p --first-parent master
++log -p --diff-merges=first-parent master
+ log -m -p --first-parent master
+ log -m -p master
+ log --cc -m -p master
+diff --git a/t/t4013/diff.log_-p_--diff-merges=first-parent_master b/t/t4013/diff.log_-p_--diff-merges=first-parent_master
+new file mode 100644
+index 000000000000..9538a2751123
+--- /dev/null
++++ b/t/t4013/diff.log_-p_--diff-merges=first-parent_master
+@@ -0,0 +1,137 @@
++$ git log -p --diff-merges=first-parent master
++commit 59d314ad6f356dd08601a4cd5e530381da3e3c64
++Merge: 9a6d494 c7a2ab9
++Author: A U Thor <author@example.com>
++Date:   Mon Jun 26 00:04:00 2006 +0000
++
++    Merge branch 'side'
++
++diff --git a/dir/sub b/dir/sub
++index cead32e..992913c 100644
++--- a/dir/sub
+++++ b/dir/sub
++@@ -4,3 +4,5 @@ C
++ D
++ E
++ F
+++1
+++2
++diff --git a/file0 b/file0
++index b414108..10a8a9f 100644
++--- a/file0
+++++ b/file0
++@@ -4,3 +4,6 @@
++ 4
++ 5
++ 6
+++A
+++B
+++C
++
++commit c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a
++Author: A U Thor <author@example.com>
++Date:   Mon Jun 26 00:03:00 2006 +0000
++
++    Side
++
++diff --git a/dir/sub b/dir/sub
++index 35d242b..7289e35 100644
++--- a/dir/sub
+++++ b/dir/sub
++@@ -1,2 +1,4 @@
++ A
++ B
+++1
+++2
++diff --git a/file0 b/file0
++index 01e79c3..f4615da 100644
++--- a/file0
+++++ b/file0
++@@ -1,3 +1,6 @@
++ 1
++ 2
++ 3
+++A
+++B
+++C
++diff --git a/file3 b/file3
++new file mode 100644
++index 0000000..7289e35
++--- /dev/null
+++++ b/file3
++@@ -0,0 +1,4 @@
+++A
+++B
+++1
+++2
++
++commit 9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0
++Author: A U Thor <author@example.com>
++Date:   Mon Jun 26 00:02:00 2006 +0000
++
++    Third
++
++diff --git a/dir/sub b/dir/sub
++index 8422d40..cead32e 100644
++--- a/dir/sub
+++++ b/dir/sub
++@@ -2,3 +2,5 @@ A
++ B
++ C
++ D
+++E
+++F
++diff --git a/file1 b/file1
++new file mode 100644
++index 0000000..b1e6722
++--- /dev/null
+++++ b/file1
++@@ -0,0 +1,3 @@
+++A
+++B
+++C
++
++commit 1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44
++Author: A U Thor <author@example.com>
++Date:   Mon Jun 26 00:01:00 2006 +0000
++
++    Second
++    
++    This is the second commit.
++
++diff --git a/dir/sub b/dir/sub
++index 35d242b..8422d40 100644
++--- a/dir/sub
+++++ b/dir/sub
++@@ -1,2 +1,4 @@
++ A
++ B
+++C
+++D
++diff --git a/file0 b/file0
++index 01e79c3..b414108 100644
++--- a/file0
+++++ b/file0
++@@ -1,3 +1,6 @@
++ 1
++ 2
++ 3
+++4
+++5
+++6
++diff --git a/file2 b/file2
++deleted file mode 100644
++index 01e79c3..0000000
++--- a/file2
+++++ /dev/null
++@@ -1,3 +0,0 @@
++-1
++-2
++-3
++
++commit 444ac553ac7612cc88969031b02b3767fb8a353a
++Author: A U Thor <author@example.com>
++Date:   Mon Jun 26 00:00:00 2006 +0000
++
++    Initial
++$
 -- 
 2.25.1
 
