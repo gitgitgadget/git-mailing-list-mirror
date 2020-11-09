@@ -2,140 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DC47C4741F
-	for <git@archiver.kernel.org>; Mon,  9 Nov 2020 23:12:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8051C4741F
+	for <git@archiver.kernel.org>; Mon,  9 Nov 2020 23:17:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 115AA206ED
-	for <git@archiver.kernel.org>; Mon,  9 Nov 2020 23:12:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8EF902065D
+	for <git@archiver.kernel.org>; Mon,  9 Nov 2020 23:17:14 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="X5/RKC8a"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730147AbgKIXMs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Nov 2020 18:12:48 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52118 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729879AbgKIXMs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Nov 2020 18:12:48 -0500
-Received: (qmail 4924 invoked by uid 109); 9 Nov 2020 23:12:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 09 Nov 2020 23:12:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28694 invoked by uid 111); 9 Nov 2020 23:12:47 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Nov 2020 18:12:47 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 9 Nov 2020 18:12:46 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH v2] t5411: consistent result for proc-receive broken test
-Message-ID: <20201109231246.GA677345@coredump.intra.peff.net>
-References: <CANYiYbHQKshFg=1xAv8MFfSjmFfQ0uJRm3mQBnZMsTd1n7R-Ow@mail.gmail.com>
- <20201109105846.64303-1-zhiyou.jx@alibaba-inc.com>
- <xmqqh7pyb61f.fsf@gitster.c.googlers.com>
+        id S1730463AbgKIXRN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Nov 2020 18:17:13 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50026 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727070AbgKIXRN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Nov 2020 18:17:13 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 22E5D95EE8;
+        Mon,  9 Nov 2020 18:17:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=AeZSI1AgQox6TsFW6hs2/I7y8mg=; b=X5/RKC
+        8azkoHWmOd+uKDuVvkwRnkHJUsUwU9tAr6CG3uyFSIKMwUxKWhP8tft7/OahFJxE
+        LCd/sRVeUNPv2ki9MrWhthb3IhqxsT/qID4Nu/BRXciGD6x+vbJojPulbYlJ2uL6
+        XTn8lEXt/LCpLU2ivwTfWj1zbK6jovMvxy7+Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OWDDE4hErlHHHoGity6aNv4nenh5+nTS
+        jxLYNG26/N7/zCxZp309CQwpF992R0ZWD2JHcqek1ozXMzETF+Yt8l1lG1/gsom8
+        RJOn4z5ojmd1QS9DYhRLVQ96CsIOjOqycWUsfoeKJy2eONiToe4mrUd50dnrbKZn
+        UszbKHDWlAA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1947695EE7;
+        Mon,  9 Nov 2020 18:17:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9BF2E95EE6;
+        Mon,  9 Nov 2020 18:17:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Seija K. via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, pi1024e <pi1024e@github.com>
+Subject: Re: [PATCH] Simplified merge logic
+References: <pull.911.git.git.1604871456715.gitgitgadget@gmail.com>
+Date:   Mon, 09 Nov 2020 15:17:09 -0800
+In-Reply-To: <pull.911.git.git.1604871456715.gitgitgadget@gmail.com> (Seija
+        K. via GitGitGadget's message of "Sun, 08 Nov 2020 21:37:36 +0000")
+Message-ID: <xmqqo8k69l3e.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqh7pyb61f.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: B189F5D8-22E1-11EB-868B-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 09, 2020 at 12:59:24PM -0800, Junio C Hamano wrote:
+"Seija K. via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> > @@ -1196,11 +1197,12 @@ static int run_proc_receive_hook(struct command *commands,
-> >  		packet_flush(proc.in);
-> >  	}
-> >  
-> > +	close(proc.in);
-> > +
-> >  	/* Read result from proc-receive */
-> >  	code = read_proc_receive_report(&reader, commands, &errmsg);
-> >  
-> >  cleanup:
-> > -	close(proc.in);
-> >  	close(proc.out);
-> >  	if (use_sideband)
-> >  		finish_async(&muxer);
-> 
-> OK, without us closing our end, the hook cannot even tell that it
-> read to the end of our input.
+> From: pi1024e <pi1024e@github.com>
+>
+> commit: Avoid extraneous boolean checking by simplifying the if statements.
+> Signed-off-by: Seija <pi1024e@github.com>
+> ---
 
-That doesn't seem right. It should be expecting our flush packet,
-shouldn't it? And if it sees an EOF before the flush packet, that would
-be an error from the hook's perspective.
+Meh.
 
-This part of the patch seems like a red herring to me.
+Admittedly, readability is somewhat subjective, but a rewrite like
 
-> > @@ -52,8 +53,10 @@ static void proc_receive_verison(struct packet_reader *reader) {
-> >  		}
-> >  	}
-> >  
-> > -	if (server_version != 1 || die_version)
-> > +	if (server_version != 1)
-> >  		die("bad protocol version: %d", server_version);
-> > +	if (die_version)
-> > +		die("die with the --die-version option");
-> 
-> If any of these trigger, wouldn't we end up dying without consuming
-> what receive-pack said?
+        if (condition)                  if (!condition)
+                do_when_true();                 do_when_false();
+        else                       ==>  else
+                do_when_false();                do_when_true();
 
-Yeah, I think they would have the same race that the commit message
-describes (proc-receive hook writes to stderr and dies, receive-pack
-gets an error writing to now-closed hook pipe and never relays the
-stderr).
+while it may not be incorrect per-se needs more than a subjective "I
+think this is more readable" to justify the code churn.
 
-But it seems like fixing this in the hook is the wrong place. The hook
-has failed and has nothing else to say. Adding a pump-the-stdin-to-eof
-loop to every die() is a lot of effort. Not to mention that the hook
-could fail for reasons outside its usual flow control (e.g., segfault,
-oom, etc, and receive-pack should be able to handle that gracefully,
-even if the hook doesn't appear to behave.
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index 4c133402a6..9664da6031 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -853,9 +853,8 @@ static void prepare_to_commit(struct commit_list *remoteheads)
+>  	if (run_commit_hook(0 < option_edit, get_index_file(), "prepare-commit-msg",
+>  			    git_path_merge_msg(the_repository), "merge", NULL))
+>  		abort_commit(remoteheads, NULL);
+> -	if (0 < option_edit) {
+> -		if (launch_editor(git_path_merge_msg(the_repository), NULL, NULL))
+> -			abort_commit(remoteheads, NULL);
+> +	if (0 < option_edit && launch_editor(git_path_merge_msg(the_repository), NULL, NULL)) {
+> +		abort_commit(remoteheads, NULL);
+>  	}
 
-I.e., I think the bug is in receive-pack's run_proc_receive_hook(). It
-cleverly ignores SIGPIPE exactly to avoid dying during the write phase,
-but then it proceeds to call packet_write_fmt(), etc, that will die on
-any error (going to extra effort to emulate sigpipe, no less!). So we
-die and take our sideband muxer with us.
+This may reduce the number of lines, but personally I find that
 
-So instead of this hunk:
+	if (are we editing?) {
+		if (run editor---did we fail?)
+			abort();
+	}
 
-> > @@ -79,9 +82,15 @@ static void proc_receive_read_commands(struct packet_reader *reader,
-> >  		    *p++ != ' ' ||
-> >  		    parse_oid_hex(p, &new_oid, &p) ||
-> >  		    *p++ != ' ' ||
-> > -		    die_readline)
-> > +		    die_readline) {
-> > +			char *bad_line = xstrdup(reader->line);
-> > +			while (packet_reader_read(reader) != PACKET_READ_EOF)
-> > +				; /* do nothing */
-> > +			if (die_readline)
-> > +				die("die with the --die-readline option");
-> >  			die("protocol error: expected 'old new ref', got '%s'",
-> > -			    reader->line);
-> > +			    bad_line);
-> > +		}
-> 
-> This part is different from the previous one in that it slurps all
-> the input before dying evein in die_readline case.
+is much easier to read.
 
-I think the patch really ought to be in receive-pack, converting
-packet_write_fmt() and packet_flush() into their "gently" forms.
+And much more importantly, it would be much easier to extend later
+what hwppens when we decide to edit, than the new code proposed by
+this patch.
 
-And when we see a write error, close our pipe to the hook, set errmsg to
-"hook failed to run" or similar, and then jump to the "cleanup" label,
-where we'll wait on our sideband muxer to finish (which in turn will
-wait pump any remaining data out of the hook's stderr).
+> @@ -1213,7 +1212,7 @@ static int merging_a_throwaway_tag(struct commit *commit)
+>  	if (!merge_remote_util(commit) ||
+>  	    !merge_remote_util(commit)->obj ||
+>  	    merge_remote_util(commit)->obj->type != OBJ_TAG)
+> -		return is_throwaway_tag;
+> +		return 0;
 
-Optionally we can pump the hook stdout to see if it gave us a better
-message, but I think if write() failed, then all bets are off. The hook
-broke protocol; a well-behaved hook that wanted to pass along a specific
-per-ref message to the user would actually read all the input and then
-report on each ref).
+Likewise.  If somebody _must_ touch this function to gain commit
+count without making the code harder to maintain, it may be an
+option to use "goto leave;" here and then create a "leave:" label
+before the other "return"---at least that may be worth considering,
+but not this---when everybody else in the function wants to maintain
+that the value in this variable is what is returned from the
+function.
 
--Peff
+> @@ -1459,13 +1458,12 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>  			fast_forward = FF_NO;
+>  	}
+>  
+> -	if (!use_strategies) {
+> -		if (!remoteheads)
+> -			; /* already up-to-date */
+> -		else if (!remoteheads->next)
+> -			add_strategies(pull_twohead, DEFAULT_TWOHEAD);
+> -		else
+> +	if (!use_strategies && remoteheads) {
+> +		/* not up-to-date */
+> +		if (remoteheads->next)
+>  			add_strategies(pull_octopus, DEFAULT_OCTOPUS);
+> +		else
+> +			add_strategies(pull_twohead, DEFAULT_TWOHEAD);
+>  	}
+
+Likewise.
+
+	if (do we have to choose strategies ourselves?) {
+		... depending on the case, choose strategy ...
+	}
+
+is much easier to reason about than
+
+	if (do we have to choose strategies ourselves?, oh by the
+    	    way, don't forget that already up-to-date case we do not
+	    have to choose) {
+		... the remainder ...
+	}
+
+and extend when we need to add something to do in the up-to-date
+case as long as the end-user did not specify which strategy to use
+in the future.  The reduced line count alone is not a good yardstick
+to use when talking about code restructuring for readability and
+maintainability.
+
+Thanks.
