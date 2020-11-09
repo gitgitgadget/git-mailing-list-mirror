@@ -2,80 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D37EFC2D0A3
-	for <git@archiver.kernel.org>; Mon,  9 Nov 2020 22:12:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4020EC2D0A3
+	for <git@archiver.kernel.org>; Mon,  9 Nov 2020 22:19:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 86AFE206CB
-	for <git@archiver.kernel.org>; Mon,  9 Nov 2020 22:12:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA16E206BE
+	for <git@archiver.kernel.org>; Mon,  9 Nov 2020 22:19:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729454AbgKIWMu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Nov 2020 17:12:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50480 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729247AbgKIWMu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Nov 2020 17:12:50 -0500
-Received: from 0x63.nu (0x63.nu [IPv6:2a02:750:9::199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4FF5C0613CF
-        for <git@vger.kernel.org>; Mon,  9 Nov 2020 14:12:49 -0800 (PST)
-Received: from ip6-localhost ([::1] helo=moveme2)
-        by 0x63.nu with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <anders@0x63.nu>)
-        id 1kcFP3-0024zo-Mr; Mon, 09 Nov 2020 23:12:45 +0100
-References: <20201025212652.3003036-1-anders@0x63.nu> <20201025212652.3003036-7-anders@0x63.nu> <CAP8UFD1nYgqT1k1Mc=Ea3AZkb-TdhPBzXo+N+4nWgYVxEBxzRA@mail.gmail.com>
-User-agent: mu4e 0.9.18; emacs 26.0.91
-From:   Anders Waldenborg <anders@0x63.nu>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 06/21] t4205: add test for trailer in log with nonstandard separator
-In-reply-to: <CAP8UFD1nYgqT1k1Mc=Ea3AZkb-TdhPBzXo+N+4nWgYVxEBxzRA@mail.gmail.com>
-Date:   Mon, 09 Nov 2020 23:12:14 +0100
-Message-ID: <87y2jap4ch.fsf@0x63.nu>
+        id S1729452AbgKIWTl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Nov 2020 17:19:41 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51950 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725946AbgKIWTk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Nov 2020 17:19:40 -0500
+Received: (qmail 4148 invoked by uid 109); 9 Nov 2020 22:19:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 09 Nov 2020 22:19:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27916 invoked by uid 111); 9 Nov 2020 22:19:39 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Nov 2020 17:19:39 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 9 Nov 2020 17:19:39 -0500
+From:   Jeff King <peff@peff.net>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH] completion: bash: support recursive aliases
+Message-ID: <20201109221939.GA670413@coredump.intra.peff.net>
+References: <20201109215248.461167-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-SA-Exim-Connect-IP: ::1
-X-SA-Exim-Mail-From: anders@0x63.nu
-X-SA-Exim-Scanned: No (on 0x63.nu); SAEximRunCond expanded to false
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20201109215248.461167-1-felipe.contreras@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Nov 09, 2020 at 03:52:48PM -0600, Felipe Contreras wrote:
 
-Christian Couder writes:
+> It is possible to have a recursive aliases like:
+> 
+>   l = log --oneline
+>   lg = l --graph
+> 
+> So the completion should detect such aliases as well.
 
-> On Sun, Oct 25, 2020 at 10:27 PM Anders Waldenborg <anders@0x63.nu> wrote:
->>
->> ); SAEximRunCond expanded to false
+Yeah, agreed that it would be nice to handle this case.
 
-Please disregard this line. It is an unfortunate and most embarrassing
-artifact of messed up git send-email and stmp forwarding over ssh. Which
-hopefully have been sorted so it doesn't happen next time. It obviously
-shouldn't be part of the commit massage in any of the patches in the
-series.
+>  __git_aliased_command ()
+>  {
+> [...]
+> +	if [[ -n "$found" ]]; then
+> +		local expansion=$(__git_aliased_command "$found")
+> +		echo "${expansion:-$found}"
+> +	fi
 
->> Signed-off-by: Anders Waldenborg <anders@0x63.nu>
->
-> Why is this new test important?
+So if we expanded X to Y, we recurse and try to expand Y. That makes
+sense, but just thinking of some possible drawbacks:
 
-The test that checks that 'git log --pretty=format:%(trailers)' shows
-the output in the form "Closes: 1234" even if input was "Closes #1234"
-is interesting both because it checks that this behavior is kept intact
-in the patches later in the series which modifies handling of separator
-and because it is a behavior that can be surprising and not well defined
-in documentation and those tend to be the ones that are easiest to
-accidentally break. Maybe the addition of the test should come later in
-the series where the changes that potentially could break it happen.
+ - it's an extra process invocation for each alias lookup (to see "nope,
+   this doesn't expand further"). That's probably OK, since this is
+   triggered by human action.
 
+   I don't think there's a way to avoid this with the current set of Git
+   commands. "git help lg" isn't recursive, and anyway isn't suitable
+   for general use (if there is no such alias, it tries to load the
+   manpage!).
 
-It seems like you stopped reviewing my patch series at patch 06/21. That
-is IMHO just before it starts to get interesting :)  Now I don't know if
-rest of it was rubbish or uninteresting or just there was no time to
-look at it.
+ - there's no limit on the recursion if we do see a cycle. Doing:
 
-I've updated according to the suggestions, but not sure if I should
-repost the series with just such small adjustments.
+     git config alias.foo foo
+     git foo <Tab>
+
+   seems to fork-bomb the system with bash processes (well, perhaps not
+   a true fork-bomb because they expand linearly rather than
+   exponentially, but still...).
+
+   That's obviously a broken and useless, but the outcome is less than
+   ideal.  We could avoid it by looking for repeats in the chain. Doing
+   so in posix shell is pretty painful, but perhaps bash associate
+   arrays would make it not too painful.
+
+We do have "git <cmd> --git-completion-helper" these days. I wonder if
+something like "git --expand-alias-to-command" would be a useful
+addition, as it would let us directly ask which Git command would be
+executed (if any). And it would make both downsides go away.
+
+I don't mind this solution in the meantime, though.
+
+-Peff
