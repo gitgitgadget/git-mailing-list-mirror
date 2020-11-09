@@ -7,28 +7,28 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD17BC4741F
-	for <git@archiver.kernel.org>; Mon,  9 Nov 2020 08:34:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2D10C55ABD
+	for <git@archiver.kernel.org>; Mon,  9 Nov 2020 08:34:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 99B2720702
-	for <git@archiver.kernel.org>; Mon,  9 Nov 2020 08:34:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 85D0920702
+	for <git@archiver.kernel.org>; Mon,  9 Nov 2020 08:34:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=nokia.onmicrosoft.com header.i=@nokia.onmicrosoft.com header.b="gMmNkSam"
+	dkim=pass (1024-bit key) header.d=nokia.onmicrosoft.com header.i=@nokia.onmicrosoft.com header.b="Cj6OYEne"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729647AbgKIIeI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Nov 2020 03:34:08 -0500
-Received: from mail-eopbgr00139.outbound.protection.outlook.com ([40.107.0.139]:21712
-        "EHLO EUR02-AM5-obe.outbound.protection.outlook.com"
+        id S1729698AbgKIIeK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Nov 2020 03:34:10 -0500
+Received: from mail-am6eur05on2132.outbound.protection.outlook.com ([40.107.22.132]:3937
+        "EHLO EUR05-AM6-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726176AbgKIIeH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Nov 2020 03:34:07 -0500
+        id S1729267AbgKIIeK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Nov 2020 03:34:10 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=d/5vSmyULsUj1TW/dGcQUO9zs0m6S70SD3MCiUqNF+r5aF8TS5iJsuSiD18RirPWdvgMQNhX/D5+bkR3H7AuLXidW/vRwgDIWlxfVCacorSh/NY2ZSmk43b62RyBcVV80QtxzDptpfbh9w2/q5iJzX+AKxBWiRE6qSzuADX3JB4+xlgt0pgbr1lbgyMwPAL6NdRWMh9pc2i+8kJWes6ogmFZ5H37QOlrVZuzn6dcspKIC2i24yjNzdG9TbNoENlyNyjqAmUnXQCUy/bDhJhABEq5dcQMBid5EJzOWtGSk3Ycn1gjAEAGwqk/QbuAFSzbfrTruSYnpGfhaLgR+LjFdQ==
+ b=B9slI08lCX6sQ8x/D+rDJy0txCRi4ztcCZyz1BAmsPNOmQvMgSME5PeGU1gIN71qFvgn6xZGwcDtGVjoeU/r+CeHTSX7GyMnd8lpV2VYd1PQCmYnfiJ7bDZo9x9Guyy8vvYbVyeptXcTgFPP2Hnc6pUA6nII/4KBam19ZQA0f8mGE0SUczpsYk4odWYN3r95DzAaa3Eow4zO42Qvn0lxMq4MsFd3o65aqwwsx3a0JNQNLH7WnXYnwGBRuXr+0NgrJ1pOibMZAMeCkBXTQ2g7Bo/XhZg349KXRjmpt7WexX//cgv9KhnAfbnbQJjt+FyMF7OgG4gHszur2YM/DYkOVw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=l2PNQMWoGDCdC8a4IVFsznFXLFlFHgGAN3t8JLnPn4A=;
- b=YFpX4hQVXUHrErteeqgBz6baCETr2HwbVnE/3fAVf04BrAAE4FKH36nGjhrvXxDW/0O2jKOoQt26/lKg6FCpmD3+uJbo6AXTfyuY3bYl517YHJKlfHTzUItaFWWlJigEFEZ7fYgJk0RfQ+eI11U9/Fv9c37yvHEKoPBACue8r/vBSX3VhYZmMS6okr3WwI+Z1cMAOto/v6AxPZH9OhuLDpTO2urS+MWjjCiCJv266qojct7BVcp6Kcop6cY5vyjjTEigPiaWPttvAmpfEsRXi1MCc76N+6QpMpyKZI7/lxseeWizoI7b2hyStHiwTLhXLuZ26UhrOn+rdb8IT7/54g==
+ bh=YuHOuAU9rIic9L7tfZiRJpgSbiVRXpIRWxFidY0iao0=;
+ b=GZcFwbudz/FxDn503L2dxdeYYoElv0wgdQ79T7KhoyEA4TMXTYEOFSDXlc/nxc0PAJc+7MSealBmsxFRqTYEOj821BKq5ZmvT/EIJ1KDFadawOcwFzQv1xsIKOS+DGDp8+gtt649cviHGs92+BgSEA2g+z/WhqpwArWV4RwQ9NVVsL9XN5fqLEbg/Gj78F+SDDS8i2U+NMl9U9Aumzr+8Dr7YjQ6pt+ltJ2YeWP3Q/eZYpdbrl+XEtN4D10HsnZjPMfuH0s4DlCOeI7M5iMxr7WGgQBFP6py3R3UIeUUSUVVrGiXYOZ+FFaEYUvixXR4FHRHFN+l/3+/3Xtai0RwIQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
  is 131.228.6.101) smtp.rcpttodomain=google.com smtp.mailfrom=nokia.com;
  dmarc=fail (p=none sp=none pct=100) action=none header.from=nokia.com;
@@ -36,18 +36,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nokia.onmicrosoft.com;
  s=selector1-nokia-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=l2PNQMWoGDCdC8a4IVFsznFXLFlFHgGAN3t8JLnPn4A=;
- b=gMmNkSamhQhrKK3RA/9eEyLRdG9tqHKMuPbzHSREMc6MHkgQ6mIUyZFKPJD4xYhJ+lAAQlYNqv0AYChZKEa5DnDkVPF+AZLKtvGg0Z4uJvBXDV5BEn3XczaBGfAai8cbG1xZ/8c7UjrAMBomek2yOwnsnXrk9XA4bNJJ8chgMuY=
-Received: from AM6P195CA0005.EURP195.PROD.OUTLOOK.COM (2603:10a6:209:81::18)
- by AM6PR07MB5623.eurprd07.prod.outlook.com (2603:10a6:20b:81::15) with
+ bh=YuHOuAU9rIic9L7tfZiRJpgSbiVRXpIRWxFidY0iao0=;
+ b=Cj6OYEnef6ZjD3YwOO9NRelAD0K+R9nfvocLzUWWUzbsHZMk5mymzhmq9XQ4Ftu4VIRhwNUJOOMtrmNeGB9GZGUiSdzf9IzMhRQeA7U0KTbei/w6J1+dF/XI3SgjEr9FKhLvStEfNLF9lX4HYFGQEmXRzeI5hwaWMgP3ak+gODo=
+Received: from MR2P264CA0091.FRAP264.PROD.OUTLOOK.COM (2603:10a6:500:32::31)
+ by DB6PR07MB4263.eurprd07.prod.outlook.com (2603:10a6:6:50::18) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3541.10; Mon, 9 Nov
- 2020 08:34:04 +0000
-Received: from VE1EUR03FT025.eop-EUR03.prod.protection.outlook.com
- (2603:10a6:209:81:cafe::c1) by AM6P195CA0005.outlook.office365.com
- (2603:10a6:209:81::18) with Microsoft SMTP Server (version=TLS1_2,
+ 2020 08:34:06 +0000
+Received: from VE1EUR03FT003.eop-EUR03.prod.protection.outlook.com
+ (2603:10a6:500:32:cafe::e2) by MR2P264CA0091.outlook.office365.com
+ (2603:10a6:500:32::31) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3541.21 via Frontend
- Transport; Mon, 9 Nov 2020 08:34:02 +0000
+ Transport; Mon, 9 Nov 2020 08:34:05 +0000
 X-MS-Exchange-Authentication-Results: spf=softfail (sender IP is
  131.228.6.101) smtp.mailfrom=nokia.com; google.com; dkim=none (message not
  signed) header.d=none;google.com; dmarc=fail action=none
@@ -55,19 +55,19 @@ X-MS-Exchange-Authentication-Results: spf=softfail (sender IP is
 Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
  nokia.com discourages use of 131.228.6.101 as permitted sender)
 Received: from fr712usmtp1.zeu.alcatel-lucent.com (131.228.6.101) by
- VE1EUR03FT025.mail.protection.outlook.com (10.152.18.74) with Microsoft SMTP
+ VE1EUR03FT003.mail.protection.outlook.com (10.152.18.108) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3541.17 via Frontend Transport; Mon, 9 Nov 2020 08:34:02 +0000
+ 15.20.3541.17 via Frontend Transport; Mon, 9 Nov 2020 08:34:04 +0000
 Received: from ulegcpbofur.emea.nsn-net.net (ulegcpbofur.emea.nsn-net.net [10.151.74.147])
-        by fr712usmtp1.zeu.alcatel-lucent.com (GMO) with ESMTP id 0A98XxLn030528;
+        by fr712usmtp1.zeu.alcatel-lucent.com (GMO) with ESMTP id 0A98XxLm030528;
         Mon, 9 Nov 2020 08:34:00 GMT
 From:   Peter Kaestle <peter.kaestle@nokia.com>
 To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
         Stefan Beller <sbeller@google.com>
 Cc:     peter.kaestle@nokia.com
-Subject: [RFC 2/2] Revert "submodule.c: fetch in submodules git directory instead of in worktree"
-Date:   Mon,  9 Nov 2020 09:33:49 +0100
-Message-Id: <1604910829-49109-3-git-send-email-peter.kaestle@nokia.com>
+Subject: [RFC 1/2] submodules: test for fetch of non-init subsub-repo
+Date:   Mon,  9 Nov 2020 09:33:48 +0100
+Message-Id: <1604910829-49109-2-git-send-email-peter.kaestle@nokia.com>
 X-Mailer: git-send-email 2.6.2
 In-Reply-To: <1604910829-49109-1-git-send-email-peter.kaestle@nokia.com>
 References: <1604413399-63090-1-git-send-email-peter.kaestle@nokia.com>
@@ -77,91 +77,90 @@ X-MS-Office365-Filtering-HT: Tenant
 X-MS-PublicTrafficType: Email
 MIME-Version: 1.0
 Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: c1286101-cd60-4462-4be6-08d8848a365d
-X-MS-TrafficTypeDiagnostic: AM6PR07MB5623:
-X-Microsoft-Antispam-PRVS: <AM6PR07MB5623CD2D9575E67A2D2BA185EEEA0@AM6PR07MB5623.eurprd07.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:127;
+X-MS-Office365-Filtering-Correlation-Id: 767fbe92-3f46-43a8-15a3-08d8848a37df
+X-MS-TrafficTypeDiagnostic: DB6PR07MB4263:
+X-Microsoft-Antispam-PRVS: <DB6PR07MB4263CBFB2EC0ABAAB15A4123EEEA0@DB6PR07MB4263.eurprd07.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:1775;
 X-MS-Exchange-SenderADCheck: 1
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: nJKvyWYok8aZxqg4pUpxQ4p9BkZU8jbM0SrWYKxzpsrO29K/OLo3EvzSAWDO8Adha0O4shJpsJsbgjJlewYg0OCjgqj8FZ4WK6MmMQsAnx/n8aBE24da/H5elsBsValrCdhwa5lAKtlXq7Y7CsKEr4JoDlJcWg/4toyGDntfUydfYRbwRturs4GD5cnaS/7PAGbjlWYaCNNtbGq4pjIwSdo/s8kCtzAY/aXuX9oUrq5JniWHQm6nhUZQhzJEkF5i5z0fh4FjBQQddhDczOjGmow2AlNiambfoNNrExLGic4nCBdN90PJhvrdWtpjQorqupvBBjTEcAaHJ6yEVB/kVTi2LIDdWQ9LwfTNWQGAVMBD0N3gNvIJqdGqz0I+XdoVh65mHmxhlKhi0mta7BEseA==
-X-Forefront-Antispam-Report: CIP:131.228.6.101;CTRY:FI;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:fr712usmtp1.zeu.alcatel-lucent.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(4636009)(136003)(396003)(376002)(346002)(39860400002)(46966005)(83380400001)(36756003)(70206006)(26005)(2906002)(36906005)(2616005)(5660300002)(110136005)(82740400003)(316002)(8676002)(336012)(44832011)(86362001)(82310400003)(81166007)(6666004)(186003)(478600001)(70586007)(107886003)(8936002)(4326008)(356005)(47076004);DIR:OUT;SFP:1102;
+X-Microsoft-Antispam-Message-Info: u+bM/qh5qZsU44wHYSVy8b+wDv6MKqH7j8fBPmGvyvk9Lt7SaPCGwq06aGC8tKtjnEuM7RayUwthkRn2GAHQ2nOhdKC4+ctucCl4GTbvCIa452Cf3GrkB21XgpluXL+fcNdqnI13b6++7rka2Ls89oWgU8K6nZuTcWTJUYjKN1ID0nu+v3lbUBkja2cOQf0oEjpVnHR92ssOtaZx3tWLCWRaLzolDcoi1OEmpDARq7MivYG+Twvc/EvAB2vYcoFEisRONTkNUE1g78TucWbz5e8tr6N5ByX1u6Y1OyTRzXm37KfU+b2DJPVdvTdTbNDk73EVPvzlYtdRHeRqoUXavV54SrvzpQzV3HqZgQDbWuJnG0//Vr4IarBBtBWeQklYMfDIxNH13JHsajQMnVQqWg==
+X-Forefront-Antispam-Report: CIP:131.228.6.101;CTRY:FI;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:fr712usmtp1.zeu.alcatel-lucent.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(4636009)(39860400002)(376002)(136003)(396003)(346002)(46966005)(26005)(44832011)(2616005)(107886003)(83380400001)(336012)(6666004)(36756003)(2906002)(70586007)(5660300002)(86362001)(36906005)(8936002)(8676002)(70206006)(186003)(81166007)(110136005)(356005)(316002)(82740400003)(478600001)(47076004)(4326008)(82310400003);DIR:OUT;SFP:1102;
 X-OriginatorOrg: nokia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Nov 2020 08:34:02.4452
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Nov 2020 08:34:04.9366
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: c1286101-cd60-4462-4be6-08d8848a365d
+X-MS-Exchange-CrossTenant-Network-Message-Id: 767fbe92-3f46-43a8-15a3-08d8848a37df
 X-MS-Exchange-CrossTenant-Id: 5d471751-9675-428d-917b-70f44f9630b0
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=5d471751-9675-428d-917b-70f44f9630b0;Ip=[131.228.6.101];Helo=[fr712usmtp1.zeu.alcatel-lucent.com]
-X-MS-Exchange-CrossTenant-AuthSource: VE1EUR03FT025.eop-EUR03.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: VE1EUR03FT003.eop-EUR03.prod.protection.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR07MB5623
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB6PR07MB4263
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This reverts commit a62387b3fc9f5aeeb04a2db278121d33a9caafa7 and sets
-the "fetching a superproject containing an uninitialized sub/sub
-project" testcase to expect success.
+This test case triggers a regression, which was introduced by
+a62387b3fc9f5aeeb04a2db278121d33a9caafa7 in following setup:
+outer_repo/middle_repo/inner_repo and a change in the remote of
+inner_repo happens.  Then it's being fetched by a second clone of the
+outer repo, in which the middle is initialized, but the inner is not.
+
+This causes is_empty_dir() in submodule.c:get_next_submodule() to
+check for a directory only existing in the actual worktree, while the
+is_empty_dir() being called from .git/modules.
 
 Signed-off-by: Peter Kaestle <peter.kaestle@nokia.com>
 ---
- submodule.c                 | 14 ++++----------
- t/t5526-fetch-submodules.sh |  2 +-
- 2 files changed, 5 insertions(+), 11 deletions(-)
+ t/t5526-fetch-submodules.sh | 38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
-diff --git a/submodule.c b/submodule.c
-index b3bb59f..eef5204e 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -499,12 +499,6 @@ void prepare_submodule_repo_env(struct strvec *out)
- 		     DEFAULT_GIT_DIR_ENVIRONMENT);
- }
- 
--static void prepare_submodule_repo_env_in_gitdir(struct strvec *out)
--{
--	prepare_submodule_repo_env_no_git_dir(out);
--	strvec_pushf(out, "%s=.", GIT_DIR_ENVIRONMENT);
--}
--
- /*
-  * Initialize a repository struct for a submodule based on the provided 'path'.
-  *
-@@ -1455,8 +1449,8 @@ static int get_next_submodule(struct child_process *cp,
- 		if (task->repo) {
- 			struct strbuf submodule_prefix = STRBUF_INIT;
- 			child_process_init(cp);
--			cp->dir = task->repo->gitdir;
--			prepare_submodule_repo_env_in_gitdir(&cp->env_array);
-+			cp->dir = task->repo->worktree;
-+			prepare_submodule_repo_env(&cp->env_array);
- 			cp->git_cmd = 1;
- 			if (!spf->quiet)
- 				strbuf_addf(err, _("Fetching submodule %s%s\n"),
-@@ -1505,9 +1499,9 @@ static int get_next_submodule(struct child_process *cp,
- 			    spf->prefix, task->sub->path);
- 
- 		child_process_init(cp);
--		prepare_submodule_repo_env_in_gitdir(&cp->env_array);
-+		prepare_submodule_repo_env(&cp->env_array);
- 		cp->git_cmd = 1;
--		cp->dir = task->repo->gitdir;
-+		cp->dir = task->repo->worktree;
- 
- 		strvec_init(&cp->args);
- 		strvec_pushv(&cp->args, spf->args.v);
 diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 9fbd481..236e26a 100755
+index dd8e423..9fbd481 100755
 --- a/t/t5526-fetch-submodules.sh
 +++ b/t/t5526-fetch-submodules.sh
-@@ -729,7 +729,7 @@ add_commit_push()
- 	git -C "$dir" push
- }
+@@ -719,4 +719,42 @@ test_expect_success 'fetch new submodule commit intermittently referenced by sup
+ 	)
+ '
  
--test_expect_failure 'fetching a superproject containing an uninitialized sub/sub project' '
-+test_expect_success 'fetching a superproject containing an uninitialized sub/sub project' '
- 	# does not depend on any previous test setups
- 
- 	for repo in outer middle inner
++add_commit_push()
++{
++	dir="$1"
++	msg="$2"
++	shift 2
++	git -C "$dir" add "$@" &&
++	git -C "$dir" commit -a -m "$msg" &&
++	git -C "$dir" push
++}
++
++test_expect_failure 'fetching a superproject containing an uninitialized sub/sub project' '
++	# does not depend on any previous test setups
++
++	for repo in outer middle inner
++	do
++		git init --bare $repo &&
++		git clone $repo ${repo}_content &&
++		echo $repo > ${repo}_content/file &&
++		add_commit_push ${repo}_content "initial" file
++	done &&
++
++	git clone outer A &&
++	git -C A submodule add "$pwd/middle" &&
++	git -C A/middle/ submodule add "$pwd/inner" &&
++	add_commit_push A/middle/ "adding inner sub" .gitmodules inner &&
++	add_commit_push A/ "adding middle sub" .gitmodules middle &&
++
++	git clone outer B &&
++	git -C B/ submodule update --init middle &&
++
++	echo "change on inner repo of A" > A/middle/inner/file &&
++	add_commit_push A/middle/inner "change on inner" file &&
++	add_commit_push A/middle "change on inner" inner &&
++	add_commit_push A "change on inner" middle &&
++
++	git -C B/ fetch
++'
++
+ test_done
 -- 
 2.6.2
 
