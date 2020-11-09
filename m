@@ -2,214 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81E27C2D0A3
-	for <git@archiver.kernel.org>; Mon,  9 Nov 2020 20:59:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B7B1C2D0A3
+	for <git@archiver.kernel.org>; Mon,  9 Nov 2020 20:59:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 11646206A1
-	for <git@archiver.kernel.org>; Mon,  9 Nov 2020 20:59:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4A996206E3
+	for <git@archiver.kernel.org>; Mon,  9 Nov 2020 20:59:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VvKWv4+u"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CbytwKO3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729874AbgKIU7d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Nov 2020 15:59:33 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51166 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725946AbgKIU7c (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Nov 2020 15:59:32 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 35CA29205E;
-        Mon,  9 Nov 2020 15:59:26 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gmOSXY/svLOiVkq0hRjZIgp4OzM=; b=VvKWv4
-        +uuj0E0Zi+j/d/lUa3HHMkQawr1g37pKeg7uBmqIsTJ/U6teftXoTe5jj5uxo9Ku
-        MK8lpnKpGUASFz1Ydx2OcuQAo+Y0CRVXCOIaw98GbKWwodqzSjaG+iEZpP2wdoAz
-        sQUmCYhlyhMat2TBrQjJ62umHH4vH7RFKeN40=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=E1AJndC1HwWmiGcgaUOQLXUzYHntb5Df
-        Dd4x9Jl1WbiX4BxZKIMvm7Z09hbVC6D4NGt8VDMrvb2kQWPgyBijeEdHZPnaCBUj
-        NxBA1YdJSCYBYK0ZDVw25T3D/MIl3P0aoduNdfUy/t3KjBOc53cRqA/Eu8L3hgrM
-        mV+cm79Iv1g=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2589B9205D;
-        Mon,  9 Nov 2020 15:59:26 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A633492058;
-        Mon,  9 Nov 2020 15:59:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH v2] t5411: consistent result for proc-receive broken test
-References: <CANYiYbHQKshFg=1xAv8MFfSjmFfQ0uJRm3mQBnZMsTd1n7R-Ow@mail.gmail.com>
-        <20201109105846.64303-1-zhiyou.jx@alibaba-inc.com>
-Date:   Mon, 09 Nov 2020 12:59:24 -0800
-In-Reply-To: <20201109105846.64303-1-zhiyou.jx@alibaba-inc.com> (Jiang Xin's
-        message of "Mon, 9 Nov 2020 18:58:46 +0800")
-Message-ID: <xmqqh7pyb61f.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 733E11BE-22CE-11EB-BDBE-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+        id S1730260AbgKIU76 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Nov 2020 15:59:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39080 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725946AbgKIU76 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Nov 2020 15:59:58 -0500
+Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13C2EC0613CF
+        for <git@vger.kernel.org>; Mon,  9 Nov 2020 12:59:58 -0800 (PST)
+Received: by mail-qk1-x74a.google.com with SMTP id s5so6865224qkj.21
+        for <git@vger.kernel.org>; Mon, 09 Nov 2020 12:59:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=TVaTMMWjAQShbKY/w22aloKz+XdMSeuSu3hT3ljL03o=;
+        b=CbytwKO3OKfTYQdLiAT8pHEM042L/eIlzDW7PQOR53clZXx1SUJ5NUGuZdbD8Z0FIX
+         ti1TsAohaDdAPYH0rDGYsA+vtRet39RZ4qgf+ZU1n2LT7Nx4n+03Dr6aZayRPlzJHR9j
+         PRsq6zwjuV34CN4h4Zo+0VXGq0WhkJur94/tmtJHsi54tSwdH+knprQCpg5h11fgCgHP
+         +yEBYzq/PHHV2/UTgMgbF1WAXQHyM04PvWWfJx96J0JkyeOp4NNcLASNntCmlIPe/RGp
+         /NiquRZxIH135knl1pWzWwplDFNVDvcM6YLL4idZAxhvpeDopv/GaDNO7xkUkSBoMMIO
+         QM1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=TVaTMMWjAQShbKY/w22aloKz+XdMSeuSu3hT3ljL03o=;
+        b=PezHy7ytAinkmsqBQToTyUX4ef6EQ3hAC/Z54AbQyOEmxkHpeDdvRB6J5WVOTyQdx5
+         YVFYWJBx7qlDpj9/y2ILu90YoSMKqKNoYBvuLq2Rfw8o9McmRai1dGjGSCnmTtzRTnvo
+         2uMf0jpb8tDeRkoD5Svd8nYf3RSalP3uVpTAN/GVTO12uWosIQ6+5tBklGvbwxigxr5d
+         Vu3OcpgEIThvaE8aER34oFXgCdOGjuYpmVLWx/vAs8URphelhN68VCV0l4JeHzTVRciv
+         16NVU+57C+/BOV9T61BSp7+lGJ6h+fYdmBGL4UP1YTQNSwVArgo7NNC94qm71J157cLI
+         n5nQ==
+X-Gm-Message-State: AOAM531aUsqE7E28hDwcGi61CkBYFsyogkjmap9CdPftXrV5G3ZoypGa
+        ifUOBV0RuN1vU2gGRYiYobZDFG/v5jGlngdp0sv2
+X-Google-Smtp-Source: ABdhPJwSoKYEWJ/zVez27jkUhMSE0wGOndvYTqw6G1RxyyGh3CzecHCE4zQVj8nN7T80Hi7zMWyP/t1k7Xza92i4/dXi
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a0c:f7cb:: with SMTP id
+ f11mr16590472qvo.34.1604955597281; Mon, 09 Nov 2020 12:59:57 -0800 (PST)
+Date:   Mon,  9 Nov 2020 12:59:55 -0800
+In-Reply-To: <CABPp-BFkAu6oO5V0jRh=ExuPxBXma1F17zaq-zEaqMagc72Ccw@mail.gmail.com>
+Message-Id: <20201109205955.2523889-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <CABPp-BFkAu6oO5V0jRh=ExuPxBXma1F17zaq-zEaqMagc72Ccw@mail.gmail.com>
+X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8-goog
+Subject: Re: [PATCH v2 06/20] merge-ort: implement a very basic collect_merge_info()
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     newren@gmail.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+> > > +     unsigned mbase_null = !(mask & 1);
+> > > +     unsigned side1_null = !(mask & 2);
+> > > +     unsigned side2_null = !(mask & 4);
+> >
+> > Should these be "int"?
+> 
+> Does the type matter, particularly since "boolean" isn't available?
 
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index bb9909c52e..6bd402897c 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -1172,6 +1172,7 @@ static int run_proc_receive_hook(struct command *commands,
->  	if (version != 1) {
->  		strbuf_addf(&errmsg, "proc-receive version '%d' is not supported",
->  			    version);
-> +		close(proc.in);
->  		code = -1;
->  		goto cleanup;
->  	}
-> @@ -1196,11 +1197,12 @@ static int run_proc_receive_hook(struct command *commands,
->  		packet_flush(proc.in);
->  	}
->  
-> +	close(proc.in);
-> +
->  	/* Read result from proc-receive */
->  	code = read_proc_receive_report(&reader, commands, &errmsg);
->  
->  cleanup:
-> -	close(proc.in);
->  	close(proc.out);
->  	if (use_sideband)
->  		finish_async(&muxer);
+It doesn't, which is why I would expect the most generic type - if I see
+something else, I would be led to think that there was a specific reason
+for choosing that. But if I'm in the minority, that's fine.
 
-OK, without us closing our end, the hook cannot even tell that it
-read to the end of our input.
+> > I thought that this was written like this (instead of inlining the 2
+> > double-quotes) to ensure that the string-equality-is-pointer-equality
+> > characteristic holds, but I see that that characteristic is for
+> > directory_name in struct merged_info, not current_dir_name in struct
+> > merge_options_internal. Any reason for not inlining ""?
+> 
+> You're really digging in; I love it.  From setup_path_info(), the
+> directory_name is set from the current_dir_name:
+>         path_info->merged.directory_name = current_dir_name;
+> (and if you follow where the current_dir_name parameter gets its value
+> from, you find that it came indirectly from
+> opt->priv->current_dir_name), so current_dir_name must meet all the
+> requirements on merge_info's directory_name field.
+> 
+> Perhaps there's still some kind of additional simplification possible
+> here, but directory rename detection is an area that has to take some
+> special care around this requirement.  I simplified the code a little
+> bit in this area as I was trying to break off a good first 20 patches
+> to submit, but even if we can simplify it more, the structure is just
+> going to come back later.
 
-> diff --git a/t/helper/test-proc-receive.c b/t/helper/test-proc-receive.c
-> index 42164d9898..9f7fbc5b7a 100644
-> --- a/t/helper/test-proc-receive.c
-> +++ b/t/helper/test-proc-receive.c
-> @@ -12,6 +12,7 @@ static const char *proc_receive_usage[] = {
->  
->  static int die_version;
->  static int die_readline;
-> +static int die_report;
->  static int no_push_options;
->  static int use_atomic;
->  static int use_push_options;
-> @@ -52,8 +53,10 @@ static void proc_receive_verison(struct packet_reader *reader) {
->  		}
->  	}
->  
-> -	if (server_version != 1 || die_version)
-> +	if (server_version != 1)
->  		die("bad protocol version: %d", server_version);
-> +	if (die_version)
-> +		die("die with the --die-version option");
-
-If any of these trigger, wouldn't we end up dying without consuming
-what receive-pack said?
-
->  
->  	packet_write_fmt(1, "version=%d%c%s\n",
->  			 version, '\0',
-> @@ -79,9 +82,15 @@ static void proc_receive_read_commands(struct packet_reader *reader,
->  		    *p++ != ' ' ||
->  		    parse_oid_hex(p, &new_oid, &p) ||
->  		    *p++ != ' ' ||
-> -		    die_readline)
-> +		    die_readline) {
-> +			char *bad_line = xstrdup(reader->line);
-> +			while (packet_reader_read(reader) != PACKET_READ_EOF)
-> +				; /* do nothing */
-> +			if (die_readline)
-> +				die("die with the --die-readline option");
->  			die("protocol error: expected 'old new ref', got '%s'",
-> -			    reader->line);
-> +			    bad_line);
-> +		}
-
-This part is different from the previous one in that it slurps all
-the input before dying evein in die_readline case.
-
-> @@ -166,6 +177,8 @@ int cmd__proc_receive(int argc, const char **argv)
->  				fprintf(stderr, "proc-receive> %s\n", item->string);
->  	}
->  
-> +	if (die_report)
-> +		die("die with the --die-report option");
-
-And at this point we have already read everything the other end
-said (if so, there is no need for the artificial "read everything
-before we die")?
-
-> diff --git a/t/t5411/test-0013-bad-protocol.sh b/t/t5411/test-0013-bad-protocol.sh
-> index c5fe4cb37b..5c5241bc95 100644
-> --- a/t/t5411/test-0013-bad-protocol.sh
-> +++ b/t/t5411/test-0013-bad-protocol.sh
-> @@ -55,19 +55,16 @@ test_expect_success "proc-receive: bad protocol (hook --die-version, $PROTOCOL)"
->  	test_must_fail git -C workbench push origin \
->  		HEAD:refs/for/master/topic \
->  		>out 2>&1 &&
-
-Are these expected to conflict with Dscho's changes to move 'master'
-around?
-
-> -	make_user_friendly_and_stable_output <out >actual &&
-> -
-> +	make_user_friendly_and_stable_output <out |
-> +		sed -n \
-> +			-e "/^To / { s/   */ /g; p; }" \
-> +			-e "/^ ! / { s/   */ /g; p; }" \
-> +			>actual &&
-
-It's the same thing but I somehow find "s/  */ /g" easier to read.
-The comparison is between "there may be two things or more---squish
-them down to one" and "After one thing, there may be any number of
-things---remove all the extra ones".
-
-Makes me wonder if make_user_friendly should optionally have an
-option to do something like this for us.  I doubt it that it is
-worth to do something like the attached patch.
-
-
- t/t5411/common-functions.sh | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
-
-diff --git c/t/t5411/common-functions.sh w/t/t5411/common-functions.sh
-index 6580bebd8e..6919639c60 100644
---- c/t/t5411/common-functions.sh
-+++ w/t/t5411/common-functions.sh
-@@ -40,7 +40,9 @@ create_commits_in () {
- # `GIT_TEST_GETTEXT_POISON=true` in order to test unintentional translations
- # on plumbing commands.
- make_user_friendly_and_stable_output () {
--	sed \
-+	local en=
-+	case "$#" in 0) ;; *) en=-n ;; esac
-+	sed $en \
- 		-e "s/  *\$//" \
- 		-e "s/   */ /g" \
- 		-e "s/'/\"/g" \
-@@ -52,5 +54,6 @@ make_user_friendly_and_stable_output () {
- 		-e "s/$(echo $A | cut -c1-7)[0-9a-f]*/<OID-A>/g" \
- 		-e "s/$(echo $B | cut -c1-7)[0-9a-f]*/<OID-B>/g" \
- 		-e "s#To $URL_PREFIX/upstream.git#To <URL/of/upstream.git>#" \
--		-e "/^error: / d"
-+		-e "/^error: / d" \
-+		${1+"$@"}
- }
+Ah, I see.
