@@ -2,64 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6705FC388F7
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 07:44:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D7A0C388F7
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 07:55:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0E28D20829
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 07:44:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4425D20829
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 07:55:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AAn06T3A"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fZ+O6Qgr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727991AbgKJHok (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Nov 2020 02:44:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54100 "EHLO
+        id S1727013AbgKJHzz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Nov 2020 02:55:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726467AbgKJHok (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Nov 2020 02:44:40 -0500
-Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B01EC0613CF
-        for <git@vger.kernel.org>; Mon,  9 Nov 2020 23:44:40 -0800 (PST)
-Received: by mail-ed1-x544.google.com with SMTP id v4so11609136edi.0
-        for <git@vger.kernel.org>; Mon, 09 Nov 2020 23:44:40 -0800 (PST)
+        with ESMTP id S1726462AbgKJHzz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Nov 2020 02:55:55 -0500
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFD42C0613CF
+        for <git@vger.kernel.org>; Mon,  9 Nov 2020 23:55:54 -0800 (PST)
+Received: by mail-ej1-x642.google.com with SMTP id f23so9466841ejk.2
+        for <git@vger.kernel.org>; Mon, 09 Nov 2020 23:55:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=HcV+Zg1wij3L17K8qDCLBG/S3wBpg4hXIBR+4GNh4w4=;
-        b=AAn06T3AfQ4Q/roASjmfMGiW3m0xhbMnIB6ch8c1ODcX9YBZ27L4UbL0O0PUBKQ8Td
-         J2VO/lxzipkDaCqAAcr+eU3+9GCpz5FdcJhlvo7Vu0ebFOYaK7rXCz+Njcd5BbuqSrXr
-         NZFpXG9kkbD2Z3AOFcbtEa77QHAjwkVUeCTIuLe3aDbclPRm2uPOOKhVFKKopH4OtLY/
-         2mR67ebUBBRojFdMacbt7EpF8pI7usTQoXRlIbCIUg+k3aGx1ee+mTIij+L5t5EKdfjy
-         UIrhqR0ACvccdml3Yz9/g+Kh71pgBKJ0sL0gvPwAvyFiYTevyZgom8c8SEVodKUVKJPw
-         PHmA==
+        bh=W8CBr4O45BczsTAxSZdu9reZODiJe3wDzqJpR6cvsm0=;
+        b=fZ+O6QgrGZI0KYfBaYrf8uYgu1w916lqiIZPKdanEEWMrIcmH2UJ0YvtcuODKuCMS4
+         Kic3KInZ8f0HcFtz2dD32maFTdiHnOr/ywPg5hQBoTw3x6mW8OJnCU5na+8a2haPUSa1
+         N7ayK+lW8LQghZ7vHV2yUWh48OTBB6nm0DGZW7welDp8kHE8HYX9BZH0L77I7Nkcybhv
+         xLzBvlxhaN4j6Z+GXZP3Iw+cpoU5W9Bh894am3/jHPoVBhZ7zmARtHbG9HN4A4fmu6EU
+         +4zg6Pcc6lidZsbNa86B3tOXb3sBgH6O8qJ+aLArJ8DMEC2veG3ztq5koB26ej3QVEaB
+         2O+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=HcV+Zg1wij3L17K8qDCLBG/S3wBpg4hXIBR+4GNh4w4=;
-        b=Z1J1pYA30nWhSI73tzG9/VmDQROsP9d/G67W8U4+1IvZnMgiUp/BMQOepthkV7lUNe
-         OxUE6xKyP2Z7UW8RQ91oTMINKIS8n1dL5HsiMsTguPB06zkUEY5tCXUbCV+2XJy9Jsij
-         58uXX1VgIembFFSwDPlH593MT6gqGNLZfR1mr53LzRm7ZDm/yEQarfXSExaHoD8UfJ+K
-         5pznjWDpM+2j7+AFxAux0Vs/r7bXb2HeRx02E81Mu1RXBdFWt2ZHrIpMLygmS7aStac2
-         +RcxhOKcD3Dc3pom9bhP0g8za23mLe+NbVgVavIXmz8BZ0mdT973bnHj8rDrG7KEAXGB
-         9r/w==
-X-Gm-Message-State: AOAM531KD2/Av+e1GIp8vS1cEtMCf65ZFDFbTs2VmGUVAWHAhrnoSSlz
-        fbfpsjCS35FwquuUsOq4SXQZupk46s0wci9lJ6Y=
-X-Google-Smtp-Source: ABdhPJxjI14bwEXITeLrwr8qqGg1/BSIyYioEdRA8HPDKbXNk+c70QTRxp1MRgz7oB6Cq2nzNRRXohhaRX1/Ue4Vjgk=
-X-Received: by 2002:a50:b761:: with SMTP id g88mr19936660ede.387.1604994279036;
- Mon, 09 Nov 2020 23:44:39 -0800 (PST)
+        bh=W8CBr4O45BczsTAxSZdu9reZODiJe3wDzqJpR6cvsm0=;
+        b=qjEq/7t6bawBOdOOtUIqKvadPGQdik6ao6xOH87i3HagTL+EYct3bhNc92nVees2JK
+         97F6za9uy6I0ZAx3g/GHGN8fudsFEE/s9nxkjpsNmmpmRGWeiRPtwoy7ICYfkYMb/NQT
+         ErFbnvq0fC3X83GE0vsmw6F24dvDUjJ9a7sRXzC+FvB0RyX/+0mJwmGdhjJAr2QI7fcD
+         9MM9DyQ9sK1mIk2AuBYQT7lH+NqQRqB2WM+ISTwWEXEYzNu6BqpoX+NAuL8YPNswA0L1
+         1/DsX/n9WImrj50qQMFCaiwDmCxXZm74l5/QWsxF8Ne5YQW5jPe/nuhV2qbufUxN1t4g
+         ipBg==
+X-Gm-Message-State: AOAM532wkvkAxkED8EcujziXqt7+9uFygIkBzMdRAWW5RRrIVzn2neAI
+        6JH+8YZcaDgpZ4jfbBozBvWtfrjRtdd9u1u5+S0=
+X-Google-Smtp-Source: ABdhPJw7870K60Xg5+znk86APUvunFHNWRPemmf12aNAdbtSZWnFHviU0JkcXurByq8eKH186G99hAFvqFj9VukQKis=
+X-Received: by 2002:a17:906:9455:: with SMTP id z21mr18725255ejx.160.1604994953388;
+ Mon, 09 Nov 2020 23:55:53 -0800 (PST)
 MIME-Version: 1.0
-References: <20201025212652.3003036-1-anders@0x63.nu>
-In-Reply-To: <20201025212652.3003036-1-anders@0x63.nu>
+References: <20201025212652.3003036-1-anders@0x63.nu> <20201025212652.3003036-7-anders@0x63.nu>
+ <CAP8UFD1nYgqT1k1Mc=Ea3AZkb-TdhPBzXo+N+4nWgYVxEBxzRA@mail.gmail.com> <87y2jap4ch.fsf@0x63.nu>
+In-Reply-To: <87y2jap4ch.fsf@0x63.nu>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 10 Nov 2020 08:44:27 +0100
-Message-ID: <CAP8UFD1pnZeoL7KFCTKdO8OQm0zh9cJWzkyk4+4ykhvwj1ZkMA@mail.gmail.com>
-Subject: Re: [PATCH 00/21] trailer fixes
+Date:   Tue, 10 Nov 2020 08:55:42 +0100
+Message-ID: <CAP8UFD0SkCHpSeZ0aWO21mj7+DJJ0GRJhkSCeKzbUsgQkwVLRw@mail.gmail.com>
+Subject: Re: [PATCH 06/21] t4205: add test for trailer in log with nonstandard separator
 To:     Anders Waldenborg <anders@0x63.nu>
 Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Jonathan Tan <jonathantanmy@google.com>
@@ -68,30 +69,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 25, 2020 at 10:27 PM Anders Waldenborg <anders@0x63.nu> wrote:
+On Mon, Nov 9, 2020 at 11:12 PM Anders Waldenborg <anders@0x63.nu> wrote:
 >
 >
-> This patch series contains a bunch fo trailer related changes. Sparked
-
-s/fo/of/
-
-> from this thread:
->   https://public-inbox.org/git/87blk0rjob.fsf@0x63.nu/T/#r3dc3e4fa67b6fba95e4b2ea2c1cf1672af55a9ee
+> Christian Couder writes:
+>
+> > On Sun, Oct 25, 2020 at 10:27 PM Anders Waldenborg <anders@0x63.nu> wrote:
+> >>
+> >> ); SAEximRunCond expanded to false
+>
+> Please disregard this line. It is an unfortunate and most embarrassing
+> artifact of messed up git send-email and stmp forwarding over ssh. Which
+> hopefully have been sorted so it doesn't happen next time. It obviously
+> shouldn't be part of the commit massage in any of the patches in the
+> series.
 
 Ok.
 
-> Most commits are refactors preparing for the others, the actual user
-> visible changes are:
->  * Allow using aliases in pretty formatting '%(trailer:key=foo)`
->  * Fixes related to matching prefix rather than full trailer
->  * Tighten up "canonicalization" of trailers
->  * Add --(no-)canonicalize
+> >> Signed-off-by: Anders Waldenborg <anders@0x63.nu>
+> >
+> > Why is this new test important?
+>
+> The test that checks that 'git log --pretty=format:%(trailers)' shows
+> the output in the form "Closes: 1234" even if input was "Closes #1234"
+> is interesting both because it checks that this behavior is kept intact
+> in the patches later in the series which modifies handling of separator
+> and because it is a behavior that can be surprising and not well defined
+> in documentation and those tend to be the ones that are easiest to
+> accidentally break.
 
-It's not easy to see which patch(es)/commit(s) correspond to which
-change. Maybe you could add numbers like 4/21, 5/21, etc after each of
-the above visible changes. Or you could say for example "patches 1/21
-to 4/21 are doing this, then patch 5/21 is doing this, then patches
-6/21 to 9/21 are doing something else" so it would help us have a
-better overview of the series.
+Ok, I would suggest adding some of the above in the commit message of
+the next version of the patch.
 
-Thanks for working on this!
+> Maybe the addition of the test should come later in
+> the series where the changes that potentially could break it happen.
+
+Maybe. I found the series a bit confusing because it seemed to me that
+the cover letter wasn't explaining very well what it does. I just
+commented on the cover letter. Hopefully in the next version it will
+be better, and it will then be easier to see if patches should be
+moved around.
+
+> It seems like you stopped reviewing my patch series at patch 06/21. That
+> is IMHO just before it starts to get interesting :)  Now I don't know if
+> rest of it was rubbish or uninteresting or just there was no time to
+> look at it.
+
+It was a combination of not much time and the cover letter not making
+it easy to understand the whole series. I was hoping that the next
+version would have more explanations in the cover letter and also in
+some commit messages.
+
+> I've updated according to the suggestions, but not sure if I should
+> repost the series with just such small adjustments.
+
+I think it's worth reposting with an improved cover letter and other
+small adjustments.
+
+Thanks,
+Christian.
