@@ -2,132 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D53ACC2D0A3
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 02:36:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F8BDC4741F
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 02:38:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 73C13205ED
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 02:36:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E6FCE20665
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 02:38:01 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rEM9mT5C"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729777AbgKJCg1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Nov 2020 21:36:27 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37948 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728066AbgKJCg1 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 9 Nov 2020 21:36:27 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1729706AbgKJCiB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Nov 2020 21:38:01 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55223 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729648AbgKJCiA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Nov 2020 21:38:00 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DC745100A33;
+        Mon,  9 Nov 2020 21:37:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=tMWpM3ZSPz3rvrqAKn6FKVFzyQg=; b=rEM9mT
+        5CITYumE/L69xlp8t3WsDKcH+m+Vk9kLLsMXZEXkCCNVg46pXvMIFEHGLrykJBt3
+        VRqWNVzPL/L1QFgc1c2Dq5x1HP6BTJgjruaLp74yDc2/bmkfYf/7oJ3/sU3IAHhH
+        qulTKzOryhun1dE3Z3U9WZ2zFOnrIbUlL9Kis=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=YXz21oJnKBs/q5wCvzA7Zdp7mmq7882s
+        HER35pBEAjhRIvKvRYuR6GIAPaLe6wjAVW/zh71zGbL9JYaRApmdKQ64HXDjelGy
+        lhXTDZ8NLqE5lGJK+nQ84YlxizXFGZ2wNE0WskZEW4g4qp+grpWdGr/nNQdbVOCZ
+        c1iaPtc5d/g=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D5141100A32;
+        Mon,  9 Nov 2020 21:37:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CA8CB6045A;
-        Tue, 10 Nov 2020 02:36:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1604975786;
-        bh=TouxPynUOS/0czo/geZeXFzm8OH7/AXrZk1sH6chbxc=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=kY87qV+z/Aef5wnXNRIZ30mb7Ri+io6VhYB8OCLSfTU3FXhhKqCqXuBlcZu4Uhl3f
-         Cn3R3kf45P6nj3z1713J1GaUKPD2usaBO2UVcqnVsT95KPAIqlt3WzIO0pDirH94i9
-         CFrN20S1wJZHoxvmYUuko2XcjGGCUHGTHiZr6df917VAKuBDyZ4v4LciDqNuyR76re
-         8GZziNosoJ3S9bXlowCYtsVGjXKmZXh36MtH3qPX5hMeYPvyrUXhmX3fe1eRUk40gu
-         ujoRrosQfWywSAzB6waVelSLlH6yUSuFGPc8KzMKbd+dsRqqGEVaDJoFm5TQLmMJYW
-         5Sy7xdsEfmA+2kBswmMp5d0xh61bnL+TgsW8l6dU6AGMa5KFICBcLbemBnmbPTrh7e
-         kKAfAOdYMg2bhcIyuf7wkCXkM1pdlkDH8SUxoaANiM2mtOfp73R4V4w2Jdz8pF781c
-         HppqSSLEFNlaTPB5Txfofo+PMigh03GxdgHcTu6kX1cjx20T2HZ
-Date:   Tue, 10 Nov 2020 02:36:20 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Daniel Gurney <dgurney99@gmail.com>, git@vger.kernel.org,
-        Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v2] compat/bswap.h: simplify MSVC endianness detection
-Message-ID: <20201110023620.GH6252@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, Daniel Gurney <dgurney99@gmail.com>,
-        git@vger.kernel.org, Johannes.Schindelin@gmx.de
-References: <20201107234751.10661-1-dgurney99@gmail.com>
- <20201108095739.23144-1-dgurney99@gmail.com>
- <20201110003127.GA1268480@coredump.intra.peff.net>
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2B538100A31;
+        Mon,  9 Nov 2020 21:37:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     hukeping <hukeping@huawei.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        "Zhengjunling (JRing, Task Force)" <zhengjunling@huawei.com>,
+        zhuangbiaowei <zhuangbiaowei@huawei.com>,
+        Patrick Hemmer <git@stormcloud9.net>,
+        Rafael Ascensao <rafa.almas@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] format-patch: make output filename configurable
+References: <20201105201548.2333425-1-hukeping@huawei.com>
+        <20201105150149.GA107127@coredump.intra.peff.net>
+        <xmqqimajijwa.fsf@gitster.c.googlers.com>
+        <xmqqwnyydxaw.fsf@gitster.c.googlers.com>
+        <xmqqo8kadu9j.fsf_-_@gitster.c.googlers.com>
+        <CAPig+cQAreDJn_tS_K4sR9HwsSVNoFid9sWSdxzwSqkJLRidgQ@mail.gmail.com>
+        <xmqqwnyubagr.fsf@gitster.c.googlers.com>
+        <9d4b387655024b24a20ce2384740b03a@huawei.com>
+Date:   Mon, 09 Nov 2020 18:37:54 -0800
+In-Reply-To: <9d4b387655024b24a20ce2384740b03a@huawei.com>
+        (hukeping@huawei.com's message of "Tue, 10 Nov 2020 02:31:38 +0000")
+Message-ID: <xmqqr1p27x8d.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="6lXr1rPCNTf1w0X8"
-Content-Disposition: inline
-In-Reply-To: <20201110003127.GA1268480@coredump.intra.peff.net>
-User-Agent: Mutt/1.14.6 (2020-07-11)
+Content-Type: text/plain
+X-Pobox-Relay-ID: BD3E192E-22FD-11EB-ACEB-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+hukeping <hukeping@huawei.com> writes:
 
---6lXr1rPCNTf1w0X8
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> It would be very hard to remove a config knob rather than add a
+> new one and we already have too many.
+>
+> Does it worth to add a new configuration variable for this or just
+> a hard-coded value is enough?
 
-On 2020-11-10 at 00:31:27, Jeff King wrote:
-> On Sun, Nov 08, 2020 at 11:57:41AM +0200, Daniel Gurney wrote:
->=20
-> > Modern MSVC or Windows versions don't support big-endian, so it's
-> > unnecessary to consider architectures when using it.
->=20
-> This made me wonder if we support any non-modern versions (which would
-> be negatively impacted).
+I personally would say "yes, the current code that limits to 64 is
+enough", but you, as the person who said that you do not like the
+current hard-coded value, are not in the position to ask that
+question, I would have to say---if it were enough for you, you
+wouldn't have complained about 64 in the first place ;-)
 
-I'm pretty sure we don't.  As I said, we're using several C99 features
-and that version precedes the C99 standard (and 1999).
 
-> From the earlier thread at [1], it sounds like probably not, but I
-> wonder if we can offer a stronger argument there (or just define
-> "modern" a little more clearly).
 
-According to Wikipedia[0]:
-
-  Visual C++ 2013 [12.0] finally added support for various C99 features
-  in its C mode (including designated initializers, compound literals,
-  and the _Bool type), though it was still not complete. Visual C++ 2015
-  further improved the C99 support, with full support of the C99
-  Standard Library, except for features that require C99 language
-  features not yet supported by the compiler.
-
-The version mentioned that supported MIPS, Alpha, and m68k was Visual
-C++ 2.0 RISC Edition.  While Wikipedia doesn't mention its release date,
-its successor, Visual C++ 4.0, was released in 1995.  The m68k version
-ran on Macs using those processors, and Apple abandoned m68k for PowerPC
-in 1994[1].
-
-I'm entirely comfortable with requiring that people use a compiler and
-operating system newer than 25 years old to compile Git correctly.  As
-I've said or implied in previous threads, I'm also fine requiring C99
-(vendors having had over two decades to implement it) and only
-supporting OSes with vendor security support, although obviously these
-latter two items are much more controversial.
-
-I'm fine leaving the commit message as it stands, given the brevity of
-the patch and that in the technology field, the affected versions are
-not in any way "modern," but of course I wouldn't object to a reroll.
-It's fine, should that happen, to include any of this email in the
-commit message.
-
-[0] https://en.wikipedia.org/wiki/Microsoft_Visual_C%2B%2B
-[1] https://en.wikipedia.org/wiki/Macintosh
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---6lXr1rPCNTf1w0X8
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX6n8pAAKCRB8DEliiIei
-gXF9AQDt6Na60PQtAIf2W8e7eZn5oqsoIGJJVDmWxx3v7XyuAgD+N2gI7AKWyP55
-RzL6R189l2yEv1Is03ovOCoWt+4g/AQ=
-=YSYC
------END PGP SIGNATURE-----
-
---6lXr1rPCNTf1w0X8--
