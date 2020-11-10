@@ -2,243 +2,252 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20531C388F7
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 19:17:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CFCDC56201
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 19:32:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 933262063A
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 19:17:12 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="HHYlmkbR"
+	by mail.kernel.org (Postfix) with ESMTP id C93D720665
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 19:32:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726984AbgKJTRL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Nov 2020 14:17:11 -0500
-Received: from mout.gmx.net ([212.227.15.18]:59065 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726307AbgKJTRL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Nov 2020 14:17:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1605035825;
-        bh=wPXlwuW2EiwqKP/0u5RdCOEJHMhcjBn/mqLY/WSguvI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=HHYlmkbRwvc5EfGHIr8Mf0WCXF8S1brQowEcLEDItRP/H21k6Dkx9mFQwtDYUU96A
-         g+uvp7qB6SYCxeWpuVFEv+5evyS60HiV30icWGgA6OrUxCK9ju0skSunCAoWwH+rJU
-         uU48wLNL2V/NSlUZxeYir/qqV2udUy84mKQ0aZ1k=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.25.62] ([213.196.212.205]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MfpSl-1k5jM82Rsf-00gJqh; Tue, 10
- Nov 2020 20:17:05 +0100
-Date:   Tue, 10 Nov 2020 20:17:04 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] add-interactive.c: use correct names to load color.diff.*
- config
-In-Reply-To: <20201110182833.GB1362803@coredump.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.2011102015160.18437@tvgsbejvaqbjf.bet>
-References: <313B8999-1E99-4695-A20D-E48840C30879@gmail.com> <20201106170345.GA174555@coredump.intra.peff.net> <nycvar.QRO.7.76.6.2011101653330.18437@tvgsbejvaqbjf.bet> <20201110182833.GB1362803@coredump.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1732156AbgKJTcO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Nov 2020 14:32:14 -0500
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:55001 "EHLO
+        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1731597AbgKJTcL (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 10 Nov 2020 14:32:11 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id 067195C02B9
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 14:32:09 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Tue, 10 Nov 2020 14:32:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-type:date:from:message-id
+        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm1; bh=MjgsnhpIv9eg4UkycJXxPISYCzakR
+        52oFF0FnpsZYcU=; b=daqsMzqbxkN6IR7lGl0Mtmu/k+J0TR8vLTldNersnJi23
+        Z5LpTm0lbyfzr7cLcFAyjI7jbeAe+lXwdsuDJVs18c0Jwm7FuxJSoE4CjUDDjF3P
+        /GcyUPnzWTbis32h+nvcc45FTPtMTktJbQyecnU2S44GLBDASsKorBaRSV7Wyicb
+        yY62lYeD2NcZJYQYfUc21aZfcS6Es/CG+O1ZFK77+U9C60qANU/Jn2IQpBFDm/uC
+        +nzeqiIue9f85C1aMXcwFC65jdz72AxQF6y7wYVPhrkWEJahB8xtwK4n2dFpyQgS
+        Cw7kcOUprkJZUI/+Y+wqD5QsWpXRB/HCrT0ry0DtQ==
+X-ME-Sender: <xms:uOqqXxbDnjcFOnRaeLCStNOwfNgViLE8p5o2H_R1Jjo_5KSRJ6SOLw>
+    <xme:uOqqX4bwHIYnBiOPSwCJCs_8q3Y0hXHvWUAhakPxsysdpJfD4vmLOyYQ5BA1yZf9Y
+    Tg7HGbh5I8A_BU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedruddujedguddviecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepvffhuffkffgfgggtsehgtderof
+    dtfeejnecuhfhrohhmpedfffgvmhhiucfordcuqfgsvghnohhurhdfuceorghthhgvnhgr
+    sehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomheqnecuggftrfgrthhtvghrnh
+    epkeejvdduheffkeduudeuveeiheffgeeltddugeefudegueetuddvkeevffdtgfdunecu
+    kfhppeeiiedrudduhedrudejfedrudeiieenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpegrthhhvghnrgesihhnvhhishhisghlvghthhhinhhg
+    shhlrggsrdgtohhm
+X-ME-Proxy: <xmx:uOqqXz8lUwGB0uwpY_b5S7p9dlE274KhyYVhpTkixZJDD8YkpKKDoA>
+    <xmx:uOqqX_rh1IDfBeSeV-IhrCQXq8NXp6WcErn6-5JebCkC_SZ4lXmu5g>
+    <xmx:uOqqX8qXZnhNfMhDqEq3rsdmJJ7ygEnxap1SdybIWlOQe8OjxNwyQw>
+    <xmx:ueqqX15yI6Y3qeY66pAS2pjW_iPJCAusfklSw7Q9wfeiYJgf0hHT3Q>
+Received: from [0.0.0.0] (unknown [66.115.173.166])
+        by mail.messagingengine.com (Postfix) with ESMTPA id AFB21306307F
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 14:32:08 -0500 (EST)
+To:     Git <git@vger.kernel.org>
+From:   "Demi M. Obenour" <athena@invisiblethingslab.com>
+Subject: check_refname_format allows refs with components that begin with -,
+ even though `git tag` does not
+Message-ID: <c926193b-a328-7562-6d4b-1ab2765c8cca@invisiblethingslab.com>
+Date:   Tue, 10 Nov 2020 14:32:04 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:UIE62fb8c31M3ZIHQ53YZKERkuxKBBq5ByI002i2CPjYf/ZaWJP
- y5QcVN/x4e7CtPie2axMyxMeFmI/q+OvCmkDDfQZ8PpMg01hD37SEVjV2ya8/1t/AYoCuLE
- 4VBpk1K0JiAYRcLt2JqVtb5QNO7ZGpZorF0HXID3XkVjZLz6m9llxRd1dvWY2vgh6byodNT
- bT2S2vfl16Ln+ZDxdhoig==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:voOkIAnwkX0=:Zn+Woh+fvlpm62n/ieZJEY
- 2r/ujusPa9vxX1dzs9z48MzTNmFee6XTyPRZr8zYbwOAyOAiYgpoIa8EtRWHed4YwNl3GL77P
- m9btoFzqZAgDWyC3SJMM05+WMGpsVd/emP+mlDuESaIg3SRzNHedTMGGSqeUBJWhQ+rMx+wHL
- PEs5TzdAtnWnODnenhLwX1oR3+4G/K2YnR/fmIP+Qdvc1fGiWL6fnuz4gGxm4dkvTupTrGG1a
- Uv4sY5F1N3lu7Rp1Ja3X8IwIpl4V3c10iMy2aOtSeQdP3SwvC6XIoktt2ADrnT4PWAGi5k7Ii
- E6hRzRf9uklZ68iIsy7wGR7t7KRWL3cr2MOMnul6lTk/0BvPUkwTpWgb/0Amr3+9ycgeoZfeQ
- /7X9IxXhAVD2l7tNwXv7djGvj6xUQCvTzZs1Klg6ZBixzfLa0Xgj6MRIKWSbmmoZ4hqnzwiAW
- p/J/wL804h9eaLwYkO2juSiHwN9TG0f4eZdhBiEwo8Jt9ON+oYJ033SR1BSzzf5yHpOhxYNRS
- 6mts+qA4m76ojE1C0cryuBBwHvUFsPPVp15Fo5jhQYPG7TXRQiuaB5s10S3FZGq4X5S/HpvCO
- sEEd/1YeZTE+Fljdlq7PmWbzt+zW1bRuJ3SelEw1FBiOypx2DBj6ctMNhXRyhMVxkR4YqUppM
- IJ9mhU7YYH0RaOBysfJ4NJRXh3Jb21LisioG940SyNXA5HCg1dsj79oyQLN/VL+u9r1Z9ptyN
- K13yfWdlvOH9rvBGbJQTI9iNMJQB3A+pB5zZPE31MqUdkKlH+Ho4gNoD4Gh5/fFTlj0+EUMOz
- 5oJWvcrcVvU9d+S6XE3+kfw7AG88dy2l9W40jEOl91+IKT6pz+ANDIUDWAwr8R8k+8+4ZLNwk
- K0wBQeZViWiKYIO9Aih26W0Dzj7cZ8h0Prw7XdQZU=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="rwYrjGYnJpu84f8wmPWW73X4LAzIMcGYC"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--rwYrjGYnJpu84f8wmPWW73X4LAzIMcGYC
+Content-Type: multipart/mixed; boundary="lkwwXRnG3fVH946rS4vUVyA8SSsAhpJOK";
+ protected-headers="v1"
+From: "Demi M. Obenour" <athena@invisiblethingslab.com>
+To: Git <git@vger.kernel.org>
+Message-ID: <c926193b-a328-7562-6d4b-1ab2765c8cca@invisiblethingslab.com>
+Subject: check_refname_format allows refs with components that begin with -,
+ even though `git tag` does not
 
-On Tue, 10 Nov 2020, Jeff King wrote:
+--lkwwXRnG3fVH946rS4vUVyA8SSsAhpJOK
+Content-Type: multipart/mixed;
+ boundary="------------22BC6454D8C5503319DE83DF"
+Content-Language: en-US
 
-> On Tue, Nov 10, 2020 at 05:06:59PM +0100, Johannes Schindelin wrote:
->
-> > A bigger puzzle for me was: why did we not catch that earlier? I vague=
-ly
-> > remember that we introduced _specifically_ code to test coloring, and =
-to
-> > make those test work on Windows (rather than skipping them all).
-> >
-> > *clicketyclick* ah, we only tests the menu of `git add -i`, and we do =
-not
-> > even override the colors...
->
-> Yeah, the test coverage could definitely be improved.
+This is a multi-part message in MIME format.
+--------------22BC6454D8C5503319DE83DF
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-I was actually already working on a comprehensive test case.
+If I try to create a Git tag with a name beginning with `-`,
+Git complains.  However, Git does not check that a repository does
+not have tags containing `-`.  This almost led to a vulnerability
+in the QubesOS `verify-git-tag` script.  Fortunately, this was not
+exploitable, as neither `git tag -v`, `git verify-tag --raw`, nor
+`git describe` have options that are useful to an attacker.
 
-> > Will try to set aside some time to work on fixing this,
->
-> How about this?
->
-> -- >8 --
-> Subject: add-interactive.c: use correct names to load color.diff.* confi=
-g
->
-> The builtin version of add-interactive mistakenly loads diff colors from
-> color.interactive.* instead of color.diff.*. It also accidentally spells
-> "frag" as "fraginfo".
->
-> Let's fix that, and add some test coverage:
->
->   - check that color.diff.* is respected (this passes with the perl
->     version, but without this patch fails if GIT_TEST_ADD_I_USE_BUILTIN
->     is set)
->
->   - check that color.interactive.* is respected; this passes already
->     with both versions, but confirms we didn't break anything
->
-> Note that neither test is exhaustive over the set of color config, but
-> this is enough to sanity check the system (and we do check frag
-> explicitly because of its typo).
->
-> Note also that we don't respect the historical "diff.color.*". The perl
-> version never did, and those have been deprecated since 2007.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+Since this could cause vulnerabilities in other programs, I initially
+reported it as an embargoed security bug, but was told to post it
+publicly.
 
-If you don't mind, I'd like to integrate your work into mine and make you
-a co-author. Objections?
+The best idea I had for a fix is to print names beginning with `-`
+using the fully-qualified form, such as "refs/tags/-a".  Also, `--`
+is used as a delimiter in many commands, and can=E2=80=99t be escaped,
+so disallowing it might be a good idea.
 
-Ciao,
-Dscho
+In the long run, I hope to see leading dashes banned entirely, but
+backwards compatibility might prevent that.
 
-> ---
-> I don't love that we have to repeat the set of color config here (and I
-> guess maybe somebody would complain that we don't respect all of the
-> weird "moved" variants?). But I agree that it's hard to re-use the
-> existing diff code without stomping all over global variables. So I'd
-> consider this the minimal fix bringing us in line with the perl version,
-> but we may want to later revisit the diff color-config code as a whole.
->
->  add-interactive.c          | 22 ++++++++++++----------
->  t/t3701-add-interactive.sh | 32 ++++++++++++++++++++++++++++++++
->  2 files changed, 44 insertions(+), 10 deletions(-)
->
-> diff --git a/add-interactive.c b/add-interactive.c
-> index 555c4abf32..208a058a68 100644
-> --- a/add-interactive.c
-> +++ b/add-interactive.c
-> @@ -12,10 +12,11 @@
->  #include "prompt.h"
->
->  static void init_color(struct repository *r, struct add_i_state *s,
-> +		       const char *section,
->  		       const char *slot_name, char *dst,
->  		       const char *default_color)
->  {
-> -	char *key =3D xstrfmt("color.interactive.%s", slot_name);
-> +	char *key =3D xstrfmt("color.%s.%s", section, slot_name);
->  	const char *value;
->
->  	if (!s->use_color)
-> @@ -40,18 +41,19 @@ void init_add_i_state(struct add_i_state *s, struct =
-repository *r)
->  			git_config_colorbool("color.interactive", value);
->  	s->use_color =3D want_color(s->use_color);
->
-> -	init_color(r, s, "header", s->header_color, GIT_COLOR_BOLD);
-> -	init_color(r, s, "help", s->help_color, GIT_COLOR_BOLD_RED);
-> -	init_color(r, s, "prompt", s->prompt_color, GIT_COLOR_BOLD_BLUE);
-> -	init_color(r, s, "error", s->error_color, GIT_COLOR_BOLD_RED);
-> -	init_color(r, s, "reset", s->reset_color, GIT_COLOR_RESET);
-> -	init_color(r, s, "fraginfo", s->fraginfo_color,
-> +	init_color(r, s, "interactive", "header", s->header_color, GIT_COLOR_B=
-OLD);
-> +	init_color(r, s, "interactive", "help", s->help_color, GIT_COLOR_BOLD_=
-RED);
-> +	init_color(r, s, "interactive", "prompt", s->prompt_color, GIT_COLOR_B=
-OLD_BLUE);
-> +	init_color(r, s, "interactive", "error", s->error_color, GIT_COLOR_BOL=
-D_RED);
-> +
-> +	init_color(r, s, "diff", "reset", s->reset_color, GIT_COLOR_RESET);
-> +	init_color(r, s, "diff", "frag", s->fraginfo_color,
->  		   diff_get_color(s->use_color, DIFF_FRAGINFO));
-> -	init_color(r, s, "context", s->context_color,
-> +	init_color(r, s, "diff", "context", s->context_color,
->  		diff_get_color(s->use_color, DIFF_CONTEXT));
-> -	init_color(r, s, "old", s->file_old_color,
-> +	init_color(r, s, "diff", "old", s->file_old_color,
->  		diff_get_color(s->use_color, DIFF_FILE_OLD));
-> -	init_color(r, s, "new", s->file_new_color,
-> +	init_color(r, s, "diff", "new", s->file_new_color,
->  		diff_get_color(s->use_color, DIFF_FILE_NEW));
->
->  	FREE_AND_NULL(s->interactive_diff_filter);
-> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> index ca04fac417..7c3107a04a 100755
-> --- a/t/t3701-add-interactive.sh
-> +++ b/t/t3701-add-interactive.sh
-> @@ -602,6 +602,27 @@ test_expect_success 'colorized diffs respect diff.w=
-sErrorHighlight' '
->  	grep "old<" output
->  '
->
-> +test_expect_success 'colorized diffs respect color config' '
-> +	git reset --hard &&
-> +
-> +	echo content >test &&
-> +	printf y >y &&
-> +	force_color git \
-> +		-c color.diff.meta=3D"bold red" \
-> +		-c color.diff.frag=3D"bold blue" \
-> +		-c color.diff.old=3D"green" \
-> +		-c color.diff.new=3D"red" \
-> +		add -p >output.raw 2>&1 <y &&
-> +	test_decode_color <output.raw >output &&
-> +
-> +	# do not check the full output, which would make the test brittle;
-> +	# just make sure the items we configured were colored correctly
-> +	grep "^<BOLD;RED>diff" output &&
-> +	grep "^<BOLD;BLUE>@@" output &&
-> +	grep "^<GREEN>-" output &&
-> +	grep "^<RED>\+" output
-> +'
-> +
->  test_expect_success 'diffFilter filters diff' '
->  	git reset --hard &&
->
-> @@ -884,4 +905,15 @@ test_expect_success 'show help from add--helper' '
->  	test_i18ncmp expect actual
->  '
->
-> +test_expect_success 'interactive colors can be configured' '
-> +	git reset --hard &&
-> +
-> +	test_write_lines h |
-> +	force_color git \
-> +		-c color.interactive.help=3D"bold yellow" \
-> +		add -i >actual.colored &&
-> +	test_decode_color <actual.colored >actual &&
-> +	test_i18ngrep "^<BOLD;YELLOW>update" actual
-> +'
-> +
->  test_done
-> --
-> 2.29.2.640.g9e24689a4c
->
->
+Sincerely,
+
+Demi
+
+--------------22BC6454D8C5503319DE83DF
+Content-Type: application/pgp-keys;
+ name="OpenPGP_0xB288B55FFF9C22C1.asc"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+ filename="OpenPGP_0xB288B55FFF9C22C1.asc"
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+xsFNBFp+A0oBEADffj6anl9/BHhUSxGTICeVl2tob7hPDdhHNgPR4C8xlYt5q49yB+l2nipda=
+q+4
+Gk6FZfqC825TKl7eRpUjMriwle4r3R0ydSIGcy4M6eb0IcxmuPYfbWpr/si88QKgyGSVZ7GeN=
+W1U
+nzTdhYHuFlk8dBSmB1fzhEYEk0RcJqg4AKoq6/3/UorR+FaSuVwT7rqzGrTlscnTDlPWgRzrQ=
+3js
+sesI7sZLm82E3pJSgaUoCdCOlL7MMPCJwI8JpPlBedRpe9tfVyfu3euTPLPxwcV3L/cfWPGSL=
+4Po
+fBtB8NUU6QwYiQ9Hzx4xOyn67zW73/G0Q2vPPRst8LBDqlxLjbtx/WLR6h3nBc3eyuZ+q62HS=
+1pJ
+5EvUT1vjyJ1ySrqtUXWQ4XlZyoEFUfpJxJoN0A9HCxmHGVckzTRl5FMWo8TCniHynNXsBtDQb=
+abt
+7aNEOaAJdE7to0AH3T/Bvwzcp0ZJtBk0EM6YeMLtotUut7h2Bkg1b//r6bTBswMBXVJ5H44Qf=
+0+e
+KeUg7whSC9qpYOzzrm7+0r9F5u3qF8ZTx55TJc2g656C9a1P1MYVysLvkLvS4H+crmxA/i08T=
+c1h
++x9RRvqba4lSzZ6/Tmt60DPM5Sc4R0nSm9BBff0Nm0bSNRS8InXdO1Aq3362QKX2NOwcL5YaS=
+twO
+DNyZUqF7izjK4QARAQABzTxEZW1pIE1hcmllIE9iZW5vdXIgKGxvdmVyIG9mIGNvZGluZykgP=
+GRl
+bWlvYmVub3VyQGdtYWlsLmNvbT7CwXgEEwECACIFAlp+A0oCGwMGCwkIBwMCBhUIAgkKCwQWA=
+gMB
+Ah4BAheAAAoJELKItV//nCLBhr8QAK/xrb4wyi71xII2hkFBpT59ObLN+32FQT7R3lbZRjVFj=
+c6y
+MUjOb1H/hJVxx+yo5gsSj5LS9AwggioUSrcUKldfA/PKKai2mzTlUDxTcF3vKx6iMXKA6AqwA=
+w4B
+57ZEJoMM6egm57TV19kzPMc879NV2nc6+elaKl+/kbVeD3qvBuEwsTe2Do3HAAdrfUG/j9erw=
+Ik6
+gha/Hp9yZlCnPTX+VK+xifQqt8RtMqS5R/S8z0msJMI/ajNU03kFjOpqrYziv6OZLJ5cuKb3b=
+ZU5
+aoaRQRDzkFIR6aqtFLTohTo20QywXwRa39uFaOT/0YMpNyel0kdOszFOykTEGI2u+kja35g9T=
+kH9
+0kkBTG+aEWttIht0Hy6YFmwjcAxisSakBuHnHuMSOiyRQLu43ej2+mDWgItLZ48Mu0C3IG1se=
+eQD
+jEYPtqvyZ6bGkf2Vj+L6wLoLLIhRZxQOedqArIk/Sb2SzQYuxN44IDRt+3ZcDqsPppoKcxSyd=
+1Ny
+2tpvjYJXlfKmOYLhTWs8nwlAlSHX/c/jz/ywwf7eSvGknToo1Y0VpRtoxMaKW1nvH0OeCSVJi=
+tfR
+P7YbiRVc2aNqWPCSgtqHAuVraBRbAFLKh9d2rKFB3BmynTUpc1BQLJP8+D5oNyb8Ts4xXd3iV=
+/uD
+8JLGJfYZIR7oGWFLP4uZ3tkneDfYzTxEZW1pIE9iZW5vdXIgKElUTCBFbWFpbCBLZXkpIDxhd=
+Ghl
+bmFAaW52aXNpYmxldGhpbmdzbGFiLmNvbT7CwY4EEwEIADgWIQR2h02fEza6IlkHHHGyiLVf/=
+5wi
+wQUCX6YJvQIbAwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgAAKCRCyiLVf/5wiwWRhD/0YR+YYC=
+5Kd
+uv/2LBgQJIygMsFiRHbR4+tWXuTFqgrxxFSlMktZ6gQrQCWe38WnOXkBoY6n/5lSJdfnuGd2U=
+agZ
+/9dkaGMUkqt+5WshLFly4BnP7pSsWReKgMP7etRTwn3Szk1OwFx2lzY1EnnconPLfPBc6rWG2=
+moA
+6l0WX+3WNR1B1ndqpl2hPSjT2jUCBWDVrGOUSX7r5f1WgtBeNYnEXPBCUUM51pFGESmfHIXQr=
+qFD
+A7nBNiIVFDJTmQzuEqIyJl67pKNgooij5mKzRhFKHfjLRAH4mmWZlB9UjDStAfFBAoDFHwd1H=
+L5V
+QCNQdqEc/9lZDApqWuCPadZN+pGouqLysesIYsNxUhJ7dtWOWHl0vs7/3qkWmWun/2uOJMQhr=
+a2u
+8nA9g91FbOobWqjrDd6x3ZJoGQf4zLqjmn/P514gb697788e573WN/MpQ5XIFl7aM2d6/GJiq=
+6LC
+9T2gSUW4rbPBiqOCeiUx7Kd/sVm41p9TOA7fEG4bYddCfDsNxaQJH6VRK3NOuBUGeL+iQEVF5=
+Xs6
+Yp+U+jwvv2M5Lel3EqAYo5xXTx4ls0xaxDCufudcAh8CMMqx3fguSb7Mi31WlnZpk0fDuWQVN=
+KyD
+P7lYpwc4nCCGNKCj622ZSocHAcQmX28L8pJdLYacv9pU3jPy4fHcQYvmTavTqowGnM7BTQRaf=
+gNK
+ARAAvcp2SPS1PriZDHhCXickP/FRZAiUD0GRLCBszk5T58L1Z2tAEvOp9mfqyu0f7rGLOYiQm=
+eef
+ySElnfMQ+e7ntHgeO23Cb1ahpTmyNgxBvE8GltDtHbkYQ4MzBC+LdSnUQHqSBEgRAP4j6SOIH=
+1G1
+RCBELqnakMjuBgHvjJA9B8uSR/9KoBZm2knoDU3UIOYqmI0Wd7bYrMGpapdf4ksr9VmHgtTgL=
+Ptg
+SzgE9jRIIEolTrcRH4HsLELQlovB9UqIq2pCH6OOR89LZPwHfWVodj7zhrfeymvOaOEyycYCS=
+ahh
+J6nBVGZySa4sKGkSEvDdgvP5xDOd429bB9IGHXTFN0MWO3WDSyFK0SkHjZBd9HSu1eiUR+6ZX=
+kZX
+/sEHDX0QCFKzZWrY/U8cIr0KypwvWiBRRxMv9JgILa0EoXDEZjIFZUaDgOQfEU7pUSwppGn78=
+Lob
+OnQsTdBjQDkSFVRcY8fVZ+zqmD4MIqH2ekmxJdIYD8lgULxPOZJRS2S6I+6fo6A2NVzUM7Znw=
+K5y
+fcfmFeIoI1iJiDQGUpZhHGLXfscty4v/KHmAwKq7J6zo2/lrxoQspCZOLqwaINizbXMgo5E7O=
+xfl
+nlxlKNDQ4W3d2egMhX6nhe7idw+YZaV9pyPZ6P7oD6601aFWQIK65zc9ImRtg1ceOsfdd6VSh=
+5eZ
+pWEAEQEAAcLBXwQYAQIACQUCWn4DSgIbDAAKCRCyiLVf/5wiwcDSD/wIiBxPG6CKkXhUMmjM8=
+aup
+ROGGQmTY+uQf55Azr6HUosH8I41VRNld4hM8TB24MkwhgOu/gaP3eWkBo4J9Ez7bBs3pckB4q=
+WlM
+xMq7HHlBlmKCl2MlVihH8odHA353fXYgJt1XjanIbXDKaHoREx/H60R5yXQXI39ddj80EnSgu=
+pKl
+NENfenOFaeRwzkHzYg503+4GUo9Aa2hzgcsvSxAwi4UIgpq/thNK1uLQbQwJ9h5E/bn99mRqi=
+Qp9
+TvtrlXxYRrurzxOapKq20hPExvtNx/HnFNqudM4B1j3RzDgb8txIc3wIdlZjkk3ESvrUlHv7t=
+8HS
+0Qz8L/w08xiN+ioJMvTLAwuYKSMDWziT9hv6tcE9aBpMOCF31r9rn1ol6ifpOxxItjdbK3nuw=
+8vS
+gQqm/nGtbxYWDwyX4T++SP1Z8x1bLGf62Gffudcg6FAAaDXSTUhlGJfmIfT8PaRNyreBBc1JR=
+WVm
+xOMSi/zT56Ps+CfWlnpiy7M3GM/7t152zr1EkB0q5nzs193FeMn5ozOZXsIErLaMRsk8djPHp=
+7JY
+HV4T7YWZQ505zk/gvjk7IfPpubaLPB0I2jzNNTCgYgKnT4JLJtcLtg668FIugoUVU1AXI+vv/=
+SCf
+NR9j9oCZNy7NwFSMSH3y6GN+BPjGEn5BIwc9BPAiznAMOySMAGngUw=3D=3D
+=3DjHHo
+-----END PGP PUBLIC KEY BLOCK-----
+
+--------------22BC6454D8C5503319DE83DF--
+
+--lkwwXRnG3fVH946rS4vUVyA8SSsAhpJOK--
+
+--rwYrjGYnJpu84f8wmPWW73X4LAzIMcGYC
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAl+q6rcACgkQsoi1X/+c
+IsEyoxAAgKNcYi61LSN5aLl18eSvYDpJIEhZk9wArDj83KNrD+T96o9Aw9qcP7hF
+biL8akDW9AP5Vt9BHl5pns+wzBChfGZoXYPAc1hM8dReKbBSAcyvY2o0WASIyWBq
+qCQxvPyKmOdJNaaFh+mW7xRebdB80A0+oJ9yKc+Pnbl8WiIwaPgRpnuochi5/THX
+cZ1Kjt3URPkn1zaS2Z1M4vrEUz4d5qBRjbL2VEUlFXW6pFRLHG+bexozwdhNwe0l
+U2d9vd9aXDgLkdG4MAak4cfu19+tQUTdRON/HP0Z5NqyldVKkx6G0K89kspCtt3J
+wbz3klHzhCDgHPnvKA1YADIclDHznrhK7IqeSH6/HpMZMp0RlaT/uIDHQzbZsVab
+K9w+Hx2ig8VWki99Ii4P0Q3iVQcuHvSKZlvYl04bRrM396UaZgpeWHpAA8ff5/TG
+5CYCjdfhBkNBvE/iOrQ2PMb3BwjukA4r30pTAcq9mNBGuUQzkSvxAA8NTT97w7Oa
+gfQNIWnDw6/YcuAa/6RZTPXKt4QIwFjwwtjJ2KM33i4Lak4umYbWQiE0gJ8c5sVh
+f79JgDrFo9HJoh6D2MWQcX9GWqOIfadBNWVQcLFjTS08qFgCb1s1KI8KG1BaHp/B
+Et94Ym2nwJrUnU7JWa0TGdxfXTEjUoBgut3R4U5hOxmXy0maLUA=
+=pmAT
+-----END PGP SIGNATURE-----
+
+--rwYrjGYnJpu84f8wmPWW73X4LAzIMcGYC--
