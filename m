@@ -2,128 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64BA1C55ABD
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBD5EC388F7
 	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:39:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 061C5207D3
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:39:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6AB2D20825
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:39:05 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KgIAc1tb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731876AbgKJVjE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Nov 2020 16:39:04 -0500
-Received: from cloud.peff.net ([104.130.231.41]:53554 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730894AbgKJVh2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Nov 2020 16:37:28 -0500
-Received: (qmail 9487 invoked by uid 109); 10 Nov 2020 21:37:28 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 10 Nov 2020 21:37:28 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6074 invoked by uid 111); 10 Nov 2020 21:37:27 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 10 Nov 2020 16:37:27 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 10 Nov 2020 16:37:27 -0500
-From:   Jeff King <peff@peff.net>
+        id S1731587AbgKJVjD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Nov 2020 16:39:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43014 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731981AbgKJVhk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Nov 2020 16:37:40 -0500
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 721B6C0613D1
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 13:37:40 -0800 (PST)
+Received: by mail-pf1-x443.google.com with SMTP id x13so48123pfa.9
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 13:37:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=s/+N1DQ8GVzUisJ6bFoh7DKgRIy7q573ckt3BaFxiyA=;
+        b=KgIAc1tb9c/bjo/fB6QYzP9/mXmyyYuYEifFdGmCAssr7gf+n3OuWltd8sCjVvfBpP
+         51kfnkJ7FcsHFmI6jsvRakDUWmJ7TFk2NeAt4WE0/wP+tJbDx/MovydMklfUtdfa2fa0
+         daSEm5WMjrhqQyFD0lfERcD7DF+sVfy8wAhU+cD4yQHQZVUcEYH8h1dRmBMVfGsNJDwz
+         oD5bRpHUbedVDRW4W2MvRBDkDqsziraMq4Zd/5q4Ok4CW3dInfj/k5CIuBUPKi9+4zPo
+         0AYEq81zbrC+xbL3N47y0SJwW63RxNRfuiAvzWgMQh7GeG9RP+KvM15YTC3fnao5cOk2
+         QRLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=s/+N1DQ8GVzUisJ6bFoh7DKgRIy7q573ckt3BaFxiyA=;
+        b=f+U8cU1meSxlX8u12V1aEwRYH0YTdgF2EzvrX3hZRqR4gacaChNiu3fedhgzg7km8v
+         HxkhoSPY6IWjTzc9GnPtWWz30m37XPNhQh7Phuj8mZ+SPcdvteIJhP7ZwRQk54jl2WI6
+         zjNzN0mhCqwzkUaQArTDLzY/J3mujXrbKNpVCms45tppuTs/GZhKlMqacpJwVtUGNcCC
+         1dDgTwnsbljz/Ii93nVoOJuLXDH4hKzwQ6d/qO3r263g0MSJYyhW2YRvF52MNCQgyB6m
+         dvBWWLATpw9pOzGHQC6OCmxGFME8zNYCcaPFbhJrWA+GrK5mLEBcqHhAFTMTrSInQfaC
+         GlWg==
+X-Gm-Message-State: AOAM5326hg88q1ZsWWjuakz3+eLNbGFC4mZZidTKpbtYqgAOsj9zT7Xx
+        tj27tSIAQdIBtB6RYbz0NRonOML/FEzhRQ==
+X-Google-Smtp-Source: ABdhPJx7Dbt2uURp76Rrrr2OQ6OjR4zDQ3+rju+Xy8iVdSkvbsUHLMBmKGbI8lOuBNXEgNVvVHNoFw==
+X-Received: by 2002:a63:f748:: with SMTP id f8mr18577098pgk.420.1605044259878;
+        Tue, 10 Nov 2020 13:37:39 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:1ea0:b8ff:fe74:b4c1])
+        by smtp.gmail.com with ESMTPSA id mt2sm4552900pjb.7.2020.11.10.13.37.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Nov 2020 13:37:38 -0800 (PST)
+Date:   Tue, 10 Nov 2020 13:37:32 -0800
+From:   Josh Steadmon <steadmon@google.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "Demi M. Obenour" <athena@invisiblethingslab.com>,
-        Git <git@vger.kernel.org>
-Subject: [PATCH 1/3] rev-parse: don't accept options after dashdash
-Message-ID: <20201110213727.GA788740@coredump.intra.peff.net>
-References: <20201110213544.GA3263091@coredump.intra.peff.net>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 00/10] Advertise trace2 SID in protocol capabilities
+Message-ID: <20201110213732.GE36751@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <cover.1604006121.git.steadmon@google.com>
+ <4f1a1bab-7ac7-b8dd-acb2-6aeb04be3171@jeffhostetler.com>
+ <20201102222020.GA1904687@google.com>
+ <xmqqa6vyqgoc.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201110213544.GA3263091@coredump.intra.peff.net>
+In-Reply-To: <xmqqa6vyqgoc.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Because of the order in which we check options in rev-parse, there are a
-few options we accept even after a "--". This is wrong, because the
-whole point of "--" is to say "everything after here is a path". Let's
-move the "did we see a dashdash" check (it's called "as_is" in the code)
-to the top of the parsing loop.
+On 2020.11.03 13:22, Junio C Hamano wrote:
+> Josh Steadmon <steadmon@google.com> writes:
+> 
+> >> So the value being passed between client and server over the
+> >> protocol may look like `<sid1>/<sid2>/<sid3>` rather than just a
+> >> single `<sid_x>` term.  For your purposes, do you want or care if
+> >> you get the single term or the full SID ?
+> >
+> > I'm not sure we care too much one way or the other. A single component
+> > of the SID should be enough to join client & server logs, but it's
+> > easier to just send the whole thing.
+> 
+> It may be worth documenting this design decision in the protocol
+> doc; even though protocol doc may say this should be treated as an
+> opaque token, people may assume certain structure.
 
-Note there is one subtlety here. The options are ordered so that some
-are checked before we even see if we're in a repository (they continue
-the loop, and if we get past a certain point, then we do the repository
-setup). By moving the as_is check higher, it's also in that "before
-setup" section, even though it might look at the repository via
-verify_filename(). However, this works out: we'd never set as_is until
-we parse "--", and we don't parse that until after doing the setup.
-
-An alternative here to avoid the subtlety is to put the as_is check at
-the top of the post-setup options. But then every pre-setup option would
-have to remember to check "if (!as_is && !strcmp(...))". So while this
-is a bit magical, it's harder for future code to get wrong.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I guess it could also shove them all into an:
-
-  if (!as_is) {
-	if (!strcmp("--local-env-vars"))
-  }
-
-conditional. I do end up having to do that later for end-of-options
-anyway.
-
- builtin/rev-parse.c            | 11 ++++++-----
- t/t1506-rev-parse-diagnosis.sh |  9 +++++++++
- 2 files changed, 15 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index ed200c8af1..293428fa0d 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -622,6 +622,12 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 	for (i = 1; i < argc; i++) {
- 		const char *arg = argv[i];
- 
-+		if (as_is) {
-+			if (show_file(arg, output_prefix) && as_is < 2)
-+				verify_filename(prefix, arg, 0);
-+			continue;
-+		}
-+
- 		if (!strcmp(arg, "--local-env-vars")) {
- 			int i;
- 			for (i = 0; local_repo_env[i]; i++)
-@@ -655,11 +661,6 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 			i++;
- 			continue;
- 		}
--		if (as_is) {
--			if (show_file(arg, output_prefix) && as_is < 2)
--				verify_filename(prefix, arg, 0);
--			continue;
--		}
- 		if (!strcmp(arg,"-n")) {
- 			if (++i >= argc)
- 				die("-n requires an argument");
-diff --git a/t/t1506-rev-parse-diagnosis.sh b/t/t1506-rev-parse-diagnosis.sh
-index 3e657e693b..2ed5d50059 100755
---- a/t/t1506-rev-parse-diagnosis.sh
-+++ b/t/t1506-rev-parse-diagnosis.sh
-@@ -254,4 +254,13 @@ test_expect_success 'escaped char does not trigger wildcard rule' '
- 	test_must_fail git rev-parse "foo\\*bar"
- '
- 
-+test_expect_success 'arg after dashdash not interpreted as option' '
-+	cat >expect <<-\EOF &&
-+	--
-+	--local-env-vars
-+	EOF
-+	git rev-parse -- --local-env-vars >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.29.2.640.g9e24689a4c
-
+Done in V3.
