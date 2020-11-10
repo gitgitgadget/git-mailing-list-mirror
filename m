@@ -2,112 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+X-Spam-Status: No, score=-11.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B40DC388F7
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 15:35:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AA47C388F7
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 15:38:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 203B02076E
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 15:35:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BB57D2068D
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 15:38:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N4UVWPOe"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="E4cPhwj6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730845AbgKJPfN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Nov 2020 10:35:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42784 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730511AbgKJPfN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Nov 2020 10:35:13 -0500
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EC45C0613CF
-        for <git@vger.kernel.org>; Tue, 10 Nov 2020 07:35:13 -0800 (PST)
-Received: by mail-lj1-x242.google.com with SMTP id 11so15189721ljf.2
-        for <git@vger.kernel.org>; Tue, 10 Nov 2020 07:35:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=M8MbeTAHaiDyiQW1HZ0d/kEUnqvgtEFTXKPqTGxzUVs=;
-        b=N4UVWPOeufAPnt0K6Gv3NDVaVN0BbVwQ3cTvvRpLYDqXBJ37kADYMUVlH/AZqGUvZK
-         v+MSzc/yuS917ufxjI9GEc6NNbO4EIwWj6seXu70ewt3VFPrQEDLig/5v/KiS7W/ZWHd
-         cyvGrun2my8V01+k2BLGDPeqqXQ5jtettGcJ7yX2C359pARWsJNhSTmSApsKrceEMC9P
-         N0CzQVkxOZvlqI3kf2p1q0oRSI0r3D7p0ScK/ObXxb0kdYzrTgwcGm9HpVYMxlKWCinM
-         4r1UShaYAcasQ1Xl0IJdiRFcGwqug5qRVY+EUY+NI/Hh9P7sTPhKb9JJbvfLHCRZKuOv
-         EneQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=M8MbeTAHaiDyiQW1HZ0d/kEUnqvgtEFTXKPqTGxzUVs=;
-        b=qnXPsKVarm5TCYkqd3ROWQR+9kF+QHkkZOLGfKgJNg0jnnxNxuWuSvkcLsVh0hfcy+
-         WH8wQLFFrI3K6M9iWNdBvtpd9ha3GVI+RkKvL9BdUUGgFHP4zUt/EFss+EDDEAJBAlWV
-         fBh5yBJ/eX+k4XTKTmzFSZji7Bk0CT+ZrvzEZyBrALVgD2XnZico4kdVYNbQriiTBAy3
-         1szQNf7rlnceKIegBK1atsFc5E4q9Ej1JJCcm76HfdY24PNCv1dqYYyNfuGnqZ4KC2uA
-         EUjxfwvwlvttBvUTRLJyaOeUuMPJ1AMyXWKmLzjLSl47+mECX2iD9MVM92k527gVFpM3
-         YXvw==
-X-Gm-Message-State: AOAM532l5/3lT1RS57ljVxrd541l3fQO6yTJZ2UzhnVE+9TPa0FQQBOP
-        jZzJ3b5HsWKXs4/wbMz78yZeRtKsEcBmLexS
-X-Google-Smtp-Source: ABdhPJzDZbURWRyNAVTMTnT1xsyvXHZER4jdycUWtHCs77+dGo0lhO7mKh4MqeI0OD4shbGK445KaA==
-X-Received: by 2002:a05:651c:512:: with SMTP id o18mr7918412ljp.315.1605022510833;
-        Tue, 10 Nov 2020 07:35:10 -0800 (PST)
-Received: from [10.5.0.5] ([185.204.1.184])
-        by smtp.gmail.com with ESMTPSA id p204sm166948lfa.168.2020.11.10.07.35.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Nov 2020 07:35:09 -0800 (PST)
-Subject: Re: [PATCH v2] compat/bswap.h: simplify MSVC endianness detection
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <20201107234751.10661-1-dgurney99@gmail.com>
- <20201108095739.23144-1-dgurney99@gmail.com>
- <20201110003127.GA1268480@coredump.intra.peff.net>
- <20201110023620.GH6252@camp.crustytoothpaste.net>
- <xmqqft5h92fm.fsf@gitster.c.googlers.com>
- <nycvar.QRO.7.76.6.2011101500370.18437@tvgsbejvaqbjf.bet>
-From:   Daniel Gurney <dgurney99@gmail.com>
-Message-ID: <f41271c0-973d-ee3f-9535-d7fbc5b073cf@gmail.com>
-Date:   Tue, 10 Nov 2020 17:35:08 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.1
+        id S1732645AbgKJPis (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Nov 2020 10:38:48 -0500
+Received: from mout.gmx.net ([212.227.17.22]:40453 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732457AbgKJPir (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Nov 2020 10:38:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1605022720;
+        bh=Jk0Z81kTOFRF2epYhMLg1vMdkcI1ForQ2k77aDCsuZ8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=E4cPhwj6R0epSmH0Z+PopqhXYZWo4cDYxoxNwKB9OA0Jc0+XgEbLrsWVYPL+wQKPp
+         y50NPoS39anboDHqQVASjJm6iAGwZnbmmyTY8NUXAeQOJjBgIbiOaTqyOEg8gMtPef
+         49hN8FB/uzmQX3TJwO5wdC9cZ7vYXRu3VJ9Gq/fs=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.26.25.62] ([213.196.212.205]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MtOGU-1kJCUo2TtO-00urtb; Tue, 10
+ Nov 2020 16:38:40 +0100
+Date:   Tue, 10 Nov 2020 16:38:39 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jinoh Kang <luke1337@theori.io>
+cc:     Junio C Hamano <junio@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v4] diff: make diff_free_filespec_data accept NULL
+In-Reply-To: <137f0fc1-fbd9-a62c-bd52-cffd26c364bf@theori.io>
+Message-ID: <nycvar.QRO.7.76.6.2011101638080.18437@tvgsbejvaqbjf.bet>
+References: <aeb24944-17af-cf53-93f4-e727f9fe9988@theori.io> <xmqq4km4lppy.fsf@gitster.c.googlers.com> <a0513d6f-1f69-683d-d6c5-75b17b8b6890@theori.io> <a096d122-52a3-700a-3a14-30a81b099cd8@theori.io> <137f0fc1-fbd9-a62c-bd52-cffd26c364bf@theori.io>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.2011101500370.18437@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:HP6yu1IkV0rVUKRy4HnRIZqFydpsNVh4jSHoWpJmdpIyUVGft3G
+ dhsIHio4UD4b+rF10lr4I1qQW1NrfbRGqxBTd67+JyrK6a+K77Ld6mlMm2fZkDnI7qFdWdp
+ lE5sK3gybc/KP8P31sZiaERkExLOJU9TXC9EMJHHk6iq+fkQm6bIKgH4d+yUcnr3GzKF1ce
+ cMCiTZJsk968VDVLenKXw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:kSrqXTUEnsY=:TtS/mcv53cFdayn9TcRTpf
+ I1SspcF6Vzf/zksACrHR07hv0Q5EyJ0a/61PMVk9Jm3Pz+1vvSt93Xq81RGmnoXI7bJlK6Lg5
+ 0G6Ns2rSv5E5xOcs0bHqZkm19RqRnp7DdfzY05ZEFFD1Ic+SuX1rU6pypwHpBielIDI+TMXuw
+ r1uyRcNMe0GPkffq9oIZ/WIqMwm55oAdQdNAN5NN9MMV1iHwpgKci3KYa2HLNmvNhNdED36ca
+ mLt0l6g1BePvWZB9K4z3YINsvSfqhI8IWjes0oS54a46GOLQ6nnhVE0t4xUI1KalOEfT8lhpq
+ ytEX1dUjCbYIsvYFWAPbK5Rn8iYq0LY3FjtCoIWNXtkKuhx/icoZinccswKm/98kK+BY3JOMO
+ Bp6Lik6BFopSJMuP+1aiFz+yGsSG62kOvZEdCkn5vU3uxIwiiXr09rEqh0qmxE52fl+BtyUmI
+ U2RjD7fGNlZOgdgnHxLLOtWg4+JGZc8oiIoz+gP38cRbmdSpdMrHnsGaYsMwQ6m22NED9Ui4D
+ bxKYIwPPfumSu6xaAp94V/6qMRwRxDcR9SOKmO4nhuBPJufY50H5lfofyKdlw2y2NezXsGaBP
+ +acOMKy2BFjDtVO7ymbhgM28TZN9AYPC0H2BWVfJvEYyi6fZfb9D7XUBzAGTA5bZMBnGdVBRS
+ 0YdOX6SkbvVl+oReWxcQEpWXdepYTzjMw3qLpvu9ApVvjlnMtolgP4WgUP911n4GlJN1FyiXj
+ alxlC70mPZHpgO1Bwm0ByGaIYGamCbu1W89sHjvFqH7nWkYHAXtA/WRIkjJsc19Lm/3lK7Yrj
+ yayq25AxpDRbrvf7BFQwNKHUJ35oCzQnofRrR7/9WfueSzijaYZV9tNLOXWIp9mxVzsi3pozV
+ XQtFR/I7XBuw7ngcMQWNo952xhrj/7Blr7gHsDNto=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Hi Jinoh,
 
-On 10/11/2020 16:04, Johannes Schindelin wrote:
- > Point in reference:
- > you can build Linux applications in Visual Studio like _right now_ [*1*].
- >
- > Ciao,
- > Dscho
- >
- > Footnote *1*: It currently uses GCC, but who says it always will?
- > https://docs.microsoft.com/en-us/cpp/linux/cmake-linux-project
+On Tue, 10 Nov 2020, Jinoh Kang wrote:
 
-When it comes to building C++ code MSVC uses Microsoft's C++ Standard 
-Library, and one of its stated non-goals[1] is being ported to other 
-systems. I assume the same applies for their C library. Therefore to me 
-a scenario where a future version of MSVC would build non-Windows code, 
-let alone for a big-endian architecture, seems extremely unlikely.
+> Today, diff_free_filespec_data crashes when passed a NULL pointer.
+> Commit 3aef54e8b8 ("diff: munmap() file contents before running external
+> diff") introduced calls to diff_free_filespec_data in run_external_diff,
+> which may pass NULL pointers.
+>
+> Git uses NULL filespecs to indicate unmerged files when merge conflict
+> resolution is in progress.  Fortunately, other code paths bail out early
+> even before NULL can reach diff_free_filespec_data(); however, difftool
+> is expected to do a full-blown diff anyway regardless of conflict
+> status.
+>
+> Fix this and prevent any similar bugs in the future by making
+> `diff_free_filespec_data(NULL)` a no-op.
+>
+> Also, add a test case that confirms that running difftool --cached with
+> unmerged files does not SIGSEGV.
+>
+> Signed-off-by: Jinoh Kang <luke1337@theori.io>
+> ---
+>  diff.c              |  3 +++
+>  t/t7800-difftool.sh | 23 +++++++++++++++++++++++
+>  2 files changed, 26 insertions(+)
+>
+> diff --git a/diff.c b/diff.c
+> index d24f47df99..ace4a1d387 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -4115,6 +4115,9 @@ void diff_free_filespec_blob(struct diff_filespec =
+*s)
+>
+>  void diff_free_filespec_data(struct diff_filespec *s)
+>  {
+> +	if (!s)
+> +		return;
+> +
 
-That said, I understand your overall point of view perfectly, and I'm 
-fine with either one of my patches being applied since the end result 
-today is the same.
+I had suggested an improvement for this hunk as well as for the test case.
+Fell through the cracks?
 
-- Daniel
+Ciao,
+Dscho
 
-[1] https://github.com/microsoft/STL#non-goals
-
-
+>  	diff_free_filespec_blob(s);
+>  	FREE_AND_NULL(s->cnt_data);
+>  }
+> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+> index 524f30f7dc..e9391abb54 100755
+> --- a/t/t7800-difftool.sh
+> +++ b/t/t7800-difftool.sh
+> @@ -728,6 +728,29 @@ test_expect_success 'add -N and difftool -d' '
+>  	git difftool --dir-diff --extcmd ls
+>  '
+>
+> +test_expect_success 'difftool --cached with unmerged files' '
+> +	test_when_finished git reset --hard &&
+> +	echo base >file &&
+> +	git add file &&
+> +	git commit -m base &&
+> +	git checkout -B conflict-a &&
+> +	git checkout -B conflict-b &&
+> +	git checkout conflict-a &&
+> +	echo conflict-a >>file &&
+> +	git add file &&
+> +	git commit -m conflict-a &&
+> +	git checkout conflict-b &&
+> +	echo conflict-b >>file &&
+> +	git add file &&
+> +	git commit -m conflict-b &&
+> +	git checkout master &&
+> +	git merge conflict-a &&
+> +	test_must_fail git merge conflict-b &&
+> +	: >expect &&
+> +	git difftool --cached --no-prompt >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_expect_success 'outside worktree' '
+>  	echo 1 >1 &&
+>  	echo 2 >2 &&
+> --
+> 2.26.2
+>
