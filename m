@@ -2,99 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84AF3C4742C
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 23:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39580C388F7
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 23:39:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1AD3B207E8
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 23:23:02 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RMHB5ifX"
+	by mail.kernel.org (Postfix) with ESMTP id C509D207BB
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 23:39:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731713AbgKJXXB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Nov 2020 18:23:01 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57021 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726706AbgKJXXA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Nov 2020 18:23:00 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E52CF10F987;
-        Tue, 10 Nov 2020 18:22:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CjqkQG+gHeHeWbLkfx1XHfe8a8o=; b=RMHB5i
-        fXAU6pv5kECFWBfagO9zRIChSmlQTB8Sfa57fkn0txRAc/BsfEjUh1pk5L+m/UQf
-        7AydYfKAzKs7KR4McLlJ97ED6wGczad206DRhh4+kSYjay+FRL5zl0WGhKGDklIH
-        gArT6AUr8MUSxW5xzqMimVoyBDCZs9rEocRuk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=MICRj16CwrY3qhboy3qiyABwxNSsuvLC
-        tuaSelLv2eb+5gqwzGR6xbYGdqv0O9cyKSnE+IzYSFhhznQZ3mKwApirjN6HYvwL
-        gxoC4IA9x6GKCaQilp7kvDekyBj1Iwc5oswhh93xnMekc0jK0uWJZdYlqFYCG10j
-        muEJr1ZG1D0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id DE7F410F986;
-        Tue, 10 Nov 2020 18:22:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1731657AbgKJXj0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Nov 2020 18:39:26 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38502 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726706AbgKJXj0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 10 Nov 2020 18:39:26 -0500
+Received: from camp.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 330CB10F985;
-        Tue, 10 Nov 2020 18:22:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 561186045A;
+        Tue, 10 Nov 2020 23:38:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1605051534;
+        bh=MG9qnTfwxRBkaWa8kVnQiu0/zFDF3bJYbRmFauA5pnQ=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=EuPgw4YC4ulSCTNbC+ig6+ZIqvo3uGbyWJUpItY2H9jCO4VLCXkjSP/psxu8MTXTg
+         cB8FqhMT9eU+Hy4uyldfqF192Tbat5q0F5btXvaMiciL7w87T6oXPpsuQ2Ri3J1Rd5
+         1K4BtCS2YHRtPkml20W0gizany79OHdU0loc67yVXgPaSncJneQ6zYn2Q2LLOoXhCs
+         LckKSc5IXUMzJv5ntD7n66zKKdZpsR2MWTjJKe1g3pY41WlJTyl6sYY8xWx1IfZ/Jc
+         qc8/NwOFLBrOqNR0M86EJfI0Gf/ay+TP2h2p/DdE3pq8/PGWPO/w0OO1Is8uh6ga9H
+         0HLtA9bqw/E0PBpzerZnzISZDO3fxnn+jW2lr7BXXb9G8gD4U1SPOjM7CcJLeRG/MY
+         xOgdJZ8lhz2Ky5jLqfNQPJDYTpifDS8bJEgBByrRhdA/l1lg3rxqXRYIIuN2FxoYJZ
+         LbaVJGQ/+K6/T3i9Zj7jjKLxu++TPakcJwtGFiew0zUqWYuPd2n
+Date:   Tue, 10 Nov 2020 23:38:50 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Brandon Richardson <brandon1024.br@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: format-patch: "magic" mbox timestamp
-References: <CAETBDP6d8UwiJEF_pX0p=xLG79pwHeEtectmOnjPiUpjUCPaqw@mail.gmail.com>
-        <nycvar.QRO.7.76.6.2011102347320.18437@tvgsbejvaqbjf.bet>
-Date:   Tue, 10 Nov 2020 15:22:54 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.2011102347320.18437@tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Wed, 11 Nov 2020 00:12:05 +0100
-        (CET)")
-Message-ID: <xmqqimac6bld.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+Cc:     Daniel Gurney <dgurney99@gmail.com>, git@vger.kernel.org,
+        Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH] compat/bswap.h: detect ARM64 when using MSVC
+Message-ID: <20201110233850.GJ6252@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Daniel Gurney <dgurney99@gmail.com>, git@vger.kernel.org,
+        Sebastian Schuberth <sschuberth@gmail.com>
+References: <20201107221916.1428757-1-dgurney99@gmail.com>
+ <20201107224747.GF6252@camp.crustytoothpaste.net>
+ <nycvar.QRO.7.76.6.2011101418550.18437@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A9EDAB06-23AB-11EB-B76E-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="/0U0QBNx7JIUZLHm"
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.2011101418550.18437@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.14.6 (2020-07-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> The original magic timestamp, however, was the one I reintroduced, and as
-> you can see from the part I quoted above, I only imitated the original
-> script.
+--/0U0QBNx7JIUZLHm
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-That's almost a lifetime ago that I totally forgot that it was
-original a shell script.  
+On 2020-11-10 at 13:58:21, Johannes Schindelin wrote:
 
-It indeed does this:
+> The biggest question now is: are we certain that `_M_ARM64` implies
+> little-endian?
 
-+	case "$mbox" in
-+	t)
-+	    echo 'From nobody Mon Sep 17 00:00:00 2001' ;# UNIX "From" line
-+	    mailScript="$mailScript"'
-+	    s|^|Subject: [PATCH'"$num"'] |'
-+	    ;;
+For Windows?  Yes.  I'm almost certain Windows has only supported
+little-endian architectures, possibly with the exception of gaming
+consoles.
 
-which clearly shows that "nobody" was chosen to mimic a real mailbox
-(i.e. unlike what Brandon said in the other message, the <mailbox>
-may not have "@" <domain> after <local-part>).
+> I remember that ARM (the 32-bit variety, that is) has support for
+> switching endianness on the fly. Happily, MSVC talks specifically about
+> _not_ supporting that:
+> https://docs.microsoft.com/en-us/cpp/build/overview-of-arm-abi-conventions
+>=20
+> Likewise, it says the same about ARM64 (mentioning that it would be much
+> harder to switch endianness there to begin with):
+> https://docs.microsoft.com/en-us/cpp/build/arm64-windows-abi-conventions
+>=20
+> So does that make us confident that we can just add that `_M_ARM64` part?
+> Yes. Does it make me confident that we can just drop all of the
+> architecture-dependent conditions? No, it does not. There _were_ versions
+> of MSVC that could compile code for PowerPC, for example, which _is_
+> big-endian.
 
-In any case, I think what's more important is after 15 years, if any
-implementation of the /etc/magic database actually take advantage of
-that magic date as the "magic" signal to identify a format-patch
-output.  Despite the wishes of original authors and designers of Git
-and its format-patch output, perhaps no /etc/magic author noticed it,
-in which case it is safe to use other randomly picked dates, or the
-timestamp of underlying commits.  Otherwise, changing the "magic"
-timestamp would introduce a needless regression.
+PowerPC can actually be either.  Most 64-bit PowerPC machines these days
+are run as little endian, and Windows has always run it in little-endian
+mode.  Macs ran it in big-endian mode.
 
+> > As far as I know, Windows has always run on little-endian hardware.
+>=20
+> I think that depends on your point of view... IIRC an early version of
+> Windows NT (or was it still VMS Plus?) ran on DEC Alpha, which I seem to
+> _vaguely_ remember was big-endian.
+
+Alpha appears to have supported both, but as far as I know, both Windows
+and Linux used it in little-endian mode.
+
+> > [0] Wikipedia does not specify the endiannesses supported by the MIPS
+> > edition.
+>=20
+> I have another vague memory about MIPS (a wonderful SGI machine I had the
+> pleasure of banging my head against, for lack of Python support and Git
+> requiring Python back then) being big-endian, too.
+
+Another architecture that supports both endiannesses.  Debian supports
+both, but I believe Windows only supported the little-endian version.  I
+have a small MIPS board that uses the little endian port for Debian.
+
+> Short version: while I managed to convince myself that _currently_ there
+> are no big-endian platforms that we can support via MSVC, I would like to
+> stay within the boundaries of caution and _not_ drop those `defined(_M_*)`
+> parts.
+
+While I'm confident in my statements, you're the relevant subsystem
+maintainer here, so I'm happy to defer to your judgment.  I think Junio
+can just pick up the earlier patch version and we should be good to go,
+since that patch seemed to meet everyone's needs.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--/0U0QBNx7JIUZLHm
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX6skiQAKCRB8DEliiIei
+gcshAP9I/nm9VOKBlTNrrffC/VXxeH1G+VyW7XWKwReGl1axAAD/cQhirFdo0qa/
+sfyZMzoRqN9lqJSMciAUDdpFuqVahgk=
+=OFLP
+-----END PGP SIGNATURE-----
+
+--/0U0QBNx7JIUZLHm--
