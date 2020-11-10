@@ -7,98 +7,94 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 696A8C2D0A3
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 01:07:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE853C4741F
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 01:10:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 069CC206D8
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 01:07:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 85051206D8
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 01:10:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vfhhGX3N"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BiQ9Mc+P"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730171AbgKJBHJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Nov 2020 20:07:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49334 "EHLO
+        id S1729661AbgKJBKY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Nov 2020 20:10:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727311AbgKJBHI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Nov 2020 20:07:08 -0500
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30123C0613CF
-        for <git@vger.kernel.org>; Mon,  9 Nov 2020 17:07:08 -0800 (PST)
-Received: by mail-wr1-x443.google.com with SMTP id p8so10047083wrx.5
-        for <git@vger.kernel.org>; Mon, 09 Nov 2020 17:07:08 -0800 (PST)
+        with ESMTP id S1727311AbgKJBKY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Nov 2020 20:10:24 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BF26C0613CF
+        for <git@vger.kernel.org>; Mon,  9 Nov 2020 17:10:23 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id o15so3020062wru.6
+        for <git@vger.kernel.org>; Mon, 09 Nov 2020 17:10:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=1hmxC4AHI3ILlZM6ho8XOVYy5W81LJGRlfWrfrqX+3M=;
-        b=vfhhGX3NbTVJnmnsTJleNgzac3d+YdqI9d0HWpO+H9BgaESxhWfFZiyXvN53YFRSNk
-         5w8gR+K1sXpF8nSmh09lzGupW/YtejMAI3F6xBwbDaUNDjgI3sRSLo6tenaBuWC6pFui
-         iUInj1NNw7S6ZC4SpK/hv2wx/GVeQPts9b/U1zkhFTNe6YsCYT7G8z+e+SDXniHrGlh9
-         V4cshiTwUmbJILlc4Ut0FwcRF0aqZuu2NEm75hOxJETgY7xPvrbHLtvfeca/Qe6psDh8
-         k+Pq+97qmXinaITTBBZU5vYtvWPy0QXVYbTlUDKMYyzTp9xxj2MnzCUww4dISdk/F1oo
-         hVag==
+        bh=Yg+dQJlL6dHdS8MRLTCCHCEm6n11KvgZjgvFAx+w8IA=;
+        b=BiQ9Mc+PJZ96m4g/NkD5nyClW09Kr4jDZpVYBtKLsTDZ9QY+qKVGWJrJEJVFzT1NXi
+         LVj0CFE+hBFF1kO49oa//kmpJDQZ2HKF+GRbiDnBo6iqkRm7LDsHEDGBlJY7wEXlcpVd
+         JbYdWO900FqHRFLbUYdlHllI4kCXoHqS4ngztjtEUlJG+cmBk8WQ06+FOm5fMb+HmZDL
+         nPyGx3pfueXfMk5jlJKYAGQ3OvvU8Ev51LaZxSKc01wWngtgRsyBjOOPsM1eso4Dynhd
+         5b+q0ILpk9WIGR0/t6l9+oItdrLCJ8TDLM2zhdtdhBk+dr1vi+9KK1joCZ1SeuqlRT4O
+         0dKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=1hmxC4AHI3ILlZM6ho8XOVYy5W81LJGRlfWrfrqX+3M=;
-        b=aoFfz/SuMvS3/y/EKiJPXUndbIYQ8ja7aUaVsaWUkV1ryk6MEIdhn5gn/xzH5CJM/k
-         Qjvx6QZPXVFLGuDbrFAgNGnohEdIp8I399iVRgTZ1tnvuBq4zRdRAjwfWLMgjhdL3FAu
-         oszTtTAMGnB2YMVfhXZL60x0UaUIglR5ypFh4jALuILpZEZbno1sqQgMe9cN1ndUpUEo
-         vUYtbH2rp+2IalpDSe2FDwHEFnioLJxLeFnr0D6DxvfbTqKb39Lwfli3BMWiF9J9v//T
-         upEPmFbWt2ZHJgR5YcXC7qmWt7s5doIWOKfI46cCYIy/ScraKXoUFCu/6pOXiUq7F0DR
-         z5Lw==
-X-Gm-Message-State: AOAM533qHFucvPe+H7NJhAjYhFdD+C/W5oAvXgOZraEORE6ey+23lKp2
-        K33wWkp86B1a6VktsoDp0f662KyNjWu3nzIXVTM=
-X-Google-Smtp-Source: ABdhPJxiMeqbjhxv1+KoGxRlrOoKofZS1/9NL8Gitu3dA9jcxUZjQSD+mszj9CFXFGeazo0Qaik9cjouULaVGT6Ibms=
-X-Received: by 2002:a5d:52c1:: with SMTP id r1mr32406wrv.255.1604970426992;
- Mon, 09 Nov 2020 17:07:06 -0800 (PST)
+        bh=Yg+dQJlL6dHdS8MRLTCCHCEm6n11KvgZjgvFAx+w8IA=;
+        b=Cw1SlowIeXSvxsgMf2U7hBwxzd9DGkfo3DQRoNTkeUd1FVa61vlr4cRoxpI9v9RGp0
+         ZwTunWoMHO95arggtXvj5WCyCBD+uft5yOh1s2A4mrKB/qVu4K4oEKUlPEFvTEuobEqY
+         QnwdwTuO9ZBdRg5csrPivOen4dKVOJSqxCJcuhrWdxUuTdsWqFgYJi0eNPqaHYZDJju5
+         SYYrBXQeFGlois6//4rrgsR+/dO51Tmj4gL1i0YLuzhRbChiJBiGeAr83j2j4fjTryWc
+         WSL8qYB1Xf6ufAdborJ5I/mMoiZ9mHrji0qjxlVKfw399vM4l4GOt3gK/IaNE0Wynb52
+         hOFA==
+X-Gm-Message-State: AOAM531nLhRFiRdhJ4TYgnYWCtfn4kyHo1qiBCI5It+Ei21JRs9fRDlP
+        i/eVKkOkeOP4nuqLSwvYdlz37AGFBTBuSL2cXZJ7JYh/I+k=
+X-Google-Smtp-Source: ABdhPJxygJvICLmbxXuDGk8mfU/BM23p1PxHdhN+1EVO23zcnOfHGX3E1LUmVQ3UbE43n6qB3QDmoeGGgxlhuwNSUEs=
+X-Received: by 2002:adf:de91:: with SMTP id w17mr20381226wrl.84.1604970622270;
+ Mon, 09 Nov 2020 17:10:22 -0800 (PST)
 MIME-Version: 1.0
-References: <20201109215248.461167-1-felipe.contreras@gmail.com> <20201109221939.GA670413@coredump.intra.peff.net>
-In-Reply-To: <20201109221939.GA670413@coredump.intra.peff.net>
+References: <20201109215248.461167-1-felipe.contreras@gmail.com>
+ <X6m8R9erSxGlPXq2@nand.local> <xmqq4klyb1w2.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq4klyb1w2.fsf@gitster.c.googlers.com>
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Mon, 9 Nov 2020 19:06:56 -0600
-Message-ID: <CAMP44s2mZK2_aAepOQs-5fmrbYPJ74Jb4VaSgwMAEdzZXS+9ZA@mail.gmail.com>
+Date:   Mon, 9 Nov 2020 19:10:11 -0600
+Message-ID: <CAMP44s36ThnMondH8w-VDi4vWNL0Cpkx+o1qRkx_giJvyfh0dg@mail.gmail.com>
 Subject: Re: [PATCH] completion: bash: support recursive aliases
-To:     Jeff King <peff@peff.net>
-Cc:     Git <git@vger.kernel.org>,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Git <git@vger.kernel.org>,
         Philippe Blain <levraiphilippeblain@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 9, 2020 at 4:19 PM Jeff King <peff@peff.net> wrote:
+On Mon, Nov 9, 2020 at 4:29 PM Junio C Hamano <gitster@pobox.com> wrote:
 
->  - there's no limit on the recursion if we do see a cycle. Doing:
+> >> So the completion should detect such aliases as well.
 >
->      git config alias.foo foo
->      git foo <Tab>
+> Two comments.
 >
->    seems to fork-bomb the system with bash processes (well, perhaps not
->    a true fork-bomb because they expand linearly rather than
->    exponentially, but still...).
+>  - on design, is it possible to make a set of aliases that form a
+>    cycle?  do we need to worry about such case?  what does the
+>    current implementation do for an "alias" in such a cycle?
 
-Yes. I opted for the quick and minimal solution. But if this is a
-concern it can be handled.
+Yes. The first try would be stuck in a loop until the user types CTRL+C.
 
-> We do have "git <cmd> --git-completion-helper" these days. I wonder if
-> something like "git --expand-alias-to-command" would be a useful
-> addition, as it would let us directly ask which Git command would be
-> executed (if any). And it would make both downsides go away.
+I already sent a second version that fixes that.
 
-Yes, but I don't think we need to wait in order to have a solution for
-both issues. I already sent an updated patch.
+>  - on implementation, it is done as a recursive call to the same
+>    function, but a loop that naturally maps tail recursion would
+>    also be a trivial implementation.  is it worth rewriting the
+>    recursive calls into a loop?  if we need to solve the circular
+>    references (above) by say limiting the length of the cycle, would
+>    such a rewrite make sense as a way to help implementation?
 
-Additionally, it might not be what the user wants. For example the
-user might decide to have different completion for each one of the
-aliases (_git_l, _git_lg, etc.), and if so, we would want
-__git_aliased_command to exit once we find the correct completion
-function.
+Yes, that can be done. I opted for the minimal change so it was easy
+to understand what the code was trying to do.
 
-Cheers.
+The second version works in the way you suggested.
 
 -- 
 Felipe Contreras
