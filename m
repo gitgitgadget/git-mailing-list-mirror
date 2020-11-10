@@ -2,119 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
+X-Spam-Status: No, score=-0.9 required=3.0 tests=BAYES_40,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6F23C388F7
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 13:17:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5246C4742C
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 13:17:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 477D920797
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 13:17:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 565E0207BB
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 13:17:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=theori-io.20150623.gappssmtp.com header.i=@theori-io.20150623.gappssmtp.com header.b="iWdKxd+K"
+	dkim=pass (2048-bit key) header.d=digitalsocialweb.com header.i=@digitalsocialweb.com header.b="BWlISS+P"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730231AbgKJNRD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Nov 2020 08:17:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49100 "EHLO
+        id S1730484AbgKJNRN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Nov 2020 08:17:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726721AbgKJNRC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Nov 2020 08:17:02 -0500
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EFECC0613CF
-        for <git@vger.kernel.org>; Tue, 10 Nov 2020 05:17:02 -0800 (PST)
-Received: by mail-pf1-x441.google.com with SMTP id z3so11380548pfb.10
-        for <git@vger.kernel.org>; Tue, 10 Nov 2020 05:17:02 -0800 (PST)
+        with ESMTP id S1726721AbgKJNRN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Nov 2020 08:17:13 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5C96C0613CF
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 05:17:12 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id p22so2957411wmg.3
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 05:17:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=theori-io.20150623.gappssmtp.com; s=20150623;
-        h=to:cc:references:from:subject:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=8DAmbxVGFmPx19VVzfDDmd/ZPZuWTbkjNGSRAMcCP2k=;
-        b=iWdKxd+KS5tuSOw4B5T1NlD3xjKFULFdzBBnP6aWyJKoQNj/ojxvtayrXAnXSSAXWX
-         vk08luJe2aXdeBhvJ9uvKEMV0xm6ezpdKnVwW0/6EyD0ACsIL75iiJLgzDwvhnDWL922
-         qgC0IBCZScJnUsnW11adTwhMoixy2mKgZN6+cVoZKd0UQ2+2fbePZGF6bBXgQHIsP1aS
-         7TOqGgMSTNb46ZJ+rZSv7yokJmFVYA1GDtSYxQaF05NH38UcYENz8R22VSa7LIl/b4ZL
-         yGWwHPW8nzaRjtQ+Quhy24ug/KqiqZKXe2PLIBDko25uajUqQFVls/i+jAKm8ZZV6IxQ
-         x1kQ==
+        d=digitalsocialweb.com; s=google;
+        h=mime-version:from:reply-to:to:subject:content-transfer-encoding
+         :date:message-id;
+        bh=slNq8NBPxHFbXe9fNvn+Ir6OSSMGYHeGF/+6wx7b56Q=;
+        b=BWlISS+P++mxTM7QVRVFPmLhL2LvBJUIlVqF1GqKavPX7GlK7h6JjQeypO6B5zLutp
+         noBDuZwR9uWv1cBuknu1V7c9L2E63i9QcvlTb3iOa+eTlkt0R0d0ZIJBzzs6ryfIlCyH
+         +RWSnwumdw7e0gblF34E9oyBZj8hrOoXHvbzfn7mEn9yaHCDYRK0420q9kqYY9OpGPTv
+         6z5JimqUKOf5nNsf0+zE7lW06i/kiGp2jrpIXhxaXmtUqxRKcWUV0fgcu4109BSkGy4s
+         ZFV+i1o+tljreiYQELxd6qgx7XQLqXKYSidwVjJIhN8zElkf7TxloMiF17/lDxCVCX+O
+         a1Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:cc:references:from:subject:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=8DAmbxVGFmPx19VVzfDDmd/ZPZuWTbkjNGSRAMcCP2k=;
-        b=t2RfouXS9bvR1GtBwnBZwYjivVRKsPdYCQF+Bk4lhtJCRwjPW/aaWeShx50WMXxKzC
-         IX68OaDEPD2Yuqame4fa7uR49G1cevGvGbWayJcuyqTj9UK1jfMLj0uuEBAPxfr3xOND
-         LA7/fpFxqxaf46VF4D2/q0Vxm2o3sN16p70uc5SbHdbOCu3xtyq4TDwUPI3+rOKoxbUx
-         CkVkX5qJ6O9j5YPz+5MncV756RIjGIy/4KtmWkodj9AmrAX3wmO7dNqA9VcdlZO3JrKq
-         5xFnOAMMhVMZYJwGWXWvZ8ng2c3jlnKCZ34+5atsJFitkhPmkvXHVQvAGX2HEA2osZrJ
-         iJvg==
-X-Gm-Message-State: AOAM532gbwkap4x/MP4+3mFOOpPbZaOGLTlGumlEn92M7lkZXtSw6tiH
-        LBTK+IcKzY/CdorWcLpDgVV646obDJVRuA==
-X-Google-Smtp-Source: ABdhPJwY4rUF96JM1ez4EAc5WYelJlltrJnfCp0siGNNBl2bmiRsxhx6g1httJpm7N+ZqCr1CI3aFA==
-X-Received: by 2002:a63:161a:: with SMTP id w26mr16583494pgl.17.1605014221686;
-        Tue, 10 Nov 2020 05:17:01 -0800 (PST)
-Received: from [127.0.0.1] ([222.99.114.187])
-        by smtp.gmail.com with ESMTPSA id j19sm12173854pfd.189.2020.11.10.05.16.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Nov 2020 05:17:00 -0800 (PST)
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <junio@pobox.com>, git@vger.kernel.org
-References: <aeb24944-17af-cf53-93f4-e727f9fe9988@theori.io>
- <xmqq4km4lppy.fsf@gitster.c.googlers.com>
- <a0513d6f-1f69-683d-d6c5-75b17b8b6890@theori.io>
- <a096d122-52a3-700a-3a14-30a81b099cd8@theori.io>
- <nycvar.QRO.7.76.6.2011101257540.18437@tvgsbejvaqbjf.bet>
-From:   Jinoh Kang <luke1337@theori.io>
-Subject: Re: [PATCH v3] diff: make diff_free_filespec_data accept NULL
-Message-ID: <17491ac3-ce1b-ca5d-d4e8-9fa8ab72d7e3@theori.io>
-Date:   Tue, 10 Nov 2020 13:16:56 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101 Firefox/78.0
+        h=x-gm-message-state:mime-version:from:reply-to:to:subject
+         :content-transfer-encoding:date:message-id;
+        bh=slNq8NBPxHFbXe9fNvn+Ir6OSSMGYHeGF/+6wx7b56Q=;
+        b=uRLQcHiflLfgmOW1P1j3XsF30Pe9K4n5IY6z8Mqko3+Kb6n/rMP8zQBdR9v9SrJUdW
+         iNRVYT53tJjxVssFT1u4kbDm19MfHSiG2cWDxF9qL1KxsE9h0QrPhA1GWHT0zzs5FUzL
+         RDmnbTe8Su0AmJa478yE/QkY7w9X5coJzAOLMDzY/t2REBZVlHDCQfiwFv4fsuhKbBZo
+         VP2hJtpcym8g6zwuEwgZfw+o1QZjNaKPr1afpk9V+pAh1YTmj61FtNyGLOXI5uRoQke/
+         QEnI5zu9ZNvym63pmVJh6VjWkr32PRtF+o9Y+SikxcQ2t+n6TkmDK54orYNmIwIzLXMp
+         MB6A==
+X-Gm-Message-State: AOAM532tDVkG0LrktwQHS7RQZNrltT/iM1uZBpaAIA2Kbey8W3v9ER/d
+        2PEy6bZ29ubybhnaYc9Ta1WQEUaRrEacW7Cq
+X-Google-Smtp-Source: ABdhPJwtB4w4ESLTwbV7gv9wwJIUPllS40ZsgXnStUvLmYjAFai6q2OB2tLpvvgQJfD+i6Y3TJWqMg==
+X-Received: by 2002:a1c:7215:: with SMTP id n21mr4657719wmc.173.1605014231092;
+        Tue, 10 Nov 2020 05:17:11 -0800 (PST)
+Received: from 72.255.54.232 ([72.255.54.232])
+        by smtp.gmail.com with ESMTPSA id g11sm8165132wrq.7.2020.11.10.05.17.09
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Tue, 10 Nov 2020 05:17:10 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.2011101257540.18437@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+From:   "Jason Dunlap" <jason@digitalsocialweb.com>
+Reply-To: jason@digitalsocialweb.com
+To:     git@vger.kernel.org
+Subject: Paid Gust posting
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Smart_Send_3_1_6
+Date:   Tue, 10 Nov 2020 18:09:12 +0500
+Message-ID: <10980385454712157481936@DESKTOP-L09MN1Q>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/10/20 12:08 PM, Johannes Schindelin wrote:
-> Hi Jinoh,
-> 
-> On Fri, 6 Nov 2020, Jinoh Kang wrote:
-> 
->> Commit 3aef54e8b8 ("diff: munmap() file contents before running external
->> diff") introduced calls to diff_free_filespec_data in
->> run_external_diff, which may pass NULL pointers.
-> 
-> Sorry for the breakage!
+Hello,
 
-No worries. Those functions were indeed confusing...
+We are a professional Outreach company looking for blogs for blog posting. =
+I came across your blog on Google, and I=92m writing to express my interest=
+ in posting content on your site.=20
 
-> 
-> Maybe the commit message could talk a bit about the circumstances when
-> this happens? Of course, I (and every other reader...) could analyze your
-> patch to guess what it is that triggers the bug, but it's really a good
-> use of the commit message to describe it in plain English.
+We also have a writing agency, where all our writers are native speakers an=
+d will ensure that whatever that is posted on your site will be of high qua=
+lity and relevant to your site.
 
-Agreed. The v1 PATCH, which was off-list, did explain that NULL filespecs
-are used to indicate unmerged files (i.e. with unresolved conflicts).
+All payments will be made via PayPal or Pioneer. Whichever method you prefe=
+r for the do =96 follow backlinks. Please notify me of the price per post.
 
-> 
->>
->> Fix this and prevent any such bugs in the future by making
->> `diff_free_filespec_data(NULL)` a no-op.
->>
->> Fixes: 3aef54e8b8 ("diff: munmap() file contents before running external diff")
-> 
-> I am unaware of any other commit having a `Fixes:` trailer in the commit
-> message. In any case, I would have expected `Fixes:` to mention a ticket
-> or a bug report, not the commit that fixed _a separate_ issue (but
-> unfortunately introduced this regression).
+I look forward to hearing from you,
 
-Sorry for this one; somehow I didn't notice that git and linux use
-different conventions.
-
--- 
-Jinoh Kang
-Theori
+Best Regards,
