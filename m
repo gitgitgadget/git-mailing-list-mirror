@@ -2,148 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24EB7C388F7
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 14:05:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68C4DC4742C
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 14:07:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B1B5120809
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 14:05:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F2EDE20867
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 14:07:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="C4nZURGl"
+	dkim=pass (2048-bit key) header.d=theori-io.20150623.gappssmtp.com header.i=@theori-io.20150623.gappssmtp.com header.b="YQR7Un5q"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730306AbgKJOFG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Nov 2020 09:05:06 -0500
-Received: from mout.gmx.net ([212.227.17.21]:53831 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729898AbgKJOFG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Nov 2020 09:05:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1605017087;
-        bh=JC2kCAjSjzUyEMPr8EWnRImVgrxl3T1Rm60qkAhYVqU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=C4nZURGlz2XYQkqJOkUXIPbegM2tjhAV+n05ikYj3y+VhAxRgQtD6AfmwaGjHVpjr
-         +7F7TVCJ0ud+hkP3YxT5vbEjODUsBsAZG3fNiqwjEzvRO16nZ9aVQ0LWbLQ0HtvKHp
-         JGLEUof2Ju5EVGVDaUwvSlcxu/bcjHJKPbCn9C1I=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.25.62] ([213.196.212.205]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MCbIx-1kTRq007fP-009fIq; Tue, 10
- Nov 2020 15:04:47 +0100
-Date:   Tue, 10 Nov 2020 15:04:44 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, Daniel Gurney <dgurney99@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2] compat/bswap.h: simplify MSVC endianness detection
-In-Reply-To: <xmqqft5h92fm.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2011101500370.18437@tvgsbejvaqbjf.bet>
-References: <20201107234751.10661-1-dgurney99@gmail.com> <20201108095739.23144-1-dgurney99@gmail.com> <20201110003127.GA1268480@coredump.intra.peff.net> <20201110023620.GH6252@camp.crustytoothpaste.net> <xmqqft5h92fm.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730099AbgKJOHD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Nov 2020 09:07:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57010 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726721AbgKJOHC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Nov 2020 09:07:02 -0500
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5569FC0613CF
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 06:07:02 -0800 (PST)
+Received: by mail-pg1-x544.google.com with SMTP id i7so10243981pgh.6
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 06:07:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=theori-io.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:references:subject:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=XYbqTMqHnpB+j63Z49PF6fUJWZmbxh5cp5Ok1LuC2TE=;
+        b=YQR7Un5qHGMuKdr0s6+g9rrPY/wEnhHhqt9rkIgOID3MfHJ3u3NlUGADS/AJho8gAe
+         BoR+tlkdCVbi8cey44fSJY8bpv3T8Gq/J+LHCRpnPzRokIKirtnuc8k8jaqTAaARSyTn
+         aXyk6AVnsd1m1vveUwll4QEcbZ3x4kDJp3VA/BAdd6atX6pFqeYP52dHpbvh28+gE9R0
+         UoK7K5tNML/5o8Brk7zI1XHpkoRwWWdsjXABJWmM7V8avfCcUnF29t8rNLJ9mVzytwQQ
+         lOfivZP9HMiUMbRbex7EbomKWPU7/mU1ojIoe/1ZqteCrUSjHqwk/qQB+/h1jpBoGmsK
+         br2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:references:subject:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=XYbqTMqHnpB+j63Z49PF6fUJWZmbxh5cp5Ok1LuC2TE=;
+        b=Z/AWEwsL9ty0RZITHg0EaukvidKBxZBoqjmjn5vzLFnskUzLZfF0By419hfNbdbL7P
+         5N3ATXMLYh5DHEH69fjtNElxu9LV/F4qsSlOAzeuK7mnLzJHAM09ND+e9emRWv86VN95
+         1umjHfACNjSz7t+ZQ4nl7Jn2VsFvKD/zXcAO7+CvDv71lK0zWEuEuukkDHZw8PrmQr8X
+         sh9wIA2cqmEgOSwUs8l1PVpyqipQo+k9m27B7QYtDK1FEseRHiHntwywUch0Sp6z/FqT
+         QMTPGK3vgRnks5WJqLH9V5V/WO8TtdOKOnMmuRe+RBbrmPdaDJTZnG5GTwiTv62MsDuo
+         ux2Q==
+X-Gm-Message-State: AOAM533w4rPQUoTWxYjUcVGkGtgHD9h8mtUjKVJ1vozbqWTPVWksllvn
+        P/YpD7Hp+SmQdS+bCmLeCbxfqw==
+X-Google-Smtp-Source: ABdhPJz2FA7Zu1WRRsANzt7JG/H/E+q+7HmdFXubWRN6lUd/jNY0UxI+oPUlOvBzKPXgTm2JiB8HBw==
+X-Received: by 2002:a62:b417:0:b029:18b:8c55:849f with SMTP id h23-20020a62b4170000b029018b8c55849fmr17906379pfn.27.1605017221639;
+        Tue, 10 Nov 2020 06:07:01 -0800 (PST)
+Received: from [127.0.0.1] ([222.99.114.187])
+        by smtp.gmail.com with ESMTPSA id t18sm3454691pjs.56.2020.11.10.06.06.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Nov 2020 06:07:00 -0800 (PST)
+From:   Jinoh Kang <luke1337@theori.io>
+To:     Junio C Hamano <junio@pobox.com>, git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <aeb24944-17af-cf53-93f4-e727f9fe9988@theori.io>
+ <xmqq4km4lppy.fsf@gitster.c.googlers.com>
+ <a0513d6f-1f69-683d-d6c5-75b17b8b6890@theori.io>
+ <a096d122-52a3-700a-3a14-30a81b099cd8@theori.io>
+Subject: [PATCH v4] diff: make diff_free_filespec_data accept NULL
+Message-ID: <137f0fc1-fbd9-a62c-bd52-cffd26c364bf@theori.io>
+Date:   Tue, 10 Nov 2020 14:06:56 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101 Firefox/78.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ikyx6XzVyMzDtBsoxk9Hxynhtq2rA0t8R2PEh3Skk5obGG/SKZm
- sGffL2ocfMhwGU5n423mXOPtN2z22n4bDRaV1KpyeCwjIkwl6UlkCSi8TQz9PkfQHyhD19N
- BvMQE7u6i8v7Az8uwv6k3wArvvk481hoA1sBbALRwWpzE3sodsT6koqaAoilP4UhvTwqVs7
- UmI3ymolN65mwoeiMtfTg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:BiKY5ssiaLg=:bs2G8szqqcScXamIxmHgIp
- S4tOy0ASzlaFIvC81znEkl2WPSfs/JC75EgGQrLT8wiaspbbWjHHJkLj2vDJ0aMRT8Sh6Unu9
- cfFisSE8Vl7MjHSaLmM6EfH5UROFtBCmxIriRQ3Sn9CbGO2DODDO97cJGg7dddlghXFpFBbnM
- 9xCQ60AxhFDnUCygZlvLvjSjgBkmUSGtadqAKfAbU21gD1e/mkyxBkpnXOeIB51rGP1beBr0p
- ST1S8gjAV4W9C5V91Ddv8+PnD01Lp0yW4AK93KugeZGvSLFhcnl+1PT+zzVS1EM2Q+ecBXOtS
- wkKyeiNqog81pjetslABfnSf6vAIosSGCVYWhHzRU9OFhqmaaZ6GovtHsQSnGuBl1D50NHLM5
- hdBthJCu292BjwjijgLRXrHFx1j39vm6yjNMw0cDx6d0QI3QOlDmQX2JWM/W6v6xvECsPR2dT
- 9YlU0e6jOyus3N3CE5pPuIy/pEoAF05HVAwDHW0mcUkv4Z6aqIIm/2g9cnA+kKULw8RUffdm1
- uXkugr2FWQG+kAel6/Om/i/MB8DWzdPX4a0/wV0oKv+CKosZ1mRZI8r96a/Mux5bQDPXT1EZe
- 2Hwe47e+kDKWS5rliyp12Y03HFpGlbgbLJv+wNiFQPD9EVNcfFMc3cprELf1Ke+0zB+InuwKo
- 5y1FDCTBr2Yiq7AZ4wz8kgjwX5D9/aIO+Oyvei59T8NIDNORgCRRrEsSdgL9SxiFh8pSqoEfL
- GZ47nHu1BzynzzRyMGiIG6kdFPvtdFqf7JiBEyNCHjP/guZQrAxkjKppEKlcu+d1UAsE+3BAF
- Gn3ndS28Ti2nL8CMZcqTV3Cs8Ndi5jhPAtDfNbLhu9aKwmR/PzMEd0ilZjT+pxgR+WAZkax2c
- ZS75Dwg1wGu4ZXtrkmJOHIp+B5MXDelEgoh4CCqUs=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <a096d122-52a3-700a-3a14-30a81b099cd8@theori.io>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Today, diff_free_filespec_data crashes when passed a NULL pointer.
+Commit 3aef54e8b8 ("diff: munmap() file contents before running external
+diff") introduced calls to diff_free_filespec_data in run_external_diff,
+which may pass NULL pointers.
 
-On Mon, 9 Nov 2020, Junio C Hamano wrote:
+Git uses NULL filespecs to indicate unmerged files when merge conflict
+resolution is in progress.  Fortunately, other code paths bail out early
+even before NULL can reach diff_free_filespec_data(); however, difftool
+is expected to do a full-blown diff anyway regardless of conflict
+status.
 
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->
-> > On 2020-11-10 at 00:31:27, Jeff King wrote:
-> >> On Sun, Nov 08, 2020 at 11:57:41AM +0200, Daniel Gurney wrote:
-> >>
-> >> > Modern MSVC or Windows versions don't support big-endian, so it's
-> >> > unnecessary to consider architectures when using it.
-> >>
-> >> This made me wonder if we support any non-modern versions (which woul=
-d
-> >> be negatively impacted).
-> >
-> > I'm pretty sure we don't.  As I said, we're using several C99 features
-> > and that version precedes the C99 standard (and 1999).
-> >
-> >> From the earlier thread at [1], it sounds like probably not, but I
-> >> wonder if we can offer a stronger argument there (or just define
-> >> "modern" a little more clearly).
-> >
-> > According to Wikipedia[0]:
-> >
-> >   Visual C++ 2013 [12.0] finally added support for various C99 feature=
-s
-> >   in its C mode (including designated initializers, compound literals,
-> >   and the _Bool type), though it was still not complete. Visual C++ 20=
-15
-> >   further improved the C99 support, with full support of the C99
-> >   Standard Library, except for features that require C99 language
-> >   features not yet supported by the compiler.
-> >
-> > The version mentioned that supported MIPS, Alpha, and m68k was Visual
-> > C++ 2.0 RISC Edition.  While Wikipedia doesn't mention its release dat=
-e,
-> > its successor, Visual C++ 4.0, was released in 1995.  The m68k version
-> > ran on Macs using those processors, and Apple abandoned m68k for Power=
-PC
-> > in 1994[1].
->
-> So,
->
-> 	The only versions of MSVC that support big-endian are too
-> 	ancient and do not understand some C99 features we use in
-> 	our codebase, so it is unnecessary...
->
-> would be sufficient?
->
-> > I'm entirely comfortable with requiring that people use a compiler and
-> > operating system newer than 25 years old to compile Git correctly.  As
-> > I've said or implied in previous threads, I'm also fine requiring C99
-> > (vendors having had over two decades to implement it) and only
-> > supporting OSes with vendor security support, although obviously these
-> > latter two items are much more controversial.
->
-> Maybe controversial, but worth at least laying the ground rules
-> ahead of time?
->
-> Do we have any specific feature we avoid only due to portability
-> concerns?  Declaring an identifier in the first part of for() is the
-> only thing that comes to my mind, but there may be others.  I think
-> we should consider how well each individual feature is supported by
-> systems we care about as we feel the need.
+Fix this and prevent any similar bugs in the future by making
+`diff_free_filespec_data(NULL)` a no-op.
 
-I would feel a bit more comfortable reintroducing the part that
-specifically checks for x86, x86_64 and ARM64, for the reasons I outlined
-in my reply to a previous version of this patch: just because the MSVC
-versions we can currently use to build Git currently only supports little
-endian does not mean that all future versions will do. Point in reference:
-you can build Linux applications in Visual Studio like _right now_ [*1*].
+Also, add a test case that confirms that running difftool --cached with
+unmerged files does not SIGSEGV.
 
-Ciao,
-Dscho
+Signed-off-by: Jinoh Kang <luke1337@theori.io>
+---
+ diff.c              |  3 +++
+ t/t7800-difftool.sh | 23 +++++++++++++++++++++++
+ 2 files changed, 26 insertions(+)
 
-Footnote *1*: It currently uses GCC, but who says it always will?
-https://docs.microsoft.com/en-us/cpp/linux/cmake-linux-project
+diff --git a/diff.c b/diff.c
+index d24f47df99..ace4a1d387 100644
+--- a/diff.c
++++ b/diff.c
+@@ -4115,6 +4115,9 @@ void diff_free_filespec_blob(struct diff_filespec *s)
+ 
+ void diff_free_filespec_data(struct diff_filespec *s)
+ {
++	if (!s)
++		return;
++
+ 	diff_free_filespec_blob(s);
+ 	FREE_AND_NULL(s->cnt_data);
+ }
+diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+index 524f30f7dc..e9391abb54 100755
+--- a/t/t7800-difftool.sh
++++ b/t/t7800-difftool.sh
+@@ -728,6 +728,29 @@ test_expect_success 'add -N and difftool -d' '
+ 	git difftool --dir-diff --extcmd ls
+ '
+ 
++test_expect_success 'difftool --cached with unmerged files' '
++	test_when_finished git reset --hard &&
++	echo base >file &&
++	git add file &&
++	git commit -m base &&
++	git checkout -B conflict-a &&
++	git checkout -B conflict-b &&
++	git checkout conflict-a &&
++	echo conflict-a >>file &&
++	git add file &&
++	git commit -m conflict-a &&
++	git checkout conflict-b &&
++	echo conflict-b >>file &&
++	git add file &&
++	git commit -m conflict-b &&
++	git checkout master &&
++	git merge conflict-a &&
++	test_must_fail git merge conflict-b &&
++	: >expect &&
++	git difftool --cached --no-prompt >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'outside worktree' '
+ 	echo 1 >1 &&
+ 	echo 2 >2 &&
+-- 
+2.26.2
