@@ -2,136 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0B18C388F7
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:52:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F9ABC388F7
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:55:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7890420781
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:52:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B104520781
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:55:15 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sJL08VVo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730894AbgKJVww (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Nov 2020 16:52:52 -0500
-Received: from cloud.peff.net ([104.130.231.41]:53600 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726706AbgKJVww (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Nov 2020 16:52:52 -0500
-Received: (qmail 9558 invoked by uid 109); 10 Nov 2020 21:52:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 10 Nov 2020 21:52:52 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6372 invoked by uid 111); 10 Nov 2020 21:52:51 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 10 Nov 2020 16:52:51 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 10 Nov 2020 16:52:50 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH v3 2/2] receive-pack: gently write messages to
- proc-receive
-Message-ID: <20201110215250.GB3263091@coredump.intra.peff.net>
-References: <CANYiYbH-x6khgTkkFV29+7AjghOZmG69_6-sQcm2489WMHOWAA@mail.gmail.com>
- <20201110120135.42025-2-zhiyou.jx@alibaba-inc.com>
+        id S1731880AbgKJVzO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Nov 2020 16:55:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45752 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726467AbgKJVzO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Nov 2020 16:55:14 -0500
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 100B4C0613D1
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 13:55:14 -0800 (PST)
+Received: by mail-qk1-x730.google.com with SMTP id v143so8578202qkb.2
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 13:55:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=c+7xg4fqYQPPbst5OoTvUJVernufegqrHBcJ61FCL/I=;
+        b=sJL08VVoMRcS5AEOJWfG//LuUTt4HAYB0EGaQrj0TgXCHqro1jVcFFBqdAKTxWQn6F
+         lmQqQeb8zvYB/X/TdQrR3NmdKzf61FVdeIRcczGjA67tZun371OZzrFUZZs4gUgYNU+J
+         soV76YjTwf1Jz/dsntyGixCaMgTEQxrSOdR+MuhnFjVjiYxICkXfASrSTUgjwXYOJ0hq
+         Aux4S7w1Z/eC5DgY2pJ3w3rhLI9qxsgZiDJV3SxqePFz8mpP0iWc5bIKlt+UkAjyPvut
+         zhKZjEUgTlOqUy5OHSJ4knDbkM9X2M3DU4ErQFE39PNqMLCudBhHUeNOehiQ9+3TqGZ2
+         1TYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=c+7xg4fqYQPPbst5OoTvUJVernufegqrHBcJ61FCL/I=;
+        b=pK8Pei7qs9SX+mg3+IxU17+YEFWJVr7E3qpKjj/F7qHKOvXnJDQDs/5yO4CG97XUxR
+         xIQ/3oDnVw3eYB6PtqMWGU5cy9Vk6/H49cMr4dMTj2iBoQjgX6Eg7ZJyf6Z8y7+mEUQd
+         1XYrOiwF5O1Ro5Cvkt2s5KXQ3MwtnzuxK6Sji3liKXwjJQB52IRRRrcOZ0tsWvWVcGdz
+         gogGcHq4pNyIYcvJX8SoUdnHCEaut9UXQtYdN8xGbfiy1g3m46tY8YZhqxV2g8hW9HAE
+         NQWmQzvXAZTJPvmAPSzQdibDRf7VSy1Md79PuelA7f/NhuZvIPR6Wv3fWkYh3bmifGeC
+         QWbg==
+X-Gm-Message-State: AOAM533KseQBZlfitoO6RSv8bmEcgWqHRVcvvfoUV6tMoJyLD2xBFpyH
+        H3VcQ6Ake/DhXszcD9p9dLGBLQvs/WDKKDv51HZxWp6H6t8WiQ==
+X-Google-Smtp-Source: ABdhPJzkuM48ORId9Q2gk6zbrG2cRM36V3g/VcdY4aJnTWWKgvNTjvQUsvRnHB2qP7dLHEodrHZVsLLXI6cyu6TIz4I=
+X-Received: by 2002:a37:a3d2:: with SMTP id m201mr12587587qke.203.1605045312982;
+ Tue, 10 Nov 2020 13:55:12 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20201110120135.42025-2-zhiyou.jx@alibaba-inc.com>
+From:   Brandon Richardson <brandon1024.br@gmail.com>
+Date:   Tue, 10 Nov 2020 17:54:47 -0400
+Message-ID: <CAETBDP6d8UwiJEF_pX0p=xLG79pwHeEtectmOnjPiUpjUCPaqw@mail.gmail.com>
+Subject: format-patch: "magic" mbox timestamp
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Johannes.Schindelin@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 10, 2020 at 08:01:35PM +0800, Jiang Xin wrote:
+Hi all,
 
-> Johannes found a flaky hang in `t5411/test-0013-bad-protocol.sh` in the
-> osx-clang job of the CI/PR builds, and ran into an issue when using
-> the `--stress` option with the following error messages:
-> 
->     fatal: unable to write flush packet: Broken pipe
->     send-pack: unexpected disconnect while reading sideband packet
->     fatal: the remote end hung up unexpectedly
-> 
-> In this test case, the "proc-receive" hook sends an error message and
-> dies earlier. While "receive-pack" on the other side of the pipe
-> should forward the error message of the "proc-receive" hook to the
-> client side, but it fails to do so. This is because "receive-pack"
-> uses `packet_write_fmt()` and `packet_flush()` to write pkt-line
-> message to "proc-receive" hook, and these functions die immediately
-> when pipe is broken. Using "gently" forms for these functions will get
-> more predicable output.
+After submitting a patch internally within our organization today, I
+was looking through the `format-patch` output and was curious to see
+the strange timestamp on the "From" line. At first glance I thought
+the parent commit timestamp might have been off, but that wasn't the
+case. I thought it might be a bug but quickly noticed the fixed
+timestamp string in `log-tree`.
 
-The changes to use gently() in the code looked good to me, and I think
-you got all of the relevant spots.
+Reading through the various revisions of `log-tree.c` didn't answer
+many questions either, until I turned to the docs and read:
 
-I was surprised by a few bits:
+> The patch produced by git format-patch is in UNIX mailbox format, with a fixed "magic" time stamp to indicate that the file is output from format-patch rather than a real mailbox [...]
 
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index bb9909c52e..697a4e8802 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -974,9 +974,10 @@ static int read_proc_receive_report(struct packet_reader *reader,
->  	struct command *cmd;
->  	struct command *hint = NULL;
->  	struct ref_push_report *report = NULL;
-> -	int new_report = 0;
->  	int code = 0;
-> +	int new_report = 0;
+I find this pretty interesting, and would like to hear more from those
+that introduced change. It looks like this was first introduced in
+3eefc18917 (Tentative built-in format-patch., 2006-04-18), albeit with
+a different "magic" timestamp, and then changed to its current
+timestamp value in 698ce6f87e (fmt-patch: Support --attach,
+2006-05-20).
 
-This is just noise in the diff, I think. It does not matter either way.
+Please correct me if I'm wrong, but I'm assuming the "UNIX mailbox
+format" referenced in the docs refers to the mbox database format
+described in appendix A of RFC-4155. If so, since we use a commit id
+in place of the sender email address, would that itself be sufficient
+to indicate that the output isn't from a real mailbox? A commit id
+will never match the addr-spec in RFC-2822, so I figure that anyone
+looking at `format-patch` output could safely assume that it did not
+originate from a mailbox.
 
-> @@ -984,8 +985,14 @@ static int read_proc_receive_report(struct packet_reader *reader,
->  		const char *refname;
->  		char *p;
->  
-> -		if (packet_reader_read(reader) != PACKET_READ_NORMAL)
-> +		if (packet_reader_read(reader) != PACKET_READ_NORMAL) {
-> +			if (!response) {
-> +				strbuf_addstr(errmsg, "no response from proc-receive hook");
-> +				return -1;
-> +			}
->  			break;
-> +		}
-> +		response++;
-
-This extra check seems orthogonal to the rest of the commit. It does
-seem like it might be a reasonable thing to check, but I wondered:
-
-  - if the hook has nothing to report, wouldn't it just send a flush
-    packet? Does that break protocol or not?
-
-  - if not, then I guess we're expecting a response for every ref we
-    mentioned (and presumably we would not trigger the hook at all if
-    there are no refs). But in that case, shouldn't we be checking that
-    we counted up the number of responses we expected? But we already do
-    that, by annotating the items in the commands list that didn't get
-    RUN_PROC_RECEIVE_RETURNED set.
-
-So at best, it seems like this check is redundant (and at worst it may
-complain unnecessarily about a corner case).
-
-> @@ -1100,7 +1107,7 @@ static int run_proc_receive_hook(struct command *commands,
->  	struct strbuf cap = STRBUF_INIT;
->  	struct strbuf errmsg = STRBUF_INIT;
->  	int hook_use_push_options = 0;
-> -	int version = 0;
-> +	int version = -1;
-> [...]
-> -	if (version != 1) {
-> +	if (version == -1) {
-> +		strbuf_addstr(&errmsg, "fail to negotiate version with proc-receive hook");
-> +		code = -1;
-> +		goto cleanup;
-> +	} else if (version != 1) {
->  		strbuf_addf(&errmsg, "proc-receive version '%d' is not supported",
->  			    version);
-
-Likewise this seems orthogonal to the main point of the patch. Though it
-seems like a good idea in general to check when the other side doesn't
-report a version (assuming it is a protocol breakage not to report the
-version, and we're not simply supposed to default).
-
--Peff
+I could see this as a good opportunity to use a more relevant
+timestamp, perhaps the commit timestamp of the first patch in the
+series.
