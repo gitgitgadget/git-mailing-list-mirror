@@ -2,295 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D1EAC56202
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:40:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0B18C388F7
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:52:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 19348207D3
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:40:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7890420781
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:52:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731962AbgKJVks (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Nov 2020 16:40:48 -0500
-Received: from cloud.peff.net ([104.130.231.41]:53574 "EHLO cloud.peff.net"
+        id S1730894AbgKJVww (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Nov 2020 16:52:52 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53600 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727275AbgKJVkU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Nov 2020 16:40:20 -0500
-Received: (qmail 9513 invoked by uid 109); 10 Nov 2020 21:40:20 -0000
+        id S1726706AbgKJVww (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Nov 2020 16:52:52 -0500
+Received: (qmail 9558 invoked by uid 109); 10 Nov 2020 21:52:52 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 10 Nov 2020 21:40:20 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 10 Nov 2020 21:52:52 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6129 invoked by uid 111); 10 Nov 2020 21:40:19 -0000
+Received: (qmail 6372 invoked by uid 111); 10 Nov 2020 21:52:51 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 10 Nov 2020 16:40:19 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 10 Nov 2020 16:52:51 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 10 Nov 2020 16:40:19 -0500
+Date:   Tue, 10 Nov 2020 16:52:50 -0500
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "Demi M. Obenour" <athena@invisiblethingslab.com>,
-        Git <git@vger.kernel.org>
-Subject: [PATCH 3/3] rev-parse: handle --end-of-options
-Message-ID: <20201110214019.GC788740@coredump.intra.peff.net>
-References: <20201110213544.GA3263091@coredump.intra.peff.net>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH v3 2/2] receive-pack: gently write messages to
+ proc-receive
+Message-ID: <20201110215250.GB3263091@coredump.intra.peff.net>
+References: <CANYiYbH-x6khgTkkFV29+7AjghOZmG69_6-sQcm2489WMHOWAA@mail.gmail.com>
+ <20201110120135.42025-2-zhiyou.jx@alibaba-inc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20201110213544.GA3263091@coredump.intra.peff.net>
+In-Reply-To: <20201110120135.42025-2-zhiyou.jx@alibaba-inc.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We taught rev-list a new way to separate options from revisions in
-19e8789b23 (revision: allow --end-of-options to end option parsing,
-2019-08-06), but rev-parse uses its own parser. It should know about
---end-of-options not only for consistency, but because it may be
-presented with similarly ambiguous cases. E.g., if a caller does:
+On Tue, Nov 10, 2020 at 08:01:35PM +0800, Jiang Xin wrote:
 
-  git rev-parse "$rev" -- "$path"
+> Johannes found a flaky hang in `t5411/test-0013-bad-protocol.sh` in the
+> osx-clang job of the CI/PR builds, and ran into an issue when using
+> the `--stress` option with the following error messages:
+> 
+>     fatal: unable to write flush packet: Broken pipe
+>     send-pack: unexpected disconnect while reading sideband packet
+>     fatal: the remote end hung up unexpectedly
+> 
+> In this test case, the "proc-receive" hook sends an error message and
+> dies earlier. While "receive-pack" on the other side of the pipe
+> should forward the error message of the "proc-receive" hook to the
+> client side, but it fails to do so. This is because "receive-pack"
+> uses `packet_write_fmt()` and `packet_flush()` to write pkt-line
+> message to "proc-receive" hook, and these functions die immediately
+> when pipe is broken. Using "gently" forms for these functions will get
+> more predicable output.
 
-to parse an untrusted input, then it will get confused if $rev contains
-an option-like string like "--local-env-vars". Or even "--not-real",
-which we'd keep as an option to pass along to rev-list.
+The changes to use gently() in the code looked good to me, and I think
+you got all of the relevant spots.
 
-Or even more importantly:
+I was surprised by a few bits:
 
-  git rev-parse --verify "$rev"
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index bb9909c52e..697a4e8802 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -974,9 +974,10 @@ static int read_proc_receive_report(struct packet_reader *reader,
+>  	struct command *cmd;
+>  	struct command *hint = NULL;
+>  	struct ref_push_report *report = NULL;
+> -	int new_report = 0;
+>  	int code = 0;
+> +	int new_report = 0;
 
-can be confused by options, even though its purpose is safely parsing
-untrusted input. On the plus side, it will always fail the --verify
-part, as it will not have parsed a revision, so the caller will
-generally "fail closed" rather than continue to use the untrusted
-string. But it will still trigger whatever option was in "$rev"; this
-should be mostly harmless, since rev-parse options are all read-only,
-but I didn't carefully audit all paths.
+This is just noise in the diff, I think. It does not matter either way.
 
-This patch lets callers write:
+> @@ -984,8 +985,14 @@ static int read_proc_receive_report(struct packet_reader *reader,
+>  		const char *refname;
+>  		char *p;
+>  
+> -		if (packet_reader_read(reader) != PACKET_READ_NORMAL)
+> +		if (packet_reader_read(reader) != PACKET_READ_NORMAL) {
+> +			if (!response) {
+> +				strbuf_addstr(errmsg, "no response from proc-receive hook");
+> +				return -1;
+> +			}
+>  			break;
+> +		}
+> +		response++;
 
-  git rev-parse --end-of-options "$rev" -- "$path"
+This extra check seems orthogonal to the rest of the commit. It does
+seem like it might be a reasonable thing to check, but I wondered:
 
-and:
+  - if the hook has nothing to report, wouldn't it just send a flush
+    packet? Does that break protocol or not?
 
-  git rev-parse --verify --end-of-options "$rev"
+  - if not, then I guess we're expecting a response for every ref we
+    mentioned (and presumably we would not trigger the hook at all if
+    there are no refs). But in that case, shouldn't we be checking that
+    we counted up the number of responses we expected? But we already do
+    that, by annotating the items in the commands list that didn't get
+    RUN_PROC_RECEIVE_RETURNED set.
 
-which will both treat "$rev" always as a revision parameter. The latter
-is a bit clunky. It would be nicer if we had defined "--verify" to
-require that its next argument be the revision. But we have not
-historically done so, and:
+So at best, it seems like this check is redundant (and at worst it may
+complain unnecessarily about a corner case).
 
-  git rev-parse --verify -q "$rev"
+> @@ -1100,7 +1107,7 @@ static int run_proc_receive_hook(struct command *commands,
+>  	struct strbuf cap = STRBUF_INIT;
+>  	struct strbuf errmsg = STRBUF_INIT;
+>  	int hook_use_push_options = 0;
+> -	int version = 0;
+> +	int version = -1;
+> [...]
+> -	if (version != 1) {
+> +	if (version == -1) {
+> +		strbuf_addstr(&errmsg, "fail to negotiate version with proc-receive hook");
+> +		code = -1;
+> +		goto cleanup;
+> +	} else if (version != 1) {
+>  		strbuf_addf(&errmsg, "proc-receive version '%d' is not supported",
+>  			    version);
 
-does currently work. I added a test here to confirm that we didn't break
-that.
+Likewise this seems orthogonal to the main point of the patch. Though it
+seems like a good idea in general to check when the other side doesn't
+report a version (assuming it is a protocol breakage not to report the
+version, and we're not simply supposed to default).
 
-A few implementation notes:
-
- - We don't document --end-of-options explicitly in commands, but rather
-   in gitcli(7). So I didn't give it its own section in git-rev-parse(1).
-   But I did call it out specifically in the --verify section, and
-   include it in the examples, which should show best practices.
-
- - We don't have to re-indent the main option-parsing block, because we
-   can combine our "did we see end of options" check with "does it start
-   with a dash". The exception is the pre-setup options, which need
-   their own block.
-
- - We do however have to pull the "--" parsing out of the "does it start
-   with dash" block, because we want to parse it even if we've seen
-   --end-of-options.
-
- - We'll leave "--end-of-options" in the output. This is probably not
-   technically necessary, as a careful caller will do:
-
-     git rev-parse --end-of-options $revs -- $paths
-
-   and anything in $revs will be resolved to an object id. However, it
-   does help a slightly less careful caller like:
-
-     git rev-parse --end-of-options $revs_or_paths
-
-   where a path "--foo" will remain in the output as long as it also
-   exists on disk. In that case, it's helpful to retain --end-of-options
-   to get passed along to rev-list, s it would otherwise see just
-   "--foo".
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git-rev-parse.txt |  8 +++--
- builtin/rev-parse.c             | 56 +++++++++++++++++++--------------
- t/t1503-rev-parse-verify.sh     | 13 ++++++++
- t/t1506-rev-parse-diagnosis.sh  | 16 ++++++++++
- 4 files changed, 68 insertions(+), 25 deletions(-)
-
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index 19b12b6d43..5013daa6ef 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -109,6 +109,10 @@ names an existing object that is a commit-ish (i.e. a commit, or an
- annotated tag that points at a commit).  To make sure that `$VAR`
- names an existing object of any type, `git rev-parse "$VAR^{object}"`
- can be used.
-++
-+Note that if you are verifying a name from an untrusted source, it is
-+wise to use `--end-of-options` so that the name argument is not mistaken
-+for another option.
- 
- -q::
- --quiet::
-@@ -446,15 +450,15 @@ $ git rev-parse --verify HEAD
- * Print the commit object name from the revision in the $REV shell variable:
- +
- ------------
--$ git rev-parse --verify $REV^{commit}
-+$ git rev-parse --verify --end-of-options $REV^{commit}
- ------------
- +
- This will error out if $REV is empty or not a valid revision.
- 
- * Similar to above:
- +
- ------------
--$ git rev-parse --default master --verify $REV
-+$ git rev-parse --default master --verify --end-of-options $REV
- ------------
- +
- but if $REV is empty, the commit object name from master will be printed.
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index 79689286d8..69ba7326cf 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -595,6 +595,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 	struct object_context unused;
- 	struct strbuf buf = STRBUF_INIT;
- 	const int hexsz = the_hash_algo->hexsz;
-+	int seen_end_of_options = 0;
- 
- 	if (argc > 1 && !strcmp("--parseopt", argv[1]))
- 		return cmd_parseopt(argc - 1, argv + 1, prefix);
-@@ -628,21 +629,23 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 			continue;
- 		}
- 
--		if (!strcmp(arg, "--local-env-vars")) {
--			int i;
--			for (i = 0; local_repo_env[i]; i++)
--				printf("%s\n", local_repo_env[i]);
--			continue;
--		}
--		if (!strcmp(arg, "--resolve-git-dir")) {
--			const char *gitdir = argv[++i];
--			if (!gitdir)
--				die("--resolve-git-dir requires an argument");
--			gitdir = resolve_gitdir(gitdir);
--			if (!gitdir)
--				die("not a gitdir '%s'", argv[i]);
--			puts(gitdir);
--			continue;
-+		if (!seen_end_of_options) {
-+			if (!strcmp(arg, "--local-env-vars")) {
-+				int i;
-+				for (i = 0; local_repo_env[i]; i++)
-+					printf("%s\n", local_repo_env[i]);
-+				continue;
-+			}
-+			if (!strcmp(arg, "--resolve-git-dir")) {
-+				const char *gitdir = argv[++i];
-+				if (!gitdir)
-+					die("--resolve-git-dir requires an argument");
-+				gitdir = resolve_gitdir(gitdir);
-+				if (!gitdir)
-+					die("not a gitdir '%s'", argv[i]);
-+				puts(gitdir);
-+				continue;
-+			}
- 		}
- 
- 		/* The rest of the options require a git repository. */
-@@ -652,14 +655,15 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 			did_repo_setup = 1;
- 		}
- 
--		if (*arg == '-') {
--			if (!strcmp(arg, "--")) {
--				as_is = 2;
--				/* Pass on the "--" if we show anything but files.. */
--				if (filter & (DO_FLAGS | DO_REVS))
--					show_file(arg, 0);
--				continue;
--			}
-+		if (!strcmp(arg, "--")) {
-+			as_is = 2;
-+			/* Pass on the "--" if we show anything but files.. */
-+			if (filter & (DO_FLAGS | DO_REVS))
-+				show_file(arg, 0);
-+			continue;
-+		}
-+
-+		if (!seen_end_of_options && *arg == '-') {
- 			if (!strcmp(arg, "--git-path")) {
- 				if (!argv[i + 1])
- 					die("--git-path requires an argument");
-@@ -937,6 +941,12 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 				puts(the_hash_algo->name);
- 				continue;
- 			}
-+			if (!strcmp(arg, "--end-of-options")) {
-+				seen_end_of_options = 1;
-+				if (filter & (DO_FLAGS | DO_REVS))
-+					show_file(arg, 0);
-+				continue;
-+			}
- 			if (show_flag(arg) && verify)
- 				die_no_single_rev(quiet);
- 			continue;
-diff --git a/t/t1503-rev-parse-verify.sh b/t/t1503-rev-parse-verify.sh
-index 492edffa9c..dc9fe3cbf1 100755
---- a/t/t1503-rev-parse-verify.sh
-+++ b/t/t1503-rev-parse-verify.sh
-@@ -144,4 +144,17 @@ test_expect_success SYMLINKS 'ref resolution not confused by broken symlinks' '
- 	test_must_fail git rev-parse --verify broken
- '
- 
-+test_expect_success 'options can appear after --verify' '
-+	git rev-parse --verify HEAD >expect &&
-+	git rev-parse --verify -q HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'verify respects --end-of-options' '
-+	git update-ref refs/heads/-tricky HEAD &&
-+	git rev-parse --verify HEAD >expect &&
-+	git rev-parse --verify --end-of-options -tricky >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/t/t1506-rev-parse-diagnosis.sh b/t/t1506-rev-parse-diagnosis.sh
-index 2ed5d50059..e2ae15a2cf 100755
---- a/t/t1506-rev-parse-diagnosis.sh
-+++ b/t/t1506-rev-parse-diagnosis.sh
-@@ -263,4 +263,20 @@ test_expect_success 'arg after dashdash not interpreted as option' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'arg after end-of-options not interpreted as option' '
-+	test_must_fail git rev-parse --end-of-options --not-real -- 2>err &&
-+	test_i18ngrep bad.revision.*--not-real err
-+'
-+
-+test_expect_success 'end-of-options still allows --' '
-+	cat >expect <<-EOF &&
-+	--end-of-options
-+	$(git rev-parse --verify HEAD)
-+	--
-+	path
-+	EOF
-+	git rev-parse --end-of-options HEAD -- path >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.29.2.640.g9e24689a4c
+-Peff
