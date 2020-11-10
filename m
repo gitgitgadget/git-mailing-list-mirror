@@ -8,62 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 144B0C55ABD
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 455DDC388F7
 	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 23:42:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD44920809
+	by mail.kernel.org (Postfix) with ESMTP id EE27D20867
 	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 23:42:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pv9tMqvv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FnPaO0VA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732519AbgKJXmc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Nov 2020 18:42:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34380 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732505AbgKJXm3 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1732511AbgKJXm3 (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 10 Nov 2020 18:42:29 -0500
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA350C0613D1
-        for <git@vger.kernel.org>; Tue, 10 Nov 2020 15:42:28 -0800 (PST)
-Received: by mail-wr1-x443.google.com with SMTP id 33so358805wrl.7
-        for <git@vger.kernel.org>; Tue, 10 Nov 2020 15:42:28 -0800 (PST)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34366 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732451AbgKJXm1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Nov 2020 18:42:27 -0500
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D473AC0617A6
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 15:42:25 -0800 (PST)
+Received: by mail-wr1-x444.google.com with SMTP id 23so352109wrc.8
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 15:42:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=7fuDlDpWYpiI76IwISm/Zm85PJpd+Kjy9VbDOwFHfjw=;
-        b=pv9tMqvvYBTheMtTXfr9bbw2rbmKoKDWn9B/sju8BQBnciHaWUuqRpNxegnhyF4HaE
-         B2q/n6PG6Yl7Z2360bAgsRAnC3L+iDwZAfolMAUHHutRdvJotofIU8Pon3rY6LwsGf1C
-         CiUuTUmTeqifgV+pwHPgXb8t4OIpQe3bVRjCSTlp2gvLazR1AbyoJEbg4DsRciXBZW6E
-         GABP8gLvFHy9V6Z/kBswM6C4nbCcdUPiwnVsXcFG/yAISK1LN/X3/IwqQEBgIezJspKA
-         Xx8j/o29NXLFL6F5lXdSeckJbIiFDfO6TaeX6U6mL0m91qjbcbufaFgNYmQBZr2UI8dG
-         fD3w==
+        bh=IfewZDe6pyLTRvzVboxTA78Zdq0TjQvvkV3C3VOSFME=;
+        b=FnPaO0VA1ze0cSxhxZpHjA2/syGfyo8Qu/Z6K/KIZPcOTdFIEdt5bEvS6/Bv+iicxM
+         GVtyYi59quGCTOJdd8TxF+R2R+ocJdFTLPYlYjnPMMKwDOi29/wUV678EjbWuuayuvb+
+         sXSSt+9P40Y635mvW8Io0ztwQLs0aj5oXBV2mcuEUT6rJxqcMSNZUQRWlETkFfIff6GJ
+         GoiAW75wQB96EULL59LpANd3qu75adlBUZLMOFGkoBBPU6LQdC5O0r9cturPF9eaIWwv
+         4Jlu2vuxPamt5MQrXXNF+Hg4p5tEbWBPwXSttnHlbc6lxUgzkguU+Pq+Pp/i5w6Sdr5O
+         AyUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7fuDlDpWYpiI76IwISm/Zm85PJpd+Kjy9VbDOwFHfjw=;
-        b=A8n4NwwQW+qvSr95fa4GBlHgKLeZ4BojjRQzAD5NfktbkBHVCcgh9UwXfcqnAXKtO3
-         kPDTYNFrZQipwSxO5uU7lg0IFiX/Bk1X7zXo414Y5pMS50hk8Pdr3miuV/OLyLud+Ri6
-         yhsGsCEWScZriC1eVWhkaTwll6i0VJ/5Ql/BLKTuWm+vycR5q3BG7Yyr0/nvfvxwxFqx
-         gs2r+iaNl/Dp4kKZkJKc62h4d8wYQR8eCD7Im1PwUnFdPsQDXuXm31V+TT4LZRaXLzAi
-         DjC9j1yqKHarQJArhAaUerdXZBGvzh8QTxie9T1Ov5cyKYZP9KmPxPD2PyJEsvNcnhTb
-         ZOLg==
-X-Gm-Message-State: AOAM530mI1cQKEDIN83K8qINrd68birQxcE7OUoBPySJe149rAWhQTNJ
-        2iyXgU4OTSypL5UKYp0mjIK40G0PiZo=
-X-Google-Smtp-Source: ABdhPJwohdFOSZ2k3outAamzHzvpvTiRh0uYZd8n4ViznX0k8du1rS18tBCqeHJ0RXe6vqlM3W5gcA==
-X-Received: by 2002:a5d:51c5:: with SMTP id n5mr5452774wrv.83.1605051747437;
-        Tue, 10 Nov 2020 15:42:27 -0800 (PST)
+        bh=IfewZDe6pyLTRvzVboxTA78Zdq0TjQvvkV3C3VOSFME=;
+        b=gAvQFkrMqNoZ2gBCM08+sTvNnZ515fsHqSfcbref/cFK5n/SDvw8XsMmkGYBJ7rKbj
+         B/KQRG3T5pQaPwQkuPyMpKUVg912WgUVb00YbtfG8xFgifawFRRR98phfxMXmK8jYjvC
+         2YWXKI2QyJPwgWBBcBSgRo/jVGsYTWXuosiNqYfEyaHRtiNTeM88RJs7EmVxwXL19ebq
+         rLZsMlKpJHYAuDRzNfCkz564L+tj//MFRysBimxljmac5F684fBtjIIqB3BkBtbfIrgj
+         hf7vpMwbSG7ucmEdQQ7AMQ42QLxMkrpsqi/8SGaMDrPYhT/TmOcDdP1O5I+lduFGAKcz
+         iG9g==
+X-Gm-Message-State: AOAM531zkYj6l8kadz78/vXGAsAsYnhno8FVgY8cTfw4q9Lkhcb5vV1v
+        7zvAA3zqR2cEoieXX0nGdW10+YGfe7Y=
+X-Google-Smtp-Source: ABdhPJwkurV+98EaQHZlLcmFMn0M7U4tknBUpA5xq2xKh/RYvYtVcazLs5MC5PA3LFqG83Rmmy3+jg==
+X-Received: by 2002:adf:db8e:: with SMTP id u14mr25424836wri.233.1605051744438;
+        Tue, 10 Nov 2020 15:42:24 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g131sm380370wma.35.2020.11.10.15.42.26
+        by smtp.gmail.com with ESMTPSA id s9sm281947wrf.90.2020.11.10.15.42.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2020 15:42:27 -0800 (PST)
-Message-Id: <38355ec98f04783367d74e38cda3ce5d6632c7ac.1605051739.git.gitgitgadget@gmail.com>
+        Tue, 10 Nov 2020 15:42:24 -0800 (PST)
+Message-Id: <85b0d27d76e31033d691b69b271db6ad033f9e29.1605051739.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.785.git.1605051739.gitgitgadget@gmail.com>
 References: <pull.785.git.1605051739.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 10 Nov 2020 23:42:19 +0000
-Subject: [PATCH 9/9] add -i: verify in the tests that colors can be overridden
+Date:   Tue, 10 Nov 2020 23:42:15 +0000
+Subject: [PATCH 5/9] add -i (built-in): use correct names to load color.diff.*
+ config
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,85 +78,68 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Now that the Perl version produces the same output as the built-in
-version (mostly fixing bugs in the latter), let's add a regression test
-to verify that it stays this way.
+The builtin version of add-interactive mistakenly loads diff colors from
+color.interactive.* instead of color.diff.*. It also accidentally spells
+`frag` as `fraginfo`.
 
-Note that we only `grep` for the colored error message instead of
-verifying that the entire `stderr` consists of just this one line: when
-running the test script via `dash`, using the `-x` option to trace the
-commands, the sub-shell in `force_color` causes those commands to be
-traced into `err.raw` because we set, but do not export
-`BASH_XTRACEFD`).
+Let's fix that.
 
+Note also that we don't respect the historical `diff.color.*`. The perl
+version never did, and those have been deprecated since 2007.
+
+Reported-by: Philippe Blain <levraiphilippeblain@gmail.com>
+Co-authored-by: Jeff King <peff@peff.net>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t3701-add-interactive.sh | 53 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
+ add-interactive.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index ca04fac417..28549a41a2 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -589,6 +589,59 @@ test_expect_success 'diffs can be colorized' '
- 	grep "$(printf "\\033")" output
- '
+diff --git a/add-interactive.c b/add-interactive.c
+index f3a1d7456e..9126684348 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -12,10 +12,10 @@
+ #include "prompt.h"
  
-+test_expect_success 'colors can be overridden' '
-+	test_config color.interactive.header red &&
-+	test_config color.interactive.help green &&
-+	test_config color.interactive.prompt yellow &&
-+	test_config color.interactive.error blue &&
-+	test_config color.diff.frag magenta &&
-+	test_config color.diff.context cyan &&
-+	test_config color.diff.old bold &&
-+	test_config color.diff.new "bold red" &&
-+
-+	git reset --hard &&
-+	test_when_finished "git rm -f color-test" &&
-+	test_write_lines context old more-context >color-test &&
-+	git add color-test &&
-+	test_write_lines context new more-context >color-test &&
-+
-+	echo trigger an error message >input &&
-+	force_color git add -i 2>err.raw <input &&
-+	test_decode_color <err.raw >err &&
-+	grep "<BLUE>Huh (trigger)?<RESET>" err &&
-+
-+	test_write_lines patch color-test "" y quit >input &&
-+	force_color git add -i >actual.raw <input &&
-+	test_decode_color <actual.raw >actual.decoded &&
-+	sed "/index [0-9a-f]*\\.\\.[0-9a-f]* 100644/d" <actual.decoded >actual &&
-+	cat >expect <<-\EOF &&
-+	<RED>           staged     unstaged path<RESET>
-+	  1:        +3/-0        +1/-1 color-test
-+
-+	<RED>*** Commands ***<RESET>
-+	  1: <YELLOW>s<RESET>tatus	  2: <YELLOW>u<RESET>pdate	  3: <YELLOW>r<RESET>evert	  4: <YELLOW>a<RESET>dd untracked
-+	  5: <YELLOW>p<RESET>atch	  6: <YELLOW>d<RESET>iff	  7: <YELLOW>q<RESET>uit	  8: <YELLOW>h<RESET>elp
-+	<YELLOW>What now<RESET>> <RED>           staged     unstaged path<RESET>
-+	  1:        +3/-0        +1/-1 <YELLOW>c<RESET>olor-test
-+	<YELLOW>Patch update<RESET>>> <RED>           staged     unstaged path<RESET>
-+	* 1:        +3/-0        +1/-1 <YELLOW>c<RESET>olor-test
-+	<YELLOW>Patch update<RESET>>> <BOLD>diff --git a/color-test b/color-test<RESET>
-+	<BOLD>--- a/color-test<RESET>
-+	<BOLD>+++ b/color-test<RESET>
-+	<MAGENTA>@@ -1,3 +1,3 @@<RESET>
-+	<CYAN> context<RESET>
-+	<BOLD>-old<RESET>
-+	<BOLD;RED>+<RESET><BOLD;RED>new<RESET>
-+	<CYAN> more-context<RESET>
-+	<YELLOW>(1/1) Stage this hunk [y,n,q,a,d,e,?]? <RESET>
-+	<RED>*** Commands ***<RESET>
-+	  1: <YELLOW>s<RESET>tatus	  2: <YELLOW>u<RESET>pdate	  3: <YELLOW>r<RESET>evert	  4: <YELLOW>a<RESET>dd untracked
-+	  5: <YELLOW>p<RESET>atch	  6: <YELLOW>d<RESET>iff	  7: <YELLOW>q<RESET>uit	  8: <YELLOW>h<RESET>elp
-+	<YELLOW>What now<RESET>> Bye.
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'colorized diffs respect diff.wsErrorHighlight' '
- 	git reset --hard &&
+ static void init_color(struct repository *r, struct add_i_state *s,
+-		       const char *slot_name, char *dst,
++		       const char *section_and_slot, char *dst,
+ 		       const char *default_color)
+ {
+-	char *key = xstrfmt("color.interactive.%s", slot_name);
++	char *key = xstrfmt("color.%s", section_and_slot);
+ 	const char *value;
  
+ 	if (!s->use_color)
+@@ -40,17 +40,20 @@ void init_add_i_state(struct add_i_state *s, struct repository *r)
+ 			git_config_colorbool("color.interactive", value);
+ 	s->use_color = want_color(s->use_color);
+ 
+-	init_color(r, s, "header", s->header_color, GIT_COLOR_BOLD);
+-	init_color(r, s, "help", s->help_color, GIT_COLOR_BOLD_RED);
+-	init_color(r, s, "prompt", s->prompt_color, GIT_COLOR_BOLD_BLUE);
+-	init_color(r, s, "error", s->error_color, GIT_COLOR_BOLD_RED);
+-	init_color(r, s, "fraginfo", s->fraginfo_color,
++	init_color(r, s, "interactive.header", s->header_color, GIT_COLOR_BOLD);
++	init_color(r, s, "interactive.help", s->help_color, GIT_COLOR_BOLD_RED);
++	init_color(r, s, "interactive.prompt", s->prompt_color,
++		   GIT_COLOR_BOLD_BLUE);
++	init_color(r, s, "interactive.error", s->error_color,
++		   GIT_COLOR_BOLD_RED);
++
++	init_color(r, s, "diff.frag", s->fraginfo_color,
+ 		   diff_get_color(s->use_color, DIFF_FRAGINFO));
+-	init_color(r, s, "context", s->context_color,
++	init_color(r, s, "diff.context", s->context_color,
+ 		diff_get_color(s->use_color, DIFF_CONTEXT));
+-	init_color(r, s, "old", s->file_old_color,
++	init_color(r, s, "diff.old", s->file_old_color,
+ 		diff_get_color(s->use_color, DIFF_FILE_OLD));
+-	init_color(r, s, "new", s->file_new_color,
++	init_color(r, s, "diff.new", s->file_new_color,
+ 		diff_get_color(s->use_color, DIFF_FILE_NEW));
+ 
+ 	strlcpy(s->reset_color,
 -- 
 gitgitgadget
+
