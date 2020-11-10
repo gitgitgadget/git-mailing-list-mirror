@@ -2,373 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B223C55ABD
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:22:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7859AC388F7
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:33:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B08A4206F1
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:22:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 37F232074B
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:33:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lDNw1s94"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LJlrDJFB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732052AbgKJVWe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Nov 2020 16:22:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40656 "EHLO
+        id S1731709AbgKJVdr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Nov 2020 16:33:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732030AbgKJVWa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Nov 2020 16:22:30 -0500
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05987C0613D4
-        for <git@vger.kernel.org>; Tue, 10 Nov 2020 13:22:30 -0800 (PST)
-Received: by mail-ot1-x343.google.com with SMTP id n89so137721otn.3
-        for <git@vger.kernel.org>; Tue, 10 Nov 2020 13:22:29 -0800 (PST)
+        with ESMTP id S1726688AbgKJVdr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Nov 2020 16:33:47 -0500
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1697C0613D1
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 13:33:46 -0800 (PST)
+Received: by mail-ej1-x644.google.com with SMTP id me8so10314185ejb.10
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 13:33:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=5/1QeBCX0cJkbLMBnrlRk2Qmcs/II1ykY3MtvDvC5mo=;
-        b=lDNw1s94+8qYVy+indI40yH/QEmZsF8yMEiH2DdHn1TIP8yVYGjUrNvbbCWyzsn2U5
-         XvSBa/ZVNx+aMEissPktd6GZJRpeTgxN44puygv6vM5ZlXPTXInh664wOWjYvgJEVFrI
-         srAjBLYTRqkwGA8267teFiO+e0xTJGqpgZMouRjIAg9jvBlX8j+VUblPcVeS5yXjuQnL
-         oDGQ0Z/LNAOax39XqzvR5t8uOg5Bz5QaLs4TbycZKfCAgQw4QkjjnGUY2ZyjyYF43FwW
-         XpbsPTLibtdEHPBH36Zuws/8PdFgmhvjIWwoUI8pVgcFxGMjMmHy1Mh98iLC4nD1AFSo
-         cE0w==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=CmHXrDb4EJz0dowWoiEKji692r4JL2f/sDsorLWJv30=;
+        b=LJlrDJFBdBb8Xt+pJn6GydR+EC2QdOprjIG+foYWHWug/eTQHRGXnSreynfnNsqAtq
+         nq+NOvSnp5U78RMt0D8I0JTFzq1Z6S3Cxc/J44tq8F+NCkegPPTcNX6NNlpe6DMBRIwV
+         DdHZQqCye5f7+aYGOZ5rxWxopmfP+gDiG44gKge/TjtF2wSknbzeh/YFHyKpYApMo3rw
+         QE/ocwLoi63K0NqfxbQmqWQTwFhc37rewolMvGb6WhU8zrqSfAwsRo5fM6ly1uM3h/49
+         yD/Hpqsd59fZS5umL6MtDFJvr6xRu1O8mwz/D61AT0HxnuRhz9ZFeHJdqAOQZuMumwCn
+         XoRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=5/1QeBCX0cJkbLMBnrlRk2Qmcs/II1ykY3MtvDvC5mo=;
-        b=Pyb6h1xXUKghNAsii6aAz4y1j9ZiW4ijWteVJh5qGPnTEzadWs6VZvqXuFw5LONeM+
-         RcG7w6U2ovhq8wHaP3NeL2qXFLs4egERk8/K+xIeyXvW5y3rZtDv6r4fXK4xvXdqTUHc
-         Yfs2NX1rVD1XhHI3XkKWmq6enBqg97aNZGvZaJHLxO7sCKRxUkg1gIJvrc5wFb42Tpxl
-         lf10zKVu34TSaeOy04j+8U6jVNMwg9jIpT6XExL0PNdU8QawvS01B0HKsYNsHTGhd9w/
-         PVElSbpXxAZgCHUCxdikrYkYG1cIYMLEup8VOOjWPpcPbgQFEPmvLPHK3Lt/Qmuy48ov
-         aamg==
-X-Gm-Message-State: AOAM533KIEqrHve8d98L3XYwTXXcaHtf08rDtuDNPB20CLqn4hkRTfBV
-        5eU6/RgiwTGO/cJj60zDsQRveY/Lgx6J/w==
-X-Google-Smtp-Source: ABdhPJwHeFnWEZIYIyYc3a3B/OJ3PU+NSEum8hwUwABdjhVVALkb0p70Zr1roSad9p1M69+WCDhaXw==
-X-Received: by 2002:a9d:d37:: with SMTP id 52mr14975784oti.60.1605043349001;
-        Tue, 10 Nov 2020 13:22:29 -0800 (PST)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id k13sm35258ooi.41.2020.11.10.13.22.28
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=CmHXrDb4EJz0dowWoiEKji692r4JL2f/sDsorLWJv30=;
+        b=SxydHOPCjRuTCoHlPGQISMqnnNZyQMRathCZKkk/gAB5mJJPC5Zh3CjbFfa8J7RI3M
+         Cp8nsLlX+SLIXu5BMHcbhUgSiJYwDKogXq38P2AXJ1qjfDFCNaSkkna/yWmohLEDDZH1
+         WlIGJ57wrpEkx5BhgmBld+ZvOh8TVfKc05srtfr18wgdCdonKqKy/3eG8BZARnto2OQS
+         nOYJI416T/37P3IIuTp+ALMSvmzsxqSR/X1qkmaNSuN07tbSzGiGjhXQAIiMn62SJhUv
+         yKYTdpWt3ih7PW9Gy6HLxeWztDbJDGfPewtBeXrkW9iD2Z7HamJI7cKZpjSgVvRPND70
+         P2sg==
+X-Gm-Message-State: AOAM532Jlg3EL/n9SByYd8g0kelGH9l1G8sfeYjnahYj5nXMB6YH/2RJ
+        mW9owl5WUxFwS0Jw/ZUK5GA=
+X-Google-Smtp-Source: ABdhPJxXB4BUg2ciJz6jjRLK5FuymB3Ry0DLmIxY7iQ4jfC8A0fcXf7gkvps5LUDXcCOTciAiPulmA==
+X-Received: by 2002:a17:906:dbf4:: with SMTP id yd20mr21827626ejb.53.1605044025284;
+        Tue, 10 Nov 2020 13:33:45 -0800 (PST)
+Received: from evledraar (ip18-11-210-87.adsl2.static.versatel.nl. [87.210.11.18])
+        by smtp.gmail.com with ESMTPSA id qx6sm28092ejb.10.2020.11.10.13.33.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2020 13:22:28 -0800 (PST)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 26/26] completion: bash: shuffle __gitcomp functions
-Date:   Tue, 10 Nov 2020 15:21:36 -0600
-Message-Id: <20201110212136.870769-27-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20201110212136.870769-1-felipe.contreras@gmail.com>
-References: <20201110212136.870769-1-felipe.contreras@gmail.com>
+        Tue, 10 Nov 2020 13:33:44 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     "Demi M. Obenour" <athena@invisiblethingslab.com>
+Cc:     Git <git@vger.kernel.org>
+Subject: Re: check_refname_format allows refs with components that begin with -, even though `git tag` does not
+References: <c926193b-a328-7562-6d4b-1ab2765c8cca@invisiblethingslab.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 26.3; mu4e 1.4.13
+In-reply-to: <c926193b-a328-7562-6d4b-1ab2765c8cca@invisiblethingslab.com>
+Date:   Tue, 10 Nov 2020 22:33:42 +0100
+Message-ID: <87imachp6x.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-They are the ones that actually do the completion, put them at the top.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/completion/git-completion.bash | 262 +++++++++++++------------
- 1 file changed, 135 insertions(+), 127 deletions(-)
+On Tue, Nov 10 2020, Demi M. Obenour wrote:
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index d73cdb7096..578b6b0d2f 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -45,6 +45,141 @@
- #     When set to "1" suggest all options, including options which are
- #     typically hidden (e.g. '--allow-empty' for 'git commit').
- 
-+# The following functions are meant to modify COMPREPLY, which should not be
-+# modified directly.  The purpose is to localize the modifications so it's
-+# easier to emulate it in Zsh. Every time a new __gitcomp* function is added,
-+# the corresponding function should be added to Zsh.
-+
-+__gitcompadd ()
-+{
-+	local x i=${#COMPREPLY[@]}
-+	for x in $1; do
-+		if [[ "$x" == "$3"* ]]; then
-+			COMPREPLY[i++]="$2$x$4"
-+		fi
-+	done
-+}
-+
-+# Creates completion replies.
-+# It accepts 1 to 4 arguments:
-+# 1: List of possible completion words.
-+# 2: A prefix to be added to each possible completion word (optional).
-+# 3: Generate possible completion matches for this word (optional).
-+# 4: A suffix to be appended to each possible completion word (optional).
-+__gitcomp ()
-+{
-+	local IFS=$' \t\n'
-+	__gitcompadd "$1" "${2-}" "${3-$cur}" "${4- }"
-+}
-+
-+# Generates completion reply from newline-separated possible completion words
-+# by appending a space to all of them. The result is appended to COMPREPLY.
-+# It accepts 1 to 4 arguments:
-+# 1: List of possible completion words, separated by a single newline.
-+# 2: A prefix to be added to each possible completion word (optional).
-+# 3: Generate possible completion matches for this word (optional).
-+# 4: A suffix to be appended to each possible completion word instead of
-+#    the default space (optional).  If specified but empty, nothing is
-+#    appended.
-+__gitcomp_nl ()
-+{
-+	local IFS=$'\n'
-+	__gitcompadd "$1" "${2-}" "${3-$cur}" "${4- }"
-+}
-+
-+# Appends prefiltered words to COMPREPLY without any additional processing.
-+# Callers must take care of providing only words that match the current word
-+# to be completed and adding any prefix and/or suffix (trailing space!), if
-+# necessary.
-+# 1: List of newline-separated matching completion words, complete with
-+#    prefix and suffix.
-+__gitcomp_direct ()
-+{
-+	local IFS=$'\n'
-+
-+	COMPREPLY+=($1)
-+}
-+
-+# Generates completion reply with compgen from newline-separated possible
-+# completion filenames.
-+# It accepts 1 to 3 arguments:
-+# 1: List of possible completion filenames, separated by a single newline.
-+# 2: A directory prefix to be added to each possible completion filename
-+#    (optional).
-+# 3: Generate possible completion matches for this word (optional).
-+__gitcomp_file ()
-+{
-+	local IFS=$'\n'
-+
-+	# XXX does not work when the directory prefix contains a tilde,
-+	# since tilde expansion is not applied.
-+	# This means that COMPREPLY will be empty and Bash default
-+	# completion will be used.
-+	__gitcompadd "$1" "${2-}" "${3-$cur}" ""
-+
-+	# use a hack to enable file mode in bash < 4
-+	compopt -o filenames +o nospace 2>/dev/null ||
-+	compgen -f /non-existing-dir/ >/dev/null ||
-+	true
-+}
-+
-+# Fills the COMPREPLY array with prefiltered paths without any additional
-+# processing.
-+# Callers must take care of providing only paths that match the current path
-+# to be completed and adding any prefix path components, if necessary.
-+# 1: List of newline-separated matching paths, complete with all prefix
-+#    path components.
-+__gitcomp_file_direct ()
-+{
-+	local IFS=$'\n'
-+
-+	COMPREPLY+=($1)
-+
-+	# use a hack to enable file mode in bash < 4
-+	compopt -o filenames +o nospace 2>/dev/null ||
-+	compgen -f /non-existing-dir/ >/dev/null ||
-+	true
-+}
-+
-+# Creates completion replies, reorganizing options and adding suffixes as needed.
-+# It accepts 1 to 4 arguments:
-+# 1: List of possible completion words.
-+# 2: A prefix to be added to each possible completion word (optional).
-+# 3: Generate possible completion matches for this word (optional).
-+# 4: A suffix to be appended to each possible completion word (optional).
-+__gitcomp_opts ()
-+{
-+	local cur_="${3-$cur}"
-+
-+	if [[ "$cur_" == *= ]]; then
-+		return
-+	fi
-+
-+	local c i=0 IFS=$' \t\n' sfx
-+	for c in $1; do
-+		if [[ $c == "--" ]]; then
-+			if [[ "$cur_" == --no-* ]]; then
-+				continue
-+			fi
-+
-+			if [[ --no == "$cur_"* ]]; then
-+				COMPREPLY[i++]="--no-... "
-+			fi
-+			break
-+		fi
-+		if [[ $c == "$cur_"* ]]; then
-+			case $c in
-+			*=|*.) sfx="" ;;
-+			*) sfx=" " ;;
-+			esac
-+			COMPREPLY[i++]="${2-}$c${4:-$sfx}"
-+		fi
-+	done
-+}
-+
-+# __gitcomp functions end here
-+# ==============================================================================
-+
- # Discovers the path to the git repository taking any '--git-dir=<path>' and
- # '-C <path>' options into account and stores it in the $__git_repo_path
- # variable.
-@@ -159,77 +294,6 @@ __git_dequote ()
- 	done
- }
- 
--# Appends prefiltered words to COMPREPLY without any additional processing.
--# Callers must take care of providing only words that match the current word
--# to be completed and adding any prefix and/or suffix (trailing space!), if
--# necessary.
--# 1: List of newline-separated matching completion words, complete with
--#    prefix and suffix.
--__gitcomp_direct ()
--{
--	local IFS=$'\n'
+> If I try to create a Git tag with a name beginning with `-`,
+> Git complains.  However, Git does not check that a repository does
+> not have tags containing `-`.  This almost led to a vulnerability
+> in the QubesOS `verify-git-tag` script.  Fortunately, this was not
+> exploitable, as neither `git tag -v`, `git verify-tag --raw`, nor
+> `git describe` have options that are useful to an attacker.
+>
+> Since this could cause vulnerabilities in other programs, I initially
+> reported it as an embargoed security bug, but was told to post it
+> publicly.
+>
+> The best idea I had for a fix is to print names beginning with `-`
+> using the fully-qualified form, such as "refs/tags/-a".  Also, `--`
+> is used as a delimiter in many commands, and can=E2=80=99t be escaped,
+> so disallowing it might be a good idea.
+>
+> In the long run, I hope to see leading dashes banned entirely, but
+> backwards compatibility might prevent that.
+
+[Re-posted from the very brief discussion on the security list]
+
+I'm inclined to say that we might as well remove the porcelain
+limitation of these "-" tags and branches. In reality we support them,
+fsck doesn't even warn about them, and git-check-ref-format(1) doesn't
+document them as forbidden.
+
+From reading 63486240108 ("disallow branch names that start with a
+hyphen", 2010-09-14) and 4f0accd638b ("tag: disallow '-' as tag name",
+2011-05-10) I don't see why we'd need to forbid these. A WIP patch of
+removing the checks from strbuf_check_branch_ref() and
+strbuf_check_tag_ref() fails just one test.
+
+The reason we forbade these seems to have been mainly to avoid the UI
+confusion of "git checkout -" or "git checkout -foo" and "git checkout
+-- -foo" not working. We can just make the "-" a special-case, and since
+then we've had "git switch -- -foo" which works, and you can do "git
+checkout refs/heads/-foo".
+
+I'm probably missing some porcelain bits but with my trivial patch "git
+[opts] [tag|branch] -- -foo" works.
+
+So I think we should just allow these, since at best it just leads to a
+false sense of security.
+
+FWIW this is the very basic WIP patch I was playing with. Fails just one
+test that explicitly tests for a branch named "-naster" with
+check-ref-format, should probably still disallow refs named just "-" (or
+maybe not...).
+
+diff --git a/builtin/tag.c b/builtin/tag.c
+index ecf011776dc..86088838bb4 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -369,9 +369,6 @@ static int parse_msg_arg(const struct option *opt, cons=
+t char *arg, int unset)
+=20
+ static int strbuf_check_tag_ref(struct strbuf *sb, const char *name)
+ {
+-	if (name[0] =3D=3D '-')
+-		return -1;
 -
--	COMPREPLY+=($1)
--}
--
--__gitcompadd ()
--{
--	local x i=${#COMPREPLY[@]}
--	for x in $1; do
--		if [[ "$x" == "$3"* ]]; then
--			COMPREPLY[i++]="$2$x$4"
--		fi
--	done
--}
--
--# Creates completion replies.
--# It accepts 1 to 4 arguments:
--# 1: List of possible completion words.
--# 2: A prefix to be added to each possible completion word (optional).
--# 3: Generate possible completion matches for this word (optional).
--# 4: A suffix to be appended to each possible completion word (optional).
--__gitcomp ()
--{
--	local IFS=$' \t\n'
--	__gitcompadd "$1" "${2-}" "${3-$cur}" "${4- }"
--}
--
--# Creates completion replies, reorganizing options and adding suffixes as needed.
--# It accepts 1 to 4 arguments:
--# 1: List of possible completion words.
--# 2: A prefix to be added to each possible completion word (optional).
--# 3: Generate possible completion matches for this word (optional).
--# 4: A suffix to be appended to each possible completion word (optional).
--__gitcomp_opts ()
--{
--	local cur_="${3-$cur}"
--
--	if [[ "$cur_" == *= ]]; then
--		return
--	fi
--
--	local c i=0 IFS=$' \t\n' sfx
--	for c in $1; do
--		if [[ $c == "--" ]]; then
--			if [[ "$cur_" == --no-* ]]; then
--				continue
--			fi
--
--			if [[ --no == "$cur_"* ]]; then
--				COMPREPLY[i++]="--no-... "
--			fi
--			break
--		fi
--		if [[ $c == "$cur_"* ]]; then
--			case $c in
--			*=|*.) sfx="" ;;
--			*) sfx=" " ;;
--			esac
--			COMPREPLY[i++]="${2-}$c${4:-$sfx}"
--		fi
--	done
--}
--
- # Clear the variables caching builtins' options when (re-)sourcing
- # the completion script.
- if [[ -n ${ZSH_VERSION-} ]]; then
-@@ -278,62 +342,6 @@ __gitcomp_builtin ()
- 	__gitcomp_opts "$options"
- }
- 
--# Generates completion reply from newline-separated possible completion words
--# by appending a space to all of them. The result is appended to COMPREPLY.
--# It accepts 1 to 4 arguments:
--# 1: List of possible completion words, separated by a single newline.
--# 2: A prefix to be added to each possible completion word (optional).
--# 3: Generate possible completion matches for this word (optional).
--# 4: A suffix to be appended to each possible completion word instead of
--#    the default space (optional).  If specified but empty, nothing is
--#    appended.
--__gitcomp_nl ()
--{
--	local IFS=$'\n'
--	__gitcompadd "$1" "${2-}" "${3-$cur}" "${4- }"
--}
--
--# Fills the COMPREPLY array with prefiltered paths without any additional
--# processing.
--# Callers must take care of providing only paths that match the current path
--# to be completed and adding any prefix path components, if necessary.
--# 1: List of newline-separated matching paths, complete with all prefix
--#    path components.
--__gitcomp_file_direct ()
--{
--	local IFS=$'\n'
--
--	COMPREPLY+=($1)
--
--	# use a hack to enable file mode in bash < 4
--	compopt -o filenames +o nospace 2>/dev/null ||
--	compgen -f /non-existing-dir/ >/dev/null ||
--	true
--}
--
--# Generates completion reply with compgen from newline-separated possible
--# completion filenames.
--# It accepts 1 to 3 arguments:
--# 1: List of possible completion filenames, separated by a single newline.
--# 2: A directory prefix to be added to each possible completion filename
--#    (optional).
--# 3: Generate possible completion matches for this word (optional).
--__gitcomp_file ()
--{
--	local IFS=$'\n'
--
--	# XXX does not work when the directory prefix contains a tilde,
--	# since tilde expansion is not applied.
--	# This means that COMPREPLY will be empty and Bash default
--	# completion will be used.
--	__gitcompadd "$1" "${2-}" "${3-$cur}" ""
--
--	# use a hack to enable file mode in bash < 4
--	compopt -o filenames +o nospace 2>/dev/null ||
--	compgen -f /non-existing-dir/ >/dev/null ||
--	true
--}
--
- # Execute 'git ls-files', unless the --committable option is specified, in
- # which case it runs 'git diff-index' to find out the files that can be
- # committed.  It return paths relative to the directory specified in the first
--- 
-2.29.2
+ 	strbuf_reset(sb);
+ 	strbuf_addf(sb, "refs/tags/%s", name);
+=20
+diff --git a/sha1-name.c b/sha1-name.c
+index 0b23b86ceb4..9a01138336c 100644
+--- a/sha1-name.c
++++ b/sha1-name.c
+@@ -1592,7 +1592,7 @@ int strbuf_check_branch_ref(struct strbuf *sb, const =
+char *name)
+ 	 */
+ 	strbuf_splice(sb, 0, 0, "refs/heads/", 11);
+=20
+-	if (*name =3D=3D '-' ||
++	if (!strcmp(name, "-") ||
+ 	    !strcmp(sb->buf, "refs/heads/HEAD"))
+ 		return -1;
+=20
 
