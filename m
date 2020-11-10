@@ -2,95 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A60C4C388F7
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:13:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E013EC388F7
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:21:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 60BF5206B5
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:13:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8142E20781
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:21:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hwMbeFyl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J659lMkC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727275AbgKJVNp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Nov 2020 16:13:45 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62631 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726179AbgKJVNo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Nov 2020 16:13:44 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 97FB49B0C4;
-        Tue, 10 Nov 2020 16:13:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zmk2eY9taZwJioAFCPrPhfX2lp8=; b=hwMbeF
-        yl5zJbTsC+xbE3+eZNe7vlQ9FrFku9lzCgOY664AMxowCyDIYAkc936m5ryaVEDf
-        M7BiiKexM9vX9owt9yxxRt/w0Dl1m/8qkdS/o3hrQNPm0hoL9NFjvG3G0T/hyaOc
-        EbzxDrp85EjMNNFZ759Tb+xUDUsQMcnRgNyN0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=W4w3dkOkyyDFT2lZVTQx7AiDlfJXUNEf
-        +FOJN2/WvrkQNfQ0VjiLRPQMUvgD20ZHqCxOnT1eZxhSv6UDnCC9qyhejujkOqBm
-        sXEjXfJ6KKJXy4zMdW4THXoVsADVv5THkN0I0VqE3JEd7HXlA3EbhwO5kYwDSGwI
-        zX3SdkDQZ0c=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9012A9B0C3;
-        Tue, 10 Nov 2020 16:13:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 18DCE9B0C1;
-        Tue, 10 Nov 2020 16:13:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH v2] t5411: consistent result for proc-receive broken test
-References: <CANYiYbHQKshFg=1xAv8MFfSjmFfQ0uJRm3mQBnZMsTd1n7R-Ow@mail.gmail.com>
-        <20201109105846.64303-1-zhiyou.jx@alibaba-inc.com>
-        <xmqqh7pyb61f.fsf@gitster.c.googlers.com>
-        <20201109231246.GA677345@coredump.intra.peff.net>
-        <CANYiYbH-x6khgTkkFV29+7AjghOZmG69_6-sQcm2489WMHOWAA@mail.gmail.com>
-        <xmqqzh3p53lt.fsf@gitster.c.googlers.com>
-Date:   Tue, 10 Nov 2020 13:13:41 -0800
-In-Reply-To: <xmqqzh3p53lt.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Tue, 10 Nov 2020 13:00:46 -0800")
-Message-ID: <xmqqv9ec6hkq.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1731666AbgKJVVk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Nov 2020 16:21:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40472 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726400AbgKJVVj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Nov 2020 16:21:39 -0500
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD01AC0613D1
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 13:21:39 -0800 (PST)
+Received: by mail-oi1-x233.google.com with SMTP id d9so16109274oib.3
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 13:21:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KpNX+wwCCpr4iaWZMjvlrg28Zg7y+VdDuXlAvCwOuss=;
+        b=J659lMkCdAFpH2bwXoebLweFi0v79p0X08ERcmDeP4BjD9kapfzC4A6IYA3vLOnFFn
+         0NR/j9T8bVnTKmqhmT6h+3MKDbwpGnlzPS97n+AmbFI4XNELSR9xfB9PdDZgjqIFSFxF
+         NxS2acc54iM9w7U/zUqjDBTA8rYMoQo41uwVKt9kphrawLux88ary5x1XO016z7wfmbA
+         mXT+0maI3GhiKik0+y5BzJ+pe0xxNrzpZmSjEnmIwpyv9RTrIaEVceTbfUhblcUxhEQ5
+         jLfsSFxUcHMYpBE9oe33LommuhRBUQ+ElW9iIB10NWAUfcJhfyi3LXS5BVt/e+iispf3
+         QWEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KpNX+wwCCpr4iaWZMjvlrg28Zg7y+VdDuXlAvCwOuss=;
+        b=osbaqd0rofJtoCsszdnDQyhDQs5Qo2sik9ydX9OHEm/cbrUqloJAcao52+VNUQchjf
+         V7rwhWtAmLQXGSs3+EXrZUlq1JDjIaM4JI/n0DjGxgBLq/5kZSe8HbQ2SQaxjcJJwcMk
+         s7XWAlFgFtCxlQlexFQxCDkUEVYIFXW8QEmBls0BrJVdc+fmZKVfmMN28LnzeeK/lcPx
+         5cA343KvpGHg3DYMUTK+Dg53zDxtZuw+4uhtpiCfiS8tvLB/ctfVMa7QV+75BlRPnArZ
+         Y9NgsU9jbMbs6jXCbTZvbwOt4EkpdFpGzQdsbLV24rAU/Oxa1dGSQxtqNFgecYEN4J+K
+         wAlg==
+X-Gm-Message-State: AOAM530os+aeNHrulCjiinTlDlOr5ycQORYaEFNIEYuJiChPZk9yzPoT
+        jiuR3UGwIy/xKZjjqu4O9zY1SX7n9uwAfw==
+X-Google-Smtp-Source: ABdhPJwutTqJPi6Cq2eiDmSPCMmt6A/VcPNPDzM/EO+tMd6VesJjus2g5jMEyour6syNYudd+3MZug==
+X-Received: by 2002:aca:d445:: with SMTP id l66mr44294oig.37.1605043298960;
+        Tue, 10 Nov 2020 13:21:38 -0800 (PST)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id f34sm25479otb.34.2020.11.10.13.21.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Nov 2020 13:21:38 -0800 (PST)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v2 00/26] completion: bash: a bunch of fixes, cleanups, and reorganization
+Date:   Tue, 10 Nov 2020 15:21:10 -0600
+Message-Id: <20201110212136.870769-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9C1F4AAA-2399-11EB-BE4A-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+I found a couple of bugs and inconsistencies.
 
-> Jiang Xin <worldhello.net@gmail.com> writes:
->
->> Thanks Peff for pointing the root cause. Will use the "gently" forms
->> of packet_write_fmt() and packet_flush() in patch v3.
->
-> Another thing I noticed.  Its tests are based on a codebase where
-> master is called main, which means it is not designed to be usable
-> with the 'master' or 'maint' track.  
->
-> Because the topic is no longer "just apply a band-aid to paper over
-> test flakeyness" but is fixing the codepath that matters in real
-> user experience, I'd prefer to see it applicable even to the
-> maintenance track.
+Also low-hanging fruit in terms of redundant code that can be merged and removed.
 
-I've queued these patches on top of
-js/default-branch-name-adjust-t5411; that makes the topic mergeable
-to 'master' but not to 'maint'.  Perhaps that is good enough, as the
-maintenance track of today would become obsolete by the end of this
-year.
+Tons of cleanups.
 
-Thanks.
+And refactoring the ancient _get_comp_words_by_ref.
+
+Since v1:
+
+ * Added bug fixes
+ * A lot more reorganization
+
+
+Felipe Contreras (26):
+  completion: bash: fix prefix detection in branch.*
+  completion: bash: add correct suffix in variables
+  completion: bash: fix for suboptions with value
+  completion: bash: do not modify COMP_WORDBREAKS
+  test: completion: fix currently typed words
+  test: completion: add run_func() helper
+  completion: bash: remove non-append functionality
+  completion: bash: get rid of _append() functions
+  completion: bash: get rid of any non-append code
+  completion: bash: factor out check in __gitcomp
+  completion: bash: simplify equal suffix check
+  completion: bash: refactor __gitcomp
+  completion: bash: simplify __gitcomp
+  completion: bash: change suffix check in __gitcomp
+  completion: bash: improve __gitcomp suffix code
+  completion: bash: simplify config_variable_name
+  test: completion: switch __gitcomp_nl prefix test
+  completion: bash: simplify _get_comp_words_by_ref()
+  completion: bash: refactor _get_comp_words_by_ref()
+  completion: bash: cleanup _get_comp_words_by_ref()
+  completion: bash: trivial cleanup
+  completion: bash: rename _get_comp_words_by_ref()
+  completion: bash: improve __gitcomp description
+  completion: bash: add __gitcomp_opts
+  completion: bash: cleanup __gitcomp* invocations
+  completion: bash: shuffle __gitcomp functions
+
+ contrib/completion/git-completion.bash | 648 +++++++++++--------------
+ contrib/completion/git-completion.zsh  |  20 +-
+ t/t9902-completion.sh                  | 159 +++---
+ 3 files changed, 377 insertions(+), 450 deletions(-)
+
+-- 
+2.29.2
+
