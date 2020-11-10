@@ -2,131 +2,379 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A040C5517A
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 17:05:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9392C388F7
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 17:09:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BC9BC206D8
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 17:05:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5B33320781
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 17:09:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GbsNL5TZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QKybgYgm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729110AbgKJRFz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Nov 2020 12:05:55 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:53026 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726688AbgKJRFz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Nov 2020 12:05:55 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 56B7B10D386;
-        Tue, 10 Nov 2020 12:05:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=tInqPHS5DE5s
-        kFdvve9cDZLxYbQ=; b=GbsNL5TZ9RFrsfDw8yu32qIjo1Wf4ORdpCdjJ0VU9K0J
-        r2A6YVft/aWCS2DKsgW4QuhBPbjfwHoLO1DwbYHaCb9lJBcZD+c7Lbu6CBYcX9xa
-        IAIwuZ2+iFpwXdC4yEAYipD1gkg8vC4M8sfJ7aj+UaSF6wfUN2f6taSYF3i42pU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=vIcS2r
-        RBnli9HSYti62WXl265XNhdvOkhSTdHt0xJ6j0xU/gVJILYIiMhTFpIBoUoGWINf
-        1sd9n2aSDGB5ofX5SJ6rMbUvjaBF1Ugvi0mcEMycpj8/kf4caXbjvcwKRFFH3gC0
-        F+ObwNeQR3RQbP1vwd/igAmoBMRnVMB/o4KSs=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4EFCF10D385;
-        Tue, 10 Nov 2020 12:05:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8D28510D384;
-        Tue, 10 Nov 2020 12:05:49 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Barret Rhoden <brho@google.com>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Jean-Yves Avenard <jyavenard@mozilla.com>, git@vger.kernel.org
-Subject: Re: Request for change 610e2b9240 reversal
-References: <CA+phgpFS_MOKOib5+yAE7U2QPMqMD_t+yXhR29UG9aSO4pgk+A@mail.gmail.com>
-        <171b9a99-d48a-babe-168b-a7cd410e4635@web.de>
-        <416a4e32-f813-cb7f-406d-30c5d48034b3@google.com>
-Date:   Tue, 10 Nov 2020 09:05:47 -0800
-In-Reply-To: <416a4e32-f813-cb7f-406d-30c5d48034b3@google.com> (Barret
-        Rhoden's message of "Tue, 10 Nov 2020 08:33:53 -0500")
-Message-ID: <xmqq361h87mc.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727968AbgKJRJu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Nov 2020 12:09:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57600 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726721AbgKJRJu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Nov 2020 12:09:50 -0500
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB0D7C0613CF
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 09:09:49 -0800 (PST)
+Received: by mail-pf1-x441.google.com with SMTP id e7so11975248pfn.12
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 09:09:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=IeaCMBOXfRfXtS3Tsli2rP4pksX/QkttIYSUdE5Inm0=;
+        b=QKybgYgmYCA+vdXeIjK9sjZYpndRWOR9x2iRXrej+gaNJaQ6d4aJKKMKjhFjtnH2wg
+         8ROOGywBYzlVoNxdfxRUHwDuuqteSuR9/OXe9U+83ye66LMZdqwhRxfeR8azOrcES0AS
+         4sM1nLgj8bp9KtBseGfrOG8yVd4SZqBtKnN4vdFEZ95aYZekOPtUAPwxof83OWzR3OKC
+         mywKYGelv+cMLR1QeKG1F4GEhPaoDjW+sDvjXsgKhC60EA5LyQ6gReMW5SnjfA2Lm4wu
+         Bo38iRmKHP/qnbh+2YiEBJ4gj4zXt0xVxKNAJ35G2w9h59KngOKyKGaD5hZ0QCadMDle
+         xbZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=IeaCMBOXfRfXtS3Tsli2rP4pksX/QkttIYSUdE5Inm0=;
+        b=n3MqhjO6NYKgMyiy4eprEZkOKArh7OJ8JgaGyzrYAWqAHEVkGknBGPJnVRpbXne/p4
+         vb7puDWnWHXco+2b9jsCNoWRntdukn0fq5R69n+CgGib2ZYTe6a2SMP5v661JSj7d1jQ
+         QgaB2JJWBQW027LOuMDmHevYZemTC8UBDKFY2gxf+poPL5/4D7l6G4tErhYDK36NPNpR
+         NxQpo8JAOqSShrKzCmZb7/z1oXj58y3SvSBUbeUQbambah6cnl35blyA5FJni2R54ngX
+         8sImM//z4SCpq0SxdGVFY1KXHHZw6gf46sRaDYMCn3KYysKLxTj/z0xUG5NwGImSdTHK
+         AEAw==
+X-Gm-Message-State: AOAM530x8wOGhHOTEnKxFWOlYYo2IkX4bHgKzYlhV7dfnvKk44y/C4YO
+        ECn9INIcINCPJ5HPGqfYLCg=
+X-Google-Smtp-Source: ABdhPJzxr1pwkRaCAItiYaucA6o9ZkFmZxqYD73kvyk177UIZdaGbHYIht4igrz44L8ruNyEfmUbVw==
+X-Received: by 2002:a65:404b:: with SMTP id h11mr17205004pgp.379.1605028189448;
+        Tue, 10 Nov 2020 09:09:49 -0800 (PST)
+Received: from localhost ([2402:800:63a8:b485:e36e:8de6:8e0a:7fe3])
+        by smtp.gmail.com with ESMTPSA id y23sm3096425pje.41.2020.11.10.09.09.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Nov 2020 09:09:48 -0800 (PST)
+Date:   Wed, 11 Nov 2020 00:09:46 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Sangeeta Jain <sangunb09@gmail.com>
+Cc:     git@vger.kernel.org, phillip.wood123@gmail.com,
+        kaartic.sivaraam@gmail.com, gitster@pobox.com,
+        sunshine@sunshineco.com
+Subject: Re: [Outreachy][PATCH v7] diff: do not show submodule with untracked
+ files as "-dirty"
+Message-ID: <X6rJWpuUHz1qHYZL@danh.dev>
+References: <pull.751.git.1602781723670.gitgitgadget@gmail.com>
+ <20201110083900.88161-1-sangunb09@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FB67D374-2376-11EB-BC4F-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201110083900.88161-1-sangunb09@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Barret Rhoden <brho@google.com> writes:
+Hi Sangeeta,
 
-> On 11/10/20 6:38 AM, Ren=C3=A9 Scharfe wrote:
-> [snip]
->> Reported-by: Jean-Yves Avenard <jyavenard@mozilla.com>
->> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
->
-> patch looks good to me.
->
-> Reviewed-by: Barret Rhoden <brho@google.com>
->
-> Thanks,
->
-> Barret
+First, thanks for correcting the test code that I've noticed in the
+previous mail (and thanks to Junio, who explained my words in better
+terms).
 
-Yes, I do recall that we discussed reverting half of that change and
-then I forgot to follow through.
+On 2020-11-10 14:09:00+0530, Sangeeta Jain <sangunb09@gmail.com> wrote:
+> diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.txt
+> index c3ae136eba..2d3331f55c 100644
+> --- a/Documentation/config/diff.txt
+> +++ b/Documentation/config/diff.txt
+> @@ -85,6 +85,8 @@ diff.ignoreSubmodules::
+>  	and 'git status' when `status.submoduleSummary` is set unless it is
+>  	overridden by using the --ignore-submodules command-line option.
+>  	The 'git submodule' commands are not affected by this setting.
+> +	By default this is set to untracked so that any untracked
+> +	submodules are ignored.
 
-Thanks, all.  Will queue.
+This rounds looks better to me.
+My only question now is: Should this change applicable to diff-index,
+diff-files and other plumbing commands?
 
->
->
->> ---
->>   oidset.c                     | 5 +++--
->>   t/t8013-blame-ignore-revs.sh | 4 ++--
->>   2 files changed, 5 insertions(+), 4 deletions(-)
->> diff --git a/oidset.c b/oidset.c
->> index 2d0ab76fb5..5aac633c1f 100644
->> --- a/oidset.c
->> +++ b/oidset.c
->> @@ -72,9 +72,10 @@ void oidset_parse_file_carefully(struct oidset *set=
-, const char *path,
->>   		if (!sb.len)
->>   			continue;
->> -		if (parse_oid_hex(sb.buf, &oid, &p) || *p !=3D '\0' ||
->> -		    (fn && fn(&oid, cbdata)))
->> +		if (parse_oid_hex(sb.buf, &oid, &p) || *p !=3D '\0')
->>   			die("invalid object name: %s", sb.buf);
->> +		if (fn && fn(&oid, cbdata))
->> +			continue;
->>   		oidset_insert(set, &oid);
->>   	}
->>   	if (ferror(fp))
->> diff --git a/t/t8013-blame-ignore-revs.sh b/t/t8013-blame-ignore-revs.=
-sh
->> index 24ae5018e8..b18633dee1 100755
->> --- a/t/t8013-blame-ignore-revs.sh
->> +++ b/t/t8013-blame-ignore-revs.sh
->> @@ -39,10 +39,10 @@ test_expect_success 'validate --ignore-rev' '
->>   	test_must_fail git blame --ignore-rev X^{tree} file
->>   '
->> -# Ensure bogus --ignore-revs-file requests are caught
->> +# Ensure bogus --ignore-revs-file requests are silently accepted
->>   test_expect_success 'validate --ignore-revs-file' '
->>   	git rev-parse X^{tree} >ignore_x &&
->> -	test_must_fail git blame --ignore-revs-file ignore_x file
->> +	git blame --ignore-revs-file ignore_x file
->>   '
->>   for I in X XT
->> --
->> 2.29.2
->>=20
+As of it's now, we treat the absent of diff.ignoreSubmodules as
+"none" but we're changing to "untracked" with this change.
+
+Will someone's scripts break by this change?
+I think it's unlikely, but who knows?
+
+To contribute to the chaos, --ignore-submodules implies --ignore-submodules=all 
+My first-quick-and-INCORRECT scan to the diff-options, I was puzzled
+by its default, and I thought (incorrectly, for a second) the absent of
+--ignore-submodules mean --ignore-submodules=all.
+
+-- Danh
+
+>  
+>  diff.mnemonicPrefix::
+>  	If set, 'git diff' uses a prefix pair that is different from the
+> diff --git a/diff.c b/diff.c
+> index 2bb2f8f57e..5a80695da8 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -4585,6 +4585,9 @@ void repo_diff_setup(struct repository *r, struct diff_options *options)
+>  		DIFF_XDL_SET(options, INDENT_HEURISTIC);
+>  
+>  	options->orderfile = diff_order_file_cfg;
+> +	
+> +	if (!options->flags.ignore_submodule_set)
+> +		options->flags.ignore_untracked_in_submodules = 1;
+>  
+>  	if (diff_no_prefix) {
+>  		options->a_prefix = options->b_prefix = "";
+> diff --git a/diff.h b/diff.h
+> index 11de52e9e9..1e18e6b1c3 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -178,6 +178,7 @@ struct diff_flags {
+>  	unsigned diff_from_contents;
+>  	unsigned dirty_submodules;
+>  	unsigned ignore_untracked_in_submodules;
+> +	unsigned ignore_submodule_set;
+>  	unsigned ignore_dirty_submodules;
+>  	unsigned override_submodule_config;
+>  	unsigned dirstat_by_line;
+> diff --git a/submodule.c b/submodule.c
+> index b3bb59f066..8f6227c993 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -420,6 +420,7 @@ const char *submodule_strategy_to_string(const struct submodule_update_strategy
+>  void handle_ignore_submodules_arg(struct diff_options *diffopt,
+>  				  const char *arg)
+>  {
+> +	diffopt->flags.ignore_submodule_set = 1;
+>  	diffopt->flags.ignore_submodules = 0;
+>  	diffopt->flags.ignore_untracked_in_submodules = 0;
+>  	diffopt->flags.ignore_dirty_submodules = 0;
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> index ca04fac417..9a2489cde0 100755
+> --- a/t/t3701-add-interactive.sh
+> +++ b/t/t3701-add-interactive.sh
+> @@ -765,6 +765,12 @@ test_expect_success 'setup different kinds of dirty submodules' '
+>  	cat >expected <<-\EOF &&
+>  	dirty-both-ways
+>  	dirty-head
+> +	EOF
+> +	test_cmp expected actual &&
+> +	git -C for-submodules diff-files --name-only --ignore-submodules=none >actual &&
+> +	cat >expected <<-\EOF &&
+> +	dirty-both-ways
+> +	dirty-head
+>  	dirty-otherwise
+>  	EOF
+>  	test_cmp expected actual &&
+> diff --git a/t/t4027-diff-submodule.sh b/t/t4027-diff-submodule.sh
+> index d7145ccca4..894a11b224 100755
+> --- a/t/t4027-diff-submodule.sh
+> +++ b/t/t4027-diff-submodule.sh
+> @@ -93,6 +93,14 @@ test_expect_success 'git diff HEAD with dirty submodule (untracked)' '
+>  	) &&
+>  	git diff HEAD >actual &&
+>  	sed -e "1,/^@@/d" actual >actual.body &&
+> +	expect_from_to >expect.body $subtip $subprev &&
+> +	test_cmp expect.body actual.body
+> +'
+> +
+> +test_expect_success 'git diff HEAD with dirty submodule (untracked) (none ignored)' '
+> +	test_config diff.ignoreSubmodules none &&
+> +	git diff HEAD >actual &&
+> +	sed -e "1,/^@@/d" actual >actual.body &&
+>  	expect_from_to >expect.body $subtip $subprev-dirty &&
+>  	test_cmp expect.body actual.body
+>  '
+> @@ -168,13 +176,13 @@ test_expect_success 'git diff HEAD with dirty submodule (untracked, refs match)'
+>  		git clean -qfdx &&
+>  		>cruft
+>  	) &&
+> -	git diff HEAD >actual &&
+> +	git diff --ignore-submodules=none HEAD >actual &&
+>  	sed -e "1,/^@@/d" actual >actual.body &&
+>  	expect_from_to >expect.body $subprev $subprev-dirty &&
+>  	test_cmp expect.body actual.body &&
+>  	git diff --ignore-submodules=all HEAD >actual2 &&
+>  	test_must_be_empty actual2 &&
+> -	git diff --ignore-submodules=untracked HEAD >actual3 &&
+> +	git diff HEAD >actual3 &&
+>  	test_must_be_empty actual3 &&
+>  	git diff --ignore-submodules=dirty HEAD >actual4 &&
+>  	test_must_be_empty actual4
+> diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
+> index f852136585..b3a7b7acaa 100755
+> --- a/t/t4041-diff-submodule-option.sh
+> +++ b/t/t4041-diff-submodule-option.sh
+> @@ -262,7 +262,7 @@ test_expect_success 'submodule is up to date' '
+>  
+>  test_expect_success 'submodule contains untracked content' '
+>  	echo new > sm1/new-file &&
+> -	git diff-index -p --submodule=log HEAD >actual &&
+> +	git diff-index -p --ignore-submodules=none --submodule=log HEAD >actual &&
+>  	cat >expected <<-EOF &&
+>  	Submodule sm1 contains untracked content
+>  	EOF
+> @@ -270,7 +270,7 @@ test_expect_success 'submodule contains untracked content' '
+>  '
+>  
+>  test_expect_success 'submodule contains untracked content (untracked ignored)' '
+> -	git diff-index -p --ignore-submodules=untracked --submodule=log HEAD >actual &&
+> +	git diff-index -p --submodule=log HEAD >actual &&
+>  	test_must_be_empty actual
+>  '
+>  
+> @@ -286,7 +286,7 @@ test_expect_success 'submodule contains untracked content (all ignored)' '
+>  
+>  test_expect_success 'submodule contains untracked and modified content' '
+>  	echo new > sm1/foo6 &&
+> -	git diff-index -p --submodule=log HEAD >actual &&
+> +	git diff-index -p --ignore-submodules=none --submodule=log HEAD >actual &&
+>  	cat >expected <<-EOF &&
+>  	Submodule sm1 contains untracked content
+>  	Submodule sm1 contains modified content
+> @@ -296,7 +296,7 @@ test_expect_success 'submodule contains untracked and modified content' '
+>  
+>  test_expect_success 'submodule contains untracked and modified content (untracked ignored)' '
+>  	echo new > sm1/foo6 &&
+> -	git diff-index -p --ignore-submodules=untracked --submodule=log HEAD >actual &&
+> +	git diff-index -p --submodule=log HEAD >actual &&
+>  	cat >expected <<-EOF &&
+>  	Submodule sm1 contains modified content
+>  	EOF
+> @@ -337,7 +337,7 @@ test_expect_success 'submodule is modified' '
+>  
+>  test_expect_success 'modified submodule contains untracked content' '
+>  	echo new > sm1/new-file &&
+> -	git diff-index -p --submodule=log HEAD >actual &&
+> +	git diff-index -p  --ignore-submodules=none --submodule=log HEAD >actual &&
+>  	cat >expected <<-EOF &&
+>  	Submodule sm1 contains untracked content
+>  	Submodule sm1 $head6..$head8:
+> @@ -347,7 +347,7 @@ test_expect_success 'modified submodule contains untracked content' '
+>  '
+>  
+>  test_expect_success 'modified submodule contains untracked content (untracked ignored)' '
+> -	git diff-index -p --ignore-submodules=untracked --submodule=log HEAD >actual &&
+> +	git diff-index -p --submodule=log HEAD >actual &&
+>  	cat >expected <<-EOF &&
+>  	Submodule sm1 $head6..$head8:
+>  	  > change
+> @@ -371,7 +371,7 @@ test_expect_success 'modified submodule contains untracked content (all ignored)
+>  
+>  test_expect_success 'modified submodule contains untracked and modified content' '
+>  	echo modification >> sm1/foo6 &&
+> -	git diff-index -p --submodule=log HEAD >actual &&
+> +	git diff-index -p --ignore-submodules=none --submodule=log HEAD >actual &&
+>  	cat >expected <<-EOF &&
+>  	Submodule sm1 contains untracked content
+>  	Submodule sm1 contains modified content
+> @@ -383,7 +383,7 @@ test_expect_success 'modified submodule contains untracked and modified content'
+>  
+>  test_expect_success 'modified submodule contains untracked and modified content (untracked ignored)' '
+>  	echo modification >> sm1/foo6 &&
+> -	git diff-index -p --ignore-submodules=untracked --submodule=log HEAD >actual &&
+> +	git diff-index -p --submodule=log HEAD >actual &&
+>  	cat >expected <<-EOF &&
+>  	Submodule sm1 contains modified content
+>  	Submodule sm1 $head6..$head8:
+> diff --git a/t/t4060-diff-submodule-option-diff-format.sh b/t/t4060-diff-submodule-option-diff-format.sh
+> index fc8229c726..dc7b242697 100755
+> --- a/t/t4060-diff-submodule-option-diff-format.sh
+> +++ b/t/t4060-diff-submodule-option-diff-format.sh
+> @@ -409,7 +409,7 @@ test_expect_success 'submodule is up to date' '
+>  
+>  test_expect_success 'submodule contains untracked content' '
+>  	echo new > sm1/new-file &&
+> -	git diff-index -p --submodule=diff HEAD >actual &&
+> +	git diff-index -p --ignore-submodules=none --submodule=diff HEAD >actual &&
+>  	cat >expected <<-EOF &&
+>  	Submodule sm1 contains untracked content
+>  	EOF
+> @@ -417,7 +417,7 @@ test_expect_success 'submodule contains untracked content' '
+>  '
+>  
+>  test_expect_success 'submodule contains untracked content (untracked ignored)' '
+> -	git diff-index -p --ignore-submodules=untracked --submodule=diff HEAD >actual &&
+> +	git diff-index -p --submodule=diff HEAD >actual &&
+>  	test_must_be_empty actual
+>  '
+>  
+> @@ -433,7 +433,7 @@ test_expect_success 'submodule contains untracked content (all ignored)' '
+>  
+>  test_expect_success 'submodule contains untracked and modified content' '
+>  	echo new > sm1/foo6 &&
+> -	git diff-index -p --submodule=diff HEAD >actual &&
+> +	git diff-index -p --ignore-submodules=none --submodule=diff HEAD >actual &&
+>  	cat >expected <<-EOF &&
+>  	Submodule sm1 contains untracked content
+>  	Submodule sm1 contains modified content
+> @@ -451,7 +451,7 @@ test_expect_success 'submodule contains untracked and modified content' '
+>  # NOT OK
+>  test_expect_success 'submodule contains untracked and modified content (untracked ignored)' '
+>  	echo new > sm1/foo6 &&
+> -	git diff-index -p --ignore-submodules=untracked --submodule=diff HEAD >actual &&
+> +	git diff-index -p --submodule=diff HEAD >actual &&
+>  	cat >expected <<-EOF &&
+>  	Submodule sm1 contains modified content
+>  	diff --git a/sm1/foo6 b/sm1/foo6
+> @@ -512,7 +512,7 @@ test_expect_success 'submodule is modified' '
+>  
+>  test_expect_success 'modified submodule contains untracked content' '
+>  	echo new > sm1/new-file &&
+> -	git diff-index -p --submodule=diff HEAD >actual &&
+> +	git diff-index -p --ignore-submodules=none --submodule=diff HEAD >actual &&
+>  	cat >expected <<-EOF &&
+>  	Submodule sm1 contains untracked content
+>  	Submodule sm1 $head7..$head8:
+> @@ -528,7 +528,7 @@ test_expect_success 'modified submodule contains untracked content' '
+>  '
+>  
+>  test_expect_success 'modified submodule contains untracked content (untracked ignored)' '
+> -	git diff-index -p --ignore-submodules=untracked --submodule=diff HEAD >actual &&
+> +	git diff-index -p --submodule=diff HEAD >actual &&
+>  	cat >expected <<-EOF &&
+>  	Submodule sm1 $head7..$head8:
+>  	diff --git a/sm1/foo6 b/sm1/foo6
+> @@ -564,7 +564,7 @@ test_expect_success 'modified submodule contains untracked content (all ignored)
+>  
+>  test_expect_success 'modified submodule contains untracked and modified content' '
+>  	echo modification >> sm1/foo6 &&
+> -	git diff-index -p --submodule=diff HEAD >actual &&
+> +	git diff-index -p --ignore-submodules=none --submodule=diff HEAD >actual &&
+>  	cat >expected <<-EOF &&
+>  	Submodule sm1 contains untracked content
+>  	Submodule sm1 contains modified content
+> @@ -583,7 +583,7 @@ test_expect_success 'modified submodule contains untracked and modified content'
+>  
+>  test_expect_success 'modified submodule contains untracked and modified content (untracked ignored)' '
+>  	echo modification >> sm1/foo6 &&
+> -	git diff-index -p --ignore-submodules=untracked --submodule=diff HEAD >actual &&
+> +	git diff-index -p --submodule=diff HEAD >actual &&
+>  	cat >expected <<-EOF &&
+>  	Submodule sm1 contains modified content
+>  	Submodule sm1 $head7..$head8:
+> diff --git a/wt-status.c b/wt-status.c
+> index 7074bbdd53..83d418647d 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -606,7 +606,9 @@ static void wt_status_collect_changes_worktree(struct wt_status *s)
+>  	if (s->ignore_submodule_arg) {
+>  		rev.diffopt.flags.override_submodule_config = 1;
+>  		handle_ignore_submodules_arg(&rev.diffopt, s->ignore_submodule_arg);
+> -	}
+> +	} else if (!rev.diffopt.flags.ignore_submodule_set && 
+> +			s->show_untracked_files != SHOW_NO_UNTRACKED_FILES)
+> +		handle_ignore_submodules_arg(&rev.diffopt, "none");
+>  	rev.diffopt.format_callback = wt_status_collect_changed_cb;
+>  	rev.diffopt.format_callback_data = s;
+>  	rev.diffopt.detect_rename = s->detect_rename >= 0 ? s->detect_rename : rev.diffopt.detect_rename;
+> -- 
+> 2.21.1 (Apple Git-122.3)
+> 
+
+-- 
+Danh
