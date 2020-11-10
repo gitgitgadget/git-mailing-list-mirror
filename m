@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56644C56201
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68229C388F7
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:22:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EEAE020781
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:22:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 070F920781
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:22:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cfwiw54/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JCFSefGx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731968AbgKJVWO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Nov 2020 16:22:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40592 "EHLO
+        id S1731984AbgKJVWR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Nov 2020 16:22:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731912AbgKJVWN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Nov 2020 16:22:13 -0500
-Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C282C0613D1
-        for <git@vger.kernel.org>; Tue, 10 Nov 2020 13:22:13 -0800 (PST)
-Received: by mail-oo1-xc34.google.com with SMTP id t10so241128oon.4
-        for <git@vger.kernel.org>; Tue, 10 Nov 2020 13:22:13 -0800 (PST)
+        with ESMTP id S1731912AbgKJVWO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Nov 2020 16:22:14 -0500
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90E59C0613D1
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 13:22:14 -0800 (PST)
+Received: by mail-ot1-x32f.google.com with SMTP id g19so80977otp.13
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 13:22:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=UkU5z8sfNDXovy2ZdIiqze3JF/d4JAzCtCfhdyoJj/g=;
-        b=Cfwiw54/fdNG+4yQ8Zq48UcPkYHtJnshc4DIlLQmzQVgFy72S3+hOLB7U59Jlo4jcH
-         2jS7J7Gyf1DKc+W2cxOR9+yDqa7mKW139Hk6h5Brpu7t3I+bw9E1Tj3svBvUfPnkc+5V
-         Vve0IPaNxJPJXKXzsSnceCSegnGcehFDMZNwch8RJTkixl83hAE4K8oJQjb4P+xSLRit
-         14+C+Fjn1EocbF1LH4g/U2Dgl9SAqV3XCiTIrw47Gx+NgVUGQTZYJyf1sxPE7SXRRZbj
-         UvLhaKm1OYA87Qb00H/XoO+UbsOnSh8lk1e1+xeRwUC+ylY7LvLUnSRKniT9JegxQy8u
-         oaTA==
+        bh=GZ/l6PPoJxJkWA6o1N5NxZ2CSXJuFnIR4oTtK8vHmKM=;
+        b=JCFSefGx3uL5fHVc7ctfoV7dSDKloqRRDi5QMTPdj0DLqwSemejn1xVIDMeS9pTJdu
+         P7guZ6kO32gX6t2CumwE5PROXS6/p83ZSq+QvYX14TLA3mTu2HyMOW2vyduUccd4SEVq
+         6tW40Jx1uTEBn7l71i/1Ggwp27gcFKxKyUz9Dx4epqjlMiKH68CMnseviSNtETl88PbM
+         tAjIjlkPxCQQ+Jk4bybqtOhg3RvNKpQU++svQF2XT47q3eoib55twZDltAD5cFvAlDth
+         fXC9/6VZOwScYnyi3aVj/upJXyHdsIyPjpZUrrCafqkX5LdqC3J8n07LBxyUpoEuC214
+         pEjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=UkU5z8sfNDXovy2ZdIiqze3JF/d4JAzCtCfhdyoJj/g=;
-        b=C/0EFexmGAPATMlizoV2fnV5tLY6dVXQOxAr2TL/IQrCNnlwh2Wt1YlLJ7IW5IYmH9
-         GqmgClLX6Yv/fED1qOhTYJEbTHmcWIgvbqYRmSCnJdT94CU3jh0RQeBBsxI8SkfvZS/P
-         Q7lWzov8oXbt8gLxZgieZ7+SxIKiV37SXRI5UsbMDlaMFyQIIyuoI/UcEM/cqviAvgaG
-         3tDFDP0r7XD6UDfkhj7GlLkmyMS4fVXKrMwzNmZ8r1hqWoKSk8T40iGRL9GWMt4TG9Oz
-         r9YqwIjdrRDCqWCyaftzMFa9ViGpgT3VsQgeVqhPlqSpkfP345VLybAL556Bv0VnXHbA
-         FPIQ==
-X-Gm-Message-State: AOAM5325oby6b2oE/A6xPe9Mq5eajEZJEGHFdyEGaB4H1QagQfQIasIf
-        9Fo/TVZi3wwmS7X7fXJH2vncVpW6OVWj9g==
-X-Google-Smtp-Source: ABdhPJy+9eAiZi1BOCeMHHQpqqZsFMrn+898U3l9uB1qoiu05iSujL7/mJCXmvhP1eUrqHQyTZnJyg==
-X-Received: by 2002:a4a:e09a:: with SMTP id w26mr14977174oos.18.1605043332361;
-        Tue, 10 Nov 2020 13:22:12 -0800 (PST)
+        bh=GZ/l6PPoJxJkWA6o1N5NxZ2CSXJuFnIR4oTtK8vHmKM=;
+        b=G4KqLK3qlClRBRLqveGR3igsD3pZIslYZOs12XwP4kuxQ5NFAGkwbNkj1tGuesHI+I
+         X4drEWDMDaXg/UKvyK6elq3MoRODu2zysGmIdpNiSeHRfYnKHkVYXmL7xp3iVbkE+l1X
+         TVjccTQ4aPHkLLrJsaO5hlVVekHBKt5JwOj0oMoIEbStDL9xgpnH3LC0Jh8xn/29MDzz
+         hdoSszCNv2QZyR+RB5FuJARFlu8QwH4gaYU4XrlHIWKGS67aU7qZJ28clqATuEYn0Vae
+         mSZDXYrjogur6WUntzR8dHiScjgg3T7ClkrQILJpo27M4dZ9txKwch11UWW6AIXW108S
+         vwCQ==
+X-Gm-Message-State: AOAM530cyjDiCsneoWgZdMH4+Vsqtkv3m6CnvD/Bneawq0JZenmjKC4H
+        vi6ieumk10mlMG7Wjssjlfy6RmhT3dfLBA==
+X-Google-Smtp-Source: ABdhPJxp2mqQVPygO2tecCa80pU9pVVUsq9k7PTFBBhaPNCU6wcgdYgz7+5qnrMfd4sQa3CaZai3Rg==
+X-Received: by 2002:a9d:5910:: with SMTP id t16mr16492209oth.155.1605043333802;
+        Tue, 10 Nov 2020 13:22:13 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id l2sm19923otl.67.2020.11.10.13.22.11
+        by smtp.gmail.com with ESMTPSA id y15sm17791otq.79.2020.11.10.13.22.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Nov 2020 13:22:11 -0800 (PST)
+        Tue, 10 Nov 2020 13:22:13 -0800 (PST)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 17/26] test: completion: switch __gitcomp_nl prefix test
-Date:   Tue, 10 Nov 2020 15:21:27 -0600
-Message-Id: <20201110212136.870769-18-felipe.contreras@gmail.com>
+Subject: [PATCH v2 18/26] completion: bash: simplify _get_comp_words_by_ref()
+Date:   Tue, 10 Nov 2020 15:21:28 -0600
+Message-Id: <20201110212136.870769-19-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20201110212136.870769-1-felipe.contreras@gmail.com>
 References: <20201110212136.870769-1-felipe.contreras@gmail.com>
@@ -75,33 +75,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-By default COMP_WORDBREAKS includes =, so it's not realistic to test for
-a prefix that almost never will be there.
-
-No functional changes.
+We don't need the whole functionality of _get_comp_words_by_ref(), we
+know exactly what we need from that function, so only do that.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- t/t9902-completion.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ contrib/completion/git-completion.bash | 30 ++++++--------------------
+ t/t9902-completion.sh                  | 21 ++++--------------
+ 2 files changed, 10 insertions(+), 41 deletions(-)
 
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 56a66a375a..4548f0c5bf 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -260,30 +260,12 @@ __git_reassemble_comp_words_by_ref()
+ if ! type _get_comp_words_by_ref >/dev/null 2>&1; then
+ _get_comp_words_by_ref ()
+ {
+-	local exclude cur_ words_ cword_
+-	if [ "$1" = "-n" ]; then
+-		exclude=$2
+-		shift 2
+-	fi
+-	__git_reassemble_comp_words_by_ref "$exclude"
+-	cur_=${words_[cword_]}
+-	while [ $# -gt 0 ]; do
+-		case "$1" in
+-		cur)
+-			cur=$cur_
+-			;;
+-		prev)
+-			prev=${words_[$cword_-1]}
+-			;;
+-		words)
+-			words=("${words_[@]}")
+-			;;
+-		cword)
+-			cword=$cword_
+-			;;
+-		esac
+-		shift
+-	done
++	local words_ cword_
++	__git_reassemble_comp_words_by_ref "=:"
++	cword=$cword_
++	cur=${words_[cword]}
++	prev=${words_[cword-1]}
++	words=("${words_[@]}")
+ }
+ fi
+ 
 diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 3ec9ff9308..012dade4a5 100755
+index 012dade4a5..e39febcc4a 100755
 --- a/t/t9902-completion.sh
 +++ b/t/t9902-completion.sh
-@@ -570,9 +570,9 @@ test_expect_success '__gitcomp_nl - trailing space' '
- '
+@@ -40,23 +40,10 @@ GIT_TESTING_PORCELAIN_COMMAND_LIST='add checkout rebase'
+ # So let's override it with a minimal version for testing purposes.
+ _get_comp_words_by_ref ()
+ {
+-	while [ $# -gt 0 ]; do
+-		case "$1" in
+-		cur)
+-			cur=${_words[_cword]}
+-			;;
+-		prev)
+-			prev=${_words[_cword-1]}
+-			;;
+-		words)
+-			words=("${_words[@]}")
+-			;;
+-		cword)
+-			cword=$_cword
+-			;;
+-		esac
+-		shift
+-	done
++	cword=$_cword
++	cur=${_words[cword]}
++	prev=${_words[cword-1]}
++	words=("${_words[@]}")
+ }
  
- test_expect_success '__gitcomp_nl - prefix' '
--	test_gitcomp_nl "--fixup=m" "$refs" "--fixup=" "m" <<-EOF
--	--fixup=main Z
--	--fixup=maint Z
-+	test_gitcomp_nl "branch.m" "$refs" "branch." "m" <<-EOF
-+	branch.main Z
-+	branch.maint Z
- 	EOF
- '
- 
+ print_comp ()
 -- 
 2.29.2
 
