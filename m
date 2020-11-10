@@ -2,99 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58352C2D0A3
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 02:09:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 084D9C4741F
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 02:31:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 03E0120679
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 02:09:49 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mS6M4W5A"
+	by mail.kernel.org (Postfix) with ESMTP id C86DA205CB
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 02:31:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730615AbgKJCJs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Nov 2020 21:09:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59018 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729661AbgKJCJs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Nov 2020 21:09:48 -0500
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49B9BC0613CF
-        for <git@vger.kernel.org>; Mon,  9 Nov 2020 18:09:48 -0800 (PST)
-Received: by mail-wr1-x442.google.com with SMTP id l1so6543586wrb.9
-        for <git@vger.kernel.org>; Mon, 09 Nov 2020 18:09:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xkdAt9gkni9NjBj5JKKtN6RVfJ6i7/sN6FmmOotCz00=;
-        b=mS6M4W5AgbBAeZ92JszJjqB2toU0j+nz1qVUx5m+v1F5ycvvdD1/m8ORg/7ZJtKN2Q
-         H5BQ5O7Rx1nG97Em/e0ItVVgTP1TgPFHtTJLI80YsBzFL0rcqxc92Vq7hekIkh+BSsYN
-         glgKyPDETHnwmwGJDq7U3QcsgTc/lwcLXvlTTs7487eQ4ta4qCBTD4zogOwejKHBoI3w
-         +rdhDJfgWhLa2ix5ky33q+kwE9R43W94MoT8Krq8uisAkvzAknDQ2k5ZuMW6OZGAQ/4q
-         +F+judxOu8uLbB6cnRdMAXoeFOFlFZvJyY6NEHvsURm2cKeLr8H7v/WC/y1tr/PQu9EZ
-         VL9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xkdAt9gkni9NjBj5JKKtN6RVfJ6i7/sN6FmmOotCz00=;
-        b=GsdWi7hE+C1P2ndih0kyVH2314P+PAqbIryoDKG4tHDUlCCffZP6hYW6n2Z0HZbZ9I
-         zCU/maZvb0S0nBsuaNtnm8/a2zL2B6DdGVRuB+u3+2cDxB985xDPRtTfP4mWlIxTf273
-         fztVMFvdoOiprAw9VflJugmGvuI4+5DEXHWuN3c8uihCwMgkGPSQiIUI5bkSog/y3rwa
-         qtAHjigGhV15hQ2yghw932fkwL24ybAMp5GrcNTJ6RC/8EZ0J1Pu2N20CtsGRxthO7ji
-         iamJ6KZdoDnANsub11h+89VX7wlDrKWnEaziZFkhbc4nmmelTzFSEK9lCSewW66FqNVP
-         vt4w==
-X-Gm-Message-State: AOAM532ilnCWVP0IotcAyG+yE3z26Vu5rr384ATBRYDLGCwAiTtzYyy4
-        pCU98s5mWXjOA2MDycCv0HnERDEmd1pt3UrZjwc=
-X-Google-Smtp-Source: ABdhPJz/1+stZcjISUt1l0VpL3wP71JZaePvcIFCD2SIJjH/70bx64p/VByfkLvlWQqJ8S+0dyjhzv0JxamWfWBfAHs=
-X-Received: by 2002:a5d:474f:: with SMTP id o15mr21114870wrs.100.1604974186902;
- Mon, 09 Nov 2020 18:09:46 -0800 (PST)
-MIME-Version: 1.0
-References: <20201110005331.532678-1-felipe.contreras@gmail.com> <xmqqv9ee7zkx.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqv9ee7zkx.fsf@gitster.c.googlers.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Mon, 9 Nov 2020 20:09:35 -0600
-Message-ID: <CAMP44s3qF2ie=+EgScyQtk_Z5qDeeWXBrJV61NTOkxOy6eBD-g@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] completion: bash: support for recursive/nested aliases
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git <git@vger.kernel.org>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        id S1730035AbgKJCbm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Nov 2020 21:31:42 -0500
+Received: from szxga02-in.huawei.com ([45.249.212.188]:2428 "EHLO
+        szxga02-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727311AbgKJCbm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Nov 2020 21:31:42 -0500
+Received: from DGGEMM402-HUB.china.huawei.com (unknown [172.30.72.54])
+        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4CVX1H2tmNz53WL;
+        Tue, 10 Nov 2020 10:31:31 +0800 (CST)
+Received: from dggemi756-chm.china.huawei.com (10.1.198.142) by
+ DGGEMM402-HUB.china.huawei.com (10.3.20.210) with Microsoft SMTP Server (TLS)
+ id 14.3.487.0; Tue, 10 Nov 2020 10:31:38 +0800
+Received: from dggeme755-chm.china.huawei.com (10.3.19.101) by
+ dggemi756-chm.china.huawei.com (10.1.198.142) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
+ 15.1.1913.5; Tue, 10 Nov 2020 10:31:38 +0800
+Received: from dggeme755-chm.china.huawei.com ([10.7.64.71]) by
+ dggeme755-chm.china.huawei.com ([10.7.64.71]) with mapi id 15.01.1913.007;
+ Tue, 10 Nov 2020 10:31:38 +0800
+From:   hukeping <hukeping@huawei.com>
+To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+CC:     Eric Sunshine <sunshine@sunshineco.com>,
+        "Zhengjunling (JRing, Task Force)" <zhengjunling@huawei.com>,
+        zhuangbiaowei <zhuangbiaowei@huawei.com>,
+        Patrick Hemmer <git@stormcloud9.net>,
+        Rafael Ascensao <rafa.almas@gmail.com>,
+        =?utf-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>,
         Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Subject: RE: [PATCH v2] format-patch: make output filename configurable
+Thread-Topic: [PATCH v2] format-patch: make output filename configurable
+Thread-Index: AQHWts3qvxQgrI6CmE273AixfIxBvqnAn0nQ
+Date:   Tue, 10 Nov 2020 02:31:38 +0000
+Message-ID: <9d4b387655024b24a20ce2384740b03a@huawei.com>
+References: <20201105201548.2333425-1-hukeping@huawei.com>
+        <20201105150149.GA107127@coredump.intra.peff.net>
+        <xmqqimajijwa.fsf@gitster.c.googlers.com>
+        <xmqqwnyydxaw.fsf@gitster.c.googlers.com>
+        <xmqqo8kadu9j.fsf_-_@gitster.c.googlers.com>
+        <CAPig+cQAreDJn_tS_K4sR9HwsSVNoFid9sWSdxzwSqkJLRidgQ@mail.gmail.com>
+ <xmqqwnyubagr.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqwnyubagr.fsf@gitster.c.googlers.com>
+Accept-Language: en-US, zh-CN
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.33.44.11]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 9, 2020 at 7:47 PM Junio C Hamano <gitster@pobox.com> wrote:
-
-> It is unclear why 3/3 needs to be separate (in other words, is there
-> a reason why 1/3 and 2/3 need to be done while the function is in
-> the more complex form, instead of doing what 1/3 and 2/3 wanted to
-> do to the function in a way that does not require later clean-up?),
-> but other than that, the end-result looks good.
-
-It doesn't need to be separate. It's there just because the jump from
-the current code to 1/3 is more natural this way (v2), but 3/3 can
-certainly be merged to 1/3. We will have something a little bit odd in
-the history:
-
-  cur=$last
-  if [[ "$cur" != "$1" ]]; then
-    echo "$cur"
-  fi
-
-Why not just use $last instead of $cur? And in fact why clear $cur if
-we are going to be setting it again?
-
-It's just a little odd, but I sent a v3 with 1/3 and 3/3 merged, and
-it's not too odd.
-
-Cheers.
-
--- 
-Felipe Contreras
+PkZvciB0aGUgcGFzdCAxNSB5ZWFycywgd2UndmUgdXNlZCB0aGUgaGFyZGNvZGVkIDY0IGFzIHRo
+ZSBsZW5ndGggbGltaXQgb2YgdGhlDQo+ZmlsZW5hbWUgb2YgdGhlIG91dHB1dCBmcm9tIHRoZSAi
+Z2l0IGZvcm1hdC1wYXRjaCINCj5jb21tYW5kLiAgU2luY2UgdGhlIHZhbHVlIGlzIHNob3J0ZXIg
+dGhhbiB0aGUgODAtY29sdW1uIHRlcm1pbmFsLCBpdCBjb3VsZCBncm93DQo+d2l0aG91dCBsaW5l
+IHdyYXBwaW5nIGEgYml0LiAgQXQgdGhlIHNhbWUgdGltZSwgc2luY2UgdGhlIHZhbHVlIGlzIGxv
+bmdlciB0aGFuIGhhbGYNCj5vZiB0aGUgODAtY29sdW1uIHRlcm1pbmFsLCB3ZSBjb3VsZCBmaXQg
+dHdvIG9yIG1vcmUgb2YgdGhlbSBpbiAibHMiIG91dHB1dCBvbg0KPnN1Y2ggYSB0ZXJtaW5hbCBp
+ZiB3ZSBhbGxvd2VkIHRvIGxvd2VyIGl0Lg0KPg0KPkludHJvZHVjZSBhIG5ldyBjb21tYW5kIGxp
+bmUgb3B0aW9uIC0tZmlsZW5hbWUtbWF4LWxlbmd0aD08bj4gYW5kIGEgbmV3DQo+Y29uZmlndXJh
+dGlvbiB2YXJpYWJsZSBmb3JtYXQuZmlsZW5hbWVNYXhMZW5ndGggdG8gb3ZlcnJpZGUgdGhlIGhh
+cmRjb2RlZA0KPmRlZmF1bHQuDQo+DQpJdCB3b3VsZCBiZSB2ZXJ5IGhhcmQgdG8gcmVtb3ZlIGEg
+Y29uZmlnIGtub2IgcmF0aGVyIHRoYW4gYWRkICBhIG5ldyBvbmUgYW5kIHdlIGFscmVhZHkNCmhh
+dmUgdG9vIG1hbnkuDQoNCkRvZXMgaXQgd29ydGggdG8gYWRkIGEgbmV3IGNvbmZpZ3VyYXRpb24g
+dmFyaWFibGUgZm9yIHRoaXMgb3IganVzdCBhIGhhcmQtY29kZWQgdmFsdWUgaXMgZW5vdWdoPw0K
+DQo+V2hpbGUgd2UgYXJlIGF0IGl0LCByZW1vdmUgYSBjaGVjayB0aGF0IHRoZSBuYW1lIG9mIG91
+dHB1dCBkaXJlY3RvcnkgZG9lcyBub3QNCj5leGNlZWQgUEFUSF9NQVgtLS10aGlzIGNoZWNrIGlz
+IHBvaW50bGVzcyBpbiB0aGF0IGJ5IHRoZSB0aW1lIGNvbnRyb2wgcmVhY2hlcyB0aGUNCj5mdW5j
+dGlvbiwgdGhlIGNhbGxlciB3b3VsZCBhbHJlYWR5IGhhdmUgZG9uZSBhbiBlcXVpdmFsZW50IG9m
+ICJta2RpciAtcCIsIHNvIGlmIHRoZQ0KPnN5c3RlbSBkb2VzIG5vdCBsaWtlIGFuIG92ZXJseSBs
+b25nIGRpcmVjdG9yeSBuYW1lLCB0aGUgY29udHJvbCB3b3VsZG4ndCBoYXZlDQo+cmVhY2hlZCBo
+ZXJlLCBhbmQgb3RoZXJ3aXNlLCB3ZSBrbm93IHRoYXQgdGhlIHN5c3RlbSBhbGxvd2VkIHRoZSBv
+dXRwdXQNCj5kaXJlY3RvcnkgdG8gZXhpc3QuICBJbiB0aGUgd29yc3QgY2FzZSwgd2Ugd2lsbCBn
+ZXQgYW4gZXJyb3Igd2hlbiB3ZSB0cnkgdG8gb3BlbiB0aGUNCj5vdXRwdXQgZmlsZSBhbmQgaGFu
+ZGxlIHRoZSBlcnJvciBjb3JyZWN0bHkgYW55d2F5Lg0KPg0KPlNpZ25lZC1vZmYtYnk6IEp1bmlv
+IEMgSGFtYW5vIDxnaXRzdGVyQHBvYm94LmNvbT4NCg0K
