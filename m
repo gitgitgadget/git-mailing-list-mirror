@@ -2,97 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F9ABC388F7
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:55:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A76FDC4742C
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 22:23:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B104520781
-	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 21:55:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4F9CC206B2
+	for <git@archiver.kernel.org>; Tue, 10 Nov 2020 22:23:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sJL08VVo"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rhjhOZib"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731880AbgKJVzO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Nov 2020 16:55:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45752 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726467AbgKJVzO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Nov 2020 16:55:14 -0500
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 100B4C0613D1
-        for <git@vger.kernel.org>; Tue, 10 Nov 2020 13:55:14 -0800 (PST)
-Received: by mail-qk1-x730.google.com with SMTP id v143so8578202qkb.2
-        for <git@vger.kernel.org>; Tue, 10 Nov 2020 13:55:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=c+7xg4fqYQPPbst5OoTvUJVernufegqrHBcJ61FCL/I=;
-        b=sJL08VVoMRcS5AEOJWfG//LuUTt4HAYB0EGaQrj0TgXCHqro1jVcFFBqdAKTxWQn6F
-         lmQqQeb8zvYB/X/TdQrR3NmdKzf61FVdeIRcczGjA67tZun371OZzrFUZZs4gUgYNU+J
-         soV76YjTwf1Jz/dsntyGixCaMgTEQxrSOdR+MuhnFjVjiYxICkXfASrSTUgjwXYOJ0hq
-         Aux4S7w1Z/eC5DgY2pJ3w3rhLI9qxsgZiDJV3SxqePFz8mpP0iWc5bIKlt+UkAjyPvut
-         zhKZjEUgTlOqUy5OHSJ4knDbkM9X2M3DU4ErQFE39PNqMLCudBhHUeNOehiQ9+3TqGZ2
-         1TYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=c+7xg4fqYQPPbst5OoTvUJVernufegqrHBcJ61FCL/I=;
-        b=pK8Pei7qs9SX+mg3+IxU17+YEFWJVr7E3qpKjj/F7qHKOvXnJDQDs/5yO4CG97XUxR
-         xIQ/3oDnVw3eYB6PtqMWGU5cy9Vk6/H49cMr4dMTj2iBoQjgX6Eg7ZJyf6Z8y7+mEUQd
-         1XYrOiwF5O1Ro5Cvkt2s5KXQ3MwtnzuxK6Sji3liKXwjJQB52IRRRrcOZ0tsWvWVcGdz
-         gogGcHq4pNyIYcvJX8SoUdnHCEaut9UXQtYdN8xGbfiy1g3m46tY8YZhqxV2g8hW9HAE
-         NQWmQzvXAZTJPvmAPSzQdibDRf7VSy1Md79PuelA7f/NhuZvIPR6Wv3fWkYh3bmifGeC
-         QWbg==
-X-Gm-Message-State: AOAM533KseQBZlfitoO6RSv8bmEcgWqHRVcvvfoUV6tMoJyLD2xBFpyH
-        H3VcQ6Ake/DhXszcD9p9dLGBLQvs/WDKKDv51HZxWp6H6t8WiQ==
-X-Google-Smtp-Source: ABdhPJzkuM48ORId9Q2gk6zbrG2cRM36V3g/VcdY4aJnTWWKgvNTjvQUsvRnHB2qP7dLHEodrHZVsLLXI6cyu6TIz4I=
-X-Received: by 2002:a37:a3d2:: with SMTP id m201mr12587587qke.203.1605045312982;
- Tue, 10 Nov 2020 13:55:12 -0800 (PST)
+        id S1731992AbgKJWXl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Nov 2020 17:23:41 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59528 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727275AbgKJWXl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Nov 2020 17:23:41 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 21DA8107CA0;
+        Tue, 10 Nov 2020 17:23:39 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=exZzrzm5YdAseEJ8kpSXC7l+dpA=; b=rhjhOZ
+        ib/vXaeKcD8kRY5xla+ok7AFWB+1q2wQXj7Y13KXtXI3SEjSMIfTXxrv11jhkyt3
+        xmNiEwE63Vt7SMaNEwzu6o3ScHbdpJgByQsXGDB9sGcMpwh9VTinDYTswAcvuAVO
+        6XVDnu341ElnhA5eK7JKyS0vY8DV0qWPe7E14=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=t+MxtXAaOheBEekMljcHIb5pbt13/jKO
+        KlIoisU+jXNNky9f3CoO9RlVwC+Ey2xFRaY7c6WTfK3Z4gOO95+d/k16ng7Xyrtx
+        HEc7btnuaAheEPtAymRXyUxMfUM1JKysEnGvRlPLVPEsWsHSLXZxI5XeZjqt9mXt
+        9XBzYZsLgfk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1A4E6107C9F;
+        Tue, 10 Nov 2020 17:23:39 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 67242107C9E;
+        Tue, 10 Nov 2020 17:23:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     "Demi M. Obenour" <athena@invisiblethingslab.com>,
+        Git <git@vger.kernel.org>
+Subject: Re: [PATCH 3/3] rev-parse: handle --end-of-options
+References: <20201110213544.GA3263091@coredump.intra.peff.net>
+        <20201110214019.GC788740@coredump.intra.peff.net>
+Date:   Tue, 10 Nov 2020 14:23:34 -0800
+In-Reply-To: <20201110214019.GC788740@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 10 Nov 2020 16:40:19 -0500")
+Message-ID: <xmqqr1p06ec9.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-From:   Brandon Richardson <brandon1024.br@gmail.com>
-Date:   Tue, 10 Nov 2020 17:54:47 -0400
-Message-ID: <CAETBDP6d8UwiJEF_pX0p=xLG79pwHeEtectmOnjPiUpjUCPaqw@mail.gmail.com>
-Subject: format-patch: "magic" mbox timestamp
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Johannes.Schindelin@gmx.de
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6021318A-23A3-11EB-AD25-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+Jeff King <peff@peff.net> writes:
 
-After submitting a patch internally within our organization today, I
-was looking through the `format-patch` output and was curious to see
-the strange timestamp on the "From" line. At first glance I thought
-the parent commit timestamp might have been off, but that wasn't the
-case. I thought it might be a bug but quickly noticed the fixed
-timestamp string in `log-tree`.
+> This patch lets callers write:
+>
+>   git rev-parse --end-of-options "$rev" -- "$path"
+>
+> and:
+>
+>   git rev-parse --verify --end-of-options "$rev"
+>
+> which will both treat "$rev" always as a revision parameter.
 
-Reading through the various revisions of `log-tree.c` didn't answer
-many questions either, until I turned to the docs and read:
+Nice.  The only iffy case I can think of is that we can never have
+"--" to specify a rev, because with "git cmd -- -- path" we don't
+know which double-dash among the two is the disambiguator that makes
+the other double-dash to be either rev or path, but that is not a
+new problem with this change.
 
-> The patch produced by git format-patch is in UNIX mailbox format, with a fixed "magic" time stamp to indicate that the file is output from format-patch rather than a real mailbox [...]
+> +test_expect_success 'verify respects --end-of-options' '
+> +	git update-ref refs/heads/-tricky HEAD &&
+> +	git rev-parse --verify HEAD >expect &&
+> +	git rev-parse --verify --end-of-options -tricky >actual &&
+> +	test_cmp expect actual
+> +'
 
-I find this pretty interesting, and would like to hear more from those
-that introduced change. It looks like this was first introduced in
-3eefc18917 (Tentative built-in format-patch., 2006-04-18), albeit with
-a different "magic" timestamp, and then changed to its current
-timestamp value in 698ce6f87e (fmt-patch: Support --attach,
-2006-05-20).
+;-)  Or refs/heads/--tricky?
 
-Please correct me if I'm wrong, but I'm assuming the "UNIX mailbox
-format" referenced in the docs refers to the mbox database format
-described in appendix A of RFC-4155. If so, since we use a commit id
-in place of the sender email address, would that itself be sufficient
-to indicate that the output isn't from a real mailbox? A commit id
-will never match the addr-spec in RFC-2822, so I figure that anyone
-looking at `format-patch` output could safely assume that it did not
-originate from a mailbox.
-
-I could see this as a good opportunity to use a more relevant
-timestamp, perhaps the commit timestamp of the first patch in the
-series.
+The whole thing looked good.  Thanks.
