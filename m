@@ -7,79 +7,78 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BF8DC4742C
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 07:05:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8A77C388F9
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 07:05:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5817020786
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 07:05:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F152E20786
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 07:05:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jxtu/Fm3";
-	dkim=temperror (0-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cLxm3MQ/"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ltanyz0b";
+	dkim=temperror (0-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UMeAMqAG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726102AbgKKHFa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 02:05:30 -0500
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:58017 "EHLO
+        id S1726146AbgKKHFj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 02:05:39 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:41145 "EHLO
         out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725882AbgKKHF3 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 11 Nov 2020 02:05:29 -0500
+        by vger.kernel.org with ESMTP id S1726112AbgKKHFf (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 11 Nov 2020 02:05:35 -0500
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id A3B765C045A;
-        Wed, 11 Nov 2020 02:05:28 -0500 (EST)
+        by mailout.nyi.internal (Postfix) with ESMTP id 5FA2E5C045A;
+        Wed, 11 Nov 2020 02:05:34 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Wed, 11 Nov 2020 02:05:28 -0500
+  by compute1.internal (MEProxy); Wed, 11 Nov 2020 02:05:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm2; bh=djaGuxkgg+HjAAejZhXsDZHi+6k
-        xVQnPuRkraZYebvU=; b=jxtu/Fm3vaWDY+//Er49Yun/3NfjjwZrMkNXrlozFdQ
-        4ueu6lFNFWIHeT5FqZY4mg/pqxuEHB5VOwRJuaDGIWSQ2IvYFAJ0pOPTZbpH9Xhd
-        QTK732wKKAtb4QJKP29KvT8r8IlaeqIfd3w9ztiU0TryhFfL0zXQHRQs3evUVSF8
-        ouueJbjUX7SrhAIe+9RGo7LkIw6nMQxNAw5UUbNcvu95j6e23Jzgr4H7Db0k6DEf
-        ZjaMHPNviKesw48pvvO8PYXNEAa5wqp9dzeFZ6MMhNF87EgVL+XpE6Ot8IULpBuT
-        sTWpgmlBsAJ7lRtoomUjc562CZTiXaELaalbVOog+/Q==
+        :content-type:in-reply-to; s=fm2; bh=0kTLwf2zRxPwGcJ9GArcUWWpQI6
+        c2Yc4/DXFlcdzo5Q=; b=Ltanyz0b/5sKX3BdNrVp1Kr8dQP9Jfd39/HDDfvFH1K
+        CvAmSJkr9DQ/7Ae3PjR2i0mNTrgAckQSxbSTHvmB2LVVaXn8Zk3VXqbQ6mSXB0mW
+        n0h9MUFudLZd5wDCKghgfrUdEnIqAD0Cea+qHmCQMyIvrbvG8oJIQt0VnMEY2k6y
+        0xBIUgzxIPmniMNnRXHQ3c3sMzDweoO7gQ9mfnnp6QURLxr/7DzRcycGe/dDvLVP
+        7Bz14OvO/TAc6uA0cHrFOHGXHmpbz0Ab1m5hoWstRXEBpTHwHJ3sEx9gU9yBCxDo
+        6bgC71YVhJt1NRMWAyxqlOas8UQ4FIS3kR9pRtqa8Bw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=djaGux
-        kgg+HjAAejZhXsDZHi+6kxVQnPuRkraZYebvU=; b=cLxm3MQ/UgtsFdbIolfGV7
-        zTuMgYR3bEtmLd35bKrIFzVcSzkx3TCitEDNTpn/1svcScXv4500zz96kvlTlZBw
-        NwSq0vG+TXOgIZenz5h/DVCE2/6kOz4vpFvhcAELc/aqTzagLxQWqd4XaUz8/B/u
-        ZOl69jsz8BbQiF56TI5vNVSlHKNNas3gi1YV03UAzvFMeJaLXcvy4ZdP4o/WhA40
-        30BtRkuhlrEKJENqpQJcz3WSWCMJ+rg149gEICOhmPEqamCVSW/6ahDCWZBoQtx5
-        otLHl+dI0ngYwPhFD8+q0ugr1zemL8D6uJYp5ySPpC5tmZrcwdxKMHiSbtI8+l3A
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=0kTLwf
+        2zRxPwGcJ9GArcUWWpQI6c2Yc4/DXFlcdzo5Q=; b=UMeAMqAGo/+aM/6WEFyQXy
+        O4zql8wN/4riCN7SsKsbSLZOez96ckf5gBKSo9aCMbGlXcudnQfQnzSz/EpDv69U
+        DUO0hsRAfF58beGCvGPaj3yIbPRWcvi/hFtnaqfTzGfHRIMicrq5Wqs2g72B9ZcI
+        3XZt6cnikBp6Z6MNwrmTzSwpc3eDS8+0GmHoTuwcnMUpimydtpeSikBIjrBbPqBm
+        i8hQ2RgboSKoUYcIOgSpIyjW0R+A5sHUaVS5boAvpfUR/fkWRnPxcb20S085y89u
+        H6bCKxwBFweZrkR4SGXXQomlRIAfg6KPH3XGFfVMKVOjkaM6u4DEjcndLBtwC2vg
         ==
-X-ME-Sender: <xms:OI2rX-firwpFU0cJdfIPeqQPD4Ac3qLX2aA9stiuzP6F69nXSBop3g>
-    <xme:OI2rX4NCqVmspGUOpr0jZ1spTEGTKcV5cf4EzdukatkW7krwKmwGOF6TAkyxArHl6
-    6uWH_cTbIVPr4H5CA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudduledgkeefucetufdoteggodetrfdotf
+X-ME-Sender: <xms:Po2rXxgJXN8JBns0aS2VIYzDGXBEgF01UqgT9zmw2RoGX6AnGrjB_g>
+    <xme:Po2rX2CLcUSysWmc8fgHeMosMhQyHehzIc3CWvRMoGlejMq2nRl0vc4cNuPAHOd3T
+    Q_WwbSSj4-6PtiW9Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudduledgkeegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
     dvjeektdfhhedvlefgtefgvdettdfhnecukfhppeekledrudegrdeivddrkeeknecuvehl
-    uhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
     himh
-X-ME-Proxy: <xmx:OI2rX_hb9yDGeRZRcF0AQCw2KtinpUlbXrO2ksi9PRXpEccrXpUcog>
-    <xmx:OI2rX79kdmP6CQBSUuuB9eI-9OJFlM5gBCAg5SaZYHX4znyuIkBKKg>
-    <xmx:OI2rX6tDRHZkhTMHpWRp-3uiEYDConUdTWvjVEwC9zU9cUmD9RKzPQ>
-    <xmx:OI2rXw0AJ12SW_fSQgzdz6WAhYY3wGE43b4FBEMEgDXGJfaES4bDRw>
+X-ME-Proxy: <xmx:Po2rXxHwcNv3xkF9Yk1WplXAl89vzOkCUW_mJfrhPGA14XYW3Qy-Gw>
+    <xmx:Po2rX2TpVDljY9iHnpZSAfPZOKZ5COIC9IPgl27LBR6BeaebyZZIkw>
+    <xmx:Po2rX-z7Ss-nPEtAJDXRU0BAI1L78-hqKuFM5bnd_YiBWXW7Vp-zzQ>
+    <xmx:Po2rX0aea9hwd0VCMCOi3y-JqooOrI5TsA6cC9fNPOy0RpV82KfSDg>
 Received: from vm-mail.pks.im (dynamic-089-014-062-088.89.14.pool.telefonica.de [89.14.62.88])
-        by mail.messagingengine.com (Postfix) with ESMTPA id E89D93280060;
-        Wed, 11 Nov 2020 02:05:27 -0500 (EST)
+        by mail.messagingengine.com (Postfix) with ESMTPA id ABCA6328005D;
+        Wed, 11 Nov 2020 02:05:33 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 7f4edda6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 11 Nov 2020 06:58:47 +0000 (UTC)
-Date:   Wed, 11 Nov 2020 07:58:47 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 6158c34d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 11 Nov 2020 06:58:52 +0000 (UTC)
+Date:   Wed, 11 Nov 2020 07:58:53 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, gitster@pobox.com
-Subject: [PATCH v3 3/4] p1400: use `git-update-ref --stdin` to test multiple
- transactions
-Message-ID: <e393b5350f5ed0c7353b6301755a35d7c3b1b83c.1605077740.git.ps@pks.im>
+Subject: [PATCH v3 4/4] update-ref: disallow "start" for ongoing transactions
+Message-ID: <bacb8960b01b1de53b0060f2582da2b63aeda350.1605077740.git.ps@pks.im>
 References: <cover.1604501265.git.ps@pks.im>
  <cover.1605077740.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="cljao4jDg3a+zOqm"
+        protocol="application/pgp-signature"; boundary="CBruwtHZbEbVuwMp"
 Content-Disposition: inline
 In-Reply-To: <cover.1605077740.git.ps@pks.im>
 Precedence: bulk
@@ -87,90 +86,87 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---cljao4jDg3a+zOqm
+--CBruwtHZbEbVuwMp
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In commit 0a0fbbe3ff (refs: remove lookup cache for
-reference-transaction hook, 2020-08-25), a new benchmark was added to
-p1400 which has the intention to exercise creation of multiple
-transactions in a single process. As git-update-ref wasn't yet able to
-create multiple transactions with a single run we instead used git-push.
-As its non-atomic version creates a transaction per reference update,
-this was the best approximation we could make at that point in time.
+It is currently possible to write multiple "start" commands into
+git-update-ref(1) for a single session, but none of them except for the
+first one actually have any effect.
 
-Now that `git-update-ref --stdin` supports creation of multiple
-transactions, let's convert the benchmark to use that instead. It has
-less overhead and it's also a lot clearer what the actual intention is.
+Using such nested "start"s may eventually have a sensible effect. One
+may imagine that it restarts the current transaction, effectively
+emptying it and creating a new one. It may also allow for creation of
+nested transactions. But currently, none of these are implemented.
+
+Silently ignoring this misuse is making it hard to iterate in the future
+if "start" is ever going to have meaningful semantics in such a context.
+This commit thus makes sure to error out in case we see such use.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/perf/p1400-update-ref.sh | 20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ builtin/update-ref.c  |  2 ++
+ t/t1400-update-ref.sh | 11 +++++++++++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/t/perf/p1400-update-ref.sh b/t/perf/p1400-update-ref.sh
-index ce5ac3ed85..dda8a74866 100755
---- a/t/perf/p1400-update-ref.sh
-+++ b/t/perf/p1400-update-ref.sh
-@@ -7,13 +7,14 @@ test_description=3D"Tests performance of update-ref"
- test_perf_fresh_repo
-=20
- test_expect_success "setup" '
--	git init --bare target-repo.git &&
- 	test_commit PRE &&
- 	test_commit POST &&
--	printf "create refs/heads/%d PRE\n" $(test_seq 1000) >create &&
--	printf "update refs/heads/%d POST PRE\n" $(test_seq 1000) >update &&
--	printf "delete refs/heads/%d POST\n" $(test_seq 1000) >delete &&
--	git update-ref --stdin <create
-+	for i in $(test_seq 5000)
-+	do
-+		printf "start\ncreate refs/heads/%d PRE\ncommit\n" $i &&
-+		printf "start\nupdate refs/heads/%d POST PRE\ncommit\n" $i &&
-+		printf "start\ndelete refs/heads/%d POST\ncommit\n" $i
-+	done >instructions
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index bb65129012..6029a80544 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -436,6 +436,8 @@ static void update_refs_stdin(void)
+ 		switch (state) {
+ 		case UPDATE_REFS_OPEN:
+ 		case UPDATE_REFS_STARTED:
++			if (state =3D=3D UPDATE_REFS_STARTED && cmd->state =3D=3D UPDATE_REFS_S=
+TARTED)
++				die("cannot restart ongoing transaction");
+ 			/* Do not downgrade a transaction to a non-transaction. */
+ 			if (cmd->state >=3D state)
+ 				state =3D cmd->state;
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index 2890504edd..e109097970 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -1582,4 +1582,15 @@ test_expect_success 'transaction can commit after ab=
+ort' '
+ 	test_cmp expect actual
  '
 =20
- test_perf "update-ref" '
-@@ -26,14 +27,7 @@ test_perf "update-ref" '
- '
-=20
- test_perf "update-ref --stdin" '
--	git update-ref --stdin <update &&
--	git update-ref --stdin <delete &&
--	git update-ref --stdin <create
--'
--
--test_perf "nonatomic push" '
--	git push ./target-repo.git $(test_seq 1000) &&
--	git push --delete ./target-repo.git $(test_seq 1000)
-+	git update-ref --stdin <instructions >/dev/null
- '
-=20
++test_expect_success 'transaction cannot restart ongoing transaction' '
++	cat >stdin <<-EOF &&
++	start
++	create refs/heads/restart $A
++	start
++	commit
++	EOF
++	test_must_fail git update-ref --stdin <stdin >actual &&
++	test_must_fail git show-ref --verify refs/heads/restart
++'
++
  test_done
 --=20
 2.29.2
 
 
---cljao4jDg3a+zOqm
+--CBruwtHZbEbVuwMp
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl+ri6cACgkQVbJhu7ck
-PpS9yRAAlLQHhsyz0JKPZ91CBeLbUcO8O346HorSjF8mImm4fTI02oPeinM24QhN
-ToWI7Pf88hst2xLu4dmKM5o+tKv6YYOzOWL1UP9jUMHu3LfJbKC1c12qjdNuIHjQ
-i4cffyMylwb/5Svkpydoy/UiH7XEvWQeU5JgQ9nCvToXdnBdJRywdjbmk9U/VA4P
-hJ4LZakWjbUYIGYXvf/cognOMyLIbDIpY7g/Re+tlE1LSsFm4Gyn7/eBbmtTf2EA
-KDiVFQYhF56T4MgAKnBOfAcDColGS9r+l8BlcSI4or0umHHQn6bEeASOsKqgMF55
-myYJPz35yHzhy26pF1a3VftW2ZpbTf/WmyHqZSlrFq0b27GESpso6qxS4ykeeXB3
-Nh1ZrdQSO/JdvR8eucjIyTSgVIXYp54imNiagvdYCoawme4rP57/3XydiaAmdRVV
-vYw8bB0K2U28sMbJuyF2EtrMuzAmdXnUfqbBaqTrmafKsIIfnq/jWkPDjpDWaoeP
-NJke+bI/WJ5v//c+Tkiip2QcXTBjKYkkrvt2pQ+xyzN/YUmggmMloljdNbcoVuO7
-l1M62VBf9YlzDuYyOkC0T4naf/3O75BASYiQvHKR8C8leOvmftxreomL3meHdgvZ
-wb1j+vYkRICiGxwJVtigM+hZk7YjfBBFie3Up30MYIQpkijgHw4=
-=8O5c
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl+ri6wACgkQVbJhu7ck
+PpTbUw//b4BUc2v08rbBHYLN3UagEq9fdlnuKdJeKGVDTdt8YNXlpk3e4gWvfICg
+TwBB6XBXSZRGsmCMqBvJe17adQVZY+W5wKeHCEiFcFXyAWBLBwZCmDqbOjjw+T3w
+HecnCOvy3CET/YvnIsoIgLqtMppcoey1H/9jHqHZNx3+UwtDD1wQ8VI+JWcm+9a9
+nni5YK7zAGqNH4TRvhBxL2w2zDwVoC/tURcTydwuFaQ4ux2FTdGWbI8NJJOLhUoM
+fq1C/yM3V9OIfAtbIVjP23NZ+udCq/Io/z84twkXavfCNHmMZ/X7VrG1bYUk2Cst
+U5jih6nnAAt9kvdSmzKP5fqC9XPbXvzzJPqS3IZy2PwSbQOlOB96Q8YmKiTU4o3N
+MveJcxeuwteJqKlNhar+3S5KPZhUwK/TaUqJLS8xdmRCAf7JLT/y7QRlPpQxUMDb
+G1w0RqLiCBaGzJjWKty4u5BW5REOGBeoO0Aiizgl0hbaSAcBo6CTX8WbLs9gmLKx
+mDLrdmKFQPjmENji74hUv8IplAc2NE59xLZrrj/VPDblDqvtjEn0PZFhKODXw5k4
+AMe/FW+TE/ltsketqH4BgngWOmWGDqJ43UIMnCNXc7b/31J5g3O4VrMB0L06O8s8
+74DaEbMh3H09dDx7yq3QxJXgT0HuISkmzJX2sPD5mGK+JqipKXc=
+=jNd6
 -----END PGP SIGNATURE-----
 
---cljao4jDg3a+zOqm--
+--CBruwtHZbEbVuwMp--
