@@ -2,114 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BED9BC56201
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 20:33:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B199C5517A
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 20:35:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 64221208B3
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 20:33:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9FDA2208B3
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 20:35:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cPYKoCvy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EG2qHHTm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725860AbgKKUdX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 15:33:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34522 "EHLO
+        id S1726391AbgKKUfN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 15:35:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726276AbgKKUdX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 15:33:23 -0500
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F998C0613D1
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 12:33:21 -0800 (PST)
-Received: by mail-wm1-x343.google.com with SMTP id s13so3520961wmh.4
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 12:33:21 -0800 (PST)
+        with ESMTP id S1725959AbgKKUfN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 15:35:13 -0500
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0B00C0613D1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 12:35:11 -0800 (PST)
+Received: by mail-wm1-x341.google.com with SMTP id s13so3525047wmh.4
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 12:35:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=hkFk8gjsfKjI+ZVV9MsX1EFli/O/Esfyfgt2m2FishE=;
-        b=cPYKoCvyxQvqBARlnYQUepseMa6426/hOecRgBGjVFMNIbim9vrcp1MJJUM/OBozBD
-         DlTIqStaXYueHnnM7LFVCjKmgdq08sZrwcafgOtdRZeOeltk5tK63k5XA4nRdeusjJaM
-         cGLbniTT7kFNANSlXsCc2xPJWIxZUWSa+GWYXRvDmOuJWYjYAqpnDL+URi1B20wcOGDU
-         bXwikRT/FDtMec0QxxJbVj9F5zMjyjNZzw4uoYa/Z+o3RKdQBV/pXRDlwjjB+ql+F/kU
-         ArEOcADSJ4aVRNlzoYIYjkrbTM7du8iI6gEcJouF66sYRFAXZVGo07qxux++LH5WeTro
-         mmog==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=tDtBrUaK7qJpAbbmi54X0IKWwQwAPRm//prAbcoq2Yo=;
+        b=EG2qHHTm/q9DOD1po9vIu8RiprZu47ebZTNfEzxbNSvpLBoan0D7daoV/0IcSUQ0sD
+         143/0p+jpILZtAOVmzQ41PT9Xisnmt4UhJj/MdOWfrfhAVYPU6i7zvhjbwb0ILXDXg/Y
+         j5IFv8CSTVNxL4Wcz1PTcu1TipSzji6y6lgZvNT77b+0ybAEiJsFS6YA65OOqR68jdQn
+         HC1do2KgGKg7KJwCAxeSkV87/8AR+D4NYjKYrM76t0v0t6bOFsCsOylDMG4QS5Ua7Et9
+         YLZ2ZaP3fXc/VKwn54TibEFiJ5XjlhEfbOho29fc+ZN0eI7p6jA27mFJjSOoxeRlXVtq
+         k8Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=hkFk8gjsfKjI+ZVV9MsX1EFli/O/Esfyfgt2m2FishE=;
-        b=hfXTnaTsPgqaCalJ5Sfnzg5/DFotXNv7oxfhCU39vxp4yv+1osPYczKVjttZjUviON
-         zM06GGkVLi6zy54qJDjsoDtSu4jt3eH3Ykhx+xPuY3GlLmr0Nb1eDtT+WR0np5kxrPzL
-         /JWvrKsgrfV3pdMIylGY01KmYOTsh8GgbxhANqhJvDEBgwPx5CCs9XPvXcBjIZmR4KS+
-         EYanOSNrRAD18tuV1J6z3YR9sPNXP+FFdYlTF9oNx7czSbPbWd/bRvzVrkDo9ZGLbp6N
-         +Zq3U5ePs9Bh1Vq97J6k1OhWnAsG5CHTwPf6k3YZtir3yha3Gs0DZFABHvENxQdt+TVD
-         54dQ==
-X-Gm-Message-State: AOAM530EJka3s4vbcQBW29Y+O8kc0yJ7Tj7IglyKU6KocDgccgXbll9A
-        4WpBnBk1f77N0cqFByGZ34oyVJ3sNe8=
-X-Google-Smtp-Source: ABdhPJzlgmscDUpfS6shQhzGe2Xm86T7PjYexxUApkPVcmgXoYe2Y3EUUv+uw9M9NprI9iC5K2n1Ug==
-X-Received: by 2002:a1c:9a12:: with SMTP id c18mr5924942wme.22.1605126799980;
-        Wed, 11 Nov 2020 12:33:19 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a9sm3883539wrp.21.2020.11.11.12.33.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2020 12:33:19 -0800 (PST)
-Message-Id: <0e2b11ae9851525d24e5f4e2bb0919bf4f0fd788.1605126798.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.787.git.1605126798.gitgitgadget@gmail.com>
-References: <pull.787.git.1605126798.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 11 Nov 2020 20:33:17 +0000
-Subject: [PATCH 1/2] mergetools/bc: add `bc4` to the alias list for Beyond
- Compare
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=tDtBrUaK7qJpAbbmi54X0IKWwQwAPRm//prAbcoq2Yo=;
+        b=lJODkkIXyB2hYB3pr1IGXHnKMI0iJOvUve763fDexBLy6wZVMLvUkFmilIY1//4XQH
+         zwt/23Eb+JpdP43Y63FSBuwOE8FlSDkilNS39dQRgYG25o+E7fveDtqgiuNk2X0oFgWh
+         ZJAmFxEwOkwtZF8J88uu0CEleqvqtGeevmKAuUK01i2gQT5xvWADIxkNGf0BUI3LtB5n
+         sFpUuvW5YopSxMfINB1vkiGiDWqiofh39SG9KnV0UHr0b9k/XYDY+gMdM0Rx7AE0aPpS
+         QzZABSrVmAzLGLs9nxApnXvbQa89gmYy1XhpcdQgB4H3VUSttfO8cOoJaQqPoK/75xZN
+         PFIA==
+X-Gm-Message-State: AOAM5335he+OUHzCSAoZ0dYNfxlYEgIn6IS9BVkWR1zd5/A8qDJhgdPK
+        exwA43dMom2T9cSP7lj3Fedr7/JrSeKvZ+NM2Uc=
+X-Google-Smtp-Source: ABdhPJzU9h9e9jazM1WDS3iL6+mooPeqvnyowS3UAiZ5svpNBj6gD5ziSTN0rPHwOTTO1SYEby5USYagZXO2O40JuOM=
+X-Received: by 2002:a7b:c3d5:: with SMTP id t21mr5804459wmj.37.1605126910606;
+ Wed, 11 Nov 2020 12:35:10 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     pudinha <rogi@skylittlesystem.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.835.v4.git.git.1604535765.gitgitgadget@gmail.com>
+ <pull.835.v5.git.git.1604622298.gitgitgadget@gmail.com> <34f542d9dd846da5fd81274966ee2ebe0660dcef.1604622299.git.gitgitgadget@gmail.com>
+ <fbaa60c4-ee6b-02b7-68b5-e5873f8ec713@gmail.com> <20201111190121.GE9902@coredump.intra.peff.net>
+In-Reply-To: <20201111190121.GE9902@coredump.intra.peff.net>
+From:   Chris Torek <chris.torek@gmail.com>
+Date:   Wed, 11 Nov 2020 12:34:59 -0800
+Message-ID: <CAPx1GvfXMnhgQDan7N=Y4WWdcS6p6WrekYkDyfx4nwnDtSuMQQ@mail.gmail.com>
+Subject: Re: [PATCH v5 12/15] strmap: enable allocations to come from a mem_pool
+To:     Jeff King <peff@peff.net>
+Cc:     phillip.wood@dunelm.org.uk,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Wed, Nov 11, 2020 at 11:02 AM Jeff King <peff@peff.net> wrote:
+> Even if we're only using a pointer to it, we still need a valid forward
+> declaration [in a function, but not in a struct definition] ...
+> I'm not sure whether this is a seldom-seen corner of the C standard, or
+> a compiler-specific thing (though both clang and gcc seem to allow it).
 
-As of 83bbf9b92ea8 (mergetool--lib: improve support for vimdiff-style
-tool variants, 2020-07-29), we already list `bc` and `bc3` as aliases
-for that mergetool/difftool.
+It is standard (and not all *that* seldom-seen, in that many compilers
+have warnings when you put these in function prototype scope).  The
+forward declaration is implicit, and occurs *in the current scope*.  The
+trick is figuring out what the scope is.  At file level, the scope is "leve=
+l
+zero" as it were: file scope.  So it's as global as we get (C separates
+"globality" into scope and linkage; *variables* have linkagebut *type
+names* do not).  Function prototypes, however, have function-prototype
+scope, which ends at the end of the function declaration.
 
-However, the current Beyond Compare version is _4_, therefore the `bc4`
-alias is missing from that list.
+Overall, though, I agree that the nicest style is to have an explicit
+forward declaration (in C that is=E2=80=94note that in C++, struct is just =
+a
+class with everything public, and class definitions have scope!).
 
-Most notably, this is the root cause of the breakage reported in
-https://github.com/git-for-windows/git/issues/2893 where a
-well-configured `bc4` difftool stopped working as of v2.29.0:
-`setup_tool` would notice that after stripping off the trailing digit,
-it finds a match in `mergetools/` (the `bc` file), source it, and then
-the alias would not match the list offered by the `list_tool_variants`
-function, and simply exit without doing anything, but pretending
-success.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- mergetools/bc | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/mergetools/bc b/mergetools/bc
-index a89086ee72..26c19d46a5 100644
---- a/mergetools/bc
-+++ b/mergetools/bc
-@@ -25,4 +25,5 @@ translate_merge_tool_path() {
- list_tool_variants () {
- 	echo bc
- 	echo bc3
-+	echo bc4
- }
--- 
-gitgitgadget
-
+Chris
