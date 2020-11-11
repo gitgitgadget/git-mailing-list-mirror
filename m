@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C421C388F9
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 19:43:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1700AC5517A
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 19:43:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 11E2A2087D
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 19:43:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A4A3D2087D
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 19:43:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="CGBs3pBT"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="ySqkrOr8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727794AbgKKTnH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 14:43:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54932 "EHLO
+        id S1727803AbgKKTnN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 14:43:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727684AbgKKTnH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 14:43:07 -0500
-Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5971EC0613D1
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 11:43:07 -0800 (PST)
-Received: by mail-qv1-xf42.google.com with SMTP id g19so1529608qvy.2
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 11:43:07 -0800 (PST)
+        with ESMTP id S1727773AbgKKTnN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 14:43:13 -0500
+Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1391CC0613D1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 11:43:12 -0800 (PST)
+Received: by mail-qt1-x842.google.com with SMTP id b16so1952012qtb.6
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 11:43:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=sE5cm27BQBCiqVlBL8nTP7rYpEYlk03VQA5EA27Rtqc=;
-        b=CGBs3pBTP+aMRwCd+O8j/p/yNCldMmPc2rIeLq9BV+Vj+YADIIf5/rIEm8F1NeGgPe
-         rlZzNG2CE4KN4xywgL537bnMF1xx4t9wk1QK/0v7t7ZSsWKTYhW9WjEXnwNJjnl3Ko7U
-         8sw2hrNWBnyhUezqKp+eOXp8Cpv2GC5hcvLTpkoUK3B23gndN8U0Qov08RYx343YazA6
-         me+8W9cBZaBajt3FIKyTLtR7ECWHb6CgdPT2RoGkybr+vLvHpr5p/mlwzdtGPgcMm/s0
-         bETQGvxpnpLgbVlZqd3GBGu3DMY8YT/ZSqIRV+oExu08lXfVaERGexBenuJCQvmWdkEb
-         2/7w==
+        bh=bzeOBd/U/47Er7muYEe+SEG0TcfPAQqvipRIyq1W2Yw=;
+        b=ySqkrOr8tR3GMgUtqy33ABBnoIZr03chDCS33nCUcIibJseTsluJBajvCmRq8oqPal
+         WGm3qKATafMUvd0o824Nw6fOxPv82WUnxvJkyg4iRBBlOl29PvBND11lQNfs738EULTW
+         AT4c73WVqHuzRAc61UIG2mP3eW51cSZLPsYjkUqKqTo9M+C0BMlS0GN8LIas4/fog5Rh
+         gneuuLw94DObjzp1iz9LaUQ7wR+fdfvq4x19ShVEZijCX/bPez/6mUpM5sFevUIbPGBw
+         7pzdyvtkKtLHK0JjGjqagVVXMwQ0HYWtJywGKaRQJQ6cn9udl7ppe44iVBdoBAqdWK6z
+         PwBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=sE5cm27BQBCiqVlBL8nTP7rYpEYlk03VQA5EA27Rtqc=;
-        b=piLVxKFiPe45fJOE+bNdMzaTF5X46Dd4yJCWrzK5GLmX1blQ7S2QE1gsc9jnln3shO
-         ruw2D9NSfFcRPPGPh9yLU/xfi78fCwqTML1pmmf5uVutNOJhbtEc1i7YFQIgC9lraTof
-         QiWgJlsuK6h7RRLiD+mCVK4M/6/C/Zo968poiA8TgicSCOFZUZYplvBIwp1TODy6zipa
-         1Pyxo5IXlVMkj5FZnBCwvWxL1+zwslX2NuGt/tE46LRqbTZnfcrzU32kEi6wh217rpV0
-         EJc1MlCZSxaBTfHCrFke/RE0BduFvIJOXKbV58G3cJ/KcIUxXMpbHlK9OOOazcgKOHmG
-         yTRA==
-X-Gm-Message-State: AOAM530BvaHfU7NcWwUlDYpsvYgav2M5H9HrLS4Ai1VW1nQMSHRyfemG
-        yxZXeTPjyzgT+XoosvajYk+2X6YE/B+0KBkQ
-X-Google-Smtp-Source: ABdhPJzbMKMvBJECrJ1xY4OE+oMngLM8tZ74EQcLTOHmF0lCu3bqFH2QuCMAsoHY4G46jV/HL0+4Rw==
-X-Received: by 2002:a0c:e443:: with SMTP id d3mr15685381qvm.18.1605123786373;
-        Wed, 11 Nov 2020 11:43:06 -0800 (PST)
+        bh=bzeOBd/U/47Er7muYEe+SEG0TcfPAQqvipRIyq1W2Yw=;
+        b=YN95rtIb5ROTuaKK1vJQ+vsheFVgVE8N2KeqimegdyTxcV57LYOxbNyqLcbd915DKn
+         O3nUqnrKrOSt6JQ0pcZQppBjhXH33En67GKhOMXrrMVqRaDcabyMvJwixt72mPqhreF1
+         vK4YwC0fn0NIcGR8MltdLO9NtoF1PItcvkEV6qhpFSCbZ+JGFrkHberalELptPl/Kk56
+         xWHO/CiPd54jVmSog4e1qvU4GyQ5/vVLRDkMvqEKyf08RXDZEhAQ8PzWq5qBIxLxbyIX
+         JyoffTvgz6MkkouVxeBNuis2zpjF0hLXv9zzPJwjr5lv2MSH+GUf+nU1gOjQJMoJkRft
+         nQ/A==
+X-Gm-Message-State: AOAM532qUYO0BcSpblePm+G5QexE1sAMH9GMm3P1jjGjXcIM1dKBiLCV
+        +OhLuTn64/AJ1lCBn041gvUTDq3YhgBSIdZc
+X-Google-Smtp-Source: ABdhPJzt63DGcuodKbUiKbfwMIQYU8iibHGIZnL18xMyJtWoZJ6TCL2KsfTX8bZwF+A0QKZt1dyP+g==
+X-Received: by 2002:a05:622a:4e:: with SMTP id y14mr17336842qtw.392.1605123791026;
+        Wed, 11 Nov 2020 11:43:11 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:7ccc:9a51:1ad:2057])
-        by smtp.gmail.com with ESMTPSA id t20sm3162276qtt.70.2020.11.11.11.43.05
+        by smtp.gmail.com with ESMTPSA id j50sm3297161qtc.5.2020.11.11.11.43.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2020 11:43:05 -0800 (PST)
-Date:   Wed, 11 Nov 2020 14:43:03 -0500
+        Wed, 11 Nov 2020 11:43:10 -0800 (PST)
+Date:   Wed, 11 Nov 2020 14:43:08 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net
-Subject: [PATCH 08/23] ewah: implement bitmap_or()
-Message-ID: <dce9b6da0ad38da0a92b39d780d7b56f83d52950.1605123652.git.me@ttaylorr.com>
+Subject: [PATCH 09/23] ewah: add bitmap_dup() function
+Message-ID: <242bd3f110fe43c127208a7351215f1b238c714b.1605123652.git.me@ttaylorr.com>
 References: <cover.1605123652.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -74,39 +74,47 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-We have a function to bitwise-OR an ewah into an uncompressed bitmap,
-but not to OR two uncompressed bitmaps. Let's add it.
-
-Interestingly, we have a public header declaration going back to
-e1273106f6 (ewah: compressed bitmap implementation, 2013-11-14), but the
-function was never implemented.
+There's no easy way to make a copy of a bitmap. Obviously a caller can
+iterate over the bits and set them one by one in a new bitmap, but we
+can go much faster by copying whole words with memcpy().
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- ewah/bitmap.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ ewah/bitmap.c | 7 +++++++
+ ewah/ewok.h   | 1 +
+ 2 files changed, 8 insertions(+)
 
 diff --git a/ewah/bitmap.c b/ewah/bitmap.c
-index 43a59d7fed..c3f8e7242b 100644
+index c3f8e7242b..eb7e2539be 100644
 --- a/ewah/bitmap.c
 +++ b/ewah/bitmap.c
-@@ -127,6 +127,15 @@ void bitmap_and_not(struct bitmap *self, struct bitmap *other)
- 		self->words[i] &= ~other->words[i];
+@@ -35,6 +35,13 @@ struct bitmap *bitmap_new(void)
+ 	return bitmap_word_alloc(32);
  }
  
-+void bitmap_or(struct bitmap *self, const struct bitmap *other)
++struct bitmap *bitmap_dup(const struct bitmap *src)
 +{
-+	size_t i;
-+
-+	bitmap_grow(self, other->word_alloc);
-+	for (i = 0; i < other->word_alloc; i++)
-+		self->words[i] |= other->words[i];
++	struct bitmap *dst = bitmap_word_alloc(src->word_alloc);
++	COPY_ARRAY(dst->words, src->words, src->word_alloc);
++	return dst;
 +}
 +
- void bitmap_or_ewah(struct bitmap *self, struct ewah_bitmap *other)
+ static void bitmap_grow(struct bitmap *self, size_t word_alloc)
  {
- 	size_t original_size = self->word_alloc;
+ 	if (word_alloc > self->word_alloc) {
+diff --git a/ewah/ewok.h b/ewah/ewok.h
+index 011852bef1..1fc555e672 100644
+--- a/ewah/ewok.h
++++ b/ewah/ewok.h
+@@ -173,6 +173,7 @@ struct bitmap {
+ 
+ struct bitmap *bitmap_new(void);
+ struct bitmap *bitmap_word_alloc(size_t word_alloc);
++struct bitmap *bitmap_dup(const struct bitmap *src);
+ void bitmap_set(struct bitmap *self, size_t pos);
+ void bitmap_unset(struct bitmap *self, size_t pos);
+ int bitmap_get(struct bitmap *self, size_t pos);
 -- 
 2.29.2.156.gc03786897f
 
