@@ -2,89 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F104CC388F9
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 16:09:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECFE4C56201
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 16:09:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 991E02074B
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 16:09:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8DFC92074B
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 16:09:46 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m0oBT+HG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726491AbgKKQJ3 convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 11 Nov 2020 11:09:29 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:45124 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726039AbgKKQJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 11:09:29 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.189.82])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 0ABG9Kl1033055
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 11 Nov 2020 11:09:21 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "=?UTF-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
-        <avarab@gmail.com>, <git@vger.kernel.org>
-Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
-        "'James Knight'" <james.d.knight@live.com>
-References: <20201111095420.1446-1-avarab@gmail.com> <20201111095420.1446-3-avarab@gmail.com>
-In-Reply-To: <20201111095420.1446-3-avarab@gmail.com>
-Subject: RE: [PATCH 2/2] config.mak.uname: remove unused NEEDS_SSL_WITH_CURL flag
-Date:   Wed, 11 Nov 2020 11:09:14 -0500
-Message-ID: <012701d6b845$03bde880$0b39b980$@nexbridge.com>
+        id S1726702AbgKKQJp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 11:09:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50064 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726840AbgKKQJo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 11:09:44 -0500
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com [IPv6:2607:f8b0:4864:20::741])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9834EC0613D1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 08:09:42 -0800 (PST)
+Received: by mail-qk1-x741.google.com with SMTP id q5so2097110qkc.12
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 08:09:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=CzJ72iOh6G4bZjXzGtiQsf+dN8ZUUh2ZAoWG6Bc2OTQ=;
+        b=m0oBT+HGnNHDuISpQFGp37jMlm9r1fs0k13JJaL/ocO6wHyx8OHPS0mf+qyvI3fUaA
+         78pzyzvkyXp0xgA0DytlLtS3oTFAbyiAVjYVY1He45T5oiYaUfOoSzejEQ8DrbrvTIYY
+         u5qLBkFBBLfTKW67a3HjR9P1Q+udBEser1F5v9LHRnwaJcnSXeiMocb2h2oMT8PfAGHU
+         cnxpDtuyqSBSf1+gAnC1zqIE1i1bzcujcIb27SwGsev//NmDFeuRHKlgLzxmzsTadUKP
+         RHz9/5vnfDG0JfEuYLAakBsV6tgGMiCtCNcp63wa9D9pkU+YD7Vj/wSuRf0eOHfjhiie
+         SZCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=CzJ72iOh6G4bZjXzGtiQsf+dN8ZUUh2ZAoWG6Bc2OTQ=;
+        b=QTk8L6UeT3GEmH3mbkSTEUEDKRSisce0YNwN3HhlILj6g8kgBgmGb2LBN32tZ6LmUa
+         2K81GXPAXFYIPoVzCeRgXAFGR0bMUuUxa9Q+d3uaQzkCJO15kmUwnW5ad7ddC11bA9Gb
+         XMktExIwH3Gcbw/ftcKyWjKCheEe5/Eeq0rOzb3fJwszWqDCjNeL+VZpWhjqwmjPtR4V
+         4bRMbzXHstQ/EImNBjTFlWgVgENRbjs8ptm+MFnKCWkzAF8ahvYXi2f36g+sO/Z4vYN4
+         7H/P4F3MSn+OJWNC+uelkqCvfqX0Pa764nTPaECOqDiGwFzV8wA+CMZElCdv4nNVGiQ0
+         FaVQ==
+X-Gm-Message-State: AOAM530jldllLJyNK5SZTKr0X6aMVB7SCQBsdJiI9R2R3qaxA9ibQZxh
+        TgE/3QDxHOBWT6MsejHdZxCAW8ccxtRaWQ==
+X-Google-Smtp-Source: ABdhPJzVsoHh9YqXtW0VqgCASOMZ/VI03MrQrha/xEeooiGJ9CIYoVtCxFTCPrxL0yRYFJXGKqrYRA==
+X-Received: by 2002:a37:9d04:: with SMTP id g4mr26121545qke.358.1605110980963;
+        Wed, 11 Nov 2020 08:09:40 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:c9d4:abc:8d:1568? ([2600:1700:e72:80a0:c9d4:abc:8d:1568])
+        by smtp.gmail.com with UTF8SMTPSA id r204sm2447702qka.122.2020.11.11.08.09.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Nov 2020 08:09:40 -0800 (PST)
+Subject: Re: [PATCH v2 12/20] merge-ort: have process_entries operate in a
+ defined order
+To:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+References: <20201102204344.342633-1-newren@gmail.com>
+ <20201102204344.342633-13-newren@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <4432ae6c-90ae-90d9-218f-15856395efac@gmail.com>
+Date:   Wed, 11 Nov 2020 11:09:38 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101
+ Thunderbird/83.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQI65rKnRZv7H5ZMm4Sq5UB8kjuF3QFAvDOrqPC2EtA=
-Content-Language: en-ca
+In-Reply-To: <20201102204344.342633-13-newren@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On November 11, 2020 4:54 AM, Ævar Arnfjörð Bjarmason wrote:
-> The NEEDS_SSL_WITH_CURL flag was still being set in one case, but hasn't
-> existed since 23c4bbe28e6 ("build: link with curl-defined linker flags", 2018-
-> 11-03). Remove it, and a comment which referred to it. See 6c109904bc8
-> ("Port to HP NonStop", 2012-09-19) for the initial addition of the comment.
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  config.mak.uname | 5 -----
->  1 file changed, 5 deletions(-)
-> 
-> diff --git a/config.mak.uname b/config.mak.uname index
-> 8d7b96f8b9b..5b30a9154ac 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -541,11 +541,6 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
->  	# removing the directory at OS releases J06.21 and L17.02.
->  	# Default to the older rm until those two releases are deprecated.
->  	RM = /bin/rm -f
-> -	# As detected by './configure'.
-> -	# Missdetected, hence commented out, see below.
-> -	#NO_CURL = YesPlease
-> -	# Added manually, see above.
-> -	NEEDS_SSL_WITH_CURL = YesPlease
->  	NEEDS_CRYPTO_WITH_SSL = YesPlease
->  	HAVE_DEV_TTY = YesPlease
->  	HAVE_LIBCHARSET_H = YesPlease
-> --
-> 2.29.2.222.g5d2a92d10f8
+On 11/2/2020 3:43 PM, Elijah Newren wrote:
+> We want to handle paths below a directory before needing to handle the
+> directory itself.  Also, we want to handle the directory immediately
+> after the paths below it, so we can't use simple lexicographic ordering
+> from strcmp (which would insert foo.txt between foo and foo/file.c).
+> Copy string_list_df_name_compare() from merge-recursive.c, and set up a
+> string list of paths sorted by that function so that we can iterate in
+> the desired order.
 
-This should be fine. We will test when rolled in, but I can't see an issue here. Sadly, I can't remove the junk above those deletions yet.
+This is at least the second time we've copied something from
+merge-recursive.c. Should we be starting a merge-utils.[c|h] to group
+these together under a common implementation?
 
-Thanks,
-Randall
+> +	/* Put every entry from paths into plist, then sort */
+>  	strmap_for_each_entry(&opt->priv->paths, &iter, e) {
+> +		string_list_append(&plist, e->key)->util = e->value;
+> +	}
 
--- Brief whoami:
- NonStop developer since approximately 211288444200000000
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
+nit: are braces required here?
 
-
-
+-Stolee
