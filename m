@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16C12C388F9
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 07:05:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F5D2C388F9
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 07:05:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9A5A920786
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 07:05:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0649220786
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 07:05:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QWhF7FNr";
-	dkim=temperror (0-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h/uJZL5v"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="q1wJ2mPT";
+	dkim=temperror (0-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QcbQ0/Ra"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726042AbgKKHFY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 02:05:24 -0500
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:46761 "EHLO
+        id S1726081AbgKKHF2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 02:05:28 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:46821 "EHLO
         out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725882AbgKKHFX (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 11 Nov 2020 02:05:23 -0500
+        by vger.kernel.org with ESMTP id S1725882AbgKKHF1 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 11 Nov 2020 02:05:27 -0500
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 2F12D5C0415;
-        Wed, 11 Nov 2020 02:05:22 -0500 (EST)
+        by mailout.nyi.internal (Postfix) with ESMTP id E23E45C045A;
+        Wed, 11 Nov 2020 02:05:25 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Wed, 11 Nov 2020 02:05:22 -0500
+  by compute1.internal (MEProxy); Wed, 11 Nov 2020 02:05:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm2; bh=Tij9vKDh8SL/dBS6/qN7QHTusd9
-        cAX8skAg0QJbvSQQ=; b=QWhF7FNrxrnSB5NGW3nDx+ogkZ7pCORmvdLmwjT8EV4
-        eT9xt8zPHlC9CtmzvFtDmMoCKORDkMgmMLs/Ze4DNkdARBIHP031mTKj7e3aW0oo
-        qnHqisdYMAZh/4yasw/OwNlZpafucbLPRFtJ/6EikHHeU+V6SOmSss5VLF3oxxwU
-        6BrvI3bmcfUU7rhtr/Y8aiMxArLSvpZPbwowyI17rnlJGwhI6daUYGo0rNN9Kqrc
-        1Uf9o/bDtYBE2it3aJuPxTtffxdKtyXX11QAml5N2ETYhx3Kz85XxSd5vJy13ESL
-        Mny4HHny/GR93h5iYNPExuNn4JRTpZcjOeSuJigXgGw==
+        :content-type:in-reply-to; s=fm2; bh=XQaJqllg7GbEBkjmzHN8KpWDXvZ
+        QR2acQ3P2XHjgIm8=; b=q1wJ2mPTrSKAqhzg9Xj1h8wwMBN8hh8JgQqEn0/Kf/T
+        aMv1z8IOkM3/FS/LLpBBigMl5C/5bA2OcDwhlW4m4+rlhgDLtQgV2dvjh60zRnTT
+        Tj9mxUjYxmy5DT1ln9ifGtHp1uHZYpN2UmHr/cose9iCuxcvTeOVRofmG8+XXL5I
+        2PV3RiCK/mRaF+Bjaaww+True3VeAyJfYu3ZwxTODk9a1zwwnBFHV9dK98LQn8Gm
+        i0RbnD522xMHKQI/7jHdXb0JxRg6KRCn6OX9smceAsDkwPjN4TksDynE2REnqZS4
+        93635O6ofKQ8dCKI1J8OUz3m4r3ost8Ou0G7i5KikXw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=Tij9vK
-        Dh8SL/dBS6/qN7QHTusd9cAX8skAg0QJbvSQQ=; b=h/uJZL5vbtz3IBIdtaZ+5D
-        yZhAL4XQzphfdEkjRHMzvji2IPHv94XrXbn9ty1j6BrJtjj9PM7dI8LoYqP4uB2c
-        yRwpvW6blRBYd62o5RKWb7mRZQKL/s0yTriQjwrha5pZZBF0CLA2fp68u1Zyk4Tj
-        R/ISAzbPleQGvagY686N26d2KdzVLJcHMqJvlPvYwl08J+3IEBFAUE/GJYcwsz6B
-        yEVQqRIBo2iyzuvrl+m3FqgEzMvY7ptRFEZaXOPHfNzAdN4Q1eWT0shxed9TWGrC
-        DSVNWYFU6sgFN4Cc/Ii6Ixp7f281xzUcFbOrGk+6cE4Jl2tPxQ2S5QH1a5OMesNA
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=XQaJql
+        lg7GbEBkjmzHN8KpWDXvZQR2acQ3P2XHjgIm8=; b=QcbQ0/Ra09n8tK6TA0wkBV
+        fGKA9acOW7ne984xYa+8J9dYKGdGQkfbBTCfvClgq7us+7P71X0w8wlBc5bdfPrS
+        Cnf3XFcd/y63RVRC24tz317fuMWg4Xd9opfNKDETUDJ1VfaeN8JH2MCPTgBhzlxf
+        9SIoCzYMWB1UzPa2EFP5TtgrscormsGCJh06qCssbIqtyW5Cea5JScBA4m4MJ/Cl
+        zOOWt0pPDwKfqLQQJhBG0rWMmK9ZS7Okn7dEWwkfqKuW+2HIduH0HFsE1vwPthBd
+        OhN4SQTpPlV8gncwsmY+hS1qHHu0oBQth37AJa7AQmClaicS2viqXOzd8qkpDPlA
         ==
-X-ME-Sender: <xms:Mo2rX_-oGQD_9LoxwFKg3g05de3wYicwfAVnube5Vv-G8BbhCmHAYw>
-    <xme:Mo2rX7sqzE0OqRJ7v3nZd_3qR4DQH7Egc--3r71aebq4DLkvAWmywPgoC0apErz5b
-    c8KPPp4Jkn-oGZ5Xw>
+X-ME-Sender: <xms:NY2rX31lWLkb1ndk-E_LF5tpwd2OJYWIGwiSCvfdsdRN4bZJUNWGZQ>
+    <xme:NY2rX2GgA5Oggp-Q0ZroCZCaeco56WCJlNj08x6bClyp43JfugqNSF5GqUzakZ-Lk
+    al-jbM-8iYk_TtLtg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudduledgkeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
@@ -58,27 +58,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudduledgkeefucetufdoteggod
     dvjeektdfhhedvlefgtefgvdettdfhnecukfhppeekledrudegrdeivddrkeeknecuvehl
     uhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
     himh
-X-ME-Proxy: <xmx:Mo2rX9CLFhSSM3ItFhmJ7JFG-exsAnXpVfLFGGoSPiR98QP7GtogtQ>
-    <xmx:Mo2rX7fT2VeSTnR9Fcp9R_ZHb1Pf9N0bHQP97bAVNwlNfqW_8lDKqw>
-    <xmx:Mo2rX0NT7Tae6rV3XKfpeNQwHLiVEAE6tGd4W4RD6WcB_hdvMrGxIQ>
-    <xmx:Mo2rX-VSGyV1shMbJHsMEpf1C6q6JccWTft7-0iHy1VXT7K0RDf9yg>
+X-ME-Proxy: <xmx:NY2rX37HbslqSwkCUvM9RoJuXlvRvxmQg95iTLZ7vPxPhovmzv_uCg>
+    <xmx:NY2rX82Qcbw6ApURZ07cfbaso08PSLKOTQ7MLMHDYsrZnJStUd6Q6g>
+    <xmx:NY2rX6GZssPD0AfnExk6u8S7izgVzcqQpCqaHCMfvCIDhgY91mwbwQ>
+    <xmx:NY2rX1MWsgSCKuzJ_YsOPD3s7CGIjYz9eVK69X1TtmzbIVmr_qBmSw>
 Received: from vm-mail.pks.im (dynamic-089-014-062-088.89.14.pool.telefonica.de [89.14.62.88])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 5DF94328005D;
-        Wed, 11 Nov 2020 02:05:21 -0500 (EST)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 364803280059;
+        Wed, 11 Nov 2020 02:05:25 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 51b8d91d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 11 Nov 2020 06:58:38 +0000 (UTC)
-Date:   Wed, 11 Nov 2020 07:58:38 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 11636625 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 11 Nov 2020 06:58:43 +0000 (UTC)
+Date:   Wed, 11 Nov 2020 07:58:43 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, gitster@pobox.com
-Subject: [PATCH v3 1/4] t1400: avoid touching refs on filesystem
-Message-ID: <e66b1bcc62139f62866dc9f25856eaebfe107056.1605077740.git.ps@pks.im>
+Subject: [PATCH v3 2/4] update-ref: allow creation of multiple transactions
+Message-ID: <f19917483362569de132c9d81070f2c3e8e365b3.1605077740.git.ps@pks.im>
 References: <cover.1604501265.git.ps@pks.im>
  <cover.1605077740.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="/Of/RHqbzrqLYTip"
+        protocol="application/pgp-signature"; boundary="mjfVsAhgqZ9CUFps"
 Content-Disposition: inline
 In-Reply-To: <cover.1605077740.git.ps@pks.im>
 Precedence: bulk
@@ -86,265 +86,149 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---/Of/RHqbzrqLYTip
+--mjfVsAhgqZ9CUFps
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The testcase t1400 exercises the git-update-ref(1) utility. To do so,
-many tests directly read and write references via the filesystem,
-assuming that we always use loose and/or packed references. While this
-is true now, it'll change with the introduction of the reftable backend.
+While git-update-ref has recently grown commands which allow interactive
+control of transactions in e48cf33b61 (update-ref: implement interactive
+transaction handling, 2020-04-02), it is not yet possible to create
+multiple transactions in a single session. To do so, one currently still
+needs to invoke the executable multiple times.
 
-Convert those tests to use git-update-ref(1) and git-show-ref(1) where
-possible. As some tests exercise behaviour with broken references and
-neither of those tools actually allows writing or reading broken
-references, this commit doesn't adjust all tests.
+This commit addresses this shortcoming by allowing the "start" command
+to create a new transaction if the current transaction has already been
+either committed or aborted.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t1400-update-ref.sh | 72 +++++++++++++++++++++++--------------------
- 1 file changed, 39 insertions(+), 33 deletions(-)
+ Documentation/git-update-ref.txt |  3 +-
+ builtin/update-ref.c             | 13 ++++++++-
+ t/t1400-update-ref.sh            | 50 ++++++++++++++++++++++++++++++++
+ 3 files changed, 64 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-re=
+f.txt
+index d401234b03..48b6683071 100644
+--- a/Documentation/git-update-ref.txt
++++ b/Documentation/git-update-ref.txt
+@@ -125,7 +125,8 @@ option::
+ start::
+ 	Start a transaction. In contrast to a non-transactional session, a
+ 	transaction will automatically abort if the session ends without an
+-	explicit commit.
++	explicit commit. This command may create a new empty transaction when
++	the current one has been committed or aborted already.
+=20
+ prepare::
+ 	Prepare to commit the transaction. This will create lock files for all
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index 8a2df4459c..bb65129012 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -446,7 +446,18 @@ static void update_refs_stdin(void)
+ 			state =3D cmd->state;
+ 			break;
+ 		case UPDATE_REFS_CLOSED:
+-			die("transaction is closed");
++			if (cmd->state !=3D UPDATE_REFS_STARTED)
++				die("transaction is closed");
++
++			/*
++			 * Open a new transaction if we're currently closed and
++			 * get a "start".
++			 */
++			state =3D cmd->state;
++			transaction =3D ref_transaction_begin(&err);
++			if (!transaction)
++				die("%s", err.buf);
++
+ 			break;
+ 		}
+=20
 diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index 4c01e08551..d7a57488ed 100755
+index d7a57488ed..2890504edd 100755
 --- a/t/t1400-update-ref.sh
 +++ b/t/t1400-update-ref.sh
-@@ -14,6 +14,12 @@ n=3D$n_dir/fixes
- outside=3Drefs/foo
- bare=3Dbare-repo
+@@ -1532,4 +1532,54 @@ test_expect_success 'transaction with prepare aborts=
+ by default' '
+ 	test_must_fail git show-ref --verify -q $b
+ '
 =20
-+# Some of the tests delete HEAD, which causes us to not treat the current
-+# working directory as a Git repository anymore. To avoid using any potent=
-ial
-+# parent repository to be discovered, we need to set up the ceiling direct=
-ories.
-+GIT_CEILING_DIRECTORIES=3D"$PWD/.."
-+export GIT_CEILING_DIRECTORIES
++test_expect_success 'transaction can commit multiple times' '
++	cat >stdin <<-EOF &&
++	start
++	create refs/heads/branch-1 $A
++	commit
++	start
++	create refs/heads/branch-2 $B
++	commit
++	EOF
++	git update-ref --stdin <stdin >actual &&
++	printf "%s: ok\n" start commit start commit >expect &&
++	test_cmp expect actual &&
++	echo "$A" >expect &&
++	git rev-parse refs/heads/branch-1 >actual &&
++	test_cmp expect actual &&
++	echo "$B" >expect &&
++	git rev-parse refs/heads/branch-2 >actual &&
++	test_cmp expect actual
++'
 +
- create_test_commits ()
- {
- 	prfx=3D"$1"
-@@ -48,17 +54,17 @@ test_expect_success "fail to delete $m with stale ref" '
- 	test $B =3D "$(git show-ref -s --verify $m)"
- '
- test_expect_success "delete $m" '
--	test_when_finished "rm -f .git/$m" &&
-+	test_when_finished "git update-ref -d $m" &&
- 	git update-ref -d $m $B &&
--	test_path_is_missing .git/$m
-+	test_must_fail git show-ref --verify -q $m
- '
-=20
- test_expect_success "delete $m without oldvalue verification" '
--	test_when_finished "rm -f .git/$m" &&
-+	test_when_finished "git update-ref -d $m" &&
- 	git update-ref $m $A &&
- 	test $A =3D $(git show-ref -s --verify $m) &&
- 	git update-ref -d $m &&
--	test_path_is_missing .git/$m
-+	test_must_fail git show-ref --verify -q $m
- '
-=20
- test_expect_success "fail to create $n" '
-@@ -80,26 +86,26 @@ test_expect_success "fail to delete $m (by HEAD) with s=
-tale ref" '
- 	test $B =3D $(git show-ref -s --verify $m)
- '
- test_expect_success "delete $m (by HEAD)" '
--	test_when_finished "rm -f .git/$m" &&
-+	test_when_finished "git update-ref -d $m" &&
- 	git update-ref -d HEAD $B &&
--	test_path_is_missing .git/$m
-+	test_must_fail git show-ref --verify -q $m
- '
-=20
- test_expect_success "deleting current branch adds message to HEAD's log" '
--	test_when_finished "rm -f .git/$m" &&
-+	test_when_finished "git update-ref -d $m" &&
- 	git update-ref $m $A &&
- 	git symbolic-ref HEAD $m &&
- 	git update-ref -m delete-$m -d $m &&
--	test_path_is_missing .git/$m &&
-+	test_must_fail git show-ref --verify -q $m &&
- 	grep "delete-$m$" .git/logs/HEAD
- '
-=20
- test_expect_success "deleting by HEAD adds message to HEAD's log" '
--	test_when_finished "rm -f .git/$m" &&
-+	test_when_finished "git update-ref -d $m" &&
- 	git update-ref $m $A &&
- 	git symbolic-ref HEAD $m &&
- 	git update-ref -m delete-by-head -d HEAD &&
--	test_path_is_missing .git/$m &&
-+	test_must_fail git show-ref --verify -q $m &&
- 	grep "delete-by-head$" .git/logs/HEAD
- '
-=20
-@@ -188,27 +194,26 @@ test_expect_success "move $m (by HEAD)" '
- 	test $B =3D $(git show-ref -s --verify $m)
- '
- test_expect_success "delete $m (by HEAD) should remove both packed and loo=
-se $m" '
--	test_when_finished "rm -f .git/$m" &&
-+	test_when_finished "rm -f git update-ref -d $m" &&
- 	git update-ref -d HEAD $B &&
- 	! grep "$m" .git/packed-refs &&
--	test_path_is_missing .git/$m
-+	test_must_fail git show-ref --verify -q $m
- '
-=20
--cp -f .git/HEAD .git/HEAD.orig
- test_expect_success 'delete symref without dereference' '
--	test_when_finished "cp -f .git/HEAD.orig .git/HEAD" &&
--	git update-ref --no-deref -d HEAD &&
--	test_path_is_missing .git/HEAD
-+	git symbolic-ref SYMREF $m &&
-+	git update-ref --no-deref -d SYMREF &&
-+	test_must_fail git show-ref --verify -q SYMREF
- '
-=20
- test_expect_success 'delete symref without dereference when the referred r=
-ef is packed' '
--	test_when_finished "cp -f .git/HEAD.orig .git/HEAD" &&
- 	echo foo >foo.c &&
- 	git add foo.c &&
- 	git commit -m foo &&
-+	git symbolic-ref SYMREF $m &&
- 	git pack-refs --all &&
--	git update-ref --no-deref -d HEAD &&
--	test_path_is_missing .git/HEAD
-+	git update-ref --no-deref -d SYMREF &&
-+	test_must_fail git show-ref --verify -q SYMREF
- '
-=20
- git update-ref -d $m
-@@ -226,25 +231,25 @@ test_expect_success 'update-ref --no-deref -d can del=
-ete self-reference' '
- 	test_when_finished "rm -f .git/refs/heads/self" &&
- 	test_path_is_file .git/refs/heads/self &&
- 	git update-ref --no-deref -d refs/heads/self &&
--	test_path_is_missing .git/refs/heads/self
-+	test_must_fail git show-ref --verify -q refs/heads/self
- '
-=20
- test_expect_success 'update-ref --no-deref -d can delete reference to bad =
-ref' '
- 	>.git/refs/heads/bad &&
- 	test_when_finished "rm -f .git/refs/heads/bad" &&
- 	git symbolic-ref refs/heads/ref-to-bad refs/heads/bad &&
--	test_when_finished "rm -f .git/refs/heads/ref-to-bad" &&
-+	test_when_finished "git update-ref -d refs/heads/ref-to-bad" &&
- 	test_path_is_file .git/refs/heads/ref-to-bad &&
- 	git update-ref --no-deref -d refs/heads/ref-to-bad &&
--	test_path_is_missing .git/refs/heads/ref-to-bad
-+	test_must_fail git show-ref --verify -q refs/heads/ref-to-bad
- '
-=20
- test_expect_success '(not) create HEAD with old sha1' '
- 	test_must_fail git update-ref HEAD $A $B
- '
- test_expect_success "(not) prior created .git/$m" '
--	test_when_finished "rm -f .git/$m" &&
--	test_path_is_missing .git/$m
-+	test_when_finished "git update-ref -d $m" &&
-+	test_must_fail git show-ref --verify -q $m
- '
-=20
- test_expect_success 'create HEAD' '
-@@ -254,7 +259,7 @@ test_expect_success '(not) change HEAD with wrong SHA1'=
- '
- 	test_must_fail git update-ref HEAD $B $Z
- '
- test_expect_success "(not) changed .git/$m" '
--	test_when_finished "rm -f .git/$m" &&
-+	test_when_finished "git update-ref -d $m" &&
- 	! test $B =3D $(git show-ref -s --verify $m)
- '
-=20
-@@ -284,8 +289,8 @@ test_expect_success 'empty directory removal' '
- 	test_path_is_file .git/refs/heads/d1/d2/r1 &&
- 	test_path_is_file .git/logs/refs/heads/d1/d2/r1 &&
- 	git branch -d d1/d2/r1 &&
--	test_path_is_missing .git/refs/heads/d1/d2 &&
--	test_path_is_missing .git/logs/refs/heads/d1/d2 &&
-+	test_must_fail git show-ref --verify -q refs/heads/d1/d2 &&
-+	test_must_fail git show-ref --verify -q logs/refs/heads/d1/d2 &&
- 	test_path_is_file .git/refs/heads/d1/r2 &&
- 	test_path_is_file .git/logs/refs/heads/d1/r2
- '
-@@ -298,8 +303,8 @@ test_expect_success 'symref empty directory removal' '
- 	test_path_is_file .git/refs/heads/e1/e2/r1 &&
- 	test_path_is_file .git/logs/refs/heads/e1/e2/r1 &&
- 	git update-ref -d HEAD &&
--	test_path_is_missing .git/refs/heads/e1/e2 &&
--	test_path_is_missing .git/logs/refs/heads/e1/e2 &&
-+	test_must_fail git show-ref --verify -q refs/heads/e1/e2 &&
-+	test_must_fail git show-ref --verify -q logs/refs/heads/e1/e2 &&
- 	test_path_is_file .git/refs/heads/e1/r2 &&
- 	test_path_is_file .git/logs/refs/heads/e1/r2 &&
- 	test_path_is_file .git/logs/HEAD
-@@ -1388,7 +1393,8 @@ test_expect_success 'handle per-worktree refs in refs=
-/bisect' '
- 		git rev-parse refs/bisect/something >../worktree-head &&
- 		git for-each-ref | grep refs/bisect/something
- 	) &&
--	test_path_is_missing .git/refs/bisect &&
-+	git show-ref >actual &&
-+	! grep 'refs/bisect' actual &&
- 	test_must_fail git rev-parse refs/bisect/something &&
- 	git update-ref refs/bisect/something HEAD &&
- 	git rev-parse refs/bisect/something >main-head &&
-@@ -1500,7 +1506,7 @@ test_expect_success 'transaction can handle abort' '
- 	git update-ref --stdin <stdin >actual &&
- 	printf "%s: ok\n" start abort >expect &&
- 	test_cmp expect actual &&
--	test_path_is_missing .git/$b
-+	test_must_fail git show-ref --verify -q $b
- '
-=20
- test_expect_success 'transaction aborts by default' '
-@@ -1511,7 +1517,7 @@ test_expect_success 'transaction aborts by default' '
- 	git update-ref --stdin <stdin >actual &&
- 	printf "%s: ok\n" start >expect &&
- 	test_cmp expect actual &&
--	test_path_is_missing .git/$b
-+	test_must_fail git show-ref --verify -q $b
- '
-=20
- test_expect_success 'transaction with prepare aborts by default' '
-@@ -1523,7 +1529,7 @@ test_expect_success 'transaction with prepare aborts =
-by default' '
- 	git update-ref --stdin <stdin >actual &&
- 	printf "%s: ok\n" start prepare >expect &&
- 	test_cmp expect actual &&
--	test_path_is_missing .git/$b
-+	test_must_fail git show-ref --verify -q $b
- '
-=20
++test_expect_success 'transaction can create and delete' '
++	cat >stdin <<-EOF &&
++	start
++	create refs/heads/create-and-delete $A
++	commit
++	start
++	delete refs/heads/create-and-delete $A
++	commit
++	EOF
++	git update-ref --stdin <stdin >actual &&
++	printf "%s: ok\n" start commit start commit >expect &&
++	test_must_fail git show-ref --verify refs/heads/create-and-delete
++'
++
++test_expect_success 'transaction can commit after abort' '
++	cat >stdin <<-EOF &&
++	start
++	create refs/heads/abort $A
++	abort
++	start
++	create refs/heads/abort $A
++	commit
++	EOF
++	git update-ref --stdin <stdin >actual &&
++	printf "%s: ok\n" start abort start commit >expect &&
++	echo "$A" >expect &&
++	git rev-parse refs/heads/abort >actual &&
++	test_cmp expect actual
++'
++
  test_done
 --=20
 2.29.2
 
 
---/Of/RHqbzrqLYTip
+--mjfVsAhgqZ9CUFps
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl+ri50ACgkQVbJhu7ck
-PpRDaw/9GuIK4nPPCdER+IQk29oT1V8foJle/kbF0w7pz8VFHw7LhRXRWfqT8PCb
-aGVqXZjfp/1SY9Ct48jrgJCk3AAHY5Ix6B/Rt3NLyYyAaHdIuIyEdkl32xdd48ru
-8Fr/l4kkTycP1hzzgy0cc114SZpoT90NYIhH0xv5w6E0OvJZJRrG3hiLGjZxail7
-EWOzaBTfY+HlzXOvONYztQAcuod9I0QicGA0zNEcyqO9R6r7pocxynjollge16Zn
-8QuuML0TZwghWViFGKQzPuWhTdw2gpYMJzvkZ448hgTbZMILzQLfX3lhxRO0b78o
-b1nAv3Z45IChiwUpatm+g/wYyTVythqa8AztpojGIGucydyDRI2TFWr9vDNDzSMw
-HTFi38Af9JqzwrbCs0leS7JaW8KQYaELM1NJgjK21cgOfLrDsSWjpm/Pr44LWIUy
-PY8JMF4JE/0FJXWl+pmhq0NZ2tUGtQ9YzOsfq9iByN3EAX1KrEu2+uPXcnLNiNx/
-I/fZu1isVV6qqbiI46NGRbAtb8Lsvoj0yVmC1FqaFh8OPUdntqS3r4ZRMG8xOjjX
-9ZZt1/1CXClCzNaREmJK7Q/HYtbwJZTfhVhATCV3ytwX3ChWfLtoJWITuIPiFg8A
-9dbMX9VcKAt5N0ShrjLPTYVbe5tg7vM5eeA+P9B9Ryh/xupkWDg=
-=yF+F
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl+ri6IACgkQVbJhu7ck
+PpQdJA//cFpena/n10Cxqk1MkRyo/AnI8PLffSSg7Yt24ABW7qJRg33X/mZ4BIg3
++CTz9X+UrQ2oHYGtRciisbC3bQHBh4Mqt+sQYDG4BfYicn9267EhZVmpMYTxlZPz
+7tzisdNE3x9xakao6MKVOH9gXZlo04lH7QtlsVaFEYMtNH/fnNyfjv03QfU9X4rw
+UDRkL48OF1gWAr9ZLrl7NRNpByamyt9jGDBuXNi0oG+TxuwcdSXF3ACi8byIBjlh
+QweoHB5zY1hnjLoW8q0ZNnBZbtC2cP1BQdr85d4LjLJb2ve2DGjpF4CJ9XDMPM7J
+EggpjhWDOSQ1Kq4DItkuECPiyBEOWf4QD9NA5ruVZLg/s9xO5uQLb/m1Tig4cbYK
+9GlOl9Mp9bAbb890IIA7k8kUm4gYVbfaN9aut9M9assS9iAON9jaOoKASKIQ+gbS
+tYHWMnFc/Kr1Kge0s2gvamnspBrAgnbTn0xQ6vQ714bpO8SqMxNG8DXUCGb6fYx8
+VAVuL4DW1/SvZM25WXFPsDMkeDy1jSJ3ll3qi/iD57BCdQzaOa6xkTJ6AuZRdwII
+XQnSDbFskPYmA7Ri0WKZfjkcbmkjXzDf7s7b5f9FbJBSbYW+Aw0BYXoOhkmJ2AaN
+p8PYvZ0GYTzYdIBNrwRBl1jJEGa332Lj8QtJY02+Rpt2u3WKDDY=
+=RW3u
 -----END PGP SIGNATURE-----
 
---/Of/RHqbzrqLYTip--
+--mjfVsAhgqZ9CUFps--
