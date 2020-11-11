@@ -2,158 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A414C388F9
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 19:41:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24844C388F9
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 19:41:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 090E2207F7
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 19:41:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B002F2087D
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 19:41:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="GekYEoZg"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="lbMk2yiB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727171AbgKKTlo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 14:41:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54690 "EHLO
+        id S1727489AbgKKTlv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 14:41:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726492AbgKKTll (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 14:41:41 -0500
+        with ESMTP id S1726479AbgKKTlv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 14:41:51 -0500
 Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B923AC0613D1
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 11:41:38 -0800 (PST)
-Received: by mail-qk1-x743.google.com with SMTP id d9so2894470qke.8
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 11:41:38 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE744C0613D1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 11:41:49 -0800 (PST)
+Received: by mail-qk1-x743.google.com with SMTP id h15so2860601qkl.13
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 11:41:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition;
-        bh=6Lyl1Ngj4+Es26LBpxCVkXaNMMcM4sqOCYz94M8wx2s=;
-        b=GekYEoZgepDTUomfyfggmrBEwZuW3Cb8AlgHH8o7DqfP83XLZJZxAwIo8pGe5vT4AF
-         uDFwDAxrMSeB8nHt8GQAy2T+KxU3MYVN7K7Fu3k+BXFEiUJyGUepJq6kUQgsIJYThbPy
-         HffIfoe2KjjAwflfjePGOC3gL6vq+RLB7a9PegBPz2GqvUsHUhVwdxEsXDwTolSwDxFw
-         0m3YI0bt3gseV5InW0bTt9weyIjVPhd+K3Hi8RmZWPG6llCR9qbcGIipLYEUQM0+49nk
-         Srr8RV7eyxhmT7UlzGEO/Ybfoa5mTCVqj/Qqx066EWXaLkAQo9nlzET3Gf9+m9UpUxUe
-         O+1w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=YfB1LW/vqaO3YmLzAXyzg2hBvw20Dcx/Uldtx6zwBcs=;
+        b=lbMk2yiB6Wh6jx84tSQ3+nQrxJUTAXZgkntCbG2nJ8W03dyO1YavYDx86WWJj556ND
+         ps6+QThGc05S3D2BpXh9yOFGmO9EMqyIDBHlxDVA0ef2s9EiMVGokHFbjML1WsYT0IFl
+         HF7lHRdZw8S2O912W8tPl6r4oSB5F2ZQuLa3tofk9j3T6ti69z/bUOA1zqBFxTIFwMx4
+         077CmXXiKYgOeQgXerWP1ve4/on64Gi4OraF/jlxsUed4UgC4cPNeOaN/wWc74k5WcXk
+         kC9hPwNTkMTsn0XFcDX9eNW/+7sEtKQ2zr/1D2lgnhcwYZMHRH9YHP6OHq1lFmSYNtDz
+         2brg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition;
-        bh=6Lyl1Ngj4+Es26LBpxCVkXaNMMcM4sqOCYz94M8wx2s=;
-        b=VKQx44tGoTG7ZOZjC7OO+EYvtLX99p7CrNWaUBoD47tvfvyJZdoue1OyiEuC0Hkum1
-         BiQoxPDtmKpSrjPBzqNd9GSOvUNeFum6X9K0B8WeY7xnV9unKEkDNVSaQUNLaPn63WcX
-         wxPMpjMZ/V8XM/1WjyOLJQuC+vRcCYMnt9vj5jZ+pfVVpZyZ08N4cVOYZWneeby5jUaK
-         173phvvnoYz21WIPu2/MT2q03/ltch/pVH+y0eUEkpsXSvI5R5a6sony54LY3Rm+mN8h
-         UPIVJayGqlGfY1+9dNEcRQBnZZZ4q9nvKw5EEU2ODrpV+7+Z3/M5Qoo/xkShZyle3BNX
-         QHNQ==
-X-Gm-Message-State: AOAM531j77+BPGh5CoHksKuzhzVewwvhp76ST1Bmerd8qa6cn4UmsL/I
-        811WCcdkzL5zGpR35stvuleBKBEw9RKBnxAA
-X-Google-Smtp-Source: ABdhPJz0NVp87huWq15+8La62fSA7XMm17TUh2V0+KVjvuY/rPu7TxsbVhucMSemyvCKBkcUJa6agw==
-X-Received: by 2002:a37:46d0:: with SMTP id t199mr25954995qka.308.1605123697537;
-        Wed, 11 Nov 2020 11:41:37 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=YfB1LW/vqaO3YmLzAXyzg2hBvw20Dcx/Uldtx6zwBcs=;
+        b=BZtETV7T5JUFkdWSxcR7R/3ltbbAjzsUhxkzTzkEuQ7jK1wE26PJjh7xK6j1K+cK0n
+         RPE/Qjia73ZEtOHwk3qKmUAF0lOmIUYcxu1pXy3PX91CW3SYirYDud7g3KNcgpiYTGYb
+         nC+Fl3BF8BQK3WIJdOSqzJmoA66q1ygUSuzQq4yRgDVwIwiFIA4DlVz0U9zg1tQzDPCL
+         tMH9AN2oD+YMRlPA9x+yMyL7hETKk8Z9lVHo5H3Bj76vyaX3Q5YARKyteq62TGI0jdXT
+         eRRj+4ODFBgLm2U+5EpxfZ30wX37wotzwzk040qRvmQENjSVqmWQHekQMHFrhPXxd7Pe
+         buZQ==
+X-Gm-Message-State: AOAM5304co05Z1+Yy5tPEFcci2D5QuX7SkDSqm+EAMHyUULfSd2IMX6E
+        JelN0m8RAYbmOQMVqh9OzNXOfH3gSoAdcsrN
+X-Google-Smtp-Source: ABdhPJyV6fAtAmZ3NJmp3zf3LtszvCzEBMWha3QfW2Hw4BjDYgTSc1PTE/ZTgBGzu6SCTb7/Pg6F2g==
+X-Received: by 2002:ae9:ea14:: with SMTP id f20mr25928195qkg.239.1605123708683;
+        Wed, 11 Nov 2020 11:41:48 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:7ccc:9a51:1ad:2057])
-        by smtp.gmail.com with ESMTPSA id q15sm3003614qki.13.2020.11.11.11.41.36
+        by smtp.gmail.com with ESMTPSA id z125sm3098243qke.54.2020.11.11.11.41.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2020 11:41:36 -0800 (PST)
-Date:   Wed, 11 Nov 2020 14:41:34 -0500
+        Wed, 11 Nov 2020 11:41:48 -0800 (PST)
+Date:   Wed, 11 Nov 2020 14:41:44 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net
-Subject: [PATCH 00/23] pack-bitmap: bitmap generation improvements
-Message-ID: <cover.1605123652.git.me@ttaylorr.com>
+Subject: [PATCH 01/23] ewah/ewah_bitmap.c: grow buffer past 1
+Message-ID: <36deaad366d66d10b96755dd6969bfe51123a2d4.1605123652.git.me@ttaylorr.com>
+References: <cover.1605123652.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <cover.1605123652.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series contains some patches that GitHub has been using in its fork
-for the past few months to improve generating reachability bitmaps,
-particularly in pathological cases, such as the repo containing all
-forks of chromium/chromium.
+When the buffer size is exactly 1, we fail to grow it properly, since
+the integer truncation means that 1 * 3 / 2 = 1. This can cause a bad
+write on the line below.
 
-The patches that follow are organized into five parts:
+Bandaid this by first padding the buffer by 16, and then growing it.
+This still allows old blocks to fit into new ones, but fixes the case
+where the block size equals 1.
 
-  - The first nine patches do some basic clean-up and fix a bug that we
-    were able to exercise in tests while writing these patches.
+Co-authored-by: Jeff King <peff@peff.net>
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ ewah/ewah_bitmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  - The next two patches reimplements bitmap writing in order to avoid making
-    multiple passes over the object graph. This approach ends up
-    regressing both the time and memory used to generate bitmaps on the
-    kernel's fork-network, but ends up being a useful stepping stone for
-    further improvements.
-
-  - The six patches that follow that culminates in a patch to build
-    fewer intermediate bitmaps during the walk in order to reduce both
-    memory and time for reasonably-sized repositories. (Which
-    intermediate bitmaps are considered "important" is discussed in
-    detail in the seventeenth patch).
-
-  - The next several patches make reusing previously generated reachability
-    bitmaps purely an optimization for generating new bitmaps. Importantly, that
-    allows the bitmap selection process to pick better commits to bitmap going
-    forward, rather than blindly reusing previously selected ones. They also
-    include some light refactoring, and a patch to avoid tree walks when
-    existing bitmaps suffice.
-
-  - The final two patches address a trade-off in the prior patches between
-    walking a wide history only once with high memory cost, and walking the same
-    history multiple times with lower memory cost. Here, the walk is reduced to
-    only cover the first-parent history. The final patch treats existing bitmaps
-    as maximal in order to make it more difficult for a different set of
-    selected commits to "walk around" the previously selected commits and force
-    a large number of new bitmaps to be computed.
-
-In the end, no block-buster performance improvements are attained on
-normal-to-large sized repositories, but the new bitmap generation routine helps
-substantially on enormous repositories, like the chromium/chromium fork-network.
-
-Individual performance numbers are available in the patches throughout.
-
-This series is a prerequisite to a list of other bitmap-related patches in
-GitHub's fork, including multi-pack bitmaps.
-
-Derrick Stolee (9):
-  pack-bitmap-write: fill bitmap with commit history
-  bitmap: add bitmap_diff_nonzero()
-  commit: implement commit_list_contains()
-  t5310: add branch-based checks
-  pack-bitmap-write: rename children to reverse_edges
-  pack-bitmap-write: build fewer intermediate bitmaps
-  pack-bitmap-write: use existing bitmaps
-  pack-bitmap-write: relax unique rewalk condition
-  pack-bitmap-write: better reuse bitmaps
-
-Jeff King (11):
-  pack-bitmap: fix header size check
-  pack-bitmap: bounds-check size of cache extension
-  t5310: drop size of truncated ewah bitmap
-  rev-list: die when --test-bitmap detects a mismatch
-  ewah: factor out bitmap growth
-  ewah: make bitmap growth less aggressive
-  ewah: implement bitmap_or()
-  ewah: add bitmap_dup() function
-  pack-bitmap-write: reimplement bitmap writing
-  pack-bitmap-write: pass ownership of intermediate bitmaps
-  pack-bitmap-write: ignore BITMAP_FLAG_REUSE
-
-Taylor Blau (3):
-  ewah/ewah_bitmap.c: grow buffer past 1
-  pack-bitmap: factor out 'bitmap_for_commit()'
-  pack-bitmap: factor out 'add_commit_to_bitmap()'
-
- builtin/pack-objects.c  |   1 -
- commit.c                |  11 +
- commit.h                |   2 +
- ewah/bitmap.c           |  54 ++++-
- ewah/ewah_bitmap.c      |   2 +-
- ewah/ewok.h             |   3 +-
- pack-bitmap-write.c     | 452 +++++++++++++++++++++++++---------------
- pack-bitmap.c           | 130 +++++-------
- pack-bitmap.h           |   8 +-
- t/t5310-pack-bitmaps.sh | 164 ++++++++++++---
- 10 files changed, 548 insertions(+), 279 deletions(-)
-
---
+diff --git a/ewah/ewah_bitmap.c b/ewah/ewah_bitmap.c
+index d59b1afe3d..3fae04ad00 100644
+--- a/ewah/ewah_bitmap.c
++++ b/ewah/ewah_bitmap.c
+@@ -45,7 +45,7 @@ static inline void buffer_grow(struct ewah_bitmap *self, size_t new_size)
+ static inline void buffer_push(struct ewah_bitmap *self, eword_t value)
+ {
+ 	if (self->buffer_size + 1 >= self->alloc_size)
+-		buffer_grow(self, self->buffer_size * 3 / 2);
++		buffer_grow(self, (self->buffer_size + 16) * 3 / 2);
+ 
+ 	self->buffer[self->buffer_size++] = value;
+ }
+-- 
 2.29.2.156.gc03786897f
+
