@@ -7,98 +7,114 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F6E1C5517A
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 17:04:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CAC1C388F9
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 17:07:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A5A582074B
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 17:04:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8FE02206CA
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 17:07:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZZvP5ulJ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qU4ekqxf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727027AbgKKREF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 12:04:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58534 "EHLO
+        id S1726638AbgKKRHa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 12:07:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726011AbgKKREE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 12:04:04 -0500
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A37DC0613D1
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 09:04:02 -0800 (PST)
-Received: by mail-oi1-x242.google.com with SMTP id m13so2916189oih.8
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 09:04:02 -0800 (PST)
+        with ESMTP id S1726338AbgKKRHa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 12:07:30 -0500
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B094C0613D1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 09:07:30 -0800 (PST)
+Received: by mail-ot1-x342.google.com with SMTP id n15so2789104otl.8
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 09:07:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=6NZ3ZfKXNkuZsX5slrWhkJPLc8RZfN8HqdjaJ3mcVf0=;
-        b=ZZvP5ulJnkptXEs+Hb8wW6AfE4wphrwRFvEZ6JJ2fcDUB8buByfbk54oomoPg8tHnD
-         BE//yMSjNIK7EZGwSLRhc2IvZkz652Y+JS9qZYlpCdEe2uEXQ0C30WCuO31sZhMVKi/V
-         MWrvcwB381uLkqrBRei0KE6uCNQW/lQltG0BAMBhxWR6uy1tvn1l2YTkmVNz7HEaAbuG
-         BmF7ECURZyhY5X1V1v7KJLpUAiToJ+Tsfo+T+9Zk9zzZIRlctZUobQwtwzWiFeXMO+gi
-         ZR44sRNbdttsiRWvs0wD6M/7RQOK/mpKzyw1U2o3FoiEgREk4mnb7AdWFXAsHkdhyu/z
-         Q0cA==
+        bh=DWX5S4XJ0WeGx9Jndi/OQVjP03ab8soVPd+StDFfzVE=;
+        b=qU4ekqxfyJ6+jG8JZvHv0jjM8oItrvC6mDlBEh9RCNEMjFAj980Idkq1Vb7xuFgVbi
+         IqigY4tnluuT+y1B4IZw/cvk5zFW+1yXESHgwqFPL/3fGKAGG67Yf+XQ436/cWMcFR85
+         oqrQQEExsygFnJfXebi+eqPzu+p84hD8KE2hvff3Z518E1jXOdhcRJ5IIO7GekOv8Ryv
+         fSOG+3KDwlefHVl3nYYp6En/Gfo9DDNX6d7d5ROtvGSy4UhygmQTIoCX3wNxAipvOrYt
+         rMGtP8XQi7AGJLElVBATsQm6B8QWhu+lPcvDe40577WBfIxK9/MbztuLRnQnhy9Rqymj
+         KO/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=6NZ3ZfKXNkuZsX5slrWhkJPLc8RZfN8HqdjaJ3mcVf0=;
-        b=dlSs6ynIwoE/ESI3XdepWU5s3xyfjJAlrRfQNgP4jNxMWa22JSAxjaaEujI+CSHUIJ
-         8ZVi3dKQdIOajyrZ1jGZY9zfQBCl6UxF0amMTxiDmq5QEtzhDw71TagrLIqdoWl5sSBA
-         9o6eNanRNNk1FfUgs7qL/L3UuAC7cyeuih1jgNJgTMTgThyqgdUCG5l+cxrBsXJr9K8v
-         jsNiJ2r8yEH9ty8tTbk1W4vr+znGWJEyED6G2YK58wjNQsuxJTF41VzV2LaZbhSv4zoi
-         wJZho18sULcohwWiwnnwH/D8yysnSPfsXreN8CYOFtabSF7D/gQfvQvUvs//9PMG1NkM
-         HqIw==
-X-Gm-Message-State: AOAM532nyiuy9StLVMfbxRcGpVuBR7bjOWib8hHoPAhrG3TLqwF9BIeR
-        CUU/DUNjgO1YzORKGREcQwhzOWqZohcHK0PK2fBSrRlrTiw=
-X-Google-Smtp-Source: ABdhPJxlmZLP2ESH+l2Ojyk18avgBpKImU5vqdfLgCpkSVVtRe3JZ89HP0kpxd9oeXfIYlDmDu91UnfS9BmDOeXynFI=
-X-Received: by 2002:aca:3756:: with SMTP id e83mr2756336oia.31.1605114241608;
- Wed, 11 Nov 2020 09:04:01 -0800 (PST)
+        bh=DWX5S4XJ0WeGx9Jndi/OQVjP03ab8soVPd+StDFfzVE=;
+        b=cXN+KaWWbVyU9ZSGnOD2X4QVHTBOJ5bqAA8Qgo6mKj53Z7bgflo9b6c+06DyBRBjFD
+         ECCDBOCnFvAoJkuSCPe8sYzVl2wTLlQovNnBxL2ciPoi44kdGD6fP/tZUsh3Qdg6iYTP
+         dhXDbwVOlragM2PZiJAE/7/PtdaNIz6jMYIN87/X6j/bwzlhLGS1hlrHKpa4ALiuK8O+
+         BEQj1xe8Z4h46vdQaR4PgiE8mVpBQU1aifFQ/svqWwAh87IYSxi073ZIK3RV8rrauu2b
+         vzU7GoiHSDcnJU8BWbN9L20lrgNvvO4VmJ6ez7Is2Xmk/ekFnWWSvNTVaHc/ycxFdRes
+         bABw==
+X-Gm-Message-State: AOAM5339toW9RyhyV7NAIxq0TJyNpfFh8oy09cLVNlL0W0sA5U7pjiWe
+        2VNeEWewlaNhr/sm7Lbqzb1Fp9FBV3gyIFbWdEI=
+X-Google-Smtp-Source: ABdhPJwD7G7KSch5LyOSKdhTvFJ4dgCVHlK+CCactGSpn5pqEVP/xlA/apIusblmOtIXCRxJ/A94HqmbmJ9L+a5tHNY=
+X-Received: by 2002:a9d:8d7:: with SMTP id 81mr18827232otf.345.1605114449526;
+ Wed, 11 Nov 2020 09:07:29 -0800 (PST)
 MIME-Version: 1.0
-References: <20201102204344.342633-1-newren@gmail.com> <20201102204344.342633-5-newren@gmail.com>
- <cd05d258-a526-9843-f646-d2d42f1b8cbc@gmail.com> <CABPp-BFd2Wg-9h9+Gx20szX=YfKLqvBMWGg-eZU0yL8_DPh6kw@mail.gmail.com>
- <91898d2a-174f-a9c6-f174-3c7809f79b34@gmail.com>
-In-Reply-To: <91898d2a-174f-a9c6-f174-3c7809f79b34@gmail.com>
+References: <20201102204344.342633-1-newren@gmail.com> <20201102204344.342633-6-newren@gmail.com>
+ <267dbe58-e319-0904-3552-bf56530181c3@gmail.com>
+In-Reply-To: <267dbe58-e319-0904-3552-bf56530181c3@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 11 Nov 2020 09:03:50 -0800
-Message-ID: <CABPp-BENqoXL9yPW1DnoEa89oGxM2J1H4Vz3VE5r2-D+-m=PKA@mail.gmail.com>
-Subject: Re: [PATCH v2 04/20] merge-ort: use histogram diff
+Date:   Wed, 11 Nov 2020 09:07:18 -0800
+Message-ID: <CABPp-BER+nzGb42fB2__tF=a8Y-JQ-Fzi8PZ9T6nWG-5RZfzhA@mail.gmail.com>
+Subject: Re: [PATCH v2 05/20] merge-ort: add an err() function similar to one
+ from merge-recursive
 To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Jeff Hostetler <git@jeffhostetler.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 11, 2020 at 8:51 AM Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 11/11/2020 11:47 AM, Elijah Newren wrote:
-> > On Wed, Nov 11, 2020 at 5:54 AM Derrick Stolee <stolee@gmail.com> wrote:
-> >>
-> >> On 11/2/2020 3:43 PM, Elijah Newren wrote:
-> >>> I have some ideas for using a histogram diff to improve content merges,
-> >>> which fundamentally relies on the idea of a histogram.  Since the diffs
-> >>> are never displayed to the user but just used internally for merging,
-> >>> the typical user preference shouldn't matter anyway, and I want to make
-> >>> sure that all my testing works with this algorithm.
-> >>>
-> >>> Granted, I don't yet know if those ideas will pan out and I haven't even
-> >>> tried any of them out yet, but it's easy to change the diff algorithm in
-> >>> the future if needed or wanted.  For now, just set it to histogram.
-> >>
-> >> If you are not making use of the histogram yet, then could you set this
-> >> patch aside until you _do_ use it? Or are there performance implications
-> >> that are also a side benefit?
-> >
-> > Long story...
->
-> ...
->
-> > Does that help?
->
-> In summary, you have some concrete reasons to prefer the histogram
-> diff other than just "I have some ideas that might pan out later" so
-> this code change is a good one but could be better justified in the
-> commit message. Does that sound correct?
+On Wed, Nov 11, 2020 at 5:58 AM Derrick Stolee <stolee@gmail.com> wrote:
 
-Sure, I can add some additional wording about those ideas and the
-concrete issues I want to fix.
+> > +static int err(struct merge_options *opt, const char *err, ...)
+> > +{
+> > +     va_list params;
+> > +     struct strbuf sb = STRBUF_INIT;
+> > +
+> > +     strbuf_addstr(&sb, "error: ");
+> > +     va_start(params, err);
+> > +     strbuf_vaddf(&sb, err, params);
+> > +     va_end(params);
+> > +
+> > +     error("%s", sb.buf);
+> > +     strbuf_release(&sb);
+> > +
+> > +     return -1;
+> > +}
+> > +
+>
+> This seems simple enough to have a duplicate copy lying
+> around. Do you anticipate that all common code will live
+> in the same file eventually? Or will these two static err()
+> method always be duplicated?
+
+I anticipate that merge-recursive.[ch] will be deleted.
+
+merge-ort was what I wanted to modify merge-recursive.[ch] to be, but
+Junio suggested doing it as a different merge backend since it had
+invasive changes, so that we could have an easy way to try it out and
+fallback to the known good algorithm until we had sufficient comfort
+with the new algorithm to switch over to it.
+
+> Aside: I wonder if these errors could be logged using trace2
+> primitives, to assist diagnosing problems with merges. CC'ing
+> Jeff Hostetler if he has an opinion.
+>
+> >  static int collect_merge_info(struct merge_options *opt,
+> >                             struct tree *merge_base,
+> >                             struct tree *side1,
+> >                             struct tree *side2)
+> >  {
+> > +     /* TODO: Implement this using traverse_trees() */
+> >       die("Not yet implemented.");
+> >  }
+>
+> This comment looks to be applied to the wrong patch.
+
+Oops!  You are correct; will fix.
