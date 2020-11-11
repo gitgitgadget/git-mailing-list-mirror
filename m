@@ -2,157 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 851F3C388F9
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 19:18:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C240C388F9
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 19:24:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 283EF206B6
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 19:18:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A9F2920829
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 19:24:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="W1svJUnc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GA8BWkKs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727663AbgKKTSw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 14:18:52 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60231 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727641AbgKKTSv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 14:18:51 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 098F2A27C6;
-        Wed, 11 Nov 2020 14:18:48 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZElelmHKUvK6jIMN9MMKWuydJCc=; b=W1svJU
-        nczbKvx0gla8jkys3WLInhLnLG/gol1BwwyB6+mU5DCK3xh8IGfhEQaqKqkBQnIO
-        4mBW+osz/5gR+8lFJzUIGgWbavx87NlBSdL0FN49fRkFVzvZM5NoAf6S99H1iPpV
-        lsdrvf4M3EDiwBEPqKIm9ECAHEF/5WD0Mo0Ng=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=KyL+YYhO5A+Xd88IDC16R0CoQ0djWSBw
-        VPasJ7oHqAuIgWyO3gqljvy/Ps5VzeV2/RN+SLKCU25pFrM4rSF4RbaKBzM9mEj/
-        dX9t5Yz69+d52LvZKDUDMMceFNy2QW6sYeWJC7VKs95u3wkJ7muuvQWEaNH/t6KK
-        76nm5n3iQBw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 00748A27C4;
-        Wed, 11 Nov 2020 14:18:48 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 71E46A27C3;
-        Wed, 11 Nov 2020 14:18:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jinoh Kang <luke1337@theori.io>, Junio C Hamano <junio@pobox.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v5] diff: make diff_free_filespec_data accept NULL
-References: <aeb24944-17af-cf53-93f4-e727f9fe9988@theori.io>
-        <xmqq4km4lppy.fsf@gitster.c.googlers.com>
-        <a0513d6f-1f69-683d-d6c5-75b17b8b6890@theori.io>
-        <a096d122-52a3-700a-3a14-30a81b099cd8@theori.io>
-        <137f0fc1-fbd9-a62c-bd52-cffd26c364bf@theori.io>
-        <5d4315c5-a0ae-2857-fbcc-ec6166d025b6@theori.io>
-        <nycvar.QRO.7.76.6.2011111727090.18437@tvgsbejvaqbjf.bet>
-Date:   Wed, 11 Nov 2020 11:18:46 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.2011111727090.18437@tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Wed, 11 Nov 2020 17:27:48 +0100
-        (CET)")
-Message-ID: <xmqqk0ur4s89.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B9032FC4-2452-11EB-88BA-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+        id S1727665AbgKKTYt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 14:24:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52116 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726739AbgKKTYt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 14:24:49 -0500
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42B5DC0613D1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 11:24:49 -0800 (PST)
+Received: by mail-qt1-x843.google.com with SMTP id f93so2118513qtb.10
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 11:24:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=3/f2/BSbYBvtWCl/vFamYRSQuXSC4BIcg3v2QKa1u9s=;
+        b=GA8BWkKsQ17/EKKQ6RseVCz0VZNxG6QVwALfhwwsBiC1EUJ3nEjbQLvsE05ebApHiJ
+         SuOIBpC6nlLIY04lt9LZqQ6M11/b1HIGBuen51o1J67FiGSVgqgYFfXM1EdzUhTtrZzo
+         CZsiIh4Khj2Dc1xQYoeIZuwDlMP9F+ojqNr7bO+lw6kTLh5hquzyDPUmQK++1C6ZoBF7
+         RctSM8FQm7t7jrRd7aCv40h0gxE4qt0BSiZT8sEqmLZdRjMJgZzfBgZeaFJYvK7olZdQ
+         F2iEnt0T1A/HVCdMmVY5IiLYWW+KtxCdpOuLWtFv9PnlTiIiksH0WTM6udl6caqeH/n/
+         mIJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=3/f2/BSbYBvtWCl/vFamYRSQuXSC4BIcg3v2QKa1u9s=;
+        b=mTFAlrCSopNTgBShDr5XHffxFiL5UQ1eXWXKXpbUb25OmnOW7WBauHIi/HsLXMPztp
+         qe1o/xPEA6LZOpO0Nw7ucicAU7/slSI8PrD1uZ0MpBfemz4ZI6HV/jA1GJhaC/9sU+nS
+         xzDZQshi0un/47WbSe2hQ+7GcX33ktuJEKyRkc++RXgHH650+BpQPMf6HGkt05Sv+eoJ
+         0eeATAW2Id7GIoVXfExC5kPd/EzRK3XQ8A67SSXD8ixrB8Fk/+GF3uTHB4PZq9kHN/aS
+         smFZVK23yeqN+ZHXM6Wf11bVfLLfSktspCIsjq7H9s8ZQS1jCdHktaVuHxovDnU51jeh
+         VPHQ==
+X-Gm-Message-State: AOAM531mZYPLjq6jujcwjsH5lFOSB4z0Tlbn9CoRphle9DBhgHCE/nK5
+        FR5ZmaIyAhwfI/nUvb0NxtI=
+X-Google-Smtp-Source: ABdhPJy1RKtqFlJRk4EShS8xYTdvZNUjwyL6EBCZnJ8TJFYlobibc98lMv5hBRdpnaxGjQTAP1qrVw==
+X-Received: by 2002:aed:237c:: with SMTP id i57mr24791251qtc.324.1605122688595;
+        Wed, 11 Nov 2020 11:24:48 -0800 (PST)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id i192sm3150318qke.73.2020.11.11.11.24.47
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Wed, 11 Nov 2020 11:24:47 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [RFC 1/2] submodules: test for fetch of non-init subsub-repo
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <1604910829-49109-2-git-send-email-peter.kaestle@nokia.com>
+Date:   Wed, 11 Nov 2020 14:24:46 -0500
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Philip Oakley <philipoakley@iee.email>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <48197610-9B5B-43A0-9748-AB71B061858A@gmail.com>
+References: <1604413399-63090-1-git-send-email-peter.kaestle@nokia.com> <1604910829-49109-1-git-send-email-peter.kaestle@nokia.com> <1604910829-49109-2-git-send-email-peter.kaestle@nokia.com>
+To:     Peter Kaestle <peter.kaestle@nokia.com>
+X-Mailer: Apple Mail (2.3124)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> Hi Jinoh,
->
-> On Wed, 11 Nov 2020, Jinoh Kang wrote:
->
->> diff_free_filespec_data crashes when passed a NULL fillspec pointer.
->> Commit 3aef54e8b8 ("diff: munmap() file contents before running external
->> diff", 2019-07-11) introduced calls to diff_free_filespec_data in
->> run_external_diff without also checking if the argument is NULL.
->>
->> Git uses NULL filespecs to indicate unmerged files when merge conflict
->> resolution is in progress.  Fortunately, other code paths bail out early
->> even before NULL can reach diff_free_filespec_data(); however, difftool
->> is expected to do a full-blown diff anyway regardless of conflict
->> status.
->>
->> Fix this and prevent any similar bugs in the future by making
->> `diff_free_filespec_data(NULL)` a no-op.
->>
->> Add a test case that confirms that running difftool --cached with
->> unmerged files does not result in a SIGSEGV.
->>
->> Signed-off-by: Jinoh Kang <luke1337@theori.io>
->
-> ACK!
->
-> The patch looks good to go to me.
->
-> Thank you!
-> Dscho
-
-Thanks, both.
-Will queue.
+Hi Peter,
 
 
->
->> ---
->>  diff.c              |  3 +++
->>  t/t7800-difftool.sh | 13 +++++++++++++
->>  2 files changed, 16 insertions(+)
->>
->> diff --git a/diff.c b/diff.c
->> index d24f47df99..ace4a1d387 100644
->> --- a/diff.c
->> +++ b/diff.c
->> @@ -4115,6 +4115,9 @@ void diff_free_filespec_blob(struct diff_filespec *s)
->>
->>  void diff_free_filespec_data(struct diff_filespec *s)
->>  {
->> +	if (!s)
->> +		return;
->> +
->>  	diff_free_filespec_blob(s);
->>  	FREE_AND_NULL(s->cnt_data);
->>  }
->> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
->> index 524f30f7dc..a578b35761 100755
->> --- a/t/t7800-difftool.sh
->> +++ b/t/t7800-difftool.sh
->> @@ -728,6 +728,19 @@ test_expect_success 'add -N and difftool -d' '
->>  	git difftool --dir-diff --extcmd ls
->>  '
->>
->> +test_expect_success 'difftool --cached with unmerged files' '
->> +	test_when_finished git reset --hard &&
->> +
->> +	test_commit conflicting &&
->> +	test_commit conflict-a conflict.t a &&
->> +	git reset --hard conflicting &&
->> +	test_commit conflict-b conflict.t b &&
->> +	test_must_fail git merge conflict-a &&
->> +
->> +	git difftool --cached --no-prompt >output &&
->> +	test_must_be_empty output
->> +'
->> +
->>  test_expect_success 'outside worktree' '
->>  	echo 1 >1 &&
->>  	echo 2 >2 &&
->> --
->> 2.26.2
->>
->>
+> Le 9 nov. 2020 =C3=A0 03:33, Peter Kaestle <peter.kaestle@nokia.com> a =
+=C3=A9crit :
+>=20
+> --- snip ---
+>=20
+> +add_commit_push()
+> +{
+> +	dir=3D"$1"
+> +	msg=3D"$2"
+> +	shift 2
+> +	git -C "$dir" add "$@" &&
+> +	git -C "$dir" commit -a -m "$msg" &&
+> +	git -C "$dir" push
+> +}
+> +
+> +test_expect_failure 'fetching a superproject containing an =
+uninitialized sub/sub project' '
+> +	# does not depend on any previous test setups
+> +
+> +	for repo in outer middle inner
+> +	do
+> +		git init --bare $repo &&
+> +		git clone $repo ${repo}_content &&
+> +		echo $repo > ${repo}_content/file &&
+> +		add_commit_push ${repo}_content "initial" file
+> +	done &&
+> +
+> +	git clone outer A &&
+> +	git -C A submodule add "$pwd/middle" &&
+> +	git -C A/middle/ submodule add "$pwd/inner" &&
+> +	add_commit_push A/middle/ "adding inner sub" .gitmodules inner =
+&&
+> +	add_commit_push A/ "adding middle sub" .gitmodules middle &&
+> +
+> +	git clone outer B &&
+> +	git -C B/ submodule update --init middle &&
+> +
+> +	echo "change on inner repo of A" > A/middle/inner/file &&
+> +	add_commit_push A/middle/inner "change on inner" file &&
+> +	add_commit_push A/middle "change on inner" inner &&
+> +	add_commit_push A "change on inner" middle &&
+
+In addition to what Junio wrote, maybe your test could make better use =
+of the=20
+functions provided by the test harness library. Take a look at t/README =
+[1] for a=20
+partial list, and t/test-lib-functions.sh [2] for the full list. =
+test_create_repo, in particular,
+could be useful.
+
+Cheers,
+
+Philippe.
+
+
+[1] https://github.com/git/git/blob/master/t/README#L743
+[2] https://github.com/git/git/blob/master/t/test-lib-functions.sh
+
