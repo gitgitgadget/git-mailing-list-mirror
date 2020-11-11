@@ -2,73 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B9A2C5517A
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 17:21:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E420C388F9
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 17:22:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3B933206D9
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 17:21:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BB8832072C
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 17:22:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727457AbgKKRV0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 12:21:26 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:37932 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726625AbgKKRVZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 12:21:25 -0500
-Received: by mail-ed1-f66.google.com with SMTP id k9so3117354edo.5
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 09:21:24 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9uW/jMxlasGUsOiPvHx6bnsv9ntygI2t6R0B9/5mfv4=;
-        b=oVSke/mmyagnmsdeHBt0M+jie79zem0MHKWLOlf0ydwiaMkP0Pgt4snjRzXZkvgZUo
-         3tl+qSQ0GZqLFHHNjpa0zJTw0GQDZUxUE8mjBnwXSMaQ3pCi959KPUMe3m8Ag1BnedNS
-         gVzE+S2fGt8D7SVgIaBhr/6CJ/K7jrspijtzH25X5ftMp0sxZMu5cUD7dh6Wil0UfVtA
-         KE99HzMRn1N5AV8YsevEy9G3Ml8x35zjiGBPJifpyY7UQ7pJZolMjaeEvf0ZwxcVVESF
-         wUlJ3ZGVt5Ef5ZPLpgvQISGk7WAKqj51U0hBdkp6axoh6CFMoVhPKpQyzcxb4RnI3Wky
-         gmWw==
-X-Gm-Message-State: AOAM5317dyRknGHr1WQzh8Be4IgF3FBdfm9Yqyu/nR1r79h6x5YXifcv
-        T1vcBy52+hTpjvmhYzmOE7aKtKF2BoRhM9BzE4M=
-X-Google-Smtp-Source: ABdhPJy1FiTpX8jWQBsyNjMXgmhULGFAwrqBNuBPTD2todoby1hCswac1tZ+XB11RZWHUsbWgIAjh6/2iCzfdTEaV6k=
-X-Received: by 2002:aa7:cc0e:: with SMTP id q14mr491583edt.181.1605115284275;
- Wed, 11 Nov 2020 09:21:24 -0800 (PST)
+        id S1727174AbgKKRWq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 12:22:46 -0500
+Received: from smtp.hosts.co.uk ([85.233.160.19]:47123 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726625AbgKKRWq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 12:22:46 -0500
+Received: from host-89-243-187-160.as13285.net ([89.243.187.160] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1kctpT-0005oT-3t; Wed, 11 Nov 2020 17:22:43 +0000
+Subject: Re: [RFC 1/2] submodules: test for fetch of non-init subsub-repo
+To:     =?UTF-8?Q?Peter_K=c3=a4stle?= <peter.kaestle@nokia.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>
+References: <1604413399-63090-1-git-send-email-peter.kaestle@nokia.com>
+ <1604910829-49109-1-git-send-email-peter.kaestle@nokia.com>
+ <1604910829-49109-2-git-send-email-peter.kaestle@nokia.com>
+ <xmqqk0uuct94.fsf@gitster.c.googlers.com>
+ <c4741382-5662-ac15-24da-218b28ae9dee@nokia.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <4339e01e-d312-69ee-c810-2fbc65606b0d@iee.email>
+Date:   Wed, 11 Nov 2020 17:22:43 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.2
 MIME-Version: 1.0
-References: <20201102204344.342633-1-newren@gmail.com> <20201102204344.342633-8-newren@gmail.com>
- <c4b9b64c-f0a0-5824-44b9-072370cfc465@gmail.com> <CABPp-BGk8FBt8WWw_h8t2jiE4quBoMeaco19F-fJ6V_vOnsNww@mail.gmail.com>
-In-Reply-To: <CABPp-BGk8FBt8WWw_h8t2jiE4quBoMeaco19F-fJ6V_vOnsNww@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 11 Nov 2020 12:21:13 -0500
-Message-ID: <CAPig+cSrcodAJu9S82vogt05priRDj1vBpaZUTFfhJraEzKvZA@mail.gmail.com>
-Subject: Re: [PATCH v2 07/20] merge-ort: avoid repeating fill_tree_descriptor()
- on the same tree
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <c4741382-5662-ac15-24da-218b28ae9dee@nokia.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 11, 2020 at 12:13 PM Elijah Newren <newren@gmail.com> wrote:
-> On Wed, Nov 11, 2020 at 6:51 AM Derrick Stolee <stolee@gmail.com> wrote:
-> > If the *_null values were in an array, instead, then all of these
-> > lines could be grouped as a macro:
-> >
-> >         unsigned null_oid[3] = {
-> >                 !(mask & 1),
-> >                 !(mask & 2),
-> >                 !(mask & 4)
-> >         };
->
-> Hmm, I like it.  I think I'll rename trivial_merge() to
-> non_null_match() (trivial merge suggests it can immediately be
-> resolved which is not necessarily true if rename detection is on), but
-> otherwise I'll use this.
+minor readability comment,
 
-Are we allowing non-constant array initializers in the codebase these
-days? I don't see anything in CodingGuidelines suggesting the use of
-them.
+On 11/11/2020 12:45, Peter Kästle wrote:
+> Here is my proposal for a new commit message of the test case:
+>
+> ----8<----
+> A regression has been introduced by 'a62387b (submodule.c: fetch in
+> submodules git directory instead of in worktree, 2018-11-28)'.
+>
+> The scenario in which it triggers is when one has a remote repository
+> with a subrepository inside a subrepository like this:
+> superproject/middle_repo/inner_repo
+>
+> Person A and B have both a clone of it, while Person B is not working
+> with the inner_repo and thus does not have it initialized in his working
+> copy.
+>
+> Now person A introduces a change to the inner_repo and propagates it
+> through the middle_repo and the superproject.
+> Once person A pushed the changes and person B wants to fetch them
+> using "git fetch" on superproject level, git
+
+It's not obviously obvious which person is doing this final 'git'
+operation (it isn't attached to a particular person). Not sure if moving
+the comma, or saying ", B's 'git fetch' will.." is the right choice. The
+following sentences also feel as treating 'git' as person (trusted
+friend;-).
+
+> will return with error saying:
+>
+> Could not access submodule 'inner_repo'
+> Errors during submodule fetch:
+>         middle_repo
+>
+> Expectation is that in this case the inner submodule will be
+> recognized as uninitialized subrepository and skipped by the git fetch
+> command.
+>
+> This used to work correctly before 'a62387b (submodule.c: fetch in
+> submodules git directory instead of in worktree, 2018-11-28)'.
+>
+> Starting with a62387b the code wants to evaluate "is_empty_dir()"
+> inside .git/modules for a directory only existing in the worktree,
+> delivering then of course wrong return value.
+> ---->8----
+--
+Philip
