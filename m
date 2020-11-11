@@ -2,76 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97B66C388F9
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 13:58:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA4B1C388F9
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 14:38:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3045A20809
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 13:58:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4A55F20795
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 14:38:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W3rzlw6r"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BOs15nGt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727057AbgKKN6k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 08:58:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57826 "EHLO
+        id S1726460AbgKKOiI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 09:38:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726938AbgKKN6e (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 08:58:34 -0500
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C6AAC0613D1
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 05:58:34 -0800 (PST)
-Received: by mail-ot1-x344.google.com with SMTP id f16so2166294otl.11
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 05:58:34 -0800 (PST)
+        with ESMTP id S1726516AbgKKOiG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 09:38:06 -0500
+Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A89E8C0613D1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 06:38:05 -0800 (PST)
+Received: by mail-qk1-x744.google.com with SMTP id n132so1838775qke.1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 06:38:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=OZywLo4NGuU0nFp5obQYAjLX/ce1fEYkLT1QC8UDjM8=;
-        b=W3rzlw6rVJ8fvbpR4ROlwUl/p7g8HEpNpO5vLl+Wig4BxSRdDJTglqsAA52NkNgQ8O
-         XYd4UVmWuzSmKyOW3eRWlZfQKLvVF4ReJ6Wv3U4qxgO+kt0aEoFY2JFwT1HaoYSwBBvU
-         gh37EdBa9G/5l856iLMKA72zXM5rGWC1HxuMvdXyj+fsdadLcP1MOO6POTy1SH+SbJdl
-         E9OeXLGnUCyM7BqiYFwYvJ1yWoST3pStotl0LhQ0QkRGgRNUPiuNqa89i6wvFlt1G56t
-         +63EabcMHxsw7sGMAoDhDX9KaVp/c6pneBz0yLiqBT+F4A6Ao0JS5CD/TE8xfP/9Wleq
-         s6LQ==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=wCpicEzzbpLYcaXY4ehGR4O9O/IC8lBowwzg05OSd3o=;
+        b=BOs15nGtEq+2H+9pfhAEvcc/Fd9WZ9SJjKSoWGRloF60lYggBbr63pIebf2l7row2V
+         qqB2NnErH2Qdjwe8VeTkTzidXNltGh9T2Vk09dmevQUgwCgfNG/kUbd3+pmoHBFpJGPR
+         7ZPkjXoLfx1q4lSbiI8/HCJEPT3Es4LOULOODbM3Hi+NBGX9obi8P7TeiXSDUUrYmdsf
+         +aDQb/7Njad0aYmz+fAwXXbr+YsoRAlKRWj8JiOsoUlbeOuFKwlmKMaYDwYq/6tHKInS
+         kY/3VX6dHuYmkF3fIgFvSh7HpHmLNdn8JKekJmEAeoiOOLv0hMw+zxHUyPtWGWHl5DTq
+         ixYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+        h=x-gm-message-state:subject:to:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=OZywLo4NGuU0nFp5obQYAjLX/ce1fEYkLT1QC8UDjM8=;
-        b=a8/WEE7bu5bnCYlr/AALc1doGWJaqafCcr1q5sP1P8oPXRJrH5rwp8FBsojpuaNrkV
-         fjxbatvF6rRd54OT8agEj+2odut1KdIanvFyAD59USGim23x5ix2DrG9GjqSpGNWq3s9
-         GlR1H+pMGc8ZkXB84VJFfR78PGwYxg/EUuFuIzcKCgODKnWo6hmaDnX2nhLcjWewtRqt
-         fVT+N69F5KP2JXrALwXGAr1j0e98a5Wt5grN51Uh/Ik3fopbBdzoQl6h1+8dXxiM6HtA
-         VNhBWNWj5EA7sj18Mtrope17aQDm7aTus7LWWSnGySOdlYa3EUXhwcyYUiPZnpBRVU2y
-         9W7w==
-X-Gm-Message-State: AOAM531cGqk1TgWBzJCPRvGz4CIITwj9A+eojhl43O4dAcNl6jD96414
-        i63Dpt+sIX7G/Car/oAbuHM=
-X-Google-Smtp-Source: ABdhPJx1X7DldNpnGEdL+iNLEzmkTlT+PKcghb5BKP2qogfkaGCz8COZG9foCaej5cuQo2z9FgpeHw==
-X-Received: by 2002:a9d:62c9:: with SMTP id z9mr18074671otk.18.1605103113243;
-        Wed, 11 Nov 2020 05:58:33 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:d86f:4f77:7172:19ff? ([2600:1700:e72:80a0:d86f:4f77:7172:19ff])
-        by smtp.gmail.com with UTF8SMTPSA id k11sm508557otr.14.2020.11.11.05.58.31
+        bh=wCpicEzzbpLYcaXY4ehGR4O9O/IC8lBowwzg05OSd3o=;
+        b=IW0r7LL9E1KGcq6MYQBr1GaA3j8BU009WEl1eF7kV0xKziReTcJTcFTle6QIJoVRpk
+         YPAMuIU8hrycEzszFu+CPWv50X9RWWYstpR/40e9UFqTw5bNW2GYae3sVopidA+tc/LA
+         uHV8M+1CZ0pEOex8tBPyOuiFqHe/LgHb/gji/1sbsFbu7I/tkK74qGV5VUSm6NYy7wVG
+         vih2ZMxti8ArAC+GiT+zIo77oE9Gfni7zFCSilF0R+8Kaqb+aishoqi3EBqKEmCLvn65
+         8ob4Bb3nDdA2aMPRfycOhCgGxh7CLBuFCh8odZcXYqnuq2UTKpPsM9T83Z+t2gstpWRu
+         QkKg==
+X-Gm-Message-State: AOAM532R00eU4l+d0HK3/O9EvqWOnZQjZB0I53jSxaRgHOlYbdpjf03s
+        /rOo++GwSnfz8xEJvit9/nkqq9PR+Nfccw==
+X-Google-Smtp-Source: ABdhPJwSmcoeZ2xWAA3cKwF6oPreCoQIYKJ5nN8smCPy24wn6pKgsvaD+jMqAG2Sp3FKae7Fpqrubw==
+X-Received: by 2002:a37:991:: with SMTP id 139mr5308494qkj.185.1605105484381;
+        Wed, 11 Nov 2020 06:38:04 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:c9d4:abc:8d:1568? ([2600:1700:e72:80a0:c9d4:abc:8d:1568])
+        by smtp.gmail.com with UTF8SMTPSA id o21sm2288402qko.9.2020.11.11.06.38.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Nov 2020 05:58:32 -0800 (PST)
-Subject: Re: [PATCH v2 05/20] merge-ort: add an err() function similar to one
- from merge-recursive
+        Wed, 11 Nov 2020 06:38:03 -0800 (PST)
+Subject: Re: [PATCH v2 06/20] merge-ort: implement a very basic
+ collect_merge_info()
 To:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org
 References: <20201102204344.342633-1-newren@gmail.com>
- <20201102204344.342633-6-newren@gmail.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>
+ <20201102204344.342633-7-newren@gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <267dbe58-e319-0904-3552-bf56530181c3@gmail.com>
-Date:   Wed, 11 Nov 2020 08:58:31 -0500
+Message-ID: <42037753-c8c1-629c-3d99-d54842686b2e@gmail.com>
+Date:   Wed, 11 Nov 2020 09:38:01 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101
  Thunderbird/83.0
 MIME-Version: 1.0
-In-Reply-To: <20201102204344.342633-6-newren@gmail.com>
+In-Reply-To: <20201102204344.342633-7-newren@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -80,63 +79,70 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 11/2/2020 3:43 PM, Elijah Newren wrote:
-> Various places in merge-recursive used an err() function when it hit
-> some kind of unrecoverable error.  That code was from the reusable bits
-> of merge-recursive.c that we liked, such as merge_3way, writing object
-> files to the object store, reading blobs from the object store, etc.  So
-> create a similar function to allow us to port that code over, and use it
-> for when we detect problems returned from collect_merge_info()'s
-> traverse_trees() call, which we will be adding next.
-> 
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  merge-ort.c | 27 ++++++++++++++++++++++++++-
->  1 file changed, 26 insertions(+), 1 deletion(-)
-> 
-> diff --git a/merge-ort.c b/merge-ort.c
-> index df97a54773..537da9f6df 100644
-> --- a/merge-ort.c
-> +++ b/merge-ort.c
-> @@ -61,11 +61,28 @@ struct conflict_info {
->  	unsigned match_mask:3;
->  };
->  
-> +static int err(struct merge_options *opt, const char *err, ...)
-> +{
-> +	va_list params;
-> +	struct strbuf sb = STRBUF_INIT;
-> +
-> +	strbuf_addstr(&sb, "error: ");
-> +	va_start(params, err);
-> +	strbuf_vaddf(&sb, err, params);
-> +	va_end(params);
-> +
-> +	error("%s", sb.buf);
-> +	strbuf_release(&sb);
-> +
-> +	return -1;
-> +}
-> +
+> +	/* +1 in both of the following lines to include the NUL byte */
+> +	fullpath = xmalloc(len+1);
+> +	make_traverse_path(fullpath, len+1, info, p->path, p->pathlen);
 
-This seems simple enough to have a duplicate copy lying
-around. Do you anticipate that all common code will live
-in the same file eventually? Or will these two static err()
-method always be duplicated?
+nit: s/len+1/len + 1/g
 
-Aside: I wonder if these errors could be logged using trace2
-primitives, to assist diagnosing problems with merges. CC'ing
-Jeff Hostetler if he has an opinion.
+> +		void *buf[3] = {NULL,};
+
+This "{NULL,}" seems odd to me. I suppose there is a reason why it
+isn't "{ NULL, NULL, NULL }"?
+
+> +		const char *original_dir_name;
+> +		int i, ret;
+> +
+> +		ci->match_mask &= filemask;
+> +		newinfo = *info;
+> +		newinfo.prev = info;
+> +		newinfo.name = p->path;
+> +		newinfo.namelen = p->pathlen;
+> +		newinfo.pathlen = st_add3(newinfo.pathlen, p->pathlen, 1);
+> +
+> +		for (i = 0; i < 3; i++, dirmask >>= 1) {
+
+This multi-action iterator borders on "too clever". It seems like
+placing "dirmask >>= 1;" or "dirmask = dirmask >> 1;" at the end
+of the block would be equivalent and less jarring to a reader.
+
+I was thinking it doesn't really matter, except that dirmask is not
+in the initializer or sentinel of the for(), so having it here does
+not immediately make sense.
+
+(This has been too much writing for such an inconsequential line
+of code. Sorry.)
+
+> +			const struct object_id *oid = NULL;
+> +			if (dirmask & 1)
+> +				oid = &names[i].oid;
+> +			buf[i] = fill_tree_descriptor(opt->repo, t + i, oid);
+> +		}
+
 
 >  static int collect_merge_info(struct merge_options *opt,
 >  			      struct tree *merge_base,
 >  			      struct tree *side1,
 >  			      struct tree *side2)
 >  {
-> +	/* TODO: Implement this using traverse_trees() */
->  	die("Not yet implemented.");
->  }
+> -	/* TODO: Implement this using traverse_trees() */
+> -	die("Not yet implemented.");
+> +	int ret;
+> +	struct tree_desc t[3];
+> +	struct traverse_info info;
+> +	char *toplevel_dir_placeholder = "";
 
-This comment looks to be applied to the wrong patch.
+It seems like this should be "const char *"
+
+> +	init_tree_desc(t+0, merge_base->buffer, merge_base->size);
+> +	init_tree_desc(t+1, side1->buffer, side1->size);
+> +	init_tree_desc(t+2, side2->buffer, side2->size);
+
+More space issues: s/t+/t + /g
+
+I'm only really able to engage in this at a surface level, it
+seems, but maybe I'll have more to say as the implementation
+grows.
 
 Thanks,
 -Stolee
