@@ -2,114 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBBB2C56202
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 12:28:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7790DC388F9
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 12:30:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8A5AF207BB
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 12:28:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0B68D206FB
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 12:30:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oipXyuQi"
+	dkim=pass (2048-bit key) header.d=theori-io.20150623.gappssmtp.com header.i=@theori-io.20150623.gappssmtp.com header.b="LcjtBln/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726722AbgKKM2u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 07:28:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43790 "EHLO
+        id S1726267AbgKKMaf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 07:30:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726384AbgKKM2a (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 07:28:30 -0500
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84917C0617A7
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 04:28:30 -0800 (PST)
-Received: by mail-wm1-x342.google.com with SMTP id 19so2115930wmf.1
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 04:28:30 -0800 (PST)
+        with ESMTP id S1726149AbgKKMaf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 07:30:35 -0500
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1668AC0613D1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 04:30:35 -0800 (PST)
+Received: by mail-pg1-x542.google.com with SMTP id f18so1351184pgi.8
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 04:30:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=AzgWnmI3Bhq6k5C1tKCzYRk5JHhlQy9Xx+1Yk/wajuk=;
-        b=oipXyuQi9SYPa5C+l2M8qSRca9H5rLdJjkaVrjs33ZX+ZXVdPK0EoMoMo6RP7xycdN
-         OjGBvBPEZE06pWLNV1PbM3Wm7KvE9asRxmQySRt11xPr2kOMaMFjdje92NW6CNo+XW/U
-         UMdMu153WHMhkc/WzpFaGA8lzIJWAIfP6ja54n0SeOX6mHuB14DfmXGzhWa73afx4pQi
-         pJLwLaQpuERIZ9mTEpK1CL6w3Q+eNcUqofrlYHBM+vNrtQA3f9egtggJaGetCIHX2u2L
-         K3SZPp4NLVES+3HRSfWO1zuU2SMc+Qb7GIglaBlMXEd3lsWH3icXRY6g7aGnTpbUxuzU
-         ZTYQ==
+        d=theori-io.20150623.gappssmtp.com; s=20150623;
+        h=to:cc:references:from:subject:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=DcvEqspQg6v8GyTJkXl+Sb/MCLh2kXms83lC8aetFZo=;
+        b=LcjtBln/qsBEYztoZ55QkuuYk7Tg0bWvOayfI6HskGymdVCx6fHGaaQTn2juosJCMY
+         eF+EwJqYldI/MfgNKWcmBclB6I07gdC12CH1VRwW7ScKI/IYZKMSnJyhoisu8iUFaH/c
+         94bem+m0m09d1EXQidVokTzCsFHsTB/jOY/LTy7KmcHZAdEngm0zBO3+Ka5frvlzmjUo
+         yjn68fTTfoVIiumX8Ffu8iRc0+KlofIaSWIHdCNdDA6rxnnpMoT8OGZpnlyP64jtZQkQ
+         auvsNpKCA2PWZO5TeAH6aduwHj7XpohRpTkyVMWg+YhLI2m9Di2gAlmVvIT64KjQ3ABS
+         /C2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=AzgWnmI3Bhq6k5C1tKCzYRk5JHhlQy9Xx+1Yk/wajuk=;
-        b=LrGyTfKPS1FCmSvTuPoHPACEzl1H0uHox1Uu7dL9wCwDy9ZvETdyIFSLsrF51jLGnu
-         2t06eQ5ItJA+Ep0T4QV6yw4ivn8owFKpYOu3ofXaYKngn9riMto3Y+W2JeHp14C9LU78
-         uN5jHft/tpAwBG1x7mrMfakbg/RfiN3fX3LfUWYq054l6NPu2z+MxLOGVECDvOk2nx0A
-         8JkmYxKpaY1JV7W2CXS/NADpjQ2c7aUggEALgKv6y+Civ3YCzDbSiY5F40n6MUuVcntC
-         6v8ik84WmRIXbPS/vpphdX7DB/yXHwLxRBUtV31pOFz218GeGQlEtwVLDnSZ0VHXLpKe
-         YRTg==
-X-Gm-Message-State: AOAM530qH2lWKQh3BZJl57YkfmeOpYLwq/4GZcJdNcMQ4Aej0K5SzqSc
-        obtbNXVNbKIk3w9jQ2cou90K2O8OCoE=
-X-Google-Smtp-Source: ABdhPJzKyVhKBIG+hGI7FlakOT5N4/oxyQJpJTMAJ4QAPqsh1lZYINcZf05kr6KW6RLyj+VUvAnyOw==
-X-Received: by 2002:a1c:7213:: with SMTP id n19mr3782038wmc.36.1605097708904;
-        Wed, 11 Nov 2020 04:28:28 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j71sm2613344wmj.10.2020.11.11.04.28.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2020 04:28:28 -0800 (PST)
-Message-Id: <c857c4493213bd7cc4d057487db2d1a74fa0bbd6.1605097704.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.785.v2.git.1605097704.gitgitgadget@gmail.com>
-References: <pull.785.git.1605051739.gitgitgadget@gmail.com>
-        <pull.785.v2.git.1605097704.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 11 Nov 2020 12:28:17 +0000
-Subject: [PATCH v2 04/11] add -i: use `reset_color` consistently
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:to:cc:references:from:subject:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=DcvEqspQg6v8GyTJkXl+Sb/MCLh2kXms83lC8aetFZo=;
+        b=TWYyJYjI4R/vaU3qywGnB+hyOsOrCr/Wk/4AoUcuRa5J/bWBp8/LLAqK9vwudfzDjS
+         LVq+Tq14M7xmiTY4zSPX/6EdlXI2C5INoXkkkFcydtwinuEv087SVZDMGhdnF6YxDPPa
+         kBHWtKW0jKY4dS5MgMLFf6SbVXYP3pFoBJt0HQIKT0OqLqleddmbDZwH1TYcCFpFdIU+
+         Yvro6FnACkLyBux2i/FlP3424F8bffPudGxzbYsJNZ1hxdlOKwbgBmhc2V1z6YoWDqx2
+         K1FWquwlTuEA72ZvsgOLYEMZbG+ZfnTqyKGurEVzgoSknvmuBAvU1Zvaoe3HixLsnj83
+         Eo6g==
+X-Gm-Message-State: AOAM531RQUHDoFrM01/Abfp3cuCl1A+fa9/URVjsSZTvfNfE+KCVvuqD
+        8bHg++O0osb6g/IhFBjsZGuh8Ic1pJzULVB6
+X-Google-Smtp-Source: ABdhPJxCyRv9bHKLwy0vCz/KxW0ygcJFA0Hc+YNu0/ha/vxPOxkoUFcbLzUVj07j4sr8bXzmA8OivA==
+X-Received: by 2002:a65:47ca:: with SMTP id f10mr20523026pgs.298.1605097834164;
+        Wed, 11 Nov 2020 04:30:34 -0800 (PST)
+Received: from [127.0.0.1] ([14.33.99.107])
+        by smtp.gmail.com with ESMTPSA id u5sm2456355pgj.28.2020.11.11.04.30.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Nov 2020 04:30:33 -0800 (PST)
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <junio@pobox.com>, git@vger.kernel.org
+References: <aeb24944-17af-cf53-93f4-e727f9fe9988@theori.io>
+ <xmqq4km4lppy.fsf@gitster.c.googlers.com>
+ <a0513d6f-1f69-683d-d6c5-75b17b8b6890@theori.io>
+ <a096d122-52a3-700a-3a14-30a81b099cd8@theori.io>
+ <137f0fc1-fbd9-a62c-bd52-cffd26c364bf@theori.io>
+ <nycvar.QRO.7.76.6.2011101638080.18437@tvgsbejvaqbjf.bet>
+From:   Jinoh Kang <luke1337@theori.io>
+Subject: Re: [PATCH v4] diff: make diff_free_filespec_data accept NULL
+Message-ID: <01640022-5bda-9712-8228-501374474d5f@theori.io>
+Date:   Wed, 11 Nov 2020 12:30:28 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101 Firefox/78.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+In-Reply-To: <nycvar.QRO.7.76.6.2011101638080.18437@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 11/10/20 3:38 PM, Johannes Schindelin wrote:
+> I had suggested an improvement for this hunk as well as for the test case.
+> Fell through the cracks?
 
-We already maintain a list of colors in the `add_i_state`, therefore we
-should use them.
+You guessed it right. My apologies.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- add-patch.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> +test_expect_success 'difftool --cached with unmerged files' '
+> +	test_when_finished git reset --hard &&
+> +	echo base >file &&
+> +	git add file &&
+> +	git commit -m base &&
+> 
+> This does not advance the committer date. Let's just use the helper
+> function we invented to make this much easier:
+> 
+> 	test_commit base
+> 
+> This has also the advantage of already tagging the outcome.
+> 
+>> +	git checkout -B conflict-a &&
+>> +	git checkout -B conflict-b &&
+>> +	git checkout conflict-a &&
+>> +	echo conflict-a >>file &&
+>> +	git add file &&
+>> +	git commit -m conflict-a &&
+>> +	git checkout conflict-b &&
+>> +	echo conflict-b >>file &&
+>> +	git add file &&
+>> +	git commit -m conflict-b &&
+>> +	git checkout master &&
+>> +	git merge conflict-a &&
+>> +	test_must_fail git merge conflict-b &&
+>> +	: >expect &&
+>> +	git difftool --cached --no-prompt >actual &&
+>> +	test_cmp expect actual
+> 
+> Shouldn't this use the `test_must_be_empty` function instead?
+> 
+> How about writing the test case this way:
+> 
+> test_expect_success 'difftool --cached with unmerged files' '
+> 	test_when_finished git reset --hard &&
+> 
+> 	test_commit conflicting &&
+> 	test_commit conflict-a a conflicting.t &&
+> 	git reset --hard conflicting &&
+> 	test_commit conflict-b b conflicting.t &&
+> 	test_must_fail git merge conflict-a &&
+> 
+> 	git difftool --cached --no-prompt >out &&
+> 	test_must_be_empty out
+> '
 
-diff --git a/add-patch.c b/add-patch.c
-index b6d53229bb..bf89c43145 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -672,7 +672,7 @@ static void render_hunk(struct add_p_state *s, struct hunk *hunk,
- 		if (len)
- 			strbuf_add(out, p, len);
- 		else if (colored)
--			strbuf_addf(out, "%s\n", GIT_COLOR_RESET);
-+			strbuf_addf(out, "%s\n", s->s.reset_color);
- 		else
- 			strbuf_addch(out, '\n');
- 	}
-@@ -1065,7 +1065,7 @@ static void recolor_hunk(struct add_p_state *s, struct hunk *hunk)
- 			      s->s.file_new_color :
- 			      s->s.context_color);
- 		strbuf_add(&s->colored, plain + current, eol - current);
--		strbuf_addstr(&s->colored, GIT_COLOR_RESET);
-+		strbuf_addstr(&s->colored, s->s.reset_color);
- 		if (next > eol)
- 			strbuf_add(&s->colored, plain + eol, next - eol);
- 		current = next;
+The original test code was copied from the "difftool --dir-diff with
+unmerged files" case above.
+
+It might be worth cleaning it up too, but let's leave it for another
+time.
+
+I'm keeping the return-early code as per Junio's request.
+
 -- 
-gitgitgadget
-
+Jinoh Kang
+Theori
