@@ -2,123 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60359C5517A
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 16:23:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FAEDC388F9
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 16:25:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E634D20678
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 16:23:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D08642072C
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 16:25:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Zj3HvkAQ"
+	dkim=pass (1024-bit key) header.d=mail.ru header.i=@mail.ru header.b="sePgSNXH";
+	dkim=pass (1024-bit key) header.d=mail.ru header.i=@mail.ru header.b="xNNKakNa"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727042AbgKKQXi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 11:23:38 -0500
-Received: from mout.gmx.net ([212.227.15.15]:57367 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726466AbgKKQXi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 11:23:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1605111803;
-        bh=U/iU9OsgzFBcT+Kf6El0d6LpmdTdyMPdCwpO5T07UxE=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Zj3HvkAQNJpU+2A2qXDb9SuQL+CwwkO4gl8yxsDhM0Zy+LrCmi1RYyCREM2xBWnxf
-         iIfm6jFKlwmGYv++gFAJopEOZDa/jzkBmjZyAi008oUSeTlQ14ejX2IwnedVNqM9S/
-         ralSwMrA+urlaxKUF76kCGjMIbuyQ1eiEqiROzGk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.25.62] ([213.196.212.205]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MtfNl-1kJ04K25Ff-00v6sI; Wed, 11
- Nov 2020 17:23:23 +0100
-Date:   Wed, 11 Nov 2020 17:23:22 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Daniel Gurney <dgurney99@gmail.com>
-cc:     git@vger.kernel.org,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] compat/bswap.h: don't assume MSVC is little-endian
-In-Reply-To: <20201111083227.605518-1-dgurney99@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2011111723050.18437@tvgsbejvaqbjf.bet>
-References: <20201111083227.605518-1-dgurney99@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726552AbgKKQY7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 11:24:59 -0500
+Received: from fallback12.mail.ru ([94.100.179.29]:35720 "EHLO
+        fallback12.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725922AbgKKQY7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 11:24:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail3;
+        h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:Message-ID:To:Subject:From; bh=pcU6d1u6i9xoilCjtqFexkmI6v56/uTWLJtqIezT4hc=;
+        b=sePgSNXHyCMBR5FmF2CvXhvaV3qxg0vcANoJ42WxS6vJoeRKZd6f2WbOZZbMvrWNDEKPl83y6b3X3cqFt142167FSMF4yBlkvvM9cdL6garAKfI+XKqNErQ+d8tSA678kCYHkc9AABwQ5rU1YRkCk1Q6rhT4WoRrxFWNQU8i9hQ=;
+Received: from [10.161.64.52] (port=56692 helo=smtp44.i.mail.ru)
+        by fallback12.m.smailru.net with esmtp (envelope-from <kirnosenko@mail.ru>)
+        id 1kcsvY-00006n-NT
+        for git@vger.kernel.org; Wed, 11 Nov 2020 19:24:56 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail3;
+        h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:Message-ID:To:Subject:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=pcU6d1u6i9xoilCjtqFexkmI6v56/uTWLJtqIezT4hc=;
+        b=xNNKakNagprcGcDh6M27ku8QEzO8DAJijykau9iqR7t/lP1WE2nClhlMipEtYdLjoV7MjyG7S/O6NrtfO4LYa5+oEabcTK6Adgn+fcXAwJBqxq5Y7t52+GC3zBTpx7srw2+S0CvhqeRDhR6O5qQeCzJcJMvaTFBN1aXgKJhNWug=;
+Received: by smtp44.i.mail.ru with esmtpa (envelope-from <kirnosenko@mail.ru>)
+        id 1kcsvW-00066B-TC
+        for git@vger.kernel.org; Wed, 11 Nov 2020 19:24:55 +0300
+From:   Semyon Kirnosenko <kirnosenko@mail.ru>
+Subject: how to measure your code
+To:     git@vger.kernel.org
+Message-ID: <dcf76ed6-103c-bfc5-2226-37702df62056@mail.ru>
+Date:   Wed, 11 Nov 2020 20:24:54 +0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:pqKfTD8qeODrEEmWLKx9oO2wdEvOl7J1O6BC0VxhZLs7FFKkDHO
- rXtmqX04oaQU4jlvj9lTFDB0AnsqSxVm98CGLhjAG0oyzHvLB59lk6nC0y2Re99mFaULpWU
- tUBOlPRLamzuOoF0vhau4fZR+fdRm/JsXCTxCAHvkGlbri/ydfwaursIeFRiqIrBJZZaQOY
- kv4PCyIc/4y2qpqkjZEZg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:jPjn7rv0uRI=:4sdHdS+mgbdMGCWifZpZ9T
- B3/IacXmzAuQv3bhWZhY5LRhhocrG/IpLCqxn9AAOf8wRzUWsLUb+xwQEWb/GFfejq0AimPWG
- FoozMZsNtp3gah7buqW/VNjNIwldhDwSbLBE17i2fn+jUdlHeGajM1ajrc9yudy9PfizaPeLc
- 1T0j8d8c+Y7Fu5qX4aJGbAU+8G81I1+65mNBLzXhtHaK79czGxHn3a0OJ2JQSNw7KmtDlZnLe
- uhvoujoE0oTZq0YRXTbs9eOutp57PTOwdOTVtO2tUUXNPYsjd1ke1pc3aFShNkzC5wOFeCkjB
- zTf3p6QxNDGdrw9kPPyevrxJ7yzDQ5mTbq3b87hPMx/VFS5oYATKVNH2Q+5IUuTATFLdcnEIK
- ++JxGJPFD2zaEBCXQ8r8Q/JVLStmP128Xncb1VYOiLZI2q4yEiKNaniKnyi8xx6RJD/Ubr4uS
- CZ7AI4tkep9u0ihTR0DHpD4qAK9tTNlNPL9W80+C7N/UWNaxhqLEY7WeZMVF2Uy3yWLGjEeje
- aDmNR3BSnqJl12QDvw0EWo/hU8IQvt6t7vZ5mwUR5R9potJc7t+xvWz6tW7GqdTEgzPOMUYq6
- JSQXzDbBDXuIveVFbjWB0Vlb0AqdhDoLL0ynrpqJQUfNqOGAOmM6bJEYaExGoHidm+QvhtdHl
- PGQcdT3GZl4tP/e8F3HkoGz80NdQxMxn/NOT9tVo1c0zBqiO0k8O+boq6pacViZQPfdHaw533
- JxSSH2mwLbcGh0hNAr2HzVTmxR+EdRztF8g2Iw2m0KsJHHV0pS3BgBt9DGLrNpCcx6060Xmou
- yARFK0Mx5rzPTP31vMw6HYu1jotCtc3AFSTW6L5uAQuw9TqRQkXLGon0p2dBHa8TvFUHEGmzP
- hErWE6PeFpeY1LAjokYOr3kZlBt5Odp0u/9Plf3TU=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-7564579A: 646B95376F6C166E
+X-77F55803: 4F1203BC0FB41BD94AF7078E5631C702B89D0B8F1B44BAD195A97966740C87A800894C459B0CD1B9E763774E5F95ED0A687AD9D155AD1410CD72DF4F33F3022270620434C0A4BCCF
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7AC5438007118D6FAEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006372A1E89AC32EDFEB98638F802B75D45FF5571747095F342E8C7A0BC55FA0FE5FC1E70F93F28DE8F2F379175DB283B59049F841E8B11D81203389733CBF5DBD5E9D5E8D9A59859A8B6957A4DEDD2346B42CC7F00164DA146DA6F5DAA56C3B73B2321F2F7C9D6F236AF3AA81AA40904B5D9A18204E546F3947C8C83961949B2167BBA3038C0950A5D36C8A9BA7A39EFB7668729DE7A884B61D1BA3038C0950A5D36D5E8D9A59859A8B663444D639916A75176E601842F6C81A1F004C90652538430CDED94BCBF13EF3B93EC92FD9297F6718AA50765F7900637BC468E7E89D8C5D6A7F4EDE966BC389F395957E7521B51C24C7702A67D5C33162DBA43225CD8A89F83C798A30B85E16BA91E23F1B6B78B78B5C8C57E37DE458B4C7702A67D5C3316FA3894348FB808DBA1CE242F1348D5363B503F486389A921A5CC5B56E945C8DA
+X-C8649E89: A3A31E5508D84A7DC6F026FE4ED7F5EBEC4A792D901381E1C9362D40A359AA078F466C4D2CB55F4C
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojbL9S8ysBdXiH79qCUTDVxSSfrzhpT1Bf
+X-Mailru-Sender: 263D284DE1FEA85B373AFA6EACBBC7374563D774F4F50D9A25A98D77366E7208EC5C612A129548CDE3EE672BEAF2E64D027D9DD7AE85109591DAF81EB73856111CB7F13A3BAE2AB60D4ABDE8C577C2ED
+X-Mras: Ok
+X-7564579A: 646B95376F6C166E
+X-77F55803: 6242723A09DB00B4A5EAA273AC3F3BA17C01F372D9D4960050C07392B76182F668F3CF0E9FE49B69BD0A8F4BFAE735A169C36CB4D2463948D76990956056B3CF57C33508B3B42FC5
+X-7FA49CB5: 0D63561A33F958A581B80FEA15D459AF40DF9DF79E6B4E4CA191DDEEE07CCD088941B15DA834481F8AA50765F7900637B286A8317E92A103389733CBF5DBD5E9B5C8C57E37DE458BC2E450F102A9CDD0D32BA5DBAC0009BE9E8FC8737B5C2249082DB3601DDE4E4976E601842F6C81A12EF20D2F80756B5FDA63EEEA5E5E9D65089D37D7C0E48F6CA18204E546F3947C83C798A30B85E16BA91E23F1B6B78B78C8A9BA7A39EFB7666BA297DBC24807EA089D37D7C0E48F6C8AA50765F7900637BC468E7E89D8C5D6EFF80C71ABB335746BA297DBC24807EA27F269C8F02392CDC58410348177836E285124B2A10EEC6C00306258E7E6ABB4E4A6367B16DE6309
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojctyB8EdIch6gFL1sYuprvg==
+X-Mailru-MI: 1000
+X-Mailru-Sender: A5480F10D64C9005265567A7F4CD751956CAC95A23E81D772FB0AA883FD4065ED38A1BEA64D5C64A747DBA6A7B69AB523DDE9B364B0DF2894997D260BF952801D63E4CEE33A69112AE208404248635DF
+X-Mras: Ok
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Daniel,
+Hello!
 
-On Wed, 11 Nov 2020, Daniel Gurney wrote:
+I'd like to introduce a new statistics generator for git. Call it 
+Repositorch. It allows to get some basic and advanced statistics 
+including LOCs, Burndown, Code ownership, Defect density, etc.
 
-> In 1af265f0 (compat/bswap.h: simplify MSVC endianness
-> detection, 2020-11-08) we attempted to simplify code by assuming MSVC
-> builds will be for little-endian machines, since only unusably old
-> versions of MSVC supported big-endian MIPS and m68k architectures.
->
-> However, it's possible that MSVC could be ported to build for a
-> big-endian architecture again, so the simplification wasn't as
-> future-proof as hoped.
->
-> So let's go back to the old way of detecting MSVC, and then checking
-> architecture from a list of little-endian architecture macros.
->
-> Note that MSVC does not treat ARM64 as bi-endian, so we can safely treat
-> it as little-endian.
->
-> Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
-> Helped-by: Jeff King <peff@peff.net>
-> Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Daniel Gurney <dgurney99@gmail.com>
+Some links:
 
-ACK!
+github - https://github.com/kirnosenko/Repositorch
+dockerhub - https://hub.docker.com/r/kirnosenko/repositorch
+how to use guide - https://www.youtube.com/watch?v=Rd5R0BbFdGA
 
-Thank you so much,
-Dscho
-
-> ---
->  compat/bswap.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/compat/bswap.h b/compat/bswap.h
-> index 72f225eaa8..512f6f4b99 100644
-> --- a/compat/bswap.h
-> +++ b/compat/bswap.h
-> @@ -74,7 +74,7 @@ static inline uint64_t git_bswap64(uint64_t x)
->  }
->  #endif
->
-> -#elif defined(_MSC_VER)
-> +#elif defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_X64) || defi=
-ned(_M_ARM64))
->
->  #include <stdlib.h>
->
-> --
-> 2.29.2
->
->
+Still in alpha but ready for some fun mining :)
