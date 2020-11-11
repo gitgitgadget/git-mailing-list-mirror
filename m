@@ -2,147 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50D58C388F9
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 18:50:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2ADDFC388F9
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 18:58:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D50582068D
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 18:50:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B7A23206FB
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 18:58:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="grEQEk+I"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SrNlUktQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726734AbgKKSt7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 13:49:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46736 "EHLO
+        id S1726634AbgKKS6T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 13:58:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726216AbgKKSt7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 13:49:59 -0500
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59D31C0613D1
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 10:49:59 -0800 (PST)
-Received: by mail-ot1-x341.google.com with SMTP id f16so3088867otl.11
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 10:49:59 -0800 (PST)
+        with ESMTP id S1725995AbgKKS6S (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 13:58:18 -0500
+Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B9ADC0613D1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 10:58:18 -0800 (PST)
+Received: by mail-oi1-x241.google.com with SMTP id u127so3352128oib.6
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 10:58:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=KperZmt2X1geHI/TWgCCMkx2kL0U+UU1fdawMKU2mm0=;
-        b=grEQEk+IPpy4/+sl9TIxEVkxUDfeYm2C7YZroR9IHjhTIsoSqAQN1TVuRJziEtb7m4
-         I9HXF8oRDh+oF5UJelkxyACV7Y+Ot5Efj2WsX86cWor6DXMSzF1UMqdbyTTaDsuJnVx6
-         VgZ+wafCVxosAdvLSTTYYBkZK0Rg0NwwKe05zQLe9th1x15gZcvflQPO/O1Et/K12mQv
-         B9s5rCqarUYjwLTdlLbtYt01umqx/yjVeveWrJDJqnvMSh1fUFdqYRFrNklnzelMKs1s
-         FW86NbRvLtAFREN7U1oSEGVQ+vnbSrR1Q6dA5CZ94IaLcYnoWvSsNZIldkQbieTCCXZd
-         vQdg==
+        bh=IJAm8cvyuHxGmWQxKlGyrA8z4EwQpmk4e6OcbrqL54w=;
+        b=SrNlUktQ5Lu4HEFxcewfdEZcbzSx6GRXVBu//DhBLw1TtgdC5Fm5+8xRdFPVRUijF5
+         YDnxNPpSEbab0DCHP6dZBkRIzG8zifLlehH9zq67SZuQh6Y/MpaF+cKz0RwoaTbRb3TN
+         sSZy5di9wj+obTQ7xMS2QAcfzMVLyoAsTRQZtT/ZDA29Ke5l7jl38yeuNe0ziUeI1Ooy
+         hOJJbukAEcgJztw2Q4Ma3Wl0UDG0/PpHjjBejy3kRyDtgQLAD5z/HEqFLnSNtvS0/5HH
+         ihfuj0T+RI0OQ6Ju84ukiCAdZKefJENpDZCzA1aufez/P4bZ0dlrvwd/9sr/NZu3Q/BN
+         PtFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=KperZmt2X1geHI/TWgCCMkx2kL0U+UU1fdawMKU2mm0=;
-        b=Qp2HM5nelhjBOmNy5UgOBof4AX98FiyE+zH0hrOrBFd8WyX86NS3Jeh6pE38krULN2
-         PkHnxug+sKOjKdb3vKfWMqfIxzesnDsH12v+6WcU2MuEctorK0MEOaTX/6V133c8UDdG
-         4mPcDdaRrd6+21geAeSJFc/runisLXye/3ixbeGAbec5KjuRs9KNCgS3DhbiP5BR79EQ
-         Uz4dVq9yXSrQaXgfbwzeW2Z6PTm/OGDpceSHD0i+oZ/bgVPfnYE9SSf/aUDtP1AN83bx
-         OtIZy/CsdNHwoamQI0621ygOXqsUSWY7HPCKGdN3JDziDq6XjtdFy6RCGF2YU0RNXfDl
-         z4Tg==
-X-Gm-Message-State: AOAM5339VmBbnxDBrP7+HCMHCrqazW051G+kxDHlLDGmn3LD2QyUGQ+F
-        z6kELBrHL1KtK62dGnCdCVlrUGPUIixWxfNpAQ4=
-X-Google-Smtp-Source: ABdhPJwG79taXsrZQ120JmdPTrJ8Y35f1Wkou7gd3e4rgkIhcct8+UIc2kKrpmLS7L9UZsj02N6in15LU4YjWqg4QG8=
-X-Received: by 2002:a05:6830:1002:: with SMTP id a2mr19441649otp.316.1605120597343;
- Wed, 11 Nov 2020 10:49:57 -0800 (PST)
+        bh=IJAm8cvyuHxGmWQxKlGyrA8z4EwQpmk4e6OcbrqL54w=;
+        b=s6aUmMHG2Xhx2rqJEqxLkqSIF3/DRQ9oxyyA3gK8VdntIgSfIsA2v/TSh3cMgQ3HOZ
+         S3i7bXrhEOBQfsi1rD3buNFoWpKoVj9GRStxP8Z3O5Dfw/YcOrg8P3GBlqxETexvuVyo
+         lSOlN1whslmRqZ+BlBtANTURCa/EKeepq5kBDQLtjLL3iazv02r4ssc0itptyxWw2Dew
+         HPeUm64jRUHb7a2X36jyNmxwLKoUH7Th5HurrypTPkF0l7B+LgYBMBKxBxSA6q3YgZlp
+         gMxgI1v7ULZthqQ3qvssNJ/erT33m7kqUO41y8I0AXKd9wnZPN86dVxEiFcUaxkUpupi
+         1kvA==
+X-Gm-Message-State: AOAM532Kdx49fPscira8Jy9FkAeYxXRJYuRpnHBTl5iE8tGSSmtRr4XL
+        Ty8+OAG/knz2HQe1DJcVVdqnRawcS2f7IS1aaZK/RN9mYO0=
+X-Google-Smtp-Source: ABdhPJxwS6jfK75WHrx0sTwttjzPOUJ2gD4/b2FjWZvjlsmpr45wuDdn+i8sdTlhuOCoXa3FN3PVVyWtuHQFynEHlDM=
+X-Received: by 2002:aca:49d5:: with SMTP id w204mr3179367oia.167.1605121097532;
+ Wed, 11 Nov 2020 10:58:17 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.835.v4.git.git.1604535765.gitgitgadget@gmail.com>
- <pull.835.v5.git.git.1604622298.gitgitgadget@gmail.com> <34f542d9dd846da5fd81274966ee2ebe0660dcef.1604622299.git.gitgitgadget@gmail.com>
- <fbaa60c4-ee6b-02b7-68b5-e5873f8ec713@gmail.com>
-In-Reply-To: <fbaa60c4-ee6b-02b7-68b5-e5873f8ec713@gmail.com>
+References: <20201102204344.342633-1-newren@gmail.com> <20201102204344.342633-13-newren@gmail.com>
+ <4432ae6c-90ae-90d9-218f-15856395efac@gmail.com>
+In-Reply-To: <4432ae6c-90ae-90d9-218f-15856395efac@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 11 Nov 2020 10:49:46 -0800
-Message-ID: <CABPp-BGTS+qe1V7=ie7PjbRmKwwF=c54uOm43R1dnv7MgBJfyA@mail.gmail.com>
-Subject: Re: [PATCH v5 12/15] strmap: enable allocations to come from a mem_pool
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
+Date:   Wed, 11 Nov 2020 10:58:06 -0800
+Message-ID: <CABPp-BEEoqOer11BYrqSVE9E4HcT5MNWcRm7ZHBQ7MVZRUDVXw@mail.gmail.com>
+Subject: Re: [PATCH v2 12/20] merge-ort: have process_entries operate in a
+ defined order
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 11, 2020 at 9:33 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+On Wed, Nov 11, 2020 at 8:09 AM Derrick Stolee <stolee@gmail.com> wrote:
 >
-> Hi Elijah
+> On 11/2/2020 3:43 PM, Elijah Newren wrote:
+> > We want to handle paths below a directory before needing to handle the
+> > directory itself.  Also, we want to handle the directory immediately
+> > after the paths below it, so we can't use simple lexicographic ordering
+> > from strcmp (which would insert foo.txt between foo and foo/file.c).
+> > Copy string_list_df_name_compare() from merge-recursive.c, and set up a
+> > string list of paths sorted by that function so that we can iterate in
+> > the desired order.
 >
-> On 06/11/2020 00:24, Elijah Newren via GitGitGadget wrote:
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > For heavy users of strmaps, allowing the keys and entries to be
-> > allocated from a memory pool can provide significant overhead savings.
-> > Add an option to strmap_init_with_options() to specify a memory pool.
-> > [...]
-> > diff --git a/strmap.h b/strmap.h
-> > index c8c4d7c932..dda928703d 100644
-> > --- a/strmap.h
-> > +++ b/strmap.h
-> > @@ -3,8 +3,10 @@
-> >
-> >   #include "hashmap.h"
-> >
-> > +struct mempool;
->
-> I think this is a typo - I assume you wanted to declare `struct
-> mem_pool` but it's not strictly necessary as you're only adding a
-> pointer to the struct below.
->
-> Best Wishes
->
-> Phillip
+> This is at least the second time we've copied something from
+> merge-recursive.c. Should we be starting a merge-utils.[c|h] to group
+> these together under a common implementation?
 
-Indeed, thanks.
+I'm actually going to replace the function later for performance
+reasons, but trying to make the series as simple as possible prompted
+me to "just copy something for a starting point".
 
+There will be more functions that I copy, yes, but since I sometimes
+also tweak and since the goal is to delete merge-recursive.[ch], I
+didn't really want to set up an infrastructure to share stuff.
+
+> > +     /* Put every entry from paths into plist, then sort */
+> >       strmap_for_each_entry(&opt->priv->paths, &iter, e) {
+> > +             string_list_append(&plist, e->key)->util = e->value;
+> > +     }
 >
-> >   struct strmap {
-> >       struct hashmap map;
-> > +     struct mem_pool *pool;
-> >       unsigned int strdup_strings:1;
-> >   };
-> >
-> > @@ -37,9 +39,10 @@ void strmap_init(struct strmap *map);
-> >
-> >   /*
-> >    * Same as strmap_init, but for those who want to control the memory management
-> > - * carefully instead of using the default of strdup_strings=1.
-> > + * carefully instead of using the default of strdup_strings=1 and pool=NULL.
-> >    */
-> >   void strmap_init_with_options(struct strmap *map,
-> > +                           struct mem_pool *pool,
-> >                             int strdup_strings);
-> >
-> >   /*
-> > @@ -137,9 +140,10 @@ static inline void strintmap_init(struct strintmap *map, int default_value)
-> >
-> >   static inline void strintmap_init_with_options(struct strintmap *map,
-> >                                              int default_value,
-> > +                                            struct mem_pool *pool,
-> >                                              int strdup_strings)
-> >   {
-> > -     strmap_init_with_options(&map->map, strdup_strings);
-> > +     strmap_init_with_options(&map->map, pool, strdup_strings);
-> >       map->default_value = default_value;
-> >   }
-> >
-> > @@ -221,9 +225,10 @@ static inline void strset_init(struct strset *set)
-> >   }
-> >
-> >   static inline void strset_init_with_options(struct strset *set,
-> > +                                         struct mem_pool *pool,
-> >                                           int strdup_strings)
-> >   {
-> > -     strmap_init_with_options(&set->map, strdup_strings);
-> > +     strmap_init_with_options(&set->map, pool, strdup_strings);
-> >   }
-> >
-> >   static inline void strset_clear(struct strset *set)
-> >
+> nit: are braces required here?
+
+It might not be with the current macro definition of
+strmap_for_each_entry(), but I think at one point it was (the macro
+has undergone some changes over time).  Given the difficulty of
+digging through the layers of macros (and the possible risk of it
+changing in the future with hashmap or strmap changes), I wonder if
+it's simpler for readers to just keep them?
