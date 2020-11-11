@@ -7,70 +7,70 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 304B1C388F9
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 20:48:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD7E5C388F9
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 20:58:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B8E1920797
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 20:48:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5EA3D204EA
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 20:58:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IQi6h0dD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cab+DQFJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726313AbgKKUsH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 15:48:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36802 "EHLO
+        id S1726111AbgKKU65 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 15:58:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725959AbgKKUsH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 15:48:07 -0500
-Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE838C0613D1
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 12:48:05 -0800 (PST)
-Received: by mail-qt1-x843.google.com with SMTP id n63so2356248qte.4
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 12:48:05 -0800 (PST)
+        with ESMTP id S1725933AbgKKU65 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 15:58:57 -0500
+Received: from mail-oo1-xc42.google.com (mail-oo1-xc42.google.com [IPv6:2607:f8b0:4864:20::c42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E31B4C0613D1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 12:58:56 -0800 (PST)
+Received: by mail-oo1-xc42.google.com with SMTP id q28so774376oof.1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 12:58:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=sr/XCOcObO2CVBb09AL+M3azC0ocv+0oGM6vL+HrHIg=;
-        b=IQi6h0dD96z0iu5R2UlkB723wiZpd9Qu5PKTtuwog9BoEagI6yv0Mn9B7tqAkczj39
-         VTZ8md5AKcg2O5SiVz0VHj6ItDqEC9ReXCNyzFoQi/YIy/8HpFGY3pPq8z+LqT7/4t0v
-         vh0CouU6Tukp10VVY4iWLOsAV2OFbKGzuubC6BDGV2oTZsBsKueVmnqH2Yg+4IZcTx9z
-         gTJIavRNS2Dt8jiPcRjRSjVw5A2PchR7bfHpBvfDwKYrln0zG9P2l9+bWr2g3h6+sKfr
-         JGy69EU52ACJ8Ejlg7Ren70ivbCrElUhzaVSnDDUZBpogDXeMHDvbJXLyDe7Clv0I90q
-         wFsg==
+        bh=zSWpSd0p05pP3hS5qhACN8RfgRZOchBZ147Y+dEruCs=;
+        b=cab+DQFJToOn9WqXAKmXe9SvJF2D4LEt57Euf6MJ4rkY0XFBc5Ny9YvxK0n7T565yo
+         1D6uks0NJQX0REO72CDvqNLGspkf6sLWpqkaZ8s1ZkCewzsr7ojkGuMrJ4duPSi1iTQ2
+         wa6XgEaU5yF2a9cfQaqCxuxH3rZHcRJ3m5yeatnbW8aR43q2mINItoA77u6B6ERc4H6Q
+         fDcxcUEI/BEISBlkZQyGsyKbjKLNqgVaj3+UMdez3gKXllzZpxCwJruUSWqO2Wm4GoUJ
+         txvyjUiBFd4g/IEqSfs1DulD05dUs1eAdwYldp51fVR8obeINvv1WouGrrp+qO2JXxsH
+         7+kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=sr/XCOcObO2CVBb09AL+M3azC0ocv+0oGM6vL+HrHIg=;
-        b=WbAjPpKA9DNVxLPWmlr2AkQIfMU4uDprgUMXjRLxA2/8DuhXUmfdwLDmyf8uQ8PbZ2
-         1AHnt0A0w0ccwG/SCn4zN8TKd5noRNuxE7vAQPz1PeiX1kLqxBN/vMJpZemDmYJpHTuF
-         W1cboFDpmX0zyWs15D8GwlSruwwcMoJHKvEsnMWdoz8IEbSy7xYZP8FklTpnICVohRjf
-         gkTeGlY9jHXpJ8wwbC58EQrDre1l3UEn+yEzGl3HjOYqPjC4NQ8791wlOMJnHJ8pqEQT
-         vagOzP4237DrNWJxskQQB1TEErEAbQi8OHiJc/nAdvzvVK8TNfySi3XGkWKKU+dGQukQ
-         Tn9g==
-X-Gm-Message-State: AOAM5319UIjGhlxVaEH9BWqMDOz01THJNsGIUS1pBTD91sX6NEjhIaDR
-        UC0a2dEtif59aGuUvoV1Q++cquHOtPH4Bg==
-X-Google-Smtp-Source: ABdhPJweBwPYh5ne6bH6DoEYym67kitpzmR/oksBCf5Dph8H4Bi349IsYEvckFlncCFnU+PzMF7kFg==
-X-Received: by 2002:ac8:641:: with SMTP id e1mr19995416qth.226.1605127684124;
-        Wed, 11 Nov 2020 12:48:04 -0800 (PST)
+        bh=zSWpSd0p05pP3hS5qhACN8RfgRZOchBZ147Y+dEruCs=;
+        b=BUrZa8yKhqO+SFOyb3hL6IBqhkxKWCXxY2yhRjXD21q7nnfRCUvmggQIoR3Qs2cfRF
+         6kMtCs8r1wAoorDCqGGHvaU8Um+WFTYrca7tIVcFoY0FQ8tGcBJdz0eVU/+ynFKLK14Y
+         CMEdpRPkr2ENpzJObdZw+yKSHzAWXNXqUzV1OMc/FFgiU/+vasplvYSCFx6haf44sFde
+         msR383tK/QxAlLPu4CRAsgjGGKy+67iI+PwWLpRXNFxY0MjbaZVnHAr5pBao9Feah7PX
+         JYWuzVTytnV1CE3IXBlT02gCmOYx6PJRXb7IQtqwGdcFBDmmF39s/CX22S0wCkg/LOgK
+         8JYA==
+X-Gm-Message-State: AOAM532qMEIfLUqDuFN1E295di0NP7WbTjv+BYC8JMHkziB7D9u379xj
+        aROlSPmNuofZTQUH+j2bNHA=
+X-Google-Smtp-Source: ABdhPJzptZVhrcsWrYrgOCgMNYUtmBTO7/G/ZMIDPVMWVWahX/J9tph21IId5TLBdhUBYGsh+rraJg==
+X-Received: by 2002:a4a:b188:: with SMTP id c8mr13282210ooo.61.1605128335899;
+        Wed, 11 Nov 2020 12:58:55 -0800 (PST)
 Received: from ?IPv6:2600:1700:e72:80a0:c9d4:abc:8d:1568? ([2600:1700:e72:80a0:c9d4:abc:8d:1568])
-        by smtp.gmail.com with UTF8SMTPSA id h4sm3417200qkh.93.2020.11.11.12.48.03
+        by smtp.gmail.com with UTF8SMTPSA id o29sm763332ote.7.2020.11.11.12.58.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Nov 2020 12:48:03 -0800 (PST)
-Subject: Re: [PATCH v2 00/20] fundamentals of merge-ort implementation
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <20201102204344.342633-1-newren@gmail.com>
- <75170ee7-525e-31fc-f6bd-6dfac12b00c8@gmail.com>
- <CABPp-BF=+-ieP8fCxWWuvhe2dTTMKVGnYSTJuV6H9Z+zYs0SNg@mail.gmail.com>
+        Wed, 11 Nov 2020 12:58:55 -0800 (PST)
+Subject: Re: [PATCH 15/23] t5310: add branch-based checks
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <cover.1605123652.git.me@ttaylorr.com>
+ <9ab4b94b3573346b31e710486799ab3d95bade8e.1605123653.git.me@ttaylorr.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <e3fcaead-8bee-bcda-aee0-459ad9774f9e@gmail.com>
-Date:   Wed, 11 Nov 2020 15:48:01 -0500
+Message-ID: <abf9273f-4795-5a48-c28b-15e68d40b910@gmail.com>
+Date:   Wed, 11 Nov 2020 15:58:52 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101
  Thunderbird/83.0
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BF=+-ieP8fCxWWuvhe2dTTMKVGnYSTJuV6H9Z+zYs0SNg@mail.gmail.com>
+In-Reply-To: <9ab4b94b3573346b31e710486799ab3d95bade8e.1605123653.git.me@ttaylorr.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -78,32 +78,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/11/2020 1:35 PM, Elijah Newren wrote:
-> On Wed, Nov 11, 2020 at 9:09 AM Derrick Stolee <stolee@gmail.com> wrote:
->> For the series as a whole I'd love to see at least one test that
->> demonstrates that this code does something, if even only for a very
->> narrow case.
->>
->> There's a lot of code being moved here, and it would be nice to have
->> even a very simple test case that can check that we didn't leave any
->> important die("not implemented") calls lying around or worse accessing
->> an uninitialized pointer or something.
+On 11/11/2020 2:43 PM, Taylor Blau wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
 > 
-> We absolutely left several die("not implemented") calls lying around.
-> The series was long enough at 20 patches; reviewers lose steam at 10
-> (at least both you and Jonathan have), so maybe I should have left
-> even more in there as an attempt to split up this series more.
-> 
-> However, if you run the testsuite with GIT_TEST_MERGE_ALGORITHM=ort,
-> then this series drops the number of failures in the testsuite from
-> around 2200, down to 1500.  So, there's about 700 testcases for you.
+> The current rev-list tests that check the bitmap data only work on HEAD
+> instead of multiple branches. Expand the test cases to handle both
+> 'master' and 'other' branches.
 
-Sorry that I'm jumping in to the series-of-series in the middle, so
-I am unfamiliar with the previous progress and testing strategy. This
-"number of test failures" metric is sufficient to demonstrate the
-progress provided in this series. Perhaps it was even in your v1 cover
-letter.
+Adding Johannes to CC since this likely will start colliding with his
+default branch rename efforts.
+
+> +rev_list_tests () {
+> +	state=$1
+> +
+> +	for branch in "master" "other"
+> +	do
+> +		rev_list_tests_head
+> +	done
+> +}
+
+Specifically, this is a _new_ instance of "master", but all the
+other instances of "master" are likely being converted to "main"
+in parallel. It would certainly be easier to convert this test
+_after_ these changes are applied, but that's unlikely to happen
+with the current schedule of things.
 
 Thanks,
 -Stolee
+
 
