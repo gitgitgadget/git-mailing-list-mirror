@@ -2,103 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0308C388F9
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 21:04:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D1D8C388F9
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 21:18:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2037920825
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 21:04:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BD0CC20679
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 21:18:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="V4r7vdh0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HNfvd6Ef"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726150AbgKKVEl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 16:04:41 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59066 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725933AbgKKVEl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 16:04:41 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 395EAF0EA9;
-        Wed, 11 Nov 2020 16:04:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=dl1wuRJtSa0YRvj0ZSF+2MtnOd8=; b=V4r7vd
-        h0EZaIxOw85ZwKkLQT3kGwxEo8FoHBkCipiw3LeSKs3uTZNEoARbmkp+7wxNSgVc
-        d+b3HmZDVx06rGqiHV0tFkdJp4UwD+OVBb8xVOjUYP4/zNpHCMQ1Bs8ZQnSla3RH
-        Q3tF/YiBIn1lcAYRYJfjbUmktVcZ8gfIs2RaM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Be27WpFBabd6O7DIdioyADSeqVKMWZ9D
-        baTxmxkmE0ntLEaePHoPwiiT09FHuVXV2N2Eu4Orgf1k+IFqGMS8tD1lZeg1Bn3U
-        tJyYIS7JX9cF0KfT+f1p4z8PzDdwM+fI5y41kb5OMJ0of3zRgfTy38xufHXzsCrj
-        s6RG74Tkjks=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 31FDEF0EA8;
-        Wed, 11 Nov 2020 16:04:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7D5E5F0EA7;
-        Wed, 11 Nov 2020 16:04:36 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        dstolee@microsoft.com, peff@peff.net,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 15/23] t5310: add branch-based checks
-References: <cover.1605123652.git.me@ttaylorr.com>
-        <9ab4b94b3573346b31e710486799ab3d95bade8e.1605123653.git.me@ttaylorr.com>
-        <abf9273f-4795-5a48-c28b-15e68d40b910@gmail.com>
-Date:   Wed, 11 Nov 2020 13:04:34 -0800
-In-Reply-To: <abf9273f-4795-5a48-c28b-15e68d40b910@gmail.com> (Derrick
-        Stolee's message of "Wed, 11 Nov 2020 15:58:52 -0500")
-Message-ID: <xmqqwnyr38rh.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726205AbgKKVSq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 16:18:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41510 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725933AbgKKVSq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 16:18:46 -0500
+Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D6B8C0613D1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 13:18:46 -0800 (PST)
+Received: by mail-oi1-x242.google.com with SMTP id m13so3804455oih.8
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 13:18:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=yMXKqf2FybOv33BFE3YqBY4OOePlSIZKFy3vKLviBeI=;
+        b=HNfvd6EfPK3qd5kRYpWEy4rDo5Jdu+U7wzoVhXWt0lISsSA1EWGV0GC65JPvQqRxKG
+         R/2hVRFQ5paRyDibG6EdPLiJkUVH3nAmW/urBoMpp0nAziLcmY5DU3mtuQxl1+uZC8A1
+         jq4zQxjWpyi1M4OBEvFzYlmiElJES8IyHorFoH89deH020n0nrS2VxfvF9JL8MphOqKl
+         jiVbzs+AdSbeNK8PDXY1wv79mjvk8nDLwadwIpcXhzLXEERJamSCS1YyolX8WxSEayM0
+         LBuSn0k/vF87M8L+bpEWvcVo681TPdAdzD6jvlMc7n6Z5WUs/3QBJYrg7xUAec5zKfD4
+         W1cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yMXKqf2FybOv33BFE3YqBY4OOePlSIZKFy3vKLviBeI=;
+        b=IPx0X04xLxFRH4/8X23yyNfdR269KkViEJKucFil0dojqWlQgCZoKQiU1mQhr14j/R
+         a88P+cLOTVVs6QK9+ZfK9Hi0B9A2FSMsgm7vAa/4ur2XdQ/bTg+R6vtjFTAX1z+pVuYT
+         uAmCjv3/qICyO31byaD7TsPtwmkSfPtHMdTveUdbvw8myOwLgdRWK9loOYxeQmqMoorU
+         fNa3EW2U+FRddNehS50JUHHaX1Z0mpmr43G7FsXp6WvHbQmPNoSLQ7x6faMHuPW7+jEv
+         VRqNDp3Wrd/mFkM7IlNYcS+LeNoqeT4XiqOyZ4MkQ4Njj0tYVToJXp5su/UZKKy1YDXT
+         oYIg==
+X-Gm-Message-State: AOAM532TG/it6FO/wIWRIfHCkt8Fc1JuQWLugIIVe8WH14fvDcdxvQjc
+        b9X9uIgZrFUQ5KlL7nEISzRAKiyVK1+kPXCerWI=
+X-Google-Smtp-Source: ABdhPJyE0iifyWih7Fl7c1vSsivv3w0MmkYdCRosBfEvztntcZEBLb1UtkJPzdELIib6UMVlRP6IQ7aDsgjBL6JV9HU=
+X-Received: by 2002:aca:3756:: with SMTP id e83mr3450760oia.31.1605129525603;
+ Wed, 11 Nov 2020 13:18:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8156A66E-2461-11EB-B3A3-D609E328BF65-77302942!pb-smtp21.pobox.com
+References: <20201102204344.342633-1-newren@gmail.com> <75170ee7-525e-31fc-f6bd-6dfac12b00c8@gmail.com>
+ <CABPp-BF=+-ieP8fCxWWuvhe2dTTMKVGnYSTJuV6H9Z+zYs0SNg@mail.gmail.com> <e3fcaead-8bee-bcda-aee0-459ad9774f9e@gmail.com>
+In-Reply-To: <e3fcaead-8bee-bcda-aee0-459ad9774f9e@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 11 Nov 2020 13:18:34 -0800
+Message-ID: <CABPp-BE=XzueTJ18dZXXXGEkJ0b6R-TjrgK5SAjDo2oPzTLETA@mail.gmail.com>
+Subject: Re: [PATCH v2 00/20] fundamentals of merge-ort implementation
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Hi Derrick,
 
-> On 11/11/2020 2:43 PM, Taylor Blau wrote:
->> From: Derrick Stolee <dstolee@microsoft.com>
->> 
->> The current rev-list tests that check the bitmap data only work on HEAD
->> instead of multiple branches. Expand the test cases to handle both
->> 'master' and 'other' branches.
+On Wed, Nov 11, 2020 at 12:48 PM Derrick Stolee <stolee@gmail.com> wrote:
 >
-> Adding Johannes to CC since this likely will start colliding with his
-> default branch rename efforts.
+> On 11/11/2020 1:35 PM, Elijah Newren wrote:
+> > On Wed, Nov 11, 2020 at 9:09 AM Derrick Stolee <stolee@gmail.com> wrote:
+> >> For the series as a whole I'd love to see at least one test that
+> >> demonstrates that this code does something, if even only for a very
+> >> narrow case.
+> >>
+> >> There's a lot of code being moved here, and it would be nice to have
+> >> even a very simple test case that can check that we didn't leave any
+> >> important die("not implemented") calls lying around or worse accessing
+> >> an uninitialized pointer or something.
+> >
+> > We absolutely left several die("not implemented") calls lying around.
+> > The series was long enough at 20 patches; reviewers lose steam at 10
+> > (at least both you and Jonathan have), so maybe I should have left
+> > even more in there as an attempt to split up this series more.
+> >
+> > However, if you run the testsuite with GIT_TEST_MERGE_ALGORITHM=ort,
+> > then this series drops the number of failures in the testsuite from
+> > around 2200, down to 1500.  So, there's about 700 testcases for you.
 >
->> +rev_list_tests () {
->> +	state=$1
->> +
->> +	for branch in "master" "other"
->> +	do
->> +		rev_list_tests_head
->> +	done
->> +}
->
-> Specifically, this is a _new_ instance of "master", but all the
-> other instances of "master" are likely being converted to "main"
-> in parallel. It would certainly be easier to convert this test
-> _after_ these changes are applied, but that's unlikely to happen
-> with the current schedule of things.
+> Sorry that I'm jumping in to the series-of-series in the middle, so
+> I am unfamiliar with the previous progress and testing strategy. This
 
-In some tests, it may make sense to configure init.defaultbranchname
-in $HOME/.gitconfig upfront and either (1) leave instances of
-'master' as they are (we may want to avoid 'slave', but 'master' is
-not all that wrong), or (2) rewrite instances of 'master' to 'main'
-(or 'primary' or whatever init.defaultbranchname gets configured).
+Not a problem at all.  Thanks much for jumping in and taking a look!
+You always provide some good feedback and suggestions.
 
+(Besides, those testcase changes have been spread over two and a half
+years...hard to stay on top of all of them.)
 
+> "number of test failures" metric is sufficient to demonstrate the
+> progress provided in this series. Perhaps it was even in your v1 cover
+> letter.
 
+Um, oops; it's not.  I did mention there were still some "not
+implemented" messages left, but didn't mention the testcase counts.
+But even that mention is apparently in the v1 cover letter rather than
+v2, and v2 wasn't sent in-reply-to v1, so it's harder to catch that.
+Sorry about that; I'll include the testcase counts in the v3 cover
+letter.
