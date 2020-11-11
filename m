@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C9A2C5517A
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D45A5C56201
 	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 20:02:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B800F2087D
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 20:02:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 830C12087D
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 20:02:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AueMMHlG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DA+KpdV5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727852AbgKKUCe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 15:02:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57962 "EHLO
+        id S1727858AbgKKUCf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 15:02:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727617AbgKKUCd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 15:02:33 -0500
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92DE3C0613D1
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 12:02:32 -0800 (PST)
-Received: by mail-wr1-x442.google.com with SMTP id j7so3753157wrp.3
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 12:02:32 -0800 (PST)
+        with ESMTP id S1727768AbgKKUCc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 15:02:32 -0500
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3887C0613D1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 12:02:31 -0800 (PST)
+Received: by mail-wm1-x341.google.com with SMTP id w24so3493842wmi.0
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 12:02:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=h5PnHyptBUWzu+AN7UGcuZ3DQJK/OQ/2tdMdIpZtNLg=;
-        b=AueMMHlGLpkED7wAWBz8T6aE4W2w4Z9v9GO9c+WlENUv1UbG+sNF+8tvTOLOLRMQB0
-         unerycfegFCCfxiVjAHBXgDT3fHiJRokksrNrvRUgOY+I4puTzSC4v8VUpfcW6fcNmPL
-         20/TigoaXR+U1yUZ1pLFHTEMFHAYSjBybOMxQ6HL073fZj0njV5plHPw/V/S+EaIGE0m
-         EIh3sdE2KA7oJT8pCq3bTnhJnWjTrWRch50dTn9lpv2WmKh/64S7nkSdi6IWlYTtdJb8
-         ovA2WetU0I0IKnaLB0qTpEkMs1LIspKp1XJek+UBnUgUa8pgp5irHYHsSeOHO6DnMJkd
-         GVEA==
+        bh=egrP2YxGIqUqE7lI0Iu1Sp/CnRg8F1CK39E/Ny45G70=;
+        b=DA+KpdV5LrwJnygi82b18MnbwvjVJRSvZ6FmYS87mtjX422t/zTvoB3MgLlqBHMl1s
+         90SFE/v7oQcUPlD7iQAOuF2nx8MpvLkZYHEeXxH5GbOrx6nyv3mxhTnaqOoOi0sAmTkG
+         P5qsaPz5P8YurV6MODp+1HQJ+KohVDC2IRtDEr/2Q0C53ydqLBF8kKsjqtPM4ESaXikf
+         vCJq/TOlvdw9oTiHkO3TYMHAjIIScIVQsX+6BrwREqkrpc2ivZtULe5c9wGTXbzsSV6j
+         U0I3f1lYKhguHYNu5F5j+P9AYIfBnxjzi8F0PabEEMWeNeAm5hi6PPfsxkNUKuscvT9l
+         dMHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=h5PnHyptBUWzu+AN7UGcuZ3DQJK/OQ/2tdMdIpZtNLg=;
-        b=FRKnAR0DTXhIq4HWkPN1Sk8Ie/NQByeUvOJHdZAx7buL0Lky1TXER8cAhC/RDw8S0v
-         zGwx/ruunE2O9Df61Ni4M1oBE/QMh1vMt3xhtB/NluFlVyPd/O48ou6jPiMCAdee+ZsA
-         tiiQdmZ7Q9a0mmk59j1jY8tQjYrVLb/tFohSQ8Y0AisJ26zEJ+O+suZlMU+l2Hn/Mved
-         0WKh7IKDyWydycsZZOXO3DyzRGAxsBEfBKRyYij5xviHNB5TZOQYy6owyEiG+gnuIMCl
-         3+gmxFXXlRIqCOFOR9KyJkHHuhX4X3dnl03tNTBvUpsm38zaWNPmMxe/ny3S/spKcI8P
-         RPCQ==
-X-Gm-Message-State: AOAM532WJzxAwXqLV6khkfsQ89qNn/KFrKTVHguf1ZLfDqnqfi9Y0oUj
-        fUhtxSqk1Kxt2ikyDAqOyskomjsGzyc=
-X-Google-Smtp-Source: ABdhPJx/4bJ8ZsOH2R8XEELrooVqKp6VmrvBymXqushzvEASjhXj6OfgWDmRKb4nn7VZMgjCVistcg==
-X-Received: by 2002:adf:c58f:: with SMTP id m15mr32757047wrg.144.1605124951204;
-        Wed, 11 Nov 2020 12:02:31 -0800 (PST)
+        bh=egrP2YxGIqUqE7lI0Iu1Sp/CnRg8F1CK39E/Ny45G70=;
+        b=AxcchNQ3ZCT5jfa5YnCriJaQ5XN2WbPTMGQlFpCN8kW9TLLlJO/Irmji8W5iS/CH3m
+         VmE9mwuhH+JgnOPEv2L3YQNLG7Ko3XdKPN/VuwL4Wx6fpwv+xnOAZ3soLYTMYPrPfpVc
+         rrLfHzMEcUP6vBW9CKG1Ag6NSHI4RDBkN4g3JKrqjfgNqQLV/Q5pvI5u9iKWSQwFCNDl
+         /tiyGS1rRalyljhIqQWWeO33XAY5FkpQZKuWrIQtGePR1t1v2NYlb6aj+cd3NQjav6io
+         cBAjFsJbLYFydxSpimIwpElW0YcG+2M0ebiEQGSzbUHTKF0S2Tyw3IS9K1qYOW4MH/y6
+         pssQ==
+X-Gm-Message-State: AOAM530Fm7G5hJpKmN2LMCjhzJ8/q9ExAQi4FZ06XnstgxIcxLaqt78t
+        o8hS3um0Phzggl2deAIox0lEK3AhBWM=
+X-Google-Smtp-Source: ABdhPJzUzq5qe0uF3foSS/Y6FSe9hRCMMMSvvUqzbt9Ql0Q15S/uJdD1Nkem3f5cCi/lnIN9wA5hoA==
+X-Received: by 2002:a1c:2041:: with SMTP id g62mr1471651wmg.118.1605124950503;
+        Wed, 11 Nov 2020 12:02:30 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h4sm3617919wrq.3.2020.11.11.12.02.30
+        by smtp.gmail.com with ESMTPSA id w21sm3628672wmi.29.2020.11.11.12.02.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 11 Nov 2020 12:02:30 -0800 (PST)
-Message-Id: <f499934f54a2d1d9ac6ffeafcd6388d183d26fa3.1605124942.git.gitgitgadget@gmail.com>
+Message-Id: <fd96e9fc8df23851022edf3799012441cd4c8728.1605124942.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.835.v6.git.git.1605124942.gitgitgadget@gmail.com>
 References: <pull.835.v5.git.git.1604622298.gitgitgadget@gmail.com>
         <pull.835.v6.git.git.1605124942.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 11 Nov 2020 20:02:15 +0000
-Subject: [PATCH v6 09/15] strmap: add functions facilitating use as a
- string->int map
+Date:   Wed, 11 Nov 2020 20:02:14 +0000
+Subject: [PATCH v6 08/15] strmap: enable faster clearing and reusing of
+ strmaps
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,151 +80,61 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Although strmap could be used as a string->int map, one either had to
-allocate an int for every entry and then deallocate later, or one had to
-do a bunch of casting between (void*) and (intptr_t).
+When strmaps are used heavily, such as is done by my new merge-ort
+algorithm, and strmaps need to be cleared but then re-used (because of
+e.g. picking multiple commits to cherry-pick, or due to a recursive
+merge having several different merges while recursing), free-ing and
+reallocating map->table repeatedly can add up in time, especially since
+it will likely be reallocated to a much smaller size but the previous
+merge provides a good guide to the right size to use for the next merge.
 
-Add some special functions that do the casting.  Also, rename put->set
-for such wrapper functions since 'put' implied there may be some
-deallocation needed if the string was already found in the map, which
-isn't the case when we're storing an int value directly in the void*
-slot instead of using the void* slot as a pointer to data.
+Introduce strmap_partial_clear() to take advantage of this type of
+situation; it will act similar to strmap_clear() except that
+map->table's entries are zeroed instead of map->table being free'd.
+Making use of this function reduced the cost of
+clear_or_reinit_internal_opts() by about 20% in mert-ort, and dropped
+the overall runtime of my rebase testcase by just under 2%.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- strmap.c | 11 +++++++
- strmap.h | 94 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 105 insertions(+)
+ strmap.c | 6 ++++++
+ strmap.h | 6 ++++++
+ 2 files changed, 12 insertions(+)
 
 diff --git a/strmap.c b/strmap.c
-index c410c5241a..0d10a884b5 100644
+index 829f1bc095..c410c5241a 100644
 --- a/strmap.c
 +++ b/strmap.c
-@@ -123,3 +123,14 @@ void strmap_remove(struct strmap *map, const char *str, int free_value)
- 		free((char*)ret->key);
- 	free(ret);
+@@ -64,6 +64,12 @@ void strmap_clear(struct strmap *map, int free_values)
+ 	hashmap_clear(&map->map);
  }
-+
-+void strintmap_incr(struct strintmap *map, const char *str, intptr_t amt)
+ 
++void strmap_partial_clear(struct strmap *map, int free_values)
 +{
-+	struct strmap_entry *entry = find_strmap_entry(&map->map, str);
-+	if (entry) {
-+		intptr_t *whence = (intptr_t*)&entry->value;
-+		*whence += amt;
-+	}
-+	else
-+		strintmap_set(map, str, map->default_value + amt);
++	strmap_free_entries_(map, free_values);
++	hashmap_partial_clear(&map->map);
 +}
++
+ void *strmap_put(struct strmap *map, const char *str, void *data)
+ {
+ 	struct strmap_entry *entry = find_strmap_entry(map, str);
 diff --git a/strmap.h b/strmap.h
-index c14fcee148..56a5cdb864 100644
+index f74bc582e4..c14fcee148 100644
 --- a/strmap.h
 +++ b/strmap.h
-@@ -23,6 +23,10 @@ int cmp_strmap_entry(const void *hashmap_cmp_fn_data,
- 			.map = HASHMAP_INIT(cmp_strmap_entry, NULL),  \
- 			.strdup_strings = 1,                          \
- 		    }
-+#define STRINTMAP_INIT { \
-+			.map = STRMAP_INIT,   \
-+			.default_value = 0,   \
-+		       }
+@@ -42,6 +42,12 @@ void strmap_init_with_options(struct strmap *map,
+  */
+ void strmap_clear(struct strmap *map, int free_values);
  
++/*
++ * Similar to strmap_clear() but leaves map->map->table allocated and
++ * pre-sized so that subsequent uses won't need as many rehashings.
++ */
++void strmap_partial_clear(struct strmap *map, int free_values);
++
  /*
-  * Initialize the members of the strmap.  Any keys added to the strmap will
-@@ -102,4 +106,94 @@ static inline int strmap_empty(struct strmap *map)
- #define strmap_for_each_entry(mystrmap, iter, var)	\
- 	hashmap_for_each_entry(&(mystrmap)->map, iter, var, ent)
- 
-+
-+/*
-+ * strintmap:
-+ *    A map of string -> int, typecasting the void* of strmap to an int.
-+ *
-+ * Primary differences:
-+ *    1) Since the void* value is just an int in disguise, there is no value
-+ *       to free.  (Thus one fewer argument to strintmap_clear)
-+ *    2) strintmap_get() returns an int, or returns the default_value if the
-+ *       key is not found in the strintmap.
-+ *    3) No strmap_put() equivalent; strintmap_set() and strintmap_incr()
-+ *       instead.
-+ */
-+
-+struct strintmap {
-+	struct strmap map;
-+	int default_value;
-+};
-+
-+#define strintmap_for_each_entry(mystrmap, iter, var)	\
-+	strmap_for_each_entry(&(mystrmap)->map, iter, var)
-+
-+static inline void strintmap_init(struct strintmap *map, int default_value)
-+{
-+	strmap_init(&map->map);
-+	map->default_value = default_value;
-+}
-+
-+static inline void strintmap_init_with_options(struct strintmap *map,
-+					       int default_value,
-+					       int strdup_strings)
-+{
-+	strmap_init_with_options(&map->map, strdup_strings);
-+	map->default_value = default_value;
-+}
-+
-+static inline void strintmap_clear(struct strintmap *map)
-+{
-+	strmap_clear(&map->map, 0);
-+}
-+
-+static inline void strintmap_partial_clear(struct strintmap *map)
-+{
-+	strmap_partial_clear(&map->map, 0);
-+}
-+
-+static inline int strintmap_contains(struct strintmap *map, const char *str)
-+{
-+	return strmap_contains(&map->map, str);
-+}
-+
-+static inline void strintmap_remove(struct strintmap *map, const char *str)
-+{
-+	return strmap_remove(&map->map, str, 0);
-+}
-+
-+static inline int strintmap_empty(struct strintmap *map)
-+{
-+	return strmap_empty(&map->map);
-+}
-+
-+static inline unsigned int strintmap_get_size(struct strintmap *map)
-+{
-+	return strmap_get_size(&map->map);
-+}
-+
-+/*
-+ * Returns the value for str in the map.  If str isn't found in the map,
-+ * the map's default_value is returned.
-+ */
-+static inline int strintmap_get(struct strintmap *map, const char *str)
-+{
-+	struct strmap_entry *result = strmap_get_entry(&map->map, str);
-+	if (!result)
-+		return map->default_value;
-+	return (intptr_t)result->value;
-+}
-+
-+static inline void strintmap_set(struct strintmap *map, const char *str,
-+				 intptr_t v)
-+{
-+	strmap_put(&map->map, str, (void *)v);
-+}
-+
-+/*
-+ * Increment the value for str by amt.  If str isn't in the map, add it and
-+ * set its value to default_value + amt.
-+ */
-+void strintmap_incr(struct strintmap *map, const char *str, intptr_t amt);
-+
- #endif /* STRMAP_H */
+  * Insert "str" into the map, pointing to "data".
+  *
 -- 
 gitgitgadget
 
