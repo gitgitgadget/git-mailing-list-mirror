@@ -2,97 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00996C388F9
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 20:33:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA899C5517A
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 20:33:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 892B620797
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 20:33:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 616D9208B3
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 20:33:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DXXhW9fL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UmFoZq4v"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726233AbgKKUdV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 15:33:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34518 "EHLO
+        id S1726439AbgKKUdX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 15:33:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725981AbgKKUdV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 15:33:21 -0500
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F6DAC0613D1
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 12:33:20 -0800 (PST)
-Received: by mail-wm1-x344.google.com with SMTP id 10so3440168wml.2
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 12:33:20 -0800 (PST)
+        with ESMTP id S1725981AbgKKUdX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 15:33:23 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC171C0613D4
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 12:33:22 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id c17so3764420wrc.11
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 12:33:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=1FSbwJyCLlZKIo0wf359AK8blFZfRkLQ2I5yM+S6Ez0=;
-        b=DXXhW9fL6Ow76PaDmFe3Bnsdbz7pO53Qal0+01C2wJ/W4Pcg/QB4Q6TE4X1MCNDH8X
-         EEH9Abs/FMHXNkmCYmSmLvjgoZ6n5YtAdhVU5Ilv4enNT3/1uVhbaE2lu5UjWCJH3prI
-         tOfeco1wZA2sKIXjGopBNU4YyUiYpd6Jd9n04TR9cpNKYqJFYUPCVnK4vng6dXNTVhpv
-         ouJxqEbxLwDl2JYeUJ/OTBbMz2u1tXdBFDB5onMOMVegFWPgDz7/Q07Gk1R7Kmr4ZNZX
-         AdIPyFptfWbNgsG+bw0QKcIasqkAzRz8ZG4VSiZSA9nYK0QK1+NWxuA3/sD5iNyrpMsk
-         YfZA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=vqbm/YN2lHxCdaQfPL2/d5HBDMnCmEapquoJ1GKs5nY=;
+        b=UmFoZq4vbYxmb2O3rcUDFkWLQIVWHqt5lD3aSsqnVQSRFjLUip0L9XsU0s/XPj190e
+         ebapR6X6YwJB7NAt08y5V2V3az235J64h5K2tkZYO5PBj7GYjnDKill5xqMuqbTKhdE4
+         A2gWNElovHbm8Jl28ElBasOgF0c6j/H8LZ4oX5ToXT+bW/qu36O9FrEslXe0Em9KuEBK
+         od24/grRs4W2oQIf0FXYiD3gPpWZyNCfW/JLfLPK3pp145egKXnQsMinWAPARJExoHs+
+         1zJ28qeqYTDjPmGszPh2Z29PsRHhI030NC1sdbUC/DirtAqETARpSgTCr1Uyjk+jkgjf
+         oXfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=1FSbwJyCLlZKIo0wf359AK8blFZfRkLQ2I5yM+S6Ez0=;
-        b=BI8ayXslyOUKx7KW/XZJkFaN/3YYbDNvcTZUfHHQ4DHZz7gZT0bOahZr8fVzZ01Sbl
-         ujN+Qbob9ySaNTeM13RTkdt1Hr7v16csCW64YqdLBRHBx0UDxX1YJPP+Cb9rWfVHSNnh
-         ygLWlg/QPnIxRtIpwAM3lggjDDNV+WQkzVT0f0JloyU/v43o6xQME1Z0v+vVSa3z0PmZ
-         bEi/MEZY7vb9clC41Exgu0t3Ur8i/JVOkVeTlm40K0M7BGtoX7pYqCIEzyb4Q9yuw//I
-         GyeNdoi2C66/Wypce5q5plf4KMmGp8yj0drtsXYNhSseEqYRxASI4Zrte8bApI3e7kkd
-         XlXA==
-X-Gm-Message-State: AOAM532X51dhHY/cuJ2sZmJB26sU8MXtySCn55qL6GQoX0WMrDQwzf8S
-        FKBmmNuuGqXJMtLIluq2lBsobnTKCa0=
-X-Google-Smtp-Source: ABdhPJyt8sYI31b4XIs3EKtkBUmjlUICGpb8bF/oRgsKW8kAKKa31pcVsm2U8gui55XIztDN+g3F3Q==
-X-Received: by 2002:a1c:5f83:: with SMTP id t125mr4851122wmb.82.1605126799260;
-        Wed, 11 Nov 2020 12:33:19 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=vqbm/YN2lHxCdaQfPL2/d5HBDMnCmEapquoJ1GKs5nY=;
+        b=DhZ/uC8aeUqknbfRw5zXeT1ZKUYmJC1DoFhbuVIi6R0P7vFRFf+wfJxZKgNb8IkSkU
+         s4IX40oiTPtxq/M3WGD4CY+TWilYz+OGVAaYWzNCgY65VtJuBcW2OWUafyCuaODDY2DI
+         zcAIJfDKl94kzJ/q1zAddRz6mWjRkJbpI02RQsB7P4tsB7jfqQfRhDuIwmUB4A3WWk70
+         xbhC2GdJiCSUXfG95XMfe/kgKzVWjjXN1RYFVwkoLYssoBYfXMl9p6eRebZe8RqR8Wu5
+         opKYg3HL1WfHgkwbVvZB+5e6CgV+ect8h9JuXzHTMtflTyD74H0VsExkpdlyf7Oa7hGq
+         8lSw==
+X-Gm-Message-State: AOAM532FcLJxPDcJIvekMFC43DUJrYd0ySrpgdrGRRl1EO+RSZw+hrYl
+        OQps4z3GWg7iBKJ/H2S6hYZqm4oIbUM=
+X-Google-Smtp-Source: ABdhPJzUadtMMHzJtSEo9p4TzgbjV82D7r4TSZVtxot2WYTtKqi8Qv4lSM7MksnutnbN7bZNtfoloQ==
+X-Received: by 2002:adf:e5d0:: with SMTP id a16mr34017531wrn.340.1605126800736;
+        Wed, 11 Nov 2020 12:33:20 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n10sm3999035wrx.9.2020.11.11.12.33.18
+        by smtp.gmail.com with ESMTPSA id y63sm3657091wmg.28.2020.11.11.12.33.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2020 12:33:18 -0800 (PST)
-Message-Id: <pull.787.git.1605126798.gitgitgadget@gmail.com>
+        Wed, 11 Nov 2020 12:33:20 -0800 (PST)
+Message-Id: <c157c07d5d4917e6eef6717894f61c54cbc9af22.1605126798.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.787.git.1605126798.gitgitgadget@gmail.com>
+References: <pull.787.git.1605126798.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 11 Nov 2020 20:33:16 +0000
-Subject: [PATCH 0/2] difftool: fix user-defined Beyond Compare setups
+Date:   Wed, 11 Nov 2020 20:33:18 +0000
+Subject: [PATCH 2/2] mergetool: avoid letting `list_tool_variants` break
+ user-defined setups
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     pudinha <rogi@skylittlesystem.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Git v2.29.0 includes patches that try to support Beyond Compare better by
-default. However, as reported in 
-https://github.com/git-for-windows/git/issues/2893, they broke user-defined
-setups that use bc4 as the name for the difftool.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This patch series fixes that and is based on pd/mergetool-nvimdiff.
+In 83bbf9b92ea8 (mergetool--lib: improve support for vimdiff-style tool
+variants, 2020-07-29), we introduced a `list_tool_variants` function
+in the spirit of Postel's Law: be lenient in what you accept as input.
+In this particular instance, we wanted to allow not only `bc` but also
+`bc3` as name for the Beyond Compare tool.
 
-Johannes Schindelin (2):
-  mergetools/bc: add `bc4` to the alias list for Beyond Compare
-  mergetool: avoid letting `list_tool_variants` break user-defined
-    setups
+However, what this patch overlooked is that it is totally allowed for
+users to override the defaults in `mergetools/`. But now that we strip
+off trailing digits, the name that the user gave the tool might not
+actually be in the list produced by `list_tool_variants`.
 
+So let's do the same as for the `diff_cmd` and the `merge_cmd`: override
+it with the trivial version in case a user-defined setup was detected.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  git-mergetool--lib.sh | 4 ++++
- mergetools/bc         | 1 +
- 2 files changed, 5 insertions(+)
+ 1 file changed, 4 insertions(+)
 
-
-base-commit: 11868978c7c80d3c29071b29e7964e3d62523819
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-787%2Fdscho%2Ffix-beyond-compare-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-787/dscho/fix-beyond-compare-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/787
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index 2defef28cd..7225abd811 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -138,6 +138,10 @@ setup_user_tool () {
+ 	merge_cmd () {
+ 		( eval $merge_tool_cmd )
+ 	}
++
++	list_tool_variants () {
++		echo "$tool"
++	}
+ }
+ 
+ setup_tool () {
 -- 
 gitgitgadget
