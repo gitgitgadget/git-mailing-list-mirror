@@ -4,101 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7876FC388F9
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 16:33:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF626C55ABD
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 16:39:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0F3C8206F1
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 16:33:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 77ADC20791
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 16:39:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="O/MyZzmE"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tHAtDH3F"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726595AbgKKQdv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 11:33:51 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60705 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725979AbgKKQdu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 11:33:50 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B77D4A1838;
-        Wed, 11 Nov 2020 11:33:48 -0500 (EST)
+        id S1727560AbgKKQjM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 11:39:12 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53799 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727489AbgKKQjL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 11:39:11 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AF795E6A69;
+        Wed, 11 Nov 2020 11:39:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=TTDUxaTaVN4G
-        pGjYwAKpDwEYMBs=; b=O/MyZzmEHkSRAN8qXB6geNO//Saqcgz+4oKr4O7wTSnb
-        4/6Qc6IoYLJa+HwFr5xWgG6TV7T3ZyqlJQFkTlGwRZ6/Wea7QqBv9QH5F32BzCFN
-        kf7DiCa/cS8QMlfVcEU497X2CaTDohHjAM1NyDo8gLobEp1EtmtN55lIyCPt4YI=
+        :content-type; s=sasl; bh=RX9HSTp/WOLNnoVyXLuvahN0+6U=; b=tHAtDH
+        3FCGaz+hLy5LhcbHqmUdmB9NYMcLppCTm0EdoEP9ozdFa+Xe/PV1de0LrlV9wDC8
+        ZmDFuQb9uCn5MrsQMMoCM9QxKhYSYmzgW4EJFBJOB3vvfil2YeZsXpbA4V8V58Ge
+        FCp/1kMqT2bHg5Yhh0GRNu8PqbbwLTNhw7z+U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ugzur6
-        9JTC66bC9Gp6CyFA1vYtrr4wJ90tl53FOMkccqFGrz1RjUbxwSClIw6+tl3v5570
-        aivFU8ihdsaaI6jqjLMeg7I2RkFPTNlycc0upRrkUw5dr1Bls605RTk036fMlr3l
-        i+tY2OMz//EcPJUJ96PIN21Q6axQyIryY/olw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AFA7CA1837;
-        Wed, 11 Nov 2020 11:33:48 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=DO75tCgvUaIWC0SNAm33/Q0argGjuSuS
+        dxHp4U1qeaSELYNIrZ/Yv4413tN9sYrrXHyt1L5arnp0BO7AHZPF7zO3ikknzny4
+        bIQeozVGFBNvYnPghUPCPA6rsYqHzAHne1VewcuImklddDiu8b+sqEM9ubEGZ3+Q
+        vNVvImgnv2c=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A7EAFE6A68;
+        Wed, 11 Nov 2020 11:39:09 -0500 (EST)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
+Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3AB81A1836;
-        Wed, 11 Nov 2020 11:33:48 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 01927E6A5E;
+        Wed, 11 Nov 2020 11:39:06 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 5/5] parse-remote: remove this now-unused library
-References: <CAGZ79kb57HzJQ4VLFD_NMKvEnriPVXoAAPimg6BG_Z+PPjJ4aQ@mail.gmail.com>
-        <20201111151754.31527-6-avarab@gmail.com>
-Date:   Wed, 11 Nov 2020 08:33:47 -0800
-In-Reply-To: <20201111151754.31527-6-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Wed, 11 Nov 2020 16:17:54 +0100")
-Message-ID: <xmqqwnyr4zv8.fsf@gitster.c.googlers.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Git <git@vger.kernel.org>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v2 06/26] test: completion: add run_func() helper
+References: <20201110212136.870769-1-felipe.contreras@gmail.com>
+        <20201110212136.870769-7-felipe.contreras@gmail.com>
+        <xmqq1rh05p6f.fsf@gitster.c.googlers.com>
+        <CAMP44s0XA6QjOZTJaC5CK9Rp9ySfoH9_rJu-AoEGgprstzprfw@mail.gmail.com>
+Date:   Wed, 11 Nov 2020 08:39:05 -0800
+In-Reply-To: <CAMP44s0XA6QjOZTJaC5CK9Rp9ySfoH9_rJu-AoEGgprstzprfw@mail.gmail.com>
+        (Felipe Contreras's message of "Wed, 11 Nov 2020 05:43:24 -0600")
+Message-ID: <xmqqsg9f4zme.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: AC9CF1AA-243B-11EB-B155-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6A9C5CE0-243C-11EB-95BE-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> Completely remove the git-parse-remote shellscript library.
+> But even with no other reason for it, the patch stands on its own.
 >
-> Since e9460a66e0 ("parse-remote: support default reflist in
-> get_remote_merge_branch", 2009-06-12) when there were around 300 lines
-> of code here used by various core code everything in it has become
-> unsued, and that unused code was removed in preceding commits. Almost
-> all of its previous functionality has now been rewritten in C.
+>> > +run_func ()
+>> > +{
+>> > +     local -a COMPREPLY &&
+>
+> This is the line that was smuggled in. It should be part of a separate
+> patch, since this is behavior change.
+> ...
+> Do you want me to add: "In two places we generate an output that
+> didn't exist before, but nothing ever reads it." ?
 
-Very pleasing to see this.
+That would be very friendly to readers who may later wonder why the
+change was made, yes.
 
-I would imagine that an equally easy to understand and more compact
-presentation of this series would have been to
-
- - copy minimally needed code to git-submodule.sh verbatim, while
-   dropping the dot-source from git-submodule.sh (patch 1)
-
- - just say "nobody now dot-sources this shell library" and do what
-   this step does.
-
-Especially 1/5 confused me more than it helped me to understand the
-end result ;-)  It does not matter in the endgame that GIT_DIR was
-defined there, as long as we know nobody other than git-submodule.sh
-dot-sources the shell library and git-submodule.sh uses its own setup.
-
-But that can only be said with perfect hindsight after seeing all
-your efforts in these five patches.
-
-Thanks.
-
-
+In any case, I am not a shell-completion person, so even if I said
+"yes that would make the patch perfect", that would not count as
+much ;-)
