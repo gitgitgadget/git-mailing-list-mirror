@@ -4,110 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D1D8C388F9
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 21:18:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23165C388F9
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 21:22:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BD0CC20679
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 21:18:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9279620825
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 21:22:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HNfvd6Ef"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qRZlH61x"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726205AbgKKVSq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 16:18:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41510 "EHLO
+        id S1725966AbgKKVWG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 16:22:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725933AbgKKVSq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 16:18:46 -0500
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D6B8C0613D1
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 13:18:46 -0800 (PST)
-Received: by mail-oi1-x242.google.com with SMTP id m13so3804455oih.8
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 13:18:46 -0800 (PST)
+        with ESMTP id S1725933AbgKKVWG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 16:22:06 -0500
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43342C0613D1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 13:22:06 -0800 (PST)
+Received: by mail-oi1-x243.google.com with SMTP id u127so3832881oib.6
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 13:22:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=yMXKqf2FybOv33BFE3YqBY4OOePlSIZKFy3vKLviBeI=;
-        b=HNfvd6EfPK3qd5kRYpWEy4rDo5Jdu+U7wzoVhXWt0lISsSA1EWGV0GC65JPvQqRxKG
-         R/2hVRFQ5paRyDibG6EdPLiJkUVH3nAmW/urBoMpp0nAziLcmY5DU3mtuQxl1+uZC8A1
-         jq4zQxjWpyi1M4OBEvFzYlmiElJES8IyHorFoH89deH020n0nrS2VxfvF9JL8MphOqKl
-         jiVbzs+AdSbeNK8PDXY1wv79mjvk8nDLwadwIpcXhzLXEERJamSCS1YyolX8WxSEayM0
-         LBuSn0k/vF87M8L+bpEWvcVo681TPdAdzD6jvlMc7n6Z5WUs/3QBJYrg7xUAec5zKfD4
-         W1cw==
+        bh=fVzn+RsmKnXFYKfqd63X/CbkMpu8KQHbEZdUkW4xj0U=;
+        b=qRZlH61x8PUZR1fizh+hBjMB8Z181/uPxp4e+kJcUiFg2OlfhQabtFJndoos/kssky
+         9pkwiRkz1vixActMgr/SPssLUHuGJ8lG4kz6uv/xijnXasExer28zlZM5L9REr8xQRU2
+         ZF7iYvB7dr2TocPCBh+nIFu1Jbi98qod7JpWPqRAY/uycNdmmdAGe/H5sLPlHsnXmgdE
+         tLSIWrsxPuuQqXzhwkmeYzOAzn0I60GWaBeXCCBpoIomx9jKuF11OSZ+XYn8JMCH/jvI
+         wlwev9rgw7mzGl4hYQgV8xnxfGu+r6B+I3O1zAU8Zl5YkOAsw8Rxf7uJIhbCgbiN1im9
+         I4bA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=yMXKqf2FybOv33BFE3YqBY4OOePlSIZKFy3vKLviBeI=;
-        b=IPx0X04xLxFRH4/8X23yyNfdR269KkViEJKucFil0dojqWlQgCZoKQiU1mQhr14j/R
-         a88P+cLOTVVs6QK9+ZfK9Hi0B9A2FSMsgm7vAa/4ur2XdQ/bTg+R6vtjFTAX1z+pVuYT
-         uAmCjv3/qICyO31byaD7TsPtwmkSfPtHMdTveUdbvw8myOwLgdRWK9loOYxeQmqMoorU
-         fNa3EW2U+FRddNehS50JUHHaX1Z0mpmr43G7FsXp6WvHbQmPNoSLQ7x6faMHuPW7+jEv
-         VRqNDp3Wrd/mFkM7IlNYcS+LeNoqeT4XiqOyZ4MkQ4Njj0tYVToJXp5su/UZKKy1YDXT
-         oYIg==
-X-Gm-Message-State: AOAM532TG/it6FO/wIWRIfHCkt8Fc1JuQWLugIIVe8WH14fvDcdxvQjc
-        b9X9uIgZrFUQ5KlL7nEISzRAKiyVK1+kPXCerWI=
-X-Google-Smtp-Source: ABdhPJyE0iifyWih7Fl7c1vSsivv3w0MmkYdCRosBfEvztntcZEBLb1UtkJPzdELIib6UMVlRP6IQ7aDsgjBL6JV9HU=
-X-Received: by 2002:aca:3756:: with SMTP id e83mr3450760oia.31.1605129525603;
- Wed, 11 Nov 2020 13:18:45 -0800 (PST)
+        bh=fVzn+RsmKnXFYKfqd63X/CbkMpu8KQHbEZdUkW4xj0U=;
+        b=YiYGgyQnezSIy2tOuvC8mRWS2vsPtvzWUfsanJFJ5MzgPEvzkaq9Gtz9lFFQHHPfaF
+         2NtAzfnEruygInmmP7YqDY9JaIJs+US55NKInzEyTNS8iSpzUzvqKGz51G1P4zNUwfJv
+         FFlvAkxmvDNMLBvyK1AhsjjvKIt5MQSBEydd6sCbibv4rw7j+jW7NgJOnUAgUqo7ZP33
+         chTe7MBzgf7oLY0eF/IdVF+/l9i6nDU/vxQUwPjKKZis2TwISunFn7P9vaOWWYN4a/e7
+         HEBH4pgbu5+O2doRtg3CKJeEjTe5QhLr1cpYy/a8AWWAb1ewABPHthFtHqa+iyICyIDL
+         HEEg==
+X-Gm-Message-State: AOAM533j0cByxQ8ZwI77GHpdv3FVauxbFVNv0PTmEXyeYUQuSIe/Ijx5
+        jkNmubNmTBN19sng+QPlJZYyu/HuwONPlNdFM8E=
+X-Google-Smtp-Source: ABdhPJxEX9WPVJmk9/jaQj51TvKucKzvWK0zZ0cqmOpVCP3nI4J/r7ulI7bTAl7bSPouHzPVVDOrb6H07U3/1Vs2zuQ=
+X-Received: by 2002:aca:b4d7:: with SMTP id d206mr3609564oif.39.1605129725527;
+ Wed, 11 Nov 2020 13:22:05 -0800 (PST)
 MIME-Version: 1.0
-References: <20201102204344.342633-1-newren@gmail.com> <75170ee7-525e-31fc-f6bd-6dfac12b00c8@gmail.com>
- <CABPp-BF=+-ieP8fCxWWuvhe2dTTMKVGnYSTJuV6H9Z+zYs0SNg@mail.gmail.com> <e3fcaead-8bee-bcda-aee0-459ad9774f9e@gmail.com>
-In-Reply-To: <e3fcaead-8bee-bcda-aee0-459ad9774f9e@gmail.com>
+References: <20201102204344.342633-15-newren@gmail.com> <20201111204707.3126694-1-jonathantanmy@google.com>
+In-Reply-To: <20201111204707.3126694-1-jonathantanmy@google.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 11 Nov 2020 13:18:34 -0800
-Message-ID: <CABPp-BE=XzueTJ18dZXXXGEkJ0b6R-TjrgK5SAjDo2oPzTLETA@mail.gmail.com>
-Subject: Re: [PATCH v2 00/20] fundamentals of merge-ort implementation
-To:     Derrick Stolee <stolee@gmail.com>
+Date:   Wed, 11 Nov 2020 13:21:54 -0800
+Message-ID: <CABPp-BF+wX4nRnVNJLFKqKhjop1nL948SyhYRs2Tx3rErDa8sw@mail.gmail.com>
+Subject: Re: [PATCH v2 14/20] merge-ort: step 2 of tree writing -- function to
+ create tree object
+To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Derrick,
-
-On Wed, Nov 11, 2020 at 12:48 PM Derrick Stolee <stolee@gmail.com> wrote:
+On Wed, Nov 11, 2020 at 12:47 PM Jonathan Tan <jonathantanmy@google.com> wrote:
 >
-> On 11/11/2020 1:35 PM, Elijah Newren wrote:
-> > On Wed, Nov 11, 2020 at 9:09 AM Derrick Stolee <stolee@gmail.com> wrote:
-> >> For the series as a whole I'd love to see at least one test that
-> >> demonstrates that this code does something, if even only for a very
-> >> narrow case.
-> >>
-> >> There's a lot of code being moved here, and it would be nice to have
-> >> even a very simple test case that can check that we didn't leave any
-> >> important die("not implemented") calls lying around or worse accessing
-> >> an uninitialized pointer or something.
-> >
-> > We absolutely left several die("not implemented") calls lying around.
-> > The series was long enough at 20 patches; reviewers lose steam at 10
-> > (at least both you and Jonathan have), so maybe I should have left
-> > even more in there as an attempt to split up this series more.
-> >
-> > However, if you run the testsuite with GIT_TEST_MERGE_ALGORITHM=ort,
-> > then this series drops the number of failures in the testsuite from
-> > around 2200, down to 1500.  So, there's about 700 testcases for you.
+> > +static void write_tree(struct object_id *result_oid,
+> > +                    struct string_list *versions,
+> > +                    unsigned int offset)
+> > +{
+> > +     size_t maxlen = 0;
+> > +     unsigned int nr = versions->nr - offset;
+> > +     struct strbuf buf = STRBUF_INIT;
+> > +     struct string_list relevant_entries = STRING_LIST_INIT_NODUP;
+> > +     int i;
+> > +
+> > +     /*
+> > +      * We want to sort the last (versions->nr-offset) entries in versions.
+> > +      * Do so by abusing the string_list API a bit: make another string_list
+> > +      * that contains just those entries and then sort them.
+> > +      *
+> > +      * We won't use relevant_entries again and will let it just pop off the
+> > +      * stack, so there won't be allocation worries or anything.
+> > +      */
+> > +     relevant_entries.items = versions->items + offset;
+> > +     relevant_entries.nr = versions->nr - offset;
+> > +     string_list_sort(&relevant_entries);
+> > +
+> > +     /* Pre-allocate some space in buf */
+> > +     for (i = 0; i < nr; i++) {
+> > +             maxlen += strlen(versions->items[offset+i].string) + 34;
 >
-> Sorry that I'm jumping in to the series-of-series in the middle, so
-> I am unfamiliar with the previous progress and testing strategy. This
+> Probably should include the_hash_algo->rawsz instead of hardcoding 34.
 
-Not a problem at all.  Thanks much for jumping in and taking a look!
-You always provide some good feedback and suggestions.
-
-(Besides, those testcase changes have been spread over two and a half
-years...hard to stay on top of all of them.)
-
-> "number of test failures" metric is sufficient to demonstrate the
-> progress provided in this series. Perhaps it was even in your v1 cover
-> letter.
-
-Um, oops; it's not.  I did mention there were still some "not
-implemented" messages left, but didn't mention the testcase counts.
-But even that mention is apparently in the v1 cover letter rather than
-v2, and v2 wasn't sent in-reply-to v1, so it's harder to catch that.
-Sorry about that; I'll include the testcase counts in the v3 cover
-letter.
+Ah, indeed.  And I should submit a patch for fast-import.c to update
+it to not hardcode 34 either (though I'll submit the fast-import
+change separate from this series).
