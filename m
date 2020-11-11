@@ -2,104 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5698C388F9
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 18:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50D58C388F9
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 18:50:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6C1D1206FB
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 18:45:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D50582068D
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 18:50:00 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="grEQEk+I"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726460AbgKKSp2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 13:45:28 -0500
-Received: from cloud.peff.net ([104.130.231.41]:54794 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725949AbgKKSp2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 13:45:28 -0500
-Received: (qmail 13744 invoked by uid 109); 11 Nov 2020 18:45:28 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 11 Nov 2020 18:45:28 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18013 invoked by uid 111); 11 Nov 2020 18:45:27 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 11 Nov 2020 13:45:27 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 11 Nov 2020 13:45:27 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 00/11] Fix color handling in git add -i
-Message-ID: <20201111184527.GD9902@coredump.intra.peff.net>
-References: <pull.785.git.1605051739.gitgitgadget@gmail.com>
- <pull.785.v2.git.1605097704.gitgitgadget@gmail.com>
+        id S1726734AbgKKSt7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 13:49:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46736 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726216AbgKKSt7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 13:49:59 -0500
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59D31C0613D1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 10:49:59 -0800 (PST)
+Received: by mail-ot1-x341.google.com with SMTP id f16so3088867otl.11
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 10:49:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KperZmt2X1geHI/TWgCCMkx2kL0U+UU1fdawMKU2mm0=;
+        b=grEQEk+IPpy4/+sl9TIxEVkxUDfeYm2C7YZroR9IHjhTIsoSqAQN1TVuRJziEtb7m4
+         I9HXF8oRDh+oF5UJelkxyACV7Y+Ot5Efj2WsX86cWor6DXMSzF1UMqdbyTTaDsuJnVx6
+         VgZ+wafCVxosAdvLSTTYYBkZK0Rg0NwwKe05zQLe9th1x15gZcvflQPO/O1Et/K12mQv
+         B9s5rCqarUYjwLTdlLbtYt01umqx/yjVeveWrJDJqnvMSh1fUFdqYRFrNklnzelMKs1s
+         FW86NbRvLtAFREN7U1oSEGVQ+vnbSrR1Q6dA5CZ94IaLcYnoWvSsNZIldkQbieTCCXZd
+         vQdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KperZmt2X1geHI/TWgCCMkx2kL0U+UU1fdawMKU2mm0=;
+        b=Qp2HM5nelhjBOmNy5UgOBof4AX98FiyE+zH0hrOrBFd8WyX86NS3Jeh6pE38krULN2
+         PkHnxug+sKOjKdb3vKfWMqfIxzesnDsH12v+6WcU2MuEctorK0MEOaTX/6V133c8UDdG
+         4mPcDdaRrd6+21geAeSJFc/runisLXye/3ixbeGAbec5KjuRs9KNCgS3DhbiP5BR79EQ
+         Uz4dVq9yXSrQaXgfbwzeW2Z6PTm/OGDpceSHD0i+oZ/bgVPfnYE9SSf/aUDtP1AN83bx
+         OtIZy/CsdNHwoamQI0621ygOXqsUSWY7HPCKGdN3JDziDq6XjtdFy6RCGF2YU0RNXfDl
+         z4Tg==
+X-Gm-Message-State: AOAM5339VmBbnxDBrP7+HCMHCrqazW051G+kxDHlLDGmn3LD2QyUGQ+F
+        z6kELBrHL1KtK62dGnCdCVlrUGPUIixWxfNpAQ4=
+X-Google-Smtp-Source: ABdhPJwG79taXsrZQ120JmdPTrJ8Y35f1Wkou7gd3e4rgkIhcct8+UIc2kKrpmLS7L9UZsj02N6in15LU4YjWqg4QG8=
+X-Received: by 2002:a05:6830:1002:: with SMTP id a2mr19441649otp.316.1605120597343;
+ Wed, 11 Nov 2020 10:49:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <pull.785.v2.git.1605097704.gitgitgadget@gmail.com>
+References: <pull.835.v4.git.git.1604535765.gitgitgadget@gmail.com>
+ <pull.835.v5.git.git.1604622298.gitgitgadget@gmail.com> <34f542d9dd846da5fd81274966ee2ebe0660dcef.1604622299.git.gitgitgadget@gmail.com>
+ <fbaa60c4-ee6b-02b7-68b5-e5873f8ec713@gmail.com>
+In-Reply-To: <fbaa60c4-ee6b-02b7-68b5-e5873f8ec713@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 11 Nov 2020 10:49:46 -0800
+Message-ID: <CABPp-BGTS+qe1V7=ie7PjbRmKwwF=c54uOm43R1dnv7MgBJfyA@mail.gmail.com>
+Subject: Re: [PATCH v5 12/15] strmap: enable allocations to come from a mem_pool
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 11, 2020 at 12:28:13PM +0000, Johannes Schindelin via GitGitGadget wrote:
+On Wed, Nov 11, 2020 at 9:33 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>
+> Hi Elijah
+>
+> On 06/11/2020 00:24, Elijah Newren via GitGitGadget wrote:
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > For heavy users of strmaps, allowing the keys and entries to be
+> > allocated from a memory pool can provide significant overhead savings.
+> > Add an option to strmap_init_with_options() to specify a memory pool.
+> > [...]
+> > diff --git a/strmap.h b/strmap.h
+> > index c8c4d7c932..dda928703d 100644
+> > --- a/strmap.h
+> > +++ b/strmap.h
+> > @@ -3,8 +3,10 @@
+> >
+> >   #include "hashmap.h"
+> >
+> > +struct mempool;
+>
+> I think this is a typo - I assume you wanted to declare `struct
+> mem_pool` but it's not strictly necessary as you're only adding a
+> pointer to the struct below.
+>
+> Best Wishes
+>
+> Phillip
 
-> Changes since v1:
-> 
->  * The regression test now actually exercises the re-coloring (that is the
->    primary purpose of git add -p looking at the color.diff.* variables).
->  * The way the built-in git add -p renders hunk headers of split hunks was
->    aligned with how the Perl version does things.
->  * We now consistently prefer color.diff.context over color.diff.plain, no
->    matter whether using the Perl or the built-in version of git add -p.
->  * The commit message for the regression test no longer confuses readers by
->    mentioning dash.
->  * The regression test was structured a bit better, first testing error
->    message coloring, then the menu in git add -i and then the diff coloring
->    in git add -p.
+Indeed, thanks.
 
-The changes were less scary than I was led to believe after reading your
-earlier response. :)
-
-Everything here looks sensible. As I said elsewhere, I do worry there
-may be a lingering issue with how parse_diff() looks at the filtered
-diffs. Let me see if I can get diff-so-fancy working...
-
-Aha, yes. I think using diff-so-fancy here isn't entirely robust,
-because it has some cases where it fails at the 1-to-1 line
-correspondence, but they're aware of the issue. But it does work in
-simples cases now (there's some coloring which makes the output more
-meaningful, but I obviously won't paste it here):
-
-  $ git -c interactive.difffilter='diff-so-fancy' add -p
-  ──────────────────────────────────────────────────────────────────────
-  modified: file
-  ──────────────────────────────────────────────────────────────────────
-  @ file:1 @
-  old
-  new
-  (1/1) Stage this hunk [y,n,q,a,d,e,?]? 
-
-But with the builtin:
-
-  $ git -c interactive.difffilter='diff-so-fancy' \
-        -c add.interactive.usebuiltin=true \
-	add -p
-  error: could not parse colored hunk header '?[1m?[38;5;1m?[31mold?[m'
-
-I don't use it myself, and as I said, I think they have some fixes to
-make for it to be robust as a diff-filter. But I suspect this may be a
-problem once the builtin version becomes the default.
-
-I don't think it should be dealt with in this patch series, though.
-While it may touch on some of the coloring code, it's otherwise
-orthogonal to the fixes here. And while the fix is likely to be to make
-render_hunk() stop re-coloring in the non-edit cases, your more-robust
-test here will still be checking what you expect (because it really is
-triggering the edit case, not relying on the extra coloring to see the
-effect of in-process color config).
-
--Peff
+>
+> >   struct strmap {
+> >       struct hashmap map;
+> > +     struct mem_pool *pool;
+> >       unsigned int strdup_strings:1;
+> >   };
+> >
+> > @@ -37,9 +39,10 @@ void strmap_init(struct strmap *map);
+> >
+> >   /*
+> >    * Same as strmap_init, but for those who want to control the memory management
+> > - * carefully instead of using the default of strdup_strings=1.
+> > + * carefully instead of using the default of strdup_strings=1 and pool=NULL.
+> >    */
+> >   void strmap_init_with_options(struct strmap *map,
+> > +                           struct mem_pool *pool,
+> >                             int strdup_strings);
+> >
+> >   /*
+> > @@ -137,9 +140,10 @@ static inline void strintmap_init(struct strintmap *map, int default_value)
+> >
+> >   static inline void strintmap_init_with_options(struct strintmap *map,
+> >                                              int default_value,
+> > +                                            struct mem_pool *pool,
+> >                                              int strdup_strings)
+> >   {
+> > -     strmap_init_with_options(&map->map, strdup_strings);
+> > +     strmap_init_with_options(&map->map, pool, strdup_strings);
+> >       map->default_value = default_value;
+> >   }
+> >
+> > @@ -221,9 +225,10 @@ static inline void strset_init(struct strset *set)
+> >   }
+> >
+> >   static inline void strset_init_with_options(struct strset *set,
+> > +                                         struct mem_pool *pool,
+> >                                           int strdup_strings)
+> >   {
+> > -     strmap_init_with_options(&set->map, strdup_strings);
+> > +     strmap_init_with_options(&set->map, pool, strdup_strings);
+> >   }
+> >
+> >   static inline void strset_clear(struct strset *set)
+> >
