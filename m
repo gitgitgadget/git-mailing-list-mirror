@@ -5,67 +5,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F243DC388F9
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 20:02:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1892C56201
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 20:02:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 97BC2208B8
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 20:02:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C9CD2087D
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 20:02:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BPBPnf3t"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tYEpKMRw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727681AbgKKUCl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 15:02:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57982 "EHLO
+        id S1727883AbgKKUCm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 15:02:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727868AbgKKUCh (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1727720AbgKKUCh (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 11 Nov 2020 15:02:37 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD153C0613D1
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 12:02:36 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id s8so3704962wrw.10
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 12:02:36 -0800 (PST)
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79033C0613D4
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 12:02:37 -0800 (PST)
+Received: by mail-wr1-x444.google.com with SMTP id 33so3730248wrl.7
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 12:02:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=OA4wQ/JUZvjUd14KqKKplav5D5ohsMHFqJIjlPS/lz8=;
-        b=BPBPnf3tu5ousPEXSm2MpDo6yb7SdkVY+JdpuuTVZwjmTubo30gA4ScWxugKr2utzA
-         r7YNx57AoWFUkB0jEV/wKAOCXo8u6FD2YgpiPCj3Lw5+scarzTDCtOKniIGVgRPgeGzT
-         UIxLGynXGJmsBkUyEBupZznN4qPcs7y2o1wxAg4te1EcfFmbOjS1dYNS6JHA/tz0K0SF
-         ftBs0kkeauxMfXVrG4GxEYoFT/u21CmoWfU+XgWsh1VWhsRoDxAz+6mdCQE9Fte2ONYj
-         q+aNwMvRYI7lmY82mS/LcyZnsPNs/yIGeGxv9JLyKSYNyi1YCnOFkz0iAxKELkH8vQhb
-         t8Zg==
+        bh=/m8cQExWBEWxoRtNoB5eAbuRwvA8C0BdwF9qLyUY+84=;
+        b=tYEpKMRwB6wxX1ouX14vuvy5Fv92lx/0aurwHid8iy0xybFEQrDEcP+4FWswzuX16F
+         3j2dXVzD6Q1a3Jh31Zx5b0R66j6gp8UpMOyAGAhs9ihKJfjSu/qpROGVrXUGA09rE7Lp
+         CK6qh4g+Y7/hA0woZ5nbH1tO+qU8410QDwIRlIdwL9VFKlzC7S3c3Ec8W0RiwEYMetEz
+         7ky9weX4Je09PgiZCH1Kz4HiE7P36UmvR7j5270oKLvQd3ztk+32okln8JODte3hUS0k
+         JHayMc/rNNyeYU/TsK6e0z1k4tjnr7LtgJW4TW4raCdTznJ5uceMLUcbpVlLyc6/S4iV
+         hKaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=OA4wQ/JUZvjUd14KqKKplav5D5ohsMHFqJIjlPS/lz8=;
-        b=pmUXEuSg0Fl0ORHg5dz7vd3SIflXcHOqccJlNYeM/1yl7Uxb1lGGKMRkyeUYwfGGJn
-         fHUMYu/FORn/KDS8poHQe982Cv0fvpmoVmCOCQS2Y3NOA8bSmsYQqxCmhF+FrcR+YYVA
-         ojiqOjD7KgM2HNAR3Lj7+F70AXjKvRDHMUHD0lVyZSOq//Iy9UQPwtFqC7Ap+yKBJ+oe
-         Jwb+nf60yBRkltBCSesL09Fg0Nih0s0irFvTeCvP76dUngcIq/8TnjUhFZB2TjUG4M0R
-         lyFtCHYmWR5xz8nTq/sS4pSzh+2L9ozenrLgw9YbzH4yQ3ErC3/3q4Nu2mmjWe2R1tqS
-         hUrA==
-X-Gm-Message-State: AOAM5306eHyvj/tGHChVoyP7SwYe20hkklFApsN4nq6wStt9AXRh04pt
-        jJwCr50rO6v/eZZmUHqJ4sC2lCb5qtY=
-X-Google-Smtp-Source: ABdhPJymOEU44GGtRAJbIlvbP/70vFOQCwXLabbePN5jzbe6cR7AmcG7agvp2ozIv6EHWq/WarRR8g==
-X-Received: by 2002:adf:f6cd:: with SMTP id y13mr12017820wrp.363.1605124955378;
-        Wed, 11 Nov 2020 12:02:35 -0800 (PST)
+        bh=/m8cQExWBEWxoRtNoB5eAbuRwvA8C0BdwF9qLyUY+84=;
+        b=JM9D3CHNb5lDvEpH4110iyY/eaSEZfWBgEs5Aij53pu+d4Z178mACpftBsPKVp/+58
+         wfAopAy0uq9SGDjhRONCzO6sUkSAcZMELOR2gUFiF1SIPBjh6vUmYFi1vlfqswk1D7m1
+         auAxLx2vtmqoZJFrky9lQZD7bRQ4wfLtxl6zyp/a8+7Qab9qX4Q3KPWSWH9ek3d8jZu5
+         Scl7NB5pY8+kgyMnEzSKJF7FwsGohpmfgtxobbEvi+qd/685lM6XPQwFQbw2AAMOLu6x
+         LHqKEdkXvEyofDyqfrwgJK0wGg040RWuUS0NnJiILAt2c/zsl+RbV8phBXurvN+QWpSJ
+         m9Fg==
+X-Gm-Message-State: AOAM5328zy26LAhe8QWpUhYYJzgU3pGQ0TWCgXJ4E4TOGEVHB3epHUm+
+        zB83Yqu1p4zWSql49eJsXlLQCCUZfbM=
+X-Google-Smtp-Source: ABdhPJx7Xz7l1fAFLNe/hwE5ZxCO/pkNEs7Cmx6joZ8lboiQc+KbL9pO4meaZJSXCqM6oEIHYMMOtA==
+X-Received: by 2002:adf:c58f:: with SMTP id m15mr32757466wrg.144.1605124956134;
+        Wed, 11 Nov 2020 12:02:36 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p12sm3621748wrw.28.2020.11.11.12.02.34
+        by smtp.gmail.com with ESMTPSA id t13sm3827880wru.67.2020.11.11.12.02.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2020 12:02:34 -0800 (PST)
-Message-Id: <058e7a6b76047a6e3196ff13cafc2d6ea3b772df.1605124942.git.gitgitgadget@gmail.com>
+        Wed, 11 Nov 2020 12:02:35 -0800 (PST)
+Message-Id: <9b494c26c18e5a5b4f2561e30546d3bf3e82ef11.1605124942.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.835.v6.git.git.1605124942.gitgitgadget@gmail.com>
 References: <pull.835.v5.git.git.1604622298.gitgitgadget@gmail.com>
         <pull.835.v6.git.git.1605124942.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 11 Nov 2020 20:02:20 +0000
-Subject: [PATCH v6 14/15] Use new HASHMAP_INIT macro to simplify hashmap
- initialization
+Date:   Wed, 11 Nov 2020 20:02:21 +0000
+Subject: [PATCH v6 15/15] shortlog: use strset from strmap.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,191 +79,110 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Now that hashamp has lazy initialization and a HASHMAP_INIT macro,
-hashmaps allocated on the stack can be initialized without a call to
-hashmap_init() and in some cases makes the code a bit shorter.  Convert
-some callsites over to take advantage of this.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- attr.c                  | 26 ++++++++------------------
- bloom.c                 |  3 +--
- builtin/difftool.c      |  9 ++++-----
- range-diff.c            |  4 +---
- revision.c              |  9 +--------
- t/helper/test-hashmap.c |  3 +--
- 6 files changed, 16 insertions(+), 38 deletions(-)
+ builtin/shortlog.c | 61 +++-------------------------------------------
+ 1 file changed, 4 insertions(+), 57 deletions(-)
 
-diff --git a/attr.c b/attr.c
-index a826b2ef1f..4ef85d668b 100644
---- a/attr.c
-+++ b/attr.c
-@@ -52,13 +52,6 @@ static inline void hashmap_unlock(struct attr_hashmap *map)
- 	pthread_mutex_unlock(&map->mutex);
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index 83f0a739b4..c52e4ccd19 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -10,6 +10,7 @@
+ #include "shortlog.h"
+ #include "parse-options.h"
+ #include "trailer.h"
++#include "strmap.h"
+ 
+ static char const * const shortlog_usage[] = {
+ 	N_("git shortlog [<options>] [<revision-range>] [[--] <path>...]"),
+@@ -169,60 +170,6 @@ static void read_from_stdin(struct shortlog *log)
+ 	strbuf_release(&oneline);
  }
  
+-struct strset_item {
+-	struct hashmap_entry ent;
+-	char value[FLEX_ARRAY];
+-};
+-
+-struct strset {
+-	struct hashmap map;
+-};
+-
+-#define STRSET_INIT { { NULL } }
+-
+-static int strset_item_hashcmp(const void *hash_data,
+-			       const struct hashmap_entry *entry,
+-			       const struct hashmap_entry *entry_or_key,
+-			       const void *keydata)
+-{
+-	const struct strset_item *a, *b;
+-
+-	a = container_of(entry, const struct strset_item, ent);
+-	if (keydata)
+-		return strcmp(a->value, keydata);
+-
+-	b = container_of(entry_or_key, const struct strset_item, ent);
+-	return strcmp(a->value, b->value);
+-}
+-
 -/*
-- * The global dictionary of all interned attributes.  This
-- * is a singleton object which is shared between threads.
-- * Access to this dictionary must be surrounded with a mutex.
+- * Adds "str" to the set if it was not already present; returns true if it was
+- * already there.
 - */
--static struct attr_hashmap g_attr_hashmap;
--
- /* The container for objects stored in "struct attr_hashmap" */
- struct attr_hash_entry {
- 	struct hashmap_entry ent;
-@@ -80,11 +73,14 @@ static int attr_hash_entry_cmp(const void *unused_cmp_data,
- 	return (a->keylen != b->keylen) || strncmp(a->key, b->key, a->keylen);
- }
- 
--/* Initialize an 'attr_hashmap' object */
--static void attr_hashmap_init(struct attr_hashmap *map)
+-static int strset_check_and_add(struct strset *ss, const char *str)
 -{
--	hashmap_init(&map->map, attr_hash_entry_cmp, NULL, 0);
--}
-+/*
-+ * The global dictionary of all interned attributes.  This
-+ * is a singleton object which is shared between threads.
-+ * Access to this dictionary must be surrounded with a mutex.
-+ */
-+static struct attr_hashmap g_attr_hashmap = {
-+	HASHMAP_INIT(attr_hash_entry_cmp, NULL)
-+};
- 
- /*
-  * Retrieve the 'value' stored in a hashmap given the provided 'key'.
-@@ -96,9 +92,6 @@ static void *attr_hashmap_get(struct attr_hashmap *map,
- 	struct attr_hash_entry k;
- 	struct attr_hash_entry *e;
- 
--	if (!map->map.tablesize)
--		attr_hashmap_init(map);
+-	unsigned int hash = strhash(str);
+-	struct strset_item *item;
 -
- 	hashmap_entry_init(&k.ent, memhash(key, keylen));
- 	k.key = key;
- 	k.keylen = keylen;
-@@ -114,9 +107,6 @@ static void attr_hashmap_add(struct attr_hashmap *map,
- {
- 	struct attr_hash_entry *e;
- 
--	if (!map->map.tablesize)
--		attr_hashmap_init(map);
+-	if (!ss->map.table)
+-		hashmap_init(&ss->map, strset_item_hashcmp, NULL, 0);
 -
- 	e = xmalloc(sizeof(struct attr_hash_entry));
- 	hashmap_entry_init(&e->ent, memhash(key, keylen));
- 	e->key = key;
-diff --git a/bloom.c b/bloom.c
-index 719c313a1c..b176f28f53 100644
---- a/bloom.c
-+++ b/bloom.c
-@@ -229,10 +229,9 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
- 	diffcore_std(&diffopt);
- 
- 	if (diff_queued_diff.nr <= settings->max_changed_paths) {
--		struct hashmap pathmap;
-+		struct hashmap pathmap = HASHMAP_INIT(pathmap_cmp, NULL);
- 		struct pathmap_hash_entry *e;
- 		struct hashmap_iter iter;
--		hashmap_init(&pathmap, pathmap_cmp, NULL, 0);
- 
- 		for (i = 0; i < diff_queued_diff.nr; i++) {
- 			const char *path = diff_queued_diff.queue[i]->two->path;
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index 7ac432b881..6e18e623fd 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -342,7 +342,10 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 	const char *workdir, *tmp;
- 	int ret = 0, i;
- 	FILE *fp;
--	struct hashmap working_tree_dups, submodules, symlinks2;
-+	struct hashmap working_tree_dups = HASHMAP_INIT(working_tree_entry_cmp,
-+							NULL);
-+	struct hashmap submodules = HASHMAP_INIT(pair_cmp, NULL);
-+	struct hashmap symlinks2 = HASHMAP_INIT(pair_cmp, NULL);
- 	struct hashmap_iter iter;
- 	struct pair_entry *entry;
- 	struct index_state wtindex;
-@@ -383,10 +386,6 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 	rdir_len = rdir.len;
- 	wtdir_len = wtdir.len;
- 
--	hashmap_init(&working_tree_dups, working_tree_entry_cmp, NULL, 0);
--	hashmap_init(&submodules, pair_cmp, NULL, 0);
--	hashmap_init(&symlinks2, pair_cmp, NULL, 0);
+-	if (hashmap_get_from_hash(&ss->map, hash, str))
+-		return 1;
 -
- 	child.no_stdin = 1;
- 	child.git_cmd = 1;
- 	child.use_shell = 0;
-diff --git a/range-diff.c b/range-diff.c
-index befeecae44..b9950f10c8 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -232,11 +232,9 @@ static int patch_util_cmp(const void *dummy, const struct patch_util *a,
- 
- static void find_exact_matches(struct string_list *a, struct string_list *b)
- {
--	struct hashmap map;
-+	struct hashmap map = HASHMAP_INIT((hashmap_cmp_fn)patch_util_cmp, NULL);
- 	int i;
- 
--	hashmap_init(&map, (hashmap_cmp_fn)patch_util_cmp, NULL, 0);
--
- 	/* First, add the patches of a to a hash map */
- 	for (i = 0; i < a->nr; i++) {
- 		struct patch_util *util = a->items[i].util;
-diff --git a/revision.c b/revision.c
-index f27649d45d..c6e169e3eb 100644
---- a/revision.c
-+++ b/revision.c
-@@ -124,11 +124,6 @@ static int path_and_oids_cmp(const void *hashmap_cmp_fn_data,
- 	return strcmp(e1->path, e2->path);
- }
- 
--static void paths_and_oids_init(struct hashmap *map)
--{
--	hashmap_init(map, path_and_oids_cmp, NULL, 0);
+-	FLEX_ALLOC_STR(item, value, str);
+-	hashmap_entry_init(&item->ent, hash);
+-	hashmap_add(&ss->map, &item->ent);
+-	return 0;
 -}
 -
- static void paths_and_oids_clear(struct hashmap *map)
- {
- 	struct hashmap_iter iter;
-@@ -213,7 +208,7 @@ void mark_trees_uninteresting_sparse(struct repository *r,
- 				     struct oidset *trees)
- {
- 	unsigned has_interesting = 0, has_uninteresting = 0;
--	struct hashmap map;
-+	struct hashmap map = HASHMAP_INIT(path_and_oids_cmp, NULL);
- 	struct hashmap_iter map_iter;
- 	struct path_and_oids_entry *entry;
- 	struct object_id *oid;
-@@ -237,8 +232,6 @@ void mark_trees_uninteresting_sparse(struct repository *r,
- 	if (!has_uninteresting || !has_interesting)
- 		return;
- 
--	paths_and_oids_init(&map);
+-static void strset_clear(struct strset *ss)
+-{
+-	if (!ss->map.table)
+-		return;
+-	hashmap_clear_and_free(&ss->map, struct strset_item, ent);
+-}
 -
- 	oidset_iter_init(trees, &iter);
- 	while ((oid = oidset_iter_next(&iter))) {
- 		struct tree *tree = lookup_tree(r, oid);
-diff --git a/t/helper/test-hashmap.c b/t/helper/test-hashmap.c
-index 2475663b49..36ff07bd4b 100644
---- a/t/helper/test-hashmap.c
-+++ b/t/helper/test-hashmap.c
-@@ -151,12 +151,11 @@ static void perf_hashmap(unsigned int method, unsigned int rounds)
- int cmd__hashmap(int argc, const char **argv)
- {
- 	struct strbuf line = STRBUF_INIT;
--	struct hashmap map;
- 	int icase;
-+	struct hashmap map = HASHMAP_INIT(test_entry_cmp, &icase);
+ static void insert_records_from_trailers(struct shortlog *log,
+ 					 struct strset *dups,
+ 					 struct commit *commit,
+@@ -253,7 +200,7 @@ static void insert_records_from_trailers(struct shortlog *log,
+ 		if (!parse_ident(log, &ident, value))
+ 			value = ident.buf;
  
- 	/* init hash map */
- 	icase = argc > 1 && !strcmp("ignorecase", argv[1]);
--	hashmap_init(&map, test_entry_cmp, &icase, 0);
- 
- 	/* process commands from stdin */
- 	while (strbuf_getline(&line, stdin) != EOF) {
+-		if (strset_check_and_add(dups, value))
++		if (!strset_add(dups, value))
+ 			continue;
+ 		insert_one_record(log, value, oneline);
+ 	}
+@@ -291,7 +238,7 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit)
+ 				      log->email ? "%aN <%aE>" : "%aN",
+ 				      &ident, &ctx);
+ 		if (!HAS_MULTI_BITS(log->groups) ||
+-		    !strset_check_and_add(&dups, ident.buf))
++		    strset_add(&dups, ident.buf))
+ 			insert_one_record(log, ident.buf, oneline_str);
+ 	}
+ 	if (log->groups & SHORTLOG_GROUP_COMMITTER) {
+@@ -300,7 +247,7 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit)
+ 				      log->email ? "%cN <%cE>" : "%cN",
+ 				      &ident, &ctx);
+ 		if (!HAS_MULTI_BITS(log->groups) ||
+-		    !strset_check_and_add(&dups, ident.buf))
++		    strset_add(&dups, ident.buf))
+ 			insert_one_record(log, ident.buf, oneline_str);
+ 	}
+ 	if (log->groups & SHORTLOG_GROUP_TRAILER) {
 -- 
 gitgitgadget
-
