@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24844C388F9
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 19:41:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E094C388F9
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 19:42:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B002F2087D
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 19:41:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 46BE42087D
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 19:42:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="lbMk2yiB"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="wLojPmCR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727489AbgKKTlv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 14:41:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54718 "EHLO
+        id S1727553AbgKKTl7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 14:41:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726479AbgKKTlv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 14:41:51 -0500
+        with ESMTP id S1727468AbgKKTl7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 14:41:59 -0500
 Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE744C0613D1
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 11:41:49 -0800 (PST)
-Received: by mail-qk1-x743.google.com with SMTP id h15so2860601qkl.13
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 11:41:49 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E84F9C0613D1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 11:41:58 -0800 (PST)
+Received: by mail-qk1-x743.google.com with SMTP id t191so2916311qka.4
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 11:41:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=YfB1LW/vqaO3YmLzAXyzg2hBvw20Dcx/Uldtx6zwBcs=;
-        b=lbMk2yiB6Wh6jx84tSQ3+nQrxJUTAXZgkntCbG2nJ8W03dyO1YavYDx86WWJj556ND
-         ps6+QThGc05S3D2BpXh9yOFGmO9EMqyIDBHlxDVA0ef2s9EiMVGokHFbjML1WsYT0IFl
-         HF7lHRdZw8S2O912W8tPl6r4oSB5F2ZQuLa3tofk9j3T6ti69z/bUOA1zqBFxTIFwMx4
-         077CmXXiKYgOeQgXerWP1ve4/on64Gi4OraF/jlxsUed4UgC4cPNeOaN/wWc74k5WcXk
-         kC9hPwNTkMTsn0XFcDX9eNW/+7sEtKQ2zr/1D2lgnhcwYZMHRH9YHP6OHq1lFmSYNtDz
-         2brg==
+        bh=iP/7a2VntiLlnAaVrnGYm87IoWVvfW65anp38JXV3Qw=;
+        b=wLojPmCRqZhpgAq5eLmbAR6g3EoqvnLrTh8h+ROuP1LtyjyWdDq3cc+ZbQ0Ut1KbbP
+         2C6LsUHVQ5LD9ypL+d3yR9a6iM45dkcIFKfjWe44wijQt9ALuQXeidRaYJILHw1ExqAX
+         yb7rcu/mRKe3M+VKBwAHmULWYcNIC+GTgZqy5knN73uJP28EKN0OntLvqhyDhg2B063u
+         9LDxylTEoRwcgrCRkzMx7y149dA7S2ToLGBMNNXgyafO8f7Isf26wMSPjLYER/kSvjyL
+         ku9rO6pwlw87v+gcnNq/ka0HF5qUbvQGgG4RhQPYBMk5rikqN4AZu6K029b7kvVDelcs
+         H01w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=YfB1LW/vqaO3YmLzAXyzg2hBvw20Dcx/Uldtx6zwBcs=;
-        b=BZtETV7T5JUFkdWSxcR7R/3ltbbAjzsUhxkzTzkEuQ7jK1wE26PJjh7xK6j1K+cK0n
-         RPE/Qjia73ZEtOHwk3qKmUAF0lOmIUYcxu1pXy3PX91CW3SYirYDud7g3KNcgpiYTGYb
-         nC+Fl3BF8BQK3WIJdOSqzJmoA66q1ygUSuzQq4yRgDVwIwiFIA4DlVz0U9zg1tQzDPCL
-         tMH9AN2oD+YMRlPA9x+yMyL7hETKk8Z9lVHo5H3Bj76vyaX3Q5YARKyteq62TGI0jdXT
-         eRRj+4ODFBgLm2U+5EpxfZ30wX37wotzwzk040qRvmQENjSVqmWQHekQMHFrhPXxd7Pe
-         buZQ==
-X-Gm-Message-State: AOAM5304co05Z1+Yy5tPEFcci2D5QuX7SkDSqm+EAMHyUULfSd2IMX6E
-        JelN0m8RAYbmOQMVqh9OzNXOfH3gSoAdcsrN
-X-Google-Smtp-Source: ABdhPJyV6fAtAmZ3NJmp3zf3LtszvCzEBMWha3QfW2Hw4BjDYgTSc1PTE/ZTgBGzu6SCTb7/Pg6F2g==
-X-Received: by 2002:ae9:ea14:: with SMTP id f20mr25928195qkg.239.1605123708683;
-        Wed, 11 Nov 2020 11:41:48 -0800 (PST)
+        bh=iP/7a2VntiLlnAaVrnGYm87IoWVvfW65anp38JXV3Qw=;
+        b=DxzpW/XbzCv1wc/g4yEt8NR96aBplm7GRP+FX6Hm9W5co5EoADukPzGyUsbE/VFbfh
+         RXJUkd6hHdiaPoQcmicmPENAG2dEE6p+Z45pB56AoJXwCWeKt8TBZ7GrwAko5l14qz37
+         seJUxVkEg3gArDGanISrQ2EyqdHFcED4uNmoEaiNiwxtgdrrBGu6Hc0IV2nbIVoJQ/Ld
+         tH+puOhcMXsx4sTa/X7Z4HVnncOU5865nJSrL1OzldKPERZDiJklWi4Ob/Aq8oKIH4P8
+         mxMvzrTtLThxztqZ4Msp+JJ1/UUrxnSYvUW4rEr4RSGamiIG1FTHYMWFD44nT+TSRnNS
+         8qnQ==
+X-Gm-Message-State: AOAM533DU7nsc+ZPEWGVoHGSau8FPe3NDwO7y4yVSXe4xTaGRqxIF3hF
+        MBQSwNVoFEqEKbe8v1/Km1CqFFUcs0j3C/Fd
+X-Google-Smtp-Source: ABdhPJzdAMMFdjTDyT18f1My43B8MMVz01HdNNRKnDevDXfuRk/XTXNPZAdKGfyaKLQiHStETtBRpQ==
+X-Received: by 2002:a37:98c7:: with SMTP id a190mr27174894qke.471.1605123717929;
+        Wed, 11 Nov 2020 11:41:57 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:7ccc:9a51:1ad:2057])
-        by smtp.gmail.com with ESMTPSA id z125sm3098243qke.54.2020.11.11.11.41.47
+        by smtp.gmail.com with ESMTPSA id 9sm2814578qty.30.2020.11.11.11.41.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2020 11:41:48 -0800 (PST)
-Date:   Wed, 11 Nov 2020 14:41:44 -0500
+        Wed, 11 Nov 2020 11:41:57 -0800 (PST)
+Date:   Wed, 11 Nov 2020 14:41:54 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net
-Subject: [PATCH 01/23] ewah/ewah_bitmap.c: grow buffer past 1
-Message-ID: <36deaad366d66d10b96755dd6969bfe51123a2d4.1605123652.git.me@ttaylorr.com>
+Subject: [PATCH 02/23] pack-bitmap: fix header size check
+Message-ID: <c59fcbcc67556c5c9c5a22a2ee745a2f58234efd.1605123652.git.me@ttaylorr.com>
 References: <cover.1605123652.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -72,34 +72,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the buffer size is exactly 1, we fail to grow it properly, since
-the integer truncation means that 1 * 3 / 2 = 1. This can cause a bad
-write on the line below.
+From: Jeff King <peff@peff.net>
 
-Bandaid this by first padding the buffer by 16, and then growing it.
-This still allows old blocks to fit into new ones, but fixes the case
-where the block size equals 1.
+When we parse a .bitmap header, we first check that we have enough bytes
+to make a valid header. We do that based on sizeof(struct
+bitmap_disk_header). However, as of 0f4d6cada8 (pack-bitmap: make bitmap
+header handling hash agnostic, 2019-02-19), that struct oversizes its
+checksum member to GIT_MAX_RAWSZ. That means we need to adjust for the
+difference between that constant and the size of the actual hash we're
+using. That commit adjusted the code which moves our pointer forward,
+but forgot to update the size check.
 
-Co-authored-by: Jeff King <peff@peff.net>
+This meant we were overly strict about the header size (requiring room
+for a 32-byte worst-case hash, when sha1 is only 20 bytes). But in
+practice it didn't matter because bitmap files tend to have at least 12
+bytes of actual data anyway, so it was unlikely for a valid file to be
+caught by this.
+
+Let's fix it by pulling the header size into a separate variable and
+using it in both spots. That fixes the bug and simplifies the code to make
+it harder to have a mismatch like this in the future. It will also come
+in handy in the next patch for more bounds checking.
+
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- ewah/ewah_bitmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ pack-bitmap.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/ewah/ewah_bitmap.c b/ewah/ewah_bitmap.c
-index d59b1afe3d..3fae04ad00 100644
---- a/ewah/ewah_bitmap.c
-+++ b/ewah/ewah_bitmap.c
-@@ -45,7 +45,7 @@ static inline void buffer_grow(struct ewah_bitmap *self, size_t new_size)
- static inline void buffer_push(struct ewah_bitmap *self, eword_t value)
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 4077e731e8..cea3bb88bf 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -138,8 +138,9 @@ static struct ewah_bitmap *read_bitmap_1(struct bitmap_index *index)
+ static int load_bitmap_header(struct bitmap_index *index)
  {
- 	if (self->buffer_size + 1 >= self->alloc_size)
--		buffer_grow(self, self->buffer_size * 3 / 2);
-+		buffer_grow(self, (self->buffer_size + 16) * 3 / 2);
+ 	struct bitmap_disk_header *header = (void *)index->map;
++	size_t header_size = sizeof(*header) - GIT_MAX_RAWSZ + the_hash_algo->rawsz;
  
- 	self->buffer[self->buffer_size++] = value;
+-	if (index->map_size < sizeof(*header) + the_hash_algo->rawsz)
++	if (index->map_size < header_size)
+ 		return error("Corrupted bitmap index (missing header data)");
+ 
+ 	if (memcmp(header->magic, BITMAP_IDX_SIGNATURE, sizeof(BITMAP_IDX_SIGNATURE)) != 0)
+@@ -164,7 +165,7 @@ static int load_bitmap_header(struct bitmap_index *index)
+ 	}
+ 
+ 	index->entry_count = ntohl(header->entry_count);
+-	index->map_pos += sizeof(*header) - GIT_MAX_RAWSZ + the_hash_algo->rawsz;
++	index->map_pos += header_size;
+ 	return 0;
  }
+ 
 -- 
 2.29.2.156.gc03786897f
 
