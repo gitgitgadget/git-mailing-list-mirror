@@ -5,65 +5,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=-20.4 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
-	autolearn_force=no version=3.4.0
+	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3E67C388F9
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 01:32:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFA81C388F9
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 01:32:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4C5A520809
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 01:32:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 55004208B3
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 01:32:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IZpLjLa5"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="a6Pc7ClP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728448AbgKLBcf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 20:32:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33534 "EHLO
+        id S1728458AbgKLBci (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 20:32:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727927AbgKKXbj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 18:31:39 -0500
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75A19C061A49
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 15:29:50 -0800 (PST)
-Received: by mail-yb1-xb49.google.com with SMTP id h9so3949852ybj.10
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 15:29:50 -0800 (PST)
+        with ESMTP id S1727930AbgKKXbk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 18:31:40 -0500
+Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EA7EC061A4C
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 15:29:56 -0800 (PST)
+Received: by mail-qk1-x749.google.com with SMTP id w4so2897709qki.20
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 15:29:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to;
-        bh=SPTfoDU7oaS1izrTItAOGX8PlPGtVfveZVP2zs6SoLE=;
-        b=IZpLjLa550r1zFU7t+n8+E3MV5JxyNQa98o/Z/SBkP70YXbtVdJ1rOVhM/JOZEQm1f
-         OnuzfsTBexu+cO+8SAY+GtMzFIdXhKiYWbMzAHI9bRdYPWwchQYOxbcZ0uho/Gs02NsT
-         4ZOvN7x3yhAXdoLlK5S9FUMinzn/UHVROcHRXAJPMuKvmlqdxsF+DQrmeuoMqKqvjLNU
-         7iz+Qiwjc6vrtue1oypb2hEIWsWDcBr2sGgaJlcM8Cs/t9XMvhg/RmEZc6/kekXiP7Cv
-         3rf51ZEHcqjNE3a7fyNWIxG4A4VOt9yVejCpcbN0UhmMnRSlM33xQiiZqV0DBXNxq1Cg
-         ANXA==
+        bh=i+EAlozu6VIsnZugCRWqOwOMqEq9ylJlCNXpuvidHxE=;
+        b=a6Pc7ClPvpjKan/IknDKt/TKhQuQ2v8kwPMn/cV0MeezbWa4noJGtWdL4U9FSWE6i6
+         vyA74HabuhFi9FxxnRWWRkmAV3kWrqkkSOdUOMQTYXtooR6mbWCwKtUkm4uVfju5I6DK
+         /KlW8ck0MvrhDXMi6gGi8lhhjHlcYfl34cNulcnPLtOAT09GcmyqhlnlLwWFqXGHM2ZS
+         WHdRppvF3CQl4NrlhBok8rKwvwkTBCj2T2bsIpcVEhQKf9nBEpq59UrZBIQMPIi6BFy5
+         yVUNOaBSxulp8roKLwFjhJFlt+/RLn1MsfCZBt4TiIWFjhz9w2OzT487mXcqXBYUp+IH
+         PQfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to;
-        bh=SPTfoDU7oaS1izrTItAOGX8PlPGtVfveZVP2zs6SoLE=;
-        b=pFcCW1HZx2XDeiqBryamDn/6QMzqLEBUTwByBsqF5ds0EaQ8o6bCNpTF0UW9n6ny1C
-         KdsphUYAHG1oEx+/cdOpuJU/bCuGqMFMYvnZ9wcKYaighs1eR65OyWMFhm/93ZweQF0g
-         G+4ZPKBnZDFc9o4YtFGFBhyI27/hddEa0+vV4GauhDd6EOiKc7cmB+/vrn/11LjqoX9G
-         dyYP9XRE72qA/rxzKuw2X9l5Gbnvi8B9VsFTG9K0wJqGqUS250mN1+mTuedQlfWwRrt1
-         Ulj6qNC1xHgvX+5gYfquYGemVM8l3HdQpu5HOSxQvAuRfCFIYYxqGCDq2chHz1GPCr+b
-         LFTA==
-X-Gm-Message-State: AOAM533fYmowgJbIUScSGMRlMFY740L8CnWlyE0YVRMT2nwPOjNWAFFA
-        7G8sUj2qzrYfLO1Yz0qgvYxby8GL8ghSxnGOg6djXmOuq97ygRMycVZpisE9jF0XW7hpzeKrp4C
-        bUmNPFl2zbNb1A+MuoFV07nFHeeVmrof68SjE4908iolwO+tu8Xn9Z3Xm0xGacGE=
-X-Google-Smtp-Source: ABdhPJzbtGj223IGG9YX12/P6CXpA5COFw/hnDYYyukQtgi32bINojnd6lhQp1TQkOynAR4UFOwYqlOAJSmVWw==
+        bh=i+EAlozu6VIsnZugCRWqOwOMqEq9ylJlCNXpuvidHxE=;
+        b=FNKXuxjGJSvoX45w6JaKXT+SCiiXA/GaWV4hU89NvXELkgTYmTUaUJ4BU2rNlYJ6NJ
+         u+BrWWkQdGq3LptkodtAQ909GajFTln1U26T5R6YItGNwmu8IQ+fGvWGmk32LiDsPBjS
+         qcovWHwSg8Ii1ck04wY1KO9CrsFnC+0L07gL8hkvduXb5nN1SPTFU9oYeyvm5Sh9xcrb
+         9AFO/jMXLEhvuf+V64EsMkXOtAvL2SIut2AXCKZ+trx48wPzsEoMiw5uMYxplrRwnVsR
+         Y8paKSPSIQIts52VLATwihhzMF0xCgzwk9zn3dT+Gc47CS1jS1TxJdYSTaDMGT+5toSU
+         C7vQ==
+X-Gm-Message-State: AOAM530JtJM5SyZriQaCJJ7OUAV8IFiG67D5+LooQWGMa9me5MP3bWsJ
+        sExRDtzSGEJXI29tQn6y4ULafd1qjKpti623lFJCL8SI3ZNpH/+CWpUBFANjOzQhLaIhS8JOql+
+        83rGX6pG7aZWcJeRRnVk76y5f+mD/F7Aw2opoAqFZQJFn+gyiHx37v52QAgRlIt0=
+X-Google-Smtp-Source: ABdhPJzS1HinnbpEYenKnEDXRsTJFP6qfxymZqiTu+4dK85kiEq2JNgSCMc+Me54xkxCPP8MgQLzfrWBHSCf4Q==
 Sender: "steadmon via sendgmr" <steadmon@lunarfall.svl.corp.google.com>
 X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2ce:200:1ea0:b8ff:fe74:b4c1])
- (user=steadmon job=sendgmr) by 2002:a25:10c5:: with SMTP id
- 188mr37704606ybq.181.1605137389612; Wed, 11 Nov 2020 15:29:49 -0800 (PST)
-Date:   Wed, 11 Nov 2020 15:29:30 -0800
+ (user=steadmon job=sendgmr) by 2002:a0c:f951:: with SMTP id
+ i17mr13130324qvo.22.1605137395431; Wed, 11 Nov 2020 15:29:55 -0800 (PST)
+Date:   Wed, 11 Nov 2020 15:29:33 -0800
 In-Reply-To: <cover.1605136908.git.steadmon@google.com>
-Message-Id: <014cae8dc1c3e03e149f8abc98f2f1a50bb0cb98.1605136908.git.steadmon@google.com>
+Message-Id: <012949e7da24a9f9b8bb7ac7c098f04a1d35d6f7.1605136908.git.steadmon@google.com>
 Mime-Version: 1.0
 References: <cover.1604006121.git.steadmon@google.com> <cover.1605136908.git.steadmon@google.com>
 X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8-goog
-Subject: [PATCH v3 07/11] transport: log received server session ID
+Subject: [PATCH v3 10/11] send-pack: advertise session ID in capabilities
 From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
@@ -71,121 +71,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a client receives a session-id capability from a protocol v0, v1,
-or v2 server, log the received session ID via a trace2 data event.
+When the server sent a session-id capability and transfer.advertiseSID
+is true, advertise send-pack's own session ID back to the server.
 
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- t/t5705-session-id-in-capabilities.sh | 64 +++++++++++++++++++++++++++
- transport.c                           | 10 +++++
- 2 files changed, 74 insertions(+)
- create mode 100755 t/t5705-session-id-in-capabilities.sh
+ send-pack.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/t/t5705-session-id-in-capabilities.sh b/t/t5705-session-id-in-capabilities.sh
-new file mode 100755
-index 0000000000..9e782f4413
---- /dev/null
-+++ b/t/t5705-session-id-in-capabilities.sh
-@@ -0,0 +1,64 @@
-+#!/bin/sh
-+
-+test_description='session ID in capabilities'
-+
-+. ./test-lib.sh
-+
-+REPO="$(pwd)/repo"
-+LOCAL_PRISTINE="$(pwd)/local_pristine"
-+
-+test_expect_success 'setup repos for session ID capability tests' '
-+	git init "$REPO" &&
-+	test_commit -C "$REPO" a &&
-+	git clone "file://$REPO" "$LOCAL_PRISTINE" &&
-+	test_commit -C "$REPO" b
-+'
-+
-+for PROTO in 0 1 2
-+do
-+	test_expect_success "session IDs not advertised by default (fetch v${PROTO})" '
-+		test_when_finished "rm -rf local tr2-client-events" &&
-+		cp -r "$LOCAL_PRISTINE" local &&
-+		GIT_TRACE2_EVENT="$(pwd)/tr2-client-events" \
-+		git -c protocol.version=$PROTO -C local fetch origin &&
-+		test -z "$(grep \"key\":\"server-sid\" tr2-client-events)"
-+	'
-+
-+	test_expect_success "session IDs not advertised by default (push v${PROTO})" '
-+		test_when_finished "rm -rf local tr2-client-events" &&
-+		cp -r "$LOCAL_PRISTINE" local &&
-+		git -C local pull --no-rebase origin &&
-+		GIT_TRACE2_EVENT_NESTING=5 \
-+		GIT_TRACE2_EVENT="$(pwd)/tr2-client-events" \
-+		git -c protocol.version=$PROTO -C local push origin &&
-+		test -z "$(grep \"key\":\"server-sid\" tr2-client-events)"
-+	'
-+done
-+
-+test_expect_success 'enable SID advertisement' '
-+	git -C "$REPO" config transfer.advertiseSID true &&
-+	git -C "$LOCAL_PRISTINE" config transfer.advertiseSID true
-+'
-+
-+for PROTO in 0 1 2
-+do
-+	test_expect_success "session IDs advertised (fetch v${PROTO})" '
-+		test_when_finished "rm -rf local tr2-client-events" &&
-+		cp -r "$LOCAL_PRISTINE" local &&
-+		GIT_TRACE2_EVENT="$(pwd)/tr2-client-events" \
-+		git -c protocol.version=$PROTO -C local fetch origin &&
-+		grep \"key\":\"server-sid\" tr2-client-events
-+	'
-+
-+	test_expect_success "session IDs advertised (push v${PROTO})" '
-+		test_when_finished "rm -rf local tr2-client-events" &&
-+		cp -r "$LOCAL_PRISTINE" local &&
-+		git -C local pull --no-rebase origin &&
-+		GIT_TRACE2_EVENT_NESTING=5 \
-+		GIT_TRACE2_EVENT="$(pwd)/tr2-client-events" \
-+		git -c protocol.version=$PROTO -C local push origin &&
-+		grep \"key\":\"server-sid\" tr2-client-events
-+	'
-+done
-+
-+test_done
-diff --git a/transport.c b/transport.c
-index 47da955e4f..679a35e7c1 100644
---- a/transport.c
-+++ b/transport.c
-@@ -286,6 +286,8 @@ static struct ref *handshake(struct transport *transport, int for_push,
- 	struct git_transport_data *data = transport->data;
- 	struct ref *refs = NULL;
+diff --git a/send-pack.c b/send-pack.c
+index eb4a44270b..bda65c98f9 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -424,6 +424,7 @@ int send_pack(struct send_pack_args *args,
+ 	int use_sideband = 0;
+ 	int quiet_supported = 0;
+ 	int agent_supported = 0;
++	int advertise_sid = 0;
+ 	int use_atomic = 0;
+ 	int atomic_supported = 0;
+ 	int use_push_options = 0;
+@@ -435,6 +436,8 @@ int send_pack(struct send_pack_args *args,
+ 	const char *push_cert_nonce = NULL;
  	struct packet_reader reader;
-+	int sid_len;
-+	const char *server_sid;
  
- 	connect_setup(transport, for_push);
++	git_config_get_bool("transfer.advertisesid", &advertise_sid);
++
+ 	/* Does the other end support the reporting? */
+ 	if (server_supports("report-status-v2"))
+ 		status_report = 2;
+@@ -450,6 +453,8 @@ int send_pack(struct send_pack_args *args,
+ 		quiet_supported = 1;
+ 	if (server_supports("agent"))
+ 		agent_supported = 1;
++	if (!server_supports("session-id"))
++		advertise_sid = 0;
+ 	if (server_supports("no-thin"))
+ 		args->use_thin_pack = 0;
+ 	if (server_supports("atomic"))
+@@ -506,6 +511,8 @@ int send_pack(struct send_pack_args *args,
+ 		strbuf_addf(&cap_buf, " object-format=%s", the_hash_algo->name);
+ 	if (agent_supported)
+ 		strbuf_addf(&cap_buf, " agent=%s", git_user_agent_sanitized());
++	if (advertise_sid)
++		strbuf_addf(&cap_buf, " session-id=%s", trace2_session_id());
  
-@@ -297,6 +299,8 @@ static struct ref *handshake(struct transport *transport, int for_push,
- 	data->version = discover_version(&reader);
- 	switch (data->version) {
- 	case protocol_v2:
-+		if (server_feature_v2("session-id", &server_sid))
-+			trace2_data_string("transfer", NULL, "server-sid", server_sid);
- 		if (must_list_refs)
- 			get_remote_refs(data->fd[1], &reader, &refs, for_push,
- 					ref_prefixes,
-@@ -310,6 +314,12 @@ static struct ref *handshake(struct transport *transport, int for_push,
- 				 for_push ? REF_NORMAL : 0,
- 				 &data->extra_have,
- 				 &data->shallow);
-+		server_sid = server_feature_value("session-id", &sid_len);
-+		if (server_sid) {
-+			char *sid = xstrndup(server_sid, sid_len);
-+			trace2_data_string("transfer", NULL, "server-sid", sid);
-+			free(sid);
-+		}
- 		break;
- 	case protocol_unknown_version:
- 		BUG("unknown protocol version");
+ 	/*
+ 	 * NEEDSWORK: why does delete-refs have to be so specific to
 -- 
 2.29.2.222.g5d2a92d10f8-goog
 
