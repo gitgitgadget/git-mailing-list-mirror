@@ -2,79 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+X-Spam-Status: No, score=-11.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FAEDC388F9
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 16:25:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EF6CC388F9
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 16:27:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D08642072C
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 16:25:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 86EE020756
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 16:27:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=mail.ru header.i=@mail.ru header.b="sePgSNXH";
-	dkim=pass (1024-bit key) header.d=mail.ru header.i=@mail.ru header.b="xNNKakNa"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="TugBEUdX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726552AbgKKQY7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 11:24:59 -0500
-Received: from fallback12.mail.ru ([94.100.179.29]:35720 "EHLO
-        fallback12.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725922AbgKKQY7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 11:24:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail3;
-        h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:Message-ID:To:Subject:From; bh=pcU6d1u6i9xoilCjtqFexkmI6v56/uTWLJtqIezT4hc=;
-        b=sePgSNXHyCMBR5FmF2CvXhvaV3qxg0vcANoJ42WxS6vJoeRKZd6f2WbOZZbMvrWNDEKPl83y6b3X3cqFt142167FSMF4yBlkvvM9cdL6garAKfI+XKqNErQ+d8tSA678kCYHkc9AABwQ5rU1YRkCk1Q6rhT4WoRrxFWNQU8i9hQ=;
-Received: from [10.161.64.52] (port=56692 helo=smtp44.i.mail.ru)
-        by fallback12.m.smailru.net with esmtp (envelope-from <kirnosenko@mail.ru>)
-        id 1kcsvY-00006n-NT
-        for git@vger.kernel.org; Wed, 11 Nov 2020 19:24:56 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail3;
-        h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:Message-ID:To:Subject:From:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=pcU6d1u6i9xoilCjtqFexkmI6v56/uTWLJtqIezT4hc=;
-        b=xNNKakNagprcGcDh6M27ku8QEzO8DAJijykau9iqR7t/lP1WE2nClhlMipEtYdLjoV7MjyG7S/O6NrtfO4LYa5+oEabcTK6Adgn+fcXAwJBqxq5Y7t52+GC3zBTpx7srw2+S0CvhqeRDhR6O5qQeCzJcJMvaTFBN1aXgKJhNWug=;
-Received: by smtp44.i.mail.ru with esmtpa (envelope-from <kirnosenko@mail.ru>)
-        id 1kcsvW-00066B-TC
-        for git@vger.kernel.org; Wed, 11 Nov 2020 19:24:55 +0300
-From:   Semyon Kirnosenko <kirnosenko@mail.ru>
-Subject: how to measure your code
-To:     git@vger.kernel.org
-Message-ID: <dcf76ed6-103c-bfc5-2226-37702df62056@mail.ru>
-Date:   Wed, 11 Nov 2020 20:24:54 +0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.1
+        id S1727420AbgKKQ1x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 11:27:53 -0500
+Received: from mout.gmx.net ([212.227.15.15]:51307 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727392AbgKKQ1w (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 11:27:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1605112068;
+        bh=+DFqzKw2bpoO+G3a+7UaaTOptTyKsiVaKF597VX1D2Y=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=TugBEUdXyBy4mt+D2A1OK1kR7/P2RSvBmtJ2IYRhJPIYNJxTiMzxh8XIVqY7nSI49
+         Hp5Q5J41+LAKeO1JFyH6GEHnUr+WtylTJ+J2GEJkFajZddG+z+h+/WUadznQsDJ2m0
+         U5bMD+2HP3jDpFqJdk3p55sfg1Xy92QzAwjK0OmI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.26.25.62] ([213.196.212.205]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mi2Nv-1k8TyM41Zp-00e82p; Wed, 11
+ Nov 2020 17:27:48 +0100
+Date:   Wed, 11 Nov 2020 17:27:48 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jinoh Kang <luke1337@theori.io>
+cc:     Junio C Hamano <junio@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v5] diff: make diff_free_filespec_data accept NULL
+In-Reply-To: <5d4315c5-a0ae-2857-fbcc-ec6166d025b6@theori.io>
+Message-ID: <nycvar.QRO.7.76.6.2011111727090.18437@tvgsbejvaqbjf.bet>
+References: <aeb24944-17af-cf53-93f4-e727f9fe9988@theori.io> <xmqq4km4lppy.fsf@gitster.c.googlers.com> <a0513d6f-1f69-683d-d6c5-75b17b8b6890@theori.io> <a096d122-52a3-700a-3a14-30a81b099cd8@theori.io> <137f0fc1-fbd9-a62c-bd52-cffd26c364bf@theori.io>
+ <5d4315c5-a0ae-2857-fbcc-ec6166d025b6@theori.io>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-7564579A: 646B95376F6C166E
-X-77F55803: 4F1203BC0FB41BD94AF7078E5631C702B89D0B8F1B44BAD195A97966740C87A800894C459B0CD1B9E763774E5F95ED0A687AD9D155AD1410CD72DF4F33F3022270620434C0A4BCCF
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7AC5438007118D6FAEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006372A1E89AC32EDFEB98638F802B75D45FF5571747095F342E8C7A0BC55FA0FE5FC1E70F93F28DE8F2F379175DB283B59049F841E8B11D81203389733CBF5DBD5E9D5E8D9A59859A8B6957A4DEDD2346B42CC7F00164DA146DA6F5DAA56C3B73B2321F2F7C9D6F236AF3AA81AA40904B5D9A18204E546F3947C8C83961949B2167BBA3038C0950A5D36C8A9BA7A39EFB7668729DE7A884B61D1BA3038C0950A5D36D5E8D9A59859A8B663444D639916A75176E601842F6C81A1F004C90652538430CDED94BCBF13EF3B93EC92FD9297F6718AA50765F7900637BC468E7E89D8C5D6A7F4EDE966BC389F395957E7521B51C24C7702A67D5C33162DBA43225CD8A89F83C798A30B85E16BA91E23F1B6B78B78B5C8C57E37DE458B4C7702A67D5C3316FA3894348FB808DBA1CE242F1348D5363B503F486389A921A5CC5B56E945C8DA
-X-C8649E89: A3A31E5508D84A7DC6F026FE4ED7F5EBEC4A792D901381E1C9362D40A359AA078F466C4D2CB55F4C
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojbL9S8ysBdXiH79qCUTDVxSSfrzhpT1Bf
-X-Mailru-Sender: 263D284DE1FEA85B373AFA6EACBBC7374563D774F4F50D9A25A98D77366E7208EC5C612A129548CDE3EE672BEAF2E64D027D9DD7AE85109591DAF81EB73856111CB7F13A3BAE2AB60D4ABDE8C577C2ED
-X-Mras: Ok
-X-7564579A: 646B95376F6C166E
-X-77F55803: 6242723A09DB00B4A5EAA273AC3F3BA17C01F372D9D4960050C07392B76182F668F3CF0E9FE49B69BD0A8F4BFAE735A169C36CB4D2463948D76990956056B3CF57C33508B3B42FC5
-X-7FA49CB5: 0D63561A33F958A581B80FEA15D459AF40DF9DF79E6B4E4CA191DDEEE07CCD088941B15DA834481F8AA50765F7900637B286A8317E92A103389733CBF5DBD5E9B5C8C57E37DE458BC2E450F102A9CDD0D32BA5DBAC0009BE9E8FC8737B5C2249082DB3601DDE4E4976E601842F6C81A12EF20D2F80756B5FDA63EEEA5E5E9D65089D37D7C0E48F6CA18204E546F3947C83C798A30B85E16BA91E23F1B6B78B78C8A9BA7A39EFB7666BA297DBC24807EA089D37D7C0E48F6C8AA50765F7900637BC468E7E89D8C5D6EFF80C71ABB335746BA297DBC24807EA27F269C8F02392CDC58410348177836E285124B2A10EEC6C00306258E7E6ABB4E4A6367B16DE6309
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojctyB8EdIch6gFL1sYuprvg==
-X-Mailru-MI: 1000
-X-Mailru-Sender: A5480F10D64C9005265567A7F4CD751956CAC95A23E81D772FB0AA883FD4065ED38A1BEA64D5C64A747DBA6A7B69AB523DDE9B364B0DF2894997D260BF952801D63E4CEE33A69112AE208404248635DF
-X-Mras: Ok
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:v2bIQ5WS47Oy3Oy6SuAqw2nr/RVr1rhIA/akTVpR0Vl96ocenfY
+ /at2/384Rmo8f9cmWU4FvxhiM+5ZA8nc7nnWqYo4HEdTEvP06yaSULKg7lPR4GoNOxy+qzk
+ RcIjt7tbJJYGygjWfFGq2KNc7QyqoucLEnc2QoFojCl8lzZpRaMQe5TdaHaPo/fp/5RLLxU
+ mq0kO4eOTN5TG3Oy6oroA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:N2xHuvZi4f8=:JXU89Wtp+/y+RIgOtEyG/w
+ GUuIMfHm0p+IAIoK+czAk17eqq7QFoGIVylIyDL8A2FabT/ap1g44bH1nuFl2azOMU+wLPJTv
+ gU9pmSe5Vn5WkeAPN/EfmHPJ50iDL0flNq9mdoU6BLpcMQJkfSJwD6L6JkyEXrHrUXbXXbMpO
+ JOz0FJqDSAcHgFPBuHZuqaUfwvqUMVbOPJQFokJOsE/b3hX5jFjJnDUEgqOPfB8QchDefIshe
+ NFkEKkYtDKy8d3kTWK9DUIW8jWmfPr/oq5PykNKueUWeVekb/Qw82NfTisuFeUl0fwpAV5P8o
+ vUpHnLrIf6Qef/PrtPZcClAQvtNDT8TKEwcSVtuNjnURZyQI/WJyp8ObE8SUiajcwS+qMjSFR
+ NpM5lL4QwTLjkRaOOF2L6hZOsTN9AYlT8+t+qaP6k3Hhd3myNdmQG3meZebL6g01v2xA8+VO7
+ EV8CqZrdnkp91Md11xvvih5OvbAeiRNFGtaw4w+tqd5UczyiIEhGGYDhzQ+XT4gzc7raIOk4y
+ 7m5L18+IRYcUVE9IOayF38265hBIu6MxZe0LLOynu+Rn+zE0GCDZBUwD8nAi9o8/E3mv79O1c
+ uvIVv2I2DgzwtemZKZmb3LZiQL/fbs4eCsVuSRcdBCLtAtXlCp6djr/iG5bUVFSUQ1mIS9cPm
+ xzvlpX1reYquhsLkdl8eoVIvKf2GIlMPMxO1bC1FQy8E5UAg5swhWaHfsNYai9IuTxW3qdmnz
+ uawqD8HTHR8KqnpqHU+mxVUlqi6OC/yaV+aTWWz/FUe0NhHCNsW2zHaAWdYDUUdB5JCrU2087
+ ZBocB76x/wj6x2z5Qa93JQY89soiR3Yc1doJjHN7sdcvjB9+CaOtd7+fxDMyJkqutUBEkrfNx
+ HfurOyJ9X8ZxpDs07RGpPSH8Hd70ilxd2JugFaVeM=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello!
+Hi Jinoh,
 
-I'd like to introduce a new statistics generator for git. Call it 
-Repositorch. It allows to get some basic and advanced statistics 
-including LOCs, Burndown, Code ownership, Defect density, etc.
+On Wed, 11 Nov 2020, Jinoh Kang wrote:
 
-Some links:
+> diff_free_filespec_data crashes when passed a NULL fillspec pointer.
+> Commit 3aef54e8b8 ("diff: munmap() file contents before running external
+> diff", 2019-07-11) introduced calls to diff_free_filespec_data in
+> run_external_diff without also checking if the argument is NULL.
+>
+> Git uses NULL filespecs to indicate unmerged files when merge conflict
+> resolution is in progress.  Fortunately, other code paths bail out early
+> even before NULL can reach diff_free_filespec_data(); however, difftool
+> is expected to do a full-blown diff anyway regardless of conflict
+> status.
+>
+> Fix this and prevent any similar bugs in the future by making
+> `diff_free_filespec_data(NULL)` a no-op.
+>
+> Add a test case that confirms that running difftool --cached with
+> unmerged files does not result in a SIGSEGV.
+>
+> Signed-off-by: Jinoh Kang <luke1337@theori.io>
 
-github - https://github.com/kirnosenko/Repositorch
-dockerhub - https://hub.docker.com/r/kirnosenko/repositorch
-how to use guide - https://www.youtube.com/watch?v=Rd5R0BbFdGA
+ACK!
 
-Still in alpha but ready for some fun mining :)
+The patch looks good to go to me.
+
+Thank you!
+Dscho
+
+> ---
+>  diff.c              |  3 +++
+>  t/t7800-difftool.sh | 13 +++++++++++++
+>  2 files changed, 16 insertions(+)
+>
+> diff --git a/diff.c b/diff.c
+> index d24f47df99..ace4a1d387 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -4115,6 +4115,9 @@ void diff_free_filespec_blob(struct diff_filespec =
+*s)
+>
+>  void diff_free_filespec_data(struct diff_filespec *s)
+>  {
+> +	if (!s)
+> +		return;
+> +
+>  	diff_free_filespec_blob(s);
+>  	FREE_AND_NULL(s->cnt_data);
+>  }
+> diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+> index 524f30f7dc..a578b35761 100755
+> --- a/t/t7800-difftool.sh
+> +++ b/t/t7800-difftool.sh
+> @@ -728,6 +728,19 @@ test_expect_success 'add -N and difftool -d' '
+>  	git difftool --dir-diff --extcmd ls
+>  '
+>
+> +test_expect_success 'difftool --cached with unmerged files' '
+> +	test_when_finished git reset --hard &&
+> +
+> +	test_commit conflicting &&
+> +	test_commit conflict-a conflict.t a &&
+> +	git reset --hard conflicting &&
+> +	test_commit conflict-b conflict.t b &&
+> +	test_must_fail git merge conflict-a &&
+> +
+> +	git difftool --cached --no-prompt >output &&
+> +	test_must_be_empty output
+> +'
+> +
+>  test_expect_success 'outside worktree' '
+>  	echo 1 >1 &&
+>  	echo 2 >2 &&
+> --
+> 2.26.2
+>
+>
