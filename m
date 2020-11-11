@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E094C388F9
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 19:42:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 807DDC388F9
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 19:42:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 46BE42087D
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 19:42:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2E8702087D
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 19:42:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="wLojPmCR"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="cHQn3DX0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727553AbgKKTl7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 14:41:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54742 "EHLO
+        id S1727645AbgKKTmG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 14:42:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727468AbgKKTl7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 14:41:59 -0500
-Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E84F9C0613D1
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 11:41:58 -0800 (PST)
-Received: by mail-qk1-x743.google.com with SMTP id t191so2916311qka.4
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 11:41:58 -0800 (PST)
+        with ESMTP id S1726479AbgKKTmE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 14:42:04 -0500
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ACC9C0613D1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 11:42:04 -0800 (PST)
+Received: by mail-qt1-x835.google.com with SMTP id i12so2204511qtj.0
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 11:42:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=iP/7a2VntiLlnAaVrnGYm87IoWVvfW65anp38JXV3Qw=;
-        b=wLojPmCRqZhpgAq5eLmbAR6g3EoqvnLrTh8h+ROuP1LtyjyWdDq3cc+ZbQ0Ut1KbbP
-         2C6LsUHVQ5LD9ypL+d3yR9a6iM45dkcIFKfjWe44wijQt9ALuQXeidRaYJILHw1ExqAX
-         yb7rcu/mRKe3M+VKBwAHmULWYcNIC+GTgZqy5knN73uJP28EKN0OntLvqhyDhg2B063u
-         9LDxylTEoRwcgrCRkzMx7y149dA7S2ToLGBMNNXgyafO8f7Isf26wMSPjLYER/kSvjyL
-         ku9rO6pwlw87v+gcnNq/ka0HF5qUbvQGgG4RhQPYBMk5rikqN4AZu6K029b7kvVDelcs
-         H01w==
+        bh=WJoyeKHouA+s3pojn9t5eLjcAQwqU/UHOR9tm2lp0R0=;
+        b=cHQn3DX0DHvS1ULAOHu7p5dsQCBkQ6dPaUizKTo+z5czYs1x/O2nddTgeeyaGc7Hp/
+         n/PryO09EJdqZ2uTvtUIhaXNrxpb0VbfPUaI6lHuQHK4f5HRC/aV4GhYngvHGB5Z1nnN
+         1HTgYNSLU5d0ljeNYD1TAsAzpWPPmktN8OyeHumvEarpQoA40L18+9vOsxi2E/bcu8oy
+         r63OGddljm8nzZzrVoPqWBniSeYtGfh9hAvDLLuUNFaAemzc5MVIj8fetb3Ezt+ezSu8
+         bzZvTCqllcC+hm9A5tMBl+GaC3+YqjrY9qJOecT8K+lT+gdxsF12N0p9f1znma1PIIRs
+         f2VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=iP/7a2VntiLlnAaVrnGYm87IoWVvfW65anp38JXV3Qw=;
-        b=DxzpW/XbzCv1wc/g4yEt8NR96aBplm7GRP+FX6Hm9W5co5EoADukPzGyUsbE/VFbfh
-         RXJUkd6hHdiaPoQcmicmPENAG2dEE6p+Z45pB56AoJXwCWeKt8TBZ7GrwAko5l14qz37
-         seJUxVkEg3gArDGanISrQ2EyqdHFcED4uNmoEaiNiwxtgdrrBGu6Hc0IV2nbIVoJQ/Ld
-         tH+puOhcMXsx4sTa/X7Z4HVnncOU5865nJSrL1OzldKPERZDiJklWi4Ob/Aq8oKIH4P8
-         mxMvzrTtLThxztqZ4Msp+JJ1/UUrxnSYvUW4rEr4RSGamiIG1FTHYMWFD44nT+TSRnNS
-         8qnQ==
-X-Gm-Message-State: AOAM533DU7nsc+ZPEWGVoHGSau8FPe3NDwO7y4yVSXe4xTaGRqxIF3hF
-        MBQSwNVoFEqEKbe8v1/Km1CqFFUcs0j3C/Fd
-X-Google-Smtp-Source: ABdhPJzdAMMFdjTDyT18f1My43B8MMVz01HdNNRKnDevDXfuRk/XTXNPZAdKGfyaKLQiHStETtBRpQ==
-X-Received: by 2002:a37:98c7:: with SMTP id a190mr27174894qke.471.1605123717929;
-        Wed, 11 Nov 2020 11:41:57 -0800 (PST)
+        bh=WJoyeKHouA+s3pojn9t5eLjcAQwqU/UHOR9tm2lp0R0=;
+        b=XVNBLyUlOeM2mbYBiqAB/hZMFJq3w5yejQValsvmuOXc1RJ+u3TpGcDnvJASCGuBdN
+         qTDxkM47V8YjZFnuHq72S/l5L3Xf9YKARpkdL5c3bu8JGSqt6t+4a6p+PYNR10+ZrHSs
+         gLeEsYv1aVB5WLsdsmVNAq2irb9JU8dGnS8XtcGFnN/9saAq0PVUl6xXjEJVyKCjj3lc
+         NifExXm4s5FiZQltX6QaEd4hglalESvb1L17vzksdBRcqlb35tCF/NJ5K7XCkUlUEYiz
+         WQfIDQxTxg4fHE9or2BpVn82eqMWbkwEZYdG782o1AXPuU30YCGiHC49L6TyGZj+Z7Zl
+         MbDg==
+X-Gm-Message-State: AOAM530pwUFfSRqOqBsZKecG8Vjs+h9S+cPu3nVBPPwcc/Hp2Q5xdpFa
+        cP47pQrgT0CFraQh2nnyVS/IwvBOYG26SDAj
+X-Google-Smtp-Source: ABdhPJwhCe/GcuJIFgxAhhSFk7gmNHSvSdO82uMjguQwhqUuDTbW4Dc74Le0KwQKcnhAL8mufW+xPg==
+X-Received: by 2002:a05:622a:c8:: with SMTP id p8mr5402929qtw.293.1605123723244;
+        Wed, 11 Nov 2020 11:42:03 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:7ccc:9a51:1ad:2057])
-        by smtp.gmail.com with ESMTPSA id 9sm2814578qty.30.2020.11.11.11.41.57
+        by smtp.gmail.com with ESMTPSA id f130sm1774843qke.30.2020.11.11.11.42.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Nov 2020 11:41:57 -0800 (PST)
-Date:   Wed, 11 Nov 2020 14:41:54 -0500
+        Wed, 11 Nov 2020 11:42:02 -0800 (PST)
+Date:   Wed, 11 Nov 2020 14:42:00 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net
-Subject: [PATCH 02/23] pack-bitmap: fix header size check
-Message-ID: <c59fcbcc67556c5c9c5a22a2ee745a2f58234efd.1605123652.git.me@ttaylorr.com>
+Subject: [PATCH 03/23] pack-bitmap: bounds-check size of cache extension
+Message-ID: <1573902df00e8a14a9cb68c37f55474388b1dc2e.1605123652.git.me@ttaylorr.com>
 References: <cover.1605123652.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -74,56 +74,88 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-When we parse a .bitmap header, we first check that we have enough bytes
-to make a valid header. We do that based on sizeof(struct
-bitmap_disk_header). However, as of 0f4d6cada8 (pack-bitmap: make bitmap
-header handling hash agnostic, 2019-02-19), that struct oversizes its
-checksum member to GIT_MAX_RAWSZ. That means we need to adjust for the
-difference between that constant and the size of the actual hash we're
-using. That commit adjusted the code which moves our pointer forward,
-but forgot to update the size check.
+A .bitmap file may have a "name hash cache" extension, which puts a
+sequence of uint32_t bytes (one per object) at the end of the file. When
+we see a flag indicating this extension, we blindly subtract the
+appropriate number of bytes from our available length. However, if the
+.bitmap file is too short, we'll underflow our length variable and wrap
+around, thinking we have a very large length. This can lead to reading
+out-of-bounds bytes while loading individual ewah bitmaps.
 
-This meant we were overly strict about the header size (requiring room
-for a 32-byte worst-case hash, when sha1 is only 20 bytes). But in
-practice it didn't matter because bitmap files tend to have at least 12
-bytes of actual data anyway, so it was unlikely for a valid file to be
-caught by this.
-
-Let's fix it by pulling the header size into a separate variable and
-using it in both spots. That fixes the bug and simplifies the code to make
-it harder to have a mismatch like this in the future. It will also come
-in handy in the next patch for more bounds checking.
+We can fix this by checking the number of available bytes when we parse
+the header. The existing "truncated bitmap" test is now split into two
+tests: one where we don't have this extension at all (and hence actually
+do try to read a truncated ewah bitmap) and one where we realize
+up-front that we can't even fit in the cache structure. We'll check
+stderr in each case to make sure we hit the error we're expecting.
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ pack-bitmap.c           |  8 ++++++--
+ t/t5310-pack-bitmaps.sh | 17 +++++++++++++++--
+ 2 files changed, 21 insertions(+), 4 deletions(-)
 
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 4077e731e8..cea3bb88bf 100644
+index cea3bb88bf..42d4824c76 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -138,8 +138,9 @@ static struct ewah_bitmap *read_bitmap_1(struct bitmap_index *index)
- static int load_bitmap_header(struct bitmap_index *index)
- {
- 	struct bitmap_disk_header *header = (void *)index->map;
-+	size_t header_size = sizeof(*header) - GIT_MAX_RAWSZ + the_hash_algo->rawsz;
+@@ -153,14 +153,18 @@ static int load_bitmap_header(struct bitmap_index *index)
+ 	/* Parse known bitmap format options */
+ 	{
+ 		uint32_t flags = ntohs(header->options);
++		uint32_t cache_size = st_mult(index->pack->num_objects, sizeof(uint32_t));
++		unsigned char *index_end = index->map + index->map_size - the_hash_algo->rawsz;
  
--	if (index->map_size < sizeof(*header) + the_hash_algo->rawsz)
-+	if (index->map_size < header_size)
- 		return error("Corrupted bitmap index (missing header data)");
+ 		if ((flags & BITMAP_OPT_FULL_DAG) == 0)
+ 			return error("Unsupported options for bitmap index file "
+ 				"(Git requires BITMAP_OPT_FULL_DAG)");
  
- 	if (memcmp(header->magic, BITMAP_IDX_SIGNATURE, sizeof(BITMAP_IDX_SIGNATURE)) != 0)
-@@ -164,7 +165,7 @@ static int load_bitmap_header(struct bitmap_index *index)
+ 		if (flags & BITMAP_OPT_HASH_CACHE) {
+-			unsigned char *end = index->map + index->map_size - the_hash_algo->rawsz;
+-			index->hashes = ((uint32_t *)end) - index->pack->num_objects;
++			if (index->map + header_size + cache_size > index_end)
++				return error("corrupted bitmap index file (too short to fit hash cache)");
++			index->hashes = (void *)(index_end - cache_size);
++			index_end -= cache_size;
+ 		}
  	}
  
- 	index->entry_count = ntohl(header->entry_count);
--	index->map_pos += sizeof(*header) - GIT_MAX_RAWSZ + the_hash_algo->rawsz;
-+	index->map_pos += header_size;
- 	return 0;
- }
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index 8318781d2b..e2c3907a68 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -343,7 +343,8 @@ test_expect_success 'pack reuse respects --incremental' '
+ 	test_must_be_empty actual
+ '
  
+-test_expect_success 'truncated bitmap fails gracefully' '
++test_expect_success 'truncated bitmap fails gracefully (ewah)' '
++	test_config pack.writebitmaphashcache false &&
+ 	git repack -ad &&
+ 	git rev-list --use-bitmap-index --count --all >expect &&
+ 	bitmap=$(ls .git/objects/pack/*.bitmap) &&
+@@ -352,7 +353,19 @@ test_expect_success 'truncated bitmap fails gracefully' '
+ 	mv -f $bitmap.tmp $bitmap &&
+ 	git rev-list --use-bitmap-index --count --all >actual 2>stderr &&
+ 	test_cmp expect actual &&
+-	test_i18ngrep corrupt stderr
++	test_i18ngrep corrupt.ewah.bitmap stderr
++'
++
++test_expect_success 'truncated bitmap fails gracefully (cache)' '
++	git repack -ad &&
++	git rev-list --use-bitmap-index --count --all >expect &&
++	bitmap=$(ls .git/objects/pack/*.bitmap) &&
++	test_when_finished "rm -f $bitmap" &&
++	test_copy_bytes 512 <$bitmap >$bitmap.tmp &&
++	mv -f $bitmap.tmp $bitmap &&
++	git rev-list --use-bitmap-index --count --all >actual 2>stderr &&
++	test_cmp expect actual &&
++	test_i18ngrep corrupted.bitmap.index stderr
+ '
+ 
+ # have_delta <obj> <expected_base>
 -- 
 2.29.2.156.gc03786897f
 
