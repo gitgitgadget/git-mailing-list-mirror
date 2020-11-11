@@ -7,63 +7,64 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75C5EC388F9
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 11:04:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A0A7C388F9
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 11:08:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 08EAC20756
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 11:04:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8C1862074B
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 11:08:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U1HcPrm4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PWiCFDcF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726134AbgKKLEE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 06:04:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58324 "EHLO
+        id S1726113AbgKKLIR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 06:08:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725965AbgKKLED (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 06:04:03 -0500
-Received: from mail-yb1-xb42.google.com (mail-yb1-xb42.google.com [IPv6:2607:f8b0:4864:20::b42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B999C0613D1
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 03:04:03 -0800 (PST)
-Received: by mail-yb1-xb42.google.com with SMTP id i193so1567213yba.1
-        for <git@vger.kernel.org>; Wed, 11 Nov 2020 03:04:03 -0800 (PST)
+        with ESMTP id S1725895AbgKKLIQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 06:08:16 -0500
+Received: from mail-yb1-xb43.google.com (mail-yb1-xb43.google.com [IPv6:2607:f8b0:4864:20::b43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45EC1C0613D1
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 03:08:15 -0800 (PST)
+Received: by mail-yb1-xb43.google.com with SMTP id s8so1524811yba.13
+        for <git@vger.kernel.org>; Wed, 11 Nov 2020 03:08:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=sAP9J2qw4PeQKBqbXNiG8pArIMX16RasXMkFFJHGrG8=;
-        b=U1HcPrm4/0RPOwjcM8sI/C5ANCiQ8Vgv/Ymb20lBEkeFUp2UBUyGOXAaJ0S2gKf1OE
-         b4NfYQ0W0EUqW/aN2D2ATabraTO7toU7p3ptErDaTjUS900KjBq59YyOzKa2wU/EIiPm
-         x7pd2FHNNqrsuWP6hU1Y100Je3Y1BBffDl0SXzBFvNNnHuT49e6/k0+4UQvG280mzwie
-         RV4I4d6c6x+jQjhDP3izierp++clgYVT7X4wPVS7E4x+GekY/y3iHeFk97krcmCBxSnn
-         EOzs3+8AolRpK/dYS5MPDa78fR5B8LwhRGr5Lti1YxuIhuvd7yToDO+IzohrhMQf0H/r
-         tkDA==
+        bh=apnmHM0AyrFE3unQHY+BFaeA7xJ+cnqfZw23tG9N5P0=;
+        b=PWiCFDcFqaldRN9RXuy5je1Hw9ojWZor6Tb6cBjdHAsI3/5BAZTTD7EUIp8+pC++M8
+         LG8riARI5uHm6Cu6TiCRI2yQNlxfW3UV2htJ86v0+4PgiHK4CTw/tVE1QyF7166zsMOI
+         ShW1Dft2GZ4VBHxrwJizSO548H/YrbDkkp3qcKVQjj+AVkYM+DD3fUUlDMSVypzjeLnA
+         MzWHDDi0SQ0fQIB1pH4Z+s4/fZJsDwUoExREn0GYQuevRUGD9DLYBm+bU+1bw8BEhxPY
+         wZWmF0qykU7GzZEqZqt4ZYokQEZ7P/OnerxsYVhWCNGbtzKHnejItj1bd7SEWLRb+ByO
+         fjDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=sAP9J2qw4PeQKBqbXNiG8pArIMX16RasXMkFFJHGrG8=;
-        b=oxlMeREduXDsCmL1nW2m3N1g3a+Rji1tILehPRxtN6gZhfgFCBTdBgc5J7z2dtDuAR
-         OtRTJHpTnjafuEFnYvOJwxKnGA//m1PTBCVMnQ4YpEO8pnFKHa8dbOY2VjRU17vrEfIx
-         qdEkgQ4El6OheveemUDdd8Pm7EnD+hlQMa+9QIw6zEBni56a+pkQaFV7E/ysgu00K9FE
-         JSszLy3N04TdaFJR4EqmyJ9ZM7oEFDGZ8losTwG9wtL8mIL7GiqT3jXadDEWVITjOuzL
-         MwSZCEei4R7nOK5J2Ehj8MjAcaHHEOTZrs66UbabvQhXVhtaYJ+vNPQXTNF4MIzg7r/O
-         +15w==
-X-Gm-Message-State: AOAM531Y04yfXCUouZg+B/iaKEe1zKvx6hvT3U0iAFlg7YiVoJVte73P
-        ZfwDXm4mjgadpWRD0sRFYfZunGgGtK2eie/vaxd7hdGmejaC3A==
-X-Google-Smtp-Source: ABdhPJx3sRJz2wdrUSAAmVm4X1X6h9XGnGiYx4ruDkyWbkJVZdIZjU/0NOg/3q6XQPMNJmGcm5EygRy5oHcwnNk3JeI=
-X-Received: by 2002:a25:b5ce:: with SMTP id d14mr19333894ybg.520.1605092642832;
- Wed, 11 Nov 2020 03:04:02 -0800 (PST)
+        bh=apnmHM0AyrFE3unQHY+BFaeA7xJ+cnqfZw23tG9N5P0=;
+        b=GdwjLv343V/cDrrsQNdd7x5S+hgq0+/G7nEFbz7jluJ7OH/vhnfdr1fBdYbrH2uxiT
+         4BooOuoFF+gq+zoqb3bgQl3vpsMmGCDKzeHI0br3258+lAjsUVlJvPYrVD00xJwuz2la
+         MDp4kv9B1mhMT5T3Pxhyo+8EBfT+TVqt9HDa1fatPYoJWWY5XqgQvaaMdWaV4HyfMeD6
+         VWiNqLK6fZ9ztMGFejwEvhWvFvxD+lKZg4ncYgp6MSaeOvSvNdmUoZYXHOVeV/9403WO
+         38ZHGBaVrgCuIKcUTuPXIT90EDi0IwDaTVPhkCDRKZYd8IElFZ+KkHskPafh+3bglyWo
+         0BSQ==
+X-Gm-Message-State: AOAM531xBtYOvtXPpBzhriT0EkCM5B2vqw1KgtX9rkQTJLsJOygwmx2e
+        T7JBfWtfO03DLcSSi2AmSgf//agT93IPEd+A+jlJ5JzRNOF4wg==
+X-Google-Smtp-Source: ABdhPJzjdUkyFqsGLoJeRC3TGHQz+76QSZAjErvXfb927GzHd109e7yEA54Fio/W022TgKRu1vQhswBn+k+mF8HcEMY=
+X-Received: by 2002:a25:bc02:: with SMTP id i2mr8194212ybh.478.1605092894499;
+ Wed, 11 Nov 2020 03:08:14 -0800 (PST)
 MIME-Version: 1.0
 References: <CANYiYbH-x6khgTkkFV29+7AjghOZmG69_6-sQcm2489WMHOWAA@mail.gmail.com>
- <20201110120135.42025-2-zhiyou.jx@alibaba-inc.com> <20201110215250.GB3263091@coredump.intra.peff.net>
-In-Reply-To: <20201110215250.GB3263091@coredump.intra.peff.net>
+ <20201110120135.42025-1-zhiyou.jx@alibaba-inc.com> <xmqq7dqt6ilx.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq7dqt6ilx.fsf@gitster.c.googlers.com>
 From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Wed, 11 Nov 2020 19:03:51 +0800
-Message-ID: <CANYiYbEd1bDtwsq44Xqsc1o3=a6XO7aX5b_ZQ9gh7-xOS5O5rg@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] receive-pack: gently write messages to proc-receive
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+Date:   Wed, 11 Nov 2020 19:08:03 +0800
+Message-ID: <CANYiYbEFrqCDOcmFek336UG7PK0TLUaa26jVYjRgRcCvtfkHsg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] t5411: refactor make_user_friendly_and_stable_output
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
         Jiang Xin <zhiyou.jx@alibaba-inc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
@@ -71,96 +72,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> =E4=BA=8E2020=E5=B9=B411=E6=9C=8811=E6=97=A5=E5=
-=91=A8=E4=B8=89 =E4=B8=8A=E5=8D=885:52=E5=86=99=E9=81=93=EF=BC=9A
-> > diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> > index bb9909c52e..697a4e8802 100644
-> > --- a/builtin/receive-pack.c
-> > +++ b/builtin/receive-pack.c
-> > @@ -974,9 +974,10 @@ static int read_proc_receive_report(struct packet_=
-reader *reader,
-> >       struct command *cmd;
-> >       struct command *hint =3D NULL;
-> >       struct ref_push_report *report =3D NULL;
-> > -     int new_report =3D 0;
-> >       int code =3D 0;
-> > +     int new_report =3D 0;
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2020=E5=B9=B411=E6=9C=8811=E6=
+=97=A5=E5=91=A8=E4=B8=89 =E4=B8=8A=E5=8D=884:51=E5=86=99=E9=81=93=EF=BC=9A
 >
-> This is just noise in the diff, I think. It does not matter either way.
+> Jiang Xin <worldhello.net@gmail.com> writes:
 >
-> > @@ -984,8 +985,14 @@ static int read_proc_receive_report(struct packet_=
-reader *reader,
-> >               const char *refname;
-> >               char *p;
-> >
-> > -             if (packet_reader_read(reader) !=3D PACKET_READ_NORMAL)
-> > +             if (packet_reader_read(reader) !=3D PACKET_READ_NORMAL) {
-> > +                     if (!response) {
-> > +                             strbuf_addstr(errmsg, "no response from p=
-roc-receive hook");
-> > +                             return -1;
-> > +                     }
-> >                       break;
-> > +             }
-> > +             response++;
+> > diff --git a/t/t5411/common-functions.sh b/t/t5411/common-functions.sh
+> > index 521a347710..b7cca2d8fb 100644
+> > --- a/t/t5411/common-functions.sh
+> > +++ b/t/t5411/common-functions.sh
+> > @@ -42,7 +42,7 @@ create_commits_in () {
+> >  make_user_friendly_and_stable_output () {
+> >       sed \
+> >               -e "s/  *\$//" \
+> > -             -e "s/   */ /g" \
+> > +             -e "s/  */ /g" \
+> >               -e "s/'/\"/g" \
+> >               -e "s/  /    /g" \
+> >               -e "s/$A/<COMMIT-A>/g" \
+> > @@ -52,5 +52,11 @@ make_user_friendly_and_stable_output () {
+> >               -e "s/$(echo $A | cut -c1-7)[0-9a-f]*/<OID-A>/g" \
+> >               -e "s/$(echo $B | cut -c1-7)[0-9a-f]*/<OID-B>/g" \
+> >               -e "s#To $URL_PREFIX/upstream.git#To <URL/of/upstream.git=
+>#" \
+> > -             -e "/^error: / d"
+> > +             -e "/^error: / d" | \
+> > +     if test $# -eq 0
+> > +     then
+> > +             cat
+> > +     else
+> > +             sed ${1+"$@"}
+> > +     fi
+> >  }
 >
-> This extra check seems orthogonal to the rest of the commit. It does
-> seem like it might be a reasonable thing to check, but I wondered:
+> I may have suggested it, but looking at this implementation I'd have
+> to say it is not worth the extra process here.  The only reason why
+> I made the suggestion was that way we can make the single "sed"
+> invocation to do what we want.
 >
->   - if the hook has nothing to report, wouldn't it just send a flush
->     packet? Does that break protocol or not?
+> If you need custom output for just two tests in 5411-0000, define
+> the custom one that wraps make_user_friendly_and_stable_output in
+> that single script like so:
+>
+>     filter_out_remote_messages () {
+>         make_user_friendly_and_stable_output |
+>         sed -n -e ...
+>     }
+>
+> and then use that ...
 
-It's OK to send a flush packet without any payload, so will check
-status PACKET_READ_EOF for broken proc-receive.
-
--- snip --
-@@ -977,15 +977,25 @@ static int read_proc_receive_report(struct
-packet_reader *reader,
-        for (;;) {
-                struct object_id old_oid, new_oid;
-                const char *head;
-                const char *refname;
-                char *p;
--
--               if (packet_reader_read(reader) !=3D PACKET_READ_NORMAL)
-+               enum packet_read_status status;
-+
-+               status =3D packet_reader_read(reader);
-+               if (status !=3D PACKET_READ_NORMAL) {
-+                       /* Check whether proc-receive exited abnormally */
-+                       if (status =3D=3D PACKET_READ_EOF && !response) {
-+                               strbuf_addstr(errmsg, "proc-receive
-exited abnormally");
-+                               return -1;
-+                       }
-                        break;
-+               }
-+               response++;
--- snap --
-
->
-> > @@ -1100,7 +1107,7 @@ static int run_proc_receive_hook(struct command *=
-commands,
-> >       struct strbuf cap =3D STRBUF_INIT;
-> >       struct strbuf errmsg =3D STRBUF_INIT;
-> >       int hook_use_push_options =3D 0;
-> > -     int version =3D 0;
-> > +     int version =3D -1;
-> > [...]
-> > -     if (version !=3D 1) {
-> > +     if (version =3D=3D -1) {
-> > +             strbuf_addstr(&errmsg, "fail to negotiate version with pr=
-oc-receive hook");
-> > +             code =3D -1;
-> > +             goto cleanup;
-> > +     } else if (version !=3D 1) {
-> >               strbuf_addf(&errmsg, "proc-receive version '%d' is not su=
-pported",
-> >                           version);
->
-> Likewise this seems orthogonal to the main point of the patch. Though it
-> seems like a good idea in general to check when the other side doesn't
-> report a version (assuming it is a protocol breakage not to report the
-> version, and we're not simply supposed to default).
-
-Will add a new patch for default version for proc-receive.
+Will add new helper function
+`filter_out_user_friendly_and_stable_output` like this, and use it for
+5411-0000, 5411-0001, 5411-0013 and 5411-0014.
