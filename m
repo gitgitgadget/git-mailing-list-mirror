@@ -2,119 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-9.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1EE3C388F9
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 07:10:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 163DFC4742C
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 07:11:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6BC9420756
-	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 07:10:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BBF6C20786
+	for <git@archiver.kernel.org>; Wed, 11 Nov 2020 07:11:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725995AbgKKHK6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Nov 2020 02:10:58 -0500
-Received: from bsmtp2.bon.at ([213.33.87.16]:63928 "EHLO bsmtp2.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725828AbgKKHK6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Nov 2020 02:10:58 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp2.bon.at (Postfix) with ESMTPSA id 4CWG9B55TLz5tlJ;
-        Wed, 11 Nov 2020 08:10:54 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 9473120FA;
-        Wed, 11 Nov 2020 08:10:53 +0100 (CET)
-Subject: Re: git rebase/git rebase --abort cause inconsistent state
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Eugen Konkov <kes-kes@yandex.ru>, Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-References: <1526558917.20201106203213@yandex.ru>
- <CABPp-BGAJiaU5aeC3sGvp3znQw1esrn9c19gyOZQBymYvNFCaw@mail.gmail.com>
- <43de6950-a33c-f3da-2a76-72719fef5af3@kdbg.org>
- <16910030549.20201109134640@yandex.ru>
- <xmqqft5icsd9.fsf@gitster.c.googlers.com>
- <nycvar.QRO.7.76.6.2011102312020.18437@tvgsbejvaqbjf.bet>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <ea62f9b7-483b-9187-25ee-b6116a25b757@kdbg.org>
-Date:   Wed, 11 Nov 2020 08:10:53 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.0
+        id S1726024AbgKKHLF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Nov 2020 02:11:05 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:33823 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725828AbgKKHLE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Nov 2020 02:11:04 -0500
+Received: by mail-ed1-f66.google.com with SMTP id a15so1200645edy.1
+        for <git@vger.kernel.org>; Tue, 10 Nov 2020 23:11:02 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=TCF4KVFN1NpT0JwjnSqjzcFeGvcgoHW/iqAmElQA2NQ=;
+        b=WE52vPUp3bh8vHLUMCCpcItcejUlRl1un8OD5lLONzx8OJMILRTlxb6oD1pU3ZinmG
+         w2Rv/thk7nyvDW2+4TBnIWiFCk15cuPwAewTpCB9vegHY0vfAfXGZ5ARZl+r+GU7Su7l
+         2yy/mwatukxeqgqC5Q/q/XpKkHuZceFngaVKLyMmH2lfhWA1UsAW9cZMEJy7M6/8bakr
+         zMGHAgihhNeBJ87mw9exr5x89AJk/j7GNxCD/Pf0KBbov20iEAmtdOYGliI4oMaj2eiC
+         X7pSAvmDUgEO6z7uMbcQTfw7n/KiX+8nCE8JgXpe2alzSbLmaytgN34QVH+DIm++e4qb
+         3keA==
+X-Gm-Message-State: AOAM533tWffbgqsnIqcT5se8TKZL7B7iRHXzg5DYo+/VtcbzDhR5v1cA
+        yHTD0U0pdWgpPORVrtErwgQ3dUWe/TmkxEuUTdw=
+X-Google-Smtp-Source: ABdhPJwPKdUVQNjOrPuav6Q54eBUCadAabaYPAsvfWR0jLI/TU/MGuytyLJpzteGjS0jZcy+UOwnODUePZXQtJ1Tcu8=
+X-Received: by 2002:a05:6402:206:: with SMTP id t6mr3389827edv.291.1605078662065;
+ Tue, 10 Nov 2020 23:11:02 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.2011102312020.18437@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <pull.776.git.1604412196.gitgitgadget@gmail.com>
+ <pull.776.v2.git.1604520368.gitgitgadget@gmail.com> <709a17372099351af3e3b9f2dddcd9ce220a9fcb.1604520368.git.gitgitgadget@gmail.com>
+In-Reply-To: <709a17372099351af3e3b9f2dddcd9ce220a9fcb.1604520368.git.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 11 Nov 2020 02:10:50 -0500
+Message-ID: <CAPig+cReatZ-iSLWreQqYLM7qONWvBLbDUNVH1dJV37VnmPBgw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] maintenance: include 'cron' details in docs
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Son Luong Ngoc <sluongng@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 10.11.20 um 23:28 schrieb Johannes Schindelin:
-> On Mon, 9 Nov 2020, Junio C Hamano wrote:
->> Eugen Konkov <kes-kes@yandex.ru> writes:
->>
->>>> You start at branch dev. Then you use the two argument form
->>>
->>>>       git rebase dev local/dev
->>>
->>>> and when you later
->>>
->>>>       git rebase --abort
->>>
->>>> then you are not warped back to dev, but to local/dev:
->>>
->>> I suppose `git rebase --abort` should return me back to `dev`, because
->>> this is the state I was before the command. hmm... suppose it will not
->>> return to original branch when [branch] parameter is specified for git
->>> rebase
->>
->> Yes, "git rebase [--onto C] A B" has always been a short-hand for
->>
->> 	git checkout B
->> 	git rebase [--onto C] A
->>
->> which means that if the second rebase step aborts, rebase wants to
->> go back to the state before the rebase started, i.e. immediately
->> after "checkout B" was done.
->>
->> I think the root cause of the problem is that addition of the
->> "--autostash" feature (which came much later than the two-arg form)
->> was designed poorly.  If it wanted to keep the "two-arg form is a
->> mere short-hand for checkout followed by rebase" semantics to avoid
->> confusing existing users (which is probably a good thing and that
->> seems to be what the code does), then the auto-stash should have
->> been added _after_ we switch to the branch we rebase, i.e. B.  That
->> way, the stash would be applicable if the rebase gets aborted and
->> goes back to the original B, where the stash was taken from.
-> 
-> That makes a ton of sense to me.
+On Wed, Nov 4, 2020 at 3:06 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> Advanced and expert users may want to know how 'git maintenance start'
+> schedules background maintenance in order to customize their own
+> schedules beyond what the maintenance.* config values allow. Start a new
+> set of sections in git-maintenance.txt that describe how 'cron' is used
+> to run these tasks.
+>
+> This is particularly valuable for users who want to inspect what Git is
+> doing or for users who want to customize the schedule further. Having a
+> baseline can provide a way forward for users who have never worked with
+> cron schedules.
 
-Not to me. In particular, I would prefer to move away from the mental 
-model "two-arg form is shorthand for checkout followed by rebase".
+A few comments below, not necessarily worth a re-roll...
 
-First of all, it does not match the mental model of inexperienced users. 
-You have to have been deep in Git operations long enough to know that 
-the two-arg form is implemented by an initial checkout so that the 
-rebase can proceed as if it were the usual one-arg form.
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+> diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
+> @@ -218,6 +218,60 @@ Further, the `git gc` command should not be combined with
+> +The standard mechanism for scheduling background tasks on POSIX systems
+> +is `cron`. This tool executes commands based on a given schedule. The
 
-Second, this initial checkout in two-arg form is not necessary at all to 
-begin the rebase. As a first step, the commits to be rebased must be 
-determined. For this, the traditional way is to ask for the range 
-BASE..HEAD (and in order not to change this query for two-arg form, the 
-checkout was added). But the commits can be determined with 
-BASE..${second_arg:-HEAD} without requiring a checkout. Then the first 
-unavoidable checkout is the one that goes to ONTO (with some further 
-shortcuts in an interactive rebase).
+It is common in Git (and other Unix) documentation to refer to a Unix
+tool by its man page reference. So, for instance, instead of `cron`,
+we would say cron(8) since the `cron` man page is in section 8 of the
+Unix manual.
 
-I really don't give a dime for the initial checkout. After a botched 
-two-arg rebase, I usually prefer that --abort brings me back to the 
-branch were I was when I started, and not to the branch that was the 
-second arg of the rebase.
+> +The `<path>` string is loaded to specifically use the location for the
 
->> In any case, the ship has long sailed, so ...
+The word "loaded" sounds odd in this context.
 
-Well, then order it back. rebase is porcelain, not plumbing.
+> +`git` executable used in the `git maintenance start` command. This allows
+> +for multiple versions to be compatible. However, if the same user runs
+> +`git maintenance start` with multiple Git executables, then only the
+> +latest executable will be used.
 
--- Hannes
+I had to read this paragraph four or five times to understand what it
+is trying to say (assuming I do understand it). Perhaps it can be
+rewritten more succinctly something like this:
+
+    The `crontab` entry specifies the full path of the `git`
+    executable to ensure that the `git` command run is the same one
+    with which `git maintenance start` was issued independent of
+    `PATH`.
+
+> +These commands use `git for-each-repo --config=maintenance.repo` to run
+> +`git maintenance run --schedule=<frequency>` on each repository listed in
+> +the multi-valued `maintenance.repo` config option. These are typically
+> +loaded from the user-specific global config located at `~/.gitconfig`.
+
+I wonder if mentioning `~/.gitconfig` explicitly is wise since it
+might also be at $XDG_CONFIG_HOME/git/config or some other location on
+Windows. Perhaps it would be sufficient to mention only "global Git
+configuration" or something.
+
+> +If the config values are insufficient to achieve your desired background
+> +maintenance schedule, then you can create your own schedule. If you run
+> +`crontab -e`, then an editor will load with your user-specific `cron`
+> +schedule. In that editor, you can add your own schedule lines. You could
+> +start by adapting the default schedule listed earlier, or you could read
+> +https://man7.org/linux/man-pages/man5/crontab.5.html[the `crontab` documentation]
+
+For consistency with other parts of Git documentation, it might be
+better to reference the `crontab` man page simply as crontab(5) rather
+than providing an explicit URL.
+
+> +for advanced scheduling techniques. Please do use the full path and
+> +`--exec-path` techniques from the default schedule to ensure you are
+> +executing the correct binaries in your schedule.
