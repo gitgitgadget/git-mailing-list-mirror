@@ -2,76 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6044C2D0E4
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 19:58:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36F4BC2D0E4
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 20:06:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7ED2720825
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 19:58:25 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Gb4n0K8d"
+	by mail.kernel.org (Postfix) with ESMTP id CD8D8207DE
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 20:06:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726913AbgKLT6Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Nov 2020 14:58:24 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:55921 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726702AbgKLT6Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Nov 2020 14:58:24 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4EBF7FA714;
-        Thu, 12 Nov 2020 14:58:22 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=6Xw6Xbf/WFk9PsapGQzbEaU1/vA=; b=Gb4n0K8d2W2XPSrpWQJX
-        F4TutoE/4CWrwfcMBJaouZ5xZp7qT28mmx4pe+zG4CJX7fXK5ZGc+rfLx/Ve/jH3
-        4IRJa77h8VfnPYezsoW2hdF2e0obZOAntQgApjf/tDZoje5IFB+o9tEv3zJW+BFH
-        0jv/gqN2QYh53xJdzAIka2o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=pJWE0iDWqMuIBjFBKOrA+88qGWIkXojqAeVAHZOl6HZgZB
-        b+clMQDk+bUV3yU3I3LEroDhfxT3qdyxpUi5Hjq2CSlfQJaClOscPX0YJHESP8JG
-        Hk00nTxyCmuNW0zvRAba2NVfT1K1yx3Bum8K8f+z5ma1vTM2hmkwj9ZoK2d8M=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 46086FA713;
-        Thu, 12 Nov 2020 14:58:22 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 75304FA712;
-        Thu, 12 Nov 2020 14:58:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v2 12/26] completion: bash: refactor __gitcomp
-References: <20201110212136.870769-1-felipe.contreras@gmail.com>
-        <20201110212136.870769-13-felipe.contreras@gmail.com>
-Date:   Thu, 12 Nov 2020 11:58:16 -0800
-Message-ID: <xmqqo8k2cppj.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726807AbgKLUGW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Nov 2020 15:06:22 -0500
+Received: from mail-ej1-f43.google.com ([209.85.218.43]:34637 "EHLO
+        mail-ej1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726738AbgKLUGW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Nov 2020 15:06:22 -0500
+Received: by mail-ej1-f43.google.com with SMTP id o9so9882480ejg.1
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 12:06:21 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xZlGgpDpfUQDPHH0/EYVGY+Nkzpqi8DVQObRMKMZTGY=;
+        b=NNohSaKPi4u0OAyrMAZVif7AEeqQiVtMtITTVhxR0LzFMPgQ7nwQ879ahibJXalyrv
+         nNQtrK1JysmMAKz5/MdHG6j/BIshLeSOTainclYEN6usDzwU8X+9I0OIJFA35+2Byinf
+         jOBKCWIIUUyPzPhySvZXAkqNSUXyJnrhK4+EmVXEytEVruqPGSbm68xYETXLPvFsjaNZ
+         aKzfH3B26YgSXO3PPxHq0nNv4kvS8ctcbmhYWNs+itHDIWuVUw6GYbmlVSdcsiyRhlRe
+         lVKadD96jiBVEnTpEAu+QzSxY+05e56Nsx9pVZbcjjH6k29Tp7XwBCVL4tIHs/Y8kWlg
+         47BA==
+X-Gm-Message-State: AOAM5311Uclra5E2cVZyXFmji/cZp7haABWV5C0GS33gEOUiENyEBKbJ
+        MLcL7jejQb/BeBCLsKcIe45NQX/6yEsrYkJmCpA=
+X-Google-Smtp-Source: ABdhPJwFxefxGNn3jhj1fsiv78bzIRyZ0ryeU2pi6aVnNY2T5sTxAw6jNyH8c4X2Sc55FiLYTTk6yMqBt4V6+HH/aA4=
+X-Received: by 2002:a17:906:c357:: with SMTP id ci23mr931780ejb.311.1605211580360;
+ Thu, 12 Nov 2020 12:06:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 68A82672-2521-11EB-878F-D609E328BF65-77302942!pb-smtp21.pobox.com
+References: <20201112174353.GD4270@szeder.dev> <xmqqk0uqjw4l.fsf@gitster.c.googlers.com>
+ <CAPig+cT1zDT1iqRqO-4U8Rwq7p=MFm5Bkn990AVbxMHqp=knmg@mail.gmail.com> <xmqqblg2jt95.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqblg2jt95.fsf@gitster.c.googlers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 12 Nov 2020 15:06:08 -0500
+Message-ID: <CAPig+cTeiLDFQD6HDhr-or4F+2POfsMkQ2f0H5ipvi7DCkmLRw@mail.gmail.com>
+Subject: Re: git format-patch --range-diff bug?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-
-> We have to chunks of code doing exactly the same. There's no need for
-> that.
-
-You mean "2 chunks"?
-
+On Thu, Nov 12, 2020 at 2:00 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > [...] the best "fix" likely would be for `git format-patch --range-diff` to
+> > error out when it sees a 3-dot range.
 >
-> No functional changes.
+> And possibly rename the option.  Giving "--range-diff=<prev>" is not
+> an instruction to run "git range-diff <prev>", so it is clear that
+> the option is misnamed.
 >
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
+> It probably should have been "--[no-]range-diff" boolean that
+> controls if we add the range-diff from the previous, whose default
+> may be affected by the user of the "-v$n" option, plus another
+> option that gives where to find the "previous series", whose
+> presence probably trigger "--range-diff" implicitly, or something
+> like that.
+>
+> And the option whose value we are having problem with is exactly
+> that "--previous-series=<prev>" option.
+
+You may be right that, due to the name similarity, some people
+misinterpret --range-diff as providing one-to-one parity with the `git
+range-diff` command, but that was never the intention (as was
+discussed during review). Instead, the intention all along was only to
+make it easy to embed range-diffs in `git format-patch` output with a
+simple and concise invocation, and only for common cases. For
+instance, it is quite common for v2 to share a common base with v1, in
+which case `git format-patch -v2 --range-diff=v1 <base>` would be
+sufficient (when v2 is the checked-out branch). Anything more complex
+can be achieved by utilizing `git range-diff` directly; for instance:
+`git range-diff {complexity} >>0000-cover-letter.patch`
+
+As discussed during review, I had considered more complex invocation
+possibilities for `git format-patch` but ended up rejecting them and
+opting instead for simplicity since `git range-diff` itself is a
+suitable escape hatch for accomplishing complex cases not handled by
+the intentionally simplistic --range-diff option. Thus, I'm hesitant
+to go in a direction which adds more complexity to the `git
+format-patch` invocation, thus making it more difficult to use
+range-diff with `git format-patch`.
