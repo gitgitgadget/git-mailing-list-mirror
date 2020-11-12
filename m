@@ -2,145 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 467E9C2D0E4
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 18:29:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D97BBC2D0E4
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 18:32:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ED0A52223C
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 18:29:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 810802223F
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 18:32:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726361AbgKLS33 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Nov 2020 13:29:29 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56182 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726104AbgKLS31 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Nov 2020 13:29:27 -0500
-Received: (qmail 21664 invoked by uid 109); 12 Nov 2020 18:29:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 12 Nov 2020 18:29:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32752 invoked by uid 111); 12 Nov 2020 18:29:25 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Nov 2020 13:29:25 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 12 Nov 2020 13:29:25 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 9/9] add -i: verify in the tests that colors can be
- overridden
-Message-ID: <20201112182925.GA701197@coredump.intra.peff.net>
-References: <pull.785.git.1605051739.gitgitgadget@gmail.com>
- <38355ec98f04783367d74e38cda3ce5d6632c7ac.1605051739.git.gitgitgadget@gmail.com>
- <20201111023549.GB806755@coredump.intra.peff.net>
- <nycvar.QRO.7.76.6.2011111635140.18437@tvgsbejvaqbjf.bet>
- <20201111180713.GC9902@coredump.intra.peff.net>
- <nycvar.QRO.7.76.6.2011121448550.18437@tvgsbejvaqbjf.bet>
+        id S1726300AbgKLScz convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 12 Nov 2020 13:32:55 -0500
+Received: from mail-ed1-f53.google.com ([209.85.208.53]:46373 "EHLO
+        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726148AbgKLScz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Nov 2020 13:32:55 -0500
+Received: by mail-ed1-f53.google.com with SMTP id t11so7508319edj.13
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 10:32:54 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=wW/Pc0ZQRUik9JV1LTbuklNXWzx6gu7ALIdY0B0IpIM=;
+        b=HzHjUGi9LwVlz96QLFbPBsyp9BQgZIxPbLw+iZs2/w4nB5vgDchotwEO+jWoiV9hCs
+         emfYPb9nOCZqlcQ5qvncVWxZpCok4IMrif5VtbQwYK1MGB2uc6ZIwEn/GHoMlobEmPbz
+         ccTvIsmHLMQMopgTa2RIpIiQckBqBAtXGRVe3KOLDGzqucnIzNNx0WqjKopZkDVYtpcW
+         fZk8oU7FIkOmhHJ+fxVAp08MoJ2IetsVb8c54z5MojkAX0Cdtg8lj+Dr6rrb9Lni7YKv
+         +oJXfUYlCvd+IPpPuyjc+bkHqYEFkey0ww3kdUsX8x+jOb1zZU9UwDQX/7WYbW84thju
+         1gjQ==
+X-Gm-Message-State: AOAM531xSdj+HdQollAaZ9+ONNC50bEijYEPXmtcjpjjBp60RjBD/Ive
+        QJfMe0UyUhU1ZzFyLJmYtDr9CnSAykLucyL2QBM=
+X-Google-Smtp-Source: ABdhPJy2Fm272RLGD+0BVTFBaG8m+zYcVPOiG59f1rxS1L3PeHKUTzHPhAacfrh97aNmpISnnP/ze7BmAVpdlYDQXHw=
+X-Received: by 2002:aa7:cc0e:: with SMTP id q14mr1209795edt.181.1605205973353;
+ Thu, 12 Nov 2020 10:32:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2011121448550.18437@tvgsbejvaqbjf.bet>
+References: <20201112174353.GD4270@szeder.dev> <xmqqk0uqjw4l.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqk0uqjw4l.fsf@gitster.c.googlers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 12 Nov 2020 13:32:42 -0500
+Message-ID: <CAPig+cT1zDT1iqRqO-4U8Rwq7p=MFm5Bkn990AVbxMHqp=knmg@mail.gmail.com>
+Subject: Re: git format-patch --range-diff bug?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 12, 2020 at 03:04:01PM +0100, Johannes Schindelin wrote:
+On Thu, Nov 12, 2020 at 12:57 PM Junio C Hamano <gitster@pobox.com> wrote:
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+> >       git range-diff v1...v2 &&
+> >       git format-patch -1 --range-diff=v1...v2 v2 &&
+>
+> The other day I did something similar and ended up with
+>
+>         git format-patch --range-diff=v1 v1..v2
+>
+> Would it help not to use the three-dot form?  From my reading of
+> "git format-patch --range-diff=<previous>" description, it only
+> needs to give a single range (i.e. previous side of series of
+> commits) as the other range to be compared are by definition the
+> patches you are producing, while v1...v2 syntax is to give two
+> ranges with one option.  So...
 
-> Gaaah! I totally forgot that `BASH_XTRACEFD` is only heeded by BusyBox'
-> ash (and only when built with `ENABLE_ASH_BASH_COMPAT`), not by `dash`.
-> 
-> Sorry for the noise.
+Indeed. It's not clear (at least to me) how git-format-patch's
+--range-diff option should interpret a 3-dot range, thus the
+implementation explicitly supports only a single revision or a 2-dot
+range, and the documentation reflects this.
 
-Ah, that makes more sense. And I learned something new about busybox. :)
+It turns out, as you discovered, that the implementation is a bit
+deficient in that it doesn't outright reject a 3-dot range, and
+instead gets tripped up by:
 
-> > Hmm. Right, I knew about that weirdness. But I assumed that the builtin
-> > add-interactive was doing the diffs in-core. Otherwise, why would we
-> > have seen the failure to load diff.color.frag in the first place?
-> 
-> Oh, that's easy to explain: as you can verify reading
-> https://github.com/git/git/blob/e31aba42fb12/git-add--interactive.perl#L885-L898
-> the Perl version of `git add -p` insists on (re-)constructing the hunk
-> headers manually, and obviously it needs to color them manually, too. And
-> https://github.com/git/git/blob/e31aba42fb12/add-patch.c#L649-L672 shows
-> that the built-in version of `git add -p` slavishly follows that practice.
+     int prev_is_range = !!strstr(prev, "..");
 
-But that is only when we split hunks (your link to the perl script is in
-split_hunks()). I agree we must color manually there when creating our
-own hunk header. But outside of that and patch-editing, the perl script
-does not otherwise recolor or rewrite (nor even really parse beyond
-line-splitting) what it gets from the colorized version.
+which accidentally also matches a 3-dot range, with the result that
+the 3-dot range gets passed into the lower-level range-diff machinery
+which then forwards the 3-dot range to git-log. The git-range-diff
+command, on the other hand, interprets a 3-dot range manually so such
+a range doesn't make it down to the lower-level range-diff machinery.
 
-Whereas add-patch parses the colors off of the version and then
-re-colors every hunk header. Which seems doubly weird to me. Even if we
-were going to re-color every hunk (e.g., because we don't want to store
-the original hunk line, but instead a parsed version of it), why bother
-parsing the color version at all, and not just the machine-readable
-version?
-
-> > The answer seems to be that render_hunk() always _replaces_ the colors
-> > we got from running the external diff. Whereas the perl version only
-> > applied coloring when reading back in the results of an edit operation
-> > (and likewise used the frag color when generating a split hunk header).
-> 
-> No, the Perl version also insists on applying `fraginfo_color`, see
-> https://github.com/git/git/blob/e31aba42fb12/git-add--interactive.perl#L885-L898
-
-Only when we split. Try this to give different colors between the
-interactive script and diff:
-
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index e713fe3d02..862a21ff1f 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -28,8 +28,9 @@
- my $diff_use_color = $repo->get_colorbool('color.diff');
- my ($fraginfo_color) =
- 	$diff_use_color ? (
--		$repo->get_color('color.diff.frag', 'cyan'),
-+		$repo->get_color('color.diff.nonsense', 'yellow'),
- 	) : ();
-+# noop to create split hunk
- my ($diff_plain_color) =
- 	$diff_use_color ? (
- 		$repo->get_color('color.diff.plain', ''),
-
-Running "git add -p" does not result in yellow hunk headers. But issuing
-a split command does.
-
-The distinction is mostly academic, because diff-tree and the
-interactive patch code should be using the same colors, so the result
-should look the same. It could matter if the diff-filter chooses
-different colors, though then the split headers will not match the
-originals in style. We _could_ run the newly created hunk header
-individually through the diff-filter, though I'm not sure how various
-filters would handle that.
-
-That's true of the perl version as well as the builtin one, but I think
-the builtin one's insistence on parsing the colored output is taking us
-in the wrong direction to eventually fix that.
-
-> > I'm not sure that what the builtin version is doing is wrong, but it
-> > seems like it's putting a lot of extra effort into parsing colors off of
-> > the colorized version. Whereas the perl version just assumes the lines
-> > match up. I do wonder if there are corner cases we might hit around
-> > filters here, though. The lines we get from a filter might bear no
-> > resemblance at all to diff lines. The only thing we require in the perl
-> > version is that they have correspond 1-to-1 with the unfiltered diff
-> > lines in meaning.
-> 
-> They do have to correspond 1-to-1 because the assumption is that the
-> individual lines will then correspond one-to-one, too. This does not need
-> to be true, of course, but then the filter is probably less useful than
-> the user wants it to be.
-
-Right, I'm not disputing the 1-to-1 thing (I was after all the one who
-implemented interactive.diffilter, and added the "complain if the counts
-don't line up" check). But in the perl script they only need to
-correspond _semantically_, not syntactically.
-
--Peff
+I haven't fully thought it through yet, but at this point, the best
+"fix" likely would be for `git format-patch --range-diff` to error out
+when it sees a 3-dot range. (Unless there is some other intuitive
+interpretation of a 3-dot range which escapes me.)
