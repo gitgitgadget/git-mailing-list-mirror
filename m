@@ -2,92 +2,307 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36F4BC2D0E4
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 20:06:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65A26C2D0E4
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 20:15:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CD8D8207DE
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 20:06:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0F06A20A8B
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 20:15:32 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ikhf8xeh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726807AbgKLUGW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Nov 2020 15:06:22 -0500
-Received: from mail-ej1-f43.google.com ([209.85.218.43]:34637 "EHLO
-        mail-ej1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726738AbgKLUGW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Nov 2020 15:06:22 -0500
-Received: by mail-ej1-f43.google.com with SMTP id o9so9882480ejg.1
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 12:06:21 -0800 (PST)
+        id S1727069AbgKLUPb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Nov 2020 15:15:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56562 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726960AbgKLUP3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Nov 2020 15:15:29 -0500
+Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AD2DC0613D1
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 12:15:29 -0800 (PST)
+Received: by mail-qv1-xf49.google.com with SMTP id t13so4580198qvm.14
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 12:15:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=sykIFTSECVQMg7QvsaJrJK6vaqdetmNZCMPO4gWbmJE=;
+        b=ikhf8xeh9mG52qcSUxs4PD1q1l505E1BCxHhu7KszM5bvNyP7vgf6xN1lIMwp4jXCs
+         Z6gtf4YTvYDJw3XhYqnrkWOXwQuNSl97R2hlSfXxxS4KBOLSeGO5hwI9IS4elOW6NUu3
+         h6s6xuvRjyStGUOE5B4/A+m3bgkc8pFepkfGQoOgEut0GJS1lR5GlW+ou77wCDhxDsuO
+         aZ+CAB70Q96c57MyC3LXmCAE8ofiAL92oD50xXsYdwCZ6AtWXVGKFzFHwwx8WDvCvD0Y
+         Q6V8mvCpN9ZcOBmmEDR+22NQSp0K0/5hfDKSD+0/Z1/jNE8NxWVNEgPKy8NOUiv3x9jM
+         yMgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xZlGgpDpfUQDPHH0/EYVGY+Nkzpqi8DVQObRMKMZTGY=;
-        b=NNohSaKPi4u0OAyrMAZVif7AEeqQiVtMtITTVhxR0LzFMPgQ7nwQ879ahibJXalyrv
-         nNQtrK1JysmMAKz5/MdHG6j/BIshLeSOTainclYEN6usDzwU8X+9I0OIJFA35+2Byinf
-         jOBKCWIIUUyPzPhySvZXAkqNSUXyJnrhK4+EmVXEytEVruqPGSbm68xYETXLPvFsjaNZ
-         aKzfH3B26YgSXO3PPxHq0nNv4kvS8ctcbmhYWNs+itHDIWuVUw6GYbmlVSdcsiyRhlRe
-         lVKadD96jiBVEnTpEAu+QzSxY+05e56Nsx9pVZbcjjH6k29Tp7XwBCVL4tIHs/Y8kWlg
-         47BA==
-X-Gm-Message-State: AOAM5311Uclra5E2cVZyXFmji/cZp7haABWV5C0GS33gEOUiENyEBKbJ
-        MLcL7jejQb/BeBCLsKcIe45NQX/6yEsrYkJmCpA=
-X-Google-Smtp-Source: ABdhPJwFxefxGNn3jhj1fsiv78bzIRyZ0ryeU2pi6aVnNY2T5sTxAw6jNyH8c4X2Sc55FiLYTTk6yMqBt4V6+HH/aA4=
-X-Received: by 2002:a17:906:c357:: with SMTP id ci23mr931780ejb.311.1605211580360;
- Thu, 12 Nov 2020 12:06:20 -0800 (PST)
-MIME-Version: 1.0
-References: <20201112174353.GD4270@szeder.dev> <xmqqk0uqjw4l.fsf@gitster.c.googlers.com>
- <CAPig+cT1zDT1iqRqO-4U8Rwq7p=MFm5Bkn990AVbxMHqp=knmg@mail.gmail.com> <xmqqblg2jt95.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqblg2jt95.fsf@gitster.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 12 Nov 2020 15:06:08 -0500
-Message-ID: <CAPig+cTeiLDFQD6HDhr-or4F+2POfsMkQ2f0H5ipvi7DCkmLRw@mail.gmail.com>
-Subject: Re: git format-patch --range-diff bug?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Git List <git@vger.kernel.org>
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=sykIFTSECVQMg7QvsaJrJK6vaqdetmNZCMPO4gWbmJE=;
+        b=EGpx6LNJFCEM4m84JVkTgVo3WHiyRW/urPIPje6ARNAxrrIKCH3w9QPXIlPzBOwIZH
+         DaH0I/OpWVbbqf8FHPx54N8ZBheU1iXUWB0gTAQS4YhjpExFfeG4grrttI0beciT/Vgq
+         B4Vf7VXBWbuZOH7PDsrEgUoDE8wGgRIQVp13DsFDT8kj5utBSUfWUE5WihW+6lCO6XKt
+         kXLj7W1iYXGJTr8G1rgsWWw0XMKDorh+3am5Yn4G5T6dli3PCZPdrnkG+RKePCbR/opa
+         J0JSsFhbb5pzS7/2MCdYhksicL2SP3ntIFyUkCy8hjN7gVB/fkG9yWBsyYfSuOQjokit
+         /fUw==
+X-Gm-Message-State: AOAM530xC4p5NbRCSd43kseAsVsMPuAFQ2Bn+zV8Fu1+kR324SONjnY0
+        lTVQkCcw2pKC7fY8VjGcKczv0dA25OLzEYm7VUPM
+X-Google-Smtp-Source: ABdhPJz9VJeAgURut4whY6WMfA5SmzOw0IEGF5G1egc1DkEKm8NXT8ek7C0zT4c3WJNR3DC3ww4X2p1i0ZX91MYlQzW2
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6214:40c:: with SMTP id
+ z12mr1366105qvx.25.1605212128329; Thu, 12 Nov 2020 12:15:28 -0800 (PST)
+Date:   Thu, 12 Nov 2020 12:15:24 -0800
+In-Reply-To: <20201102204344.342633-16-newren@gmail.com>
+Message-Id: <20201112201524.3438029-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20201102204344.342633-16-newren@gmail.com>
+X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8-goog
+Subject: Re: [PATCH v2 15/20] merge-ort: step 3 of tree writing -- handling
+ subdirectories as we go
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     newren@gmail.com
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 12, 2020 at 2:00 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > [...] the best "fix" likely would be for `git format-patch --range-diff` to
-> > error out when it sees a 3-dot range.
->
-> And possibly rename the option.  Giving "--range-diff=<prev>" is not
-> an instruction to run "git range-diff <prev>", so it is clear that
-> the option is misnamed.
->
-> It probably should have been "--[no-]range-diff" boolean that
-> controls if we add the range-diff from the previous, whose default
-> may be affected by the user of the "-v$n" option, plus another
-> option that gives where to find the "previous series", whose
-> presence probably trigger "--range-diff" implicitly, or something
-> like that.
->
-> And the option whose value we are having problem with is exactly
-> that "--previous-series=<prev>" option.
+Firstly, from [1]:
 
-You may be right that, due to the name similarity, some people
-misinterpret --range-diff as providing one-to-one parity with the `git
-range-diff` command, but that was never the intention (as was
-discussed during review). Instead, the intention all along was only to
-make it easy to embed range-diffs in `git format-patch` output with a
-simple and concise invocation, and only for common cases. For
-instance, it is quite common for v2 to share a common base with v1, in
-which case `git format-patch -v2 --range-diff=v1 <base>` would be
-sufficient (when v2 is the checked-out branch). Anything more complex
-can be achieved by utilizing `git range-diff` directly; for instance:
-`git range-diff {complexity} >>0000-cover-letter.patch`
+> Thanks for the reviews!  I was hoping to see some comments on patch
+> 15, as it's possibly the gnarliest.  It's a relatively straightforward
+> algorithm, just lots of bookkeeping.
 
-As discussed during review, I had considered more complex invocation
-possibilities for `git format-patch` but ended up rejecting them and
-opting instead for simplicity since `git range-diff` itself is a
-suitable escape hatch for accomplishing complex cases not handled by
-the intentionally simplistic --range-diff option. Thus, I'm hesitant
-to go in a direction which adds more complexity to the `git
-format-patch` invocation, thus making it more difficult to use
-range-diff with `git format-patch`.
+I was planning to send this out yesterday, but couldn't finish it. :-P
+Indeed, a lot of things to think about.
+
+[1] https://lore.kernel.org/git/CABPp-BFgQX6Ash03x7z+RfE3ytbw3x0DzDSBrGddgMr_soODoA@mail.gmail.com/
+
+[snip commit message]
+
+Thanks for the thorough explanation.
+
+> @@ -353,6 +353,9 @@ static int string_list_df_name_compare(const char *one, const char *two)
+>  
+>  struct directory_versions {
+>  	struct string_list versions;
+> +	struct string_list offsets;
+
+Looking below (and at the explanation in the commit message), this is a
+mapping from full paths to integers casted to the pointer type.
+
+> +	const char *last_directory;
+> +	unsigned last_directory_len;
+
+Is this just the last entry in "versions"?
+
+>  static void write_tree(struct object_id *result_oid,
+> @@ -409,12 +412,100 @@ static void record_entry_for_tree(struct directory_versions *dir_metadata,
+>  		/* nothing to record */
+>  		return;
+>  
+> +	/*
+> +	 * Note: write_completed_directories() already added
+> +	 * entries for directories to dir_metadata->versions,
+> +	 * so no need to handle ci->filemask == 0 again.
+> +	 */
+> +	if (!ci->merged.clean && !ci->filemask)
+> +		return;
+> +
+>  	basename = path + ci->merged.basename_offset;
+>  	assert(strchr(basename, '/') == NULL);
+>  	string_list_append(&dir_metadata->versions,
+>  			   basename)->util = &ci->merged.result;
+>  }
+
+Conceptually, I can see how the algorithm below inserts directories, but
+I don't understand the significance of "!ci->merged.clean" in the change
+above.
+
+> +static void write_completed_directories(struct merge_options *opt,
+> +					const char *new_directory_name,
+> +					struct directory_versions *info)
+> +{
+> +	const char *prev_dir;
+> +	struct merged_info *dir_info = NULL;
+> +	unsigned int offset;
+> +	int wrote_a_new_tree = 0;
+> +
+> +	if (new_directory_name == info->last_directory)
+> +		return;
+
+Pointer equality is OK here presumably because of the string interning
+of directory names.
+
+I'm starting to think that it might be too difficult to keep track of
+where strings are interned. Maybe there should be a data structure
+containing all interned strings, and make the path a struct or something
+like that (to clearly indicate that the string inside comes from the
+interned string data structure).
+
+> +	/*
+> +	 * If we are just starting (last_directory is NULL), or last_directory
+> +	 * is a prefix of the current directory, then we can just update
+> +	 * last_directory and record the offset where we started this directory.
+> +	 */
+> +	if (info->last_directory == NULL ||
+> +	    !strncmp(new_directory_name, info->last_directory,
+> +		     info->last_directory_len)) {
+
+Git has starts_with() for prefix checking. (May not be as optimized as
+this one, though.)
+
+> +		uintptr_t offset = info->versions.nr;
+> +
+> +		info->last_directory = new_directory_name;
+> +		info->last_directory_len = strlen(info->last_directory);
+> +		string_list_append(&info->offsets,
+> +				   info->last_directory)->util = (void*)offset;
+> +		return;
+> +	}
+
+Due to the way this is sorted, there might be a jump of 2 or more
+directories. (The commit message also provides such an example - from ""
+to "src/moduleB", without going through "src".)
+
+> +	/*
+> +	 * At this point, ne (next entry) is within a different directory
+> +	 * than the last entry, so we need to create a tree object for all
+> +	 * the entries in info->versions that are under info->last_directory.
+> +	 */
+
+There's no "ne" below.
+
+> +	dir_info = strmap_get(&opt->priv->paths, info->last_directory);
+> +	assert(dir_info);
+> +	offset = (uintptr_t)info->offsets.items[info->offsets.nr-1].util;
+> +	if (offset == info->versions.nr) {
+> +		dir_info->is_null = 1;
+> +	} else {
+> +		dir_info->result.mode = S_IFDIR;
+> +		write_tree(&dir_info->result.oid, &info->versions, offset);
+> +		wrote_a_new_tree = 1;
+> +	}
+
+I was trying to figure out the cases in which offset would be
+info->versions.nr - if such a case existed, and if yes, would it be
+incorrect to skip creating such a tree because presumably this offset
+exists in info->offsets for a reason. Do you know in which situation
+offset would equal info->versions.nr?
+
+> +	/*
+> +	 * We've now used several entries from info->versions and one entry
+> +	 * from info->offsets, so we get rid of those values.
+> +	 */
+> +	info->offsets.nr--;
+> +	info->versions.nr = offset;
+
+OK.
+
+> +	/*
+> +	 * Now we've got an OID for last_directory in dir_info.  We need to
+> +	 * add it to info->versions for it to be part of the computation of
+> +	 * its parent directories' OID.  But first, we have to find out what
+> +	 * its' parent name was and whether that matches the previous
+> +	 * info->offsets or we need to set up a new one.
+> +	 */
+> +	prev_dir = info->offsets.nr == 0 ? NULL :
+> +		   info->offsets.items[info->offsets.nr-1].string;
+> +	if (new_directory_name != prev_dir) {
+> +		uintptr_t c = info->versions.nr;
+> +		string_list_append(&info->offsets,
+> +				   new_directory_name)->util = (void*)c;
+> +	}
+
+Because of the possible jump of 2 or more directories that I mentioned
+earlier, there may be gaps in the offsets. So it makes sense that we
+sometimes need to insert an intermediate one.
+
+I wonder if the code would be clearer if we had explicit "begin tree"
+and "end tree" steps just like in list-objects-filter.c (LOFS_BEGIN_TREE
+and LOFS_END_TREE). Here we have "end tree" (because of the way the
+entries were sorted) but not "begin tree". If we had "begin tree", we
+probably would be able to create the necessary offsets in a loop at that
+stage, and the reasoning about the contents of the offsets would not be
+so complicated.
+
+If we really only want one side (i.e. you don't want to introduce a
+synthetic entry just to mark the end or the beginning), then my personal
+experience is that having the "begin" side is easier to understand, as
+the state is more natural and easier to reason about. (Unlike here,
+where there could be gaps in the offsets and the reader has to
+understand that the gaps will be filled just in time.) But that may just
+be my own experience.
+
+> +	/*
+> +	 * Okay, finally record OID for last_directory in info->versions,
+> +	 * and update last_directory.
+> +	 */
+> +	if (wrote_a_new_tree) {
+> +		const char *dir_name = strrchr(info->last_directory, '/');
+> +		dir_name = dir_name ? dir_name+1 : info->last_directory;
+> +		string_list_append(&info->versions, dir_name)->util = dir_info;
+> +	}
+> +	info->last_directory = new_directory_name;
+> +	info->last_directory_len = strlen(info->last_directory);
+> +}
+
+OK - several entries in info->versions were deleted earlier (through
+info->versions.nr = offset), and we add one here to represent the tree
+containing all those deleted versions.
+
+> @@ -541,22 +635,27 @@ static void process_entries(struct merge_options *opt,
+>  		 */
+>  		struct conflict_info *ci = entry->util;
+>  
+> +		write_completed_directories(opt, ci->merged.directory_name,
+> +					    &dir_metadata);
+>  		if (ci->merged.clean)
+>  			record_entry_for_tree(&dir_metadata, path, ci);
+>  		else
+>  			process_entry(opt, path, ci, &dir_metadata);
+>  	}
+
+Trying to make sense of this: we pass in the directory name of the
+current entry so that if the last directory is *not* a prefix of the
+current directory (so we either went up a directory or went sideways),
+then we write a tree (unless offset == info->versions.nr, which as I
+stated above, I still don't fully understand - I thought we would always
+have to write a tree). So maybe the name of the function should be
+"write_completed_directory" (and document it as "write a tree if
+???"), since we write at most one.
+
+In this kind of algorithm (where intermediate accumulated results are
+being written), there needs to be a last write after the loop that
+writes whatever's left in the accumulation buffer. I do see it below
+("write_tree"), so that's good.
+
+> -	/*
+> -	 * TODO: We can't actually write a tree yet, because dir_metadata just
+> -	 * contains all basenames of all files throughout the tree with their
+> -	 * mode and hash.  Not only is that a nonsensical tree, it will have
+> -	 * lots of duplicates for paths such as "Makefile" or ".gitignore".
+> -	 */
+> -	die("Not yet implemented; need to process subtrees separately");
+> +	if (dir_metadata.offsets.nr != 1 ||
+> +	    (uintptr_t)dir_metadata.offsets.items[0].util != 0) {
+> +		printf("dir_metadata.offsets.nr = %d (should be 1)\n",
+> +		       dir_metadata.offsets.nr);
+> +		printf("dir_metadata.offsets.items[0].util = %u (should be 0)\n",
+> +		       (unsigned)(uintptr_t)dir_metadata.offsets.items[0].util);
+> +		fflush(stdout);
+> +		BUG("dir_metadata accounting completely off; shouldn't happen");
+> +	}
+
+Sanity check, OK.
+
+[snip rest]
+
+In summary, I think that the code would be easier to understand (for
+everyone) if there were both BEGIN_TREE and END_TREE entries. And for me
+personally, once the offset == info->versions.nr part is clarified
+(perhaps there is something obvious that I'm missing).
