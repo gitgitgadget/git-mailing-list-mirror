@@ -2,254 +2,311 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76BC1C56201
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 16:01:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C45A9C5519F
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 16:19:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0696C221E9
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 16:01:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 53E9A2078D
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 16:19:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=nokia.onmicrosoft.com header.i=@nokia.onmicrosoft.com header.b="QKGAZZhc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tiNrgJju"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729142AbgKLQBL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Nov 2020 11:01:11 -0500
-Received: from mail-eopbgr130109.outbound.protection.outlook.com ([40.107.13.109]:17542
-        "EHLO EUR01-HE1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1728836AbgKLQBC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Nov 2020 11:01:02 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=THHGU1+4D/+Yoe37iYF0fEFHSW2RfnHmlw15yE/bhxHg+VEml+YpotlTQ1EFYZ1vTHBdqnA16V2I0xxmMUlTwSRyrKpYSSNAUj0B8gJCPchu/kJZW7U/Oq3w4ZZB9YRryZ7oX58NiHXWvBXqZqUezxEmCuKihWrMzdZbXengLcgr1oOAQ0oyNc9fJoMo9L8li1zb8IqMM3mAt447hEpXKFM3Y/cPivFps36+nDI626da9AmJQLaFIxEkTQre3zgb+NC6N93R8ft/8ZWfiFytZLT3FD8G8LC2djoRtM79hP3yakDlHtnMFizVxlvtuBESllKLg1vt4K5tZqIUssSzbg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vITP0iostx4LizsdW8IBpL5q4GPr+DOfwPw53J+nru4=;
- b=YCpGxwrtVViqPodSKk1erM/IJSKvJt4LE9VpZQOd8o8ExaZIO2Q/TQfwPTg1gg8guP3FRehCOpgaPACmeToCbto1Hu5euexYpQ57PFFnE8zK2kRlBpHVxQFCw8PR5Dhe9zEV0KItgbR0VZuFDGdpXVWLQYviK5tN2gldrAy10qZlJYhQ5/ALGplAG/zVR5NgGCH2AzfTdZqHe4RBa6GCem6seAMjVA/Ok+gIRWHWkjvGAt+zWJiLWdziBNAhlZ0lMh9OLUbqEnF4kmmNNL/NsX8Hut0cyM5JL7QVq3c0T3lBs2SWkvkGhXaupDnFGA52BfO6FTDh5zbAp21T70w0Bw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
- is 131.228.6.100) smtp.rcpttodomain=iee.email smtp.mailfrom=nokia.com;
- dmarc=fail (p=none sp=none pct=100) action=none header.from=nokia.com;
- dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nokia.onmicrosoft.com;
- s=selector1-nokia-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vITP0iostx4LizsdW8IBpL5q4GPr+DOfwPw53J+nru4=;
- b=QKGAZZhcT8uzQgEPhslDx/uT7p336Gp0l7rJtTBFKvvGQmpUZQ738u2x+oY6l7xwIm0hD2pgHHLTH+X8iRG9Ale9zwNnEaAHiIkg2JL05ieTqPKJF4APM57eIaI6wheth2aAw9v3yw4FjF7TUWdq6GK1zOwsxtdBbCYrm3CrzBM=
-Received: from DB6PR0301CA0080.eurprd03.prod.outlook.com (2603:10a6:6:30::27)
- by PA4PR07MB7200.eurprd07.prod.outlook.com (2603:10a6:102:f4::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3564.13; Thu, 12 Nov
- 2020 16:00:58 +0000
-Received: from DB5EUR03FT024.eop-EUR03.prod.protection.outlook.com
- (2603:10a6:6:30:cafe::d4) by DB6PR0301CA0080.outlook.office365.com
- (2603:10a6:6:30::27) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3541.21 via Frontend
- Transport; Thu, 12 Nov 2020 16:00:58 +0000
-X-MS-Exchange-Authentication-Results: spf=softfail (sender IP is
- 131.228.6.100) smtp.mailfrom=nokia.com; iee.email; dkim=none (message not
- signed) header.d=none;iee.email; dmarc=fail action=none
- header.from=nokia.com;
-Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
- nokia.com discourages use of 131.228.6.100 as permitted sender)
-Received: from fr711usmtp2.zeu.alcatel-lucent.com (131.228.6.100) by
- DB5EUR03FT024.mail.protection.outlook.com (10.152.20.67) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3564.22 via Frontend Transport; Thu, 12 Nov 2020 16:00:57 +0000
-Received: from ulegcpbofur.emea.nsn-net.net (ulegcpbofur.emea.nsn-net.net [10.151.74.147])
-        by fr711usmtp2.zeu.alcatel-lucent.com (GMO) with ESMTP id 0ACG0tCY014537;
-        Thu, 12 Nov 2020 16:00:55 GMT
-From:   Peter Kaestle <peter.kaestle@nokia.com>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>, philipoakley@iee.email
-Cc:     peter.kaestle@nokia.com
-Subject: [RFCv2] submodules: fix of regression on fetching of non-init subsub-repo
-Date:   Thu, 12 Nov 2020 17:00:53 +0100
-Message-Id: <1605196853-37359-1-git-send-email-peter.kaestle@nokia.com>
-X-Mailer: git-send-email 2.6.2
-In-Reply-To: <4339e01e-d312-69ee-c810-2fbc65606b0d@iee.email>
-References: <4339e01e-d312-69ee-c810-2fbc65606b0d@iee.email>
-X-EOPAttributedMessage: 0
-X-MS-Office365-Filtering-HT: Tenant
-X-MS-PublicTrafficType: Email
+        id S1728967AbgKLQT5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Nov 2020 11:19:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48002 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728965AbgKLQT5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Nov 2020 11:19:57 -0500
+Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D4FEC0613D1
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 08:19:57 -0800 (PST)
+Received: by mail-ed1-x543.google.com with SMTP id p93so6925357edd.7
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 08:19:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=evl93YNRlOd1r6pzXkDnDUSJ5EUDZglCKd9gctY+nZE=;
+        b=tiNrgJjup4Q+7WHcyvyp4CK8TKOknGkuGAfC1k3MzNtG9ulK1WhkkTtWTNVO/8Z3MY
+         1rzWZ+SvJkI7PzkerWy9OeM/ChTQLEAa7r7OvOeAywAprT6vwtZBE27MBuPXqgwo4bsU
+         H0EPUKF0ObUJ6fL5163rG9DFl2nWuy/w97yju5m7EYrz7eWy1gRzoRoa0ItAfHtuOOJB
+         MqOoCRQu6DmDmjnC9miTSKZSKewbJX4AaYkIW8C0EEIqy+p0pNvnIafR98/KINv2jb0P
+         8bZSMRAt2jxgJCdWgU9WTnkCzykoIl4hjVa24FEjWsIVhvrjxSXrvNwmu0Oe5S/NakL1
+         1WJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=evl93YNRlOd1r6pzXkDnDUSJ5EUDZglCKd9gctY+nZE=;
+        b=gWMbqG4PRwLm0cLKTcY1tGGHfXg8WylOApS75eFGmcR8OTIp2wzmMLmB+jxKZr/EyL
+         9I5GFWzYAsDmb1qoIzhWNH4qJbLXaX45IRKiPfMoGz+lJ2koJSd5vax9swwen58ZE8I1
+         qgbgztMibiDJDlN2AuL+SoLQyUSVNMuyU4KKg+UTNEI5+by8EwbAliSvcKXLOtIa66bG
+         KS/o1GlH3o9brrPLaPIb8MvJYAWFzZqIISjSya5rvyR/KZcQ2i7NQR4/9qQ4jYKx78b9
+         F6TVPy6cxNyASx1TlR+jTricBk5IsDOT+hZ3m7IWDA2daZL3V5MXjz2EXVVdC991ML16
+         A34w==
+X-Gm-Message-State: AOAM533ANfPKBjBq4Jn/NplJ2nICLYXjMeqNSsl1w28fVryy65rhG58n
+        AzKAuRfcY5VEbFWwbRR/BzeUc6b4JCA=
+X-Google-Smtp-Source: ABdhPJxuPpgoRxc3fhXgMY59F8nGMH1iPGR5oQXHnzbSgSq7X8QstyBYlbfhtjcEAW21res7R73Pkw==
+X-Received: by 2002:a05:6402:a46:: with SMTP id bt6mr557822edb.101.1605197995667;
+        Thu, 12 Nov 2020 08:19:55 -0800 (PST)
+Received: from localhost.localdomain (94-21-58-64.pool.digikabel.hu. [94.21.58.64])
+        by smtp.gmail.com with ESMTPSA id b9sm1012553ejb.0.2020.11.12.08.19.54
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Nov 2020 08:19:55 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH v2] bisect: loosen halfway() check for a large number of commits
+Date:   Thu, 12 Nov 2020 17:19:38 +0100
+Message-Id: <20201112161938.20494-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.29.2.588.gcd0acd9177
+In-Reply-To: <20201022103806.26680-1-szeder.dev@gmail.com>
+References: <20201022103806.26680-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: 7cb23ee8-02b8-48dc-7f2e-08d8872424db
-X-MS-TrafficTypeDiagnostic: PA4PR07MB7200:
-X-Microsoft-Antispam-PRVS: <PA4PR07MB7200596B5F2643E9C63AF8CFEEE70@PA4PR07MB7200.eurprd07.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:283;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: HHivWHjg09w7c2aZU82vzpF5XN588Wwwx+wmaAsVuNYn2mSPP4vN8lGrDypD0+jS0gi8ISXC44lJT1JPFxIseDwLRq589qEo6QvVcUbz9cWRLuDxnT7pDaL7OULgqyzWnjHkyc5IA4OeVb9d0icDK9qBPuVbC0pm1vOtle23z9P41M61r2Ir0eumFBMH9Fn91bhDPtu9VB3oFiCHe8rByckzKLsRjTyUO/99EVcC2FFXvWvvSlnQms3t0oZraCB9kFh0fQeqOUVSCiix0dcBK23ulZZ3UnDKWPZsswiJF1clmeZxZZY7KKq4jA0lUO1QTwl5al85g9FbIAnE1WDhbNKwd0OOAZFVzPb84+pf/zZqVKghW/Hlx1rHj70RtWx21ou/17B3cZXiQi/VInH6Ow==
-X-Forefront-Antispam-Report: CIP:131.228.6.100;CTRY:FI;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:fr711usmtp2.zeu.alcatel-lucent.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(4636009)(346002)(396003)(376002)(136003)(39860400002)(46966005)(47076004)(82740400003)(5660300002)(83380400001)(478600001)(82310400003)(4326008)(81166007)(356005)(336012)(26005)(36756003)(186003)(107886003)(8936002)(44832011)(316002)(110136005)(2906002)(8676002)(70586007)(86362001)(70206006)(2616005)(4001150100001);DIR:OUT;SFP:1102;
-X-OriginatorOrg: nokia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2020 16:00:57.8872
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7cb23ee8-02b8-48dc-7f2e-08d8872424db
-X-MS-Exchange-CrossTenant-Id: 5d471751-9675-428d-917b-70f44f9630b0
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=5d471751-9675-428d-917b-70f44f9630b0;Ip=[131.228.6.100];Helo=[fr711usmtp2.zeu.alcatel-lucent.com]
-X-MS-Exchange-CrossTenant-AuthSource: DB5EUR03FT024.eop-EUR03.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR07MB7200
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A regression has been introduced by 'a62387b (submodule.c: fetch in
-submodules git directory instead of in worktree, 2018-11-28)'.
+'git bisect start ...' and subsequent 'git bisect (good|bad)' commands
+can take quite a while when the given/remaining revision range between
+good and bad commits is big and contains a lot of merge commits, e.g.
+in git.git:
 
-The scenario in which it triggers is when one has a remote repository
-with a subrepository inside a subrepository like this:
-superproject/middle_repo/inner_repo
+  $ git rev-list --count v1.6.0..v2.28.0
+  44284
+  $ time git bisect start v2.28.0 v1.6.0
+  Bisecting: 22141 revisions left to test after this (roughly 15 steps)
+  [e197c21807dacadc8305250baa0b9228819189d4] unable_to_lock_die(): rename function from unable_to_lock_index_die()
 
-Person A and B have both a clone of it, while Person B is not working
-with the inner_repo and thus does not have it initialized in his working
-copy.
+  real    0m15.472s
+  user    0m15.220s
+  sys     0m0.255s
 
-Now person A introduces a change to the inner_repo and propagates it
-through the middle_repo and the superproject.
-Once person A pushed the changes and person B wants to fetch them using
-"git fetch" on superproject level, B's git call will return with error
-saying:
+The majority of the runtime is spent in do_find_bisection(), where we
+try to find a commit as close as possible to the halfway point between
+the bad and good revisions, i.e. a commit from which the number of
+reachable commits that are in the good-bad range is half the total
+number of commits in that range.  So we count how many commits are
+reachable in the good-bad range for each commit in that range, which
+is quick and easy for a linear history, even over 300k commits in a
+linear range are handled in ~0.3s on my machine.  Alas, handling merge
+commits is non-trivial and quite expensive as the algorithm used seems
+to be quadratic, causing the long runtime shown above.
 
-Could not access submodule 'inner_repo'
-Errors during submodule fetch:
-         middle_repo
+Interestingly, look at what a big difference one additional commit
+can make:
 
-Expectation is that in this case the inner submodule will be recognized
-as uninitialized subrepository and skipped by the git fetch command.
+  $ git rev-list --count v1.6.0^..v2.28.0
+  44285
+  $ time git bisect start v2.28.0 v1.6.0^
+  Bisecting: 22142 revisions left to test after this (roughly 15 steps)
+  [565301e41670825ceedf75220f2918ae76831240] Sync with 2.1.2
 
-This used to work correctly before 'a62387b (submodule.c: fetch in
-submodules git directory instead of in worktree, 2018-11-28)'.
+  real  0m5.848s
+  user  0m5.600s
+  sys   0m0.252s
 
-Starting with a62387b the code wants to evaluate "is_empty_dir()" inside
-.git/modules for a directory only existing in the worktree, delivering
-then of course wrong return value.
+The difference is caused by one of the optimizations attempting to cut
+down the runtime added in 1c4fea3a40 (git-rev-list --bisect:
+optimization, 2007-03-21):
 
-This patch reverts the changes of a62387b and introduces a regression
-test.
+    Another small optimization is whenever we find a half-way commit
+    (that is, a commit that can reach exactly half of the commits),
+    we stop giving counts to remaining commits, as we will not find
+    any better commit than we just found.
 
-Signed-off-by: Peter Kaestle <peter.kaestle@nokia.com>
+In this second 'git bisect start' command we happen to find a commit
+exactly at the halfway point and can return early, but in the first
+case there is no such commit, so we can't return early and end up
+counting the number of reachable commits from all commits in the
+good-bad range.
+
+However, when we have thousands of commits it's not all that important
+to find the _exact_ halfway point, a few commits more or less doesn't
+make any real difference for the bisection.
+
+So let's loosen the check in the halfway() helper to consider commits
+within about 0.1% of the exact halfway point as halfway as well, and
+rename the function to approx_halfway() accordingly.  This will allow
+us to return early on a bigger good-bad range, even when there is no
+commit exactly at the halfway point, thereby reducing the runtime of
+the first command above considerably, from ~15s to 4.901s.
+Furthermore, even if there is a commit exactly at the halfway point,
+we might still stumble upon a commit within that 0.1% range before
+finding the exact halfway point, allowing us to return a bit earlier,
+slightly reducing the runtime of the second command from 5.848s to
+5.058s.  Note that this change doesn't affect good-bad ranges
+containing ~2000 commits or less, because that 0.1% tolerance becomes
+zero due to integer arithmetic; however, if the range is that small
+then counting the reachable commits for all commits is already fast
+enough anyway.
+
+Naturally, this will likely change which commits get picked at each
+bisection step, and, in turn, might change how many bisection steps
+are necessary to find the first bad commit.  If the number of
+necessary bisection steps were to increase often, then this change
+could backfire, because building and testing at each step might take
+much longer than the time spared.  OTOH, if the number of steps were
+to decrease, then it would be a double win.
+
+So I ran some tests to see how often that happens: picked random good
+and bad starting revisions at least 50k commits apart and a random
+first bad commit in between in git.git, and used 'git bisect run git
+merge-base --is-ancestor HEAD $first_bad_commit' to check the number
+of necessary bisection steps.  After repeating all this 1000 times
+both with and without this patch I found that:
+
+  - 146 cases needed one more bisection step than before, 149 cases
+    needed one less step, while in the remaining 705 cases the number
+    of steps didn't change.  So the number of bisection steps does
+    indeed change in a non-negligible number of cases, but it seems
+    that the average number of steps doesn't change in the long run.
+
+  - The first 'git bisect start' command got over 3x faster in 456
+    cases, so this "no commit at the exact halfway point" case seems
+    to be common enough to care about.
+
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- submodule.c                 | 14 +++-------
- t/t5526-fetch-submodules.sh | 63 +++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 67 insertions(+), 10 deletions(-)
+Range-diff:
+1:  79ae48469f ! 1:  1a2f5135de bisect: loosen halfway() check for a large number of commits
+    @@ Commit message
+         to find the _exact_ halfway point, a few commits more or less doesn't
+         make any real difference for the bisection.
+     
+    -    So let's loosen the halfway check to consider commits within about
+    -    0.1% of the exact halfway point as halfway as well.  This will allow
+    +    So let's loosen the check in the halfway() helper to consider commits
+    +    within about 0.1% of the exact halfway point as halfway as well, and
+    +    rename the function to approx_halfway() accordingly.  This will allow
+         us to return early on a bigger good-bad range, even when there is no
+         commit exactly at the halfway point, thereby reducing the runtime of
+         the first command above considerably, from ~15s to 4.901s.
+    @@ Commit message
+             cases, so this "no commit at the exact halfway point" case seems
+             to be common enough to care about.
+     
+    -    [TODO:
+    -      - Update comments at callsites mentioning "exact halfway".
+    -      - Rename function to approx_halfway(), perhaps?]
+    +    Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+     
+      ## bisect.c ##
+     @@ bisect.c: static int count_interesting_parents(struct commit *commit, unsigned bisect_flag
+    + 	return count;
+    + }
+      
+    - static inline int halfway(struct commit_list *p, int nr)
+    +-static inline int halfway(struct commit_list *p, int nr)
+    ++static inline int approx_halfway(struct commit_list *p, int nr)
+      {
+     +	int diff;
+     +
+    @@ bisect.c: static inline int halfway(struct commit_list *p, int nr)
+      		return 0;
+      	}
+      }
+    +@@ bisect.c: static struct commit_list *do_find_bisection(struct commit_list *list,
+    + 		weight_set(p, count_distance(p));
+    + 		clear_distance(list);
+    + 
+    +-		/* Does it happen to be at exactly half-way? */
+    +-		if (!(bisect_flags & FIND_BISECTION_ALL) && halfway(p, nr))
+    ++		/* Does it happen to be at half-way? */
+    ++		if (!(bisect_flags & FIND_BISECTION_ALL) &&
+    ++		      approx_halfway(p, nr))
+    + 			return p;
+    + 		counted++;
+    + 	}
+    +@@ bisect.c: static struct commit_list *do_find_bisection(struct commit_list *list,
+    + 			else
+    + 				weight_set(p, weight(q));
+    + 
+    +-			/* Does it happen to be at exactly half-way? */
+    +-			if (!(bisect_flags & FIND_BISECTION_ALL) && halfway(p, nr))
+    ++			/* Does it happen to be at half-way? */
+    ++			if (!(bisect_flags & FIND_BISECTION_ALL) &&
+    ++			      approx_halfway(p, nr))
+    + 				return p;
+    + 		}
+    + 	}
 
-diff --git a/submodule.c b/submodule.c
-index b3bb59f..eef5204e 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -499,12 +499,6 @@ void prepare_submodule_repo_env(struct strvec *out)
- 		     DEFAULT_GIT_DIR_ENVIRONMENT);
+ bisect.c | 27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
+
+diff --git a/bisect.c b/bisect.c
+index f5b1368128..bedce28cb6 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -103,8 +103,10 @@ static int count_interesting_parents(struct commit *commit, unsigned bisect_flag
+ 	return count;
  }
  
--static void prepare_submodule_repo_env_in_gitdir(struct strvec *out)
--{
--	prepare_submodule_repo_env_no_git_dir(out);
--	strvec_pushf(out, "%s=.", GIT_DIR_ENVIRONMENT);
--}
--
- /*
-  * Initialize a repository struct for a submodule based on the provided 'path'.
-  *
-@@ -1455,8 +1449,8 @@ static int get_next_submodule(struct child_process *cp,
- 		if (task->repo) {
- 			struct strbuf submodule_prefix = STRBUF_INIT;
- 			child_process_init(cp);
--			cp->dir = task->repo->gitdir;
--			prepare_submodule_repo_env_in_gitdir(&cp->env_array);
-+			cp->dir = task->repo->worktree;
-+			prepare_submodule_repo_env(&cp->env_array);
- 			cp->git_cmd = 1;
- 			if (!spf->quiet)
- 				strbuf_addf(err, _("Fetching submodule %s%s\n"),
-@@ -1505,9 +1499,9 @@ static int get_next_submodule(struct child_process *cp,
- 			    spf->prefix, task->sub->path);
+-static inline int halfway(struct commit_list *p, int nr)
++static inline int approx_halfway(struct commit_list *p, int nr)
+ {
++	int diff;
++
+ 	/*
+ 	 * Don't short-cut something we are not going to return!
+ 	 */
+@@ -113,13 +115,22 @@ static inline int halfway(struct commit_list *p, int nr)
+ 	if (DEBUG_BISECT)
+ 		return 0;
+ 	/*
+-	 * 2 and 3 are halfway of 5.
++	 * For small number of commits 2 and 3 are halfway of 5, and
+ 	 * 3 is halfway of 6 but 2 and 4 are not.
+ 	 */
+-	switch (2 * weight(p) - nr) {
++	diff = 2 * weight(p) - nr;
++	switch (diff) {
+ 	case -1: case 0: case 1:
+ 		return 1;
+ 	default:
++		/*
++		 * For large number of commits we are not so strict, it's
++		 * good enough if it's within ~0.1% of the halfway point,
++		 * e.g. 5000 is exactly halfway of 10000, but we consider
++		 * the values [4996, 5004] as halfway as well.
++		 */
++		if (abs(diff) < nr / 1024)
++			return 1;
+ 		return 0;
+ 	}
+ }
+@@ -321,8 +332,9 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+ 		weight_set(p, count_distance(p));
+ 		clear_distance(list);
  
- 		child_process_init(cp);
--		prepare_submodule_repo_env_in_gitdir(&cp->env_array);
-+		prepare_submodule_repo_env(&cp->env_array);
- 		cp->git_cmd = 1;
--		cp->dir = task->repo->gitdir;
-+		cp->dir = task->repo->worktree;
+-		/* Does it happen to be at exactly half-way? */
+-		if (!(bisect_flags & FIND_BISECTION_ALL) && halfway(p, nr))
++		/* Does it happen to be at half-way? */
++		if (!(bisect_flags & FIND_BISECTION_ALL) &&
++		      approx_halfway(p, nr))
+ 			return p;
+ 		counted++;
+ 	}
+@@ -362,8 +374,9 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+ 			else
+ 				weight_set(p, weight(q));
  
- 		strvec_init(&cp->args);
- 		strvec_pushv(&cp->args, spf->args.v);
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index dd8e423..a7f6f9f 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -719,4 +719,67 @@ test_expect_success 'fetch new submodule commit intermittently referenced by sup
- 	)
- '
- 
-+add_commit_push () {
-+	dir="$1"
-+	msg="$2"
-+	shift 2
-+	git -C "$dir" add "$@" &&
-+	git -C "$dir" commit -a -m "$msg" &&
-+	git -C "$dir" push
-+}
-+
-+compare_refs_in_dir () {
-+	fail= &&
-+	if test "x$1" = 'x!'
-+	then
-+		fail='!' &&
-+		shift
-+	fi &&
-+	git -C "$1" rev-parse --verify "$2" >expect &&
-+	git -C "$3" rev-parse --verify "$4" >actual &&
-+	eval $fail test_cmp expect actual
-+}
-+
-+
-+test_expect_success 'setup nested submodule fetch test' '
-+	# does not depend on any previous test setups
-+
-+	for repo in outer middle inner
-+	do
-+		(
-+			git init --bare $repo &&
-+			git clone $repo ${repo}_content &&
-+			echo "$repo" >"${repo}_content/file" &&
-+			add_commit_push ${repo}_content "initial" file
-+		) || return 1
-+	done &&
-+
-+	git clone outer A &&
-+	git -C A submodule add "$pwd/middle" &&
-+	git -C A/middle/ submodule add "$pwd/inner" &&
-+	add_commit_push A/middle/ "adding inner sub" .gitmodules inner &&
-+	add_commit_push A/ "adding middle sub" .gitmodules middle &&
-+
-+	git clone outer B &&
-+	git -C B/ submodule update --init middle &&
-+
-+	compare_refs_in_dir A HEAD B HEAD &&
-+	compare_refs_in_dir A/middle HEAD B/middle HEAD &&
-+	test -f B/file &&
-+	test -f B/middle/file &&
-+	! test -f B/middle/inner/file &&
-+
-+	echo "change on inner repo of A" >"A/middle/inner/file" &&
-+	add_commit_push A/middle/inner "change on inner" file &&
-+	add_commit_push A/middle "change on inner" inner &&
-+	add_commit_push A "change on inner" middle
-+'
-+
-+test_expect_success 'fetching a superproject containing an uninitialized sub/sub project' '
-+	# depends on previous test for setup
-+
-+	git -C B/ fetch &&
-+	compare_refs_in_dir A origin/master B origin/master
-+'
-+
- test_done
+-			/* Does it happen to be at exactly half-way? */
+-			if (!(bisect_flags & FIND_BISECTION_ALL) && halfway(p, nr))
++			/* Does it happen to be at half-way? */
++			if (!(bisect_flags & FIND_BISECTION_ALL) &&
++			      approx_halfway(p, nr))
+ 				return p;
+ 		}
+ 	}
 -- 
-2.6.2
+2.29.2.588.gcd0acd9177
 
