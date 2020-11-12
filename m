@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 463B1C64E7D
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 22:44:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DD81C64E7A
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 22:44:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CAAE820825
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 22:44:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B74BE2068D
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 22:44:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JIPVafxH"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E7HUvzK1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727811AbgKLWoe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Nov 2020 17:44:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51484 "EHLO
+        id S1727832AbgKLWon (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Nov 2020 17:44:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727590AbgKLWoU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Nov 2020 17:44:20 -0500
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45E52C061A48
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 14:44:20 -0800 (PST)
-Received: by mail-wm1-x344.google.com with SMTP id a65so6860911wme.1
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 14:44:20 -0800 (PST)
+        with ESMTP id S1727812AbgKLWoe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Nov 2020 17:44:34 -0500
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE213C061A04
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 14:44:18 -0800 (PST)
+Received: by mail-wr1-x441.google.com with SMTP id l1so7676838wrb.9
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 14:44:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=GN4G6QsZmljMzgDC6utVTEHBFbyCDOLjec62dMQAoIc=;
-        b=JIPVafxHQVYK43eqvSMWnicNFYKOy9YBq1Bj2bk7BFDs6ZxZ4yXolRHwzFefDh0oaR
-         kNFvVmhmENQ9XlApk72OdDBuYc6jC+9DLYz/uBO5q0HJONFciObRAgPTm/mq7jpmVwjO
-         kW+z5BH693iabwFNEPTQPqEGU5T+5fp/LeodRnkd+Ah1zq+EJgFSkFrkjHsachZdncc4
-         mjSsk+DOhBprCB+LSCU0IEE82ZebtB3sI0jqRDNRfaxtn9q0OT103eBgcRF+JwLO2Abj
-         Gy/b43rISn6/f3T3vGq9GRG+mvyQPGNK9KEtJzuZBC3rUJ7pJQXSKw8HdlPgRDWChH6a
-         /S4w==
+        bh=PrxBAgLLxcP+v8AD0vC5gSUbFEzbar/OprAWUy9jqC8=;
+        b=E7HUvzK1Tt0n/3ev77P28hJdwWToDprP2D9VoAGDe8wVTES0vgPo330OF6kJyL7ljF
+         fVmmWIwt2xc+K9Zq/HJFJjY7LTast+9ymvr5pgCHAj9l9Cl7RAksFzg6uDpgoDomT033
+         Tr6h5tVj6NevRnklrLBNpzgGXDPUwUC8mCW1HoSxdKsVTx03t9nt/SBJdeeqIlTtP/Dn
+         3cj3nV+Iq/rM/IF5LpZNWjxxEV90s4Xb2hEHXdyQSRthZWZcOepxY66y+uShOQZt4oM3
+         wBllH/mzQ5TUfiYWdqjPt1h+GPIs2TxOtt1F0W4D0/l1bSmg2kt509WJeyr4DZSQSi3W
+         jQCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=GN4G6QsZmljMzgDC6utVTEHBFbyCDOLjec62dMQAoIc=;
-        b=omgE0w+PG8LyzyOLJYArmzys7/ySDFQsY2/Q0PUN43sUorUXQN5Mn9DmvoVEUlz6Ij
-         XCVyTZfPQpKiookIRQxVMcG3QwtC4WQdzB4iZrkhlSizFeg/Ykjc87KIKNu8RDeIfx/p
-         8clKLqIKThRsvRUucS7+i7yu/GOIgzei7OVwJrd5Ti7j7qrz2MTFAldynPSLplPaUPGV
-         WoQ4D2J/T9+MPW1kgqk2kH/rsLbQhaCI+//HmtEeqDDvKllTAKvQYz2kFEzKIyJ6NwYr
-         rrAcNnINGsIiFQ6ExM+bhYsWG/RVKOYl81hg8GxUICbfNNxpZkrtppYFah9U1Rs0LtXI
-         KPTQ==
-X-Gm-Message-State: AOAM532jNNl65HhZ1nflmQi4uQaWgK7/XjuTrZjjTx35w3PiLzj0nBfc
-        p3RHZbTTXtcmfXvdC9kSdAHTNvRfN+I=
-X-Google-Smtp-Source: ABdhPJzIn3AptGRNtXOI8Cmvh7uiSeMvFYV0wbENS+k2sdv00GnilRKR8xVrFCltH6wqm7o7hX9epQ==
-X-Received: by 2002:a1c:490b:: with SMTP id w11mr41300wma.101.1605221057568;
-        Thu, 12 Nov 2020 14:44:17 -0800 (PST)
+        bh=PrxBAgLLxcP+v8AD0vC5gSUbFEzbar/OprAWUy9jqC8=;
+        b=QfUVOKRytUW6gAkV9jJBuvEDl4aw7ci5XBEAz3Qc8mUftSG2Y++GBgH0Wni3zFQgXg
+         45U8LixybNVmdGYTGogOa9Hu6UP0Try6TIATK+xHfaBuq/7qPfxKgyrqaBKoHwy61QPP
+         7t3zP/wKV8slRLETZiM5NTqGP1KYjKOjrzUzZmx6zb1t8QD4S1z6Q0BkO6UCFiwAatxC
+         PxI3yrrOr64ZQKY/p2HJBXdir6b+/r4S23QZugUjMob16QbqTovJHbwnh8xUX+K5aS1+
+         wr+B8UNUqLG3lKGSmPZLBWHeH6Td1RuPteVWbBa46aixxhPLtduRv4NSOi9fdLHV8vFR
+         zUZg==
+X-Gm-Message-State: AOAM5331C/A+MpSA892ahCf6BR+x1KTfJvA+7aknctlytE9Z/LMZYjNX
+        B2nC0cPA8U13FH4GYViT8rmML+sV5Fc=
+X-Google-Smtp-Source: ABdhPJxCIVgQ6i8RnzYPM6a3Yr6J5aLygQBAD7MTYYT9uVPrCmCgwdLYBLu8jkCaXPpiqegz9+Y9xg==
+X-Received: by 2002:adf:8366:: with SMTP id 93mr2021747wrd.321.1605221056697;
+        Thu, 12 Nov 2020 14:44:16 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f13sm3177390wrq.78.2020.11.12.14.44.16
+        by smtp.gmail.com with ESMTPSA id n22sm7810554wmk.40.2020.11.12.14.44.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Nov 2020 14:44:17 -0800 (PST)
-Message-Id: <07714a8c6543703f099b83860c369896484c7bff.1605221039.git.gitgitgadget@gmail.com>
+        Thu, 12 Nov 2020 14:44:16 -0800 (PST)
+Message-Id: <7f67471c03228a3cc6c37963db05a3c36175e1b7.1605221039.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.762.git.1605221038.gitgitgadget@gmail.com>
 References: <pull.762.git.1605221038.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 12 Nov 2020 22:43:51 +0000
-Subject: [PATCH 21/28] t7[5-9]*: adjust the references to the default branch
+Date:   Thu, 12 Nov 2020 22:43:50 +0000
+Subject: [PATCH 20/28] t7[0-4]*: adjust the references to the default branch
  name "main"
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
@@ -78,1997 +78,1233 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Excluding t7817, which is added in an unrelated patch series at the time
-of writing, this adjusts t7[5-9]*. This trick was performed via
+Carefully excluding t7064, which sees independent development elsewhere
+at the time of writing, we use `main` as the default branch name in
+t7[0-4]*. This trick was performed via
 
 	$ (cd t &&
 	   sed -i -e 's/master/main/g' -e 's/MASTER/MAIN/g' \
-		-e 's/Master/Main/g' -- t7[5-9]*.sh)
+		-e 's/Master/Main/g' -- t7[0-4]*.sh &&
+	   git checkout HEAD -- t7064\*)
 
 This allows us to define `GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main`
 for those tests.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t7501-commit-basic-functionality.sh         |   2 +-
- t/t7502-commit-porcelain.sh                   |  12 +-
- ...3-pre-commit-and-pre-merge-commit-hooks.sh |  42 ++---
- t/t7504-commit-msg-hook.sh                    |  24 +--
- t/t7505-prepare-commit-msg-hook.sh            |  20 +-
- t/t7508-status.sh                             |  58 +++---
- t/t7510-signed-commit.sh                      |   2 +-
- t/t7512-status-help.sh                        |  40 ++--
- t/t7517-per-repo-email.sh                     |  12 +-
- t/t7600-merge.sh                              |  44 ++---
- t/t7606-merge-custom.sh                       |   2 +-
- t/t7608-merge-messages.sh                     |  36 ++--
- t/t7610-mergetool.sh                          | 174 +++++++++---------
- t/t7611-merge-abort.sh                        |   4 +-
- t/t7612-merge-verify-signatures.sh            |   2 +-
- t/t7614-merge-signoff.sh                      |  24 +--
- t/t7701-repack-unpack-unreachable.sh          |   2 +-
- t/t7800-difftool.sh                           |  38 ++--
- t/t7810-grep.sh                               |  28 +--
- t/test-lib.sh                                 |   4 +-
- 20 files changed, 285 insertions(+), 285 deletions(-)
+ t/t7003-filter-branch.sh                |  40 ++++-----
+ t/t7004-tag.sh                          |   8 +-
+ t/t7030-verify-tag.sh                   |   2 +-
+ t/t7060-wtstatus.sh                     |  26 +++---
+ t/t7063-status-untracked-cache.sh       |  14 +--
+ t/t7102-reset.sh                        |   6 +-
+ t/t7113-post-index-change-hook.sh       |   2 +-
+ t/t7201-co.sh                           | 110 ++++++++++++------------
+ t/t7400-submodule-basic.sh              |  20 ++---
+ t/t7403-submodule-sync.sh               |  10 +--
+ t/t7406-submodule-update.sh             |  38 ++++----
+ t/t7407-submodule-foreach.sh            |  24 +++---
+ t/t7409-submodule-detached-work-tree.sh |   8 +-
+ t/t7417-submodule-path-url.sh           |   2 +-
+ t/test-lib.sh                           |   4 +-
+ 15 files changed, 157 insertions(+), 157 deletions(-)
 
-diff --git a/t/t7501-commit-basic-functionality.sh b/t/t7501-commit-basic-functionality.sh
-index 110b4bf459..72c9031934 100755
---- a/t/t7501-commit-basic-functionality.sh
-+++ b/t/t7501-commit-basic-functionality.sh
-@@ -603,7 +603,7 @@ test_expect_success 'same tree (merge and amend merge)' '
- 	echo zero >zero &&
- 	git add zero &&
- 	git commit -m "add zero" &&
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index 36477cb1f4..e8df682c8d 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -13,7 +13,7 @@ test_expect_success 'setup' '
+ 	mkdir dir &&
+ 	test_commit dir/D &&
+ 	test_commit E &&
+-	git checkout master &&
++	git checkout main &&
+ 	test_commit C &&
+ 	git checkout branch &&
+ 	git merge C &&
+@@ -25,7 +25,7 @@ test_expect_success 'setup' '
+ # * G
+ # *   Merge commit 'C' into branch
+ # |\
+-# | * (master) C
++# | * (main) C
+ # * | E
+ # * | dir/D
+ # * | D
+@@ -162,15 +162,15 @@ test_expect_success 'subdirectory filter result looks okay' '
+ '
+ 
+ test_expect_success 'more setup' '
+-	git checkout master &&
++	git checkout main &&
+ 	mkdir subdir &&
+ 	echo A > subdir/new &&
+ 	git add subdir/new &&
+ 	test_tick &&
+-	git commit -m "subdir on master" subdir/new &&
++	git commit -m "subdir on main" subdir/new &&
+ 	git rm A.t &&
+ 	test_tick &&
+-	git commit -m "again subdir on master" &&
++	git commit -m "again subdir on main" &&
+ 	git merge branch
+ '
+ 
+@@ -199,7 +199,7 @@ test_expect_success 'author information is preserved' '
+ 	git branch preserved-author &&
+ 	(sane_unset GIT_AUTHOR_NAME &&
+ 	 git filter-branch -f --msg-filter "cat; \
+-			test \$GIT_COMMIT != $(git rev-parse master) || \
++			test \$GIT_COMMIT != $(git rev-parse main) || \
+ 			echo Hallo" \
+ 		preserved-author) &&
+ 	git rev-list --author="B V Uips" preserved-author >actual &&
+@@ -218,7 +218,7 @@ test_expect_success "remove a certain author's commits" '
+ 		else\
+ 			git commit-tree \"\$@\";\
+ 		fi" removed-author &&
+-	cnt1=$(git rev-list master | wc -l) &&
++	cnt1=$(git rev-list main | wc -l) &&
+ 	cnt2=$(git rev-list removed-author | wc -l) &&
+ 	test $cnt1 -eq $(($cnt2 + 1)) &&
+ 	git rev-list --author="B V Uips" removed-author >actual &&
+@@ -226,7 +226,7 @@ test_expect_success "remove a certain author's commits" '
+ '
+ 
+ test_expect_success 'barf on invalid name' '
+-	test_must_fail git filter-branch -f master xy-problem &&
++	test_must_fail git filter-branch -f main xy-problem &&
+ 	test_must_fail git filter-branch -f HEAD^
+ '
+ 
+@@ -236,8 +236,8 @@ test_expect_success '"map" works in commit filter' '
+ 		mapped=\$(map \$parent) &&
+ 		actual=\$(echo \"\$@\" | sed \"s/^.*-p //\") &&
+ 		test \$mapped = \$actual &&
+-		git commit-tree \"\$@\";" master~2..master &&
+-	git rev-parse --verify master
++		git commit-tree \"\$@\";" main~2..main &&
++	git rev-parse --verify main
+ '
+ 
+ test_expect_success 'Name needing quotes' '
+@@ -256,7 +256,7 @@ test_expect_success 'Name needing quotes' '
+ 
+ test_expect_success 'Subdirectory filter with disappearing trees' '
+ 	git reset --hard &&
 -	git checkout master &&
 +	git checkout main &&
  
- 	git merge -s ours side -m "empty ok" &&
- 	git diff HEAD^ HEAD >actual &&
-diff --git a/t/t7502-commit-porcelain.sh b/t/t7502-commit-porcelain.sh
-index 14c92e4c25..3956dcc237 100755
---- a/t/t7502-commit-porcelain.sh
-+++ b/t/t7502-commit-porcelain.sh
-@@ -76,7 +76,7 @@ test_expect_success 'output summary format for merges' '
+ 	mkdir foo &&
+ 	touch foo/bar &&
+@@ -275,7 +275,7 @@ test_expect_success 'Subdirectory filter with disappearing trees' '
+ 	git commit -m "Re-adding foo" &&
  
- output_tests_cleanup() {
- 	# this is needed for "do not fire editor in the presence of conflicts"
+ 	git filter-branch -f --subdirectory-filter foo &&
+-	git rev-list master >actual &&
++	git rev-list main >actual &&
+ 	test_line_count = 3 actual
+ '
+ 
+@@ -332,7 +332,7 @@ test_expect_success 'Tag name filtering allows slashes in tag names' '
+ 	test_cmp expect actual
+ '
+ test_expect_success 'setup --prune-empty comparisons' '
+-	git checkout --orphan master-no-a &&
++	git checkout --orphan main-no-a &&
+ 	git rm -rf . &&
+ 	unset test_tick &&
+ 	test_tick &&
+@@ -343,7 +343,7 @@ test_expect_success 'setup --prune-empty comparisons' '
+ 	mkdir dir &&
+ 	test_commit dir/D dir/D.t dir/D dir/Dx &&
+ 	test_commit E E.t E Ex &&
+-	git checkout master-no-a &&
++	git checkout main-no-a &&
+ 	test_commit C C.t C Cx &&
+ 	git checkout branch-no-a &&
+ 	git merge Cx -m "Merge tag '\''C'\'' into branch" &&
+@@ -397,7 +397,7 @@ test_expect_success '--prune-empty is able to prune entire branch' '
+ '
+ 
+ test_expect_success '--remap-to-ancestor with filename filters' '
 -	git checkout master &&
 +	git checkout main &&
- 
- 	# this is needed for the "partial removal" test to pass
- 	git rm file1 &&
-@@ -440,7 +440,7 @@ test_expect_success 'do not fire editor in the presence of conflicts' '
- 	git add g &&
- 	git commit -m "add g" &&
- 	git branch second &&
--	echo master >g &&
-+	echo main >g &&
- 	echo g >h &&
- 	git add g h &&
- 	git commit -m "modify g and add h" &&
-@@ -449,7 +449,7 @@ test_expect_success 'do not fire editor in the presence of conflicts' '
- 	git add g &&
- 	git commit -m second &&
- 	# Must fail due to conflict
--	test_must_fail git cherry-pick -n master &&
-+	test_must_fail git cherry-pick -n main &&
- 	echo "editor not started" >.git/result &&
- 	(
- 		GIT_EDITOR="\"$(pwd)/.git/FAKE_EDITOR\"" &&
-@@ -478,9 +478,9 @@ git reset -q --hard
- 
- test_expect_success 'Hand committing of a redundant merge removes dups' '
- 
--	git rev-parse second master >expect &&
--	test_must_fail git merge second master &&
--	git checkout master g &&
-+	git rev-parse second main >expect &&
-+	test_must_fail git merge second main &&
-+	git checkout main g &&
- 	EDITOR=: git commit -a &&
- 	git cat-file commit HEAD >raw &&
- 	sed -n -e "s/^parent //p" -e "/^$/q" raw >actual &&
-diff --git a/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh b/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
-index b3485450a2..6ac12726d6 100755
---- a/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
-+++ b/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
-@@ -44,16 +44,16 @@ test_expect_success 'root commit' '
- 	git add foo &&
- 	git commit -m "make it non-ff" &&
- 	git branch side-orig side &&
--	git checkout master
-+	git checkout main
+ 	git reset --hard A &&
+ 	test_commit add-foo foo 1 &&
+ 	git branch moved-foo &&
+@@ -407,15 +407,15 @@ test_expect_success '--remap-to-ancestor with filename filters' '
+ 	git branch moved-bar &&
+ 	test_commit change-foo foo 2 &&
+ 	git filter-branch -f --remap-to-ancestor \
+-		moved-foo moved-bar A..master \
++		moved-foo moved-bar A..main \
+ 		-- -- foo &&
+ 	test $(git rev-parse moved-foo) = $(git rev-parse moved-bar) &&
+-	test $(git rev-parse moved-foo) = $(git rev-parse master^) &&
++	test $(git rev-parse moved-foo) = $(git rev-parse main^) &&
+ 	test $orig_invariant = $(git rev-parse invariant)
  '
  
- test_expect_success 'setup conflicting branches' '
--	test_when_finished "git checkout master" &&
--	git checkout -b conflicting-a master &&
-+	test_when_finished "git checkout main" &&
-+	git checkout -b conflicting-a main &&
- 	echo a >conflicting &&
- 	git add conflicting &&
- 	git commit -m conflicting-a &&
--	git checkout -b conflicting-b master &&
-+	git checkout -b conflicting-b main &&
- 	echo b >conflicting &&
- 	git add conflicting &&
- 	git commit -m conflicting-b
-@@ -71,8 +71,8 @@ test_expect_success 'with no hook (merge)' '
- 	test_when_finished "rm -f actual_hooks" &&
- 	git branch -f side side-orig &&
- 	git checkout side &&
--	git merge -m "merge master" master &&
+ test_expect_success 'automatic remapping to ancestor with filename filters' '
 -	git checkout master &&
-+	git merge -m "merge main" main &&
 +	git checkout main &&
- 	test_path_is_missing actual_hooks
+ 	git reset --hard A &&
+ 	test_commit add-foo2 foo 1 &&
+ 	git branch moved-foo2 &&
+@@ -425,10 +425,10 @@ test_expect_success 'automatic remapping to ancestor with filename filters' '
+ 	git branch moved-bar2 &&
+ 	test_commit change-foo2 foo 2 &&
+ 	git filter-branch -f \
+-		moved-foo2 moved-bar2 A..master \
++		moved-foo2 moved-bar2 A..main \
+ 		-- -- foo &&
+ 	test $(git rev-parse moved-foo2) = $(git rev-parse moved-bar2) &&
+-	test $(git rev-parse moved-foo2) = $(git rev-parse master^) &&
++	test $(git rev-parse moved-foo2) = $(git rev-parse main^) &&
+ 	test $orig_invariant = $(git rev-parse invariant2)
  '
  
-@@ -88,8 +88,8 @@ test_expect_success '--no-verify with no hook (merge)' '
- 	test_when_finished "rm -f actual_hooks" &&
- 	git branch -f side side-orig &&
- 	git checkout side &&
--	git merge --no-verify -m "merge master" master &&
--	git checkout master &&
-+	git merge --no-verify -m "merge main" main &&
-+	git checkout main &&
- 	test_path_is_missing actual_hooks
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index 05f411c821..630fcde90b 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -1583,7 +1583,7 @@ test_expect_success 'checking that branch head with --no-contains lists all but
+ "
+ 
+ test_expect_success 'merging original branch into this branch' '
+-	git merge --strategy=ours master &&
++	git merge --strategy=ours main &&
+         git tag v4.0
  '
  
-@@ -108,15 +108,15 @@ test_expect_success 'with succeeding hook (merge)' '
- 	cp "$HOOKDIR/success.sample" "$PREMERGE" &&
- 	echo "$PREMERGE" >expected_hooks &&
- 	git checkout side &&
--	git merge -m "merge master" master &&
--	git checkout master &&
-+	git merge -m "merge main" main &&
-+	git checkout main &&
- 	test_cmp expected_hooks actual_hooks
- '
- 
- test_expect_success 'automatic merge fails; both hooks are available' '
- 	test_when_finished "rm -f \"$PREMERGE\" \"$PRECOMMIT\"" &&
- 	test_when_finished "rm -f expected_hooks actual_hooks" &&
--	test_when_finished "git checkout master" &&
-+	test_when_finished "git checkout main" &&
- 	cp "$HOOKDIR/success.sample" "$PREMERGE" &&
- 	cp "$HOOKDIR/success.sample" "$PRECOMMIT" &&
- 
-@@ -145,8 +145,8 @@ test_expect_success '--no-verify with succeeding hook (merge)' '
- 	cp "$HOOKDIR/success.sample" "$PREMERGE" &&
- 	git branch -f side side-orig &&
- 	git checkout side &&
--	git merge --no-verify -m "merge master" master &&
--	git checkout master &&
-+	git merge --no-verify -m "merge main" main &&
-+	git checkout main &&
- 	test_path_is_missing actual_hooks
- '
- 
-@@ -174,8 +174,8 @@ test_expect_success 'with failing hook (merge)' '
- 	cp "$HOOKDIR/fail.sample" "$PREMERGE" &&
- 	echo "$PREMERGE" >expected_hooks &&
- 	git checkout side &&
--	test_must_fail git merge -m "merge master" master &&
--	git checkout master &&
-+	test_must_fail git merge -m "merge main" main &&
-+	git checkout main &&
- 	test_cmp expected_hooks actual_hooks
- '
- 
-@@ -184,8 +184,8 @@ test_expect_success '--no-verify with failing hook (merge)' '
- 	cp "$HOOKDIR/fail.sample" "$PREMERGE" &&
- 	git branch -f side side-orig &&
- 	git checkout side &&
--	git merge --no-verify -m "merge master" master &&
--	git checkout master &&
-+	git merge --no-verify -m "merge main" main &&
-+	git checkout main &&
- 	test_path_is_missing actual_hooks
- '
- 
-@@ -212,8 +212,8 @@ test_expect_success POSIXPERM 'with non-executable hook (merge)' '
- 	cp "$HOOKDIR/non-exec.sample" "$PREMERGE" &&
- 	git branch -f side side-orig &&
- 	git checkout side &&
--	git merge -m "merge master" master &&
--	git checkout master &&
-+	git merge -m "merge main" main &&
-+	git checkout main &&
- 	test_path_is_missing actual_hooks
- '
- 
-@@ -222,8 +222,8 @@ test_expect_success POSIXPERM '--no-verify with non-executable hook (merge)' '
- 	cp "$HOOKDIR/non-exec.sample" "$PREMERGE" &&
- 	git branch -f side side-orig &&
- 	git checkout side &&
--	git merge --no-verify -m "merge master" master &&
--	git checkout master &&
-+	git merge --no-verify -m "merge main" main &&
-+	git checkout main &&
- 	test_path_is_missing actual_hooks
- '
- 
-diff --git a/t/t7504-commit-msg-hook.sh b/t/t7504-commit-msg-hook.sh
-index 31b9c6a2c1..2547362a39 100755
---- a/t/t7504-commit-msg-hook.sh
-+++ b/t/t7504-commit-msg-hook.sh
-@@ -142,12 +142,12 @@ test_expect_success '--no-verify with failing hook (editor)' '
- test_expect_success 'merge fails with failing hook' '
- 
- 	test_when_finished "git branch -D newbranch" &&
--	test_when_finished "git checkout -f master" &&
-+	test_when_finished "git checkout -f main" &&
- 	git checkout --orphan newbranch &&
- 	: >file2 &&
- 	git add file2 &&
- 	git commit --no-verify file2 -m in-side-branch &&
--	test_must_fail git merge --allow-unrelated-histories master &&
-+	test_must_fail git merge --allow-unrelated-histories main &&
- 	commit_msg_is "in-side-branch" # HEAD before merge
- 
- '
-@@ -155,14 +155,14 @@ test_expect_success 'merge fails with failing hook' '
- test_expect_success 'merge bypasses failing hook with --no-verify' '
- 
- 	test_when_finished "git branch -D newbranch" &&
--	test_when_finished "git checkout -f master" &&
-+	test_when_finished "git checkout -f main" &&
- 	git checkout --orphan newbranch &&
- 	git rm -f file &&
- 	: >file2 &&
- 	git add file2 &&
- 	git commit --no-verify file2 -m in-side-branch &&
--	git merge --no-verify --allow-unrelated-histories master &&
--	commit_msg_is "Merge branch '\''master'\'' into newbranch"
-+	git merge --no-verify --allow-unrelated-histories main &&
-+	commit_msg_is "Merge branch '\''main'\'' into newbranch"
- '
- 
- 
-@@ -248,28 +248,28 @@ test_expect_success "hook doesn't edit commit message (editor)" '
- 
- test_expect_success 'hook called in git-merge picks up commit message' '
- 	test_when_finished "git branch -D newbranch" &&
--	test_when_finished "git checkout -f master" &&
-+	test_when_finished "git checkout -f main" &&
- 	git checkout --orphan newbranch &&
- 	git rm -f file &&
- 	: >file2 &&
- 	git add file2 &&
- 	git commit --no-verify file2 -m in-side-branch &&
--	git merge --allow-unrelated-histories master &&
-+	git merge --allow-unrelated-histories main &&
- 	commit_msg_is "new message"
- '
- 
- test_expect_failure 'merge --continue remembers --no-verify' '
- 	test_when_finished "git branch -D newbranch" &&
--	test_when_finished "git checkout -f master" &&
--	git checkout master &&
-+	test_when_finished "git checkout -f main" &&
-+	git checkout main &&
- 	echo a >file2 &&
- 	git add file2 &&
--	git commit --no-verify -m "add file2 to master" &&
--	git checkout -b newbranch master^ &&
-+	git commit --no-verify -m "add file2 to main" &&
-+	git checkout -b newbranch main^ &&
- 	echo b >file2 &&
- 	git add file2 &&
- 	git commit --no-verify file2 -m in-side-branch &&
--	git merge --no-verify -m not-rewritten-by-hook master &&
-+	git merge --no-verify -m not-rewritten-by-hook main &&
- 	# resolve conflict:
- 	echo c >file2 &&
- 	git add file2 &&
-diff --git a/t/t7505-prepare-commit-msg-hook.sh b/t/t7505-prepare-commit-msg-hook.sh
-index 94f85cdf83..20b49629cd 100755
---- a/t/t7505-prepare-commit-msg-hook.sh
-+++ b/t/t7505-prepare-commit-msg-hook.sh
-@@ -15,7 +15,7 @@ test_expect_success 'set up commits for rebasing' '
+@@ -1944,15 +1944,15 @@ test_expect_success ULIMIT_STACK_SIZE '--contains and --no-contains work in a de
+ 	i=1 &&
+ 	while test $i -lt 8000
  	do
- 		test_commit rebase-$i c $i
- 	done &&
+-		echo "commit refs/heads/master
++		echo "commit refs/heads/main
+ committer A U Thor <author@example.com> $((1000000000 + $i * 100)) +0200
+ data <<EOF
+ commit #$i
+ EOF"
+-		test $i = 1 && echo "from refs/heads/master^0"
++		test $i = 1 && echo "from refs/heads/main^0"
+ 		i=$(($i + 1))
+ 	done | git fast-import &&
 -	git checkout master &&
 +	git checkout main &&
- 
- 	cat >rebase-todo <<-EOF
- 	pick $(git rev-parse rebase-a)
-@@ -190,7 +190,7 @@ test_expect_success 'with hook (-c)' '
- 
- test_expect_success 'with hook (merge)' '
- 
--	test_when_finished "git checkout -f master" &&
-+	test_when_finished "git checkout -f main" &&
- 	git checkout -B other HEAD@{1} &&
- 	echo "more" >>file &&
- 	git add file &&
-@@ -202,7 +202,7 @@ test_expect_success 'with hook (merge)' '
- 
- test_expect_success 'with hook and editor (merge)' '
- 
--	test_when_finished "git checkout -f master" &&
-+	test_when_finished "git checkout -f main" &&
- 	git checkout -B other HEAD@{1} &&
- 	echo "more" >>file &&
- 	git add file &&
-@@ -218,7 +218,7 @@ test_rebase () {
- 	test_expect_$expect C_LOCALE_OUTPUT "with hook (rebase ${mode:--i})" '
- 		test_when_finished "\
- 			git rebase --abort
--			git checkout -f master
-+			git checkout -f main
- 			git branch -D tmp" &&
- 		git checkout -b tmp rebase-me &&
- 		GIT_SEQUENCE_EDITOR="cp rebase-todo" &&
-@@ -250,14 +250,14 @@ test_rebase success
- test_have_prereq !REBASE_P || test_rebase success -p
- 
- test_expect_success 'with hook (cherry-pick)' '
--	test_when_finished "git checkout -f master" &&
-+	test_when_finished "git checkout -f main" &&
- 	git checkout -B other b &&
- 	git cherry-pick rebase-1 &&
- 	test "$(git log -1 --pretty=format:%s)" = "message (no editor)"
- '
- 
- test_expect_success 'with hook and editor (cherry-pick)' '
--	test_when_finished "git checkout -f master" &&
-+	test_when_finished "git checkout -f main" &&
- 	git checkout -B other b &&
- 	git cherry-pick -e rebase-1 &&
- 	test "$(git log -1 --pretty=format:%s)" = merge
-@@ -270,7 +270,7 @@ EOF
- 
- test_expect_success 'with failing hook' '
- 
--	test_when_finished "git checkout -f master" &&
-+	test_when_finished "git checkout -f main" &&
- 	head=$(git rev-parse HEAD) &&
- 	echo "more" >> file &&
- 	git add file &&
-@@ -280,7 +280,7 @@ test_expect_success 'with failing hook' '
- 
- test_expect_success 'with failing hook (--no-verify)' '
- 
--	test_when_finished "git checkout -f master" &&
-+	test_when_finished "git checkout -f main" &&
- 	head=$(git rev-parse HEAD) &&
- 	echo "more" >> file &&
- 	git add file &&
-@@ -290,7 +290,7 @@ test_expect_success 'with failing hook (--no-verify)' '
- 
- test_expect_success 'with failing hook (merge)' '
- 
--	test_when_finished "git checkout -f master" &&
-+	test_when_finished "git checkout -f main" &&
- 	git checkout -B other HEAD@{1} &&
- 	echo "more" >> file &&
- 	git add file &&
-@@ -305,7 +305,7 @@ test_expect_success 'with failing hook (merge)' '
- '
- 
- test_expect_success C_LOCALE_OUTPUT 'with failing hook (cherry-pick)' '
--	test_when_finished "git checkout -f master" &&
-+	test_when_finished "git checkout -f main" &&
- 	git checkout -B other b &&
- 	test_must_fail git cherry-pick rebase-1 2>actual &&
- 	test $(grep -c prepare-commit-msg actual) = 1
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index 963fed6821..d01aacb66b 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -37,11 +37,11 @@ test_expect_success 'create upstream branch' '
- 	git checkout -b upstream &&
- 	test_commit upstream1 &&
- 	test_commit upstream2 &&
--	# leave the first commit on master as root because several
-+	# leave the first commit on main as root because several
- 	# tests depend on this case; for our upstream we only
- 	# care about commit counts anyway, so a totally divergent
- 	# history is OK
--	git checkout --orphan master
-+	git checkout --orphan main
- '
- 
- test_expect_success 'setup' '
-@@ -88,7 +88,7 @@ EOF
- 
- test_expect_success 'status --column' '
- 	cat >expect <<\EOF &&
--# On branch master
-+# On branch main
- # Your branch and '\''upstream'\'' have diverged,
- # and have 1 and 2 different commits each, respectively.
- #   (use "git pull" to merge the remote branch into yours)
-@@ -119,7 +119,7 @@ test_expect_success 'status --column status.displayCommentPrefix=false' '
- '
- 
- cat >expect <<\EOF
--# On branch master
-+# On branch main
- # Your branch and 'upstream' have diverged,
- # and have 1 and 2 different commits each, respectively.
- #   (use "git pull" to merge the remote branch into yours)
-@@ -193,7 +193,7 @@ test_expect_success 'commit ignores status.displayCommentPrefix=false in COMMIT_
- '
- 
- cat >expect <<\EOF
--On branch master
-+On branch main
- Your branch and 'upstream' have diverged,
- and have 1 and 2 different commits each, respectively.
- 
-@@ -266,7 +266,7 @@ test_expect_success 'status with gitignore' '
- 	test_cmp expect output &&
- 
- 	cat >expect <<\EOF &&
--On branch master
-+On branch main
- Your branch and '\''upstream'\'' have diverged,
- and have 1 and 2 different commits each, respectively.
-   (use "git pull" to merge the remote branch into yours)
-@@ -331,7 +331,7 @@ test_expect_success 'status with gitignore (nothing untracked)' '
- 	test_cmp expect output &&
- 
- 	cat >expect <<\EOF &&
--On branch master
-+On branch main
- Your branch and '\''upstream'\'' have diverged,
- and have 1 and 2 different commits each, respectively.
-   (use "git pull" to merge the remote branch into yours)
-@@ -368,7 +368,7 @@ output*
- EOF
- 
- cat >expect <<\EOF
--## master...upstream [ahead 1, behind 2]
-+## main...upstream [ahead 1, behind 2]
-  M dir1/modified
- A  dir2/added
- ?? dir1/untracked
-@@ -401,7 +401,7 @@ test_expect_success 'setup dir3' '
- 
- test_expect_success 'status -uno' '
- 	cat >expect <<EOF &&
--On branch master
-+On branch main
- Your branch and '\''upstream'\'' have diverged,
- and have 1 and 2 different commits each, respectively.
-   (use "git pull" to merge the remote branch into yours)
-@@ -429,7 +429,7 @@ test_expect_success 'status (status.showUntrackedFiles no)' '
- 
- test_expect_success 'status -uno (advice.statusHints false)' '
- 	cat >expect <<EOF &&
--On branch master
-+On branch main
- Your branch and '\''upstream'\'' have diverged,
- and have 1 and 2 different commits each, respectively.
- 
-@@ -463,7 +463,7 @@ test_expect_success 'status -s (status.showUntrackedFiles no)' '
- 
- test_expect_success 'status -unormal' '
- 	cat >expect <<EOF &&
--On branch master
-+On branch main
- Your branch and '\''upstream'\'' have diverged,
- and have 1 and 2 different commits each, respectively.
-   (use "git pull" to merge the remote branch into yours)
-@@ -518,7 +518,7 @@ test_expect_success 'status -s (status.showUntrackedFiles normal)' '
- 
- test_expect_success 'status -uall' '
- 	cat >expect <<EOF &&
--On branch master
-+On branch main
- Your branch and '\''upstream'\'' have diverged,
- and have 1 and 2 different commits each, respectively.
-   (use "git pull" to merge the remote branch into yours)
-@@ -578,7 +578,7 @@ test_expect_success 'status -s (status.showUntrackedFiles all)' '
- 
- test_expect_success 'status with relative paths' '
- 	cat >expect <<\EOF &&
--On branch master
-+On branch main
- Your branch and '\''upstream'\'' have diverged,
- and have 1 and 2 different commits each, respectively.
-   (use "git pull" to merge the remote branch into yours)
-@@ -646,7 +646,7 @@ test_expect_success 'setup unique colors' '
- 
- test_expect_success TTY 'status with color.ui' '
- 	cat >expect <<\EOF &&
--On branch <GREEN>master<RESET>
-+On branch <GREEN>main<RESET>
- Your branch and '\''upstream'\'' have diverged,
- and have 1 and 2 different commits each, respectively.
-   (use "git pull" to merge the remote branch into yours)
-@@ -706,7 +706,7 @@ test_expect_success TTY 'status -s with color.status' '
- '
- 
- cat >expect <<\EOF
--## <YELLOW>master<RESET>...<CYAN>upstream<RESET> [ahead <YELLOW>1<RESET>, behind <CYAN>2<RESET>]
-+## <YELLOW>main<RESET>...<CYAN>upstream<RESET> [ahead <YELLOW>1<RESET>, behind <CYAN>2<RESET>]
-  <RED>M<RESET> dir1/modified
- <GREEN>A<RESET>  dir2/added
- <BLUE>??<RESET> dir1/untracked
-@@ -757,7 +757,7 @@ test_expect_success 'status --porcelain respects -b' '
- 
- 	git status --porcelain -b >output &&
- 	{
--		echo "## master...upstream [ahead 1, behind 2]" &&
-+		echo "## main...upstream [ahead 1, behind 2]" &&
- 		cat expect
- 	} >tmp &&
- 	mv tmp expect &&
-@@ -769,7 +769,7 @@ test_expect_success 'status --porcelain respects -b' '
- 
- test_expect_success 'status without relative paths' '
- 	cat >expect <<\EOF &&
--On branch master
-+On branch main
- Your branch and '\''upstream'\'' have diverged,
- and have 1 and 2 different commits each, respectively.
-   (use "git pull" to merge the remote branch into yours)
-@@ -843,7 +843,7 @@ test_expect_success 'status -s without relative paths' '
- 
- test_expect_success 'dry-run of partial commit excluding new file in index' '
- 	cat >expect <<EOF &&
--On branch master
-+On branch main
- Your branch and '\''upstream'\'' have diverged,
- and have 1 and 2 different commits each, respectively.
-   (use "git pull" to merge the remote branch into yours)
-@@ -897,7 +897,7 @@ test_expect_success 'setup status submodule summary' '
- 
- test_expect_success 'status submodule summary is disabled by default' '
- 	cat >expect <<EOF &&
--On branch master
-+On branch main
- Your branch and '\''upstream'\'' have diverged,
- and have 1 and 2 different commits each, respectively.
-   (use "git pull" to merge the remote branch into yours)
-@@ -954,7 +954,7 @@ head=$(cd sm && git rev-parse --short=7 --verify HEAD)
- 
- test_expect_success 'status submodule summary' '
- 	cat >expect <<EOF &&
--On branch master
-+On branch main
- Your branch and '\''upstream'\'' have diverged,
- and have 1 and 2 different commits each, respectively.
-   (use "git pull" to merge the remote branch into yours)
-@@ -1013,7 +1013,7 @@ test_expect_success 'status -s submodule summary' '
- 
- test_expect_success 'status submodule summary (clean submodule): commit' '
- 	cat >expect <<EOF &&
--On branch master
-+On branch main
- Your branch and '\''upstream'\'' have diverged,
- and have 2 and 2 different commits each, respectively.
-   (use "git pull" to merge the remote branch into yours)
-@@ -1061,7 +1061,7 @@ test_expect_success 'status -z implies porcelain' '
- 
- test_expect_success 'commit --dry-run submodule summary (--amend)' '
- 	cat >expect <<EOF &&
--On branch master
-+On branch main
- Your branch and '\''upstream'\'' have diverged,
- and have 2 and 2 different commits each, respectively.
-   (use "git pull" to merge the remote branch into yours)
-@@ -1113,7 +1113,7 @@ touch .gitmodules
- 
- test_expect_success '--ignore-submodules=untracked suppresses submodules with untracked content' '
- 	cat > expect << EOF &&
--On branch master
-+On branch main
- Your branch and '\''upstream'\'' have diverged,
- and have 2 and 2 different commits each, respectively.
-   (use "git pull" to merge the remote branch into yours)
-@@ -1222,7 +1222,7 @@ test_expect_success '.git/config ignore=dirty suppresses submodules with modifie
- 
- test_expect_success "--ignore-submodules=untracked doesn't suppress submodules with modified content" '
- 	cat > expect << EOF &&
--On branch master
-+On branch main
- Your branch and '\''upstream'\'' have diverged,
- and have 2 and 2 different commits each, respectively.
-   (use "git pull" to merge the remote branch into yours)
-@@ -1279,7 +1279,7 @@ head2=$(cd sm && git commit -q -m "2nd commit" foo && git rev-parse --short=7 --
- 
- test_expect_success "--ignore-submodules=untracked doesn't suppress submodule summary" '
- 	cat > expect << EOF &&
--On branch master
-+On branch main
- Your branch and '\''upstream'\'' have diverged,
- and have 2 and 2 different commits each, respectively.
-   (use "git pull" to merge the remote branch into yours)
-@@ -1360,7 +1360,7 @@ test_expect_success ".git/config ignore=dirty doesn't suppress submodule summary
- '
- 
- cat > expect << EOF
--; On branch master
-+; On branch main
- ; Your branch and 'upstream' have diverged,
- ; and have 2 and 2 different commits each, respectively.
- ;   (use "git pull" to merge the remote branch into yours)
-@@ -1408,7 +1408,7 @@ test_expect_success "status (core.commentchar with two chars with submodule summ
- 
- test_expect_success "--ignore-submodules=all suppresses submodule summary" '
- 	cat > expect << EOF &&
--On branch master
-+On branch main
- Your branch and '\''upstream'\'' have diverged,
- and have 2 and 2 different commits each, respectively.
-   (use "git pull" to merge the remote branch into yours)
-@@ -1434,7 +1434,7 @@ EOF
- 
- test_expect_success '.gitmodules ignore=all suppresses unstaged submodule summary' '
- 	cat > expect << EOF &&
--On branch master
-+On branch main
- Your branch and '\''upstream'\'' have diverged,
- and have 2 and 2 different commits each, respectively.
-   (use "git pull" to merge the remote branch into yours)
-@@ -1554,7 +1554,7 @@ test_expect_success 'git commit --dry-run will show a staged but ignored submodu
- 	git reset HEAD^ &&
- 	git add sm &&
- 	cat >expect << EOF &&
--On branch master
-+On branch main
- Your branch and '\''upstream'\'' have diverged,
- and have 2 and 2 different commits each, respectively.
-   (use "git pull" to merge the remote branch into yours)
-diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
-index 6baaa1ad91..0653fdcd02 100755
---- a/t/t7510-signed-commit.sh
-+++ b/t/t7510-signed-commit.sh
-@@ -25,7 +25,7 @@ test_expect_success GPG 'create signed commits' '
+ 	git tag far-far-away HEAD^ &&
+ 	run_with_limited_stack git tag --contains HEAD >actual &&
+ 	test_must_be_empty actual &&
+diff --git a/t/t7030-verify-tag.sh b/t/t7030-verify-tag.sh
+index 5c5bc32ccb..7a70df79a2 100755
+--- a/t/t7030-verify-tag.sh
++++ b/t/t7030-verify-tag.sh
+@@ -17,7 +17,7 @@ test_expect_success GPG 'create signed tags' '
  	echo 3 >elif && git add elif &&
  	test_tick && git commit -m "third on side" &&
  
 -	git checkout master &&
 +	git checkout main &&
  	test_tick && git merge -S side &&
- 	git tag merge &&
+ 	git tag -s -m merge merge &&
  
-diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
-index 29518e0949..29aa9adcfd 100755
---- a/t/t7512-status-help.sh
-+++ b/t/t7512-status-help.sh
-@@ -17,14 +17,14 @@ test_expect_success 'prepare for conflicts' '
- 	git config --global advice.statusuoption false &&
- 	test_commit init main.txt init &&
- 	git branch conflicts &&
--	test_commit on_master main.txt on_master &&
-+	test_commit on_main main.txt on_main &&
- 	git checkout conflicts &&
- 	test_commit on_conflicts main.txt on_conflicts
- '
+diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
+index d5218743e9..cb4e104e4b 100755
+--- a/t/t7060-wtstatus.sh
++++ b/t/t7060-wtstatus.sh
+@@ -51,7 +51,7 @@ EOF
+ 		git checkout -b side HEAD^ &&
+ 		git rm foo &&
+ 		git commit -m delete &&
+-		test_must_fail git merge master &&
++		test_must_fail git merge main &&
+ 		test_must_fail git commit --dry-run >../actual &&
+ 		test_i18ncmp ../expect ../actual &&
+ 		git status >../actual &&
+@@ -124,18 +124,18 @@ test_expect_success 'git diff-index --cached -C shows 2 copies + 1 unmerged' '
  
- 
- test_expect_success 'status when conflicts unresolved' '
--	test_must_fail git merge master &&
-+	test_must_fail git merge main &&
- 	cat >expected <<\EOF &&
- On branch conflicts
- You have unmerged paths.
-@@ -44,7 +44,7 @@ EOF
- 
- test_expect_success 'status when conflicts resolved before commit' '
- 	git reset --hard conflicts &&
--	test_must_fail git merge master &&
-+	test_must_fail git merge main &&
- 	echo one >main.txt &&
- 	git add main.txt &&
- 	cat >expected <<\EOF &&
-@@ -63,7 +63,7 @@ EOF
- 
- 
- test_expect_success 'prepare for rebase conflicts' '
--	git reset --hard master &&
-+	git reset --hard main &&
- 	git checkout -b rebase_conflicts &&
- 	test_commit one_rebase main.txt one &&
- 	test_commit two_rebase main.txt two &&
-@@ -118,11 +118,11 @@ EOF
- 
- 
- test_expect_success 'prepare for rebase_i_conflicts' '
--	git reset --hard master &&
-+	git reset --hard main &&
- 	git checkout -b rebase_i_conflicts &&
- 	test_commit one_unmerge main.txt one_unmerge &&
- 	git branch rebase_i_conflicts_second &&
--	test_commit one_master main.txt one_master &&
-+	test_commit one_main main.txt one_main &&
- 	git checkout rebase_i_conflicts_second &&
- 	test_commit one_second main.txt one_second
- '
-@@ -182,7 +182,7 @@ EOF
- 
- 
- test_expect_success 'status when rebasing -i in edit mode' '
--	git reset --hard master &&
-+	git reset --hard main &&
- 	git checkout -b rebase_i_edit &&
- 	test_commit one_rebase_i main.txt one &&
- 	test_commit two_rebase_i main.txt two &&
-@@ -212,7 +212,7 @@ EOF
- 
- 
- test_expect_success 'status when splitting a commit' '
--	git reset --hard master &&
-+	git reset --hard main &&
- 	git checkout -b split_commit &&
- 	test_commit one_split main.txt one &&
- 	test_commit two_split main.txt two &&
-@@ -251,7 +251,7 @@ EOF
- 
- 
- test_expect_success 'status after editing the last commit with --amend during a rebase -i' '
--	git reset --hard master &&
-+	git reset --hard main &&
- 	git checkout -b amend_last &&
- 	test_commit one_amend main.txt one &&
- 	test_commit two_amend main.txt two &&
-@@ -284,7 +284,7 @@ EOF
- 
- 
- test_expect_success 'prepare for several edits' '
--	git reset --hard master &&
-+	git reset --hard main &&
- 	git checkout -b several_edits &&
- 	test_commit one_edits main.txt one &&
- 	test_commit two_edits main.txt two &&
-@@ -593,7 +593,7 @@ EOF
- 
- 
- test_expect_success 'prepare am_session' '
--	git reset --hard master &&
-+	git reset --hard main &&
- 	git checkout -b am_session &&
- 	test_commit one_am one.txt "one" &&
- 	test_commit two_am two.txt "two" &&
-@@ -666,7 +666,7 @@ EOF
- 
- 
- test_expect_success 'status when bisecting' '
--	git reset --hard master &&
-+	git reset --hard main &&
- 	git checkout -b bisect &&
- 	test_commit one_bisect main.txt one &&
- 	test_commit two_bisect main.txt two &&
-@@ -689,7 +689,7 @@ EOF
- 
- 
- test_expect_success 'status when rebase --apply conflicts with statushints disabled' '
--	git reset --hard master &&
-+	git reset --hard main &&
- 	git checkout -b statushints_disabled &&
- 	test_when_finished "git config --local advice.statushints true" &&
- 	git config --local advice.statushints false &&
-@@ -714,7 +714,7 @@ EOF
- 
- 
- test_expect_success 'prepare for cherry-pick conflicts' '
--	git reset --hard master &&
-+	git reset --hard main &&
- 	git checkout -b cherry_branch &&
- 	test_commit one_cherry main.txt one &&
- 	test_commit two_cherries main.txt two &&
-@@ -825,7 +825,7 @@ EOF
- '
- 
- test_expect_success 'status while reverting commit (conflicts)' '
+ test_expect_success 'status when conflicts with add and rm advice (deleted by them)' '
+ 	git reset --hard &&
 -	git checkout master &&
 +	git checkout main &&
- 	echo before >to-revert.txt &&
- 	test_commit before to-revert.txt &&
- 	echo old >to-revert.txt &&
-@@ -835,7 +835,7 @@ test_expect_success 'status while reverting commit (conflicts)' '
- 	TO_REVERT=$(git rev-parse --short HEAD^) &&
- 	test_must_fail git revert $TO_REVERT &&
- 	cat >expected <<EOF &&
--On branch master
-+On branch main
- You are currently reverting commit $TO_REVERT.
-   (fix conflicts and run "git revert --continue")
-   (use "git revert --skip" to skip this patch)
-@@ -856,7 +856,7 @@ test_expect_success 'status while reverting commit (conflicts resolved)' '
- 	echo reverted >to-revert.txt &&
- 	git add to-revert.txt &&
- 	cat >expected <<EOF &&
--On branch master
-+On branch main
- You are currently reverting commit $TO_REVERT.
-   (all conflicts fixed: run "git revert --continue")
-   (use "git revert --skip" to skip this patch)
-@@ -875,7 +875,7 @@ EOF
- test_expect_success 'status after reverting commit' '
- 	git revert --continue &&
+ 	test_commit init main.txt init &&
+ 	git checkout -b second_branch &&
+ 	git rm main.txt &&
+ 	git commit -m "main.txt deleted on second_branch" &&
+ 	test_commit second conflict.txt second &&
+-	git checkout master &&
++	git checkout main &&
+ 	test_commit on_second main.txt on_second &&
+-	test_commit master conflict.txt master &&
++	test_commit main conflict.txt main &&
+ 	test_must_fail git merge second_branch &&
  	cat >expected <<\EOF &&
 -On branch master
 +On branch main
- nothing to commit (use -u to show untracked files)
- EOF
+ You have unmerged paths.
+   (fix conflicts and run "git commit")
+   (use "git merge --abort" to abort the merge)
+@@ -157,8 +157,8 @@ test_expect_success 'prepare for conflicts' '
+ 	git checkout -b conflict &&
+ 	test_commit one main.txt one &&
+ 	git branch conflict_second &&
+-	git mv main.txt sub_master.txt &&
+-	git commit -m "main.txt renamed in sub_master.txt" &&
++	git mv main.txt sub_main.txt &&
++	git commit -m "main.txt renamed in sub_main.txt" &&
+ 	git checkout conflict_second &&
+ 	git mv main.txt sub_second.txt &&
+ 	git commit -m "main.txt renamed in sub_second.txt"
+@@ -176,7 +176,7 @@ You have unmerged paths.
+ Unmerged paths:
+   (use "git add/rm <file>..." as appropriate to mark resolution)
+ 	both deleted:    main.txt
+-	added by them:   sub_master.txt
++	added by them:   sub_main.txt
+ 	added by us:     sub_second.txt
+ 
+ no changes added to commit (use "git add" and/or "git commit -a")
+@@ -189,7 +189,7 @@ EOF
+ test_expect_success 'status when conflicts with only rm advice (both deleted)' '
+ 	git reset --hard conflict_second &&
+ 	test_must_fail git merge conflict &&
+-	git add sub_master.txt &&
++	git add sub_main.txt &&
+ 	git add sub_second.txt &&
+ 	cat >expected <<\EOF &&
+ On branch conflict_second
+@@ -198,7 +198,7 @@ You have unmerged paths.
+   (use "git merge --abort" to abort the merge)
+ 
+ Changes to be committed:
+-	new file:   sub_master.txt
++	new file:   sub_main.txt
+ 
+ Unmerged paths:
+   (use "git rm <file>..." to mark resolution)
+@@ -209,12 +209,12 @@ EOF
  	git status --untracked-files=no >actual &&
-@@ -889,7 +889,7 @@ test_expect_success 'status while reverting after committing conflict resolution
- 	echo reverted >to-revert.txt &&
- 	git commit -a &&
- 	cat >expected <<EOF &&
--On branch master
-+On branch main
- Revert currently in progress.
-   (run "git revert --continue" to continue)
-   (use "git revert --skip" to skip this patch)
-@@ -902,7 +902,7 @@ EOF
+ 	test_i18ncmp expected actual &&
+ 	git reset --hard &&
+-	git checkout master
++	git checkout main
  '
  
- test_expect_success 'prepare for different number of commits rebased' '
--	git reset --hard master &&
-+	git reset --hard main &&
- 	git checkout -b several_commits &&
- 	test_commit one_commit main.txt one &&
- 	test_commit two_commit main.txt two &&
-diff --git a/t/t7517-per-repo-email.sh b/t/t7517-per-repo-email.sh
-index b2401cec3e..3a7723d16b 100755
---- a/t/t7517-per-repo-email.sh
-+++ b/t/t7517-per-repo-email.sh
-@@ -47,24 +47,24 @@ test_expect_success 'set up rebase scenarios' '
+ test_expect_success 'status --branch with detached HEAD' '
+ 	git reset --hard &&
+-	git checkout master^0 &&
++	git checkout main^0 &&
+ 	git status --branch --porcelain >actual &&
+ 	cat >expected <<-EOF &&
+ 	## HEAD (no branch)
+@@ -230,7 +230,7 @@ test_expect_success 'status --branch with detached HEAD' '
+ ## Duplicate the above test and verify --porcelain=v1 arg parsing.
+ test_expect_success 'status --porcelain=v1 --branch with detached HEAD' '
+ 	git reset --hard &&
+-	git checkout master^0 &&
++	git checkout main^0 &&
+ 	git status --branch --porcelain=v1 >actual &&
+ 	cat >expected <<-EOF &&
+ 	## HEAD (no branch)
+diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+index a682a3d826..3b41d563d5 100755
+--- a/t/t7063-status-untracked-cache.sh
++++ b/t/t7063-status-untracked-cache.sh
+@@ -475,7 +475,7 @@ EOF
+ test_expect_success 'set up sparse checkout' '
+ 	echo "done/[a-z]*" >.git/info/sparse-checkout &&
+ 	test_config core.sparsecheckout true &&
+-	git checkout master &&
++	git checkout main &&
+ 	git update-index --force-untracked-cache &&
+ 	git status --porcelain >/dev/null && # prime the cache
+ 	test_path_is_missing done/.gitignore &&
+@@ -734,13 +734,13 @@ test_expect_success 'test ident field is working' '
+ test_expect_success 'untracked cache survives a checkout' '
+ 	git commit --allow-empty -m empty &&
+ 	test-tool dump-untracked-cache >../before &&
+-	test_when_finished  "git checkout master" &&
++	test_when_finished  "git checkout main" &&
+ 	git checkout -b other_branch &&
+ 	test-tool dump-untracked-cache >../after &&
+ 	test_cmp ../before ../after &&
+ 	test_commit test &&
+ 	test-tool dump-untracked-cache >../before &&
+-	git checkout master &&
++	git checkout main &&
+ 	test-tool dump-untracked-cache >../after &&
+ 	test_cmp ../before ../after
+ '
+@@ -775,7 +775,7 @@ test_expect_success SYMLINKS '"status" after symlink replacement should be clean
+ 	git checkout HEAD~ &&
+ 	status_is_clean &&
+ 	status_is_clean &&
+-	git checkout master &&
++	git checkout main &&
+ 	avoid_racy &&
+ 	status_is_clean &&
+ 	status_is_clean
+@@ -786,7 +786,7 @@ test_expect_success SYMLINKS '"status" after symlink replacement should be clean
+ 	git checkout HEAD~ &&
+ 	status_is_clean &&
+ 	status_is_clean &&
+-	git checkout master &&
++	git checkout main &&
+ 	avoid_racy &&
+ 	status_is_clean &&
+ 	status_is_clean
+@@ -810,7 +810,7 @@ test_expect_success '"status" after file replacement should be clean with UC=tru
+ 	git checkout HEAD~ &&
+ 	status_is_clean &&
+ 	status_is_clean &&
+-	git checkout master &&
++	git checkout main &&
+ 	avoid_racy &&
+ 	status_is_clean &&
+ 	test-tool dump-untracked-cache >../actual &&
+@@ -828,7 +828,7 @@ test_expect_success '"status" after file replacement should be clean with UC=fal
+ 	git checkout HEAD~ &&
+ 	status_is_clean &&
+ 	status_is_clean &&
+-	git checkout master &&
++	git checkout main &&
+ 	avoid_racy &&
+ 	status_is_clean &&
+ 	status_is_clean
+diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
+index b1affb001f..9dfed50354 100755
+--- a/t/t7102-reset.sh
++++ b/t/t7102-reset.sh
+@@ -145,7 +145,7 @@ test_expect_success 'trying to do reset --soft with pending merge should fail' '
+ 	printf "1st line 2nd file\n2nd line 2nd file\n3rd line" >secondfile &&
+ 	git commit -a -m "the change in branch2" &&
  
- test_expect_success 'fast-forward rebase does not care about ident' '
- 	git checkout -B tmp side-without-commit &&
--	git rebase master
-+	git rebase main
+-	git checkout master &&
++	git checkout main &&
+ 	git branch -D branch1 branch2 &&
+ 	check_changes $head5
+ '
+@@ -167,7 +167,7 @@ test_expect_success 'trying to do reset --soft with pending checkout merge shoul
+ 	printf "1st line 2nd file\n2nd line 2nd file\n3rd line" >secondfile &&
+ 	git commit -a -m "the line in branch3" &&
+ 
+-	git checkout master &&
++	git checkout main &&
+ 	git branch -D branch3 branch4 &&
+ 	check_changes $head5
+ '
+@@ -380,7 +380,7 @@ test_expect_success '--hard reset to ORIG_HEAD should clear a fast-forward merge
+ 	git reset --hard ORIG_HEAD &&
+ 	check_changes $head5 &&
+ 
+-	git checkout master &&
++	git checkout main &&
+ 	git branch -D branch1 branch2 &&
+ 	check_changes $head5
+ '
+diff --git a/t/t7113-post-index-change-hook.sh b/t/t7113-post-index-change-hook.sh
+index f011ad7eec..2e38428176 100755
+--- a/t/t7113-post-index-change-hook.sh
++++ b/t/t7113-post-index-change-hook.sh
+@@ -85,7 +85,7 @@ test_expect_success 'test checkout and reset trigger the hook' '
+ 	EOF
+ 	: force index to be dirty &&
+ 	test-tool chmtime +60 dir1/file1.txt &&
+-	git checkout master &&
++	git checkout main &&
+ 	test_path_is_file testsuccess && rm -f testsuccess &&
+ 	test_path_is_missing testfailure &&
+ 	test-tool chmtime +60 dir1/file1.txt &&
+diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+index b36a93056f..3ab219a04e 100755
+--- a/t/t7201-co.sh
++++ b/t/t7201-co.sh
+@@ -5,10 +5,10 @@
+ 
+ test_description='git checkout tests.
+ 
+-Creates master, forks renamer and side branches from it.
++Creates main, forks renamer and side branches from it.
+ Test switching across them.
+ 
+-  ! [master] Initial A one, A two
++  ! [main] Initial A one, A two
+    * [renamer] Renamer R one->uno, M two
+     ! [side] Side M one, D two, A three
+      ! [simple] Simple D one, M two
+@@ -16,7 +16,7 @@ Test switching across them.
+      + [simple] Simple D one, M two
+     +  [side] Side M one, D two, A three
+    *   [renamer] Renamer R one->uno, M two
+-  +*++ [master] Initial A one, A two
++  +*++ [main] Initial A one, A two
+ 
  '
  
- test_expect_success 'non-fast-forward rebase refuses to write commits' '
- 	test_when_finished "git rebase --abort || true" &&
- 	git checkout -B tmp side-with-commit &&
--	test_must_fail git rebase master
-+	test_must_fail git rebase main
+@@ -46,27 +46,27 @@ test_expect_success setup '
+ 	fill a b c d e f >two &&
+ 	git commit -a -m "Renamer R one->uno, M two" &&
+ 
+-	git checkout -b side master &&
++	git checkout -b side main &&
+ 	fill 1 2 3 4 5 6 7 >one &&
+ 	fill A B C D E >three &&
+ 	rm -f two &&
+ 	git update-index --add --remove one two three &&
+ 	git commit -m "Side M one, D two, A three" &&
+ 
+-	git checkout -b simple master &&
++	git checkout -b simple main &&
+ 	rm -f one &&
+ 	fill a c e >two &&
+ 	git commit -a -m "Simple D one, M two" &&
+ 
+-	git checkout master
++	git checkout main
  '
  
- test_expect_success 'fast-forward rebase does not care about ident (interactive)' '
- 	git checkout -B tmp side-without-commit &&
--	git rebase -i master
-+	git rebase -i main
+ test_expect_success 'checkout from non-existing branch' '
+-	git checkout -b delete-me master &&
++	git checkout -b delete-me main &&
+ 	git update-ref -d --no-deref refs/heads/delete-me &&
+ 	test refs/heads/delete-me = "$(git symbolic-ref HEAD)" &&
+-	git checkout master &&
+-	test refs/heads/master = "$(git symbolic-ref HEAD)"
++	git checkout main &&
++	test refs/heads/main = "$(git symbolic-ref HEAD)"
  '
  
- test_expect_success 'non-fast-forward rebase refuses to write commits (interactive)' '
- 	test_when_finished "git rebase --abort || true" &&
- 	git checkout -B tmp side-with-commit &&
--	test_must_fail git rebase -i master
-+	test_must_fail git rebase -i main
+ test_expect_success 'checkout with dirty tree without -m' '
+@@ -81,7 +81,7 @@ test_expect_success 'checkout with dirty tree without -m' '
  '
  
- test_expect_success 'noop interactive rebase does not care about ident' '
-@@ -75,14 +75,14 @@ test_expect_success 'noop interactive rebase does not care about ident' '
- test_expect_success REBASE_P \
- 	'fast-forward rebase does not care about ident (preserve)' '
- 	git checkout -B tmp side-without-commit &&
--	git rebase -p master
-+	git rebase -p main
- '
- 
- test_expect_success REBASE_P \
- 	'non-fast-forward rebase refuses to write commits (preserve)' '
- 	test_when_finished "git rebase --abort || true" &&
- 	git checkout -B tmp side-with-commit &&
--	test_must_fail git rebase -p master
-+	test_must_fail git rebase -p main
- '
- 
- test_expect_success 'author.name overrides user.name' '
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 1c85f75555..6feb8895f3 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -14,9 +14,9 @@ Testing basic merge operations/option parsing.
-     ! [c4] c4
-      ! [c5] c5
-       ! [c6] c6
--       * [master] Merge commit 'c1'
-+       * [main] Merge commit 'c1'
- --------
--       - [master] Merge commit 'c1'
-+       - [main] Merge commit 'c1'
-  +     * [c1] commit 1
-       +  [c6] c6
-      +   [c5] c5
-@@ -203,13 +203,13 @@ test_expect_success 'merge c0 with c1 with --ff-only' '
- test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'merge from unborn branch' '
+ test_expect_success 'checkout with unrelated dirty tree without -m' '
 -	git checkout -f master &&
 +	git checkout -f main &&
- 	test_might_fail git branch -D kid &&
- 
- 	echo "OBJID HEAD@{0}: initial pull" >reflog.expected &&
- 
- 	git checkout --orphan kid &&
--	test_when_finished "git checkout -f master" &&
-+	test_when_finished "git checkout -f main" &&
- 	git rm -fr . &&
- 	test_tick &&
- 	git merge --ff-only c1 &&
-@@ -413,7 +413,7 @@ test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'merge c1 with c2 (no-commit in config)' '
- 	git reset --hard c1 &&
--	test_config branch.master.mergeoptions "--no-commit" &&
-+	test_config branch.main.mergeoptions "--no-commit" &&
- 	git merge c2 &&
- 	verify_merge file result.1-5 &&
- 	verify_head $c1 &&
-@@ -427,7 +427,7 @@ test_expect_success 'merge c1 with c2 (log in config)' '
- 	git merge --log c2 &&
- 	git show -s --pretty=tformat:%s%n%b >expect &&
- 
--	test_config branch.master.mergeoptions "--log" &&
-+	test_config branch.main.mergeoptions "--log" &&
- 	git reset --hard c1 &&
- 	git merge c2 &&
- 	git show -s --pretty=tformat:%s%n%b >actual &&
-@@ -440,7 +440,7 @@ test_expect_success 'merge c1 with c2 (log in config gets overridden)' '
- 	git merge c2 &&
- 	git show -s --pretty=tformat:%s%n%b >expect &&
- 
--	test_config branch.master.mergeoptions "--no-log" &&
-+	test_config branch.main.mergeoptions "--no-log" &&
- 	test_config merge.log "true" &&
- 	git reset --hard c1 &&
- 	git merge c2 &&
-@@ -451,7 +451,7 @@ test_expect_success 'merge c1 with c2 (log in config gets overridden)' '
- 
- test_expect_success 'merge c1 with c2 (squash in config)' '
- 	git reset --hard c1 &&
--	test_config branch.master.mergeoptions "--squash" &&
-+	test_config branch.main.mergeoptions "--squash" &&
- 	git merge c2 &&
- 	verify_merge file result.1-5 &&
- 	verify_head $c1 &&
-@@ -463,7 +463,7 @@ test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'override config option -n with --summary' '
- 	git reset --hard c1 &&
--	test_config branch.master.mergeoptions "-n" &&
-+	test_config branch.main.mergeoptions "-n" &&
- 	test_tick &&
- 	git merge --summary c2 >diffstat.txt &&
- 	verify_merge file result.1-5 msg.1-5 &&
-@@ -477,7 +477,7 @@ test_expect_success 'override config option -n with --summary' '
- 
- test_expect_success 'override config option -n with --stat' '
- 	git reset --hard c1 &&
--	test_config branch.master.mergeoptions "-n" &&
-+	test_config branch.main.mergeoptions "-n" &&
- 	test_tick &&
- 	git merge --stat c2 >diffstat.txt &&
- 	verify_merge file result.1-5 msg.1-5 &&
-@@ -493,7 +493,7 @@ test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'override config option --stat' '
- 	git reset --hard c1 &&
--	test_config branch.master.mergeoptions "--stat" &&
-+	test_config branch.main.mergeoptions "--stat" &&
- 	test_tick &&
- 	git merge -n c2 >diffstat.txt &&
- 	verify_merge file result.1-5 msg.1-5 &&
-@@ -509,7 +509,7 @@ test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'merge c1 with c2 (override --no-commit)' '
- 	git reset --hard c1 &&
--	test_config branch.master.mergeoptions "--no-commit" &&
-+	test_config branch.main.mergeoptions "--no-commit" &&
- 	test_tick &&
- 	git merge --commit c2 &&
- 	verify_merge file result.1-5 msg.1-5 &&
-@@ -520,7 +520,7 @@ test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'merge c1 with c2 (override --squash)' '
- 	git reset --hard c1 &&
--	test_config branch.master.mergeoptions "--squash" &&
-+	test_config branch.main.mergeoptions "--squash" &&
- 	test_tick &&
- 	git merge --no-squash c2 &&
- 	verify_merge file result.1-5 msg.1-5 &&
-@@ -549,9 +549,9 @@ test_expect_success 'merge c0 with c1 (merge.ff=false)' '
+ 	fill 0 1 2 3 4 5 6 7 8 >same &&
+ 	cp same kept &&
+ 	git checkout side >messages &&
+@@ -91,7 +91,7 @@ test_expect_success 'checkout with unrelated dirty tree without -m' '
  '
- test_debug 'git log --graph --decorate --oneline --all'
  
--test_expect_success 'combine branch.master.mergeoptions with merge.ff' '
-+test_expect_success 'combine branch.main.mergeoptions with merge.ff' '
- 	git reset --hard c0 &&
--	test_config branch.master.mergeoptions "--ff" &&
-+	test_config branch.main.mergeoptions "--ff" &&
- 	test_config merge.ff "false" &&
- 	test_tick &&
- 	git merge c1 &&
-@@ -593,7 +593,7 @@ test_expect_success 'option --no-ff overrides merge.ff=only config' '
+ test_expect_success 'checkout -m with dirty tree' '
+-	git checkout -f master &&
++	git checkout -f main &&
+ 	git clean -f &&
  
- test_expect_success 'merge c0 with c1 (ff overrides no-ff)' '
- 	git reset --hard c0 &&
--	test_config branch.master.mergeoptions "--no-ff" &&
-+	test_config branch.main.mergeoptions "--no-ff" &&
- 	git merge --ff c1 &&
- 	verify_merge file result.1 &&
- 	verify_head $c1
-@@ -606,7 +606,7 @@ test_expect_success 'merge log message' '
- 	test_must_be_empty msg.act &&
+ 	fill 0 1 2 3 4 5 6 7 8 >one &&
+@@ -102,9 +102,9 @@ test_expect_success 'checkout -m with dirty tree' '
+ 	printf "M\t%s\n" one >expect.messages &&
+ 	test_cmp expect.messages messages &&
  
- 	git reset --hard c0 &&
--	test_config branch.master.mergeoptions "--no-ff" &&
-+	test_config branch.main.mergeoptions "--no-ff" &&
- 	git merge --no-log c2 &&
- 	git show -s --pretty=format:%b HEAD >msg.act &&
- 	test_must_be_empty msg.act &&
-@@ -950,10 +950,10 @@ test_expect_success 'set up mod-256 conflict scenario' '
- 	git add file &&
- 	git commit -m base &&
+-	fill "M	one" "A	three" "D	two" >expect.master &&
+-	git diff --name-status master >current.master &&
+-	test_cmp expect.master current.master &&
++	fill "M	one" "A	three" "D	two" >expect.main &&
++	git diff --name-status main >current.main &&
++	test_cmp expect.main current.main &&
  
--	# one side changes the first line of each to "master"
--	sed s/-1/-master/ file >tmp &&
-+	# one side changes the first line of each to "main"
-+	sed s/-1/-main/ file >tmp &&
- 	mv tmp file &&
--	git commit -am master &&
-+	git commit -am main &&
+ 	fill "M	one" >expect.side &&
+ 	git diff --name-status side >current.side &&
+@@ -115,7 +115,7 @@ test_expect_success 'checkout -m with dirty tree' '
+ '
  
- 	# and the other to "side"; merging the two will
- 	# yield 256 separate conflicts
-@@ -965,12 +965,12 @@ test_expect_success 'set up mod-256 conflict scenario' '
+ test_expect_success 'checkout -m with dirty tree, renamed' '
+-	git checkout -f master && git clean -f &&
++	git checkout -f main && git clean -f &&
  
- test_expect_success 'merge detects mod-256 conflicts (recursive)' '
+ 	fill 1 2 3 4 5 7 8 >one &&
+ 	if git checkout renamer
+@@ -135,7 +135,7 @@ test_expect_success 'checkout -m with dirty tree, renamed' '
+ '
+ 
+ test_expect_success 'checkout -m with merge conflict' '
+-	git checkout -f master && git clean -f &&
++	git checkout -f main && git clean -f &&
+ 
+ 	fill 1 T 3 4 5 6 S 8 >one &&
+ 	if git checkout renamer
+@@ -148,7 +148,7 @@ test_expect_success 'checkout -m with merge conflict' '
+ 
+ 	git checkout -m renamer &&
+ 
+-	git diff master:one :3:uno |
++	git diff main:one :3:uno |
+ 	sed -e "1,/^@@/d" -e "/^ /d" -e "s/^-/d/" -e "s/^+/a/" >current &&
+ 	fill d2 aT d7 aS >expect &&
+ 	test_cmp expect current &&
+@@ -157,7 +157,7 @@ test_expect_success 'checkout -m with merge conflict' '
+ '
+ 
+ test_expect_success 'format of merge conflict from checkout -m' '
+-	git checkout -f master &&
++	git checkout -f main &&
+ 	git clean -f &&
+ 
+ 	fill b d >two &&
+@@ -181,7 +181,7 @@ test_expect_success 'format of merge conflict from checkout -m' '
+ '
+ 
+ test_expect_success 'checkout --merge --conflict=diff3 <branch>' '
+-	git checkout -f master &&
++	git checkout -f main &&
  	git reset --hard &&
--	test_must_fail git merge -s recursive master
-+	test_must_fail git merge -s recursive main
+ 	git clean -f &&
+ 
+@@ -193,7 +193,7 @@ test_expect_success 'checkout --merge --conflict=diff3 <branch>' '
+ 	a
+ 	c
+ 	e
+-	||||||| master
++	||||||| main
+ 	a
+ 	b
+ 	c
+@@ -208,7 +208,7 @@ test_expect_success 'checkout --merge --conflict=diff3 <branch>' '
  '
  
- test_expect_success 'merge detects mod-256 conflicts (resolve)' '
+ test_expect_success 'switch to another branch while carrying a deletion' '
+-	git checkout -f master &&
++	git checkout -f main &&
  	git reset --hard &&
--	test_must_fail git merge -s resolve master
-+	test_must_fail git merge -s resolve main
+ 	git clean -f &&
+ 	git rm two &&
+@@ -229,7 +229,7 @@ test_expect_success 'checkout to detach HEAD (with advice declined)' '
+ 	test_i18ngrep "HEAD is now at $rev" messages &&
+ 	test_line_count = 1 messages &&
+ 	H=$(git rev-parse --verify HEAD) &&
+-	M=$(git show-ref -s --verify refs/heads/master) &&
++	M=$(git show-ref -s --verify refs/heads/main) &&
+ 	test "z$H" = "z$M" &&
+ 	if git symbolic-ref HEAD >/dev/null 2>&1
+ 	then
+@@ -249,7 +249,7 @@ test_expect_success 'checkout to detach HEAD' '
+ 	grep "HEAD is now at $rev" messages &&
+ 	test_line_count -gt 1 messages &&
+ 	H=$(git rev-parse --verify HEAD) &&
+-	M=$(git show-ref -s --verify refs/heads/master) &&
++	M=$(git show-ref -s --verify refs/heads/main) &&
+ 	test "z$H" = "z$M" &&
+ 	if git symbolic-ref HEAD >/dev/null 2>&1
+ 	then
+@@ -261,11 +261,11 @@ test_expect_success 'checkout to detach HEAD' '
  '
  
- test_expect_success 'merge nothing into void' '
-diff --git a/t/t7606-merge-custom.sh b/t/t7606-merge-custom.sh
-index 8e8c4d7246..81fb7c474c 100755
---- a/t/t7606-merge-custom.sh
-+++ b/t/t7606-merge-custom.sh
-@@ -4,7 +4,7 @@ test_description="git merge
+ test_expect_success 'checkout to detach HEAD with branchname^' '
+-	git checkout -f master &&
++	git checkout -f main &&
+ 	git clean -f &&
+ 	git checkout renamer^ &&
+ 	H=$(git rev-parse --verify HEAD) &&
+-	M=$(git show-ref -s --verify refs/heads/master) &&
++	M=$(git show-ref -s --verify refs/heads/main) &&
+ 	test "z$H" = "z$M" &&
+ 	if git symbolic-ref HEAD >/dev/null 2>&1
+ 	then
+@@ -277,11 +277,11 @@ test_expect_success 'checkout to detach HEAD with branchname^' '
+ '
  
- Testing a custom strategy.
+ test_expect_success 'checkout to detach HEAD with :/message' '
+-	git checkout -f master &&
++	git checkout -f main &&
+ 	git clean -f &&
+ 	git checkout ":/Initial" &&
+ 	H=$(git rev-parse --verify HEAD) &&
+-	M=$(git show-ref -s --verify refs/heads/master) &&
++	M=$(git show-ref -s --verify refs/heads/main) &&
+ 	test "z$H" = "z$M" &&
+ 	if git symbolic-ref HEAD >/dev/null 2>&1
+ 	then
+@@ -293,11 +293,11 @@ test_expect_success 'checkout to detach HEAD with :/message' '
+ '
  
--*   (HEAD, master) Merge commit 'c3'
-+*   (HEAD, main) Merge commit 'c3'
- |\
- | * (tag: c3) c3
- * | (tag: c1) c1
-diff --git a/t/t7608-merge-messages.sh b/t/t7608-merge-messages.sh
-index 8e7e0a5865..d5e411daf5 100755
---- a/t/t7608-merge-messages.sh
-+++ b/t/t7608-merge-messages.sh
-@@ -10,51 +10,51 @@ check_oneline() {
+ test_expect_success 'checkout to detach HEAD with HEAD^0' '
+-	git checkout -f master &&
++	git checkout -f main &&
+ 	git clean -f &&
+ 	git checkout HEAD^0 &&
+ 	H=$(git rev-parse --verify HEAD) &&
+-	M=$(git show-ref -s --verify refs/heads/master) &&
++	M=$(git show-ref -s --verify refs/heads/main) &&
+ 	test "z$H" = "z$M" &&
+ 	if git symbolic-ref HEAD >/dev/null 2>&1
+ 	then
+@@ -310,13 +310,13 @@ test_expect_success 'checkout to detach HEAD with HEAD^0' '
+ 
+ test_expect_success 'checkout with ambiguous tag/branch names' '
+ 	git tag both side &&
+-	git branch both master &&
++	git branch both main &&
+ 	git reset --hard &&
+-	git checkout master &&
++	git checkout main &&
+ 
+ 	git checkout both &&
+ 	H=$(git rev-parse --verify HEAD) &&
+-	M=$(git show-ref -s --verify refs/heads/master) &&
++	M=$(git show-ref -s --verify refs/heads/main) &&
+ 	test "z$H" = "z$M" &&
+ 	name=$(git symbolic-ref HEAD 2>/dev/null) &&
+ 	test "z$name" = zrefs/heads/both
+@@ -324,12 +324,12 @@ test_expect_success 'checkout with ambiguous tag/branch names' '
+ 
+ test_expect_success 'checkout with ambiguous tag/branch names' '
+ 	git reset --hard &&
+-	git checkout master &&
++	git checkout main &&
+ 
+ 	git tag frotz side &&
+-	git branch frotz master &&
++	git branch frotz main &&
+ 	git reset --hard &&
+-	git checkout master &&
++	git checkout main &&
+ 
+ 	git checkout tags/frotz &&
+ 	H=$(git rev-parse --verify HEAD) &&
+@@ -346,7 +346,7 @@ test_expect_success 'checkout with ambiguous tag/branch names' '
+ 
+ test_expect_success 'switch branches while in subdirectory' '
+ 	git reset --hard &&
+-	git checkout master &&
++	git checkout main &&
+ 
+ 	mkdir subs &&
+ 	git -C subs checkout side &&
+@@ -362,7 +362,7 @@ test_expect_success 'checkout specific path while in subdirectory' '
+ 	git add subs/bero &&
+ 	git commit -m "add subs/bero" &&
+ 
+-	git checkout master &&
++	git checkout main &&
+ 	mkdir -p subs &&
+ 	git -C subs checkout side -- bero &&
+ 	test -f subs/bero
+@@ -370,7 +370,7 @@ test_expect_success 'checkout specific path while in subdirectory' '
+ 
+ test_expect_success 'checkout w/--track sets up tracking' '
+     git config branch.autosetupmerge false &&
+-    git checkout master &&
++    git checkout main &&
+     git checkout --track -b track1 &&
+     test "$(git config branch.track1.remote)" &&
+     test "$(git config branch.track1.merge)"
+@@ -379,40 +379,40 @@ test_expect_success 'checkout w/--track sets up tracking' '
+ test_expect_success 'checkout w/autosetupmerge=always sets up tracking' '
+     test_when_finished git config branch.autosetupmerge false &&
+     git config branch.autosetupmerge always &&
+-    git checkout master &&
++    git checkout main &&
+     git checkout -b track2 &&
+     test "$(git config branch.track2.remote)" &&
+     test "$(git config branch.track2.merge)"
+ '
+ 
+ test_expect_success 'checkout w/--track from non-branch HEAD fails' '
+-    git checkout master^0 &&
++    git checkout main^0 &&
+     test_must_fail git symbolic-ref HEAD &&
+     test_must_fail git checkout --track -b track &&
+     test_must_fail git rev-parse --verify track &&
+     test_must_fail git symbolic-ref HEAD &&
+-    test "z$(git rev-parse master^0)" = "z$(git rev-parse HEAD)"
++    test "z$(git rev-parse main^0)" = "z$(git rev-parse HEAD)"
+ '
+ 
+ test_expect_success 'checkout w/--track from tag fails' '
+-    git checkout master^0 &&
++    git checkout main^0 &&
+     test_must_fail git symbolic-ref HEAD &&
+     test_must_fail git checkout --track -b track frotz &&
+     test_must_fail git rev-parse --verify track &&
+     test_must_fail git symbolic-ref HEAD &&
+-    test "z$(git rev-parse master^0)" = "z$(git rev-parse HEAD)"
++    test "z$(git rev-parse main^0)" = "z$(git rev-parse HEAD)"
+ '
+ 
+ test_expect_success 'detach a symbolic link HEAD' '
+-    git checkout master &&
++    git checkout main &&
+     git config --bool core.prefersymlinkrefs yes &&
+     git checkout side &&
+-    git checkout master &&
++    git checkout main &&
+     it=$(git symbolic-ref HEAD) &&
+-    test "z$it" = zrefs/heads/master &&
+-    here=$(git rev-parse --verify refs/heads/master) &&
++    test "z$it" = zrefs/heads/main &&
++    here=$(git rev-parse --verify refs/heads/main) &&
+     git checkout side^ &&
+-    test "z$(git rev-parse --verify refs/heads/master)" = "z$here"
++    test "z$(git rev-parse --verify refs/heads/main)" = "z$here"
+ '
+ 
+ test_expect_success 'checkout with --track fakes a sensible -b <name>' '
+@@ -423,13 +423,13 @@ test_expect_success 'checkout with --track fakes a sensible -b <name>' '
+     test "refs/heads/koala/bear" = "$(git symbolic-ref HEAD)" &&
+     test "$(git rev-parse HEAD)" = "$(git rev-parse renamer)" &&
+ 
+-    git checkout master && git branch -D koala/bear &&
++    git checkout main && git branch -D koala/bear &&
+ 
+     git checkout --track refs/remotes/origin/koala/bear &&
+     test "refs/heads/koala/bear" = "$(git symbolic-ref HEAD)" &&
+     test "$(git rev-parse HEAD)" = "$(git rev-parse renamer)" &&
+ 
+-    git checkout master && git branch -D koala/bear &&
++    git checkout main && git branch -D koala/bear &&
+ 
+     git checkout --track remotes/origin/koala/bear &&
+     test "refs/heads/koala/bear" = "$(git symbolic-ref HEAD)" &&
+@@ -582,17 +582,17 @@ test_expect_success 'checkout --conflict=diff3' '
+ '
+ 
+ test_expect_success 'failing checkout -b should not break working tree' '
+-	git reset --hard master &&
+-	git symbolic-ref HEAD refs/heads/master &&
++	git reset --hard main &&
++	git symbolic-ref HEAD refs/heads/main &&
+ 	test_must_fail git checkout -b renamer side^ &&
+-	test $(git symbolic-ref HEAD) = refs/heads/master &&
++	test $(git symbolic-ref HEAD) = refs/heads/main &&
+ 	git diff --exit-code &&
+ 	git diff --cached --exit-code
+ '
+ 
+ test_expect_success 'switch out of non-branch' '
+-	git reset --hard master &&
+-	git checkout master^0 &&
++	git reset --hard main &&
++	git checkout main^0 &&
+ 	echo modified >one &&
+ 	test_must_fail git checkout renamer 2>error.log &&
+ 	! grep "^Previous HEAD" error.log
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index fec7e0299d..ce320807d4 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -124,7 +124,7 @@ inspect() {
  }
  
- test_expect_success 'merge local branch' '
--	test_commit master-1 &&
-+	test_commit main-1 &&
- 	git checkout -b local-branch &&
- 	test_commit branch-1 &&
--	git checkout master &&
--	test_commit master-2 &&
-+	git checkout main &&
-+	test_commit main-2 &&
- 	git merge local-branch &&
- 	check_oneline "Merge branch Qlocal-branchQ"
- '
+ test_expect_success 'submodule add' '
+-	echo "refs/heads/master" >expect &&
++	echo "refs/heads/main" >expect &&
  
- test_expect_success 'merge octopus branches' '
--	git checkout -b octopus-a master &&
-+	git checkout -b octopus-a main &&
- 	test_commit octopus-1 &&
--	git checkout -b octopus-b master &&
-+	git checkout -b octopus-b main &&
- 	test_commit octopus-2 &&
--	git checkout master &&
-+	git checkout main &&
- 	git merge octopus-a octopus-b &&
- 	check_oneline "Merge branches Qoctopus-aQ and Qoctopus-bQ"
- '
- 
- test_expect_success 'merge tag' '
--	git checkout -b tag-branch master &&
-+	git checkout -b tag-branch main &&
- 	test_commit tag-1 &&
--	git checkout master &&
--	test_commit master-3 &&
-+	git checkout main &&
-+	test_commit main-3 &&
- 	git merge tag-1 &&
- 	check_oneline "Merge tag Qtag-1Q"
- '
- 
- test_expect_success 'ambiguous tag' '
--	git checkout -b ambiguous master &&
-+	git checkout -b ambiguous main &&
- 	test_commit ambiguous &&
--	git checkout master &&
--	test_commit master-4 &&
-+	git checkout main &&
-+	test_commit main-4 &&
- 	git merge ambiguous &&
- 	check_oneline "Merge tag QambiguousQ"
- '
- 
- test_expect_success 'remote-tracking branch' '
--	git checkout -b remote master &&
-+	git checkout -b remote main &&
- 	test_commit remote-1 &&
--	git update-ref refs/remotes/origin/master remote &&
--	git checkout master &&
--	test_commit master-5 &&
--	git merge origin/master &&
--	check_oneline "Merge remote-tracking branch Qorigin/masterQ"
-+	git update-ref refs/remotes/origin/main remote &&
-+	git checkout main &&
-+	test_commit main-5 &&
-+	git merge origin/main &&
-+	check_oneline "Merge remote-tracking branch Qorigin/mainQ"
- '
- 
- test_done
-diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index 70afdd06fa..69ef7f7356 100755
---- a/t/t7610-mergetool.sh
-+++ b/t/t7610-mergetool.sh
-@@ -10,19 +10,19 @@ Testing basic merge tool invocation'
- . ./test-lib.sh
- 
- # All the mergetool test work by checking out a temporary branch based
--# off 'branch1' and then merging in master and checking the results of
-+# off 'branch1' and then merging in main and checking the results of
- # running mergetool
- 
- test_expect_success 'setup' '
- 	test_config rerere.enabled true &&
--	echo master >file1 &&
--	echo master spaced >"spaced name" &&
--	echo master file11 >file11 &&
--	echo master file12 >file12 &&
--	echo master file13 >file13 &&
--	echo master file14 >file14 &&
-+	echo main >file1 &&
-+	echo main spaced >"spaced name" &&
-+	echo main file11 >file11 &&
-+	echo main file12 >file12 &&
-+	echo main file13 >file13 &&
-+	echo main file14 >file14 &&
- 	mkdir subdir &&
--	echo master sub >subdir/file3 &&
-+	echo main sub >subdir/file3 &&
- 	test_create_repo submod &&
  	(
- 		cd submod &&
-@@ -34,7 +34,7 @@ test_expect_success 'setup' '
- 	git add file1 "spaced name" file1[1-4] subdir/file3 .gitmodules submod &&
- 	git commit -m "add initial versions" &&
+ 		cd addtest &&
+@@ -223,7 +223,7 @@ test_expect_success 'submodule add --branch' '
+ 	echo "refs/heads/initial" >expect-head &&
+ 	cat <<-\EOF >expect-heads &&
+ 	refs/heads/initial
+-	refs/heads/master
++	refs/heads/main
+ 	EOF
  
--	git checkout -b branch1 master &&
-+	git checkout -b branch1 main &&
- 	git submodule update -N &&
- 	echo branch1 change >file1 &&
- 	echo branch1 newfile >file2 &&
-@@ -71,39 +71,39 @@ test_expect_success 'setup' '
- 	test_write_lines one two 3 >c/c/file.txt &&
- 	git commit -a -m"move to c" &&
- 
--	git checkout -b stash1 master &&
-+	git checkout -b stash1 main &&
- 	echo stash1 change file11 >file11 &&
- 	git add file11 &&
- 	git commit -m "stash1 changes" &&
- 
--	git checkout -b stash2 master &&
-+	git checkout -b stash2 main &&
- 	echo stash2 change file11 >file11 &&
- 	git add file11 &&
- 	git commit -m "stash2 changes" &&
- 
--	git checkout master &&
-+	git checkout main &&
- 	git submodule update -N &&
--	echo master updated >file1 &&
--	echo master new >file2 &&
--	echo master updated spaced >"spaced name" &&
--	echo master both added >both &&
--	echo master updated file12 >file12 &&
--	echo master updated file14 >file14 &&
--	echo master new sub >subdir/file3 &&
-+	echo main updated >file1 &&
-+	echo main new >file2 &&
-+	echo main updated spaced >"spaced name" &&
-+	echo main both added >both &&
-+	echo main updated file12 >file12 &&
-+	echo main updated file14 >file14 &&
-+	echo main new sub >subdir/file3 &&
  	(
- 		cd submod &&
--		echo master submodule >bar &&
-+		echo main submodule >bar &&
- 		git add bar &&
--		git commit -m "Add bar on master" &&
--		git checkout -b submod-master
-+		git commit -m "Add bar on main" &&
-+		git checkout -b submod-main
+@@ -241,7 +241,7 @@ test_expect_success 'submodule add --branch' '
+ '
+ 
+ test_expect_success 'submodule add with ./ in path' '
+-	echo "refs/heads/master" >expect &&
++	echo "refs/heads/main" >expect &&
+ 
+ 	(
+ 		cd addtest &&
+@@ -257,7 +257,7 @@ test_expect_success 'submodule add with ./ in path' '
+ '
+ 
+ test_expect_success 'submodule add with /././ in path' '
+-	echo "refs/heads/master" >expect &&
++	echo "refs/heads/main" >expect &&
+ 
+ 	(
+ 		cd addtest &&
+@@ -273,7 +273,7 @@ test_expect_success 'submodule add with /././ in path' '
+ '
+ 
+ test_expect_success 'submodule add with // in path' '
+-	echo "refs/heads/master" >expect &&
++	echo "refs/heads/main" >expect &&
+ 
+ 	(
+ 		cd addtest &&
+@@ -289,7 +289,7 @@ test_expect_success 'submodule add with // in path' '
+ '
+ 
+ test_expect_success 'submodule add with /.. in path' '
+-	echo "refs/heads/master" >expect &&
++	echo "refs/heads/main" >expect &&
+ 
+ 	(
+ 		cd addtest &&
+@@ -305,7 +305,7 @@ test_expect_success 'submodule add with /.. in path' '
+ '
+ 
+ test_expect_success 'submodule add with ./, /.. and // in path' '
+-	echo "refs/heads/master" >expect &&
++	echo "refs/heads/main" >expect &&
+ 
+ 	(
+ 		cd addtest &&
+@@ -335,7 +335,7 @@ test_expect_success !CYGWIN 'submodule add with \\ in path' '
+ '
+ 
+ test_expect_success 'submodule add in subdirectory' '
+-	echo "refs/heads/master" >expect &&
++	echo "refs/heads/main" >expect &&
+ 
+ 	mkdir addtest/sub &&
+ 	(
+@@ -557,7 +557,7 @@ test_expect_success 'status should be "up-to-date" after update' '
+ 
+ test_expect_success 'checkout superproject with subproject already present' '
+ 	git checkout initial &&
+-	git checkout master
++	git checkout main
+ '
+ 
+ test_expect_success 'apply submodule diff' '
+@@ -574,7 +574,7 @@ test_expect_success 'apply submodule diff' '
+ 	git checkout second &&
+ 	git apply --index P.diff &&
+ 
+-	git diff --cached master >staged &&
++	git diff --cached main >staged &&
+ 	test_must_be_empty staged
+ '
+ 
+diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
+index 0726799e74..848d4e7db7 100755
+--- a/t/t7403-submodule-sync.sh
++++ b/t/t7403-submodule-sync.sh
+@@ -78,7 +78,7 @@ test_expect_success 'change submodule url' '
+ 	(
+ 		cd super &&
+ 		cd submodule &&
+-		git checkout master &&
++		git checkout main &&
+ 		git pull
  	) &&
- 	git add file1 "spaced name" file12 file14 file2 subdir/file3 submod &&
- 	git add both &&
- 	git rm file11 &&
--	git commit -m "master updates" &&
-+	git commit -m "main updates" &&
- 
- 	git clean -fdx &&
--	git checkout -b order-file-start master &&
-+	git checkout -b order-file-start main &&
- 	echo start >a &&
- 	echo start >b &&
- 	git add a b &&
-@@ -130,7 +130,7 @@ test_expect_success 'custom mergetool' '
- 	test_when_finished "git reset --hard" &&
- 	git checkout -b test$test_count branch1 &&
- 	git submodule update -N &&
--	test_must_fail git merge master &&
-+	test_must_fail git merge main &&
- 	yes "" | git mergetool both &&
- 	yes "" | git mergetool file1 file1 &&
- 	yes "" | git mergetool file2 "spaced name" &&
-@@ -138,11 +138,11 @@ test_expect_success 'custom mergetool' '
- 	yes "d" | git mergetool file11 &&
- 	yes "d" | git mergetool file12 &&
- 	yes "l" | git mergetool submod &&
--	echo "master updated" >expect &&
-+	echo "main updated" >expect &&
- 	test_cmp expect file1 &&
--	echo "master new" >expect &&
-+	echo "main new" >expect &&
- 	test_cmp expect file2 &&
--	echo "master new sub" >expect &&
-+	echo "main new sub" >expect &&
- 	test_cmp expect subdir/file3 &&
- 	echo "branch1 submodule" >expect &&
- 	test_cmp expect submod/bar &&
-@@ -156,7 +156,7 @@ test_expect_success 'gui mergetool' '
- 	test_when_finished "git reset --hard" &&
- 	git checkout -b test$test_count branch1 &&
- 	git submodule update -N &&
--	test_must_fail git merge master &&
-+	test_must_fail git merge main &&
- 	yes "" | git mergetool --gui both &&
- 	yes "" | git mergetool -g file1 file1 &&
- 	yes "" | git mergetool --gui file2 "spaced name" &&
-@@ -164,11 +164,11 @@ test_expect_success 'gui mergetool' '
- 	yes "d" | git mergetool --gui file11 &&
- 	yes "d" | git mergetool --gui file12 &&
- 	yes "l" | git mergetool --gui submod &&
--	echo "gui master updated" >expect &&
-+	echo "gui main updated" >expect &&
- 	test_cmp expect file1 &&
--	echo "gui master new" >expect &&
-+	echo "gui main new" >expect &&
- 	test_cmp expect file2 &&
--	echo "gui master new sub" >expect &&
-+	echo "gui main new sub" >expect &&
- 	test_cmp expect subdir/file3 &&
- 	echo "branch1 submodule" >expect &&
- 	test_cmp expect submod/bar &&
-@@ -179,7 +179,7 @@ test_expect_success 'gui mergetool without merge.guitool set falls back to merge
- 	test_when_finished "git reset --hard" &&
- 	git checkout -b test$test_count branch1 &&
- 	git submodule update -N &&
--	test_must_fail git merge master &&
-+	test_must_fail git merge main &&
- 	yes "" | git mergetool --gui both &&
- 	yes "" | git mergetool -g file1 file1 &&
- 	yes "" | git mergetool --gui file2 "spaced name" &&
-@@ -187,11 +187,11 @@ test_expect_success 'gui mergetool without merge.guitool set falls back to merge
- 	yes "d" | git mergetool --gui file11 &&
- 	yes "d" | git mergetool --gui file12 &&
- 	yes "l" | git mergetool --gui submod &&
--	echo "master updated" >expect &&
-+	echo "main updated" >expect &&
- 	test_cmp expect file1 &&
--	echo "master new" >expect &&
-+	echo "main new" >expect &&
- 	test_cmp expect file2 &&
--	echo "master new sub" >expect &&
-+	echo "main new sub" >expect &&
- 	test_cmp expect subdir/file3 &&
- 	echo "branch1 submodule" >expect &&
- 	test_cmp expect submod/bar &&
-@@ -206,7 +206,7 @@ test_expect_success 'mergetool crlf' '
- 	# test_when_finished is LIFO.)
- 	test_config core.autocrlf true &&
- 	git checkout -b test$test_count branch1 &&
--	test_must_fail git merge master &&
-+	test_must_fail git merge main &&
- 	yes "" | git mergetool file1 &&
- 	yes "" | git mergetool file2 &&
- 	yes "" | git mergetool "spaced name" &&
-@@ -215,11 +215,11 @@ test_expect_success 'mergetool crlf' '
- 	yes "d" | git mergetool file11 &&
- 	yes "d" | git mergetool file12 &&
- 	yes "r" | git mergetool submod &&
--	test "$(printf x | cat file1 -)" = "$(printf "master updated\r\nx")" &&
--	test "$(printf x | cat file2 -)" = "$(printf "master new\r\nx")" &&
--	test "$(printf x | cat subdir/file3 -)" = "$(printf "master new sub\r\nx")" &&
-+	test "$(printf x | cat file1 -)" = "$(printf "main updated\r\nx")" &&
-+	test "$(printf x | cat file2 -)" = "$(printf "main new\r\nx")" &&
-+	test "$(printf x | cat subdir/file3 -)" = "$(printf "main new sub\r\nx")" &&
- 	git submodule update -N &&
--	echo "master submodule" >expect &&
-+	echo "main submodule" >expect &&
- 	test_cmp expect submod/bar &&
- 	git commit -m "branch1 resolved with mergetool - autocrlf"
- '
-@@ -230,9 +230,9 @@ test_expect_success 'mergetool in subdir' '
- 	git submodule update -N &&
+ 	mv submodule moved-submodule &&
+@@ -112,7 +112,7 @@ test_expect_success '"git submodule sync" should update submodule URLs' '
+ 	)" &&
  	(
- 		cd subdir &&
--		test_must_fail git merge master &&
-+		test_must_fail git merge main &&
- 		yes "" | git mergetool file3 &&
--		echo "master new sub" >expect &&
-+		echo "main new sub" >expect &&
- 		test_cmp expect file3
+ 		cd super-clone/submodule &&
+-		git checkout master &&
++		git checkout main &&
+ 		git pull
+ 	) &&
+ 	(
+@@ -140,7 +140,7 @@ test_expect_success '"git submodule sync --recursive" should update all submodul
+ 	)" &&
+ 	(
+ 		cd super-clone/submodule/sub-submodule &&
+-		git checkout master &&
++		git checkout main &&
+ 		git pull
  	)
  '
-@@ -243,7 +243,7 @@ test_expect_success 'mergetool on file in parent dir' '
- 	git submodule update -N &&
+@@ -168,7 +168,7 @@ test_expect_success '"git submodule sync" should update submodule URLs - subdire
+ 	)" &&
  	(
- 		cd subdir &&
--		test_must_fail git merge master &&
-+		test_must_fail git merge main &&
- 		yes "" | git mergetool file3 &&
- 		yes "" | git mergetool ../file1 &&
- 		yes "" | git mergetool ../file2 ../spaced\ name &&
-@@ -251,9 +251,9 @@ test_expect_success 'mergetool on file in parent dir' '
- 		yes "d" | git mergetool ../file11 &&
- 		yes "d" | git mergetool ../file12 &&
- 		yes "l" | git mergetool ../submod &&
--		echo "master updated" >expect &&
-+		echo "main updated" >expect &&
- 		test_cmp expect ../file1 &&
--		echo "master new" >expect &&
-+		echo "main new" >expect &&
- 		test_cmp expect ../file2 &&
- 		echo "branch1 submodule" >expect &&
- 		test_cmp expect ../submod/bar &&
-@@ -265,7 +265,7 @@ test_expect_success 'mergetool skips autoresolved' '
- 	test_when_finished "git reset --hard" &&
- 	git checkout -b test$test_count branch1 &&
- 	git submodule update -N &&
--	test_must_fail git merge master &&
-+	test_must_fail git merge main &&
- 	test -n "$(git ls-files -u)" &&
- 	yes "d" | git mergetool file11 &&
- 	yes "d" | git mergetool file12 &&
-@@ -280,17 +280,17 @@ test_expect_success 'mergetool merges all from subdir (rerere disabled)' '
- 	test_config rerere.enabled false &&
+ 		cd super-clone/submodule &&
+-		git checkout master &&
++		git checkout main &&
+ 		git pull
+ 	) &&
  	(
- 		cd subdir &&
--		test_must_fail git merge master &&
-+		test_must_fail git merge main &&
- 		yes "r" | git mergetool ../submod &&
- 		yes "d" "d" | git mergetool --no-prompt &&
--		echo "master updated" >expect &&
-+		echo "main updated" >expect &&
- 		test_cmp expect ../file1 &&
--		echo "master new" >expect &&
-+		echo "main new" >expect &&
- 		test_cmp expect ../file2 &&
--		echo "master new sub" >expect &&
-+		echo "main new sub" >expect &&
- 		test_cmp expect file3 &&
- 		( cd .. && git submodule update -N ) &&
--		echo "master submodule" >expect &&
-+		echo "main submodule" >expect &&
- 		test_cmp expect ../submod/bar &&
- 		git commit -m "branch2 resolved by mergetool from subdir"
+@@ -199,7 +199,7 @@ test_expect_success '"git submodule sync --recursive" should update all submodul
+ 	)" &&
+ 	(
+ 		cd super-clone/submodule/sub-submodule &&
+-		git checkout master &&
++		git checkout main &&
+ 		git pull
  	)
-@@ -303,17 +303,17 @@ test_expect_success 'mergetool merges all from subdir (rerere enabled)' '
- 	rm -rf .git/rr-cache &&
- 	(
- 		cd subdir &&
--		test_must_fail git merge master &&
-+		test_must_fail git merge main &&
- 		yes "r" | git mergetool ../submod &&
- 		yes "d" "d" | git mergetool --no-prompt &&
--		echo "master updated" >expect &&
-+		echo "main updated" >expect &&
- 		test_cmp expect ../file1 &&
--		echo "master new" >expect &&
-+		echo "main new" >expect &&
- 		test_cmp expect ../file2 &&
--		echo "master new sub" >expect &&
-+		echo "main new sub" >expect &&
- 		test_cmp expect file3 &&
- 		( cd .. && git submodule update -N ) &&
--		echo "master submodule" >expect &&
-+		echo "main submodule" >expect &&
- 		test_cmp expect ../submod/bar &&
- 		git commit -m "branch2 resolved by mergetool from subdir"
+ '
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index acb8766ac2..87097846cb 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -14,10 +14,10 @@ submodule and "git submodule update --rebase/--merge" does not detach the HEAD.
+ 
+ compare_head()
+ {
+-    sha_master=$(git rev-list --max-count=1 master)
++    sha_main=$(git rev-list --max-count=1 main)
+     sha_head=$(git rev-list --max-count=1 HEAD)
+ 
+-    test "$sha_master" = "$sha_head"
++    test "$sha_main" = "$sha_head"
+ }
+ 
+ 
+@@ -262,14 +262,14 @@ test_expect_success 'submodule update --remote should fetch upstream changes wit
+ 		cd super &&
+ 		git submodule update --remote --force submodule &&
+ 		git -C submodule log -1 --oneline >actual &&
+-		git -C ../submodule log -1 --oneline master >expect &&
++		git -C ../submodule log -1 --oneline main >expect &&
+ 		test_cmp expect actual &&
+ 		git checkout -b test-branch &&
+ 		git submodule update --remote --force submodule &&
+ 		git -C submodule log -1 --oneline >actual &&
+ 		git -C ../submodule log -1 --oneline test-branch >expect &&
+ 		test_cmp expect actual &&
+-		git checkout master &&
++		git checkout main &&
+ 		git branch -d test-branch &&
+ 		git reset --hard HEAD^
  	)
-@@ -325,7 +325,7 @@ test_expect_success 'mergetool skips resolved paths when rerere is active' '
- 	rm -rf .git/rr-cache &&
- 	git checkout -b test$test_count branch1 &&
- 	git submodule update -N &&
--	test_must_fail git merge master &&
-+	test_must_fail git merge main &&
- 	yes "l" | git mergetool --no-prompt submod &&
- 	yes "d" "d" | git mergetool --no-prompt &&
- 	git submodule update -N &&
-@@ -366,11 +366,11 @@ test_expect_success 'mergetool takes partial path' '
- 	test_config rerere.enabled false &&
- 	git checkout -b test$test_count branch1 &&
- 	git submodule update -N &&
--	test_must_fail git merge master &&
-+	test_must_fail git merge main &&
- 
- 	yes "" | git mergetool subdir &&
- 
--	echo "master new sub" >expect &&
-+	echo "main new sub" >expect &&
- 	test_cmp expect subdir/file3
+@@ -282,7 +282,7 @@ test_expect_success 'local config should override .gitmodules branch' '
+ 	 git add file &&
+ 	 test_tick &&
+ 	 git commit -m "upstream line5" &&
+-	 git checkout master
++	 git checkout main
+ 	) &&
+ 	(cd super &&
+ 	 git config submodule.submodule.branch test-branch &&
+@@ -292,9 +292,9 @@ test_expect_success 'local config should override .gitmodules branch' '
+ 	)
  '
  
-@@ -434,7 +434,7 @@ test_expect_success 'deleted vs modified submodule' '
- 	git rm --cached submod &&
- 	git commit -m "Submodule deleted from branch" &&
- 	git checkout -b test$test_count.a test$test_count &&
--	test_must_fail git merge master &&
-+	test_must_fail git merge main &&
- 	test -n "$(git ls-files -u)" &&
- 	yes "" | git mergetool file1 file2 spaced\ name subdir/file3 &&
- 	yes "" | git mergetool both &&
-@@ -444,7 +444,7 @@ test_expect_success 'deleted vs modified submodule' '
- 	echo "branch1 submodule" >expect &&
- 	test_cmp expect submod/bar &&
- 	git submodule update -N &&
--	echo "master submodule" >expect &&
-+	echo "main submodule" >expect &&
- 	test_cmp expect submod/bar &&
- 	output="$(git mergetool --no-prompt)" &&
- 	test "$output" = "No files need merging" &&
-@@ -453,7 +453,7 @@ test_expect_success 'deleted vs modified submodule' '
- 	mv submod submod-movedaside &&
- 	git checkout -b test$test_count.b test$test_count &&
- 	git submodule update -N &&
--	test_must_fail git merge master &&
-+	test_must_fail git merge main &&
- 	test -n "$(git ls-files -u)" &&
- 	yes "" | git mergetool file1 file2 spaced\ name subdir/file3 &&
- 	yes "" | git mergetool both &&
-@@ -465,7 +465,7 @@ test_expect_success 'deleted vs modified submodule' '
- 	git commit -m "Merge resolved by deleting module" &&
- 
- 	mv submod-movedaside submod &&
--	git checkout -b test$test_count.c master &&
-+	git checkout -b test$test_count.c main &&
- 	git submodule update -N &&
- 	test_must_fail git merge test$test_count &&
- 	test -n "$(git ls-files -u)" &&
-@@ -481,7 +481,7 @@ test_expect_success 'deleted vs modified submodule' '
- 	git commit -m "Merge resolved by deleting module" &&
- 	mv submod.orig submod &&
- 
--	git checkout -b test$test_count.d master &&
-+	git checkout -b test$test_count.d main &&
- 	git submodule update -N &&
- 	test_must_fail git merge test$test_count &&
- 	test -n "$(git ls-files -u)" &&
-@@ -489,10 +489,10 @@ test_expect_success 'deleted vs modified submodule' '
- 	yes "" | git mergetool both &&
- 	yes "d" | git mergetool file11 file12 &&
- 	yes "l" | git mergetool submod &&
--	echo "master submodule" >expect &&
-+	echo "main submodule" >expect &&
- 	test_cmp expect submod/bar &&
- 	git submodule update -N &&
--	echo "master submodule" >expect &&
-+	echo "main submodule" >expect &&
- 	test_cmp expect submod/bar &&
- 	output="$(git mergetool --no-prompt)" &&
- 	test "$output" = "No files need merging" &&
-@@ -509,7 +509,7 @@ test_expect_success 'file vs modified submodule' '
- 	git add submod &&
- 	git commit -m "Submodule path becomes file" &&
- 	git checkout -b test$test_count.a branch1 &&
--	test_must_fail git merge master &&
-+	test_must_fail git merge main &&
- 	test -n "$(git ls-files -u)" &&
- 	yes "" | git mergetool file1 file2 spaced\ name subdir/file3 &&
- 	yes "" | git mergetool both &&
-@@ -519,7 +519,7 @@ test_expect_success 'file vs modified submodule' '
- 	echo "branch1 submodule" >expect &&
- 	test_cmp expect submod/bar &&
- 	git submodule update -N &&
--	echo "master submodule" >expect &&
-+	echo "main submodule" >expect &&
- 	test_cmp expect submod/bar &&
- 	output="$(git mergetool --no-prompt)" &&
- 	test "$output" = "No files need merging" &&
-@@ -527,7 +527,7 @@ test_expect_success 'file vs modified submodule' '
- 
- 	mv submod submod-movedaside &&
- 	git checkout -b test$test_count.b test$test_count &&
--	test_must_fail git merge master &&
-+	test_must_fail git merge main &&
- 	test -n "$(git ls-files -u)" &&
- 	yes "" | git mergetool file1 file2 spaced\ name subdir/file3 &&
- 	yes "" | git mergetool both &&
-@@ -547,7 +547,7 @@ test_expect_success 'file vs modified submodule' '
- 	test "$output" = "No files need merging" &&
- 	git commit -m "Merge resolved by keeping file" &&
- 
--	git checkout -b test$test_count.c master &&
-+	git checkout -b test$test_count.c main &&
- 	rmdir submod && mv submod-movedaside submod &&
- 	test ! -e submod.orig &&
- 	git submodule update -N &&
-@@ -573,7 +573,7 @@ test_expect_success 'file vs modified submodule' '
- 	test "$output" = "No files need merging" &&
- 	git commit -m "Merge resolved by keeping file" &&
- 
--	git checkout -b test$test_count.d master &&
-+	git checkout -b test$test_count.d main &&
- 	rmdir submod && mv submod.orig submod &&
- 	git submodule update -N &&
- 	test_must_fail git merge test$test_count &&
-@@ -586,10 +586,10 @@ test_expect_success 'file vs modified submodule' '
- 	then
- 		yes "d" | git mergetool submod~test19
- 	fi &&
--	echo "master submodule" >expect &&
-+	echo "main submodule" >expect &&
- 	test_cmp expect submod/bar &&
- 	git submodule update -N &&
--	echo "master submodule" >expect &&
-+	echo "main submodule" >expect &&
- 	test_cmp expect submod/bar &&
- 	output="$(git mergetool --no-prompt)" &&
- 	test "$output" = "No files need merging" &&
-@@ -672,7 +672,7 @@ test_expect_success 'directory vs modified submodule' '
- 	git add submod/file16 &&
- 	git commit -m "Submodule path becomes directory" &&
- 
--	test_must_fail git merge master &&
-+	test_must_fail git merge main &&
- 	test -n "$(git ls-files -u)" &&
- 	yes "l" | git mergetool submod &&
- 	echo "not a submodule" >expect &&
-@@ -680,14 +680,14 @@ test_expect_success 'directory vs modified submodule' '
- 	rm -rf submod.orig &&
- 
- 	git reset --hard &&
--	test_must_fail git merge master &&
-+	test_must_fail git merge main &&
- 	test -n "$(git ls-files -u)" &&
- 	test ! -e submod.orig &&
- 	if test "$GIT_TEST_MERGE_ALGORITHM" = ort
- 	then
--		yes "r" | git mergetool submod~master &&
-+		yes "r" | git mergetool submod~main &&
- 		git mv submod submod.orig &&
--		git mv submod~master submod
-+		git mv submod~main submod
- 	else
- 		yes "r" | git mergetool submod
- 	fi &&
-@@ -698,18 +698,18 @@ test_expect_success 'directory vs modified submodule' '
- 	mv submod-movedaside/.git submod &&
- 	( cd submod && git clean -f && git reset --hard ) &&
- 	git submodule update -N &&
--	echo "master submodule" >expect &&
-+	echo "main submodule" >expect &&
- 	test_cmp expect submod/bar &&
- 	git reset --hard &&
- 	rm -rf submod-movedaside &&
- 
--	git checkout -b test$test_count.c master &&
-+	git checkout -b test$test_count.c main &&
- 	git submodule update -N &&
- 	test_must_fail git merge test$test_count &&
- 	test -n "$(git ls-files -u)" &&
- 	yes "l" | git mergetool submod &&
- 	git submodule update -N &&
--	echo "master submodule" >expect &&
-+	echo "main submodule" >expect &&
- 	test_cmp expect submod/bar &&
- 
- 	git reset --hard &&
-@@ -721,7 +721,7 @@ test_expect_success 'directory vs modified submodule' '
- 	echo "not a submodule" >expect &&
- 	test_cmp expect submod/file16 &&
- 
--	git reset --hard master &&
-+	git reset --hard main &&
- 	( cd submod && git clean -f && git reset --hard ) &&
- 	git submodule update -N
- '
-@@ -729,7 +729,7 @@ test_expect_success 'directory vs modified submodule' '
- test_expect_success 'file with no base' '
- 	test_when_finished "git reset --hard" &&
- 	git checkout -b test$test_count branch1 &&
--	test_must_fail git merge master &&
-+	test_must_fail git merge main &&
- 	git mergetool --no-prompt --tool mybase -- both &&
- 	test_must_be_empty both
- '
-@@ -739,9 +739,9 @@ test_expect_success 'custom commands override built-ins' '
- 	git checkout -b test$test_count branch1 &&
- 	test_config mergetool.defaults.cmd "cat \"\$REMOTE\" >\"\$MERGED\"" &&
- 	test_config mergetool.defaults.trustExitCode true &&
--	test_must_fail git merge master &&
-+	test_must_fail git merge main &&
- 	git mergetool --no-prompt --tool defaults -- both &&
--	echo master both added >expected &&
-+	echo main both added >expected &&
- 	test_cmp expected both
+-test_expect_success 'submodule update --rebase staying on master' '
++test_expect_success 'submodule update --rebase staying on main' '
+ 	(cd super/submodule &&
+-	  git checkout master
++	  git checkout main
+ 	) &&
+ 	(cd super &&
+ 	 (cd submodule &&
+@@ -306,7 +306,7 @@ test_expect_success 'submodule update --rebase staying on master' '
+ 	)
  '
  
-@@ -751,7 +751,7 @@ test_expect_success 'filenames seen by tools start with ./' '
- 	test_config mergetool.writeToTemp false &&
- 	test_config mergetool.myecho.cmd "echo \"\$LOCAL\"" &&
- 	test_config mergetool.myecho.trustExitCode true &&
--	test_must_fail git merge master &&
-+	test_must_fail git merge main &&
- 	git mergetool --no-prompt --tool myecho -- both >actual &&
- 	grep ^\./both_LOCAL_ actual
- '
-@@ -768,7 +768,7 @@ test_expect_success MKTEMP 'temporary filenames are used with mergetool.writeToT
- 	test_config mergetool.writeToTemp true &&
- 	test_config mergetool.myecho.cmd "echo \"\$LOCAL\"" &&
- 	test_config mergetool.myecho.trustExitCode true &&
--	test_must_fail git merge master &&
-+	test_must_fail git merge main &&
- 	git mergetool --no-prompt --tool myecho -- both >actual &&
- 	! grep ^\./both_LOCAL_ actual &&
- 	grep /both_LOCAL_ actual
-diff --git a/t/t7611-merge-abort.sh b/t/t7611-merge-abort.sh
-index 7c84a518aa..8e95182566 100755
---- a/t/t7611-merge-abort.sh
-+++ b/t/t7611-merge-abort.sh
-@@ -7,7 +7,7 @@ Set up repo with conflicting and non-conflicting branches:
- There are three files foo/bar/baz, and the following graph illustrates the
- content of these files in each commit:
+-test_expect_success 'submodule update --merge staying on master' '
++test_expect_success 'submodule update --merge staying on main' '
+ 	(cd super/submodule &&
+ 	  git reset --hard HEAD~1
+ 	) &&
+@@ -609,7 +609,7 @@ test_expect_success 'submodule update - update=none in .git/config' '
+ 	(cd super &&
+ 	 git config submodule.submodule.update none &&
+ 	 (cd submodule &&
+-	  git checkout master &&
++	  git checkout main &&
+ 	  compare_head
+ 	 ) &&
+ 	 git diff --name-only >out &&
+@@ -629,7 +629,7 @@ test_expect_success 'submodule update - update=none in .git/config but --checkou
+ 	(cd super &&
+ 	 git config submodule.submodule.update none &&
+ 	 (cd submodule &&
+-	  git checkout master &&
++	  git checkout main &&
+ 	  compare_head
+ 	 ) &&
+ 	 git diff --name-only >out &&
+@@ -689,7 +689,7 @@ test_expect_success 'submodule update continues after checkout error' '
+ test_expect_success 'submodule update continues after recursive checkout error' '
+ 	(cd super &&
+ 	 git reset --hard HEAD &&
+-	 git checkout master &&
++	 git checkout main &&
+ 	 git submodule update &&
+ 	 (cd submodule &&
+ 	  git submodule add ../submodule subsubmodule &&
+@@ -733,7 +733,7 @@ test_expect_success 'submodule update continues after recursive checkout error'
  
--# foo/bar/baz --- foo/bar/bazz     <-- master
-+# foo/bar/baz --- foo/bar/bazz     <-- main
- #             \
- #              --- foo/barf/bazf   <-- conflict_branch
- #               \
-@@ -40,7 +40,7 @@ test_expect_success 'setup' '
- 	git checkout -b clean_branch HEAD^ &&
- 	echo bart > bar &&
- 	git commit -a -m "clean" &&
--	git checkout master
-+	git checkout main
- '
+ test_expect_success 'submodule update exit immediately in case of merge conflict' '
+ 	(cd super &&
+-	 git checkout master &&
++	 git checkout main &&
+ 	 git reset --hard HEAD &&
+ 	 (cd submodule &&
+ 	  (cd subsubmodule &&
+@@ -751,7 +751,7 @@ test_expect_success 'submodule update exit immediately in case of merge conflict
+ 	 git add submodule2 &&
+ 	 git commit -m "two_new_submodule_commits" &&
+ 	 (cd submodule &&
+-	  git checkout master &&
++	  git checkout main &&
+ 	  test_commit "conflict" file &&
+ 	  echo "conflict" > file
+ 	 ) &&
+@@ -770,7 +770,7 @@ test_expect_success 'submodule update exit immediately in case of merge conflict
  
- pre_merge_head="$(git rev-parse HEAD)"
-diff --git a/t/t7612-merge-verify-signatures.sh b/t/t7612-merge-verify-signatures.sh
-index a426f3a89a..6c52b6ac1e 100755
---- a/t/t7612-merge-verify-signatures.sh
-+++ b/t/t7612-merge-verify-signatures.sh
-@@ -31,7 +31,7 @@ test_expect_success GPG 'create signed commits' '
- 	echo 3 >baz && git add baz &&
- 	test_tick && git commit -SB7227189 -m "untrusted on side" &&
+ test_expect_success 'submodule update exit immediately after recursive rebase error' '
+ 	(cd super &&
+-	 git checkout master &&
++	 git checkout main &&
+ 	 git reset --hard HEAD &&
+ 	 (cd submodule &&
+ 	  git reset --hard HEAD &&
+@@ -786,7 +786,7 @@ test_expect_success 'submodule update exit immediately after recursive rebase er
+ 	 git add submodule2 &&
+ 	 git commit -m "two_new_submodule_commits" &&
+ 	 (cd submodule &&
+-	  git checkout master &&
++	  git checkout main &&
+ 	  test_commit "conflict2" file &&
+ 	  echo "conflict" > file
+ 	 ) &&
+@@ -878,21 +878,21 @@ test_expect_success 'submodule update places git-dir in superprojects git-dir re
+ 	git clone subsubsuper_update_r subsubsuper_update_r2 &&
+ 	(cd subsubsuper_update_r2 &&
+ 	 test_commit "update_subsubsuper" file &&
+-	 git push origin master
++	 git push origin main
+ 	) &&
+ 	git clone subsuper_update_r subsuper_update_r2 &&
+ 	(cd subsuper_update_r2 &&
+ 	 test_commit "update_subsuper" file &&
+ 	 git submodule add ../subsubsuper_update_r subsubmodule &&
+ 	 git commit -am "subsubmodule" &&
+-	 git push origin master
++	 git push origin main
+ 	) &&
+ 	git clone super_update_r super_update_r2 &&
+ 	(cd super_update_r2 &&
+ 	 test_commit "update_super" file &&
+ 	 git submodule add ../subsuper_update_r submodule &&
+ 	 git commit -am "submodule" &&
+-	 git push origin master
++	 git push origin main
+ 	) &&
+ 	rm -rf super_update_r2 &&
+ 	git clone super_update_r super_update_r2 &&
+@@ -911,7 +911,7 @@ test_expect_success 'submodule update places git-dir in superprojects git-dir re
  
--	git checkout master
-+	git checkout main
- '
+ test_expect_success 'submodule add properly re-creates deeper level submodules' '
+ 	(cd super &&
+-	 git reset --hard master &&
++	 git reset --hard main &&
+ 	 rm -rf deeper/ &&
+ 	 git submodule add --force ../submodule deeper/submodule
+ 	)
+diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
+index 6b2aa917e1..8ebcaa3694 100755
+--- a/t/t7407-submodule-foreach.sh
++++ b/t/t7407-submodule-foreach.sh
+@@ -277,13 +277,13 @@ sub1sha1_short=$(cd clone3/sub1 && git rev-parse --short HEAD)
+ sub2sha1_short=$(cd clone3/sub2 && git rev-parse --short HEAD)
  
- test_expect_success GPG 'merge unsigned commit with verification' '
-diff --git a/t/t7614-merge-signoff.sh b/t/t7614-merge-signoff.sh
-index c1b8446f49..1e901224cd 100755
---- a/t/t7614-merge-signoff.sh
-+++ b/t/t7614-merge-signoff.sh
-@@ -11,17 +11,17 @@ This test runs git merge --signoff and makes sure that it works.
- test_setup() {
- 	# Expected commit message after merge --signoff
- 	cat >expected-signed <<EOF &&
--Merge branch 'master' into other-branch
-+Merge branch 'main' into other-branch
- 
- Signed-off-by: $(git var GIT_COMMITTER_IDENT | sed -e "s/>.*/>/")
+ cat > expect <<EOF
+- $nested1sha1 nested1 (heads/master)
+- $nested2sha1 nested1/nested2 (heads/master)
+- $nested3sha1 nested1/nested2/nested3 (heads/master)
+- $submodulesha1 nested1/nested2/nested3/submodule (heads/master)
++ $nested1sha1 nested1 (heads/main)
++ $nested2sha1 nested1/nested2 (heads/main)
++ $nested3sha1 nested1/nested2/nested3 (heads/main)
++ $submodulesha1 nested1/nested2/nested3/submodule (heads/main)
+  $sub1sha1 sub1 ($sub1sha1_short)
+  $sub2sha1 sub2 ($sub2sha1_short)
+- $sub3sha1 sub3 (heads/master)
++ $sub3sha1 sub3 (heads/main)
  EOF
  
- 	# Expected commit message after merge without --signoff (or with --no-signoff)
- 	cat >expected-unsigned <<EOF &&
--Merge branch 'master' into other-branch
-+Merge branch 'main' into other-branch
+ test_expect_success 'test "status --recursive"' '
+@@ -295,10 +295,10 @@ test_expect_success 'test "status --recursive"' '
+ '
+ 
+ cat > expect <<EOF
+- $nested1sha1 nested1 (heads/master)
++ $nested1sha1 nested1 (heads/main)
+ +$nested2sha1 nested1/nested2 (file2~1)
+- $nested3sha1 nested1/nested2/nested3 (heads/master)
+- $submodulesha1 nested1/nested2/nested3/submodule (heads/master)
++ $nested3sha1 nested1/nested2/nested3 (heads/main)
++ $submodulesha1 nested1/nested2/nested3/submodule (heads/main)
  EOF
  
--	# Initial commit and feature branch to merge master into it.
-+	# Initial commit and feature branch to merge main into it.
- 	git commit --allow-empty -m "Initial empty commit" &&
- 	git checkout -b other-branch &&
- 	test_commit other-branch file1 1
-@@ -38,30 +38,30 @@ test_expect_success 'setup' '
+ test_expect_success 'ensure "status --cached --recursive" preserves the --cached flag' '
+@@ -316,13 +316,13 @@ test_expect_success 'ensure "status --cached --recursive" preserves the --cached
+ nested2sha1=$(git -C clone3/nested1/nested2 rev-parse HEAD)
  
- # Test with --signoff flag
- test_expect_success 'git merge --signoff adds a sign-off line' '
--	git checkout master &&
--	test_commit master-branch-2 file2 2 &&
-+	git checkout main &&
-+	test_commit main-branch-2 file2 2 &&
- 	git checkout other-branch &&
--	git merge master --signoff --no-edit &&
-+	git merge main --signoff --no-edit &&
- 	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
- 	test_cmp expected-signed actual
- '
+ cat > expect <<EOF
+- $nested1sha1 ../nested1 (heads/master)
++ $nested1sha1 ../nested1 (heads/main)
+ +$nested2sha1 ../nested1/nested2 (file2)
+- $nested3sha1 ../nested1/nested2/nested3 (heads/master)
+- $submodulesha1 ../nested1/nested2/nested3/submodule (heads/master)
++ $nested3sha1 ../nested1/nested2/nested3 (heads/main)
++ $submodulesha1 ../nested1/nested2/nested3/submodule (heads/main)
+  $sub1sha1 ../sub1 ($sub1sha1_short)
+  $sub2sha1 ../sub2 ($sub2sha1_short)
+- $sub3sha1 ../sub3 (heads/master)
++ $sub3sha1 ../sub3 (heads/main)
+ EOF
  
- # Test without --signoff flag
- test_expect_success 'git merge does not add a sign-off line' '
--	git checkout master &&
--	test_commit master-branch-3 file3 3 &&
-+	git checkout main &&
-+	test_commit main-branch-3 file3 3 &&
- 	git checkout other-branch &&
--	git merge master --no-edit &&
-+	git merge main --no-edit &&
- 	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
- 	test_cmp expected-unsigned actual
- '
+ test_expect_success 'test "status --recursive" from sub directory' '
+diff --git a/t/t7409-submodule-detached-work-tree.sh b/t/t7409-submodule-detached-work-tree.sh
+index fc018e3638..727490eb15 100755
+--- a/t/t7409-submodule-detached-work-tree.sh
++++ b/t/t7409-submodule-detached-work-tree.sh
+@@ -35,7 +35,7 @@ test_expect_success 'submodule on detached working tree' '
+ 			git rev-parse --verify HEAD >actual &&
+ 			test_cmp ../../../../expect actual
+ 		) &&
+-		git push origin master
++		git push origin main
+ 	) &&
+ 	mkdir home2 &&
+ 	(
+@@ -44,7 +44,7 @@ test_expect_success 'submodule on detached working tree' '
+ 		GIT_WORK_TREE="$(pwd)" &&
+ 		GIT_DIR="$(pwd)/.dotfiles" &&
+ 		export GIT_WORK_TREE GIT_DIR &&
+-		git checkout master &&
++		git checkout main &&
+ 		git submodule update --init &&
+ 		(
+ 			unset GIT_WORK_TREE GIT_DIR &&
+@@ -64,10 +64,10 @@ test_expect_success 'submodule on detached working pointed by core.worktree' '
+ 		git clone --bare ../remote "$GIT_DIR" &&
+ 		git config core.bare false &&
+ 		git config core.worktree .. &&
+-		git checkout master &&
++		git checkout main &&
+ 		git submodule add ../bundle1 .vim/bundle/dupe &&
+ 		test_commit "dupe" &&
+-		git push origin master
++		git push origin main
+ 	) &&
+ 	(
+ 		cd home &&
+diff --git a/t/t7417-submodule-path-url.sh b/t/t7417-submodule-path-url.sh
+index f7e7e94d7b..1c9181aee7 100755
+--- a/t/t7417-submodule-path-url.sh
++++ b/t/t7417-submodule-path-url.sh
+@@ -36,7 +36,7 @@ test_expect_success MINGW 'submodule paths disallows trailing spaces' '
+ 	sed "s/sub/sub /" <tree >tree.new &&
+ 	tree=$(git -C super mktree <tree.new) &&
+ 	commit=$(echo with space | git -C super commit-tree $tree) &&
+-	git -C super update-ref refs/heads/master $commit &&
++	git -C super update-ref refs/heads/main $commit &&
  
- # Test for --no-signoff flag
- test_expect_success 'git merge --no-signoff flag cancels --signoff flag' '
--	git checkout master &&
--	test_commit master-branch-4 file4 4 &&
-+	git checkout main &&
-+	test_commit main-branch-4 file4 4 &&
- 	git checkout other-branch &&
--	git merge master --no-edit --signoff --no-signoff &&
-+	git merge main --no-edit --signoff --no-signoff &&
- 	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
- 	test_cmp expected-unsigned actual
- '
-diff --git a/t/t7701-repack-unpack-unreachable.sh b/t/t7701-repack-unpack-unreachable.sh
-index 48261ba080..852c81d13e 100755
---- a/t/t7701-repack-unpack-unreachable.sh
-+++ b/t/t7701-repack-unpack-unreachable.sh
-@@ -22,7 +22,7 @@ test_expect_success '-A with -d option leaves unreachable objects unpacked' '
- 	git commit -a -m more_content &&
- 	csha1=$(git rev-parse HEAD^{commit}) &&
- 	tsha1=$(git rev-parse HEAD^{tree}) &&
--	git checkout master &&
-+	git checkout main &&
- 	echo even more content >> file1 &&
- 	test_tick &&
- 	git commit -a -m even_more_content &&
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index a578b35761..31e719e361 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -35,23 +35,23 @@ test_expect_success 'basic usage requires no repo' '
- 	test_i18ngrep ^usage: output
- '
- 
--# Create a file on master and change it on branch
-+# Create a file on main and change it on branch
- test_expect_success 'setup' '
--	echo master >file &&
-+	echo main >file &&
- 	git add file &&
- 	git commit -m "added file" &&
- 
--	git checkout -b branch master &&
-+	git checkout -b branch main &&
- 	echo branch >file &&
- 	git commit -a -m "branch changed file" &&
--	git checkout master
-+	git checkout main
- '
- 
- # Configure a custom difftool.<tool>.cmd and use it
- test_expect_success 'custom commands' '
- 	difftool_test_setup &&
- 	test_config difftool.test-tool.cmd "cat \"\$REMOTE\"" &&
--	echo master >expect &&
-+	echo main >expect &&
- 	git difftool --no-prompt branch >actual &&
- 	test_cmp expect actual &&
- 
-@@ -63,7 +63,7 @@ test_expect_success 'custom commands' '
- 
- test_expect_success 'custom tool commands override built-ins' '
- 	test_config difftool.vimdiff.cmd "cat \"\$REMOTE\"" &&
--	echo master >expect &&
-+	echo main >expect &&
- 	git difftool --tool vimdiff --no-prompt branch >actual &&
- 	test_cmp expect actual
- '
-@@ -311,21 +311,21 @@ test_expect_success 'difftool.<tool>.path' '
- 
- test_expect_success 'difftool --extcmd=cat' '
- 	echo branch >expect &&
--	echo master >>expect &&
-+	echo main >>expect &&
- 	git difftool --no-prompt --extcmd=cat branch >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'difftool --extcmd cat' '
- 	echo branch >expect &&
--	echo master >>expect &&
-+	echo main >>expect &&
- 	git difftool --no-prompt --extcmd=cat branch >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'difftool -x cat' '
- 	echo branch >expect &&
--	echo master >>expect &&
-+	echo main >>expect &&
- 	git difftool --no-prompt -x cat branch >actual &&
- 	test_cmp expect actual
- '
-@@ -338,7 +338,7 @@ test_expect_success 'difftool --extcmd echo arg1' '
- '
- 
- test_expect_success 'difftool --extcmd cat arg1' '
--	echo master >expect &&
-+	echo main >expect &&
- 	git difftool --no-prompt \
- 		--extcmd sh\ -c\ \"cat\ \$1\" branch >actual &&
- 	test_cmp expect actual
-@@ -351,7 +351,7 @@ test_expect_success 'difftool --extcmd cat arg2' '
- 	test_cmp expect actual
- '
- 
--# Create a second file on master and a different version on branch
-+# Create a second file on main and a different version on branch
- test_expect_success 'setup with 2 files different' '
- 	echo m2 >file2 &&
- 	git add file2 &&
-@@ -361,7 +361,7 @@ test_expect_success 'setup with 2 files different' '
- 	echo br2 >file2 &&
- 	git add file2 &&
- 	git commit -a -m "branch changed file2" &&
--	git checkout master
-+	git checkout main
- '
- 
- test_expect_success 'say no to the first file' '
-@@ -369,14 +369,14 @@ test_expect_success 'say no to the first file' '
- 	git difftool -x cat branch <input >output &&
- 	grep m2 output &&
- 	grep br2 output &&
--	! grep master output &&
-+	! grep main output &&
- 	! grep branch output
- '
- 
- test_expect_success 'say no to the second file' '
- 	(echo && echo n) >input &&
- 	git difftool -x cat branch <input >output &&
--	grep master output &&
-+	grep main output &&
- 	grep branch output &&
- 	! grep m2 output &&
- 	! grep br2 output
-@@ -384,7 +384,7 @@ test_expect_success 'say no to the second file' '
- 
- test_expect_success 'ending prompt input with EOF' '
- 	git difftool -x cat branch </dev/null >output &&
--	! grep master output &&
-+	! grep main output &&
- 	! grep branch output &&
- 	! grep m2 output &&
- 	! grep br2 output
-@@ -396,9 +396,9 @@ test_expect_success 'difftool --tool-help' '
- '
- 
- test_expect_success 'setup change in subdirectory' '
--	git checkout master &&
-+	git checkout main &&
- 	mkdir sub &&
--	echo master >sub/sub &&
-+	echo main >sub/sub &&
- 	git add sub/sub &&
- 	git commit -m "added sub/sub" &&
- 	git tag v1 &&
-@@ -526,7 +526,7 @@ run_dir_diff_test 'difftool --dir-diff from subdirectory with GIT_DIR set' '
- run_dir_diff_test 'difftool --dir-diff when worktree file is missing' '
- 	test_when_finished git reset --hard &&
- 	rm file2 &&
--	git difftool --dir-diff $symlinks --extcmd ls branch master >output &&
-+	git difftool --dir-diff $symlinks --extcmd ls branch main >output &&
- 	grep file2 output
- '
- 
-@@ -543,7 +543,7 @@ run_dir_diff_test 'difftool --dir-diff with unmerged files' '
- 	echo b >>file &&
- 	git add file &&
- 	git commit -m conflict-b &&
--	git checkout master &&
-+	git checkout main &&
- 	git merge conflict-a &&
- 	test_must_fail git merge conflict-b &&
- 	cat >expect <<-EOF &&
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 991d5bd9c0..bee57a4e08 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -1206,19 +1206,19 @@ test_expect_success 'grep -e -- -- path' '
- '
- 
- test_expect_success 'dashdash disambiguates rev as rev' '
--	test_when_finished "rm -f master" &&
--	echo content >master &&
--	echo master:hello.c >expect &&
--	git grep -l o master -- hello.c >actual &&
-+	test_when_finished "rm -f main" &&
-+	echo content >main &&
-+	echo main:hello.c >expect &&
-+	git grep -l o main -- hello.c >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'dashdash disambiguates pathspec as pathspec' '
--	test_when_finished "git rm -f master" &&
--	echo content >master &&
--	git add master &&
--	echo master:content >expect &&
--	git grep o -- master >actual &&
-+	test_when_finished "git rm -f main" &&
-+	echo content >main &&
-+	git add main &&
-+	echo main:content >expect &&
-+	git grep o -- main >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -1254,15 +1254,15 @@ test_expect_success 'grep --no-index pattern -- path' '
- '
- 
- test_expect_success 'grep --no-index complains of revs' '
--	test_must_fail git grep --no-index o master -- 2>err &&
-+	test_must_fail git grep --no-index o main -- 2>err &&
- 	test_i18ngrep "cannot be used with revs" err
- '
- 
- test_expect_success 'grep --no-index prefers paths to revs' '
--	test_when_finished "rm -f master" &&
--	echo content >master &&
--	echo master:content >expect &&
--	git grep --no-index o master >actual &&
-+	test_when_finished "rm -f main" &&
-+	echo content >main &&
-+	echo main:content >expect &&
-+	git grep --no-index o main >actual &&
- 	test_cmp expect actual
- '
- 
+ 	test_must_fail git clone --recurse-submodules super dst 2>err &&
+ 	test_i18ngrep "sub " err
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 815d7b21fe..2ef51a4f3f 100644
+index 44b4bba0cb..815d7b21fe 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
 @@ -257,13 +257,13 @@ case "$TRASH_DIRECTORY" in
  esac
  
  case "$TEST_NUMBER" in
--3404|4013|5310|6300|7064)
-+3404|4013|5310|6300|7064|7817)
+-3404|4013|5310|6300)
++3404|4013|5310|6300|7064)
  	# Avoid conflicts with patch series that are cooking at the same time
  	# as the patch series changing the default of `init.defaultBranch`.
  	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
  	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  	;;
--[0-6]*|7[0-4]*)
-+[0-7]*)
+-[0-6]*)
++[0-6]*|7[0-4]*)
  	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  	;;
