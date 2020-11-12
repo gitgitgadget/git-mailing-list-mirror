@@ -2,173 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63F9EC5519F
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 14:05:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FEBDC2D0A3
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 14:05:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F17BE20A8B
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 14:05:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E628A21D40
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 14:05:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="KfhZNrdT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pbnHx1bv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728270AbgKLOFH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Nov 2020 09:05:07 -0500
-Received: from mout.gmx.net ([212.227.15.15]:43571 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727822AbgKLOFG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Nov 2020 09:05:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1605189901;
-        bh=nx12jBQgYhiNHEQhMOCctWIhp0CglQr9jMRCF459CJU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=KfhZNrdTXCmwM3iJwILI2HLBgvzRLpZoYxOpQOsyVpHMrMXp5Wu+xB8a5vtUY0nAm
-         XtBnJdZ6NoVd8UyHAN3fONTpx5PlKnVml2utW1RVaFzRHCZm607RAoSAE6TWkQClFk
-         64E6KqwE40+R3+MBfj09jigGNNj67882vS5H3/L0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.25.62] ([213.196.212.205]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MhD2O-1k97bK3fCU-00eJBq; Thu, 12
- Nov 2020 15:05:01 +0100
-Date:   Thu, 12 Nov 2020 15:04:01 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 9/9] add -i: verify in the tests that colors can be
- overridden
-In-Reply-To: <20201111180713.GC9902@coredump.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.2011121448550.18437@tvgsbejvaqbjf.bet>
-References: <pull.785.git.1605051739.gitgitgadget@gmail.com> <38355ec98f04783367d74e38cda3ce5d6632c7ac.1605051739.git.gitgitgadget@gmail.com> <20201111023549.GB806755@coredump.intra.peff.net> <nycvar.QRO.7.76.6.2011111635140.18437@tvgsbejvaqbjf.bet>
- <20201111180713.GC9902@coredump.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728340AbgKLOFs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Nov 2020 09:05:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55408 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728271AbgKLOFr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Nov 2020 09:05:47 -0500
+Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 527EAC0613D1
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 06:05:47 -0800 (PST)
+Received: by mail-ed1-x541.google.com with SMTP id q3so6281862edr.12
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 06:05:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=mPaynHgnkFeHUuepb5NOO4qSZYiM1UEY4QgnLSEWGAI=;
+        b=pbnHx1bvdG90TiWRshgY+IN2/0Ywi4oELSP3VAkOi8rXZFRTWWuxG4r9BOtjR7AuBM
+         Xo67WF8iF4fWuZeiD/2VOku3rYmnhTaGKW/MBAZqK1x64u8i3MSwBRsD6usNUzYWG0FK
+         HcT2nL76Uhj+y2ZJ+rORNfwc0JROLtaFoBjXoKZnH0XhQItaqz2Ao6OoObLGX5rscdrG
+         X+uUgbb84FwUeGVFw1NOMeUFL9R+FxnLZj4NVTiStT9pSEqmoUK+9AuxOP5kid+1woNZ
+         q7b+0o/bmEXe2TDFMyfb7WAIpZSI4/Xwu+q6RgDBcoZaZg0rFJuAErcg4KV1VAsoYd+b
+         /dmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=mPaynHgnkFeHUuepb5NOO4qSZYiM1UEY4QgnLSEWGAI=;
+        b=qcsmxbWLFW4r0FZ1qTEZF2Ba7yACJeg6cn+uM1DbPnSElnuKKyU67AHiq0s8A2f2h1
+         DFS4HyLj8E6nq75CxdZijyFWZ/21ckfGmn/YY2FOxvQn39Zp3NgCF4XyjupDv9LLcN0W
+         dq8K291hMNv2yslK31URfI4XPNOpgAU47eU2LtuemT2ISArex8Hn5+Rn/gmSBr8BIEL5
+         CsXrNM+sqETJXqpBOsnK88K2Fzwz5d1Aok2K76ljEgr5zB8y46C8wjp2baTNJxQ00U2A
+         /hi3n75vmeJSneERCvC5tcUEau33rML5Pyc78xO6LFkUyouu9xqBWoCxXszrypmroZ50
+         elRw==
+X-Gm-Message-State: AOAM531yoiJVSSYayQJeOMk4XxVwSQvHXvbdz7TKZ1SijYYyWnfYVPXb
+        ACy797ER9FLWowrQ2FNlHUQ=
+X-Google-Smtp-Source: ABdhPJyYf9xYZs9LhOqygXrvNogEYeivSPuwqdIVAA1q4kywGa4KmafyvOlHgDO0ZJXvShU7nDWdnw==
+X-Received: by 2002:a50:9319:: with SMTP id m25mr5283848eda.297.1605189945971;
+        Thu, 12 Nov 2020 06:05:45 -0800 (PST)
+Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
+        by smtp.gmail.com with ESMTPSA id p1sm2414871edx.4.2020.11.12.06.05.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Nov 2020 06:05:45 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 01/11] docs: new capability to advertise trace2 SIDs
+References: <cover.1604006121.git.steadmon@google.com> <cover.1604355792.git.steadmon@google.com> <d04028c3c7574e3ca0f9c1b3d711192ca756158d.1604355792.git.steadmon@google.com> <xmqq5z6mqg60.fsf@gitster.c.googlers.com> <634cf106-7bc2-e8fa-5745-5e2d26b50e14@jeffhostetler.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 26.3; mu4e 1.4.13
+In-reply-to: <634cf106-7bc2-e8fa-5745-5e2d26b50e14@jeffhostetler.com>
+Date:   Thu, 12 Nov 2020 15:05:44 +0100
+Message-ID: <87d00ihdqf.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:sqqnFDeYRPVM7e61dVTJHKShtua7EXcD5vyB5k42TyYOuD9vz77
- 5K7R6mmKPrxOMGXZFamhjYzodWhWaJCkrxu7duTXmPFsJy22d9UPTQjnznE8WbUYgyl4Jqq
- R5kVQl/4UyZYViWeBr2m8eb+l8V3uGun5WniFoarhC1b0ZleAeizGdRzHge8TflrcGfh4Dg
- J4Pb5o2Gk+NPZiP/PbfnA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:4KY+ZnLjRfg=:4++1pghrCedWOS7uFLXfmU
- oM+oObh5gpDwnEY9pxedD6G2DiqTnMH4I1loF/Sjd0PK9zoj5l9nrqCeeNmob7faJ8Yc9tGJo
- P7DLip8fsR0hjcoIlQ3M59Nwr7IPNW3yG+NFIL0MuZkLsPgPhW6yDDH9BI+bB6Bj95il734FK
- pMcvaNdBe7e9qbg17bSE0I0HtZpDcAOSkKUwiyX25/7BRpzge/tpzjtPKNMpX5v8RZ+VSGyJr
- vYV+FwkKcsir9O1NmoB1B+eEyALwvaFeUh7O7MrGOGxNDC/T4LqhiD5vV3ejVU1K5WuiJRR0q
- dowlL4EignjvQ/pixc45VUtLFUVWxq1Mp6OCDiYCnvRoLprGwY5kqaBPvqDG/4DyQW/I+m5H1
- +ImGJMdB8+3w8Mh3ZUi8p+WL5tF0+oVT7CZAnuCvfdps5Lc9Dj2hmfo+/uIBiw98WwviHAHKB
- v0ewgav4dzx6PaSJCsDATldwCXx8ljxKGYfx+FHl3rgSV+lfUMtQtg64SsIB8a2GkLdeOssU7
- 4xd0mWuKjmm44oqQ6ZYkHwXUAvofgr/fhqxwWY4hW1oPjba+QUtNat4egtQJ9r/0fmfwcxivR
- 2vqjrCiuFNWGi6g+l1gs8pJfdRAvHwfO21tqhy5gCcQyF3zWRAowrz8qdHn4yLLj/Yy6csYHS
- UrL4jFLiczQ79fFHB64D5sGgJ4rOIqawVszqyqtyJy19Ncwk0MiM+YmJ8TxmNKLorKrYYYmYF
- zX28lRllidUtaQmMyTgCTuADAl3G+HLVI8C4miZd8e/P4uHRREAUEea73cR/8HEFTYMD0VWrM
- pHtAMO5vPKFrCKOaXB1gVAK36DjnqMucHPF+jSW6t8ToavrzjQRpZxuw34lbqkD4LcAHs3H+A
- MpnlymQZU5Bawch4ASrFOAtqBhW9AdWFRqYc2fPvI=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
 
-On Wed, 11 Nov 2020, Jeff King wrote:
+On Thu, Nov 05 2020, Jeff Hostetler wrote:
 
-> On Wed, Nov 11, 2020 at 04:53:13PM +0100, Johannes Schindelin wrote:
+> However, the opportunity to introduce a prefix as I suggested earlier
+> does offer the opportunity to introduce funky chars that would not
+> have any protection, so you may want to c-quote the string when
+> inserting it into the wire protocol.
 >
-> > > If we are using dash, then surely BASH_XTRACEFD does not matter eith=
-er
-> > > way?
-> >
-> > It kinda does, though. Dash _does_ respect the `BASH_XTRACEFD` variabl=
-e,
-> > funnily enough, but does not hand the settings through to sub-shells,
-> > whereas Bash does.
+>     $ GIT_TRACE2_EVENT=1 GIT_TRACE2_PARENT_SID=hello git version
+>     {"event":"version","sid":"hello/20201030T154143.660608Z-H86606a97- 
+> P00001d30",...}
+>     ...
 >
-> Really? That's news to me, and doesn't seem to trigger:
->
->   [bash uses it]
->   $ bash -xc 'BASH_XTRACEFD=3D3; echo foo' 3>trace
->   + BASH_XTRACEFD=3D3
->   foo
->   $ cat trace
->   + echo foo
->
->   [dash does not]
->   $ dash -xc 'BASH_XTRACEFD=3D3; echo foo' 3>trace
->   + BASH_XTRACEFD=3D3
->   + echo foo
->   foo
->   $ cat trace
+> (Allowing the user to insert a prefix like that has been useful for
+> tracking control/experiment testing, so I wouldn't want to disable
+> it.)
 
-Gaaah! I totally forgot that `BASH_XTRACEFD` is only heeded by BusyBox'
-ash (and only when built with `ENABLE_ASH_BASH_COMPAT`), not by `dash`.
+AFAICT the way it's documented now is the "is the session-id[...]"
+paragraph in api-trace2.txt.
 
-Sorry for the noise.
+I'd like to see us document the implementation a bit better and
+explicitly support the "hack" of setting GIT_TRACE2_PARENT_SID=hello.
 
-> > Oh my. I really had tried to avoid going _this_ deep. The `.meta` sett=
-ing
-> > is not even read by the interactive add command:
-> >
-> > 	$ git grep -w meta git-add--interactive.perl add-interactive.c \
-> > 		add-patch.c
-> >
-> > comes up empty.
-> > [how and why add--interactive.perl reads color config]
->
-> Hmm. Right, I knew about that weirdness. But I assumed that the builtin
-> add-interactive was doing the diffs in-core. Otherwise, why would we
-> have seen the failure to load diff.color.frag in the first place?
+I.e. maybe I've missed something but we just say "session-id is
+prepended with the session-id of the parent" but don't mention that we
+separate them with slashes, so you can split on that to get the depth &
+individual ID's.
 
-Oh, that's easy to explain: as you can verify reading
-https://github.com/git/git/blob/e31aba42fb12/git-add--interactive.perl#L88=
-5-L898
-the Perl version of `git add -p` insists on (re-)constructing the hunk
-headers manually, and obviously it needs to color them manually, too. And
-https://github.com/git/git/blob/e31aba42fb12/add-patch.c#L649-L672 shows
-that the built-in version of `git add -p` slavishly follows that practice.
+My reading of the updated doc patch in v3 is that not allowing
+"non-printable or whitespace" allows you to e.g. have slashes in those
+custom session IDs, which would be quite inconvenient since it would
+break that property.
 
-> Philippe's simple example just did "git add -p". So now I'm doubly
-> confused.
-
-Right. I should have been more precise in what parts are used of the diff
-that is colored via the internal diff machinery. The hunk headers are not
-used. The hunks themselves are, unless edited. The file header is, too:
-https://github.com/git/git/blob/e31aba42fb12/add-patch.c#L683-L714
-
-> The answer seems to be that render_hunk() always _replaces_ the colors
-> we got from running the external diff. Whereas the perl version only
-> applied coloring when reading back in the results of an edit operation
-> (and likewise used the frag color when generating a split hunk header).
-
-No, the Perl version also insists on applying `fraginfo_color`, see
-https://github.com/git/git/blob/e31aba42fb12/git-add--interactive.perl#L88=
-5-L898
-
-> I'm not sure that what the builtin version is doing is wrong, but it
-> seems like it's putting a lot of extra effort into parsing colors off of
-> the colorized version. Whereas the perl version just assumes the lines
-> match up. I do wonder if there are corner cases we might hit around
-> filters here, though. The lines we get from a filter might bear no
-> resemblance at all to diff lines. The only thing we require in the perl
-> version is that they have correspond 1-to-1 with the unfiltered diff
-> lines in meaning.
-
-They do have to correspond 1-to-1 because the assumption is that the
-individual lines will then correspond one-to-one, too. This does not need
-to be true, of course, but then the filter is probably less useful than
-the user wants it to be.
-
-> > For those reasons, v2 brings more changes than I had hoped for. In the
-> > end, it is a better patch series, obviously. So even if I was reluctan=
-t to
-> > work on all this: thank you for prodding me.
->
-> Heh. Sorry and thanks, I guess? :) I'll try to read over v2 carefully.
-
-No need to be sorry on your side. _I_ am sorry that I did not add that
-test case during my re-implementation efforts in the first place.
-
-Thanks,
-DScho
+And we should explicitly support the GIT_TRACE2_PARENT_SID=* setting
+from an external process, and make the SID definition loose enough to
+allow for SIDs that don't look like Git's in that chain. I.e. a useful
+property (and one I've seen in the wild) is to have some external
+programt that already has SIDs/UUID run IDs spawn git, setting
+GIT_TRACE2_PARENT_SID=<that program's SID> makes things convenient for
+the purposes of logging.n
