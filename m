@@ -2,115 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30AE3C2D0A3
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 14:47:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DEC60C5519F
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 14:51:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C0CD922248
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 14:47:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7507322240
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 14:51:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="HitevINK"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="THsrxRE2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728265AbgKLOru (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Nov 2020 09:47:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33726 "EHLO
+        id S1728446AbgKLOvQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Nov 2020 09:51:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727035AbgKLOrt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Nov 2020 09:47:49 -0500
-Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8213C0613D1
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 06:47:49 -0800 (PST)
-Received: by mail-qt1-x842.google.com with SMTP id m65so4072708qte.11
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 06:47:49 -0800 (PST)
+        with ESMTP id S1727035AbgKLOvQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Nov 2020 09:51:16 -0500
+Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1317AC0613D1
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 06:51:16 -0800 (PST)
+Received: by mail-qk1-x743.google.com with SMTP id q5so5402124qkc.12
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 06:51:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=l+gkhIE6id0kiaZH2L0IHemX+rVaJWHQqPbeKSs33Ok=;
-        b=HitevINK1sTtdY9XDGHu//AIP1aH+PuQo8UXU51BHy+BhpIkNvmU4FV5jWI5eqUdd4
-         n0Ii9AmEZGNp1bvIRTlaJu8y3a4TBdfOgSUOaW0S3X5189gWFyywqVlnrKlpXS17wmCL
-         LS/3dBidAcJxaqccMSHanEiFWadjFImB8SjZZWwCwbj1VvVUksoLTouXEhGcSHuyvwT2
-         Lu5vEUtPg+vJgBjmTyc+tEynEHXgHGj31fdIQraEHZl2LwoxJFehNqHgF5WV73SHiFzq
-         uKCjPjWXaVsgbNdTRbgicP/gf19590iAue33j4hAvxCZWVTDXKJulF89rDED7JJwqZHU
-         PkFg==
+        bh=UTlZ1/Tg4ClzrPuTdGQTVW5MTTCgPiQnCWU4i9kPmK0=;
+        b=THsrxRE2QxkYfr15/1iWmMhi6xE6M/+JsDSd/hKXOuT6aLr+LHsiClSfrCFm4nDqOT
+         lW6kMMxh3x2pyRfNB2NjwdfAqcCUviQTTBwYmGBXbrM+cGWrhGOpaUEKIwymXzn9WS0u
+         +4ey/mFU+u3GZsqpBSGKs0SGCfqiIn7fghbLgvYPPVjGge8YU8FIg1YpvehsEybXIetB
+         1lDQjHItBk7AKk2a08/JN+90hnT9nQEuCyLhZnVbznUbmqggwHouGdQpCRCrzk8NPrbY
+         ZM5tUWYHvhN7m7OZxUCLi4phnY8i1oDAmtoZiWacVTem0kzxmFAqhwA6bUbvx6fPy+12
+         qIbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=l+gkhIE6id0kiaZH2L0IHemX+rVaJWHQqPbeKSs33Ok=;
-        b=i2JTuWidWIEXQkBV8ewxNF5u8dZsVMEtgjK6K/ehn8K1YWPp6T/2Ep/4PRKHnyA+oM
-         AErLG0Xyt0UMc4Dmuv7XzFRmQ9l/SZiFX+p7uoEN0CQEv5UqFfNJBblTtPM7KfwiNzR+
-         BZYTLGEy7tNNIhqhATxklWoXEQIYKvBf9vBkjUmtzdKpTHKYjkdVkowRQFVw2N9BXKzx
-         ELy984hjsZDzWbcwzrbT8kXmYvt9i3zmNyO0zZhx1Sma5iCwldwYlomEQHjmkueR7rTd
-         K1UUvjha8K7Q9cDBjU9XCyqMueTP0ZcPVY0BvTcbYtOeGXniXSuoJHDvVaevC7zafqOq
-         IXrw==
-X-Gm-Message-State: AOAM532QxCcL45zk/cIqTL408sAqmgY8DjT0FSHjdyiYFK/3lnhR4qMh
-        KTE6sd9GHRf4fW9rXDXHTF9Ppw==
-X-Google-Smtp-Source: ABdhPJx99Lu20dCfz9T/dUvHHqd3VmsY3zmoMW8EMr9pyjURAh+i8pvok1saNGnfbdNNZUoH4T8+Ww==
-X-Received: by 2002:ac8:5142:: with SMTP id h2mr7990676qtn.29.1605192468503;
-        Thu, 12 Nov 2020 06:47:48 -0800 (PST)
+        bh=UTlZ1/Tg4ClzrPuTdGQTVW5MTTCgPiQnCWU4i9kPmK0=;
+        b=pjZBluiyUPiYkb8xKw83dza/fXXze1/IJnDEU7JMXbJcpmNEUgeF3mv/zIJf+XzddD
+         50LOiRd3LF/ylSPmgM3vxgiv7cINsxgnbv5BmlrHplZETiZVWOzES9vHLlg8vH+/kQ+J
+         lSUl3JMZEFKGVaQ8KqZfI1l+aBKobLPgY+PGHjQro4Z2DhJQJmG/tt1coqBTqtkqlf77
+         b5KjPOoxhq/vnJtrOJkaekrOiNsrWMEOPbGJjYnorLUW22qqs26+cxP1zOj/q/eg4WAG
+         CFYWNtEiUowmQbOzcZCgl1AQhVNNLkphaje1hXviwn3mfGsix2BnOp+ZR0uO9e/sgf3Q
+         VWBw==
+X-Gm-Message-State: AOAM532ZMRo+fLTtJaXr3VxxMmMkQ7WgUVMQblFygRL/5V6yTWRa97AC
+        c4XK9xW8X8RCNznMaWMCFejhxQ==
+X-Google-Smtp-Source: ABdhPJzQ32p3PCBw+GInQKnu9uyZkcVTrZ8Igbcbh5mBqp+zBoQxraeuEQ8qOetWSNu1RvdeR1jtDg==
+X-Received: by 2002:a37:b07:: with SMTP id 7mr98052qkl.370.1605192675116;
+        Thu, 12 Nov 2020 06:51:15 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:508e:3ccd:52c2:244c])
-        by smtp.gmail.com with ESMTPSA id q15sm4815530qki.13.2020.11.12.06.47.47
+        by smtp.gmail.com with ESMTPSA id o189sm5150873qkf.34.2020.11.12.06.51.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Nov 2020 06:47:47 -0800 (PST)
-Date:   Thu, 12 Nov 2020 09:47:45 -0500
+        Thu, 12 Nov 2020 06:51:14 -0800 (PST)
+Date:   Thu, 12 Nov 2020 09:51:12 -0500
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Git Mailing List <git@vger.kernel.org>,
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
         Derrick Stolee <dstolee@microsoft.com>
 Subject: Re: [PATCH 1/3] csum-file: add hashwrite_be64()
-Message-ID: <X61LEUBDyhnboZAv@nand.local>
+Message-ID: <X61L4Ebd5PBpYDel@nand.local>
 References: <16932ced-8bcd-89bd-b927-cae1bce0365a@web.de>
- <fcebe67f-f1d7-0069-01de-12844508cae1@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <fcebe67f-f1d7-0069-01de-12844508cae1@gmail.com>
+In-Reply-To: <16932ced-8bcd-89bd-b927-cae1bce0365a@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 12, 2020 at 08:52:24AM -0500, Derrick Stolee wrote:
-> On 11/12/2020 7:20 AM, René Scharfe wrote:
-> > Add a helper function for hashing and writing 64-bit integers in network
-> > byte order.  It returns the number of written bytes.  This simplifies
-> > callers that keep track of the file offset, even though this number is a
-> > constant.
-> >
-> > Suggested-by: Derrick Stolee <dstolee@microsoft.com>
-> > Original-patch-by: Taylor Blau <me@ttaylorr.com>
+On Thu, Nov 12, 2020 at 01:20:19PM +0100, René Scharfe wrote:
+> Add a helper function for hashing and writing 64-bit integers in network
+> byte order.  It returns the number of written bytes.  This simplifies
+> callers that keep track of the file offset, even though this number is a
+> constant.
 >
-> These patches are absolutely correct, and I'm glad to see them show up
-> in a very clear presentation. I had to go look to see why these were
-> not already present, with [1] being the last instance of these showing
-> up on-list. They did not get into the new version after a significant
-> refactor [2].
-
-That's right. What happened was we stopped writing the uncompressed "has
-an unpresentable Bloom filter" bitmap between the two versions you're
-talking about. Since we wrote each word as a big-endian 8-byte unsigned
-value, introducing hashwrite_be64() was useful in the earlier version.
-
-But in the rewritten version, there were no _new_ callers that would
-have wanted hashwrite_be64(), so I dropped those patches since the
-series was already large.
-
-That all being said, these are definitely useful patches to have, so I'm
-glad to see them being dug back up. Thanks, René :-).
-
-> Thanks,
-> -Stolee
+> Suggested-by: Derrick Stolee <dstolee@microsoft.com>
+> Original-patch-by: Taylor Blau <me@ttaylorr.com>
+> Signed-off-by: René Scharfe <l.s.r@web.de>
+> ---
+>  csum-file.h | 7 +++++++
+>  1 file changed, 7 insertions(+)
 >
-> [1] https://lore.kernel.org/git/20200904202226.GA21837@nand.local/
-> [2] https://lore.kernel.org/git/cover.1599664389.git.me@ttaylorr.com/
+> diff --git a/csum-file.h b/csum-file.h
+> index f9cbd317fb..e54d53d1d0 100644
+> --- a/csum-file.h
+> +++ b/csum-file.h
+> @@ -62,4 +62,11 @@ static inline void hashwrite_be32(struct hashfile *f, uint32_t data)
+>  	hashwrite(f, &data, sizeof(data));
+>  }
+>
+> +static inline size_t hashwrite_be64(struct hashfile *f, uint64_t data)
+> +{
+> +	data = htonll(data);
+
+Great. This is new from my patch (which wrote the high- and low four
+bytes with two separate hashwrite_be32()'s), but I think it's a clear
+improvement.
+
+In addition to being more readable, we can use the bswap instruction
+once instead of twice if it exists.
+
+Please feel free to add my:
+
+  Signed-off-by: Taylor Blau <me@ttaylorr.com>
 
 Thanks,
 Taylor
