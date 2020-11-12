@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF473C64E75
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 22:44:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F661C6379F
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 22:44:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A2C4D20825
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 22:44:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3B32D2068D
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 22:44:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q9fsIMkn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ji5oeZlg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727754AbgKLWoY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Nov 2020 17:44:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51484 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727695AbgKLWoW (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727708AbgKLWoW (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 12 Nov 2020 17:44:22 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18179C0613D4
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 14:44:22 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id c17so7652185wrc.11
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 14:44:22 -0800 (PST)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51498 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727558AbgKLWoT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Nov 2020 17:44:19 -0500
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A45C0C061A47
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 14:44:19 -0800 (PST)
+Received: by mail-wm1-x341.google.com with SMTP id d142so6581633wmd.4
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 14:44:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=pzA+MvIh3Tg46h3pj3tdyvlBgcWIqn5TYGCmUQNG2iY=;
-        b=Q9fsIMknSQSblI6dnwMuoU6XU/6tD2f5vvp/IWeRa7CaKMK1Ic2ZvnIT/cMeK3hQEt
-         44NFgvNU7LCcNKmVi1cW1YxlKVR6y+SJHqkpiY1XoYq6Usvkspwh1yd4zcrNCRy1++bV
-         VVB5Oozlsz2Bbs0aEDiNJ5w805zefMuRglG3qCtecjK9vuhT1dFQXDYlRKtoNci6/sob
-         wdrkPrMI23TMqyD6sIDfUjqqk66UqSR8s/RedC98F1bSPeaNIgkGWnh9f3UFtGYjphla
-         JCZWLjmyD//l/uyskrIiDkdMvECZSW14FPiCEZ/bUgMRfS/g0TLVmzDXHxB83Mu1cskG
-         nzDw==
+        bh=Znuj+r+07LlnsRiW9hY8Ldpnh1XWOE6Nj5Z2z0BJdz8=;
+        b=Ji5oeZlgrKwjSYlqPnVKZrWEYcEMcyHfV2+2eXjrDPtobLJCcq2ar6tX1a89pCl3zD
+         hdLqDZ2veY44zKoGzdULLMcE7MDTmy4pr+z8e9KYlD9uO5BjHkmJkIinwvGhu6xl9+bs
+         qs7gqwK7tm4xYyGSL5BB6FecFgpZYpelgUGOVR1HyTf+5fDVztTkMIG/2qAL+r3xTtow
+         v8CZCVVx+uIwOHMRmbjj8vWBCAqbjc8+tSMvS29vKBPlEtQLVW+UPKntHrrbfp+LYpvj
+         SSfDmGCjYVCFJWu2BDHTmeZDBNlkcSRpghDV/IfrngZVT/ie9eheLANBI/r7gL/Z4Xtk
+         oUYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pzA+MvIh3Tg46h3pj3tdyvlBgcWIqn5TYGCmUQNG2iY=;
-        b=O+M1jHs9CqoppGqVf/AxrZ/nI5D6+gnpZ03E6eLh9l/1xE5MKPTlrMV1YwTFSVD5sa
-         nAuYKvwiNG3OI5QuCp2bTHr5fp51NawnFRy4PFP0OVsBKVWP0C0EQQwjpl7oF+IbfbLt
-         Qu1XN78IrkqqAVJ/hjH9pfEqyzT91DmMofBCQYq1I7ZBu0Dyz7E0mpCCaTW8+cPkN/bn
-         5LWxvNKAeMUvvR8QSc/usBHFHmxeHeVu9u/SqjAAjtbKYLhmXoHustmyA1FxH+7NO+2s
-         BhNNAWEYMTHJjcWtOKsQRjAD+0uszYMbnsA28PKHio2aavd7Nla5hMv4+BenfOyeMn2S
-         1okA==
-X-Gm-Message-State: AOAM531I90uxVOeBbNKyQXWCj+6yFoFQk63G/BPDd82usclANrC0P5iz
-        A0VsagZKzenK/z2w3iqMAu9C0RN/Jn0=
-X-Google-Smtp-Source: ABdhPJyb3JTz0JCz6KjBpPq8b9P2avB+fzwuJlJhBQVXygMR/i8MU1K6dju47+sib9NDrOkxntSp0Q==
-X-Received: by 2002:adf:f846:: with SMTP id d6mr2254154wrq.128.1605221060665;
-        Thu, 12 Nov 2020 14:44:20 -0800 (PST)
+        bh=Znuj+r+07LlnsRiW9hY8Ldpnh1XWOE6Nj5Z2z0BJdz8=;
+        b=Ofabji8SE/2x9SbN8RRxWgzhvg6xnoigfvWpYSFMJ4jZ49JHSmzlKj1OH6pdJfZDYk
+         CQBaAyL1CJIZE1+XcvRWJ0G81htteyXJzMQ6JE+LFL7pi/AYNNT2BmpEhwVgZXcr12fj
+         UyIQ8891kBxmWxJv/Si0ufySyNYs/iwDX8x2JSW1FaVnBXMD5G0s2ysJOko5TmgZY7qq
+         vgZvTWyLIwFo3ffuE18pNv4e9vQp5UpYmw6Mssv5p8KnV6itzB9Zmf4SK/cbOFJ7hHHu
+         P+kYLsGK2XxmI6Z9WPjmi2rPs2JiCTT8K8LZBBFKemAWlCtyycMsWSoUlxaYDoDluID0
+         Mk0A==
+X-Gm-Message-State: AOAM530srxb3+a1GWm2fN6p9f+W4HsoqTfQLwk0JUGODCLMGySBPDgdZ
+        Nxj4XinaAt2bI1JGc0C9EoZImayWpnQ=
+X-Google-Smtp-Source: ABdhPJwy0DSbdlUQHaBhvktuB0gXhrJyXJKnRgmKHbekBqtJoCA8oQBgE7wylXqSd5SiUikEcOEalg==
+X-Received: by 2002:a05:600c:4147:: with SMTP id h7mr60269wmm.186.1605221058284;
+        Thu, 12 Nov 2020 14:44:18 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y4sm7799424wmj.2.2020.11.12.14.44.20
+        by smtp.gmail.com with ESMTPSA id c185sm8297253wma.44.2020.11.12.14.44.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Nov 2020 14:44:20 -0800 (PST)
-Message-Id: <bd32d55eab2ceab101343ebf1d571056d6e7696a.1605221040.git.gitgitgadget@gmail.com>
+        Thu, 12 Nov 2020 14:44:17 -0800 (PST)
+Message-Id: <3a987c452eb88c2d18c6eebc9841644516d10e1c.1605221039.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.762.git.1605221038.gitgitgadget@gmail.com>
 References: <pull.762.git.1605221038.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 12 Nov 2020 22:43:55 +0000
-Subject: [PATCH 25/28] tests(git-p4): transition to the default branch name
- `main`
+Date:   Thu, 12 Nov 2020 22:43:52 +0000
+Subject: [PATCH 22/28] t8*: adjust the references to the default branch name
+ "main"
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,220 +78,148 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In the previous commits, we adjusted the test suite to use the branch
-name `main` for initial branches.
+This trick was performed via
 
-The `git p4`-related tests are a bit harder to adjust because `git p4`
-uses the ref `refs/heads/p4/master` to track the remote branches, and
-for now, we do not want to change that (this might be the subject of a
-future patch series). We only need to adjust for the actual initial
-branch name to be changed to `main`.
+	$ (cd t &&
+	   sed -i -e 's/master/main/g' -e 's/MASTER/MAIN/g' \
+		-e 's/Master/Main/g' -- t8*.sh annotate*.sh)
 
 This allows us to define `GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main`
 for those tests.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t9800-git-p4-basic.sh        |  2 +-
- t/t9801-git-p4-branch.sh       | 16 ++++++++--------
- t/t9806-git-p4-options.sh      | 18 +++++++++---------
- t/t9807-git-p4-submit.sh       |  2 +-
- t/t9811-git-p4-label-import.sh |  2 +-
- t/test-lib.sh                  |  2 +-
- 6 files changed, 21 insertions(+), 21 deletions(-)
+ t/annotate-tests.sh             |  8 ++++----
+ t/t8001-annotate.sh             |  2 +-
+ t/t8003-blame-corner-cases.sh   |  4 ++--
+ t/t8004-blame-with-conflicts.sh | 14 +++++++-------
+ t/test-lib.sh                   |  2 +-
+ 5 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/t/t9800-git-p4-basic.sh b/t/t9800-git-p4-basic.sh
-index c98c1dfc23..0c543a8708 100755
---- a/t/t9800-git-p4-basic.sh
-+++ b/t/t9800-git-p4-basic.sh
-@@ -226,7 +226,7 @@ test_expect_success 'clone --bare should make a bare repository' '
- 		git config --get --bool core.bare true &&
- 		git rev-parse --verify refs/remotes/p4/master &&
- 		git rev-parse --verify refs/remotes/p4/HEAD &&
--		git rev-parse --verify refs/heads/master &&
-+		git rev-parse --verify refs/heads/main &&
- 		git rev-parse --verify HEAD
- 	)
- '
-diff --git a/t/t9801-git-p4-branch.sh b/t/t9801-git-p4-branch.sh
-index a3abd778f9..94161d4b57 100755
---- a/t/t9801-git-p4-branch.sh
-+++ b/t/t9801-git-p4-branch.sh
-@@ -67,7 +67,7 @@ test_expect_success 'import main, no branch detection' '
- 	(
- 		cd "$git" &&
- 		git log --oneline --graph --decorate --all &&
--		git rev-list master -- >wc &&
-+		git rev-list main -- >wc &&
- 		test_line_count = 4 wc
- 	)
- '
-@@ -78,7 +78,7 @@ test_expect_success 'import branch1, no branch detection' '
- 	(
- 		cd "$git" &&
- 		git log --oneline --graph --decorate --all &&
--		git rev-list master -- >wc &&
-+		git rev-list main -- >wc &&
- 		test_line_count = 2 wc
- 	)
- '
-@@ -89,7 +89,7 @@ test_expect_success 'import branch2, no branch detection' '
- 	(
- 		cd "$git" &&
- 		git log --oneline --graph --decorate --all &&
--		git rev-list master -- >wc &&
-+		git rev-list main -- >wc &&
- 		test_line_count = 2 wc
- 	)
- '
-@@ -100,7 +100,7 @@ test_expect_success 'import depot, no branch detection' '
- 	(
- 		cd "$git" &&
- 		git log --oneline --graph --decorate --all &&
--		git rev-list master -- >wc &&
-+		git rev-list main -- >wc &&
- 		test_line_count = 8 wc
- 	)
- '
-@@ -114,7 +114,7 @@ test_expect_success 'import depot, branch detection' '
- 		git log --oneline --graph --decorate --all &&
- 
- 		# 4 main commits
--		git rev-list master -- >wc &&
-+		git rev-list main -- >wc &&
- 		test_line_count = 4 wc &&
- 
- 		# 3 main, 1 integrate, 1 on branch2
-@@ -137,7 +137,7 @@ test_expect_success 'import depot, branch detection, branchList branch definitio
- 		git log --oneline --graph --decorate --all &&
- 
- 		# 4 main commits
--		git rev-list master -- >wc &&
-+		git rev-list main -- >wc &&
- 		test_line_count = 4 wc &&
- 
- 		# 3 main, 1 integrate, 1 on branch2
-@@ -484,7 +484,7 @@ test_expect_success 'use-client-spec detect-branches files in top-level' '
- 	(
- 		cd "$git" &&
- 		git p4 sync --detect-branches --use-client-spec //depot/usecs@all &&
--		git checkout -b master p4/usecs/b1 &&
-+		git checkout -b main p4/usecs/b1 &&
- 		test_path_is_file b1-file1 &&
- 		test_path_is_missing b2-file2 &&
- 		test_path_is_missing b1 &&
-@@ -537,7 +537,7 @@ test_expect_success 'use-client-spec detect-branches skips files in branches' '
- 	(
- 		cd "$git" &&
- 		git p4 sync --detect-branches --use-client-spec //depot/usecs@all &&
--		git checkout -b master p4/usecs/b3 &&
-+		git checkout -b main p4/usecs/b3 &&
- 		test_path_is_file b1-file1 &&
- 		test_path_is_file b3-file3_2 &&
- 		test_path_is_missing b3-file3_1
-diff --git a/t/t9806-git-p4-options.sh b/t/t9806-git-p4-options.sh
-index 4e794a01bf..0beae2e3f3 100755
---- a/t/t9806-git-p4-options.sh
-+++ b/t/t9806-git-p4-options.sh
-@@ -27,14 +27,14 @@ test_expect_success 'clone no --git-dir' '
- 	test_must_fail git p4 clone --git-dir=xx //depot
+diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
+index 3aee61d2cc..ee5d2d4cf8 100644
+--- a/t/annotate-tests.sh
++++ b/t/annotate-tests.sh
+@@ -95,7 +95,7 @@ test_expect_success 'blame 2 authors' '
  '
  
--test_expect_success 'clone --branch should checkout master' '
-+test_expect_success 'clone --branch should checkout main' '
- 	git p4 clone --branch=refs/remotes/p4/sb --dest="$git" //depot &&
- 	test_when_finished cleanup_git &&
- 	(
- 		cd "$git" &&
- 		git rev-parse refs/remotes/p4/sb >sb &&
--		git rev-parse refs/heads/master >master &&
--		test_cmp sb master &&
-+		git rev-parse refs/heads/main >main &&
-+		test_cmp sb main &&
- 		git rev-parse HEAD >head &&
- 		test_cmp sb head
- 	)
-@@ -147,22 +147,22 @@ test_expect_success 'clone --changesfile, @all' '
- 	test_must_fail git p4 clone --changesfile="$TRASH_DIRECTORY/cf" --dest="$git" //depot@all
+ test_expect_success 'setup B1 lines (branch1)' '
+-	git checkout -b branch1 master &&
++	git checkout -b branch1 main &&
+ 	echo "3A slow green fox jumps into the" >>file &&
+ 	echo "well." >>file &&
+ 	GIT_AUTHOR_NAME="B1" GIT_AUTHOR_EMAIL="B1@test.git" \
+@@ -107,7 +107,7 @@ test_expect_success 'blame 2 authors + 1 branch1 author' '
  '
  
--# imports both master and p4/master in refs/heads
-+# imports both main and p4/master in refs/heads
- # requires --import-local on sync to find p4 refs/heads
--# does not update master on sync, just p4/master
-+# does not update main on sync, just p4/master
- test_expect_success 'clone/sync --import-local' '
- 	git p4 clone --import-local --dest="$git" //depot@1,2 &&
- 	test_when_finished cleanup_git &&
- 	(
- 		cd "$git" &&
--		git log --oneline refs/heads/master >lines &&
-+		git log --oneline refs/heads/main >lines &&
- 		test_line_count = 2 lines &&
- 		git log --oneline refs/heads/p4/master >lines &&
- 		test_line_count = 2 lines &&
- 		test_must_fail git p4 sync &&
+ test_expect_success 'setup B2 lines (branch2)' '
+-	git checkout -b branch2 master &&
++	git checkout -b branch2 main &&
+ 	sed -e "s/2A quick brown/4A quick brown lazy dog/" <file >file.new &&
+ 	mv file.new file &&
+ 	GIT_AUTHOR_NAME="B2" GIT_AUTHOR_EMAIL="B2@test.git" \
+@@ -131,11 +131,11 @@ test_expect_success 'blame --first-parent blames merge for branch1' '
+ '
  
- 		git p4 sync --import-local &&
--		git log --oneline refs/heads/master >lines &&
-+		git log --oneline refs/heads/main >lines &&
- 		test_line_count = 2 lines &&
- 		git log --oneline refs/heads/p4/master >lines &&
- 		test_line_count = 3 lines
-@@ -174,7 +174,7 @@ test_expect_success 'clone --max-changes' '
- 	test_when_finished cleanup_git &&
- 	(
- 		cd "$git" &&
--		git log --oneline refs/heads/master >lines &&
-+		git log --oneline refs/heads/main >lines &&
- 		test_line_count = 2 lines
- 	)
+ test_expect_success 'blame ancestor' '
+-	check_count -h master A 2 B 2
++	check_count -h main A 2 B 2
  '
-@@ -237,7 +237,7 @@ test_expect_success 'clone --use-client-spec' '
- 			git init &&
- 			git config git-p4.useClientSpec true &&
- 			git p4 sync //depot/... &&
--			git checkout -b master p4/master &&
-+			git checkout -b main p4/master &&
- 			test_path_is_file bus/dir/f4 &&
- 			test_path_is_missing file1
- 		)
-diff --git a/t/t9807-git-p4-submit.sh b/t/t9807-git-p4-submit.sh
-index eaaae414a1..e45104d1ef 100755
---- a/t/t9807-git-p4-submit.sh
-+++ b/t/t9807-git-p4-submit.sh
-@@ -114,7 +114,7 @@ test_expect_success 'submit with allowSubmit' '
- 		git config git-p4.skipSubmitEdit true &&
- 		git config git-p4.allowSubmit "nobranch" &&
- 		test_must_fail git p4 submit &&
--		git config git-p4.allowSubmit "nobranch,master" &&
-+		git config git-p4.allowSubmit "nobranch,main" &&
- 		git p4 submit
- 	)
+ 
+ test_expect_success 'blame great-ancestor' '
+-	check_count -h master^ A 2
++	check_count -h main^ A 2
  '
-diff --git a/t/t9811-git-p4-label-import.sh b/t/t9811-git-p4-label-import.sh
-index c1446f26ab..c722b5a176 100755
---- a/t/t9811-git-p4-label-import.sh
-+++ b/t/t9811-git-p4-label-import.sh
-@@ -185,7 +185,7 @@ test_expect_success 'tag that cannot be exported' '
- 		git add main/f12 &&
- 		git commit -m "adding f12" &&
- 		git tag -m "tag on a_branch" GIT_TAG_ON_A_BRANCH &&
--		git checkout master &&
-+		git checkout main &&
- 		git p4 submit --export-labels
- 	) &&
- 	(
+ 
+ test_expect_success 'setup evil merge' '
+diff --git a/t/t8001-annotate.sh b/t/t8001-annotate.sh
+index 72176e42c1..3687fc58d8 100755
+--- a/t/t8001-annotate.sh
++++ b/t/t8001-annotate.sh
+@@ -7,7 +7,7 @@ PROG='git annotate'
+ . "$TEST_DIRECTORY"/annotate-tests.sh
+ 
+ test_expect_success 'annotate old revision' '
+-	git annotate file master >actual &&
++	git annotate file main >actual &&
+ 	awk "{ print \$3; }" <actual >authors &&
+ 	test 2 = $(grep A <authors | wc -l) &&
+ 	test 2 = $(grep B <authors | wc -l)
+diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases.sh
+index ba8013b002..2e499b4511 100755
+--- a/t/t8003-blame-corner-cases.sh
++++ b/t/t8003-blame-corner-cases.sh
+@@ -161,13 +161,13 @@ test_expect_success 'blame wholesale copy and more in the index' '
+ 
+ test_expect_success 'blame during cherry-pick with file rename conflict' '
+ 
+-	test_when_finished "git reset --hard && git checkout master" &&
++	test_when_finished "git reset --hard && git checkout main" &&
+ 	git checkout HEAD~3 &&
+ 	echo MOUSE >> mouse &&
+ 	git mv mouse rodent &&
+ 	git add rodent &&
+ 	GIT_AUTHOR_NAME=Rodent git commit -m "rodent" &&
+-	git checkout --detach master &&
++	git checkout --detach main &&
+ 	(git cherry-pick HEAD@{1} || test $? -eq 1) &&
+ 	git show HEAD@{1}:rodent > rodent &&
+ 	git add rodent &&
+diff --git a/t/t8004-blame-with-conflicts.sh b/t/t8004-blame-with-conflicts.sh
+index 9c353ab222..b6c992ec45 100755
+--- a/t/t8004-blame-with-conflicts.sh
++++ b/t/t8004-blame-with-conflicts.sh
+@@ -21,16 +21,16 @@ test_expect_success 'setup first case' '
+ 	git add file2 &&
+ 	git commit --author "U Gly <ug@localhost>" -m ugly &&
+ 
+-	# Back to master and change something
+-	git checkout master &&
++	# Back to main and change something
++	git checkout main &&
+ 	echo "
+ 
+ bla" >> file1 &&
+ 	git commit --author "Old Line <ol@localhost>" -a -m file1.b &&
+ 
+-	# Back to foo and merge master
++	# Back to foo and merge main
+ 	git checkout foo &&
+-	if git merge master; then
++	if git merge main; then
+ 		echo needed conflict here
+ 		exit 1
+ 	else
+@@ -44,8 +44,8 @@ Even more" > file2 &&
+ 	git rm file1 &&
+ 	git commit --author "M Result <mr@localhost>" -a -m merged &&
+ 
+-	# Back to master and change file1 again
+-	git checkout master &&
++	# Back to main and change file1 again
++	git checkout main &&
+ 	sed s/bla/foo/ <file1 >X &&
+ 	rm file1 &&
+ 	mv X file1 &&
+@@ -53,7 +53,7 @@ Even more" > file2 &&
+ 
+ 	# Try to merge into foo again
+ 	git checkout foo &&
+-	if git merge master; then
++	if git merge main; then
+ 		echo needed conflict here
+ 		exit 1
+ 	else
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 803b9c2a58..173880196e 100644
+index 2ef51a4f3f..4ddfb9e3ee 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
 @@ -263,7 +263,7 @@ case "$TEST_NUMBER" in
  	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
  	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  	;;
--[0-8]*|9[0-7]*)
-+[0-8]*|9[0-8]*)
+-[0-7]*)
++[0-8]*)
  	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  	;;
