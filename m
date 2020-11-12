@@ -4,112 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FEBDC2D0A3
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 14:05:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B351C2D0A3
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 14:09:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E628A21D40
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 14:05:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2159622248
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 14:09:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pbnHx1bv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NExMLzE9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728340AbgKLOFs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Nov 2020 09:05:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55408 "EHLO
+        id S1728072AbgKLOJ2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Nov 2020 09:09:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728271AbgKLOFr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Nov 2020 09:05:47 -0500
-Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 527EAC0613D1
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 06:05:47 -0800 (PST)
-Received: by mail-ed1-x541.google.com with SMTP id q3so6281862edr.12
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 06:05:47 -0800 (PST)
+        with ESMTP id S1727739AbgKLOJ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Nov 2020 09:09:28 -0500
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24BB8C0613D1
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 06:09:28 -0800 (PST)
+Received: by mail-ej1-x644.google.com with SMTP id i19so7887110ejx.9
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 06:09:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=mPaynHgnkFeHUuepb5NOO4qSZYiM1UEY4QgnLSEWGAI=;
-        b=pbnHx1bvdG90TiWRshgY+IN2/0Ywi4oELSP3VAkOi8rXZFRTWWuxG4r9BOtjR7AuBM
-         Xo67WF8iF4fWuZeiD/2VOku3rYmnhTaGKW/MBAZqK1x64u8i3MSwBRsD6usNUzYWG0FK
-         HcT2nL76Uhj+y2ZJ+rORNfwc0JROLtaFoBjXoKZnH0XhQItaqz2Ao6OoObLGX5rscdrG
-         X+uUgbb84FwUeGVFw1NOMeUFL9R+FxnLZj4NVTiStT9pSEqmoUK+9AuxOP5kid+1woNZ
-         q7b+0o/bmEXe2TDFMyfb7WAIpZSI4/Xwu+q6RgDBcoZaZg0rFJuAErcg4KV1VAsoYd+b
-         /dmg==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=PxBeOXv0v25C/SKYGP/pcpT8wL/Xp9LRyAUDvbWrOxM=;
+        b=NExMLzE9b3wfifUst9IF7+9SApAZ+IqQ7hflukH1MYUvqddyigIz78HWCHbxGFvyvP
+         JjIDI45cwOBrYMNnm3BFoUYJT+k5HZXcH7PDcrWxDpnYdlkC77/oDdpLmhJtYMcnBHSb
+         npug9IyQzXgrI0I1fGlVqpHg+wZBJ1wE5QAMXe7ai1Edl4tVOz2othxR06vToAatbp0B
+         8cfsjTe0LQqWCFno7EEQVRRpKIbe0hmy1l37Ebby3AHZvmnuogJz7Ingi041qQp3Nja3
+         yvyFXDugHG4X7rxuek9BuhSvG1Gm3a1gz+9dNcruB0Qbeo4lAR2cilLKZ29EoN5CuFnh
+         vaDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=mPaynHgnkFeHUuepb5NOO4qSZYiM1UEY4QgnLSEWGAI=;
-        b=qcsmxbWLFW4r0FZ1qTEZF2Ba7yACJeg6cn+uM1DbPnSElnuKKyU67AHiq0s8A2f2h1
-         DFS4HyLj8E6nq75CxdZijyFWZ/21ckfGmn/YY2FOxvQn39Zp3NgCF4XyjupDv9LLcN0W
-         dq8K291hMNv2yslK31URfI4XPNOpgAU47eU2LtuemT2ISArex8Hn5+Rn/gmSBr8BIEL5
-         CsXrNM+sqETJXqpBOsnK88K2Fzwz5d1Aok2K76ljEgr5zB8y46C8wjp2baTNJxQ00U2A
-         /hi3n75vmeJSneERCvC5tcUEau33rML5Pyc78xO6LFkUyouu9xqBWoCxXszrypmroZ50
-         elRw==
-X-Gm-Message-State: AOAM531yoiJVSSYayQJeOMk4XxVwSQvHXvbdz7TKZ1SijYYyWnfYVPXb
-        ACy797ER9FLWowrQ2FNlHUQ=
-X-Google-Smtp-Source: ABdhPJyYf9xYZs9LhOqygXrvNogEYeivSPuwqdIVAA1q4kywGa4KmafyvOlHgDO0ZJXvShU7nDWdnw==
-X-Received: by 2002:a50:9319:: with SMTP id m25mr5283848eda.297.1605189945971;
-        Thu, 12 Nov 2020 06:05:45 -0800 (PST)
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=PxBeOXv0v25C/SKYGP/pcpT8wL/Xp9LRyAUDvbWrOxM=;
+        b=H2VUPrhc4E2F3uNeSTKa9F5amD72o55SJH9qfYT8mCv3xMiSuMWOd8Qbfdcu3SyLnX
+         d9oV2D0J7MdCPpybZoNRuGxVccRZmzb8e9R4poWYoAnSFJbSpOkqUdhSGYKLsPTdvXw/
+         ECARtM3VcqE5WFueu0u26qa4aQe0us6jFohcwz+wODVQWq2z+sr3cCp4AiyRSVNhEA9n
+         m5BUaJ3cLCYT6lHyUQQ0p4Ri+g6jsxuPS5nlt3q990d52BFLWP0NiRb6e12NUc3vqV3x
+         sRKnbZ9CMn8f6+2VYlCHdTyzYQZDlBr0tpvX4qQuiM7NXQXSJ2YKaG007T7vMB6yX9Aw
+         dbbQ==
+X-Gm-Message-State: AOAM532XtranSxFxftQ7D20qUvAbl3U24j34KjlvAeIDgWYBTxz20Y53
+        IxxlZqzW26LWXqloQw1IkCo=
+X-Google-Smtp-Source: ABdhPJzX8aabq8YFlhfyT7B6BSovZgmkGpg0vb5A04ivo3ibZ3L7EEOIm5SCz8mz/msnyi+B1ndxfA==
+X-Received: by 2002:a17:906:180b:: with SMTP id v11mr30181020eje.466.1605190166741;
+        Thu, 12 Nov 2020 06:09:26 -0800 (PST)
 Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id p1sm2414871edx.4.2020.11.12.06.05.44
+        by smtp.gmail.com with ESMTPSA id zm12sm2187645ejb.62.2020.11.12.06.09.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Nov 2020 06:05:45 -0800 (PST)
+        Thu, 12 Nov 2020 06:09:26 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 01/11] docs: new capability to advertise trace2 SIDs
-References: <cover.1604006121.git.steadmon@google.com> <cover.1604355792.git.steadmon@google.com> <d04028c3c7574e3ca0f9c1b3d711192ca756158d.1604355792.git.steadmon@google.com> <xmqq5z6mqg60.fsf@gitster.c.googlers.com> <634cf106-7bc2-e8fa-5745-5e2d26b50e14@jeffhostetler.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH 0/5] Remove now-unused git-parse-remote
+References: <CAGZ79kb57HzJQ4VLFD_NMKvEnriPVXoAAPimg6BG_Z+PPjJ4aQ@mail.gmail.com> <20201111151754.31527-1-avarab@gmail.com> <20201111173738.GB9902@coredump.intra.peff.net>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 26.3; mu4e 1.4.13
-In-reply-to: <634cf106-7bc2-e8fa-5745-5e2d26b50e14@jeffhostetler.com>
-Date:   Thu, 12 Nov 2020 15:05:44 +0100
-Message-ID: <87d00ihdqf.fsf@evledraar.gmail.com>
+In-reply-to: <20201111173738.GB9902@coredump.intra.peff.net>
+Date:   Thu, 12 Nov 2020 15:09:25 +0100
+Message-ID: <87a6vmhdka.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Nov 05 2020, Jeff Hostetler wrote:
+On Wed, Nov 11 2020, Jeff King wrote:
 
-> However, the opportunity to introduce a prefix as I suggested earlier
-> does offer the opportunity to introduce funky chars that would not
-> have any protection, so you may want to c-quote the string when
-> inserting it into the wire protocol.
+> On Wed, Nov 11, 2020 at 04:17:49PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
 >
->     $ GIT_TRACE2_EVENT=1 GIT_TRACE2_PARENT_SID=hello git version
->     {"event":"version","sid":"hello/20201030T154143.660608Z-H86606a97- 
-> P00001d30",...}
->     ...
+>> I started poking at removing .git/branches from the default template,
+>> which I had a patch for until I noticed Johannes's old[1] series.
+>>=20
+>> In any case, this is one thing that came out of that
+>> investigation. The code we're keeping by moving it to git-submodule.sh
+>> can also be replaced by some C code we have, but I wanted to leave
+>> that to another submission (if I'll get to it), and make this simply a
+>> code removal.
 >
-> (Allowing the user to insert a prefix like that has been useful for
-> tracking control/experiment testing, so I wouldn't want to disable
-> it.)
+> I'm happy to see unused code go away in general, but this raises a
+> question: what promises have we made to end-user scripts about this
+> library being available?
+>
+> We do install it, including a manpage which claims you can do:
+>
+>   . "$(git --exec-path)/git-parse-remote"
+>
+> though it does not actually document any particular functions being
+> available. It looks like we've removed functions before without warning
+> (e.g., 1a92777504 (git-request-pull: open-code the only invocation of
+> get_remote_url, 2011-03-01)).
+>
+> I'm just wondering if we need to have any kind of warning or deprecation
+> period.
+>
+> To be clear, I find it pretty unlikely that anybody is using the rather
+> esoteric functions in this file, but that's usually when I get most
+> surprised. :)
 
-AFAICT the way it's documented now is the "is the session-id[...]"
-paragraph in api-trace2.txt.
+I think it's fine to just remove it, I'll note that in a v2 commit
+message. I.e. the convention at the time was just to create these *.sh
+libraries as documented, but I don't think anyone used them outside of
+git.git.
 
-I'd like to see us document the implementation a bit better and
-explicitly support the "hack" of setting GIT_TRACE2_PARENT_SID=hello.
+If they did maybe we should move them to contrib and ... create the same
+bitrot as with the *.sh builtins :)
 
-I.e. maybe I've missed something but we just say "session-id is
-prepended with the session-id of the parent" but don't mention that we
-separate them with slashes, so you can split on that to get the depth &
-individual ID's.
+So I think it's better just to "git rm" it, if it breaks things for
+anyone they can just get the last version and maintain it themselves.
 
-My reading of the updated doc patch in v3 is that not allowing
-"non-printable or whitespace" allows you to e.g. have slashes in those
-custom session IDs, which would be quite inconvenient since it would
-break that property.
+>>  .gitignore                         |  1 -
+>>  Documentation/git-parse-remote.txt | 23 -------
+>>  Makefile                           |  2 -
+>>  command-list.txt                   |  1 -
+>>  git-parse-remote.sh                | 98 ------------------------------
+>>  git-submodule.sh                   |  8 ++-
+>>  6 files changed, 7 insertions(+), 126 deletions(-)
+>>  delete mode 100644 Documentation/git-parse-remote.txt
+>
+> I expected to see a "delete" line for git-parse-remote.sh here. I
+> thought at first maybe you were leaving the empty shell so that people
+> could continue to source it (keeping the promise in the manpage, but not
+> providing any actual functions). But it looks like the final patch stops
+> building it at all, leaving the now-useless source file.
 
-And we should explicitly support the GIT_TRACE2_PARENT_SID=* setting
-from an external process, and make the SID definition loose enough to
-allow for SIDs that don't look like Git's in that chain. I.e. a useful
-property (and one I've seen in the wild) is to have some external
-programt that already has SIDs/UUID run IDs spawn git, setting
-GIT_TRACE2_PARENT_SID=<that program's SID> makes things convenient for
-the purposes of logging.n
+That was just a mistake on my part, I meant to "git rm" it but
+forgot. Will fix it v2.
