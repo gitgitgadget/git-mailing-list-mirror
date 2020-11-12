@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A1E4C63777
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 22:44:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 608F3C64E69
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 22:44:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1A32020825
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 22:44:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F3A4920825
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 22:44:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fxJwORib"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CTJnnB5A"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727796AbgKLWo2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Nov 2020 17:44:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51492 "EHLO
+        id S1727785AbgKLWo0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Nov 2020 17:44:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726533AbgKLWoX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Nov 2020 17:44:23 -0500
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3149FC0613D1
+        with ESMTP id S1727753AbgKLWoY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Nov 2020 17:44:24 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8A9DC0613D4
         for <git@vger.kernel.org>; Thu, 12 Nov 2020 14:44:23 -0800 (PST)
-Received: by mail-wm1-x341.google.com with SMTP id p19so7055080wmg.0
+Received: by mail-wr1-x42f.google.com with SMTP id k2so7719213wrx.2
         for <git@vger.kernel.org>; Thu, 12 Nov 2020 14:44:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=phrigkNfIq3TK8S9001z/6IoRt/PO1uEdnRAkDlA4uQ=;
-        b=fxJwORib7NAjA13vwWbWu5CkIMsWvPcPzZaWPf0OamdE1vROz/4I/1e11YcQB906vK
-         QXJX8lYkCEQH46t5GUqnL0gi/WYbYoD+KGenblpuMUjQl1j+mvBV5kgHZRrYIxKobfFZ
-         MZUCp2EQaY+g4NEMUdd6PkYduXejPn3YEJQ/ySoubBDQuBcdJ7J5+wvlIMw/tCmevZz9
-         INeF2Hjn/pf2L10bc/bdD4ih3gtawPxxpTPaPKREEmJiwslmfLcfyvZKIMj2VxMNLxqA
-         KlAagU23dIHYIhu8byl+w03cJIulepbposg/tl3tOzJYQsPXKaPKX+2O7pbhkL3tdpvF
-         fQJA==
+        bh=oJvoE+6n2GDioCEPeHOUv6BYBRtQQoyaYZ4NbOTYoYc=;
+        b=CTJnnB5APKiD7mMd3TMtE0zay5UdrxjxbmaPsFg0AFmlKQ7UwJX5U4pMonR52fRRsH
+         +Omh6smpCECVVjWUswwPvHKPkGF5SRXiriV/o7K52F0L1TJhcXHgfcgqymBUHwQ/3t94
+         LxaV2mMS62wczQtCyp4KeYBT2UI4L2ktcbt7Tp3TqHgfRmB1xeuFI/2RkObqHgJe7la+
+         krHQ6X5Leu5nwzxnfvesg/Y+MS9qk8pb2gyl6XSsspZQdbf5FRL8Otg52A3e5/DwKhNs
+         7w2MkxISgcVLe0s3mKW7Pxkv8VztBIP7r00NjvLMhGEZ0Zp8PKCRCZjBhHPjDO20fFKh
+         vzfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=phrigkNfIq3TK8S9001z/6IoRt/PO1uEdnRAkDlA4uQ=;
-        b=qrlXtqbumFZCIFNy9oSB8+Rzjb6oinYX9M/hF63lAd0jXaS1ZxRxs8tRuwyZeVBBJg
-         bTu8rTKuJadTEXzfPBycNcpHgyyTqtCmILvmnQ1k5qhxYVQuqyazKwUJDnjXUMH8GfSQ
-         0L4MHTduGTts3U57gh+oIOl4pbuIHnplNKgCQ2X8cdI5XhkCRB/Bp5OyfTyb9pb2KsPo
-         ZakRpQI4fW99/F9lufHv5qWypoHJC0dK28/fRjlgYWSLa92yKICJBKPuKzFzurh8Co/y
-         foqGjZ41SG6nFtvhmV/Uf1mwGyK9DNIRpW6ovGRz6NcK550GXCSDeQ1cqImcce20SV9T
-         M5bQ==
-X-Gm-Message-State: AOAM530yaSpjHdJmsZFK6tMFM05J+bftlTh/ZTtBS3/cGFsSJsCDwyrH
-        DYSJhMyumzSF3JM2CijUFSbo3vyAwZg=
-X-Google-Smtp-Source: ABdhPJzJlR36svW+vKMCJcHcXfSBhUzEevLQk79FaR0GUlvNjo+NOq9gwbHliLqIzOsIAzi1z+WaPw==
-X-Received: by 2002:a7b:c1ce:: with SMTP id a14mr70937wmj.126.1605221061377;
-        Thu, 12 Nov 2020 14:44:21 -0800 (PST)
+        bh=oJvoE+6n2GDioCEPeHOUv6BYBRtQQoyaYZ4NbOTYoYc=;
+        b=qeLdUb0q0QHLL2w6vawAm2ieoV6FlYGBnIjmMP2n5zR4+gQBYWYkXLC0q0vV84JX4I
+         kRKv1kjvRDROfWeJRNYBc3kE/sGw7wi4z9goox33RC5Vaz4fKp8uJkMegKHDBC4P+2cB
+         8vQ4sRuvYBdvwGVlFFatZ5nZ9VxeJPNSJX00u0C4s8m+2PkX5e9mVTWiS6eiUWtVNULH
+         XSMVHNor2K5CdOlTdzn2LVmHVjV6sWrQFaC1yIUZxFexXlyNC4MEa2+5AcJg2C/5ef/I
+         LxbFGMDPP5kBlgzJmz9XydMJjPRNKT6YRhl9W42obUxhWlMjBD8C3+rvH6hwMOq26F5i
+         +JSw==
+X-Gm-Message-State: AOAM533DZgAIAZdP+hxx5jS9aBVquyq4wOUPTUIjJnCoWKmVehYAIHVJ
+        bDQwdT2LbB0OMEkUY74GYa+fo/dLo5s=
+X-Google-Smtp-Source: ABdhPJwUPO7BXrDBTfiKEOWz7CC58Zw98ofaberDyYqzFk127zP0m3lSd7iqRpuyVCtppINPVfIFpg==
+X-Received: by 2002:a5d:54c7:: with SMTP id x7mr2098802wrv.359.1605221062148;
+        Thu, 12 Nov 2020 14:44:22 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c64sm7706484wmd.41.2020.11.12.14.44.20
+        by smtp.gmail.com with ESMTPSA id o14sm3634307wrw.4.2020.11.12.14.44.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Nov 2020 14:44:20 -0800 (PST)
-Message-Id: <73100477a86b4ffdb26e80ae93093441df582665.1605221040.git.gitgitgadget@gmail.com>
+        Thu, 12 Nov 2020 14:44:21 -0800 (PST)
+Message-Id: <09b611a3598553b0576fd174ff0ac66a8584ba22.1605221040.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.762.git.1605221038.gitgitgadget@gmail.com>
 References: <pull.762.git.1605221038.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 12 Nov 2020 22:43:56 +0000
-Subject: [PATCH 26/28] t99*: adjust the references to the default branch name
- "main"
+Date:   Thu, 12 Nov 2020 22:43:57 +0000
+Subject: [PATCH 27/28] tests: drop prereq `PREPARE_FOR_MAIN_BRANCH` where no
+ longer needed
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,540 +78,452 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Carefully excluding t9902, which sees independent development elsewhere
-at the time of writing, we use `main` as the default branch name in
-t9903. This trick was performed via
+We introduced the `PREPARE_FOR_MAIN_BRANCH` prereq for the sole purpose
+of allowing us to perform the non-trivial adjustments regarding the
+`master` -> `main` rename before the automatable ones.
 
-	$ (cd t &&
-	   sed -i -e 's/master/main/g' -e 's/MASTER/MAIN/g' \
-		-e 's/Master/Main/g' -- t99*.sh lib-cvs.sh &&
-	   git checkout HEAD -- t9902\*)
+Now that the transition is almost complete, we can stop using it in most
+instances. The only exception is t9902: at the time of writing, there
+are other patches in flight that touch this test script, therefore the
+transition to `main` is postponed to a later date.
 
-This allows us to define `GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main`
-for all tests (except the ones we specifically excluded for now).
+This patch is the result of this command:
+
+	sed -i 's/PREPARE_FOR_MAIN_BRANCH[ ,]//' t/t[0-9]*.sh &&
+	git checkout HEAD -- t/t9902\*
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t9903-bash-prompt.sh | 114 ++++++++++++++++++++---------------------
- t/test-lib.sh          |   4 +-
- 2 files changed, 59 insertions(+), 59 deletions(-)
+ t/t1400-update-ref.sh              |  4 +--
+ t/t3200-branch.sh                  |  6 ++---
+ t/t3201-branch-contains.sh         |  2 +-
+ t/t3203-branch-output.sh           |  2 +-
+ t/t3205-branch-color.sh            |  2 +-
+ t/t5505-remote.sh                  |  8 +++---
+ t/t5510-fetch.sh                   |  4 +--
+ t/t5526-fetch-submodules.sh        | 42 +++++++++++++++---------------
+ t/t5703-upload-pack-ref-in-want.sh |  2 +-
+ t/t6302-for-each-ref-filter.sh     | 12 ++++-----
+ 10 files changed, 42 insertions(+), 42 deletions(-)
 
-diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-index ab5da2cabc..a77daa7419 100755
---- a/t/t9903-bash-prompt.sh
-+++ b/t/t9903-bash-prompt.sh
-@@ -28,7 +28,7 @@ test_expect_success 'setup for prompt tests' '
- 	echo 3 >file &&
- 	git commit -m "third b1" file &&
- 	git tag -a -m msg2 t2 &&
--	git checkout -b b2 master &&
-+	git checkout -b b2 main &&
- 	echo 0 >file &&
- 	git commit -m "second b2" file &&
- 	echo 00 >file &&
-@@ -37,20 +37,20 @@ test_expect_success 'setup for prompt tests' '
- 	git commit -m "yet another b2" file &&
- 	mkdir ignored_dir &&
- 	echo "ignored_dir/" >>.gitignore &&
--	git checkout master
-+	git checkout main
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index 3265a8c58e..127efff136 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -585,7 +585,7 @@ test_expect_success 'stdin fails on unbalanced quotes' '
+ 	grep "fatal: badly quoted argument: \\\"main" err
  '
  
- test_expect_success 'prompt - branch name' '
--	printf " (master)" >expected &&
-+	printf " (main)" >expected &&
- 	__git_ps1 >"$actual" &&
- 	test_cmp expected "$actual"
+-test_expect_success PREPARE_FOR_MAIN_BRANCH 'stdin fails on invalid escape' '
++test_expect_success 'stdin fails on invalid escape' '
+ 	echo "create $a \"ma\zn\"" >stdin &&
+ 	test_must_fail git update-ref --stdin <stdin 2>err &&
+ 	grep "fatal: badly quoted argument: \\\"ma\\\\zn\\\"" err
+@@ -704,7 +704,7 @@ test_expect_success 'stdin succeeds with quoted argument' '
+ 	test_cmp expect actual
  '
  
- test_expect_success SYMLINKS 'prompt - branch name - symlink symref' '
--	printf " (master)" >expected &&
--	test_when_finished "git checkout master" &&
-+	printf " (main)" >expected &&
-+	test_when_finished "git checkout main" &&
- 	test_config core.preferSymlinkRefs true &&
--	git checkout master &&
-+	git checkout main &&
- 	__git_ps1 >"$actual" &&
- 	test_cmp expected "$actual"
+-test_expect_success PREPARE_FOR_MAIN_BRANCH 'stdin succeeds with escaped character' '
++test_expect_success 'stdin succeeds with escaped character' '
+ 	git update-ref -d $a &&
+ 	echo "create $a \"ma\\151n\"" >stdin &&
+ 	git update-ref --stdin <stdin &&
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 63036e0369..430f5af21b 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -321,7 +321,7 @@ test_expect_success 'git branch --list -v with --abbrev' '
+ 
  '
-@@ -58,7 +58,7 @@ test_expect_success SYMLINKS 'prompt - branch name - symlink symref' '
- test_expect_success 'prompt - unborn branch' '
- 	printf " (unborn)" >expected &&
- 	git checkout --orphan unborn &&
--	test_when_finished "git checkout master" &&
-+	test_when_finished "git checkout main" &&
- 	__git_ps1 >"$actual" &&
- 	test_cmp expected "$actual"
+ 
+-test_expect_success PREPARE_FOR_MAIN_BRANCH 'git branch --column' '
++test_expect_success 'git branch --column' '
+ 	COLUMNS=81 git branch --column=column >actual &&
+ 	cat >expect <<\EOF &&
+   a/b/c   bam     foo     l     * main    n       o/p     r
+@@ -358,7 +358,7 @@ EOF
+ 	test_cmp expect actual
  '
-@@ -72,7 +72,7 @@ test_expect_success FUNNYNAMES 'prompt - with newline in path' '
- with
- newline" &&
- 	mkdir "$repo_with_newline" &&
--	printf " (master)" >expected &&
-+	printf " (main)" >expected &&
- 	git init "$repo_with_newline" &&
- 	test_when_finished "rm -rf \"$repo_with_newline\"" &&
- 	mkdir "$repo_with_newline"/subdir &&
-@@ -87,7 +87,7 @@ test_expect_success 'prompt - detached head' '
- 	printf " ((%s...))" $(git log -1 --format="%h" --abbrev=13 b1^) >expected &&
- 	test_config core.abbrev 13 &&
- 	git checkout b1^ &&
--	test_when_finished "git checkout master" &&
-+	test_when_finished "git checkout main" &&
- 	__git_ps1 >"$actual" &&
- 	test_cmp expected "$actual"
+ 
+-test_expect_success PREPARE_FOR_MAIN_BRANCH 'git branch with column.*' '
++test_expect_success 'git branch with column.*' '
+ 	git config column.ui column &&
+ 	git config column.branch "dense" &&
+ 	COLUMNS=80 git branch >actual &&
+@@ -375,7 +375,7 @@ test_expect_success 'git branch --column -v should fail' '
+ 	test_must_fail git branch --column -v
  '
-@@ -95,7 +95,7 @@ test_expect_success 'prompt - detached head' '
- test_expect_success 'prompt - describe detached head - contains' '
- 	printf " ((t2~1))" >expected &&
- 	git checkout b1^ &&
--	test_when_finished "git checkout master" &&
-+	test_when_finished "git checkout main" &&
+ 
+-test_expect_success PREPARE_FOR_MAIN_BRANCH 'git branch -v with column.ui ignored' '
++test_expect_success 'git branch -v with column.ui ignored' '
+ 	git config column.ui column &&
+ 	COLUMNS=80 git branch -v | cut -c -8 | sed "s/ *$//" >actual &&
+ 	git config --unset column.ui &&
+diff --git a/t/t3201-branch-contains.sh b/t/t3201-branch-contains.sh
+index 110cfef820..f39ae97264 100755
+--- a/t/t3201-branch-contains.sh
++++ b/t/t3201-branch-contains.sh
+@@ -242,7 +242,7 @@ test_expect_success 'branch --merged combined with --no-merged' '
+ # Here "topic" tracks "main" with one extra commit, and "zzz" points to the
+ # same tip as main The name "zzz" must come alphabetically after "topic"
+ # as we process them in that order.
+-test_expect_success PREPARE_FOR_MAIN_BRANCH 'branch --merged with --verbose' '
++test_expect_success 'branch --merged with --verbose' '
+ 	git branch --track topic main &&
+ 	git branch zzz topic &&
+ 	git checkout topic &&
+diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+index 727c9d9caa..211eb8357f 100755
+--- a/t/t3203-branch-output.sh
++++ b/t/t3203-branch-output.sh
+@@ -329,7 +329,7 @@ test_expect_success '--color overrides auto-color' '
+ 	test_cmp expect.color actual
+ '
+ 
+-test_expect_success PREPARE_FOR_MAIN_BRANCH 'verbose output lists worktree path' '
++test_expect_success 'verbose output lists worktree path' '
+ 	one=$(git rev-parse --short HEAD) &&
+ 	two=$(git rev-parse --short main) &&
+ 	cat >expect <<-EOF &&
+diff --git a/t/t3205-branch-color.sh b/t/t3205-branch-color.sh
+index 9f2fb785d2..2eb619231d 100755
+--- a/t/t3205-branch-color.sh
++++ b/t/t3205-branch-color.sh
+@@ -28,7 +28,7 @@ test_expect_success 'regular output shows colors' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success PREPARE_FOR_MAIN_BRANCH 'verbose output shows colors' '
++test_expect_success 'verbose output shows colors' '
+ 	oid=$(git rev-parse --short HEAD) &&
+ 	cat >expect <<-EOF &&
+ 	* <CYAN>main               <RESET> $oid foo
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 540d65aa22..869109a2c6 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -234,7 +234,7 @@ cat >test/expect <<EOF
+     main  pushes to another (up to date)
+ EOF
+ 
+-test_expect_success PREPARE_FOR_MAIN_BRANCH 'show' '
++test_expect_success 'show' '
  	(
- 		GIT_PS1_DESCRIBE_STYLE=contains &&
- 		__git_ps1 >"$actual"
-@@ -106,7 +106,7 @@ test_expect_success 'prompt - describe detached head - contains' '
- test_expect_success 'prompt - describe detached head - branch' '
- 	printf " ((tags/t2~1))" >expected &&
- 	git checkout b1^ &&
--	test_when_finished "git checkout master" &&
-+	test_when_finished "git checkout main" &&
+ 		cd test &&
+ 		git config --add remote.origin.fetch refs/heads/main:refs/heads/upstream &&
+@@ -285,7 +285,7 @@ cat >test/expect <<EOF
+     refs/tags/lastbackup forces to refs/tags/lastbackup
+ EOF
+ 
+-test_expect_success PREPARE_FOR_MAIN_BRANCH 'show -n' '
++test_expect_success 'show -n' '
+ 	mv one one.unreachable &&
  	(
- 		GIT_PS1_DESCRIBE_STYLE=branch &&
- 		__git_ps1 >"$actual"
-@@ -117,7 +117,7 @@ test_expect_success 'prompt - describe detached head - branch' '
- test_expect_success 'prompt - describe detached head - describe' '
- 	printf " ((t1-1-g%s))" $(git log -1 --format="%h" b1^) >expected &&
- 	git checkout b1^ &&
--	test_when_finished "git checkout master" &&
-+	test_when_finished "git checkout main" &&
+ 		cd test &&
+@@ -328,7 +328,7 @@ test_expect_success 'set-head --auto' '
+ 	)
+ '
+ 
+-test_expect_success PREPARE_FOR_MAIN_BRANCH 'set-head --auto has no problem w/multiple HEADs' '
++test_expect_success 'set-head --auto has no problem w/multiple HEADs' '
  	(
- 		GIT_PS1_DESCRIBE_STYLE=describe &&
- 		__git_ps1 >"$actual"
-@@ -128,7 +128,7 @@ test_expect_success 'prompt - describe detached head - describe' '
- test_expect_success 'prompt - describe detached head - default' '
- 	printf " ((t2))" >expected &&
- 	git checkout --detach b1 &&
--	test_when_finished "git checkout master" &&
-+	test_when_finished "git checkout main" &&
- 	__git_ps1 >"$actual" &&
- 	test_cmp expected "$actual"
- '
-@@ -152,7 +152,7 @@ test_expect_success 'prompt - deep inside .git directory' '
+ 		cd test &&
+ 		git fetch two "refs/heads/*:refs/remotes/two/*" &&
+@@ -1348,7 +1348,7 @@ test_expect_success 'unqualified <dst> refspec DWIM and advice' '
+ 	)
  '
  
- test_expect_success 'prompt - inside bare repository' '
--	printf " (BARE:master)" >expected &&
-+	printf " (BARE:main)" >expected &&
- 	git init --bare bare.git &&
- 	test_when_finished "rm -rf bare.git" &&
+-test_expect_success PREPARE_FOR_MAIN_BRANCH 'refs/remotes/* <src> refspec and unqualified <dst> DWIM and advice' '
++test_expect_success 'refs/remotes/* <src> refspec and unqualified <dst> DWIM and advice' '
  	(
-@@ -172,7 +172,7 @@ test_expect_success 'prompt - interactive rebase' '
- 	test_when_finished "rm -f fake_editor.sh" &&
- 	test_set_editor "$TRASH_DIRECTORY/fake_editor.sh" &&
- 	git checkout b1 &&
--	test_when_finished "git checkout master" &&
-+	test_when_finished "git checkout main" &&
- 	git rebase -i HEAD^ &&
- 	test_when_finished "git rebase --abort" &&
- 	__git_ps1 >"$actual" &&
-@@ -182,7 +182,7 @@ test_expect_success 'prompt - interactive rebase' '
- test_expect_success 'prompt - rebase merge' '
- 	printf " (b2|REBASE 1/3)" >expected &&
- 	git checkout b2 &&
--	test_when_finished "git checkout master" &&
-+	test_when_finished "git checkout main" &&
- 	test_must_fail git rebase --merge b1 b2 &&
- 	test_when_finished "git rebase --abort" &&
- 	__git_ps1 >"$actual" &&
-@@ -192,7 +192,7 @@ test_expect_success 'prompt - rebase merge' '
- test_expect_success 'prompt - rebase am' '
- 	printf " (b2|REBASE 1/3)" >expected &&
- 	git checkout b2 &&
--	test_when_finished "git checkout master" &&
-+	test_when_finished "git checkout main" &&
- 	test_must_fail git rebase --apply b1 b2 &&
- 	test_when_finished "git rebase --abort" &&
- 	__git_ps1 >"$actual" &&
-@@ -202,7 +202,7 @@ test_expect_success 'prompt - rebase am' '
- test_expect_success 'prompt - merge' '
- 	printf " (b1|MERGING)" >expected &&
- 	git checkout b1 &&
--	test_when_finished "git checkout master" &&
-+	test_when_finished "git checkout main" &&
- 	test_must_fail git merge b2 &&
- 	test_when_finished "git reset --hard" &&
- 	__git_ps1 >"$actual" &&
-@@ -210,7 +210,7 @@ test_expect_success 'prompt - merge' '
+ 		cd two &&
+ 		git tag -a -m "Some tag" my-tag main &&
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 206e3be695..f8bcaeca08 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -942,7 +942,7 @@ test_expect_success 'fetching with auto-gc does not lock up' '
+ 	)
  '
  
- test_expect_success 'prompt - cherry-pick' '
--	printf " (master|CHERRY-PICKING)" >expected &&
-+	printf " (main|CHERRY-PICKING)" >expected &&
- 	test_must_fail git cherry-pick b1 b1^ &&
- 	test_when_finished "git cherry-pick --abort" &&
- 	__git_ps1 >"$actual" &&
-@@ -222,7 +222,7 @@ test_expect_success 'prompt - cherry-pick' '
- '
- 
- test_expect_success 'prompt - revert' '
--	printf " (master|REVERTING)" >expected &&
-+	printf " (main|REVERTING)" >expected &&
- 	test_must_fail git revert b1^ b1 &&
- 	test_when_finished "git revert --abort" &&
- 	__git_ps1 >"$actual" &&
-@@ -234,7 +234,7 @@ test_expect_success 'prompt - revert' '
- '
- 
- test_expect_success 'prompt - bisect' '
--	printf " (master|BISECTING)" >expected &&
-+	printf " (main|BISECTING)" >expected &&
- 	git bisect start &&
- 	test_when_finished "git bisect reset" &&
- 	__git_ps1 >"$actual" &&
-@@ -242,7 +242,7 @@ test_expect_success 'prompt - bisect' '
- '
- 
- test_expect_success 'prompt - dirty status indicator - clean' '
--	printf " (master)" >expected &&
-+	printf " (main)" >expected &&
+-test_expect_success PREPARE_FOR_MAIN_BRANCH,C_LOCALE_OUTPUT 'fetch aligned output' '
++test_expect_success C_LOCALE_OUTPUT 'fetch aligned output' '
+ 	git clone . full-output &&
+ 	test_commit looooooooooooong-tag &&
  	(
- 		GIT_PS1_SHOWDIRTYSTATE=y &&
- 		__git_ps1 >"$actual"
-@@ -251,7 +251,7 @@ test_expect_success 'prompt - dirty status indicator - clean' '
+@@ -957,7 +957,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH,C_LOCALE_OUTPUT 'fetch aligned outpu
+ 	test_cmp expect actual
  '
  
- test_expect_success 'prompt - dirty status indicator - dirty worktree' '
--	printf " (master *)" >expected &&
-+	printf " (main *)" >expected &&
- 	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
+-test_expect_success PREPARE_FOR_MAIN_BRANCH,C_LOCALE_OUTPUT 'fetch compact output' '
++test_expect_success C_LOCALE_OUTPUT 'fetch compact output' '
+ 	git clone . compact &&
+ 	test_commit extraaa &&
  	(
-@@ -262,7 +262,7 @@ test_expect_success 'prompt - dirty status indicator - dirty worktree' '
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index f45ba02b8a..356ce31d48 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -61,7 +61,7 @@ test_expect_success setup '
+ 	)
  '
  
- test_expect_success 'prompt - dirty status indicator - dirty index' '
--	printf " (master +)" >expected &&
-+	printf " (main +)" >expected &&
- 	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	git add -u &&
-@@ -274,7 +274,7 @@ test_expect_success 'prompt - dirty status indicator - dirty index' '
- '
- 
- test_expect_success 'prompt - dirty status indicator - dirty index and worktree' '
--	printf " (master *+)" >expected &&
-+	printf " (main *+)" >expected &&
- 	echo "dirty index" >file &&
- 	test_when_finished "git reset --hard" &&
- 	git add -u &&
-@@ -288,7 +288,7 @@ test_expect_success 'prompt - dirty status indicator - dirty index and worktree'
- 
- test_expect_success 'prompt - dirty status indicator - orphan branch - clean' '
- 	printf " (orphan #)" >expected &&
--	test_when_finished "git checkout master" &&
-+	test_when_finished "git checkout main" &&
- 	git checkout --orphan orphan &&
- 	git reset --hard &&
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "fetch --recurse-submodules recurses into submodules" '
++test_expect_success "fetch --recurse-submodules recurses into submodules" '
+ 	add_upstream_commit &&
  	(
-@@ -300,7 +300,7 @@ test_expect_success 'prompt - dirty status indicator - orphan branch - clean' '
+ 		cd downstream &&
+@@ -71,7 +71,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH "fetch --recurse-submodules recurses
+ 	test_i18ncmp expect.err actual.err
+ '
  
- test_expect_success 'prompt - dirty status indicator - orphan branch - dirty index' '
- 	printf " (orphan +)" >expected &&
--	test_when_finished "git checkout master" &&
-+	test_when_finished "git checkout main" &&
- 	git checkout --orphan orphan &&
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "submodule.recurse option triggers recursive fetch" '
++test_expect_success "submodule.recurse option triggers recursive fetch" '
+ 	add_upstream_commit &&
  	(
- 		GIT_PS1_SHOWDIRTYSTATE=y &&
-@@ -311,7 +311,7 @@ test_expect_success 'prompt - dirty status indicator - orphan branch - dirty ind
+ 		cd downstream &&
+@@ -81,7 +81,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH "submodule.recurse option triggers r
+ 	test_i18ncmp expect.err actual.err
+ '
  
- test_expect_success 'prompt - dirty status indicator - orphan branch - dirty index and worktree' '
- 	printf " (orphan *+)" >expected &&
--	test_when_finished "git checkout master" &&
-+	test_when_finished "git checkout main" &&
- 	git checkout --orphan orphan &&
- 	>file &&
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "fetch --recurse-submodules -j2 has the same output behaviour" '
++test_expect_success "fetch --recurse-submodules -j2 has the same output behaviour" '
+ 	add_upstream_commit &&
  	(
-@@ -322,7 +322,7 @@ test_expect_success 'prompt - dirty status indicator - orphan branch - dirty ind
+ 		cd downstream &&
+@@ -111,7 +111,7 @@ test_expect_success "fetch --no-recurse-submodules only fetches superproject" '
+ 	test_must_be_empty actual.err
  '
  
- test_expect_success 'prompt - dirty status indicator - shell variable unset with config disabled' '
--	printf " (master)" >expected &&
-+	printf " (main)" >expected &&
- 	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	test_config bash.showDirtyState false &&
-@@ -334,7 +334,7 @@ test_expect_success 'prompt - dirty status indicator - shell variable unset with
- '
- 
- test_expect_success 'prompt - dirty status indicator - shell variable unset with config enabled' '
--	printf " (master)" >expected &&
-+	printf " (main)" >expected &&
- 	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	test_config bash.showDirtyState true &&
-@@ -346,7 +346,7 @@ test_expect_success 'prompt - dirty status indicator - shell variable unset with
- '
- 
- test_expect_success 'prompt - dirty status indicator - shell variable set with config disabled' '
--	printf " (master)" >expected &&
-+	printf " (main)" >expected &&
- 	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	test_config bash.showDirtyState false &&
-@@ -358,7 +358,7 @@ test_expect_success 'prompt - dirty status indicator - shell variable set with c
- '
- 
- test_expect_success 'prompt - dirty status indicator - shell variable set with config enabled' '
--	printf " (master *)" >expected &&
-+	printf " (main *)" >expected &&
- 	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	test_config bash.showDirtyState true &&
-@@ -382,7 +382,7 @@ test_expect_success 'prompt - dirty status indicator - not shown inside .git dir
- '
- 
- test_expect_success 'prompt - stash status indicator - no stash' '
--	printf " (master)" >expected &&
-+	printf " (main)" >expected &&
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "using fetchRecurseSubmodules=true in .gitmodules recurses into submodules" '
++test_expect_success "using fetchRecurseSubmodules=true in .gitmodules recurses into submodules" '
  	(
- 		GIT_PS1_SHOWSTASHSTATE=y &&
- 		__git_ps1 >"$actual"
-@@ -391,7 +391,7 @@ test_expect_success 'prompt - stash status indicator - no stash' '
+ 		cd downstream &&
+ 		git config -f .gitmodules submodule.submodule.fetchRecurseSubmodules true &&
+@@ -141,7 +141,7 @@ test_expect_success "using fetchRecurseSubmodules=false in .git/config overrides
+ 	test_must_be_empty actual.err
  '
  
- test_expect_success 'prompt - stash status indicator - stash' '
--	printf " (master $)" >expected &&
-+	printf " (main $)" >expected &&
- 	echo 2 >file &&
- 	git stash &&
- 	test_when_finished "git stash drop" &&
-@@ -417,7 +417,7 @@ test_expect_success 'prompt - stash status indicator - not shown inside .git dir
- '
- 
- test_expect_success 'prompt - untracked files status indicator - no untracked files' '
--	printf " (master)" >expected &&
-+	printf " (main)" >expected &&
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "--recurse-submodules overrides fetchRecurseSubmodules setting from .git/config" '
++test_expect_success "--recurse-submodules overrides fetchRecurseSubmodules setting from .git/config" '
  	(
- 		GIT_PS1_SHOWUNTRACKEDFILES=y &&
- 		cd otherrepo &&
-@@ -427,7 +427,7 @@ test_expect_success 'prompt - untracked files status indicator - no untracked fi
+ 		cd downstream &&
+ 		git fetch --recurse-submodules >../actual.out 2>../actual.err &&
+@@ -170,7 +170,7 @@ test_expect_success "--quiet propagates to parallel submodules" '
+ 	test_must_be_empty actual.err
  '
  
- test_expect_success 'prompt - untracked files status indicator - untracked files' '
--	printf " (master %%)" >expected &&
-+	printf " (main %%)" >expected &&
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "--dry-run propagates to submodules" '
++test_expect_success "--dry-run propagates to submodules" '
+ 	add_upstream_commit &&
  	(
- 		GIT_PS1_SHOWUNTRACKEDFILES=y &&
- 		__git_ps1 >"$actual"
-@@ -436,7 +436,7 @@ test_expect_success 'prompt - untracked files status indicator - untracked files
+ 		cd downstream &&
+@@ -180,7 +180,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH "--dry-run propagates to submodules"
+ 	test_i18ncmp expect.err actual.err
  '
  
- test_expect_success 'prompt - untracked files status indicator - empty untracked dir' '
--	printf " (master)" >expected &&
-+	printf " (main)" >expected &&
- 	mkdir otherrepo/untracked-dir &&
- 	test_when_finished "rm -rf otherrepo/untracked-dir" &&
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "Without --dry-run propagates to submodules" '
++test_expect_success "Without --dry-run propagates to submodules" '
  	(
-@@ -448,7 +448,7 @@ test_expect_success 'prompt - untracked files status indicator - empty untracked
+ 		cd downstream &&
+ 		git fetch --recurse-submodules >../actual.out 2>../actual.err
+@@ -189,7 +189,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH "Without --dry-run propagates to sub
+ 	test_i18ncmp expect.err actual.err
  '
  
- test_expect_success 'prompt - untracked files status indicator - non-empty untracked dir' '
--	printf " (master %%)" >expected &&
-+	printf " (main %%)" >expected &&
- 	mkdir otherrepo/untracked-dir &&
- 	test_when_finished "rm -rf otherrepo/untracked-dir" &&
- 	>otherrepo/untracked-dir/untracked-file &&
-@@ -461,7 +461,7 @@ test_expect_success 'prompt - untracked files status indicator - non-empty untra
- '
- 
- test_expect_success 'prompt - untracked files status indicator - untracked files outside cwd' '
--	printf " (master %%)" >expected &&
-+	printf " (main %%)" >expected &&
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "recurseSubmodules=true propagates into submodules" '
++test_expect_success "recurseSubmodules=true propagates into submodules" '
+ 	add_upstream_commit &&
  	(
- 		mkdir -p ignored_dir &&
- 		cd ignored_dir &&
-@@ -472,7 +472,7 @@ test_expect_success 'prompt - untracked files status indicator - untracked files
+ 		cd downstream &&
+@@ -200,7 +200,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH "recurseSubmodules=true propagates i
+ 	test_i18ncmp expect.err actual.err
  '
  
- test_expect_success 'prompt - untracked files status indicator - shell variable unset with config disabled' '
--	printf " (master)" >expected &&
-+	printf " (main)" >expected &&
- 	test_config bash.showUntrackedFiles false &&
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "--recurse-submodules overrides config in submodule" '
++test_expect_success "--recurse-submodules overrides config in submodule" '
+ 	add_upstream_commit &&
  	(
- 		sane_unset GIT_PS1_SHOWUNTRACKEDFILES &&
-@@ -482,7 +482,7 @@ test_expect_success 'prompt - untracked files status indicator - shell variable
+ 		cd downstream &&
+@@ -225,7 +225,7 @@ test_expect_success "--no-recurse-submodules overrides config setting" '
+ 	test_must_be_empty actual.err
  '
  
- test_expect_success 'prompt - untracked files status indicator - shell variable unset with config enabled' '
--	printf " (master)" >expected &&
-+	printf " (main)" >expected &&
- 	test_config bash.showUntrackedFiles true &&
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "Recursion doesn't happen when no new commits are fetched in the superproject" '
++test_expect_success "Recursion doesn't happen when no new commits are fetched in the superproject" '
  	(
- 		sane_unset GIT_PS1_SHOWUNTRACKEDFILES &&
-@@ -492,7 +492,7 @@ test_expect_success 'prompt - untracked files status indicator - shell variable
+ 		cd downstream &&
+ 		(
+@@ -239,7 +239,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH "Recursion doesn't happen when no ne
+ 	test_must_be_empty actual.err
  '
  
- test_expect_success 'prompt - untracked files status indicator - shell variable set with config disabled' '
--	printf " (master)" >expected &&
-+	printf " (main)" >expected &&
- 	test_config bash.showUntrackedFiles false &&
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "Recursion stops when no new submodule commits are fetched" '
++test_expect_success "Recursion stops when no new submodule commits are fetched" '
+ 	head1=$(git rev-parse --short HEAD) &&
+ 	git add submodule &&
+ 	git commit -m "new submodule" &&
+@@ -255,7 +255,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH "Recursion stops when no new submodu
+ 	test_must_be_empty actual.out
+ '
+ 
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "Recursion doesn't happen when new superproject commits don't change any submodules" '
++test_expect_success "Recursion doesn't happen when new superproject commits don't change any submodules" '
+ 	add_upstream_commit &&
+ 	head1=$(git rev-parse --short HEAD) &&
+ 	echo a > file &&
+@@ -272,7 +272,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH "Recursion doesn't happen when new s
+ 	test_i18ncmp expect.err.file actual.err
+ '
+ 
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "Recursion picks up config in submodule" '
++test_expect_success "Recursion picks up config in submodule" '
  	(
- 		GIT_PS1_SHOWUNTRACKEDFILES=y &&
-@@ -502,7 +502,7 @@ test_expect_success 'prompt - untracked files status indicator - shell variable
+ 		cd downstream &&
+ 		git fetch --recurse-submodules &&
+@@ -301,7 +301,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH "Recursion picks up config in submod
+ 	test_must_be_empty actual.out
  '
  
- test_expect_success 'prompt - untracked files status indicator - shell variable set with config enabled' '
--	printf " (master %%)" >expected &&
-+	printf " (main %%)" >expected &&
- 	test_config bash.showUntrackedFiles true &&
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "Recursion picks up all submodules when necessary" '
++test_expect_success "Recursion picks up all submodules when necessary" '
+ 	add_upstream_commit &&
  	(
- 		GIT_PS1_SHOWUNTRACKEDFILES=y &&
-@@ -522,13 +522,13 @@ test_expect_success 'prompt - untracked files status indicator - not shown insid
+ 		cd submodule &&
+@@ -334,7 +334,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH "Recursion picks up all submodules w
+ 	test_must_be_empty actual.out
  '
  
- test_expect_success 'prompt - format string starting with dash' '
--	printf -- "-master" >expected &&
-+	printf -- "-main" >expected &&
- 	__git_ps1 "-%s" >"$actual" &&
- 	test_cmp expected "$actual"
- '
- 
- test_expect_success 'prompt - pc mode' '
--	printf "BEFORE: (\${__git_ps1_branch_name}):AFTER\\nmaster" >expected &&
-+	printf "BEFORE: (\${__git_ps1_branch_name}):AFTER\\nmain" >expected &&
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "'--recurse-submodules=on-demand' doesn't recurse when no new commits are fetched in the superproject (and ignores config)" '
++test_expect_success "'--recurse-submodules=on-demand' doesn't recurse when no new commits are fetched in the superproject (and ignores config)" '
+ 	add_upstream_commit &&
  	(
- 		__git_ps1 "BEFORE:" ":AFTER" >"$actual" &&
- 		test_must_be_empty "$actual" &&
-@@ -538,7 +538,7 @@ test_expect_success 'prompt - pc mode' '
+ 		cd submodule &&
+@@ -361,7 +361,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH "'--recurse-submodules=on-demand' do
+ 	test_must_be_empty actual.err
  '
  
- test_expect_success 'prompt - bash color pc mode - branch name' '
--	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear}):AFTER\\nmaster" >expected &&
-+	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear}):AFTER\\nmain" >expected &&
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "'--recurse-submodules=on-demand' recurses as deep as necessary (and ignores config)" '
++test_expect_success "'--recurse-submodules=on-demand' recurses as deep as necessary (and ignores config)" '
+ 	head1=$(git rev-parse --short HEAD) &&
+ 	git add submodule &&
+ 	git commit -m "new submodule" &&
+@@ -389,7 +389,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH "'--recurse-submodules=on-demand' re
+ 	test_i18ncmp expect.err actual.err
+ '
+ 
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "'--recurse-submodules=on-demand' stops when no new submodule commits are found in the superproject (and ignores config)" '
++test_expect_success "'--recurse-submodules=on-demand' stops when no new submodule commits are found in the superproject (and ignores config)" '
+ 	add_upstream_commit &&
+ 	head1=$(git rev-parse --short HEAD) &&
+ 	echo a >> file &&
+@@ -406,7 +406,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH "'--recurse-submodules=on-demand' st
+ 	test_i18ncmp expect.err.file actual.err
+ '
+ 
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "'fetch.recurseSubmodules=on-demand' overrides global config" '
++test_expect_success "'fetch.recurseSubmodules=on-demand' overrides global config" '
  	(
- 		GIT_PS1_SHOWCOLORHINTS=y &&
- 		__git_ps1 "BEFORE:" ":AFTER" >"$actual" &&
-@@ -550,7 +550,7 @@ test_expect_success 'prompt - bash color pc mode - branch name' '
- test_expect_success 'prompt - bash color pc mode - detached head' '
- 	printf "BEFORE: (${c_red}\${__git_ps1_branch_name}${c_clear}):AFTER\\n(%s...)" $(git log -1 --format="%h" b1^) >expected &&
- 	git checkout b1^ &&
--	test_when_finished "git checkout master" &&
-+	test_when_finished "git checkout main" &&
+ 		cd downstream &&
+ 		git fetch --recurse-submodules
+@@ -434,7 +434,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH "'fetch.recurseSubmodules=on-demand'
+ 	test_i18ncmp expect.err.2 actual.err
+ '
+ 
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "'submodule.<sub>.fetchRecurseSubmodules=on-demand' overrides fetch.recurseSubmodules" '
++test_expect_success "'submodule.<sub>.fetchRecurseSubmodules=on-demand' overrides fetch.recurseSubmodules" '
  	(
- 		GIT_PS1_SHOWCOLORHINTS=y &&
- 		__git_ps1 "BEFORE:" ":AFTER" &&
-@@ -560,7 +560,7 @@ test_expect_success 'prompt - bash color pc mode - detached head' '
+ 		cd downstream &&
+ 		git fetch --recurse-submodules
+@@ -462,7 +462,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH "'submodule.<sub>.fetchRecurseSubmod
+ 	test_i18ncmp expect.err.2 actual.err
  '
  
- test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty worktree' '
--	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}*${c_clear}):AFTER\\nmaster" >expected &&
-+	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}*${c_clear}):AFTER\\nmain" >expected &&
- 	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "don't fetch submodule when newly recorded commits are already present" '
++test_expect_success "don't fetch submodule when newly recorded commits are already present" '
  	(
-@@ -573,7 +573,7 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirt
+ 		cd submodule &&
+ 		git checkout -q HEAD^^
+@@ -485,7 +485,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH "don't fetch submodule when newly re
+ 	)
  '
  
- test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty index' '
--	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_green}+${c_clear}):AFTER\\nmaster" >expected &&
-+	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_green}+${c_clear}):AFTER\\nmain" >expected &&
- 	echo "dirty" >file &&
- 	test_when_finished "git reset --hard" &&
- 	git add -u &&
-@@ -587,7 +587,7 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirt
- '
- 
- test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty index and worktree' '
--	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}*${c_green}+${c_clear}):AFTER\\nmaster" >expected &&
-+	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}*${c_green}+${c_clear}):AFTER\\nmain" >expected &&
- 	echo "dirty index" >file &&
- 	test_when_finished "git reset --hard" &&
- 	git add -u &&
-@@ -602,7 +602,7 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirt
- '
- 
- test_expect_success 'prompt - bash color pc mode - dirty status indicator - before root commit' '
--	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_green}#${c_clear}):AFTER\\nmaster" >expected &&
-+	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_green}#${c_clear}):AFTER\\nmain" >expected &&
+-test_expect_success PREPARE_FOR_MAIN_BRANCH "'fetch.recurseSubmodules=on-demand' works also without .gitmodules entry" '
++test_expect_success "'fetch.recurseSubmodules=on-demand' works also without .gitmodules entry" '
  	(
- 		GIT_PS1_SHOWDIRTYSTATE=y &&
- 		GIT_PS1_SHOWCOLORHINTS=y &&
-@@ -628,7 +628,7 @@ test_expect_success 'prompt - bash color pc mode - inside .git directory' '
+ 		cd downstream &&
+ 		git fetch --recurse-submodules
+diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
+index bbf03a8f66..fe89ea55b1 100755
+--- a/t/t5703-upload-pack-ref-in-want.sh
++++ b/t/t5703-upload-pack-ref-in-want.sh
+@@ -383,7 +383,7 @@ test_expect_success 'server is initially behind - ref in want' '
+ 	test_cmp expected actual
  '
  
- test_expect_success 'prompt - bash color pc mode - stash status indicator' '
--	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_lblue}\$${c_clear}):AFTER\\nmaster" >expected &&
-+	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_lblue}\$${c_clear}):AFTER\\nmain" >expected &&
- 	echo 2 >file &&
- 	git stash &&
- 	test_when_finished "git stash drop" &&
-@@ -642,7 +642,7 @@ test_expect_success 'prompt - bash color pc mode - stash status indicator' '
+-test_expect_success PREPARE_FOR_MAIN_BRANCH 'server loses a ref - ref in want' '
++test_expect_success 'server loses a ref - ref in want' '
+ 	git -C "$REPO" config uploadpack.allowRefInWant true &&
+ 	rm -rf local &&
+ 	cp -r "$LOCAL_PRISTINE" local &&
+diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+index f5a55c1991..7a45bbf048 100755
+--- a/t/t6302-for-each-ref-filter.sh
++++ b/t/t6302-for-each-ref-filter.sh
+@@ -113,7 +113,7 @@ test_expect_success '%(color) must fail' '
+ 	test_must_fail git for-each-ref --format="%(color)%(refname)"
  '
  
- test_expect_success 'prompt - bash color pc mode - untracked files status indicator' '
--	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}%%${c_clear}):AFTER\\nmaster" >expected &&
-+	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}%%${c_clear}):AFTER\\nmain" >expected &&
- 	(
- 		GIT_PS1_SHOWUNTRACKEDFILES=y &&
- 		GIT_PS1_SHOWCOLORHINTS=y &&
-@@ -653,7 +653,7 @@ test_expect_success 'prompt - bash color pc mode - untracked files status indica
+-test_expect_success PREPARE_FOR_MAIN_BRANCH 'left alignment is default' '
++test_expect_success 'left alignment is default' '
+ 	cat >expect <<-\EOF &&
+ 	refname is refs/heads/main    |refs/heads/main
+ 	refname is refs/heads/side    |refs/heads/side
+@@ -131,7 +131,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH 'left alignment is default' '
+ 	test_cmp expect actual
  '
  
- test_expect_success 'prompt - zsh color pc mode' '
--	printf "BEFORE: (%%F{green}master%%f):AFTER" >expected &&
-+	printf "BEFORE: (%%F{green}main%%f):AFTER" >expected &&
- 	(
- 		ZSH_VERSION=5.0.0 &&
- 		GIT_PS1_SHOWCOLORHINTS=y &&
-@@ -664,7 +664,7 @@ test_expect_success 'prompt - zsh color pc mode' '
+-test_expect_success PREPARE_FOR_MAIN_BRANCH 'middle alignment' '
++test_expect_success 'middle alignment' '
+ 	cat >expect <<-\EOF &&
+ 	|  refname is refs/heads/main  |refs/heads/main
+ 	|  refname is refs/heads/side  |refs/heads/side
+@@ -149,7 +149,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH 'middle alignment' '
+ 	test_cmp expect actual
  '
  
- test_expect_success 'prompt - hide if pwd ignored - env var unset, config disabled' '
--	printf " (master)" >expected &&
-+	printf " (main)" >expected &&
- 	test_config bash.hideIfPwdIgnored false &&
- 	(
- 		cd ignored_dir &&
-@@ -685,7 +685,7 @@ test_expect_success 'prompt - hide if pwd ignored - env var unset, config disabl
- '
+-test_expect_success PREPARE_FOR_MAIN_BRANCH 'right alignment' '
++test_expect_success 'right alignment' '
+ 	cat >expect <<-\EOF &&
+ 	|    refname is refs/heads/main|refs/heads/main
+ 	|    refname is refs/heads/side|refs/heads/side
+@@ -184,7 +184,7 @@ EOF
+ test_align_permutations() {
+ 	while read -r option
+ 	do
+-		test_expect_success PREPARE_FOR_MAIN_BRANCH "align:$option" '
++		test_expect_success "align:$option" '
+ 			git for-each-ref --format="|%(align:$option)refname is %(refname)%(end)|%(refname)" >actual &&
+ 			test_cmp expect actual
+ 		'
+@@ -213,7 +213,7 @@ EOF
  
- test_expect_success 'prompt - hide if pwd ignored - env var unset, config unset' '
--	printf " (master)" >expected &&
-+	printf " (main)" >expected &&
- 	(
- 		cd ignored_dir &&
- 		__git_ps1 >"$actual"
-@@ -704,7 +704,7 @@ test_expect_success 'prompt - hide if pwd ignored - env var unset, config unset,
- '
+ # Individual atoms inside %(align:...) and %(end) must not be quoted.
  
- test_expect_success 'prompt - hide if pwd ignored - env var set, config disabled' '
--	printf " (master)" >expected &&
-+	printf " (main)" >expected &&
- 	test_config bash.hideIfPwdIgnored false &&
- 	(
- 		cd ignored_dir &&
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 173880196e..cbd5ca7944 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -257,13 +257,13 @@ case "$TRASH_DIRECTORY" in
- esac
+-test_expect_success PREPARE_FOR_MAIN_BRANCH 'alignment with format quote' "
++test_expect_success 'alignment with format quote' "
+ 	cat >expect <<-\EOF &&
+ 	|'       '\''main| A U Thor'\''       '|
+ 	|'       '\''side| A U Thor'\''       '|
+@@ -231,7 +231,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH 'alignment with format quote' "
+ 	test_cmp expect actual
+ "
  
- case "$TEST_NUMBER" in
--3404|4013|5310|6300|7064|7817)
-+3404|4013|5310|6300|7064|7817|9902)
- 	# Avoid conflicts with patch series that are cooking at the same time
- 	# as the patch series changing the default of `init.defaultBranch`.
- 	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
- 	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 	;;
--[0-8]*|9[0-8]*)
-+*)
- 	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- 	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 	;;
+-test_expect_success PREPARE_FOR_MAIN_BRANCH 'nested alignment with quote formatting' "
++test_expect_success 'nested alignment with quote formatting' "
+ 	cat >expect <<-\EOF &&
+ 	|'           main               '|
+ 	|'           side               '|
 -- 
 gitgitgadget
 
