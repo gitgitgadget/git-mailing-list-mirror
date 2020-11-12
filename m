@@ -2,97 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5DA3C2D0A3
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 09:50:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CBF3BC2D0A3
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 10:02:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4E86522202
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 09:50:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 732F4221FE
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 10:02:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JGasSepR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HvKE5Wz3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727645AbgKLJu6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Nov 2020 04:50:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43908 "EHLO
+        id S1726510AbgKLKCL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Nov 2020 05:02:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726028AbgKLJu5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Nov 2020 04:50:57 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37D8FC0613D1
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 01:50:57 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id za3so6800655ejb.5
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 01:50:57 -0800 (PST)
+        with ESMTP id S1726061AbgKLKCK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Nov 2020 05:02:10 -0500
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC6A2C0613D1
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 02:02:08 -0800 (PST)
+Received: by mail-ed1-x544.google.com with SMTP id t11so5429646edj.13
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 02:02:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AsOYZKeadQGSjwTrhka3ivzO4nAgB7AeM+0fHDHtA3o=;
-        b=JGasSepR30PiTFOu1w43f/3LX0ICDQ96XO4NWiNQ0XJmHcqHiF1tsOobXMIB3cJxgd
-         Qac56BRTbWzV/mwfIY7pzBAtp2taCtr4BXTMMntTrowfweK67ix8I2lajogKxe3BCyo4
-         EnSfTc2KSWiBwH51WqIOYUP8+oPdFqMVSxu/YYYTt7SGW8I0YgFDvq/2HVRaMR7Wl6J0
-         BBaVcbKLeX+jz2S2j9xRZC3j/9rNA12EknLLWfzHePsABbojE+NjUV8g5ugfrwAqAyBd
-         p8szHgtRmPh8d3vLrP2RiOf+Wzx3EL1xyDgbkO6hJzyFAv7En/h2+XN1csZufxGb7w3C
-         dXPA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Pl4SEyAiNhLxM3F0NOHVo8DZzKWITAnGcCBtzqiybJI=;
+        b=HvKE5Wz3Ho4n5dBxXy7B6FMfkGY2UvBS3/wj2wYMvgfYP04XT8QaXTyyP7ByYwk/OQ
+         SdyiO+1aHrqRu5JGeYUcFlTpKR4j/7eZ81+ICpqjPAVoiUlwwV+pNlXHciZ6pMvxvxCs
+         1krbeQAc6wAN7V/D5zHTB+Dk5gVoLnzH1nw9lqOU8k4Bk04d7fJgM4j+65IrrOpyxiiB
+         F+sgyQqdwJdjOdJz0au+5usicvQ3IuRKsBSUivtEAK9H7Kgp1I+Byfny1h9/F90F2Sqk
+         0mxrZCpir6OIZPac941Zv45+Zko5I4d5OD4xZfme1gMqwrKEY1VJewwwZYEbY5Fmk9DC
+         mgpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AsOYZKeadQGSjwTrhka3ivzO4nAgB7AeM+0fHDHtA3o=;
-        b=IA3EurlmwASWEU66tXkRi/4s6kiQ471NVFZd9GWPzGXkvZSrxgtNbY6RSoJA9MXMQ9
-         WvLcblL6rFzrzKGdr88toQ/zA1fWdVhNSsJbApuz/z8XOHyVBkrXJzeGHIOhU/uq+rDx
-         tCp3KD8pHxFDkY793+DGCkLy3BKMBw26S4FQD1okTfqaI3B9hrpxC6sY078IGks/uPv2
-         QAsaCTiHJIJQ5128UpBt8ipDt3tiif1S/WMM2BPS8x1sPiNpH3NibsA7UqO2RSQbvqey
-         DP0SqVJ6mE8FaGGZ1/cRKCVNnmYqk2+P+/ivmaCI8VM/HoRKz05qqCwN8fBOZCGW9Yn8
-         gtVQ==
-X-Gm-Message-State: AOAM532b8BEV0bFJDIJkcOtDdT5UaAS7LCV4YHf/LsJWTSJFnLqe/ZGM
-        hiWVD9IganbHsYqyl7nKm63zwlQtj6D0IJ/wupCNEXXWuJ21xA==
-X-Google-Smtp-Source: ABdhPJwJKBw3RMf28RnRJWHRGVATNFqz/uXcBSZcgS15mlLlo4dfBVSNKweaCkCJPCCwlu8qj368oQzJ8O6u8rUmpB8=
-X-Received: by 2002:a17:906:2b06:: with SMTP id a6mr30742744ejg.283.1605174655878;
- Thu, 12 Nov 2020 01:50:55 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Pl4SEyAiNhLxM3F0NOHVo8DZzKWITAnGcCBtzqiybJI=;
+        b=JICKRBFqZsnsJvTdGCyg8o5M4qwwouEHy28MWnKQt0IKc+BUgNACyfLLknX6KN4tmj
+         ZcH7yyiy6iZqJ63ErSqPp3pwgnFIrdJxKe/bxaEk6N8l+mHLjmItGcRz3FwIsJdKx5aU
+         AId2G+RW1sR/nwOjQ8rumiLHCPtBb4i1pkV4GWJhjj814RjdRirCHzaL7iII6SC/WuaH
+         1eAvt1vuJIRy/vM/jQ2Hb8LlK0AmP6azgps4MDalLjJh2vB/4M/6aGItxgIh+VGPAmLX
+         SYsEF75OtwuG0HLM0K2CyfirQV16lBtgdENCGUXY2up/+NkIef/iquyRgpM4o6jJVP8H
+         z7IQ==
+X-Gm-Message-State: AOAM531ie0dkfy6Zt8SVsmzifb8R8y/2nVhbDZyVxN0TiZOwihCsEebM
+        FyWTFnyCsM/9cMdPE6rYRdSoaf4G1jA=
+X-Google-Smtp-Source: ABdhPJxHdHkmpOMb5xlmGk0QCa9KiqYXkhwPGIeOxPD2yPW7HP4F/ay4YAk6hcEokN4OUqD3i6k1yA==
+X-Received: by 2002:aa7:cb02:: with SMTP id s2mr4100557edt.211.1605175327431;
+        Thu, 12 Nov 2020 02:02:07 -0800 (PST)
+Received: from szeder.dev (94-21-58-64.pool.digikabel.hu. [94.21.58.64])
+        by smtp.gmail.com with ESMTPSA id f18sm2111910edt.32.2020.11.12.02.02.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Nov 2020 02:02:06 -0800 (PST)
+Date:   Thu, 12 Nov 2020 11:02:04 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 2/2] completion: bash: check for alias loop
+Message-ID: <20201112100204.GC4270@szeder.dev>
+References: <20201110020343.548848-1-felipe.contreras@gmail.com>
+ <20201110020343.548848-3-felipe.contreras@gmail.com>
 MIME-Version: 1.0
-References: <dcf76ed6-103c-bfc5-2226-37702df62056@mail.ru>
-In-Reply-To: <dcf76ed6-103c-bfc5-2226-37702df62056@mail.ru>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 12 Nov 2020 10:50:44 +0100
-Message-ID: <CAP8UFD1ANmskDJ0D3D=OJm_FUaNc2-59tLLeAwwNFCKMX2RcZQ@mail.gmail.com>
-Subject: Re: how to measure your code
-To:     Semyon Kirnosenko <kirnosenko@mail.ru>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20201110020343.548848-3-felipe.contreras@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Mon, Nov 09, 2020 at 08:03:43PM -0600, Felipe Contreras wrote:
+> We don't want to be stuck in an endless cycle.
+> 
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  contrib/completion/git-completion.bash | 11 ++++++++---
+>  1 file changed, 8 insertions(+), 3 deletions(-)
+> 
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index eb00d9ba22..ce0dc1e0f8 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1121,11 +1121,16 @@ __git_pretty_aliases ()
+>  # __git_aliased_command requires 1 argument
+>  __git_aliased_command ()
+>  {
+> -	local cur=$1 last word cmdline
+> +	local cur=$1 list word cmdline
+>  
+>  	while [[ -n "$cur" ]]; do
+> +		if [[ "$list" == *"$cur "* ]]; then
 
-On Wed, Nov 11, 2020 at 5:26 PM Semyon Kirnosenko <kirnosenko@mail.ru> wrote:
->
-> Hello!
->
-> I'd like to introduce a new statistics generator for git. Call it
-> Repositorch. It allows to get some basic and advanced statistics
-> including LOCs, Burndown, Code ownership, Defect density, etc.
->
-> Some links:
->
-> github - https://github.com/kirnosenko/Repositorch
-> dockerhub - https://hub.docker.com/r/kirnosenko/repositorch
-> how to use guide - https://www.youtube.com/watch?v=Rd5R0BbFdGA
->
-> Still in alpha but ready for some fun mining :)
+I suspect the right hand side should be *" $cur "* ...
 
-Thanks! We publish a monthly newsletter called Git Rev News
-(https://git.github.io/rev_news/archive/) and you are welcome to
-submit a pull request to add a small text about your tool to the "Git
-tools and sites" section of the (currently empty) draft of the next
-edition:
+> +			# loop detected
+> +			return
+> +		fi
+> +
+>  		cmdline=$(__git config --get "alias.$cur")
+> -		last=$cur
+> +		list="$cur $list"
 
-https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-69.md
+... and this should be list=" $cur $list", because otherwise a partial
+match is possible and would be mistaken for a loop (though I didn't
+actually test whether that's indeed the case).
 
-Best,
-Christian.
+>  		cur=
+>  
+>  		for word in $cmdline; do
+> @@ -1149,7 +1154,7 @@ __git_aliased_command ()
+>  		done
+>  	done
+>  
+> -	cur=$last
+> +	cur="${list%% *}"
+>  	if [[ "$cur" != "$1" ]]; then
+>  		echo "$cur"
+>  	fi
+> -- 
+> 2.29.2
+> 
