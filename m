@@ -2,227 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD6C5C2D0A3
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 13:42:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65112C2D0A3
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 13:49:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 565D020825
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 13:42:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E4F7820936
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 13:49:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BuQVYhCR"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Akg8D48+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727909AbgKLNm5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Nov 2020 08:42:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51878 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727790AbgKLNm4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Nov 2020 08:42:56 -0500
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73A56C0613D1
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 05:42:56 -0800 (PST)
-Received: by mail-qk1-x72e.google.com with SMTP id h15so5163043qkl.13
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 05:42:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=9O/xeKEU+pOHjPyQLTAtZcihlaPei9Lew2vx7IPlpAo=;
-        b=BuQVYhCR9hxRX4zSORavpA1kIDHeViqmNhyR9k2X5bv9SF8t3aCesSMeq60LTpe/1q
-         ynvVG6V52AI7h5DAuMrbTlmdRVGPijczoPMWDlEEObFydfG9Prkv/QSO/SOJmLmjCQem
-         ZgPxkmBfDjVW3p07mjAuCv/GKNN6umWBXPsOdkar07/Ul87HanFg4UKRia6WRUKWQlaU
-         cj+fkaPlqXBFCDlZu2d1UoIsQNuO/v/xmoWocY/nY+dPnHtqgf2lrA6DTo+kCDf3T/8/
-         OMYNC2XCCvoNDGZKzoVPhboxcHBU7NR6PBJwSIoPnzZ8VdjDKRpvmpgzo3QAPHT8gKQI
-         5U3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=9O/xeKEU+pOHjPyQLTAtZcihlaPei9Lew2vx7IPlpAo=;
-        b=RwNRUcapYqblMLyo4u1cbuoafeABEiRrsc7ZMlw4HAsKw8TczSv0mIoZxn1ZfLOWqw
-         mOnBEYU6P6jsWz+f4W49tHWRhiL0hKZODp/37IQFw/LwXZJkhkotI10jyUZbXpAOODX9
-         9PDs6XUmzbPQNsjpddO2ECB5SWSFtOL/ipbHyuXziovlBhLL8lHqN0veQfXB5r8k8zG7
-         TVF4rTltWYNjTMBaMNjjAQqq2Fe6jE7s3e8Vp+/V/CJSJk6UQatoQYfsoU+Sf+gNImQK
-         LHuGncirHCyVJ3LTm0Yn3q/FUBVvNavEVXJ6ldp7TICf4yaJXaf4dYJCNzfCuVe/6XTq
-         fORg==
-X-Gm-Message-State: AOAM530V5weDhuh7BpaArqP7VbanfND/TKjXP6QsmbsQr3P1CImpEW9U
-        nC1PVrE242H8/ksj9WEqWws=
-X-Google-Smtp-Source: ABdhPJxXH/EpuTdFIit1SDMCJ1asSb8dKBSFjLCEOzQPgd9W+YY4ORp86+U4nJJKvaC4mhYnH4SXWw==
-X-Received: by 2002:a37:84b:: with SMTP id 72mr26187999qki.435.1605188575211;
-        Thu, 12 Nov 2020 05:42:55 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:c9d4:abc:8d:1568? ([2600:1700:e72:80a0:c9d4:abc:8d:1568])
-        by smtp.gmail.com with UTF8SMTPSA id t188sm356563qkd.45.2020.11.12.05.42.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Nov 2020 05:42:54 -0800 (PST)
-Subject: Re: [PATCH v2 3/4] maintenance: use launchctl on macOS
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Son Luong Ngoc <sluongng@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.776.git.1604412196.gitgitgadget@gmail.com>
- <pull.776.v2.git.1604520368.gitgitgadget@gmail.com>
- <0fafd75d100f343f7cff6471772ed9b12793f81e.1604520368.git.gitgitgadget@gmail.com>
- <CAPig+cT=DytbMH6KkC6ipD3jbWNa7jgW9G0Q76rwJoEsLGn_ow@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <5e0307b8-8e63-f82d-b417-7007d4a3a5b3@gmail.com>
-Date:   Thu, 12 Nov 2020 08:42:52 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101
- Thunderbird/83.0
+        id S1728419AbgKLNtl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Nov 2020 08:49:41 -0500
+Received: from mout.gmx.net ([212.227.15.15]:40943 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728415AbgKLNtk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Nov 2020 08:49:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1605188975;
+        bh=u3R6GyG01MPVSnZWkOLuG+tqZhSsxRmiuOI/fzGKcRw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Akg8D48+sfe/dfhQv2PzMJRduZLzgQldVyVPeLvatUEjcNf9gJhsoYouiNs00/IPm
+         0XP67/vDAvoyalCtyAcqDwrW17Pe/lpvvA1PdPcNQzG4dJWjvH09QgLQ+yBBeLqF6Z
+         dBttbOBkLw+J+YnKCfa6bBywMV0t+yBLwwLGTDz4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.26.25.62] ([213.196.212.205]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MTzf6-1kmasf3JPW-00Qzfx; Thu, 12
+ Nov 2020 14:49:35 +0100
+Date:   Thu, 12 Nov 2020 14:48:36 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Subject: Re: [PATCH] t4013: prepare for the new default branch name "main"
+In-Reply-To: <xmqqsg9f36nu.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2011121443100.18437@tvgsbejvaqbjf.bet>
+References: <pull.783.git.1604829561838.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2011112137390.18437@tvgsbejvaqbjf.bet> <xmqqsg9f36nu.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cT=DytbMH6KkC6ipD3jbWNa7jgW9G0Q76rwJoEsLGn_ow@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:HbTS/z1DFbJTrZICaWbSr96PAHFsbOh6hdDLpLABx5RuzvjTsYK
+ md9lF3C0MSlCczwwTT9DEKvwlvWhLBXcb0bYXbgCUt3dZ3bg8OvOk/xH+h09m2l2am81XEn
+ Fb9hy4eOWgdnsmD2vKbItyc/8thyTNVTDDO8TcwSk12+mq/ooFnsbQbcN1x1UmILVNAA765
+ t/ExDFUJ8pZA+DhZX6MIA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:8dQSj2b8OOQ=:a5qR9tqrp70+Ge5Sl03+YS
+ haZqi+B+t+gLSCdL4FjwPVyLyQxf/kPmMFjQxVOVYxeif6o6A2Cojmnq2TwjxDpnoq69gGSdf
+ K0y4IXvD4eY9PcDmnbDBzvJ9jF3sAk+wj0ShpgsW4D0Xo2MvJMgOIS4SsB5EKyVj9A44AGB7L
+ 7xtvID1tcZ2n2x7IlRQxq9bSfcH9oDxSt9cXXUiNAhXHzl9oVYjL3eRFX/5BSwJU1JdS9LNBK
+ DNm2gug2S8cve74DFDCOpIdqH/MjHJl4OwHmD4uyBuou5pT6gPMfHf/unici7iXcWaDOfLuNS
+ qNyQFcK0MsfNagQfDcZGCLR/fZat06AQJ5RDtLJCG4kNfjDwOaVxE/YNKSRivSLuvYPW+UZrD
+ j8brkX7zsB3KMDtc/zr5X2pxKcT/J9OHB6uOn4zoCXxgdvdZ5H6uPs7TUBoNeMELkbofCcTry
+ 0WzGQARKTjmzSdNXioX2Qw41bxj2xlPYSQR2Dod++OR1ltOYet+gzn+wylonX7DT17eT4ilAf
+ aDU/3r2VFJ4+7gcDC5C+qd4DyPlalzIo1Y/RpfE/gKSQezA3ngGYlsyOEM3xB5CCERBcBCROb
+ iz87rTJFb/MzstwE7yqaBF6oXuomZxVA2yOdTN9OIzd3uH3d+XQGmYf+zolQN29jZieGJ/PcA
+ SdVGy6EUtChc8w4lNe4omESs3YXV4UseonwO7Z4yxoFcxzqQ/dKV7S8sSjJ3t0VLKtUumD9sq
+ u3RPg4WqtqI2v1dsdBW33lV8CfJqfUVkF9u2dccu1p1NHoFjyxx0aE4mEulXkFwvGenfPSHnT
+ te/wNPQZoZ1XAev7wuGvqjRP/gwM/FWl5pEhfgcTxqOCZ264eTy2sSIznf9RTEzYHrs+UM0ek
+ //irIlvAd9+NZh7IFlSlDLMHf5DT9J9YM+79KiHF4=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/11/2020 3:12 AM, Eric Sunshine wrote:
-> On Wed, Nov 4, 2020 at 3:06 PM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> [...]
->> The solution is to switch from cron to the Apple-recommended [1]
->> 'launchd' tool.
->> [...]
->> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
->> ---
->> diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
->> +While macOS technically supports `cron`, using `crontab -e` requires
->> +elevated privileges and the executed process do not have a full user
-> 
-> Either s/process/processes/ or s/do/does/
-> 
->> +context. Without a full user context, Git and its credential helpers
->> +cannot access stored credentials, so some maintenance tasks are not
->> +functional.
-> 
-> Nicely explained.
-> 
->> +Instead, `git maintenance start` interacts with the `launchctl` tool,
->> +which is the recommended way to
->> +https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/ScheduledJobs.html[schedule timed jobs in macOS].
-> 
-> Nit: I worry a bit about links to Apple documentation becoming
-> outdated. It might not hurt to omit this link altogether, or perhaps
-> demote it to a footnote (which might allow it to be somewhat usable
-> even when Git documentation is rendered into something other than
-> HTML).
-> 
->> +Scheduling maintenance through `git maintenance (start|stop)` requires
->> +some `launchctl` features available only in macOS 10.11 or later.
-> 
-> Nit: This leaves the reader wondering what modern features are needed.
-> Would it make sense to mention that "bootstrap" is used in place of
-> "load" in older versions of 'launchctl'?
-> 
->> +Your user-specific scheduled tasks are stored as XML-formatted `.plist`
->> +files in `~/Library/LaunchAgents/`. You can see the currently-registered
->> +tasks using the following command:
->> +
->> +-----------------------------------------------------------------------
->> +$ ls ~/Library/LaunchAgents/ | grep org.git-scm.git
-> 
-> Alternately (unimportant):
-> 
->     ls ~/Library/LaunchAgents/org.git-scm.git.*
-> 
-> although that would emit "No such file" if you don't have any
-> registered, which might suggest:
-> 
->     find ~/Library/LaunchAgents -name 'org.git-scm.git.*'
-> 
->> +To create more advanced customizations to your background tasks, see
->> +https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CreatingLaunchdJobs.html#//apple_ref/doc/uid/TP40001762-104142[the `launchctl` documentation]
->> +for more information.
-> 
-> I really worry about this sort of URL becoming outdated. Would it make
-> sense instead to just point the user at the man page,
-> launchd.plist(5)? It's not quite the same, as it doesn't provide the
-> range of examples as the URL you cite, but it should get the user
-> started.
+Hi Junio,
 
-I shared similar concerns. I'll use the man page references instead.
-All of the information should be a short web search away after the
-user is given the right terminology.
+On Wed, 11 Nov 2020, Junio C Hamano wrote:
 
->> diff --git a/builtin/gc.c b/builtin/gc.c
->> @@ -1491,6 +1491,214 @@ static int maintenance_unregister(void)
->> +static int remove_plist(enum schedule_priority schedule)
->> +{
->> +       const char *frequency = get_frequency(schedule);
->> +       char *name = get_service_name(frequency);
->> +       char *filename = get_service_filename(name);
->> +       int result = bootout(filename);
->> +       free(filename);
->> +       free(name);
->> +       return result;
->> +}
->>
->> +static int remove_plists(void)
->> +{
->> +       return remove_plist(SCHEDULE_HOURLY) ||
->> +               remove_plist(SCHEDULE_DAILY) ||
->> +               remove_plist(SCHEDULE_WEEKLY);
->> +}
-> 
-> The new documentation you added says that the plist files will be
-> deleted after they are deregistered using launchctl, but I don't see
-> anything actually deleting them. Am I missing something obvious?
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > Could you advise how I could help advance this patch further? This is =
+the
+> > last patch I need that is not in `next` to get to the patch series tha=
+t
+> > actually flips the default of `init.defaultBranch` to `main` (see
+> > https://github.com/gitgitgadget/git/pull/762).
+>
+> Is it an option to add
+>
+>     git config --global init.defaultBranchName master
+>
+> at the very beginning of the test script without making any other
+> change?
 
-As mentioned below, this was a change that I made but somehow lost
-while juggling multiple copies of my branch.
+Unfortunately not because at that stage, `HOME` is still not overridden.
+It will be overridden in `test-lib.sh`. Which is also where the initial
+repository (and hence, the initial branch) will be created.
 
->> +static int schedule_plist(const char *exec_path, enum schedule_priority schedule)
->> +{
->> +       plist = fopen(filename, "w");
->> +       if (!plist)
->> +               die(_("failed to open '%s'"), filename);
-> 
-> As mentioned previously, these could be replaced with a simple xfopen().
-> 
-> In fact, I'm having trouble seeing changes in this re-roll which you
-> had planned on making, such as consolidating the repeated code in
-> bootout() and bootstrap(), and ensuring that bootout() doesn't
-> complain if the plist files are already missing, and so forth. Did you
-> opt to not make those changes? (Which would be fine; they were minor
-> suggestions.)
+So: the suggested command with work neither before `. test-lib.sh` nor
+after it.
 
-No, I definitely made those changes _somewhere_ but I must have
-gotten confused as to which of my machines had those changes. I
-guess that's part of the risk of testing across three platforms.
+I understand the desire to leave t4013 alone for the moment. If that's
+what you want, I can send off a patch series that _specificall_ excludes
+t4013, and will the follow up with a pair of patches that ties up that
+loose end.
 
-Thank you for noticing, and I'll be more careful from now on.
+Sound good?
 
->> +test_expect_success MACOS_MAINTENANCE 'start and stop macOS maintenance' '
->> +       echo "#!/bin/sh\necho \$@ >>args" >print-args &&
->> +       chmod a+x print-args &&
-> 
-> Earlier review already mentioned write_script() and "$@". (Not
-> necessarily worth a re-roll.)
+> After all, we may want to avoid 'slave' but 'master' by itself is
+> not all that bad, especially given that it is used only in the test
+> script.  If we were to have "does the configuration variable work
+> OK?" test somewhere anyway, why not make it this test?
 
-I'm going to go back to all of your earlier comments to make sure
-they are _actually_ applied in v3.
- 
->> +       for frequency in hourly daily weekly
->> +       do
->> +               PLIST="$HOME/Library/LaunchAgents/org.git-scm.git.$frequency.plist" &&
->> +               xmllint "$PLIST" >/dev/null &&
-> 
-> Do we really need to suppress xmllint's stdout?
-
-It outputs the XML itself. Maybe there is a command to stop that from
-happening, but nulling stdout keeps the test log clean.
+What's wrong with the test cases in t0001-init.sh that are labeled
+'overridden default initial branch name (config)', 'overridden default
+main branch name (env)' and 'invalid default branch name', i.e.
+https://github.com/git/git/blob/e31aba42fb/t/t0001-init.sh#L554-L572?
 
 Thanks,
--Stolee
+Dscho
