@@ -2,146 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 651C2C2D0A3
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 13:56:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63F9EC5519F
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 14:05:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 06D0A20A8B
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 13:56:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F17BE20A8B
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 14:05:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fk6W2zPb"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="KfhZNrdT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728305AbgKLN4t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Nov 2020 08:56:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54026 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727796AbgKLN4s (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Nov 2020 08:56:48 -0500
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F1E1C0613D1
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 05:56:48 -0800 (PST)
-Received: by mail-oi1-x241.google.com with SMTP id u127so6440698oib.6
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 05:56:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=1HpbupDAjVrRix1jq4Rgfc0FffW+QggWtByC8qWhUh4=;
-        b=Fk6W2zPbHYA9oMFDbvLrZibLzH2362M4WB3kdOm2QWbg8RqtO219jnVxCKEyv0MFTs
-         8KgC8lbEY4Fi5hLA+RhhYuOACIMw66E7vUpFey9W6/CbJ0/2g6eMfaPl3cHg2vV1w8aO
-         hPr0wPBZAx6yrjUahzbNNM/NTO6ToXWRHGzoFwDbeebOfArTI3E0oqaxl1wNJ+B0vzUH
-         D1R2ytitV8NwUDDlW0Su06cFjZkBHjQfQPAeqOJvIyor4Adw65Ynw7zzr8ckkS0m018g
-         yOTXg58LWrM28kB5a6yvdrrJEEjp1jYgYGSKzIKgmleoQXBk0N3HRTSPhrH2SUuYTnqB
-         hKDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=1HpbupDAjVrRix1jq4Rgfc0FffW+QggWtByC8qWhUh4=;
-        b=d5q21OqDPckmW5qP0fqbIrYyV+lb+YlKzWqqYZnuP09GZl/7eKRsj9mlQtMdhsFOUR
-         i3Ul88C+v1EFSeobN3hqmcdYH6Vu7gkWUlrOE8udDdyEOeyGVe1daEDZU49rNcRKMKnJ
-         oJMjHR+aEahMNsToLQj80PsgMYJepuLqsRyXIwioxFjmo32Y2oqWh8+7P28wnRA3fauP
-         YqRbLUzuWc+UwHhCtoo6yPO+bySnufOxOOaPWrD8aRymXQZfdTFneWE3e3HFD8NeBiPc
-         Ouhl5EEmUqdLAwic5gqyG44eGUu+eGcV5zlGfRxY+24oIfMevWi/79QJpsDl3VYYjPja
-         0wkw==
-X-Gm-Message-State: AOAM533JP+f5KmEFOaI/jKD1H4YRQ4WkFP5l8qfBuxy5j9cSKdVAoW+r
-        XBrNpnoqaBvF/tbdOQc9rWg=
-X-Google-Smtp-Source: ABdhPJxh+TOyGySy21yqKQAvgUMQQva+kU61Z5zS8XoWIRZLVWmW/q79LIbYL02zEi+YRN5CUxJEeQ==
-X-Received: by 2002:aca:3246:: with SMTP id y67mr5675395oiy.159.1605189407670;
-        Thu, 12 Nov 2020 05:56:47 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:30c9:afaa:d787:e592? ([2600:1700:e72:80a0:30c9:afaa:d787:e592])
-        by smtp.gmail.com with UTF8SMTPSA id k20sm1274766ooh.47.2020.11.12.05.56.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Nov 2020 05:56:47 -0800 (PST)
-Subject: Re: [PATCH v2 4/4] maintenance: use Windows scheduled tasks
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Son Luong Ngoc <sluongng@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.776.git.1604412196.gitgitgadget@gmail.com>
- <pull.776.v2.git.1604520368.gitgitgadget@gmail.com>
- <84eb44de31f04b2a94f57ee11d70be81f5bbeee2.1604520368.git.gitgitgadget@gmail.com>
- <CAPig+cRRQc=RNd=zGFvi2yiLD6PoLLBJQtFxkZ+QaVVA9MP1DA@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <d46826a5-0c30-3d71-26a0-f579d997c3a0@gmail.com>
-Date:   Thu, 12 Nov 2020 08:56:45 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101
- Thunderbird/83.0
+        id S1728270AbgKLOFH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Nov 2020 09:05:07 -0500
+Received: from mout.gmx.net ([212.227.15.15]:43571 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727822AbgKLOFG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Nov 2020 09:05:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1605189901;
+        bh=nx12jBQgYhiNHEQhMOCctWIhp0CglQr9jMRCF459CJU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=KfhZNrdTXCmwM3iJwILI2HLBgvzRLpZoYxOpQOsyVpHMrMXp5Wu+xB8a5vtUY0nAm
+         XtBnJdZ6NoVd8UyHAN3fONTpx5PlKnVml2utW1RVaFzRHCZm607RAoSAE6TWkQClFk
+         64E6KqwE40+R3+MBfj09jigGNNj67882vS5H3/L0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.26.25.62] ([213.196.212.205]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MhD2O-1k97bK3fCU-00eJBq; Thu, 12
+ Nov 2020 15:05:01 +0100
+Date:   Thu, 12 Nov 2020 15:04:01 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 9/9] add -i: verify in the tests that colors can be
+ overridden
+In-Reply-To: <20201111180713.GC9902@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2011121448550.18437@tvgsbejvaqbjf.bet>
+References: <pull.785.git.1605051739.gitgitgadget@gmail.com> <38355ec98f04783367d74e38cda3ce5d6632c7ac.1605051739.git.gitgitgadget@gmail.com> <20201111023549.GB806755@coredump.intra.peff.net> <nycvar.QRO.7.76.6.2011111635140.18437@tvgsbejvaqbjf.bet>
+ <20201111180713.GC9902@coredump.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cRRQc=RNd=zGFvi2yiLD6PoLLBJQtFxkZ+QaVVA9MP1DA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:sqqnFDeYRPVM7e61dVTJHKShtua7EXcD5vyB5k42TyYOuD9vz77
+ 5K7R6mmKPrxOMGXZFamhjYzodWhWaJCkrxu7duTXmPFsJy22d9UPTQjnznE8WbUYgyl4Jqq
+ R5kVQl/4UyZYViWeBr2m8eb+l8V3uGun5WniFoarhC1b0ZleAeizGdRzHge8TflrcGfh4Dg
+ J4Pb5o2Gk+NPZiP/PbfnA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:4KY+ZnLjRfg=:4++1pghrCedWOS7uFLXfmU
+ oM+oObh5gpDwnEY9pxedD6G2DiqTnMH4I1loF/Sjd0PK9zoj5l9nrqCeeNmob7faJ8Yc9tGJo
+ P7DLip8fsR0hjcoIlQ3M59Nwr7IPNW3yG+NFIL0MuZkLsPgPhW6yDDH9BI+bB6Bj95il734FK
+ pMcvaNdBe7e9qbg17bSE0I0HtZpDcAOSkKUwiyX25/7BRpzge/tpzjtPKNMpX5v8RZ+VSGyJr
+ vYV+FwkKcsir9O1NmoB1B+eEyALwvaFeUh7O7MrGOGxNDC/T4LqhiD5vV3ejVU1K5WuiJRR0q
+ dowlL4EignjvQ/pixc45VUtLFUVWxq1Mp6OCDiYCnvRoLprGwY5kqaBPvqDG/4DyQW/I+m5H1
+ +ImGJMdB8+3w8Mh3ZUi8p+WL5tF0+oVT7CZAnuCvfdps5Lc9Dj2hmfo+/uIBiw98WwviHAHKB
+ v0ewgav4dzx6PaSJCsDATldwCXx8ljxKGYfx+FHl3rgSV+lfUMtQtg64SsIB8a2GkLdeOssU7
+ 4xd0mWuKjmm44oqQ6ZYkHwXUAvofgr/fhqxwWY4hW1oPjba+QUtNat4egtQJ9r/0fmfwcxivR
+ 2vqjrCiuFNWGi6g+l1gs8pJfdRAvHwfO21tqhy5gCcQyF3zWRAowrz8qdHn4yLLj/Yy6csYHS
+ UrL4jFLiczQ79fFHB64D5sGgJ4rOIqawVszqyqtyJy19Ncwk0MiM+YmJ8TxmNKLorKrYYYmYF
+ zX28lRllidUtaQmMyTgCTuADAl3G+HLVI8C4miZd8e/P4uHRREAUEea73cR/8HEFTYMD0VWrM
+ pHtAMO5vPKFrCKOaXB1gVAK36DjnqMucHPF+jSW6t8ToavrzjQRpZxuw34lbqkD4LcAHs3H+A
+ MpnlymQZU5Bawch4ASrFOAtqBhW9AdWFRqYc2fPvI=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/11/2020 3:59 AM, Eric Sunshine wrote:
-> On Wed, Nov 4, 2020 at 3:06 PM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> Git's background maintenance uses cron by default, but this is not
->> available on Windows. Instead, integrate with Task Scheduler.
->> [...]
->> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
->> ---
->> diff --git a/builtin/gc.c b/builtin/gc.c
->> @@ -1698,6 +1698,187 @@ static int platform_update_schedule(int run_maintenance, int fd)
->> +static int schedule_task(const char *exec_path, enum schedule_priority schedule)
->> +{
->> +       xmlpath =  xstrfmt("%s/schedule-%s.xml",
->> +                          the_repository->objects->odb->path,
->> +                          frequency);
-> 
-> Am I reading correctly that it is writing this throwaway XML file into
-> the Git object directory? Would writing to a temporary directory make
-> more sense? (Not worth a re-roll.)
+Hi Peff,
 
-A temp directory is a good idea.
+On Wed, 11 Nov 2020, Jeff King wrote:
 
->> +       xmlfp = fopen(xmlpath, "w");
->> +       if (!xmlfp)
->> +               die(_("failed to open '%s'"), xmlpath);
-> 
-> Could use xfopen() as mentioned previously.
-> 
->> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
->> @@ -442,6 +442,36 @@ test_expect_success MACOS_MAINTENANCE 'start and stop macOS maintenance' '
->> +test_expect_success MINGW 'start and stop Windows maintenance' '
->> +       for frequency in hourly daily weekly
->> +       do
->> +               printf "/create /tn Git Maintenance (%s) /f /xml .git/objects/schedule-%s.xml\n" \
->> +                       $frequency $frequency
-> 
-> Nit: You lost the `|| return 1` which was present in the previous
-> version. True, it's very unlikely that `printf` could fail, but having
-> the `|| return 1` there makes it easier for the reader's eye to glide
-> over the code without having to worry about whether it is handling
-> error conditions correctly, thus reduces cognitive load.
+> On Wed, Nov 11, 2020 at 04:53:13PM +0100, Johannes Schindelin wrote:
 >
->> +       done >expect &&
-> 
-> Rather than a loop, you could just use:
-> 
->     printf "/create ... (%s) /f /xml ...schedule-%s.xml\n" \
->         hourly hourly daily daily weekly weekly >expect &&
-> 
-> though it's subjective as to whether that is an improvement.
+> > > If we are using dash, then surely BASH_XTRACEFD does not matter eith=
+er
+> > > way?
+> >
+> > It kinda does, though. Dash _does_ respect the `BASH_XTRACEFD` variabl=
+e,
+> > funnily enough, but does not hand the settings through to sub-shells,
+> > whereas Bash does.
+>
+> Really? That's news to me, and doesn't seem to trigger:
+>
+>   [bash uses it]
+>   $ bash -xc 'BASH_XTRACEFD=3D3; echo foo' 3>trace
+>   + BASH_XTRACEFD=3D3
+>   foo
+>   $ cat trace
+>   + echo foo
+>
+>   [dash does not]
+>   $ dash -xc 'BASH_XTRACEFD=3D3; echo foo' 3>trace
+>   + BASH_XTRACEFD=3D3
+>   + echo foo
+>   foo
+>   $ cat trace
 
-It's sufficient, and avoids issues with deep tabbing and
-chaining "|| return 1"".
+Gaaah! I totally forgot that `BASH_XTRACEFD` is only heeded by BusyBox'
+ash (and only when built with `ENABLE_ASH_BASH_COMPAT`), not by `dash`.
+
+Sorry for the noise.
+
+> > Oh my. I really had tried to avoid going _this_ deep. The `.meta` sett=
+ing
+> > is not even read by the interactive add command:
+> >
+> > 	$ git grep -w meta git-add--interactive.perl add-interactive.c \
+> > 		add-patch.c
+> >
+> > comes up empty.
+> > [how and why add--interactive.perl reads color config]
+>
+> Hmm. Right, I knew about that weirdness. But I assumed that the builtin
+> add-interactive was doing the diffs in-core. Otherwise, why would we
+> have seen the failure to load diff.color.frag in the first place?
+
+Oh, that's easy to explain: as you can verify reading
+https://github.com/git/git/blob/e31aba42fb12/git-add--interactive.perl#L88=
+5-L898
+the Perl version of `git add -p` insists on (re-)constructing the hunk
+headers manually, and obviously it needs to color them manually, too. And
+https://github.com/git/git/blob/e31aba42fb12/add-patch.c#L649-L672 shows
+that the built-in version of `git add -p` slavishly follows that practice.
+
+> Philippe's simple example just did "git add -p". So now I'm doubly
+> confused.
+
+Right. I should have been more precise in what parts are used of the diff
+that is colored via the internal diff machinery. The hunk headers are not
+used. The hunks themselves are, unless edited. The file header is, too:
+https://github.com/git/git/blob/e31aba42fb12/add-patch.c#L683-L714
+
+> The answer seems to be that render_hunk() always _replaces_ the colors
+> we got from running the external diff. Whereas the perl version only
+> applied coloring when reading back in the results of an edit operation
+> (and likewise used the frag color when generating a split hunk header).
+
+No, the Perl version also insists on applying `fraginfo_color`, see
+https://github.com/git/git/blob/e31aba42fb12/git-add--interactive.perl#L88=
+5-L898
+
+> I'm not sure that what the builtin version is doing is wrong, but it
+> seems like it's putting a lot of extra effort into parsing colors off of
+> the colorized version. Whereas the perl version just assumes the lines
+> match up. I do wonder if there are corner cases we might hit around
+> filters here, though. The lines we get from a filter might bear no
+> resemblance at all to diff lines. The only thing we require in the perl
+> version is that they have correspond 1-to-1 with the unfiltered diff
+> lines in meaning.
+
+They do have to correspond 1-to-1 because the assumption is that the
+individual lines will then correspond one-to-one, too. This does not need
+to be true, of course, but then the filter is probably less useful than
+the user wants it to be.
+
+> > For those reasons, v2 brings more changes than I had hoped for. In the
+> > end, it is a better patch series, obviously. So even if I was reluctan=
+t to
+> > work on all this: thank you for prodding me.
+>
+> Heh. Sorry and thanks, I guess? :) I'll try to read over v2 carefully.
+
+No need to be sorry on your side. _I_ am sorry that I did not add that
+test case during my re-implementation efforts in the first place.
 
 Thanks,
--Stolee
-
+DScho
