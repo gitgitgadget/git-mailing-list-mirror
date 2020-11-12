@@ -6,76 +6,110 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C162C2D0E4
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 18:42:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD819C5519F
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 18:51:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AFB5922228
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 18:42:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 601DB22228
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 18:51:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726416AbgKLSmb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Nov 2020 13:42:31 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56230 "EHLO cloud.peff.net"
+        id S1726584AbgKLSvr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Nov 2020 13:51:47 -0500
+Received: from cloud.peff.net ([104.130.231.41]:56250 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726303AbgKLSmb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Nov 2020 13:42:31 -0500
-Received: (qmail 21717 invoked by uid 109); 12 Nov 2020 18:42:31 -0000
+        id S1726554AbgKLSvr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Nov 2020 13:51:47 -0500
+Received: (qmail 21755 invoked by uid 109); 12 Nov 2020 18:51:47 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 12 Nov 2020 18:42:31 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 12 Nov 2020 18:51:47 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 444 invoked by uid 111); 12 Nov 2020 18:42:30 -0000
+Received: (qmail 523 invoked by uid 111); 12 Nov 2020 18:51:46 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Nov 2020 13:42:30 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Nov 2020 13:51:46 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 12 Nov 2020 13:42:30 -0500
+Date:   Thu, 12 Nov 2020 13:51:46 -0500
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCH 0/5] Remove now-unused git-parse-remote
-Message-ID: <20201112184230.GC701197@coredump.intra.peff.net>
+Subject: Re: How do I "git fetch" with a custom <refspec> but a default
+ remote?
+Message-ID: <20201112185146.GD701197@coredump.intra.peff.net>
 References: <CAGZ79kb57HzJQ4VLFD_NMKvEnriPVXoAAPimg6BG_Z+PPjJ4aQ@mail.gmail.com>
  <20201111151754.31527-1-avarab@gmail.com>
- <20201111173738.GB9902@coredump.intra.peff.net>
- <87a6vmhdka.fsf@evledraar.gmail.com>
+ <877dqqhd3s.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87a6vmhdka.fsf@evledraar.gmail.com>
+In-Reply-To: <877dqqhd3s.fsf@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 12, 2020 at 03:09:25PM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Thu, Nov 12, 2020 at 03:19:19PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-> > To be clear, I find it pretty unlikely that anybody is using the rather
-> > esoteric functions in this file, but that's usually when I get most
-> > surprised. :)
+> On Wed, Nov 11 2020, Ævar Arnfjörð Bjarmason wrote:
 > 
-> I think it's fine to just remove it, I'll note that in a v2 commit
-> message. I.e. the convention at the time was just to create these *.sh
-> libraries as documented, but I don't think anyone used them outside of
-> git.git.
-
-OK. I'm fine with that interpretation as long as we are doing it
-consciously. It might be worth noting in the release notes (not only the
-removal here, but our general attitude towards these shell libraries).
-
-> If they did maybe we should move them to contrib and ... create the same
-> bitrot as with the *.sh builtins :)
-
-Please no. :)
-
-> > I expected to see a "delete" line for git-parse-remote.sh here. I
-> > thought at first maybe you were leaving the empty shell so that people
-> > could continue to source it (keeping the promise in the manpage, but not
-> > providing any actual functions). But it looks like the final patch stops
-> > building it at all, leaving the now-useless source file.
+> > In any case, this is one thing that came out of that
+> > investigation. The code we're keeping by moving it to git-submodule.sh
+> > can also be replaced by some C code we have, but I wanted to leave
+> > that to another submission (if I'll get to it), and make this simply a
+> > code removal.
 > 
-> That was just a mistake on my part, I meant to "git rm" it but
-> forgot. Will fix it v2.
+> I may have missed a way to do $subject, but I don't think it's
+> possible.
 
-Makes sense.
+I'm pretty certain it's not. I've run into this before and looked for a
+solution without finding one (in my case I was not scripting, but was
+just too lazy to type "origin").
+
+> I came up with this patch:
+> [...]
+> So it works, but what do we think about this calling convention? Do we
+> have any prior art for commands that take positional arguments like
+> <remote> and <refspec> where you'd like to use a default for an earlier
+> argument to provide a subsequent one?
+
+It seems perfectly reasonable to me. The logic for parsing (that users
+must understand) is: if --default-remote is specified, act as if the
+default remote was specified as the first argument.
+
+I can't think offhand of a case exactly like this, but certainly options
+like "git tag -d" influences how the non-option arguments are parsed.
+
+> To make it more general and consistent we'de probably like a --remote=*
+> and --refspec arguments, so the invocation would be:
+> 
+>     git fetch ([--remote=]<name> | --default-remote) [([--refspec=]<refspec> | --default-refspec)]
+> 
+> But maybe I'm overthinking it...
+
+If we were starting from scratch, then I think that might have been
+nicer, because --default-remote would be implied if there is no
+"--remote" option. And then my lazy-to-type:
+
+  git fetch topic
+
+would just work. But given that we have the positional <remote>
+parameter already, I don't think adding --remote gives much value. And
+it raises the question of what "git fetch --remote=foo --remote=bar"
+means (I think the answer is last-one-wins).
+
+Slightly orthogonal, but I've occasionally also wished for:
+
+  git fetch @{upstream}
+
+or
+
+  git fetch @{push}
+
+to grab the latest copy of related branches. Those are a _bit_ funny in
+that we usually resolve those names to the local tracking branch. But I
+think the semantics are clear (we get to that tracking branch by
+applying fetch refspecs to a particular remote).
+
+I mention it only in case it gives you any bright ideas on how the
+command-line parsing would work there.
 
 -Peff
