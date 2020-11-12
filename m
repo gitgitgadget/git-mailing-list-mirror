@@ -2,124 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CE79C388F7
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 22:34:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10B0BC388F7
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 22:44:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2ABA12085B
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 22:34:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BB81E20825
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 22:44:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JKGIU61M"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oQusTF9F"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726125AbgKLWez (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Nov 2020 17:34:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50024 "EHLO
+        id S1727067AbgKLWoG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Nov 2020 17:44:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725962AbgKLWez (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Nov 2020 17:34:55 -0500
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA65AC0613D4
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 14:34:54 -0800 (PST)
-Received: by mail-ot1-x341.google.com with SMTP id y22so7200273oti.10
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 14:34:54 -0800 (PST)
+        with ESMTP id S1726526AbgKLWoG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Nov 2020 17:44:06 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56613C0617A7
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 14:44:06 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id s8so7667321wrw.10
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 14:44:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:reply-to:mime-version
-         :content-transfer-encoding;
-        bh=HfipEYFfvwpvhUhrcQy7V0KmJuBV2w2NOhvYLrKZhvA=;
-        b=JKGIU61MMAtDSM2Jb0vwtPwCr+mD02RLGzj0eaE9lUvWsS+Ww/p5wxQTGZyvJbSdPo
-         nqg9Zc/mgvJ8aulmEyap7zq87PDRrATeRSLtSitKo07RNa6iNWNF/wrIMOUT5dbsDRMN
-         8VrgAexjalYggOMY8JfyFTzUySMDkHu4kusdj4CcPG16XedelgvaqhADuNPIkr2is0yY
-         EgaKNIDYW8Tkdpyc5HwklQyE0Z4sK5qZ1iPXZ8j/D5DbDzHrPWBmTgYq5Fgo7xxTzo0s
-         bKj7nR2VM/TZ0XjDy6bUtla3cIixJi0tutV3dvs81FmJG/5lehbJwp9W+em1Krd8KGpo
-         HwxQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=bqnnc6DRfudaGIlMY9/t4Ry607yj07KWLabzb+YCGvU=;
+        b=oQusTF9FOvQOpW7MK2+/siWqM/NBTcSpdBuvu48oTKwpy6EeYOaLCG5ukkAK2xnnXk
+         +0DlK3165/DDT19o5v6xaOsg94mP43rT1f+IM2Y1Xz/fr5XIiltOFSJGtLlXYqQ9VQ/B
+         MCPhXbkZOYiVOdfqP3qqoAcr2IQdg0fPcHOl2eSLlzDFHRvf9qKpj5782OQ+W7tRKfcD
+         yBWZSJV4W/2J1ot48L1XX/JUaC1nLh9a4eNiVGblnao8cWp3N/OfhMqLT25YSlS22vXf
+         8K63Q5yUasdRlvaFaNt8zdDPONB+96SEfQlfulBukhsnf3SjtQ//Jfb3xs6daO/AEkwm
+         yPOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :mime-version:content-transfer-encoding;
-        bh=HfipEYFfvwpvhUhrcQy7V0KmJuBV2w2NOhvYLrKZhvA=;
-        b=Ev2Lab58TXJDokj70nkOm0kcn6F4BbZ+dmHaI1wuFZafVSYafXdNTc17kjPYevtqjJ
-         R09WGzywoxc1s+4B3Kz0G8Z1tsk2wWjOUlCzo8GMCy6Zi0LH0M8v0PxWhg/uhJOVd/QH
-         dSCpzE2r8OE1YJo/7hTmozDrYcwHnTqnmm6SsVJZ5ecW18WM3AQaTvq1w6O/2trlLmfw
-         fQV8hzpZCKYiNFk7ZFhbENRJ3cE4AKJ6cq/qpcY1psN932faRCIQbxWcJdTaIm2Ht/wm
-         RxKF1Oo9kBhEwWcz1nP9oEv1BT8vM/5Cm5g0wJvzMIM/iiiF7jKjmEiSn2HluTUiNZZx
-         cqww==
-X-Gm-Message-State: AOAM532VSOPBF42KLCCyQJklIOqOk69zgkiyOM9kc710eIG5SlgerZ1V
-        lg3Bycje0zs6OWWMr+WAff1asKfQRbkS7w==
-X-Google-Smtp-Source: ABdhPJxkyHAB3yup0d8jfGmt4gakYnlJGoRkzTEtkeoFWeK16/V/6ibYATk+oHg/pdP3mrl9PdTYsQ==
-X-Received: by 2002:a9d:3cf:: with SMTP id f73mr1055029otf.118.1605220494109;
-        Thu, 12 Nov 2020 14:34:54 -0800 (PST)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id e127sm1434577oia.12.2020.11.12.14.34.53
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=bqnnc6DRfudaGIlMY9/t4Ry607yj07KWLabzb+YCGvU=;
+        b=fU11iX/i0AQjeuIgHa7Fw0JeQao7MafTDpnOlztm+zjIJaEbSVD0AopW58Omt3FPJf
+         MmrHhgC9ovxD/WYsakeZkm+HdO7rrmdnXSRcSIUeyluTw4jb4iZ6uO+/MV1itAiYHvZS
+         KCvsNKWd8mFQIg3qnjfnyNfGziNhTT/G3kwHsuMkYF7oEDc62/C83PjmFOyNk1mjbaWd
+         QfFUaif/i1jQfROETpnvHMKqg9eDjJCzS/K/tEN1TRyGmMjBbqfh/1S3Yi6/dGU+2XDe
+         UAHIBq8ozT64e2LxivV5AFz9uSHGLm0ylXjqUTWABWwvCiy7VMH+gHAkpeXmAwZM7bfv
+         m/aA==
+X-Gm-Message-State: AOAM5315CAvHnL+NFNZgwuQ6SfjKeXf8awHme7NMgPB73CynLPgSGg3Q
+        eW7VgZlJSo0Q6KHv9VBidVG/mHwK65Y=
+X-Google-Smtp-Source: ABdhPJw5fUuG+5McjqOB+M4aF0RqDdAZATFboaBJJ6vDGbDLUK3rbe7zZhSTWbS0Ud5e4kaBd5fPAw==
+X-Received: by 2002:adf:b186:: with SMTP id q6mr2200239wra.53.1605221044977;
+        Thu, 12 Nov 2020 14:44:04 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m21sm15829732wmi.3.2020.11.12.14.44.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Nov 2020 14:34:53 -0800 (PST)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] completion: bash: improve alias loop detection
-Date:   Thu, 12 Nov 2020 16:34:52 -0600
-Message-Id: <20201112223452.1526315-1-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.29.2
-Reply-To: 20201112100204.GC4270@szeder.dev
-MIME-Version: 1.0
+        Thu, 12 Nov 2020 14:44:04 -0800 (PST)
+Message-Id: <e494152c3e72df871cbea44e1205162b2be162df.1605221039.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.762.git.1605221038.gitgitgadget@gmail.com>
+References: <pull.762.git.1605221038.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 12 Nov 2020 22:43:35 +0000
+Subject: [PATCH 05/28] t3416: preemptively adjust alignment in a comment
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It is possible for the name of an alias to end with the name of another
-alias, in which case the code will incorrectly detect a loop.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-We can fix that by adding an extra space between words.
+We are about to adjust t3416 for the new default branch name `main`.
+This name is two characters shorter and therefore needs two spaces more
+padding to align correctly.
 
-Suggested-by: SZEDER Gábor <szeder.dev@gmail.com>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+Adjusting the alignment before the big search-and-replace makes it
+easier to verify that the final result does not leave any misaligned
+lines behind.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/completion/git-completion.bash | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ t/t3416-rebase-onto-threedots.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index ce0dc1e0f8..cd2a02bafd 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1121,16 +1121,17 @@ __git_pretty_aliases ()
- # __git_aliased_command requires 1 argument
- __git_aliased_command ()
- {
--	local cur=$1 list word cmdline
-+	local cur=$1 last list word cmdline
- 
- 	while [[ -n "$cur" ]]; do
--		if [[ "$list" == *"$cur "* ]]; then
-+		if [[ "$list" == *" $cur "* ]]; then
- 			# loop detected
- 			return
- 		fi
- 
- 		cmdline=$(__git config --get "alias.$cur")
--		list="$cur $list"
-+		list=" $cur $list"
-+		last=$cur
- 		cur=
- 
- 		for word in $cmdline; do
-@@ -1154,7 +1155,7 @@ __git_aliased_command ()
- 		done
- 	done
- 
--	cur="${list%% *}"
-+	cur=$last
- 	if [[ "$cur" != "$1" ]]; then
- 		echo "$cur"
- 	fi
+diff --git a/t/t3416-rebase-onto-threedots.sh b/t/t3416-rebase-onto-threedots.sh
+index 9c2548423b..1f37adf56b 100755
+--- a/t/t3416-rebase-onto-threedots.sh
++++ b/t/t3416-rebase-onto-threedots.sh
+@@ -12,7 +12,7 @@ test_description='git rebase --onto A...B'
+ #
+ #	    F---G topic                             G'
+ #	   /                                       /
+-# A---B---C---D---E master      -->       A---B---C---D---E
++# A---B---C---D---E master        -->       A---B---C---D---E
+ #      \   \ /
+ #	\   x
+ #	 \ / \
 -- 
-2.29.2
+gitgitgadget
 
