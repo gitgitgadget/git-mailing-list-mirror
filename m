@@ -2,108 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91FF6C5519F
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 17:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1022AC5519F
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 17:43:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3151D21D40
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 17:40:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E8DE2085B
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 17:43:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CaH6ol0w"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tX4NIY0m"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726116AbgKLRkH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Nov 2020 12:40:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60356 "EHLO
+        id S1726286AbgKLRn5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Nov 2020 12:43:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726041AbgKLRkG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Nov 2020 12:40:06 -0500
-Received: from mail-vk1-xa41.google.com (mail-vk1-xa41.google.com [IPv6:2607:f8b0:4864:20::a41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85393C0613D1
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 09:40:06 -0800 (PST)
-Received: by mail-vk1-xa41.google.com with SMTP id u16so303840vkb.1
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 09:40:06 -0800 (PST)
+        with ESMTP id S1726202AbgKLRn5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Nov 2020 12:43:57 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF548C0613D1
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 09:43:56 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id v22so7319812edt.9
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 09:43:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fKBq+HSK3AA7MGk5LwDUhDCnWOUEIO47C+bSrRTu99A=;
-        b=CaH6ol0wN4vIBNqSuV28h3qkKVSW+oPNiMOBBJmziQl2OC2KZF18pBu2zI1UXdJaEJ
-         yn//1guyWwNXUJn7DlACSixyLrP9MNH27OLSeXtnMSj2B3yBDtzDJ56fjXij2N20oTqS
-         zswdAnSoNyQ5bTqmu6Gyf9Fyiu+2CJ/02XDpL5Y/JlHuC+N3B8c1nW0IPWY63Bo9rw4n
-         GzMsvG3tyPabnqUhd07/5aE/VBySu0rAL/OTi7jcMQdx2tPFk83knph7Or1S9AG2ywmn
-         PAALX6HWlkuMMF2sGz/HpaSwkgxCIGiq2JB3WPZTsHZ3/PnNVBa0i69ojvVX+1/yYVHY
-         xWxA==
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=SCdDgk5l/WGgbNzYj/eJbUkTjLrEslUXFfaQD6qim4w=;
+        b=tX4NIY0mi8DWyrQvBSJ7O35hY8bnX5DEdV1AlsxVZRcoD3zIZzquNB/xFAL/vaW/XO
+         knlmabcDkgqQGLUa1yBSpeYw+dHjbXLD0dpFSwImiam1vDYYm6+Ab9+X3eyFSV3VICym
+         DIHFAqJQiRBsjYnIezY73KoNxtoVY7dBWlyBbms1HOgpi5yYf7yK6enFTAdgxfsDfSUG
+         +OZJQsHWbTlXtvGmP7zLl27HGL3CD2P45J63GartgsqLAqhBfYHu2YIpT1ATZFa48TGc
+         Eb64oqwKQJT4mMz5K4jnMmX9opt1ux9RBbLNW0DxsWj9uq+z4PRzsT0BICEx3Q1wKQZd
+         e1oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fKBq+HSK3AA7MGk5LwDUhDCnWOUEIO47C+bSrRTu99A=;
-        b=WF4eZVmqtT0VTlq6bheD6EvImjAUoxdAFPNh4qlKq7UxKep8VLQHTheB1BYKFduk8n
-         tJk0P4ShPb98LdcdLP1uPzZXFFljU+FecW8mDlUQr8hxn2lZVL02orq7QvllIPPUiQ6N
-         /DMUc30ycXEzc2GJ5Go57unE95YgFHH5UWMrI4WiBtDxrOU9YM8WAVus1I0pdXnDztnO
-         e156YRc7ZCFXI4furFxerte05AMTGqqMQDQr08vt0NMokotXLuJlus5Sjx195phEVTUw
-         yinJqJqy0KGZS89GsFVKXAJRpkdV5d4/Lvub8fIlaOnGW97gm47AwcDhwNU807hJsexY
-         dgpA==
-X-Gm-Message-State: AOAM533r3EpEFaqCAmw+XXMYR/47+j6gkwGdvInpwu1BFXtHl4+C0PEg
-        eeSLtIHb5Srcn60SumtphUWCPxnCtaaToF52TK0=
-X-Google-Smtp-Source: ABdhPJzgNAef+63VWrquw9xntOAidw1Qo3CdpS7Zmalj3Ix92wFl1LDkug3aasUY8nZ1c9dDZfyrUC8yQqd/G/NiZoU=
-X-Received: by 2002:a1f:1b92:: with SMTP id b140mr989706vkb.7.1605202805765;
- Thu, 12 Nov 2020 09:40:05 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=SCdDgk5l/WGgbNzYj/eJbUkTjLrEslUXFfaQD6qim4w=;
+        b=StQeMjyq+j6SoUNANV3TlndPj6NTp2z6GzuwupqCpiyaLn48b3V4tkmX8ZeHpopOEN
+         IZ7ipZdKL0zEPzrSCKX9O6WCqiE9KQC45gYFfNiebHDfbDqBmocKtpe9ZEhnSlMiDOIh
+         3+/968ZP0ambplNgmoCjVJmg0ARhkbyb3bc+evaOKMjqsF9W0kQhAY0B9HtrPrOYt/8r
+         R/bgSHnzgot9ibjBT0e2u1CiT4ZRLaKTPzI3/qwhiLVM24DHEA3sFetK6rxEAPSZZM5f
+         oOtggMdpQB4qFQbdPRBs5qGUksuQn3kDx57WM3oovAF2aSCwzBpWlFnUB1RacGIk7Ysy
+         9ixg==
+X-Gm-Message-State: AOAM531Z9O54HOSl6/lxNeVkkKt/bcGk0nwr9I+LSCSKZwGYMYunEiVI
+        HUtd2WVpvvJD5fxx8/+d+ow7X0pIrMA=
+X-Google-Smtp-Source: ABdhPJy9nPjTeZ7Fo4eNUC2D5pE79RmcnPF/f2gzCq8lQrBgIqczE+hk97nlHKz3jXmyLRtCcIAqqg==
+X-Received: by 2002:aa7:c2d7:: with SMTP id m23mr985997edp.230.1605203035432;
+        Thu, 12 Nov 2020 09:43:55 -0800 (PST)
+Received: from szeder.dev (94-21-58-64.pool.digikabel.hu. [94.21.58.64])
+        by smtp.gmail.com with ESMTPSA id r20sm2719690edq.6.2020.11.12.09.43.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Nov 2020 09:43:54 -0800 (PST)
+Date:   Thu, 12 Nov 2020 18:43:53 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>
+Subject: git format-patch --range-diff bug?
+Message-ID: <20201112174353.GD4270@szeder.dev>
 MIME-Version: 1.0
-References: <cover.1605123652.git.me@ttaylorr.com> <c59fcbcc67556c5c9c5a22a2ee745a2f58234efd.1605123652.git.me@ttaylorr.com>
-In-Reply-To: <c59fcbcc67556c5c9c5a22a2ee745a2f58234efd.1605123652.git.me@ttaylorr.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 12 Nov 2020 18:39:53 +0100
-Message-ID: <CAN0heSoVS0MhEN_91da5Uv=jimLRcEu+EX1mocm2+quB559vsQ@mail.gmail.com>
-Subject: Re: [PATCH 02/23] pack-bitmap: fix header size check
-To:     Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Taylor/Peff,
+I've just run into an unexpected looking range-diff generated by 'git
+format-patch -1 --range-diff=...'.  While the 'git range-diff' command
+correctly pairs up the old and new versions of the commit, 'git
+format-patch --range-diff' somehow doesn't and reports it in a weird
+way.
 
-On Wed, 11 Nov 2020 at 20:43, Taylor Blau <me@ttaylorr.com> wrote:
->
-> This meant we were overly strict about the header size (requiring room
-> for a 32-byte worst-case hash, when sha1 is only 20 bytes). But in
-> practice it didn't matter because bitmap files tend to have at least 12
-> bytes of actual data anyway, so it was unlikely for a valid file to be
-> caught by this.
+The test below demonstrates the issue, though it doesn't fail but only
+prints the outputs of those commands:
 
-Good catch.
+  ---  >8  ---
 
-> +       size_t header_size = sizeof(*header) - GIT_MAX_RAWSZ + the_hash_algo->rawsz;
->
-> -       if (index->map_size < sizeof(*header) + the_hash_algo->rawsz)
-> +       if (index->map_size < header_size)
->                 return error("Corrupted bitmap index (missing header data)");
+#!/bin/sh
 
-I wondered if the "12" in the commit message shouldn't be "32". We used
-to count the hash bytes twice: first 32 that are included in the
-`sizeof()` and then another 20 or 32 on top of that. So we'd always
-count 32 too many.
+test_description='test'
 
-Except, what the addition of `the_hash_algo->rawsz` tries to account for
-is the hash aaaaall the way at the end of the file -- not the one at the
-end of the header. That's my reading of the state before 0f4d6cada8
-("pack-bitmap: make bitmap header handling hash agnostic", 2019-02-19),
-anyway. So with that in mind, "12" makes sense.
+. ./test-lib.sh
 
-I think we should actually check that we have room for the footer
-hash. I'll comment more on the next patch.
+test_expect_success 'test' '
+	test_tick &&
+	printf "%s\n" 0 1 2 3 4 5 6 7 8 9 >file &&
+	git add file &&
+	git commit -m initial &&
 
-> -       index->map_pos += sizeof(*header) - GIT_MAX_RAWSZ + the_hash_algo->rawsz;
-> +       index->map_pos += header_size;
+	git checkout -b v1 &&
+	echo foo >>file &&
+	git commit -m change file &&
 
-Makes sense.
+	git checkout -b v2 master &&
+	echo bar >>file &&
+	git commit -m change file &&
 
-Martin
+	: The output of the range-diff command is what I would expect to be included in the generated patch &&
+	git range-diff v1...v2 &&
+
+	: But that is not what we get embedded in the generated patch &&
+	git format-patch -1 --range-diff=v1...v2 v2 &&
+	sed -n -e "/^Range-diff:$/,/^$/ p" 0001-change.patch &&
+
+	: Adding the range-diff to the cover letter doesnt seem to help &&
+	git format-patch -1 --range-diff=v1...v2 --cover-letter v2 &&
+	sed -n -e "/^Range-diff:$/,$ p" 0000-cover-letter.patch
+'
+test_done
+
+  ---  8<  ---
+
+And here is the relevant part of the output:
+
++ : The output of the range-diff command is what I would expect to be
+included in the generated patch
++ git range-diff v1...v2
+1:  f8c2d0b ! 1:  83c34a8 change
+    @@ -9,4 +9,4 @@
+      7
+      8
+      9
+    -+foo
+    ++bar
++ : But that is not what we get embedded in the generated patch
++ git format-patch -1 --range-diff=v1...v2 v2
+0001-change.patch
++ sed -n -e /^Range-diff:$/,/^$/ p 0001-change.patch
+Range-diff:
+1:  83c34a8 = 1:  83c34a8 change
+2:  f8c2d0b < -:  ------- change
+
++ : Adding the range-diff to the cover letter doesnt seem to help
++ git format-patch -1 --range-diff=v1...v2 --cover-letter v2
+0000-cover-letter.patch
+0001-change.patch
++ sed -n -e /^Range-diff:$/,$ p 0000-cover-letter.patch
+Range-diff:
+1:  83c34a8 = 1:  83c34a8 change
+2:  f8c2d0b < -:  ------- change
+-- 
+2.18.0.584.g40ce41604d
+
