@@ -2,116 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65112C2D0A3
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 13:49:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76375C388F7
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 13:52:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E4F7820936
-	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 13:49:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0896720936
+	for <git@archiver.kernel.org>; Thu, 12 Nov 2020 13:52:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Akg8D48+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bwHK3YV2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728419AbgKLNtl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Nov 2020 08:49:41 -0500
-Received: from mout.gmx.net ([212.227.15.15]:40943 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728415AbgKLNtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Nov 2020 08:49:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1605188975;
-        bh=u3R6GyG01MPVSnZWkOLuG+tqZhSsxRmiuOI/fzGKcRw=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Akg8D48+sfe/dfhQv2PzMJRduZLzgQldVyVPeLvatUEjcNf9gJhsoYouiNs00/IPm
-         0XP67/vDAvoyalCtyAcqDwrW17Pe/lpvvA1PdPcNQzG4dJWjvH09QgLQ+yBBeLqF6Z
-         dBttbOBkLw+J+YnKCfa6bBywMV0t+yBLwwLGTDz4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.25.62] ([213.196.212.205]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MTzf6-1kmasf3JPW-00Qzfx; Thu, 12
- Nov 2020 14:49:35 +0100
-Date:   Thu, 12 Nov 2020 14:48:36 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Subject: Re: [PATCH] t4013: prepare for the new default branch name "main"
-In-Reply-To: <xmqqsg9f36nu.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2011121443100.18437@tvgsbejvaqbjf.bet>
-References: <pull.783.git.1604829561838.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2011112137390.18437@tvgsbejvaqbjf.bet> <xmqqsg9f36nu.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728286AbgKLNw3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Nov 2020 08:52:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53358 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728089AbgKLNw2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Nov 2020 08:52:28 -0500
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A5F6C0613D1
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 05:52:28 -0800 (PST)
+Received: by mail-oi1-x243.google.com with SMTP id j7so6396266oie.12
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 05:52:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=3GEib27PSz6mgI3M5DZ6hmAvXUtwxZScYzoz+LwW5lw=;
+        b=bwHK3YV2xiYtxgZnWggNY455CKo6Lw7aCIFjfUOduusODF97oEZu36P+jb85Chnehy
+         puKNcRKR77pypR4+njZpPaxIb70949RwMOosCRc69OBpfVzmODkc9/ZAy2YQgXHvesLA
+         8J9a/nM+ZwidnnyQygWXMi1YMDoFLdYJfakplWvduBniFKGhyjyPzpJ1X33Lxu0qVRuG
+         VJFez8DgSrvsUDCwSeYtiMMQOa8VLsnJzLs7QoA81k7GVZNHmlVIim1E+pPmDCHkrYOf
+         MDnlR0h680fq4YYrL4eDfhndV81IKENIFiJ6sufApe4ctQtMebujbg28OHjYKeVfyWRv
+         Sygg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=3GEib27PSz6mgI3M5DZ6hmAvXUtwxZScYzoz+LwW5lw=;
+        b=gqPPVrJfXwfg9kDhAgambhpv3dzXEinoi6nzyekZ+H4csLPVWp9VeXwyf/Ytn3TYe0
+         2fmBHxCyM4Y3MmPpSMa2lJcSGHp2uXjwAn3RqAM1rEOVYPcmdAPGo3Q6V3OtjlMtTMx5
+         f47/0QDNuG8OX9fdJTN/BfIh3U1lG0bpabjgwQtVhgPTDtd6lduxJG1DsWz9cNB+q8E9
+         CPR78ZMRtE7fKnPM04z3nn9KWp0jPyoCYkzDscj/uwF7hAPMVX5qeLOwHWiSeTc7u/DH
+         nX2bEWt0ybplg6u6SSxgg6OG6ONjVCwJWbtQ2J9obM2mMTIYP91coh/XqJdnM77vZSgD
+         /jDA==
+X-Gm-Message-State: AOAM530fF3LsiHQj928gImYxvPi4kNVUEMW6VnH6opbJR3gv9zQERqW8
+        VytGJhBuN77k7TvYXGOcM8APD0aVNuH2Rg==
+X-Google-Smtp-Source: ABdhPJwegGBc25mnYUeOqfTUeVv26pLLe/iNU4yeHBDND6ZizUZVD7/vVOnO/03U5UTNZ0rhWWbsng==
+X-Received: by 2002:aca:ec97:: with SMTP id k145mr5559471oih.163.1605189147282;
+        Thu, 12 Nov 2020 05:52:27 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:c9d4:abc:8d:1568? ([2600:1700:e72:80a0:c9d4:abc:8d:1568])
+        by smtp.gmail.com with UTF8SMTPSA id t199sm1130770oif.25.2020.11.12.05.52.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Nov 2020 05:52:26 -0800 (PST)
+Subject: Re: [PATCH 1/3] csum-file: add hashwrite_be64()
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <16932ced-8bcd-89bd-b927-cae1bce0365a@web.de>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <fcebe67f-f1d7-0069-01de-12844508cae1@gmail.com>
+Date:   Thu, 12 Nov 2020 08:52:24 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101
+ Thunderbird/83.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:HbTS/z1DFbJTrZICaWbSr96PAHFsbOh6hdDLpLABx5RuzvjTsYK
- md9lF3C0MSlCczwwTT9DEKvwlvWhLBXcb0bYXbgCUt3dZ3bg8OvOk/xH+h09m2l2am81XEn
- Fb9hy4eOWgdnsmD2vKbItyc/8thyTNVTDDO8TcwSk12+mq/ooFnsbQbcN1x1UmILVNAA765
- t/ExDFUJ8pZA+DhZX6MIA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8dQSj2b8OOQ=:a5qR9tqrp70+Ge5Sl03+YS
- haZqi+B+t+gLSCdL4FjwPVyLyQxf/kPmMFjQxVOVYxeif6o6A2Cojmnq2TwjxDpnoq69gGSdf
- K0y4IXvD4eY9PcDmnbDBzvJ9jF3sAk+wj0ShpgsW4D0Xo2MvJMgOIS4SsB5EKyVj9A44AGB7L
- 7xtvID1tcZ2n2x7IlRQxq9bSfcH9oDxSt9cXXUiNAhXHzl9oVYjL3eRFX/5BSwJU1JdS9LNBK
- DNm2gug2S8cve74DFDCOpIdqH/MjHJl4OwHmD4uyBuou5pT6gPMfHf/unici7iXcWaDOfLuNS
- qNyQFcK0MsfNagQfDcZGCLR/fZat06AQJ5RDtLJCG4kNfjDwOaVxE/YNKSRivSLuvYPW+UZrD
- j8brkX7zsB3KMDtc/zr5X2pxKcT/J9OHB6uOn4zoCXxgdvdZ5H6uPs7TUBoNeMELkbofCcTry
- 0WzGQARKTjmzSdNXioX2Qw41bxj2xlPYSQR2Dod++OR1ltOYet+gzn+wylonX7DT17eT4ilAf
- aDU/3r2VFJ4+7gcDC5C+qd4DyPlalzIo1Y/RpfE/gKSQezA3ngGYlsyOEM3xB5CCERBcBCROb
- iz87rTJFb/MzstwE7yqaBF6oXuomZxVA2yOdTN9OIzd3uH3d+XQGmYf+zolQN29jZieGJ/PcA
- SdVGy6EUtChc8w4lNe4omESs3YXV4UseonwO7Z4yxoFcxzqQ/dKV7S8sSjJ3t0VLKtUumD9sq
- u3RPg4WqtqI2v1dsdBW33lV8CfJqfUVkF9u2dccu1p1NHoFjyxx0aE4mEulXkFwvGenfPSHnT
- te/wNPQZoZ1XAev7wuGvqjRP/gwM/FWl5pEhfgcTxqOCZ264eTy2sSIznf9RTEzYHrs+UM0ek
- //irIlvAd9+NZh7IFlSlDLMHf5DT9J9YM+79KiHF4=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <16932ced-8bcd-89bd-b927-cae1bce0365a@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 11/12/2020 7:20 AM, René Scharfe wrote:
+> Add a helper function for hashing and writing 64-bit integers in network
+> byte order.  It returns the number of written bytes.  This simplifies
+> callers that keep track of the file offset, even though this number is a
+> constant.
+> 
+> Suggested-by: Derrick Stolee <dstolee@microsoft.com>
+> Original-patch-by: Taylor Blau <me@ttaylorr.com>
 
-On Wed, 11 Nov 2020, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> > Could you advise how I could help advance this patch further? This is =
-the
-> > last patch I need that is not in `next` to get to the patch series tha=
-t
-> > actually flips the default of `init.defaultBranch` to `main` (see
-> > https://github.com/gitgitgadget/git/pull/762).
->
-> Is it an option to add
->
->     git config --global init.defaultBranchName master
->
-> at the very beginning of the test script without making any other
-> change?
-
-Unfortunately not because at that stage, `HOME` is still not overridden.
-It will be overridden in `test-lib.sh`. Which is also where the initial
-repository (and hence, the initial branch) will be created.
-
-So: the suggested command with work neither before `. test-lib.sh` nor
-after it.
-
-I understand the desire to leave t4013 alone for the moment. If that's
-what you want, I can send off a patch series that _specificall_ excludes
-t4013, and will the follow up with a pair of patches that ties up that
-loose end.
-
-Sound good?
-
-> After all, we may want to avoid 'slave' but 'master' by itself is
-> not all that bad, especially given that it is used only in the test
-> script.  If we were to have "does the configuration variable work
-> OK?" test somewhere anyway, why not make it this test?
-
-What's wrong with the test cases in t0001-init.sh that are labeled
-'overridden default initial branch name (config)', 'overridden default
-main branch name (env)' and 'invalid default branch name', i.e.
-https://github.com/git/git/blob/e31aba42fb/t/t0001-init.sh#L554-L572?
+These patches are absolutely correct, and I'm glad to see them show up
+in a very clear presentation. I had to go look to see why these were
+not already present, with [1] being the last instance of these showing
+up on-list. They did not get into the new version after a significant
+refactor [2].
 
 Thanks,
-Dscho
+-Stolee
+
+[1] https://lore.kernel.org/git/20200904202226.GA21837@nand.local/
+[2] https://lore.kernel.org/git/cover.1599664389.git.me@ttaylorr.com/
