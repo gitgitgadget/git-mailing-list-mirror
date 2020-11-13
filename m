@@ -2,148 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88134C388F7
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 13:53:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBE31C388F7
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 13:54:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4B3D72223F
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 13:53:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9A0082222F
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 13:54:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uCFoq9EK"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="bFQfw5gr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727096AbgKMNxt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Nov 2020 08:53:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53102 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726795AbgKMNxq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Nov 2020 08:53:46 -0500
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FB81C0613D1
-        for <git@vger.kernel.org>; Fri, 13 Nov 2020 05:53:39 -0800 (PST)
-Received: by mail-qk1-x732.google.com with SMTP id d28so8756102qka.11
-        for <git@vger.kernel.org>; Fri, 13 Nov 2020 05:53:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=8l/Zv25LwG6bORWryw3QmAzfjup9r+2cpEL2qCN/vUI=;
-        b=uCFoq9EKdcm8bdTB7LcmY7e42IUClgvmyZkwy2xbD3tD7+i8VrfsuDna1ZcqeoZcRg
-         xhtGLZQs4kubpXhkpFEZ9Hd3MTRGV9i9UniViDpMm+unNWHMWShiPylbqCufOu6iiVyk
-         G0xcnV5IKuakqGa5xaMAy9CLPMDlvqcrPytufOPudfDl/9pRtSxuOKECvFvEUk1YdZiy
-         DtoHHnpH6FWOxw1g9s1HJ0a9AUpO+X826IxYhDB8QbhLg8xnXUKABNArsDWziv/sCUbF
-         zxgcba++s2ggX4HFClqBzsyE1RpFyFsNxEcghORet4iUk3djsZT2sdlOJFQF2jpBUpN9
-         eQgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=8l/Zv25LwG6bORWryw3QmAzfjup9r+2cpEL2qCN/vUI=;
-        b=RGFSCbBzC4GLN9MkuWJUYR+ogTRifwt5Dwp1Cy66SErppI85s6WPoSuX1rkI70Y5C8
-         klGaS/XUU3O7Q/ITHZE9vI8fVsOWcytXC/HYFmt3NEZq9DN+KW+rTUfCsAsfYPWEFsh1
-         oBJk7WDkl3dZD6PlnPcpY9/IqoMVffR1KltWBTIUIHsXfxi32VIIxwIkQL/C8yW3bhXS
-         GLp3KytIe4SKKy8E9e9XAnwpiOabg8Guh7sBesj3tn8I4INXsTS2zBT0AcvagYUeaDt3
-         ZH1NDfsTw7grPyInWapu+mbti04MyDJogORxT5lZKJp2vasO1/SQt/6QEu6kJIAk6eFE
-         L+fg==
-X-Gm-Message-State: AOAM531hZWr+U63xBUd/0I+fHtCtOFwEtWwWBiqALe11vC7P1eBXfYBl
-        pmvzn9D4DKXW5FTYcEVWscV26rGOrMWNPA==
-X-Google-Smtp-Source: ABdhPJxVowqi/ZCpoAXT9fgRd6qF6hR1PEKa3ABZuLjjJOfCcB4l6Mi+h2Hf2YhApI33chwF48WLMw==
-X-Received: by 2002:a37:41d2:: with SMTP id o201mr1937589qka.425.1605275618395;
-        Fri, 13 Nov 2020 05:53:38 -0800 (PST)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id n41sm7231531qtb.18.2020.11.13.05.53.36
-        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
-        Fri, 13 Nov 2020 05:53:37 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: The master branch rename, and avoiding another v1.6.0 git-foo fiasco
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-In-Reply-To: <CAMP44s1vx==-0Sh_dN66k-u_LwUSqQRn+ckMrYMHhz7i8ZVr2Q@mail.gmail.com>
-Date:   Fri, 13 Nov 2020 08:53:35 -0500
-Cc:     "D.E. Goodman-Wilson" <don@goodman-wilson.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        id S1726795AbgKMNyG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Nov 2020 08:54:06 -0500
+Received: from mout.gmx.net ([212.227.15.15]:59855 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726759AbgKMNyF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Nov 2020 08:54:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1605275641;
+        bh=xbNBiu4o7mwhAjgE4GNivlQjo4mEmxGwPfB7pnnOULI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=bFQfw5gr3+Kxe+/t93EumvOlksNl3zhTMejSBItfOhokD4HDDR4mQiGQ9H4+n1fau
+         SW18Kap+zcscpHaPuiGjNXlOarjfHTSMACXffJ+xkknaceDXQhB9dIx3JtzHXRrfsI
+         c8LOrASGfkUNs/oGCLQJnO25/qmfa9hwGGb624fk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.26.25.62] ([213.196.212.205]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MK3W0-1krNHb0F4Q-00LS2x; Fri, 13
+ Nov 2020 14:54:01 +0100
+Date:   Fri, 13 Nov 2020 14:53:02 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Phillip Wood <phillip.wood123@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 04/11] add -i: use `reset_color` consistently
+In-Reply-To: <6405f7c9-b084-ed48-e33e-009f388933bf@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2011131452120.18437@tvgsbejvaqbjf.bet>
+References: <pull.785.git.1605051739.gitgitgadget@gmail.com> <pull.785.v2.git.1605097704.gitgitgadget@gmail.com> <c857c4493213bd7cc4d057487db2d1a74fa0bbd6.1605097704.git.gitgitgadget@gmail.com> <6405f7c9-b084-ed48-e33e-009f388933bf@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:F1BubG19ecMhlbVxxJ6Z5XedaXa6RQL+2sIk+Tyy2enBMp+WJCo
+ /DPcrxprcLXqYqNSAERgluEWegcBmDbSG9KFvS5kL06vYBpwcmN3f5dvaxnp6BtNB093pew
+ JC3ChTvM+ebbSOHHyLVHhrioRKCFX4u3jerl7L8k8FnHdO2pw/ScK0G5iG23hHWDECjsj2J
+ JK0vrbZrWgro1ulxX9ZBA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ZQXFwvy89Cg=:UC5tNzLnGWeFeYl2GIv2HM
+ hOsakPbdMWqUNAMQ/JFgEzD9Xyzk/1VAR4qmprpGVql7stpzRzepi3aJY2fheiBcrVfUkOl/o
+ 4hPjrDreRQW/77Q/j4FyLinFva+HVMgBg2Iuu9cTrL/SXt9APZ4gg57crLA0NijU1qE5hQc9a
+ BYKXEZk7WV6DZ8XKUPwa+kKLnsHoAuB4DJFnL8bHBtP0b/JTZNlfQ5MzbO+BliZY/36WuPWmH
+ WvrTRJaPgC85B7Qd1CEk8+cEhJkkFZjcW1KA3T3bDCWlNYgz5YuQ0feyoInPdA8wSKkKeVFSj
+ xd5UYOxro/O/3YV4iUUhd/F6c4hb7qkuVMu+djn6G/oNHmc43+pKgF/QfIi3MLQfE09ixeYMg
+ utwBnMDqAaBVt6RY5Q9xP+4xeWds4gcOuAdCzndvxcmbhoRkrKpzoELvx6cAsOMANbiT6r3d7
+ CgR5N5u8tLzzAxnz6xtNAWxvHDoSlRJwR6mW4ABKVUxX7xBoABmup9Jbqf0FectTfO7vCLJnB
+ C8leQkbHyDvaSE0cXDXYHORdwCD/B4M4msDF0xdbKqX0EiPfTnuXOmU7CgWWeRZReXpQSc0pq
+ MkDX0nqjAmU0y5xQR2MqBWsSvFLCEEHSbQ1ZxZVOOAEU3ROCkkiWnmZtTuMWdoIV3/AUNihwv
+ UV4PCHO5W/XRPtUzRVG5nHRnsJgeoBVsJSQ9uXdtJ4enZC6S9b6hHpyLkVm0y4x8YkoX5orQx
+ PkWHJDWBRvI03YgXaBfYQNpuLCufh+OjRGXXC9o82NsWQVSTxuS677OZ5KXWCpo8feo7LaQTA
+ 3aTipQVCW3y5zVW87zkXUWdvuYEsotYSKlT/1SxrjeEO5Bp7ppybb8SNfyGgz+hX/emF/8xcU
+ Z0+S72BjChrUWTGwYxtv+bDJCkxy2XVolYxUkO5k4=
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <3EC700EE-8DB1-4A31-9061-6C5899330CCC@gmail.com>
-References: <CAMP44s3BJ3dGsLJ-6yA-Po459=+m826KD9an4+P3qOY1vkbxZg@mail.gmail.com> <20201113010107.GL6252@camp.crustytoothpaste.net> <CAMP44s1U1FevS7NrAYxvgVyzfR5tnD9-+BbPdw5bKnaNHkyD+A@mail.gmail.com> <nbCkLegnP_kb-16UzAuDChE0p68ZtRD_3ZN3o3BJHYBYpUxTWuKjvhCSKT7zRZl_sckHrkyJl2fwePFUBR-HtDcEV0rHuac6Ygg-FrrYsYI=@goodman-wilson.com> <CAMP44s1vx==-0Sh_dN66k-u_LwUSqQRn+ckMrYMHhz7i8ZVr2Q@mail.gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-X-Mailer: Apple Mail (2.3124)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Felipe,=20
+Hi Phillip,
 
-> Le 13 nov. 2020 =C3=A0 01:47, Felipe Contreras =
-<felipe.contreras@gmail.com> a =C3=A9crit :
->=20
-> On Fri, Nov 13, 2020 at 12:02 AM D.E. Goodman-Wilson
-> <don@goodman-wilson.com> wrote:
->>> Did we hear the testimony of a single black person that was offended
->> by the word?
->>=20
->>> Nobody affected by this change actually asked for this change
->>=20
->> Five minutes searching Twitter will reveal a great number of Black =
-git users championing this change.
->=20
-> This is anecdotal evidence.
->=20
-> We all live in our own digital bubble. Every person's Twitter feed is
-> different, and Google search results depend on where you live, and
-> your past searches.
->=20
-> You may find "a great number" of users that match that criteria, what
-> I find is only people criticizing the move, and after five minutes I
-> haven't found a single black person actually offended by the current
-> name.
->=20
->> How is reopening this discussion anything but a distraction?
->=20
-> This discussion never happened.
->=20
-> Everyone in the June thread argued about the different names of the
-> potential branch, and the culture war implications. Virtually *nobody*
-> argued about the manner of implementation: deprecation period, clear
-> warnings, Git 3.0 consideration.
+On Fri, 13 Nov 2020, Phillip Wood wrote:
 
-I couldn't agree more. We really need to be warning users several =
-versions in advance,
-and I mean months or even years. I don't wan't to come up with a number, =
-but I would
-guess that maybe 85 %, (or even 95 % ?) of the world-wide Git user base =
-is unaware that any discussion
-on that topic ever took place.
+> Hi Dscho
+>
+> On 11/11/2020 12:28, Johannes Schindelin via GitGitGadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > We already maintain a list of colors in the `add_i_state`, therefore w=
+e
+> > should use them.
+>
+> Playing devil's advocate for a moment - why do we have a reset entry in =
+that
+> list? The next patch makes sure it cannot be customized which is a good =
+thing
+> so why not drop the `reset` member from `add_i_state` entirely? The perl
+> version needed to get the reset string from `git config` and store it
+> somewhere but in the C version we have a perfectly good constant we can =
+use
+> instead.
 
-Brian mentioned that some people voicing their concern on the list did =
-not abide by the code of conduct.=20
-There was also very vocal disagreement voiced in the Git-for-Windows =
-GitHub project before the
-discussion reached the mailing list, of which a lot was also considered =
-to not abide by that project's
-code of conduct. While I agree that discussion should be done with =
-respect, and some people that=20
-are driven to react to such important changes might not be aware of any =
-code of conduct they should=20
-follow, because they don't participate in the "day-to-day" life of the =
-project, just the fact that they even
-care enough to voice their disagreement should be a big red flag in =
-terms of how this change should be done,
-in my opinion.
+Right.
 
-I had avoided commenting on this whole subject, but the main point you =
-are bringing,=20
-that such a change, if done, should be made with great care to our user =
-base and a lot=20
-more warning, is a very important one.=20
+On the other hand, does it hurt to keep that field for consistency with
+the rest of the coloring stuff? It would probably cost more to make the
+change you suggested than it would benefit us.
 
-Thanks for bringing it up.
-
-Philippe.
-
-
+Ciao,
+Dscho
