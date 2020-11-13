@@ -2,95 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B452CC2D0E4
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 00:11:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D374C5519F
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 01:01:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2C2B0221E9
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 00:11:56 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CSByfywJ"
+	by mail.kernel.org (Postfix) with ESMTP id 2A75520B80
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 01:01:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725966AbgKMALz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Nov 2020 19:11:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36910 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725894AbgKMALy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Nov 2020 19:11:54 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EFF1C0613D1
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 16:11:54 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id u12so652128wrt.0
-        for <git@vger.kernel.org>; Thu, 12 Nov 2020 16:11:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qq4BsgvxROnJ1lIRCxtq5BlMNScmKtRdMA8I9EJPK0w=;
-        b=CSByfywJIWV1B5MBT0ayuZHkgbdkrM1FeO+5pBgGYRabwd0lvXfQSVJES95eygbJc6
-         zVwBmAaC4c0IHKPutJhU9bKIUmNM5QWiCnPigulTuZgX6vkRMWwK2h8GxohShglTXsVE
-         1OjWerXBPMT5Zon0xff0WcoAWGssdTyAvkOMtmPAjA9JCHirJvXyovIfPEy6NxSPL+U2
-         thKhfQhlv1W2VAPRZMCmZ41LK+UGG0dmSWzqTOE/oAU/PmupvzIhsIUR7shisURtVgz5
-         r51V51ndWUdzzUpf2crlev9R2DEj752vEmsWxnWXPV6jUh8xjIMAqhfmRkS2uG2PfHTp
-         9b9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qq4BsgvxROnJ1lIRCxtq5BlMNScmKtRdMA8I9EJPK0w=;
-        b=CmakUNA39DOGAES2OP4WWwJ76h1DS3Tp1vmJ07SE6dSQ9do5uz9MKacKC/6kr/iIDE
-         idrgsk8ZQi1N+Y/M2xuq/U5ZqI8jXMk5nr0ayw6F6+ag49a1LVlu/Tk31t/se/D9zFEF
-         ImzfE82Jx3iM7Q6qUMNDPZhvQ+0UYXUi9piOt4yD8wOjRDoPgFBFbF7GClofgUIsGv4J
-         Rr6rfEnBRk7AA9fAgU+J02NmI4VuKgE3YMNyvIvuAQ32SE0xUPxKYl50+GhvrN8O3cYv
-         cG3Q4eHSIkXFWHI/Lh9lRjTJXaKxv/H0Je4u72PSWzeWH+wvHHi9AXkzD2Lpd3RjDS9B
-         DCPA==
-X-Gm-Message-State: AOAM533wFgdUa1xAukJ230ShMT2JyFtHir+gOKB6sT9vm7ZCGGvi5IA6
-        nDiyo6Anv7cFFjGIYs2PLDPc7WB2gt23hacKcPA=
-X-Google-Smtp-Source: ABdhPJz5rTUSCsDuc4bI8CH3Upf8RL7MmC0otoCBvX2B2iY85X4KUJ1nM633TmQktU1BWxA/9QK6pZFcWXagOenMCss=
-X-Received: by 2002:a5d:4349:: with SMTP id u9mr2361838wrr.319.1605226313329;
- Thu, 12 Nov 2020 16:11:53 -0800 (PST)
+        id S1726097AbgKMBBQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Nov 2020 20:01:16 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:39820 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725965AbgKMBBP (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 12 Nov 2020 20:01:15 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E867C60756;
+        Fri, 13 Nov 2020 01:01:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1605229272;
+        bh=F03QmCYK45Tye/HIAbWXK511ZMDYwYB0p3KPjKzYvUQ=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=ESMOcYmvjSXxKtP9cYTGNrxJWJHe9RIi187auXdMGJB5OBGANAf+R5f19yKPuY3pU
+         vsji4KsgNE9a1NF73VINBp0mORsunQbOMWUiSNZzh2N0JJIjsUjK9AHGc/prt/2u6a
+         32IdsQ93SpX9p7rHWMqmnWnrW4cb4OdRvnFzgaajqDNxJ+le14pIu5e7R7mOpDARXL
+         RiYWAINwcQ5s9PJOnXgKP39EO0+Su2gggeY00owpr1gwJR+7Ek8Ldw99akepjHezdN
+         hpOgaVvPCUHBhDz1PSV3dXupGyozu9NLjZqx8dMb8T6xKQ6KqrxjcNUoDS1NpGc8nt
+         Je/z7TFK7LKocG2cfAYEoDtJCKNDrtmePjFpploYCqp0E9WXjU6TTCXYqy9A8C9o0H
+         bVJUwJub6/i+rYzF3NMTTm479z0kDGJj6znC3BYcY9NKZJ+z61vibeADJwiVwFxCht
+         SYiFrdX2yXrJq1JRIIiqQBixLUTMLNIXgudloXoqGx7BX+QNhum
+Date:   Fri, 13 Nov 2020 01:01:07 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Don Goodman-Wilson <don@goodman-wilson.com>
+Subject: Re: The master branch rename, and avoiding another v1.6.0 git-foo
+ fiasco
+Message-ID: <20201113010107.GL6252@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Don Goodman-Wilson <don@goodman-wilson.com>
+References: <CAMP44s3BJ3dGsLJ-6yA-Po459=+m826KD9an4+P3qOY1vkbxZg@mail.gmail.com>
 MIME-Version: 1.0
-References: <pull.762.git.1605221038.gitgitgadget@gmail.com>
-In-Reply-To: <pull.762.git.1605221038.gitgitgadget@gmail.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Thu, 12 Nov 2020 18:11:42 -0600
-Message-ID: <CAMP44s3DExJ-F=MKhKyupr5M0RDvr8kJzxXbWeNzNjUN1bzXUA@mail.gmail.com>
-Subject: Re: [PATCH 00/28] Use main as default branch name
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="7vAdt9JsdkkzRPKN"
+Content-Disposition: inline
+In-Reply-To: <CAMP44s3BJ3dGsLJ-6yA-Po459=+m826KD9an4+P3qOY1vkbxZg@mail.gmail.com>
+User-Agent: Mutt/1.14.6 (2020-07-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 12, 2020 at 5:55 PM Johannes Schindelin via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
 
-> This is the big one. This changes the default of init.defaultBranch to main,
-> reflecting what many open source projects already did (which was followed by
-> GitHub, Azure Repos and others).
+--7vAdt9JsdkkzRPKN
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I want to plant a big red flag here for the record.
+On 2020-11-13 at 00:04:23, Felipe Contreras wrote:
+> *If* we are going to rename the master branch, it should be with a
+> good reason, after discussing it appropriately, in a major release
+> (i.e. Git 3.0), after a period of deprecation, and a big warning to
+> invite users to provide feedback about the important upcoming change.
+> We can hedge these types of changes with a "core.mode=3Dnext"
+> configuration, as I argued back in 2013. [3]
 
-I am against this change.
+When the original email that proposed this change came up, I did suggest
+that this would be suitable for a Git 3.0.  I think such a version
+number bump would be valuable, but I know that Git doesn't follow
+semantic versioning and I'm happy for Junio to make the call.  Git has
+made incompatible changes in the past in non-major versions, so there is
+precedent for this, although I agree it has the potential to be
+surprising.  Again, I defer to Junio's judgment here.
 
-At the very least in the manner it is being made. I started a separate
-thread [1] explaining the reasoning.
+I should point out that there is an option to test or set this already,
+with init.defaultBranch.  I have used this feature for testing in the
+past, and I use the feature now to set default branches.  It's also
+possible to use the template functionality to set a default branch name
+for new repositories and I've tested support for this back to at least
+Git 2.0 (but I believe it goes back even farther).  And, of course,
+either of these options can be used for developers to choose the branch
+name which meets the needs of the project best.
 
-In addition to the manner--which I argue in that other thread should
-be done for Git 3.0--I also object to the reasoning behind the change.
+As for consultation with users, there was a discussion about this on the
+list a few months back and we did get a lot of input from various
+parties.  Some of that feedback was hostile and inappropriate and some
+even violated our code of conduct in my view, as is all too common with
+potentially controversial topics, and I'm not eager to repeat such a
+discussion, since I don't think it's going to result in a productive,
+positive outcome.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
 
-Let me know if you would rather hear my arguments against the
-reasoning here, or in the other thread.
+--7vAdt9JsdkkzRPKN
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Cheers.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
 
-[1] https://lore.kernel.org/git/CAMP44s3BJ3dGsLJ-6yA-Po459=+m826KD9an4+P3qOY1vkbxZg@mail.gmail.com/
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX63a0gAKCRB8DEliiIei
+gW4tAQCSP0NOzT1KNga1QYx8CvxDvKKGnjo1oYi5i0krg8OlEQD7BE6t6Pbe3O0K
+6xBTUObPu0wpcR7cGJh7fNLJkYOSzQA=
+=Fa1a
+-----END PGP SIGNATURE-----
 
--- 
-Felipe Contreras
+--7vAdt9JsdkkzRPKN--
