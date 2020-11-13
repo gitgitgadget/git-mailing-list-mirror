@@ -2,94 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2191BC4742C
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 21:41:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E59A8C4742C
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 21:49:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DCAC12224D
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 21:41:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8B6782068E
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 21:49:35 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="rgUVGeiO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726196AbgKMVk6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Nov 2020 16:40:58 -0500
-Received: from mail-ej1-f67.google.com ([209.85.218.67]:40251 "EHLO
-        mail-ej1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725885AbgKMVkz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Nov 2020 16:40:55 -0500
-Received: by mail-ej1-f67.google.com with SMTP id oq3so15773023ejb.7
-        for <git@vger.kernel.org>; Fri, 13 Nov 2020 13:40:51 -0800 (PST)
+        id S1726070AbgKMVte (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Nov 2020 16:49:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44108 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725885AbgKMVtd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Nov 2020 16:49:33 -0500
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com [IPv6:2607:f8b0:4864:20::742])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B08B6C0613D1
+        for <git@vger.kernel.org>; Fri, 13 Nov 2020 13:49:31 -0800 (PST)
+Received: by mail-qk1-x742.google.com with SMTP id 11so10429247qkd.5
+        for <git@vger.kernel.org>; Fri, 13 Nov 2020 13:49:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=lcCxrdw5Guv6J8mEHkQYsNFhg6vAHifyEqCOgZL/AlE=;
+        b=rgUVGeiO3RdJHWcIOoCG27QydhEkp6nB51rOoPV6auUcososZz4j6AxfhzrEVLhNjj
+         MM3S+6W/kCjPErKFXXx2duIs7Q0iglSthnEohLyXSZknxfThhMbV5gX8lpl/jmlGyh6Z
+         EABzmXZf0F/C3m70u92ZY1VpRBrbJvEbBIvXKAAUzQuRLlzGdhWfUnt6Nv7tjEEELMt3
+         be35TNKblUNCINqes+Zr6CWT7jvl3VPM3hrqxDK/anNULGKbhbcmIUePtPDLNCJgCRfP
+         mTOhjtgz0nagsf+Dgit3k3LHD7rrWyQKwG5kmIlHtSUnmzvKlxHq99PpU3UgEiFlkhwd
+         zM/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=L6+mB+MMKA+HxSIUmrDk/nHzTYg6K/JXzpjR6dPio6I=;
-        b=egMAkLDsYGTGUz6kykOAzambuCuBoTnsHUIXE5hC/EVqSxPo/9G+nVRDeUpsIhZc0p
-         JBr9P/ylzFyWU0kHbDsRHZEY2BGCltc1Lhaekk+lw/wb13W6G+FJEJobBjfb3buuYA30
-         m2t5ylKQdQsq2WiFDfLepuga9ZDfA9oA0VaHs11uY+wmmJm17x/Q2F5IR63FBAnzURCd
-         9fTLDNsU8v41SY/IxatftxEmI+k5a8YrayHhszPUXqEfUaYNVRY/EhRjf2sBTeKQTH5h
-         vpR1774n0doSKpYiWM2OxkyDNOGLmCYcKqmZmPbVVbPa5rNRi4dumxRtDw2blRm80Oux
-         qaxw==
-X-Gm-Message-State: AOAM531ZaA9WpSpfWxfuDyQNGxZ3k6x+U0ytvErf02HutD4E3yKKViVC
-        /1vCwiMfiNwxIwbt7THaNkio+HH8Q9zFOieehXA=
-X-Google-Smtp-Source: ABdhPJwVfWa5xVU2gV95UuisDxW0B7ybdkZjARsuRxyZG0dD5FlBkG/bSeAs/zbaljg2XnZUyQD4rc1R/Vr09CIWLHs=
-X-Received: by 2002:a17:906:c357:: with SMTP id ci23mr3821512ejb.311.1605303650967;
- Fri, 13 Nov 2020 13:40:50 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=lcCxrdw5Guv6J8mEHkQYsNFhg6vAHifyEqCOgZL/AlE=;
+        b=KOsBW1ks1kFHEvIi7+mg9ld/fVOCYPFNHvX2YPwtl/DyoMaq7AI2HTyGCjtmi4t+JF
+         5CztcW3EYEbrYkEskofB0qGS3FAuLcpooKxHNm1wkd9dkC45I3tSqaw+A27t2W/duXAP
+         eUcwQkuuaAmROfvuc1FQM/dVYhnl9TNF47n1ZOZyKuloXuj3Ie3lXUxfgOh5JyKpsfoL
+         qeSVOq3cLmW8IUDxql4jhq3ai5kBJlpWLbo6Av5wxxSLaqhu/NCvRxHM/8wqkICHNX2K
+         9gADuC/ZKtIs+hKS8iRX2Z/0MqEOu4dpQobD8efqumOZ1XDkkDDuq6igthK4Oyw/2XIL
+         MZvA==
+X-Gm-Message-State: AOAM530k0cBkDm1RSWmveI6gD/sFtM+NeJrUdA1zKgpXbcieZLathA7Z
+        RRyxP8dvw3umLjK6LBJoRxB/QQ==
+X-Google-Smtp-Source: ABdhPJxoXfoDA9WmFLyrtRTNb7pNfPP18LA7bbYurdH8mAPaZXlj1laVzl+FOlZdU1y8nREGzsIEaA==
+X-Received: by 2002:a05:620a:10ac:: with SMTP id h12mr4092731qkk.165.1605304170855;
+        Fri, 13 Nov 2020 13:49:30 -0800 (PST)
+Received: from localhost ([2605:9480:22e:ff10:51df:232c:7a24:7fb0])
+        by smtp.gmail.com with ESMTPSA id s68sm7599706qkc.43.2020.11.13.13.49.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Nov 2020 13:49:30 -0800 (PST)
+Date:   Fri, 13 Nov 2020 16:49:28 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 03/23] pack-bitmap: bounds-check size of cache extension
+Message-ID: <X67/aExL78Fxyobl@nand.local>
+References: <cover.1605123652.git.me@ttaylorr.com>
+ <1573902df00e8a14a9cb68c37f55474388b1dc2e.1605123652.git.me@ttaylorr.com>
+ <CAN0heSqiiMZgT+rEgWVVR_cEmPK2bS3QNnJuHahrqVQet7_Qug@mail.gmail.com>
+ <20201113045700.GA743619@coredump.intra.peff.net>
+ <X6760infcF0hRYTG@nand.local>
+ <20201113213942.GB780435@coredump.intra.peff.net>
 MIME-Version: 1.0
-References: <pull.776.v2.git.1604520368.gitgitgadget@gmail.com>
- <pull.776.v3.git.1605276024.gitgitgadget@gmail.com> <ed7a61978fe9dce26ca459b5a86490c15e470698.1605276024.git.gitgitgadget@gmail.com>
- <CAPig+cS3YXH=SmTsRTOa5Cdppt9L=MbFRT+LWn9QE7aEqRiDqQ@mail.gmail.com> <73c902db-40f5-2693-c350-9c04ba2751cf@gmail.com>
-In-Reply-To: <73c902db-40f5-2693-c350-9c04ba2751cf@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 13 Nov 2020 16:40:40 -0500
-Message-ID: <CAPig+cRv_Swd4WcZDnyDxg4E1HdwdkfybjWiZsYwPFSxkhUz0w@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] maintenance: use Windows scheduled tasks
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20201113213942.GB780435@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 13, 2020 at 4:32 PM Derrick Stolee <stolee@gmail.com> wrote:
-> On 11/13/2020 3:44 PM, Eric Sunshine wrote:
-> > On Fri, Nov 13, 2020 at 9:00 AM Derrick Stolee via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
-> >> +test_expect_success MINGW 'start and stop Windows maintenance' '
-> >> +       write_script print-args <<-\EOF &&
-> >> +       echo $* >>args
-> >> +       EOF
+On Fri, Nov 13, 2020 at 04:39:42PM -0500, Jeff King wrote:
+> The problem is this hunk from patch 2:
+>
+> > +       size_t header_size = sizeof(*header) - GIT_MAX_RAWSZ + the_hash_algo->rawsz;
 > >
-> > Using `>>` here makes it harder to reason about the test than using
-> > `>` would, especially since `>>` seems to be unnecessary in this case.
+> > -       if (index->map_size < sizeof(*header) + the_hash_algo->rawsz)
+> > +       if (index->map_size < header_size)
+> >                 return error("Corrupted bitmap index (missing header data)");
 >
-> Since we execute the GIT_TEST_CRONTAB executable multiple times, we
-> need to use >> to log all three instances (and their order). Using ">args"
-> would only capture the final call for the weekly schedule.
+> The header struct contains a field for the hash of the pack. So the
+> original code as taking that full header, and adding in another
+> current-algo rawsz to account for the trailer.
 >
-> On macOS, there are as many as six calls (three bootouts, three bootstraps).
+> Afterwards, we adjust header_size to swap out the MAX_RAWSZ for the
+> current-algo rawsz. So header_size is a correct substitution for
+> sizeof(*header) now. But we still have to add back in
+> the_hash_algo->rawsz to account for the trailer. The second "+" line is
+> wrong to have removed it.
 
-Makes sense. Thanks.
+Thanks for your patient explanation. This hunk should instead read:
 
-> >> +       GIT_TEST_CRONTAB="/bin/sh print-args" git maintenance start &&
-> >
-> > Is it a requirement on Windows to mention /bin/sh here? Specifically,
-> > I'm wondering why a simple ./print-args doesn't work. (It's especially
-> > unclear since write_script() is used heavily in the test suite and it
-> > seems to work well enough on Windows without specifying /bin/sh.)
++       size_t header_size = sizeof(*header) - GIT_MAX_RAWSZ + the_hash_algo->rawsz;
+
+-       if (index->map_size < sizeof(*header) + the_hash_algo->rawsz)
++       if (index->map_size < header_size + the_hash_algo->rawsz)
+                return error("Corrupted bitmap index (missing header data)");
+
+That error might not necessarily be right (it could say "missing header
+or trailer data"), though. I'm open to if you think it should be
+changed or not.
+
+Since we didn't realize this bug at the time, the rest of the patch
+message is worded correctly, I believe.
+
+> The later line we adjust:
 >
-> I landed on this after trying several attempts to get this to work,
-> including "$(pwd)/print-args" and I'm not sure why it doesn't work
-> in the Windows case. It is something to do with how I am executing
-> the subcommand from within Git. I'm pretty sure this idea of "mocking"
-> an executable through Git is relatively new, or at least rare
+> > -       index->map_pos += sizeof(*header) - GIT_MAX_RAWSZ + the_hash_algo->rawsz;
+> > +       index->map_pos += header_size;
+>
+> is correct. It's just skipping past the header, and doesn't care about
+> the trailer at all (and confusing the two is probably what led me to
+> write the bug in the first place).
 
-Just for clarification... You mentioned in response to my [3/4] review
-that your accidentally-working write_script() only worked as expected
-on Mac but not on Windows. When you arrived at this solution of
-GIT_TEST_CRONTAB="/bin/sh ..." here, was that before or after you
-fixed write_script() to take the script body from stdin?
+Right, makes sense.
+
+> -Peff
+
+Thanks,
+Taylor
