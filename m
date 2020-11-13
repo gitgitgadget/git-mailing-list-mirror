@@ -2,111 +2,186 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93ABAC4742C
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 14:00:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DF32C388F7
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 14:00:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 49FB02222F
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 14:00:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 499CE2222F
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 14:00:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="GvLmrHLW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cB6UbvQv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727041AbgKMOAB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Nov 2020 09:00:01 -0500
-Received: from mout.gmx.net ([212.227.15.15]:42541 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726878AbgKMN77 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Nov 2020 08:59:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1605275995;
-        bh=1pyjJm78Q2VkKusSGodVe+jHDEWu75KDOQ6J0jFUmtg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=GvLmrHLW6ReLwyuUi9sVXIKVrp6Yfq6/UOvqiLyePRLAC1aRkEETLTw9EzLPuhZTl
-         pMku7DumHx0vQad53lCiLNsmI7MhXMXResM+jDtBrDG9X7lgbNFkusLCzpUZAPbhaO
-         0RrsvQnCthRN0lIffGRaaJjTQZJGuC0V0UievgNY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.25.62] ([213.196.212.205]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M1Hdw-1kapn70xXW-002pEs; Fri, 13
- Nov 2020 14:59:55 +0100
-Date:   Fri, 13 Nov 2020 14:58:57 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Phillip Wood <phillip.wood123@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 09/11] add -i (Perl version): include indentation in
- the colored header
-In-Reply-To: <70fae5a9-354d-978b-c560-d7fcabb25c76@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2011131457420.18437@tvgsbejvaqbjf.bet>
-References: <pull.785.git.1605051739.gitgitgadget@gmail.com> <pull.785.v2.git.1605097704.gitgitgadget@gmail.com> <304614751ea1b1db80fbbbdc909b3d198c20313e.1605097704.git.gitgitgadget@gmail.com> <70fae5a9-354d-978b-c560-d7fcabb25c76@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726778AbgKMOA3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Nov 2020 09:00:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54184 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726498AbgKMOA2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Nov 2020 09:00:28 -0500
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 152C6C0617A6
+        for <git@vger.kernel.org>; Fri, 13 Nov 2020 06:00:28 -0800 (PST)
+Received: by mail-wm1-x341.google.com with SMTP id a3so8574668wmb.5
+        for <git@vger.kernel.org>; Fri, 13 Nov 2020 06:00:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Nly5aoUwoSfFzapqnHpVG8ijbTA7fs42NqNdOyOuJhA=;
+        b=cB6UbvQv6yy64uWWrwYsnDIFoBbU2JcY7BPIG10EnGOwahXt732xoYUcBucaaeRufG
+         9z8KMDkRrSgzhyjpGO+zbDpwxGp60bKhILdScWI7x036C6RUyCVlBDQ3p7TvY1kYoYOR
+         /HP1b0EhLp63hNJ+IChnKnator65VSV6ourjPbqO8O2+JgJSdkAlrGf4CJMT49gEJNgx
+         N1P/tYdX/UUTxit2yFWf3ZtCHNaTFpA7aM/WazNhpPtR9bkj9hBDB5OC6TR6TXJpKe1D
+         bXOCJEga79M8hCxYQ5enVMFTajpM4pWZ3qS8Js+7LPo54pKojqUE8aFGXhgK1jpEsz8m
+         qcmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=Nly5aoUwoSfFzapqnHpVG8ijbTA7fs42NqNdOyOuJhA=;
+        b=qw7WJfjrpDTzQa5BgJyKUcSw4ZC2jZz+ywHhMt8L1VHC2oxHQAtrcQ24xXpAVucmmL
+         IuspRjDHJhEbMwl61LjQEIBOeISEh8xJ6jVisIGlr8od3IGzzNh9drD+sms50hrb+RYt
+         MQlPMMYBsA3rgXDRtlcuVNlVS2ZaGnGK9XM2eWwSx3BkKJ56fHSw68pCGuyxlIZBk9Zb
+         D0mZZ+G/W9TA/WY+mdKyly6Qur6bzTGQreZVu8Y7nWvsjkPVW2sEaXpDJa8U0IAsQq3Q
+         aK8ph/a+2t5HEgWqhrPT85x5N7ku2NZ1WDnUzR+hMAIdo1UVcgc7t2SemwDZXDcIE8j+
+         Ag9A==
+X-Gm-Message-State: AOAM530n+0hI8xtiKcrpQAyoKJhGXBpBPcavArSMXNZ56BHPJDDKZVQE
+        0f7q8t+raTzzUwXGixu0+ZBVfiPUm+M=
+X-Google-Smtp-Source: ABdhPJxu8pD63PVLeuVGochyhLhkJkqVR7p3INo4SN93pUpOMKcSJ5ilnIbeJAqbiVP2F4Vb4+YPtw==
+X-Received: by 2002:a1c:9c53:: with SMTP id f80mr2623981wme.19.1605276026620;
+        Fri, 13 Nov 2020 06:00:26 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 71sm11609927wrm.20.2020.11.13.06.00.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Nov 2020 06:00:26 -0800 (PST)
+Message-Id: <d35f1aa162097d4dfe468b3ac1717bca92a41cfa.1605276024.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.776.v3.git.1605276024.gitgitgadget@gmail.com>
+References: <pull.776.v2.git.1604520368.gitgitgadget@gmail.com>
+        <pull.776.v3.git.1605276024.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 13 Nov 2020 14:00:21 +0000
+Subject: [PATCH v3 1/4] maintenance: extract platform-specific scheduling
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:/ciYXk2xHNojW7pstrB9r2TIsTNfypZJz37WBGwVKwMAer3X3FU
- IcIEgJ/IKXEPmdA255nKaNfyE9+peVhEY+UUd/QEaLLXch3XNGMo7ndy1lhNVIcXfpCEGrm
- AqTHMSP+upURYWOWbOqiOz3NRx1D3am0ggss5hfMptXQiS+qwNGPqOSsqOs2c9meXt//etS
- 892cvk5/678zj4kuHiisA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:moZthvJ0Nqc=:ElCgp91aG+JMYvuZVSCGnF
- in6KsJzYZWiEF4XAG+SpRmZOlq7q6HwxTF72pHZZHzWZMue3S1rukyXKW34Zr1xioo7NfKwYe
- uR3BViFgSwUqya2mKQFmjZMST8X+Y6D+tXpu4JV7odAJuaxdvYHmOk6IeLmKONfljJF/GvrlX
- Sn2Hwrgk66jR+Cba2mUAapc4d2c8Bqqd2/PEdBTxs1bcQZoXMIypgs5o5I3Zbfme5IxwbZbFR
- 3ePXCB0c3eV/VMIRP8nEAtHMJEAo2aLiuOz1xXWjuC2zRGLLX65j+ANpbzNrJ2z1QuuHxdw7i
- rkQKrk13eHSaAE1K3gdlF5EYLSpJHeLdvGk5LIDt6os5OMK3c2k/8YwMr0VFaXiP4xzMUddQj
- Z0gdkAtQrWAv5bnsAbKS+rZysHPsGhqyTiLA8ZEGqtMnZ6z4+bpMLZUwn5ArS5y02FAXVkZk4
- iHbsRwlUqqR5FGqKzfLfMXrjJvkx3MiGRoYvOIwX1N92CBAAgUViKnhxD6qOi3fw5y4s413t3
- y58K8bCy8Nne0YEKMD2AlzqfaQvYLbB8KjMHLXFx/vzkGTJTlJJYX6ugSDJcCgXbwbjqYjkG4
- lZ+DSqEZov4bYDxUnROvpTKjsrrXGGqPJKBP2YZT6US88Li8BahuVOPDvpT3LDnApKe6E4xFD
- dBokXk/uqg44LyYQAlNDw5cjFFUHStts2ODHz4puz/kDvXN7MNktfb5Y+A8BMluN3ZP7sEyBG
- xObmChxsaKXV8lxOy9VezVNP3xGlCDtkYd0c/ubaixvXwn1mLdYrmJKFw6sPMfuatbcHnvnuR
- Ou2hXnne/OgWpPLGShQoowWOpl/bvZy3NMuV8SaGoOOYNFbPazLl+ejIxWFhagVffBewmLLB7
- 7Lxm2XPcYUh9w1sTVtj7Oc/1NaWa375mGlG1kg++4=
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+From: Derrick Stolee <dstolee@microsoft.com>
 
-On Fri, 13 Nov 2020, Phillip Wood wrote:
+The existing schedule mechanism using 'cron' is supported by POSIX
+platforms, but not Windows. It also works slightly differently on
+macOS to significant detriment of the user experience. To allow for
+new implementations on these platforms, extract a method that
+performs the platform-specific scheduling mechanism. This will be
+swapped at compile time with new implementations on specialized
+platforms.
 
-> On 11/11/2020 12:28, Johannes Schindelin via GitGitGadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > The header is formatted by padding each column heading with spaces up =
-to
-> > the length of 12 characters. These padding spaces are naturally includ=
-ed
-> > when coloring the entire header.
-> >
-> > However, the preceding five spaces indentation for non-flat lists were
-> > _not_ included in the Perl version, but _were_ included in the built-i=
-n
-> > version. Let's adjust the former to align with the latter's behavior.
->
-> I had trouble understanding this. I think my confusion is that the paddi=
-ng was
-> printed when the header was colored, but it was not inside the colored p=
-art
-> whereas the subject lead be to think there was no indentation printed wh=
-en the
-> header was colored.
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ builtin/gc.c | 38 +++++++++++++++++++++-----------------
+ 1 file changed, 21 insertions(+), 17 deletions(-)
 
-Right, this is ambiguous, but I thought it was clear from the first
-paragraph that "included" means "when coloring".
+diff --git a/builtin/gc.c b/builtin/gc.c
+index e3098ef6a1..c1f7d9bdc2 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1494,7 +1494,7 @@ static int maintenance_unregister(void)
+ #define BEGIN_LINE "# BEGIN GIT MAINTENANCE SCHEDULE"
+ #define END_LINE "# END GIT MAINTENANCE SCHEDULE"
+ 
+-static int update_background_schedule(int run_maintenance)
++static int platform_update_schedule(int run_maintenance, int fd)
+ {
+ 	int result = 0;
+ 	int in_old_region = 0;
+@@ -1503,11 +1503,6 @@ static int update_background_schedule(int run_maintenance)
+ 	FILE *cron_list, *cron_in;
+ 	const char *crontab_name;
+ 	struct strbuf line = STRBUF_INIT;
+-	struct lock_file lk;
+-	char *lock_path = xstrfmt("%s/schedule", the_repository->objects->odb->path);
+-
+-	if (hold_lock_file_for_update(&lk, lock_path, LOCK_NO_DEREF) < 0)
+-		return error(_("another process is scheduling background maintenance"));
+ 
+ 	crontab_name = getenv("GIT_TEST_CRONTAB");
+ 	if (!crontab_name)
+@@ -1516,12 +1511,11 @@ static int update_background_schedule(int run_maintenance)
+ 	strvec_split(&crontab_list.args, crontab_name);
+ 	strvec_push(&crontab_list.args, "-l");
+ 	crontab_list.in = -1;
+-	crontab_list.out = dup(lk.tempfile->fd);
++	crontab_list.out = dup(fd);
+ 	crontab_list.git_cmd = 0;
+ 
+ 	if (start_command(&crontab_list)) {
+-		result = error(_("failed to run 'crontab -l'; your system might not support 'cron'"));
+-		goto cleanup;
++		return error(_("failed to run 'crontab -l'; your system might not support 'cron'"));
+ 	}
+ 
+ 	/* Ignore exit code, as an empty crontab will return error. */
+@@ -1531,7 +1525,7 @@ static int update_background_schedule(int run_maintenance)
+ 	 * Read from the .lock file, filtering out the old
+ 	 * schedule while appending the new schedule.
+ 	 */
+-	cron_list = fdopen(lk.tempfile->fd, "r");
++	cron_list = fdopen(fd, "r");
+ 	rewind(cron_list);
+ 
+ 	strvec_split(&crontab_edit.args, crontab_name);
+@@ -1539,8 +1533,7 @@ static int update_background_schedule(int run_maintenance)
+ 	crontab_edit.git_cmd = 0;
+ 
+ 	if (start_command(&crontab_edit)) {
+-		result = error(_("failed to run 'crontab'; your system might not support 'cron'"));
+-		goto cleanup;
++		return error(_("failed to run 'crontab'; your system might not support 'cron'"));
+ 	}
+ 
+ 	cron_in = fdopen(crontab_edit.in, "w");
+@@ -1586,13 +1579,24 @@ static int update_background_schedule(int run_maintenance)
+ 	close(crontab_edit.in);
+ 
+ done_editing:
+-	if (finish_command(&crontab_edit)) {
++	if (finish_command(&crontab_edit))
+ 		result = error(_("'crontab' died"));
+-		goto cleanup;
+-	}
+-	fclose(cron_list);
++	else
++		fclose(cron_list);
++	return result;
++}
++
++static int update_background_schedule(int run_maintenance)
++{
++	int result;
++	struct lock_file lk;
++	char *lock_path = xstrfmt("%s/schedule", the_repository->objects->odb->path);
++
++	if (hold_lock_file_for_update(&lk, lock_path, LOCK_NO_DEREF) < 0)
++		return error(_("another process is scheduling background maintenance"));
++
++	result = platform_update_schedule(run_maintenance, lk.tempfile->fd);
+ 
+-cleanup:
+ 	rollback_lock_file(&lk);
+ 	return result;
+ }
+-- 
+gitgitgadget
 
-I'm not a native speaker, though, so I welcome suggestions to improve
-this.
-
-> I assume this change is so that we can use the same test for both
-> versions?
-
-Correct.
-
-Thanks,
-Dscho
