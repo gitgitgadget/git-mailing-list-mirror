@@ -2,53 +2,50 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DBD7C55ABD
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 20:44:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6005AC55ABD
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 20:47:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE64020B80
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 20:44:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EAB2F2223C
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 20:47:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726087AbgKMUob (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Nov 2020 15:44:31 -0500
-Received: from mail-ej1-f67.google.com ([209.85.218.67]:45105 "EHLO
-        mail-ej1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725866AbgKMUoa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Nov 2020 15:44:30 -0500
-Received: by mail-ej1-f67.google.com with SMTP id dk16so15513995ejb.12
-        for <git@vger.kernel.org>; Fri, 13 Nov 2020 12:44:28 -0800 (PST)
+        id S1726003AbgKMUr3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Nov 2020 15:47:29 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:36589 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725866AbgKMUr2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Nov 2020 15:47:28 -0500
+Received: by mail-ed1-f67.google.com with SMTP id o20so12337320eds.3
+        for <git@vger.kernel.org>; Fri, 13 Nov 2020 12:47:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=9C/SCuiUxONXgomycVBKLfD6kfs8PJ/dke8A71L71k4=;
-        b=F86n/DmQBDdL1HP/zSnZHwBoJhE5UjkAjoEVEuFYZSh7MyuIXSHstlfhIU1aNR5dkT
-         cgFA3MWw8hTe7YGPHzihUNddy3BXxF55UhBQOIsEvERDZ/JwqYZ4lPWNSLyx0+b87s+O
-         S+9SxtSQf3eohZdDrEQA2OFM5aulz6QMigf4KiorVw6MTqJ1pLh08bJQyfla+tTBKaC7
-         cqgXrD97YpXte1dnbXexqMk062gvcWNKGWuiI1Zmkoy8C3ATApkwqWmNjw/BIfPuxDm8
-         B2DKMr+0VMriU9j1VybsTR1E+nrgjqwTOLBcenMxqUcaCqHWGmH8XqbI+GsrVQy2GFFJ
-         /hlA==
-X-Gm-Message-State: AOAM53279o9xzv1RjFZnNnVIPvIAYj83lLp2OHtHdJGAp4WACZLRO5qD
-        T7ad9RK7zO2rWOb6XGsmtZsGkTzZjQZE6n/H37c=
-X-Google-Smtp-Source: ABdhPJydrY8g8KI7cIBxKHuzX40Fyp29Z1y3FbRt3Ew3ZkR/5G/IkZBD8XlpbsDFrpi4RXffq4TcXQzxE3ujP//Pl1I=
-X-Received: by 2002:a17:906:6949:: with SMTP id c9mr3794130ejs.482.1605300267285;
- Fri, 13 Nov 2020 12:44:27 -0800 (PST)
+        bh=KNDC3Hua8zbfHSBQKwsCKKvVO6gijXDxZNRCAE6S684=;
+        b=GifN2Y1mS1tn22RpBrejQKxtrdli4vEw+YAKGKx2kmH+857ObtBf8LtB0hnUJvE1lF
+         kLdZikr18ibVCc0pQxctuHd0i4X4QBAd5qKDIM0PtOJ0eVKmDMocLDr+i2Yr6z2zqpuP
+         V2auzMECHo17xHqDrMycCcFXd67g7xVeoyGEBvHl8u71Nyc2J+BcXY8t5K2zhDheXK0+
+         F10F3O5H7bLjLSkVRRUjQ0gNuiq2BLTKNGJ8MmNOX74R3h1XOD+8+B0B8HRjSqTeK2Tw
+         JaWWUgwjCvxWMA3l/BR+CrA3hD2QjOd9K0Ro0aiGK8msyvNgq6KCY6e4GxFovsBOyw/h
+         PjZw==
+X-Gm-Message-State: AOAM531XUNH6xD5WhVgGcu6ikiZQ6sU7WnG/sZWVdoFrwXbhOP1DbHc/
+        38ml6aFSfif1ow6O3GuOnFGdPsv/Ri/6zItVgH4=
+X-Google-Smtp-Source: ABdhPJyIhSr7QqrqbYmxyrV1LlNqmPuBLVGwDFdaEbC6sSImCVBOibObieeN53bBiH3QKJ7BzdcyYLEr/RJl5ZmUOtA=
+X-Received: by 2002:aa7:d84a:: with SMTP id f10mr4576123eds.163.1605300445859;
+ Fri, 13 Nov 2020 12:47:25 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.776.v2.git.1604520368.gitgitgadget@gmail.com>
- <pull.776.v3.git.1605276024.gitgitgadget@gmail.com> <ed7a61978fe9dce26ca459b5a86490c15e470698.1605276024.git.gitgitgadget@gmail.com>
-In-Reply-To: <ed7a61978fe9dce26ca459b5a86490c15e470698.1605276024.git.gitgitgadget@gmail.com>
+References: <pull.776.v2.git.1604520368.gitgitgadget@gmail.com> <pull.776.v3.git.1605276024.gitgitgadget@gmail.com>
+In-Reply-To: <pull.776.v3.git.1605276024.gitgitgadget@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 13 Nov 2020 15:44:16 -0500
-Message-ID: <CAPig+cS3YXH=SmTsRTOa5Cdppt9L=MbFRT+LWn9QE7aEqRiDqQ@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] maintenance: use Windows scheduled tasks
+Date:   Fri, 13 Nov 2020 15:47:15 -0500
+Message-ID: <CAPig+cRPKZGR0XKv4vwtP-xpzYDpB6PL-=Q7weeWtTbDG7o3vQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/4] Maintenance IV: Platform-specific background maintenance
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Derrick Stolee <derrickstolee@github.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -56,58 +53,20 @@ X-Mailing-List: git@vger.kernel.org
 
 On Fri, Nov 13, 2020 at 9:00 AM Derrick Stolee via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
-> Git's background maintenance uses cron by default, but this is not
-> available on Windows. Instead, integrate with Task Scheduler.
-> [...]
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> @@ -1684,6 +1684,190 @@ static int platform_update_schedule(int run_maintenance, int fd)
-> +static int schedule_task(const char *exec_path, enum schedule_priority schedule)
-> +{
-> +       char *xmlpath, *tempDir;
-> +       tempDir = xstrfmt("%s/temp", the_repository->objects->odb->path);
-> +       xmlpath =  xstrfmt("%s/schedule-%s.xml", tempDir, frequency);
+>  * This actually includes the feedback responses I had intended for v2.
+>    Sorry about that!
 
-When I wondered aloud in my previous review whether writing these
-throwaway files to a temporary directory would make sense, I was
-thinking more along the lines of /tmp or $TEMP. More specifically, we
-have xmkstemp() in wrapper.c which is good for this sort of thing (or
-one of the other temporary-file-making functions in there). We also
-have a more full-featured temporary-file API in tempfile.h which would
-ensure that these throwaway files actually get thrown away when the
-command finishes.
+I forgot to mention a couple things when reviewing the patches
+individually, so I'll point them out here...
 
-This is not necessarily worth a re-roll.
+>      +    at [2]. The current design does not preclude a future version that
+>      +    detects the available fatures of 'launchctl' to use the older
 
-> +       if (start_command(&child))
-> +               die(_("failed to start schtasks"));
-> +       result = finish_command(&child);
-> +
-> +       unlink(xmlpath);
-> +       rmdir(tempDir);
+s/fatures/features/
 
-Neither xmlpath and tempDir get cleaned up from the filesystem if the
-preceding die() is triggered (which may or may not make sense --
-perhaps you want to keep them around if it helps with the diagnosis of
-the failure). The functions in tempfile.h would ensure the temporary
-file is cleaned up even if the program die()s, or you could manually
-remove the temporary file before die()ing.
+>      -+ test_cmp expect args
+>      ++ test_line_count = 0 actual
 
-> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-> @@ -437,6 +437,33 @@ test_expect_success MACOS_MAINTENANCE 'start and stop macOS maintenance' '
-> +test_expect_success MINGW 'start and stop Windows maintenance' '
-> +       write_script print-args <<-\EOF &&
-> +       echo $* >>args
-> +       EOF
+These days, we usually say:
 
-Using `>>` here makes it harder to reason about the test than using
-`>` would, especially since `>>` seems to be unnecessary in this case.
-
-> +       rm -f args &&
-> +       GIT_TEST_CRONTAB="/bin/sh print-args" git maintenance start &&
-
-Is it a requirement on Windows to mention /bin/sh here? Specifically,
-I'm wondering why a simple ./print-args doesn't work. (It's especially
-unclear since write_script() is used heavily in the test suite and it
-seems to work well enough on Windows without specifying /bin/sh.)
+    test_must_be_empty actual
