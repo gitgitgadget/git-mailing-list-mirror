@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01F1BC388F7
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 12:10:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83502C56202
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 12:10:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 996A322240
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 12:10:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 215C422240
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 12:10:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b2pBsPAI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Spq679yT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726557AbgKMMK4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Nov 2020 07:10:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36892 "EHLO
+        id S1726600AbgKMMK6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Nov 2020 07:10:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726443AbgKMMKx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Nov 2020 07:10:53 -0500
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 759D7C0613D1
-        for <git@vger.kernel.org>; Fri, 13 Nov 2020 04:10:52 -0800 (PST)
-Received: by mail-wr1-x443.google.com with SMTP id 33so9593620wrl.7
-        for <git@vger.kernel.org>; Fri, 13 Nov 2020 04:10:52 -0800 (PST)
+        with ESMTP id S1726443AbgKMMK5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Nov 2020 07:10:57 -0500
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0B3DC0617A7
+        for <git@vger.kernel.org>; Fri, 13 Nov 2020 04:10:56 -0800 (PST)
+Received: by mail-wr1-x441.google.com with SMTP id b6so9607960wrt.4
+        for <git@vger.kernel.org>; Fri, 13 Nov 2020 04:10:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lplqWk8OD6gy1Z79jgyAfJNr4cHv2o5utpGFFN7YCbw=;
-        b=b2pBsPAIYVotxuE/E22xDn/bvNkMCjs6G6ZOcbOPnbP0HYY4RfQsllOvJV7c6tdXQ/
-         UCcDig6wtDdeUXa7Z84tcjGlKmcPvOc1vs7Sqepv3kENSAHpPXfXyN6jVglJXotktO3C
-         JFgk3dH0W/JXYQLR2f4ipb7vfZ/YVzmETLywS53jeDRlDJDfz3FvzvMw5UyHOQmkGHgG
-         oFsO0cWTlo9SHiAjghTwxKbrgmwssx/vXovnfGe8ujYIkoYm6wxDTic/gcxicvfNh/W5
-         qeKBhBrxBpkLQiSAU8hfKoqdM24TK60YBqnJQIRcEMNs9rN4mcj4EAynTBjUMwdV1/i8
-         kXjw==
+        bh=tzV2CGDbpfCGD8P4Bcx+JKrijTpClHVDpR1EZUYiGuw=;
+        b=Spq679yTQlxgkINxY8kCl31J+V/DrngAFVpX5n/CMaEoPG05xbq9B1csMqMGdRLpGg
+         TLxvNMhmX75jhG0iQqu4OG1p7VTfck+zs8qNvx17Ny1KMyCsG2n+o4nxeavF/jAfj9bz
+         Gdn23ztixSDST+jbjPkI8fA+D6puOZ5CFgzx9kTvxRPR+2u1sqgfcLXGsH1Px/elwWV6
+         7cpy6vD0QaYc2dJSYIZHu4qIpMDpGbrBXgaw/kPz162m2BgMo6WPL9+qtKHvtTXDwaD+
+         8wwG9WNEO8rdz/MwrabY03h8+6sITPcd8zMbqk4mv3WCsK2JvqQrSD2GEahl1YNavlgo
+         qELw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lplqWk8OD6gy1Z79jgyAfJNr4cHv2o5utpGFFN7YCbw=;
-        b=haDXhXkA31xCYDixA/o3XPOk4V0C4p90/hu2hldEQkRrmqZtoIpSywyihP15MAMEVF
-         dz/i3s+Xnnatf7BUOvTFRNL8Es8y/vE3FD12FBHD6Qdsm9fWoA0E85Hz0FFFgzjC9HS9
-         xI5uh2BURSTCLvwAXFbLfniQrBBoz5+zpux44cCodP9GTVV/TAotHfOE7F0vjRpaLfVv
-         rgEH6O+bN0Ul4qUN7fOF9V192FL5dnc2WvWzVlIALTeApsw1QG3ZXXVdtyzpQyP5CBFp
-         EcruWwwxQ8uyrmjSvgZ3pEUHQvBg+357uVj5I7qh4qNWHDxplWPfMftGRObNBbevZhpr
-         mZWw==
-X-Gm-Message-State: AOAM533vvCm8PhzvPCJwZmGSY9W0/3H4SNm3XSwC42lK59dnj4goUOxc
-        azlRvg2AD6jTtKDW3Mci2UVs6JwhVHA=
-X-Google-Smtp-Source: ABdhPJwsE+M1723z76rlsTVhLATBS7MGUM+ldGZ+3TvzvCo2raYAhLVVtDpUpz2niZs6J9xXskNB8g==
-X-Received: by 2002:a5d:448a:: with SMTP id j10mr2974441wrq.33.1605269450474;
-        Fri, 13 Nov 2020 04:10:50 -0800 (PST)
+        bh=tzV2CGDbpfCGD8P4Bcx+JKrijTpClHVDpR1EZUYiGuw=;
+        b=peEu2L+W/xZf7BzM0DwnkweFLo5bgy71rfMPafD6XCImdS16EgBbdvyPtSgefRhuME
+         W7ov/ReE2sQpsEdcTIes/x6pW1NM+CqPHDvoCFpS2aKVQlvQV8ImGFsm06pOUkUj1R7q
+         7TQpUdAWyCHi4+JzhYdwrCBM5VOMqZ8j+IrEiNJY//u0WCESrD/TUhIU+aTuvAFeZnD0
+         qU6oLQqI6+6nST4ZWwJ5BZkKaPP0OWlCZEn0xK7DS+iw5sJt78L2q/tBr0V/6cjOucJq
+         NzpgkSE6a5Rj9ItIg3NPDa+LtUetKWAtQchVN8Kuc7WOz5V5sc+5c//vC4mrN8aKWPcR
+         CaQQ==
+X-Gm-Message-State: AOAM533FaFO9yhIDIESQf1ztiMQytuTpJh4NNbL5UvV94iWJfb+LOmpM
+        8e6Mdqq53mKQohKiZkvq8CQZXFjh1iM=
+X-Google-Smtp-Source: ABdhPJxPTZvhOaP6vDU1fFwZ6OwxwQevmRJJ4AAsBb/ex+4GKZIcqj++jtEn2kuq37P2cVSBYfCE7Q==
+X-Received: by 2002:adf:db0f:: with SMTP id s15mr3112081wri.354.1605269454822;
+        Fri, 13 Nov 2020 04:10:54 -0800 (PST)
 Received: from ylate.lan (atoulouse-654-1-426-233.w2-6.abo.wanadoo.fr. [2.6.209.233])
-        by smtp.googlemail.com with ESMTPSA id g138sm10083697wme.39.2020.11.13.04.10.48
+        by smtp.googlemail.com with ESMTPSA id g138sm10083697wme.39.2020.11.13.04.10.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Nov 2020 04:10:49 -0800 (PST)
+        Fri, 13 Nov 2020 04:10:54 -0800 (PST)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v4 03/12] merge-one-file: rewrite in C
-Date:   Fri, 13 Nov 2020 12:04:19 +0100
-Message-Id: <20201113110428.21265-4-alban.gruin@gmail.com>
+Subject: [PATCH v4 06/12] merge-resolve: rewrite in C
+Date:   Fri, 13 Nov 2020 12:04:22 +0100
+Message-Id: <20201113110428.21265-7-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20201113110428.21265-1-alban.gruin@gmail.com>
 References: <20201005122646.27994-1-alban.gruin@gmail.com>
@@ -76,596 +76,353 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This rewrites `git merge-one-file' from shell to C.  This port is not
-completely straightforward: to save precious cycles by avoiding reading
-and flushing the index repeatedly, write temporary files when an
-operation can be performed in-memory, or allow other function to use the
-rewrite without forking nor worrying about the index, the calls to
-external processes are replaced by calls to functions in libgit.a:
+This rewrites `git merge-resolve' from shell to C.  As for `git
+merge-one-file', this port is not completely straightforward and removes
+calls to external processes to avoid reading and writing the index over
+and over again.
 
- - calls to `update-index --add --cacheinfo' are replaced by calls to
-   add_to_index_cacheinfo();
+ - The call to `update-index -q --refresh' is replaced by a call to
+   refresh_index().
 
- - calls to `update-index --remove' are replaced by calls to
-   remove_file_from_index();
+ - The call to `read-tree' is replaced by a call to unpack_trees() (and
+   all the setup needed).
 
- - calls to `checkout-index -u -f' are replaced by calls to
-   checkout_entry();
+ - The call to `write-tree' is replaced by a call to
+   write_index_as_tree().
 
- - calls to `unpack-file' and `merge-files' are replaced by calls to
-   read_mmblob() and xdl_merge(), respectively, to merge files
-   in-memory;
+ - The call to `merge-index', needed to invoke `git merge-one-file', is
+   replaced by a call to the new merge_all_index() function.
 
- - calls to `checkout-index -f --stage=2' are removed, as this is needed
-   to have the correct permission bits on the merged file from the
-   script, but not in the C version;
+The index is read in cmd_merge_resolve(), and is wrote back by
+merge_strategies_resolve().
 
- - calls to `update-index' are replaced by calls to add_file_to_index().
-
-The bulk of the rewrite is done in a new file in libgit.a,
-merge-strategies.c.  This will enable the resolve and octopus strategies
-to directly call it instead of forking.
-
-This also fixes a bug present in the original script: instead of
-checking if a _regular_ file exists when a file exists in the branch to
-merge, but not in our branch, the rewritten version checks if a file of
-any kind (ie. a directory, ...) exists.  This fixes the tests t6035.14,
-where the branch to merge had a new file, `a/b', but our branch had a
-directory there; it should have failed because a directory exists, but
-it did not because there was no regular file called `a/b'.  This test is
-now marked as successful.
+The parameters of merge_strategies_resolve() will be surprising at first
+glance: why using a commit list for `bases' and `remote', where we could
+use an oid array, and a pointer to an oid?  Because, in a later commit,
+try_merge_strategy() will be able to call merge_strategies_resolve()
+directly, and it already uses a commit list for `bases' (`common') and
+`remote' (`remoteheads'), and a string for `head_arg'.  To reduce
+frictions later, merge_strategies_resolve() takes the same types of
+parameters.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
- Makefile                        |   3 +-
- builtin.h                       |   1 +
- builtin/merge-one-file.c        |  94 +++++++++++++++++
- git-merge-one-file.sh           | 167 ------------------------------
- git.c                           |   1 +
- merge-strategies.c              | 173 ++++++++++++++++++++++++++++++++
- merge-strategies.h              |  12 +++
- t/t6415-merge-dir-to-symlink.sh |   2 +-
- 8 files changed, 284 insertions(+), 169 deletions(-)
- create mode 100644 builtin/merge-one-file.c
- delete mode 100755 git-merge-one-file.sh
- create mode 100644 merge-strategies.c
- create mode 100644 merge-strategies.h
+ Makefile                |  2 +-
+ builtin.h               |  1 +
+ builtin/merge-resolve.c | 73 +++++++++++++++++++++++++++++++++++
+ git-merge-resolve.sh    | 54 --------------------------
+ git.c                   |  1 +
+ merge-strategies.c      | 85 +++++++++++++++++++++++++++++++++++++++++
+ merge-strategies.h      |  5 +++
+ 7 files changed, 166 insertions(+), 55 deletions(-)
+ create mode 100644 builtin/merge-resolve.c
+ delete mode 100755 git-merge-resolve.sh
 
 diff --git a/Makefile b/Makefile
-index de53954590..6dfdb33cb2 100644
+index 6dfdb33cb2..3cc6b192f1 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -601,7 +601,6 @@ SCRIPT_SH += git-bisect.sh
  SCRIPT_SH += git-difftool--helper.sh
  SCRIPT_SH += git-filter-branch.sh
  SCRIPT_SH += git-merge-octopus.sh
--SCRIPT_SH += git-merge-one-file.sh
- SCRIPT_SH += git-merge-resolve.sh
+-SCRIPT_SH += git-merge-resolve.sh
  SCRIPT_SH += git-mergetool.sh
  SCRIPT_SH += git-quiltimport.sh
-@@ -909,6 +908,7 @@ LIB_OBJS += match-trees.o
- LIB_OBJS += mem-pool.o
- LIB_OBJS += merge-blobs.o
- LIB_OBJS += merge-recursive.o
-+LIB_OBJS += merge-strategies.o
- LIB_OBJS += merge.o
- LIB_OBJS += mergesort.o
- LIB_OBJS += midx.o
-@@ -1094,6 +1094,7 @@ BUILTIN_OBJS += builtin/mailsplit.o
- BUILTIN_OBJS += builtin/merge-base.o
- BUILTIN_OBJS += builtin/merge-file.o
- BUILTIN_OBJS += builtin/merge-index.o
-+BUILTIN_OBJS += builtin/merge-one-file.o
+ SCRIPT_SH += git-request-pull.sh
+@@ -1097,6 +1096,7 @@ BUILTIN_OBJS += builtin/merge-index.o
+ BUILTIN_OBJS += builtin/merge-one-file.o
  BUILTIN_OBJS += builtin/merge-ours.o
  BUILTIN_OBJS += builtin/merge-recursive.o
++BUILTIN_OBJS += builtin/merge-resolve.o
  BUILTIN_OBJS += builtin/merge-tree.o
+ BUILTIN_OBJS += builtin/merge.o
+ BUILTIN_OBJS += builtin/mktag.o
 diff --git a/builtin.h b/builtin.h
-index 53fb290963..4d2cd78856 100644
+index 4d2cd78856..35e91c16d0 100644
 --- a/builtin.h
 +++ b/builtin.h
-@@ -178,6 +178,7 @@ int cmd_merge_base(int argc, const char **argv, const char *prefix);
- int cmd_merge_index(int argc, const char **argv, const char *prefix);
- int cmd_merge_ours(int argc, const char **argv, const char *prefix);
+@@ -180,6 +180,7 @@ int cmd_merge_ours(int argc, const char **argv, const char *prefix);
  int cmd_merge_file(int argc, const char **argv, const char *prefix);
-+int cmd_merge_one_file(int argc, const char **argv, const char *prefix);
+ int cmd_merge_one_file(int argc, const char **argv, const char *prefix);
  int cmd_merge_recursive(int argc, const char **argv, const char *prefix);
++int cmd_merge_resolve(int argc, const char **argv, const char *prefix);
  int cmd_merge_tree(int argc, const char **argv, const char *prefix);
  int cmd_mktag(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/merge-one-file.c b/builtin/merge-one-file.c
+ int cmd_mktree(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/merge-resolve.c b/builtin/merge-resolve.c
 new file mode 100644
-index 0000000000..9c21778e1d
+index 0000000000..dca31676b8
 --- /dev/null
-+++ b/builtin/merge-one-file.c
-@@ -0,0 +1,94 @@
++++ b/builtin/merge-resolve.c
+@@ -0,0 +1,73 @@
 +/*
-+ * Builtin "git merge-one-file"
++ * Builtin "git merge-resolve"
 + *
 + * Copyright (c) 2020 Alban Gruin
 + *
-+ * Based on git-merge-one-file.sh, written by Linus Torvalds.
++ * Based on git-merge-resolve.sh, written by Linus Torvalds and Junio C
++ * Hamano.
 + *
-+ * This is the git per-file merge utility, called with
-+ *
-+ *   argv[1] - original file object name (or empty)
-+ *   argv[2] - file in branch1 object name (or empty)
-+ *   argv[3] - file in branch2 object name (or empty)
-+ *   argv[4] - pathname in repository
-+ *   argv[5] - original file mode (or empty)
-+ *   argv[6] - file in branch1 mode (or empty)
-+ *   argv[7] - file in branch2 mode (or empty)
-+ *
-+ * Handle some trivial cases. The _really_ trivial cases have been
-+ * handled already by git read-tree, but that one doesn't do any merges
-+ * that might change the tree layout.
++ * Resolve two trees, using enhanced multi-base read-tree.
 + */
 +
 +#define USE_THE_INDEX_COMPATIBILITY_MACROS
 +#include "cache.h"
 +#include "builtin.h"
-+#include "lockfile.h"
 +#include "merge-strategies.h"
 +
-+static const char builtin_merge_one_file_usage[] =
-+	"git merge-one-file <orig blob> <our blob> <their blob> <path> "
-+	"<orig mode> <our mode> <their mode>\n\n"
-+	"Blob ids and modes should be empty for missing files.";
++static const char builtin_merge_resolve_usage[] =
++	"git merge-resolve <bases>... -- <head> <remote>";
 +
-+static int read_mode(const char *name, const char *arg, unsigned int *mode)
++int cmd_merge_resolve(int argc, const char **argv, const char *prefix)
 +{
-+	char *last;
-+	int ret = 0;
++	int i, sep_seen = 0;
++	const char *head = NULL;
++	struct commit_list *bases = NULL, *remote = NULL;
++	struct commit_list **next_base = &bases;
 +
-+	*mode = strtol(arg, &last, 8);
++	if (argc < 5)
++		usage(builtin_merge_resolve_usage);
 +
-+	if (*last)
-+		ret = error(_("invalid '%s' mode: expected nothing, got '%c'"), name, *last);
-+	else if (!(S_ISREG(*mode) || S_ISDIR(*mode) || S_ISLNK(*mode)))
-+		ret = error(_("invalid '%s' mode: %o"), name, *mode);
-+
-+	return ret;
-+}
-+
-+int cmd_merge_one_file(int argc, const char **argv, const char *prefix)
-+{
-+	struct object_id orig_blob, our_blob, their_blob,
-+		*p_orig_blob = NULL, *p_our_blob = NULL, *p_their_blob = NULL;
-+	unsigned int orig_mode = 0, our_mode = 0, their_mode = 0, ret = 0;
-+	struct lock_file lock = LOCK_INIT;
-+
-+	if (argc != 8)
-+		usage(builtin_merge_one_file_usage);
-+
++	setup_work_tree();
 +	if (read_cache() < 0)
 +		die("invalid index");
 +
-+	hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
++	/*
++	 * The first parameters up to -- are merge bases; the rest are
++	 * heads.
++	 */
++	for (i = 1; i < argc; i++) {
++		if (!strcmp(argv[i], "--"))
++			sep_seen = 1;
++		else if (!strcmp(argv[i], "-h"))
++			usage(builtin_merge_resolve_usage);
++		else if (sep_seen && !head)
++			head = argv[i];
++		else {
++			struct object_id oid;
++			struct commit *commit;
 +
-+	if (!get_oid_hex(argv[1], &orig_blob)) {
-+		p_orig_blob = &orig_blob;
-+		ret = read_mode("orig", argv[5], &orig_mode);
-+	} else if (!*argv[1] && *argv[5])
-+		ret = error(_("no 'orig' object id given, but a mode was still given."));
++			if (get_oid(argv[i], &oid))
++				die("object %s not found.", argv[i]);
 +
-+	if (!get_oid_hex(argv[2], &our_blob)) {
-+		p_our_blob = &our_blob;
-+		ret = read_mode("our", argv[6], &our_mode);
-+	} else if (!*argv[2] && *argv[6])
-+		ret = error(_("no 'our' object id given, but a mode was still given."));
++			commit = lookup_commit_or_die(&oid, argv[i]);
 +
-+	if (!get_oid_hex(argv[3], &their_blob)) {
-+		p_their_blob = &their_blob;
-+		ret = read_mode("their", argv[7], &their_mode);
-+	} else if (!*argv[3] && *argv[7])
-+		ret = error(_("no 'their' object id given, but a mode was still given."));
-+
-+	if (ret)
-+		return ret;
-+
-+	ret = merge_three_way(the_repository, p_orig_blob, p_our_blob, p_their_blob,
-+			      argv[4], orig_mode, our_mode, their_mode);
-+
-+	if (ret) {
-+		rollback_lock_file(&lock);
-+		return !!ret;
++			if (sep_seen)
++				commit_list_insert(commit, &remote);
++			else
++				next_base = commit_list_append(commit, next_base);
++		}
 +	}
 +
-+	return write_locked_index(&the_index, &lock, COMMIT_LOCK);
++	/*
++	 * Give up if we are given two or more remotes.  Not handling
++	 * octopus.
++	 */
++	if (remote && remote->next)
++		return 2;
++
++	/* Give up if this is a baseless merge. */
++	if (!bases)
++		return 2;
++
++	return merge_strategies_resolve(the_repository, bases, head, remote);
 +}
-diff --git a/git-merge-one-file.sh b/git-merge-one-file.sh
+diff --git a/git-merge-resolve.sh b/git-merge-resolve.sh
 deleted file mode 100755
-index f6d9852d2f..0000000000
---- a/git-merge-one-file.sh
+index 343fe7bccd..0000000000
+--- a/git-merge-resolve.sh
 +++ /dev/null
-@@ -1,167 +0,0 @@
+@@ -1,54 +0,0 @@
 -#!/bin/sh
 -#
--# Copyright (c) Linus Torvalds, 2005
+-# Copyright (c) 2005 Linus Torvalds
+-# Copyright (c) 2005 Junio C Hamano
 -#
--# This is the git per-file merge script, called with
--#
--#   $1 - original file SHA1 (or empty)
--#   $2 - file in branch1 SHA1 (or empty)
--#   $3 - file in branch2 SHA1 (or empty)
--#   $4 - pathname in repository
--#   $5 - original file mode (or empty)
--#   $6 - file in branch1 mode (or empty)
--#   $7 - file in branch2 mode (or empty)
--#
--# Handle some trivial cases.. The _really_ trivial cases have
--# been handled already by git read-tree, but that one doesn't
--# do any merges that might change the tree layout.
+-# Resolve two trees, using enhanced multi-base read-tree.
 -
--USAGE='<orig blob> <our blob> <their blob> <path>'
--USAGE="$USAGE <orig mode> <our mode> <their mode>"
--LONG_USAGE="usage: git merge-one-file $USAGE
--
--Blob ids and modes should be empty for missing files."
--
--SUBDIRECTORY_OK=Yes
--. git-sh-setup
--cd_to_toplevel
--require_work_tree
--
--if test $# != 7
--then
--	echo "$LONG_USAGE"
--	exit 1
--fi
--
--case "${1:-.}${2:-.}${3:-.}" in
--#
--# Deleted in both or deleted in one and unchanged in the other
--#
--"$1.." | "$1.$1" | "$1$1.")
--	if { test -z "$6" && test "$5" != "$7"; } ||
--	   { test -z "$7" && test "$5" != "$6"; }
--	then
--		echo "ERROR: File $4 deleted on one branch but had its" >&2
--		echo "ERROR: permissions changed on the other." >&2
--		exit 1
--	fi
--
--	if test -n "$2"
--	then
--		echo "Removing $4"
--	else
--		# read-tree checked that index matches HEAD already,
--		# so we know we do not have this path tracked.
--		# there may be an unrelated working tree file here,
--		# which we should just leave unmolested.  Make sure
--		# we do not have it in the index, though.
--		exec git update-index --remove -- "$4"
--	fi
--	if test -f "$4"
--	then
--		rm -f -- "$4" &&
--		rmdir -p "$(expr "z$4" : 'z\(.*\)/')" 2>/dev/null || :
--	fi &&
--		exec git update-index --remove -- "$4"
--	;;
--
--#
--# Added in one.
--#
--".$2.")
--	# the other side did not add and we added so there is nothing
--	# to be done, except making the path merged.
--	exec git update-index --add --cacheinfo "$6" "$2" "$4"
--	;;
--"..$3")
--	echo "Adding $4"
--	if test -f "$4"
--	then
--		echo "ERROR: untracked $4 is overwritten by the merge." >&2
--		exit 1
--	fi
--	git update-index --add --cacheinfo "$7" "$3" "$4" &&
--		exec git checkout-index -u -f -- "$4"
--	;;
--
--#
--# Added in both, identically (check for same permissions).
--#
--".$3$2")
--	if test "$6" != "$7"
--	then
--		echo "ERROR: File $4 added identically in both branches," >&2
--		echo "ERROR: but permissions conflict $6->$7." >&2
--		exit 1
--	fi
--	echo "Adding $4"
--	git update-index --add --cacheinfo "$6" "$2" "$4" &&
--		exec git checkout-index -u -f -- "$4"
--	;;
--
--#
--# Modified in both, but differently.
--#
--"$1$2$3" | ".$2$3")
--
--	case ",$6,$7," in
--	*,120000,*)
--		echo "ERROR: $4: Not merging symbolic link changes." >&2
--		exit 1
+-# The first parameters up to -- are merge bases; the rest are heads.
+-bases= head= remotes= sep_seen=
+-for arg
+-do
+-	case ",$sep_seen,$head,$arg," in
+-	*,--,)
+-		sep_seen=yes
 -		;;
--	*,160000,*)
--		echo "ERROR: $4: Not merging conflicting submodule changes." >&2
--		exit 1
+-	,yes,,*)
+-		head=$arg
 -		;;
--	esac
--
--	src1=$(git unpack-file $2)
--	src2=$(git unpack-file $3)
--	case "$1" in
--	'')
--		echo "Added $4 in both, but differently."
--		orig=$(git unpack-file $(git hash-object /dev/null))
+-	,yes,*)
+-		remotes="$remotes$arg "
 -		;;
 -	*)
--		echo "Auto-merging $4"
--		orig=$(git unpack-file $1)
+-		bases="$bases$arg "
 -		;;
 -	esac
+-done
 -
--	git merge-file "$src1" "$orig" "$src2"
--	ret=$?
--	msg=
--	if test $ret != 0 || test -z "$1"
+-# Give up if we are given two or more remotes -- not handling octopus.
+-case "$remotes" in
+-?*' '?*)
+-	exit 2 ;;
+-esac
+-
+-# Give up if this is a baseless merge.
+-if test '' = "$bases"
+-then
+-	exit 2
+-fi
+-
+-git update-index -q --refresh
+-git read-tree -u -m --aggressive $bases $head $remotes || exit 2
+-echo "Trying simple merge."
+-if result_tree=$(git write-tree 2>/dev/null)
+-then
+-	exit 0
+-else
+-	echo "Simple merge failed, trying Automatic merge."
+-	if git merge-index -o git-merge-one-file -a
 -	then
--		msg='content conflict'
--		ret=1
--	fi
--
--	# Create the working tree file, using "our tree" version from the
--	# index, and then store the result of the merge.
--	git checkout-index -f --stage=2 -- "$4" && cat "$src1" >"$4" || exit 1
--	rm -f -- "$orig" "$src1" "$src2"
--
--	if test "$6" != "$7"
--	then
--		if test -n "$msg"
--		then
--			msg="$msg, "
--		fi
--		msg="${msg}permissions conflict: $5->$6,$7"
--		ret=1
--	fi
--
--	if test $ret != 0
--	then
--		echo "ERROR: $msg in $4" >&2
+-		exit 0
+-	else
 -		exit 1
 -	fi
--	exec git update-index -- "$4"
--	;;
--
--*)
--	echo "ERROR: $4: Not handling case $1 -> $2 -> $3" >&2
--	;;
--esac
--exit 1
+-fi
 diff --git a/git.c b/git.c
-index f1e8b56d99..a4d3f98094 100644
+index a4d3f98094..64a1a1de41 100644
 --- a/git.c
 +++ b/git.c
-@@ -540,6 +540,7 @@ static struct cmd_struct commands[] = {
- 	{ "merge-file", cmd_merge_file, RUN_SETUP_GENTLY },
- 	{ "merge-index", cmd_merge_index, RUN_SETUP | NO_PARSEOPT },
- 	{ "merge-ours", cmd_merge_ours, RUN_SETUP | NO_PARSEOPT },
-+	{ "merge-one-file", cmd_merge_one_file, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+@@ -544,6 +544,7 @@ static struct cmd_struct commands[] = {
  	{ "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
  	{ "merge-recursive-ours", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
  	{ "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
++	{ "merge-resolve", cmd_merge_resolve, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+ 	{ "merge-subtree", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+ 	{ "merge-tree", cmd_merge_tree, RUN_SETUP | NO_PARSEOPT },
+ 	{ "mktag", cmd_mktag, RUN_SETUP | NO_PARSEOPT },
 diff --git a/merge-strategies.c b/merge-strategies.c
-new file mode 100644
-index 0000000000..f5fdb15bbf
---- /dev/null
+index aa31b7045c..2b34ea0b76 100644
+--- a/merge-strategies.c
 +++ b/merge-strategies.c
-@@ -0,0 +1,173 @@
-+#include "cache.h"
-+#include "dir.h"
-+#include "merge-strategies.h"
-+#include "xdiff-interface.h"
+@@ -1,7 +1,10 @@
+ #include "cache.h"
++#include "cache-tree.h"
+ #include "dir.h"
++#include "lockfile.h"
+ #include "merge-strategies.h"
+ #include "run-command.h"
++#include "unpack-trees.h"
+ #include "xdiff-interface.h"
+ 
+ static int checkout_from_index(struct index_state *istate, const char *path,
+@@ -285,3 +288,85 @@ int merge_all_index(struct index_state *istate, int oneshot, int quiet,
+ 
+ 	return err;
+ }
 +
-+static int checkout_from_index(struct index_state *istate, const char *path,
-+			       struct cache_entry *ce)
++static int add_tree(const struct object_id *oid, struct tree_desc *t)
 +{
-+	struct checkout state = CHECKOUT_INIT;
++	struct tree *tree;
 +
-+	state.istate = istate;
-+	state.force = 1;
-+	state.base_dir = "";
-+	state.base_dir_len = 0;
++	tree = parse_tree_indirect(oid);
++	if (parse_tree(tree))
++		return -1;
 +
-+	if (checkout_entry(ce, &state, NULL, NULL) < 0)
-+		return error(_("%s: cannot checkout file"), path);
++	init_tree_desc(t, tree->buffer, tree->size);
 +	return 0;
 +}
 +
-+static int merge_one_file_deleted(struct index_state *istate,
-+				  const struct object_id *our_blob,
-+				  const struct object_id *their_blob, const char *path,
-+				  unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode)
++int merge_strategies_resolve(struct repository *r,
++			     struct commit_list *bases, const char *head_arg,
++			     struct commit_list *remote)
 +{
-+	if ((our_blob && orig_mode != our_mode) ||
-+	    (their_blob && orig_mode != their_mode))
-+		return error(_("File %s deleted on one branch but had its "
-+			       "permissions changed on the other."), path);
++	int i = 0;
++	struct lock_file lock = LOCK_INIT;
++	struct tree_desc t[MAX_UNPACK_TREES];
++	struct unpack_trees_options opts;
++	struct object_id head, oid;
++	struct commit_list *j;
 +
-+	if (our_blob) {
-+		printf(_("Removing %s\n"), path);
++	if (head_arg)
++		get_oid(head_arg, &head);
 +
-+		if (file_exists(path))
-+			remove_path(path);
++	repo_hold_locked_index(r, &lock, LOCK_DIE_ON_ERROR);
++	refresh_index(r->index, 0, NULL, NULL, NULL);
++
++	memset(&opts, 0, sizeof(opts));
++	opts.head_idx = 1;
++	opts.src_index = r->index;
++	opts.dst_index = r->index;
++	opts.update = 1;
++	opts.merge = 1;
++	opts.aggressive = 1;
++
++	for (j = bases; j && j->item; j = j->next) {
++		if (add_tree(&j->item->object.oid, t + (i++)))
++			goto out;
 +	}
 +
-+	if (remove_file_from_index(istate, path))
-+		return error("%s: cannot remove from the index", path);
-+	return 0;
-+}
++	if (head_arg && add_tree(&head, t + (i++)))
++		goto out;
++	if (remote && add_tree(&remote->item->object.oid, t + (i++)))
++		goto out;
 +
-+static int do_merge_one_file(struct index_state *istate,
-+			     const struct object_id *orig_blob,
-+			     const struct object_id *our_blob,
-+			     const struct object_id *their_blob, const char *path,
-+			     unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode)
-+{
-+	int ret, i, dest;
-+	ssize_t written;
-+	mmbuffer_t result = {NULL, 0};
-+	mmfile_t mmfs[3];
-+	xmparam_t xmp = {{0}};
-+
-+	if (our_mode == S_IFLNK || their_mode == S_IFLNK)
-+		return error(_("%s: Not merging symbolic link changes."), path);
-+	else if (our_mode == S_IFGITLINK || their_mode == S_IFGITLINK)
-+		return error(_("%s: Not merging conflicting submodule changes."), path);
-+	else if (our_mode != their_mode)
-+		return error(_("permission conflict: %o->%o,%o in %s"),
-+			     orig_mode, our_mode, their_mode, path);
-+
-+	if (orig_blob) {
-+		printf(_("Auto-merging %s\n"), path);
-+		read_mmblob(mmfs + 0, orig_blob);
-+	} else {
-+		printf(_("Added %s in both, but differently.\n"), path);
-+		read_mmblob(mmfs + 0, &null_oid);
++	if (i == 1)
++		opts.fn = oneway_merge;
++	else if (i == 2) {
++		opts.fn = twoway_merge;
++		opts.initial_checkout = is_index_unborn(r->index);
++	} else if (i >= 3) {
++		opts.fn = threeway_merge;
++		opts.head_idx = i - 1;
 +	}
 +
-+	read_mmblob(mmfs + 1, our_blob);
-+	read_mmblob(mmfs + 2, their_blob);
++	if (unpack_trees(i, t, &opts))
++		goto out;
 +
-+	xmp.level = XDL_MERGE_ZEALOUS_ALNUM;
-+	xmp.style = 0;
-+	xmp.favor = 0;
++	puts(_("Trying simple merge."));
++	write_locked_index(r->index, &lock, COMMIT_LOCK);
 +
-+	ret = xdl_merge(mmfs + 0, mmfs + 1, mmfs + 2, &xmp, &result);
++	if (write_index_as_tree(&oid, r->index, r->index_file,
++				WRITE_TREE_SILENT, NULL)) {
++		int ret;
 +
-+	for (i = 0; i < 3; i++)
-+		free(mmfs[i].ptr);
++		puts(_("Simple merge failed, trying Automatic merge."));
++		repo_hold_locked_index(r, &lock, LOCK_DIE_ON_ERROR);
++		ret = merge_all_index(r->index, 0, 0, merge_one_file_func, r);
 +
-+	if (ret < 0) {
-+		free(result.ptr);
-+		return error(_("Failed to execute internal merge"));
-+	} else if (ret > 0 || !orig_blob) {
-+		free(result.ptr);
-+		return error(_("content conflict in %s"), path);
-+	}
-+
-+	unlink(path);
-+	if ((dest = open(path, O_WRONLY | O_CREAT, our_mode)) < 0) {
-+		free(result.ptr);
-+		return error_errno(_("failed to open file '%s'"), path);
-+	}
-+
-+	written = write_in_full(dest, result.ptr, result.size);
-+	close(dest);
-+
-+	free(result.ptr);
-+
-+	if (written < 0)
-+		return error_errno(_("failed to write to '%s'"), path);
-+
-+	return add_file_to_index(istate, path, 0);
-+}
-+
-+int merge_three_way(struct repository *r,
-+		    const struct object_id *orig_blob,
-+		    const struct object_id *our_blob,
-+		    const struct object_id *their_blob, const char *path,
-+		    unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode)
-+{
-+	if (orig_blob &&
-+	    ((!their_blob && our_blob && oideq(orig_blob, our_blob)) ||
-+	     (!our_blob && their_blob && oideq(orig_blob, their_blob)))) {
-+		/* Deleted in both or deleted in one and unchanged in the other. */
-+		return merge_one_file_deleted(r->index, our_blob, their_blob, path,
-+					      orig_mode, our_mode, their_mode);
-+	} else if (!orig_blob && our_blob && !their_blob) {
-+		/*
-+		 * Added in one.  The other side did not add and we
-+		 * added so there is nothing to be done, except making
-+		 * the path merged.
-+		 */
-+		return add_to_index_cacheinfo(r->index, our_mode, our_blob, path, 0, 1, 1, NULL);
-+	} else if (!orig_blob && !our_blob && their_blob) {
-+		struct cache_entry *ce;
-+		printf(_("Adding %s\n"), path);
-+
-+		if (file_exists(path))
-+			return error(_("untracked %s is overwritten by the merge."), path);
-+
-+		if (add_to_index_cacheinfo(r->index, their_mode, their_blob, path, 0, 1, 1, &ce))
-+			return -1;
-+		return checkout_from_index(r->index, path, ce);
-+	} else if (!orig_blob && our_blob && their_blob &&
-+		   oideq(our_blob, their_blob)) {
-+		struct cache_entry *ce;
-+
-+		/* Added in both, identically (check for same permissions). */
-+		if (our_mode != their_mode)
-+			return error(_("File %s added identically in both branches, "
-+				       "but permissions conflict %o->%o."),
-+				     path, our_mode, their_mode);
-+
-+		printf(_("Adding %s\n"), path);
-+
-+		if (add_to_index_cacheinfo(r->index, our_mode, our_blob, path, 0, 1, 1, &ce))
-+			return -1;
-+		return checkout_from_index(r->index, path, ce);
-+	} else if (our_blob && their_blob) {
-+		/* Modified in both, but differently. */
-+		return do_merge_one_file(r->index,
-+					 orig_blob, our_blob, their_blob, path,
-+					 orig_mode, our_mode, their_mode);
-+	} else {
-+		char orig_hex[GIT_MAX_HEXSZ] = {0}, our_hex[GIT_MAX_HEXSZ] = {0},
-+			their_hex[GIT_MAX_HEXSZ] = {0};
-+
-+		if (orig_blob)
-+			oid_to_hex_r(orig_hex, orig_blob);
-+		if (our_blob)
-+			oid_to_hex_r(our_hex, our_blob);
-+		if (their_blob)
-+			oid_to_hex_r(their_hex, their_blob);
-+
-+		return error(_("%s: Not handling case %s -> %s -> %s"),
-+			     path, orig_hex, our_hex, their_hex);
++		write_locked_index(r->index, &lock, COMMIT_LOCK);
++		return !!ret;
 +	}
 +
 +	return 0;
++
++ out:
++	rollback_lock_file(&lock);
++	return 2;
 +}
 diff --git a/merge-strategies.h b/merge-strategies.h
-new file mode 100644
-index 0000000000..e624c4f27c
---- /dev/null
+index b69a12b390..4f996261b4 100644
+--- a/merge-strategies.h
 +++ b/merge-strategies.h
-@@ -0,0 +1,12 @@
-+#ifndef MERGE_STRATEGIES_H
-+#define MERGE_STRATEGIES_H
-+
-+#include "object.h"
-+
-+int merge_three_way(struct repository *r,
-+		    const struct object_id *orig_blob,
-+		    const struct object_id *our_blob,
-+		    const struct object_id *their_blob, const char *path,
-+		    unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode);
-+
-+#endif /* MERGE_STRATEGIES_H */
-diff --git a/t/t6415-merge-dir-to-symlink.sh b/t/t6415-merge-dir-to-symlink.sh
-index 2eddcc7664..5fb74e39a0 100755
---- a/t/t6415-merge-dir-to-symlink.sh
-+++ b/t/t6415-merge-dir-to-symlink.sh
-@@ -94,7 +94,7 @@ test_expect_success SYMLINKS 'a/b was resolved as symlink' '
- 	test -h a/b
- '
+@@ -1,6 +1,7 @@
+ #ifndef MERGE_STRATEGIES_H
+ #define MERGE_STRATEGIES_H
  
--test_expect_failure 'do not lose untracked in merge (resolve)' '
-+test_expect_success 'do not lose untracked in merge (resolve)' '
- 	git reset --hard &&
- 	git checkout baseline^0 &&
- 	>a/b/c/e &&
++#include "commit.h"
+ #include "object.h"
+ 
+ int merge_three_way(struct repository *r,
+@@ -32,4 +33,8 @@ int merge_index_path(struct index_state *istate, int oneshot, int quiet,
+ int merge_all_index(struct index_state *istate, int oneshot, int quiet,
+ 		    merge_fn fn, void *data);
+ 
++int merge_strategies_resolve(struct repository *r,
++			     struct commit_list *bases, const char *head_arg,
++			     struct commit_list *remote);
++
+ #endif /* MERGE_STRATEGIES_H */
 -- 
 2.20.1
 
