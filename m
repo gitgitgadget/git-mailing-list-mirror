@@ -7,31 +7,31 @@ X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AB6FC388F9
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 05:07:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0592C4742C
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 05:07:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1C09F20B80
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 05:07:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9A37620B80
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 05:07:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726204AbgKMFHS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Nov 2020 00:07:18 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56920 "EHLO cloud.peff.net"
+        id S1726215AbgKMFHU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Nov 2020 00:07:20 -0500
+Received: from cloud.peff.net ([104.130.231.41]:56922 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726054AbgKMFHS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Nov 2020 00:07:18 -0500
-Received: (qmail 23773 invoked by uid 109); 13 Nov 2020 05:07:18 -0000
+        id S1726054AbgKMFHU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Nov 2020 00:07:20 -0500
+Received: (qmail 23776 invoked by uid 109); 13 Nov 2020 05:07:20 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 13 Nov 2020 05:07:18 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 13 Nov 2020 05:07:20 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6211 invoked by uid 111); 13 Nov 2020 05:07:17 -0000
+Received: (qmail 6214 invoked by uid 111); 13 Nov 2020 05:07:19 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 13 Nov 2020 00:07:17 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 13 Nov 2020 00:07:19 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 13 Nov 2020 00:07:17 -0500
+Date:   Fri, 13 Nov 2020 00:07:19 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 4/5] block-sha1: take a size_t length parameter
-Message-ID: <20201113050717.GD744691@coredump.intra.peff.net>
+Subject: [PATCH 5/5] packfile: detect overflow in .idx file size checks
+Message-ID: <20201113050719.GE744691@coredump.intra.peff.net>
 References: <20201113050631.GA744608@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -41,52 +41,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The block-sha1 implementation takes an "unsigned long" for the length of
-a buffer to hash, but our hash algorithm wrappers take a size_t, as do
-other implementations we support like openssl or sha1dc. On many
-systems, including Linux, these two are equivalent, but they are not on
-Windows (where only a "long long" is 64 bits). As a result, passing
-large chunks to a single the_hash_algo->update_fn() would produce wrong
-answers there.
+In load_idx(), we check that the .idx file is sized appropriately for
+the number of objects it claims to have. We recently fixed the case
+where the number of objects caused our expected size to overflow a
+32-bit unsigned int, and we switched to size_t.
 
-Note that we don't need to update any other sizes outside of the
-function interface. We store the cumulative size in a "long long" (which
-we must do since we hash things bigger than 4GB, like packfiles, even on
-32-bit platforms). And internally, we break that size_t len down into
-64-byte blocks to feed into the guts of the algorithm.
+On a 64-bit system, this is fine; our size_t covers any expected size.
+On a 32-bit system, though, it won't. The file may claim to have 2^31
+objects, which will overflow even a size_t.
+
+This doesn't hurt us at all for a well-formed idx file. A 32-bit system
+would already have failed to mmap such a file, since it would be too
+big. But an .idx file which _claims_ to have 2^31 objects but is
+actually much smaller would fool our check.
+
+This is a broken file, and for the most part we don't care that much
+what happens. But:
+
+  - it's a little friendlier to notice up front "woah, this file is
+    broken" than it is to get nonsense results
+
+  - later access of the data assumes that the loading function
+    sanity-checked that we have at least enough bytes for the regular
+    object-id table. A malformed .idx file could lead to an
+    out-of-bounds read.
+
+So let's use our overflow-checking functions to make sure that we're not
+fooled by a malformed file.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- block-sha1/sha1.c | 2 +-
- block-sha1/sha1.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ packfile.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/block-sha1/sha1.c b/block-sha1/sha1.c
-index 22b125cf8c..8681031402 100644
---- a/block-sha1/sha1.c
-+++ b/block-sha1/sha1.c
-@@ -203,7 +203,7 @@ void blk_SHA1_Init(blk_SHA_CTX *ctx)
- 	ctx->H[4] = 0xc3d2e1f0;
- }
- 
--void blk_SHA1_Update(blk_SHA_CTX *ctx, const void *data, unsigned long len)
-+void blk_SHA1_Update(blk_SHA_CTX *ctx, const void *data, size_t len)
- {
- 	unsigned int lenW = ctx->size & 63;
- 
-diff --git a/block-sha1/sha1.h b/block-sha1/sha1.h
-index 4df6747752..9fb0441b98 100644
---- a/block-sha1/sha1.h
-+++ b/block-sha1/sha1.h
-@@ -13,7 +13,7 @@ typedef struct {
- } blk_SHA_CTX;
- 
- void blk_SHA1_Init(blk_SHA_CTX *ctx);
--void blk_SHA1_Update(blk_SHA_CTX *ctx, const void *dataIn, unsigned long len);
-+void blk_SHA1_Update(blk_SHA_CTX *ctx, const void *dataIn, size_t len);
- void blk_SHA1_Final(unsigned char hashout[20], blk_SHA_CTX *ctx);
- 
- #define platform_SHA_CTX	blk_SHA_CTX
+diff --git a/packfile.c b/packfile.c
+index 63fe9ee8be..9702b1218b 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -148,7 +148,7 @@ int load_idx(const char *path, const unsigned int hashsz, void *idx_map,
+ 		 *  - hash of the packfile
+ 		 *  - file checksum
+ 		 */
+-		if (idx_size != 4 * 256 + (size_t)nr * (hashsz + 4) + hashsz + hashsz)
++		if (idx_size != st_add(4 * 256 + hashsz + hashsz, st_mult(nr, hashsz + 4)))
+ 			return error("wrong index v1 file size in %s", path);
+ 	} else if (version == 2) {
+ 		/*
+@@ -164,10 +164,10 @@ int load_idx(const char *path, const unsigned int hashsz, void *idx_map,
+ 		 * variable sized table containing 8-byte entries
+ 		 * for offsets larger than 2^31.
+ 		 */
+-		size_t min_size = 8 + 4*256 + (size_t)nr*(hashsz + 4 + 4) + hashsz + hashsz;
++		size_t min_size = st_add(8 + 4*256 + hashsz + hashsz, st_mult(nr, hashsz + 4 + 4));
+ 		size_t max_size = min_size;
+ 		if (nr)
+-			max_size += ((size_t)nr - 1)*8;
++			max_size = st_add(max_size, st_mult(nr - 1, 8));
+ 		if (idx_size < min_size || idx_size > max_size)
+ 			return error("wrong index v2 file size in %s", path);
+ 		if (idx_size != min_size &&
 -- 
 2.29.2.705.g306f91dc4e
-
