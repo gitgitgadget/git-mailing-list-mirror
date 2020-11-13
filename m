@@ -2,229 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C95D0C388F7
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 13:47:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88134C388F7
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 13:53:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8F8652223F
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 13:47:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4B3D72223F
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 13:53:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I16GGxas"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uCFoq9EK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726704AbgKMNrq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Nov 2020 08:47:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52118 "EHLO
+        id S1727096AbgKMNxt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Nov 2020 08:53:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726487AbgKMNrn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Nov 2020 08:47:43 -0500
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B198C0613D1
-        for <git@vger.kernel.org>; Fri, 13 Nov 2020 05:47:43 -0800 (PST)
-Received: by mail-qt1-x844.google.com with SMTP id g15so6630184qtq.13
-        for <git@vger.kernel.org>; Fri, 13 Nov 2020 05:47:43 -0800 (PST)
+        with ESMTP id S1726795AbgKMNxq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Nov 2020 08:53:46 -0500
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FB81C0613D1
+        for <git@vger.kernel.org>; Fri, 13 Nov 2020 05:53:39 -0800 (PST)
+Received: by mail-qk1-x732.google.com with SMTP id d28so8756102qka.11
+        for <git@vger.kernel.org>; Fri, 13 Nov 2020 05:53:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/ggxNKAD4QZnJldeFzppE4LuXOWjqDdlYQoosccinL0=;
-        b=I16GGxasvtq+7/A3JnKTbfnkWxWGW2mycdGJZ91HjEJmDmF/0lf3h60CM9jnXpdikO
-         pYXkRJnDJ3by1invahU7UxKrydH7oyxDgHXfetp1Q/jy2eL3Yi1Ig8iolFbqI6zaZIjA
-         YIjdLYJx8iOj12ikqIqo4Y6EKlkblSydy8cTiT8NrGK7ie9TZI7Lu1iz24j/sYcc+H+X
-         wiaha5ml4cm5VtE0lWqBy1ZuHFsrJucXseud/9l+XY44uPPhmpRSK2AckRc8a/zf7l9o
-         USs4CuxVza1N7c5fk+z+qZDzER4v5L7BUgO8vUZbG04nyMpHU8s+FfFq6Bt45NSeg/nw
-         yFAQ==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=8l/Zv25LwG6bORWryw3QmAzfjup9r+2cpEL2qCN/vUI=;
+        b=uCFoq9EKdcm8bdTB7LcmY7e42IUClgvmyZkwy2xbD3tD7+i8VrfsuDna1ZcqeoZcRg
+         xhtGLZQs4kubpXhkpFEZ9Hd3MTRGV9i9UniViDpMm+unNWHMWShiPylbqCufOu6iiVyk
+         G0xcnV5IKuakqGa5xaMAy9CLPMDlvqcrPytufOPudfDl/9pRtSxuOKECvFvEUk1YdZiy
+         DtoHHnpH6FWOxw1g9s1HJ0a9AUpO+X826IxYhDB8QbhLg8xnXUKABNArsDWziv/sCUbF
+         zxgcba++s2ggX4HFClqBzsyE1RpFyFsNxEcghORet4iUk3djsZT2sdlOJFQF2jpBUpN9
+         eQgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=/ggxNKAD4QZnJldeFzppE4LuXOWjqDdlYQoosccinL0=;
-        b=Y+qIULK05JowlGguhWbaHuYj9EXZWRfvEz14/OiJ48Yo7/dEoUJio/mv29Art7taN0
-         JLXfQbd+ISjS56+bWfVxFswIpGY9DU6gmnciEELJSVj3yAuPBwhK88itB2qiJm0TgdwM
-         d7O8JP0khUT2tjPNW8OaACwwtFV928humhclbPMHuz5MppiqC7DTc96cyHQ5p6wgrdQF
-         OAnZG/XfWkK3RkdxgBNC1plvDbJpouZWbL85WOcYAkBT71fJD015okNUBDEmOgkUmJLz
-         758W2YlcngDv5iS1h+thHSqO4G/BLIbpsL6DtHJkuWS/JQXKdO8zvMVNgEildYy6YuKJ
-         wz5w==
-X-Gm-Message-State: AOAM533cI+q08g/196aPAVITB4NjI7bbRMg6fYYKqsaMvwNO6Jm7s6S3
-        dUwCE0Sx68r5zYr1aVMBl1pf80YDlmNlnQ==
-X-Google-Smtp-Source: ABdhPJzb+QxkCRe1sh15O52Mg7O6UFuPZZUAatdhAcIar3eUxmt7RpALsQ5a3SkFyW+so0J9sNBRkg==
-X-Received: by 2002:ac8:6b92:: with SMTP id z18mr1995727qts.30.1605275261764;
-        Fri, 13 Nov 2020 05:47:41 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:30c9:afaa:d787:e592? ([2600:1700:e72:80a0:30c9:afaa:d787:e592])
-        by smtp.gmail.com with UTF8SMTPSA id y1sm397524qky.63.2020.11.13.05.47.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Nov 2020 05:47:41 -0800 (PST)
-Subject: Re: [PATCH] rm: honor sparse checkout patterns
-To:     Elijah Newren <newren@gmail.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <9f2135f90ffea7f4ccb226f506bf554deab324cc.1605205427.git.matheus.bernardino@usp.br>
- <CABPp-BGkkNwdjLB4HSygvU43OZRiuhDyt7RjrDGodWrfNgkBXQ@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <70ae5b1d-b1d2-1b3f-11cf-8e5ceafe6048@gmail.com>
-Date:   Fri, 13 Nov 2020 08:47:39 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101
- Thunderbird/83.0
-MIME-Version: 1.0
-In-Reply-To: <CABPp-BGkkNwdjLB4HSygvU43OZRiuhDyt7RjrDGodWrfNgkBXQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=8l/Zv25LwG6bORWryw3QmAzfjup9r+2cpEL2qCN/vUI=;
+        b=RGFSCbBzC4GLN9MkuWJUYR+ogTRifwt5Dwp1Cy66SErppI85s6WPoSuX1rkI70Y5C8
+         klGaS/XUU3O7Q/ITHZE9vI8fVsOWcytXC/HYFmt3NEZq9DN+KW+rTUfCsAsfYPWEFsh1
+         oBJk7WDkl3dZD6PlnPcpY9/IqoMVffR1KltWBTIUIHsXfxi32VIIxwIkQL/C8yW3bhXS
+         GLp3KytIe4SKKy8E9e9XAnwpiOabg8Guh7sBesj3tn8I4INXsTS2zBT0AcvagYUeaDt3
+         ZH1NDfsTw7grPyInWapu+mbti04MyDJogORxT5lZKJp2vasO1/SQt/6QEu6kJIAk6eFE
+         L+fg==
+X-Gm-Message-State: AOAM531hZWr+U63xBUd/0I+fHtCtOFwEtWwWBiqALe11vC7P1eBXfYBl
+        pmvzn9D4DKXW5FTYcEVWscV26rGOrMWNPA==
+X-Google-Smtp-Source: ABdhPJxVowqi/ZCpoAXT9fgRd6qF6hR1PEKa3ABZuLjjJOfCcB4l6Mi+h2Hf2YhApI33chwF48WLMw==
+X-Received: by 2002:a37:41d2:: with SMTP id o201mr1937589qka.425.1605275618395;
+        Fri, 13 Nov 2020 05:53:38 -0800 (PST)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id n41sm7231531qtb.18.2020.11.13.05.53.36
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Fri, 13 Nov 2020 05:53:37 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: The master branch rename, and avoiding another v1.6.0 git-foo fiasco
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <CAMP44s1vx==-0Sh_dN66k-u_LwUSqQRn+ckMrYMHhz7i8ZVr2Q@mail.gmail.com>
+Date:   Fri, 13 Nov 2020 08:53:35 -0500
+Cc:     "D.E. Goodman-Wilson" <don@goodman-wilson.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <3EC700EE-8DB1-4A31-9061-6C5899330CCC@gmail.com>
+References: <CAMP44s3BJ3dGsLJ-6yA-Po459=+m826KD9an4+P3qOY1vkbxZg@mail.gmail.com> <20201113010107.GL6252@camp.crustytoothpaste.net> <CAMP44s1U1FevS7NrAYxvgVyzfR5tnD9-+BbPdw5bKnaNHkyD+A@mail.gmail.com> <nbCkLegnP_kb-16UzAuDChE0p68ZtRD_3ZN3o3BJHYBYpUxTWuKjvhCSKT7zRZl_sckHrkyJl2fwePFUBR-HtDcEV0rHuac6Ygg-FrrYsYI=@goodman-wilson.com> <CAMP44s1vx==-0Sh_dN66k-u_LwUSqQRn+ckMrYMHhz7i8ZVr2Q@mail.gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/12/2020 6:54 PM, Elijah Newren wrote:
-> Hi,
-> 
-> On Thu, Nov 12, 2020 at 1:02 PM Matheus Tavares
-> <matheus.bernardino@usp.br> wrote:
->>
->> Make git-rm honor the 'sparse.restrictCmds' setting, by restricting its
->> operation to the paths that match both the command line pathspecs and
->> the repository's sparsity patterns. This better matches the expectations
->> of users with sparse-checkout definitions, while still allowing them
->> to optionally enable the old behavior with 'sparse.restrictCmds=false'
->> or the global '--no-restrict-to-sparse-paths' option.
-> 
-> (For Stolee:) Did this arise when a user specified a directory to
-> delete, and a (possibly small) part of that directory was in the
-> sparse checkout while other portions of it were outside?
+Hi Felipe,=20
 
-The user who suggested this used a command like 'git rm */*.csprojx' to
-remove all paths with that file extension, but then realized that they
-were deleting all of those files from the entire repo, not just the
-current sparse-checkout.
+> Le 13 nov. 2020 =C3=A0 01:47, Felipe Contreras =
+<felipe.contreras@gmail.com> a =C3=A9crit :
+>=20
+> On Fri, Nov 13, 2020 at 12:02 AM D.E. Goodman-Wilson
+> <don@goodman-wilson.com> wrote:
+>>> Did we hear the testimony of a single black person that was offended
+>> by the word?
+>>=20
+>>> Nobody affected by this change actually asked for this change
+>>=20
+>> Five minutes searching Twitter will reveal a great number of Black =
+git users championing this change.
+>=20
+> This is anecdotal evidence.
+>=20
+> We all live in our own digital bubble. Every person's Twitter feed is
+> different, and Google search results depend on where you live, and
+> your past searches.
+>=20
+> You may find "a great number" of users that match that criteria, what
+> I find is only people criticizing the move, and after five minutes I
+> haven't found a single black person actually offended by the current
+> name.
+>=20
+>> How is reopening this discussion anything but a distraction?
+>=20
+> This discussion never happened.
+>=20
+> Everyone in the June thread argued about the different names of the
+> potential branch, and the culture war implications. Virtually *nobody*
+> argued about the manner of implementation: deprecation period, clear
+> warnings, Git 3.0 consideration.
 
-> I can easily see users thinking they are dealing with just the files
-> relevant to them, and expecting the directory deletion to only affect
-> that relevant subset, so this seems like a great idea.  We'd just want
-> to make sure we have a good error message if they explicitly list a
-> single path outside the sparse checkout.
+I couldn't agree more. We really need to be warning users several =
+versions in advance,
+and I mean months or even years. I don't wan't to come up with a number, =
+but I would
+guess that maybe 85 %, (or even 95 % ?) of the world-wide Git user base =
+is unaware that any discussion
+on that topic ever took place.
 
-We should definitely consider how to make this more usable for users
-who operate within a sparse-checkout but try to modify files outside
-the sparse-checkout.
+Brian mentioned that some people voicing their concern on the list did =
+not abide by the code of conduct.=20
+There was also very vocal disagreement voiced in the Git-for-Windows =
+GitHub project before the
+discussion reached the mailing list, of which a lot was also considered =
+to not abide by that project's
+code of conduct. While I agree that discussion should be done with =
+respect, and some people that=20
+are driven to react to such important changes might not be aware of any =
+code of conduct they should=20
+follow, because they don't participate in the "day-to-day" life of the =
+project, just the fact that they even
+care enough to voice their disagreement should be a big red flag in =
+terms of how this change should be done,
+in my opinion.
 
-Is there a warning message such as "the supplied pathspec doesn't
-match any known file" that we could extend to recommend possibly
-disabling the sparse.restrictCmds config? (I see that you identify
-one below.)
+I had avoided commenting on this whole subject, but the main point you =
+are bringing,=20
+that such a change, if done, should be made with great care to our user =
+base and a lot=20
+more warning, is a very important one.=20
 
->> +CONFIGURATION
->> +-------------
->> +
->> +sparse.restrictCmds::
->> +       By default, git-rm only matches and removes paths within the
->> +       sparse-checkout patterns. This behavior can be changed with the
->> +       `sparse.restrictCmds` setting or the global
->> +       `--no-restrict-to-sparse-paths` option. For more details, see the
->> +       full `sparse.restrictCmds` definition in linkgit:git-config[1].
-> 
-> Hmm, I wonder what people will think who are reading through the
-> manual and have never used sparse-checkout.  This seems prone to
-> confusion for them.  Maybe instead we could word this as:
-> 
-> When sparse-checkouts are in use, by default git-rm will only match
-> and remove paths within the sparse-checkout patterns...
+Thanks for bringing it up.
 
-A preface such as "When using sparse-checkouts..." can help users
-ignore these config settings if they are unfamiliar with the
-concept.
->> @@ -293,8 +294,12 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
->>
->>         seen = xcalloc(pathspec.nr, 1);
->>
->> +       sparse_paths_only = restrict_to_sparse_paths(the_repository);
->> +
->>         for (i = 0; i < active_nr; i++) {
->>                 const struct cache_entry *ce = active_cache[i];
->> +               if (sparse_paths_only && ce_skip_worktree(ce))
->> +                       continue;
->>                 if (!ce_path_match(&the_index, ce, &pathspec, seen))
->>                         continue;
->>                 ALLOC_GROW(list.entry, list.nr + 1, list.alloc);
+Philippe.
 
-This seems like an incredibly simple implementation! Excellent.
-
->> +test_expect_success 'rm should respect --[no]-restrict-to-sparse-paths' '
->> +       git init sparse-repo &&
->> +       (
->> +               cd sparse-repo &&
->> +               touch a b c &&
->> +               git add -A &&
->> +               git commit -m files &&
->> +               git sparse-checkout set "/a" &&
->> +
->> +               # By default, it should not rm paths outside the sparse-checkout
->> +               test_must_fail git rm b 2>stderr &&
->> +               test_i18ngrep "fatal: pathspec .b. did not match any files" stderr &&
-> 
-> Ah, this answers my question about whether the user gets an error
-> message when they explicitly call out a single path outside the sparse
-> checkout.  I'm curious if we want to be slightly more verbose on the
-> error message when sparse-checkouts are in effect.  In particular, if
-> no paths match the sparsity patterns, but some paths would have
-> matched the pathspec ignoring the sparsity patterns, then perhaps the
-> error message should include a reference to the
-> --no-restrict-to-sparse-paths flag.
-
-The error message could be modified similar to below:
-
-if (!seen[i]) {
-	if (!ignore_unmatch) {
-		die(_("pathspec '%s' did not match any files%s"),
-			original,
-			sparse_paths_only
-				? _("; disable sparse.restrictCmds if you intend to edit outside the current sparse-checkout definition")
-				: "");
-	}
-}
-
->> +
->> +               # But it should rm them with --no-restrict-to-sparse-paths
->> +               git --no-restrict-to-sparse-paths rm b &&
->> +
->> +               # And also with sparse.restrictCmds=false
->> +               git reset &&
->> +               git -c sparse.restrictCmds=false rm b
->> +       )
->> +'
->> +
->>  test_done
-> 
-> Do we also want to include a testcase where the user specifies a
-> directory and part of that directory is within the sparsity paths and
-> part is out?  E.g.  'git sparse-checkout set /sub/dir && git rm -r
-> sub' ?
-
-That is definitely an interesting case. I'm not sure the current
-implementation will do the "right" thing here. Definitely worth
-testing, and it might require a more complicated implementation.
-
->> diff --git a/t/t7011-skip-worktree-reading.sh b/t/t7011-skip-worktree-reading.sh
->> index 26852586ac..1761a2b1b9 100755
->> --- a/t/t7011-skip-worktree-reading.sh
->> +++ b/t/t7011-skip-worktree-reading.sh
->> @@ -132,11 +132,6 @@ test_expect_success 'diff-files does not examine skip-worktree dirty entries' '
->>         test -z "$(git diff-files -- one)"
->>  '
->>
->> -test_expect_success 'git-rm succeeds on skip-worktree absent entries' '
->> -       setup_absent &&
->> -       git rm 1
->> -'
->> -
-
-Instead of deleting this case, perhaps we should just use "-c sparse.restrictCmds=false"
-in the 'git rm' command, so we are still testing this case?
-
-Thanks again! I appreciate that you jumped on this suggestion.
-
--Stolee
 
