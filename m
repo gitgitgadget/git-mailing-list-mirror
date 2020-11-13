@@ -2,126 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A16AEC388F7
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 15:49:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFCFAC388F7
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 16:04:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6E191208D5
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 15:49:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8CD532076E
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 16:04:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H9uYnrjV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IaqTtTUm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726734AbgKMPtx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Nov 2020 10:49:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43408 "EHLO
+        id S1726526AbgKMQEd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Nov 2020 11:04:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726621AbgKMPtw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Nov 2020 10:49:52 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C3C4C0613D1
-        for <git@vger.kernel.org>; Fri, 13 Nov 2020 07:49:52 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id 10so8519270wml.2
-        for <git@vger.kernel.org>; Fri, 13 Nov 2020 07:49:52 -0800 (PST)
+        with ESMTP id S1726336AbgKMQEc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Nov 2020 11:04:32 -0500
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23DF5C0613D1
+        for <git@vger.kernel.org>; Fri, 13 Nov 2020 08:04:31 -0800 (PST)
+Received: by mail-wm1-x342.google.com with SMTP id w24so8954879wmi.0
+        for <git@vger.kernel.org>; Fri, 13 Nov 2020 08:04:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5qfKg3PORPDWLLGrPlgQb5/ZhXFy4g2edo3+b09VbAY=;
-        b=H9uYnrjVgIb7TBhS2jy6Lo9Xxyu1cThilYs5oIQ86fWLBRjjxWiiBF6TKLww0jgjoJ
-         gGzcG1P8VUpN5q7N6185nPrF+vN/JWdHDXa2JCs2j8Ry/P2x1ILTEgVHHbdcoCy/5CZ1
-         Ozy51mwFJ0YRo4edTwDQsxVSn4nGc5eUPLhJ/Wnt7nfiIoBUW9wuKpStFpHaKDfiWLdN
-         IyRFJwE2pBW8XsJaUdLe2ePnj5ap/4bpLUaR4/E6kB961MHELfFBzuDKbC67jbSYtooz
-         FwJActIWZtzyB0X4UkKr450bHhXuLW3QOKhY/2LcHZAAy4x829ufmiu+hzVZWrsZw34J
-         OZGw==
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=mL1Sx+uZntuYFExVpo8e5xY0y3X7GHVFvS5x3q6zfq0=;
+        b=IaqTtTUmym/ymPFXtbl5gBVl9BtXi/hHt8/zGhx58KX/beNv1VSgedjVPBTzPgZigY
+         o3mPV0ZJzZR2okOgT8f4Bn2zLn7DHylz2ZSllr4lhgwTBfCnmjry2F7OvzZQvMGyH2mg
+         jsMbkhJ6aqBmSLVPYAlapS67gQqJYZJcSE1lo7dAwsNjWfXxjFEBT9r5k2Lbv7tq6pzg
+         yYhUibDCFDoFVnLryQ4L8BxNCUZ8NNifCLwEFsySIxYTcERKVqPDufnaGUvKCSX/jzsB
+         2Qou+mGyIR3eh0TL1KVXftT4hOqDcI12cSprZ0utCy7nIzg+114YkxcaqHUms7kRP6jq
+         1ztw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5qfKg3PORPDWLLGrPlgQb5/ZhXFy4g2edo3+b09VbAY=;
-        b=DQW0ypIx6BOTKvZY+E/OUCdTEkocmViihOPqELFt+Wk4VhGnD00xfq9RFrTVbNgk50
-         5zGGcICjrVkkXCwF1IN6YnKdOUj7VqTpWkyNidbzMNfKBJOs0lqoJD3tx+c1gODUFqMs
-         6+T9GBwxbUnN06J+zFwfb/d/nE5dD8DR3TrXleza2MmLtUMW0Hq6eSs1tlfpQEVm8Z9Z
-         /NDUOV6FHiwH0rbFweHskbE13pMaD8nUnwZn+bvPdNDK9QJUtGud1CRJ1dcELeaz+YxA
-         Q/I0dbVP3JjcSKJgGV5F72gc5SBESVXi+jkLWyR9i/EgFkGNU6OZn/IkozIiOSyBfm5+
-         1B0A==
-X-Gm-Message-State: AOAM531JrbcBOu4jsEy/gKXb156h3syGm7g4q92p0RoC7ZdKaPbQjJV9
-        +5pCDG0MfghQknlsHzXpY+/9S2TQr3/sD1P6yBE=
-X-Google-Smtp-Source: ABdhPJzt+DmhDeZt0u4DEe2O2lbF52qe0TBQmoAlhqES0xpGMPL1Ykls2AQWui3700q77E3QoUjs9qNbqYurXPS/+ho=
-X-Received: by 2002:a1c:4c09:: with SMTP id z9mr3187682wmf.55.1605282585810;
- Fri, 13 Nov 2020 07:49:45 -0800 (PST)
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=mL1Sx+uZntuYFExVpo8e5xY0y3X7GHVFvS5x3q6zfq0=;
+        b=NfRm3hUt5zzI5p1QQA0qw76/WVYZ/b9IR/7nyKF97paARAN+3Tga36J3gK8jc/b/C9
+         U67mtfXcAB8nLVZdep+p3tWAvVpUN9Y44uUsNNpqtFbeESTcoZbYD/lOQKE9v7sijZDi
+         KD0M2GM1u9Pje8xJgVfD1iybm//mBnM7zXBL58+EPKP55/pLMUznexHLv5sqy5iPUQZN
+         D8VnH41uujLPUEsQnLi/1lTsGPKNtVVkHGR2uq7+8AMXvCE6YDuRFFLt1PA7cHSyPsRE
+         59yor9cO3h+poB6u1EKjw2pMFvfBSxKMI3nMIJ3D7t5G1NKQv8Y4MpgB056lndoYs7j/
+         iBJA==
+X-Gm-Message-State: AOAM532RxQrBL1DMfI9QId1t2ARTHwx4Kv4BPi74qGAM4C80BBITKiUg
+        q3mUgramz49HzekfrM+ehDQ=
+X-Google-Smtp-Source: ABdhPJxl4f2/GTXrPnhUV5cZRh5Y2WU8yw2UPhHFijG2C8pRNNfTRrn6PnJnGkVzSnBOoeqxR1u2cw==
+X-Received: by 2002:a05:600c:d2:: with SMTP id u18mr3297724wmm.102.1605283464914;
+        Fri, 13 Nov 2020 08:04:24 -0800 (PST)
+Received: from [192.168.1.240] (194.55.7.51.dyn.plus.net. [51.7.55.194])
+        by smtp.gmail.com with ESMTPSA id v6sm12749666wrb.53.2020.11.13.08.04.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Nov 2020 08:04:23 -0800 (PST)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 04/11] add -i: use `reset_color` consistently
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Jeff King <peff@peff.net>
+References: <pull.785.git.1605051739.gitgitgadget@gmail.com>
+ <pull.785.v2.git.1605097704.gitgitgadget@gmail.com>
+ <c857c4493213bd7cc4d057487db2d1a74fa0bbd6.1605097704.git.gitgitgadget@gmail.com>
+ <6405f7c9-b084-ed48-e33e-009f388933bf@gmail.com>
+ <nycvar.QRO.7.76.6.2011131452120.18437@tvgsbejvaqbjf.bet>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <820a19d2-2acb-3ee1-8927-8981de62bc7e@gmail.com>
+Date:   Fri, 13 Nov 2020 16:04:20 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-References: <CAMP44s3BJ3dGsLJ-6yA-Po459=+m826KD9an4+P3qOY1vkbxZg@mail.gmail.com>
- <20201113010107.GL6252@camp.crustytoothpaste.net> <CAMP44s1U1FevS7NrAYxvgVyzfR5tnD9-+BbPdw5bKnaNHkyD+A@mail.gmail.com>
- <nbCkLegnP_kb-16UzAuDChE0p68ZtRD_3ZN3o3BJHYBYpUxTWuKjvhCSKT7zRZl_sckHrkyJl2fwePFUBR-HtDcEV0rHuac6Ygg-FrrYsYI=@goodman-wilson.com>
- <CAMP44s1vx==-0Sh_dN66k-u_LwUSqQRn+ckMrYMHhz7i8ZVr2Q@mail.gmail.com> <3EC700EE-8DB1-4A31-9061-6C5899330CCC@gmail.com>
-In-Reply-To: <3EC700EE-8DB1-4A31-9061-6C5899330CCC@gmail.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Fri, 13 Nov 2020 09:49:34 -0600
-Message-ID: <CAMP44s3ksNQGg2cDjC5msqs=NfdUbdQzSJA+sTTtN20PrH74Hg@mail.gmail.com>
-Subject: Re: The master branch rename, and avoiding another v1.6.0 git-foo fiasco
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     "D.E. Goodman-Wilson" <don@goodman-wilson.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <nycvar.QRO.7.76.6.2011131452120.18437@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 13, 2020 at 7:53 AM Philippe Blain
-<levraiphilippeblain@gmail.com> wrote:
+Hi Dscho
 
-> > This discussion never happened.
-> >
-> > Everyone in the June thread argued about the different names of the
-> > potential branch, and the culture war implications. Virtually *nobody*
-> > argued about the manner of implementation: deprecation period, clear
-> > warnings, Git 3.0 consideration.
->
-> I couldn't agree more. We really need to be warning users several versions in advance,
-> and I mean months or even years. I don't wan't to come up with a number, but I would
-> guess that maybe 85 %, (or even 95 % ?) of the world-wide Git user base is unaware that any discussion
-> on that topic ever took place.
+On 13/11/2020 13:53, Johannes Schindelin wrote:
+> Hi Phillip,
+> 
+> On Fri, 13 Nov 2020, Phillip Wood wrote:
+> 
+>> Hi Dscho
+>>
+>> On 11/11/2020 12:28, Johannes Schindelin via GitGitGadget wrote:
+>>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>>>
+>>> We already maintain a list of colors in the `add_i_state`, therefore we
+>>> should use them.
+>>
+>> Playing devil's advocate for a moment - why do we have a reset entry in that
+>> list? The next patch makes sure it cannot be customized which is a good thing
+>> so why not drop the `reset` member from `add_i_state` entirely? The perl
+>> version needed to get the reset string from `git config` and store it
+>> somewhere but in the C version we have a perfectly good constant we can use
+>> instead.
+> 
+> Right.
+> 
+> On the other hand, does it hurt to keep that field for consistency with
+> the rest of the coloring stuff? 
 
-More like 99.9%.
+It creates the illusion that `reset` is similar to the others but it 
+isn't as we don't want it to be customizable.
 
-> Brian mentioned that some people voicing their concern on the list did not abide by the code of conduct.
-> There was also very vocal disagreement voiced in the Git-for-Windows GitHub project before the
-> discussion reached the mailing list, of which a lot was also considered to not abide by that project's
-> code of conduct. While I agree that discussion should be done with respect, and some people that
-> are driven to react to such important changes might not be aware of any code of conduct they should
-> follow, because they don't participate in the "day-to-day" life of the project, just the fact that they even
-> care enough to voice their disagreement should be a big red flag in terms of how this change should be done,
-> in my opinion.
+> It would probably cost more to make the
+> change you suggested than it would benefit us.
 
-Yes, the abrasive tone of those users did not help, but neither does
-tone policing. At the end of the day they did some valid arguments,
-and it will be the users that suffer because the project decided to
-focus on the tone, rather than the argument.
+At the moment there is one use of `s->s.color_reset` and two of 
+`GIT_COLOR_RESET` in add-patch.c
 
-> I had avoided commenting on this whole subject, but the main point you are bringing,
-> that such a change, if done, should be made with great care to our user base and a lot
-> more warning, is a very important one.
+Best Wishes
 
-Indeed. I am debating whether or not I should bring up the arguments
-nobody brought up in that big discussion, because in 2020 the concept
-of freedom of speech is lost, and merely stating facts can get you
-banned from a community, or worse. But the facts remain true.
+Phillip
 
-For now I think this is the imminent issue, and a warning must be
-issued so that users know what is coming. I suspect when they realize
-what's coming, they will preemptively complain in the mailing list.
-
-We'll see. But sneaking this change is *definitely* going to upset
-many users, making the problem worse.
-
-Cheers.
-
--- 
-Felipe Contreras
+> Ciao,
+> Dscho
+> 
