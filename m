@@ -2,138 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-8.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC098C388F7
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 10:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A3D2C4742C
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 11:17:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6E10E2076E
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 10:02:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 07561207DE
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 11:17:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UxB88/jc"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="RT8mToCn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726348AbgKMKCR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Nov 2020 05:02:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44652 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726321AbgKMKCQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Nov 2020 05:02:16 -0500
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0593C0613D1
-        for <git@vger.kernel.org>; Fri, 13 Nov 2020 02:02:14 -0800 (PST)
-Received: by mail-ej1-x644.google.com with SMTP id oq3so12502395ejb.7
-        for <git@vger.kernel.org>; Fri, 13 Nov 2020 02:02:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=XQuLr/4FVycz0o53PirIEuBwphX8rgRTPWJxj9pZaeU=;
-        b=UxB88/jciIX8/L7I1ByTJSyIQBTWTDjglbmtggguGhqZxXeVod8Kwmyf8I/mMfkfX6
-         mlpSQWz8sYrAkQr9INtm0RzdV+B6iLNqNoEcbJfwVzojKTfJ8IJSnw4ejQ9oqJUvEi2o
-         LiRETu/YGliz2XTkpCPtjob6/+e3aHu9jlH7/vNbWopIwW3gl8b5pfAJdOoLJMr5Fbqh
-         dpLOsbMAdPrlyzUgo/wjMk7uSUApj01qrAqRgFNGJvHdYMQVNQqHHlaqDxVP09VkC5/9
-         h0q0v5clC0hpRSZus33J2+R3uuZZg6yDUsqTi6Mq2CynXF2mvaRhaYluZ5R5WQF7vaap
-         w/sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=XQuLr/4FVycz0o53PirIEuBwphX8rgRTPWJxj9pZaeU=;
-        b=N7etkc11sJ5BdlZbAfU2tmrDshcQ8R+alRIqN09glOt/w3UKZAX98LRWTPYtaMrxz5
-         q2KgwDM4ubGVxyZj4bFnrpCSKVib+z+1qxmenNpiYAb7SCSqWijESYCnSELwuUizxTit
-         WIb7qBG7BMCXzUo7kUjvmLZjDppTTjqUuzSQwgHukPy6TaXq76xqkVi7d1q1weWrUSfk
-         sV6SHLAg/yFPylXHGgETV/rl5fQRFBZebcZg6U9ve89SUnjYfCb3UGW1UzZTiJFR0Tp6
-         tt9881L2teqbjt9fUgjsm5Dar+KnC2jL9oLckU7E9YVGi+2PvnsvYtc2u3HS/YKF5eLe
-         1Mbw==
-X-Gm-Message-State: AOAM533wlr4G7b9rWot78BSaxuV9KdTqnJ39WXGKsU2uK1EOFigqgjOz
-        GHS5YOGXxh/E3fzNpKb+VrITEN4endg=
-X-Google-Smtp-Source: ABdhPJxRVXV3xxz85xqLZP6UXPrbN55JZ6oNaunawicbcSDClA8K2703hYVloUvNLrBL25+8ML181w==
-X-Received: by 2002:a17:906:3f93:: with SMTP id b19mr1261130ejj.497.1605261733647;
-        Fri, 13 Nov 2020 02:02:13 -0800 (PST)
-Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id mj17sm3144946ejb.59.2020.11.13.02.02.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Nov 2020 02:02:12 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 14/28] t55[23]*: adjust the references to the default branch name "main"
-References: <pull.762.git.1605221038.gitgitgadget@gmail.com> <3aef39320e96aad10e133f1c97a9010aa85aa894.1605221039.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 26.3; mu4e 1.4.13
-In-reply-to: <3aef39320e96aad10e133f1c97a9010aa85aa894.1605221039.git.gitgitgadget@gmail.com>
-Date:   Fri, 13 Nov 2020 11:02:12 +0100
-Message-ID: <87sg9dfucb.fsf@evledraar.gmail.com>
+        id S1726497AbgKMLQz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Nov 2020 06:16:55 -0500
+Received: from mout.gmx.net ([212.227.17.22]:40327 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726541AbgKMLDu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Nov 2020 06:03:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1605265420;
+        bh=5AjKzSyQBNYZ+aZ7RToeG7ryDDg5FCLMftExLfsHY70=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=RT8mToCnEAg5CUz0N/29PHPjB0fU8TcPz9KSSUAGhAWAqYrVWee8W7ytpv6XMI5g1
+         g/ZKUPSbHlxhQHx8p9xOnboHzT9G5VGxb4B6QGMJth8IVvTZs0inHvfd3LtdFLE80B
+         9Ho2hThTNpQPyrqMwEm//kUnLKzif/Ckz9v8lRi4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.26.25.62] ([213.196.212.205]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M1ps8-1kbJwK2ctk-002F8T; Fri, 13
+ Nov 2020 12:03:40 +0100
+Date:   Fri, 13 Nov 2020 12:02:41 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 5/5] packfile: detect overflow in .idx file size checks
+In-Reply-To: <20201113050719.GE744691@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2011131200460.18437@tvgsbejvaqbjf.bet>
+References: <20201113050631.GA744608@coredump.intra.peff.net> <20201113050719.GE744691@coredump.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:h38uKX2N5pYOx8tbpgRQk2PhAkv0N8X7VyPlviJElxE3J+uvJ/u
+ NdaA6o4obDjPWRFeHHub44rGfsC/15oTaDhONn4A05QPh9sVAXF81Rh8itgTufcn5DSs6NF
+ nnc+RZPoCR7yJpqNE503oRBkTb6RP84qheMB3RIuXDxwA9Tm6fnzKyw9/E+1gvksOX3dz4L
+ P84Ltsn/myv62iV92KDhA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:OLvR1Db3/ns=:d/vL98zaG8JUaVn/2vVd9P
+ mXJMG0DP6EkE8tCjhrESBrCvoY8KrOV0xwdK35rNBzwRJ4mVnhQJGWCr/ph5JhPnrm0ygfYa0
+ TsQz3+EemP2oTnYgjQM6PLuXpSkwWTMwGnJNcVChU9Dvtu8/sz6/b9N55Ox2fr2S53Kiezaib
+ vHjydBalRfUbxly+pePLctKH+dVMUHxwJxqUHsFEgC6M8t7wKziQF07ranZift4n3AjK0UC6U
+ /FPqqckAwR7WovdyRMTDP5A71A05ol+wVkLCa57al4+XtsqDNUCfwRZ6c//ABPssYVi5KeseY
+ t4GjIirfAaj753DY02GMDhEvIUxUN0U4oBuLjYg3/FNsJoNpTZsW/LWZlQ9b2MJwvCfyV/NV3
+ +G9Gc09XpTXw6b5m8p2yPdjF4V7QgfPAUVVVXsRil4gIoT3ohMumn1HVCGKGWECZiiCiwvGh/
+ eHilV6/Z4+CEbIsUSWQGtR2FSHO51Wxh+csctW8jcyH3n0VkyMIoz1AHxdkUz+bBOqjA9vAaq
+ lXzNEXfdN5g9Wtl5sWiM/ieh+dAFfdEQ02vqcD4/9KrF/Wlt/otJxMv1v6c7zPGgxJ4G7noUi
+ NLLT1o2o/S+AOHO2oqMthwozz90c71EXBkbtDUGyscb8zQQ6z8Kj0aBwkGCXnUTnjnX4MtVS6
+ hC/AWQGaF0mPwnDsoEnM1Ii0hWM5nKM3q1gA+cJH31yWQvugLo2UXxfRlq3javowYhFI4nX1I
+ 1xlR8qVGckybPzQw7PHBdppih3RWmsE3f6yXob8sL74Ns0JVcG9Pwajk6ZYhxp8u5Z8yU4gKZ
+ lPRWLwRsCAwlyurOaMxgsVy8HTU9eJw0n+cdDz/uVbc1P4pziAvQAFmKbEKd+IQSNzmVhVPye
+ 5p5crnE5iOeWMRbXto4Fl9RYyINuiTeXhecqYoVl0=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Peff,
 
-On Thu, Nov 12 2020, Johannes Schindelin via GitGitGadget wrote:
+On Fri, 13 Nov 2020, Jeff King wrote:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> diff --git a/packfile.c b/packfile.c
+> index 63fe9ee8be..9702b1218b 100644
+> --- a/packfile.c
+> +++ b/packfile.c
+> @@ -148,7 +148,7 @@ int load_idx(const char *path, const unsigned int ha=
+shsz, void *idx_map,
+>  		 *  - hash of the packfile
+>  		 *  - file checksum
+>  		 */
+> -		if (idx_size !=3D 4 * 256 + (size_t)nr * (hashsz + 4) + hashsz + hash=
+sz)
+> +		if (idx_size !=3D st_add(4 * 256 + hashsz + hashsz, st_mult(nr, hashs=
+z + 4)))
+>  			return error("wrong index v1 file size in %s", path);
+>  	} else if (version =3D=3D 2) {
+>  		/*
+> @@ -164,10 +164,10 @@ int load_idx(const char *path, const unsigned int =
+hashsz, void *idx_map,
+>  		 * variable sized table containing 8-byte entries
+>  		 * for offsets larger than 2^31.
+>  		 */
+> -		size_t min_size =3D 8 + 4*256 + (size_t)nr*(hashsz + 4 + 4) + hashsz =
++ hashsz;
+> +		size_t min_size =3D st_add(8 + 4*256 + hashsz + hashsz, st_mult(nr, h=
+ashsz + 4 + 4));
+>  		size_t max_size =3D min_size;
+>  		if (nr)
+> -			max_size +=3D ((size_t)nr - 1)*8;
+> +			max_size =3D st_add(max_size, st_mult(nr - 1, 8));
+
+I wondered about these multiplications and whether we should use the
+`st_*()` helpers, when reading 1/5. And I am glad I read on!
+
+FWIW I like all five patches.
+
+Thanks,
+Dscho
+
+>  		if (idx_size < min_size || idx_size > max_size)
+>  			return error("wrong index v2 file size in %s", path);
+>  		if (idx_size !=3D min_size &&
+> --
+> 2.29.2.705.g306f91dc4e
 >
-> This trick was performed via
->
-> 	$ (cd t &&
-> 	   sed -i -e 's/master/main/g' -e 's/MASTER/MAIN/g' \
-> 		-e 's/Master/Main/g' -e 's/naster/nain/g' -- t55[23]*.sh)
->
-> Note that t5533 contains a variation of the name `master` (`naster`)
-> that we rename here, too.
->
-> This commit allows us to define
-> `GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main` for that range of tests.
-
-There's also a "naster" in t/t1402-check-ref-format.sh that's not
-changed here and missed by 02/28 of this series.
-
-Is there some meaning to the name "nain" and "naster" that I'm missing?
-If not can we just call this "topic" or something while we're at it?
-I.e. this on top (just s/nain/topic/g):
-
-diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
-index 9fcec604c3..4e33ec1fb9 100755
---- a/t/t5533-push-cas.sh
-+++ b/t/t5533-push-cas.sh
-@@ -201,12 +201,12 @@ test_expect_success 'cover everything with default force-with-lease (protected)'
- 	setup_srcdst_basic &&
- 	(
- 		cd src &&
--		git branch nain main^
-+		git branch topic main^
- 	) &&
- 	git ls-remote src refs/heads/\* >expect &&
- 	(
- 		cd dst &&
--		test_must_fail git push --force-with-lease origin main main:nain
-+		test_must_fail git push --force-with-lease origin main main:topic
- 	) &&
- 	git ls-remote src refs/heads/\* >actual &&
- 	test_cmp expect actual
-@@ -216,16 +216,16 @@ test_expect_success 'cover everything with default force-with-lease (allowed)' '
- 	setup_srcdst_basic &&
- 	(
- 		cd src &&
--		git branch nain main^
-+		git branch topic main^
- 	) &&
- 	(
- 		cd dst &&
- 		git fetch &&
--		git push --force-with-lease origin main main:nain
-+		git push --force-with-lease origin main main:topic
- 	) &&
- 	git ls-remote dst refs/heads/main |
--	sed -e "s/main/nain/" >expect &&
--	git ls-remote src refs/heads/nain >actual &&
-+	sed -e "s/main/topic/" >expect &&
-+	git ls-remote src refs/heads/topic >actual &&
- 	test_cmp expect actual
- '
- 
