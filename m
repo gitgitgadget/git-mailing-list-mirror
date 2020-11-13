@@ -2,131 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67226C388F7
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 12:11:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E491C388F7
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 12:16:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 16D7B2085B
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 12:11:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DBAA022240
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 12:16:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hzccKDOp"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tgLu7d69";
+	dkim=temperror (0-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c+gp/z0V"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726431AbgKMMLp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Nov 2020 07:11:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37040 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726359AbgKMMLo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Nov 2020 07:11:44 -0500
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57217C0613D1
-        for <git@vger.kernel.org>; Fri, 13 Nov 2020 04:11:44 -0800 (PST)
-Received: by mail-wr1-x444.google.com with SMTP id j7so9619787wrp.3
-        for <git@vger.kernel.org>; Fri, 13 Nov 2020 04:11:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=loiULDHUldWa134DuFZ+Pg1IPijkeO8dQ5B1koe9Ios=;
-        b=hzccKDOpFCIGjMEZJg4+L4J1M2GPG1rpMdxjM7BoZb4HHj/80XFyJEZ36/XOJFtYa6
-         nks7QtbQUgr6wqrBcuhf1NcKFLhWUxhh3i30Z6SUl+7S6vfpDwMP3+E8zaf/NGUTnpB7
-         OXDbHEKVrnwUsMCmzdxw2rfhPqUx9IGP3lFpCvi6qbWcZnYmfrKh3eCH4vGWailRCyqn
-         kzZVKpbF7yDqcifktWgVbCOik7//QHLsTq3xjQ4LH6T/WSTfbehloVzmuPh+MudDzbPd
-         jmNNSwmbr6aIwv2Wecr3ytdfIf66cjAKnRZSblEfOSFylPgPG6qek8yfIhwpmHQ0Qhdk
-         CAhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=loiULDHUldWa134DuFZ+Pg1IPijkeO8dQ5B1koe9Ios=;
-        b=NHJ7vonyN8OEcDK+UfSywTvgV14GgFlRFosZXmjPe/wpd44OP3Xt04JSfkWEIULZIA
-         eeXF4zLHImXk9gFn0CEcgNbKEp4ouU6LNNqCKSFLWadgkTizGqHrfcyAU+X7DMmwyyYo
-         OAU5GcA5z+sTmD/0PulKav9/qvpp+0THYKMdhSuELq3m7KAUD7jXCU5StUwy+4pqN0u/
-         G3ILW05Wcmhun1KYSkOrEqPvcRSFO1UG7vrbEjOhkZ370a8mHwvV+fJTD90N0ZrX6JEv
-         VPJLGX5wJHrB6qc9CIwutXzfJ/anWgIqecrVtpcjGH2GjBNsbSlNA27WX1qvNY8xcmXu
-         ZhyQ==
-X-Gm-Message-State: AOAM532f/VLZ5m8pDGjuz/pjKo7bngx4NRPL1Q7vSNLrvz8bqGItZvZ4
-        FyTXl0sO6rwAcsBgmnNjCxFAYcERD5I=
-X-Google-Smtp-Source: ABdhPJw7p1jaYcXsiEF9GoyiIVCwRb5Wiu1LtxKNODr+6SUBzSFKSOmypco3mjC+7+ootxQgMKtBeQ==
-X-Received: by 2002:adf:84a6:: with SMTP id 35mr3147439wrg.18.1605269503151;
-        Fri, 13 Nov 2020 04:11:43 -0800 (PST)
-Received: from [192.168.1.201] (194.55.7.51.dyn.plus.net. [51.7.55.194])
-        by smtp.googlemail.com with ESMTPSA id z6sm9620466wmi.1.2020.11.13.04.11.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Nov 2020 04:11:42 -0800 (PST)
-Subject: Re: [PATCH v2 09/11] add -i (Perl version): include indentation in
- the colored header
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.785.git.1605051739.gitgitgadget@gmail.com>
- <pull.785.v2.git.1605097704.gitgitgadget@gmail.com>
- <304614751ea1b1db80fbbbdc909b3d198c20313e.1605097704.git.gitgitgadget@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <70fae5a9-354d-978b-c560-d7fcabb25c76@gmail.com>
-Date:   Fri, 13 Nov 2020 12:11:41 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+        id S1726514AbgKMMQV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Nov 2020 07:16:21 -0500
+Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:47585 "EHLO
+        wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726469AbgKMMQU (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 13 Nov 2020 07:16:20 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.west.internal (Postfix) with ESMTP id 08A2DCB3
+        for <git@vger.kernel.org>; Fri, 13 Nov 2020 07:16:18 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Fri, 13 Nov 2020 07:16:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:subject:message-id:mime-version:content-type; s=fm2;
+         bh=wbw+wm/iIIe53Q77C8EB1A46QWKFxgdTOCeUo/hxJzE=; b=tgLu7d69t3VI
+        k7SpAMnNNX5DuxxbI1BicLBFjulZzu7cL4sj6RVaARVziF0AWZk0zXWRHZmo/4bg
+        AjkPR5V1dTHbTgnYwZ5CFUUXAsuL4IIvPGwOb+kUgrauf9JbfClzfQzeFyqUVHC+
+        7BZF4xI4DxfaI61dEw3WQsneV3Y67YbFFSAWCMXhPPYtpNWl2pcWPmI2eUPJ4Olh
+        ACLBLvv49wZkKKsp0IQcDmzzCUcyVB5NfQ0jLtg4GQXBNsiPGSdHc4zOxkmRAD5X
+        XjEepD4hAJaQdwk10Ah5gSziWATn/mpoklKHad1MzJaoeuBVBt93ZLjESDMQfC7J
+        81Bu40uHaw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-type:date:from:message-id
+        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm1; bh=wbw+wm/iIIe53Q77C8EB1A46QWKFx
+        gdTOCeUo/hxJzE=; b=c+gp/z0VZcwaAU5SiYZqgGvsQJg4undztpKbzKU7BmZSU
+        I96V3V2TPirAzQF75p9RR8Kr/YfJIdt/binOtAEZBk/jmX3kj1xZAR6h6ADEEPi1
+        e4b7DdAMRlzJsKcG8f3J3NRxTDvXyhYD1FFr/uuhr1ppL8obfOAa2YbSb+EzKg0R
+        K6dgPRXkcColcVM0Bb7DEmgc+0K79o8Aep42RH2e56OaMqSI+Q+AVy3NyOZ3zvKx
+        PRx+mgUkikKJbhzmxRcSA/Dkqm2S6WYKsiW3nFqpnpzAU/HAOu7RmBt6Ymxqovhj
+        noxxegU9kh5zFcf6UDLcbwZUVe4NCnLAPpAohqfzg==
+X-ME-Sender: <xms:EnmuXzYxefMvdeoETwV1-vZm-NZB4A_iZDlMGz_iWsPmYVqIl1UvRQ>
+    <xme:EnmuXyaUjgZXprgOV31iBHlxksD--UIvOlfoJa9lh1qeFwELqniJFAyW9A6JXIJ_B
+    phDu0T-LY2u5XLP1Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedruddvhedgfeekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepjeeifedvueelfffgjeduffdvgefhiefgjefgvd
+    dvfeduvefffeevfffhgfekieffnecukfhppeekledruddvrdefuddrvdefheenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrih
+    hm
+X-ME-Proxy: <xmx:EnmuX1-QN2IuIGMfkA-YwqVLTbT2mCdCqJSENMv1bLYNhHCgeqW2PQ>
+    <xmx:EnmuX5o-1XvayBZcqCW0E7RYyLC5MUZQNrkIHa1hc9OAj9yxecBQXA>
+    <xmx:EnmuX-rHRc4zRSfHJ9YwMxf3MbbLxqhtYKxhtjdkaRkPBn-EUbDT6w>
+    <xmx:EnmuX71MTtviixvCyOGD44uoQ0kiC4F0fptmOPbFKqYaKRRy9xxPYA>
+Received: from vm-mail.pks.im (dynamic-089-012-031-235.89.12.pool.telefonica.de [89.12.31.235])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 14D523064AAA
+        for <git@vger.kernel.org>; Fri, 13 Nov 2020 07:16:17 -0500 (EST)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id e28368a1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+        for <git@vger.kernel.org>;
+        Fri, 13 Nov 2020 12:16:12 +0000 (UTC)
+Date:   Fri, 13 Nov 2020 13:16:13 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     git@vger.kernel.org
+Subject: [PATCH 0/2] config: allow specifying config entries via envvar pairs
+Message-ID: <cover.1605269465.git.ps@pks.im>
 MIME-Version: 1.0
-In-Reply-To: <304614751ea1b1db80fbbbdc909b3d198c20313e.1605097704.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="yA6s6Gg27gIgz0F1"
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho
 
-On 11/11/2020 12:28, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> The header is formatted by padding each column heading with spaces up to
-> the length of 12 characters. These padding spaces are naturally included
-> when coloring the entire header.
-> 
-> However, the preceding five spaces indentation for non-flat lists were
-> _not_ included in the Perl version, but _were_ included in the built-in
-> version. Let's adjust the former to align with the latter's behavior.
+--yA6s6Gg27gIgz0F1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I had trouble understanding this. I think my confusion is that the 
-padding was printed when the header was colored, but it was not inside 
-the colored part whereas the subject lead be to think there was no 
-indentation printed when the header was colored. I assume this change is 
-so that we can use the same test for both versions?
+Hi,
 
-Best Wishes
+this patch series adds a way to specify config entries via separate
+envvars `GIT_CONFIG_KEY_$n` and `GIT_CONFIG_VALUE_$n`. There's two main
+motivations:
 
-Phillip
+    1. `GIT_CONFIG_PARAMETERS` is undocumented and requires parsing of
+       the key-value pairs. This requires the user to properly escape
+       all potentially harmful characters, which may be hard if the
+       value is controlled by a third party.
 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->   git-add--interactive.perl | 6 ++----
->   1 file changed, 2 insertions(+), 4 deletions(-)
-> 
-> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> index e713fe3d02..adbac2bc6d 100755
-> --- a/git-add--interactive.perl
-> +++ b/git-add--interactive.perl
-> @@ -483,10 +483,8 @@ sub list_and_choose {
->   		my $last_lf = 0;
->   
->   		if ($opts->{HEADER}) {
-> -			if (!$opts->{LIST_FLAT}) {
-> -				print "     ";
-> -			}
-> -			print colored $header_color, "$opts->{HEADER}\n";
-> +			my $indent = $opts->{LIST_FLAT} ? "" : "     ";
-> +			print colored $header_color, "$indent$opts->{HEADER}\n";
->   		}
->   		for ($i = 0; $i < @stuff; $i++) {
->   			my $chosen = $chosen[$i] ? '*' : ' ';
-> 
+    2. `git -c key=3Dval` is not really suited to contain sensitive
+       information, as command line arguments trivially show up in e.g.
+       ps(1).
 
+This new way of passing envvars tries to fix both of those shortcomings.
+
+Patrick
+
+Patrick Steinhardt (2):
+  config: extract function to parse config pairs
+  config: allow specifying config entries via envvar pairs
+
+ Documentation/git-config.txt |  6 ++++
+ config.c                     | 65 ++++++++++++++++++++++++++----------
+ t/t1300-config.sh            | 23 +++++++++++++
+ 3 files changed, 76 insertions(+), 18 deletions(-)
+
+--=20
+2.29.2
+
+
+--yA6s6Gg27gIgz0F1
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl+ueQwACgkQVbJhu7ck
+PpQs8Q//b8N5RPsB5bzLh8XaWbHcY3oDD1L6i6ZNF2OC3XcPP8RRooBypfaGsX76
+YtQWeyb/IqIfNmodgcl6KmAeU5wXNY2QN89bwTjlMS93K0YYeF1ZEuxg4dWobVTw
+7Mnz9B0QSdGBPy9WpOqztbMdVVK7vquVDyVHkTJpvw5pHAMYzZ6mzaAfaeyIk7v7
+LoT1LU2Sfv39yYmCgsFCpunGhI21Bwyj1oAXEdDd41Z2FANvx1VzaldmPjEnB+gK
+MqC12Eci+Y4RtWOG3fj/YFcv6JtKw+2Lh14gZhdHocBYzSao+M+ZL1TsZa1Ew1sS
+aXeSKba2XLyYWaDCkr6PVynbwpiqpm3LlqLJ/FVftsiQ8tVjj9vyAH0wYZgvBydg
+lQlSZx6r9CvWxJAe96q0FZIv8tm05MUXGROaTx99P32GdvodPFrpkbn6xrH11Kcj
+stPgFyAPEZod5IdesTdWiuKPBak8uIIfuKFK35QCwPgQ7cG9f+oK9wDkvou6Uk+r
+YIp/Zehb342glRjmiYZ8K23zXq9vxIrWGjphP3U91Vo54FO+gEYaW34K4x3u+lR+
+XEggNyzEUyxwYwVWajoBFovMsANT1LZPzmGio4G2JYvfw2MXQU3L/WoyICC/Rnq4
+CFMJgN/PRzDzakM5xEoMvJs2k/XRzy8tF13mMS+QZPBixB6vRVE=
+=NJr4
+-----END PGP SIGNATURE-----
+
+--yA6s6Gg27gIgz0F1--
