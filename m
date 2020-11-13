@@ -2,77 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B676C388F9
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 05:14:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1F07C388F9
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 05:26:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C9F9A2137B
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 05:14:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3CDA62137B
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 05:26:18 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a5lB6LzK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726146AbgKMFO3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Nov 2020 00:14:29 -0500
-Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:40856 "EHLO
-        outgoing.mit.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1726054AbgKMFO2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Nov 2020 00:14:28 -0500
-Received: from callcc.thunk.org (pool-72-74-133-215.bstnma.fios.verizon.net [72.74.133.215])
-        (authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 0AD5E9aY001197
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 13 Nov 2020 00:14:09 -0500
-Received: by callcc.thunk.org (Postfix, from userid 15806)
-        id 0ACD1420107; Fri, 13 Nov 2020 00:14:09 -0500 (EST)
-Date:   Fri, 13 Nov 2020 00:14:08 -0500
-From:   "Theodore Y. Ts'o" <tytso@mit.edu>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Don Goodman-Wilson <don@goodman-wilson.com>
-Subject: Re: The master branch rename, and avoiding another v1.6.0 git-foo
- fiasco
-Message-ID: <20201113051408.GA3985404@mit.edu>
-References: <CAMP44s3BJ3dGsLJ-6yA-Po459=+m826KD9an4+P3qOY1vkbxZg@mail.gmail.com>
- <20201113010107.GL6252@camp.crustytoothpaste.net>
- <CAMP44s1U1FevS7NrAYxvgVyzfR5tnD9-+BbPdw5bKnaNHkyD+A@mail.gmail.com>
+        id S1726143AbgKMF0R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Nov 2020 00:26:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57770 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726091AbgKMF0R (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Nov 2020 00:26:17 -0500
+Received: from mail-ua1-x942.google.com (mail-ua1-x942.google.com [IPv6:2607:f8b0:4864:20::942])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A07B8C0613D1
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 21:26:16 -0800 (PST)
+Received: by mail-ua1-x942.google.com with SMTP id k12so2643449uae.13
+        for <git@vger.kernel.org>; Thu, 12 Nov 2020 21:26:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=a8qbL2nhxKE0Uj03RmNHHx9h2V6k5/BW8sue4yLOU6Q=;
+        b=a5lB6LzKqoQvz48Dhpe/dreKpIU0iAnwiJeIJIetvCYJVXUCZOwX+jcB42sHh/P4Bh
+         Qn7GREKKnoI81cFZolqd7mEAprgA+hY70mJb15zFvZxIo6bnldyMRm5hqnIJellmRNwq
+         R98ZJ1SmMvkXMp1epAqNLS5RcVEkYKJ4mPSviQxRv77h2XNmBkprP0GSzvJOmVpqlOte
+         5601OGQkRVZzxoDOkq7v4SJ8lWls1i34JAwYPL5begFzlEntg2P1CiUFG7d6dvLevcEs
+         TjKsxZ7uQ15NhiPyoHwLNKrxLpu4yYB+4HmkdzsbRXPZz4VCLnsEJZhyqOp04PuVtOFw
+         CbUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=a8qbL2nhxKE0Uj03RmNHHx9h2V6k5/BW8sue4yLOU6Q=;
+        b=sQ205X1tMVnLo8v7Dqu0y/x8d9VeI9eiRRo1pf5+iVAFbxC5MMDVxjN7bylI7tUBLO
+         ccdhkvZAblfwtlIC4HRs30JtBjQjCXbmMqmCdyKglsSScEGmS0+NuMb7Gr1W7UUw8EB7
+         t9NGKOV6jBlKgk7a+uDb1wDW6A1iNYZ77dSi07AYVc+1PAA4UTQ44M4Ylz7/AunFxMgI
+         7KFr1t3Y7m9riiRfnZZSH5RW6ZWB392FTIBhDJ6wjR+22UQcOCyc2df1ZA9WnKzCTnq4
+         /Kq03QAW9b6zntuQmhu7xY+3TjNAuWKlY5F3wGs8iYX/qbrBmsx2/97veTtugRXiLQOO
+         m6Hg==
+X-Gm-Message-State: AOAM530fDi2aL52RllJnrRhf1tTV0pksG463+FJtfgJIGq7r+i4HUiWq
+        77o4pjTo/w0GsL21pgzBtc9lN3fL1rKNFomZ04A=
+X-Google-Smtp-Source: ABdhPJyFlqYhAjLQzlBlZMoHZUHpkQFXWWV5DpW6JrLGeVH9CQ957GMyorjtis3ZKGTfX8pmIO+XwdeJBZgAFQBDbM8=
+X-Received: by 2002:ab0:2606:: with SMTP id c6mr147930uao.62.1605245175250;
+ Thu, 12 Nov 2020 21:26:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMP44s1U1FevS7NrAYxvgVyzfR5tnD9-+BbPdw5bKnaNHkyD+A@mail.gmail.com>
+References: <cover.1605123652.git.me@ttaylorr.com> <1573902df00e8a14a9cb68c37f55474388b1dc2e.1605123652.git.me@ttaylorr.com>
+ <CAN0heSqiiMZgT+rEgWVVR_cEmPK2bS3QNnJuHahrqVQet7_Qug@mail.gmail.com> <20201113045700.GA743619@coredump.intra.peff.net>
+In-Reply-To: <20201113045700.GA743619@coredump.intra.peff.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Fri, 13 Nov 2020 06:26:02 +0100
+Message-ID: <CAN0heSpQURCY4xnLHzq8ok7as-YUq4VingPrZ-NJnetsv-RG1w@mail.gmail.com>
+Subject: Re: [PATCH 03/23] pack-bitmap: bounds-check size of cache extension
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Maybe I'm missing something, but I'm very confused about what is going
-to be changed that you are concerned about.  What is it precisely that
-going to be happening (or which you think is going to be happening)
-which is causing you concern?
+On Fri, 13 Nov 2020 at 05:57, Jeff King <peff@peff.net> wrote:
+>
+> On Thu, Nov 12, 2020 at 06:47:09PM +0100, Martin =C3=85gren wrote:
+>
+> > > +               uint32_t cache_size =3D st_mult(index->pack->num_obje=
+cts, sizeof(uint32_t));
+> >
+> > Hmm. If `sizeof(size_t)` is 8, then this multiplication can't possibly
+> > overflow. A huge value of `num_objects` (say, 0xffffffff) would give a
+> > huge return value (0xffffffff<<2) which would be truncated (0xfffffffc)=
+.
+> > I think?
+>
+> Yeah, `cache_size` should absolutely be a `size_t`. If you have more
+> than a billion objects, obviously your cache is going to be bigger than
+> that. But most importantly, somebody can _claim_ to have a huge number
+> of objects and foil the size checks by wrapping around.
+>
+> > Do we want a `u32_mult()`?
+>
+> Nah, we should be doing this as a size_t in the first place. There are
+> similar problems with the .idx format, btw. I have a series to deal with
+> that which I've been meaning to post.
 
+Yes, that makes sense!
 
-Is it changing the default branch name when creating a new repository?
-(Which affects only people creating new repositories)
+> >   if (cache_size > index_end - index->map - header_size)
+>
+> Yes, I agree this should be done as a subtraction as you showed to avoid
+> integer overflow.
 
-Is it renaming the master branch for the git repo?  (which affects
-people who are developing or tracking git via the repository, as
-opposed to using a pre-packaged git provided by their Linux
-Distributions / OS).
+> >   -       if (index->map_size < sizeof(*header) + the_hash_algo->rawsz)
+> >   +       if (index->map_size < header_size + the_hash_algo->rawsz)
 
-Is it improving the tools so that other projects can more easily
-rename their primary development branch from master to main?  (Which
-many projects have been doing *already*, without not a lot of Sturm
-und Drang as near as I can tell, at least in many/most cases.)
+> Right. I think that's right, and the previous patch is just buggy.
 
-Is it removing places in the git program where "master" is treated
-specially (e.g., in how the default text for merge descrtipion is
-worded)?
-
-What, specifically, is the "backwards incompatible change" that you
-are most worried about?  Because many projects have already been
-renaming their primary development branch from master to main
-*already*.
-
-						- Ted
+Martin
