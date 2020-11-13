@@ -7,31 +7,32 @@ X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18699C388F9
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 05:07:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A7FBC388F9
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 05:07:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id ABEC720A8B
-	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 05:07:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4CC5520B80
+	for <git@archiver.kernel.org>; Fri, 13 Nov 2020 05:07:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726189AbgKMFHC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Nov 2020 00:07:02 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56912 "EHLO cloud.peff.net"
+        id S1726198AbgKMFHP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Nov 2020 00:07:15 -0500
+Received: from cloud.peff.net ([104.130.231.41]:56918 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726054AbgKMFHC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Nov 2020 00:07:02 -0500
-Received: (qmail 23764 invoked by uid 109); 13 Nov 2020 05:07:02 -0000
+        id S1726054AbgKMFHP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Nov 2020 00:07:15 -0500
+Received: (qmail 23770 invoked by uid 109); 13 Nov 2020 05:07:15 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 13 Nov 2020 05:07:02 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 13 Nov 2020 05:07:15 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6189 invoked by uid 111); 13 Nov 2020 05:07:01 -0000
+Received: (qmail 6208 invoked by uid 111); 13 Nov 2020 05:07:14 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 13 Nov 2020 00:07:01 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 13 Nov 2020 00:07:14 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 13 Nov 2020 00:07:01 -0500
+Date:   Fri, 13 Nov 2020 00:07:14 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 2/5] use size_t to store pack .idx byte offsets
-Message-ID: <20201113050701.GB744691@coredump.intra.peff.net>
+Subject: [PATCH 3/5] fsck: correctly compute checksums on idx files larger
+ than 4GB
+Message-ID: <20201113050714.GC744691@coredump.intra.peff.net>
 References: <20201113050631.GA744608@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -41,64 +42,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We sometimes store the offset into a pack .idx file as an "unsigned
-long", but the mmap'd size of a pack .idx file can exceed 4GB. This is
-sufficient on LP64 systems like Linux, but will be too small on LLP64
-systems like Windows, where "unsigned long" is still only 32 bits. Let's
-use size_t, which is a better type for an offset into a memory buffer.
+When checking the trailing checksum hash of a .idx file, we pass the
+whole buffer (minus the trailing hash) into a single call to
+the_hash_algo->update_fn(). But we cast it to an "unsigned int". This
+comes from c4001d92be (Use off_t when we really mean a file offset.,
+2007-03-06). That commit started storing the index_size variable as an
+off_t, but our mozilla-sha1 implementation from the time was limited to
+a smaller size. Presumably the cast was a way of annotating that we
+expected .idx files to be small, and so we didn't need to loop (as we do
+for arbitrarily-large .pack files). Though as an aside it was still
+wrong, because the mozilla function actually took a signed int.
+
+These days our hash-update functions are defined to take a size_t, so we
+can pass the whole buffer in directly. The cast is actually causing a
+buggy truncation!
+
+While we're here, though, let's drop the confusing off_t variable in the
+first place. We're getting the size not from the filesystem anyway, but
+from p->index_size, which is a size_t. In fact, we can make the code a
+bit more readable by dropping our local variable duplicating
+p->index_size, and instead have one that stores the size of the actual
+index data, minus the trailing hash.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/pack-redundant.c | 6 +++---
- packfile.c               | 4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ pack-check.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-index 178e3409b7..3e70f2a4c1 100644
---- a/builtin/pack-redundant.c
-+++ b/builtin/pack-redundant.c
-@@ -236,7 +236,7 @@ static struct pack_list * pack_list_difference(const struct pack_list *A,
+diff --git a/pack-check.c b/pack-check.c
+index db3adf8781..4b089fe8ec 100644
+--- a/pack-check.c
++++ b/pack-check.c
+@@ -164,22 +164,22 @@ static int verify_packfile(struct repository *r,
  
- static void cmp_two_packs(struct pack_list *p1, struct pack_list *p2)
+ int verify_pack_index(struct packed_git *p)
  {
--	unsigned long p1_off = 0, p2_off = 0, p1_step, p2_step;
-+	size_t p1_off = 0, p2_off = 0, p1_step, p2_step;
- 	const unsigned char *p1_base, *p2_base;
- 	struct llist_item *p1_hint = NULL, *p2_hint = NULL;
- 	const unsigned int hashsz = the_hash_algo->rawsz;
-@@ -280,7 +280,7 @@ static void cmp_two_packs(struct pack_list *p1, struct pack_list *p2)
- static size_t sizeof_union(struct packed_git *p1, struct packed_git *p2)
- {
- 	size_t ret = 0;
--	unsigned long p1_off = 0, p2_off = 0, p1_step, p2_step;
-+	size_t p1_off = 0, p2_off = 0, p1_step, p2_step;
- 	const unsigned char *p1_base, *p2_base;
- 	const unsigned int hashsz = the_hash_algo->rawsz;
+-	off_t index_size;
++	size_t len;
+ 	const unsigned char *index_base;
+ 	git_hash_ctx ctx;
+ 	unsigned char hash[GIT_MAX_RAWSZ];
+ 	int err = 0;
  
-@@ -499,7 +499,7 @@ static void scan_alt_odb_packs(void)
- static struct pack_list * add_pack(struct packed_git *p)
- {
- 	struct pack_list l;
--	unsigned long off = 0, step;
-+	size_t off = 0, step;
- 	const unsigned char *base;
+ 	if (open_pack_index(p))
+ 		return error("packfile %s index not opened", p->pack_name);
+-	index_size = p->index_size;
+ 	index_base = p->index_data;
++	len = p->index_size - the_hash_algo->rawsz;
  
- 	if (!p->pack_local && !(alt_odb || verbose))
-diff --git a/packfile.c b/packfile.c
-index a72c2a261f..63fe9ee8be 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -164,8 +164,8 @@ int load_idx(const char *path, const unsigned int hashsz, void *idx_map,
- 		 * variable sized table containing 8-byte entries
- 		 * for offsets larger than 2^31.
- 		 */
--		unsigned long min_size = 8 + 4*256 + (size_t)nr*(hashsz + 4 + 4) + hashsz + hashsz;
--		unsigned long max_size = min_size;
-+		size_t min_size = 8 + 4*256 + (size_t)nr*(hashsz + 4 + 4) + hashsz + hashsz;
-+		size_t max_size = min_size;
- 		if (nr)
- 			max_size += ((size_t)nr - 1)*8;
- 		if (idx_size < min_size || idx_size > max_size)
+ 	/* Verify SHA1 sum of the index file */
+ 	the_hash_algo->init_fn(&ctx);
+-	the_hash_algo->update_fn(&ctx, index_base, (unsigned int)(index_size - the_hash_algo->rawsz));
++	the_hash_algo->update_fn(&ctx, index_base, len);
+ 	the_hash_algo->final_fn(hash, &ctx);
+-	if (!hasheq(hash, index_base + index_size - the_hash_algo->rawsz))
++	if (!hasheq(hash, index_base + len))
+ 		err = error("Packfile index for %s hash mismatch",
+ 			    p->pack_name);
+ 	return err;
 -- 
 2.29.2.705.g306f91dc4e
 
