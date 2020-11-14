@@ -2,97 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D223C63697
-	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 18:21:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFB20C5519F
+	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 18:37:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2F57D2224F
-	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 18:21:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 73D7D2225E
+	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 18:37:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZCIVxnzw"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="Zu5aGVAy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726200AbgKNSUs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Nov 2020 13:20:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34904 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726070AbgKNSUs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Nov 2020 13:20:48 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1B9AC0613D1
-        for <git@vger.kernel.org>; Sat, 14 Nov 2020 10:20:47 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id f20so18556198ejz.4
-        for <git@vger.kernel.org>; Sat, 14 Nov 2020 10:20:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=raNIEZ+7d9o+7UlXECxKnkWinHHfkDe8Z7czd800300=;
-        b=ZCIVxnzwVuUR8IYHs2Zm/wnr5HJLoKvlS9wzMc2665oh9y6r0C3cnEq0NiumYvFbt/
-         GsOaKYrnF5Ejv0ZFENFhaSHoor+l/60MoubiaVmH8p5Nx6thV6EUsznoukxLYqBbUGK9
-         G0QUWOs4T04EclkWzutsGJIv0PmsYWdZebDp3S2VzJOEZqsIyR+vssoYeLqJW6AUY3sU
-         9aE3wxGVSHLO42A8sMImmHAV1lCAxrqxUxcdkzaPttwRzcxarUJvMb1SH2Q6C/DpuOgU
-         fSMSFgbcirXxZXHBNdViNkeB3zedyDF0rOuAavWmZcctQvzYMmRunMRyo8AmKn859MGy
-         AWig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=raNIEZ+7d9o+7UlXECxKnkWinHHfkDe8Z7czd800300=;
-        b=E8uJcaalxwfLMIk/TE8Jh4CqomZG6RP46wWXJTmEr6QvE/0pd+sDPovfv64Bz5l/Fn
-         TGga6ud2KwIRaKKRaVMRCjnZV76MaA333yGKL61wTZoNuZPuWuI8vea3wahjR9wo/7HB
-         p4tTnE4drSDUiw560WLntgbQ9UTkf02AVXTgpkeVS0IuvHjAC9PkwDvk6nsEZMKZDFVt
-         ACr1vx6W4oDUL7ogrQJzf3wi+qbwZW0/5CT3l11vQ8bS3UvNMnaHGVvd7ibM5uZJ/MY2
-         3Hb3uIQ8BH3hzeHdskV8yifuoIaufHnuGqFnvOHUtYTzS4PbjI1pwN7MnMvBK9uRvZVu
-         q9vA==
-X-Gm-Message-State: AOAM532QJoBdYt7f4Ud31Ld86uxP5VPEvDBAbJEJsrr6DEDZkACyJ7VN
-        jaGn0dKdx1NYOKYaQGmBzMx6KIgw7a+1/Q==
-X-Google-Smtp-Source: ABdhPJz0WWR5rgnk9W+rB5z2uvkzmYuEe/Rs6iSrWo7jyMq3Yln4hdSZq5x7CngDd2aRN/YZLdtD9g==
-X-Received: by 2002:a17:906:7797:: with SMTP id s23mr7356466ejm.312.1605378046500;
-        Sat, 14 Nov 2020 10:20:46 -0800 (PST)
-Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id o17sm4583930edz.10.2020.11.14.10.20.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Nov 2020 10:20:45 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Alireza <rezaxm@gmail.com>, git@vger.kernel.org
-Subject: Re: Why Git LFS is not a built-in feature
-References: <CAD9n_qjKyxNjtd1YrcHzshLg0-vbwXkHRwMveXHAWSOXMWLKAg@mail.gmail.com> <20201114002902.GN6252@camp.crustytoothpaste.net> <20201114162700.cvmxzcs4sdhsxpak@chatter.i7.local>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 26.3; mu4e 1.4.13
-In-reply-to: <20201114162700.cvmxzcs4sdhsxpak@chatter.i7.local>
-Date:   Sat, 14 Nov 2020 19:20:45 +0100
-Message-ID: <87blfzg5qa.fsf@evledraar.gmail.com>
+        id S1726182AbgKNShJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Nov 2020 13:37:09 -0500
+Received: from mout.web.de ([212.227.15.4]:58867 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726174AbgKNShI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Nov 2020 13:37:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1605379023;
+        bh=XlpB1iGKC8r+OGd0uncF32ni5f1S5BO6dZck9erq7Qw=;
+        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
+        b=Zu5aGVAy1s5Ayq6nAsGUAZ4PvNXK3N4jYkdTvGNvO1tIeVpIeYSQdJkTSLRYlpiFY
+         7+u7/DTBHtODh5AP9rprBuJ57B/+2TUbtoqVJ9OfnPx/pR1WIo8oVZXO/ITYTRxms6
+         pRxFTeJ4Nz0bVbR7Ie0RfINaXnITzNVfg0YbuGAA=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.17.45]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MBjMO-1kYU793Kf6-00CCYR; Sat, 14
+ Nov 2020 19:37:03 +0100
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] diff-lib: plug minor memory leaks in do_diff_cache()
+Message-ID: <80fb4a2a-992f-7d3b-9413-5059da3a8f01@web.de>
+Date:   Sat, 14 Nov 2020 19:37:03 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:zGJTlUfHLV53Ek5I4gpUIk+yPUQce30NybZP0cYyRiXW6IHXD6M
+ pLtdcIXNh7S7q76oFLRR28IYEEYfsnX/o4AfVBWjWyRqV16enZh/XKKmrUaQVVA7WTXGZVO
+ VBkT4kij/DFP9j5GNC5QBXDH1Z5x23e5/valatfZQ1zaU0IB9wh2EoJCRPUfu1DbBJ235og
+ 9b5tShVPmORMpYZz2ph9A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:gccV0u+l2AU=:1r/CD8+brTcPLiHiP+mMpM
+ Ltve4tvgV+YbYOSSivjFwXSWmlB4ccoih4A1XZa/ABRsqQMbn89rnwYpzaHJoRLaKJnQ2bmlr
+ dDqwl4LDEZ1ZoLePHqhRJ6AzZ1U+pTBZ96NFvbI6sCupbJxUSjp4NwXjvk96rh6HlfCerjA7W
+ E/GHPtpoTOtb1d811vQ75QCOigqJZCPO+FBnJ2JQ8mZY7Y67UhiVA88Thsfk8tUw2IhZQyknF
+ qRcbfrACB3DtpHN68yFdYSnLhHRBfhU2LNioKLNGtAkIL5wi3HT6FE8RKJZPK+1qswpwJ/3vc
+ /dAz8j+2KCLXLRx3mMKZIFZUh1DZyqCZrBfd0MCbJbPPGAas5pBSnxcdnWEHNpfgCjIjOqxhM
+ zjxJ4sua3OUwuEHIWPEuJF2tdSVVO9X030ue7liRyaVWj6vTYNoWKIE9yM4oVftduj6YXU9Wm
+ tWaqtAZ1AIquyMRjqZ9VWkuAqnFjUl0AA5s5ezyMmiow1aVLTp1w3JNaFN1506vKwBtTtdkCW
+ zmU2cx0Pc9YDAbIyxemtJSwZZryramxqjwl90uF15YPDCDgzLdYGJsW+199fnJEZP9KIB5cE2
+ NsV8SEodiDrmsqV0wviBVZP7d+Cfwp8NWg0ul7Ml+T9Ba/c08MVUyrz9ID66jxpuP6PIDUJPI
+ Jrf9eegIWxjE37RmF/vG7au4/zkBTgy4ZPMMeJKLVRROPfshZMI3Y9nm1c3NUkIYxLUAlmc1+
+ RYfWg5sveCH+OnDoG/NihfESgywDzWJN9asqGHxc3FqL3SZa+Sb+pk2KoAihR1bb/1i3IYFPN
+ 2+fz8hjeSzV79rcAz3Pz4pnnmQdnegk0MT4igWLdvTgv7cp931c1lPwSPTDcTAypR/KwUwyS4
+ nQPEWLBPSaomFONU33eQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+do_diff_cache() builds a struct rev_info to hand to diff_cache() from
+scratch by initializing it using repo_init_revisions() and then
+replacing its diffopt and prune_data members.
 
-On Sat, Nov 14 2020, Konstantin Ryabitsev wrote:
+The diffopt member is initialized to a heap-allocated list of options,
+though.  Release it using diff_setup_done() before overwriting it.
 
-> On Sat, Nov 14, 2020 at 12:29:02AM +0000, brian m. carlson wrote:
->> Additionally, in many cases, projects can avoid the need for storing
->> large files at all by using repository best practices, like not storing
->> build products or binary dependencies in the repository and instead
->> using an artifact server or a standard packaging system.  If possible,
->> that will almost always provide a better experience than any solution
->> for storing large files in the repository.
->
-> Well, I would argue that if the goal is ongoing archival and easy 
-> replication, then storing objects in a repository like git makes a lot 
-> more sense than keeping them on a central server that may or may not be 
-> there a few years down the line. Having large file support native in git 
-> is a laudable goal and I quite often wish that it existed.
+The initial value of the prune_data member doesn't need to be released,
+but the copy created using copy_pathspec() does.  Clear it after use.
 
-That native support does exist right now in the form of partial clones,
-the packfile-uris support, core.bigFileThreshold etc.
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ diff-lib.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-It's got a lot of rough edges currently, but if it's something you're
-interested in you should try it out and see if the subset of features
-that works well now is something that would work for you.
+diff --git a/diff-lib.c b/diff-lib.c
+index 082e249fc3..b73cc1859a 100644
+=2D-- a/diff-lib.c
++++ b/diff-lib.c
+@@ -606,10 +606,12 @@ int do_diff_cache(const struct object_id *tree_oid, =
+struct diff_options *opt)
+
+ 	repo_init_revisions(opt->repo, &revs, NULL);
+ 	copy_pathspec(&revs.prune_data, &opt->pathspec);
++	diff_setup_done(&revs.diffopt);
+ 	revs.diffopt =3D *opt;
+
+ 	if (diff_cache(&revs, tree_oid, NULL, 1))
+ 		exit(128);
++	clear_pathspec(&revs.prune_data);
+ 	return 0;
+ }
+
+=2D-
+2.29.2
