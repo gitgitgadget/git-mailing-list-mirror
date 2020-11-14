@@ -2,87 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15E35C5519F
-	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 19:32:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 864D1C5519F
+	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 21:18:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D5D6722265
-	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 19:32:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 436882242C
+	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 21:18:34 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WGMI0mIG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726299AbgKNTbm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Nov 2020 14:31:42 -0500
-Received: from 1.mo51.mail-out.ovh.net ([178.32.121.110]:58146 "EHLO
-        1.mo51.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726277AbgKNTbl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Nov 2020 14:31:41 -0500
-X-Greylist: delayed 8399 seconds by postgrey-1.27 at vger.kernel.org; Sat, 14 Nov 2020 14:31:41 EST
-Received: from mxplan1.mail.ovh.net (unknown [10.108.4.102])
-        by mo51.mail-out.ovh.net (Postfix) with ESMTPS id 5FD70234D64;
-        Sat, 14 Nov 2020 16:55:25 +0100 (CET)
-Received: from greg0ire.fr (37.59.142.105) by DAG4EX2.mxp1.local (172.16.2.8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2044.4; Sat, 14 Nov
- 2020 16:55:24 +0100
-Authentication-Results: garm.ovh; auth=pass (GARM-105G0067aade327-dacd-4b50-a17f-0d4f8f6c885c,
-                    4C58B1D2F0141825396C827F322D1A475CF1342F) smtp.auth=postmaster@greg0ire.fr
-Subject: Re: phpdoc diff in git -L is not the correct one
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
-CC:     Git Mailing List <git@vger.kernel.org>
-References: <348a2a4a-dfdb-190b-edac-01e9ad4c2d4d@greg0ire.fr>
- <CAN0heSrU5zzgR_FDZcEopPP2EmSQnraZXO4v8Smx8=fWcXa0uQ@mail.gmail.com>
-From:   =?UTF-8?Q?Gr=c3=a9goire_PARIS?= <postmaster@greg0ire.fr>
-Message-ID: <e666e806-d8c6-0b8d-c583-e4a8ee0ee806@greg0ire.fr>
-Date:   Sat, 14 Nov 2020 16:55:22 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.3.1
-MIME-Version: 1.0
-In-Reply-To: <CAN0heSrU5zzgR_FDZcEopPP2EmSQnraZXO4v8Smx8=fWcXa0uQ@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
+        id S1726177AbgKNVSL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Nov 2020 16:18:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33812 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726112AbgKNVSL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Nov 2020 16:18:11 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 149A5C0613D1
+        for <git@vger.kernel.org>; Sat, 14 Nov 2020 13:18:11 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id u12so6992771wrt.0
+        for <git@vger.kernel.org>; Sat, 14 Nov 2020 13:18:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=5chmW2QIHUxbRHInjDcbWYUpA/m1Qk+EHtO8/zrhsO0=;
+        b=WGMI0mIGzCgydUk3NtBQpmyY1vkfhst8VbfLh5WIOexaBgLe04v43O8Gp+rI3/s9q7
+         dlEkzDbZGCiFghXucD8GCFdryiDRSUGOSn5EYDywD9Gkw6LZj+hUsKpvHKkjVRG4D1cB
+         LXy1TcdP6SrcXeOth7MRDf2lLAxhG5Ldy5/M7IQUFR+cuiNVXGdTL8ws6Yb3fMi8a4yR
+         DbHwceS0ZNvCpWSxq3atYAcuGeaOXEYzjBzAJEJC3h7o3/obYQLEjzHegUUeJes0iEow
+         z1UFRBEf4HaZEjWTiC3DviI89pPWtP2emMHAFAXLCl126BD5yN/5tmvTDNHVZKUM5c90
+         C/Gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=5chmW2QIHUxbRHInjDcbWYUpA/m1Qk+EHtO8/zrhsO0=;
+        b=Wu0W6thq9m/MrHODTBLMTu8TbKorqnVtIKO3guF22MngzHTaBo/eovKRpiZXRR/yFY
+         rmX0GXN0pdZOeErfQh6m4ifSb9fxog3KtBXhUBhoh4kNtOvxOKeweR9pHE04fwBE+uwP
+         eJH4oprRxvSnZ+x4rlSAYXacNrQ4LxI5Tc17KZCvYxzrTquY+lSffZ/Q49FhozGjesuZ
+         ZUxmY4O/aQpCSceQGt+S0dbr4MKoDGoDZcmHxlWwQjXSuH4s8MoXOURnm5wPk+35ekkB
+         cReVQqLGcqIsmQPYn83CFWiuzwzhQ/SqSbI0u2v4mnlAhEs9aBJOHn+agXapjByj0LX5
+         hAng==
+X-Gm-Message-State: AOAM530IEVHGQUczgjd9jn9xBoRvrkCaL807kKEQkEbGTR4zTkee/Qhx
+        +RCezlWtKhFa3xjFUuYjb+0YGvSj1Mc=
+X-Google-Smtp-Source: ABdhPJwfouGXidc2Z+7IbZPHxu6Na05/sv2V4yeMY5nOYhAInD8cMLABvgRSq3vjhr8OWtVMNZxhcg==
+X-Received: by 2002:adf:f9c4:: with SMTP id w4mr11441988wrr.64.1605388688791;
+        Sat, 14 Nov 2020 13:18:08 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p12sm16139122wrw.28.2020.11.14.13.18.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Nov 2020 13:18:08 -0800 (PST)
+Message-Id: <pull.915.git.git.1605388687554.gitgitgadget@gmail.com>
+From:   "Javier Spagnoletti via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 14 Nov 2020 21:18:07 +0000
+Subject: [PATCH] userdiff: php: Improved tests catching "abstract" and "final"
+ functions
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Originating-IP: [37.59.142.105]
-X-ClientProxiedBy: CAS3.mxp1.local (172.16.1.3) To DAG4EX2.mxp1.local
- (172.16.2.8)
-X-Ovh-Tracer-GUID: 6c028f97-4827-4bca-82e7-9dd3758d013f
-X-Ovh-Tracer-Id: 18297280862585327002
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedujedruddvjedgkeefucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepuffvfhfhkffffgggjggtgfhisehtkeertddtfeejnecuhfhrohhmpefirhorghhoihhrvggprfettffkufcuoehpohhsthhmrghsthgvrhesghhrvghgtdhirhgvrdhfrheqnecuggftrfgrthhtvghrnhepieeuieelheelhfdujeetteeuieejkeeivedtveffveevveegfeduleffhfehkedtnecukfhppedtrddtrddtrddtpdefjedrheelrddugedvrddutdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmohguvgepshhmthhpqdhouhhtpdhhvghlohepmhigphhlrghnuddrmhgrihhlrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpehpohhsthhmrghsthgvrhesghhrvghgtdhirhgvrdhfrhdprhgtphhtthhopehmrghrthhinhdrrghgrhgvnhesghhmrghilhdrtghomh
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Javier Spagnoletti <phansys@gmail.com>,
+        Javier Spagnoletti <phansys@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Martin,
+From: Javier Spagnoletti <phansys@gmail.com>
 
-thanks for your answer!
+Since the original tests cases were using other detectable keywords (like
+"public" or "protected"), they are able to pass even if the keywords
+intended to be covered are not present.
 
-> In the end I think your best option right now is to give explicit line
-> numbers for <end> and <start>.
-That is indeed what I currently do, I plugged that to vim's visual 
-selection with
+Signed-off-by: Javier Spagnoletti <phansys@gmail.com>
+---
+    userdiff: php: Improved test cases used to catch "abstract" and "final"
+    functions
+    
+    Since the original tests cases were using other detectable keywords
+    (like "public" or "protected"), they are able to pass even if the
+    keywords intended to be covered are not present. In the case of the test
+    for "abstract" keyword, the method's body was removed in the fixture,
+    since PHP doesn't allow an abstract method to have a body.
+    
+    Signed-off-by: Javier Spagnoletti phansys@gmail.com [phansys@gmail.com]
 
-   vnoremap <leader>l :<c-u>exe '!git log -L' 
-line("'<").','.line("'>").':'.expand('%')<CR>
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-915%2Fphansys%2Fpr_864-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-915/phansys/pr_864-v1
+Pull-Request: https://github.com/git/git/pull/915
 
-and it works great!
+ t/t4018/php-abstract-method | 5 ++++-
+ t/t4018/php-final-method    | 2 +-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-I was wondering if that was maybe an issue with the PHP regex, but with your
-explanation I understand a bit more what the issue might be: The man 
-page you
-are quoting seems to say that the regex can only work on a single line as
-opposed to a code block (for probably very good reasons), which means 
-there is
-no hope to include the phpdoc in the regex, or to fix this issue I suppose.
+diff --git a/t/t4018/php-abstract-method b/t/t4018/php-abstract-method
+index ce215df75a..14d77e6c15 100644
+--- a/t/t4018/php-abstract-method
++++ b/t/t4018/php-abstract-method
+@@ -1,7 +1,10 @@
+ abstract class Klass
+ {
+-    abstract public function RIGHT(): ?string
++    abstract function RIGHT(): ?string
+     {
++        // PHP doesn't allow abstract methods to have a body,
++        // but this is here just for diff ckeck purposes.
++
+         return 'ChangeMe';
+     }
+ }
+diff --git a/t/t4018/php-final-method b/t/t4018/php-final-method
+index 537fb8ad9a..f7dd2dec17 100644
+--- a/t/t4018/php-final-method
++++ b/t/t4018/php-final-method
+@@ -1,6 +1,6 @@
+ class Klass
+ {
+-    final public function RIGHT(): string
++    final function RIGHT(): string
+     {
+         return 'ChangeMe';
+     }
 
-I also suppose the issue is the same for any other language that has 
-documentation above function declarations.
-
-Thanks for taking the time to answer my question.
-
---
-
-greg0ire
-
+base-commit: e31aba42fb12bdeb0f850829e008e1e3f43af500
+-- 
+gitgitgadget
