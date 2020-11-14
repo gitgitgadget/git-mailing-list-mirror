@@ -2,118 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5F20C5519F
-	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 06:32:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8322DC5519F
+	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 08:44:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 951012224B
-	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 06:32:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 46D21205CA
+	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 08:44:05 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lEXUWMdL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726502AbgKNGXM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Nov 2020 01:23:12 -0500
-Received: from cloud.peff.net ([104.130.231.41]:58214 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726380AbgKNGXM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Nov 2020 01:23:12 -0500
-Received: (qmail 28801 invoked by uid 109); 14 Nov 2020 06:23:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 14 Nov 2020 06:23:12 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20775 invoked by uid 111); 14 Nov 2020 06:23:11 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 14 Nov 2020 01:23:11 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Sat, 14 Nov 2020 01:23:10 -0500
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        dstolee@microsoft.com, gitster@pobox.com
-Subject: Re: [PATCH 17/23] pack-bitmap-write: build fewer intermediate bitmaps
-Message-ID: <20201114062310.GA828053@coredump.intra.peff.net>
-References: <cover.1605123652.git.me@ttaylorr.com>
- <ab64354851e2aa61e901e37814b2ae33d8f855d1.1605123653.git.me@ttaylorr.com>
- <20201113222328.GA8033@szeder.dev>
- <20201113230324.GA784144@coredump.intra.peff.net>
+        id S1726578AbgKNIno (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Nov 2020 03:43:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59672 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726478AbgKNIno (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Nov 2020 03:43:44 -0500
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38775C0613D1
+        for <git@vger.kernel.org>; Sat, 14 Nov 2020 00:43:42 -0800 (PST)
+Received: by mail-wm1-x342.google.com with SMTP id a65so17549909wme.1
+        for <git@vger.kernel.org>; Sat, 14 Nov 2020 00:43:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NfPcX6Rr4Tb9tu8iL/pCnVVH4icc31E1v7hWIEAOSfA=;
+        b=lEXUWMdL3Xb6p5C/6mqFD8Qks4OUKd5OPsgBl9nX4ESGQ93Bs5zLZMT0s9KSMITuFE
+         9ay5wXZdJoM85nrNDnCPrhZvIeZcUQ8WBgYc0aI15vfUxu1LULWNntcv9qR8wpCSlnEX
+         KsMP64zAe0wkNKUa3a1hb2EmHRsu2AtRHEXHHRODzt4PUDinXFYbDMruvDBkihjwgZFG
+         peTjBYqhz4uGCpfhW9bJfWG6HFepLjqGNipWsL0l9wH9Z+jjAOEy5HCO9IFpD3cghxH0
+         PMqKRCG7hzmMbrFsmRI+L4JlB/Jb33RpDWt7rG0zRSMKQ5tDB9g4r5Yg3LEXnWDOXFSl
+         oEHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NfPcX6Rr4Tb9tu8iL/pCnVVH4icc31E1v7hWIEAOSfA=;
+        b=P+fJMqdGERXti2W1hcV5+vJRRCbDVZs4DclLzCqRlHb7I16/VZzt59PhiMowQQ0q31
+         wzVoE8MVHOFo8JgOlst6t3n2LIAFsTsR4UL+vBjfTOOwgQYdeJ/JTFDWsIxQTMnYp0tX
+         xHw20WRqmgyetIzMI8HdnRNr3lqvr+6kxDQxDaUAe3hLOR1Qye9d1K5Bb5yTnKCa+hiC
+         kr0kgCMEx03q2LQiqgpU4HbZ8syl9EYaSjy+hyXVQowkcG7IIe5qC74GRWt1KsArI9Ex
+         vp7USLhN15ufeByzXYkxU/ZU1avK9HCU99jr81SdwtshInsVrifL9IR5Q0g1J2UQxuFR
+         f+0w==
+X-Gm-Message-State: AOAM533w5ujiIUWPjBDtfbcJOPpF+ub7VJjtIgt0WGX7DGIzDdnhmaaD
+        PcMzi9WZ1pV9Sw9/bWw/bUGFqss+s/rsgA==
+X-Google-Smtp-Source: ABdhPJxAEK2lIN1dKlcwMwRMZA+9wiZI3YQeg8jx8UQ6GNfKepXPOSLqWYaP/12py1tN5U4Chpa0mQ==
+X-Received: by 2002:a1c:1dc1:: with SMTP id d184mr6092324wmd.169.1605343420653;
+        Sat, 14 Nov 2020 00:43:40 -0800 (PST)
+Received: from localhost.localdomain (pub212004089179.dh-hfc.datazug.ch. [212.4.89.179])
+        by smtp.gmail.com with ESMTPSA id v67sm13385234wma.17.2020.11.14.00.43.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Nov 2020 00:43:39 -0800 (PST)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>
+Subject: [PATCH] list-objects-filter-options: fix function name in BUG
+Date:   Sat, 14 Nov 2020 09:43:26 +0100
+Message-Id: <20201114084327.14891-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.29.2.454.gaff20da3a2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20201113230324.GA784144@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 13, 2020 at 06:03:24PM -0500, Jeff King wrote:
+Fix the function name we give in the BUG message. It's "config", not
+"choice".
 
-> But what's slightly disturbing is this output:
-> 
-> >   --- expect      2020-11-13 22:20:39.246355100 +0000
-> >   +++ actual      2020-11-13 22:20:39.254355294 +0000
-> >   @@ -1 +1 @@
-> >   -239
-> >   +236
-> >   error: last command exited with $?=1
-> 
-> We're actually producing the wrong answer here, which implies that
-> ewah_read_mmap() is not being careful enough. Or possibly we are feeding
-> it extra bytes (e.g., letting it run over into the name-hash cache or
-> into the trailer checksum).
-> 
-> I think we'll have to dig further into this, probably running the sha256
-> case in a debugger to see what offsets we actually end up reading.
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ list-objects-filter-options.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Yep, the problem is in the caller, which is not careful about size
-checks before reading the header before the actual ewah.
-
-The first hunk here fixes it (the second is just another possible
-corruption I noticed, but not triggered by the test):
-
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index dc811ebae8..785009b04e 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -229,11 +229,16 @@ static int load_bitmap_entries_v1(struct bitmap_index *index)
- 		uint32_t commit_idx_pos;
- 		struct object_id oid;
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+index defd3dfd10..d2d1c81caf 100644
+--- a/list-objects-filter-options.c
++++ b/list-objects-filter-options.c
+@@ -35,7 +35,7 @@ const char *list_object_filter_config_name(enum list_objects_filter_choice c)
+ 		/* not a real filter type; just the count of all filters */
+ 		break;
+ 	}
+-	BUG("list_object_filter_choice_name: invalid argument '%d'", c);
++	BUG("list_object_filter_config_name: invalid argument '%d'", c);
+ }
  
-+		if (index->map_size - index->map_pos < 6)
-+			return error("corrupt ewah bitmap: truncated header for entry %d", i);
-+
- 		commit_idx_pos = read_be32(index->map, &index->map_pos);
- 		xor_offset = read_u8(index->map, &index->map_pos);
- 		flags = read_u8(index->map, &index->map_pos);
- 
--		nth_packed_object_id(&oid, index->pack, commit_idx_pos);
-+		if (nth_packed_object_id(&oid, index->pack, commit_idx_pos) < 0)
-+			return error("corrupt ewah bitmap: commit index %u out of range",
-+				     (unsigned)commit_idx_pos);
- 
- 		bitmap = read_bitmap_1(index);
- 		if (!bitmap)
+ /*
+-- 
+2.29.2.454.gaff20da3a2
 
-We should definitely do something like this, but there are some possible
-further improvements:
-
-  - I think that map_size includes the trailing hash, and almost
-    certainly any post-index extensions. We could probably compute the
-    correct boundary of the bitmaps themselves in the caller and make
-    sure we don't read past it. I'm not sure if it's worth the effort,
-    though. In a truncation situation, basically all bets are off (is
-    the trailer still there and the bitmap entries malformed, or is the
-    trailer truncated?). The best we can do is try to read what's there
-    as if it's correct data (and protect ourselves when it's obviously
-    bogus).
-
-  - we could avoid the magic "6" if read_be32() and read_u8(), which are
-    custom helpers for this function, checked sizes before advancing the
-    pointers.
-
-  - I'm hesitant to add more tests in this area. As you can see from the
-    commit which "broke" the test, truncating at byte N is going to be
-    sensitive to small variations in the bitmap generation. So unless
-    we're actually parsing the bitmaps and doing targeted corruptions,
-    the tests will be somewhat brittle.
-
--Peff
