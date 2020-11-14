@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3FEAC6369E
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3B4FC63699
 	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 00:35:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C337222267
+	by mail.kernel.org (Postfix) with ESMTP id 75D2F22267
 	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 00:35:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qgMLZzXd"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gV24JFhC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726182AbgKNAew (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Nov 2020 19:34:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41602 "EHLO
+        id S1726156AbgKNAet (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Nov 2020 19:34:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726166AbgKNAeu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Nov 2020 19:34:50 -0500
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDCEFC0613D1
+        with ESMTP id S1726113AbgKNAet (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Nov 2020 19:34:49 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F0EEC0617A6
         for <git@vger.kernel.org>; Fri, 13 Nov 2020 16:34:49 -0800 (PST)
-Received: by mail-wm1-x344.google.com with SMTP id w24so13536689wmi.0
+Received: by mail-wr1-x42b.google.com with SMTP id k2so12158487wrx.2
         for <git@vger.kernel.org>; Fri, 13 Nov 2020 16:34:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=tli/2DVPWhBZTlOxbzWYQvd2w5EWfJsrm0epbkKGYY4=;
-        b=qgMLZzXdbiQiq2YcgKN9hE3+1czr/OFtlwQIBUnrECFLEwzW4gCXFFP9IMubpR2Ov/
-         EziAy3qOAXnveqHpPehN5yIavzo9fCkE+Wf+RFmgVpLioMO2hYQrNbN5IuF5rJHIhe3X
-         2fazC6hMkabUF8nzN7NnaK2X98QqxCPCMzOYEXggWGU5ejN3NPK2PRnsTtF2P2reVj8m
-         xrOOV7R8jBa4oAIfA1laV13mXAVg4hROjiPs8V7ofdNVf3eWYVkFBoZmaebLaI0rcaxy
-         I4POEVRW2mrz3ynIbgdScq5jjQQY9fLDsYJZERjx00t51HRNy6tGdw71VOuUGZagQ5N2
-         Sagg==
+        bh=gWDz9/SWZ7N7h4GNphEYMJIZWtymw4ByXjkmREoQWWo=;
+        b=gV24JFhCE8xRJihBdBiJst9DvGtWod1UFh9xrOswBco3SuEB/mX2S6vuAwVhb64kli
+         GOIHqPOss6d0X5j7fk11WopX0rHJR4LWOBfrjMXOoJUnEHEzsFsTljvv9Z6EaBJNuyls
+         j04lbWshhVFABDWPJEnfNcWap9r63wN+vgsEXWoMAl0RdWDYbQmfhe2020hgtZbWKLwC
+         +SFrxWpVwS26/r2s4cNe/kdxxfeQtLB853Bvns3GrczlqcJFPMSF6+pWMwC8iumkRbJE
+         BG7f9ajbdgYLqWvzhGuDtlc3TvmVcRaNbY98eyziSexiHvdjJ0zOeFepwrVqf2yU9E8c
+         qtTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=tli/2DVPWhBZTlOxbzWYQvd2w5EWfJsrm0epbkKGYY4=;
-        b=jylmrRmp4ntyYye4I6VTmBxMZ1NFt1vmupMr7chPh5MXS6SHeShJd+1GqsT5CakEAR
-         0C7WMI78ktjUx1JQy+uVI002xi1ltu4bhUdmlB6tfJIbyuW+sgLAJEWa1hTcBYoK5olW
-         TJCFfjWLqwOAXtseqMR0OpqUK3yG9bm97MhL6XtFNdCLFk99fLflvR8ziuV0dl5oU99f
-         kLH8qiC90PGUwe2Ojf5VIAyLCM/Y4c14Db8Hrn3YlaGBfjl2QbW3RVI0LmGBPY8jtNxd
-         BRhIvVGHENejjY22y0l9D8v6I3agbj61Mj3LGPkYTCxE5jX9qx9lumOl5c1doBbKx7VJ
-         Mw0Q==
-X-Gm-Message-State: AOAM5326TllOxPsDU9vmgol18Et9keskgsq3GYS7JE+5bGHnWbIqO7Zi
-        xrhtfet5KPY8Olw9mJN2FoPMNyFDwQE=
-X-Google-Smtp-Source: ABdhPJyQVJzCyJwCcqMMAzXnWYSW4I4O/fT3Mqpl9Sj+g1mRLlDJGhaIA7KqoQk/b4I9uhbjjdAKRg==
-X-Received: by 2002:a1c:7d03:: with SMTP id y3mr4974827wmc.58.1605314088506;
-        Fri, 13 Nov 2020 16:34:48 -0800 (PST)
+        bh=gWDz9/SWZ7N7h4GNphEYMJIZWtymw4ByXjkmREoQWWo=;
+        b=fIGyjO4NjZL7iEwkK1LNOGJ8m+s/r8ev2Heg4beVYG+8RDp6Jptbtybks5eBZuu3Qs
+         dYDv5+VLBRo3Z+4xEOHtUaJ+9cYIMxa43d7MzVkKh1RPgaEVq7BKxPGFVXIgsRkHbj5g
+         gWPUxX6mUWGGtt3Ga4V9x6wSZ9W54obAtSUu7QYdFD1nU7wT7OYkMMYMwUEkBqZl7heT
+         +rDcQ7mjHc3cz5rgHBAh/OPMCe+CC/oU/P0LZ0D8dAcyN0nVnaf761NjWmycyYVni3Sr
+         KPgwIOeffk1r4FPjDuFzGfH/2z1F/hgNL0HI38kzfszb8QxaVp8tCFJ61w2CpbkimEDj
+         hV5w==
+X-Gm-Message-State: AOAM533KlunyLM9V2CTUdwmpcJFN8SWi9hxe84KQIApJkoE7uCvsAJ+q
+        vH+DE7Rk5559Idi6kXB/tbM7ZYJ7jko=
+X-Google-Smtp-Source: ABdhPJwLCC/OIzbh8fBZradce00tJf6voAbfiShyGOE92u7FbGrovJwLOY+Reo3wXiKADSXSr9sX7w==
+X-Received: by 2002:a5d:4e07:: with SMTP id p7mr6540479wrt.63.1605314087808;
+        Fri, 13 Nov 2020 16:34:47 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 71sm13457195wrm.20.2020.11.13.16.34.48
+        by smtp.gmail.com with ESMTPSA id 89sm13046586wrp.58.2020.11.13.16.34.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Nov 2020 16:34:48 -0800 (PST)
-Message-Id: <4a124031400c38d7b44298a3328e4e81d756b637.1605314085.git.gitgitgadget@gmail.com>
+        Fri, 13 Nov 2020 16:34:47 -0800 (PST)
+Message-Id: <85c5766556e53f780b9a3ac677a0c758c51baae2.1605314085.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.789.git.1605314085.gitgitgadget@gmail.com>
 References: <pull.789.git.1605314085.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 14 Nov 2020 00:34:44 +0000
-Subject: [PATCH 3/4] t5572: describe '--rebase' tests a little more
+Date:   Sat, 14 Nov 2020 00:34:43 +0000
+Subject: [PATCH 2/4] t5572: add notes on a peculiar test
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,51 +81,82 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-It can be hard at first glance to distinguish what is different between
-the two tests 'recursive rebasing pull' and 'pull rebase recursing fails
-with conflicts' in 't5572-pull-submodule.sh', and to understand how they
-relate to the scenarios described in a6d7eb2c7a (pull: optionally rebase
-submodules (remote submodule changes only), 2017-06-23), which
-implemented '--recurse-submodules' for 'git pull' and added these tests.
+Test 5572.63 ("branch has no merge base with remote-tracking
+counterpart") was introduced in 4d36f88be7 (submodule: do not pass null
+OID to setup_revisions, 2018-05-24), as a regression test for the bug
+this commit was fixing (preventing a 'fatal: bad object' error when the
+current branch and the remote-tracking branch we are pulling have no
+merge-base).
 
-Rename the tests to be more descriptive and add some bullet points
-comments describing the different scenarios.
+However, the commit message for 4d36f88be7 does not describe in which
+real-life situation this bug was encountered. The brief discussion on the
+mailing list [1] does not either.
+
+The regression test is not really representative of a real-life
+scenario: both the local repository and its upstream have only a single
+commit, and the "no merge-base" scenario is simulated by recreating this
+root commit in the local repository using 'git commit-tree' before
+calling 'git pull --rebase --recurse-submodules'. The rebase succeeds
+and results in the local branch being reset to the same root commit as
+the upstream branch.
+
+The fix in 4d36f88be7 modifies 'submodule.c::submodule_touches_in_range'
+so that if 'excl_oid' is null, which is the case when the 'git merge-base
+--fork-point' invocation in 'builtin/pull.c::get_rebase_fork_point'
+errors (no fork-point), then instead of 'incl_oid --not excl_oid' being
+passed to setup_revisions, only 'incl_oid' is passed, and
+'submodule_touches_in_range' examines 'incl_oid' and all its ancestors
+to verify that they do not touch the submodule.
+
+In test 5572.63, the recreated lone root commit in the local repository is
+thus the only commit being examined by 'submodule_touches_in_range', and
+this commit *adds* the submodule. However, 'submodule_touches_in_range'
+*succeeds* because 'combine-diff.c::diff_tree_combined' (see the
+backtrace below) returns early since this commit is the root commit
+and has no parents.
+
+  #0  diff_tree_combined at combine-diff.c:1494
+  #1  0x0000000100150cbe in diff_tree_combined_merge at combine-diff.c:1649
+  #2  0x00000001002c7147 in collect_changed_submodules at submodule.c:869
+  #3  0x00000001002c7d6f in submodule_touches_in_range at submodule.c:1268
+  #4  0x00000001000ad58b in cmd_pull at builtin/pull.c:1040
+
+In light of all this, add a note in t5572 documenting this peculiar
+test.
+
+[1] https://lore.kernel.org/git/20180524204729.19896-1-jonathantanmy@google.com/t/#u
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- t/t5572-pull-submodule.sh | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ t/t5572-pull-submodule.sh | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
 diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
-index 7f658dba6d..7d9e12df4d 100755
+index 1d75e3b12b..7f658dba6d 100755
 --- a/t/t5572-pull-submodule.sh
 +++ b/t/t5572-pull-submodule.sh
-@@ -101,7 +101,12 @@ test_expect_success " --[no-]recurse-submodule and submodule.recurse" '
- 	test_path_is_file super/sub/merge_strategy_4.t
+@@ -136,6 +136,21 @@ test_expect_success 'pull rebase recursing fails with conflicts' '
+ 	test_i18ngrep "locally recorded submodule modifications" err
  '
  
--test_expect_success 'recursive rebasing pull' '
-+test_expect_success 'pull --rebase --recurse-submodules (remote superproject submodule changes, local submodule changes)' '
-+	# This tests the following scenario :
-+	# - local submodule has new commits
-+	# - local superproject does not have new commits
-+	# - upstream superproject has new commits that change the submodule pointer
++# NOTE:
++#
++# This test is particular because there is only a single commit in the upstream superproject
++# 'parent' (which adds the submodule 'a-submodule'). The clone of the superproject
++# ('child') hard-resets its branch to a new root commit with the same tree as the one
++# from the upstream superproject, so that its branch has no merge-base with its
++# remote-tracking counterpart, and then calls 'git pull --recurse-submodules --rebase'.
++# The result is that the local branch is reset to the remote-tracking branch (as it was
++# originally before the hard-reset).
 +
- 	# change upstream
- 	test_commit -C child rebase_strategy &&
- 	git -C parent submodule update --remote &&
-@@ -116,7 +121,10 @@ test_expect_success 'recursive rebasing pull' '
- 	test_path_is_file super/sub/local_stuff.t
- '
++# The only commit in the range generated by 'submodule.c::submodule_touches_in_range' and
++# passed to 'submodule.c::collect_changed_submodules' is the new (regenerated) initial commit,
++# which adds the submodule.
++# However, 'submodule_touches_in_range' does not error (even though this commit adds the submodule)
++# because 'combine-diff.c::diff_tree_combined' returns early, as the initial commit has no parents.
+ test_expect_success 'branch has no merge base with remote-tracking counterpart' '
+ 	rm -rf parent child &&
  
--test_expect_success 'pull rebase recursing fails with conflicts' '
-+test_expect_success 'pull --rebase --recurse-submodules fails if both sides record submodule changes' '
-+	# This tests the following scenario :
-+	# - local superproject has new commits that change the submodule pointer
-+	# - upstream superproject has new commits that change the submodule pointer
- 
- 	# local changes in submodule recorded in superproject:
- 	test_commit -C super/sub local_stuff_2 &&
 -- 
 gitgitgadget
 
