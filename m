@@ -2,78 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8174C56202
-	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 14:35:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EE26C5519F
+	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 15:32:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A248F22284
-	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 14:35:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3621F2225E
+	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 15:32:23 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hZUvV6+u"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726889AbgKNOfF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Nov 2020 09:35:05 -0500
-Received: from mail2.kobil.com ([194.25.29.118]:7787 "EHLO mail2.kobil.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726307AbgKNOfD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Nov 2020 09:35:03 -0500
-X-Greylist: delayed 901 seconds by postgrey-1.27 at vger.kernel.org; Sat, 14 Nov 2020 09:35:02 EST
-Received: from KEX1.kobil.com (10.10.0.128) by KEX2.kobil.com (10.10.0.129)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_RSA_WITH_AES_128_CBC_SHA256) id 15.2.529.5; Sat, 14 Nov 2020
- 15:20:00 +0100
-Received: from KEX1.kobil.com ([fe80::2cb3:aee5:3cce:4e77]) by KEX1.kobil.com
- ([fe80::2cb3:aee5:3cce:4e77%6]) with mapi id 15.02.0529.005; Sat, 14 Nov 2020
- 15:19:59 +0100
-From:   Lukasz Niemier <Lukasz.Niemier@kobil.com>
-To:     "Theodore Y. Ts'o" <tytso@mit.edu>
-CC:     Felipe Contreras <felipe.contreras@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "Don Goodman-Wilson" <don@goodman-wilson.com>
-Subject: Re: The master branch rename, and avoiding another v1.6.0 git-foo
- fiasco
-Thread-Topic: The master branch rename, and avoiding another v1.6.0 git-foo
- fiasco
-Thread-Index: AQHWupE8x1aOUYe5d0arrwPnk6hGXg==
-Date:   Sat, 14 Nov 2020 14:19:59 +0000
-Message-ID: <CBC2DBAA-A409-49CD-B932-AC82D3C20D55@kobil.com>
-References: <CAMP44s3BJ3dGsLJ-6yA-Po459=+m826KD9an4+P3qOY1vkbxZg@mail.gmail.com>
- <20201113010107.GL6252@camp.crustytoothpaste.net>
- <CAMP44s1U1FevS7NrAYxvgVyzfR5tnD9-+BbPdw5bKnaNHkyD+A@mail.gmail.com>
- <20201113051408.GA3985404@mit.edu>
- <CAMP44s3AeESm7VBKbar0ir_Py35g99ZW6bNX_=AK4N=OFkcrdA@mail.gmail.com>
- <20201113145802.GB3985404@mit.edu>
-In-Reply-To: <20201113145802.GB3985404@mit.edu>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-endpointsecurity-0xde81-ev: v:6.6.21.304, d:out, a:y, w:t, t:67,
- sv:1605357916, ts:1605363600
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <074D582CE814BF48B3F410619F557891@kobil.com>
-Content-Transfer-Encoding: base64
+        id S1727030AbgKNPcW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Nov 2020 10:32:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37394 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726981AbgKNPcV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Nov 2020 10:32:21 -0500
+Received: from mail-vs1-xe36.google.com (mail-vs1-xe36.google.com [IPv6:2607:f8b0:4864:20::e36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87A09C0613D1
+        for <git@vger.kernel.org>; Sat, 14 Nov 2020 07:32:21 -0800 (PST)
+Received: by mail-vs1-xe36.google.com with SMTP id 128so6804393vso.7
+        for <git@vger.kernel.org>; Sat, 14 Nov 2020 07:32:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=IDZB1E0+NTyj0iAHQIfNmZEFKBXKUUeE9igKImz6O/I=;
+        b=hZUvV6+uikafF6253NiLvSwyML0sMWCNZZeQg+xp9m8NeCPGQQZunrsQuvrzIyJ6Bl
+         Rj7FFC89cx1s92nQVt98MmLlblvGJwDT3JAFyGuShr3dkynmaGm5phK8cKIQE97qtQR2
+         DuJen81vAgEKSrrvlfLymXUfKsqNYFFydQd/sc/LzrKiiqSAx8K98WKNn3zcqwTMfnl5
+         EDfVG8vSNxjkbCJCuudRBJY40xWvHmwZCNnYXE7XMW4245OmTJhQRZQzeEbxHqUzpSrm
+         zhAPQauqSCCngRS0O90wXUNSL2UmjDlFAVpdR8MgWbfXlc/aNtMq4zXIrD7RfU9Onv45
+         keUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=IDZB1E0+NTyj0iAHQIfNmZEFKBXKUUeE9igKImz6O/I=;
+        b=in+c0FlyF1tDoH5yJnXuBzHM9f96PTopidVvZospKidn80JgqkmuxsDLXNzGGCiZQP
+         VhINLQcSX4I+RKBffm2IKtjiTLaig0al3KCnbVYlLiMDYv2iPMolHhYDNHTdpJnwfCKd
+         knz5mytNs24ai1Z/IZVXDA3M/wpDJY07GOlR+zmVtjHnvIGJwdy0jvvziBHGn1+yIV3x
+         tWBA/KbXXFYtNWWakOftArIP2WJfVayL2/9Sx0EGjopljSFEtT5Wn9wxxdPNeQekLipB
+         VM3YTkzbGBdgIWDrk54M+dEwdw0ufkssN+a+q9xYo/yRswMUauBoborhY/D//c5O8Z/L
+         /5DQ==
+X-Gm-Message-State: AOAM5332oqZbl7LJF5aZ3QbNDMuOzrEI8Q7mQ46gSoa6i4UvxRdkv5F7
+        nEmLudBN7sX6CdNRDaHqkGcra5g+1XuANtLn2MOQ63oll1OEdg==
+X-Google-Smtp-Source: ABdhPJxnkW1+NdcPa5SscXXiWlIOVQO+xHj9ALJFJbvMZ6awiojqGdIBfFKlvDOOjxlxF/8yP4K45GHXPRItgfnMRIY=
+X-Received: by 2002:a67:f708:: with SMTP id m8mr4196063vso.58.1605367940702;
+ Sat, 14 Nov 2020 07:32:20 -0800 (PST)
 MIME-Version: 1.0
+References: <348a2a4a-dfdb-190b-edac-01e9ad4c2d4d@greg0ire.fr>
+In-Reply-To: <348a2a4a-dfdb-190b-edac-01e9ad4c2d4d@greg0ire.fr>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Sat, 14 Nov 2020 16:32:07 +0100
+Message-ID: <CAN0heSrU5zzgR_FDZcEopPP2EmSQnraZXO4v8Smx8=fWcXa0uQ@mail.gmail.com>
+Subject: Re: phpdoc diff in git -L is not the correct one
+To:     =?UTF-8?Q?Gr=C3=A9goire_PARIS?= <postmaster@greg0ire.fr>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-PiBPSywgZmluZS4gIFRoYXQgd2Fzbid0IGNsZWFyIGluIHlvdXIgZWFybGllciBtZXNzYWdlcy4g
-IFNvIHRoaXMgaXMNCj4gKm5vdCogbGlrZSAyMDA4LCB3aGVyZSB3ZSBhcmUgYnJlYWtpbmcgd29y
-a2Zsb3dzIG9yIGZpbmdlciBtYWNyb3Mgb2YNCj4gKmV4aXN0aW5nKiBnaXQgdXNlcnMuDQo+IA0K
-PiBJbnN0ZWFkLCB3ZSBtaWdodCBiZSBjYXVzaW5nIGEgY2VydGFpbiBhbW91bnQgb2YgY29uZnVz
-aW9uIHdpdGgNCj4gcmVzcGVjdCB0byAqbmV3KiB1c2VycywgZXNwZWNpYWxseSBpZiBzb21lIHBv
-cnRpb24gb2YgdGhlbSBhcmUgdXNpbmcNCj4gYW4gb2xkZXIgdmVyc2lvbiBvZiBnaXQsIHdoZXJl
-IHRoZSBkZWZhdWx0IGluaXRpYWwgYnJhbmNoIG5hbWUgaXMNCj4gIm1hc3RlciIsIG9yIGEgbmV3
-ZXIgdmVyc2lvbiBvZiBnaXQsIHdoZXJlIHRoZSBkZWZhdWx0IGluaXRpYWwgYnJhbmNoDQo+IG5h
-bWUgaXMgIm1haW4iLg0KDQpJIGFtIHByZXR0eSBtdWNoICoqZXhpc3RpbmcqKiBHaXQgdXNlciB3
-aGVyZSBJIGFtIG1haW50YWluaW5nIGZldyByZXBvcw0KeWV0IEkgYW0gY29uc3RhbnRseSBjcmVh
-dGluZyBuZXcgb25lcyBmb3IgYW5vdGhlciBwcm9qZWN0cyBvZiBtaW5lLiBTdWNoDQphYnJ1cHQg
-Y2hhbmdlIGluIHRoZSBkZWZhdWx0IGJyYW5jaCBuYW1lLCB3aXRob3V0IGFueSB3YXJuaW5nLCB3
-b3VsZCBiZQ0KdmVyeSBjb25mdXNpbmcgZm9yIG1lLiBOb3QgZXZlcnkgdXNlciBpcyB3b3JraW5n
-IG9uIGEgc2luZ2xlIEdpdCByZXBvDQpmb3IgdGhlaXIgd2hvbGUgbGlmZS4NCg0KSSBmZWVsIHRo
-YXQgb3VyIHZpZXcgb24gd2hvIGlzICoqbmV3Kiogb3IgKipleGlzdGluZyoqIHVzZXIgZGlmZmVy
-cy4NCg0KLS0NCg0KxYF1a2FzeiBOaWVtaWVyDQpsdWthc3oubmllbWllckBrb2JpbC5jb20NCg0K
+Hi greg0ire,
+
+On Sat, 14 Nov 2020 at 14:28, Gr=C3=A9goire PARIS <postmaster@greg0ire.fr> =
+wrote:
+> I have recently found out about git -L , which is great! I think I have
+> found a
+> bug in it though: the diff is correct on the method itself, but changes
+> in the
+> phpdoc of the method do not seem to be taken into account, while changes
+> in the
+> phpdoc of the method that follows the one I care about show up in the
+> diff. I
+> have attached a bug report generated with git bugreport.
+
+This seems to be behaving like documented. Quoting the man-page:
+
+  If :<funcname> is given in place of <start> and <end>, it is a regular
+  expression that denotes the range from the first funcname line that
+  matches <funcname>, up to the next funcname line.
+
+That range is exactly what you're seeing.
+
+Now, I can certainly understand your wish of peeking backwards to
+include the phpdoc for that function. You can do that using something
+like
+
+  git log -L46,76:src/Doctrine/Instantiator/Instantiator.php
+
+but it's obviously a bit more involved to figure out which (approximate)
+numbers to give.
+
+One way of *only* looking backwards might be to use a regex for the
+<start>, then a negative offset for <end>:
+
+  git log -L/instantiate\(/,-14:src/Doctrine/Instantiator/Instantiator.php
+
+Alas, this also requires coming up with a decent guess for how far back
+to look. I can't seem to find a way of using a regex for <end> and
+searching backwards -- I imagine it could be something like "-/regex/".
+Anyway, that would just solve half your problem: You'd see the
+documentation evolve but not the implementation.
+
+In the end I think your best option right now is to give explicit line
+numbers for <end> and <start>.
+
+Martin
