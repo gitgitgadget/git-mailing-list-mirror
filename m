@@ -2,131 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E5B1C4742C
-	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 00:26:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40648C55ABD
+	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 00:29:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4D83A2225D
-	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 00:26:06 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CuMKrWoh"
+	by mail.kernel.org (Postfix) with ESMTP id 011C12225B
+	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 00:29:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726087AbgKNAZp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Nov 2020 19:25:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40104 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725981AbgKNAZo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Nov 2020 19:25:44 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90AF2C0613D1
-        for <git@vger.kernel.org>; Fri, 13 Nov 2020 16:25:44 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id c17so12058933wrc.11
-        for <git@vger.kernel.org>; Fri, 13 Nov 2020 16:25:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=z4Rj4rseHNHkeHaLRW4sErEFZTvVWLtAsfI1VdmQXZU=;
-        b=CuMKrWohdar/xCazsfYuu5mQg7yfSryQfS5EVbUmGZwXpS+2AAJ+ZP0Sn7v7bdijmd
-         WFXiDAq1BaHvzMkzRj5q6NhjM+mW0Lp+wNOxDDGIfrd9DHtVF+eAOf0KF21jlnmotIle
-         Dhv6+IodwQGp2ysQXnZSGKi1eXq21gStC8aRgE+dS2X6Vm6DRFf8e8VAxAT+aPEh/dxE
-         lmkz9/3QsSvp6G8S+ICx2iN7O/rNnMGcYRKMwiiTtrO0EBR4quU30m9LM6qA44CReOnk
-         Lo8ZPe3Zv9vP9CTsyl/ka6P3oweswoHxnqr5tPG/J3JuBaXOEWo4fkexESMGehY5UpPw
-         lzYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=z4Rj4rseHNHkeHaLRW4sErEFZTvVWLtAsfI1VdmQXZU=;
-        b=J+0lj1XqpUivMr9kcLKGx9S4089V2kchJMEmCa67QYGQFSkSBZ9k6RkEuGvJN6IER3
-         NXXc38PSb/WCZzo/mcGolTRF3DheFooYbqE3l8xzrRYp30kUUOVgkzvPC978RjmkQHyK
-         1Y3g1SxwSELzdaUyM/aDuKH6YqNHmMFZXnawY/DDF9DcwBSN0rxmQfF8DZkZm6+Kuat2
-         NfiQy3pNDAbcsjZ/dVP8CKpbeVpw/uZJn7RievZQdULANaZ3reTBacux8QwxtIKnH24M
-         a43kFMS5TILLnNj+dPzG0x0e/qDPvltPw7p8caoEncI5kYhturK6I3AvjoH9uzL2wTn7
-         67Lw==
-X-Gm-Message-State: AOAM530DxURRq/R68e2YauveDrOb/Pr4NcfkpZ6iiz1h51TWOH6XBz56
-        6magFIpBJdwy2JVSwYSnR9NEshqzrt1UBvH8nLw=
-X-Google-Smtp-Source: ABdhPJwZFQ4q88Xj+SYG4aSj6ELLs9ViNN5eUAOT1y1U7FPRaXV4uDIQ9e+PfOI3J7bicFHaga1QxzSguwOERvix48U=
-X-Received: by 2002:adf:de91:: with SMTP id w17mr6361700wrl.84.1605313543292;
- Fri, 13 Nov 2020 16:25:43 -0800 (PST)
+        id S1726175AbgKNA3K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Nov 2020 19:29:10 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40432 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726039AbgKNA3K (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 13 Nov 2020 19:29:10 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7B70760752;
+        Sat, 14 Nov 2020 00:29:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1605313748;
+        bh=NqdimiXV/i/syxxkgt/imUNY0gZAWMQqRzOLnnqd7dM=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=prRkFzuA9T1lavKCXVc79kBUGpLYkTFPXuVPN6MBnbeScy7k7A3WyX/BdQx6KFuqE
+         ZPKOENMn5J1u0tlqvUm1MXCvogHQh8OxYbDiJKBEMH+Gjirb6qbRiDkVEeWbvrr+q/
+         MhR9D00ZC10CDl16ov1RYHgqOma6ZMl8rz8mmGy9lTUzHvGhMxZxk+tLnsd2XUeUGw
+         Lx8YSS/cHNORX6QUAp+3hoh3vOc79LMDqBSHcKQvunmc/sfcjLrRKtjaGv+RAIXPeQ
+         GMaY5/QCKnQbgQXZdHNfYTJ3DTqRc318zpdiqGtsf4E3gTifzSuUAEq8vYtBxqrnPr
+         qWeHnWhPpXV1mUzuQXh0Zsd3TOX0ejd4HMMyDYgmc/+Qynyi83Kkz24aC+4a1CTyW+
+         vOniq9ShHF44/cGBgDsZbA1Zrz2fGre4qmxiq5fwOgFGqjaNpWW8+Zz579Qu+aObYm
+         OwphYL68eiQb0qP9ugKkNKWbrwNb5Wz00ppmGnSCRVzEKxJAwvr
+Date:   Sat, 14 Nov 2020 00:29:02 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Alireza <rezaxm@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Why Git LFS is not a built-in feature
+Message-ID: <20201114002902.GN6252@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Alireza <rezaxm@gmail.com>, git@vger.kernel.org
+References: <CAD9n_qjKyxNjtd1YrcHzshLg0-vbwXkHRwMveXHAWSOXMWLKAg@mail.gmail.com>
 MIME-Version: 1.0
-References: <nycvar.QRO.7.76.6.2011131519170.18437@tvgsbejvaqbjf.bet>
- <20201113161320.16458-1-avarab@gmail.com> <20201113191418.GA764688@coredump.intra.peff.net>
- <nycvar.QRO.7.76.6.2011132229480.18437@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2011132229480.18437@tvgsbejvaqbjf.bet>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Fri, 13 Nov 2020 18:25:32 -0600
-Message-ID: <CAMP44s0EqK2rbUzqUH0iAAMmQACDd4oLYZrM10vH4xgh4AHNew@mail.gmail.com>
-Subject: Re: [RFC/PATCH] tests: support testing with an arbitrary default
- branch (sort of)
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="i6vqABX3nJKXLk01"
+Content-Disposition: inline
+In-Reply-To: <CAD9n_qjKyxNjtd1YrcHzshLg0-vbwXkHRwMveXHAWSOXMWLKAg@mail.gmail.com>
+User-Agent: Mutt/1.14.6 (2020-07-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 13, 2020 at 4:05 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> On Fri, 13 Nov 2020, Jeff King wrote:
 
-> > I'm on the fence whether there should be a deprecation period or major
-> > version bump for the final patch, but making the tests flexible enough
-> > to handle the before and after state seems like it can be done uncouple=
-d
-> > from the actual default-flip.
->
-> Hmm. On that matter, I wonder what the big fuss is all about. It's not
-> like Git is forcing anybody to change their default branch.
+--i6vqABX3nJKXLk01
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Except you are, and you will be doing it without the user consent, and
-without warning. This is the opposite of what any software project
-that cares about its users should do.
+On 2020-11-13 at 09:45:52, Alireza wrote:
+> Currently, having to set up git-lfs in each client and checking server
+> compatibility is a huge barrier for using it in the first place,
+> whilst it is generally a good practice to store large files in lfs.
+>=20
+> As a consequence a lot of repos are not using it when they should.
+>=20
+> Is there any reason that we don't have built-in support for such an
+> important feature?
 
-The consequences are predictable.
+There are a couple reasons that it's not a built-in feature:
 
-Exactly the same argument was used in 2008, and it was wrong for
-exactly the same reasons.
+* First, there are several options in this space.  Git LFS is one,
+  git-annex is another, and some people prefer to store large objects in
+  the repository and use partial clone.  Git, as a project, tries to be
+  flexible and meet the needs of various kinds of users without
+  privileging one or another external tool.
+* Git LFS is a complicated piece of software and it's currently written
+  in Go, which is different from most of Git.  Re-implementing it in C
+  would be burdensome, and there's little interest in maintaining Go
+  software in the Git project.
+* Git LFS uses a different protocol from Git, requiring additional
+  configuration and a separate server-side component.
+* The smudge and clean filter approach has some limitations, among them
+  that users who don't have the external filter installed can commit
+  uncleaned objects that then result in the working tree consistently
+  being modified, even after git reset --hard.
 
-Yes, people could add the exec-path to their PATH, so "nobody was
-being forced" ultimately, but that's missing the point entirely,
-because that happened *after* they were forced initially, and being
-caught completely off guard.
+It's my hope that the built-in support for partial clone will mature
+enough to the point where that's a clear win and the need for external
+tools isn't as great, since I think that will ultimately provide a
+better experience for users.  Some people are already using it.  So in
+some sense, we do have this as a built-in feature, maybe just not the
+one you were expecting.
 
-> There have been plenty of articles about this in the meantime, too, and
-> I could imagine that most developers are at least aware that the shift
-> away from `master` is happening, in many quite visible projects.
+Additionally, in many cases, projects can avoid the need for storing
+large files at all by using repository best practices, like not storing
+build products or binary dependencies in the repository and instead
+using an artifact server or a standard packaging system.  If possible,
+that will almost always provide a better experience than any solution
+for storing large files in the repository.
 
-I have used Git since 2005, contributed since 2009, follow the git
-subreddit, and I was not aware of the change, and presumably neither
-was =C3=86var.
-
-What you imagine most developers know is irrelevant, what is relevant
-is what they actually know.
-
-This is the bias known as the curse of knowledge: since you have a lot
-of specific knowledge you fail to see how other people could not see
-the same thing you are seeing, but they don't, and the reason is that
-they don't have the same knowledge as you.
-
-But just because you can't see it happen, doesn't mean it can't.
-
-It did in 2008, and people back then used the same argument you are using n=
-ow.
-
-Developers back then could not imagine how it was possible that users
-were not aware of the upcoming change that had been cooking for years,
-but alas they did not.
-
-Do not assume what your users know. Deprecation periods exist for a
-reason, and so do warnings.
-
+Finally, if you do want to use an external tool like Git LFS, it's
+reasonably straightforward to specify a script to install and configure
+the required dependencies for your project on each system so that
+everything just works.  One popular location for this kind of path is
+script/bootstrap.
 --=20
-Felipe Contreras
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--i6vqABX3nJKXLk01
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX68kzAAKCRB8DEliiIei
+gTIaAP4hOgo2M6o4nE8K6umbrw51zt77xjoCzM3wiovvweonmQD8D9hmRzhIPKWB
+j5Y98Gm/mFKXr8Kjfu9t7hgYKnZWYw0=
+=Fgw6
+-----END PGP SIGNATURE-----
+
+--i6vqABX3nJKXLk01--
