@@ -2,111 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32FE0C5519F
-	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 13:25:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8174C56202
+	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 14:35:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E55D22071E
-	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 13:25:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A248F22284
+	for <git@archiver.kernel.org>; Sat, 14 Nov 2020 14:35:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726495AbgKNNZW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Nov 2020 08:25:22 -0500
-Received: from smtpout1.mo529.mail-out.ovh.net ([178.32.125.2]:57993 "EHLO
-        smtpout1.mo529.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726112AbgKNNZV (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 14 Nov 2020 08:25:21 -0500
-X-Greylist: delayed 376 seconds by postgrey-1.27 at vger.kernel.org; Sat, 14 Nov 2020 08:25:20 EST
-Received: from mxplan1.mail.ovh.net (unknown [10.109.138.121])
-        by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 15F526C43E5D
-        for <git@vger.kernel.org>; Sat, 14 Nov 2020 14:19:02 +0100 (CET)
-Received: from greg0ire.fr (37.59.142.102) by DAG4EX2.mxp1.local (172.16.2.8)
+        id S1726889AbgKNOfF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Nov 2020 09:35:05 -0500
+Received: from mail2.kobil.com ([194.25.29.118]:7787 "EHLO mail2.kobil.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726307AbgKNOfD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Nov 2020 09:35:03 -0500
+X-Greylist: delayed 901 seconds by postgrey-1.27 at vger.kernel.org; Sat, 14 Nov 2020 09:35:02 EST
+Received: from KEX1.kobil.com (10.10.0.128) by KEX2.kobil.com (10.10.0.129)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2044.4; Sat, 14 Nov
- 2020 14:19:01 +0100
-Authentication-Results: garm.ovh; auth=pass (GARM-102R004a104fe4b-209d-463f-a84d-9acd85a5a572,
-                    4C58B1D2F0141825396C827F322D1A475CF1342F) smtp.auth=postmaster@greg0ire.fr
-To:     <git@vger.kernel.org>
-From:   =?UTF-8?Q?Gr=c3=a9goire_PARIS?= <postmaster@greg0ire.fr>
-Subject: phpdoc diff in git -L is not the correct one
-Message-ID: <348a2a4a-dfdb-190b-edac-01e9ad4c2d4d@greg0ire.fr>
-Date:   Sat, 14 Nov 2020 14:19:01 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.3.1
+ cipher=TLS_RSA_WITH_AES_128_CBC_SHA256) id 15.2.529.5; Sat, 14 Nov 2020
+ 15:20:00 +0100
+Received: from KEX1.kobil.com ([fe80::2cb3:aee5:3cce:4e77]) by KEX1.kobil.com
+ ([fe80::2cb3:aee5:3cce:4e77%6]) with mapi id 15.02.0529.005; Sat, 14 Nov 2020
+ 15:19:59 +0100
+From:   Lukasz Niemier <Lukasz.Niemier@kobil.com>
+To:     "Theodore Y. Ts'o" <tytso@mit.edu>
+CC:     Felipe Contreras <felipe.contreras@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "Don Goodman-Wilson" <don@goodman-wilson.com>
+Subject: Re: The master branch rename, and avoiding another v1.6.0 git-foo
+ fiasco
+Thread-Topic: The master branch rename, and avoiding another v1.6.0 git-foo
+ fiasco
+Thread-Index: AQHWupE8x1aOUYe5d0arrwPnk6hGXg==
+Date:   Sat, 14 Nov 2020 14:19:59 +0000
+Message-ID: <CBC2DBAA-A409-49CD-B932-AC82D3C20D55@kobil.com>
+References: <CAMP44s3BJ3dGsLJ-6yA-Po459=+m826KD9an4+P3qOY1vkbxZg@mail.gmail.com>
+ <20201113010107.GL6252@camp.crustytoothpaste.net>
+ <CAMP44s1U1FevS7NrAYxvgVyzfR5tnD9-+BbPdw5bKnaNHkyD+A@mail.gmail.com>
+ <20201113051408.GA3985404@mit.edu>
+ <CAMP44s3AeESm7VBKbar0ir_Py35g99ZW6bNX_=AK4N=OFkcrdA@mail.gmail.com>
+ <20201113145802.GB3985404@mit.edu>
+In-Reply-To: <20201113145802.GB3985404@mit.edu>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-endpointsecurity-0xde81-ev: v:6.6.21.304, d:out, a:y, w:t, t:67,
+ sv:1605357916, ts:1605363600
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <074D582CE814BF48B3F410619F557891@kobil.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
-        boundary="------------A2CE23C4FE87CA42AB892860"
-Content-Language: en-US
-X-Originating-IP: [37.59.142.102]
-X-ClientProxiedBy: DAG7EX2.mxp1.local (172.16.2.14) To DAG4EX2.mxp1.local
- (172.16.2.8)
-X-Ovh-Tracer-GUID: d3301e7d-be4e-4f51-b663-ff4b92829dd3
-X-Ovh-Tracer-Id: 15655919681057688855
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedujedruddvjedgheduucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpefvhffukffffgggtghisehmtderredtfeejnecuhfhrohhmpefirhorghhoihhrvggprfettffkufcuoehpohhsthhmrghsthgvrhesghhrvghgtdhirhgvrdhfrheqnecuggftrfgrthhtvghrnheptdeiheelkeegudduuedvfeegveefudevheefhfejtdeilefgvedvteeuffevtdfhnecukfhppedtrddtrddtrddtpdefjedrheelrddugedvrddutddvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmohguvgepshhmthhpqdhouhhtpdhhvghlohepmhigphhlrghnuddrmhgrihhlrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpehpohhsthhmrghsthgvrhesghhrvghgtdhirhgvrdhfrhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---------------A2CE23C4FE87CA42AB892860
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-
-Hello,
-
-I have recently found out about git -L , which is great! I think I have 
-found a
-bug in it though: the diff is correct on the method itself, but changes 
-in the
-phpdoc of the method do not seem to be taken into account, while changes 
-in the
-phpdoc of the method that follows the one I care about show up in the 
-diff. I
-have attached a bug report generated with git bugreport.
-
-Regards,
-
--- 
-greg0ire
-
-
---------------A2CE23C4FE87CA42AB892860
-Content-Type: text/plain; charset="UTF-8";
-	name="git-bugreport-2020-11-14-1402.txt"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
-	filename="git-bugreport-2020-11-14-1402.txt"
-
-VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQpQbGVhc2UgYW5z
-d2VyIHRoZSBmb2xsb3dpbmcgcXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3Vy
-IGlzc3VlLgoKV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3Rl
-cHMgdG8gcmVwcm9kdWNlIHlvdXIgaXNzdWUpCgplY2hvICcqLnBocCBkaWZmPXBocCcgPiB+
-Ly5jb25maWcvZ2l0L2F0dHJpYnV0ZXMKZ2l0IGNsb25lIGdpdEBnaXRodWIuY29tOmRvY3Ry
-aW5lL2luc3RhbnRpYXRvci5naXQKY2QgaW5zdGFudGlhdG9yCmdpdCBsb2cgLUwgOmluc3Rh
-bnRpYXRlOnNyYy9Eb2N0cmluZS9JbnN0YW50aWF0b3IvSW5zdGFudGlhdG9yLnBocAoKV2hh
-dCBkaWQgeW91IGV4cGVjdCB0byBoYXBwZW4/IChFeHBlY3RlZCBiZWhhdmlvcikKClNlZSBj
-aGFuZ2VzIHRoYXQgaGFwcGVuZWQgaW4gdGhlIHBocGRvYyBvZiB0aGUgaW5zdGFudGlhdGUo
-KSBtZXRob2QgYXBwZWFyIGluCnRoZSBsb2cuCgpXaGF0IGhhcHBlbmVkIGluc3RlYWQ/IChB
-Y3R1YWwgYmVoYXZpb3IpCgpJIHNhdyBjaGFuZ2VzIHRoYXQgaGFwcGVuZWQgaW4gdGhlIHBo
-cGRvYyBvZiB0aGUgYnVpbGRBbmRDYWNoZUZyb21GYWN0b3J5KCkKbWV0aG9kLCB3aGljaCBp
-cyB0aGUgb25lIHJpZ2h0IGFmdGVyIHRoZSBpbnN0YW50aWF0ZSgpIG1ldGhvZAoKV2hhdCdz
-IGRpZmZlcmVudCBiZXR3ZWVuIHdoYXQgeW91IGV4cGVjdGVkIGFuZCB3aGF0IGFjdHVhbGx5
-IGhhcHBlbmVkPwoKVGhlIHBocGRvYyBiZWluZyBkaWZmZWQuCgpBbnl0aGluZyBlbHNlIHlv
-dSB3YW50IHRvIGFkZDoKClNob3dpbmcgY2hhbmdlcyBvZiB0aGUgcGhwZG9jIG9mIHRoZSBt
-ZXRob2QgbWlnaHQgbm90IGJlIGVhc3kgdG8gaW1wbGVtZW50LCBidXQKSSB0aGluayBub3Qg
-c2hvd2luZyBjaGFuZ2VzIG9mIHRoZSBwaHBkb2Mgb2YgdGhlIG5leHQgbWV0aG9kIHNob3Vs
-ZCBiZS4KClBsZWFzZSByZXZpZXcgdGhlIHJlc3Qgb2YgdGhlIGJ1ZyByZXBvcnQgYmVsb3cu
-CllvdSBjYW4gZGVsZXRlIGFueSBsaW5lcyB5b3UgZG9uJ3Qgd2lzaCB0byBzaGFyZS4KCltT
-eXN0ZW0gSW5mb10KZ2l0IHZlcnNpb246CmdpdCB2ZXJzaW9uIDIuMjguMApjcHU6IHg4Nl82
-NApubyBjb21taXQgYXNzb2NpYXRlZCB3aXRoIHRoaXMgYnVpbGQKc2l6ZW9mLWxvbmc6IDgK
-c2l6ZW9mLXNpemVfdDogOApzaGVsbC1wYXRoOiAvYmluL3NoCnVuYW1lOiBMaW51eCA1Ljgu
-MTYtMzAwLmZjMzMueDg2XzY0ICMxIFNNUCBNb24gT2N0IDE5IDEzOjE4OjMzIFVUQyAyMDIw
-IHg4Nl82NApjb21waWxlciBpbmZvOiBnbnVjOiAxMC4yCmxpYmMgaW5mbzogZ2xpYmM6IDIu
-MzIKJFNIRUxMICh0eXBpY2FsbHksIGludGVyYWN0aXZlIHNoZWxsKTogL2Jpbi96c2gKCgpb
-RW5hYmxlZCBIb29rc10KcHJlLWNvbW1pdApwb3N0LWNvbW1pdApwb3N0LWNoZWNrb3V0CnBv
-c3QtbWVyZ2UKcHJlLXB1c2gKcG9zdC1yZXdyaXRlCg==
---------------A2CE23C4FE87CA42AB892860--
+PiBPSywgZmluZS4gIFRoYXQgd2Fzbid0IGNsZWFyIGluIHlvdXIgZWFybGllciBtZXNzYWdlcy4g
+IFNvIHRoaXMgaXMNCj4gKm5vdCogbGlrZSAyMDA4LCB3aGVyZSB3ZSBhcmUgYnJlYWtpbmcgd29y
+a2Zsb3dzIG9yIGZpbmdlciBtYWNyb3Mgb2YNCj4gKmV4aXN0aW5nKiBnaXQgdXNlcnMuDQo+IA0K
+PiBJbnN0ZWFkLCB3ZSBtaWdodCBiZSBjYXVzaW5nIGEgY2VydGFpbiBhbW91bnQgb2YgY29uZnVz
+aW9uIHdpdGgNCj4gcmVzcGVjdCB0byAqbmV3KiB1c2VycywgZXNwZWNpYWxseSBpZiBzb21lIHBv
+cnRpb24gb2YgdGhlbSBhcmUgdXNpbmcNCj4gYW4gb2xkZXIgdmVyc2lvbiBvZiBnaXQsIHdoZXJl
+IHRoZSBkZWZhdWx0IGluaXRpYWwgYnJhbmNoIG5hbWUgaXMNCj4gIm1hc3RlciIsIG9yIGEgbmV3
+ZXIgdmVyc2lvbiBvZiBnaXQsIHdoZXJlIHRoZSBkZWZhdWx0IGluaXRpYWwgYnJhbmNoDQo+IG5h
+bWUgaXMgIm1haW4iLg0KDQpJIGFtIHByZXR0eSBtdWNoICoqZXhpc3RpbmcqKiBHaXQgdXNlciB3
+aGVyZSBJIGFtIG1haW50YWluaW5nIGZldyByZXBvcw0KeWV0IEkgYW0gY29uc3RhbnRseSBjcmVh
+dGluZyBuZXcgb25lcyBmb3IgYW5vdGhlciBwcm9qZWN0cyBvZiBtaW5lLiBTdWNoDQphYnJ1cHQg
+Y2hhbmdlIGluIHRoZSBkZWZhdWx0IGJyYW5jaCBuYW1lLCB3aXRob3V0IGFueSB3YXJuaW5nLCB3
+b3VsZCBiZQ0KdmVyeSBjb25mdXNpbmcgZm9yIG1lLiBOb3QgZXZlcnkgdXNlciBpcyB3b3JraW5n
+IG9uIGEgc2luZ2xlIEdpdCByZXBvDQpmb3IgdGhlaXIgd2hvbGUgbGlmZS4NCg0KSSBmZWVsIHRo
+YXQgb3VyIHZpZXcgb24gd2hvIGlzICoqbmV3Kiogb3IgKipleGlzdGluZyoqIHVzZXIgZGlmZmVy
+cy4NCg0KLS0NCg0KxYF1a2FzeiBOaWVtaWVyDQpsdWthc3oubmllbWllckBrb2JpbC5jb20NCg0K
