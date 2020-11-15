@@ -7,32 +7,32 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66347C844E8
-	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 12:38:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5817CC844F2
+	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 12:38:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EFC2622265
-	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 12:38:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 10C3C20855
+	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 12:38:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="JaZA19Qz"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="l0Tx60dE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729898AbgKPMHy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Nov 2020 07:07:54 -0500
-Received: from mout.gmx.net ([212.227.15.19]:53115 "EHLO mout.gmx.net"
+        id S1729377AbgKPMMk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Nov 2020 07:12:40 -0500
+Received: from mout.gmx.net ([212.227.15.19]:55249 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729143AbgKPMHx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Nov 2020 07:07:53 -0500
+        id S1728843AbgKPMMj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Nov 2020 07:12:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1605528465;
-        bh=NCUO0RjUZzUdDmzgUAl1mWRCe7x+tHzpykI6RvHu+pM=;
+        s=badeba3b8450; t=1605528752;
+        bh=eoeFWYQLfvSDVTGMrNlgG7myROfUTo7KdQjdl/HVJcQ=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=JaZA19QzbcaYvhXdLxPA8kiNUO+roq/bx2+J9SuGhuZWrXrih+zIRFO8SWjKCb5p4
-         1F/2vUg5BX4UCMHpoL9p5c/skeenqfnWI+F3EWpEw0fmOgZ047fj5OJY/e9oCD5QKq
-         mfO0uvby9z/QKbrBL1fTnFnSSEckyvIDdYY7tDjw=
+        b=l0Tx60dE4fO0J91Hu2eRAx+wwOQ8ovmoJG+mXSu6Uy1w28ryrln/Je2y3sq1KbXHF
+         MlOhvww1Hb3DCEgAsZ+i2XnylZYUxMBa+DJfOraPSThE8PxFH6W+aenRE0N8NhRJwE
+         i5TkPT7w/aDS8SmI7zYXcNYxWQPZHYrpNdYNhyKw=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.25.62] ([213.196.212.61]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MhU9Z-1k0uYc1qeR-00eZqu; Mon, 16
- Nov 2020 13:07:45 +0100
-Date:   Mon, 16 Nov 2020 00:51:10 +0100 (CET)
+Received: from [172.26.25.62] ([213.196.212.61]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MDhhN-1kWckC3jMt-00Aqr1; Mon, 16
+ Nov 2020 13:12:31 +0100
+Date:   Mon, 16 Nov 2020 00:55:57 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     phillip.wood@dunelm.org.uk
@@ -40,33 +40,33 @@ cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org,
         Philippe Blain <levraiphilippeblain@gmail.com>,
         Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 09/11] add -i (Perl version): include indentation in
- the colored header
-In-Reply-To: <041e9ff3-2447-e55d-f40d-079a84f0ad44@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2011160050300.18437@tvgsbejvaqbjf.bet>
-References: <pull.785.git.1605051739.gitgitgadget@gmail.com> <pull.785.v2.git.1605097704.gitgitgadget@gmail.com> <304614751ea1b1db80fbbbdc909b3d198c20313e.1605097704.git.gitgitgadget@gmail.com> <70fae5a9-354d-978b-c560-d7fcabb25c76@gmail.com>
- <nycvar.QRO.7.76.6.2011131457420.18437@tvgsbejvaqbjf.bet> <041e9ff3-2447-e55d-f40d-079a84f0ad44@gmail.com>
+Subject: Re: [PATCH v2 07/11] add -p (built-in): do not color the progress
+ indicator separately
+In-Reply-To: <d0603db3-a6d8-d71b-1ee0-4c5c51b00da2@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2011160054460.18437@tvgsbejvaqbjf.bet>
+References: <pull.785.git.1605051739.gitgitgadget@gmail.com> <pull.785.v2.git.1605097704.gitgitgadget@gmail.com> <73b6d60a801766605cde9403d7a9e8451ef99e11.1605097704.git.gitgitgadget@gmail.com> <918a0a1d-6384-5615-c343-1f03046770f7@gmail.com>
+ <nycvar.QRO.7.76.6.2011131455460.18437@tvgsbejvaqbjf.bet> <d0603db3-a6d8-d71b-1ee0-4c5c51b00da2@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:RQhcYU/mGZwLhyVXKqCrWwl5pSiY0z2kCzaH/x1mg518lwyH4iD
- mTO9EtJzeL6UNvyr9O74K71YLUko7BD6TlAq3ldfBBQ/+HXWfuc5EcD1/b9DdP/hxK7YsOx
- B/UXAXXS0UPrnSm421tMwgHDJbfFZRSPty/JDT3ycU+1ZJAGRIxXL5rd3RQbx7/02Pnhb29
- NlMVHEsl4ahd0/1Xj+PNQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:n/VTlxZxBJw=:Q/Eped6yKQUPUeF6saBusG
- ZPa9mfDHogoEJxnER1EHDt74FB8exyh0z8pS7gvgiTVuWak9/XiNVinBb7p+SlK0AJsKiESOR
- qMKbvmmBmndyNnNb0/prP1Hf5Kr6CUt2vXzvtfSZw9lQe6kk5LZeRyOWka5FQxH5imeiqTBkP
- 4GxikDV1NdGf39KTeRYVGHzE0yI2bKt9yWNy+u0AJZuoEGgiJ39quZbXhRW/gy6AJGJJrOoSb
- 6ZBGhrkdm1PYQ5dEazIzv79U7yqjqw6NJO0SO62k52dAPErk/Mh2249jLXONITuWkJAwSfLwG
- e6h9reUBz6UtuxPZLQ6eMbbTVs4kawvwMBpKaoiaeSAtNrD00aVTtQZy6vBdB0xW3dO6OGy73
- xREuA0aLQAiGg05VQxdp99ih8Uyab07l9PcjqAD/oJRQ6KYhOLqkYLUInjXPnX14WNqd2MvsV
- WngqECCT9PcXl/xtdsPsbNhR4atTssjyNaAZLF6nLnteklMAymlymKDDcIGu8DlS5qLRFFUeV
- c7MzhZocj/A+459OAdmxj+r3gdwE6g5/LcR1/hjnHfRN+DCD4Jnw3nVZpYDvYKyVJecBVr5ip
- R+b/blDCj3DShgSXABiFwDS39Xx3PEoburOP8Q/fu1kIQN+p92N30Sr6tI83IxS2HaLVK8BdH
- 7O9o5ueAgoBGAzAfGrao4OLU+LYw3POEdFp/0hVwPAvKKbxHRKvrrRqNCjkzmyXWLtz545v/3
- PvErZDgIubOi8zB7nOvwXz/+xMpTK+PUi5PEqxJqBBhN4sKrBO4L/IHBX9Ju8tsRURcdPanXF
- Gy7D5g3s3jRFIx7cp3xrSpkVjGhzwTge9Qtp/5wS6m1s/lZ1yhJsZSabWXiOlOvwga11+puwd
- 7/DjjGqI2Tmu1XIKeEGG/r5yBCczv+IRXX7JRdcIk=
+X-Provags-ID: V03:K1:8x0wiXCNahykRo0DVObHZuzzYPGZi4ARWmQU56lIVNA7lq1OFTq
+ 4rPwvtT8H+m6N7fPwu3dQ7+zVF/V8kOW7koK8zB95RJS0X4kdYWeqyep1aW/DbLXu4oq/PP
+ 0SbMBgT1iUMfgr9ufuuDmLCf6MbwW7Fv9XTAeE/8JqCGRLadZzZ4BCG3Pg+LOh/qb8A6/QQ
+ biBkk2sAscNl+f6LIhVPA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Vw+tJY99W5Y=:Gdo4/mnzHI7DEgqaeWc1Cz
+ CFKAtkNeCUk5rMFXY8twml2Pn+DytTuQ4AwyHt/c2TEChEMb/h507ahueQonotA75bskOGKBE
+ 8fy6xVL8pBAYm9vl6EPSh5ayarrw6pjPmpFzzW2opC0jYxTXR1IwIatjVdz61ipwJo9x9uh+A
+ x3Njvr7Vn+ZZ3AdatgtFqErmoB/KmASA45PqadTEnXlYPG/DzzfuEBzErBwtU+jz4nEucbkd7
+ Ip1MkoOCveWZD6eNaVZmymFbrPyj3axsr6JLeKolVkl35Gd88azKuuw34jEKRCMY4AZzW7Gt1
+ L2IydAVCiEy56fkhrA7VUp/IPQoFZCjwDLoeIaQ+9wtjbf2ydupxAdjlXDtBAw07jHIyuHFCC
+ fb3dmSJRfct3LcX9ZrxqsOz5cI11u0o74iaiEq7K7fMqGZ6frdaJ9DVCxTwdiST2IWpuOcE8i
+ 4JaQNFOsU8RvS9HA4oDD5mMVzlC361kMpD2vnhUaysKbzjjFa4EMa4JeZd80aeVbj5YBdZwx+
+ mIyPUvjBRwYYM1cEcVtBDtYch2virfs442u1Vz+sWd5rnb23dRVEYPM8BNnT4RhciGdpXWXzx
+ UGqwoaGA0NILPEMukTJfq9QBqV0rxhm45olWtzCZdg7Me2cPLi/8UVuovF4RKOjsj0s4E61DR
+ O/puCipRtbLlOkq1XqXzTBDBpzGzm6rsiyUJfgIOQISdTR2qzMlLBkmmw0H6GR4mU4AXiYrfv
+ TWO6kdhS8fTF7QIE71rk74lGuyr8n6UMff53drx0BWE98PNQDUAxNt7Xbo3EPF+1BU+VofY/8
+ YftyoRLwNJBj7QxGFvf4EB6vAmcVrXcewFCSmt3R4cjjgvBrTrwuaQVSCt8qqNqiNTw9+5FMj
+ 6nk56Eap5VP1F3uBIs4v6PucS6rUa79shr6LXE5W4=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -76,56 +76,59 @@ Hi Phillip,
 
 On Fri, 13 Nov 2020, Phillip Wood wrote:
 
-> On 13/11/2020 13:58, Johannes Schindelin wrote:
->
+> On 13/11/2020 13:57, Johannes Schindelin wrote:
+> >
 > > On Fri, 13 Nov 2020, Phillip Wood wrote:
 > >
 > > > On 11/11/2020 12:28, Johannes Schindelin via GitGitGadget wrote:
 > > > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > > > >
-> > > > The header is formatted by padding each column heading with spaces
-> > > > up to the length of 12 characters. These padding spaces are
-> > > > naturally included when coloring the entire header.
-> > > >
-> > > > However, the preceding five spaces indentation for non-flat lists
-> > > > were _not_ included in the Perl version, but _were_ included in
-> > > > the built-in version. Let's adjust the former to align with the
-> > > > latter's behavior.
+> > > > The Perl version of this command colors the progress indicator and=
+ the
+> > > > prompt message in one go, let's do the same in the built-in versio=
+n.
 > > >
-> > > I had trouble understanding this. I think my confusion is that the
-> > > padding was printed when the header was colored, but it was not
-> > > inside the colored part whereas the subject lead be to think there
-> > > was no indentation printed when the header was colored.
+> > > Why? the C version has access to an api that means we don't have to
+> > > remember to print the reset string each time so why move away from
+> > > that? I don't think it matters to the user that there are some extra
+> > > escape codes in the prompt of the C version. The answer is probably
+> > > "so we can use the same test as the perl version" which might be a
+> > > good reason - if it is I think it would be helpful to say so in the
+> > > commit message.
 > >
-> > Right, this is ambiguous, but I thought it was clear from the first
-> > paragraph that "included" means "when coloring".
-> >
-> > I'm not a native speaker, though, so I welcome suggestions to improve
-> > this.
->
-> Maybe something along the lines of
->
-> add -i (Perl version): color header to match the C version
->
-> Both versions of `add -i` indent non-flat lists by five spaces. However =
-when
-> using color the C version prints these spaces after the ANSI color codes
-> whereas the Perl version prints them before the color codes. Change the =
-Perl
-> version to match the C version to make testing easier.
-
-I wrapped it, and modified it slightly:
-
-    add -i (Perl version): color header to match the C version
-
-    Both versions of `add -i` indent non-flat lists by five spaces. Howeve=
-r
-    when using color the C version prints these spaces after the ANSI colo=
-r
-    codes whereas the Perl version prints them before the color codes.
-    Change the Perl version to match the C version to allow for introducin=
+> > Honestly, the number one reason is so that the _same_ test passes usin=
 g
-    a test that verifies that both versions produce the exact same output.
+> > the Perl version as well as with the built-in version, something that =
+is
+> > required by the `linux-clang` job in our CI build.
+>
+> That's what I assumed - it would be good to document that in the commit
+> message.
 
-Thanks,
+I did that:
+
+    add -p (built-in): do not color the progress indicator separately
+
+    The Perl version of this command colors the progress indicator and the
+    prompt message in one go.
+
+    Let's do the same in the built-in version so that the same upcoming te=
+st
+    (which will compare the output of `git add -p` against a known-good
+    version) will pass both for the Perl version as well as for the built-=
+in
+    version.
+
+> > I am not really willing to change this, unless I hear a goooood reason=
+ to
+> > complicate the test.
+>
+> I guess we could change the perl version to match the C version as it is=
+ the
+> perl version that will be retired but I'm not that fussed
+
+Well, since we want to supersede the Perl version by the built-in version,
+the latter needs to imitate the former, no?
+
+Ciao,
 Dscho
