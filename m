@@ -2,202 +2,207 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.9 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
+X-Spam-Status: No, score=-8.9 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
 	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D1C9C83D5D
-	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 12:38:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C964C8301C
+	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 12:38:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1499222265
-	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 12:38:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E354822265
+	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 12:38:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Zy5q+Jy1"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="PHBz8dgm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729877AbgKPLwY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Nov 2020 06:52:24 -0500
-Received: from mout.gmx.net ([212.227.17.20]:45885 "EHLO mout.gmx.net"
+        id S1729862AbgKPL5Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Nov 2020 06:57:16 -0500
+Received: from mout.gmx.net ([212.227.15.19]:34503 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728829AbgKPLwY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Nov 2020 06:52:24 -0500
+        id S1726614AbgKPL5P (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Nov 2020 06:57:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1605527539;
-        bh=rUu4iEiIWCjE0TvFWVpWjUwWUSUrbKKQ3HDQ6tGhz/U=;
+        s=badeba3b8450; t=1605527827;
+        bh=O/87KwgmwcXKn9HpeXE1TC4Ggf+LXy5uv8EpsjLjFwQ=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Zy5q+Jy13DsHIWQQl2Jv1r09B56rhH2EtYxbSCtJU1SPAbf1BIGeLtyJMgCn6FP51
-         22PYzh6woJAvsRcfp/gT7Gq/LP+35Cm7Ih1sLASHG3IAhNfjCnjXKuID3R5DZ1K2qy
-         hORjMx2+CwAMhXYGmGL5QmPOuRzm8o1XWWIow8PI=
+        b=PHBz8dgmIeB0EruL0xcGCyJdsIpkB6dG2jyYCjsh4RA/q6Qds+8fr3puIGKpjvj9u
+         A1DsXnlImqfpdUOFhfa5KgThtkeked1T9YVwpMu46YdCd/L6DnsJwv5hRqhskfCE6D
+         hsfp642/AdN0ABgGEmLIeAw+C8ylBStDDppYZIxM=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.25.62] ([213.196.212.61]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MgvvJ-1k4lP53ren-00hPnn; Mon, 16
- Nov 2020 12:52:19 +0100
-Date:   Mon, 16 Nov 2020 00:35:44 +0100 (CET)
+Received: from [172.26.25.62] ([213.196.212.61]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M3lc9-1keM9A1Phz-000xSE; Mon, 16
+ Nov 2020 12:57:07 +0100
+Date:   Mon, 16 Nov 2020 00:40:32 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Jeff King <peff@peff.net>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 9/9] add -i: verify in the tests that colors can be
- overridden
-In-Reply-To: <20201112182925.GA701197@coredump.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.2011160027480.18437@tvgsbejvaqbjf.bet>
-References: <pull.785.git.1605051739.gitgitgadget@gmail.com> <38355ec98f04783367d74e38cda3ce5d6632c7ac.1605051739.git.gitgitgadget@gmail.com> <20201111023549.GB806755@coredump.intra.peff.net> <nycvar.QRO.7.76.6.2011111635140.18437@tvgsbejvaqbjf.bet>
- <20201111180713.GC9902@coredump.intra.peff.net> <nycvar.QRO.7.76.6.2011121448550.18437@tvgsbejvaqbjf.bet> <20201112182925.GA701197@coredump.intra.peff.net>
+        git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH v2 00/11] Fix color handling in git add -i
+In-Reply-To: <20201112184026.GB701197@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2011160036100.18437@tvgsbejvaqbjf.bet>
+References: <pull.785.git.1605051739.gitgitgadget@gmail.com> <pull.785.v2.git.1605097704.gitgitgadget@gmail.com> <20201111184527.GD9902@coredump.intra.peff.net> <nycvar.QRO.7.76.6.2011121504110.18437@tvgsbejvaqbjf.bet>
+ <20201112184026.GB701197@coredump.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:hcfM9rRgaqvpR/SSsxMGxKTjew+ITdeZcI93jt6JB0NwwviBCea
- 4kiWAM7JHk1HnJDySJN8WYwIH3WtVrBAs2tjDaOncJ/Azy2ZOVj5A1sW3r24I3HXLSzLN/p
- 8i1MTA0u7sYO5ku0drSddlBKR6rgQoZYDWO78Zdg2Zv8mP8hCmQjGzv/HoAxz3rtNCWQZM/
- vZcE7uoOCOqDCdq9UWjCA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:U2GHZTtXn7A=:5HnZwb8KpFLX428lveCtAp
- dbFH0a+qATqI/ZirXIbGMflhTVA/Fq6hI8FXz12rQ1WCkXHwMJYerrQrELvE/LtDQeBZwJM/N
- iLDs/+XOfSlaZSmGW9CqoODs+TZH1t8w2CWGXm02FZgxFkibTiX98N3w9N7JVLsQXBKemO2qP
- VOxbxVLRWzIdJKRPEoG83fMW6l8KMnDQpX9R5jv3WULFKG7vahfzxHdNKd+OG+/V+DOk7D81g
- qsIhj2EqEN+m0UnuKiV9FPIb+DKp2xwlsxSy9lgtZ2ZA4OY8k9nYRxKaJpTGiUdGYUvdETg92
- zsfUbdy7jdFCleiqq9+a/md4zPidpiI1Mgeu3xIpxJcxd7IRIlkFyoj88DbEjoCsfn288YWaX
- ytzgPDQ8xgjAYGNEv8dAksMCneoCWXm6tgz/GBNNobI8qx6tMuO/6qWrKVVIH8WVeUcB/Rbbw
- GnkIv7We3+XFzGYIlJMY8xlVVE+iRFxBQWQKbqCYMy1U8q58gZP6OlvQRIqCnvLS4nDBjROjA
- 85sjYaTW3ZKSRqBeCkuTFouFuk2x1wLzMlala8LS1QutF76kryRsJIBpG4inWv85Cyl6xAb/Z
- A1MJxjpHl0PBikkKk3Ub0k3sVG4P97DWgFaG5Fb8B9S62XOGJBc+R6yLfvCldAV65v7NtbX4R
- 3pp4eEIjwtrps6c8zUuifVSr4311Cvxu3xLt0sxKvUgoTVHmHQD3OuKYDAAZZtHthGaFlSjrl
- jlHYb7wHDyowm2LadsHg7Tnsaa+Edib1ZXSV60KL/LVnn4DTB9bcOIz1c9AWvYBYQH553lSh6
- A4wVVHqBlB8h+rKgGigE7+v9k3YXajqfROc06keXisKo8x2340q6RUHbRJr9PNpLA+6bjblC1
- 7bV59vMV58Y407HVPXIedzmSoD4TDIlffXqge9Pfo=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1833663111-1605483634=:18437"
+X-Provags-ID: V03:K1:WClLO3ewcE04lXNemZbT2yWQyhcszXIlEt07G3EEHhXqMSZrTgN
+ xxYD/He6qEiDVJm9fM8M1q9c+DwMkea6n2hsHaRTtLywgt8qumzdtJimM2mrjXneScDTP0W
+ voRnPbdzJMarUE492dXkVKJHL6eW8fcuWN6lNiuB4vRet31URC/Ua0PXlwHJ+7pQJnMiFqq
+ MMmBbrYDhfHuZX2V8jnyQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:eIr5WVt+FfU=:PrHGwnSA5R0Jj/6JQPtOEy
+ yJfMbXcJJFdnwFRN5nUuffuA3yH1ZnHVMPBVaEnXhALuwsXnRNYZuntZSmOeagCd3lT9fymvm
+ tx+DBZ9pMjFwTFHieStLztCro/dfyGX0ZcW3/OyfpVDgwMt/OD+prdXn2RCQM2tc/tni2NbSy
+ FzRcEBcTzMSh4LBUJxJpmq5oneR5efMCDWM7wpOzFwuh0f0N/mimS0DlwfdpbPf+FjyGOE+P0
+ FJVPXf3l45L62SKKZkAVPu0t4lLRKGhvFJY0N2Up1br2tEdPceGMr1WXoiGJPuT4rWb1GsQzf
+ LNnu4QMchg8jshwKOPF8i6rJj/TQq/IwoZNuS4ZiDDvgeuBTQci2pSUrN1kHpVtZICFg8xZtg
+ QhlSfmCHNlbVL0pzL3r+K/nuKssu44hS5z7bapa7hCuA+2wCS9fnCmT81hMFKfdWvums1gk8T
+ y4h3T8ZNQ8JvO+jhj729UtXnZqEvqc4a7mKAVrkonUjz97wzCckmrr6sBmQdojz0KKLYwbkiz
+ 0TGWKf3zYcJnPA8Y958Ob4y+FLslMUAYqi0n88/MgsXiR42P1iBSWV803RnDnGi3QeztciNfZ
+ som0fmRKS7mGWYkXEmUs3kjyzkkqxX9FwC4G/pa75jOZXR05JLJTYpGfjxdFrsHpSVDSJ1Gr/
+ RtglIrW8+zRHIm2KwgHekdQokzBNUgMWsovpqpdMWYCQlACjg9srRH9aOUBKdhy3Z+KomgvE4
+ BHzvNXe104WfJdNViR4wBPfG/OBxwjvqFdfrR2fauF0Va+vgCtGoZdMJ8XrC9hMbJLKfDi0tk
+ NO9ryYo30fyUdVHGv9y+nfWaj9La23auFw2BKIOzxbRrD29gzwpesrcoVCkXWciz4eX03MUGC
+ 7bns6QJSgpmVx0R1FmazQAiqOtj3L9sNA0WgR1zQc=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-1833663111-1605483634=:18437
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
 Hi Peff,
 
 On Thu, 12 Nov 2020, Jeff King wrote:
 
-> On Thu, Nov 12, 2020 at 03:04:01PM +0100, Johannes Schindelin wrote:
+> On Thu, Nov 12, 2020 at 03:20:38PM +0100, Johannes Schindelin wrote:
 >
-> > > Hmm. Right, I knew about that weirdness. But I assumed that the buil=
-tin
-> > > add-interactive was doing the diffs in-core. Otherwise, why would we
-> > > have seen the failure to load diff.color.frag in the first place?
+> > >   $ git -c interactive.difffilter=3D'diff-so-fancy' add -p
+> > >   =E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
+=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
+=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
+=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
+=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
+=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
+=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
+=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
+=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80
+> > >   modified: file
+> > >   =E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
+=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
+=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
+=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
+=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
+=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
+=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
+=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
+=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80
+> > >   @ file:1 @
+> > >   old
+> > >   new
+> > >   (1/1) Stage this hunk [y,n,q,a,d,e,?]?
 > >
-> > Oh, that's easy to explain: as you can verify reading
-> > https://github.com/git/git/blob/e31aba42fb12/git-add--interactive.perl=
-#L885-L898
-> > the Perl version of `git add -p` insists on (re-)constructing the hunk
-> > headers manually, and obviously it needs to color them manually, too. =
-And
-> > https://github.com/git/git/blob/e31aba42fb12/add-patch.c#L649-L672 sho=
-ws
-> > that the built-in version of `git add -p` slavishly follows that pract=
-ice.
+> > It might _seem_ that it works. But try to split a hunk. I did this wit=
+h
+> > the test case (interrupting it just before running `add -p`):
 >
-> But that is only when we split hunks (your link to the perl script is in
-> split_hunks()). I agree we must color manually there when creating our
-> own hunk header. But outside of that and patch-editing, the perl script
-> does not otherwise recolor or rewrite (nor even really parse beyond
-> line-splitting) what it gets from the colorized version.
+> Yes, there are definitely problems with how diff-so-fancy represents
+> things (because they don't maintain a 1-to-1 correspondence). You should
+> generally get a complaint like:
 >
-> Whereas add-patch parses the colors off of the version and then
-> re-colors every hunk header. Which seems doubly weird to me. Even if we
-> were going to re-color every hunk (e.g., because we don't want to store
-> the original hunk line, but instead a parsed version of it), why bother
-> parsing the color version at all, and not just the machine-readable
-> version?
+>   $ git -c interactive.difffilter=3D'diff-so-fancy' add -p
+>   fatal: mismatched output from interactive.diffFilter
+>   hint: Your filter must maintain a one-to-one correspondence
+>   hint: between its input and output lines.
+>
+> The diff-so-fancy folks have asked me about this, and I've made clear
+> the problem to them, and that the solution is to have a mode which
+> maintains the line correspondence. AFAIK there's no fix yet. I don't
+> know how many people are actually using it in practice in its current
+> buggy state.
+>
+> There's a big thread here:
+>
+>   https://github.com/so-fancy/diff-so-fancy/issues/35
+>
+> I don't really recommend reading the whole thing. Beyond what I just
+> said, the interesting bits are:
+>
+>   - people recommend using the "delta" tool; it has a "--color-only"
+>     option which does just diff-highlight-style coloring, but doesn't
+>     break line correspondence
+>
+>   - somebody suggested instead of using interactive.difffilter, to add
+>     an option to show each hunk in an individual pager command. So
+>     add-interactive would never see the "fancy" version at all, but it
+>     would be generated on the fly when the user sees it (and that filter
+>     would have to be able to handle seeing individual hunks without the
+>     diff header).
+>
+> All of which is to say that the current state is a bit of a mess, and I
+> don't consider it completely necessary to fix it before the builtin
+> version becomes the default. But:
+>
+>   - I think we should expect some possible complaints / bug reports
+>     from fringe users of the already-somewhat-broken state
+>
+>   - IMHO the parsing of the filtered version done by the builtin is
+>     going in the wrong direction (see my other mail for an elaboration)
 
-Let's continue on this distraction for a bit before I go back to fixing
-the patch series, which actually tries to fix a _different_ concern.
+It's a little bit of a surprise that this is the first time I hear about
+this.
 
-The reason why `add-patch.c` "parses the colors off" is that we want to
-show the rest of the hunk header, in color, even after splitting hunks
-(this will only be shown for the first hunk, of course).
+The way _I_ would go about fixing this is to look for a tell-tale that
+we're looking at a `diff-so-fancy` style output, e.g. by looking for that
+horizontal line, then adding special code to handle that.
 
-But given that `git add -p` is somewhat of a fringe use, and using
-`diffFilter` is _even_ more fringe, I do not really want to spend any
-further time on this tangent.
+This is not a minor undertaking, and it would currently require _two_
+implementations: the Perl version and the built-in version. They would
+look _very_ different from one another. Therefore, I would probably either
+wait until the Perl version is retired, or selectively only adjust the
+built-in version, if _I_ was to implement this.
 
-> > > The answer seems to be that render_hunk() always _replaces_ the colo=
-rs
-> > > we got from running the external diff. Whereas the perl version only
-> > > applied coloring when reading back in the results of an edit operati=
-on
-> > > (and likewise used the frag color when generating a split hunk heade=
-r).
-> >
-> > No, the Perl version also insists on applying `fraginfo_color`, see
-> > https://github.com/git/git/blob/e31aba42fb12/git-add--interactive.perl=
-#L885-L898
->
-> Only when we split. Try this to give different colors between the
-> interactive script and diff:
->
-> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> index e713fe3d02..862a21ff1f 100755
-> --- a/git-add--interactive.perl
-> +++ b/git-add--interactive.perl
-> @@ -28,8 +28,9 @@
->  my $diff_use_color =3D $repo->get_colorbool('color.diff');
->  my ($fraginfo_color) =3D
->  	$diff_use_color ? (
-> -		$repo->get_color('color.diff.frag', 'cyan'),
-> +		$repo->get_color('color.diff.nonsense', 'yellow'),
->  	) : ();
-> +# noop to create split hunk
->  my ($diff_plain_color) =3D
->  	$diff_use_color ? (
->  		$repo->get_color('color.diff.plain', ''),
->
-> Running "git add -p" does not result in yellow hunk headers. But issuing
-> a split command does.
->
-> The distinction is mostly academic, because diff-tree and the
-> interactive patch code should be using the same colors, so the result
-> should look the same. It could matter if the diff-filter chooses
-> different colors, though then the split headers will not match the
-> originals in style. We _could_ run the newly created hunk header
-> individually through the diff-filter, though I'm not sure how various
-> filters would handle that.
->
-> That's true of the perl version as well as the builtin one, but I think
-> the builtin one's insistence on parsing the colored output is taking us
-> in the wrong direction to eventually fix that.
-
-My thinking back then was: what if _I_ want to use a diffFilter? For what
-would I use it? Probably to emphasize certain hunk headers more, by adding
-more color to the part after the line range.
-
-Anyway. I stand by what I said above: I do not want to spend any further
-time on this tangent, at least not right now. There are more pressing
-challenges waiting for me, and I expect those other challenge to have a
-much bigger "return on investment".
+But given that it does not work right now, and given that it has not been
+working for a long time, I think it does not hurt so much if it is left in
+the current state for a bit longer. I would love to focus on the patch
+series that kicked off this discussion first, getting it done, before I
+think about other `add -p` aspects.
 
 Ciao,
 Dscho
 
-> > > I'm not sure that what the builtin version is doing is wrong, but it
-> > > seems like it's putting a lot of extra effort into parsing colors of=
-f of
-> > > the colorized version. Whereas the perl version just assumes the lin=
-es
-> > > match up. I do wonder if there are corner cases we might hit around
-> > > filters here, though. The lines we get from a filter might bear no
-> > > resemblance at all to diff lines. The only thing we require in the p=
-erl
-> > > version is that they have correspond 1-to-1 with the unfiltered diff
-> > > lines in meaning.
-> >
-> > They do have to correspond 1-to-1 because the assumption is that the
-> > individual lines will then correspond one-to-one, too. This does not n=
-eed
-> > to be true, of course, but then the filter is probably less useful tha=
-n
-> > the user wants it to be.
 >
-> Right, I'm not disputing the 1-to-1 thing (I was after all the one who
-> implemented interactive.diffilter, and added the "complain if the counts
-> don't line up" check). But in the perl script they only need to
-> correspond _semantically_, not syntactically.
+> > > While it may touch on some of the coloring code, it's otherwise
+> > > orthogonal to the fixes here. And while the fix is likely to be to m=
+ake
+> > > render_hunk() stop re-coloring in the non-edit cases, your more-robu=
+st
+> > > test here will still be checking what you expect (because it really =
+is
+> > > triggering the edit case, not relying on the extra coloring to see t=
+he
+> > > effect of in-process color config).
+> >
+> > I don't actually think that we _can_ stop re-coloring the hunk header =
+in
+> > the general case because we need to keep this working even for split
+> > hunks. It would be a very bad idea to make it work for non-split cases=
+ and
+> > then something like `die()` only when the hunk is split. Better re-col=
+or
+> > all of them, then, to not even risk that situation.
+>
+> Yeah, obviously calling die() in the split case is bad. And the fact
+> that newly-created split hunk headers are not filtered the same way as
+> the original hunk headers isn't ideal. But it's a pretty easy fix in the
+> perl version, and not in the builtin version.
 >
 > -Peff
 >
+
+--8323328-1833663111-1605483634=:18437--
