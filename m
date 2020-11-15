@@ -7,128 +7,99 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5817CC844F2
-	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 12:38:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3664DC844F8
+	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 12:38:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 10C3C20855
+	by mail.kernel.org (Postfix) with ESMTP id E374822265
 	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 12:38:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="l0Tx60dE"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="aloI+Hqn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729377AbgKPMMk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Nov 2020 07:12:40 -0500
-Received: from mout.gmx.net ([212.227.15.19]:55249 "EHLO mout.gmx.net"
+        id S1729417AbgKPMOW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Nov 2020 07:14:22 -0500
+Received: from mout.gmx.net ([212.227.15.19]:40959 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728843AbgKPMMj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Nov 2020 07:12:39 -0500
+        id S1727895AbgKPMOW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Nov 2020 07:14:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1605528752;
-        bh=eoeFWYQLfvSDVTGMrNlgG7myROfUTo7KdQjdl/HVJcQ=;
+        s=badeba3b8450; t=1605528859;
+        bh=FUM687dyMpXJd577zLrmrUDTouCNgzu9Y6DIFPcYksk=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=l0Tx60dE4fO0J91Hu2eRAx+wwOQ8ovmoJG+mXSu6Uy1w28ryrln/Je2y3sq1KbXHF
-         MlOhvww1Hb3DCEgAsZ+i2XnylZYUxMBa+DJfOraPSThE8PxFH6W+aenRE0N8NhRJwE
-         i5TkPT7w/aDS8SmI7zYXcNYxWQPZHYrpNdYNhyKw=
+        b=aloI+HqndeuqYd/Wiu9phYiYBEWq9zvCetTS4OhUjnN2ujAogYN/eOoD42h9QJkvm
+         GqFmaL9sGQMv+KELMLpQ7Kw2G9bn3MgikGAu66+XiuOB6P+BWl6Wu9msz5aAXEfA/i
+         8RX4bLsmZ85j/UQ+j3nSz3l1qOIumb+TMSpwis+8=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.26.25.62] ([213.196.212.61]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MDhhN-1kWckC3jMt-00Aqr1; Mon, 16
- Nov 2020 13:12:31 +0100
-Date:   Mon, 16 Nov 2020 00:55:57 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MVvL5-1kohVX3YGL-00RpTi; Mon, 16
+ Nov 2020 13:14:18 +0100
+Date:   Mon, 16 Nov 2020 00:57:44 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     phillip.wood@dunelm.org.uk
+To:     Philippe Blain <levraiphilippeblain@gmail.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
         Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 07/11] add -p (built-in): do not color the progress
- indicator separately
-In-Reply-To: <d0603db3-a6d8-d71b-1ee0-4c5c51b00da2@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2011160054460.18437@tvgsbejvaqbjf.bet>
-References: <pull.785.git.1605051739.gitgitgadget@gmail.com> <pull.785.v2.git.1605097704.gitgitgadget@gmail.com> <73b6d60a801766605cde9403d7a9e8451ef99e11.1605097704.git.gitgitgadget@gmail.com> <918a0a1d-6384-5615-c343-1f03046770f7@gmail.com>
- <nycvar.QRO.7.76.6.2011131455460.18437@tvgsbejvaqbjf.bet> <d0603db3-a6d8-d71b-1ee0-4c5c51b00da2@gmail.com>
+Subject: Re: [PATCH v2 10/11] add -p: prefer color.diff.context over
+ color.diff.plain
+In-Reply-To: <4A02D618-34EB-4B20-A102-99B3CDAFD0BB@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2011160056450.18437@tvgsbejvaqbjf.bet>
+References: <pull.785.git.1605051739.gitgitgadget@gmail.com> <pull.785.v2.git.1605097704.gitgitgadget@gmail.com> <48d8e0badfec5f0e576868f7a406ed7ede6c7200.1605097704.git.gitgitgadget@gmail.com> <4A02D618-34EB-4B20-A102-99B3CDAFD0BB@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:8x0wiXCNahykRo0DVObHZuzzYPGZi4ARWmQU56lIVNA7lq1OFTq
- 4rPwvtT8H+m6N7fPwu3dQ7+zVF/V8kOW7koK8zB95RJS0X4kdYWeqyep1aW/DbLXu4oq/PP
- 0SbMBgT1iUMfgr9ufuuDmLCf6MbwW7Fv9XTAeE/8JqCGRLadZzZ4BCG3Pg+LOh/qb8A6/QQ
- biBkk2sAscNl+f6LIhVPA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Vw+tJY99W5Y=:Gdo4/mnzHI7DEgqaeWc1Cz
- CFKAtkNeCUk5rMFXY8twml2Pn+DytTuQ4AwyHt/c2TEChEMb/h507ahueQonotA75bskOGKBE
- 8fy6xVL8pBAYm9vl6EPSh5ayarrw6pjPmpFzzW2opC0jYxTXR1IwIatjVdz61ipwJo9x9uh+A
- x3Njvr7Vn+ZZ3AdatgtFqErmoB/KmASA45PqadTEnXlYPG/DzzfuEBzErBwtU+jz4nEucbkd7
- Ip1MkoOCveWZD6eNaVZmymFbrPyj3axsr6JLeKolVkl35Gd88azKuuw34jEKRCMY4AZzW7Gt1
- L2IydAVCiEy56fkhrA7VUp/IPQoFZCjwDLoeIaQ+9wtjbf2ydupxAdjlXDtBAw07jHIyuHFCC
- fb3dmSJRfct3LcX9ZrxqsOz5cI11u0o74iaiEq7K7fMqGZ6frdaJ9DVCxTwdiST2IWpuOcE8i
- 4JaQNFOsU8RvS9HA4oDD5mMVzlC361kMpD2vnhUaysKbzjjFa4EMa4JeZd80aeVbj5YBdZwx+
- mIyPUvjBRwYYM1cEcVtBDtYch2virfs442u1Vz+sWd5rnb23dRVEYPM8BNnT4RhciGdpXWXzx
- UGqwoaGA0NILPEMukTJfq9QBqV0rxhm45olWtzCZdg7Me2cPLi/8UVuovF4RKOjsj0s4E61DR
- O/puCipRtbLlOkq1XqXzTBDBpzGzm6rsiyUJfgIOQISdTR2qzMlLBkmmw0H6GR4mU4AXiYrfv
- TWO6kdhS8fTF7QIE71rk74lGuyr8n6UMff53drx0BWE98PNQDUAxNt7Xbo3EPF+1BU+VofY/8
- YftyoRLwNJBj7QxGFvf4EB6vAmcVrXcewFCSmt3R4cjjgvBrTrwuaQVSCt8qqNqiNTw9+5FMj
- 6nk56Eap5VP1F3uBIs4v6PucS6rUa79shr6LXE5W4=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-2069398629-1605484665=:18437"
+X-Provags-ID: V03:K1:qk7y7u3aUxV8NCq+cfRhA24SUeUa/DQDUhHLvb+qzw/IJKZKo2m
+ lI++FwtUk9iWKdLfcAPA2QXwRZ0CaZqgKjjtKv6p6k2LhV2H4k05SQzzWYkIYKfr7Rsd5EU
+ QOndpuVx9ut5Zq3KaxgZim6tPgMB0xDzoXy5jE++5Zxm/cmdmICtBry64dcRaKOZSCfu+v5
+ 6Q+tOudBo6QFHLCObBdFg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:HBJ4wZ+zhSU=:dqLeQ+ecC1O0lgD7fWV/3q
+ Jxg5ffMGL9JsQ3tIAcICxfJMu6ZSX8+BzO6NSPlsInAsTThwuLd3xAFvoRoeXQ/pROTIAB4Jl
+ Tv/2bbS62gV29r4db4wju0fqH9WL11SoyXqmtVXAUIrHSlbgzcEcF1adR6yEu2SczlAQA2p3s
+ nds/ESPxWs06qWq+nFVhDKSLQXsMZdFzKYsE9cRCz7TgUIff9OuLN6gD501lCWNE83G1Um5Tw
+ upqhlXwzvAnKeKRSbkQIg7bo+GiKrWO4dHrRhRrPwZk+YrNFKYR6RqveqYdHa9m3h4EF6VfXY
+ 15qIeaJWY5CFLgDGFb3puEyhI8eKQGjdbFwWx3WWY0VHAG0MJ7eFmdLhtUXXXp5ZqNIpT2CCG
+ WebOpmF24yIH5W7EyIkpXiSJhO9PmiEqREYsQZBqIfbxBjrHJfOQJvvuY7fgCqbM2RJ39yAHQ
+ JyLz2h9pR424sK64nuxyYYeIqgrVIJ+9avanfNSbbw8znaAmB7pjTwNWWCEr7I8BjJ2jrirr2
+ SYZquJGQ8wy6EKyM8hUnVXDleVtifIbxFnANX9KnAObJvf0FdmHoWAzoQvyK6CBqUEFjl5B+I
+ kf6NCDL6CJX14pRcs33e6SVczxiVJ/+MITX6TsYPsjCw5ffkMaRPDBNLKjEsMNv2A6P66VU1w
+ 5pK0zUYRxohnxWZo7oaCSx563VjWw12vk2gVSFYN4u6A9rjvRUaC4+OBhAobm2eqh8TXZGMkx
+ UvPMl2HjZZJiwovH4FBIYsBROI4F9ADytqFoCCgpnZvrsU6eDhboqHFUh2GOlJpDQ4s/UUlZq
+ /e5z2KEKLXrpdSnLDsQeL44gjW2GFua4OLJtNR6CPrNquQ5GYr6/63vwCemRd/XcgLwsK8GRx
+ zHxBWRN9WS3mqVJsGB+qiUN3isx9GPnO3stHUF4vo=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Fri, 13 Nov 2020, Phillip Wood wrote:
+--8323328-2069398629-1605484665=:18437
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> On 13/11/2020 13:57, Johannes Schindelin wrote:
+Hi Philippe,
+
+[to make me completely confused about which spelling for
+"Phillip"/"Philippe" to use, Philip Oakley needs to chime in.]
+
+On Fri, 13 Nov 2020, Philippe Blain wrote:
+
+> > Le 11 nov. 2020 =C3=A0 07:28, Johannes Schindelin via GitGitGadget <gi=
+tgitgadget@gmail.com> a =C3=A9crit :
 > >
-> > On Fri, 13 Nov 2020, Phillip Wood wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
-> > > On 11/11/2020 12:28, Johannes Schindelin via GitGitGadget wrote:
-> > > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > > >
-> > > > The Perl version of this command colors the progress indicator and=
- the
-> > > > prompt message in one go, let's do the same in the built-in versio=
-n.
-> > >
-> > > Why? the C version has access to an api that means we don't have to
-> > > remember to print the reset string each time so why move away from
-> > > that? I don't think it matters to the user that there are some extra
-> > > escape codes in the prompt of the C version. The answer is probably
-> > > "so we can use the same test as the perl version" which might be a
-> > > good reason - if it is I think it would be helpful to say so in the
-> > > commit message.
-> >
-> > Honestly, the number one reason is so that the _same_ test passes usin=
-g
-> > the Perl version as well as with the built-in version, something that =
-is
-> > required by the `linux-clang` job in our CI build.
+> > This still needs
 >
-> That's what I assumed - it would be good to document that in the commit
-> message.
+> s/needs/leads/
 
-I did that:
+Of course!
 
-    add -p (built-in): do not color the progress indicator separately
-
-    The Perl version of this command colors the progress indicator and the
-    prompt message in one go.
-
-    Let's do the same in the built-in version so that the same upcoming te=
-st
-    (which will compare the output of `git add -p` against a known-good
-    version) will pass both for the Perl version as well as for the built-=
-in
-    version.
-
-> > I am not really willing to change this, unless I hear a goooood reason=
- to
-> > complicate the test.
->
-> I guess we could change the perl version to match the C version as it is=
- the
-> perl version that will be retired but I'm not that fussed
-
-Well, since we want to supersede the Perl version by the built-in version,
-the latter needs to imitate the former, no?
-
-Ciao,
+Thanks,
 Dscho
+
+> > to inconsistencies when both config names are used: the
+> > initial diff will be colored by the diff machinery. Once edited by a
+> > user, a hunk has to be re-colored by `git add -p`, though, which would
+> > then use the other setting to color the context lines.
+
+--8323328-2069398629-1605484665=:18437--
