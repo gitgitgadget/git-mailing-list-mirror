@@ -2,121 +2,202 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
+X-Spam-Status: No, score=-11.9 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
 	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90749C83D51
-	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 12:38:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D1C9C83D5D
+	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 12:38:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3034F20855
-	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 12:38:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1499222265
+	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 12:38:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="cb6NDAHX"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Zy5q+Jy1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729882AbgKPLn1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Nov 2020 06:43:27 -0500
-Received: from mout.gmx.net ([212.227.17.20]:37257 "EHLO mout.gmx.net"
+        id S1729877AbgKPLwY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Nov 2020 06:52:24 -0500
+Received: from mout.gmx.net ([212.227.17.20]:45885 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726487AbgKPLn0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Nov 2020 06:43:26 -0500
+        id S1728829AbgKPLwY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Nov 2020 06:52:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1605526992;
-        bh=eUU7eYcqftV9UGYFjY8Q8eodXGLr9wCZuSOjpQ/bGeE=;
+        s=badeba3b8450; t=1605527539;
+        bh=rUu4iEiIWCjE0TvFWVpWjUwWUSUrbKKQ3HDQ6tGhz/U=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=cb6NDAHXEBL/sJonDKHQ/rvOeQ9iCQ7vzsKndJqqVcMJ8RLw/9t5orTYMKkhdEK5F
-         q4ahJB8TngHvgE2U4eicK6tSNL1RdCM0nqoirEf7JLY3badmOfmuvor2/zZFdUxsLJ
-         prCUwDxHAFuhkDVm/n+keTrxi066Mcs8gDzfOgok=
+        b=Zy5q+Jy13DsHIWQQl2Jv1r09B56rhH2EtYxbSCtJU1SPAbf1BIGeLtyJMgCn6FP51
+         22PYzh6woJAvsRcfp/gT7Gq/LP+35Cm7Ih1sLASHG3IAhNfjCnjXKuID3R5DZ1K2qy
+         hORjMx2+CwAMhXYGmGL5QmPOuRzm8o1XWWIow8PI=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.25.62] ([213.196.212.61]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MAOJP-1kXjAZ2MWZ-00Bpxi; Mon, 16
- Nov 2020 12:43:12 +0100
-Date:   Mon, 16 Nov 2020 00:26:36 +0100 (CET)
+Received: from [172.26.25.62] ([213.196.212.61]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MgvvJ-1k4lP53ren-00hPnn; Mon, 16
+ Nov 2020 12:52:19 +0100
+Date:   Mon, 16 Nov 2020 00:35:44 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>,
-        git@vger.kernel.org, dstolee@microsoft.com, peff@peff.net
-Subject: Re: [PATCH 15/23] t5310: add branch-based checks
-In-Reply-To: <xmqqwnyr38rh.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2011160024050.18437@tvgsbejvaqbjf.bet>
-References: <cover.1605123652.git.me@ttaylorr.com> <9ab4b94b3573346b31e710486799ab3d95bade8e.1605123653.git.me@ttaylorr.com> <abf9273f-4795-5a48-c28b-15e68d40b910@gmail.com> <xmqqwnyr38rh.fsf@gitster.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 9/9] add -i: verify in the tests that colors can be
+ overridden
+In-Reply-To: <20201112182925.GA701197@coredump.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.2011160027480.18437@tvgsbejvaqbjf.bet>
+References: <pull.785.git.1605051739.gitgitgadget@gmail.com> <38355ec98f04783367d74e38cda3ce5d6632c7ac.1605051739.git.gitgitgadget@gmail.com> <20201111023549.GB806755@coredump.intra.peff.net> <nycvar.QRO.7.76.6.2011111635140.18437@tvgsbejvaqbjf.bet>
+ <20201111180713.GC9902@coredump.intra.peff.net> <nycvar.QRO.7.76.6.2011121448550.18437@tvgsbejvaqbjf.bet> <20201112182925.GA701197@coredump.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:N/A1XjNn0aogu5/73wonRtxNy3vnlTGgVE3GFYa0cmWQqLpxoTS
- 8Yjb/XyqP6t+y0eaCBzPWYTEV547oNW34RIZX1td6VcDgHcs7qhd6/TBm7upNIs7ppAmqM4
- ahKpYbumYA97qb8E1SSUD0cLP9O0/pE7zosiQAG0843cc5u6sMFeQTtMFCp1V/pwE0pzav8
- ZNHqU44lAeKlrbM1GaFcw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:9HELzAzeAHM=:EFuQM9G+j+oJ8uvvkdTYmJ
- ca+f256OdTduR7CG0AbY1L5w3P+tTkwa3ifUimZZHZDwizeEeESSjf4vPVIsV9qN/YW/1wgoJ
- 3tUIEfUgw8pEmlLlAW8gp2iCU3mNll4dVq9wu57GXVmadAB5eQMu4G7aDYzzw7NUQs7CCaEsZ
- JuLbkYuTwWM5u0M43qSLCimlk4K9Hd2wMrnkpfi8tX017FmX7G6N2iJ/6Trkk9dJv24r44vD2
- dZuco9Vp19/3kVHh0gFwoDqGld66Kbuf439QKL0y6FoagvPC2cTr+zNRCILn2do0vwvFsrmXx
- /OC4HX6CgbgxbYljBB483fIvtypZs+c10gXzkhjSnmqnXnUHBHlibTvYBPFteWK8U+xSqKSSQ
- du6452IjL3nD8tkOaC5AnjNUw/Z2TIASCpeOWUP7JCHbdTZWX0ichjr5C5GgYv9aiQ3Dypq/U
- GzcjE68+IQjCAbFzrhyfRjpiHeeTSoY2jju4Yx7BQspRcSchbwCPVM+SzNFkIi3cftmZB++CW
- P7oHaU1xlKaGCvULYXk06d0H7wAKvYQbPAcOk0tbGuC/Wp4q5nJp2FhoYEPzQazxAC5bZZAXg
- VkBjjKuTg/dx/27qb6ifr+YRKSDc+6NMAKygufwMV/orj/0WaEDNKv2kZF7k421tCM1nHfeE9
- M8ZMC5tMTk+jvOyrVUP5dWiIfHTas//qrDE7o1PVPt39uxaI5D4wb505Ydllf0lX0aQPFHQhV
- UZeP2S8DfN7i4p8yKpr624n76p63SVDUprhBawKsLNbQ1zPC1fwWMNgDm8EQmdf+Y5QcGEhJc
- cfv5R+n7kBgUzLJWTXjZdbE6YVFfw6SfvFjB5Ea8urUDYAuQoz3PJvkqJEETy+emXW39u/uGn
- erCpw13jbFfCflZKDr48VbGLTjy9Yq8YAFvvOqWiU=
+X-Provags-ID: V03:K1:hcfM9rRgaqvpR/SSsxMGxKTjew+ITdeZcI93jt6JB0NwwviBCea
+ 4kiWAM7JHk1HnJDySJN8WYwIH3WtVrBAs2tjDaOncJ/Azy2ZOVj5A1sW3r24I3HXLSzLN/p
+ 8i1MTA0u7sYO5ku0drSddlBKR6rgQoZYDWO78Zdg2Zv8mP8hCmQjGzv/HoAxz3rtNCWQZM/
+ vZcE7uoOCOqDCdq9UWjCA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:U2GHZTtXn7A=:5HnZwb8KpFLX428lveCtAp
+ dbFH0a+qATqI/ZirXIbGMflhTVA/Fq6hI8FXz12rQ1WCkXHwMJYerrQrELvE/LtDQeBZwJM/N
+ iLDs/+XOfSlaZSmGW9CqoODs+TZH1t8w2CWGXm02FZgxFkibTiX98N3w9N7JVLsQXBKemO2qP
+ VOxbxVLRWzIdJKRPEoG83fMW6l8KMnDQpX9R5jv3WULFKG7vahfzxHdNKd+OG+/V+DOk7D81g
+ qsIhj2EqEN+m0UnuKiV9FPIb+DKp2xwlsxSy9lgtZ2ZA4OY8k9nYRxKaJpTGiUdGYUvdETg92
+ zsfUbdy7jdFCleiqq9+a/md4zPidpiI1Mgeu3xIpxJcxd7IRIlkFyoj88DbEjoCsfn288YWaX
+ ytzgPDQ8xgjAYGNEv8dAksMCneoCWXm6tgz/GBNNobI8qx6tMuO/6qWrKVVIH8WVeUcB/Rbbw
+ GnkIv7We3+XFzGYIlJMY8xlVVE+iRFxBQWQKbqCYMy1U8q58gZP6OlvQRIqCnvLS4nDBjROjA
+ 85sjYaTW3ZKSRqBeCkuTFouFuk2x1wLzMlala8LS1QutF76kryRsJIBpG4inWv85Cyl6xAb/Z
+ A1MJxjpHl0PBikkKk3Ub0k3sVG4P97DWgFaG5Fb8B9S62XOGJBc+R6yLfvCldAV65v7NtbX4R
+ 3pp4eEIjwtrps6c8zUuifVSr4311Cvxu3xLt0sxKvUgoTVHmHQD3OuKYDAAZZtHthGaFlSjrl
+ jlHYb7wHDyowm2LadsHg7Tnsaa+Edib1ZXSV60KL/LVnn4DTB9bcOIz1c9AWvYBYQH553lSh6
+ A4wVVHqBlB8h+rKgGigE7+v9k3YXajqfROc06keXisKo8x2340q6RUHbRJr9PNpLA+6bjblC1
+ 7bV59vMV58Y407HVPXIedzmSoD4TDIlffXqge9Pfo=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Peff,
 
-On Wed, 11 Nov 2020, Junio C Hamano wrote:
+On Thu, 12 Nov 2020, Jeff King wrote:
 
-> Derrick Stolee <stolee@gmail.com> writes:
+> On Thu, Nov 12, 2020 at 03:04:01PM +0100, Johannes Schindelin wrote:
 >
-> > On 11/11/2020 2:43 PM, Taylor Blau wrote:
-> >> From: Derrick Stolee <dstolee@microsoft.com>
-> >>
-> >> The current rev-list tests that check the bitmap data only work on HE=
-AD
-> >> instead of multiple branches. Expand the test cases to handle both
-> >> 'master' and 'other' branches.
+> > > Hmm. Right, I knew about that weirdness. But I assumed that the buil=
+tin
+> > > add-interactive was doing the diffs in-core. Otherwise, why would we
+> > > have seen the failure to load diff.color.frag in the first place?
 > >
-> > Adding Johannes to CC since this likely will start colliding with his
-> > default branch rename efforts.
-
-It's okay. It's not like this is the only topic I have to navigate around.
-
-> >> +rev_list_tests () {
-> >> +	state=3D$1
-> >> +
-> >> +	for branch in "master" "other"
-> >> +	do
-> >> +		rev_list_tests_head
-> >> +	done
-> >> +}
-> >
-> > Specifically, this is a _new_ instance of "master", but all the
-> > other instances of "master" are likely being converted to "main"
-> > in parallel. It would certainly be easier to convert this test
-> > _after_ these changes are applied, but that's unlikely to happen
-> > with the current schedule of things.
+> > Oh, that's easy to explain: as you can verify reading
+> > https://github.com/git/git/blob/e31aba42fb12/git-add--interactive.perl=
+#L885-L898
+> > the Perl version of `git add -p` insists on (re-)constructing the hunk
+> > headers manually, and obviously it needs to color them manually, too. =
+And
+> > https://github.com/git/git/blob/e31aba42fb12/add-patch.c#L649-L672 sho=
+ws
+> > that the built-in version of `git add -p` slavishly follows that pract=
+ice.
 >
-> In some tests, it may make sense to configure init.defaultbranchname
-> in $HOME/.gitconfig upfront and either (1) leave instances of
-> 'master' as they are (we may want to avoid 'slave', but 'master' is
-> not all that wrong), or (2) rewrite instances of 'master' to 'main'
-> (or 'primary' or whatever init.defaultbranchname gets configured).
+> But that is only when we split hunks (your link to the perl script is in
+> split_hunks()). I agree we must color manually there when creating our
+> own hunk header. But outside of that and patch-editing, the perl script
+> does not otherwise recolor or rewrite (nor even really parse beyond
+> line-splitting) what it gets from the colorized version.
+>
+> Whereas add-patch parses the colors off of the version and then
+> re-colors every hunk header. Which seems doubly weird to me. Even if we
+> were going to re-color every hunk (e.g., because we don't want to store
+> the original hunk line, but instead a parsed version of it), why bother
+> parsing the color version at all, and not just the machine-readable
+> version?
 
-I explored this option very early on (so long ago that I failed to mention
-it). The problem with that is that `$HOME` is set thusly in `test-lib.sh`:
+Let's continue on this distraction for a bit before I go back to fixing
+the patch series, which actually tries to fix a _different_ concern.
 
-	HOME=3D"$TRASH_DIRECTORY"
+The reason why `add-patch.c` "parses the colors off" is that we want to
+show the rest of the hunk header, in color, even after splitting hunks
+(this will only be shown for the first hunk, of course).
 
-In other words, the test repository's top-level directory is the home
-directory. Which means that `git status`, when run directly after `.
-test-lib.sh` would already show `.gitignore` as untracked, something that
-would trip up a couple of test scripts.
+But given that `git add -p` is somewhat of a fringe use, and using
+`diffFilter` is _even_ more fringe, I do not really want to spend any
+further time on this tangent.
+
+> > > The answer seems to be that render_hunk() always _replaces_ the colo=
+rs
+> > > we got from running the external diff. Whereas the perl version only
+> > > applied coloring when reading back in the results of an edit operati=
+on
+> > > (and likewise used the frag color when generating a split hunk heade=
+r).
+> >
+> > No, the Perl version also insists on applying `fraginfo_color`, see
+> > https://github.com/git/git/blob/e31aba42fb12/git-add--interactive.perl=
+#L885-L898
+>
+> Only when we split. Try this to give different colors between the
+> interactive script and diff:
+>
+> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+> index e713fe3d02..862a21ff1f 100755
+> --- a/git-add--interactive.perl
+> +++ b/git-add--interactive.perl
+> @@ -28,8 +28,9 @@
+>  my $diff_use_color =3D $repo->get_colorbool('color.diff');
+>  my ($fraginfo_color) =3D
+>  	$diff_use_color ? (
+> -		$repo->get_color('color.diff.frag', 'cyan'),
+> +		$repo->get_color('color.diff.nonsense', 'yellow'),
+>  	) : ();
+> +# noop to create split hunk
+>  my ($diff_plain_color) =3D
+>  	$diff_use_color ? (
+>  		$repo->get_color('color.diff.plain', ''),
+>
+> Running "git add -p" does not result in yellow hunk headers. But issuing
+> a split command does.
+>
+> The distinction is mostly academic, because diff-tree and the
+> interactive patch code should be using the same colors, so the result
+> should look the same. It could matter if the diff-filter chooses
+> different colors, though then the split headers will not match the
+> originals in style. We _could_ run the newly created hunk header
+> individually through the diff-filter, though I'm not sure how various
+> filters would handle that.
+>
+> That's true of the perl version as well as the builtin one, but I think
+> the builtin one's insistence on parsing the colored output is taking us
+> in the wrong direction to eventually fix that.
+
+My thinking back then was: what if _I_ want to use a diffFilter? For what
+would I use it? Probably to emphasize certain hunk headers more, by adding
+more color to the part after the line range.
+
+Anyway. I stand by what I said above: I do not want to spend any further
+time on this tangent, at least not right now. There are more pressing
+challenges waiting for me, and I expect those other challenge to have a
+much bigger "return on investment".
 
 Ciao,
 Dscho
+
+> > > I'm not sure that what the builtin version is doing is wrong, but it
+> > > seems like it's putting a lot of extra effort into parsing colors of=
+f of
+> > > the colorized version. Whereas the perl version just assumes the lin=
+es
+> > > match up. I do wonder if there are corner cases we might hit around
+> > > filters here, though. The lines we get from a filter might bear no
+> > > resemblance at all to diff lines. The only thing we require in the p=
+erl
+> > > version is that they have correspond 1-to-1 with the unfiltered diff
+> > > lines in meaning.
+> >
+> > They do have to correspond 1-to-1 because the assumption is that the
+> > individual lines will then correspond one-to-one, too. This does not n=
+eed
+> > to be true, of course, but then the filter is probably less useful tha=
+n
+> > the user wants it to be.
+>
+> Right, I'm not disputing the 1-to-1 thing (I was after all the one who
+> implemented interactive.diffilter, and added the "complain if the counts
+> don't line up" check). But in the perl script they only need to
+> correspond _semantically_, not syntactically.
+>
+> -Peff
+>
