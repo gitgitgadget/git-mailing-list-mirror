@@ -2,177 +2,176 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6D52C388F9
-	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 22:21:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADE7DC5519F
+	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 23:29:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 81C5E223BF
-	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 22:21:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3F513241A3
+	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 23:29:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="beDjS/80"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hcno9sgm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729278AbgKPWVY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Nov 2020 17:21:24 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54504 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726016AbgKPWVY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Nov 2020 17:21:24 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A8B25F5EB5;
-        Mon, 16 Nov 2020 17:21:20 -0500 (EST)
+        id S1728814AbgKPX3M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Nov 2020 18:29:12 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51239 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726236AbgKPX3M (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Nov 2020 18:29:12 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D972E97867;
+        Mon, 16 Nov 2020 18:29:06 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=sjWqSy3LS31+HO36DRboA55nEXU=; b=beDjS/
-        80SNX3fvgqyhMgHfQ0aeRZ3yWDfM3lxw04HAQ9kO7OvhubVFhV2+P8GsnARcaJk8
-        4vNimLor6/nQlUfN26t/nw3Jff9J2x+p5489AerGR4b8iBDQcW8sfWAj8EmShQJp
-        c3YtOge53reIgfBQw2pvxSf25b+WAB7vyWfWc=
+        :content-type; s=sasl; bh=cUfh9FD+VoerD4NnEvx/g60ARD8=; b=hcno9s
+        gmYE6NNKG1aq7UKxa8krHOWDO8qxYppsaRG9SrIf5OzIYSxjz3BYxZjqmkpKcXAj
+        ddhn2Nr2YR1hRtyCR58hfpBRvp2mNzzHN6pCiGXuKppD1zmR1QUWN4bfiPezF4Cr
+        KvYvC7E1nFRq9zTvTDB9+mFlrp+d8gXMEPJWI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=viF0j/WzILxDf8jwzkDarbHVZh8Wmwty
-        1Os62Sl9z0+AUV+nDA7gVCZd2nrJkGeF/GteCvcptBwFoccLy7spMPLu8fdsprRT
-        CQHg/gTTgXNMbm+1AZsuIJeKOpYNVg84pBMgMRQjn9DQ3Ycjz1HooTEJI6fVXPek
-        udi6o297sTE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9B24EF5EB4;
-        Mon, 16 Nov 2020 17:21:20 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=uW14LQ0TUdK08JwPCJfFgSm2og4nhmZU
+        Bs87+cZTQzHFxVTb2TpFnJqv8jmiOpEsuiarWeM7D6qhGU22coYzWZSa8Kgxtebu
+        NXUkjkojg8/iH2R4KeBaAY8Xv/51kOYEmihGuRCr2G7UkLv3U+ae1kedvHAMemSc
+        mNyQ4rlcLgQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C3AD497866;
+        Mon, 16 Nov 2020 18:29:06 -0500 (EST)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
+Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D3C63F5EB2;
-        Mon, 16 Nov 2020 17:21:17 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 31B3097864;
+        Mon, 16 Nov 2020 18:29:06 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Javier Spagnoletti via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Javier Spagnoletti <phansys@gmail.com>
-Subject: Re: [PATCH] userdiff: php: Improved tests catching "abstract" and
- "final" functions
-References: <pull.915.git.git.1605388687554.gitgitgadget@gmail.com>
-Date:   Mon, 16 Nov 2020 14:21:16 -0800
-In-Reply-To: <pull.915.git.git.1605388687554.gitgitgadget@gmail.com> (Javier
-        Spagnoletti via GitGitGadget's message of "Sat, 14 Nov 2020 21:18:07
-        +0000")
-Message-ID: <xmqqtutp6izn.fsf@gitster.c.googlers.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH 3/3] builtin/repack.c: don't move existing packs out of
+ the way
+References: <cover.1605552016.git.me@ttaylorr.com>
+        <d4e73aad14189a00621da9e000d2c6a5fe776d84.1605552016.git.me@ttaylorr.com>
+Date:   Mon, 16 Nov 2020 15:29:05 -0800
+In-Reply-To: <d4e73aad14189a00621da9e000d2c6a5fe776d84.1605552016.git.me@ttaylorr.com>
+        (Taylor Blau's message of "Mon, 16 Nov 2020 13:41:21 -0500")
+Message-ID: <xmqqpn4c7uf2.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 0C069656-285A-11EB-8C71-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 84F1634E-2863-11EB-A257-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Javier Spagnoletti via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> From: Javier Spagnoletti <phansys@gmail.com>
-> Subject: [PATCH] userdiff: php: Improved tests catching "abstract" and "final" functions
+> This behavior dates all the way back to 2ad47d6 (git-repack: Be
+> careful when updating the same pack as an existing one., 2006-06-25).
+> 2ad47d6 is mainly concerned about a case where a newly written pack
+> would have a different structure than its index. This used to be
+> possible when the pack name was a hash of the set of objects. Under this
+> naming scheme, two packs that store the same set of objects could differ
+> in delta selection, object positioning, or both. If this happened, then
+> any such packs would be unreadable in the instant between copying the
+> new pack and new index (i.e., either the index or pack will be stale
+> depending on the order that they were copied).
 
-I'd suggest using this instead:
+True.  So the idea is that we can now pretend that we never wrote
+the new packfile and leave the existing one as-is?
 
-Subject: [PATCH] userdiff: improve "abstract" and "final" function tests for php
+> This patch is mostly limited to removing code paths that deal with the
+> 'old' prefixing, with the exception of pack metadata.
 
-I am not familiar enough with PHP to know if s/function/method/ is
-more appropriate for certain, but I suspect that would be the case.
+... "pack metadata" meaning?  We do not remove and replace the file,
+but we update their mtime to keep these packfiles more fresh than
+other packfiles, or something?
 
-> Since the original tests cases were using other detectable keywords (like
-> "public" or "protected"), they are able to pass even if the keywords
-> intended to be covered are not present.
+> t7700.14 ensures
+> that 'git repack' will, for example, remove existing bitmaps even if the
+> pack written is verbatim the same (when repacking without '-b' in a
+> repository unchanged from the time 'git repack -b' was run). So, we have
+> to handle metadata that we didn't write, by unlinking any existing
+> metadata that our invocation of pack-objects didn't generate itself.
 
-I think you meant that other keywords that start functions were on
-the same line and that hides if "abstract" alone is recognised
-without these other keywords?
+Hmph, t7700.14 wants it that way because?
 
-The patch changes "abstract public function" to "abstract function";
-the assumption is that the presence of "public" alone is enough for
-such a line to be recognised to start a function.  
+If we were told to generate a packfile, and we ended up regenerating
+the exactly the same one, it appears to me that we can just pretend
+nothing happened and leave things as they were?  Puzzled...
 
-But is that assumption tested elsewhere?
-
-    ... goes and looks ...
-
-    $ ls t/t4018/php-*
-    t/t4018/php-abstract-class  t/t4018/php-function   t/t4018/php-trait
-    t/t4018/php-class	    t/t4018/php-interface
-    t/t4018/php-final-class     t/t4018/php-method
-
-    $ git grep -e public -e protected t/t4018/php-*
-    t/t4018/php-interface:    public function foo($ChangeMe);
-    t/t4018/php-method:    public static function RIGHT()
-    t/t4018/php-trait:    public function foo($ChangeMe)
-
-You bring up "protected" but I do not see it mentioned anywhere in
-your patch or in existing tests, by the way.
-
-Taking all of the above together, perhaps
-
-	A few tests try to see if lines with "abstract public
-	function RIGHT()" and "final public function RIGHT()" on
-	them are recognised as starting a method, but the presense
-	of the keyword "public" is enough to get them recognised;
-	ensure that these lines are still recognised as the
-	beginning of a function without the "public" keyword.
-
-	Note that t4018/php-method already tests a line with 'public
-	static function RIGHT()' on it to start a function, so we
-	are not losing test coverage for "public" keyword with this
-	change
-
-would make it clearer?
-
->
-> Signed-off-by: Javier Spagnoletti <phansys@gmail.com>
-> ---
->     userdiff: php: Improved test cases used to catch "abstract" and "final"
->     functions
->     
->     Since the original tests cases were using other detectable keywords
->     (like "public" or "protected"), they are able to pass even if the
->     keywords intended to be covered are not present. In the case of the test
->     for "abstract" keyword, the method's body was removed in the fixture,
->     since PHP doesn't allow an abstract method to have a body.
->     
->     Signed-off-by: Javier Spagnoletti phansys@gmail.com [phansys@gmail.com]
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-915%2Fphansys%2Fpr_864-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-915/phansys/pr_864-v1
-> Pull-Request: https://github.com/git/git/pull/915
->
->  t/t4018/php-abstract-method | 5 ++++-
->  t/t4018/php-final-method    | 2 +-
->  2 files changed, 5 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t4018/php-abstract-method b/t/t4018/php-abstract-method
-> index ce215df75a..14d77e6c15 100644
-> --- a/t/t4018/php-abstract-method
-> +++ b/t/t4018/php-abstract-method
-> @@ -1,7 +1,10 @@
->  abstract class Klass
->  {
-> -    abstract public function RIGHT(): ?string
-> +    abstract function RIGHT(): ?string
->      {
-> +        // PHP doesn't allow abstract methods to have a body,
-> +        // but this is here just for diff ckeck purposes.
+> @@ -463,109 +463,34 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+>  
+>  	/*
+>  	 * Ok we have prepared all new packfiles.
+>  	 */
+>  	for_each_string_list_item(item, &names) {
+>  		for (ext = 0; ext < ARRAY_SIZE(exts); ext++) {
+>  			char *fname, *fname_old;
+>  
+>  			fname = mkpathdup("%s/pack-%s%s",
+>  					packdir, item->string, exts[ext].name);
+>  			fname_old = mkpathdup("%s-%s%s",
+>  					packtmp, item->string, exts[ext].name);
 > +
->          return 'ChangeMe';
->      }
->  }
-> diff --git a/t/t4018/php-final-method b/t/t4018/php-final-method
-> index 537fb8ad9a..f7dd2dec17 100644
-> --- a/t/t4018/php-final-method
-> +++ b/t/t4018/php-final-method
-> @@ -1,6 +1,6 @@
->  class Klass
->  {
-> -    final public function RIGHT(): string
-> +    final function RIGHT(): string
->      {
->          return 'ChangeMe';
->      }
->
-> base-commit: e31aba42fb12bdeb0f850829e008e1e3f43af500
+> +			if (((uintptr_t)item->util) & (1 << ext)) {
+> +				struct stat statbuffer;
+> +				if (!stat(fname_old, &statbuffer)) {
+> +					statbuffer.st_mode &= ~(S_IWUSR | S_IWGRP | S_IWOTH);
+> +					chmod(fname_old, statbuffer.st_mode);
+> +				}
+> +
+>  				if (rename(fname_old, fname))
+>  					die_errno(_("renaming '%s' failed"), fname_old);
+
+OK, so this is where the previous step matters.  We do the same as
+before (i.e. stat+chmod and rename) only for paths we have created.
+
+We don't reuse the old one because we have already written a new
+file so we won't save anything by doing so, and checking if the
+target of rename exists already before deciding not to rename cannot
+be made atomic, so just relying on rename() to do the right thing is
+a good idea anyway.
+
+> +			} else if (!exts[ext].optional)
+> +				die(_("missing required file: %s"), fname_old);
+
+If one branch of if/else if.../else requires multi-statement block,
+use {} on all of them, for consistency.
+
+So, if we wrote a few .$ext for a packfile but not some .$ext, if
+the one we didn't write is among the necessary one, we are in
+trouble?  OK.
+
+> +			else if (unlink(fname) < 0 && errno != ENOENT)
+> +				die_errno(_("could not unlink: %s"), fname);
+
+And if we wrote .pack and .idx but not .bitmap, the old .bitmpa that
+has the same pack hash may be stale and we discard it for safety?
+That sounds "prudent" but it is not immdiately clear from what
+danger we are protecting ourselves.
+
+In any case, much of what I speculated while reading the proposed
+log message turned out to be false, which may be a sign that the log
+message did not explain the approach clearly enough.  I thought that
+a newly created file that happened to be identical to existing ones
+would be discarded without getting renamed to their final location,
+but the code does not do such special casing.  I thought the
+'metadata' it talks about were to compensate for side effects of
+reusing the old files, but that was not what the 'metadata' was even
+about.
+
+Other than that, the change in [2/3] and [3/3] look quite sensible
+(I am not saying [1/3] is bad---I haven't looked at it yet).
+
+Thanks.
+
+>  			free(fname);
+>  			free(fname_old);
+>  		}
+>  	}
+>  	/* End of pack replacement. */
+>  
+>  	reprepare_packed_git(the_repository);
