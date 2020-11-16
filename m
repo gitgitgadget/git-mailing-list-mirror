@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 850D6C6379D
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4827C6379F
 	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 16:09:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 50337221F9
+	by mail.kernel.org (Postfix) with ESMTP id 7382E20729
 	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 16:09:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QQGpX5Yv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qmINwcmG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731710AbgKPQIo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Nov 2020 11:08:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60120 "EHLO
+        id S1731713AbgKPQIq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Nov 2020 11:08:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731696AbgKPQIn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Nov 2020 11:08:43 -0500
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56D3AC0613CF
-        for <git@vger.kernel.org>; Mon, 16 Nov 2020 08:08:43 -0800 (PST)
-Received: by mail-wr1-x444.google.com with SMTP id s8so19244393wrw.10
-        for <git@vger.kernel.org>; Mon, 16 Nov 2020 08:08:43 -0800 (PST)
+        with ESMTP id S1731696AbgKPQIp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Nov 2020 11:08:45 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23130C0613CF
+        for <git@vger.kernel.org>; Mon, 16 Nov 2020 08:08:44 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id p1so19230374wrf.12
+        for <git@vger.kernel.org>; Mon, 16 Nov 2020 08:08:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Z0intue/lSwO9yFM240zAhjoEqzGBf2u2fwvfA8xtN0=;
-        b=QQGpX5YviIBltB9B1HSETMKJ7cPULX8nt1bCnvxB1jPx0B5e065BOowKVUqNLocMa8
-         6mzcmOkoOzeRAoeAJsO5PMsJBNhXOUy9OSnX6LJt1ySpbFc/hWnwEXvwEOBmBzEtspYT
-         a47QXOKXwsKpzU4guSpsjZqgKY6Ox8DomHc2OpevvG/lkcldAnWm0j3vkGt24e1v/Y3p
-         1X56ojpCMgk8Jqz6WYi0Nofiil1pn9Tjz4DIwyuKMJY+INYUO0f/fvXGnRzESaO9dX6u
-         wGJPfweARTyiBTBYg/eE4IYcXT9FmIT0w2iIqcsrkwj59BYnQn22ZYuJa6YjZOv4QjfQ
-         O0Eg==
+        bh=Al/BEw1HlTzADw13DfXHg15dSSfmpzE7jxEGknssPgI=;
+        b=qmINwcmG9abD2EDd1BqmuKGLGKNkNh+J6VLNJVC9kvusXwJLmT4crnKjxygKga75Wk
+         xfEW+B7vY+LdqUe89kTECfN8E8Z0s2W7fSC6gqMB8zp+Fu8c9PE5CKla+5pNHobnYCkY
+         PatviHc8IMjxzjPrCcOr2e+aRr+3CgCEL/QHaYsuzV08QE3OGB7ecUYPZtrhU2TnzuW9
+         M9CHdfngqGzkOLXaB/PHx/M88KKs3KhGojU9f5JqflX13jpQ/dP+ncVjOxfusopC08pl
+         Vzif9JnBvxwT1wMuWqj7RkD60MiY3gyD8dEiuZ0w8o6pv++nefp5Cd2U98TPY9Bjewu4
+         f0BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Z0intue/lSwO9yFM240zAhjoEqzGBf2u2fwvfA8xtN0=;
-        b=VMG1Gg7FuC2eKim2uRnQCo9hHdxtzuVOiKwg6Y098rHVCSR9xcz81kj1eVObv/lYkU
-         zIDmcPgvrvRb/SdOY5rPuaDO5SNxusRTvga1a4dVyCRHvKqwHck7PmqhZjI/kM5xbxOK
-         cXhrhLDRpwAhbWtDVRr3ssJMCeMVWQBqKZiXyNwvWb0ymGtOgYQkNZ6GvXyrB6CQSapu
-         aS8kAuW/uN67jpIbWFBhhyUdAiowWTiO47gWK18mSGJqOFjcVihP8PO2BQwL2E7onzqZ
-         V7wRm+UZLlPtBeAtt45S4nQERCzjHQKmy2ssFK4kw2bgN04N8S4JUQNe+hvR6YtFotrf
-         flyw==
-X-Gm-Message-State: AOAM530esQ+2R4trlU4MZEOLCFNuLqm9F9CSKC2JB5z+zhjCCci2mxju
-        wkdbevn0RGbffkukK6WBEJe4wBu6dGM=
-X-Google-Smtp-Source: ABdhPJxBGcBA6I9yUXSRnKza1gzon6ozbjbCvzUt9HSiRcFtN9bTlTRd5pVHYcmz4sYna6dTAjo1gg==
-X-Received: by 2002:adf:9e07:: with SMTP id u7mr19237301wre.47.1605542921953;
-        Mon, 16 Nov 2020 08:08:41 -0800 (PST)
+        bh=Al/BEw1HlTzADw13DfXHg15dSSfmpzE7jxEGknssPgI=;
+        b=YNILqUVNss4AyG0br979PYfwfiIpLgMCeYAEVusZZT2DsXil+VXzquNNchfsiHtDdX
+         PC/H0MgfFqrRggtVw8TXjPPK9qmoPVRPHqsuA05RG8FFdEg3B1g1wtJEE6zr8WNA4tNY
+         SVbqnncm1mv/q99tS2oFuMO4JpnNYkw2jX1MGb/44vBBnawFGVv6J8gSPFHck3SBJI4J
+         6p/LLNOPLG+uImeDaUlC7Z2X59kXQtOVz4rm2q98VzDRayaFHIoZJrVYTbtbq2uRmvEB
+         2LK2Sarx+8MUynhRHzduG2m7AnU3mJpGlpJh7hmY96XQDf243KASLEvzPF7RhQBY7Tnv
+         382g==
+X-Gm-Message-State: AOAM531WRS1CiAiDQH0JL38jDSMBrD/sLKzfCBiXOb4uQKL+Z/G1YJkE
+        V2UAkoS8s/TZGcRjvrzsxdzLmZTHhSU=
+X-Google-Smtp-Source: ABdhPJzgNzyLa459Hzw/nJ/kznPo6d1een5CUGGrzaD/+GgwBqSpdOik3HusOHAy6xxivZ0yd/5Hsw==
+X-Received: by 2002:adf:b186:: with SMTP id q6mr21577577wra.53.1605542922774;
+        Mon, 16 Nov 2020 08:08:42 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e3sm6820210wro.90.2020.11.16.08.08.41
+        by smtp.gmail.com with ESMTPSA id x63sm21410243wmb.48.2020.11.16.08.08.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Nov 2020 08:08:41 -0800 (PST)
-Message-Id: <094a4ad90ced8756ded9a225d2fd3886574ef6fc.1605542912.git.gitgitgadget@gmail.com>
+        Mon, 16 Nov 2020 08:08:42 -0800 (PST)
+Message-Id: <9a4d2a33b50344e97e2bc47e5aeb0d3fcbc18a6c.1605542912.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.785.v3.git.1605542912.gitgitgadget@gmail.com>
 References: <pull.785.v2.git.1605097704.gitgitgadget@gmail.com>
         <pull.785.v3.git.1605542912.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 16 Nov 2020 16:08:30 +0000
-Subject: [PATCH v3 09/11] add -i (Perl version): color header to match the C
- version
+Date:   Mon, 16 Nov 2020 16:08:31 +0000
+Subject: [PATCH v3 10/11] add -p: prefer color.diff.context over
+ color.diff.plain
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,34 +83,87 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Both versions of `add -i` indent non-flat lists by five spaces. However
-when using color the C version prints these spaces after the ANSI color
-codes whereas the Perl version prints them before the color codes.
-Change the Perl version to match the C version to allow for introducing
-a test that verifies that both versions produce the exact same output.
+Git's diff machinery allows users to override the colors to use in
+diffs, even the plain-colored context lines. As of 8dbf3eb6850 (diff.h:
+rename DIFF_PLAIN color slot to DIFF_CONTEXT, 2015-05-27), the preferred
+name of the config setting is `color.diff.context`, although Git still
+allows `color.diff.plain`.
+
+In the context of `git add -p`, this logic is a bit hard to replicate:
+`git_diff_basic_config()` reads all config values sequentially and if it
+sees _any_ `color.diff.context` or `color.diff.plain`, it accepts the
+new color. The Perl version of `git add -p` needs to go through `git
+config --get-color`, though, which allows only one key to be specified.
+The same goes for the built-in version of `git add -p`, which has to go
+through `repo_config_get_value()`.
+
+The best we can do here is to look for `.context` and if none is found,
+fall back to looking for `.plain`, and if still not found, fall back to
+the hard-coded default (which in this case is simply the empty string,
+as context lines are typically rendered without colored).
+
+This still leads to inconsistencies when both config names are used: the
+initial diff will be colored by the diff machinery. Once edited by a
+user, a hunk has to be re-colored by `git add -p`, though, which would
+then use the other setting to color the context lines.
+
+In practice, this is not _all_ that bad. The `git config` manual says
+this in the `color.diff.<slot>`:
+
+	`context` (context text - `plain` is a historical synonym)
+
+We should therefore assume that users use either one or the other, but
+not both names. Besides, it is relatively uncommon to look at a hunk
+after editing it because it is immediately staged by default.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- git-add--interactive.perl | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ add-interactive.c         | 6 ++++--
+ git-add--interactive.perl | 6 +++---
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
+diff --git a/add-interactive.c b/add-interactive.c
+index c298a8b80f..54dfdc56f5 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -49,8 +49,10 @@ void init_add_i_state(struct add_i_state *s, struct repository *r)
+ 
+ 	init_color(r, s, "diff.frag", s->fraginfo_color,
+ 		   diff_get_color(s->use_color, DIFF_FRAGINFO));
+-	init_color(r, s, "diff.context", s->context_color,
+-		diff_get_color(s->use_color, DIFF_CONTEXT));
++	init_color(r, s, "diff.context", s->context_color, "fall back");
++	if (!strcmp(s->context_color, "fall back"))
++		init_color(r, s, "diff.plain", s->context_color,
++			   diff_get_color(s->use_color, DIFF_CONTEXT));
+ 	init_color(r, s, "diff.old", s->file_old_color,
+ 		diff_get_color(s->use_color, DIFF_FILE_OLD));
+ 	init_color(r, s, "diff.new", s->file_new_color,
 diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index e713fe3d02..adbac2bc6d 100755
+index adbac2bc6d..bc3a1e8eff 100755
 --- a/git-add--interactive.perl
 +++ b/git-add--interactive.perl
-@@ -483,10 +483,8 @@ sub list_and_choose {
- 		my $last_lf = 0;
- 
- 		if ($opts->{HEADER}) {
--			if (!$opts->{LIST_FLAT}) {
--				print "     ";
--			}
--			print colored $header_color, "$opts->{HEADER}\n";
-+			my $indent = $opts->{LIST_FLAT} ? "" : "     ";
-+			print colored $header_color, "$indent$opts->{HEADER}\n";
- 		}
- 		for ($i = 0; $i < @stuff; $i++) {
- 			my $chosen = $chosen[$i] ? '*' : ' ';
+@@ -30,9 +30,9 @@
+ 	$diff_use_color ? (
+ 		$repo->get_color('color.diff.frag', 'cyan'),
+ 	) : ();
+-my ($diff_plain_color) =
++my ($diff_context_color) =
+ 	$diff_use_color ? (
+-		$repo->get_color('color.diff.plain', ''),
++		$repo->get_color($repo->config('color.diff.context') ? 'color.diff.context' : 'color.diff.plain', ''),
+ 	) : ();
+ my ($diff_old_color) =
+ 	$diff_use_color ? (
+@@ -1046,7 +1046,7 @@ sub color_diff {
+ 		colored((/^@/  ? $fraginfo_color :
+ 			 /^\+/ ? $diff_new_color :
+ 			 /^-/  ? $diff_old_color :
+-			 $diff_plain_color),
++			 $diff_context_color),
+ 			$_);
+ 	} @_;
+ }
 -- 
 gitgitgadget
 
