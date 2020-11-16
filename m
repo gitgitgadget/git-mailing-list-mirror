@@ -8,64 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A3F9C61DD8
-	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 16:08:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A1E1C4742C
+	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 16:09:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0CB1D20729
-	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 16:08:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30E1020729
+	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 16:09:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZIFfmU7X"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FQWBBcdw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731635AbgKPQIg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Nov 2020 11:08:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60086 "EHLO
+        id S1731663AbgKPQIi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Nov 2020 11:08:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728858AbgKPQIg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Nov 2020 11:08:36 -0500
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B1A3C0613CF
-        for <git@vger.kernel.org>; Mon, 16 Nov 2020 08:08:36 -0800 (PST)
-Received: by mail-wr1-x442.google.com with SMTP id 23so19238413wrc.8
+        with ESMTP id S1731658AbgKPQIh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Nov 2020 11:08:37 -0500
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09D86C0613CF
+        for <git@vger.kernel.org>; Mon, 16 Nov 2020 08:08:37 -0800 (PST)
+Received: by mail-wm1-x341.google.com with SMTP id h21so3329094wmb.2
         for <git@vger.kernel.org>; Mon, 16 Nov 2020 08:08:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=js8oUsMHl21kgw69PYKoHcc81MiST6F1XqDnN0kNdcM=;
-        b=ZIFfmU7X4eeH3Itq/a2AXgbmYbsAgRJSJDbp2W5f08pSF5nPjjuhBzNo6PYgnkiOKZ
-         iD56OS4Yaxbw/XC/xdk6/Xsvjvi6Q/kJi0hO/qLrT2NXXL0NQl2ZFpWsQIJoJ5LixNlw
-         3CJEslG92swnCLT5YBvwSyRfgC+ZJB1hPsziENfHrgmQZ7edwQKWDw7INYsUIUHsGzqq
-         SmmUp969VpD6hszIxLnuBIvVicg2n1jNQLSiMwZV4MMnBMGOveSkn0fwTTKxpG7w0Cqj
-         GTlGUASbDDkGT5Xhq1e2Yw1JM0zQcbcPikpMQo6JBTpeWnHVsN6CMJncvzE7+RYxRgtp
-         PX6Q==
+        bh=dpll76Bt0FuWoTL59TONqXQ0KGL2T+WUdIsjig1jOUg=;
+        b=FQWBBcdwKCARAq/cLY0Ed5g/F+XkhkMo/bNDPJgxX4md/xpgy/bAaEbWb0q83NhySV
+         cc8euxmPgvefEPfYPgxK6Vih1WlyIKblfUneB77HfM7MEd7B2Tym2GxWK5rPF+aAozPj
+         Riff2Tn+RclBJLT9ixAbRqUyw8JTUf9FLJMJX/9tMmouv6XBnmCVfIf8W0a99o2jqaTO
+         JAl0Cu7GMgpKEIve28IGLuq7swJbCi6s22KhtSuE56F04OTEAPDCaqPj4FCHwEJdJQIG
+         wh4OVFynccDyqzC6IYrG/uUFXnoBbEiOZPerbkyVVa4bKNGNRMFjTYy1NhT7qh5ruPHr
+         Xf/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=js8oUsMHl21kgw69PYKoHcc81MiST6F1XqDnN0kNdcM=;
-        b=cnkgQ7Pnmei2x6YA9Fgd/Ky+UkzaW2s5f8dDGZxRdetsmk1Vp/lurZAdQkxywXOJq1
-         JQPoVC1FQzmhBvuB3Ldf928LDeNz73/cWNPUXzzXntNjVXc6e3kpI/P6oYkI/1i1ZINJ
-         WzjHMPvX++csqFvZ1lOmsBcd25n2mAmgNekWOmPdO8g7rFN1i16OCNhasQNiyv5UnFLK
-         I5dChzKM2/JNjxH7N7RFd9i7WvcSjkDp/xQUiVp45jkV9Wa5XPIWd7XoEwcN74w/XsW4
-         SWzIWP/gEJyra2inx8HtEuUC5kUQUUN+HN0ZNrHWFgzqBYMl4d0KNj5ZX+DHF5CTY+D2
-         2M2g==
-X-Gm-Message-State: AOAM533iXhZ+TkgvZKax1Tnjz1CJpjAQpoBYDmyqQmIt/5EWkjBNuKKJ
-        k8srunpmisDin2WydgHcLGpGTgGBYJA=
-X-Google-Smtp-Source: ABdhPJxAnmhb6Uwt2ECP7kBVYAU6AeCVAULzlNW169/nfy8Hcc+hjTvqnWQoH0yZ2Bs1S74N2JK39w==
-X-Received: by 2002:adf:fd85:: with SMTP id d5mr12265895wrr.99.1605542914713;
-        Mon, 16 Nov 2020 08:08:34 -0800 (PST)
+        bh=dpll76Bt0FuWoTL59TONqXQ0KGL2T+WUdIsjig1jOUg=;
+        b=UdCamG5OjvQ744bvrhfs8kzKiFKc1LXnFEC1baxCqJ69SlQTyi+Iqj8pD63Rz3ameb
+         UpUlCKtSbZ3C2mh3p6QAwQ+5qJ9co0x9fkzMtmEuyhHUXhVhuPcvvJomMzxCMkLTKmej
+         x8m0hlbcaQ9ehz7ex3h37znr4hEJWxjguvA1LH18qmmCPsR9TQGj56CdaatTSHgM90Qf
+         f4X9PFqguVroM69JNdRHzP+++dbvsBefW2kuoiAKlwXYbkCMU8G1fnP9pngLzz13madE
+         QC/51hU1XGVzrnhYVfougVmBJLSjV5lGQgHaOm+Xr5v3NCTL80rDKm6eTeR4lslfyLb2
+         UCow==
+X-Gm-Message-State: AOAM530iB0Z4zdJZei/aK8O7wQn3sbvPb0ZhF8LfQXQczdSPj1H/Hx2y
+        1u7lM9CmkbHCndr9RsOphbx+GTkmIic=
+X-Google-Smtp-Source: ABdhPJwL5ANPWD4SMNw26Z5WriL9Y7TEd9ZhWQqZu3cS9ilWZ/X0tgXNZ8KRjWkyIngJsog3+K36uw==
+X-Received: by 2002:a1c:93:: with SMTP id 141mr3353897wma.52.1605542915617;
+        Mon, 16 Nov 2020 08:08:35 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o197sm19720452wme.17.2020.11.16.08.08.34
+        by smtp.gmail.com with ESMTPSA id f18sm9747811wru.42.2020.11.16.08.08.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Nov 2020 08:08:34 -0800 (PST)
-Message-Id: <6152122c04aacf8c3e3f1aae7b73995da6b9e354.1605542912.git.gitgitgadget@gmail.com>
+        Mon, 16 Nov 2020 08:08:35 -0800 (PST)
+Message-Id: <068813912b9e5133f9d9bbacb239f7954788bf53.1605542912.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.785.v3.git.1605542912.gitgitgadget@gmail.com>
 References: <pull.785.v2.git.1605097704.gitgitgadget@gmail.com>
         <pull.785.v3.git.1605542912.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 16 Nov 2020 16:08:22 +0000
-Subject: [PATCH v3 01/11] add -i (built-in): do show an error message for
- incorrect inputs
+Date:   Mon, 16 Nov 2020 16:08:23 +0000
+Subject: [PATCH v3 02/11] add -i (built-in): send error messages to stderr
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,41 +82,33 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-There is a neat feature in `git add -i` where it allows users to select
-items via unique prefixes.
+The Perl version of that command already does that since a301973641f
+(add -p: print errors in separate color, 2009-02-05). The built-in
+version's development started by reimplementing the initial version from
+5cde71d64af (git-add --interactive, 2006-12-10) for simplicity, though,
+which still printed error messages to stdout.
 
-In the built-in version of `git add -i`, we specifically sort the items
-(unless they are already sorted) and then perform a binary search to
-figure out whether the input constitutes a unique prefix. Unfortunately,
-by mistake this code misidentifies matches even if the input string is
-not actually a prefix of any item.
-
-For example, in the initial menu, where there is a `status` and an
-`update` command, the input `tadaa` was mistaken as a prefix of
-`update`.
-
-Let's fix this by looking a bit closer whether the input is actually a
-prefix of the item at the found insert index.
+Let's fix that by imitating the Perl version's behavior in the built-in
+version of that command.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- add-interactive.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ add-interactive.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/add-interactive.c b/add-interactive.c
-index 555c4abf32..8ca503d803 100644
+index 8ca503d803..0f24992ca4 100644
 --- a/add-interactive.c
 +++ b/add-interactive.c
-@@ -194,7 +194,8 @@ static ssize_t find_unique(const char *string, struct prefix_item_list *list)
- 	else if (index + 1 < list->sorted.nr &&
- 		 starts_with(list->sorted.items[index + 1].string, string))
- 		return -1;
--	else if (index < list->sorted.nr)
-+	else if (index < list->sorted.nr &&
-+		 starts_with(list->sorted.items[index].string, string))
- 		item = list->sorted.items[index].util;
- 	else
- 		return -1;
+@@ -365,7 +365,7 @@ static ssize_t list_and_choose(struct add_i_state *s,
+ 
+ 			if (from < 0 || from >= items->items.nr ||
+ 			    (singleton && from + 1 != to)) {
+-				color_fprintf_ln(stdout, s->error_color,
++				color_fprintf_ln(stderr, s->error_color,
+ 						 _("Huh (%s)?"), p);
+ 				break;
+ 			} else if (singleton) {
 -- 
 gitgitgadget
 
