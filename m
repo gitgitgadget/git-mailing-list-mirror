@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 611F8C63798
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B28DC6369E
 	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 16:09:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 27FAD20729
-	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 16:09:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F3121221F9
+	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 16:09:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TKLTo7E9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QZcQRcPp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731707AbgKPQIn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Nov 2020 11:08:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60114 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731696AbgKPQIm (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1731704AbgKPQIm (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 16 Nov 2020 11:08:42 -0500
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BAF9C0613CF
-        for <git@vger.kernel.org>; Mon, 16 Nov 2020 08:08:42 -0800 (PST)
-Received: by mail-wm1-x341.google.com with SMTP id w24so24098786wmi.0
-        for <git@vger.kernel.org>; Mon, 16 Nov 2020 08:08:42 -0800 (PST)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60112 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731696AbgKPQIl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Nov 2020 11:08:41 -0500
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DF01C0613CF
+        for <git@vger.kernel.org>; Mon, 16 Nov 2020 08:08:41 -0800 (PST)
+Received: by mail-wm1-x343.google.com with SMTP id 23so206721wmg.1
+        for <git@vger.kernel.org>; Mon, 16 Nov 2020 08:08:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=9tX+jisZnF8QKIRir0GzdfsvhwQEBVAh2/i2Bt96TTA=;
-        b=TKLTo7E98m+TxRmHL+8anhQKoWj/NJnv2qadJWLPYj/7oRmxbYu6S8Zrd2RNlDRHnj
-         t6DIXQdmNvZjGnvEgezvW/CAOnsRMNQf1JtqdipebCgjl4yeuJaSFaPCNB0RHoEwbuYG
-         BEJQLnvqYvHNSGqz79pJbctZ+v41GWh9BVjJPPfDQH9SmyqRQnJPh5hDqc0NnPrTgtnR
-         uTX+GGE1I9B+UdFxuz+0hIiphDk44xx+oeNPl8KJX3hjzGEZG5hcq4SvxCldI8LodQ9U
-         MkXLCJ3FQ45kV7TVsJDlzzrJvvT+h4ylbt7SAxHK9XI8TDbz1ttYBFrdMQ66Tzp809bM
-         aGQg==
+        bh=/1KLgV2xLIpkunGyPrrCfBxphaLP2gFzSlc7IzvFqQk=;
+        b=QZcQRcPpx1nfUheI61X6Q8m+SYmRNiZ9CUair5twlaSBdYc5VBUcjAuSZax2J1p1cV
+         +v/I/BsHn61ouAjdHur9W3K4GFpvhtjmkgKH4wSbQ3KA8Zs0MbX3WFNMeSNa0I/T9tNd
+         g0uKduw6nnd3XcgCQ79ZGcphpfOn3qcwfNkQlJSQTltVS007tuVUHrC4Zd3oNr+sJ+Q2
+         k572o6G6YNBfjQBn76FiMEroJltfZumFtIjGZ0tITuTI4MNglGMec1aAwuSIRdRZuCkL
+         zE2qTQEy4u+cYR25OLJBaoQNxhLU4x0g2nHM1Hncx1Q5krDMgbwlP27SOk2OBtXgZXIj
+         rSAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=9tX+jisZnF8QKIRir0GzdfsvhwQEBVAh2/i2Bt96TTA=;
-        b=VTglABCrsOUEMNWACET9US0vhgOwzYFmlN9Tz2yMOYc3UTMwH54QxxguyBplxu29Ys
-         ws3i+MMBBz9mW98DbjnlpQ6dRREpexQiMtp8jVYHMaTzZLXTZl/wZxHsffBJ6k0kg+RJ
-         RtEZJPhe4wC8I5R1u2ydlmTGQCgPDQI2ZD2kUNTCtJ7rSioZpm7STR1X1YQWxmB59Q+h
-         wyAp+qw1nNFnPMr9DNwrX6ss7+sGI4JDtrIl0dgzrOsQLuGNot+602zl39OF+JL+tZ9j
-         cl88GHdRBb137k6m9u2QnEA+CjB7H+Fn6QqSg2CgMKNIWEt3Wbp06NT9zKkJHp3Nxfgo
-         z5IQ==
-X-Gm-Message-State: AOAM531nkQzFqPgzybMY/Oaqpvz4/FmPImncIn7a+FXJ9k9i4zyNijNj
-        JcEpZM0+A1mz3kyjejjehJbaa0O2AQc=
-X-Google-Smtp-Source: ABdhPJzYrpQigh68ZfYnyX4QmzQ0WL9VAYBp49XsrzOWmhSX3IW15iNQYLnZKQnNUGmeRzeDDrV/mg==
-X-Received: by 2002:a1c:328a:: with SMTP id y132mr16012529wmy.134.1605542920953;
+        bh=/1KLgV2xLIpkunGyPrrCfBxphaLP2gFzSlc7IzvFqQk=;
+        b=LWZuf6kXtaxNirK2SRmpcENLc/sJNB+6zcr+7ozNm+xQzBW1TVO/WuYMl9ym5qXZBS
+         8M0rBxjJviqHLWrhoABSNYdW1P4JioFI4f1f09I/1k1zxm2FCps7XAYjHgxpGG7iWeL5
+         Cn0RZjIJ3iJyQeqDj481jGcGvZsrQgxWzJIm4jH3stwTSG7fP5jVfoQCuWTBXSu7KXXL
+         xWfw+kHO9lTyfz3vzrpPEPFyI60spl8JK11bjCAs2MAwN/G4dVbdKTsZmTWaKjEIYT38
+         vzt+dvbpEWZg7assnAU3+dR22Xj1tXbPpgsH2sQm0QB1VimlZ66p64MbIaIVzle1QnAv
+         lNlQ==
+X-Gm-Message-State: AOAM531uD7xCGj0A9cjJGa+lhPqYCF1K0hngMwlaoMQKkFFdmEr0YcID
+        cV2h5DefYWZJRSbP0/91DZtbY65CJIE=
+X-Google-Smtp-Source: ABdhPJxOVzy8GK2kRZQZXQeM96VHz9KV5FwiHE1WOqu6WTvaKRKGIB2j3TavuzSO9vyXnQYpY3zkkg==
+X-Received: by 2002:a1c:2d93:: with SMTP id t141mr16272443wmt.104.1605542920222;
         Mon, 16 Nov 2020 08:08:40 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s8sm23621235wrn.33.2020.11.16.08.08.40
+        by smtp.gmail.com with ESMTPSA id r9sm25337197wrg.59.2020.11.16.08.08.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Nov 2020 08:08:40 -0800 (PST)
-Message-Id: <168891f9f8b61f958b7a32ab2bb744563d086357.1605542912.git.gitgitgadget@gmail.com>
+        Mon, 16 Nov 2020 08:08:39 -0800 (PST)
+Message-Id: <6a68bc5511a72d25b84a243dd5d8019f81cee610.1605542912.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.785.v3.git.1605542912.gitgitgadget@gmail.com>
 References: <pull.785.v2.git.1605097704.gitgitgadget@gmail.com>
         <pull.785.v3.git.1605542912.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 16 Nov 2020 16:08:29 +0000
-Subject: [PATCH v3 08/11] add -i (built-in): use the same indentation as the
- Perl version
+Date:   Mon, 16 Nov 2020 16:08:28 +0000
+Subject: [PATCH v3 07/11] add -p (built-in): do not color the progress
+ indicator separately
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,29 +83,44 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When copying the spaces used to indent non-flat lists in `git add -i`,
-one space was appended by mistake. This makes the output of the built-in
-version of `git add -i` inconsistent with the Perl version. Let's adjust
-the built-in version to produce the same output as the Perl version.
+The Perl version of this command colors the progress indicator and the
+prompt message in one go.
+
+Let's do the same in the built-in version so that the same upcoming test
+(which will compare the output of `git add -p` against a known-good
+version) will pass both for the Perl version as well as for the built-in
+version.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- add-interactive.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ add-patch.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/add-interactive.c b/add-interactive.c
-index 9126684348..c298a8b80f 100644
---- a/add-interactive.c
-+++ b/add-interactive.c
-@@ -1137,7 +1137,7 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
- 	print_file_item_data.color = data.color;
- 	print_file_item_data.reset = data.reset;
+diff --git a/add-patch.c b/add-patch.c
+index bf89c43145..2fad92ca37 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -1461,15 +1461,15 @@ static int patch_update_file(struct add_p_state *s,
+ 		else
+ 			prompt_mode_type = PROMPT_HUNK;
  
--	strbuf_addstr(&header, "      ");
-+	strbuf_addstr(&header, "     ");
- 	strbuf_addf(&header, print_file_item_data.modified_fmt,
- 		    _("staged"), _("unstaged"), _("path"));
- 	opts.list_opts.header = header.buf;
+-		color_fprintf(stdout, s->s.prompt_color,
+-			      "(%"PRIuMAX"/%"PRIuMAX") ",
++		printf("%s(%"PRIuMAX"/%"PRIuMAX") ", s->s.prompt_color,
+ 			      (uintmax_t)hunk_index + 1,
+ 			      (uintmax_t)(file_diff->hunk_nr
+ 						? file_diff->hunk_nr
+ 						: 1));
+-		color_fprintf(stdout, s->s.prompt_color,
+-			      _(s->mode->prompt_mode[prompt_mode_type]),
+-			      s->buf.buf);
++		printf(_(s->mode->prompt_mode[prompt_mode_type]),
++		       s->buf.buf);
++		if (*s->s.reset_color)
++			fputs(s->s.reset_color, stdout);
+ 		fflush(stdout);
+ 		if (read_single_character(s) == EOF)
+ 			break;
 -- 
 gitgitgadget
 
