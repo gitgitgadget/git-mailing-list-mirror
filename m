@@ -8,63 +8,64 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A1E1C4742C
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91BDDC61DD8
 	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 16:09:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 30E1020729
+	by mail.kernel.org (Postfix) with ESMTP id 56B8A221F9
 	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 16:09:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FQWBBcdw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sVmvEjOr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731663AbgKPQIi (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1731691AbgKPQIi (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 16 Nov 2020 11:08:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60092 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731658AbgKPQIh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Nov 2020 11:08:37 -0500
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09D86C0613CF
+        with ESMTP id S1731658AbgKPQIi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Nov 2020 11:08:38 -0500
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F34EFC0613CF
         for <git@vger.kernel.org>; Mon, 16 Nov 2020 08:08:37 -0800 (PST)
-Received: by mail-wm1-x341.google.com with SMTP id h21so3329094wmb.2
-        for <git@vger.kernel.org>; Mon, 16 Nov 2020 08:08:36 -0800 (PST)
+Received: by mail-wr1-x444.google.com with SMTP id l1so19252142wrb.9
+        for <git@vger.kernel.org>; Mon, 16 Nov 2020 08:08:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=dpll76Bt0FuWoTL59TONqXQ0KGL2T+WUdIsjig1jOUg=;
-        b=FQWBBcdwKCARAq/cLY0Ed5g/F+XkhkMo/bNDPJgxX4md/xpgy/bAaEbWb0q83NhySV
-         cc8euxmPgvefEPfYPgxK6Vih1WlyIKblfUneB77HfM7MEd7B2Tym2GxWK5rPF+aAozPj
-         Riff2Tn+RclBJLT9ixAbRqUyw8JTUf9FLJMJX/9tMmouv6XBnmCVfIf8W0a99o2jqaTO
-         JAl0Cu7GMgpKEIve28IGLuq7swJbCi6s22KhtSuE56F04OTEAPDCaqPj4FCHwEJdJQIG
-         wh4OVFynccDyqzC6IYrG/uUFXnoBbEiOZPerbkyVVa4bKNGNRMFjTYy1NhT7qh5ruPHr
-         Xf/A==
+        bh=I45Wez2549eUcVcvjzTBIh58pyxNIL9ydV8QhHpZrSs=;
+        b=sVmvEjOrfiQ72g4ptzgbVRwIktv2ALrkds1QgWASNCYKtYPeJnziWQ5JgvokPx8e7L
+         E+cl1vMufRsN0SuF+B9p7/PV8hKc5Mbd2ImQSewfbbA+/MXmrHXv92wsyGuRJ29HxjDA
+         MMSJIq6bM0AAUxxfsMoCRqr17Mpfc6rz5+wxY3kcY8KnwCX40xJ7mC+bM+31/5sCm+yt
+         K9zH4MXG0MW/9Xai0dMTVYX3wl9zfz8AmzsQAT+gYY/aqZiCnei7fXKuI8u2DamOs9jE
+         v3ocGfs5bbxYblU9YWK5gVM0SUTgmnYSZukB5NX9pQwlW5RyqwRfYThxasofNm/VxZ5m
+         lBwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=dpll76Bt0FuWoTL59TONqXQ0KGL2T+WUdIsjig1jOUg=;
-        b=UdCamG5OjvQ744bvrhfs8kzKiFKc1LXnFEC1baxCqJ69SlQTyi+Iqj8pD63Rz3ameb
-         UpUlCKtSbZ3C2mh3p6QAwQ+5qJ9co0x9fkzMtmEuyhHUXhVhuPcvvJomMzxCMkLTKmej
-         x8m0hlbcaQ9ehz7ex3h37znr4hEJWxjguvA1LH18qmmCPsR9TQGj56CdaatTSHgM90Qf
-         f4X9PFqguVroM69JNdRHzP+++dbvsBefW2kuoiAKlwXYbkCMU8G1fnP9pngLzz13madE
-         QC/51hU1XGVzrnhYVfougVmBJLSjV5lGQgHaOm+Xr5v3NCTL80rDKm6eTeR4lslfyLb2
-         UCow==
-X-Gm-Message-State: AOAM530iB0Z4zdJZei/aK8O7wQn3sbvPb0ZhF8LfQXQczdSPj1H/Hx2y
-        1u7lM9CmkbHCndr9RsOphbx+GTkmIic=
-X-Google-Smtp-Source: ABdhPJwL5ANPWD4SMNw26Z5WriL9Y7TEd9ZhWQqZu3cS9ilWZ/X0tgXNZ8KRjWkyIngJsog3+K36uw==
-X-Received: by 2002:a1c:93:: with SMTP id 141mr3353897wma.52.1605542915617;
-        Mon, 16 Nov 2020 08:08:35 -0800 (PST)
+        bh=I45Wez2549eUcVcvjzTBIh58pyxNIL9ydV8QhHpZrSs=;
+        b=XO+5ihtgcq6EuTDesezelxXpjwKdxOcC8hwQGSDgFniIokoGlxF7YEanJCaYdwfJgM
+         pkBqiKdG0GV03uZt/e65DrNujk//L9WlY5GGmB1ICG+DBFORB3jyFUfYXJcFObyxvaEu
+         yUGPV42HuRSVu/FujHAvhTFENko9HiKxR867wcn/6Z4ua961+ZjvY8P5oOh6okKnPqeP
+         C0yELdGgHYjnPpzrM7Qqe2trPWVV/0KCyc+638CkMQqPP7v6gbaxtv5b9Y5w+zn14gvR
+         uOUoWuep9a7xVUqpl2XpyN/6Qhckd2AmJJN0Jl7oT3k+L1DHnFiunr/4G7z2TGq+257p
+         zcNQ==
+X-Gm-Message-State: AOAM530E4pNqv0/jvT4gc08TrbckT5pDChKmyLE6+KWHswmUuEOq7PGh
+        /jr2S7/whyodKYW2FoPOTFEVzDELwn4=
+X-Google-Smtp-Source: ABdhPJwMduVXgsGH+XeWyZ6jK9MGUOSBJAz7P4DtfPzMcqqfXX1ZRD+r5QRqbCIWeoa+Yo/ggmZ0Jw==
+X-Received: by 2002:a5d:62c7:: with SMTP id o7mr15930655wrv.29.1605542916574;
+        Mon, 16 Nov 2020 08:08:36 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f18sm9747811wru.42.2020.11.16.08.08.34
+        by smtp.gmail.com with ESMTPSA id k3sm3349509wrn.81.2020.11.16.08.08.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Nov 2020 08:08:35 -0800 (PST)
-Message-Id: <068813912b9e5133f9d9bbacb239f7954788bf53.1605542912.git.gitgitgadget@gmail.com>
+        Mon, 16 Nov 2020 08:08:36 -0800 (PST)
+Message-Id: <98deb538d91ba0ab485fa8d97cc6062bcc680938.1605542912.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.785.v3.git.1605542912.gitgitgadget@gmail.com>
 References: <pull.785.v2.git.1605097704.gitgitgadget@gmail.com>
         <pull.785.v3.git.1605542912.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 16 Nov 2020 16:08:23 +0000
-Subject: [PATCH v3 02/11] add -i (built-in): send error messages to stderr
+Date:   Mon, 16 Nov 2020 16:08:24 +0000
+Subject: [PATCH v3 03/11] add -p (built-in): imitate `xdl_format_hunk_hdr()`
+ generating hunk headers
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,33 +83,38 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The Perl version of that command already does that since a301973641f
-(add -p: print errors in separate color, 2009-02-05). The built-in
-version's development started by reimplementing the initial version from
-5cde71d64af (git-add --interactive, 2006-12-10) for simplicity, though,
-which still printed error messages to stdout.
-
-Let's fix that by imitating the Perl version's behavior in the built-in
-version of that command.
+In libxdiff, imitating GNU diff, the hunk headers only show the line
+count if it is different from 1. When splitting hunks, the Perl version
+of `git add -p` already imitates this. Let's do the same in the built-in
+version of said command.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- add-interactive.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ add-patch.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/add-interactive.c b/add-interactive.c
-index 8ca503d803..0f24992ca4 100644
---- a/add-interactive.c
-+++ b/add-interactive.c
-@@ -365,7 +365,7 @@ static ssize_t list_and_choose(struct add_i_state *s,
+diff --git a/add-patch.c b/add-patch.c
+index be4cf6e9e5..b6d53229bb 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -661,9 +661,14 @@ static void render_hunk(struct add_p_state *s, struct hunk *hunk,
+ 		else
+ 			new_offset += delta;
  
- 			if (from < 0 || from >= items->items.nr ||
- 			    (singleton && from + 1 != to)) {
--				color_fprintf_ln(stdout, s->error_color,
-+				color_fprintf_ln(stderr, s->error_color,
- 						 _("Huh (%s)?"), p);
- 				break;
- 			} else if (singleton) {
+-		strbuf_addf(out, "@@ -%lu,%lu +%lu,%lu @@",
+-			    old_offset, header->old_count,
+-			    new_offset, header->new_count);
++		strbuf_addf(out, "@@ -%lu", old_offset);
++		if (header->old_count != 1)
++			strbuf_addf(out, ",%lu", header->old_count);
++		strbuf_addf(out, " +%lu", new_offset);
++		if (header->new_count != 1)
++			strbuf_addf(out, ",%lu", header->new_count);
++		strbuf_addstr(out, " @@");
++
+ 		if (len)
+ 			strbuf_add(out, p, len);
+ 		else if (colored)
 -- 
 gitgitgadget
 
