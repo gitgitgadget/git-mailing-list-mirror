@@ -7,99 +7,121 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3664DC844F8
-	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 12:38:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB827C8450D
+	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 12:38:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E374822265
-	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 12:38:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6204D20855
+	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 12:38:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="aloI+Hqn"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="bZ98bwp5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729417AbgKPMOW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Nov 2020 07:14:22 -0500
-Received: from mout.gmx.net ([212.227.15.19]:40959 "EHLO mout.gmx.net"
+        id S1730011AbgKPMTR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Nov 2020 07:19:17 -0500
+Received: from mout.gmx.net ([212.227.15.15]:36485 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727895AbgKPMOW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Nov 2020 07:14:22 -0500
+        id S1727027AbgKPMTR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Nov 2020 07:19:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1605528859;
-        bh=FUM687dyMpXJd577zLrmrUDTouCNgzu9Y6DIFPcYksk=;
+        s=badeba3b8450; t=1605529149;
+        bh=WfcFUT+UTR0ofGha5G3a2QsVnvExwp6SUu/hmPkYgJs=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=aloI+HqndeuqYd/Wiu9phYiYBEWq9zvCetTS4OhUjnN2ujAogYN/eOoD42h9QJkvm
-         GqFmaL9sGQMv+KELMLpQ7Kw2G9bn3MgikGAu66+XiuOB6P+BWl6Wu9msz5aAXEfA/i
-         8RX4bLsmZ85j/UQ+j3nSz3l1qOIumb+TMSpwis+8=
+        b=bZ98bwp5IV5GLIVin6xImtICXKBuWZURSMPYcvkqEMj+4euQNy/gfxzBgnapsns/s
+         tdstiGc/8vGyvzgMMt5QFF01a9VR2J9bFfg7kBI1T5zR0UjrBKXS+jRHNCPfRAuZPY
+         X9n5XfwzSxmmhk7PWfRugj3gD6qLhjCV+T2J85Rs=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.26.25.62] ([213.196.212.61]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MVvL5-1kohVX3YGL-00RpTi; Mon, 16
- Nov 2020 13:14:18 +0100
-Date:   Mon, 16 Nov 2020 00:57:44 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MrQEn-1jtB9u1R9b-00oapl; Mon, 16
+ Nov 2020 13:19:09 +0100
+Date:   Mon, 16 Nov 2020 01:02:34 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
+        git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
         Jeff King <peff@peff.net>
 Subject: Re: [PATCH v2 10/11] add -p: prefer color.diff.context over
  color.diff.plain
-In-Reply-To: <4A02D618-34EB-4B20-A102-99B3CDAFD0BB@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2011160056450.18437@tvgsbejvaqbjf.bet>
-References: <pull.785.git.1605051739.gitgitgadget@gmail.com> <pull.785.v2.git.1605097704.gitgitgadget@gmail.com> <48d8e0badfec5f0e576868f7a406ed7ede6c7200.1605097704.git.gitgitgadget@gmail.com> <4A02D618-34EB-4B20-A102-99B3CDAFD0BB@gmail.com>
+In-Reply-To: <4ad92124-de1f-df66-093b-5089ad111cb7@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2011160057560.18437@tvgsbejvaqbjf.bet>
+References: <pull.785.git.1605051739.gitgitgadget@gmail.com> <pull.785.v2.git.1605097704.gitgitgadget@gmail.com> <48d8e0badfec5f0e576868f7a406ed7ede6c7200.1605097704.git.gitgitgadget@gmail.com> <4ad92124-de1f-df66-093b-5089ad111cb7@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-2069398629-1605484665=:18437"
-X-Provags-ID: V03:K1:qk7y7u3aUxV8NCq+cfRhA24SUeUa/DQDUhHLvb+qzw/IJKZKo2m
- lI++FwtUk9iWKdLfcAPA2QXwRZ0CaZqgKjjtKv6p6k2LhV2H4k05SQzzWYkIYKfr7Rsd5EU
- QOndpuVx9ut5Zq3KaxgZim6tPgMB0xDzoXy5jE++5Zxm/cmdmICtBry64dcRaKOZSCfu+v5
- 6Q+tOudBo6QFHLCObBdFg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:HBJ4wZ+zhSU=:dqLeQ+ecC1O0lgD7fWV/3q
- Jxg5ffMGL9JsQ3tIAcICxfJMu6ZSX8+BzO6NSPlsInAsTThwuLd3xAFvoRoeXQ/pROTIAB4Jl
- Tv/2bbS62gV29r4db4wju0fqH9WL11SoyXqmtVXAUIrHSlbgzcEcF1adR6yEu2SczlAQA2p3s
- nds/ESPxWs06qWq+nFVhDKSLQXsMZdFzKYsE9cRCz7TgUIff9OuLN6gD501lCWNE83G1Um5Tw
- upqhlXwzvAnKeKRSbkQIg7bo+GiKrWO4dHrRhRrPwZk+YrNFKYR6RqveqYdHa9m3h4EF6VfXY
- 15qIeaJWY5CFLgDGFb3puEyhI8eKQGjdbFwWx3WWY0VHAG0MJ7eFmdLhtUXXXp5ZqNIpT2CCG
- WebOpmF24yIH5W7EyIkpXiSJhO9PmiEqREYsQZBqIfbxBjrHJfOQJvvuY7fgCqbM2RJ39yAHQ
- JyLz2h9pR424sK64nuxyYYeIqgrVIJ+9avanfNSbbw8znaAmB7pjTwNWWCEr7I8BjJ2jrirr2
- SYZquJGQ8wy6EKyM8hUnVXDleVtifIbxFnANX9KnAObJvf0FdmHoWAzoQvyK6CBqUEFjl5B+I
- kf6NCDL6CJX14pRcs33e6SVczxiVJ/+MITX6TsYPsjCw5ffkMaRPDBNLKjEsMNv2A6P66VU1w
- 5pK0zUYRxohnxWZo7oaCSx563VjWw12vk2gVSFYN4u6A9rjvRUaC4+OBhAobm2eqh8TXZGMkx
- UvPMl2HjZZJiwovH4FBIYsBROI4F9ADytqFoCCgpnZvrsU6eDhboqHFUh2GOlJpDQ4s/UUlZq
- /e5z2KEKLXrpdSnLDsQeL44gjW2GFua4OLJtNR6CPrNquQ5GYr6/63vwCemRd/XcgLwsK8GRx
- zHxBWRN9WS3mqVJsGB+qiUN3isx9GPnO3stHUF4vo=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:KrqlI2seZVXcVzNjm+KWN3mP7/RO/zxX8rquIrLaIS7eL70h6x7
+ AzkwTUfxifp5n9MU76SJ/icKJ4ELeniwox5zR9MMQmQk9FjPjre6cVhyNMDsfG40xNjh7sm
+ zuW6y6dNHwGNZHFgrZQc6o29bQqKgv++9w8whTYT25zg2sF2Ugalf1ChTkXUHsr+Ib3fwOA
+ GWBO7nKzczMLcBKwLcVNQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:q9qYr3UjSBc=:2+zRFH+AbMCGOXyxI1Kz+F
+ lNfW3RRez021Bl5aMs4Av6BTM/7cel8Ssu7zGCJFRLzZbPNdqzDExj9uOUP41d8WxzV+FEXdW
+ Ggy20OUPPDwL2uNBxKeP+19+iNFxYb33we98JWA7fnH/Q9O1jIjIo+tFZ3lkQcC32PA8ZsglT
+ dGSSrKIfoFa7GAZQA6Ooyk2cdu4sZi4ZmtA5BIwFJzag3IJtkZVZfQGqzCmSdt/C2xJXVsYp3
+ o6AJqkJfegV7Wf7VQUh0rBClFhyOLQ0eoUdfOdYv4yxseBC2luSZskZUuguqqIeyqRhcW1ep0
+ AA5fuXJOLQljCF0uNoUCYaqYY85WYE0QswP/NNaY7i4xUKXAE/g25tcw2LyCLI+BDF3hC/MYz
+ 7/BybvIYE3zR5fYhCjVH5lEJpQ70F261I40qPxnF1catIYtdExPDmcbtOQUhhLwChx+yUvIE9
+ XdK1wLDzZyOpfIZiZqPar4sFkOYHBGE8bydCkEvd/3EyZfcDowWUprzsi1A/9siBQ8zggoxtt
+ OVBKh81vUaDDML6c/LTFDZdU1oNTUsIxq8s2P80dH+rra3uDnqcsuW6rNF8WvgUzSzgPgGT6A
+ 4HC7H6xZ3t1AtH3d0/vWEAeNj93+rbR/HEejnPs56Rz5IjGcBBQigLHpcaB/oUe9nJQPEhUKm
+ lfnOIDBiYI9rRhKSQzNJieZ/4DDwRHCHKEznuSPZ+k7diYABQ5JJyWiEfjYC6+j3yWCrZezXK
+ ucSSeFCoST1vlKhtDV+vPiKUpVv2QTZf+pfh6o7C6elnyU0Gid/QfGunq3ozKDl/rrb2waygF
+ U9zFpFr5KX0rnJgstsSMd6BRYJItSev/4Ki9UAL3IlxnXTTrQExZgMQyG+7dsY0SKz+xuXvDU
+ qKVo0jTlJ2u0Vb+nUKVtX5bKL2Vq37VS62ar6M2Ow=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Phillip,
 
---8323328-2069398629-1605484665=:18437
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Fri, 13 Nov 2020, Phillip Wood wrote:
 
-Hi Philippe,
-
-[to make me completely confused about which spelling for
-"Phillip"/"Philippe" to use, Philip Oakley needs to chime in.]
-
-On Fri, 13 Nov 2020, Philippe Blain wrote:
-
-> > Le 11 nov. 2020 =C3=A0 07:28, Johannes Schindelin via GitGitGadget <gi=
-tgitgadget@gmail.com> a =C3=A9crit :
-> >
+> On 11/11/2020 12:28, Johannes Schindelin via GitGitGadget wrote:
 > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
-> > This still needs
+> > Git's diff machinery allows users to override the colors to use in
+> > diffs, even the plain-colored context lines. As of 8dbf3eb6850 (diff.h=
+:
+> > rename DIFF_PLAIN color slot to DIFF_CONTEXT, 2015-05-27), the preferr=
+ed
+> > name of the config setting is `color.diff.context`, although Git still
+> > allows `color.diff.plain`.
+> >
+> > In the context of `git add -p`, this logic is a bit hard to replicate:
+> > `git_diff_basic_config()` reads all config values sequentially and if =
+it
+> > sees _any_ `color.diff.context` or `color.diff.plain`, it accepts the
+> > new color. The Perl version of `git add -p` needs to go through `git
+> > config --get-color`, though, which allows only one key to be specified=
+.
+> > The same goes for the built-in version of `git add -p`, which has to g=
+o
+> > through `repo_config_get_value()`.
 >
-> s/needs/leads/
+> One nit pick: the built-in version does not have to go through
+> `repo_config_get_value()`, it could get the values in a callback using
+> `git_config()` which would match the behavior of diff but chooses not to
+> (presumably it is more convenient to just look up the config values).
 
-Of course!
+Oh, but that would require _all_ callers of the interactive patch
+functionality to be audited, to ensure that the correct `git_config()`
+call back is used.
 
-Thanks,
+That's positively not what I intended.
+
+Instead, using `repo_config_get_value()` does not require that care, and
+does not open us up to future callers that may forget to include the
+required callback in _their_ config parsing.
+
+In addition, using `repo_config_get_value()` already prepares this part of
+Git's code for a future where the `struct repository *` pointer is passed
+into every code path that needs it, so that we no longer have to rely on
+global state at all.
+
+Besides, since this patch is really about fixing the discrepancy between
+the Perl version's use of `.plain` and the built-in's use of `.context`,
+changing something as unrelated as how the config is accessed would be
+inappropriate (even elsewhere in this patch series, which really is about
+fixing interactive `add`'s color handling).
+
+Ciao,
 Dscho
-
-> > to inconsistencies when both config names are used: the
-> > initial diff will be colored by the diff machinery. Once edited by a
-> > user, a hunk has to be re-colored by `git add -p`, though, which would
-> > then use the other setting to color the context lines.
-
---8323328-2069398629-1605484665=:18437--
