@@ -2,102 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64A86C4742C
-	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 18:56:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59759C2D0A3
+	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 19:01:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0964520575
-	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 18:56:10 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ov1HBGT0"
+	by mail.kernel.org (Postfix) with ESMTP id DBADE2225E
+	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 19:01:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726471AbgKPSzs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Nov 2020 13:55:48 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56042 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725879AbgKPSzs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Nov 2020 13:55:48 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A70E2F42C5;
-        Mon, 16 Nov 2020 13:55:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=u+lx0IA/0vuk
-        eDlMt5HlCi+naeo=; b=ov1HBGT0zIeyuJoZpM0A6PqJjXEzFByLGGi+rl2xxuy3
-        FKfIyHdaPqpQiH63whsYO4G5N7NbJyXMSLTlEGUVWxam6JwsQELOwmCdXhLr13dK
-        JhciLlqdJe8jhXa7Oq8BLTiAOJ87x/nshSesxcPy0g0Lua1Cm27XwAD9r+dzkIQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ZMIXz2
-        ZzHxSZrCGRn3HSmGFKwu/58El79jlWmUWQR2k56XNm7eCyfLLset47w9GJq1ptTn
-        zAWfkJhoHx04gOxI05MlBiFRZOeBQu6kEVXs0DkJdPw+3NPGp4iu2PIwv6kWclah
-        UFu+pIBL5SWNbrU+eoff0Z4ST0WdPa/994n4s=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A0D4DF42C4;
-        Mon, 16 Nov 2020 13:55:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EB8A2F42C3;
-        Mon, 16 Nov 2020 13:55:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Adam Spiers <git@adamspiers.org>,
-        git mailing list <git@vger.kernel.org>
-Subject: Re: git-log: documenting pathspec usage
-References: <20201116122230.eyizwe2bmqkmftch@gmail.com>
-        <878sb1fpep.fsf@evledraar.gmail.com>
-Date:   Mon, 16 Nov 2020 10:55:40 -0800
-In-Reply-To: <878sb1fpep.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Mon, 16 Nov 2020 13:37:50 +0100")
-Message-ID: <xmqqblfx9ln7.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726964AbgKPTBL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Nov 2020 14:01:11 -0500
+Received: from out0.migadu.com ([94.23.1.103]:47512 "EHLO out0.migadu.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725879AbgKPTBL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Nov 2020 14:01:11 -0500
+X-Greylist: delayed 336 seconds by postgrey-1.27 at vger.kernel.org; Mon, 16 Nov 2020 14:01:10 EST
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cmpwn.com; s=key1;
+        t=1605552928;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=9IpKeQmlGyJyU2GAJRZRDQdfTQ5J9UofhkEjqowKlHI=;
+        b=cZ+Vr3RGDs4bmz5ADeG7fpcdQNJmB3gAZA3YOSe582E5tPadtm+EKUf98EcsvYiHYALFVj
+        xSsdUjauIHYk1kRxLMLrB9XL6xzzpAT1nU12qQjqGq8DL97WnR3X2FMSMzD57bfEI752Ej
+        dMENKSzOjJ9JauNKUK4IrMq4X25mGEArH7vdKHSROOv/C/Nr/2IknPOTW43/8mSGV5FV5T
+        Zr+bm2gvCTk0BH23lrcPLMDtmY5Cg/ka8j9G8nVJqb7aJSN2aewN4XG5ZitHl6WPG6MNEz
+        FSWCdpQ5YpNGz6CJUlONTcxJxzUqCo2jQbVxflp4G11aB/jVbwgLhAlxfucThA==
+From:   Drew DeVault <sir@cmpwn.com>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     Drew DeVault <sir@cmpwn.com>, lanodan <contact+git@hacktivis.me>
+Subject: [PATCH] help.c: add advice.correctTypos option
+Date:   Mon, 16 Nov 2020 13:55:21 -0500
+Message-Id: <20201116185521.2276-1-sir@cmpwn.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5471ED7C-283D-11EB-AA8C-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-Authenticated-User: sir@cmpwn.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+This allows users to disable guessing the commands or options that they
+meant to use.
+---
+Questions:
 
-> It seems like a good idea to make these consistent, if you're feeling
-> more ambitious than just git-log's manpage then:
->    =20
->     $ git grep '<pathspec>' -- Documentation/git-*.txt|wc -l
->     54
->     $ git grep '<path>' -- Documentation/git-*.txt|wc -l
->     161
->
-> Most/all of these should probably be changed to one or the other.
+- Is advice.* the right namespace?
+- How should this interact with help.autocorrect?
 
-There is another thing we want to normalize.
+ Documentation/config/advice.txt |  2 ++
+ help.c                          | 19 ++++++++++++++++---
+ 2 files changed, 18 insertions(+), 3 deletions(-)
 
-Originally <pathspec> was invented to be a collective noun (i.e. a
-set of one or more wildmatch patterns that specify paths that match
-any of these patterns is called a pathspec).  These days, however,
-we more often refer to each individual pattern as <pathspec> than
-using the word in its original way.  We can look for '<pathspec>...'
-in the documentation to find these more modern usage.
-
-This latter form would match readers' expectation better, but there
-still are a few places (e.g. "stash forget <pathspec>") that use the
-word as a collection of pattterns.  While these places may be using
-the word "correctly", in the modern world, they give an incorrect
-impression that the command somehow is special and can take a
-pathspec with only a single pattern, when they can take one or more
-patterns.
-
-We should make sure we use "<pathspec>..."  uniformly in the
-documentation in these places.
-
-Thanks.
+diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
+index acbd0c09aa..135d1345af 100644
+--- a/Documentation/config/advice.txt
++++ b/Documentation/config/advice.txt
+@@ -119,4 +119,6 @@ advice.*::
+ 	addEmptyPathspec::
+ 		Advice shown if a user runs the add command without providing
+ 		the pathspec parameter.
++	correctTypos::
++		Detect typos and suggest corrections.
+ --
+diff --git a/help.c b/help.c
+index 919cbb9206..c35c4c99da 100644
+--- a/help.c
++++ b/help.c
+@@ -515,10 +515,16 @@ static const char bad_interpreter_advice[] =
+ 
+ const char *help_unknown_cmd(const char *cmd)
+ {
+-	int i, n, best_similarity = 0;
++	int i, n, best_similarity = 0, enable = 1;
+ 	struct cmdnames main_cmds, other_cmds;
+ 	struct cmdname_help *common_cmds;
+ 
++	git_config_get_bool("advice.correctTypos", &enable);
++	if (!enable) {
++		fprintf_ln(stderr, _("git: '%s' is not a git command. See 'git --help'."), cmd);
++		exit(1);
++	}
++
+ 	memset(&main_cmds, 0, sizeof(main_cmds));
+ 	memset(&other_cmds, 0, sizeof(other_cmds));
+ 	memset(&aliases, 0, sizeof(aliases));
+@@ -705,11 +711,18 @@ static struct string_list guess_refs(const char *ref)
+ NORETURN void help_unknown_ref(const char *ref, const char *cmd,
+ 			       const char *error)
+ {
+-	int i;
+-	struct string_list suggested_refs = guess_refs(ref);
++	int i, enable = 1;
++	struct string_list suggested_refs;
+ 
+ 	fprintf_ln(stderr, _("%s: %s - %s"), cmd, ref, error);
+ 
++	git_config_get_bool("advice.correctTypos", &enable);
++	if (!enable) {
++		exit(1);
++	}
++
++	suggested_refs = guess_refs(ref);
++
+ 	if (suggested_refs.nr > 0) {
+ 		fprintf_ln(stderr,
+ 			   Q_("\nDid you mean this?",
+-- 
+2.29.2
 
