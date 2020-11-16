@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1245C64E75
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 850D6C6379D
 	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 16:09:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9A87C221F9
+	by mail.kernel.org (Postfix) with ESMTP id 50337221F9
 	for <git@archiver.kernel.org>; Mon, 16 Nov 2020 16:09:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="q4fXo8Ur"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QQGpX5Yv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731716AbgKPQIs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Nov 2020 11:08:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60130 "EHLO
+        id S1731710AbgKPQIo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Nov 2020 11:08:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731696AbgKPQIq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Nov 2020 11:08:46 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34668C0613D1
-        for <git@vger.kernel.org>; Mon, 16 Nov 2020 08:08:45 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id l1so19252627wrb.9
-        for <git@vger.kernel.org>; Mon, 16 Nov 2020 08:08:45 -0800 (PST)
+        with ESMTP id S1731696AbgKPQIn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Nov 2020 11:08:43 -0500
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56D3AC0613CF
+        for <git@vger.kernel.org>; Mon, 16 Nov 2020 08:08:43 -0800 (PST)
+Received: by mail-wr1-x444.google.com with SMTP id s8so19244393wrw.10
+        for <git@vger.kernel.org>; Mon, 16 Nov 2020 08:08:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ZZUqMQkE4pHLIgP6YPbr6smpy1FSBQAOH0ZoELDA6jk=;
-        b=q4fXo8Ur41fPR1ivbsjo2qAcGG5zSJ6KpssR3Ryp05el/UVRE8VjtnnhMKxfmreIkt
-         gIWf5yGY194ylFQRs59emTrD5uD2hLjs4bCzdgvJaWKwkyEKWy3W+U1Wfk1ylyghP1tP
-         DbIuju5tvyZX/eKz0Wyg4HNYslqQiIHmNK5lJcc+a/r6HicK6PPFk/SkPTGUbyrYRbFW
-         Ng35wgpnNuwpJrxwcuITAfGLRLfpIMOj8htDMiEyWa4Ink6KCv+d5BpX0Hf+WHCoJL6t
-         gckwUj40c0hGLxQ2WRV9ZtXBoQYMO1i0uM1bKBH8Is5PIXIIb2OZuQIxoPCx+p9CMCyT
-         WiWA==
+        bh=Z0intue/lSwO9yFM240zAhjoEqzGBf2u2fwvfA8xtN0=;
+        b=QQGpX5YviIBltB9B1HSETMKJ7cPULX8nt1bCnvxB1jPx0B5e065BOowKVUqNLocMa8
+         6mzcmOkoOzeRAoeAJsO5PMsJBNhXOUy9OSnX6LJt1ySpbFc/hWnwEXvwEOBmBzEtspYT
+         a47QXOKXwsKpzU4guSpsjZqgKY6Ox8DomHc2OpevvG/lkcldAnWm0j3vkGt24e1v/Y3p
+         1X56ojpCMgk8Jqz6WYi0Nofiil1pn9Tjz4DIwyuKMJY+INYUO0f/fvXGnRzESaO9dX6u
+         wGJPfweARTyiBTBYg/eE4IYcXT9FmIT0w2iIqcsrkwj59BYnQn22ZYuJa6YjZOv4QjfQ
+         O0Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ZZUqMQkE4pHLIgP6YPbr6smpy1FSBQAOH0ZoELDA6jk=;
-        b=b8VKedrPeF99YwKFajGZj7HU6St2N73TITbYEBXE8g0Z4JZrxuhNep0MaqdDMkgT3S
-         YJAuXjjkyuUnHfpW1w3EJnfnd/RCnD8RgcWypO/6ZLt/7XhVi8vSRwEAnvM5X6KXUl5h
-         j/ZHWvIMcTtijS/iSJM6BfuIhdbTMUx8gORSVvF3cHnHx7Hiju08OXqP23MGG2sfN2OJ
-         xlkuy56dDSdxN4DSkxNd2K4ZCrfVzL0RuTqyGUp14sKyMyRolUFDSh04niYKbYk5OKdR
-         5TKkk0PpYDXZcrOH4NUvFughDNXaMUtTWFSU9vWvy2OCOBU2ongoHGg7nPinRVZL2sUD
-         R0Dg==
-X-Gm-Message-State: AOAM533U427B+2pPxbiEJHmy6CJMR/caql3YIX31KwsaiI81+f46Ic9E
-        jA08EHEgqWGih+rkQSzVq+lF0ZojV8k=
-X-Google-Smtp-Source: ABdhPJzpfko9d9mncfT49ir+9j4nmm3Xkps77UQI3tNxOZPLjK6BzeHAzLmBGrypsmg/4khfFRKqag==
-X-Received: by 2002:adf:b74d:: with SMTP id n13mr3176658wre.101.1605542923706;
-        Mon, 16 Nov 2020 08:08:43 -0800 (PST)
+        bh=Z0intue/lSwO9yFM240zAhjoEqzGBf2u2fwvfA8xtN0=;
+        b=VMG1Gg7FuC2eKim2uRnQCo9hHdxtzuVOiKwg6Y098rHVCSR9xcz81kj1eVObv/lYkU
+         zIDmcPgvrvRb/SdOY5rPuaDO5SNxusRTvga1a4dVyCRHvKqwHck7PmqhZjI/kM5xbxOK
+         cXhrhLDRpwAhbWtDVRr3ssJMCeMVWQBqKZiXyNwvWb0ymGtOgYQkNZ6GvXyrB6CQSapu
+         aS8kAuW/uN67jpIbWFBhhyUdAiowWTiO47gWK18mSGJqOFjcVihP8PO2BQwL2E7onzqZ
+         V7wRm+UZLlPtBeAtt45S4nQERCzjHQKmy2ssFK4kw2bgN04N8S4JUQNe+hvR6YtFotrf
+         flyw==
+X-Gm-Message-State: AOAM530esQ+2R4trlU4MZEOLCFNuLqm9F9CSKC2JB5z+zhjCCci2mxju
+        wkdbevn0RGbffkukK6WBEJe4wBu6dGM=
+X-Google-Smtp-Source: ABdhPJxBGcBA6I9yUXSRnKza1gzon6ozbjbCvzUt9HSiRcFtN9bTlTRd5pVHYcmz4sYna6dTAjo1gg==
+X-Received: by 2002:adf:9e07:: with SMTP id u7mr19237301wre.47.1605542921953;
+        Mon, 16 Nov 2020 08:08:41 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w10sm24099417wra.34.2020.11.16.08.08.42
+        by smtp.gmail.com with ESMTPSA id e3sm6820210wro.90.2020.11.16.08.08.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Nov 2020 08:08:43 -0800 (PST)
-Message-Id: <492f46833a3fee22cef4e1ecfb341f20b5471e9c.1605542912.git.gitgitgadget@gmail.com>
+        Mon, 16 Nov 2020 08:08:41 -0800 (PST)
+Message-Id: <094a4ad90ced8756ded9a225d2fd3886574ef6fc.1605542912.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.785.v3.git.1605542912.gitgitgadget@gmail.com>
 References: <pull.785.v2.git.1605097704.gitgitgadget@gmail.com>
         <pull.785.v3.git.1605542912.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 16 Nov 2020 16:08:32 +0000
-Subject: [PATCH v3 11/11] add -i: verify in the tests that colors can be
- overridden
+Date:   Mon, 16 Nov 2020 16:08:30 +0000
+Subject: [PATCH v3 09/11] add -i (Perl version): color header to match the C
+ version
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,137 +83,34 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Now that the Perl version produces the same output as the built-in
-version (mostly fixing bugs in the latter), let's add a regression test
-to verify that it stays this way.
+Both versions of `add -i` indent non-flat lists by five spaces. However
+when using color the C version prints these spaces after the ANSI color
+codes whereas the Perl version prints them before the color codes.
+Change the Perl version to match the C version to allow for introducing
+a test that verifies that both versions produce the exact same output.
 
-Note that we only `grep` for the colored error message instead of
-verifying that the entire `stderr` consists of just this one line: when
-running the test script using the `-x` option to trace the
-commands, the sub-shell in `force_color` causes those commands to be
-traced into `err.raw` (unless running in Bash where we set the
-`BASH_XTRACEFD` variable to avoid that).
-
-Also note that the color reset in the `<BLUE>+<RESET><BLUE>new<RESET>`
-line might look funny and unnecessary, as the corresponding `old` line
-does not reset the color after the diff marker only to turn the color
-back on right away.
-
-However, this is a (necessary) side effect of the white-space check: in
-`emit_line_ws_markup()`, we first emit the diff marker via
-`emit_line_0()` and then the rest of the line via `ws_check_emit()`. To
-leave them somewhat decoupled, the color has to be reset after the diff
-marker to allow for the rest of the line to start with another color (or
-inverted, in case of white-space issues).
-
-Finally, we have to simulate hunk editing: the `git add -p` command
-cannot rely on the internal diff machinery for coloring after letting
-the user edit a hunk; It has to "re-color" the edited hunk. This is the
-primary reason why that command is interested in the exact values of the
-`color.diff.*` settings in the first place. To test this re-coloring, we
-therefore have to pretend to edit a hunk and then show that hunk in the
-regression test.
-
-Co-authored-by: Jeff King <peff@peff.net>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t3701-add-interactive.sh | 84 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 84 insertions(+)
+ git-add--interactive.perl | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index ca04fac417..cc3f434a97 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -589,6 +589,90 @@ test_expect_success 'diffs can be colorized' '
- 	grep "$(printf "\\033")" output
- '
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index e713fe3d02..adbac2bc6d 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -483,10 +483,8 @@ sub list_and_choose {
+ 		my $last_lf = 0;
  
-+test_expect_success 'colors can be overridden' '
-+	git reset --hard &&
-+	test_when_finished "git rm -f color-test" &&
-+	test_write_lines context old more-context >color-test &&
-+	git add color-test &&
-+	test_write_lines context new more-context another-one >color-test &&
-+
-+	echo trigger an error message >input &&
-+	force_color git \
-+		-c color.interactive.error=blue \
-+		add -i 2>err.raw <input &&
-+	test_decode_color <err.raw >err &&
-+	grep "<BLUE>Huh (trigger)?<RESET>" err &&
-+
-+	test_write_lines help quit >input &&
-+	force_color git \
-+		-c color.interactive.header=red \
-+		-c color.interactive.help=green \
-+		-c color.interactive.prompt=yellow \
-+		add -i >actual.raw <input &&
-+	test_decode_color <actual.raw >actual &&
-+	cat >expect <<-\EOF &&
-+	<RED>           staged     unstaged path<RESET>
-+	  1:        +3/-0        +2/-1 color-test
-+
-+	<RED>*** Commands ***<RESET>
-+	  1: <YELLOW>s<RESET>tatus	  2: <YELLOW>u<RESET>pdate	  3: <YELLOW>r<RESET>evert	  4: <YELLOW>a<RESET>dd untracked
-+	  5: <YELLOW>p<RESET>atch	  6: <YELLOW>d<RESET>iff	  7: <YELLOW>q<RESET>uit	  8: <YELLOW>h<RESET>elp
-+	<YELLOW>What now<RESET>> <GREEN>status        - show paths with changes<RESET>
-+	<GREEN>update        - add working tree state to the staged set of changes<RESET>
-+	<GREEN>revert        - revert staged set of changes back to the HEAD version<RESET>
-+	<GREEN>patch         - pick hunks and update selectively<RESET>
-+	<GREEN>diff          - view diff between HEAD and index<RESET>
-+	<GREEN>add untracked - add contents of untracked files to the staged set of changes<RESET>
-+	<RED>*** Commands ***<RESET>
-+	  1: <YELLOW>s<RESET>tatus	  2: <YELLOW>u<RESET>pdate	  3: <YELLOW>r<RESET>evert	  4: <YELLOW>a<RESET>dd untracked
-+	  5: <YELLOW>p<RESET>atch	  6: <YELLOW>d<RESET>iff	  7: <YELLOW>q<RESET>uit	  8: <YELLOW>h<RESET>elp
-+	<YELLOW>What now<RESET>> Bye.
-+	EOF
-+	test_cmp expect actual &&
-+
-+	: exercise recolor_hunk by editing and then look at the hunk again &&
-+	test_write_lines s e K q >input &&
-+	force_color git \
-+		-c color.interactive.prompt=yellow \
-+		-c color.diff.meta=italic \
-+		-c color.diff.frag=magenta \
-+		-c color.diff.context=cyan \
-+		-c color.diff.old=bold \
-+		-c color.diff.new=blue \
-+		-c core.editor=touch \
-+		add -p >actual.raw <input &&
-+	test_decode_color <actual.raw >actual.decoded &&
-+	sed "s/index [0-9a-f]*\\.\\.[0-9a-f]* 100644/<INDEX-LINE>/" <actual.decoded >actual &&
-+	cat >expect <<-\EOF &&
-+	<ITALIC>diff --git a/color-test b/color-test<RESET>
-+	<ITALIC><INDEX-LINE><RESET>
-+	<ITALIC>--- a/color-test<RESET>
-+	<ITALIC>+++ b/color-test<RESET>
-+	<MAGENTA>@@ -1,3 +1,4 @@<RESET>
-+	<CYAN> context<RESET>
-+	<BOLD>-old<RESET>
-+	<BLUE>+<RESET><BLUE>new<RESET>
-+	<CYAN> more-context<RESET>
-+	<BLUE>+<RESET><BLUE>another-one<RESET>
-+	<YELLOW>(1/1) Stage this hunk [y,n,q,a,d,s,e,?]? <RESET><BOLD>Split into 2 hunks.<RESET>
-+	<MAGENTA>@@ -1,3 +1,3 @@<RESET>
-+	<CYAN> context<RESET>
-+	<BOLD>-old<RESET>
-+	<BLUE>+<RESET><BLUE>new<RESET>
-+	<CYAN> more-context<RESET>
-+	<YELLOW>(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,?]? <RESET><MAGENTA>@@ -3 +3,2 @@<RESET>
-+	<CYAN> more-context<RESET>
-+	<BLUE>+<RESET><BLUE>another-one<RESET>
-+	<YELLOW>(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,?]? <RESET><MAGENTA>@@ -1,3 +1,3 @@<RESET>
-+	<CYAN> context<RESET>
-+	<BOLD>-old<RESET>
-+	<BLUE>+new<RESET>
-+	<CYAN> more-context<RESET>
-+	<YELLOW>(1/2) Stage this hunk [y,n,q,a,d,j,J,g,/,e,?]? <RESET>
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'colorized diffs respect diff.wsErrorHighlight' '
- 	git reset --hard &&
- 
+ 		if ($opts->{HEADER}) {
+-			if (!$opts->{LIST_FLAT}) {
+-				print "     ";
+-			}
+-			print colored $header_color, "$opts->{HEADER}\n";
++			my $indent = $opts->{LIST_FLAT} ? "" : "     ";
++			print colored $header_color, "$indent$opts->{HEADER}\n";
+ 		}
+ 		for ($i = 0; $i < @stuff; $i++) {
+ 			my $chosen = $chosen[$i] ? '*' : ' ';
 -- 
 gitgitgadget
+
