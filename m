@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75E0DC2D0E4
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 21:48:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2E70C2D0E4
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 21:48:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 040AA241A7
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 21:48:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7431F241A7
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 21:48:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="YupCHoyC"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="wIB1vvhC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728381AbgKQVsI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Nov 2020 16:48:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53752 "EHLO
+        id S1728388AbgKQVsM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Nov 2020 16:48:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726204AbgKQVsF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Nov 2020 16:48:05 -0500
-Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B56CC0613CF
-        for <git@vger.kernel.org>; Tue, 17 Nov 2020 13:48:05 -0800 (PST)
-Received: by mail-qv1-xf31.google.com with SMTP id x13so11581083qvk.8
-        for <git@vger.kernel.org>; Tue, 17 Nov 2020 13:48:05 -0800 (PST)
+        with ESMTP id S1728385AbgKQVsM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Nov 2020 16:48:12 -0500
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E56FEC0613CF
+        for <git@vger.kernel.org>; Tue, 17 Nov 2020 13:48:11 -0800 (PST)
+Received: by mail-qk1-x72f.google.com with SMTP id v143so22414703qkb.2
+        for <git@vger.kernel.org>; Tue, 17 Nov 2020 13:48:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=tiILLqY7U1Y3QbpM1Mvip22YwICjH0jyS4H5r3mejDU=;
-        b=YupCHoyCsotFrbTPPfFta+UslN+K/KRYBOKQeLWHNYUq9qKeN9gHbkNFwxBoWuogyo
-         sjDo3hG/VeSHsYNviZmh/aV9rD2vLqz4w1ZbGL95ZVptAWD7B76uUpSj500ExErRxTtT
-         qiCwYJ5AHWvIq+3Yp0gP7+bANyqRhMwNF4NDlnIMt52Sa/C+pp5/u3kmuAhqMyplSz9I
-         WLr6oSZ0oWxglIJKEin5MsG8MLnisfBFzJRAm74RC8mwsVCIJ0bSNgwc49XvH90Qr06p
-         R02s6R0sSZazflVa6asQC7rUQlOjqtcyVuz1S+b51srlK7FiWvtG9sIhbBNx3nKghePx
-         tn3Q==
+        bh=GEb9T142uLBdJ3Em6kJ88iWE9NBaAcI3uoSRB0KT4Xs=;
+        b=wIB1vvhCPpLQEOmMqQSrERJPbTAAdg8MCGEnleQcIWEA/iwUPqk4WNRwuUHaKwFosQ
+         IH7NlTUH8q8vkRGQoJi504E7CtaMEUw1h7eaPCRNTXOrsMVqJV0aO/wX6hZ0YWPUkZaY
+         pN89417VrCEOTlSmL6aMbhiipZT3bWAdAbQGZuMfvfN45d6F5K+zw9dz1n34dk4CMjm6
+         nAXhAONDdLwdWEhSGc6M2jWRmZqhSeHgY8VrK85aofhg+tHoHU9gAAtcqaEpxrMqybbw
+         PaoVtZ12rl68/MM0tcJ/tTa+cninONc8FoJZzjy3j22uMKozdaVjdb347HSMyMrEZ7Q3
+         aFIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=tiILLqY7U1Y3QbpM1Mvip22YwICjH0jyS4H5r3mejDU=;
-        b=GLTWreh8VZLyQrL3e4H0vyJPU4Kmle0fic1WJL0OcIHYyxEc6TrM6tw+dRqKBMqw8y
-         Htv/7ycsRiGYjWRyY1qSYmFhYnB9WDOgPkM8MEo38GcWaEPRzW5q1SRD9QJUK8y1XxTG
-         LvJ7RWbOJGAKYPjWDC+jdgV9fRuJhqIH/xRmf+m6Li+uyD5mi3KH14f5IykyPQD8YL/B
-         NlQffXEWvtJpEhKjA4B9cMvmlm+yfJT0nP0ZkbRGTb+Y9Crh/MScvfihrASIZvJOFjXw
-         J7qHrFoS5Y3t/ZQ2ipdOKbGh43REmlp1eqcgA/XEDctIShgy6QI5wZZtrMvChVVIODoK
-         N69w==
-X-Gm-Message-State: AOAM530Tivn2e4U/+Yvuv8K3eRPFg2dOTmf24K/sLpd/KzyIPmH8tCNk
-        ROz86MwW3jEcMPmSZU3kNdrw3BfPbczH09FW
-X-Google-Smtp-Source: ABdhPJxn/zw1oz3EvNekE8xI7r4SW5dCEndDE/kZi/wuo+TBXRBnhkJ0+dwU8t76gV331bhhlKx0+w==
-X-Received: by 2002:a0c:90e6:: with SMTP id p93mr1429400qvp.47.1605649683972;
-        Tue, 17 Nov 2020 13:48:03 -0800 (PST)
+        bh=GEb9T142uLBdJ3Em6kJ88iWE9NBaAcI3uoSRB0KT4Xs=;
+        b=WNmuqcPOBdgRxFGVHzo3y4plYQIha3ZqpmRt3a3mpWYa2VBJ+tfAovNGyofN9c3BSb
+         420heV2QJbuNlfXbnWEmCTl8BmLykAR1a6aklAnE9tvNPDzHgdF6prip5Uaj8vLCAeNL
+         gcca39ymZAB9sILno3CVe9TpbeTgEc2tolVMfSlQcAaglaK00RPhOeYnXuUwozhmQHWS
+         aWKPLQ0g8fQ4UyuYIpeSN1lt+ZNHyZoJUcZFKNdf7agIUpK60pK3HBaUCzpp3mschrzB
+         I0aehSdtqpxkMaRp4e0n6KHLGJoy/VTGgw75s0jaGCcSIlqpBcSoYEsWMutY76v6nObB
+         3KwA==
+X-Gm-Message-State: AOAM530vy7IEuPISjrflIeOWH0sQQHQEnedzj3PHc+64ywkqpStuRlBA
+        dbb7kKieKOlHcPm4KiV65ThuNwfPlSL0JFlD
+X-Google-Smtp-Source: ABdhPJyEyF12fb5h1rnAzXt8Q0UiwGEhmjfZ4bbgll2tUsbGIIC5YvVfo22qJJKmtFqXNugEpSVWlA==
+X-Received: by 2002:a37:47d6:: with SMTP id u205mr1722594qka.19.1605649690680;
+        Tue, 17 Nov 2020 13:48:10 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:7fe5:c4d6:f587:dc1f])
-        by smtp.gmail.com with ESMTPSA id h6sm14204082qtm.68.2020.11.17.13.48.02
+        by smtp.gmail.com with ESMTPSA id w30sm3417420qkw.24.2020.11.17.13.48.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2020 13:48:03 -0800 (PST)
-Date:   Tue, 17 Nov 2020 16:48:01 -0500
+        Tue, 17 Nov 2020 13:48:10 -0800 (PST)
+Date:   Tue, 17 Nov 2020 16:48:07 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net,
         martin.agren@gmail.com, szeder.dev@gmail.com
-Subject: [PATCH v2 18/24] pack-bitmap-write: build fewer intermediate bitmaps
-Message-ID: <5262daa3300114fbaccdbc7393882c5435f95f4f.1605649533.git.me@ttaylorr.com>
+Subject: [PATCH v2 19/24] pack-bitmap-write: ignore BITMAP_FLAG_REUSE
+Message-ID: <a206f486140097c1554ce92ebcfa7190554dd19f.1605649533.git.me@ttaylorr.com>
 References: <cover.1605123652.git.me@ttaylorr.com>
  <cover.1605649533.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -74,525 +74,296 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+From: Jeff King <peff@peff.net>
 
-The bitmap_writer_build() method calls bitmap_builder_init() to
-construct a list of commits reachable from the selected commits along
-with a "reverse graph". This reverse graph has edges pointing from a
-commit to other commits that can reach that commit. After computing a
-reachability bitmap for a commit, the values in that bitmap are then
-copied to the reachability bitmaps across the edges in the reverse
-graph.
+The on-disk bitmap format has a flag to mark a bitmap to be "reused".
+This is a rather curious feature, and works like this:
 
-We can now relax the role of the reverse graph to greatly reduce the
-number of intermediate reachability bitmaps we compute during this
-reverse walk. The end result is that we walk objects the same number of
-times as before when constructing the reachability bitmaps, but we also
-spend much less time copying bits between bitmaps and have much lower
-memory pressure in the process.
+  - a run of pack-objects would decide to mark the last 80% of the
+    bitmaps it generates with the reuse flag
 
-The core idea is to select a set of "important" commits based on
-interactions among the sets of commits reachable from each selected commit.
+  - the next time we generate bitmaps, we'd see those reuse flags from
+    the last run, and mark those commits as special:
 
-The first technical concept is to create a new 'commit_mask' member in the
-bb_commit struct. Note that the selected commits are provided in an
-ordered array. The first thing to do is to mark the ith bit in the
-commit_mask for the ith selected commit. As we walk the commit-graph, we
-copy the bits in a commit's commit_mask to its parents. At the end of
-the walk, the ith bit in the commit_mask for a commit C stores a boolean
-representing "The ith selected commit can reach C."
+      - we'd be more likely to select those commits to get bitmaps in
+        the new output
 
-As we walk, we will discover non-selected commits that are important. We
-will get into this later, but those important commits must also receive
-bit positions, growing the width of the bitmasks as we walk. At the true
-end of the walk, the ith bit means "the ith _important_ commit can reach
-C."
+      - when generating the bitmap for a selected commit, we'd reuse the
+        old bitmap as-is (rearranging the bits to match the new pack, of
+        course)
 
-MAXIMAL COMMITS
----------------
+However, neither of these behaviors particularly makes sense.
 
-We use a new 'maximal' bit in the bb_commit struct to represent whether
-a commit is important or not. The term "maximal" comes from the
-partially-ordered set of commits in the commit-graph where C >= P if P
-is a parent of C, and then extending the relationship transitively.
-Instead of taking the maximal commits across the entire commit-graph, we
-instead focus on selecting each commit that is maximal among commits
-with the same bits on in their commit_mask. This definition is
-important, so let's consider an example.
+Just because a commit happened to be bitmapped last time does not make
+it a good candidate for having a bitmap this time. In particular, we may
+choose bitmaps based on how recent they are in history, or whether a ref
+tip points to them, and those things will change. We're better off
+re-considering fresh which commits are good candidates.
 
-Suppose we have three selected commits A, B, and C. These are assigned
-bitmasks 100, 010, and 001 to start. Each of these can be marked as
-maximal immediately because they each will be the uniquely maximal
-commit that contains their own bit. Keep in mind that that these commits
-may have different bitmasks after the walk; for example, if B can reach
-C but A cannot, then the final bitmask for C is 011. Even in these
-cases, C would still be a maximal commit among all commits with the
-third bit on in their masks.
+Reusing the existing bitmap _is_ a reasonable thing to do to save
+computation. But only reusing exact bitmaps is a weak form of this. If
+we have an old bitmap for A and now want a new bitmap for its child, we
+should be able to compute that only by looking at trees and that are new
+to the child. But this code would consider only exact reuse (which is
+perhaps why it was eager to select those commits in the first place).
 
-Now define sets X, Y, and Z to be the sets of commits reachable from A,
-B, and C, respectively. The intersections of these sets correspond to
-different bitmasks:
+Furthermore, the recent switch to the reverse-edge algorithm for
+generating bitmaps dropped this optimization entirely (and yet still
+performs better).
 
- * 100: X - (Y union Z)
- * 010: Y - (X union Z)
- * 001: Z - (X union Y)
- * 110: (X intersect Y) - Z
- * 101: (X intersect Z) - Y
- * 011: (Y intersect Z) - X
- * 111: X intersect Y intersect Z
+So let's do a few cleanups:
 
-This can be visualized with the following Hasse diagram:
+ - drop the whole "reusing bitmaps" phase of generating bitmaps. It's
+   not helping anything, and is mostly unused code (or worse, code that
+   is using CPU but not doing anything useful)
 
-	100    010    001
-         | \  /   \  / |
-         |  \/     \/  |
-         |  /\     /\  |
-         | /  \   /  \ |
-        110    101    011
-          \___  |  ___/
-              \ | /
-               111
+ - drop the use of the on-disk reuse flag to select commits to bitmap
 
-Some of these bitmasks may not be represented, depending on the topology
-of the commit-graph. In fact, we are counting on it, since the number of
-possible bitmasks is exponential in the number of selected commits, but
-is also limited by the total number of commits. In practice, very few
-bitmasks are possible because most commits converge on a common "trunk"
-in the commit history.
+ - stop setting the on-disk reuse flag in bitmaps we generate (since
+   nothing respects it anymore)
 
-With this three-bit example, we wish to find commits that are maximal
-for each bitmask. How can we identify this as we are walking?
+We will keep a few innards of the reuse code, which will help us
+implement a more capable version of the "reuse" optimization:
 
-As we walk, we visit a commit C. Since we are walking the commits in
-topo-order, we know that C is visited after all of its children are
-visited. Thus, when we get C from the revision walk we inspect the
-'maximal' property of its bb_data and use that to determine if C is truly
-important. Its commit_mask is also nearly final. If C is not one of the
-originally-selected commits, then assign a bit position to C (by
-incrementing num_maximal) and set that bit on in commit_mask. See
-"MULTIPLE MAXIMAL COMMITS" below for more detail on this.
+ - simplify rebuild_existing_bitmaps() into a function that only builds
+   the mapping of bits between the old and new orders, but doesn't
+   actually convert any bitmaps
 
-Now that the commit C is known to be maximal or not, consider each
-parent P of C. Compute two new values:
+ - make rebuild_bitmap() public; we'll call it lazily to convert bitmaps
+   as we traverse (using the mapping created above)
 
- * c_not_p : true if and only if the commit_mask for C contains a bit
-             that is not contained in the commit_mask for P.
-
- * p_not_c : true if and only if the commit_mask for P contains a bit
-             that is not contained in the commit_mask for P.
-
-If c_not_p is false, then P already has all of the bits that C would
-provide to its commit_mask. In this case, move on to other parents as C
-has nothing to contribute to P's state that was not already provided by
-other children of P.
-
-We continue with the case that c_not_p is true. This means there are
-bits in C's commit_mask to copy to P's commit_mask, so use bitmap_or()
-to add those bits.
-
-If p_not_c is also true, then set the maximal bit for P to one. This means
-that if no other commit has P as a parent, then P is definitely maximal.
-This is because no child had the same bitmask. It is important to think
-about the maximal bit for P at this point as a temporary state: "P is
-maximal based on current information."
-
-In contrast, if p_not_c is false, then set the maximal bit for P to
-zero. Further, clear all reverse_edges for P since any edges that were
-previously assigned to P are no longer important. P will gain all
-reverse edges based on C.
-
-The final thing we need to do is to update the reverse edges for P.
-These reverse edges respresent "which closest maximal commits
-contributed bits to my commit_mask?" Since C contributed bits to P's
-commit_mask in this case, C must add to the reverse edges of P.
-
-If C is maximal, then C is a 'closest' maximal commit that contributed
-bits to P. Add C to P's reverse_edges list.
-
-Otherwise, C has a list of maximal commits that contributed bits to its
-bitmask (and this list is exactly one element). Add all of these items
-to P's reverse_edges list. Be careful to ignore duplicates here.
-
-After inspecting all parents P for a commit C, we can clear the
-commit_mask for C. This reduces the memory load to be limited to the
-"width" of the commit graph.
-
-Consider our ABC/XYZ example from earlier and let's inspect the state of
-the commits for an interesting bitmask, say 011. Suppose that D is the
-only maximal commit with this bitmask (in the first three bits). All
-other commits with bitmask 011 have D as the only entry in their
-reverse_edges list. D's reverse_edges list contains B and C.
-
-COMPUTING REACHABILITY BITMAPS
-------------------------------
-
-Now that we have our definition, let's zoom out and consider what
-happens with our new reverse graph when computing reachability bitmaps.
-We walk the reverse graph in reverse-topo-order, so we visit commits
-with largest commit_masks first. After we compute the reachability
-bitmap for a commit C, we push the bits in that bitmap to each commit D
-in the reverse edge list for C. Then, when we finally visit D we already
-have the bits for everything reachable from maximal commits that D can
-reach and we only need to walk the objects in the set-difference.
-
-In our ABC/XYZ example, when we finally walk for the commit A we only
-need to walk commits with bitmask equal to A's bitmask. If that bitmask
-is 100, then we are only walking commits in X - (Y union Z) because the
-bitmap already contains the bits for objects reachable from (X intersect
-Y) union (X intersect Z) (i.e. the bits from the reachability bitmaps
-for the maximal commits with bitmasks 110 and 101).
-
-The behavior is intended to walk each commit (and the trees that commit
-introduces) at most once while allocating and copying fewer reachability
-bitmaps. There is one caveat: what happens when there are multiple
-maximal commits with the same bitmask, with respect to the initial set
-of selected commits?
-
-MULTIPLE MAXIMAL COMMITS
-------------------------
-
-Earlier, we mentioned that when we discover a new maximal commit, we
-assign a new bit position to that commit and set that bit position to
-one for that commit. This is absolutely important for interesting
-commit-graphs such as git/git and torvalds/linux. The reason is due to
-the existence of "butterflies" in the commit-graph partial order.
-
-Here is an example of four commits forming a butterfly:
-
-   I    J
-   |\  /|
-   | \/ |
-   | /\ |
-   |/  \|
-   M    N
-    \  /
-     |/
-     Q
-
-Here, I and J both have parents M and N. In general, these do not need
-to be exact parent relationships, but reachability relationships. The
-most important part is that M and N cannot reach each other, so they are
-independent in the partial order. If I had commit_mask 10 and J had
-commit_mask 01, then M and N would both be assigned commit_mask 11 and
-be maximal commits with the bitmask 11. Then, what happens when M and N
-can both reach a commit Q? If Q is also assigned the bitmask 11, then it
-is not maximal but is reachable from both M and N.
-
-While this is not necessarily a deal-breaker for our abstract definition
-of finding maximal commits according to a given bitmask, we have a few
-issues that can come up in our larger picture of constructing
-reachability bitmaps.
-
-In particular, if we do not also consider Q to be a "maximal" commit,
-then we will walk commits reachable from Q twice: once when computing
-the reachability bitmap for M and another time when computing the
-reachability bitmap for N. This becomes much worse if the topology
-continues this pattern with multiple butterflies.
-
-The solution has already been mentioned: each of M and N are assigned
-their own bits to the bitmask and hence they become uniquely maximal for
-their bitmasks. Finally, Q also becomes maximal and thus we do not need
-to walk its commits multiple times. The final bitmasks for these commits
-are as follows:
-
-  I:10       J:01
-   |\        /|
-   | \ _____/ |
-   | /\____   |
-   |/      \  |
-   M:111    N:1101
-        \  /
-       Q:1111
-
-Further, Q's reverse edge list is { M, N }, while M and N both have
-reverse edge list { I, J }.
-
-PERFORMANCE MEASUREMENTS
-------------------------
-
-Now that we've spent a LOT of time on the theory of this algorithm,
-let's show that this is actually worth all that effort.
-
-To test the performance, use GIT_TRACE2_PERF=1 when running
-'git repack -abd' in a repository with no existing reachability bitmaps.
-This avoids any issues with keeping existing bitmaps to skew the
-numbers.
-
-Inspect the "building_bitmaps_total" region in the trace2 output to
-focus on the portion of work that is affected by this change. Here are
-the performance comparisons for a few repositories. The timings are for
-the following versions of Git: "multi" is the timing from before any
-reverse graph is constructed, where we might perform multiple
-traversals. "reverse" is for the previous change where the reverse graph
-has every reachable commit.  Finally "maximal" is the version introduced
-here where the reverse graph only contains the maximal commits.
-
-      Repository: git/git
-           multi: 2.628 sec
-         reverse: 2.344 sec
-         maximal: 2.047 sec
-
-      Repository: torvalds/linux
-           multi: 64.7 sec
-         reverse: 205.3 sec
-         maximal: 44.7 sec
-
-So in all cases we've not only recovered any time lost to switching to
-the reverse-edge algorithm, but we come out ahead of "multi" in all
-cases. Likewise, peak heap has gone back to something reasonable:
-
-      Repository: torvalds/linux
-           multi: 2.087 GB
-         reverse: 3.141 GB
-         maximal: 2.288 GB
-
-While I do not have access to full fork networks on GitHub, Peff has run
-this algorithm on the chromium/chromium fork network and reported a
-change from 3 hours to ~233 seconds. That network is particularly
-beneficial for this approach because it has a long, linear history along
-with many tags. The "multi" approach was obviously quadratic and the new
-approach is linear.
-
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap-write.c     | 72 +++++++++++++++++++++++++++++++---
- t/t5310-pack-bitmaps.sh | 87 +++++++++++++++++++++++++++++++++++++++--
- 2 files changed, 149 insertions(+), 10 deletions(-)
+ builtin/pack-objects.c |  1 -
+ pack-bitmap-write.c    | 50 +++++-------------------------------------
+ pack-bitmap.c          | 46 +++++---------------------------------
+ pack-bitmap.h          |  6 ++++-
+ 4 files changed, 16 insertions(+), 87 deletions(-)
 
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 5617c01b5a..2a00358f34 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1104,7 +1104,6 @@ static void write_pack_file(void)
+ 				stop_progress(&progress_state);
+ 
+ 				bitmap_writer_show_progress(progress);
+-				bitmap_writer_reuse_bitmaps(&to_pack);
+ 				bitmap_writer_select_commits(indexed_commits, indexed_commits_nr, -1);
+ 				bitmap_writer_build(&to_pack);
+ 				bitmap_writer_finish(written_list, nr_written,
 diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index 369c76a87c..7b4fc0f304 100644
+index 7b4fc0f304..1995f75818 100644
 --- a/pack-bitmap-write.c
 +++ b/pack-bitmap-write.c
-@@ -180,8 +180,10 @@ static void compute_xor_offsets(void)
+@@ -30,7 +30,6 @@ struct bitmap_writer {
+ 	struct ewah_bitmap *tags;
  
- struct bb_commit {
- 	struct commit_list *reverse_edges;
-+	struct bitmap *commit_mask;
- 	struct bitmap *bitmap;
--	unsigned selected:1;
-+	unsigned selected:1,
-+		 maximal:1;
- 	unsigned idx; /* within selected array */
- };
+ 	kh_oid_map_t *bitmaps;
+-	kh_oid_map_t *reused;
+ 	struct packing_data *to_pack;
  
-@@ -198,7 +200,7 @@ static void bitmap_builder_init(struct bitmap_builder *bb,
+ 	struct bitmapped_commit *selected;
+@@ -112,7 +111,7 @@ void bitmap_writer_build_type_index(struct packing_data *to_pack,
+  * Compute the actual bitmaps
+  */
+ 
+-static inline void push_bitmapped_commit(struct commit *commit, struct ewah_bitmap *reused)
++static inline void push_bitmapped_commit(struct commit *commit)
  {
- 	struct rev_info revs;
- 	struct commit *commit;
--	unsigned int i;
-+	unsigned int i, num_maximal;
- 
- 	memset(bb, 0, sizeof(*bb));
- 	init_bb_data(&bb->data);
-@@ -210,27 +212,85 @@ static void bitmap_builder_init(struct bitmap_builder *bb,
- 	for (i = 0; i < writer->selected_nr; i++) {
- 		struct commit *c = writer->selected[i].commit;
- 		struct bb_commit *ent = bb_data_at(&bb->data, c);
-+
- 		ent->selected = 1;
-+		ent->maximal = 1;
- 		ent->idx = i;
-+
-+		ent->commit_mask = bitmap_new();
-+		bitmap_set(ent->commit_mask, i);
-+
- 		add_pending_object(&revs, &c->object, "");
+ 	if (writer.selected_nr >= writer.selected_alloc) {
+ 		writer.selected_alloc = (writer.selected_alloc + 32) * 2;
+@@ -120,7 +119,7 @@ static inline void push_bitmapped_commit(struct commit *commit, struct ewah_bitm
  	}
-+	num_maximal = writer->selected_nr;
  
- 	if (prepare_revision_walk(&revs))
- 		die("revision walk setup failed");
+ 	writer.selected[writer.selected_nr].commit = commit;
+-	writer.selected[writer.selected_nr].bitmap = reused;
++	writer.selected[writer.selected_nr].bitmap = NULL;
+ 	writer.selected[writer.selected_nr].flags = 0;
  
- 	while ((commit = get_revision(&revs))) {
- 		struct commit_list *p;
-+		struct bb_commit *c_ent;
+ 	writer.selected_nr++;
+@@ -372,13 +371,6 @@ static void store_selected(struct bb_commit *ent, struct commit *commit)
+ 	khiter_t hash_pos;
+ 	int hash_ret;
  
- 		parse_commit_or_die(commit);
+-	/*
+-	 * the "reuse bitmaps" phase may have stored something here, but
+-	 * our new algorithm doesn't use it. Drop it.
+-	 */
+-	if (stored->bitmap)
+-		ewah_free(stored->bitmap);
+-
+ 	stored->bitmap = bitmap_to_ewah(ent->bitmap);
  
--		ALLOC_GROW(bb->commits, bb->commits_nr + 1, bb->commits_alloc);
--		bb->commits[bb->commits_nr++] = commit;
-+		c_ent = bb_data_at(&bb->data, commit);
-+
-+		if (c_ent->maximal) {
-+			if (!c_ent->selected) {
-+				bitmap_set(c_ent->commit_mask, num_maximal);
-+				num_maximal++;
-+			}
-+
-+			ALLOC_GROW(bb->commits, bb->commits_nr + 1, bb->commits_alloc);
-+			bb->commits[bb->commits_nr++] = commit;
-+		}
+ 	hash_pos = kh_put_oid_map(writer.bitmaps, commit->object.oid, &hash_ret);
+@@ -477,35 +469,6 @@ static int date_compare(const void *_a, const void *_b)
+ 	return (long)b->date - (long)a->date;
+ }
  
- 		for (p = commit->parents; p; p = p->next) {
--			struct bb_commit *ent = bb_data_at(&bb->data, p->item);
--			commit_list_insert(commit, &ent->reverse_edges);
-+			struct bb_commit *p_ent = bb_data_at(&bb->data, p->item);
-+			int c_not_p, p_not_c;
-+
-+			if (!p_ent->commit_mask) {
-+				p_ent->commit_mask = bitmap_new();
-+				c_not_p = 1;
-+				p_not_c = 0;
-+			} else {
-+				c_not_p = bitmap_diff_nonzero(c_ent->commit_mask, p_ent->commit_mask);
-+				p_not_c = bitmap_diff_nonzero(p_ent->commit_mask, c_ent->commit_mask);
-+			}
-+
-+			if (!c_not_p)
-+				continue;
-+
-+			bitmap_or(p_ent->commit_mask, c_ent->commit_mask);
-+
-+			if (p_not_c)
-+				p_ent->maximal = 1;
-+			else {
-+				p_ent->maximal = 0;
-+				free_commit_list(p_ent->reverse_edges);
-+				p_ent->reverse_edges = NULL;
-+			}
-+
-+			if (c_ent->maximal) {
-+				commit_list_insert(commit, &p_ent->reverse_edges);
-+			} else {
-+				struct commit_list *cc = c_ent->reverse_edges;
-+
-+				for (; cc; cc = cc->next) {
-+					if (!commit_list_contains(cc->item, p_ent->reverse_edges))
-+						commit_list_insert(cc->item, &p_ent->reverse_edges);
-+				}
-+			}
+-void bitmap_writer_reuse_bitmaps(struct packing_data *to_pack)
+-{
+-	struct bitmap_index *bitmap_git;
+-	if (!(bitmap_git = prepare_bitmap_git(to_pack->repo)))
+-		return;
+-
+-	writer.reused = kh_init_oid_map();
+-	rebuild_existing_bitmaps(bitmap_git, to_pack, writer.reused,
+-				 writer.show_progress);
+-	/*
+-	 * NEEDSWORK: rebuild_existing_bitmaps() makes writer.reused reference
+-	 * some bitmaps in bitmap_git, so we can't free the latter.
+-	 */
+-}
+-
+-static struct ewah_bitmap *find_reused_bitmap(const struct object_id *oid)
+-{
+-	khiter_t hash_pos;
+-
+-	if (!writer.reused)
+-		return NULL;
+-
+-	hash_pos = kh_get_oid_map(writer.reused, *oid);
+-	if (hash_pos >= kh_end(writer.reused))
+-		return NULL;
+-
+-	return kh_value(writer.reused, hash_pos);
+-}
+-
+ void bitmap_writer_select_commits(struct commit **indexed_commits,
+ 				  unsigned int indexed_commits_nr,
+ 				  int max_bitmaps)
+@@ -519,12 +482,11 @@ void bitmap_writer_select_commits(struct commit **indexed_commits,
+ 
+ 	if (indexed_commits_nr < 100) {
+ 		for (i = 0; i < indexed_commits_nr; ++i)
+-			push_bitmapped_commit(indexed_commits[i], NULL);
++			push_bitmapped_commit(indexed_commits[i]);
+ 		return;
+ 	}
+ 
+ 	for (;;) {
+-		struct ewah_bitmap *reused_bitmap = NULL;
+ 		struct commit *chosen = NULL;
+ 
+ 		next = next_commit_index(i);
+@@ -539,15 +501,13 @@ void bitmap_writer_select_commits(struct commit **indexed_commits,
+ 
+ 		if (next == 0) {
+ 			chosen = indexed_commits[i];
+-			reused_bitmap = find_reused_bitmap(&chosen->object.oid);
+ 		} else {
+ 			chosen = indexed_commits[i + next];
+ 
+ 			for (j = 0; j <= next; ++j) {
+ 				struct commit *cm = indexed_commits[i + j];
+ 
+-				reused_bitmap = find_reused_bitmap(&cm->object.oid);
+-				if (reused_bitmap || (cm->object.flags & NEEDS_BITMAP) != 0) {
++				if ((cm->object.flags & NEEDS_BITMAP) != 0) {
+ 					chosen = cm;
+ 					break;
+ 				}
+@@ -557,7 +517,7 @@ void bitmap_writer_select_commits(struct commit **indexed_commits,
+ 			}
  		}
-+
-+		bitmap_free(c_ent->commit_mask);
-+		c_ent->commit_mask = NULL;
+ 
+-		push_bitmapped_commit(chosen, reused_bitmap);
++		push_bitmapped_commit(chosen);
+ 
+ 		i += next + 1;
+ 		display_progress(writer.progress, i);
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 60c781d100..d1368b69bb 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -1338,9 +1338,9 @@ void test_bitmap_walk(struct rev_info *revs)
+ 	free_bitmap_index(bitmap_git);
+ }
+ 
+-static int rebuild_bitmap(uint32_t *reposition,
+-			  struct ewah_bitmap *source,
+-			  struct bitmap *dest)
++int rebuild_bitmap(const uint32_t *reposition,
++		   struct ewah_bitmap *source,
++		   struct bitmap *dest)
+ {
+ 	uint32_t pos = 0;
+ 	struct ewah_iterator it;
+@@ -1369,19 +1369,11 @@ static int rebuild_bitmap(uint32_t *reposition,
+ 	return 0;
+ }
+ 
+-int rebuild_existing_bitmaps(struct bitmap_index *bitmap_git,
+-			     struct packing_data *mapping,
+-			     kh_oid_map_t *reused_bitmaps,
+-			     int show_progress)
++uint32_t *create_bitmap_mapping(struct bitmap_index *bitmap_git,
++				struct packing_data *mapping)
+ {
+ 	uint32_t i, num_objects;
+ 	uint32_t *reposition;
+-	struct bitmap *rebuild;
+-	struct stored_bitmap *stored;
+-	struct progress *progress = NULL;
+-
+-	khiter_t hash_pos;
+-	int hash_ret;
+ 
+ 	num_objects = bitmap_git->pack->num_objects;
+ 	reposition = xcalloc(num_objects, sizeof(uint32_t));
+@@ -1399,33 +1391,7 @@ int rebuild_existing_bitmaps(struct bitmap_index *bitmap_git,
+ 			reposition[i] = oe_in_pack_pos(mapping, oe) + 1;
  	}
-+
-+	trace2_data_intmax("pack-bitmap-write", the_repository,
-+			   "num_selected_commits", writer->selected_nr);
-+	trace2_data_intmax("pack-bitmap-write", the_repository,
-+			   "num_maximal_commits", num_maximal);
+ 
+-	rebuild = bitmap_new();
+-	i = 0;
+-
+-	if (show_progress)
+-		progress = start_progress("Reusing bitmaps", 0);
+-
+-	kh_foreach_value(bitmap_git->bitmaps, stored, {
+-		if (stored->flags & BITMAP_FLAG_REUSE) {
+-			if (!rebuild_bitmap(reposition,
+-					    lookup_stored_bitmap(stored),
+-					    rebuild)) {
+-				hash_pos = kh_put_oid_map(reused_bitmaps,
+-							  stored->oid,
+-							  &hash_ret);
+-				kh_value(reused_bitmaps, hash_pos) =
+-					bitmap_to_ewah(rebuild);
+-			}
+-			bitmap_reset(rebuild);
+-			display_progress(progress, ++i);
+-		}
+-	});
+-
+-	stop_progress(&progress);
+-
+-	free(reposition);
+-	bitmap_free(rebuild);
+-	return 0;
++	return reposition;
  }
  
- static void bitmap_builder_clear(struct bitmap_builder *bb)
-diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-index 6bf68fee85..1691710ec1 100755
---- a/t/t5310-pack-bitmaps.sh
-+++ b/t/t5310-pack-bitmaps.sh
-@@ -20,11 +20,87 @@ has_any () {
- 	grep -Ff "$1" "$2"
- }
- 
-+# To ensure the logic for "maximal commits" is exercised, make
-+# the repository a bit more complicated.
-+#
-+#    other                         master
-+#      *                             *
-+# (99 commits)                  (99 commits)
-+#      *                             *
-+#      |\                           /|
-+#      | * octo-other  octo-master * |
-+#      |/|\_________  ____________/|\|
-+#      | \          \/  __________/  |
-+#      |  | ________/\ /             |
-+#      *  |/          * merge-right  *
-+#      | _|__________/ \____________ |
-+#      |/ |                         \|
-+# (l1) *  * merge-left               * (r1)
-+#      | / \________________________ |
-+#      |/                           \|
-+# (l2) *                             * (r2)
-+#       \____________...____________ |
-+#                                   \|
-+#                                    * (base)
-+#
-+# The important part for the maximal commit algorithm is how
-+# the bitmasks are extended. Assuming starting bit positions
-+# for master (bit 0) and other (bit 1), and some flexibility
-+# in the order that merge bases are visited, the bitmasks at
-+# the end should be:
-+#
-+#      master: 1       (maximal, selected)
-+#       other: 01      (maximal, selected)
-+# octo-master: 1
-+#  octo-other: 01
-+# merge-right: 111     (maximal)
-+#        (l1): 111
-+#        (r1): 111
-+#  merge-left: 1101    (maximal)
-+#        (l2): 11111   (maximal)
-+#        (r2): 111101  (maximal)
-+#      (base): 1111111 (maximal)
-+
- test_expect_success 'setup repo with moderate-sized history' '
--	test_commit_bulk --id=file 100 &&
-+	test_commit_bulk --id=file 10 &&
- 	git checkout -b other HEAD~5 &&
- 	test_commit_bulk --id=side 10 &&
-+
-+	# add complicated history setup, including merges and
-+	# ambiguous merge-bases
-+
-+	git checkout -b merge-left other~2 &&
-+	git merge master~2 -m "merge-left" &&
-+
-+	git checkout -b merge-right master~1 &&
-+	git merge other~1 -m "merge-right" &&
-+
-+	git checkout -b octo-master master &&
-+	git merge merge-left merge-right -m "octopus-master" &&
-+
-+	git checkout -b octo-other other &&
-+	git merge merge-left merge-right -m "octopus-other" &&
-+
-+	git checkout other &&
-+	git merge octo-other -m "pull octopus" &&
-+
- 	git checkout master &&
-+	git merge octo-master -m "pull octopus" &&
-+
-+	# Remove these branches so they are not selected
-+	# as bitmap tips
-+	git branch -D merge-left &&
-+	git branch -D merge-right &&
-+	git branch -D octo-other &&
-+	git branch -D octo-master &&
-+
-+	# add padding to make these merges less interesting
-+	# and avoid having them selected for bitmaps
-+	test_commit_bulk --id=file 100 &&
-+	git checkout other &&
-+	test_commit_bulk --id=side 100 &&
-+	git checkout master &&
-+
- 	bitmaptip=$(git rev-parse master) &&
- 	blob=$(echo tagged-blob | git hash-object -w --stdin) &&
- 	git tag tagged-blob $blob &&
-@@ -32,9 +108,12 @@ test_expect_success 'setup repo with moderate-sized history' '
- '
- 
- test_expect_success 'full repack creates bitmaps' '
--	git repack -ad &&
-+	GIT_TRACE2_EVENT_NESTING=4 GIT_TRACE2_EVENT="$(pwd)/trace" \
-+		git repack -ad &&
- 	ls .git/objects/pack/ | grep bitmap >output &&
--	test_line_count = 1 output
-+	test_line_count = 1 output &&
-+	grep "\"key\":\"num_selected_commits\",\"value\":\"106\"" trace &&
-+	grep "\"key\":\"num_maximal_commits\",\"value\":\"111\"" trace
- '
- 
- test_expect_success 'rev-list --test-bitmap verifies bitmaps' '
-@@ -356,7 +435,7 @@ test_expect_success 'truncated bitmap fails gracefully (ewah)' '
- 	git rev-list --use-bitmap-index --count --all >expect &&
- 	bitmap=$(ls .git/objects/pack/*.bitmap) &&
- 	test_when_finished "rm -f $bitmap" &&
--	test_copy_bytes 256 <$bitmap >$bitmap.tmp &&
-+	test_copy_bytes 270 <$bitmap >$bitmap.tmp &&
- 	mv -f $bitmap.tmp $bitmap &&
- 	git rev-list --use-bitmap-index --count --all >actual 2>stderr &&
- 	test_cmp expect actual &&
+ void free_bitmap_index(struct bitmap_index *b)
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index 1203120c43..afa4115136 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -73,7 +73,11 @@ void bitmap_writer_set_checksum(unsigned char *sha1);
+ void bitmap_writer_build_type_index(struct packing_data *to_pack,
+ 				    struct pack_idx_entry **index,
+ 				    uint32_t index_nr);
+-void bitmap_writer_reuse_bitmaps(struct packing_data *to_pack);
++uint32_t *create_bitmap_mapping(struct bitmap_index *bitmap_git,
++				struct packing_data *mapping);
++int rebuild_bitmap(const uint32_t *reposition,
++		   struct ewah_bitmap *source,
++		   struct bitmap *dest);
+ void bitmap_writer_select_commits(struct commit **indexed_commits,
+ 		unsigned int indexed_commits_nr, int max_bitmaps);
+ void bitmap_writer_build(struct packing_data *to_pack);
 -- 
 2.29.2.312.gabc4d358d8
 
