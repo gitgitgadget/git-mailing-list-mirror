@@ -2,106 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71A4DC2D0E4
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 23:17:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1596C56202
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 23:33:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1DCBC2222B
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 23:17:29 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iRKuCPY4"
+	by mail.kernel.org (Postfix) with ESMTP id 9EAD52417E
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 23:33:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726476AbgKQXRH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Nov 2020 18:17:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39362 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726205AbgKQXRH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Nov 2020 18:17:07 -0500
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EA2BC0613CF
-        for <git@vger.kernel.org>; Tue, 17 Nov 2020 15:17:05 -0800 (PST)
-Received: by mail-wr1-x443.google.com with SMTP id c17so25280397wrc.11
-        for <git@vger.kernel.org>; Tue, 17 Nov 2020 15:17:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=1+Jdqevhv3GViwNf1jl3RNvqxCItBTLejrV0G0qRBow=;
-        b=iRKuCPY4CivJ2is+in/eOAmT7VHs7pMJyV3fYIB8zR571x9LYmVRQ5OaajHq/Pmu0k
-         0o4GOU0C+MRHfZYOXwP8z0vxxBttobJAVPUgAZPk8cW+ms8LDg9rGOL1wMyx2hNxggtI
-         EIydknoynwwaZiUDdYxNPW85GsAkrjViOJb7+4I5tdMxmO/yPJ3y5bFIWa57fyozwTQl
-         6jQFOgVkjqAGRJ5k2h/RdaYYtz4QiC6vS/f4jgDBQCXhVg080oukhwMN2j5NVbY3xrdK
-         Fs9DWiuvMpKCvlRvUjeIBjncgWqQsqWfdMlqAVr0cHEfUBtnVlSbFjXvhQsHEWPZHh50
-         Jbjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=1+Jdqevhv3GViwNf1jl3RNvqxCItBTLejrV0G0qRBow=;
-        b=FxF673pPUMqPK+v6JCTTrP52DKBuysUN6V9rHnl5tsoeQm/O2leL4ecgGwhYJJkSx9
-         Kmf8juiXiMvGiCgXUqwElRphEVN2bHuVwW1rpHkFNZ7VbL9X21zlV4GqxAPrLvdsM5qf
-         +7dNGYgvDFdPTM60wRDKCEsSKq1uxZCXtjmynyTTQ2o/u3gqKwqIgSgffkAi0HL7llnT
-         DBBlid5DOFdT0sX82u+I7EOK+lxcRmpNyeDv7PiJ7tigM+Uvu7lD3Qd+HGFzfER8oXGu
-         THpWdOSUVN+7A0zGu2Ip+XWoxKNM+hxruiLT3fXNoHKpZDyjTZJ8KHBANwfdHJlSoHPp
-         ejNQ==
-X-Gm-Message-State: AOAM5320S5IjOE7IIdIGY2qXpeYlJEhtYFy205Ll2tN+YCYnR4dIjmAu
-        9mlV9tfLEXHbg+vtrn6aJ2YfgiTUhE20K3rpodI=
-X-Google-Smtp-Source: ABdhPJyDusY8K1Ki/rrLd11UJGjlkKL90vYCs+FOghOhGboEzT2F4W9JzSg1noPXPokr0zCFnFUOjaOWD9N7mQpgp/Y=
-X-Received: by 2002:a5d:4349:: with SMTP id u9mr1766680wrr.319.1605655024305;
- Tue, 17 Nov 2020 15:17:04 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.762.git.1605221038.gitgitgadget@gmail.com>
- <87r1oraewl.fsf@x220.int.ebiederm.org> <xmqqv9e34mq5.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqv9e34mq5.fsf@gitster.c.googlers.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Tue, 17 Nov 2020 17:16:53 -0600
-Message-ID: <CAMP44s3750bSdmw4A=KU=UgffOPiQwB8ECk9YRPe8mh50Og8Ow@mail.gmail.com>
-Subject: Re: [PATCH 00/28] Use main as default branch name
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1726199AbgKQXdP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Nov 2020 18:33:15 -0500
+Received: from cloud.peff.net ([104.130.231.41]:33118 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725779AbgKQXdP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Nov 2020 18:33:15 -0500
+Received: (qmail 19321 invoked by uid 109); 17 Nov 2020 23:33:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 17 Nov 2020 23:33:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5542 invoked by uid 111); 17 Nov 2020 23:33:13 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 17 Nov 2020 18:33:13 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 17 Nov 2020 18:33:13 -0500
+From:   Jeff King <peff@peff.net>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
 Cc:     "Eric W. Biederman" <ebiederm@xmission.com>,
         Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         Git <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/28] Use main as default branch name
+Message-ID: <20201117233313.GB642410@coredump.intra.peff.net>
+References: <pull.762.git.1605221038.gitgitgadget@gmail.com>
+ <87r1oraewl.fsf@x220.int.ebiederm.org>
+ <CAMP44s2VJOd3N2zaj8YPv0iLOqTF7vWyZ=zPd9vd0+qO1DbEVA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAMP44s2VJOd3N2zaj8YPv0iLOqTF7vWyZ=zPd9vd0+qO1DbEVA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 17, 2020 at 4:57 PM Junio C Hamano <gitster@pobox.com> wrote:
-> ebiederm@xmission.com (Eric W. Biederman) writes:
+On Tue, Nov 17, 2020 at 04:47:56PM -0600, Felipe Contreras wrote:
 
-> > - The branch name that is somewhat meaningful to the creator of the git
-> >   repo.
+> On Tue, Nov 17, 2020 at 3:10 PM Eric W. Biederman <ebiederm@xmission.com> wrote:
 > >
-> >   I have at least two repos where I wound up doing this by hand.  So at
-> >   least for me it is something I am doing anyway.
->
-> Direct "other side" of the coin is that the name meaningful to the
-> creator may be different from project to project, so those who want
-> to try peeking projects that are so far unknown to them will have to
-> guess what that meaningful thing is.  When visiting a random github
-> repository and presented by 47 different branches, it would be more
-> helpful for such a visitor to have a reliable "this is likely to be
-> the primary integration branch" cue.  Not having a convention is
-> worse than having a convention some folks may find suboptimal from
-> usability's point of view.
+> > "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >
+> > > This is the big one. This changes the default of init.defaultBranch to main,
+> > > reflecting what many open source projects already did (which was followed by
+> > > GitHub, Azure Repos and others).
+> >
+> > Can we please not simply replace one hard coded branch name with
+> > another?
+> 
+> I thought precisely the same thing.
+> 
+> This should be easy to do if we make "origin" be a pseudo ref that
+> points to "origin/HEAD" (and we could introduce "origin/@").
 
-But a convention is just that: a convention.
+Didn't we already do this long ago? refs/remotes/%s/HEAD is special in
+the dwim_ref() lookup:
 
-If we already know "origin/HEAD" is very likely pointing to the
-integration branch, then why do we need to know what that branch is
-called in that particular project?
+  $ git rev-parse --symbolic-full-name origin
+  refs/remotes/origin/master
 
-Just refer to that branch as "origin/@", or just "origin".
+Or did you have something else in mind?
 
-That would work for projects that follow the convention, and those who
-don't. Why does the tool need to care?
+I think I have occasionally hit spots where saying "origin" instead of
+"origin/master" does not work. I can't think of any offhand now, though
+(I thought perhaps "git checkout -b foo origin" or "git branch
+--set-upstream-to=origin", but both seem to work).
 
-Cheers.
+> > I don't look in on the git list very often so perhaps I am missing a
+> > conversation where all of the details were thought through.  If so
+> > please point me at that conversation.  Otherwise can we please use this
+> > opportunity to come up with something that is actually better than
+> > naming the default branch main, rather than just something just as
+> > awkward whose only advantage is that people don't think it is
+> > politically incorrect this week.
+> 
+> This is the thread:
+> 
+> https://lore.kernel.org/git/CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com/
+> 
+> Unfortunately in my opinion the most important topics--like your
+> suggestion--were not even mentioned. Everyone focused on the wrong
+> thing (e.g. what would be a better name for "master").
 
--- 
-Felipe Contreras
+There is another thread from the same time that contains quite a lot of
+discussion on logistics. This subthread in particular raises the notion
+of "let's try to minimize needing a special branch-name at all":
+
+  https://lore.kernel.org/git/875zbrcpgh.fsf@evledraar.gmail.com/
+
+And indeed, it led to some other bug-fixes in improvements in the time
+since then:
+
+  - submodule--helper was fixed to use HEAD from the remote as its
+    fallback rather than a hard-coded "master"
+
+  - fast-export --anonymize no longer treats "master" as special, but
+    instead grew a flexible system for leaving some bits intact
+
+  - fmt-merge-msg gained new options for configuring when it will print
+    "into <branch>"
+
+So really all that is left is deciding what to do when:
+
+  git init
+  git commit -m foo
+
+is run. Obviously we added a config variable here, but we still fall
+back to a hard-coded name. One suggestion was to not use any name, and
+either require "git checkout -b some-branch" first, or commit onto a
+detached HEAD:
+
+  https://lore.kernel.org/git/B4814F42-7AF8-4D80-93D4-FAF752C72F21@me.com/
+
+The simplicity has some appeal to me, but it's even less
+backwards-compatible than falling back to a new different name.
+
+I think Eric's suggestion of using the directory name as a default was
+not previously mentioned. I'm not sure I would like that myself (I find
+value in having a consistent "this is the main branch" name across
+different repositories, at least for my workflows). And it creates all
+of the same "every tutorial is now out of date" issues. But it is
+neutral. I wouldn't be opposed to seeing it as a configurable option.
+
+-Peff
