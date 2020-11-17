@@ -6,59 +6,76 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3B1CC388F9
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 00:28:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3D5AC388F9
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 00:35:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A19EE24671
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 00:28:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A92BB238E6
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 00:35:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729495AbgKQA2k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Nov 2020 19:28:40 -0500
-Received: from cloud.peff.net ([104.130.231.41]:59868 "EHLO cloud.peff.net"
+        id S1731025AbgKQAfM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Nov 2020 19:35:12 -0500
+Received: from cloud.peff.net ([104.130.231.41]:59876 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726156AbgKQA2k (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Nov 2020 19:28:40 -0500
-Received: (qmail 12636 invoked by uid 109); 17 Nov 2020 00:28:40 -0000
+        id S1726437AbgKQAfM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Nov 2020 19:35:12 -0500
+Received: (qmail 12679 invoked by uid 109); 17 Nov 2020 00:35:12 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 17 Nov 2020 00:28:40 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 17 Nov 2020 00:35:12 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20640 invoked by uid 111); 17 Nov 2020 00:28:39 -0000
+Received: (qmail 20674 invoked by uid 111); 17 Nov 2020 00:35:11 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 16 Nov 2020 19:28:39 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 16 Nov 2020 19:35:11 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 16 Nov 2020 19:28:39 -0500
+Date:   Mon, 16 Nov 2020 19:35:11 -0500
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] archive: release refname after use
-Message-ID: <20201117002839.GB13516@coredump.intra.peff.net>
-References: <7692d2f3-0a3b-91cd-c454-9725b0a395a7@web.de>
+Subject: Re: [PATCH] diff-lib: plug minor memory leaks in do_diff_cache()
+Message-ID: <20201117003511.GC13516@coredump.intra.peff.net>
+References: <80fb4a2a-992f-7d3b-9413-5059da3a8f01@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <7692d2f3-0a3b-91cd-c454-9725b0a395a7@web.de>
+In-Reply-To: <80fb4a2a-992f-7d3b-9413-5059da3a8f01@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 14, 2020 at 11:01:04PM +0100, René Scharfe wrote:
+On Sat, Nov 14, 2020 at 07:37:03PM +0100, René Scharfe wrote:
 
-> parse_treeish_arg() uses dwim_ref() to set refname to a strdup'd string.
-> Release it after use.  Also remove the const qualifier from the refname
-> member to signify that ownership of the string is handed to the struct,
-> leaving cleanup duty with the caller of parse_treeish_arg(), thus
-> avoiding a cast.
+> do_diff_cache() builds a struct rev_info to hand to diff_cache() from
+> scratch by initializing it using repo_init_revisions() and then
+> replacing its diffopt and prune_data members.
+> 
+> The diffopt member is initialized to a heap-allocated list of options,
+> though.  Release it using diff_setup_done() before overwriting it.
 
-Yeah, I looked at the surrounding code and agree that this is the right
-thing to do.
+Makes sense. This whole "rewrite the options as a heap-allocated list"
+thing is pretty gross, but is probably the least-bad solution to the
+problem. I wondered if there might be other unpaired diff_setup() /
+diff_setup_done() calls. Curiously, there are more of the latter:
 
-I wondered if it might make  sense for the initialization and clearing
-of this "archive_args" structure to go in a pair of matched functions,
-but it probably isn't worth the trouble. write_archive() is the only
-place where we will allocate and deallocate such a struct (the only
-reason it is a type at all is to pass the set of values around the
-stack).
+  $ git grep 'diff_setup(' | wc -l
+  22
+
+  $ git grep 'diff_setup_done(' | wc -l
+  35
+
+I think because repo_init_revisions() makes an implicit call to
+diff_setup().
+
+> The initial value of the prune_data member doesn't need to be released,
+> but the copy created using copy_pathspec() does.  Clear it after use.
+
+I suspect there are more elements of rev_info that could be allocated
+(e.g., in a traversal without "--objects", I think trees and blobs are
+left sitting in the pending array). It's a prime candidate for UNLEAK()
+in most cases where we do a single traversal and then exit the program.
+But for sub-functions like this, we perhaps should bite the bullet and
+just make a rev_info_clear() function that can be used everywhere.
+
+(I'm not opposed to your patch here in the meantime, though).
 
 -Peff
