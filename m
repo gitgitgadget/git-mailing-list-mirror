@@ -7,100 +7,144 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 507C1C2D0E4
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 04:54:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 251A0C2D0E4
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 05:21:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1400C246A6
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 04:54:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC2792468E
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 05:21:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hc0ifUbu"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HD+RjHdC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727045AbgKQEx7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Nov 2020 23:53:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37788 "EHLO
+        id S1725823AbgKQFUn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Nov 2020 00:20:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725804AbgKQEx6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Nov 2020 23:53:58 -0500
-Received: from mail-oo1-xc43.google.com (mail-oo1-xc43.google.com [IPv6:2607:f8b0:4864:20::c43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B99A1C0613CF
-        for <git@vger.kernel.org>; Mon, 16 Nov 2020 20:53:58 -0800 (PST)
-Received: by mail-oo1-xc43.google.com with SMTP id z13so4455679ooa.5
-        for <git@vger.kernel.org>; Mon, 16 Nov 2020 20:53:58 -0800 (PST)
+        with ESMTP id S1725774AbgKQFUn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Nov 2020 00:20:43 -0500
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFE30C0613CF
+        for <git@vger.kernel.org>; Mon, 16 Nov 2020 21:20:42 -0800 (PST)
+Received: by mail-ot1-x341.google.com with SMTP id f16so18277863otl.11
+        for <git@vger.kernel.org>; Mon, 16 Nov 2020 21:20:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=X+GxGLcIracSP9Bn3wToZxS9/RMXf8XeFy1u15qyM/k=;
-        b=Hc0ifUbukbhNJatm8rVJdUEA8HXw75B5Ng9/KXx4nY/EqejHwJ+Bvtt4KfaA6v7JGg
-         Sh39nPgz8nY9tGZ2pS9kZah6XE65imvFOu3qZXVHxZtkH9vt253mffsL6OsiXWeLOZXH
-         iZwuy8vvwKY/ErUmc/UIZMqfLJWnwsYgBUnZNBKD2DvxBbarysne2ojKgaG6AV1Rwfa3
-         y4YVslBPLaBk20GDPpvC9E/Tg+4Bw1KD67Z2cvO8IskdCCffIPZr/stTqVR46O3lq5Lj
-         3ZpM4YOgzkp1YNCbsmFfPv+ZTb8lfZvqT2XW52pAMZ7g2G0qXAJBR9ADaJuVwAfjiopu
-         I/pw==
+        bh=pWnm7HE0hXee/9Wc/grkTdpBVwFfomF3i6FQl0hEkC8=;
+        b=HD+RjHdCC9EHdZxosWOpBmXR2HBDrqbMtx4DCfOf1tRSGzycRsakaaR0GohnvyxG5G
+         vVLd5UCwj0Cy3rf83KpSxIusNjCY1oYkgprgHit41lGJ+Is+NXo9Euz0wTr/HSRMfQaG
+         sCNE3R2tDAzVhsdGfTqPvi+D4mjNegr5dusnSrseNpEjlfDmDds44KNwJqf4KBLJxt89
+         iVethEsHqHQ7gD/9hA9yjNFDJjW3F929hNtEDwhBZgAQXOlNdqcOfoJAmCvY/WlN5wse
+         G20hgbnUhfgHKHlmjZZncadxXoHHGdoPAWksncsfEE85+J1VYytrZStExi7HLGuPdybh
+         m9vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=X+GxGLcIracSP9Bn3wToZxS9/RMXf8XeFy1u15qyM/k=;
-        b=J5Y1fR5imFhy18WZO7prztXiCb8ck06rCWWllaA4KfPplILqv4nQlBHBGC+2na4KXU
-         t1ml7JjR6RoFgCk4HEiJNZuG5/UkV3NajG9w5fKKnE57rV7/1NJFwfIXml8ZMyW/twZC
-         svZ7CJqxFY3XjpJFnN5h653EmuwMyhZFooLVaZP+AfjqsrPHEQu/oz4We+8tQ5P+W55r
-         Dan74pg4UkmsrL0eI8EtIqNdA2VzSccqGkbrcUUX1Gxv6oz///4g3eZrkllL137PUDvL
-         o1iZXFuVMMxqjdifQdslttZ+L68Jot51UZmVdOrHZzzULz9OxpTZ+B16Mdyoqu18N6Fi
-         flmA==
-X-Gm-Message-State: AOAM530d+G/CPJ77e6NoMZY1bgff1EDhI1XksyJ7BH6QHi957IUjxvkB
-        mkEQUxKnIl5rYM+LxDv+M/6Iz9yOvXlzUaEQnd0=
-X-Google-Smtp-Source: ABdhPJzSfM/hrZZL4M38ipU6wiUITcL8FIl0Psb3UmQsEfxc5U2hraop0aw/2pnlPXHrv65cv5O3iIbyZ5q5Sn6zckY=
-X-Received: by 2002:a4a:8519:: with SMTP id k25mr1910753ooh.32.1605588838038;
- Mon, 16 Nov 2020 20:53:58 -0800 (PST)
+        bh=pWnm7HE0hXee/9Wc/grkTdpBVwFfomF3i6FQl0hEkC8=;
+        b=Kcxzxn4wuFoIjcm1rq6fGGMd6IlDU9v33mMSejGZzerq6XpScdSKtCJwRfB5SVLMqF
+         PprpwewdlZdGm5IiPDh2CpxfUH9yh9+fZFbSjfKb0jRQ6odZVIdcfIiQffF6gtkO8+vh
+         q/lobsduZoZwgi3xrhNp7ctqyo2jtc9kGuVHMIr06W7Etuz1fU6TABgR+uN8a+4Rsnvv
+         7ucLFNPMSgrcXvtg5QUvdgpMdVlA3AEyXV0GF+/gDu0tDGPyt4vmjXJGGePZtgztYtiX
+         v/mEjrO1sBjQlw+Qxs5CMcPTa+PTf6JpdGbskq5ciM7CT8yiHC5Lzy1pqMKCbZ0JNpTv
+         DOQw==
+X-Gm-Message-State: AOAM530CTwW3ALffdH8+ixxmgqQt+fQG87xwbnxghk3WVzBbPBXaenkQ
+        I7E6U7b4bFwY/f3w1dxiYmqS6DnnrlcVy4eM/sDGmKy3t6IalQ==
+X-Google-Smtp-Source: ABdhPJyQ8ZMPJJD0TW9wfdio2odaxlIwUqZEypzubBHYCYHNm/ISl3071Clh4yoHi2GqArCmOFZuuFtt7bUg6PuV/uQ=
+X-Received: by 2002:a05:6830:1002:: with SMTP id a2mr2008000otp.316.1605590442144;
+ Mon, 16 Nov 2020 21:20:42 -0800 (PST)
 MIME-Version: 1.0
 References: <9f2135f90ffea7f4ccb226f506bf554deab324cc.1605205427.git.matheus.bernardino@usp.br>
- <CABPp-BGkkNwdjLB4HSygvU43OZRiuhDyt7RjrDGodWrfNgkBXQ@mail.gmail.com>
- <70ae5b1d-b1d2-1b3f-11cf-8e5ceafe6048@gmail.com> <be43763e-6931-3e84-8e5a-0ac839cc0566@jeffhostetler.com>
-In-Reply-To: <be43763e-6931-3e84-8e5a-0ac839cc0566@jeffhostetler.com>
+ <xmqqeekt83fl.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqeekt83fl.fsf@gitster.c.googlers.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 16 Nov 2020 20:53:46 -0800
-Message-ID: <CABPp-BFFcP5a26f3o1_gna=G-WcP1LD78aKztjbWOgjeD5F52A@mail.gmail.com>
+Date:   Mon, 16 Nov 2020 21:20:30 -0800
+Message-ID: <CABPp-BHvZyb4cF29HqDYgMHTMEr2LdvKYATWqADRyhqJzB=Liw@mail.gmail.com>
 Subject: Re: [PATCH] rm: honor sparse checkout patterns
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Git Mailing List <git@vger.kernel.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Matheus Tavares <matheus.bernardino@usp.br>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 16, 2020 at 6:30 AM Jeff Hostetler <git@jeffhostetler.com> wrote:
->
-> On 11/13/20 8:47 AM, Derrick Stolee wrote:
-> > On 11/12/2020 6:54 PM, Elijah Newren wrote:
-> >> Hi,
-> >>
-> >> On Thu, Nov 12, 2020 at 1:02 PM Matheus Tavares
-> >> <matheus.bernardino@usp.br> wrote:
-> >>>
-> >>> Make git-rm honor the 'sparse.restrictCmds' setting, by restricting its
-> >>> operation to the paths that match both the command line pathspecs and
-> >>> the repository's sparsity patterns. This better matches the expectations
-> >>> of users with sparse-checkout definitions, while still allowing them
-> >>> to optionally enable the old behavior with 'sparse.restrictCmds=false'
-> >>> or the global '--no-restrict-to-sparse-paths' option.
-> >>
-> >> (For Stolee:) Did this arise when a user specified a directory to
-> >> delete, and a (possibly small) part of that directory was in the
-> >> sparse checkout while other portions of it were outside?
-> >
-> > The user who suggested this used a command like 'git rm */*.csprojx' to
-> > remove all paths with that file extension, but then realized that they
-> > were deleting all of those files from the entire repo, not just the
-> > current sparse-checkout.
->
-> Aren't the wildcards expanded by the shell before the command
-> line is given to Git?  So the Git command should only receive
-> command line args that actually match existing files, right??
+Hi,
 
-Good point.  I suspect, though, that the issue may still be a problem
-if the user were to quote the wildcards; that may have been what
-happened and the reporting of the case just lost them somewhere along
-the way.
+On Mon, Nov 16, 2020 at 12:14 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Matheus Tavares <matheus.bernardino@usp.br> writes:
+>
+> > Make git-rm honor the 'sparse.restrictCmds' setting, by restricting its
+> > operation to the paths that match both the command line pathspecs and
+> > the repository's sparsity patterns.
+>
+> > This better matches the expectations
+> > of users with sparse-checkout definitions, while still allowing them
+> > to optionally enable the old behavior with 'sparse.restrictCmds=false'
+> > or the global '--no-restrict-to-sparse-paths' option.
+>
+> Hmph.  Is "rm" the only oddball that ignores the sparse setting?
+
+This might make you much less happy, but in general none of the
+commands pay attention to the setting; I think a line or two in
+merge-recursive.c is the only part of the codebase outside of
+unpack_trees() that pays any attention to it at all.  This was noted
+as a problem in the initial review of the sparse-checkout series at
+[1], and was the biggest factor behind me requesting the following
+being added to the manpage for sparse-checkout[2]:
+
+THIS COMMAND IS EXPERIMENTAL. ITS BEHAVIOR, AND THE BEHAVIOR OF OTHER
+COMMANDS IN THE PRESENCE OF SPARSE-CHECKOUTS, WILL LIKELY CHANGE IN
+THE FUTURE.
+
+However, multiple groups were using sparse checkouts anyway, via
+manually editing .git/info/sparse-checkout and running `git read-tree
+-mu HEAD`, and adding various wrappers around it, and Derrick and I
+thought there was value in getting _something_ out there to smooth it
+out a little bit.  I'd still say it's pretty rough around the
+edges...but useful nonetheless.
+
+[1] https://lore.kernel.org/git/CABPp-BHJeuEHBDkf93m9sfSZ4rZB7+eFejiAXOsjLEUu5eT5FA@mail.gmail.com/
+[2] https://lore.kernel.org/git/CABPp-BEryfaeYhuUsiDTaYdRKpK6GRi7hgZ5XSTVkoHVkx2qQA@mail.gmail.com/
+
+> >  to the paths specified by the sparsity patterns, or to the intersection of
+> >  those paths and any (like `*.c`) that the user might also specify on the
+> >  command line. When false, the affected commands will work on full trees,
+> > -ignoring the sparsity patterns. For now, only git-grep honors this setting.
+> > +ignoring the sparsity patterns. For now, only git-grep and git-rm honor this
+> > +setting.
+>
+> I am not sure if this is a good direction to go---can we make an
+> inventory of all commands that affect working tree files and see
+> which ones need the same treatment before going forward with just
+> "grep" and "rm"?  Documenting the decision on the ones that will not
+> get the same treatment may also be a good idea.  What I am aiming
+> for is to prevent users from having to know in which versions of Git
+> they can rely on the sparsity patterns with what commands, and doing
+> things piecemeal like these two topics would be a road to confusion.
+
+It's not just commands which affect the working tree that need to be
+inventoried and adjusted.  We've made lists of commands in the past:
+
+[3] https://lore.kernel.org/git/CABPp-BEbNCYk0pCuEDQ_ViB2=varJPBsVODxNvJs0EVRyBqjBg@mail.gmail.com/
+[4] https://lore.kernel.org/git/xmqqy2y3ejwe.fsf@gitster-ct.c.googlers.com/
+
+But the working-directory related ones are perhaps more problematic.
+One additoinal example: I just got a report today that "git stash
+apply" dies with a fatal error and the working directory in some
+intermediate state when trying to apply a stash when the working
+directory has a different set of sparsity paths than when the stash
+was created.  (Granted, an error makes sense, but this was throwing
+untranslated error messages, meaning they weren't in codepaths that
+were meant to be triggered.)  This case may not be an apples to apples
+comparison, but the testcase did involve adding new files before
+stashing, so the stash apply would have been trying to remove files.
+Anyway, I'll send more details on that issue in a separate thread
+after I've had some time to dig into it.
+
+
+Anyway, I'm not sure this helps, because I'm basically saying things
+are kind of messy, and we're fixing as we go rather than having a full
+implementation and all the fixes.
