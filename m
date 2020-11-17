@@ -2,156 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCB0DC2D0E4
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 21:48:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D522C2D0E4
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 21:51:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 635E4241A7
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 21:48:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A8C2D241A7
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 21:51:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="JeonMeUJ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mBqFAHDB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728601AbgKQVsn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Nov 2020 16:48:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53854 "EHLO
+        id S1728163AbgKQVut (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Nov 2020 16:50:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727386AbgKQVsn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Nov 2020 16:48:43 -0500
-Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com [IPv6:2607:f8b0:4864:20::f43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2A67C0613CF
-        for <git@vger.kernel.org>; Tue, 17 Nov 2020 13:48:41 -0800 (PST)
-Received: by mail-qv1-xf43.google.com with SMTP id u23so4175824qvf.1
-        for <git@vger.kernel.org>; Tue, 17 Nov 2020 13:48:41 -0800 (PST)
+        with ESMTP id S1726182AbgKQVut (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Nov 2020 16:50:49 -0500
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10015C0613CF
+        for <git@vger.kernel.org>; Tue, 17 Nov 2020 13:50:49 -0800 (PST)
+Received: by mail-wm1-x344.google.com with SMTP id 23so2889187wmg.1
+        for <git@vger.kernel.org>; Tue, 17 Nov 2020 13:50:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=h62hnBTQj+3iLx4T5aRYU4yZUSJ3pyFT8cbw1VivSPY=;
-        b=JeonMeUJsvOEUFeaRN3eNDVeV7J4sNR4elorMpofkQUYYFSXD+pFj0yuUY2tU2DlDm
-         FYTUsLQoiPrD5ZnhOFoeNTA4wcqPmbeCW4UoIwzlv0up6XycpA7qNkvLgCHLEqsqvXJi
-         qf312I907HfGT2iZRF4GYkCYL9zN+RfxksfDMuaRpJlnZ6nU6a8QUQQ9F9st58Wa1u9F
-         mwGnOKd0Xp69JFxaiJ7nZEHX0h4HIAeZGnjoLtDmBPK5W7XlO2zxwFX5G+XMkz/Hq0ci
-         OM3W7U1XzrdImBu/w/M/nn45Bw3jR44SWWUn0gSJXYhl64kY0UMvZV9aY/GkZWBY6Svh
-         izhw==
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=XxXfj32Ecv2frXptIVP/lnWrnu5gzk4nnJ631zN7c8s=;
+        b=mBqFAHDBeGqnbaThs+Yv/TS4lCJGxRqI+/d1+XvEAuu+HPANZ1owJqGKcgMx/KhOED
+         U6i9ZDIrzeC9qectylNJX14YmKumKd+R4x4WY9yWCQh2EUdN1/ozseE++KLBh0OxKEZz
+         naIzeblHu+Cmkwvns1AbfUinnbrDVB7T9WBk9Rrh9jQKlHt8MAtf0ubQ0kGB19ls7qk8
+         IJDX21JYA6X1RosyfBOAtqIX0QFpy5QxTH9fKb4ksdaroPeRbqv9uUUC065qiGSz3RNx
+         fd5Nw65Yf4k12b+s0pd+9dq1wngfG0p/2B7rcDOvmoEPyoFAAwyopFcIrBl9ngcz/aiM
+         XzEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=h62hnBTQj+3iLx4T5aRYU4yZUSJ3pyFT8cbw1VivSPY=;
-        b=Pfd1ZcJQ6nFxx6pPyBVGCLIbjuxw8FQUrYj1luppk87auEdaTwuwyj1wRkGzurE7DG
-         M+kKuZLL7tcDAvucje6OMZBj9jDz7G1aVGrQIsfHDfXcMPfvxFl64P5t1Gn3mrkuEDZr
-         BR4jfYzrB1lozQbTkEMFt+tzzg1dhvhOQENiy5OZ6ytgsmCSDko3/84bxxeucAAR9aX8
-         ywXcNddyYE5+gD7pexeieL1WJ0BiWgf+ZOdy4HEDjo6ZfPxLB8W0Swe5qea/4ins4OJz
-         55EwkXlSdggXIsqrnJMLoQLzx7aY8+sM7oQwDhmyu/9O0PhqvEoLq/9e7sGp4gGih4Jg
-         8hcw==
-X-Gm-Message-State: AOAM532kbrBuZPlXsJyjDtTfnCF341Xb6WSYtgG7M9qMA0Tg29KpNwr6
-        0Cjt154J2fOm+WnwtrEqiaKGx7WfwWfTB29P
-X-Google-Smtp-Source: ABdhPJxxXfTgjjMsq+KVwGCRIZw/yqhv6bzwAE+jB7gXU0O/asKOTkeurG7ZJt3NYGDMJIEhGniQPg==
-X-Received: by 2002:ad4:4745:: with SMTP id c5mr1535151qvx.2.1605649720915;
-        Tue, 17 Nov 2020 13:48:40 -0800 (PST)
-Received: from localhost ([2605:9480:22e:ff10:7fe5:c4d6:f587:dc1f])
-        by smtp.gmail.com with ESMTPSA id 205sm15270396qki.50.2020.11.17.13.48.40
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=XxXfj32Ecv2frXptIVP/lnWrnu5gzk4nnJ631zN7c8s=;
+        b=bSNj4X1/oZzGguUVN8pe0opS5P+OE87O6R2ExEbSVB1HhUgxkpJMIzTX+53idLjT4r
+         rCBLZAvL4WSFLHI9FIijMXtawiEy3/k6EYSUGzmmqoq2HJvz1WQjtczCE2yky17N9yZb
+         /jqW2MXSvEzIPZ9tb0Cg+narnQ54m8Ol4Uf1eaoIDvnnpuc95LZqQA+/FHYZIX7Aj2Ub
+         a9Xt6+jbarcZOY1388KDVoeoo4ltYZ1h+WSP7Jil9dfZGgnQ2hwKScQTc8UVGGEgy+ci
+         i3AOnv83377IeebscrX0Vs5jhl+i8rSI5GsySLe34EFKmUVNqEg8e9oo0b+eMENDiKdQ
+         F9wQ==
+X-Gm-Message-State: AOAM533aYun6folpDn2/oe5EWtGfNhMmTeyS2tlWSiW0PpqWFCpnY1vY
+        jO4otj+dJpNyyKKHvEhw5GaYQUB5HeY=
+X-Google-Smtp-Source: ABdhPJxaszoFojR3eXGHalLlx+gNp9Zp4YCnMoKpy52qOB0CjY0bjn0BDbveyEC2SUOTjJ/CXBmTLw==
+X-Received: by 2002:a1c:e1c6:: with SMTP id y189mr1077852wmg.94.1605649847705;
+        Tue, 17 Nov 2020 13:50:47 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d16sm29396176wrw.17.2020.11.17.13.50.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2020 13:48:40 -0800 (PST)
-Date:   Tue, 17 Nov 2020 16:48:36 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net,
-        martin.agren@gmail.com, szeder.dev@gmail.com
-Subject: [PATCH v2 24/24] pack-bitmap-write: better reuse bitmaps
-Message-ID: <42399a1c2e52e1d055a2d0ad96af2ca4dce6b1a0.1605649533.git.me@ttaylorr.com>
-References: <cover.1605123652.git.me@ttaylorr.com>
- <cover.1605649533.git.me@ttaylorr.com>
+        Tue, 17 Nov 2020 13:50:47 -0800 (PST)
+Message-Id: <pull.916.git.git.1605649846824.gitgitgadget@gmail.com>
+From:   "Seija K. via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 17 Nov 2020 21:50:46 +0000
+Subject: [PATCH] Make dir_init inline
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1605649533.git.me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     Seija K <pi1024e@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+From: Seija K <pi1024e@github.com>
 
-If the old bitmap file contains a bitmap for a given commit, then that
-commit does not need help from intermediate commits in its history to
-compute its final bitmap. Eject that commit from the walk and insert it
-as a maximal commit in the list of commits for computing bitmaps.
+commit: A void that simply calls another function would be better off as inline.
+Plus, dir_init being originally a memset call makes this change more fitting.
+Finally, even if a stack trace is made, a memset call will be in said trace anyway.
 
-This helps the repeat bitmap computation task, even if the selected
-commits shift drastically. This helps when a previously-bitmapped commit
-exists in the first-parent history of a newly-selected commit. Since we
-stop the walk at these commits and we use a first-parent walk, it is
-harder to walk "around" these bitmapped commits. It's not impossible,
-but we can greatly reduce the computation time for many selected
-commits.
-
-             |   runtime (sec)    |   peak heap (GB)   |
-             |                    |                    |
-             |   from  |   with   |   from  |   with   |
-             | scratch | existing | scratch | existing |
-  -----------+---------+----------+---------+-----------
-  last patch | 100.641 |   35.560 |   2.152 |    2.224 |
-  this patch |  99.720 |   11.696 |   2.152 |    2.217 |
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Seija K. <pi1024e@github.com>
 ---
- pack-bitmap-write.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+    Make dir_init inline
+    
+    commit: A void that simply calls another function would be better off as
+    inline. Plus, dir_init being originally a memset call makes this change
+    more fitting. Finally, even if a stack trace is made, a memset call will
+    be in said trace anyway.
 
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index b0493d971d..3ac90ae410 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -195,7 +195,8 @@ struct bitmap_builder {
- };
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-916%2Fpi1024e%2Fpatch-1-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-916/pi1024e/patch-1-v1
+Pull-Request: https://github.com/git/git/pull/916
+
+ dir.c | 11 +++--------
+ dir.h |  5 ++++-
+ 2 files changed, 7 insertions(+), 9 deletions(-)
+
+diff --git a/dir.c b/dir.c
+index ebea5f1f91..c9c890785d 100644
+--- a/dir.c
++++ b/dir.c
+@@ -54,11 +54,6 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
+ static int resolve_dtype(int dtype, struct index_state *istate,
+ 			 const char *path, int len);
  
- static void bitmap_builder_init(struct bitmap_builder *bb,
--				struct bitmap_writer *writer)
-+				struct bitmap_writer *writer,
-+				struct bitmap_index *old_bitmap)
+-void dir_init(struct dir_struct *dir)
+-{
+-	memset(dir, 0, sizeof(*dir));
+-}
+-
+ int count_slashes(const char *s)
  {
- 	struct rev_info revs;
- 	struct commit *commit;
-@@ -234,12 +235,26 @@ static void bitmap_builder_init(struct bitmap_builder *bb,
- 
- 		c_ent = bb_data_at(&bb->data, commit);
- 
-+		if (old_bitmap && bitmap_for_commit(old_bitmap, commit)) {
-+			/*
-+			 * This commit has an existing bitmap, so we can
-+			 * get its bits immediately without an object
-+			 * walk. There is no need to continue walking
-+			 * beyond this commit.
-+			 */
-+			c_ent->maximal = 1;
-+			p = NULL;
-+		}
-+
- 		if (c_ent->maximal) {
- 			num_maximal++;
- 			ALLOC_GROW(bb->commits, bb->commits_nr + 1, bb->commits_alloc);
- 			bb->commits[bb->commits_nr++] = commit;
+ 	int cnt = 0;
+@@ -167,14 +162,14 @@ static size_t common_prefix_len(const struct pathspec *pathspec)
+ 			char c = pathspec->items[n].match[i];
+ 			if (c != pathspec->items[0].match[i])
+ 				break;
+-			if (c == '/')
+-				len = i + 1;
+ 			i++;
++			if (c == '/')
++				len = i;
  		}
+ 		if (n == 0 || len < max) {
+ 			max = len;
+ 			if (!max)
+-				break;
++				return 0;
+ 		}
+ 	}
+ 	return max;
+diff --git a/dir.h b/dir.h
+index a3c40dec51..8da509f42c 100644
+--- a/dir.h
++++ b/dir.h
+@@ -361,7 +361,10 @@ int match_pathspec(const struct index_state *istate,
+ int report_path_error(const char *ps_matched, const struct pathspec *pathspec);
+ int within_depth(const char *name, int namelen, int depth, int max_depth);
  
-+		if (!c_ent->commit_mask)
-+			continue;
-+
- 		if (p) {
- 			struct bb_commit *p_ent = bb_data_at(&bb->data, p->item);
- 			int c_not_p, p_not_c;
-@@ -422,7 +437,7 @@ void bitmap_writer_build(struct packing_data *to_pack)
- 	else
- 		mapping = NULL;
+-void dir_init(struct dir_struct *dir);
++static inline void dir_init(struct dir_struct *dir)
++{
++	memset(dir, 0, sizeof(*dir));
++}
  
--	bitmap_builder_init(&bb, &writer);
-+	bitmap_builder_init(&bb, &writer, old_bitmap);
- 	for (i = bb.commits_nr; i > 0; i--) {
- 		struct commit *commit = bb.commits[i-1];
- 		struct bb_commit *ent = bb_data_at(&bb.data, commit);
+ int fill_directory(struct dir_struct *dir,
+ 		   struct index_state *istate,
+
+base-commit: e31aba42fb12bdeb0f850829e008e1e3f43af500
 -- 
-2.29.2.312.gabc4d358d8
+gitgitgadget
