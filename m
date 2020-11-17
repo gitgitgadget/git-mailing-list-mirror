@@ -7,64 +7,63 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D749CC63697
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 21:47:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD147C2D0E4
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 21:47:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 761D624181
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 21:47:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8179B241A7
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 21:47:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="Vdto+aVJ"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="ZJ7d2AcG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728494AbgKQVrY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Nov 2020 16:47:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53632 "EHLO
+        id S1728500AbgKQVra (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Nov 2020 16:47:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726544AbgKQVrY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Nov 2020 16:47:24 -0500
-Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00D16C0613CF
-        for <git@vger.kernel.org>; Tue, 17 Nov 2020 13:47:24 -0800 (PST)
-Received: by mail-qt1-x843.google.com with SMTP id 3so17133883qtx.3
-        for <git@vger.kernel.org>; Tue, 17 Nov 2020 13:47:23 -0800 (PST)
+        with ESMTP id S1726544AbgKQVra (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Nov 2020 16:47:30 -0500
+Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com [IPv6:2607:f8b0:4864:20::744])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8725C0613CF
+        for <git@vger.kernel.org>; Tue, 17 Nov 2020 13:47:28 -0800 (PST)
+Received: by mail-qk1-x744.google.com with SMTP id u4so22347127qkk.10
+        for <git@vger.kernel.org>; Tue, 17 Nov 2020 13:47:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=SB/Np43TUqBuwpOVIoYb4n+uOEF85GV7A6IjS9o8uW4=;
-        b=Vdto+aVJ1rS1aN5mXd6Xl78tyGWUvUpTsHxJ9BaolvsM74xo9DjpfRG2ECxQ7i0KhI
-         vKNxWfcVU0ETU3v9CkjW9/gKIVzDyBx/MTS1IcfuDFhuihPzAs6E52q/gX1gNiAvWvp6
-         cGwyYYDoeCg4lSEAvOSCn1DupWeEsi+rAzFZNAE0j1aGnOF88Fy3lNCvkQWpxrFCPs1a
-         +YhvCT8ULWSD456owJRE0G5Ux3/LLoMQTbTxwgzATcshOGFlLg8bb3W8oa06dPeIL2or
-         +PWoS/D8C/IhlTI/0mEE/gy5YIfVJRNX5oK6NnlYooi+mPqwjS3g72eXunvGLbtH6Z6p
-         Bt9g==
+        bh=JsFhLQbh5EuSVPg83T6V+6+RMKHaLo4hNx2UNqp8ct4=;
+        b=ZJ7d2AcGZ0Wlhv4hdlpsUliHRuJVkxB/bnwdlslqNDezoeksda7XVVwbPcPO+rmHY7
+         hlXfWxPPTJykYnCuYfZtlomdjxWeKOR1TLs/QgqCoc/iK9qPsu4/ZdCE/nKVksL+332J
+         BPl6lccz3xsUD7RXRI1o5HP+atkvbAvAuQp/A7hoLMccQFxYoorvQ/GYOp0Wv6eFNNxD
+         RtEe/7ON2/wPkUHnIYFkJbSya40sgTkELaFUZxNwnZCgRbd41vz2iyGOB+BsQnL5ruWZ
+         IAQvzY6/JdNRGISEXSElgbHUPS1fJ6ByjQwdKXxRnw0611TIQ8y5xB33fF2cEX6h82Vn
+         XBBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=SB/Np43TUqBuwpOVIoYb4n+uOEF85GV7A6IjS9o8uW4=;
-        b=sbzRF3+nBZfS4PZDOVs2ywcLNoqhV4SIhluww/JkBk1EihOCjMx5gv3kyVQnh4Hul1
-         DKtr8g3siLnaGYEZ1h/nT62fXhYkpPIhnxDjccarC4sGKs2uI2mr2Wx6SzO5torpZaPs
-         y0xo1/dlUPdSuqPja2W+WeVLMhqj3y+vHP1Tny5UE0IqlcwO/pFn7Fgpa/rknzCz/ob0
-         ERnbgTsJLDpRAIWU+lSU0FpAHewckuI6PfyK8b/rdUj2tbyJczd/I+eiWheSm25Y1xII
-         bjRq7j17YYR2bbeBvVLg2cqvUVqT5opeu6zkYHEr6CcK4UR4KIf2TGGLzqJu3OyxbQ5c
-         LmTA==
-X-Gm-Message-State: AOAM533TxlIIPlzW93qLujwDICs40jxwJyaMzMFvc7W4LQHCYg8Zntsm
-        UX6bAszyLHSHIcDvhEz8frQo79uFnctuQFhp
-X-Google-Smtp-Source: ABdhPJxBMGZQCL5PHvvaPHcxNioLtKURi3BtythbxUp0S9ligH3gLBLUYg5PpEilX9YMUiaviXuUJQ==
-X-Received: by 2002:ac8:7b47:: with SMTP id m7mr1768617qtu.171.1605649642932;
-        Tue, 17 Nov 2020 13:47:22 -0800 (PST)
+        bh=JsFhLQbh5EuSVPg83T6V+6+RMKHaLo4hNx2UNqp8ct4=;
+        b=uBL0oQbuR5WcJ2c9sviejAytMAqWbyS7aTjCaQE+XzoFEzNZh31fWkKIVdofT7JOvI
+         S9Jl472TDoUmjn4N5J2LDizfHhjpYpCuWuO6O5S+f0J1uGYGzdXmTZa/t9HksoKMVqdl
+         SKTtF0WH+ptAIiPg3T4gnYYzfp8diVpMMgqGrtDHcvQL2BBsgfwfi9hGsmSQzgWt4u4q
+         Psz+iafaCY45LmiLMWe0V41/IEY+IXGFKkGCNT14dfJOz5kXXB76ciYXc80UUIbMe+Gf
+         sZLa5kVCqXGgHHo7nwAJuNdjoWMdD1Hcpo7/ohf1+2mjc7/k/7hT0btEgleXl89DD4Wl
+         B35g==
+X-Gm-Message-State: AOAM530Ev//YsnnwowGzVW7MOAOVxe5dQitG98VDZFg4c7rEFsNwllg7
+        +yXIHQWWrTJXIsfe/zcYzuJoLX03VTUxcjpm
+X-Google-Smtp-Source: ABdhPJxBvcG73kKw4OVaxiQ26sxTIXYZcuH2dZ7k7jrJbKJ7lSKbFJuR5JvyUKlNu0tgKijDC/WeyA==
+X-Received: by 2002:a05:620a:1087:: with SMTP id g7mr1702402qkk.457.1605649647528;
+        Tue, 17 Nov 2020 13:47:27 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:7fe5:c4d6:f587:dc1f])
-        by smtp.gmail.com with ESMTPSA id g70sm14727155qke.8.2020.11.17.13.47.22
+        by smtp.gmail.com with ESMTPSA id i4sm3563999qti.78.2020.11.17.13.47.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2020 13:47:22 -0800 (PST)
-Date:   Tue, 17 Nov 2020 16:47:20 -0500
+        Tue, 17 Nov 2020 13:47:26 -0800 (PST)
+Date:   Tue, 17 Nov 2020 16:47:24 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net,
         martin.agren@gmail.com, szeder.dev@gmail.com
-Subject: [PATCH v2 11/24] pack-bitmap-write: pass ownership of intermediate
- bitmaps
-Message-ID: <466dd3036a8ca7dc9718a53f17cf87e0eb22c066.1605649533.git.me@ttaylorr.com>
+Subject: [PATCH v2 12/24] pack-bitmap-write: fill bitmap with commit history
+Message-ID: <8e5607929d66a3c808dbe3a06c312d0cda1ef568.1605649533.git.me@ttaylorr.com>
 References: <cover.1605123652.git.me@ttaylorr.com>
  <cover.1605649533.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -75,84 +74,95 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+From: Derrick Stolee <dstolee@microsoft.com>
 
-Our algorithm to generate reachability bitmaps walks through the commit
-graph from the bottom up, passing bitmap data from each commit to its
-descendants. For a linear stretch of history like:
+The fill_bitmap_commit() method assumes that every parent of the given
+commit is already part of the current bitmap. Instead of making that
+assumption, let's walk parents until we reach commits already part of
+the bitmap. Set the value for that parent immediately after querying to
+save time doing double calls to find_object_pos() and to avoid inserting
+the parent into the queue multiple times.
 
-  A -- B -- C
-
-our sequence of steps is:
-
-  - compute the bitmap for A by walking its trees, etc
-
-  - duplicate A's bitmap as a starting point for B; we can now free A's
-    bitmap, since we only needed it as an intermediate result
-
-  - OR in any extra objects that B can reach into its bitmap
-
-  - duplicate B's bitmap as a starting point for C; likewise, free B's
-    bitmap
-
-  - OR in objects for C, and so on...
-
-Rather than duplicating bitmaps and immediately freeing the original, we
-can just pass ownership from commit to commit. Note that this doesn't
-always work:
-
-  - the recipient may be a merge which already has an intermediate
-    bitmap from its other ancestor. In that case we have to OR our
-    result into it. Note that the first ancestor to reach the merge does
-    get to pass ownership, though.
-
-  - we may have multiple children; we can only pass ownership to one of
-    them
-
-However, it happens often enough and copying bitmaps is expensive enough
-that this provides a noticeable speedup. On a clone of linux.git, this
-reduces the time to generate bitmaps from 205s to 70s. This is about the
-same amount of time it took to generate bitmaps using our old "many
-traversals" algorithm (the previous commit measures the identical
-scenario as taking 63s). It unfortunately provides only a very modest
-reduction in the peak memory usage, though.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap-write.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ pack-bitmap-write.c | 30 +++++++++++++++++++++++-------
+ 1 file changed, 23 insertions(+), 7 deletions(-)
 
 diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index f2f0b6b2c2..d2d46ff5f4 100644
+index d2d46ff5f4..361f3305a2 100644
 --- a/pack-bitmap-write.c
 +++ b/pack-bitmap-write.c
-@@ -333,6 +333,7 @@ void bitmap_writer_build(struct packing_data *to_pack)
- 		struct commit *commit = bb.commits[i-1];
- 		struct bb_commit *ent = bb_data_at(&bb.data, commit);
- 		struct commit *child;
-+		int reused = 0;
+@@ -12,6 +12,7 @@
+ #include "sha1-lookup.h"
+ #include "pack-objects.h"
+ #include "commit-reach.h"
++#include "prio-queue.h"
  
- 		fill_bitmap_commit(ent, commit);
+ struct bitmapped_commit {
+ 	struct commit *commit;
+@@ -279,17 +280,30 @@ static void fill_bitmap_tree(struct bitmap *bitmap,
+ }
  
-@@ -348,10 +349,15 @@ void bitmap_writer_build(struct packing_data *to_pack)
+ static void fill_bitmap_commit(struct bb_commit *ent,
+-			       struct commit *commit)
++			       struct commit *commit,
++			       struct prio_queue *queue)
+ {
+ 	if (!ent->bitmap)
+ 		ent->bitmap = bitmap_new();
  
- 			if (child_ent->bitmap)
- 				bitmap_or(child_ent->bitmap, ent->bitmap);
--			else
-+			else if (reused)
- 				child_ent->bitmap = bitmap_dup(ent->bitmap);
-+			else {
-+				child_ent->bitmap = ent->bitmap;
-+				reused = 1;
+-	/*
+-	 * mark ourselves, but do not bother with parents; their values
+-	 * will already have been propagated to us
+-	 */
+ 	bitmap_set(ent->bitmap, find_object_pos(&commit->object.oid));
+-	fill_bitmap_tree(ent->bitmap, get_commit_tree(commit));
++	prio_queue_put(queue, commit);
++
++	while (queue->nr) {
++		struct commit_list *p;
++		struct commit *c = prio_queue_get(queue);
++
++		bitmap_set(ent->bitmap, find_object_pos(&c->object.oid));
++		fill_bitmap_tree(ent->bitmap, get_commit_tree(c));
++
++		for (p = c->parents; p; p = p->next) {
++			int pos = find_object_pos(&p->item->object.oid);
++			if (!bitmap_get(ent->bitmap, pos)) {
++				bitmap_set(ent->bitmap, pos);
++				prio_queue_put(queue, p->item);
 +			}
- 		}
--		bitmap_free(ent->bitmap);
-+		if (!reused)
-+			bitmap_free(ent->bitmap);
++		}
++	}
+ }
+ 
+ static void store_selected(struct bb_commit *ent, struct commit *commit)
+@@ -319,6 +333,7 @@ void bitmap_writer_build(struct packing_data *to_pack)
+ 	struct bitmap_builder bb;
+ 	size_t i;
+ 	int nr_stored = 0; /* for progress */
++	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
+ 
+ 	writer.bitmaps = kh_init_oid_map();
+ 	writer.to_pack = to_pack;
+@@ -335,7 +350,7 @@ void bitmap_writer_build(struct packing_data *to_pack)
+ 		struct commit *child;
+ 		int reused = 0;
+ 
+-		fill_bitmap_commit(ent, commit);
++		fill_bitmap_commit(ent, commit, &queue);
+ 
+ 		if (ent->selected) {
+ 			store_selected(ent, commit);
+@@ -360,6 +375,7 @@ void bitmap_writer_build(struct packing_data *to_pack)
+ 			bitmap_free(ent->bitmap);
  		ent->bitmap = NULL;
  	}
++	clear_prio_queue(&queue);
  	bitmap_builder_clear(&bb);
+ 
+ 	stop_progress(&writer.progress);
 -- 
 2.29.2.312.gabc4d358d8
 
