@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73D15C8300B
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 16:13:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B90F5C8300F
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 16:13:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1F0A8221F8
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 16:13:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 60D52221F8
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 16:13:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cc3jZczD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KTiM2Xn5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727485AbgKQQM5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Nov 2020 11:12:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57794 "EHLO
+        id S1727513AbgKQQND (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Nov 2020 11:13:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727454AbgKQQMz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Nov 2020 11:12:55 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6919DC061A4A
-        for <git@vger.kernel.org>; Tue, 17 Nov 2020 08:12:54 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id s13so3739153wmh.4
-        for <git@vger.kernel.org>; Tue, 17 Nov 2020 08:12:54 -0800 (PST)
+        with ESMTP id S1727472AbgKQQM4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Nov 2020 11:12:56 -0500
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 901EDC0613CF
+        for <git@vger.kernel.org>; Tue, 17 Nov 2020 08:12:55 -0800 (PST)
+Received: by mail-wm1-x342.google.com with SMTP id w24so3760740wmi.0
+        for <git@vger.kernel.org>; Tue, 17 Nov 2020 08:12:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=c1o3HZBCJUKehk8bRkjmxh7o5ADycOrNPBk/lBevBZ0=;
-        b=cc3jZczDxamTAOjkIvF4Xliv+v/sa/VboJ6WIrbTHyosxd2Lh9y8xxPLHHDV4AbDON
-         qLcY9k4lB3qa94uxUsinWzBuRydQwWK4Kq+uT6KBllky3HnPElSUs2PBfXafd1dIZ/qu
-         SGoBSV/eGOk0rz0U6zAxLZ+Gho9+18pRxGg+BAlanVAlDkPGD7wz2orAjZ1fd4u9+SdF
-         ebUeeSrX9tz79SAheGX+FVoHPxvEMi7GiPaCrJgdeKXZQLNo9x87nJx99zbEmMJBxamE
-         wDnqhI0rUmwL3mW1a0dreb1moSOz+hzF/Af7Zsc/PYlDn59vmEsw/hcX0DH0UhdVzX05
-         5LNQ==
+        bh=aL21iKmd5v0rxYG5x+Wy4wFwLVWBG3/jRW8wGRlnm6M=;
+        b=KTiM2Xn5XzeUuNy0Vol7GiQP10XInu0NjCwvAPMmEcek0w6j9ZhSTsxRWhIFkeD4HS
+         mH4ovv6Kcq41C7J7JVlUjWbRjbgeQBCNpiwlKVHjepHHjwlmOIRmF7ivNm0lqcHJxibX
+         nG0Rhfgl45+RFzxNxIx1KjO7oME+3GDGr2S1j9Z+JaebyvZWhJBPSLvYp3fwzMsBs/ms
+         u7Tpl/t9cbZMYp5NyiAzQn3San8gF71Haubyt322iTbRvF1bLbDI+HtmpNuLkso3KrDh
+         1NzuJFgLX/3HTgHvW+ZTV7QTctKZrKJuQ9kJrshUxRYUx7q4wgChYvRhk4/nzTQzO0jn
+         6odA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=c1o3HZBCJUKehk8bRkjmxh7o5ADycOrNPBk/lBevBZ0=;
-        b=Tm0kubZdeLdBs3tTs+KeALYwj0XZCwf0rJ9DeMvnfE5WZshMePgKgIOdIFYXaiLPty
-         wWkBCy5d9gzgn9kg/xfP6jhQqNEDMGDQZkOByeEr3upBev7AoNpSb7zhhDbkHk/BwY1v
-         0f3YjJiLOiL/CeUvqKzjffQfaThGGZkCjGJH/0BNPZKgX2dd++diFMH2JpKbcBclFIDS
-         DWJUWVsFplMg+5QFR/jMbJXPmKz25GsYI9G0//dxTpWU4IXcAjH7illdAZu714dz62ek
-         wXqEceskQvb5++I10zx9vPqOTxGdZUb3/FRh/OtOowIuuSgXIS+U4jkYLMPWurWw/qKY
-         m8NQ==
-X-Gm-Message-State: AOAM531ttPSfrRgXrETYzHwVlNauhTDWqJ3WuKJteByaKUl9nlTZJqeV
-        nMnQXBxqcEoKNu6JMWWlBhkyggPpTYQ=
-X-Google-Smtp-Source: ABdhPJzt/ixvoXKJRV79dT6nrzCPL9H6aXxqVIHi/I7zEDggPfWpx9h4/+vuMjDAGaD7gkIYc9l4LA==
-X-Received: by 2002:a1c:61c5:: with SMTP id v188mr359805wmb.141.1605629572901;
-        Tue, 17 Nov 2020 08:12:52 -0800 (PST)
+        bh=aL21iKmd5v0rxYG5x+Wy4wFwLVWBG3/jRW8wGRlnm6M=;
+        b=Sebx1Qk2uS19GeZeWAZw/NR2u/K+jJj8fhzjj+1l/hoT/mqtCxJUKr12UTnnfUX688
+         TdENwyl3mNQUKfBMCXYXFDdeBj5eGxTjbfvWwVLjc8qMrAqp0DQeUB3cTF3fC+qIcggg
+         RfDf/ezLsC5OznIDtDdAGQZnwvsu47lzT4ulKL8pM/x4xFd5u+VxFmm+Dxco9OcgWuc6
+         rtONhyvZuBUpCZHElTnQBZGuR+LICCUI4v0pZYv5rIoikSORjpRMxjsiA1/cjUQh1mLg
+         z8ZivbzjHyMKNdusRwC8Qs/7PGU/d/PfzFFJ+GiyoxdAw7/rHDH2/z1LR0khBGqI6kA2
+         mM1A==
+X-Gm-Message-State: AOAM532r4heBJ92qM9ENr+rHPalcfWRp5ieeq4JzxQFvp9FMPT9HUe7A
+        Qz7AkJuOnkHfB/5Lf9w4nzIMmh5iVPM=
+X-Google-Smtp-Source: ABdhPJwURu91J4xSlFjPUa9dPN6DbZl5aMkIoMPnsw43P/91fqRGtKwIXbDDI4yXVr0PsWm5vPA2MQ==
+X-Received: by 2002:a1c:63d7:: with SMTP id x206mr443390wmb.34.1605629573868;
+        Tue, 17 Nov 2020 08:12:53 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b124sm4272729wmh.13.2020.11.17.08.12.52
+        by smtp.gmail.com with ESMTPSA id l16sm27064818wrx.5.2020.11.17.08.12.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2020 08:12:52 -0800 (PST)
-Message-Id: <4da4b69114b597cf27baee63313663ccd1d8d28c.1605629549.git.gitgitgadget@gmail.com>
+        Tue, 17 Nov 2020 08:12:53 -0800 (PST)
+Message-Id: <cfa29c7f714f8225714e9dc052e37b4402bc9863.1605629549.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.762.v2.git.1605629547.gitgitgadget@gmail.com>
 References: <pull.762.git.1605221038.gitgitgadget@gmail.com>
         <pull.762.v2.git.1605629547.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 17 Nov 2020 16:12:25 +0000
-Subject: [PATCH v2 25/27] tests(git-p4): transition to the default branch name
- `main`
+Date:   Tue, 17 Nov 2020 16:12:26 +0000
+Subject: [PATCH v2 26/27] t99*: adjust the references to the default branch
+ name "main"
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,220 +84,537 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In the previous commits, we adjusted the test suite to use the branch
-name `main` for initial branches.
+Carefully excluding t9902, which sees independent development elsewhere
+at the time of writing, we use `main` as the default branch name in
+t9903. This trick was performed via
 
-The `git p4`-related tests are a bit harder to adjust because `git p4`
-uses the ref `refs/heads/p4/master` to track the remote branches, and
-for now, we do not want to change that (this might be the subject of a
-future patch series). We only need to adjust for the actual initial
-branch name to be changed to `main`.
+	$ (cd t &&
+	   sed -i -e 's/master/main/g' -e 's/MASTER/MAIN/g' \
+		-e 's/Master/Main/g' -- t99*.sh lib-cvs.sh &&
+	   git checkout HEAD -- t9902\*)
 
 This allows us to define `GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main`
-for those tests.
+for all tests (except the ones we specifically excluded for now).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t9800-git-p4-basic.sh        |  2 +-
- t/t9801-git-p4-branch.sh       | 16 ++++++++--------
- t/t9806-git-p4-options.sh      | 18 +++++++++---------
- t/t9807-git-p4-submit.sh       |  2 +-
- t/t9811-git-p4-label-import.sh |  2 +-
- t/test-lib.sh                  |  2 +-
- 6 files changed, 21 insertions(+), 21 deletions(-)
+ t/t9903-bash-prompt.sh | 114 ++++++++++++++++++++---------------------
+ t/test-lib.sh          |   4 +-
+ 2 files changed, 59 insertions(+), 59 deletions(-)
 
-diff --git a/t/t9800-git-p4-basic.sh b/t/t9800-git-p4-basic.sh
-index c98c1dfc23..0c543a8708 100755
---- a/t/t9800-git-p4-basic.sh
-+++ b/t/t9800-git-p4-basic.sh
-@@ -226,7 +226,7 @@ test_expect_success 'clone --bare should make a bare repository' '
- 		git config --get --bool core.bare true &&
- 		git rev-parse --verify refs/remotes/p4/master &&
- 		git rev-parse --verify refs/remotes/p4/HEAD &&
--		git rev-parse --verify refs/heads/master &&
-+		git rev-parse --verify refs/heads/main &&
- 		git rev-parse --verify HEAD
- 	)
- '
-diff --git a/t/t9801-git-p4-branch.sh b/t/t9801-git-p4-branch.sh
-index a3abd778f9..94161d4b57 100755
---- a/t/t9801-git-p4-branch.sh
-+++ b/t/t9801-git-p4-branch.sh
-@@ -67,7 +67,7 @@ test_expect_success 'import main, no branch detection' '
- 	(
- 		cd "$git" &&
- 		git log --oneline --graph --decorate --all &&
--		git rev-list master -- >wc &&
-+		git rev-list main -- >wc &&
- 		test_line_count = 4 wc
- 	)
- '
-@@ -78,7 +78,7 @@ test_expect_success 'import branch1, no branch detection' '
- 	(
- 		cd "$git" &&
- 		git log --oneline --graph --decorate --all &&
--		git rev-list master -- >wc &&
-+		git rev-list main -- >wc &&
- 		test_line_count = 2 wc
- 	)
- '
-@@ -89,7 +89,7 @@ test_expect_success 'import branch2, no branch detection' '
- 	(
- 		cd "$git" &&
- 		git log --oneline --graph --decorate --all &&
--		git rev-list master -- >wc &&
-+		git rev-list main -- >wc &&
- 		test_line_count = 2 wc
- 	)
- '
-@@ -100,7 +100,7 @@ test_expect_success 'import depot, no branch detection' '
- 	(
- 		cd "$git" &&
- 		git log --oneline --graph --decorate --all &&
--		git rev-list master -- >wc &&
-+		git rev-list main -- >wc &&
- 		test_line_count = 8 wc
- 	)
- '
-@@ -114,7 +114,7 @@ test_expect_success 'import depot, branch detection' '
- 		git log --oneline --graph --decorate --all &&
- 
- 		# 4 main commits
--		git rev-list master -- >wc &&
-+		git rev-list main -- >wc &&
- 		test_line_count = 4 wc &&
- 
- 		# 3 main, 1 integrate, 1 on branch2
-@@ -137,7 +137,7 @@ test_expect_success 'import depot, branch detection, branchList branch definitio
- 		git log --oneline --graph --decorate --all &&
- 
- 		# 4 main commits
--		git rev-list master -- >wc &&
-+		git rev-list main -- >wc &&
- 		test_line_count = 4 wc &&
- 
- 		# 3 main, 1 integrate, 1 on branch2
-@@ -484,7 +484,7 @@ test_expect_success 'use-client-spec detect-branches files in top-level' '
- 	(
- 		cd "$git" &&
- 		git p4 sync --detect-branches --use-client-spec //depot/usecs@all &&
--		git checkout -b master p4/usecs/b1 &&
-+		git checkout -b main p4/usecs/b1 &&
- 		test_path_is_file b1-file1 &&
- 		test_path_is_missing b2-file2 &&
- 		test_path_is_missing b1 &&
-@@ -537,7 +537,7 @@ test_expect_success 'use-client-spec detect-branches skips files in branches' '
- 	(
- 		cd "$git" &&
- 		git p4 sync --detect-branches --use-client-spec //depot/usecs@all &&
--		git checkout -b master p4/usecs/b3 &&
-+		git checkout -b main p4/usecs/b3 &&
- 		test_path_is_file b1-file1 &&
- 		test_path_is_file b3-file3_2 &&
- 		test_path_is_missing b3-file3_1
-diff --git a/t/t9806-git-p4-options.sh b/t/t9806-git-p4-options.sh
-index 4e794a01bf..0beae2e3f3 100755
---- a/t/t9806-git-p4-options.sh
-+++ b/t/t9806-git-p4-options.sh
-@@ -27,14 +27,14 @@ test_expect_success 'clone no --git-dir' '
- 	test_must_fail git p4 clone --git-dir=xx //depot
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index ab5da2cabc..a77daa7419 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -28,7 +28,7 @@ test_expect_success 'setup for prompt tests' '
+ 	echo 3 >file &&
+ 	git commit -m "third b1" file &&
+ 	git tag -a -m msg2 t2 &&
+-	git checkout -b b2 master &&
++	git checkout -b b2 main &&
+ 	echo 0 >file &&
+ 	git commit -m "second b2" file &&
+ 	echo 00 >file &&
+@@ -37,20 +37,20 @@ test_expect_success 'setup for prompt tests' '
+ 	git commit -m "yet another b2" file &&
+ 	mkdir ignored_dir &&
+ 	echo "ignored_dir/" >>.gitignore &&
+-	git checkout master
++	git checkout main
  '
  
--test_expect_success 'clone --branch should checkout master' '
-+test_expect_success 'clone --branch should checkout main' '
- 	git p4 clone --branch=refs/remotes/p4/sb --dest="$git" //depot &&
- 	test_when_finished cleanup_git &&
- 	(
- 		cd "$git" &&
- 		git rev-parse refs/remotes/p4/sb >sb &&
--		git rev-parse refs/heads/master >master &&
--		test_cmp sb master &&
-+		git rev-parse refs/heads/main >main &&
-+		test_cmp sb main &&
- 		git rev-parse HEAD >head &&
- 		test_cmp sb head
- 	)
-@@ -147,22 +147,22 @@ test_expect_success 'clone --changesfile, @all' '
- 	test_must_fail git p4 clone --changesfile="$TRASH_DIRECTORY/cf" --dest="$git" //depot@all
+ test_expect_success 'prompt - branch name' '
+-	printf " (master)" >expected &&
++	printf " (main)" >expected &&
+ 	__git_ps1 >"$actual" &&
+ 	test_cmp expected "$actual"
  '
  
--# imports both master and p4/master in refs/heads
-+# imports both main and p4/master in refs/heads
- # requires --import-local on sync to find p4 refs/heads
--# does not update master on sync, just p4/master
-+# does not update main on sync, just p4/master
- test_expect_success 'clone/sync --import-local' '
- 	git p4 clone --import-local --dest="$git" //depot@1,2 &&
- 	test_when_finished cleanup_git &&
+ test_expect_success SYMLINKS 'prompt - branch name - symlink symref' '
+-	printf " (master)" >expected &&
+-	test_when_finished "git checkout master" &&
++	printf " (main)" >expected &&
++	test_when_finished "git checkout main" &&
+ 	test_config core.preferSymlinkRefs true &&
+-	git checkout master &&
++	git checkout main &&
+ 	__git_ps1 >"$actual" &&
+ 	test_cmp expected "$actual"
+ '
+@@ -58,7 +58,7 @@ test_expect_success SYMLINKS 'prompt - branch name - symlink symref' '
+ test_expect_success 'prompt - unborn branch' '
+ 	printf " (unborn)" >expected &&
+ 	git checkout --orphan unborn &&
+-	test_when_finished "git checkout master" &&
++	test_when_finished "git checkout main" &&
+ 	__git_ps1 >"$actual" &&
+ 	test_cmp expected "$actual"
+ '
+@@ -72,7 +72,7 @@ test_expect_success FUNNYNAMES 'prompt - with newline in path' '
+ with
+ newline" &&
+ 	mkdir "$repo_with_newline" &&
+-	printf " (master)" >expected &&
++	printf " (main)" >expected &&
+ 	git init "$repo_with_newline" &&
+ 	test_when_finished "rm -rf \"$repo_with_newline\"" &&
+ 	mkdir "$repo_with_newline"/subdir &&
+@@ -87,7 +87,7 @@ test_expect_success 'prompt - detached head' '
+ 	printf " ((%s...))" $(git log -1 --format="%h" --abbrev=13 b1^) >expected &&
+ 	test_config core.abbrev 13 &&
+ 	git checkout b1^ &&
+-	test_when_finished "git checkout master" &&
++	test_when_finished "git checkout main" &&
+ 	__git_ps1 >"$actual" &&
+ 	test_cmp expected "$actual"
+ '
+@@ -95,7 +95,7 @@ test_expect_success 'prompt - detached head' '
+ test_expect_success 'prompt - describe detached head - contains' '
+ 	printf " ((t2~1))" >expected &&
+ 	git checkout b1^ &&
+-	test_when_finished "git checkout master" &&
++	test_when_finished "git checkout main" &&
  	(
- 		cd "$git" &&
--		git log --oneline refs/heads/master >lines &&
-+		git log --oneline refs/heads/main >lines &&
- 		test_line_count = 2 lines &&
- 		git log --oneline refs/heads/p4/master >lines &&
- 		test_line_count = 2 lines &&
- 		test_must_fail git p4 sync &&
+ 		GIT_PS1_DESCRIBE_STYLE=contains &&
+ 		__git_ps1 >"$actual"
+@@ -106,7 +106,7 @@ test_expect_success 'prompt - describe detached head - contains' '
+ test_expect_success 'prompt - describe detached head - branch' '
+ 	printf " ((tags/t2~1))" >expected &&
+ 	git checkout b1^ &&
+-	test_when_finished "git checkout master" &&
++	test_when_finished "git checkout main" &&
+ 	(
+ 		GIT_PS1_DESCRIBE_STYLE=branch &&
+ 		__git_ps1 >"$actual"
+@@ -117,7 +117,7 @@ test_expect_success 'prompt - describe detached head - branch' '
+ test_expect_success 'prompt - describe detached head - describe' '
+ 	printf " ((t1-1-g%s))" $(git log -1 --format="%h" b1^) >expected &&
+ 	git checkout b1^ &&
+-	test_when_finished "git checkout master" &&
++	test_when_finished "git checkout main" &&
+ 	(
+ 		GIT_PS1_DESCRIBE_STYLE=describe &&
+ 		__git_ps1 >"$actual"
+@@ -128,7 +128,7 @@ test_expect_success 'prompt - describe detached head - describe' '
+ test_expect_success 'prompt - describe detached head - default' '
+ 	printf " ((t2))" >expected &&
+ 	git checkout --detach b1 &&
+-	test_when_finished "git checkout master" &&
++	test_when_finished "git checkout main" &&
+ 	__git_ps1 >"$actual" &&
+ 	test_cmp expected "$actual"
+ '
+@@ -152,7 +152,7 @@ test_expect_success 'prompt - deep inside .git directory' '
+ '
  
- 		git p4 sync --import-local &&
--		git log --oneline refs/heads/master >lines &&
-+		git log --oneline refs/heads/main >lines &&
- 		test_line_count = 2 lines &&
- 		git log --oneline refs/heads/p4/master >lines &&
- 		test_line_count = 3 lines
-@@ -174,7 +174,7 @@ test_expect_success 'clone --max-changes' '
- 	test_when_finished cleanup_git &&
+ test_expect_success 'prompt - inside bare repository' '
+-	printf " (BARE:master)" >expected &&
++	printf " (BARE:main)" >expected &&
+ 	git init --bare bare.git &&
+ 	test_when_finished "rm -rf bare.git" &&
  	(
- 		cd "$git" &&
--		git log --oneline refs/heads/master >lines &&
-+		git log --oneline refs/heads/main >lines &&
- 		test_line_count = 2 lines
- 	)
+@@ -172,7 +172,7 @@ test_expect_success 'prompt - interactive rebase' '
+ 	test_when_finished "rm -f fake_editor.sh" &&
+ 	test_set_editor "$TRASH_DIRECTORY/fake_editor.sh" &&
+ 	git checkout b1 &&
+-	test_when_finished "git checkout master" &&
++	test_when_finished "git checkout main" &&
+ 	git rebase -i HEAD^ &&
+ 	test_when_finished "git rebase --abort" &&
+ 	__git_ps1 >"$actual" &&
+@@ -182,7 +182,7 @@ test_expect_success 'prompt - interactive rebase' '
+ test_expect_success 'prompt - rebase merge' '
+ 	printf " (b2|REBASE 1/3)" >expected &&
+ 	git checkout b2 &&
+-	test_when_finished "git checkout master" &&
++	test_when_finished "git checkout main" &&
+ 	test_must_fail git rebase --merge b1 b2 &&
+ 	test_when_finished "git rebase --abort" &&
+ 	__git_ps1 >"$actual" &&
+@@ -192,7 +192,7 @@ test_expect_success 'prompt - rebase merge' '
+ test_expect_success 'prompt - rebase am' '
+ 	printf " (b2|REBASE 1/3)" >expected &&
+ 	git checkout b2 &&
+-	test_when_finished "git checkout master" &&
++	test_when_finished "git checkout main" &&
+ 	test_must_fail git rebase --apply b1 b2 &&
+ 	test_when_finished "git rebase --abort" &&
+ 	__git_ps1 >"$actual" &&
+@@ -202,7 +202,7 @@ test_expect_success 'prompt - rebase am' '
+ test_expect_success 'prompt - merge' '
+ 	printf " (b1|MERGING)" >expected &&
+ 	git checkout b1 &&
+-	test_when_finished "git checkout master" &&
++	test_when_finished "git checkout main" &&
+ 	test_must_fail git merge b2 &&
+ 	test_when_finished "git reset --hard" &&
+ 	__git_ps1 >"$actual" &&
+@@ -210,7 +210,7 @@ test_expect_success 'prompt - merge' '
  '
-@@ -237,7 +237,7 @@ test_expect_success 'clone --use-client-spec' '
- 			git init &&
- 			git config git-p4.useClientSpec true &&
- 			git p4 sync //depot/... &&
--			git checkout -b master p4/master &&
-+			git checkout -b main p4/master &&
- 			test_path_is_file bus/dir/f4 &&
- 			test_path_is_missing file1
- 		)
-diff --git a/t/t9807-git-p4-submit.sh b/t/t9807-git-p4-submit.sh
-index eaaae414a1..e45104d1ef 100755
---- a/t/t9807-git-p4-submit.sh
-+++ b/t/t9807-git-p4-submit.sh
-@@ -114,7 +114,7 @@ test_expect_success 'submit with allowSubmit' '
- 		git config git-p4.skipSubmitEdit true &&
- 		git config git-p4.allowSubmit "nobranch" &&
- 		test_must_fail git p4 submit &&
--		git config git-p4.allowSubmit "nobranch,master" &&
-+		git config git-p4.allowSubmit "nobranch,main" &&
- 		git p4 submit
- 	)
+ 
+ test_expect_success 'prompt - cherry-pick' '
+-	printf " (master|CHERRY-PICKING)" >expected &&
++	printf " (main|CHERRY-PICKING)" >expected &&
+ 	test_must_fail git cherry-pick b1 b1^ &&
+ 	test_when_finished "git cherry-pick --abort" &&
+ 	__git_ps1 >"$actual" &&
+@@ -222,7 +222,7 @@ test_expect_success 'prompt - cherry-pick' '
  '
-diff --git a/t/t9811-git-p4-label-import.sh b/t/t9811-git-p4-label-import.sh
-index c1446f26ab..c722b5a176 100755
---- a/t/t9811-git-p4-label-import.sh
-+++ b/t/t9811-git-p4-label-import.sh
-@@ -185,7 +185,7 @@ test_expect_success 'tag that cannot be exported' '
- 		git add main/f12 &&
- 		git commit -m "adding f12" &&
- 		git tag -m "tag on a_branch" GIT_TAG_ON_A_BRANCH &&
--		git checkout master &&
-+		git checkout main &&
- 		git p4 submit --export-labels
- 	) &&
+ 
+ test_expect_success 'prompt - revert' '
+-	printf " (master|REVERTING)" >expected &&
++	printf " (main|REVERTING)" >expected &&
+ 	test_must_fail git revert b1^ b1 &&
+ 	test_when_finished "git revert --abort" &&
+ 	__git_ps1 >"$actual" &&
+@@ -234,7 +234,7 @@ test_expect_success 'prompt - revert' '
+ '
+ 
+ test_expect_success 'prompt - bisect' '
+-	printf " (master|BISECTING)" >expected &&
++	printf " (main|BISECTING)" >expected &&
+ 	git bisect start &&
+ 	test_when_finished "git bisect reset" &&
+ 	__git_ps1 >"$actual" &&
+@@ -242,7 +242,7 @@ test_expect_success 'prompt - bisect' '
+ '
+ 
+ test_expect_success 'prompt - dirty status indicator - clean' '
+-	printf " (master)" >expected &&
++	printf " (main)" >expected &&
  	(
+ 		GIT_PS1_SHOWDIRTYSTATE=y &&
+ 		__git_ps1 >"$actual"
+@@ -251,7 +251,7 @@ test_expect_success 'prompt - dirty status indicator - clean' '
+ '
+ 
+ test_expect_success 'prompt - dirty status indicator - dirty worktree' '
+-	printf " (master *)" >expected &&
++	printf " (main *)" >expected &&
+ 	echo "dirty" >file &&
+ 	test_when_finished "git reset --hard" &&
+ 	(
+@@ -262,7 +262,7 @@ test_expect_success 'prompt - dirty status indicator - dirty worktree' '
+ '
+ 
+ test_expect_success 'prompt - dirty status indicator - dirty index' '
+-	printf " (master +)" >expected &&
++	printf " (main +)" >expected &&
+ 	echo "dirty" >file &&
+ 	test_when_finished "git reset --hard" &&
+ 	git add -u &&
+@@ -274,7 +274,7 @@ test_expect_success 'prompt - dirty status indicator - dirty index' '
+ '
+ 
+ test_expect_success 'prompt - dirty status indicator - dirty index and worktree' '
+-	printf " (master *+)" >expected &&
++	printf " (main *+)" >expected &&
+ 	echo "dirty index" >file &&
+ 	test_when_finished "git reset --hard" &&
+ 	git add -u &&
+@@ -288,7 +288,7 @@ test_expect_success 'prompt - dirty status indicator - dirty index and worktree'
+ 
+ test_expect_success 'prompt - dirty status indicator - orphan branch - clean' '
+ 	printf " (orphan #)" >expected &&
+-	test_when_finished "git checkout master" &&
++	test_when_finished "git checkout main" &&
+ 	git checkout --orphan orphan &&
+ 	git reset --hard &&
+ 	(
+@@ -300,7 +300,7 @@ test_expect_success 'prompt - dirty status indicator - orphan branch - clean' '
+ 
+ test_expect_success 'prompt - dirty status indicator - orphan branch - dirty index' '
+ 	printf " (orphan +)" >expected &&
+-	test_when_finished "git checkout master" &&
++	test_when_finished "git checkout main" &&
+ 	git checkout --orphan orphan &&
+ 	(
+ 		GIT_PS1_SHOWDIRTYSTATE=y &&
+@@ -311,7 +311,7 @@ test_expect_success 'prompt - dirty status indicator - orphan branch - dirty ind
+ 
+ test_expect_success 'prompt - dirty status indicator - orphan branch - dirty index and worktree' '
+ 	printf " (orphan *+)" >expected &&
+-	test_when_finished "git checkout master" &&
++	test_when_finished "git checkout main" &&
+ 	git checkout --orphan orphan &&
+ 	>file &&
+ 	(
+@@ -322,7 +322,7 @@ test_expect_success 'prompt - dirty status indicator - orphan branch - dirty ind
+ '
+ 
+ test_expect_success 'prompt - dirty status indicator - shell variable unset with config disabled' '
+-	printf " (master)" >expected &&
++	printf " (main)" >expected &&
+ 	echo "dirty" >file &&
+ 	test_when_finished "git reset --hard" &&
+ 	test_config bash.showDirtyState false &&
+@@ -334,7 +334,7 @@ test_expect_success 'prompt - dirty status indicator - shell variable unset with
+ '
+ 
+ test_expect_success 'prompt - dirty status indicator - shell variable unset with config enabled' '
+-	printf " (master)" >expected &&
++	printf " (main)" >expected &&
+ 	echo "dirty" >file &&
+ 	test_when_finished "git reset --hard" &&
+ 	test_config bash.showDirtyState true &&
+@@ -346,7 +346,7 @@ test_expect_success 'prompt - dirty status indicator - shell variable unset with
+ '
+ 
+ test_expect_success 'prompt - dirty status indicator - shell variable set with config disabled' '
+-	printf " (master)" >expected &&
++	printf " (main)" >expected &&
+ 	echo "dirty" >file &&
+ 	test_when_finished "git reset --hard" &&
+ 	test_config bash.showDirtyState false &&
+@@ -358,7 +358,7 @@ test_expect_success 'prompt - dirty status indicator - shell variable set with c
+ '
+ 
+ test_expect_success 'prompt - dirty status indicator - shell variable set with config enabled' '
+-	printf " (master *)" >expected &&
++	printf " (main *)" >expected &&
+ 	echo "dirty" >file &&
+ 	test_when_finished "git reset --hard" &&
+ 	test_config bash.showDirtyState true &&
+@@ -382,7 +382,7 @@ test_expect_success 'prompt - dirty status indicator - not shown inside .git dir
+ '
+ 
+ test_expect_success 'prompt - stash status indicator - no stash' '
+-	printf " (master)" >expected &&
++	printf " (main)" >expected &&
+ 	(
+ 		GIT_PS1_SHOWSTASHSTATE=y &&
+ 		__git_ps1 >"$actual"
+@@ -391,7 +391,7 @@ test_expect_success 'prompt - stash status indicator - no stash' '
+ '
+ 
+ test_expect_success 'prompt - stash status indicator - stash' '
+-	printf " (master $)" >expected &&
++	printf " (main $)" >expected &&
+ 	echo 2 >file &&
+ 	git stash &&
+ 	test_when_finished "git stash drop" &&
+@@ -417,7 +417,7 @@ test_expect_success 'prompt - stash status indicator - not shown inside .git dir
+ '
+ 
+ test_expect_success 'prompt - untracked files status indicator - no untracked files' '
+-	printf " (master)" >expected &&
++	printf " (main)" >expected &&
+ 	(
+ 		GIT_PS1_SHOWUNTRACKEDFILES=y &&
+ 		cd otherrepo &&
+@@ -427,7 +427,7 @@ test_expect_success 'prompt - untracked files status indicator - no untracked fi
+ '
+ 
+ test_expect_success 'prompt - untracked files status indicator - untracked files' '
+-	printf " (master %%)" >expected &&
++	printf " (main %%)" >expected &&
+ 	(
+ 		GIT_PS1_SHOWUNTRACKEDFILES=y &&
+ 		__git_ps1 >"$actual"
+@@ -436,7 +436,7 @@ test_expect_success 'prompt - untracked files status indicator - untracked files
+ '
+ 
+ test_expect_success 'prompt - untracked files status indicator - empty untracked dir' '
+-	printf " (master)" >expected &&
++	printf " (main)" >expected &&
+ 	mkdir otherrepo/untracked-dir &&
+ 	test_when_finished "rm -rf otherrepo/untracked-dir" &&
+ 	(
+@@ -448,7 +448,7 @@ test_expect_success 'prompt - untracked files status indicator - empty untracked
+ '
+ 
+ test_expect_success 'prompt - untracked files status indicator - non-empty untracked dir' '
+-	printf " (master %%)" >expected &&
++	printf " (main %%)" >expected &&
+ 	mkdir otherrepo/untracked-dir &&
+ 	test_when_finished "rm -rf otherrepo/untracked-dir" &&
+ 	>otherrepo/untracked-dir/untracked-file &&
+@@ -461,7 +461,7 @@ test_expect_success 'prompt - untracked files status indicator - non-empty untra
+ '
+ 
+ test_expect_success 'prompt - untracked files status indicator - untracked files outside cwd' '
+-	printf " (master %%)" >expected &&
++	printf " (main %%)" >expected &&
+ 	(
+ 		mkdir -p ignored_dir &&
+ 		cd ignored_dir &&
+@@ -472,7 +472,7 @@ test_expect_success 'prompt - untracked files status indicator - untracked files
+ '
+ 
+ test_expect_success 'prompt - untracked files status indicator - shell variable unset with config disabled' '
+-	printf " (master)" >expected &&
++	printf " (main)" >expected &&
+ 	test_config bash.showUntrackedFiles false &&
+ 	(
+ 		sane_unset GIT_PS1_SHOWUNTRACKEDFILES &&
+@@ -482,7 +482,7 @@ test_expect_success 'prompt - untracked files status indicator - shell variable
+ '
+ 
+ test_expect_success 'prompt - untracked files status indicator - shell variable unset with config enabled' '
+-	printf " (master)" >expected &&
++	printf " (main)" >expected &&
+ 	test_config bash.showUntrackedFiles true &&
+ 	(
+ 		sane_unset GIT_PS1_SHOWUNTRACKEDFILES &&
+@@ -492,7 +492,7 @@ test_expect_success 'prompt - untracked files status indicator - shell variable
+ '
+ 
+ test_expect_success 'prompt - untracked files status indicator - shell variable set with config disabled' '
+-	printf " (master)" >expected &&
++	printf " (main)" >expected &&
+ 	test_config bash.showUntrackedFiles false &&
+ 	(
+ 		GIT_PS1_SHOWUNTRACKEDFILES=y &&
+@@ -502,7 +502,7 @@ test_expect_success 'prompt - untracked files status indicator - shell variable
+ '
+ 
+ test_expect_success 'prompt - untracked files status indicator - shell variable set with config enabled' '
+-	printf " (master %%)" >expected &&
++	printf " (main %%)" >expected &&
+ 	test_config bash.showUntrackedFiles true &&
+ 	(
+ 		GIT_PS1_SHOWUNTRACKEDFILES=y &&
+@@ -522,13 +522,13 @@ test_expect_success 'prompt - untracked files status indicator - not shown insid
+ '
+ 
+ test_expect_success 'prompt - format string starting with dash' '
+-	printf -- "-master" >expected &&
++	printf -- "-main" >expected &&
+ 	__git_ps1 "-%s" >"$actual" &&
+ 	test_cmp expected "$actual"
+ '
+ 
+ test_expect_success 'prompt - pc mode' '
+-	printf "BEFORE: (\${__git_ps1_branch_name}):AFTER\\nmaster" >expected &&
++	printf "BEFORE: (\${__git_ps1_branch_name}):AFTER\\nmain" >expected &&
+ 	(
+ 		__git_ps1 "BEFORE:" ":AFTER" >"$actual" &&
+ 		test_must_be_empty "$actual" &&
+@@ -538,7 +538,7 @@ test_expect_success 'prompt - pc mode' '
+ '
+ 
+ test_expect_success 'prompt - bash color pc mode - branch name' '
+-	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear}):AFTER\\nmaster" >expected &&
++	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear}):AFTER\\nmain" >expected &&
+ 	(
+ 		GIT_PS1_SHOWCOLORHINTS=y &&
+ 		__git_ps1 "BEFORE:" ":AFTER" >"$actual" &&
+@@ -550,7 +550,7 @@ test_expect_success 'prompt - bash color pc mode - branch name' '
+ test_expect_success 'prompt - bash color pc mode - detached head' '
+ 	printf "BEFORE: (${c_red}\${__git_ps1_branch_name}${c_clear}):AFTER\\n(%s...)" $(git log -1 --format="%h" b1^) >expected &&
+ 	git checkout b1^ &&
+-	test_when_finished "git checkout master" &&
++	test_when_finished "git checkout main" &&
+ 	(
+ 		GIT_PS1_SHOWCOLORHINTS=y &&
+ 		__git_ps1 "BEFORE:" ":AFTER" &&
+@@ -560,7 +560,7 @@ test_expect_success 'prompt - bash color pc mode - detached head' '
+ '
+ 
+ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty worktree' '
+-	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}*${c_clear}):AFTER\\nmaster" >expected &&
++	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}*${c_clear}):AFTER\\nmain" >expected &&
+ 	echo "dirty" >file &&
+ 	test_when_finished "git reset --hard" &&
+ 	(
+@@ -573,7 +573,7 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirt
+ '
+ 
+ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty index' '
+-	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_green}+${c_clear}):AFTER\\nmaster" >expected &&
++	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_green}+${c_clear}):AFTER\\nmain" >expected &&
+ 	echo "dirty" >file &&
+ 	test_when_finished "git reset --hard" &&
+ 	git add -u &&
+@@ -587,7 +587,7 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirt
+ '
+ 
+ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirty index and worktree' '
+-	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}*${c_green}+${c_clear}):AFTER\\nmaster" >expected &&
++	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}*${c_green}+${c_clear}):AFTER\\nmain" >expected &&
+ 	echo "dirty index" >file &&
+ 	test_when_finished "git reset --hard" &&
+ 	git add -u &&
+@@ -602,7 +602,7 @@ test_expect_success 'prompt - bash color pc mode - dirty status indicator - dirt
+ '
+ 
+ test_expect_success 'prompt - bash color pc mode - dirty status indicator - before root commit' '
+-	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_green}#${c_clear}):AFTER\\nmaster" >expected &&
++	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_green}#${c_clear}):AFTER\\nmain" >expected &&
+ 	(
+ 		GIT_PS1_SHOWDIRTYSTATE=y &&
+ 		GIT_PS1_SHOWCOLORHINTS=y &&
+@@ -628,7 +628,7 @@ test_expect_success 'prompt - bash color pc mode - inside .git directory' '
+ '
+ 
+ test_expect_success 'prompt - bash color pc mode - stash status indicator' '
+-	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_lblue}\$${c_clear}):AFTER\\nmaster" >expected &&
++	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_lblue}\$${c_clear}):AFTER\\nmain" >expected &&
+ 	echo 2 >file &&
+ 	git stash &&
+ 	test_when_finished "git stash drop" &&
+@@ -642,7 +642,7 @@ test_expect_success 'prompt - bash color pc mode - stash status indicator' '
+ '
+ 
+ test_expect_success 'prompt - bash color pc mode - untracked files status indicator' '
+-	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}%%${c_clear}):AFTER\\nmaster" >expected &&
++	printf "BEFORE: (${c_green}\${__git_ps1_branch_name}${c_clear} ${c_red}%%${c_clear}):AFTER\\nmain" >expected &&
+ 	(
+ 		GIT_PS1_SHOWUNTRACKEDFILES=y &&
+ 		GIT_PS1_SHOWCOLORHINTS=y &&
+@@ -653,7 +653,7 @@ test_expect_success 'prompt - bash color pc mode - untracked files status indica
+ '
+ 
+ test_expect_success 'prompt - zsh color pc mode' '
+-	printf "BEFORE: (%%F{green}master%%f):AFTER" >expected &&
++	printf "BEFORE: (%%F{green}main%%f):AFTER" >expected &&
+ 	(
+ 		ZSH_VERSION=5.0.0 &&
+ 		GIT_PS1_SHOWCOLORHINTS=y &&
+@@ -664,7 +664,7 @@ test_expect_success 'prompt - zsh color pc mode' '
+ '
+ 
+ test_expect_success 'prompt - hide if pwd ignored - env var unset, config disabled' '
+-	printf " (master)" >expected &&
++	printf " (main)" >expected &&
+ 	test_config bash.hideIfPwdIgnored false &&
+ 	(
+ 		cd ignored_dir &&
+@@ -685,7 +685,7 @@ test_expect_success 'prompt - hide if pwd ignored - env var unset, config disabl
+ '
+ 
+ test_expect_success 'prompt - hide if pwd ignored - env var unset, config unset' '
+-	printf " (master)" >expected &&
++	printf " (main)" >expected &&
+ 	(
+ 		cd ignored_dir &&
+ 		__git_ps1 >"$actual"
+@@ -704,7 +704,7 @@ test_expect_success 'prompt - hide if pwd ignored - env var unset, config unset,
+ '
+ 
+ test_expect_success 'prompt - hide if pwd ignored - env var set, config disabled' '
+-	printf " (master)" >expected &&
++	printf " (main)" >expected &&
+ 	test_config bash.hideIfPwdIgnored false &&
+ 	(
+ 		cd ignored_dir &&
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 58267802f9..0ec93a2eec 100644
+index 0ec93a2eec..d39bdf04ce 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -263,7 +263,7 @@ case "$TEST_NUMBER" in
+@@ -257,13 +257,13 @@ case "$TRASH_DIRECTORY" in
+ esac
+ 
+ case "$TEST_NUMBER" in
+-3404|4013|5310|5526|6300|7064|7817)
++3404|4013|5310|5526|6300|7064|7817|9902)
+ 	# Avoid conflicts with patch series that are cooking at the same time
+ 	# as the patch series changing the default of `init.defaultBranch`.
  	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
  	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  	;;
--[0-8]*|9[0-7]*)
-+[0-8]*|9[0-8]*)
+-[0-8]*|9[0-8]*)
++*)
  	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  	;;
