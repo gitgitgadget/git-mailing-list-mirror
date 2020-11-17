@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B2FAC8300A
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 16:13:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8875BC64EBC
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 16:13:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5C06A24655
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 16:13:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30A82221F8
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 16:13:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MiGGzSbu"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oEwgJxkp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727489AbgKQQM7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Nov 2020 11:12:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57782 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727407AbgKQQMw (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727448AbgKQQMw (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 17 Nov 2020 11:12:52 -0500
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCF1AC061A04
-        for <git@vger.kernel.org>; Tue, 17 Nov 2020 08:12:51 -0800 (PST)
-Received: by mail-wm1-x343.google.com with SMTP id w24so3760557wmi.0
-        for <git@vger.kernel.org>; Tue, 17 Nov 2020 08:12:51 -0800 (PST)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57768 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727413AbgKQQMs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Nov 2020 11:12:48 -0500
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2149EC0613CF
+        for <git@vger.kernel.org>; Tue, 17 Nov 2020 08:12:48 -0800 (PST)
+Received: by mail-wr1-x442.google.com with SMTP id u12so16518784wrt.0
+        for <git@vger.kernel.org>; Tue, 17 Nov 2020 08:12:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ZSx9WaOV8Pj+GeE1SE6euqE0bTOkxQynTAQMrV328A4=;
-        b=MiGGzSbuPztdGCDcWKAbr3Txa5ev6QSaGJGd/+ihvCtAsBl7fe5oTeJvyZd/15ZZNt
-         kDhykG7QMjqkzMxA1jHAj5RHCzaAk6icctBCiPufGKoNVb92rSRsYm74Q8D7MdlkTOTF
-         b5jdYF6hC3KubWtMc2GW9Kgi7TPRLFdZkn9HbRz4bsvn6xiQpUKv/DklamFeQ7wUBVlc
-         JPUQgek3SKFnsxqI8FbULfHtz/12VC1RT7wW1IsvZu2Z3yCjC5V4siXwN2qDJfbjtzO9
-         V2oVs/YKVsnkn3bzHlyjirbITUBC75+eok+FQsgAcYF2/dNA68GeoLW1AgbTNU8wq7SC
-         IJqw==
+        bh=esuiaVwX5BoC6K7GjUiIIYFLk9J0bjTSSdng3qhqHUc=;
+        b=oEwgJxkpPlX5a4Fh/71iXG1+/8ojU/k97QPhgsWJh1DjpGK+YxO2T1hAElKsPktysL
+         wurddYMIDMz4/9E84gkZSG6VMtE6jkhGmkovPE5J7ccJ54g4fz1O8yDlnG1fTymGEtPR
+         vj5+GqnmCo0e0GEXBtiaJpW7n4kU2B1Y2C9lvDgn8RQp6eqK0Oz3vbnhKSCLJT+8eE8E
+         5hbKnb5NNP633zreTp8b2gsVl8yp0qXTthdZCTy/6euh/G7G+YLMRogKT/3NHij7glMw
+         JL8syUicv1K2jqP1oDFwPR3ImwxhFE3MrUU/yUU2dyXPJu3qNaE09J6d7v0RrBO8i2cj
+         oqLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ZSx9WaOV8Pj+GeE1SE6euqE0bTOkxQynTAQMrV328A4=;
-        b=mJ3z6LXEjZX0HbzswPyWTijKwqgOcqC9eK9T51fix52ZE8PjJPpdyad6Vn7SnEB/Ck
-         ZY3nou9gsFYn744ZYFbllbX3cqurcGBbleeTa942Rdya2lnN8EhRxKb1q9Sr2ClMcfaZ
-         r37U5/5GGx1yT76kevKqCj6EUFXI3RTOn4Z6MAtU74boUKLmHQ0knlYsJqQV0pZK38+r
-         JVktw2csmFW7o6XzZ6GkQ8EHTj5S3tH0RuTTV6JqGzVVuVgwPzz+iva57HXPbIbsC7lK
-         l/qRCUptcgIcwLZN02vmuXurHRwIxyS7rLpyIlWXm0K+EVd6IE/DEnIyu4lVOW0jZtgT
-         Mb8w==
-X-Gm-Message-State: AOAM531WqCXHIBsKl4ggSSXlw+b9sTaBOX0E0UE5AjP+9fQNBfKl8Anq
-        cn2cbWQweDiXdSCO1kqIKqlfpr7dX+g=
-X-Google-Smtp-Source: ABdhPJzHbF4Tyg/X/6uHmJ40ZR1shOgS/j2MCEAq7Sl6pLaogCitApCnku2K7zwMcMlrWWlhUifK8Q==
-X-Received: by 2002:a7b:cbcf:: with SMTP id n15mr399115wmi.156.1605629570423;
-        Tue, 17 Nov 2020 08:12:50 -0800 (PST)
+        bh=esuiaVwX5BoC6K7GjUiIIYFLk9J0bjTSSdng3qhqHUc=;
+        b=fSGJp3XO+uv9DHPhX/pM3yAKH1pVqm843Vs0cMlGwORKGu1J8B6K8SNK0GB2syrOWw
+         SJF/rfF0PTFGOvlcdEWqWTyhQVUwf6jlviMSwWh/hX57bOTddXgQCuGLa2APnhMztCaD
+         JeDg4g3IxBD0s34fOlo/jXh25Y1CCBkuoabZCXkpNwCb+rk+BCb3AEG1Luq0/bbktp8B
+         Y6v17Ie+k/zx0MvCH2rBEk8ntGiB33aZafcFVjD8hvxTeYh+hMsYTJL1ncOZjCFsI1WZ
+         IU/NmQVDpLTYyjmnnhNBIULGncO2JSXSq3OVLdJxD+Ivh1armCKcZHgF5ZOFnx1lNsmf
+         H0Vw==
+X-Gm-Message-State: AOAM533tL+SVS9liITEM9S+fLbj5QctnRsKicgv2gdAfhI7PkCLTbI1i
+        YOQrCmH2dGaBx8rKU1mR3W1FA6IdwIk=
+X-Google-Smtp-Source: ABdhPJzxeVptlXmjz3hF5xdD9GE42+5bQcaz2ePb4voNwg8/dXrc84ZICsaSy4yBlYydNLC0t97iBA==
+X-Received: by 2002:a5d:6783:: with SMTP id v3mr241826wru.45.1605629566770;
+        Tue, 17 Nov 2020 08:12:46 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 60sm25602639wrs.69.2020.11.17.08.12.49
+        by smtp.gmail.com with ESMTPSA id n10sm29297659wrx.9.2020.11.17.08.12.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2020 08:12:50 -0800 (PST)
-Message-Id: <5cac0065c87e6acf1ed95ed5f24c1027048e7b6f.1605629549.git.gitgitgadget@gmail.com>
+        Tue, 17 Nov 2020 08:12:46 -0800 (PST)
+Message-Id: <04878e2268c17bd480e2fccace780462142dd665.1605629548.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.762.v2.git.1605629547.gitgitgadget@gmail.com>
 References: <pull.762.git.1605221038.gitgitgadget@gmail.com>
         <pull.762.v2.git.1605629547.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 17 Nov 2020 16:12:22 +0000
-Subject: [PATCH v2 22/27] t8*: adjust the references to the default branch
- name "main"
+Date:   Tue, 17 Nov 2020 16:12:18 +0000
+Subject: [PATCH v2 18/27] t64*: preemptively adjust alignment to prepare for
+ `master` -> `main`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,151 +84,102 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This trick was performed via
-
-	$ (cd t &&
-	   sed -i -e 's/master/main/g' -e 's/MASTER/MAIN/g' \
-		-e 's/Master/Main/g' -- t8*.sh annotate*.sh)
-
-This allows us to define `GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main`
-for those tests.
+We are in the process of renaming the default branch name to `main`,
+which is two characters shorter than `master`. Therefore, some lines
+need to be adjusted in t6416, t6422 and t6427 that want to align text
+involving the default branch name.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/annotate-tests.sh             |  8 ++++----
- t/t8001-annotate.sh             |  2 +-
- t/t8003-blame-corner-cases.sh   |  4 ++--
- t/t8004-blame-with-conflicts.sh | 14 +++++++-------
- t/test-lib.sh                   |  2 +-
- 5 files changed, 15 insertions(+), 15 deletions(-)
+ t/t6416-recursive-corner-cases.sh    | 8 ++++----
+ t/t6422-merge-rename-corner-cases.sh | 4 ++--
+ t/t6427-diff3-conflict-markers.sh    | 4 ++--
+ 3 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
-index 3aee61d2cc..ee5d2d4cf8 100644
---- a/t/annotate-tests.sh
-+++ b/t/annotate-tests.sh
-@@ -95,7 +95,7 @@ test_expect_success 'blame 2 authors' '
- '
+diff --git a/t/t6416-recursive-corner-cases.sh b/t/t6416-recursive-corner-cases.sh
+index 887c2195a9..dbccc3158a 100755
+--- a/t/t6416-recursive-corner-cases.sh
++++ b/t/t6416-recursive-corner-cases.sh
+@@ -385,7 +385,7 @@ test_expect_success 'git detects conflict merging criss-cross+modify/delete' '
+ 		test_line_count = 2 out &&
  
- test_expect_success 'setup B1 lines (branch1)' '
--	git checkout -b branch1 master &&
-+	git checkout -b branch1 main &&
- 	echo "3A slow green fox jumps into the" >>file &&
- 	echo "well." >>file &&
- 	GIT_AUTHOR_NAME="B1" GIT_AUTHOR_EMAIL="B1@test.git" \
-@@ -107,7 +107,7 @@ test_expect_success 'blame 2 authors + 1 branch1 author' '
- '
+ 		git rev-parse >expect       \
+-			master:file  B:file &&
++			master:file    B:file &&
+ 		git rev-parse   >actual      \
+ 			:1:file      :2:file &&
+ 		test_cmp expect actual
+@@ -407,7 +407,7 @@ test_expect_success 'git detects conflict merging criss-cross+modify/delete, rev
+ 		test_line_count = 2 out &&
  
- test_expect_success 'setup B2 lines (branch2)' '
--	git checkout -b branch2 master &&
-+	git checkout -b branch2 main &&
- 	sed -e "s/2A quick brown/4A quick brown lazy dog/" <file >file.new &&
- 	mv file.new file &&
- 	GIT_AUTHOR_NAME="B2" GIT_AUTHOR_EMAIL="B2@test.git" \
-@@ -131,11 +131,11 @@ test_expect_success 'blame --first-parent blames merge for branch1' '
- '
- 
- test_expect_success 'blame ancestor' '
--	check_count -h master A 2 B 2
-+	check_count -h main A 2 B 2
- '
- 
- test_expect_success 'blame great-ancestor' '
--	check_count -h master^ A 2
-+	check_count -h main^ A 2
- '
- 
- test_expect_success 'setup evil merge' '
-diff --git a/t/t8001-annotate.sh b/t/t8001-annotate.sh
-index 72176e42c1..3687fc58d8 100755
---- a/t/t8001-annotate.sh
-+++ b/t/t8001-annotate.sh
-@@ -7,7 +7,7 @@ PROG='git annotate'
- . "$TEST_DIRECTORY"/annotate-tests.sh
- 
- test_expect_success 'annotate old revision' '
--	git annotate file master >actual &&
-+	git annotate file main >actual &&
- 	awk "{ print \$3; }" <actual >authors &&
- 	test 2 = $(grep A <authors | wc -l) &&
- 	test 2 = $(grep B <authors | wc -l)
-diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases.sh
-index ba8013b002..2e499b4511 100755
---- a/t/t8003-blame-corner-cases.sh
-+++ b/t/t8003-blame-corner-cases.sh
-@@ -161,13 +161,13 @@ test_expect_success 'blame wholesale copy and more in the index' '
- 
- test_expect_success 'blame during cherry-pick with file rename conflict' '
- 
--	test_when_finished "git reset --hard && git checkout master" &&
-+	test_when_finished "git reset --hard && git checkout main" &&
- 	git checkout HEAD~3 &&
- 	echo MOUSE >> mouse &&
- 	git mv mouse rodent &&
- 	git add rodent &&
- 	GIT_AUTHOR_NAME=Rodent git commit -m "rodent" &&
--	git checkout --detach master &&
-+	git checkout --detach main &&
- 	(git cherry-pick HEAD@{1} || test $? -eq 1) &&
- 	git show HEAD@{1}:rodent > rodent &&
- 	git add rodent &&
-diff --git a/t/t8004-blame-with-conflicts.sh b/t/t8004-blame-with-conflicts.sh
-index 9c353ab222..b6c992ec45 100755
---- a/t/t8004-blame-with-conflicts.sh
-+++ b/t/t8004-blame-with-conflicts.sh
-@@ -21,16 +21,16 @@ test_expect_success 'setup first case' '
- 	git add file2 &&
- 	git commit --author "U Gly <ug@localhost>" -m ugly &&
- 
--	# Back to master and change something
--	git checkout master &&
-+	# Back to main and change something
-+	git checkout main &&
- 	echo "
- 
- bla" >> file1 &&
- 	git commit --author "Old Line <ol@localhost>" -a -m file1.b &&
- 
--	# Back to foo and merge master
-+	# Back to foo and merge main
- 	git checkout foo &&
--	if git merge master; then
-+	if git merge main; then
- 		echo needed conflict here
- 		exit 1
- 	else
-@@ -44,8 +44,8 @@ Even more" > file2 &&
- 	git rm file1 &&
- 	git commit --author "M Result <mr@localhost>" -a -m merged &&
- 
--	# Back to master and change file1 again
--	git checkout master &&
-+	# Back to main and change file1 again
-+	git checkout main &&
- 	sed s/bla/foo/ <file1 >X &&
- 	rm file1 &&
- 	mv X file1 &&
-@@ -53,7 +53,7 @@ Even more" > file2 &&
- 
- 	# Try to merge into foo again
- 	git checkout foo &&
--	if git merge master; then
-+	if git merge main; then
- 		echo needed conflict here
- 		exit 1
- 	else
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 6ce12ad6d8..a63945569f 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -263,7 +263,7 @@ case "$TEST_NUMBER" in
- 	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
- 	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 	;;
--[0-7]*)
-+[0-8]*)
- 	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- 	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 	;;
+ 		git rev-parse >expect       \
+-			master:file  B:file &&
++			master:file    B:file &&
+ 		git rev-parse   >actual      \
+ 			:1:file      :3:file &&
+ 		test_cmp expect actual
+@@ -1553,7 +1553,7 @@ test_expect_failure 'check conflicting modes for regular file' '
+ # Setup:
+ #          L1---L2
+ #         /  \ /  \
+-#   master    X    ?
++#     master    X    ?
+ #         \  / \  /
+ #          R1---R2
+ #
+@@ -1748,7 +1748,7 @@ test_expect_success 'check nested conflicts' '
+ # Setup:
+ #          L1---L2---L3
+ #         /  \ /  \ /  \
+-#   master    X1   X2   ?
++#     master    X1   X2   ?
+ #         \  / \  / \  /
+ #          R1---R2---R3
+ #
+diff --git a/t/t6422-merge-rename-corner-cases.sh b/t/t6422-merge-rename-corner-cases.sh
+index 78bfaf17f0..e40a1b686f 100755
+--- a/t/t6422-merge-rename-corner-cases.sh
++++ b/t/t6422-merge-rename-corner-cases.sh
+@@ -1130,7 +1130,7 @@ test_conflicts_with_adds_and_renames() {
+ 	# Setup:
+ 	#          L
+ 	#         / \
+-	#   master   ?
++	#     master   ?
+ 	#         \ /
+ 	#          R
+ 	#
+@@ -1290,7 +1290,7 @@ test_conflicts_with_adds_and_renames add    add
+ # Setup:
+ #          L
+ #         / \
+-#   master   ?
++#     master   ?
+ #         \ /
+ #          R
+ #
+diff --git a/t/t6427-diff3-conflict-markers.sh b/t/t6427-diff3-conflict-markers.sh
+index f4655bb358..f7620e677c 100755
+--- a/t/t6427-diff3-conflict-markers.sh
++++ b/t/t6427-diff3-conflict-markers.sh
+@@ -43,7 +43,7 @@ test_expect_success 'check no merge base' '
+ # Setup:
+ #          L1
+ #         /  \
+-#   master    ?
++#     master    ?
+ #         \  /
+ #          R1
+ #
+@@ -101,7 +101,7 @@ test_expect_success 'check unique merge base' '
+ # Setup:
+ #          L1---L2--L3
+ #         /  \ /      \
+-#   master    X1       ?
++#     master    X1       ?
+ #         \  / \      /
+ #          R1---R2--R3
+ #
 -- 
 gitgitgadget
 
