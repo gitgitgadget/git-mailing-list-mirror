@@ -2,163 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81EF9C2D0E4
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 12:05:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19A6BC64E75
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 13:56:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2255424631
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 12:05:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B7733221F8
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 13:56:35 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H06+7htP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728166AbgKQMFZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Nov 2020 07:05:25 -0500
-Received: from relay6-d.mail.gandi.net ([217.70.183.198]:59199 "EHLO
-        relay6-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726807AbgKQMFY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Nov 2020 07:05:24 -0500
-X-Originating-IP: 103.82.80.230
-Received: from localhost (unknown [103.82.80.230])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id 8710CC0003;
-        Tue, 17 Nov 2020 12:05:21 +0000 (UTC)
-Date:   Tue, 17 Nov 2020 17:35:19 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Stefan Haller <stefan@haller-berlin.de>
-Cc:     git@vger.kernel.org, mlevedahl@gmail.com,
-        Johannes.Schindelin@gmx.de, gitster@pobox.com
-Subject: Re: [PATCH v2 1/1] git-gui: Auto-rescan on activate
-Message-ID: <20201117120519.nlm7hwnilzwalgho@yadavpratyush.com>
-References: <fe2f24e8-52f2-81fe-0ebd-ecd90b1acfb4@haller-berlin.de>
- <20201103161631.89971-1-stefan@haller-berlin.de>
- <20201103161631.89971-2-stefan@haller-berlin.de>
- <14be00ae-c2b6-87eb-2f4b-964a6df7b230@haller-berlin.de>
- <20201117073618.fjbi4ranmh5x3uxk@yadavpratyush.com>
- <4a37f6ce-276f-1c7e-1252-085a6f28c95b@haller-berlin.de>
+        id S1731702AbgKQN4V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Nov 2020 08:56:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36588 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731175AbgKQN4T (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Nov 2020 08:56:19 -0500
+Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E18E2C0613CF
+        for <git@vger.kernel.org>; Tue, 17 Nov 2020 05:56:19 -0800 (PST)
+Received: by mail-qv1-xf2d.google.com with SMTP id e14so3423450qve.3
+        for <git@vger.kernel.org>; Tue, 17 Nov 2020 05:56:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=K78INMWCpHECOXkHLjPkvUWskFNvIor89ZrrxjGSK7I=;
+        b=H06+7htPI184bqpsAtO6d/EAB/QuiF9iiftRnf6hH5+iGOFoI9bIz4aIpjmk5fmDdf
+         jKS+jYztxrn2Y4dyHThy1cepD+1/fe31svCxj5PS6/wqQMDjdWmIx2SU5PEmpugGbxMN
+         KeEVq9PRc3itMJmTrlWnP9cKF83yY9SdEvbUAdifQ3kSjTknsG+MSbpSzfH7+21W5bWa
+         +HCtOpUrS+CtknDOAbcrxHSP0C95CYenJ46jC0Mw/K66iBEpwVwA6QlSsQZg5l9zpFOE
+         27Wd1+yfIKrVO8ivk466TPxJEvWrqY5/uppn/AIhg1jy9fVPPkqG3Dh8Sj03ZGBz42z8
+         gEPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=K78INMWCpHECOXkHLjPkvUWskFNvIor89ZrrxjGSK7I=;
+        b=kcywozm0D+MzZsg/93X3W+Fyii82WvovLPIU8fhbVx37hAm0JWQKWy/HZwklWXgnhh
+         k9BkaVvdyUvYiwUKDV9bmdSwWWm5L5tME+joEJih00A+HmOcRJTcMljK4IbFfC2kwMQ2
+         QFhI+/LeWatv1Bi8vR160iDSuaN/JkVjFwWXBUI38k3pk0b+dqRmWQuISKeMrpN1Zzl8
+         GAQSScwi6xJwbkFMR2/qqMrxmlPNqd51KtcU/3A0nzq2Z6tAXjzOB5TcTHtPOiW90vzk
+         kz8/zI14Co0fDbvY09vcCgnIMRgxAu9skbN3nQ4pgX39BIwPL/zJqBoVdqpls1bifL2Z
+         p39g==
+X-Gm-Message-State: AOAM533GIobk+K4V5CvgzBzDl9oSqy7kB+4sPb3NY8XpYjv3DaHC70hc
+        C2LHz3XghH0TBm9LEzmhHuBlQC4ZxBm1yg==
+X-Google-Smtp-Source: ABdhPJzxuC17LkcDq7eTT/Sh2J2kNJvozMsCz0EKNFqheubcRO1Rh4jy1beLiTPhy9fSeMMxIZu+/Q==
+X-Received: by 2002:a0c:f651:: with SMTP id s17mr21169611qvm.32.1605621378547;
+        Tue, 17 Nov 2020 05:56:18 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:d8ec:3b9c:1add:941c? ([2600:1700:e72:80a0:d8ec:3b9c:1add:941c])
+        by smtp.gmail.com with UTF8SMTPSA id i4sm13720594qtw.22.2020.11.17.05.56.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Nov 2020 05:56:17 -0800 (PST)
+Subject: Re: ds/maintenance-part-3 (was Re: What's cooking in git.git (Nov
+ 2020, #02; Mon, 9))
+To:     Emily Shaffer <emilyshaffer@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <xmqq7dqu9jwh.fsf@gitster.c.googlers.com>
+ <d0123439-236c-1a62-294b-a3373465eadb@gmail.com>
+ <20201116235642.GA15562@google.com> <xmqqh7po7r3w.fsf@gitster.c.googlers.com>
+ <20201117010709.GB15562@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <29212864-ab96-5757-cbfb-f5621a43f8d8@gmail.com>
+Date:   Tue, 17 Nov 2020 08:56:16 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101
+ Thunderbird/83.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4a37f6ce-276f-1c7e-1252-085a6f28c95b@haller-berlin.de>
+In-Reply-To: <20201117010709.GB15562@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 17/11/20 12:13PM, Stefan Haller wrote:
-> On 17.11.20 8:36, Pratyush Yadav wrote:
-> > Hi Stefan,
-> > 
-> > On 14/11/20 08:14PM, Stefan Haller wrote:
-> >> On 03.11.20 17:16, Stefan Haller wrote:
-> >>> Do an automatic rescan whenever the git-gui window receives focus. Most other
-> >>> GUI tools do this, and it's very convenient; no more pressing F5 manually.
-> >>>
-> >>> People who don't like this behavior can turn it off in the Options dialog.
-> >>
-> >> Ping - any thoughts? I have been running with this patch for a few weeks
-> >> now, and I already don't want to miss it any more.
-> > 
-> > I have been staring at your patch for the last few days with indecision. 
-> > I have finally made up my mind. I do not think it is a good idea to hurt 
-> > the experience of a significant population of our users without at least 
-> > telling them how they can fix it.
-> > 
-> > The config option is not very visible at all. Experience has told me 
-> > that people don't often go looking around in the options menu to find a 
-> > fix for their problem. So we need to do a better job of educating them 
-> > why they might be experiencing slowdowns and how they can avoid them.
-> > 
-> > Let's take inspiration from git status. When the local branch diverges 
-> > from the upstream branch, git status shows you how many commits your 
-> > branch is ahead and how many commits behind upstream. This can be an 
-> > expensive operation if the divergence point is far behind. In those 
-> > cases, git status prints something like:
-> > 
-> >   It took 30.00 seconds to calculate the branch ahead/behind values.
-> >   You can use '--no-ahead-behind' to avoid this.
-> > 
-> > This made me aware this option existed and that I can use it to avoid 
-> > slowdowns.
-> > 
-> > We should do something similar for the auto rescan. Measure how long it 
-> > takes to finish the rescan and if it takes longer than X seconds then 
-> > tell the user that they can use this option to disable this. If they 
-> > don't mind the delay they can keep on using it.
-> > 
-> > I am working on a patch to add this. Will send it in a day or two.
+On 11/16/2020 8:07 PM, Emily Shaffer wrote:
+> On Mon, Nov 16, 2020 at 04:40:35PM -0800, Junio C Hamano wrote:
+>>
+>> Emily Shaffer <emilyshaffer@google.com> writes:
+>>
+>>> Because 'git maintenance unregister' spins a child process to call 'git
+>>> config --unset maintenance.repo <cwd>', it actually fails if "cwd"
+>>> contains a POSIX regular expression special character:
+>>>
+>>>   git config [<file-option>] --unset name [value_regex]
+>>
+>> Good find.  And it is even worse that value_regex uses ERE, not BRE,
+>> which means even an otherwise innocuous letter like '+' cannot be
+>> used without quoting.
 > 
-> Sounds good to me. While I personally don't think such a check is
-> necessary in this case, I also have nothing against it if you find it
-> important.
-> 
-> It just needs to be possible to disable that check itself, too. I
-> certainly wouldn't want to be bothered by it, even if the rescan should
-> take longer than whatever threshold you decide on. So if you put up a
-> dialog to inform the user, the dialog should ideally have a "Don't show
-> again" option.
+> I should have mentioned in the first letter than Jonathan Nieder was the
+> one who made the jump from "this is breaking in the buildbot but not
+> locally" to regular expression metachars. Credit where it's due.
 
-That's the plan. It will be a yes/no/cancel prompt. Saying yes or no 
-sets auto rescan to on/off and the message won't pop up again. Saying 
-cancel does nothing and you will see the popup again on the next long 
-rescan.
- 
-> 
-> >> Cc:-ing a few people who were involved in the discussion on Pratyush's
-> >> similar patch last summer. [0]
-> >>
-> >>
-> >> [0] <https://lore.kernel.org/git/20190728151726.9188-1-
-> >>      me@yadavpratyush.com/>
-> >>
-> >>
-> >>>
-> >>> Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
-> >>> ---
-> >>>  git-gui.sh     | 5 +++++
-> >>>  lib/option.tcl | 1 +
-> >>>  2 files changed, 6 insertions(+)
-> >>>
-> >>> diff --git a/git-gui.sh b/git-gui.sh
-> >>> index 867b8ce..14735a3 100755
-> >>> --- a/git-gui.sh
-> >>> +++ b/git-gui.sh
-> >>> @@ -906,6 +906,7 @@ set font_descs {
-> >>>  }
-> >>>  set default_config(gui.stageuntracked) ask
-> >>>  set default_config(gui.displayuntracked) true
-> >>> +set default_config(gui.autorescan) true
-> >>>
-> >>>  ######################################################################
-> >>>  ##
-> >>> @@ -4007,6 +4008,10 @@ bind .   <Alt-Key-2> {focus_widget $::ui_index}
-> >>>  bind .   <Alt-Key-3> {focus $::ui_diff}
-> >>>  bind .   <Alt-Key-4> {focus $::ui_comm}
-> >>>
-> >>> +if {[is_config_true gui.autorescan]} {
-> >>> +	bind .   <FocusIn>  { if {"%W" eq "."} do_rescan }
-> >>> +}
-> >>> +
-> >>>  set file_lists_last_clicked($ui_index) {}
-> >>>  set file_lists_last_clicked($ui_workdir) {}
-> >>>
-> >>> diff --git a/lib/option.tcl b/lib/option.tcl
-> >>> index e43971b..9e83db7 100644
-> >>> --- a/lib/option.tcl
-> >>> +++ b/lib/option.tcl
-> >>> @@ -145,6 +145,7 @@ proc do_options {} {
-> >>>  		{b merge.diffstat {mc "Show Diffstat After Merge"}}
-> >>>  		{t merge.tool {mc "Use Merge Tool"}}
-> >>>
-> >>> +		{b gui.autorescan  {mc "Auto-Rescan On Activate"}}
-> >>>  		{b gui.trustmtime  {mc "Trust File Modification Timestamps"}}
-> >>>  		{b gui.pruneduringfetch {mc "Prune Tracking Branches During Fetch"}}
-> >>>  		{b gui.matchtrackingbranch {mc "Match Tracking Branches"}}
-> >>> --
-> >>> 2.29.2
-> >>>
-> > 
+Thank you for finding and reporting this bug.
 
--- 
-Regards,
-Pratyush Yadav
+Can I at least have a short moment of griping about anyone putting
+regex characters into their directory names? ;)
+
+>>> You can demo it for yourself like so:
+>>>
+>>>   git init repro+for+maintenance
+>>>   git maintenance register
+>>>   git maintenance unregister
+>>>   echo $?	# returns '5'
+>>>   git config --list --global
+>>>
+>>> I see two paths forward:
+>>>
+>>
+>> 0. Quote the value_regex properly, instead of blindly using a value
+>>    that comes from the environment.
+
+Pulling the subcommand from my test enfironment using GIT_TRACE2_PERF=1
+I see the following quotes being used:
+
+git config --global --unset maintenance.repo "/repos/new+repo*test"
+
+I'm guessing that what we really want is to _escape_ the regex glob
+characters? This command works:
+
+git config --global --unset maintenance.repo "/repos/new\+repo\*test"
+
+The only place I see where we do that currently is in
+builtin/sparse-checkout.c:escaped_pattern(). Please let me know if
+you know of a more suitable way to escape regex characters.
+
+>>> 1. Teach 'git config' to learn either which regex parser to use
+>>> (including fixed), or at least to learn "value isn't a regex", or
+>>>
+>>> 2. Don't spin a child process in 'git maintenance [un]register' and
+>>> instead just call the config API.
+>>
+>>> I'd suggest #2. The config API is very nice, and seems to have a simple
+>>> way to add or remove configs to your global file in just a couple of
+>>> lines. If there's a reason why it's not simpler to do it that way, it's
+>>> my fault for missing the review :)
+>>
+>> My short-to-mid-term preference is to do #1 to allow a value to be
+>> spelled literally (i.e. remove entry with _this_ value, and add this
+>> one instead), and optionally do #2 as an optimization that is not
+>> essential.  I do not offhand know how you can make #2 alone fly
+>> without doing some form of #1, as I think the same value_regex that
+>> ought to be ERE to specify entries to be replaced needs to be used
+>> under the cover even if you use "config API" anyway.
+> 
+> Ah, right you are - I had figured the regex parsing was done earlier,
+> but it indeed looks to happen in
+> config.c:git_config_set_multivar_in_file_gently. Thanks.
+
+So the "real fix" is to allow a command-line option to 'git config'
+that makes the "value_regex" parameter a literal string? Of course,
+this would either require wiring an option down into
+git_config_set_multivar_in_file_gently() to treat the string as a
+literal _or_ to escape the input string in builtin/config.c.
+
+Am I understanding the intended plan here?
+
+Thanks,
+-Stolee
