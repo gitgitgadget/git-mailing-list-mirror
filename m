@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B831C64E69
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 16:13:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 127FFC64E8A
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 16:13:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0F772221F8
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 16:13:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B0E03221F8
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 16:13:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pzj20REt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aoTJp4yr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727369AbgKQQMl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Nov 2020 11:12:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57722 "EHLO
+        id S1727433AbgKQQMt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Nov 2020 11:12:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727359AbgKQQMj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Nov 2020 11:12:39 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF4CEC0613CF
-        for <git@vger.kernel.org>; Tue, 17 Nov 2020 08:12:38 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id p1so23699148wrf.12
-        for <git@vger.kernel.org>; Tue, 17 Nov 2020 08:12:38 -0800 (PST)
+        with ESMTP id S1727376AbgKQQMr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Nov 2020 11:12:47 -0500
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63B93C0617A7
+        for <git@vger.kernel.org>; Tue, 17 Nov 2020 08:12:46 -0800 (PST)
+Received: by mail-wr1-x444.google.com with SMTP id b6so23744987wrt.4
+        for <git@vger.kernel.org>; Tue, 17 Nov 2020 08:12:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=49I3S0+QIrBPnKWH8b2aH5md24BqJVQ+u4IIkthSw9Y=;
-        b=pzj20REtr187w0UzRrS3SfIAEtgeheQ1DWcKx2lxYI0XI3XSD/Uf5bjwxc3wA+5ybX
-         WrtMHU6tINzguyHekGcKxTkmBVaWDtCaO2MvaTq4oR7j56+PzPbbNoQJ2x1+vYvSCIxp
-         8g5kFtv3aqqmWaAGqLQEaL6VgyIqaSYhsr+rBjQYDUQPcRcEZIFvCvZNlVfSv3FLbz7s
-         GzeMa48+uo/p3xS9mHAohIvb15GpWHXBcIWGC+GNahfsLw1lCpbOmpxf0FYRxDvEqZtg
-         znBuSyFWXzaKTVHLKeE45nv/Deq+f6bhHBH0HfwoomkkINNd2CNq7CL8uBcEjbqd84ez
-         ovWg==
+        bh=EAyWzPv6YeuWoeDr30fg7MXYmuBLeRYFDEuRsPbbXXs=;
+        b=aoTJp4yr8q5MNhnxmyZ8Tj8bKoAEvcx8nZ714l9Jsvd8XswQfiF07f6j8xnx9Hj8N5
+         QetofySoc6rVLQZNZtV3zkTUgoLHjtlgNSTPsDAFRIA87hjwGgUF/ukR2Bn9SAONxvR+
+         c5vBZsFah+fjdhJrOKAwXkEX1wNI2u1inDorI7EApryLTVOWszol0ABk6Pe3jFyWCA8n
+         07TLp9OyZygAsr1sgvllC8spz48L/KZbFeR1AhorfTwBtcC4LX/1u5TOueZRvQQOTIvx
+         3wDpPvU94EGHdClH57kPLADY2sglZab6z15XMDVfFagW62OmmvYO0zc0NAK4gJn/RNu9
+         bymQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=49I3S0+QIrBPnKWH8b2aH5md24BqJVQ+u4IIkthSw9Y=;
-        b=XhEqBm3xTkVOVL+l5LY/kYFIdR3xVvo3pEexogH8rbImV0CtF/UtoSGv9OUeuIKTrT
-         rTsVnQBBwK4ARPfbzFsS+hsWqrMSAUCx9szlvlfW6Gwhd3m4nBVfpv1jLeL0xI1Jc9zK
-         ShnU5JdxBmAy0Lt0zQKvm0k7LV1EnQGpjVQcrr9i8m4exjHpEmd/6V1x49OB0laMJF54
-         s0DxOYnDyhd8WZ68gnl3SaUyojHxbKIbm/TI17zdkY/3v1nzo+wFYoU2i26qhQne9t0f
-         3vAT25DsRLPptyZ/yhet83NOMNcwuh84LPPRD+PUCgpB548qdzzi9ul2h/9SLhrEAThs
-         gwfg==
-X-Gm-Message-State: AOAM53027m/Zu3HdG+t3FWl3g86CELZ01JY2QAZA2W+mcVF0KwIkTQWG
-        ZTFBau3NZUY2dYNGuSzYr/AJX6zZht0=
-X-Google-Smtp-Source: ABdhPJyTC9VFP0pWgr0nJJ/3S31kBuMAKAQreyttwWkgFg5Pz4xE0UlvqapqfTgL8Veyg8Hj4xmeUg==
-X-Received: by 2002:adf:c847:: with SMTP id e7mr261589wrh.346.1605629556369;
-        Tue, 17 Nov 2020 08:12:36 -0800 (PST)
+        bh=EAyWzPv6YeuWoeDr30fg7MXYmuBLeRYFDEuRsPbbXXs=;
+        b=MqzrAxtWW+x3b2cZqghzWJxsGJgc4bWxXsQnlcM7xY7hDVmgLz4p9Y4FXGLy87PmKg
+         yya+FwwCf/k9UrOjD7+qjNRnz75+xmBe1qo2CLkroFB94eYk84WDvMTaqO+3aSqqGRyx
+         AwOxiRKe3YYV9Dl1zPy5SncgHBw9IQGR2njWXTgc7mpR6xFv//OL1/doGkhm9iv8NQkY
+         QkPO0kOwjrcnvMOtK6/sCiL8w+qsA14AhGHfIs1fIHF1nRhRNwOR50/MEsuN1fKBxvKy
+         p69yOskTVbpXZ1QEiYtqgBay4fwDrNsfDJRIhW4dAF+5JpCaebui7frBp1A56UdfsCZb
+         KsmQ==
+X-Gm-Message-State: AOAM532/o90y2PHcXfjSdBuCypOt1rTxYxSBktl6um/Bqj0oZV3HHq8J
+        rqbpUcL0JF4U5SxIneN9iTRBrp0jyuM=
+X-Google-Smtp-Source: ABdhPJz7ogOXKsjtv7Rr810/sisEvGtQx7reFXd2Ryt6DEz4aYfggQEX/LWwUxALer+mCwCu6RMmbQ==
+X-Received: by 2002:adf:df86:: with SMTP id z6mr265913wrl.57.1605629564228;
+        Tue, 17 Nov 2020 08:12:44 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b8sm3957944wmj.9.2020.11.17.08.12.35
+        by smtp.gmail.com with ESMTPSA id d3sm30329857wrg.16.2020.11.17.08.12.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2020 08:12:35 -0800 (PST)
-Message-Id: <2f62b3f4694096b38deba3359c7705296b4209fd.1605629548.git.gitgitgadget@gmail.com>
+        Tue, 17 Nov 2020 08:12:43 -0800 (PST)
+Message-Id: <c37d97c2d829a7a366742c7bf78eec461bb10d5d.1605629548.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.762.v2.git.1605629547.gitgitgadget@gmail.com>
 References: <pull.762.git.1605221038.gitgitgadget@gmail.com>
         <pull.762.v2.git.1605629547.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 17 Nov 2020 16:12:06 +0000
-Subject: [PATCH v2 06/27] t34*: adjust the references to the default branch
- name "main"
+Date:   Tue, 17 Nov 2020 16:12:15 +0000
+Subject: [PATCH v2 15/27] t55[4-9]*: adjust the references to the default
+ branch name "main"
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -84,1713 +84,1429 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Carefully excluding t3404, which sees independent development elsewhere
-at the time of writing, we use `main` as the default branch name in
-t34*. This trick was performed via
+This trick was performed via
 
 	$ (cd t &&
 	   sed -i -e 's/master/main/g' -e 's/MASTER/MAIN/g' \
-		-e 's/Master/Main/g' -- t34*.sh &&
-	   git checkout HEAD -- t34\*)
+		-e 's/Master/Main/g' -e 's/retsam/niam/g' \
+		-- t55[4-9]*.sh t556x*)
 
 This allows us to define `GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main`
 for those tests.
 
+Note that t5541 uses the reversed `master` name: `retsam`. We replace it
+by the equivalent for `main`: `niam`.
+
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t3400-rebase.sh                 | 60 +++++++++++++++----------------
- t/t3402-rebase-merge.sh           | 44 +++++++++++------------
- t/t3403-rebase-skip.sh            |  6 ++--
- t/t3405-rebase-malformed.sh       |  8 ++---
- t/t3406-rebase-message.sh         | 24 ++++++-------
- t/t3407-rebase-abort.sh           | 18 +++++-----
- t/t3408-rebase-multi-line.sh      |  2 +-
- t/t3409-rebase-preserve-merges.sh | 10 +++---
- t/t3412-rebase-root.sh            | 28 +++++++--------
- t/t3413-rebase-hook.sh            | 42 +++++++++++-----------
- t/t3415-rebase-autosquash.sh      |  2 +-
- t/t3416-rebase-onto-threedots.sh  | 54 ++++++++++++++--------------
- t/t3418-rebase-continue.sh        | 24 ++++++-------
- t/t3419-rebase-patch-id.sh        | 12 +++----
- t/t3420-rebase-autostash.sh       |  8 ++---
- t/t3423-rebase-reword.sh          |  6 ++--
- t/t3427-rebase-subtree.sh         | 20 +++++------
- t/t3430-rebase-merges.sh          | 16 ++++-----
- t/t3431-rebase-fork-point.sh      | 32 ++++++++---------
- t/t3432-rebase-fast-forward.sh    | 34 +++++++++---------
- t/t3434-rebase-i18n.sh            |  8 ++---
- t/t3435-rebase-gpg-sign.sh        |  4 +--
- t/t3436-rebase-more-options.sh    |  2 +-
- t/test-lib.sh                     |  8 ++++-
- 24 files changed, 239 insertions(+), 233 deletions(-)
+ t/t5540-http-push-webdav.sh          |  8 +--
+ t/t5541-http-push-smart.sh           | 40 +++++++-------
+ t/t5542-push-http-shallow.sh         |  8 +--
+ t/t5543-atomic-push.sh               | 80 +++++++++++++--------------
+ t/t5545-push-options.sh              | 62 ++++++++++-----------
+ t/t5548-push-porcelain.sh            | 64 +++++++++++-----------
+ t/t5550-http-fetch-dumb.sh           | 20 +++----
+ t/t5551-http-fetch-smart.sh          | 20 +++----
+ t/t5552-skipping-fetch-negotiator.sh |  2 +-
+ t/t5553-set-upstream.sh              | 82 ++++++++++++++--------------
+ t/t5561-http-backend.sh              |  4 +-
+ t/t556x_common                       |  8 +--
+ t/t5570-git-daemon.sh                | 16 +++---
+ t/t5571-pre-push-hook.sh             |  4 +-
+ t/t5572-pull-submodule.sh            |  4 +-
+ t/t5580-unc-paths.sh                 |  2 +-
+ t/t5581-http-curl-verbose.sh         |  2 +-
+ t/t5582-fetch-negative-refspec.sh    | 22 ++++----
+ t/test-lib.sh                        |  2 +-
+ 19 files changed, 225 insertions(+), 225 deletions(-)
 
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index 40d2975995..cdfc7e083a 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -24,15 +24,15 @@ test_expect_success 'prepare repository with topic branches' '
- 	git update-index --add Y &&
- 	git commit -m "Add Y." &&
- 	git checkout -b filemove &&
--	git reset --soft master &&
-+	git reset --soft main &&
- 	mkdir D &&
- 	git mv A D/A &&
- 	git commit -m "Move A." &&
--	git checkout -b my-topic-branch master &&
-+	git checkout -b my-topic-branch main &&
- 	echo Second >B &&
- 	git update-index --add B &&
- 	git commit -m "Add B." &&
--	git checkout -f master &&
-+	git checkout -f main &&
- 	echo Third >>A &&
- 	git update-index A &&
- 	git commit -m "Modify A." &&
-@@ -46,23 +46,23 @@ test_expect_success 'prepare repository with topic branches' '
- 
- test_expect_success 'rebase on dirty worktree' '
- 	echo dirty >>A &&
--	test_must_fail git rebase master
-+	test_must_fail git rebase main
+diff --git a/t/t5540-http-push-webdav.sh b/t/t5540-http-push-webdav.sh
+index 450321fddb..1973d8bb32 100755
+--- a/t/t5540-http-push-webdav.sh
++++ b/t/t5540-http-push-webdav.sh
+@@ -71,7 +71,7 @@ test_expect_success 'push already up-to-date' '
+ test_expect_success 'push to remote repository with unpacked refs' '
+ 	(cd "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo.git &&
+ 	 rm packed-refs &&
+-	 git update-ref refs/heads/master $ORIG_HEAD &&
++	 git update-ref refs/heads/main $ORIG_HEAD &&
+ 	 git --bare update-server-info) &&
+ 	git push &&
+ 	(cd "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo.git &&
+@@ -91,7 +91,7 @@ test_expect_success 'http-push fetches unpacked objects' '
+ 	 git remote rm origin &&
+ 	 git reflog expire --expire=0 --all &&
+ 	 git prune &&
+-	 git push -f -v $HTTPD_URL/dumb/test_repo_unpacked.git master)
++	 git push -f -v $HTTPD_URL/dumb/test_repo_unpacked.git main)
  '
  
- test_expect_success 'rebase on dirty cache' '
- 	git add A &&
--	test_must_fail git rebase master
-+	test_must_fail git rebase main
+ test_expect_success 'http-push fetches packed objects' '
+@@ -111,7 +111,7 @@ test_expect_success 'http-push fetches packed objects' '
+ 	 git remote remove origin &&
+ 	 git reflog expire --expire=0 --all &&
+ 	 git prune &&
+-	 git push -f -v $HTTPD_URL/dumb/test_repo_packed.git master)
++	 git push -f -v $HTTPD_URL/dumb/test_repo_packed.git main)
  '
  
--test_expect_success 'rebase against master' '
-+test_expect_success 'rebase against main' '
- 	git reset --hard HEAD &&
--	git rebase master
-+	git rebase main
+ test_expect_success 'create and delete remote branch' '
+@@ -163,7 +163,7 @@ test_expect_success 'PUT and MOVE sends object to URLs with SHA-1 hash suffix' '
  '
  
- test_expect_success 'rebase sets ORIG_HEAD to pre-rebase state' '
- 	git checkout -b orig-head topic &&
- 	pre="$(git rev-parse --verify HEAD)" &&
--	git rebase master &&
-+	git rebase main &&
- 	test_cmp_rev "$pre" ORIG_HEAD &&
- 	test_cmp_rev ! "$pre" HEAD
- '
-@@ -93,19 +93,19 @@ test_expect_success 'HEAD was detached during rebase' '
+ test_http_push_nonff "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo.git \
+-	"$ROOT_PATH"/test_repo_clone master
++	"$ROOT_PATH"/test_repo_clone main
  
- test_expect_success 'rebase from ambiguous branch name' '
- 	git checkout -b topic side &&
--	git rebase master
-+	git rebase main
+ test_expect_success 'push to password-protected repository (user in URL)' '
+ 	test_commit pw-user &&
+diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
+index 187454f5dd..ae90ed230b 100755
+--- a/t/t5541-http-push-smart.sh
++++ b/t/t5541-http-push-smart.sh
+@@ -142,23 +142,23 @@ test_expect_success 'used receive-pack service' '
  '
  
- test_expect_success 'rebase off of the previous branch using "-"' '
+ test_http_push_nonff "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo.git \
+-	"$ROOT_PATH"/test_repo_clone master 		success
++	"$ROOT_PATH"/test_repo_clone main 		success
+ 
+ test_expect_success 'push fails for non-fast-forward refs unmatched by remote helper' '
+ 	# create a dissimilarly-named remote ref so that git is unable to match the
+ 	# two refs (viz. local, remote) unless an explicit refspec is provided.
+-	git push origin master:retsam &&
++	git push origin main:niam &&
+ 
+ 	echo "change changed" > path2 &&
+ 	git commit -a -m path2 --amend &&
+ 
+-	# push master too; this ensures there is at least one '"'push'"' command to
++	# push main too; this ensures there is at least one '"'push'"' command to
+ 	# the remote helper and triggers interaction with the helper.
+-	test_must_fail git push -v origin +master master:retsam >output 2>&1'
++	test_must_fail git push -v origin +main main:niam >output 2>&1'
+ 
+ test_expect_success 'push fails for non-fast-forward refs unmatched by remote helper: remote output' '
+-	grep "^ + [a-f0-9]*\.\.\.[a-f0-9]* *master -> master (forced update)$" output &&
+-	grep "^ ! \[rejected\] *master -> retsam (non-fast-forward)$" output
++	grep "^ + [a-f0-9]*\.\.\.[a-f0-9]* *main -> main (forced update)$" output &&
++	grep "^ ! \[rejected\] *main -> niam (non-fast-forward)$" output
+ '
+ 
+ test_expect_success 'push fails for non-fast-forward refs unmatched by remote helper: our output' '
+@@ -167,7 +167,7 @@ test_expect_success 'push fails for non-fast-forward refs unmatched by remote he
+ '
+ 
+ test_expect_success 'push (chunked)' '
 -	git checkout master &&
 +	git checkout main &&
- 	git checkout HEAD^ &&
- 	git rebase @{-1} >expect.messages &&
--	git merge-base master HEAD >expect.forkpoint &&
-+	git merge-base main HEAD >expect.forkpoint &&
- 
--	git checkout master &&
-+	git checkout main &&
- 	git checkout HEAD^ &&
- 	git rebase - >actual.messages &&
--	git merge-base master HEAD >actual.forkpoint &&
-+	git merge-base main HEAD >actual.forkpoint &&
- 
- 	test_cmp expect.forkpoint actual.forkpoint &&
- 	# the next one is dubious---we may want to say "-",
-@@ -114,7 +114,7 @@ test_expect_success 'rebase off of the previous branch using "-"' '
+ 	test_commit commit path3 &&
+ 	HEAD=$(git rev-parse --verify HEAD) &&
+ 	test_config http.postbuffer 4 &&
+@@ -177,9 +177,9 @@ test_expect_success 'push (chunked)' '
+ 	 test $HEAD = $(git rev-parse --verify HEAD))
  '
  
- test_expect_success 'rebase a single mode change' '
--	git checkout master &&
-+	git checkout main &&
- 	git branch -D topic &&
- 	echo 1 >X &&
- 	git add X &&
-@@ -126,7 +126,7 @@ test_expect_success 'rebase a single mode change' '
- 	test_chmod +x A &&
- 	test_tick &&
- 	git commit -m modechange &&
--	GIT_TRACE=1 git rebase master
-+	GIT_TRACE=1 git rebase main
- '
- 
- test_expect_success 'rebase is not broken by diff.renames' '
-@@ -162,11 +162,11 @@ test_expect_success 'fail when upstream arg is missing and not configured' '
- test_expect_success 'rebase works with format.useAutoBase' '
- 	test_config format.useAutoBase true &&
- 	git checkout topic &&
--	git rebase master
-+	git rebase main
- '
- 
- test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg (--merge)' '
--	git checkout -b default-base master &&
-+	git checkout -b default-base main &&
- 	git checkout -b default topic &&
- 	git config branch.default.remote . &&
- 	git config branch.default.merge refs/heads/default-base &&
-@@ -184,7 +184,7 @@ test_expect_success 'default to common base in @{upstream}s reflog if no upstrea
- '
- 
- test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg (--apply)' '
--	git checkout -B default-base master &&
-+	git checkout -B default-base main &&
- 	git checkout -B default topic &&
- 	git config branch.default.remote . &&
- 	git config branch.default.merge refs/heads/default-base &&
-@@ -226,13 +226,13 @@ test_expect_success 'cherry-picked commits and fork-point work together' '
- 
- test_expect_success 'rebase --apply -q is quiet' '
- 	git checkout -b quiet topic &&
--	git rebase --apply -q master >output.out 2>&1 &&
-+	git rebase --apply -q main >output.out 2>&1 &&
- 	test_must_be_empty output.out
- '
- 
- test_expect_success 'rebase --merge -q is quiet' '
- 	git checkout -B quiet topic &&
--	git rebase --merge -q master >output.out 2>&1 &&
-+	git rebase --merge -q main >output.out 2>&1 &&
- 	test_must_be_empty output.out
- '
- 
-@@ -294,7 +294,7 @@ test_expect_success 'rebase commit with an ancient timestamp' '
- '
- 
- test_expect_success 'rebase with "From " line in commit message' '
--	git checkout -b preserve-from master~1 &&
-+	git checkout -b preserve-from main~1 &&
- 	cat >From_.msg <<EOF &&
- Somebody embedded an mbox in a commit message
- 
-@@ -310,7 +310,7 @@ EOF
- 	>From_ &&
- 	git add From_ &&
- 	git commit -F From_.msg &&
--	git rebase master &&
-+	git rebase main &&
- 	git log -1 --pretty=format:%B >out &&
- 	test_cmp From_.msg out
- '
-@@ -357,12 +357,12 @@ test_expect_success 'rebase --apply and .gitattributes' '
- 		git cherry-pick test &&
- 
- 		git checkout test &&
--		git rebase master &&
-+		git rebase main &&
- 		grep "smudged" a.txt &&
- 
- 		git checkout removal &&
- 		git reset --hard &&
--		git rebase master &&
-+		git rebase main &&
- 		grep "clean" a.txt
- 	)
- '
-@@ -402,20 +402,20 @@ test_expect_success 'rebase -c rebase.useBuiltin=false warning' '
- '
- 
- test_expect_success 'switch to branch checked out here' '
--	git checkout master &&
--	git rebase master master
-+	git checkout main &&
-+	git rebase main main
- '
- 
- test_expect_success 'switch to branch not checked out' '
--	git checkout master &&
-+	git checkout main &&
+-## References of remote: atomic1(1)            master(2) collateral(2) other(2)
+-## References of local :            atomic2(2) master(1) collateral(3) other(2) collateral1(3) atomic(1)
+-## Atomic push         :                       master(1) collateral(3)                         atomic(1)
++## References of remote: atomic1(1)            main(2) collateral(2) other(2)
++## References of local :            atomic2(2) main(1) collateral(3) other(2) collateral1(3) atomic(1)
++## Atomic push         :                       main(1) collateral(3)                         atomic(1)
+ test_expect_success 'push --atomic also prevents branch creation, reports collateral' '
+ 	# Setup upstream repo - empty for now
+ 	d=$HTTPD_DOCUMENT_ROOT_PATH/atomic-branches.git &&
+@@ -192,15 +192,15 @@ test_expect_success 'push --atomic also prevents branch creation, reports collat
+ 	test_commit atomic2 &&
+ 	git branch collateral &&
  	git branch other &&
--	git rebase master other
-+	git rebase main other
- '
+-	git push "$up" atomic1 master collateral other &&
++	git push "$up" atomic1 main collateral other &&
+ 	git tag -d atomic1 &&
  
- test_expect_success 'refuse to switch to branch checked out elsewhere' '
+ 	# collateral is a valid push, but should be failed by atomic push
+ 	git checkout collateral &&
+ 	test_commit collateral1 &&
+ 
+-	# Make master incompatible with upstream to provoke atomic
 -	git checkout master &&
++	# Make main incompatible with upstream to provoke atomic
 +	git checkout main &&
- 	git worktree add wt &&
--	test_must_fail git -C wt rebase master master 2>err &&
-+	test_must_fail git -C wt rebase main main 2>err &&
- 	test_i18ngrep "already checked out" err
+ 	git reset --hard HEAD^ &&
+ 
+ 	# Add a new branch which should be failed by atomic push. This is a
+@@ -208,7 +208,7 @@ test_expect_success 'push --atomic also prevents branch creation, reports collat
+ 	git branch atomic &&
+ 
+ 	# --atomic should cause entire push to be rejected
+-	test_must_fail git push --atomic "$up" master atomic collateral 2>output &&
++	test_must_fail git push --atomic "$up" main atomic collateral 2>output &&
+ 
+ 	# the new branch should not have been created upstream
+ 	test_must_fail git -C "$d" show-ref --verify refs/heads/atomic &&
+@@ -216,15 +216,15 @@ test_expect_success 'push --atomic also prevents branch creation, reports collat
+ 	# upstream should still reflect atomic2, the last thing we pushed
+ 	# successfully
+ 	git rev-parse atomic2 >expected &&
+-	# on master...
+-	git -C "$d" rev-parse refs/heads/master >actual &&
++	# on main...
++	git -C "$d" rev-parse refs/heads/main >actual &&
+ 	test_cmp expected actual &&
+ 	# ...and collateral.
+ 	git -C "$d" rev-parse refs/heads/collateral >actual &&
+ 	test_cmp expected actual &&
+ 
+ 	# the failed refs should be indicated to the user
+-	grep "^ ! .*rejected.* master -> master" output &&
++	grep "^ ! .*rejected.* main -> main" output &&
+ 
+ 	# the collateral failure refs should be indicated to the user
+ 	grep "^ ! .*rejected.* atomic -> atomic .*atomic push failed" output &&
+@@ -472,9 +472,9 @@ test_expect_success 'clone/fetch scrubs password from reflogs' '
+ 	test_commit prepare-for-force-fetch &&
+ 	git switch -c away &&
+ 	git fetch "$HTTPD_URL_USER_PASS/smart/test_repo.git" \
+-		+master:master &&
++		+main:main &&
+ 	# should have been scrubbed down to vanilla URL
+-	git log -g master >reflog &&
++	git log -g main >reflog &&
+ 	grep "$HTTPD_URL" reflog &&
+ 	! grep "$HTTPD_URL_USER_PASS" reflog
  '
- 
-diff --git a/t/t3402-rebase-merge.sh b/t/t3402-rebase-merge.sh
-index 6e032716a6..ed7fcb5a6c 100755
---- a/t/t3402-rebase-merge.sh
-+++ b/t/t3402-rebase-merge.sh
-@@ -19,10 +19,10 @@ test_expect_success setup '
- 	git commit -m"initial" &&
- 	git branch side &&
- 	echo "11 $T" >>original &&
--	git commit -a -m"master updates a bit." &&
-+	git commit -a -m"main updates a bit." &&
- 
- 	echo "12 $T" >>original &&
--	git commit -a -m"master updates a bit more." &&
-+	git commit -a -m"main updates a bit more." &&
- 
- 	git checkout side &&
- 	(echo "0 $T" && cat original) >renamed &&
-@@ -47,13 +47,13 @@ test_expect_success setup '
- '
- 
- test_expect_success 'reference merge' '
--	git merge -s recursive -m "reference merge" master
-+	git merge -s recursive -m "reference merge" main
- '
- 
- PRE_REBASE=$(git rev-parse test-rebase)
- test_expect_success rebase '
- 	git checkout test-rebase &&
--	GIT_TRACE=1 git rebase --merge master
-+	GIT_TRACE=1 git rebase --merge main
- '
- 
- test_expect_success 'test-rebase@{1} is pre rebase' '
-@@ -72,24 +72,24 @@ test_expect_success 'merge and rebase should match' '
- '
- 
- test_expect_success 'rebase the other way' '
--	git reset --hard master &&
-+	git reset --hard main &&
- 	git rebase --merge side
- '
- 
- test_expect_success 'rebase -Xtheirs' '
--	git checkout -b conflicting master~2 &&
-+	git checkout -b conflicting main~2 &&
- 	echo "AB $T" >> original &&
- 	git commit -mconflicting original &&
--	git rebase -Xtheirs master &&
-+	git rebase -Xtheirs main &&
- 	grep AB original &&
- 	! grep 11 original
- '
- 
- test_expect_success 'rebase -Xtheirs from orphan' '
--	git checkout --orphan orphan-conflicting master~2 &&
-+	git checkout --orphan orphan-conflicting main~2 &&
- 	echo "AB $T" >> original &&
- 	git commit -morphan-conflicting original &&
--	git rebase -Xtheirs master &&
-+	git rebase -Xtheirs main &&
- 	grep AB original &&
- 	! grep 11 original
- '
-@@ -107,9 +107,9 @@ test_expect_success 'merge and rebase should match' '
- 
- test_expect_success 'picking rebase' '
- 	git reset --hard side &&
--	git rebase --merge --onto master side^^ &&
--	mb=$(git merge-base master HEAD) &&
--	if test "$mb" = "$(git rev-parse master)"
-+	git rebase --merge --onto main side^^ &&
-+	mb=$(git merge-base main HEAD) &&
-+	if test "$mb" = "$(git rev-parse main)"
- 	then
- 		echo happy
- 	else
-@@ -140,11 +140,11 @@ test_expect_success 'rebase -s funny -Xopt' '
- 	EOF
- 	chmod +x test-bin/git-merge-funny &&
- 	git reset --hard &&
--	git checkout -b test-funny master^ &&
-+	git checkout -b test-funny main^ &&
- 	test_commit funny &&
+@@ -498,7 +498,7 @@ test_expect_success 'colorize errors/hints' '
+ 	cd "$ROOT_PATH"/test_repo_clone &&
+ 	test_must_fail git -c color.transport=always -c color.advice=always \
+ 		-c color.push=always \
+-		push origin origin/master^:master 2>act &&
++		push origin origin/main^:main 2>act &&
+ 	test_decode_color <act >decoded &&
+ 	test_i18ngrep "<RED>.*rejected.*<RESET>" decoded &&
+ 	test_i18ngrep "<RED>error: failed to push some refs" decoded &&
+diff --git a/t/t5542-push-http-shallow.sh b/t/t5542-push-http-shallow.sh
+index ddc1db722d..0d8f5219da 100755
+--- a/t/t5542-push-http-shallow.sh
++++ b/t/t5542-push-http-shallow.sh
+@@ -51,12 +51,12 @@ test_expect_success 'push to shallow repo via http' '
  	(
- 		PATH=./test-bin:$PATH &&
--		git rebase -s funny -Xopt master
-+		git rebase -s funny -Xopt main
+ 	cd full &&
+ 	commit 9 &&
+-	git push $HTTPD_URL/smart/repo.git +master:refs/remotes/top/master
++	git push $HTTPD_URL/smart/repo.git +main:refs/remotes/top/main
  	) &&
- 	test -f funny.was.run
- '
-@@ -165,7 +165,7 @@ test_expect_success 'rebase --skip works with two conflicts in a row' '
- test_expect_success '--reapply-cherry-picks' '
- 	git init repo &&
- 
--	# O(1-10) -- O(1-11) -- O(0-10) master
-+	# O(1-10) -- O(1-11) -- O(0-10) main
- 	#        \
- 	#         -- O(1-11) -- O(1-12) otherbranch
- 
-@@ -187,18 +187,18 @@ test_expect_success '--reapply-cherry-picks' '
- 	git -C repo commit -a -m "add 12 in another branch" &&
- 
- 	# Regular rebase fails, because the 1-11 commit is deduplicated
--	test_must_fail git -C repo rebase --merge master 2> err &&
-+	test_must_fail git -C repo rebase --merge main 2> err &&
- 	test_i18ngrep "error: could not apply.*add 12 in another branch" err &&
- 	git -C repo rebase --abort &&
- 
- 	# With --reapply-cherry-picks, it works
--	git -C repo rebase --merge --reapply-cherry-picks master
-+	git -C repo rebase --merge --reapply-cherry-picks main
- '
- 
- test_expect_success '--reapply-cherry-picks refrains from reading unneeded blobs' '
- 	git init server &&
- 
--	# O(1-10) -- O(1-11) -- O(1-12) master
-+	# O(1-10) -- O(1-11) -- O(1-12) main
- 	#        \
- 	#         -- O(0-10) otherbranch
- 
-@@ -220,18 +220,18 @@ test_expect_success '--reapply-cherry-picks refrains from reading unneeded blobs
- 	test_config -C server uploadpack.allowanysha1inwant 1 &&
- 
- 	git clone --filter=blob:none "file://$(pwd)/server" client &&
--	git -C client checkout origin/master &&
-+	git -C client checkout origin/main &&
- 	git -C client checkout origin/otherbranch &&
- 
- 	# Sanity check to ensure that the blobs from the merge base and "add
- 	# 11" are missing
- 	git -C client rev-list --objects --all --missing=print >missing_list &&
--	MERGE_BASE_BLOB=$(git -C server rev-parse master^^:file.txt) &&
--	ADD_11_BLOB=$(git -C server rev-parse master^:file.txt) &&
-+	MERGE_BASE_BLOB=$(git -C server rev-parse main^^:file.txt) &&
-+	ADD_11_BLOB=$(git -C server rev-parse main^:file.txt) &&
- 	grep "[?]$MERGE_BASE_BLOB" missing_list &&
- 	grep "[?]$ADD_11_BLOB" missing_list &&
- 
--	git -C client rebase --merge --reapply-cherry-picks origin/master &&
-+	git -C client rebase --merge --reapply-cherry-picks origin/main &&
- 
- 	# The blob from the merge base had to be fetched, but not "add 11"
- 	git -C client rev-list --objects --all --missing=print >missing_list &&
-diff --git a/t/t3403-rebase-skip.sh b/t/t3403-rebase-skip.sh
-index a927774910..360b46adef 100755
---- a/t/t3403-rebase-skip.sh
-+++ b/t/t3403-rebase-skip.sh
-@@ -48,7 +48,7 @@ test_expect_success setup '
- 	'
- 
- test_expect_success 'rebase with git am -3 (default)' '
--	test_must_fail git rebase master
-+	test_must_fail git rebase main
- '
- 
- test_expect_success 'rebase --skip can not be used with other options' '
-@@ -64,7 +64,7 @@ test_expect_success 'rebase moves back to skip-reference' '
- 	test refs/heads/skip-reference = $(git symbolic-ref HEAD) &&
- 	git branch post-rebase &&
- 	git reset --hard pre-rebase &&
--	test_must_fail git rebase master &&
-+	test_must_fail git rebase main &&
- 	echo "hello" > hello &&
- 	git add hello &&
- 	git rebase --continue &&
-@@ -75,7 +75,7 @@ test_expect_success 'rebase moves back to skip-reference' '
- test_expect_success 'checkout skip-merge' 'git checkout -f skip-merge'
- 
- test_expect_success 'rebase with --merge' '
--	test_must_fail git rebase --merge master
-+	test_must_fail git rebase --merge main
- '
- 
- test_expect_success 'rebase --skip with --merge' '
-diff --git a/t/t3405-rebase-malformed.sh b/t/t3405-rebase-malformed.sh
-index 860e63e444..7ef8bfa0ac 100755
---- a/t/t3405-rebase-malformed.sh
-+++ b/t/t3405-rebase-malformed.sh
-@@ -52,7 +52,7 @@ test_expect_success setup '
- 	git add file3 &&
- 	git commit --allow-empty-message -m "" &&
- 
--	git checkout master &&
-+	git checkout main &&
- 
- 	echo One >file1 &&
- 	test_tick &&
-@@ -62,7 +62,7 @@ test_expect_success setup '
- 
- test_expect_success 'rebase commit with multi-line subject' '
- 
--	git rebase master multi-line-subject &&
-+	git rebase main multi-line-subject &&
- 	git cat-file commit HEAD | sed -e "1,/^\$/d" >F1 &&
- 
- 	test_cmp F0 F1 &&
-@@ -70,14 +70,14 @@ test_expect_success 'rebase commit with multi-line subject' '
- '
- 
- test_expect_success 'rebase commit with diff in message' '
--	git rebase master diff-in-message &&
-+	git rebase main diff-in-message &&
- 	git cat-file commit HEAD | sed -e "1,/^$/d" >G1 &&
- 	test_cmp G0 G1 &&
- 	test_cmp G G0
- '
- 
- test_expect_success 'rebase -m commit with empty message' '
--	git rebase -m master empty-message-merge
-+	git rebase -m main empty-message-merge
- '
- 
- test_expect_success 'rebase -i commit with empty message' '
-diff --git a/t/t3406-rebase-message.sh b/t/t3406-rebase-message.sh
-index 4afc528165..00e271fb36 100755
---- a/t/t3406-rebase-message.sh
-+++ b/t/t3406-rebase-message.sh
-@@ -18,27 +18,27 @@ test_expect_success 'setup' '
- '
- 
- test_expect_success 'rebase -m' '
--	git rebase -m master >actual &&
-+	git rebase -m main >actual &&
- 	test_must_be_empty actual
- '
- 
--test_expect_success 'rebase against master twice' '
--	git rebase --apply master >out &&
-+test_expect_success 'rebase against main twice' '
-+	git rebase --apply main >out &&
- 	test_i18ngrep "Current branch topic is up to date" out
- '
- 
--test_expect_success 'rebase against master twice with --force' '
--	git rebase --force-rebase --apply master >out &&
-+test_expect_success 'rebase against main twice with --force' '
-+	git rebase --force-rebase --apply main >out &&
- 	test_i18ngrep "Current branch topic is up to date, rebase forced" out
- '
- 
--test_expect_success 'rebase against master twice from another branch' '
-+test_expect_success 'rebase against main twice from another branch' '
- 	git checkout topic^ &&
--	git rebase --apply master topic >out &&
-+	git rebase --apply main topic >out &&
- 	test_i18ngrep "Current branch topic is up to date" out
- '
- 
--test_expect_success 'rebase fast-forward to master' '
-+test_expect_success 'rebase fast-forward to main' '
- 	git checkout topic^ &&
- 	git rebase --apply topic >out &&
- 	test_i18ngrep "Fast-forwarded HEAD to topic" out
-@@ -46,21 +46,21 @@ test_expect_success 'rebase fast-forward to master' '
- 
- test_expect_success 'rebase --stat' '
- 	git reset --hard start &&
--	git rebase --stat master >diffstat.txt &&
-+	git rebase --stat main >diffstat.txt &&
- 	grep "^ fileX |  *1 +$" diffstat.txt
- '
- 
- test_expect_success 'rebase w/config rebase.stat' '
- 	git reset --hard start &&
- 	git config rebase.stat true &&
--	git rebase master >diffstat.txt &&
-+	git rebase main >diffstat.txt &&
- 	grep "^ fileX |  *1 +$" diffstat.txt
- '
- 
- test_expect_success 'rebase -n overrides config rebase.stat config' '
- 	git reset --hard start &&
- 	git config rebase.stat true &&
--	git rebase -n master >diffstat.txt &&
-+	git rebase -n main >diffstat.txt &&
- 	! grep "^ fileX |  *1 +$" diffstat.txt
- '
- 
-@@ -113,7 +113,7 @@ test_expect_success 'rebase -i onto unrelated history' '
- 	git init unrelated &&
- 	test_commit -C unrelated 1 &&
- 	git -C unrelated remote add -f origin "$PWD" &&
--	git -C unrelated branch --set-upstream-to=origin/master &&
-+	git -C unrelated branch --set-upstream-to=origin/main &&
- 	git -C unrelated -c core.editor=true rebase -i -v --stat >actual &&
- 	test_i18ngrep "Changes to " actual &&
- 	test_i18ngrep "5 files changed" actual
-diff --git a/t/t3407-rebase-abort.sh b/t/t3407-rebase-abort.sh
-index 97efea0f56..2c2a5b9c10 100755
---- a/t/t3407-rebase-abort.sh
-+++ b/t/t3407-rebase-abort.sh
-@@ -37,7 +37,7 @@ testrebase() {
- 		cd "$work_dir" &&
- 		# Clean up the state from the previous one
- 		git reset --hard pre-rebase &&
--		test_must_fail git rebase$type master &&
-+		test_must_fail git rebase$type main &&
- 		test_path_is_dir "$dotest" &&
- 		git rebase --abort &&
- 		test $(git rev-parse to-rebase) = $(git rev-parse pre-rebase) &&
-@@ -48,10 +48,10 @@ testrebase() {
- 		cd "$work_dir" &&
- 		# Clean up the state from the previous one
- 		git reset --hard pre-rebase &&
--		test_must_fail git rebase$type master &&
-+		test_must_fail git rebase$type main &&
- 		test_path_is_dir "$dotest" &&
- 		test_must_fail git rebase --skip &&
--		test $(git rev-parse HEAD) = $(git rev-parse master) &&
-+		test $(git rev-parse HEAD) = $(git rev-parse main) &&
- 		git rebase --abort &&
- 		test $(git rev-parse to-rebase) = $(git rev-parse pre-rebase) &&
- 		test ! -d "$dotest"
-@@ -61,13 +61,13 @@ testrebase() {
- 		cd "$work_dir" &&
- 		# Clean up the state from the previous one
- 		git reset --hard pre-rebase &&
--		test_must_fail git rebase$type master &&
-+		test_must_fail git rebase$type main &&
- 		test_path_is_dir "$dotest" &&
- 		echo c > a &&
- 		echo d >> a &&
- 		git add a &&
- 		test_must_fail git rebase --continue &&
--		test $(git rev-parse HEAD) != $(git rev-parse master) &&
-+		test $(git rev-parse HEAD) != $(git rev-parse main) &&
- 		git rebase --abort &&
- 		test $(git rev-parse to-rebase) = $(git rev-parse pre-rebase) &&
- 		test ! -d "$dotest"
-@@ -78,7 +78,7 @@ testrebase() {
- 		# Clean up the state from the previous one
- 		git reset --hard pre-rebase &&
- 		git reflog show to-rebase > reflog_before &&
--		test_must_fail git rebase$type master &&
-+		test_must_fail git rebase$type main &&
- 		git rebase --abort &&
- 		git reflog show to-rebase > reflog_after &&
- 		test_cmp reflog_before reflog_after &&
-@@ -89,7 +89,7 @@ testrebase() {
- 		cd "$work_dir" &&
- 		# Clean up the state from the previous one
- 		git reset --hard pre-rebase &&
--		test_must_fail git rebase$type master &&
-+		test_must_fail git rebase$type main &&
- 		test_must_fail git rebase -v --abort &&
- 		test_must_fail git rebase --abort -v &&
- 		git rebase --abort
-@@ -103,7 +103,7 @@ test_expect_success 'rebase --apply --quit' '
- 	cd "$work_dir" &&
- 	# Clean up the state from the previous one
- 	git reset --hard pre-rebase &&
--	test_must_fail git rebase --apply master &&
-+	test_must_fail git rebase --apply main &&
- 	test_path_is_dir .git/rebase-apply &&
- 	head_before=$(git rev-parse HEAD) &&
- 	git rebase --quit &&
-@@ -115,7 +115,7 @@ test_expect_success 'rebase --merge --quit' '
- 	cd "$work_dir" &&
- 	# Clean up the state from the previous one
- 	git reset --hard pre-rebase &&
--	test_must_fail git rebase --merge master &&
-+	test_must_fail git rebase --merge main &&
- 	test_path_is_dir .git/rebase-merge &&
- 	head_before=$(git rev-parse HEAD) &&
- 	git rebase --quit &&
-diff --git a/t/t3408-rebase-multi-line.sh b/t/t3408-rebase-multi-line.sh
-index d2bd7c17b0..1cba82f001 100755
---- a/t/t3408-rebase-multi-line.sh
-+++ b/t/t3408-rebase-multi-line.sh
-@@ -46,7 +46,7 @@ But otherwise with a sane description." side2 &&
- test_expect_success rebase '
- 
- 	git checkout side &&
--	git rebase master &&
-+	git rebase main &&
- 	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
- 	git cat-file commit side@{1} | sed -e "1,/^\$/d" >expect &&
- 	test_cmp expect actual
-diff --git a/t/t3409-rebase-preserve-merges.sh b/t/t3409-rebase-preserve-merges.sh
-index 3b340f1ece..b078985b95 100755
---- a/t/t3409-rebase-preserve-merges.sh
-+++ b/t/t3409-rebase-preserve-merges.sh
-@@ -18,7 +18,7 @@ export GIT_AUTHOR_EMAIL
- 
- # Clone 2 (conflicting merge):
- #
--# A1--A2--B3   <-- origin/master
-+# A1--A2--B3   <-- origin/main
- #  \       \
- #   B1------M  <-- topic
- #    \
-@@ -26,7 +26,7 @@ export GIT_AUTHOR_EMAIL
- #
- # Clone 3 (no-ff merge):
- #
--# A1--A2--B3   <-- origin/master
-+# A1--A2--B3   <-- origin/main
- #  \
- #   B1------M  <-- topic
- #    \     /
-@@ -44,7 +44,7 @@ test_expect_success 'setup for merge-preserving rebase' \
- 	echo Second > B &&
- 	git add B &&
- 	git commit -m "Add B1" &&
--	git checkout -f master &&
-+	git checkout -f main &&
- 	echo Third >> A &&
- 	git commit -a -m "Modify A2" &&
- 	echo Fifth > B &&
-@@ -55,10 +55,10 @@ test_expect_success 'setup for merge-preserving rebase' \
  	(
- 		cd clone2 &&
- 		git checkout -b topic origin/topic &&
--		test_must_fail git merge origin/master &&
-+		test_must_fail git merge origin/main &&
- 		echo Resolved >B &&
- 		git add B &&
--		git commit -m "Merge origin/master into topic"
-+		git commit -m "Merge origin/main into topic"
+ 	cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+ 	git fsck &&
+-	git log --format=%s top/master >actual &&
++	git log --format=%s top/main >actual &&
+ 	cat <<EOF >expect &&
+ 9
+ 4
+@@ -74,11 +74,11 @@ test_expect_success 'push from shallow repo via http' '
+ 	git config http.receivepack true
  	) &&
- 
- 	git clone ./. clone3 &&
-diff --git a/t/t3412-rebase-root.sh b/t/t3412-rebase-root.sh
-index 21632a984e..120315ac0e 100755
---- a/t/t3412-rebase-root.sh
-+++ b/t/t3412-rebase-root.sh
-@@ -24,7 +24,7 @@ test_expect_success 'prepare repository' '
- 
- test_expect_success 'rebase --root fails with too many args' '
- 	git checkout -B fail other &&
--	test_must_fail git rebase --onto master --root fail fail
-+	test_must_fail git rebase --onto main --root fail fail
- '
- 
- test_expect_success 'setup pre-rebase hook' '
-@@ -44,7 +44,7 @@ EOF
- 
- test_expect_success 'rebase --root --onto <newbase>' '
- 	git checkout -b work other &&
--	git rebase --root --onto master &&
-+	git rebase --root --onto main &&
- 	git log --pretty=tformat:"%s" > rebased &&
- 	test_cmp expect rebased
- '
-@@ -55,7 +55,7 @@ test_expect_success 'pre-rebase got correct input (1)' '
- 
- test_expect_success 'rebase --root --onto <newbase> <branch>' '
- 	git branch work2 other &&
--	git rebase --root --onto master work2 &&
-+	git rebase --root --onto main work2 &&
- 	git log --pretty=tformat:"%s" > rebased2 &&
- 	test_cmp expect rebased2
- '
-@@ -66,7 +66,7 @@ test_expect_success 'pre-rebase got correct input (2)' '
- 
- test_expect_success 'rebase -i --root --onto <newbase>' '
- 	git checkout -b work3 other &&
--	git rebase -i --root --onto master &&
-+	git rebase -i --root --onto main &&
- 	git log --pretty=tformat:"%s" > rebased3 &&
- 	test_cmp expect rebased3
- '
-@@ -77,7 +77,7 @@ test_expect_success 'pre-rebase got correct input (3)' '
- 
- test_expect_success 'rebase -i --root --onto <newbase> <branch>' '
- 	git branch work4 other &&
--	git rebase -i --root --onto master work4 &&
-+	git rebase -i --root --onto main work4 &&
- 	git log --pretty=tformat:"%s" > rebased4 &&
- 	test_cmp expect rebased4
- '
-@@ -88,7 +88,7 @@ test_expect_success 'pre-rebase got correct input (4)' '
- 
- test_expect_success REBASE_P 'rebase -i -p with linear history' '
- 	git checkout -b work5 other &&
--	git rebase -i -p --root --onto master &&
-+	git rebase -i -p --root --onto main &&
- 	git log --pretty=tformat:"%s" > rebased5 &&
- 	test_cmp expect rebased5
- '
-@@ -122,7 +122,7 @@ EOF
- 
- test_expect_success REBASE_P 'rebase -i -p with merge' '
- 	git checkout -b work6 other &&
--	git rebase -i -p --root --onto master &&
-+	git rebase -i -p --root --onto main &&
- 	log_with_names work6 > rebased6 &&
- 	test_cmp expect-side rebased6
- '
-@@ -157,7 +157,7 @@ EOF
- 
- test_expect_success REBASE_P 'rebase -i -p with two roots' '
- 	git checkout -b work7 other &&
--	git rebase -i -p --root --onto master &&
-+	git rebase -i -p --root --onto main &&
- 	log_with_names work7 > rebased7 &&
- 	test_cmp expect-third rebased7
- '
-@@ -173,14 +173,14 @@ EOF
- 
- test_expect_success 'pre-rebase hook stops rebase' '
- 	git checkout -b stops1 other &&
--	test_must_fail git rebase --root --onto master &&
-+	test_must_fail git rebase --root --onto main &&
- 	test "z$(git symbolic-ref HEAD)" = zrefs/heads/stops1 &&
- 	test 0 = $(git rev-list other...stops1 | wc -l)
- '
- 
- test_expect_success 'pre-rebase hook stops rebase -i' '
- 	git checkout -b stops2 other &&
--	test_must_fail git rebase --root --onto master &&
-+	test_must_fail git rebase --root --onto main &&
- 	test "z$(git symbolic-ref HEAD)" = zrefs/heads/stops2 &&
- 	test 0 = $(git rev-list other...stops2 | wc -l)
- '
-@@ -190,7 +190,7 @@ test_expect_success 'remove pre-rebase hook' '
- '
- 
- test_expect_success 'set up a conflict' '
--	git checkout master &&
-+	git checkout main &&
- 	echo conflict > B &&
- 	git add B &&
- 	git commit -m conflict
-@@ -198,7 +198,7 @@ test_expect_success 'set up a conflict' '
- 
- test_expect_success 'rebase --root with conflict (first part)' '
- 	git checkout -b conflict1 other &&
--	test_must_fail git rebase --root --onto master &&
-+	test_must_fail git rebase --root --onto main &&
- 	git ls-files -u | grep "B$"
- '
- 
-@@ -225,7 +225,7 @@ test_expect_success 'rebase --root with conflict (second part)' '
- 
- test_expect_success 'rebase -i --root with conflict (first part)' '
- 	git checkout -b conflict2 other &&
--	test_must_fail git rebase -i --root --onto master &&
-+	test_must_fail git rebase -i --root --onto main &&
- 	git ls-files -u | grep "B$"
- '
- 
-@@ -263,7 +263,7 @@ EOF
- 
- test_expect_success REBASE_P 'rebase -i -p --root with conflict (first part)' '
- 	git checkout -b conflict3 other &&
--	test_must_fail git rebase -i -p --root --onto master &&
-+	test_must_fail git rebase -i -p --root --onto main &&
- 	git ls-files -u | grep "B$"
- '
- 
-diff --git a/t/t3413-rebase-hook.sh b/t/t3413-rebase-hook.sh
-index b6833e9a5f..b5b8d3556e 100755
---- a/t/t3413-rebase-hook.sh
-+++ b/t/t3413-rebase-hook.sh
-@@ -18,7 +18,7 @@ test_expect_success setup '
- 	git add git &&
- 	test_tick &&
- 	git commit -m side &&
--	git checkout master &&
-+	git checkout main &&
- 	git log --pretty=oneline --abbrev-commit --graph --all &&
- 	git branch test side
- '
-@@ -26,14 +26,14 @@ test_expect_success setup '
- test_expect_success 'rebase' '
- 	git checkout test &&
- 	git reset --hard side &&
--	git rebase master &&
-+	git rebase main &&
- 	test "z$(cat git)" = zworld
- '
- 
- test_expect_success 'rebase -i' '
- 	git checkout test &&
- 	git reset --hard side &&
--	EDITOR=true git rebase -i master &&
-+	EDITOR=true git rebase -i main &&
- 	test "z$(cat git)" = zworld
- '
- 
-@@ -49,53 +49,53 @@ EOF
- test_expect_success 'pre-rebase hook gets correct input (1)' '
- 	git checkout test &&
- 	git reset --hard side &&
--	git rebase master &&
-+	git rebase main &&
- 	test "z$(cat git)" = zworld &&
--	test "z$(cat .git/PRE-REBASE-INPUT)" = zmaster,
-+	test "z$(cat .git/PRE-REBASE-INPUT)" = zmain,
- 
- '
- 
- test_expect_success 'pre-rebase hook gets correct input (2)' '
- 	git checkout test &&
- 	git reset --hard side &&
--	git rebase master test &&
-+	git rebase main test &&
- 	test "z$(cat git)" = zworld &&
--	test "z$(cat .git/PRE-REBASE-INPUT)" = zmaster,test
-+	test "z$(cat .git/PRE-REBASE-INPUT)" = zmain,test
- '
- 
- test_expect_success 'pre-rebase hook gets correct input (3)' '
- 	git checkout test &&
- 	git reset --hard side &&
--	git checkout master &&
--	git rebase master test &&
-+	git checkout main &&
-+	git rebase main test &&
- 	test "z$(cat git)" = zworld &&
--	test "z$(cat .git/PRE-REBASE-INPUT)" = zmaster,test
-+	test "z$(cat .git/PRE-REBASE-INPUT)" = zmain,test
- '
- 
- test_expect_success 'pre-rebase hook gets correct input (4)' '
- 	git checkout test &&
- 	git reset --hard side &&
--	EDITOR=true git rebase -i master &&
-+	EDITOR=true git rebase -i main &&
- 	test "z$(cat git)" = zworld &&
--	test "z$(cat .git/PRE-REBASE-INPUT)" = zmaster,
-+	test "z$(cat .git/PRE-REBASE-INPUT)" = zmain,
- 
- '
- 
- test_expect_success 'pre-rebase hook gets correct input (5)' '
- 	git checkout test &&
- 	git reset --hard side &&
--	EDITOR=true git rebase -i master test &&
-+	EDITOR=true git rebase -i main test &&
- 	test "z$(cat git)" = zworld &&
--	test "z$(cat .git/PRE-REBASE-INPUT)" = zmaster,test
-+	test "z$(cat .git/PRE-REBASE-INPUT)" = zmain,test
- '
- 
- test_expect_success 'pre-rebase hook gets correct input (6)' '
- 	git checkout test &&
- 	git reset --hard side &&
--	git checkout master &&
--	EDITOR=true git rebase -i master test &&
-+	git checkout main &&
-+	EDITOR=true git rebase -i main test &&
- 	test "z$(cat git)" = zworld &&
--	test "z$(cat .git/PRE-REBASE-INPUT)" = zmaster,test
-+	test "z$(cat .git/PRE-REBASE-INPUT)" = zmain,test
- '
- 
- test_expect_success 'setup pre-rebase hook that fails' '
-@@ -110,7 +110,7 @@ EOF
- test_expect_success 'pre-rebase hook stops rebase (1)' '
- 	git checkout test &&
- 	git reset --hard side &&
--	test_must_fail git rebase master &&
-+	test_must_fail git rebase main &&
- 	test "z$(git symbolic-ref HEAD)" = zrefs/heads/test &&
- 	test 0 = $(git rev-list HEAD...side | wc -l)
- '
-@@ -118,7 +118,7 @@ test_expect_success 'pre-rebase hook stops rebase (1)' '
- test_expect_success 'pre-rebase hook stops rebase (2)' '
- 	git checkout test &&
- 	git reset --hard side &&
--	test_must_fail env EDITOR=: git rebase -i master &&
-+	test_must_fail env EDITOR=: git rebase -i main &&
- 	test "z$(git symbolic-ref HEAD)" = zrefs/heads/test &&
- 	test 0 = $(git rev-list HEAD...side | wc -l)
- '
-@@ -126,7 +126,7 @@ test_expect_success 'pre-rebase hook stops rebase (2)' '
- test_expect_success 'rebase --no-verify overrides pre-rebase (1)' '
- 	git checkout test &&
- 	git reset --hard side &&
--	git rebase --no-verify master &&
-+	git rebase --no-verify main &&
- 	test "z$(git symbolic-ref HEAD)" = zrefs/heads/test &&
- 	test "z$(cat git)" = zworld
- '
-@@ -134,7 +134,7 @@ test_expect_success 'rebase --no-verify overrides pre-rebase (1)' '
- test_expect_success 'rebase --no-verify overrides pre-rebase (2)' '
- 	git checkout test &&
- 	git reset --hard side &&
--	EDITOR=true git rebase --no-verify -i master &&
-+	EDITOR=true git rebase --no-verify -i main &&
- 	test "z$(git symbolic-ref HEAD)" = zrefs/heads/test &&
- 	test "z$(cat git)" = zworld
- '
-diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-index 7bab6000dc..40bb7ac649 100755
---- a/t/t3415-rebase-autosquash.sh
-+++ b/t/t3415-rebase-autosquash.sh
-@@ -407,7 +407,7 @@ test_expect_success 'wrapped original subject' '
- 
- test_expect_success 'abort last squash' '
- 	test_when_finished "test_might_fail git rebase --abort" &&
--	test_when_finished "git checkout master" &&
-+	test_when_finished "git checkout main" &&
- 
- 	git checkout -b some-squashes &&
- 	git commit --allow-empty -m first &&
-diff --git a/t/t3416-rebase-onto-threedots.sh b/t/t3416-rebase-onto-threedots.sh
-index 1f37adf56b..2360a1e37a 100755
---- a/t/t3416-rebase-onto-threedots.sh
-+++ b/t/t3416-rebase-onto-threedots.sh
-@@ -5,14 +5,14 @@ test_description='git rebase --onto A...B'
- . ./test-lib.sh
- . "$TEST_DIRECTORY/lib-rebase.sh"
- 
--# Rebase only the tip commit of "topic" on merge base between "master"
--# and "topic".  Cannot do this for "side" with "master" because there
-+# Rebase only the tip commit of "topic" on merge base between "main"
-+# and "topic".  Cannot do this for "side" with "main" because there
- # is no single merge base.
- #
- #
- #	    F---G topic                             G'
- #	   /                                       /
--# A---B---C---D---E master        -->       A---B---C---D---E
-+# A---B---C---D---E main        -->       A---B---C---D---E
- #      \   \ /
- #	\   x
- #	 \ / \
-@@ -26,7 +26,7 @@ test_expect_success setup '
- 	git branch topic &&
- 	git checkout side &&
- 	test_commit H &&
--	git checkout master &&
-+	git checkout main &&
- 	test_tick &&
- 	git merge H &&
- 	git tag D &&
-@@ -42,83 +42,83 @@ test_expect_success setup '
- 	test_commit K
- '
- 
--test_expect_success 'rebase --onto master...topic' '
-+test_expect_success 'rebase --onto main...topic' '
- 	git reset --hard &&
- 	git checkout topic &&
- 	git reset --hard G &&
- 
--	git rebase --onto master...topic F &&
-+	git rebase --onto main...topic F &&
- 	git rev-parse HEAD^1 >actual &&
- 	git rev-parse C^0 >expect &&
- 	test_cmp expect actual
- '
- 
--test_expect_success 'rebase --onto master...' '
-+test_expect_success 'rebase --onto main...' '
- 	git reset --hard &&
- 	git checkout topic &&
- 	git reset --hard G &&
- 
--	git rebase --onto master... F &&
-+	git rebase --onto main... F &&
- 	git rev-parse HEAD^1 >actual &&
- 	git rev-parse C^0 >expect &&
- 	test_cmp expect actual
- '
- 
--test_expect_success 'rebase --onto master...side' '
-+test_expect_success 'rebase --onto main...side' '
- 	git reset --hard &&
- 	git checkout side &&
- 	git reset --hard K &&
- 
--	test_must_fail git rebase --onto master...side J
-+	test_must_fail git rebase --onto main...side J
- '
- 
--test_expect_success 'rebase -i --onto master...topic' '
-+test_expect_success 'rebase -i --onto main...topic' '
- 	git reset --hard &&
- 	git checkout topic &&
- 	git reset --hard G &&
- 	set_fake_editor &&
--	EXPECT_COUNT=1 git rebase -i --onto master...topic F &&
-+	EXPECT_COUNT=1 git rebase -i --onto main...topic F &&
- 	git rev-parse HEAD^1 >actual &&
- 	git rev-parse C^0 >expect &&
- 	test_cmp expect actual
- '
- 
--test_expect_success 'rebase -i --onto master...' '
-+test_expect_success 'rebase -i --onto main...' '
- 	git reset --hard &&
- 	git checkout topic &&
- 	git reset --hard G &&
- 	set_fake_editor &&
--	EXPECT_COUNT=1 git rebase -i --onto master... F &&
-+	EXPECT_COUNT=1 git rebase -i --onto main... F &&
- 	git rev-parse HEAD^1 >actual &&
- 	git rev-parse C^0 >expect &&
- 	test_cmp expect actual
- '
- 
--test_expect_success 'rebase -i --onto master...side' '
-+test_expect_success 'rebase -i --onto main...side' '
- 	git reset --hard &&
- 	git checkout side &&
- 	git reset --hard K &&
- 
- 	set_fake_editor &&
--	test_must_fail git rebase -i --onto master...side J
-+	test_must_fail git rebase -i --onto main...side J
- '
- 
- test_expect_success 'rebase --keep-base --onto incompatible' '
--	test_must_fail git rebase --keep-base --onto master...
-+	test_must_fail git rebase --keep-base --onto main...
- '
- 
- test_expect_success 'rebase --keep-base --root incompatible' '
- 	test_must_fail git rebase --keep-base --root
- '
- 
--test_expect_success 'rebase --keep-base master from topic' '
-+test_expect_success 'rebase --keep-base main from topic' '
- 	git reset --hard &&
- 	git checkout topic &&
- 	git reset --hard G &&
- 
--	git rebase --keep-base master &&
-+	git rebase --keep-base main &&
- 	git rev-parse C >base.expect &&
--	git merge-base master HEAD >base.actual &&
-+	git merge-base main HEAD >base.actual &&
- 	test_cmp base.expect base.actual &&
- 
- 	git rev-parse HEAD~2 >actual &&
-@@ -126,23 +126,23 @@ test_expect_success 'rebase --keep-base master from topic' '
- 	test_cmp expect actual
- '
- 
--test_expect_success 'rebase --keep-base master from side' '
-+test_expect_success 'rebase --keep-base main from side' '
- 	git reset --hard &&
- 	git checkout side &&
- 	git reset --hard K &&
- 
--	test_must_fail git rebase --keep-base master
-+	test_must_fail git rebase --keep-base main
- '
- 
--test_expect_success 'rebase -i --keep-base master from topic' '
-+test_expect_success 'rebase -i --keep-base main from topic' '
- 	git reset --hard &&
- 	git checkout topic &&
- 	git reset --hard G &&
- 
- 	set_fake_editor &&
--	EXPECT_COUNT=2 git rebase -i --keep-base master &&
-+	EXPECT_COUNT=2 git rebase -i --keep-base main &&
- 	git rev-parse C >base.expect &&
--	git merge-base master HEAD >base.actual &&
-+	git merge-base main HEAD >base.actual &&
- 	test_cmp base.expect base.actual &&
- 
- 	git rev-parse HEAD~2 >actual &&
-@@ -150,13 +150,13 @@ test_expect_success 'rebase -i --keep-base master from topic' '
- 	test_cmp expect actual
- '
- 
--test_expect_success 'rebase -i --keep-base master from side' '
-+test_expect_success 'rebase -i --keep-base main from side' '
- 	git reset --hard &&
- 	git checkout side &&
- 	git reset --hard K &&
- 
- 	set_fake_editor &&
--	test_must_fail git rebase -i --keep-base master
-+	test_must_fail git rebase -i --keep-base main
- '
- 
- test_done
-diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-index 7a2da972fd..b9e059e168 100755
---- a/t/t3418-rebase-continue.sh
-+++ b/t/t3418-rebase-continue.sh
-@@ -15,13 +15,13 @@ test_expect_success 'setup' '
- 	git checkout -b topic HEAD^ &&
- 	test_commit "commit-new-file-F2-on-topic-branch" F2 22 &&
- 
--	git checkout master
-+	git checkout main
- '
- 
- test_expect_success 'interactive rebase --continue works with touched file' '
- 	rm -fr .git/rebase-* &&
- 	git reset --hard &&
--	git checkout master &&
-+	git checkout main &&
- 
- 	FAKE_LINES="edit 1" git rebase -i HEAD^ &&
- 	test-tool chmtime =-60 F1 &&
-@@ -31,9 +31,9 @@ test_expect_success 'interactive rebase --continue works with touched file' '
- test_expect_success 'non-interactive rebase --continue works with touched file' '
- 	rm -fr .git/rebase-* &&
- 	git reset --hard &&
--	git checkout master &&
-+	git checkout main &&
- 
--	test_must_fail git rebase --onto master master topic &&
-+	test_must_fail git rebase --onto main main topic &&
- 	echo "Resolved" >F2 &&
- 	git add F2 &&
- 	test-tool chmtime =-60 F1 &&
-@@ -61,7 +61,7 @@ test_expect_success 'rebase --continue remembers merge strategy and options' '
- 	chmod +x test-bin/git-merge-funny &&
+ 	commit 10 &&
+-	git push $HTTPD_URL/smart/repo.git +master:refs/remotes/top/master &&
++	git push $HTTPD_URL/smart/repo.git +main:refs/remotes/top/main &&
  	(
- 		PATH=./test-bin:$PATH &&
--		test_must_fail git rebase -s funny -Xopt master topic
-+		test_must_fail git rebase -s funny -Xopt main topic
+ 	cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+ 	git fsck &&
+-	git log --format=%s top/master >actual &&
++	git log --format=%s top/main >actual &&
+ 	cat <<EOF >expect &&
+ 10
+ 4
+diff --git a/t/t5543-atomic-push.sh b/t/t5543-atomic-push.sh
+index 620c30d58f..01a9a6e9e0 100755
+--- a/t/t5543-atomic-push.sh
++++ b/t/t5543-atomic-push.sh
+@@ -40,9 +40,9 @@ test_expect_success 'atomic push works for a single branch' '
+ 		test_commit one &&
+ 		git push --mirror up &&
+ 		test_commit two &&
+-		git push --atomic up master
++		git push --atomic up main
  	) &&
- 	test -f funny.was.run &&
- 	rm funny.was.run &&
-@@ -93,7 +93,7 @@ test_expect_success 'rebase -i --continue handles merge strategy and options' '
- 	chmod +x test-bin/git-merge-funny &&
+-	test_refs master master
++	test_refs main main
+ '
+ 
+ test_expect_success 'atomic push works for two branches' '
+@@ -55,9 +55,9 @@ test_expect_success 'atomic push works for two branches' '
+ 		test_commit two &&
+ 		git checkout second &&
+ 		test_commit three &&
+-		git push --atomic up master second
++		git push --atomic up main second
+ 	) &&
+-	test_refs master master &&
++	test_refs main main &&
+ 	test_refs second second
+ '
+ 
+@@ -70,7 +70,7 @@ test_expect_success 'atomic push works in combination with --mirror' '
+ 		test_commit two &&
+ 		git push --atomic --mirror up
+ 	) &&
+-	test_refs master master &&
++	test_refs main main &&
+ 	test_refs second second
+ '
+ 
+@@ -79,7 +79,7 @@ test_expect_success 'atomic push works in combination with --force' '
  	(
- 		PATH=./test-bin:$PATH &&
--		test_must_fail git rebase -i -s funny -Xopt -Xfoo master topic
-+		test_must_fail git rebase -i -s funny -Xopt -Xfoo main topic
- 	) &&
- 	test -f funny.was.run &&
- 	rm funny.was.run &&
-@@ -188,11 +188,11 @@ test_expect_success '--skip after failed fixup cleans commit message' '
- test_expect_success 'setup rerere database' '
- 	rm -fr .git/rebase-* &&
- 	git reset --hard commit-new-file-F3-on-topic-branch &&
--	git checkout master &&
-+	git checkout main &&
- 	test_commit "commit-new-file-F3" F3 3 &&
- 	test_config rerere.enabled true &&
- 	git update-ref refs/heads/topic commit-new-file-F3-on-topic-branch &&
--	test_must_fail git rebase -m master topic &&
-+	test_must_fail git rebase -m main topic &&
- 	echo "Resolved" >F2 &&
- 	cp F2 expected-F2 &&
- 	git add F2 &&
-@@ -207,7 +207,7 @@ test_expect_success 'setup rerere database' '
- prepare () {
- 	rm -fr .git/rebase-* &&
- 	git reset --hard commit-new-file-F3-on-topic-branch &&
--	git checkout master &&
-+	git checkout main &&
- 	test_config rerere.enabled true
- }
- 
-@@ -215,7 +215,7 @@ test_rerere_autoupdate () {
- 	action=$1 &&
- 	test_expect_success "rebase $action --continue remembers --rerere-autoupdate" '
- 		prepare &&
--		test_must_fail git rebase $action --rerere-autoupdate master topic &&
-+		test_must_fail git rebase $action --rerere-autoupdate main topic &&
- 		test_cmp expected-F2 F2 &&
- 		git diff-files --quiet &&
- 		test_must_fail git rebase --continue &&
-@@ -227,7 +227,7 @@ test_rerere_autoupdate () {
- 	test_expect_success "rebase $action --continue honors rerere.autoUpdate" '
- 		prepare &&
- 		test_config rerere.autoupdate true &&
--		test_must_fail git rebase $action master topic &&
-+		test_must_fail git rebase $action main topic &&
- 		test_cmp expected-F2 F2 &&
- 		git diff-files --quiet &&
- 		test_must_fail git rebase --continue &&
-@@ -239,7 +239,7 @@ test_rerere_autoupdate () {
- 	test_expect_success "rebase $action --continue remembers --no-rerere-autoupdate" '
- 		prepare &&
- 		test_config rerere.autoupdate true &&
--		test_must_fail git rebase $action --no-rerere-autoupdate master topic &&
-+		test_must_fail git rebase $action --no-rerere-autoupdate main topic &&
- 		test_cmp expected-F2 F2 &&
- 		test_must_fail git diff-files --quiet &&
- 		git add F2 &&
-diff --git a/t/t3419-rebase-patch-id.sh b/t/t3419-rebase-patch-id.sh
-index 1f32faa4a4..29fa76be4d 100755
---- a/t/t3419-rebase-patch-id.sh
-+++ b/t/t3419-rebase-patch-id.sh
-@@ -24,7 +24,7 @@ test_expect_success 'setup' '
- 
- test_expect_success 'setup: 500 lines' '
- 	rm -f .gitattributes &&
--	git checkout -q -f master &&
-+	git checkout -q -f main &&
- 	git reset --hard root &&
- 	test_seq 500 >file &&
- 	git add file &&
-@@ -40,7 +40,7 @@ test_expect_success 'setup: 500 lines' '
- 	git add newfile &&
- 	git commit -q -m "add small file" &&
- 
--	git cherry-pick master >/dev/null 2>&1
-+	git cherry-pick main >/dev/null 2>&1
- '
- 
- test_expect_success 'setup attributes' '
-@@ -48,18 +48,18 @@ test_expect_success 'setup attributes' '
- '
- 
- test_expect_success 'detect upstream patch' '
--	git checkout -q master &&
-+	git checkout -q main &&
- 	scramble file &&
- 	git add file &&
- 	git commit -q -m "change big file again" &&
- 	git checkout -q other^{} &&
--	git rebase master &&
--	git rev-list master...HEAD~ >revs &&
-+	git rebase main &&
-+	git rev-list main...HEAD~ >revs &&
- 	test_must_be_empty revs
- '
- 
- test_expect_success 'do not drop patch' '
--	git branch -f squashed master &&
-+	git branch -f squashed main &&
- 	git checkout -q -f squashed &&
- 	git reset -q --soft HEAD~2 &&
- 	git commit -q -m squashed &&
-diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
-index ca331733fb..b1263e5a47 100755
---- a/t/t3420-rebase-autostash.sh
-+++ b/t/t3420-rebase-autostash.sh
-@@ -21,12 +21,12 @@ test_expect_success setup '
- 	git add . &&
- 	test_tick &&
- 	git commit -m "third commit" &&
--	git checkout -b unrelated-onto-branch master &&
-+	git checkout -b unrelated-onto-branch main &&
- 	echo unrelated >file4 &&
- 	git add . &&
- 	test_tick &&
- 	git commit -m "unrelated commit" &&
--	git checkout -b related-onto-branch master &&
-+	git checkout -b related-onto-branch main &&
- 	echo conflicting-change >file2 &&
- 	git add . &&
- 	test_tick &&
-@@ -305,7 +305,7 @@ test_expect_success 'autostash is saved on editor failure with conflict' '
- '
- 
- test_expect_success 'autostash with dirty submodules' '
--	test_when_finished "git reset --hard && git checkout master" &&
-+	test_when_finished "git reset --hard && git checkout main" &&
- 	git checkout -b with-submodule &&
- 	git submodule add ./ sub &&
- 	test_tick &&
-@@ -324,7 +324,7 @@ test_expect_success 'branch is left alone when possible' '
- 
- test_expect_success 'never change active branch' '
- 	git checkout -b not-the-feature-branch unrelated-onto-branch &&
--	test_when_finished "git reset --hard && git checkout master" &&
-+	test_when_finished "git reset --hard && git checkout main" &&
- 	echo changed >file0 &&
- 	git rebase --autostash not-the-feature-branch feature-branch &&
- 	test_cmp_rev not-the-feature-branch unrelated-onto-branch
-diff --git a/t/t3423-rebase-reword.sh b/t/t3423-rebase-reword.sh
-index 6963750794..4859bb8f72 100755
---- a/t/t3423-rebase-reword.sh
-+++ b/t/t3423-rebase-reword.sh
-@@ -7,7 +7,7 @@ test_description='git rebase interactive with rewording'
- . "$TEST_DIRECTORY"/lib-rebase.sh
- 
- test_expect_success 'setup' '
--	test_commit master file-1 test &&
-+	test_commit main file-1 test &&
- 
- 	git checkout -b stuff &&
- 
-@@ -22,7 +22,7 @@ test_expect_success 'reword without issues functions as intended' '
- 
- 	set_fake_editor &&
- 	FAKE_LINES="pick 1 reword 2" FAKE_COMMIT_MESSAGE="feature_b_reworded" \
--		git rebase -i -v master &&
-+		git rebase -i -v main &&
- 
- 	test "$(git log -1 --format=%B)" = "feature_b_reworded" &&
- 	test $(git rev-list --count HEAD) = 3
-@@ -35,7 +35,7 @@ test_expect_success 'reword after a conflict preserves commit' '
- 
- 	set_fake_editor &&
- 	test_must_fail env FAKE_LINES="reword 2" \
--		git rebase -i -v master &&
-+		git rebase -i -v main &&
- 
- 	git checkout --theirs file-2 &&
- 	git add file-2 &&
-diff --git a/t/t3427-rebase-subtree.sh b/t/t3427-rebase-subtree.sh
-index 5839719ba1..265856ece6 100755
---- a/t/t3427-rebase-subtree.sh
-+++ b/t/t3427-rebase-subtree.sh
-@@ -17,7 +17,7 @@ commit_message() {
- #
- # topic_1 - topic_2 - topic_3
- #                             \
--# README ---------------------- Add subproject master - topic_4 - files_subtree/topic_5
-+# README ---------------------- Add subproject main - topic_4 - files_subtree/topic_5
- #
- # Where the merge moves the files topic_[123].t into the subdirectory
- # files_subtree/ and topic_4 as well as files_subtree/topic_5 add files to that
-@@ -28,7 +28,7 @@ commit_message() {
- # an empty commit is added on top. The pre-rebase commit history looks like
- # this:
- #
--# Add subproject master - topic_4 - files_subtree/topic_5 - Empty commit
-+# Add subproject main - topic_4 - files_subtree/topic_5 - Empty commit
- #
- # where the root commit adds three files: topic_1.t, topic_2.t and topic_3.t.
- #
-@@ -48,11 +48,11 @@ test_expect_success 'setup' '
- 	test_commit -C files topic_3 &&
- 
- 	: perform subtree merge into files_subtree/ &&
--	git fetch files refs/heads/master:refs/heads/files-master &&
-+	git fetch files refs/heads/main:refs/heads/files-main &&
- 	git merge -s ours --no-commit --allow-unrelated-histories \
--		files-master &&
--	git read-tree --prefix=files_subtree -u files-master &&
--	git commit -m "Add subproject master" &&
-+		files-main &&
-+	git read-tree --prefix=files_subtree -u files-main &&
-+	git commit -m "Add subproject main" &&
- 
- 	: add two extra commits to rebase &&
- 	test_commit -C files_subtree topic_4 &&
-@@ -70,7 +70,7 @@ test_expect_success 'setup' '
- test_expect_failure REBASE_P 'Rebase -Xsubtree --preserve-merges --onto commit' '
- 	reset_rebase &&
- 	git checkout -b rebase-preserve-merges to-rebase &&
--	git rebase -Xsubtree=files_subtree --preserve-merges --onto files-master master &&
-+	git rebase -Xsubtree=files_subtree --preserve-merges --onto files-main main &&
- 	verbose test "$(commit_message HEAD~)" = "topic_4" &&
- 	verbose test "$(commit_message HEAD)" = "files_subtree/topic_5"
- '
-@@ -79,7 +79,7 @@ test_expect_failure REBASE_P 'Rebase -Xsubtree --preserve-merges --onto commit'
- test_expect_failure REBASE_P 'Rebase -Xsubtree --keep-empty --preserve-merges --onto commit' '
- 	reset_rebase &&
- 	git checkout -b rebase-keep-empty to-rebase &&
--	git rebase -Xsubtree=files_subtree --keep-empty --preserve-merges --onto files-master master &&
-+	git rebase -Xsubtree=files_subtree --keep-empty --preserve-merges --onto files-main main &&
- 	verbose test "$(commit_message HEAD~2)" = "topic_4" &&
- 	verbose test "$(commit_message HEAD~)" = "files_subtree/topic_5" &&
- 	verbose test "$(commit_message HEAD)" = "Empty commit"
-@@ -88,7 +88,7 @@ test_expect_failure REBASE_P 'Rebase -Xsubtree --keep-empty --preserve-merges --
- test_expect_success 'Rebase -Xsubtree --empty=ask --onto commit' '
- 	reset_rebase &&
- 	git checkout -b rebase-onto to-rebase &&
--	test_must_fail git rebase -Xsubtree=files_subtree --empty=ask --onto files-master master &&
-+	test_must_fail git rebase -Xsubtree=files_subtree --empty=ask --onto files-main main &&
- 	: first pick results in no changes &&
- 	git rebase --skip &&
- 	verbose test "$(commit_message HEAD~2)" = "topic_4" &&
-@@ -99,7 +99,7 @@ test_expect_success 'Rebase -Xsubtree --empty=ask --onto commit' '
- test_expect_success 'Rebase -Xsubtree --empty=ask --rebase-merges --onto commit' '
- 	reset_rebase &&
- 	git checkout -b rebase-merges-onto to-rebase &&
--	test_must_fail git rebase -Xsubtree=files_subtree --empty=ask --rebase-merges --onto files-master --root &&
-+	test_must_fail git rebase -Xsubtree=files_subtree --empty=ask --rebase-merges --onto files-main --root &&
- 	: first pick results in no changes &&
- 	git rebase --skip &&
- 	verbose test "$(commit_message HEAD~2)" = "topic_4" &&
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index b454f400eb..3cc99693af 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -12,7 +12,7 @@ Initial setup:
- 
-     -- B --                   (first)
-    /       \
-- A - C - D - E - H            (master)
-+ A - C - D - E - H            (main)
-    \    \       /
-     \    F - G                (second)
-      \
-@@ -37,7 +37,7 @@ test_expect_success 'setup' '
- 	git checkout -b first &&
- 	test_commit B &&
- 	b=$(git rev-parse --short HEAD) &&
--	git checkout master &&
-+	git checkout main &&
- 	test_commit C &&
- 	c=$(git rev-parse --short HEAD) &&
- 	test_commit D &&
-@@ -52,7 +52,7 @@ test_expect_success 'setup' '
- 	f=$(git rev-parse --short HEAD) &&
- 	test_commit G &&
- 	g=$(git rev-parse --short HEAD) &&
--	git checkout master &&
-+	git checkout main &&
- 	git merge --no-commit G &&
- 	test_tick &&
- 	git commit -m H &&
-@@ -82,7 +82,7 @@ test_expect_success 'create completely different structure' '
- 	EOF
- 	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
- 	test_tick &&
--	git rebase -i -r A master &&
-+	git rebase -i -r A main &&
- 	test_cmp_graph <<-\EOF
- 	*   Merge the topic branch '\''onebranch'\''
- 	|\
-@@ -183,7 +183,7 @@ test_expect_success 'fast-forward merge -c still rewords' '
- '
- 
- test_expect_success 'with a branch tip that was cherry-picked already' '
--	git checkout -b already-upstream master &&
-+	git checkout -b already-upstream main &&
- 	base="$(git rev-parse --verify HEAD)" &&
- 
- 	test_commit A1 &&
-@@ -211,7 +211,7 @@ test_expect_success 'with a branch tip that was cherry-picked already' '
- '
- 
- test_expect_success 'do not rebase cousins unless asked for' '
--	git checkout -b cousins master &&
-+	git checkout -b cousins main &&
- 	before="$(git rev-parse --verify HEAD)" &&
- 	test_tick &&
- 	git rebase -r HEAD^ &&
-@@ -340,7 +340,7 @@ test_expect_success 'a "merge" into a root commit is a fast-forward' '
- test_expect_success 'A root commit can be a cousin, treat it that way' '
- 	git checkout --orphan khnum &&
- 	test_commit yama &&
--	git checkout -b asherah master &&
-+	git checkout -b asherah main &&
- 	test_commit shamkat &&
- 	git merge --allow-unrelated-histories khnum &&
- 	test_tick &&
-@@ -367,7 +367,7 @@ test_expect_success 'labels that are object IDs are rewritten' '
- 	git checkout -b third B &&
- 	test_commit I &&
- 	third=$(git rev-parse HEAD) &&
--	git checkout -b labels master &&
-+	git checkout -b labels main &&
- 	git merge --no-commit third &&
- 	test_tick &&
- 	git commit -m "Merge commit '\''$third'\'' into labels" &&
-diff --git a/t/t3431-rebase-fork-point.sh b/t/t3431-rebase-fork-point.sh
-index 172562789e..d5d9b2304d 100755
---- a/t/t3431-rebase-fork-point.sh
-+++ b/t/t3431-rebase-fork-point.sh
-@@ -7,11 +7,11 @@ test_description='git rebase --fork-point test'
- 
- . ./test-lib.sh
- 
--# A---B---D---E    (master)
-+# A---B---D---E    (main)
- #      \
- #       C*---F---G (side)
- #
--# C was formerly part of master but master was rewound to remove C
-+# C was formerly part of main but main was rewound to remove C
- #
- test_expect_success setup '
- 	test_commit A &&
-@@ -30,7 +30,7 @@ test_rebase () {
- 	expected="$1" &&
- 	shift &&
- 	test_expect_success "git rebase $*" "
+ 		cd workbench &&
+ 		test_commit one &&
+-		git branch second master &&
++		git branch second main &&
+ 		test_commit two_a &&
+ 		git checkout second &&
+ 		test_commit two_b &&
+@@ -87,36 +87,36 @@ test_expect_success 'atomic push works in combination with --force' '
+ 		test_commit four &&
+ 		git push --mirror up &&
+ 		# The actual test is below
 -		git checkout master &&
 +		git checkout main &&
- 		git reset --hard E &&
- 		git checkout side &&
- 		git reset --hard G &&
-@@ -48,26 +48,26 @@ test_rebase 'G F C E D B A' --no-fork-point
- test_rebase 'G F C D B A' --no-fork-point --onto D
- test_rebase 'G F C B A' --no-fork-point --keep-base
+ 		test_commit three_a &&
+ 		git checkout second &&
+ 		git reset --hard HEAD^ &&
+-		git push --force --atomic up master second
++		git push --force --atomic up main second
+ 	) &&
+-	test_refs master master &&
++	test_refs main main &&
+ 	test_refs second second
+ '
  
--test_rebase 'G F E D B A' --fork-point refs/heads/master
--test_rebase 'G F E D B A' --fork-point master
-+test_rebase 'G F E D B A' --fork-point refs/heads/main
-+test_rebase 'G F E D B A' --fork-point main
+-# set up two branches where master can be pushed but second can not
++# set up two branches where main can be pushed but second can not
+ # (non-fast-forward). Since second can not be pushed the whole operation
+-# will fail and leave master untouched.
++# will fail and leave main untouched.
+ test_expect_success 'atomic push fails if one branch fails' '
+ 	mk_repo_pair &&
+ 	(
+ 		cd workbench &&
+ 		test_commit one &&
+-		git checkout -b second master &&
++		git checkout -b second main &&
+ 		test_commit two &&
+ 		test_commit three &&
+ 		test_commit four &&
+ 		git push --mirror up &&
+ 		git reset --hard HEAD~2 &&
+ 		test_commit five &&
+-		git checkout master &&
++		git checkout main &&
+ 		test_commit six &&
+ 		test_must_fail git push --atomic --all up
+ 	) &&
+-	test_refs master HEAD@{7} &&
++	test_refs main HEAD@{7} &&
+ 	test_refs second HEAD@{4}
+ '
  
--test_rebase 'G F D B A' --fork-point --onto D refs/heads/master
--test_rebase 'G F D B A' --fork-point --onto D master
-+test_rebase 'G F D B A' --fork-point --onto D refs/heads/main
-+test_rebase 'G F D B A' --fork-point --onto D main
+@@ -126,7 +126,7 @@ test_expect_success 'atomic push fails if one tag fails remotely' '
+ 	(
+ 		cd workbench &&
+ 		test_commit one &&
+-		git checkout -b second master &&
++		git checkout -b second main &&
+ 		test_commit two &&
+ 		git push --mirror up
+ 	) &&
+@@ -139,14 +139,14 @@ test_expect_success 'atomic push fails if one tag fails remotely' '
+ 	# see if we can now push both branches.
+ 	(
+ 		cd workbench &&
+-		git checkout master &&
++		git checkout main &&
+ 		test_commit three &&
+ 		git checkout second &&
+ 		test_commit four &&
+ 		git tag test_tag &&
+-		test_must_fail git push --tags --atomic up master second
++		test_must_fail git push --tags --atomic up main second
+ 	) &&
+-	test_refs master HEAD@{3} &&
++	test_refs main HEAD@{3} &&
+ 	test_refs second HEAD@{1}
+ '
  
--test_rebase 'G F B A' --fork-point --keep-base refs/heads/master
--test_rebase 'G F B A' --fork-point --keep-base master
-+test_rebase 'G F B A' --fork-point --keep-base refs/heads/main
-+test_rebase 'G F B A' --fork-point --keep-base main
+@@ -155,7 +155,7 @@ test_expect_success 'atomic push obeys update hook preventing a branch to be pus
+ 	(
+ 		cd workbench &&
+ 		test_commit one &&
+-		git checkout -b second master &&
++		git checkout -b second main &&
+ 		test_commit two &&
+ 		git push --mirror up
+ 	) &&
+@@ -165,19 +165,19 @@ test_expect_success 'atomic push obeys update hook preventing a branch to be pus
+ 		HOOK="$HOOKDIR/update" &&
+ 		mkdir -p "$HOOKDIR" &&
+ 		write_script "$HOOK" <<-\EOF
+-			# only allow update to master from now on
+-			test "$1" = "refs/heads/master"
++			# only allow update to main from now on
++			test "$1" = "refs/heads/main"
+ 		EOF
+ 	) &&
+ 	(
+ 		cd workbench &&
+-		git checkout master &&
++		git checkout main &&
+ 		test_commit three &&
+ 		git checkout second &&
+ 		test_commit four &&
+-		test_must_fail git push --atomic up master second
++		test_must_fail git push --atomic up main second
+ 	) &&
+-	test_refs master HEAD@{3} &&
++	test_refs main HEAD@{3} &&
+ 	test_refs second HEAD@{1}
+ '
  
--test_rebase 'G F C E D B A' refs/heads/master
--test_rebase 'G F C E D B A' master
-+test_rebase 'G F C E D B A' refs/heads/main
-+test_rebase 'G F C E D B A' main
+@@ -192,21 +192,21 @@ test_expect_success 'atomic push is not advertised if configured' '
+ 		test_commit one &&
+ 		git push --mirror up &&
+ 		test_commit two &&
+-		test_must_fail git push --atomic up master
++		test_must_fail git push --atomic up main
+ 	) &&
+-	test_refs master HEAD@{1}
++	test_refs main HEAD@{1}
+ '
  
--test_rebase 'G F C D B A' --onto D refs/heads/master
--test_rebase 'G F C D B A' --onto D master
-+test_rebase 'G F C D B A' --onto D refs/heads/main
-+test_rebase 'G F C D B A' --onto D main
+-# References in upstream : master(1) one(1) foo(1)
+-# References in workbench: master(2)        foo(1) two(2) bar(2)
+-# Atomic push            : master(2)               two(2) bar(2)
++# References in upstream : main(1) one(1) foo(1)
++# References in workbench: main(2)        foo(1) two(2) bar(2)
++# Atomic push            : main(2)               two(2) bar(2)
+ test_expect_success 'atomic push reports (reject by update hook)' '
+ 	mk_repo_pair &&
+ 	(
+ 		cd workbench &&
+ 		test_commit one &&
+ 		git branch foo &&
+-		git push up master one foo &&
++		git push up main one foo &&
+ 		git tag -d one
+ 	) &&
+ 	(
+@@ -228,19 +228,19 @@ test_expect_success 'atomic push reports (reject by update hook)' '
+ 		git branch bar
+ 	) &&
+ 	test_must_fail git -C workbench \
+-		push --atomic up master two bar >out 2>&1 &&
++		push --atomic up main two bar >out 2>&1 &&
+ 	fmt_status_report <out >actual &&
+ 	cat >expect <<-EOF &&
+ 	To ../upstream
+-	 ! [remote rejected] master -> master (atomic push failure)
++	 ! [remote rejected] main -> main (atomic push failure)
+ 	 ! [remote rejected] two -> two (atomic push failure)
+ 	 ! [remote rejected] bar -> bar (hook declined)
+ 	EOF
+ 	test_cmp expect actual
+ '
  
--test_rebase 'G F C B A' --keep-base refs/heads/master
--test_rebase 'G F C B A' --keep-base master
-+test_rebase 'G F C B A' --keep-base refs/heads/main
-+test_rebase 'G F C B A' --keep-base main
+-# References in upstream : master(1) one(1) foo(1)
+-# References in workbench: master(2)        foo(1) two(2) bar(2)
++# References in upstream : main(1) one(1) foo(1)
++# References in workbench: main(2)        foo(1) two(2) bar(2)
+ test_expect_success 'atomic push reports (mirror, but reject by update hook)' '
+ 	(
+ 		cd workbench &&
+@@ -252,7 +252,7 @@ test_expect_success 'atomic push reports (mirror, but reject by update hook)' '
+ 	fmt_status_report <out >actual &&
+ 	cat >expect <<-EOF &&
+ 	To ../upstream
+-	 ! [remote rejected] master -> master (atomic push failure)
++	 ! [remote rejected] main -> main (atomic push failure)
+ 	 ! [remote rejected] one (atomic push failure)
+ 	 ! [remote rejected] bar -> bar (hook declined)
+ 	 ! [remote rejected] two -> two (atomic push failure)
+@@ -260,21 +260,21 @@ test_expect_success 'atomic push reports (mirror, but reject by update hook)' '
+ 	test_cmp expect actual
+ '
  
- test_expect_success 'git rebase --fork-point with ambigous refname' '
+-# References in upstream : master(2) one(1) foo(1)
+-# References in workbench: master(1)        foo(1) two(2) bar(2)
++# References in upstream : main(2) one(1) foo(1)
++# References in workbench: main(1)        foo(1) two(2) bar(2)
+ test_expect_success 'atomic push reports (reject by non-ff)' '
+ 	rm upstream/.git/hooks/update &&
+ 	(
+ 		cd workbench &&
+-		git push up master &&
++		git push up main &&
+ 		git reset --hard HEAD^
+ 	) &&
+ 	test_must_fail git -C workbench \
+-		push --atomic up master foo bar >out 2>&1 &&
++		push --atomic up main foo bar >out 2>&1 &&
+ 	fmt_status_report <out >actual &&
+ 	cat >expect <<-EOF &&
+ 	To ../upstream
+-	 ! [rejected] master -> master (non-fast-forward)
++	 ! [rejected] main -> main (non-fast-forward)
+ 	 ! [rejected] bar -> bar (atomic push failed)
+ 	EOF
+ 	test_cmp expect actual
+diff --git a/t/t5545-push-options.sh b/t/t5545-push-options.sh
+index 38e6f7340e..a1276bbc33 100755
+--- a/t/t5545-push-options.sh
++++ b/t/t5545-push-options.sh
+@@ -63,9 +63,9 @@ test_expect_success 'one push option works for a single branch' '
+ 		test_commit one &&
+ 		git push --mirror up &&
+ 		test_commit two &&
+-		git push --push-option=asdf up master
++		git push --push-option=asdf up main
+ 	) &&
+-	test_refs master master &&
++	test_refs main main &&
+ 	echo "asdf" >expect &&
+ 	test_cmp expect upstream/.git/hooks/pre-receive.push_options &&
+ 	test_cmp expect upstream/.git/hooks/post-receive.push_options
+@@ -79,9 +79,9 @@ test_expect_success 'push option denied by remote' '
+ 		test_commit one &&
+ 		git push --mirror up &&
+ 		test_commit two &&
+-		test_must_fail git push --push-option=asdf up master
++		test_must_fail git push --push-option=asdf up main
+ 	) &&
+-	test_refs master HEAD@{1}
++	test_refs main HEAD@{1}
+ '
+ 
+ test_expect_success 'two push options work' '
+@@ -92,9 +92,9 @@ test_expect_success 'two push options work' '
+ 		test_commit one &&
+ 		git push --mirror up &&
+ 		test_commit two &&
+-		git push --push-option=asdf --push-option="more structured text" up master
++		git push --push-option=asdf --push-option="more structured text" up main
+ 	) &&
+-	test_refs master master &&
++	test_refs main main &&
+ 	printf "asdf\nmore structured text\n" >expect &&
+ 	test_cmp expect upstream/.git/hooks/pre-receive.push_options &&
+ 	test_cmp expect upstream/.git/hooks/post-receive.push_options
+@@ -123,14 +123,14 @@ test_expect_success 'push options and submodules' '
+ 
+ 	git -C parent push \
+ 		--push-option=asdf --push-option="more structured text" \
+-		--recurse-submodules=on-demand up master &&
++		--recurse-submodules=on-demand up main &&
+ 
+-	git -C upstream rev-parse --verify master >expect &&
+-	git -C parent/workbench rev-parse --verify master >actual &&
++	git -C upstream rev-parse --verify main >expect &&
++	git -C parent/workbench rev-parse --verify main >actual &&
+ 	test_cmp expect actual &&
+ 
+-	git -C parent_upstream rev-parse --verify master >expect &&
+-	git -C parent rev-parse --verify master >actual &&
++	git -C parent_upstream rev-parse --verify main >expect &&
++	git -C parent rev-parse --verify main >actual &&
+ 	test_cmp expect actual &&
+ 
+ 	printf "asdf\nmore structured text\n" >expect &&
+@@ -148,9 +148,9 @@ test_expect_success 'default push option' '
+ 		test_commit one &&
+ 		git push --mirror up &&
+ 		test_commit two &&
+-		git -c push.pushOption=default push up master
++		git -c push.pushOption=default push up main
+ 	) &&
+-	test_refs master master &&
++	test_refs main main &&
+ 	echo "default" >expect &&
+ 	test_cmp expect upstream/.git/hooks/pre-receive.push_options &&
+ 	test_cmp expect upstream/.git/hooks/post-receive.push_options
+@@ -164,9 +164,9 @@ test_expect_success 'two default push options' '
+ 		test_commit one &&
+ 		git push --mirror up &&
+ 		test_commit two &&
+-		git -c push.pushOption=default1 -c push.pushOption=default2 push up master
++		git -c push.pushOption=default1 -c push.pushOption=default2 push up main
+ 	) &&
+-	test_refs master master &&
++	test_refs main main &&
+ 	printf "default1\ndefault2\n" >expect &&
+ 	test_cmp expect upstream/.git/hooks/pre-receive.push_options &&
+ 	test_cmp expect upstream/.git/hooks/post-receive.push_options
+@@ -180,9 +180,9 @@ test_expect_success 'push option from command line overrides from-config push op
+ 		test_commit one &&
+ 		git push --mirror up &&
+ 		test_commit two &&
+-		git -c push.pushOption=default push --push-option=manual up master
++		git -c push.pushOption=default push --push-option=manual up main
+ 	) &&
+-	test_refs master master &&
++	test_refs main main &&
+ 	echo "manual" >expect &&
+ 	test_cmp expect upstream/.git/hooks/pre-receive.push_options &&
+ 	test_cmp expect upstream/.git/hooks/post-receive.push_options
+@@ -196,9 +196,9 @@ test_expect_success 'empty value of push.pushOption in config clears the list' '
+ 		test_commit one &&
+ 		git push --mirror up &&
+ 		test_commit two &&
+-		git -c push.pushOption=default1 -c push.pushOption= -c push.pushOption=default2 push up master
++		git -c push.pushOption=default1 -c push.pushOption= -c push.pushOption=default2 push up main
+ 	) &&
+-	test_refs master master &&
++	test_refs main main &&
+ 	echo "default2" >expect &&
+ 	test_cmp expect upstream/.git/hooks/pre-receive.push_options &&
+ 	test_cmp expect upstream/.git/hooks/post-receive.push_options
+@@ -212,16 +212,16 @@ test_expect_success 'invalid push option in config' '
+ 		test_commit one &&
+ 		git push --mirror up &&
+ 		test_commit two &&
+-		test_must_fail git -c push.pushOption push up master
++		test_must_fail git -c push.pushOption push up main
+ 	) &&
+-	test_refs master HEAD@{1}
++	test_refs main HEAD@{1}
+ '
+ 
+ test_expect_success 'push options keep quoted characters intact (direct)' '
+ 	mk_repo_pair &&
+ 	git -C upstream config receive.advertisePushOptions true &&
+ 	test_commit -C workbench one &&
+-	git -C workbench push --push-option="\"embedded quotes\"" up master &&
++	git -C workbench push --push-option="\"embedded quotes\"" up main &&
+ 	echo "\"embedded quotes\"" >expect &&
+ 	test_cmp expect upstream/.git/hooks/pre-receive.push_options
+ '
+@@ -244,28 +244,28 @@ mk_http_pair () {
+ test_expect_success 'push option denied properly by http server' '
+ 	mk_http_pair false &&
+ 	test_commit -C test_http_clone one &&
+-	test_must_fail git -C test_http_clone push --push-option=asdf origin master 2>actual &&
++	test_must_fail git -C test_http_clone push --push-option=asdf origin main 2>actual &&
+ 	test_i18ngrep "the receiving end does not support push options" actual &&
+-	git -C test_http_clone push origin master
++	git -C test_http_clone push origin main
+ '
+ 
+ test_expect_success 'push options work properly across http' '
+ 	mk_http_pair true &&
+ 
+ 	test_commit -C test_http_clone one &&
+-	git -C test_http_clone push origin master &&
+-	git -C "$HTTPD_DOCUMENT_ROOT_PATH"/upstream.git rev-parse --verify master >expect &&
+-	git -C test_http_clone rev-parse --verify master >actual &&
++	git -C test_http_clone push origin main &&
++	git -C "$HTTPD_DOCUMENT_ROOT_PATH"/upstream.git rev-parse --verify main >expect &&
++	git -C test_http_clone rev-parse --verify main >actual &&
+ 	test_cmp expect actual &&
+ 
+ 	test_commit -C test_http_clone two &&
+-	git -C test_http_clone push --push-option=asdf --push-option="more structured text" origin master &&
++	git -C test_http_clone push --push-option=asdf --push-option="more structured text" origin main &&
+ 	printf "asdf\nmore structured text\n" >expect &&
+ 	test_cmp expect "$HTTPD_DOCUMENT_ROOT_PATH"/upstream.git/hooks/pre-receive.push_options &&
+ 	test_cmp expect "$HTTPD_DOCUMENT_ROOT_PATH"/upstream.git/hooks/post-receive.push_options &&
+ 
+-	git -C "$HTTPD_DOCUMENT_ROOT_PATH"/upstream.git rev-parse --verify master >expect &&
+-	git -C test_http_clone rev-parse --verify master >actual &&
++	git -C "$HTTPD_DOCUMENT_ROOT_PATH"/upstream.git rev-parse --verify main >expect &&
++	git -C test_http_clone rev-parse --verify main >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -273,7 +273,7 @@ test_expect_success 'push options keep quoted characters intact (http)' '
+ 	mk_http_pair true &&
+ 
+ 	test_commit -C test_http_clone one &&
+-	git -C test_http_clone push --push-option="\"embedded quotes\"" origin master &&
++	git -C test_http_clone push --push-option="\"embedded quotes\"" origin main &&
+ 	echo "\"embedded quotes\"" >expect &&
+ 	test_cmp expect "$HTTPD_DOCUMENT_ROOT_PATH"/upstream.git/hooks/pre-receive.push_options
+ '
+diff --git a/t/t5548-push-porcelain.sh b/t/t5548-push-porcelain.sh
+index 1b19b3ef55..5a761f3642 100755
+--- a/t/t5548-push-porcelain.sh
++++ b/t/t5548-push-porcelain.sh
+@@ -36,7 +36,7 @@ create_commits_in () {
+ 		shift ||
+ 		return 1
+ 	done &&
+-	git -C "$repo" update-ref refs/heads/master $oid
++	git -C "$repo" update-ref refs/heads/main $oid
+ }
+ 
+ # Format the output of git-push, git-show-ref and other commands to make a
+@@ -57,8 +57,8 @@ make_user_friendly_and_stable_output () {
+ }
+ 
+ setup_upstream_and_workbench () {
+-	# Upstream  after setup : master(B)  foo(A)  bar(A)  baz(A)
+-	# Workbench after setup : master(A)
++	# Upstream  after setup : main(B)  foo(A)  bar(A)  baz(A)
++	# Workbench after setup : main(A)
+ 	test_expect_success "setup upstream repository and workbench" '
+ 		rm -rf upstream.git workbench &&
+ 		git init --bare upstream.git &&
+@@ -70,9 +70,9 @@ setup_upstream_and_workbench () {
+ 			# this fixed-width oid will be replaced with "<OID>".
+ 			git config core.abbrev 7 &&
+ 			git remote add origin ../upstream.git &&
+-			git update-ref refs/heads/master $A &&
++			git update-ref refs/heads/main $A &&
+ 			git push origin \
+-				$B:refs/heads/master \
++				$B:refs/heads/main \
+ 				$A:refs/heads/foo \
+ 				$A:refs/heads/bar \
+ 				$A:refs/heads/baz
+@@ -94,17 +94,17 @@ run_git_push_porcelain_output_test() {
+ 		;;
+ 	esac
+ 
+-	# Refs of upstream : master(B)  foo(A)  bar(A)  baz(A)
+-	# Refs of workbench: master(A)                  baz(A)  next(A)
+-	# git-push         : master(A)  NULL    (B)     baz(A)  next(A)
++	# Refs of upstream : main(B)  foo(A)  bar(A)  baz(A)
++	# Refs of workbench: main(A)                  baz(A)  next(A)
++	# git-push         : main(A)  NULL    (B)     baz(A)  next(A)
+ 	test_expect_success "porcelain output of successful git-push ($PROTOCOL)" '
+ 		(
+ 			cd workbench &&
+-			git update-ref refs/heads/master $A &&
++			git update-ref refs/heads/main $A &&
+ 			git update-ref refs/heads/baz $A &&
+ 			git update-ref refs/heads/next $A &&
+ 			git push --porcelain --force origin \
+-				master \
++				main \
+ 				:refs/heads/foo \
+ 				$B:bar \
+ 				baz \
+@@ -116,7 +116,7 @@ run_git_push_porcelain_output_test() {
+ 		=    refs/heads/baz:refs/heads/baz    [up to date]
+ 		     <COMMIT-B>:refs/heads/bar    <OID-A>..<OID-B>
+ 		-    :refs/heads/foo    [deleted]
+-		+    refs/heads/master:refs/heads/master    <OID-B>...<OID-A> (forced update)
++		+    refs/heads/main:refs/heads/main    <OID-B>...<OID-A> (forced update)
+ 		*    refs/heads/next:refs/heads/next    [new branch]
+ 		Done
+ 		EOF
+@@ -127,22 +127,22 @@ run_git_push_porcelain_output_test() {
+ 		cat >expect <<-EOF &&
+ 		<COMMIT-B> refs/heads/bar
+ 		<COMMIT-A> refs/heads/baz
+-		<COMMIT-A> refs/heads/master
++		<COMMIT-A> refs/heads/main
+ 		<COMMIT-A> refs/heads/next
+ 		EOF
+ 		test_cmp expect actual
+ 	'
+ 
+-	# Refs of upstream : master(A)  bar(B)  baz(A)  next(A)
+-	# Refs of workbench: master(B)  bar(A)  baz(A)  next(A)
+-	# git-push         : master(B)  bar(A)  NULL    next(A)
++	# Refs of upstream : main(A)  bar(B)  baz(A)  next(A)
++	# Refs of workbench: main(B)  bar(A)  baz(A)  next(A)
++	# git-push         : main(B)  bar(A)  NULL    next(A)
+ 	test_expect_success "atomic push failed ($PROTOCOL)" '
+ 		(
+ 			cd workbench &&
+-			git update-ref refs/heads/master $B &&
++			git update-ref refs/heads/main $B &&
+ 			git update-ref refs/heads/bar $A &&
+ 			test_must_fail git push --atomic --porcelain origin \
+-				master \
++				main \
+ 				bar \
+ 				:baz \
+ 				next
+@@ -153,7 +153,7 @@ run_git_push_porcelain_output_test() {
+ 		=    refs/heads/next:refs/heads/next    [up to date]
+ 		!    refs/heads/bar:refs/heads/bar    [rejected] (non-fast-forward)
+ 		!    (delete):refs/heads/baz    [rejected] (atomic push failed)
+-		!    refs/heads/master:refs/heads/master    [rejected] (atomic push failed)
++		!    refs/heads/main:refs/heads/main    [rejected] (atomic push failed)
+ 		Done
+ 		EOF
+ 		test_cmp expect actual &&
+@@ -163,7 +163,7 @@ run_git_push_porcelain_output_test() {
+ 		cat >expect <<-EOF &&
+ 		<COMMIT-B> refs/heads/bar
+ 		<COMMIT-A> refs/heads/baz
+-		<COMMIT-A> refs/heads/master
++		<COMMIT-A> refs/heads/main
+ 		<COMMIT-A> refs/heads/next
+ 		EOF
+ 		test_cmp expect actual
+@@ -174,16 +174,16 @@ run_git_push_porcelain_output_test() {
+ 		EOF
+ 	'
+ 
+-	# Refs of upstream : master(A)  bar(B)  baz(A)  next(A)
+-	# Refs of workbench: master(B)  bar(A)  baz(A)  next(A)
+-	# git-push         : master(B)  bar(A)  NULL    next(A)
++	# Refs of upstream : main(A)  bar(B)  baz(A)  next(A)
++	# Refs of workbench: main(B)  bar(A)  baz(A)  next(A)
++	# git-push         : main(B)  bar(A)  NULL    next(A)
+ 	test_expect_success "pre-receive hook declined ($PROTOCOL)" '
+ 		(
+ 			cd workbench &&
+-			git update-ref refs/heads/master $B &&
++			git update-ref refs/heads/main $B &&
+ 			git update-ref refs/heads/bar $A &&
+ 			test_must_fail git push --porcelain --force origin \
+-				master \
++				main \
+ 				bar \
+ 				:baz \
+ 				next
+@@ -194,7 +194,7 @@ run_git_push_porcelain_output_test() {
+ 		=    refs/heads/next:refs/heads/next    [up to date]
+ 		!    refs/heads/bar:refs/heads/bar    [remote rejected] (pre-receive hook declined)
+ 		!    :refs/heads/baz    [remote rejected] (pre-receive hook declined)
+-		!    refs/heads/master:refs/heads/master    [remote rejected] (pre-receive hook declined)
++		!    refs/heads/main:refs/heads/main    [remote rejected] (pre-receive hook declined)
+ 		Done
+ 		EOF
+ 		test_cmp expect actual &&
+@@ -204,7 +204,7 @@ run_git_push_porcelain_output_test() {
+ 		cat >expect <<-EOF &&
+ 		<COMMIT-B> refs/heads/bar
+ 		<COMMIT-A> refs/heads/baz
+-		<COMMIT-A> refs/heads/master
++		<COMMIT-A> refs/heads/main
+ 		<COMMIT-A> refs/heads/next
+ 		EOF
+ 		test_cmp expect actual
+@@ -214,14 +214,14 @@ run_git_push_porcelain_output_test() {
+ 		rm "$upstream/hooks/pre-receive"
+ 	'
+ 
+-	# Refs of upstream : master(A)  bar(B)  baz(A)  next(A)
+-	# Refs of workbench: master(B)  bar(A)  baz(A)  next(A)
+-	# git-push         : master(B)  bar(A)  NULL    next(A)
++	# Refs of upstream : main(A)  bar(B)  baz(A)  next(A)
++	# Refs of workbench: main(B)  bar(A)  baz(A)  next(A)
++	# git-push         : main(B)  bar(A)  NULL    next(A)
+ 	test_expect_success "non-fastforward push ($PROTOCOL)" '
+ 		(
+ 			cd workbench &&
+ 			test_must_fail git push --porcelain origin \
+-				master \
++				main \
+ 				bar \
+ 				:baz \
+ 				next
+@@ -231,7 +231,7 @@ run_git_push_porcelain_output_test() {
+ 		To <URL/of/upstream.git>
+ 		=    refs/heads/next:refs/heads/next    [up to date]
+ 		-    :refs/heads/baz    [deleted]
+-		     refs/heads/master:refs/heads/master    <OID-A>..<OID-B>
++		     refs/heads/main:refs/heads/main    <OID-A>..<OID-B>
+ 		!    refs/heads/bar:refs/heads/bar    [rejected] (non-fast-forward)
+ 		Done
+ 		EOF
+@@ -241,7 +241,7 @@ run_git_push_porcelain_output_test() {
+ 		make_user_friendly_and_stable_output <out >actual &&
+ 		cat >expect <<-EOF &&
+ 		<COMMIT-B> refs/heads/bar
+-		<COMMIT-B> refs/heads/master
++		<COMMIT-B> refs/heads/main
+ 		<COMMIT-A> refs/heads/next
+ 		EOF
+ 		test_cmp expect actual
+diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+index 483578b2d7..6fdcd0c036 100755
+--- a/t/t5550-http-fetch-dumb.sh
++++ b/t/t5550-http-fetch-dumb.sh
+@@ -26,7 +26,7 @@ test_expect_success 'create http-accessible bare repository with loose objects'
+ 	 hooks/post-update
+ 	) &&
+ 	git remote add public "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+-	git push public master:master
++	git push public main:main
+ '
+ 
+ test_expect_success 'clone http repository' '
+@@ -37,8 +37,8 @@ test_expect_success 'clone http repository' '
+ 
+ test_expect_success 'list refs from outside any repository' '
+ 	cat >expect <<-EOF &&
+-	$(git rev-parse master)	HEAD
+-	$(git rev-parse master)	refs/heads/master
++	$(git rev-parse main)	HEAD
++	$(git rev-parse main)	refs/heads/main
+ 	EOF
+ 	nongit git ls-remote "$HTTPD_URL/dumb/repo.git" >actual &&
+ 	test_cmp expect actual
+@@ -181,8 +181,8 @@ test_expect_success 'fetch changes via manual http-fetch' '
+ 
+ 	HEAD=$(git rev-parse --verify HEAD) &&
+ 	(cd clone2 &&
+-	 git http-fetch -a -w heads/master-new $HEAD $(git config remote.origin.url) &&
+-	 git checkout master-new &&
++	 git http-fetch -a -w heads/main-new $HEAD $(git config remote.origin.url) &&
++	 git checkout main-new &&
+ 	 test $HEAD = $(git rev-parse --verify HEAD)) &&
+ 	test_cmp file clone2/file
+ '
+@@ -192,19 +192,19 @@ test_expect_success 'manual http-fetch without -a works just as well' '
+ 
+ 	HEAD=$(git rev-parse --verify HEAD) &&
+ 	(cd clone3 &&
+-	 git http-fetch -w heads/master-new $HEAD $(git config remote.origin.url) &&
+-	 git checkout master-new &&
++	 git http-fetch -w heads/main-new $HEAD $(git config remote.origin.url) &&
++	 git checkout main-new &&
+ 	 test $HEAD = $(git rev-parse --verify HEAD)) &&
+ 	test_cmp file clone3/file
+ '
+ 
+ test_expect_success 'http remote detects correct HEAD' '
+-	git push public master:other &&
++	git push public main:other &&
+ 	(cd clone &&
+ 	 git remote set-head origin -d &&
+ 	 git remote set-head origin -a &&
+ 	 git symbolic-ref refs/remotes/origin/HEAD > output &&
+-	 echo refs/remotes/origin/master > expect &&
++	 echo refs/remotes/origin/main > expect &&
+ 	 test_cmp expect output
+ 	)
+ '
+@@ -416,7 +416,7 @@ test_expect_success 'set up evil alternates scheme' '
+ 	evil=$HTTPD_DOCUMENT_ROOT_PATH/evil.git &&
+ 	git init --bare "$evil" &&
+ 	# do this by hand to avoid object existence check
+-	printf "%s\\t%s\\n" $sha1 refs/heads/master >"$evil/info/refs"
++	printf "%s\\t%s\\n" $sha1 refs/heads/main >"$evil/info/refs"
+ '
+ 
+ # Here we'll just redirect via HTTP. In a real-world attack these would be on
+diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+index e40e9ed52f..2215bbcce7 100755
+--- a/t/t5551-http-fetch-smart.sh
++++ b/t/t5551-http-fetch-smart.sh
+@@ -18,7 +18,7 @@ test_expect_success 'create http-accessible bare repository' '
+ 	 git --bare init
+ 	) &&
+ 	git remote add public "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+-	git push public master:master
++	git push public main:main
+ '
+ 
+ setup_askpass_helper
+@@ -238,9 +238,9 @@ test_expect_success 'invalid Content-Type rejected' '
+ 
+ test_expect_success 'create namespaced refs' '
+ 	test_commit namespaced &&
+-	git push public HEAD:refs/namespaces/ns/refs/heads/master &&
++	git push public HEAD:refs/namespaces/ns/refs/heads/main &&
+ 	git --git-dir="$HTTPD_DOCUMENT_ROOT_PATH/repo.git" \
+-		symbolic-ref refs/namespaces/ns/HEAD refs/namespaces/ns/refs/heads/master
++		symbolic-ref refs/namespaces/ns/HEAD refs/namespaces/ns/refs/heads/main
+ '
+ 
+ test_expect_success 'smart clone respects namespace' '
+@@ -271,7 +271,7 @@ test_expect_success 'cookies stored in http.cookiefile when http.savecookies set
+ 	EOF
+ 	git config http.cookiefile cookies.txt &&
+ 	git config http.savecookies true &&
+-	git ls-remote $HTTPD_URL/smart_cookies/repo.git master &&
++	git ls-remote $HTTPD_URL/smart_cookies/repo.git main &&
+ 
+ 	# NEEDSWORK: If the overspecification of the expected result is reduced, we
+ 	# might be able to run this test in all protocol versions.
+@@ -344,12 +344,12 @@ test_expect_success 'large fetch-pack requests can be sent using chunked encodin
+ test_expect_success 'test allowreachablesha1inwant' '
+ 	test_when_finished "rm -rf test_reachable.git" &&
+ 	server="$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+-	master_sha=$(git -C "$server" rev-parse refs/heads/master) &&
++	main_sha=$(git -C "$server" rev-parse refs/heads/main) &&
+ 	git -C "$server" config uploadpack.allowreachablesha1inwant 1 &&
+ 
+ 	git init --bare test_reachable.git &&
+ 	git -C test_reachable.git remote add origin "$HTTPD_URL/smart/repo.git" &&
+-	git -C test_reachable.git fetch origin "$master_sha"
++	git -C test_reachable.git fetch origin "$main_sha"
+ '
+ 
+ test_expect_success 'test allowreachablesha1inwant with unreachable' '
+@@ -363,7 +363,7 @@ test_expect_success 'test allowreachablesha1inwant with unreachable' '
+ 	git push public :refs/heads/doomed &&
+ 
+ 	server="$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+-	master_sha=$(git -C "$server" rev-parse refs/heads/master) &&
++	main_sha=$(git -C "$server" rev-parse refs/heads/main) &&
+ 	git -C "$server" config uploadpack.allowreachablesha1inwant 1 &&
+ 
+ 	git init --bare test_reachable.git &&
+@@ -385,7 +385,7 @@ test_expect_success 'test allowanysha1inwant with unreachable' '
+ 	git push public :refs/heads/doomed &&
+ 
+ 	server="$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+-	master_sha=$(git -C "$server" rev-parse refs/heads/master) &&
++	main_sha=$(git -C "$server" rev-parse refs/heads/main) &&
+ 	git -C "$server" config uploadpack.allowreachablesha1inwant 1 &&
+ 
+ 	git init --bare test_reachable.git &&
+@@ -444,8 +444,8 @@ test_expect_success 'using fetch command in remote-curl updates refs' '
+ 	test_commit -C "$SERVER" bar &&
+ 	git -C client -c protocol.version=0 fetch &&
+ 
+-	git -C "$SERVER" rev-parse master >expect &&
+-	git -C client rev-parse origin/master >actual &&
++	git -C "$SERVER" rev-parse main >expect &&
++	git -C client rev-parse origin/main >actual &&
+ 	test_cmp expect actual
+ '
+ 
+diff --git a/t/t5552-skipping-fetch-negotiator.sh b/t/t5552-skipping-fetch-negotiator.sh
+index 156c704040..7b9fb4ff02 100755
+--- a/t/t5552-skipping-fetch-negotiator.sh
++++ b/t/t5552-skipping-fetch-negotiator.sh
+@@ -100,7 +100,7 @@ test_expect_success 'use ref advertisement to filter out commits' '
+ 	git -C server checkout --orphan anotherbranch &&
+ 	test_commit -C server to_fetch &&
+ 
+-	# The server advertising "c3" (as "refs/heads/master") means that we do
++	# The server advertising "c3" (as "refs/heads/main") means that we do
+ 	# not need to send any ancestors of "c3", but we still need to send "c3"
+ 	# itself.
+ 	test_config -C client fetch.negotiationalgorithm skipping &&
+diff --git a/t/t5553-set-upstream.sh b/t/t5553-set-upstream.sh
+index 7622981cbf..0e6574f526 100755
+--- a/t/t5553-set-upstream.sh
++++ b/t/t5553-set-upstream.sh
+@@ -32,9 +32,9 @@ test_expect_success 'setup bare parent fetch' '
+ 	git remote add upstream parent
+ '
+ 
+-test_expect_success 'setup commit on master and other fetch' '
++test_expect_success 'setup commit on main and other fetch' '
+ 	test_commit one &&
+-	git push upstream master &&
++	git push upstream main &&
+ 	git checkout -b other &&
+ 	test_commit two &&
+ 	git push upstream other
+@@ -43,38 +43,38 @@ test_expect_success 'setup commit on master and other fetch' '
+ # tests for fetch --set-upstream
+ 
+ test_expect_success 'fetch --set-upstream does not set upstream w/o branch' '
+-	clear_config master other &&
 -	git checkout master &&
++	clear_config main other &&
 +	git checkout main &&
- 	git checkout -b one &&
- 	git checkout side &&
- 	git tag one &&
-diff --git a/t/t3432-rebase-fast-forward.sh b/t/t3432-rebase-fast-forward.sh
-index a29eda87e9..b87537ca7d 100755
---- a/t/t3432-rebase-fast-forward.sh
-+++ b/t/t3432-rebase-fast-forward.sh
-@@ -84,19 +84,19 @@ test_rebase_same_head_ () {
- 
- changes='no changes'
- test_rebase_same_head success noop same success work same
--test_rebase_same_head success noop same success work same master
-+test_rebase_same_head success noop same success work same main
- test_rebase_same_head success noop same success work diff --onto B B
- test_rebase_same_head success noop same success work diff --onto B... B
--test_rebase_same_head success noop same success work same --onto master... master
--test_rebase_same_head success noop same success work same --keep-base master
-+test_rebase_same_head success noop same success work same --onto main... main
-+test_rebase_same_head success noop same success work same --keep-base main
- test_rebase_same_head success noop same success work same --keep-base
- test_rebase_same_head success noop same success work same --no-fork-point
- test_rebase_same_head success noop same success work same --keep-base --no-fork-point
--test_rebase_same_head success noop same success work same --fork-point master
-+test_rebase_same_head success noop same success work same --fork-point main
- test_rebase_same_head success noop same success work diff --fork-point --onto B B
- test_rebase_same_head success noop same success work diff --fork-point --onto B... B
--test_rebase_same_head success noop same success work same --fork-point --onto master... master
--test_rebase_same_head success noop same success work same --keep-base --keep-base master
-+test_rebase_same_head success noop same success work same --fork-point --onto main... main
-+test_rebase_same_head success noop same success work same --keep-base --keep-base main
- 
- test_expect_success 'add work same to side' '
- 	test_commit E
-@@ -104,22 +104,22 @@ test_expect_success 'add work same to side' '
- 
- changes='our changes'
- test_rebase_same_head success noop same success work same
--test_rebase_same_head success noop same success work same master
-+test_rebase_same_head success noop same success work same main
- test_rebase_same_head success noop same success work diff --onto B B
- test_rebase_same_head success noop same success work diff --onto B... B
--test_rebase_same_head success noop same success work same --onto master... master
--test_rebase_same_head success noop same success work same --keep-base master
-+test_rebase_same_head success noop same success work same --onto main... main
-+test_rebase_same_head success noop same success work same --keep-base main
- test_rebase_same_head success noop same success work same --keep-base
- test_rebase_same_head success noop same success work same --no-fork-point
- test_rebase_same_head success noop same success work same --keep-base --no-fork-point
--test_rebase_same_head success noop same success work same --fork-point master
-+test_rebase_same_head success noop same success work same --fork-point main
- test_rebase_same_head success noop same success work diff --fork-point --onto B B
- test_rebase_same_head success noop same success work diff --fork-point --onto B... B
--test_rebase_same_head success noop same success work same --fork-point --onto master... master
--test_rebase_same_head success noop same success work same --fork-point --keep-base master
-+test_rebase_same_head success noop same success work same --fork-point --onto main... main
-+test_rebase_same_head success noop same success work same --fork-point --keep-base main
- 
- test_expect_success 'add work same to upstream' '
--	git checkout master &&
-+	git checkout main &&
- 	test_commit F &&
- 	git checkout side
- '
-@@ -127,12 +127,12 @@ test_expect_success 'add work same to upstream' '
- changes='our and their changes'
- test_rebase_same_head success noop same success work diff --onto B B
- test_rebase_same_head success noop same success work diff --onto B... B
--test_rebase_same_head success noop same success work diff --onto master... master
--test_rebase_same_head success noop same success work diff --keep-base master
-+test_rebase_same_head success noop same success work diff --onto main... main
-+test_rebase_same_head success noop same success work diff --keep-base main
- test_rebase_same_head success noop same success work diff --keep-base
- test_rebase_same_head failure work same success work diff --fork-point --onto B B
- test_rebase_same_head failure work same success work diff --fork-point --onto B... B
--test_rebase_same_head success noop same success work diff --fork-point --onto master... master
--test_rebase_same_head success noop same success work diff --fork-point --keep-base master
-+test_rebase_same_head success noop same success work diff --fork-point --onto main... main
-+test_rebase_same_head success noop same success work diff --fork-point --keep-base main
- 
- test_done
-diff --git a/t/t3434-rebase-i18n.sh b/t/t3434-rebase-i18n.sh
-index c7c835cde9..a252908d02 100755
---- a/t/t3434-rebase-i18n.sh
-+++ b/t/t3434-rebase-i18n.sh
-@@ -7,7 +7,7 @@ test_description='rebase with changing encoding
- 
- Initial setup:
- 
--1 - 2              master
-+1 - 2              main
-  \
-   3 - 4            first
-    \
-@@ -41,7 +41,7 @@ test_expect_success 'rebase --rebase-merges update encoding eucJP to UTF-8' '
- 	git config i18n.commitencoding eucJP &&
- 	git merge -F "$TEST_DIRECTORY/t3434/eucJP.txt" second &&
- 	git config i18n.commitencoding UTF-8 &&
--	git rebase --rebase-merges master &&
-+	git rebase --rebase-merges main &&
- 	compare_msg eucJP.txt eucJP UTF-8
+ 	git fetch --set-upstream upstream &&
+-	check_config_missing master &&
++	check_config_missing main &&
+ 	check_config_missing other
  '
  
-@@ -50,7 +50,7 @@ test_expect_success 'rebase --rebase-merges update encoding eucJP to ISO-2022-JP
- 	git config i18n.commitencoding eucJP &&
- 	git merge -F "$TEST_DIRECTORY/t3434/eucJP.txt" second &&
- 	git config i18n.commitencoding ISO-2022-JP &&
--	git rebase --rebase-merges master &&
-+	git rebase --rebase-merges main &&
- 	compare_msg eucJP.txt eucJP ISO-2022-JP
+-test_expect_success 'fetch --set-upstream upstream master sets branch master but not other' '
+-	clear_config master other &&
+-	git fetch --set-upstream upstream master &&
+-	check_config master upstream refs/heads/master &&
++test_expect_success 'fetch --set-upstream upstream main sets branch main but not other' '
++	clear_config main other &&
++	git fetch --set-upstream upstream main &&
++	check_config main upstream refs/heads/main &&
+ 	check_config_missing other
  '
  
-@@ -66,7 +66,7 @@ test_rebase_continue_update_encode () {
- 		git config i18n.commitencoding $old &&
- 		git commit -F "$TEST_DIRECTORY/t3434/$msgfile" &&
- 		git config i18n.commitencoding $new &&
--		test_must_fail git rebase -m master &&
-+		test_must_fail git rebase -m main &&
- 		test -f .git/rebase-merge/message &&
- 		git stripspace <.git/rebase-merge/message >two.t &&
- 		git add two.t &&
-diff --git a/t/t3435-rebase-gpg-sign.sh b/t/t3435-rebase-gpg-sign.sh
-index 54120b09d6..aab2b3aab8 100755
---- a/t/t3435-rebase-gpg-sign.sh
-+++ b/t/t3435-rebase-gpg-sign.sh
-@@ -46,7 +46,7 @@ test_expect_success 'setup: merge commit' '
- 	test_commit fork-point &&
- 	git switch -c side &&
+ test_expect_success 'fetch --set-upstream upstream other sets branch other' '
+-	clear_config master other &&
++	clear_config main other &&
+ 	git fetch --set-upstream upstream other &&
+-	check_config master upstream refs/heads/other &&
++	check_config main upstream refs/heads/other &&
+ 	check_config_missing other
+ '
+ 
+-test_expect_success 'fetch --set-upstream master:other does not set the branch other2' '
++test_expect_success 'fetch --set-upstream main:other does not set the branch other2' '
+ 	clear_config other2 &&
+-	git fetch --set-upstream upstream master:other2 &&
++	git fetch --set-upstream upstream main:other2 &&
+ 	check_config_missing other2
+ '
+ 
+ test_expect_success 'fetch --set-upstream http://nosuchdomain.example.com fails with invalid url' '
+-	# master explicitly not cleared, we check that it is not touched from previous value
++	# main explicitly not cleared, we check that it is not touched from previous value
+ 	clear_config other other2 &&
+ 	test_must_fail git fetch --set-upstream http://nosuchdomain.example.com &&
+-	check_config master upstream refs/heads/other &&
++	check_config main upstream refs/heads/other &&
+ 	check_config_missing other &&
+ 	check_config_missing other2
+ '
+@@ -83,7 +83,7 @@ test_expect_success 'fetch --set-upstream with valid URL sets upstream to URL' '
+ 	clear_config other other2 &&
+ 	url="file://$PWD" &&
+ 	git fetch --set-upstream "$url" &&
+-	check_config master "$url" HEAD &&
++	check_config main "$url" HEAD &&
+ 	check_config_missing other &&
+ 	check_config_missing other2
+ '
+@@ -96,30 +96,30 @@ test_expect_success 'setup bare parent pull' '
+ 	git remote add upstream parent
+ '
+ 
+-test_expect_success 'setup commit on master and other pull' '
++test_expect_success 'setup commit on main and other pull' '
  	test_commit three &&
--	git switch master &&
-+	git switch main &&
- 	git merge --no-ff side &&
- 	git tag merged
- '
-@@ -64,7 +64,7 @@ test_rebase_gpg_sign   false -i --no-gpg-sign --gpg-sign
- test_expect_failure 'rebase -p --no-gpg-sign override commit.gpgsign' '
- 	git reset --hard merged &&
- 	git config commit.gpgsign true &&
--	git rebase -p --no-gpg-sign --onto=one fork-point master &&
-+	git rebase -p --no-gpg-sign --onto=one fork-point main &&
- 	test_must_fail git verify-commit HEAD
+-	git push --tags upstream master &&
++	git push --tags upstream main &&
+ 	test_commit four &&
+ 	git push upstream other
  '
  
-diff --git a/t/t3436-rebase-more-options.sh b/t/t3436-rebase-more-options.sh
-index eaaf4c8d1d..4d106642ba 100755
---- a/t/t3436-rebase-more-options.sh
-+++ b/t/t3436-rebase-more-options.sh
-@@ -28,7 +28,7 @@ test_expect_success 'setup' '
- 	test_commit commit2 foo foo2 &&
- 	test_commit commit3 foo foo3 &&
+-test_expect_success 'pull --set-upstream upstream master sets branch master but not other' '
+-	clear_config master other &&
+-	git pull --set-upstream upstream master &&
+-	check_config master upstream refs/heads/master &&
++test_expect_success 'pull --set-upstream upstream main sets branch main but not other' '
++	clear_config main other &&
++	git pull --set-upstream upstream main &&
++	check_config main upstream refs/heads/main &&
+ 	check_config_missing other
+ '
  
--	git checkout --orphan master &&
-+	git checkout --orphan main &&
- 	rm foo &&
- 	test_write_lines "line 1" "        line 2" "line 3" >file &&
- 	git commit -am "add file" &&
+-test_expect_success 'pull --set-upstream master:other2 does not set the branch other2' '
++test_expect_success 'pull --set-upstream main:other2 does not set the branch other2' '
+ 	clear_config other2 &&
+-	git pull --set-upstream upstream master:other2 &&
++	git pull --set-upstream upstream main:other2 &&
+ 	check_config_missing other2
+ '
+ 
+-test_expect_success 'pull --set-upstream upstream other sets branch master' '
+-	clear_config master other &&
++test_expect_success 'pull --set-upstream upstream other sets branch main' '
++	clear_config main other &&
+ 	git pull --set-upstream upstream other &&
+-	check_config master upstream refs/heads/other &&
++	check_config main upstream refs/heads/other &&
+ 	check_config_missing other
+ '
+ 
+@@ -130,47 +130,47 @@ test_expect_success 'pull --set-upstream upstream tag does not set the tag' '
+ '
+ 
+ test_expect_success 'pull --set-upstream http://nosuchdomain.example.com fails with invalid url' '
+-	# master explicitly not cleared, we check that it is not touched from previous value
++	# main explicitly not cleared, we check that it is not touched from previous value
+ 	clear_config other other2 three &&
+ 	test_must_fail git pull --set-upstream http://nosuchdomain.example.com &&
+-	check_config master upstream refs/heads/other &&
++	check_config main upstream refs/heads/other &&
+ 	check_config_missing other &&
+ 	check_config_missing other2 &&
+ 	check_config_missing three
+ '
+ 
+ test_expect_success 'pull --set-upstream upstream HEAD sets branch HEAD' '
+-	clear_config master other &&
++	clear_config main other &&
+ 	git pull --set-upstream upstream HEAD &&
+-	check_config master upstream HEAD &&
++	check_config main upstream HEAD &&
+ 	git checkout other &&
+ 	git pull --set-upstream upstream HEAD &&
+ 	check_config other upstream HEAD
+ '
+ 
+ test_expect_success 'pull --set-upstream upstream with more than one branch does nothing' '
+-	clear_config master three &&
+-	git pull --set-upstream upstream master three &&
+-	check_config_missing master &&
++	clear_config main three &&
++	git pull --set-upstream upstream main three &&
++	check_config_missing main &&
+ 	check_config_missing three
+ '
+ 
+ test_expect_success 'pull --set-upstream with valid URL sets upstream to URL' '
+-	clear_config master other other2 &&
+-	git checkout master &&
++	clear_config main other other2 &&
++	git checkout main &&
+ 	url="file://$PWD" &&
+ 	git pull --set-upstream "$url" &&
+-	check_config master "$url" HEAD &&
++	check_config main "$url" HEAD &&
+ 	check_config_missing other &&
+ 	check_config_missing other2
+ '
+ 
+ test_expect_success 'pull --set-upstream with valid URL and branch sets branch' '
+-	clear_config master other other2 &&
+-	git checkout master &&
++	clear_config main other other2 &&
++	git checkout main &&
+ 	url="file://$PWD" &&
+-	git pull --set-upstream "$url" master &&
+-	check_config master "$url" refs/heads/master &&
++	git pull --set-upstream "$url" main &&
++	check_config main "$url" refs/heads/main &&
+ 	check_config_missing other &&
+ 	check_config_missing other2
+ '
+diff --git a/t/t5561-http-backend.sh b/t/t5561-http-backend.sh
+index 6eb0294978..c8a9f7f9bb 100755
+--- a/t/t5561-http-backend.sh
++++ b/t/t5561-http-backend.sh
+@@ -39,9 +39,9 @@ POST() {
+ 
+ grep '^[^#]' >exp <<EOF
+ 
+-###  refs/heads/master
++###  refs/heads/main
+ ###
+-GET  /smart/repo.git/refs/heads/master HTTP/1.1 404 -
++GET  /smart/repo.git/refs/heads/main HTTP/1.1 404 -
+ 
+ ###  getanyfile default
+ ###
+diff --git a/t/t556x_common b/t/t556x_common
+index 359fcfe32b..670fb89477 100755
+--- a/t/t556x_common
++++ b/t/t556x_common
+@@ -22,7 +22,7 @@ test_expect_success 'setup repository' '
+ 	 : >objects/info/http-alternates
+ 	) &&
+ 	git remote add public "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+-	git push public master:master &&
++	git push public main:main &&
+ 
+ 	(cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+ 	 git repack -a -d
+@@ -31,7 +31,7 @@ test_expect_success 'setup repository' '
+ 	echo other >file &&
+ 	git add file &&
+ 	git commit -m two &&
+-	git push public master:master &&
++	git push public main:main &&
+ 
+ 	LOOSE_URL=$(find_file objects/??) &&
+ 	PACK_URL=$(find_file objects/pack/*.pack) &&
+@@ -51,8 +51,8 @@ get_static_files() {
+ 
+ SMART=smart
+ GIT_HTTP_EXPORT_ALL=1 && export GIT_HTTP_EXPORT_ALL
+-test_expect_success 'direct refs/heads/master not found' '
+-	GET refs/heads/master "404 Not Found"
++test_expect_success 'direct refs/heads/main not found' '
++	GET refs/heads/main "404 Not Found"
+ '
+ test_expect_success 'static file is ok' '
+ 	get_static_files "200 OK"
+diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
+index 8f69a7854f..864d5c985c 100755
+--- a/t/t5570-git-daemon.sh
++++ b/t/t5570-git-daemon.sh
+@@ -26,7 +26,7 @@ test_expect_success 'create git-accessible bare repository' '
+ 	 : >git-daemon-export-ok
+ 	) &&
+ 	git remote add public "$GIT_DAEMON_DOCUMENT_ROOT_PATH/repo.git" &&
+-	git push public master:master
++	git push public main:main
+ '
+ 
+ test_expect_success 'clone git repository' '
+@@ -55,12 +55,12 @@ test_expect_success 'no-op fetch without "-v" is quiet' '
+ '
+ 
+ test_expect_success 'remote detects correct HEAD' '
+-	git push public master:other &&
++	git push public main:other &&
+ 	(cd clone &&
+ 	 git remote set-head -d origin &&
+ 	 git remote set-head -a origin &&
+ 	 git symbolic-ref refs/remotes/origin/HEAD > output &&
+-	 echo refs/remotes/origin/master > expect &&
++	 echo refs/remotes/origin/main > expect &&
+ 	 test_cmp expect output
+ 	)
+ '
+@@ -148,7 +148,7 @@ test_remote_error()
+ 
+ msg="access denied or repository not exported"
+ test_expect_success 'clone non-existent' "test_remote_error    '$msg' clone nowhere.git"
+-test_expect_success 'push disabled'      "test_remote_error    '$msg' push  repo.git master"
++test_expect_success 'push disabled'      "test_remote_error    '$msg' push  repo.git main"
+ test_expect_success 'read access denied' "test_remote_error -x '$msg' fetch repo.git"
+ test_expect_success 'not exported'       "test_remote_error -n '$msg' fetch repo.git"
+ 
+@@ -156,7 +156,7 @@ stop_git_daemon
+ start_git_daemon --informative-errors
+ 
+ test_expect_success 'clone non-existent' "test_remote_error    'no such repository'      clone nowhere.git"
+-test_expect_success 'push disabled'      "test_remote_error    'service not enabled'     push  repo.git master"
++test_expect_success 'push disabled'      "test_remote_error    'service not enabled'     push  repo.git main"
+ test_expect_success 'read access denied' "test_remote_error -x 'no such repository'      fetch repo.git"
+ test_expect_success 'not exported'       "test_remote_error -n 'repository not exported' fetch repo.git"
+ 
+@@ -192,10 +192,10 @@ test_expect_success FAKENC 'hostname interpolation works after LF-stripping' '
+ 	fake_nc "$GIT_DAEMON_HOST_PORT" <input >output &&
+ 	depacketize <output >output.raw &&
+ 
+-	# just pick out the value of master, which avoids any protocol
++	# just pick out the value of main, which avoids any protocol
+ 	# particulars
+-	perl -lne "print \$1 if m{^(\\S+) refs/heads/master}" <output.raw >actual &&
+-	git -C "$repo" rev-parse master >expect &&
++	perl -lne "print \$1 if m{^(\\S+) refs/heads/main}" <output.raw >actual &&
++	git -C "$repo" rev-parse main >expect &&
+ 	test_cmp expect actual
+ '
+ 
+diff --git a/t/t5571-pre-push-hook.sh b/t/t5571-pre-push-hook.sh
+index ac53d63869..891f03cd59 100755
+--- a/t/t5571-pre-push-hook.sh
++++ b/t/t5571-pre-push-hook.sh
+@@ -48,11 +48,11 @@ EOF
+ cat >expected <<EOF
+ parent1
+ repo1
+-refs/heads/master $COMMIT2 refs/heads/foreign $COMMIT1
++refs/heads/main $COMMIT2 refs/heads/foreign $COMMIT1
+ EOF
+ 
+ test_expect_success 'push with hook' '
+-	git push parent1 master:foreign &&
++	git push parent1 main:foreign &&
+ 	diff expected actual
+ '
+ 
+diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
+index 1d75e3b12b..d6a75964d8 100755
+--- a/t/t5572-pull-submodule.sh
++++ b/t/t5572-pull-submodule.sh
+@@ -148,8 +148,8 @@ test_expect_success 'branch has no merge base with remote-tracking counterpart'
+ 
+ 	git clone parent child &&
+ 
+-	# Reset master so that it has no merge base with
+-	# refs/remotes/origin/master.
++	# Reset main so that it has no merge base with
++	# refs/remotes/origin/main.
+ 	OTHER=$(git -C child commit-tree -m bar \
+ 		$(git -C child rev-parse HEAD^{tree})) &&
+ 	git -C child reset --hard "$OTHER" &&
+diff --git a/t/t5580-unc-paths.sh b/t/t5580-unc-paths.sh
+index cf768b3a27..511c1ba51d 100755
+--- a/t/t5580-unc-paths.sh
++++ b/t/t5580-unc-paths.sh
+@@ -53,7 +53,7 @@ test_expect_success fetch '
+ 	git init to-fetch &&
+ 	(
+ 		cd to-fetch &&
+-		git fetch "$UNCPATH" master
++		git fetch "$UNCPATH" main
+ 	)
+ '
+ 
+diff --git a/t/t5581-http-curl-verbose.sh b/t/t5581-http-curl-verbose.sh
+index 927aad0820..0c6e3b7665 100755
+--- a/t/t5581-http-curl-verbose.sh
++++ b/t/t5581-http-curl-verbose.sh
+@@ -13,7 +13,7 @@ test_expect_success 'setup repository' '
+ 	git add file &&
+ 	git commit -m one &&
+ 	git remote add public "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+-	git push public master:master
++	git push public main:main
+ '
+ 
+ test_expect_success 'failure in git-upload-pack is shown' '
+diff --git a/t/t5582-fetch-negative-refspec.sh b/t/t5582-fetch-negative-refspec.sh
+index 8c61e28fec..9c2b19cae2 100755
+--- a/t/t5582-fetch-negative-refspec.sh
++++ b/t/t5582-fetch-negative-refspec.sh
+@@ -22,12 +22,12 @@ test_expect_success "clone and setup child repos" '
+ 		git switch -c alternate &&
+ 		echo >file updated again by one &&
+ 		git commit -a -m "updated by one again" &&
+-		git switch master
++		git switch main
+ 	) &&
+ 	git clone . two &&
+ 	(
+ 		cd two &&
+-		git config branch.master.remote one &&
++		git config branch.main.remote one &&
+ 		git config remote.one.url ../one/.git/ &&
+ 		git config remote.one.fetch +refs/heads/*:refs/remotes/one/* &&
+ 		git config --add remote.one.fetch ^refs/heads/alternate
+@@ -43,9 +43,9 @@ test_expect_success "fetch one" '
+ 		test_must_fail git rev-parse --verify refs/remotes/one/alternate &&
+ 		git fetch one &&
+ 		test_must_fail git rev-parse --verify refs/remotes/one/alternate &&
+-		git rev-parse --verify refs/remotes/one/master &&
+-		mine=$(git rev-parse refs/remotes/one/master) &&
+-		his=$(cd ../one && git rev-parse refs/heads/master) &&
++		git rev-parse --verify refs/remotes/one/main &&
++		mine=$(git rev-parse refs/remotes/one/main) &&
++		his=$(cd ../one && git rev-parse refs/heads/main) &&
+ 		test "z$mine" = "z$his"
+ 	)
+ '
+@@ -57,7 +57,7 @@ test_expect_success "fetch with negative refspec on commandline" '
+ 		cd three &&
+ 		alternate_in_one=$(cd ../one && git rev-parse refs/heads/alternate) &&
+ 		echo $alternate_in_one >expect &&
+-		git fetch ../one/.git refs/heads/*:refs/remotes/one/* ^refs/heads/master &&
++		git fetch ../one/.git refs/heads/*:refs/remotes/one/* ^refs/heads/main &&
+ 		cut -f -1 .git/FETCH_HEAD >actual &&
+ 		test_cmp expect actual
+ 	)
+@@ -68,8 +68,8 @@ test_expect_success "fetch with negative sha1 refspec fails" '
+ 	git commit -a -m "updated by origin yet again" &&
+ 	(
+ 		cd three &&
+-		master_in_one=$(cd ../one && git rev-parse refs/heads/master) &&
+-		test_must_fail git fetch ../one/.git refs/heads/*:refs/remotes/one/* ^$master_in_one
++		main_in_one=$(cd ../one && git rev-parse refs/heads/main) &&
++		test_must_fail git fetch ../one/.git refs/heads/*:refs/remotes/one/* ^$main_in_one
+ 	)
+ '
+ 
+@@ -92,10 +92,10 @@ test_expect_success "fetch with negative pattern refspec does not expand prefix"
+ 	(
+ 		cd three &&
+ 		alternate_in_one=$(cd ../one && git rev-parse refs/heads/alternate) &&
+-		master_in_one=$(cd ../one && git rev-parse refs/heads/master) &&
++		main_in_one=$(cd ../one && git rev-parse refs/heads/main) &&
+ 		echo $alternate_in_one >expect &&
+-		echo $master_in_one >>expect &&
+-		git fetch ../one/.git refs/heads/*:refs/remotes/one/* ^master &&
++		echo $main_in_one >>expect &&
++		git fetch ../one/.git refs/heads/*:refs/remotes/one/* ^main &&
+ 		cut -f -1 .git/FETCH_HEAD >actual &&
+ 		test_cmp expect actual
+ 	)
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index c464f8dcc8..4ae87a5c4e 100644
+index 381416825c..3e0c9413f1 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -257,7 +257,13 @@ case "$TRASH_DIRECTORY" in
- esac
- 
- case "$TEST_NUMBER" in
--[0-2]*|3[0-3]*)
-+3404)
-+	# Avoid conflicts with patch series that are cooking at the same time
-+	# as the patch series changing the default of `init.defaultBranch`.
-+	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+	;;
-+[0-2]*|3[0-4]*)
+@@ -263,7 +263,7 @@ case "$TEST_NUMBER" in
+ 	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
+ 	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 	;;
+-[0-4]*|5[0-4]*|55[0-3]*)
++[0-4]*|5[0-5]*)
  	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  	;;
