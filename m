@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E54EC64E7D
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 16:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DF8BC64E90
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 16:13:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2F86B24655
+	by mail.kernel.org (Postfix) with ESMTP id EC16724655
 	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 16:13:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N6s5qg0T"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZlQHf5C9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727404AbgKQQMq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Nov 2020 11:12:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57744 "EHLO
+        id S1727438AbgKQQMu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Nov 2020 11:12:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727376AbgKQQMp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Nov 2020 11:12:45 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACDEBC0613CF
-        for <git@vger.kernel.org>; Tue, 17 Nov 2020 08:12:43 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id 10so3807498wml.2
-        for <git@vger.kernel.org>; Tue, 17 Nov 2020 08:12:43 -0800 (PST)
+        with ESMTP id S1727414AbgKQQMs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Nov 2020 11:12:48 -0500
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C999C061A04
+        for <git@vger.kernel.org>; Tue, 17 Nov 2020 08:12:47 -0800 (PST)
+Received: by mail-wm1-x344.google.com with SMTP id p22so3787382wmg.3
+        for <git@vger.kernel.org>; Tue, 17 Nov 2020 08:12:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=p/ewD6CCGutyLFF+yvgktNBs/MPY3Kxf+Kl5VMsZ4yc=;
-        b=N6s5qg0Tmw8E/rvMdwqUZswYWeCEpSolc5TYq7jytiVMDuQgAv7Wb91Xo8rXE9SbSC
-         SMjn7m2iDuL6rCFsRZGis07jsrHiLfRolF2FoGZCqEw+wJtk78qTZ9KCZMjZ4264XSIw
-         fef4WUCY+Wm9fGi6UQFQZXJzQjLWyr8STkYSYa0AFYrVeaHwP7wRaLalu3Hi7/Rvr4iz
-         GhiBkyDg3vmWVBWfQikj/QThohWJCayKD+Up7Xfv9+iNLrKBObnV2f1yPd6dIQu1NKOg
-         dDngp5QYw7C/7pv4ipv6pcaZYCdImNO+zDLRmxMa9YPZANkl1+eCydkX9zKmWZqZZh/z
-         SmcQ==
+        bh=LCW2Ju4EUCXow7Dy9X6YpqxY1/1Sk65EowJ4oV0hndo=;
+        b=ZlQHf5C9ZQPGY4ha9qC0tmORcDejELgXj/gJXQDsGJ37+Km5u69xYztb4jBZD40fAX
+         bfx+/e/UPsZOSin6ja+Vr+z0rVRx0Y3umi/v9qtsBmqTZ2x8V+fvxe3FtOFPoqe9ol5S
+         fIqK0VhaSmvQZn2tdfgZ7x+HqjU/mpp2vcqRLt0JtXLGH47r0sNfYuy4VbGmMTWcSzbe
+         k9HPZSH+mGKluZS4cW0T+fsmC/TtVgEA/ExNHkpyzWNxIYOuX96F1Vl34b9TGD9/ltWa
+         hu/FYZsZPhvltHPM0jbPvkTkKpKKbiqHZFOhlMNhJgOUNQzIvKyDFKQyK3SMG/45k2Aa
+         sudg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=p/ewD6CCGutyLFF+yvgktNBs/MPY3Kxf+Kl5VMsZ4yc=;
-        b=rdFY+6IxrVy+tOpAAh9B7+Lp8EkOJdARmhieSKHkp8uXEXgchXnVdgchPw7VGyoddw
-         kurCnKTKu+g6Zl77n1hABdPa6M7LcoLXMt5ZJtg+Ea/T4niVMPOqq0CD1eCTPKjAuI2e
-         jwiozsttmkd8YpjSNUTX4/eVhlr2MSrDxKhq81q6qAZyU2yIkoBPyvJk/XXu7w5+Tv6T
-         ZzM++8LkNMpBKKro2hF3TdZp8d17wtg43NWfq2LDmi6umn4kCNxkqxype5bcW9c4LhUk
-         EfQcu+D9mW4w5WGAezlZdiwFJWHRwIWqp0MchK8UOP7yHQ4iMivwXFZqfKLEauhvFZpk
-         YP6A==
-X-Gm-Message-State: AOAM532oGPPH34Vs1ra/JJ3KBym5cqSDdFEYSSnBD0y4uirlzjFcTRD1
-        wc4boRiOGYOMOX+/Ow5s77rJV/40GDI=
-X-Google-Smtp-Source: ABdhPJzm5EtvbMx2t9Gb48T5rM830c7I3YLIhagCGLceExqXpKjLfIFo2rHQQtErXcvciOazrkcRWw==
-X-Received: by 2002:a7b:c772:: with SMTP id x18mr380047wmk.185.1605629561553;
-        Tue, 17 Nov 2020 08:12:41 -0800 (PST)
+        bh=LCW2Ju4EUCXow7Dy9X6YpqxY1/1Sk65EowJ4oV0hndo=;
+        b=iKi1DPx+nBh3Sg1tXrsEg+26EuiHrlMXo9xzeuMQU91tX184oA50mb0PM/qRvOBUAD
+         a2VvkiIq0IEjLznIE/c8uaFZOMroRWAGKopzP6fnoWSrfl4RHSVlAKVKwp59iRVECCG/
+         CK4ac3KTeBqaUwqimVeVIqXT7B8w4rWZNz4UZU8ECS1HwpYraZfnMyw8HIVwqtsRmzws
+         RCw8YS9P/is/HxX/pv2/S/HLsX6jJSrGbbsNHO8jABsOkz6prS7h0tn9Rw9zaOONcy8P
+         AonEV/3+QNaU+BzPCEulXf+KbHFQk0e8675JfYc6YHHzqkPX0eIPMVHgextwoaExyCqq
+         hdIQ==
+X-Gm-Message-State: AOAM533EYjR+6Ent5+63v++rm1XeDr9dODwVVUe/rlwsNZws9UaZC4w3
+        nczglO7YCymEPN6GOSiUDDh2vy+Enwc=
+X-Google-Smtp-Source: ABdhPJyyRFtBD6VYO8aZy6gfdFmjAJ/mrW1Q++o8V4lFx3sVvEn8IdxCH2XfVPFR6yQ26wyj/zHHgQ==
+X-Received: by 2002:a1c:230b:: with SMTP id j11mr403717wmj.12.1605629565138;
+        Tue, 17 Nov 2020 08:12:45 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z7sm2814243wmf.33.2020.11.17.08.12.40
+        by smtp.gmail.com with ESMTPSA id k22sm4107833wmi.34.2020.11.17.08.12.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2020 08:12:41 -0800 (PST)
-Message-Id: <332677cbf9dd889242b4e4105272988cd40a7758.1605629548.git.gitgitgadget@gmail.com>
+        Tue, 17 Nov 2020 08:12:44 -0800 (PST)
+Message-Id: <dda6ce098c94d118adf92119df8714fc2ce4f20a.1605629548.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.762.v2.git.1605629547.gitgitgadget@gmail.com>
 References: <pull.762.git.1605221038.gitgitgadget@gmail.com>
         <pull.762.v2.git.1605629547.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 17 Nov 2020 16:12:12 +0000
-Subject: [PATCH v2 12/27] t550*: adjust the references to the default branch
- name "main"
+Date:   Tue, 17 Nov 2020 16:12:16 +0000
+Subject: [PATCH v2 16/27] t5[6-9]*: adjust the references to the default
+ branch name "main"
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -88,925 +88,1337 @@ This trick was performed via
 
 	$ (cd t &&
 	   sed -i -e 's/master/main/g' -e 's/MASTER/MAIN/g' \
-		-e 's/Master/Main/g' -- t550*.sh)
+		-e 's/Master/Main/g' -- t5[6-9]*.sh)
 
 This allows us to define `GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main`
 for those tests.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t5500-fetch-pack.sh            |  28 +++----
- t/t5501-fetch-push-alternates.sh |   4 +-
- t/t5502-quickfetch.sh            |   6 +-
- t/t5503-tagfollow.sh             |  12 +--
- t/t5504-fetch-receive-strict.sh  |  20 ++---
- t/t5505-remote.sh                | 140 +++++++++++++++----------------
- t/t5506-remote-groups.sh         |   4 +-
- t/t5509-fetch-push-namespaces.sh |  30 +++----
- t/test-lib.sh                    |   2 +-
- 9 files changed, 123 insertions(+), 123 deletions(-)
+ t/t5601-clone.sh                    |  4 +-
+ t/t5604-clone-reference.sh          | 12 +++---
+ t/t5605-clone-local.sh              | 10 ++---
+ t/t5606-clone-options.sh            |  8 ++--
+ t/t5607-clone-bundle.sh             | 14 +++----
+ t/t5608-clone-2gb.sh                |  2 +-
+ t/t5609-clone-branch.sh             |  6 +--
+ t/t5610-clone-detached.sh           |  4 +-
+ t/t5611-clone-config.sh             | 16 ++++----
+ t/t5612-clone-refspec.sh            | 42 ++++++++++-----------
+ t/t5614-clone-submodules-shallow.sh |  2 +-
+ t/t5616-partial-clone.sh            | 50 ++++++++++++-------------
+ t/t5617-clone-submodules-remote.sh  |  6 +--
+ t/t5700-protocol-v1.sh              | 16 ++++----
+ t/t5701-git-serve.sh                | 16 ++++----
+ t/t5702-protocol-v2.sh              | 50 ++++++++++++-------------
+ t/t5703-upload-pack-ref-in-want.sh  | 58 ++++++++++++++---------------
+ t/t5801-remote-helpers.sh           | 24 ++++++------
+ t/test-lib.sh                       |  2 +-
+ 19 files changed, 171 insertions(+), 171 deletions(-)
 
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index 3557374312..70e41ada01 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -407,14 +407,14 @@ test_expect_success 'in_vain resetted upon ACK' '
- 	rm -rf myserver myclient &&
- 	git init myserver &&
- 
--	# Linked list of commits on master. The first is common; the rest are
-+	# Linked list of commits on main. The first is common; the rest are
- 	# not.
--	test_commit -C myserver first_master_commit &&
-+	test_commit -C myserver first_main_commit &&
- 	git clone "file://$(pwd)/myserver" myclient &&
- 	test_commit_bulk -C myclient 255 &&
- 
- 	# Another linked list of commits on anotherbranch with no connection to
--	# master. The first is common; the rest are not.
-+	# main. The first is common; the rest are not.
- 	git -C myserver checkout --orphan anotherbranch &&
- 	test_commit -C myserver first_anotherbranch_commit &&
- 	git -C myclient fetch origin anotherbranch:refs/heads/anotherbranch &&
-@@ -422,14 +422,14 @@ test_expect_success 'in_vain resetted upon ACK' '
- 	test_commit_bulk -C myclient 255 &&
- 
- 	# The new commit that the client wants to fetch.
--	git -C myserver checkout master &&
-+	git -C myserver checkout main &&
- 	test_commit -C myserver to_fetch &&
- 
- 	# The client will send (as "have"s) all 256 commits in anotherbranch
- 	# first. The 256th commit is common between the client and the server,
- 	# and should reset in_vain. This allows negotiation to continue until
- 	# the client reports that first_anotherbranch_commit is common.
--	git -C myclient fetch --progress origin master 2>log &&
-+	git -C myclient fetch --progress origin main 2>log &&
- 	test_i18ngrep "Total 3 " log
- '
- 
-@@ -637,7 +637,7 @@ test_expect_success 'shallow fetch with tags does not break the repository' '
- 		mkdir repo2 &&
- 		cd repo2 &&
- 		git init &&
--		git fetch --depth=2 ../.git master:branch &&
-+		git fetch --depth=2 ../.git main:branch &&
- 		git fsck
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 7df3c5373a..f5058be718 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -217,7 +217,7 @@ test_expect_success 'clone respects global branch.autosetuprebase' '
+ 		rm -fr dst &&
+ 		git clone src dst &&
+ 		cd dst &&
+-		actual="z$(git config branch.master.rebase)" &&
++		actual="z$(git config branch.main.rebase)" &&
+ 		test ztrue = $actual
  	)
  '
-@@ -662,7 +662,7 @@ test_expect_success 'fetch-pack can fetch a raw sha1 that is advertised as a ref
+@@ -591,7 +591,7 @@ test_expect_success 'clone from a repository with two identical branches' '
  
- 	git init client &&
- 	git -C client fetch-pack ../server \
--		$(git -C server rev-parse refs/heads/master)
-+		$(git -C server rev-parse refs/heads/main)
- '
- 
- test_expect_success 'fetch-pack can fetch a raw sha1 overlapping a named ref' '
-@@ -688,7 +688,7 @@ test_expect_success 'fetch-pack cannot fetch a raw sha1 that is not advertised a
- 	# Some protocol versions (e.g. 2) support fetching
- 	# unadvertised objects, so restrict this test to v0.
- 	test_must_fail env GIT_TEST_PROTOCOL_VERSION=0 git -C client fetch-pack ../server \
--		$(git -C server rev-parse refs/heads/master^) 2>err &&
-+		$(git -C server rev-parse refs/heads/main^) 2>err &&
- 	test_i18ngrep "Server does not allow request for unadvertised object" err
- '
- 
-@@ -822,7 +822,7 @@ test_expect_success 'clone shallow since ...' '
- 
- test_expect_success 'fetch shallow since ...' '
- 	git -C shallow11 fetch --shallow-since "200000000 +0700" origin &&
--	git -C shallow11 log --pretty=tformat:%s origin/master >actual &&
-+	git -C shallow11 log --pretty=tformat:%s origin/main >actual &&
- 	cat >expected <<-\EOF &&
- 	three
- 	two
-@@ -863,7 +863,7 @@ test_expect_success 'shallow since with commit graph and already-seen commit' '
  	(
- 	cd shallow-since-graph &&
- 	test_commit base &&
--	test_commit master &&
-+	test_commit main &&
- 	git checkout -b other HEAD^ &&
- 	test_commit other &&
- 	git commit-graph write --reachable &&
-@@ -874,7 +874,7 @@ test_expect_success 'shallow since with commit graph and already-seen commit' '
- 	$(echo "object-format=$(test_oid algo)" | packetize)
- 	00010013deepen-since 1
- 	$(echo "want $(git rev-parse other)" | packetize)
--	$(echo "have $(git rev-parse master)" | packetize)
-+	$(echo "have $(git rev-parse main)" | packetize)
+ 		cd src &&
+-		git checkout -b another master
++		git checkout -b another main
+ 	) &&
+ 	git clone src target-11 &&
+ 	test "z$( cd target-11 && git symbolic-ref HEAD )" = zrefs/heads/another
+diff --git a/t/t5604-clone-reference.sh b/t/t5604-clone-reference.sh
+index 2f7be23044..db86a84af9 100755
+--- a/t/t5604-clone-reference.sh
++++ b/t/t5604-clone-reference.sh
+@@ -49,7 +49,7 @@ test_expect_success 'existence of info/alternates' '
+ '
+ 
+ test_expect_success 'pulling from reference' '
+-	git -C C pull ../B master
++	git -C C pull ../B main
+ '
+ 
+ test_expect_success 'that reference gets used' '
+@@ -70,7 +70,7 @@ test_expect_success 'existence of info/alternates' '
+ '
+ 
+ test_expect_success 'pulling from reference' '
+-	git -C D pull ../B master
++	git -C D pull ../B main
+ '
+ 
+ test_expect_success 'that reference gets used' '
+@@ -136,11 +136,11 @@ test_expect_success 'prepare branched repository' '
+ 	git clone A J &&
+ 	(
+ 		cd J &&
+-		git checkout -b other master^ &&
++		git checkout -b other main^ &&
+ 		echo other >otherfile &&
+ 		git add otherfile &&
+ 		git commit -m other &&
+-		git checkout master
++		git checkout main
+ 	)
+ '
+ 
+@@ -152,9 +152,9 @@ test_expect_success 'fetch with incomplete alternates' '
+ 		git remote add J "file://$base_dir/J" &&
+ 		GIT_TRACE_PACKET=$U.K git fetch J
+ 	) &&
+-	master_object=$(cd A && git for-each-ref --format="%(objectname)" refs/heads/master) &&
++	main_object=$(cd A && git for-each-ref --format="%(objectname)" refs/heads/main) &&
+ 	test -s "$U.K" &&
+-	! grep " want $master_object" "$U.K" &&
++	! grep " want $main_object" "$U.K" &&
+ 	tag_object=$(cd A && git for-each-ref --format="%(objectname)" refs/tags/HEAD) &&
+ 	! grep " want $tag_object" "$U.K"
+ '
+diff --git a/t/t5605-clone-local.sh b/t/t5605-clone-local.sh
+index af23419ebf..a7756e9622 100755
+--- a/t/t5605-clone-local.sh
++++ b/t/t5605-clone-local.sh
+@@ -15,7 +15,7 @@ test_expect_success 'preparing origin repository' '
+ 	test "$(cd a.git && git config --bool core.bare)" = true &&
+ 	test "$(cd x && git config --bool core.bare)" = true &&
+ 	git bundle create b1.bundle --all &&
+-	git bundle create b2.bundle master &&
++	git bundle create b2.bundle main &&
+ 	mkdir dir &&
+ 	cp b1.bundle dir/b3 &&
+ 	cp b1.bundle b4
+@@ -84,7 +84,7 @@ test_expect_success 'bundle clone with nonexistent HEAD' '
+ 	git clone b2.bundle b2 &&
+ 	(cd b2 &&
+ 	git fetch &&
+-	test_must_fail git rev-parse --verify refs/heads/master)
++	test_must_fail git rev-parse --verify refs/heads/main)
+ '
+ 
+ test_expect_success 'clone empty repository' '
+@@ -98,9 +98,9 @@ test_expect_success 'clone empty repository' '
+ 	 echo "content" >> foo &&
+ 	 git add foo &&
+ 	 git commit -m "Initial commit" &&
+-	 git push origin master &&
+-	 expected=$(git rev-parse master) &&
+-	 actual=$(git --git-dir=../empty/.git rev-parse master) &&
++	 git push origin main &&
++	 expected=$(git rev-parse main) &&
++	 actual=$(git --git-dir=../empty/.git rev-parse main) &&
+ 	 test $actual = $expected)
+ '
+ 
+diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
+index 7f082fb23b..80caff9266 100755
+--- a/t/t5606-clone-options.sh
++++ b/t/t5606-clone-options.sh
+@@ -15,7 +15,7 @@ test_expect_success 'setup' '
+ test_expect_success 'clone -o' '
+ 
+ 	git clone -o foo parent clone-o &&
+-	git -C clone-o rev-parse --verify refs/remotes/foo/master
++	git -C clone-o rev-parse --verify refs/remotes/foo/main
+ 
+ '
+ 
+@@ -45,7 +45,7 @@ test_expect_success 'disallows --bare with --separate-git-dir' '
+ test_expect_success 'uses "origin" for default remote name' '
+ 
+ 	git clone parent clone-default-origin &&
+-	git -C clone-default-origin rev-parse --verify refs/remotes/origin/master
++	git -C clone-default-origin rev-parse --verify refs/remotes/origin/main
+ 
+ '
+ 
+@@ -74,14 +74,14 @@ test_expect_success 'prefers config "clone.defaultRemoteName" over default' '
+ 
+ 	test_config_global clone.defaultRemoteName from_config &&
+ 	git clone parent clone-config-origin &&
+-	git -C clone-config-origin rev-parse --verify refs/remotes/from_config/master
++	git -C clone-config-origin rev-parse --verify refs/remotes/from_config/main
+ 
+ '
+ 
+ test_expect_success 'prefers --origin over -c config' '
+ 
+ 	git clone -c clone.defaultRemoteName=inline --origin from_option parent clone-o-and-inline-config &&
+-	git -C clone-o-and-inline-config rev-parse --verify refs/remotes/from_option/master
++	git -C clone-o-and-inline-config rev-parse --verify refs/remotes/from_option/main
+ 
+ '
+ 
+diff --git a/t/t5607-clone-bundle.sh b/t/t5607-clone-bundle.sh
+index 26985f4b44..4f2db37981 100755
+--- a/t/t5607-clone-bundle.sh
++++ b/t/t5607-clone-bundle.sh
+@@ -19,7 +19,7 @@ test_expect_success 'setup' '
+ '
+ 
+ test_expect_success '"verify" needs a worktree' '
+-	git bundle create tip.bundle -1 master &&
++	git bundle create tip.bundle -1 main &&
+ 	nongit test_must_fail git bundle verify ../tip.bundle 2>err &&
+ 	test_i18ngrep "need a repository" err
+ '
+@@ -39,15 +39,15 @@ test_expect_success 'die if bundle file cannot be created' '
+ '
+ 
+ test_expect_failure 'bundle --stdin' '
+-	echo master | git bundle create stdin-bundle.bdl --stdin &&
++	echo main | git bundle create stdin-bundle.bdl --stdin &&
+ 	git ls-remote stdin-bundle.bdl >output &&
+-	grep master output
++	grep main output
+ '
+ 
+ test_expect_failure 'bundle --stdin <rev-list options>' '
+-	echo master | git bundle create hybrid-bundle.bdl --stdin tag &&
++	echo main | git bundle create hybrid-bundle.bdl --stdin tag &&
+ 	git ls-remote hybrid-bundle.bdl >output &&
+-	grep master output
++	grep main output
+ '
+ 
+ test_expect_success 'empty bundle file is rejected' '
+@@ -83,14 +83,14 @@ test_expect_success 'prerequisites with an empty commit message' '
+ 
+ test_expect_success 'failed bundle creation does not leave cruft' '
+ 	# This fails because the bundle would be empty.
+-	test_must_fail git bundle create fail.bundle master..master &&
++	test_must_fail git bundle create fail.bundle main..main &&
+ 	test_path_is_missing fail.bundle.lock
+ '
+ 
+ test_expect_success 'fetch SHA-1 from bundle' '
+ 	test_create_repo foo &&
+ 	test_commit -C foo x &&
+-	git -C foo bundle create tip.bundle -1 master &&
++	git -C foo bundle create tip.bundle -1 main &&
+ 	git -C foo rev-parse HEAD >hash &&
+ 
+ 	# Exercise to ensure that fetching a SHA-1 from a bundle works with no
+diff --git a/t/t5608-clone-2gb.sh b/t/t5608-clone-2gb.sh
+index 4c476d2fa1..87a8cd9f98 100755
+--- a/t/t5608-clone-2gb.sh
++++ b/t/t5608-clone-2gb.sh
+@@ -26,7 +26,7 @@ test_expect_success 'setup' '
+ 		i=$(($i+1)) ||
+ 		echo $? > exit-status
+ 	 done &&
+-	 echo "commit refs/heads/master" &&
++	 echo "commit refs/heads/main" &&
+ 	 echo "author A U Thor <author@email.com> 123456789 +0000" &&
+ 	 echo "committer C O Mitter <committer@email.com> 123456789 +0000" &&
+ 	 echo "data 5" &&
+diff --git a/t/t5609-clone-branch.sh b/t/t5609-clone-branch.sh
+index 6e7a7be052..2652dbe4e4 100755
+--- a/t/t5609-clone-branch.sh
++++ b/t/t5609-clone-branch.sh
+@@ -20,7 +20,7 @@ test_expect_success 'setup' '
+ 	 echo one >file && git add file && git commit -m one &&
+ 	 git checkout -b two &&
+ 	 echo two >file && git add file && git commit -m two &&
+-	 git checkout master) &&
++	 git checkout main) &&
+ 	mkdir empty &&
+ 	(cd empty && git init)
+ '
+@@ -28,7 +28,7 @@ test_expect_success 'setup' '
+ test_expect_success 'vanilla clone chooses HEAD' '
+ 	git clone parent clone &&
+ 	(cd clone &&
+-	 check_HEAD master &&
++	 check_HEAD main &&
+ 	 check_file one
+ 	)
+ '
+@@ -53,7 +53,7 @@ test_expect_success 'clone -b sets up tracking' '
+ 
+ test_expect_success 'clone -b does not munge remotes/origin/HEAD' '
+ 	(cd clone-two &&
+-	 echo refs/remotes/origin/master >expect &&
++	 echo refs/remotes/origin/main >expect &&
+ 	 git symbolic-ref refs/remotes/origin/HEAD >actual &&
+ 	 test_cmp expect actual
+ 	)
+diff --git a/t/t5610-clone-detached.sh b/t/t5610-clone-detached.sh
+index 8b0d607df1..985f0d7303 100755
+--- a/t/t5610-clone-detached.sh
++++ b/t/t5610-clone-detached.sh
+@@ -20,7 +20,7 @@ test_expect_success 'setup' '
+ '
+ 
+ test_expect_success 'clone repo (detached HEAD points to branch)' '
+-	git checkout master^0 &&
++	git checkout main^0 &&
+ 	git clone "file://$PWD" detached-branch
+ '
+ test_expect_success 'cloned HEAD matches' '
+@@ -59,7 +59,7 @@ test_expect_success 'cloned HEAD is detached' '
+ '
+ 
+ test_expect_success 'clone repo (orphan detached HEAD)' '
+-	git checkout master^0 &&
++	git checkout main^0 &&
+ 	echo four >file &&
+ 	git commit -a -m four &&
+ 	git clone "file://$PWD" detached-orphan
+diff --git a/t/t5611-clone-config.sh b/t/t5611-clone-config.sh
+index 8e0fd39823..6e10ac9a9f 100755
+--- a/t/t5611-clone-config.sh
++++ b/t/t5611-clone-config.sh
+@@ -47,16 +47,16 @@ test_expect_success 'clone -c config is available during clone' '
+ 
+ test_expect_success 'clone -c remote.origin.fetch=<refspec> works' '
+ 	rm -rf child &&
+-	git update-ref refs/grab/it refs/heads/master &&
+-	git update-ref refs/leave/out refs/heads/master &&
++	git update-ref refs/grab/it refs/heads/main &&
++	git update-ref refs/leave/out refs/heads/main &&
+ 	git clone -c "remote.origin.fetch=+refs/grab/*:refs/grab/*" . child &&
+ 	git -C child for-each-ref --format="%(refname)" >actual &&
+ 
+ 	cat >expect <<-\EOF &&
+ 	refs/grab/it
+-	refs/heads/master
++	refs/heads/main
+ 	refs/remotes/origin/HEAD
+-	refs/remotes/origin/master
++	refs/remotes/origin/main
+ 	EOF
+ 	test_cmp expect actual
+ '
+@@ -68,9 +68,9 @@ test_expect_success 'git -c remote.origin.fetch=<refspec> clone works' '
+ 
+ 	cat >expect <<-\EOF &&
+ 	refs/grab/it
+-	refs/heads/master
++	refs/heads/main
+ 	refs/remotes/origin/HEAD
+-	refs/remotes/origin/master
++	refs/remotes/origin/main
+ 	EOF
+ 	test_cmp expect actual
+ '
+@@ -85,9 +85,9 @@ test_expect_success 'clone -c remote.<remote>.fetch=<refspec> --origin=<name>' '
+ 
+ 	cat >expect <<-\EOF &&
+ 	refs/grab/it
+-	refs/heads/master
++	refs/heads/main
+ 	refs/remotes/upstream/HEAD
+-	refs/remotes/upstream/master
++	refs/remotes/upstream/main
+ 	EOF
+ 	test_cmp expect actual
+ '
+diff --git a/t/t5612-clone-refspec.sh b/t/t5612-clone-refspec.sh
+index e3b436d8ae..c045aba0fd 100755
+--- a/t/t5612-clone-refspec.sh
++++ b/t/t5612-clone-refspec.sh
+@@ -4,7 +4,7 @@ test_description='test refspec written by clone-command'
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
+-	# Make two branches, "master" and "side"
++	# Make two branches, "main" and "side"
+ 	echo one >file &&
+ 	git add file &&
+ 	git commit -m one &&
+@@ -16,7 +16,7 @@ test_expect_success 'setup' '
+ 	git checkout -b side &&
+ 	echo four >file &&
+ 	git commit -a -m four &&
+-	git checkout master &&
++	git checkout main &&
+ 	git tag five &&
+ 
+ 	# default clone
+@@ -25,18 +25,18 @@ test_expect_success 'setup' '
+ 	# default clone --no-tags
+ 	git clone --no-tags . dir_all_no_tags &&
+ 
+-	# default --single that follows HEAD=master
+-	git clone --single-branch . dir_master &&
++	# default --single that follows HEAD=main
++	git clone --single-branch . dir_main &&
+ 
+-	# default --single that follows HEAD=master with no tags
+-	git clone --single-branch --no-tags . dir_master_no_tags &&
++	# default --single that follows HEAD=main with no tags
++	git clone --single-branch --no-tags . dir_main_no_tags &&
+ 
+ 	# default --single that follows HEAD=side
+ 	git checkout side &&
+ 	git clone --single-branch . dir_side &&
+ 
+ 	# explicit --single that follows side
+-	git checkout master &&
++	git checkout main &&
+ 	git clone --single-branch --branch side . dir_side2 &&
+ 
+ 	# default --single with --mirror
+@@ -55,11 +55,11 @@ test_expect_success 'setup' '
+ 	# explicit --single with tag and --no-tags
+ 	git clone --single-branch --no-tags --branch two . dir_tag_no_tags &&
+ 
+-	# advance both "master" and "side" branches
++	# advance both "main" and "side" branches
+ 	git checkout side &&
+ 	echo five >file &&
+ 	git commit -a -m five &&
+-	git checkout master &&
++	git checkout main &&
+ 	echo six >file &&
+ 	git commit -a -m six &&
+ 
+@@ -75,7 +75,7 @@ test_expect_success 'by default all branches will be kept updated' '
+ 		sed -e "/HEAD$/d" \
+ 		    -e "s|/remotes/origin/|/heads/|" refs >../actual
+ 	) &&
+-	# follow both master and side
++	# follow both main and side
+ 	git for-each-ref refs/heads >expect &&
+ 	test_cmp expect actual
+ '
+@@ -100,20 +100,20 @@ test_expect_success 'clone with --no-tags' '
+ 	test_must_be_empty actual
+ '
+ 
+-test_expect_success '--single-branch while HEAD pointing at master' '
++test_expect_success '--single-branch while HEAD pointing at main' '
+ 	(
+-		cd dir_master &&
++		cd dir_main &&
+ 		git fetch --force &&
+ 		git for-each-ref refs/remotes/origin >refs &&
+ 		sed -e "/HEAD$/d" \
+ 		    -e "s|/remotes/origin/|/heads/|" refs >../actual
+ 	) &&
+-	# only follow master
+-	git for-each-ref refs/heads/master >expect &&
++	# only follow main
++	git for-each-ref refs/heads/main >expect &&
+ 	# get & check latest tags
+ 	test_cmp expect actual &&
+ 	(
+-		cd dir_master &&
++		cd dir_main &&
+ 		git fetch --tags --force &&
+ 		git for-each-ref refs/tags >../actual
+ 	) &&
+@@ -122,20 +122,20 @@ test_expect_success '--single-branch while HEAD pointing at master' '
+ 	test_line_count = 2 actual
+ '
+ 
+-test_expect_success '--single-branch while HEAD pointing at master and --no-tags' '
++test_expect_success '--single-branch while HEAD pointing at main and --no-tags' '
+ 	(
+-		cd dir_master_no_tags &&
++		cd dir_main_no_tags &&
+ 		git fetch &&
+ 		git for-each-ref refs/remotes/origin >refs &&
+ 		sed -e "/HEAD$/d" \
+ 		    -e "s|/remotes/origin/|/heads/|" refs >../actual
+ 	) &&
+-	# only follow master
+-	git for-each-ref refs/heads/master >expect &&
++	# only follow main
++	git for-each-ref refs/heads/main >expect &&
+ 	test_cmp expect actual &&
+ 	# get tags (noop)
+ 	(
+-		cd dir_master_no_tags &&
++		cd dir_main_no_tags &&
+ 		git fetch &&
+ 		git for-each-ref refs/tags >../actual
+ 	) &&
+@@ -143,7 +143,7 @@ test_expect_success '--single-branch while HEAD pointing at master and --no-tags
+ 	test_line_count = 0 actual &&
+ 	# get tags with --tags overrides tagOpt
+ 	(
+-		cd dir_master_no_tags &&
++		cd dir_main_no_tags &&
+ 		git fetch --tags &&
+ 		git for-each-ref refs/tags >../actual
+ 	) &&
+diff --git a/t/t5614-clone-submodules-shallow.sh b/t/t5614-clone-submodules-shallow.sh
+index e4e6ea4d52..5504b519c7 100755
+--- a/t/t5614-clone-submodules-shallow.sh
++++ b/t/t5614-clone-submodules-shallow.sh
+@@ -7,7 +7,7 @@ test_description='Test shallow cloning of repos with submodules'
+ pwd=$(pwd)
+ 
+ test_expect_success 'setup' '
+-	git checkout -b master &&
++	git checkout -b main &&
+ 	test_commit commit1 &&
+ 	test_commit commit2 &&
+ 	mkdir sub &&
+diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+index f4d49d8335..273c0183e2 100755
+--- a/t/t5616-partial-clone.sh
++++ b/t/t5616-partial-clone.sh
+@@ -51,14 +51,14 @@ test_expect_success 'verify that .promisor file contains refs fetched' '
+ 	test_line_count = 1 promisorlist &&
+ 	git -C srv.bare rev-parse --verify HEAD >headhash &&
+ 	grep "$(cat headhash) HEAD" $(cat promisorlist) &&
+-	grep "$(cat headhash) refs/heads/master" $(cat promisorlist)
++	grep "$(cat headhash) refs/heads/main" $(cat promisorlist)
+ '
+ 
+-# checkout master to force dynamic object fetch of blobs at HEAD.
++# checkout main to force dynamic object fetch of blobs at HEAD.
+ test_expect_success 'verify checkout with dynamic object fetch' '
+ 	git -C pc1 rev-list --quiet --objects --missing=print HEAD >observed &&
+ 	test_line_count = 4 observed &&
+-	git -C pc1 checkout master &&
++	git -C pc1 checkout main &&
+ 	git -C pc1 rev-list --quiet --objects --missing=print HEAD >observed &&
+ 	test_line_count = 0 observed
+ '
+@@ -73,8 +73,8 @@ test_expect_success 'push new commits to server' '
+ 		git -C src add file.1.txt
+ 		git -C src commit -m "mod $x"
+ 	done &&
+-	git -C src blame master -- file.1.txt >expect.blame &&
+-	git -C src push -u srv master
++	git -C src blame main -- file.1.txt >expect.blame &&
++	git -C src push -u srv main
+ '
+ 
+ # (partial) fetch in the partial clone repo from the promisor remote.
+@@ -83,26 +83,26 @@ test_expect_success 'push new commits to server' '
+ test_expect_success 'partial fetch inherits filter settings' '
+ 	git -C pc1 fetch origin &&
+ 	git -C pc1 rev-list --quiet --objects --missing=print \
+-		master..origin/master >observed &&
++		main..origin/main >observed &&
+ 	test_line_count = 5 observed
+ '
+ 
+ # force dynamic object fetch using diff.
+-# we should only get 1 new blob (for the file in origin/master).
++# we should only get 1 new blob (for the file in origin/main).
+ test_expect_success 'verify diff causes dynamic object fetch' '
+-	git -C pc1 diff master..origin/master -- file.1.txt &&
++	git -C pc1 diff main..origin/main -- file.1.txt &&
+ 	git -C pc1 rev-list --quiet --objects --missing=print \
+-		 master..origin/master >observed &&
++		 main..origin/main >observed &&
+ 	test_line_count = 4 observed
+ '
+ 
+ # force full dynamic object fetch of the file's history using blame.
+ # we should get the intermediate blobs for the file.
+ test_expect_success 'verify blame causes dynamic object fetch' '
+-	git -C pc1 blame origin/master -- file.1.txt >observed.blame &&
++	git -C pc1 blame origin/main -- file.1.txt >observed.blame &&
+ 	test_cmp expect.blame observed.blame &&
+ 	git -C pc1 rev-list --quiet --objects --missing=print \
+-		master..origin/master >observed &&
++		main..origin/main >observed &&
+ 	test_line_count = 0 observed
+ '
+ 
+@@ -115,7 +115,7 @@ test_expect_success 'push new commits to server for file.2.txt' '
+ 		git -C src add file.2.txt
+ 		git -C src commit -m "mod $x"
+ 	done &&
+-	git -C src push -u srv master
++	git -C src push -u srv main
+ '
+ 
+ # Do FULL fetch by disabling inherited filter-spec using --no-filter.
+@@ -123,7 +123,7 @@ test_expect_success 'push new commits to server for file.2.txt' '
+ test_expect_success 'override inherited filter-spec using --no-filter' '
+ 	git -C pc1 fetch --no-filter origin &&
+ 	git -C pc1 rev-list --quiet --objects --missing=print \
+-		master..origin/master >observed &&
++		main..origin/main >observed &&
+ 	test_line_count = 0 observed
+ '
+ 
+@@ -136,7 +136,7 @@ test_expect_success 'push new commits to server for file.3.txt' '
+ 		git -C src add file.3.txt
+ 		git -C src commit -m "mod $x"
+ 	done &&
+-	git -C src push -u srv master
++	git -C src push -u srv main
+ '
+ 
+ # Do a partial fetch and then try to manually fetch the missing objects.
+@@ -146,7 +146,7 @@ test_expect_success 'manual prefetch of missing objects' '
+ 	git -C pc1 fetch --filter=blob:none origin &&
+ 
+ 	git -C pc1 rev-list --quiet --objects --missing=print \
+-		 master..origin/master >revs &&
++		 main..origin/main >revs &&
+ 	awk -f print_1.awk revs |
+ 	sed "s/?//" |
+ 	sort >observed.oids &&
+@@ -155,7 +155,7 @@ test_expect_success 'manual prefetch of missing objects' '
+ 	git -C pc1 fetch-pack --stdin "file://$(pwd)/srv.bare" <observed.oids &&
+ 
+ 	git -C pc1 rev-list --quiet --objects --missing=print \
+-		master..origin/master >revs &&
++		main..origin/main >revs &&
+ 	awk -f print_1.awk revs |
+ 	sed "s/?//" |
+ 	sort >observed.oids &&
+@@ -196,7 +196,7 @@ test_expect_success 'use fsck before and after manually fetching a missing subtr
+ 	echo "in dir" >src/dir/file.txt &&
+ 	git -C src add dir/file.txt &&
+ 	git -C src commit -m "file in dir" &&
+-	git -C src push -u srv master &&
++	git -C src push -u srv main &&
+ 	SUBTREE=$(git -C src rev-parse HEAD:dir) &&
+ 
+ 	rm -rf dst &&
+@@ -204,7 +204,7 @@ test_expect_success 'use fsck before and after manually fetching a missing subtr
+ 	git -C dst fsck &&
+ 
+ 	# Make sure we only have commits, and all trees and blobs are missing.
+-	git -C dst rev-list --missing=allow-any --objects master \
++	git -C dst rev-list --missing=allow-any --objects main \
+ 		>fetched_objects &&
+ 	awk -f print_1.awk fetched_objects |
+ 	xargs -n1 git -C dst cat-file -t >fetched_types &&
+@@ -221,7 +221,7 @@ test_expect_success 'use fsck before and after manually fetching a missing subtr
+ 	git -C dst fsck &&
+ 
+ 	# Auto-fetch all remaining trees and blobs with --missing=error
+-	git -C dst rev-list --missing=error --objects master >fetched_objects &&
++	git -C dst rev-list --missing=error --objects main >fetched_objects &&
+ 	test_line_count = 70 fetched_objects &&
+ 
+ 	awk -f print_1.awk fetched_objects |
+@@ -331,7 +331,7 @@ test_expect_success 'setup src repo for sparse filter' '
+ test_expect_success 'partial clone with sparse filter succeeds' '
+ 	rm -rf dst.git &&
+ 	git clone --no-local --bare \
+-		  --filter=sparse:oid=master:only-one \
++		  --filter=sparse:oid=main:only-one \
+ 		  sparse-src dst.git &&
+ 	(
+ 		cd dst.git &&
+@@ -344,11 +344,11 @@ test_expect_success 'partial clone with sparse filter succeeds' '
+ test_expect_success 'partial clone with unresolvable sparse filter fails cleanly' '
+ 	rm -rf dst.git &&
+ 	test_must_fail git clone --no-local --bare \
+-				 --filter=sparse:oid=master:no-such-name \
++				 --filter=sparse:oid=main:no-such-name \
+ 				 sparse-src dst.git 2>err &&
+-	test_i18ngrep "unable to access sparse blob in .master:no-such-name" err &&
++	test_i18ngrep "unable to access sparse blob in .main:no-such-name" err &&
+ 	test_must_fail git clone --no-local --bare \
+-				 --filter=sparse:oid=master \
++				 --filter=sparse:oid=main \
+ 				 sparse-src dst.git 2>err &&
+ 	test_i18ngrep "unable to parse sparse filter data in" err
+ '
+@@ -403,7 +403,7 @@ test_expect_success 'fetch lazy-fetches only to resolve deltas' '
+ 	# promisor remote other than for the big tree (because it needs to
+ 	# resolve the delta).
+ 	GIT_TRACE_PACKET="$(pwd)/trace" git -C client \
+-		fetch "file://$(pwd)/server" master &&
++		fetch "file://$(pwd)/server" main &&
+ 
+ 	# Verify the assumption that the client needed to fetch the delta base
+ 	# to resolve the delta.
+@@ -422,7 +422,7 @@ test_expect_success 'fetch lazy-fetches only to resolve deltas, protocol v2' '
+ 	# promisor remote other than for the big blob (because it needs to
+ 	# resolve the delta).
+ 	GIT_TRACE_PACKET="$(pwd)/trace" git -C client \
+-		fetch "file://$(pwd)/server" master &&
++		fetch "file://$(pwd)/server" main &&
+ 
+ 	# Verify that protocol version 2 was used.
+ 	grep "fetch< version 2" trace &&
+diff --git a/t/t5617-clone-submodules-remote.sh b/t/t5617-clone-submodules-remote.sh
+index 1a041df10b..abab358119 100755
+--- a/t/t5617-clone-submodules-remote.sh
++++ b/t/t5617-clone-submodules-remote.sh
+@@ -7,7 +7,7 @@ test_description='Test cloning repos with submodules using remote-tracking branc
+ pwd=$(pwd)
+ 
+ test_expect_success 'setup' '
+-	git checkout -b master &&
++	git checkout -b main &&
+ 	test_commit commit1 &&
+ 	mkdir sub &&
+ 	(
+@@ -39,7 +39,7 @@ test_expect_success 'clone with --remote-submodules' '
+ 	git clone --recurse-submodules --remote-submodules "file://$pwd/." super_clone &&
+ 	(
+ 		cd super_clone/sub &&
+-		git diff --exit-code remotes/origin/master
++		git diff --exit-code remotes/origin/main
+ 	)
+ '
+ 
+@@ -57,7 +57,7 @@ test_expect_success 'clone with --single-branch' '
+ 	git clone --recurse-submodules --single-branch "file://$pwd/." super_clone &&
+ 	(
+ 		cd super_clone/sub &&
+-		git rev-parse --verify origin/master &&
++		git rev-parse --verify origin/main &&
+ 		test_must_fail git rev-parse --verify origin/other
+ 	)
+ '
+diff --git a/t/t5700-protocol-v1.sh b/t/t5700-protocol-v1.sh
+index 022901b9eb..bfa7e3379a 100755
+--- a/t/t5700-protocol-v1.sh
++++ b/t/t5700-protocol-v1.sh
+@@ -41,7 +41,7 @@ test_expect_success 'fetch with git:// using protocol v1' '
+ 	GIT_TRACE_PACKET=1 git -C daemon_child -c protocol.version=1 \
+ 		fetch 2>log &&
+ 
+-	git -C daemon_child log -1 --format=%s origin/master >actual &&
++	git -C daemon_child log -1 --format=%s origin/main >actual &&
+ 	git -C "$daemon_parent" log -1 --format=%s >expect &&
+ 	test_cmp expect actual &&
+ 
+@@ -69,7 +69,7 @@ test_expect_success 'push with git:// using protocol v1' '
+ 	test_commit -C daemon_child three &&
+ 
+ 	# Push to another branch, as the target repository has the
+-	# master branch checked out and we cannot push into it.
++	# main branch checked out and we cannot push into it.
+ 	GIT_TRACE_PACKET=1 git -C daemon_child -c protocol.version=1 \
+ 		push origin HEAD:client_branch 2>log &&
+ 
+@@ -110,7 +110,7 @@ test_expect_success 'fetch with file:// using protocol v1' '
+ 	GIT_TRACE_PACKET=1 git -C file_child -c protocol.version=1 \
+ 		fetch 2>log &&
+ 
+-	git -C file_child log -1 --format=%s origin/master >actual &&
++	git -C file_child log -1 --format=%s origin/main >actual &&
+ 	git -C file_parent log -1 --format=%s >expect &&
+ 	test_cmp expect actual &&
+ 
+@@ -134,7 +134,7 @@ test_expect_success 'push with file:// using protocol v1' '
+ 	test_commit -C file_child three &&
+ 
+ 	# Push to another branch, as the target repository has the
+-	# master branch checked out and we cannot push into it.
++	# main branch checked out and we cannot push into it.
+ 	GIT_TRACE_PACKET=1 git -C file_child -c protocol.version=1 \
+ 		push origin HEAD:client_branch 2>log &&
+ 
+@@ -188,7 +188,7 @@ test_expect_success 'fetch with ssh:// using protocol v1' '
+ 		fetch 2>log &&
+ 	expect_ssh git-upload-pack &&
+ 
+-	git -C ssh_child log -1 --format=%s origin/master >actual &&
++	git -C ssh_child log -1 --format=%s origin/main >actual &&
+ 	git -C ssh_parent log -1 --format=%s >expect &&
+ 	test_cmp expect actual &&
+ 
+@@ -213,7 +213,7 @@ test_expect_success 'push with ssh:// using protocol v1' '
+ 	test_commit -C ssh_child three &&
+ 
+ 	# Push to another branch, as the target repository has the
+-	# master branch checked out and we cannot push into it.
++	# main branch checked out and we cannot push into it.
+ 	GIT_TRACE_PACKET=1 git -C ssh_child -c protocol.version=1 \
+ 		push origin HEAD:client_branch 2>log &&
+ 	expect_ssh git-receive-pack &&
+@@ -257,7 +257,7 @@ test_expect_success 'fetch with http:// using protocol v1' '
+ 	GIT_TRACE_PACKET=1 git -C http_child -c protocol.version=1 \
+ 		fetch 2>log &&
+ 
+-	git -C http_child log -1 --format=%s origin/master >actual &&
++	git -C http_child log -1 --format=%s origin/main >actual &&
+ 	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" log -1 --format=%s >expect &&
+ 	test_cmp expect actual &&
+ 
+@@ -281,7 +281,7 @@ test_expect_success 'push with http:// using protocol v1' '
+ 	test_commit -C http_child three &&
+ 
+ 	# Push to another branch, as the target repository has the
+-	# master branch checked out and we cannot push into it.
++	# main branch checked out and we cannot push into it.
+ 	GIT_TRACE_PACKET=1 git -C http_child -c protocol.version=1 \
+ 		push origin HEAD:client_branch && #2>log &&
+ 
+diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
+index a1f5fdc9fd..3a04a56c2c 100755
+--- a/t/t5701-git-serve.sh
++++ b/t/t5701-git-serve.sh
+@@ -83,9 +83,9 @@ test_expect_success 'wrong object-format' '
+ #
+ test_expect_success 'setup some refs and tags' '
+ 	test_commit one &&
+-	git branch dev master &&
++	git branch dev main &&
+ 	test_commit two &&
+-	git symbolic-ref refs/heads/release refs/heads/master &&
++	git symbolic-ref refs/heads/release refs/heads/main &&
+ 	git tag -a -m "annotated tag" annotated-tag
+ '
+ 
+@@ -99,7 +99,7 @@ test_expect_success 'basics of ls-refs' '
+ 	cat >expect <<-EOF &&
+ 	$(git rev-parse HEAD) HEAD
+ 	$(git rev-parse refs/heads/dev) refs/heads/dev
+-	$(git rev-parse refs/heads/master) refs/heads/master
++	$(git rev-parse refs/heads/main) refs/heads/main
+ 	$(git rev-parse refs/heads/release) refs/heads/release
+ 	$(git rev-parse refs/tags/annotated-tag) refs/tags/annotated-tag
+ 	$(git rev-parse refs/tags/one) refs/tags/one
+@@ -117,13 +117,13 @@ test_expect_success 'basic ref-prefixes' '
+ 	command=ls-refs
+ 	object-format=$(test_oid algo)
+ 	0001
+-	ref-prefix refs/heads/master
++	ref-prefix refs/heads/main
+ 	ref-prefix refs/tags/one
  	0000
  	EOF
- 	)
-@@ -896,7 +896,7 @@ test_expect_success 'shallow clone exclude tag two' '
  
- test_expect_success 'fetch exclude tag one' '
- 	git -C shallow12 fetch --shallow-exclude one origin &&
--	git -C shallow12 log --pretty=tformat:%s origin/master >actual &&
-+	git -C shallow12 log --pretty=tformat:%s origin/main >actual &&
- 	test_write_lines three two >expected &&
- 	test_cmp expected actual
+ 	cat >expect <<-EOF &&
+-	$(git rev-parse refs/heads/master) refs/heads/master
++	$(git rev-parse refs/heads/main) refs/heads/main
+ 	$(git rev-parse refs/tags/one) refs/tags/one
+ 	0000
+ 	EOF
+@@ -144,7 +144,7 @@ test_expect_success 'refs/heads prefix' '
+ 
+ 	cat >expect <<-EOF &&
+ 	$(git rev-parse refs/heads/dev) refs/heads/dev
+-	$(git rev-parse refs/heads/master) refs/heads/master
++	$(git rev-parse refs/heads/main) refs/heads/main
+ 	$(git rev-parse refs/heads/release) refs/heads/release
+ 	0000
+ 	EOF
+@@ -188,8 +188,8 @@ test_expect_success 'symrefs parameter' '
+ 
+ 	cat >expect <<-EOF &&
+ 	$(git rev-parse refs/heads/dev) refs/heads/dev
+-	$(git rev-parse refs/heads/master) refs/heads/master
+-	$(git rev-parse refs/heads/release) refs/heads/release symref-target:refs/heads/master
++	$(git rev-parse refs/heads/main) refs/heads/main
++	$(git rev-parse refs/heads/release) refs/heads/release symref-target:refs/heads/main
+ 	0000
+ 	EOF
+ 
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index 7d5b17909b..1aeb6b6dd7 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -36,10 +36,10 @@ test_expect_success 'ref advertisement is filtered with ls-remote using protocol
+ 	test_when_finished "rm -f log" &&
+ 
+ 	GIT_TRACE_PACKET="$(pwd)/log" git -c protocol.version=2 \
+-		ls-remote "$GIT_DAEMON_URL/parent" master >actual &&
++		ls-remote "$GIT_DAEMON_URL/parent" main >actual &&
+ 
+ 	cat >expect <<-EOF &&
+-	$(git -C "$daemon_parent" rev-parse refs/heads/master)$(printf "\t")refs/heads/master
++	$(git -C "$daemon_parent" rev-parse refs/heads/main)$(printf "\t")refs/heads/main
+ 	EOF
+ 
+ 	test_cmp expect actual
+@@ -69,7 +69,7 @@ test_expect_success 'fetch with git:// using protocol v2' '
+ 	GIT_TRACE_PACKET="$(pwd)/log" git -C daemon_child -c protocol.version=2 \
+ 		fetch &&
+ 
+-	git -C daemon_child log -1 --format=%s origin/master >actual &&
++	git -C daemon_child log -1 --format=%s origin/main >actual &&
+ 	git -C "$daemon_parent" log -1 --format=%s >expect &&
+ 	test_cmp expect actual &&
+ 
+@@ -118,7 +118,7 @@ test_expect_success 'push with git:// and a config of v2 does not request v2' '
+ 	test_commit -C daemon_child three &&
+ 
+ 	# Push to another branch, as the target repository has the
+-	# master branch checked out and we cannot push into it.
++	# main branch checked out and we cannot push into it.
+ 	GIT_TRACE_PACKET="$(pwd)/log" git -C daemon_child -c protocol.version=2 \
+ 		push origin HEAD:client_branch &&
+ 
+@@ -158,10 +158,10 @@ test_expect_success 'ref advertisement is filtered with ls-remote using protocol
+ 	test_when_finished "rm -f log" &&
+ 
+ 	GIT_TRACE_PACKET="$(pwd)/log" git -c protocol.version=2 \
+-		ls-remote "file://$(pwd)/file_parent" master >actual &&
++		ls-remote "file://$(pwd)/file_parent" main >actual &&
+ 
+ 	cat >expect <<-EOF &&
+-	$(git -C file_parent rev-parse refs/heads/master)$(printf "\t")refs/heads/master
++	$(git -C file_parent rev-parse refs/heads/main)$(printf "\t")refs/heads/main
+ 	EOF
+ 
+ 	test_cmp expect actual
+@@ -171,10 +171,10 @@ test_expect_success 'server-options are sent when using ls-remote' '
+ 	test_when_finished "rm -f log" &&
+ 
+ 	GIT_TRACE_PACKET="$(pwd)/log" git -c protocol.version=2 \
+-		ls-remote -o hello -o world "file://$(pwd)/file_parent" master >actual &&
++		ls-remote -o hello -o world "file://$(pwd)/file_parent" main >actual &&
+ 
+ 	cat >expect <<-EOF &&
+-	$(git -C file_parent rev-parse refs/heads/master)$(printf "\t")refs/heads/master
++	$(git -C file_parent rev-parse refs/heads/main)$(printf "\t")refs/heads/main
+ 	EOF
+ 
+ 	test_cmp expect actual &&
+@@ -184,7 +184,7 @@ test_expect_success 'server-options are sent when using ls-remote' '
+ 
+ test_expect_success 'warn if using server-option with ls-remote with legacy protocol' '
+ 	test_must_fail env GIT_TEST_PROTOCOL_VERSION=0 git -c protocol.version=0 \
+-		ls-remote -o hello -o world "file://$(pwd)/file_parent" master 2>err &&
++		ls-remote -o hello -o world "file://$(pwd)/file_parent" main 2>err &&
+ 
+ 	test_i18ngrep "see protocol.version in" err &&
+ 	test_i18ngrep "server options require protocol version 2 or later" err
+@@ -217,7 +217,7 @@ test_expect_success 'fetch with file:// using protocol v2' '
+ 	GIT_TRACE_PACKET="$(pwd)/log" git -C file_child -c protocol.version=2 \
+ 		fetch origin &&
+ 
+-	git -C file_child log -1 --format=%s origin/master >actual &&
++	git -C file_child log -1 --format=%s origin/main >actual &&
+ 	git -C file_parent log -1 --format=%s >expect &&
+ 	test_cmp expect actual &&
+ 
+@@ -232,13 +232,13 @@ test_expect_success 'ref advertisement is filtered during fetch using protocol v
+ 	git -C file_parent branch unwanted-branch three &&
+ 
+ 	GIT_TRACE_PACKET="$(pwd)/log" git -C file_child -c protocol.version=2 \
+-		fetch origin master &&
++		fetch origin main &&
+ 
+-	git -C file_child log -1 --format=%s origin/master >actual &&
++	git -C file_child log -1 --format=%s origin/main >actual &&
+ 	git -C file_parent log -1 --format=%s >expect &&
+ 	test_cmp expect actual &&
+ 
+-	grep "refs/heads/master" log &&
++	grep "refs/heads/main" log &&
+ 	! grep "refs/heads/unwanted-branch" log
  '
-@@ -910,11 +910,11 @@ test_expect_success 'fetching deepen' '
- 	test_commit three &&
- 	git clone --depth 1 "file://$(pwd)/." deepen &&
- 	test_commit four &&
--	git -C deepen log --pretty=tformat:%s master >actual &&
-+	git -C deepen log --pretty=tformat:%s main >actual &&
+ 
+@@ -248,9 +248,9 @@ test_expect_success 'server-options are sent when fetching' '
+ 	test_commit -C file_parent four &&
+ 
+ 	GIT_TRACE_PACKET="$(pwd)/log" git -C file_child -c protocol.version=2 \
+-		fetch -o hello -o world origin master &&
++		fetch -o hello -o world origin main &&
+ 
+-	git -C file_child log -1 --format=%s origin/master >actual &&
++	git -C file_child log -1 --format=%s origin/main >actual &&
+ 	git -C file_parent log -1 --format=%s >expect &&
+ 	test_cmp expect actual &&
+ 
+@@ -264,7 +264,7 @@ test_expect_success 'warn if using server-option with fetch with legacy protocol
+ 	git init temp_child &&
+ 
+ 	test_must_fail env GIT_TEST_PROTOCOL_VERSION=0 git -C temp_child -c protocol.version=0 \
+-		fetch -o hello -o world "file://$(pwd)/file_parent" master 2>err &&
++		fetch -o hello -o world "file://$(pwd)/file_parent" main 2>err &&
+ 
+ 	test_i18ngrep "see protocol.version in" err &&
+ 	test_i18ngrep "server options require protocol version 2 or later" err
+@@ -325,7 +325,7 @@ test_expect_success 'partial clone' '
+ 	grep "version 2" trace &&
+ 
+ 	# Ensure that the old version of the file is missing
+-	git -C client rev-list --quiet --objects --missing=print master \
++	git -C client rev-list --quiet --objects --missing=print main \
+ 		>observed.oids &&
+ 	grep "$(git -C server rev-parse message1:a.txt)" observed.oids &&
+ 
+@@ -350,7 +350,7 @@ test_expect_success 'partial fetch' '
+ 	SERVER="file://$(pwd)/server" &&
+ 
+ 	GIT_TRACE_PACKET="$(pwd)/trace" git -C client -c protocol.version=2 \
+-		fetch --filter=blob:none "$SERVER" master:refs/heads/other &&
++		fetch --filter=blob:none "$SERVER" main:refs/heads/other &&
+ 	grep "version 2" trace &&
+ 
+ 	# Ensure that the old version of the file is missing
+@@ -395,7 +395,7 @@ test_expect_success 'even with handcrafted request, filter does not work if not
+ 	command=fetch
+ 	object-format=$(test_oid algo)
+ 	0001
+-	want $(git -C server rev-parse master)
++	want $(git -C server rev-parse main)
+ 	filter blob:none
+ 	0000
+ 	EOF
+@@ -539,7 +539,7 @@ test_expect_success 'deepen-relative' '
+ 	test_commit -C server four &&
+ 
+ 	# Sanity check that only "three" is downloaded
+-	git -C client log --pretty=tformat:%s master >actual &&
++	git -C client log --pretty=tformat:%s main >actual &&
  	echo three >expected &&
  	test_cmp expected actual &&
- 	git -C deepen fetch --deepen=1 &&
--	git -C deepen log --pretty=tformat:%s origin/master >actual &&
-+	git -C deepen log --pretty=tformat:%s origin/main >actual &&
+ 
+@@ -548,7 +548,7 @@ test_expect_success 'deepen-relative' '
+ 	# Ensure that protocol v2 is used
+ 	grep "fetch< version 2" trace &&
+ 
+-	git -C client log --pretty=tformat:%s origin/master >actual &&
++	git -C client log --pretty=tformat:%s origin/main >actual &&
  	cat >expected <<-\EOF &&
  	four
  	three
-diff --git a/t/t5501-fetch-push-alternates.sh b/t/t5501-fetch-push-alternates.sh
-index 1bc57ac03f..0054163ce4 100755
---- a/t/t5501-fetch-push-alternates.sh
-+++ b/t/t5501-fetch-push-alternates.sh
-@@ -45,7 +45,7 @@ test_expect_success setup '
- test_expect_success 'pushing into a repository with the same alternate' '
+@@ -670,7 +670,7 @@ test_expect_success 'fetch with http:// using protocol v2' '
+ 	GIT_TRACE_PACKET="$(pwd)/log" git -C http_child -c protocol.version=2 \
+ 		fetch &&
+ 
+-	git -C http_child log -1 --format=%s origin/master >actual &&
++	git -C http_child log -1 --format=%s origin/main >actual &&
+ 	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" log -1 --format=%s >expect &&
+ 	test_cmp expect actual &&
+ 
+@@ -698,11 +698,11 @@ test_expect_success 'fetch from namespaced repo respects namespaces' '
+ 	test_commit -C "$HTTPD_DOCUMENT_ROOT_PATH/nsrepo" one &&
+ 	test_commit -C "$HTTPD_DOCUMENT_ROOT_PATH/nsrepo" two &&
+ 	git -C "$HTTPD_DOCUMENT_ROOT_PATH/nsrepo" \
+-		update-ref refs/namespaces/ns/refs/heads/master one &&
++		update-ref refs/namespaces/ns/refs/heads/main one &&
+ 
+ 	GIT_TRACE_PACKET="$(pwd)/log" git -C http_child -c protocol.version=2 \
+ 		fetch "$HTTPD_URL/smart_namespace/nsrepo" \
+-		refs/heads/master:refs/heads/theirs &&
++		refs/heads/main:refs/heads/theirs &&
+ 
+ 	# Server responded using protocol v2
+ 	grep "fetch< version 2" log &&
+@@ -733,7 +733,7 @@ test_expect_success 'push with http:// and a config of v2 does not request v2' '
+ 	test_commit -C http_child three &&
+ 
+ 	# Push to another branch, as the target repository has the
+-	# master branch checked out and we cannot push into it.
++	# main branch checked out and we cannot push into it.
+ 	GIT_TRACE_PACKET="$(pwd)/log" git -C http_child -c protocol.version=2 \
+ 		push origin HEAD:client_branch &&
+ 
+diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
+index b46940b725..bbf03a8f66 100755
+--- a/t/t5703-upload-pack-ref-in-want.sh
++++ b/t/t5703-upload-pack-ref-in-want.sh
+@@ -38,7 +38,7 @@ write_command () {
+ 
+ # c(o/foo) d(o/bar)
+ #        \ /
+-#         b   e(baz)  f(master)
++#         b   e(baz)  f(main)
+ #          \__  |  __/
+ #             \ | /
+ #               a
+@@ -51,7 +51,7 @@ test_expect_success 'setup repository' '
+ 	test_commit d &&
+ 	git checkout -b baz a &&
+ 	test_commit e &&
+-	git checkout master &&
++	git checkout main &&
+ 	test_commit f
+ '
+ 
+@@ -88,7 +88,7 @@ test_expect_success 'invalid want-ref line' '
+ test_expect_success 'basic want-ref' '
+ 	oid=$(git rev-parse f) &&
+ 	cat >expected_refs <<-EOF &&
+-	$oid refs/heads/master
++	$oid refs/heads/main
+ 	EOF
+ 	git rev-parse f >expected_commits &&
+ 
+@@ -97,7 +97,7 @@ test_expect_success 'basic want-ref' '
+ 	$(write_command fetch)
+ 	0001
+ 	no-progress
+-	want-ref refs/heads/master
++	want-ref refs/heads/main
+ 	have $oid
+ 	done
+ 	0000
+@@ -135,7 +135,7 @@ test_expect_success 'multiple want-ref lines' '
+ test_expect_success 'mix want and want-ref' '
+ 	oid=$(git rev-parse f) &&
+ 	cat >expected_refs <<-EOF &&
+-	$oid refs/heads/master
++	$oid refs/heads/main
+ 	EOF
+ 	git rev-parse e f >expected_commits &&
+ 
+@@ -143,7 +143,7 @@ test_expect_success 'mix want and want-ref' '
+ 	$(write_command fetch)
+ 	0001
+ 	no-progress
+-	want-ref refs/heads/master
++	want-ref refs/heads/main
+ 	want $(git rev-parse e)
+ 	have $(git rev-parse a)
+ 	done
+@@ -182,7 +182,7 @@ LOCAL_PRISTINE="$(pwd)/local_pristine"
+ # $REPO
+ # c(o/foo) d(o/bar)
+ #        \ /
+-#         b   e(baz)  f(master)
++#         b   e(baz)  f(main)
+ #          \__  |  __/
+ #             \ | /
+ #               a
+@@ -193,7 +193,7 @@ LOCAL_PRISTINE="$(pwd)/local_pristine"
+ #		.
+ #		.
+ #		|
+-#		a(master)
++#		a(main)
+ test_expect_success 'setup repos for fetching with ref-in-want tests' '
  	(
- 		cd one &&
--		git push ../receiver master:refs/heads/it
-+		git push ../receiver main:refs/heads/it
- 	) &&
- 	(
- 		cd receiver &&
-@@ -57,7 +57,7 @@ test_expect_success 'pushing into a repository with the same alternate' '
- test_expect_success 'fetching from a repository with the same alternate' '
- 	(
- 		cd fetcher &&
--		git fetch ../one master:refs/heads/it &&
-+		git fetch ../one main:refs/heads/it &&
- 		count_objects >../fetcher.count
- 	) &&
- 	test_cmp one.count fetcher.count
-diff --git a/t/t5502-quickfetch.sh b/t/t5502-quickfetch.sh
-index 7a46cbdbe6..b163787a05 100755
---- a/t/t5502-quickfetch.sh
-+++ b/t/t5502-quickfetch.sh
-@@ -108,14 +108,14 @@ test_expect_success 'quickfetch should not copy from alternate' '
- 				q
- 			}"
- 	) ) &&
--	origin_master=$( (
-+	origin_main=$( (
- 		cd quickclone &&
--		git rev-parse origin/master
-+		git rev-parse origin/main
- 	) ) &&
- 	echo "loose objects: $obj_cnt, packfiles: $pck_cnt" &&
- 	test $obj_cnt -eq 0 &&
- 	test $pck_cnt -eq 0 &&
--	test z$origin_master = z$(git rev-parse master)
-+	test z$origin_main = z$(git rev-parse main)
+ 		git init "$REPO" &&
+@@ -209,7 +209,7 @@ test_expect_success 'setup repos for fetching with ref-in-want tests' '
+ 		test_commit_bulk --id=s 33 &&
  
- '
- 
-diff --git a/t/t5503-tagfollow.sh b/t/t5503-tagfollow.sh
-index 6dafbe4543..b3e5f810e0 100755
---- a/t/t5503-tagfollow.sh
-+++ b/t/t5503-tagfollow.sh
-@@ -11,7 +11,7 @@ test_description='test automatic tag following'
- #   L - A ------ O ------ B
- #    \   \                 \
- #     \   C - origin/cat    \
--#      origin/master           master
-+#      origin/main           main
- 
- test_expect_success setup '
- 	test_tick &&
-@@ -57,7 +57,7 @@ test_expect_success 'fetch A (new commit : 1 connection)' '
- 	(
- 		cd cloned &&
- 		GIT_TRACE_PACKET=$UPATH git fetch &&
--		test $A = $(git rev-parse --verify origin/master)
-+		test $A = $(git rev-parse --verify origin/main)
- 	) &&
- 	get_needs $U >actual &&
- 	test_cmp expect actual
-@@ -72,7 +72,7 @@ test_expect_success "create tag T on A, create C on branch cat" '
- 	git add file &&
- 	git commit -m C &&
- 	C=$(git rev-parse --verify HEAD) &&
--	git checkout master
-+	git checkout main
- '
- 
- test_expect_success 'setup expect' '
-@@ -123,7 +123,7 @@ test_expect_success 'fetch B, S (commit and tag : 1 connection)' '
- 	(
- 		cd cloned &&
- 		GIT_TRACE_PACKET=$UPATH git fetch &&
--		test $B = $(git rev-parse --verify origin/master) &&
-+		test $B = $(git rev-parse --verify origin/main) &&
- 		test $B = $(git rev-parse --verify tag2^0) &&
- 		test $S = $(git rev-parse --verify tag2)
- 	) &&
-@@ -138,7 +138,7 @@ want $S
- EOF
- '
- 
--test_expect_success 'new clone fetch master and tags' '
-+test_expect_success 'new clone fetch main and tags' '
- 	test_might_fail git branch -D cat &&
- 	rm -f $U &&
- 	(
-@@ -147,7 +147,7 @@ test_expect_success 'new clone fetch master and tags' '
- 		git init &&
- 		git remote add origin .. &&
- 		GIT_TRACE_PACKET=$UPATH git fetch &&
--		test $B = $(git rev-parse --verify origin/master) &&
-+		test $B = $(git rev-parse --verify origin/main) &&
- 		test $S = $(git rev-parse --verify tag2) &&
- 		test $B = $(git rev-parse --verify tag2^0) &&
- 		test $T = $(git rev-parse --verify tag1) &&
-diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
-index 1a16ac4c0d..d2ba19ce68 100755
---- a/t/t5504-fetch-receive-strict.sh
-+++ b/t/t5504-fetch-receive-strict.sh
-@@ -25,7 +25,7 @@ test_expect_success 'fetch without strict' '
- 		cd dst &&
- 		git config fetch.fsckobjects false &&
- 		git config transfer.fsckobjects false &&
--		test_must_fail git fetch ../.git master
-+		test_must_fail git fetch ../.git main
- 	)
- '
- 
-@@ -36,7 +36,7 @@ test_expect_success 'fetch with !fetch.fsckobjects' '
- 		cd dst &&
- 		git config fetch.fsckobjects false &&
- 		git config transfer.fsckobjects true &&
--		test_must_fail git fetch ../.git master
-+		test_must_fail git fetch ../.git main
- 	)
- '
- 
-@@ -47,7 +47,7 @@ test_expect_success 'fetch with fetch.fsckobjects' '
- 		cd dst &&
- 		git config fetch.fsckobjects true &&
- 		git config transfer.fsckobjects false &&
--		test_must_fail git fetch ../.git master
-+		test_must_fail git fetch ../.git main
- 	)
- '
- 
-@@ -57,13 +57,13 @@ test_expect_success 'fetch with transfer.fsckobjects' '
- 	(
- 		cd dst &&
- 		git config transfer.fsckobjects true &&
--		test_must_fail git fetch ../.git master
-+		test_must_fail git fetch ../.git main
- 	)
- '
- 
- cat >exp <<EOF
- To dst
--!	refs/heads/master:refs/heads/test	[remote rejected] (missing necessary objects)
-+!	refs/heads/main:refs/heads/test	[remote rejected] (missing necessary objects)
- Done
- EOF
- 
-@@ -75,7 +75,7 @@ test_expect_success 'push without strict' '
- 		git config fetch.fsckobjects false &&
- 		git config transfer.fsckobjects false
- 	) &&
--	test_must_fail git push --porcelain dst master:refs/heads/test >act &&
-+	test_must_fail git push --porcelain dst main:refs/heads/test >act &&
- 	test_cmp exp act
- '
- 
-@@ -87,13 +87,13 @@ test_expect_success 'push with !receive.fsckobjects' '
- 		git config receive.fsckobjects false &&
- 		git config transfer.fsckobjects true
- 	) &&
--	test_must_fail git push --porcelain dst master:refs/heads/test >act &&
-+	test_must_fail git push --porcelain dst main:refs/heads/test >act &&
- 	test_cmp exp act
- '
- 
- cat >exp <<EOF
- To dst
--!	refs/heads/master:refs/heads/test	[remote rejected] (unpacker error)
-+!	refs/heads/main:refs/heads/test	[remote rejected] (unpacker error)
- EOF
- 
- test_expect_success 'push with receive.fsckobjects' '
-@@ -104,7 +104,7 @@ test_expect_success 'push with receive.fsckobjects' '
- 		git config receive.fsckobjects true &&
- 		git config transfer.fsckobjects false
- 	) &&
--	test_must_fail git push --porcelain dst master:refs/heads/test >act &&
-+	test_must_fail git push --porcelain dst main:refs/heads/test >act &&
- 	test_cmp exp act
- '
- 
-@@ -115,7 +115,7 @@ test_expect_success 'push with transfer.fsckobjects' '
- 		cd dst &&
- 		git config transfer.fsckobjects true
- 	) &&
--	test_must_fail git push --porcelain dst master:refs/heads/test >act &&
-+	test_must_fail git push --porcelain dst main:refs/heads/test >act &&
- 	test_cmp exp act
- '
- 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index eaa6e90220..540d65aa22 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -17,7 +17,7 @@ setup_repository () {
- 	git add elif &&
- 	test_tick &&
- 	git commit -m "Second" &&
--	git checkout master
-+	git checkout main
- 	)
- }
- 
-@@ -60,8 +60,8 @@ test_expect_success C_LOCALE_OUTPUT 'remote information for the origin' '
- 	(
- 		cd test &&
- 		tokens_match origin "$(git remote)" &&
--		check_remote_track origin master side &&
--		check_tracking_branch origin HEAD master side
-+		check_remote_track origin main side &&
-+		check_tracking_branch origin HEAD main side
- 	)
- '
- 
-@@ -70,7 +70,7 @@ test_expect_success 'add another remote' '
- 		cd test &&
- 		git remote add -f second ../two &&
- 		tokens_match "origin second" "$(git remote)" &&
--		check_tracking_branch second master side another &&
-+		check_tracking_branch second main side another &&
- 		git for-each-ref "--format=%(refname)" refs/remotes |
- 		sed -e "/^refs\/remotes\/origin\//d" \
- 		    -e "/^refs\/remotes\/second\//d" >actual &&
-@@ -81,8 +81,8 @@ test_expect_success 'add another remote' '
- test_expect_success C_LOCALE_OUTPUT 'check remote-tracking' '
- 	(
- 		cd test &&
--		check_remote_track origin master side &&
--		check_remote_track second master side another
-+		check_remote_track origin main side &&
-+		check_remote_track second main side another
- 	)
- '
- 
-@@ -99,7 +99,7 @@ test_expect_success 'remote forces tracking branches' '
- test_expect_success 'remove remote' '
- 	(
- 		cd test &&
--		git symbolic-ref refs/remotes/second/HEAD refs/remotes/second/master &&
-+		git symbolic-ref refs/remotes/second/HEAD refs/remotes/second/main &&
- 		git remote rm second
- 	)
- '
-@@ -108,7 +108,7 @@ test_expect_success C_LOCALE_OUTPUT 'remove remote' '
- 	(
- 		cd test &&
- 		tokens_match origin "$(git remote)" &&
--		check_remote_track origin master side &&
-+		check_remote_track origin main side &&
- 		git for-each-ref "--format=%(refname)" refs/remotes |
- 		sed -e "/^refs\/remotes\/origin\//d" >actual &&
- 		test_must_be_empty actual
-@@ -121,13 +121,13 @@ test_expect_success 'remove remote protects local branches' '
- 		cat >expect1 <<-\EOF &&
- 		Note: A branch outside the refs/remotes/ hierarchy was not removed;
- 		to delete it, use:
--		  git branch -d master
-+		  git branch -d main
- 		EOF
- 		cat >expect2 <<-\EOF &&
- 		Note: Some branches outside the refs/remotes/ hierarchy were not removed;
- 		to delete them, use:
- 		  git branch -d foobranch
--		  git branch -d master
-+		  git branch -d main
- 		EOF
- 		git tag footag &&
- 		git config --add remote.oops.fetch "+refs/*:refs/*" &&
-@@ -153,7 +153,7 @@ test_expect_success 'remove errors out early when deleting non-existent branch'
- 
- test_expect_success 'remove remote with a branch without configured merge' '
- 	test_when_finished "(
--		git -C test checkout master;
-+		git -C test checkout main;
- 		git -C test branch -D two;
- 		git -C test config --remove-section remote.two;
- 		git -C test config --remove-section branch.second;
-@@ -163,9 +163,9 @@ test_expect_success 'remove remote with a branch without configured merge' '
- 		cd test &&
- 		git remote add two ../two &&
- 		git fetch two &&
--		git checkout -b second two/master^0 &&
-+		git checkout -b second two/main^0 &&
- 		git config branch.second.remote two &&
+ 		# Add novel commits to upstream
 -		git checkout master &&
 +		git checkout main &&
- 		git remote rm two
- 	)
- '
-@@ -211,7 +211,7 @@ cat >test/expect <<EOF
- * remote origin
-   Fetch URL: $(pwd)/one
-   Push  URL: $(pwd)/one
--  HEAD branch: master
-+  HEAD branch: main
-   Remote branches:
-     main new (next fetch will store in remotes/origin)
-     side tracked
-@@ -221,14 +221,14 @@ cat >test/expect <<EOF
-     octopus  merges with remote topic-a
-                 and with remote topic-b
-                 and with remote topic-c
--    rebase  rebases onto remote master
-+    rebase  rebases onto remote main
-   Local refs configured for 'git push':
-     main pushes to main     (local out of date)
-     main pushes to upstream (create)
- * remote two
-   Fetch URL: ../two
-   Push  URL: ../three
--  HEAD branch: master
-+  HEAD branch: main
-   Local refs configured for 'git push':
-     ahead forces to main    (fast-forwardable)
-     main  pushes to another (up to date)
-@@ -237,16 +237,16 @@ EOF
- test_expect_success PREPARE_FOR_MAIN_BRANCH 'show' '
- 	(
- 		cd test &&
--		git config --add remote.origin.fetch refs/heads/master:refs/heads/upstream &&
-+		git config --add remote.origin.fetch refs/heads/main:refs/heads/upstream &&
- 		git fetch &&
--		git checkout -b ahead origin/master &&
-+		git checkout -b ahead origin/main &&
- 		echo 1 >>file &&
- 		test_tick &&
- 		git commit -m update file &&
+ 		cd "$REPO" &&
+ 		git checkout -b o/foo &&
+ 		test_commit b &&
+@@ -218,7 +218,7 @@ test_expect_success 'setup repos for fetching with ref-in-want tests' '
+ 		test_commit d &&
+ 		git checkout -b baz a &&
+ 		test_commit e &&
 -		git checkout master &&
--		git branch --track octopus origin/master &&
--		git branch --track rebase origin/master &&
--		git branch -d -r origin/master &&
 +		git checkout main &&
-+		git branch --track octopus origin/main &&
-+		git branch --track rebase origin/main &&
-+		git branch -d -r origin/main &&
- 		git config --add remote.two.url ../two &&
- 		git config --add remote.two.pushurl ../three &&
- 		git config branch.rebase.rebase true &&
-@@ -258,10 +258,10 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH 'show' '
- 			git commit -m update file
- 		) &&
- 		git config --add remote.origin.push : &&
--		git config --add remote.origin.push refs/heads/master:refs/heads/upstream &&
-+		git config --add remote.origin.push refs/heads/main:refs/heads/upstream &&
- 		git config --add remote.origin.push +refs/tags/lastbackup &&
--		git config --add remote.two.push +refs/heads/ahead:refs/heads/master &&
--		git config --add remote.two.push refs/heads/master:refs/heads/another &&
-+		git config --add remote.two.push +refs/heads/ahead:refs/heads/main &&
-+		git config --add remote.two.push refs/heads/main:refs/heads/another &&
- 		git remote show origin two >output &&
- 		git branch -d rebase octopus &&
- 		test_i18ncmp expect output
-@@ -274,7 +274,7 @@ cat >test/expect <<EOF
-   Push  URL: $(pwd)/one
-   HEAD branch: (not queried)
-   Remote branches: (status not queried)
--    master
-+    main
-     side
-   Local branches configured for 'git pull':
-     ahead merges with remote main
-@@ -322,7 +322,7 @@ test_expect_success 'set-head --auto' '
- 	(
- 		cd test &&
- 		git remote set-head --auto origin &&
--		echo refs/remotes/origin/master >expect &&
-+		echo refs/remotes/origin/main >expect &&
- 		git symbolic-ref refs/remotes/origin/HEAD >output &&
- 		test_cmp expect output
- 	)
-@@ -333,7 +333,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH 'set-head --auto has no problem w/mu
- 		cd test &&
- 		git fetch two "refs/heads/*:refs/remotes/two/*" &&
- 		git remote set-head --auto two >output 2>&1 &&
--		echo "two/HEAD set to master" >expect &&
-+		echo "two/HEAD set to main" >expect &&
- 		test_i18ncmp expect output
- 	)
- '
-@@ -347,7 +347,7 @@ test_expect_success 'set-head explicit' '
- 		cd test &&
- 		git remote set-head origin side2 &&
- 		git symbolic-ref refs/remotes/origin/HEAD >output &&
--		git remote set-head origin master &&
-+		git remote set-head origin main &&
- 		test_cmp expect output
- 	)
- '
-@@ -410,7 +410,7 @@ test_expect_success 'fetch mirrors act as mirrors during fetch' '
- 	(
- 		cd mirror-fetch/parent &&
- 		git branch new &&
--		git branch -m master renamed
-+		git branch -m main renamed
+ 		test_commit f
  	) &&
- 	(
- 		cd mirror-fetch/child &&
-@@ -424,7 +424,7 @@ test_expect_success 'fetch mirrors can prune' '
- 	(
- 		cd mirror-fetch/child &&
- 		git remote prune parent &&
--		test_must_fail git rev-parse --verify refs/heads/master
-+		test_must_fail git rev-parse --verify refs/heads/main
- 	)
+ 	git -C "$REPO" config uploadpack.allowRefInWant true &&
+@@ -245,12 +245,12 @@ test_expect_success 'fetching multiple refs' '
+ 
+ 	rm -rf local &&
+ 	cp -r "$LOCAL_PRISTINE" local &&
+-	GIT_TRACE_PACKET="$(pwd)/log" git -C local fetch origin master baz &&
++	GIT_TRACE_PACKET="$(pwd)/log" git -C local fetch origin main baz &&
+ 
+-	git -C "$REPO" rev-parse "master" "baz" >expected &&
+-	git -C local rev-parse refs/remotes/origin/master refs/remotes/origin/baz >actual &&
++	git -C "$REPO" rev-parse "main" "baz" >expected &&
++	git -C local rev-parse refs/remotes/origin/main refs/remotes/origin/baz >actual &&
+ 	test_cmp expected actual &&
+-	grep "want-ref refs/heads/master" log &&
++	grep "want-ref refs/heads/main" log &&
+ 	grep "want-ref refs/heads/baz" log
  '
  
-@@ -477,14 +477,14 @@ test_expect_success 'push mirrors act as mirrors during push' '
- 	(
- 		cd mirror-push/private &&
- 		git branch new &&
--		git branch -m master renamed &&
-+		git branch -m main renamed &&
- 		git push public
- 	) &&
- 	(
- 		cd mirror-push/private &&
- 		git rev-parse --verify refs/heads/new &&
- 		git rev-parse --verify refs/heads/renamed &&
--		test_must_fail git rev-parse --verify refs/heads/master
-+		test_must_fail git rev-parse --verify refs/heads/main
- 	)
+@@ -261,13 +261,13 @@ test_expect_success 'fetching ref and exact OID' '
+ 	cp -r "$LOCAL_PRISTINE" local &&
+ 	oid=$(git -C "$REPO" rev-parse b) &&
+ 	GIT_TRACE_PACKET="$(pwd)/log" git -C local fetch origin \
+-		master "$oid":refs/heads/actual &&
++		main "$oid":refs/heads/actual &&
+ 
+-	git -C "$REPO" rev-parse "master" "b" >expected &&
+-	git -C local rev-parse refs/remotes/origin/master refs/heads/actual >actual &&
++	git -C "$REPO" rev-parse "main" "b" >expected &&
++	git -C local rev-parse refs/remotes/origin/main refs/heads/actual >actual &&
+ 	test_cmp expected actual &&
+ 	grep "want $oid" log &&
+-	grep "want-ref refs/heads/master" log
++	grep "want-ref refs/heads/main" log
  '
  
-@@ -610,10 +610,10 @@ test_expect_success 'reject --no-no-tags' '
+ test_expect_success 'fetching with wildcard that does not match any refs' '
+@@ -316,7 +316,7 @@ test_expect_success 'setup repos for change-while-negotiating test' '
+ 		test_commit_bulk --id=s 33 &&
+ 
+ 		# Add novel commits to upstream
+-		git checkout master &&
++		git checkout main &&
+ 		cd "$REPO" &&
+ 		test_commit m2 &&
+ 		test_commit m3 &&
+@@ -342,7 +342,7 @@ test_expect_success 'server is initially ahead - no ref in want' '
+ 	git -C "$REPO" config uploadpack.allowRefInWant false &&
+ 	rm -rf local &&
+ 	cp -r "$LOCAL_PRISTINE" local &&
+-	inconsistency master $(test_oid numeric) &&
++	inconsistency main $(test_oid numeric) &&
+ 	test_must_fail git -C local fetch 2>err &&
+ 	test_i18ngrep "fatal: remote error: upload-pack: not our ref" err
  '
+@@ -351,11 +351,11 @@ test_expect_success 'server is initially ahead - ref in want' '
+ 	git -C "$REPO" config uploadpack.allowRefInWant true &&
+ 	rm -rf local &&
+ 	cp -r "$LOCAL_PRISTINE" local &&
+-	inconsistency master $(test_oid numeric) &&
++	inconsistency main $(test_oid numeric) &&
+ 	git -C local fetch &&
  
- cat >one/expect <<\EOF
--  apis/master
-+  apis/main
-   apis/side
-   drosophila/another
--  drosophila/master
-+  drosophila/main
-   drosophila/side
- EOF
- 
-@@ -630,11 +630,11 @@ test_expect_success 'update' '
- 
- cat >one/expect <<\EOF
-   drosophila/another
--  drosophila/master
-+  drosophila/main
-   drosophila/side
--  manduca/master
-+  manduca/main
-   manduca/side
--  megaloprepus/master
-+  megaloprepus/main
-   megaloprepus/side
- EOF
- 
-@@ -673,11 +673,11 @@ test_expect_success 'update --prune' '
- '
- 
- cat >one/expect <<-\EOF
--  apis/master
-+  apis/main
-   apis/side
--  manduca/master
-+  manduca/main
-   manduca/side
--  megaloprepus/master
-+  megaloprepus/main
-   megaloprepus/side
- EOF
- 
-@@ -697,7 +697,7 @@ test_expect_success 'update default' '
- 
- cat >one/expect <<\EOF
-   drosophila/another
--  drosophila/master
-+  drosophila/main
-   drosophila/side
- EOF
- 
-@@ -751,14 +751,14 @@ test_expect_success 'rename a remote' '
- 	git clone one four &&
- 	(
- 		cd four &&
--		git config branch.master.pushRemote origin &&
-+		git config branch.main.pushRemote origin &&
- 		git remote rename origin upstream &&
- 		test -z "$(git for-each-ref refs/remotes/origin)" &&
--		test "$(git symbolic-ref refs/remotes/upstream/HEAD)" = "refs/remotes/upstream/master" &&
--		test "$(git rev-parse upstream/master)" = "$(git rev-parse master)" &&
-+		test "$(git symbolic-ref refs/remotes/upstream/HEAD)" = "refs/remotes/upstream/main" &&
-+		test "$(git rev-parse upstream/main)" = "$(git rev-parse main)" &&
- 		test "$(git config remote.upstream.fetch)" = "+refs/heads/*:refs/remotes/upstream/*" &&
--		test "$(git config branch.master.remote)" = "upstream" &&
--		test "$(git config branch.master.pushRemote)" = "upstream" &&
-+		test "$(git config branch.main.remote)" = "upstream" &&
-+		test "$(git config branch.main.pushRemote)" = "upstream" &&
- 		test "$(git config --global remote.pushDefault)" = "origin"
- 	)
- '
-@@ -804,7 +804,7 @@ test_expect_success 'rename does not update a non-default fetch refspec' '
- 		git config remote.origin.fetch +refs/heads/*:refs/heads/origin/* &&
- 		git remote rename origin upstream &&
- 		test "$(git config remote.upstream.fetch)" = "+refs/heads/*:refs/heads/origin/*" &&
--		git rev-parse -q origin/master
-+		git rev-parse -q origin/main
- 	)
- '
- 
-@@ -824,7 +824,7 @@ test_expect_success 'rename a remote with name prefix of other remote' '
- 		cd four.three &&
- 		git remote add o git://example.com/repo.git &&
- 		git remote rename o upstream &&
--		test "$(git rev-parse origin/master)" = "$(git rev-parse master)"
-+		test "$(git rev-parse origin/main)" = "$(git rev-parse main)"
- 	)
- '
- 
-@@ -840,11 +840,11 @@ test_expect_success 'remove a remote' '
- 	git clone one four.five &&
- 	(
- 		cd four.five &&
--		git config branch.master.pushRemote origin &&
-+		git config branch.main.pushRemote origin &&
- 		git remote remove origin &&
- 		test -z "$(git for-each-ref refs/remotes/origin)" &&
--		test_must_fail git config branch.master.remote &&
--		test_must_fail git config branch.master.pushRemote &&
-+		test_must_fail git config branch.main.remote &&
-+		test_must_fail git config branch.main.pushRemote &&
- 		test "$(git config --global remote.pushDefault)" = "origin"
- 	)
- '
-@@ -885,9 +885,9 @@ test_expect_success 'remove a remote removes repo remote.pushDefault but keeps g
- 
- cat >remotes_origin <<EOF
- URL: $(pwd)/one
--Push: refs/heads/master:refs/heads/upstream
-+Push: refs/heads/main:refs/heads/upstream
- Push: refs/heads/next:refs/heads/upstream2
--Pull: refs/heads/master:refs/heads/origin
-+Pull: refs/heads/main:refs/heads/origin
- Pull: refs/heads/next:refs/heads/origin2
- EOF
- 
-@@ -903,11 +903,11 @@ test_expect_success 'migrate a remote from named file in $GIT_DIR/remotes' '
- 		test_path_is_missing .git/remotes/origin &&
- 		test "$(git config remote.origin.url)" = "$origin_url" &&
- 		cat >push_expected <<-\EOF &&
--		refs/heads/master:refs/heads/upstream
-+		refs/heads/main:refs/heads/upstream
- 		refs/heads/next:refs/heads/upstream2
- 		EOF
- 		cat >fetch_expected <<-\EOF &&
--		refs/heads/master:refs/heads/origin
-+		refs/heads/main:refs/heads/origin
- 		refs/heads/next:refs/heads/origin2
- 		EOF
- 		git config --get-all remote.origin.push >push_actual &&
-@@ -927,8 +927,8 @@ test_expect_success 'migrate a remote from named file in $GIT_DIR/branches' '
- 		git remote rename origin origin &&
- 		test_path_is_missing .git/branches/origin &&
- 		test "$(git config remote.origin.url)" = "$origin_url" &&
--		test "$(git config remote.origin.fetch)" = "refs/heads/master:refs/heads/origin" &&
--		test "$(git config remote.origin.push)" = "HEAD:refs/heads/master"
-+		test "$(git config remote.origin.fetch)" = "refs/heads/main:refs/heads/origin" &&
-+		test "$(git config remote.origin.push)" = "HEAD:refs/heads/main"
- 	)
- '
- 
-@@ -951,7 +951,7 @@ test_expect_success 'remote prune to cause a dangling symref' '
- 	(
- 		cd one &&
- 		git checkout side2 &&
--		git branch -D master
-+		git branch -D main
- 	) &&
- 	(
- 		cd eight &&
-@@ -994,22 +994,22 @@ test_expect_success 'remote set-branches' '
- 	EOF
- 	sort <<-\EOF >expect.replace &&
- 	+refs/heads/maint:refs/remotes/scratch/maint
--	+refs/heads/master:refs/remotes/scratch/master
-+	+refs/heads/main:refs/remotes/scratch/main
- 	+refs/heads/next:refs/remotes/scratch/next
- 	EOF
- 	sort <<-\EOF >expect.add-two &&
- 	+refs/heads/maint:refs/remotes/scratch/maint
--	+refs/heads/master:refs/remotes/scratch/master
-+	+refs/heads/main:refs/remotes/scratch/main
- 	+refs/heads/next:refs/remotes/scratch/next
- 	+refs/heads/seen:refs/remotes/scratch/seen
- 	+refs/heads/t/topic:refs/remotes/scratch/t/topic
- 	EOF
- 	sort <<-\EOF >expect.setup-ffonly &&
--	refs/heads/master:refs/remotes/scratch/master
-+	refs/heads/main:refs/remotes/scratch/main
- 	+refs/heads/next:refs/remotes/scratch/next
- 	EOF
- 	sort <<-\EOF >expect.respect-ffonly &&
--	refs/heads/master:refs/remotes/scratch/master
-+	refs/heads/main:refs/remotes/scratch/main
- 	+refs/heads/next:refs/remotes/scratch/next
- 	+refs/heads/seen:refs/remotes/scratch/seen
- 	EOF
-@@ -1025,7 +1025,7 @@ test_expect_success 'remote set-branches' '
- 		git config --get-all remote.scratch.fetch >config-result &&
- 		sort <config-result >../actual.add &&
- 
--		git remote set-branches scratch maint master next &&
-+		git remote set-branches scratch maint main next &&
- 		git config --get-all remote.scratch.fetch >config-result &&
- 		sort <config-result >../actual.replace &&
- 
-@@ -1035,7 +1035,7 @@ test_expect_success 'remote set-branches' '
- 
- 		git config --unset-all remote.scratch.fetch &&
- 		git config remote.scratch.fetch \
--			refs/heads/master:refs/remotes/scratch/master &&
-+			refs/heads/main:refs/remotes/scratch/main &&
- 		git config --add remote.scratch.fetch \
- 			+refs/heads/next:refs/remotes/scratch/next &&
- 		git config --get-all remote.scratch.fetch >config-result &&
-@@ -1055,14 +1055,14 @@ test_expect_success 'remote set-branches' '
- 
- test_expect_success 'remote set-branches with --mirror' '
- 	echo "+refs/*:refs/*" >expect.initial &&
--	echo "+refs/heads/master:refs/heads/master" >expect.replace &&
-+	echo "+refs/heads/main:refs/heads/main" >expect.replace &&
- 	git clone --mirror .git/ setbranches-mirror &&
- 	(
- 		cd setbranches-mirror &&
- 		git remote rename origin scratch &&
- 		git config --get-all remote.scratch.fetch >../actual.initial &&
- 
--		git remote set-branches scratch heads/master &&
-+		git remote set-branches scratch heads/main &&
- 		git config --get-all remote.scratch.fetch >../actual.replace
- 	) &&
- 	test_cmp expect.initial actual.initial &&
-@@ -1308,7 +1308,7 @@ test_extra_arg () {
- test_extra_arg add nick url
- test_extra_arg rename origin newname
- test_extra_arg remove origin
--test_extra_arg set-head origin master
-+test_extra_arg set-head origin main
- # set-branches takes any number of args
- test_extra_arg get-url origin newurl
- test_extra_arg set-url origin newurl oldurl
-@@ -1325,7 +1325,7 @@ test_expect_success 'unqualified <dst> refspec DWIM and advice' '
- 	test_when_finished "(cd test && git tag -d some-tag)" &&
- 	(
- 		cd test &&
--		git tag -a -m "Some tag" some-tag master &&
-+		git tag -a -m "Some tag" some-tag main &&
- 		exit_with=true &&
- 		for type in commit tag tree blob
- 		do
-@@ -1351,7 +1351,7 @@ test_expect_success 'unqualified <dst> refspec DWIM and advice' '
- test_expect_success PREPARE_FOR_MAIN_BRANCH 'refs/remotes/* <src> refspec and unqualified <dst> DWIM and advice' '
- 	(
- 		cd two &&
--		git tag -a -m "Some tag" my-tag master &&
-+		git tag -a -m "Some tag" my-tag main &&
- 		git update-ref refs/trees/my-head-tree HEAD^{tree} &&
- 		git update-ref refs/blobs/my-file-blob HEAD:file
- 	) &&
-diff --git a/t/t5506-remote-groups.sh b/t/t5506-remote-groups.sh
-index 83d5558c0e..f2df3944e0 100755
---- a/t/t5506-remote-groups.sh
-+++ b/t/t5506-remote-groups.sh
-@@ -31,8 +31,8 @@ repo_fetched() {
- test_expect_success 'setup' '
- 	mkdir one && (cd one && git init) &&
- 	mkdir two && (cd two && git init) &&
--	git remote add -m master one one &&
--	git remote add -m master two two
-+	git remote add -m main one one &&
-+	git remote add -m main two two
- '
- 
- test_expect_success 'no group updates all' '
-diff --git a/t/t5509-fetch-push-namespaces.sh b/t/t5509-fetch-push-namespaces.sh
-index a67f792adf..ad4a3f5c6e 100755
---- a/t/t5509-fetch-push-namespaces.sh
-+++ b/t/t5509-fetch-push-namespaces.sh
-@@ -27,9 +27,9 @@ test_expect_success setup '
- test_expect_success 'pushing into a repository using a ref namespace' '
- 	(
- 		cd original &&
--		git push pushee-namespaced master &&
-+		git push pushee-namespaced main &&
- 		git ls-remote pushee-namespaced >actual &&
--		printf "$commit1\trefs/heads/master\n" >expected &&
-+		printf "$commit1\trefs/heads/main\n" >expected &&
- 		test_cmp expected actual &&
- 		git push pushee-namespaced --tags &&
- 		git ls-remote pushee-namespaced >actual &&
-@@ -56,7 +56,7 @@ test_expect_success 'pulling from a repository using a ref namespace' '
- 		cd puller &&
- 		git remote add -f pushee-namespaced "ext::git --namespace=namespace %s ../pushee" &&
- 		git for-each-ref refs/ >actual &&
--		printf "$commit1 commit\trefs/remotes/pushee-namespaced/master\n" >expected &&
-+		printf "$commit1 commit\trefs/remotes/pushee-namespaced/main\n" >expected &&
- 		printf "$commit0 commit\trefs/tags/0\n" >>expected &&
- 		printf "$commit1 commit\trefs/tags/1\n" >>expected &&
- 		test_cmp expected actual
-@@ -76,7 +76,7 @@ test_expect_success 'mirroring a repository using a ref namespace' '
- 	(
- 		cd mirror &&
- 		git for-each-ref refs/ >actual &&
--		printf "$commit1 commit\trefs/namespaces/namespace/refs/heads/master\n" >expected &&
-+		printf "$commit1 commit\trefs/namespaces/namespace/refs/heads/main\n" >expected &&
- 		printf "$commit0 commit\trefs/namespaces/namespace/refs/tags/0\n" >>expected &&
- 		printf "$commit1 commit\trefs/namespaces/namespace/refs/tags/1\n" >>expected &&
- 		test_cmp expected actual
-@@ -87,7 +87,7 @@ test_expect_success 'hide namespaced refs with transfer.hideRefs' '
- 	GIT_NAMESPACE=namespace \
- 		git -C pushee -c transfer.hideRefs=refs/tags \
- 		ls-remote "ext::git %s ." >actual &&
--	printf "$commit1\trefs/heads/master\n" >expected &&
-+	printf "$commit1\trefs/heads/main\n" >expected &&
+-	git -C "$REPO" rev-parse --verify master >expected &&
+-	git -C local rev-parse --verify refs/remotes/origin/master >actual &&
++	git -C "$REPO" rev-parse --verify main >expected &&
++	git -C local rev-parse --verify refs/remotes/origin/main >actual &&
  	test_cmp expected actual
  '
  
-@@ -95,7 +95,7 @@ test_expect_success 'check that transfer.hideRefs does not match unstripped refs
- 	GIT_NAMESPACE=namespace \
- 		git -C pushee -c transfer.hideRefs=refs/namespaces/namespace/refs/tags \
- 		ls-remote "ext::git %s ." >actual &&
--	printf "$commit1\trefs/heads/master\n" >expected &&
-+	printf "$commit1\trefs/heads/main\n" >expected &&
- 	printf "$commit0\trefs/tags/0\n" >>expected &&
- 	printf "$commit1\trefs/tags/1\n" >>expected &&
- 	test_cmp expected actual
-@@ -105,23 +105,23 @@ test_expect_success 'hide full refs with transfer.hideRefs' '
- 	GIT_NAMESPACE=namespace \
- 		git -C pushee -c transfer.hideRefs="^refs/namespaces/namespace/refs/tags" \
- 		ls-remote "ext::git %s ." >actual &&
--	printf "$commit1\trefs/heads/master\n" >expected &&
-+	printf "$commit1\trefs/heads/main\n" >expected &&
+@@ -363,11 +363,11 @@ test_expect_success 'server is initially behind - no ref in want' '
+ 	git -C "$REPO" config uploadpack.allowRefInWant false &&
+ 	rm -rf local &&
+ 	cp -r "$LOCAL_PRISTINE" local &&
+-	inconsistency master "master^" &&
++	inconsistency main "main^" &&
+ 	git -C local fetch &&
+ 
+-	git -C "$REPO" rev-parse --verify "master^" >expected &&
+-	git -C local rev-parse --verify refs/remotes/origin/master >actual &&
++	git -C "$REPO" rev-parse --verify "main^" >expected &&
++	git -C local rev-parse --verify refs/remotes/origin/main >actual &&
  	test_cmp expected actual
  '
  
- test_expect_success 'try to update a hidden ref' '
--	test_config -C pushee transfer.hideRefs refs/heads/master &&
--	test_must_fail git -C original push pushee-namespaced master
-+	test_config -C pushee transfer.hideRefs refs/heads/main &&
-+	test_must_fail git -C original push pushee-namespaced main
+@@ -375,11 +375,11 @@ test_expect_success 'server is initially behind - ref in want' '
+ 	git -C "$REPO" config uploadpack.allowRefInWant true &&
+ 	rm -rf local &&
+ 	cp -r "$LOCAL_PRISTINE" local &&
+-	inconsistency master "master^" &&
++	inconsistency main "main^" &&
+ 	git -C local fetch &&
+ 
+-	git -C "$REPO" rev-parse --verify "master" >expected &&
+-	git -C local rev-parse --verify refs/remotes/origin/master >actual &&
++	git -C "$REPO" rev-parse --verify "main" >expected &&
++	git -C local rev-parse --verify refs/remotes/origin/main >actual &&
+ 	test_cmp expected actual
  '
  
- test_expect_success 'try to update a ref that is not hidden' '
--	test_config -C pushee transfer.hideRefs refs/namespaces/namespace/refs/heads/master &&
--	git -C original push pushee-namespaced master
-+	test_config -C pushee transfer.hideRefs refs/namespaces/namespace/refs/heads/main &&
-+	git -C original push pushee-namespaced main
+diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
+index 0f04b6cddb..306fe9e5e1 100755
+--- a/t/t5801-remote-helpers.sh
++++ b/t/t5801-remote-helpers.sh
+@@ -71,18 +71,18 @@ test_expect_success 'fetch multiple branches' '
+ 	(cd local &&
+ 	 git fetch
+ 	) &&
+-	compare_refs server master local refs/remotes/origin/master &&
++	compare_refs server main local refs/remotes/origin/main &&
+ 	compare_refs server new local refs/remotes/origin/new
  '
  
- test_expect_success 'try to update a hidden full ref' '
--	test_config -C pushee transfer.hideRefs "^refs/namespaces/namespace/refs/heads/master" &&
--	test_must_fail git -C original push pushee-namespaced master
-+	test_config -C pushee transfer.hideRefs "^refs/namespaces/namespace/refs/heads/main" &&
-+	test_must_fail git -C original push pushee-namespaced main
+ test_expect_success 'push when remote has extra refs' '
+ 	(cd local &&
+-	 git reset --hard origin/master &&
++	 git reset --hard origin/main &&
+ 	 echo content >>file &&
+ 	 git commit -a -m six &&
+ 	 git push
+ 	) &&
+-	compare_refs local master server master
++	compare_refs local main server main
  '
  
- test_expect_success 'set up ambiguous HEAD' '
-@@ -157,9 +157,9 @@ test_expect_success 'denyCurrentBranch and unborn branch with ref namespace' '
- 		cd original &&
- 		git init unborn &&
- 		git remote add unborn-namespaced "ext::git --namespace=namespace %s unborn" &&
--		test_must_fail git push unborn-namespaced HEAD:master &&
-+		test_must_fail git push unborn-namespaced HEAD:main &&
- 		git -C unborn config receive.denyCurrentBranch updateInstead &&
--		git push unborn-namespaced HEAD:master
-+		git push unborn-namespaced HEAD:main
- 	)
- '
+ test_expect_success 'push new branch by name' '
+@@ -174,7 +174,7 @@ test_expect_failure 'pushing without marks' '
  
+ test_expect_success 'push all with existing object' '
+ 	(cd local &&
+-	git branch dup2 master &&
++	git branch dup2 main &&
+ 	git push origin --all
+ 	) &&
+ 	compare_refs local dup2 server dup2
+@@ -182,7 +182,7 @@ test_expect_success 'push all with existing object' '
+ 
+ test_expect_success 'push ref with existing object' '
+ 	(cd local &&
+-	git branch dup master &&
++	git branch dup main &&
+ 	git push origin dup
+ 	) &&
+ 	compare_refs local dup server dup
+@@ -190,7 +190,7 @@ test_expect_success 'push ref with existing object' '
+ 
+ test_expect_success GPG 'push signed tag' '
+ 	(cd local &&
+-	git checkout master &&
++	git checkout main &&
+ 	git tag -s -m signed-tag signed-tag &&
+ 	git push origin signed-tag
+ 	) &&
+@@ -200,7 +200,7 @@ test_expect_success GPG 'push signed tag' '
+ 
+ test_expect_success GPG 'push signed tag with signed-tags capability' '
+ 	(cd local &&
+-	git checkout master &&
++	git checkout main &&
+ 	git tag -s -m signed-tag signed-tag-2 &&
+ 	GIT_REMOTE_TESTGIT_SIGNED_TAGS=1 git push origin signed-tag-2
+ 	) &&
+@@ -209,7 +209,7 @@ test_expect_success GPG 'push signed tag with signed-tags capability' '
+ 
+ test_expect_success 'push update refs' '
+ 	(cd local &&
+-	git checkout -b update master &&
++	git checkout -b update main &&
+ 	echo update >>file &&
+ 	git commit -a -m update &&
+ 	git push origin update &&
+@@ -260,7 +260,7 @@ test_expect_success 'proper failure checks for fetching' '
+ test_expect_success 'proper failure checks for pushing' '
+ 	test_when_finished "rm -rf local/git.marks local/testgit.marks" &&
+ 	(cd local &&
+-	git checkout -b crash master &&
++	git checkout -b crash main &&
+ 	echo crash >>file &&
+ 	git commit -a -m crash &&
+ 	test_must_fail env GIT_REMOTE_TESTGIT_FAILURE=1 git push --all &&
+@@ -272,7 +272,7 @@ test_expect_success 'proper failure checks for pushing' '
+ 
+ test_expect_success 'push messages' '
+ 	(cd local &&
+-	git checkout -b new_branch master &&
++	git checkout -b new_branch main &&
+ 	echo new >>file &&
+ 	git commit -a -m new &&
+ 	git push origin new_branch &&
+@@ -286,7 +286,7 @@ test_expect_success 'push messages' '
+ 
+ test_expect_success 'fetch HEAD' '
+ 	(cd server &&
+-	git checkout master &&
++	git checkout main &&
+ 	echo more >>file &&
+ 	git commit -a -m more
+ 	) &&
+@@ -298,7 +298,7 @@ test_expect_success 'fetch HEAD' '
+ 
+ test_expect_success 'fetch url' '
+ 	(cd server &&
+-	git checkout master &&
++	git checkout main &&
+ 	echo more >>file &&
+ 	git commit -a -m more
+ 	) &&
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 155bfad454..ca86f666e6 100644
+index 3e0c9413f1..11e02d615a 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
 @@ -263,7 +263,7 @@ case "$TEST_NUMBER" in
  	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
  	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  	;;
--[0-4]*|5[0-4]*)
-+[0-4]*|5[0-4]*|550*)
+-[0-4]*|5[0-5]*)
++[0-5]*)
  	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  	;;
