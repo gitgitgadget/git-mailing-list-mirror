@@ -2,87 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-9.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20ADEC2D0E4
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 07:06:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4276AC63777
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 07:36:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B3475246C5
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 07:06:21 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oAxL7Qfg"
+	by mail.kernel.org (Postfix) with ESMTP id D809F20867
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 07:36:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726260AbgKQHGU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Nov 2020 02:06:20 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52586 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726196AbgKQHGU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Nov 2020 02:06:20 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 629E999FCB;
-        Tue, 17 Nov 2020 02:06:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=OE2kTiNkTOiTyznpk0MAl7jgIa0=; b=oAxL7Q
-        fgp4D1F01j2bCbXjBZ996eStSviSOBp7gpvmHVu/+WLgRqJ6TE8EE/DcYTDeHIav
-        s/b6fp2rEDM8raZhPkOFjUm/z97vVmWEhqIKcSc6ZklzB7d9uIiR+pBgUA/jOCLc
-        gN6qpHfbBihSKuHQoOzIekHwxtRMeoasN9lOM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=CtykDp14/3RkS3xEoeU2X/NGnrawJZul
-        wWFNo+v/xDOxbCNqiF/zLHxsjzwI9MeST0btgqvkawi0XkSLy0gKgIayJ5eFbBn+
-        WdyCIGH+6QSoGjDF8g3g94GW/ckhgKbIxlTOaFot9avJT6/np1SyLaxNMPjcFI+d
-        FtTYcQKFpMc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5B43399FCA;
-        Tue, 17 Nov 2020 02:06:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E490B99FC9;
-        Tue, 17 Nov 2020 02:06:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/2] config: allow specifying config entries via envvar
- pairs
-References: <cover.1605269465.git.ps@pks.im>
-        <44e8dd50c6ea7cbcc5e4fc35c9b9057c0a52038c.1605269465.git.ps@pks.im>
-        <87mtzlflw7.fsf@evledraar.gmail.com>
-        <xmqqy2j1851k.fsf@gitster.c.googlers.com> <X7NtovvfE7IjWzie@ncase>
-Date:   Mon, 16 Nov 2020 23:06:17 -0800
-In-Reply-To: <X7NtovvfE7IjWzie@ncase> (Patrick Steinhardt's message of "Tue,
-        17 Nov 2020 07:28:50 +0100")
-Message-ID: <xmqq4klo7992.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726557AbgKQHgY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Nov 2020 02:36:24 -0500
+Received: from relay12.mail.gandi.net ([217.70.178.232]:54261 "EHLO
+        relay12.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725779AbgKQHgX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Nov 2020 02:36:23 -0500
+Received: from localhost (unknown [103.82.80.230])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay12.mail.gandi.net (Postfix) with ESMTPSA id B84C6200009;
+        Tue, 17 Nov 2020 07:36:20 +0000 (UTC)
+Date:   Tue, 17 Nov 2020 13:06:18 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     Stefan Haller <stefan@haller-berlin.de>
+Cc:     git@vger.kernel.org, mlevedahl@gmail.com,
+        Johannes.Schindelin@gmx.de, gitster@pobox.com
+Subject: Re: [PATCH v2 1/1] git-gui: Auto-rescan on activate
+Message-ID: <20201117073618.fjbi4ranmh5x3uxk@yadavpratyush.com>
+References: <fe2f24e8-52f2-81fe-0ebd-ecd90b1acfb4@haller-berlin.de>
+ <20201103161631.89971-1-stefan@haller-berlin.de>
+ <20201103161631.89971-2-stefan@haller-berlin.de>
+ <14be00ae-c2b6-87eb-2f4b-964a6df7b230@haller-berlin.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 638712F4-28A3-11EB-9E4C-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <14be00ae-c2b6-87eb-2f4b-964a6df7b230@haller-berlin.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi Stefan,
 
->> I especially do not think we want to read from unbounded number of
->> GIT_CONFIG_KEY_<N> variables like this patch does.  How would a
->> script cleanse its environment to protect itself from stray such
->> environment variable pair?  Count up from 1 to forever?  Run "env"
->> and grep for "GIT_CONFIG_KEY_[0-9]*=" (the answer is No.  What if
->> some environment variables have newline in its values?)
->
-> You only have to unset `GIT_CONFIG_KEY_1` as the parser will stop
-> iterating on the first missing key. More generally, if you set `n` keys,
-> it's sufficient to unset key `n+1`.
+On 14/11/20 08:14PM, Stefan Haller wrote:
+> On 03.11.20 17:16, Stefan Haller wrote:
+> > Do an automatic rescan whenever the git-gui window receives focus. Most other
+> > GUI tools do this, and it's very convenient; no more pressing F5 manually.
+> > 
+> > People who don't like this behavior can turn it off in the Options dialog.
+> 
+> Ping - any thoughts? I have been running with this patch for a few weeks
+> now, and I already don't want to miss it any more.
 
-Yes, but those who want to set N keys would likely to be content
-with setting 1..N and happily forget unsetting N+1, and that is
-where "how would one cleanse the environment to give a clean slate?"
-comes from.
+I have been staring at your patch for the last few days with indecision. 
+I have finally made up my mind. I do not think it is a good idea to hurt 
+the experience of a significant population of our users without at least 
+telling them how they can fix it.
+
+The config option is not very visible at all. Experience has told me 
+that people don't often go looking around in the options menu to find a 
+fix for their problem. So we need to do a better job of educating them 
+why they might be experiencing slowdowns and how they can avoid them.
+
+Let's take inspiration from git status. When the local branch diverges 
+from the upstream branch, git status shows you how many commits your 
+branch is ahead and how many commits behind upstream. This can be an 
+expensive operation if the divergence point is far behind. In those 
+cases, git status prints something like:
+
+  It took 30.00 seconds to calculate the branch ahead/behind values.
+  You can use '--no-ahead-behind' to avoid this.
+
+This made me aware this option existed and that I can use it to avoid 
+slowdowns.
+
+We should do something similar for the auto rescan. Measure how long it 
+takes to finish the rescan and if it takes longer than X seconds then 
+tell the user that they can use this option to disable this. If they 
+don't mind the delay they can keep on using it.
+
+I am working on a patch to add this. Will send it in a day or two.
+ 
+> Cc:-ing a few people who were involved in the discussion on Pratyush's
+> similar patch last summer. [0]
+> 
+> 
+> [0] <https://lore.kernel.org/git/20190728151726.9188-1-
+>      me@yadavpratyush.com/>
+> 
+> 
+> > 
+> > Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
+> > ---
+> >  git-gui.sh     | 5 +++++
+> >  lib/option.tcl | 1 +
+> >  2 files changed, 6 insertions(+)
+> > 
+> > diff --git a/git-gui.sh b/git-gui.sh
+> > index 867b8ce..14735a3 100755
+> > --- a/git-gui.sh
+> > +++ b/git-gui.sh
+> > @@ -906,6 +906,7 @@ set font_descs {
+> >  }
+> >  set default_config(gui.stageuntracked) ask
+> >  set default_config(gui.displayuntracked) true
+> > +set default_config(gui.autorescan) true
+> > 
+> >  ######################################################################
+> >  ##
+> > @@ -4007,6 +4008,10 @@ bind .   <Alt-Key-2> {focus_widget $::ui_index}
+> >  bind .   <Alt-Key-3> {focus $::ui_diff}
+> >  bind .   <Alt-Key-4> {focus $::ui_comm}
+> > 
+> > +if {[is_config_true gui.autorescan]} {
+> > +	bind .   <FocusIn>  { if {"%W" eq "."} do_rescan }
+> > +}
+> > +
+> >  set file_lists_last_clicked($ui_index) {}
+> >  set file_lists_last_clicked($ui_workdir) {}
+> > 
+> > diff --git a/lib/option.tcl b/lib/option.tcl
+> > index e43971b..9e83db7 100644
+> > --- a/lib/option.tcl
+> > +++ b/lib/option.tcl
+> > @@ -145,6 +145,7 @@ proc do_options {} {
+> >  		{b merge.diffstat {mc "Show Diffstat After Merge"}}
+> >  		{t merge.tool {mc "Use Merge Tool"}}
+> > 
+> > +		{b gui.autorescan  {mc "Auto-Rescan On Activate"}}
+> >  		{b gui.trustmtime  {mc "Trust File Modification Timestamps"}}
+> >  		{b gui.pruneduringfetch {mc "Prune Tracking Branches During Fetch"}}
+> >  		{b gui.matchtrackingbranch {mc "Match Tracking Branches"}}
+> > --
+> > 2.29.2
+> > 
+
+-- 
+Regards,
+Pratyush Yadav
