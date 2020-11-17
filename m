@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9595C63697
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 21:47:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAFE2C63697
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 21:47:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D7A6241A7
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 21:47:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 55C10241A7
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 21:47:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="K2Yz+mbe"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="NAzpINx7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728431AbgKQVq7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Nov 2020 16:46:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53556 "EHLO
+        id S1728443AbgKQVrE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Nov 2020 16:47:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726544AbgKQVq7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Nov 2020 16:46:59 -0500
-Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3589C0613CF
-        for <git@vger.kernel.org>; Tue, 17 Nov 2020 13:46:57 -0800 (PST)
-Received: by mail-qt1-x842.google.com with SMTP id v11so17079216qtq.12
-        for <git@vger.kernel.org>; Tue, 17 Nov 2020 13:46:57 -0800 (PST)
+        with ESMTP id S1726544AbgKQVrE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Nov 2020 16:47:04 -0500
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AF84C0613CF
+        for <git@vger.kernel.org>; Tue, 17 Nov 2020 13:47:04 -0800 (PST)
+Received: by mail-qt1-x841.google.com with SMTP id g20so5282662qtu.4
+        for <git@vger.kernel.org>; Tue, 17 Nov 2020 13:47:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=A1JWPrX0+V9iLB+u62uSdRbBNywDpECZ6X0CkSo1VC4=;
-        b=K2Yz+mbeVME6pxLdkxuQiG095D9J31aTYuEV0En+eIWNyw82TG1AfmBvcxwKSyttS9
-         lDMca+Fb3A/UI300zhtFmnqRAihccnSX2N5TXOPpOoLhVGCML69A6K7PpXOvaSgjQzgp
-         1KF7B/ACDFz/+HnL8PUAXMxwOjmVYtEoO+BV40UxlF3lo6dUmdv+9G+MIcEwyE6htlNN
-         A/J4iTQ4FVR63kaLT/fJduUijZUuC4LWTQ89/WcO2E7wiyp0jsKZRVpDYh1seaf+vzok
-         sfG6wpv0X+bKPXKOONrLOenEXUyn6o/0YGIr5aePvYfDf5+lCnmv4phJAbRNulNJLTvH
-         ZAOQ==
+        bh=17lcZ0zqXOkBUp/MGOpfciq4MhQIFv8u9HznwaBQsZI=;
+        b=NAzpINx7YyRB8FIOpCmUTiUpVLLtbNjRXMFJWkvg1NaNwuY0Ukc4d3YFz+1o8Y2gMZ
+         0rur92X+1MkCTKnrjpN+OW2kgK20WtEDAeC+sMAr1HT8H6v5jA7WlPtJy4sBXVyC6Sld
+         701JMhkxKZUZv3MgdBsGFm1k65lPDsWrzjcypj2o7M9E7PrWSskC0NvLfPiw5l6IadGV
+         Xzo59sTaISjv0h0QT2YayuiAQKRqcB/u9IbVogqM/8jRmwhBVh15/jFKqrXhNgkEVOS5
+         Yr4oGPpeLzoFt6ZVPITDvwNKbJtdr0pAbjUuei6N8OhCJyqiaIMQ7uH2xMypUoNVTRzv
+         X40A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=A1JWPrX0+V9iLB+u62uSdRbBNywDpECZ6X0CkSo1VC4=;
-        b=TuK2JkfNuF68sqRDV0Ka00QuF5M4zfg38Q7ur8B7qHXO4mXXnp9KMtehqMc4wSal1l
-         /ieJRLCLLFlLV59Wtm44B3Wwx0JrUjYsgXfWnjIkvBmQ0E68piZq+oMpbJHL9AEFyi3d
-         QYhrEFk3sXYGEIjiq0WfCS6s4rZIMtoMOtOFaOWWf8hPAHZxpnvDObGL20smNj7P4c78
-         FgYBy31bHf2GDjcAS0TmTdiTVf20+GiKKHm3Yp6OZkfD5UKh9VslClj4Xc6GMeFEEQLx
-         f4K3Tpx6gD794ZeIuSyD7ROn/GLpEjlmKl3bsb2r9AvQFASqznhuW0Y4BuiGnIdKO8+Q
-         TuUA==
-X-Gm-Message-State: AOAM531qvq/FZIlG5wDfg6qqO86FaVTKkr9NaqswlioxV6rs6+bFoebp
-        4dEPB8XbVG216IOZJADbZodyIXjiWvYzu3ME
-X-Google-Smtp-Source: ABdhPJzCx6hOFpzsp9VSfkg3XzchswRfNaPW/5DrQCx51d8ay1SyLI2dFs/7yiD7Bi6+zj0c6dUJjA==
-X-Received: by 2002:ac8:5649:: with SMTP id 9mr1729711qtt.379.1605649616887;
-        Tue, 17 Nov 2020 13:46:56 -0800 (PST)
+        bh=17lcZ0zqXOkBUp/MGOpfciq4MhQIFv8u9HznwaBQsZI=;
+        b=ekHTFL6n1yX7CpA2Xm+pVa/FghpseDu37ZfKvsB9wPwduSQKHnnIdpRTzqMiIM3DlY
+         Tt65NGiQsjqrJCWCn0TljFGaIRIW5JCwfaYtMSB//XOeARxVse17NTbWn1a0sYf7JDPf
+         1e5MF972NusR1Fo+g6syksQF2r66+tF2Tq6HMcg5JFmAGAmte0b7/bf40O2r2zSaeLyk
+         SQc/bOxKTw4Etrmtj4d+r/Pgf7pHbxvScEB0J1yC4jDe5dcnHEJR22LIe/OqPy7QMoVz
+         Jwy7iTiE9pip7/FT/q5Qa5VefvY/lys/dJy1+lN3kJDY+VSNyAJKorymn3LVwGFrExrf
+         3QEw==
+X-Gm-Message-State: AOAM530gQaHa3AX0f8ujA+D6X23vmJgvnTR0TVD8pLEY7161p1AHXs93
+        I3c00T8DahpDKlFjoJMvRKQWAeuUKIeocUYO
+X-Google-Smtp-Source: ABdhPJwblMlIuv1dZ61PMhmSP7N5/ELv0FIKwUH6K+H5Qtx3sWtSP/mh9XCvPN1ncJgzzLqhErPqDw==
+X-Received: by 2002:ac8:71d9:: with SMTP id i25mr1798728qtp.218.1605649623040;
+        Tue, 17 Nov 2020 13:47:03 -0800 (PST)
 Received: from localhost ([2605:9480:22e:ff10:7fe5:c4d6:f587:dc1f])
-        by smtp.gmail.com with ESMTPSA id f189sm14982766qkb.84.2020.11.17.13.46.56
+        by smtp.gmail.com with ESMTPSA id y23sm6431121qkb.26.2020.11.17.13.47.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2020 13:46:56 -0800 (PST)
-Date:   Tue, 17 Nov 2020 16:46:54 -0500
+        Tue, 17 Nov 2020 13:47:02 -0800 (PST)
+Date:   Tue, 17 Nov 2020 16:47:00 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, gitster@pobox.com, peff@peff.net,
         martin.agren@gmail.com, szeder.dev@gmail.com
-Subject: [PATCH v2 06/24] ewah: factor out bitmap growth
-Message-ID: <9bb1ea3b19c86507b7485ae872a8ef350cd0aedc.1605649533.git.me@ttaylorr.com>
+Subject: [PATCH v2 07/24] ewah: make bitmap growth less aggressive
+Message-ID: <f8426c7e8b2523711f8d6f917dff4d89881f4340.1605649533.git.me@ttaylorr.com>
 References: <cover.1605123652.git.me@ttaylorr.com>
  <cover.1605649533.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -76,53 +76,52 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-We auto-grow bitmaps when somebody asks to set a bit whose position is
-outside of our currently allocated range. Other operations besides
-single bit-setting might need to do this, too, so let's pull it into its
-own function.
+If you ask to set a bit in the Nth word and we haven't yet allocated
+that many slots in our array, we'll increase the bitmap size to 2*N.
+This means we might frequently end up with bitmaps that are twice the
+necessary size (as soon as you ask for the biggest bit, we'll size up to
+twice that).
 
-Note that we change the semantics a little: you now ask for the number
-of words you'd like to have, not the id of the block you'd like to write
-to.
+But if we just allocate as many words as were asked for, we may not grow
+fast enough. The worst case there is setting bit 0, then 1, etc. Each
+time we grow we'd just extend by one more word, giving us linear
+reallocations (and quadratic memory copies).
+
+Let's combine those by allocating the maximum of:
+
+ - what the caller asked for
+
+ - a geometric increase in existing size; we'll switch to 3/2 instead of
+   2 here. That's less aggressive and may help avoid fragmenting memory
+   (N + 3N/2 > 9N/4, so old chunks can be reused as we scale up).
+
+Our worst case is still 3/2N wasted bits (you set bit N-1, then setting
+bit N causes us to grow by 3/2), but our average should be much better.
+
+This isn't usually that big a deal, but it will matter as we shift the
+reachability bitmap generation code to store more bitmaps in memory.
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- ewah/bitmap.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ ewah/bitmap.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/ewah/bitmap.c b/ewah/bitmap.c
-index d8cec585af..7c1ecfa6fd 100644
+index 7c1ecfa6fd..43a59d7fed 100644
 --- a/ewah/bitmap.c
 +++ b/ewah/bitmap.c
-@@ -35,18 +35,22 @@ struct bitmap *bitmap_new(void)
- 	return bitmap_word_alloc(32);
- }
- 
--void bitmap_set(struct bitmap *self, size_t pos)
-+static void bitmap_grow(struct bitmap *self, size_t word_alloc)
+@@ -39,7 +39,9 @@ static void bitmap_grow(struct bitmap *self, size_t word_alloc)
  {
--	size_t block = EWAH_BLOCK(pos);
--
--	if (block >= self->word_alloc) {
-+	if (word_alloc > self->word_alloc) {
+ 	if (word_alloc > self->word_alloc) {
  		size_t old_size = self->word_alloc;
--		self->word_alloc = block ? block * 2 : 1;
-+		self->word_alloc = word_alloc * 2;
+-		self->word_alloc = word_alloc * 2;
++		self->word_alloc = old_size * 3 / 2;
++		if (word_alloc > self->word_alloc)
++			self->word_alloc = word_alloc;
  		REALLOC_ARRAY(self->words, self->word_alloc);
  		memset(self->words + old_size, 0x0,
  			(self->word_alloc - old_size) * sizeof(eword_t));
- 	}
-+}
- 
-+void bitmap_set(struct bitmap *self, size_t pos)
-+{
-+	size_t block = EWAH_BLOCK(pos);
-+
-+	bitmap_grow(self, block + 1);
- 	self->words[block] |= EWAH_MASK(pos);
- }
- 
 -- 
 2.29.2.312.gabc4d358d8
 
