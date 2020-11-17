@@ -2,111 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8AF3C2D0E4
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 22:48:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3374BC2D0E4
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 22:54:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A00520782
-	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 22:48:30 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UqxJotAi"
+	by mail.kernel.org (Postfix) with ESMTP id DED3021D40
+	for <git@archiver.kernel.org>; Tue, 17 Nov 2020 22:54:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729102AbgKQWsJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Nov 2020 17:48:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34874 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726498AbgKQWsJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Nov 2020 17:48:09 -0500
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7419C0613CF
-        for <git@vger.kernel.org>; Tue, 17 Nov 2020 14:48:08 -0800 (PST)
-Received: by mail-wm1-x344.google.com with SMTP id 19so376544wmf.1
-        for <git@vger.kernel.org>; Tue, 17 Nov 2020 14:48:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mQm5Hj1ZRCBZl56V8Gg6ugzDkhYpFd/TnMmY0CliByE=;
-        b=UqxJotAic2svOKrTwHXDtSfCVbjJzBtvQ5f1V89BUG7GKD8MAqsMwIqRsBM7Glx4Wp
-         owmyWKeL+/iO84sVLJGPDUvjnGusq33C+bJYMG3ru0/aEM5PYRSwqy5l76mq6mZBDpRq
-         m2xr+1uJOWq4DyhwmmaL+vW+qYIe2L+n0MHcBzkcqN4Uj6OhAbTinoJdtkZKOf20h217
-         /gJIfL5aAVG8Eq8GsYcHj2X4vVoupss8mwij5lJSLewMAMWSpch8Nj36DbdBMBXJdTz0
-         8tS1JgVMRKBrD8uEc8KWoj0Gpe09ses4HFBzdwAuqKe4eJnh++X1EwN9O25mpdN0meea
-         FR1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mQm5Hj1ZRCBZl56V8Gg6ugzDkhYpFd/TnMmY0CliByE=;
-        b=bZoIhRFCEpMEFziJ/SQV8prrf8HNgDafnqon09oiTrZkpgKOH+/61amZdRKY5ekDtd
-         G3ZDXymu0VJ2C9+Wx3A3jnmt91i9GYf05Xw63vBAdhebQC3PDDpPxiPVxCTw0Luq5icU
-         KjU1FQtA8zMUpp2zCYjj5WB68pA8EMCn9lhuQUC50rV7dI0vnWxxkLpVDMr60nLaD7L1
-         w6owhe4gCsfIjzdh29npG+35xN6AXEkXelqmN2P38h3ddurf6I1Z5V77h4kz0uH4gWHR
-         thS+ZBAXIe1DXezLkUlovRnl4PcanGVvmD4j19RIlcJhkIGoj/pfmY7jbKN2IQxWNYWM
-         Dlfw==
-X-Gm-Message-State: AOAM533Yhyn43qBdgfTXsC8hOLAwXaQ/Yhp1TEw7CLWyeA4GU7nDDJDT
-        qf0WoNHFV0ehp92sBAxI+qzbDNO2i7qHGuEa0F4=
-X-Google-Smtp-Source: ABdhPJy+eYlNViyj7u6jcAiOagcBUBFh5Om41+l9p5Y0ZFGiPNxxWuTIBXTqwYmxopa/ksfO0ZVjWOieGqpuxp5Uvz4=
-X-Received: by 2002:a1c:7704:: with SMTP id t4mr1303659wmi.48.1605653287466;
- Tue, 17 Nov 2020 14:48:07 -0800 (PST)
+        id S1728346AbgKQWyD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Nov 2020 17:54:03 -0500
+Received: from cloud.peff.net ([104.130.231.41]:33072 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726498AbgKQWyC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Nov 2020 17:54:02 -0500
+Received: (qmail 19130 invoked by uid 109); 17 Nov 2020 22:54:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 17 Nov 2020 22:54:02 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5058 invoked by uid 111); 17 Nov 2020 22:54:01 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 17 Nov 2020 17:54:01 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 17 Nov 2020 17:54:01 -0500
+From:   Jeff King <peff@peff.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] list-objects-filter-options: fix function name in BUG
+Message-ID: <20201117225401.GA642410@coredump.intra.peff.net>
+References: <20201114084327.14891-1-martin.agren@gmail.com>
+ <20201117021318.GA30463@coredump.intra.peff.net>
+ <CAN0heSoGnAKjTz2tiHpe2==Y-w7M03eiEpW2hU67FRbv=G+H8w@mail.gmail.com>
 MIME-Version: 1.0
-References: <pull.762.git.1605221038.gitgitgadget@gmail.com> <87r1oraewl.fsf@x220.int.ebiederm.org>
-In-Reply-To: <87r1oraewl.fsf@x220.int.ebiederm.org>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Tue, 17 Nov 2020 16:47:56 -0600
-Message-ID: <CAMP44s2VJOd3N2zaj8YPv0iLOqTF7vWyZ=zPd9vd0+qO1DbEVA@mail.gmail.com>
-Subject: Re: [PATCH 00/28] Use main as default branch name
-To:     "Eric W. Biederman" <ebiederm@xmission.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAN0heSoGnAKjTz2tiHpe2==Y-w7M03eiEpW2hU67FRbv=G+H8w@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 17, 2020 at 3:10 PM Eric W. Biederman <ebiederm@xmission.com> wrote:
->
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > This is the big one. This changes the default of init.defaultBranch to main,
-> > reflecting what many open source projects already did (which was followed by
-> > GitHub, Azure Repos and others).
->
-> Can we please not simply replace one hard coded branch name with
-> another?
+On Tue, Nov 17, 2020 at 07:02:19PM +0100, Martin Ågren wrote:
 
-I thought precisely the same thing.
+> > But as a general rule, I don't think we even need to include function
+> > names here. The message would look like:
+> >
+> >   BUG: list-objects-filter-options.c:20: list_object_filter_choice_name: invalid argument '3'
+> >
+> > which already tells us where the code is[1]. Perhaps:
+> >
+> >   BUG("invalid filter choice enum: %d", c);
+> >
+> > would be shorter but equally informative (I don't overly care here,
+> > since the idea is that nobody sees it, but just making a point about the
+> > future).
+> 
+> Having the function name or something else making the string unique
+> across the codebase could be useful if the compiler doesn't support
+> variadic macros -- we'll fall back to using a function instead of a
+> macro, and can't use __FILE__ and __LINE__. (You obviously know all of
+> this, having written d8193743e0 ("usage.c: add BUG() function",
+> 2017-05-12).)
 
-This should be easy to do if we make "origin" be a pseudo ref that
-points to "origin/HEAD" (and we could introduce "origin/@").
+My feeling is that we shouldn't care too much about platforms without
+variadic macros. AFAIK they are an extreme minority at this point, if
+they exist at all. We are being nice by making Git compile at all on
+such platforms, but I don't want people doing normal development work
+(like writing trace or bug calls) to have to be thinking too much about
+it.
 
-That way there will never be a need to type "origin/master", or having
-it as an upstream, you can simply set "origin" as the upstream
-tracking "branch".
+I actually wonder if it is time to drop HAVE_VARIADIC_MACROS completely.
+They are in C99, and we have been introducing many other C99-isms. It
+would be a minor cleanup to a few bits of code, which perhaps isn't
+worth the risk. But I also have a vague memory of not being able to
+implement some interfaces because we couldn't count on them.
 
-> I don't look in on the git list very often so perhaps I am missing a
-> conversation where all of the details were thought through.  If so
-> please point me at that conversation.  Otherwise can we please use this
-> opportunity to come up with something that is actually better than
-> naming the default branch main, rather than just something just as
-> awkward whose only advantage is that people don't think it is
-> politically incorrect this week.
+Poking around, 3689539127 (add helpers for allocating flex-array
+structs, 2016-02-22) points out one such case. I think discussion of
+BUG_ON() got blocked by that, too. Looks like we also discussed them in
+the big "C99 weather balloon" thread:
 
-This is the thread:
+  https://lore.kernel.org/git/20170710070342.txmlwwq6gvjkwtw7@sigill.intra.peff.net/
 
-https://lore.kernel.org/git/CAOAHyQwyXC1Z3v7BZAC+Bq6JBaM7FvBenA-1fcqeDV==apdWDg@mail.gmail.com/
+Maybe it's time for something like this as a test:
 
-Unfortunately in my opinion the most important topics--like your
-suggestion--were not even mentioned. Everyone focused on the wrong
-thing (e.g. what would be a better name for "master").
-
-Cheers.
-
--- 
-Felipe Contreras
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 2fd9d5b403..fe5de2239f 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1194,14 +1194,9 @@ static inline int regexec_buf(const regex_t *preg, const char *buf, size_t size,
+ /* usage.c: only to be used for testing BUG() implementation (see test-tool) */
+ extern int BUG_exit_code;
+ 
+-#ifdef HAVE_VARIADIC_MACROS
+ __attribute__((format (printf, 3, 4))) NORETURN
+ void BUG_fl(const char *file, int line, const char *fmt, ...);
+ #define BUG(...) BUG_fl(__FILE__, __LINE__, __VA_ARGS__)
+-#else
+-__attribute__((format (printf, 1, 2))) NORETURN
+-void BUG(const char *fmt, ...);
+-#endif
+ 
+ /*
+  * Preserves errno, prints a message, but gives no warning for ENOENT.
+diff --git a/usage.c b/usage.c
+index 06665823a2..b72f48f70e 100644
+--- a/usage.c
++++ b/usage.c
+@@ -273,23 +273,13 @@ static NORETURN void BUG_vfl(const char *file, int line, const char *fmt, va_lis
+ 	abort();
+ }
+ 
+-#ifdef HAVE_VARIADIC_MACROS
+ NORETURN void BUG_fl(const char *file, int line, const char *fmt, ...)
+ {
+ 	va_list ap;
+ 	va_start(ap, fmt);
+ 	BUG_vfl(file, line, fmt, ap);
+ 	va_end(ap);
+ }
+-#else
+-NORETURN void BUG(const char *fmt, ...)
+-{
+-	va_list ap;
+-	va_start(ap, fmt);
+-	BUG_vfl(NULL, 0, fmt, ap);
+-	va_end(ap);
+-}
+-#endif
+ 
+ #ifdef SUPPRESS_ANNOTATED_LEAKS
+ void unleak_memory(const void *ptr, size_t len)
