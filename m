@@ -8,64 +8,64 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE900C8300C
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 23:45:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37A34C64EBC
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 23:45:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5D525246BB
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 23:45:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E370E246CB
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 23:45:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vauMgSEI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UR+LojFJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727590AbgKRXpX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Nov 2020 18:45:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40734 "EHLO
+        id S1727521AbgKRXpO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Nov 2020 18:45:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727505AbgKRXpN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Nov 2020 18:45:13 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A378CC0617A7
-        for <git@vger.kernel.org>; Wed, 18 Nov 2020 15:45:11 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id o15so4325928wru.6
-        for <git@vger.kernel.org>; Wed, 18 Nov 2020 15:45:11 -0800 (PST)
+        with ESMTP id S1727407AbgKRXpC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Nov 2020 18:45:02 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 447C3C0613D4
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 15:45:02 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id r17so4378693wrw.1
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 15:45:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=0LOGttpXAtJOoddKxUkAVphiF7vr+KCq+STs3+9YsRE=;
-        b=vauMgSEIrqPFHGvAwjFslPzU+DzHIiXYty4QDDkZAjbbFwEzbRO6RABvkyhbyUVrD0
-         JwB30OVP1b+dP7CJVqpILNw/j0mqUMiUwMWit7yt0RAooOHCT1OxJAlejqGMZ+dlg0K2
-         DYleu19LOwrK15ZV5WiM/1PspX641UefJ9wHfzml+sZ4AqIK4EU41rOOF9dNkVpVhjo/
-         TvjA5QZe52dwowhi6wZJfCtW6zlVuFm+lW1wwBEcTe8sUxyhDg3RXvRKAy+UcKOjoghQ
-         C6EJo4Rr1SnwziNYLBRL+7BzngFD27YKBPEYLVoOjCbFuf2lBUDNMPOJtFF/M+nfl4eK
-         UDzA==
+        bh=p9BgL/b4+AfEWTATU3qPGbxhuMDOy/7UiiQs8OGY5B8=;
+        b=UR+LojFJzMWd8tlFszzDYwRMhWzTm2D+9gP/pNSvAGKyP7T7boqVs6QQtwlgHJtZ9d
+         OJwxcZZA3EewcJNRA/KmLjSeMLDUC6/NkxXeRFYZDTYqirICmOzxB6T8zM0O1FRJHrmB
+         vnhzq8lzluWN47/2yT0io6sK+lKIP4XJ2HPSXHC7DkSmMTQ1puGjUVngKIzM3ZxzDHlD
+         U33gA6IdxyUMkF2ME74IDNYMe2gN5rvFzh9rh98W2k1Z19iPOkvMekl/6Jl0DOQN22ai
+         PcitiYhfkpBLelQlpRyi/2xCGRxnrS+wG9m6mP4ui3VoQhxnY+WLk0nV4ahM+iLqexUw
+         qV/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0LOGttpXAtJOoddKxUkAVphiF7vr+KCq+STs3+9YsRE=;
-        b=hH8PQy0O18S0nrlhsqSN6HA8LQzwihO9WTmYoqOXnLwff/5C0wEG48zVmo+6sU9IED
-         MPqueaMTOPgUmOKduexdpZBSCXRtDq0FdyFyOnVZBG8jrOVGe4s8qGGWSnm0od1K6lpu
-         ao/Ehm9fz7c0Y0czMek9bSC/7Y2PxdJqcBgIJEDLnEn1OpWHAscgqU9JTIqbmd2DDzla
-         HQ9+ld1feNPIsx6zZd97MujKEqZKxXa2sL0lY1JCUbFdmhKdLXxbDCrEmHRmkgoxck6J
-         xWRQk0wX8eY4fAXeZ+zGM7/g1BaGdwu37pvgq3gUHH3GwrQnmfI4jAQnGGBrSooORtTX
-         numA==
-X-Gm-Message-State: AOAM533ZbW99up7eTqRrqDkMmhwM2RmA4Olkv/W6NDzE4gINCTRkLVV4
-        gBUsqSarZKcn4brG+3xcxVyAi1SB0oM=
-X-Google-Smtp-Source: ABdhPJyXEAvsPadJwMBFPI4Wdq5PxfF1u+JQsTgcr/O4uZ1mYbA2mYCJmjSdBhRCfUdykZrQNPvOEg==
-X-Received: by 2002:a5d:6692:: with SMTP id l18mr6863980wru.44.1605743109382;
-        Wed, 18 Nov 2020 15:45:09 -0800 (PST)
+        bh=p9BgL/b4+AfEWTATU3qPGbxhuMDOy/7UiiQs8OGY5B8=;
+        b=sXyXaF1NUPumcp6vglMm1sViK0wu0BKk2afOzUam748cqrt1DjU+WSOkXxv8Y9NqjE
+         RmDZsJKRno2LKnOi0ADD7rtyC+IpRNnqZhV8QHI2umbzVsCyI+iZFv9IvU2ieNFmvjOq
+         LCaKXyMuGGtBt02NKp3VWqQpgPSi26tz2c0o3oNEzCcISZi7atEt0eGS0bonzQxdImDz
+         ouUdcWtibLnn/rMXs9S9mvMuNfGrkmQQRvWn3eTDr1gusogruQILbytCZ6sZUsGIzddk
+         XeGK6Vvf04kSZLjMNhvYI7nhI2gZOs5pfcle67erkwL+cgnethTsRN7U3hbEgMbkPFoc
+         8IsQ==
+X-Gm-Message-State: AOAM531pDSESXEfX6TajsGXfsHSQiNsHR8K1f2e7omN+XyxvhlGnvJFh
+        cjNsvEV8pUa/SaukCzg4m8JTKfxQ4q0=
+X-Google-Smtp-Source: ABdhPJxSivPM8YFyX9Plumqps++BcW/z+m8ViLOyehXuF/5QTPT9HDH1sSXf9DXW9O4K3fKwWgkTwA==
+X-Received: by 2002:adf:e551:: with SMTP id z17mr7375793wrm.374.1605743099355;
+        Wed, 18 Nov 2020 15:44:59 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u16sm35284561wrn.55.2020.11.18.15.45.08
+        by smtp.gmail.com with ESMTPSA id n123sm6003401wmn.38.2020.11.18.15.44.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2020 15:45:08 -0800 (PST)
-Message-Id: <3dbc83c6a16e9d579c540852a486d94fbb70cfb2.1605743088.git.gitgitgadget@gmail.com>
+        Wed, 18 Nov 2020 15:44:58 -0800 (PST)
+Message-Id: <0164eb9745d010f04cafa3564bc65f874811d190.1605743087.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.762.v3.git.1605743086.gitgitgadget@gmail.com>
 References: <pull.762.v2.git.1605629547.gitgitgadget@gmail.com>
         <pull.762.v3.git.1605743086.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 18 Nov 2020 23:44:38 +0000
-Subject: [PATCH v3 20/28] t6[4-9]*: adjust the references to the default
- branch name "main"
+Date:   Wed, 18 Nov 2020 23:44:27 +0000
+Subject: [PATCH v3 09/28] t4*: adjust the references to the default branch
+ name "main"
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,1352 +85,1762 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This trick was performed via
+Carefully excluding t4013 and t4015, which see independent development
+elsewhere at the time of writing, we use `main` as the default branch
+name in t4*. This trick was performed via
 
 	$ (cd t &&
 	   sed -i -e 's/master/main/g' -e 's/MASTER/MAIN/g' \
-		-e 's/Master/Main/g' -- t6[4-9]*.sh)
+		-e 's/Master/Main/g' -- t4*.sh t4211/*.export &&
+	   git checkout HEAD -- t4013\*)
 
 This allows us to define `GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main`
 for those tests.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t6400-merge-df.sh                       |  8 ++--
- t/t6402-merge-rename.sh                   | 48 +++++++++++------------
- t/t6404-recursive-merge.sh                |  6 +--
- t/t6405-merge-symlinks.sh                 | 16 ++++----
- t/t6406-merge-attr.sh                     | 26 ++++++------
- t/t6407-merge-binary.sh                   |  8 ++--
- t/t6409-merge-subtree.sh                  | 18 ++++-----
- t/t6411-merge-filemode.sh                 | 12 +++---
- t/t6412-merge-large-rename.sh             |  8 ++--
- t/t6413-merge-crlf.sh                     |  4 +-
- t/t6414-merge-rename-nocruft.sh           |  4 +-
- t/t6415-merge-dir-to-symlink.sh           | 24 ++++++------
- t/t6416-recursive-corner-cases.sh         | 30 +++++++-------
- t/t6417-merge-ours-theirs.sh              | 30 +++++++-------
- t/t6418-merge-text-auto.sh                | 14 +++----
- t/t6419-merge-ignorecase.sh               | 12 +++---
- t/t6422-merge-rename-corner-cases.sh      | 14 +++----
- t/t6425-merge-rename-delete.sh            |  4 +-
- t/t6427-diff3-conflict-markers.sh         | 16 ++++----
- t/t6430-merge-recursive.sh                | 20 +++++-----
- t/t6432-merge-recursive-space-options.sh  |  8 ++--
- t/t6433-merge-toplevel.sh                 | 10 ++---
- t/t6434-merge-recursive-rename-options.sh |  8 ++--
- t/t6436-merge-overwrite.sh                |  4 +-
- t/t6437-submodule-merge.sh                | 16 ++++----
- t/t6439-merge-co-error-msgs.sh            |  8 ++--
- t/t6501-freshen-objects.sh                |  4 +-
- 27 files changed, 190 insertions(+), 190 deletions(-)
+ t/t4014-format-patch.sh              | 178 +++++++++++++--------------
+ t/t4017-diff-retval.sh               |   4 +-
+ t/t4038-diff-combined.sh             |  16 +--
+ t/t4041-diff-submodule-option.sh     |   4 +-
+ t/t4048-diff-combined-binary.sh      |  12 +-
+ t/t4052-stat-output.sh               |   6 +-
+ t/t4056-diff-order.sh                |   4 +-
+ t/t4057-diff-combined-paths.sh       |  22 ++--
+ t/t4061-diff-indent.sh               |  26 ++--
+ t/t4066-diff-emit-delay.sh           |   4 +-
+ t/t4068-diff-symmetric-merge-base.sh |  50 ++++----
+ t/t4103-apply-binary.sh              |  38 +++---
+ t/t4108-apply-threeway.sh            |  16 +--
+ t/t4121-apply-diffs.sh               |   4 +-
+ t/t4122-apply-symlink-inside.sh      |   8 +-
+ t/t4150-am.sh                        |  28 ++---
+ t/t4200-rerere.sh                    |  22 ++--
+ t/t4201-shortlog.sh                  |   4 +-
+ t/t4202-log.sh                       | 108 ++++++++--------
+ t/t4203-mailmap.sh                   |   4 +-
+ t/t4204-patch-id.sh                  |  28 ++---
+ t/t4207-log-decoration-colors.sh     |   8 +-
+ t/t4208-log-magic-pathspec.sh        |   6 +-
+ t/t4211-line-log.sh                  |   2 +-
+ t/t4211/history.export               |   2 +-
+ t/t4214-log-graph-octopus.sh         |   4 +-
+ t/t4216-log-bloom.sh                 |   6 +-
+ t/t4253-am-keep-cr-dos.sh            |  22 ++--
+ t/t4257-am-interactive.sh            |   2 +-
+ 29 files changed, 319 insertions(+), 319 deletions(-)
 
-diff --git a/t/t6400-merge-df.sh b/t/t6400-merge-df.sh
-index 5fab2d2dd7..38700d29b5 100755
---- a/t/t6400-merge-df.sh
-+++ b/t/t6400-merge-df.sh
-@@ -4,7 +4,7 @@
- #
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 276aea32a6..66630c8413 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -5,7 +5,7 @@
  
- test_description='Test merge with directory/file conflicts'
+ test_description='various format-patch tests'
+ 
 -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
 +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
  . ./test-lib.sh
-@@ -27,12 +27,12 @@ test_expect_success 'prepare repository' '
- '
+@@ -35,11 +35,11 @@ test_expect_success setup '
+ 	test_tick &&
+ 	git commit -m "Side changes #3 with \\n backslash-n in it." &&
  
- test_expect_success 'Merge with d/f conflicts' '
--	test_expect_code 1 git merge -m "merge msg" master
-+	test_expect_code 1 git merge -m "merge msg" main
- '
- 
- test_expect_success 'F/D conflict' '
- 	git reset --hard &&
 -	git checkout master &&
 +	git checkout main &&
- 	rm .git/index &&
+ 	git diff-tree -p C2 >patch &&
+ 	git apply --index <patch &&
+ 	test_tick &&
+-	git commit -m "Master accepts moral equivalent of #2" &&
++	git commit -m "Main accepts moral equivalent of #2" &&
  
- 	mkdir before &&
-@@ -50,7 +50,7 @@ test_expect_success 'F/D conflict' '
- 	git add . &&
- 	git commit -m para &&
- 
--	git merge master
-+	git merge main
- '
- 
- test_expect_success 'setup modify/delete + directory/file conflict' '
-diff --git a/t/t6402-merge-rename.sh b/t/t6402-merge-rename.sh
-index 227c2feb08..425dad97d5 100755
---- a/t/t6402-merge-rename.sh
-+++ b/t/t6402-merge-rename.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
- 
- test_description='Merge-recursive merging renames'
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -57,9 +57,9 @@ test_expect_success 'setup' '
- 	git branch change &&
- 	git branch change+rename &&
- 
--	sed -e "/^g /s/.*/g : master changes a line/" <A >A+ &&
-+	sed -e "/^g /s/.*/g : main changes a line/" <A >A+ &&
- 	mv A+ A &&
--	git commit -a -m "master updates A" &&
-+	git commit -a -m "main updates A" &&
- 
- 	git checkout yellow &&
- 	rm -f M &&
-@@ -97,7 +97,7 @@ test_expect_success 'setup' '
- 	git update-index --add B &&
- 	git commit -q -a -m "changed and renamed" &&
+ 	git checkout side &&
+ 	git checkout -b patchid &&
+@@ -59,39 +59,39 @@ test_expect_success setup '
+ 	test_tick &&
+ 	git commit -m "patchid 3" &&
  
 -	git checkout master
 +	git checkout main
  '
  
- test_expect_success 'pull renaming branch into unrenaming one' \
-@@ -112,7 +112,7 @@ test_expect_success 'pull renaming branch into unrenaming one' \
- 	sed -ne "/^g/{
- 	p
- 	q
--	}" B | grep master &&
-+	}" B | grep main &&
- 	git diff --exit-code white N
+ test_expect_success 'format-patch --ignore-if-in-upstream' '
+-	git format-patch --stdout master..side >patch0 &&
++	git format-patch --stdout main..side >patch0 &&
+ 	grep "^From " patch0 >from0 &&
+ 	test_line_count = 3 from0
  '
  
-@@ -137,7 +137,7 @@ test_expect_success 'pull unrenaming branch into renaming one' \
+ test_expect_success 'format-patch --ignore-if-in-upstream' '
+ 	git format-patch --stdout \
+-		--ignore-if-in-upstream master..side >patch1 &&
++		--ignore-if-in-upstream main..side >patch1 &&
+ 	grep "^From " patch1 >from1 &&
+ 	test_line_count = 2 from1
  '
- 	git reset --hard &&
- 	git show-branch &&
--	test_expect_code 1 git pull . master &&
-+	test_expect_code 1 git pull . main &&
- 	git ls-files -u B >b.stages &&
- 	test_line_count = 3 b.stages &&
- 	git ls-files -s N >n.stages &&
-@@ -190,7 +190,7 @@ test_expect_success 'interference with untracked working tree file' '
- test_expect_success 'interference with untracked working tree file' '
- 	git reset --hard &&
- 	rm -f A M &&
--	git checkout -f master &&
-+	git checkout -f main &&
- 	git tag -f anchor &&
- 	git show-branch &&
- 	git pull . yellow &&
-@@ -201,7 +201,7 @@ test_expect_success 'interference with untracked working tree file' '
- test_expect_success 'updated working tree file should prevent the merge' '
- 	git reset --hard &&
- 	rm -f A M &&
--	git checkout -f master &&
-+	git checkout -f main &&
- 	git tag -f anchor &&
- 	git show-branch &&
- 	echo >>M one line addition &&
-@@ -214,7 +214,7 @@ test_expect_success 'updated working tree file should prevent the merge' '
- test_expect_success 'updated working tree file should prevent the merge' '
- 	git reset --hard &&
- 	rm -f A M &&
--	git checkout -f master &&
-+	git checkout -f main &&
- 	git tag -f anchor &&
- 	git show-branch &&
- 	echo >>M one line addition &&
-@@ -232,7 +232,7 @@ test_expect_success 'interference with untracked working tree file' '
- 	git tag -f anchor &&
- 	git show-branch &&
- 	echo >M this file should not matter &&
--	git pull . master &&
-+	git pull . main &&
- 	test_path_is_file M &&
- 	! {
- 		git ls-files -s |
-@@ -767,7 +767,7 @@ test_expect_success 'setup avoid unnecessary update, dir->(file,nothing)' '
- 	git rm -rf df &&
- 	git commit -mB &&
  
+ test_expect_success 'format-patch --ignore-if-in-upstream handles tags' '
+ 	git tag -a v1 -m tag side &&
+-	git tag -a v2 -m tag master &&
++	git tag -a v2 -m tag main &&
+ 	git format-patch --stdout --ignore-if-in-upstream v2..v1 >patch1 &&
+ 	grep "^From " patch1 >from1 &&
+ 	test_line_count = 2 from1
+ '
+ 
+ test_expect_success "format-patch doesn't consider merge commits" '
+-	git checkout -b feature master &&
++	git checkout -b feature main &&
+ 	echo "Another line" >>file &&
+ 	test_tick &&
+ 	git commit -am "Feature branch change #1" &&
+ 	echo "Yet another line" >>file &&
+ 	test_tick &&
+ 	git commit -am "Feature branch change #2" &&
+-	git checkout -b merger master &&
++	git checkout -b merger main &&
+ 	test_tick &&
+ 	git merge --no-ff feature &&
+ 	git format-patch -3 --stdout >patch &&
+@@ -100,16 +100,16 @@ test_expect_success "format-patch doesn't consider merge commits" '
+ '
+ 
+ test_expect_success 'format-patch result applies' '
+-	git checkout -b rebuild-0 master &&
++	git checkout -b rebuild-0 main &&
+ 	git am -3 patch0 &&
+-	git rev-list master.. >list &&
++	git rev-list main.. >list &&
+ 	test_line_count = 2 list
+ '
+ 
+ test_expect_success 'format-patch --ignore-if-in-upstream result applies' '
+-	git checkout -b rebuild-1 master &&
++	git checkout -b rebuild-1 main &&
+ 	git am -3 patch1 &&
+-	git rev-list master.. >list &&
++	git rev-list main.. >list &&
+ 	test_line_count = 2 list
+ '
+ 
+@@ -133,7 +133,7 @@ test_expect_success 'extra headers' '
+ " &&
+ 	git config --add format.headers "Cc: S E Cipient <scipient@example.com>
+ " &&
+-	git format-patch --stdout master..side >patch2 &&
++	git format-patch --stdout main..side >patch2 &&
+ 	sed -e "/^\$/q" patch2 >hdrs2 &&
+ 	grep "^To: R E Cipient <rcipient@example.com>\$" hdrs2 &&
+ 	grep "^Cc: S E Cipient <scipient@example.com>\$" hdrs2
+@@ -142,7 +142,7 @@ test_expect_success 'extra headers' '
+ test_expect_success 'extra headers without newlines' '
+ 	git config --replace-all format.headers "To: R E Cipient <rcipient@example.com>" &&
+ 	git config --add format.headers "Cc: S E Cipient <scipient@example.com>" &&
+-	git format-patch --stdout master..side >patch3 &&
++	git format-patch --stdout main..side >patch3 &&
+ 	sed -e "/^\$/q" patch3 >hdrs3 &&
+ 	grep "^To: R E Cipient <rcipient@example.com>\$" hdrs3 &&
+ 	grep "^Cc: S E Cipient <scipient@example.com>\$" hdrs3
+@@ -151,7 +151,7 @@ test_expect_success 'extra headers without newlines' '
+ test_expect_success 'extra headers with multiple To:s' '
+ 	git config --replace-all format.headers "To: R E Cipient <rcipient@example.com>" &&
+ 	git config --add format.headers "To: S E Cipient <scipient@example.com>" &&
+-	git format-patch --stdout master..side >patch4 &&
++	git format-patch --stdout main..side >patch4 &&
+ 	sed -e "/^\$/q" patch4 >hdrs4 &&
+ 	grep "^To: R E Cipient <rcipient@example.com>,\$" hdrs4 &&
+ 	grep "^ *S E Cipient <scipient@example.com>\$" hdrs4
+@@ -159,7 +159,7 @@ test_expect_success 'extra headers with multiple To:s' '
+ 
+ test_expect_success 'additional command line cc (ascii)' '
+ 	git config --replace-all format.headers "Cc: R E Cipient <rcipient@example.com>" &&
+-	git format-patch --cc="S E Cipient <scipient@example.com>" --stdout master..side >patch5 &&
++	git format-patch --cc="S E Cipient <scipient@example.com>" --stdout main..side >patch5 &&
+ 	sed -e "/^\$/q" patch5 >hdrs5 &&
+ 	grep "^Cc: R E Cipient <rcipient@example.com>,\$" hdrs5 &&
+ 	grep "^ *S E Cipient <scipient@example.com>\$" hdrs5
+@@ -167,7 +167,7 @@ test_expect_success 'additional command line cc (ascii)' '
+ 
+ test_expect_failure 'additional command line cc (rfc822)' '
+ 	git config --replace-all format.headers "Cc: R E Cipient <rcipient@example.com>" &&
+-	git format-patch --cc="S. E. Cipient <scipient@example.com>" --stdout master..side >patch5 &&
++	git format-patch --cc="S. E. Cipient <scipient@example.com>" --stdout main..side >patch5 &&
+ 	sed -e "/^\$/q" patch5 >hdrs5 &&
+ 	grep "^Cc: R E Cipient <rcipient@example.com>,\$" hdrs5 &&
+ 	grep "^ *\"S. E. Cipient\" <scipient@example.com>\$" hdrs5
+@@ -175,14 +175,14 @@ test_expect_failure 'additional command line cc (rfc822)' '
+ 
+ test_expect_success 'command line headers' '
+ 	git config --unset-all format.headers &&
+-	git format-patch --add-header="Cc: R E Cipient <rcipient@example.com>" --stdout master..side >patch6 &&
++	git format-patch --add-header="Cc: R E Cipient <rcipient@example.com>" --stdout main..side >patch6 &&
+ 	sed -e "/^\$/q" patch6 >hdrs6 &&
+ 	grep "^Cc: R E Cipient <rcipient@example.com>\$" hdrs6
+ '
+ 
+ test_expect_success 'configuration headers and command line headers' '
+ 	git config --replace-all format.headers "Cc: R E Cipient <rcipient@example.com>" &&
+-	git format-patch --add-header="Cc: S E Cipient <scipient@example.com>" --stdout master..side >patch7 &&
++	git format-patch --add-header="Cc: S E Cipient <scipient@example.com>" --stdout main..side >patch7 &&
+ 	sed -e "/^\$/q" patch7 >hdrs7 &&
+ 	grep "^Cc: R E Cipient <rcipient@example.com>,\$" hdrs7 &&
+ 	grep "^ *S E Cipient <scipient@example.com>\$" hdrs7
+@@ -190,40 +190,40 @@ test_expect_success 'configuration headers and command line headers' '
+ 
+ test_expect_success 'command line To: header (ascii)' '
+ 	git config --unset-all format.headers &&
+-	git format-patch --to="R E Cipient <rcipient@example.com>" --stdout master..side >patch8 &&
++	git format-patch --to="R E Cipient <rcipient@example.com>" --stdout main..side >patch8 &&
+ 	sed -e "/^\$/q" patch8 >hdrs8 &&
+ 	grep "^To: R E Cipient <rcipient@example.com>\$" hdrs8
+ '
+ 
+ test_expect_failure 'command line To: header (rfc822)' '
+-	git format-patch --to="R. E. Cipient <rcipient@example.com>" --stdout master..side >patch8 &&
++	git format-patch --to="R. E. Cipient <rcipient@example.com>" --stdout main..side >patch8 &&
+ 	sed -e "/^\$/q" patch8 >hdrs8 &&
+ 	grep "^To: \"R. E. Cipient\" <rcipient@example.com>\$" hdrs8
+ '
+ 
+ test_expect_failure 'command line To: header (rfc2047)' '
+-	git format-patch --to="R Ä Cipient <rcipient@example.com>" --stdout master..side >patch8 &&
++	git format-patch --to="R Ä Cipient <rcipient@example.com>" --stdout main..side >patch8 &&
+ 	sed -e "/^\$/q" patch8 >hdrs8 &&
+ 	grep "^To: =?UTF-8?q?R=20=C3=84=20Cipient?= <rcipient@example.com>\$" hdrs8
+ '
+ 
+ test_expect_success 'configuration To: header (ascii)' '
+ 	git config format.to "R E Cipient <rcipient@example.com>" &&
+-	git format-patch --stdout master..side >patch9 &&
++	git format-patch --stdout main..side >patch9 &&
+ 	sed -e "/^\$/q" patch9 >hdrs9 &&
+ 	grep "^To: R E Cipient <rcipient@example.com>\$" hdrs9
+ '
+ 
+ test_expect_failure 'configuration To: header (rfc822)' '
+ 	git config format.to "R. E. Cipient <rcipient@example.com>" &&
+-	git format-patch --stdout master..side >patch9 &&
++	git format-patch --stdout main..side >patch9 &&
+ 	sed -e "/^\$/q" patch9 >hdrs9 &&
+ 	grep "^To: \"R. E. Cipient\" <rcipient@example.com>\$" hdrs9
+ '
+ 
+ test_expect_failure 'configuration To: header (rfc2047)' '
+ 	git config format.to "R Ä Cipient <rcipient@example.com>" &&
+-	git format-patch --stdout master..side >patch9 &&
++	git format-patch --stdout main..side >patch9 &&
+ 	sed -e "/^\$/q" patch9 >hdrs9 &&
+ 	grep "^To: =?UTF-8?q?R=20=C3=84=20Cipient?= <rcipient@example.com>\$" hdrs9
+ '
+@@ -237,35 +237,35 @@ check_patch () {
+ }
+ 
+ test_expect_success 'format.from=false' '
+-	git -c format.from=false format-patch --stdout master..side >patch &&
++	git -c format.from=false format-patch --stdout main..side >patch &&
+ 	sed -e "/^\$/q" patch >hdrs &&
+ 	check_patch patch &&
+ 	! grep "^From: C O Mitter <committer@example.com>\$" hdrs
+ '
+ 
+ test_expect_success 'format.from=true' '
+-	git -c format.from=true format-patch --stdout master..side >patch &&
++	git -c format.from=true format-patch --stdout main..side >patch &&
+ 	sed -e "/^\$/q" patch >hdrs &&
+ 	check_patch hdrs &&
+ 	grep "^From: C O Mitter <committer@example.com>\$" hdrs
+ '
+ 
+ test_expect_success 'format.from with address' '
+-	git -c format.from="F R Om <from@example.com>" format-patch --stdout master..side >patch &&
++	git -c format.from="F R Om <from@example.com>" format-patch --stdout main..side >patch &&
+ 	sed -e "/^\$/q" patch >hdrs &&
+ 	check_patch hdrs &&
+ 	grep "^From: F R Om <from@example.com>\$" hdrs
+ '
+ 
+ test_expect_success '--no-from overrides format.from' '
+-	git -c format.from="F R Om <from@example.com>" format-patch --no-from --stdout master..side >patch &&
++	git -c format.from="F R Om <from@example.com>" format-patch --no-from --stdout main..side >patch &&
+ 	sed -e "/^\$/q" patch >hdrs &&
+ 	check_patch hdrs &&
+ 	! grep "^From: F R Om <from@example.com>\$" hdrs
+ '
+ 
+ test_expect_success '--from overrides format.from' '
+-	git -c format.from="F R Om <from@example.com>" format-patch --from --stdout master..side >patch &&
++	git -c format.from="F R Om <from@example.com>" format-patch --from --stdout main..side >patch &&
+ 	sed -e "/^\$/q" patch >hdrs &&
+ 	check_patch hdrs &&
+ 	! grep "^From: F R Om <from@example.com>\$" hdrs
+@@ -274,7 +274,7 @@ test_expect_success '--from overrides format.from' '
+ test_expect_success '--no-to overrides config.to' '
+ 	git config --replace-all format.to \
+ 		"R E Cipient <rcipient@example.com>" &&
+-	git format-patch --no-to --stdout master..side >patch10 &&
++	git format-patch --no-to --stdout main..side >patch10 &&
+ 	sed -e "/^\$/q" patch10 >hdrs10 &&
+ 	check_patch hdrs10 &&
+ 	! grep "^To: R E Cipient <rcipient@example.com>\$" hdrs10
+@@ -284,7 +284,7 @@ test_expect_success '--no-to and --to replaces config.to' '
+ 	git config --replace-all format.to \
+ 		"Someone <someone@out.there>" &&
+ 	git format-patch --no-to --to="Someone Else <else@out.there>" \
+-		--stdout master..side >patch11 &&
++		--stdout main..side >patch11 &&
+ 	sed -e "/^\$/q" patch11 >hdrs11 &&
+ 	check_patch hdrs11 &&
+ 	! grep "^To: Someone <someone@out.there>\$" hdrs11 &&
+@@ -294,7 +294,7 @@ test_expect_success '--no-to and --to replaces config.to' '
+ test_expect_success '--no-cc overrides config.cc' '
+ 	git config --replace-all format.cc \
+ 		"C E Cipient <rcipient@example.com>" &&
+-	git format-patch --no-cc --stdout master..side >patch12 &&
++	git format-patch --no-cc --stdout main..side >patch12 &&
+ 	sed -e "/^\$/q" patch12 >hdrs12 &&
+ 	check_patch hdrs12 &&
+ 	! grep "^Cc: C E Cipient <rcipient@example.com>\$" hdrs12
+@@ -303,7 +303,7 @@ test_expect_success '--no-cc overrides config.cc' '
+ test_expect_success '--no-add-header overrides config.headers' '
+ 	git config --replace-all format.headers \
+ 		"Header1: B E Cipient <rcipient@example.com>" &&
+-	git format-patch --no-add-header --stdout master..side >patch13 &&
++	git format-patch --no-add-header --stdout main..side >patch13 &&
+ 	sed -e "/^\$/q" patch13 >hdrs13 &&
+ 	check_patch hdrs13 &&
+ 	! grep "^Header1: B E Cipient <rcipient@example.com>\$" hdrs13
+@@ -312,7 +312,7 @@ test_expect_success '--no-add-header overrides config.headers' '
+ test_expect_success 'multiple files' '
+ 	rm -rf patches/ &&
+ 	git checkout side &&
+-	git format-patch -o patches/ master &&
++	git format-patch -o patches/ main &&
+ 	ls patches/0001-Side-changes-1.patch patches/0002-Side-changes-2.patch patches/0003-Side-changes-3-with-n-backslash-n-in-it.patch
+ '
+ 
+@@ -372,7 +372,7 @@ test_expect_success 'filename limit applies only to basename' '
+ 
+ test_expect_success 'reroll count' '
+ 	rm -fr patches &&
+-	git format-patch -o patches --cover-letter --reroll-count 4 master..side >list &&
++	git format-patch -o patches --cover-letter --reroll-count 4 main..side >list &&
+ 	! grep -v "^patches/v4-000[0-3]-" list &&
+ 	sed -n -e "/^Subject: /p" $(cat list) >subjects &&
+ 	! grep -v "^Subject: \[PATCH v4 [0-3]/3\] " subjects
+@@ -380,7 +380,7 @@ test_expect_success 'reroll count' '
+ 
+ test_expect_success 'reroll count (-v)' '
+ 	rm -fr patches &&
+-	git format-patch -o patches --cover-letter -v4 master..side >list &&
++	git format-patch -o patches --cover-letter -v4 main..side >list &&
+ 	! grep -v "^patches/v4-000[0-3]-" list &&
+ 	sed -n -e "/^Subject: /p" $(cat list) >subjects &&
+ 	! grep -v "^Subject: \[PATCH v4 [0-3]/3\] " subjects
+@@ -416,7 +416,7 @@ EOF
+ 
+ test_expect_success 'no threading' '
+ 	git checkout side &&
+-	check_threading expect.no-threading master
++	check_threading expect.no-threading main
+ '
+ 
+ cat >expect.thread <<EOF
+@@ -433,7 +433,7 @@ References: <0>
+ EOF
+ 
+ test_expect_success 'thread' '
+-	check_threading expect.thread --thread master
++	check_threading expect.thread --thread main
+ '
+ 
+ cat >expect.in-reply-to <<EOF
+@@ -453,7 +453,7 @@ EOF
+ 
+ test_expect_success 'thread in-reply-to' '
+ 	check_threading expect.in-reply-to --in-reply-to="<test.message>" \
+-		--thread master
++		--thread main
+ '
+ 
+ cat >expect.cover-letter <<EOF
+@@ -474,7 +474,7 @@ References: <0>
+ EOF
+ 
+ test_expect_success 'thread cover-letter' '
+-	check_threading expect.cover-letter --cover-letter --thread master
++	check_threading expect.cover-letter --cover-letter --thread main
+ '
+ 
+ cat >expect.cl-irt <<EOF
+@@ -501,12 +501,12 @@ EOF
+ 
+ test_expect_success 'thread cover-letter in-reply-to' '
+ 	check_threading expect.cl-irt --cover-letter \
+-		--in-reply-to="<test.message>" --thread master
++		--in-reply-to="<test.message>" --thread main
+ '
+ 
+ test_expect_success 'thread explicit shallow' '
+ 	check_threading expect.cl-irt --cover-letter \
+-		--in-reply-to="<test.message>" --thread=shallow master
++		--in-reply-to="<test.message>" --thread=shallow main
+ '
+ 
+ cat >expect.deep <<EOF
+@@ -524,7 +524,7 @@ References: <0>
+ EOF
+ 
+ test_expect_success 'thread deep' '
+-	check_threading expect.deep --thread=deep master
++	check_threading expect.deep --thread=deep main
+ '
+ 
+ cat >expect.deep-irt <<EOF
+@@ -547,7 +547,7 @@ EOF
+ 
+ test_expect_success 'thread deep in-reply-to' '
+ 	check_threading expect.deep-irt  --thread=deep \
+-		--in-reply-to="<test.message>" master
++		--in-reply-to="<test.message>" main
+ '
+ 
+ cat >expect.deep-cl <<EOF
+@@ -571,7 +571,7 @@ References: <0>
+ EOF
+ 
+ test_expect_success 'thread deep cover-letter' '
+-	check_threading expect.deep-cl --cover-letter --thread=deep master
++	check_threading expect.deep-cl --cover-letter --thread=deep main
+ '
+ 
+ cat >expect.deep-cl-irt <<EOF
+@@ -601,27 +601,27 @@ EOF
+ 
+ test_expect_success 'thread deep cover-letter in-reply-to' '
+ 	check_threading expect.deep-cl-irt --cover-letter \
+-		--in-reply-to="<test.message>" --thread=deep master
++		--in-reply-to="<test.message>" --thread=deep main
+ '
+ 
+ test_expect_success 'thread via config' '
+ 	test_config format.thread true &&
+-	check_threading expect.thread master
++	check_threading expect.thread main
+ '
+ 
+ test_expect_success 'thread deep via config' '
+ 	test_config format.thread deep &&
+-	check_threading expect.deep master
++	check_threading expect.deep main
+ '
+ 
+ test_expect_success 'thread config + override' '
+ 	test_config format.thread deep &&
+-	check_threading expect.thread --thread master
++	check_threading expect.thread --thread main
+ '
+ 
+ test_expect_success 'thread config + --no-thread' '
+ 	test_config format.thread deep &&
+-	check_threading expect.no-threading --no-thread master
++	check_threading expect.no-threading --no-thread main
+ '
+ 
+ test_expect_success 'excessive subject' '
+@@ -634,7 +634,7 @@ test_expect_success 'excessive subject' '
+ 	after=$(git rev-parse --short $after) &&
+ 	git update-index file &&
+ 	git commit -m "This is an excessively long subject line for a message due to the habit some projects have of not having a short, one-line subject at the start of the commit message, but rather sticking a whole paragraph right at the start as the only thing in the commit message. It had better not become the filename for the patch." &&
+-	git format-patch -o patches/ master..side &&
++	git format-patch -o patches/ main..side &&
+ 	ls patches/0004-This-is-an-excessively-long-subject-line-for-a-messa.patch
+ '
+ 
+@@ -896,13 +896,13 @@ test_expect_success 'options no longer allowed for format-patch' '
+ '
+ 
+ test_expect_success 'format-patch --numstat should produce a patch' '
+-	git format-patch --numstat --stdout master..side >output &&
++	git format-patch --numstat --stdout main..side >output &&
+ 	grep "^diff --git a/" output >diff &&
+ 	test_line_count = 5 diff
+ '
+ 
+ test_expect_success 'format-patch -- <path>' '
+-	git format-patch master..side -- file 2>error &&
++	git format-patch main..side -- file 2>error &&
+ 	! grep "Use .--" error
+ '
+ 
+@@ -1676,9 +1676,9 @@ test_expect_success 'cover letter with invalid --cover-from-description and conf
+ 	test_config branch.rebuild-1.description "config subject
+ 
+ body" &&
+-	test_must_fail git format-patch --cover-letter --cover-from-description garbage master &&
++	test_must_fail git format-patch --cover-letter --cover-from-description garbage main &&
+ 	test_config format.coverFromDescription garbage &&
+-	test_must_fail git format-patch --cover-letter master
++	test_must_fail git format-patch --cover-letter main
+ '
+ 
+ test_expect_success 'cover letter with format.coverFromDescription = default' '
+@@ -1687,7 +1687,7 @@ test_expect_success 'cover letter with format.coverFromDescription = default' '
+ body" &&
+ 	test_config format.coverFromDescription default &&
+ 	git checkout rebuild-1 &&
+-	git format-patch --stdout --cover-letter master >actual &&
++	git format-patch --stdout --cover-letter main >actual &&
+ 	grep "^Subject: \[PATCH 0/2\] \*\*\* SUBJECT HERE \*\*\*$" actual &&
+ 	! grep "^\*\*\* BLURB HERE \*\*\*$" actual &&
+ 	grep "^config subject$" actual &&
+@@ -1699,7 +1699,7 @@ test_expect_success 'cover letter with --cover-from-description default' '
+ 
+ body" &&
+ 	git checkout rebuild-1 &&
+-	git format-patch --stdout --cover-letter --cover-from-description default master >actual &&
++	git format-patch --stdout --cover-letter --cover-from-description default main >actual &&
+ 	grep "^Subject: \[PATCH 0/2\] \*\*\* SUBJECT HERE \*\*\*$" actual &&
+ 	! grep "^\*\*\* BLURB HERE \*\*\*$" actual &&
+ 	grep "^config subject$" actual &&
+@@ -1712,7 +1712,7 @@ test_expect_success 'cover letter with format.coverFromDescription = none' '
+ body" &&
+ 	test_config format.coverFromDescription none &&
+ 	git checkout rebuild-1 &&
+-	git format-patch --stdout --cover-letter master >actual &&
++	git format-patch --stdout --cover-letter main >actual &&
+ 	grep "^Subject: \[PATCH 0/2\] \*\*\* SUBJECT HERE \*\*\*$" actual &&
+ 	grep "^\*\*\* BLURB HERE \*\*\*$" actual &&
+ 	! grep "^config subject$" actual &&
+@@ -1724,7 +1724,7 @@ test_expect_success 'cover letter with --cover-from-description none' '
+ 
+ body" &&
+ 	git checkout rebuild-1 &&
+-	git format-patch --stdout --cover-letter --cover-from-description none master >actual &&
++	git format-patch --stdout --cover-letter --cover-from-description none main >actual &&
+ 	grep "^Subject: \[PATCH 0/2\] \*\*\* SUBJECT HERE \*\*\*$" actual &&
+ 	grep "^\*\*\* BLURB HERE \*\*\*$" actual &&
+ 	! grep "^config subject$" actual &&
+@@ -1737,7 +1737,7 @@ test_expect_success 'cover letter with format.coverFromDescription = message' '
+ body" &&
+ 	test_config format.coverFromDescription message &&
+ 	git checkout rebuild-1 &&
+-	git format-patch --stdout --cover-letter master >actual &&
++	git format-patch --stdout --cover-letter main >actual &&
+ 	grep "^Subject: \[PATCH 0/2\] \*\*\* SUBJECT HERE \*\*\*$" actual &&
+ 	! grep "^\*\*\* BLURB HERE \*\*\*$" actual &&
+ 	grep "^config subject$" actual &&
+@@ -1749,7 +1749,7 @@ test_expect_success 'cover letter with --cover-from-description message' '
+ 
+ body" &&
+ 	git checkout rebuild-1 &&
+-	git format-patch --stdout --cover-letter --cover-from-description message master >actual &&
++	git format-patch --stdout --cover-letter --cover-from-description message main >actual &&
+ 	grep "^Subject: \[PATCH 0/2\] \*\*\* SUBJECT HERE \*\*\*$" actual &&
+ 	! grep "^\*\*\* BLURB HERE \*\*\*$" actual &&
+ 	grep "^config subject$" actual &&
+@@ -1762,7 +1762,7 @@ test_expect_success 'cover letter with format.coverFromDescription = subject' '
+ body" &&
+ 	test_config format.coverFromDescription subject &&
+ 	git checkout rebuild-1 &&
+-	git format-patch --stdout --cover-letter master >actual &&
++	git format-patch --stdout --cover-letter main >actual &&
+ 	grep "^Subject: \[PATCH 0/2\] config subject$" actual &&
+ 	! grep "^\*\*\* BLURB HERE \*\*\*$" actual &&
+ 	! grep "^config subject$" actual &&
+@@ -1774,7 +1774,7 @@ test_expect_success 'cover letter with --cover-from-description subject' '
+ 
+ body" &&
+ 	git checkout rebuild-1 &&
+-	git format-patch --stdout --cover-letter --cover-from-description subject master >actual &&
++	git format-patch --stdout --cover-letter --cover-from-description subject main >actual &&
+ 	grep "^Subject: \[PATCH 0/2\] config subject$" actual &&
+ 	! grep "^\*\*\* BLURB HERE \*\*\*$" actual &&
+ 	! grep "^config subject$" actual &&
+@@ -1787,7 +1787,7 @@ test_expect_success 'cover letter with format.coverFromDescription = auto (short
+ body" &&
+ 	test_config format.coverFromDescription auto &&
+ 	git checkout rebuild-1 &&
+-	git format-patch --stdout --cover-letter master >actual &&
++	git format-patch --stdout --cover-letter main >actual &&
+ 	grep "^Subject: \[PATCH 0/2\] config subject$" actual &&
+ 	! grep "^\*\*\* BLURB HERE \*\*\*$" actual &&
+ 	! grep "^config subject$" actual &&
+@@ -1799,7 +1799,7 @@ test_expect_success 'cover letter with --cover-from-description auto (short subj
+ 
+ body" &&
+ 	git checkout rebuild-1 &&
+-	git format-patch --stdout --cover-letter --cover-from-description auto master >actual &&
++	git format-patch --stdout --cover-letter --cover-from-description auto main >actual &&
+ 	grep "^Subject: \[PATCH 0/2\] config subject$" actual &&
+ 	! grep "^\*\*\* BLURB HERE \*\*\*$" actual &&
+ 	! grep "^config subject$" actual &&
+@@ -1812,7 +1812,7 @@ test_expect_success 'cover letter with format.coverFromDescription = auto (long
+ body" &&
+ 	test_config format.coverFromDescription auto &&
+ 	git checkout rebuild-1 &&
+-	git format-patch --stdout --cover-letter master >actual &&
++	git format-patch --stdout --cover-letter main >actual &&
+ 	grep "^Subject: \[PATCH 0/2\] \*\*\* SUBJECT HERE \*\*\*$" actual &&
+ 	! grep "^\*\*\* BLURB HERE \*\*\*$" actual &&
+ 	grep "^this is a really long first line and it is over 100 characters long which is the threshold for long subjects$" actual &&
+@@ -1824,7 +1824,7 @@ test_expect_success 'cover letter with --cover-from-description auto (long subje
+ 
+ body" &&
+ 	git checkout rebuild-1 &&
+-	git format-patch --stdout --cover-letter --cover-from-description auto master >actual &&
++	git format-patch --stdout --cover-letter --cover-from-description auto main >actual &&
+ 	grep "^Subject: \[PATCH 0/2\] \*\*\* SUBJECT HERE \*\*\*$" actual &&
+ 	! grep "^\*\*\* BLURB HERE \*\*\*$" actual &&
+ 	grep "^this is a really long first line and it is over 100 characters long which is the threshold for long subjects$" actual &&
+@@ -1837,7 +1837,7 @@ test_expect_success 'cover letter with command-line --cover-from-description ove
+ body" &&
+ 	test_config format.coverFromDescription none &&
+ 	git checkout rebuild-1 &&
+-	git format-patch --stdout --cover-letter --cover-from-description subject master >actual &&
++	git format-patch --stdout --cover-letter --cover-from-description subject main >actual &&
+ 	grep "^Subject: \[PATCH 0/2\] config subject$" actual &&
+ 	! grep "^\*\*\* BLURB HERE \*\*\*$" actual &&
+ 	! grep "^config subject$" actual &&
+@@ -1847,7 +1847,7 @@ body" &&
+ test_expect_success 'cover letter using branch description (1)' '
+ 	git checkout rebuild-1 &&
+ 	test_config branch.rebuild-1.description hello &&
+-	git format-patch --stdout --cover-letter master >actual &&
++	git format-patch --stdout --cover-letter main >actual &&
+ 	grep hello actual
+ '
+ 
+@@ -1861,14 +1861,14 @@ test_expect_success 'cover letter using branch description (2)' '
+ test_expect_success 'cover letter using branch description (3)' '
+ 	git checkout rebuild-1 &&
+ 	test_config branch.rebuild-1.description hello &&
+-	git format-patch --stdout --cover-letter ^master rebuild-1 >actual &&
++	git format-patch --stdout --cover-letter ^main rebuild-1 >actual &&
+ 	grep hello actual
+ '
+ 
+ test_expect_success 'cover letter using branch description (4)' '
+ 	git checkout rebuild-1 &&
+ 	test_config branch.rebuild-1.description hello &&
+-	git format-patch --stdout --cover-letter master.. >actual &&
++	git format-patch --stdout --cover-letter main.. >actual &&
+ 	grep hello actual
+ '
+ 
+@@ -1935,8 +1935,8 @@ test_expect_success 'From line has expected format' '
+ 
+ test_expect_success 'format-patch -o with no leading directories' '
+ 	rm -fr patches &&
+-	git format-patch -o patches master..side &&
+-	count=$(git rev-list --count master..side) &&
++	git format-patch -o patches main..side &&
++	count=$(git rev-list --count main..side) &&
+ 	ls patches >list &&
+ 	test_line_count = $count list
+ '
+@@ -1944,16 +1944,16 @@ test_expect_success 'format-patch -o with no leading directories' '
+ test_expect_success 'format-patch -o with leading existing directories' '
+ 	rm -rf existing-dir &&
+ 	mkdir existing-dir &&
+-	git format-patch -o existing-dir/patches master..side &&
+-	count=$(git rev-list --count master..side) &&
++	git format-patch -o existing-dir/patches main..side &&
++	count=$(git rev-list --count main..side) &&
+ 	ls existing-dir/patches >list &&
+ 	test_line_count = $count list
+ '
+ 
+ test_expect_success 'format-patch -o with leading non-existing directories' '
+ 	rm -rf non-existing-dir &&
+-	git format-patch -o non-existing-dir/patches master..side &&
+-	count=$(git rev-list --count master..side) &&
++	git format-patch -o non-existing-dir/patches main..side &&
++	count=$(git rev-list --count main..side) &&
+ 	test_path_is_dir non-existing-dir &&
+ 	ls non-existing-dir/patches >list &&
+ 	test_line_count = $count list
+@@ -1962,8 +1962,8 @@ test_expect_success 'format-patch -o with leading non-existing directories' '
+ test_expect_success 'format-patch format.outputDirectory option' '
+ 	test_config format.outputDirectory patches &&
+ 	rm -fr patches &&
+-	git format-patch master..side &&
+-	count=$(git rev-list --count master..side) &&
++	git format-patch main..side &&
++	count=$(git rev-list --count main..side) &&
+ 	ls patches >list &&
+ 	test_line_count = $count list
+ '
+@@ -1971,7 +1971,7 @@ test_expect_success 'format-patch format.outputDirectory option' '
+ test_expect_success 'format-patch -o overrides format.outputDirectory' '
+ 	test_config format.outputDirectory patches &&
+ 	rm -fr patches patchset &&
+-	git format-patch master..side -o patchset &&
++	git format-patch main..side -o patchset &&
+ 	test_path_is_missing patches &&
+ 	test_path_is_dir patchset
+ '
+@@ -2068,14 +2068,14 @@ test_expect_success 'format-patch --base errors out when base commit is not ance
+ 	#	  ------------W
+ 	#
+ 	# If "format-patch Z..X" is given, P and Z can not be specified as the base commit
+-	git checkout -b topic1 master &&
++	git checkout -b topic1 main &&
+ 	git rev-parse HEAD >commit-id-base &&
+ 	test_commit P &&
+ 	git rev-parse HEAD >commit-id-P &&
+ 	test_commit Z &&
+ 	git rev-parse HEAD >commit-id-Z &&
+ 	test_commit Y &&
+-	git checkout -b topic2 master &&
++	git checkout -b topic2 main &&
+ 	test_commit W &&
+ 	git merge topic1 &&
+ 	test_commit X &&
+@@ -2088,7 +2088,7 @@ test_expect_success 'format-patch --base errors out when base commit is not ance
+ '
+ 
+ test_expect_success 'format-patch --base=auto' '
+-	git checkout -b upstream master &&
++	git checkout -b upstream main &&
+ 	git checkout -b local upstream &&
+ 	git branch --set-upstream-to=upstream &&
+ 	test_commit N1 &&
+@@ -2109,11 +2109,11 @@ test_expect_success 'format-patch errors out when history involves criss-cross'
+ 	#  \ / \
+ 	#   C---M2---E
+ 	#
 -	git checkout master &&
 +	git checkout main &&
- 	git rm -rf df &&
- 	echo bla >df &&
- 	git add -A &&
-@@ -775,7 +775,7 @@ test_expect_success 'setup avoid unnecessary update, dir->(file,nothing)' '
+ 	test_commit A &&
+-	git checkout -b xb master &&
++	git checkout -b xb main &&
+ 	test_commit B &&
+-	git checkout -b xc master &&
++	git checkout -b xc main &&
+ 	test_commit C &&
+ 	git checkout -b xbc xb -- &&
+ 	git merge xc &&
+@@ -2233,7 +2233,7 @@ test_expect_success 'format-patch --pretty=mboxrd' '
  '
  
- test_expect_success 'avoid unnecessary update, dir->(file,nothing)' '
--	git checkout -q master^0 &&
-+	git checkout -q main^0 &&
- 	test-tool chmtime --get -3600 df >expect &&
- 	git merge side &&
- 	test-tool chmtime --get df >actual &&
-@@ -797,14 +797,14 @@ test_expect_success 'setup avoid unnecessary update, modify/delete' '
- 	git rm -f file &&
- 	git commit -m "Delete file" &&
+ test_expect_success 'interdiff: setup' '
+-	git checkout -b boop master &&
++	git checkout -b boop main &&
+ 	test_commit fnorp blorp &&
+ 	test_commit fleep blorp
+ '
+diff --git a/t/t4017-diff-retval.sh b/t/t4017-diff-retval.sh
+index 0b379c307b..ed461f481e 100755
+--- a/t/t4017-diff-retval.sh
++++ b/t/t4017-diff-retval.sh
+@@ -2,7 +2,7 @@
  
+ test_description='Return value of diffs'
+ 
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+@@ -114,7 +114,7 @@ test_expect_success 'check detects leftover conflict markers' '
+ 	git checkout HEAD^ &&
+ 	echo binary >>b &&
+ 	git commit -m "side" b &&
+-	test_must_fail git merge master &&
++	test_must_fail git merge main &&
+ 	git add b &&
+ 	test_expect_code 2 git --no-pager diff --cached --check >test.out &&
+ 	test 3 = $(grep "conflict marker" test.out | wc -l) &&
+diff --git a/t/t4038-diff-combined.sh b/t/t4038-diff-combined.sh
+index e873abb1da..09ad491a59 100755
+--- a/t/t4038-diff-combined.sh
++++ b/t/t4038-diff-combined.sh
+@@ -2,7 +2,7 @@
+ 
+ test_description='combined diff'
+ 
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+@@ -118,7 +118,7 @@ test_expect_success 'check --cc --raw with forty trees' '
+ '
+ 
+ test_expect_success 'setup combined ignore spaces' '
 -	git checkout master &&
 +	git checkout main &&
- 	echo bla >file &&
- 	git add -A &&
- 	git commit -m "Modify file"
- '
- 
- test_expect_success 'avoid unnecessary update, modify/delete' '
--	git checkout -q master^0 &&
-+	git checkout -q main^0 &&
- 	test-tool chmtime --get -3600 file >expect &&
- 	test_must_fail git merge side &&
- 	test-tool chmtime --get file >actual &&
-@@ -826,13 +826,13 @@ test_expect_success 'setup avoid unnecessary update, rename/add-dest' '
- 	git add -A &&
- 	git commit -m "Add file copy" &&
- 
--	git checkout master &&
-+	git checkout main &&
- 	git mv file newfile &&
- 	git commit -m "Rename file"
- '
- 
- test_expect_success 'avoid unnecessary update, rename/add-dest' '
--	git checkout -q master^0 &&
-+	git checkout -q main^0 &&
- 	test-tool chmtime --get -3600 newfile >expect &&
- 	git merge side &&
- 	test-tool chmtime --get newfile >actual &&
-@@ -882,15 +882,15 @@ test_expect_success 'setup for use of extended merge markers' '
- 	git mv original_file renamed_file &&
- 	git commit -mB &&
- 
--	git checkout master &&
-+	git checkout main &&
- 	echo 8.5 >>original_file &&
- 	git add original_file &&
- 	git commit -mC
- '
- 
--test_expect_success 'merge master into rename has correct extended markers' '
-+test_expect_success 'merge main into rename has correct extended markers' '
- 	git checkout rename^0 &&
--	test_must_fail git merge -s recursive master^0 &&
-+	test_must_fail git merge -s recursive main^0 &&
- 
- 	cat >expected <<-\EOF &&
- 	1
-@@ -905,14 +905,14 @@ test_expect_success 'merge master into rename has correct extended markers' '
- 	9
- 	=======
- 	8.5
--	>>>>>>> master^0:original_file
-+	>>>>>>> main^0:original_file
+ 	>test &&
+ 	git add test &&
+ 	git commit -m initial &&
+@@ -146,7 +146,7 @@ test_expect_success 'setup combined ignore spaces' '
  	EOF
- 	test_cmp expected renamed_file
- '
+ 	git commit -m "test other space changes" -a &&
  
--test_expect_success 'merge rename into master has correct extended markers' '
-+test_expect_success 'merge rename into main has correct extended markers' '
- 	git reset --hard &&
--	git checkout master^0 &&
-+	git checkout main^0 &&
- 	test_must_fail git merge -s recursive rename^0 &&
+-	test_must_fail git merge master &&
++	test_must_fail git merge main &&
+ 	tr -d Q <<-\EOF >test &&
+ 	eol spaces Q
+ 	space  change
+@@ -407,7 +407,7 @@ test_expect_success 'combine diff missing delete bug' '
+ test_expect_success 'combine diff gets tree sorting right' '
+ 	# create a directory and a file that sort differently in trees
+ 	# versus byte-wise (implied "/" sorts after ".")
+-	git checkout -f master &&
++	git checkout -f main &&
+ 	mkdir foo &&
+ 	echo base >foo/one &&
+ 	echo base >foo/two &&
+@@ -417,9 +417,9 @@ test_expect_success 'combine diff gets tree sorting right' '
  
- 	cat >expected <<-\EOF &&
-@@ -948,13 +948,13 @@ test_expect_success 'setup spurious "refusing to lose untracked" message' '
- 	git mv original_file renamed_file &&
- 	git commit -mB &&
+ 	# one side modifies a file in the directory, along with the root
+ 	# file...
+-	echo master >foo/one &&
+-	echo master >foo.ext &&
+-	git commit -a -m master &&
++	echo main >foo/one &&
++	echo main >foo.ext &&
++	git commit -a -m main &&
  
+ 	# the other side modifies the other file in the directory
+ 	git checkout -b other HEAD^ &&
+@@ -429,7 +429,7 @@ test_expect_success 'combine diff gets tree sorting right' '
+ 	# And now we merge. The files in the subdirectory will resolve cleanly,
+ 	# meaning that a combined diff will not find them interesting. But it
+ 	# will find the tree itself interesting, because it had to be merged.
 -	git checkout master &&
 +	git checkout main &&
- 	git rm original_file &&
- 	git commit -mC
+ 	git merge other &&
+ 
+ 	printf "MM\tfoo\n" >expect &&
+diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
+index 8014cd684b..9b326fe935 100755
+--- a/t/t4041-diff-submodule-option.sh
++++ b/t/t4041-diff-submodule-option.sh
+@@ -9,7 +9,7 @@ test_description='Support for verbose submodule differences in git diff
+ This test tries to verify the sanity of the --submodule option of git diff.
  '
  
- test_expect_success 'no spurious "refusing to lose untracked" message' '
--	git checkout master^0 &&
-+	git checkout main^0 &&
- 	test_must_fail git merge rename^0 2>errors.txt &&
- 	! grep "refusing to lose untracked file" errors.txt
- '
-diff --git a/t/t6404-recursive-merge.sh b/t/t6404-recursive-merge.sh
-index bdf8169456..c7ab7048f5 100755
---- a/t/t6404-recursive-merge.sh
-+++ b/t/t6404-recursive-merge.sh
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+@@ -541,7 +541,7 @@ test_expect_success 'diff --submodule with objects referenced by alternates' '
+ 	(cd super &&
+ 		(cd sub &&
+ 			git fetch &&
+-			git checkout origin/master
++			git checkout origin/main
+ 		) &&
+ 		git diff --submodule > ../actual
+ 	) &&
+diff --git a/t/t4048-diff-combined-binary.sh b/t/t4048-diff-combined-binary.sh
+index e2780e697a..0260cf64f5 100755
+--- a/t/t4048-diff-combined-binary.sh
++++ b/t/t4048-diff-combined-binary.sh
 @@ -1,7 +1,7 @@
  #!/bin/sh
  
- test_description='Test merge without common ancestors'
+ test_description='combined and merge diff handle binary files and textconv'
 -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
 +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
  . ./test-lib.sh
-@@ -22,11 +22,11 @@ test_expect_success 'setup tests' '
- 	git add a1 &&
- 	GIT_AUTHOR_DATE="2006-12-12 23:00:00" git commit -m 1 a1 &&
- 
--	git checkout -b A master &&
-+	git checkout -b A main &&
- 	echo A >a1 &&
- 	GIT_AUTHOR_DATE="2006-12-12 23:00:01" git commit -m A a1 &&
- 
--	git checkout -b B master &&
-+	git checkout -b B main &&
- 	echo B >a1 &&
- 	GIT_AUTHOR_DATE="2006-12-12 23:00:02" git commit -m B a1 &&
- 
-diff --git a/t/t6405-merge-symlinks.sh b/t/t6405-merge-symlinks.sh
-index 140e9e6ce6..7435fce71e 100755
---- a/t/t6405-merge-symlinks.sh
-+++ b/t/t6405-merge-symlinks.sh
-@@ -8,7 +8,7 @@ test_description='merging symlinks on filesystem w/o symlink support.
- This tests that git merge-recursive writes merge results as plain files
- if core.symlinks is false.'
- 
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -22,7 +22,7 @@ test_expect_success 'setup' '
- 	git branch b-file &&
- 	l=$(printf file | git hash-object -t blob -w --stdin) &&
- 	echo "120000 $l	symlink" | git update-index --index-info &&
--	git commit -m master &&
-+	git commit -m main &&
- 	git checkout b-symlink &&
- 	l=$(printf file-different | git hash-object -t blob -w --stdin) &&
- 	echo "120000 $l	symlink" | git update-index --index-info &&
-@@ -33,28 +33,28 @@ test_expect_success 'setup' '
- 	git commit -m b-file
+@@ -17,7 +17,7 @@ test_expect_success 'setup binary merge conflict' '
+ 	echo threeQ3 | q_to_nul >binary &&
+ 	git commit -a -m three &&
+ 	three=$(git rev-parse --short HEAD:binary) &&
+-	test_must_fail git merge master &&
++	test_must_fail git merge main &&
+ 	echo resolvedQhooray | q_to_nul >binary &&
+ 	git commit -a -m resolved &&
+ 	res=$(git rev-parse --short HEAD:binary)
+@@ -65,14 +65,14 @@ test_expect_success 'diff --cc indicates binary-ness' '
  '
  
--test_expect_success 'merge master into b-symlink, which has a different symbolic link' '
-+test_expect_success 'merge main into b-symlink, which has a different symbolic link' '
- 	git checkout b-symlink &&
--	test_must_fail git merge master
-+	test_must_fail git merge main
- '
- 
- test_expect_success 'the merge result must be a file' '
- 	test_path_is_file symlink
- '
- 
--test_expect_success 'merge master into b-file, which has a file instead of a symbolic link' '
-+test_expect_success 'merge main into b-file, which has a file instead of a symbolic link' '
- 	git reset --hard &&
- 	git checkout b-file &&
--	test_must_fail git merge master
-+	test_must_fail git merge main
- '
- 
- test_expect_success 'the merge result must be a file' '
- 	test_path_is_file symlink
- '
- 
--test_expect_success 'merge b-file, which has a file instead of a symbolic link, into master' '
-+test_expect_success 'merge b-file, which has a file instead of a symbolic link, into main' '
- 	git reset --hard &&
+ test_expect_success 'setup non-binary with binary attribute' '
 -	git checkout master &&
 +	git checkout main &&
- 	test_must_fail git merge b-file
+ 	test_commit one text &&
+ 	test_commit two text &&
+ 	two=$(git rev-parse --short HEAD:text) &&
+ 	git checkout -b branch-text HEAD^ &&
+ 	test_commit three text &&
+ 	three=$(git rev-parse --short HEAD:text) &&
+-	test_must_fail git merge master &&
++	test_must_fail git merge main &&
+ 	test_commit resolved text &&
+ 	res=$(git rev-parse --short HEAD:text) &&
+ 	echo text -diff >.gitattributes
+@@ -209,11 +209,11 @@ index $three,$two..0000000
+  +THREE
+ ++=======
+ + TWO
+-++>>>>>>> MASTER
++++>>>>>>> MAIN
+ EOF
+ test_expect_success 'diff --cc respects textconv on worktree file' '
+ 	git reset --hard HEAD^ &&
+-	test_must_fail git merge master &&
++	test_must_fail git merge main &&
+ 	git diff >actual &&
+ 	test_cmp expect actual
  '
- 
-diff --git a/t/t6406-merge-attr.sh b/t/t6406-merge-attr.sh
-index 7fe4034d58..d5a4ac2d81 100755
---- a/t/t6406-merge-attr.sh
-+++ b/t/t6406-merge-attr.sh
+diff --git a/t/t4052-stat-output.sh b/t/t4052-stat-output.sh
+index a9aef7f986..9eba436211 100755
+--- a/t/t4052-stat-output.sh
++++ b/t/t4052-stat-output.sh
 @@ -5,7 +5,7 @@
  
- test_description='per path merge controlled by merge attribute'
+ test_description='test --stat output of various commands'
  
 -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
 +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
  . ./test-lib.sh
-@@ -22,10 +22,10 @@ test_expect_success setup '
- 	git branch side &&
- 	for f in text binary union
- 	do
--		echo Master >>$f && git add $f || return 1
-+		echo Main >>$f && git add $f || return 1
+@@ -356,7 +356,7 @@ cat >expect <<'EOF'
+ EOF
+ test_expect_success 'merge --stat respects COLUMNS (big change)' '
+ 	git checkout -b branch HEAD^^ &&
+-	COLUMNS=100 git merge --stat --no-ff master^ >output &&
++	COLUMNS=100 git merge --stat --no-ff main^ >output &&
+ 	grep " | " output >actual &&
+ 	test_cmp expect actual
+ '
+@@ -365,7 +365,7 @@ cat >expect <<'EOF'
+  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++++++++++++++++++++++++++++++
+ EOF
+ test_expect_success 'merge --stat respects COLUMNS (long filename)' '
+-	COLUMNS=100 git merge --stat --no-ff master >output &&
++	COLUMNS=100 git merge --stat --no-ff main >output &&
+ 	grep " | " output >actual &&
+ 	test_cmp expect actual
+ '
+diff --git a/t/t4056-diff-order.sh b/t/t4056-diff-order.sh
+index 723eee4e8e..63ea7144bb 100755
+--- a/t/t4056-diff-order.sh
++++ b/t/t4056-diff-order.sh
+@@ -2,7 +2,7 @@
+ 
+ test_description='diff order'
+ 
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+@@ -109,7 +109,7 @@ done
+ test_expect_success 'setup for testing combine-diff order' '
+ 	git checkout -b tmp HEAD~ &&
+ 	create_files 3 &&
+-	git checkout master &&
++	git checkout main &&
+ 	git merge --no-commit -s ours tmp &&
+ 	create_files 5
+ '
+diff --git a/t/t4057-diff-combined-paths.sh b/t/t4057-diff-combined-paths.sh
+index 71af157bf9..7e5b74f72e 100755
+--- a/t/t4057-diff-combined-paths.sh
++++ b/t/t4057-diff-combined-paths.sh
+@@ -2,7 +2,7 @@
+ 
+ test_description='combined diff show only paths that are different to all parents'
+ 
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+@@ -27,9 +27,9 @@ test_expect_success 'trivial merge - combine-diff empty' '
+ 		echo $i/2 >>$i.txt
  	done &&
- 	test_tick &&
--	git commit -m Master &&
-+	git commit -m Main &&
- 
- 	git checkout side &&
- 	for f in text binary union
-@@ -67,7 +67,7 @@ test_expect_success merge '
- 		echo "union merge=union"
- 	} >.gitattributes &&
- 
--	if git merge master
-+	if git merge main
- 	then
- 		echo Gaah, should have conflicted
- 		false
-@@ -90,7 +90,7 @@ test_expect_success 'check merge result in working tree' '
- 	grep "<<<<<<<" text &&
- 	cmp binary-orig binary &&
- 	! grep "<<<<<<<" union &&
--	grep Master union &&
-+	grep Main union &&
- 	grep Side union
+ 	git commit -a -m "side 2-9" &&
+-	git checkout master &&
++	git checkout main &&
+ 	echo 1/2 >1.txt &&
+-	git commit -a -m "master 1" &&
++	git commit -a -m "main 1" &&
+ 	git merge side &&
+ 	>diffc.expect &&
+ 	diffc_verify
+@@ -44,19 +44,19 @@ test_expect_success 'only one truly conflicting path' '
+ 	done &&
+ 	echo "4side" >>4.txt &&
+ 	git commit -a -m "side 2-9 +4" &&
+-	git checkout master &&
++	git checkout main &&
+ 	for i in $(test_seq 1 9)
+ 	do
+ 		echo $i/3 >>$i.txt
+ 	done &&
+-	echo "4master" >>4.txt &&
+-	git commit -a -m "master 1-9 +4" &&
++	echo "4main" >>4.txt &&
++	git commit -a -m "main 1-9 +4" &&
+ 	test_must_fail git merge side &&
+ 	cat <<-\EOF >4.txt &&
+ 	4
+ 	4/2
+ 	4/3
+-	4master
++	4main
+ 	4side
+ 	EOF
+ 	git add 4.txt &&
+@@ -72,12 +72,12 @@ test_expect_success 'merge introduces new file' '
+ 		echo $i/4 >>$i.txt
+ 	done &&
+ 	git commit -a -m "side 5-9" &&
+-	git checkout master &&
++	git checkout main &&
+ 	for i in $(test_seq 1 3)
+ 	do
+ 		echo $i/4 >>$i.txt
+ 	done &&
+-	git commit -a -m "master 1-3 +4hello" &&
++	git commit -a -m "main 1-3 +4hello" &&
+ 	git merge side &&
+ 	echo "Hello World" >4hello.txt &&
+ 	git add 4hello.txt &&
+@@ -93,12 +93,12 @@ test_expect_success 'merge removed a file' '
+ 		echo $i/5 >>$i.txt
+ 	done &&
+ 	git commit -a -m "side 5-9" &&
+-	git checkout master &&
++	git checkout main &&
+ 	for i in $(test_seq 1 3)
+ 	do
+ 		echo $i/4 >>$i.txt
+ 	done &&
+-	git commit -a -m "master 1-3" &&
++	git commit -a -m "main 1-3" &&
+ 	git merge side &&
+ 	git rm 4.txt &&
+ 	git commit --amend &&
+diff --git a/t/t4061-diff-indent.sh b/t/t4061-diff-indent.sh
+index cbe64d5f79..bcf7493740 100755
+--- a/t/t4061-diff-indent.sh
++++ b/t/t4061-diff-indent.sh
+@@ -3,7 +3,7 @@
+ test_description='Test diff indent heuristic.
  
  '
-@@ -118,13 +118,13 @@ test_expect_success 'custom merge backend' '
- 	git config --replace-all \
- 	merge.custom.name "custom merge driver for testing" &&
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
--	git merge master &&
-+	git merge main &&
- 
- 	cmp binary union &&
- 	sed -e 1,3d text >check-1 &&
--	o=$(git unpack-file master^:text) &&
-+	o=$(git unpack-file main^:text) &&
- 	a=$(git unpack-file side^:text) &&
--	b=$(git unpack-file master:text) &&
-+	b=$(git unpack-file main:text) &&
- 	sh -c "./custom-merge $o $a $b 0 text" &&
- 	sed -e 1,3d $a >check-2 &&
- 	cmp check-1 check-2 &&
-@@ -139,7 +139,7 @@ test_expect_success 'custom merge backend' '
- 	git config --replace-all \
- 	merge.custom.name "custom merge driver for testing" &&
- 
--	if git merge master
-+	if git merge main
- 	then
- 		echo "Eh? should have conflicted"
- 		false
-@@ -149,9 +149,9 @@ test_expect_success 'custom merge backend' '
- 
- 	cmp binary union &&
- 	sed -e 1,3d text >check-1 &&
--	o=$(git unpack-file master^:text) &&
-+	o=$(git unpack-file main^:text) &&
- 	a=$(git unpack-file anchor:text) &&
--	b=$(git unpack-file master:text) &&
-+	b=$(git unpack-file main:text) &&
- 	sh -c "./custom-merge $o $a $b 0 text" &&
- 	sed -e 1,3d $a >check-2 &&
- 	cmp check-1 check-2 &&
-@@ -179,7 +179,7 @@ test_expect_success 'up-to-date merge without common ancestor' '
- 	test_tick &&
- 	(
- 		cd repo1 &&
--		git fetch ../repo2 master &&
-+		git fetch ../repo2 main &&
- 		git merge --allow-unrelated-histories FETCH_HEAD
- 	)
+ . ./test-lib.sh
+@@ -269,7 +269,7 @@ test_expect_success 'diff-index: nice spaces with --indent-heuristic' '
+ 	git reset --soft HEAD~ &&
+ 	git diff-index --indent-heuristic -p old -- spaces.txt >out-diff-index-compacted &&
+ 	compare_diff spaces-compacted-expect out-diff-index-compacted &&
+-	git checkout -f master
++	git checkout -f main
  '
-@@ -204,7 +204,7 @@ test_expect_success 'custom merge does not lock index' '
- 	# By packaging the command in test_when_finished, we get both
- 	# the correctness check and the clean-up.
- 	test_when_finished "kill \$(cat sleep.pid)" &&
--	git merge master
-+	git merge main
+ 
+ test_expect_success 'diff-index: nice spaces with diff.indentHeuristic=true' '
+@@ -277,7 +277,7 @@ test_expect_success 'diff-index: nice spaces with diff.indentHeuristic=true' '
+ 	git reset --soft HEAD~ &&
+ 	git -c diff.indentHeuristic=true diff-index -p old -- spaces.txt >out-diff-index-compacted2 &&
+ 	compare_diff spaces-compacted-expect out-diff-index-compacted2 &&
+-	git checkout -f master
++	git checkout -f main
+ '
+ 
+ test_expect_success 'diff-index: ugly spaces with --no-indent-heuristic' '
+@@ -285,7 +285,7 @@ test_expect_success 'diff-index: ugly spaces with --no-indent-heuristic' '
+ 	git reset --soft HEAD~ &&
+ 	git diff-index --no-indent-heuristic -p old -- spaces.txt >out-diff-index &&
+ 	compare_diff spaces-expect out-diff-index &&
+-	git checkout -f master
++	git checkout -f main
+ '
+ 
+ test_expect_success 'diff-index: ugly spaces with diff.indentHeuristic=false' '
+@@ -293,7 +293,7 @@ test_expect_success 'diff-index: ugly spaces with diff.indentHeuristic=false' '
+ 	git reset --soft HEAD~ &&
+ 	git -c diff.indentHeuristic=false diff-index -p old -- spaces.txt >out-diff-index2 &&
+ 	compare_diff spaces-expect out-diff-index2 &&
+-	git checkout -f master
++	git checkout -f main
+ '
+ 
+ test_expect_success 'diff-index: --indent-heuristic overrides config' '
+@@ -301,7 +301,7 @@ test_expect_success 'diff-index: --indent-heuristic overrides config' '
+ 	git reset --soft HEAD~ &&
+ 	git -c diff.indentHeuristic=false diff-index --indent-heuristic -p old -- spaces.txt >out-diff-index-compacted3 &&
+ 	compare_diff spaces-compacted-expect out-diff-index-compacted3 &&
+-	git checkout -f master
++	git checkout -f main
+ '
+ 
+ test_expect_success 'diff-index: --no-indent-heuristic overrides config' '
+@@ -309,7 +309,7 @@ test_expect_success 'diff-index: --no-indent-heuristic overrides config' '
+ 	git reset --soft HEAD~ &&
+ 	git -c diff.indentHeuristic=true diff-index --no-indent-heuristic -p old -- spaces.txt >out-diff-index3 &&
+ 	compare_diff spaces-expect out-diff-index3 &&
+-	git checkout -f master
++	git checkout -f main
+ '
+ 
+ # --- diff-files tests ----------------------------------------------------
+@@ -320,7 +320,7 @@ test_expect_success 'diff-files: nice spaces with --indent-heuristic' '
+ 	git diff-files --indent-heuristic -p spaces.txt >out-diff-files-raw &&
+ 	grep -v index out-diff-files-raw >out-diff-files-compacted &&
+ 	compare_diff spaces-compacted-expect out-diff-files-compacted &&
+-	git checkout -f master
++	git checkout -f main
+ '
+ 
+ test_expect_success 'diff-files: nice spaces with diff.indentHeuristic=true' '
+@@ -329,7 +329,7 @@ test_expect_success 'diff-files: nice spaces with diff.indentHeuristic=true' '
+ 	git -c diff.indentHeuristic=true diff-files -p spaces.txt >out-diff-files-raw2 &&
+ 	grep -v index out-diff-files-raw2 >out-diff-files-compacted2 &&
+ 	compare_diff spaces-compacted-expect out-diff-files-compacted2 &&
+-	git checkout -f master
++	git checkout -f main
+ '
+ 
+ test_expect_success 'diff-files: ugly spaces with --no-indent-heuristic' '
+@@ -338,7 +338,7 @@ test_expect_success 'diff-files: ugly spaces with --no-indent-heuristic' '
+ 	git diff-files --no-indent-heuristic -p spaces.txt >out-diff-files-raw &&
+ 	grep -v index out-diff-files-raw >out-diff-files &&
+ 	compare_diff spaces-expect out-diff-files &&
+-	git checkout -f master
++	git checkout -f main
+ '
+ 
+ test_expect_success 'diff-files: ugly spaces with diff.indentHeuristic=false' '
+@@ -347,7 +347,7 @@ test_expect_success 'diff-files: ugly spaces with diff.indentHeuristic=false' '
+ 	git -c diff.indentHeuristic=false diff-files -p spaces.txt >out-diff-files-raw2 &&
+ 	grep -v index out-diff-files-raw2 >out-diff-files &&
+ 	compare_diff spaces-expect out-diff-files &&
+-	git checkout -f master
++	git checkout -f main
+ '
+ 
+ test_expect_success 'diff-files: --indent-heuristic overrides config' '
+@@ -356,7 +356,7 @@ test_expect_success 'diff-files: --indent-heuristic overrides config' '
+ 	git -c diff.indentHeuristic=false diff-files --indent-heuristic -p spaces.txt >out-diff-files-raw3 &&
+ 	grep -v index out-diff-files-raw3 >out-diff-files-compacted &&
+ 	compare_diff spaces-compacted-expect out-diff-files-compacted &&
+-	git checkout -f master
++	git checkout -f main
+ '
+ 
+ test_expect_success 'diff-files: --no-indent-heuristic overrides config' '
+@@ -365,7 +365,7 @@ test_expect_success 'diff-files: --no-indent-heuristic overrides config' '
+ 	git -c diff.indentHeuristic=true diff-files --no-indent-heuristic -p spaces.txt >out-diff-files-raw4 &&
+ 	grep -v index out-diff-files-raw4 >out-diff-files &&
+ 	compare_diff spaces-expect out-diff-files &&
+-	git checkout -f master
++	git checkout -f main
  '
  
  test_done
-diff --git a/t/t6407-merge-binary.sh b/t/t6407-merge-binary.sh
-index 826deacfd7..d4273f2575 100755
---- a/t/t6407-merge-binary.sh
-+++ b/t/t6407-merge-binary.sh
-@@ -2,7 +2,7 @@
- 
- test_description='ask merge-recursive to merge binary files'
- 
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -23,7 +23,7 @@ test_expect_success setup '
- 	git ls-files -s a >E0 &&
- 	git ls-files -s m | sed -e "s/ 0	/ 3	/" >E3 &&
- 	test_tick &&
--	git commit -m "master adds some" &&
-+	git commit -m "main adds some" &&
- 
- 	git checkout side &&
- 	echo rezrov >>m &&
-@@ -42,7 +42,7 @@ test_expect_success resolve '
- 	rm -f a* m* &&
- 	git reset --hard anchor &&
- 
--	if git merge -s resolve master
-+	if git merge -s resolve main
- 	then
- 		echo Oops, should not have succeeded
- 		false
-@@ -57,7 +57,7 @@ test_expect_success recursive '
- 	rm -f a* m* &&
- 	git reset --hard anchor &&
- 
--	if git merge -s recursive master
-+	if git merge -s recursive main
- 	then
- 		echo Oops, should not have succeeded
- 		false
-diff --git a/t/t6409-merge-subtree.sh b/t/t6409-merge-subtree.sh
-index e2c1cfc9fe..d406b2343c 100755
---- a/t/t6409-merge-subtree.sh
-+++ b/t/t6409-merge-subtree.sh
-@@ -2,7 +2,7 @@
- 
- test_description='subtree merge strategy'
- 
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -17,10 +17,10 @@ test_expect_success setup '
- 	echo >>hello world &&
- 	git add hello &&
- 	git commit -m second &&
--	git checkout master &&
-+	git checkout main &&
- 	for i in mundo $s; do echo $i; done >hello &&
- 	git add hello &&
--	git commit -m master
-+	git commit -m main
- 
- '
- 
-@@ -39,7 +39,7 @@ test_expect_success 'setup branch sub' '
- '
- 
- test_expect_success 'setup topic branch' '
--	git checkout -b topic master &&
-+	git checkout -b topic main &&
- 	git merge -s ours --no-commit --allow-unrelated-histories sub &&
- 	git read-tree --prefix=dir/ -u sub &&
- 	git commit -m "initial merge of sub into topic" &&
-@@ -80,8 +80,8 @@ test_expect_success 'setup' '
- 
- test_expect_success 'initial merge' '
- 	git remote add -f gui ../git-gui &&
--	git merge -s ours --no-commit --allow-unrelated-histories gui/master &&
--	git read-tree --prefix=git-gui/ -u gui/master &&
-+	git merge -s ours --no-commit --allow-unrelated-histories gui/main &&
-+	git read-tree --prefix=git-gui/ -u gui/main &&
- 	git commit -m "Merge git-gui as our subdirectory" &&
- 	git checkout -b work &&
- 	git ls-files -s >actual &&
-@@ -111,10 +111,10 @@ test_expect_success 'merge update' '
- 
- test_expect_success 'initial ambiguous subtree' '
- 	cd ../git &&
--	git reset --hard master &&
-+	git reset --hard main &&
- 	git checkout -b topic_2 &&
--	git merge -s ours --no-commit gui/master &&
--	git read-tree --prefix=git-gui2/ -u gui/master &&
-+	git merge -s ours --no-commit gui/main &&
-+	git read-tree --prefix=git-gui2/ -u gui/main &&
- 	git commit -m "Merge git-gui2 as our subdirectory" &&
- 	git checkout -b work2 &&
- 	git ls-files -s >actual &&
-diff --git a/t/t6411-merge-filemode.sh b/t/t6411-merge-filemode.sh
-index 7b66abfdbb..f54c915d6a 100755
---- a/t/t6411-merge-filemode.sh
-+++ b/t/t6411-merge-filemode.sh
+diff --git a/t/t4066-diff-emit-delay.sh b/t/t4066-diff-emit-delay.sh
+index 1983f1ebbe..a1de63b77f 100755
+--- a/t/t4066-diff-emit-delay.sh
++++ b/t/t4066-diff-emit-delay.sh
 @@ -1,7 +1,7 @@
  #!/bin/sh
  
- test_description='merge: handle file mode'
+ test_description='test combined/stat/moved interaction'
 -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
 +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
  . ./test-lib.sh
-@@ -10,11 +10,11 @@ test_expect_success 'set up mode change in one branch' '
- 	: >file1 &&
- 	git add file1 &&
- 	git commit -m initial &&
--	git checkout -b a1 master &&
-+	git checkout -b a1 main &&
- 	: >dummy &&
- 	git add dummy &&
- 	git commit -m a &&
--	git checkout -b b1 master &&
-+	git checkout -b b1 main &&
- 	test_chmod +x file1 &&
- 	git add file1 &&
- 	git commit -m b1
-@@ -42,12 +42,12 @@ do_one_mode resolve b1 a1
- 
- test_expect_success 'set up mode change in both branches' '
- 	git reset --hard HEAD &&
--	git checkout -b a2 master &&
-+	git checkout -b a2 main &&
- 	: >file2 &&
- 	H=$(git hash-object file2) &&
- 	test_chmod +x file2 &&
- 	git commit -m a2 &&
--	git checkout -b b2 master &&
-+	git checkout -b b2 main &&
- 	: >file2 &&
- 	git add file2 &&
- 	git commit -m b2 &&
-@@ -79,7 +79,7 @@ do_both_modes resolve
- 
- test_expect_success 'set up delete/modechange scenario' '
- 	git reset --hard &&
--	git checkout -b deletion master &&
-+	git checkout -b deletion main &&
- 	git rm file1 &&
- 	git commit -m deletion
- '
-diff --git a/t/t6412-merge-large-rename.sh b/t/t6412-merge-large-rename.sh
-index d6840078c4..c50d315722 100755
---- a/t/t6412-merge-large-rename.sh
-+++ b/t/t6412-merge-large-rename.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
- 
- test_description='merging with large rename matrix'
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -33,7 +33,7 @@ test_rename() {
- 	test_expect_success "rename ($1, $2)" '
- 	n='$1' &&
- 	expect='$2' &&
--	git checkout -f master &&
-+	git checkout -f main &&
- 	test_might_fail git branch -D test$n &&
- 	git reset --hard initial &&
- 	for i in $(count $n); do
-@@ -53,8 +53,8 @@ test_rename() {
- 	git add . &&
- 	git commit -m change+rename=$n &&
- 	case "$expect" in
--		ok) git merge master ;;
--		 *) test_must_fail git merge master ;;
-+		ok) git merge main ;;
-+		 *) test_must_fail git merge main ;;
- 	esac
- 	'
- }
-diff --git a/t/t6413-merge-crlf.sh b/t/t6413-merge-crlf.sh
-index 3bd8e3e899..affea255fe 100755
---- a/t/t6413-merge-crlf.sh
-+++ b/t/t6413-merge-crlf.sh
-@@ -8,7 +8,7 @@ test_description='merge conflict in crlf repo
- 
+@@ -16,7 +16,7 @@ test_expect_success 'set up history with a merge' '
+ 	test_commit B &&
+ 	git checkout -b side HEAD^ &&
+ 	test_commit C &&
+-	git merge -m M master &&
++	git merge -m M main &&
+ 	test_commit D
  '
  
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -27,7 +27,7 @@ test_expect_success setup '
- 	echo line from b | append_cr >file &&
- 	git commit -m "add line from b" file &&
- 	git tag b &&
--	git checkout master
-+	git checkout main
- '
- 
- test_expect_success 'Check "ours" is CRLF' '
-diff --git a/t/t6414-merge-rename-nocruft.sh b/t/t6414-merge-rename-nocruft.sh
-index 42824dcf49..d7e3c1fa6e 100755
---- a/t/t6414-merge-rename-nocruft.sh
-+++ b/t/t6414-merge-rename-nocruft.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
- 
- test_description='Merge-recursive merging renames'
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -68,7 +68,7 @@ test_expect_success 'setup' '
- 	git update-index A &&
- 	git commit -m "blue modify A" &&
- 
--	git checkout master
-+	git checkout main
- '
- 
- # This test broke in 65ac6e9c3f47807cb603af07a6a9e1a43bc119ae
-diff --git a/t/t6415-merge-dir-to-symlink.sh b/t/t6415-merge-dir-to-symlink.sh
-index 32c0b62496..2ce104aca7 100755
---- a/t/t6415-merge-dir-to-symlink.sh
-+++ b/t/t6415-merge-dir-to-symlink.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
- 
- test_description='merging when a directory was replaced with a symlink'
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -22,7 +22,7 @@ test_expect_success 'create a commit where dir a/b changed to symlink' '
- 
- test_expect_success 'checkout does not clobber untracked symlink' '
- 	git checkout HEAD^0 &&
--	git reset --hard master &&
-+	git reset --hard main &&
- 	git rm --cached a/b &&
- 	git commit -m "untracked symlink remains" &&
- 	test_must_fail git checkout start^0
-@@ -30,7 +30,7 @@ test_expect_success 'checkout does not clobber untracked symlink' '
- 
- test_expect_success 'a/b-2/c/d is kept when clobbering symlink b' '
- 	git checkout HEAD^0 &&
--	git reset --hard master &&
-+	git reset --hard main &&
- 	git rm --cached a/b &&
- 	git commit -m "untracked symlink remains" &&
- 	git checkout -f start^0 &&
-@@ -39,7 +39,7 @@ test_expect_success 'a/b-2/c/d is kept when clobbering symlink b' '
- 
- test_expect_success 'checkout should not have deleted a/b-2/c/d' '
- 	git checkout HEAD^0 &&
--	git reset --hard master &&
-+	git reset --hard main &&
- 	 git checkout start^0 &&
- 	 test_path_is_file a/b-2/c/d
- '
-@@ -56,7 +56,7 @@ test_expect_success 'setup for merge test' '
- test_expect_success 'Handle D/F conflict, do not lose a/b-2/c/d in merge (resolve)' '
- 	git reset --hard &&
- 	git checkout baseline^0 &&
--	git merge -s resolve master &&
-+	git merge -s resolve main &&
- 	test_path_is_file a/b-2/c/d
- '
- 
-@@ -67,7 +67,7 @@ test_expect_success SYMLINKS 'a/b was resolved as symlink' '
- test_expect_success 'Handle D/F conflict, do not lose a/b-2/c/d in merge (recursive)' '
- 	git reset --hard &&
- 	git checkout baseline^0 &&
--	git merge -s recursive master &&
-+	git merge -s recursive main &&
- 	test_path_is_file a/b-2/c/d
- '
- 
-@@ -77,7 +77,7 @@ test_expect_success SYMLINKS 'a/b was resolved as symlink' '
- 
- test_expect_success 'Handle F/D conflict, do not lose a/b-2/c/d in merge (resolve)' '
- 	git reset --hard &&
--	git checkout master^0 &&
-+	git checkout main^0 &&
- 	git merge -s resolve baseline^0 &&
- 	test_path_is_file a/b-2/c/d
- '
-@@ -88,7 +88,7 @@ test_expect_success SYMLINKS 'a/b was resolved as symlink' '
- 
- test_expect_success 'Handle F/D conflict, do not lose a/b-2/c/d in merge (recursive)' '
- 	git reset --hard &&
--	git checkout master^0 &&
-+	git checkout main^0 &&
- 	git merge -s recursive baseline^0 &&
- 	test_path_is_file a/b-2/c/d
- '
-@@ -101,7 +101,7 @@ test_expect_failure 'do not lose untracked in merge (resolve)' '
- 	git reset --hard &&
- 	git checkout baseline^0 &&
- 	>a/b/c/e &&
--	test_must_fail git merge -s resolve master &&
-+	test_must_fail git merge -s resolve main &&
- 	test_path_is_file a/b/c/e &&
- 	test_path_is_file a/b-2/c/d
- '
-@@ -110,7 +110,7 @@ test_expect_success 'do not lose untracked in merge (recursive)' '
- 	git reset --hard &&
- 	git checkout baseline^0 &&
- 	>a/b/c/e &&
--	test_must_fail git merge -s recursive master &&
-+	test_must_fail git merge -s recursive main &&
- 	test_path_is_file a/b/c/e &&
- 	test_path_is_file a/b-2/c/d
- '
-@@ -119,14 +119,14 @@ test_expect_success 'do not lose modifications in merge (resolve)' '
- 	git reset --hard &&
- 	git checkout baseline^0 &&
- 	echo more content >>a/b/c/d &&
--	test_must_fail git merge -s resolve master
-+	test_must_fail git merge -s resolve main
- '
- 
- test_expect_success 'do not lose modifications in merge (recursive)' '
- 	git reset --hard &&
- 	git checkout baseline^0 &&
- 	echo more content >>a/b/c/d &&
--	test_must_fail git merge -s recursive master
-+	test_must_fail git merge -s recursive main
- '
- 
- test_expect_success 'setup a merge where dir a/b-2 changed to symlink' '
-diff --git a/t/t6416-recursive-corner-cases.sh b/t/t6416-recursive-corner-cases.sh
-index 3d515a8e31..84f5082366 100755
---- a/t/t6416-recursive-corner-cases.sh
-+++ b/t/t6416-recursive-corner-cases.sh
-@@ -2,7 +2,7 @@
- 
- test_description='recursive merge corner cases involving criss-cross merges'
- 
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -388,7 +388,7 @@ test_expect_success 'git detects conflict merging criss-cross+modify/delete' '
- 		test_line_count = 2 out &&
- 
- 		git rev-parse >expect       \
--			master:file    B:file &&
-+			main:file    B:file &&
- 		git rev-parse   >actual      \
- 			:1:file      :2:file &&
- 		test_cmp expect actual
-@@ -410,7 +410,7 @@ test_expect_success 'git detects conflict merging criss-cross+modify/delete, rev
- 		test_line_count = 2 out &&
- 
- 		git rev-parse >expect       \
--			master:file    B:file &&
-+			main:file    B:file &&
- 		git rev-parse   >actual      \
- 			:1:file      :3:file &&
- 		test_cmp expect actual
-@@ -1556,12 +1556,12 @@ test_expect_failure 'check conflicting modes for regular file' '
- # Setup:
- #          L1---L2
- #         /  \ /  \
--#     master    X    ?
-+#     main    X    ?
- #         \  / \  /
- #          R1---R2
- #
- # Where:
--#   master has two files, named 'b' and 'a'
-+#   main has two files, named 'b' and 'a'
- #   branches L1 and R1 both modify each of the two files in conflicting ways
- #
- #   L2 is a merge of R1 into L1; more on it later.
-@@ -1666,7 +1666,7 @@ test_expect_success 'check nested conflicts' '
- 		cd nested_conflicts &&
- 
- 		git clean -f &&
--		MASTER=$(git rev-parse --short master) &&
-+		MAIN=$(git rev-parse --short main) &&
- 		git checkout L2^0 &&
- 
- 		# Merge must fail; there is a conflict
-@@ -1682,24 +1682,24 @@ test_expect_success 'check nested conflicts' '
- 		test_line_count = 1 out &&
- 
- 		# Create a and b from virtual merge base X
--		git cat-file -p master:a >base &&
-+		git cat-file -p main:a >base &&
- 		git cat-file -p L1:a >ours &&
- 		git cat-file -p R1:a >theirs &&
- 		test_must_fail git merge-file --diff3 \
- 			-L "Temporary merge branch 1" \
--			-L "$MASTER"  \
-+			-L "$MAIN"  \
- 			-L "Temporary merge branch 2" \
- 			ours  \
- 			base  \
- 			theirs &&
- 		sed -e "s/^\([<|=>]\)/\1\1/" ours >vmb_a &&
- 
--		git cat-file -p master:b >base &&
-+		git cat-file -p main:b >base &&
- 		git cat-file -p L1:b >ours &&
- 		git cat-file -p R1:b >theirs &&
- 		test_must_fail git merge-file --diff3 \
- 			-L "Temporary merge branch 1" \
--			-L "$MASTER"  \
-+			-L "$MAIN"  \
- 			-L "Temporary merge branch 2" \
- 			ours  \
- 			base  \
-@@ -1751,12 +1751,12 @@ test_expect_success 'check nested conflicts' '
- # Setup:
- #          L1---L2---L3
- #         /  \ /  \ /  \
--#     master    X1   X2   ?
-+#     main    X1   X2   ?
- #         \  / \  / \  /
- #          R1---R2---R3
- #
- # Where:
--#   master has one file named 'content'
-+#   main has one file named 'content'
- #   branches L1 and R1 both modify each of the two files in conflicting ways
- #
- #   L<n> (n>1) is a merge of R<n-1> into L<n-1>
-@@ -1837,7 +1837,7 @@ test_expect_success 'check virtual merge base with nested conflicts' '
- 	(
- 		cd virtual_merge_base_has_nested_conflicts &&
- 
--		MASTER=$(git rev-parse --short master) &&
-+		MAIN=$(git rev-parse --short main) &&
- 		git checkout L3^0 &&
- 
- 		# Merge must fail; there is a conflict
-@@ -1860,13 +1860,13 @@ test_expect_success 'check virtual merge base with nested conflicts' '
- 		# Imitate X1 merge base, except without long enough conflict
- 		# markers because a subsequent sed will modify them.  Put
- 		# result into vmb.
--		git cat-file -p master:content >base &&
-+		git cat-file -p main:content >base &&
- 		git cat-file -p L:content >left &&
- 		git cat-file -p R:content >right &&
- 		cp left merged-once &&
- 		test_must_fail git merge-file --diff3 \
- 			-L "Temporary merge branch 1" \
--			-L "$MASTER"  \
-+			-L "$MAIN"  \
- 			-L "Temporary merge branch 2" \
- 			merged-once \
- 			base        \
-diff --git a/t/t6417-merge-ours-theirs.sh b/t/t6417-merge-ours-theirs.sh
-index e7883f890a..ac9aee9a66 100755
---- a/t/t6417-merge-ours-theirs.sh
-+++ b/t/t6417-merge-ours-theirs.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
- 
- test_description='Merge-recursive ours and theirs variants'
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -23,11 +23,11 @@ test_expect_success setup '
- 	sed -e "s/9/nueve/" >file <elif &&
- 	git commit -a -m theirs &&
- 
--	git checkout master^0
-+	git checkout main^0
- '
- 
- test_expect_success 'plain recursive - should conflict' '
--	git reset --hard master &&
-+	git reset --hard main &&
- 	test_must_fail git merge -s recursive side &&
- 	grep nine file &&
- 	grep nueve file &&
-@@ -37,7 +37,7 @@ test_expect_success 'plain recursive - should conflict' '
- '
- 
- test_expect_success 'recursive favouring theirs' '
--	git reset --hard master &&
-+	git reset --hard main &&
- 	git merge -s recursive -Xtheirs side &&
- 	! grep nine file &&
- 	grep nueve file &&
-@@ -47,7 +47,7 @@ test_expect_success 'recursive favouring theirs' '
- '
- 
- test_expect_success 'recursive favouring ours' '
--	git reset --hard master &&
-+	git reset --hard main &&
- 	git merge -s recursive -X ours side &&
- 	grep nine file &&
- 	! grep nueve file &&
-@@ -59,26 +59,26 @@ test_expect_success 'recursive favouring ours' '
- test_expect_success 'binary file with -Xours/-Xtheirs' '
- 	echo file binary >.gitattributes &&
- 
--	git reset --hard master &&
-+	git reset --hard main &&
- 	git merge -s recursive -X theirs side &&
- 	git diff --exit-code side HEAD -- file &&
- 
--	git reset --hard master &&
-+	git reset --hard main &&
- 	git merge -s recursive -X ours side &&
--	git diff --exit-code master HEAD -- file
-+	git diff --exit-code main HEAD -- file
- '
- 
- test_expect_success 'pull passes -X to underlying merge' '
--	git reset --hard master && git pull -s recursive -Xours . side &&
--	git reset --hard master && git pull -s recursive -X ours . side &&
--	git reset --hard master && git pull -s recursive -Xtheirs . side &&
--	git reset --hard master && git pull -s recursive -X theirs . side &&
--	git reset --hard master && test_must_fail git pull -s recursive -X bork . side
-+	git reset --hard main && git pull -s recursive -Xours . side &&
-+	git reset --hard main && git pull -s recursive -X ours . side &&
-+	git reset --hard main && git pull -s recursive -Xtheirs . side &&
-+	git reset --hard main && git pull -s recursive -X theirs . side &&
-+	git reset --hard main && test_must_fail git pull -s recursive -X bork . side
- '
- 
- test_expect_success SYMLINKS 'symlink with -Xours/-Xtheirs' '
--	git reset --hard master &&
--	git checkout -b two master &&
-+	git reset --hard main &&
-+	git checkout -b two main &&
- 	ln -s target-zero link &&
- 	git add link &&
- 	git commit -m "add link pointing to zero" &&
-diff --git a/t/t6418-merge-text-auto.sh b/t/t6418-merge-text-auto.sh
-index 91b43de00d..1e0296dd17 100755
---- a/t/t6418-merge-text-auto.sh
-+++ b/t/t6418-merge-text-auto.sh
+diff --git a/t/t4068-diff-symmetric-merge-base.sh b/t/t4068-diff-symmetric-merge-base.sh
+index 55d47352ba..2d650d8f10 100755
+--- a/t/t4068-diff-symmetric-merge-base.sh
++++ b/t/t4068-diff-symmetric-merge-base.sh
 @@ -2,17 +2,17 @@
  
- test_description='CRLF merge conflict across text=auto change
- 
--* [master] remove .gitattributes
-+* [main] remove .gitattributes
-  ! [side] add line from b
- --
-  + [side] add line from b
--*  [master] remove .gitattributes
--*  [master^] add line from a
--*  [master~2] normalize file
-+*  [main] remove .gitattributes
-+*  [main^] add line from a
-+*  [main~2] normalize file
- *+ [side^] Initial
- '
+ test_description='behavior of diff with symmetric-diff setups and --merge-base'
  
 -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
 +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
  . ./test-lib.sh
-@@ -67,7 +67,7 @@ test_expect_success setup '
- 	git commit -m "add line from b" &&
- 	git tag b &&
+ 
+ # build these situations:
+ #  - normal merge with one merge base (br1...b2r);
+-#  - criss-cross merge ie 2 merge bases (br1...master);
+-#  - disjoint subgraph (orphan branch, br3...master).
++#  - criss-cross merge ie 2 merge bases (br1...main);
++#  - disjoint subgraph (orphan branch, br3...main).
+ #
+-#     B---E   <-- master
++#     B---E   <-- main
+ #    / \ /
+ #   A   X
+ #    \ / \
+@@ -35,9 +35,9 @@ test_expect_success setup '
+ 	git add c &&
+ 	git commit -m C &&
+ 	git tag commit-C &&
+-	git merge -m D master &&
++	git merge -m D main &&
+ 	git tag commit-D &&
+-	git checkout master &&
++	git checkout main &&
+ 	git merge -m E commit-C &&
+ 	git checkout -b br2 commit-C &&
+ 	echo f >f &&
+@@ -61,7 +61,7 @@ test_expect_success 'diff with one merge base' '
+ # It should have one of those two, which comes out
+ # to seven lines.
+ test_expect_success 'diff with two merge bases' '
+-	git diff br1...master >tmp 2>err &&
++	git diff br1...main >tmp 2>err &&
+ 	test_line_count = 7 tmp &&
+ 	test_line_count = 1 err
+ '
+@@ -72,22 +72,22 @@ test_expect_success 'diff with no merge bases' '
+ '
+ 
+ test_expect_success 'diff with too many symmetric differences' '
+-	test_must_fail git diff br1...master br2...br3 2>err &&
++	test_must_fail git diff br1...main br2...br3 2>err &&
+ 	test_i18ngrep "usage" err
+ '
+ 
+ test_expect_success 'diff with symmetric difference and extraneous arg' '
+-	test_must_fail git diff master br1...master 2>err &&
++	test_must_fail git diff main br1...main 2>err &&
+ 	test_i18ngrep "usage" err
+ '
+ 
+ test_expect_success 'diff with two ranges' '
+-	test_must_fail git diff master br1..master br2..br3 2>err &&
++	test_must_fail git diff main br1..main br2..br3 2>err &&
+ 	test_i18ngrep "usage" err
+ '
+ 
+ test_expect_success 'diff with ranges and extra arg' '
+-	test_must_fail git diff master br1..master commit-D 2>err &&
++	test_must_fail git diff main br1..main commit-D 2>err &&
+ 	test_i18ngrep "usage" err
+ '
+ 
+@@ -96,21 +96,21 @@ test_expect_success 'diff --merge-base with no commits' '
+ '
+ 
+ test_expect_success 'diff --merge-base with three commits' '
+-	test_must_fail git diff --merge-base br1 br2 master 2>err &&
++	test_must_fail git diff --merge-base br1 br2 main 2>err &&
+ 	test_i18ngrep "usage" err
+ '
+ 
+ for cmd in diff-index diff
+ do
+ 	test_expect_success "$cmd --merge-base with one commit" '
+-		git checkout master &&
++		git checkout main &&
+ 		git $cmd commit-C >expect &&
+ 		git $cmd --merge-base br2 >actual &&
+ 		test_cmp expect actual
+ 	'
+ 
+ 	test_expect_success "$cmd --merge-base with one commit and unstaged changes" '
+-		git checkout master &&
++		git checkout main &&
+ 		test_when_finished git reset --hard &&
+ 		echo unstaged >>c &&
+ 		git $cmd commit-C >expect &&
+@@ -119,7 +119,7 @@ do
+ 	'
+ 
+ 	test_expect_success "$cmd --merge-base with one commit and staged and unstaged changes" '
+-		git checkout master &&
++		git checkout main &&
+ 		test_when_finished git reset --hard &&
+ 		echo staged >>c &&
+ 		git add c &&
+@@ -130,7 +130,7 @@ do
+ 	'
+ 
+ 	test_expect_success "$cmd --merge-base --cached with one commit and staged and unstaged changes" '
+-		git checkout master &&
++		git checkout main &&
+ 		test_when_finished git reset --hard &&
+ 		echo staged >>c &&
+ 		git add c &&
+@@ -141,19 +141,19 @@ do
+ 	'
+ 
+ 	test_expect_success "$cmd --merge-base with non-commit" '
+-		git checkout master &&
+-		test_must_fail git $cmd --merge-base master^{tree} 2>err &&
++		git checkout main &&
++		test_must_fail git $cmd --merge-base main^{tree} 2>err &&
+ 		test_i18ngrep "fatal: --merge-base only works with commits" err
+ 	'
+ 
+ 	test_expect_success "$cmd --merge-base with no merge bases and one commit" '
+-		git checkout master &&
++		git checkout main &&
+ 		test_must_fail git $cmd --merge-base br3 2>err &&
+ 		test_i18ngrep "fatal: no merge base found" err
+ 	'
+ 
+ 	test_expect_success "$cmd --merge-base with multiple merge bases and one commit" '
+-		git checkout master &&
++		git checkout main &&
+ 		test_must_fail git $cmd --merge-base br1 2>err &&
+ 		test_i18ngrep "fatal: multiple merge bases found" err
+ 	'
+@@ -162,13 +162,13 @@ done
+ for cmd in diff-tree diff
+ do
+ 	test_expect_success "$cmd --merge-base with two commits" '
+-		git $cmd commit-C master >expect &&
+-		git $cmd --merge-base br2 master >actual &&
++		git $cmd commit-C main >expect &&
++		git $cmd --merge-base br2 main >actual &&
+ 		test_cmp expect actual
+ 	'
+ 
+ 	test_expect_success "$cmd --merge-base commit and non-commit" '
+-		test_must_fail git $cmd --merge-base br2 master^{tree} 2>err &&
++		test_must_fail git $cmd --merge-base br2 main^{tree} 2>err &&
+ 		test_i18ngrep "fatal: --merge-base only works with commits" err
+ 	'
+ 
+@@ -178,13 +178,13 @@ do
+ 	'
+ 
+ 	test_expect_success "$cmd --merge-base with multiple merge bases and two commits" '
+-		test_must_fail git $cmd --merge-base master br1 2>err &&
++		test_must_fail git $cmd --merge-base main br1 2>err &&
+ 		test_i18ngrep "fatal: multiple merge bases found" err
+ 	'
+ done
+ 
+ test_expect_success 'diff-tree --merge-base with one commit' '
+-	test_must_fail git diff-tree --merge-base master 2>err &&
++	test_must_fail git diff-tree --merge-base main 2>err &&
+ 	test_i18ngrep "fatal: --merge-base only works with two commits" err
+ '
+ 
+diff --git a/t/t4103-apply-binary.sh b/t/t4103-apply-binary.sh
+index ee4a74b132..fad6d3f542 100755
+--- a/t/t4103-apply-binary.sh
++++ b/t/t4103-apply-binary.sh
+@@ -6,7 +6,7 @@
+ test_description='git apply handling binary patches
+ 
+ '
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+@@ -34,64 +34,64 @@ test_expect_success 'setup' '
+ 	git update-index --add --remove file1 file2 file3 file4 &&
+ 	git commit -m "Second Version" &&
+ 
+-	git diff-tree -p master binary >B.diff &&
+-	git diff-tree -p -C master binary >C.diff &&
++	git diff-tree -p main binary >B.diff &&
++	git diff-tree -p -C main binary >C.diff &&
+ 
+-	git diff-tree -p --binary master binary >BF.diff &&
+-	git diff-tree -p --binary -C master binary >CF.diff &&
++	git diff-tree -p --binary main binary >BF.diff &&
++	git diff-tree -p --binary -C main binary >CF.diff &&
+ 
+-	git diff-tree -p --full-index master binary >B-index.diff &&
+-	git diff-tree -p -C --full-index master binary >C-index.diff &&
++	git diff-tree -p --full-index main binary >B-index.diff &&
++	git diff-tree -p -C --full-index main binary >C-index.diff &&
+ 
+-	git diff-tree -p --binary --no-prefix master binary -- file3 >B0.diff &&
++	git diff-tree -p --binary --no-prefix main binary -- file3 >B0.diff &&
+ 
+ 	git init other-repo &&
+ 	(
+ 		cd other-repo &&
+-		git fetch .. master &&
++		git fetch .. main &&
+ 		git reset --hard FETCH_HEAD
+ 	)
+ '
+ 
+ test_expect_success 'stat binary diff -- should not fail.' \
+-	'git checkout master &&
++	'git checkout main &&
+ 	 git apply --stat --summary B.diff'
+ 
+ test_expect_success 'stat binary -p0 diff -- should not fail.' '
+-	 git checkout master &&
++	 git checkout main &&
+ 	 git apply --stat -p0 B0.diff
+ '
+ 
+ test_expect_success 'stat binary diff (copy) -- should not fail.' \
+-	'git checkout master &&
++	'git checkout main &&
+ 	 git apply --stat --summary C.diff'
+ 
+ test_expect_success 'check binary diff -- should fail.' \
+-	'git checkout master &&
++	'git checkout main &&
+ 	 test_must_fail git apply --check B.diff'
+ 
+ test_expect_success 'check binary diff (copy) -- should fail.' \
+-	'git checkout master &&
++	'git checkout main &&
+ 	 test_must_fail git apply --check C.diff'
+ 
+ test_expect_success \
+ 	'check incomplete binary diff with replacement -- should fail.' '
+-	git checkout master &&
++	git checkout main &&
+ 	test_must_fail git apply --check --allow-binary-replacement B.diff
+ '
+ 
+ test_expect_success \
+     'check incomplete binary diff with replacement (copy) -- should fail.' '
+-	 git checkout master &&
++	 git checkout main &&
+ 	 test_must_fail git apply --check --allow-binary-replacement C.diff
+ '
+ 
+ test_expect_success 'check binary diff with replacement.' \
+-	'git checkout master &&
++	'git checkout main &&
+ 	 git apply --check --allow-binary-replacement BF.diff'
+ 
+ test_expect_success 'check binary diff with replacement (copy).' \
+-	'git checkout master &&
++	'git checkout main &&
+ 	 git apply --check --allow-binary-replacement CF.diff'
+ 
+ # Now we start applying them.
+@@ -99,7 +99,7 @@ test_expect_success 'check binary diff with replacement (copy).' \
+ do_reset () {
+ 	rm -f file? &&
+ 	git reset --hard &&
+-	git checkout -f master
++	git checkout -f main
+ }
+ 
+ test_expect_success 'apply binary diff -- should fail.' \
+diff --git a/t/t4108-apply-threeway.sh b/t/t4108-apply-threeway.sh
+index 0a091dc5a0..d62db3fbe1 100755
+--- a/t/t4108-apply-threeway.sh
++++ b/t/t4108-apply-threeway.sh
+@@ -2,7 +2,7 @@
+ 
+ test_description='git apply --3way'
+ 
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+@@ -27,14 +27,14 @@ test_expect_success setup '
+ 	test_tick &&
+ 	test_write_lines 1 two 3 4 5 six 7 >one &&
+ 	test_write_lines 1 two 3 4 5 6 7 >two &&
+-	git commit -a -m master &&
++	git commit -a -m main &&
+ 
+ 	git checkout side &&
+ 	test_write_lines 1 2 3 4 five 6 7 >one &&
+ 	test_write_lines 1 2 3 4 five 6 7 >two &&
+ 	git commit -a -m side &&
  
 -	git checkout master
 +	git checkout main
  '
  
- test_expect_success 'set up fuzz_conflict() helper' '
-@@ -198,7 +198,7 @@ test_expect_success 'Test delete/normalize conflict' '
- 	git reset --hard initial &&
- 	git rm file &&
- 	git commit -m "remove file" &&
--	git checkout master &&
-+	git checkout main &&
- 	git reset --hard a^ &&
- 	git merge side &&
- 	test_path_is_missing file
-diff --git a/t/t6419-merge-ignorecase.sh b/t/t6419-merge-ignorecase.sh
-index 9996a94431..b64b75acf5 100755
---- a/t/t6419-merge-ignorecase.sh
-+++ b/t/t6419-merge-ignorecase.sh
-@@ -2,7 +2,7 @@
+ test_expect_success 'apply without --3way' '
+@@ -42,7 +42,7 @@ test_expect_success 'apply without --3way' '
  
- test_description='git-merge with case-changing rename on case-insensitive file system'
+ 	# should fail to apply
+ 	git reset --hard &&
+-	git checkout master^0 &&
++	git checkout main^0 &&
+ 	test_must_fail git apply --index P.diff &&
+ 	# should leave things intact
+ 	git diff-files --exit-code &&
+@@ -55,14 +55,14 @@ test_apply_with_3way () {
  
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 	# The corresponding conflicted merge
+ 	git reset --hard &&
+-	git checkout master^0 &&
++	git checkout main^0 &&
+ 	test_must_fail git merge --no-commit side &&
+ 	git ls-files -s >expect.ls &&
+ 	print_sanitized_conflicted_diff >expect.diff &&
  
- . ./test-lib.sh
-@@ -23,18 +23,18 @@ test_expect_success 'merge with case-changing rename' '
- 	>foo &&
- 	git add foo &&
- 	git commit -m "intervening commit" &&
--	git checkout master &&
-+	git checkout main &&
- 	git rm TestCase &&
- 	>testcase &&
- 	git add testcase &&
- 	git commit -m "rename to testcase" &&
- 	git checkout with-camel &&
--	git merge master -m "merge" &&
-+	git merge main -m "merge" &&
- 	test_path_is_file testcase
- '
+ 	# should fail to apply
+ 	git reset --hard &&
+-	git checkout master^0 &&
++	git checkout main^0 &&
+ 	test_must_fail git apply --index --3way P.diff &&
+ 	git ls-files -s >actual.ls &&
+ 	print_sanitized_conflicted_diff >actual.diff &&
+@@ -89,7 +89,7 @@ test_expect_success 'apply with --3way with rerere enabled' '
  
- test_expect_success 'merge with case-changing rename on both sides' '
--	git checkout master &&
-+	git checkout main &&
- 	git reset --hard baseline &&
- 	git branch -D with-camel &&
- 	git checkout -b with-camel &&
-@@ -43,13 +43,13 @@ test_expect_success 'merge with case-changing rename on both sides' '
- 	>foo &&
- 	git add foo &&
- 	git commit -m "intervening commit" &&
--	git checkout master &&
-+	git checkout main &&
- 	git rm TestCase &&
- 	>testcase &&
- 	git add testcase &&
- 	git commit -m "rename to testcase" &&
- 	git checkout with-camel &&
--	git merge master -m "merge" &&
-+	git merge main -m "merge" &&
- 	test_path_is_file testcase
- '
+ 	# The corresponding conflicted merge
+ 	git reset --hard &&
+-	git checkout master^0 &&
++	git checkout main^0 &&
+ 	test_must_fail git merge --no-commit side &&
  
-diff --git a/t/t6422-merge-rename-corner-cases.sh b/t/t6422-merge-rename-corner-cases.sh
-index 9fb4e72ca3..bf4ce3c63d 100755
---- a/t/t6422-merge-rename-corner-cases.sh
-+++ b/t/t6422-merge-rename-corner-cases.sh
-@@ -3,7 +3,7 @@
- test_description="recursive merge corner cases w/ renames but not criss-crosses"
- # t6036 has corner cases that involve both criss-cross merges and renames
+ 	# Manually resolve and record the resolution
+@@ -99,7 +99,7 @@ test_expect_success 'apply with --3way with rerere enabled' '
  
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 	# should fail to apply
+ 	git reset --hard &&
+-	git checkout master^0 &&
++	git checkout main^0 &&
+ 	test_must_fail git apply --index --3way P.diff &&
  
- . ./test-lib.sh
-@@ -1133,7 +1133,7 @@ test_conflicts_with_adds_and_renames() {
- 	# Setup:
- 	#          L
- 	#         / \
--	#     master   ?
-+	#     main   ?
- 	#         \ /
- 	#          R
- 	#
-@@ -1263,7 +1263,7 @@ test_conflicts_with_adds_and_renames() {
- 				:2:three           \
- 				:3:three           &&
- 			git rev-parse >expected        \
--				master:irrelevant_file \
-+				main:irrelevant_file \
- 				file_v2                \
- 				file_v4                &&
- 			test_cmp expected actual &&
-@@ -1293,12 +1293,12 @@ test_conflicts_with_adds_and_renames add    add
- # Setup:
- #          L
- #         / \
--#     master   ?
-+#     main   ?
- #         \ /
- #          R
- #
- # Where:
--#   master has two files, named 'one' and 'two'.
-+#   main has two files, named 'one' and 'two'.
- #   branches L and R both modify 'one', in conflicting ways.
- #   branches L and R both modify 'two', in conflicting ways.
- #   branch L also renames 'one' to 'three'.
-@@ -1379,7 +1379,7 @@ test_expect_success 'check nested conflicts from rename/rename(2to1)' '
- 		test_line_count = 1 out &&
- 
- 		# Compare :2:three to expected values
--		git cat-file -p master:one >base &&
-+		git cat-file -p main:one >base &&
- 		git cat-file -p L:three >ours &&
- 		git cat-file -p R:one >theirs &&
- 		test_must_fail git merge-file    \
-@@ -1390,7 +1390,7 @@ test_expect_success 'check nested conflicts from rename/rename(2to1)' '
- 		test_cmp expect L-three &&
- 
- 		# Compare :2:three to expected values
--		git cat-file -p master:two >base &&
-+		git cat-file -p main:two >base &&
- 		git cat-file -p L:two >ours &&
- 		git cat-file -p R:three >theirs &&
- 		test_must_fail git merge-file    \
-diff --git a/t/t6425-merge-rename-delete.sh b/t/t6425-merge-rename-delete.sh
-index e58e3dfba1..459b431a60 100755
---- a/t/t6425-merge-rename-delete.sh
-+++ b/t/t6425-merge-rename-delete.sh
+ 	# but rerere should have replayed the recorded resolution
+diff --git a/t/t4121-apply-diffs.sh b/t/t4121-apply-diffs.sh
+index 60deb3bf78..b45454aaf4 100755
+--- a/t/t4121-apply-diffs.sh
++++ b/t/t4121-apply-diffs.sh
 @@ -1,7 +1,7 @@
  #!/bin/sh
  
- test_description='Merge-recursive rename/delete conflict message'
+ test_description='git apply for contextually independent diffs'
 -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
 +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
  . ./test-lib.sh
-@@ -15,7 +15,7 @@ test_expect_success 'rename/delete' '
- 	git mv A B &&
- 	git commit -m "rename" &&
+@@ -26,7 +26,7 @@ test_expect_success 'setup' \
+ 	git commit -a -q -m 2 &&
+ 	echo 9 >>file &&
+ 	git commit -a -q -m 3 &&
+-	git checkout master'
++	git checkout main'
  
--	git checkout master &&
-+	git checkout main &&
- 	git rm A &&
- 	git commit -m "delete" &&
+ test_expect_success \
+ 	'check if contextually independent diffs for the same file apply' \
+diff --git a/t/t4122-apply-symlink-inside.sh b/t/t4122-apply-symlink-inside.sh
+index 71deaf779d..aa52de401b 100755
+--- a/t/t4122-apply-symlink-inside.sh
++++ b/t/t4122-apply-symlink-inside.sh
+@@ -1,7 +1,7 @@
+ #!/bin/sh
  
-diff --git a/t/t6427-diff3-conflict-markers.sh b/t/t6427-diff3-conflict-markers.sh
-index 3ae2d07ae1..25c4b720e7 100755
---- a/t/t6427-diff3-conflict-markers.sh
-+++ b/t/t6427-diff3-conflict-markers.sh
-@@ -2,7 +2,7 @@
- 
- test_description='recursive merge diff3 style conflict markers'
- 
+ test_description='apply to deeper directory without getting fooled with symlink'
 -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
 +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
  . ./test-lib.sh
-@@ -46,7 +46,7 @@ test_expect_success 'check no merge base' '
- # Setup:
- #          L1
- #         /  \
--#     master    ?
-+#     main    ?
- #         \  /
- #          R1
- #
-@@ -93,18 +93,18 @@ test_expect_success 'check unique merge base' '
- 		cd unique_merge_base &&
+@@ -38,11 +38,11 @@ test_expect_success apply '
  
- 		git checkout L^0 &&
--		MASTER=$(git rev-parse --short master) &&
-+		MAIN=$(git rev-parse --short main) &&
+ test_expect_success 'check result' '
  
- 		test_must_fail git -c merge.conflictstyle=diff3 merge -s recursive R^0 &&
- 
--		grep "|||||| $MASTER:content" renamed
-+		grep "|||||| $MAIN:content" renamed
- 	)
- '
- 
- # Setup:
- #          L1---L2--L3
- #         /  \ /      \
--#     master    X1       ?
-+#     main    X1       ?
- #         \  / \      /
- #          R1---R2--R3
- #
-@@ -194,10 +194,10 @@ test_expect_success 'rebase --merge describes parent of commit being picked' '
- 	(
- 		cd rebase &&
- 		test_commit base file &&
--		test_commit master file &&
-+		test_commit main file &&
- 		git checkout -b side HEAD^ &&
- 		test_commit side file &&
--		test_must_fail git -c merge.conflictstyle=diff3 rebase --merge master &&
-+		test_must_fail git -c merge.conflictstyle=diff3 rebase --merge main &&
- 		grep "||||||| parent of" file
- 	)
- '
-@@ -206,7 +206,7 @@ test_expect_success 'rebase --apply describes fake ancestor base' '
- 	(
- 		cd rebase &&
- 		git rebase --abort &&
--		test_must_fail git -c merge.conflictstyle=diff3 rebase --apply master &&
-+		test_must_fail git -c merge.conflictstyle=diff3 rebase --apply main &&
- 		grep "||||||| constructed merge base" file
- 	)
- '
-diff --git a/t/t6430-merge-recursive.sh b/t/t6430-merge-recursive.sh
-index acb2868260..ffcc01fe65 100755
---- a/t/t6430-merge-recursive.sh
-+++ b/t/t6430-merge-recursive.sh
-@@ -2,7 +2,7 @@
- 
- test_description='merge-recursive backend test'
- 
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -38,7 +38,7 @@ test_expect_success 'setup 1' '
- 	git add a d/e &&
- 
+-	git diff --exit-code master &&
+-	git diff --exit-code --cached master &&
++	git diff --exit-code main &&
++	git diff --exit-code --cached main &&
  	test_tick &&
--	git commit -m "master modifies a and d/e" &&
-+	git commit -m "main modifies a and d/e" &&
- 	c1=$(git rev-parse --verify HEAD) &&
- 	( git ls-tree -r HEAD && git ls-files -s ) >actual &&
- 	(
-@@ -469,7 +469,7 @@ test_expect_success SYMLINKS 'dir in working tree with symlink ancestor does not
- 		git checkout -b branch1 &&
- 		git commit --allow-empty -m "empty commit" &&
+ 	git commit -m replay &&
+-	T1=$(git rev-parse "master^{tree}") &&
++	T1=$(git rev-parse "main^{tree}") &&
+ 	T2=$(git rev-parse "HEAD^{tree}") &&
+ 	test "z$T1" = "z$T2"
  
--		git checkout master &&
-+		git checkout main &&
- 		git rm foo &&
- 		mkdir foo &&
- 		>foo/bar &&
-@@ -478,7 +478,7 @@ test_expect_success SYMLINKS 'dir in working tree with symlink ancestor does not
+diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+index e1ffc04852..99987515dc 100755
+--- a/t/t4150-am.sh
++++ b/t/t4150-am.sh
+@@ -2,7 +2,7 @@
  
- 		git checkout branch1 &&
+ test_description='git am running'
  
--		git cherry-pick master &&
-+		git cherry-pick main &&
- 		test_path_is_dir foo &&
- 		test_path_is_file foo/bar
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+@@ -182,8 +182,8 @@ test_expect_success setup '
+ 	test_tick &&
+ 	git commit -m "added another file" &&
+ 
+-	git format-patch --stdout master >lorem-move.patch &&
+-	git format-patch --no-prefix --stdout master >lorem-zero.patch &&
++	git format-patch --stdout main >lorem-move.patch &&
++	git format-patch --no-prefix --stdout main >lorem-zero.patch &&
+ 
+ 	git checkout -b rename &&
+ 	git mv file renamed &&
+@@ -456,11 +456,11 @@ test_expect_success 'am changes committer and keeps author' '
+ 	git checkout first &&
+ 	git am patch2 &&
+ 	test_path_is_missing .git/rebase-apply &&
+-	test "$(git rev-parse master^^)" = "$(git rev-parse HEAD^^)" &&
+-	git diff --exit-code master..HEAD &&
+-	git diff --exit-code master^..HEAD^ &&
+-	compare author master HEAD &&
+-	compare author master^ HEAD^ &&
++	test "$(git rev-parse main^^)" = "$(git rev-parse HEAD^^)" &&
++	git diff --exit-code main..HEAD &&
++	git diff --exit-code main^..HEAD^ &&
++	compare author main HEAD &&
++	compare author main^ HEAD^ &&
+ 	test "$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>" = \
+ 	     "$(git log -1 --pretty=format:"%cn <%ce>" HEAD)"
+ '
+@@ -762,7 +762,7 @@ test_expect_success 'am takes patches from a Pine mailbox' '
+ 	git checkout first &&
+ 	cat pine patch1 | git am &&
+ 	test_path_is_missing .git/rebase-apply &&
+-	git diff --exit-code master^..HEAD
++	git diff --exit-code main^..HEAD
+ '
+ 
+ test_expect_success 'am fails on mail without patch' '
+@@ -1115,21 +1115,21 @@ test_expect_success 'am and .gitattibutes' '
+ 		test_commit sixth &&
+ 
+ 		git checkout test &&
+-		git format-patch --stdout master..HEAD >patches &&
+-		git reset --hard master &&
++		git format-patch --stdout main..HEAD >patches &&
++		git reset --hard main &&
+ 		git am patches &&
+ 		grep "smudged" a.txt &&
+ 
+ 		git checkout removal &&
+ 		git reset --hard &&
+-		git format-patch --stdout master..HEAD >patches &&
+-		git reset --hard master &&
++		git format-patch --stdout main..HEAD >patches &&
++		git reset --hard main &&
+ 		git am patches &&
+ 		grep "clean" a.txt &&
+ 
+ 		git checkout conflict &&
+ 		git reset --hard &&
+-		git format-patch --stdout master..HEAD >patches &&
++		git format-patch --stdout main..HEAD >patches &&
+ 		git reset --hard fourth &&
+ 		test_must_fail git am -3 patches &&
+ 		grep "<<<<<<<<<<" a.txt
+diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
+index 1f1a809c60..9f8c76dffb 100755
+--- a/t/t4200-rerere.sh
++++ b/t/t4200-rerere.sh
+@@ -8,7 +8,7 @@ test_description='git rerere
+ ! [fifth] version1
+  ! [first] first
+   ! [fourth] version1
+-   ! [master] initial
++   ! [main] initial
+     ! [second] prefer first over second
+      ! [third] version2
+ ------
+@@ -19,10 +19,10 @@ test_description='git rerere
+     -  [second] prefer first over second
+  +  +  [first] first
+     +  [second^] second
+-++++++ [master] initial
++++++++ [main] initial
+ '
+ 
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+@@ -60,7 +60,7 @@ test_expect_success 'setup' '
+ 	test_tick &&
+ 	git commit -q -a -m first &&
+ 
+-	git checkout -b second master &&
++	git checkout -b second main &&
+ 	git show first:a1 |
+ 	sed -e "s/To die, t/To die! T/" -e "s/Some title/Some Title/" >a1 &&
+ 	echo "* END *" >>a1 &&
+@@ -171,7 +171,7 @@ test_expect_success 'first postimage wins' '
+ 
+ 	oldmtimepost=$(test-tool chmtime --get -60 $rr/postimage) &&
+ 
+-	git checkout -b third master &&
++	git checkout -b third main &&
+ 	git show second^:a1 | sed "s/To die: t/To die! T/" >a1 &&
+ 	git commit -q -a -m third &&
+ 
+@@ -583,13 +583,13 @@ test_expect_success 'multiple identical conflicts' '
+ test_expect_success 'rerere with unexpected conflict markers does not crash' '
+ 	git reset --hard &&
+ 
+-	git checkout -b branch-1 master &&
++	git checkout -b branch-1 main &&
+ 	echo "bar" >test &&
+ 	git add test &&
+ 	git commit -q -m two &&
+ 
+ 	git reset --hard &&
+-	git checkout -b branch-2 master &&
++	git checkout -b branch-2 main &&
+ 	echo "foo" >test &&
+ 	git add test &&
+ 	git commit -q -a -m one &&
+@@ -604,7 +604,7 @@ test_expect_success 'rerere with unexpected conflict markers does not crash' '
+ test_expect_success 'rerere with inner conflict markers' '
+ 	git reset --hard &&
+ 
+-	git checkout -b A master &&
++	git checkout -b A main &&
+ 	echo "bar" >test &&
+ 	git add test &&
+ 	git commit -q -m two &&
+@@ -613,7 +613,7 @@ test_expect_success 'rerere with inner conflict markers' '
+ 	git commit -q -m three &&
+ 
+ 	git reset --hard &&
+-	git checkout -b B master &&
++	git checkout -b B main &&
+ 	echo "foo" >test &&
+ 	git add test &&
+ 	git commit -q -a -m one &&
+@@ -654,11 +654,11 @@ test_expect_success 'setup simple stage 1 handling' '
+ 		git add original &&
+ 		git commit -m original &&
+ 
+-		git checkout -b A master &&
++		git checkout -b A main &&
+ 		git mv original A &&
+ 		git commit -m "rename to A" &&
+ 
+-		git checkout -b B master &&
++		git checkout -b B main &&
+ 		git mv original B &&
+ 		git commit -m "rename to B"
  	)
-@@ -493,8 +493,8 @@ test_expect_success 'reset and 3-way merge' '
- 
- test_expect_success 'reset and bind merge' '
- 
--	git reset --hard master &&
--	git read-tree --prefix=M/ master &&
-+	git reset --hard main &&
-+	git read-tree --prefix=M/ main &&
- 	git ls-files -s >actual &&
- 	(
- 		echo "100644 $o1 0	M/a" &&
-@@ -508,7 +508,7 @@ test_expect_success 'reset and bind merge' '
- 	) >expected &&
- 	test_cmp expected actual &&
- 
--	git read-tree --prefix=a1/ master &&
-+	git read-tree --prefix=a1/ main &&
- 	git ls-files -s >actual &&
- 	(
- 		echo "100644 $o1 0	M/a" &&
-@@ -526,7 +526,7 @@ test_expect_success 'reset and bind merge' '
- 	) >expected &&
- 	test_cmp expected actual &&
- 
--	git read-tree --prefix=z/ master &&
-+	git read-tree --prefix=z/ main &&
- 	git ls-files -s >actual &&
- 	(
- 		echo "100644 $o1 0	M/a" &&
-@@ -602,11 +602,11 @@ test_expect_success 'merge-recursive w/ empty work tree - theirs has rename' '
- 
- test_expect_success 'merge removes empty directories' '
- 
--	git reset --hard master &&
-+	git reset --hard main &&
- 	git checkout -b rm &&
- 	git rm d/e &&
- 	git commit -mremoved-d/e &&
--	git checkout master &&
-+	git checkout main &&
- 	git merge -s recursive rm &&
- 	test_path_is_missing d
- '
-diff --git a/t/t6432-merge-recursive-space-options.sh b/t/t6432-merge-recursive-space-options.sh
-index 1333cbb148..db4b77e63d 100755
---- a/t/t6432-merge-recursive-space-options.sh
-+++ b/t/t6432-merge-recursive-space-options.sh
-@@ -2,16 +2,16 @@
- 
- test_description='merge-recursive space options
- 
--* [master] Clarify
-+* [main] Clarify
-  ! [remote] Remove cruft
- --
-  + [remote] Remove cruft
--*  [master] Clarify
-+*  [main] Clarify
- *+ [remote^] Initial revision
- *   ok 1: setup
+diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
+index ad6d3eebe5..3095b1b2ff 100755
+--- a/t/t4201-shortlog.sh
++++ b/t/t4201-shortlog.sh
+@@ -6,7 +6,7 @@
+ test_description='git shortlog
  '
  
 -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
@@ -1438,241 +1848,707 @@ index 1333cbb148..db4b77e63d 100755
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
  . ./test-lib.sh
-@@ -90,7 +90,7 @@ test_expect_success 'setup' '
- 	mv text.txt+ text.txt &&
- 	git commit -a -m "Remove cruft" &&
+@@ -194,7 +194,7 @@ test_expect_success 'shortlog with revision pseudo options' '
+ '
  
--	git checkout master &&
-+	git checkout main &&
- 	sed -e "
- 			s/\(not in his right mind\),\(.*\)/\1;\2Q/
- 			s/Quite correct\(.*\)/It is too correct\1Q/
-diff --git a/t/t6433-merge-toplevel.sh b/t/t6433-merge-toplevel.sh
-index 2d51b2d08c..b16031465f 100755
---- a/t/t6433-merge-toplevel.sh
-+++ b/t/t6433-merge-toplevel.sh
-@@ -2,13 +2,13 @@
+ test_expect_success 'shortlog with --output=<file>' '
+-	git shortlog --output=shortlog -1 master >output &&
++	git shortlog --output=shortlog -1 main >output &&
+ 	test_must_be_empty output &&
+ 	test_line_count = 3 shortlog
+ '
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 6c7a3cfc2c..350cfa3593 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -2,7 +2,7 @@
  
- test_description='"git merge" top-level frontend'
+ test_description='git log'
  
 -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
 +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
  . ./test-lib.sh
+@@ -481,7 +481,7 @@ test_expect_success 'set up merge history' '
+ 	git checkout -b side HEAD~4 &&
+ 	test_commit side-1 1 1 &&
+ 	test_commit side-2 2 2 &&
+-	git checkout master &&
++	git checkout main &&
+ 	git merge side
+ '
  
- t3033_reset () {
--	git checkout -B master two &&
-+	git checkout -B main two &&
- 	git branch -f left three &&
- 	git branch -f right four
+@@ -544,17 +544,17 @@ test_expect_success 'log --graph with merge with log.graphColors' '
+ '
+ 
+ test_expect_success 'log --raw --graph -m with merge' '
+-	git log --raw --graph --oneline -m master | head -n 500 >actual &&
++	git log --raw --graph --oneline -m main | head -n 500 >actual &&
+ 	grep "initial" actual
+ '
+ 
+ test_expect_success 'diff-tree --graph' '
+-	git diff-tree --graph master^ | head -n 500 >actual &&
++	git diff-tree --graph main^ | head -n 500 >actual &&
+ 	grep "one" actual
+ '
+ 
+ cat > expect <<\EOF
+-*   commit master
++*   commit main
+ |\  Merge: A B
+ | | Author: A U Thor <author@example.com>
+ | |
+@@ -570,22 +570,22 @@ cat > expect <<\EOF
+ | |
+ | |     side-1
+ | |
+-* | commit master~1
++* | commit main~1
+ | | Author: A U Thor <author@example.com>
+ | |
+ | |     Second
+ | |
+-* | commit master~2
++* | commit main~2
+ | | Author: A U Thor <author@example.com>
+ | |
+ | |     sixth
+ | |
+-* | commit master~3
++* | commit main~3
+ | | Author: A U Thor <author@example.com>
+ | |
+ | |     fifth
+ | |
+-* | commit master~4
++* | commit main~4
+ |/  Author: A U Thor <author@example.com>
+ |
+ |       fourth
+@@ -616,19 +616,19 @@ test_expect_success 'log --graph with full output' '
+ test_expect_success 'set up more tangled history' '
+ 	git checkout -b tangle HEAD~6 &&
+ 	test_commit tangle-a tangle-a a &&
+-	git merge master~3 &&
++	git merge main~3 &&
+ 	git merge side~1 &&
+-	git checkout master &&
++	git checkout main &&
+ 	git merge tangle &&
+ 	git checkout -b reach &&
+ 	test_commit reach &&
+-	git checkout master &&
++	git checkout main &&
+ 	git checkout -b octopus-a &&
+ 	test_commit octopus-a &&
+-	git checkout master &&
++	git checkout main &&
+ 	git checkout -b octopus-b &&
+ 	test_commit octopus-b &&
+-	git checkout master &&
++	git checkout main &&
+ 	test_commit seventh &&
+ 	git merge octopus-a octopus-b &&
+ 	git merge reach
+@@ -653,7 +653,7 @@ cat > expect <<\EOF
+ |\
+ | *   Merge branch 'side' (early part) into tangle
+ | |\
+-| * \   Merge branch 'master' (early part) into tangle
++| * \   Merge branch 'main' (early part) into tangle
+ | |\ \
+ | * | | tangle-a
+ * | | |   Merge branch 'side'
+@@ -797,7 +797,7 @@ test_expect_success 'multiple decorate-refs' '
+ 
+ test_expect_success 'decorate-refs-exclude with glob' '
+ 	cat >expect.decorate <<-\EOF &&
+-	Merge-tag-reach (HEAD -> master)
++	Merge-tag-reach (HEAD -> main)
+ 	Merge-tags-octopus-a-and-octopus-b
+ 	seventh (tag: seventh)
+ 	octopus-b (tag: octopus-b)
+@@ -814,7 +814,7 @@ test_expect_success 'decorate-refs-exclude with glob' '
+ 
+ test_expect_success 'decorate-refs-exclude without globs' '
+ 	cat >expect.decorate <<-\EOF &&
+-	Merge-tag-reach (HEAD -> master)
++	Merge-tag-reach (HEAD -> main)
+ 	Merge-tags-octopus-a-and-octopus-b
+ 	seventh (tag: seventh)
+ 	octopus-b (tag: octopus-b, octopus-b)
+@@ -831,7 +831,7 @@ test_expect_success 'decorate-refs-exclude without globs' '
+ 
+ test_expect_success 'multiple decorate-refs-exclude' '
+ 	cat >expect.decorate <<-\EOF &&
+-	Merge-tag-reach (HEAD -> master)
++	Merge-tag-reach (HEAD -> main)
+ 	Merge-tags-octopus-a-and-octopus-b
+ 	seventh (tag: seventh)
+ 	octopus-b (tag: octopus-b)
+@@ -854,7 +854,7 @@ test_expect_success 'multiple decorate-refs-exclude' '
+ 
+ test_expect_success 'decorate-refs and decorate-refs-exclude' '
+ 	cat >expect.no-decorate <<-\EOF &&
+-	Merge-tag-reach (master)
++	Merge-tag-reach (main)
+ 	Merge-tags-octopus-a-and-octopus-b
+ 	seventh
+ 	octopus-b
+@@ -869,7 +869,7 @@ test_expect_success 'decorate-refs and decorate-refs-exclude' '
+ 
+ test_expect_success 'deocrate-refs and log.excludeDecoration' '
+ 	cat >expect.decorate <<-\EOF &&
+-	Merge-tag-reach (master)
++	Merge-tag-reach (main)
+ 	Merge-tags-octopus-a-and-octopus-b
+ 	seventh
+ 	octopus-b (octopus-b)
+@@ -884,7 +884,7 @@ test_expect_success 'deocrate-refs and log.excludeDecoration' '
+ 
+ test_expect_success 'decorate-refs-exclude and simplify-by-decoration' '
+ 	cat >expect.decorate <<-\EOF &&
+-	Merge-tag-reach (HEAD -> master)
++	Merge-tag-reach (HEAD -> main)
+ 	reach (tag: reach, reach)
+ 	seventh (tag: seventh)
+ 	Merge-branch-tangle
+@@ -1083,7 +1083,7 @@ cat >expect <<\EOF
+ | |\ \  Merge: MERGE_PARENTS
+ | | | | Author: A U Thor <author@example.com>
+ | | | |
+-| | | |     Merge branch 'master' (early part) into tangle
++| | | |     Merge branch 'main' (early part) into tangle
+ | | | |
+ | * | | commit COMMIT_OBJECT_NAME
+ | | | | Author: A U Thor <author@example.com>
+@@ -1358,7 +1358,7 @@ cat >expect <<\EOF
+ *** | |\ \  Merge: MERGE_PARENTS
+ *** | | | | Author: A U Thor <author@example.com>
+ *** | | | |
+-*** | | | |     Merge branch 'master' (early part) into tangle
++*** | | | |     Merge branch 'main' (early part) into tangle
+ *** | | | |
+ *** | * | | commit COMMIT_OBJECT_NAME
+ *** | | | | Author: A U Thor <author@example.com>
+@@ -1591,24 +1591,24 @@ test_expect_success 'dotdot is a parent directory' '
+ '
+ 
+ test_expect_success GPG 'setup signed branch' '
+-	test_when_finished "git reset --hard && git checkout master" &&
+-	git checkout -b signed master &&
++	test_when_finished "git reset --hard && git checkout main" &&
++	git checkout -b signed main &&
+ 	echo foo >foo &&
+ 	git add foo &&
+ 	git commit -S -m signed_commit
+ '
+ 
+ test_expect_success GPG 'setup signed branch with subkey' '
+-	test_when_finished "git reset --hard && git checkout master" &&
+-	git checkout -b signed-subkey master &&
++	test_when_finished "git reset --hard && git checkout main" &&
++	git checkout -b signed-subkey main &&
+ 	echo foo >foo &&
+ 	git add foo &&
+ 	git commit -SB7227189 -m signed_commit
+ '
+ 
+ test_expect_success GPGSM 'setup signed branch x509' '
+-	test_when_finished "git reset --hard && git checkout master" &&
+-	git checkout -b signed-x509 master &&
++	test_when_finished "git reset --hard && git checkout main" &&
++	git checkout -b signed-x509 main &&
+ 	echo foo >foo &&
+ 	git add foo &&
+ 	test_config gpg.format x509 &&
+@@ -1641,12 +1641,12 @@ test_expect_success GPGSM 'log --graph --show-signature x509' '
+ '
+ 
+ test_expect_success GPG 'log --graph --show-signature for merged tag' '
+-	test_when_finished "git reset --hard && git checkout master" &&
+-	git checkout -b plain master &&
++	test_when_finished "git reset --hard && git checkout main" &&
++	git checkout -b plain main &&
+ 	echo aaa >bar &&
+ 	git add bar &&
+ 	git commit -m bar_commit &&
+-	git checkout -b tagged master &&
++	git checkout -b tagged main &&
+ 	echo bbb >baz &&
+ 	git add baz &&
+ 	git commit -m baz_commit &&
+@@ -1660,12 +1660,12 @@ test_expect_success GPG 'log --graph --show-signature for merged tag' '
+ '
+ 
+ test_expect_success GPG 'log --graph --show-signature for merged tag in shallow clone' '
+-	test_when_finished "git reset --hard && git checkout master" &&
+-	git checkout -b plain-shallow master &&
++	test_when_finished "git reset --hard && git checkout main" &&
++	git checkout -b plain-shallow main &&
+ 	echo aaa >bar &&
+ 	git add bar &&
+ 	git commit -m bar_commit &&
+-	git checkout --detach master &&
++	git checkout --detach main &&
+ 	echo bbb >baz &&
+ 	git add baz &&
+ 	git commit -m baz_commit &&
+@@ -1680,12 +1680,12 @@ test_expect_success GPG 'log --graph --show-signature for merged tag in shallow
+ '
+ 
+ test_expect_success GPG 'log --graph --show-signature for merged tag with missing key' '
+-	test_when_finished "git reset --hard && git checkout master" &&
+-	git checkout -b plain-nokey master &&
++	test_when_finished "git reset --hard && git checkout main" &&
++	git checkout -b plain-nokey main &&
+ 	echo aaa >bar &&
+ 	git add bar &&
+ 	git commit -m bar_commit &&
+-	git checkout -b tagged-nokey master &&
++	git checkout -b tagged-nokey main &&
+ 	echo bbb >baz &&
+ 	git add baz &&
+ 	git commit -m baz_commit &&
+@@ -1699,12 +1699,12 @@ test_expect_success GPG 'log --graph --show-signature for merged tag with missin
+ '
+ 
+ test_expect_success GPG 'log --graph --show-signature for merged tag with bad signature' '
+-	test_when_finished "git reset --hard && git checkout master" &&
+-	git checkout -b plain-bad master &&
++	test_when_finished "git reset --hard && git checkout main" &&
++	git checkout -b plain-bad main &&
+ 	echo aaa >bar &&
+ 	git add bar &&
+ 	git commit -m bar_commit &&
+-	git checkout -b tagged-bad master &&
++	git checkout -b tagged-bad main &&
+ 	echo bbb >baz &&
+ 	git add baz &&
+ 	git commit -m baz_commit &&
+@@ -1721,12 +1721,12 @@ test_expect_success GPG 'log --graph --show-signature for merged tag with bad si
+ '
+ 
+ test_expect_success GPG 'log --show-signature for merged tag with GPG failure' '
+-	test_when_finished "git reset --hard && git checkout master" &&
+-	git checkout -b plain-fail master &&
++	test_when_finished "git reset --hard && git checkout main" &&
++	git checkout -b plain-fail main &&
+ 	echo aaa >bar &&
+ 	git add bar &&
+ 	git commit -m bar_commit &&
+-	git checkout -b tagged-fail master &&
++	git checkout -b tagged-fail main &&
+ 	echo bbb >baz &&
+ 	git add baz &&
+ 	git commit -m baz_commit &&
+@@ -1740,14 +1740,14 @@ test_expect_success GPG 'log --show-signature for merged tag with GPG failure' '
+ '
+ 
+ test_expect_success GPGSM 'log --graph --show-signature for merged tag x509' '
+-	test_when_finished "git reset --hard && git checkout master" &&
++	test_when_finished "git reset --hard && git checkout main" &&
+ 	test_config gpg.format x509 &&
+ 	test_config user.signingkey $GIT_COMMITTER_EMAIL &&
+-	git checkout -b plain-x509 master &&
++	git checkout -b plain-x509 main &&
+ 	echo aaa >bar &&
+ 	git add bar &&
+ 	git commit -m bar_commit &&
+-	git checkout -b tagged-x509 master &&
++	git checkout -b tagged-x509 main &&
+ 	echo bbb >baz &&
+ 	git add baz &&
+ 	git commit -m baz_commit &&
+@@ -1761,14 +1761,14 @@ test_expect_success GPGSM 'log --graph --show-signature for merged tag x509' '
+ '
+ 
+ test_expect_success GPGSM 'log --graph --show-signature for merged tag x509 missing key' '
+-	test_when_finished "git reset --hard && git checkout master" &&
++	test_when_finished "git reset --hard && git checkout main" &&
+ 	test_config gpg.format x509 &&
+ 	test_config user.signingkey $GIT_COMMITTER_EMAIL &&
+-	git checkout -b plain-x509-nokey master &&
++	git checkout -b plain-x509-nokey main &&
+ 	echo aaa >bar &&
+ 	git add bar &&
+ 	git commit -m bar_commit &&
+-	git checkout -b tagged-x509-nokey master &&
++	git checkout -b tagged-x509-nokey main &&
+ 	echo bbb >baz &&
+ 	git add baz &&
+ 	git commit -m baz_commit &&
+@@ -1781,14 +1781,14 @@ test_expect_success GPGSM 'log --graph --show-signature for merged tag x509 miss
+ '
+ 
+ test_expect_success GPGSM 'log --graph --show-signature for merged tag x509 bad signature' '
+-	test_when_finished "git reset --hard && git checkout master" &&
++	test_when_finished "git reset --hard && git checkout main" &&
+ 	test_config gpg.format x509 &&
+ 	test_config user.signingkey $GIT_COMMITTER_EMAIL &&
+-	git checkout -b plain-x509-bad master &&
++	git checkout -b plain-x509-bad main &&
+ 	echo aaa >bar &&
+ 	git add bar &&
+ 	git commit -m bar_commit &&
+-	git checkout -b tagged-x509-bad master &&
++	git checkout -b tagged-x509-bad main &&
+ 	echo bbb >baz &&
+ 	git add baz &&
+ 	git commit -m baz_commit &&
+@@ -1838,7 +1838,7 @@ test_expect_success 'log diagnoses bogus HEAD' '
+ 	git init empty &&
+ 	test_must_fail git -C empty log 2>stderr &&
+ 	test_i18ngrep does.not.have.any.commits stderr &&
+-	echo 1234abcd >empty/.git/refs/heads/master &&
++	echo 1234abcd >empty/.git/refs/heads/main &&
+ 	test_must_fail git -C empty log 2>stderr &&
+ 	test_i18ngrep broken stderr &&
+ 	echo "ref: refs/heads/invalid.lock" >empty/.git/HEAD &&
+diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+index 8a2f8984f6..3f82c651b4 100755
+--- a/t/t4203-mailmap.sh
++++ b/t/t4203-mailmap.sh
+@@ -2,7 +2,7 @@
+ 
+ test_description='.mailmap configurations'
+ 
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+@@ -197,7 +197,7 @@ test_expect_success 'No mailmap files, but configured' '
+ 
+ test_expect_success 'setup mailmap blob tests' '
+ 	git checkout -b map &&
+-	test_when_finished "git checkout master" &&
++	test_when_finished "git checkout main" &&
+ 	cat >just-bugs <<- EOF &&
+ 	Blob Guy <bugs@company.xx>
+ 	EOF
+diff --git a/t/t4204-patch-id.sh b/t/t4204-patch-id.sh
+index 46ecb777f4..f120857c20 100755
+--- a/t/t4204-patch-id.sh
++++ b/t/t4204-patch-id.sh
+@@ -2,7 +2,7 @@
+ 
+ test_description='git patch-id'
+ 
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+@@ -16,9 +16,9 @@ test_expect_success 'setup' '
+ 	test_write_lines $as b >foo &&
+ 	test_write_lines $as b >bar &&
+ 	git commit -a -m first &&
+-	git checkout -b same master &&
++	git checkout -b same main &&
+ 	git commit --amend -m same-msg &&
+-	git checkout -b notsame master &&
++	git checkout -b notsame main &&
+ 	echo c >foo &&
+ 	echo c >bar &&
+ 	git commit --amend -a -m notsame-msg &&
+@@ -49,31 +49,31 @@ get_patch_id () {
  }
-@@ -24,7 +24,7 @@ test_expect_success setup '
- 	test_commit four &&
- 	git checkout --orphan newroot &&
- 	test_commit five &&
--	git checkout master
-+	git checkout main
+ 
+ test_expect_success 'patch-id detects equality' '
+-	get_patch_id master &&
++	get_patch_id main &&
+ 	get_patch_id same &&
+-	test_cmp patch-id_master patch-id_same
++	test_cmp patch-id_main patch-id_same
  '
  
- # Local branches
-@@ -64,7 +64,7 @@ test_expect_success 'merge octopus, non-fast-forward (ff)' '
- test_expect_success 'merge octopus, fast-forward (does not ff)' '
- 	t3033_reset &&
- 	git merge left right &&
--	# two (master) is not an ancestor of three (left) and four (right)
-+	# two (main) is not an ancestor of three (left) and four (right)
- 	test_must_fail git rev-parse --verify HEAD^4 &&
- 	git rev-parse HEAD^1 HEAD^2 HEAD^3 | sort >actual &&
- 	git rev-parse two three four | sort >expect &&
-@@ -121,7 +121,7 @@ test_expect_success 'merge FETCH_HEAD octopus fast-forward (does not ff)' '
- 	t3033_reset &&
- 	git fetch . left right &&
- 	git merge FETCH_HEAD &&
--	# two (master) is not an ancestor of three (left) and four (right)
-+	# two (main) is not an ancestor of three (left) and four (right)
- 	test_must_fail git rev-parse --verify HEAD^4 &&
- 	git rev-parse HEAD^1 HEAD^2 HEAD^3 | sort >actual &&
- 	git rev-parse two three four | sort >expect &&
-diff --git a/t/t6434-merge-recursive-rename-options.sh b/t/t6434-merge-recursive-rename-options.sh
-index 7e877e96e2..a11707835b 100755
---- a/t/t6434-merge-recursive-rename-options.sh
-+++ b/t/t6434-merge-recursive-rename-options.sh
-@@ -5,11 +5,11 @@ test_description='merge-recursive rename options
- Test rename detection by examining rename/delete conflicts.
- 
- * (HEAD -> rename) rename
--| * (master) delete
-+| * (main) delete
- |/
- * base
- 
--git diff --name-status base master
-+git diff --name-status base main
- D	0-old
- D	1-old
- D	2-old
-@@ -26,7 +26,7 @@ they are rounded down (see, e.g., Documentation/diff-generate-patch.txt, which
- mentions this in a different context).
+ test_expect_success 'patch-id detects inequality' '
+-	get_patch_id master &&
++	get_patch_id main &&
+ 	get_patch_id notsame &&
+-	! test_cmp patch-id_master patch-id_notsame
++	! test_cmp patch-id_main patch-id_notsame
  '
+ 
+ test_expect_success 'patch-id supports git-format-patch output' '
+-	get_patch_id master &&
++	get_patch_id main &&
+ 	git checkout same &&
+ 	git format-patch -1 --stdout | calc_patch_id same &&
+-	test_cmp patch-id_master patch-id_same &&
++	test_cmp patch-id_main patch-id_same &&
+ 	set $(git format-patch -1 --stdout | git patch-id) &&
+ 	test "$2" = $(git rev-parse HEAD)
+ '
+ 
+ test_expect_success 'whitespace is irrelevant in footer' '
+-	get_patch_id master &&
++	get_patch_id main &&
+ 	git checkout same &&
+ 	git format-patch -1 --stdout | sed "s/ \$//" | calc_patch_id same &&
+-	test_cmp patch-id_master patch-id_same
++	test_cmp patch-id_main patch-id_same
+ '
+ 
+ cmp_patch_id () {
+@@ -91,7 +91,7 @@ test_patch_id_file_order () {
+ 	shift
+ 	name="order-${1}-$relevant"
+ 	shift
+-	get_top_diff "master" | calc_patch_id "$name" "$@" &&
++	get_top_diff "main" | calc_patch_id "$name" "$@" &&
+ 	git checkout same &&
+ 	git format-patch -1 --stdout -O foo-then-bar |
+ 		calc_patch_id "ordered-$name" "$@" &&
+@@ -140,10 +140,10 @@ test_expect_success '--stable overrides patchid.stable = false' '
+ '
+ 
+ test_expect_success 'patch-id supports git-format-patch MIME output' '
+-	get_patch_id master &&
++	get_patch_id main &&
+ 	git checkout same &&
+ 	git format-patch -1 --attach --stdout | calc_patch_id same &&
+-	test_cmp patch-id_master patch-id_same
++	test_cmp patch-id_main patch-id_same
+ '
+ 
+ test_expect_success 'patch-id respects config from subdir' '
+diff --git a/t/t4207-log-decoration-colors.sh b/t/t4207-log-decoration-colors.sh
+index 6c868df38d..b870942498 100755
+--- a/t/t4207-log-decoration-colors.sh
++++ b/t/t4207-log-decoration-colors.sh
+@@ -5,7 +5,7 @@
+ 
+ test_description='Test for "git log --decorate" colors'
  
 -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
 +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
  . ./test-lib.sh
-@@ -121,7 +121,7 @@ test_expect_success 'setup repo' '
- 	get_expected_stages 2 &&
- 	get_expected_stages 3 &&
- 	check_50="false" &&
--	tail="HEAD^ -- HEAD master"
-+	tail="HEAD^ -- HEAD main"
- '
+@@ -43,13 +43,13 @@ test_expect_success setup '
  
- test_expect_success 'setup thresholds' '
-diff --git a/t/t6436-merge-overwrite.sh b/t/t6436-merge-overwrite.sh
-index 7d5691c1b4..362ae37a12 100755
---- a/t/t6436-merge-overwrite.sh
-+++ b/t/t6436-merge-overwrite.sh
-@@ -4,7 +4,7 @@ test_description='git-merge
+ cat >expected <<EOF
+ ${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_HEAD}HEAD ->\
+- ${c_reset}${c_branch}master${c_reset}${c_commit},\
++ ${c_reset}${c_branch}main${c_reset}${c_commit},\
+  ${c_reset}${c_tag}tag: v1.0${c_reset}${c_commit},\
+  ${c_reset}${c_tag}tag: B${c_reset}${c_commit})${c_reset} B
+ ${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A1${c_reset}${c_commit},\
+- ${c_reset}${c_remoteBranch}other/master${c_reset}${c_commit})${c_reset} A1
++ ${c_reset}${c_remoteBranch}other/main${c_reset}${c_commit})${c_reset} A1
+ ${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_stash}refs/stash${c_reset}${c_commit})${c_reset}\
+- On master: Changes to A.t
++ On main: Changes to A.t
+ ${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A${c_reset}${c_commit})${c_reset} A
+ EOF
  
- Do not overwrite changes.'
- 
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -196,7 +196,7 @@ test_expect_success 'set up unborn branch and content' '
- '
- 
- test_expect_success 'will not clobber WT/index when merging into unborn' '
--	git merge master &&
-+	git merge main &&
- 	grep foo tracked-file &&
- 	git show :tracked-file >expect &&
- 	grep foo expect &&
-diff --git a/t/t6437-submodule-merge.sh b/t/t6437-submodule-merge.sh
-index 14fa46edf3..0f92bcf326 100755
---- a/t/t6437-submodule-merge.sh
-+++ b/t/t6437-submodule-merge.sh
+diff --git a/t/t4208-log-magic-pathspec.sh b/t/t4208-log-magic-pathspec.sh
+index 1938d4a58f..5e10136e9a 100755
+--- a/t/t4208-log-magic-pathspec.sh
++++ b/t/t4208-log-magic-pathspec.sh
 @@ -2,7 +2,7 @@
  
- test_description='merging with submodules'
+ test_description='magic pathspec tests using git-log'
  
 -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
 +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
  . ./test-lib.sh
-@@ -30,7 +30,7 @@ test_expect_success setup '
- 	test_tick &&
- 	git commit -m root &&
+@@ -29,7 +29,7 @@ test_expect_success '"git log :/a -- " should not be ambiguous' '
+ '
  
--	git checkout -b a master &&
-+	git checkout -b a main &&
- 	(cd sub &&
- 	 echo A > file &&
- 	 git add file &&
-@@ -40,7 +40,7 @@ test_expect_success setup '
- 	test_tick &&
- 	git commit -m a &&
+ test_expect_success '"git log :/detached -- " should find a commit only in HEAD' '
+-	test_when_finished "git checkout master" &&
++	test_when_finished "git checkout main" &&
+ 	git checkout --detach &&
+ 	# Must manually call `test_tick` instead of using `test_commit`,
+ 	# because the latter additionally creates a tag, which would make
+@@ -122,7 +122,7 @@ test_expect_success 'command line pathspec parsing for "git log"' '
+ 	git checkout HEAD^ &&
+ 	echo 2 >a &&
+ 	git commit -a -m "update a to 2" &&
+-	test_must_fail git merge master &&
++	test_must_fail git merge main &&
+ 	git add a &&
+ 	git log --merge -- a
+ '
+diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
+index 59c258429d..560127cc07 100755
+--- a/t/t4211-line-log.sh
++++ b/t/t4211-line-log.sh
+@@ -1,7 +1,7 @@
+ #!/bin/sh
  
--	git checkout -b b master &&
-+	git checkout -b b main &&
- 	(cd sub &&
- 	 echo B > file &&
- 	 git add file &&
-@@ -257,22 +257,22 @@ test_expect_success 'setup for recursive merge with submodule' '
- 	 (cd sub &&
- 	  git init &&
- 	  test_commit a &&
--	  git checkout -b sub-b master &&
-+	  git checkout -b sub-b main &&
- 	  test_commit b &&
--	  git checkout -b sub-c master &&
-+	  git checkout -b sub-c main &&
- 	  test_commit c &&
- 	  git checkout -b sub-bc sub-b &&
- 	  git merge sub-c &&
- 	  git checkout -b sub-cb sub-c &&
- 	  git merge sub-b &&
--	  git checkout master) &&
-+	  git checkout main) &&
- 	 git add sub &&
- 	 git commit -m a &&
--	 git checkout -b top-b master &&
-+	 git checkout -b top-b main &&
- 	 (cd sub && git checkout sub-b) &&
- 	 git add sub &&
- 	 git commit -m b &&
--	 git checkout -b top-c master &&
-+	 git checkout -b top-c main &&
- 	 (cd sub && git checkout sub-c) &&
- 	 git add sub &&
- 	 git commit -m c &&
-diff --git a/t/t6439-merge-co-error-msgs.sh b/t/t6439-merge-co-error-msgs.sh
-index e5542ceb24..e176475ed5 100755
---- a/t/t6439-merge-co-error-msgs.sh
-+++ b/t/t6439-merge-co-error-msgs.sh
+ test_description='test log -L'
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+diff --git a/t/t4211/history.export b/t/t4211/history.export
+index f9f41e211e..006972a1f2 100644
+--- a/t/t4211/history.export
++++ b/t/t4211/history.export
+@@ -316,7 +316,7 @@ long f(long x)
+ 	return s;
+ }
+ 
+-commit refs/heads/master
++commit refs/heads/main
+ mark :19
+ author Thomas Rast <trast@student.ethz.ch> 1362045024 +0100
+ committer Thomas Rast <trast@student.ethz.ch> 1362045024 +0100
+diff --git a/t/t4214-log-graph-octopus.sh b/t/t4214-log-graph-octopus.sh
+index 981b83513a..f70c46bbbf 100755
+--- a/t/t4214-log-graph-octopus.sh
++++ b/t/t4214-log-graph-octopus.sh
 @@ -2,7 +2,7 @@
  
- test_description='unpack-trees error messages'
+ test_description='git log --graph of skewed left octopus merge.'
  
 -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
 +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
  . ./test-lib.sh
-@@ -21,7 +21,7 @@ test_expect_success 'setup' '
- 	git add two three four five &&
- 	git commit -m Second &&
+@@ -20,7 +20,7 @@ test_cmp_colored_graph () {
+ test_expect_success 'set up merge history' '
+ 	test_commit initial &&
+ 	for i in 1 2 3 4 ; do
+-		git checkout master -b $i || return $?
++		git checkout main -b $i || return $?
+ 		# Make tag name different from branch name, to avoid
+ 		# ambiguity error when calling checkout.
+ 		test_commit $i $i $i tag$i || return $?
+diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
+index b3f3820dbb..0f16c4b9d5 100755
+--- a/t/t4216-log-bloom.sh
++++ b/t/t4216-log-bloom.sh
+@@ -1,7 +1,7 @@
+ #!/bin/sh
  
--	git checkout master &&
-+	git checkout main &&
- 	echo other >two &&
- 	echo other >three &&
- 	echo other >four &&
-@@ -86,7 +86,7 @@ test_expect_success 'cannot switch branches because of local changes' '
- 	echo two >rep/two &&
- 	git add rep/one rep/two &&
- 	git commit -m Fourth &&
--	git checkout master &&
-+	git checkout main &&
- 	echo uno >rep/one &&
- 	echo dos >rep/two &&
- 	test_must_fail git checkout branch 2>out &&
-@@ -131,7 +131,7 @@ test_expect_success 'not_uptodate_dir porcelain checkout error' '
- 	>rep2 &&
- 	git add rep rep2 &&
- 	git commit -m "added test as a file" &&
--	git checkout master &&
-+	git checkout main &&
- 	>rep/untracked-file &&
- 	>rep2/untracked-file &&
- 	test_must_fail git checkout branch 2>out &&
-diff --git a/t/t6501-freshen-objects.sh b/t/t6501-freshen-objects.sh
-index bda5069044..75210f012b 100755
---- a/t/t6501-freshen-objects.sh
-+++ b/t/t6501-freshen-objects.sh
-@@ -25,7 +25,7 @@
- #      to refer to an existing tree).
- 
- test_description='check pruning of dependent objects'
+ test_description='git log for a path with Bloom filters'
 -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
 +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
  . ./test-lib.sh
-@@ -70,7 +70,7 @@ for repack in '' true; do
- 		git checkout -b experiment &&
- 		commit abandon &&
- 		maybe_repack &&
--		git checkout master &&
-+		git checkout main &&
- 		git branch -D experiment
- 	'
+@@ -24,7 +24,7 @@ test_expect_success 'setup test - repo, commits, commit graph, log outputs' '
+ 	test_commit c10 file_to_be_deleted &&
+ 	git checkout -b side HEAD~4 &&
+ 	test_commit side-1 file4 &&
+-	git checkout master &&
++	git checkout main &&
+ 	git merge side &&
+ 	test_commit c11 file5 &&
+ 	mv file5 file5_renamed &&
+@@ -97,7 +97,7 @@ do
+ 		      "--topo-order" \
+ 		      "--date-order" \
+ 		      "--author-date-order" \
+-		      "--ancestry-path side..master"
++		      "--ancestry-path side..main"
+ 	do
+ 		test_expect_success "git log option: $option for path: $path" '
+ 			test_bloom_filters_used "$option -- $path" &&
+diff --git a/t/t4253-am-keep-cr-dos.sh b/t/t4253-am-keep-cr-dos.sh
+index ec7ba62d67..0ee69d2a0c 100755
+--- a/t/t4253-am-keep-cr-dos.sh
++++ b/t/t4253-am-keep-cr-dos.sh
+@@ -6,7 +6,7 @@
+ test_description='git-am mbox with dos line ending.
  
+ '
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+@@ -46,7 +46,7 @@ test_expect_success 'setup repository with dos files' '
+ 
+ test_expect_success 'am with dos files without --keep-cr' '
+ 	git checkout -b dosfiles initial &&
+-	git format-patch -k initial..master &&
++	git format-patch -k initial..main &&
+ 	test_must_fail git am -k -3 000*.patch &&
+ 	git am --abort &&
+ 	rm -rf .git/rebase-apply 000*.patch
+@@ -54,23 +54,23 @@ test_expect_success 'am with dos files without --keep-cr' '
+ 
+ test_expect_success 'am with dos files with --keep-cr' '
+ 	git checkout -b dosfiles-keep-cr initial &&
+-	git format-patch -k --stdout initial..master >output &&
++	git format-patch -k --stdout initial..main >output &&
+ 	git am --keep-cr -k -3 output &&
+-	git diff --exit-code master
++	git diff --exit-code main
+ '
+ 
+ test_expect_success 'am with dos files config am.keepcr' '
+ 	git config am.keepcr 1 &&
+ 	git checkout -b dosfiles-conf-keepcr initial &&
+-	git format-patch -k --stdout initial..master >output &&
++	git format-patch -k --stdout initial..main >output &&
+ 	git am -k -3 output &&
+-	git diff --exit-code master
++	git diff --exit-code main
+ '
+ 
+ test_expect_success 'am with dos files config am.keepcr overridden by --no-keep-cr' '
+ 	git config am.keepcr 1 &&
+ 	git checkout -b dosfiles-conf-keepcr-override initial &&
+-	git format-patch -k initial..master &&
++	git format-patch -k initial..main &&
+ 	test_must_fail git am -k -3 --no-keep-cr 000*.patch &&
+ 	git am --abort &&
+ 	rm -rf .git/rebase-apply 000*.patch
+@@ -78,14 +78,14 @@ test_expect_success 'am with dos files config am.keepcr overridden by --no-keep-
+ 
+ test_expect_success 'am with dos files with --keep-cr continue' '
+ 	git checkout -b dosfiles-keep-cr-continue initial &&
+-	git format-patch -k initial..master &&
++	git format-patch -k initial..main &&
+ 	append_cr <file1a >file &&
+ 	git commit -m "different patch" file &&
+ 	test_must_fail git am --keep-cr -k -3 000*.patch &&
+ 	append_cr <file2 >file &&
+ 	git add file &&
+ 	git am -3 --resolved &&
+-	git diff --exit-code master
++	git diff --exit-code main
+ '
+ 
+ test_expect_success 'am with unix files config am.keepcr overridden by --no-keep-cr' '
+@@ -93,9 +93,9 @@ test_expect_success 'am with unix files config am.keepcr overridden by --no-keep
+ 	git checkout -b unixfiles-conf-keepcr-override initial &&
+ 	cp -f file1 file &&
+ 	git commit -m "line ending to unix" file &&
+-	git format-patch -k initial..master &&
++	git format-patch -k initial..main &&
+ 	git am -k -3 --no-keep-cr 000*.patch &&
+-	git diff --exit-code -w master
++	git diff --exit-code -w main
+ '
+ 
+ test_done
+diff --git a/t/t4257-am-interactive.sh b/t/t4257-am-interactive.sh
+index 5344bd248a..aed8f4de3d 100755
+--- a/t/t4257-am-interactive.sh
++++ b/t/t4257-am-interactive.sh
+@@ -10,7 +10,7 @@ test_expect_success 'set up patches to apply' '
+ 	git format-patch --stdout -2 >mbox &&
+ 
+ 	git reset --hard unrelated &&
+-	test_commit conflict-master file master base
++	test_commit conflict-main file main base
+ '
+ 
+ # Sanity check our setup.
 -- 
 gitgitgadget
 
