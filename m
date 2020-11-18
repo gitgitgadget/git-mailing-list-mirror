@@ -2,98 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DDF8C56201
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 18:26:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59808C5519F
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 18:27:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 05C18246B0
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 18:26:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF922246BA
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 18:27:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yQ0OnfUD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uN9vgPd2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726599AbgKRS0a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Nov 2020 13:26:30 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:51233 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726397AbgKRS0a (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Nov 2020 13:26:30 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6C32510D020;
-        Wed, 18 Nov 2020 13:26:28 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Nq8Alg5HwiTXdNVS3dc4DiVOA5w=; b=yQ0Onf
-        UDJpsSNvguWvz0rSvuztFENGHiqQtCR61iwc8OEi3RZ/TsS+KzJwnWCiObhvgd/R
-        vcGhDpgBDSFx2v9z6mJgOUKtfLtGE0z4ey2TQAYOtwNd83dnn5eirNV0o5BHMcn2
-        oKB9d+BKQ1X1SYpx8KA+Tvf/+Bw/1Pm7GPKCk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=pfZwxdg16T1PvtpBHKZmDrK6nymkhK5h
-        uRgSISkyXgGkPnDH+oQ+j9te08PkO5qQKh4uV8T2AYvCqGWWI1NEpmDX9tEK/5tW
-        LV6ArTHydbhNZvwvAghVnf6wPI8KJ0mXFDaZE6s19m685ApX0KA09JKZOuAwdtGQ
-        +/CG1ZS5Jhw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 654B110D01F;
-        Wed, 18 Nov 2020 13:26:28 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AA3D810D01E;
-        Wed, 18 Nov 2020 13:26:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/3] t2106: make test independent of the current main
- branch name
-References: <pull.792.git.1605710947.gitgitgadget@gmail.com>
-        <d477b02b5a3ca6d2beef5bdea21407a3c555f83e.1605710947.git.gitgitgadget@gmail.com>
-Date:   Wed, 18 Nov 2020 10:26:23 -0800
-In-Reply-To: <d477b02b5a3ca6d2beef5bdea21407a3c555f83e.1605710947.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Wed, 18 Nov 2020
-        14:49:06 +0000")
-Message-ID: <xmqqsg961pyo.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726141AbgKRS1y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Nov 2020 13:27:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47720 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725794AbgKRS1x (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Nov 2020 13:27:53 -0500
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B672C0613D4
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 10:27:52 -0800 (PST)
+Received: by mail-ej1-x643.google.com with SMTP id y17so4108378ejh.11
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 10:27:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=655V0GcFNpoeYmdp1HsT0l9zb3kX1Sycpl69V3fpdrg=;
+        b=uN9vgPd2WV8punZijNK/11kTmv48WatQP+OYH1nzuvWE9R5SDwHPkdzL/dHUZHwxbt
+         xs1tVPRRSs+fQpTmw+IeM2fV50h3COL6S4sZxyXCtxgz03awRHhBc2V6ddv0janyuNs9
+         qt5BJYpHnvfhiMXc+gnFzDcqkKxmrD+Gubt3SSxVl8/QgA5vLPHBUYO4dh534Btnup03
+         uZcvZOc0MDGJR8ZpEt0SAckYouh1vJ7W3D8Yh+cyu03gI11cNh2ROjDShYCWW3YM6zpb
+         VLnSYJnkZi2wXyMc9O2UcvlyOks0PIzhVmN3auTu2oR+voTM2A+Uv8LnUEivAS9tWGAW
+         XJHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=655V0GcFNpoeYmdp1HsT0l9zb3kX1Sycpl69V3fpdrg=;
+        b=hEUEwjfi97unjMEd+FpT/a4rYdgUcHABR5wWihPOzFZNNZrlkWBEoXKjL3DzToD/RV
+         DnIB3SOvQ5tWmFKjb7wPmPz7gZLFYyuqoLo9mhhUXNqDgKXVtR19S3b3jf+lBpZJMxa1
+         NHQYqDFPD4slj9PtK772QMkcUXwn4bi8Qop8Bwir8R1dYoM/UbaWZln29425UfoZIReZ
+         Zl5SJ7D+EH5enjbH2kGRP39sZVSBS222XaqNAKqrlzGVEHuiSIyV6x9KkiTNGUODqiJ0
+         bfXEivtX9ZntKrIPLlsOlP0cPLHinmIHO8VYFo2m4dp6tU49tdLIgsWeH2LZnO3iJpjQ
+         RF+Q==
+X-Gm-Message-State: AOAM532zIIkklJB6jM2fvBPQAiW8OZ55NIiJSIE8dHGzdAyr8+ctQ1Gp
+        W0jTVHnrDKKeKIsEaJGFgFI=
+X-Google-Smtp-Source: ABdhPJxkjXRXnBUM75CI69n3KgwaWqup5gzOpXEDe6dFOgl+/37gBMawjiGCcAdrh3IMX8US+H34fg==
+X-Received: by 2002:a17:906:4712:: with SMTP id y18mr24325222ejq.51.1605724070875;
+        Wed, 18 Nov 2020 10:27:50 -0800 (PST)
+Received: from evledraar (ip18-11-210-87.adsl2.static.versatel.nl. [87.210.11.18])
+        by smtp.gmail.com with ESMTPSA id bg4sm13446011ejb.24.2020.11.18.10.27.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Nov 2020 10:27:50 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Drew DeVault <sir@cmpwn.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        lanodan <contact+git@hacktivis.me>
+Subject: Re: [PATCH v3] help.c: configurable suggestions
+References: <xmqqima237qt.fsf@gitster.c.googlers.com> <C76K6Q09ATLR.1OI5KW390LKFX@taiga>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 26.3; mu4e 1.4.13
+In-reply-to: <C76K6Q09ATLR.1OI5KW390LKFX@taiga>
+Date:   Wed, 18 Nov 2020 19:27:49 +0100
+Message-ID: <877dqir04a.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 914358E6-29CB-11EB-9DA2-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> We do have this wonderful shortcut `git checkout -` to go back to the
-> previous branch, thanks to the reflog.
+On Wed, Nov 18 2020, Drew DeVault wrote:
 
-;-)
+> On Wed Nov 18, 2020 at 12:16 PM EST, Junio C Hamano wrote:
+>> It is unclear from this description alone why this is needed. The
+>> seller of this change needs to emphasize how this is better than
+>> setting the variable to "0" (do not autocorrect). My guess is that
+>> some users do not even need the suggestion of correct spelling when
+>> they made a typo?
+>
+> This is one reason. Another is that spell checking can be
+> computationally expensive, and take an annoyingly long time on low-end
+> devices.
 
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  t/t2106-update-index-assume-unchanged.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t2106-update-index-assume-unchanged.sh b/t/t2106-update-index-assume-unchanged.sh
-> index ff0947f388..3396f23363 100755
-> --- a/t/t2106-update-index-assume-unchanged.sh
-> +++ b/t/t2106-update-index-assume-unchanged.sh
-> @@ -20,7 +20,7 @@ test_expect_success 'do not switch branches with dirty file' '
->  	git checkout other &&
->  	echo dirt >file &&
->  	git update-index --assume-unchanged file &&
-> -	test_must_fail git checkout master
-> +	test_must_fail git checkout -
->  '
->  
->  test_done
+As an aside it would be interesting if you're in a position to test it
+whether it's the suggestion code itself that's so expensive, or e.g. the
+stat()-ing on "git xyz" looking for "git-xyz" in $PATH. I if it's
+FS-limited that there's easy optimization opportunities there.
