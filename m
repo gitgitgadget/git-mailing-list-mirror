@@ -8,67 +8,66 @@ X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FD14C5519F
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 19:25:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E329CC56201
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 19:26:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B7C2A2225B
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 19:25:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 70ED22225B
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 19:26:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mRuDAmEY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IKL5P1TC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726339AbgKRTZ3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Nov 2020 14:25:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56834 "EHLO
+        id S1726512AbgKRT0g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Nov 2020 14:26:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726107AbgKRTZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Nov 2020 14:25:29 -0500
+        with ESMTP id S1725782AbgKRT0g (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Nov 2020 14:26:36 -0500
 Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 215A2C0613D4
-        for <git@vger.kernel.org>; Wed, 18 Nov 2020 11:25:29 -0800 (PST)
-Received: by mail-wr1-x442.google.com with SMTP id j7so3359488wrp.3
-        for <git@vger.kernel.org>; Wed, 18 Nov 2020 11:25:29 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5336CC0613D4
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 11:26:36 -0800 (PST)
+Received: by mail-wr1-x442.google.com with SMTP id b6so3353224wrt.4
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 11:26:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:from:date:subject:fcc:content-transfer-encoding
          :mime-version:to:cc;
-        bh=KvKPCoShK0PCTxTVEmAqiSqBspvDtYJYt1J57Tv6cGM=;
-        b=mRuDAmEYIB/qIvbdH8TG0kejWsuLeepO1TcVEVvmxwuz1hW8YX6J5q7IRcyQqDvvf7
-         L0leSdhXD1naxbJ8ueoSJScModizMU1Ce2FgIREvLG73mb+0xBAUye64Fn9XbF5DI1Wc
-         4F71lq45alUCEIiKTO3sXbmQa++UWf1QzWj03VnDeC1lRpPQIwfPZUiWSaxGTM8GZeP4
-         fddCnYxhVl/Rq4mzjuG+HB9pIvO2rj6JiSmSnE6JevwxxxZKdezrXzJ8PL6rYzlBcvgK
-         EInbVMWvsrYpPzVJXXAnGjXm5x1X+16zrvho812zWbbEYRtqlCiwk9WJlgJ9Wk0ci7BP
-         6KRQ==
+        bh=Pb1g0labPd9S8JYkIOuVXI/tu3oUpuX/P2m7OmA4wHc=;
+        b=IKL5P1TClhZXaePfzq/ONfibg+FLQFCZ5R7uilUjsbUsh8a690kHzh8V/aBVBsv4yZ
+         rTXaEOJdl4WYwGQn0mtI60/sTL0ek+nKBQzzmzFFTRzOJOrJvTS1rMhbMFRuA3CiH1Qu
+         mhYKQ4QI2dfZ8e0STcYAE/HV1yNn9c3tIQXU1i+NzKY+Vliu9Awf2VqXSzDtcTaePdGF
+         8M1xXlWoQp5XTrkVLRqrgmnsljVLHK4nz4zQdqxfxUMfspGwr5Wqrbtk+OoNVxNkAkwI
+         VGsHsH9zAIzZVuPRLWkg0YA3LR8UEX7pB6YUktA/CMsBT0BzxXsvT/N1jgAkEUppG4dj
+         jrYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=KvKPCoShK0PCTxTVEmAqiSqBspvDtYJYt1J57Tv6cGM=;
-        b=oM0iJIaxoTpkQqAJp5ifndoX1LnfyldPw9uXI2Uo3gsGrd/RUoKMsj74sqoOrkB8CR
-         UkpSO5AnoFJElmhR6m779N3Q0xckGtcCuvdWId6HuI9k9s9Hsv11I5HRA9yOp6PufyFb
-         p6M9DlTS9jXPrLwmqVfJLomoTdAiC0+Lj5AmplMmDrUXX+DYKyNzS33M8h7jnVzTLCoy
-         BdKM8F9nfWOWjH5r/DUcqcAP9F4Gz4KJWjKbmvAxDGF9MH7qQ3FWGFGWWEaQ+IB4WSVT
-         EU14btSVC97BAq2puqbxOOrysW4N/lV6NnpyFTJ4JB+ZV8m7nEesUJL8kbM9Otul6DTC
-         hQMg==
-X-Gm-Message-State: AOAM531yNq6UkmKWsQBgD44CrDBFrBJHeZbkojOi1E/BDIpgu8qR7IHK
-        w0y/S0K5tZ3FpZaWlVa5A5lyQFnhJ0g=
-X-Google-Smtp-Source: ABdhPJzEV/YsaumN7t6vSOPYTErKvMi16+LVbP1HcOdt/tAkvHmISeGwrS7T1JSv2Eehh6vWiAYSYQ==
-X-Received: by 2002:a5d:4e4e:: with SMTP id r14mr6542269wrt.308.1605727527732;
-        Wed, 18 Nov 2020 11:25:27 -0800 (PST)
+        bh=Pb1g0labPd9S8JYkIOuVXI/tu3oUpuX/P2m7OmA4wHc=;
+        b=TSD8m0sdYqiQ/AaaSaKQNrrZD4+Zr+GUMoxhlKKFda7zIYY82zbgIUeblqUe4yld6d
+         0oP/p9Si4R6WApmL943Q6y4/ocD6+KHXP2fZkQDMyQjirAebecyBksj08qn90u1hJa7Q
+         2Q3Az2jcgos94IEKl08IH5sviSI4zbELbd44nGNtU+If2gjPh9pvN5LrBKSkaVdhwP8t
+         +ATvvJ6wm56APlKsDe35FxKA61Xq0kdM9+ixj++SVbF3QTkitW9n57qbT+QTT8ANTrAV
+         mg2LaFpCxy4TTp1QYvB+/4pw/WtyMN52/Tkzu1uDYGTkSnDosWUxA+q/kijtVo9mrXn/
+         3qeg==
+X-Gm-Message-State: AOAM531qq6s2G36WhWFE0MsFZFo/sgTKvAcD1plC87hGLGzQuGBfCNYr
+        wTaFpJvHzPR0by77e3YKWYH9AP7dfQo=
+X-Google-Smtp-Source: ABdhPJwKYkB3iQZttIVjOF1v+5naFYuKNgSOfTLoNW9tLU1YveI8gWVJ9kJIZX6kyqqhFfx9z8uDNw==
+X-Received: by 2002:adf:d4c6:: with SMTP id w6mr6743043wrk.71.1605727594937;
+        Wed, 18 Nov 2020 11:26:34 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l16sm33367800wrx.5.2020.11.18.11.25.27
+        by smtp.gmail.com with ESMTPSA id w186sm5143019wmb.26.2020.11.18.11.26.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2020 11:25:27 -0800 (PST)
-Message-Id: <pull.793.git.1605727526797.gitgitgadget@gmail.com>
+        Wed, 18 Nov 2020 11:26:34 -0800 (PST)
+Message-Id: <pull.794.git.1605727594021.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 18 Nov 2020 19:25:26 +0000
-Subject: [PATCH] t3040: remove stale note
+Date:   Wed, 18 Nov 2020 19:26:33 +0000
+Subject: [PATCH] t4015: let the test pass with any default branch name
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Alex Riesen <raa.lkml@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -76,36 +75,42 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This comment was most likely a "note to self" during the development of
-1c3e5c4ebc3 (Tests for core subproject support, 2007-04-19) and is
-neither needed nor comprehensible at this point. Let's remove it.
+We do not need to hard-code the actual branch name, as we have access to
+the reflog and can be a lot more precise at what we want.
+
+Strangely enough, this test case would have succeeded even with an
+overridden default branch name, obviously for the wrong reason. Let's
+verify that it passes for the expected reason, by looking for a
+tell-tale in Git's output.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
-    t3040: remove stale note
+    t4015: let the test pass with any default branch name
     
-    And yet another thing I noticed while working on 
+    Aaaaand another issue, also found while working on 
     https://github.com/gitgitgadget/git/pull/762.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-793%2Fdscho%2Ft3040-and-default-branch-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-793/dscho/t3040-and-default-branch-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/793
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-794%2Fdscho%2Ft4015-and-default-branch-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-794/dscho/t4015-and-default-branch-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/794
 
- t/t3040-subprojects-basic.sh | 3 ---
- 1 file changed, 3 deletions(-)
+ t/t4015-diff-whitespace.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/t/t3040-subprojects-basic.sh b/t/t3040-subprojects-basic.sh
-index b81eb5fd6f..6abdcbbc94 100755
---- a/t/t3040-subprojects-basic.sh
-+++ b/t/t3040-subprojects-basic.sh
-@@ -79,7 +79,4 @@ test_expect_success 'checkout in superproject' '
- 	git diff-index --exit-code --raw --cached save -- sub1
- '
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index 8bdaa0a693..c9dd62b70e 100755
+--- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -883,7 +883,8 @@ test_expect_success 'combined diff with autocrlf conversion' '
+ 	echo >x goodbye &&
+ 	git commit -m "the other side" x &&
+ 	git config core.autocrlf true &&
+-	test_must_fail git merge master &&
++	test_must_fail git merge @{2} >actual &&
++	test_i18ngrep "Automatic merge failed" actual &&
  
--# just interesting what happened...
--# git diff --name-status -M save master
--
- test_done
+ 	git diff >actual.raw &&
+ 	sed -e "1,/^@@@/d" actual.raw >actual &&
 
 base-commit: e31aba42fb12bdeb0f850829e008e1e3f43af500
 -- 
