@@ -2,141 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 478FEC5519F
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 06:49:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE60BC5519F
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 06:54:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6673324655
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 06:49:05 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="i0fsmXGb";
-	dkim=temperror (0-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JLaqpb+W"
+	by mail.kernel.org (Postfix) with ESMTP id 9396A24655
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 06:54:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726300AbgKRGso (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Nov 2020 01:48:44 -0500
-Received: from wout2-smtp.messagingengine.com ([64.147.123.25]:33161 "EHLO
-        wout2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725794AbgKRGso (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 18 Nov 2020 01:48:44 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 257D9D1A;
-        Wed, 18 Nov 2020 01:48:43 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Wed, 18 Nov 2020 01:48:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm2; bh=YpLbG9z7Hmy++pe2fa4PpwXGYzP
-        U48pKAnwrCxS54MA=; b=i0fsmXGbNy7XpIRIcdC23pkymZ0pOwk0RxcDVIymeWJ
-        KeRWrYR0BiG1CGFdkrRGcx4bosN1sJG5yOkSrTAr+2wDIn/npmkVrlZLwzcQUwb5
-        IudrciT4hhSs0rFI9BhQmm4X6fcvGBx+9fUIh+f/xs4BwD2tyuboLV5zQDgI+evH
-        RVfp8HEjD8FgiW+s/OmM/G34UVskJXX2FaoF2K8xmfqSwdLpUdTEyWW2ve8uimCV
-        NbhYBoy1u+Cv+E4gOhhJN3v46dLsMQU19sGfOgY4uwt/UR0TILkevVjqnLemeM0z
-        UIwYdO0cipMj6Z29iSXrDTNSQKqwqdfhwVumKX4d8pg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=YpLbG9
-        z7Hmy++pe2fa4PpwXGYzPU48pKAnwrCxS54MA=; b=JLaqpb+WYKHWu61J4MX1RP
-        dYzny1O4IcZtMyKDw1mZuSCzAzf3AmBzJl4ivWIYdykGfXeExiYgSioRP9l+bK7y
-        AirCAfeZuCAqI6xs8U6zU9ddU+kt8B4DvLfE0HuA6wXa/YMTUAnK+PPGdc31Ab6G
-        PZpavuc91FEPCrPe+PFPq15yOHT0EyXKeMXXiPqGsSHN9j4fyI07XLN1clTOAEIp
-        D4ptWEgCvkuH7A8fmhQvkBWxTD1kEP9negexst/DR/9MRBz72C2BST6R/ZyytDIE
-        sEFUYgpgyNujvBs4rXfQzeWdlGrdCoTGntficcbkee01NI3nF0DEbxwbqgvehuaw
-        ==
-X-ME-Sender: <xms:ysO0X9KpsbhoNjlHoJ5JgG65fvzFJE6edF-Yu69CUa6UEdZO8D3h9Q>
-    <xme:ysO0X5IWxjP37x-A5RQM38V_pqcJUZQ64F1izqxUuYQ8fjk3cR7Xi2IXaxxRs1b5E
-    zIDOIgo5TbITbl3Fw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudefgedguddttdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtd
-    fhvdejkedthfehvdelgfetgfdvtedthfenucfkphepjeejrddukeefrdejrddvfeejnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimh
-X-ME-Proxy: <xmx:ysO0X1sgl2XpH760_QTnXrFlqz_SI3Ttxt1M8U0yymSm27gpWCisZA>
-    <xmx:ysO0X-b0MQvabBYh4nFvwK_ucUHJ8H1_BM4Qi4F7_gHySC03F5oKiQ>
-    <xmx:ysO0X0aulxpCq17EC3NutvHdyKIx7isLJvLXCvA2L6xVW-i4xWVwwQ>
-    <xmx:ysO0X_x2INN_-LDu6z4BBswA0XhrCBztA_aBw8mIPTeejPGXu0NJ9g>
-Received: from vm-mail.pks.im (x4db707ed.dyn.telefonica.de [77.183.7.237])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 9BD8E3064AAA;
-        Wed, 18 Nov 2020 01:48:41 -0500 (EST)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 2259bffc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 18 Nov 2020 06:48:37 +0000 (UTC)
-Date:   Wed, 18 Nov 2020 07:48:36 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, gitster@pobox.com, szeder.dev@gmail.com
-Subject: Re: [PATCH v4 1/4] t1400: avoid touching refs on filesystem
-Message-ID: <X7TDxPFjrG4vruHx@ncase>
-References: <cover.1604501265.git.ps@pks.im>
- <cover.1605254957.git.ps@pks.im>
- <617d48b00a13c8ef82749f0b610997625f6cf222.1605254957.git.ps@pks.im>
- <20201113204031.GA780435@coredump.intra.peff.net>
+        id S1726472AbgKRGyi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Nov 2020 01:54:38 -0500
+Received: from cloud.peff.net ([104.130.231.41]:33548 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725794AbgKRGyi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Nov 2020 01:54:38 -0500
+Received: (qmail 21480 invoked by uid 109); 18 Nov 2020 06:54:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 18 Nov 2020 06:54:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9510 invoked by uid 111); 18 Nov 2020 06:54:36 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 18 Nov 2020 01:54:36 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 18 Nov 2020 01:54:37 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 15/16] commit-reach: make can_all_from_reach... linear
+Message-ID: <20201118065437.GA16996@coredump.intra.peff.net>
+References: <223b14f7-213f-4d22-4776-22dcfd1806c2@web.de>
+ <7b95417a-c8fb-4f1e-cb09-c36804a3a4d0@web.de>
+ <20181005165157.GC11254@sigill.intra.peff.net>
+ <dca35e44-a763-bcf0-f457-b8dab53815cf@web.de>
+ <20181005190847.GC17482@sigill.intra.peff.net>
+ <c05f192b-4e89-48b0-1c23-b43ec6fdb74b@web.de>
+ <20181005194223.GA19428@sigill.intra.peff.net>
+ <c141fb44-904f-e8b6-119f-7d2d6bcfd81a@web.de>
+ <20181017083340.GB31932@sigill.intra.peff.net>
+ <20201118021605.GB360414@google.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Xb/TYaBvw429ANFy"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20201113204031.GA780435@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20201118021605.GB360414@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Nov 17, 2020 at 06:16:05PM -0800, Jonathan Nieder wrote:
 
---Xb/TYaBvw429ANFy
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Since this came up in [1], I took a glance at this.
+> 
+> I also think it looks reasonable, though it's possible to do better if
+> we're willing to (1) cast between pointers to function with different
+> signatures, which is portable in practice but I don't believe the C
+> standard speaks to and (2) conditionally make use of gcc extensions,
+> for typechecking.
 
-On Fri, Nov 13, 2020 at 03:40:31PM -0500, Jeff King wrote:
-> On Fri, Nov 13, 2020 at 09:12:31AM +0100, Patrick Steinhardt wrote:
->=20
-> > The testcase t1400 exercises the git-update-ref(1) utility. To do so,
-> > many tests directly read and write references via the filesystem,
-> > assuming that we always use loose and/or packed references. While this
-> > is true now, it'll change with the introduction of the reftable backend.
-> >=20
-> > Convert those tests to use git-update-ref(1) and git-show-ref(1) where
-> > possible. Furthermore, two tests are converted to not delete HEAD
-> > anymore, as this results in a broken repository. They've instead been
-> > updated to create a non-mandatory symybolic reference and delete that
-> > one instead.
->=20
-> s/symybolic/symbolic/
->=20
-> Other than, this whole series looks good to me. Thanks for taking the
-> time to do the extra cleanup (which ended up being way more complicated
-> than the original goal :) ).
+The C standard definitely is not OK with calling a function through a
+wrong declaration or cast. I won't find chapter and verse, but here's a
+practical example:
 
-Thanks!
+-- >8 --
+#include <stdio.h>
+#include <stdint.h>
 
-Junio, shall I fix this typo with another version or will you fix this
-up locally?
+void foo(uint32_t a, uint32_t b)
+{
+	printf("got a = %u\n", a);
+	printf("got b = %u\n", b);
+}
 
-Patrick
+typedef void (*almost_foo)(uint64_t, uint64_t);
 
---Xb/TYaBvw429ANFy
-Content-Type: application/pgp-signature; name="signature.asc"
+int main(void)
+{
+	almost_foo bar = (almost_foo)foo;
 
------BEGIN PGP SIGNATURE-----
+	printf("real call:\n");
+	foo(1, 2);
+	printf("via cast:\n");
+	bar(3, 4);
+	return 0;
+}
+-- >8 --
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl+0w8MACgkQVbJhu7ck
-PpSjMw//VOoNYiIKv3eXFHWOBWJhnv4L+/lUFe6wtBR1EMsXKU0Mo0RkUDCMYRKa
-xPaohhS367hqEcEfoPIDzVIbQjtA4ynOlsQFrPdFe/NQJpTfogeBMnpR5w3d3qbM
-RquhG1kd7YLT7OJmwnpgTAwq3jmvx6txc8kHBdNGJ1nvPTKN1xEWdPusC9fJvW4A
-b9vLY3rAbmrMXNj88ghZcMc14eQAW24g+0t8QxnvgIF+qm2C5B14oGUkp0JyCGwj
-zsHKw8xC1KadZuzo0Dq6duLh4pgyMjb1TRA3EayaOTnrZ/1N7Idqw0sLESq40pym
-wklShPoj/sIx8DogNCAHQI7Wy5jgVdHWAYd63/zTWdYS+gSsDwQziFevp6nkMewT
-LTxnc5xedAT68wT8ZrFMh1QuKKGiSF/pu2vLKF50QMZ9WFv3qhwckGH8fNoU/4Gu
-jhV9nRybBtzdxhj9CIkfNpSR+KfldJlHukWdRgFRTmwL+Qu0U8fqHF2AgWhY6ugP
-NMDBZK9N4Z272bzzd7O6vQi1ccC0t4jZjrc23G6FAYy8ypznt1szpENsL8oa04LY
-KG0pAcag8I/qs7S6jyuIE4mwRfCOMe+i2KuEmvpilYK4O/pxj6WmUA0Xuu6+RnJt
-GjqteMjt6ZJONGK2cu+wAhtOary5X/k9dPj93U/erwwtTK8kcDM=
-=WfI8
------END PGP SIGNATURE-----
+The caller thinks it's passing uint64_t integers, but the function
+thinks it's getting uint32_t integers. The output will depend on your
+calling conventions. If I compile it on my 64-bit Linux machine, it
+produces what you'd expect:
 
---Xb/TYaBvw429ANFy--
+  $ gcc foo.c
+  $ ./a.out
+  real call:
+  got a = 1
+  got b = 2
+  via cast:
+  got a = 3
+  got b = 4
+
+That's because we're using the System V AMD64 ABI convention, which
+passes the first six parameters via registers. And even after that, each
+parameter on the stack uses 8 bytes (even if it's smaller), so the two
+representations are equivalent.
+
+But if I compile it in 32-bit mode, it doesn't work:
+
+  $ gcc -m32 foo.c
+  $ ./a.out
+  real call:
+  got a = 1
+  got b = 2
+  via cast:
+  got a = 3
+  got b = 0
+
+That's because it's using the cdecl convention, which puts everything on
+the stack, and which uses a minimum of 4 bytes per parameter. So each
+64-bit value results in two 32-bit pushes onto the stack (of 0, and 3).
+
+Now in practice you're probably fine as long as the number and sizes of
+the parameters are the same between the function definition and what the
+caller casts to. And so if we're talking about casting individual
+parameters between a void parameter and another pointer, that would
+usually be fine (in practice; the standard only says that void can store
+the type of anything, so it _could_ be larger than some other pointers.
+I don't know of any modern systems where this is true, though).
+
+Which is all a roundabout way of saying that yes, I think this kind of
+cast is probably OK in practice.
+
+I _think_ the ccan type-checking macro you pointed to would catch this
+sufficiently on systems with typeof() that it would also protect systems
+with different calling conventions. But I admit it's pretty dense.
+
+So I dunno. The nice thing is that this puts the ugliness all inside of
+QSORT(), which becomes magically type-safe. But it involves importing a
+lot of tricky bits under the hood.
+
+The downside of René's patch is that it hides the declaration of the
+comparison function (and the typesafe wrapper) inside a macro. But the
+resulting code is (IMHO) pretty easy to comprehend.
+
+-Peff
