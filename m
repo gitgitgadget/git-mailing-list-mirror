@@ -2,94 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1765C5519F
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 16:02:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C577C5519F
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 16:46:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3583D247CB
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 16:02:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 15CA2208CA
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 16:46:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cKqGEi/i"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o+3IFset"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726199AbgKRQCD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Nov 2020 11:02:03 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59124 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726189AbgKRQCD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Nov 2020 11:02:03 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 52C1710C003;
-        Wed, 18 Nov 2020 11:02:01 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=yw0BZFl1fdeA
-        8nLnIvMhNzJW2ak=; b=cKqGEi/igJkrV86Brzx4SBL3/To6ZF8yQ5b+lDz2w3Nh
-        D78ow7yIX0PPFU73nCsxPDtZzY6LCkxJUQxvtR8p621NHEwa5FwEaGKz4a5mR7fE
-        DOSzfNc4qaxJG98i5gmZWYFF8KUwSjfe4aY/L2mNgTFAcxTVE15OQSxz7m4NB3w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=h8+4LS
-        Ri/NPWP69FqFrtIjxBXlYg6hfw/BPQgBCttFBUXlQ/Jt63ddH2Jhz4izwj6If2Tf
-        EqkzXyNbpgwE7LocBCAWmxICSonXcTd2SPkf8yoV/KOzur1J4R8reJat5ljOQjN0
-        /UtTXpDRo48V5r4bIqw9C+JvlUdWYxjCxx6uo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4A5C810C002;
-        Wed, 18 Nov 2020 11:02:01 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 375B210C001;
-        Wed, 18 Nov 2020 11:01:57 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] config: allow specifying config entries via envvar
- pairs
-References: <cover.1605269465.git.ps@pks.im>
-        <44e8dd50c6ea7cbcc5e4fc35c9b9057c0a52038c.1605269465.git.ps@pks.im>
-        <87mtzlflw7.fsf@evledraar.gmail.com>
-        <xmqqy2j1851k.fsf@gitster.c.googlers.com> <X7NtovvfE7IjWzie@ncase>
-        <xmqq4klo7992.fsf@gitster.c.googlers.com>
-        <87d00arczw.fsf@evledraar.gmail.com>
-Date:   Wed, 18 Nov 2020 08:01:55 -0800
-In-Reply-To: <87d00arczw.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Wed, 18 Nov 2020 14:49:39 +0100")
-Message-ID: <xmqqo8ju3b7w.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727220AbgKRQq5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Nov 2020 11:46:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60388 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726924AbgKRQq5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Nov 2020 11:46:57 -0500
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E07E9C0613D4
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 08:46:56 -0800 (PST)
+Received: by mail-pf1-x432.google.com with SMTP id c66so1770726pfa.4
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 08:46:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=w1DRZQTKVBy4L+DZdQr+4BVdmMPwMp5a9GadbhLFqZ0=;
+        b=o+3IFsetBgXCqJKE5+zj1J04sdXODiTpeZNzTfNooPcWSKlwbhvzIdayGjxOuAl2tZ
+         /HRcerDaoT4eq1CnEScroC2pvX6T2Ka8L1jvZBBgeusj+9bhkh/fe0EjsCMGzzOsbQaU
+         1UcpFer49Sf64HT9TbbG2DW62+nhrlbEitQghediGz5iGYmdw3jbGvxOljD/zEz8BJGf
+         lTlR8L9UbYmqYPGh61la3RFhoc/29xGv8fhhDokIliUnFeztxfmMzMVu9QzY69ecMmNn
+         NcBeuIfFd5sENcsYXqUAxB6bob3mpCxfIRaoOfv8KKRpHi8iRIlJ6YMKd264Qx4sQo5I
+         uBXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=w1DRZQTKVBy4L+DZdQr+4BVdmMPwMp5a9GadbhLFqZ0=;
+        b=PgYvdGkNA/5h4KFQ8KK/5EuIBYQ86Cxr8TwTvYa4G+C5N+lzMvu/MApQ1IUUW5u7Hb
+         OAVElrtAFECL15/LKLh6ioRQ7LL51VW6B3U+NJN72PTe/wTKZk3Tv2Do4bPWKaeYVbW9
+         tQL3MGyTsq05w5QiJrtwf+Gp2r9NbXQD+qF2pY/cqHonL7rV0r6yM/UDcWJSifkovtWc
+         VlJcFQ4QlPNm6+4ZjNHYm8RQ7j1LWL5e93eIx45wSy3Y+6x05IAokplItv2PLMZIU5Z9
+         U0k4Nn/LiG3VHHxgN4LA6kXXSDiKJniA90SHBwobYdhwpIKWvy95ZO307uWEtlj2ZmIP
+         3qvg==
+X-Gm-Message-State: AOAM530mFLROYTqJxSdxgrx6E6d21y+RyDFZbYKgSFN2tHplvzj7d3nY
+        mHhM32ho3ZF4nOzg0/CNwp1LrvPWTevXthom4vE6tAezEnWIbA==
+X-Google-Smtp-Source: ABdhPJwELFfn/jhPFhe+4j88cZDyxgNgel422dm+Jb8aIklpyTBqQlY/DfIlX4s14WpAQOj2idf7jIRqauRSaq8SV5k=
+X-Received: by 2002:a62:7ac2:0:b029:18b:c5bb:303d with SMTP id
+ v185-20020a627ac20000b029018bc5bb303dmr5233599pfc.71.1605718015941; Wed, 18
+ Nov 2020 08:46:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 62737FD2-29B7-11EB-89F6-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+From:   Peter Hadlaw <hadlawp@gmail.com>
+Date:   Wed, 18 Nov 2020 10:46:30 -0600
+Message-ID: <CABrPy+GrSB87mFm5tXsXkC+OKg6NBxUJA5b0NYsa18a8EbcrNw@mail.gmail.com>
+Subject: Keeping the original init.defaultBranch config value
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Hello,
 
-> Nobody in this thread has mentioned GIT_PUSH_OPTION_* which works prett=
-y
-> much like Patrick's suggestion, and it looks like --local-env-vars
-> misses those:
->
->     $ GIT_PUSH_OPTION_0=3Dfoo GIT_PUSH_OPTION_COUNT=3D20 git rev-parse =
---local-env-vars | grep GIT_PUSH
->     $
->
-> I haven't tested this, but I expect there's a bug where a push hook
-> itself does a local push to another repo and that repo has a hook, that
-> the push options are erroneously carried forward to the sub-process.
+Just wanted to confirm that in order to keep new repositories
+initializing with `master` as the default branch the command would be:
 
-True.
+```
+git config --global init.defaultBranch master
+```
 
-Nobody mentioned the environment variable in the discussion, and
-nobody discovered and was motivated enough to report and/or fix it,
-may be a good indication that these variables are not much used in
-real life and certainly not in combination with hooks that further
-push things out.
+Regards,
+Peter
