@@ -2,130 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63C38C5519F
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 18:30:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FB4AC56201
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 18:30:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CF78E20897
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 18:30:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 038D52168B
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 18:30:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wc+eyF1G"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NCoRoS0C"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726440AbgKRSaS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Nov 2020 13:30:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48096 "EHLO
+        id S1726510AbgKRSae (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Nov 2020 13:30:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726200AbgKRSaS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Nov 2020 13:30:18 -0500
-Received: from mail-qv1-xf41.google.com (mail-qv1-xf41.google.com [IPv6:2607:f8b0:4864:20::f41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F5DAC0613D4
-        for <git@vger.kernel.org>; Wed, 18 Nov 2020 10:30:18 -0800 (PST)
-Received: by mail-qv1-xf41.google.com with SMTP id ek7so1521091qvb.6
-        for <git@vger.kernel.org>; Wed, 18 Nov 2020 10:30:18 -0800 (PST)
+        with ESMTP id S1726466AbgKRSad (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Nov 2020 13:30:33 -0500
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86088C0613D4
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 10:30:33 -0800 (PST)
+Received: by mail-wr1-x444.google.com with SMTP id d12so3114382wrr.13
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 10:30:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=zWrkt3D1HXCFRRHBQasirjXrXIUYzPqwWPhJpHwI+TE=;
-        b=Wc+eyF1G28tqqsz7aFWo4+W2CSRgLujHX6/wo7k73456RM+/IeroN8RZ8GWt0Ce4vl
-         5wqDkTJkH2VPtxCWq83135BXRgu1Oi0CaLmHo7WOyk8n6XK/VdMgqhHh0v6SJ2fjbucs
-         10mghQZCvjFzoyqkFSC8QC4+WcRfr0rNlVCDfyp+D0Ua7lyAXEl5QjIFRYe5ZExfZe44
-         BfEYIHZsloaXviYUMGnDkjd81nuf9he6c1ZZVDSPs2NZiJn7mHk0S511ehTQZ/KWTwZd
-         mmP0BXRgQ5FDaz9W9Rbr3OYzd5+3CEMXN43H5wficKzFiS0iLVscwYNc2iUR+UcPNoW4
-         OkPw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=RVmK5NIPLLXSYaqZdPcfl+MAajr8mT15xa1RvA2Ml2I=;
+        b=NCoRoS0CFWqdKweAPYM/yWjD3P6KzNlqniVcaL7WtbhtnImXxsC8eA/oTqrYXBZnf/
+         frHLQBJ5+AxyK6LlVTsHZsh9dvp4HuZXi/gu4RlK/42LuRznz88lq/byBXcLHolJM1NU
+         dhC+NqVi6jn8jYqj2zygOMwHAyUhG164LmR6jbzaobr4WdNrggLViLf62IsZtMHovJ2W
+         q0EnW+w7O7PN/mlN0wzAevjpMrgUIRptxo8fDRFnDWln1nQj1Lv54+a3SC5qllvGYApx
+         hDgoaopQREkazGWgA7Vs0QpBXs/MvrAp7dzK+3GOAOssNg0Y0Xo/sYcmjZ1j8cysrk9i
+         cPEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=zWrkt3D1HXCFRRHBQasirjXrXIUYzPqwWPhJpHwI+TE=;
-        b=PjIFTRLH10gLspmcjzENPSnNH03jH0WAX7UefaOb2g9DBlIG2gzTdffFY1v7lmkuGw
-         e/NLQKO4TdJ1rcR4aSrk0D5/c7RKvDtrgKVW9hbl3C06YlUloRNIrKXXArcmsOMvsL7M
-         FMn3g6cVne5uuQmYtusbeYoHSFP4T5JgXiRuUXr8zykq0518DGkmFoHMLKlKjvBBYugC
-         mF+Awx2KCFnLOipORLLe0gcThtqoakVXvkU8lUdB4oy8MaVt2NS8n0ZPQdkRxBduH0je
-         vkO8yDzfIjndraLE30bvKbmRJjLpuaR2cF4At0YnDy295dwXIZUXKivQ9RJTHot6OE8l
-         lIHA==
-X-Gm-Message-State: AOAM531B/09E56XMoPUOPZ0DVN7R+3Xzk7c+heddLlWsAGZTC2HIhLC4
-        jcQI1C4w+1MKi27wwBMhU1o=
-X-Google-Smtp-Source: ABdhPJw7NQusH0Y8fVoQYycF0yjo0wGnCPrPjqTmyl60ovKBJoVd0BGVZ5Yv0YXTDZTVye0pK5BDzw==
-X-Received: by 2002:a0c:e18f:: with SMTP id p15mr6432254qvl.12.1605724217447;
-        Wed, 18 Nov 2020 10:30:17 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:805f:b8ae:cbb3:6b01? ([2600:1700:e72:80a0:805f:b8ae:cbb3:6b01])
-        by smtp.gmail.com with UTF8SMTPSA id a23sm17033472qtk.82.2020.11.18.10.30.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Nov 2020 10:30:16 -0800 (PST)
-Subject: Re: [PATCH v4 4/4] maintenance: use Windows scheduled tasks
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.776.v3.git.1605276024.gitgitgadget@gmail.com>
- <pull.776.v4.git.1605647598.gitgitgadget@gmail.com>
- <b8d86fb9832b59884d3d38791de252dcb71e3629.1605647598.git.gitgitgadget@gmail.com>
- <CAPig+cRFQfg-NLx5dO+BjQpYduhOYs-_+ZRd=DhO8ebWjGB0iA@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <e8922076-1ed4-b540-f1c9-9b4a8fa7a085@gmail.com>
-Date:   Wed, 18 Nov 2020 13:30:15 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101
- Thunderbird/83.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=RVmK5NIPLLXSYaqZdPcfl+MAajr8mT15xa1RvA2Ml2I=;
+        b=Q/qzrL3yx+SjKP7lPti3pgutlFmme2GNIUfUZwyU1W0cVcq1mvOihtSE3MLdpqOJx9
+         mwHoHY9B0bVi78ifKup4FWDOmBx0RC7DfECAMHaZ8h/B0vlL0tTwY+/G4OTDoNkzvdIS
+         zTI4HHpDMDKgaSEtWtYzy4YX5gmM0wRqY9OFiVy2H/VeLd1BZB5MJnRG/KuAwS49Va0v
+         52sweJqnXhOqza+Y75E8/Gpz01UUyMTk/Aca1Rr7Olh6t7zVHcZHzhvemWjiqqcOYUIX
+         QxEne46mXtrE9T7x3hUqEknhiVAesiC0ikxESRXXTKB8JM1O/2HUc0HTfNV50kxOC4Xd
+         40vw==
+X-Gm-Message-State: AOAM531bZzkiWnLCXMHJzoO4gLlZ38vy72zxUdY/hWw0ViPa8lYkMnV1
+        0KYMvoSx7oA0cy/pEWNwCHR5KlorDZA=
+X-Google-Smtp-Source: ABdhPJyvZ4PrLYnlCEGAa55f2eVZ9QGrkZCgM4OM+fnzEzN0IjyPs8meaJyNokZ3dHvn68YcBg5NiA==
+X-Received: by 2002:a5d:5405:: with SMTP id g5mr6251952wrv.350.1605724232277;
+        Wed, 18 Nov 2020 10:30:32 -0800 (PST)
+Received: from szeder.dev (78-131-14-45.pool.digikabel.hu. [78.131.14.45])
+        by smtp.gmail.com with ESMTPSA id p4sm5798751wmc.46.2020.11.18.10.30.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Nov 2020 10:30:31 -0800 (PST)
+Date:   Wed, 18 Nov 2020 19:30:22 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t5310-pack-bitmaps: skip JGit tests with SHA256
+Message-ID: <20201118183022.GA8396@szeder.dev>
+References: <20201113215307.20855-1-szeder.dev@gmail.com>
+ <nycvar.QRO.7.76.6.2011152252520.18437@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cRFQfg-NLx5dO+BjQpYduhOYs-_+ZRd=DhO8ebWjGB0iA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <nycvar.QRO.7.76.6.2011152252520.18437@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/18/2020 2:15 AM, Eric Sunshine wrote:
-> On Tue, Nov 17, 2020 at 4:13 PM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> [...]
->> Since the GIT_TEST_MAINT_SCHEDULER environment variable allows us to
->> specify 'schtasks' as the scheduler, we can test the Windows-specific
->> logic on a macOS platform. Thus, add a check that the XML file written
->> by Git is valid when xmllint exists on the system.
+On Sun, Nov 15, 2020 at 11:08:40PM +0100, Johannes Schindelin wrote:
+> Hi Gábor,
 > 
-> Nit: xmllint can be installed on Linux (and likely other platforms),
-> as well, so it's not clear why this calls out macOS specially. More
-> generally, it may not be important to call out xmllint at all in the
-> commit message; it's just _one_ thing being checked by a test which is
-> checking several other things not called out individually by the
-> commit message. Anyhow, this is minor; not worth a re-roll.
-
-Sorry, it should just say "other platforms"
-
->> diff --git a/builtin/gc.c b/builtin/gc.c
->> @@ -1671,6 +1671,167 @@ static int launchctl_update_schedule(int run_maintenance, int fd, const char *cm
->> +static int schtasks_schedule_task(const char *exec_path, enum schedule_priority schedule, const char *cmd)
->> +{
->> +       xmlpath =  xstrfmt("%s/schedule-%s.xml",
->> +                          the_repository->objects->odb->path,
->> +                          frequency);
+> On Fri, 13 Nov 2020, SZEDER Gábor wrote:
 > 
-> I missed this in the earlier rounds since I wasn't paying close enough
-> attention, but placing this XML file within the object database
-> directory (.git/objects/) feels rather odd, even if it is just a
-> temporary file. Using the .git/ directory itself might be better,
-> perhaps like this:
+> > In 't5310-pack-bitmaps.sh' two tests make sure that our pack bitmaps
+> > are compatible with JGit's bitmaps.  Alas, not even the most recent
+> > JGit version (5.9.0.202009080501-r) supports SHA256 yet, so when this
+> > test script is run with GIT_TEST_DEFAULT_HASH=sha256 on a setup with
+> > JGit installed in PATH, then these two tests fail.
 > 
->     struct strbuf xmlpath = STRBUF_INIT;
->     strbuf_git_common_path(&xmlpath, the_repository,
->         "schtasks-%s.xml", frequency);
->     ...
->     strbuf_release(&xmlpath);
+> I wonder whether there is a way to change the `JGIT` prereq in a way
+> that automagically will recognize a (future) SHA256-enabled JGit?
+> Something like
+> 
+> test_lazy_prereq JGIT '
+> 	jgit --version &&
+>         test_have_prereq !SHA1 ||
+> 	test "$(git rev-list -n 1 HEAD)" = "$(jgit rev-list -n 1 HEAD)"
+> '
+> 
+> What do you think?
 
-It does look odd, and in this case we could use the .git directory
-instead. I specifically use the objects directory for the maintenance
-lock in 'git maintenance run' to allow maintenance to run when
-GIT_OBJECT_DIRECTORY points to an alternate, allowing us to maintain
-object databases that don't have a full .git directory around them.
+I'm not sure.  It is surely a substantial effort to fully support
+SHA256, and I suppose there will be JGit versions with only partial
+support.  I'm worried that there will be versions that can already
+read SHA256 objects, but can't read/write SHA256 pack bitmaps, or
+can't transfer/negotiate SHA256 objects yet (for t5512), so even
+though they could fulfill such a prereq test above, the test would
+still fail.
 
-Thanks,
--Stolee
+
