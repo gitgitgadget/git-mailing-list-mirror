@@ -2,298 +2,197 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-15.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55487C56202
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 09:12:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39FD2C5519F
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 09:17:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E5B232467A
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 09:12:44 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H16DGsUV"
+	by mail.kernel.org (Postfix) with ESMTP id D6D642467A
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 09:17:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726110AbgKRJMX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Nov 2020 04:12:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46558 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725779AbgKRJMW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Nov 2020 04:12:22 -0500
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F907C0613D4
-        for <git@vger.kernel.org>; Wed, 18 Nov 2020 01:12:22 -0800 (PST)
-Received: by mail-oi1-x236.google.com with SMTP id l206so1409548oif.12
-        for <git@vger.kernel.org>; Wed, 18 Nov 2020 01:12:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=vc5DYiZdRgO5sVz0e7Ghg/OmDM7h3Ncde6PDmy/ZYBQ=;
-        b=H16DGsUVq1yM5QH0MqC+21+AZXn6/kfguukU+XnFkngevB7i7RFWOtEWQf4uK2LNtX
-         eBZc6yExH+bvSbY7Be03zVxWDU2yUI0lO3D6FKXWeqPwB/k9acc631mxKcmMFl8WeaaI
-         nYO9Q96YDO2Ge/jDIAsNInj3sfE00x4UTKU/FPxJ+KqMd23oXUpDEwnefbb1Hyp0Cn7X
-         34g/qSSXZ1J9LUrobQJ8Ag7LvtZ61tug9/yWcb315EOgP5zf6HS5hrtNOrP9NtJIg0/L
-         2fsBdHIZU9B5jdwGog9hh4+R8mxkHiIT1ouctAXY9MuAxA+9nFyPGeGjWlJ8WtrDBZpf
-         IgEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=vc5DYiZdRgO5sVz0e7Ghg/OmDM7h3Ncde6PDmy/ZYBQ=;
-        b=ivloqJjeQf5ZzQXaFC/VRu5AvRcYqO2ZwF5d50W+CsPto1MgTXJUXGenxlKkoQHglG
-         sweb/Y4XjqOT2sh54sUr9RDFbu41+cnHhVmUUq4IDEPlXDiVM/pCF//TXMl/G5CjeRrM
-         DKOzsYlKEH20kroB9LSOpTT2ObxNFCwSKavhWx8vumGi82V590KY6Vsil5irv9YX/pw2
-         XKHdZoM2lxa8h9/85nXUv5OM1t9H6FSDHdEbnnTVlEcJF/bft8hI++Zp/0YWg3Rf1KA6
-         ivyEe3mlnu1vrDghkqjf45I5h86M9Fr5nyVecgph8cU+5DiBDfY0U3kSwQQzm8+oX4pB
-         SYTg==
-X-Gm-Message-State: AOAM530TNL4wSe0C2sSUjZhO0P4v5mFjIaCNv21VxVYwBvPpepxC3DgD
-        aysCCvdLFctjXfEIWqsvGeCkd0vluYsIog==
-X-Google-Smtp-Source: ABdhPJxDYNnC3O11AM2D6qzVBcKNdvUq6zxTTnSu+CuP0jNYNn4fPa1yGj9/SgC/LiHtgw5Q6qW72Q==
-X-Received: by 2002:aca:5b85:: with SMTP id p127mr2180402oib.34.1605690741189;
-        Wed, 18 Nov 2020 01:12:21 -0800 (PST)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id e47sm7183769ote.50.2020.11.18.01.12.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2020 01:12:20 -0800 (PST)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Dominik Salvet <dominik.salvet@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [RFC/PATCH] Add fetch.updateHead option
-Date:   Wed, 18 Nov 2020 03:12:19 -0600
-Message-Id: <20201118091219.3341585-1-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.29.2
+        id S1726489AbgKRJRZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Nov 2020 04:17:25 -0500
+Received: from dd36226.kasserver.com ([85.13.153.21]:38166 "EHLO
+        dd36226.kasserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725804AbgKRJRZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Nov 2020 04:17:25 -0500
+Received: from client3368.fritz.box (i5C7445B5.versanet.de [92.116.69.181])
+        by dd36226.kasserver.com (Postfix) with ESMTPSA id 779F43C0B56;
+        Wed, 18 Nov 2020 10:17:22 +0100 (CET)
+Subject: Re: [PATCH v2 1/1] git-gui: Auto-rescan on activate
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     git@vger.kernel.org, mlevedahl@gmail.com,
+        Johannes.Schindelin@gmx.de, gitster@pobox.com
+References: <fe2f24e8-52f2-81fe-0ebd-ecd90b1acfb4@haller-berlin.de>
+ <20201103161631.89971-1-stefan@haller-berlin.de>
+ <20201103161631.89971-2-stefan@haller-berlin.de>
+ <14be00ae-c2b6-87eb-2f4b-964a6df7b230@haller-berlin.de>
+ <20201117073618.fjbi4ranmh5x3uxk@yadavpratyush.com>
+ <4a37f6ce-276f-1c7e-1252-085a6f28c95b@haller-berlin.de>
+ <20201117120519.nlm7hwnilzwalgho@yadavpratyush.com>
+From:   Stefan Haller <stefan@haller-berlin.de>
+Message-ID: <e691c62c-7fb2-6a7d-0f02-7c0ab021f738@haller-berlin.de>
+Date:   Wed, 18 Nov 2020 10:17:21 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.4.3
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20201117120519.nlm7hwnilzwalgho@yadavpratyush.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: de-DE
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Users might change the behavior when running "git fetch" so that the
-remote's HEAD symbolic ref is updated at certain point.
+On 17.11.20 13:05, Pratyush Yadav wrote:
+> On 17/11/20 12:13PM, Stefan Haller wrote:
+>> On 17.11.20 8:36, Pratyush Yadav wrote:
+>>> Hi Stefan,
+>>>
+>>> On 14/11/20 08:14PM, Stefan Haller wrote:
+>>>> On 03.11.20 17:16, Stefan Haller wrote:
+>>>>> Do an automatic rescan whenever the git-gui window receives focus. Most other
+>>>>> GUI tools do this, and it's very convenient; no more pressing F5 manually.
+>>>>>
+>>>>> People who don't like this behavior can turn it off in the Options dialog.
+>>>>
+>>>> Ping - any thoughts? I have been running with this patch for a few weeks
+>>>> now, and I already don't want to miss it any more.
+>>>
+>>> I have been staring at your patch for the last few days with indecision. 
+>>> I have finally made up my mind. I do not think it is a good idea to hurt 
+>>> the experience of a significant population of our users without at least 
+>>> telling them how they can fix it.
+>>>
+>>> The config option is not very visible at all. Experience has told me 
+>>> that people don't often go looking around in the options menu to find a 
+>>> fix for their problem. So we need to do a better job of educating them 
+>>> why they might be experiencing slowdowns and how they can avoid them.
+>>>
+>>> Let's take inspiration from git status. When the local branch diverges 
+>>> from the upstream branch, git status shows you how many commits your 
+>>> branch is ahead and how many commits behind upstream. This can be an 
+>>> expensive operation if the divergence point is far behind. In those 
+>>> cases, git status prints something like:
+>>>
+>>>   It took 30.00 seconds to calculate the branch ahead/behind values.
+>>>   You can use '--no-ahead-behind' to avoid this.
+>>>
+>>> This made me aware this option existed and that I can use it to avoid 
+>>> slowdowns.
+>>>
+>>> We should do something similar for the auto rescan. Measure how long it 
+>>> takes to finish the rescan and if it takes longer than X seconds then 
+>>> tell the user that they can use this option to disable this. If they 
+>>> don't mind the delay they can keep on using it.
+>>>
+>>> I am working on a patch to add this. Will send it in a day or two.
+>>
+>> Sounds good to me. While I personally don't think such a check is
+>> necessary in this case, I also have nothing against it if you find it
+>> important.
+>>
+>> It just needs to be possible to disable that check itself, too. I
+>> certainly wouldn't want to be bothered by it, even if the rescan should
+>> take longer than whatever threshold you decide on. So if you put up a
+>> dialog to inform the user, the dialog should ideally have a "Don't show
+>> again" option.
+> 
+> That's the plan. It will be a yes/no/cancel prompt. Saying yes or no 
+> sets auto rescan to on/off and the message won't pop up again. Saying 
+> cancel does nothing and you will see the popup again on the next long 
+> rescan.
 
-For example after running "git remote add" the remote HEAD is not
-set like it is with "git clone".
+Interesting. After thinking about this for a while, I'm not convinced
+that a Yes/No/Cancel dialog is the best user experience for this, for
+the following reasons:
 
-Setting "fetch.updatehead = missing" would probably be a sensible
-default that everyone would want, but for now the default behavior is to
-never update HEAD, so there shouldn't be any functional changes.
+- It isn't obvious whether clicking No will turn auto-rescan off only
+  for this repo, or globally (unless you provide two different buttons
+  for this).
 
-For the next major version of Git, we might want to change this default.
+- It doesn't teach users how they can turn it back on if they clicked No
+  too hastily (e.g. because they didn't immediately understand the
+  difference between No and Cancel).
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
+- It isn't really intuitively obvious what "Cancel" means. What is the
+  operation that is being cancelled here? The rescan itself has already
+  happened. (Yes, I know that the operation being cancelled is the
+  process of deciding whether the option should be turned off, but as I
+  said, I don't find this intuitive.)
 
-This is just a RFC, the tests are missing.
+I think it might be a better user experience to have a dialog like this:
 
- Documentation/config/fetch.txt  |  4 +++
- Documentation/config/remote.txt |  3 ++
- builtin/fetch.c                 | 53 ++++++++++++++++++++++++++++++++-
- remote.c                        | 21 +++++++++++++
- remote.h                        | 11 +++++++
- 5 files changed, 91 insertions(+), 1 deletion(-)
+      The automatic rescan on activating the application has
+      taken more than X seconds. If this bothers you, you can
+      turn it off in the Preferences dialog.
 
-diff --git a/Documentation/config/fetch.txt b/Documentation/config/fetch.txt
-index 6af6f5edb2..93d6c59fac 100644
---- a/Documentation/config/fetch.txt
-+++ b/Documentation/config/fetch.txt
-@@ -94,3 +94,7 @@ fetch.writeCommitGraph::
- 	merge and the write may take longer. Having an updated commit-graph
- 	file helps performance of many Git commands, including `git merge-base`,
- 	`git push -f`, and `git log --graph`. Defaults to false.
-+
-+fetch.updateHead::
-+  Defines when to update the remote HEAD symbolic ref. Values are 'never',
-+  'missing' (update only when HEAD is missing), and 'always'.
-diff --git a/Documentation/config/remote.txt b/Documentation/config/remote.txt
-index a8e6437a90..905661c7f7 100644
---- a/Documentation/config/remote.txt
-+++ b/Documentation/config/remote.txt
-@@ -84,3 +84,6 @@ remote.<name>.promisor::
- remote.<name>.partialclonefilter::
- 	The filter that will be applied when fetching from this
- 	promisor remote.
-+
-+remote.<name>.updateHead::
-+  Defines when to update the remote HEAD symbolic ref. See `fetch.updateHead`.
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index f9c3c49f14..b47b06f001 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -55,6 +55,8 @@ static int fetch_prune_tags_config = -1; /* unspecified */
- static int prune_tags = -1; /* unspecified */
- #define PRUNE_TAGS_BY_DEFAULT 0 /* do we prune tags by default? */
- 
-+static int fetch_update_head = FETCH_UPDATE_HEAD_DEFAULT;
-+
- static int all, append, dry_run, force, keep, multiple, update_head_ok;
- static int write_fetch_head = 1;
- static int verbosity, deepen_relative, set_upstream;
-@@ -120,6 +122,9 @@ static int git_fetch_config(const char *k, const char *v, void *cb)
- 		return 0;
- 	}
- 
-+	if (!strcmp(k, "fetch.updatehead"))
-+		return parse_update_head(&fetch_update_head, k, v);
-+
- 	return git_default_config(k, v, cb);
- }
- 
-@@ -1342,6 +1347,38 @@ static void backfill_tags(struct transport *transport, struct ref *ref_map)
- 	}
- }
- 
-+static void update_head(int config, const struct ref *head, const struct remote *remote)
-+{
-+	struct strbuf ref = STRBUF_INIT, target = STRBUF_INIT;
-+	const char *r, *head_name = NULL;
-+
-+	if (!head || !head->symref || !remote)
-+		return;
-+
-+	strbuf_addf(&ref, "refs/remotes/%s/HEAD", remote->name);
-+	skip_prefix(head->symref, "refs/heads/", &head_name);
-+	strbuf_addf(&target, "refs/remotes/%s/%s", remote->name, head_name);
-+
-+	r = refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
-+		ref.buf, RESOLVE_REF_READING,
-+		NULL, NULL);
-+
-+	if (r) {
-+		if (config == FETCH_UPDATE_HEAD_MISSING)
-+			/* already present */
-+			return;
-+		else if (config == FETCH_UPDATE_HEAD_ALWAYS && !strcmp(r, target.buf))
-+			/* already up-to-date */
-+			return;
-+		else
-+			/* should never happen */
-+			return;
-+	}
-+
-+	if (create_symref(ref.buf, target.buf, "remote update head"))
-+		warning(_("could not set remote head"));
-+}
-+
- static int do_fetch(struct transport *transport,
- 		    struct refspec *rs)
- {
-@@ -1351,6 +1388,7 @@ static int do_fetch(struct transport *transport,
- 	const struct ref *remote_refs;
- 	struct strvec ref_prefixes = STRVEC_INIT;
- 	int must_list_refs = 1;
-+	int need_update_head = 0, update_head_config = 0;
- 
- 	if (tags == TAGS_DEFAULT) {
- 		if (transport->remote->fetch_tags == 2)
-@@ -1382,8 +1420,18 @@ static int do_fetch(struct transport *transport,
- 				break;
- 			}
- 		}
--	} else if (transport->remote && transport->remote->fetch.nr)
-+	} else if (transport->remote && transport->remote->fetch.nr) {
-+		if (transport->remote->update_head)
-+			update_head_config = transport->remote->update_head;
-+		else
-+			update_head_config = fetch_update_head;
-+
-+		need_update_head = update_head_config && update_head_config != FETCH_UPDATE_HEAD_NEVER;
-+
-+		if (need_update_head)
-+			strvec_push(&ref_prefixes, "HEAD");
- 		refspec_ref_prefixes(&transport->remote->fetch, &ref_prefixes);
-+	}
- 
- 	if (tags == TAGS_SET || tags == TAGS_DEFAULT) {
- 		must_list_refs = 1;
-@@ -1427,6 +1475,9 @@ static int do_fetch(struct transport *transport,
- 		goto cleanup;
- 	}
- 
-+	if (need_update_head)
-+		update_head(update_head_config, find_ref_by_name(remote_refs, "HEAD"), transport->remote);
-+
- 	if (set_upstream) {
- 		struct branch *branch = branch_get("HEAD");
- 		struct ref *rm;
-diff --git a/remote.c b/remote.c
-index 8a6dbbb903..dad8062561 100644
---- a/remote.c
-+++ b/remote.c
-@@ -298,6 +298,25 @@ static void read_branches_file(struct remote *remote)
- 	remote->fetch_tags = 1; /* always auto-follow */
- }
- 
-+int parse_update_head(int *r, const char *var, const char *value)
-+{
-+	if (!r)
-+		return -1;
-+	else if (!value)
-+		return config_error_nonbool(var);
-+	else if (!strcmp(value, "never"))
-+		*r = FETCH_UPDATE_HEAD_NEVER;
-+	else if (!strcmp(value, "missing"))
-+		*r = FETCH_UPDATE_HEAD_MISSING;
-+	else if (!strcmp(value, "always"))
-+		*r = FETCH_UPDATE_HEAD_ALWAYS;
-+	else {
-+		error(_("malformed value for %s: %s"), var, value);
-+		return error(_("must be one of never, missing, or always"));
-+	}
-+	return 0;
-+}
-+
- static int handle_config(const char *key, const char *value, void *cb)
- {
- 	const char *name;
-@@ -418,6 +437,8 @@ static int handle_config(const char *key, const char *value, void *cb)
- 					 key, value);
- 	} else if (!strcmp(subkey, "vcs")) {
- 		return git_config_string(&remote->foreign_vcs, key, value);
-+	} else if (!strcmp(subkey, "updatehead")) {
-+		return parse_update_head(&remote->update_head, key, value);
- 	}
- 	return 0;
- }
-diff --git a/remote.h b/remote.h
-index 3211abdf05..c16a2d7b2e 100644
---- a/remote.h
-+++ b/remote.h
-@@ -21,6 +21,13 @@ enum {
- 	REMOTE_BRANCHES
- };
- 
-+enum {
-+	FETCH_UPDATE_HEAD_DEFAULT = 0,
-+	FETCH_UPDATE_HEAD_NEVER,
-+	FETCH_UPDATE_HEAD_MISSING,
-+	FETCH_UPDATE_HEAD_ALWAYS,
-+};
-+
- struct remote {
- 	struct hashmap_entry ent;
- 
-@@ -62,6 +69,8 @@ struct remote {
- 	int prune;
- 	int prune_tags;
- 
-+	int update_head;
-+
- 	/**
- 	 * The configured helper programs to run on the remote side, for
- 	 * Git-native protocols.
-@@ -372,4 +381,6 @@ int parseopt_push_cas_option(const struct option *, const char *arg, int unset);
- int is_empty_cas(const struct push_cas_option *);
- void apply_push_cas(struct push_cas_option *, struct remote *, struct ref *);
- 
-+int parse_update_head(int *r, const char *var, const char *value);
-+
- #endif
--- 
-2.29.2
+            [x] Don't show again
+                                             [OK]
 
+
+The only downside is that it's more work to implement, as you can't use
+tk_messageBox.
+
+All of this is just my humble opinion; if you decide to stick to your
+plan, that's ok with me too.
+
+
+>>>> Cc:-ing a few people who were involved in the discussion on Pratyush's
+>>>> similar patch last summer. [0]
+>>>>
+>>>>
+>>>> [0] <https://lore.kernel.org/git/20190728151726.9188-1-
+>>>>      me@yadavpratyush.com/>
+>>>>
+>>>>
+>>>>>
+>>>>> Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
+>>>>> ---
+>>>>>  git-gui.sh     | 5 +++++
+>>>>>  lib/option.tcl | 1 +
+>>>>>  2 files changed, 6 insertions(+)
+>>>>>
+>>>>> diff --git a/git-gui.sh b/git-gui.sh
+>>>>> index 867b8ce..14735a3 100755
+>>>>> --- a/git-gui.sh
+>>>>> +++ b/git-gui.sh
+>>>>> @@ -906,6 +906,7 @@ set font_descs {
+>>>>>  }
+>>>>>  set default_config(gui.stageuntracked) ask
+>>>>>  set default_config(gui.displayuntracked) true
+>>>>> +set default_config(gui.autorescan) true
+>>>>>
+>>>>>  ######################################################################
+>>>>>  ##
+>>>>> @@ -4007,6 +4008,10 @@ bind .   <Alt-Key-2> {focus_widget $::ui_index}
+>>>>>  bind .   <Alt-Key-3> {focus $::ui_diff}
+>>>>>  bind .   <Alt-Key-4> {focus $::ui_comm}
+>>>>>
+>>>>> +if {[is_config_true gui.autorescan]} {
+>>>>> +	bind .   <FocusIn>  { if {"%W" eq "."} do_rescan }
+>>>>> +}
+>>>>> +
+>>>>>  set file_lists_last_clicked($ui_index) {}
+>>>>>  set file_lists_last_clicked($ui_workdir) {}
+>>>>>
+>>>>> diff --git a/lib/option.tcl b/lib/option.tcl
+>>>>> index e43971b..9e83db7 100644
+>>>>> --- a/lib/option.tcl
+>>>>> +++ b/lib/option.tcl
+>>>>> @@ -145,6 +145,7 @@ proc do_options {} {
+>>>>>  		{b merge.diffstat {mc "Show Diffstat After Merge"}}
+>>>>>  		{t merge.tool {mc "Use Merge Tool"}}
+>>>>>
+>>>>> +		{b gui.autorescan  {mc "Auto-Rescan On Activate"}}
+>>>>>  		{b gui.trustmtime  {mc "Trust File Modification Timestamps"}}
+>>>>>  		{b gui.pruneduringfetch {mc "Prune Tracking Branches During Fetch"}}
+>>>>>  		{b gui.matchtrackingbranch {mc "Match Tracking Branches"}}
+>>>>> --
+>>>>> 2.29.2
+>>>>>
+>>>
+> 
