@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9ED4C6379D
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57000C64E7A
 	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 23:45:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7B0A0246CB
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 23:45:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EEDDE246BC
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 23:45:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WePlQzy8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AUdo9j2l"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727498AbgKRXpK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Nov 2020 18:45:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40720 "EHLO
+        id S1727448AbgKRXpD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Nov 2020 18:45:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727167AbgKRXpI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Nov 2020 18:45:08 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A43E6C0613D4
-        for <git@vger.kernel.org>; Wed, 18 Nov 2020 15:45:07 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id d12so4249436wrr.13
-        for <git@vger.kernel.org>; Wed, 18 Nov 2020 15:45:07 -0800 (PST)
+        with ESMTP id S1727430AbgKRXo6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Nov 2020 18:44:58 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6AC2C061A04
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 15:44:57 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id 10so5176145wml.2
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 15:44:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=z0LYoMA+xaLFi3o8Qms0m9V625e9yCYjjkCnFCpwHlE=;
-        b=WePlQzy8IK/DwISLXs3NMtjU/XCabxPMSvp31mtSWVMY/A+EzhoLK/XUKbi3s8yJPe
-         nXfXx+EXwcaAkIU1cWOj8CxYBItIfpFtZUeKzYoUqM8UVQr8ePByZzDXZEqpDvT7XiS9
-         Mvf0HxSSnaaZJjktCbyYNPKmaE8qYZg4GP986PIzuWS+O1Im1zPRYYf0pSH5vwCVLQ0w
-         NiR7pASjLQyGPMe5G4eyNE6KQmjY57E4/uF7SiE/2QY9/pDvxgYxmsuR9vtDVchYych0
-         5woePbsu1zzfR3HheTAXNBIqvCcFVTUGxDHF2gBtwOUt6hgmh11901H5WKZ50JsQnmOv
-         U76A==
+        bh=srepqrMzHgCKl5pLxTZobMSRrCuNdJsMV1unBJXAd+I=;
+        b=AUdo9j2lNUzurGEgkS5uAcQ3V9HJXLuJsBLtikKzbsC34wm591plzgyvFnfAoXds/o
+         IZAR20br4kz8j2Gbb1c7RPLVsLW8j6oAI18BcUZnGTTvlw/vXhAUr1r8IHnUdyfzgINA
+         d5t5mtb6xvcp/05sy/zmUcHYk/hMG9JPO4xWOCqd5fqp133z+4m5b8p2I21wSM8wHxj9
+         oDjQTBoe5foG+7gbZddvAwqH+OQ2fsQQBur4mITEqZOzicnsyFYx/ZBBYuJuiB60v5ZR
+         bXjOHFa0xf7u31exZhGzikhf8ca6tPwFoYG0VgD9FVKrspa1jx0AI+imWOgitEPrpqtE
+         Tm9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=z0LYoMA+xaLFi3o8Qms0m9V625e9yCYjjkCnFCpwHlE=;
-        b=iirPof0OJwf8NxygptTwtpWet6YEJwmfog8V89mzxrjz4sOaDdP1irUtMXZmvJ/ECd
-         WHXZZbb/0RC0oMfrkiHyeMyrxd2J7Guf/1us4qTn4ZOuTkGusp6kfI4JeTE8KPJh6x/U
-         gLCKk1gSKAZNxMObEMxjS51nNSN0IKmmu4zkxuD4cGQtLYMVDwGWefEKheuR7JPMNSkF
-         367IKfMRa7r1Oqs7coe7IF1UD23js90WLS8mfQnbpHo4JU3apNGxp3TIXF2Q12dsUzyj
-         Fsnslbqq8xgu26iqbnIMuXgAxB7ZGNwIurx915vrCUg3ZMxUTrLSQfOqUZmC0qWQR/uG
-         upeg==
-X-Gm-Message-State: AOAM533Sm4arZE0hnw65vn3Zf+P3SFtVr+qk1uOnJkBJ7aHG5GID9cWg
-        Nq6SLqrKn+NuY1ljj86HDvDr1sZs7io=
-X-Google-Smtp-Source: ABdhPJw1m6Nsoo21C8EShcU9L+KEhSZ+mneobABErCIMqtzAQziv3C5UAQ3jB14WNINx32lsm43IPg==
-X-Received: by 2002:adf:f5c8:: with SMTP id k8mr7483658wrp.2.1605743105535;
-        Wed, 18 Nov 2020 15:45:05 -0800 (PST)
+        bh=srepqrMzHgCKl5pLxTZobMSRrCuNdJsMV1unBJXAd+I=;
+        b=mCYMsPA/g1ItfaZ/llfgxKNI4AiuIwA7lI28c4sWn2K15hs8q/wLibgMhI+gySGlj+
+         O84I3e9pKlxt+2DatHcS7vlImPbtTlVwLsYBW9DqToGHYlEjLuiumg9d87YDuDAQrFfa
+         M2iBIlpKjrUtOLdXBJYFK2oO4+5Ahw2R1fOavLggUSiQZM+roU7seYgRUy7E/x1Q+fkB
+         Dho0s80OKBxiu0r1cDa1WbXGnLtDXjlAKJ2+FgTELs2LIQIbp1ljZd/J2+Lg+vtPS2Zc
+         YiwGVVpKe8BwDrA2nWzOi7YpDq1nz8XveodzMofdwIIsnxHvL4Ia533O4VnqjfpZ0SA6
+         mDBw==
+X-Gm-Message-State: AOAM533Dc+qbO8vKg+75f5dAqRRb9DmmMb+mZ40+MDmovZVd7jcz6Jix
+        4iMK1234zeX/Z9M2T8vom+bFMhQ+axo=
+X-Google-Smtp-Source: ABdhPJzTt6sSlaFRKschETpj5PJUEoMRifFpIGtWn12fkhiQjargzviTdsMR+3vzvpjaxwZtG4ChgQ==
+X-Received: by 2002:a7b:c1ce:: with SMTP id a14mr1554842wmj.126.1605743095382;
+        Wed, 18 Nov 2020 15:44:55 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w21sm6038197wmi.29.2020.11.18.15.45.04
+        by smtp.gmail.com with ESMTPSA id m22sm37063849wrb.97.2020.11.18.15.44.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2020 15:45:05 -0800 (PST)
-Message-Id: <5c57fbe695e90ca7fedaa4b9843daee925250435.1605743087.git.gitgitgadget@gmail.com>
+        Wed, 18 Nov 2020 15:44:54 -0800 (PST)
+Message-Id: <090ac6e9a15afa5d76c37e7b9c93a01e6933146c.1605743087.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.762.v3.git.1605743086.gitgitgadget@gmail.com>
 References: <pull.762.v2.git.1605629547.gitgitgadget@gmail.com>
         <pull.762.v3.git.1605743086.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 18 Nov 2020 23:44:34 +0000
-Subject: [PATCH v3 16/28] t55[4-9]*: adjust the references to the default
+Date:   Wed, 18 Nov 2020 23:44:23 +0000
+Subject: [PATCH v3 05/28] t3[0-3]*: adjust the references to the default
  branch name "main"
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
@@ -85,1558 +85,1646 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This trick was performed via
+Carefully excluding t3040, which sees independent development elsewhere
+at the time of writing, we transition above-mentioned tests to the
+default branch name `main`. This trick was performed via
 
 	$ (cd t &&
 	   sed -i -e 's/master/main/g' -e 's/MASTER/MAIN/g' \
-		-e 's/Master/Main/g' -e 's/retsam/niam/g' \
-		-- t55[4-9]*.sh t556x*)
+		-e 's/Master/Main/g' -- t3[0-3]*.sh t3206/* &&
+	   git checkout HEAD -- t3040\*)
 
 This allows us to define `GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main`
 for those tests.
 
-Note that t5541 uses the reversed `master` name: `retsam`. We replace it
-by the equivalent for `main`: `niam`.
-
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t5540-http-push-webdav.sh          | 10 ++--
- t/t5541-http-push-smart.sh           | 42 +++++++-------
- t/t5542-push-http-shallow.sh         | 10 ++--
- t/t5543-atomic-push.sh               | 82 +++++++++++++--------------
- t/t5545-push-options.sh              | 64 ++++++++++-----------
- t/t5548-push-porcelain.sh            | 64 ++++++++++-----------
- t/t5550-http-fetch-dumb.sh           | 22 ++++----
- t/t5551-http-fetch-smart.sh          | 22 ++++----
- t/t5552-skipping-fetch-negotiator.sh |  2 +-
- t/t5553-set-upstream.sh              | 84 ++++++++++++++--------------
- t/t5560-http-backend-noserver.sh     |  2 +-
- t/t5561-http-backend.sh              |  6 +-
- t/t556x_common                       |  8 +--
- t/t5570-git-daemon.sh                | 18 +++---
- t/t5571-pre-push-hook.sh             |  6 +-
- t/t5572-pull-submodule.sh            |  4 +-
- t/t5580-unc-paths.sh                 |  4 +-
- t/t5581-http-curl-verbose.sh         |  4 +-
- t/t5582-fetch-negative-refspec.sh    | 24 ++++----
- 19 files changed, 239 insertions(+), 239 deletions(-)
+ t/t3200-branch.sh                     | 244 +++++++++++++-------------
+ t/t3201-branch-contains.sh            |  82 ++++-----
+ t/t3202-show-branch-octopus.sh        |   4 +-
+ t/t3203-branch-output.sh              |  40 ++---
+ t/t3204-branch-name-interpretation.sh |   8 +-
+ t/t3205-branch-color.sh               |   8 +-
+ t/t3206-range-diff.sh                 |  42 ++---
+ t/t3206/history.export                |   2 +-
+ t/t3210-pack-refs.sh                  |   6 +-
+ t/t3211-peel-ref.sh                   |   6 +-
+ t/t3301-notes.sh                      |   6 +-
+ t/t3302-notes-index-expensive.sh      |   4 +-
+ t/t3303-notes-subtrees.sh             |  10 +-
+ t/t3304-notes-mixed.sh                |  10 +-
+ t/t3308-notes-merge.sh                |   2 +-
+ t/t3320-notes-merge-worktrees.sh      |   6 +-
+ 16 files changed, 240 insertions(+), 240 deletions(-)
 
-diff --git a/t/t5540-http-push-webdav.sh b/t/t5540-http-push-webdav.sh
-index 751116e123..8b68bb38a4 100755
---- a/t/t5540-http-push-webdav.sh
-+++ b/t/t5540-http-push-webdav.sh
-@@ -7,7 +7,7 @@ test_description='test WebDAV http-push
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 04b568cf21..56517dd9c3 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -5,7 +5,7 @@
  
- This test runs various sanity checks on http-push.'
- 
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -74,7 +74,7 @@ test_expect_success 'push already up-to-date' '
- test_expect_success 'push to remote repository with unpacked refs' '
- 	(cd "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo.git &&
- 	 rm packed-refs &&
--	 git update-ref refs/heads/master $ORIG_HEAD &&
-+	 git update-ref refs/heads/main $ORIG_HEAD &&
- 	 git --bare update-server-info) &&
- 	git push &&
- 	(cd "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo.git &&
-@@ -94,7 +94,7 @@ test_expect_success 'http-push fetches unpacked objects' '
- 	 git remote rm origin &&
- 	 git reflog expire --expire=0 --all &&
- 	 git prune &&
--	 git push -f -v $HTTPD_URL/dumb/test_repo_unpacked.git master)
-+	 git push -f -v $HTTPD_URL/dumb/test_repo_unpacked.git main)
- '
- 
- test_expect_success 'http-push fetches packed objects' '
-@@ -114,7 +114,7 @@ test_expect_success 'http-push fetches packed objects' '
- 	 git remote remove origin &&
- 	 git reflog expire --expire=0 --all &&
- 	 git prune &&
--	 git push -f -v $HTTPD_URL/dumb/test_repo_packed.git master)
-+	 git push -f -v $HTTPD_URL/dumb/test_repo_packed.git main)
- '
- 
- test_expect_success 'create and delete remote branch' '
-@@ -166,7 +166,7 @@ test_expect_success 'PUT and MOVE sends object to URLs with SHA-1 hash suffix' '
- '
- 
- test_http_push_nonff "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo.git \
--	"$ROOT_PATH"/test_repo_clone master
-+	"$ROOT_PATH"/test_repo_clone main
- 
- test_expect_success 'push to password-protected repository (user in URL)' '
- 	test_commit pw-user &&
-diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
-index 2836b87239..bc5ccf233f 100755
---- a/t/t5541-http-push-smart.sh
-+++ b/t/t5541-http-push-smart.sh
-@@ -4,7 +4,7 @@
- #
- 
- test_description='test smart pushing over http via http-backend'
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -145,23 +145,23 @@ test_expect_success 'used receive-pack service' '
- '
- 
- test_http_push_nonff "$HTTPD_DOCUMENT_ROOT_PATH"/test_repo.git \
--	"$ROOT_PATH"/test_repo_clone master 		success
-+	"$ROOT_PATH"/test_repo_clone main 		success
- 
- test_expect_success 'push fails for non-fast-forward refs unmatched by remote helper' '
- 	# create a dissimilarly-named remote ref so that git is unable to match the
- 	# two refs (viz. local, remote) unless an explicit refspec is provided.
--	git push origin master:retsam &&
-+	git push origin main:niam &&
- 
- 	echo "change changed" > path2 &&
- 	git commit -a -m path2 --amend &&
- 
--	# push master too; this ensures there is at least one '"'push'"' command to
-+	# push main too; this ensures there is at least one '"'push'"' command to
- 	# the remote helper and triggers interaction with the helper.
--	test_must_fail git push -v origin +master master:retsam >output 2>&1'
-+	test_must_fail git push -v origin +main main:niam >output 2>&1'
- 
- test_expect_success 'push fails for non-fast-forward refs unmatched by remote helper: remote output' '
--	grep "^ + [a-f0-9]*\.\.\.[a-f0-9]* *master -> master (forced update)$" output &&
--	grep "^ ! \[rejected\] *master -> retsam (non-fast-forward)$" output
-+	grep "^ + [a-f0-9]*\.\.\.[a-f0-9]* *main -> main (forced update)$" output &&
-+	grep "^ ! \[rejected\] *main -> niam (non-fast-forward)$" output
- '
- 
- test_expect_success 'push fails for non-fast-forward refs unmatched by remote helper: our output' '
-@@ -170,7 +170,7 @@ test_expect_success 'push fails for non-fast-forward refs unmatched by remote he
- '
- 
- test_expect_success 'push (chunked)' '
--	git checkout master &&
-+	git checkout main &&
- 	test_commit commit path3 &&
- 	HEAD=$(git rev-parse --verify HEAD) &&
- 	test_config http.postbuffer 4 &&
-@@ -180,9 +180,9 @@ test_expect_success 'push (chunked)' '
- 	 test $HEAD = $(git rev-parse --verify HEAD))
- '
- 
--## References of remote: atomic1(1)            master(2) collateral(2) other(2)
--## References of local :            atomic2(2) master(1) collateral(3) other(2) collateral1(3) atomic(1)
--## Atomic push         :                       master(1) collateral(3)                         atomic(1)
-+## References of remote: atomic1(1)            main(2) collateral(2) other(2)
-+## References of local :            atomic2(2) main(1) collateral(3) other(2) collateral1(3) atomic(1)
-+## Atomic push         :                       main(1) collateral(3)                         atomic(1)
- test_expect_success 'push --atomic also prevents branch creation, reports collateral' '
- 	# Setup upstream repo - empty for now
- 	d=$HTTPD_DOCUMENT_ROOT_PATH/atomic-branches.git &&
-@@ -195,15 +195,15 @@ test_expect_success 'push --atomic also prevents branch creation, reports collat
- 	test_commit atomic2 &&
- 	git branch collateral &&
- 	git branch other &&
--	git push "$up" atomic1 master collateral other &&
-+	git push "$up" atomic1 main collateral other &&
- 	git tag -d atomic1 &&
- 
- 	# collateral is a valid push, but should be failed by atomic push
- 	git checkout collateral &&
- 	test_commit collateral1 &&
- 
--	# Make master incompatible with upstream to provoke atomic
--	git checkout master &&
-+	# Make main incompatible with upstream to provoke atomic
-+	git checkout main &&
- 	git reset --hard HEAD^ &&
- 
- 	# Add a new branch which should be failed by atomic push. This is a
-@@ -211,7 +211,7 @@ test_expect_success 'push --atomic also prevents branch creation, reports collat
- 	git branch atomic &&
- 
- 	# --atomic should cause entire push to be rejected
--	test_must_fail git push --atomic "$up" master atomic collateral 2>output &&
-+	test_must_fail git push --atomic "$up" main atomic collateral 2>output &&
- 
- 	# the new branch should not have been created upstream
- 	test_must_fail git -C "$d" show-ref --verify refs/heads/atomic &&
-@@ -219,15 +219,15 @@ test_expect_success 'push --atomic also prevents branch creation, reports collat
- 	# upstream should still reflect atomic2, the last thing we pushed
- 	# successfully
- 	git rev-parse atomic2 >expected &&
--	# on master...
--	git -C "$d" rev-parse refs/heads/master >actual &&
-+	# on main...
-+	git -C "$d" rev-parse refs/heads/main >actual &&
- 	test_cmp expected actual &&
- 	# ...and collateral.
- 	git -C "$d" rev-parse refs/heads/collateral >actual &&
- 	test_cmp expected actual &&
- 
- 	# the failed refs should be indicated to the user
--	grep "^ ! .*rejected.* master -> master" output &&
-+	grep "^ ! .*rejected.* main -> main" output &&
- 
- 	# the collateral failure refs should be indicated to the user
- 	grep "^ ! .*rejected.* atomic -> atomic .*atomic push failed" output &&
-@@ -475,9 +475,9 @@ test_expect_success 'clone/fetch scrubs password from reflogs' '
- 	test_commit prepare-for-force-fetch &&
- 	git switch -c away &&
- 	git fetch "$HTTPD_URL_USER_PASS/smart/test_repo.git" \
--		+master:master &&
-+		+main:main &&
- 	# should have been scrubbed down to vanilla URL
--	git log -g master >reflog &&
-+	git log -g main >reflog &&
- 	grep "$HTTPD_URL" reflog &&
- 	! grep "$HTTPD_URL_USER_PASS" reflog
- '
-@@ -501,7 +501,7 @@ test_expect_success 'colorize errors/hints' '
- 	cd "$ROOT_PATH"/test_repo_clone &&
- 	test_must_fail git -c color.transport=always -c color.advice=always \
- 		-c color.push=always \
--		push origin origin/master^:master 2>act &&
-+		push origin origin/main^:main 2>act &&
- 	test_decode_color <act >decoded &&
- 	test_i18ngrep "<RED>.*rejected.*<RESET>" decoded &&
- 	test_i18ngrep "<RED>error: failed to push some refs" decoded &&
-diff --git a/t/t5542-push-http-shallow.sh b/t/t5542-push-http-shallow.sh
-index 0feec9c449..c2cc83182f 100755
---- a/t/t5542-push-http-shallow.sh
-+++ b/t/t5542-push-http-shallow.sh
-@@ -2,7 +2,7 @@
- 
- test_description='push from/to a shallow clone over http'
+ test_description='git branch assorted tests'
  
 -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
 +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
  . ./test-lib.sh
-@@ -54,12 +54,12 @@ test_expect_success 'push to shallow repo via http' '
+@@ -31,7 +31,7 @@ test_expect_success 'branch -h in broken repository' '
  	(
- 	cd full &&
- 	commit 9 &&
--	git push $HTTPD_URL/smart/repo.git +master:refs/remotes/top/master
-+	git push $HTTPD_URL/smart/repo.git +main:refs/remotes/top/main
+ 		cd broken &&
+ 		git init &&
+-		>.git/refs/heads/master &&
++		>.git/refs/heads/main &&
+ 		test_expect_code 129 git branch -h >usage 2>&1
  	) &&
- 	(
- 	cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
- 	git fsck &&
--	git log --format=%s top/master >actual &&
-+	git log --format=%s top/main >actual &&
- 	cat <<EOF >expect &&
- 9
- 4
-@@ -77,11 +77,11 @@ test_expect_success 'push from shallow repo via http' '
- 	git config http.receivepack true
- 	) &&
- 	commit 10 &&
--	git push $HTTPD_URL/smart/repo.git +master:refs/remotes/top/master &&
-+	git push $HTTPD_URL/smart/repo.git +main:refs/remotes/top/main &&
- 	(
- 	cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
- 	git fsck &&
--	git log --format=%s top/master >actual &&
-+	git log --format=%s top/main >actual &&
- 	cat <<EOF >expect &&
- 10
- 4
-diff --git a/t/t5543-atomic-push.sh b/t/t5543-atomic-push.sh
-index 16a8fc7535..bfee461861 100755
---- a/t/t5543-atomic-push.sh
-+++ b/t/t5543-atomic-push.sh
-@@ -2,7 +2,7 @@
- 
- test_description='pushing to a repository using the atomic push option'
- 
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -43,9 +43,9 @@ test_expect_success 'atomic push works for a single branch' '
- 		test_commit one &&
- 		git push --mirror up &&
- 		test_commit two &&
--		git push --atomic up master
-+		git push --atomic up main
- 	) &&
--	test_refs master master
-+	test_refs main main
+ 	test_i18ngrep "[Uu]sage" broken/usage
+@@ -45,8 +45,8 @@ test_expect_success 'git branch a/b/c should create a branch' '
+ 	git branch a/b/c && test_path_is_file .git/refs/heads/a/b/c
  '
  
- test_expect_success 'atomic push works for two branches' '
-@@ -58,9 +58,9 @@ test_expect_success 'atomic push works for two branches' '
- 		test_commit two &&
- 		git checkout second &&
- 		test_commit three &&
--		git push --atomic up master second
-+		git push --atomic up main second
- 	) &&
--	test_refs master master &&
-+	test_refs main main &&
- 	test_refs second second
+-test_expect_success 'git branch mb master... should create a branch' '
+-	git branch mb master... && test_path_is_file .git/refs/heads/mb
++test_expect_success 'git branch mb main... should create a branch' '
++	git branch mb main... && test_path_is_file .git/refs/heads/mb
  '
  
-@@ -73,7 +73,7 @@ test_expect_success 'atomic push works in combination with --mirror' '
- 		test_commit two &&
- 		git push --atomic --mirror up
- 	) &&
--	test_refs master master &&
-+	test_refs main main &&
- 	test_refs second second
+ test_expect_success 'git branch HEAD should fail' '
+@@ -54,7 +54,7 @@ test_expect_success 'git branch HEAD should fail' '
  '
  
-@@ -82,7 +82,7 @@ test_expect_success 'atomic push works in combination with --force' '
- 	(
- 		cd workbench &&
- 		test_commit one &&
--		git branch second master &&
-+		git branch second main &&
- 		test_commit two_a &&
- 		git checkout second &&
- 		test_commit two_b &&
-@@ -90,36 +90,36 @@ test_expect_success 'atomic push works in combination with --force' '
- 		test_commit four &&
- 		git push --mirror up &&
- 		# The actual test is below
--		git checkout master &&
-+		git checkout main &&
- 		test_commit three_a &&
- 		git checkout second &&
- 		git reset --hard HEAD^ &&
--		git push --force --atomic up master second
-+		git push --force --atomic up main second
- 	) &&
--	test_refs master master &&
-+	test_refs main main &&
- 	test_refs second second
- '
- 
--# set up two branches where master can be pushed but second can not
-+# set up two branches where main can be pushed but second can not
- # (non-fast-forward). Since second can not be pushed the whole operation
--# will fail and leave master untouched.
-+# will fail and leave main untouched.
- test_expect_success 'atomic push fails if one branch fails' '
- 	mk_repo_pair &&
- 	(
- 		cd workbench &&
- 		test_commit one &&
--		git checkout -b second master &&
-+		git checkout -b second main &&
- 		test_commit two &&
- 		test_commit three &&
- 		test_commit four &&
- 		git push --mirror up &&
- 		git reset --hard HEAD~2 &&
- 		test_commit five &&
--		git checkout master &&
-+		git checkout main &&
- 		test_commit six &&
- 		test_must_fail git push --atomic --all up
- 	) &&
--	test_refs master HEAD@{7} &&
-+	test_refs main HEAD@{7} &&
- 	test_refs second HEAD@{4}
- '
- 
-@@ -129,7 +129,7 @@ test_expect_success 'atomic push fails if one tag fails remotely' '
- 	(
- 		cd workbench &&
- 		test_commit one &&
--		git checkout -b second master &&
-+		git checkout -b second main &&
- 		test_commit two &&
- 		git push --mirror up
- 	) &&
-@@ -142,14 +142,14 @@ test_expect_success 'atomic push fails if one tag fails remotely' '
- 	# see if we can now push both branches.
- 	(
- 		cd workbench &&
--		git checkout master &&
-+		git checkout main &&
- 		test_commit three &&
- 		git checkout second &&
- 		test_commit four &&
- 		git tag test_tag &&
--		test_must_fail git push --tags --atomic up master second
-+		test_must_fail git push --tags --atomic up main second
- 	) &&
--	test_refs master HEAD@{3} &&
-+	test_refs main HEAD@{3} &&
- 	test_refs second HEAD@{1}
- '
- 
-@@ -158,7 +158,7 @@ test_expect_success 'atomic push obeys update hook preventing a branch to be pus
- 	(
- 		cd workbench &&
- 		test_commit one &&
--		git checkout -b second master &&
-+		git checkout -b second main &&
- 		test_commit two &&
- 		git push --mirror up
- 	) &&
-@@ -168,19 +168,19 @@ test_expect_success 'atomic push obeys update hook preventing a branch to be pus
- 		HOOK="$HOOKDIR/update" &&
- 		mkdir -p "$HOOKDIR" &&
- 		write_script "$HOOK" <<-\EOF
--			# only allow update to master from now on
--			test "$1" = "refs/heads/master"
-+			# only allow update to main from now on
-+			test "$1" = "refs/heads/main"
- 		EOF
- 	) &&
- 	(
- 		cd workbench &&
--		git checkout master &&
-+		git checkout main &&
- 		test_commit three &&
- 		git checkout second &&
- 		test_commit four &&
--		test_must_fail git push --atomic up master second
-+		test_must_fail git push --atomic up main second
- 	) &&
--	test_refs master HEAD@{3} &&
-+	test_refs main HEAD@{3} &&
- 	test_refs second HEAD@{1}
- '
- 
-@@ -195,21 +195,21 @@ test_expect_success 'atomic push is not advertised if configured' '
- 		test_commit one &&
- 		git push --mirror up &&
- 		test_commit two &&
--		test_must_fail git push --atomic up master
-+		test_must_fail git push --atomic up main
- 	) &&
--	test_refs master HEAD@{1}
-+	test_refs main HEAD@{1}
- '
- 
--# References in upstream : master(1) one(1) foo(1)
--# References in workbench: master(2)        foo(1) two(2) bar(2)
--# Atomic push            : master(2)               two(2) bar(2)
-+# References in upstream : main(1) one(1) foo(1)
-+# References in workbench: main(2)        foo(1) two(2) bar(2)
-+# Atomic push            : main(2)               two(2) bar(2)
- test_expect_success 'atomic push reports (reject by update hook)' '
- 	mk_repo_pair &&
- 	(
- 		cd workbench &&
- 		test_commit one &&
- 		git branch foo &&
--		git push up master one foo &&
-+		git push up main one foo &&
- 		git tag -d one
- 	) &&
- 	(
-@@ -231,19 +231,19 @@ test_expect_success 'atomic push reports (reject by update hook)' '
- 		git branch bar
- 	) &&
- 	test_must_fail git -C workbench \
--		push --atomic up master two bar >out 2>&1 &&
-+		push --atomic up main two bar >out 2>&1 &&
- 	fmt_status_report <out >actual &&
- 	cat >expect <<-EOF &&
- 	To ../upstream
--	 ! [remote rejected] master -> master (atomic push failure)
-+	 ! [remote rejected] main -> main (atomic push failure)
- 	 ! [remote rejected] two -> two (atomic push failure)
- 	 ! [remote rejected] bar -> bar (hook declined)
- 	EOF
- 	test_cmp expect actual
- '
- 
--# References in upstream : master(1) one(1) foo(1)
--# References in workbench: master(2)        foo(1) two(2) bar(2)
-+# References in upstream : main(1) one(1) foo(1)
-+# References in workbench: main(2)        foo(1) two(2) bar(2)
- test_expect_success 'atomic push reports (mirror, but reject by update hook)' '
- 	(
- 		cd workbench &&
-@@ -255,7 +255,7 @@ test_expect_success 'atomic push reports (mirror, but reject by update hook)' '
- 	fmt_status_report <out >actual &&
- 	cat >expect <<-EOF &&
- 	To ../upstream
--	 ! [remote rejected] master -> master (atomic push failure)
-+	 ! [remote rejected] main -> main (atomic push failure)
- 	 ! [remote rejected] one (atomic push failure)
- 	 ! [remote rejected] bar -> bar (hook declined)
- 	 ! [remote rejected] two -> two (atomic push failure)
-@@ -263,21 +263,21 @@ test_expect_success 'atomic push reports (mirror, but reject by update hook)' '
- 	test_cmp expect actual
- '
- 
--# References in upstream : master(2) one(1) foo(1)
--# References in workbench: master(1)        foo(1) two(2) bar(2)
-+# References in upstream : main(2) one(1) foo(1)
-+# References in workbench: main(1)        foo(1) two(2) bar(2)
- test_expect_success 'atomic push reports (reject by non-ff)' '
- 	rm upstream/.git/hooks/update &&
- 	(
- 		cd workbench &&
--		git push up master &&
-+		git push up main &&
- 		git reset --hard HEAD^
- 	) &&
- 	test_must_fail git -C workbench \
--		push --atomic up master foo bar >out 2>&1 &&
-+		push --atomic up main foo bar >out 2>&1 &&
- 	fmt_status_report <out >actual &&
- 	cat >expect <<-EOF &&
- 	To ../upstream
--	 ! [rejected] master -> master (non-fast-forward)
-+	 ! [rejected] main -> main (non-fast-forward)
- 	 ! [rejected] bar -> bar (atomic push failed)
- 	EOF
- 	test_cmp expect actual
-diff --git a/t/t5545-push-options.sh b/t/t5545-push-options.sh
-index 202d75aebe..58c7add7ee 100755
---- a/t/t5545-push-options.sh
-+++ b/t/t5545-push-options.sh
-@@ -2,7 +2,7 @@
- 
- test_description='pushing to a repository using push options'
- 
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -66,9 +66,9 @@ test_expect_success 'one push option works for a single branch' '
- 		test_commit one &&
- 		git push --mirror up &&
- 		test_commit two &&
--		git push --push-option=asdf up master
-+		git push --push-option=asdf up main
- 	) &&
--	test_refs master master &&
-+	test_refs main main &&
- 	echo "asdf" >expect &&
- 	test_cmp expect upstream/.git/hooks/pre-receive.push_options &&
- 	test_cmp expect upstream/.git/hooks/post-receive.push_options
-@@ -82,9 +82,9 @@ test_expect_success 'push option denied by remote' '
- 		test_commit one &&
- 		git push --mirror up &&
- 		test_commit two &&
--		test_must_fail git push --push-option=asdf up master
-+		test_must_fail git push --push-option=asdf up main
- 	) &&
--	test_refs master HEAD@{1}
-+	test_refs main HEAD@{1}
- '
- 
- test_expect_success 'two push options work' '
-@@ -95,9 +95,9 @@ test_expect_success 'two push options work' '
- 		test_commit one &&
- 		git push --mirror up &&
- 		test_commit two &&
--		git push --push-option=asdf --push-option="more structured text" up master
-+		git push --push-option=asdf --push-option="more structured text" up main
- 	) &&
--	test_refs master master &&
-+	test_refs main main &&
- 	printf "asdf\nmore structured text\n" >expect &&
- 	test_cmp expect upstream/.git/hooks/pre-receive.push_options &&
- 	test_cmp expect upstream/.git/hooks/post-receive.push_options
-@@ -126,14 +126,14 @@ test_expect_success 'push options and submodules' '
- 
- 	git -C parent push \
- 		--push-option=asdf --push-option="more structured text" \
--		--recurse-submodules=on-demand up master &&
-+		--recurse-submodules=on-demand up main &&
- 
--	git -C upstream rev-parse --verify master >expect &&
--	git -C parent/workbench rev-parse --verify master >actual &&
-+	git -C upstream rev-parse --verify main >expect &&
-+	git -C parent/workbench rev-parse --verify main >actual &&
- 	test_cmp expect actual &&
- 
--	git -C parent_upstream rev-parse --verify master >expect &&
--	git -C parent rev-parse --verify master >actual &&
-+	git -C parent_upstream rev-parse --verify main >expect &&
-+	git -C parent rev-parse --verify main >actual &&
- 	test_cmp expect actual &&
- 
- 	printf "asdf\nmore structured text\n" >expect &&
-@@ -151,9 +151,9 @@ test_expect_success 'default push option' '
- 		test_commit one &&
- 		git push --mirror up &&
- 		test_commit two &&
--		git -c push.pushOption=default push up master
-+		git -c push.pushOption=default push up main
- 	) &&
--	test_refs master master &&
-+	test_refs main main &&
- 	echo "default" >expect &&
- 	test_cmp expect upstream/.git/hooks/pre-receive.push_options &&
- 	test_cmp expect upstream/.git/hooks/post-receive.push_options
-@@ -167,9 +167,9 @@ test_expect_success 'two default push options' '
- 		test_commit one &&
- 		git push --mirror up &&
- 		test_commit two &&
--		git -c push.pushOption=default1 -c push.pushOption=default2 push up master
-+		git -c push.pushOption=default1 -c push.pushOption=default2 push up main
- 	) &&
--	test_refs master master &&
-+	test_refs main main &&
- 	printf "default1\ndefault2\n" >expect &&
- 	test_cmp expect upstream/.git/hooks/pre-receive.push_options &&
- 	test_cmp expect upstream/.git/hooks/post-receive.push_options
-@@ -183,9 +183,9 @@ test_expect_success 'push option from command line overrides from-config push op
- 		test_commit one &&
- 		git push --mirror up &&
- 		test_commit two &&
--		git -c push.pushOption=default push --push-option=manual up master
-+		git -c push.pushOption=default push --push-option=manual up main
- 	) &&
--	test_refs master master &&
-+	test_refs main main &&
- 	echo "manual" >expect &&
- 	test_cmp expect upstream/.git/hooks/pre-receive.push_options &&
- 	test_cmp expect upstream/.git/hooks/post-receive.push_options
-@@ -199,9 +199,9 @@ test_expect_success 'empty value of push.pushOption in config clears the list' '
- 		test_commit one &&
- 		git push --mirror up &&
- 		test_commit two &&
--		git -c push.pushOption=default1 -c push.pushOption= -c push.pushOption=default2 push up master
-+		git -c push.pushOption=default1 -c push.pushOption= -c push.pushOption=default2 push up main
- 	) &&
--	test_refs master master &&
-+	test_refs main main &&
- 	echo "default2" >expect &&
- 	test_cmp expect upstream/.git/hooks/pre-receive.push_options &&
- 	test_cmp expect upstream/.git/hooks/post-receive.push_options
-@@ -215,16 +215,16 @@ test_expect_success 'invalid push option in config' '
- 		test_commit one &&
- 		git push --mirror up &&
- 		test_commit two &&
--		test_must_fail git -c push.pushOption push up master
-+		test_must_fail git -c push.pushOption push up main
- 	) &&
--	test_refs master HEAD@{1}
-+	test_refs main HEAD@{1}
- '
- 
- test_expect_success 'push options keep quoted characters intact (direct)' '
- 	mk_repo_pair &&
- 	git -C upstream config receive.advertisePushOptions true &&
- 	test_commit -C workbench one &&
--	git -C workbench push --push-option="\"embedded quotes\"" up master &&
-+	git -C workbench push --push-option="\"embedded quotes\"" up main &&
- 	echo "\"embedded quotes\"" >expect &&
- 	test_cmp expect upstream/.git/hooks/pre-receive.push_options
- '
-@@ -247,28 +247,28 @@ mk_http_pair () {
- test_expect_success 'push option denied properly by http server' '
- 	mk_http_pair false &&
- 	test_commit -C test_http_clone one &&
--	test_must_fail git -C test_http_clone push --push-option=asdf origin master 2>actual &&
-+	test_must_fail git -C test_http_clone push --push-option=asdf origin main 2>actual &&
- 	test_i18ngrep "the receiving end does not support push options" actual &&
--	git -C test_http_clone push origin master
-+	git -C test_http_clone push origin main
- '
- 
- test_expect_success 'push options work properly across http' '
- 	mk_http_pair true &&
- 
- 	test_commit -C test_http_clone one &&
--	git -C test_http_clone push origin master &&
--	git -C "$HTTPD_DOCUMENT_ROOT_PATH"/upstream.git rev-parse --verify master >expect &&
--	git -C test_http_clone rev-parse --verify master >actual &&
-+	git -C test_http_clone push origin main &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH"/upstream.git rev-parse --verify main >expect &&
-+	git -C test_http_clone rev-parse --verify main >actual &&
- 	test_cmp expect actual &&
- 
- 	test_commit -C test_http_clone two &&
--	git -C test_http_clone push --push-option=asdf --push-option="more structured text" origin master &&
-+	git -C test_http_clone push --push-option=asdf --push-option="more structured text" origin main &&
- 	printf "asdf\nmore structured text\n" >expect &&
- 	test_cmp expect "$HTTPD_DOCUMENT_ROOT_PATH"/upstream.git/hooks/pre-receive.push_options &&
- 	test_cmp expect "$HTTPD_DOCUMENT_ROOT_PATH"/upstream.git/hooks/post-receive.push_options &&
- 
--	git -C "$HTTPD_DOCUMENT_ROOT_PATH"/upstream.git rev-parse --verify master >expect &&
--	git -C test_http_clone rev-parse --verify master >actual &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH"/upstream.git rev-parse --verify main >expect &&
-+	git -C test_http_clone rev-parse --verify main >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -276,7 +276,7 @@ test_expect_success 'push options keep quoted characters intact (http)' '
- 	mk_http_pair true &&
- 
- 	test_commit -C test_http_clone one &&
--	git -C test_http_clone push --push-option="\"embedded quotes\"" origin master &&
-+	git -C test_http_clone push --push-option="\"embedded quotes\"" origin main &&
- 	echo "\"embedded quotes\"" >expect &&
- 	test_cmp expect "$HTTPD_DOCUMENT_ROOT_PATH"/upstream.git/hooks/pre-receive.push_options
- '
-diff --git a/t/t5548-push-porcelain.sh b/t/t5548-push-porcelain.sh
-index 1b19b3ef55..5a761f3642 100755
---- a/t/t5548-push-porcelain.sh
-+++ b/t/t5548-push-porcelain.sh
-@@ -36,7 +36,7 @@ create_commits_in () {
- 		shift ||
- 		return 1
- 	done &&
--	git -C "$repo" update-ref refs/heads/master $oid
-+	git -C "$repo" update-ref refs/heads/main $oid
- }
- 
- # Format the output of git-push, git-show-ref and other commands to make a
-@@ -57,8 +57,8 @@ make_user_friendly_and_stable_output () {
- }
- 
- setup_upstream_and_workbench () {
--	# Upstream  after setup : master(B)  foo(A)  bar(A)  baz(A)
--	# Workbench after setup : master(A)
-+	# Upstream  after setup : main(B)  foo(A)  bar(A)  baz(A)
-+	# Workbench after setup : main(A)
- 	test_expect_success "setup upstream repository and workbench" '
- 		rm -rf upstream.git workbench &&
- 		git init --bare upstream.git &&
-@@ -70,9 +70,9 @@ setup_upstream_and_workbench () {
- 			# this fixed-width oid will be replaced with "<OID>".
- 			git config core.abbrev 7 &&
- 			git remote add origin ../upstream.git &&
--			git update-ref refs/heads/master $A &&
-+			git update-ref refs/heads/main $A &&
- 			git push origin \
--				$B:refs/heads/master \
-+				$B:refs/heads/main \
- 				$A:refs/heads/foo \
- 				$A:refs/heads/bar \
- 				$A:refs/heads/baz
-@@ -94,17 +94,17 @@ run_git_push_porcelain_output_test() {
- 		;;
- 	esac
- 
--	# Refs of upstream : master(B)  foo(A)  bar(A)  baz(A)
--	# Refs of workbench: master(A)                  baz(A)  next(A)
--	# git-push         : master(A)  NULL    (B)     baz(A)  next(A)
-+	# Refs of upstream : main(B)  foo(A)  bar(A)  baz(A)
-+	# Refs of workbench: main(A)                  baz(A)  next(A)
-+	# git-push         : main(A)  NULL    (B)     baz(A)  next(A)
- 	test_expect_success "porcelain output of successful git-push ($PROTOCOL)" '
- 		(
- 			cd workbench &&
--			git update-ref refs/heads/master $A &&
-+			git update-ref refs/heads/main $A &&
- 			git update-ref refs/heads/baz $A &&
- 			git update-ref refs/heads/next $A &&
- 			git push --porcelain --force origin \
--				master \
-+				main \
- 				:refs/heads/foo \
- 				$B:bar \
- 				baz \
-@@ -116,7 +116,7 @@ run_git_push_porcelain_output_test() {
- 		=    refs/heads/baz:refs/heads/baz    [up to date]
- 		     <COMMIT-B>:refs/heads/bar    <OID-A>..<OID-B>
- 		-    :refs/heads/foo    [deleted]
--		+    refs/heads/master:refs/heads/master    <OID-B>...<OID-A> (forced update)
-+		+    refs/heads/main:refs/heads/main    <OID-B>...<OID-A> (forced update)
- 		*    refs/heads/next:refs/heads/next    [new branch]
- 		Done
- 		EOF
-@@ -127,22 +127,22 @@ run_git_push_porcelain_output_test() {
- 		cat >expect <<-EOF &&
- 		<COMMIT-B> refs/heads/bar
- 		<COMMIT-A> refs/heads/baz
--		<COMMIT-A> refs/heads/master
-+		<COMMIT-A> refs/heads/main
- 		<COMMIT-A> refs/heads/next
- 		EOF
- 		test_cmp expect actual
- 	'
- 
--	# Refs of upstream : master(A)  bar(B)  baz(A)  next(A)
--	# Refs of workbench: master(B)  bar(A)  baz(A)  next(A)
--	# git-push         : master(B)  bar(A)  NULL    next(A)
-+	# Refs of upstream : main(A)  bar(B)  baz(A)  next(A)
-+	# Refs of workbench: main(B)  bar(A)  baz(A)  next(A)
-+	# git-push         : main(B)  bar(A)  NULL    next(A)
- 	test_expect_success "atomic push failed ($PROTOCOL)" '
- 		(
- 			cd workbench &&
--			git update-ref refs/heads/master $B &&
-+			git update-ref refs/heads/main $B &&
- 			git update-ref refs/heads/bar $A &&
- 			test_must_fail git push --atomic --porcelain origin \
--				master \
-+				main \
- 				bar \
- 				:baz \
- 				next
-@@ -153,7 +153,7 @@ run_git_push_porcelain_output_test() {
- 		=    refs/heads/next:refs/heads/next    [up to date]
- 		!    refs/heads/bar:refs/heads/bar    [rejected] (non-fast-forward)
- 		!    (delete):refs/heads/baz    [rejected] (atomic push failed)
--		!    refs/heads/master:refs/heads/master    [rejected] (atomic push failed)
-+		!    refs/heads/main:refs/heads/main    [rejected] (atomic push failed)
- 		Done
- 		EOF
- 		test_cmp expect actual &&
-@@ -163,7 +163,7 @@ run_git_push_porcelain_output_test() {
- 		cat >expect <<-EOF &&
- 		<COMMIT-B> refs/heads/bar
- 		<COMMIT-A> refs/heads/baz
--		<COMMIT-A> refs/heads/master
-+		<COMMIT-A> refs/heads/main
- 		<COMMIT-A> refs/heads/next
- 		EOF
- 		test_cmp expect actual
-@@ -174,16 +174,16 @@ run_git_push_porcelain_output_test() {
- 		EOF
- 	'
- 
--	# Refs of upstream : master(A)  bar(B)  baz(A)  next(A)
--	# Refs of workbench: master(B)  bar(A)  baz(A)  next(A)
--	# git-push         : master(B)  bar(A)  NULL    next(A)
-+	# Refs of upstream : main(A)  bar(B)  baz(A)  next(A)
-+	# Refs of workbench: main(B)  bar(A)  baz(A)  next(A)
-+	# git-push         : main(B)  bar(A)  NULL    next(A)
- 	test_expect_success "pre-receive hook declined ($PROTOCOL)" '
- 		(
- 			cd workbench &&
--			git update-ref refs/heads/master $B &&
-+			git update-ref refs/heads/main $B &&
- 			git update-ref refs/heads/bar $A &&
- 			test_must_fail git push --porcelain --force origin \
--				master \
-+				main \
- 				bar \
- 				:baz \
- 				next
-@@ -194,7 +194,7 @@ run_git_push_porcelain_output_test() {
- 		=    refs/heads/next:refs/heads/next    [up to date]
- 		!    refs/heads/bar:refs/heads/bar    [remote rejected] (pre-receive hook declined)
- 		!    :refs/heads/baz    [remote rejected] (pre-receive hook declined)
--		!    refs/heads/master:refs/heads/master    [remote rejected] (pre-receive hook declined)
-+		!    refs/heads/main:refs/heads/main    [remote rejected] (pre-receive hook declined)
- 		Done
- 		EOF
- 		test_cmp expect actual &&
-@@ -204,7 +204,7 @@ run_git_push_porcelain_output_test() {
- 		cat >expect <<-EOF &&
- 		<COMMIT-B> refs/heads/bar
- 		<COMMIT-A> refs/heads/baz
--		<COMMIT-A> refs/heads/master
-+		<COMMIT-A> refs/heads/main
- 		<COMMIT-A> refs/heads/next
- 		EOF
- 		test_cmp expect actual
-@@ -214,14 +214,14 @@ run_git_push_porcelain_output_test() {
- 		rm "$upstream/hooks/pre-receive"
- 	'
- 
--	# Refs of upstream : master(A)  bar(B)  baz(A)  next(A)
--	# Refs of workbench: master(B)  bar(A)  baz(A)  next(A)
--	# git-push         : master(B)  bar(A)  NULL    next(A)
-+	# Refs of upstream : main(A)  bar(B)  baz(A)  next(A)
-+	# Refs of workbench: main(B)  bar(A)  baz(A)  next(A)
-+	# git-push         : main(B)  bar(A)  NULL    next(A)
- 	test_expect_success "non-fastforward push ($PROTOCOL)" '
- 		(
- 			cd workbench &&
- 			test_must_fail git push --porcelain origin \
--				master \
-+				main \
- 				bar \
- 				:baz \
- 				next
-@@ -231,7 +231,7 @@ run_git_push_porcelain_output_test() {
- 		To <URL/of/upstream.git>
- 		=    refs/heads/next:refs/heads/next    [up to date]
- 		-    :refs/heads/baz    [deleted]
--		     refs/heads/master:refs/heads/master    <OID-A>..<OID-B>
-+		     refs/heads/main:refs/heads/main    <OID-A>..<OID-B>
- 		!    refs/heads/bar:refs/heads/bar    [rejected] (non-fast-forward)
- 		Done
- 		EOF
-@@ -241,7 +241,7 @@ run_git_push_porcelain_output_test() {
- 		make_user_friendly_and_stable_output <out >actual &&
- 		cat >expect <<-EOF &&
- 		<COMMIT-B> refs/heads/bar
--		<COMMIT-B> refs/heads/master
-+		<COMMIT-B> refs/heads/main
- 		<COMMIT-A> refs/heads/next
- 		EOF
- 		test_cmp expect actual
-diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-index 9ec91792c3..2ecb06bb63 100755
---- a/t/t5550-http-fetch-dumb.sh
-+++ b/t/t5550-http-fetch-dumb.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
- 
- test_description='test dumb fetching over http via static file'
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -29,7 +29,7 @@ test_expect_success 'create http-accessible bare repository with loose objects'
- 	 hooks/post-update
- 	) &&
- 	git remote add public "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
--	git push public master:master
-+	git push public main:main
- '
- 
- test_expect_success 'clone http repository' '
-@@ -40,8 +40,8 @@ test_expect_success 'clone http repository' '
- 
- test_expect_success 'list refs from outside any repository' '
- 	cat >expect <<-EOF &&
--	$(git rev-parse master)	HEAD
--	$(git rev-parse master)	refs/heads/master
-+	$(git rev-parse main)	HEAD
-+	$(git rev-parse main)	refs/heads/main
- 	EOF
- 	nongit git ls-remote "$HTTPD_URL/dumb/repo.git" >actual &&
- 	test_cmp expect actual
-@@ -184,8 +184,8 @@ test_expect_success 'fetch changes via manual http-fetch' '
- 
- 	HEAD=$(git rev-parse --verify HEAD) &&
- 	(cd clone2 &&
--	 git http-fetch -a -w heads/master-new $HEAD $(git config remote.origin.url) &&
--	 git checkout master-new &&
-+	 git http-fetch -a -w heads/main-new $HEAD $(git config remote.origin.url) &&
-+	 git checkout main-new &&
- 	 test $HEAD = $(git rev-parse --verify HEAD)) &&
- 	test_cmp file clone2/file
- '
-@@ -195,19 +195,19 @@ test_expect_success 'manual http-fetch without -a works just as well' '
- 
- 	HEAD=$(git rev-parse --verify HEAD) &&
- 	(cd clone3 &&
--	 git http-fetch -w heads/master-new $HEAD $(git config remote.origin.url) &&
--	 git checkout master-new &&
-+	 git http-fetch -w heads/main-new $HEAD $(git config remote.origin.url) &&
-+	 git checkout main-new &&
- 	 test $HEAD = $(git rev-parse --verify HEAD)) &&
- 	test_cmp file clone3/file
- '
- 
- test_expect_success 'http remote detects correct HEAD' '
--	git push public master:other &&
-+	git push public main:other &&
- 	(cd clone &&
- 	 git remote set-head origin -d &&
- 	 git remote set-head origin -a &&
- 	 git symbolic-ref refs/remotes/origin/HEAD > output &&
--	 echo refs/remotes/origin/master > expect &&
-+	 echo refs/remotes/origin/main > expect &&
- 	 test_cmp expect output
- 	)
- '
-@@ -419,7 +419,7 @@ test_expect_success 'set up evil alternates scheme' '
- 	evil=$HTTPD_DOCUMENT_ROOT_PATH/evil.git &&
- 	git init --bare "$evil" &&
- 	# do this by hand to avoid object existence check
--	printf "%s\\t%s\\n" $sha1 refs/heads/master >"$evil/info/refs"
-+	printf "%s\\t%s\\n" $sha1 refs/heads/main >"$evil/info/refs"
- '
- 
- # Here we'll just redirect via HTTP. In a real-world attack these would be on
-diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-index 310b89dbab..984dba22af 100755
---- a/t/t5551-http-fetch-smart.sh
-+++ b/t/t5551-http-fetch-smart.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
- 
- test_description='test smart fetching over http via http-backend'
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -21,7 +21,7 @@ test_expect_success 'create http-accessible bare repository' '
- 	 git --bare init
- 	) &&
- 	git remote add public "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
--	git push public master:master
-+	git push public main:main
- '
- 
- setup_askpass_helper
-@@ -241,9 +241,9 @@ test_expect_success 'invalid Content-Type rejected' '
- 
- test_expect_success 'create namespaced refs' '
- 	test_commit namespaced &&
--	git push public HEAD:refs/namespaces/ns/refs/heads/master &&
-+	git push public HEAD:refs/namespaces/ns/refs/heads/main &&
- 	git --git-dir="$HTTPD_DOCUMENT_ROOT_PATH/repo.git" \
--		symbolic-ref refs/namespaces/ns/HEAD refs/namespaces/ns/refs/heads/master
-+		symbolic-ref refs/namespaces/ns/HEAD refs/namespaces/ns/refs/heads/main
- '
- 
- test_expect_success 'smart clone respects namespace' '
-@@ -274,7 +274,7 @@ test_expect_success 'cookies stored in http.cookiefile when http.savecookies set
- 	EOF
- 	git config http.cookiefile cookies.txt &&
- 	git config http.savecookies true &&
--	git ls-remote $HTTPD_URL/smart_cookies/repo.git master &&
-+	git ls-remote $HTTPD_URL/smart_cookies/repo.git main &&
- 
- 	# NEEDSWORK: If the overspecification of the expected result is reduced, we
- 	# might be able to run this test in all protocol versions.
-@@ -347,12 +347,12 @@ test_expect_success 'large fetch-pack requests can be sent using chunked encodin
- test_expect_success 'test allowreachablesha1inwant' '
- 	test_when_finished "rm -rf test_reachable.git" &&
- 	server="$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
--	master_sha=$(git -C "$server" rev-parse refs/heads/master) &&
-+	main_sha=$(git -C "$server" rev-parse refs/heads/main) &&
- 	git -C "$server" config uploadpack.allowreachablesha1inwant 1 &&
- 
- 	git init --bare test_reachable.git &&
- 	git -C test_reachable.git remote add origin "$HTTPD_URL/smart/repo.git" &&
--	git -C test_reachable.git fetch origin "$master_sha"
-+	git -C test_reachable.git fetch origin "$main_sha"
- '
- 
- test_expect_success 'test allowreachablesha1inwant with unreachable' '
-@@ -366,7 +366,7 @@ test_expect_success 'test allowreachablesha1inwant with unreachable' '
- 	git push public :refs/heads/doomed &&
- 
- 	server="$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
--	master_sha=$(git -C "$server" rev-parse refs/heads/master) &&
-+	main_sha=$(git -C "$server" rev-parse refs/heads/main) &&
- 	git -C "$server" config uploadpack.allowreachablesha1inwant 1 &&
- 
- 	git init --bare test_reachable.git &&
-@@ -388,7 +388,7 @@ test_expect_success 'test allowanysha1inwant with unreachable' '
- 	git push public :refs/heads/doomed &&
- 
- 	server="$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
--	master_sha=$(git -C "$server" rev-parse refs/heads/master) &&
-+	main_sha=$(git -C "$server" rev-parse refs/heads/main) &&
- 	git -C "$server" config uploadpack.allowreachablesha1inwant 1 &&
- 
- 	git init --bare test_reachable.git &&
-@@ -447,8 +447,8 @@ test_expect_success 'using fetch command in remote-curl updates refs' '
- 	test_commit -C "$SERVER" bar &&
- 	git -C client -c protocol.version=0 fetch &&
- 
--	git -C "$SERVER" rev-parse master >expect &&
--	git -C client rev-parse origin/master >actual &&
-+	git -C "$SERVER" rev-parse main >expect &&
-+	git -C client rev-parse origin/main >actual &&
- 	test_cmp expect actual
- '
- 
-diff --git a/t/t5552-skipping-fetch-negotiator.sh b/t/t5552-skipping-fetch-negotiator.sh
-index 156c704040..7b9fb4ff02 100755
---- a/t/t5552-skipping-fetch-negotiator.sh
-+++ b/t/t5552-skipping-fetch-negotiator.sh
-@@ -100,7 +100,7 @@ test_expect_success 'use ref advertisement to filter out commits' '
- 	git -C server checkout --orphan anotherbranch &&
- 	test_commit -C server to_fetch &&
- 
--	# The server advertising "c3" (as "refs/heads/master") means that we do
-+	# The server advertising "c3" (as "refs/heads/main") means that we do
- 	# not need to send any ancestors of "c3", but we still need to send "c3"
- 	# itself.
- 	test_config -C client fetch.negotiationalgorithm skipping &&
-diff --git a/t/t5553-set-upstream.sh b/t/t5553-set-upstream.sh
-index e78a21881f..b1d614ce18 100755
---- a/t/t5553-set-upstream.sh
-+++ b/t/t5553-set-upstream.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
- 
- test_description='"git fetch/pull --set-upstream" basic tests.'
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -35,9 +35,9 @@ test_expect_success 'setup bare parent fetch' '
- 	git remote add upstream parent
- '
- 
--test_expect_success 'setup commit on master and other fetch' '
-+test_expect_success 'setup commit on main and other fetch' '
- 	test_commit one &&
--	git push upstream master &&
-+	git push upstream main &&
- 	git checkout -b other &&
- 	test_commit two &&
- 	git push upstream other
-@@ -46,38 +46,38 @@ test_expect_success 'setup commit on master and other fetch' '
- # tests for fetch --set-upstream
- 
- test_expect_success 'fetch --set-upstream does not set upstream w/o branch' '
--	clear_config master other &&
--	git checkout master &&
-+	clear_config main other &&
-+	git checkout main &&
- 	git fetch --set-upstream upstream &&
--	check_config_missing master &&
-+	check_config_missing main &&
- 	check_config_missing other
- '
- 
--test_expect_success 'fetch --set-upstream upstream master sets branch master but not other' '
--	clear_config master other &&
--	git fetch --set-upstream upstream master &&
--	check_config master upstream refs/heads/master &&
-+test_expect_success 'fetch --set-upstream upstream main sets branch main but not other' '
-+	clear_config main other &&
-+	git fetch --set-upstream upstream main &&
-+	check_config main upstream refs/heads/main &&
- 	check_config_missing other
- '
- 
- test_expect_success 'fetch --set-upstream upstream other sets branch other' '
--	clear_config master other &&
-+	clear_config main other &&
- 	git fetch --set-upstream upstream other &&
--	check_config master upstream refs/heads/other &&
-+	check_config main upstream refs/heads/other &&
- 	check_config_missing other
- '
- 
--test_expect_success 'fetch --set-upstream master:other does not set the branch other2' '
-+test_expect_success 'fetch --set-upstream main:other does not set the branch other2' '
- 	clear_config other2 &&
--	git fetch --set-upstream upstream master:other2 &&
-+	git fetch --set-upstream upstream main:other2 &&
- 	check_config_missing other2
- '
- 
- test_expect_success 'fetch --set-upstream http://nosuchdomain.example.com fails with invalid url' '
--	# master explicitly not cleared, we check that it is not touched from previous value
-+	# main explicitly not cleared, we check that it is not touched from previous value
- 	clear_config other other2 &&
- 	test_must_fail git fetch --set-upstream http://nosuchdomain.example.com &&
--	check_config master upstream refs/heads/other &&
-+	check_config main upstream refs/heads/other &&
- 	check_config_missing other &&
- 	check_config_missing other2
- '
-@@ -86,7 +86,7 @@ test_expect_success 'fetch --set-upstream with valid URL sets upstream to URL' '
- 	clear_config other other2 &&
- 	url="file://$PWD" &&
- 	git fetch --set-upstream "$url" &&
--	check_config master "$url" HEAD &&
-+	check_config main "$url" HEAD &&
- 	check_config_missing other &&
- 	check_config_missing other2
- '
-@@ -99,30 +99,30 @@ test_expect_success 'setup bare parent pull' '
- 	git remote add upstream parent
- '
- 
--test_expect_success 'setup commit on master and other pull' '
-+test_expect_success 'setup commit on main and other pull' '
- 	test_commit three &&
--	git push --tags upstream master &&
-+	git push --tags upstream main &&
- 	test_commit four &&
- 	git push upstream other
- '
- 
--test_expect_success 'pull --set-upstream upstream master sets branch master but not other' '
--	clear_config master other &&
--	git pull --set-upstream upstream master &&
--	check_config master upstream refs/heads/master &&
-+test_expect_success 'pull --set-upstream upstream main sets branch main but not other' '
-+	clear_config main other &&
-+	git pull --set-upstream upstream main &&
-+	check_config main upstream refs/heads/main &&
- 	check_config_missing other
- '
- 
--test_expect_success 'pull --set-upstream master:other2 does not set the branch other2' '
-+test_expect_success 'pull --set-upstream main:other2 does not set the branch other2' '
- 	clear_config other2 &&
--	git pull --set-upstream upstream master:other2 &&
-+	git pull --set-upstream upstream main:other2 &&
- 	check_config_missing other2
- '
- 
--test_expect_success 'pull --set-upstream upstream other sets branch master' '
--	clear_config master other &&
-+test_expect_success 'pull --set-upstream upstream other sets branch main' '
-+	clear_config main other &&
- 	git pull --set-upstream upstream other &&
--	check_config master upstream refs/heads/other &&
-+	check_config main upstream refs/heads/other &&
- 	check_config_missing other
- '
- 
-@@ -133,47 +133,47 @@ test_expect_success 'pull --set-upstream upstream tag does not set the tag' '
- '
- 
- test_expect_success 'pull --set-upstream http://nosuchdomain.example.com fails with invalid url' '
--	# master explicitly not cleared, we check that it is not touched from previous value
-+	# main explicitly not cleared, we check that it is not touched from previous value
- 	clear_config other other2 three &&
- 	test_must_fail git pull --set-upstream http://nosuchdomain.example.com &&
--	check_config master upstream refs/heads/other &&
-+	check_config main upstream refs/heads/other &&
- 	check_config_missing other &&
- 	check_config_missing other2 &&
- 	check_config_missing three
- '
- 
- test_expect_success 'pull --set-upstream upstream HEAD sets branch HEAD' '
--	clear_config master other &&
-+	clear_config main other &&
- 	git pull --set-upstream upstream HEAD &&
--	check_config master upstream HEAD &&
-+	check_config main upstream HEAD &&
- 	git checkout other &&
- 	git pull --set-upstream upstream HEAD &&
- 	check_config other upstream HEAD
- '
- 
- test_expect_success 'pull --set-upstream upstream with more than one branch does nothing' '
--	clear_config master three &&
--	git pull --set-upstream upstream master three &&
--	check_config_missing master &&
-+	clear_config main three &&
-+	git pull --set-upstream upstream main three &&
-+	check_config_missing main &&
- 	check_config_missing three
- '
- 
- test_expect_success 'pull --set-upstream with valid URL sets upstream to URL' '
--	clear_config master other other2 &&
--	git checkout master &&
-+	clear_config main other other2 &&
-+	git checkout main &&
- 	url="file://$PWD" &&
- 	git pull --set-upstream "$url" &&
--	check_config master "$url" HEAD &&
-+	check_config main "$url" HEAD &&
- 	check_config_missing other &&
- 	check_config_missing other2
- '
- 
- test_expect_success 'pull --set-upstream with valid URL and branch sets branch' '
--	clear_config master other other2 &&
--	git checkout master &&
-+	clear_config main other other2 &&
-+	git checkout main &&
- 	url="file://$PWD" &&
--	git pull --set-upstream "$url" master &&
--	check_config master "$url" refs/heads/master &&
-+	git pull --set-upstream "$url" main &&
-+	check_config main "$url" refs/heads/main &&
- 	check_config_missing other &&
- 	check_config_missing other2
- '
-diff --git a/t/t5560-http-backend-noserver.sh b/t/t5560-http-backend-noserver.sh
-index 5561b7d012..d30cf4f5b8 100755
---- a/t/t5560-http-backend-noserver.sh
-+++ b/t/t5560-http-backend-noserver.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
- 
- test_description='test git-http-backend-noserver'
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-diff --git a/t/t5561-http-backend.sh b/t/t5561-http-backend.sh
-index cba2dffdb0..9c57d84315 100755
---- a/t/t5561-http-backend.sh
-+++ b/t/t5561-http-backend.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
- 
- test_description='test git-http-backend'
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -42,9 +42,9 @@ POST() {
- 
- grep '^[^#]' >exp <<EOF
- 
--###  refs/heads/master
-+###  refs/heads/main
- ###
--GET  /smart/repo.git/refs/heads/master HTTP/1.1 404 -
-+GET  /smart/repo.git/refs/heads/main HTTP/1.1 404 -
- 
- ###  getanyfile default
- ###
-diff --git a/t/t556x_common b/t/t556x_common
-index 359fcfe32b..670fb89477 100755
---- a/t/t556x_common
-+++ b/t/t556x_common
-@@ -22,7 +22,7 @@ test_expect_success 'setup repository' '
- 	 : >objects/info/http-alternates
- 	) &&
- 	git remote add public "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
--	git push public master:master &&
-+	git push public main:main &&
- 
- 	(cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
- 	 git repack -a -d
-@@ -31,7 +31,7 @@ test_expect_success 'setup repository' '
- 	echo other >file &&
- 	git add file &&
- 	git commit -m two &&
--	git push public master:master &&
-+	git push public main:main &&
- 
- 	LOOSE_URL=$(find_file objects/??) &&
- 	PACK_URL=$(find_file objects/pack/*.pack) &&
-@@ -51,8 +51,8 @@ get_static_files() {
- 
- SMART=smart
- GIT_HTTP_EXPORT_ALL=1 && export GIT_HTTP_EXPORT_ALL
--test_expect_success 'direct refs/heads/master not found' '
--	GET refs/heads/master "404 Not Found"
-+test_expect_success 'direct refs/heads/main not found' '
-+	GET refs/heads/main "404 Not Found"
- '
- test_expect_success 'static file is ok' '
- 	get_static_files "200 OK"
-diff --git a/t/t5570-git-daemon.sh b/t/t5570-git-daemon.sh
-index 2e99a331c5..3332a0c595 100755
---- a/t/t5570-git-daemon.sh
-+++ b/t/t5570-git-daemon.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
- 
- test_description='test fetching over git protocol'
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -29,7 +29,7 @@ test_expect_success 'create git-accessible bare repository' '
- 	 : >git-daemon-export-ok
- 	) &&
- 	git remote add public "$GIT_DAEMON_DOCUMENT_ROOT_PATH/repo.git" &&
--	git push public master:master
-+	git push public main:main
- '
- 
- test_expect_success 'clone git repository' '
-@@ -58,12 +58,12 @@ test_expect_success 'no-op fetch without "-v" is quiet' '
- '
- 
- test_expect_success 'remote detects correct HEAD' '
--	git push public master:other &&
-+	git push public main:other &&
- 	(cd clone &&
- 	 git remote set-head -d origin &&
- 	 git remote set-head -a origin &&
- 	 git symbolic-ref refs/remotes/origin/HEAD > output &&
--	 echo refs/remotes/origin/master > expect &&
-+	 echo refs/remotes/origin/main > expect &&
- 	 test_cmp expect output
- 	)
- '
-@@ -151,7 +151,7 @@ test_remote_error()
- 
- msg="access denied or repository not exported"
- test_expect_success 'clone non-existent' "test_remote_error    '$msg' clone nowhere.git"
--test_expect_success 'push disabled'      "test_remote_error    '$msg' push  repo.git master"
-+test_expect_success 'push disabled'      "test_remote_error    '$msg' push  repo.git main"
- test_expect_success 'read access denied' "test_remote_error -x '$msg' fetch repo.git"
- test_expect_success 'not exported'       "test_remote_error -n '$msg' fetch repo.git"
- 
-@@ -159,7 +159,7 @@ stop_git_daemon
- start_git_daemon --informative-errors
- 
- test_expect_success 'clone non-existent' "test_remote_error    'no such repository'      clone nowhere.git"
--test_expect_success 'push disabled'      "test_remote_error    'service not enabled'     push  repo.git master"
-+test_expect_success 'push disabled'      "test_remote_error    'service not enabled'     push  repo.git main"
- test_expect_success 'read access denied' "test_remote_error -x 'no such repository'      fetch repo.git"
- test_expect_success 'not exported'       "test_remote_error -n 'repository not exported' fetch repo.git"
- 
-@@ -195,10 +195,10 @@ test_expect_success FAKENC 'hostname interpolation works after LF-stripping' '
- 	fake_nc "$GIT_DAEMON_HOST_PORT" <input >output &&
- 	depacketize <output >output.raw &&
- 
--	# just pick out the value of master, which avoids any protocol
-+	# just pick out the value of main, which avoids any protocol
- 	# particulars
--	perl -lne "print \$1 if m{^(\\S+) refs/heads/master}" <output.raw >actual &&
--	git -C "$repo" rev-parse master >expect &&
-+	perl -lne "print \$1 if m{^(\\S+) refs/heads/main}" <output.raw >actual &&
-+	git -C "$repo" rev-parse main >expect &&
- 	test_cmp expect actual
- '
- 
-diff --git a/t/t5571-pre-push-hook.sh b/t/t5571-pre-push-hook.sh
-index 971ed3da4b..ad8d5804f7 100755
---- a/t/t5571-pre-push-hook.sh
-+++ b/t/t5571-pre-push-hook.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
- 
- test_description='check pre-push hooks'
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- . ./test-lib.sh
-@@ -51,11 +51,11 @@ EOF
- cat >expected <<EOF
- parent1
- repo1
--refs/heads/master $COMMIT2 refs/heads/foreign $COMMIT1
-+refs/heads/main $COMMIT2 refs/heads/foreign $COMMIT1
+ cat >expect <<EOF
+-$ZERO_OID $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	branch: Created from master
++$ZERO_OID $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	branch: Created from main
  EOF
+ test_expect_success 'git branch --create-reflog d/e/f should create a branch and a log' '
+ 	GIT_COMMITTER_DATE="2005-05-26 23:30" \
+@@ -113,7 +113,7 @@ test_expect_success 'git branch -m n/n n should work' '
  
- test_expect_success 'push with hook' '
--	git push parent1 master:foreign &&
-+	git push parent1 main:foreign &&
- 	diff expected actual
+ test_expect_success 'git branch -m bbb should rename checked out branch' '
+ 	test_when_finished git branch -D bbb &&
+-	test_when_finished git checkout master &&
++	test_when_finished git checkout main &&
+ 	git checkout -b aaa &&
+ 	git commit --allow-empty -m "a new commit" &&
+ 	git rev-parse aaa@{0} >expect &&
+@@ -127,7 +127,7 @@ test_expect_success 'git branch -m bbb should rename checked out branch' '
+ 
+ test_expect_success 'renaming checked out branch works with d/f conflict' '
+ 	test_when_finished "git branch -D foo/bar || git branch -D foo" &&
+-	test_when_finished git checkout master &&
++	test_when_finished git checkout main &&
+ 	git checkout -b foo &&
+ 	git branch -m foo/bar &&
+ 	git symbolic-ref HEAD >actual &&
+@@ -188,7 +188,7 @@ test_expect_success 'git branch -M should leave orphaned HEAD alone' '
+ 		git checkout --orphan lonely &&
+ 		grep lonely .git/HEAD &&
+ 		test_path_is_missing .git/refs/head/lonely &&
+-		git branch -M master mistress &&
++		git branch -M main mistress &&
+ 		grep lonely .git/HEAD
+ 	)
+ '
+@@ -204,7 +204,7 @@ test_expect_success 'resulting reflog can be shown by log -g' '
  '
  
-diff --git a/t/t5572-pull-submodule.sh b/t/t5572-pull-submodule.sh
-index 1d75e3b12b..d6a75964d8 100755
---- a/t/t5572-pull-submodule.sh
-+++ b/t/t5572-pull-submodule.sh
-@@ -148,8 +148,8 @@ test_expect_success 'branch has no merge base with remote-tracking counterpart'
+ test_expect_success 'git branch -M baz bam should succeed when baz is checked out as linked working tree' '
+-	git checkout master &&
++	git checkout main &&
+ 	git worktree add -b baz bazdir &&
+ 	git worktree add -f bazdir2 baz &&
+ 	git branch -M baz bam &&
+@@ -227,18 +227,18 @@ test_expect_success 'git branch -M baz bam should succeed within a worktree in w
+ 	git worktree prune
+ '
  
- 	git clone parent child &&
+-test_expect_success 'git branch -M master should work when master is checked out' '
+-	git checkout master &&
+-	git branch -M master
++test_expect_success 'git branch -M main should work when main is checked out' '
++	git checkout main &&
++	git branch -M main
+ '
  
--	# Reset master so that it has no merge base with
--	# refs/remotes/origin/master.
-+	# Reset main so that it has no merge base with
-+	# refs/remotes/origin/main.
- 	OTHER=$(git -C child commit-tree -m bar \
- 		$(git -C child rev-parse HEAD^{tree})) &&
- 	git -C child reset --hard "$OTHER" &&
-diff --git a/t/t5580-unc-paths.sh b/t/t5580-unc-paths.sh
-index da4c94cce1..cd803ae8bf 100755
---- a/t/t5580-unc-paths.sh
-+++ b/t/t5580-unc-paths.sh
+-test_expect_success 'git branch -M master master should work when master is checked out' '
+-	git checkout master &&
+-	git branch -M master master
++test_expect_success 'git branch -M main main should work when main is checked out' '
++	git checkout main &&
++	git branch -M main main
+ '
+ 
+-test_expect_success 'git branch -M topic topic should work when master is checked out' '
+-	git checkout master &&
++test_expect_success 'git branch -M topic topic should work when main is checked out' '
++	git checkout main &&
+ 	git branch topic &&
+ 	git branch -M topic topic
+ '
+@@ -295,8 +295,8 @@ test_expect_success 'bare main worktree has HEAD at branch deleted by secondary
+ 	git init nonbare &&
+ 	test_commit -C nonbare x &&
+ 	git clone --bare nonbare bare &&
+-	git -C bare worktree add --detach ../secondary master &&
+-	git -C secondary branch -D master
++	git -C bare worktree add --detach ../secondary main &&
++	git -C secondary branch -D main
+ '
+ 
+ test_expect_success 'git branch --list -v with --abbrev' '
+@@ -348,7 +348,7 @@ test_expect_success 'git branch --column with an extremely long branch name' '
+   j/k
+   l
+   m/m
+-* master
++* main
+   mb
+   n
+   o/o
+@@ -391,7 +391,7 @@ test_expect_success PREPARE_FOR_MAIN_BRANCH 'git branch -v with column.ui ignore
+   j/k
+   l
+   m/m
+-* master
++* main
+   mb
+   n
+   o/o
+@@ -430,8 +430,8 @@ test_expect_success 'config information was renamed, too' '
+ '
+ 
+ test_expect_success 'git branch -m correctly renames multiple config sections' '
+-	test_when_finished "git checkout master" &&
+-	git checkout -b source master &&
++	test_when_finished "git checkout main" &&
++	git checkout -b source main &&
+ 
+ 	# Assert that a config file with multiple config sections has
+ 	# those sections preserved...
+@@ -590,18 +590,18 @@ test_expect_success 'git branch -C c1 c2 should never touch HEAD' '
+ 	! grep "$msg$" .git/logs/HEAD
+ '
+ 
+-test_expect_success 'git branch -C master should work when master is checked out' '
+-	git checkout master &&
+-	git branch -C master
++test_expect_success 'git branch -C main should work when main is checked out' '
++	git checkout main &&
++	git branch -C main
+ '
+ 
+-test_expect_success 'git branch -C master master should work when master is checked out' '
+-	git checkout master &&
+-	git branch -C master master
++test_expect_success 'git branch -C main main should work when main is checked out' '
++	git checkout main &&
++	git branch -C main main
+ '
+ 
+-test_expect_success 'git branch -C main5 main5 should work when master is checked out' '
+-	git checkout master &&
++test_expect_success 'git branch -C main5 main5 should work when main is checked out' '
++	git checkout main &&
+ 	git branch main5 &&
+ 	git branch -C main5 main5
+ '
+@@ -623,8 +623,8 @@ test_expect_success 'git branch -C ab cd should overwrite existing config for cd
+ test_expect_success 'git branch -c correctly copies multiple config sections' '
+ 	FOO=1 &&
+ 	export FOO &&
+-	test_when_finished "git checkout master" &&
+-	git checkout -b source2 master &&
++	test_when_finished "git checkout main" &&
++	git checkout -b source2 main &&
+ 
+ 	# Assert that a config file with multiple config sections has
+ 	# those sections preserved...
+@@ -714,10 +714,10 @@ test_expect_success 'deleting a self-referential symref' '
+ '
+ 
+ test_expect_success 'renaming a symref is not allowed' '
+-	git symbolic-ref refs/heads/topic refs/heads/master &&
++	git symbolic-ref refs/heads/topic refs/heads/main &&
+ 	test_must_fail git branch -m topic new-topic &&
+ 	git symbolic-ref refs/heads/topic &&
+-	test_path_is_file .git/refs/heads/master &&
++	test_path_is_file .git/refs/heads/main &&
+ 	test_path_is_missing .git/refs/heads/new-topic
+ '
+ 
+@@ -731,27 +731,27 @@ test_expect_success SYMLINKS 'git branch -m u v should fail when the reflog for
+ test_expect_success 'test tracking setup via --track' '
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+-	(git show-ref -q refs/remotes/local/master || git fetch local) &&
+-	git branch --track my1 local/master &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
++	git branch --track my1 local/main &&
+ 	test $(git config branch.my1.remote) = local &&
+-	test $(git config branch.my1.merge) = refs/heads/master
++	test $(git config branch.my1.merge) = refs/heads/main
+ '
+ 
+ test_expect_success 'test tracking setup (non-wildcard, matching)' '
+ 	git config remote.local.url . &&
+-	git config remote.local.fetch refs/heads/master:refs/remotes/local/master &&
+-	(git show-ref -q refs/remotes/local/master || git fetch local) &&
+-	git branch --track my4 local/master &&
++	git config remote.local.fetch refs/heads/main:refs/remotes/local/main &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
++	git branch --track my4 local/main &&
+ 	test $(git config branch.my4.remote) = local &&
+-	test $(git config branch.my4.merge) = refs/heads/master
++	test $(git config branch.my4.merge) = refs/heads/main
+ '
+ 
+ test_expect_success 'tracking setup fails on non-matching refspec' '
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+-	(git show-ref -q refs/remotes/local/master || git fetch local) &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
+ 	git config remote.local.fetch refs/heads/s:refs/remotes/local/s &&
+-	test_must_fail git branch --track my5 local/master &&
++	test_must_fail git branch --track my5 local/main &&
+ 	test_must_fail git config branch.my5.remote &&
+ 	test_must_fail git config branch.my5.merge
+ '
+@@ -760,21 +760,21 @@ test_expect_success 'test tracking setup via config' '
+ 	git config branch.autosetupmerge true &&
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+-	(git show-ref -q refs/remotes/local/master || git fetch local) &&
+-	git branch my3 local/master &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
++	git branch my3 local/main &&
+ 	test $(git config branch.my3.remote) = local &&
+-	test $(git config branch.my3.merge) = refs/heads/master
++	test $(git config branch.my3.merge) = refs/heads/main
+ '
+ 
+ test_expect_success 'test overriding tracking setup via --no-track' '
+ 	git config branch.autosetupmerge true &&
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+-	(git show-ref -q refs/remotes/local/master || git fetch local) &&
+-	git branch --no-track my2 local/master &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
++	git branch --no-track my2 local/main &&
+ 	git config branch.autosetupmerge false &&
+ 	! test "$(git config branch.my2.remote)" = local &&
+-	! test "$(git config branch.my2.merge)" = refs/heads/master
++	! test "$(git config branch.my2.merge)" = refs/heads/main
+ '
+ 
+ test_expect_success 'no tracking without .fetch entries' '
+@@ -839,26 +839,26 @@ test_expect_success 'branch from tag w/--track causes failure' '
+ 
+ test_expect_success '--set-upstream-to fails on multiple branches' '
+ 	echo "fatal: too many arguments to set new upstream" >expect &&
+-	test_must_fail git branch --set-upstream-to master a b c 2>err &&
++	test_must_fail git branch --set-upstream-to main a b c 2>err &&
+ 	test_i18ncmp expect err
+ '
+ 
+ test_expect_success '--set-upstream-to fails on detached HEAD' '
+ 	git checkout HEAD^{} &&
+ 	test_when_finished git checkout - &&
+-	echo "fatal: could not set upstream of HEAD to master when it does not point to any branch." >expect &&
+-	test_must_fail git branch --set-upstream-to master 2>err &&
++	echo "fatal: could not set upstream of HEAD to main when it does not point to any branch." >expect &&
++	test_must_fail git branch --set-upstream-to main 2>err &&
+ 	test_i18ncmp expect err
+ '
+ 
+ test_expect_success '--set-upstream-to fails on a missing dst branch' '
+ 	echo "fatal: branch '"'"'does-not-exist'"'"' does not exist" >expect &&
+-	test_must_fail git branch --set-upstream-to master does-not-exist 2>err &&
++	test_must_fail git branch --set-upstream-to main does-not-exist 2>err &&
+ 	test_i18ncmp expect err
+ '
+ 
+ test_expect_success '--set-upstream-to fails on a missing src branch' '
+-	test_must_fail git branch --set-upstream-to does-not-exist master 2>err &&
++	test_must_fail git branch --set-upstream-to does-not-exist main 2>err &&
+ 	test_i18ngrep "the requested upstream branch '"'"'does-not-exist'"'"' does not exist" err
+ '
+ 
+@@ -877,20 +877,20 @@ test_expect_success '--set-upstream-to fails on locked config' '
+ '
+ 
+ test_expect_success 'use --set-upstream-to modify HEAD' '
+-	test_config branch.master.remote foo &&
+-	test_config branch.master.merge foo &&
++	test_config branch.main.remote foo &&
++	test_config branch.main.merge foo &&
+ 	git branch my12 &&
+ 	git branch --set-upstream-to my12 &&
+-	test "$(git config branch.master.remote)" = "." &&
+-	test "$(git config branch.master.merge)" = "refs/heads/my12"
++	test "$(git config branch.main.remote)" = "." &&
++	test "$(git config branch.main.merge)" = "refs/heads/my12"
+ '
+ 
+ test_expect_success 'use --set-upstream-to modify a particular branch' '
+ 	git branch my13 &&
+-	git branch --set-upstream-to master my13 &&
++	git branch --set-upstream-to main my13 &&
+ 	test_when_finished "git branch --unset-upstream my13" &&
+ 	test "$(git config branch.my13.remote)" = "." &&
+-	test "$(git config branch.my13.merge)" = "refs/heads/master"
++	test "$(git config branch.my13.merge)" = "refs/heads/main"
+ '
+ 
+ test_expect_success '--unset-upstream should fail if given a non-existent branch' '
+@@ -909,14 +909,14 @@ test_expect_success '--unset-upstream should fail if config is locked' '
+ 
+ test_expect_success 'test --unset-upstream on HEAD' '
+ 	git branch my14 &&
+-	test_config branch.master.remote foo &&
+-	test_config branch.master.merge foo &&
++	test_config branch.main.remote foo &&
++	test_config branch.main.merge foo &&
+ 	git branch --set-upstream-to my14 &&
+ 	git branch --unset-upstream &&
+-	test_must_fail git config branch.master.remote &&
+-	test_must_fail git config branch.master.merge &&
++	test_must_fail git config branch.main.remote &&
++	test_must_fail git config branch.main.merge &&
+ 	# fail for a branch without upstream set
+-	echo "fatal: Branch '"'"'master'"'"' has no upstream information" >expect &&
++	echo "fatal: Branch '"'"'main'"'"' has no upstream information" >expect &&
+ 	test_must_fail git branch --unset-upstream 2>err &&
+ 	test_i18ncmp expect err
+ '
+@@ -937,14 +937,14 @@ test_expect_success '--unset-upstream should fail on detached HEAD' '
+ 
+ test_expect_success 'test --unset-upstream on a particular branch' '
+ 	git branch my15 &&
+-	git branch --set-upstream-to master my14 &&
++	git branch --set-upstream-to main my14 &&
+ 	git branch --unset-upstream my14 &&
+ 	test_must_fail git config branch.my14.remote &&
+ 	test_must_fail git config branch.my14.merge
+ '
+ 
+ test_expect_success 'disabled option --set-upstream fails' '
+-	test_must_fail git branch --set-upstream origin/master
++	test_must_fail git branch --set-upstream origin/main
+ '
+ 
+ test_expect_success '--set-upstream-to notices an error to set branch as own upstream' '
+@@ -959,32 +959,32 @@ test_expect_success '--set-upstream-to notices an error to set branch as own ups
+ 
+ # Keep this test last, as it changes the current branch
+ cat >expect <<EOF
+-$ZERO_OID $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	branch: Created from master
++$ZERO_OID $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	branch: Created from main
+ EOF
+ test_expect_success 'git checkout -b g/h/i -l should create a branch and a log' '
+ 	GIT_COMMITTER_DATE="2005-05-26 23:30" \
+-	git checkout -b g/h/i -l master &&
++	git checkout -b g/h/i -l main &&
+ 	test_path_is_file .git/refs/heads/g/h/i &&
+ 	test_path_is_file .git/logs/refs/heads/g/h/i &&
+ 	test_cmp expect .git/logs/refs/heads/g/h/i
+ '
+ 
+ test_expect_success 'checkout -b makes reflog by default' '
+-	git checkout master &&
++	git checkout main &&
+ 	git config --unset core.logAllRefUpdates &&
+ 	git checkout -b alpha &&
+ 	git rev-parse --verify alpha@{0}
+ '
+ 
+ test_expect_success 'checkout -b does not make reflog when core.logAllRefUpdates = false' '
+-	git checkout master &&
++	git checkout main &&
+ 	git config core.logAllRefUpdates false &&
+ 	git checkout -b beta &&
+ 	test_must_fail git rev-parse --verify beta@{0}
+ '
+ 
+ test_expect_success 'checkout -b with -l makes reflog when core.logAllRefUpdates = false' '
+-	git checkout master &&
++	git checkout main &&
+ 	git checkout -lb gamma &&
+ 	git config --unset core.logAllRefUpdates &&
+ 	git rev-parse --verify gamma@{0}
+@@ -993,10 +993,10 @@ test_expect_success 'checkout -b with -l makes reflog when core.logAllRefUpdates
+ test_expect_success 'avoid ambiguous track' '
+ 	git config branch.autosetupmerge true &&
+ 	git config remote.ambi1.url lalala &&
+-	git config remote.ambi1.fetch refs/heads/lalala:refs/heads/master &&
++	git config remote.ambi1.fetch refs/heads/lalala:refs/heads/main &&
+ 	git config remote.ambi2.url lilili &&
+-	git config remote.ambi2.fetch refs/heads/lilili:refs/heads/master &&
+-	test_must_fail git branch all1 master &&
++	git config remote.ambi2.fetch refs/heads/lilili:refs/heads/main &&
++	test_must_fail git branch all1 main &&
+ 	test -z "$(git config branch.all1.merge)"
+ '
+ 
+@@ -1052,10 +1052,10 @@ test_expect_success 'autosetuprebase local on a tracked remote branch' '
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+ 	git config branch.autosetuprebase local &&
+-	(git show-ref -q refs/remotes/local/master || git fetch local) &&
+-	git branch --track myr5 local/master &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
++	git branch --track myr5 local/main &&
+ 	test "$(git config branch.myr5.remote)" = local &&
+-	test "$(git config branch.myr5.merge)" = refs/heads/master &&
++	test "$(git config branch.myr5.merge)" = refs/heads/main &&
+ 	! test "$(git config branch.myr5.rebase)" = true
+ '
+ 
+@@ -1063,10 +1063,10 @@ test_expect_success 'autosetuprebase never on a tracked remote branch' '
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+ 	git config branch.autosetuprebase never &&
+-	(git show-ref -q refs/remotes/local/master || git fetch local) &&
+-	git branch --track myr6 local/master &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
++	git branch --track myr6 local/main &&
+ 	test "$(git config branch.myr6.remote)" = local &&
+-	test "$(git config branch.myr6.merge)" = refs/heads/master &&
++	test "$(git config branch.myr6.merge)" = refs/heads/main &&
+ 	! test "$(git config branch.myr6.rebase)" = true
+ '
+ 
+@@ -1074,10 +1074,10 @@ test_expect_success 'autosetuprebase remote on a tracked remote branch' '
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+ 	git config branch.autosetuprebase remote &&
+-	(git show-ref -q refs/remotes/local/master || git fetch local) &&
+-	git branch --track myr7 local/master &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
++	git branch --track myr7 local/main &&
+ 	test "$(git config branch.myr7.remote)" = local &&
+-	test "$(git config branch.myr7.merge)" = refs/heads/master &&
++	test "$(git config branch.myr7.merge)" = refs/heads/main &&
+ 	test "$(git config branch.myr7.rebase)" = true
+ '
+ 
+@@ -1085,10 +1085,10 @@ test_expect_success 'autosetuprebase always on a tracked remote branch' '
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+ 	git config branch.autosetuprebase remote &&
+-	(git show-ref -q refs/remotes/local/master || git fetch local) &&
+-	git branch --track myr8 local/master &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
++	git branch --track myr8 local/main &&
+ 	test "$(git config branch.myr8.remote)" = local &&
+-	test "$(git config branch.myr8.merge)" = refs/heads/master &&
++	test "$(git config branch.myr8.merge)" = refs/heads/main &&
+ 	test "$(git config branch.myr8.rebase)" = true
+ '
+ 
+@@ -1096,10 +1096,10 @@ test_expect_success 'autosetuprebase unconfigured on a tracked remote branch' '
+ 	git config --unset branch.autosetuprebase &&
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+-	(git show-ref -q refs/remotes/local/master || git fetch local) &&
+-	git branch --track myr9 local/master &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
++	git branch --track myr9 local/main &&
+ 	test "$(git config branch.myr9.remote)" = local &&
+-	test "$(git config branch.myr9.merge)" = refs/heads/master &&
++	test "$(git config branch.myr9.merge)" = refs/heads/main &&
+ 	test "z$(git config branch.myr9.rebase)" = z
+ '
+ 
+@@ -1117,7 +1117,7 @@ test_expect_success 'autosetuprebase unconfigured on a tracked local branch' '
+ test_expect_success 'autosetuprebase unconfigured on untracked local branch' '
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+-	(git show-ref -q refs/remotes/local/master || git fetch local) &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
+ 	git branch --no-track myr11 mybase2 &&
+ 	test "z$(git config branch.myr11.remote)" = z &&
+ 	test "z$(git config branch.myr11.merge)" = z &&
+@@ -1127,8 +1127,8 @@ test_expect_success 'autosetuprebase unconfigured on untracked local branch' '
+ test_expect_success 'autosetuprebase unconfigured on untracked remote branch' '
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+-	(git show-ref -q refs/remotes/local/master || git fetch local) &&
+-	git branch --no-track myr12 local/master &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
++	git branch --no-track myr12 local/main &&
+ 	test "z$(git config branch.myr12.remote)" = z &&
+ 	test "z$(git config branch.myr12.merge)" = z &&
+ 	test "z$(git config branch.myr12.rebase)" = z
+@@ -1138,7 +1138,7 @@ test_expect_success 'autosetuprebase never on an untracked local branch' '
+ 	git config branch.autosetuprebase never &&
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+-	(git show-ref -q refs/remotes/local/master || git fetch local) &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
+ 	git branch --no-track myr13 mybase2 &&
+ 	test "z$(git config branch.myr13.remote)" = z &&
+ 	test "z$(git config branch.myr13.merge)" = z &&
+@@ -1149,7 +1149,7 @@ test_expect_success 'autosetuprebase local on an untracked local branch' '
+ 	git config branch.autosetuprebase local &&
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+-	(git show-ref -q refs/remotes/local/master || git fetch local) &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
+ 	git branch --no-track myr14 mybase2 &&
+ 	test "z$(git config branch.myr14.remote)" = z &&
+ 	test "z$(git config branch.myr14.merge)" = z &&
+@@ -1160,7 +1160,7 @@ test_expect_success 'autosetuprebase remote on an untracked local branch' '
+ 	git config branch.autosetuprebase remote &&
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+-	(git show-ref -q refs/remotes/local/master || git fetch local) &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
+ 	git branch --no-track myr15 mybase2 &&
+ 	test "z$(git config branch.myr15.remote)" = z &&
+ 	test "z$(git config branch.myr15.merge)" = z &&
+@@ -1171,7 +1171,7 @@ test_expect_success 'autosetuprebase always on an untracked local branch' '
+ 	git config branch.autosetuprebase always &&
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+-	(git show-ref -q refs/remotes/local/master || git fetch local) &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
+ 	git branch --no-track myr16 mybase2 &&
+ 	test "z$(git config branch.myr16.remote)" = z &&
+ 	test "z$(git config branch.myr16.merge)" = z &&
+@@ -1182,8 +1182,8 @@ test_expect_success 'autosetuprebase never on an untracked remote branch' '
+ 	git config branch.autosetuprebase never &&
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+-	(git show-ref -q refs/remotes/local/master || git fetch local) &&
+-	git branch --no-track myr17 local/master &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
++	git branch --no-track myr17 local/main &&
+ 	test "z$(git config branch.myr17.remote)" = z &&
+ 	test "z$(git config branch.myr17.merge)" = z &&
+ 	test "z$(git config branch.myr17.rebase)" = z
+@@ -1193,8 +1193,8 @@ test_expect_success 'autosetuprebase local on an untracked remote branch' '
+ 	git config branch.autosetuprebase local &&
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+-	(git show-ref -q refs/remotes/local/master || git fetch local) &&
+-	git branch --no-track myr18 local/master &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
++	git branch --no-track myr18 local/main &&
+ 	test "z$(git config branch.myr18.remote)" = z &&
+ 	test "z$(git config branch.myr18.merge)" = z &&
+ 	test "z$(git config branch.myr18.rebase)" = z
+@@ -1204,8 +1204,8 @@ test_expect_success 'autosetuprebase remote on an untracked remote branch' '
+ 	git config branch.autosetuprebase remote &&
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+-	(git show-ref -q refs/remotes/local/master || git fetch local) &&
+-	git branch --no-track myr19 local/master &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
++	git branch --no-track myr19 local/main &&
+ 	test "z$(git config branch.myr19.remote)" = z &&
+ 	test "z$(git config branch.myr19.merge)" = z &&
+ 	test "z$(git config branch.myr19.rebase)" = z
+@@ -1215,8 +1215,8 @@ test_expect_success 'autosetuprebase always on an untracked remote branch' '
+ 	git config branch.autosetuprebase always &&
+ 	git config remote.local.url . &&
+ 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+-	(git show-ref -q refs/remotes/local/master || git fetch local) &&
+-	git branch --no-track myr20 local/master &&
++	(git show-ref -q refs/remotes/local/main || git fetch local) &&
++	git branch --no-track myr20 local/main &&
+ 	test "z$(git config branch.myr20.remote)" = z &&
+ 	test "z$(git config branch.myr20.merge)" = z &&
+ 	test "z$(git config branch.myr20.rebase)" = z
+@@ -1224,7 +1224,7 @@ test_expect_success 'autosetuprebase always on an untracked remote branch' '
+ 
+ test_expect_success 'autosetuprebase always on detached HEAD' '
+ 	git config branch.autosetupmerge always &&
+-	test_when_finished git checkout master &&
++	test_when_finished git checkout main &&
+ 	git checkout HEAD^0 &&
+ 	git branch my11 &&
+ 	test -z "$(git config branch.my11.remote)" &&
+@@ -1252,18 +1252,18 @@ test_expect_success 'attempt to delete a branch without base and unmerged to HEA
+ test_expect_success 'attempt to delete a branch merged to its base' '
+ 	# we are on my9 which is the initial commit; traditionally
+ 	# we would not have allowed deleting my8 that is not merged
+-	# to my9, but it is set to track master that already has my8
+-	git config branch.my8.merge refs/heads/master &&
++	# to my9, but it is set to track main that already has my8
++	git config branch.my8.merge refs/heads/main &&
+ 	git branch -d my8
+ '
+ 
+ test_expect_success 'attempt to delete a branch merged to its base' '
+-	git checkout master &&
++	git checkout main &&
+ 	echo Third >>A &&
+ 	git commit -m "Third commit" A &&
+ 	git branch -t my10 my9 &&
+ 	git branch -f my10 HEAD^ &&
+-	# we are on master which is at the third commit, and my10
++	# we are on main which is at the third commit, and my10
+ 	# is behind us, so traditionally we would have allowed deleting
+ 	# it; but my10 is set to track my9 that is further behind.
+ 	test_must_fail git branch -d my10
+@@ -1290,7 +1290,7 @@ test_expect_success 'detect typo in branch name when using --edit-description' '
+ '
+ 
+ test_expect_success 'refuse --edit-description on unborn branch for now' '
+-	test_when_finished "git checkout master" &&
++	test_when_finished "git checkout main" &&
+ 	write_script editor <<-\EOF &&
+ 		echo "New contents" >"$1"
+ 	EOF
+@@ -1304,18 +1304,18 @@ test_expect_success '--merged catches invalid object names' '
+ 
+ test_expect_success '--list during rebase' '
+ 	test_when_finished "reset_rebase" &&
+-	git checkout master &&
++	git checkout main &&
+ 	FAKE_LINES="1 edit 2" &&
+ 	export FAKE_LINES &&
+ 	set_fake_editor &&
+ 	git rebase -i HEAD~2 &&
+ 	git branch --list >actual &&
+-	test_i18ngrep "rebasing master" actual
++	test_i18ngrep "rebasing main" actual
+ '
+ 
+ test_expect_success '--list during rebase from detached HEAD' '
+-	test_when_finished "reset_rebase && git checkout master" &&
+-	git checkout master^0 &&
++	test_when_finished "reset_rebase && git checkout main" &&
++	git checkout main^0 &&
+ 	oid=$(git rev-parse --short HEAD) &&
+ 	FAKE_LINES="1 edit 2" &&
+ 	export FAKE_LINES &&
+@@ -1351,11 +1351,11 @@ test_expect_success 'tracking with unexpected .fetch refspec' '
+ 		git remote add c ../c &&
+ 		git config remote.c.fetch "+refs/remotes/*:refs/remotes/*" &&
+ 		git fetch c &&
+-		git branch --track local/a/master remotes/a/master &&
+-		test "$(git config branch.local/a/master.remote)" = "c" &&
+-		test "$(git config branch.local/a/master.merge)" = "refs/remotes/a/master" &&
++		git branch --track local/a/main remotes/a/main &&
++		test "$(git config branch.local/a/main.remote)" = "c" &&
++		test "$(git config branch.local/a/main.merge)" = "refs/remotes/a/main" &&
+ 		git rev-parse --verify a >expect &&
+-		git rev-parse --verify local/a/master >actual &&
++		git rev-parse --verify local/a/main >actual &&
+ 		test_cmp expect actual
+ 	)
+ '
+@@ -1374,7 +1374,7 @@ test_expect_success 'configured committerdate sort' '
+ 		test_commit b &&
+ 		git branch >actual &&
+ 		cat >expect <<-\EOF &&
+-		  master
++		  main
+ 		  a
+ 		  c
+ 		* b
+@@ -1392,7 +1392,7 @@ test_expect_success 'option override configured sort' '
+ 		  a
+ 		* b
+ 		  c
+-		  master
++		  main
+ 		EOF
+ 		test_cmp expect actual
+ 	)
+diff --git a/t/t3201-branch-contains.sh b/t/t3201-branch-contains.sh
+index 532cdbe9ae..8e626afbb9 100755
+--- a/t/t3201-branch-contains.sh
++++ b/t/t3201-branch-contains.sh
+@@ -2,7 +2,7 @@
+ 
+ test_description='branch --contains <commit>, --no-contains <commit> --merged, and --no-merged'
+ 
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+@@ -17,47 +17,47 @@ test_expect_success setup '
+ 
+ 	echo 1 >file &&
+ 	test_tick &&
+-	git commit -a -m "second on master" &&
++	git commit -a -m "second on main" &&
+ 
+ 	git checkout side &&
+ 	echo 1 >file &&
+ 	test_tick &&
+ 	git commit -a -m "second on side" &&
+ 
+-	git merge master
++	git merge main
+ 
+ '
+ 
+-test_expect_success 'branch --contains=master' '
++test_expect_success 'branch --contains=main' '
+ 
+-	git branch --contains=master >actual &&
++	git branch --contains=main >actual &&
+ 	{
+-		echo "  master" && echo "* side"
++		echo "  main" && echo "* side"
+ 	} >expect &&
+ 	test_cmp expect actual
+ 
+ '
+ 
+-test_expect_success 'branch --contains master' '
++test_expect_success 'branch --contains main' '
+ 
+-	git branch --contains master >actual &&
++	git branch --contains main >actual &&
+ 	{
+-		echo "  master" && echo "* side"
++		echo "  main" && echo "* side"
+ 	} >expect &&
+ 	test_cmp expect actual
+ 
+ '
+ 
+-test_expect_success 'branch --no-contains=master' '
++test_expect_success 'branch --no-contains=main' '
+ 
+-	git branch --no-contains=master >actual &&
++	git branch --no-contains=main >actual &&
+ 	test_must_be_empty actual
+ 
+ '
+ 
+-test_expect_success 'branch --no-contains master' '
++test_expect_success 'branch --no-contains main' '
+ 
+-	git branch --no-contains master >actual &&
++	git branch --no-contains main >actual &&
+ 	test_must_be_empty actual
+ 
+ '
+@@ -76,7 +76,7 @@ test_expect_success 'branch --no-contains=side' '
+ 
+ 	git branch --no-contains=side >actual &&
+ 	{
+-		echo "  master"
++		echo "  main"
+ 	} >expect &&
+ 	test_cmp expect actual
+ 
+@@ -84,9 +84,9 @@ test_expect_success 'branch --no-contains=side' '
+ 
+ test_expect_success 'branch --contains with pattern implies --list' '
+ 
+-	git branch --contains=master master >actual &&
++	git branch --contains=main main >actual &&
+ 	{
+-		echo "  master"
++		echo "  main"
+ 	} >expect &&
+ 	test_cmp expect actual
+ 
+@@ -94,7 +94,7 @@ test_expect_success 'branch --contains with pattern implies --list' '
+ 
+ test_expect_success 'branch --no-contains with pattern implies --list' '
+ 
+-	git branch --no-contains=master master >actual &&
++	git branch --no-contains=main main >actual &&
+ 	test_must_be_empty actual
+ 
+ '
+@@ -103,7 +103,7 @@ test_expect_success 'side: branch --merged' '
+ 
+ 	git branch --merged >actual &&
+ 	{
+-		echo "  master" &&
++		echo "  main" &&
+ 		echo "* side"
+ 	} >expect &&
+ 	test_cmp expect actual
+@@ -112,9 +112,9 @@ test_expect_success 'side: branch --merged' '
+ 
+ test_expect_success 'branch --merged with pattern implies --list' '
+ 
+-	git branch --merged=side master >actual &&
++	git branch --merged=side main >actual &&
+ 	{
+-		echo "  master"
++		echo "  main"
+ 	} >expect &&
+ 	test_cmp expect actual
+ 
+@@ -127,18 +127,18 @@ test_expect_success 'side: branch --no-merged' '
+ 
+ '
+ 
+-test_expect_success 'master: branch --merged' '
++test_expect_success 'main: branch --merged' '
+ 
+-	git checkout master &&
++	git checkout main &&
+ 	git branch --merged >actual &&
+ 	{
+-		echo "* master"
++		echo "* main"
+ 	} >expect &&
+ 	test_cmp expect actual
+ 
+ '
+ 
+-test_expect_success 'master: branch --no-merged' '
++test_expect_success 'main: branch --no-merged' '
+ 
+ 	git branch --no-merged >actual &&
+ 	{
+@@ -150,22 +150,22 @@ test_expect_success 'master: branch --no-merged' '
+ 
+ test_expect_success 'branch --no-merged with pattern implies --list' '
+ 
+-	git branch --no-merged=master master >actual &&
++	git branch --no-merged=main main >actual &&
+ 	test_must_be_empty actual
+ 
+ '
+ 
+ test_expect_success 'implicit --list conflicts with modification options' '
+ 
+-	test_must_fail git branch --contains=master -d &&
+-	test_must_fail git branch --contains=master -m foo &&
+-	test_must_fail git branch --no-contains=master -d &&
+-	test_must_fail git branch --no-contains=master -m foo
++	test_must_fail git branch --contains=main -d &&
++	test_must_fail git branch --contains=main -m foo &&
++	test_must_fail git branch --no-contains=main -d &&
++	test_must_fail git branch --no-contains=main -m foo
+ 
+ '
+ 
+ test_expect_success 'Assert that --contains only works on commits, not trees & blobs' '
+-	test_must_fail git branch --contains master^{tree} &&
++	test_must_fail git branch --contains main^{tree} &&
+ 	blob=$(git hash-object -w --stdin <<-\EOF
+ 	Some blob
+ 	EOF
+@@ -175,11 +175,11 @@ test_expect_success 'Assert that --contains only works on commits, not trees & b
+ '
+ 
+ test_expect_success 'multiple branch --contains' '
+-	git checkout -b side2 master &&
++	git checkout -b side2 main &&
+ 	>feature &&
+ 	git add feature &&
+ 	git commit -m "add feature" &&
+-	git checkout -b next master &&
++	git checkout -b next main &&
+ 	git merge side &&
+ 	git branch --contains side --contains side2 >actual &&
+ 	cat >expect <<-\EOF &&
+@@ -191,9 +191,9 @@ test_expect_success 'multiple branch --contains' '
+ '
+ 
+ test_expect_success 'multiple branch --merged' '
+-	git branch --merged next --merged master >actual &&
++	git branch --merged next --merged main >actual &&
+ 	cat >expect <<-\EOF &&
+-	  master
++	  main
+ 	* next
+ 	  side
+ 	EOF
+@@ -203,13 +203,13 @@ test_expect_success 'multiple branch --merged' '
+ test_expect_success 'multiple branch --no-contains' '
+ 	git branch --no-contains side --no-contains side2 >actual &&
+ 	cat >expect <<-\EOF &&
+-	  master
++	  main
+ 	EOF
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'multiple branch --no-merged' '
+-	git branch --no-merged next --no-merged master >actual &&
++	git branch --no-merged next --no-merged main >actual &&
+ 	cat >expect <<-\EOF &&
+ 	  side2
+ 	EOF
+@@ -217,7 +217,7 @@ test_expect_success 'multiple branch --no-merged' '
+ '
+ 
+ test_expect_success 'branch --contains combined with --no-contains' '
+-	git checkout -b seen master &&
++	git checkout -b seen main &&
+ 	git merge side &&
+ 	git merge side2 &&
+ 	git branch --contains side --no-contains side2 >actual &&
+@@ -242,17 +242,17 @@ test_expect_success 'branch --merged combined with --no-merged' '
+ # that the latter walk does not mess up our flag to see if it was
+ # merged).
+ #
+-# Here "topic" tracks "master" with one extra commit, and "zzz" points to the
+-# same tip as master The name "zzz" must come alphabetically after "topic"
++# Here "topic" tracks "main" with one extra commit, and "zzz" points to the
++# same tip as main The name "zzz" must come alphabetically after "topic"
+ # as we process them in that order.
+ test_expect_success PREPARE_FOR_MAIN_BRANCH 'branch --merged with --verbose' '
+-	git branch --track topic master &&
++	git branch --track topic main &&
+ 	git branch zzz topic &&
+ 	git checkout topic &&
+ 	test_commit foo &&
+ 	git branch --merged topic >actual &&
+ 	cat >expect <<-\EOF &&
+-	  master
++	  main
+ 	* topic
+ 	  zzz
+ 	EOF
+diff --git a/t/t3202-show-branch-octopus.sh b/t/t3202-show-branch-octopus.sh
+index bbf7129dd8..5cb0126cfe 100755
+--- a/t/t3202-show-branch-octopus.sh
++++ b/t/t3202-show-branch-octopus.sh
+@@ -2,7 +2,7 @@
+ 
+ test_description='test show-branch with more than 8 heads'
+ 
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+@@ -18,7 +18,7 @@ test_expect_success 'setup' '
+ 
+ 	for i in $numbers
+ 	do
+-		git checkout -b branch$i master &&
++		git checkout -b branch$i main &&
+ 		> file$i &&
+ 		git add file$i &&
+ 		test_tick &&
+diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+index a2144dd8e5..a7d2edd988 100755
+--- a/t/t3203-branch-output.sh
++++ b/t/t3203-branch-output.sh
 @@ -1,7 +1,7 @@
  #!/bin/sh
  
- test_description='various Windows-only path tests'
+ test_description='git branch display tests'
 -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
 +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
  . ./test-lib.sh
-@@ -56,7 +56,7 @@ test_expect_success fetch '
- 	git init to-fetch &&
- 	(
- 		cd to-fetch &&
--		git fetch "$UNCPATH" master
-+		git fetch "$UNCPATH" main
- 	)
+@@ -29,7 +29,7 @@ test_expect_success 'make remote branches' '
+ cat >expect <<'EOF'
+   branch-one
+   branch-two
+-* master
++* main
+ EOF
+ test_expect_success 'git branch shows local branches' '
+ 	git branch >actual &&
+@@ -63,7 +63,7 @@ test_expect_success 'git branch -r shows remote branches' '
+ cat >expect <<'EOF'
+   branch-one
+   branch-two
+-* master
++* main
+   remotes/origin/HEAD -> origin/branch-one
+   remotes/origin/branch-one
+   remotes/origin/branch-two
+@@ -155,7 +155,7 @@ test_expect_success 'git branch shows detached HEAD properly' '
+ * (HEAD detached at $(git rev-parse --short HEAD^0))
+   branch-one
+   branch-two
+-  master
++  main
+ EOF
+ 	git checkout HEAD^0 &&
+ 	git branch >actual &&
+@@ -163,12 +163,12 @@ EOF
  '
  
-diff --git a/t/t5581-http-curl-verbose.sh b/t/t5581-http-curl-verbose.sh
-index 907bb062d6..cded79c16b 100755
---- a/t/t5581-http-curl-verbose.sh
-+++ b/t/t5581-http-curl-verbose.sh
+ test_expect_success 'git branch shows detached HEAD properly after checkout --detach' '
+-	git checkout master &&
++	git checkout main &&
+ 	cat >expect <<EOF &&
+ * (HEAD detached at $(git rev-parse --short HEAD^0))
+   branch-one
+   branch-two
+-  master
++  main
+ EOF
+ 	git checkout --detach &&
+ 	git branch >actual &&
+@@ -180,7 +180,7 @@ test_expect_success 'git branch shows detached HEAD properly after moving' '
+ * (HEAD detached from $(git rev-parse --short HEAD))
+   branch-one
+   branch-two
+-  master
++  main
+ EOF
+ 	git reset --hard HEAD^1 &&
+ 	git branch >actual &&
+@@ -192,9 +192,9 @@ test_expect_success 'git branch shows detached HEAD properly from tag' '
+ * (HEAD detached at fromtag)
+   branch-one
+   branch-two
+-  master
++  main
+ EOF
+-	git tag fromtag master &&
++	git tag fromtag main &&
+ 	git checkout fromtag &&
+ 	git branch >actual &&
+ 	test_i18ncmp expect actual
+@@ -205,7 +205,7 @@ test_expect_success 'git branch shows detached HEAD properly after moving from t
+ * (HEAD detached from fromtag)
+   branch-one
+   branch-two
+-  master
++  main
+ EOF
+ 	git reset --hard HEAD^1 &&
+ 	git branch >actual &&
+@@ -217,7 +217,7 @@ test_expect_success 'git branch `--sort` option' '
+ 	* (HEAD detached from fromtag)
+ 	  branch-two
+ 	  branch-one
+-	  master
++	  main
+ 	EOF
+ 	git branch --sort=objectsize >actual &&
+ 	test_i18ncmp expect actual
+@@ -226,7 +226,7 @@ test_expect_success 'git branch `--sort` option' '
+ test_expect_success 'git branch --points-at option' '
+ 	cat >expect <<-\EOF &&
+ 	  branch-one
+-	  master
++	  main
+ 	EOF
+ 	git branch --points-at=branch-one >actual &&
+ 	test_cmp expect actual
+@@ -263,14 +263,14 @@ test_expect_success 'sort branches, ignore case' '
+ 		cat >expected <<-\EOF &&
+ 		BRANCH-two
+ 		branch-one
+-		master
++		main
+ 		EOF
+ 		test_cmp expected actual &&
+ 		git branch --list -i | awk "{print \$NF}" >actual &&
+ 		cat >expected <<-\EOF &&
+ 		branch-one
+ 		BRANCH-two
+-		master
++		main
+ 		EOF
+ 		test_cmp expected actual
+ 	)
+@@ -282,7 +282,7 @@ test_expect_success 'git branch --format option' '
+ 	Refname is refs/heads/ambiguous
+ 	Refname is refs/heads/branch-one
+ 	Refname is refs/heads/branch-two
+-	Refname is refs/heads/master
++	Refname is refs/heads/main
+ 	Refname is refs/heads/ref-to-branch
+ 	Refname is refs/heads/ref-to-remote
+ 	EOF
+@@ -296,7 +296,7 @@ test_expect_success 'worktree colors correct' '
+ 	  ambiguous<RESET>
+ 	  branch-one<RESET>
+ 	+ <CYAN>branch-two<RESET>
+-	  master<RESET>
++	  main<RESET>
+ 	  ref-to-branch<RESET> -> branch-one
+ 	  ref-to-remote<RESET> -> origin/branch-one
+ 	EOF
+@@ -309,9 +309,9 @@ test_expect_success 'worktree colors correct' '
+ '
+ 
+ test_expect_success "set up color tests" '
+-	echo "<RED>master<RESET>" >expect.color &&
+-	echo "master" >expect.bare &&
+-	color_args="--format=%(color:red)%(refname:short) --list master"
++	echo "<RED>main<RESET>" >expect.color &&
++	echo "main" >expect.bare &&
++	color_args="--format=%(color:red)%(refname:short) --list main"
+ '
+ 
+ test_expect_success '%(color) omitted without tty' '
+@@ -334,7 +334,7 @@ test_expect_success '--color overrides auto-color' '
+ 
+ test_expect_success PREPARE_FOR_MAIN_BRANCH 'verbose output lists worktree path' '
+ 	one=$(git rev-parse --short HEAD) &&
+-	two=$(git rev-parse --short master) &&
++	two=$(git rev-parse --short main) &&
+ 	cat >expect <<-EOF &&
+ 	* (HEAD detached from fromtag) $one one
+ 	  ambiguous                    $one one
+diff --git a/t/t3204-branch-name-interpretation.sh b/t/t3204-branch-name-interpretation.sh
+index dd315ebf04..993a6b5eff 100755
+--- a/t/t3204-branch-name-interpretation.sh
++++ b/t/t3204-branch-name-interpretation.sh
+@@ -6,7 +6,7 @@ Branch name arguments are usually names which are taken to be inside of
+ refs/heads/, but we interpret some magic syntax like @{-1}, @{upstream}, etc.
+ This script aims to check the behavior of those corner cases.
+ '
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+@@ -31,7 +31,7 @@ test_expect_success 'update branch via @{-1}' '
+ 	git branch previous one &&
+ 
+ 	git checkout previous &&
+-	git checkout master &&
++	git checkout main &&
+ 
+ 	git branch -f @{-1} two &&
+ 	expect_branch previous two
+@@ -61,7 +61,7 @@ test_expect_success 'delete branch via @{-1}' '
+ 	git branch previous-del &&
+ 
+ 	git checkout previous-del &&
+-	git checkout master &&
++	git checkout main &&
+ 
+ 	git branch -D @{-1} &&
+ 	expect_deleted previous-del
+@@ -101,7 +101,7 @@ test_expect_success 'disallow deleting remote branch via @{-1}' '
+ 	git update-ref refs/remotes/origin/previous one &&
+ 
+ 	git checkout -b origin/previous two &&
+-	git checkout master &&
++	git checkout main &&
+ 
+ 	test_must_fail git branch -r -D @{-1} &&
+ 	expect_branch refs/remotes/origin/previous one &&
+diff --git a/t/t3205-branch-color.sh b/t/t3205-branch-color.sh
+index 8b54a9252b..b905dc4867 100755
+--- a/t/t3205-branch-color.sh
++++ b/t/t3205-branch-color.sh
+@@ -1,14 +1,14 @@
+ #!/bin/sh
+ 
+ test_description='basic branch output coloring'
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+ 
+ test_expect_success 'set up some sample branches' '
+ 	test_commit foo &&
+-	git update-ref refs/remotes/origin/master HEAD &&
++	git update-ref refs/remotes/origin/main HEAD &&
+ 	git update-ref refs/heads/other HEAD
+ '
+ 
+@@ -22,9 +22,9 @@ test_expect_success 'set up some color config' '
+ 
+ test_expect_success 'regular output shows colors' '
+ 	cat >expect <<-\EOF &&
+-	* <CYAN>master<RESET>
++	* <CYAN>main<RESET>
+ 	  <BLUE>other<RESET>
+-	  <YELLOW>remotes/origin/master<RESET>
++	  <YELLOW>remotes/origin/main<RESET>
+ 	EOF
+ 	git branch --color -a >actual.raw &&
+ 	test_decode_color <actual.raw >actual &&
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index 3813ddc85e..ce24b5d735 100755
+--- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -2,7 +2,7 @@
+ 
+ test_description='range-diff tests'
+ 
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+@@ -130,7 +130,7 @@ test_expect_success 'setup' '
+ '
+ 
+ test_expect_success 'simple A..B A..C (unmodified)' '
+-	git range-diff --no-color master..topic master..unmodified \
++	git range-diff --no-color main..topic main..unmodified \
+ 		>actual &&
+ 	cat >expect <<-EOF &&
+ 	1:  $(test_oid t1) = 1:  $(test_oid u1) s/5/A/
+@@ -148,13 +148,13 @@ test_expect_success 'simple B...C (unmodified)' '
+ '
+ 
+ test_expect_success 'simple A B C (unmodified)' '
+-	git range-diff --no-color master topic unmodified >actual &&
++	git range-diff --no-color main topic unmodified >actual &&
+ 	# same "expect" as above
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'trivial reordering' '
+-	git range-diff --no-color master topic reordered >actual &&
++	git range-diff --no-color main topic reordered >actual &&
+ 	cat >expect <<-EOF &&
+ 	1:  $(test_oid t1) = 1:  $(test_oid r1) s/5/A/
+ 	3:  $(test_oid t3) = 2:  $(test_oid r2) s/11/B/
+@@ -165,7 +165,7 @@ test_expect_success 'trivial reordering' '
+ '
+ 
+ test_expect_success 'removed a commit' '
+-	git range-diff --no-color master topic removed >actual &&
++	git range-diff --no-color main topic removed >actual &&
+ 	cat >expect <<-EOF &&
+ 	1:  $(test_oid t1) = 1:  $(test_oid d1) s/5/A/
+ 	2:  $(test_oid t2) < -:  $(test_oid __) s/4/A/
+@@ -176,7 +176,7 @@ test_expect_success 'removed a commit' '
+ '
+ 
+ test_expect_success 'added a commit' '
+-	git range-diff --no-color master topic added >actual &&
++	git range-diff --no-color main topic added >actual &&
+ 	cat >expect <<-EOF &&
+ 	1:  $(test_oid t1) = 1:  $(test_oid a1) s/5/A/
+ 	2:  $(test_oid t2) = 2:  $(test_oid a2) s/4/A/
+@@ -188,7 +188,7 @@ test_expect_success 'added a commit' '
+ '
+ 
+ test_expect_success 'new base, A B C' '
+-	git range-diff --no-color master topic rebased >actual &&
++	git range-diff --no-color main topic rebased >actual &&
+ 	cat >expect <<-EOF &&
+ 	1:  $(test_oid t1) = 1:  $(test_oid b1) s/5/A/
+ 	2:  $(test_oid t2) = 2:  $(test_oid b2) s/4/A/
+@@ -199,7 +199,7 @@ test_expect_success 'new base, A B C' '
+ '
+ 
+ test_expect_success 'new base, B...C' '
+-	# this syntax includes the commits from master!
++	# this syntax includes the commits from main!
+ 	git range-diff --no-color topic...rebased >actual &&
+ 	cat >expect <<-EOF &&
+ 	-:  $(test_oid __) > 1:  $(test_oid b5) unrelated
+@@ -423,7 +423,7 @@ test_expect_success 'file added and later removed' '
+ 
+ test_expect_success 'no commits on one side' '
+ 	git commit --amend -m "new message" &&
+-	git range-diff master HEAD@{1} HEAD
++	git range-diff main HEAD@{1} HEAD
+ '
+ 
+ test_expect_success 'changed message' '
+@@ -485,11 +485,11 @@ test_expect_success 'dual-coloring' '
+ 	test_cmp expect actual
+ '
+ 
+-for prev in topic master..topic
++for prev in topic main..topic
+ do
+ 	test_expect_success "format-patch --range-diff=$prev" '
+ 		git format-patch --cover-letter --range-diff=$prev \
+-			master..unmodified >actual &&
++			main..unmodified >actual &&
+ 		test_when_finished "rm 000?-*" &&
+ 		test_line_count = 5 actual &&
+ 		test_i18ngrep "^Range-diff:$" 0000-* &&
+@@ -514,19 +514,19 @@ test_expect_success 'range-diff overrides diff.noprefix internally' '
+ 
+ test_expect_success 'basic with modified format.pretty with suffix' '
+ 	git -c format.pretty="format:commit %H%d%n" range-diff \
+-		master..topic master..unmodified
++		main..topic main..unmodified
+ '
+ 
+ test_expect_success 'basic with modified format.pretty without "commit "' '
+ 	git -c format.pretty="format:%H%n" range-diff \
+-		master..topic master..unmodified
++		main..topic main..unmodified
+ '
+ 
+ test_expect_success 'range-diff compares notes by default' '
+ 	git notes add -m "topic note" topic &&
+ 	git notes add -m "unmodified note" unmodified &&
+ 	test_when_finished git notes remove topic unmodified &&
+-	git range-diff --no-color master..topic master..unmodified \
++	git range-diff --no-color main..topic main..unmodified \
+ 		>actual &&
+ 	sed s/Z/\ /g >expect <<-EOF &&
+ 	1:  $(test_oid t1) = 1:  $(test_oid u1) s/5/A/
+@@ -550,7 +550,7 @@ test_expect_success 'range-diff with --no-notes' '
+ 	git notes add -m "topic note" topic &&
+ 	git notes add -m "unmodified note" unmodified &&
+ 	test_when_finished git notes remove topic unmodified &&
+-	git range-diff --no-color --no-notes master..topic master..unmodified \
++	git range-diff --no-color --no-notes main..topic main..unmodified \
+ 		>actual &&
+ 	cat >expect <<-EOF &&
+ 	1:  $(test_oid t1) = 1:  $(test_oid u1) s/5/A/
+@@ -568,7 +568,7 @@ test_expect_success 'range-diff with multiple --notes' '
+ 	git notes --ref=note2 add -m "topic note2" topic &&
+ 	git notes --ref=note2 add -m "unmodified note2" unmodified &&
+ 	test_when_finished git notes --ref=note2 remove topic unmodified &&
+-	git range-diff --no-color --notes=note1 --notes=note2 master..topic master..unmodified \
++	git range-diff --no-color --notes=note1 --notes=note2 main..topic main..unmodified \
+ 		>actual &&
+ 	sed s/Z/\ /g >expect <<-EOF &&
+ 	1:  $(test_oid t1) = 1:  $(test_oid u1) s/5/A/
+@@ -598,7 +598,7 @@ test_expect_success 'format-patch --range-diff does not compare notes by default
+ 	git notes add -m "unmodified note" unmodified &&
+ 	test_when_finished git notes remove topic unmodified &&
+ 	git format-patch --cover-letter --range-diff=$prev \
+-		master..unmodified >actual &&
++		main..unmodified >actual &&
+ 	test_when_finished "rm 000?-*" &&
+ 	test_line_count = 5 actual &&
+ 	test_i18ngrep "^Range-diff:$" 0000-* &&
+@@ -615,7 +615,7 @@ test_expect_success 'format-patch --range-diff with --no-notes' '
+ 	git notes add -m "unmodified note" unmodified &&
+ 	test_when_finished git notes remove topic unmodified &&
+ 	git format-patch --no-notes --cover-letter --range-diff=$prev \
+-		master..unmodified >actual &&
++		main..unmodified >actual &&
+ 	test_when_finished "rm 000?-*" &&
+ 	test_line_count = 5 actual &&
+ 	test_i18ngrep "^Range-diff:$" 0000-* &&
+@@ -632,7 +632,7 @@ test_expect_success 'format-patch --range-diff with --notes' '
+ 	git notes add -m "unmodified note" unmodified &&
+ 	test_when_finished git notes remove topic unmodified &&
+ 	git format-patch --notes --cover-letter --range-diff=$prev \
+-		master..unmodified >actual &&
++		main..unmodified >actual &&
+ 	test_when_finished "rm 000?-*" &&
+ 	test_line_count = 5 actual &&
+ 	test_i18ngrep "^Range-diff:$" 0000-* &&
+@@ -661,7 +661,7 @@ test_expect_success 'format-patch --range-diff with format.notes config' '
+ 	test_when_finished git notes remove topic unmodified &&
+ 	test_config format.notes true &&
+ 	git format-patch --cover-letter --range-diff=$prev \
+-		master..unmodified >actual &&
++		main..unmodified >actual &&
+ 	test_when_finished "rm 000?-*" &&
+ 	test_line_count = 5 actual &&
+ 	test_i18ngrep "^Range-diff:$" 0000-* &&
+@@ -692,7 +692,7 @@ test_expect_success 'format-patch --range-diff with multiple notes' '
+ 	git notes --ref=note2 add -m "unmodified note2" unmodified &&
+ 	test_when_finished git notes --ref=note2 remove topic unmodified &&
+ 	git format-patch --notes=note1 --notes=note2 --cover-letter --range-diff=$prev \
+-		master..unmodified >actual &&
++		main..unmodified >actual &&
+ 	test_when_finished "rm 000?-*" &&
+ 	test_line_count = 5 actual &&
+ 	test_i18ngrep "^Range-diff:$" 0000-* &&
+diff --git a/t/t3206/history.export b/t/t3206/history.export
+index 4c808e5b3b..4485adc37b 100644
+--- a/t/t3206/history.export
++++ b/t/t3206/history.export
+@@ -168,7 +168,7 @@ mark :11
+ data 10
+ unrelated
+ 
+-commit refs/heads/master
++commit refs/heads/main
+ mark :12
+ author Thomas Rast <trast@inf.ethz.ch> 1374485127 +0200
+ committer Thomas Rast <trast@inf.ethz.ch> 1374485127 +0200
+diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
+index 90eea19564..3b7cdc56ec 100755
+--- a/t/t3210-pack-refs.sh
++++ b/t/t3210-pack-refs.sh
+@@ -9,7 +9,7 @@ test_description='git pack-refs should not change the branch semantic
+ This test runs git pack-refs and git show-ref and checks that the branch
+ semantic is still the same.
+ '
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+@@ -138,7 +138,7 @@ test_expect_success 'delete ref with dangling packed version' '
+ 	git commit --allow-empty -m "future garbage" &&
+ 	git pack-refs --all &&
+ 	git reset --hard HEAD^ &&
+-	git checkout master &&
++	git checkout main &&
+ 	git reflog expire --expire=all --all &&
+ 	git prune --expire=all &&
+ 	git branch -d lamb 2>result &&
+@@ -243,7 +243,7 @@ test_expect_success 'retry acquiring packed-refs.lock' '
+ 
+ test_expect_success SYMLINKS 'pack symlinked packed-refs' '
+ 	# First make sure that symlinking works when reading:
+-	git update-ref refs/heads/lossy refs/heads/master &&
++	git update-ref refs/heads/lossy refs/heads/main &&
+ 	git for-each-ref >all-refs-before &&
+ 	mv .git/packed-refs .git/my-deviant-packed-refs &&
+ 	ln -s my-deviant-packed-refs .git/packed-refs &&
+diff --git a/t/t3211-peel-ref.sh b/t/t3211-peel-ref.sh
+index f3d9c6b6b6..37b9d26f4b 100755
+--- a/t/t3211-peel-ref.sh
++++ b/t/t3211-peel-ref.sh
 @@ -1,7 +1,7 @@
  #!/bin/sh
  
- test_description='test GIT_CURL_VERBOSE'
+ test_description='tests for the peel_ref optimization of packed-refs'
 -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
 +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
  . ./test-lib.sh
-@@ -16,7 +16,7 @@ test_expect_success 'setup repository' '
- 	git add file &&
- 	git commit -m one &&
- 	git remote add public "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
--	git push public master:master
-+	git push public main:main
+@@ -22,7 +22,7 @@ print_ref() {
+ 
+ test_expect_success 'set up expected show-ref output' '
+ 	{
+-		print_ref "refs/heads/master" &&
++		print_ref "refs/heads/main" &&
+ 		print_ref "refs/outside/foo" &&
+ 		print_ref "refs/outside/foo^{}" &&
+ 		print_ref "refs/tags/base" &&
+@@ -50,7 +50,7 @@ test_expect_success 'create old-style pack-refs without fully-peeled' '
+ 	# know we are emulating exactly what an older git would have written.
+ 	{
+ 		echo "# pack-refs with: peeled " &&
+-		print_ref "refs/heads/master" &&
++		print_ref "refs/heads/main" &&
+ 		print_ref "refs/outside/foo" &&
+ 		print_ref "refs/tags/base" &&
+ 		print_ref "refs/tags/foo" &&
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 8f43303007..2b685580b6 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -1295,11 +1295,11 @@ test_expect_success 'git notes copy diagnoses too many or too few parameters' '
+ 	test_i18ngrep "too many parameters" error
  '
  
- test_expect_success 'failure in git-upload-pack is shown' '
-diff --git a/t/t5582-fetch-negative-refspec.sh b/t/t5582-fetch-negative-refspec.sh
-index 608e9aa189..6af143c140 100755
---- a/t/t5582-fetch-negative-refspec.sh
-+++ b/t/t5582-fetch-negative-refspec.sh
-@@ -5,7 +5,7 @@ test_description='"git fetch" with negative refspecs.
- 
+-test_expect_success 'git notes get-ref expands refs/heads/master to refs/notes/refs/heads/master' '
++test_expect_success 'git notes get-ref expands refs/heads/main to refs/notes/refs/heads/main' '
+ 	test_unconfig core.notesRef &&
+ 	sane_unset GIT_NOTES_REF &&
+-	echo refs/notes/refs/heads/master >expect &&
+-	git notes --ref=refs/heads/master get-ref >actual &&
++	echo refs/notes/refs/heads/main >expect &&
++	git notes --ref=refs/heads/main get-ref >actual &&
+ 	test_cmp expect actual
  '
+ 
+diff --git a/t/t3302-notes-index-expensive.sh b/t/t3302-notes-index-expensive.sh
+index 1564befe00..ef8b63952e 100755
+--- a/t/t3302-notes-index-expensive.sh
++++ b/t/t3302-notes-index-expensive.sh
+@@ -5,7 +5,7 @@
+ 
+ test_description='Test commit notes index (expensive!)'
  
 -GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
 +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
  . ./test-lib.sh
-@@ -25,12 +25,12 @@ test_expect_success "clone and setup child repos" '
- 		git switch -c alternate &&
- 		echo >file updated again by one &&
- 		git commit -a -m "updated by one again" &&
--		git switch master
-+		git switch main
- 	) &&
- 	git clone . two &&
+@@ -23,7 +23,7 @@ create_repo () {
+ 			notemark=$(($mark+1))
+ 			test_tick &&
+ 			cat <<-INPUT_END &&
+-			commit refs/heads/master
++			commit refs/heads/main
+ 			mark :$mark
+ 			committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+ 			data <<COMMIT
+diff --git a/t/t3303-notes-subtrees.sh b/t/t3303-notes-subtrees.sh
+index 16f3438355..d47ce00f69 100755
+--- a/t/t3303-notes-subtrees.sh
++++ b/t/t3303-notes-subtrees.sh
+@@ -2,7 +2,7 @@
+ 
+ test_description='Test commit notes organized in subtrees'
+ 
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+@@ -43,7 +43,7 @@ test_expect_success "setup: create $number_of_commits commits" '
+ 			nr=$(($nr+1)) &&
+ 			test_tick &&
+ 			cat <<INPUT_END
+-commit refs/heads/master
++commit refs/heads/main
+ committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+ data <<COMMIT
+ commit #$nr
+@@ -78,7 +78,7 @@ test_sha1_based () {
  	(
- 		cd two &&
--		git config branch.master.remote one &&
-+		git config branch.main.remote one &&
- 		git config remote.one.url ../one/.git/ &&
- 		git config remote.one.fetch +refs/heads/*:refs/remotes/one/* &&
- 		git config --add remote.one.fetch ^refs/heads/alternate
-@@ -46,9 +46,9 @@ test_expect_success "fetch one" '
- 		test_must_fail git rev-parse --verify refs/remotes/one/alternate &&
- 		git fetch one &&
- 		test_must_fail git rev-parse --verify refs/remotes/one/alternate &&
--		git rev-parse --verify refs/remotes/one/master &&
--		mine=$(git rev-parse refs/remotes/one/master) &&
--		his=$(cd ../one && git rev-parse refs/heads/master) &&
-+		git rev-parse --verify refs/remotes/one/main &&
-+		mine=$(git rev-parse refs/remotes/one/main) &&
-+		his=$(cd ../one && git rev-parse refs/heads/main) &&
- 		test "z$mine" = "z$his"
- 	)
- '
-@@ -60,7 +60,7 @@ test_expect_success "fetch with negative refspec on commandline" '
- 		cd three &&
- 		alternate_in_one=$(cd ../one && git rev-parse refs/heads/alternate) &&
- 		echo $alternate_in_one >expect &&
--		git fetch ../one/.git refs/heads/*:refs/remotes/one/* ^refs/heads/master &&
-+		git fetch ../one/.git refs/heads/*:refs/remotes/one/* ^refs/heads/main &&
- 		cut -f -1 .git/FETCH_HEAD >actual &&
- 		test_cmp expect actual
- 	)
-@@ -71,8 +71,8 @@ test_expect_success "fetch with negative sha1 refspec fails" '
- 	git commit -a -m "updated by origin yet again" &&
+ 		start_note_commit &&
+ 		nr=$number_of_commits &&
+-		git rev-list refs/heads/master |
++		git rev-list refs/heads/main |
+ 		while read sha1; do
+ 			note_path=$(echo "$sha1" | sed "$1")
+ 			cat <<INPUT_END &&
+@@ -108,7 +108,7 @@ test_same_notes () {
  	(
- 		cd three &&
--		master_in_one=$(cd ../one && git rev-parse refs/heads/master) &&
--		test_must_fail git fetch ../one/.git refs/heads/*:refs/remotes/one/* ^$master_in_one
-+		main_in_one=$(cd ../one && git rev-parse refs/heads/main) &&
-+		test_must_fail git fetch ../one/.git refs/heads/*:refs/remotes/one/* ^$main_in_one
- 	)
+ 		start_note_commit &&
+ 		nr=$number_of_commits &&
+-		git rev-list refs/heads/master |
++		git rev-list refs/heads/main |
+ 		while read sha1; do
+ 			first_note_path=$(echo "$sha1" | sed "$1")
+ 			second_note_path=$(echo "$sha1" | sed "$2")
+@@ -147,7 +147,7 @@ test_concatenated_notes () {
+ 	(
+ 		start_note_commit &&
+ 		nr=$number_of_commits &&
+-		git rev-list refs/heads/master |
++		git rev-list refs/heads/main |
+ 		while read sha1; do
+ 			first_note_path=$(echo "$sha1" | sed "$1")
+ 			second_note_path=$(echo "$sha1" | sed "$2")
+diff --git a/t/t3304-notes-mixed.sh b/t/t3304-notes-mixed.sh
+index 6a7b8e2829..03dfcd3954 100755
+--- a/t/t3304-notes-mixed.sh
++++ b/t/t3304-notes-mixed.sh
+@@ -2,7 +2,7 @@
+ 
+ test_description='Test notes trees that also contain non-notes'
+ 
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+@@ -39,7 +39,7 @@ test_expect_success "setup: create a couple of commits" '
+ 
+ 	test_tick &&
+ 	cat <<INPUT_END >input &&
+-commit refs/heads/master
++commit refs/heads/main
+ committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+ data <<COMMIT
+ commit #1
+@@ -54,7 +54,7 @@ INPUT_END
+ 
+ 	test_tick &&
+ 	cat <<INPUT_END >>input &&
+-commit refs/heads/master
++commit refs/heads/main
+ committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+ data <<COMMIT
+ commit #2
+@@ -71,8 +71,8 @@ INPUT_END
+ 
+ test_expect_success "create a notes tree with both notes and non-notes" '
+ 
+-	commit1=$(git rev-parse refs/heads/master^) &&
+-	commit2=$(git rev-parse refs/heads/master) &&
++	commit1=$(git rev-parse refs/heads/main^) &&
++	commit2=$(git rev-parse refs/heads/main) &&
+ 	test_tick &&
+ 	cat <<INPUT_END >input &&
+ commit refs/notes/commits
+diff --git a/t/t3308-notes-merge.sh b/t/t3308-notes-merge.sh
+index d69c84c640..202702be1a 100755
+--- a/t/t3308-notes-merge.sh
++++ b/t/t3308-notes-merge.sh
+@@ -108,7 +108,7 @@ test_expect_success 'fail to merge into various non-notes refs' '
+ 	git update-ref refs/notes/dir/foo HEAD &&
+ 	test_must_fail git -c "core.notesRef=refs/notes/dir" notes merge x &&
+ 	test_must_fail git -c "core.notesRef=refs/notes/dir/" notes merge x &&
+-	test_must_fail git -c "core.notesRef=refs/heads/master" notes merge x &&
++	test_must_fail git -c "core.notesRef=refs/heads/main" notes merge x &&
+ 	test_must_fail git -c "core.notesRef=refs/notes/y:" notes merge x &&
+ 	test_must_fail git -c "core.notesRef=refs/notes/y:foo" notes merge x &&
+ 	test_must_fail git -c "core.notesRef=refs/notes/foo^{bar" notes merge x
+diff --git a/t/t3320-notes-merge-worktrees.sh b/t/t3320-notes-merge-worktrees.sh
+index f86975414c..052516e6c6 100755
+--- a/t/t3320-notes-merge-worktrees.sh
++++ b/t/t3320-notes-merge-worktrees.sh
+@@ -5,7 +5,7 @@
+ 
+ test_description='Test merging of notes trees in multiple worktrees'
+ 
+-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+@@ -39,8 +39,8 @@ test_expect_success 'modify notes ref ourselves (x)' '
  '
  
-@@ -95,10 +95,10 @@ test_expect_success "fetch with negative pattern refspec does not expand prefix"
- 	(
- 		cd three &&
- 		alternate_in_one=$(cd ../one && git rev-parse refs/heads/alternate) &&
--		master_in_one=$(cd ../one && git rev-parse refs/heads/master) &&
-+		main_in_one=$(cd ../one && git rev-parse refs/heads/main) &&
- 		echo $alternate_in_one >expect &&
--		echo $master_in_one >>expect &&
--		git fetch ../one/.git refs/heads/*:refs/remotes/one/* ^master &&
-+		echo $main_in_one >>expect &&
-+		git fetch ../one/.git refs/heads/*:refs/remotes/one/* ^main &&
- 		cut -f -1 .git/FETCH_HEAD >actual &&
- 		test_cmp expect actual
- 	)
+ test_expect_success 'create some new worktrees' '
+-	git worktree add -b newbranch worktree master &&
+-	git worktree add -b newbranch2 worktree2 master
++	git worktree add -b newbranch worktree main &&
++	git worktree add -b newbranch2 worktree2 main
+ '
+ 
+ test_expect_success 'merge z into y fails and sets NOTES_MERGE_REF' '
 -- 
 gitgitgadget
 
