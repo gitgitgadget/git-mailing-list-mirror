@@ -2,113 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 212FCC2D0E4
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 00:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7855AC2D0E4
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 00:10:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A8BFA221FB
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 00:08:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E2D022202
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 00:10:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XNHXzb4Q"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="A1upUFSx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726489AbgKRAHj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Nov 2020 19:07:39 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60331 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726205AbgKRAHj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Nov 2020 19:07:39 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BEB4D101431;
-        Tue, 17 Nov 2020 19:07:35 -0500 (EST)
+        id S1726439AbgKRAKt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Nov 2020 19:10:49 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65376 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725771AbgKRAKs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Nov 2020 19:10:48 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9B4EA936D3;
+        Tue, 17 Nov 2020 19:10:46 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=v+jIbxn0aK3X2aiQnrdSy0w3DA0=; b=XNHXzb
-        4Q4LXW7AAS2ZNjqVMXX2w9tTULHEx05jDLknaaWmGokPmginh92p7zg/lpZNek+n
-        o7V/nhcPUtUrmm/pLHUvm0pIWMYJyEf58VXqO5aTV7mFlCqUJt//aTaZJQsON9yc
-        Flh3jbTkIFEhWBvrBiogk5RMu+rqM5hIs6MXs=
+        :content-type; s=sasl; bh=X6TMpeDMNqe6dny9VyRxm2pHxCA=; b=A1upUF
+        SxruwCp5XK+NSeYGYaOaPzbNlGmx6lTqRHFATrrzQqYum4SMKsCuynkqvzXxttzI
+        Db4PjGdxkQtOV1SSLXLztocGCC6gBdLfL0P1OaMY3zw+9CHRq1txek0EEw/aoT8i
+        oLypTGQ/rUcu5Uxn+1rzhRBHz21SDJK6r1QbE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UGKlnj2OyXXeKwyimE554QbE2PJRz51H
-        0BG74K8y6PlR2N4wb4MsxfKVhsQaoXb3x2q4+j0g1gq6paO3Egj2nnx0vO0/VHrM
-        K/dYiZ3Pv3S0akaHIwfw9yzjowv7C2oYz8B9Q4C5TWJkV+sumjpI2qmH7YPsNsFY
-        ajbxSmQVfS4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B6142101430;
-        Tue, 17 Nov 2020 19:07:35 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=aFj8txvkDlpPX7OR6JeVHyPWQqjPpql2
+        CIaAq/0GH7dIuZ1rgcEpxtiSRkAi9dJHGjEZj5a1FP8Y8pWd7Q5rPoWYTsfG8c7O
+        F45S4o1yXKkzYRH9kDenTN0vWavaPobmwtnhQH/Wwilfv8j/X9Ds5KRJiYnU+eWg
+        qw4bysRshks=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9321F936D2;
+        Tue, 17 Nov 2020 19:10:46 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 86F2A10142F;
-        Tue, 17 Nov 2020 19:07:30 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 20208936D1;
+        Tue, 17 Nov 2020 19:10:46 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        "Eric W. Biederman" <ebiederm@xmission.com>,
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     "Eric W. Biederman" <ebiederm@xmission.com>,
         Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         Git <git@vger.kernel.org>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 Subject: Re: [PATCH 00/28] Use main as default branch name
 References: <pull.762.git.1605221038.gitgitgadget@gmail.com>
         <87r1oraewl.fsf@x220.int.ebiederm.org>
-        <CAMP44s2VJOd3N2zaj8YPv0iLOqTF7vWyZ=zPd9vd0+qO1DbEVA@mail.gmail.com>
-        <20201117233313.GB642410@coredump.intra.peff.net>
-Date:   Tue, 17 Nov 2020 16:07:28 -0800
-In-Reply-To: <20201117233313.GB642410@coredump.intra.peff.net> (Jeff King's
-        message of "Tue, 17 Nov 2020 18:33:13 -0500")
-Message-ID: <xmqqr1or4jen.fsf@gitster.c.googlers.com>
+        <xmqqv9e34mq5.fsf@gitster.c.googlers.com>
+        <CAMP44s3750bSdmw4A=KU=UgffOPiQwB8ECk9YRPe8mh50Og8Ow@mail.gmail.com>
+Date:   Tue, 17 Nov 2020 16:10:45 -0800
+In-Reply-To: <CAMP44s3750bSdmw4A=KU=UgffOPiQwB8ECk9YRPe8mh50Og8Ow@mail.gmail.com>
+        (Felipe Contreras's message of "Tue, 17 Nov 2020 17:16:53 -0600")
+Message-ID: <xmqqmtzf4j96.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 0CDA5436-2932-11EB-85A6-D609E328BF65-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 816DF79E-2932-11EB-AFAB-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> I think Eric's suggestion of using the directory name as a default was
-> not previously mentioned. I'm not sure I would like that myself (I find
-> value in having a consistent "this is the main branch" name across
-> different repositories, at least for my workflows). And it creates all
-> of the same "every tutorial is now out of date" issues. But it is
-> neutral. I wouldn't be opposed to seeing it as a configurable option.
+> If we already know "origin/HEAD" is very likely pointing to the
+> integration branch, then why do we need to know what that branch is
+> called in that particular project?
+>
+> Just refer to that branch as "origin/@", or just "origin".
 
-I actually recall hearing it from Eric, not on this list, directly
-back in the timeframe of these previous dicsussions.  I somehow
-thought I relayed it to the community, perhaps #git-devel on
-freenode, but apparently not to this list.
+"git merge origin" turns into "git merge origin/HEAD", I think, and
+we had it for quite some time.
 
-Yes, init.defaultBranchName is defined to be a string, so it is a
-bit tricky to introduce special values that mean "no, not a
-hardcoded value but derive dynamically based on X".  Perhaps use a
-prefix that is not allowed in a refname, perhaps like this update to
-the function that uses the value read from the init.defaultBranch
-configuration variable.
+But repositories may not even have any origin to begin with.  The
+one I am typing this message in certainly does not.  And we need
+some fallback default when origin/HEAD cannot be used anyway, and
+that is where the convention comes in again.  You cannot escape from
+it, and ...
 
- refs.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+> That would work for projects that follow the convention, and those who
+> don't. Why does the tool need to care?
 
-diff --git c/refs.c w/refs.c
-index 392f0bbf68..3fbc697cd8 100644
---- c/refs.c
-+++ w/refs.c
-@@ -576,6 +576,12 @@ char *repo_default_branch_name(struct repository *r)
- 
- 	if (!ret)
- 		ret = xstrdup("master");
-+	else if (!strcmp(ret, ":dirname"))
-+		ret = ... do the $(basename $(cwd)) thing ...;
-+	else if (!strcmp(ret, ":some other magic"))
-+		ret = ... do some other magic thing ...;
-+	else if (ret[0] == ':')
-+		die(_("%s - unrecognised magic", ret);
- 
- 	full_ref = xstrfmt("refs/heads/%s", ret);
- 	if (check_refname_format(full_ref, 0))
+... certainly it would not work for me.
+
