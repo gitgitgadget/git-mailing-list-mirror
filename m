@@ -2,96 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7069FC5519F
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 08:17:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D79A0C63697
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 09:05:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1287722266
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 08:17:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E2102463B
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 09:05:08 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="q4g0hbq7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726181AbgKRIRx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Nov 2020 03:17:53 -0500
-Received: from smtpout1.mo804.mail-out.ovh.net ([79.137.123.220]:33675 "EHLO
-        smtpout1.mo804.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726107AbgKRIRw (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 18 Nov 2020 03:17:52 -0500
-Received: from mxplan1.mail.ovh.net (unknown [10.109.146.140])
-        by mo804.mail-out.ovh.net (Postfix) with ESMTPS id 96C327362E09;
-        Wed, 18 Nov 2020 09:17:50 +0100 (CET)
-Received: from greg0ire.fr (37.59.142.104) by DAG4EX2.mxp1.local (172.16.2.8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2044.4; Wed, 18 Nov
- 2020 09:17:49 +0100
-Authentication-Results: garm.ovh; auth=pass (GARM-104R0051d9e8198-35f8-4081-877c-8067f9794faa,
-                    AD131F76BB5DFBF2F978B3F098793A1FA3F14443) smtp.auth=postmaster@greg0ire.fr
-Subject: Re: phpdoc diff in git -L is not the correct one
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
-CC:     Git Mailing List <git@vger.kernel.org>
-References: <348a2a4a-dfdb-190b-edac-01e9ad4c2d4d@greg0ire.fr>
- <CAN0heSrU5zzgR_FDZcEopPP2EmSQnraZXO4v8Smx8=fWcXa0uQ@mail.gmail.com>
- <e666e806-d8c6-0b8d-c583-e4a8ee0ee806@greg0ire.fr>
- <CAN0heSr9=_So-sUhQN86vawBEkJhnrHHsd3OcSYZMZ-idZGFAQ@mail.gmail.com>
- <5a2d70eb-da75-ff59-8ac1-6ba81e1632da@web.de>
-From:   =?UTF-8?Q?Gr=c3=a9goire_PARIS?= <postmaster@greg0ire.fr>
-Message-ID: <a205cb0c-95ec-7f9e-0dea-8fd5b4bc694f@greg0ire.fr>
-Date:   Wed, 18 Nov 2020 09:17:49 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.3.1
+        id S1726890AbgKRJEl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Nov 2020 04:04:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45378 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726503AbgKRJEj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Nov 2020 04:04:39 -0500
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86481C0613D4
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 01:04:39 -0800 (PST)
+Received: by mail-wm1-x343.google.com with SMTP id p19so3679876wmg.0
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 01:04:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ZvLaenwq+ZS5JLjDA8IqVhoRiTQeDKKJJk/N9AXz0UU=;
+        b=q4g0hbq7VOTqzCjGBjNXyV2laWTXHst0Y7ucZvfs+N2b/2O3Wn4ozb1YM7viFIi4eS
+         Ysl32IZUCgMZgX7J1zL2J9ELuh6DawJXwf3Id6g20MXJItszV/GbnUgs8EMT07NiuE8y
+         PlaWA4KR9jFCioliAWUE/3rvaocL34hiWiBazZcWQtlTwTbYLNe2ygfQfN6xOCDeRWLb
+         kPGelzPhyPFm3pJRtpXLoI97ZT039glK5GNpNtFTMfdKEjp9xm2CmzxNh584/xOBtQRM
+         kuLf99amQbv9138qRVil2JP0JQvVldhWOiPhT3pE+5lBXP90yXTnVVRuW1WrsOMIIAIj
+         2Miw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ZvLaenwq+ZS5JLjDA8IqVhoRiTQeDKKJJk/N9AXz0UU=;
+        b=V5Rc9lqNrLPVJTamV698pFvrA+AQFgidn9LsYihJVhRfVECd2RkPdr/5xwO+n3vBIa
+         QzcIVHEF0HRf5TE7+oZKSh1ciJl2RvHKYyTn03gTEke22HvvmMGCD119oNLi3W0kMIIA
+         kyDnemXFjcemj0rd8GgUcUqXyj2dkSu9NRs31wFjFKU5jKAhJtgwpzzmdaz2Cu79odeR
+         5PJbw4+6rCY9kp8QMG952xFwnR22n9N0VAU846bDa0JucWk19w1VOcEGh0biqpcw3Lm8
+         iukxnroUHAVBZE1W22YUz2enX1oRK4XVhaB7TQQhvRoLmOqvX3tweuMmOxsahV0Ixopl
+         /fSQ==
+X-Gm-Message-State: AOAM5323cd0SjgQE31yqvuB/AASqdADrzd1dv+hmQTmWUrW0ajumVhBb
+        s6qdWXN0s8RJbJTY/YTvTAxry/ajq8SkICGvtto=
+X-Google-Smtp-Source: ABdhPJxUL8MIDTvb3iIlKQkC6Cl4KErNhO5eH8722z+dbRzezKN+C8t8DhPtDgD0h0S2YNwFQKYx6KJFUUMp34ueSM8=
+X-Received: by 2002:a7b:cc94:: with SMTP id p20mr3457058wma.100.1605690276736;
+ Wed, 18 Nov 2020 01:04:36 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <5a2d70eb-da75-ff59-8ac1-6ba81e1632da@web.de>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Originating-IP: [37.59.142.104]
-X-ClientProxiedBy: DAG8EX1.mxp1.local (172.16.2.15) To DAG4EX2.mxp1.local
- (172.16.2.8)
-X-Ovh-Tracer-GUID: 19661b44-445f-44b5-8ef5-f0b469406801
-X-Ovh-Tracer-Id: 15613416961290636765
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedujedrudefgedguddulecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefuvfhfhffkffgfgggjtgfgihesthekredttdefjeenucfhrhhomhepifhrrohgohhirhgvpgfrteftkffuuceophhoshhtmhgrshhtvghrsehgrhgvghdtihhrvgdrfhhrqeenucggtffrrghtthgvrhhnpeeiueeileehlefhudejteetueeijeekieevtdevffevveevgeefudelfffhheektdenucfkpheptddrtddrtddrtddpfeejrdehledrudegvddruddtgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphdqohhuthdphhgvlhhopehmgihplhgrnhdurdhmrghilhdrohhvhhdrnhgvthdpihhnvghtpedtrddtrddtrddtpdhmrghilhhfrhhomhepphhoshhtmhgrshhtvghrsehgrhgvghdtihhrvgdrfhhrpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggv
+References: <pull.762.git.1605221038.gitgitgadget@gmail.com>
+ <87r1oraewl.fsf@x220.int.ebiederm.org> <CAMP44s2VJOd3N2zaj8YPv0iLOqTF7vWyZ=zPd9vd0+qO1DbEVA@mail.gmail.com>
+ <20201117233313.GB642410@coredump.intra.peff.net> <CAMP44s1HhiDYfji9L2sj3QbCDmsb9dnrLCS6cQJPbmS1F3vKoQ@mail.gmail.com>
+ <20201118012230.GB650959@coredump.intra.peff.net> <CAMP44s1t3CKF3btQwSwaz_Pu2fE6PGyb+_iMW8dAbY3aE3mH7w@mail.gmail.com>
+ <20201118020618.GE650959@coredump.intra.peff.net>
+In-Reply-To: <20201118020618.GE650959@coredump.intra.peff.net>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Wed, 18 Nov 2020 03:04:25 -0600
+Message-ID: <CAMP44s1G9vqrCPsev-uy6G6dEpB-1MXkeqG7Gt_fyHnoCVcLsw@mail.gmail.com>
+Subject: Re: [PATCH 00/28] Use main as default branch name
+To:     Jeff King <peff@peff.net>
+Cc:     "Eric W. Biederman" <ebiederm@xmission.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi René!
+On Tue, Nov 17, 2020 at 8:06 PM Jeff King <peff@peff.net> wrote:
+> On Tue, Nov 17, 2020 at 07:45:21PM -0600, Felipe Contreras wrote:
 
-Sorry for not seeing your answer before!
-
-On 11/15/20 12:40 AM, René Scharfe wrote:
+> > The equivalent of this choice is in "git remote add -m":
+> >
+> >   With `-m <master>` option, a symbolic-ref `refs/remotes/<name>/HEAD`
+> >   is set up to point at remote's `<master>` branch. See also the
+> >   set-head command.
 >
-> The --function-context options of git diff and git grep try to show
-> comments by including non-empty lines before function lines.
+> Wow, I'm not sure how that option escaped my notice for all these years.
+> Of course it would be much more useful if it pulled the value from the
+> remote HEAD (but again, unless we use "-f" we are not contacting the
+> remote at all).
 
-That would indeed do the first part of the job. Do you think something 
-similarcould be done to remove non-empty lines before the next funcname?
+Seems to come basically untouched since 2007:
 
->    This
-> heuristic might work for -L :funcname:file as well (patch below), but
-> breaks seven tests in each of t8001-annotate.sh, t8002-blame.sh and
-> t8012-blame-colors.sh.
+  b6f5da1e0f (Teach git-remote add to fetch and track)
 
-I haven't written C in 10 literal years but I think I managed to apply 
-this patch, and something looks wrong: it's looking too "far" before: 
-See for instance: --- commit 1a8a640f87cad94d36713f45e5e257de20930171 
-Author: Michael Moravec <me@majkl.me> Date: Mon Mar 5 04:01:58 2018 
-+0100 Upgrade to Doctrine CS 4.0 diff --git 
-a/src/Doctrine/Instantiator/Instantiator.php 
-b/src/Doctrine/Instantiator/Instantiator.php --- 
-a/src/Doctrine/Instantiator/Instantiator.php +++ 
-b/src/Doctrine/Instantiator/Instantiator.php @@ -31,12 +33,14 @@ */ 
-private static $cachedInstantiators = []; /** - * @var object[] of 
-objects that can directly be cloned, indexed by class name + * Array of 
-objects that can directly be cloned, indexed by class name. + * + * @var 
-object[] */ private static $cachedCloneables = []; /** * {@inheritDoc} 
-*/ public function instantiate($className) --- Here it's picking changes 
-in the phpdoc of the property that precedes `instantiate`, (when using 
-git log 
--L/instantiate\(/,-14:src/Doctrine/Instantiator/Instantiator.php) What's 
-wrong? -- greg0ire
+> And then it is just a question of what the default is. Currently it is
+> "never". I suspect most people would be happy with "always", but it does
+> break some existing flows. But perhaps "create-if-missing" is a good
+> medium.
 
+Agreed. Personally I don't see any problem with "create-if-missing",
+but creating a configuration and defaulting to "never" should be a
+good first step.
+
+I'm sending an RFC patch to that effect.
+
+Cheers.
+
+-- 
+Felipe Contreras
