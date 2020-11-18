@@ -7,139 +7,144 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD953C5519F
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 17:28:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E2E4C5519F
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 17:35:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7502D248C7
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 17:28:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C15CE248E4
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 17:35:21 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="D/hN371S"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726184AbgKRR2x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Nov 2020 12:28:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38644 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725774AbgKRR2x (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Nov 2020 12:28:53 -0500
-X-Greylist: delayed 76941 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 18 Nov 2020 09:28:53 PST
-Received: from out1.migadu.com (out1.migadu.com [IPv6:2001:41d0:2:863f::])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26B56C0613D4
-        for <git@vger.kernel.org>; Wed, 18 Nov 2020 09:28:53 -0800 (PST)
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cmpwn.com; s=key1;
-        t=1605720531;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=L4bIxtN3q7mnBTC+nL5rzV3gTr0WtxASCHA7aJE61DU=;
-        b=tywB/MphKpP0LshpPK/MgOVN7OTZgGsgTc1DOjf7r5/I8tdC98EgvJSp2qR/pSovjCrB0C
-        4xEmvJAgilZ6xJtRd6uZs7wPdVXWV4QffsCfGiuiMNeHQ2KFXIJgJ0gJgF+Wx+VASh7kM/
-        Sx+3qWHICEqVlI9isveXlRMyReqFKuwXJGqtAYT4rucnJA5uYZ0MlkgoqxVqoaiZ0JggHT
-        os05fZ71iE5wpJcOyGnRKBcXAUE4Y1I4COFutdAONRmtrG8StCrJ9TaHiAr+2nCZQfJWKD
-        DxKeFJFtpx74qaqH2ETQ3l/VbuoUkypSOZjUH7gsx1EGWCGpAClbvGZcRmK5hg==
-From:   Drew DeVault <sir@cmpwn.com>
-To:     git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
-Cc:     Drew DeVault <sir@cmpwn.com>, lanodan <contact+git@hacktivis.me>
-Subject: [PATCH v4] help.c: expand options for help.autocorrect
-Date:   Wed, 18 Nov 2020 12:28:49 -0500
-Message-Id: <20201118172849.24715-1-sir@cmpwn.com>
+        id S1726444AbgKRRfU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Nov 2020 12:35:20 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56044 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725943AbgKRRfU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Nov 2020 12:35:20 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1C26B8E795;
+        Wed, 18 Nov 2020 12:35:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=QguXD3T80YFSj4OnCZdYwnecLbc=; b=D/hN37
+        1SglVHa9BdKKh0hq3iLd9iCjWihlnVoEHbJqtfGbA1LozHTYcZcd9cqVpOiEUt3w
+        SDpP6B1ORbPeu//LSDttsXYtradtYtFwz43Ud6bKs5LuSVPQc5n+h4RKkXBMgsfO
+        mtXv1mIvZ/ufTN1rofL3Tqp2Z3M/fqYEqkOS8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fSVD7UClLcckdGFg0DFNgdGVUqd/LIIT
+        veim3CBWFsNu9OekinS280f9KqZhATmll0C7+SpIFrosOSeesOilS+pzBHStpvQs
+        DTabrUrzXzJUQOrC8l0GKbZJqzq2amxODJhi0aJQhL+I3mLaGIS/XAzPUUyueeqg
+        dyjTVzX18xk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 127558E794;
+        Wed, 18 Nov 2020 12:35:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8CD848E793;
+        Wed, 18 Nov 2020 12:35:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Peter Hadlaw <hadlawp@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re* Keeping the original init.defaultBranch config value
+References: <CABrPy+GrSB87mFm5tXsXkC+OKg6NBxUJA5b0NYsa18a8EbcrNw@mail.gmail.com>
+Date:   Wed, 18 Nov 2020 09:35:15 -0800
+In-Reply-To: <CABrPy+GrSB87mFm5tXsXkC+OKg6NBxUJA5b0NYsa18a8EbcrNw@mail.gmail.com>
+        (Peter Hadlaw's message of "Wed, 18 Nov 2020 10:46:30 -0600")
+Message-ID: <xmqqd00a36wc.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Auth-User: sir@cmpwn.com
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6BECC700-29C4-11EB-BF06-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some users would prefer to never suggest corrections at all. This
-updates help.autocorrect to accept the strings "immediate" and "never",
-the former assuming the prior behavior of negative values for
-autocorrect, and the latter skipping auto-correction entirely.
+Peter Hadlaw <hadlawp@gmail.com> writes:
 
-Signed-off-by: Drew DeVault <sir@cmpwn.com>
+> Hello,
+>
+> Just wanted to confirm that in order to keep new repositories
+> initializing with `master` as the default branch the command would be:
+>
+> ```
+> git config --global init.defaultBranch master
+> ```
+
+Yes.
+
+If you have to ask the above question, that would mean the
+documentation we have right now probably is not clear enough.  
+
+It is understandable, given that our documentation does not mention
+any future plan to change 'master' to other value, but it may still
+be a good idea.
+
+The following patch is on 'seen' with Dscho's "prepare for main but
+do not flip the final switch yet" series.  I am not committed to the
+phrasing, but just showing it as a discussion starter.
+
+Thanks.
+
+--- >8 ------ >8 ------ >8 --- cut here --- >8 ------ >8 ---
+Subject: "init" doc: mention the configurability more clearly
+
+Update the description for the '--initial-branch' option to mention
+that the historical default has been `master` and it can be
+configured to use any name.  When actual transition happens to
+another fixed name, say 'main', the description would further be
+updated to mention like:
+
+	... fall back to the default name 'main', but it can be
+	customized with the `init.defaultBranch` configuration
+	variable.  Note that the default name historically was
+	'master'.
+
+in order to help people who wonder why more mature projects or
+documentation tend not to say 'main'.
+
+While we are at it, stop referring to "HEAD file", which was a
+remnant from 2005 that talks too much about implementation detail.
+The most important fact is that the current branch is set to an
+unborn branch and not detached HEAD.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/config/help.txt | 16 +++++++++-------
- help.c                        | 25 ++++++++++++++++++++++---
- 2 files changed, 31 insertions(+), 10 deletions(-)
+ Documentation/git-init.txt | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/config/help.txt b/Documentation/config/help.txt
-index 224bbf5a28..e07abd32d7 100644
---- a/Documentation/config/help.txt
-+++ b/Documentation/config/help.txt
-@@ -8,13 +8,15 @@ help.format::
- 	the default. 'web' and 'html' are the same.
+diff --git i/Documentation/git-init.txt w/Documentation/git-init.txt
+index 59ecda6c17..62c7552a12 100644
+--- i/Documentation/git-init.txt
++++ w/Documentation/git-init.txt
+@@ -20,8 +20,9 @@ DESCRIPTION
  
- help.autoCorrect::
--	Automatically correct and execute mistyped commands after
--	waiting for the given number of deciseconds (0.1 sec). If more
--	than one command can be deduced from the entered text, nothing
--	will be executed.  If the value of this option is negative,
--	the corrected command will be executed immediately. If the
--	value is 0 - the command will be just shown but not executed.
--	This is the default.
-+	If git detects typos and can identify exactly one valid command similar
-+	to the error, git will automatically run the intended command after
-+	waiting a duration of time defined by this configuration value in
-+	deciseconds (0.1 sec).  If this value is 0, the suggested corrections
-+	will be shown, but not executed. If "immediate", the suggested command
-+	is run immediately. If "never", suggestions are not shown at all. The
-+	default value is zero.
-++
-+Negative integers are interpreted as "immediately" for historical reasons.
+ This command creates an empty Git repository - basically a `.git`
+ directory with subdirectories for `objects`, `refs/heads`,
+-`refs/tags`, and template files.  An initial `HEAD` file that
+-references the HEAD of the master branch is also created.
++`refs/tags`, and template files.  An unborn branch (see the
++`--initial-branch` option below for its name) is made to the current
++branch.
  
- help.htmlPath::
- 	Specify the path where the HTML documentation resides. File system paths
-diff --git a/help.c b/help.c
-index 919cbb9206..3c3bdec213 100644
---- a/help.c
-+++ b/help.c
-@@ -472,12 +472,26 @@ int is_in_cmdlist(struct cmdnames *c, const char *s)
- static int autocorrect;
- static struct cmdnames aliases;
+ If the `$GIT_DIR` environment variable is set then it specifies a path
+ to use instead of `./.git` for the base of the repository.
+@@ -73,8 +74,10 @@ If this is reinitialization, the repository will be moved to the specified path.
+ -b <branch-name>::
+ --initial-branch=<branch-name>::
  
-+#define AUTOCORRECT_NEVER (-2)
-+#define AUTOCORRECT_IMMEDIATELY (-1)
-+
- static int git_unknown_cmd_config(const char *var, const char *value, void *cb)
- {
- 	const char *p;
+-Use the specified name for the initial branch in the newly created repository.
+-If not specified, fall back to the default name: `master`.
++Use the specified name for the initial branch in the newly created
++repository.  If not specified, fall back to the default name
++'master', but it can be customized with the `init.defaultBranch`
++configuration variable.
  
--	if (!strcmp(var, "help.autocorrect"))
--		autocorrect = git_config_int(var,value);
-+	if (!strcmp(var, "help.autocorrect")) {
-+		if (!value)
-+			return config_error_nonbool(var);
-+		if (!strcmp(value, "never")) {
-+			autocorrect = AUTOCORRECT_NEVER;
-+		} else if (!strcmp(value, "immediate")) {
-+			autocorrect = AUTOCORRECT_IMMEDIATELY;
-+		} else {
-+			int v = git_config_int(var, value);
-+			autocorrect = (v < 0)
-+				? AUTOCORRECT_IMMEDIATELY : v;
-+		}
-+	}
- 	/* Also use aliases for command lookup */
- 	if (skip_prefix(var, "alias.", &p))
- 		add_cmdname(&aliases, p, strlen(p));
-@@ -525,6 +539,11 @@ const char *help_unknown_cmd(const char *cmd)
+ --shared[=(false|true|umask|group|all|world|everybody|0xxx)]::
  
- 	read_early_config(git_unknown_cmd_config, NULL);
- 
-+	if (autocorrect == AUTOCORRECT_NEVER) {
-+		fprintf_ln(stderr, _("git: '%s' is not a git command. See 'git --help'."), cmd);
-+		exit(1);
-+	}
-+
- 	load_command_list("git-", &main_cmds, &other_cmds);
- 
- 	add_cmd_list(&main_cmds, &aliases);
-@@ -594,7 +613,7 @@ const char *help_unknown_cmd(const char *cmd)
- 			   _("WARNING: You called a Git command named '%s', "
- 			     "which does not exist."),
- 			   cmd);
--		if (autocorrect < 0)
-+		if (autocorrect == AUTOCORRECT_IMMEDIATELY)
- 			fprintf_ln(stderr,
- 				   _("Continuing under the assumption that "
- 				     "you meant '%s'."),
--- 
-2.29.2
-
+o
