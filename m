@@ -2,170 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 007E5C56202
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 00:50:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2D6CC2D0E4
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 00:51:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9B3B624198
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 00:50:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4F1EF24199
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 00:51:31 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tHvkmaGY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726657AbgKRAuY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Nov 2020 19:50:24 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:42882 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726592AbgKRAuW (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 17 Nov 2020 19:50:22 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CB0806044F;
-        Wed, 18 Nov 2020 00:50:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1605660621;
-        bh=T7B5bxJBDDBadzOd//Nl9zVnIdecCiqUep+/+fLRR8k=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=sBo40/Uxb2NjnZ5c7EkPUfEvs85lsXlyq6iZAKqg9rckq3jMQb/dCo+YaXEvw6xDa
-         dq2vvPzZPedpNn/CwMZV/Qpt0D49p58U4jXtUXMyJcJF3EDGC4kNOgs2GnW7V8kPia
-         KDX/CNC8QKmWazC4NBmhdy2bFMn3BPKaiv43z5LQkyEKbqATKK5SsGp8E48lLSTNeY
-         MpbhY7F9EvmZNUCwOUdd+s+bbIEtnGJ8SJkqR625v7nm758vgI9jZQn2PBIm0Mxax+
-         XqZ9Ki0+ocahOzd2yL4mKNs8VPkCVSKrbABXouDrzu3Rlf4JvPZ0th9Gb6HScAOtDH
-         8VKYW0IpkTIr/nkybKFa/sfvHvKPMmM8Aj3jy4ohZIwVYHFUvLKinpwME/m8IDoC1k
-         H85eU2/wNcR2KPL8uJj1o0rZUgDRA6f1sVe08TSbGkFJLIG0lA/GBDriJuEQp3lnli
-         VK9+1R94TouSX8XtGKKBb7/eamYd1C8ZZwhHbAfp2bp2+7ovlb+
-Date:   Wed, 18 Nov 2020 00:50:14 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] config: allow specifying config entries via envvar
- pairs
-Message-ID: <20201118005014.GC389879@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-References: <cover.1605269465.git.ps@pks.im>
- <44e8dd50c6ea7cbcc5e4fc35c9b9057c0a52038c.1605269465.git.ps@pks.im>
- <87mtzlflw7.fsf@evledraar.gmail.com>
- <xmqqy2j1851k.fsf@gitster.c.googlers.com>
- <20201117023454.GA34754@coredump.intra.peff.net>
+        id S1727429AbgKRAva (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Nov 2020 19:51:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54122 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725767AbgKRAva (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Nov 2020 19:51:30 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7D0AC061A48
+        for <git@vger.kernel.org>; Tue, 17 Nov 2020 16:51:29 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id b6so134714wrt.4
+        for <git@vger.kernel.org>; Tue, 17 Nov 2020 16:51:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=REsQu7s60hxfuqcOpxuTrkfNDD8QqfAZdy0ZPRsYgek=;
+        b=tHvkmaGYmxHq3XetIaUJodezRHsH1gEh4e3FVBJaTdtwRiLJ+nzvFevWU/Ul/2OLF/
+         SWx4De/n9a2JCqHPc+fT4fDATwoe01/LewHCgQuE7n9oWjtmG5qy9LCPmkt1v9VvO8mG
+         /0b9ZvICJaP1ZcKCqNQ+JAIfz3hCIu7R1VjVSg5D0baGZ5mh3g6U7Ebo3ppL2Nj6FU3N
+         c7t77sV90X3wUCfSankj5JQEL0JxU4vY5Z1wQlsDLd2aMJ4BzkMBdHAVnxP13bhDqUXC
+         /FEw7SzCHdzc1t2IdUf7Zg0k5MapnqBI2Pao2jCaFemw2LEAHYxKxCLQBrHAWmMgM5Uw
+         Bssg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=REsQu7s60hxfuqcOpxuTrkfNDD8QqfAZdy0ZPRsYgek=;
+        b=cyOufKUaSvSDDS8kkBEnDXoja9BrwugMQCNeWLriR5v3/ZctwXQNqIuuQhSFafIhVJ
+         fF6snDpUVazYP3bI5YFLMNnZVs4i2rHBsspdkG6qldP1fS4zQzQ44TKLfTD/mHldBFee
+         PSJiHQiEMroz0J27cQSjogZCw3O+BY9NE+y1e1qRrRp4fpNRZ/g34zZ8WuB4XcWq7LM8
+         YQlFguTjWluHYmslSBo63Gxp/ulD+EcrUl5TjQbd26BM4aOiOM5+6sPScp57OZEt11Yx
+         +1JdEdA0urACou4uTDKlNT3BAVhmOm7eLTPlLpPnQ1/TP6CXEZPafLuB9TQzpcLLrPOC
+         6O+A==
+X-Gm-Message-State: AOAM531jk//qbrdVNdxo6Oy6qpMougCuDVEX1WdrQjcLdTyc/k0+jKh0
+        gW1SXGNn34opqRLtUo0a4rj/1hRKBbT7aFpSbDo=
+X-Google-Smtp-Source: ABdhPJy+DnP6OskWb4PNWm8FN2RAS7pS+A6W2QsBv4ZRoGnNYZlWylrkqtwOazptj+gips0JlqNycmYi1sVMIdZPdZE=
+X-Received: by 2002:a5d:474f:: with SMTP id o15mr2099722wrs.100.1605660688500;
+ Tue, 17 Nov 2020 16:51:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="9Ek0hoCL9XbhcSqy"
-Content-Disposition: inline
-In-Reply-To: <20201117023454.GA34754@coredump.intra.peff.net>
-User-Agent: Mutt/1.14.6 (2020-07-11)
+References: <pull.762.git.1605221038.gitgitgadget@gmail.com>
+ <87r1oraewl.fsf@x220.int.ebiederm.org> <xmqqv9e34mq5.fsf@gitster.c.googlers.com>
+ <CAMP44s3750bSdmw4A=KU=UgffOPiQwB8ECk9YRPe8mh50Og8Ow@mail.gmail.com> <xmqqmtzf4j96.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqmtzf4j96.fsf@gitster.c.googlers.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Tue, 17 Nov 2020 18:51:17 -0600
+Message-ID: <CAMP44s39fuHfJ5Uuywh05+S+fTzdhOb3f6ma-oqkW2T5gTG9OQ@mail.gmail.com>
+Subject: Re: [PATCH 00/28] Use main as default branch name
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "Eric W. Biederman" <ebiederm@xmission.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
---9Ek0hoCL9XbhcSqy
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2020-11-17 at 02:34:54, Jeff King wrote:
-> On Mon, Nov 16, 2020 at 11:39:35AM -0800, Junio C Hamano wrote:
->=20
-> > >> While not document, it is currently possible to specify config entri=
-es
-> > >> [in GIT_CONFIG_PARAMETERS]
-> > [...]
+On Tue, Nov 17, 2020 at 6:10 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+> > If we already know "origin/HEAD" is very likely pointing to the
+> > integration branch, then why do we need to know what that branch is
+> > called in that particular project?
 > >
-> > "While not documented" yes, for sure, but we do not document it for
-> > a good reason---it is a pure implementation detail between Git
-> > process that runs another one as its internal implementation detail.
->=20
-> I have actually been quite tempted to document and promise that it will
-> continue to work. Because it really is useful in some instances. The
-> thing that has held me back is that the documentation would reveal how
-> unforgiving the parser is. ;)
->=20
-> It insists that key/value pairs are shell-quoted as a whole. I think if
-> we made it accept a some reasonable inputs:
->=20
->   - do not require quoting for values that do not need it
->=20
->   - allow any amount of shell-style single-quoting (whole parameters,
->     just values, etc).
->=20
->   - do not bother allowing other quoting, like double-quotes with
->     backslashes. However, document backslash and double-quote as
->     meta-characters that must not appear outside of single-quotes, to
->     allow for future expansion.
->=20
-> then I'd feel comfortable making it a public-facing feature. And for
-> most cases it would be pretty pleasant to use (and for the unpleasant
-> ones, I'm not sure that a little quoting is any worse than the paired
-> environment variables found here).
+> > Just refer to that branch as "origin/@", or just "origin".
+>
+> "git merge origin" turns into "git merge origin/HEAD", I think, and
+> we had it for quite some time.
+>
+> But repositories may not even have any origin to begin with.  The
+> one I am typing this message in certainly does not.  And we need
+> some fallback default when origin/HEAD cannot be used anyway, and
+> that is where the convention comes in again.  You cannot escape from
+> it, and ...
 
-What if we didn't document it but provided a command that produced a
-suitable value?  Maybe something like this:
+I did not say the convention can be escaped, I said the convention can
+be minimized.
 
-  GIT_CONFIG_PARAMETERS=3D$(git rev-parse --quote-parameters a.b.c ENV_VAR =
-d.e.f OTHER_ENV_VAR)
+Since apparently there's already support for "origin/HEAD", a lot of
+documentation can avoid the term "origin/master", and simply use
+"origin".
 
-Or whatever we decide.
+However, we need to make sure users have a properly set up
+"origin/HEAD", and at least in my case none of my remotes have set it
+up. Looking at the code, it seems:
 
-I don't personally love shell quoting as an interchange mechanism; I'd
-prefer something like URI-encoding, which is a bit more standardized and
-easier to reason about from a security perspective.  But if we decide to
-change it, it doesn't matter, since it's still undocumented and this
-would be the only acceptable way to pass config through the environment.
+  git clone URL test
 
-Alternatively, we could just do this:
+Is different than:
 
-  git with-config --key a.b.c --value ENV_VAR --key d.e.f --value OTHER_ENV=
-_VAR --command git foo
+  git init test
+  git remote add origin URL
+  git fetch origin
+  git checkout -b $favorite origin
 
-That would also leave it undocumented, but make it easier to work with.
+In the latter there is no origin/HEAD, and I don't see why that should
+be the case.
 
-> > I especially do not think we want to read from unbounded number of
-> > GIT_CONFIG_KEY_<N> variables like this patch does.  How would a
-> > script cleanse its environment to protect itself from stray such
-> > environment variable pair?  Count up from 1 to forever?  Run "env"
-> > and grep for "GIT_CONFIG_KEY_[0-9]*=3D" (the answer is No.  What if
-> > some environment variables have newline in its values?)
->=20
-> Yeah, scripts can currently assume that:
->=20
->   unset $(git rev-parse --local-env-vars)
->=20
-> will drop any config from the environment. In some cases, having
-> rev-parse enumerate the GIT_CONFIG_KEY_* variables that are set would be
-> sufficient. But that implies that rev-parse is seeing the same
-> environment we're planning to clear. As it is now, a script is free to
-> use rev-parse to generate that list, hold on to it, and then use it
-> later.
+Cheers.
 
-I'm also uncomfortable with an arbitrary number of keys and values.  It
-becomes very tricky to cleanse the environment, and even if the code
-stops at the first gap, if you then add more entries, then you have to
-cleanse again or risk a security problem.  I feel like this is only
-going to bite us in the future.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---9Ek0hoCL9XbhcSqy
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX7RvxQAKCRB8DEliiIei
-gcbXAQCMa6Zlr0m2P43R63cZSScETvsVmUvaQbLFUVQKpsn5/QEA9RSALHW7oyii
-PURgjRtoafhb1wNdN6Hxts1duJ2TTAU=
-=RMbn
------END PGP SIGNATURE-----
-
---9Ek0hoCL9XbhcSqy--
+-- 
+Felipe Contreras
