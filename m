@@ -2,114 +2,172 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89294C56201
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 23:26:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B12EC5519F
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 23:36:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2DF9A246BB
-	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 23:26:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0A196246B4
+	for <git@archiver.kernel.org>; Wed, 18 Nov 2020 23:36:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ZCvIfSz7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MaaMvWH3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726950AbgKRX0F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Nov 2020 18:26:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37702 "EHLO
+        id S1726963AbgKRXfs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Nov 2020 18:35:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726162AbgKRX0E (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Nov 2020 18:26:04 -0500
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7334EC0613D4
-        for <git@vger.kernel.org>; Wed, 18 Nov 2020 15:26:03 -0800 (PST)
-Received: by mail-pf1-x443.google.com with SMTP id i8so2595262pfk.10
-        for <git@vger.kernel.org>; Wed, 18 Nov 2020 15:26:03 -0800 (PST)
+        with ESMTP id S1726162AbgKRXfr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Nov 2020 18:35:47 -0500
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50AC0C0613D4
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 15:35:47 -0800 (PST)
+Received: by mail-wm1-x343.google.com with SMTP id p22so5123915wmg.3
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 15:35:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=2gVJq5TGX/OnvvTTdwI2mixCEJx6fZlK3ONdnyJ14z8=;
-        b=ZCvIfSz7qPeIn4vtuwMIJCcWpJosHFsvWfrxTsx7oFu2xj3mka1JIBqPluQP/7d/Vh
-         4B5ie/LDS8ip9uUtbyeDUUB/i+qj7iezxAue5xncG6wbfJ0EWzA1lAL6EdX3HXtWTiPA
-         UMdK5TVIyIMRfddFulnDoQioUZ6tBhpzOivuQCWq2D7GRcVjqPlblnX7cgqwn8Kd5cmX
-         usgjRde6kR0JjnZEwBirWyuZcoq4SVLsMUQjvLZIzMoalfUI8cQ2zcfLXQNmaXGMfJ7A
-         RtiPE/PofHoI8iDpGirUfeTiU+RulFKKZYrKMzMXNiazunfhMpvuvLm1IYaE0pK9vgKS
-         zDHA==
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=FQF+ROJVDM7lAHjqM81W5GX6XbNAC3KY7LMI/8Fgo8s=;
+        b=MaaMvWH3XfVrCLPNkEjWTd2AItfVhbMInbSZfqcgHvN4dRiNIhP6xR6Jg58u0sl/sM
+         2arDWJhK17/eyHcbGCf9Kixl29QHWO006sL2bpheRmWZ6yhWckLcYJIMNvgxUvh/VyXN
+         Mavkj7li604bPzmScc3gsXuYKESBS8+gVgaTfoT0n6aLgvoNO34NuK5aNv3cKlUA0G+m
+         U1VZYs+9tHfSdvjVFGG4p2/mZfcL/YWQgnDREwNBLNBzB3VbkbsptGf9Tnn0nNnTuDrZ
+         cHRCPq0l1PLI533GPCDoW7d8lBWYqt4UiUjUUzMHwpwpqaVtvPHHhb4uSr8nnE66ry3d
+         x3gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=2gVJq5TGX/OnvvTTdwI2mixCEJx6fZlK3ONdnyJ14z8=;
-        b=CmPJxd1jgELwxptj03ze74ZHl1r71bN7fJzTfw1B6xQUaxQc2w6ahR5rwX8fAea2Qk
-         CH0PZp3hS/sw4aNboBEqkC15jVJYkKJ06uxwZt8s9stfSCYkhwIxJhJnzZFs9Pw3PTIG
-         7R2mzfr5XGQTJaZ39AwiKBbYThThxfKeTBhvNnX+vcvvQiUEmAviyukMRF3E5LjFiLoF
-         QCyluFeLlJ/TWmVNhCllDUdsysKSpJKooXsnJ2X4gm0s+H2yAJglS2KO+wA3Jix9qC2p
-         C00xH0Ro0/D99ocNUrAa0RCylHHMdGlJWqsLvjxqZaMsufZURB+/11aL6aS3iRJghZI+
-         QGQg==
-X-Gm-Message-State: AOAM531/y15F6LDS1scjfehaEbw3ffotw8mbOzrG3JlhvjvGptJbA5Xx
-        idnrkZbFVneoAMp0E/1Ayofkbw==
-X-Google-Smtp-Source: ABdhPJxwAPR8qFJLoKtyWu4QEI+/uSVUbzPZMgz4rIsj40RYxnBUmvnswC9Yy2WjetQOgtvIpNhNhw==
-X-Received: by 2002:a17:90b:368e:: with SMTP id mj14mr1343700pjb.109.1605741962806;
-        Wed, 18 Nov 2020 15:26:02 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
-        by smtp.gmail.com with ESMTPSA id b80sm27076422pfb.40.2020.11.18.15.26.01
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=FQF+ROJVDM7lAHjqM81W5GX6XbNAC3KY7LMI/8Fgo8s=;
+        b=fUDI5XYKDpFsUjOq3pvyeELUHbthpnuQ1sZcJo3LU8DBfp+p7d3xtlFhbhx7t2ZJXX
+         Kvj+rPAD/G67ZbkgSPrlvI9nxHaluGgta9yisLcWKIBhTvBATLFEc9Drkqx0PJq2mHla
+         h3ljyKYKJcFGDsRb9yEUseX5DgUBszs+sMTXi68aNxWfr136iPgi6Y/LrtWtXJjS07Xq
+         N50578lyUfeWPDauo+geBF3e12PdYkF9EM277ir1WhIZUcsV4edt0Gs/lslnjbv4SmZe
+         2zF6ofRQTU2eo5ntTFy3NZiM3N0z5BN6XXG0qf8iL7qZqBuea7Jn8iwm1LnI561TdbmG
+         Yl6A==
+X-Gm-Message-State: AOAM53383id2RRnxMss1ghe3yDgXWNHbwlz1KSd3eQ4fr7yH2+jDNYub
+        G3/J93b03q0NPOkX+FRtGl/Gs7Bfpy4=
+X-Google-Smtp-Source: ABdhPJwiIgDTi1ereJ6MsaAwQ6wl6fjqx4o9Mjc6P4r89oeaBvL9R8WohW1mJ7RHWu5JLzKMP5TJJg==
+X-Received: by 2002:a05:600c:2119:: with SMTP id u25mr1448019wml.53.1605742545887;
+        Wed, 18 Nov 2020 15:35:45 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id s4sm34835687wro.10.2020.11.18.15.35.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2020 15:26:01 -0800 (PST)
-Date:   Wed, 18 Nov 2020 15:25:57 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Shourya Shukla <shouryashukla.oo@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, christian.couder@gmail.com,
-        kaartic.sivaraam@gmail.com, Johannes.Schindelin@gmx.de,
-        liu.denton@gmail.com
-Subject: Re: [PATCH v2 1/3] dir: change the scope of function
- 'directory_exists_in_index()'
-Message-ID: <20201118232557.GA3698950@google.com>
-References: <20201007074538.25891-1-shouryashukla.oo@gmail.com>
- <20201007074538.25891-2-shouryashukla.oo@gmail.com>
+        Wed, 18 Nov 2020 15:35:45 -0800 (PST)
+Message-Id: <pull.794.v2.git.1605742544801.gitgitgadget@gmail.com>
+In-Reply-To: <pull.794.git.1605727594021.gitgitgadget@gmail.com>
+References: <pull.794.git.1605727594021.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 18 Nov 2020 23:35:44 +0000
+Subject: [PATCH v2] t4015: let the test pass with any default branch name
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201007074538.25891-2-shouryashukla.oo@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Wed, Oct 07, 2020 at 01:15:36PM +0530, Shourya Shukla wrote:
-> 
-> Change the scope of the function 'directory_exists_in_index()' as well
-> as declare it in 'dir.h'.
-> 
-> Since the return type of the function is the enumerator 'exist_status',
-> change its scope as well and declare it in 'dir.h'.
+We do not need to hard-code the actual branch name, as we can use the
+`test_commit` function to simplify the code and use the tag it
+generates, thereby being a lot more precise in what we want.
 
-I don't have comments about the diff itself beyond what Junio mentioned
-- it's very simple. But I do think this commit message needs a rewrite.
+Strangely enough, this test case would have succeeded even with an
+overridden default branch name, obviously for the wrong reason. Let's
+verify that it passes for the expected reason, by looking for a
+tell-tale in Git's output.
 
-Your commit message summarizes the diff - which isn't useful, because
-the diff itself is very simple. But what it fails to do is what I'm a
-lot more interested in, reading this change: *why* do you want to make
-this function and enum reusable? I think you mention it in the cover
-letter, but it's not explained at all here.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    t4015: let the test pass with any default branch name
+    
+    Aaaaand another issue, also found while working on 
+    https://github.com/gitgitgadget/git/pull/762.
+    
+    Changes since v1:
+    
+     * We now use test_commit and the tag it creates, rather than the
+       reflog.
+     *
 
-Explaining the motivation in the cover letter also would help us
-understand whether it is better to make the enum public, like your diff
-proposes, or to wrap or change the function and avoid exposing the enum,
-like you suggested in reply to Junio's comment.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-794%2Fdscho%2Ft4015-and-default-branch-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-794/dscho/t4015-and-default-branch-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/794
 
-Lastly, saying something like "This change is needed so that git commit
-can sort ducks by feather length" helps avoid
-https://en.wikipedia.org/wiki/XY_problem - that is, maybe we already
-have another tool which is more appropriate, and which you missed; and
-knowing your motivation, someone can point you in that direction
-instead.
+Range-diff vs v1:
 
-The same comment holds true for your patch 3, as well.
+ 1:  5467cae0dd ! 1:  2f6d07fe90 t4015: let the test pass with any default branch name
+     @@ Metadata
+       ## Commit message ##
+          t4015: let the test pass with any default branch name
+      
+     -    We do not need to hard-code the actual branch name, as we have access to
+     -    the reflog and can be a lot more precise at what we want.
+     +    We do not need to hard-code the actual branch name, as we can use the
+     +    `test_commit` function to simplify the code and use the tag it
+     +    generates, thereby being a lot more precise in what we want.
+      
+          Strangely enough, this test case would have succeeded even with an
+          overridden default branch name, obviously for the wrong reason. Let's
+     @@ Commit message
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## t/t4015-diff-whitespace.sh ##
+     -@@ t/t4015-diff-whitespace.sh: test_expect_success 'combined diff with autocrlf conversion' '
+     +@@ t/t4015-diff-whitespace.sh: test_expect_success 'rename empty' '
+     + test_expect_success 'combined diff with autocrlf conversion' '
+     + 
+     + 	git reset --hard &&
+     +-	echo >x hello &&
+     +-	git commit -m "one side" x &&
+     ++	test_commit "one side" x hello one-side &&
+     + 	git checkout HEAD^ &&
+       	echo >x goodbye &&
+       	git commit -m "the other side" x &&
+       	git config core.autocrlf true &&
+      -	test_must_fail git merge master &&
+     -+	test_must_fail git merge @{2} >actual &&
+     ++	test_must_fail git merge one-side >actual &&
+      +	test_i18ngrep "Automatic merge failed" actual &&
+       
+       	git diff >actual.raw &&
 
-Thanks for your effort on this series.
 
- - Emily
+ t/t4015-diff-whitespace.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index 8bdaa0a693..47f0e2889d 100755
+--- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -877,13 +877,13 @@ test_expect_success 'rename empty' '
+ test_expect_success 'combined diff with autocrlf conversion' '
+ 
+ 	git reset --hard &&
+-	echo >x hello &&
+-	git commit -m "one side" x &&
++	test_commit "one side" x hello one-side &&
+ 	git checkout HEAD^ &&
+ 	echo >x goodbye &&
+ 	git commit -m "the other side" x &&
+ 	git config core.autocrlf true &&
+-	test_must_fail git merge master &&
++	test_must_fail git merge one-side >actual &&
++	test_i18ngrep "Automatic merge failed" actual &&
+ 
+ 	git diff >actual.raw &&
+ 	sed -e "1,/^@@@/d" actual.raw >actual &&
+
+base-commit: e31aba42fb12bdeb0f850829e008e1e3f43af500
+-- 
+gitgitgadget
