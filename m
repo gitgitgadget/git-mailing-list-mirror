@@ -2,44 +2,46 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36212C2D0E4
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 14:04:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D502C6369E
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 14:11:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EB5C524698
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 14:04:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 24D3224655
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 14:11:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727319AbgKSOEh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Nov 2020 09:04:37 -0500
-Received: from siwi.pair.com ([209.68.5.199]:14032 "EHLO siwi.pair.com"
+        id S1727265AbgKSOLR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Nov 2020 09:11:17 -0500
+Received: from siwi.pair.com ([209.68.5.199]:14634 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727304AbgKSOEg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Nov 2020 09:04:36 -0500
+        id S1726820AbgKSOLR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Nov 2020 09:11:17 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 396153F5FBF;
-        Thu, 19 Nov 2020 09:04:35 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTP id 8F51E3F5FC7;
+        Thu, 19 Nov 2020 09:11:15 -0500 (EST)
 Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 0D07F3F5FB9;
-        Thu, 19 Nov 2020 09:04:35 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTPSA id 56FE53F5FC2;
+        Thu, 19 Nov 2020 09:11:15 -0500 (EST)
 Subject: Re: RFC: auto-enabling parallel-checkout on NFS
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     gerardu@amazon.com, git@vger.kernel.org
-References: <9c999e38-34db-84bb-3a91-ae2a62b964b5@jeffhostetler.com>
- <20201119040117.67914-1-matheus.bernardino@usp.br>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     git@vger.kernel.org, gerardu@amazon.com,
+        Derrick Stolee <stolee@gmail.com>
+References: <20201115194359.67901-1-matheus.bernardino@usp.br>
+ <87y2ixpvos.fsf@evledraar.gmail.com>
 From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <212a2def-6811-b6e4-0550-ecae2fe0c02c@jeffhostetler.com>
-Date:   Thu, 19 Nov 2020 09:04:34 -0500
+Message-ID: <e0ddf00d-785b-9220-0082-8be54fb7a7c6@jeffhostetler.com>
+Date:   Thu, 19 Nov 2020 09:11:14 -0500
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
  Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-In-Reply-To: <20201119040117.67914-1-matheus.bernardino@usp.br>
+In-Reply-To: <87y2ixpvos.fsf@evledraar.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -49,56 +51,51 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 11/18/20 11:01 PM, Matheus Tavares wrote:
-> Hi, Jeff
+On 11/19/20 4:01 AM, Ævar Arnfjörð Bjarmason wrote:
 > 
-> On Mon, Nov 16, 2020 at 12:19 PM Jeff Hostetler <git@jeffhostetler.com> wrote:
->>
->> I can't really speak to NFS performance, but I have to wonder if there's
->> not something else affecting the results -- 4 and/or 8 core results are
->> better than 16+ results in some columns.  And we get diminishing returns
->> after ~16.
+>> The major downside is that detecting the file system type is quite
+>> platform-dependent, so there is no simple and portable solution. (Also,
+>> I'm not sure if the optimal number of workers would be the same on
+>> different OSes). But we decided to give it a try, so this is a
+>> rough prototype that would work for Linux:
+>> https://github.com/matheustavares/git/commit/2e2c787e2a1742fed8c35dba185b7cd208603de9
 > 
-> Yeah, that's a good point. I'm not sure yet what's causing the
-> diminishing returns, but Geert and I are investigating. Maybe we are
-> hitting some limit for parallelism in this scenario.
+> I'm not intrinsically opposed to hardcoding some "nr_threads = is_nfs()
+> ? x : y" as a stopgap.
+> 
+> I do think we should be thinking about a sustainable way of doing this
+> sort of thing, this method of testing once and hardcoding something
+> isn't a good approach.
+> 
+> It doesn't anticipate all sorts of different setups, e.g. in this case
+> NFS is not a FS, but a protocol, there's probably going to be some
+> implementations where parallel is much worse due to a quirk of the
+> implementation.
+> 
+> I think integrating an optimization run with the relatively new
+> git-maintenance is a better way forward.
+> 
+> You'd configure e.g.:
+> 
+>      maintenance.performanceTests.enabled=true
+>      maintenance.performanceTests.writeConfig=true
+> 
+> Which would run e.g.:
+> 
+>      git config --type bool core.untrackedCache $(git update-index --test-untracked-cache && echo true || echo false)
+>      git config checkout.workers $(git maintenance--helper auto-discover-config checkout.workers)
+> 
+> Such an implementation can be really basic at first, or even just punt
+> on the test and use your current "is it NFS?" check.
+> 
+> But I think we should be moving to some helper that does the actual test
+> locally when asked/configured by the user, so we're not making a bunch
+> of guesses in advance about the size/shape of the repository, OS/nfs/fs
+> etc.
+> 
 
-I seem to recall back when I was working on this problem that
-the unzip of each blob was a major pain point.  Combine this
-long delta-chains and each worker would need multiple rounds of
-read/memmap, unzip, and de-delta before it had the complete blob
-and could then smudge and write.
+I kinda like this idea.  It would give us a chance to let maintenance
+periodically probe the repo/system and improve some of these tuning
+knobs.
 
-This makes me wonder if repacking the repo with shorter delta-chains
-affects the checkout times.  And improves the perf when there are
-more workers.  I'm not saying that this is a solution, but rather
-an experiment to see if it changes anything and maybe adjust our
-focus.
-
-> 
->> I'm wondering if during these test runs, you were IO vs CPU bound and if
->> VM was a problem.
-> 
-> I would say we are more IO bound during these tests. While a sequential
-> linux-v5.8 checkout usually uses 100% of one core in my laptop's SSD,
-> in this setup, it only used 5% to 10%. And even with 64 workers (on a
-> single core), CPU usage stays around 60% most of the time.
-> 
-> About memory, the peak PSS was around 1.75GB, with 64 workers, and the
-> machine has 10GB of RAM. But are there other numbers that I should keep
-> an eye on while running the test?
-> 
->> I'm wondering if setting thread affinity would help here.
-> 
-> Hmm, I only had one core online during the benchmark, so I think thread
-> affinity wouldn't impact the runtime.
-
-I wasn't really thinking about the 64 workers on 1 core case.  I was
-more thinking about the 64 workers on 64 cores case and wondering
-if workers were being randomly bounced from core to core and we were
-thrashing.
-
-> 
-> Thanks,
-> Matheus
-> 
+Jeff
