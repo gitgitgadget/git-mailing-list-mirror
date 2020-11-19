@@ -2,114 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2AE9C388F9
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 09:01:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DDD8C388F9
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 09:23:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 42587246CA
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 09:01:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D4F73221EB
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 09:23:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MsuDS2oL"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="elB2fofo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726505AbgKSJBN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Nov 2020 04:01:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41434 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725936AbgKSJBM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Nov 2020 04:01:12 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D57EC0613D4
-        for <git@vger.kernel.org>; Thu, 19 Nov 2020 01:01:11 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id y17so6768940ejh.11
-        for <git@vger.kernel.org>; Thu, 19 Nov 2020 01:01:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=up9tAGZjuGBAJrKyoPM1B9iVYt/FgDuEsB3apeGCNvY=;
-        b=MsuDS2oLlgW4aacRVUsa7b+lSIyAnDoVIG2KjzcoCAKDqDUB2q9XUzQnkrtYjiFrSO
-         QCEIEtM5EIJV2xXQdtF9xElpLT1nMhAFaCatmeuzALB9Zara61i6gc00kaZkj7ehaFzp
-         4M/Q8hsYm+0rCNaRbiK24/28/WzYSfQM0Ga+gNcc4pN8IBX0kLFMUjtEk93C0ObXWISC
-         B6pG5wy/KAAjAg+qtqlSN5SSGtaW7lmrPWhzERNqVkXFNeKwwPHQPqRwexYllbvVvEou
-         9GPcpa+92JzFSddBFg9GDqQV2bM6fkt/gJeT05fPaaC/WF2nXdsB3GjAQUt4mwhlEfBk
-         1+TQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=up9tAGZjuGBAJrKyoPM1B9iVYt/FgDuEsB3apeGCNvY=;
-        b=kq/79iyTyAv/oQOr44DgyxxsW/f8nhOTT2wL558beHcFBM0BW+Rb60xDF+tY5XYMft
-         rZsNiDYEIfSmzhD5eeUCh5/HhHj9pWQmfPj/FpUAXTCeFHTsh12D+5Difsumf9pj5E1f
-         Rg3YJ1T8f2NUOpyi+79DWiHAg0FHYZyH3/3+mfH96zUeOVmQX1M9kl9YpQs2Vd/fv8lg
-         ivISNCIPs/nz1AG/Q9bOzKWYtzcf6k4fHh7irBwj+VURDFSmgnftfJt5GLiAqIlnwDs0
-         zqBVrHxphMfPOanDSpp1JdkELENYgT792UA1kKTfhYglt5dkjjhYqSdPJS23q5VGvxB6
-         1qFw==
-X-Gm-Message-State: AOAM531V4UzXPfRVCgdvdpgzs615JYZ2MmAGEq2lsEgBomozHsDzlUc2
-        Bwcv7uevjNh78SLOk0uACXhSs/8Lf+++DA==
-X-Google-Smtp-Source: ABdhPJyb5VQt+gWyK8o38Ut8hH5+bb6u5WUKdt/V3PjgoM4d9fIjmOQgkxaCZkPBk8aU/tR/WGcbuA==
-X-Received: by 2002:a17:906:5793:: with SMTP id k19mr28546565ejq.410.1605776469586;
-        Thu, 19 Nov 2020 01:01:09 -0800 (PST)
-Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id n1sm631713ejb.2.2020.11.19.01.01.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Nov 2020 01:01:08 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git@vger.kernel.org, gerardu@amazon.com,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: RFC: auto-enabling parallel-checkout on NFS
-References: <20201115194359.67901-1-matheus.bernardino@usp.br>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 26.3; mu4e 1.4.13
-In-reply-to: <20201115194359.67901-1-matheus.bernardino@usp.br>
-Date:   Thu, 19 Nov 2020 10:01:07 +0100
-Message-ID: <87y2ixpvos.fsf@evledraar.gmail.com>
+        id S1726663AbgKSJXC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Nov 2020 04:23:02 -0500
+Received: from mout.gmx.net ([212.227.15.19]:58537 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726457AbgKSJXB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Nov 2020 04:23:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1605777752;
+        bh=I82HHOng+Fv2Fmjb0K/G85IUMaOIWqWbAF0qsVoknIk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=elB2fofooNl8UOJZOBj6vIYsC40kWdfVK+0B0vERMHZow6ENcvzTW+oc7U0uc0ceg
+         /cilpgiLR318XxHPK8X7kdFtsjHqRTrZo+HMjda1BS5EBqo4ALqhocB25sG7gnqBfQ
+         DSk/iOpu0rcu+3IE6kjY/iDP82s21jT2oFEZqwGM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.26.22.105] ([213.196.212.61]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MyKDe-1kKxtc0LEa-00yklg; Thu, 19
+ Nov 2020 10:22:32 +0100
+Date:   Thu, 19 Nov 2020 10:22:31 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        "Eric W. Biederman" <ebiederm@xmission.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git <git@vger.kernel.org>
+Subject: Re: [PATCH 00/28] Use main as default branch name
+In-Reply-To: <xmqq1rgq4qn3.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2011191012430.56@tvgsbejvaqbjf.bet>
+References: <pull.762.git.1605221038.gitgitgadget@gmail.com> <87r1oraewl.fsf@x220.int.ebiederm.org> <CAMP44s2VJOd3N2zaj8YPv0iLOqTF7vWyZ=zPd9vd0+qO1DbEVA@mail.gmail.com> <20201117233313.GB642410@coredump.intra.peff.net> <xmqqr1or4jen.fsf@gitster.c.googlers.com>
+ <20201118012544.GC650959@coredump.intra.peff.net> <20201118024028.GE360414@google.com> <xmqqima343vb.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2011181207220.56@tvgsbejvaqbjf.bet> <xmqq1rgq4qn3.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:WDy8h6/Tf/r9oDDc+2amRDUnSmoAgPkwOAPh1g0kRlzwhS1wxir
+ grBJfMaZN0th6OYcuU5pdQwpHL2w0Rt9JPjrcAqs0pmijAHLzACzWw3Qu0jQB0DjGOJvGf4
+ /q5XrusJJWIykYSfE+h5JKN+xFhnowNVdzIlQ0v4iogI9NPs/RWzR+lZNNaGxqQ5/ha0fHu
+ onSo6pq2s+zqK7uNeXh5Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:6pYN09RhpiE=:r/SwMXritdpnKcCUBDRCio
+ nKjcxLLzSmvCzyfH5Lp45Rs9iLR7piGmeYaOk2pEBrm/v/AnRMJVONdVvBZkCiQBUqKHbspfD
+ ijpmK50KuTEDn9izPbkLMqCqCt45EunRq3qBOwbXqTUia5lbMyYxRAntFfcn+lyKlnFnnFkNm
+ bZtBPwB2H25i7//CAz9TY4OOTVw32yMLHZvwHydAFbQJCT0gVgKDTJtPzrZ5uLsxlZ87DQaoO
+ K1bQlokl44PkJi6h5/DfvflmcgH1BtbGmOj5M6D9aROuyCGOqD5CTORpIobdvB5H+BOF6nxC3
+ g3ZqmrFxamuwdlgILfv6v6X6+OFOIGMYk8ceanxHKtSYxsZi1DJEtvC6m5JC/xzjzIWr2Hg+n
+ gdWtbZ8z7yJBWARVQU3ZBCYqODu7gdHbzvtUc2Q3d4Cw0G18e6tQ4gU3vb7Ue49cXRkIKC/id
+ RcReHPwhavp51JSRdOvu3KEQoM38YnkbX2uaqd+g/c8kXJP9iQVPKQJVJy8++XqNZN8qAMGjY
+ f/6U0VIT44y1o0v4Fo8NSHBrtuhefpjLdZDntp5xPu8+73kIwK4MYJSS0BfEHJBlCPLOiBWFU
+ 8w5DbZUO2b6Qji7obWR85M2Tpv0FUakJNvHn7BAtt3WP1vMkUIljF/rw30REeSUMFF/SIMhZA
+ 6vwg5vzu96X90Jf2+xtzVj69dmMttpj6iFh/vt5nIYaQ7qgpaPIUl0Locf0CTH9tebC5e66oy
+ t18Gu5t39RmeJZAidpuTFgLWH7AQIO2NKDEbHZC9jFZBoE0Sy9w8nj2IVqCc8y0dNnzZZfJYy
+ dczn7LNMc8hRnTItO5fT2u5VVbfYlTbtPlA7i27yh1RYDzHdC2zmEBXigWPXju25OKVdGXoZ2
+ 2nNlfWOCCqfY5BvvAZ+sK+9X2A3WRoc5ncOfnC5QE=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
-> The major downside is that detecting the file system type is quite
-> platform-dependent, so there is no simple and portable solution. (Also,
-> I'm not sure if the optimal number of workers would be the same on
-> different OSes). But we decided to give it a try, so this is a
-> rough prototype that would work for Linux:
-> https://github.com/matheustavares/git/commit/2e2c787e2a1742fed8c35dba185b7cd208603de9
+On Wed, 18 Nov 2020, Junio C Hamano wrote:
 
-I'm not intrinsically opposed to hardcoding some "nr_threads = is_nfs()
-? x : y" as a stopgap.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > So yes, I totally agree that triggering an interactive prompt by the e=
+mpty
+> > value is not really a good idea (nor a particularly intuitive behavior=
+).
+>
+> Puzzled.
+>
+> Nobody talked about going interactive so far and I didn't suggest
+> it---even though I think it is a cute idea to give a "what branch
+> name do you want to use?" prompt, I do not think it is practical.
 
-I do think we should be thinking about a sustainable way of doing this
-sort of thing, this method of testing once and hardcoding something
-isn't a good approach.
+The interactive prompt was what I understood your "a notation that asks
+for the basename behaviour" comment. The "ask" was what tripped me up, I
+always interpret that as interactive. But now that I re-read it, I
+understand that you had not thought that far yet.
 
-It doesn't anticipate all sorts of different setups, e.g. in this case
-NFS is not a FS, but a protocol, there's probably going to be some
-implementations where parallel is much worse due to a quirk of the
-implementation.
+> I thought it was obvious, but the key to coming up with a name
+> dynamically instead of using a fixed string is to derive from a cue
+> the end user gives, not directly use what the end user gives.  I do
+> not think anybody in the discussion meant by "the <basename> thing"
+> to literally use $(basename $(cwd)) output, but use it to derive a
+> token that check-ref-format likes.  As you may have already known
+> when you wrote them, "My Documents" or the root directory case are
+> red herring---it would be trivial to derive "MyDocuments" or
+> "my-documents" for the former, and for the latter, it is totally OK
+> for the deriving rule to come up with any of "unnamed", "initial",
+> etc.
 
-I think integrating an optimization run with the relatively new
-git-maintenance is a better way forward.
+The more magic you introduce, the less intuitive the whole thing gets, and
+the more disruptive the change.
 
-You'd configure e.g.:
+> Most of the thing you said in the message I am responding to did not
+> make much sense to me.  Perhaps you can retry after reading the
+> message you are responding to again?
 
-    maintenance.performanceTests.enabled=true
-    maintenance.performanceTests.writeConfig=true
+Could you be a bit more specific?
 
-Which would run e.g.:
+Was it the "I already use the empty string to force a fall-back, it cannot
+also mean something else" that did not make sense?
 
-    git config --type bool core.untrackedCache $(git update-index --test-untracked-cache && echo true || echo false)
-    git config checkout.workers $(git maintenance--helper auto-discover-config checkout.workers)
+Or my comment that special-casing values that start with a colon would
+look saner to me?
 
-Such an implementation can be really basic at first, or even just punt
-on the test and use your current "is it NFS?" check.
+Or the comment about the basename in a root directory?
 
-But I think we should be moving to some helper that does the actual test
-locally when asked/configured by the user, so we're not making a bunch
-of guesses in advance about the size/shape of the repository, OS/nfs/fs
-etc.
+Or referencing the SFC statement that we want to minimize disruption?
+
+Or my stated preference to go with `main` in order to fulfill that promise
+of minimizing the disruption to users?
+
+Or my current plan to introduce an `advise()` call when running `git init`
+that tells users that the fall-back for `init.defaultBranch` will change
+soon and that users are encouraged to configure it if they care about
+keeping the current fall-back?
+
+Or that all of this needs to be done with care?
+
+The message you refer to might not have been the best example of clear
+communication, but it hardly deserved _that_ response.
+
+Ciao,
+Dscho
