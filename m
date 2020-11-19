@@ -2,135 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3E78C2D0E4
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 04:17:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0576C2D0E4
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 06:37:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 31358246BC
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 04:17:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C1E952158C
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 06:37:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o00XZ4zg"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bPrUGW/Q";
+	dkim=temperror (0-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cLMvUJ/Z"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726188AbgKSEQw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Nov 2020 23:16:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54252 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726105AbgKSEQw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Nov 2020 23:16:52 -0500
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4F50C0613D4
-        for <git@vger.kernel.org>; Wed, 18 Nov 2020 20:16:51 -0800 (PST)
-Received: by mail-pf1-x436.google.com with SMTP id t8so3193555pfg.8
-        for <git@vger.kernel.org>; Wed, 18 Nov 2020 20:16:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fxFEJO35R7eA2gdjtYOLprXdB33nEK1DufpgP4QV0pY=;
-        b=o00XZ4zgno2FJl4RFmduQ5ad0PXY2Aj6/zt2DAKBXeDOsJeatTZ08YafF5gSzqZLfU
-         DrlFjfpeixyVfGCfL/zCcelAgDPZsXyiBDSmdQzMvThrpmCeUEvrk1CX9Dg0vsg/tQyf
-         07MRnJsGUrArtXE/FKWb8Je6gKD9mMSHSilJAUfuAxS4oGaRFpTrWvFt6cbJ9SLna1JS
-         ovgrAa+9e7jBMSEmQ0EBNMYjhhS9P3IZ3/A3KUQnxZVZ94GofYkqnCAoTEEKNyyS1RAd
-         HikD2W6j8Y5YTwEvuWvkZCb6mDYUCyeEC3lUXDBAGKi0UNccnEYTC5F7C1/LlQZVwkjk
-         erLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fxFEJO35R7eA2gdjtYOLprXdB33nEK1DufpgP4QV0pY=;
-        b=HpXCCyHKfBR6B6vCeUnX5ocgiBBY4tAQSEe4j5QQ3ZSOLt1MJP9qMpAvtRQUwgMx3G
-         O5oNfVU9dzb3np9Ho3NsnLdy1+PAjdQVYmf3ZvP9tVEgREK8IOJqvA3Qv0sFJsZrMJkz
-         EFijWE3W3qE0pB4ueoD4CrSwrrlzLV3C4/zOBCn52LJplD62uCBM3sN6c/mUKFELRdjJ
-         rswjBufc1DvI2Iq/aHDLC1U+PYZT2bHvBNFetoH/uZHi8x+BAobGzuVO8gq85/jcgReH
-         TTudTRlFL+4fc+6pkbxekIzt5n9kNu/Q5lw1Am9t1T1dSFzbSYdF5GQTmOiGDHtfTGkt
-         1c2w==
-X-Gm-Message-State: AOAM530iXXM1xupj/3fTV86wTbZb5ds3kMpYqrsHQGhrkG9F6NxzhPMy
-        YRjmfSODQBXNOGFHxI/n5wZl7daKe2kWrimCHAE=
-X-Google-Smtp-Source: ABdhPJyaSfHSgMQBY27oowGcaQp1ClrQuFn1zXZZHbga06867teA9yae/zToI/YedXdY+UxSg1w8yTAZ9yERRjpLvls=
-X-Received: by 2002:a17:90a:2c09:: with SMTP id m9mr2175969pjd.205.1605759411329;
- Wed, 18 Nov 2020 20:16:51 -0800 (PST)
+        id S1726158AbgKSGhm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Nov 2020 01:37:42 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:34003 "EHLO
+        out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726122AbgKSGhm (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 19 Nov 2020 01:37:42 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id 6C9985C01A0;
+        Thu, 19 Nov 2020 01:37:36 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Thu, 19 Nov 2020 01:37:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=fm2; bh=5a6cifWPVdjYbNl+g/JW8rzoSnWfrg4UJ9b4BViv
+        XRI=; b=bPrUGW/QSYug8AAWb/2nLGvDHsnhfW1MXt2588qZxviEUFcKL175tf69
+        85YEl22PWm5S+e54TDmqW2k0oMQt/NxC4GbBC5nsih+oAThegQtUVsdaUv5bDefb
+        /R0FBWWLXhp0oXGcX8fMtibTvfuTNOkKRiYaSY2weAFVaoEOfmoN9738rhbEFwpr
+        DsOLFfDDcxS6c7TERDykEIdItK7UeLsvIx8PbwMaAQuM6Y8nwWRpABy8+uAGxQ1/
+        FrinVtUR/wsEj64IjECiTzVdZEM5AouNwN0b8eKC/iMnImsmHS+jOU1uU8ZNZCbW
+        KKaiYJF0xizsE+fX1Nbo1pOGGW7c7w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=5a6cif
+        WPVdjYbNl+g/JW8rzoSnWfrg4UJ9b4BVivXRI=; b=cLMvUJ/ZeMP0lCV9dobewy
+        q/fXgrPbq+UASjf1lJZG2C33zQPM8rtDTqBopOrl/oDWfUPImqLiqAgosgyGFKuX
+        lVMIuol1WERXe3wV5UQrPp4sl97Xyw2ShTUFqbMOtx/jiuNik8TjpBAAc2OPdLBn
+        to1rGTmlyJFc7DOIEh+q6plc3NFsl1hil73n01J/qhAd5FG+CpcpWby7YNhUitEj
+        0IEKSz305rZ8cUYuYliSOxSXtl1z8e8TCmH6bwyN9ET4WOoveOd06OqpmJQgVhEf
+        YYhZ3JRyzP4RmN1C7sASsXLjHbMLkTWbPXWqIrIzE8f9OPG3tQAhQH3lp5PZuh/g
+        ==
+X-ME-Sender: <xms:sBK2Xw6IkFjdKQZ2hQQVW3ZD1rNNsHUR-QHpFDP-cINrHHoIeK_muw>
+    <xme:sBK2Xx6epGhu7XUw8gGAsISOoaCrGXCOCza-zTYz4FeQMVozsCvtBHzMBazqXLwvd
+    vcmZ6okWy3MfTRVzQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudefiedgleeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
+    dvjeektdfhhedvlefgtefgvdettdfhnecukfhppeejjedrudeluddrvddvrddvuddunecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimh
+X-ME-Proxy: <xmx:sBK2X_eeLjOW2KMPZP8yjrh39Dn3AcNhfI7DbfBO-Gg2tp4jGfCVPA>
+    <xmx:sBK2X1IFQ7DpPf2dZKLDxKwXfqRcrpnp-z9ZFKuvpI4zvAHkpboq7g>
+    <xmx:sBK2X0K0LIP2Hrycc-dPcmzkvKxw9iYFN6r2NXSUHoBfM8eMbtvATQ>
+    <xmx:sBK2X7VHDXX7ByW5uuOBETR803a85sW4rwweJcXZz5a07kcjzlcTSQ>
+Received: from vm-mail.pks.im (x4dbf16d3.dyn.telefonica.de [77.191.22.211])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 389213064AA6;
+        Thu, 19 Nov 2020 01:37:35 -0500 (EST)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 62abd138 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 19 Nov 2020 06:37:32 +0000 (UTC)
+Date:   Thu, 19 Nov 2020 07:37:31 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/2] config: allow specifying config entries via envvar
+ pairs
+Message-ID: <X7YSq9zgTgfFCF1N@ncase>
+References: <cover.1605269465.git.ps@pks.im>
+ <44e8dd50c6ea7cbcc5e4fc35c9b9057c0a52038c.1605269465.git.ps@pks.im>
+ <87mtzlflw7.fsf@evledraar.gmail.com>
+ <xmqqy2j1851k.fsf@gitster.c.googlers.com>
+ <20201117023454.GA34754@coredump.intra.peff.net>
+ <20201118005014.GC389879@camp.crustytoothpaste.net>
+ <20201118015907.GD650959@coredump.intra.peff.net>
+ <20201118022532.GD389879@camp.crustytoothpaste.net>
+ <X7THfjaP91+GV//V@ncase>
+ <20201119021116.GE389879@camp.crustytoothpaste.net>
 MIME-Version: 1.0
-References: <CAMP44s3BJ3dGsLJ-6yA-Po459=+m826KD9an4+P3qOY1vkbxZg@mail.gmail.com>
- <20201113010107.GL6252@camp.crustytoothpaste.net> <CAMP44s1U1FevS7NrAYxvgVyzfR5tnD9-+BbPdw5bKnaNHkyD+A@mail.gmail.com>
- <20201113051408.GA3985404@mit.edu> <CAMP44s3AeESm7VBKbar0ir_Py35g99ZW6bNX_=AK4N=OFkcrdA@mail.gmail.com>
- <20201113145802.GB3985404@mit.edu> <CBC2DBAA-A409-49CD-B932-AC82D3C20D55@kobil.com>
- <20201115034649.GC3985404@mit.edu> <CA+sFfMfWrSMKAogg-5dsaO_beXUV-JCBLBPeLZ5g_0jGqsom8Q@mail.gmail.com>
-In-Reply-To: <CA+sFfMfWrSMKAogg-5dsaO_beXUV-JCBLBPeLZ5g_0jGqsom8Q@mail.gmail.com>
-From:   Peter Hadlaw <hadlawp@gmail.com>
-Date:   Wed, 18 Nov 2020 22:16:25 -0600
-Message-ID: <CABrPy+GXpV4F_j6nChEG4cEM=N3GSUmeJ_cK+6+JcNHMsY-T0Q@mail.gmail.com>
-Subject: Re: The master branch rename, and avoiding another v1.6.0 git-foo fiasco
-To:     Brandon Casey <drafnel@gmail.com>
-Cc:     "Theodore Y. Ts'o" <tytso@mit.edu>,
-        Lukasz Niemier <Lukasz.Niemier@kobil.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Don Goodman-Wilson <don@goodman-wilson.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="HXOmDMo55RM/jxEz"
+Content-Disposition: inline
+In-Reply-To: <20201119021116.GE389879@camp.crustytoothpaste.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reposting a bit from a side thread, so excuse me. Felt that this is
-more of a relevant place to leave these thoughts.
 
-***
-If some people or teams would prefer _their_ default branches to be
-anything other than `master`, I'm all for giving them the tools to
-live out their dreams. That's what `git config` and the new
-`defaultBranch` flag are for. There is no need to force these desires
-onto _all_ users.
-***
+--HXOmDMo55RM/jxEz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It's worth noting that the word "slave" comes from the en_slav_ement
-of Slavs (the Slavic people of Eastern Europe). Check "Slav Twitter"
-if you must, you'll find nothing but a chuckle at this situation.
+On Thu, Nov 19, 2020 at 02:11:16AM +0000, brian m. carlson wrote:
+> On 2020-11-18 at 07:04:30, Patrick Steinhardt wrote:
+> > On Wed, Nov 18, 2020 at 02:25:32AM +0000, brian m. carlson wrote:
+> > > Sure, that could be an option.  It's the simplest, and we already know
+> > > how to handle config this way.  People will be able to figure out how=
+ to
+> > > use it pretty easily.
+> >=20
+> > At first, this idea sounds quite interesting. But only until one
+> > realizes that it's got the exact same problem which I'm trying to solve:
+> > there's still a point in time where one can observe config values via
+> > the command line, even though that moment now is a lot shorter compared
+> > to running the "real" git command with those keys.
+>=20
+> I don't think that's the case.  This command:
+>=20
+>   git --env-config a.b.c=3DENV_VAR
+>=20
+> would be equivalent to this shell command:
+>=20
+>   git -c "a.b.c=3D$ENV_VAR"
+>=20
+> In other words, ENV_VAR is the _name_ of a environment variable to read
+> for the config value.  Subprocesses would inherit it using the
+> undocumented GIT_CONFIG_PARAMETERS.
+>=20
+> Or are you trying to hide the configuration key as well?
 
-I encourage everyone to really think about the changes you are making.
+No. I just didn't realize that it's supposed to be the name of an
+envvar.
 
-It was just reported to me that a professional friend of mine had
-confusion as to why, after initializing a new repository, they
-couldn't navigate to the `master` branch of their repository.
+Patrick
 
-I understand this is back-of-the-napkin type math but stay with me for
-one moment. I also understand GitHub is not all of git users, but I
-just pulled the number to help me out here.
+--HXOmDMo55RM/jxEz
+Content-Type: application/pgp-signature; name="signature.asc"
 
-If GitHub has 40 million users but let's say half of them aren't
-active, so now we are at 20 million.
+-----BEGIN PGP SIGNATURE-----
 
-(Replace this number with how many actual users of git are out there.)
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl+2EqoACgkQVbJhu7ck
+PpRb3hAAqvSTF5QVkqXwiJXDcimLicqBd9alEU2+jXXlbNBnaajISB9hqPKr/PLb
+aMR64eDWP6m2XFsZRLggFzKn6286IVPChpMktxRBpV0XOSU+lD+THe0a67ue33aT
+zLMH6jn4TGhXVckI0ldi84eIyBjItsATHCnB1d7GjAz8emSOufnYY5PWACxpGq31
+yfhcRWLAwvHAgwavMPVTw/4sdjmqkYvASlYXIc+WdnFctapCYZcgUyWwQim12Dp9
+cFxRoALRc4ciQhUBGI/u9c8sJjQZ965Vo5151i6TfkMh2LZ+9I2lmu85PS0e2llw
+CQy40xlQficwTza/m3t84XGpTW5gk6fiVbV+QbjejLZTvbSj0tcsihUgb3iB9TLK
+5AQvkFFbBc9CBdolQl2DYNSano/CCBrvVr4lTsSaqd+/MNsmR7aMVANsa+ywupTy
+c2MWVejwwqS0/hlGvmfQBHW8AHbcHk+8OKIKsMtG1nSv7NbhufDt0ZB6M405PkK/
+aFLZK+mgTEvueG+ms8k2sC7QNxr17ziClWa5oiL61pKyc9IPxPTlsMEq5ApePRLz
+pYnqpGJ/ea5EEJsUhEQiBmh8va/JtQq43MtZecRu4bxRsXu2XhMzu78cKJ6jLJLj
+qn2k1mQbKAYwaKKG0nJLviqSV15o8NUCczT6lKnPjTO2i6VszV0=
+=EVMW
+-----END PGP SIGNATURE-----
 
-Let's even say half of them are on board and aware of this "harmless"
-change to a more "sensitive" doublespeak representation of the
-"master" copy/branch of the repo. That leaves us with 10 million users
-of git that are either unaware or are not on board. Let's say it takes
-3 minutes for a user to search on the web why exactly they can't
-navigate to their "master" branch. That's 30 million minutes wasted,
-or about 57 man-YEARs of time wasted.... for what? Oh but you'll ask
-them what their default is? Do the same math... better yet realize
-this is just a power exercise of one very tiny group over another.
-
-When do we put our foot down and say enough is enough, and not
-everything is offensive?
-
-Again, please reconsider making this change towards
-doublespeak/Newspeak and consider the ramifications of how much actual
-human life & time will be wasted. Ignoring adding on the new
-reputation of the git project to kowtow to "current year" politics.
-
-Besides just the annoyance to users in their day to day, yes there is
-mention of "just update the tutorials!" but what a way to dishonor the
-millions of hours people have put into welcoming other individuals to
-the git community. There is no reason to outdate their tutorials and
-documentation so prematurely (and yet again exercise power over them
-by making them update their content for no real reason).
-
---
-Peter
+--HXOmDMo55RM/jxEz--
