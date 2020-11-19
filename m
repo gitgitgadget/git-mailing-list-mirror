@@ -2,98 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C305C2D0E4
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 13:26:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A9CBC63697
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 13:37:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EAEE9246B0
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 13:26:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B652E2080A
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 13:37:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O5/Vm6wD"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KswIJt/L"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727293AbgKSNZy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Nov 2020 08:25:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53932 "EHLO
+        id S1726787AbgKSNhJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Nov 2020 08:37:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727195AbgKSNZx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Nov 2020 08:25:53 -0500
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC7BEC0613CF
-        for <git@vger.kernel.org>; Thu, 19 Nov 2020 05:25:53 -0800 (PST)
-Received: by mail-oi1-x234.google.com with SMTP id f11so6283666oij.6
-        for <git@vger.kernel.org>; Thu, 19 Nov 2020 05:25:53 -0800 (PST)
+        with ESMTP id S1726575AbgKSNhJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Nov 2020 08:37:09 -0500
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59811C0613CF
+        for <git@vger.kernel.org>; Thu, 19 Nov 2020 05:37:09 -0800 (PST)
+Received: by mail-qk1-x72d.google.com with SMTP id l2so5323787qkf.0
+        for <git@vger.kernel.org>; Thu, 19 Nov 2020 05:37:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=zpUmC3xTyW67/K5Jr6W31KdlthbFxg1pVAnsR2HJUGI=;
-        b=O5/Vm6wDoEged1Z1BGm8DEf+0rYtjQtYNXmk9GL5+4plvXCnF6uyMUSLB7/xB68ppP
-         GvRvD06/8FsaVs0OWMgqPwNdg8O5B4g+AGz/d8B7zt2YxWGh5oZiFYormCduTXinwFoS
-         9EtudRasFRftyvi/ndbFM3T36w5oaTvaa2DPnu6iSD6FGpkyMIVQM4n3KiYnHLtRQINJ
-         wUiBeZJ8+UnpQzx6I87ujAOtoJlcMnVDO4PtPofBkhsmqe0IQxxuQxLZTcyWtrCK0euy
-         chBtUjm4mXLop6YMBNWfpC7Ity10DMhGRxhvU1+e9wzRocM9X8xV7virfmgsDOjaUwNj
-         Ji8A==
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=KMNuSdydlR1zdS37T3iZ3M9d9ov2DPdxaVDAZQmLOZ0=;
+        b=KswIJt/L7Nqm8QJFhEhQzuApxw5cQlx425364GCt9gJIQPIaVTLSaeWJumXHT4Frgh
+         PQuhBF/HENogtb7fmpNAJA8eUUOd9gcxQEyeSczBLeImfPA7SKIzC6rMm1qFPybP9D9s
+         x8MrZquTfy5KnPVX3EoXRMliSMG1Xh9n/qpG4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=zpUmC3xTyW67/K5Jr6W31KdlthbFxg1pVAnsR2HJUGI=;
-        b=nimiNhx+yegScaYixcLsFxTxq1aRvJcVtiSW/Sawv5auObRz+VjWhwd5XpeLrACufN
-         1xtvR0rOJspjSuqmopYKy7E67poSpsy2JJvbylZsVvYq5sCEsKmBHm89uFYKGLpFeIIg
-         iyP0SP1sg7Ermxnlebbub7J1D4x3BY2J6AGc5IAGyIGeDznf9x1hMY0+BTakrM204YMz
-         gPR7IUO6PBI/vA5XhAEdcjFY6ay78XilTf4Ertv7K70PBnCNFJuu67+K5375zWtRVfe+
-         Gn6DULsJ8foqI6ieU6URgtbJVNCuh+/tZW/0arngZZMR5MPB+xyTc+rKvUe+bYF8+hhF
-         48QQ==
-X-Gm-Message-State: AOAM530rDyDc0biKpcBm0P40Ke/2d3TkHU2h1qavAi3Mn/b/HleVEaIG
-        ySrq0LeBphdP8u2AkiYCfUpn43Pl7BJY8A==
-X-Google-Smtp-Source: ABdhPJwerkhMbFagn7k6XQ4O/9/g9PyQrfFsVIJlYdLoseRPrBVdk2O2r7LNKhnHPT4li6IMKPv/NA==
-X-Received: by 2002:a05:6808:14e:: with SMTP id h14mr2931490oie.126.1605792352049;
-        Thu, 19 Nov 2020 05:25:52 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:805f:b8ae:cbb3:6b01? ([2600:1700:e72:80a0:805f:b8ae:cbb3:6b01])
-        by smtp.gmail.com with UTF8SMTPSA id b123sm9200509oii.47.2020.11.19.05.25.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Nov 2020 05:25:51 -0800 (PST)
-Subject: Re: ds/maintenance-part-3 (was Re: What's cooking in git.git (Nov
- 2020, #02; Mon, 9))
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-References: <xmqq7dqu9jwh.fsf@gitster.c.googlers.com>
- <d0123439-236c-1a62-294b-a3373465eadb@gmail.com>
- <20201116235642.GA15562@google.com> <xmqqh7po7r3w.fsf@gitster.c.googlers.com>
- <20201117010709.GB15562@google.com>
- <29212864-ab96-5757-cbfb-f5621a43f8d8@gmail.com>
- <xmqqlfez6alb.fsf@gitster.c.googlers.com>
- <f8b1a1cc-dcda-0e53-4c46-bb5bfff3fdd4@gmail.com>
- <xmqqd00ayttk.fsf@gitster.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <2c2db228-069a-947d-8446-89f4d3f6181a@gmail.com>
-Date:   Thu, 19 Nov 2020 08:25:50 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101
- Thunderbird/83.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=KMNuSdydlR1zdS37T3iZ3M9d9ov2DPdxaVDAZQmLOZ0=;
+        b=EH4q/MEGzZzlvTl7DhATRnEWNbBhmPIUxr2i3dF13YjbYoTIVaWfLvVF6VRUJKJge0
+         WqsiGf7E2iOXYmCRcTcpz+/enGxPzObc5vSpzwRRRLrAABO+vWwQmEyp93FX6lZfPSSE
+         i5acFJwlWmKSqBqtAXIf3ZneZmh3ysMsp61nQzyvGQF64aAxbjPDZqtcs5VWft0GVaxs
+         juOEMMClH4VVJ0BfkAciZlHv6jT8Nkf6Ua+WPfb3kgofNlnCrywqs3xKdm2GgInKJKYt
+         KN7Z2+uigT0gBUWKofvGf8+ImnqnfPk3wnZU1r/g5i0SAXsSOlB5IE53EK47wW6FfjO3
+         Cjdw==
+X-Gm-Message-State: AOAM531ffmFAev4fJ5YXP1Lh3Die4Y22O6x7Jl/4YBbOR6ozW6cvgC2D
+        KcvygjOmxE6NG4zEG8Tj0SH7uA==
+X-Google-Smtp-Source: ABdhPJykbWwe1SwwJRm02G3TzO7zE5eNzz7nZBwDYRwNtrsqWbJlALoaUK7a92LR2oWP784MbPyjJQ==
+X-Received: by 2002:a05:620a:62b:: with SMTP id 11mr11491281qkv.229.1605793028426;
+        Thu, 19 Nov 2020 05:37:08 -0800 (PST)
+Received: from chatter.i7.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id i52sm19069018qtc.3.2020.11.19.05.37.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Nov 2020 05:37:07 -0800 (PST)
+Date:   Thu, 19 Nov 2020 08:37:05 -0500
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     Brandon Casey <drafnel@gmail.com>
+Cc:     "Theodore Y. Ts'o" <tytso@mit.edu>,
+        Lukasz Niemier <Lukasz.Niemier@kobil.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Don Goodman-Wilson <don@goodman-wilson.com>
+Subject: Re: The master branch rename, and avoiding another v1.6.0 git-foo
+ fiasco
+Message-ID: <20201119133705.7q7yghymvvo7zeq4@chatter.i7.local>
+Mail-Followup-To: Brandon Casey <drafnel@gmail.com>,
+        "Theodore Y. Ts'o" <tytso@mit.edu>,
+        Lukasz Niemier <Lukasz.Niemier@kobil.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Don Goodman-Wilson <don@goodman-wilson.com>
+References: <CAMP44s3BJ3dGsLJ-6yA-Po459=+m826KD9an4+P3qOY1vkbxZg@mail.gmail.com>
+ <20201113010107.GL6252@camp.crustytoothpaste.net>
+ <CAMP44s1U1FevS7NrAYxvgVyzfR5tnD9-+BbPdw5bKnaNHkyD+A@mail.gmail.com>
+ <20201113051408.GA3985404@mit.edu>
+ <CAMP44s3AeESm7VBKbar0ir_Py35g99ZW6bNX_=AK4N=OFkcrdA@mail.gmail.com>
+ <20201113145802.GB3985404@mit.edu>
+ <CBC2DBAA-A409-49CD-B932-AC82D3C20D55@kobil.com>
+ <20201115034649.GC3985404@mit.edu>
+ <CA+sFfMfWrSMKAogg-5dsaO_beXUV-JCBLBPeLZ5g_0jGqsom8Q@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqd00ayttk.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CA+sFfMfWrSMKAogg-5dsaO_beXUV-JCBLBPeLZ5g_0jGqsom8Q@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/18/2020 9:16 PM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
+On Wed, Nov 18, 2020 at 05:02:59PM -0800, Brandon Casey wrote:
+> > This *really* is not hard; which is why I am starting to suspect
+> > people are really kvetching because their objections are really more
+> > about the woke/anti-woke aspect of the "master" -> "main" migration
+> > --- and they are using *think* the children^H^H^H^H^H^H^H users as a
+> > rhetorical device.
 > 
->> I will get started on this fix as a series on top of part-3.
-> 
-> Thanks.  Not just part-4 but Dscho's test update also depends on
-> this, so let's see it corrected soonish.
+> So we're changing the default branch name from "master" to "main"?
 
-I got a decent start yesterday, but I'll put this at the top
-of my pile for today.
+To my knowledge, there are no concrete plans to change anything at this 
+time. All recent work was to remove any special-case treatment of 
+"master" as the default branch name, so people are free to use any 
+configuration they like.
 
--Stolee
+> For what purpose?  What problem are we trying to solve?
 
+People want to be able to use arbitrary branch names.
+
+> Is the word "master" now going to become a taboo word that we're all
+> afraid to say?
+
+No, everyone is welcome to use it if they like. It has perfectly 
+legitimate usage cases -- for example, some of the staunchest opponents 
+of this terminology continue to list their "Master of Arts" degree on 
+LinkedIn.
+
+> Isn't this all a little silly? What's wrong with the term "master"?
+
+It is misleading in the context of git, because it implies that a branch 
+carrying that name is in some way special compared to other branches 
+(e.g. like "trunk" in the SVN world). In reality, the "master" branch is 
+just a branch like all others (and can be missing entirely or have junk 
+in it), so it really shouldn't be called "master".
+
+> It's a well understood and commonly used term that denotes
+> "authority", i.e. the master branch is the authoritative branch.
+> People sleep in master bedrooms. Universities have headmasters and
+> award master's degrees. Skilled people become master craftsmen and
+> give master classes (e.g. master plumber, master diver). Recording
+> artists master a track. Skilled chess players become chess masters
+> etc.
+
+Exactly, thank you for illustrating my point. In all of the above 
+situations the word "master" is used to indicate some kind of 
+distinction. If all you have is a single bedroom, it would be kinda 
+obnoxious to refer to it as "the master bedroom," eh? :)
+
+-K
