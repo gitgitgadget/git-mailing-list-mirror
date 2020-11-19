@@ -2,106 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3280BC2D0E4
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 04:01:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3E78C2D0E4
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 04:17:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B4D2E246BC
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 04:01:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31358246BC
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 04:17:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="npEiWdGK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o00XZ4zg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726238AbgKSEB3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Nov 2020 23:01:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51810 "EHLO
+        id S1726188AbgKSEQw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Nov 2020 23:16:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726077AbgKSEB3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Nov 2020 23:01:29 -0500
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB932C0613D4
-        for <git@vger.kernel.org>; Wed, 18 Nov 2020 20:01:27 -0800 (PST)
-Received: by mail-qk1-x732.google.com with SMTP id n132so4238148qke.1
-        for <git@vger.kernel.org>; Wed, 18 Nov 2020 20:01:27 -0800 (PST)
+        with ESMTP id S1726105AbgKSEQw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Nov 2020 23:16:52 -0500
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4F50C0613D4
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 20:16:51 -0800 (PST)
+Received: by mail-pf1-x436.google.com with SMTP id t8so3193555pfg.8
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 20:16:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=rLVewwy7/zFy5wD0Gv26d/MDyNBH+gsk1q9ZFoww7V4=;
-        b=npEiWdGKNfI5Q6tmxlewSSp+ZC0HATq0i2WK7qbtENnkHSdRyXeT7ih4bPSr6i/r/e
-         XSEUTOTGxqSPKFNbCBqz/iK+8yPBRp0Spcdy9nuj2pYO4OqEif6pyYAd1G3VjeqCahLC
-         7+Z70TIXRD1Lx06OvnoLudPNwLo3MnuOF7UP/kqTo7HQAagPwQ5o4oqABRZx0XUDZEeL
-         rHrj4smPiUZlsTZvpbV4xQXgu/o3q3eM8rkP1rNALDyS42RBeLdzYleOYX90+2O+xelk
-         I+p+TkmPRPcHwoeWZXX9CZY0j0s93gHyUJzca0tsMJAiNrK6lqYvSPvVwYvhcd5f+4zH
-         1J7A==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=fxFEJO35R7eA2gdjtYOLprXdB33nEK1DufpgP4QV0pY=;
+        b=o00XZ4zgno2FJl4RFmduQ5ad0PXY2Aj6/zt2DAKBXeDOsJeatTZ08YafF5gSzqZLfU
+         DrlFjfpeixyVfGCfL/zCcelAgDPZsXyiBDSmdQzMvThrpmCeUEvrk1CX9Dg0vsg/tQyf
+         07MRnJsGUrArtXE/FKWb8Je6gKD9mMSHSilJAUfuAxS4oGaRFpTrWvFt6cbJ9SLna1JS
+         ovgrAa+9e7jBMSEmQ0EBNMYjhhS9P3IZ3/A3KUQnxZVZ94GofYkqnCAoTEEKNyyS1RAd
+         HikD2W6j8Y5YTwEvuWvkZCb6mDYUCyeEC3lUXDBAGKi0UNccnEYTC5F7C1/LlQZVwkjk
+         erLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=rLVewwy7/zFy5wD0Gv26d/MDyNBH+gsk1q9ZFoww7V4=;
-        b=eCP+6FQ6yjRh+5TEa0akalYkMagKIJgLG6MLckiFqc93ZkEwA5WgrXw/VA4Q6ED5wN
-         KC5WU/Wd5w/y51cvnr3wd6lqJMlqpjXPKTPGpN/Gc0WW7+s15gCqBd2Dl6C799Bb3Yrm
-         PkgbYG47c0EryQTJsPAElAmgB6W0Bcws9dr4Lw+0c3ki9Hr6P6JdcknOi4bhR1/E4Oel
-         PC2jk+RS0GB9oKPsatzOzHKrGdvyf2WtY7a8uiSsYK8xXV5XrLF2J0pBTi/UTAgRwy6a
-         iswElOE8S1TiJTqm8qtF0T/5Ai2dPfqbj4qtTDelQewdvRMdokzBfZrSgbc8k5U8ZrxN
-         74pQ==
-X-Gm-Message-State: AOAM532lgqHvhUhcdO9oK87Y7JpwjCiN7mkIcAfA+RT7S7zcblMfq/1S
-        /FWXepYZpVNOf6jYNVCCBjdjwT2kFu92AQ==
-X-Google-Smtp-Source: ABdhPJzEMqp4PPA7wSkLd4zdmvhRBVTwvlzA4DKijshGdCOcHOJyuuDCrvIODvn/848saknTntf0Aw==
-X-Received: by 2002:a37:a915:: with SMTP id s21mr9684560qke.38.1605758486938;
-        Wed, 18 Nov 2020 20:01:26 -0800 (PST)
-Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id l46sm18132776qta.44.2020.11.18.20.01.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2020 20:01:25 -0800 (PST)
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-To:     git@jeffhostetler.com
-Cc:     gerardu@amazon.com, git@vger.kernel.org, matheus.bernardino@usp.br
-Subject: Re: RFC: auto-enabling parallel-checkout on NFS
-Date:   Thu, 19 Nov 2020 01:01:17 -0300
-Message-Id: <20201119040117.67914-1-matheus.bernardino@usp.br>
-X-Mailer: git-send-email 2.28.0
-In-Reply-To: <9c999e38-34db-84bb-3a91-ae2a62b964b5@jeffhostetler.com>
-References: <9c999e38-34db-84bb-3a91-ae2a62b964b5@jeffhostetler.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=fxFEJO35R7eA2gdjtYOLprXdB33nEK1DufpgP4QV0pY=;
+        b=HpXCCyHKfBR6B6vCeUnX5ocgiBBY4tAQSEe4j5QQ3ZSOLt1MJP9qMpAvtRQUwgMx3G
+         O5oNfVU9dzb3np9Ho3NsnLdy1+PAjdQVYmf3ZvP9tVEgREK8IOJqvA3Qv0sFJsZrMJkz
+         EFijWE3W3qE0pB4ueoD4CrSwrrlzLV3C4/zOBCn52LJplD62uCBM3sN6c/mUKFELRdjJ
+         rswjBufc1DvI2Iq/aHDLC1U+PYZT2bHvBNFetoH/uZHi8x+BAobGzuVO8gq85/jcgReH
+         TTudTRlFL+4fc+6pkbxekIzt5n9kNu/Q5lw1Am9t1T1dSFzbSYdF5GQTmOiGDHtfTGkt
+         1c2w==
+X-Gm-Message-State: AOAM530iXXM1xupj/3fTV86wTbZb5ds3kMpYqrsHQGhrkG9F6NxzhPMy
+        YRjmfSODQBXNOGFHxI/n5wZl7daKe2kWrimCHAE=
+X-Google-Smtp-Source: ABdhPJyaSfHSgMQBY27oowGcaQp1ClrQuFn1zXZZHbga06867teA9yae/zToI/YedXdY+UxSg1w8yTAZ9yERRjpLvls=
+X-Received: by 2002:a17:90a:2c09:: with SMTP id m9mr2175969pjd.205.1605759411329;
+ Wed, 18 Nov 2020 20:16:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <CAMP44s3BJ3dGsLJ-6yA-Po459=+m826KD9an4+P3qOY1vkbxZg@mail.gmail.com>
+ <20201113010107.GL6252@camp.crustytoothpaste.net> <CAMP44s1U1FevS7NrAYxvgVyzfR5tnD9-+BbPdw5bKnaNHkyD+A@mail.gmail.com>
+ <20201113051408.GA3985404@mit.edu> <CAMP44s3AeESm7VBKbar0ir_Py35g99ZW6bNX_=AK4N=OFkcrdA@mail.gmail.com>
+ <20201113145802.GB3985404@mit.edu> <CBC2DBAA-A409-49CD-B932-AC82D3C20D55@kobil.com>
+ <20201115034649.GC3985404@mit.edu> <CA+sFfMfWrSMKAogg-5dsaO_beXUV-JCBLBPeLZ5g_0jGqsom8Q@mail.gmail.com>
+In-Reply-To: <CA+sFfMfWrSMKAogg-5dsaO_beXUV-JCBLBPeLZ5g_0jGqsom8Q@mail.gmail.com>
+From:   Peter Hadlaw <hadlawp@gmail.com>
+Date:   Wed, 18 Nov 2020 22:16:25 -0600
+Message-ID: <CABrPy+GXpV4F_j6nChEG4cEM=N3GSUmeJ_cK+6+JcNHMsY-T0Q@mail.gmail.com>
+Subject: Re: The master branch rename, and avoiding another v1.6.0 git-foo fiasco
+To:     Brandon Casey <drafnel@gmail.com>
+Cc:     "Theodore Y. Ts'o" <tytso@mit.edu>,
+        Lukasz Niemier <Lukasz.Niemier@kobil.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Don Goodman-Wilson <don@goodman-wilson.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Jeff
+Reposting a bit from a side thread, so excuse me. Felt that this is
+more of a relevant place to leave these thoughts.
 
-On Mon, Nov 16, 2020 at 12:19 PM Jeff Hostetler <git@jeffhostetler.com> wrote:
->
-> I can't really speak to NFS performance, but I have to wonder if there's
-> not something else affecting the results -- 4 and/or 8 core results are
-> better than 16+ results in some columns.  And we get diminishing returns
-> after ~16.
+***
+If some people or teams would prefer _their_ default branches to be
+anything other than `master`, I'm all for giving them the tools to
+live out their dreams. That's what `git config` and the new
+`defaultBranch` flag are for. There is no need to force these desires
+onto _all_ users.
+***
 
-Yeah, that's a good point. I'm not sure yet what's causing the
-diminishing returns, but Geert and I are investigating. Maybe we are
-hitting some limit for parallelism in this scenario.
+It's worth noting that the word "slave" comes from the en_slav_ement
+of Slavs (the Slavic people of Eastern Europe). Check "Slav Twitter"
+if you must, you'll find nothing but a chuckle at this situation.
 
-> I'm wondering if during these test runs, you were IO vs CPU bound and if
-> VM was a problem.
+I encourage everyone to really think about the changes you are making.
 
-I would say we are more IO bound during these tests. While a sequential
-linux-v5.8 checkout usually uses 100% of one core in my laptop's SSD,
-in this setup, it only used 5% to 10%. And even with 64 workers (on a
-single core), CPU usage stays around 60% most of the time.
+It was just reported to me that a professional friend of mine had
+confusion as to why, after initializing a new repository, they
+couldn't navigate to the `master` branch of their repository.
 
-About memory, the peak PSS was around 1.75GB, with 64 workers, and the
-machine has 10GB of RAM. But are there other numbers that I should keep
-an eye on while running the test?
+I understand this is back-of-the-napkin type math but stay with me for
+one moment. I also understand GitHub is not all of git users, but I
+just pulled the number to help me out here.
 
-> I'm wondering if setting thread affinity would help here.
+If GitHub has 40 million users but let's say half of them aren't
+active, so now we are at 20 million.
 
-Hmm, I only had one core online during the benchmark, so I think thread
-affinity wouldn't impact the runtime.
+(Replace this number with how many actual users of git are out there.)
 
-Thanks,
-Matheus
+Let's even say half of them are on board and aware of this "harmless"
+change to a more "sensitive" doublespeak representation of the
+"master" copy/branch of the repo. That leaves us with 10 million users
+of git that are either unaware or are not on board. Let's say it takes
+3 minutes for a user to search on the web why exactly they can't
+navigate to their "master" branch. That's 30 million minutes wasted,
+or about 57 man-YEARs of time wasted.... for what? Oh but you'll ask
+them what their default is? Do the same math... better yet realize
+this is just a power exercise of one very tiny group over another.
+
+When do we put our foot down and say enough is enough, and not
+everything is offensive?
+
+Again, please reconsider making this change towards
+doublespeak/Newspeak and consider the ramifications of how much actual
+human life & time will be wasted. Ignoring adding on the new
+reputation of the git project to kowtow to "current year" politics.
+
+Besides just the annoyance to users in their day to day, yes there is
+mention of "just update the tutorials!" but what a way to dishonor the
+millions of hours people have put into welcoming other individuals to
+the git community. There is no reason to outdate their tutorials and
+documentation so prematurely (and yet again exercise power over them
+by making them update their content for no real reason).
+
+--
+Peter
