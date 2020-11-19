@@ -2,92 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A6ACC63697
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 00:00:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C246DC5519F
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 00:03:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D9060246EE
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 00:00:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4FF8722240
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 00:03:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="laSQo+0J"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ryD8xCVC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726687AbgKSAA3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Nov 2020 19:00:29 -0500
-Received: from mout.gmx.net ([212.227.17.22]:55473 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725947AbgKSAA2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Nov 2020 19:00:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1605744003;
-        bh=4upwBoRBvqzqO5Pxd/DwL6aZoJIkJFzvRAD6XihKl5g=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=laSQo+0J6jHa3vB9+D4kmG6BaOcOy/v6SNirZjj3N6kX8YdqyByJMArz/qcD1W6Hh
-         jRf880cdO71BeMFhVjmolkflIJgSkfMMUCfr5JcqJx0m6E3wu/YpH/rZ53Xrx2cV9A
-         skzPh9KU7Sc2OIa5PeSthz3YGkyV0vdo8omFIuqo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.22.105] ([213.196.212.61]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MYNNy-1kkVTV2nFS-00VSJC; Thu, 19
- Nov 2020 01:00:03 +0100
-Date:   Thu, 19 Nov 2020 01:00:02 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Philip Oakley <philipoakley@iee.email>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        "Eric W. Biederman" <ebiederm@xmission.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 00/28] Use main as default branch name
-In-Reply-To: <1389dabc-33c9-1e65-a3de-43729a6c2e70@iee.email>
-Message-ID: <nycvar.QRO.7.76.6.2011190057370.56@tvgsbejvaqbjf.bet>
-References: <pull.762.git.1605221038.gitgitgadget@gmail.com> <87r1oraewl.fsf@x220.int.ebiederm.org> <xmqqv9e34mq5.fsf@gitster.c.googlers.com> <1389dabc-33c9-1e65-a3de-43729a6c2e70@iee.email>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726756AbgKSADm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Nov 2020 19:03:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43586 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726714AbgKSADm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Nov 2020 19:03:42 -0500
+Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com [IPv6:2607:f8b0:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9614C0613D4
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 16:03:40 -0800 (PST)
+Received: by mail-pl1-x644.google.com with SMTP id v21so670245plo.12
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 16:03:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=10HYDlYOQOvyTwx7ZtRfhxnjCXzvThMbt7BtkDHeDIQ=;
+        b=ryD8xCVCXweHPSiUK2zKiL/eDM1k2tWH0lpmbxc1ncI9DDBKU3ypQXcc9PrhYENxog
+         F/xMbyICGr9JIXT1GtLHVgl7xeu1DOJQfRl6R68GH16qPAyj6q3N/gP7gnbgVPVj75Lm
+         ira6IeSBui6Dxtp1pymEDZMkTW88iEjjshcYcoVkJiQVe7S6OQal4wwbhwPhSyuaPtQT
+         50hVM2hlDQGhedYwVHMLumLfLt5eMF9pkFqoSuG21iF/nULsLY2OLnb1XbfHLsWR5oIV
+         UMKrw6zvcIlJY8NhgcHB6FqdIeI+vuwwuQpa4U80U6rF7zGu29xy+S9icyHmvmpSkpxJ
+         X8Gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=10HYDlYOQOvyTwx7ZtRfhxnjCXzvThMbt7BtkDHeDIQ=;
+        b=JAmjAxrD9kBW7Eabdf/LkvFgqZ8l/hz0ihkB2R30gpMzn3fZvCNgFXc9M0vLviD8ff
+         YbQCnXl1T3vmDIGYX8QY9aVaxsmdZ7H5k6xYUafe0Tj5Z6kXgw49QTex7mrqCvAzdnIU
+         1DXRultB/9xsOS7D9yxbZbIsDx9HVX7Ms0hzXwYgqovVzD396TDaX8wJYlmIQzQj3G3v
+         kz1EROjHIEM1xMAuRmStQVq74VKopvPS4bd2mdyzliVDDTSjs8yCFGvsnQlcpHMchw16
+         mfbhA1OnvOaC4PAUAWs6RIHWeF7WbnjGsNRMO2MLxKnbwIeGRqDMDDn62VlAZYmssFj+
+         cOTw==
+X-Gm-Message-State: AOAM5319TdulwXEAEUg/GljNJoMGlaBf1zPUfNcbqgpyci9Ff2duyat2
+        H6OQp4qIC8J6jPvapFwSd86+6Q==
+X-Google-Smtp-Source: ABdhPJxtinuet1vfBhgPI/FRWZIjcXaNCUXwO8SiWZ+raxC0uAIVwjOxgR2Pxjpz9GtSLYpgstpXXw==
+X-Received: by 2002:a17:902:b7c6:b029:d8:e447:f7ef with SMTP id v6-20020a170902b7c6b02900d8e447f7efmr6213150plz.1.1605744219947;
+        Wed, 18 Nov 2020 16:03:39 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:1ea0:b8ff:fe74:b4c1])
+        by smtp.gmail.com with ESMTPSA id s6sm28232011pfh.9.2020.11.18.16.03.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Nov 2020 16:03:38 -0800 (PST)
+Date:   Wed, 18 Nov 2020 16:03:33 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     Shourya Shukla <shouryashukla.oo@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, christian.couder@gmail.com,
+        kaartic.sivaraam@gmail.com, Johannes.Schindelin@gmx.de,
+        liu.denton@gmail.com
+Subject: Re: [PATCH v2 0/3] submodule: port subcommand add from shell to C
+Message-ID: <20201119000333.GI36751@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>, git@vger.kernel.org,
+        gitster@pobox.com, christian.couder@gmail.com,
+        kaartic.sivaraam@gmail.com, Johannes.Schindelin@gmx.de,
+        liu.denton@gmail.com
+References: <20201007074538.25891-1-shouryashukla.oo@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:YvhktWurYR4dldBHP7UG/sfiS7GNBJxS5YYQ7tNe6oi8g8iCAu+
- xvBuyp+0G7TNTQOMWgumbYUVbfUN0xwhARKD6iG30SHqOPi8LsmyOWtRsM1D9YQmRl3QrE6
- rv/k5yh6xwj1WTiAPXUbFGRPLJCRLv/gVVZ5NqQ+zyvebqq6d4vZGxOX3GWI3IjiTqi07sz
- bG14ZxER+ERrX5WnF3ImA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8WQfjN/7zbc=:BM2kBheh8ikseQwek3MG4E
- nqaY8zkY4+C5Krdo2wvH10CYlF94OpFE1px/7uk5kP1qx8U1b45UIgAnfGR4mxODqBD1DiPB5
- DgWlykj5r5GaXNgVn1gJ/79WQFZSTE4vZ/EWJOXGJOwoOFWFASadlfPNn1D5qX67fqK/wCJVo
- snHeufP3zmHz4StpgccRkO21yNVIAE4jKl83vet1fxnqc9hLMg78Qb9DyRZRKEscuqnmPFoLB
- Mrg0HPSvYJo3Wq2qLFawvXAHEZZHUQ4Jt6qYGSioQ3+985UfzcTpld6naQ3i9yn8WlM/8zyIs
- z7qS0npBsTymDbRzk6zZcPM3xdcAWsZ0H2kCmlCOEvN4XGq+NXXn2qrZEd2k2as6VvLFWTi9a
- oLxvgOIatLqbICqerzl0VL5jQyxBNO4tkp/AX64TL+RfggVprgS8hbkZePFFHwA2If3BrkI+i
- kY1ooiVQrVU6VuvRHberMWr1k7qd4cjsl+PK34Gx2Jncso26cOVOFNctytKFpuNP+czhyDoTj
- igglOg9u3bp9HS+SdRkn2wu9BcKNDZZ7iaiec+zP8rRSqq+m44CjFqVql4D1elXehaG4sLNJ+
- lXj//EDjKOs7N5sH3H7pNfCcOItSqNIEpMh0d8OPNm1JH1BtxvZZwVPml4U59cZp4WHJMHxGh
- +OTQX+zgERRAiaKHLT3POkQwIlNZnlOWlRpm01ljIU9aNCafplhHO8ihi3+2WncbuUs22pHXT
- TEJJ8FzhBvSO7Rq6AchGhRiP0wUDCah3QWfmLbd8ScKEP1cG7xQsSA2BB0KsLAyOhxatDIgKw
- 3wn6dNd2TVK+OO5LA4uHcCMKwMiTi6fJsJ4Yy1O6d9xEKvgPK04EiazFVsuIykcQ9r0DfNd7d
- AErZhfWbXLNi2ZbkDXZbBC3ddNG1KLwN0OSu86n3Q=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201007074538.25891-1-shouryashukla.oo@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philip,
+Hi Shourya,
 
-On Wed, 18 Nov 2020, Philip Oakley wrote:
+Thank you for this series! Please see the comments below:
 
-> An alternative in the other direction is to go with the 'not currently
-> on any branch' (detached at nowhere) but then require users to
-> deliberately create their first branch with their chosen name. This
-> moves the 'backward incompatibility' to a different place, which may be
-> easier to manage.
 
-It might be easier to manage for _us_, the Git developers. But every user
-who initializes a repository and wants to push now needs to take the extra
-step to give their unnamed branch ("detached HEAD" is _still_ confusing
-new users!!!) a name.
+On 2020.10.07 13:15, Shourya Shukla wrote:
+> Hello all,
+> 
+> This is the v2 of the patch with the same title, delivered more than a
+> month ago as a part of my GSoC. Link to v1:
+> https://lore.kernel.org/git/20200824090359.403944-1-shouryashukla.oo@gmail.com/
 
-That would be much more disruptive than choosing a "rather dull and
-boring" name instead of a rather racially-charged one.
+Since GSoC has ended for the year, I wanted to point out the
+git-mentoring@googlegroups.com list, where you can find additional
+mentors if you like.
 
-And we promised to try to minimize the disruption to Git users.
+> The changelog is as follows:
+> 
+>     1. Introduce PATCH[1/3](dir: change the scope of function
+>        'directory_exists_in_index()', 2020-10-06). This was done since
+>        the above mentioned function will be used in the patch that
+>        follows.
+> 
+>     2. There are multiple changes in this commit:
+> 
+>             A. Improve the part which checks if the 'path' given as
+>                argument exists or not. Implementing Kaartic's
+>                suggestions on the patch, I had to make sure that the
+>                case for checking if the path has tracked contents or
+>                not also works.
+> 
+>             B. Also, wrap the aforementioned segment in a function
+>                since it became very long. The function is called
+>                'check_sm_exists()'.
+> 
+>             C. Also, use the function 'is_nonbare_repository_dir()'
+>                instead of 'is_directory()' when trying to resolve
+>                gitlink.
+> 
+>             D. Append keyword 'fatal' in front of the expected output of
+>                test t7400.6 since the command die()s out in case of
+>                absence of commits in a submodule.
+> 
+>             E. Remove the extra `#include "dir.h"` from
+>                'submodule--helper.c'.
+> 
+>     3. Introduce PATCH[3/3] (t7400: add test to check 'submodule add'
+>        for tracked paths, 2020-10-07). Kaartic pointed out that a test
+>        for path with tracked contents did not exist and hence it was
+>        necessary to write one. Therefore, this commit introduces a new
+>        test 't7400.18: submodule add to path with tracked contents
+>        fails'.
 
-Ciao,
-Dscho
+Generally, we want to avoid describing in detail what the code does;
+hopefully, the code can speak for itself. It may be a better use of the
+cover letter to describe the motivation for the series as a whole.
+Reviewers will not necessarily have background on what you want to
+accomplish. We came up with a few factors that might have inspired this
+change, but we're not sure which you intended to address:
+
+* Increase efficiency by reducing the number of processes forked and the
+  use of the shell.
+
+* Make the submodule code easier to maintain (since the project probably
+  has more C experts than shell experts).
+
+* Improve the user experience with submodules by giving the
+  submodule-add code access to C internals, and vice versa.
+
+Knowing what you want to accomplish can make it easier for reviewers. Of
+course, you'll also want to include important context in your commit
+messages as well, so that it's available in the history if future
+debugging is necessary.
+
+
+Thanks again for the series, and please feel free to follow up if you
+have any questions
+-- Josh
