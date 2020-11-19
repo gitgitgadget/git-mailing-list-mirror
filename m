@@ -2,100 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D502C6369E
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 14:11:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A896BC2D0E4
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 08:18:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 24D3224655
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 14:11:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 37E332225E
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 08:18:53 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YtXc/sJK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727265AbgKSOLR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Nov 2020 09:11:17 -0500
-Received: from siwi.pair.com ([209.68.5.199]:14634 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726820AbgKSOLR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Nov 2020 09:11:17 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 8F51E3F5FC7;
-        Thu, 19 Nov 2020 09:11:15 -0500 (EST)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 56FE53F5FC2;
-        Thu, 19 Nov 2020 09:11:15 -0500 (EST)
-Subject: Re: RFC: auto-enabling parallel-checkout on NFS
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git@vger.kernel.org, gerardu@amazon.com,
-        Derrick Stolee <stolee@gmail.com>
-References: <20201115194359.67901-1-matheus.bernardino@usp.br>
- <87y2ixpvos.fsf@evledraar.gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <e0ddf00d-785b-9220-0082-8be54fb7a7c6@jeffhostetler.com>
-Date:   Thu, 19 Nov 2020 09:11:14 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        id S1726448AbgKSISw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Nov 2020 03:18:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34838 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726292AbgKSISv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Nov 2020 03:18:51 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C772C0613CF
+        for <git@vger.kernel.org>; Thu, 19 Nov 2020 00:18:49 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id f11so6993368lfs.3
+        for <git@vger.kernel.org>; Thu, 19 Nov 2020 00:18:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=ZWy3M17sn8yvwi1e6pCz/ns9N2E/eDZTVHn9y41EpUA=;
+        b=YtXc/sJKEKCUwe+3Fxp/2zhGrJdSipS7B9bWJ58IPJhqDv1//T6esJBKAndrrgbRXV
+         /hw8kEB2/mmXHiAJ/oaqbjiKWnL3xKQathQLQB85q31QOqe17S/xrZxsWiIt+ryUZM3/
+         fFhVUd4bSSjmnUsCrdDruAiml4j3pALa7K5mDwK56pbgzoXlfuDIROIAZfu3d7tAk1rV
+         bFPv/O2zojrRjExYliGS+cwdcog0s3CZOemfW9wNsWoclTFJGnXsEp2gYhPzkkSf7mbR
+         wNczi4vpX8Jb/IKChcGBH4t/juAqma26MpdV+MXBpnfW1oEB2cHJFF2/2kY2aMhy0Qrb
+         M4Rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=ZWy3M17sn8yvwi1e6pCz/ns9N2E/eDZTVHn9y41EpUA=;
+        b=Ar3E/b7whecrK39oMkzPS8cj0WvraUaEEM55RRf7ifAUCg0CK2DtoBx0xCgBVTPdDi
+         WE7L4uOaEDBbDsm7aLUqvLTVXJ+/BeyMq99ah2VsWNgVGiPlwH4Sso1dVuHrzPnXTB6/
+         Z9fxXjEDf0ze22onl2POZ0oz3oaXgzh+ZxwZhOuCzhW3Ntw/cPfTtkZiEydVbI0rs6lh
+         5pg0FnqVQgBHpUkX2+NmkeS0ks/3Jrhr3EFJJTAlYvMU16e4LBR/khPXw70iL5d9MOpB
+         twh5Id9ZE+SwouuqKjHrwB95ucF88fL3uc2NGoUX59VeIyTaoy8WXoWZsUHuwARsUizZ
+         7Seg==
+X-Gm-Message-State: AOAM530gCS+nmxzCGjrkBi9ryv7rFVB9xinQkznN5t+D7hytOmbFDI/3
+        w5sT/TlkrzZFlpQpziEGnlNr+GYhmbmxL4ipcrx+JUkuNoWu7g==
+X-Google-Smtp-Source: ABdhPJxeU4D6W09b53bf0DjV49KkF8Ib0o+wkKq8hpwDVlT35g+0liVPRvAYtHR4s1dQWvvlKTsO0BlPmWY2ppFWaQ4=
+X-Received: by 2002:ac2:4834:: with SMTP id 20mr5038632lft.598.1605773927642;
+ Thu, 19 Nov 2020 00:18:47 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <87y2ixpvos.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+From:   =?UTF-8?B?5ZSQ5a6H5aWV?= <winglovet@gmail.com>
+Date:   Thu, 19 Nov 2020 16:18:36 +0800
+Message-ID: <CAFWsj_UwkQX9y0xPQJE3xguo0z3TMkvKAwei5iryCWXvVP8CjA@mail.gmail.com>
+Subject: 
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
+
+What did you do before the bug happened? (Steps to reproduce your issue)
+  1. linux environment, prepare a large repo to give you enough time to debug
+  2. clone that repo
+  3. during clone, send SIGTERM to the git-upload-pack process
+
+What did you expect to happen? (Expected behavior)
+  there is no git process left
+
+What happened instead? (Actual behavior)
+  there is a git pack-objects process which is forked by the
+git-upload-pack process, it becomes a zombie
+
+What's different between what you expected and what actually happened?
+  there shouldn't exist zombie processes
+
+Anything else you want to add:
+  you may need a docker container environment to reproduce this since
+mostly init process will cleanup zombie processes for you
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
 
 
-On 11/19/20 4:01 AM, Ævar Arnfjörð Bjarmason wrote:
-> 
->> The major downside is that detecting the file system type is quite
->> platform-dependent, so there is no simple and portable solution. (Also,
->> I'm not sure if the optimal number of workers would be the same on
->> different OSes). But we decided to give it a try, so this is a
->> rough prototype that would work for Linux:
->> https://github.com/matheustavares/git/commit/2e2c787e2a1742fed8c35dba185b7cd208603de9
-> 
-> I'm not intrinsically opposed to hardcoding some "nr_threads = is_nfs()
-> ? x : y" as a stopgap.
-> 
-> I do think we should be thinking about a sustainable way of doing this
-> sort of thing, this method of testing once and hardcoding something
-> isn't a good approach.
-> 
-> It doesn't anticipate all sorts of different setups, e.g. in this case
-> NFS is not a FS, but a protocol, there's probably going to be some
-> implementations where parallel is much worse due to a quirk of the
-> implementation.
-> 
-> I think integrating an optimization run with the relatively new
-> git-maintenance is a better way forward.
-> 
-> You'd configure e.g.:
-> 
->      maintenance.performanceTests.enabled=true
->      maintenance.performanceTests.writeConfig=true
-> 
-> Which would run e.g.:
-> 
->      git config --type bool core.untrackedCache $(git update-index --test-untracked-cache && echo true || echo false)
->      git config checkout.workers $(git maintenance--helper auto-discover-config checkout.workers)
-> 
-> Such an implementation can be really basic at first, or even just punt
-> on the test and use your current "is it NFS?" check.
-> 
-> But I think we should be moving to some helper that does the actual test
-> locally when asked/configured by the user, so we're not making a bunch
-> of guesses in advance about the size/shape of the repository, OS/nfs/fs
-> etc.
-> 
-
-I kinda like this idea.  It would give us a chance to let maintenance
-periodically probe the repo/system and improve some of these tuning
-knobs.
-
-Jeff
+[System Info]
+git version:
+git version 2.26.2
+cpu: x86_64
