@@ -2,481 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B6EFC56201
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 15:50:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 114C8C56201
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 15:52:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F09A822256
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 15:50:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 969B722256
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 15:52:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T6/7KqxE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PagmCO2Z"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727824AbgKSPus (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Nov 2020 10:50:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48250 "EHLO
+        id S1728757AbgKSPw0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Nov 2020 10:52:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727428AbgKSPur (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Nov 2020 10:50:47 -0500
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F565C0613CF
-        for <git@vger.kernel.org>; Thu, 19 Nov 2020 07:50:46 -0800 (PST)
-Received: by mail-wr1-x443.google.com with SMTP id c17so6894347wrc.11
-        for <git@vger.kernel.org>; Thu, 19 Nov 2020 07:50:46 -0800 (PST)
+        with ESMTP id S1727937AbgKSPw0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Nov 2020 10:52:26 -0500
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEB60C0613CF
+        for <git@vger.kernel.org>; Thu, 19 Nov 2020 07:52:25 -0800 (PST)
+Received: by mail-wm1-x342.google.com with SMTP id s13so7175906wmh.4
+        for <git@vger.kernel.org>; Thu, 19 Nov 2020 07:52:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Gb8qQr6QRwiSeijlgQd933nm6je1qr/W69doAAepXKY=;
-        b=T6/7KqxE8pLde5VOJHfHbgxQZL3lS90D1x3KZ9u8o1l34fkemMWMyPg82g/lGLckCV
-         EQuM6rdI25THXT7J9EbYez8kilwOYKMNYzVV4R1UctQzX356Eg3EdDmHloIIjZRNY0dK
-         D9csMm6QuUgAb/OZdgU44YOF7uuzUuaaty5GCHXgTblQQ0S/3aQyjYxJcXflm8ZMse6i
-         1NJ0+R/QhSltRN9lF9BZV7XpXnInZup2H4ReozBqMgf5i0a5EtSqRo02Zu25nibVvLrI
-         vGIe54P0/s+779GrOoh9hemC9brESv8sgxZHO4XygvbG7eF00C1b8ps+oz9oGUQA9WjK
-         hBjA==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=tDzXpsm8eW6mloM68/FD0rXKP2odAu0Dxs8rPY1E8/g=;
+        b=PagmCO2ZX7dI8oBrtjNBQcjt3NSoYAuR5DxVKwYn/2KhO/vOaVttiVoUq3jJcyil3s
+         zVsLqrIPZBcId+kbuz+7msIjmlA/pJem1wI5A1XXPmeJ4NEQM+PP+5fF7X7kig/FuKSa
+         MQRcK4ArFVyRgPDye9JZiyX9cZ8y1+vq6KNHhoMCBG9cDwL/4+mqgTu0sAvZAczZQQcR
+         1/Dz2ppeKOMR0HwEgiazBMLeyJZR2jDXdyszxxs2zNDKTBAH3SktT+IpcI1pjqGFnZ4s
+         RkAciozWT2a24QNBJMRLks7FFSSDZ5/jOtQoid9P0CqThoWyPjqH0j8j7YolNZRoEGen
+         u52g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Gb8qQr6QRwiSeijlgQd933nm6je1qr/W69doAAepXKY=;
-        b=eMtpt3U6jcIozIhy7D8GtsCcHGMJVlZd39zEFeR9Y+n/bNs7RX6NQu8rBFvUZbMXNU
-         sIG/rLU8BvVgU413TkmKUNIR0nNe2mVf0OlHMHjSLn5Pw/I9XXvdpAZW/PlXst/3rpgI
-         DuY/hA8D2kPNF7LrbGRlWnOlSrmqNfMu/uHp9T2sNqIXZjVgFUjy9WhwA7NS94lsRtpk
-         I0FIY5bJNHSHAHtVzcT3vwauPO8a3cdPdKk8oAZCoHA1OwrhV2H8qS46UTsTXFos+2qI
-         uVSRI6LK0W9+m62RI9dK97PetrO6tpgBG0EwCeOLctlzRzUnX8y2oFEPihN+wOhFSDnZ
-         7Gaw==
-X-Gm-Message-State: AOAM531bRv4rjsAMKZQHqzn2mUqpzG9/QXiviWC6vAZxgPmaWUvPdi32
-        K4zhG37OTA0PlIug28uqT17m+vIMqQw=
-X-Google-Smtp-Source: ABdhPJwvOSK5CuA+SQTJzzJ0Hde66HODqiNGR8QUqm9ZKbJFVaIx83JXoUlRyUIbbicBr10qD8Ozfg==
-X-Received: by 2002:adf:e287:: with SMTP id v7mr11408680wri.252.1605801044973;
-        Thu, 19 Nov 2020 07:50:44 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=tDzXpsm8eW6mloM68/FD0rXKP2odAu0Dxs8rPY1E8/g=;
+        b=ebnqaXLs74RSRC9Y1MZZ/0Cr/hoSOG8lSIYr1Yesxz9d8uL9haI6BQOK1e5CETO+sW
+         wgqEgwNVHwI3MU/kkS07AM6c+nxlONBQWNKlxOcs5+F96ukTVQSMoC4n28qOMQvbGfvF
+         gymqe9zw49GSSj3MSkuh1xs/4g5P6p0w/AmcjRIN6ojLheeZa3IYgtDDDAEKIUHkXRsK
+         X1LXr0s0AwcjOKeZJ5J7PehlUU5Ejf1F2I1THWmZjOOWGklWXVPdGh0wkeuzb+OR1aHI
+         ITjRRfc03ssh1gGLRBpaE7ek+qdR5cHw9G1m9d5zRetFga/7b0VnZhjQnbG01xjjnPFZ
+         IWFQ==
+X-Gm-Message-State: AOAM533zR3oB2D8uQCx9rJfFZ34ToxW+JEAClzpnpwE63PNAFkIjP9cy
+        ecTAz1KYVy5Yz4S8DS+bDXZh52Tg2o8=
+X-Google-Smtp-Source: ABdhPJwF0gVEdVCIf/gCMjBw49i6gRgGCNgJuQ054CPaTvEfsRUvbqxfkHxj1jwnZZStu3sRPwHYUQ==
+X-Received: by 2002:a1c:a145:: with SMTP id k66mr5125955wme.173.1605801144324;
+        Thu, 19 Nov 2020 07:52:24 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r9sm227105wrg.59.2020.11.19.07.50.44
+        by smtp.gmail.com with ESMTPSA id i11sm168691wro.85.2020.11.19.07.52.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Nov 2020 07:50:44 -0800 (PST)
-Message-Id: <pull.790.v2.git.1605801043899.gitgitgadget@gmail.com>
-In-Reply-To: <pull.790.git.1605625363309.gitgitgadget@gmail.com>
-References: <pull.790.git.1605625363309.gitgitgadget@gmail.com>
-From:   "Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 19 Nov 2020 15:50:43 +0000
-Subject: [PATCH v2] hooks: allow input from stdin
+        Thu, 19 Nov 2020 07:52:23 -0800 (PST)
+Message-Id: <pull.796.git.1605801143.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 19 Nov 2020 15:52:16 +0000
+Subject: [PATCH 0/7] config: add --literal-value option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Orgad Shaneh <orgads@gmail.com>, Orgad Shaneh <orgads@gmail.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Orgad Shaneh <orgads@gmail.com>
+As reported [1], 'git maintenance unregister' fails when a repository is
+located in a directory with regex glob characters.
 
-Let hooks receive user input if applicable.
+[1] 
+https://lore.kernel.org/git/2c2db228-069a-947d-8446-89f4d3f6181a@gmail.com/T/#mb96fa4187a0d6aeda097cd95804a8aafc0273022
 
-Closing stdin originates in f5bbc3225 (Port git commit to C,
-2007). Looks like the original shell implementation did have
-stdin open. Not clear why the author chose to close it on
-the C port (maybe copy&paste).
+The discussed solution was to modify 'git config' to specify that the
+'value_regex' argument should be treated as an exact string match. This is
+the primary change in this series, with an additional patch at the end to
+make 'git maintenance [un]register' use this option, when necessary.
 
-Allow stdin only for commit-related hooks. Some of the other
-hooks pass their own input to the hook, so don't change them.
+Thanks, -Stolee
 
-Signed-off-by: Orgad Shaneh <orgads@gmail.com>
----
-    hooks: allow input from stdin
-    
-    Let hooks receive user input if applicable.
-    
-    Closing stdin originates in f5bbc3225 (Port git commit to C, 2007).
-    Looks like the original shell implementation did have stdin open. Not
-    clear why the author chose to close it on the C port (maybe copy&paste).
-    
-    The only hook that passes internal information to the hook via stdin is
-    pre-push, which has its own logic.
-    
-    Some references of users requesting this feature. Some of them use
-    acrobatics to gain access to stdin: [1] 
-    https://stackoverflow.com/q/1067874/764870[2] 
-    https://stackoverflow.com/q/47477766/764870[3] 
-    https://stackoverflow.com/q/3417896/764870[4] 
-    https://github.com/FriendsOfPHP/PHP-CS-Fixer/issues/3165[5] 
-    https://github.com/typicode/husky/issues/442
+Derrick Stolee (7):
+  t1300: test "set all" mode with value_regex
+  t1300: add test for --replace-all with value_regex
+  config: convert multi_replace to flags
+  config: add --literal-value option, un-implemented
+  config: plumb --literal-value into config API
+  config: implement --literal-value with --get*
+  maintenance: use 'git config --literal-value'
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-790%2Forgads%2Fhooks-stdin-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-790/orgads/hooks-stdin-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/790
-
-Range-diff vs v1:
-
- 1:  4aa6b4c507 < -:  ---------- hooks: allow input from stdin
- -:  ---------- > 1:  6a9bcf9d8b hooks: allow input from stdin
+ Documentation/git-config.txt |  20 ++++--
+ builtin/branch.c             |   4 +-
+ builtin/config.c             |  50 ++++++++++---
+ builtin/gc.c                 |   5 +-
+ builtin/remote.c             |   8 ++-
+ config.c                     |  29 ++++----
+ config.h                     |  24 +++++--
+ t/t1300-config.sh            | 136 +++++++++++++++++++++++++++++++++++
+ t/t7900-maintenance.sh       |  12 ++++
+ 9 files changed, 248 insertions(+), 40 deletions(-)
 
 
- builtin/am.c                                  |  6 +--
- builtin/checkout.c                            |  2 +-
- builtin/clone.c                               |  2 +-
- builtin/gc.c                                  |  2 +-
- builtin/merge.c                               |  2 +-
- builtin/rebase.c                              |  2 +-
- builtin/receive-pack.c                        |  2 +-
- commit.c                                      |  2 +-
- read-cache.c                                  |  2 +-
- reset.c                                       |  2 +-
- run-command.c                                 |  9 +++--
- run-command.h                                 | 15 +++++---
- ...3-pre-commit-and-pre-merge-commit-hooks.sh | 37 ++++++++++++++++++-
- t/t7504-commit-msg-hook.sh                    | 15 ++++++++
- t/t7505-prepare-commit-msg-hook.sh            | 14 +++++++
- 15 files changed, 92 insertions(+), 22 deletions(-)
-
-diff --git a/builtin/am.c b/builtin/am.c
-index f22c73a05b..1946569d5b 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -428,7 +428,7 @@ static int run_applypatch_msg_hook(struct am_state *state)
- 	int ret;
- 
- 	assert(state->msg);
--	ret = run_hook_le(NULL, "applypatch-msg", am_path(state, "final-commit"), NULL);
-+	ret = run_hook_le(NULL, 0, "applypatch-msg", am_path(state, "final-commit"), NULL);
- 
- 	if (!ret) {
- 		FREE_AND_NULL(state->msg);
-@@ -1559,7 +1559,7 @@ static void do_commit(const struct am_state *state)
- 	const char *reflog_msg, *author, *committer = NULL;
- 	struct strbuf sb = STRBUF_INIT;
- 
--	if (run_hook_le(NULL, "pre-applypatch", NULL))
-+	if (run_hook_le(NULL, 0, "pre-applypatch", NULL))
- 		exit(1);
- 
- 	if (write_cache_as_tree(&tree, 0, NULL))
-@@ -1611,7 +1611,7 @@ static void do_commit(const struct am_state *state)
- 		fclose(fp);
- 	}
- 
--	run_hook_le(NULL, "post-applypatch", NULL);
-+	run_hook_le(NULL, 0, "post-applypatch", NULL);
- 
- 	strbuf_release(&sb);
- }
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 9b82119129..293e8ebd76 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -104,7 +104,7 @@ struct branch_info {
- static int post_checkout_hook(struct commit *old_commit, struct commit *new_commit,
- 			      int changed)
- {
--	return run_hook_le(NULL, "post-checkout",
-+	return run_hook_le(NULL, 0, "post-checkout",
- 			   oid_to_hex(old_commit ? &old_commit->object.oid : &null_oid),
- 			   oid_to_hex(new_commit ? &new_commit->object.oid : &null_oid),
- 			   changed ? "1" : "0", NULL);
-diff --git a/builtin/clone.c b/builtin/clone.c
-index a0841923cf..6cfd2f23be 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -816,7 +816,7 @@ static int checkout(int submodule_progress)
- 	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
- 		die(_("unable to write new index file"));
- 
--	err |= run_hook_le(NULL, "post-checkout", oid_to_hex(&null_oid),
-+	err |= run_hook_le(NULL, 0, "post-checkout", oid_to_hex(&null_oid),
- 			   oid_to_hex(&oid), "1", NULL);
- 
- 	if (!err && (option_recurse_submodules.nr > 0)) {
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 5cd2a43f9f..c790a362df 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -385,7 +385,7 @@ static int need_to_gc(void)
- 	else
- 		return 0;
- 
--	if (run_hook_le(NULL, "pre-auto-gc", NULL))
-+	if (run_hook_le(NULL, 0, "pre-auto-gc", NULL))
- 		return 0;
- 	return 1;
- }
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 4c133402a6..1f1d234879 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -474,7 +474,7 @@ static void finish(struct commit *head_commit,
- 	}
- 
- 	/* Run a post-merge hook */
--	run_hook_le(NULL, "post-merge", squash ? "1" : "0", NULL);
-+	run_hook_le(NULL, 0, "post-merge", squash ? "1" : "0", NULL);
- 
- 	apply_autostash(git_path_merge_autostash(the_repository));
- 	strbuf_release(&reflog_message);
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 7b65525301..c17f7a628b 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -2014,7 +2014,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 
- 	/* If a hook exists, give it a chance to interrupt*/
- 	if (!ok_to_skip_pre_rebase &&
--	    run_hook_le(NULL, "pre-rebase", options.upstream_arg,
-+	    run_hook_le(NULL, 0, "pre-rebase", options.upstream_arg,
- 			argc ? argv[0] : NULL, NULL))
- 		die(_("The pre-rebase hook refused to rebase."));
- 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index bb9909c52e..c1398af755 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1384,7 +1384,7 @@ static const char *push_to_checkout(unsigned char *hash,
- 				    const char *work_tree)
- {
- 	strvec_pushf(env, "GIT_WORK_TREE=%s", absolute_path(work_tree));
--	if (run_hook_le(env->v, push_to_checkout_hook,
-+	if (run_hook_le(env->v, 0, push_to_checkout_hook,
- 			hash_to_hex(hash), NULL))
- 		return "push-to-checkout hook declined";
- 	else
-diff --git a/commit.c b/commit.c
-index fe1fa3dc41..775019ec9d 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1646,7 +1646,7 @@ int run_commit_hook(int editor_is_used, const char *index_file,
- 		strvec_push(&hook_env, "GIT_EDITOR=:");
- 
- 	va_start(args, name);
--	ret = run_hook_ve(hook_env.v, name, args);
-+	ret = run_hook_ve(hook_env.v, RUN_HOOK_ALLOW_STDIN, name, args);
- 	va_end(args);
- 	strvec_clear(&hook_env);
- 
-diff --git a/read-cache.c b/read-cache.c
-index ecf6f68994..a83beac63e 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -3070,7 +3070,7 @@ static int do_write_locked_index(struct index_state *istate, struct lock_file *l
- 	else
- 		ret = close_lock_file_gently(lock);
- 
--	run_hook_le(NULL, "post-index-change",
-+	run_hook_le(NULL, 0, "post-index-change",
- 			istate->updated_workdir ? "1" : "0",
- 			istate->updated_skipworktree ? "1" : "0", NULL);
- 	istate->updated_workdir = 0;
-diff --git a/reset.c b/reset.c
-index 2f4fbd07c5..33687b0b5b 100644
---- a/reset.c
-+++ b/reset.c
-@@ -127,7 +127,7 @@ int reset_head(struct repository *r, struct object_id *oid, const char *action,
- 					    reflog_head);
- 	}
- 	if (run_hook)
--		run_hook_le(NULL, "post-checkout",
-+		run_hook_le(NULL, 0, "post-checkout",
- 			    oid_to_hex(orig ? orig : &null_oid),
- 			    oid_to_hex(oid), "1", NULL);
- 
-diff --git a/run-command.c b/run-command.c
-index 2ee59acdc8..21b1f0a5e9 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1343,7 +1343,7 @@ const char *find_hook(const char *name)
- 	return path.buf;
- }
- 
--int run_hook_ve(const char *const *env, const char *name, va_list args)
-+int run_hook_ve(const char *const *env, int opt, const char *name, va_list args)
- {
- 	struct child_process hook = CHILD_PROCESS_INIT;
- 	const char *p;
-@@ -1356,20 +1356,21 @@ int run_hook_ve(const char *const *env, const char *name, va_list args)
- 	while ((p = va_arg(args, const char *)))
- 		strvec_push(&hook.args, p);
- 	hook.env = env;
--	hook.no_stdin = 1;
-+	if (!(opt & RUN_HOOK_ALLOW_STDIN))
-+		hook.no_stdin = 1;
- 	hook.stdout_to_stderr = 1;
- 	hook.trace2_hook_name = name;
- 
- 	return run_command(&hook);
- }
- 
--int run_hook_le(const char *const *env, const char *name, ...)
-+int run_hook_le(const char *const *env, int opt, const char *name, ...)
- {
- 	va_list args;
- 	int ret;
- 
- 	va_start(args, name);
--	ret = run_hook_ve(env, name, args);
-+	ret = run_hook_ve(env, opt, name, args);
- 	va_end(args);
- 
- 	return ret;
-diff --git a/run-command.h b/run-command.h
-index 6472b38bde..e6a850c6fe 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -201,11 +201,16 @@ int run_command(struct child_process *);
-  */
- const char *find_hook(const char *name);
- 
-+#define RUN_HOOK_ALLOW_STDIN 1
-+
- /**
-  * Run a hook.
-- * The first argument is a pathname to an index file, or NULL
-- * if the hook uses the default index file or no index is needed.
-- * The second argument is the name of the hook.
-+ * The first argument is an array of environment variables, or NULL
-+ * if the hook uses the default environment and doesn't require
-+ * additional variables.
-+ * The second argument is zero or RUN_HOOK_ALLOW_STDIN, which enables
-+ * stdin for the child process (the default is no_stdin).
-+ * The third argument is the name of the hook.
-  * The further arguments correspond to the hook arguments.
-  * The last argument has to be NULL to terminate the arguments list.
-  * If the hook does not exist or is not executable, the return
-@@ -215,8 +220,8 @@ const char *find_hook(const char *name);
-  * On execution, .stdout_to_stderr and .no_stdin will be set.
-  */
- LAST_ARG_MUST_BE_NULL
--int run_hook_le(const char *const *env, const char *name, ...);
--int run_hook_ve(const char *const *env, const char *name, va_list args);
-+int run_hook_le(const char *const *env, int opt, const char *name, ...);
-+int run_hook_ve(const char *const *env, int opt, const char *name, va_list args);
- 
- /*
-  * Trigger an auto-gc
-diff --git a/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh b/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
-index b3485450a2..e915ffe546 100755
---- a/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
-+++ b/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
-@@ -7,6 +7,7 @@ test_description='pre-commit and pre-merge-commit hooks'
- HOOKDIR="$(git rev-parse --git-dir)/hooks"
- PRECOMMIT="$HOOKDIR/pre-commit"
- PREMERGE="$HOOKDIR/pre-merge-commit"
-+POSTCOMMIT="$HOOKDIR/post-commit"
- 
- # Prepare sample scripts that write their $0 to actual_hooks
- test_expect_success 'sample script setup' '
-@@ -28,11 +29,15 @@ test_expect_success 'sample script setup' '
- 	echo $0 >>actual_hooks
- 	test $GIT_PREFIX = "success/"
- 	EOF
--	write_script "$HOOKDIR/check-author.sample" <<-\EOF
-+	write_script "$HOOKDIR/check-author.sample" <<-\EOF &&
- 	echo $0 >>actual_hooks
- 	test "$GIT_AUTHOR_NAME" = "New Author" &&
- 	test "$GIT_AUTHOR_EMAIL" = "newauthor@example.com"
- 	EOF
-+	write_script "$HOOKDIR/user-input.sample" <<-\EOF
-+	! read -r line || echo "$line" > hook_input
-+	exit 0
-+	EOF
- '
- 
- test_expect_success 'root commit' '
-@@ -278,4 +283,34 @@ test_expect_success 'check the author in hook' '
- 	test_cmp expected_hooks actual_hooks
- '
- 
-+test_expect_success 'with user input' '
-+	test_when_finished "rm -f \"$PRECOMMIT\" user_input hook_input" &&
-+	cp "$HOOKDIR/user-input.sample" "$PRECOMMIT" &&
-+	echo "user input" > user_input &&
-+	echo "more" >>file &&
-+	git add file &&
-+	git commit -m "more" < user_input &&
-+	test_cmp user_input hook_input
-+'
-+
-+test_expect_success 'post-commit with user input' '
-+	test_when_finished "rm -f \"$POSTCOMMIT\" user_input hook_input" &&
-+	cp "$HOOKDIR/user-input.sample" "$POSTCOMMIT" &&
-+	echo "user input" > user_input &&
-+	echo "more" >>file &&
-+	git add file &&
-+	git commit -m "more" < user_input &&
-+	test_cmp user_input hook_input
-+'
-+
-+test_expect_success 'with user input (merge)' '
-+	test_when_finished "rm -f \"$PREMERGE\" user_input hook_input" &&
-+	cp "$HOOKDIR/user-input.sample" "$PREMERGE" &&
-+	echo "user input" > user_input &&
-+	git checkout side &&
-+	git merge -m "merge master" master < user_input &&
-+	git checkout master &&
-+	test_cmp user_input hook_input
-+'
-+
- test_done
-diff --git a/t/t7504-commit-msg-hook.sh b/t/t7504-commit-msg-hook.sh
-index 31b9c6a2c1..ad467aad86 100755
---- a/t/t7504-commit-msg-hook.sh
-+++ b/t/t7504-commit-msg-hook.sh
-@@ -294,5 +294,20 @@ test_expect_success 'hook is called for reword during `rebase -i`' '
- 
- '
- 
-+# now a hook that accepts input and writes it as the commit message
-+cat > "$HOOK" <<'EOF'
-+#!/bin/sh
-+! read -r line || echo "$line" > "$1"
-+EOF
-+chmod +x "$HOOK"
-+
-+test_expect_success 'hook with user input' '
-+
-+	echo "additional" >> file &&
-+	git add file &&
-+	echo "user input" | git commit -m "additional" &&
-+	commit_msg_is "user input"
-+
-+'
- 
- test_done
-diff --git a/t/t7505-prepare-commit-msg-hook.sh b/t/t7505-prepare-commit-msg-hook.sh
-index 94f85cdf83..16a161f129 100755
---- a/t/t7505-prepare-commit-msg-hook.sh
-+++ b/t/t7505-prepare-commit-msg-hook.sh
-@@ -91,6 +91,11 @@ else
- fi
- test "$GIT_EDITOR" = : && source="$source (no editor)"
- 
-+if read -r line
-+then
-+	source="$source $line"
-+fi
-+
- if test $rebasing = 1
- then
- 	echo "$source $(get_last_cmd)" >"$1"
-@@ -113,6 +118,15 @@ test_expect_success 'with hook (-m)' '
- 
- '
- 
-+test_expect_success 'with hook (-m and input)' '
-+
-+	echo "more" >> file &&
-+	git add file &&
-+	echo "user input" | git commit -m "more" &&
-+	test "$(git log -1 --pretty=format:%s)" = "message (no editor) user input"
-+
-+'
-+
- test_expect_success 'with hook (-m editor)' '
- 
- 	echo "more" >> file &&
-
-base-commit: e31aba42fb12bdeb0f850829e008e1e3f43af500
+base-commit: 0016b618182f642771dc589cf0090289f9fe1b4f
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-796%2Fderrickstolee%2Fmaintenance%2Fconfig-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-796/derrickstolee/maintenance/config-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/796
 -- 
 gitgitgadget
