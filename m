@@ -2,126 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89872C2D0E4
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 12:34:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DAAAC2D0E4
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 12:38:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1EC30246E0
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 12:34:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04902246E0
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 12:38:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eYJ5rMKa"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="DJVaHe+T"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727272AbgKSMeA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Nov 2020 07:34:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45938 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727182AbgKSMd7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Nov 2020 07:33:59 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64EAFC0613CF
-        for <git@vger.kernel.org>; Thu, 19 Nov 2020 04:33:59 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id j205so7966453lfj.6
-        for <git@vger.kernel.org>; Thu, 19 Nov 2020 04:33:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=EbMSMT/haVM2PrKuJmItpc+FaSqD9FNdEdI/CBi3adA=;
-        b=eYJ5rMKaBcKXucAAB1xsvQeFOR6HEmjOqHjlyeI+5uZp0sZf0PUkXeYdx2pWRccUGD
-         3TjjMJFY8ULHKCJQ8OYILWKkCfUr54WOA19pxoaTwGq0A8tCEX/i/FXIjRRgjMqQOSXb
-         CSu+ztPQEZL//1s9z8ALwzE5HlRaeuNbt65a6V8a2jlsq2SPBK8wmbAl2FH+qiY1AKkZ
-         E77pA6Xo8/mjE5+Bu8FwLxTXMtYx/sVna1QwmUKWk09ByIzSEK/4N6Jf72AvaMzI9upj
-         fOpHz3K+sAgrqOJ0EtCZ2Sm3pjN7v6hp8ZEcx0A1f9Izm1UFG6K6VFfQOMGLMkpXlN5u
-         d3pQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=EbMSMT/haVM2PrKuJmItpc+FaSqD9FNdEdI/CBi3adA=;
-        b=AJbwCefpPH6SZHL2eJDcPeb4vqPBiu7stmTqdn5QIWv4EZ3QsePbHAVggKXspDBRl4
-         EUZxALJJLqv91UhuukrSNSHxu7+xE2Qe8QritXu+yp3/3Mz2pjt7nxP8OuPsym+/wOyo
-         tuRKVV6/TNFcklbNbsoQ9vvPHhiVEtbxruSi7v1zR2vQ8Fts7ndvyCvaXsxcx61Ii+kY
-         wcsNa2ENM5kODyhsffL5NRQvkmq+9qUdb+tz/B9JdWv7n+y/G1j8oyQ5zHSuft4zUXZF
-         qb81R06J7Mer2KXCsikRMi2V40F4a2AXI7VWGVS1hyYZptg3fU8Tqdd3Swbxx/lGJckd
-         JizQ==
-X-Gm-Message-State: AOAM531CPvbJRtrUxjD3GJsi6j12SG7D0uH6BSoJ1K9BRGdANAFif5cF
-        mLWRIi5+QE4GvmOGpoBRfm8=
-X-Google-Smtp-Source: ABdhPJzNr5oXOdenxIu/s1Y2LjthhRqTahg3gbNTQz6lMgpjNQ6yEkI6qxOQNSLgCCpG0NavfIBnwQ==
-X-Received: by 2002:a19:c55:: with SMTP id 82mr5326435lfm.84.1605789237912;
-        Thu, 19 Nov 2020 04:33:57 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id 22sm3693608ljw.40.2020.11.19.04.33.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Nov 2020 04:33:57 -0800 (PST)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "Eric W. Biederman" <ebiederm@xmission.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 00/28] Use main as default branch name
-References: <pull.762.git.1605221038.gitgitgadget@gmail.com>
-        <87r1oraewl.fsf@x220.int.ebiederm.org>
-        <xmqqv9e34mq5.fsf@gitster.c.googlers.com>
-        <1389dabc-33c9-1e65-a3de-43729a6c2e70@iee.email>
-        <xmqqh7pmyuzn.fsf@gitster.c.googlers.com>
-        <7df660f2-ad74-7d1f-eb13-a0edadffbfbf@iee.email>
-        <871rgpr497.fsf@osv.gnss.ru>
-        <fe8962ee-0e0b-19bb-4b89-4603cdabee74@iee.email>
-Date:   Thu, 19 Nov 2020 15:33:56 +0300
-In-Reply-To: <fe8962ee-0e0b-19bb-4b89-4603cdabee74@iee.email> (Philip Oakley's
-        message of "Thu, 19 Nov 2020 11:50:23 +0000")
-Message-ID: <873615plu3.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        id S1727278AbgKSMiY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Nov 2020 07:38:24 -0500
+Received: from mout.gmx.net ([212.227.15.19]:57387 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727096AbgKSMiY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Nov 2020 07:38:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1605789497;
+        bh=iZb8hYDNJmn9tTDwiI4kStzzoMdpGNtBo8icgMNpy9o=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=DJVaHe+TuWlfqlaiKPTDZ/1LQFIBYEX8J0MAlCuWokhF/sYjntw6GHmSLxGiqD4s+
+         k1Ecr5pUrY3Ttgx5ypprYOrWm4W8hMk23YZ3l4lujK5rmJobhV2I6n8h6M2qQDgqF8
+         l8pWhplwZvZ1xbyGAh/c8B2WOdjrsCuGdIWsAcew=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.26.22.105] ([213.196.212.61]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N8GQs-1kAyxV0Gye-014BmT; Thu, 19
+ Nov 2020 13:38:17 +0100
+Date:   Thu, 19 Nov 2020 13:38:16 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
+        shouryashukla.oo@gmail.com, git@vger.kernel.org,
+        christian.couder@gmail.com, kaartic.sivaraam@gmail.com,
+        liu.denton@gmail.com, pc44800@gmail.com, chriscool@tuxfamily.org,
+        stefanbeller@gmail.com
+Subject: Re: [PATCH v2 2/3] submodule: port submodule subcommand 'add' from
+ shell to C
+In-Reply-To: <871rgprdt1.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2011191327320.56@tvgsbejvaqbjf.bet>
+References: <xmqqd01sugrg.fsf@gitster.c.googlers.com> <20201118231331.716110-1-jonathantanmy@google.com> <871rgprdt1.fsf@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323328-1924640556-1605789499=:56"
+X-Provags-ID: V03:K1:OCuGGWERS6lKoCTEp1NJtpXFZii5Be2aSLriRmg4LGQhF9GxCZK
+ vHxiiMXL17O1peXw1YzTs8kl5KYw+cMNMaGVpHhNXBXijuQ/4YleK7DDoTR7UkPP3EjSO0S
+ oHJEYnO+ryQstc2OdE0SdNR2inYiquheh89fwBKCsP2Lftms0+ugIC8nO4M6gSf0IJL9DZX
+ llz1wwdRH2/CHChwXF6mQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:DCIuZWd1ct4=:n+MqAeB+yniiIW6I5zPqp6
+ SZC49/BKPZVLWy4HGEGVPjV6+yld1WzDQpMpEt0JEFUyuXSsIwSpbFM2BuvLBwq1et4+PgIBG
+ BsjcrTZsInvohOZMgEg8WwnN5HibYcNmOf3Q2iMDH06uLf4gIYLh3BT79YZ06fK/o008DCVnh
+ Dh52x2QY/LurD2qycVo5tPf8Fo7r0RdC3FnHM96TQn/QUZDknZfx/W82wtVDTbiLR9PIs3+In
+ mOiZ16Tyl8GzxXVHMuNhFcRyN9/zZukJBuwX7joYzhYhxCSLj7xFLDGpTFz2ocO8EgGGnbQRt
+ TnCzFe+LJnGI5PPotVT7f5Bm9MLozW0GRRO81/O7LJxLEzGACmv/fyHNCcPpC8zgsRLaLp2u2
+ G7JwEHX95z3KhBzqXrOhbS1nJH01vqqqhMlMH+T59KFr6x6ctjBvQzqBZfy4GezsbvM25iIVF
+ DI7hO86Dlo/e0qQsN2GtzW7lNasFvq//N9eOIsHECY7SzEDpqxrI/WvXeTRkphSg8I7lg9dEf
+ /HiWgvKE7veaw8HT5auXYMEhq+iYQlKeb2DIj6BaSqQDKIcPJ8gVuF2iV5ssL3PFhybyt0Ial
+ SYupR5aZGfzQvmPGfYx69+j4fZ6FL4xg5oEXwkJ4P1Mfa77i7FbzXwHr43SV+dZ5HFGoj3VbX
+ JwsGjjOTvWjIL/a+HmxMpfG+Katg19GEMCnO9O35u5yLzLNN5hlBpVEf8IegvoL89tMkDCh7J
+ FFyhUEgR3YGQI0VVgkndUx+9zhPNivPjRb0d7w2KYKhnMDwWu5wXFgmG3sYU98mTb0FQh/x3u
+ zbQws3z0qzXNzwkv4JVRaBSxeyGGYHol48lEXF5SrEmRNF+xQBelgmtWUnqeDFWr0s3kfJ4+C
+ 09oHMnIm6oSI8WM41CkhCWJFm87zFYHpNieYC6GFY=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.email> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On 19/11/2020 11:10, Sergey Organov wrote:
->> Philip Oakley <philipoakley@iee.email> writes:
->>
->>> On 19/11/2020 01:51, Junio C Hamano wrote:
->>>> Philip Oakley <philipoakley@iee.email> writes:
->>>>
->>>>> An alternative in the other direction is to go with the 'not currently
->>>>> on any branch' (detached at nowhere) but then require users to
->>>>> deliberately create their first branch with their chosen name. This
->>>>> moves the 'backward incompatibility' to a different place, which may be
->>>>> easier to manage.
->>>> As has already been mentioned by Peff, I do not think that is a
->>>> workable alternative, especially given that people are generally
->>>> afraid of and easily get confused by being on a detached HEAD.
->>> Yes, our use of the technical phrase 'detached HEAD' is confusing,
->>> compared with the more pleasant 'not on any branch', or 'not at a branch
->>> tip'. Such is the curse of knowledge.
->> To me "not on a branch [tip]" is also confusing, as in fact you are, as
->> is easily seen after you perform a few commits, and now HEAD points
->> directly to the tip of the branch (that has no other references).
->>
->> I wonder why Git didn't rather adopt "unnamed branch" or "nameless
->> branch" to describe this mode of operation?
-> Given the ephemeral nature of branches they sound like good
-> suggestion.
+--8323328-1924640556-1605789499=:56
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Sure, so to me they sound even more natural in Git context than in any
-other VCS I'm aware of.
+Hi =C3=86var,
+
+On Thu, 19 Nov 2020, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
 >
-> However I suspect "history" to be the "why" of the current 'detached
-> head' usage.
-> Maybe it's a side reference to Nearly Headless Nick or other discussions
-> of the time (aka lost in history)?
+> On Thu, Nov 19 2020, Jonathan Tan wrote:
+>
+> >> Whew.
+> >>
+> >> This was way too big to be reviewed in a single sitting.  I do not
+> >> know offhand if there is a better way to structure the changes into
+> >> a more digestible pieces to help prevent reviewers from overlooking
+> >> potential mistakes, though.
+> >>
+> >> Thanks.
+> >
+> > I just took a look at this, and one thing that would have helped is if
+> > you ported the end of the function first in a commit, and work your wa=
+y
+> > backwards (in one or more commits).
+> >
+> > After reading through the whole thing, I saw that this is mostly a
+> > straightforward start-to-finish port (besides factoring out code into
+> > functions), but it would be much easier for reviewers to conceptualize
+> > and discuss the different parts if they were already divided.
+>
+> Having done some minor changes to git-submodule.sh recently, I wondered
+> if we weren't at the point where it would be a nice approach to invert
+> the C/sh helper relationship.
+>
+> I.e. write git-submodule.c, which would be the small entry point, it
+> would then mostly dispatch to a submodule--helper, which would in turn
+> mostly dispatch to a new submodule--helper-sh (containing most of the
+> current git-submodule.sh code), which in turn would re-dispatch to the C
+> submodule--helper (which as an aside, then sometimes calls itself via
+> process invocation).
+>
+> It's quite a bit of spaghetti code, but means that there's a straighter
+> path to porting some of the setup code such as the "--check-writeable",
+> is_absolute_path() etc. being changed at the start of the change here to
+> git-submodule.sh.
 
-I do have a few commits at which HEAD has been detached, not once at
-some. Bloody they are.
+Looking at
+https://github.com/gitgitgadget/git/blob/ss/submodule-add-in-c/git-submodu=
+le.sh,
+I see that while there are still 794 lines, most of it is just mostly
+redundant option parsing. The only function left to convert is
+`cmd_update()`, and the first half was already converted to C long ago,
+via the `git submodule--helper update-clone` subcommand:
+https://github.com/gitgitgadget/git/blob/ss/submodule-add-in-c/git-submodu=
+le.sh#L269-L530
 
--- Sergey
+At this stage I suspect that having a little more patience would make more
+sense. After `cmd_update` is converted, we can simply finish the
+conversion, without having to keep the shell script around.
+
+Ciao,
+Dscho
+
+--8323328-1924640556-1605789499=:56--
