@@ -2,209 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 998AFC5519F
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 00:24:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AB01C5519F
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 00:30:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 14C6E246D1
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 00:24:20 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="GdBgoA1B"
+	by mail.kernel.org (Postfix) with ESMTP id 1FB7E246E7
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 00:30:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726889AbgKSAYT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Nov 2020 19:24:19 -0500
-Received: from mout.gmx.net ([212.227.17.21]:50451 "EHLO mout.gmx.net"
+        id S1726815AbgKSAaY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Nov 2020 19:30:24 -0500
+Received: from smtp.hosts.co.uk ([85.233.160.19]:56865 "EHLO smtp.hosts.co.uk"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726304AbgKSAYS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Nov 2020 19:24:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1605745453;
-        bh=VDCNz+8wYEy5fXYd5PFJO3lSdj5TzwTkuhTFzf2v/F8=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=GdBgoA1BTmmRgDLGziElZ6Ss8H0SHpguN5pkNCoypCozEBwDEKniRPwMkHY5Zi4lz
-         s57j7X7NIv8Bwpgaptn2sfs4ZZoM/ms8pmspvh7wtRW9NBTDeEU+6Hjwpqal97Y9fk
-         9Up2wtyJUOSc8JQREWOfOS0ABEbtXwcqRo2nf3B8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.22.105] ([213.196.212.61]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N4hvb-1kEDcI2mwh-011nHq; Thu, 19
- Nov 2020 01:24:13 +0100
-Date:   Thu, 19 Nov 2020 01:24:13 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t1309: use a non-loaded branch name in the `onbranch`
- test cases
-In-Reply-To: <87a6vera3q.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2011190107160.56@tvgsbejvaqbjf.bet>
-References: <pull.791.git.1605709410465.gitgitgadget@gmail.com> <87a6vera3q.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726098AbgKSAaX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Nov 2020 19:30:23 -0500
+Received: from host-89-243-187-160.as13285.net ([89.243.187.160] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1kfXq8-000APc-6E; Thu, 19 Nov 2020 00:30:21 +0000
+Subject: Re: [PATCH 00/28] Use main as default branch name
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "Eric W. Biederman" <ebiederm@xmission.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+References: <pull.762.git.1605221038.gitgitgadget@gmail.com>
+ <87r1oraewl.fsf@x220.int.ebiederm.org>
+ <xmqqv9e34mq5.fsf@gitster.c.googlers.com>
+ <1389dabc-33c9-1e65-a3de-43729a6c2e70@iee.email>
+ <nycvar.QRO.7.76.6.2011190057370.56@tvgsbejvaqbjf.bet>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <d81da6b9-02ee-dd38-3c94-3509f5e3cbf4@iee.email>
+Date:   Thu, 19 Nov 2020 00:30:18 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.3
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-961743544-1605745455=:56"
-X-Provags-ID: V03:K1:X6lYwh96Nu1c7PWFsLTx7j7M1egptPe/6uTI/oPDlEjwsNZ0zhz
- 6MraXNFpZlN5HrpLFW9nE0t5PiK1pFQAHVkZb6mQfZ03Og1cbNXfsy0d7SCinURZsVf5fhz
- Ajb/Uk/qShIccWmptgz/XFqD2MyICjaSzGt8cyZzALgr+k52a7XwwZRHsi/5FjAK1Ljnsli
- CNhwQaBRGYvjgkWSQ0kKQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:nbuzmEW1MgM=:jS2Js6Lo9lJavRQ7pbNVtR
- /RTyvc+NgqxXATQOMqhy5SPnBE7AizDo0AyNLDt/wGcmb+SRLlzERUoujQN8w2Bq2m84spYor
- 0Jtv8USRym5xSD2KglFgmWnBgPNIkrmxXzu9IDfQs0CUdsXTkK8ZME3lBz7wlZBVAejIb3FZM
- NYK4IuBWfhHEdKYIbz6QduScuUa+JbgxcfhKKSHLCVX7CX4a1d5nFT5muRQ6K++/rXox04ejJ
- Cmc0BnNQLiqVpIpDzXX0qiwZjEcneyrVN5t/gVCysgBP5K1YE+oiV757vqFZnY6EnEAjvx6x8
- J4NTGeYDjIIimpGHBAhq4Z77ZPGgQ9aXICw7l5V2g51HecJOxk1t50paYuCL4qBlaRBVm8BHu
- Gdl5g0u1ospxkzEW742VbYzD1t2ZJpe3zp77IGeyU349lqSziU0V8mwT55YXjBDm/1hE+hS1X
- 2FlMFJQ2v92u5i2Imv85QJiEBiLC0GkBhJnADrdXv9nz3wKCKUIz/sSWa/XHjjgjuNMSnTHIN
- G2QA8b4IkVcdW6raq9ILaUEbymFIz5WKnD32EthP73Aq0aFh2BF8w8YvaYOxyZ/xtCosTJBi+
- Dom8t+hx07cTeHnlMEVYGRN8LSEC5ULk1W9MArWBNbAqRbU02SL/kH4k/HueLDSo8hGM91IXW
- pfh4yv9viBgNqWMAtoByhyNQsm6QciIXsDrY5H6yAFIAMOKdoZm9Zx6lDc5v32nLOvakLYMUA
- 8fhXm9uYZBqqP5TV0UMjiEYdsCFB6uGgNn+MhhAwbOJAF90EdKhJPmxwntCkZZod9AtaIOOgo
- nP2XX/hswV22lhfMBrrmJ4a4NcAKzx0uE7vv0Kv1TxYACYwlm8c8Xo+7C0meQzBRQGpABQXbl
- TY/YfWy/IlyCL7Oy8tuvb7AM1Gr0sI8RMrnL5W/hA=
+In-Reply-To: <nycvar.QRO.7.76.6.2011190057370.56@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Dscho,
 
---8323328-961743544-1605745455=:56
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi =C3=86var,
-
-On Wed, 18 Nov 2020, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-
-> On Wed, Nov 18 2020, Johannes Schindelin via GitGitGadget wrote:
+On 19/11/2020 00:00, Johannes Schindelin wrote:
+> Hi Philip,
 >
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > The `onbranch` test cases in question do not actually want to include
-> > anything; Instead, they want to verify that the `onbranch` code path
-> > does not regress in the early-config case or in the non-Git case, wher=
-e
-> > the `onbranch` include is actually ignored.
+> On Wed, 18 Nov 2020, Philip Oakley wrote:
 >
-> It's unclear to me what this patch is for & why it's needed.
+>> An alternative in the other direction is to go with the 'not currently
+>> on any branch' (detached at nowhere) but then require users to
+>> deliberately create their first branch with their chosen name. This
+>> moves the 'backward incompatibility' to a different place, which may be
+>> easier to manage.
+> It might be easier to manage for _us_, the Git developers. But every user
+> who initializes a repository and wants to push now
 
-Well, the entire idea of switching to a new default branch name is to
-avoid using words that we know cause undue emotional harm. In the grand
-scheme, therefore, I want to avoid having any mention of such words in our
-test suite.
+Is this 'emerges fully formed' initialise & push  really that common.
 
-> Yesterday in your v2 27/27 series you sent a different one that changed
-> this from s/master/main/g:
-> https://lore.kernel.org/git/b8fa037791683b50c3efb01aa6ac0d3f7b888a2b.160=
-5629548.git.gitgitgadget@gmail.com/
+I'd be expecting a few add & commits prior to the push, so plenty of
+time for deciding and creating the chosen branch. At least that was the
+thought process...
+
+>  needs to take the extra
+> step to give their unnamed branch
+
+>  ("detached HEAD" is _still_ confusing
+> new users!!!) a name.
+I'd only mentioned the detached head to keep the devs happy ;-) I'm
+quite happy with a "not on any named branch yet" type message for normal
+usage.
+
 >
-> That's on top of "next", but this one is on "master", the two would
-> conflict, and the 02/27 one seems like the right thing to do.
+> That would be much more disruptive than choosing a "rather dull and
+> boring" name instead of a rather racially-charged one.
+"Main" is fine, but Junio had mention say "Primary" as being more
+positive, but that is begging the question for the user. We should let
+them chose.
 
-Yeah, I hadn't made it clear yet at the time you wrote this that my
-intention was to give in to your and Junio's suggestion to restrict the
-`GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME` assignments to _just_ the test
-scripts that don't work with arbitrary default branch names.
-
-I had hoped that mentioning gitgitgadget PR 762 (which is that 27-strong
-patch series) would be indicator enough that I was in the process of
-revamping it into a v3, and that this here patch is one part that I
-separated out into its own patch.
-
-> > Therefore, the actual branch name does not matter at all. We might jus=
-t
-> > as well avoid racially-charged names here.
+Hence using the not greatly inspiring 'main' as a starter offering would
+match that desire that the user should, ideally, make their own choice. 
 >
-> It seems to me the actual name matters a lot, and it must whatever the
-> default branch name is.
-
-Nope. Not at all. Because what we're exercising is the code paths when we
-_don't_ have a branch name to work with.
-
-In the non-Git case, this is trivial to see. There is not even a
-repository! How can there be a branch?
-
-In the early config case, it is too early to access the refs. I meant to
-reference (but forgot) the commit 85fe0e800ca (config: work around bug
-with includeif:onbranch and early config, 2019-07-31) because that
-commit's commit message describes the catch-22 that is the reason why the
-early config cannot see the current branch name (if any).
-
-I should probably have thought of referencing 22932d9169f (config: stop
-checking whether the_repository is NULL, 2019-08-06) for the second test
-case, too.
-
-So again, these two test cases do _not_ exercise the code path where
-another config file is included. To the contrary, they try to prevent a
-regression where `onbranch` would segfault in one case, and BUG in the
-other (in both cases because the now-fixed code used to try to look at the
-current branch name _anyway_).
-
-> I.e. what the test is doing is producing intentionally broken config,
-> and asserting that we don't read it at an early stage.
+> And we promised to try to minimize the disruption to Git users.
+...but we haven't said 'it' is an ignorable issue. There's still a lot
+of old documentation and inertia to overcome.
 >
-> Therefore if we regressed and started doing that the test wouldn't catch
-> it, because the default branch name is "master", or "main" if/when that
-> refs.c change lands, neither of which is "topic".
-
-No, if we regressed, the code would start to throw a BUG, or a segfault,
-respectively.
-
-We never expect these two test cases to look at any branch name at all.
-
-Ciao,
-Dscho
-
-> Maybe I'm missing something but it seems 58ebccb478 ("t1309: use short
-> branch name in includeIf.onbranch test", 2019-08-06) and your own
-> 85fe0e800c ("config: work around bug with includeif:onbranch and early
-> config", 2019-07-31) which added the test support reading.
->
->
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >     t1309: use a non-loaded branch name in the onbranch test cases
-> >
-> >     Just something I stumbled over while working on
-> >     https://github.com/gitgitgadget/git/pull/762.
-> >
-> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-791%=
-2Fdscho%2Ft1309-onbranch-tests-v1
-> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-791/dsc=
-ho/t1309-onbranch-tests-v1
-> > Pull-Request: https://github.com/gitgitgadget/git/pull/791
-> >
-> >  t/t1309-early-config.sh | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/t/t1309-early-config.sh b/t/t1309-early-config.sh
-> > index ebb8e1aecb..b4a9158307 100755
-> > --- a/t/t1309-early-config.sh
-> > +++ b/t/t1309-early-config.sh
-> > @@ -91,11 +91,11 @@ test_expect_failure 'ignore .git/ with invalid con=
-fig' '
-> >
-> >  test_expect_success 'early config and onbranch' '
-> >  	echo "[broken" >broken &&
-> > -	test_with_config "[includeif \"onbranch:master\"]path=3D../broken"
-> > +	test_with_config "[includeif \"onbranch:topic\"]path=3D../broken"
-> >  '
-> >
-> >  test_expect_success 'onbranch config outside of git repo' '
-> > -	test_config_global includeIf.onbranch:master.path non-existent &&
-> > +	test_config_global includeIf.onbranch:topic.path non-existent &&
-> >  	nongit git help
-> >  '
-> >
-> >
-> > base-commit: e31aba42fb12bdeb0f850829e008e1e3f43af500
->
->
->
-
---8323328-961743544-1605745455=:56--
+> Ciao,
+> Dscho
+Philip
