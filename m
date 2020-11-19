@@ -2,62 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D7B9C5519F
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 01:02:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E89BCC5519F
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 01:03:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 02F992225E
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 01:02:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83D3720771
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 01:03:12 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tRZafkNi"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726527AbgKSBCU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Nov 2020 20:02:20 -0500
-Received: from vsmx009.vodafonemail.xion.oxcs.net ([153.92.174.87]:46029 "EHLO
-        vsmx009.vodafonemail.xion.oxcs.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726098AbgKSBCU (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 18 Nov 2020 20:02:20 -0500
-Received: from vsmx001.vodafonemail.xion.oxcs.net (unknown [192.168.75.191])
-        by mta-5-out.mta.xion.oxcs.net (Postfix) with ESMTP id 43A62159D748;
-        Thu, 19 Nov 2020 00:56:17 +0000 (UTC)
-Received: from [192.168.2.101] (unknown [94.216.44.144])
-        by mta-5-out.mta.xion.oxcs.net (Postfix) with ESMTPA id 0C50B159D745;
-        Thu, 19 Nov 2020 00:56:12 +0000 (UTC)
-To:     git@vger.kernel.org
-From:   Ernst Reissner <rei3ner@arcor.de>
-Subject: what is dirty 2nd
-Message-ID: <504b3d77-3333-0b8a-b187-4a8d1df733de@arcor.de>
-Date:   Thu, 19 Nov 2020 01:56:12 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.0
+        id S1726651AbgKSBDL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Nov 2020 20:03:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52714 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726098AbgKSBDL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Nov 2020 20:03:11 -0500
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEF36C0613D4
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 17:03:10 -0800 (PST)
+Received: by mail-io1-xd35.google.com with SMTP id n129so4164058iod.5
+        for <git@vger.kernel.org>; Wed, 18 Nov 2020 17:03:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CNo5e4nO8oc+7TQ+3J5Yv5O8r31c/563nlZnPs+M3mk=;
+        b=tRZafkNiJPPha1UyaevYyDNRxDzNMV5VqfCHb1afbrdYp1I6k3Bs1zifxgjXdHxMOY
+         8YyADUuHceVcW8cHE086L+8k7Qa/MtQ/ImgT9xPBIENk1+CI3MwNpCFi5PKBD3HlEu9Y
+         TxWuVgTeaWso+CQfysuROaRJC0jQEL4u9kcYLo+nL1anSQ6GrKqJFVhjaRBJ0qWWqEa+
+         /DP2/px6iQpMbDpUbSpk2/5auQsq+zT74e95BMeZoLgtcbl3OFM/EXZJmJY8/NHq4A+H
+         RP5+ZmNxVxIbXQjSjbkgTmc956+fhWeJUNDye9KYia95yhdWXfJ3iqg3fYECud9ZkPUE
+         qfPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CNo5e4nO8oc+7TQ+3J5Yv5O8r31c/563nlZnPs+M3mk=;
+        b=bYrWu/NWOcYdqF68Swo5l9qKj8WPf1C3KKZUxkOFe2/6rlFHaRI8LQaguxNLXZZASf
+         TTaTXVGykhzdWetMRSyYN6CTfNn65wnhWp3uc6mUnTidS1T1FiCJt27yxARC4xwuuADL
+         l/ECsD2/xhhR6HaJQm1D0GApwj5I/CyfTLBWDuxL32lQ0EW23FBS29/JRLrsvanxwNrk
+         jhlOzTfcCIQ82fv078fdlqMqNR8Z30Z/hIFeNAkv3qDKYD9yy6pplQJLTmAbt6ZKvJmR
+         433zPG0o1UwRQrGwQXRsd/dyjZnkAZI1gNVVjUkCHm/En3qXWEnsxiWCCPZ3LE4k3CYi
+         H3sw==
+X-Gm-Message-State: AOAM5313rDjGvPcmroL97tctXt1kxkcGxpBUa1sQVgnK4oCoQR7gazcO
+        1NN1h/Jeuz2kxCJR/ShMUwv0F52VnFeW4AJYrq4=
+X-Google-Smtp-Source: ABdhPJxtw6jNsSQ/qMNPXpTpln/AbcZ4GNPSsE9Uwaw+pykpnG2fiDPqimmTCd0uSdPuX6HwfekjalQNf3Nm/9DC6mA=
+X-Received: by 2002:a5e:8e01:: with SMTP id a1mr17868992ion.7.1605747790143;
+ Wed, 18 Nov 2020 17:03:10 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-VADE-STATUS: LEGIT
+References: <CAMP44s3BJ3dGsLJ-6yA-Po459=+m826KD9an4+P3qOY1vkbxZg@mail.gmail.com>
+ <20201113010107.GL6252@camp.crustytoothpaste.net> <CAMP44s1U1FevS7NrAYxvgVyzfR5tnD9-+BbPdw5bKnaNHkyD+A@mail.gmail.com>
+ <20201113051408.GA3985404@mit.edu> <CAMP44s3AeESm7VBKbar0ir_Py35g99ZW6bNX_=AK4N=OFkcrdA@mail.gmail.com>
+ <20201113145802.GB3985404@mit.edu> <CBC2DBAA-A409-49CD-B932-AC82D3C20D55@kobil.com>
+ <20201115034649.GC3985404@mit.edu>
+In-Reply-To: <20201115034649.GC3985404@mit.edu>
+From:   Brandon Casey <drafnel@gmail.com>
+Date:   Wed, 18 Nov 2020 17:02:59 -0800
+Message-ID: <CA+sFfMfWrSMKAogg-5dsaO_beXUV-JCBLBPeLZ5g_0jGqsom8Q@mail.gmail.com>
+Subject: Re: The master branch rename, and avoiding another v1.6.0 git-foo fiasco
+To:     "Theodore Y. Ts'o" <tytso@mit.edu>
+Cc:     Lukasz Niemier <Lukasz.Niemier@kobil.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Don Goodman-Wilson <don@goodman-wilson.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello All,
+On Sat, Nov 14, 2020 at 8:23 PM Theodore Y. Ts'o <tytso@mit.edu> wrote:
 
-another idea to that subject:
+> This *really* is not hard; which is why I am starting to suspect
+> people are really kvetching because their objections are really more
+> about the woke/anti-woke aspect of the "master" -> "main" migration
+> --- and they are using *think* the children^H^H^H^H^H^H^H users as a
+> rhetorical device.
 
-Maybe one can add another flag, 'untracked' or '+untracked".
+So we're changing the default branch name from "master" to "main"?
 
-So it can be -dirty+untracked or only +untracked or only -dirty.
+For what purpose?  What problem are we trying to solve?
 
-I could live with that also as i can see from the version string whats 
-going on.
+Is the word "master" now going to become a taboo word that we're all
+afraid to say?
 
+Isn't this all a little silly? What's wrong with the term "master"?
+It's a well understood and commonly used term that denotes
+"authority", i.e. the master branch is the authoritative branch.
+People sleep in master bedrooms. Universities have headmasters and
+award master's degrees. Skilled people become master craftsmen and
+give master classes (e.g. master plumber, master diver). Recording
+artists master a track. Skilled chess players become chess masters
+etc.
 
-Better suggestion?
-
-
-Regards,
-
-
-ERnst
-
+-Brandon
