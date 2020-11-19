@@ -5,71 +5,66 @@ X-Spam-Level:
 X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CAB52C388F9
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 10:47:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A76BC6369E
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 10:50:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 610672225B
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 10:47:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 017DA246EF
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 10:49:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="TUgTZ6p8"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="G4ZiKb2i"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726486AbgKSKrV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Nov 2020 05:47:21 -0500
-Received: from mout.gmx.net ([212.227.15.18]:41333 "EHLO mout.gmx.net"
+        id S1726740AbgKSKtj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Nov 2020 05:49:39 -0500
+Received: from mout.gmx.net ([212.227.15.15]:51073 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725905AbgKSKrV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Nov 2020 05:47:21 -0500
+        id S1726575AbgKSKti (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Nov 2020 05:49:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1605782806;
-        bh=93pFxT6Dmc/9Wkya9FQrD/7VteEG/9hy+Z+ijejuOv0=;
+        s=badeba3b8450; t=1605782970;
+        bh=pUEe6Y9rj4uw82JfxxfBUP6npAtHVeyQyNEQi7qJdiY=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=TUgTZ6p8AHK13Zxk35CehOlVx95JSm3w3iFXUNHtHevSQTTn+dKayugfDDrmGGAP3
-         1AeQiPRzinIaUYMEF+U4fusjE3U5MC5vaXpSTYgfy29E0kGSBVM9/9BbyaZgE4q91u
-         TitoQExl80izphvxTgtpiDPOoskpBixxjq7wLpIg=
+        b=G4ZiKb2iTgvIJb9JD2tiZ2W+Q961oLyUQNBdWconubozzdGnbrZADb0uiw1L2sExd
+         iia2IvB/FkiO4BbYQLTVqXZa9gOe/FWKH8CRazhQWlIOilMFELu/N6eIQm4Ow7WgQo
+         il//4vFpxDtNPFcZCfQNSMhbp8U+/bgDoHbFwoY4=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.26.22.105] ([213.196.212.61]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N2V0H-1kGDdJ0Y1f-013twL; Thu, 19
- Nov 2020 11:46:46 +0100
-Date:   Thu, 19 Nov 2020 11:46:45 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MSbxD-1kqvml0zpR-00SuwQ; Thu, 19
+ Nov 2020 11:49:30 +0100
+Date:   Thu, 19 Nov 2020 11:49:30 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>
-cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Theodore Ts'o <tytso@mit.edu>,
-        Don Goodman-Wilson <don@goodman-wilson.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [RFC/PATCH] tests: support testing with an arbitrary default
- branch (sort of)
-In-Reply-To: <87ima2rdsm.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2011191050550.56@tvgsbejvaqbjf.bet>
-References: <nycvar.QRO.7.76.6.2011131519170.18437@tvgsbejvaqbjf.bet> <20201113161320.16458-1-avarab@gmail.com> <20201113191418.GA764688@coredump.intra.peff.net> <nycvar.QRO.7.76.6.2011132229480.18437@tvgsbejvaqbjf.bet> <87h7psg6lz.fsf@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.2011162118060.18437@tvgsbejvaqbjf.bet> <87ima2rdsm.fsf@evledraar.gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t1309: use a non-loaded branch name in the `onbranch`
+ test cases
+In-Reply-To: <874kllre8f.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2011191147490.56@tvgsbejvaqbjf.bet>
+References: <pull.791.git.1605709410465.gitgitgadget@gmail.com> <87a6vera3q.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.2011190107160.56@tvgsbejvaqbjf.bet> <874kllre8f.fsf@evledraar.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1318466315-1605782808=:56"
-X-Provags-ID: V03:K1:EIzockhuUo2E/Ib/DZejwEC8KHkgWIR6M5dflYc7C/4ofJwzmFa
- MAqRoDU4CMH6G1j34/H55JJ5BEMWQrZTkL/ITtn9B8iO/N0WsrXBeVT0cIVOXS3i247dvGZ
- jixXiOfEjKol95vKo7GFFPMwfePob3B2oMSPKC0Zw7t8p5OOZ8EfKa9gZbiB0EDhXblV5W0
- B1n14zd2aXxNmYxXI/x2w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:bKwbT20zQVI=:h0vA3opM17Cr8WYGwdwtFq
- UQzst6SyzWhMPXYzzAXVO9fBAB6sgIRognHnYGxkwVME2QB6JXrVZQcz1GGZUw7CgjCT06HQy
- TarS7NaeoAXmtb28cT3hRMTEKn3DKtmGBcoBDm2GdWFvL+knYvGDn6a40kWbh3OZ+2lm3q4eI
- qk2byDa67725HXQwgPqflEDCNQjDWIn6+4Pb73LgbyTD81VEi5J/BGjOKGjqJEBPr6tFhxtqL
- 2flpjBJRazBjjb/pU8cb0dq1u3jIkQNieBk4pOyk9DPCyC2WMGIOrrPrn3CePf5MuU05/45Pg
- MkdcTJ0feZGrPKglvr6DXRR8phdi/Fa46FMig1nNBFyycESqBAMbSJRezQZat0R+zW6Ix39J2
- SCKtpclSmoZy0caU0DXgcde2ScDelIC91d/jUUNWNUELb0xS7MGqZGr4Nnwxculb+0FbJFbCl
- ystqOXFysGGtjtvt6UeVqevCUSWNzzEAvjaAQ72/zsvj6LQ4+h9XTVWg0QW4nChqDi7K2funJ
- b7lgLPIlVaJ7rkoAuN8gw83u1X9fPGmsc8F3YzrtXII/KFAvB4uCpyU6hZHVVfmcNoiA8ZzGt
- jrmHRNEo3C7OHEk3mTSljrFJH/nJ0GZyxCVMybiSDQ1sxS5KV4fug2fMZdgHOfGVQ+V751F1w
- QLLqTvyUujNmHJWTsc4B625tIYui7tH4r7DUfUQp8Zplvm2BkPFSkyeRGquT9yQ4K2kA/T5BA
- gGDZOwUlnQLo8W0s81XLsWjp0ewoO0e98ElwUZeaXByVLo8RfcUHJC2cpztwyiZaJpM6NqYc4
- Wy+GJcX8QgasYYP0oOzL31eHnl76pXZFKTaaJhdz2565cVRg8OkYSZGRXoBPDSY20diCipo92
- GsCjJsrAg7Dia5vr4MaqCBNrvSdD7zzYrxmO/fyS8=
+Content-Type: multipart/mixed; boundary="8323328-1424220650-1605782972=:56"
+X-Provags-ID: V03:K1:gKSVxZbuFTuyOI6L94YZDdggwbLErrAcuVt0KbGzpv9N3WRsk/1
+ iwaY6X5pRvvC0WWzvtm2cz9OvZW9aigJyComP/c4rMONpd0eEF1Q/5ovnqWlcfQxlFl6KlC
+ pWbNJK3Mn3wApiEm/Q/Op+v/UYqjmZ9sI0rNvIEbysTVtbKXghzfGdRO+bkFlJenjVmTUlu
+ y0Hf1yq2/wjaSGiTSnUzA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:9bTQq1wKR4k=:m1yBbiSdpbG9ePiKB5lmff
+ RJzEewnwoGZkL0vGFM8JCgBxbV+SKf6BzIdqjjHOYtrDunIIusXbA39pcNkYvrK4Dqt+tC1zk
+ TUQym28wOoxC9fK4WtxfM08vxklqKjSf4on++5goLeSx7rKDajiqEMbzjvXCgUfnv3OPrOYOk
+ EBPZrDHpQ9Ks7vFxrPJ4JgCoBhDvMjwDH3WI1ee6TEsAY19dMUbFKB5Ttlm2ns0AzvJD4fYa4
+ 53i8NYVetA5a53iKHCI3fHDoxIHamFWUUUGFXRboxUbJwBUZdtJdPdOtbyVyA4seyXtiFP4uF
+ liUK1VHYG1UgD8D5HX3RmkohvqOtU8gBTqG69FOKmz77+l9XuXiVQgKzncn3Lqyai249kIHeQ
+ KvJmbsaNUn+ESIlsholT4/okIaB2mKsqAWMAFG19zlfmZPII3aZlLnP0fkMN6g+0ksZZjnTcW
+ f9TKi4FhvrpvWK50VZRbYZ9So9cn55qfugXneOsqGBxFfwJ4qaIB34+5eyX3k13XSRiHZXSlT
+ qK+yGpJGnmAkZvzJSJET9D2oO93omxbFheO4M0q3QzBZvGkVV0/0OljbBqaAskTFWN8ZY8LPE
+ iFiZEAJjDxjWH9EIAEQSkTVWLpzVeF8sT3ATflBnzBGDEqDgkJAQqm1UvZcTLy87ANKjsQm3b
+ 6Q305uAxoroNAssjH6sgHbZaPGMqPY4RVGK1XI1TqOib0kJ5lsF7FCz0w6yL2saNhj223LoI8
+ eGf1UmiRXkjttORtEmH5zJ/CMvSa9V8pUm3aCR48AI2sDiImbVW8GGV1rF+41lcP7JzV1Kkri
+ xUo+uqosrrrzYC5Zi3bG2ayfETVv0EhXqQyzLRt/+WyT+CErnrWeiHJLFWPRO0UNMXw66e4na
+ tNmDB64mUNAylrwkKjGX2fY4l7G+NZqH1x37QB/wk=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -77,109 +72,68 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1318466315-1605782808=:56
+--8323328-1424220650-1605782972=:56
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
 Hi =C3=86var,
 
-I agree with pretty much all you said, just wanted to comment on a couple
-things:
+On Thu, 19 Nov 2020, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-On Wed, 18 Nov 2020, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-
-> In case I didn't make it clear I have no objection entirely replacing
-> "master" with "main" in the tests. I just had a practical
-> concern/question about coverage while it was landing, and a suggestion
-> of whether perhaps there was an easier/faster way to do the "init"
-> change first by omitting some of the test churn.
+> On Thu, Nov 19 2020, Johannes Schindelin wrote:
 >
-> But if you want to do all the legwork that's fine by me :)
-
-I started it, I finish it, I guess. Well, technically Don started it...
-
-> I think some of the people advocating this change can rightly look at
-> some of the previous E-Mail traffic and see what are at best rants and
-> at worst some political grandstanding that's at best pretty irrelevant
-> to any proposed changes in git.git.
+> > On Wed, 18 Nov 2020, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >
+> >> On Wed, Nov 18 2020, Johannes Schindelin via GitGitGadget wrote:
+> >>
+> >> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >> >
+> >> > Therefore, the actual branch name does not matter at all. We might
+> >> > just as well avoid racially-charged names here.
+> >>
+> >> It seems to me the actual name matters a lot, and it must whatever
+> >> the default branch name is.
+> >
+> > Nope. Not at all. Because what we're exercising is the code paths when
+> > we _don't_ have a branch name to work with.
+> >
+> > In the non-Git case, this is trivial to see. There is not even a
+> > repository! How can there be a branch?
+> >
+> > In the early config case, it is too early to access the refs. I meant
+> > to reference (but forgot) the commit 85fe0e800ca (config: work around
+> > bug with includeif:onbranch and early config, 2019-07-31) because that
+> > commit's commit message describes the catch-22 that is the reason why
+> > the early config cannot see the current branch name (if any).
+> >
+> > I should probably have thought of referencing 22932d9169f (config:
+> > stop checking whether the_repository is NULL, 2019-08-06) for the
+> > second test case, too.
+> >
+> > So again, these two test cases do _not_ exercise the code path where
+> > another config file is included. To the contrary, they try to prevent
+> > a regression where `onbranch` would segfault in one case, and BUG in
+> > the other (in both cases because the now-fixed code used to try to
+> > look at the current branch name _anyway_).
+> >
+> >> I.e. what the test is doing is producing intentionally broken config,
+> >> and asserting that we don't read it at an early stage.
+> >>
+> >> Therefore if we regressed and started doing that the test wouldn't
+> >> catch it, because the default branch name is "master", or "main"
+> >> if/when that refs.c change lands, neither of which is "topic".
+> >
+> > No, if we regressed, the code would start to throw a BUG, or a
+> > segfault, respectively.
+> >
+> > We never expect these two test cases to look at any branch name at
+> > all.
 >
-> But that doesn't mean that there aren't some legitimate concerns.
+> Thanks. I mis(understood|read) it.
 
-And that's so sad to read. It is disheartening how eager certain people
-were to drown out others' voices, then claiming that they had not heard
-any views opposing their own. I mean, yeah, if you want to hear other
-opinions, it sure helps to stop talking for a while, and to start
-listening.
-
-I consider myself lucky that I _did_ get the chance to listen. Related to
-my work in GSoC and Outreachy, and through my day job, wonderful people
-approached me with their stories and perspectives. I am really glad that I
-had the opportunity to hear those.
-
-As to legitimate concerns: yes, you are right. There are those. If your
-documentation says that you should avoid committing directly to the
-`master` branch, and then you clone a popular Open Source project and it
-does not even _have_ a `master` branch, that might be a bit puzzling.
-
-Note that I used a clone as an example, not `git init`, because it is a
-much more common operation. Git is a tool for developers to communicate,
-in a way, after all, even if it _can_ be used for working in isolation,
-too. Hence clones outnumber inits. And that communication of ideas, of
-code, and to combine efforts, to collaborate, that is what Git really
-facilitates. That is why I find it so important to be inclusive, to be
-inviting underrepresented developers. There is such a lot of untapped
-potential there, and even if using a non-offensive default branch name is
-but a _teeny_ tiny step to open the door a little, it is at least a step
-in the right direction.
-
-Now, since I mentioned `clone`: please note that the default branch name
-used in a `clone` is squarely outside the Git project's control. It is
-decided by the maintainer(s)/communities of the respective projects. And
-that's exactly how it should be.
-
-Therefore, as you said before, it does not really matter all that much
-at what date we will change the fall-back for `init.defaultBranch`.
-
-At the same time, I still think that it is valuable to transition the test
-suite _now_, to be as independent on a specific default branch name as
-possible, if only to ensure that above-mentioned projects can choose
-freely what they want their primary branch to be called and Git works just
-fine.
-
-> I do 100% agree that the s/master/main/g change of the default should be
-> made in one form or another. In my mind that doesn't even require a
-> consideration of the political motivations at this point as far as
-> git.git is concerned, just:
->
->  1. Major Git hosting providers already made the change
->
->  2. Realistically a lot/majority of git's user base interact with that
->     in a major way.
->
->  3. A discrepancy in any default between /usr/bin/git and those
->     providers is more confusing than not.
-
-Right.
-
-I originally thought that we should switch the default branch name in
-v2.30 for that reason, but I now think that adding that advice is probably
-a less disruptive, and almost equally supportive solution.
-
->  4. #3 doesn't mean they say "jump" we say "how high" whatever the
->     change is.
->
->     But in this case the default is an entirely arbitrary default. Not
->     e.g. that they decided to add some ill-thought out header to the
->     object format or whatever.
->
-> P.S.: Shouldn't the pull patch in d18c950a69f be using the advice
->      facility, not warning()?
-
-I submitted a patch for that, but unfortunately forgot to Cc: you:
-https://lore.kernel.org/git/pull.795.git.1605781349528.gitgitgadget@gmail.=
-com
+I guess the commit message could use an update.
 
 Ciao,
 Dscho
 
---8323328-1318466315-1605782808=:56--
+--8323328-1424220650-1605782972=:56--
