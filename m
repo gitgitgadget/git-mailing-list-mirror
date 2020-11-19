@@ -2,158 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ADA3FC6369E
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 17:56:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B351C63697
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 18:06:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 545F8246AD
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 17:56:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C95A246CA
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 18:06:32 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OX3gBKN2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728633AbgKSR4K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Nov 2020 12:56:10 -0500
-Received: from cloud.peff.net ([104.130.231.41]:35814 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728412AbgKSR4K (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Nov 2020 12:56:10 -0500
-Received: (qmail 31458 invoked by uid 109); 19 Nov 2020 17:56:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 19 Nov 2020 17:56:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30393 invoked by uid 111); 19 Nov 2020 17:56:08 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 19 Nov 2020 12:56:08 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 19 Nov 2020 12:56:08 -0500
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] tests: make sure nested lazy prereqs work reliably
-Message-ID: <20201119175608.GA132922@coredump.intra.peff.net>
-References: <20201118190414.32616-1-szeder.dev@gmail.com>
- <20201119155824.GB25426@coredump.intra.peff.net>
+        id S1729212AbgKSSGY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Nov 2020 13:06:24 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51415 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728724AbgKSSGX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Nov 2020 13:06:23 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ED5A69805D;
+        Thu, 19 Nov 2020 13:06:21 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fIPV78qB0Tq/xVhzBIOoQ9vkMqE=; b=OX3gBK
+        N22AJLnybUs309oFLGtkk+4zbpIruc3E5bqtKANN6zCNrTjhrSfbnDR2An/+9iIs
+        8f974ulDIjdCPb1giLnkdHi0zvpvGk8qeq4zMziud2s6sZS9V56k0eJTu1HFVxLS
+        gavsDJ0ZOUcSbb5vHSkanQr4d0GR9PmWkLvEk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=FCFXILoTfrOSQ1VD4CBfy9c2VSeoqLC1
+        ApIalXXeDZzhJVwsiWtoX8/BI2OJOen70TMTFlUCLvr0/opX8FwVs8G6FYrUE5ZH
+        aHykRB6igGf+GpS48bQ+eWSOR5nsZlhniLQy3V9w4MwUz15V75SVQWkN3MR9T3JN
+        lcqKGqOmSJU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E5D9A9805C;
+        Thu, 19 Nov 2020 13:06:21 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 674449805A;
+        Thu, 19 Nov 2020 13:06:21 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+Subject: Re: ds/maintenance-part-3 (was Re: What's cooking in git.git (Nov
+ 2020, #02; Mon, 9))
+References: <xmqq7dqu9jwh.fsf@gitster.c.googlers.com>
+        <d0123439-236c-1a62-294b-a3373465eadb@gmail.com>
+        <20201116235642.GA15562@google.com>
+        <xmqqh7po7r3w.fsf@gitster.c.googlers.com>
+        <20201117010709.GB15562@google.com>
+        <29212864-ab96-5757-cbfb-f5621a43f8d8@gmail.com>
+        <xmqqlfez6alb.fsf@gitster.c.googlers.com>
+        <f8b1a1cc-dcda-0e53-4c46-bb5bfff3fdd4@gmail.com>
+        <xmqqd00ayttk.fsf@gitster.c.googlers.com>
+        <2c2db228-069a-947d-8446-89f4d3f6181a@gmail.com>
+Date:   Thu, 19 Nov 2020 10:06:19 -0800
+In-Reply-To: <2c2db228-069a-947d-8446-89f4d3f6181a@gmail.com> (Derrick
+        Stolee's message of "Thu, 19 Nov 2020 08:25:50 -0500")
+Message-ID: <xmqq5z61z0f8.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20201119155824.GB25426@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: EDDF4C56-2A91-11EB-80B8-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 19, 2020 at 10:58:24AM -0500, Jeff King wrote:
+Derrick Stolee <stolee@gmail.com> writes:
 
-> > +if test -z "$GIT_TEST_FAIL_PREREQS_INTERNAL" && test "$nestedworks" != yes
-> > +then
-> > +	say 'bug in test framework: nested lazy prerequisites do not work'
-> > +	exit 1
-> > +fi
-> 
-> I was surprised to see this bare exit, because I know we have some
-> functions (run_sub_test_*) to help with testing the framework itself. It
-> looks like the other prereq tests don't use it either, though. I wonder
-> if there is a technical reason, or if they were simply added at a
-> different time. (Either way, I am OK for your new test to match the
-> surrounding ones like you have here).
+> On 11/18/2020 9:16 PM, Junio C Hamano wrote:
+>> Derrick Stolee <stolee@gmail.com> writes:
+>> 
+>>> I will get started on this fix as a series on top of part-3.
+>> 
+>> Thanks.  Not just part-4 but Dscho's test update also depends on
+>> this, so let's see it corrected soonish.
+>
+> I got a decent start yesterday, but I'll put this at the top
+> of my pile for today.
 
-I took a look at converting some of the existing tests. This seems to
-work. It's a bit longer to read, perhaps, but I kind of like that the
-expected outcome is all laid out. It also pollutes the test output less
-(e.g., if you wanted to count up skipped tests in the whole suite, you'd
-get a bunch of noise from t0000 for these uninteresting skips).
-
-Thoughts? I think this is something I'd do on top of your patch.
-
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index f4ba2e8c85..f369af76be 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -759,43 +759,50 @@ test_expect_success '--run invalid range end' "
- 	EOF_ERR
- "
- 
--
--test_set_prereq HAVEIT
--haveit=no
--test_expect_success HAVEIT 'test runs if prerequisite is satisfied' '
--	test_have_prereq HAVEIT &&
--	haveit=yes
--'
--donthaveit=yes
--test_expect_success DONTHAVEIT 'unmet prerequisite causes test to be skipped' '
--	donthaveit=no
--'
--if test -z "$GIT_TEST_FAIL_PREREQS_INTERNAL" -a $haveit$donthaveit != yesyes
--then
--	say "bug in test framework: prerequisite tags do not work reliably"
--	exit 1
--fi
--
--test_set_prereq HAVETHIS
--haveit=no
--test_expect_success HAVETHIS,HAVEIT 'test runs if prerequisites are satisfied' '
--	test_have_prereq HAVEIT &&
--	test_have_prereq HAVETHIS &&
--	haveit=yes
--'
--donthaveit=yes
--test_expect_success HAVEIT,DONTHAVEIT 'unmet prerequisites causes test to be skipped' '
--	donthaveit=no
--'
--donthaveiteither=yes
--test_expect_success DONTHAVEIT,HAVEIT 'unmet prerequisites causes test to be skipped' '
--	donthaveiteither=no
-+test_expect_success 'tests respect prerequisites' '
-+	run_sub_test_lib_test prereqs "tests respect prereqs" <<-\EOF &&
-+
-+	test_set_prereq HAVEIT
-+	haveit=no
-+	test_expect_success HAVEIT "prereq is satisfied" "
-+		test_have_prereq HAVEIT &&
-+		haveit=yes
-+	"
-+
-+	donthaveit=yes
-+	test_expect_success DONTHAVEIT "prereq not satisfied" "
-+		donthaveit=no
-+	"
-+
-+	test_set_prereq HAVETHIS
-+	haveit=no
-+	test_expect_success HAVETHIS,HAVEIT "multiple prereqs" "
-+		test_have_prereq HAVEIT &&
-+		test_have_prereq HAVETHIS &&
-+		haveit=yes
-+	"
-+
-+	donthaveit=yes
-+	test_expect_success HAVEIT,DONTHAVEIT "mixed prereqs (yes,no)" "
-+		donthaveit=no
-+	"
-+
-+	donthaveiteither=yes
-+	test_expect_success DONTHAVEIT,HAVEIT "mixed prereqs (no,yes)" "
-+		donthaveiteither=no
-+	"
-+	test_done
-+	EOF
-+	check_sub_test_lib_test prereqs <<-\EOF
-+	ok 1 - prereq is satisfied
-+	ok 2 # skip prereq not satisfied (missing DONTHAVEIT)
-+	ok 3 - multiple prereqs
-+	ok 4 # skip mixed prereqs (yes,no) (missing DONTHAVEIT of HAVEIT,DONTHAVEIT)
-+	ok 5 # skip mixed prereqs (no,yes) (missing DONTHAVEIT of DONTHAVEIT,HAVEIT)
-+	# passed all 5 test(s)
-+	1..5
-+	EOF
- '
--if test -z "$GIT_TEST_FAIL_PREREQS_INTERNAL" -a $haveit$donthaveit$donthaveiteither != yesyesyes
--then
--	say "bug in test framework: multiple prerequisite tags do not work reliably"
--	exit 1
--fi
- 
- test_lazy_prereq LAZY_TRUE true
- havetrue=no
+Thanks.
