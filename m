@@ -2,191 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD65BC63777
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 22:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B005C388F9
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 22:25:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4640920B1F
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 22:13:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BF4EF208FE
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 22:25:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JHClFCM2"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fkR/PMyG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726716AbgKSWNA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Nov 2020 17:13:00 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50521 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726342AbgKSWNA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Nov 2020 17:13:00 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C09C9100A8B;
-        Thu, 19 Nov 2020 17:12:53 -0500 (EST)
+        id S1726827AbgKSWYl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Nov 2020 17:24:41 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64440 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726362AbgKSWYl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Nov 2020 17:24:41 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 967FF116A61;
+        Thu, 19 Nov 2020 17:24:39 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ngyNuw7hBr0V
-        TW2NIy+XWWB0A9w=; b=JHClFCM2vriei4nnYv2o9Gmrnpz7WIKey1m6p1qIDtE4
-        J2OuDMQcC/5ph46QiFqjL3PhqNE2zds8xjjBgQGvxV0qnEoO4UHYNNo5Wnk6DE1O
-        9jfnKaH8JFJDW5lgLSYeUcmkHAjIKJtVahjFxoOpHtZUFZt9NYj2dECFv6efBFQ=
+        :content-type; s=sasl; bh=8oOXKb+8RgHfz6/UZaO8g1uk0e8=; b=fkR/PM
+        yGnbaUPdI+J6rXvlFqgY7GayZecS5hmbbvl0KUadokQ5vHM7P5JrlX1wvoM6H5Jl
+        H6yexin5FmY3ry5Iv5sGMz4+eXFVJXsUCP6/rQAj4QLB2+CHjXPrS2UrRGSSqAZe
+        ILAk24zxpWZz/VeDKXQuD1MyB5ahBdmvG2P38=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=UiY5OU
-        4QIBflfOnYvjBXoHGF+k3C4dk6to+jKmXs1bov6GprntJXvfipG/8LBZuI8N7XGk
-        AcjsyT7eUJbGwaqZEu1YfQkROanoH3qTX74sJfW5hsYRRKE2ye24VGzQ3BgxPeP6
-        ZL7wYXZw3APJa7/+BQ2nSz5GOKuWajuMKnY9c=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B89EC100A8A;
-        Thu, 19 Nov 2020 17:12:53 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=cf1rLveddSAI2Gq3PkpD6xD/sXMfiCJU
+        Gqg83+Yn/RECZMt6trg+6mbOu+tBx7vZDOLN+FX43dxLZBHcXlBlOnLN/1ojcp7N
+        IeB2aPgiv8lFuvX1rDIq6vn0vzI2vrS0+C3canhUavGwKnXn+56uQW7BYo01SfMM
+        CuXO2Jutc7E=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8EEC4116A60;
+        Thu, 19 Nov 2020 17:24:39 -0500 (EST)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
+Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AB2A2100A84;
-        Thu, 19 Nov 2020 17:12:49 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7F6AA116A59;
+        Thu, 19 Nov 2020 17:24:35 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Alex Henrie <alexhenrie24@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] pull: colorize the hint about setting `pull.rebase`
-References: <pull.795.git.1605781349528.gitgitgadget@gmail.com>
-Date:   Thu, 19 Nov 2020 14:12:48 -0800
-In-Reply-To: <pull.795.git.1605781349528.gitgitgadget@gmail.com> (Johannes
-        Schindelin via GitGitGadget's message of "Thu, 19 Nov 2020 10:22:29
-        +0000")
-Message-ID: <xmqqsg95vvvj.fsf@gitster.c.googlers.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/7] t1300: test "set all" mode with value_regex
+References: <pull.796.git.1605801143.gitgitgadget@gmail.com>
+        <2da2131114eb47e70ccaf8fb9c51bf7fb5b173b0.1605801143.git.gitgitgadget@gmail.com>
+Date:   Thu, 19 Nov 2020 14:24:33 -0800
+In-Reply-To: <2da2131114eb47e70ccaf8fb9c51bf7fb5b173b0.1605801143.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Thu, 19 Nov 2020
+        15:52:17 +0000")
+Message-ID: <xmqqo8jtvvby.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5C5F4DEE-2AB4-11EB-908D-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 01138E26-2AB6-11EB-AF41-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> In d18c950a69f (pull: warn if the user didn't say whether to rebase or
-> to merge, 2020-03-09), a new hint was introduced to encourage users to
-> make a conscious decision about whether they want their pull to merge o=
-r
-> to rebase by configuring the `pull.rebase` setting.
->
-> This warning was clearly intended to advise users, but as pointed out i=
-n
-> https://lore.kernel.org/git/87ima2rdsm.fsf%40evledraar.gmail.com, it
-> uses `warning()` instead of `advise()`.
->
-> One consequence is that the advice is not colorized in the same manner
-> as other, similar messages. So let's use `advise()` instead.
-
-The advise() gives unconditional output like warning(), so we still
-take advantage of the variable's self-squelching nature.  I am OK
-with the change.
-
-Besides coloring (which I personally find it distracting but not so
-strongly to forbid others from using), advise() behaves better when
-showing multi-line messages, and that would be another reason why
-we want to use it over warning() here.
-
-Will queue.  Thanks.
-
-> Pointed-out-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.co=
-m>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->     pull: colorize the hint about setting pull.rebase
->    =20
->     I see that Junio briefly wondered
->     [https://lore.kernel.org/git/xmqqeeuecngu.fsf@gitster-ct.c.googlers=
-.com/]=20
->     about using an advice here, and concluded that it was not needed be=
-cause
->     the warning is self-squelching (i.e. there is already a config sett=
-ing
->     that will silence this warning). But that missed the fact that warn=
-ings
->     are not colorized, whereas advice is.
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-795%2=
-Fdscho%2Fcolorize-pull.rebase-advice-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-795/dsch=
-o/colorize-pull.rebase-advice-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/795
->
->  builtin/pull.c               | 24 ++++++++++++------------
->  t/t7601-merge-pull-config.sh |  7 +++++--
->  2 files changed, 17 insertions(+), 14 deletions(-)
->
-> diff --git a/builtin/pull.c b/builtin/pull.c
-> index 17aa63cd35..1034372f8b 100644
-> --- a/builtin/pull.c
-> +++ b/builtin/pull.c
-> @@ -345,18 +345,18 @@ static enum rebase_type config_get_rebase(void)
->  		return parse_config_rebase("pull.rebase", value, 1);
-> =20
->  	if (opt_verbosity >=3D 0 && !opt_ff) {
-> -		warning(_("Pulling without specifying how to reconcile divergent bra=
-nches is\n"
-> -			"discouraged. You can squelch this message by running one of the fo=
-llowing\n"
-> -			"commands sometime before your next pull:\n"
-> -			"\n"
-> -			"  git config pull.rebase false  # merge (the default strategy)\n"
-> -			"  git config pull.rebase true   # rebase\n"
-> -			"  git config pull.ff only       # fast-forward only\n"
-> -			"\n"
-> -			"You can replace \"git config\" with \"git config --global\" to set=
- a default\n"
-> -			"preference for all repositories. You can also pass --rebase, --no-=
-rebase,\n"
-> -			"or --ff-only on the command line to override the configured defaul=
-t per\n"
-> -			"invocation.\n"));
-> +		advise(_("Pulling without specifying how to reconcile divergent bran=
-ches is\n"
-> +			 "discouraged. You can squelch this message by running one of the f=
-ollowing\n"
-> +			 "commands sometime before your next pull:\n"
-> +			 "\n"
-> +			 "  git config pull.rebase false  # merge (the default strategy)\n"
-> +			 "  git config pull.rebase true   # rebase\n"
-> +			 "  git config pull.ff only       # fast-forward only\n"
-> +			 "\n"
-> +			 "You can replace \"git config\" with \"git config --global\" to se=
-t a default\n"
-> +			 "preference for all repositories. You can also pass --rebase, --no=
--rebase,\n"
-> +			 "or --ff-only on the command line to override the configured defau=
-lt per\n"
-> +			 "invocation.\n"));
->  	}
-> =20
->  	return REBASE_FALSE;
-> diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.s=
-h
-> index c5c4ea5fc0..6774e9d86f 100755
-> --- a/t/t7601-merge-pull-config.sh
-> +++ b/t/t7601-merge-pull-config.sh
-> @@ -29,8 +29,11 @@ test_expect_success 'setup' '
-> =20
->  test_expect_success 'pull.rebase not set' '
->  	git reset --hard c0 &&
-> -	git pull . c1 2>err &&
-> -	test_i18ngrep "Pulling without specifying how to reconcile" err
-> +	git -c color.advice=3Dalways pull . c1 2>err &&
-> +	test_decode_color <err >decoded &&
-> +	test_i18ngrep "<YELLOW>hint: " decoded &&
-> +	test_i18ngrep "Pulling without specifying how to reconcile" decoded
+> +test_expect_success 'set all config with value_regex' '
+> +	q_to_tab >initial <<-\EOF &&
+> +	[abc]
+> +	Qkey = one
+> +	EOF
 > +
->  '
-> =20
->  test_expect_success 'pull.rebase not set and pull.ff=3Dtrue' '
->
-> base-commit: faefdd61ec7c7f6f3c8c9907891465ac9a2a1475
+> +	cp initial .git/config &&
+
+Not a new problem with this patch, but does the above pattern
+introduce potential problems?  I am wondering if overwriting the
+config file with a little piece that has only the stuff the test is
+interested in, while wiping the parts that may be essential for
+repository integrity (e.g. "extensions.objectFormat"), is OK in the
+long run (brian cc'ed for his sha256 work).  There also are
+autodetected crlf settings etc. that are in the .git/config when a
+test repository is created, and we probably would want to keep them
+intact.
