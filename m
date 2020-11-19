@@ -2,147 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C385C63798
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 23:17:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8816BC388F9
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 23:29:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 34AE4221FE
-	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 23:17:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30B8122227
+	for <git@archiver.kernel.org>; Thu, 19 Nov 2020 23:29:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yXwCCAaV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gNmfWbwZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726532AbgKSXRe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Nov 2020 18:17:34 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60641 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726325AbgKSXRe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Nov 2020 18:17:34 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 562B810130C;
-        Thu, 19 Nov 2020 18:17:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=WDeIx9Kw50TLPlLEdKB+sO3TOlw=; b=yXwCCA
-        aV/DRfYfO2SxgXlnSjqcFDroTIGzjeMNgV5W/uAZlusj55Q3WQFMsQQaVDTRJiH0
-        vEO6KnEVXB3gjF34vl60bpfnhBEGL5+pIbbnz0dILvxCaRY8vXfC0vK+dOR+BXcz
-        FIe9KySBtGkFgyN89/um3n4z/0BMxIF+91XYw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=E0jZydB9NSu1oQVYshx7UOpWXg0KfCmm
-        Ti7Je/RFAs/EhjAdKRP1yHgqH4dKJgCh+KnqVFWBnqh1K+WLZMNFLMlDHE/tlxO/
-        kFCkjgLMjsE+aWnnk0LurPVYfpYe74mkR24d0FQCua5UfyknHf+VO6+V08QTo3eG
-        Abd4lWA4kuc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4DF2D10130B;
-        Thu, 19 Nov 2020 18:17:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5C3D0101309;
-        Thu, 19 Nov 2020 18:17:29 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 7/7] maintenance: use 'git config --literal-value'
-References: <pull.796.git.1605801143.gitgitgadget@gmail.com>
-        <1d1c2fd23e805e0f25edd324a614715b1d11a2bb.1605801143.git.gitgitgadget@gmail.com>
-Date:   Thu, 19 Nov 2020 15:17:27 -0800
-In-Reply-To: <1d1c2fd23e805e0f25edd324a614715b1d11a2bb.1605801143.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Thu, 19 Nov 2020
-        15:52:23 +0000")
-Message-ID: <xmqq7dqhvsvs.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727117AbgKSX3T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Nov 2020 18:29:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34348 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727041AbgKSX3T (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Nov 2020 18:29:19 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B29DC0613CF
+        for <git@vger.kernel.org>; Thu, 19 Nov 2020 15:29:18 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id l1so8162603wrb.9
+        for <git@vger.kernel.org>; Thu, 19 Nov 2020 15:29:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ygJ4vJNDOAXyxtlwBmuJAkbHmMm6n+9K7CZf4We5Mok=;
+        b=gNmfWbwZaxf0QVjkNPqlcFZbix2CkkcmT0T285z1rXQXkw3GJ/7WWqrEqm4s03dG/P
+         0UVJqkXeXfWMfZkrXFLMr22FFzwtOmJOv59qDo+jhBWdeDKhjc8k0hlzYDIO3p2V4Zvn
+         cVOmutEIZzsuOgbUtp8LMsATJaNfip+CRVEtk45mgtovyvZMhq7rJy16fKcc5qYXtnY0
+         HAbY+VfsZl1yqPCs4arewgZ4km0lEL9NEnplRVs2PMy8CL/czPMlGAyfwwTSj2dER69X
+         ddpIzpoghDe9ALMxJScBcPHjefDHSoDUsDIXC0x1Pi57qZCZ3W4Knjq3jN5YCMjMpFsg
+         WNDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ygJ4vJNDOAXyxtlwBmuJAkbHmMm6n+9K7CZf4We5Mok=;
+        b=o0C4Yv2VzKbgkx/gIGsyNsZebjWZLHHv3seXWbN2JVkURJ4hlSnxBUmPtnsLEK440P
+         /ZMJrYk1B2KOljp0SfYp2GU5U5KisqgoHQlvTknBylWNBqBUKpBdFkaLiV5tAt66myFN
+         uSh+BxdUnJg+R+6O3BO/YIqHuuVSsB/NBRvraG0jna83lnjoCZ9bMg2mbN0AL4T4Gj5X
+         yX3fECFnut/TheVy/5OVaM2n/KIM4Ff25VTZQr1pIdoAeHAPHA7P9AkMKgXRSStmZF1l
+         BYdd040fURqBRBTRcKSLULes+glxhwWJ2obUxZP2Bmrt82Xm7RqmsfEmIAZgAR+Z66y9
+         jyfw==
+X-Gm-Message-State: AOAM5317npre2Us47ucqIe/k89mPX3dP9kWzVIff4yoD2DZSsBt2EoWV
+        nqyGOWeog2rmoTNucs8rKIH4xw0Sraf7ZTOztW4=
+X-Google-Smtp-Source: ABdhPJwhgEILgz9EoGlkrFnNapHkwJiVuaT+1yhU+tQElS4YF1N0d7nRvcgmpsgpqq+al5ujQj1pE+PLBuMEFNhte+M=
+X-Received: by 2002:adf:e788:: with SMTP id n8mr12398962wrm.84.1605828557371;
+ Thu, 19 Nov 2020 15:29:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 64D73686-2ABD-11EB-8584-D609E328BF65-77302942!pb-smtp21.pobox.com
+References: <CAMP44s3BJ3dGsLJ-6yA-Po459=+m826KD9an4+P3qOY1vkbxZg@mail.gmail.com>
+ <20201113010107.GL6252@camp.crustytoothpaste.net> <CAMP44s1U1FevS7NrAYxvgVyzfR5tnD9-+BbPdw5bKnaNHkyD+A@mail.gmail.com>
+ <20201113051408.GA3985404@mit.edu> <CAMP44s3AeESm7VBKbar0ir_Py35g99ZW6bNX_=AK4N=OFkcrdA@mail.gmail.com>
+ <20201113145802.GB3985404@mit.edu> <CBC2DBAA-A409-49CD-B932-AC82D3C20D55@kobil.com>
+ <20201115034649.GC3985404@mit.edu> <CA+sFfMfWrSMKAogg-5dsaO_beXUV-JCBLBPeLZ5g_0jGqsom8Q@mail.gmail.com>
+ <20201119133705.7q7yghymvvo7zeq4@chatter.i7.local> <xmqq4kllxcmw.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq4kllxcmw.fsf@gitster.c.googlers.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Thu, 19 Nov 2020 17:29:06 -0600
+Message-ID: <CAMP44s1515GOwTOYv-wz4qMC9Qb6d8cSVSb_CNVwun0+Yj3VxQ@mail.gmail.com>
+Subject: Re: The master branch rename, and avoiding another v1.6.0 git-foo fiasco
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Brandon Casey <drafnel@gmail.com>,
+        "Theodore Y. Ts'o" <tytso@mit.edu>,
+        Lukasz Niemier <Lukasz.Niemier@kobil.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Don Goodman-Wilson <don@goodman-wilson.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, Nov 19, 2020 at 3:25 PM Junio C Hamano <gitster@pobox.com> wrote:
 
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> When a repository's leading directories contain regex glob characters,
-> the config calls for 'git maintenance register' and 'git maintenance
-> unregister' are not careful enough. Use the new --literal-value option
-> to direct the config machinery to use exact string matches. This is a
-> more robust option than excaping these arguments in a piecemeal fashion.
->
-> Reported-by: Emily Shaffer <emilyshaffer@google.com>
-> Reported-by: Jonathan Nieder <jrnieder@gmail.com>
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  builtin/gc.c           |  5 +++--
->  t/t7900-maintenance.sh | 12 ++++++++++++
->  2 files changed, 15 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index e3098ef6a1..0784bbdc6a 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -1452,7 +1452,8 @@ static int maintenance_register(void)
->  		git_config_set("maintenance.strategy", "incremental");
->  
->  	config_get.git_cmd = 1;
-> -	strvec_pushl(&config_get.args, "config", "--global", "--get", "maintenance.repo",
-> +	strvec_pushl(&config_get.args, "config", "--global", "--get",
-> +		     "--literal-value", "maintenance.repo",
->  		     the_repository->worktree ? the_repository->worktree
->  					      : the_repository->gitdir,
->  			 NULL);
-> @@ -1483,7 +1484,7 @@ static int maintenance_unregister(void)
->  
->  	config_unset.git_cmd = 1;
->  	strvec_pushl(&config_unset.args, "config", "--global", "--unset",
-> -		     "maintenance.repo",
-> +		     "--literal-value", "maintenance.repo",
->  		     the_repository->worktree ? the_repository->worktree
->  					      : the_repository->gitdir,
->  		     NULL);
-> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-> index 20184e96e1..2ee5512158 100755
-> --- a/t/t7900-maintenance.sh
-> +++ b/t/t7900-maintenance.sh
-> @@ -367,6 +367,18 @@ test_expect_success 'register and unregister' '
->  	test_cmp before actual
->  '
->  
-> +test_expect_success 'register and unregister with glob characters' '
-> +	GLOB="a+b*c" &&
-> +	git init "$GLOB" &&
-> +	git -C "$GLOB" maintenance register &&
-> +	git config --get-all --show-origin maintenance.repo &&
-> +	git config --get-all --global --literal-value \
-> +		maintenance.repo "$(pwd)/$GLOB" &&
-> +	git -C "$GLOB" maintenance unregister &&
-> +	test_must_fail git config --get-all --global --literal-value \
-> +		maintenance.repo "$(pwd)/$GLOB"
-> +'
-> +
+> Some understand well that the primary reason to switch to 'main' is
+> to help people who will need to interact with projects and hosting
+> providers that have done the same switch already [*1*].  Some do not
+> buy that reason well and ask "why?".  You need to give an answer to
+> the latter.
 
-Makes sense.  Thanks.
+How exactly does this help people interacting with GitHub?
 
-As to the topic-branch organization, my plan is for the final shape
-(I haven't really reviewed the early 6 yet so I do not know if they
-require rerolling at this point) would be to:
+The main instructions in GitHub while creating a new repository are:
 
- - create ds/config-literal-value topic on somewhere old enough and
-   queue [1/7] thru [6/7] on it.
+  echo "# test" >> README.md
+  git init
+  git add README.md
+  git commit -m "first commit"
+  git branch -M main
+  git remote add origin $url
+  git push -u origin main
 
- - merge the above into ds/maintenance-part-3
+Changing the default to "main" would modify the instructions to:
 
- - apply [7/7] on top of ds/maintenance-part-3
+  echo "# test" >> README.md
+  git init
+  git add README.md
+  git commit -m "first commit"
+  git remote add origin $url
+  git push -u origin main
 
+One line. That's it.
+
+Moreover, they can already get rid of that line, all they have to do
+is "git init -b main" instead of "git init".
+
+Why haven't they updated the instructions?
+
+Ahh, that's right... it's because the instructions are meant to work
+on older versions of git as well.
+
+Therefore, even if the default was changed in Git 2.30, they will not
+change the instructions.
+
+It's very likely that even if Git changes the default in 2020, GitHub
+will not change the instructions by 2022, possibly 2024 (if the world
+still stands).
+
+So how exactly will this change help GitHub and other hosting providers?
+
+The anti-master camp came here *demanding* a name change, and in the
+process of discussing many claims were simply taken for granted, even
+though no prima facie was offered.
+
+But no, the claim that this change will "help people who will need to
+interact with projects and hosting providers that have done the same
+switch already" has not met its burden of proof.
+
+In fact, no attempt has even been made to explain *how* it would help.
+
+Cheers.
+
+-- 
+Felipe Contreras
