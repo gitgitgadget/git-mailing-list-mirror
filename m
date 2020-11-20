@@ -2,121 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40818C388F9
-	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 00:35:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AF33C388F9
+	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 01:33:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D6AEE22240
-	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 00:35:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E9EF22254
+	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 01:33:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WoSTXuxz"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xm24+4r4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727054AbgKTAfH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Nov 2020 19:35:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44618 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726776AbgKTAfG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Nov 2020 19:35:06 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 631E3C0613CF
-        for <git@vger.kernel.org>; Thu, 19 Nov 2020 16:35:06 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id c198so6957826wmd.0
-        for <git@vger.kernel.org>; Thu, 19 Nov 2020 16:35:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ENDQnME8JUp5WSnTTzcQDl4NQlZTLBHL960I1KsPuPQ=;
-        b=WoSTXuxzCT0y5weuXqPv7X3J/PfGegKjaB6Q1BLiX01U1azNjVTV2BHw8XnX4TZp0X
-         N8UC1z9yoR7iwJ7IiKnJZ8aT0DjrK1MVli1owcQE36EgRNEbzZEJKhn/2PM+jjdqH4vT
-         T18oPQJuMWcElUZv/W0DrzS2WN0O5AGpwZjOA7SCmsUB+j38LxrwSlCHT7BbpTXcN2gU
-         4Oe2rNy25D6lyn804w1fN473X1O0Py2mIUcLdx5mOBLf6Dc9Tg8xoN+ZFew134DSNQg3
-         ET3SEaun0FtmecZ5qM5yodjja7Vb8v2eh972UOCL3Yt5RAJAi0MLtIRTprv6QjMwrbxE
-         TxwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ENDQnME8JUp5WSnTTzcQDl4NQlZTLBHL960I1KsPuPQ=;
-        b=sRVSAqJGX4+vaO59JuGO1tc3Lx0hOtC0XpNGgWYFzkiMIdVvx2kDr/m9oWoi644qyG
-         H7IpIw/KDgysIM/IHV6B2pZEyvIXSxZE2Xtc6m17zYYB8aoPd1pZwW8qhOHw1tTgqQDI
-         TJst4K4ttSKTOgkPHG0ItAYpskxmMM9ttiTcM79nw5StcKxyVocVHz7g9NQMVI3yzvkI
-         MWVDTSDevM3EIoga5E0oLxGM/4RzHDFmZKPtz4sl/olQRuqaqbjXcKa9lZxwfA0rxWhC
-         Wi692rXMVObdQKueH3QrmXAbi3co9AtCkqbgotQMTMUL2ky+rLO8jzmukihe3WdXk+qF
-         szlg==
-X-Gm-Message-State: AOAM530Jnhj7iqjmCU0g03WddTr0zvB/zMkbLheK3nD/03H9K5PXpg2s
-        52MPM7eYdF0CzaBwGeiwByBsoERWIQAIXHPiJAk=
-X-Google-Smtp-Source: ABdhPJwroM6zQXqRlrvCCiWQMR7ME5wtvdMA9V+1fG7CZIw5i0IYuI9ABZCElx9mT2nc3wwWxvFl57kqjL/DoBIB4W0=
-X-Received: by 2002:a7b:cc94:: with SMTP id p20mr7409798wma.100.1605832505128;
- Thu, 19 Nov 2020 16:35:05 -0800 (PST)
+        id S1727041AbgKTBck (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Nov 2020 20:32:40 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54839 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726619AbgKTBcj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Nov 2020 20:32:39 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 774BA9AD0C;
+        Thu, 19 Nov 2020 20:32:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=3EzyvQWW4Ofo
+        Bd+xLsLrohgYQuI=; b=xm24+4r4wfFGH/xREsDoY/2GLArNE0BLTqB4a0700RMc
+        pJmFOEpmCjjy8wNBtDulRoVNGbQrKji9mAdarqt0s4joqm+XGQH9ANoIOuD/hiRK
+        d85VjarbJK3sfN/OuBC6Uq+O/o9w/wc8C7onPtPMHmu8MyIuGUM2YqQMbMhGxVs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=jzo1rm
+        zvIG5XAo5eYPlnqhImhJV5WXoKDFkf0/J+oyIue0bgtsicohGkJmjTKEOoOB8KZQ
+        If5bh+69BInPIPkHCJ6NjvE4JhAPvWIXxxAco8uMf0KiRX9fSiPmlzrcXHRGIH2R
+        Z5+MX7/VlU+PPBh8X8mJVuj+HNa5cX5eu54SU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6E48D9AD0B;
+        Thu, 19 Nov 2020 20:32:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DE3E59AD0A;
+        Thu, 19 Nov 2020 20:32:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] tests: make sure nested lazy prereqs work reliably
+References: <20201118190414.32616-1-szeder.dev@gmail.com>
+        <20201119155824.GB25426@coredump.intra.peff.net>
+        <20201119175608.GA132922@coredump.intra.peff.net>
+        <xmqqd009xh19.fsf@gitster.c.googlers.com>
+        <20201120001458.GA274082@coredump.intra.peff.net>
+Date:   Thu, 19 Nov 2020 17:32:36 -0800
+In-Reply-To: <20201120001458.GA274082@coredump.intra.peff.net> (Jeff King's
+        message of "Thu, 19 Nov 2020 19:14:58 -0500")
+Message-ID: <xmqqlfewvmmj.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CAMP44s3BJ3dGsLJ-6yA-Po459=+m826KD9an4+P3qOY1vkbxZg@mail.gmail.com>
- <20201113010107.GL6252@camp.crustytoothpaste.net> <CAMP44s1U1FevS7NrAYxvgVyzfR5tnD9-+BbPdw5bKnaNHkyD+A@mail.gmail.com>
- <20201113051408.GA3985404@mit.edu> <CAMP44s3AeESm7VBKbar0ir_Py35g99ZW6bNX_=AK4N=OFkcrdA@mail.gmail.com>
- <20201113145802.GB3985404@mit.edu> <CBC2DBAA-A409-49CD-B932-AC82D3C20D55@kobil.com>
- <20201115034649.GC3985404@mit.edu> <CA+sFfMfWrSMKAogg-5dsaO_beXUV-JCBLBPeLZ5g_0jGqsom8Q@mail.gmail.com>
- <20201119133705.7q7yghymvvo7zeq4@chatter.i7.local> <CA+sFfMdHrapy2o8D53dpqA5b+a88VLOX126daLcC8Sash4rq3A@mail.gmail.com>
-In-Reply-To: <CA+sFfMdHrapy2o8D53dpqA5b+a88VLOX126daLcC8Sash4rq3A@mail.gmail.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Thu, 19 Nov 2020 18:34:54 -0600
-Message-ID: <CAMP44s2XXq5+uZLfrWs_yvrcuKYv2ta849PQ_w1ZqHKFsPZ6Ew@mail.gmail.com>
-Subject: Re: The master branch rename, and avoiding another v1.6.0 git-foo fiasco
-To:     Brandon Casey <drafnel@gmail.com>
-Cc:     "Theodore Y. Ts'o" <tytso@mit.edu>,
-        Lukasz Niemier <Lukasz.Niemier@kobil.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Don Goodman-Wilson <don@goodman-wilson.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 454E96D4-2AD0-11EB-A0C8-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 19, 2020 at 3:29 PM Brandon Casey <drafnel@gmail.com> wrote:
-> On Thu, Nov 19, 2020 at 5:37 AM Konstantin Ryabitsev
-> <konstantin@linuxfoundation.org> wrote:
+Jeff King <peff@peff.net> writes:
 
-> > To my knowledge, there are no concrete plans to change anything at this
-> > time. All recent work was to remove any special-case treatment of
-> > "master" as the default branch name, so people are free to use any
-> > configuration they like.
+> OK, then here's the whole thing. I ended up with a few more cleanups,
+> too. This is all on top of G=C3=A1bor's patches. It's conceptually
+> independent, but the textual wrangling was annoying enough it didn't
+> make any sense to require you to do it again during merging. ;) Plus I
+> do not think either topic is high-risk nor urgent enough to worry too
+> much about one blocking the other.
+
+I'll ask you to do the last step maybe in a few weeks; the range
+notation tests seem to have changed since where I queued G=C3=A1bor's
+patches and where [4/4] is based on (yours is based on newer
+codebase).
+
+> The diffstat is scary, but it's mostly the final patch, which is pretty
+> mechanical.
+
+Yup, and the result is much easier to read.
+
+Thanks.
+
+>   [1/4]: t0000: keep clean-up tests together
+>   [2/4]: t0000: run prereq tests inside sub-test
+>   [3/4]: t0000: run cleaning test inside sub-test
+>   [4/4]: t0000: consistently use single quotes for outer tests
 >
-> Glad to hear that. That doesn't seem to be the perspective that others
-> have in this discussion thread though, especially since Theodore Ts'o
-> referred to "...the "master" -> "main" migration" in his comment that
-> I quoted above.
-
-Let me try to clarify to you.
-
-At this precise moment the name of the branch is "master", and will
-continue to be until a concrete plan to change it is put forward.
-
-However, the momentum is there to change the default name. So, if the
-camp in favor of the change keeps pushing forward, finishes all the
-necessary work, and puts a plan in place--which will probably include
-a precautionary warning--the name will likely be eventually changed.
-It's only a matter of when.
-
-Since there's many agendas: a) get the name changed as soon as
-possible, b) change the name, but do it properly and take as long as
-is indeed, c) change the name, but not necessarily to "main", and d)
-do not change the name; what you are seeing is probably a clash of
-many agendas and no clarity from the project.
-
-Moreover, once the plan is set in motion, and many users are notified
-of things upcoming change, I suspect there will be a backlash, and the
-"decision" might be reconsidered.
-
-So, even though things are not set in stone, and the dust has not yet
-settled, the move towards a change away from the default branch name
-"master" is currently happening.
-
-Cheers.
-
--- 
-Felipe Contreras
+>  t/t0000-basic.sh | 570 +++++++++++++++++++++++------------------------
+>  1 file changed, 284 insertions(+), 286 deletions(-)
+>
+> -Peff
