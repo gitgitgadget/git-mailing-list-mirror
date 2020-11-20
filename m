@@ -2,127 +2,189 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A9F0C56201
-	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 19:14:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46706C63777
+	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 20:36:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E6AA22240
-	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 19:14:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DBE4D22470
+	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 20:36:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hi/5H1Hr"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LSbZvu9f"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732204AbgKTTOb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Nov 2020 14:14:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48194 "EHLO
+        id S1731435AbgKTUgd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Nov 2020 15:36:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730207AbgKTTOa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Nov 2020 14:14:30 -0500
-Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5EBBC0613CF
-        for <git@vger.kernel.org>; Fri, 20 Nov 2020 11:14:30 -0800 (PST)
-Received: by mail-qt1-x836.google.com with SMTP id z24so5902163qto.3
-        for <git@vger.kernel.org>; Fri, 20 Nov 2020 11:14:30 -0800 (PST)
+        with ESMTP id S1730623AbgKTUgd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Nov 2020 15:36:33 -0500
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0742C0613CF
+        for <git@vger.kernel.org>; Fri, 20 Nov 2020 12:36:32 -0800 (PST)
+Received: by mail-wm1-x341.google.com with SMTP id w24so11033213wmi.0
+        for <git@vger.kernel.org>; Fri, 20 Nov 2020 12:36:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=PQwBxSwehP4GJgc+INWlBSxoDk09zPrMCJIzFQZ5Gxg=;
-        b=hi/5H1HrINwNlIjrSFOkhG7b6k6zMTzMrGPep7e9dPopv22jHEzLPmasBDrHXnbmN4
-         DFmMPsdgU51KLGG+34afp7qTGneTjVuvLMGgqpjhn67J6p3G5xCo3gj4ODMFZUk0X1gc
-         FfTtxEplUgaGDtG8fBerWQTWsdmQ6RkZX3o6Q=
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=z0LD6EMPImiuoJEnyOfKACl6CMb/R3sH3IiKCH7dxvs=;
+        b=LSbZvu9fM98ryly3ROED41FlN+r85Kjqigywfi1qpv7tcET30S2gaAfpoLCFsc11c4
+         6Wwud5Hxo8b5t1q6EOrxAlgx5d8aIkBCYaANyRMEi05jPWzGR814EpV4N/A4bB9r8oy7
+         hHIjISWe/VYd29/V2iK/juqF+SncDYMJIaRy0d1BobnjmxC7RjDdLQ42KcDDmjIt530+
+         eMivVUWj9/sOS9K5V1XvObBsfKWFzUfeMV96ARFfaIGxowGNLunTtM7BftHuD//jjDG+
+         NInpk1mTRgZhhfQmcrM4u3Fkduwg/pa4c6AaFh2WoINhf+DM9WocVjJmTvimlRtdWrMb
+         TLUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=PQwBxSwehP4GJgc+INWlBSxoDk09zPrMCJIzFQZ5Gxg=;
-        b=jNw7E7UOPVuXfnfKw/ziALuTFzm1xuSpTdCJ21bw1h89s4LohGwszGma1ScldL99vY
-         kIdLOzXnFGwIvo/nD/dzoQUE0qBLNDA0bdGBRHZhf9K/1UJX8NSP69QHGDFhtoP/bx5t
-         g6tQRX/xKk22kppQm+9G2T0x+9VAAujPwTY08PlYDds5FT18tgsX7KaLXxncXw1Ny5CN
-         Jvcpu1goHkWXBwg/UEa41U3kcOvdRztZfRo1m/mvf5MHSbuZw9KrLaixdDRPiv91rtjp
-         DD2t0ZtrRAej6/fwVOGxaGDr3SklFYmgJ1OBZsu0r0J6sRt+YvHBE6LtPLGEGOaOMC6x
-         u4Xw==
-X-Gm-Message-State: AOAM533ROCzrnS43NcUY8SDhgXChdB0jhgBXzRXMdwe09swKaI3dm5TB
-        3OBYFjjOjdLvDmKpK6vCvvQ3j+7Up9QSPoh2
-X-Google-Smtp-Source: ABdhPJzSTHH3D7JAi2XvaqTFTIII9besjY3igzcGc019MdeWKxA4xY9Bxfr5IsRpLb0h1deyAAMc5w==
-X-Received: by 2002:ac8:6ec5:: with SMTP id f5mr17632250qtv.56.1605899668619;
-        Fri, 20 Nov 2020 11:14:28 -0800 (PST)
-Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id e9sm225483qtr.95.2020.11.20.11.14.27
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=z0LD6EMPImiuoJEnyOfKACl6CMb/R3sH3IiKCH7dxvs=;
+        b=J3pfmiJ5tP6LjziYUe07ZXd+G37zxQ9/mn4X+zH/R1+UrgNa9t4+0M68F2tzavbQi/
+         JD+lGWrsErnQC87LGeI559C5wK1L7MaeYVt127qt2xm1+NPiz9dMGbdTQNkaPoQ+NWdw
+         RuaDwBEmqk2JQ80/7cqy5mejy3qpOkHIcF/7X86SbYRQg9v5LTXFtMvA6WVF0yskLG+/
+         LvyBVkn+PeDMttAx3VJ+gqRxHGRiia5vVCjILTDUzR4Ke64Imt7QCIGyJlypQ3a30zae
+         dBz70m69Ktfkb1KiRCJxrOOIVTHmKvItnYJyzwfppl99FOHYIbQOVo+vIvybTbzMTyF2
+         QTXA==
+X-Gm-Message-State: AOAM53200bEIvVicVlhblc88S81vLDRV77zwhxEcfGePrysNk57ydC7T
+        WVLXJU7QlRj9BOSKY4A7L/6v0JII0lg=
+X-Google-Smtp-Source: ABdhPJzdORNidwf11MkNMacfkbA+I985SPzuBCKhFu36KhJtB4E9I3jyQh+DB1fuqWD3Sb5krzJeSw==
+X-Received: by 2002:a1c:3b07:: with SMTP id i7mr12175582wma.118.1605904588448;
+        Fri, 20 Nov 2020 12:36:28 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w21sm5336730wmi.29.2020.11.20.12.36.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2020 11:14:27 -0800 (PST)
-Date:   Fri, 20 Nov 2020 14:14:26 -0500
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git <git@vger.kernel.org>
-Subject: Re: The master branch rename, and avoiding another v1.6.0 git-foo
- fiasco
-Message-ID: <20201120191426.jzaiq42mmlocmd6y@chatter.i7.local>
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>,
-        Git <git@vger.kernel.org>
-References: <20201113010107.GL6252@camp.crustytoothpaste.net>
- <CAMP44s1U1FevS7NrAYxvgVyzfR5tnD9-+BbPdw5bKnaNHkyD+A@mail.gmail.com>
- <20201113051408.GA3985404@mit.edu>
- <CAMP44s3AeESm7VBKbar0ir_Py35g99ZW6bNX_=AK4N=OFkcrdA@mail.gmail.com>
- <20201113145802.GB3985404@mit.edu>
- <CBC2DBAA-A409-49CD-B932-AC82D3C20D55@kobil.com>
- <20201115034649.GC3985404@mit.edu>
- <CA+sFfMfWrSMKAogg-5dsaO_beXUV-JCBLBPeLZ5g_0jGqsom8Q@mail.gmail.com>
- <20201119133705.7q7yghymvvo7zeq4@chatter.i7.local>
- <xmqq4kllxcmw.fsf@gitster.c.googlers.com>
+        Fri, 20 Nov 2020 12:36:27 -0800 (PST)
+Message-Id: <pull.797.git.1605904586929.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 20 Nov 2020 20:36:26 +0000
+Subject: [PATCH] clone: --filter=tree:0 implies fetch.recurseSubmodules=no
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq4kllxcmw.fsf@gitster.c.googlers.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 19, 2020 at 01:25:27PM -0800, Junio C Hamano wrote:
-> The question most useful to ask at this point are to what name
-> (fixed? computed?) and what the transition plan would look like.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-Right, hence my statement that there are no "concrete plans." I've 
-previously suggested that, should this change be implemented, it makes 
-sense to couple it with another upcoming major compatibility break -- 
-the sha1 deprecation. Perhaps we can start with the following:
+The partial clone feature has several modes, but only a few are quick
+for a server to process using reachability bitmaps:
 
-Currently:
+* Blobless: --filter=blob:none downloads all commits and trees and
+  fetches necessary blobs on-demand.
 
-$ git init
-Initialized empty Git repository in /var/home/user/foo/.git/
-$
+* Treeless: --filter=tree:0 downloads all commits and fetches necessary
+  trees and blobs on demand.
 
-New:
+This treeles mode is most similar to a shallow clone in the total size
+(it only adds the commit objects for the full history). This makes
+treeless clones an interesting replacement for shallow clones. A user
+can run more commands in a treeless clone than in a shallow clone,
+especially 'git log' (no pathspec).
 
-$ git init
-Initialized empty Git repository in /var/home/user/foo/.git/
- Initial branch: master
-  Object format: sha1
+In particular, servers can still serve 'git fetch' requests quickly by
+calculating the difference between commit wants and haves using bitmaps.
 
-Use --initial-branch and --object-format flags to specify other values.
-$
+I was testing this feature with this in mind, and I knew that some trees
+would be downloaded multiple times when checking out a new branch, but I
+did not expect to discover a significant issue with 'git fetch', at
+least in repostiories with submodules.
 
-> > It is misleading in the context of git, because it implies that a 
-> > branch carrying that name is in some way special compared to other 
-> > branches (e.g. like "trunk" in the SVN world). In reality, the 
-> > "master" branch is just a branch like all others (and can be missing 
-> > entirely or have junk in it), so it really shouldn't be called 
-> > "master".
-> 
-> I find the above answer even more confusing, in the context of major
-> projects and hosting sites all moving to 'main'.  If 'master' is
-> misleading for all the reasons stated in the above paragraph, 'main'
-> would equally be misleading.  In other words, "It is just a branch
-> like all others, so it really shouldn't be 'master'" leads to "it
-> shouldn't be 'main' or 'primary', either".
+I was testing these commands:
 
-In my mind, there are important semantic differences between "main" and 
-"master" that make "main" more acceptable. A town with a single road can 
-reasonably call it the "main road." Similarly, a "mainstream" movement 
-does not imply the existence of any other movements. Etc.
+	$ git clone --filter=tree:0 --single-branch --branch=master \
+	  https://github.com/git/git
+	$ git -C git fetch origin "+refs/heads/*:refs/remotes/origin/*"
 
--K
+This fetch command started downloading several pack-files of trees
+before completing the command. I never let it finish since I got so
+impatient with the repeated downloads. During debugging, I found that
+the stack triggering promisor_remote_get_direct() was going through
+fetch_populated_submodules(). Notice that I did not recurse my
+submodules in the original clone, so the sha1collisiondetection
+submodule is not initialized. Even so, my 'git fetch' was scanning
+commits for updates to submodules.
+
+I decided that even if I did populate the submodules, the nature of
+treeless clones makes me not want to care about the contents of commits
+other than those that I am explicitly navigating to.
+
+This loop of tree fetches can be avoided by adding
+--no-recurse-submodules to the 'git fetch' command or setting
+fetch.recurseSubmodules=no.
+
+To make this as painless as possible for future users of treeless
+clones, automatically set fetch.recurseSubmodules=no at clone time.
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+    clone: --filter=tree:0 implies fetch.recurseSubmodules=no
+    
+    While testing different partial clone options, I stumbled across this
+    one. My initial thought was that we were parsing commits and loading
+    their root trees unnecessarily, but I see that doesn't happen after this
+    change.
+    
+    Here are some recent discussions about using --filter=tree:0:
+    
+    [1] 
+    https://lore.kernel.org/git/aa7b89ee-08aa-7943-6a00-28dcf344426e@syntevo.com/
+    [2] https://lore.kernel.org/git/cover.1588633810.git.me@ttaylorr.com/[3] 
+    https://lore.kernel.org/git/58274817-7ac6-b6ae-0d10-22485dfe5e0e@syntevo.com/
+    
+    Thanks, -Stolee
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-797%2Fderrickstolee%2Ftree-0-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-797/derrickstolee/tree-0-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/797
+
+ list-objects-filter-options.c | 4 ++++
+ t/t5616-partial-clone.sh      | 6 ++++++
+ 2 files changed, 10 insertions(+)
+
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+index defd3dfd10..249939dfa5 100644
+--- a/list-objects-filter-options.c
++++ b/list-objects-filter-options.c
+@@ -376,6 +376,10 @@ void partial_clone_register(
+ 		       expand_list_objects_filter_spec(filter_options));
+ 	free(filter_name);
+ 
++	if (filter_options->choice == LOFC_TREE_DEPTH &&
++	    !filter_options->tree_exclude_depth)
++		git_config_set("fetch.recursesubmodules", "no");
++
+ 	/* Make sure the config info are reset */
+ 	promisor_remote_reinit();
+ }
+diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+index f4d49d8335..b2eaf78069 100755
+--- a/t/t5616-partial-clone.sh
++++ b/t/t5616-partial-clone.sh
+@@ -341,6 +341,12 @@ test_expect_success 'partial clone with sparse filter succeeds' '
+ 	)
+ '
+ 
++test_expect_success '--filter=tree:0 sets fetch.recurseSubmodules=no' '
++	rm -rf dst &&
++	git clone --filter=tree:0 "file://$(pwd)/src" dst &&
++	test_config -C dst fetch.recursesubmodules no
++'
++
+ test_expect_success 'partial clone with unresolvable sparse filter fails cleanly' '
+ 	rm -rf dst.git &&
+ 	test_must_fail git clone --no-local --bare \
+
+base-commit: faefdd61ec7c7f6f3c8c9907891465ac9a2a1475
+-- 
+gitgitgadget
