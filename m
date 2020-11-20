@@ -2,130 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B405C5519F
-	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 14:21:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EE75C56201
+	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 15:09:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D09AF2222A
-	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 14:21:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 873C82224E
+	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 15:09:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=patrickstevens.co.uk header.i=@patrickstevens.co.uk header.b="RQ6MHnmh"
+	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="iFXLM94y"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727543AbgKTOVr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Nov 2020 09:21:47 -0500
-Received: from mail-02.mail-europe.com ([51.89.119.103]:52852 "EHLO
-        mail-02.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727262AbgKTOVr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Nov 2020 09:21:47 -0500
-Date:   Fri, 20 Nov 2020 14:21:38 +0000
+        id S1729008AbgKTPJu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Nov 2020 10:09:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38460 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729000AbgKTPJt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Nov 2020 10:09:49 -0500
+Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65226C0613CF
+        for <git@vger.kernel.org>; Fri, 20 Nov 2020 07:09:49 -0800 (PST)
+Received: by mail-qt1-x842.google.com with SMTP id g17so7289006qts.5
+        for <git@vger.kernel.org>; Fri, 20 Nov 2020 07:09:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=patrickstevens.co.uk; s=protonmail; t=1605882103;
-        bh=s6GmLdR1AiTQtVAkTJBzIhOcIAXqVhIl2TbFy+y8uUE=;
-        h=Date:To:From:Reply-To:Subject:From;
-        b=RQ6MHnmhjZHB/ph6Lw7/0ECq2lY53W7Ve4e+Rg3mF5CxO5IqwGVYugQRKjob4in4K
-         b1m6CZVdGQ/Ej76JDR75r+4JJIsFdznG/nQU6kLgswBesOLvBg78yT6Id4L1G/8HpP
-         5uMr1WvnNv5zg0um5i3K6a9rDesPnZKAkijTY6Rs=
+        d=usp.br; s=usp-google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jsipUh8egVbRz74eoQkTl/tcP2S7Ww2AW/HHJW28Qt8=;
+        b=iFXLM94yGXcVB+Ekivzwqf5Lbz4nZbsHEzgAoZktAruOci36Fhziur/SsIJ/as0pNx
+         bcT9PUMHsyKybN46Sso1XLAtjkVsOfmYRIHP1/oo6SNzu2aclRTQxMvj+DOsBjJrc43D
+         3NDfoGOELP03XyKlugyQ09rPuLjax8KsAD85VwRYPfqY8yN8PeHj0AxFAMkrNDYLHaR2
+         aLKhnyg4worbefRA1am+URO9MJUn0Sb5zmsTVxFSAfAotFh0z8pFFJX9LAwWLpER9JZ4
+         xKb9wZM0PhpEUYVBeH98jhs+E2HHFnR2Tsgekn9Zic1brBlfTOcHGoqgbBCscIx0kdbv
+         8l6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=jsipUh8egVbRz74eoQkTl/tcP2S7Ww2AW/HHJW28Qt8=;
+        b=WzzEcY5OUfDEtMfqOjAd7kcQKAZblgg5OV/04v5D/K052sy1Urs5ZWVH0nx90UHuMS
+         3whxRTqmNP32YLr/O6L3yhmbrbL2rVDOn3/dMCLJB3HJhkFHv+5mWVNR4FkhaRGP6Eu1
+         sMWF3QwbFmxsZBRx1MNGFwf5TT9fjhGG9rzVabejtBZQ7fjo6BMoSpBN+fHIDgK7i9AG
+         VF9gqDzdjF1f417EIttWSEl9lxYdtAH7HE6u7G1c1DyLLaIspadmGgNMgIhAHmtAOvs/
+         HKFwEZPnlxBUDinbVW1A2ZiOCK8DvrvtlNHeJsXNdJBGsaPsOaQF3bcoeeWy5vHFYcR1
+         ma/g==
+X-Gm-Message-State: AOAM531iWhoxgQlHHS2aQNkiJ2SFT0TTtATPDWAQbYOazGge9ivHhhkV
+        AF8fsQdPZLvA5DWZ3U2C9HrK2D8nHB0Z6g==
+X-Google-Smtp-Source: ABdhPJyGYROc+vaWC1dKoUMSCDrs4jFnBaQ75LgTB4YPQKkPc5bg8m/Wo+0ONoCDas2Q0k/H0PdqrQ==
+X-Received: by 2002:ac8:4685:: with SMTP id g5mr16733105qto.173.1605884988161;
+        Fri, 20 Nov 2020 07:09:48 -0800 (PST)
+Received: from mango.meuintelbras.local ([177.32.118.149])
+        by smtp.gmail.com with ESMTPSA id j10sm2050390qtq.59.2020.11.20.07.09.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Nov 2020 07:09:46 -0800 (PST)
+From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
-From:   Patrick Stevens <patrick@patrickstevens.co.uk>
-Reply-To: Patrick Stevens <patrick@patrickstevens.co.uk>
-Subject: Bug report: git apply --cached --reject
-Message-ID: <31599b45-cf4e-be77-22bb-8fa03f0a52d6@patrickstevens.co.uk>
+Cc:     sunshine@sunshineco.com
+Subject: [PATCH] worktree: fix order of arguments in error message
+Date:   Fri, 20 Nov 2020 12:09:39 -0300
+Message-Id: <1d740e0d4fc08a9f420373c6cd0a554b3b4b1f40.1605883395.git.matheus.bernardino@usp.br>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+`git worktree add` (without --force) errors out when given a path
+that is already registered as a worktree and the path is missing on
+disk. But the `cmd` and `path` strings are switched on the error
+message. Let's fix that.
 
-Below the fold is a `git bugreport`-generated report of a bug with `git
-apply --cached --reject`, which I have reproduced in three different
-environments. Summary: we do not correctly stage the removal of a file
-if there is also an unrelated change that cannot be applied.
-
-I don't think this behaviour is intended; in the report I give a couple
-of variations which correctly do what I expected, and this one breaks
-the semantics I expect, given the behaviour of those variations. I have
-not tried to find the source of the bug.
-
-Thanks,
-Patrick Stevens
-
+Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
+ builtin/worktree.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
-
-What did you do before the bug happened? (Steps to reproduce your issue)
-
-Complete reproduction instructions:
-
-```
-mkdir badrepo && cd badrepo && git init
-echo "start" >> file.txt && git add file.txt && git commit -m "Initial
-commit"
-git tag initialcommit
-echo "another" >> another.txt && git add another.txt && git commit -m
-"Something else"
-git tag commit2
-git rm another.txt && git rm file.txt && git commit -m "Remove both"
-git tag commit3
-git checkout initialcommit
-git diff commit2 commit3 | git apply --reject --cached
-```
-
-What did you expect to happen? (Expected behavior)
-
-We should be left detached at tag `initialcommit`, with the working copy
-clean (i.e. containing only `file.txt`), and with the deletion of
-`file.txt` staged.
-
-What happened instead? (Actual behavior)
-
-The final `git apply` correctly leaves us detached at tag
-`initialcommit`, with a clean working copy, but incorrectly the deletion
-of `file.txt` is not staged: the index is also clean.
-
-What's different between what you expected and what actually happened?
-
-The file `file.txt` should have had its deletion staged, because this is
-part of the diff which could apply cleanly.
-
-Anything else you want to add:
-
-If I delete the `--cached` from the last line, the right thing happens:
-the working copy has `file.txt` deleted in the working copy but the
-deletion is not staged.
-If instead I remove the `git rm another.txt`, then similarly the right
-thing happens: now we end up with the deletion of `file.txt` staged (but
-the working copy is correctly unchanged).
-
-I have reproduced this using git version 2.24.1.windows.2, as well as
-2.29.2 built on Windows using the WSL and invoked through WSL, as well
-as from the Mac HomeBrew install where I produced this bug report.
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-[System Info]
-git version:
-git version 2.29.2
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Darwin 18.7.0 Darwin Kernel Version 18.7.0: Mon Aug 31 20:53:32
-PDT 2020; root:xnu-4903.278.44~1/RELEASE_X86_64 x86_64
-compiler info: clang: 11.0.0 (clang-1100.0.33.17)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/zsh
-
-
-[Enabled Hooks]
-
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index ce56fdaaa9..197fd24a55 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -304,9 +304,9 @@ static void check_candidate_path(const char *path,
+ 	}
+ 
+ 	if (locked)
+-		die(_("'%s' is a missing but locked worktree;\nuse '%s -f -f' to override, or 'unlock' and 'prune' or 'remove' to clear"), cmd, path);
++		die(_("'%s' is a missing but locked worktree;\nuse '%s -f -f' to override, or 'unlock' and 'prune' or 'remove' to clear"), path, cmd);
+ 	else
+-		die(_("'%s' is a missing but already registered worktree;\nuse '%s -f' to override, or 'prune' or 'remove' to clear"), cmd, path);
++		die(_("'%s' is a missing but already registered worktree;\nuse '%s -f' to override, or 'prune' or 'remove' to clear"), path, cmd);
+ }
+ 
+ static int add_worktree(const char *path, const char *refname,
+-- 
+2.28.0
 
