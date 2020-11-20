@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98E24C388F9
-	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 00:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D986C388F9
+	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 00:23:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 44E7422242
-	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 00:20:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4544722240
+	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 00:23:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726275AbgKTAUY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Nov 2020 19:20:24 -0500
-Received: from cloud.peff.net ([104.130.231.41]:36214 "EHLO cloud.peff.net"
+        id S1726474AbgKTAWt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Nov 2020 19:22:49 -0500
+Received: from cloud.peff.net ([104.130.231.41]:36228 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726118AbgKTAUY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Nov 2020 19:20:24 -0500
-Received: (qmail 503 invoked by uid 109); 20 Nov 2020 00:20:23 -0000
+        id S1726192AbgKTAWt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Nov 2020 19:22:49 -0500
+Received: (qmail 525 invoked by uid 109); 20 Nov 2020 00:22:49 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 20 Nov 2020 00:20:23 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 20 Nov 2020 00:22:49 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1307 invoked by uid 111); 20 Nov 2020 00:20:22 -0000
+Received: (qmail 1341 invoked by uid 111); 20 Nov 2020 00:22:48 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 19 Nov 2020 19:20:22 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 19 Nov 2020 19:22:48 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 19 Nov 2020 19:20:22 -0500
+Date:   Thu, 19 Nov 2020 19:22:47 -0500
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
         git@vger.kernel.org,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 2/4] t0000: run prereq tests inside sub-test
-Message-ID: <20201120002022.GB307112@coredump.intra.peff.net>
+Subject: [PATCH 3/4] t0000: run cleaning test inside sub-test
+Message-ID: <20201120002247.GC307112@coredump.intra.peff.net>
 References: <20201120001458.GA274082@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -44,227 +44,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We test the behavior of prerequisites in t0000 by setting up fake ones
-in the main test script, trying to run some tests, and then seeing if
-those tests impacted the environment correctly. If they didn't, then we
-write a message and manually call exit.
+Our check of test_when_finished is done directly in the main script, and
+if we failed to clean, we complain and exit immediately. It's nicer to
+signal a test failure here, for a few reasons:
 
-Instead, let's push these down into a sub-test, like many of the other
-tests covering the framework itself. This has a few advantages:
+  - this gives better output to the user when run under a TAP harness
+    like "prove"
 
-  - it does not pollute the test output with mention of skipped tests
-    (that we know are uninteresting -- the point of the test was to see
-    that these are skipped).
+  - constency; it's the only test left in the file that behaves this way
 
-  - when running in a TAP harness, we get a useful test failure message
-    (whereas when the script exits early, a tool like "prove" simply
-    says "Dubious, test returned 1").
+  - half of its "if" conditional is nonsense anyway; it picked up a
+    reference to GIT_TEST_FAIL_PREREQS internal in dfe1a17df9 (tests:
+    add a special setup where prerequisites fail, 2019-05-13) along with
+    its neighbors, even though it has nothing to do with that flag
 
-  - we do not have to worry about different test environments, such as
-    when GIT_TEST_FAIL_PREREQS_INTERNAL is set. Our sub-test helpers
-    already give us a known environment.
-
-  - the tests themselves are a bit easier to read, as we can just check
-    the test-framework output to see what happened (and get the usual
-    test_cmp diff if it failed)
-
-A few notes on the implementation:
-
-  - we could do one sub-test per each individual test_expect_success. I
-    broke it up here into a few logical groups, as I think this makes it
-    more readable
-
-  - the original tests modified environment variables inside the test
-    bodies. Instead, I've used "true" as the body of a test we expect to
-    run and "false" otherwise. Technically this does not confirm that
-    the body of the "true" test actually ran. We are trusting the
-    framework output to believe that it truly ran, which is sufficient
-    for these tests. And I think the end result is much simpler to
-    follow.
-
-  - the nested_prereq test uses a few bare "test -f" calls; I converted
-    these to our usual test_path_is_* helpers while moving the code
-    around.
+We could actually do this without a sub-test at all, and just put our
+two tests (one to do cleanup, and one to check that it happened) in the
+main script. But doing it in a subtest is conceptually cleaner (from the
+perspective of the main test script, we are checking only one thing),
+and it remains consistent with the "cleanup when failing" test directly
+after it, which has to happen in a sub-test (to avoid the main script
+complaining of the failed test).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-The diff is pretty gnarly. I recommend just reading the before/after
-sections (I wish there was a way to convince diff _not_ to generate the
-minimal diff; two big blocks would have been more readable).
-
- t/t0000-basic.sh | 149 ++++++++++++++++++++++-------------------------
- 1 file changed, 69 insertions(+), 80 deletions(-)
+ t/t0000-basic.sh | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
 diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index d49b5dd4ac..3d36a87610 100755
+index 3d36a87610..502375bdf6 100755
 --- a/t/t0000-basic.sh
 +++ b/t/t0000-basic.sh
-@@ -759,96 +759,85 @@ test_expect_success '--run invalid range end' "
- 	EOF_ERR
+@@ -852,16 +852,25 @@ test_expect_success 'lazy prereqs do not turn off tracing' "
+ 	grep 'echo trace' lazy-prereq-and-tracing/err
  "
  
-+test_expect_success 'tests respect prerequisites' '
-+	run_sub_test_lib_test prereqs "tests respect prereqs" <<-\EOF &&
- 
--test_set_prereq HAVEIT
--haveit=no
--test_expect_success HAVEIT 'test runs if prerequisite is satisfied' '
--	test_have_prereq HAVEIT &&
--	haveit=yes
+-clean=no
+ test_expect_success 'tests clean up after themselves' '
+-	test_when_finished clean=yes
 -'
--donthaveit=yes
--test_expect_success DONTHAVEIT 'unmet prerequisite causes test to be skipped' '
--	donthaveit=no
--'
--if test -z "$GIT_TEST_FAIL_PREREQS_INTERNAL" -a $haveit$donthaveit != yesyes
--then
--	say "bug in test framework: prerequisite tags do not work reliably"
--	exit 1
--fi
-+	test_set_prereq HAVEIT
-+	test_expect_success HAVEIT "prereq is satisfied" "true"
-+	test_expect_success "have_prereq works" "
-+		test_have_prereq HAVEIT
++	run_sub_test_lib_test cleanup "test with cleanup" <<-\EOF &&
++	clean=no
++	test_expect_success "do cleanup" "
++		test_when_finished clean=yes
 +	"
-+	test_expect_success DONTHAVEIT "prereq not satisfied" "false"
- 
--test_set_prereq HAVETHIS
--haveit=no
--test_expect_success HAVETHIS,HAVEIT 'test runs if prerequisites are satisfied' '
--	test_have_prereq HAVEIT &&
--	test_have_prereq HAVETHIS &&
--	haveit=yes
--'
--donthaveit=yes
--test_expect_success HAVEIT,DONTHAVEIT 'unmet prerequisites causes test to be skipped' '
--	donthaveit=no
--'
--donthaveiteither=yes
--test_expect_success DONTHAVEIT,HAVEIT 'unmet prerequisites causes test to be skipped' '
--	donthaveiteither=no
--'
--if test -z "$GIT_TEST_FAIL_PREREQS_INTERNAL" -a $haveit$donthaveit$donthaveiteither != yesyesyes
--then
--	say "bug in test framework: multiple prerequisite tags do not work reliably"
--	exit 1
--fi
-+	test_set_prereq HAVETHIS
-+	test_expect_success HAVETHIS,HAVEIT "multiple prereqs" "true"
-+	test_expect_success HAVEIT,DONTHAVEIT "mixed prereqs (yes,no)" "false"
-+	test_expect_success DONTHAVEIT,HAVEIT "mixed prereqs (no,yes)" "false"
- 
--test_lazy_prereq LAZY_TRUE true
--havetrue=no
--test_expect_success LAZY_TRUE 'test runs if lazy prereq is satisfied' '
--	havetrue=yes
--'
--donthavetrue=yes
--test_expect_success !LAZY_TRUE 'missing lazy prereqs skip tests' '
--	donthavetrue=no
++	test_expect_success "cleanup happened" "
++		test $clean = yes
++	"
 +	test_done
 +	EOF
-+
-+	check_sub_test_lib_test prereqs <<-\EOF
-+	ok 1 - prereq is satisfied
-+	ok 2 - have_prereq works
-+	ok 3 # skip prereq not satisfied (missing DONTHAVEIT)
-+	ok 4 - multiple prereqs
-+	ok 5 # skip mixed prereqs (yes,no) (missing DONTHAVEIT of HAVEIT,DONTHAVEIT)
-+	ok 6 # skip mixed prereqs (no,yes) (missing DONTHAVEIT of DONTHAVEIT,HAVEIT)
-+	# passed all 6 test(s)
-+	1..6
-+	EOF
- '
  
--if test -z "$GIT_TEST_FAIL_PREREQS_INTERNAL" -a "$havetrue$donthavetrue" != yesyes
+-if test -z "$GIT_TEST_FAIL_PREREQS_INTERNAL" -a $clean != yes
 -then
--	say 'bug in test framework: lazy prerequisites do not work'
+-	say "bug in test framework: basic cleanup command does not work reliably"
 -	exit 1
 -fi
-+test_expect_success 'tests respect lazy prerequisites' '
-+	run_sub_test_lib_test lazy-prereqs "respect lazy prereqs" <<-\EOF &&
- 
--test_lazy_prereq LAZY_FALSE false
--nothavefalse=no
--test_expect_success !LAZY_FALSE 'negative lazy prereqs checked' '
--	nothavefalse=yes
--'
--havefalse=yes
--test_expect_success LAZY_FALSE 'missing negative lazy prereqs will skip' '
--	havefalse=no
--'
-+	test_lazy_prereq LAZY_TRUE true
-+	test_expect_success LAZY_TRUE "lazy prereq is satisifed" "true"
-+	test_expect_success !LAZY_TRUE "negative lazy prereq" "false"
- 
--if test -z "$GIT_TEST_FAIL_PREREQS_INTERNAL" -a "$nothavefalse$havefalse" != yesyes
--then
--	say 'bug in test framework: negative lazy prerequisites do not work'
--	exit 1
--fi
-+	test_lazy_prereq LAZY_FALSE false
-+	test_expect_success LAZY_FALSE "lazy prereq not satisfied" "false"
-+	test_expect_success !LAZY_FALSE "negative false prereq" "true"
- 
--test_lazy_prereq NESTED_INNER '
--	>inner &&
--	rm -f outer
--'
--test_lazy_prereq NESTED_PREREQ '
--	>outer &&
--	test_have_prereq NESTED_INNER &&
--	echo "can create new file in cwd" >file &&
--	test -f outer &&
--	test ! -f inner
--'
--test_expect_success NESTED_PREREQ 'evaluating nested lazy prereqs dont interfere with each other' '
--	nestedworks=yes
-+	test_done
-+	EOF
-+
-+	check_sub_test_lib_test lazy-prereqs <<-\EOF
-+	ok 1 - lazy prereq is satisifed
-+	ok 2 # skip negative lazy prereq (missing !LAZY_TRUE)
-+	ok 3 # skip lazy prereq not satisfied (missing LAZY_FALSE)
-+	ok 4 - negative false prereq
-+	# passed all 4 test(s)
-+	1..4
-+	EOF
- '
- 
--if test -z "$GIT_TEST_FAIL_PREREQS_INTERNAL" && test "$nestedworks" != yes
--then
--	say 'bug in test framework: nested lazy prerequisites do not work'
--	exit 1
--fi
-+test_expect_success 'nested lazy prerequisites' '
-+	run_sub_test_lib_test nested-lazy "nested lazy prereqs" <<-\EOF &&
-+
-+	test_lazy_prereq NESTED_INNER "
-+		>inner &&
-+		rm -f outer
-+	"
-+	test_lazy_prereq NESTED_PREREQ "
-+		>outer &&
-+		test_have_prereq NESTED_INNER &&
-+		echo can create new file in cwd >file &&
-+		test_path_is_file outer &&
-+		test_path_is_missing inner
-+	"
-+	test_expect_success NESTED_PREREQ "evaluate nested prereq" "true"
-+
-+	test_done
-+	EOF
-+
-+	check_sub_test_lib_test nested-lazy <<-\EOF
-+	ok 1 - evaluate nested prereq
-+	# passed all 1 test(s)
-+	1..1
++	check_sub_test_lib_test cleanup <<-\EOF
++	ok 1 - do cleanup
++	ok 2 - cleanup happened
++	# passed all 2 test(s)
++	1..2
 +	EOF
 +'
  
- test_expect_success 'lazy prereqs do not turn off tracing' "
- 	run_sub_test_lib_test lazy-prereq-and-tracing \
+ test_expect_success 'tests clean up even on failures' "
+ 	run_sub_test_lib_test_err \
 -- 
 2.29.2.730.g3e418f96ba
 
