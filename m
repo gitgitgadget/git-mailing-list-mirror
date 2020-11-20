@@ -2,259 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 494AEC63798
-	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 16:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33569C2D0E4
+	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 17:07:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 062812225B
-	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 16:54:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D5AD62078B
+	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 17:07:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PqRiA78K"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lDFbVg/9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730174AbgKTQxt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Nov 2020 11:53:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54598 "EHLO
+        id S1730305AbgKTRHL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Nov 2020 12:07:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730167AbgKTQxs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Nov 2020 11:53:48 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64EEDC0613CF
-        for <git@vger.kernel.org>; Fri, 20 Nov 2020 08:53:48 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id x13so3278387wmj.1
-        for <git@vger.kernel.org>; Fri, 20 Nov 2020 08:53:48 -0800 (PST)
+        with ESMTP id S1729985AbgKTRHK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Nov 2020 12:07:10 -0500
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EEB5C0613CF
+        for <git@vger.kernel.org>; Fri, 20 Nov 2020 09:07:10 -0800 (PST)
+Received: by mail-oi1-x243.google.com with SMTP id o25so11197112oie.5
+        for <git@vger.kernel.org>; Fri, 20 Nov 2020 09:07:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=tGBsOn+CLPS2UIQsK+78dUG0cPNCdFdpBpPGhN6swd8=;
-        b=PqRiA78KJ40QJCZSCQJZWbnn9Hl8y9UzFOESRJV9MTNHX5GZYiLDavHzjXCvtQQ/cN
-         Z3TeN/NsGjKQgZtFyLdEyGir8+uwk2EA+eHK33il7lgLA88zEOfSzek1/FULjmvrPZGM
-         9FZ++ZPKA2A4VOGAlxdBbFZSRJIHDZwhSFUWYl/2+ySnfQ7uUfR4KAGiKN3W6474GdG1
-         1nSNUHuF4P0zb1bdV7Cd4hOacjCerpkj3i7tNfF29A7L20k8dLkHcL7hxStv6WsxIaj7
-         MT4sfoUE9qT7p9YNEmbaK/HdaNyWbia5zRJRSLjVolfHom+HkySwfnObrGNt8MM0ZGyV
-         NdCQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=bfSiAUNkymjFEOTM9iQCk7eX2tdOB7BwWJaMVA1fi14=;
+        b=lDFbVg/9kkEYumlLYljMrmCQJlsPvaIwrLo93MG8ZCOIcD0p07sWbXHkvG4JEyVbom
+         zDpdY2wEQyFAILlD9n6PTr3CEHOn4nxITc5m47h9k5j8/tjPJjdpHg6ydXO+IrmDGdl9
+         C2r8cwVK+mMCQh5jOHB+JzAdDCsqJ+CzNLZJ7VyrLuNWsTwfto5wIC3xirzL75Kj7EpL
+         aML8kWGYQzRhve+72HdIYX2YXguZNLSHcLaUNZHIwL/tbN12l1twpchi8XVE6e9adtEj
+         5yTbDKeTZ7ikFRQndhyJLgwOvrahXMaYbvf3wHu/nA2IF4tx87a0K48S+NFPtVZirRoK
+         5Baw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=tGBsOn+CLPS2UIQsK+78dUG0cPNCdFdpBpPGhN6swd8=;
-        b=RjT9y47JFfDzBzyUfXKrl0/YDYhgWwvgPXTtAnZdVHzzlS4gK8B1fFJhINjSwv6Zgf
-         nbzn/DOwAJBW09zAfzCSzcpPcALqbhDZCNoSn2kFA4DbrVz3lw3i85Qa9Chi+ervRA0B
-         NZSudP3bapE9bEzj4VyxmsMRKbk/bRJyz0Z4HW45IgXbavYQx+QxEn26ftNI0PuepR+L
-         +CgwiWivSwXNV7zfO5B7D4eP2SBNlEMoN0tJ21+WhxZ9ocfrym+v3P6Ly6O8YgbcgKN/
-         XbmZYW1vCJjaKEMIxyaIAYRjyGD0/sOv7AYdS09d26MPC+QHxOLtH6ow3jPBSda3gj3r
-         kHRA==
-X-Gm-Message-State: AOAM530Dr97uPXmHOghWms19L4NraG62AGz/VUUdMNbNBDAyUSpjsk7/
-        /KWpI1ywSQxDk75XXubp6QOZpabDlFg=
-X-Google-Smtp-Source: ABdhPJxPdzNtSwytIZ9jtvnVge24eP5/hu33VfBQ9Z7gjmK32qh1SU8ak5Tk3ShABB64xPgByMVTJg==
-X-Received: by 2002:a1c:40d4:: with SMTP id n203mr11275550wma.102.1605891226547;
-        Fri, 20 Nov 2020 08:53:46 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s202sm5090369wme.39.2020.11.20.08.53.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2020 08:53:46 -0800 (PST)
-Message-Id: <5143cba7047d25137b3d7f8c7811a875c1931aee.1605891222.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.919.git.git.1605891222.gitgitgadget@gmail.com>
-References: <pull.919.git.git.1605891222.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 20 Nov 2020 16:53:42 +0000
-Subject: [PATCH 3/3] stash: fix stash application in sparse-checkouts
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=bfSiAUNkymjFEOTM9iQCk7eX2tdOB7BwWJaMVA1fi14=;
+        b=NyAkNfPrPGBybilcYSlJ0IEOMpHffNi9plO9PX6oKNZBmM0cfto434DE2ZGlifsdKE
+         Zk4XjFeiTtflTatswa7dCVwymuDqJUcDcv2Yq2c4VmVqgG6k04li0x6QR6C4cTZsFOcA
+         qRZ0J4rsMlLHWvONegrnP3QyXC+MAeUQ94KdQVOA+25bJhCydzP9BbJcVOdXTg0oHLUS
+         VmIK6SwmDx34cRK0XJB5TXHCtyz09xtkVTb3hLfo+ipvZWt37dDAUpPHocMzGJvqQUBm
+         dety7PYUcVWUvHhNLrWlEXUqy3WjGnB1Ej2zqywC0XjLumrM0D5bctAc4ccS+Y0IHde8
+         lnkA==
+X-Gm-Message-State: AOAM531oa9KhsWXKHcopla7s8qATmR8fwDr5hLviZ2cuPOa2UXLcfgTA
+        TxdMgPT2x/5p1Sve7tbsk4T3BIOPqwWYtKQoFKI=
+X-Google-Smtp-Source: ABdhPJyMbLCl73NVd1cxMtPC/3Q4qA/ffeIPl7FtZAq7CCW0s+iuIx7fo0FzPv5zcp9s5DX64+rp2FVEHwPWaiWjFE8=
+X-Received: by 2002:a54:480b:: with SMTP id j11mr6864685oij.31.1605892029820;
+ Fri, 20 Nov 2020 09:07:09 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     matheus.bernardino@usp.br, dstolee@microsoft.com,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+References: <9f2135f90ffea7f4ccb226f506bf554deab324cc.1605205427.git.matheus.bernardino@usp.br>
+ <xmqqeekt83fl.fsf@gitster.c.googlers.com> <CABPp-BHvZyb4cF29HqDYgMHTMEr2LdvKYATWqADRyhqJzB=Liw@mail.gmail.com>
+In-Reply-To: <CABPp-BHvZyb4cF29HqDYgMHTMEr2LdvKYATWqADRyhqJzB=Liw@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 20 Nov 2020 09:06:58 -0800
+Message-ID: <CABPp-BGMX3wb7LiS1HkJpGveoW3J1oR0vVHbKTF5+qYLRF+59g@mail.gmail.com>
+Subject: Re: [PATCH] rm: honor sparse checkout patterns
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Matheus Tavares <matheus.bernardino@usp.br>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Hi,
 
-sparse-checkouts are built on the patterns in the
-$GIT_DIR/info/sparse-checkout file, where commands have modified
-behavior for paths that do not match those patterns.  The differences in
-behavior, as far as the bugs concerned here, fall into three different
-categories (with git subcommands that fall into each category listed):
+On Mon, Nov 16, 2020 at 9:20 PM Elijah Newren <newren@gmail.com> wrote:
+>
+> On Mon, Nov 16, 2020 at 12:14 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > Matheus Tavares <matheus.bernardino@usp.br> writes:
+> >
+> > > Make git-rm honor the 'sparse.restrictCmds' setting, by restricting its
+> > > operation to the paths that match both the command line pathspecs and
+> > > the repository's sparsity patterns.
+> >
+> > > This better matches the expectations
+> > > of users with sparse-checkout definitions, while still allowing them
+> > > to optionally enable the old behavior with 'sparse.restrictCmds=false'
+> > > or the global '--no-restrict-to-sparse-paths' option.
+> >
+> > Hmph.  Is "rm" the only oddball that ignores the sparse setting?
+>
+> This might make you much less happy, but in general none of the
+> commands pay attention to the setting; I think a line or two in
 
-  * commands that only look at files matching the patterns:
-      * status
-      * diff
-      * clean
-      * update-index
-  * commands that remove files from the working tree that do not match
-    the patterns, and restore files that do match them:
-      * read-tree
-      * switch
-      * checkout
-      * reset (--hard)
-  * commands that omit writing files to the working tree that do not
-    match the patterns, unless those files are not clean:
-      * merge
-      * rebase
-      * cherry-pick
-      * revert
+This isn't quite right; as noted at the just submitted [1], there are
+three different classes of ways that existing commands at least
+partially pay attention to the setting.
 
-There are some caveats above, e.g. a plain `git diff` ignores files
-outside the sparsity patterns but will show diffs for paths outside the
-sparsity patterns when revision arguments are passed.  (Technically,
-diff is treating the sparse paths as matching HEAD.)  So, there is some
-internal inconsistency among these commands.  There are also additional
-commands that should behave differently in the face of sparse-checkouts,
-as the sparse-checkout documentation alludes to, but the above is
-sufficient for me to explain how `git stash` is affected.
+[1] https://lore.kernel.org/git/5143cba7047d25137b3d7f8c7811a875c1931aee.1605891222.git.gitgitgadget@gmail.com/
 
-What is relevant here is that logically 'stash' should behave like a
-merge; it three-way merges the changes the user had in progress at stash
-creation time, the HEAD at the time the stash was created, and the
-current HEAD, in order to get the stashed changes applied to the current
-branch.  However, this simplistic view doesn't quite work in practice,
-because stash tweaks it a bit due to two factors: (1) flags like
---keep-index and --include-untracked (why we used two different verbs,
-'keep' and 'include', is a rant for another day) modify what should be
-staged at the end and include more things that should be quasi-merged,
-(2) stash generally wants changes to NOT be staged.  It only provides
-exceptions when (a) some of the changes had conflicts and thus we want
-to use staged to denote the clean merges and higher order stages to
-mark the conflicts, or (b) if there is a brand new file we don't want
-it to become untracked.
+> merge-recursive.c is the only part of the codebase outside of
+> unpack_trees() that pays any attention to it at all.  This was noted
+> as a problem in the initial review of the sparse-checkout series at
+> [1], and was the biggest factor behind me requesting the following
+> being added to the manpage for sparse-checkout[2]:
+>
+> THIS COMMAND IS EXPERIMENTAL. ITS BEHAVIOR, AND THE BEHAVIOR OF OTHER
+> COMMANDS IN THE PRESENCE OF SPARSE-CHECKOUTS, WILL LIKELY CHANGE IN
+> THE FUTURE.
 
-stash has traditionally gotten this special behavior by first doing a
-merge, and then when it's clean, applying a pipeline of commands to
-modify the result.  This series of commands for
-unstaging-non-newly-added-files came from the following commands:
+The fact that commands have only somewhat paid attention to this
+setting is still a problem, though.  In fact, it was apparently a
+known problem as far back as 2009 just from looking at the short list
+of TODOs at the end of that file.
 
-    git diff-index --cached --name-only --diff-filter=A $CTREE >"$a"
-    git read-tree --reset $CTREE
-    git update-index --add --stdin <"$a"
-    rm -f "$a"
+> > >  to the paths specified by the sparsity patterns, or to the intersection of
+> > >  those paths and any (like `*.c`) that the user might also specify on the
+> > >  command line. When false, the affected commands will work on full trees,
+> > > -ignoring the sparsity patterns. For now, only git-grep honors this setting.
+> > > +ignoring the sparsity patterns. For now, only git-grep and git-rm honor this
+> > > +setting.
+> >
+> > I am not sure if this is a good direction to go---can we make an
+> > inventory of all commands that affect working tree files and see
+> > which ones need the same treatment before going forward with just
+> > "grep" and "rm"?  Documenting the decision on the ones that will not
+> > get the same treatment may also be a good idea.  What I am aiming
+> > for is to prevent users from having to know in which versions of Git
+> > they can rely on the sparsity patterns with what commands, and doing
+> > things piecemeal like these two topics would be a road to confusion.
+>
+> It's not just commands which affect the working tree that need to be
+> inventoried and adjusted.  We've made lists of commands in the past:
+>
+> [3] https://lore.kernel.org/git/CABPp-BEbNCYk0pCuEDQ_ViB2=varJPBsVODxNvJs0EVRyBqjBg@mail.gmail.com/
+> [4] https://lore.kernel.org/git/xmqqy2y3ejwe.fsf@gitster-ct.c.googlers.com/
 
-You might that between the merge that proceeded these commands and these
-different commands here, that we have commands from each of the
-different types of special sparsity handling listed at the beginning of
-this message, and in fact this precisely led to the following buggy
-behaviors:
+So, I think there are a few other commands that need to be modified
+the same way rm is here by Matheus, a longer list of commands than
+what I previously linked to for other modifications, some warnings and
+error messages that need to be cleaned up, and a fair amount of
+additional testing needed.  I also think we need to revisit the flag
+names for --restrict-to-sparse-paths and
+--no-restrict-to-sparse-paths; some feedback I'm getting suggest they
+might be more frequently used than I originally suspected and thus we
+might want shorter names.  (--sparse and --dense?)  So we probably
+want to wait off on both mt/grep-sparse-checkout and
+mt/rm-sparse-checkout (sorry Matheus) and maybe my recently submitted
+stash changes (though those don't have an exposed
+--[no]-restrict-to-sparse-paths flag and are modelled on existing
+merge behavior) until we have a bigger plan in place.
 
-(1) If a path merged cleanly and it didn't match the sparsity patterns,
-the merge backend would know to avoid writing it to the working tree and
-keep the SKIP_WORKTREE bit, simply only updating it in the index.
-Unfortunately, the subsequent commands would essentially undo the
-changes in the index and thus simply toss the changes altogether since
-there was nothing left in the working tree.  This means the stash is
-only partially applied.
-
-(2) If a path existed in the worktree before `git stash apply` despite
-having the SKIP_WORKTREE bit set, then the `git read-tree --reset` would
-print an error message of the form
-      error: Entry 'modified' not uptodate. Cannot merge.
-and cause stash to abort early.
-
-(3) If there was a brand new file added by the stash, then the
-diff-index command would save that pathname to the temporary file, the
-read-tree --reset would remove it from the index, and the update-index
-command would barf due to no such file being present in the working
-copy; it would print a message of the form:
-      error: NEWFILE: does not exist and --remove not passed
-      fatal: Unable to process path NEWFILE
-and then cause stash to abort early.
-
-Basically, the whole idea of unstage-unless-brand-new requires special
-care when you are dealing with a sparse-checkout.  Fix these problems
-by applying the following simple rule:
-
-  When we unstage files, if they have the SKIP_WORKTREE bit set,
-  clear that bit and write the file out to the working directory.
-
-  (*) If there's already a file present in the way, rename it first.
-
-This fixes all three problems in t7012.13 and allows us to mark it as
-passing.
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- builtin/stash.c                  | 36 +++++++++++++++++++++++++++++++-
- t/t7012-skip-worktree-writing.sh |  2 +-
- 2 files changed, 36 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 8117d7647d..0f7e78d315 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -331,13 +331,23 @@ static void unstage_changes_unless_new(struct object_id *cache_tree)
- 	 * When we enter this function, there has been a clean merge of
- 	 * relevant trees, and the merge logic always stages whatever merges
- 	 * cleanly.  We want to unstage those changes, unless it corresponds
--	 * to a file that didn't exist as of cache_tree.
-+	 * to a file that didn't exist as of cache_tree.  However, if any
-+	 * SKIP_WORKTREE path is modified relative to cache_tree, then we
-+	 * want to clear the SKIP_WORKTREE bit and write it to the worktree
-+	 * before unstaging.
- 	 */
- 
-+	struct checkout state = CHECKOUT_INIT;
- 	struct diff_options diff_opts;
- 	struct lock_file lock = LOCK_INIT;
- 	int i;
- 
-+	/* If any entries have skip_worktree set, we'll have to check 'em out */
-+	state.force = 1;
-+	state.quiet = 1;
-+	state.refresh_cache = 1;
-+	state.istate = &the_index;
-+
- 	diff_setup(&diff_opts);
- 	diff_opts.flags.recursive = 1;
- 	diff_opts.detect_rename = 0;
-@@ -367,6 +377,30 @@ static void unstage_changes_unless_new(struct object_id *cache_tree)
- 			continue;
- 		}
- 		ce = active_cache[pos];
-+		if (ce_skip_worktree(ce)) {
-+			struct stat st;
-+			if (!lstat(ce->name, &st)) {
-+				struct strbuf new_path = STRBUF_INIT;
-+				int fd;
-+
-+				strbuf_addf(&new_path,
-+					    "%s.stash.XXXXXX", ce->name);
-+				fd = xmkstemp(new_path.buf);
-+				close(fd);
-+				printf(_("WARNING: Untracked file in way of "
-+					 "tracked file!  Renaming\n "
-+					 "           %s -> %s\n"
-+					 "         to make room.\n"),
-+				       ce->name, new_path.buf);
-+				if (rename(ce->name, new_path.buf))
-+					die("Failed to move %s to %s\n",
-+					    ce->name, new_path.buf);
-+				strbuf_release(&new_path);
-+			}
-+			checkout_entry(ce, &state, NULL, NULL);
-+		}
-+
-+		ce->ce_flags &= ~CE_SKIP_WORKTREE;
- 		if (p->one->oid_valid) {
- 			ce = make_cache_entry(&the_index,
- 					      p->one->mode,
-diff --git a/t/t7012-skip-worktree-writing.sh b/t/t7012-skip-worktree-writing.sh
-index a184ee97fb..e5c6a038fb 100755
---- a/t/t7012-skip-worktree-writing.sh
-+++ b/t/t7012-skip-worktree-writing.sh
-@@ -149,7 +149,7 @@ test_expect_success '--ignore-skip-worktree-entries leaves worktree alone' '
- 		--diff-filter=D -- keep-me.t
- '
- 
--test_expect_failure 'stash restore in sparse checkout' '
-+test_expect_success 'stash restore in sparse checkout' '
- 	test_create_repo stash-restore &&
- 	(
- 		cd stash-restore &&
--- 
-gitgitgadget
+But I only dug into it a bit while working on the stash apply bug; I'm
+going to dig more (probably just after Thanksgiving) and perhaps make
+a Documentation/technical/ file of some sort to propose more plans
+here.
