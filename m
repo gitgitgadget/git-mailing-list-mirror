@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F988C56201
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 494AEC63798
 	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 16:54:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BEFE12100A
+	by mail.kernel.org (Postfix) with ESMTP id 062812225B
 	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 16:54:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ip0voAmH"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PqRiA78K"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730171AbgKTQxs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Nov 2020 11:53:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54592 "EHLO
+        id S1730174AbgKTQxt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Nov 2020 11:53:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730167AbgKTQxr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Nov 2020 11:53:47 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A426C0613CF
-        for <git@vger.kernel.org>; Fri, 20 Nov 2020 08:53:47 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id u12so10773723wrt.0
-        for <git@vger.kernel.org>; Fri, 20 Nov 2020 08:53:47 -0800 (PST)
+        with ESMTP id S1730167AbgKTQxs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Nov 2020 11:53:48 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64EEDC0613CF
+        for <git@vger.kernel.org>; Fri, 20 Nov 2020 08:53:48 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id x13so3278387wmj.1
+        for <git@vger.kernel.org>; Fri, 20 Nov 2020 08:53:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=5L9um2HsOpUj5ErYVGAEt/asMWXqgB4GcsakeEVwtW0=;
-        b=Ip0voAmHSeJ7CKsLfDMtwLRUzzr8mg4OJskKq5JCp5fsrpZtmSHh8A3SrzM5TdkXs7
-         hXumz8PeeaY5xjpNfq0hq324otH1lg4leS7Fv884lRPurZm8iI9lDANlq7VhpODUkDah
-         Ok7PeACegXahX522mq+Icz04fT49CfcV3ZwWczmztRGn/BlmhJ6x9/eDlUMn+PdhpE6r
-         Bs/i2Q/rKlbHmOR+TWUy8olypeprrafX24zEZgNx1ghXXBiFDve86OqTeq/XKEuF5d2t
-         uIK1EHRAY4FhDH2mPRTOdgliw9EBh8R5kcUYHQnIV9oZcqQydPYpy2g5YUdNrApeO3MV
-         L2sA==
+        bh=tGBsOn+CLPS2UIQsK+78dUG0cPNCdFdpBpPGhN6swd8=;
+        b=PqRiA78KJ40QJCZSCQJZWbnn9Hl8y9UzFOESRJV9MTNHX5GZYiLDavHzjXCvtQQ/cN
+         Z3TeN/NsGjKQgZtFyLdEyGir8+uwk2EA+eHK33il7lgLA88zEOfSzek1/FULjmvrPZGM
+         9FZ++ZPKA2A4VOGAlxdBbFZSRJIHDZwhSFUWYl/2+ySnfQ7uUfR4KAGiKN3W6474GdG1
+         1nSNUHuF4P0zb1bdV7Cd4hOacjCerpkj3i7tNfF29A7L20k8dLkHcL7hxStv6WsxIaj7
+         MT4sfoUE9qT7p9YNEmbaK/HdaNyWbia5zRJRSLjVolfHom+HkySwfnObrGNt8MM0ZGyV
+         NdCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=5L9um2HsOpUj5ErYVGAEt/asMWXqgB4GcsakeEVwtW0=;
-        b=h3GtFecAucNyRofJJObaZ9j22VQPGL/7rZTo8mOSUBsi6gfq3oR2Tl82vwAv1EX93O
-         dvNm8j6QI3mL9Wtj3kB9PvQv0ykKa2lecIAgcrqI1EAcjE0jJRIlM85/OC0CdKrFFyvZ
-         zI5DwNNsd6NyIwowjGJTuPaR2clv4umEEodQUrZFTU/VZKVL0N6ST84InCeYMpVd9MTz
-         GBDes1YXhXIztOfCYvNKvMkJ9Wsq7DS2kdFHfG9UHo97Wa40j8Y650NsK2R9hFZbkTxK
-         XZ3LqbMloByqKoCWUgaWbRrgw6anSdXj4MCyZatMA8pKPyaUp3LsSKMmeXNEm7L3WTy2
-         N6tQ==
-X-Gm-Message-State: AOAM530ivsIRP5TrhiI13EIAEZzxnzXYJeeJJhJN2RpK2Frj1EWvThMU
-        Mu0sZEHnRAisWr/Jv5hDfOQcx4mTXcE=
-X-Google-Smtp-Source: ABdhPJwMwWN7uK02rlvzgTAWfp+4sg/Fm6EU87/Gg7da2wQQafYITas2d1UjyFlHVfm+oZlsyUnJjQ==
-X-Received: by 2002:adf:dccd:: with SMTP id x13mr18204582wrm.394.1605891225539;
-        Fri, 20 Nov 2020 08:53:45 -0800 (PST)
+        bh=tGBsOn+CLPS2UIQsK+78dUG0cPNCdFdpBpPGhN6swd8=;
+        b=RjT9y47JFfDzBzyUfXKrl0/YDYhgWwvgPXTtAnZdVHzzlS4gK8B1fFJhINjSwv6Zgf
+         nbzn/DOwAJBW09zAfzCSzcpPcALqbhDZCNoSn2kFA4DbrVz3lw3i85Qa9Chi+ervRA0B
+         NZSudP3bapE9bEzj4VyxmsMRKbk/bRJyz0Z4HW45IgXbavYQx+QxEn26ftNI0PuepR+L
+         +CgwiWivSwXNV7zfO5B7D4eP2SBNlEMoN0tJ21+WhxZ9ocfrym+v3P6Ly6O8YgbcgKN/
+         XbmZYW1vCJjaKEMIxyaIAYRjyGD0/sOv7AYdS09d26MPC+QHxOLtH6ow3jPBSda3gj3r
+         kHRA==
+X-Gm-Message-State: AOAM530Dr97uPXmHOghWms19L4NraG62AGz/VUUdMNbNBDAyUSpjsk7/
+        /KWpI1ywSQxDk75XXubp6QOZpabDlFg=
+X-Google-Smtp-Source: ABdhPJxPdzNtSwytIZ9jtvnVge24eP5/hu33VfBQ9Z7gjmK32qh1SU8ak5Tk3ShABB64xPgByMVTJg==
+X-Received: by 2002:a1c:40d4:: with SMTP id n203mr11275550wma.102.1605891226547;
+        Fri, 20 Nov 2020 08:53:46 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 36sm5660415wrf.94.2020.11.20.08.53.45
+        by smtp.gmail.com with ESMTPSA id s202sm5090369wme.39.2020.11.20.08.53.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2020 08:53:45 -0800 (PST)
-Message-Id: <eb9ebcf0bd8ac946dab7bfd28a44587c5d9caf4f.1605891222.git.gitgitgadget@gmail.com>
+        Fri, 20 Nov 2020 08:53:46 -0800 (PST)
+Message-Id: <5143cba7047d25137b3d7f8c7811a875c1931aee.1605891222.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.919.git.git.1605891222.gitgitgadget@gmail.com>
 References: <pull.919.git.git.1605891222.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 20 Nov 2020 16:53:41 +0000
-Subject: [PATCH 2/3] stash: remove unnecessary process forking
+Date:   Fri, 20 Nov 2020 16:53:42 +0000
+Subject: [PATCH 3/3] stash: fix stash application in sparse-checkouts
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,205 +78,183 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-When stash was converted from shell to a builtin, it merely
-transliterated the forking of various git commands from shell to a C
-program that would fork the same commands.  Some of those were converted
-over to actual library calls, but much of the pipeline-of-commands
-design still remains.  Fix some of this by replacing the portion
-corresponding to
+sparse-checkouts are built on the patterns in the
+$GIT_DIR/info/sparse-checkout file, where commands have modified
+behavior for paths that do not match those patterns.  The differences in
+behavior, as far as the bugs concerned here, fall into three different
+categories (with git subcommands that fall into each category listed):
+
+  * commands that only look at files matching the patterns:
+      * status
+      * diff
+      * clean
+      * update-index
+  * commands that remove files from the working tree that do not match
+    the patterns, and restore files that do match them:
+      * read-tree
+      * switch
+      * checkout
+      * reset (--hard)
+  * commands that omit writing files to the working tree that do not
+    match the patterns, unless those files are not clean:
+      * merge
+      * rebase
+      * cherry-pick
+      * revert
+
+There are some caveats above, e.g. a plain `git diff` ignores files
+outside the sparsity patterns but will show diffs for paths outside the
+sparsity patterns when revision arguments are passed.  (Technically,
+diff is treating the sparse paths as matching HEAD.)  So, there is some
+internal inconsistency among these commands.  There are also additional
+commands that should behave differently in the face of sparse-checkouts,
+as the sparse-checkout documentation alludes to, but the above is
+sufficient for me to explain how `git stash` is affected.
+
+What is relevant here is that logically 'stash' should behave like a
+merge; it three-way merges the changes the user had in progress at stash
+creation time, the HEAD at the time the stash was created, and the
+current HEAD, in order to get the stashed changes applied to the current
+branch.  However, this simplistic view doesn't quite work in practice,
+because stash tweaks it a bit due to two factors: (1) flags like
+--keep-index and --include-untracked (why we used two different verbs,
+'keep' and 'include', is a rant for another day) modify what should be
+staged at the end and include more things that should be quasi-merged,
+(2) stash generally wants changes to NOT be staged.  It only provides
+exceptions when (a) some of the changes had conflicts and thus we want
+to use staged to denote the clean merges and higher order stages to
+mark the conflicts, or (b) if there is a brand new file we don't want
+it to become untracked.
+
+stash has traditionally gotten this special behavior by first doing a
+merge, and then when it's clean, applying a pipeline of commands to
+modify the result.  This series of commands for
+unstaging-non-newly-added-files came from the following commands:
 
     git diff-index --cached --name-only --diff-filter=A $CTREE >"$a"
     git read-tree --reset $CTREE
     git update-index --add --stdin <"$a"
     rm -f "$a"
 
-into a library function that does the same thing.  (The read-tree
---reset was already partially converted over to a library call, but as
-an independent piece.)  Note here that this came after a merge operation
-was performed.  The merge machinery always staged anything that cleanly
-merges, and the above code only runs if there were no conflicts.  Its
-purpose is to make it so that when there are no conflicts, all the
-changes from the stash are unstaged.  However, that causes brand new
-files from the stash to become untracked, so the code above first saves
-those files off and then re-adds them afterwards.
+You might that between the merge that proceeded these commands and these
+different commands here, that we have commands from each of the
+different types of special sparsity handling listed at the beginning of
+this message, and in fact this precisely led to the following buggy
+behaviors:
 
-We replace the whole series of commands with a simple function that will
-unstage files that are not newly added.  This doesn't fix any bugs in
-the usage of these commands, it simply matches the existing behavior but
-making it an actual builtin that we can then operate on as a whole.  A
-subsequent commit will take advantage of this to fix issues with these
-commands in sparse-checkouts.
+(1) If a path merged cleanly and it didn't match the sparsity patterns,
+the merge backend would know to avoid writing it to the working tree and
+keep the SKIP_WORKTREE bit, simply only updating it in the index.
+Unfortunately, the subsequent commands would essentially undo the
+changes in the index and thus simply toss the changes altogether since
+there was nothing left in the working tree.  This means the stash is
+only partially applied.
 
-This conversion incidentally fixes t3906.1, because the separate
-update-index process would die with the following error messages:
-    error: uninitialized_sub: is a directory - add files inside instead
-    fatal: Unable to process path uninitialized_sub
-The unstaging of the directory as a submodule meant it was no longer
-tracked, and thus as an uninitialized directory it could not be added
-back using `git update-index --add`, thus resulting in this error and
-early abort.  Most of the submodule tests in 3906 continue to fail after
-this change, this change was just enough to push the first of those
-tests to success.
+(2) If a path existed in the worktree before `git stash apply` despite
+having the SKIP_WORKTREE bit set, then the `git read-tree --reset` would
+print an error message of the form
+      error: Entry 'modified' not uptodate. Cannot merge.
+and cause stash to abort early.
+
+(3) If there was a brand new file added by the stash, then the
+diff-index command would save that pathname to the temporary file, the
+read-tree --reset would remove it from the index, and the update-index
+command would barf due to no such file being present in the working
+copy; it would print a message of the form:
+      error: NEWFILE: does not exist and --remove not passed
+      fatal: Unable to process path NEWFILE
+and then cause stash to abort early.
+
+Basically, the whole idea of unstage-unless-brand-new requires special
+care when you are dealing with a sparse-checkout.  Fix these problems
+by applying the following simple rule:
+
+  When we unstage files, if they have the SKIP_WORKTREE bit set,
+  clear that bit and write the file out to the working directory.
+
+  (*) If there's already a file present in the way, rename it first.
+
+This fixes all three problems in t7012.13 and allows us to mark it as
+passing.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/stash.c           | 96 ++++++++++++++++++++++-----------------
- t/lib-submodule-update.sh | 16 +++----
- 2 files changed, 62 insertions(+), 50 deletions(-)
+ builtin/stash.c                  | 36 +++++++++++++++++++++++++++++++-
+ t/t7012-skip-worktree-writing.sh |  2 +-
+ 2 files changed, 36 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/stash.c b/builtin/stash.c
-index 24ddb1bffa..8117d7647d 100644
+index 8117d7647d..0f7e78d315 100644
 --- a/builtin/stash.c
 +++ b/builtin/stash.c
-@@ -325,33 +325,64 @@ static void add_diff_to_buf(struct diff_queue_struct *q,
- 	}
- }
- 
--static int get_newly_staged(struct strbuf *out, struct object_id *c_tree)
-+static void unstage_changes_unless_new(struct object_id *cache_tree)
- {
--	struct child_process cp = CHILD_PROCESS_INIT;
--	const char *c_tree_hex = oid_to_hex(c_tree);
--
- 	/*
--	 * diff-index is very similar to diff-tree above, and should be
--	 * converted together with update_index.
-+	 * When we enter this function, there has been a clean merge of
-+	 * relevant trees, and the merge logic always stages whatever merges
-+	 * cleanly.  We want to unstage those changes, unless it corresponds
-+	 * to a file that didn't exist as of cache_tree.
+@@ -331,13 +331,23 @@ static void unstage_changes_unless_new(struct object_id *cache_tree)
+ 	 * When we enter this function, there has been a clean merge of
+ 	 * relevant trees, and the merge logic always stages whatever merges
+ 	 * cleanly.  We want to unstage those changes, unless it corresponds
+-	 * to a file that didn't exist as of cache_tree.
++	 * to a file that didn't exist as of cache_tree.  However, if any
++	 * SKIP_WORKTREE path is modified relative to cache_tree, then we
++	 * want to clear the SKIP_WORKTREE bit and write it to the worktree
++	 * before unstaging.
  	 */
--	cp.git_cmd = 1;
--	strvec_pushl(&cp.args, "diff-index", "--cached", "--name-only",
--		     "--diff-filter=A", NULL);
--	strvec_push(&cp.args, c_tree_hex);
--	return pipe_command(&cp, NULL, 0, out, 0, NULL, 0);
--}
  
--static int update_index(struct strbuf *out)
--{
--	struct child_process cp = CHILD_PROCESS_INIT;
-+	struct diff_options diff_opts;
-+	struct lock_file lock = LOCK_INIT;
-+	int i;
++	struct checkout state = CHECKOUT_INIT;
+ 	struct diff_options diff_opts;
+ 	struct lock_file lock = LOCK_INIT;
+ 	int i;
  
--	/*
--	 * Update-index is very complicated and may need to have a public
--	 * function exposed in order to remove this forking.
--	 */
--	cp.git_cmd = 1;
--	strvec_pushl(&cp.args, "update-index", "--add", "--stdin", NULL);
--	return pipe_command(&cp, out->buf, out->len, NULL, 0, NULL, 0);
-+	diff_setup(&diff_opts);
-+	diff_opts.flags.recursive = 1;
-+	diff_opts.detect_rename = 0;
-+	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	diff_setup_done(&diff_opts);
++	/* If any entries have skip_worktree set, we'll have to check 'em out */
++	state.force = 1;
++	state.quiet = 1;
++	state.refresh_cache = 1;
++	state.istate = &the_index;
 +
-+	do_diff_cache(cache_tree, &diff_opts);
-+	diffcore_std(&diff_opts);
+ 	diff_setup(&diff_opts);
+ 	diff_opts.flags.recursive = 1;
+ 	diff_opts.detect_rename = 0;
+@@ -367,6 +377,30 @@ static void unstage_changes_unless_new(struct object_id *cache_tree)
+ 			continue;
+ 		}
+ 		ce = active_cache[pos];
++		if (ce_skip_worktree(ce)) {
++			struct stat st;
++			if (!lstat(ce->name, &st)) {
++				struct strbuf new_path = STRBUF_INIT;
++				int fd;
 +
-+	for (i = 0; i < diff_queued_diff.nr; i++) {
-+		struct diff_filepair *p;
-+		struct cache_entry *ce;
-+		int pos;
-+
-+		p = diff_queued_diff.queue[i];
-+		pos = index_name_pos(&the_index, p->two->path,
-+				     strlen(p->two->path));
-+		if (pos < 0) {
-+			assert(p->one->oid_valid);
-+			assert(!p->two->oid_valid);
-+			ce = make_cache_entry(&the_index,
-+					      p->one->mode,
-+					      &p->one->oid,
-+					      p->one->path,
-+					      0, 0);
-+			add_index_entry(&the_index, ce, ADD_CACHE_OK_TO_ADD);
-+			continue;
++				strbuf_addf(&new_path,
++					    "%s.stash.XXXXXX", ce->name);
++				fd = xmkstemp(new_path.buf);
++				close(fd);
++				printf(_("WARNING: Untracked file in way of "
++					 "tracked file!  Renaming\n "
++					 "           %s -> %s\n"
++					 "         to make room.\n"),
++				       ce->name, new_path.buf);
++				if (rename(ce->name, new_path.buf))
++					die("Failed to move %s to %s\n",
++					    ce->name, new_path.buf);
++				strbuf_release(&new_path);
++			}
++			checkout_entry(ce, &state, NULL, NULL);
 +		}
-+		ce = active_cache[pos];
-+		if (p->one->oid_valid) {
-+			ce = make_cache_entry(&the_index,
-+					      p->one->mode,
-+					      &p->one->oid,
-+					      p->one->path,
-+					      0, 0);
-+			add_index_entry(&the_index, ce,
-+					ADD_CACHE_OK_TO_REPLACE);
-+		}
-+	}
-+	diff_flush(&diff_opts);
 +
-+	repo_hold_locked_index(the_repository, &lock, LOCK_DIE_ON_ERROR);
-+	if (write_locked_index(&the_index, &lock,
-+			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
-+		die(_("Unable to write index."));
- }
++		ce->ce_flags &= ~CE_SKIP_WORKTREE;
+ 		if (p->one->oid_valid) {
+ 			ce = make_cache_entry(&the_index,
+ 					      p->one->mode,
+diff --git a/t/t7012-skip-worktree-writing.sh b/t/t7012-skip-worktree-writing.sh
+index a184ee97fb..e5c6a038fb 100755
+--- a/t/t7012-skip-worktree-writing.sh
++++ b/t/t7012-skip-worktree-writing.sh
+@@ -149,7 +149,7 @@ test_expect_success '--ignore-skip-worktree-entries leaves worktree alone' '
+ 		--diff-filter=D -- keep-me.t
+ '
  
- static int restore_untracked(struct object_id *u_tree)
-@@ -467,26 +498,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
- 		if (reset_tree(&index_tree, 0, 0))
- 			return -1;
- 	} else {
--		struct strbuf out = STRBUF_INIT;
--
--		if (get_newly_staged(&out, &c_tree)) {
--			strbuf_release(&out);
--			return -1;
--		}
--
--		if (reset_tree(&c_tree, 0, 1)) {
--			strbuf_release(&out);
--			return -1;
--		}
--
--		ret = update_index(&out);
--		strbuf_release(&out);
--		if (ret)
--			return -1;
--
--		/* read back the result of update_index() back from the disk */
--		discard_cache();
--		read_cache();
-+		unstage_changes_unless_new(&c_tree);
- 	}
- 
- 	if (!quiet) {
-diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-index bd3fa3c6da..4b714e9308 100644
---- a/t/lib-submodule-update.sh
-+++ b/t/lib-submodule-update.sh
-@@ -316,14 +316,7 @@ test_submodule_switch_common () {
- 	command="$1"
- 	######################### Appearing submodule #########################
- 	# Switching to a commit letting a submodule appear creates empty dir ...
--	if test "$KNOWN_FAILURE_STASH_DOES_IGNORE_SUBMODULE_CHANGES" = 1
--	then
--		# Restoring stash fails to restore submodule index entry
--		RESULT="failure"
--	else
--		RESULT="success"
--	fi
--	test_expect_$RESULT "$command: added submodule creates empty directory" '
-+	test_expect_success "$command: added submodule creates empty directory" '
- 		prolog &&
- 		reset_work_tree_to no_submodule &&
- 		(
-@@ -337,6 +330,13 @@ test_submodule_switch_common () {
- 		)
- 	'
- 	# ... and doesn't care if it already exists.
-+	if test "$KNOWN_FAILURE_STASH_DOES_IGNORE_SUBMODULE_CHANGES" = 1
-+	then
-+		# Restoring stash fails to restore submodule index entry
-+		RESULT="failure"
-+	else
-+		RESULT="success"
-+	fi
- 	test_expect_$RESULT "$command: added submodule leaves existing empty directory alone" '
- 		prolog &&
- 		reset_work_tree_to no_submodule &&
+-test_expect_failure 'stash restore in sparse checkout' '
++test_expect_success 'stash restore in sparse checkout' '
+ 	test_create_repo stash-restore &&
+ 	(
+ 		cd stash-restore &&
 -- 
 gitgitgadget
-
