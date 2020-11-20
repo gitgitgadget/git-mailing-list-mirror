@@ -2,189 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46706C63777
-	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 20:36:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82EBEC2D0E4
+	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 21:42:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DBE4D22470
-	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 20:36:49 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LSbZvu9f"
+	by mail.kernel.org (Postfix) with ESMTP id 2BF5122403
+	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 21:42:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731435AbgKTUgd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Nov 2020 15:36:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32826 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730623AbgKTUgd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Nov 2020 15:36:33 -0500
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0742C0613CF
-        for <git@vger.kernel.org>; Fri, 20 Nov 2020 12:36:32 -0800 (PST)
-Received: by mail-wm1-x341.google.com with SMTP id w24so11033213wmi.0
-        for <git@vger.kernel.org>; Fri, 20 Nov 2020 12:36:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=z0LD6EMPImiuoJEnyOfKACl6CMb/R3sH3IiKCH7dxvs=;
-        b=LSbZvu9fM98ryly3ROED41FlN+r85Kjqigywfi1qpv7tcET30S2gaAfpoLCFsc11c4
-         6Wwud5Hxo8b5t1q6EOrxAlgx5d8aIkBCYaANyRMEi05jPWzGR814EpV4N/A4bB9r8oy7
-         hHIjISWe/VYd29/V2iK/juqF+SncDYMJIaRy0d1BobnjmxC7RjDdLQ42KcDDmjIt530+
-         eMivVUWj9/sOS9K5V1XvObBsfKWFzUfeMV96ARFfaIGxowGNLunTtM7BftHuD//jjDG+
-         NInpk1mTRgZhhfQmcrM4u3Fkduwg/pa4c6AaFh2WoINhf+DM9WocVjJmTvimlRtdWrMb
-         TLUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=z0LD6EMPImiuoJEnyOfKACl6CMb/R3sH3IiKCH7dxvs=;
-        b=J3pfmiJ5tP6LjziYUe07ZXd+G37zxQ9/mn4X+zH/R1+UrgNa9t4+0M68F2tzavbQi/
-         JD+lGWrsErnQC87LGeI559C5wK1L7MaeYVt127qt2xm1+NPiz9dMGbdTQNkaPoQ+NWdw
-         RuaDwBEmqk2JQ80/7cqy5mejy3qpOkHIcF/7X86SbYRQg9v5LTXFtMvA6WVF0yskLG+/
-         LvyBVkn+PeDMttAx3VJ+gqRxHGRiia5vVCjILTDUzR4Ke64Imt7QCIGyJlypQ3a30zae
-         dBz70m69Ktfkb1KiRCJxrOOIVTHmKvItnYJyzwfppl99FOHYIbQOVo+vIvybTbzMTyF2
-         QTXA==
-X-Gm-Message-State: AOAM53200bEIvVicVlhblc88S81vLDRV77zwhxEcfGePrysNk57ydC7T
-        WVLXJU7QlRj9BOSKY4A7L/6v0JII0lg=
-X-Google-Smtp-Source: ABdhPJzdORNidwf11MkNMacfkbA+I985SPzuBCKhFu36KhJtB4E9I3jyQh+DB1fuqWD3Sb5krzJeSw==
-X-Received: by 2002:a1c:3b07:: with SMTP id i7mr12175582wma.118.1605904588448;
-        Fri, 20 Nov 2020 12:36:28 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w21sm5336730wmi.29.2020.11.20.12.36.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2020 12:36:27 -0800 (PST)
-Message-Id: <pull.797.git.1605904586929.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 20 Nov 2020 20:36:26 +0000
-Subject: [PATCH] clone: --filter=tree:0 implies fetch.recurseSubmodules=no
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1727040AbgKTVmX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Nov 2020 16:42:23 -0500
+Received: from smtp.hosts.co.uk ([85.233.160.19]:36467 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725805AbgKTVmW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Nov 2020 16:42:22 -0500
+Received: from host-89-243-187-160.as13285.net ([89.243.187.160] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1kgEAb-0007yd-CL; Fri, 20 Nov 2020 21:42:18 +0000
+Subject: Re: [PATCH] myFirstContribition: answering questions is not the end
+ of the story
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     Emily Shaffer <emilyshaffer@google.com>
+References: <xmqq3613vrtx.fsf@gitster.c.googlers.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <33e4b940-2560-83b7-1015-100c16c71345@iee.email>
+Date:   Fri, 20 Nov 2020 21:42:16 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+In-Reply-To: <xmqq3613vrtx.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+On 20/11/2020 17:52, Junio C Hamano wrote:
+> A review exchange may begin with a reviewer asking "what did you
+> mean by this phrase in your log message (or here in the doc)?", the
+> author answering what was meant, and then the reviewer saying "ah,
+> that is what you meant---then the flow of the logic makes sense".
+>
+> But that is not the happy end of the story.  New contributors often
+> forget that the material that has been reviewed in the above exchange
+> is still unclear in the same way to the next person who reads it,
+> until it gets updated.
 
-The partial clone feature has several modes, but only a few are quick
-for a server to process using reachability bitmaps:
+Yes!
 
-* Blobless: --filter=blob:none downloads all commits and trees and
-  fetches necessary blobs on-demand.
+> While we are in the vicinity, rephrase the verb "request" used to
+> refer to comments by reviewers to "suggest"---this matches the
+> contrast between "original" and "suggested" that appears later in
+> the same paragraph, and more importantly makes it clearer that it is
+> not like authors are to please reviewers' wishes but rather
+> reviewers are merely helping authors to polish their commits.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>
+>  * Something along this line, in a more condensed form, may also
+>    want to be in SubmittingPatches, but let's start with a longer
+>    form that is easier to discuss the intent of the addition to see
+>    if it is a good idea.  I've seen a patch that got reviewed
+>    falling thru the cracks without producing a v2 too many times.
+>
+>  Documentation/MyFirstContribution.txt | 15 ++++++++++++++-
+>  1 file changed, 14 insertions(+), 1 deletion(-)
+>
+> diff --git c/Documentation/MyFirstContribution.txt w/Documentation/MyFirstContribution.txt
+> index 60eed5edcd..bac4997e39 100644
+> --- c/Documentation/MyFirstContribution.txt
+> +++ w/Documentation/MyFirstContribution.txt
+> @@ -1143,11 +1143,24 @@ After a few days, you will hopefully receive a reply to your patchset with some
+>  comments. Woohoo! Now you can get back to work.
+>  
+>  It's good manners to reply to each comment, notifying the reviewer that you have
+> -made the change requested, feel the original is better, or that the comment
+> +made the change suggested, feel the original is better, or that the comment
+>  inspired you to do something a new way which is superior to both the original
+>  and the suggested change. This way reviewers don't need to inspect your v2 to
+>  figure out whether you implemented their comment or not.
+>  
+> +Reviewers may ask you about what you wrote in the patchset, either in
+> +the proposed commit log message or in the changes themselves.  You
+> +should answer these questions in your response messages, but often the
+> +reason why reviewers asked these questions to understand what you meant
+> +to write is because your patchset needed clarification to be understood.
 
-* Treeless: --filter=tree:0 downloads all commits and fetches necessary
-  trees and blobs on demand.
+Perhaps a paragraph break here?
+> +Do not be satisfied by just answering their questions in your response
+> +and hear them say that they now understand what you wanted to say.
+> +Update your patches to clarify the points reviewers had trouble with,
+> +and prepare your v2; the words you used to explain your v1 to answer
+> +reviewers' questions may be useful thing to use.  Your goal is to make
+> +your v2 clear enough so that it becomes unnecessary for you to give the
+> +same explanation to the next person who reads it.
+> +
+>  If you are going to push back on a comment, be polite and explain why you feel
+>  your original is better; be prepared that the reviewer may still disagree with
+>  you, and the rest of the community may weigh in on one side or the other. As
 
-This treeles mode is most similar to a shallow clone in the total size
-(it only adds the commit objects for the full history). This makes
-treeless clones an interesting replacement for shallow clones. A user
-can run more commands in a treeless clone than in a shallow clone,
-especially 'git log' (no pathspec).
+Is this also worth mentioning in SubmittingPatches?
 
-In particular, servers can still serve 'git fetch' requests quickly by
-calculating the difference between commit wants and haves using bitmaps.
+With or without the paragraph split
 
-I was testing this feature with this in mind, and I knew that some trees
-would be downloaded multiple times when checking out a new branch, but I
-did not expect to discover a significant issue with 'git fetch', at
-least in repostiories with submodules.
+Reviewed-by: Philip Oakley <philipoakley@iee.email>
 
-I was testing these commands:
 
-	$ git clone --filter=tree:0 --single-branch --branch=master \
-	  https://github.com/git/git
-	$ git -C git fetch origin "+refs/heads/*:refs/remotes/origin/*"
 
-This fetch command started downloading several pack-files of trees
-before completing the command. I never let it finish since I got so
-impatient with the repeated downloads. During debugging, I found that
-the stack triggering promisor_remote_get_direct() was going through
-fetch_populated_submodules(). Notice that I did not recurse my
-submodules in the original clone, so the sha1collisiondetection
-submodule is not initialized. Even so, my 'git fetch' was scanning
-commits for updates to submodules.
-
-I decided that even if I did populate the submodules, the nature of
-treeless clones makes me not want to care about the contents of commits
-other than those that I am explicitly navigating to.
-
-This loop of tree fetches can be avoided by adding
---no-recurse-submodules to the 'git fetch' command or setting
-fetch.recurseSubmodules=no.
-
-To make this as painless as possible for future users of treeless
-clones, automatically set fetch.recurseSubmodules=no at clone time.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
-    clone: --filter=tree:0 implies fetch.recurseSubmodules=no
-    
-    While testing different partial clone options, I stumbled across this
-    one. My initial thought was that we were parsing commits and loading
-    their root trees unnecessarily, but I see that doesn't happen after this
-    change.
-    
-    Here are some recent discussions about using --filter=tree:0:
-    
-    [1] 
-    https://lore.kernel.org/git/aa7b89ee-08aa-7943-6a00-28dcf344426e@syntevo.com/
-    [2] https://lore.kernel.org/git/cover.1588633810.git.me@ttaylorr.com/[3] 
-    https://lore.kernel.org/git/58274817-7ac6-b6ae-0d10-22485dfe5e0e@syntevo.com/
-    
-    Thanks, -Stolee
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-797%2Fderrickstolee%2Ftree-0-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-797/derrickstolee/tree-0-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/797
-
- list-objects-filter-options.c | 4 ++++
- t/t5616-partial-clone.sh      | 6 ++++++
- 2 files changed, 10 insertions(+)
-
-diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index defd3dfd10..249939dfa5 100644
---- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -376,6 +376,10 @@ void partial_clone_register(
- 		       expand_list_objects_filter_spec(filter_options));
- 	free(filter_name);
- 
-+	if (filter_options->choice == LOFC_TREE_DEPTH &&
-+	    !filter_options->tree_exclude_depth)
-+		git_config_set("fetch.recursesubmodules", "no");
-+
- 	/* Make sure the config info are reset */
- 	promisor_remote_reinit();
- }
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index f4d49d8335..b2eaf78069 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -341,6 +341,12 @@ test_expect_success 'partial clone with sparse filter succeeds' '
- 	)
- '
- 
-+test_expect_success '--filter=tree:0 sets fetch.recurseSubmodules=no' '
-+	rm -rf dst &&
-+	git clone --filter=tree:0 "file://$(pwd)/src" dst &&
-+	test_config -C dst fetch.recursesubmodules no
-+'
-+
- test_expect_success 'partial clone with unresolvable sparse filter fails cleanly' '
- 	rm -rf dst.git &&
- 	test_must_fail git clone --no-local --bare \
-
-base-commit: faefdd61ec7c7f6f3c8c9907891465ac9a2a1475
--- 
-gitgitgadget
