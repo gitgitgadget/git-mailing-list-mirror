@@ -2,115 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 840C3C5519F
-	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 12:34:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B44D0C5519F
+	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 13:09:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2D1BA22255
-	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 12:34:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 46CB722255
+	for <git@archiver.kernel.org>; Fri, 20 Nov 2020 13:09:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QqMjaJKT"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="QkdbHoDg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728240AbgKTMeb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Nov 2020 07:34:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42502 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727883AbgKTMea (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Nov 2020 07:34:30 -0500
-Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61E48C0613CF
-        for <git@vger.kernel.org>; Fri, 20 Nov 2020 04:34:30 -0800 (PST)
-Received: by mail-qt1-x842.google.com with SMTP id u22so3252515qtw.4
-        for <git@vger.kernel.org>; Fri, 20 Nov 2020 04:34:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=YgCdMtQ4BCCy7QjeQllBc7qarTLJ34I1FyvzACd70b8=;
-        b=QqMjaJKTyJxMdOxAxiLBWeESEGqz9k/Xg70HL1V4b62X1E9LtcGYG9j3BV8oz9TH3j
-         eOjD6VdoST0toxRDYXdoeEBE2lPOnsWw06YAydUazvjL+/dzuAx6kBeQICYLQjIA9SM1
-         imC0LAhbU9ti9WKE6XmpLdPZwWjacks3+JHU5bibMuSoUKTshRjOlmjk7MUPVekGyL31
-         uqFbfWXNwD1xFGMbvYBvcbiXPb+I9rFnKoRRMHJzpM+JHJFQcNxfS2mXly7VGqB5kWnV
-         7CHFxJZFoM4EgXkSfe6NIXOoWpa/pcXITtl5t5rLoAdUOgB9AaBidc9Zb+WxUUrk/qWM
-         +A1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=YgCdMtQ4BCCy7QjeQllBc7qarTLJ34I1FyvzACd70b8=;
-        b=oq0swvFM7uXiO6UqeacoI6yu5bsytbqQx/9p47E9lWhgvxYPEfcBD8xj21cexGfQOJ
-         L9HxJyzLLutEpyEoYpwnlh7PLgYEbI1B0UAiHEWVAUoiadIxHCs1I5m29lGdSOK1jY6J
-         MlYqlUELvqgtIKMDR+IVhmpeZT+UpFcibHh8IBUO4oDX1sFoFB3sxcswjkmgOp4VI4tu
-         TM/Y4dQyGAA1zVFmRMApYtNSoWiv97yVR/k9Zb8jnB9mPOJot8Yw4xPNY362CWC9U7wx
-         k4A5TExLV4gC2LuP8CjIkb4cUx9R1+zFEkW6x5S6krksGYCMTBhlsORbiHzajwUN+NMU
-         nJDA==
-X-Gm-Message-State: AOAM531NjButvMzMyNtTf7ti7FyJfja4cC/6yjDS3IfEKJQOFpUUpmUq
-        FEcVJsW4shS2ZSumbUL9C2w/7DCWq8FjQHehszk=
-X-Google-Smtp-Source: ABdhPJwltKTXXTcIZJzKp7OxThus9gnr8LQfAz1OsrYTYtQkNx8g9njEW9GmsXzNX1L9nKF0AmavSDSXSkxZ0ys2QIU=
-X-Received: by 2002:ac8:6b4c:: with SMTP id x12mr16295335qts.359.1605875669408;
- Fri, 20 Nov 2020 04:34:29 -0800 (PST)
+        id S1726654AbgKTNJR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Nov 2020 08:09:17 -0500
+Received: from mout.gmx.net ([212.227.17.22]:42429 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726118AbgKTNJR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Nov 2020 08:09:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1605877745;
+        bh=nI1HQRu4pfnSHvQYcpONts/QD2FGQugUOti8V8g7BUQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=QkdbHoDgBxRewgflmZUhMJN4iptbdewsbCM/mFGTNHQs0dmH8kfLqjrF4LlmOXKPu
+         AltdETIaOuKrFInrl4zMR+kD+UXl5h0wEp6q6RDtMbVZVkeR84r+6jDW5wAKXV9EBB
+         41wxs+VGi4O1XM2NwQ5J3YaMvrMUiU8SG5FD6BVM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.26.22.105] ([213.196.212.61]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N6sn1-1kBRDK2Myl-018KQU; Fri, 20
+ Nov 2020 14:09:05 +0100
+Date:   Fri, 20 Nov 2020 14:09:06 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 28/27] tests: run tests omitted by
+ PREPARE_FOR_MAIN_BRANCH
+In-Reply-To: <xmqqo8jtxhyu.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2011201403440.56@tvgsbejvaqbjf.bet>
+References: <pull.762.v2.git.1605629547.gitgitgadget@gmail.com> <20201118114834.11137-1-avarab@gmail.com> <nycvar.QRO.7.76.6.2011190044100.56@tvgsbejvaqbjf.bet> <xmqqo8jtxhyu.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <pull.790.v3.git.1605801376577.gitgitgadget@gmail.com>
- <pull.790.v4.git.1605819390.gitgitgadget@gmail.com> <3bd6024a236b061c89bb6b60daf3dc15ef1e32ca.1605819390.git.gitgitgadget@gmail.com>
- <CAPig+cSN=-7KWgDcXM8po44PEKi27U6mJEEL0mj_wrTJBUf=WA@mail.gmail.com>
- <CAGHpTBKHmdjqrz1ABdGUUz7AwcixU_VBy1DQzybpFizqVo8C7A@mail.gmail.com> <87sg94pa45.fsf@evledraar.gmail.com>
-In-Reply-To: <87sg94pa45.fsf@evledraar.gmail.com>
-From:   Orgad Shaneh <orgads@gmail.com>
-Date:   Fri, 20 Nov 2020 14:34:19 +0200
-Message-ID: <CAGHpTB+LzXTNp3UGia6bdEDqV=mjAY+JQkO3aeUmddhYa1xajw@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] hooks: allow input from stdin for commit-related hooks
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Orgad Shaneh via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:nSZ7cv0AMgFXoblnTjeVXvNRffQ7gdgYIL1MpfNChh2tgfWNAL7
+ 3S5n1bV8L+earTOUjFoy1yxBPlmmS9JrwZGfeliNMTnXx2lsjVNV0mgxBu+MXrRQq0KU/Hf
+ aFEX9nheuyap2Fch7iG3lZG4rSnPAW2X0dYLkUetBHjcCoZsvbmFczk7E9CJ991NUE6JON2
+ HzS3D5ChuLjTQLSFo16nw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:crT2a0L9YhQ=:XsteyVt6v15orH/oGVJ1FZ
+ fh8ZJvaUDc940UCaZ12CKk4FEO023MtICV5nEvMY2QaHfVBVSuAFe/67f8UccpjSGTd6U3Y7e
+ GXS/0OuxD6ZPac8KxRlNkzLa9Qroj9yJPSY2YZ9jstg9R7ZJ8jEXceYXakEgQF4YUOcxYp87s
+ aC9Lbu6DXiJxNXxpdxq33mcbHcbjlYoxc8i8CKaf/G2Rs9EsYVqzdpUqoO6Ua7zFH5aecUjhh
+ DRS3oegB8ZFZX0/e7J8GgKJjEAoidBxiEug0hlHv5DYrHqdVf0xjCZW/0TfJ/b4kgYDUZF+pZ
+ 4YkKjeaUmf8wqaApdINPpMHeHQLxwAKBNDb7eKrxFU/zezDfrsYTQ2K1snp6x44frKHOeNATM
+ JsVIp1mmCynE/W4RZk6H5IrKBKsPo8S1SPM9W38oct/FUFwuD4E15rz0mfCRNzW05O56DwsPB
+ VqUIbcGIMgBX2JBfJH1SMYqMkO/G8sfus9UK6+HXkjfn1nDeHSPPr8woXZ48R8lEqO9VpzgGk
+ 4hdPg8q2stnCCMZUY5yIyhcBeR70rMVkrIihGe3jfEdLTurinK484d9+Df+VTzdBTOohz72ct
+ g5tcHYX4awsPTXb4ukVxNsyLC667b0cpdWCcczG8VOt02apoh2cg8G5K1t7pftnm3PKlFBOl0
+ KX7CmbZ7iCpyuPuDN1agukIoD1vhL70e0SA0R0nIRY37WPhfsmIWdI94OazZUevEH/ePcEfHz
+ 2i7Qv6AJI0xk+4kvZiLcrPBILq4D+DP9AuAGOxGxGJj9ssJTOPXYpmPlYngbWdW3CQ4H/h3iJ
+ oiiL/LvEzvBQz0rNNhM72XdIdvfVjZEJZK0pL7eK64Qhgv/IL1ZCh6W1GMP5Ev+1Yu7oQwX8l
+ AgKFDUBa9GqaLag1GoxOWw6JIt1DZZEU6/hGwfy+s=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 20, 2020 at 12:59 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Fri, Nov 20 2020, Orgad Shaneh wrote:
->
-> > Can you suggest an alternative way to determine if I can accept user
-> > input from the console or not?
->
-> Like Eric noted in his reply I can't think of a way to do that
-> particular thing reliably either, and agree with his comments that if
-> such a way is found / some aspect of this change is kept having this
-> explanation in the patch/commit message is really helpful.
+Hi Junio,
 
-I'll reword.
+On Thu, 19 Nov 2020, Junio C Hamano wrote:
 
-> I think what you're trying to do here isn't a good fit for most git
-> workflows. Instead of trying to interactively compose a commit message
-> why not change the commit template to start with e.g.:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
->     # You must replace XXX with an issue number here!:
->     Issue #XXX:
+> > The conflicts might be trivial, but every conflict makes it harder to
+> > juggle branch thickets like Junio's `seen`. And those things add up.
+> > They're no fun, and they make life hard and tedious.
 >
-> That gives the user the same thing to fill out, but in their editor
-> instead of via some terminal/GUI prompt. They need to write the rest of
-> the commit message anyway in the editor, so even if you could why open
-> up two UIs?
+> The worst part is they can easily be cause of unintended breakage
+> due to mismerge.
+>
+> > t5526 conflicts _semantically_ with `pk/subsub-fetch-fix` (which touch=
+es
+> > t5526 and adds a new test case referring to `master`).
+> >
+> > t9902 conflicts with `fc/bash-completion-post-2.29`, and in contrast t=
+o
+> > the t5526 issue (which is trivial, even if it does require manual fixi=
+ng),
+> > the t9902 is a bit more hairy to reason about.
+> >
+> > So yes, I would love to have that test coverage back, but not by makin=
+g
+> > the transition to `main` even harder by reverting parts of it.
+>
+> Hmph, wouldn't the forcing with GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+> to 'master' be the right way to keep test coverage?
 
-We do have a template. The hook pops a listbox with all the open issues
-assigned to the user, which he/she can easily pick from, instead of
-searching for them in the browser and copying the issue id. This is only
-done if the user doesn't write an issue in the commit message.
+Well, I was naive enough to think that this whole "let's transition the
+test suite to use `main` as default branch name" business would go over
+much quicker. With that expectation, I was content to already have
+`PREPARE_FOR_MAIN`-marked test cases in t5526 and t9902. They are
+currently skipped because that prereq is still waiting for the transition
+to complete.
 
-> Projects that have these conventions also typically settle on just not
-> trying to solve this problem on the client-side, but e.g. having a
-> pre-receive hook that does the validation, or do it via CI / before a
-> merge to master happens etc.
+That's what my promise was about: as soon as the competing topics settle,
+I want to address those two test scripts in particular, moving them over
+to `GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain`.
 
-We have validation on the server too. The hook is there for convenience.
+> After all, the primary goal is to prepare tests so that we won't lose
+> coverage when the fallback default of init.defaultbranch is switched to
+> 'main', and it is a secondary goal of much lessor importance to reduce
+> the number of hits from "git grep master t/".
+>
+> > That's why I promised publicly to take care of the loose ends as quick=
+ly
+> > as I can, after the conflicting issues graduate to `next` (or when the=
+y
+> > become stalled or even dropped from `seen`).
+>
+> Perhaps I should start to more aggressively drop topics from `seen`
+> that are not sufficiently reviewed?  The guiding principle ought to
+> be "unreviewed patches are not worth applying", but I have a feeling
+> that we have become more and more lax over time due to shortage of
+> quality reviews.  I dunno.
 
-- Orgad
+FWIW I think you do a wonderful job of keeping the patch series in `seen`.
+I wish we could keep the CI build passing a bit more, but I'd rather have
+the branches that are in flight in one place, so that it is easy e.g. to
+find out whether `git diff next..seen -- t/t9902\*` is empty (to determine
+whether working on that script would cause conflicts right now).
+
+Ciao,
+Dscho
+
