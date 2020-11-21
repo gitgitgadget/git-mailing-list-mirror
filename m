@@ -2,100 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53EB2C63777
-	for <git@archiver.kernel.org>; Sat, 21 Nov 2020 20:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72F5BC388F9
+	for <git@archiver.kernel.org>; Sat, 21 Nov 2020 21:53:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E89FB221EB
-	for <git@archiver.kernel.org>; Sat, 21 Nov 2020 20:52:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 261D52080D
+	for <git@archiver.kernel.org>; Sat, 21 Nov 2020 21:53:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bdaAGcqm"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="D8rFNU7v"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728472AbgKUUwt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Nov 2020 15:52:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58578 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728402AbgKUUws (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Nov 2020 15:52:48 -0500
-Received: from mail-vs1-xe44.google.com (mail-vs1-xe44.google.com [IPv6:2607:f8b0:4864:20::e44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACF90C0613CF
-        for <git@vger.kernel.org>; Sat, 21 Nov 2020 12:52:48 -0800 (PST)
-Received: by mail-vs1-xe44.google.com with SMTP id y73so7020192vsc.5
-        for <git@vger.kernel.org>; Sat, 21 Nov 2020 12:52:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=kJOILQ2546MQYt1uxxMLolDOlYjbPAoQSF+WGqodusA=;
-        b=bdaAGcqmbIxaR4IvRH8CiwYt6slGyOkYlRORnHiArPDA6rrPEF7wW0Fjpa//ec8MOp
-         G5Z96pwNEKHttKZB5oo2TZ0c3knKmD65aNekUwHgZ9Ia8xW8xiEZuKmzGTVgaz73B3n2
-         tdIPQ0GoNQ0SdcsV9/4l/JlL3xoStP28lWvJtI2dVzC2vgzV01gy916YoC0vk3fRSlNQ
-         UzrCZro/9Q2WM7o1QBwNHR02AMxi5nrVKLybrFWnjJdX/58OURaObiwRA9/AgSS1uh0i
-         gzzrl6rJPCyi8JLMug0YlZ5rsu9ZVo49lCxWhRkgVs+/YxpGMF6KndaoE7nlpXP7Jz9N
-         bekg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=kJOILQ2546MQYt1uxxMLolDOlYjbPAoQSF+WGqodusA=;
-        b=Ls7FTGUCWTZurCJQxqFqUlRBQ5DvCFh7KxuxKEEgDLThEqfMJEr7oIllBB8QiEft/T
-         FyobsD/pVrBD5W7rLjVq/uWEUX+s/rJ/sxcE8T3elMxHz7t66fuERU1UrDpRy7WJzSwE
-         C9dco7Vp+2e4P2dMLASiWc3/F2dow5QpLqVz7CKoUuRjTsteuWottoB3aEhdralLNubG
-         VOqxHAjoedx1xBDzFm2tUmOuSbq/XstoADyeQqLXsQyxQ5tNaYzrJw3Qt9YNc9+GVlsq
-         QdRkifLpP9MSwbMBD75IeCIsF3afeQb2DZLaLmdgZWB3n4Hn+iyXViDTj7cVIl6jJWaK
-         xJEw==
-X-Gm-Message-State: AOAM533Lu92rzYKdqqm+TY4A4HjvM13Mfv6+4csqSNv7qoFwsub6h+rQ
-        pWRY/yzUwvhFArkbIkzCXd1AWE2BdQWFdemoAcvh/vU6yA0oJQ==
-X-Google-Smtp-Source: ABdhPJywc8q1bHHJfRLMFiFbuX+j1hgBMXCdy6tRt9A5rWx2eSdk5Dxl40eG0x9TqsyluVcAbHg6aZ5Lhg77Hqt5r54=
-X-Received: by 2002:a05:6102:22fb:: with SMTP id b27mr17073804vsh.49.1605991966335;
- Sat, 21 Nov 2020 12:52:46 -0800 (PST)
-MIME-Version: 1.0
-References: <cover.1605972564.git.martin.agren@gmail.com> <d6e43bc540bc682bb46d54e579a7101d0d2c462d.1605972564.git.martin.agren@gmail.com>
- <20201121202310.GA972561@coredump.intra.peff.net>
-In-Reply-To: <20201121202310.GA972561@coredump.intra.peff.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 21 Nov 2020 21:52:33 +0100
-Message-ID: <CAN0heSpNYpCGqgaa9LABG1T1LRa9jbGxvUucSSvrJG9ztHpXOg@mail.gmail.com>
-Subject: Re: [PATCH 3/4] grep: simplify color setup
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
+        id S1728581AbgKUVxb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Nov 2020 16:53:31 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:61163 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728513AbgKUVxb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Nov 2020 16:53:31 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BCB07110598;
+        Sat, 21 Nov 2020 16:53:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=6S8zesOjdvgTs9ShJyEwEdRdNv0=; b=D8rFNU
+        7vaY7W4NFMh6Xfjp16wDR/byqwoWSjZQr84rwCy9fDdQWxWnQizlawzC4uOfZvxt
+        B6eODRBYF9WKdwzalE3I2xIc+zFBWozq0IJvXG7RTLiVz7yvPxM6Icw42lB70pPM
+        YbYL5xSpuDW1mo45ss4/buOdYFm6nTK89T/IE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=oMqxGX36qaK4x6amUbJsFQq9weMtUfBw
+        +jC/w9pvFtGHYqCotDWgf1g87XGRKGTdhn4lCfzG2+SHN/x+0E7kgtBVskqO+6to
+        2BQCGHikWf2IJ/iYO1Mhim7O9V+Rpu/QvUdEuGFE9IGy4xaV76LwIXRoVGTD9PW2
+        Po2yo8fq86U=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A2A34110596;
+        Sat, 21 Nov 2020 16:53:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9EF90110595;
+        Sat, 21 Nov 2020 16:53:27 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
         Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH] myFirstContribition: answering questions is not the end
+ of the story
+References: <xmqq3613vrtx.fsf@gitster.c.googlers.com>
+        <CADtb9Dw6+g61vNAvhdWqecMwh_M=nW6Ot21Cwy1wyP9EtDkN7g@mail.gmail.com>
+Date:   Sat, 21 Nov 2020 13:53:25 -0800
+In-Reply-To: <CADtb9Dw6+g61vNAvhdWqecMwh_M=nW6Ot21Cwy1wyP9EtDkN7g@mail.gmail.com>
+        (Philippe Blain's message of "Fri, 20 Nov 2020 21:54:36 -0500")
+Message-ID: <xmqqh7pis7fu.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: FC8FFAD0-2C43-11EB-BDE5-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 21 Nov 2020 at 21:23, Jeff King <peff@peff.net> wrote:
->
-> On Sat, Nov 21, 2020 at 07:31:09PM +0100, Martin =C3=85gren wrote:
->> >  Cc-ing Peff, who initially introduced this helper. After having inlin=
-ed
-> >  the function into the for loop, it seemed better to just copy the whol=
-e
-> >  array. Happy to hear arguments against.
->
-> No, this is way better than the existing code. I introduced it to get
-> away from strcpy(), but this is better still. But...
->
-> >  Come to think of it, I suppose we could copy the whole struct and not
-> >  just the color array. Hmmm...
->
-> Yes, this seems even better. If our goal is just to start our new
-> grep_opt the same as grep_defaults, then a single-line struct copy
-> (whether through assignment or memcpy) is even clearer and more
-> maintainable.
+Philippe Blain <levraiphilippeblain@gmail.com> writes:
 
-Ok, thanks for the encouraging words. I couldn't keep myself from
-thinking that we're doing this for some weird ... performance reason?
-Thanks for taking me out of that thought.
+> I think this is a nice addition. However the patch title should probably
+> be prefixed "MyFirstContribution" and not "myFirstContribition" ;)
 
-I'll hold off for a while in case there's more feedback, then look into
-replacing this patch with a more aggressive copy of the whole struct.
-
-Martin
+Will update.  Thanks.
