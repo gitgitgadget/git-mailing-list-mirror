@@ -2,103 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06C41C63777
-	for <git@archiver.kernel.org>; Sat, 21 Nov 2020 20:11:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70234C388F9
+	for <git@archiver.kernel.org>; Sat, 21 Nov 2020 20:18:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE969217A0
-	for <git@archiver.kernel.org>; Sat, 21 Nov 2020 20:11:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1DC3E22201
+	for <git@archiver.kernel.org>; Sat, 21 Nov 2020 20:18:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H0bYJC1/"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KrCsCIAj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728490AbgKUULh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Nov 2020 15:11:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52324 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728475AbgKUULh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Nov 2020 15:11:37 -0500
-Received: from mail-ua1-x930.google.com (mail-ua1-x930.google.com [IPv6:2607:f8b0:4864:20::930])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF35AC0613CF
-        for <git@vger.kernel.org>; Sat, 21 Nov 2020 12:11:36 -0800 (PST)
-Received: by mail-ua1-x930.google.com with SMTP id q4so4349020ual.8
-        for <git@vger.kernel.org>; Sat, 21 Nov 2020 12:11:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=qnKRMDw6H6TC1JHIkvi3RNc2YZRzinZLHjjczDUrh/g=;
-        b=H0bYJC1/6P0exJ0NLUmqYhKqGh0+RV1CEaidxLlmp+G2HcAhk2kyzCsWvOUsnoKVqf
-         vC2fNBb5sOUKcOf8SNG4NKHA/ZmGDzSGEgr8Ih6eFpG1wJSOlhkTXS97BGGO/cL9PFc9
-         tckarOXINgBP0LMDT0kr5WznDo60d83dNw4eBJBh6iCYKjsqpeFhR1/kI7eaHvyVDKDS
-         VI88Oz8G6wqEh+nn2PsRDoN86vaPItzc9kDIetqTx7XuR/X2SLDely6+5/4vLCoUfhNV
-         RIaScPA2048fLu2DKSkp+t/wg1SLWcaWPzUKcz2POZ0A2PKj3bBSxIy9h0YYAhH2H4Rd
-         WWvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=qnKRMDw6H6TC1JHIkvi3RNc2YZRzinZLHjjczDUrh/g=;
-        b=sz4v/f2zgJPj5mn3AdlZC8hvTeMUbHGldfGLxa6i9bj27Lx4Y7lzPNMT2fS+oD14jA
-         UTxeGsma8BM9cKuuEDci8o1jbXiWNQHJgbbD9ZFb9KKPfA+p04hOtih12qfx9EC/bVUr
-         qkwtCHQYpzGftFe+iZkj2LkZgLK8aHlPmipbftZfLC210fqMLGZg1ZnOZT+ULCNBIoFY
-         ljGToylCNZD5ThC8AFMnF4qTFHBIWJrHMwrV8hcXivKWxilArKad9rroawpXPd1mSX3K
-         xrUIYLwGEIGblHyHtnz/nWJgGDRalZyxZqEhwCTAb8kYNeR5uoxLoYVane1/U4gDU+uW
-         95Wg==
-X-Gm-Message-State: AOAM530Mc3Q8iuiIUVf3vB41R/DlvcOd391p9Ck0YXnPdSSkIrYFAcDb
-        83jOBJ5I0CxUJWr1hUFmp+jXRn0vlDNF1bqlOqk=
-X-Google-Smtp-Source: ABdhPJzeFjQ7Uk1/xFXSNOlD5gEDBaEenFi1QPmn7QKfOGFPD7E6YCpoLCiey0oWUQbhBiQ+3YOGxCEQyAymPe13FaA=
-X-Received: by 2002:ab0:3112:: with SMTP id e18mr19313162ual.112.1605989495820;
- Sat, 21 Nov 2020 12:11:35 -0800 (PST)
+        id S1728466AbgKUUSy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Nov 2020 15:18:54 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54299 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728402AbgKUUSw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Nov 2020 15:18:52 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6B66980B2B;
+        Sat, 21 Nov 2020 15:18:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=KbacnUL8VXXmXobJf2JLIBcOXR0=; b=KrCsCI
+        AjsGn6glABzPr3dGSqOfsefTAreU92RGqpy6vvKRlgyLaUhyDIcp561erlWThz/m
+        HRfor+Qj2UAFGneOMyAKuNkMWizuRHAV1V0yxjO8X0UNStZjstphK0CSH1jmU4Gk
+        bQ4LWWWKbXQzFYBUOhXElF7WIya44P02rqUic=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=r38v1SMLU5sRqRZU6CnPSwVnj+H09Iy6
+        RZJC6wMH302IC8bm4qRyY77tkde9VD+eAMtsgpSNTGB3Qt57/xzLi4Ktdmlm0Sca
+        +VUp1MbBltz1MrzltU6H+qrN0DEDC969dB+Xiq4FiebnOnCuYs3Wi1nIcRD1Mysz
+        dZq4wj0x4kY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6300880B2A;
+        Sat, 21 Nov 2020 15:18:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E760180B29;
+        Sat, 21 Nov 2020 15:18:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Patrick Stevens <patrick@patrickstevens.co.uk>
+Cc:     git@vger.kernel.org
+Subject: Re: Bug report: git apply --cached --reject
+References: <31599b45-cf4e-be77-22bb-8fa03f0a52d6@patrickstevens.co.uk>
+Date:   Sat, 21 Nov 2020 12:18:47 -0800
+In-Reply-To: <31599b45-cf4e-be77-22bb-8fa03f0a52d6@patrickstevens.co.uk>
+        (Patrick Stevens's message of "Fri, 20 Nov 2020 14:21:38 +0000")
+Message-ID: <xmqqlfeusbtk.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <cover.1605123652.git.me@ttaylorr.com> <cover.1605649533.git.me@ttaylorr.com>
- <CAN0heSq59uX=4pqkhc904oLfeiwF5ctiEb_9cQXYY7T1t=Mt1g@mail.gmail.com> <xmqqy2iusdpy.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqy2iusdpy.fsf@gitster.c.googlers.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 21 Nov 2020 21:11:21 +0100
-Message-ID: <CAN0heSpVnzyE5S5ReKQ0Q_UU48jQ77NVF1x1NTGx29+5KZsyRA@mail.gmail.com>
-Subject: Re: [PATCH v2 00/24] pack-bitmap: bitmap generation improvements
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: C3322572-2C36-11EB-A4D1-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 21 Nov 2020 at 20:37, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Martin =C3=85gren <martin.agren@gmail.com> writes:
->
-> > On Tue, 17 Nov 2020 at 22:46, Taylor Blau <me@ttaylorr.com> wrote:
-> >> Not very much has changed since last time, but a range-diff is below
-> >> nonetheless. The major changes are:
-> >>
-> >>   - Avoid an overflow when bounds checking in the second and third
-> >>     patches (thanks, Martin, for noticing).
-> >
-> > FWIW, the updates to patches 2 and 3 look exactly like what I was
-> > expecting after the discussion on v1. I have nothing to add.
->
-> Thanks, both.  Shall we move the topic down to 'next'?
+Patrick Stevens <patrick@patrickstevens.co.uk> writes:
 
-I really only dug into those patches 2 and 3. I read the rest of the
-patches of v1 and went "that makes sense", but that's about it. I
-started looking at "pack-bitmap-write: build fewer intermediate bitmaps"
-and went "this looks really cool -- I should try to understand this". :-)
+> I don't think this behaviour is intended; in the report I give a couple
+> of variations which correctly do what I expected, and this one breaks
+> the semantics I expect, given the behaviour of those variations. I have
+> not tried to find the source of the bug.
 
-There was SZEDER's comment on that last patch in v2, where future
-readers of that patch will have to wonder why it does s/256/270/ in a
-test. I agree with SZEDER that the change should be mentioned in the
-commit message, even if it's just "unfortunately, we have some magicness
-here, plus we want to pass both with SHA-1 and SHA-256; turns out 270
-hits the problem we want to test for".
+I do not think this is intended, either.  It certainly is not
+something I would expect to see as an end user.  I somehow suspect
+that when we added "--reject", we didn't even mean to make it work
+with "--cached" in the first place.
 
-Martin
+A more plain-vanilla case like below, where an existing file sees a
+two-hunk patch, but only one of the hunks apply cleanly,
+demonstrates that the command, with an option to touch the index,
+does not want to take any ...
+
+--- >8 ------ >8 ------ >8 ------ >8 ------ >8 ------ >8 ---
+
+seq 1 10 >file && git add file && git commit -m "1 to 10"
+seq 1 10 | sed -e '/1/s/$/+/' >file
+git diff --stat -p >patch
+
+seq 1 10 | sed -e '/9/s/$/+/' >file
+git commit -m "9 plus" file
+
+rm -f file.rej
+git reset --hard
+git apply --reject patch
+# inspect the index and working tree to see what happened here
+# this one, that does not touch the index, works as expected.
+
+rm -f file.rej
+git reset --hard
+git apply --cached --reject patch
+# inspect the index and working tree to see what happened here
+
+rm -f file.rej
+git reset --hard
+git apply --index --reject patch
+# inspect the index and working tree to see what happened here
+
+--- 8< ------ 8< ------ 8< ------ 8< ------ 8< ------ 8< ---
+
+... half-baked changes.  The above prepares a 10-line file and a
+patch that touches its first and the last line.  It then makes a
+modification that textually conflicts the second last line to the
+target file, and tries to apply the patch.
+
+We do get .rej file in all cases, but in the mode that would touch
+the index, the command refuses to put the result of an incomplete
+patch application to the index, even though it updates the working
+tree files with partial application.
+
+The log message of 8938045a (git-apply --reject: finishing touches.,
+2006-08-27) does mention that with "--index", it is the designed
+behaviour to update the index for paths to which the patches were
+cleanly applied, with a reasonable justification.  Even though it
+also implies at the same time that it is also the designed behaviour
+to leave the index untouched for paths that got .rej files, I do not
+offhand see it explains the reason behind the design very well.  I
+suspect that it was to avoid committing a half-resolved state by
+mistake, but then it does not prevent the user from committing a
+no-modification by mistake, and that is why I say "not ... very well"
+here.  In any case, it does not even mention what ought to happen in
+the "--cached" case, so...
+
