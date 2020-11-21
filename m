@@ -2,104 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9B40C2D0E4
-	for <git@archiver.kernel.org>; Sat, 21 Nov 2020 01:53:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DEDDC2D0E4
+	for <git@archiver.kernel.org>; Sat, 21 Nov 2020 02:55:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4F9192237B
-	for <git@archiver.kernel.org>; Sat, 21 Nov 2020 01:53:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A94AC22403
+	for <git@archiver.kernel.org>; Sat, 21 Nov 2020 02:55:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pXNpMc0A"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JDq/qdgA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725831AbgKUBxZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Nov 2020 20:53:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53810 "EHLO
+        id S1727133AbgKUCyt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Nov 2020 21:54:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725785AbgKUBxZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Nov 2020 20:53:25 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D533BC0613CF
-        for <git@vger.kernel.org>; Fri, 20 Nov 2020 17:53:24 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id o15so12776487wru.6
-        for <git@vger.kernel.org>; Fri, 20 Nov 2020 17:53:24 -0800 (PST)
+        with ESMTP id S1727048AbgKUCyt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Nov 2020 21:54:49 -0500
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EDA1C0613CF
+        for <git@vger.kernel.org>; Fri, 20 Nov 2020 18:54:49 -0800 (PST)
+Received: by mail-ej1-x641.google.com with SMTP id a16so15595982ejj.5
+        for <git@vger.kernel.org>; Fri, 20 Nov 2020 18:54:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=pzYGzbEajEr4mvbGk1s/HVH0GtVHndCPMQ4pPytRP7A=;
-        b=pXNpMc0AGxLSF4Zk/DrJ6mP8dEhiW0ox252uBKoO1rFQ+hFdoiNO/xqGfORj2nQIM7
-         Wm74VOWlZUPchW0IHxMCxqa+H5aLKY2BXlsMiEFR83ivuD8YPXeTvg0AffVh03/ddPMy
-         E75XlmLovUStPRD5CsLDaTjGBIDRT2Al2a/sFO4LYvvB/iG3O2chv2UmD2i91vaqkHlx
-         R+IP82OAMD18G+Sf8GqoQ9o6FuGms/PtOVKnc8yrr9TMkcn7znGvnY1kIBjUekZ+JPIl
-         QMZvOh3N9CiEVl71hDMEewcPXNu9US4F+ODL5Osi874/RAq86UVu9SJbAZgMj7b4ogFw
-         EwaQ==
+         :cc:content-transfer-encoding;
+        bh=MuO00fjnl5d9BHpIaMWY9hCaNpM3BxGwYcqvdYVPBtc=;
+        b=JDq/qdgACJ9QNKy28KrkcIBRGoSz9F3asBy75br82FGjW4RYuwOzsJHp9ZG0M68jlL
+         8eaa4CKFu1Kzdzl6i9051E2Lm4kpMJ3Y8zE3fn91QrZbS7Yen7OlcEtaYCr1XUa9xLYN
+         gYAChwI5mhr0OXgwhLLSDUXA2xCW+cJgQkRimWmNg+Xz7zQMgOSjJj+EHwKbHrexnHs+
+         1aBqiDh1XqnLfBAqqJq8FPQq/NYZUCeZKd1eTPrJoscGXD9CPhDE75xkiqmxsorwgVrb
+         A560UoS86w6f64OkOtY3m8WYxSrqY0ko+768bldPAmt8HlvEoVsb5tPoI23UidCpV+oK
+         RMGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=pzYGzbEajEr4mvbGk1s/HVH0GtVHndCPMQ4pPytRP7A=;
-        b=mK+xdTY/hmKxNWqThPhH6I6znyukgBZEq6LnIeN0UQECy2pY/2Zer+qnvwRGujgXA2
-         zXVTgvozzILYSGiz4JTbmOi4GMzgysE5LE/P4hFVPBJeUNdbbiu5Gyd2o+yhIbpWUf8c
-         kiQ9K1epec2T7oI+WJ+g2GNyzWGwgBpw7k5vhmFv7CR1lVXS06s3OgCJYGiZ9f185RNn
-         jCYojQjAux9hOBNM8or2Kqy8iOTUX+oXOAlTG2woQMmci5Tb/+HWZf/Kij0JFKYNlElY
-         tFPt5oeuWzq38P58w8DtNgHbCO0u3MZalY8HNR5zAxQcd4fL7b44NVqL46Bbfc7ClxmV
-         T4/A==
-X-Gm-Message-State: AOAM5323k6CJUBgbNTYbiAwHg5qca72GSYRos3wR3h7DgWsvFyrTFv5T
-        owwr3mdYoihPVv6vUn6OInxN/0/YTJnsueSHVLc=
-X-Google-Smtp-Source: ABdhPJxo4dTOwf+W7Ln3D+0llH0qnrRRuORJyuPDbCGsYs36ALVKwrNuhcYBGu0aktD4fXPysDTMh/KBelWB2D5pxqM=
-X-Received: by 2002:a5d:4349:: with SMTP id u9mr18689781wrr.319.1605923602532;
- Fri, 20 Nov 2020 17:53:22 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=MuO00fjnl5d9BHpIaMWY9hCaNpM3BxGwYcqvdYVPBtc=;
+        b=IqHhMqwxmocVLk67aXCn1TOUNjmDp8xSt3MZJJOPp7MTbE3zqOW0HlgkdZ8RDlzEJP
+         nwmB37WnmsL4DVAmUlpL1CoYa2YJc3dJrv7X4uBLZwGfRqZPmNIm2RrXvn3LN7HJwC/l
+         XJrJJtwea3gci7vIVIg42QfcoGq22UKmMjWraiuMIAQHpDUVgqpUBxNApP7dzUVUdrOI
+         2tUJyo7WcyB/CUpyxTuamzR7IXcVmGd+nIZJvT6fLIbx3IkCmsP72+XBg8DFpiGF7kHm
+         1zhr/g/Rzjtx/ShHFMH1ltEKOwoMkuUGC7Fi3Tq4W7RFh2OoHXH/gB8OaTebQTVyyM38
+         l3yQ==
+X-Gm-Message-State: AOAM530OstX/nblVPPJ99WnmdTbCvgf4DdsEkRk2msXSywNVSnPCC+UK
+        cYNhlHOavS0o3MAb1K8eAn1kJx881EyLk+MU3t4=
+X-Google-Smtp-Source: ABdhPJyvVTkAj52BnEMh6ZYtODDZLKG+4eWVU5ZVZVo1r85o3AwG3IuuBWeLEbJYLQ9tw39oBs8pgTBarboQE99wddw=
+X-Received: by 2002:a17:906:57cc:: with SMTP id u12mr36403843ejr.163.1605927288020;
+ Fri, 20 Nov 2020 18:54:48 -0800 (PST)
 MIME-Version: 1.0
-References: <20201118091219.3341585-1-felipe.contreras@gmail.com>
- <20201120235203.GA353076@coredump.intra.peff.net> <xmqq3613tuwy.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq3613tuwy.fsf@gitster.c.googlers.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Fri, 20 Nov 2020 19:53:11 -0600
-Message-ID: <CAMP44s2yi2v8ghoQ7ZsuxnFU66Hps1DRn3a1ytqBOqS2+pzLsA@mail.gmail.com>
-Subject: Re: [RFC/PATCH] Add fetch.updateHead option
+References: <xmqq3613vrtx.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq3613vrtx.fsf@gitster.c.googlers.com>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Date:   Fri, 20 Nov 2020 21:54:36 -0500
+Message-ID: <CADtb9Dw6+g61vNAvhdWqecMwh_M=nW6Ot21Cwy1wyP9EtDkN7g@mail.gmail.com>
+Subject: Re: [PATCH] myFirstContribition: answering questions is not the end
+ of the story
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Git <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Dominik Salvet <dominik.salvet@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Emily Shaffer <emilyshaffer@google.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 20, 2020 at 6:28 PM Junio C Hamano <gitster@pobox.com> wrote:
+Hi Junio,
+
+Le ven. 20 nov. 2020, =C3=A0 21 h 50, Junio C Hamano <gitster@pobox.com> a =
+=C3=A9crit :
 >
-> Jeff King <peff@peff.net> writes:
+> A review exchange may begin with a reviewer asking "what did you
+> mean by this phrase in your log message (or here in the doc)?", the
+> author answering what was meant, and then the reviewer saying "ah,
+> that is what you meant---then the flow of the logic makes sense".
 >
-> > Thanks for working on this. Regardless of whether we change the default
-> > behavior, this seems like an obvious improvement (and I do think it
-> > makes sense to eventually change the default; I'd even be OK switching
-> > it to "missing" in the near term).
+> But that is not the happy end of the story.  New contributors often
+> forget that the material that has been reviewed in the above exchange
+> is still unclear in the same way to the next person who reads it,
+> until it gets updated.
 >
-> I agree that "missing" would be an easy thing to take, and I do not
-> mind seeing it made the default in the near term.  It won't break
-> existing expectations too much, and can even be seen as a bugfix for
-> the current behaviour by making "init && fetch" a step closer to
-> "clone".  Beyond that to modify what the end user already has is a
-> much harder sell.  For some it may be an improvement, but for others
-> it would be a breaking change.
+> While we are in the vicinity, rephrase the verb "request" used to
+> refer to comments by reviewers to "suggest"---this matches the
+> contrast between "original" and "suggested" that appears later in
+> the same paragraph, and more importantly makes it clearer that it is
+> not like authors are to please reviewers' wishes but rather
+> reviewers are merely helping authors to polish their commits.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
 
-Changing the default to "missing" breaks a lot of tests. I already
-have the fixes for the tests, but this can be seen as an indication
-that the expectations of users would change.
+I think this is a nice addition. However the patch title should probably
+be prefixed "MyFirstContribution" and not "myFirstContribition" ;)
 
-I never knew of this $remote/HEAD feature, and searching forums some
-people seem perplexed by its existence and ask how to remove it.
+Cheers!
 
-So, if the "missing" behavior is the one we are targeting (which I
-argue we should), we probably need a warning before doing the flip, so
-that users become aware of the feature and are not surprised by a
-sudden $remote/HEAD popping (or repopping) seemingly out of nowhere.
-
-Cheers.
-
--- 
-Felipe Contreras
+Philippe.
