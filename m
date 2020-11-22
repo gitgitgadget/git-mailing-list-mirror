@@ -2,126 +2,295 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAA51C388F9
-	for <git@archiver.kernel.org>; Sun, 22 Nov 2020 02:32:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7CC7C388F9
+	for <git@archiver.kernel.org>; Sun, 22 Nov 2020 03:31:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5F2E3207F7
-	for <git@archiver.kernel.org>; Sun, 22 Nov 2020 02:32:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8BFC720797
+	for <git@archiver.kernel.org>; Sun, 22 Nov 2020 03:31:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="tdoHv5RL"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Nt0Y3tdc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726826AbgKVCby (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Nov 2020 21:31:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53906 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726544AbgKVCbx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Nov 2020 21:31:53 -0500
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5813C0613CF
-        for <git@vger.kernel.org>; Sat, 21 Nov 2020 18:31:52 -0800 (PST)
-Received: by mail-ot1-x342.google.com with SMTP id 11so150392oty.9
-        for <git@vger.kernel.org>; Sat, 21 Nov 2020 18:31:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=VHBpB6AyVMT+YjNeLGr9wRlMiw/6+4ajqf9hsALcg3o=;
-        b=tdoHv5RLuo/41dzLB/qTVtxVK+ZE70o9CjRiVZbmFrmb9SIufHjQQ781V1GSTHzRBq
-         wljiMPhzAVgTG+6SjDOHOogKJ3COsgrUmP4Hj5bPV85X2YShSIauCtxf7/fe9b2a2Vkl
-         Pf1KC8owj2O9WJpn2H3+a0pEpVndLNxJuObT00jj37Kuo+NxsoA1uXwLAJiERGetFpKG
-         x/tGXKNlon5vEuE7GE1d/dvpjhcpL2JwnT5PyRWIjMc5UooT8a4z7wFbWEo3Ze99tzWV
-         rJqeOEAdx9EIzrrlAEOdXboR9cDTYmHuKqYAxo7026M3WMPCKwDuF1m58ba/XzreZiO7
-         NKsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=VHBpB6AyVMT+YjNeLGr9wRlMiw/6+4ajqf9hsALcg3o=;
-        b=NK6qHUIkby+mFT5YyNpt2jcTrtIc5T0YYnrmu9+UpDsgS2zxpHT2+pApAiSaf86YUm
-         2t/vddxqdvR51Aepy1Rz1wKcfRglsyx6jXT+rQjwEialGtij/m0J0UvyqJWleIjoMN2u
-         AgBVVR3HMuScxVBA9tmDiCuKNI9V9vCce3j+bdHHvPnTEKkTHunwU4PT1OBpWZtDRuDi
-         O+EOivUoKmE6ZLHEQvxYGC5Y0LmBUpqfiKlBZU+37mvWUMIGHrjkj6PFY5VmtVpvv82r
-         fTDunrcVCBG3QHidSg8IBZE0pO5B6j6dCawWEfSVGy9HV7kHLl78KxsE5ULoUWtVupT4
-         M02A==
-X-Gm-Message-State: AOAM532uiK2GjPJ/o4fquhzClme1WRfYi9Z3DKF8u9AvwzIYgH6aOWI4
-        EY/iCU5mJmyUEmgqNK+YBMeFHQ==
-X-Google-Smtp-Source: ABdhPJz5xhj4trUxdn5DfeY/nfvXpSBE4d5IHFEHZR3FBbgo4/bWaNtGGd90m5dszZ6W8qJ/nF1Raw==
-X-Received: by 2002:a9d:3d3:: with SMTP id f77mr18715300otf.125.1606012312180;
-        Sat, 21 Nov 2020 18:31:52 -0800 (PST)
-Received: from localhost ([198.184.28.250])
-        by smtp.gmail.com with ESMTPSA id q10sm4478469oih.56.2020.11.21.18.31.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Nov 2020 18:31:51 -0800 (PST)
-Date:   Sat, 21 Nov 2020 21:31:50 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jeff King <peff@peff.net>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v2 00/24] pack-bitmap: bitmap generation improvements
-Message-ID: <X7nNlu8wBZw3xFjX@xnor.local>
-References: <cover.1605123652.git.me@ttaylorr.com>
- <cover.1605649533.git.me@ttaylorr.com>
- <CAN0heSq59uX=4pqkhc904oLfeiwF5ctiEb_9cQXYY7T1t=Mt1g@mail.gmail.com>
- <xmqqy2iusdpy.fsf@gitster.c.googlers.com>
- <CAN0heSpVnzyE5S5ReKQ0Q_UU48jQ77NVF1x1NTGx29+5KZsyRA@mail.gmail.com>
+        id S1727086AbgKVDbU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Nov 2020 22:31:20 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56149 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726768AbgKVDbU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Nov 2020 22:31:20 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B266F96221;
+        Sat, 21 Nov 2020 22:31:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=rsmvf4bBUsJUoL8J5JDmxcutPLk=; b=Nt0Y3t
+        dcpsdP7tuDJhGtWwLnDCTkJ71aI+gcauxMB2wxC8wpt209+auue2Wim+fog84QQh
+        ppHH2bKA+37vGWESpmBaPGQrY+XcdbJJQaoVPgyzKpZf1/FsEuXvvTJavNoy1Nev
+        nu8MGsVELcWJpMQd2pNLh9sPyTF9vrqW6EORs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=va7K6GdVSRXT2uX/fyiTBMPsIUVC4uh5
+        /J+hrNlmqkMt9A/rDC/dq1kkc1YOzpB9ekDwMJjVZ44PFF1vIPO4FceNlvwZHuXs
+        qDloHPZwinP6Yqk/6JX8AMtakvrY28AlkGCzqnJDYRQC4fUTCuONbeVW2TGEqqZ4
+        7hoENt+sZBE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 991709621F;
+        Sat, 21 Nov 2020 22:31:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C690D9621E;
+        Sat, 21 Nov 2020 22:31:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Jeff King <peff@peff.net>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/7] t1300: test "set all" mode with value_regex
+References: <pull.796.git.1605801143.gitgitgadget@gmail.com>
+        <2da2131114eb47e70ccaf8fb9c51bf7fb5b173b0.1605801143.git.gitgitgadget@gmail.com>
+        <xmqqo8jtvvby.fsf@gitster.c.googlers.com>
+        <20201120183903.GA320614@coredump.intra.peff.net>
+        <20201121222734.GG389879@camp.crustytoothpaste.net>
+Date:   Sat, 21 Nov 2020 19:31:14 -0800
+In-Reply-To: <20201121222734.GG389879@camp.crustytoothpaste.net> (brian
+        m. carlson's message of "Sat, 21 Nov 2020 22:27:34 +0000")
+Message-ID: <xmqqlfeuqd8d.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAN0heSpVnzyE5S5ReKQ0Q_UU48jQ77NVF1x1NTGx29+5KZsyRA@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2CBBD3F8-2C73-11EB-9C31-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 21, 2020 at 09:11:21PM +0100, Martin Ågren wrote:
-> On Sat, 21 Nov 2020 at 20:37, Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > Martin Ågren <martin.agren@gmail.com> writes:
-> >
-> > > On Tue, 17 Nov 2020 at 22:46, Taylor Blau <me@ttaylorr.com> wrote:
-> > >> Not very much has changed since last time, but a range-diff is below
-> > >> nonetheless. The major changes are:
-> > >>
-> > >>   - Avoid an overflow when bounds checking in the second and third
-> > >>     patches (thanks, Martin, for noticing).
-> > >
-> > > FWIW, the updates to patches 2 and 3 look exactly like what I was
-> > > expecting after the discussion on v1. I have nothing to add.
-> >
-> > Thanks, both.  Shall we move the topic down to 'next'?
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+
+>> So that got a bit off-track, but I think:
+>> 
+>>   - t1300 already is very much like this, so it's not a new thing
+>> 
+>>   - but I would be happy not to see it go further in that direction,
+>>     even if it means inconsistency with the rest of the script
 >
-> I really only dug into those patches 2 and 3. I read the rest of the
-> patches of v1 and went "that makes sense", but that's about it. I
-> started looking at "pack-bitmap-write: build fewer intermediate bitmaps"
-> and went "this looks really cool -- I should try to understand this". :-)
->
-> There was SZEDER's comment on that last patch in v2, where future
-> readers of that patch will have to wonder why it does s/256/270/ in a
-> test. I agree with SZEDER that the change should be mentioned in the
-> commit message, even if it's just "unfortunately, we have some magicness
-> here, plus we want to pass both with SHA-1 and SHA-256; turns out 270
-> hits the problem we want to test for".
+> I agree we shouldn't make things worse.
 
-Thanks for reviewing it, and noticing a couple of problems in the
-earlier patches, too. If folks are happy with the replacement that I
-sent [1], then I am too :-).
+I started looking at early parts of t1300 and here is how far I
+managed to get before I can no longer keep staring the existing
+tests without vomitting.
 
-I don't think that the "big" patch generated a ton of review on the
-list, but maybe that's OK. Peff, Stolee, and I all reviewed that patch
-extensively when deploying it at GitHub (where it has been running since
-late Summer).
+I am reasonably happy with the "let's keep the vanilla untouched one
+in .git/config-initial, refrain from using [core] and other sections
+that MUST be in the initial configuration for testing, and use a
+wrapper that reads expected addition to the initial one from the
+standard input for validation" approach I came up with, but I am not
+happy with the name 'compare_expect'; 'validate_config_result' might
+be a better name.
 
-> Martin
+In any case, the reason I am sending this out early is if people
+find this approach to clean things up a sensible one.  If we can
+find concensus, perhaps I (or somebody else---hint, hint) can find
+time to do the #leftoverbits following the approach after the
+ds/config-literal-value and ds/maintenance-part-3 topics graduate
+to 'master'.
 
-Thanks,
-Taylor
 
-[1]: https://lore.kernel.org/git/X7nMzzMfjm%2Fp9qfj@xnor.local/
+
+ t/t1300-config.sh | 139 ++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 71 insertions(+), 68 deletions(-)
+
+diff --git c/t/t1300-config.sh w/t/t1300-config.sh
+index df13afaffd..c33520d7fa 100755
+--- c/t/t1300-config.sh
++++ w/t/t1300-config.sh
+@@ -7,80 +7,84 @@ test_description='Test git config in different settings'
+ 
+ . ./test-lib.sh
+ 
+-test_expect_success 'clear default config' '
+-	rm -f .git/config
++test_expect_success 'save away default config' '
++	cp .git/config .git/config-initial
+ '
+ 
+-cat > expect << EOF
+-[core]
+-	penguin = little blue
+-EOF
+-test_expect_success 'initial' '
+-	git config core.penguin "little blue" &&
++compare_expect () {
++	{
++		cat .git/config-initial &&
++		sed -e 's/^[|]//'
++	} >expect &&
+ 	test_cmp expect .git/config
++}
++
++test_expect_success 'initial' '
++	git config configtest.penguin "little blue" &&
++	compare_expect <<-\EOF
++	[configtest]
++	|	penguin = little blue
++	EOF
+ '
+ 
+-cat > expect << EOF
+-[core]
+-	penguin = little blue
+-	Movie = BadPhysics
+-EOF
+ test_expect_success 'mixed case' '
+-	git config Core.Movie BadPhysics &&
+-	test_cmp expect .git/config
++	git config ConfigTest.Movie BadPhysics &&
++	compare_expect <<-\EOF
++	[configtest]
++	|	penguin = little blue
++	|	Movie = BadPhysics
++	EOF
+ '
+ 
+-cat > expect << EOF
+-[core]
+-	penguin = little blue
+-	Movie = BadPhysics
+-[Cores]
+-	WhatEver = Second
+-EOF
+ test_expect_success 'similar section' '
+-	git config Cores.WhatEver Second &&
+-	test_cmp expect .git/config
++	git config ConfigTests.WhatEver Second &&
++	compare_expect <<-\EOF
++	[configtest]
++	|	penguin = little blue
++	|	Movie = BadPhysics
++	[ConfigTests]
++	|	WhatEver = Second
++	EOF
+ '
+ 
+-cat > expect << EOF
+-[core]
+-	penguin = little blue
+-	Movie = BadPhysics
+-	UPPERCASE = true
+-[Cores]
+-	WhatEver = Second
+-EOF
+ test_expect_success 'uppercase section' '
+-	git config CORE.UPPERCASE true &&
+-	test_cmp expect .git/config
++	git config CONFIGTEST.UPPERCASE true &&
++	compare_expect <<-\EOF
++	[configtest]
++	|	penguin = little blue
++	|	Movie = BadPhysics
++	|	UPPERCASE = true
++	[ConfigTests]
++	|	WhatEver = Second
++	EOF
+ '
+ 
+ test_expect_success 'replace with non-match' '
+-	git config core.penguin kingpin !blue
++	git config configtest.penguin kingpin !blue
+ '
+ 
+ test_expect_success 'replace with non-match (actually matching)' '
+-	git config core.penguin "very blue" !kingpin
++	git config configtest.penguin "very blue" !kingpin
+ '
+ 
+-cat > expect << EOF
+-[core]
+-	penguin = very blue
+-	Movie = BadPhysics
+-	UPPERCASE = true
+-	penguin = kingpin
+-[Cores]
+-	WhatEver = Second
+-EOF
+-
+-test_expect_success 'non-match result' 'test_cmp expect .git/config'
++test_expect_success 'non-match result' '
++	compare_expect <<-\EOF
++	[configtest]
++	|	penguin = very blue
++	|	Movie = BadPhysics
++	|	UPPERCASE = true
++	|	penguin = kingpin
++	[ConfigTests]
++	|	WhatEver = Second
++	EOF
++'
+ 
+ test_expect_success 'find mixed-case key by canonical name' '
+-	test_cmp_config Second cores.whatever
++	test_cmp_config Second configtests.whatever
+ '
+ 
+ test_expect_success 'find mixed-case key by non-canonical name' '
+-	test_cmp_config Second CoReS.WhAtEvEr
++	test_cmp_config Second CoNfIgTeSts.WhAtEvEr
+ '
+ 
+ test_expect_success 'subsections are not canonicalized by git-config' '
+@@ -94,28 +98,27 @@ test_expect_success 'subsections are not canonicalized by git-config' '
+ 	test_cmp_config two section.SubSection.key
+ '
+ 
+-cat > .git/config <<\EOF
+-[alpha]
+-bar = foo
+-[beta]
+-baz = multiple \
+-lines
+-foo = bar
+-EOF
+-
+ test_expect_success 'unset with cont. lines' '
+-	git config --unset beta.baz
++	{
++		cat .git/config-initial &&
++		cat <<-\EOF
++		[alpha]
++		bar = foo
++		[beta]
++		baz = multiple \
++		lines
++		foo = bar
++		EOF
++	} >.git/config &&
++	git config --unset beta.baz &&
++	compare_expect <<-\EOF
++	[alpha]
++	bar = foo
++	[beta]
++	foo = bar
++	EOF
+ '
+ 
+-cat > expect <<\EOF
+-[alpha]
+-bar = foo
+-[beta]
+-foo = bar
+-EOF
+-
+-test_expect_success 'unset with cont. lines is correct' 'test_cmp expect .git/config'
+-
+ cat > .git/config << EOF
+ [beta] ; silly comment # another comment
+ noIndent= sillyValue ; 'nother silly comment
