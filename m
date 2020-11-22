@@ -2,109 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04B81C5519F
-	for <git@archiver.kernel.org>; Sun, 22 Nov 2020 13:33:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 372C3C5519F
+	for <git@archiver.kernel.org>; Sun, 22 Nov 2020 15:42:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AD3A920760
-	for <git@archiver.kernel.org>; Sun, 22 Nov 2020 13:33:01 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tDbHM0MX"
+	by mail.kernel.org (Postfix) with ESMTP id F10BB20727
+	for <git@archiver.kernel.org>; Sun, 22 Nov 2020 15:42:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727660AbgKVNdA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Nov 2020 08:33:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42426 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727424AbgKVNdA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Nov 2020 08:33:00 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBF4EC0613CF
-        for <git@vger.kernel.org>; Sun, 22 Nov 2020 05:32:59 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id 10so15358294wml.2
-        for <git@vger.kernel.org>; Sun, 22 Nov 2020 05:32:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=jcbi/5OC22znXRw5QZEWvv3YMSImiaeO6HYW/7Q9KFw=;
-        b=tDbHM0MXeBW0iDQeFRc68oTyidG3/E7bkLT2ITnnLvSTJAn+FgwhcviGp/lZk+e/vg
-         wY1C89j0UikNBAYAmLQdr4pgRN1k0gMh11dLFeeVI+bqTekfohDVh367MrKPwuT8QkYE
-         zb7h8gNpasU5kqIsQL5cug3KXd4yRA7ITyLJQWDmgwMVV+UFzgoUz0um9A8YpB3uJYv9
-         o9Xb7PMJy+A4Xvbk7rUaWudvmHIG1dyag72Kl+bplT7ZDiNsmaNA36ATQNTe8WILc+UW
-         xIuaTTuDCgtzIY5JAtoRL7sdsXLWnbh8OEd93UdOiYe8mqAjXRCxWuGbq3qZXWYA2U0l
-         HQeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=jcbi/5OC22znXRw5QZEWvv3YMSImiaeO6HYW/7Q9KFw=;
-        b=IZTqTZmSQPyTFMq1FYBzpfforZp7hRU+cL1UXCnXAoevYysoZX35L09k4kumkH+UBm
-         LamFkOysiu3fguLphPtTpO6BSgb6HaorPMAfKeb2jS5aONKwOr7af29zujMn4+47tjo7
-         Us4FrD0/rFcMhXyKnOk3g5iQrmeC6JA35eGBXo3xLSpXS0G1Dv+r3ASQyr3nZZlr7IHQ
-         /C62xV+EQFydpppmJWEUMVdzGQSJpJ/gdnhsIhdWnYHDsNcfdq/grUfC1Tm8iq3T49nm
-         x+IvYDtuJqsCee58vCRu6/grDlhbEO1RF7YwuB1pnt6/AYyMdc0FpN9opo0ZH2ru5o94
-         l6Jg==
-X-Gm-Message-State: AOAM531nuxCYUBuGyiz3CpJSWCIZt32vrT4EFeWTAmH6GdEHDO6lcLsc
-        ToGGVzt/vlD7uRel7kTaTCE=
-X-Google-Smtp-Source: ABdhPJyBlb+jqyWe+HxiClt4wyQrTCC1adDSkM6VtMjKHIbUJcvkx3S34vCEe3PwDB4p0uQM4vDX5g==
-X-Received: by 2002:a05:600c:286:: with SMTP id 6mr18225448wmk.125.1606051978515;
-        Sun, 22 Nov 2020 05:32:58 -0800 (PST)
-Received: from partizan.lan ([46.98.123.94])
-        by smtp.gmail.com with ESMTPSA id s2sm11102105wmh.37.2020.11.22.05.32.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Nov 2020 05:32:57 -0800 (PST)
-From:   Serg Tereshchenko <serg.partizan@gmail.com>
-To:     stefan@haller-berlin.de
-Cc:     git@vger.kernel.org, me@yadavpratyush.com,
-        Serg Tereshchenko <serg.partizan@gmail.com>
-Subject: [PATCH] git-gui: Fix selected text colors
-Date:   Sun, 22 Nov 2020 15:32:33 +0200
-Message-Id: <20201122133233.7077-1-serg.partizan@gmail.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <7553c99f-1dea-0c1d-e5b0-2103333a76b7@haller-berlin.de>
+        id S1728050AbgKVPls (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Nov 2020 10:41:48 -0500
+Received: from dd36226.kasserver.com ([85.13.153.21]:52830 "EHLO
+        dd36226.kasserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728041AbgKVPlr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Nov 2020 10:41:47 -0500
+Received: from client3368.fritz.box (i5C744221.versanet.de [92.116.66.33])
+        by dd36226.kasserver.com (Postfix) with ESMTPSA id 2D4523C04C2;
+        Sun, 22 Nov 2020 16:41:45 +0100 (CET)
+Subject: Re: [PATCH] git-gui: Fix selected text colors
+To:     Serg Tereshchenko <serg.partizan@gmail.com>
+Cc:     git@vger.kernel.org, me@yadavpratyush.com
 References: <7553c99f-1dea-0c1d-e5b0-2103333a76b7@haller-berlin.de>
+ <20201122133233.7077-1-serg.partizan@gmail.com>
+From:   Stefan Haller <stefan@haller-berlin.de>
+Message-ID: <2436cd2e-26b9-a7cc-722a-7f27212f58f4@haller-berlin.de>
+Date:   Sun, 22 Nov 2020 16:41:44 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.5.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20201122133233.7077-1-serg.partizan@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan, please check if this fixes select colors for you.
+On 22.11.20 14:32, Serg Tereshchenko wrote:
+> Stefan, please check if this fixes select colors for you.
 
---- 8< ---
+Yes, this works. Thanks for the quick fix! I tested on Mac in both light
+and dark mode, and on Windows.
 
-Added selected state colors for text widget.
+> --- 8< ---
+> 
+> Added selected state colors for text widget.
+> 
+> Same colors for active and inactive selection, to match previous
+> behaviour.
 
-Same colors for active and inactive selection, to match previous
-behaviour.
+Preserving the previous behavior is probably a good idea when fixing a
+regression.
 
-Signed-off-by: Serg Tereshchenko <serg.partizan@gmail.com>
----
- lib/themed.tcl | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+However, it would actually be nice to have different colors for active
+and inactive selection (could be a follow-up patch). In native Mac and
+Windows applications the active selection background is usually light
+blue, and the inactive one is light grey. This would not just be a
+cosmetic improvement that looks prettier (that wouldn't be worth it),
+but it would be a real usability improvement because it would make it
+much easier to tell which of the four main views has the keyboard focus.
 
-diff --git a/lib/themed.tcl b/lib/themed.tcl
-index 83e3ac7..eda5f8c 100644
---- a/lib/themed.tcl
-+++ b/lib/themed.tcl
-@@ -34,8 +34,10 @@ namespace eval color {
- 		}
- 		add_option *Text.Background $text_bg
- 		add_option *Text.Foreground $text_fg
--		add_option *Text.HighlightBackground $base_bg
--		add_option *Text.HighlightColor $select_bg
-+		add_option *Text.selectBackground $select_bg
-+		add_option *Text.selectForeground $select_fg
-+		add_option *Text.inactiveSelectBackground $select_bg
-+		add_option *Text.inactiveSelectForeground $select_fg
- 	}
- }
- 
--- 
-2.29.2
+I couldn't find a way to query the inactive selection colors, though. Do
+you know if there's a way to do that? If not, I guess one way to do this
+is to numerically calculate a grey color with a similar brightness from
+the active selection background. I could work on a patch if you think
+this is an approach that makes sense.
 
+-Stefan
+
+
+> Signed-off-by: Serg Tereshchenko <serg.partizan@gmail.com>
+> ---
+>  lib/themed.tcl | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/lib/themed.tcl b/lib/themed.tcl
+> index 83e3ac7..eda5f8c 100644
+> --- a/lib/themed.tcl
+> +++ b/lib/themed.tcl
+> @@ -34,8 +34,10 @@ namespace eval color {
+>  		}
+>  		add_option *Text.Background $text_bg
+>  		add_option *Text.Foreground $text_fg
+> -		add_option *Text.HighlightBackground $base_bg
+> -		add_option *Text.HighlightColor $select_bg
+> +		add_option *Text.selectBackground $select_bg
+> +		add_option *Text.selectForeground $select_fg
+> +		add_option *Text.inactiveSelectBackground $select_bg
+> +		add_option *Text.inactiveSelectForeground $select_fg
+>  	}
+>  }
+>  
+> 
