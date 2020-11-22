@@ -2,114 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EEF2C5519F
-	for <git@archiver.kernel.org>; Sun, 22 Nov 2020 11:20:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC8C7C5519F
+	for <git@archiver.kernel.org>; Sun, 22 Nov 2020 12:30:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2453620773
-	for <git@archiver.kernel.org>; Sun, 22 Nov 2020 11:20:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 591CF2078D
+	for <git@archiver.kernel.org>; Sun, 22 Nov 2020 12:30:56 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qIKMOvBa"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727457AbgKVLUb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Nov 2020 06:20:31 -0500
-Received: from smtp.hosts.co.uk ([85.233.160.19]:18708 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727373AbgKVLUa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Nov 2020 06:20:30 -0500
-Received: from host-89-243-187-160.as13285.net ([89.243.187.160] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1kgnPv-000Byu-8E; Sun, 22 Nov 2020 11:20:27 +0000
-Subject: Re: [PATCH 00/28] Use main as default branch name
-To:     Sergey Organov <sorganov@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     "Eric W. Biederman" <ebiederm@xmission.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.762.git.1605221038.gitgitgadget@gmail.com>
- <87r1oraewl.fsf@x220.int.ebiederm.org>
- <xmqqv9e34mq5.fsf@gitster.c.googlers.com>
- <1389dabc-33c9-1e65-a3de-43729a6c2e70@iee.email>
- <xmqqh7pmyuzn.fsf@gitster.c.googlers.com>
- <7df660f2-ad74-7d1f-eb13-a0edadffbfbf@iee.email> <871rgpr497.fsf@osv.gnss.ru>
- <xmqqpn46qppl.fsf@gitster.c.googlers.com> <87y2it8zfm.fsf@osv.gnss.ru>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <9be54e8e-a702-0eb9-97c9-7a1fac82ed5d@iee.email>
-Date:   Sun, 22 Nov 2020 11:20:26 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.0
+        id S1727621AbgKVMay (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Nov 2020 07:30:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32944 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727424AbgKVMax (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Nov 2020 07:30:53 -0500
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7E90C0613CF
+        for <git@vger.kernel.org>; Sun, 22 Nov 2020 04:30:51 -0800 (PST)
+Received: by mail-wm1-x343.google.com with SMTP id c198so13374388wmd.0
+        for <git@vger.kernel.org>; Sun, 22 Nov 2020 04:30:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:subject:to:cc:message-id:in-reply-to:references
+         :mime-version;
+        bh=PROycb6fFl18IM+Wg4O2RAz7Yks4Ov7MfVZJ9uJ1S3M=;
+        b=qIKMOvBa3T9xFgcvGcZVCo+qxTV3O+XL0xG9kRCH2PnlHCKaIisV7K6EF2aAs+f+5q
+         Zf/vObrNLBQoe7eVhGjcl1eE9325UCrkYNzj1rD42IS7MuE906h9XdJvP8LOXncUEPWR
+         N9TxeKr6B5y+/mi5igzx2lAyBJrBbuw7UWTHcZFuQ9rnKRzOqgMKJmChzD3PgAqWEumT
+         Sl6Ykyt5nwhiHFs1urHUUYDyMRc/DwSXccln+hjNHaB2+jucMFaXRUxyIu2qLt3+ccqX
+         iHwe7qf7MpnwAukEDXVDFDCmKMEfC3kthBSkob/Uqoe+oqc9ykTjWwqK/18gu0MhjUZW
+         O0uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:subject:to:cc:message-id:in-reply-to
+         :references:mime-version;
+        bh=PROycb6fFl18IM+Wg4O2RAz7Yks4Ov7MfVZJ9uJ1S3M=;
+        b=ZuNLoE//OelLGtNNod06WlnNYJ7wEUjtw5uKLdjWELJEh16W656vf3vMAf/3cGaNp7
+         mblzdQAzxd12kiYjiDHqbQwyiwfpg4D+/WKPwiC/4funolrGxnk+eqZt3HSv5knknkUT
+         wNVedeIyVibh/QQ4I3vZGwKfDaifo3cJEs4u581BCs+6KGV5Xo71+ZuEpceAYotQTOpG
+         Nf7kxYgGtOUXUvFnVRYxRZT6ORVt23Tindz4hnZlm5kxJuDEer68Dq1QJE7o1gt49Mqs
+         sqQ/BqAnxBxXcLhZLZ6Tc6CFPZSDNIiR+IvJMfJgvHDJ8PFbC+oMYsfX/BEz2UJNMBZK
+         0uzg==
+X-Gm-Message-State: AOAM530QRGdDEdMR/xbo6+Mol9U0a9HzhMHkXTAV9JXmvjPcLFYC81I4
+        MdT3Smy6kl/gyQVR1pv8cOpLxmsNEMVnrw==
+X-Google-Smtp-Source: ABdhPJwx9Opvlge+AczuzVsJls+BPT7/nNe/BMzimZOu3m6ZTNQiIc6vHZXlmeOVM7bXwXA/qTsEUA==
+X-Received: by 2002:a05:600c:2048:: with SMTP id p8mr19551743wmg.165.1606048250500;
+        Sun, 22 Nov 2020 04:30:50 -0800 (PST)
+Received: from [192.168.1.66] ([46.98.123.94])
+        by smtp.gmail.com with ESMTPSA id i5sm13290955wrw.45.2020.11.22.04.30.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 22 Nov 2020 04:30:49 -0800 (PST)
+Date:   Sun, 22 Nov 2020 14:30:42 +0200
+From:   serg.partizan@gmail.com
+Subject: Re: [PATCH v2] git-gui: Basic dark mode support
+To:     Stefan Haller <stefan@haller-berlin.de>
+Cc:     Pratyush Yadav <me@yadavpratyush.com>, git@vger.kernel.org
+Message-Id: <6R67KQ.86UAEA0ZJLWH2@gmail.com>
+In-Reply-To: <7553c99f-1dea-0c1d-e5b0-2103333a76b7@haller-berlin.de>
+References: <20200922110419.ymqj4ol76kg6qshf@yadavpratyush.com>
+        <20200926145443.15423-1-serg.partizan@gmail.com>
+        <20201008130741.mz7k3uy65xdbdkeh@yadavpratyush.com>
+        <7553c99f-1dea-0c1d-e5b0-2103333a76b7@haller-berlin.de>
+X-Mailer: geary/3.38.1
 MIME-Version: 1.0
-In-Reply-To: <87y2it8zfm.fsf@osv.gnss.ru>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22/11/2020 10:21, Sergey Organov wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Sergey Organov <sorganov@gmail.com> writes:
->>
->>> To me "not on a branch [tip]" is also confusing, as in fact you are, as
->>> is easily seen after you perform a few commits, and now HEAD points
->>> directly to the tip of the branch (that has no other references).
->> Aren't you confused about what "on a branch" means?
-> I believe I'm not.
 
-Isn't this one of those "implementation detail" viewpoint arguments,
-combined with some incompleteness in various places.
 
-From a naive english user perspective , 'on' a branch can also mean
-anywhere along a branch and not just at the tip. Being at a commit along
-a branch can be tricky to appreciate (that on/at distinction isn't
-immediately obvious..)
->
->> After either of these two operations, your HEAD may point at the
->> same commit, but the former is on a branch (the master branch), and
->> the latter is not.
->>
->>     git checkout master
->>     git checkout master^0
->>
->> The difference between these two states does *NOT* come from which
->> commit HEAD points at.
-> Sure.
-From an implementation perspective one can go two ways, and we tell the
-user which way we went, even though, ultimately, we look at the same
-commit.
+On Sat, Nov 21, 2020 at 18:47, Stefan Haller <stefan@haller-berlin.de> 
+wrote:
+> This caused a regression: when selecting text in the diff pane or in 
+> the
+> commit message window, the selected text now has a black background 
+> (on
+> Mac and on Windows, I don't have a Linux system to test this). This
+> looks quite ugly; it used to be light blue on both of these systems.
+> 
+> When setting gui.usettk to 0, it is light blue as before (as 
+> expected).
+> 
+> I'm sorry that I can't give any suggestions how to fix this, because I
+> have trouble understanding the code related to themes, even after
+> staring at it for quite a while this afternoon.
+> 
+> Best,
+> Stefan
 
-Though, for an unborn branch we don't have a null commit value (c.f.
-empty tree) to help in being 'detached at nowhere'.
->
->> The difference comes from what happens when you make a new commit
->> starting from that state.  The former (i.e. you are on a branch)
->> grows the branch.
-> Sure.
->
->> The latter (i.e. you are not on a branch) does not grow any branch.
-> That's one way of looking at it, resulting in this "detached HEAD"
-> thingy that is too technical for the git user proper, I think. Moreover,
-> it immediately raises the question: if it doesn't grow any branch, /what/
-> does it grow?
->
-> Another way of describing it, that I prefer, is that you /are/ on an
-> /unnamed/ branch and new commits grow this particular /unnamed/ branch.
-> No need not only for "detached", but even for "HEAD" to be known to the
-> user to get the idea, I think.
-I don't think we can start like this and continue with a commit on top
-of the orphaned 'unnamed' branch. (Not tried it though..)
->
->> This is an unrelated trivia, but did anybody know that we were
->> pretty much on the detached HEAD all the time for more than a month
->> of early life of Git, until cad88fdf (git-init-db: set up the full
->> default environment, 2005-05-30)?
-> I was not aware, and it seems that in my terminology it'd sound: "Git
-> didn't have named branches until cad88fdf".
->
-> -- Sergey
+Looks like it uses inversed text colors for select colors. It works the 
+same way on linux too.
+
+I'll try to figure out why and how it can be fixed.
+
+
 
