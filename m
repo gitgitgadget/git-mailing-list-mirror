@@ -2,110 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C810C56202
-	for <git@archiver.kernel.org>; Sun, 22 Nov 2020 12:43:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E1DDC5519F
+	for <git@archiver.kernel.org>; Sun, 22 Nov 2020 13:23:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C24D22078D
-	for <git@archiver.kernel.org>; Sun, 22 Nov 2020 12:43:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5484220731
+	for <git@archiver.kernel.org>; Sun, 22 Nov 2020 13:23:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K1ubtTtP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k7zlW8N7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727832AbgKVMn5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Nov 2020 07:43:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34938 "EHLO
+        id S1727754AbgKVNXg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Nov 2020 08:23:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727735AbgKVMn4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Nov 2020 07:43:56 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8971C0613CF
-        for <git@vger.kernel.org>; Sun, 22 Nov 2020 04:43:55 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id p8so15724826wrx.5
-        for <git@vger.kernel.org>; Sun, 22 Nov 2020 04:43:55 -0800 (PST)
+        with ESMTP id S1727728AbgKVNXf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Nov 2020 08:23:35 -0500
+Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15845C0613CF
+        for <git@vger.kernel.org>; Sun, 22 Nov 2020 05:23:34 -0800 (PST)
+Received: by mail-lf1-x141.google.com with SMTP id d20so4154930lfe.11
+        for <git@vger.kernel.org>; Sun, 22 Nov 2020 05:23:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=7Fc7P8kQcPQISx2KbEH6F7H0EErAk0HWaiyJDx60mcc=;
-        b=K1ubtTtPS3LqLVzxojrqvYKPBDTHyYaGYtcw1bqs/Mq1e8Omue3WBQVSmxLZvFGoKI
-         CdzPZaOPfquYXoctixZ70Ek4us4GDziEuzCviLLEMY7TgE4Nc45dUCMvxljS3NVbyvw5
-         CBGA6dPWvfbF1qBQt+E4WOmUcFeTj6Q+MACSTuwTuTAifNBbOzW5gEgURk3bugAWhY70
-         BmAcfqLUvUVEc8QGFMEwT+c+BcTqv60WvyKfgpKUiJNeUZQxnrFSx3FXnp+Dr/JeaPgw
-         mLW67gRzq7o3M0UC5E12Ky1xgfTOAB00GjOy81LWAWmyzLQVN7bedXJW1TMM4r0dMqlA
-         cSEw==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=WcZg4uR5A0Upfbv6ih/aMzL5v35K3U48EggaLkQbAvo=;
+        b=k7zlW8N75T/WROF6ApYL8kd8pBS+u/3US8iFzMQ/Hv/uDrnjad5oxhWWUBOS87bwRn
+         LBnvaGSj3w6fi8fXlQMM/xE+KNNXOxCsgTOaTjEcmvZAZ6KxibDItz1XsCAzftXjlfNk
+         uGuZzf2qOw7V8XUPyl/5zpoOocOVxbkpFnhcy/lyDXXkSTuNCFgPJl5KeBnTeE0uD1vn
+         8Bt6QmUZDH057BlQVPwpF/wWeXfpM4uEf5ckNzofrZqhu1zkDIw7mKQd8fc3X7FAdj5L
+         92svHdbtP4CvbRTTLxoCXwd+MwJTYSAeoGb9OlPCGmFkTJUKthhC5JQ+YtpQ/I/rfYta
+         8gRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=7Fc7P8kQcPQISx2KbEH6F7H0EErAk0HWaiyJDx60mcc=;
-        b=MlkPdQDXx/pA+CgkBdo+lqyaTi6JxZGFMxfCdfxFeZzd/dKm5fv9/xa3bBQ/rjmNFj
-         P+21nN1aeakVbPsbLaYyl2Zo9+7A8MEGhpNi6isnaeMhsW8mmzeAU5oSzzwJ2OtbWQmv
-         MMZzxchO/OXlMrnrRQ8ZLJf8s31SVEIHEmvRrOHHTQ9b5tmFi1nu9MrjS7ujUYv/5spY
-         jbIxKZ3T1UhaH9lcOjvz0tCDYhbH635E3RJAZmiGAV/Iy8ahOWGwQFYrNZrknCegcG1S
-         1VEIsa5nbrTJxqHc1sVfHTC4IfxDTyFu10QMrfdGw5lBfEme2ncquMh1/q5tG+TUxe8V
-         +XIQ==
-X-Gm-Message-State: AOAM530OxksH1CqL8O9pOolMMBZb8q4gogzUO2jOH41yJ5mPJG18Wvnt
-        cWqYj7bAueFE6G5F0yY2T/M7n/ZSVB0=
-X-Google-Smtp-Source: ABdhPJyT063XpI3vg02vRAOgxm1VX7sQHLhNpC79DKFtNiN764v8RMeeykZT+AnVngf5S8vBWufNtQ==
-X-Received: by 2002:a5d:660f:: with SMTP id n15mr26510417wru.345.1606049034440;
-        Sun, 22 Nov 2020 04:43:54 -0800 (PST)
-Received: from [192.168.0.104] (atoulouse-654-1-307-224.w86-199.abo.wanadoo.fr. [86.199.90.224])
-        by smtp.gmail.com with ESMTPSA id m20sm13986635wrg.79.2020.11.22.04.43.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 22 Nov 2020 04:43:53 -0800 (PST)
-Subject: ag/merge-strategies-in-c [was Re: What's cooking in git.git (Nov
- 2020, #04; Thu, 19)]
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqwnyeqpw9.fsf@gitster.c.googlers.com>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Message-ID: <8c92f1d0-3f17-d8b2-ca93-c70ee887f37d@gmail.com>
-Date:   Sun, 22 Nov 2020 13:43:38 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.2
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=WcZg4uR5A0Upfbv6ih/aMzL5v35K3U48EggaLkQbAvo=;
+        b=un+5eW16cSO/TKqwI+lpbEHEqaRann4nOXtxuzDY1naqKGOScMnbTfgvvgVU5klZsl
+         SAZ5kbulssMsHOi3TDqgk5o3GGonQYCvYvKSHaPbfTBbdEX3AjeTfOeTf02vFlX+hT+c
+         /GVWu+cw0yXLDKMyIH9UZjtvxPEZ4FMhNS+w9f3IphnzaAdMB3A9wCY4Erk7x7Z1Kkdb
+         g8I/VkdnE6E4BdDyWGY8LeGDtq40bKD/x/i7Ls/n0HnI4fEc4HUvgglq36Gku7THCn2O
+         az/SeRCG/faA+msHKO83t3iQ6NWLKHcamAm3WBU4QPOSruMagsOouptxxjD/qpLpPicV
+         ti8w==
+X-Gm-Message-State: AOAM531PYdVYLDJxiCi38J9IQ02Yt7Y45I91/2hwoIwKvsZqM6uyf5sP
+        ye/x6NlZxRMVaheQW0wHeEc=
+X-Google-Smtp-Source: ABdhPJzDCdpZWyuyWAOAu7sYJhGSfXYwrsjxL7jzItg7CTsMXOh+DVPbLF1COgt4TH7ObgnBlGzNsQ==
+X-Received: by 2002:ac2:4c9c:: with SMTP id d28mr10922404lfl.278.1606051412275;
+        Sun, 22 Nov 2020 05:23:32 -0800 (PST)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id r12sm1074930lfc.80.2020.11.22.05.23.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 22 Nov 2020 05:23:31 -0800 (PST)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "Eric W. Biederman" <ebiederm@xmission.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 00/28] Use main as default branch name
+References: <pull.762.git.1605221038.gitgitgadget@gmail.com>
+        <87r1oraewl.fsf@x220.int.ebiederm.org>
+        <xmqqv9e34mq5.fsf@gitster.c.googlers.com>
+        <1389dabc-33c9-1e65-a3de-43729a6c2e70@iee.email>
+        <xmqqh7pmyuzn.fsf@gitster.c.googlers.com>
+        <7df660f2-ad74-7d1f-eb13-a0edadffbfbf@iee.email>
+        <871rgpr497.fsf@osv.gnss.ru> <xmqqpn46qppl.fsf@gitster.c.googlers.com>
+        <87y2it8zfm.fsf@osv.gnss.ru>
+        <9be54e8e-a702-0eb9-97c9-7a1fac82ed5d@iee.email>
+Date:   Sun, 22 Nov 2020 16:23:30 +0300
+In-Reply-To: <9be54e8e-a702-0eb9-97c9-7a1fac82ed5d@iee.email> (Philip Oakley's
+        message of "Sun, 22 Nov 2020 11:20:26 +0000")
+Message-ID: <87zh397cfh.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqwnyeqpw9.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Philip Oakley <philipoakley@iee.email> writes:
 
-Le 21/11/2020 à 23:57, Junio C Hamano a écrit :
+> On 22/11/2020 10:21, Sergey Organov wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> Sergey Organov <sorganov@gmail.com> writes:
+>>>
+>>>> To me "not on a branch [tip]" is also confusing, as in fact you are, as
+>>>> is easily seen after you perform a few commits, and now HEAD points
+>>>> directly to the tip of the branch (that has no other references).
+>>> Aren't you confused about what "on a branch" means?
+>> I believe I'm not.
+>
+> Isn't this one of those "implementation detail" viewpoint arguments,
+> combined with some incompleteness in various places.
+>
+> From a naive english user perspective , 'on' a branch can also mean
+> anywhere along a branch and not just at the tip. Being at a commit along
+> a branch can be tricky to appreciate (that on/at distinction isn't
+> immediately obvious..)
+>>
+>>> After either of these two operations, your HEAD may point at the
+>>> same commit, but the former is on a branch (the master branch), and
+>>> the latter is not.
+>>>
+>>>     git checkout master
+>>>     git checkout master^0
+>>>
+>>> The difference between these two states does *NOT* come from which
+>>> commit HEAD points at.
+>> Sure.
+> From an implementation perspective one can go two ways, and we tell the
+> user which way we went, even though, ultimately, we look at the same
+> commit.
 
-> * ag/merge-strategies-in-c (2020-11-16) 12 commits
->  - sequencer: use the "octopus" merge strategy without forking
->  - sequencer: use the "resolve" strategy without forking
->  - merge: use the "octopus" strategy without forking
->  - merge: use the "resolve" strategy without forking
->  - merge-octopus: rewrite in C
->  - merge-recursive: move better_branch_name() to merge.c
->  - merge-resolve: rewrite in C
->  - merge-index: don't fork if the requested program is `git-merge-one-file'
->  - merge-index: libify merge_one_path() and merge_all()
->  - merge-one-file: rewrite in C
->  - update-index: move add_cacheinfo() to read-cache.c
->  - t6027: modernise tests
-> 
->  The resolve and octopus merge strategy backends have been rewritten
->  in C.
-> 
+AFAIU, the only difference is that HEAD points to the commit directly in
+the case of "detached HEAD", while it points to the commit indirectly
+through the branch reference in the usual case.
 
-There is some behaviour changes and regressions in this iteration that I
-intend to fix.  Expect a reroll soon.
+>
+> Though, for an unborn branch we don't have a null commit value (c.f.
+> empty tree) to help in being 'detached at nowhere'.
 
-I also noticed that I can show which branch has made a branch when there
-is a conflict with the "resolve" strategy, like "recursive" already
-does.  Should this change be part of this series, or should it be a
-separate patch?
+We can pretend we have a null commit for the sake of regularity, even
+though Git implementation has none.
 
-Cheers,
-Alban
+Actually, it looks like a few things would be easier if Git got the
+"Adam" commit that is the ultimate final parent of everything in the
+first place, but it didn't.
 
+
+>>
+>>> The difference comes from what happens when you make a new commit
+>>> starting from that state.  The former (i.e. you are on a branch)
+>>> grows the branch.
+>> Sure.
+>>
+>>> The latter (i.e. you are not on a branch) does not grow any branch.
+>> That's one way of looking at it, resulting in this "detached HEAD"
+>> thingy that is too technical for the git user proper, I think. Moreover,
+>> it immediately raises the question: if it doesn't grow any branch, /what/
+>> does it grow?
+>>
+>> Another way of describing it, that I prefer, is that you /are/ on an
+>> /unnamed/ branch and new commits grow this particular /unnamed/ branch.
+>> No need not only for "detached", but even for "HEAD" to be known to the
+>> user to get the idea, I think.
+> I don't think we can start like this and continue with a commit on top
+> of the orphaned 'unnamed' branch. (Not tried it though..)
+
+I rather believe we can, no problems, and that's why "detached HEAD" behaves
+exactly as unnamed branch would.
+
+To make it obvious "detached HEAD" is in fact a subset of the usual
+case, imagine that "detached HEAD" is rather first implemented by
+pointing to a branch reference with a hidden name that in turn points to
+the commit, and then this "incognito branch reference" is optimized-out
+as being invisible anyway, so HEAD now points to the commit itself.
+
+-- Sergey Organov
