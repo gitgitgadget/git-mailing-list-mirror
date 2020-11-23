@@ -2,119 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7418FC388F9
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 13:24:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 341A6C8300B
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 13:30:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1DD932075A
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 13:24:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CD52820782
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 13:30:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="PACY0ajz"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="j4cYX7H4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732309AbgKWNXh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Nov 2020 08:23:37 -0500
-Received: from mout.gmx.net ([212.227.15.18]:36539 "EHLO mout.gmx.net"
+        id S2389264AbgKWN3z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Nov 2020 08:29:55 -0500
+Received: from mout.gmx.net ([212.227.17.22]:60309 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730646AbgKWNXf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Nov 2020 08:23:35 -0500
+        id S1730437AbgKWM21 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Nov 2020 07:28:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1606137812;
-        bh=ztyw4lvt3mlua4qCatrlBGiSgGHNHtGMtfY38f+eMIk=;
+        s=badeba3b8450; t=1606134502;
+        bh=JDemwnidgeVzaCrbAV8C1yfMC7HJLDJtv7LE0Qgr9DE=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=PACY0ajz5Jt2PC5Rr0ilD68Y+swCEa/Pxi9883/EqqbMyljq6fWzHEnAW5thEY61+
-         Ewav645v/H3plShvZXE6mh2DONsHlBDJ0jkLCugDBEi5HyNLK83Sl6I/3RQUoSiLVy
-         hi6rVCw5XTa8FYgiN0iU37XYck5iF9eL1iTlI4ck=
+        b=j4cYX7H4DZLR7ySKRIkuFCMLoQr22cEJIrsWegs3a6q5lVX3BIWw+cGW9KYkil5zA
+         HrW7nMLi6MMKqlD8ymO3nXAaN0Nny9cwAl2sCJNDNj1MmcCHGCQygu9EviJETxsB29
+         5FLZgL2J1tvveUX3TZUwjzZxljqqc2UcXJX1W/Zo=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.22.105] ([89.1.213.133]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MStCe-1koNLO1geU-00UIIo; Mon, 23
- Nov 2020 14:23:32 +0100
-Date:   Mon, 23 Nov 2020 14:23:30 +0100 (CET)
+Received: from [172.26.22.105] ([89.1.213.133]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MFbRm-1kSIqO0IWs-00H37t; Mon, 23
+ Nov 2020 13:28:22 +0100
+Date:   Mon, 23 Nov 2020 13:28:20 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-cc:     Johannes Sixt <j6t@kdbg.org>, Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] rm: honor sparse checkout patterns
-In-Reply-To: <CAHd-oW4OVDvfkaMjsO4vLvwrnHbyhngwW2y6AkoScJmS6XGVeQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2011231421520.56@tvgsbejvaqbjf.bet>
-References: <9f2135f90ffea7f4ccb226f506bf554deab324cc.1605205427.git.matheus.bernardino@usp.br> <CABPp-BGkkNwdjLB4HSygvU43OZRiuhDyt7RjrDGodWrfNgkBXQ@mail.gmail.com> <70ae5b1d-b1d2-1b3f-11cf-8e5ceafe6048@gmail.com> <CAHd-oW7X3fEM8PDFWQVc4kG_vfkY4LbvADzJfQrocjyaAr28TQ@mail.gmail.com>
- <79313c8c-c927-78d4-bb1d-024f9feb553c@kdbg.org> <CAHd-oW4OVDvfkaMjsO4vLvwrnHbyhngwW2y6AkoScJmS6XGVeQ@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 3/3] init: provide useful advice about
+ init.defaultBranch
+In-Reply-To: <xmqq4klgq10d.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2011231326150.56@tvgsbejvaqbjf.bet>
+References: <pull.921.git.git.1606087406.gitgitgadget@gmail.com> <253d6706e6ab97e71ec012f6de33c75f3e980701.1606087406.git.gitgitgadget@gmail.com> <xmqqft51osnu.fsf@gitster.c.googlers.com> <xmqq4klgq10d.fsf@gitster.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:E1nJWcFzr/zZQXleXJO2Ox5jXQjIktHRJkGV+zEs8NQr/lbRQbd
- 4Aq602F7Goyt2FluaTZhrjlzpLc1K6JjYke1dtcEAPeacYCCIM4FVHqXOwI4ckwet4FighF
- I3VshGDob+vX9kBecdS5iZ6cD8t4CYNOuou/tQTlp7quJ622YNFyp7Bnses6PFQVqY/TBuY
- bxPhb4l0NpKjGmCO4B1cg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:BlzUl7mHBO8=:/f2i9rMYIoQPt6FZbxtt2K
- v5dzkIAemLfHaDG3Yt/fd1KREThRyXFz/7pqsfIgPL9Li2E4NnKrv/tfHm5ttDW0XGq+2+95C
- +0V/Mt4MoOTXnoYokMWR4sp5KASy4gADNxuawry8WOnKWYj2ijuwmonWkz0GJuAwqIkwN1tKR
- Gc8ByjXC1o69fve6IovTZBoiYKQjIQUvOt8Une+Wan75t6yl3mZTGyWvJAOg2VgYjQ99YCYf7
- wLZNUE+oQzGmE9MFnpE5V/wOHA1hgpDFH0u8Yv9hVUP1TDkHgOQ8/uBpRSrBBupFIaPgWNf39
- FbWfeO/i8eeu3rGRoJK2NQGVIXeDG7mWUN/+YZuFcvETtQ/aOLNPZ31jEDapRGBvhURT5dlh5
- mRJ9n27MxLf9jimD8woqYneKP+TMpKOgB2B1B4fG9+MyqHQ+bXuI5gD01E/YDNvW32VkpHNwb
- +8uDVX5/eml4OsGL0hioxQudaFxqfpmbv5ZIWzkzZpoY0J1XngGUbU9opvzcSQTq8xzuFIsPI
- Yeo7NcnriToKIaj8ZZhNEwVKB5HO9SW0n1ofo50GOv3uzbyHXxMb68A31vNCuoI9wDjVFIwG5
- HWyFlJlVEz32Iu07pjsp80nmOF6TJ9LLQMZUNQ2Je+TfMQEo/HSLLteaECCtPJjSs04ZAg8Ft
- X2as1fsVRm6UMI1cFbOwfzDpAOb4eByTgvmJvqkqSEYTR09wovOVnyhBAkW+kAHQHJk322Kl7
- 96c4Qjvq002Yc71Te6HdX8V5nG9HXMmCjvekBHKf3GmnO2Xc3ZcxhvQ5kURhVTJ4wTQzgOfse
- pFvsQdpKRcgg9+IWnHQUt73q+c/Io30RPdeJ1+EnHuqodO89xZ+DZoQBiAjngRjn3o1tEr9IW
- bzMfJPqFOtKrr/qWxVxrjymrXyIsFgnigV8wqlnxs=
+X-Provags-ID: V03:K1:4E4NonXuSGhXstc0/l6PGfOUtXG1LoJtrH/PfeOHI+KlFW58cPP
+ 4Uen1/wUkxaZRM/X0Cmp1uMdAjEtXdzOHyo/+LlQvhsN8lropYZTM5EdzAJ7XGVvBN+Ke23
+ A28lel4ftroyPh72ikxK9XME0FeWAibTq7GMNWA/lk4PfliwClSy2QFuVLALbKJVNGnAWi7
+ j77WFf+ZpLZr2Wk6CGWNA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:3JzhxPnXpSQ=:2v/Ar8qsE5HjuZKnmoEnEV
+ uHIrdH8/rEGBiPM4QcrY8w2jZU5RrEbbWawp2GP9UK0l1QgKo2ZbSqHUu02YYeq5w0+HB7aFL
+ L5ISTOtz5zBD7f7WmBGdyV6d2yUQtHmu1h9d3VX0/KxcKs6yO2UnIcoWKPabcWS/hxS6Ql1DY
+ T31XY1G3twOmd8SJYx6cJs4fzW0ONxaG3d2jOMp08X3+CwgClX4jMBc6pKliD0pbh1n2vqkXV
+ ps3fJQEYWqBh617zuCGARnpXgf+SmRy8m7Xrom9nQBnZmYKkV08RNZ49vHmOt9MEh8e396OoL
+ 3uEFhVtTT37CoiplFwKrVWxrfkesSwCirRHeSiA4EM5aO2u8kxXFzbG7qPEeEdvnVdPGXMLq5
+ IyHJ/vgscFUlCvPXIrzd0sMAV947uVd6dszhULxigknN6JQfru92HvkG7XShTJobaKC9tHlax
+ UMFO1x7ugdhXr7deZr05JfiYl2ojBpaQ0QfS2Gtj+5Dh8yC1Ks9ecgoJ/Ut7DPBzCCtv5l+Wn
+ OEsEx3un1ugn2Hm81rt2r27CIjubwFgEuH3sLw9pW76/W3ZFYiCom8GzfHuZGbe2fqzmsr2am
+ gz9wT9vp4XefcyyTL4vfHPtHdFo9XnS61l9ymh+vZeNZdPaIWrc3phwg4tTWefrlDPVmRYs4I
+ zJQdnqIHDRRIkoLRnvc2L1jbxrcqzm/kAVlOGZ3jPtR4d1y2XQPtnmrIpe717W1qtZvWM+VjF
+ zPVbcgYKlDkx1UnFGR1Cij9Hork6gL3HsaG6ghlQlt1AM+OzKacHDi8UF8ohke6qssz3Qcjx0
+ 5Tck1BoBjVSgEOx8u9Cf12UTP6tcrH5uNlGzjiL0njOvJSTMiTNJ3DTmDl4SSMNHsYeI0oxir
+ YerIPfixygOurOyOYfyxZ57Sl06e3/C/Wm9EhKtps=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Matheus,
+Hi Junio,
 
-On Mon, 16 Nov 2020, Matheus Tavares Bernardino wrote:
+On Sun, 22 Nov 2020, Junio C Hamano wrote:
 
-> On Sun, Nov 15, 2020 at 6:42 PM Johannes Sixt <j6t@kdbg.org> wrote:
-> >
-> > Am 15.11.20 um 21:12 schrieb Matheus Tavares Bernardino:
-> > > Thank you both for the comments. I'll try to send v2 soon.
-> > >
-> > > On Fri, Nov 13, 2020 at 10:47 AM Derrick Stolee <stolee@gmail.com> w=
-rote:
-> > >>
-> > >> On 11/12/2020 6:54 PM, Elijah Newren wrote:
-> > >>>
-> > >>> Do we also want to include a testcase where the user specifies a
-> > >>> directory and part of that directory is within the sparsity paths =
-and
-> > >>> part is out?  E.g.  'git sparse-checkout set /sub/dir && git rm -r
-> > >>> sub' ?
-> > >>
-> > >> That is definitely an interesting case.
-> > >
-> > > I've added the test [1], but it's failing on Windows and I'm not qui=
-te
-> > > sure why. The trash dir artifact shows that `git sparse-checkout set
-> > > /sub/dir` produced the following path on the sparse-checkout file:
-> > > "D:/a/git/git/git-sdk-64-minimal/sub/dir".
-> >
-> > If 'git sparse-checkout' is run from a bash command line, I would not =
-be
-> > surprised if the absolute path is munched in the way that you observe,
-> > provided that D:/a/git/git/git-sdk-64-minimal is where your MinGW
-> > subsystem is located. I that the case?
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Yeah, that must be it, thanks. I didn't run the command myself as I'm
-> not on Windows, but D:/a/git/git/git-sdk-64-minimal must be the path
-> where MinGW was installed by our GitHub Actions script, then. I'll use
-> "sub/dir" without the root slash in t3600 to avoid the conversion.
-> Thanks again!
+> >> +static const char default_branch_name_advice[] =3D N_(
+> >> +"Using '%s' as the name for the initial branch. This name is subject=
+\n"
+> >> +"to change. To configure the name to use as the initial branch name =
+in\n"
+> >> +"new repositories, or to silence this warning, run:\n"
+> >
+> > s/new repositories/all of your new repositories/ as that is the
+> > whole point of using --global option below.
+> >
+> >> +"\n"
+> >> +"\tgit config --global init.defaultBranch <name>\n"
+> >> +);
+> >> +
+>
+> The above may give a valuable lesson to those who want to use one
+> branch name across new repositories, but it does not tell those who
+> wanted 'trunk' (to match the project, perhaps github.com/cli/cli,
+> with which they intend to interact) how to recover from having
+> already created the 'master' branch.  We may want to add some text
+> to suggest "branch -M" after giving the advice for the permanent
+> option.
 
-In the `windows-test` job, the construct `$(pwd)` will give you the
-Windows form (`D:/a/git/git/git-sdk-64-minimal`) whereas the `$PWD` form
-will give you the Unix-y form (`/`). What form to use depends on the
-context (if the absolute path comes from a shell script, the Unix-y form,
-if the absolute path comes from `git.exe` itself, the Windows form).
+Good point.
+
+> Also, it is unclear to those who do not have a good <name> in mind
+> (or, those who do not care to choose a <name> for themselves), what
+> <name> they should give to take the "or to silence this warning"
+> part of the advice.
+
+Also a good point.
+
+> It probably is a good idea to rephrase and say
+> either:
+>
+>     ... To configure ... in all your new repositories and squelch
+>     this message, run:
+>
+> 	git config --global init.defaultBranch <name>
+>
+> or
+>
+>     ... To configure ... in all your new repositories, run:
+>
+> 	git config --global init.defaultBranch <name>
+>
+>     Note that this message won't appear after doing so.
+
+I came up with this, which I intend to submit with v2:
+
+static const char default_branch_name_advice[] =3D N_(
+"Using '%s' as the name for the initial branch. This name is subject\n"
+"to change. To configure the initial branch name to use in all of your\n"
+"new repositories (or to suppress this warning), run:\n"
+"\n"
+"\tgit config --global init.defaultBranch <name>\n"
+"\n"
+"Common names are 'main', 'trunk' and 'development'. The initial branch\n"
+"can be renamed via this command:\n"
+"\n"
+"\tgit branch -m <name>\n"
+);
 
 Ciao,
 Dscho
