@@ -2,134 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6BB8C56202
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 23:46:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AFF7C2D0E4
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 23:52:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5234B20721
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 23:46:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E6CA520721
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 23:52:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mR8qoNd+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WEjoWp4o"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726869AbgKWXpt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Nov 2020 18:45:49 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55654 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726630AbgKWXps (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Nov 2020 18:45:48 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 78B9810A889;
-        Mon, 23 Nov 2020 18:45:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=UeQFsDYjZxl5VK9YNhKHmT8H7/8=; b=mR8qoN
-        d+PN+bICjPZQwELNG1GUONKc0qNkWxqpuuN+QoEbTcbyz4BMttQX2TZmELjaHlgM
-        po2oSXTillKXfooi2FzhQSE7pwd2mSYI2nP/NO1LaCNXpeo54Q8X6ovIhm987mct
-        apKWLLFHL93Arc++38zq13hp8Ll+iBJ89n2Rw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HPfokV0EMQAEcgR7LmD79qDMWYXX8Tdq
-        op98AkK+A/fX12vRMuwuM5WlDZNN8iw2QQJSaDmpgpaYpj7zwNcgFpbVTC475xef
-        GlzESPqJAf58XVQ2HvIf/uEuT8flvzjpLXGrIvmMs3hYNlR8slWobxFhOr/aq1yJ
-        RkbIDaI+Kf8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 70E4810A888;
-        Mon, 23 Nov 2020 18:45:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B87EE10A886;
-        Mon, 23 Nov 2020 18:45:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 2/4] branch -m: allow renaming a yet-unborn branch
-References: <pull.921.git.git.1606087406.gitgitgadget@gmail.com>
-        <pull.921.v2.git.git.1606173607.gitgitgadget@gmail.com>
-        <8de0c0eb228c8d9608d3a78c992cbd6829cb9329.1606173607.git.gitgitgadget@gmail.com>
-Date:   Mon, 23 Nov 2020 15:45:41 -0800
-In-Reply-To: <8de0c0eb228c8d9608d3a78c992cbd6829cb9329.1606173607.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Mon, 23 Nov 2020
-        23:20:05 +0000")
-Message-ID: <xmqqd003ljru.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727297AbgKWXvy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Nov 2020 18:51:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48612 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726612AbgKWXvy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Nov 2020 18:51:54 -0500
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E406C0613CF
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 15:51:54 -0800 (PST)
+Received: by mail-wr1-x443.google.com with SMTP id 23so20495101wrc.8
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 15:51:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=vkcPjx4B8kRwBuP+VST5rGBK/0dnOxYpVQ751eAuiSA=;
+        b=WEjoWp4o0S6tFxv5h+h7s68D0B5CcxHexUlKie/VhIAToDIE797q5sHOotJGlV+v0Y
+         puAQw+mByo6EVdVn9mPWPevx1jLi1vcxbDJf8fD2W3w8EWcMFMh0YRyH8+hb1T1I7Zvs
+         o6Qy4l0qu69oCTci7HHAc08TtN81SWE0BylJrZYt/ZnAK7O0/WRFKq8TGgVLEAkMdQpU
+         9h24QIBen36Tvbizqmq5EL2Y96NaJH2YSzPJPD66X6tYULXTiTDirrBo8ERqJ1R3tNBy
+         3zjVLAQPSoRWzKCPVS8DjaO1/JI11vEJR/du6lDbbTtWlPUnaTgNmAJcw0pUYDv+CXXk
+         cNtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=vkcPjx4B8kRwBuP+VST5rGBK/0dnOxYpVQ751eAuiSA=;
+        b=ed3Jp+Dw6QeKzPGUAgVofndMk00FwRKyiKHxdCc42qTy/OWwNDXUpnx/d2D8bT5hFq
+         6243Jdl0qTAHeJ3mRHZNkA3Yzk4FB1GTPNSlMUtGAXlCzzFC7HPpgPsGmFGN8+K6HkAX
+         uoB5Tn91r6yiMk9K8dKXCGqvK2sELlqzRQS3EiWoc1f1gy9vmsptsgl8BG7OAPpA9a1N
+         wIk0NyvZ1xDs8ANA3e/T202K/A1LoEVvxCjrpzdyqMrmpw8TssmuMzNLxzLUVAVJJHOu
+         oLddyze3FFmjsr3u98vA43UE5A9pr5cIepQfKUAn/DP8W8jxX+5dy5hDGQYwCvpUFsaP
+         d/ZA==
+X-Gm-Message-State: AOAM533a5XDaKF7hoNiBWWpwAOgxJHpvKe9poCWfbNz3b7epfCQSgCSi
+        6+Faci92DVORA+/ckvF0+kqK64Xno7V7WpWCGMM=
+X-Google-Smtp-Source: ABdhPJy03hg2bbQ9nJLzTSRnk78214j7NUEOD4+ceYaQnmjGWG681Dq2jpK0WcL741bal9alBznhkWgmDiWzSovXj20=
+X-Received: by 2002:a5d:4349:: with SMTP id u9mr2041242wrr.319.1606175512899;
+ Mon, 23 Nov 2020 15:51:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 006B8540-2DE6-11EB-A371-E43E2BB96649-77302942!pb-smtp20.pobox.com
+References: <20201123224621.2573159-1-felipe.contreras@gmail.com>
+ <20201123224621.2573159-2-felipe.contreras@gmail.com> <CAMP44s2FRZUvUy+F3banxd9MEdL=RMqEdJL3JLYEGDQkOz3vNA@mail.gmail.com>
+ <CAMMLpeR8_fshsaqSF6idOY-KyFw2+AK_5683a-7wDXhsO=iFVQ@mail.gmail.com> <xmqqim9vlkdn.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqim9vlkdn.fsf@gitster.c.googlers.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Mon, 23 Nov 2020 17:51:42 -0600
+Message-ID: <CAMP44s3Y3BEbPM_69uxmQWiBq2CqwBo4w13M43WvU4nUQZha8g@mail.gmail.com>
+Subject: Re: [PATCH v7 1/1] pull: add ff-only option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>, Git <git@vger.kernel.org>,
+        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
+        "Theodore Y . Ts'o" <tytso@mit.edu>, Jeff King <peff@peff.net>,
+        Andreas Krey <a.krey@gmx.de>,
+        John Keeping <john@keeping.me.uk>,
+        Richard Hansen <rhansen@rhansen.org>,
+        Philip Oakley <philipoakley@iee.email>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
+        "W. Trevor King" <wking@tremily.us>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Mon, Nov 23, 2020 at 5:32 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Alex Henrie <alexhenrie24@gmail.com> writes:
+>
+> > On Mon, Nov 23, 2020 at 3:46 PM Felipe Contreras
+> > <felipe.contreras@gmail.com> wrote:
+> >>
+> >> This patch leaves everything in place to enable this new mode, but it
+> >> only gets enabled if the user specifically configures it;
+> >>
+> >>   pull.rebase = ff-only.
+> >
+> > Why not use the existing pull.ff=only option instead of adding a new one?
+>
+> If you have pull.rebase=false, "git -c pull.ff=only pull" would fail
+> as desired upon a non-fast-forward.  But if you have
+> pull.rebase=true, does it fail the same way (not a rhetorical
+> question; I didn't try)?  If so, I agree we do not need a new one.
 
-> @@ -538,7 +538,8 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
->  		strbuf_addf(&logmsg, "Branch: renamed %s to %s",
->  			    oldref.buf, newref.buf);
->  
-> -	if (!copy && rename_ref(oldref.buf, newref.buf, logmsg.buf))
-> +	if (!copy && (oldname != head || !is_null_oid(&head_oid)) &&
+No. It attempts the rebase, because whatever is set in pull.ff affects
+only the merge mode. Also, I don't think there's any way to tell git
+rebase to fail if it's not fast-forward (not that we should attempt
+the rebase anyway).
 
-It always makes readers uneasy to see pointer comparison of two
-strings.  
+> On the other hand, it looks quite funny for that single variable
+> that controls the way how pull works, whether rebase or merge is
+> used, is pull.REBASE.
 
-Does this mean, after "git -c init.defaultbranch=master init",
+Which is precisely why I wanted to rename it to pull.mode.
 
-	git branch -m master main
+In my option git pull should have three main modes:
 
-would not work while
+1. fast-forward only
+2. merge
+3. rebase
 
-	git branch -m main
+The fast-forward only mode can be considered a merge, or a rebase,
+doesn't matter.
 
-would?  It would be easy to see with the attached patch to the test,
-I guess.
+Cheers.
 
-> +	    rename_ref(oldref.buf, newref.buf, logmsg.buf))
->  		die(_("Branch rename failed"));
->  	if (copy && copy_existing_ref(oldref.buf, newref.buf, logmsg.buf))
->  		die(_("Branch copy failed"));
-> diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-> index 69a320489f..69c5ad179c 100755
-> --- a/t/t0001-init.sh
-> +++ b/t/t0001-init.sh
-> @@ -571,4 +571,10 @@ test_expect_success 'invalid default branch name' '
->  	test_i18ngrep "invalid branch name" err
->  '
->  
-> +test_expect_success 'branch -m with the initial branch' '
-> +	git init rename-initial-branch &&
-> +	git -C rename-initial-branch branch -m renamed &&
-> +	test renamed = $(git -C rename-initial-branch symbolic-ref --short HEAD)
-> +'
-> +
->  test_done
-
-Thanks.
-
-
- t/t0001-init.sh | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git c/t/t0001-init.sh w/t/t0001-init.sh
-index 69c5ad179c..07c34431d9 100755
---- c/t/t0001-init.sh
-+++ w/t/t0001-init.sh
-@@ -577,4 +577,10 @@ test_expect_success 'branch -m with the initial branch' '
- 	test renamed = $(git -C rename-initial-branch symbolic-ref --short HEAD)
- '
- 
-+test_expect_success 'branch -m with the initial branch' '
-+	git -c init.defaultBranch=initial init rename-unborn-branch &&
-+	git -C rename-unborn-branch branch -m initial renamed &&
-+	test renamed = $(git -C rename-unborn-branch symbolic-ref --short HEAD)
-+'
-+
- test_done
+-- 
+Felipe Contreras
