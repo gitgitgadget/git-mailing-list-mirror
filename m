@@ -2,123 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75905C2D0E4
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 20:34:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23377C388F9
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 20:45:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 220B520721
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 20:34:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C0A5220721
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 20:45:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sW/6tIDY"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="lwJ+01Nc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728846AbgKWUed (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Nov 2020 15:34:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46382 "EHLO
+        id S1728980AbgKWUpZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Nov 2020 15:45:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727448AbgKWUec (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Nov 2020 15:34:32 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8779AC0613CF
-        for <git@vger.kernel.org>; Mon, 23 Nov 2020 12:34:31 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id m6so20064617wrg.7
-        for <git@vger.kernel.org>; Mon, 23 Nov 2020 12:34:31 -0800 (PST)
+        with ESMTP id S1728938AbgKWUpZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Nov 2020 15:45:25 -0500
+Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E179C0613CF
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 12:45:25 -0800 (PST)
+Received: by mail-qt1-x849.google.com with SMTP id d9so3081479qtr.5
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 12:45:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PV4wmRt4DYsISy9UHgg4C3REYOZSuwfa9jc7EKxEAlA=;
-        b=sW/6tIDYFY/mbSz5D8xaEpEBZBnKw3GRhLqq/gu3gQ73oElfhKfidLS+nFnxiq1cvu
-         5HpVdFkyZtN1rNO0jpqSHP/X/i+0SnIq8EYI7+9SNs54HyNsehg41L/hSJMbMIiKhyt1
-         sB4pNSMPOzYq2rzF6k7uk88wSLIsIOVrgxzYaXrlggtQQp6pOQzMNCkSLFOmdM5RTFvg
-         I7SiLyYbndPdMtIVVZTwG0WAlDvHpkVKJk4/cYSuOfrB7FLDAd5iFVVNBUq1JOXIn5B0
-         zLadgAOIHwmqhRw5ddJ+ZxMj6QAeoyjbghvuN54iWOrdvSq/YPbE1oEi/aeHe4OWcgSL
-         O74A==
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=ha7fUR57JK2a7s4g54+hWhFMrAlKIgOOceK+jRn2cv8=;
+        b=lwJ+01NcEMWCigtva1/6m73T8uCs8V92q4Oj/Ku5hkpzfmykcUK/k7EEZp0nsYtb0x
+         xqlD5uSC7awYfUjTCaXCz8t3Py9XpDA5I+YXdfiWqhJMz/Zyxe35YkCM4c06GgsAfHNk
+         jd5D+eQoZAvIjKYhlYQzT7eETv0hIOcJqfrC9UeaEjak0pVFpN35aBmJtLOe5Ak20lHX
+         T0qdaZAUoHkHxu3i1tR7DQkc1aC+sdgVJfrqHqhsc2kEBGZXU1IBvpyeFpNkCWUu3gsj
+         +f2G6DZaQx/o1U6EWv4HIwb9arJyYMJTMuL/shYkrgULcsdPF9Bp2wS4gSSZpzN5W68S
+         EQ6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PV4wmRt4DYsISy9UHgg4C3REYOZSuwfa9jc7EKxEAlA=;
-        b=fpDnuf1ks2GBO2Xu9FHrlyqsVwgXVCmUevJg6ScOzCQY1fTzW4a9jUue0ff2Ml55aa
-         0n4y9345UPdwyn6yBQkXeSLzFKP33r8nkaWHBPq2cW3cCfbRWTFaRJ6RZn8+zACmW94y
-         BaDVbVSaOxAXZLTu1BxfDMyDXaMzTKeCjXoY3rrmw9Y/OPhDQsd1/OdAdGsTLiPyxsLC
-         1Hzm5oQQp1rqYQB64dpjeMf+lUYMq8n1cLOFT0ULqA7wV0qRYwchZ/qUDKS5lhlUwZby
-         sDEg3Xapd1/WS3m+DrewhaqItJdZuFk0JiSaztKcTJMhxD0ATWToMVlOCk6jcopqI84p
-         Rzdg==
-X-Gm-Message-State: AOAM532NZxtTTMLQg8NIezcpEK3oikNajqE79PRKzXjsa7LMIaRXoOGM
-        bLL0rYO7vicBp4H5GC13luHrD7/i0IpuyxEG6/8=
-X-Google-Smtp-Source: ABdhPJwAaNuNImam5Dnl6t4kaE/bJAr5hBRjlij3hgDXowQuwNfPkLI78S/Hj+cSdg16ydtg+87wd9bXfMtsOw3TMJE=
-X-Received: by 2002:a5d:474f:: with SMTP id o15mr1528108wrs.100.1606163670293;
- Mon, 23 Nov 2020 12:34:30 -0800 (PST)
-MIME-Version: 1.0
-References: <742df4c2-2bc5-8a4b-8de1-cd5e48718398@redhat.com>
- <CAMMLpeRLsE=zNDjCRKmEMFxJBYcnTOdDGxEL9cZuVhuDMF=sLg@mail.gmail.com>
- <20201123191355.GA132317@mit.edu> <CAMP44s3cKVxKa0gOPfi3XRKbGbV=DweFE5pL0HM+v0kECFyPWA@mail.gmail.com>
- <20201123202003.GB132317@mit.edu>
-In-Reply-To: <20201123202003.GB132317@mit.edu>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Mon, 23 Nov 2020 14:34:18 -0600
-Message-ID: <CAMP44s27oEjScrJjeDVoNcWcvRsn173L_Kx+TOPfchOwge9zUQ@mail.gmail.com>
-Subject: Re: Pick the right default and stop warn on `git pull`
-To:     "Theodore Y. Ts'o" <tytso@mit.edu>
-Cc:     Alex Henrie <alexhenrie24@gmail.com>,
-        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
-        Git mailing list <git@vger.kernel.org>
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=ha7fUR57JK2a7s4g54+hWhFMrAlKIgOOceK+jRn2cv8=;
+        b=lkOBPS8aJ2RY65iF1wiM/0kY5Mi68wd+VNS6NkSZvDERBxHIMv5bu3AwVpcDGJWCH8
+         30Ml3O/sG/9XLdn4odSQCNy6CeTMZJtT5q7IQ4PisWcdghaNhbTw0mJDd8eSpj4NWdck
+         Jvf9gwnekZPhsvrxTbvhJZJ/SDJSzDF6EgYJRZYOaOCG1WDRHPGmQXC3tlsd8veeTafc
+         V0SQqVacSCs0Ek+Rdqgw+7LdD6FTomvpijEuHQtq3rT7Hqur/t1H61RTEw2qYRaDQQYH
+         Rc9MOMLKqFId52p2CyhFuhe7Fp1RZKHWUPQfJmP2IOuCZIRx02mXvTKJAWQZk7o+5qyB
+         SnHA==
+X-Gm-Message-State: AOAM531OMT15IDJL7R8aeVRjB61Vw41fgQpHMPlirUfJnOD3U3nmUiUB
+        5qwsJfQxtMZni6rmsWgYBIGrqwRN5h+sG57PsYCseqdRXF0yl+wj4YQAbgSooQZiHV/DGUtDGfW
+        drj8e2RdQpmCFpI4iZlGHPIo3DNkDjTaJQ6C1zpAyfFyc9VlrKeZMdQXzjDgbuadqE32SdxOK79
+        Gy
+X-Google-Smtp-Source: ABdhPJxYpGOFYpd8Fmy4AG1uDjqyQlMYlZxXKF1QjAxaNXdNPyntjvT5VYzC4jGz8DCqtzcDv3sEhqhzu84fvsqIVqXJ
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6214:17c1:: with SMTP id
+ cu1mr1476142qvb.32.1606164324314; Mon, 23 Nov 2020 12:45:24 -0800 (PST)
+Date:   Mon, 23 Nov 2020 12:45:22 -0800
+In-Reply-To: <20201123190412.101265-1-jonathantanmy@google.com>
+Message-Id: <20201123204522.675836-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20201123190412.101265-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.29.2.454.gaff20da3a2-goog
+Subject: [RFC PATCH v2] usage: add trace2 entry upon warning()
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@jeffhostetler.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 23, 2020 at 2:20 PM Theodore Y. Ts'o <tytso@mit.edu> wrote:
->
-> On Mon, Nov 23, 2020 at 01:40:38PM -0600, Felipe Contreras wrote:
-> > On Mon, Nov 23, 2020 at 1:17 PM Theodore Y. Ts'o <tytso@mit.edu> wrote:
-> >
-> > > If your repository is effectively a leaf repo, then rebasing may be
-> > > harmless, although there are still who don't like rebasing because it
-> > > invalidates your previous testing.  My personal preference is to do a
-> > > git fetch, followed by a git merge --ff-only, and if that errors out,
-> > > then I know I need to take a bit more care before deciding what to do
-> > > next.
-> >
-> > Which is why I suggested to make fast-forward-only the default:
-> >
-> > https://lore.kernel.org/git/1398988808-29678-1-git-send-email-felipe.contreras@gmail.com/
-> >
-> > In what case would that default not be what most people want?
->
-> Well, it *was* the default, previously, IIRC.
+Emit a trace2 error event whenever warning() is called, just like when
+die(), error(), or usage() is called.
 
-There has never been a "pull.mode=ff-only" option; that's what I tried
-to introduce.
+This helps debugging issues that would trigger warnings but not errors.
+In particular, this might have helped debugging an issue I encountered
+with commit graphs at $DAYJOB [1].
 
-> The problem is that for
-> "simple" use cases, using rebases for git-pull is "simpler".  Well,
-> it's simpler until it does something super-surprising when the project
-> becomes more complex, but if the goal is to have a more gentle
-> learning curve for newbies, especially for small projects --- which
-> are the vast majority of projectds, on, say github and sourceforge ---
-> the case can be made.
+There is a tradeoff between including potentially relevant messages and
+cluttering up the trace output produced. I think that warning() messages
+should be included in traces, because by its nature, Git is used over
+multiple invocations of the Git tool, and a failure (currently traced)
+in a Git invocation might be caused by an unexpected interaction in a
+previous Git invocation that only has a warning (currently untraced) as
+a symptom - as is the case in [1].
 
-The people that want rebases can configure git pull to do rebases.
+[1] https://lore.kernel.org/git/20200629220744.1054093-1-jonathantanmy@google.com/
 
-This issue is about the *unconfigured* default.
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+Whoops...I ran a compile for the first version but I sent the email out
+before looking at the results. The first version had a compile error,
+but this one should be fine.
+---
+ Documentation/technical/api-trace2.txt | 2 +-
+ usage.c                                | 6 ++++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-> So intead of having a huge discussion which is going to be very hard
-> to come to converge (much like the "main" vs "master" question),
-> requiring people to set their own global default or per-repo default
-> is a pretty good compromise.
-
-This discussion already happened in 2014, and the conclusion was that
-doing fast-forward merge if possible, and fail otherwise was a good
-default.
-
-The problem is that the patches were never merged.
-
-Cheers.
-
+diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
+index 6b6085585d..c65ffafc48 100644
+--- a/Documentation/technical/api-trace2.txt
++++ b/Documentation/technical/api-trace2.txt
+@@ -466,7 +466,7 @@ completed.)
+ 
+ `"error"`::
+ 	This event is emitted when one of the `error()`, `die()`,
+-	or `usage()` functions are called.
++	`warning()`, or `usage()` functions are called.
+ +
+ ------------
+ {
+diff --git a/usage.c b/usage.c
+index 06665823a2..1868a24f7a 100644
+--- a/usage.c
++++ b/usage.c
+@@ -81,6 +81,12 @@ static void error_builtin(const char *err, va_list params)
+ 
+ static void warn_builtin(const char *warn, va_list params)
+ {
++	/*
++	 * We call this trace2 function first and expect it to va_copy 'params'
++	 * before using it (because an 'ap' can only be walked once).
++	 */
++	trace2_cmd_error_va(warn, params);
++
+ 	vreportf("warning: ", warn, params);
+ }
+ 
 -- 
-Felipe Contreras
+2.29.2.454.gaff20da3a2-goog
+
