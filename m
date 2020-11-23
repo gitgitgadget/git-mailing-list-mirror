@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7D16C63697
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D58AFC6379F
 	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 23:20:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 64E6420719
+	by mail.kernel.org (Postfix) with ESMTP id 8EC1A206B6
 	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 23:20:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g/8ovk9T"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h8IFO6If"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726238AbgKWXUP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Nov 2020 18:20:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43732 "EHLO
+        id S1726293AbgKWXUR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Nov 2020 18:20:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726155AbgKWXUO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Nov 2020 18:20:14 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97B0BC061A4D
-        for <git@vger.kernel.org>; Mon, 23 Nov 2020 15:20:12 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id 1so1091965wme.3
-        for <git@vger.kernel.org>; Mon, 23 Nov 2020 15:20:12 -0800 (PST)
+        with ESMTP id S1725921AbgKWXUP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Nov 2020 18:20:15 -0500
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 563CAC0613CF
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 15:20:15 -0800 (PST)
+Received: by mail-wm1-x343.google.com with SMTP id c198so912958wmd.0
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 15:20:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Sw5FFiK/t6evnu3E904I82pkwQ3g660/lP3rLmMmBPk=;
-        b=g/8ovk9T2OxIKjNCyEnzpZBSx/alCFhGa9I5Q0QqWFKGQQtYSC6iCWPe/qDsM0cBmC
-         Tf0KAJG+3XhYnDY2cdDMNYa6rAsytQisGxaQy7uI5QO2XNMoLPMlvJBEkm1UG66pLPRd
-         CF3UZOkjSOAC9w/Dap/BMpT0dgCf3oMn9G0xj6YsUSjc67wMBU0BHeigOY1+w3Iap0Gu
-         A/z34AUMfvHZ7R80ZBPXJfOq7EbH/eA6ABNJ+PRl+vQQcdeSXjws+CAg9RIeQSCdofuJ
-         37txxlO+GY/bZqjp7gn6Q9BWE1T7/9tTDE7nUUbd1mhAhSB+QVhPzjwosSkZsqyu94jL
-         S/2g==
+        bh=S1mJYwfot+/yR0Z+YdILZrd7BIOV3xV2oa6vSLvNCSc=;
+        b=h8IFO6IfK5CRER7EaeOsHp4gf81Tf7NEkcqf4BYMCyS/DHkNqJRodPSYx6cdgmXxhv
+         sZlMaXWefExuvkWfv77kuqGPOgi51Go+jnTI5gaVzKfWXM21pBDrclbQlOTlvDwp/6r0
+         gS8S1QjeOzfJt0v/n+eKiOlIEszhnXFqC/1kxsTm+cRjUyY6CPVfJPjWkgRw5RqEF0LG
+         U7VTW+E7G7oV5Fk9j/8CGlK1TjyYClsZN82YdSdf0+ZyQhAevVf7Nh+GTooxlES6s6VB
+         0vhbc4FUV7/+daWblBvQY44NTnOl2xnHjR9J8QwKsS3XS/ZESTeW9cqLeU4VM5ulWqEv
+         jYTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Sw5FFiK/t6evnu3E904I82pkwQ3g660/lP3rLmMmBPk=;
-        b=jS6OuNhfqz77iQYlcDNe3jLk6hJFFhQ2eeX1A99w4QXRKdlZAYKpDPV9V5HxgRQa59
-         ZGvjEecWHGcTC8xgIsJ2J/hOriW2lTn9LdZ4yBA7WfvjfBz9g4SNK8Few1M+aIT5eIu6
-         XQzL3IqLfeU9xRQ2pEhjUshJSYxQXo/k+7OiYRqJ/9Fu6+3o7UpDdDnkTWqfKRVbVxh3
-         ZqUxLOPx7hj2aUfkubCMchj0+DVLt50Kz2rIdWIOIvC/d1CraC+PiC0l5AWEQaOQrC0V
-         1+6rneP/uI1QLkIx7l4SrGKBaJvqkPBOV6MJzfIQyuU2MzvmXiIrDXzZihF35fZYTSCR
-         RZ8A==
-X-Gm-Message-State: AOAM531ny31D7uH3QyWIEeCJ1TazPxmwnuixylNHNkF1+416KOsxtg5u
-        jlbo6OYIJhCtwga+Hg/uEiDtvWtTdvM=
-X-Google-Smtp-Source: ABdhPJzto4FToq+oIPwCE/ifvyBWNT6dQaPGTN0a3p2HZwmONolWrp58FlKDn5m+mNlkDldfYZtkrg==
-X-Received: by 2002:a1c:df8a:: with SMTP id w132mr1213028wmg.90.1606173611090;
-        Mon, 23 Nov 2020 15:20:11 -0800 (PST)
+        bh=S1mJYwfot+/yR0Z+YdILZrd7BIOV3xV2oa6vSLvNCSc=;
+        b=oVOWjQrzwO7r+KbUtN/LoXCOXME8/4yesmtrSdF2ki69PwGsEXO+y9kjlFyeNN3Y95
+         Ok9Ms3p+NcEjWEwW+li3TKTvlnlchida1MTA32m+mxnsZNxOEaF4Ogq1VGK2QIohHjls
+         NMElgcDwSN0KsmvBAqJXkEuQXQ4NiNw0PosPgeq38dkeoXd8EWCM0WuA5McBKzm8s3t0
+         K1mgdPrWwnQXnxbMwHGjEzjbtLwrX/NgomvDvi0FJne0vscVSFSPRTBhkxclhtW4mfAL
+         xv4k9HpGfCEjKavWG0bILOoGkL6Bbzrny+VscdasxTv0IO40pca0Ma/03E2sieUQ9kCw
+         riXw==
+X-Gm-Message-State: AOAM530vcWef2VBsrm8bSAYK5jJ+WRt51NQ2ieJngTQlM4ZusyX1gUJx
+        ubSuKaNu8pLfA2M5+FmY7WP4gGahKOA=
+X-Google-Smtp-Source: ABdhPJyhm7ZDD2YlGyDDBjbYvYI3fveuI3qm8mY7orvAM1/4bUniiWj7b0qa14JJgNo/+X6nbCoQUQ==
+X-Received: by 2002:a1c:9ad3:: with SMTP id c202mr1157403wme.43.1606173613432;
+        Mon, 23 Nov 2020 15:20:13 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f16sm1500797wmh.7.2020.11.23.15.20.10
+        by smtp.gmail.com with ESMTPSA id u203sm1419485wme.32.2020.11.23.15.20.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2020 15:20:10 -0800 (PST)
-Message-Id: <8de0c0eb228c8d9608d3a78c992cbd6829cb9329.1606173607.git.gitgitgadget@gmail.com>
+        Mon, 23 Nov 2020 15:20:12 -0800 (PST)
+Message-Id: <bccef953913da629057b3e9b211bc54081fa4475.1606173607.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.921.v2.git.git.1606173607.gitgitgadget@gmail.com>
 References: <pull.921.git.git.1606087406.gitgitgadget@gmail.com>
         <pull.921.v2.git.git.1606173607.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 23 Nov 2020 23:20:05 +0000
-Subject: [PATCH v2 2/4] branch -m: allow renaming a yet-unborn branch
+Date:   Mon, 23 Nov 2020 23:20:07 +0000
+Subject: [PATCH v2 4/4] init: provide useful advice about init.defaultBranch
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,47 +79,115 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In one of the next commits, we would like to give users some advice
-regarding the initial branch name, and how to modify it.
+To give ample warning for users wishing to override Git's the fall-back
+for an unconfigured `init.defaultBranch` (in case we decide to change it
+in a future Git version), let's introduce some advice that is shown upon
+`git init` when that value is not set.
 
-To that end, it would be good if `git branch -m <name>` worked in a
-freshly initialized repository without any commits. Let's make it so.
+Note: two test cases in Git's test suite want to verify that the
+`stderr` output of `git init` is empty. With this patch, that is only
+true if `init.defaultBranch` is configured, so let's do exactly that in
+those test cases. The same reasoning applies to `test_create_repo()`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/branch.c | 3 ++-
- t/t0001-init.sh  | 6 ++++++
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ refs.c                  | 19 ++++++++++++++++++-
+ t/t0001-init.sh         |  9 ++++++++-
+ t/t1510-repo-setup.sh   |  2 +-
+ t/test-lib-functions.sh |  3 ++-
+ 4 files changed, 29 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index efb30b8820..10609981e6 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -538,7 +538,8 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
- 		strbuf_addf(&logmsg, "Branch: renamed %s to %s",
- 			    oldref.buf, newref.buf);
+diff --git a/refs.c b/refs.c
+index 8df03122d6..67275858fc 100644
+--- a/refs.c
++++ b/refs.c
+@@ -562,6 +562,20 @@ void expand_ref_prefix(struct strvec *prefixes, const char *prefix)
+ 		strvec_pushf(prefixes, *p, len, prefix);
+ }
  
--	if (!copy && rename_ref(oldref.buf, newref.buf, logmsg.buf))
-+	if (!copy && (oldname != head || !is_null_oid(&head_oid)) &&
-+	    rename_ref(oldref.buf, newref.buf, logmsg.buf))
- 		die(_("Branch rename failed"));
- 	if (copy && copy_existing_ref(oldref.buf, newref.buf, logmsg.buf))
- 		die(_("Branch copy failed"));
++static const char default_branch_name_advice[] = N_(
++"Using '%s' as the name for the initial branch. This default branch name\n"
++"is subject to change. To configure the initial branch name to use in all\n"
++"of your new repositories, run:\n"
++"\n"
++"\tgit config --global init.defaultBranch <name>\n"
++"\n"
++"Common names are 'main', 'trunk' and 'development'. If you merely wish\n"
++"to suppress this warning, you can also use the current default branch\n"
++"name. The current branch can be renamed via this command:\n"
++"\n"
++"\tgit branch -m <name>\n"
++);
++
+ char *repo_default_branch_name(struct repository *r, int quiet)
+ {
+ 	const char *config_key = "init.defaultbranch";
+@@ -574,8 +588,11 @@ char *repo_default_branch_name(struct repository *r, int quiet)
+ 	else if (repo_config_get_string(r, config_key, &ret) < 0)
+ 		die(_("could not retrieve `%s`"), config_display_key);
+ 
+-	if (!ret)
++	if (!ret) {
+ 		ret = xstrdup("master");
++		if (!quiet)
++			advise(_(default_branch_name_advice), ret);
++	}
+ 
+ 	full_ref = xstrfmt("refs/heads/%s", ret);
+ 	if (check_refname_format(full_ref, 0))
 diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index 69a320489f..69c5ad179c 100755
+index 69c5ad179c..6f693d9609 100755
 --- a/t/t0001-init.sh
 +++ b/t/t0001-init.sh
-@@ -571,4 +571,10 @@ test_expect_success 'invalid default branch name' '
- 	test_i18ngrep "invalid branch name" err
+@@ -163,7 +163,7 @@ test_expect_success 'reinit' '
+ 	(
+ 		mkdir again &&
+ 		cd again &&
+-		git init >out1 2>err1 &&
++		git -c init.defaultBranch=initial init >out1 2>err1 &&
+ 		git init >out2 2>err2
+ 	) &&
+ 	test_i18ngrep "Initialized empty" again/out1 &&
+@@ -558,6 +558,13 @@ test_expect_success 'overridden default initial branch name (config)' '
+ 	grep nmb actual
  '
  
-+test_expect_success 'branch -m with the initial branch' '
-+	git init rename-initial-branch &&
-+	git -C rename-initial-branch branch -m renamed &&
-+	test renamed = $(git -C rename-initial-branch symbolic-ref --short HEAD)
++test_expect_success 'advice on unconfigured init.defaultBranch' '
++	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= git -c color.advice=always \
++		init unconfigured-default-branch-name 2>err &&
++	test_decode_color <err >decoded &&
++	test_i18ngrep "<YELLOW>hint: " decoded
 +'
 +
- test_done
+ test_expect_success 'overridden default main branch name (env)' '
+ 	test_config_global init.defaultBranch nmb &&
+ 	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=env git init main-branch-env &&
+diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
+index 9974457f56..5189a520a2 100755
+--- a/t/t1510-repo-setup.sh
++++ b/t/t1510-repo-setup.sh
+@@ -79,7 +79,7 @@ setup_repo () {
+ 	name=$1 worktreecfg=$2 gitfile=$3 barecfg=$4 &&
+ 	sane_unset GIT_DIR GIT_WORK_TREE &&
+ 
+-	git init "$name" &&
++	git -c init.defaultBranch=repo init "$name" &&
+ 	maybe_config "$name/.git/config" core.worktree "$worktreecfg" &&
+ 	maybe_config "$name/.git/config" core.bare "$barecfg" &&
+ 	mkdir -p "$name/sub/sub" &&
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 59bbf75e83..68305a4939 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1202,7 +1202,8 @@ test_create_repo () {
+ 	mkdir -p "$repo"
+ 	(
+ 		cd "$repo" || error "Cannot setup test environment"
+-		"${GIT_TEST_INSTALLED:-$GIT_EXEC_PATH}/git$X" init \
++		"${GIT_TEST_INSTALLED:-$GIT_EXEC_PATH}/git$X" \
++			-c init.defaultBranch=${GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME-master} init \
+ 			"--template=$GIT_BUILD_DIR/templates/blt/" >&3 2>&4 ||
+ 		error "cannot run git init -- have you built things yet?"
+ 		mv .git/hooks .git/hooks-disabled
 -- 
 gitgitgadget
-
