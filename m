@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFA31C6379F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8607C64E75
 	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 16:05:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7174F20782
+	by mail.kernel.org (Postfix) with ESMTP id A975E2080A
 	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 16:05:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E8Sv0g9J"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E65AuErJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732874AbgKWQFV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Nov 2020 11:05:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60976 "EHLO
+        id S1732879AbgKWQFX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Nov 2020 11:05:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731727AbgKWQFV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Nov 2020 11:05:21 -0500
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01048C061A4D
-        for <git@vger.kernel.org>; Mon, 23 Nov 2020 08:05:21 -0800 (PST)
-Received: by mail-wm1-x341.google.com with SMTP id h21so17737485wmb.2
-        for <git@vger.kernel.org>; Mon, 23 Nov 2020 08:05:20 -0800 (PST)
+        with ESMTP id S1732604AbgKWQFW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Nov 2020 11:05:22 -0500
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F32EC0613CF
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 08:05:22 -0800 (PST)
+Received: by mail-wr1-x443.google.com with SMTP id z7so3294957wrn.3
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 08:05:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=NTmAkIple9ObMNDjIA5o3xByUE1KUlDLtweBnHhzkPc=;
-        b=E8Sv0g9Ji6HWMnCgGQw3RAzSKR1fZGwiylda6hNMrD2Lr/g3q0VmSImWWyecrohMpV
-         BVg4XIDjmbcikYblgMVCM8vNXozSUH6w9bHyfGlHs3AO2JATwkgkzQN0wwgPSGHxEUID
-         GNWbf9lhtZKGuC8YUDsShrRlZl0VTKrw+85w47jMZbGtDVirmBAd+YumlV724TiSP36G
-         nLQWwKrBIxqDn6NXQPiboh79STXSkGKKhO663V/tQDekg1eMyujJ2sEJal1BoufwKACp
-         urV9tMwMnXKMYdHByqt8N8/YkCKmoBx7ObciqmwMFzw1fdLCar3vivN6I7b7jE56rmRp
-         bI3A==
+        bh=/mzC/Rybws/oBN+M7CZOHIgfp554qaNQMVxBORSPwoY=;
+        b=E65AuErJ8HuVLr+n0kYLofJ8rJ70/HgP44A8gPUIow1BIUmlAgjIfbac6Uwd+b81rg
+         vYjSzHIDEg9WSxiCZv/6W52yquqDTB2ie6GacB1tFW8AovgmPr/3tncaGyxVzYNP43FB
+         tsa0zYHYo2kMst7tMuMyrE0o3OxwlogJV4mDmiaLhuAyaz6ueWCot+AvjDSCNEMfUPBE
+         6Ep0y6bGgepCbn0ksKgSxUjKroqg6aF9+fQuJxQelgUQDovavh0Cs9BagEbXeHAHo4AO
+         yWKRtmjJPbBqhMza9oVxsGpDgzfd7T/ec1AkJJizv8LA0NfIYPDaHifedOcH0B+egNCO
+         SwfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=NTmAkIple9ObMNDjIA5o3xByUE1KUlDLtweBnHhzkPc=;
-        b=i7OCPbuh7wd8YUCK7vNv9J38jpASxhrWTBGjtgXE71o8l62E4xEtazNHQKc/9tu380
-         qMoJ7iP2VWpkNRSHRCzvXx92rMErAoe6y8/bGujD5+HlVPF8MPEvrBgqkjmJMG5b5jND
-         gcPphqDjcgKL5UBuZkxWE2isCTkPRscsWLGER4ukcjrjlpf3lTU42Nd/P0muQM0gz/Gb
-         9H1tJyrUyVi34Ds4/Ni4RkEc2eKAhDyds2EdKGyKA2a2R67ZTgNJRChZPdqESjoOdgWU
-         TPIdKFFHpsAKsjXebc/zTnZ/GGCFrKfpsTb+MLLFwlWos9JHFL8BE7p8aNwB9Ux/AyNn
-         JQlA==
-X-Gm-Message-State: AOAM531eeC9QuA7PPAX1dKbWcUCRX/H8hAFiK2Ldjw7zfm/LyJsLU4oa
-        B87GpZnVd6YLabLZPP3RODK11HBpHmo=
-X-Google-Smtp-Source: ABdhPJycb+UwLSQopTOEhSi1Em+6mcURdvTIJ6fvWKh30UAJxnJThg6kHNDJ6x1wgatz9zfK+HQQyw==
-X-Received: by 2002:a1c:2b03:: with SMTP id r3mr23649977wmr.184.1606147519385;
-        Mon, 23 Nov 2020 08:05:19 -0800 (PST)
+        bh=/mzC/Rybws/oBN+M7CZOHIgfp554qaNQMVxBORSPwoY=;
+        b=sincRnXogDwFtk2eiVAWYfqUUuR7O4sJ4SAb9bGDcRvE4rM2Q2OfGq5gPByYRuBD6M
+         c3N6LEfyc+rm28SgbzJeZHHIZJoomvySHjrx3EX3STn+lPDjR4w1fnbH3sBA1K7DPTS/
+         n5h4WIloNuQgK4rNm9ud1DqHGtEBlAmuK9l/BwtJFChHhtHBr3Ju6Ntm8BeVkOQ2fjw3
+         Ee2EIM/6p92AVngUuVNpvDB/ApkhuRm0wMqpLuHSsLw7R35hpeyEMBTCksGPqPYAl+sV
+         /BGkF3C+CyDuZAo65OouuPUeB43YK7I5Fr0ljmbqTzSwQ/oG9uGJCsTCBIW9aQABTqm9
+         DBAw==
+X-Gm-Message-State: AOAM532LOuXe3qJhF13gkbBpPDs3Dxc2w6/p/TQiF+Ac1zqtUibq8Omb
+        fnQbfCZBLDXx/sQ0MJ2LEXWdHsKT2UU=
+X-Google-Smtp-Source: ABdhPJzTe/xyk8tOgSaoOWzTzLognrltgnjexEYONOgu73sGOSdCDcKtrHfpiBDp2Lw0saDw4rl05w==
+X-Received: by 2002:a5d:67c2:: with SMTP id n2mr348404wrw.139.1606147520789;
+        Mon, 23 Nov 2020 08:05:20 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p4sm19502024wmc.46.2020.11.23.08.05.18
+        by smtp.gmail.com with ESMTPSA id l3sm19419245wmf.0.2020.11.23.08.05.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2020 08:05:18 -0800 (PST)
-Message-Id: <39718048cd8f5be053a13ff73f531e3400b80b25.1606147507.git.gitgitgadget@gmail.com>
+        Mon, 23 Nov 2020 08:05:20 -0800 (PST)
+Message-Id: <8e0111c7b4b2c766c61df30c4ae93bd2d724de06.1606147507.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.796.v2.git.1606147507.gitgitgadget@gmail.com>
 References: <pull.796.git.1605801143.gitgitgadget@gmail.com>
         <pull.796.v2.git.1606147507.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 23 Nov 2020 16:05:05 +0000
-Subject: [PATCH v2 5/7] config: plumb --fixed-value into config API
+Date:   Mon, 23 Nov 2020 16:05:06 +0000
+Subject: [PATCH v2 6/7] config: implement --fixed-value with --get*
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,208 +86,109 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The git_config_set_multivar_in_file_gently() and related methods now
-take a 'flags' bitfield, so add a new bit representing the --fixed-value
-option from 'git config'. This alters the purpose of the value_regex
-parameter to be an exact string match. This requires some initialization
-changes in git_config_set_multivar_in_file_gently() and a new strcmp()
-call in the matches() method.
-
-The new CONFIG_FLAGS_FIXED_VALUE flag is initialized in builtin/config.c
-based on the --fixed-value option, and that needs to be updated in
-several callers.
-
-This patch only affects some of the modes of 'git config', and the rest
-will be completed in the next change.
+The config builtin does its own regex matching of values for the --get,
+--get-all, and --get-regexp modes. Plumb the existing 'flags' parameter
+to the get_value() method so we can initialize the value_regex argument
+as a fixed string instead of a regex pattern.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/config.c  | 16 ++++++++-----
- config.c          |  5 +++++
- config.h          |  7 ++++++
- t/t1300-config.sh | 57 +++++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 80 insertions(+), 5 deletions(-)
+ builtin/config.c  | 15 ++++++++++-----
+ t/t1300-config.sh | 22 ++++++++++++++++++++++
+ 2 files changed, 32 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/config.c b/builtin/config.c
-index bfb55a96df..3e49e04411 100644
+index 3e49e04411..d3772b5efe 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -616,6 +616,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+@@ -14,6 +14,7 @@ static const char *const builtin_config_usage[] = {
+ 
+ static char *key;
+ static regex_t *key_regexp;
++static const char *value_regex;
+ static regex_t *regexp;
+ static int show_keys;
+ static int omit_values;
+@@ -288,6 +289,8 @@ static int collect_config(const char *key_, const char *value_, void *cb)
+ 		return 0;
+ 	if (use_key_regexp && regexec(key_regexp, key_, 0, NULL, 0))
+ 		return 0;
++	if (fixed_value && strcmp(value_regex, (value_?value_:"")))
++		return 0;
+ 	if (regexp != NULL &&
+ 	    (do_not_match ^ !!regexec(regexp, (value_?value_:""), 0, NULL, 0)))
+ 		return 0;
+@@ -298,7 +301,7 @@ static int collect_config(const char *key_, const char *value_, void *cb)
+ 	return format_config(&values->items[values->nr++], key_, value_);
+ }
+ 
+-static int get_value(const char *key_, const char *regex_)
++static int get_value(const char *key_, const char *regex_, int flags)
  {
- 	int nongit = !startup_info->have_repository;
- 	char *value;
-+	int flags = 0;
- 
- 	given_config_source.file = xstrdup_or_null(getenv(CONFIG_ENVIRONMENT));
- 
-@@ -769,6 +770,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 			error(_("--fixed-value only applies with 'value_regex'"));
- 			usage_builtin_config();
+ 	int ret = CONFIG_GENERIC_ERROR;
+ 	struct strbuf_list values = {NULL};
+@@ -335,7 +338,9 @@ static int get_value(const char *key_, const char *regex_)
  		}
-+
-+		flags = CONFIG_FLAGS_FIXED_VALUE;
  	}
  
- 	if (actions & PAGING_ACTIONS)
-@@ -832,7 +835,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		value = normalize_value(argv[0], argv[1]);
- 		UNLEAK(value);
- 		return git_config_set_multivar_in_file_gently(given_config_source.file,
--							      argv[0], value, argv[2], 0);
-+							      argv[0], value, argv[2],
-+							      flags);
- 	}
- 	else if (actions == ACTION_ADD) {
- 		check_write();
-@@ -841,7 +845,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		UNLEAK(value);
- 		return git_config_set_multivar_in_file_gently(given_config_source.file,
- 							      argv[0], value,
--							      CONFIG_REGEX_NONE, 0);
-+							      CONFIG_REGEX_NONE,
-+							      flags);
- 	}
- 	else if (actions == ACTION_REPLACE_ALL) {
- 		check_write();
-@@ -850,7 +855,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		UNLEAK(value);
- 		return git_config_set_multivar_in_file_gently(given_config_source.file,
- 							      argv[0], value, argv[2],
--							      CONFIG_FLAGS_MULTI_REPLACE);
-+							      flags | CONFIG_FLAGS_MULTI_REPLACE);
+-	if (regex_) {
++	if (regex_ && (flags & CONFIG_FLAGS_FIXED_VALUE))
++		value_regex = regex_;
++	else if (regex_) {
+ 		if (regex_[0] == '!') {
+ 			do_not_match = 1;
+ 			regex_++;
+@@ -859,19 +864,19 @@ int cmd_config(int argc, const char **argv, const char *prefix)
  	}
  	else if (actions == ACTION_GET) {
  		check_argc(argc, 1, 2);
-@@ -877,7 +882,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		check_argc(argc, 1, 2);
- 		if (argc == 2)
- 			return git_config_set_multivar_in_file_gently(given_config_source.file,
--								      argv[0], NULL, argv[1], 0);
-+								      argv[0], NULL, argv[1],
-+								      flags);
- 		else
- 			return git_config_set_in_file_gently(given_config_source.file,
- 							     argv[0], NULL);
-@@ -887,7 +893,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		check_argc(argc, 1, 2);
- 		return git_config_set_multivar_in_file_gently(given_config_source.file,
- 							      argv[0], NULL, argv[1],
--							      CONFIG_FLAGS_MULTI_REPLACE);
-+							      flags | CONFIG_FLAGS_MULTI_REPLACE);
+-		return get_value(argv[0], argv[1]);
++		return get_value(argv[0], argv[1], flags);
  	}
- 	else if (actions == ACTION_RENAME_SECTION) {
- 		int ret;
-diff --git a/config.c b/config.c
-index 096f2eae0d..64bab2b08e 100644
---- a/config.c
-+++ b/config.c
-@@ -2402,6 +2402,7 @@ struct config_store_data {
- 	size_t baselen;
- 	char *key;
- 	int do_not_match;
-+	const char *literal_value;
- 	regex_t *value_regex;
- 	int multi_replace;
- 	struct {
-@@ -2431,6 +2432,8 @@ static int matches(const char *key, const char *value,
- {
- 	if (strcmp(key, store->key))
- 		return 0; /* not ours */
-+	if (store->literal_value)
-+		return !strcmp(store->literal_value, value);
- 	if (!store->value_regex)
- 		return 1; /* always matches */
- 	if (store->value_regex == CONFIG_REGEX_NONE)
-@@ -2803,6 +2806,8 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 			store.value_regex = NULL;
- 		else if (value_regex == CONFIG_REGEX_NONE)
- 			store.value_regex = CONFIG_REGEX_NONE;
-+		else if (flags & CONFIG_FLAGS_FIXED_VALUE)
-+			store.literal_value = value_regex;
- 		else {
- 			if (value_regex[0] == '!') {
- 				store.do_not_match = 1;
-diff --git a/config.h b/config.h
-index 80844604ab..977e690be8 100644
---- a/config.h
-+++ b/config.h
-@@ -269,6 +269,13 @@ int git_config_key_is_valid(const char *key);
-  */
- #define CONFIG_FLAGS_MULTI_REPLACE (1 << 0)
- 
-+/*
-+ * When CONFIG_FLAGS_FIXED_VALUE is specified, match key/value pairs
-+ * by string comparison (not regex match) to the provided value_regex
-+ * parameter.
-+ */
-+#define CONFIG_FLAGS_FIXED_VALUE (1 << 1)
-+
- int git_config_set_multivar_gently(const char *, const char *, const char *, unsigned);
- void git_config_set_multivar(const char *, const char *, const char *, unsigned);
- int git_config_set_multivar_in_file_gently(const char *, const char *, const char *, const char *, unsigned);
+ 	else if (actions == ACTION_GET_ALL) {
+ 		do_all = 1;
+ 		check_argc(argc, 1, 2);
+-		return get_value(argv[0], argv[1]);
++		return get_value(argv[0], argv[1], flags);
+ 	}
+ 	else if (actions == ACTION_GET_REGEXP) {
+ 		show_keys = 1;
+ 		use_key_regexp = 1;
+ 		do_all = 1;
+ 		check_argc(argc, 1, 2);
+-		return get_value(argv[0], argv[1]);
++		return get_value(argv[0], argv[1], flags);
+ 	}
+ 	else if (actions == ACTION_GET_URLMATCH) {
+ 		check_argc(argc, 2, 2);
 diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index 6dc8117241..30e80ae9cb 100755
+index 30e80ae9cb..13211b6bf4 100755
 --- a/t/t1300-config.sh
 +++ b/t/t1300-config.sh
-@@ -1983,4 +1983,61 @@ test_expect_success 'refuse --fixed-value for incompatible actions' '
- 	test_must_fail git config --file=config --fixed-value --unset-all dev.null
+@@ -2040,4 +2040,26 @@ test_expect_success '--fixed-value uses exact string matching' '
+ 	test_cmp expect actual
  '
  
-+test_expect_success '--fixed-value uses exact string matching' '
++test_expect_success '--get and --get-all with --fixed-value' '
 +	GLOB="a+b*c?d[e]f.g" &&
-+	rm -f initial &&
-+	git config --file=initial fixed.test "$GLOB" &&
++	rm -f config &&
++	git config --file=config fixed.test bogus &&
++	git config --file=config --add fixed.test "$GLOB" &&
 +
-+	cp initial config &&
-+	git config --file=config fixed.test bogus "$GLOB" &&
-+	git config --file=config --list >actual &&
-+	cat >expect <<-EOF &&
-+	fixed.test=$GLOB
-+	fixed.test=bogus
-+	EOF
-+	test_cmp expect actual &&
++	git config --file=config --get fixed.test bogus &&
++	test_must_fail git config --file=config --get fixed.test "$GLOB" &&
++	git config --file=config --get --fixed-value fixed.test "$GLOB" &&
++	test_must_fail git config --file=config --get --fixed-value fixed.test non-existent &&
 +
-+	cp initial config &&
-+	git config --file=config --fixed-value fixed.test bogus "$GLOB" &&
-+	git config --file=config --list >actual &&
-+	printf "fixed.test=bogus\n" >expect &&
-+	test_cmp expect actual &&
++	git config --file=config --get-all fixed.test bogus &&
++	test_must_fail git config --file=config --get-all fixed.test "$GLOB" &&
++	git config --file=config --get-all --fixed-value fixed.test "$GLOB" &&
++	test_must_fail git config --file=config --get-all --fixed-value fixed.test non-existent &&
 +
-+	cp initial config &&
-+	test_must_fail git config --file=config --unset fixed.test "$GLOB" &&
-+	git config --file=config --fixed-value --unset fixed.test "$GLOB" &&
-+	test_must_fail git config --file=config fixed.test &&
-+
-+	cp initial config &&
-+	test_must_fail git config --file=config --unset-all fixed.test "$GLOB" &&
-+	git config --file=config --fixed-value --unset-all fixed.test "$GLOB" &&
-+	test_must_fail git config --file=config fixed.test &&
-+
-+	cp initial config &&
-+	git config --file=config --replace-all fixed.test bogus "$GLOB" &&
-+	git config --file=config --list >actual &&
-+	cat >expect <<-EOF &&
-+	fixed.test=$GLOB
-+	fixed.test=bogus
-+	EOF
-+	test_cmp expect actual &&
-+
-+	cp initial config &&
-+	git config --file=config --replace-all fixed.test bogus "$GLOB" &&
-+	git config --file=config --list >actual &&
-+	cat >expect <<-EOF &&
-+	fixed.test=$GLOB
-+	fixed.test=bogus
-+	EOF
-+	test_cmp expect actual &&
-+
-+	git config --file=config --fixed-value --replace-all fixed.test bogus "$GLOB" &&
-+	git config --file=config --list >actual &&
-+	cat >expect <<-EOF &&
-+	fixed.test=bogus
-+	fixed.test=bogus
-+	EOF
-+	test_cmp expect actual
++	git config --file=config --get-regexp fixed+ bogus &&
++	test_must_fail git config --file=config --get-regexp fixed+ "$GLOB" &&
++	git config --file=config --get-regexp --fixed-value fixed+ "$GLOB" &&
++	test_must_fail git config --file=config --get-regexp --fixed-value fixed+ non-existent
 +'
 +
  test_done
