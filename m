@@ -2,104 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA72AC2D0E4
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 11:04:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76B84C2D0E4
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 11:48:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6529B20773
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 11:04:10 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="V4EpbmJ2"
+	by mail.kernel.org (Postfix) with ESMTP id 1F38720756
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 11:48:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726901AbgKWLEJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Nov 2020 06:04:09 -0500
-Received: from mout.gmx.net ([212.227.17.22]:58069 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725806AbgKWLEJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Nov 2020 06:04:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1606129436;
-        bh=0ymfh3+hW5Cg35fHSi2+PfNh2OLA8bffT2HrxUMRZbc=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=V4EpbmJ2yNBZi9oDQC/ReKiRpE1ZkmcJqLw4cgQDzezwxEYuc93CPsu2otbk9RwND
-         DePxsfxniB+xGUte6CJbKj0vYjKhZZNDRydSP1tHLb9IUhkRW0QtGdvOis3rR3ggSh
-         5ESM/1Ied2Zjym1QBtKVH2TodhxQ3dhZ0QZa3z5Y=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.22.105] ([89.1.213.133]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MLR1f-1kxzhP0duN-00IYQl; Mon, 23
- Nov 2020 12:03:56 +0100
-Date:   Mon, 23 Nov 2020 12:03:54 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/4] grep: retire `init_grep_defaults()`
-In-Reply-To: <cover.1605972564.git.martin.agren@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2011231159340.56@tvgsbejvaqbjf.bet>
-References: <cover.1605972564.git.martin.agren@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728972AbgKWLsQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Nov 2020 06:48:16 -0500
+Received: from dd36226.kasserver.com ([85.13.153.21]:55040 "EHLO
+        dd36226.kasserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728893AbgKWLsQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Nov 2020 06:48:16 -0500
+Received: from client3368.fritz.box (i5C7462D2.versanet.de [92.116.98.210])
+        by dd36226.kasserver.com (Postfix) with ESMTPA id 64F903C018B;
+        Mon, 23 Nov 2020 12:48:13 +0100 (CET)
+From:   Stefan Haller <stefan@haller-berlin.de>
+To:     serg.partizan@gmail.com
+Cc:     me@yadavpratyush.com, git@vger.kernel.org
+Subject: [PATCH] git-gui: use gray selection background for inactive text widgets
+Date:   Mon, 23 Nov 2020 12:48:05 +0100
+Message-Id: <20201123114805.48800-1-stefan@haller-berlin.de>
+X-Mailer: git-send-email 2.29.0.18.gf8c967e53c
+In-Reply-To: <DZJ7KQ.UXACXR9SWDQI3@gmail.com>
+References: <DZJ7KQ.UXACXR9SWDQI3@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-972923147-1606129436=:56"
-X-Provags-ID: V03:K1:3Dd+X+b98C2igscfhHUZYd0qtQKQ+gPOcAcikliVkTdLR5QdLqg
- McE3qIZ/xOq3m4i3L74ZTOY4+g/8kBzcx2kVsArwVuJpgdCai88o2OyXBtPVISYleQSXyvg
- mr/tqQZM2vco2CDfeCPlbpKmzQO0z6ROTFVeFDfr//Du+V4bHuMeZyTpGBKUjEUKZCCvmQn
- TH0iknOyiBlyk4KvSW3pQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:HsoOwn1+uew=:tq0qLSMCV/HyTtvl4dICDh
- Gpe+T5hlbo/i+fFYEbB9RzPL43ujme5V2sQU4p900XV+SGdS177KVY27aM2jJbdaxmzIWBhLj
- RIrj/wZQqtds+e+l7vJpC+9iv3GGuDrDIPM7iXRi8n1v5bQEEMJBdm8k6LKkTWHjxPTMEsTtR
- 9nblpMa9O31TWsDJSvU/P6o7Z2DF9gjxqlYlpqlVWJ5moR6wQKNkXN2VJWKwu6alRq9/IeHKr
- 66FUgXllxgrZVzsEPmvjWJlj1NGL23V9rx+Kx32QGTsL7+s5dzv3RzWr7i6HbYS+WlrjQRwN8
- hY8GolWgxChSoFgi5ptKfJG3PjXa2HMrG7EPYy4YiqFCXjlzeOFbXiifILrsUcjJy5fbqEfzP
- TvqS7XEcUkH2S7J0/N/bR/t8BBPnOZEmd6vL2MsAZaebsr3uhZTUZ/MKL6VNbipjuXdTzTkFn
- uLdQPfc/31WJY0jC+ivFKjWtS4HWfEt74PwNYcRI8BllGK/5qJ8By6qojWtc95Y28mVWnV7u+
- 6oj+FPNQDzoNXRnbALqR3tl2t/Oi5k8hUZ3MwU1q52KFt41NFQn9tcM8rhalgM53P8Yg2v62m
- J48YGLDHyZ7ordk53qyttTBjxG4q8l6lQ+0RUmro9j3MAflognOhK0OfvLSYdo+KOYj9vhwz1
- BuKgExHK8tgbUG2dZ+jH2bcEBLJUqOT/YFjx3fqaq49SZqXxcGIwcfmBfDzqlzrRDk6SnHB1n
- MqSO1g/eRSfXsDiKSIJmTekDqVlDo9Am0g2XtStkjxl8ZTOhl+Acl3PT5zhBRgok7MVrZWVuI
- 0rSkjs1RrZdjCc8x3HUif/aIrFLdgykTJhwkYzAKNd1zJbuEqlOesRowLOkBD58uq2+OyWsXG
- LZs+6D1JqlkInob6UZXCRg1AjW+SyAilabaKFOq0g=
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-972923147-1606129436=:56
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi Martin,
-
-On Sat, 21 Nov 2020, Martin =C3=85gren wrote:
-
-> Users of the grep machinery need to call `init_grep_defaults()` to
-> populate some defaults. There's a comment: "We could let the compiler do
-> this, but without C99 initializers the code gets unwieldy and
-> unreadable, so...".
+On 22.11.20 18:16, serg.partizan@gmail.com wrote:
+> I think calculating that gray color from current selection bg is too much work
+> for just one color.
 >
-> We have such initializers now, so we can simplify accordingly.
+> We can just set inactiveSelectBackground to some neutral gray color like
+> #707070 or #909090 which will work fine with both dark and light themes.
 
-When I read this at first, I feared that you would change a
-`pthread_init_mutex()` to using `PTHREAD_MUTEX_INITIALIZER` instead. On
-the face of it, that would look good on paper, but it unfortunately falls
-flat for us because there is no Win32 equivalent for the static
-initializer: we emulate mutexes via `CRITICAL_SECTION`s, and those need to
-be initialized by running a function.
+OK, fine with me. Here's a patch that does this (it sits on top of yours). It
+almost works, except for one problem: on Mac, the inactive selection background
+is white instead of lightgray, but only for the diff view; for the commit editor
+it's correct. On Windows it's also correct for both views. I can't figure out
+what's the difference on Mac; do you have an idea what could be wrong?
 
-To my surprise and relief, your patches do not do that; The only mutex in
-`grep.c` (`grep_attr_mutex`) is not touched.
+--- 8< ---
 
-I just wanted to mention this here, in case anybody else had the same
-idea.
+This makes it easier to see at a glance which of the four main views has the
+keyboard focus.
+---
+ git-gui.sh     | 25 +++++++++++++++++++++----
+ lib/themed.tcl | 13 +++++++++----
+ 2 files changed, 30 insertions(+), 8 deletions(-)
 
-Thanks,
-Dscho
+diff --git a/git-gui.sh b/git-gui.sh
+index 867b8ce..a8c5cad 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -721,8 +721,8 @@ proc rmsel_tag {text} {
+ 		-foreground [$text cget -foreground] \
+ 		-borderwidth 0
+ 	$text tag conf in_sel\
+-		-background $color::select_bg \
+-		-foreground $color::select_fg
++		-background $color::inactive_select_bg \
++		-foreground $color::inactive_select_fg
+ 	bind $text <Motion> break
+ 	return $text
+ }
+@@ -3325,8 +3325,25 @@ if {!$use_ttk} {
+ foreach i [list $ui_index $ui_workdir] {
+ 	rmsel_tag $i
+ 	$i tag conf in_diff \
+-		-background $color::select_bg \
+-		-foreground $color::select_fg
++		-background $color::inactive_select_bg \
++		-foreground $color::inactive_select_fg
++
++	if {$use_ttk} {
++		bind $i <FocusIn> {
++			foreach tag [list in_diff in_sel] {
++				%W tag conf $tag \
++					-background $color::select_bg \
++					-foreground $color::select_fg
++			}
++		}
++		bind $i <FocusOut> {
++			foreach tag [list in_diff in_sel] {
++				%W tag conf $tag \
++					-background $color::inactive_select_bg \
++					-foreground $color::inactive_select_fg
++			}
++		}
++	}
+ }
+ unset i
 
---8323328-972923147-1606129436=:56--
+diff --git a/lib/themed.tcl b/lib/themed.tcl
+index eda5f8c..02b15f2 100644
+--- a/lib/themed.tcl
++++ b/lib/themed.tcl
+@@ -6,8 +6,10 @@ namespace eval color {
+ 	# Variable colors
+ 	# Preffered way to set widget colors is using add_option.
+ 	# In some cases, like with tags in_diff/in_sel, we use these colors.
+-	variable select_bg		lightgray
+-	variable select_fg		black
++	variable select_bg				lightblue
++	variable select_fg				black
++	variable inactive_select_bg		lightgray
++	variable inactive_select_fg		black
+
+ 	proc sync_with_theme {} {
+ 		set base_bg		[ttk::style lookup . -background]
+@@ -16,6 +18,9 @@ namespace eval color {
+ 		set text_fg		[ttk::style lookup Treeview -foreground]
+ 		set select_bg	[ttk::style lookup Default -selectbackground]
+ 		set select_fg	[ttk::style lookup Default -selectforeground]
++		# We keep inactive_select_bg as the hard-coded light gray above, as
++		# there doesn't seem to be a way to get it from the theme. Light gray
++		# should work well for light and dark themes.
+
+ 		set color::select_bg $select_bg
+ 		set color::select_fg $select_fg
+@@ -36,8 +41,8 @@ namespace eval color {
+ 		add_option *Text.Foreground $text_fg
+ 		add_option *Text.selectBackground $select_bg
+ 		add_option *Text.selectForeground $select_fg
+-		add_option *Text.inactiveSelectBackground $select_bg
+-		add_option *Text.inactiveSelectForeground $select_fg
++		add_option *Text.inactiveSelectBackground $color::inactive_select_bg
++		add_option *Text.inactiveSelectForeground $color::inactive_select_fg
+ 	}
+ }
+
+--
+2.29.0.18.gf8c967e53c
+
