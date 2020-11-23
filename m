@@ -2,142 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 341A6C8300B
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 13:30:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30D83C63697
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 14:54:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CD52820782
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 13:30:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C552920773
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 14:54:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="j4cYX7H4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jrpiOlL+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389264AbgKWN3z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Nov 2020 08:29:55 -0500
-Received: from mout.gmx.net ([212.227.17.22]:60309 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730437AbgKWM21 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Nov 2020 07:28:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1606134502;
-        bh=JDemwnidgeVzaCrbAV8C1yfMC7HJLDJtv7LE0Qgr9DE=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=j4cYX7H4DZLR7ySKRIkuFCMLoQr22cEJIrsWegs3a6q5lVX3BIWw+cGW9KYkil5zA
-         HrW7nMLi6MMKqlD8ymO3nXAaN0Nny9cwAl2sCJNDNj1MmcCHGCQygu9EviJETxsB29
-         5FLZgL2J1tvveUX3TZUwjzZxljqqc2UcXJX1W/Zo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.22.105] ([89.1.213.133]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MFbRm-1kSIqO0IWs-00H37t; Mon, 23
- Nov 2020 13:28:22 +0100
-Date:   Mon, 23 Nov 2020 13:28:20 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 3/3] init: provide useful advice about
- init.defaultBranch
-In-Reply-To: <xmqq4klgq10d.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2011231326150.56@tvgsbejvaqbjf.bet>
-References: <pull.921.git.git.1606087406.gitgitgadget@gmail.com> <253d6706e6ab97e71ec012f6de33c75f3e980701.1606087406.git.gitgitgadget@gmail.com> <xmqqft51osnu.fsf@gitster.c.googlers.com> <xmqq4klgq10d.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2388513AbgKWOy3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Nov 2020 09:54:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50048 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732043AbgKWOy1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Nov 2020 09:54:27 -0500
+Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 885D3C0613CF
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 06:54:27 -0800 (PST)
+Received: by mail-qt1-x842.google.com with SMTP id g17so13519723qts.5
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 06:54:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=9fHd65qkvEBezqvL17xxRq+EojtZmfo3ENmDPBI0kgs=;
+        b=jrpiOlL+QxotZrJyX3KWhj44wcDQwKihKasT3VYvUhGL5Ih1VIZLsvmAZgGxPwZS5X
+         Zlhg+/zGd+oABf74AcxmsBnnopfQTvA5rpFZx+PnPb68dmiNPaAM+wUYOa+a7mzmBvNM
+         Ar+NEu6qs5aQOjplJL/BgKvx4ZspLS1yNUoW0eXGoY0HKVfrTHjG6A2qlg+qk6fFzxPN
+         fgZPiYyemgFDZL2sXUZVOqUgDfjqJtyUAf99XqDwsgUd2O0hEU5VyRjVffP18K9Wnz7I
+         MK/penm1yGajKAjEH3WG/VoPy2ilGCgfWm9KKxcEXbPDMkBP2Leh4bQSZ7j62cynTLBh
+         hcVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=9fHd65qkvEBezqvL17xxRq+EojtZmfo3ENmDPBI0kgs=;
+        b=OsDIw6GEA14KHBXzUFiQ1p96m7ceZxEp5f2DrsQXDcj8Rnc0E9vwEi9Pq3bpbn+ag9
+         os9MEFiVTaBhRqK0kr+ovmPPOT/YhdbSzmPitaJNzmHtZpmp+8NWDrVoDOuw4+OmkAFB
+         Upepw5Pj3pWIDv8yIxmyBS9e/Yc5BHCj5TV+2GmFnlGb8u97HTq9cPbGACZDNHxoqSwi
+         RJ1N51vD3336o6jbbJIJgMwFHXMqhe8+E25wqbMvozAVZPZt0wg+vJmOpa3J7/VEKUTR
+         vDx3vMwaS7lVluKzE6pIpQhpfcf+h7wAUFUROg175y4fw9+ZuWZeEyLF7AKqNrzfrA85
+         Nk+A==
+X-Gm-Message-State: AOAM530bPmm6j4MsBwgh23al21rWF8ZNSjZBlvAZY8yCuFumTW86eX8r
+        9464Ad3WP6TnVSe3VMZOcgs=
+X-Google-Smtp-Source: ABdhPJwCSflqUgS9hP0iu2J2W5j54d+n0QZseGMLF7OW1XlZeBeaEkzCl1fNMb2MGco6U+wFzGEmig==
+X-Received: by 2002:ac8:7c9a:: with SMTP id y26mr28710591qtv.287.1606143266761;
+        Mon, 23 Nov 2020 06:54:26 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
+        by smtp.gmail.com with UTF8SMTPSA id n21sm9819872qke.21.2020.11.23.06.54.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Nov 2020 06:54:26 -0800 (PST)
+Subject: Re: [PATCH v2 12/24] pack-bitmap-write: fill bitmap with commit
+ history
+To:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, peff@peff.net,
+        martin.agren@gmail.com, szeder.dev@gmail.com
+References: <cover.1605123652.git.me@ttaylorr.com>
+ <cover.1605649533.git.me@ttaylorr.com>
+ <8e5607929d66a3c808dbe3a06c312d0cda1ef568.1605649533.git.me@ttaylorr.com>
+ <xmqqy2itoyco.fsf@gitster.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <f6d89171-f343-0d4c-7cf4-725c49615b99@gmail.com>
+Date:   Mon, 23 Nov 2020 09:54:25 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101
+ Thunderbird/83.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:4E4NonXuSGhXstc0/l6PGfOUtXG1LoJtrH/PfeOHI+KlFW58cPP
- 4Uen1/wUkxaZRM/X0Cmp1uMdAjEtXdzOHyo/+LlQvhsN8lropYZTM5EdzAJ7XGVvBN+Ke23
- A28lel4ftroyPh72ikxK9XME0FeWAibTq7GMNWA/lk4PfliwClSy2QFuVLALbKJVNGnAWi7
- j77WFf+ZpLZr2Wk6CGWNA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:3JzhxPnXpSQ=:2v/Ar8qsE5HjuZKnmoEnEV
- uHIrdH8/rEGBiPM4QcrY8w2jZU5RrEbbWawp2GP9UK0l1QgKo2ZbSqHUu02YYeq5w0+HB7aFL
- L5ISTOtz5zBD7f7WmBGdyV6d2yUQtHmu1h9d3VX0/KxcKs6yO2UnIcoWKPabcWS/hxS6Ql1DY
- T31XY1G3twOmd8SJYx6cJs4fzW0ONxaG3d2jOMp08X3+CwgClX4jMBc6pKliD0pbh1n2vqkXV
- ps3fJQEYWqBh617zuCGARnpXgf+SmRy8m7Xrom9nQBnZmYKkV08RNZ49vHmOt9MEh8e396OoL
- 3uEFhVtTT37CoiplFwKrVWxrfkesSwCirRHeSiA4EM5aO2u8kxXFzbG7qPEeEdvnVdPGXMLq5
- IyHJ/vgscFUlCvPXIrzd0sMAV947uVd6dszhULxigknN6JQfru92HvkG7XShTJobaKC9tHlax
- UMFO1x7ugdhXr7deZr05JfiYl2ojBpaQ0QfS2Gtj+5Dh8yC1Ks9ecgoJ/Ut7DPBzCCtv5l+Wn
- OEsEx3un1ugn2Hm81rt2r27CIjubwFgEuH3sLw9pW76/W3ZFYiCom8GzfHuZGbe2fqzmsr2am
- gz9wT9vp4XefcyyTL4vfHPtHdFo9XnS61l9ymh+vZeNZdPaIWrc3phwg4tTWefrlDPVmRYs4I
- zJQdnqIHDRRIkoLRnvc2L1jbxrcqzm/kAVlOGZ3jPtR4d1y2XQPtnmrIpe717W1qtZvWM+VjF
- zPVbcgYKlDkx1UnFGR1Cij9Hork6gL3HsaG6ghlQlt1AM+OzKacHDi8UF8ohke6qssz3Qcjx0
- 5Tck1BoBjVSgEOx8u9Cf12UTP6tcrH5uNlGzjiL0njOvJSTMiTNJ3DTmDl4SSMNHsYeI0oxir
- YerIPfixygOurOyOYfyxZ57Sl06e3/C/Wm9EhKtps=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqy2itoyco.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 11/22/2020 4:50 PM, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+> 
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>>
+>> The fill_bitmap_commit() method assumes that every parent of the given
+>> commit is already part of the current bitmap. Instead of making that
+>> assumption, let's walk parents until we reach commits already part of
+>> the bitmap. Set the value for that parent immediately after querying to
+>> save time doing double calls to find_object_pos() and to avoid inserting
+>> the parent into the queue multiple times.
+> 
+> Is it because somebody found a case where the assumption does not
+> hold and the code with the assumption produces a wrong result?  Is
+> it because we can get a better result without making the assumption
+> the current code does?
 
-On Sun, 22 Nov 2020, Junio C Hamano wrote:
+The algorithm from "pack-bitmap-write: reimplement bitmap writing"
+that calls fill_bitmap_commit() satisfies this assumption, since it
+computes a reachability bitmap for every commit during the reverse
+walk. We will soon change that algorithm to "skip" commits, so we
+need this step in fill_bitmap_commit() to walk forward to fill the
+gaps.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> >> +static const char default_branch_name_advice[] =3D N_(
-> >> +"Using '%s' as the name for the initial branch. This name is subject=
-\n"
-> >> +"to change. To configure the name to use as the initial branch name =
-in\n"
-> >> +"new repositories, or to silence this warning, run:\n"
-> >
-> > s/new repositories/all of your new repositories/ as that is the
-> > whole point of using --global option below.
-> >
-> >> +"\n"
-> >> +"\tgit config --global init.defaultBranch <name>\n"
-> >> +);
-> >> +
->
-> The above may give a valuable lesson to those who want to use one
-> branch name across new repositories, but it does not tell those who
-> wanted 'trunk' (to match the project, perhaps github.com/cli/cli,
-> with which they intend to interact) how to recover from having
-> already created the 'master' branch.  We may want to add some text
-> to suggest "branch -M" after giving the advice for the permanent
-> option.
+> In other words, can we explain why we are making the change in the
+> proposed log message?
+I'm sure Taylor and I can work out a better wording to make this
+more clear.
 
-Good point.
+Thanks,
+-Stolee
 
-> Also, it is unclear to those who do not have a good <name> in mind
-> (or, those who do not care to choose a <name> for themselves), what
-> <name> they should give to take the "or to silence this warning"
-> part of the advice.
 
-Also a good point.
-
-> It probably is a good idea to rephrase and say
-> either:
->
->     ... To configure ... in all your new repositories and squelch
->     this message, run:
->
-> 	git config --global init.defaultBranch <name>
->
-> or
->
->     ... To configure ... in all your new repositories, run:
->
-> 	git config --global init.defaultBranch <name>
->
->     Note that this message won't appear after doing so.
-
-I came up with this, which I intend to submit with v2:
-
-static const char default_branch_name_advice[] =3D N_(
-"Using '%s' as the name for the initial branch. This name is subject\n"
-"to change. To configure the initial branch name to use in all of your\n"
-"new repositories (or to suppress this warning), run:\n"
-"\n"
-"\tgit config --global init.defaultBranch <name>\n"
-"\n"
-"Common names are 'main', 'trunk' and 'development'. The initial branch\n"
-"can be renamed via this command:\n"
-"\n"
-"\tgit branch -m <name>\n"
-);
-
-Ciao,
-Dscho
