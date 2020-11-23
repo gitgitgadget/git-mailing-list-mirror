@@ -2,131 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.3 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 563EBC2D0E4
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 23:37:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6BB8C56202
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 23:46:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C78A220717
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 23:37:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5234B20721
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 23:46:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b="mcuTbZbr"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mR8qoNd+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727561AbgKWXhs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Nov 2020 18:37:48 -0500
-Received: from smtp-fw-6002.amazon.com ([52.95.49.90]:41598 "EHLO
-        smtp-fw-6002.amazon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727550AbgKWXhr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Nov 2020 18:37:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1606174666; x=1637710666;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=/1nKz8AO8edDkufMUMkOd2jUpQQHc97Xg1OoMZ8xQGw=;
-  b=mcuTbZbriWkKzwlwFliyX1CRI78MGXDZbbY6fmYdtMzHrA9bqc7v90SR
-   x/Dh66hnSf/JRRupWoK2i9PBmKZ+up7f4UmxSA8kBjq6MUnRSsuixT+7O
-   C3JNwPJhcayUohMqe66kkxOTRS7X1HgxHoJdyoAubFgdnTX72p5EFkHxa
-   0=;
-X-IronPort-AV: E=Sophos;i="5.78,364,1599523200"; 
-   d="scan'208";a="66871243"
-Received: from iad12-co-svc-p1-lb1-vlan2.amazon.com (HELO email-inbound-relay-1e-c7c08562.us-east-1.amazon.com) ([10.43.8.2])
-  by smtp-border-fw-out-6002.iad6.amazon.com with ESMTP; 23 Nov 2020 23:37:38 +0000
-Received: from EX13MTAUWC002.ant.amazon.com (iad12-ws-svc-p26-lb9-vlan2.iad.amazon.com [10.40.163.34])
-        by email-inbound-relay-1e-c7c08562.us-east-1.amazon.com (Postfix) with ESMTPS id 56E0D241B19;
-        Mon, 23 Nov 2020 23:37:37 +0000 (UTC)
-Received: from EX13D31UWC001.ant.amazon.com (10.43.162.152) by
- EX13MTAUWC002.ant.amazon.com (10.43.162.240) with Microsoft SMTP Server (TLS)
- id 15.0.1497.2; Mon, 23 Nov 2020 23:37:36 +0000
-Received: from EX13MTAUWC001.ant.amazon.com (10.43.162.135) by
- EX13D31UWC001.ant.amazon.com (10.43.162.152) with Microsoft SMTP Server (TLS)
- id 15.0.1497.2; Mon, 23 Nov 2020 23:37:37 +0000
-Received: from dev-dsk-gerardu-1d-54592b62.us-east-1.amazon.com
- (10.200.254.64) by mail-relay.amazon.com (10.43.162.232) with Microsoft SMTP
- Server id 15.0.1497.2 via Frontend Transport; Mon, 23 Nov 2020 23:37:36 +0000
-Received: by dev-dsk-gerardu-1d-54592b62.us-east-1.amazon.com (Postfix, from userid 5408343)
-        id 3F45548DE; Mon, 23 Nov 2020 23:37:35 +0000 (UTC)
-Date:   Mon, 23 Nov 2020 23:37:35 +0000
-From:   Geert Jansen <gerardu@amazon.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-CC:     Matheus Tavares <matheus.bernardino@usp.br>, <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: RFC: auto-enabling parallel-checkout on NFS
-Message-ID: <20201123233735.GB28189@dev-dsk-gerardu-1d-54592b62.us-east-1.amazon.com>
-References: <20201115194359.67901-1-matheus.bernardino@usp.br>
- <87y2ixpvos.fsf@evledraar.gmail.com>
+        id S1726869AbgKWXpt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Nov 2020 18:45:49 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55654 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726630AbgKWXps (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Nov 2020 18:45:48 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 78B9810A889;
+        Mon, 23 Nov 2020 18:45:46 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=UeQFsDYjZxl5VK9YNhKHmT8H7/8=; b=mR8qoN
+        d+PN+bICjPZQwELNG1GUONKc0qNkWxqpuuN+QoEbTcbyz4BMttQX2TZmELjaHlgM
+        po2oSXTillKXfooi2FzhQSE7pwd2mSYI2nP/NO1LaCNXpeo54Q8X6ovIhm987mct
+        apKWLLFHL93Arc++38zq13hp8Ll+iBJ89n2Rw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=HPfokV0EMQAEcgR7LmD79qDMWYXX8Tdq
+        op98AkK+A/fX12vRMuwuM5WlDZNN8iw2QQJSaDmpgpaYpj7zwNcgFpbVTC475xef
+        GlzESPqJAf58XVQ2HvIf/uEuT8flvzjpLXGrIvmMs3hYNlR8slWobxFhOr/aq1yJ
+        RkbIDaI+Kf8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 70E4810A888;
+        Mon, 23 Nov 2020 18:45:46 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B87EE10A886;
+        Mon, 23 Nov 2020 18:45:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 2/4] branch -m: allow renaming a yet-unborn branch
+References: <pull.921.git.git.1606087406.gitgitgadget@gmail.com>
+        <pull.921.v2.git.git.1606173607.gitgitgadget@gmail.com>
+        <8de0c0eb228c8d9608d3a78c992cbd6829cb9329.1606173607.git.gitgitgadget@gmail.com>
+Date:   Mon, 23 Nov 2020 15:45:41 -0800
+In-Reply-To: <8de0c0eb228c8d9608d3a78c992cbd6829cb9329.1606173607.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Mon, 23 Nov 2020
+        23:20:05 +0000")
+Message-ID: <xmqqd003ljru.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87y2ixpvos.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 006B8540-2DE6-11EB-A371-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ævar,
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-On Thu, Nov 19, 2020 at 10:01:07AM +0100, Ævar Arnfjörð Bjarmason wrote:
-> 
-> > The major downside is that detecting the file system type is quite
-> > platform-dependent, so there is no simple and portable solution. (Also,
-> > I'm not sure if the optimal number of workers would be the same on
-> > different OSes). But we decided to give it a try, so this is a
-> > rough prototype that would work for Linux:
-> > https://github.com/matheustavares/git/commit/2e2c787e2a1742fed8c35dba185b7cd208603de9
-> 
-> I'm not intrinsically opposed to hardcoding some "nr_threads = is_nfs()
-> ? x : y" as a stopgap.
-> 
-> I do think we should be thinking about a sustainable way of doing this
-> sort of thing, this method of testing once and hardcoding something
-> isn't a good approach.
-> 
-> It doesn't anticipate all sorts of different setups, e.g. in this case
-> NFS is not a FS, but a protocol, there's probably going to be some
-> implementations where parallel is much worse due to a quirk of the
-> implementation.
-> 
-> I think integrating an optimization run with the relatively new
-> git-maintenance is a better way forward.
-> 
-> You'd configure e.g.:
-> 
->     maintenance.performanceTests.enabled=true
->     maintenance.performanceTests.writeConfig=true
-> 
-> Which would run e.g.:
-> 
->     git config --type bool core.untrackedCache $(git update-index --test-untracked-cache && echo true || echo false)
->     git config checkout.workers $(git maintenance--helper auto-discover-config checkout.workers)
-> 
-> Such an implementation can be really basic at first, or even just punt
-> on the test and use your current "is it NFS?" check.
-> 
-> But I think we should be moving to some helper that does the actual test
-> locally when asked/configured by the user, so we're not making a bunch
-> of guesses in advance about the size/shape of the repository, OS/nfs/fs
-> etc.
+> @@ -538,7 +538,8 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+>  		strbuf_addf(&logmsg, "Branch: renamed %s to %s",
+>  			    oldref.buf, newref.buf);
+>  
+> -	if (!copy && rename_ref(oldref.buf, newref.buf, logmsg.buf))
+> +	if (!copy && (oldname != head || !is_null_oid(&head_oid)) &&
 
-I like this idea as something that will give the best configuration for a given
-repository. I also know from working with customers for a long time that most
-users will use the default settings for almost any application, and that
-default configurations therefore matter a lot.
+It always makes readers uneasy to see pointer comparison of two
+strings.  
 
-The ideal experience would be, in my view, that a clone or checkout would
-automatically benefit from parallel checkout, even if this is the first
-checkout into a new repository.
+Does this mean, after "git -c init.defaultbranch=master init",
 
-Maybe both ideas could be combined? We could have some reasonable heuristic
-based on file system type (and maybe number of CPUs) that gives most of the
-benefits of paralell checkout, while still being a reasonable compromise that
-that works across different NFS servers and file systems. Power users that want
-more aggressive tuning could run the maintenance command that measures file
-system performance and comes up with an optimal value for checkout.workers.
+	git branch -m master main
 
-Regards,
-Geert
+would not work while
+
+	git branch -m main
+
+would?  It would be easy to see with the attached patch to the test,
+I guess.
+
+> +	    rename_ref(oldref.buf, newref.buf, logmsg.buf))
+>  		die(_("Branch rename failed"));
+>  	if (copy && copy_existing_ref(oldref.buf, newref.buf, logmsg.buf))
+>  		die(_("Branch copy failed"));
+> diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+> index 69a320489f..69c5ad179c 100755
+> --- a/t/t0001-init.sh
+> +++ b/t/t0001-init.sh
+> @@ -571,4 +571,10 @@ test_expect_success 'invalid default branch name' '
+>  	test_i18ngrep "invalid branch name" err
+>  '
+>  
+> +test_expect_success 'branch -m with the initial branch' '
+> +	git init rename-initial-branch &&
+> +	git -C rename-initial-branch branch -m renamed &&
+> +	test renamed = $(git -C rename-initial-branch symbolic-ref --short HEAD)
+> +'
+> +
+>  test_done
+
+Thanks.
+
+
+ t/t0001-init.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git c/t/t0001-init.sh w/t/t0001-init.sh
+index 69c5ad179c..07c34431d9 100755
+--- c/t/t0001-init.sh
++++ w/t/t0001-init.sh
+@@ -577,4 +577,10 @@ test_expect_success 'branch -m with the initial branch' '
+ 	test renamed = $(git -C rename-initial-branch symbolic-ref --short HEAD)
+ '
+ 
++test_expect_success 'branch -m with the initial branch' '
++	git -c init.defaultBranch=initial init rename-unborn-branch &&
++	git -C rename-unborn-branch branch -m initial renamed &&
++	test renamed = $(git -C rename-unborn-branch symbolic-ref --short HEAD)
++'
++
+ test_done
