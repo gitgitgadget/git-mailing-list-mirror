@@ -2,96 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43983C63697
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 19:43:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEB1CC2D0E4
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 19:53:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0027020719
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 19:43:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D1A320717
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 19:53:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h4flhKlV"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cRBVQZbM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730548AbgKWTno (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Nov 2020 14:43:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38224 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729521AbgKWTnn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Nov 2020 14:43:43 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BD68C0613CF
-        for <git@vger.kernel.org>; Mon, 23 Nov 2020 11:43:43 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id 64so6412377wra.11
-        for <git@vger.kernel.org>; Mon, 23 Nov 2020 11:43:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Ooyt5UeXv4n7FY/z7++9prBcThQVRntnqCzM49J2X1E=;
-        b=h4flhKlV79mGNCmZLpUmpDRTOtcs1VAjiAHQBb2JI39apc0J9VQXP2Ko/JJr12cM7F
-         idRu1Iy3F0LupIxNfdZgWXzwWZfp1Edd0XgDcc9+Htt1gCji1ihV33XGZbqO1j1L3RQO
-         xmy5vxNnj+jovPNEYReUp2r49LBip3wm1nuS5exBu+VNxyy0i++nSeny8jSfFy15YCfv
-         1qzdNL506g7pmC+FOTl7DqK1MfVilqFw+XT+BSU5qYHJ+RJWmkl4dHMk1dbEDNOp74pn
-         6kXQwbznJuPoQGDnniIl0pYQCiTK5lmLAqCz1/YEls7jJdIbC8CJ0O1PUHTApwZkoshY
-         oWww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Ooyt5UeXv4n7FY/z7++9prBcThQVRntnqCzM49J2X1E=;
-        b=RjTrBe6ZY+Os7l+Mmetp5bXkKiWJ8vaSIz06ywXkV/ZghRfgU+xCGFQYxATFHqhH4/
-         H0gyopcd6QVR5V7JgzDzdMclpxBpzq7nnKhzfYjtRQAAv6Svp+XVnMiehMhmSkmB7OOU
-         lzZDJ8aVKeMG4PdcrlJo1yLNyCuKZoJyAl5fGpIfzBGFCRhOGH82nTLNXgouUvw3YXXi
-         OVG3hk3KnuHt/wuEFf2pHe9si1q/Q0NbpgAVdtBmiazCEKkX8YfuWDLpCHJ17ja1YcmF
-         /RJPBT0AXbzkfc29juLFc5+7NioPWaS9ENRgPiufDUyuBkQXvo4yS/LCI5grXYqM/txh
-         83PA==
-X-Gm-Message-State: AOAM533qK/syN2khtpZ5E1VUlSMKHN3FJ24dQp0ygUmN03xE1TZxvKyj
-        7vJSvxag+NWh8AhuRDuYNYR/yxpLh1EeTYGq/L0=
-X-Google-Smtp-Source: ABdhPJxuHvtU8/C9sDrpMxRfSggeBqWnLEIshwvd34Y26N/DgnWRBhzscp3wEk26MBTjqFw11QasoxL962J/klI7iw4=
-X-Received: by 2002:a5d:474f:: with SMTP id o15mr1344282wrs.100.1606160621965;
- Mon, 23 Nov 2020 11:43:41 -0800 (PST)
+        id S1730796AbgKWTxy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Nov 2020 14:53:54 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53281 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729009AbgKWTxy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Nov 2020 14:53:54 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5DFAC8C35A;
+        Mon, 23 Nov 2020 14:53:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=tMXDhgf/yAaSm3fm+Oq0Q7mcCA0=; b=cRBVQZ
+        bMdQWtZuTIansf3eW9exC4WAUACo40BYrPb6yaDgI8IG6tnHYzMUiI8mz5+aqF1g
+        UBRLR9L6b1tWaX7ImHbcn3gZtqG9Ldndh9MAQ4pnc1Laro9YzhCnWVDTJgdWBfoB
+        wLYu9gHye8h0b/QDmFz2aHJD2XUqMML51qI4k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=lsWTUOC3uToWGEJiUHOPIm15u21u9Umf
+        M8syrm+Ujhj6V+TRJgez4tkmtj4f25h7aNGhAX1oSJM3ZCGIOwWK4goXP9ue0hTE
+        1GiyusWStHICQ6WxA7ZlH30w2B5NJFTOpkybNMls9y2wNa+tKDT9P7bJzrxY/8qc
+        OU7I6sj2Jl0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 534798C359;
+        Mon, 23 Nov 2020 14:53:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CD0B38C357;
+        Mon, 23 Nov 2020 14:53:49 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 6/7] config: implement --fixed-value with --get*
+References: <pull.796.git.1605801143.gitgitgadget@gmail.com>
+        <pull.796.v2.git.1606147507.gitgitgadget@gmail.com>
+        <8e0111c7b4b2c766c61df30c4ae93bd2d724de06.1606147507.git.gitgitgadget@gmail.com>
+Date:   Mon, 23 Nov 2020 11:53:49 -0800
+In-Reply-To: <8e0111c7b4b2c766c61df30c4ae93bd2d724de06.1606147507.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Mon, 23 Nov 2020
+        16:05:06 +0000")
+Message-ID: <xmqqwnybn92q.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <742df4c2-2bc5-8a4b-8de1-cd5e48718398@redhat.com>
-In-Reply-To: <742df4c2-2bc5-8a4b-8de1-cd5e48718398@redhat.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Mon, 23 Nov 2020 13:43:31 -0600
-Message-ID: <CAMP44s2rhOXfqmyd-rUUmzjsbqq9juf1HNsd32aO-Qcd-m0QNw@mail.gmail.com>
-Subject: Re: Pick the right default and stop warn on `git pull`
-To:     =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>
-Cc:     Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9B1528CE-2DC5-11EB-B5DF-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 23, 2020 at 9:17 AM V=C3=ADt Ondruch <vondruch@redhat.com> wrot=
-e:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> While I understand that the merge after `git pull` is probably not the
-> best strategy (as explained in [1]), asking people to change their
-> configuration to choose their default strategy with every `git pull` is
-> not any better. Please select any strategy considered more appropriate
-> and stop warning me. I know I could change my configuration, but I'll
-> change it just if I want to differ from defaults. I don't need to be
-> told that I am using wrong default. I'd like to keep my trust in Git
-> upstream, but this is was not trustworthy decision IMO.
+> -	if (regex_) {
+> +	if (regex_ && (flags & CONFIG_FLAGS_FIXED_VALUE))
+> +		value_regex = regex_;
+> +	else if (regex_) {
+>  		if (regex_[0] == '!') {
+>  			do_not_match = 1;
+>  			regex_++;
 
-Indeed.
+When the --fixed-value option is in effect, there is no way to say
+"replace values that do not match this string", because unlike the
+regex case, we do not special case '!' at the beginning.
 
-This is why I sent patches to change the "git pull" default to merge
-the remote branch, but only if it's a fast-forward. If it's not, then
-the user would have to either merge, or rebase.
+I think it is a good design decision.  The special case has an
+escape hatch to start your value_regex with "[!]" when ERE is in
+use, but there is no such escape hatch possible with --fixed-value.
 
-https://lore.kernel.org/git/1398988808-29678-1-git-send-email-felipe.contre=
-ras@gmail.com/
+Depending on how this '!' negation is documented to the end-users
+for existing value_regex that is ERE, the documentation for the new
+option may want to talk about the lack of negation explicitly.
 
-This is the best sensible default.
+	... goes and looks ...
 
-Cheers.
+It is worse than I thought.  Here is what "git config" description
+has (and some of the badness is not the fault of this series):
 
---=20
-Felipe Contreras
+    Multiple lines can be added to an option by using the `--add` option.
+    If you want to update or unset an option which can occur on multiple
+    lines, a POSIX regexp `value_regex` needs to be given.  Only the
+    existing values that match the regexp are updated or unset.  If
+    you want to handle the lines that do *not* match the regex, just
+    prepend a single exclamation mark in front (see also <<EXAMPLES>>).
+
+The end-users these days no longer see "lines" because they do not
+hand edit .git/config, so we may need a replacement phrase to refer
+to a single "vari.able=value" setting, but we should leave it out of
+the scope of this series to clean that up---"git config --help" is
+full of references to "line".
+
+It was not "a POSIX regexp" (which does not say if it is BRE or
+ERE), and it no longer is a regexp with the new option.
+
+    ... which can occur on multiple lines, a pattern `value_regex`
+    needs to be given.  Only the existing values that match the
+    pattern are updated or unset.  The pattern is by default matched
+    as an extended regular expression, but with the `--fixed-value`
+    option, taken as a literal string and values must be identical
+    to it to be considered a match.  You can prepend an exclamation
+    point '!' to affect lines that do *not* match the pattern, but
+    this is applicable only when not using the `--fixed-value`
+    option.
+
+Ideally we probably should do s/value_regex/value_pattern/ in the
+documentation and error messages eventually, but I do not know if
+it is warranted in the scope of this series.
