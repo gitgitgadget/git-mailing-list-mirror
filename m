@@ -2,96 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AF76C2D0E4
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 16:52:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 963E3C64E75
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 18:00:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DF6722080A
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 16:52:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3D51120758
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 18:00:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="PmthsNdX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Du+kRRKt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732092AbgKWQwN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Nov 2020 11:52:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40052 "EHLO
+        id S2390592AbgKWR71 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Nov 2020 12:59:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729815AbgKWQwM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Nov 2020 11:52:12 -0500
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD3C4C0613CF
-        for <git@vger.kernel.org>; Mon, 23 Nov 2020 08:52:12 -0800 (PST)
-Received: by mail-pf1-x444.google.com with SMTP id b6so4990131pfp.7
-        for <git@vger.kernel.org>; Mon, 23 Nov 2020 08:52:12 -0800 (PST)
+        with ESMTP id S1732624AbgKWR70 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Nov 2020 12:59:26 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF93DC0613CF
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 09:59:26 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id e7so1953554wrv.6
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 09:59:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=wCHP+CiX43RbXU7uRH2/j12PxpVIzT36ebk+dyCQpEw=;
-        b=PmthsNdXTFp+57MGgulzaxSOybMjDwwUJdQKvypX9Jxj1YXKYLyi4Yp8sZznWkE8JA
-         CKR3Ewj+wfzMR2nAFgedq7h7XoamjRO3e8vXAf97SiEAFSsPjuE+S4kPfrNcajg3vvgK
-         mQTe9H6Q0tn7Weulhl+ikJa5fNXSl9AEDQooqS+MeMcHOSRL2djxutWFtt0UcwBm7Qtz
-         P6CeI39i5St5nD6OpvIZHx8/L1NYgzpRi4vLufppwbTOl4e1sGi1Dx9e4sQgaGmO1DnS
-         unH0AZwEtbxUwk4SllW155LxzdISK9siomiOLJ6Kln0mnvSLItWxswG8FjSgkbB7TI2B
-         8mmg==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=4cPgQBj1WxGHTUMEYqzlhOIV23QiZS9VaAS+hapmdiY=;
+        b=Du+kRRKtk372gUjQ/V2QuTWdO1Zldy+5P9jYgnZWo1N4bT5mhz32PmTPIWqLh3CvId
+         UtMLAzkGhLhG3DYNq2/qX/qFOBZ3POLrDMRag6d9YCWeAu/qt/9dbTUoWeOpK2BH8KKY
+         2SjOGF/GBqlPcIx2axlbBNVyNcFrxUMZvgZY/jv+ecBN6nmxsISHweKGPp8Xl8fL9ds9
+         nqYpJzb2vsVmdi1TdNq39GLE1Py4vxsF2g2geCjshKcBos8Uil4e56fAmU2DS6Hw5H0j
+         YmeVI+WPh9fynjvbU89EU4Rv/bvTrRxXd8ftMrmNwKeF02u3xnNZRpUmrgytRfyUvu4l
+         yvrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=wCHP+CiX43RbXU7uRH2/j12PxpVIzT36ebk+dyCQpEw=;
-        b=HJijboCeHTOblqSVrfmGHJ81x/eoO1qJPMks+jmDLej3XrhLEXtIioQQTuEjwvFAs1
-         moYqPIYRhzMs5TVPmXm+/NQ0WLwhO9kYToqWt5NOY9eMyNj1SBVm1XucCwp9IxOVjqFe
-         XJd3LI6FQdq9FVAVCoHIURBYOYqQMWsF3wYYYUyJBzJqGUrlrY+kF6tPqZAyGfEPEQQN
-         mWSe/8l3c218c+aX8pE4SU4EOAaXhZB5rZru6Q4SDI/nPkmUmByx5eZa/i25JZqXMdwv
-         2j99WdMxOtFp8DO1iRSaoPToN4exd6BbTejWs3oAKXUeb4V9JFTjl/FB81esKEUFy9qE
-         QecQ==
-X-Gm-Message-State: AOAM530w6vLb3pWvXop+bHsVCGdE3n2bwmEaAIRqeFgCbS2wK7N2t5a+
-        4XkTbYZ8jxK/jvIXXJrW3ObPhr+apR23FuYX
-X-Google-Smtp-Source: ABdhPJyLAvZ6grKt95o6GWwxk8e8hnwS7twTHOdqKhjCz4fKcq4xpYuwXojkJ/Hpt0vxGelZQkdKYg==
-X-Received: by 2002:a17:90a:4410:: with SMTP id s16mr18147pjg.159.1606150332141;
-        Mon, 23 Nov 2020 08:52:12 -0800 (PST)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id z9sm15084992pji.48.2020.11.23.08.52.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2020 08:52:11 -0800 (PST)
-Date:   Mon, 23 Nov 2020 11:52:09 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com, peff@peff.net
-Subject: Re: [PATCH 08/23] ewah: implement bitmap_or()
-Message-ID: <X7vouTlBlT62H7A4@nand.local>
-References: <cover.1605123652.git.me@ttaylorr.com>
- <dce9b6da0ad38da0a92b39d780d7b56f83d52950.1605123652.git.me@ttaylorr.com>
- <xmqq3611qgg4.fsf@gitster.c.googlers.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=4cPgQBj1WxGHTUMEYqzlhOIV23QiZS9VaAS+hapmdiY=;
+        b=WXwLxqN0bRjYHWylxilGzmt3kP1B8eht1YYMcBXe7S6i0PWxkmAdEhRJ3fQjhZb1uU
+         y/4nqWWuvq61rnFZFFBdztY9Xsb2PecS1fI057AKTcerV9ZhWU4nMzThSFRVK20mkwsX
+         2BmUd/TZNSnWv8zN9t0XSrrVCGoezCNmuzAVuE5K05YIYuLGX8CfWVrSN4gS7yUnVoPp
+         QEKi4PNrBTdspO+yS+RnYutqgzmgKiygNxBsN2lNLvH83/TmNlsJz+qRR3tjkR+92NUj
+         AtPJlO1IBcCNSH7iI9ZwOXzv6J7JxJQtCRDUQKpsfPiNJx5WeqpVZZd4k+I3/olp2RsG
+         RdmA==
+X-Gm-Message-State: AOAM5328oodfqFk0+heh4sXAwd5tOpPM3JtaBy5hMQUJKyhYw90PJ74M
+        UoPF7r2SDsO8xJSBhKj5HatJ3vjmU/vFpJMvwLJruzPzTOM=
+X-Google-Smtp-Source: ABdhPJzpY4aSEeQokcvvV0WhIF63CeAoZ7hw50WAGX18hoBIbaWxOfoWNpw/HGNuFWY9Mj4rHZXeI/9s8FUW+UTg75Y=
+X-Received: by 2002:adf:ed02:: with SMTP id a2mr932842wro.81.1606154365374;
+ Mon, 23 Nov 2020 09:59:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq3611qgg4.fsf@gitster.c.googlers.com>
+References: <742df4c2-2bc5-8a4b-8de1-cd5e48718398@redhat.com>
+In-Reply-To: <742df4c2-2bc5-8a4b-8de1-cd5e48718398@redhat.com>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Mon, 23 Nov 2020 10:59:13 -0700
+Message-ID: <CAMMLpeRLsE=zNDjCRKmEMFxJBYcnTOdDGxEL9cZuVhuDMF=sLg@mail.gmail.com>
+Subject: Re: Pick the right default and stop warn on `git pull`
+To:     =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 22, 2020 at 12:34:03PM -0800, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+On Mon, Nov 23, 2020 at 8:14 AM V=C3=ADt Ondruch <vondruch@redhat.com> wrot=
+e:
 >
-> > From: Jeff King <peff@peff.net>
-> >
-> > We have a function to bitwise-OR an ewah into an uncompressed bitmap,
-> > but not to OR two uncompressed bitmaps. Let's add it.
-> >
-> > Interestingly, we have a public header declaration going back to
-> > e1273106f6 (ewah: compressed bitmap implementation, 2013-11-14), but the
-> > function was never implemented.
+> Hi,
 >
-> So we have had decl, no impl, but it did not matter because there
-> was no user?  Presumably we will see a real user soon in the series
-> ;-)
+> While I understand that the merge after `git pull` is probably not the
+> best strategy (as explained in [1]), asking people to change their
+> configuration to choose their default strategy with every `git pull` is
+> not any better. Please select any strategy considered more appropriate
+> and stop warning me. I know I could change my configuration, but I'll
+> change it just if I want to differ from defaults. I don't need to be
+> told that I am using wrong default. I'd like to keep my trust in Git
+> upstream, but this is was not trustworthy decision IMO.
+>
+> BTW, I was motivated to open this discussion by this [2] Fedora ticket.
+>
+>
+> V=C3=ADt
+>
+>
+>
+> [1] https://github.com/git/git/commit/d18c950a69
+>
+> [2] https://bugzilla.redhat.com/show_bug.cgi?id=3D1900441
 
-Indeed :-). I added a note to this patch's log message to indicate that
-a new/first caller would be appearing in a couple of patches after this
-one.
+Hi Vit, as the message explains, you can use `git config --global
+pull.rebase false` to permanently silence the warning for all of your
+repositories. The idea is that in a future version of Git, users will
+not be allowed to pull at all without specifying a reconciliation
+strategy. This will prevent users (novices in particular) from
+accidentally creating messes by merging branches that should have been
+rebased instead.
 
-Thanks,
-Taylor
+Personally, I would rather have pull.rebase be true by default (and
+I'm sure many others would like that too), but there are so many users
+who really do want to merge that it's not reasonable to make rebasing
+the default. The most reasonable solution is to ask the user to be
+explicit about what they want and not make assumptions.
+
+-Alex
