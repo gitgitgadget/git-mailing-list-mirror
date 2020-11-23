@@ -2,233 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-23.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5405C64E75
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 22:46:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29875C2D0E4
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 22:48:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6D4B420738
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 22:46:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D0623206D8
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 22:48:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZlS/d6ie"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="H6ZE3h3V"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733302AbgKWWq1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Nov 2020 17:46:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38508 "EHLO
+        id S1730558AbgKWWs2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Nov 2020 17:48:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732924AbgKWWq0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Nov 2020 17:46:26 -0500
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBFE0C0613CF
-        for <git@vger.kernel.org>; Mon, 23 Nov 2020 14:46:26 -0800 (PST)
-Received: by mail-ot1-x342.google.com with SMTP id n11so17530204ota.2
-        for <git@vger.kernel.org>; Mon, 23 Nov 2020 14:46:26 -0800 (PST)
+        with ESMTP id S2387502AbgKWWsU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Nov 2020 17:48:20 -0500
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com [IPv6:2607:f8b0:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE2A0C0613CF
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 14:48:20 -0800 (PST)
+Received: by mail-pf1-x444.google.com with SMTP id v12so16393244pfm.13
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 14:48:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=gc4tiv1Ov5EKyyWZImNeb4SLWQv6xMIPdZIROa7rCzE=;
-        b=ZlS/d6iemUKgC6582xLIGPjuMuoD5MnjltjVhRityKcREnhisLOTSXbgx7qNSdIDEw
-         C/NXeMEYDAf1vNyPbhtCoLdB1Ese8GatbhuFZ9rFBeupKFibmJt07RdQfJTH30ashISE
-         YrJLA1KoC2IlDZd9px/tWWwytz7XfLVRuhYQMml/rggrR8JXGBXD6EWuJ+AnsnPIwB3O
-         0rMFPbJ3D/MyszmA2O9je3oQXc4/onn1TpApLF684drR4kBZQauk8zqc9O7dztNmcrEq
-         TV6p0ZTAvjDQnBPm/vPtYpoafAwmQEcyRjRKEHXeR9QcOzbKGkqo+8jEFCnrULEBQgkZ
-         PXDA==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=O34ZPWxCXzwaKqmjYdwWE/fmDkE983TdR4/u4lwnj4E=;
+        b=H6ZE3h3VtNLpy47Qan4mCynX/YMWRjxh/vLIqiYhwHRkyfTseD42jUDm0ctRZs26Zb
+         OFV6IIbAgIZqIIMA9UnO25XNeC4gpda29dlopnpzUOQCND6XWs5Zvkwye4DaiLHtx1b3
+         X/YqM3p+WFkpiqIoK3XwtsCY9x0GSJwBmFXe9hBfIQCgEjLy7rksj6I8mnn8xQnxYD9+
+         x+hKoBfcjptKJPNjCVUhXzAPNtHyLrMzfLkQE0b+sJ4u/0BF2+rwfK8DY3pd9Dbjl8cC
+         pDHbnLXHHMQJoNBsj/8VVUxO3f4oqgZJD5KclaOHNj0jkYSoje4I3wWMrrvTRnO9PMkL
+         B2qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=gc4tiv1Ov5EKyyWZImNeb4SLWQv6xMIPdZIROa7rCzE=;
-        b=By+fJO/yNQ4oxnK1sJNnJuSv8YDWARn0Os9gxr1xJ0nf+M7vES3jULjNV3qGJILr3e
-         B2RQx6xkuv95KwORhMWIbGeumeWIiq1McaVLgImuudVjTLrOZAfbC2uueTP0f+jbgLYR
-         UjxHZuxocrxuklSUNfGxE1Xp8tJ3PoI6jo8XXAtdNPuXiuT2hPtUqlMZhjQcSBEcWilk
-         4AlZYZfn1ZLHlBxZo8DLBFzcSDLSd+40J8WjBFfk2y4VhSpPDMMm+VlqVqCcxoUVZYRo
-         Pa75au/tk7uhiho8t0D91YZgWmApw/ChGCKzNbSntNHC3hqkwfq/i+0OdyG0ZyPc11nG
-         kjnA==
-X-Gm-Message-State: AOAM531ClDV1kGLhuOGO/8qdEseaL4IJ4cIWcLUzUPsKR09Do5Kdwx9U
-        kFcPxaFkWodujR0Z4WMNCt+lxqOPHA2xLA==
-X-Google-Smtp-Source: ABdhPJwZ6Btq9bHAwxqWm+Ka87KHZt3z3uNpC5inMRnsPWeJQrZehdUAwuRZecmVfdNwjZzHI978OQ==
-X-Received: by 2002:a9d:46f:: with SMTP id 102mr1240166otc.293.1606171585884;
-        Mon, 23 Nov 2020 14:46:25 -0800 (PST)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id v5sm8293312oob.40.2020.11.23.14.46.25
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=O34ZPWxCXzwaKqmjYdwWE/fmDkE983TdR4/u4lwnj4E=;
+        b=NgIZHtNN3akNNaRsMV/LZPwQDa4KpK6HROueH9+C5vz6gMguETe1uB5KqXPV8Nk2w4
+         0qFLljGm7c367BVaahspoHG5glefeJoNNL7KhKvQf2e7CKF2VzzIvkwcop5Ddg8Gi6lq
+         lRe34VlgxovFLNPFTx/g7mL9rVRR131JN94bv36wuv57npeIfq5+5BMhabDTQVrVfbxf
+         xOYpOFGHwG7yaccFKxOXZ/TUzA0+hW7kQygn4KsJT9gtQgicjNb8evGRPLgLmivcUnSH
+         xlaFE7tbw1sUooLloVTPS4pOxbmM3xL8HFw5GeHDa4cq8Apz2mhQ6FFfumxULllG0CLB
+         S42Q==
+X-Gm-Message-State: AOAM532n9FcEkzWyXM2SAnzYfw0luW8ukwWKmNtBf1zqHDkkbQpmxKo3
+        W5V6piOytUi4riKdkQz3SyCUYg==
+X-Google-Smtp-Source: ABdhPJxRkGrN3XtsHwgLh9HondA84WGaBZNNOKYOMeBConqTYPXdzAIS2bBmnMi//y/R1675FbFAgA==
+X-Received: by 2002:a62:8006:0:b029:196:33f2:4dd7 with SMTP id j6-20020a6280060000b029019633f24dd7mr1531610pfd.38.1606171700104;
+        Mon, 23 Nov 2020 14:48:20 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
+        by smtp.gmail.com with ESMTPSA id s26sm11837996pgv.93.2020.11.23.14.48.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2020 14:46:25 -0800 (PST)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?V=C3=ADt=20Ondruch?= <vondruch@redhat.com>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        "Theodore Y . Ts'o" <tytso@mit.edu>, Jeff King <peff@peff.net>,
-        Andreas Krey <a.krey@gmx.de>,
-        John Keeping <john@keeping.me.uk>,
-        Richard Hansen <rhansen@rhansen.org>,
-        Philip Oakley <philipoakley@iee.org>,
-        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
-        "W. Trevor King" <wking@tremily.us>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v7 1/1] pull: add ff-only option
-Date:   Mon, 23 Nov 2020 16:46:21 -0600
-Message-Id: <20201123224621.2573159-2-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20201123224621.2573159-1-felipe.contreras@gmail.com>
-References: <20201123224621.2573159-1-felipe.contreras@gmail.com>
+        Mon, 23 Nov 2020 14:48:19 -0800 (PST)
+Date:   Mon, 23 Nov 2020 14:48:14 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 7/7] maintenance: use 'git config --fixed-value'
+Message-ID: <20201123224814.GG499823@google.com>
+References: <pull.796.git.1605801143.gitgitgadget@gmail.com>
+ <pull.796.v2.git.1606147507.gitgitgadget@gmail.com>
+ <5a3acf811998bb728ce94c69611c237861775142.1606147507.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5a3acf811998bb728ce94c69611c237861775142.1606147507.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It is very typical for Git newcomers to inadvertently create merges and
-worse; inadvertently pushing them. This is one of the reasons many
-experienced users prefer to avoid 'git pull', and recommend newcomers to
-avoid it as well.
+On Mon, Nov 23, 2020 at 04:05:07PM +0000, Derrick Stolee via GitGitGadget wrote:
+> 
+> 
+> When a repository's leading directories contain regex glob characters,
+Minor "well, actually" - I'm not sure 'glob' is the right word to use
+here.
 
-To avoid these problems, and keep 'git pull' useful, it has been
-suggested that 'git pull' barfs by default if the merge is
-non-fast-forward, which unfortunately would break backwards
-compatibility.
+> the config calls for 'git maintenance register' and 'git maintenance
+> unregister' are not careful enough. Use the new --fixed-value option
+> to direct the config machinery to use exact string matches. This is a
+> more robust option than excaping these arguments in a piecemeal fashion.
+Typo on 'escaping'.
 
-This patch leaves everything in place to enable this new mode, but it
-only gets enabled if the user specifically configures it;
+> 
+> For the test, require that we are not running on Windows since the '+'
+> character is not allowed on that filesystem.
+> 
+> Reported-by: Emily Shaffer <emilyshaffer@google.com>
+> Reported-by: Jonathan Nieder <jrnieder@gmail.com>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  builtin/gc.c           |  5 +++--
+>  t/t7900-maintenance.sh | 12 ++++++++++++
+>  2 files changed, 15 insertions(+), 2 deletions(-)
+> 
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index e3098ef6a1..6dde3ce1bb 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -1452,7 +1452,8 @@ static int maintenance_register(void)
+>  		git_config_set("maintenance.strategy", "incremental");
+>  
+>  	config_get.git_cmd = 1;
+> -	strvec_pushl(&config_get.args, "config", "--global", "--get", "maintenance.repo",
+> +	strvec_pushl(&config_get.args, "config", "--global", "--get",
+> +		     "--fixed-value", "maintenance.repo",
+>  		     the_repository->worktree ? the_repository->worktree
+>  					      : the_repository->gitdir,
+>  			 NULL);
+> @@ -1483,7 +1484,7 @@ static int maintenance_unregister(void)
+>  
+>  	config_unset.git_cmd = 1;
+>  	strvec_pushl(&config_unset.args, "config", "--global", "--unset",
+> -		     "maintenance.repo",
+> +		     "--fixed-value", "maintenance.repo",
+>  		     the_repository->worktree ? the_repository->worktree
+>  					      : the_repository->gitdir,
+>  		     NULL);
+> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+> index 20184e96e1..c4e5564c31 100755
+> --- a/t/t7900-maintenance.sh
+> +++ b/t/t7900-maintenance.sh
+> @@ -367,6 +367,18 @@ test_expect_success 'register and unregister' '
+>  	test_cmp before actual
+>  '
+>  
+> +test_expect_success !MINGW 'register and unregister with glob characters' '
+> +	GLOB="a+b*c" &&
+> +	git init "$GLOB" &&
+> +	git -C "$GLOB" maintenance register &&
+> +	git config --get-all --show-origin maintenance.repo &&
+Hm, what's the reason for --show-origin when the output isn't captured
+or checked? Is this leftover?
 
-  pull.rebase = ff-only.
+> +	git config --get-all --global --fixed-value \
+> +		maintenance.repo "$(pwd)/$GLOB" &&
+> +	git -C "$GLOB" maintenance unregister &&
+> +	test_must_fail git config --get-all --global --fixed-value \
+> +		maintenance.repo "$(pwd)/$GLOB"
+> +'
+> +
+>  test_expect_success 'start from empty cron table' '
+>  	GIT_TEST_CRONTAB="test-tool crontab cron.txt" git maintenance start &&
+>  
 
-Later on this mode can be enabled by default.
+And after all that buildup, this patch is a very straightforward test
+fix: explain the problem, add the arg in question, add a regression
+test. Thanks.
 
-For the full discussion you can read:
-
-https://lore.kernel.org/git/5363BB9F.40102@xiplink.com/
-
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- Documentation/config/branch.txt |  2 ++
- Documentation/config/pull.txt   |  2 ++
- builtin/pull.c                  |  6 +++++-
- rebase.c                        |  2 ++
- rebase.h                        |  3 ++-
- t/t5520-pull.sh                 | 36 +++++++++++++++++++++++++++++++++
- 6 files changed, 49 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/config/branch.txt b/Documentation/config/branch.txt
-index cc5f3249fc..715987c759 100644
---- a/Documentation/config/branch.txt
-+++ b/Documentation/config/branch.txt
-@@ -81,6 +81,8 @@ branch.<name>.rebase::
- 	"git pull" is run. See "pull.rebase" for doing this in a non
- 	branch-specific manner.
- +
-+When `ff-only` (or just 'f'), the rebase will only succeed if it's fast-forward.
-++
- When `merges` (or just 'm'), pass the `--rebase-merges` option to 'git rebase'
- so that the local merge commits are included in the rebase (see
- linkgit:git-rebase[1] for details).
-diff --git a/Documentation/config/pull.txt b/Documentation/config/pull.txt
-index 5404830609..060bacc63c 100644
---- a/Documentation/config/pull.txt
-+++ b/Documentation/config/pull.txt
-@@ -14,6 +14,8 @@ pull.rebase::
- 	pull" is run. See "branch.<name>.rebase" for setting this on a
- 	per-branch basis.
- +
-+When `ff-only` (or just 'f'), the rebase will only succeed if it's fast-forward.
-++
- When `merges` (or just 'm'), pass the `--rebase-merges` option to 'git rebase'
- so that the local merge commits are included in the rebase (see
- linkgit:git-rebase[1] for details).
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 17aa63cd35..ba2777c401 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -1033,8 +1033,12 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 			}
- 			free_commit_list(list);
- 		}
--		if (!ran_ff)
-+		if (!ran_ff) {
-+			if (opt_rebase == REBASE_FF_ONLY)
-+				die(_("The pull was not fast-forward, please either merge or rebase.\n"
-+					"If unsure, run 'git pull --merge'."));
- 			ret = run_rebase(&curr_head, merge_heads.oid, &rebase_fork_point);
-+		}
- 
- 		if (!ret && (recurse_submodules == RECURSE_SUBMODULES_ON ||
- 			     recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND))
-diff --git a/rebase.c b/rebase.c
-index f8137d859b..eba1253552 100644
---- a/rebase.c
-+++ b/rebase.c
-@@ -20,6 +20,8 @@ enum rebase_type rebase_parse_value(const char *value)
- 		return REBASE_FALSE;
- 	else if (v > 0)
- 		return REBASE_TRUE;
-+	else if (!strcmp(value, "ff-only") || !strcmp(value, "f"))
-+		return REBASE_FF_ONLY;
- 	else if (!strcmp(value, "preserve") || !strcmp(value, "p"))
- 		return REBASE_PRESERVE;
- 	else if (!strcmp(value, "merges") || !strcmp(value, "m"))
-diff --git a/rebase.h b/rebase.h
-index cc723d4748..127febeb7c 100644
---- a/rebase.h
-+++ b/rebase.h
-@@ -7,7 +7,8 @@ enum rebase_type {
- 	REBASE_TRUE,
- 	REBASE_PRESERVE,
- 	REBASE_MERGES,
--	REBASE_INTERACTIVE
-+	REBASE_INTERACTIVE,
-+	REBASE_FF_ONLY
- };
- 
- enum rebase_type rebase_parse_value(const char *value);
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 9fae07cdfa..d96bdc90cc 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -819,4 +819,40 @@ test_expect_success 'git pull --rebase against local branch' '
- 	test_cmp expect file2
- '
- 
-+test_expect_success 'git pull fast-forward (ff-only)' '
-+	test_when_finished "git checkout master && git branch -D other test" &&
-+	test_config pull.rebase ff-only &&
-+	git checkout -b other master &&
-+	>new &&
-+	git add new &&
-+	git commit -m new &&
-+	git checkout -b test -t other &&
-+	git reset --hard master &&
-+	git pull
-+'
-+
-+test_expect_success 'git pull non-fast-forward (ff-only)' '
-+	test_when_finished "git checkout master && git branch -D other test" &&
-+	test_config pull.rebase ff-only &&
-+	git checkout -b other master^ &&
-+	>new &&
-+	git add new &&
-+	git commit -m new &&
-+	git checkout -b test -t other &&
-+	git reset --hard master &&
-+	test_must_fail git pull
-+'
-+
-+test_expect_success 'git pull non-fast-forward with merge (ff-only)' '
-+	test_when_finished "git checkout master && git branch -D other test" &&
-+	test_config pull.rebase ff-only &&
-+	git checkout -b other master^ &&
-+	>new &&
-+	git add new &&
-+	git commit -m new &&
-+	git checkout -b test -t other &&
-+	git reset --hard master &&
-+	git pull --no-rebase
-+'
-+
- test_done
--- 
-2.29.2
-
+Other than the one extraneous(?) line,
+Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
