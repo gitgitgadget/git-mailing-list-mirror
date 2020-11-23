@@ -2,134 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23377C388F9
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 20:45:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F7EEC2D0E4
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 20:46:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C0A5220721
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 20:45:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3513520721
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 20:46:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="lwJ+01Nc"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="lnHmaKfF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728980AbgKWUpZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Nov 2020 15:45:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48042 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728938AbgKWUpZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Nov 2020 15:45:25 -0500
-Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E179C0613CF
-        for <git@vger.kernel.org>; Mon, 23 Nov 2020 12:45:25 -0800 (PST)
-Received: by mail-qt1-x849.google.com with SMTP id d9so3081479qtr.5
-        for <git@vger.kernel.org>; Mon, 23 Nov 2020 12:45:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=ha7fUR57JK2a7s4g54+hWhFMrAlKIgOOceK+jRn2cv8=;
-        b=lwJ+01NcEMWCigtva1/6m73T8uCs8V92q4Oj/Ku5hkpzfmykcUK/k7EEZp0nsYtb0x
-         xqlD5uSC7awYfUjTCaXCz8t3Py9XpDA5I+YXdfiWqhJMz/Zyxe35YkCM4c06GgsAfHNk
-         jd5D+eQoZAvIjKYhlYQzT7eETv0hIOcJqfrC9UeaEjak0pVFpN35aBmJtLOe5Ak20lHX
-         T0qdaZAUoHkHxu3i1tR7DQkc1aC+sdgVJfrqHqhsc2kEBGZXU1IBvpyeFpNkCWUu3gsj
-         +f2G6DZaQx/o1U6EWv4HIwb9arJyYMJTMuL/shYkrgULcsdPF9Bp2wS4gSSZpzN5W68S
-         EQ6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=ha7fUR57JK2a7s4g54+hWhFMrAlKIgOOceK+jRn2cv8=;
-        b=lkOBPS8aJ2RY65iF1wiM/0kY5Mi68wd+VNS6NkSZvDERBxHIMv5bu3AwVpcDGJWCH8
-         30Ml3O/sG/9XLdn4odSQCNy6CeTMZJtT5q7IQ4PisWcdghaNhbTw0mJDd8eSpj4NWdck
-         Jvf9gwnekZPhsvrxTbvhJZJ/SDJSzDF6EgYJRZYOaOCG1WDRHPGmQXC3tlsd8veeTafc
-         V0SQqVacSCs0Ek+Rdqgw+7LdD6FTomvpijEuHQtq3rT7Hqur/t1H61RTEw2qYRaDQQYH
-         Rc9MOMLKqFId52p2CyhFuhe7Fp1RZKHWUPQfJmP2IOuCZIRx02mXvTKJAWQZk7o+5qyB
-         SnHA==
-X-Gm-Message-State: AOAM531OMT15IDJL7R8aeVRjB61Vw41fgQpHMPlirUfJnOD3U3nmUiUB
-        5qwsJfQxtMZni6rmsWgYBIGrqwRN5h+sG57PsYCseqdRXF0yl+wj4YQAbgSooQZiHV/DGUtDGfW
-        drj8e2RdQpmCFpI4iZlGHPIo3DNkDjTaJQ6C1zpAyfFyc9VlrKeZMdQXzjDgbuadqE32SdxOK79
-        Gy
-X-Google-Smtp-Source: ABdhPJxYpGOFYpd8Fmy4AG1uDjqyQlMYlZxXKF1QjAxaNXdNPyntjvT5VYzC4jGz8DCqtzcDv3sEhqhzu84fvsqIVqXJ
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6214:17c1:: with SMTP id
- cu1mr1476142qvb.32.1606164324314; Mon, 23 Nov 2020 12:45:24 -0800 (PST)
-Date:   Mon, 23 Nov 2020 12:45:22 -0800
-In-Reply-To: <20201123190412.101265-1-jonathantanmy@google.com>
-Message-Id: <20201123204522.675836-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20201123190412.101265-1-jonathantanmy@google.com>
-X-Mailer: git-send-email 2.29.2.454.gaff20da3a2-goog
-Subject: [RFC PATCH v2] usage: add trace2 entry upon warning()
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@jeffhostetler.com
-Content-Type: text/plain; charset="UTF-8"
+        id S1729186AbgKWUqR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Nov 2020 15:46:17 -0500
+Received: from mout.gmx.net ([212.227.17.20]:46193 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728869AbgKWUqQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Nov 2020 15:46:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1606164371;
+        bh=Vr1GlnwysCRwn51SwzpeRKjNbjPBA5QzULrQ0YbAhKU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=lnHmaKfFaT5jaxnj/rBj0vb7XDhoWmhqkNGhK4ZWVlZf3NeVaruKVruXnAl+Xe1ud
+         OxIAxhIP/cRw8Air16fTQcW83n4tKt6EGdipWcI3nwaxMeYaxX0Xh4Yh6wmxhkydPP
+         1ReCr//dfpd7IDuRJVF/bmbFn0k151ez2x+LzO8w=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.26.22.105] ([89.1.213.133]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MGz1f-1kUwOO0WNX-00E2TH; Mon, 23
+ Nov 2020 21:46:11 +0100
+Date:   Mon, 23 Nov 2020 21:46:09 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 3/3] init: provide useful advice about
+ init.defaultBranch
+In-Reply-To: <xmqqv9dvor27.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2011232136191.56@tvgsbejvaqbjf.bet>
+References: <pull.921.git.git.1606087406.gitgitgadget@gmail.com> <253d6706e6ab97e71ec012f6de33c75f3e980701.1606087406.git.gitgitgadget@gmail.com> <xmqqft51osnu.fsf@gitster.c.googlers.com> <xmqq4klgq10d.fsf@gitster.c.googlers.com>
+ <nycvar.QRO.7.76.6.2011231326150.56@tvgsbejvaqbjf.bet> <xmqqv9dvor27.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:1+KPwJGv19OHZn5S7uGhqGkgAuiV9LhILlf0vl7kRGp56WfTkfz
+ wCJ5JPIb/kO2c7E3JWWTkoGvmBU+5JOLr3QamyY3z+WI2MmKGX62XTbRAbHrViqjSOVQ5pu
+ cyM3HQd4eekH7C+ZJQekooahkLc1lcbh1uRwhumhn74sUjqeXlBrVxE0Z6AuWk77aAxSml8
+ JWjbS5IQ+3TolehgTtywg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:rTU9YgFTiko=:2lcNF4seUTfxvJE+FLcCCB
+ 4Umi/+RFwsmFau71JLuUOQH7h0OKDXNUOd4gwVmhj5A0xBaVADWR4Ji39k5hbqRS/IIjYC0Ox
+ aYrDPbGfwOmh0ILhRqbjS9L5WnJb3Wub0LcOJ1t6uEQJrj34aljai4iLBH8KjEeIdjX+/YtHa
+ bD6LUnG5c9m5c6JcQ7ykpPCpmfMusqlTCtrqQjWYfqr4Zqny3KJ3j5aoNJVEc2qvNDvj1CuKG
+ /WH7+tHfbkckJzbv6WN8NpWPqcms0ZJ+E3gb9p27r7Usbdct2b/Pf4QTc7ilCjtGa+CrjSqIW
+ aM/L0/dIXe3R48kIf8Y1DC0b4YMhdtz+0ekiwu9j1pM+lCfuFHFuV00CNmmED84YRrJTSIGp9
+ iYlFSUlTnbFpIC1VGKrjTzahV6vPnzo/lF7cXKDj9mczhDUcAI+7vyXMJgPglIx5kEI2fXvl3
+ PXSM3emBz2PV6iY2emd1qEFC9o6UTCAKZ4mzKPdg2EBbymGhfZpR+IoQUDVZRFMZRNEp96H2L
+ UaNhBU9NkIxYhwICcRei47BojTbWZjYFFQ8CCGj/2IcI50gQ/c3lfSkORMUCwLS5b6bdNcFHY
+ AHwoyqo9jI+igsFOaU2ljS401xoI+ly99pN/2PQHBFP8iFCnHXQDhCSEpikYpGIXXZFK/bHqW
+ vNA95r6K7hJjP/ddO+aMQYDIdLwBdJwG3nEc28mrA1aa24vj1Pqtu0I/cCDNCfRa/mZa/A934
+ gMPOI5PynyE2bDcetP6AHVzUOJoCDEK5H690UIUVDsVIbTPBjKu/1/zKaKuKYBKlqjsLr/lSa
+ yKPIjhqjOiAmpUardrBYDV31WHFCsbNwTpsrZaZUPbySLF/lrdmYBZLVYGDrGaVhXOSDp1VVK
+ ieztiz+PeFx3ce1m0imgGeHkfssOfrIUA/In+tGLc=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emit a trace2 error event whenever warning() is called, just like when
-die(), error(), or usage() is called.
+Hi Junio,
 
-This helps debugging issues that would trigger warnings but not errors.
-In particular, this might have helped debugging an issue I encountered
-with commit graphs at $DAYJOB [1].
+On Mon, 23 Nov 2020, Junio C Hamano wrote:
 
-There is a tradeoff between including potentially relevant messages and
-cluttering up the trace output produced. I think that warning() messages
-should be included in traces, because by its nature, Git is used over
-multiple invocations of the Git tool, and a failure (currently traced)
-in a Git invocation might be caused by an unexpected interaction in a
-previous Git invocation that only has a warning (currently untraced) as
-a symptom - as is the case in [1].
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> >> The above may give a valuable lesson to those who want to use one
+> >> branch name across new repositories, but it does not tell those who
+> >> wanted 'trunk' (to match the project, perhaps github.com/cli/cli,
+> >> with which they intend to interact) how to recover from having
+> >> already created the 'master' branch.  We may want to add some text
+> >> to suggest "branch -M" after giving the advice for the permanent
+> >> option.
+> >
+> > Good point.
+> >
+> >> Also, it is unclear to those who do not have a good <name> in mind
+> >> (or, those who do not care to choose a <name> for themselves), what
+> >> <name> they should give to take the "or to silence this warning"
+> >> part of the advice.
+> >
+> > Also a good point.
+>
+> > I came up with this, which I intend to submit with v2:
+> >
+> > static const char default_branch_name_advice[] =3D N_(
+> > "Using '%s' as the name for the initial branch. This name is subject\n=
+"
+> > "to change. To configure the initial branch name to use in all of your=
+\n"
+> > "new repositories (or to suppress this warning), run:\n"
+>
+> The same issue around "to suppress" is here, though.
 
-[1] https://lore.kernel.org/git/20200629220744.1054093-1-jonathantanmy@google.com/
+Hmm. I would like to believe that readers understand that setting it to
+_any_ name would suppress this warning.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-Whoops...I ran a compile for the first version but I sent the email out
-before looking at the results. The first version had a compile error,
-but this one should be fine.
----
- Documentation/technical/api-trace2.txt | 2 +-
- usage.c                                | 6 ++++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+> > "\n"
+> > "\tgit config --global init.defaultBranch <name>\n"
+> > "\n"
+> > "Common names are 'main', 'trunk' and 'development'. The initial branc=
+h\n"
+> > "can be renamed via this command:\n"
+> > "\n"
+> > "\tgit branch -m <name>\n"
+>
+> It is very likely that the users are on an unborn branch when they
+> see this message and "git branch -m/-M <name>" does not work.  We'd
+> probably want to update "git branch" to allow renaming the current
+> branch that is unborn.
 
-diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
-index 6b6085585d..c65ffafc48 100644
---- a/Documentation/technical/api-trace2.txt
-+++ b/Documentation/technical/api-trace2.txt
-@@ -466,7 +466,7 @@ completed.)
- 
- `"error"`::
- 	This event is emitted when one of the `error()`, `die()`,
--	or `usage()` functions are called.
-+	`warning()`, or `usage()` functions are called.
- +
- ------------
- {
-diff --git a/usage.c b/usage.c
-index 06665823a2..1868a24f7a 100644
---- a/usage.c
-+++ b/usage.c
-@@ -81,6 +81,12 @@ static void error_builtin(const char *err, va_list params)
- 
- static void warn_builtin(const char *warn, va_list params)
- {
-+	/*
-+	 * We call this trace2 function first and expect it to va_copy 'params'
-+	 * before using it (because an 'ap' can only be walked once).
-+	 */
-+	trace2_cmd_error_va(warn, params);
-+
- 	vreportf("warning: ", warn, params);
- }
- 
--- 
-2.29.2.454.gaff20da3a2-goog
+Ouch, good point, I had not even realized that that does not work. In v2,
+I will include a patch that lets it work.
 
+> In the meantime, you could do "git checkout --orphan <name>" here,
+> but once <name> exists as a branch that would not work, so...
+
+Careful. We should start thinking about phasing out either `checkout` or
+`switch`. The latter was intended to supersede the former with respect to
+working on branches, so I would think of phasing out `checkout` and favor
+`switch` instead.
+
+That issue aside, `git switch --orphan <name>` is not necessarily a good
+UI here. Its documentation talks about creating a new branch, deleting all
+tracked files. While it is technically still correct that this command,
+when run on an unborn branch, does the same as renaming said branch, it is
+highly unintuitive to think about it that way. ("I don't want to create a
+new branch, I want to rename the current one! And whoa, delete tracked
+files? I don't want to delete _any_ files! What do you mean: there aren't
+any tracked files, so none are deleted? Why do you talk about deleting
+files, then?")
+
+So in the interest of _reducing_ confusion, I would really, really,
+_really_ like to avoid mentioning that command in this advice.
+
+It really is much better to make `git branch -m <name>` work in this
+scenario.
+
+Ciao,
+Dscho
+
+>
+>
+> > );
+> >
+> > Ciao,
+> > Dscho
+>
