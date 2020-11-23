@@ -2,160 +2,226 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F7EEC2D0E4
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 20:46:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2337C2D0E4
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 20:47:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3513520721
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 20:46:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2EBC920721
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 20:47:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="lnHmaKfF"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="KE3V/RZ9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729186AbgKWUqR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Nov 2020 15:46:17 -0500
-Received: from mout.gmx.net ([212.227.17.20]:46193 "EHLO mout.gmx.net"
+        id S1728550AbgKWUr1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Nov 2020 15:47:27 -0500
+Received: from mout.gmx.net ([212.227.17.21]:32781 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728869AbgKWUqQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Nov 2020 15:46:16 -0500
+        id S1727461AbgKWUr0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Nov 2020 15:47:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1606164371;
-        bh=Vr1GlnwysCRwn51SwzpeRKjNbjPBA5QzULrQ0YbAhKU=;
+        s=badeba3b8450; t=1606164444;
+        bh=lb5Z/ULU0tH2/JjTymxSwRPKMZZ0ltLP8+XxZGh72KQ=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=lnHmaKfFaT5jaxnj/rBj0vb7XDhoWmhqkNGhK4ZWVlZf3NeVaruKVruXnAl+Xe1ud
-         OxIAxhIP/cRw8Air16fTQcW83n4tKt6EGdipWcI3nwaxMeYaxX0Xh4Yh6wmxhkydPP
-         1ReCr//dfpd7IDuRJVF/bmbFn0k151ez2x+LzO8w=
+        b=KE3V/RZ9VfTDHJWAAhBwLlNiK0jLYko3Sq5Ek52+GvqC+an4dIKEnVMU+TweU5In5
+         XuupJ0V2WwYpK7uALeW2QBzrPdry0Kakqyojzqh4eOQbmXGNtlIXj1ual7RA9BYUbE
+         KVSL9rqSNxpCZg60zuSpKFwvBAcDE6fFWEoHcYpY=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.26.22.105] ([89.1.213.133]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MGz1f-1kUwOO0WNX-00E2TH; Mon, 23
- Nov 2020 21:46:11 +0100
-Date:   Mon, 23 Nov 2020 21:46:09 +0100 (CET)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MYvY8-1klmqC0KH2-00UslM; Mon, 23
+ Nov 2020 21:47:24 +0100
+Date:   Mon, 23 Nov 2020 21:47:23 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
+To:     Philip Oakley <philipoakley@iee.email>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Subject: Re: [PATCH 3/3] init: provide useful advice about
  init.defaultBranch
-In-Reply-To: <xmqqv9dvor27.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2011232136191.56@tvgsbejvaqbjf.bet>
-References: <pull.921.git.git.1606087406.gitgitgadget@gmail.com> <253d6706e6ab97e71ec012f6de33c75f3e980701.1606087406.git.gitgitgadget@gmail.com> <xmqqft51osnu.fsf@gitster.c.googlers.com> <xmqq4klgq10d.fsf@gitster.c.googlers.com>
- <nycvar.QRO.7.76.6.2011231326150.56@tvgsbejvaqbjf.bet> <xmqqv9dvor27.fsf@gitster.c.googlers.com>
+In-Reply-To: <b7df1e27-9ffc-5ca5-3c9a-77dbcff48d19@iee.email>
+Message-ID: <nycvar.QRO.7.76.6.2011232146530.56@tvgsbejvaqbjf.bet>
+References: <pull.921.git.git.1606087406.gitgitgadget@gmail.com> <253d6706e6ab97e71ec012f6de33c75f3e980701.1606087406.git.gitgitgadget@gmail.com> <b7df1e27-9ffc-5ca5-3c9a-77dbcff48d19@iee.email>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:1+KPwJGv19OHZn5S7uGhqGkgAuiV9LhILlf0vl7kRGp56WfTkfz
- wCJ5JPIb/kO2c7E3JWWTkoGvmBU+5JOLr3QamyY3z+WI2MmKGX62XTbRAbHrViqjSOVQ5pu
- cyM3HQd4eekH7C+ZJQekooahkLc1lcbh1uRwhumhn74sUjqeXlBrVxE0Z6AuWk77aAxSml8
- JWjbS5IQ+3TolehgTtywg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:rTU9YgFTiko=:2lcNF4seUTfxvJE+FLcCCB
- 4Umi/+RFwsmFau71JLuUOQH7h0OKDXNUOd4gwVmhj5A0xBaVADWR4Ji39k5hbqRS/IIjYC0Ox
- aYrDPbGfwOmh0ILhRqbjS9L5WnJb3Wub0LcOJ1t6uEQJrj34aljai4iLBH8KjEeIdjX+/YtHa
- bD6LUnG5c9m5c6JcQ7ykpPCpmfMusqlTCtrqQjWYfqr4Zqny3KJ3j5aoNJVEc2qvNDvj1CuKG
- /WH7+tHfbkckJzbv6WN8NpWPqcms0ZJ+E3gb9p27r7Usbdct2b/Pf4QTc7ilCjtGa+CrjSqIW
- aM/L0/dIXe3R48kIf8Y1DC0b4YMhdtz+0ekiwu9j1pM+lCfuFHFuV00CNmmED84YRrJTSIGp9
- iYlFSUlTnbFpIC1VGKrjTzahV6vPnzo/lF7cXKDj9mczhDUcAI+7vyXMJgPglIx5kEI2fXvl3
- PXSM3emBz2PV6iY2emd1qEFC9o6UTCAKZ4mzKPdg2EBbymGhfZpR+IoQUDVZRFMZRNEp96H2L
- UaNhBU9NkIxYhwICcRei47BojTbWZjYFFQ8CCGj/2IcI50gQ/c3lfSkORMUCwLS5b6bdNcFHY
- AHwoyqo9jI+igsFOaU2ljS401xoI+ly99pN/2PQHBFP8iFCnHXQDhCSEpikYpGIXXZFK/bHqW
- vNA95r6K7hJjP/ddO+aMQYDIdLwBdJwG3nEc28mrA1aa24vj1Pqtu0I/cCDNCfRa/mZa/A934
- gMPOI5PynyE2bDcetP6AHVzUOJoCDEK5H690UIUVDsVIbTPBjKu/1/zKaKuKYBKlqjsLr/lSa
- yKPIjhqjOiAmpUardrBYDV31WHFCsbNwTpsrZaZUPbySLF/lrdmYBZLVYGDrGaVhXOSDp1VVK
- ieztiz+PeFx3ce1m0imgGeHkfssOfrIUA/In+tGLc=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1383336044-1606164444=:56"
+X-Provags-ID: V03:K1:wCxJ+FmkflA1oZZAQVVeuxWhKm2dRlZkVxJ7/bXfL71TLpFzLyG
+ PZjUxtdnylfJly0JPuUzlPJQm/WXiicW/gTjNwQ6DeiVMFRIN4hYh2b6TnbWnhAnub9InYU
+ vzCcJ6KdHgUuznFahJkM+pMdR8afSbJ73+vZuDcrW/PPcAOo1cS9JVB7hZCtZsgi32b2sG/
+ +nDueP4KoyZ1l0f6TQWdQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:9G0gotu3jHE=:oaOUhTyv2GbCTg7g23xgwV
+ PG+SnV1bRqXI/+S9UjR+WpcQU4gL5O38NZL8FDR+pZt/QJStwiu6h0wPNDVOS6nn3pvqueldv
+ FB+BiHkMptG5tPoLCIRg85uO0OTFg3QAdU6tYm7MlvCtXgY4L61dU8nmLtucCEyk9W6MmKfiC
+ EXwudrXiijE3JNUCl5oqM3MwMGJqeVKSQ1Q1dAsBu6oMba1czGlpP+AzvZn/R1JluIZjoBKmR
+ 3zHuMzPLvDHyzmA0iyU9JxUSDCR7/sX5AXhigX/CQF5Ch+F62pM8oi2sl0FwmfRMrZUqN7BaT
+ N25QUwOtjwNE74+gDNVxqHJUlOjuKpoDKHfgRBGyqSRGD3T2uMQeTkYwtwWKY4XN4q3g+6jS9
+ 2DsQTGoKXYwA/HHLYeNLZUSW6rNoxIBc2Bud2D2z/w+hZfEjqEO25r/awiZu+oAqZNE+TTm2B
+ HeJr4EPI8IbQ0GMy+mnMCx5/3tIYAD1v5y0xR/t2+WKdMbwaG/bXmb2yCaszRGUT1NrFFgtCq
+ izwuBO6r4e2jDYBBz7GgLJHaVGIbkBzCzF5FdQ/qUfSDumHh5JkSNN4/knAa+c/gpHdVyhO9N
+ 0pjKHK1vmC1L69TDyEERacAhMO+grgB59g7neZGFBtQpy+SKiwwpAfJmQwyb/MxHgZBAnUSUL
+ YDHsBz+bizUnImTHK9Zkya4kpUmoFS6X2+FW2zh9+Vqa9PYyHjzkWfu/b4TiWwCvoy7BKFW8k
+ kAmLipbwlVvv2NPHaN68DeEvzBCltydThMAJ+sjpGkqMcdvuowsU7DmXDU2m/GC4aV9ggDdxT
+ 2FFzLTdjPL3OerJotUwcCukgQIeSfww3VZrLkSjclGUnh6jEwcIFtuj9jJ+0GuPXIo7tWs455
+ yuRpcSlaZgNOE9zl5jpZST327MOKapd4Md1UGBhdc=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, 23 Nov 2020, Junio C Hamano wrote:
+--8323328-1383336044-1606164444=:56
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> >> The above may give a valuable lesson to those who want to use one
-> >> branch name across new repositories, but it does not tell those who
-> >> wanted 'trunk' (to match the project, perhaps github.com/cli/cli,
-> >> with which they intend to interact) how to recover from having
-> >> already created the 'master' branch.  We may want to add some text
-> >> to suggest "branch -M" after giving the advice for the permanent
-> >> option.
+Hi Philip,
+
+On Mon, 23 Nov 2020, Philip Oakley wrote:
+
+> On 22/11/2020 23:23, Johannes Schindelin via GitGitGadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
-> > Good point.
+> > To give ample warning in case we decide to change the fall-back for an
+> > unconfigured `init.defaultBranch`, let's introduce some advice that is
+> > shown upon `git init` when that value is not set.
 > >
-> >> Also, it is unclear to those who do not have a good <name> in mind
-> >> (or, those who do not care to choose a <name> for themselves), what
-> >> <name> they should give to take the "or to silence this warning"
-> >> part of the advice.
+> > Note: three test cases in Git's test suite want to verify that the
+> > `stderr` output of `git init` is empty. With this patch, that is only
+> > true if `init.defaultBranch` is configured, so let's do exactly that i=
+n
+> > those test cases. The same reasoning applies to `test_create_repo()`.
 > >
-> > Also a good point.
->
-> > I came up with this, which I intend to submit with v2:
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  refs.c                        | 13 ++++++++++++-
+> >  t/t0001-init.sh               |  9 ++++++++-
+> >  t/t1510-repo-setup.sh         |  2 +-
+> >  t/t7414-submodule-mistakes.sh |  2 +-
+> >  t/test-lib-functions.sh       |  3 ++-
+> >  5 files changed, 24 insertions(+), 5 deletions(-)
 > >
-> > static const char default_branch_name_advice[] =3D N_(
-> > "Using '%s' as the name for the initial branch. This name is subject\n=
-"
-> > "to change. To configure the initial branch name to use in all of your=
-\n"
-> > "new repositories (or to suppress this warning), run:\n"
->
-> The same issue around "to suppress" is here, though.
+> > diff --git a/refs.c b/refs.c
+> > index 8df03122d6..61d712ca05 100644
+> > --- a/refs.c
+> > +++ b/refs.c
+> > @@ -562,6 +562,14 @@ void expand_ref_prefix(struct strvec *prefixes, c=
+onst char *prefix)
+> >  		strvec_pushf(prefixes, *p, len, prefix);
+> >  }
+> >
+> > +static const char default_branch_name_advice[] =3D N_(
+> > +"Using '%s' as the name for the initial branch. This name is subject\=
+n"
+> > +"to change.
+> This sounds like Git will change the branch name within the user's repo,
+> rather than "The default" being subject to change.=C2=A0 So maybe
+> s/This/The default/=C2=A0=C2=A0 ?
 
-Hmm. I would like to believe that readers understand that setting it to
-_any_ name would suppress this warning.
-
-> > "\n"
-> > "\tgit config --global init.defaultBranch <name>\n"
-> > "\n"
-> > "Common names are 'main', 'trunk' and 'development'. The initial branc=
-h\n"
-> > "can be renamed via this command:\n"
-> > "\n"
-> > "\tgit branch -m <name>\n"
->
-> It is very likely that the users are on an unborn branch when they
-> see this message and "git branch -m/-M <name>" does not work.  We'd
-> probably want to update "git branch" to allow renaming the current
-> branch that is unborn.
-
-Ouch, good point, I had not even realized that that does not work. In v2,
-I will include a patch that lets it work.
-
-> In the meantime, you could do "git checkout --orphan <name>" here,
-> but once <name> exists as a branch that would not work, so...
-
-Careful. We should start thinking about phasing out either `checkout` or
-`switch`. The latter was intended to supersede the former with respect to
-working on branches, so I would think of phasing out `checkout` and favor
-`switch` instead.
-
-That issue aside, `git switch --orphan <name>` is not necessarily a good
-UI here. Its documentation talks about creating a new branch, deleting all
-tracked files. While it is technically still correct that this command,
-when run on an unborn branch, does the same as renaming said branch, it is
-highly unintuitive to think about it that way. ("I don't want to create a
-new branch, I want to rename the current one! And whoa, delete tracked
-files? I don't want to delete _any_ files! What do you mean: there aren't
-any tracked files, so none are deleted? Why do you talk about deleting
-files, then?")
-
-So in the interest of _reducing_ confusion, I would really, really,
-_really_ like to avoid mentioning that command in this advice.
-
-It really is much better to make `git branch -m <name>` work in this
-scenario.
-
-Ciao,
+Yes, that sounds clearer to me. Thank you,
 Dscho
 
 >
+> Philip
 >
-> > );
+> > To configure the name to use as the initial branch name in\n"
+> > +"new repositories, or to silence this warning, run:\n"
+> > +"\n"
+> > +"\tgit config --global init.defaultBranch <name>\n"
+> > +);
+> > +
+> >  char *repo_default_branch_name(struct repository *r, int quiet)
+> >  {
+> >  	const char *config_key =3D "init.defaultbranch";
+> > @@ -574,8 +582,11 @@ char *repo_default_branch_name(struct repository =
+*r, int quiet)
+> >  	else if (repo_config_get_string(r, config_key, &ret) < 0)
+> >  		die(_("could not retrieve `%s`"), config_display_key);
 > >
-> > Ciao,
-> > Dscho
+> > -	if (!ret)
+> > +	if (!ret) {
+> >  		ret =3D xstrdup("master");
+> > +		if (!quiet)
+> > +			advise(_(default_branch_name_advice), ret);
+> > +	}
+> >
+> >  	full_ref =3D xstrfmt("refs/heads/%s", ret);
+> >  	if (check_refname_format(full_ref, 0))
+> > diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+> > index 69a320489f..754dab3bab 100755
+> > --- a/t/t0001-init.sh
+> > +++ b/t/t0001-init.sh
+> > @@ -163,7 +163,7 @@ test_expect_success 'reinit' '
+> >  	(
+> >  		mkdir again &&
+> >  		cd again &&
+> > -		git init >out1 2>err1 &&
+> > +		git -c init.defaultBranch=3Dinitial init >out1 2>err1 &&
+> >  		git init >out2 2>err2
+> >  	) &&
+> >  	test_i18ngrep "Initialized empty" again/out1 &&
+> > @@ -558,6 +558,13 @@ test_expect_success 'overridden default initial b=
+ranch name (config)' '
+> >  	grep nmb actual
+> >  '
+> >
+> > +test_expect_success 'advice on unconfigured init.defaultBranch' '
+> > +	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3D git -c color.advice=3Dalways=
+ \
+> > +		init unconfigured-default-branch-name 2>err &&
+> > +	test_decode_color <err >decoded &&
+> > +	test_i18ngrep "<YELLOW>hint: " decoded
+> > +'
+> > +
+> >  test_expect_success 'overridden default main branch name (env)' '
+> >  	test_config_global init.defaultBranch nmb &&
+> >  	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Denv git init main-branch-env =
+&&
+> > diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
+> > index 9974457f56..5189a520a2 100755
+> > --- a/t/t1510-repo-setup.sh
+> > +++ b/t/t1510-repo-setup.sh
+> > @@ -79,7 +79,7 @@ setup_repo () {
+> >  	name=3D$1 worktreecfg=3D$2 gitfile=3D$3 barecfg=3D$4 &&
+> >  	sane_unset GIT_DIR GIT_WORK_TREE &&
+> >
+> > -	git init "$name" &&
+> > +	git -c init.defaultBranch=3Drepo init "$name" &&
+> >  	maybe_config "$name/.git/config" core.worktree "$worktreecfg" &&
+> >  	maybe_config "$name/.git/config" core.bare "$barecfg" &&
+> >  	mkdir -p "$name/sub/sub" &&
+> > diff --git a/t/t7414-submodule-mistakes.sh b/t/t7414-submodule-mistake=
+s.sh
+> > index f2e7df59cf..0ed02938f9 100755
+> > --- a/t/t7414-submodule-mistakes.sh
+> > +++ b/t/t7414-submodule-mistakes.sh
+> > @@ -30,7 +30,7 @@ test_expect_success 'no warning when updating entry'=
+ '
+> >
+> >  test_expect_success 'submodule add does not warn' '
+> >  	test_when_finished "git rm -rf submodule .gitmodules" &&
+> > -	git submodule add ./embed submodule 2>stderr &&
+> > +	git -c init.defaultBranch=3Dx submodule add ./embed submodule 2>stde=
+rr &&
+> >  	test_i18ngrep ! warning stderr
+> >  '
+> >
+> > diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> > index 59bbf75e83..772152320a 100644
+> > --- a/t/test-lib-functions.sh
+> > +++ b/t/test-lib-functions.sh
+> > @@ -1202,7 +1202,8 @@ test_create_repo () {
+> >  	mkdir -p "$repo"
+> >  	(
+> >  		cd "$repo" || error "Cannot setup test environment"
+> > -		"${GIT_TEST_INSTALLED:-$GIT_EXEC_PATH}/git$X" init \
+> > +		"${GIT_TEST_INSTALLED:-$GIT_EXEC_PATH}/git$X" \
+> > +			-c init.defaultBranch=3Dmaster init \
+> >  			"--template=3D$GIT_BUILD_DIR/templates/blt/" >&3 2>&4 ||
+> >  		error "cannot run git init -- have you built things yet?"
+> >  		mv .git/hooks .git/hooks-disabled
 >
+>
+
+--8323328-1383336044-1606164444=:56--
