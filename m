@@ -2,159 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-23.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9AE9C2D0E4
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 22:44:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80CB9C6379F
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 22:46:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5B8A2206D8
-	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 22:44:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3599A20708
+	for <git@archiver.kernel.org>; Mon, 23 Nov 2020 22:46:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="AINB0v0V"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tHIZDlRS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733034AbgKWWoE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Nov 2020 17:44:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38096 "EHLO
+        id S1733298AbgKWWq0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Nov 2020 17:46:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732746AbgKWWoD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Nov 2020 17:44:03 -0500
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A768DC0613CF
-        for <git@vger.kernel.org>; Mon, 23 Nov 2020 14:44:02 -0800 (PST)
-Received: by mail-pl1-x643.google.com with SMTP id l11so9618639plt.1
-        for <git@vger.kernel.org>; Mon, 23 Nov 2020 14:44:02 -0800 (PST)
+        with ESMTP id S1732924AbgKWWqZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Nov 2020 17:46:25 -0500
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09987C0613CF
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 14:46:25 -0800 (PST)
+Received: by mail-ot1-x344.google.com with SMTP id f16so17503989otl.11
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 14:46:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=jzGR7mQunS9chsi+r4Uz7BwxCo3hNdgS6X5ZadLoJsQ=;
-        b=AINB0v0V8BoTFMzKR3SDWNRDRlA74o4tRvX1s6DLLj4lH6sZO24tTUq7ZeZadEOPXr
-         6VlpYV3BKFNAJGbPCc1q5lJmcCPWyUEp1ErLLBWPWSu0xAC1JrHaWpQxzyEwb9fKrrmj
-         E3lbJJOmRXcUCyBs6nblLMhyad4RxKi1DlwCgOrnqehwamM+xiPwH1IVbfM6aseiUStk
-         +9en8ZErz3qi2zNB0pVO5XOxbTA08mwBq60l55Hu7x6TSulcvXIjkCBiOXU6s5pUN4nX
-         vpLxv6a15cXMGrXVSSOrZy38IMzDyHFaMsdUwRdavkdDQ7gTPjBb0pGErLQcO2OYrzz4
-         Kwqg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/vlp4517+rYeNAjB22eV9fKv+6tJv2eqe+DNzNrG6nc=;
+        b=tHIZDlRS8nmRtCCEJUQXa47zHdttBamZeOXpyrbrjhaq1Szbu9P/CzQGXwR8bosnmh
+         7zV4v1gE7GxUHU0LWsRoenuTxg0MHNW99puYeyTpYV5yOCrqbi55f0NerWxNXoNLoXCy
+         NKYqjuof+7YG9Mg+9Mz/0DpXOAHO+0MmjXc+BIh7mJFBIcRboWZHAdNRhsOUvsEEnKL4
+         e0+K/wdv/K+UcCSM7005NBqN1Oktfe6Nno4Mkt09ero/RAevSYxERQrCsKDUQjqJL9mn
+         3XRfRFDHsuM9aNA3R78S+3CSrkjSg5i+tz8EDYPDnBFbQvMNWvkZqjRQPFs3J+6+/qjX
+         J+Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=jzGR7mQunS9chsi+r4Uz7BwxCo3hNdgS6X5ZadLoJsQ=;
-        b=BlyBnWGIjTECipNsL243Fn4KCyTsJhGVTZ/zgarBTZXtwMnK3RlBd+XuB+gvRP50jX
-         9XcFh+AHWpMV3zny9NhoZEVjQppPzBNstea82QpHs9FBb1rvmYaM6tFdOS6aD4AdVpGq
-         9nEidy/KgHxhNDj4zZs8SJdq6M3CAKHKGeZt4aj3q7guzpMHkAzyXcdKwUca+kUgo4aw
-         mBrE0Y43P8lybms9h7vBR9vJlIZeqSLaB+3Xlfb5jaij/KvLLVguUjKNdHDG0M2sdSzQ
-         015KZesqY0Wx+2aQZ/A+PF5ofZxxc7oLh4nYcdJ3M0OsSHReLTlZwSGsjkookGwzdy8W
-         OfuQ==
-X-Gm-Message-State: AOAM531FIRTBz3pirAEVolkdtRJFeI8GJSZQdan1bLSA6uJs0n2QROIx
-        j7fG9yJb32y91Yew2q1HoEwQkQ==
-X-Google-Smtp-Source: ABdhPJw+im6GVkMKaQJ4hFYH08zG/GS2fooSCCJYc8Ht0ofQeoIag6PTRer6dKQtRU5oPAChXI55Mw==
-X-Received: by 2002:a17:902:6ac1:b029:da:1ac0:fcd4 with SMTP id i1-20020a1709026ac1b02900da1ac0fcd4mr318837plt.19.1606171442082;
-        Mon, 23 Nov 2020 14:44:02 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
-        by smtp.gmail.com with ESMTPSA id j143sm9019928pfd.20.2020.11.23.14.44.00
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/vlp4517+rYeNAjB22eV9fKv+6tJv2eqe+DNzNrG6nc=;
+        b=ueyy831a5V7ydZw9yNXHynUTPvAU9b5ZZcjJKGm0Pd2t2r6fIOGgypKcrWhRdysEXf
+         4TtJ3w1p8NVMTWQUqaFlwxcgbrSuTQhY+6KSPU50w9kT8qjteWGodCTRr9/gs/HJZkfp
+         +bX+SXe2Mvu1Urobp93+bJnp58lKI20Z1ZnZ6mNfx5zhEhKQ+mHWkAobzoMNqGgvSa6x
+         OWgqL4y14NYMkMdzkHjqlppPVSyqE45+9pIjNef4hlvHEoHjeHanErslI9VGlJSoG64g
+         yfM0FCkevwwLH1CzN5qP30C7ucxjVvZuM1pvphEmRCDrv+ImHgOTCKdWa00eHSkaX+aZ
+         ORBg==
+X-Gm-Message-State: AOAM533oVRxuPtrvOcv7sD11hGxOhKtTit5+2Qh3qeStwWDT42BTCD11
+        PJsIhOKs//12ghMm9LluknlOIKxUcvpQVw==
+X-Google-Smtp-Source: ABdhPJwUWPA4nQ6sFhPdyJgJxnFOo7Oe6jcu7dxjJjX8SJTeCQ/4OSPd/n6AqcFcGfBbzrk3/uOm7g==
+X-Received: by 2002:a05:6830:2151:: with SMTP id r17mr1243097otd.328.1606171584219;
+        Mon, 23 Nov 2020 14:46:24 -0800 (PST)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id c130sm3911699oia.33.2020.11.23.14.46.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Nov 2020 14:44:01 -0800 (PST)
-Date:   Mon, 23 Nov 2020 14:43:57 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 6/7] config: implement --fixed-value with --get*
-Message-ID: <20201123224357.GF499823@google.com>
-References: <pull.796.git.1605801143.gitgitgadget@gmail.com>
- <pull.796.v2.git.1606147507.gitgitgadget@gmail.com>
- <8e0111c7b4b2c766c61df30c4ae93bd2d724de06.1606147507.git.gitgitgadget@gmail.com>
+        Mon, 23 Nov 2020 14:46:23 -0800 (PST)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?V=C3=ADt=20Ondruch?= <vondruch@redhat.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        "Theodore Y . Ts'o" <tytso@mit.edu>, Jeff King <peff@peff.net>,
+        Andreas Krey <a.krey@gmx.de>,
+        John Keeping <john@keeping.me.uk>,
+        Richard Hansen <rhansen@rhansen.org>,
+        Philip Oakley <philipoakley@iee.org>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
+        "W. Trevor King" <wking@tremily.us>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v7 0/1] Reject non-ff pulls by default
+Date:   Mon, 23 Nov 2020 16:46:20 -0600
+Message-Id: <20201123224621.2573159-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8e0111c7b4b2c766c61df30c4ae93bd2d724de06.1606147507.git.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 23, 2020 at 04:05:06PM +0000, Derrick Stolee via GitGitGadget wrote:
-> 
+This is an attempt to revive the old patch series [1], except the only thing it's doing is the
+important change: adding the option to reject non-ff pulls.
 
-Allowing myself a sensible chuckle at the commit subject using glob
-syntax on a series about regex matching. ;)
+Following this patch the next one should add a new default mode that warns instead of fail, and the
+next one change the default to ff-only.
 
-> 
-> The config builtin does its own regex matching of values for the --get,
-> --get-all, and --get-regexp modes. Plumb the existing 'flags' parameter
-> to the get_value() method so we can initialize the value_regex argument
-> as a fixed string instead of a regex pattern.
-> 
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  builtin/config.c  | 15 ++++++++++-----
->  t/t1300-config.sh | 22 ++++++++++++++++++++++
->  2 files changed, 32 insertions(+), 5 deletions(-)
-> 
-> diff --git a/builtin/config.c b/builtin/config.c
-> index 3e49e04411..d3772b5efe 100644
-> --- a/builtin/config.c
-> +++ b/builtin/config.c
->  	if (use_key_regexp && regexec(key_regexp, key_, 0, NULL, 0))
->  		return 0;
-> +	if (fixed_value && strcmp(value_regex, (value_?value_:"")))
-> +		return 0;
-Ooh, I can see you're matching style, but the combination of the
-spaceless ternary and the trailing underscore is making me so itchy ;)
+This leaves the interface in an inconsistent state, IMO, since I believe these should work:
 
->  	if (regexp != NULL &&
->  	    (do_not_match ^ !!regexec(regexp, (value_?value_:""), 0, NULL, 0)))
->  		return 0;
-> @@ -298,7 +301,7 @@ static int collect_config(const char *key_, const char *value_, void *cb)
->  	return format_config(&values->items[values->nr++], key_, value_);
->  }
->  
-> -static int get_value(const char *key_, const char *regex_)
-> +static int get_value(const char *key_, const char *regex_, int flags)
-Very reasonable, and I appreciate passing 'flags' instead of passing
-'fixed' here. Room for growth :)
+  * git pull --rebase
+  * git pull --merge
+  * git -c pull.mode=rebase pull
+  * git -c pull.mode=merge pull
+  * git -c pull.mode=ff-only pull
 
-[snip] a bunch of straightforward plumbing-through.
+But that can be fixed later.
 
-> +test_expect_success '--get and --get-all with --fixed-value' '
-> +	GLOB="a+b*c?d[e]f.g" &&
-> +	rm -f config &&
-Again this tells me that your other tests want 'test_when_finished'
-instead.
+Cheers.
 
-> +	git config --file=config fixed.test bogus &&
-> +	git config --file=config --add fixed.test "$GLOB" &&
-> +
-> +	git config --file=config --get fixed.test bogus &&
-> +	test_must_fail git config --file=config --get fixed.test "$GLOB" &&
-> +	git config --file=config --get --fixed-value fixed.test "$GLOB" &&
-> +	test_must_fail git config --file=config --get --fixed-value fixed.test non-existent &&
-> +
-> +	git config --file=config --get-all fixed.test bogus &&
-> +	test_must_fail git config --file=config --get-all fixed.test "$GLOB" &&
-> +	git config --file=config --get-all --fixed-value fixed.test "$GLOB" &&
-> +	test_must_fail git config --file=config --get-all --fixed-value fixed.test non-existent &&
-> +
-> +	git config --file=config --get-regexp fixed+ bogus &&
-> +	test_must_fail git config --file=config --get-regexp fixed+ "$GLOB" &&
-> +	git config --file=config --get-regexp --fixed-value fixed+ "$GLOB" &&
-> +	test_must_fail git config --file=config --get-regexp --fixed-value fixed+ non-existent
-> +'
+[1] https://lore.kernel.org/git/1398988808-29678-1-git-send-email-felipe.contreras@gmail.com/
 
-Otherwise the test seems fine to me, although I wouldn't yell if it grew
-some comments :)
 
-With the exception of the 'test_when_finished', which might not even
-match style (I didn't look):
+Felipe Contreras (1):
+  pull: add ff-only option
 
-Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
+ Documentation/config/branch.txt |  2 ++
+ Documentation/config/pull.txt   |  2 ++
+ builtin/pull.c                  |  6 +++++-
+ rebase.c                        |  2 ++
+ rebase.h                        |  3 ++-
+ t/t5520-pull.sh                 | 36 +++++++++++++++++++++++++++++++++
+ 6 files changed, 49 insertions(+), 2 deletions(-)
+
+-- 
+2.29.2
+
