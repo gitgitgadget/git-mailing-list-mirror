@@ -2,120 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0808C2D0E4
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 22:34:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDDB0C2D0E4
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 22:45:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7F6FF20872
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 22:34:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 47FC9206F7
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 22:45:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MYUmS4x/"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fRjCmrED"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730023AbgKXWeN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Nov 2020 17:34:13 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56243 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729895AbgKXWeN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Nov 2020 17:34:13 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 83FCB97255;
-        Tue, 24 Nov 2020 17:34:09 -0500 (EST)
+        id S2389016AbgKXWpc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Nov 2020 17:45:32 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52909 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725930AbgKXWpc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Nov 2020 17:45:32 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 46F7CFB2E7;
+        Tue, 24 Nov 2020 17:45:31 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=bPtof4Yejq5e
-        WeBVOEHVAuSTVj0=; b=MYUmS4x/lkalG1j9b7dL0qXn5gLwMnMtjptiEp/ijE9X
-        AIWzDPmf16WVswsbOmTAM29hvU+l5S5y2Fn80CNBNMxzENqZkdXfn9SA55tae+ET
-        4IaUSQ+gwtyu+/6khJsMApj1qub805XAXxO24crVddElWFIztK5rMTNCFkipugU=
+        :content-type; s=sasl; bh=/eVm4WhARbfJ2Xv4J0+hI7YNrhI=; b=fRjCmr
+        EDiPyxO44zHZM6aGSAVIiXSZwCNogbJ4Ui6Af/3uWycFcPlWneSBxCyHCplD4Oki
+        tvCSsFFnuDdUmYZhVM7Zd9yDXetu9g0cVZZQtHXKXVSby7rv+5HZtYQWvOnC+Dgp
+        onZLm77T//ZUvzTWNTsgzaTrLkFohRsuNFeos=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=xX78At
-        0U0AnoQy9wvBwgYtgho/0VWGoze68sI319zaVmqGym6ZNZtWThh/61tB7R7cTnn3
-        dACJ9Q67lTrslIoRT/aQFirOELZGj9iFj9dUHWCVh+Uz3VHpwuX11YR8FLH6Ehxp
-        OQ2gfbgk9kwwzMNgZ7KnP+iPIg9tI10fKDlaA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7BDC997254;
-        Tue, 24 Nov 2020 17:34:09 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=rqXaXFtl4pIEXYfXFELfCvSpH+aSqZfE
+        /NE7Y5joKYF6ltELXsf0CCcwxKUZGVGRJJduqZNbZiOPPoMTVAJTKkg/Len1LOkj
+        eEpclu7heZUhZV80iLDQ4YVrpx14cQ33B/sJBs52tmN6jqcuuG3ZKTtS89c0STN0
+        6rqZcZqqNFQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2BBF1FB2E6;
+        Tue, 24 Nov 2020 17:45:31 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 06D5897253;
-        Tue, 24 Nov 2020 17:34:09 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 721F3FB2E5;
+        Tue, 24 Nov 2020 17:45:28 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 3/4] grep: copy struct in one fell swoop
-References: <cover.1605972564.git.martin.agren@gmail.com>
-        <cover.1606251357.git.martin.agren@gmail.com>
-        <359355fb4eff6d99cb1baad9b72ff96e7dcda51d.1606251358.git.martin.agren@gmail.com>
-Date:   Tue, 24 Nov 2020 14:34:08 -0800
-In-Reply-To: <359355fb4eff6d99cb1baad9b72ff96e7dcda51d.1606251358.git.martin.agren@gmail.com>
-        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Tue, 24 Nov 2020 22:04:15
- +0100")
-Message-ID: <xmqqsg8ygza7.fsf@gitster.c.googlers.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Git <git@vger.kernel.org>,
+        Brandon Williams <bwilliams.eng@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH] refspec: make @ a valid refspec
+References: <20201122164641.2091160-1-felipe.contreras@gmail.com>
+        <X7y5Wxu1eY4k6753@coredump.intra.peff.net>
+        <xmqqlfeqjzi1.fsf@gitster.c.googlers.com>
+        <CAMP44s0PwJ8qEuCCpavshpm0GqV8p37rF8McR2=gdCk2kj+JiQ@mail.gmail.com>
+Date:   Tue, 24 Nov 2020 14:45:26 -0800
+In-Reply-To: <CAMP44s0PwJ8qEuCCpavshpm0GqV8p37rF8McR2=gdCk2kj+JiQ@mail.gmail.com>
+        (Felipe Contreras's message of "Tue, 24 Nov 2020 16:01:45 -0600")
+Message-ID: <xmqqo8jmgyrd.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 2AFA513C-2EA5-11EB-9D24-D152C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: BFF3BEF8-2EA6-11EB-9E73-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin =C3=85gren <martin.agren@gmail.com> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> We have a `struct grep_opt` with our defaults which we then copy into
-> the caller's struct. Rather than zeroing the target struct and copying
-> each element one by one, just copy everything at once. This leaves the
-> code simpler and more maintainable.
+>> I too find that "@ is a shortcut for HEAD" looks ugly both at the UI
+>> level and at the implementation level [*1*], but as long as we have
+>> it, it is good to try to be consistent and allow "@" everywhere
+>> where one would write "HEAD" in places where it is syntacitically
+>> infeasible---at least we would be consistently ugly that way ;-).
 >
-> We don't have any ownership issues with what we're copying now and can
-> just greedily copy the whole thing. If and when we do need to handle
-> such elements (`char *`?), we must and can handle it appropriately.
+> Beauty is in the eye of the beholder.
 
-That is correct, but ...
+Using "@" is rather "illogical" than "ugly", and at that point it is
+not so subjective.
 
-> This
-> commit doesn't really change that.
+@-mark leads a suffix that applies some "magic" to what comes before
+it (e.g. next@{1}, maint@{2.weeks.ago}, and master@{-1}).  Making @
+a synonym for HEAD means '@' sometimes means a ref and most of the
+time means the introducer of magic that applies to a ref.
 
-... I suspect this is not.
+Worse yet, @{4} does not refer to HEAD@{4} but refers to the 4-th
+previous commit the current branch pointed at, so a mnemonic for the
+end user to remember the distinction between the two is that a bare
+"@" is different from HEAD, which is a total opposite X-<.
 
-In the original code, those who are adding a new field would notice
-that it is not copied over to the new instance (because they didn't
-add anything to grep_init() to copy the field) and at that point
-they must stop and think how the new field need to be copied.
+This is all water under the bridge, though ;-)
 
-The structure assignment of the outer shell done in this patch means
-they are robbed of the opportunity to stop and think, because most
-of the time it "works" out of the box.  I'd feel safer if we left a
-clue to future developers if we were to do your clean-up, perhaps
-like:
+> Given that, your suggested title makes more sense.
 
-diff --git c/grep.h w/grep.h
-index b5c4e223a8..388d226da3 100644
---- c/grep.h
-+++ w/grep.h
-@@ -115,6 +115,14 @@ struct grep_expr {
- 	} u;
- };
-=20
-+/*
-+ * grep_config() initializes one "default" instance of this type, and
-+ * it is copied by grep_init() to be used by each individual
-+ * invocation.  When adding a new field to this structure that is
-+ * populated from the configuration, be sure to think about ownership
-+ * (i.e. a shallow copy may not be what you want for the type of your
-+ * newly added field).
-+ */
- struct grep_opt {
- 	struct grep_pat *pattern_list;
- 	struct grep_pat **pattern_tail;
-
+Sounds good.
