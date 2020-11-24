@@ -8,65 +8,65 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C91D1C56202
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 21:04:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C346C2D0E4
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 21:04:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 71B2720789
+	by mail.kernel.org (Postfix) with ESMTP id E5FE220789
 	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 21:04:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OGGFHGyN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kX44Ttqc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729427AbgKXVE4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1729415AbgKXVE4 (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 24 Nov 2020 16:04:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48196 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729406AbgKXVE4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Nov 2020 16:04:56 -0500
-Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DFB1C0613D6
-        for <git@vger.kernel.org>; Tue, 24 Nov 2020 13:04:54 -0800 (PST)
-Received: by mail-lf1-x141.google.com with SMTP id j205so52802lfj.6
-        for <git@vger.kernel.org>; Tue, 24 Nov 2020 13:04:54 -0800 (PST)
+        with ESMTP id S1729288AbgKXVEz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Nov 2020 16:04:55 -0500
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 489D9C061A4D
+        for <git@vger.kernel.org>; Tue, 24 Nov 2020 13:04:55 -0800 (PST)
+Received: by mail-lj1-x242.google.com with SMTP id y16so23674254ljk.1
+        for <git@vger.kernel.org>; Tue, 24 Nov 2020 13:04:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bolLlYRXMxjTbk3CPu0rFIyvty01ZUVyeRrvsybispc=;
-        b=OGGFHGyNENsBQMgQOHTlloJV2LCFPPNxgz0GRv2Bjlb342W0cuPBUGrjbHzjjID7Aj
-         VCzCiFSZM8d7wFqg6ZFB7Cfv019w2kQMzsUchn12Sbtv9udkP2QJSJO4WQ61WU4s4Sms
-         9eBxkjlWJOZaJDajth3lz/W39UiF/uG403r3nfmFxOsHEvF9mY8+Ow8ZbPGRINsT79hz
-         LrPauN/KnlFrx/KsWmhs2HyFOZsAdtuI/O+GG6pYyhH2xQirKKjDrYPlOK8Pjde+Sm4i
-         LhBsPlVcm52UVnn4ztmfLytoU9QIFAKm72XGBSL/I/BsyXV0th2oLGfdz/FxoDh6hunC
-         BLHg==
+        bh=8DUdSd6pQs4jmskCyVGNyzDYV2RBm7j5o4x+7rAAh1I=;
+        b=kX44TtqcgLvzLnbeK1ONwIVMbsdYysSjMzcgdzWxtOR6vyg11/mCT+5FIvZ8ZOGR5T
+         gJGFPLE2hq52250MMf2Uhg+EmYSlWb6ROhqBbdAhD8wDyJZOJy5BVACaSyjA0j8JcbRF
+         Bv0akRa1CBMQCzox2OuPGTnrlcrEa+dahvtYxjjvpByaR4fZRuYx5ib6Us/7K6+d1Mw1
+         9MsgPwJfDaMVKvhYcbsy40P9fJQER2NzSXFUDujX8/mtWXG2/ypjS+isARuzy9ogRsMu
+         eEcpMTDtvhcAYSdYwV3gHefWC55sFOwylgx5Qerw60rO6tQIacPQivAGOxvvFtbgbFoj
+         TmXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bolLlYRXMxjTbk3CPu0rFIyvty01ZUVyeRrvsybispc=;
-        b=KyBsgZNFNHaBQYKZ1wXgoHQuYVyoFYmO76m3BMjugLCoArbfVvs/GopL7sk9Y4Pixm
-         une7dV7C7NB2zYN1aa0AaqV+c0q0yWCZq3c10B5WZbuFUZbwC9p/T74kVuURhzTA4Akg
-         A0yiodyWnjkTGwi3EkRtT0PC7EyPu6pwoIskW6qi0GwurgAcVk0c+egAghNwDuT5qPbZ
-         ZuuS8HKf79rClfiu9Jrrt1rH0BXbBklNmzFMClvnlTCL6zK0fo076kNdxNAsQYK7xQ3m
-         CjRamKxZ6jrvWdo2m2Mwdxh7SHQDgof4aKHSrz7TQFNYstogzTDWaiW2hVPrr2g31t66
-         2dLQ==
-X-Gm-Message-State: AOAM530EDO27QugCf/+b7hVLLC+wNfQEJb2TY4Qo6zYNP7fvbmUuCLXg
-        FTtya1JKT00ERQDvi86/5X3OJEpTp6OY7g==
-X-Google-Smtp-Source: ABdhPJwhzbRZU0MRb2fpe99tkzBxi37OgoXqb4rmgd5dV90RZRSd7Jn74H5TYccCOHSGbviEwfjPOA==
-X-Received: by 2002:a19:505:: with SMTP id 5mr8935lff.578.1606251892369;
-        Tue, 24 Nov 2020 13:04:52 -0800 (PST)
+        bh=8DUdSd6pQs4jmskCyVGNyzDYV2RBm7j5o4x+7rAAh1I=;
+        b=bedTyTNwacpA2G1cLu+jXKkY/s6ACDDmLLjAehSt1rbrd/f5xK9F52QvFttk6qyX0H
+         aoWO8PgHIqC0BwvnETGU/9WH4qsLTga7aHcY/aBhr9KtqUr7g3ZpMtFBUDJ33FqktPhJ
+         YFVfmLXrgNPFHWlHvj7uM3tpmICom6nXjCy9QqUP5UfJtwWssu8xncv5MCQAc6fFK71J
+         u1hTpohYEqflVKi8KJHOXyFDVufxUeERKJNwf6rZBiEvkzJCslkytXp2F8PkBnVkvWOX
+         cVx6zoUqHyqYDgRN1HMHKgXs+okjDpt1Y+orsMhEa+dt7Sp+YqOPTsckxeuHwQpM9o6D
+         kkMg==
+X-Gm-Message-State: AOAM5307QdIi8nrsBXZtS0c5R5+drE1BYCWTMFIIJzIs/bJVGxMbfC/O
+        ruQYNrSaKZ3RHd+S2v0wZsZvU62bvhzZBw==
+X-Google-Smtp-Source: ABdhPJzkTxf4rWv3sj5bVx4w6x1jGPIx23lSkmX3s6Ks4VJJaWytIx+kbiUmU/mcnjeoKEUeylOVmA==
+X-Received: by 2002:a2e:81cf:: with SMTP id s15mr53398ljg.459.1606251893527;
+        Tue, 24 Nov 2020 13:04:53 -0800 (PST)
 Received: from localhost.localdomain (h-79-136-116-123.NA.cust.bahnhof.se. [79.136.116.123])
-        by smtp.gmail.com with ESMTPSA id z20sm22911ljm.138.2020.11.24.13.04.51
+        by smtp.gmail.com with ESMTPSA id z20sm22911ljm.138.2020.11.24.13.04.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2020 13:04:51 -0800 (PST)
+        Tue, 24 Nov 2020 13:04:53 -0800 (PST)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2 3/4] grep: copy struct in one fell swoop
-Date:   Tue, 24 Nov 2020 22:04:15 +0100
-Message-Id: <359355fb4eff6d99cb1baad9b72ff96e7dcda51d.1606251358.git.martin.agren@gmail.com>
+Subject: [PATCH v2 4/4] MyFirstObjectWalk: drop `init_walken_defaults()`
+Date:   Tue, 24 Nov 2020 22:04:16 +0100
+Message-Id: <c2af3639239329675f61bb06380fdc77d0d4eb3b.1606251358.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.29.2.454.gaff20da3a2
 In-Reply-To: <cover.1606251357.git.martin.agren@gmail.com>
 References: <cover.1605972564.git.martin.agren@gmail.com> <cover.1606251357.git.martin.agren@gmail.com>
@@ -77,76 +77,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We have a `struct grep_opt` with our defaults which we then copy into
-the caller's struct. Rather than zeroing the target struct and copying
-each element one by one, just copy everything at once. This leaves the
-code simpler and more maintainable.
-
-We don't have any ownership issues with what we're copying now and can
-just greedily copy the whole thing. If and when we do need to handle
-such elements (`char *`?), we must and can handle it appropriately. This
-commit doesn't really change that.
+In a recent commit, we stopped calling `init_grep_defaults()` from this
+function. Thus, by the end of the tutorial, we still haven't added any
+contents to this function. Let's remove it for simplicity.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- grep.c | 25 ++-----------------------
- 1 file changed, 2 insertions(+), 23 deletions(-)
+ Documentation/MyFirstObjectWalk.txt | 24 ------------------------
+ 1 file changed, 24 deletions(-)
 
-diff --git a/grep.c b/grep.c
-index 8f2009ec9f..7d740452cd 100644
---- a/grep.c
-+++ b/grep.c
-@@ -66,11 +66,6 @@ static const char *color_grep_slots[] = {
- 	[GREP_COLOR_SEP]	    = "separator",
- };
+diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
+index 7f4bffc4dd..2d10eea7a9 100644
+--- a/Documentation/MyFirstObjectWalk.txt
++++ b/Documentation/MyFirstObjectWalk.txt
+@@ -182,30 +182,6 @@ its `init_log_defaults()` sets its own state (`decoration_style`) and asks
+ `grep` and `diff` to initialize themselves by calling each of their
+ initialization functions.
  
--static void color_set(char *dst, const char *color_bytes)
+-For our first example within `git walken`, we don't intend to use any other
+-components within Git, and we don't have any configuration to do.  However, we
+-may want to add some later, so for now, we can add an empty placeholder. Create
+-a new function in `builtin/walken.c`:
+-
+-----
+-static void init_walken_defaults(void)
 -{
--	xsnprintf(dst, COLOR_MAXLEN, "%s", color_bytes);
+-	/*
+-	 * We don't actually need the same components `git log` does; leave this
+-	 * empty for now.
+-	 */
 -}
+-----
 -
- static int parse_pattern_type_arg(const char *opt, const char *arg)
- {
- 	if (!strcmp(arg, "default"))
-@@ -157,9 +152,6 @@ int grep_config(const char *var, const char *value, void *cb)
-  */
- void grep_init(struct grep_opt *opt, struct repository *repo, const char *prefix)
- {
--	struct grep_opt *def = &grep_defaults;
--	int i;
+-Make sure to add a line invoking it inside of `cmd_walken()`.
 -
- #if defined(USE_LIBPCRE2)
- 	if (!pcre2_global_context)
- 		pcre2_global_context = pcre2_general_context_create(
-@@ -171,26 +163,13 @@ void grep_init(struct grep_opt *opt, struct repository *repo, const char *prefix
- 	pcre_free = free;
- #endif
+-----
+-int cmd_walken(int argc, const char **argv, const char *prefix)
+-{
+-	init_walken_defaults();
+-}
+-----
+-
+ ==== Configuring From `.gitconfig`
  
--	memset(opt, 0, sizeof(*opt));
-+	*opt = grep_defaults;
-+
- 	opt->repo = repo;
- 	opt->prefix = prefix;
- 	opt->prefix_length = (prefix && *prefix) ? strlen(prefix) : 0;
- 	opt->pattern_tail = &opt->pattern_list;
- 	opt->header_tail = &opt->header_list;
--
--	opt->only_matching = def->only_matching;
--	opt->color = def->color;
--	opt->extended_regexp_option = def->extended_regexp_option;
--	opt->pattern_type_option = def->pattern_type_option;
--	opt->linenum = def->linenum;
--	opt->columnnum = def->columnnum;
--	opt->max_depth = def->max_depth;
--	opt->pathname = def->pathname;
--	opt->relative = def->relative;
--	opt->output = def->output;
--
--	for (i = 0; i < NR_GREP_COLORS; i++)
--		color_set(opt->colors[i], def->colors[i]);
- }
- 
- void grep_destroy(void)
+ Next, we should have a look at any relevant configuration settings (i.e.,
 -- 
 2.29.2.454.gaff20da3a2
 
