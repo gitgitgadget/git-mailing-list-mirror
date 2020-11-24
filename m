@@ -2,69 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
+X-Spam-Status: No, score=-0.7 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
 	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B344C64E7C
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 09:59:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D609C2D0E4
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 10:09:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1C794206FA
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 09:59:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2CBE8206E0
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 10:09:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="dh4e0sig"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="ViDeaxma"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731815AbgKXJ7k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Nov 2020 04:59:40 -0500
-Received: from mout.gmx.net ([212.227.17.22]:34581 "EHLO mout.gmx.net"
+        id S1728129AbgKXKJd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Nov 2020 05:09:33 -0500
+Received: from mout.gmx.net ([212.227.17.21]:52875 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731804AbgKXJ7i (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Nov 2020 04:59:38 -0500
+        id S1725792AbgKXKJc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Nov 2020 05:09:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1606211973;
-        bh=CgxSAm2trgoZ3gfgFWtTJ1/r3UK8QgzQOpRbC+nvs4s=;
+        s=badeba3b8450; t=1606212568;
+        bh=w5Tohv0HmCl41WO7A2eIGG7eV3swDCUTaKu6pScG/iQ=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=dh4e0sigvhzSYWC/7TQkqIiDI55f8moRfcP551ePLbzw69ZiveFH/xrfakKq1+gxh
-         a18USkLJZTQEnOiWAIIgKZ85AaiwgrHpgfUxIcNjcLTgYcoNEp75teo7yxky/eKxVB
-         YVQN3wp3LUUW8m/aqErfgMUqpeyF4mEL1lRiczFc=
+        b=ViDeaxmaKY8/W28bb9Z+6VQMb8gZsZ13GlymA8uMQjYlDEBTIfTV6T2xaf3ndQJrm
+         MbD9QGkI05iX3EIXl0Gf65txm1cQpnd0bH6hGQdX8SBzHpjTQj1YS3dZn+2W4JeSaO
+         c25ZOR0hHcuKHWEpiJXik/C3rf/4w2KuEAhXg78o=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.26.22.105] ([89.1.213.133]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MOiHf-1ks8Ve1U3r-00QEBn; Tue, 24
- Nov 2020 10:59:33 +0100
-Date:   Tue, 24 Nov 2020 06:47:20 +0100 (CET)
+Received: from [172.26.22.105] ([89.1.213.133]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MysW2-1kLpPO1OEM-00vxgm; Tue, 24
+ Nov 2020 11:09:28 +0100
+Date:   Tue, 24 Nov 2020 06:57:16 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH v2 2/4] branch -m: allow renaming a yet-unborn branch
-In-Reply-To: <xmqqd003ljru.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2011240551050.56@tvgsbejvaqbjf.bet>
-References: <pull.921.git.git.1606087406.gitgitgadget@gmail.com>        <pull.921.v2.git.git.1606173607.gitgitgadget@gmail.com>        <8de0c0eb228c8d9608d3a78c992cbd6829cb9329.1606173607.git.gitgitgadget@gmail.com>
- <xmqqd003ljru.fsf@gitster.c.googlers.com>
+Subject: Re: [PATCH v2 4/4] init: provide useful advice about
+ init.defaultBranch
+In-Reply-To: <xmqq8sarljfn.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2011240648160.56@tvgsbejvaqbjf.bet>
+References: <pull.921.git.git.1606087406.gitgitgadget@gmail.com>        <pull.921.v2.git.git.1606173607.gitgitgadget@gmail.com>        <bccef953913da629057b3e9b211bc54081fa4475.1606173607.git.gitgitgadget@gmail.com>
+ <xmqq8sarljfn.fsf@gitster.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ns7z0W3kwEFtUl0zo8UC00mxdiS+3+whUmYoDQK1pfwA6QNC6aW
- dZBoJRchc7YCp24D+czXM29GVUMRYPeS/ubpwu0sxZlQQoz9+ZZz0GLIhybhipD0EQmxmLa
- tse7MAjdO6oxzSZWv+g9D9z9Bihemrvk/s0IoX4dQCzRpgQVmEvpLfBoNs5J5fqHvNm7KYz
- feEnUXAjOpmOLGYaU8M/A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0wQ7SS7529w=:1SHH/FLMfndcJ/EenDDs0s
- 0PYHxYueibA1zOTbJLYKOgX/0TsRK3D41ZkOoeA2ZK5WiimJi8F/5BqFYOZ3JRPMsW+KUukFu
- fQ77cth72LSwk73q75URdO711ibxdrjBQS53W3xKSjFJ3oR91tPGHs8DapwnuoKG1RGI8IcEv
- B9Cq4iTyOt6lvXNF7xPTFrDmA1TMdsAWKvO3+X50ErHRp/fNgo2RtKINaTLlDP9F12uNTtTsq
- Y/YLhfmCYpgVIV1AysbKH4OOMD5UrpPQaRhbhsSsqQ+G4/5Uu2ZLrGzaBm420a/4UXArImQi+
- +o+Lcy+N4MO7KN5q7BUXnUQzc1iYkuSq+oh3KPNg0JTBCF3q+qX0PUyFYVk7+XMZR9Jfkkpk4
- ANgS2LkQN74RQ00+OUdTQWq6P90UVlOJ3jxz+QaKcBPy8oiqyBQvJv5a0u1Hn0g+PxZ+CpQ09
- 8gL8JhUy3zkzTTMWKMJdCWmLPWYvNV4wjvMvrRnIdlz8TgU3S/NEp0COSClXB/ZlQ00Ti3+C4
- iatVjfmakQhUuKUFLKYNv1UwuAFR9e+TqdOtOq/SpJKbAOwH86RXSZuXFSIyKSwM2fMpUaLSM
- vkuaL/ciR61CTnvaNVVm3+PVNb5J1BL7DFkZLQ1+FYHvQ/+3QClJTc91A+Z9xo5XoS9HBG/YC
- GVmtlkguqTn/pK8wKKRGNMUqVE9QKbvmKzQtgtJdRIu8qMRlrOLmxhNBHcIqpBNFxChoWmcWr
- 7O5s6Vr1Fcr+T3NdQTDEvatoCFBcMK9id1OUOOBP/6QfPhIiJe/GZi44VUB1KvhJbH4ImMk45
- Bw/osh0Zk0IaE6YSMIvoUHfVAN2T8+H5t0Rha38vxAeuJqsLHc9R00eODlapAGDV+q+NlTuu2
- ZZTGRJRz027/X5Hj5VCWqPcF7abMzxgFO422Czehc=
+X-Provags-ID: V03:K1:CCfMS9ZIbPsl6bW08+ZU5W/lYTsnb3FlbEOlmpm6oKSdzyAbmxo
+ nzFwRaF0gjMiLpILGX+W9GFboR67XMVDtR8fCyNBUOICcJCX16nusNMrlW56DIx1shPbla3
+ i4BeWUdBiXerhCC14haF4Fzfafj+nSBuOoMsYWezc3ADKgEiiz3Jqu5eI6dLcRC9r38Ah6k
+ TMFwdDlr42885CDwGGmSw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:CoRTkDMHXn4=:ZHkcEqWOlT/N21pj5zV+W2
+ je6AWtABzgunTp1foKs+uQkJ93aF17J8AM7izXBS96SZCkohHOLMZth2RAXxkDwNqsOG+MRwQ
+ No8NI7UTqLQ9ItYWGnIeDnwty/08i5OCfSvQA7TOMam1IHNUrLzdWXSg6zEa917ASXj/yQndy
+ U11eqc8+twIIYl+xLPKTggjCN2acEXH2bbmsUXWVrV0uAD+7bhCL4cwm6tZfV13+9f3SfXLcY
+ RLaL2YIsGogueFYHeVgRhYTALMA3s3AlBvnutiKHvcbNtYkib6Oa1JdDkqznufNataCbUIQfE
+ iB3ZSboIv5GvX/mbdpYoCKcxOefwqMGU30P/2ba2I5lLcZrqDB+TM7dEnOQiYpWCeunzWRZD/
+ XoEAMaYT2oI7tj1t9VmnzO1euGoZjv4uQPm8pUNCBgsB5eaPlU/R278w604MaRiXzg52PYxwH
+ QEAv9eRr92kFJMu/4XecO07aL67OTKi7SaY5i3T5zecHCjttYbGNfvtkObWH/l10AdxVsVkGB
+ jHafiLJ2TLtlU7n3nxdJoEzC0A4V3ZiqdsKbsf0hGgshe+V+U0mg24sUhVFaipfU0Rc0FQby/
+ FbmNRSNnhGnm6z2M4o9elPA6jngJ+CBIFnh72Y40y1EZLTNWUm0uLHKF77iSSwE4MMPoMu8/y
+ DFM1tSWO9ysz1J/q/1XfGhM4IVXpP3f/qJtFY5aWPTscK41dRoglqBjbSQYoxRDY3S/6RzKCn
+ 4kE7Yva/jsoijaoRCSLd7aUs4kMz0biKahgxYTvX3bbls6ImO6fCb7J4KwUr7tVEQwHJA/rZn
+ zz0u+F0a4t+S56ENsTm8jJpmrffvPxpRjlcSIxtiko8WkSMY53UaPLfveKPd/WskB/0+Rmast
+ 2RcpbG/Sd0+AZaKXTL+WNSZJt3abhhb4KLzYjGrPY=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -72,108 +72,56 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Junio,
 
-
 On Mon, 23 Nov 2020, Junio C Hamano wrote:
 
 > "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 > writes:
 >
-> > @@ -538,7 +538,8 @@ static void copy_or_rename_branch(const char *oldn=
-ame, const char *newname, int
-> >  		strbuf_addf(&logmsg, "Branch: renamed %s to %s",
-> >  			    oldref.buf, newref.buf);
-> >
-> > -	if (!copy && rename_ref(oldref.buf, newref.buf, logmsg.buf))
-> > +	if (!copy && (oldname !=3D head || !is_null_oid(&head_oid)) &&
+> > +static const char default_branch_name_advice[] =3D N_(
+> > +"Using '%s' as the name for the initial branch. This default branch n=
+ame\n"
+> > +"is subject to change. To configure the initial branch name to use in=
+ all\n"
+> > +"of your new repositories, run:\n"
 >
-> It always makes readers uneasy to see pointer comparison of two
-> strings.
+> I think this is good, assuming that "subject to change" covers the
+> case where we end up doing nothing after all.  I'd feel safer if we
+> said "s/is subject to change/may change in the future/", but this is
+> not a strong preference.
 
-Even if it was on purpose ;-)
+I'd rather keep the current form, as it sounds a bit more firm to me.
 
-> Does this mean, after "git -c init.defaultbranch=3Dmaster init",
+> > +"\n"
+> > +"\tgit config --global init.defaultBranch <name>\n"
+> > +"\n"
+> > +"Common names are 'main', 'trunk' and 'development'. If you merely wi=
+sh\n"
+> > +"to suppress this warning, you can also use the current default branc=
+h\n"
+> > +"name. The current branch can be renamed via this command:\n"
 >
-> 	git branch -m master main
+> I think this is worse than the previous one.  Those who merely wish
+> to suppress the message without wanting to commit to a particular
+> name (i.e. they just want to take whatever the default we give them)
+> would be mislead and be frozen in time forever.  We do not give
+> "I'll just accept the default of the day" choice, and that is OK,
+> but we want to be clear about it, which is why I've kept raising this
+> as an issue.
 >
-> would not work while
+>     To configure the initial branch name to use in all of your new
+>     repositories and squelch this message, run:
 >
-> 	git branch -m main
->
-> would?  It would be easy to see with the attached patch to the test,
-> I guess.
+> may be better---it makes it clear that the offered two choices are
+> (1) do nothing and see this message every time, or (2) commit to a
+> name and not see this message again.
 
-At first, I thought that it would be inappropriate to do that because it
-would not work with unborn branches in a worktree other than the current
-one. Like,
+Well, I think I finally understand what you are saying: there is a
+legitimate need for a way to go with Git's preference but still suppress
+that message.
 
-	git worktree add --no-checkout --detach other
-	git -C other switch --orphan start-over-again
-	git branch -m start-over-again fresh-new-start
-
-On second thought, that's a really obscure use case, anyway. It is not
-even possible to create a secondary worktree! I started down that rabbit
-hole, but think I'd better let it be. This is where I stopped:
-
-=2D- snip --
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 200da319f1d..c84bffe9632 100644
-=2D-- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -489,6 +489,16 @@ static void reject_rebase_or_bisect_branch(const char=
- *target)
- 	free_worktrees(worktrees);
- }
-
-+static int is_unborn_branch(const char *branch_name, const char *full_ref=
-_name)
-+{
-+	int flags;
-+
-+	return (head && !strcmp(branch_name, head) && is_null_oid(&head_oid)) ||
-+		(!resolve_ref_unsafe(full_ref_name, RESOLVE_REF_READING, NULL,
-+				     &flags) &&
-+		 find_shared_symref("HEAD", full_ref));
-+}
-+
- static void copy_or_rename_branch(const char *oldname, const char *newnam=
-e, int copy, int force)
- {
- 	struct strbuf oldref =3D STRBUF_INIT, newref =3D STRBUF_INIT, logmsg =3D=
- STRBUF_INIT;
-@@ -538,8 +548,7 @@ static void copy_or_rename_branch(const char *oldname,=
- const char *newname, int
- 		strbuf_addf(&logmsg, "Branch: renamed %s to %s",
- 			    oldref.buf, newref.buf);
-
--	if (!copy &&
--	    (!head || strcmp(oldname, head) || !is_null_oid(&head_oid)) &&
-+	if (!copy && !is_unborn_branch(oldname, oldref.buf) &&
- 	    rename_ref(oldref.buf, newref.buf, logmsg.buf))
- 		die(_("Branch rename failed"));
- 	if (copy && copy_existing_ref(oldref.buf, newref.buf, logmsg.buf))
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index 84047ac64e6..124abeedf19 100755
-=2D-- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -586,4 +586,12 @@ test_expect_success 'branch -m with the initial branc=
-h' '
- 	test again =3D $(git -C rename-initial symbolic-ref --short HEAD)
- '
-
-+test_expect_success 'branch -m with the initial branch in another worktre=
-e' '
-+	git -c init.defaultBranch=3Dinitial init rename-two &&
-+	test_commit -C rename-two initial &&
-+	git -C rename-two worktree add --no-checkout ../rename-worktree &&
-+	git -C rename-worktree switch --orphan brand-new-day &&
-+	git -C rename-two branch -m brand-new-day renamed
-+'
-+
- test_done
-=2D- snap --
-
-Having said that, I fixed the `git branch -m <current-unborn> <new-name>`
-use case; the fix will be part of v3.
+I introduced `advice.defaultBranchName` to that end, and now display
+prominently, at the top of the message, how to use that flag to avoid
+seeing this advice ever again.
 
 Ciao,
 Dscho
