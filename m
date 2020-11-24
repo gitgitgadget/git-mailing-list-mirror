@@ -2,90 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F93FC2D0E4
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 21:16:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2738AC56202
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 21:20:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 24E6E20715
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 21:16:50 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="h3OqsIlC"
+	by mail.kernel.org (Postfix) with ESMTP id D3AAB20715
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 21:20:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730545AbgKXVQt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Nov 2020 16:16:49 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53845 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730537AbgKXVQs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Nov 2020 16:16:48 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C3E8FF283E;
-        Tue, 24 Nov 2020 16:16:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=S5sEnX39yQNTiS5MxsMIRg8DfMA=; b=h3OqsI
-        lCMkd0mgUohAm1BDdnga1Z0FtAwNA0Bh0KkJ8FBMLm0CsH5Mppxir7DfB7lxhCaZ
-        3QNanJ3/nXX38TU7OoRychJTzudiC0tSCvC8UyAOyvUdg8IbX8hCax41RWhunrdz
-        YSCMA6AYVhMZX5q9fUKqoJ0+ocwmdK+/o6fYQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FdnjV7ZTPhGyaCgb092uqbZLAaeV2g+x
-        E0PjP8nx/d5DCeJIJX3p5cKBuzYTHaS7nVxuoeWRkxInJ0PIa+BUAaoh0azN/qP5
-        o4qtE/1UpYbHIhQnyEq4Eg5nbEyOyJ5/fnOutCLt6cW6ZKefh3WiQvYhGK4SmaLF
-        6c9iJhBSwRw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BE9CDF283D;
-        Tue, 24 Nov 2020 16:16:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0D90CF283C;
-        Tue, 24 Nov 2020 16:16:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] t3404: do not depend on any specific default branch name
-References: <pull.798.git.1606212950283.gitgitgadget@gmail.com>
-Date:   Tue, 24 Nov 2020 13:16:42 -0800
-In-Reply-To: <pull.798.git.1606212950283.gitgitgadget@gmail.com> (Johannes
-        Schindelin via GitGitGadget's message of "Tue, 24 Nov 2020 10:15:49
-        +0000")
-Message-ID: <xmqqv9duihfp.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1731123AbgKXVUB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Nov 2020 16:20:01 -0500
+Received: from dd36226.kasserver.com ([85.13.153.21]:42516 "EHLO
+        dd36226.kasserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726876AbgKXVUB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Nov 2020 16:20:01 -0500
+Received: from client3368.local (i5C747A7D.versanet.de [92.116.122.125])
+        by dd36226.kasserver.com (Postfix) with ESMTPSA id 2B2453C052F;
+        Tue, 24 Nov 2020 22:19:59 +0100 (CET)
+Subject: Re: [PATCH] git-gui: Fix selected text colors
+To:     serg.partizan@gmail.com
+References: <7553c99f-1dea-0c1d-e5b0-2103333a76b7@haller-berlin.de>
+ <20201122133233.7077-1-serg.partizan@gmail.com>
+ <2436cd2e-26b9-a7cc-722a-7f27212f58f4@haller-berlin.de>
+ <DZJ7KQ.UXACXR9SWDQI3@gmail.com>
+ <b4571217-ea98-a282-48d3-e9679c600f4c@haller-berlin.de>
+ <NKO9KQ.ECZZ8I6WPK063@gmail.com>
+Cc:     git@vger.kernel.org, me@yadavpratyush.com
+From:   Stefan Haller <stefan@haller-berlin.de>
+Message-ID: <55348fbb-95bb-1dd2-4e17-4fc622ae7603@haller-berlin.de>
+Date:   Tue, 24 Nov 2020 22:19:59 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.5.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5A5BC7E0-2E9A-11EB-9752-E43E2BB96649-77302942!pb-smtp20.pobox.com
+In-Reply-To: <NKO9KQ.ECZZ8I6WPK063@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On 23.11.20 21:50, serg.partizan@gmail.com wrote:
+> 
+> 
+> On Mon, Nov 23, 2020 at 20:03, Stefan Haller <stefan@haller-berlin.de>
+> wrote:
+>> The problem is that it needs to be recalculated when the
+>> theme changes, and I have trouble testing that because the
+>> <<ThemeChanged>> event doesn't appear to be sent on Mac, as far as I can
+>> see.
+> 
+> How are you testing this?
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Now that we can override the default branch name in the tests via
-> `GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME`, we should avoid expecting a
-> particular hard-coded name.
->
-> So let's rename the initial branch immediately to `primary` and work
-> with that.
+By changing the Appearance setting from Light to Dark or back in Mac's
+preferences window. The git gui window does update dynamically when you
+do this.
 
-Yes, that is probably the approach that gives us the most stable
-environment to work in.   I like it.
+However, I think I was wrong when I assumed that this would change the
+theme; there's only one theme on Mac, the "aqua" theme. It just changes
+its colors, it seems.
 
->     Applying this patch would obsolete the change in 
->     js/default-branch-name-tests-final-stretch to force the default branch
->     name to master in t3404.
+> So you can safely put your code inside "color::sync_with_theme".
 
-Yup, after taking these individual replacement patches, I expect
-that the big topic will see shrinkage, which is good.
+Will do; I'll send out v2 in a moment.
 
-Will queue.  Thanks.
+> And We should move call to sync_with_theme from git-gui.sh into
+> InitTheme. I don't know why I have not put it there before.
+
+Yes, I was wondering this too. But as it doesn't seem to make a
+difference in practice, I'll leave this for someone else to fix at some
+point.
