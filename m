@@ -2,124 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 594ACC56202
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 00:47:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1C54C2D0E4
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 00:53:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 280F6204EA
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 00:47:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A821206D8
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 00:53:06 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ItUvOc8G";
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=kyleam.com header.i=@kyleam.com header.b="nxyRpijv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726682AbgKXArS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Nov 2020 19:47:18 -0500
-Received: from cloud.peff.net ([104.130.231.41]:39430 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726510AbgKXArS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Nov 2020 19:47:18 -0500
-Received: (qmail 30054 invoked by uid 109); 24 Nov 2020 00:47:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 24 Nov 2020 00:47:18 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9611 invoked by uid 111); 24 Nov 2020 00:47:17 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 23 Nov 2020 19:47:17 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 23 Nov 2020 19:47:16 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] mktag: don't check SHA-1 object length under SHA-256
-Message-ID: <X7xYFPGthu8BMWpH@coredump.intra.peff.net>
-References: <20190826014344.16008-11-sandals@crustytoothpaste.net>
- <20201123120111.13567-1-avarab@gmail.com>
- <xmqqlferoq1m.fsf@gitster.c.googlers.com>
- <X7wrbI/pefHJsfdY@coredump.intra.peff.net>
- <xmqqft4zn2f7.fsf@gitster.c.googlers.com>
+        id S1726426AbgKXAwp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Nov 2020 19:52:45 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62099 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725970AbgKXAwp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Nov 2020 19:52:45 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 23C3810AEBA;
+        Mon, 23 Nov 2020 19:52:43 -0500 (EST)
+        (envelope-from kyle@kyleam.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-transfer-encoding;
+         s=sasl; bh=vAwfi4x4YnknJwoK8425th2MS50=; b=ItUvOc8GXwSLivcKHruX
+        cNzPLYS0wLASqk27X4Ovgmu2ttAGVPMKLdE6rDavQnu+oDKw1kalGcW0ZNF6YMJs
+        ets0uhvXNUym9tIcAJ2p47o5bXHMi8Vze9I5hspKP+z0Bb/Fw96OZEO1rTjnvPyq
+        GqqhoIA9ghBNnDLR4uWNHsU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1D19710AEB9;
+        Mon, 23 Nov 2020 19:52:43 -0500 (EST)
+        (envelope-from kyle@kyleam.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=kyleam.com;
+ h=from:to:subject:date:message-id:mime-version:content-transfer-encoding;
+ s=mesmtp; bh=IHh0OtO35gS7uI1z6Xk60CWw3bnUCZF2JBZtiP67uvA=;
+ b=nxyRpijvQ0ZbNqohTMUxp3cYrVLC4xrGTeR+nTV2GjPgjDCI2et4ALxjyweb9Thui5O1DaHhmx7UOzXc5y2wJS+WTppfFCLY8kWVD2lwZIo8d8LUW0O2KRSoVS17M8Lj8fdN5qL28wGsEWtR+0sYKB3m12rbau9ybTT8wzj7akg=
+Received: from localhost (unknown [45.33.91.115])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8D98110AEB8;
+        Mon, 23 Nov 2020 19:52:40 -0500 (EST)
+        (envelope-from kyle@kyleam.com)
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] stash: add missing space to an error message
+Date:   Mon, 23 Nov 2020 19:52:12 -0500
+Message-Id: <20201124005212.13780-1-kyle@kyleam.com>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqft4zn2f7.fsf@gitster.c.googlers.com>
+X-Pobox-Relay-ID: 5AA51A40-2DEF-11EB-9AFB-E43E2BB96649-24757444!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 23, 2020 at 02:17:32PM -0800, Junio C Hamano wrote:
+Restore a space that was lost in 8a0fc8d19d (stash: convert apply to
+builtin, 2019-02-25).
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > It might just be me, but "object name" makes me think we'd take any name
-> > (e.g., a refname that resolves to an object), whereas "object id" would
-> > mean the object's hash specifically. And in this instance we only allow
-> > the latter.
-> 
-> Yeah, but glossary-content is very much explicit about this.  "name"
-> is the full hexadecimal hash, "identifier" is a synonym for it.  And
-> "id" does not even appear to be defined.  We used to call "any name
-> that refers to an object" an "extended SHA-1", but I haven't seen
-> the phrase used for a long time on the list.
+Signed-off-by: Kyle Meyer <kyle@kyleam.com>
+---
+ builtin/stash.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-OK, then my "it might just be me" is clearly just me. :)
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 24ddb1bffa..e1f8235fdd 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -419,7 +419,7 @@ static int do_apply_stash(const char *prefix, struct =
+stash_info *info,
+ 			ret =3D apply_cached(&out);
+ 			strbuf_release(&out);
+ 			if (ret)
+-				return error(_("conflicts in index."
++				return error(_("conflicts in index. "
+ 					       "Try without --index."));
+=20
+ 			discard_cache();
 
-I think the distinction I laid out earlier is nicer, but it may not be
-worth the trouble of trying to _change_ nomenclature at this point.
-Let's see what your glossary changes say...
+base-commit: b291b0a628020eedb10b6236d87fe25d295cea81
+--=20
+2.29.2
 
-> I've always found it cumbersome that, when I want to mean a full hex
-> representation, I have to say "40-byte object name".  It is not even
-> technically correct these days with SHA-256.
-
-Yeah, that is both long and wrong. I'd maybe say "hex object id" in some
-cases, which is slightly less cumbersome and extends to sha256. And
-distinguishes it from a binary object id (though see below).
-
->  Documentation/glossary-content.txt | 15 +++++++++++----
->  1 file changed, 11 insertions(+), 4 deletions(-)
-> 
-> diff --git c/Documentation/glossary-content.txt w/Documentation/glossary-content.txt
-> index 090c888335..e2ab920911 100644
-> --- c/Documentation/glossary-content.txt
-> +++ w/Documentation/glossary-content.txt
-> @@ -262,13 +262,20 @@ This commit is referred to as a "merge commit", or sometimes just a
->  	identified by its <<def_object_name,object name>>. The objects usually
->  	live in `$GIT_DIR/objects/`.
->  
-> +[[def_object_id]]object ID::
-> +	Synonym for <<def_object_identifier,object identifier>>.
-> +
->  [[def_object_identifier]]object identifier::
-> -	Synonym for <<def_object_name,object name>>.
-> +	An <<def_object_name, object name>> written as an
-> +	unabbreviated hexadecimal representation of the hash value
-> +	that uniquely identifies an <<def_object,object>>.
-> +	Also colloquially called <<def_SHA1,SHA-1>>.
-
-You might want to touch on "binary" here, too, with something like:
-
-  This may also be used to refer to the binary representation of the
-  hash value (e.g., as found within Git trees). Unless specified, this
-  term typically implies the hexadecimal representation.
-
-But maybe that is overkill. When we are talking about the command line
-interface, stdin, etc, I can't think of a place where we'd take the
-binary ("hash-object -t tree", but I don't really count that).
-
->  [[def_object_name]]object name::
-> -	The unique identifier of an <<def_object,object>>.  The
-> -	object name is usually represented by a 40 character
-> -	hexadecimal string.  Also colloquially called <<def_SHA1,SHA-1>>.
-> +	A name that identifies an <<def_object,object>> uniquely,
-> +	which can be given in various ways, including but not
-> +	limited to, the object's full <<def_object_identifier,object
-> +	identifier>>, a <<def_ref,ref>> that refers to the object.
-
-This all seems like an improvement to me, though the real question is
-how often the term "object name" appears in the _other_ manpages to
-refer to the more limited case.
-
--Peff
