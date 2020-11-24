@@ -2,95 +2,174 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40CC2C63777
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 08:07:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EC2DC2D0E4
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 09:06:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DE321206D9
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 08:07:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B3BD320782
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 09:06:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728750AbgKXIHW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Nov 2020 03:07:22 -0500
-Received: from cloud.peff.net ([104.130.231.41]:39952 "EHLO cloud.peff.net"
+        id S1730939AbgKXJGH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Nov 2020 04:06:07 -0500
+Received: from cloud.peff.net ([104.130.231.41]:39998 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726529AbgKXIHW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Nov 2020 03:07:22 -0500
-Received: (qmail 365 invoked by uid 109); 24 Nov 2020 08:07:21 -0000
+        id S1730694AbgKXJGG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Nov 2020 04:06:06 -0500
+Received: (qmail 1194 invoked by uid 109); 24 Nov 2020 09:06:06 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 24 Nov 2020 08:07:21 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 24 Nov 2020 09:06:06 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12363 invoked by uid 111); 24 Nov 2020 08:07:21 -0000
+Received: (qmail 12903 invoked by uid 111); 24 Nov 2020 09:06:05 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 24 Nov 2020 03:07:21 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 24 Nov 2020 04:06:05 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 24 Nov 2020 03:07:21 -0500
+Date:   Tue, 24 Nov 2020 04:06:05 -0500
 From:   Jeff King <peff@peff.net>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "Theodore Y. Ts'o" <tytso@mit.edu>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        =?utf-8?Q?V=C3=ADt?= Ondruch <vondruch@redhat.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: Pick the right default and stop warn on `git pull`
-Message-ID: <X7y/OdcoVnBeEVju@coredump.intra.peff.net>
-References: <X7wuMvHRURK1QS/Q@coredump.intra.peff.net>
- <CAMP44s0QOcMnYQqFFSE1jV_T6=e4=xTM0zr_06C6+aYb7oqb4A@mail.gmail.com>
- <X7xWSs3/vVqKl6sK@coredump.intra.peff.net>
- <CAMP44s1Z4tDXO4jstGMtYVOYzkQQnZMHp45pYPOimk+=jwFHcw@mail.gmail.com>
- <X7xgow4pchnhf2iY@coredump.intra.peff.net>
- <xmqqy2irjy4f.fsf@gitster.c.googlers.com>
- <X7xw0xb9UnGKbS8m@coredump.intra.peff.net>
- <CAMP44s08mEyYqbjOeTeS46CngrbQMqP2=cMr1dtRLLk_BLAq3w@mail.gmail.com>
- <X7y0GbBQa0a5Alh0@coredump.intra.peff.net>
- <CAMP44s31OqnRnMO3bcO43VyUCP27o8UGPA5ognGi1s8Se+CRiw@mail.gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] submodule: fix fetch_in_submodule logic
+Message-ID: <X7zM/d1CVuyCstZo@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAMP44s31OqnRnMO3bcO43VyUCP27o8UGPA5ognGi1s8Se+CRiw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 24, 2020 at 01:48:56AM -0600, Felipe Contreras wrote:
+This is a fix on top of ab/retire-parse-remote, which is now in next. I
+think submodule fetching is pretty broken, so we should do this or
+something like it soon.
 
-> > Yep. After reading the first half of your mail, I started to respond
-> > with the exact same thing. The key thing is letting the command-line
-> > options override all of the related config. But I guess after reading to
-> > the end that you don't actually like this. ;)
-> 
-> Yes, the command-line options should override the configuration, and
-> the configuration should override the default.
-> 
-> I'm not sure what makes you think I wouldn't like that.
+-- >8 --
+Commit 1c1518071c (submodule: use "fetch" logic instead of custom remote
+discovery, 2020-11-14) rewrote the logic in fetch_in_submodule to do:
 
-I think it's obvious that "--rebase" should override "pull.rebase". But
-what I thought you were suggesting (and which I think is reasonable) is
-for "--rebase" to affect pull.ff, as well. That's less clear (and
-doesn't happen now), but I think could produce sensible semantics.
+  elif test "$2" -ne ""
 
-But it sounded like you thought that was too complicated.
+But this is nonsense in shell: -ne is for numeric comparisons. This
+should be "=" or more idiomatically:
 
-> > I do agree it would be more clear in the long run with a single option
-> > (config and command-line) that makes it clear the values are mutually
-> > exclusive. I'm just not sure if it's painful to get there without
-> > breaking compatibility or introducing confusion in the meantime.
-> 
-> I think it is possible. I did the patches several years ago. And I'm
-> working on the patches right now. We'll see.
+  elif test -n "$2"
 
-OK. Then I'm happy to wait and see.
+But once we fix that, many tests start failing. Because that commit
+introduced another problem. The caller that passes 3 arguments looks
+like this:
 
-> Well, in git-pull there's a callback called: parse_opt_rebase(), and
-> if no argument is passed, then it returns REBASE_FALSE (0).
-> 
-> The rest of the code assumes 0 is no-rebase (i.e. merge).
-> 
-> There's no REBASE_UNSET.
+    fetch_in_submodule "$sm_path" $depth "$sha1"
 
-Right, I meant that you would add one. But if you are pursuing the other
-option, we can see how that goes.
+Note the unquoted $depth parameter. When it isn't set, the function will
+see only 2 arguments, and the function has no idea if what it sees in $2
+is an option to go on the command line, or a refspec to pass on stdin.
+In the old code before that commit:
 
--Peff
+   fetch_in_submodule () (
+        sanitize_submodule_env &&
+        cd "$1" &&
+  -     case "$2" in
+  -     '')
+  -             git fetch ;;
+  -     *)
+  -             shift
+  -             git fetch $(get_default_remote) "$@" ;;
+  -     esac
+
+we treated those the same, so it didn't matter. But in the new logic
+(with my fix above):
+
+  +     if test $# -eq 3
+  +     then
+  +             echo "$3" | git fetch --stdin "$2"
+  +     elif test -n "$n"
+  +     then
+  +             git fetch "$2"
+  +     else
+  +             git fetch
+  +     fi
+
+we use the number of parameters to distinguish the two. Let's insist
+that the caller pass an empty string for positional parameter two if
+they want to have a third parameter after it.
+
+But that still leaves one problem. In the --stdin block, we
+unconditionally pass "$2" to git-fetch, even if it's the empty string.
+Rather than add another conditional, we can use :+ parameter expansion
+to include it only if it's non-empty. In fact, we can do the same for
+the elif, too, simplifying it further. Technically this is overkill,
+since we know the --depth parameter will not have whitespace (and
+indeed, most callers do not bother quoting it), but it doesn't hurt for
+the function to be careful.
+
+It's somewhat amazing that no tests were failing. I think what happened
+is that:
+
+  - the 3-arg form rarely triggered; any call with a non-empty $depth
+    and a $sha1 would work, but one with an empty $depth would only have
+    2 arguments
+
+  - because of the wrong arguments to "test", the shell would complain
+    and exit non-zero. So we never ran the middle conditional at all
+
+  - that left every call running "git fetch" with no arguments. A
+    well-written test could have detected the distinction here, but in
+    practice omitting --depth just means fetching more commits, and
+    fetching everything (rather than a single sha1) works as long as the
+    commit in question is reachable
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+A few side notes:
+
+  - I imagine the mixup between "ne" and "=" is because they have the
+    opposite meaning in perl. :)
+
+  - it probably wouldn't hurt to beef up the tests, especially around
+    fetching an unreachable sha1, but after getting lost for an hour in
+    the spaghetti of the submodule code and its tests, I gave up. I do
+    at least feel this code is being exercised (because once the initial
+    problem is fixed, tons of things fail).
+
+ git-submodule.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 86ad60c05c..eb90f18229 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -412,17 +412,17 @@ is_tip_reachable () (
+ 	test -z "$rev"
+ )
+ 
++# usage: fetch_in_submodule <module_path> [<depth>] [<sha1>]
++# Because arguments are positional, use an empty string to omit <depth>
++# but include <sha1>.
+ fetch_in_submodule () (
+ 	sanitize_submodule_env &&
+ 	cd "$1" &&
+ 	if test $# -eq 3
+ 	then
+-		echo "$3" | git fetch --stdin "$2"
+-	elif test "$2" -ne ""
+-	then
+-		git fetch "$2"
++		echo "$3" | git fetch --stdin ${2:+"$2"}
+ 	else
+-		git fetch
++		git fetch ${2:+"$2"}
+ 	fi
+ )
+ 
+@@ -603,7 +603,7 @@ cmd_update()
+ 				# Now we tried the usual fetch, but $sha1 may
+ 				# not be reachable from any of the refs
+ 				is_tip_reachable "$sm_path" "$sha1" ||
+-				fetch_in_submodule "$sm_path" $depth "$sha1" ||
++				fetch_in_submodule "$sm_path" "$depth" "$sha1" ||
+ 				die "$(eval_gettext "Fetched in submodule path '\$displaypath', but it did not contain \$sha1. Direct fetching of that commit failed.")"
+ 			fi
+ 
+-- 
+2.29.2.784.g3af989cc94
