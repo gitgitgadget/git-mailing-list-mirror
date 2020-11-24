@@ -7,25 +7,25 @@ X-Spam-Status: No, score=2.4 required=3.0 tests=BAYES_20,DKIM_ADSP_CUSTOM_MED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,URI_HEX autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8C5BC64E8A
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 10:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CD6BC63798
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 10:17:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6734820782
+	by mail.kernel.org (Postfix) with ESMTP id C328F2076B
 	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 10:17:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731721AbgKXKRf convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 24 Nov 2020 05:17:35 -0500
-Received: from n2.nabble.com ([162.253.133.85]:55261 "EHLO n2.nabble.com"
+        id S1731711AbgKXKRe convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 24 Nov 2020 05:17:34 -0500
+Received: from n2.nabble.com ([162.253.133.85]:55258 "EHLO n2.nabble.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731693AbgKXKRe (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1731640AbgKXKRe (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 24 Nov 2020 05:17:34 -0500
 Received: from n2.nabble.com (localhost [127.0.0.1])
-        by n2.nabble.com (Postfix) with ESMTP id D82ED1175F1B6
-        for <git@vger.kernel.org>; Tue, 24 Nov 2020 03:08:52 -0700 (MST)
-Date:   Tue, 24 Nov 2020 03:08:52 -0700 (MST)
+        by n2.nabble.com (Postfix) with ESMTP id 659551175F10E
+        for <git@vger.kernel.org>; Tue, 24 Nov 2020 03:07:49 -0700 (MST)
+Date:   Tue, 24 Nov 2020 03:07:49 -0700 (MST)
 From:   michaelhernande <michalehernande@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <1606212532883-0.post@n2.nabble.com>
+Message-ID: <1606212469414-0.post@n2.nabble.com>
 Subject: How to Update Garmin GPS Map?
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
