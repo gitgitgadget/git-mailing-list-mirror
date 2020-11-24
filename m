@@ -6,148 +6,91 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED071C63777
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 08:04:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40CC2C63777
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 08:07:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9FB0C206D9
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 08:04:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE321206D9
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 08:07:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730193AbgKXIED (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Nov 2020 03:04:03 -0500
-Received: from cloud.peff.net ([104.130.231.41]:39928 "EHLO cloud.peff.net"
+        id S1728750AbgKXIHW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Nov 2020 03:07:22 -0500
+Received: from cloud.peff.net ([104.130.231.41]:39952 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730304AbgKXIED (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Nov 2020 03:04:03 -0500
-Received: (qmail 321 invoked by uid 109); 24 Nov 2020 08:04:02 -0000
+        id S1726529AbgKXIHW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Nov 2020 03:07:22 -0500
+Received: (qmail 365 invoked by uid 109); 24 Nov 2020 08:07:21 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 24 Nov 2020 08:04:02 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 24 Nov 2020 08:07:21 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12319 invoked by uid 111); 24 Nov 2020 08:04:02 -0000
+Received: (qmail 12363 invoked by uid 111); 24 Nov 2020 08:07:21 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 24 Nov 2020 03:04:02 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 24 Nov 2020 03:07:21 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 24 Nov 2020 03:04:01 -0500
+Date:   Tue, 24 Nov 2020 03:07:21 -0500
 From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH] clone: --filter=tree:0 implies fetch.recurseSubmodules=no
-Message-ID: <X7y+cZ3MPqqmGXx/@coredump.intra.peff.net>
-References: <pull.797.git.1605904586929.gitgitgadget@gmail.com>
- <20201121000436.GB353076@coredump.intra.peff.net>
- <8a31af0e-4440-d957-11fb-48c4d2abd5c7@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "Theodore Y. Ts'o" <tytso@mit.edu>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        =?utf-8?Q?V=C3=ADt?= Ondruch <vondruch@redhat.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: Pick the right default and stop warn on `git pull`
+Message-ID: <X7y/OdcoVnBeEVju@coredump.intra.peff.net>
+References: <X7wuMvHRURK1QS/Q@coredump.intra.peff.net>
+ <CAMP44s0QOcMnYQqFFSE1jV_T6=e4=xTM0zr_06C6+aYb7oqb4A@mail.gmail.com>
+ <X7xWSs3/vVqKl6sK@coredump.intra.peff.net>
+ <CAMP44s1Z4tDXO4jstGMtYVOYzkQQnZMHp45pYPOimk+=jwFHcw@mail.gmail.com>
+ <X7xgow4pchnhf2iY@coredump.intra.peff.net>
+ <xmqqy2irjy4f.fsf@gitster.c.googlers.com>
+ <X7xw0xb9UnGKbS8m@coredump.intra.peff.net>
+ <CAMP44s08mEyYqbjOeTeS46CngrbQMqP2=cMr1dtRLLk_BLAq3w@mail.gmail.com>
+ <X7y0GbBQa0a5Alh0@coredump.intra.peff.net>
+ <CAMP44s31OqnRnMO3bcO43VyUCP27o8UGPA5ognGi1s8Se+CRiw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <8a31af0e-4440-d957-11fb-48c4d2abd5c7@gmail.com>
+In-Reply-To: <CAMP44s31OqnRnMO3bcO43VyUCP27o8UGPA5ognGi1s8Se+CRiw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 23, 2020 at 10:18:42AM -0500, Derrick Stolee wrote:
+On Tue, Nov 24, 2020 at 01:48:56AM -0600, Felipe Contreras wrote:
 
-> > If I clone with tree:0, I'm still going to get the tree for the thing
-> > I'm actually checking out (assuming a non-bare repo). It would be
-> > reasonable to recursively fetch the submodules in that commit to
-> > check them out (assuming you specified --recurse-submodules).
-> > 
-> > If I then fetch again, I'll end up with another tree that I'm about to
-> > checkout. So likewise, would it make sense to fetch any updates from
-> > there?
+> > Yep. After reading the first half of your mail, I started to respond
+> > with the exact same thing. The key thing is letting the command-line
+> > options override all of the related config. But I guess after reading to
+> > the end that you don't actually like this. ;)
 > 
-> One thing that is different is that we will fetch the trees we need
-> _during that checkout_, so why do it preemptively in the fetch?
+> Yes, the command-line options should override the configuration, and
+> the configuration should override the default.
 > 
-> Further, the number of trees being fetched is _not_ the number of ref
-> tips, but seems to be related to the total number of commits different.
-> There must be a rev walk looking for which commits changed the modules
-> file or the commit link in the root tree.
+> I'm not sure what makes you think I wouldn't like that.
 
-Yeah, that's exactly what the "on-demand" thing is. I said before it was
-looking for .gitmodules, but I think it has to be looking for updated
-gitlinks. I'm pretty sure the logic only kicks in if we have a
-.gitmodules, though, to avoid the extra traversal when you're not using
-submodules (but I guess we're all now paying that traversal cost in
-git.git, even if we don't populate the modules).
+I think it's obvious that "--rebase" should override "pull.rebase". But
+what I thought you were suggesting (and which I think is reasonable) is
+for "--rebase" to affect pull.ff, as well. That's less clear (and
+doesn't happen now), but I think could produce sensible semantics.
 
-I think the goal is to do all of the fetches at once, so after "git
-fetch" you can then run checkout, merge, etc, without worrying that
-you'll need network access later.
+But it sounded like you thought that was too complicated.
 
-But it's not actually "checkout" that does the fetching. It will update
-the gitlink, but that will just show a diff against the content of the
-submodule. You have to actually "git submodule update" to update the
-repository, which will then auto-fetch (though I suspect with
-appropriate config or command-line options, checkout can be convinced to
-trigger "submodule update").
-
-So in that sense, maybe your patch is the most sensible thing. If you're
-not checking out immediately, we probably have no business in a partial
-clone guessing at trees you _might_ check out later, especially if it
-involves demand-fetching them from the server. And if you do check out
-and "submodule update" immediately, then we'd do the fetch then anyway.
-
-We can punt on the logic to walk the trees, only looking at ones we
-actually _do_ have locally, until somebody else wants to work on it.
-
-> >   - during its poking, should it set the necessary variables so that it
-> >     never demand-fetches from a promisor remote? I suspect this part
-> >     may be hard, because "fetch" and "checkout" are distinct operations
-> >     (so during the "fetch" we don't yet have the new tree demand-fetched
-> >     by checkout; in fact the user might not even be interested in
-> >     checking it out yet).
+> > I do agree it would be more clear in the long run with a single option
+> > (config and command-line) that makes it clear the values are mutually
+> > exclusive. I'm just not sure if it's painful to get there without
+> > breaking compatibility or introducing confusion in the meantime.
 > 
-> I also think this is a good idea. In particular, should we consider
-> making the "submodule fetch" be part of the "promisor"? That is, we
-> only fetch our submodule on checkout? Can we assume that the commit
-> will still exist on the remote, to some extent?
+> I think it is possible. I did the patches several years ago. And I'm
+> working on the patches right now. We'll see.
 
-I think issues of whether the commit will exist are outside the scope
-here. "submodule update" has to decide if we have it, or how to get it
-(if it can). But it won't fail a checkout in that case; you'll just be
-left with a diff between the gitlink and what's in the submodule repo.
+OK. Then I'm happy to wait and see.
 
-I'm not quite sure what you're asking with the rest of it. From this:
+> Well, in git-pull there's a callback called: parse_opt_rebase(), and
+> if no argument is passed, then it returns REBASE_FALSE (0).
+> 
+> The rest of the code assumes 0 is no-rebase (i.e. merge).
+> 
+> There's no REBASE_UNSET.
 
-> Naturally, this only really applies for --filter=tree:0, since in cases
-> like blobless clones, we would still want the commits and trees from the
-> submodule.
-
-it sounds like you're asking whether the submodule should also be using
-the same filter. Maybe, but I think it would depend on the workflow and
-the module (and probably is something that you'd want to be able to
-configure independently). At any rate, I think that's orthogonal to this
-issue.
-
-> > Given the difficulties in the latter case, this may be the best we can
-> > do. But in that case, what happens when we _do_ care about submodules,
-> > and do:
-> > 
-> >   git clone --recurse-submodules --filter=tree:0 ...
-> >   git fetch
-> >   git merge origin
-> > 
-> > Will we correctly fetch-on-demand the submodules we need during the
-> > merge operation? If so, then that user experience is probably pretty
-> > reasonable.
-
-Answering my own question: no, you'd run "git submodule update"
-afterwards.
-
-> Hopefully. Notably, the filter option does _not_ apply recursively
-> to the submodules, so even if we try to make the superproject a partial
-> clone, the submodule is not partial.
-
-Yep, but I do think that's orthogonal.
-
-> More research is required. Let's drop this patch, as I don't currently
-> have time to do the necessary deep dive. If someone else has time to
-> look into this, I'd be happy to review a better patch.
-
-I don't mind dropping it, but I've actually come around to the idea that
-your patch or something like it is probably a strict improvement.
+Right, I meant that you would add one. But if you are pursuing the other
+option, we can see how that goes.
 
 -Peff
