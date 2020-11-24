@@ -2,75 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BBD42C2D0E4
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 12:36:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80353C2D0E4
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 12:58:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4567C2076B
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 12:36:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 29E14206D9
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 12:58:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LuTQ1twD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DJJl5U8s"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387578AbgKXMfV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Nov 2020 07:35:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53608 "EHLO
+        id S2387784AbgKXM6f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Nov 2020 07:58:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387530AbgKXMfU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Nov 2020 07:35:20 -0500
-Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 969A5C0613D6
-        for <git@vger.kernel.org>; Tue, 24 Nov 2020 04:35:20 -0800 (PST)
-Received: by mail-ed1-x544.google.com with SMTP id l5so20664584edq.11
-        for <git@vger.kernel.org>; Tue, 24 Nov 2020 04:35:20 -0800 (PST)
+        with ESMTP id S2387781AbgKXM6e (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Nov 2020 07:58:34 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C5CBC0613D6
+        for <git@vger.kernel.org>; Tue, 24 Nov 2020 04:58:34 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id lv15so22477232ejb.12
+        for <git@vger.kernel.org>; Tue, 24 Nov 2020 04:58:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version:content-transfer-encoding;
-        bh=dGkrMUWNlhh0waG+BMtMKP+XrMI9DAqUTCes6FFUA88=;
-        b=LuTQ1twDa180rOW22r1qBhoZ9lEt3b5npT6+8oW1ImDC1q1xd7P0qcY8FtOOf7BBTq
-         ewhi0MkKQ35kIYTeyXDe7bQH4MIVRdaPUl8CsZsWROFtXEPPk3w6PlUH/X3chRJ+R30c
-         1nokmti6/0tbIpe30P94lTRKtFK/O2x+e4c1dgLWJhIzod3353QrLFEjZtJMoouuFQYF
-         JQ+Ee9XHdrPmFDjpwKfETqrRIfkWD+5pWldODsUz27P57I2cLTROwHcHSf8ilN0/EOJA
-         CLBQKeFA5QLd6tcfVzX6Noc5+u1A/sM5tNeftOiUm9HD6FYwr4uTgY0vASIbpW3rGzNT
-         GC3Q==
+        bh=CBTIxMI6RAjZRoGBaTGKS9jGFN7mjuQRiQsHzaV3nFk=;
+        b=DJJl5U8smiOuz7lTdPrsa6RlpgDutIvDuh1k/QLanvRIGi1n+cnaxQaxxslJs64F0H
+         MTrRERnmp35TT0IVcSMQQr+chfcoip66IcknO8EVxriHNBEOmZ97FqfNmtS5W59tCkrY
+         NCtx26Qsb0h/WIOXO2p3oFf2FDJwCkHBJq6qCw/h4DL4WeN5H9nb2GrNhJbv5ByXx7jZ
+         51oYG1Zo4fHlTl4k7/BA57zQdAeQa17bWzYqbXgn3kheUi4LXsVkjLNXfi6lcJzfrVbv
+         ec2RKC0gUIxCylxVjNlMpQE6u8FwH5uGyN0dgImbFMCMxP37j9xWFO63igVuTTR0vvyR
+         aNdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=dGkrMUWNlhh0waG+BMtMKP+XrMI9DAqUTCes6FFUA88=;
-        b=DYGUs5HeodBbgkh8SjEfmKKtgrwiIvZgbmZnd4CXzcHHSw2U/FesaZEVzMEojCC4K0
-         WauSdEueRpDQbN0WB7gIysFtmR5JXOQqM2lg2sUu/kFS+gfG6bX/G/27G6sUoPmWms13
-         cxKbwrH1s9fcRiz6DB6FoRhcEMJawZ1eAR/8bH3VBma/k1C85QytlyeAZof5OaS3q0vE
-         KAudXLymwm/TRG2qSRN25pnU/mIHqQzvFylxILAMZD/snYJVf/ZcaHZXGZus2jXpJ6Yy
-         4+dWF6cSYTbOWFZu3HNYRSl/AYb28yqT1uL+scNPzZWvN8iRkmxorq7gHsRQn2qbgrpK
-         oHTw==
-X-Gm-Message-State: AOAM532lTXAZnKQviP+xvuv5F4Y+x+dN0NSAI7EOXvAeqTskQA2r/RdF
-        k1SmLekdJZzzxoOwAn8rqDsCPrQNy4SyMg==
-X-Google-Smtp-Source: ABdhPJyYeHYySFoUspUgBo+yYI4b4G3R295dL3qjNyGyTiNH+0v3T9GCmD//c606imIPtbj+MjF6vg==
-X-Received: by 2002:a50:fb07:: with SMTP id d7mr3533770edq.169.1606221317959;
-        Tue, 24 Nov 2020 04:35:17 -0800 (PST)
+        bh=CBTIxMI6RAjZRoGBaTGKS9jGFN7mjuQRiQsHzaV3nFk=;
+        b=qihhPx5Ej0KYun4fIaytHCb9i6sAhTGV4BnU/Arealw4/BOVTnWpN3uDBrgI34bGYi
+         BoDT/9pMx3bKp1PVir7Z2mkKPN13TMlMrw0CkjrWNmdkq5mgfRSLzR1TeqfxPDFN/ueM
+         zJgDOitUJvEQW3BJontxf0Tr67WB/4CTkFxoYWwyKzUxaYWsZ3IscVpMrQnGCLdRjX2h
+         PXGadCLDiyBVD7ZKm8/CL6s9y2VJ2hUM4Pf93Hiw045ocbzDGdEF2X0x8L9imRaxQvXn
+         zvSGWwsB4yOcIqHfbsMeH/qiwXzl0s+Ahk3BKbFHMvlghJP71By+4+iGIf64qh0bdDiz
+         XntQ==
+X-Gm-Message-State: AOAM530qEYFl2ETS95nZ0Q6PTY5m4aS4QfGQtWVFxgdfPUbRmhlPwYxf
+        KqykvktOUg/TJJRoQPSkD+4=
+X-Google-Smtp-Source: ABdhPJzhdBAq1ByITt/iQKcI9p6Lq6RVs9iEJ+8BN4qZ1raRec9uyLEZpDdM7hdRWp3hex+uxEmG7A==
+X-Received: by 2002:a17:906:13d6:: with SMTP id g22mr4212329ejc.240.1606222712608;
+        Tue, 24 Nov 2020 04:58:32 -0800 (PST)
 Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id b21sm6732460ejg.93.2020.11.24.04.35.17
+        by smtp.gmail.com with ESMTPSA id l7sm6811025ejc.5.2020.11.24.04.58.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2020 04:35:17 -0800 (PST)
+        Tue, 24 Nov 2020 04:58:31 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 0/7] config: add --literal-value option
-References: <pull.796.git.1605801143.gitgitgadget@gmail.com> <87k0ugp3mg.fsf@evledraar.gmail.com> <e7973fe1-eb64-2f5a-ecb3-fadf2ba9764d@gmail.com>
+To:     Geert Jansen <gerardu@amazon.com>
+Cc:     Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: RFC: auto-enabling parallel-checkout on NFS
+References: <20201115194359.67901-1-matheus.bernardino@usp.br> <87y2ixpvos.fsf@evledraar.gmail.com> <20201123233735.GB28189@dev-dsk-gerardu-1d-54592b62.us-east-1.amazon.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 26.3; mu4e 1.4.13
-In-reply-to: <e7973fe1-eb64-2f5a-ecb3-fadf2ba9764d@gmail.com>
-Date:   Tue, 24 Nov 2020 13:35:16 +0100
-Message-ID: <87blfnoruj.fsf@evledraar.gmail.com>
+In-reply-to: <20201123233735.GB28189@dev-dsk-gerardu-1d-54592b62.us-east-1.amazon.com>
+Date:   Tue, 24 Nov 2020 13:58:31 +0100
+Message-ID: <878saqq5c8.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -79,31 +75,113 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Nov 20 2020, Derrick Stolee wrote:
+On Tue, Nov 24 2020, Geert Jansen wrote:
 
-> On 11/20/2020 8:19 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> On Thu, Nov 19 2020, Derrick Stolee via GitGitGadget wrote:
->>=20
->>> As reported [1], 'git maintenance unregister' fails when a repository is
->>> located in a directory with regex glob characters.
->>=20
->> Just as bikeshedding on the name: Did you consider something
->> thematically similar to the corresponding git-grep option,
->> i.e. --fixed-string[s]. I see -F is also free in git-config(1).
+> Hi =C3=86var,
 >
-> I definitely wanted to be specific about "value" in the name,
-> since some options include regexes on the key as well. I'm open
-> to new ideas, and combining your idea with mine would introduce
-> "--fixed-value". Thoughts?
+> On Thu, Nov 19, 2020 at 10:01:07AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>>=20
+>> > The major downside is that detecting the file system type is quite
+>> > platform-dependent, so there is no simple and portable solution. (Also,
+>> > I'm not sure if the optimal number of workers would be the same on
+>> > different OSes). But we decided to give it a try, so this is a
+>> > rough prototype that would work for Linux:
+>> > https://github.com/matheustavares/git/commit/2e2c787e2a1742fed8c35dba1=
+85b7cd208603de9
+>>=20
+>> I'm not intrinsically opposed to hardcoding some "nr_threads =3D is_nfs()
+>> ? x : y" as a stopgap.
+>>=20
+>> I do think we should be thinking about a sustainable way of doing this
+>> sort of thing, this method of testing once and hardcoding something
+>> isn't a good approach.
+>>=20
+>> It doesn't anticipate all sorts of different setups, e.g. in this case
+>> NFS is not a FS, but a protocol, there's probably going to be some
+>> implementations where parallel is much worse due to a quirk of the
+>> implementation.
+>>=20
+>> I think integrating an optimization run with the relatively new
+>> git-maintenance is a better way forward.
+>>=20
+>> You'd configure e.g.:
+>>=20
+>>     maintenance.performanceTests.enabled=3Dtrue
+>>     maintenance.performanceTests.writeConfig=3Dtrue
+>>=20
+>> Which would run e.g.:
+>>=20
+>>     git config --type bool core.untrackedCache $(git update-index --test=
+-untracked-cache && echo true || echo false)
+>>     git config checkout.workers $(git maintenance--helper auto-discover-=
+config checkout.workers)
+>>=20
+>> Such an implementation can be really basic at first, or even just punt
+>> on the test and use your current "is it NFS?" check.
+>>=20
+>> But I think we should be moving to some helper that does the actual test
+>> locally when asked/configured by the user, so we're not making a bunch
+>> of guesses in advance about the size/shape of the repository, OS/nfs/fs
+>> etc.
+>
+> I like this idea as something that will give the best configuration for a=
+ given
+> repository. I also know from working with customers for a long time that =
+most
+> users will use the default settings for almost any application, and that
+> default configurations therefore matter a lot.
+>
+> The ideal experience would be, in my view, that a clone or checkout would
+> automatically benefit from parallel checkout, even if this is the first
+> checkout into a new repository.
+>
+> Maybe both ideas could be combined? We could have some reasonable heurist=
+ic
+> based on file system type (and maybe number of CPUs) that gives most of t=
+he
+> benefits of paralell checkout, while still being a reasonable compromise =
+that
+> that works across different NFS servers and file systems. Power users tha=
+t want
+> more aggressive tuning could run the maintenance command that measures fi=
+le
+> system performance and comes up with an optimal value for checkout.worker=
+s.
 
-Hi. I see you've already sent a v2 with that. Looks good to me. FWIW I
-didn't feel strongly one way or the other about it, either would be a
-fine choice by someone who's eyeballing this more than my cursory
-glance.
+Yeah, I'm not opposed to it in the least. I just think as a practical
+matter it may become a non-issue if we had something like
+maintenance.performanceTests.*
 
-I just wanted to point out the grep option in case you'd missed it,
-since we've got a bazillion CLI options all over the place, and
-sometimes there's an existing option that's thematically similar to a
-proposed new one that's easy to miss. So we can re-use (or partially
-re-use) the name, behavior, or not.
+Because we eventually run a "gc/maintenance", and there we detach from
+the terminal, so we can run something like a find_optimal_nr_threads()
+without keeping the user waiting.
+
+If the only reason we had a
+find_if_nfs_and_nr_cores_to_guess_nr_threads() was because the more
+general find_optimal_nr_threads() took a tad too long when run
+interactively then changing where/how it's run would make the
+find_if_nfs_and_nr_cores_to_guess_nr_threads() codepath unnecessary.
+
+The "on clone" case is something we have in general with other speedups
+& sane defaults. E.g. in making the commit-graph.
+
+I haven't kept up with the latest state of that, but there was
+work/discussions on generating that there too in a smart way. E.g. you
+clone & we either make it or fork to the background and generate it. So
+in practice the user cloning a big repo has sane performance right away
+or really soon.
+
+But yeah, fully agreed on that we should ship sane defaults when
+possible.
+
+I do think (and I may be wrong here) that in particular with performance
+options it's more acceptable to not try as hard by default. A lot of
+them don't matter except for some really large repos, and users working
+with those tend to be part of some established ecosystem, where e.g. you
+clone chromium.git and a script could set up your custom config for you.
+
+But maybe there's common cases I'm not aware of where that assumption
+doesn't hold, e.g. (I'm just guessing here) people cloning arbitrary
+repos on some VM on Amazon that happens to use NFS, and then wondering
+why things are slow.
