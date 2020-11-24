@@ -2,98 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C764BC63697
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 03:01:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0ACF9C2D0E4
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 03:21:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 76D1C206FA
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 03:01:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8F5E820866
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 03:21:43 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nkr5f8zI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728503AbgKXDAn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Nov 2020 22:00:43 -0500
-Received: from cloud.peff.net ([104.130.231.41]:39710 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728209AbgKXDAn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Nov 2020 22:00:43 -0500
-Received: (qmail 30947 invoked by uid 109); 24 Nov 2020 03:00:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 24 Nov 2020 03:00:43 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10729 invoked by uid 111); 24 Nov 2020 03:00:42 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 23 Nov 2020 22:00:42 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 23 Nov 2020 22:00:42 -0500
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        dstolee@microsoft.com
-Subject: Re: [PATCH 07/23] ewah: make bitmap growth less aggressive
-Message-ID: <X7x3WtCItVGhQ57O@coredump.intra.peff.net>
-References: <cover.1605123652.git.me@ttaylorr.com>
- <c7db594fae4d0447a55a92e830475d9bc418ae7f.1605123652.git.me@ttaylorr.com>
- <xmqq7dqdqgji.fsf@gitster.c.googlers.com>
- <X7voLUlevHygqFg/@nand.local>
+        id S1728933AbgKXDVW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Nov 2020 22:21:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52664 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728846AbgKXDVW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Nov 2020 22:21:22 -0500
+Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com [IPv6:2a00:1450:4864:20::141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC518C0613CF
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 19:21:21 -0800 (PST)
+Received: by mail-lf1-x141.google.com with SMTP id u18so26784172lfd.9
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 19:21:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=T11pM30Zo2OtDA1oQ1Lu3ZWmFFIu+bqjF96YLuSv8Ms=;
+        b=Nkr5f8zI9xAI6yibQdWVTPcQq2dB1Y8/at8xV3GKA2sDZzrrWbwjBxELFPdOk8kA5k
+         J97VajlvY12aAkmDbclz4t2oMtQ6xO/ZINajI2sveVUMnUVTq+dvRdUWFTYLVJktDkv1
+         vppOoAb4rEQPbFWUdf9x122bHhoGlbe+ztbDOAL4Wvt/BAUoOKo8bOaQtC1KXHXGAgEL
+         P+hBuzLhnHp+E9FevSuGzoMLyYgqTGBG/zmxbO6hn3gYnxKDOlS0a+m7EFn+wylZArmr
+         LuDMWy70MKKDRNmUcvpT/ZpDgFrOOwROg36J6epD2983I+a/P4EcIFMjyFx+fApaJ72T
+         cLMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=T11pM30Zo2OtDA1oQ1Lu3ZWmFFIu+bqjF96YLuSv8Ms=;
+        b=Zv87/3kEF8BrAJGrQCH2+llpnWF7kwOx00rC6oybp7vASe/K87lNjldR2ItJRze4op
+         DQaKNddGAAqqdl8GVdJlQ/cs703BopXAU72c2IRhBx+UJOxOAw1FXUljdhiSxTzi88MM
+         v+JiAIy1gj6SQMJgsREWhEX3QmTr6Ceo/i52t6Wl+wJNMDknL+vuEF1gyHGKeRsGJSt7
+         rUCYLRjGkAjH55j993L7d3tNqXgs2ex9F72rsdYfWqLDp3g2mt+HKfP4CI+ExhPJRNa7
+         AwevWwXsxQw/GI+zkLTytYKGX2mh68B0vtFjdvmuRXkXI9CnvjkOZ7En6aAH0Jfo8oMP
+         z3XA==
+X-Gm-Message-State: AOAM53104l0cbZDse1FBfWQzpE+g+toPJpDQdiWXl+6OGOpGvVDg/0pR
+        ku1QAUsk5yXmcgCFGFI4/IDnzufSF5SFHJ+pUCA=
+X-Google-Smtp-Source: ABdhPJxhxRMkpjHrW2M757ph3poznUfHcZzWjicKXDDZi6rPQ7+V3ju6+1fDD5nhEvpKmMVGLqGmESOObfrUa0xoFSQ=
+X-Received: by 2002:ac2:4834:: with SMTP id 20mr823036lft.598.1606188080248;
+ Mon, 23 Nov 2020 19:21:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <X7voLUlevHygqFg/@nand.local>
+References: <CAFWsj_UwkQX9y0xPQJE3xguo0z3TMkvKAwei5iryCWXvVP8CjA@mail.gmail.com>
+ <badf3777-3970-b714-3ad9-67d2f77f94a5@web.de> <20201121002921.GC353076@coredump.intra.peff.net>
+ <xmqqd006s7ee.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqd006s7ee.fsf@gitster.c.googlers.com>
+From:   =?UTF-8?B?5ZSQ5a6H5aWV?= <winglovet@gmail.com>
+Date:   Tue, 24 Nov 2020 11:21:09 +0800
+Message-ID: <CAFWsj_WsexXgFe-jMYOk8_m9N7GLrhRjqFjRWRePZmxUDEYkSg@mail.gmail.com>
+Subject: Re: Bug report: orphaned pack-objects after killing upload-pack on [
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 23, 2020 at 11:49:49AM -0500, Taylor Blau wrote:
+when will this bug be fixed?
 
-> On Sun, Nov 22, 2020 at 12:32:01PM -0800, Junio C Hamano wrote:
-> > Taylor Blau <me@ttaylorr.com> writes:
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2020=E5=B9=B411=E6=9C=8822=E6=
+=97=A5=E5=91=A8=E6=97=A5 =E4=B8=8A=E5=8D=885:54=E5=86=99=E9=81=93=EF=BC=9A
+>
+> Jeff King <peff@peff.net> writes:
+>
+> > Yeah, clean_on_exit seems quite reasonable to me. I suspect nobody ever
+> > really noticed, because as soon as pack-objects starts to write out the
+> > pack, it will get SIGPIPE or EPIPE and die. But there is no point in
+> > letting it chug on expensive object enumeration or delta compression if
+> > upload-pack has already exited.
 > >
-> > >  - a geometric increase in existing size; we'll switch to 3/2 instead of
-> > >    2 here. That's less aggressive and may help avoid fragmenting memory
-> > >    (N + 3N/2 > 9N/4, so old chunks can be reused as we scale up).
+> > I don't know that wait_after_clean is necessary. We don't need to wait
+> > for pack-objects to fail.
 > >
-> > I am sure this is something obvious to bitmap folks, but where does
-> > 9N/4 come from (I get that the left-hand-side of the comparison is
-> > the memory necessary to hold both the old and the new copy while
-> > reallocating the words[] array)?
-> 
-> I thought that I was in the group of "bitmap folks", but since it's not
-> obvious to me either, I guess I'll have to hand in my bitmap folks
-> membership card ;).
-> 
-> Peff: where does 9N/4 come from?
-
-it is not a bitmap thing at all. We are growing a buffer, so if we
-continually multiply it by 3/2, then our sequence of sizes is:
-
-  - before growth: N
-  - after 1 growth: 3N/2
-  - after 2 growths: 9N/4
-
-Meaning we can fit the third chunk into the memory vacated by the second
-two. Whereas with a factor of, say 2:
-
-  - before growth: N
-  - after 1 growth: 2N
-  - after 2 growth: 4N
-
-which does not fit, and fragments your memory.
-
-There's a slight lie there, which is that you'll typically still hold
-the growth G-1 while doing growth G (after all, that is where you will
-copy the data from). But it still works out that you eventually get to
-use old chunks. The breakeven point is actually the golden ratio, but a)
-it's irrational and b) it probably makes sense to give some slop for
-malloc chunk overhead. 1.6 would probably be fine, too, though. :)
-
-> On a similar note: we could certainly
-> use ALLOC_GROW here, too, but it would change the behavior slightly (by
-> using alloc_nr()'s "add-16-first" behavior). Maybe we should be using
-> it, but I'll defer to your judgement.
-
-That would be OK, modulo the measurement question I asked in the other
-(wrong) part of the thread.
-
--Peff
+> > On the flip side, one of the reasons I added clean_on_exit long ago was
+> > for the similar issue on the push side, which is even worse. Here we
+> > might just waste some CPU, but on the push side we connect pack-objects
+> > directly to the remote socket, so it could actually complete the push
+> > (from the server's perspective) after the local git-push has died. Or a=
+t
+> > least I think that was possible at one point; it might not be the case
+> > any more.
+> >
+> > I wrote this patch ages ago, and it is still sitting close to the botto=
+m
+> > (if not the bottom) of my todo stack, waiting to be investigated. ;)
+>
+> Sounds sensible.
+>
+> > -- >8 --
+> > Subject: [PATCH] send-pack: kill pack-objects helper on signal or exit
+> >
+> > We spawn an external pack-objects process to actually send
+> > objects to the remote side. If we are killed by a signal
+> > during this process, the pack-objects will keep running and
+> > complete the push, which may surprise the user. We should
+> > take it down when we go down.
+> >
+> > Signed-off-by: Jeff King <peff@peff.net>
+> > ---
+> >  send-pack.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/send-pack.c b/send-pack.c
+> > index eb4a44270b..d2701bf35c 100644
+> > --- a/send-pack.c
+> > +++ b/send-pack.c
+> > @@ -85,6 +85,7 @@ static int pack_objects(int fd, struct ref *refs, str=
+uct oid_array *extra, struc
+> >       po.in =3D -1;
+> >       po.out =3D args->stateless_rpc ? -1 : fd;
+> >       po.git_cmd =3D 1;
+> > +     po.clean_on_exit =3D 1;
+> >       if (start_command(&po))
+> >               die_errno("git pack-objects failed");
