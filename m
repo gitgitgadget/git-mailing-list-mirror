@@ -7,101 +7,91 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B8B8C6379D
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 19:44:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76053C63777
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 20:01:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C4778206C0
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 19:44:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 192142086A
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 20:01:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QNedpZwj"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BPqO/oMs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726536AbgKXTno (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Nov 2020 14:43:44 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64103 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726518AbgKXTnn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Nov 2020 14:43:43 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 25D8AF9CCF;
-        Tue, 24 Nov 2020 14:43:42 -0500 (EST)
+        id S1729950AbgKXUBO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Nov 2020 15:01:14 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64714 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729774AbgKXUBO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Nov 2020 15:01:14 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 08B449BA68;
+        Tue, 24 Nov 2020 15:01:12 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zbsHxBBRSIVLExJJyCfRWM4D9sk=; b=QNedpZ
-        wjoYYhnd1Upb5P5VmgBDByIX6TDbEyZlBvoSCWYYMJb46y3ZCvOV5l7br07tRaZk
-        HgL2Yr9LWEWllWVrV86XuV4wJ2DzHOz+46W3utSk+cTDy7JweNCU2Kwwu/iGM1sE
-        z545G3beklcjfclzxZXrzeYhUngEOVt/B5jcw=
+        :content-type; s=sasl; bh=cmDJ0lL49sX2ZVOW1JVCI/ZGglE=; b=BPqO/o
+        MsWgelZjnGwtnJikiTr9ob7OccqNk63Mvd0rq37QND7aiXsllCafXTrLW4jmYGfD
+        7hKb332NNEeIz3UhtN+M0EZv03Hqjo4wytV/x+i61QgsBiIMmr//q9RbTvwH1m5F
+        0QrxZ4Qo0coBsIPn/jfv8tdj9NirQADbD8KU0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=VPAoe89rrzX4+Yb6bGyd9k77skSltEKf
-        UGgRk+5s7pgNkP8brb62QVagxpuV052vKCBlrlxjN3i+JvL5Ve1uM+BTNPyfpQPM
-        U+OUd1mySrax0fVs6czraHwPDI5H8uJepdXOPpZ6b0LTPvf8Zkq16UDqZz4J5KzK
-        7oQy0lTLvjU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1CDC3F9CCE;
-        Tue, 24 Nov 2020 14:43:42 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=CcJs0RF78FH0tQ9scI747W3FNEykMv2g
+        4WDPHGNhWwbCqhDYtBDfMXAIGbLxgAA0iBi42yK4P917VODLftfCT5H0POacslno
+        rSozAjlyX4VMhzfpUQ2rIsX/QVdyETUCVBNs5HuB/omm7d8a+uvEyR9garhRRgNz
+        LGtaqrUlxYU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EE2B09BA67;
+        Tue, 24 Nov 2020 15:01:11 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.75.7.245])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 60637F9CCD;
-        Tue, 24 Nov 2020 14:43:39 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 18F379BA66;
+        Tue, 24 Nov 2020 15:01:11 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/7] t1300: test "set all" mode with value_regex
-References: <pull.796.git.1605801143.gitgitgadget@gmail.com>
-        <2da2131114eb47e70ccaf8fb9c51bf7fb5b173b0.1605801143.git.gitgitgadget@gmail.com>
-        <xmqqo8jtvvby.fsf@gitster.c.googlers.com>
-        <20201120183903.GA320614@coredump.intra.peff.net>
-        <20201121222734.GG389879@camp.crustytoothpaste.net>
-        <xmqqlfeuqd8d.fsf@gitster.c.googlers.com>
-        <X7xyHyFMU2E8cBCE@coredump.intra.peff.net>
-Date:   Tue, 24 Nov 2020 11:43:37 -0800
-In-Reply-To: <X7xyHyFMU2E8cBCE@coredump.intra.peff.net> (Jeff King's message
-        of "Mon, 23 Nov 2020 21:38:23 -0500")
-Message-ID: <xmqqtutek0ba.fsf@gitster.c.googlers.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+        Brandon Williams <bwilliams.eng@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH] refspec: make @ a valid refspec
+References: <20201122164641.2091160-1-felipe.contreras@gmail.com>
+        <X7y5Wxu1eY4k6753@coredump.intra.peff.net>
+Date:   Tue, 24 Nov 2020 12:01:10 -0800
+In-Reply-To: <X7y5Wxu1eY4k6753@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 24 Nov 2020 02:42:19 -0500")
+Message-ID: <xmqqlfeqjzi1.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 59A39C86-2E8D-11EB-BF37-D609E328BF65-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: CC82C8B0-2E8F-11EB-A6C4-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
->> I am reasonably happy with the "let's keep the vanilla untouched one
->> in .git/config-initial, refrain from using [core] and other sections
->> that MUST be in the initial configuration for testing, and use a
->> wrapper that reads expected addition to the initial one from the
->> standard input for validation" approach I came up with, but I am not
->> happy with the name 'compare_expect'; 'validate_config_result' might
->> be a better name.
->
-> IMHO this is worse than just using "config --file" in most of the tests.
-> It's more steps to remember to deal with. And most tests do not care at
-> all what the source file is.
+> I wondered if there was a good place to mention this in the refspec
+> documentation, but it may just be an obvious fallout of the "@ is a
+> shortcut for HEAD" definition in gitrevisions(7). The only change is
+> that we're resolving the shortcut sooner so that more code can take
+> advantage of it.
 
-"Most tests do not care" only indicates the lack of test coverage.
+I too find that "@ is a shortcut for HEAD" looks ugly both at the UI
+level and at the implementation level [*1*], but as long as we have
+it, it is good to try to be consistent and allow "@" everywhere
+where one would write "HEAD" in places where it is syntacitically
+infeasible---at least we would be consistently ugly that way ;-).
 
-Knowing the implementation, it probably is OK to assume that things
-would work fine as long as "--file <file>" works correctly, though
-;-) 
+The title of the change may want to be clarified to help readers of
+"git shortlog".  It's not like it is only changing "@" and no other
+variants valid refspec, but it forces readers to make sure that the
+author did not forget to deal with ":@", "src:@", "@:dst", etc.
+"make @ a synonym to HEAD in refspec" or something along the line,
+perhaps.
 
-Not having to keep the minimum parts of the real configuration file,
-and being able to use a throw-away file for each test, certainly
-makes things cleaner.
 
-> That said, most of the effort is in the tedium of switching each
-> individual test. I am happy for whoever volunteers to do that work to
-> have the final say in the approach.
+[Footnote]
 
-Yup.
+*1* I shouldn't complain too much, as my own invention to silently
+turn "-" given from the command line into "@{-1}" is ugly at the
+code level the same way, even though it may be better at the UI
+level.
