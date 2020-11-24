@@ -3,78 +3,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DE82C2D0E4
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 02:59:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C764BC63697
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 03:01:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2E3782071E
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 02:59:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76D1C206FA
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 03:01:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726514AbgKXC70 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Nov 2020 21:59:26 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:42222 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726256AbgKXC70 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Nov 2020 21:59:26 -0500
-Received: by mail-ed1-f65.google.com with SMTP id v22so19282637edt.9
-        for <git@vger.kernel.org>; Mon, 23 Nov 2020 18:59:25 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bukSrmeQf7f0PcJDTLRV/Zc6S11atcs8F8e5GZqqKVc=;
-        b=KCl4XR3WrjxGYi9hl6EzdeZcCePG7E+txvw+xbEClVFlDMhwV72/0w3cSUn7FQ8l0Q
-         DTv6kJrH2qS69PjAPa6tiEv07bViVCgX7YUJJIKTlIa9TzkhP4o/VgOpILE6BowD/mDP
-         gWwVUr+U0IfBdjxwwS/VxTIvErO44/BkKwtrDJHZUW/jAvP30K5edHk0NP2CRy3LUF9x
-         Edi3VO8RinjmluTuRm4n7hjdfb821TIikq8zHod8nShfTLuQ46BtP17BPK8qrgqJt6kN
-         iyqobIdVOpkiSWlWI0L0Fdi1kJCpVHZGOZ2ryBa+Iw76DSYf92x/tefIYNVNw/z9AIlS
-         MuqQ==
-X-Gm-Message-State: AOAM533x4Gbkhl6VCR+lLZjDklbDaG+7Ogjdo7KjLUcc/ZeJda7HoVzg
-        frMofFcA7QeCI1g2zD5NeGdkXoMn9MIgfbXSOJs=
-X-Google-Smtp-Source: ABdhPJzwo/Vh9ybR1qLx5AP8dqFaSL770/SJKeTEhc+iNSszqY2j/0ddvOPEPmhDGcDCJtITdDmjgtMvYRGFxElvjLI=
-X-Received: by 2002:a05:6402:1358:: with SMTP id y24mr1973112edw.291.1606186765197;
- Mon, 23 Nov 2020 18:59:25 -0800 (PST)
+        id S1728503AbgKXDAn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Nov 2020 22:00:43 -0500
+Received: from cloud.peff.net ([104.130.231.41]:39710 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728209AbgKXDAn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Nov 2020 22:00:43 -0500
+Received: (qmail 30947 invoked by uid 109); 24 Nov 2020 03:00:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 24 Nov 2020 03:00:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10729 invoked by uid 111); 24 Nov 2020 03:00:42 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 23 Nov 2020 22:00:42 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 23 Nov 2020 22:00:42 -0500
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        dstolee@microsoft.com
+Subject: Re: [PATCH 07/23] ewah: make bitmap growth less aggressive
+Message-ID: <X7x3WtCItVGhQ57O@coredump.intra.peff.net>
+References: <cover.1605123652.git.me@ttaylorr.com>
+ <c7db594fae4d0447a55a92e830475d9bc418ae7f.1605123652.git.me@ttaylorr.com>
+ <xmqq7dqdqgji.fsf@gitster.c.googlers.com>
+ <X7voLUlevHygqFg/@nand.local>
 MIME-Version: 1.0
-References: <pull.776.v3.git.1605276024.gitgitgadget@gmail.com>
- <pull.776.v4.git.1605647598.gitgitgadget@gmail.com> <X7ReZXuwAaAZzMSU@flurp.local>
- <80762efd-c71b-4485-a2bb-f0577d90ff48@gmail.com>
-In-Reply-To: <80762efd-c71b-4485-a2bb-f0577d90ff48@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 23 Nov 2020 21:59:14 -0500
-Message-ID: <CAPig+cQA35f1RfrvoevTJPeAbxDtoXqdM-N8D_=hw7_ZaNYCAA@mail.gmail.com>
-Subject: Re: [PATCH v4 0/4] Maintenance IV: Platform-specific background maintenance
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <X7voLUlevHygqFg/@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 23, 2020 at 9:20 PM Derrick Stolee <stolee@gmail.com> wrote:
-> I was giving your 'test-tool getuid' idea a try, and found that _also_
-> the $HOME environment variable differs from the format we expect in these
-> subcommands:
->
->                    $HOME: C:\...
->   argument in subcommand: /c/...
+On Mon, Nov 23, 2020 at 11:49:49AM -0500, Taylor Blau wrote:
 
-Where does this problem crop up exactly? Is the test doing a literal
-comparison against the value in $HOME?
+> On Sun, Nov 22, 2020 at 12:32:01PM -0800, Junio C Hamano wrote:
+> > Taylor Blau <me@ttaylorr.com> writes:
+> >
+> > >  - a geometric increase in existing size; we'll switch to 3/2 instead of
+> > >    2 here. That's less aggressive and may help avoid fragmenting memory
+> > >    (N + 3N/2 > 9N/4, so old chunks can be reused as we scale up).
+> >
+> > I am sure this is something obvious to bitmap folks, but where does
+> > 9N/4 come from (I get that the left-hand-side of the comparison is
+> > the memory necessary to hold both the old and the new copy while
+> > reallocating the words[] array)?
+> 
+> I thought that I was in the group of "bitmap folks", but since it's not
+> obvious to me either, I guess I'll have to hand in my bitmap folks
+> membership card ;).
+> 
+> Peff: where does 9N/4 come from?
 
-> So, there is another reason why these tests don't work on Windows. I'm
-> of the opinion that maybe it's not worth _that_ level of cross-platform
-> testing.
->
-> Unless I'm missing something simple about a $HOME alternative here, this
-> seems to be more work than the resulting value. Personally, I'm happy
-> with the benefit you've already provided in allowing Linux to test all
-> platforms.
+it is not a bitmap thing at all. We are growing a buffer, so if we
+continually multiply it by 3/2, then our sequence of sizes is:
 
-Indeed, it's not worth investing a lot of additional time into it. And
-it's certainly not a good reason to hold up the series. Moreover, this
-is the sort of thing which can be refined/handled later if someone
-wants to take a shot at it.
+  - before growth: N
+  - after 1 growth: 3N/2
+  - after 2 growths: 9N/4
+
+Meaning we can fit the third chunk into the memory vacated by the second
+two. Whereas with a factor of, say 2:
+
+  - before growth: N
+  - after 1 growth: 2N
+  - after 2 growth: 4N
+
+which does not fit, and fragments your memory.
+
+There's a slight lie there, which is that you'll typically still hold
+the growth G-1 while doing growth G (after all, that is where you will
+copy the data from). But it still works out that you eventually get to
+use old chunks. The breakeven point is actually the golden ratio, but a)
+it's irrational and b) it probably makes sense to give some slop for
+malloc chunk overhead. 1.6 would probably be fine, too, though. :)
+
+> On a similar note: we could certainly
+> use ALLOC_GROW here, too, but it would change the behavior slightly (by
+> using alloc_nr()'s "add-16-first" behavior). Maybe we should be using
+> it, but I'll defer to your judgement.
+
+That would be OK, modulo the measurement question I asked in the other
+(wrong) part of the thread.
+
+-Peff
