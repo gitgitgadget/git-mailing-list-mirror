@@ -2,94 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF494C56202
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 02:19:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01ABBC2D0E4
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 02:20:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5ED8920708
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 02:19:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 96BA8206F7
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 02:20:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vWsMI5r8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="u1HL3FqI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728159AbgKXCSr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Nov 2020 21:18:47 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50394 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726817AbgKXCSq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Nov 2020 21:18:46 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id EE0C810B76A;
-        Mon, 23 Nov 2020 21:18:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=prl3CiaiK7cG4igmL1VJNwEdn0Y=; b=vWsMI5
-        r8R2Si3YmI1YGOIBMFHlf7Iie4Xgrr/UMt0vMWxCOr3Uq18dvI1ygZ3XnOgJwX8F
-        EPOykJeWjkEEvAHzyrNQD7L718fRsHIh9J1A1KL91eLtrgX0+mVdv59RG3ocOSVo
-        K7BQTYkpdg87+U/GwrM9Tsftfh4NJI0SghpMU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=q52PAanNAIVNwYTY9GjRkQOL/iVD+IHV
-        T7mrTRKoTr5lmY9PSXTU4FUq3v3/28m71ugWtVaYsgga9Bllpi1ozaQ5pMUN1q1m
-        Kp6Et0nlh/3gZoGuv+5o0Z5WlTkKCdQdSlrAa7XhfvPYITpp93+NOz+YP3bc1Zk7
-        WmfDdhcDCZQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E5FB210B769;
-        Mon, 23 Nov 2020 21:18:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3798C10B767;
-        Mon, 23 Nov 2020 21:18:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        "Theodore Y. Ts'o" <tytso@mit.edu>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        =?utf-8?Q?V?= =?utf-8?Q?=C3=ADt?= Ondruch <vondruch@redhat.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: Pick the right default and stop warn on `git pull`
-References: <742df4c2-2bc5-8a4b-8de1-cd5e48718398@redhat.com>
-        <CAMMLpeRLsE=zNDjCRKmEMFxJBYcnTOdDGxEL9cZuVhuDMF=sLg@mail.gmail.com>
-        <20201123191355.GA132317@mit.edu>
-        <CAMP44s3cKVxKa0gOPfi3XRKbGbV=DweFE5pL0HM+v0kECFyPWA@mail.gmail.com>
-        <20201123202003.GB132317@mit.edu>
-        <CAMP44s27oEjScrJjeDVoNcWcvRsn173L_Kx+TOPfchOwge9zUQ@mail.gmail.com>
-        <X7wuMvHRURK1QS/Q@coredump.intra.peff.net>
-        <CAMP44s0QOcMnYQqFFSE1jV_T6=e4=xTM0zr_06C6+aYb7oqb4A@mail.gmail.com>
-        <X7xWSs3/vVqKl6sK@coredump.intra.peff.net>
-        <CAMP44s1Z4tDXO4jstGMtYVOYzkQQnZMHp45pYPOimk+=jwFHcw@mail.gmail.com>
-        <X7xgow4pchnhf2iY@coredump.intra.peff.net>
-Date:   Mon, 23 Nov 2020 18:18:40 -0800
-In-Reply-To: <X7xgow4pchnhf2iY@coredump.intra.peff.net> (Jeff King's message
-        of "Mon, 23 Nov 2020 20:23:47 -0500")
-Message-ID: <xmqqy2irjy4f.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1728195AbgKXCUt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Nov 2020 21:20:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43404 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726817AbgKXCUs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Nov 2020 21:20:48 -0500
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD097C0613CF
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 18:20:48 -0800 (PST)
+Received: by mail-oi1-x243.google.com with SMTP id t143so22071080oif.10
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 18:20:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=p5QDI/7VoOckNBUs9hga/Zuwts5bXg8PJUnt2TVMSpg=;
+        b=u1HL3FqIsGQE205RgWMINw6I2y/OIbZUuXWcJSh0+AIL6sgoJM0OF9HxCsJNcFBUmi
+         GeqDXe+HVl+nCMAuIgYn5f/Pu/EaJ3LRY37pOqm/apB3tx52zbZuYd7+FGi7ag6jAPRQ
+         oBy6wKsCoXlDKQFGyYNoupy+48RbrB/zY9WnmIM8+mjOCrfoYZ0z8PQBR3Ksb77dzzaG
+         lx0EDFN7kc6GWPOBNyHV77MgPTIUWmFaXxYYV5lMAW2I1XNTFJy2PUgIBJe0WbOq62uh
+         h00M6bnWjjcwJzJc+GWMyPvx3MIdZrD0BU3XmLuCmoRabZlD6AIfraQYyyTaTmtvgJ4N
+         V+OA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=p5QDI/7VoOckNBUs9hga/Zuwts5bXg8PJUnt2TVMSpg=;
+        b=YfWdXkQm+rPQBfGl+sARLX0GqFhHHHC4GoyWfawTDJBYV3mlhj/AiUrE9GhOrzHxSt
+         Aejrl5KZZ83KQ31nDdjccAAio5pwVWJfr3pW5w243ljs+LpVS8kHfJ795Gs65T93L8OO
+         E3bu2fNjZ2uMuftLIC43yj4L0/CHp8cmQcvHC5gGuLQ2jFHghD76ANP3VqsrOiMfCh+P
+         zCcfv5oS+gWin8bBeH82sV60Sb06bSmm/o2eGGXWWyTWieBap6IXtV8ClpRll1BLvqM1
+         W0z3zmHjwYSw0to5EgFpFDvLCPp2WpPQrsciKt3uJ+4v6rZPzYe/cLrKFEKkk62DXSFb
+         fxAw==
+X-Gm-Message-State: AOAM532bSE9ujMnNo2wlGZFFHSFi7qpMYCQQFajAU0RHJUvNoit3HCH3
+        fEBY6LJZ2HNgmnOk2yAKRNBhyVF72+/9tA==
+X-Google-Smtp-Source: ABdhPJz2UgkQGZdZV6Binb2qzmo9zukaIe4ue4nd+XIKSphAB2LGs0amWn3I6qeVLiJLPhXVppFMTQ==
+X-Received: by 2002:aca:4950:: with SMTP id w77mr1247253oia.79.1606184447937;
+        Mon, 23 Nov 2020 18:20:47 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
+        by smtp.gmail.com with UTF8SMTPSA id o29sm8134001ote.7.2020.11.23.18.20.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Nov 2020 18:20:47 -0800 (PST)
+Subject: Re: [PATCH v4 0/4] Maintenance IV: Platform-specific background
+ maintenance
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
+References: <pull.776.v3.git.1605276024.gitgitgadget@gmail.com>
+ <pull.776.v4.git.1605647598.gitgitgadget@gmail.com>
+ <X7ReZXuwAaAZzMSU@flurp.local>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <80762efd-c71b-4485-a2bb-f0577d90ff48@gmail.com>
+Date:   Mon, 23 Nov 2020 21:20:46 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101
+ Thunderbird/84.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5F3792C0-2DFB-11EB-9903-E43E2BB96649-77302942!pb-smtp20.pobox.com
+In-Reply-To: <X7ReZXuwAaAZzMSU@flurp.local>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 11/17/2020 6:36 PM, Eric Sunshine wrote:
+> On Tue, Nov 17, 2020 at 09:13:14PM +0000, Derrick Stolee via GitGitGadget wrote:
+>> Updates in V4
+>> =============
+>>  * Eric did an excellent job providing a patch that cleans up several parts
+>>    of my series. The most impressive is his mechanism for testing the
+>>    platform-specific Git logic in a way that is (mostly) platform-agnostic.
+>>    
+>>  * Windows doesn't have the 'id' command, so we cannot run the macOS
+>>    platform test on Windows.
+> 
+> This is easy to resolve. Drop in the following patch and then replace
+> the `$(id -u)` invocation in the test with `$(test-tool getuid)`.
+> This way, the test should work on any platform since both
+> launchctl_get_uid() and `test-tool` will retrieve identical values for
+> UID.
 
-> Ah, that's what I was missing. I agree it would be nice for it to behave
-> consistently in both cases (though why one would set both pull.ff=only
-> and pull.rebase=true, I don't know).
+I was giving your 'test-tool getuid' idea a try, and found that _also_
+the $HOME environment variable differs from the format we expect in these
+subcommands:
 
-So an obvious thing we could do, if pull.mode is too much of a
-change, is to make "pull --rebase" codepath honor pull.ff as well,
-perhaps?  I.e. those who set pull.ff=only are saying that "please
-stop me when I have any local change---I want to be notified if my
-pull on this branch results in anything but a fast-forward from the
-upstream".
+                   $HOME: C:\...
+  argument in subcommand: /c/...
 
-And then making an unconfigured pull.ff to default to pull.ff=only
-may give a proper failure whether you merge or rebase.  I dunno.
+So, there is another reason why these tests don't work on Windows. I'm
+of the opinion that maybe it's not worth _that_ level of cross-platform
+testing.
+
+Unless I'm missing something simple about a $HOME alternative here, this
+seems to be more work than the resulting value. Personally, I'm happy
+with the benefit you've already provided in allowing Linux to test all
+platforms.
+
+Thanks,
+-Stolee
