@@ -2,149 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0386EC2D0E4
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 16:44:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BEAAC63777
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 17:22:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 987F5206F9
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 16:44:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0704D20643
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 17:22:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NNo3LsXh"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mR6Bylfb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390421AbgKXQon (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Nov 2020 11:44:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36004 "EHLO
+        id S2389846AbgKXRWo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Nov 2020 12:22:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389515AbgKXQon (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Nov 2020 11:44:43 -0500
-Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63621C0613D6
-        for <git@vger.kernel.org>; Tue, 24 Nov 2020 08:44:41 -0800 (PST)
-Received: by mail-ed1-x543.google.com with SMTP id cq7so21570545edb.4
-        for <git@vger.kernel.org>; Tue, 24 Nov 2020 08:44:41 -0800 (PST)
+        with ESMTP id S1726929AbgKXRWn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Nov 2020 12:22:43 -0500
+Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A6BCC0613D6
+        for <git@vger.kernel.org>; Tue, 24 Nov 2020 09:22:42 -0800 (PST)
+Received: by mail-qk1-x743.google.com with SMTP id b144so6881234qkc.13
+        for <git@vger.kernel.org>; Tue, 24 Nov 2020 09:22:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=wpv1d1POj7qsPzxhnEKnE0zg4gLwW5YwBc52keAnnVw=;
-        b=NNo3LsXhLnJSFK/YXgg6uupYL4JRoh2ocE5oh0+e7Im2uBVxD5ECTmW/JN2zDKFKnV
-         7DlH6k/BJ34V//ghyOoDqzJYU/+VMOKrJnB+JJ9huq/CKFHfc8o+dis046ExDtmBHLPj
-         XXAWA5MxAPSlvq5hFL3lXxML0uzFmjoTTQxenZF7/4EFSQzNs5kswEF/2cDscAtJgBrR
-         /Cj3NcoceV0d75xauMXBb/1QOl1Jy0snZa4JmLedVyg/o3NlhJ/0TSxYxWWgI7JKeMAZ
-         S9pFZ/B5zHpvJP9g/mMWTFBqCMN4VL8CXaUWGueZkEDER0dolIu93WqSbGEt3WMkYox8
-         LGiQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=OhSkyF9H2yPjsyhCBTF1HBl0qTbDqPNZNrT6SSKaN3Q=;
+        b=mR6Bylfb6vFXMcn6BL6iudJDVeiQcRsmxPovRqOyoSgw6Klg0DKoXqfhdW+cg9HAxe
+         mH0NvVacyZRxnDVMus70ZbnfDIN5n38tR/Sqs7Hh6oKSB8gf+q6PjZOD7ROPXWezQWHD
+         2NWDbmKI9mt3m+WzQKRDDmIdn8/GnlyktLpA8w+o2aG5+OVQxcR3W004OzqojYZ3KQpR
+         j5/cl25zhQoaXIwvddMtBQYtVN0kU9kfnzdbMmMVvwVh/N/R6Fk1F7nWqN769LyxbKMI
+         l2DitXyjS4qITDXj+5myNUyHUw34eHG8C2C5vaFWhmZxXKbOSoTQxezR55HBF2t0ytXL
+         XKLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=wpv1d1POj7qsPzxhnEKnE0zg4gLwW5YwBc52keAnnVw=;
-        b=kbanuRPTLTTHoCz1RCLTfWsllGq0WQ/4nc3x39b17BrIyM2BE2ampdZaTwQEHYhHVy
-         GAUJeEoK8R18p++90ggyK6/jVPd0VYctEnVDTEYRBSqPb7iwo5g9BMGhMt/7ghojVF1N
-         LiaeH5U8+RZ9fbryh2hnqvimyUiJxtItmPhFT6jN9PySFkmlz6zl2yPjcKr70L5xK8bs
-         ERhqSDn+A8RWSpoBz3fdm4F2FATyD3bRMPGjBRg+HaoMWEpchxf0bGOhUxQAtqp+B5k3
-         ceJSpYSVveJ/prt+ygsmajpXp59LhZjsVbdJECAWmBTmITHTm6zIKf4ecMZHQMfOm4YU
-         DhqQ==
-X-Gm-Message-State: AOAM531YI2fzlfAnztC5ZTuC76WyL4He9Zjnt5m/VJtSdFpjEViqMzUL
-        kcNa1QsqzfridpYQl8+L6PuKnXROZq6gobLP
-X-Google-Smtp-Source: ABdhPJwJfTg12l9KOa584NSQ0jBFiBNhmL3CKxjIT/Hsm+wmkeF0OXLRfl/U8gcOAfzL0JIehTavOA==
-X-Received: by 2002:a05:6402:22e3:: with SMTP id dn3mr5044117edb.136.1606236279792;
-        Tue, 24 Nov 2020 08:44:39 -0800 (PST)
-Received: from contrib-buster.auto1.local ([79.140.115.35])
-        by smtp.gmail.com with ESMTPSA id c8sm7347884edr.29.2020.11.24.08.44.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2020 08:44:39 -0800 (PST)
-From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
-To:     git@vger.kernel.org
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=OhSkyF9H2yPjsyhCBTF1HBl0qTbDqPNZNrT6SSKaN3Q=;
+        b=OmWk0DhHVAastguGEe6dsrAde8SZv1e9frTBsdVyQSgp3QWHAEbVeOiXAW45f115Ua
+         YlhkL605fL7TnkGXXPb7QmaMLnaab8627QWb5l97ODiczOkVIUcqx1IYgQtCahNRrDE5
+         a0yaQk/MjrAHcb8mu8id2fvTRRy4bLc7aTo1gfm1BXuB8cQO5XtzKhzW0nD9jN1S0Dzi
+         rbeuMtPNce45FrqZ9ECUoh66ebgFWZ6gcNmUZ5pl7YylDMZBsN/WgVur2G656U1Ew+3B
+         3/Cp5HaaP/0PQAg80q/F+lSD9Ac/3nTihWq05+6QCEAbeb5KQuXFJN9eShpyLE2b9Yf9
+         vfxw==
+X-Gm-Message-State: AOAM530xZYU5kfrIEHZPIwrUdrDSkazoTHO7lCcXZSw94RTRJ4oLo3eR
+        ZoowNXlR0EN+DxLeU6xlFaU=
+X-Google-Smtp-Source: ABdhPJzENgLStniJMqpeIES7FjmffwbMHmKCc9LrYCrBhrSZgaf1pzYEEL0ncTlQCIXmC70QZd+zsQ==
+X-Received: by 2002:a05:620a:148d:: with SMTP id w13mr5480362qkj.299.1606238561365;
+        Tue, 24 Nov 2020 09:22:41 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
+        by smtp.gmail.com with UTF8SMTPSA id b64sm13309661qkg.19.2020.11.24.09.22.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Nov 2020 09:22:40 -0800 (PST)
+Subject: Re: [PATCH 1/1] maintenance: fix a SEGFAULT when no repository
+To:     Rafael Silva <rafaeloliveira.cs@gmail.com>, git@vger.kernel.org
 Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        Rafael Silva <rafaeloliveira.cs@gmail.com>
-Subject: [PATCH 1/1] maintenance: fix a SEGFAULT when no repository
-Date:   Tue, 24 Nov 2020 16:44:05 +0000
-Message-Id: <20201124164405.29327-2-rafaeloliveira.cs@gmail.com>
-X-Mailer: git-send-email 2.29.2.505.g04529851e5
-In-Reply-To: <20201124164405.29327-1-rafaeloliveira.cs@gmail.com>
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>
 References: <20201124164405.29327-1-rafaeloliveira.cs@gmail.com>
+ <20201124164405.29327-2-rafaeloliveira.cs@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <1bfd84da-5b74-be10-fc2c-dee80111ee2d@gmail.com>
+Date:   Tue, 24 Nov 2020 12:22:40 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101
+ Thunderbird/84.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20201124164405.29327-2-rafaeloliveira.cs@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "git maintenance run" and "git maintenance start" commands holds a
-file-based lock at the .git/maintenance.lock and .git/schedule.lock
-respectively. These locks are used to ensure only one maintenance process
-is executed at the time as both operations involves writing data into
-the git repository.
+On 11/24/2020 11:44 AM, Rafael Silva wrote:
+> The "git maintenance run" and "git maintenance start" commands holds a
+> file-based lock at the .git/maintenance.lock and .git/schedule.lock
+> respectively. These locks are used to ensure only one maintenance process
+> is executed at the time as both operations involves writing data into
+> the git repository.
+> 
+> The path to the lock file is built using the "the_repository->objects->odb->path"
+> that results in SEGFAULT when we have no repository available as
+> "the_repository->objects->odb" is set to NULL.
+> 
+> Let's teach the maintenance_run_tasks() and update_background_schedule() to return
+> an error and fails the command when we have no repository available.
 
-The path to the lock file is built using the "the_repository->objects->odb->path"
-that results in SEGFAULT when we have no repository available as
-"the_repository->objects->odb" is set to NULL.
+Thank you for noticing this problem, and for a quick fix.
 
-Let's teach the maintenance_run_tasks() and update_background_schedule() to return
-an error and fails the command when we have no repository available.
+While I don't necessarily have a problem with this approach, perhaps
+it would be more robust to change the options in git.c to require a
+GIT_DIR, as in this diff?
 
-Signed-off-by: Rafael Silva <rafaeloliveira.cs@gmail.com>
+-- >8 --
 
----
- builtin/gc.c           | 14 ++++++++++++--
- t/t7900-maintenance.sh |  5 +++++
- 2 files changed, 17 insertions(+), 2 deletions(-)
+diff --git a/git.c b/git.c
+index 1cab64b5d1..c3dabd2553 100644
+--- a/git.c
++++ b/git.c
+@@ -530,7 +530,7 @@ static struct cmd_struct commands[] = {
+        { "ls-tree", cmd_ls_tree, RUN_SETUP },
+        { "mailinfo", cmd_mailinfo, RUN_SETUP_GENTLY | NO_PARSEOPT },
+        { "mailsplit", cmd_mailsplit, NO_PARSEOPT },
+-       { "maintenance", cmd_maintenance, RUN_SETUP_GENTLY | NO_PARSEOPT },
++       { "maintenance", cmd_maintenance, RUN_SETUP | NO_PARSEOPT },
+        { "merge", cmd_merge, RUN_SETUP | NEED_WORK_TREE },
+        { "merge-base", cmd_merge_base, RUN_SETUP },
+        { "merge-file", cmd_merge_file, RUN_SETUP_GENTLY },
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 3d258b60c2..d133d93a86 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1265,9 +1265,14 @@ static int maintenance_run_tasks(struct maintenance_run_opts *opts)
- {
- 	int i, found_selected = 0;
- 	int result = 0;
-+	char *lock_path;
- 	struct lock_file lk;
- 	struct repository *r = the_repository;
--	char *lock_path = xstrfmt("%s/maintenance", r->objects->odb->path);
-+
-+	if (!r || !r->gitdir)
-+		return error(_("not a git repository"));
-+
-+	lock_path = xstrfmt("%s/maintenance", the_repository->objects->odb->path);
- 
- 	if (hold_lock_file_for_update(&lk, lock_path, LOCK_NO_DEREF) < 0) {
- 		/*
-@@ -1513,8 +1518,13 @@ static int update_background_schedule(int run_maintenance)
- 	FILE *cron_list, *cron_in;
- 	const char *crontab_name;
- 	struct strbuf line = STRBUF_INIT;
-+	char *lock_path;
- 	struct lock_file lk;
--	char *lock_path = xstrfmt("%s/schedule", the_repository->objects->odb->path);
-+
-+	if (!the_repository || !the_repository->gitdir)
-+		return error(_("not a git repository"));
-+
-+	lock_path = xstrfmt("%s/schedule", the_repository->objects->odb->path);
- 
- 	if (hold_lock_file_for_update(&lk, lock_path, LOCK_NO_DEREF) < 0)
- 		return error(_("another process is scheduling background maintenance"));
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index d9e68bb2bf..bb3556888d 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -441,4 +441,9 @@ test_expect_success 'register preserves existing strategy' '
- 	test_config maintenance.strategy incremental
- '
- 
-+test_expect_success 'run and start command fails when no git repository' '
-+	test_must_fail git -C /tmp/ maintenance run &&
-+	test_must_fail git -C /tmp/ maintenance start
-+'
-+
- test_done
--- 
-2.29.2.505.g04529851e5
+-- >8 --
+
+If the above code change fixes your test (below), then that would
+probably be a safer change.
+
+The reason to use RUN_SETUP_GENTLY was probably due to some thought
+of modifying the background maintenance schedule without being in a
+Git repository. However, we currently run the [un]register logic
+inside of the stop|start subcommands, so a GIT_DIR is required there,
+too.
+
+> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+> index d9e68bb2bf..bb3556888d 100755
+> --- a/t/t7900-maintenance.sh
+> +++ b/t/t7900-maintenance.sh
+> @@ -441,4 +441,9 @@ test_expect_success 'register preserves existing strategy' '
+>  	test_config maintenance.strategy incremental
+>  '
+>  
+> +test_expect_success 'run and start command fails when no git repository' '
+> +	test_must_fail git -C /tmp/ maintenance run &&
+> +	test_must_fail git -C /tmp/ maintenance start
+> +'
+> +
+>  test_done
+
+Thanks,
+-Stolee
 
