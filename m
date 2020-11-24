@@ -2,76 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FB40C56202
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 19:34:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B8B8C6379D
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 19:44:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 192EB208FE
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 19:34:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C4778206C0
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 19:44:05 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QNedpZwj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726540AbgKXTed convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 24 Nov 2020 14:34:33 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:43808 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725790AbgKXTec (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Nov 2020 14:34:32 -0500
-Received: by mail-ed1-f68.google.com with SMTP id q16so22112545edv.10
-        for <git@vger.kernel.org>; Tue, 24 Nov 2020 11:34:31 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=osae0WGtubmoiPDaGmzAXDI96EmtsgoBL1m/zYiwhQ4=;
-        b=tEnxqUKq+cbWkKFHMw0oJNCswv1nspaRxKp6HQcNrYYE1jepYjxk1FRlG5dAaShUdd
-         OG+Pz4aVozNdht9wjf1zmwNdbXqDibrlh3u5H+KBPqsoMqMMyQkDWX/ENChgkln/6Oge
-         8YFXdwInIUWokKc8nepJokAv7wmbgz1ZgLn3kf06TnOyhjz/vMczDWx07mfsnH6S27A6
-         WTgZaOYHRsNagUsIAX8aqSZvvo5eFm4QnPCRDf5bhIxY1gQMPF6g1RLk19OAmUleg8G2
-         /mnPADxDi1w2KfQkzZ5fPfHId2YticGE9PBcG40ZJsyycoVW4iDF8SOcv7vGeJTlLLCe
-         WyQg==
-X-Gm-Message-State: AOAM532/GUaZXk4CVKU0kIsQFeKgW09D07QGafrruCmbNi8lgMYWSJlY
-        sFk2GIGmzuXuJ4d+syXpTHRxY7AzW8pRXLxZG/S4NwYggUw=
-X-Google-Smtp-Source: ABdhPJxfFwC8y//FtQ7LrBL4UG7jbcn7CrH9JNvXBZ18j+oNHASBNykFH1AdVQDMz7PhEY8RBDpMT/XnchBpdU74buo=
-X-Received: by 2002:aa7:dc48:: with SMTP id g8mr23877edu.181.1606246470369;
- Tue, 24 Nov 2020 11:34:30 -0800 (PST)
+        id S1726536AbgKXTno (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Nov 2020 14:43:44 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64103 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726518AbgKXTnn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Nov 2020 14:43:43 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 25D8AF9CCF;
+        Tue, 24 Nov 2020 14:43:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=zbsHxBBRSIVLExJJyCfRWM4D9sk=; b=QNedpZ
+        wjoYYhnd1Upb5P5VmgBDByIX6TDbEyZlBvoSCWYYMJb46y3ZCvOV5l7br07tRaZk
+        HgL2Yr9LWEWllWVrV86XuV4wJ2DzHOz+46W3utSk+cTDy7JweNCU2Kwwu/iGM1sE
+        z545G3beklcjfclzxZXrzeYhUngEOVt/B5jcw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=VPAoe89rrzX4+Yb6bGyd9k77skSltEKf
+        UGgRk+5s7pgNkP8brb62QVagxpuV052vKCBlrlxjN3i+JvL5Ve1uM+BTNPyfpQPM
+        U+OUd1mySrax0fVs6czraHwPDI5H8uJepdXOPpZ6b0LTPvf8Zkq16UDqZz4J5KzK
+        7oQy0lTLvjU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1CDC3F9CCE;
+        Tue, 24 Nov 2020 14:43:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 60637F9CCD;
+        Tue, 24 Nov 2020 14:43:39 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/7] t1300: test "set all" mode with value_regex
+References: <pull.796.git.1605801143.gitgitgadget@gmail.com>
+        <2da2131114eb47e70ccaf8fb9c51bf7fb5b173b0.1605801143.git.gitgitgadget@gmail.com>
+        <xmqqo8jtvvby.fsf@gitster.c.googlers.com>
+        <20201120183903.GA320614@coredump.intra.peff.net>
+        <20201121222734.GG389879@camp.crustytoothpaste.net>
+        <xmqqlfeuqd8d.fsf@gitster.c.googlers.com>
+        <X7xyHyFMU2E8cBCE@coredump.intra.peff.net>
+Date:   Tue, 24 Nov 2020 11:43:37 -0800
+In-Reply-To: <X7xyHyFMU2E8cBCE@coredump.intra.peff.net> (Jeff King's message
+        of "Mon, 23 Nov 2020 21:38:23 -0500")
+Message-ID: <xmqqtutek0ba.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20201124164405.29327-1-rafaeloliveira.cs@gmail.com>
- <20201124164405.29327-2-rafaeloliveira.cs@gmail.com> <CAPig+cQ-iWVz2Q1PtvbV0hk_HHRFqAFjxAF2DZ6doh2RxpZJhw@mail.gmail.com>
- <20201124191407.GC8396@szeder.dev>
-In-Reply-To: <20201124191407.GC8396@szeder.dev>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 24 Nov 2020 14:34:18 -0500
-Message-ID: <CAPig+cTnz2rqs4PY0uTaOrySZDR9Jpi2fUL-x5SJzbceZhoY1A@mail.gmail.com>
-Subject: Re: [PATCH 1/1] maintenance: fix a SEGFAULT when no repository
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Rafael Silva <rafaeloliveira.cs@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: 59A39C86-2E8D-11EB-BF37-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 24, 2020 at 2:14 PM SZEDER Gábor <szeder.dev@gmail.com> wrote:
-> On Tue, Nov 24, 2020 at 12:24:57PM -0500, Eric Sunshine wrote:
-> >     mv .git save.git &&
-> >     test_when_finished "mv save.git .git" &&
-> >     test_must_fail git maintenance run &&
-> >     test_must_fail git maintenance start
->
-> Our test library contains the 'nongit' helper function exactly for
-> this purpose:
->
->     nongit test_must_fail git maintenance run &&
->     nongit test_must_fail git maintenance start
+Jeff King <peff@peff.net> writes:
 
-Perfect. I forgot about nongit(). Thanks.
+>> I am reasonably happy with the "let's keep the vanilla untouched one
+>> in .git/config-initial, refrain from using [core] and other sections
+>> that MUST be in the initial configuration for testing, and use a
+>> wrapper that reads expected addition to the initial one from the
+>> standard input for validation" approach I came up with, but I am not
+>> happy with the name 'compare_expect'; 'validate_config_result' might
+>> be a better name.
+>
+> IMHO this is worse than just using "config --file" in most of the tests.
+> It's more steps to remember to deal with. And most tests do not care at
+> all what the source file is.
 
-I had intended on suggesting GIT_CEILING_DIRECTORIES in my response --
-which is what nongit() employs -- but couldn't get it to work for some
-reason, so I instead suggested moving .git/ aside temporarily.
+"Most tests do not care" only indicates the lack of test coverage.
+
+Knowing the implementation, it probably is OK to assume that things
+would work fine as long as "--file <file>" works correctly, though
+;-) 
+
+Not having to keep the minimum parts of the real configuration file,
+and being able to use a throw-away file for each test, certainly
+makes things cleaner.
+
+> That said, most of the effort is in the tedium of switching each
+> individual test. I am happy for whoever volunteers to do that work to
+> have the final say in the approach.
+
+Yup.
