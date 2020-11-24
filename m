@@ -8,63 +8,64 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 915C6C64E75
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 15:08:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36635C64E7A
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 15:08:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 553E020715
+	by mail.kernel.org (Postfix) with ESMTP id CE80A20715
 	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 15:08:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D5nhKZr7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tu+RPTaL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389595AbgKXPHj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Nov 2020 10:07:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49106 "EHLO
+        id S2389610AbgKXPHm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Nov 2020 10:07:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389084AbgKXPHi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Nov 2020 10:07:38 -0500
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D32EBC0613D6
-        for <git@vger.kernel.org>; Tue, 24 Nov 2020 07:07:37 -0800 (PST)
-Received: by mail-wm1-x342.google.com with SMTP id a65so3215819wme.1
-        for <git@vger.kernel.org>; Tue, 24 Nov 2020 07:07:37 -0800 (PST)
+        with ESMTP id S2389084AbgKXPHl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Nov 2020 10:07:41 -0500
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCC4AC0613D6
+        for <git@vger.kernel.org>; Tue, 24 Nov 2020 07:07:40 -0800 (PST)
+Received: by mail-wm1-x343.google.com with SMTP id a3so3194397wmb.5
+        for <git@vger.kernel.org>; Tue, 24 Nov 2020 07:07:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=MkFqOJuWMH4ERXouqLxuQMPLWBPdoS5jNAFLvyF+QxI=;
-        b=D5nhKZr76G3a6J2j06P1HWr+LKpqKLDwnxDaMJmhpNQ79Bn4MruB62oad1V5jqQJsO
-         t/RFXHNQqhqXj//RHMF1cCSC8nmuCuV5gJE9JPHtWjl+FHB7+/Zj2jIbi8Yr2H7wYUGl
-         4h4PcudUXQdvDA1lQgOXZ0196zXPTGD2B63+PR84CL8th1dwY8iLGcYHCnGJzS/A9C7v
-         x1H1UdQb45g3arpeKj8oBu9W3mUEUXUyH1Z1+GwJ3wkMJ+e2Vsu4Mmfr5h3Fkv7f4nnq
-         uRkyLISOQuHsNC64IS9Z1d9gOZjEFsr77Gliov3o55qxEb1SpttSlRAp3JgoLMxUajkD
-         HIDA==
+        bh=j7BCmDzGgwjvLopRsreJSrFUlkAwIXlafwC1ZI0e88g=;
+        b=Tu+RPTaLvbNR0ohBzho81mT/wT3rDVa4BZEv72NYjnop6KiTE8GlWeL/0KD1K7zG5Z
+         qJ27qMa7iQKwlZBqX8phhmmDV6HFFj6Bqnvqw/bDvwP6dUUptmqlg02uUM4kpJ+B4eZY
+         pSsuLPg+s++badxxk1hfmbtYSnjHbmdbbwg2exOpiUWge1xNmyVdMxF8qC420IX0pRcr
+         hADTkg28xtpAwuODC7Re7jIJ2TZKzCIUSZG33izp62JP+y2QvwRCgjVfNWn4/zgr4A0N
+         7na0yqlYqCvHL6TfK2FpjRdH0dkuPFCOp45sRMa3ikSxm5dahuPhZ0qaMqnusetMhY5L
+         /29Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=MkFqOJuWMH4ERXouqLxuQMPLWBPdoS5jNAFLvyF+QxI=;
-        b=Gzq/Ns3S1yn+BosxaOorPCU4VESVLWeI+qcUyk2KvjTvQTHyxd5eM6RPj6zmo1R3MP
-         hwpHuEJgq+4EZ2v+K/LAy8poXYmzfdduoprwb/NprTXD39uofmgwTRm32mGBfoUPX+y9
-         Xf4i9qKUbeXJwvJE6cvv1JAX6paV+xToqesPQAqlJVOZTrvikZXpS3G9pKGIsCPuXN4r
-         25qi0B9J5yQLYT4u9d2HrHOFcOxca72S3JLJsBOLwywr9qx0u08CIxpTmdjrbMM/wjry
-         iWt82Akj5bVSA4vidpkfegqdGJJmxpJGS6aSEVwpAlwV5MrYKfKwC/785c/edHB68Umy
-         SD8Q==
-X-Gm-Message-State: AOAM533NjDBBrSAD7Vg1TF1rfP31/TmnsSPCVi6oO+pFqLV7Ic37G/Ew
-        inwTU7LVCV7HI6heN3XeP/8krukisC0=
-X-Google-Smtp-Source: ABdhPJykrB6K/cSlmlKv7y9jkoWAnaup0pnPpQhj6WT3PMe79Kxep7nyXAia1YzaHj5YzWAiZHvxZw==
-X-Received: by 2002:a1c:f619:: with SMTP id w25mr4995896wmc.55.1606230456321;
-        Tue, 24 Nov 2020 07:07:36 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 17sm8196170wma.3.2020.11.24.07.07.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=j7BCmDzGgwjvLopRsreJSrFUlkAwIXlafwC1ZI0e88g=;
+        b=Sbat4WI6snwZTO76xIx50afVTEM0HxHz7ajuOq5q1VYkJP4x63HpD8R7yHW1XDT5Vd
+         YsFPz3ix5yhn09UYZZCDG+eCsIWaKrN1NmE+yv56bBKnb7UCdQCRjqIS5n/ry8vzG5i4
+         dyYHoWYHClibWiYUmNMvf28C4T1kSCYA/gJldYzLpCFhzReYr2GttQV8IjIQmSYM7P7M
+         pmQ1cOzINjkruavEhBoG2LZ12rFopvgOMQ9YwcQDI4kQrBjy+T1M53qKYz3CCRBHtbtv
+         aZMHaiPu4KlXdQq2MwlQCF1rHpZINzHaBCMEW4zku2T4/ZdO3Cp6tNcHkbExnYymrh7p
+         KERQ==
+X-Gm-Message-State: AOAM532unNCOMZLP//FV3TR0eGFs0MYzv/s5LchUAO2YAd2rGlB+6g9J
+        Y4LPCukD7fFSO8oju53/heaTiK8nTeA=
+X-Google-Smtp-Source: ABdhPJxBQ2BDAoMUZiBGd1fQ87FQdYWKeAJowGCOpxb/SbTSaQZPMU/NJqrn8E7LFnoPA5TjOBa0QQ==
+X-Received: by 2002:a05:600c:d1:: with SMTP id u17mr4843295wmm.38.1606230455385;
         Tue, 24 Nov 2020 07:07:35 -0800 (PST)
-Message-Id: <87c93068771238a65d0753cc41261c2a97ca4fd9.1606230450.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h15sm27106833wrw.15.2020.11.24.07.07.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Nov 2020 07:07:34 -0800 (PST)
+Message-Id: <5fc15f7b9adaf64c2fbfd58f6e96768f5b9d7f8b.1606230450.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.921.v3.git.git.1606230450.gitgitgadget@gmail.com>
 References: <pull.921.v2.git.git.1606173607.gitgitgadget@gmail.com>
         <pull.921.v3.git.git.1606230450.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 24 Nov 2020 15:07:29 +0000
-Subject: [PATCH v3 4/4] init: provide useful advice about init.defaultBranch
+Date:   Tue, 24 Nov 2020 15:07:28 +0000
+Subject: [PATCH v3 3/4] get_default_branch_name(): prepare for showing some
+ advice
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,153 +80,139 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-To give ample warning for users wishing to override Git's the fall-back
-for an unconfigured `init.defaultBranch` (in case we decide to change it
-in a future Git version), let's introduce some advice that is shown upon
-`git init` when that value is not set.
+We are about to introduce a message giving users running `git init` some
+advice about `init.defaultBranch`. This will necessarily be done in
+`repo_default_branch_name()`.
 
-Note: two test cases in Git's test suite want to verify that the
-`stderr` output of `git init` is empty. It is now necessary to suppress
-the advice using the newly-added `advice.defaultBranchName` setting.
-While not strictly necessary, we also set this to `false` in
-`test_create_repo()`.
+Not all code paths want to show that advice, though. In particular, the
+`git clone` codepath _specifically_ asks for `init_db()` to be quiet,
+via the `INIT_DB_QUIET` flag.
+
+In preparation for showing users above-mentioned advice, let's change
+the function signature of `get_default_branch_name()` to accept the
+parameter `quiet`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- advice.c                |  1 +
- advice.h                |  1 +
- refs.c                  | 23 ++++++++++++++++++++++-
- t/t0001-init.sh         |  9 ++++++++-
- t/t1510-repo-setup.sh   |  2 +-
- t/test-lib-functions.sh |  3 ++-
- 6 files changed, 35 insertions(+), 4 deletions(-)
+ builtin/clone.c   | 2 +-
+ builtin/init-db.c | 8 +++++---
+ refs.c            | 6 +++---
+ refs.h            | 4 ++--
+ remote.c          | 5 +++--
+ 5 files changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/advice.c b/advice.c
-index 164742305f..8a14640193 100644
---- a/advice.c
-+++ b/advice.c
-@@ -108,6 +108,7 @@ static struct {
- 	[ADVICE_AM_WORK_DIR] 				= { "amWorkDir", 1 },
- 	[ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME] 	= { "checkoutAmbiguousRemoteBranchName", 1 },
- 	[ADVICE_COMMIT_BEFORE_MERGE]			= { "commitBeforeMerge", 1 },
-+	[ADVICE_DEFAULT_BRANCH_NAME]			= { "defaultBranchName", 1 },
- 	[ADVICE_DETACHED_HEAD]				= { "detachedHead", 1 },
- 	[ADVICE_FETCH_SHOW_FORCED_UPDATES]		= { "fetchShowForcedUpdates", 1 },
- 	[ADVICE_GRAFT_FILE_DEPRECATED]			= { "graftFileDeprecated", 1 },
-diff --git a/advice.h b/advice.h
-index bc2432980a..1ae99a1b31 100644
---- a/advice.h
-+++ b/advice.h
-@@ -46,6 +46,7 @@ extern int advice_add_empty_pathspec;
- 	ADVICE_AM_WORK_DIR,
- 	ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME,
- 	ADVICE_COMMIT_BEFORE_MERGE,
-+	ADVICE_DEFAULT_BRANCH_NAME,
- 	ADVICE_DETACHED_HEAD,
- 	ADVICE_FETCH_SHOW_FORCED_UPDATES,
- 	ADVICE_GRAFT_FILE_DEPRECATED,
+diff --git a/builtin/clone.c b/builtin/clone.c
+index a0841923cf..64b1784011 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1323,7 +1323,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		remote_head = NULL;
+ 		option_no_checkout = 1;
+ 		if (!option_bare) {
+-			const char *branch = git_default_branch_name();
++			const char *branch = git_default_branch_name(0);
+ 			char *ref = xstrfmt("refs/heads/%s", branch);
+ 
+ 			install_branch_config(0, branch, remote_name, ref);
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 01bc648d41..dcc45bef51 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -202,7 +202,8 @@ void initialize_repository_version(int hash_algo, int reinit)
+ static int create_default_files(const char *template_path,
+ 				const char *original_git_dir,
+ 				const char *initial_branch,
+-				const struct repository_format *fmt)
++				const struct repository_format *fmt,
++				int quiet)
+ {
+ 	struct stat st1;
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -267,7 +268,7 @@ static int create_default_files(const char *template_path,
+ 		char *ref;
+ 
+ 		if (!initial_branch)
+-			initial_branch = git_default_branch_name();
++			initial_branch = git_default_branch_name(quiet);
+ 
+ 		ref = xstrfmt("refs/heads/%s", initial_branch);
+ 		if (check_refname_format(ref, 0) < 0)
+@@ -438,7 +439,8 @@ int init_db(const char *git_dir, const char *real_git_dir,
+ 	validate_hash_algorithm(&repo_fmt, hash);
+ 
+ 	reinit = create_default_files(template_dir, original_git_dir,
+-				      initial_branch, &repo_fmt);
++				      initial_branch, &repo_fmt,
++				      flags & INIT_DB_QUIET);
+ 	if (reinit && initial_branch)
+ 		warning(_("re-init: ignored --initial-branch=%s"),
+ 			initial_branch);
 diff --git a/refs.c b/refs.c
-index 8df03122d6..c56bc1bcfb 100644
+index 392f0bbf68..8df03122d6 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -18,6 +18,7 @@
- #include "strvec.h"
- #include "repository.h"
- #include "sigchain.h"
-+#include "advice.h"
- 
- /*
-  * List of all available backends
-@@ -562,6 +563,23 @@ void expand_ref_prefix(struct strvec *prefixes, const char *prefix)
+@@ -562,7 +562,7 @@ void expand_ref_prefix(struct strvec *prefixes, const char *prefix)
  		strvec_pushf(prefixes, *p, len, prefix);
  }
  
-+static const char default_branch_name_advice[] = N_(
-+"Using '%s' as the name for the initial branch. This default branch name\n"
-+"is subject to change. To suppress this warning, run:\n"
-+"\n"
-+"\tgit config --global advice.defaultBranchName false\n"
-+"\n"
-+"Alternatively, you can configure the initial branch name to use in all\n"
-+"of your new repositories, which will also suppress this warning:\n"
-+"\n"
-+"\tgit config --global init.defaultBranch <name>\n"
-+"\n"
-+"Common names are 'main', 'trunk' and 'development'. The initial branch\n"
-+"that was created can be renamed via this command:\n"
-+"\n"
-+"\tgit branch -m <name>\n"
-+);
-+
- char *repo_default_branch_name(struct repository *r, int quiet)
+-char *repo_default_branch_name(struct repository *r)
++char *repo_default_branch_name(struct repository *r, int quiet)
  {
  	const char *config_key = "init.defaultbranch";
-@@ -574,8 +592,11 @@ char *repo_default_branch_name(struct repository *r, int quiet)
- 	else if (repo_config_get_string(r, config_key, &ret) < 0)
- 		die(_("could not retrieve `%s`"), config_display_key);
+ 	const char *config_display_key = "init.defaultBranch";
+@@ -585,12 +585,12 @@ char *repo_default_branch_name(struct repository *r)
+ 	return ret;
+ }
  
--	if (!ret)
-+	if (!ret) {
- 		ret = xstrdup("master");
-+		if (!quiet && advice_enabled(ADVICE_DEFAULT_BRANCH_NAME))
-+			advise(_(default_branch_name_advice), ret);
-+	}
+-const char *git_default_branch_name(void)
++const char *git_default_branch_name(int quiet)
+ {
+ 	static char *ret;
  
- 	full_ref = xstrfmt("refs/heads/%s", ret);
- 	if (check_refname_format(full_ref, 0))
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index bb23e56a16..84047ac64e 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -163,7 +163,7 @@ test_expect_success 'reinit' '
- 	(
- 		mkdir again &&
- 		cd again &&
--		git init >out1 2>err1 &&
-+		git -c advice.defaultBranchName=false init >out1 2>err1 &&
- 		git init >out2 2>err2
- 	) &&
- 	test_i18ngrep "Initialized empty" again/out1 &&
-@@ -558,6 +558,13 @@ test_expect_success 'overridden default initial branch name (config)' '
- 	grep nmb actual
- '
+ 	if (!ret)
+-		ret = repo_default_branch_name(the_repository);
++		ret = repo_default_branch_name(the_repository, quiet);
  
-+test_expect_success 'advice on unconfigured init.defaultBranch' '
-+	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= git -c color.advice=always \
-+		init unconfigured-default-branch-name 2>err &&
-+	test_decode_color <err >decoded &&
-+	test_i18ngrep "<YELLOW>hint: " decoded
-+'
-+
- test_expect_success 'overridden default main branch name (env)' '
- 	test_config_global init.defaultBranch nmb &&
- 	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=env git init main-branch-env &&
-diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
-index 9974457f56..5305566167 100755
---- a/t/t1510-repo-setup.sh
-+++ b/t/t1510-repo-setup.sh
-@@ -79,7 +79,7 @@ setup_repo () {
- 	name=$1 worktreecfg=$2 gitfile=$3 barecfg=$4 &&
- 	sane_unset GIT_DIR GIT_WORK_TREE &&
+ 	return ret;
+ }
+diff --git a/refs.h b/refs.h
+index 6695518156..ff05d2e9fe 100644
+--- a/refs.h
++++ b/refs.h
+@@ -170,8 +170,8 @@ int dwim_log(const char *str, int len, struct object_id *oid, char **ref);
+  * The return value of `repo_default_branch_name()` is an allocated string. The
+  * return value of `git_default_branch_name()` is a singleton.
+  */
+-const char *git_default_branch_name(void);
+-char *repo_default_branch_name(struct repository *r);
++const char *git_default_branch_name(int quiet);
++char *repo_default_branch_name(struct repository *r, int quiet);
  
--	git init "$name" &&
-+	git -c advice.defaultBranchName=false init "$name" &&
- 	maybe_config "$name/.git/config" core.worktree "$worktreecfg" &&
- 	maybe_config "$name/.git/config" core.bare "$barecfg" &&
- 	mkdir -p "$name/sub/sub" &&
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 59bbf75e83..781d47a4bb 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1202,7 +1202,8 @@ test_create_repo () {
- 	mkdir -p "$repo"
- 	(
- 		cd "$repo" || error "Cannot setup test environment"
--		"${GIT_TEST_INSTALLED:-$GIT_EXEC_PATH}/git$X" init \
-+		"${GIT_TEST_INSTALLED:-$GIT_EXEC_PATH}/git$X" \
-+			-c advice.defaultBranchName=false init \
- 			"--template=$GIT_BUILD_DIR/templates/blt/" >&3 2>&4 ||
- 		error "cannot run git init -- have you built things yet?"
- 		mv .git/hooks .git/hooks-disabled
+ /*
+  * A ref_transaction represents a collection of reference updates that
+diff --git a/remote.c b/remote.c
+index 8a6dbbb903..bdb88d4b7d 100644
+--- a/remote.c
++++ b/remote.c
+@@ -284,7 +284,7 @@ static void read_branches_file(struct remote *remote)
+ 	if (frag)
+ 		*(frag++) = '\0';
+ 	else
+-		frag = (char *)git_default_branch_name();
++		frag = (char *)git_default_branch_name(0);
+ 
+ 	add_url_alias(remote, strbuf_detach(&buf, NULL));
+ 	refspec_appendf(&remote->fetch, "refs/heads/%s:refs/heads/%s",
+@@ -2206,7 +2206,8 @@ struct ref *guess_remote_head(const struct ref *head,
+ 
+ 	/* If a remote branch exists with the default branch name, let's use it. */
+ 	if (!all) {
+-		char *ref = xstrfmt("refs/heads/%s", git_default_branch_name());
++		char *ref = xstrfmt("refs/heads/%s",
++				    git_default_branch_name(0));
+ 
+ 		r = find_ref_by_name(refs, ref);
+ 		free(ref);
 -- 
 gitgitgadget
+
