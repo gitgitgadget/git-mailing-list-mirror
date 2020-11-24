@@ -6,88 +6,75 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AAD74C2D0E4
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 02:52:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DE82C2D0E4
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 02:59:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 53DAD20720
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 02:52:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2E3782071E
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 02:59:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728746AbgKXCvn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Nov 2020 21:51:43 -0500
-Received: from cloud.peff.net ([104.130.231.41]:39700 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728740AbgKXCvm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Nov 2020 21:51:42 -0500
-Received: (qmail 30906 invoked by uid 109); 24 Nov 2020 02:51:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 24 Nov 2020 02:51:43 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10692 invoked by uid 111); 24 Nov 2020 02:51:42 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 23 Nov 2020 21:51:42 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 23 Nov 2020 21:51:41 -0500
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        dstolee@microsoft.com
-Subject: Re: [PATCH 01/23] ewah/ewah_bitmap.c: grow buffer past 1
-Message-ID: <X7x1PciN+bVDkJhr@coredump.intra.peff.net>
-References: <cover.1605123652.git.me@ttaylorr.com>
- <36deaad366d66d10b96755dd6969bfe51123a2d4.1605123652.git.me@ttaylorr.com>
- <xmqqblfpqj4e.fsf@gitster.c.googlers.com>
- <X7vhrCbeFzxaEVvv@nand.local>
- <X7x0du3qoC4vuGtS@coredump.intra.peff.net>
+        id S1726514AbgKXC70 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Nov 2020 21:59:26 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:42222 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726256AbgKXC70 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Nov 2020 21:59:26 -0500
+Received: by mail-ed1-f65.google.com with SMTP id v22so19282637edt.9
+        for <git@vger.kernel.org>; Mon, 23 Nov 2020 18:59:25 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=bukSrmeQf7f0PcJDTLRV/Zc6S11atcs8F8e5GZqqKVc=;
+        b=KCl4XR3WrjxGYi9hl6EzdeZcCePG7E+txvw+xbEClVFlDMhwV72/0w3cSUn7FQ8l0Q
+         DTv6kJrH2qS69PjAPa6tiEv07bViVCgX7YUJJIKTlIa9TzkhP4o/VgOpILE6BowD/mDP
+         gWwVUr+U0IfBdjxwwS/VxTIvErO44/BkKwtrDJHZUW/jAvP30K5edHk0NP2CRy3LUF9x
+         Edi3VO8RinjmluTuRm4n7hjdfb821TIikq8zHod8nShfTLuQ46BtP17BPK8qrgqJt6kN
+         iyqobIdVOpkiSWlWI0L0Fdi1kJCpVHZGOZ2ryBa+Iw76DSYf92x/tefIYNVNw/z9AIlS
+         MuqQ==
+X-Gm-Message-State: AOAM533x4Gbkhl6VCR+lLZjDklbDaG+7Ogjdo7KjLUcc/ZeJda7HoVzg
+        frMofFcA7QeCI1g2zD5NeGdkXoMn9MIgfbXSOJs=
+X-Google-Smtp-Source: ABdhPJzwo/Vh9ybR1qLx5AP8dqFaSL770/SJKeTEhc+iNSszqY2j/0ddvOPEPmhDGcDCJtITdDmjgtMvYRGFxElvjLI=
+X-Received: by 2002:a05:6402:1358:: with SMTP id y24mr1973112edw.291.1606186765197;
+ Mon, 23 Nov 2020 18:59:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <X7x0du3qoC4vuGtS@coredump.intra.peff.net>
+References: <pull.776.v3.git.1605276024.gitgitgadget@gmail.com>
+ <pull.776.v4.git.1605647598.gitgitgadget@gmail.com> <X7ReZXuwAaAZzMSU@flurp.local>
+ <80762efd-c71b-4485-a2bb-f0577d90ff48@gmail.com>
+In-Reply-To: <80762efd-c71b-4485-a2bb-f0577d90ff48@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 23 Nov 2020 21:59:14 -0500
+Message-ID: <CAPig+cQA35f1RfrvoevTJPeAbxDtoXqdM-N8D_=hw7_ZaNYCAA@mail.gmail.com>
+Subject: Re: [PATCH v4 0/4] Maintenance IV: Platform-specific background maintenance
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 23, 2020 at 09:48:22PM -0500, Jeff King wrote:
+On Mon, Nov 23, 2020 at 9:20 PM Derrick Stolee <stolee@gmail.com> wrote:
+> I was giving your 'test-tool getuid' idea a try, and found that _also_
+> the $HOME environment variable differs from the format we expect in these
+> subcommands:
+>
+>                    $HOME: C:\...
+>   argument in subcommand: /c/...
 
-> > I think that we probably could just use ALLOC_GROW() as you suggest.
-> > Funny enough, reading through GitHub's chat logs, apparently this is
-> > something that Peff and I talked about. So, 16 probably came from
-> > alloc_nr(), but we probably stopped short of realizing that we could
-> > just use ALLOC_GROW as-is.
-> 
-> That would probably be OK. It's a bit more aggressive, which could
-> matter if you have a large number of very small bitmaps. My original
-> goal of the "grow less aggressively" patch was to keep memory usage
-> down, knowing that I was going to be holding a lot of bitmaps in memory
-> at once. But even with micro-optimizations like this, it turned out to
-> be far too big in practice (and hence Stolee's work on top to reduce the
-> total number we hold at once).
+Where does this problem crop up exactly? Is the test doing a literal
+comparison against the value in $HOME?
 
-Oh, sorry, I was mixing this patch up with patches 6 and 7, which touch
-buffer_grow().  This is a totally separate spot, and this is a pure
-bug-fix.
+> So, there is another reason why these tests don't work on Windows. I'm
+> of the opinion that maybe it's not worth _that_ level of cross-platform
+> testing.
+>
+> Unless I'm missing something simple about a $HOME alternative here, this
+> seems to be more work than the resulting value. Personally, I'm happy
+> with the benefit you've already provided in allowing Linux to test all
+> platforms.
 
-I think the main reason we didn't use ALLOC_GROW() here in the beginning
-is that the ewah code was originally designed to be a separate library
-(a port of the java ewah library), and didn't depend on Git code.
-
-These days we pull in xmalloc, etc, so we should be fine to use
-ALLOC_GROW().
-
-Likewise...
-
-> I think the real test would be measuring the peak heap of the series as
-> you posted it in v2, and this version replacing this patch (and the
-> "grow less aggressively" one) with ALLOC_GROW(). On something big, like
-> repacking all of the torvalds/linux or git/git fork networks.
-> 
-> If there's no appreciable difference, then definitely I think it's worth
-> the simplicity of reusing ALLOC_GROW().
-
-All of this is nonsense (though it does apply to the question of using
-ALLOC_GROW() in bitmap_grow(), via patch 7).
-
-We have many fewer ewah bitmaps in memory at one time, so I don't think
-it's worth micro-managing a few extra bytes of growth. Using
-ALLOC_GROW() for this case would be fine.
-
--Peff
+Indeed, it's not worth investing a lot of additional time into it. And
+it's certainly not a good reason to hold up the series. Moreover, this
+is the sort of thing which can be refined/handled later if someone
+wants to take a shot at it.
