@@ -2,70 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86E72C64E7A
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E499C64E7B
 	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 11:55:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 40C4F2076E
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 11:55:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EB80320782
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 11:55:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o6NH2fZd"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qQToozNz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733122AbgKXLzH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Nov 2020 06:55:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47418 "EHLO
+        id S1733117AbgKXLzF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Nov 2020 06:55:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733112AbgKXLzG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Nov 2020 06:55:06 -0500
+        with ESMTP id S1733112AbgKXLzF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Nov 2020 06:55:05 -0500
 Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 078DCC0613D6
-        for <git@vger.kernel.org>; Tue, 24 Nov 2020 03:55:06 -0800 (PST)
-Received: by mail-wm1-x344.google.com with SMTP id p22so2168209wmg.3
-        for <git@vger.kernel.org>; Tue, 24 Nov 2020 03:55:05 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CE94C0617A6
+        for <git@vger.kernel.org>; Tue, 24 Nov 2020 03:55:03 -0800 (PST)
+Received: by mail-wm1-x344.google.com with SMTP id d142so2159421wmd.4
+        for <git@vger.kernel.org>; Tue, 24 Nov 2020 03:55:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=KHmL7InPmAI+GAGxgBfupUR3/cN6PV+pWS0Z62T+0z8=;
-        b=o6NH2fZd4ihBp8pcW0PBLvbm27bSJD4+KmLGz7K5GSSg2i1SvcdxBkNkj/6/zHRSl3
-         NOKUsBY6xPOq/mpdXLB7W9VzCyQeh+hIskjTDmmwyqc0WNCXRDXznq+qBpt7a/vQ+KrG
-         jW2HOlKgJDL+GSRMDKKBF1Zn4CeZN6r/QpkC7/i94d+wYWT9yWGk3Kl0J5jaoaOVisGT
-         IBt0SsumYSywlHZkyrraM+FdXTAR1b8RiMWySrD9Jm0RdY4piDaXWjjsys1I+SxApaQC
-         J0XgQJUa7AyqAmLJky1pzLzPYSReA4hNwRc9Qth+ugArM2nGscLujL9y781JkXlONDn5
-         rVfQ==
+        bh=g6f4lMU44WIp4RgRKTQ7dDq9rOZSto3d9XfaXphHOws=;
+        b=qQToozNzDZ6QwkNKuofE+lTOCnSPJUjzVQ872AqHd4sy6JEjsC/VELZ0XJPvUz3pA0
+         dzHDZ0EBB31R5vh8A9ZMxoTXWUCdzHXQzv7/kwoVTt8qoo+wx+8h6FMff1rhsizVCoC6
+         xZE/HYaX99HnoOHf0NZ9mrya3qN58N7x6y2Bq2bHT7QJS8h9FIuxLJR69zuRtqfB92dO
+         mRVy5zNR9wM6M1fTe5AS+PzjwL0oKJoPL8DDshUUvOoNFmjVxFRW55POzeRk62JIDJQO
+         mMGJELVAclPWCObCxmk/FyPu0+xyxCA9IMmL0kRAbY79ARxGPLZwmUKapNiUDrxEXl5k
+         F/BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=KHmL7InPmAI+GAGxgBfupUR3/cN6PV+pWS0Z62T+0z8=;
-        b=k5N1EjkMPjWkAU4UlhHC06nmS+kOr8mlItB6DdxTLpcGIcAegn5BQlaMIcQ8ks6vyf
-         67dfcUeuWa3VJVd9qLe/GE4YVo8BtVkWMFsAeJQp+KJmQPVMALB3I77oaLzthJwMFlFb
-         J5WNjTG6Xz5eNbIvXSw00qha67XtXgtSgZi4Ap7jlK51dLhwVo4J/YpnGap0NThg0r9/
-         CPKNmvrnYcUpvym2IHf0P3DBKMl25U51vMuoaLiivzEPywT2QbxW47upZymuFjfpwSzB
-         Z2LXThgIT3cuyFDknwjHcEgOcpWTBTZId3GgaB+SkEhuBEaQvay4VOuOrmrlLyyfzKwR
-         auOA==
-X-Gm-Message-State: AOAM532lp2rOuS2bP8q7U/uiNVGr6baGfcTmevJWrnLUp+SmWSY+GW5u
-        1kluiZJAcVf9yGX04fSe1AFIlvB8ha8=
-X-Google-Smtp-Source: ABdhPJyiA8x/W0XNKXhegyt4B/hHPVmkwUEgwxj+b85hm2ON02BwjvACWT/EpNkqzlUZmJ4nSinmXw==
-X-Received: by 2002:a7b:c1d2:: with SMTP id a18mr4109038wmj.41.1606218904203;
-        Tue, 24 Nov 2020 03:55:04 -0800 (PST)
+        bh=g6f4lMU44WIp4RgRKTQ7dDq9rOZSto3d9XfaXphHOws=;
+        b=d61iVNNsTvuyfmgurfE/D/KO+m1HnIj050vxVA5Xz2buH+4kH50X/4zlrg35U5PmQz
+         4A9/Hgu80u9W4SWYWpPeBRFFG7kfSw6a0Lzx/bP1e3Cy0DhLwyuQYLe/9pFBvErVwWvG
+         a6GALw0lN8pl6+4mxjLbjHddTuLsSR8Pwsi3PwC7jeAuEoSSLdSptl3ta/NxDpRv1WgT
+         h/A+rbs2ve3Wp6rV9lUxbu9bLLNbQikiCJNYNOV2mwPhSlErFOndssHdeXXtUnYpKWfc
+         aJTtP74VLNy3sxyCXn+8HT07JrlUsesbv+C2JVY14G8/+EG49ed7yQ5DvHuz5eEnUxbj
+         kEOQ==
+X-Gm-Message-State: AOAM530K8UcXLlMvmp7RhTKAz9pgSRZ+Pv+5CUNdn+m/o0oleDDZDkMW
+        7AmbWdhrTc8z6DoZp6kgC49Fgp4zMdg=
+X-Google-Smtp-Source: ABdhPJzcl54yTAEWr6R+2V7h608wA5S7kRAX+Cgu0CblCexEYeCkexsb6pgKBzzOJI69SdA20Rpc+g==
+X-Received: by 2002:a1c:398a:: with SMTP id g132mr4058557wma.51.1606218901827;
+        Tue, 24 Nov 2020 03:55:01 -0800 (PST)
 Received: from ylate.lan (atoulouse-654-1-307-224.w86-199.abo.wanadoo.fr. [86.199.90.224])
-        by smtp.googlemail.com with ESMTPSA id l13sm25893227wrm.24.2020.11.24.03.55.03
+        by smtp.googlemail.com with ESMTPSA id l13sm25893227wrm.24.2020.11.24.03.55.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Nov 2020 03:55:03 -0800 (PST)
+        Tue, 24 Nov 2020 03:55:01 -0800 (PST)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v6 07/13] merge-resolve: rewrite in C
-Date:   Tue, 24 Nov 2020 12:53:09 +0100
-Message-Id: <20201124115315.13311-8-alban.gruin@gmail.com>
+Subject: [PATCH v6 05/13] merge-index: libify merge_one_path() and merge_all()
+Date:   Tue, 24 Nov 2020 12:53:07 +0100
+Message-Id: <20201124115315.13311-6-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20201124115315.13311-1-alban.gruin@gmail.com>
 References: <20201116102158.8365-1-alban.gruin@gmail.com>
@@ -76,361 +76,272 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This rewrites `git merge-resolve' from shell to C.  As for `git
-merge-one-file', this port is not completely straightforward and removes
-calls to external processes to avoid reading and writing the index over
-and over again.
+The "resolve" and "octopus" merge strategies do not call directly `git
+merge-one-file', they delegate the work to another git command, `git
+merge-index', that will loop over files in the index and call the
+specified command.  Unfortunately, these functions are not part of
+libgit.a, which means that once rewritten, the strategies would still
+have to invoke `merge-one-file' by spawning a new process first.
 
- - The call to `update-index -q --refresh' is replaced by a call to
-   refresh_index().
-
- - The call to `read-tree' is replaced by a call to unpack_trees() (and
-   all the setup needed).
-
- - The call to `write-tree' is replaced by a call to
-   write_index_as_tree().
-
- - The call to `merge-index', needed to invoke `git merge-one-file', is
-   replaced by a call to the new merge_all_index() function.
-
-The index is read in cmd_merge_resolve(), and is wrote back by
-merge_strategies_resolve().
-
-The parameters of merge_strategies_resolve() will be surprising at first
-glance: why using a commit list for `bases' and `remote', where we could
-use an oid array, and a pointer to an oid?  Because, in a later commit,
-try_merge_strategy() will be able to call merge_strategies_resolve()
-directly, and it already uses a commit list for `bases' (`common') and
-`remote' (`remoteheads'), and a string for `head_arg'.  To reduce
-frictions later, merge_strategies_resolve() takes the same types of
-parameters.
+To avoid this, this moves and renames merge_one_path(), merge_all(), and
+their helpers to merge-strategies.c.  They also take a callback to
+dictate what they should do for each file.  For now, to preserve the
+behaviour of `merge-index', only one callback, launching a new process,
+is defined.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
- Makefile                |  2 +-
- builtin.h               |  1 +
- builtin/merge-resolve.c | 73 +++++++++++++++++++++++++++++++
- git-merge-resolve.sh    | 54 -----------------------
- git.c                   |  1 +
- merge-strategies.c      | 95 +++++++++++++++++++++++++++++++++++++++++
- merge-strategies.h      |  5 +++
- 7 files changed, 176 insertions(+), 55 deletions(-)
- create mode 100644 builtin/merge-resolve.c
- delete mode 100755 git-merge-resolve.sh
+ builtin/merge-index.c |  77 +++----------------------------
+ merge-strategies.c    | 104 ++++++++++++++++++++++++++++++++++++++++++
+ merge-strategies.h    |  19 ++++++++
+ 3 files changed, 130 insertions(+), 70 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 6dfdb33cb2..3cc6b192f1 100644
---- a/Makefile
-+++ b/Makefile
-@@ -601,7 +601,6 @@ SCRIPT_SH += git-bisect.sh
- SCRIPT_SH += git-difftool--helper.sh
- SCRIPT_SH += git-filter-branch.sh
- SCRIPT_SH += git-merge-octopus.sh
--SCRIPT_SH += git-merge-resolve.sh
- SCRIPT_SH += git-mergetool.sh
- SCRIPT_SH += git-quiltimport.sh
- SCRIPT_SH += git-request-pull.sh
-@@ -1097,6 +1096,7 @@ BUILTIN_OBJS += builtin/merge-index.o
- BUILTIN_OBJS += builtin/merge-one-file.o
- BUILTIN_OBJS += builtin/merge-ours.o
- BUILTIN_OBJS += builtin/merge-recursive.o
-+BUILTIN_OBJS += builtin/merge-resolve.o
- BUILTIN_OBJS += builtin/merge-tree.o
- BUILTIN_OBJS += builtin/merge.o
- BUILTIN_OBJS += builtin/mktag.o
-diff --git a/builtin.h b/builtin.h
-index 4d2cd78856..35e91c16d0 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -180,6 +180,7 @@ int cmd_merge_ours(int argc, const char **argv, const char *prefix);
- int cmd_merge_file(int argc, const char **argv, const char *prefix);
- int cmd_merge_one_file(int argc, const char **argv, const char *prefix);
- int cmd_merge_recursive(int argc, const char **argv, const char *prefix);
-+int cmd_merge_resolve(int argc, const char **argv, const char *prefix);
- int cmd_merge_tree(int argc, const char **argv, const char *prefix);
- int cmd_mktag(int argc, const char **argv, const char *prefix);
- int cmd_mktree(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/merge-resolve.c b/builtin/merge-resolve.c
-new file mode 100644
-index 0000000000..dca31676b8
---- /dev/null
-+++ b/builtin/merge-resolve.c
-@@ -0,0 +1,73 @@
-+/*
-+ * Builtin "git merge-resolve"
-+ *
-+ * Copyright (c) 2020 Alban Gruin
-+ *
-+ * Based on git-merge-resolve.sh, written by Linus Torvalds and Junio C
-+ * Hamano.
-+ *
-+ * Resolve two trees, using enhanced multi-base read-tree.
-+ */
-+
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
-+#include "cache.h"
-+#include "builtin.h"
+diff --git a/builtin/merge-index.c b/builtin/merge-index.c
+index 38ea6ad6ca..d5e5713b25 100644
+--- a/builtin/merge-index.c
++++ b/builtin/merge-index.c
+@@ -1,74 +1,11 @@
+ #define USE_THE_INDEX_COMPATIBILITY_MACROS
+ #include "builtin.h"
+-#include "run-command.h"
+-
+-static const char *pgm;
+-static int one_shot, quiet;
+-static int err;
+-
+-static int merge_entry(int pos, const char *path)
+-{
+-	int found;
+-	const char *arguments[] = { pgm, "", "", "", path, "", "", "", NULL };
+-	char hexbuf[4][GIT_MAX_HEXSZ + 1];
+-	char ownbuf[4][60];
+-
+-	if (pos >= active_nr)
+-		die("git merge-index: %s not in the cache", path);
+-	found = 0;
+-	do {
+-		const struct cache_entry *ce = active_cache[pos];
+-		int stage = ce_stage(ce);
+-
+-		if (strcmp(ce->name, path))
+-			break;
+-		found++;
+-		oid_to_hex_r(hexbuf[stage], &ce->oid);
+-		xsnprintf(ownbuf[stage], sizeof(ownbuf[stage]), "%o", ce->ce_mode);
+-		arguments[stage] = hexbuf[stage];
+-		arguments[stage + 4] = ownbuf[stage];
+-	} while (++pos < active_nr);
+-	if (!found)
+-		die("git merge-index: %s not in the cache", path);
+-
+-	if (run_command_v_opt(arguments, 0)) {
+-		if (one_shot)
+-			err++;
+-		else {
+-			if (!quiet)
+-				die("merge program failed");
+-			exit(1);
+-		}
+-	}
+-	return found;
+-}
+-
+-static void merge_one_path(const char *path)
+-{
+-	int pos = cache_name_pos(path, strlen(path));
+-
+-	/*
+-	 * If it already exists in the cache as stage0, it's
+-	 * already merged and there is nothing to do.
+-	 */
+-	if (pos < 0)
+-		merge_entry(-pos-1, path);
+-}
+-
+-static void merge_all(void)
+-{
+-	int i;
+-	for (i = 0; i < active_nr; i++) {
+-		const struct cache_entry *ce = active_cache[i];
+-		if (!ce_stage(ce))
+-			continue;
+-		i += merge_entry(i, ce->name)-1;
+-	}
+-}
 +#include "merge-strategies.h"
-+
-+static const char builtin_merge_resolve_usage[] =
-+	"git merge-resolve <bases>... -- <head> <remote>";
-+
-+int cmd_merge_resolve(int argc, const char **argv, const char *prefix)
-+{
-+	int i, sep_seen = 0;
-+	const char *head = NULL;
-+	struct commit_list *bases = NULL, *remote = NULL;
-+	struct commit_list **next_base = &bases;
-+
-+	if (argc < 5)
-+		usage(builtin_merge_resolve_usage);
-+
-+	setup_work_tree();
-+	if (read_cache() < 0)
-+		die("invalid index");
-+
-+	/*
-+	 * The first parameters up to -- are merge bases; the rest are
-+	 * heads.
-+	 */
-+	for (i = 1; i < argc; i++) {
-+		if (!strcmp(argv[i], "--"))
-+			sep_seen = 1;
-+		else if (!strcmp(argv[i], "-h"))
-+			usage(builtin_merge_resolve_usage);
-+		else if (sep_seen && !head)
-+			head = argv[i];
-+		else {
-+			struct object_id oid;
-+			struct commit *commit;
-+
-+			if (get_oid(argv[i], &oid))
-+				die("object %s not found.", argv[i]);
-+
-+			commit = lookup_commit_or_die(&oid, argv[i]);
-+
-+			if (sep_seen)
-+				commit_list_insert(commit, &remote);
-+			else
-+				next_base = commit_list_append(commit, next_base);
-+		}
-+	}
-+
-+	/*
-+	 * Give up if we are given two or more remotes.  Not handling
-+	 * octopus.
-+	 */
-+	if (remote && remote->next)
-+		return 2;
-+
-+	/* Give up if this is a baseless merge. */
-+	if (!bases)
-+		return 2;
-+
-+	return merge_strategies_resolve(the_repository, bases, head, remote);
-+}
-diff --git a/git-merge-resolve.sh b/git-merge-resolve.sh
-deleted file mode 100755
-index 343fe7bccd..0000000000
---- a/git-merge-resolve.sh
-+++ /dev/null
-@@ -1,54 +0,0 @@
--#!/bin/sh
--#
--# Copyright (c) 2005 Linus Torvalds
--# Copyright (c) 2005 Junio C Hamano
--#
--# Resolve two trees, using enhanced multi-base read-tree.
--
--# The first parameters up to -- are merge bases; the rest are heads.
--bases= head= remotes= sep_seen=
--for arg
--do
--	case ",$sep_seen,$head,$arg," in
--	*,--,)
--		sep_seen=yes
--		;;
--	,yes,,*)
--		head=$arg
--		;;
--	,yes,*)
--		remotes="$remotes$arg "
--		;;
--	*)
--		bases="$bases$arg "
--		;;
--	esac
--done
--
--# Give up if we are given two or more remotes -- not handling octopus.
--case "$remotes" in
--?*' '?*)
--	exit 2 ;;
--esac
--
--# Give up if this is a baseless merge.
--if test '' = "$bases"
--then
--	exit 2
--fi
--
--git update-index -q --refresh
--git read-tree -u -m --aggressive $bases $head $remotes || exit 2
--echo "Trying simple merge."
--if result_tree=$(git write-tree 2>/dev/null)
--then
--	exit 0
--else
--	echo "Simple merge failed, trying Automatic merge."
--	if git merge-index -o git-merge-one-file -a
--	then
--		exit 0
--	else
--		exit 1
--	fi
--fi
-diff --git a/git.c b/git.c
-index a4d3f98094..64a1a1de41 100644
---- a/git.c
-+++ b/git.c
-@@ -544,6 +544,7 @@ static struct cmd_struct commands[] = {
- 	{ "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
- 	{ "merge-recursive-ours", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
- 	{ "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
-+	{ "merge-resolve", cmd_merge_resolve, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
- 	{ "merge-subtree", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
- 	{ "merge-tree", cmd_merge_tree, RUN_SETUP | NO_PARSEOPT },
- 	{ "mktag", cmd_mktag, RUN_SETUP | NO_PARSEOPT },
+ 
+ int cmd_merge_index(int argc, const char **argv, const char *prefix)
+ {
+-	int i, force_file = 0;
++	int i, force_file = 0, err = 0, one_shot = 0, quiet = 0;
++	const char *pgm;
+ 
+ 	/* Without this we cannot rely on waitpid() to tell
+ 	 * what happened to our children.
+@@ -98,14 +35,14 @@ int cmd_merge_index(int argc, const char **argv, const char *prefix)
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "-a")) {
+-				merge_all();
++				err |= merge_all_index(the_repository, one_shot, quiet,
++						       merge_one_file_spawn, (void *)pgm);
+ 				continue;
+ 			}
+ 			die("git merge-index: unknown option %s", arg);
+ 		}
+-		merge_one_path(arg);
++		err |= merge_index_path(the_repository, one_shot, quiet, arg,
++					merge_one_file_spawn, (void *)pgm);
+ 	}
+-	if (err && !quiet)
+-		die("merge program failed");
+ 	return err;
+ }
 diff --git a/merge-strategies.c b/merge-strategies.c
-index 542cefcf3d..9aa07e91b5 100644
+index 20a328bf57..6f27e66dfe 100644
 --- a/merge-strategies.c
 +++ b/merge-strategies.c
-@@ -1,7 +1,10 @@
+@@ -1,6 +1,7 @@
  #include "cache.h"
-+#include "cache-tree.h"
  #include "dir.h"
-+#include "lockfile.h"
  #include "merge-strategies.h"
- #include "run-command.h"
-+#include "unpack-trees.h"
++#include "run-command.h"
  #include "xdiff-interface.h"
  
  static int checkout_from_index(struct index_state *istate, const char *path,
-@@ -297,3 +300,95 @@ int merge_all_index(struct repository *r, int oneshot, int quiet,
+@@ -176,3 +177,106 @@ int merge_three_way(struct repository *r,
  
- 	return err;
+ 	return 0;
  }
 +
-+static int fast_forward(struct repository *r, struct tree_desc *t,
-+			int nr, int aggressive)
++int merge_one_file_spawn(struct repository *r,
++			 const struct object_id *orig_blob,
++			 const struct object_id *our_blob,
++			 const struct object_id *their_blob, const char *path,
++			 unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode,
++			 void *data)
 +{
-+	struct unpack_trees_options opts;
-+	struct lock_file lock = LOCK_INIT;
++	char oids[3][GIT_MAX_HEXSZ + 1] = {{0}};
++	char modes[3][10] = {{0}};
++	const char *arguments[] = { (char *)data, oids[0], oids[1], oids[2],
++				    path, modes[0], modes[1], modes[2], NULL };
 +
-+	refresh_index(r->index, REFRESH_QUIET, NULL, NULL, NULL);
-+	repo_hold_locked_index(r, &lock, LOCK_DIE_ON_ERROR);
-+
-+	memset(&opts, 0, sizeof(opts));
-+	opts.head_idx = 1;
-+	opts.src_index = r->index;
-+	opts.dst_index = r->index;
-+	opts.merge = 1;
-+	opts.update = 1;
-+	opts.aggressive = aggressive;
-+
-+	if (nr == 1)
-+		opts.fn = oneway_merge;
-+	else if (nr == 2) {
-+		opts.fn = twoway_merge;
-+		opts.initial_checkout = is_index_unborn(r->index);
-+	} else if (nr >= 3) {
-+		opts.fn = threeway_merge;
-+		opts.head_idx = nr - 1;
++	if (orig_blob) {
++		oid_to_hex_r(oids[0], orig_blob);
++		xsnprintf(modes[0], sizeof(modes[0]), "%06o", orig_mode);
 +	}
 +
-+	if (unpack_trees(nr, t, &opts))
-+		return -1;
++	if (our_blob) {
++		oid_to_hex_r(oids[1], our_blob);
++		xsnprintf(modes[1], sizeof(modes[1]), "%06o", our_mode);
++	}
 +
-+	if (write_locked_index(r->index, &lock, COMMIT_LOCK))
-+		return error(_("unable to write new index file"));
++	if (their_blob) {
++		oid_to_hex_r(oids[2], their_blob);
++		xsnprintf(modes[2], sizeof(modes[2]), "%06o", their_mode);
++	}
 +
++	return run_command_v_opt(arguments, 0);
++}
++
++static int merge_entry(struct repository *r, int quiet, unsigned int pos,
++		       const char *path, int *err, merge_fn fn, void *data)
++{
++	int found = 0;
++	const struct object_id *oids[3] = {NULL};
++	unsigned int modes[3] = {0};
++
++	do {
++		const struct cache_entry *ce = r->index->cache[pos];
++		int stage = ce_stage(ce);
++
++		if (strcmp(ce->name, path))
++			break;
++		found++;
++		oids[stage - 1] = &ce->oid;
++		modes[stage - 1] = ce->ce_mode;
++	} while (++pos < r->index->cache_nr);
++	if (!found)
++		return error(_("%s is not in the cache"), path);
++
++	if (fn(r, oids[0], oids[1], oids[2], path,
++	       modes[0], modes[1], modes[2], data)) {
++		if (!quiet)
++			error(_("Merge program failed"));
++		(*err)++;
++	}
++
++	return found;
++}
++
++int merge_index_path(struct repository *r, int oneshot, int quiet,
++		     const char *path, merge_fn fn, void *data)
++{
++	int pos = index_name_pos(r->index, path, strlen(path)), ret, err = 0;
++
++	/*
++	 * If it already exists in the cache as stage0, it's
++	 * already merged and there is nothing to do.
++	 */
++	if (pos < 0) {
++		ret = merge_entry(r, quiet || oneshot, -pos - 1, path, &err, fn, data);
++		if (ret == -1)
++			return -1;
++		else if (err)
++			return 1;
++	}
 +	return 0;
 +}
 +
-+static int add_tree(struct tree *tree, struct tree_desc *t)
++int merge_all_index(struct repository *r, int oneshot, int quiet,
++		    merge_fn fn, void *data)
 +{
-+	if (parse_tree(tree))
-+		return -1;
++	int err = 0, ret;
++	unsigned int i;
 +
-+	init_tree_desc(t, tree->buffer, tree->size);
-+	return 0;
-+}
++	for (i = 0; i < r->index->cache_nr; i++) {
++		const struct cache_entry *ce = r->index->cache[i];
++		if (!ce_stage(ce))
++			continue;
 +
-+int merge_strategies_resolve(struct repository *r,
-+			     struct commit_list *bases, const char *head_arg,
-+			     struct commit_list *remote)
-+{
-+	struct tree_desc t[MAX_UNPACK_TREES];
-+	struct object_id head, oid;
-+	struct commit_list *i;
-+	int nr = 0;
++		ret = merge_entry(r, quiet || oneshot, i, ce->name, &err, fn, data);
++		if (ret > 0)
++			i += ret - 1;
++		else if (ret == -1)
++			return -1;
 +
-+	if (head_arg)
-+		get_oid(head_arg, &head);
-+
-+	puts(_("Trying simple merge."));
-+
-+	for (i = bases; i && i->item; i = i->next) {
-+		if (add_tree(repo_get_commit_tree(r, i->item), t + (nr++)))
-+			return 2;
++		if (err && !oneshot)
++			return 1;
 +	}
 +
-+	if (head_arg) {
-+		struct tree *tree = parse_tree_indirect(&head);
-+		if (add_tree(tree, t + (nr++)))
-+			return 2;
-+	}
-+
-+	if (remote && add_tree(repo_get_commit_tree(r, remote->item), t + (nr++)))
-+		return 2;
-+
-+	if (fast_forward(r, t, nr, 1))
-+		return 2;
-+
-+	if (write_index_as_tree(&oid, r->index, r->index_file,
-+				WRITE_TREE_SILENT, NULL)) {
-+		int ret;
-+		struct lock_file lock = LOCK_INIT;
-+
-+		puts(_("Simple merge failed, trying Automatic merge."));
-+		repo_hold_locked_index(r, &lock, LOCK_DIE_ON_ERROR);
-+		ret = merge_all_index(r, 1, 0, merge_one_file_func, NULL);
-+
-+		write_locked_index(r->index, &lock, COMMIT_LOCK);
-+		return !!ret;
-+	}
-+
-+	return 0;
++	return err;
 +}
 diff --git a/merge-strategies.h b/merge-strategies.h
-index 0b74d45431..47dcd71ad5 100644
+index e624c4f27c..94c40635c4 100644
 --- a/merge-strategies.h
 +++ b/merge-strategies.h
-@@ -1,6 +1,7 @@
- #ifndef MERGE_STRATEGIES_H
- #define MERGE_STRATEGIES_H
+@@ -9,4 +9,23 @@ int merge_three_way(struct repository *r,
+ 		    const struct object_id *their_blob, const char *path,
+ 		    unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode);
  
-+#include "commit.h"
- #include "object.h"
- 
- int merge_three_way(struct repository *r,
-@@ -35,4 +36,8 @@ int merge_index_path(struct repository *r, int oneshot, int quiet,
- int merge_all_index(struct repository *r, int oneshot, int quiet,
- 		    merge_fn fn, void *data);
- 
-+int merge_strategies_resolve(struct repository *r,
-+			     struct commit_list *bases, const char *head_arg,
-+			     struct commit_list *remote);
++typedef int (*merge_fn)(struct repository *r,
++			const struct object_id *orig_blob,
++			const struct object_id *our_blob,
++			const struct object_id *their_blob, const char *path,
++			unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode,
++			void *data);
++
++int merge_one_file_spawn(struct repository *r,
++			 const struct object_id *orig_blob,
++			 const struct object_id *our_blob,
++			 const struct object_id *their_blob, const char *path,
++			 unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode,
++			 void *data);
++
++int merge_index_path(struct repository *r, int oneshot, int quiet,
++		     const char *path, merge_fn fn, void *data);
++int merge_all_index(struct repository *r, int oneshot, int quiet,
++		    merge_fn fn, void *data);
 +
  #endif /* MERGE_STRATEGIES_H */
 -- 
