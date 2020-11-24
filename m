@@ -2,107 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B646EC56202
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 22:12:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4673C2D0E4
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 22:12:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5CC432086A
-	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 22:12:13 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mZ+qKPje"
+	by mail.kernel.org (Postfix) with ESMTP id 5FD4620715
+	for <git@archiver.kernel.org>; Tue, 24 Nov 2020 22:12:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388508AbgKXWMA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Nov 2020 17:12:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58694 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388279AbgKXWMA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Nov 2020 17:12:00 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 184FEC0613D6
-        for <git@vger.kernel.org>; Tue, 24 Nov 2020 14:12:00 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id a186so368847wme.1
-        for <git@vger.kernel.org>; Tue, 24 Nov 2020 14:11:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GYvgm7FPjXWJQ45uOC8GPhd4vnxLFBs5gBUbNiWI48Y=;
-        b=mZ+qKPjeFUdEjj11QJq/GiinFyc+uIOJwq9I80txXU9Noj7FnI5URImC1e0SuAdYpC
-         gLORajtE0KPMLYfJqqTIDio82bPpJ2laWZ3l5r6CDmudBVKLvdR7BAZHM3z86RWGaGN4
-         uzaJAU+XJOJ6VHnDUQ3p1HY6bzTUm0iarV8oukM4u19+Lixfs5QVqRihCCMOFiWxvYBX
-         C3WmNEN0q98APOKc+frTtn5H4Qjd8z3k6XGE041nzCT9RqlnlYyOt6Xt580sRP9R5pE0
-         H4CgQa5Ow1TkcS/cxGaNnXM4sbCkNHpxnLGtOHUxmDMkzjMvJPxTWwNLNuymeT9YeMM+
-         0fWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GYvgm7FPjXWJQ45uOC8GPhd4vnxLFBs5gBUbNiWI48Y=;
-        b=fIwmkx5cRP1kmgTineTs0LK3PmpecVi3bNYtu4Sbj2eL26nNMQZYzWXrN/yibgzJGp
-         cbqzY4jYjdiEykgiglZsmLeyUTbKrtl+cUfJKE02IX+s0o/dFIwxH8cD2UQZ3pNCwQeK
-         /rDMiVd0A9b4WV4OI0K6XWHhCURqFL2QMPxoF3EF+oOULDvUNjVpLKasXbtKaj8PiEVV
-         F+hmgE0ovW+zdLMqoz2L7gSophWvkHZE2jQ2yLHdrP6dE1a4nc6EF6ieY7UnuJ9RaIhk
-         sEVCSKOdVHOTLotgljhPTFBPzJjuZ9/pfiWevsWtBIhX7qJ04JKS1ZRHAyMqkpXoGSS0
-         KQtg==
-X-Gm-Message-State: AOAM532+k9/tNufnZfCe1zv+uk9B+Filq5u0eIivu+JnTHsQyXfgkm/H
-        q79ainrp21QZ4cxAXToiNcIEq5PLN78s2CQ0xEU=
-X-Google-Smtp-Source: ABdhPJzQlYQOgZD4emQ5kWk7UFCawoWHVjT6taxaBc5rTOjZEcj6Yql0DWMlftlXbPGTafkQy+Gb7Zi+70zbZSLC3ew=
-X-Received: by 2002:a1c:a145:: with SMTP id k66mr466356wme.173.1606255918097;
- Tue, 24 Nov 2020 14:11:58 -0800 (PST)
+        id S2389077AbgKXWMU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Nov 2020 17:12:20 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:62416 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388540AbgKXWMU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Nov 2020 17:12:20 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.189.82])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 0AOMCDRC097709
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Tue, 24 Nov 2020 17:12:13 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Han-Wen Nienhuys via GitGitGadget'" <gitgitgadget@gmail.com>
+Cc:     <git@vger.kernel.org>, "'Han-Wen Nienhuys'" <hanwenn@gmail.com>,
+        "'Han-Wen Nienhuys'" <hanwen@google.com>
+References: <pull.922.git.git.1606245012068.gitgitgadget@gmail.com> <xmqq8saqifu3.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq8saqifu3.fsf@gitster.c.googlers.com>
+Subject: RE: [PATCH] move sleep_millisec to git-compat-util.h
+Date:   Tue, 24 Nov 2020 17:12:08 -0500
+Message-ID: <011801d6c2ae$dcdbaad0$96930070$@nexbridge.com>
 MIME-Version: 1.0
-References: <20201123191355.GA132317@mit.edu> <CAMP44s3cKVxKa0gOPfi3XRKbGbV=DweFE5pL0HM+v0kECFyPWA@mail.gmail.com>
- <20201123202003.GB132317@mit.edu> <CAMP44s27oEjScrJjeDVoNcWcvRsn173L_Kx+TOPfchOwge9zUQ@mail.gmail.com>
- <X7wuMvHRURK1QS/Q@coredump.intra.peff.net> <CAMP44s0QOcMnYQqFFSE1jV_T6=e4=xTM0zr_06C6+aYb7oqb4A@mail.gmail.com>
- <X7xWSs3/vVqKl6sK@coredump.intra.peff.net> <CAMP44s1Z4tDXO4jstGMtYVOYzkQQnZMHp45pYPOimk+=jwFHcw@mail.gmail.com>
- <X7xgow4pchnhf2iY@coredump.intra.peff.net> <xmqqy2irjy4f.fsf@gitster.c.googlers.com>
- <X7xw0xb9UnGKbS8m@coredump.intra.peff.net> <CAMP44s08mEyYqbjOeTeS46CngrbQMqP2=cMr1dtRLLk_BLAq3w@mail.gmail.com>
- <CAMMLpeSoGtqeCm6u-zrHqvPhW7brvNk_kwde3uqmbPcP1JgMHg@mail.gmail.com>
-In-Reply-To: <CAMMLpeSoGtqeCm6u-zrHqvPhW7brvNk_kwde3uqmbPcP1JgMHg@mail.gmail.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Tue, 24 Nov 2020 16:11:47 -0600
-Message-ID: <CAMP44s2z3vv2LwoMesydVL3qWrJh0VvHSUy+FpnqguoipRRD9g@mail.gmail.com>
-Subject: Re: Pick the right default and stop warn on `git pull`
-To:     Alex Henrie <alexhenrie24@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        "Theodore Y. Ts'o" <tytso@mit.edu>,
-        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQEpHIVxAVOitwfeyhjFK9k+F6/XHgE9K7xpqyk5LOA=
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 24, 2020 at 2:22 PM Alex Henrie <alexhenrie24@gmail.com> wrote:
->
-> On Mon, Nov 23, 2020 at 8:41 PM Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
+On November 24, 2020 4:51 PM, Junio C Hamano wrote:
+> To: Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
+> Cc: git@vger.kernel.org; Han-Wen Nienhuys <hanwenn@gmail.com>; Han-
+> Wen Nienhuys <hanwen@google.com>
+> Subject: Re: [PATCH] move sleep_millisec to git-compat-util.h
+> 
+> "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+> > From: Han-Wen Nienhuys <hanwen@google.com>
 > >
-> > 1. git pull # fail by default unless it's a fast-forward
-> > 2. git pull --merge # force a merge (unless it's a fast-forward,
-> > depending on pull.ff)
-> > 3. git pull --rebase # force a rebase (unless it's a fast-forward,
-> > depending on pull.ff)
->
-> I'm not sure that we need a new --merge flag for this. It sounds like
-> we just want pull.ff to default to "only" if pull.rebase is not set,
-> and if pull.rebase is set (or --rebase or --no-rebase is passed on the
-> command line) then pull.ff should default to "true". If I understand
-> correctly, that would get us everything we want without adding any new
-> variables or making any major changes to how Git works.
+> > The sleep function is defined in wrapper.c, so it makes more sense to
+> > be a in system compatibility header.
+> >
+> > Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+> > ---
+> >     move sleep_millisec to git-compat-util.h
+> 
+> Makes sense.
 
-Before making "pull.ff=only" the default, we need a transitional
-period in which if it's unset, a warning is printed when pulling a
-non-fast-forward branch. This is what my patch did several years ago.
+I have a platform fix that I'd like to apply once this makes it into the
+main code. The sleep_millisec uses poll(), which is rather heavy-weight on
+the NonStop platform. We have a much more efficient sleep function available
+(with microsecond resolution), which would be more useful unless there is a
+poll side-effect on which git depends. Would this be acceptable? I could
+push this at any time really.
 
-And yes, it should be possible to do what you suggest, but have you
-tried? I suspect both the code and the documentation would be quite
-convoluted.
+index bcda41e374..972ecd67bf 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -4,6 +4,10 @@
+ #include "cache.h"
+ #include "config.h"
 
-Cheers.
++#ifdef __TANDEM
++#include <cextdecs> /* for PROCESS_DELAY_ */
++#endif
++
+ static int memory_limit_check(size_t size, int gentle)
+ {
+        static size_t limit = 0;
+@@ -650,7 +654,11 @@ void write_file(const char *path, const char *fmt, ...)
 
--- 
-Felipe Contreras
+ void sleep_millisec(int millisec)
+ {
++#ifdef __TANDEM
++       PROCESS_DELAY_(millisec * 1000LL);
++#else
+        poll(NULL, 0, millisec);
++#endif
+ }
+
+ int xgethostname(char *buf, size_t len)
+
+Regards,
+Randall
+
