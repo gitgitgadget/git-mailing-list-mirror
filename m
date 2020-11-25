@@ -2,69 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 816CEC64E8A
-	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 22:13:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55081C6379D
+	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 22:13:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 44323206D9
-	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 22:13:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 17A10206D9
+	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 22:13:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T9IOTIPF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oQsjlvmL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732871AbgKYWNI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Nov 2020 17:13:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56006 "EHLO
+        id S1732913AbgKYWNR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Nov 2020 17:13:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732602AbgKYWNF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Nov 2020 17:13:05 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5022FC061A53
-        for <git@vger.kernel.org>; Wed, 25 Nov 2020 14:13:05 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id u12so31079wrt.0
-        for <git@vger.kernel.org>; Wed, 25 Nov 2020 14:13:05 -0800 (PST)
+        with ESMTP id S1731806AbgKYWNQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Nov 2020 17:13:16 -0500
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4070BC0617A7
+        for <git@vger.kernel.org>; Wed, 25 Nov 2020 14:13:01 -0800 (PST)
+Received: by mail-wm1-x341.google.com with SMTP id h21so199761wmb.2
+        for <git@vger.kernel.org>; Wed, 25 Nov 2020 14:13:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ggyTh2xfy1KZsvIVeRaTDC19qP+roOPfuNpnuBpZipQ=;
-        b=T9IOTIPF8J8fFyMq3vaelWIvHjllhyacQk9YjTRPzNP+F9f6bWWauRtxY8Fg0XDiU9
-         BeBl29xyu7vxKSL4t7soPVIrljMH1y8iTdSllS7c8XN75NyJA1TjmbOjDi4E+qtw0mQU
-         jOOehhrnMr058y08NgtJUzh7Ozk/79hTyGlOFx2tNvFodmDd+1cXOI+uZt0e3h1FIqq0
-         fDJv1B78n5ZjUJhejWuGrU7Ekr7xHsvrvq9aSXCusoLUDGwohKFRujvwl3JvyPwStAlR
-         T/ZYHLy33RBFjkrUQb2p8CzcjqZHVDjFRyqNAYBEwKl9vsMIogz6Mmap05Ij8KbutOSm
-         IJ7w==
+        bh=ROAjL97M45dWEQLOqthxa3ji8Wj54z8dFjWGjWjU4yE=;
+        b=oQsjlvmLu9m9cT0dH/btrqSAbV/4/0kKAojHWcBho7LLjvxRmkujwQ58QgkNsdsHgX
+         rHn28AL6kHZeMDn1orKob+0eab5sCRFD+L5VQk6ZEsJjmC+fmkVBaIbubwRXhMb07a8k
+         ijGgLpQvEcGjEnaLwChEPIGC13VdsUGRCLXAw8WndXwCmI8ZQlZbJGoJQ2AJQZZAi192
+         NI2piasOLFX+zikiraWJ0POziY8cycrGvaRA8k3Sm5VjGRAiHgTNBwHDAZp5mOQn+nvf
+         h10f3bKcr6IB/sLgQ9RK+OL1InFfB4cfWRp7ogVHPqVKK77dfroAf8p94bITrDLMn9xR
+         5cOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ggyTh2xfy1KZsvIVeRaTDC19qP+roOPfuNpnuBpZipQ=;
-        b=jssubx4kNGjPr/FCF9YRCeQd2dNCOKZQ3gPt5Q2o37qYV6aKW85cZuLeg4OtkKvDwU
-         NiBhHJr3IxP31qdPPF7RNSOFg9wU5sVIG9VFer8PrAvtrtSFZBwm4r7avG/1yDawLHGm
-         t1YVS/m4saEI2g+jk8ElXEEwjVF8gtGVVDNSqM2J+cWR86whN2HQHwkoZmpF/sZIH/NV
-         DBygOsgDnaPmmleAurRyAxuYBBFkUVIfhnwS1xYBLJ7pzRZLpcIuevgSU48qVk65TJRM
-         AEcrFT/EqlRyO2H+qXNiznQUiBph8SK5BJF4+syEbzfTrZw1i9VJo4LwfQjzHgdnU2z+
-         KWnA==
-X-Gm-Message-State: AOAM532YkD58wbb/Slynevt2S9TNXeql+94rVQOPoMFp4EVc/M4H5AF7
-        XjIn+SFtH+1rP4rxqzEoLcczcIeBLhY=
-X-Google-Smtp-Source: ABdhPJzEXIowgFGMstqf18As1tuPJYU/upMPEeZe24Mk/WQEqTDHJQokpX+sbHMaf8R6Oxm6YKIQCQ==
-X-Received: by 2002:adf:f542:: with SMTP id j2mr71541wrp.32.1606342383721;
-        Wed, 25 Nov 2020 14:13:03 -0800 (PST)
+        bh=ROAjL97M45dWEQLOqthxa3ji8Wj54z8dFjWGjWjU4yE=;
+        b=qCiDPcYIKUo/fW6nu7oOTgobltf6xu4VRkBJuxHJIXoluVLRLy3TDc4NsJM0EZRYSI
+         46fm58SOWFexxk3ZhPQgyv8MeW5wMDT3Wo9h4w+e/zTg1X8Ws3j6blbsQLVyKusRD4K/
+         8yHzwryS5arkoxR+Ei1esNQ8Lbs8jgkCFoL20HVKWSSEeatSAtaLh0dORIiyVCcZQ+yC
+         4PTcdYLDKK7sv5Y7p7mVy+GTFX7f5NHwRAZrCfYRGU+E4ytyUJOJIG0mxQuPGNFt85Ju
+         rI3n+FM2jp66MVXsg2JawOqbZYRB4luGx+nNOSZAqY4pQADbHZV0/dhLL5TN5oHDHA5D
+         kdyw==
+X-Gm-Message-State: AOAM531YiN1WmyMgMjO+d8gNb/P0YVzRTxHoexaKPFKtGUpow3qNj1ZS
+        GUA7wZgSgM5AHCc+JugErZngHjt7NOI=
+X-Google-Smtp-Source: ABdhPJwvrjl2/eTwM1P6dOd9boGJ5cYC4kQCgP/2eFHtFkQeu3mCHmYWnxDf60qCs6ilDTuJgbQznw==
+X-Received: by 2002:a1c:7d13:: with SMTP id y19mr5984806wmc.98.1606342379581;
+        Wed, 25 Nov 2020 14:12:59 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g186sm7221394wma.1.2020.11.25.14.13.02
+        by smtp.gmail.com with ESMTPSA id h83sm5090867wmf.9.2020.11.25.14.12.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Nov 2020 14:13:03 -0800 (PST)
-Message-Id: <0c276ffcee4be302be3db9b43ab8371ef26a0aec.1606342377.git.gitgitgadget@gmail.com>
+        Wed, 25 Nov 2020 14:12:59 -0800 (PST)
+Message-Id: <f0ed492096b302de0ccccfb9fc3b0c6e8bbcb261.1606342376.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.796.v3.git.1606342376.gitgitgadget@gmail.com>
 References: <pull.796.v2.git.1606147507.gitgitgadget@gmail.com>
         <pull.796.v3.git.1606342376.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 25 Nov 2020 22:12:53 +0000
-Subject: [PATCH v3 5/8] config: add --fixed-value option, un-implemented
+Date:   Wed, 25 Nov 2020 22:12:49 +0000
+Subject: [PATCH v3 1/8] config: convert multi_replace to flags
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,164 +87,228 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The 'git config' builtin takes a 'value-pattern' parameter for several
-actions. This can cause confusion when expecting exact value matches
-instead of regex matches, especially when the input string contains
-metacharacters. While callers can escape the patterns themselves, it
-would be more friendly to allow an argument to disable the pattern
-matching in favor of an exact string match.
+We will extend the flexibility of the config API. Before doing so, let's
+take an existing 'int multi_replace' parameter and replace it with a new
+'unsigned flags' parameter that can take multiple options as a bit field.
 
-Add a new '--fixed-value' option that does not currently change the
-behavior. The implementation will be filled in by later changes for
-each appropriate action. For now, check and test that --fixed-value
-will abort the command when included with an incompatible action or
-without a 'value-pattern' argument.
-
-The name '--fixed-value' was chosen over something simpler like
-'--fixed' because some commands allow regular expressions on the
-key in addition to the value.
+Update all callers that specified multi_replace to now specify the
+CONFIG_FLAGS_MULTI_REPLACE flag. To add more clarity, extend the
+documentation of git_config_set_multivar_in_file() including a clear
+labeling of its arguments. Other config API methods in config.h require
+only a change of the final parameter from 'int' to 'unsigned'.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/git-config.txt | 20 +++++++++++++-------
- builtin/config.c             | 36 ++++++++++++++++++++++++++++++++++++
- t/t1300-config.sh            | 24 ++++++++++++++++++++++++
- 3 files changed, 73 insertions(+), 7 deletions(-)
+ builtin/branch.c |  4 ++--
+ builtin/config.c |  6 ++++--
+ builtin/remote.c |  8 +++++---
+ config.c         | 24 ++++++++++++------------
+ config.h         | 29 ++++++++++++++++++++++-------
+ 5 files changed, 45 insertions(+), 26 deletions(-)
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 0be5499952..09a1d273a9 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -9,15 +9,15 @@ git-config - Get and set repository or global options
- SYNOPSIS
- --------
- [verse]
--'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] name [value [value-pattern]]
-+'git config' [<file-option>] [--type=<type>] [--fixed-value] [--show-origin] [--show-scope] [-z|--null] name [value [value-pattern]]
- 'git config' [<file-option>] [--type=<type>] --add name value
--'git config' [<file-option>] [--type=<type>] --replace-all name value [value-pattern]
--'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] --get name [value-pattern]
--'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] --get-all name [value-pattern]
--'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--name-only] --get-regexp name_regex [value-pattern]
-+'git config' [<file-option>] [--type=<type>] [--fixed-value] --replace-all name value [value-pattern]
-+'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] --get name [value-pattern]
-+'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] --get-all name [value-pattern]
-+'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] [--name-only] --get-regexp name_regex [value-pattern]
- 'git config' [<file-option>] [--type=<type>] [-z|--null] --get-urlmatch name URL
--'git config' [<file-option>] --unset name [value-pattern]
--'git config' [<file-option>] --unset-all name [value-pattern]
-+'git config' [<file-option>] [--fixed-value] --unset name [value-pattern]
-+'git config' [<file-option>] [--fixed-value] --unset-all name [value-pattern]
- 'git config' [<file-option>] --rename-section old_name new_name
- 'git config' [<file-option>] --remove-section name
- 'git config' [<file-option>] [--show-origin] [--show-scope] [-z|--null] [--name-only] -l | --list
-@@ -165,6 +165,12 @@ See also <<FILES>>.
- --list::
- 	List all variables set in config file, along with their values.
+diff --git a/builtin/branch.c b/builtin/branch.c
+index e82301fb1b..5ce3844d22 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -829,10 +829,10 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 			die(_("Branch '%s' has no upstream information"), branch->name);
  
-+--fixed-value::
-+	When used with the `value-pattern` argument, treat `value-pattern` as
-+	an exact string instead of a regular expression. This will restrict
-+	the name/value pairs that are matched to only those where the value
-+	is exactly equal to the `value-pattern`.
-+
- --type <type>::
-   'git config' will ensure that any input or output is valid under the given
-   type constraint(s), and will canonicalize outgoing values in `<type>`'s
+ 		strbuf_addf(&buf, "branch.%s.remote", branch->name);
+-		git_config_set_multivar(buf.buf, NULL, NULL, 1);
++		git_config_set_multivar(buf.buf, NULL, NULL, CONFIG_FLAGS_MULTI_REPLACE);
+ 		strbuf_reset(&buf);
+ 		strbuf_addf(&buf, "branch.%s.merge", branch->name);
+-		git_config_set_multivar(buf.buf, NULL, NULL, 1);
++		git_config_set_multivar(buf.buf, NULL, NULL, CONFIG_FLAGS_MULTI_REPLACE);
+ 		strbuf_release(&buf);
+ 	} else if (argc > 0 && argc <= 2) {
+ 		if (filter.kind != FILTER_REFS_BRANCHES)
 diff --git a/builtin/config.c b/builtin/config.c
-index 9d97091561..d0adbed872 100644
+index 5e39f61885..e7c7f3d455 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -34,6 +34,7 @@ static int respect_includes_opt = -1;
- static struct config_options config_options;
- static int show_origin;
- static int show_scope;
-+static int fixed_value;
- 
- #define ACTION_GET (1<<0)
- #define ACTION_GET_ALL (1<<1)
-@@ -141,6 +142,7 @@ static struct option builtin_config_options[] = {
- 	OPT_BIT(0, "rename-section", &actions, N_("rename section: old-name new-name"), ACTION_RENAME_SECTION),
- 	OPT_BIT(0, "remove-section", &actions, N_("remove a section: name"), ACTION_REMOVE_SECTION),
- 	OPT_BIT('l', "list", &actions, N_("list all"), ACTION_LIST),
-+	OPT_BOOL(0, "fixed-value", &fixed_value, N_("use string equality when comparing values to 'value-pattern'")),
- 	OPT_BIT('e', "edit", &actions, N_("open an editor"), ACTION_EDIT),
- 	OPT_BIT(0, "get-color", &actions, N_("find the color configured: slot [default]"), ACTION_GET_COLOR),
- 	OPT_BIT(0, "get-colorbool", &actions, N_("find the color setting: slot [stdout-is-tty]"), ACTION_GET_COLORBOOL),
-@@ -745,6 +747,40 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		usage_builtin_config();
+@@ -823,7 +823,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		value = normalize_value(argv[0], argv[1]);
+ 		UNLEAK(value);
+ 		return git_config_set_multivar_in_file_gently(given_config_source.file,
+-							      argv[0], value, argv[2], 1);
++							      argv[0], value, argv[2],
++							      CONFIG_FLAGS_MULTI_REPLACE);
  	}
+ 	else if (actions == ACTION_GET) {
+ 		check_argc(argc, 1, 2);
+@@ -859,7 +860,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		check_write();
+ 		check_argc(argc, 1, 2);
+ 		return git_config_set_multivar_in_file_gently(given_config_source.file,
+-							      argv[0], NULL, argv[1], 1);
++							      argv[0], NULL, argv[1],
++							      CONFIG_FLAGS_MULTI_REPLACE);
+ 	}
+ 	else if (actions == ACTION_RENAME_SECTION) {
+ 		int ret;
+diff --git a/builtin/remote.c b/builtin/remote.c
+index c8240e9fcd..29b1652975 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -708,7 +708,7 @@ static int mv(int argc, const char **argv)
  
-+	/* check usage of --fixed-value */
-+	if (fixed_value) {
-+		int allowed_usage = 0;
-+
-+		switch (actions) {
-+		/* git config --get <name> <value-pattern> */
-+		case ACTION_GET:
-+		/* git config --get-all <name> <value-pattern> */
-+		case ACTION_GET_ALL:
-+		/* git config --get-regexp <name-pattern> <value-pattern> */
-+		case ACTION_GET_REGEXP:
-+		/* git config --unset <name> <value-pattern> */
-+		case ACTION_UNSET:
-+		/* git config --unset-all <name> <value-pattern> */
-+		case ACTION_UNSET_ALL:
-+			allowed_usage = argc > 1 && !!argv[1];
-+			break;
-+
-+		/* git config <name> <value> <value-pattern> */
-+		case ACTION_SET_ALL:
-+		/* git config --replace-all <name> <value> <value-pattern> */
-+		case ACTION_REPLACE_ALL:
-+			allowed_usage = argc > 2 && !!argv[2];
-+			break;
-+
-+		/* other options don't allow --fixed-value */
-+		}
-+
-+		if (!allowed_usage) {
-+			error(_("--fixed-value only applies with 'value-pattern'"));
-+			usage_builtin_config();
-+		}
-+	}
-+
- 	if (actions & PAGING_ACTIONS)
- 		setup_auto_pager("config", 1);
+ 	strbuf_reset(&buf);
+ 	strbuf_addf(&buf, "remote.%s.fetch", rename.new_name);
+-	git_config_set_multivar(buf.buf, NULL, NULL, 1);
++	git_config_set_multivar(buf.buf, NULL, NULL, CONFIG_FLAGS_MULTI_REPLACE);
+ 	strbuf_addf(&old_remote_context, ":refs/remotes/%s/", rename.old_name);
+ 	for (i = 0; i < oldremote->fetch.raw_nr; i++) {
+ 		char *ptr;
+@@ -1485,7 +1485,8 @@ static int update(int argc, const char **argv)
  
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index 040b9f7506..f6f071006d 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -1967,4 +1967,28 @@ test_expect_success '--replace-all and value-pattern' '
- 	test_cmp expect actual
- '
+ static int remove_all_fetch_refspecs(const char *key)
+ {
+-	return git_config_set_multivar_gently(key, NULL, NULL, 1);
++	return git_config_set_multivar_gently(key, NULL, NULL,
++					      CONFIG_FLAGS_MULTI_REPLACE);
+ }
  
-+test_expect_success 'refuse --fixed-value for incompatible actions' '
-+	test_when_finished rm -f config &&
-+	git config --file=config dev.null bogus &&
+ static void add_branches(struct remote *remote, const char **branches,
+@@ -1674,7 +1675,8 @@ static int set_url(int argc, const char **argv)
+ 	if (!delete_mode)
+ 		git_config_set_multivar(name_buf.buf, newurl, oldurl, 0);
+ 	else
+-		git_config_set_multivar(name_buf.buf, NULL, oldurl, 1);
++		git_config_set_multivar(name_buf.buf, NULL, oldurl,
++					CONFIG_FLAGS_MULTI_REPLACE);
+ out:
+ 	strbuf_release(&name_buf);
+ 	return 0;
+diff --git a/config.c b/config.c
+index 2b79fe76ad..f34a11d94b 100644
+--- a/config.c
++++ b/config.c
+@@ -2716,9 +2716,9 @@ void git_config_set(const char *key, const char *value)
+  * if value_regex!=NULL, disregard key/value pairs where value does not match.
+  * if value_regex==CONFIG_REGEX_NONE, do not match any existing values
+  *     (only add a new one)
+- * if multi_replace==0, nothing, or only one matching key/value is replaced,
+- *     else all matching key/values (regardless how many) are removed,
+- *     before the new pair is written.
++ * if flags contains the CONFIG_FLAGS_MULTI_REPLACE flag, all matching
++ *     key/values are removed before a single new pair is written. If the
++ *     flag is not present, then replace only the first match.
+  *
+  * Returns 0 on success.
+  *
+@@ -2739,7 +2739,7 @@ void git_config_set(const char *key, const char *value)
+ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 					   const char *key, const char *value,
+ 					   const char *value_regex,
+-					   int multi_replace)
++					   unsigned flags)
+ {
+ 	int fd = -1, in_fd = -1;
+ 	int ret;
+@@ -2756,7 +2756,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 	if (ret)
+ 		goto out_free;
+ 
+-	store.multi_replace = multi_replace;
++	store.multi_replace = (flags & CONFIG_FLAGS_MULTI_REPLACE) != 0;
+ 
+ 	if (!config_filename)
+ 		config_filename = filename_buf = git_pathdup("config");
+@@ -2845,7 +2845,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 
+ 		/* if nothing to unset, or too many matches, error out */
+ 		if ((store.seen_nr == 0 && value == NULL) ||
+-		    (store.seen_nr > 1 && multi_replace == 0)) {
++		    (store.seen_nr > 1 && !store.multi_replace)) {
+ 			ret = CONFIG_NOTHING_SET;
+ 			goto out_free;
+ 		}
+@@ -2984,10 +2984,10 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 
+ void git_config_set_multivar_in_file(const char *config_filename,
+ 				     const char *key, const char *value,
+-				     const char *value_regex, int multi_replace)
++				     const char *value_regex, unsigned flags)
+ {
+ 	if (!git_config_set_multivar_in_file_gently(config_filename, key, value,
+-						    value_regex, multi_replace))
++						    value_regex, flags))
+ 		return;
+ 	if (value)
+ 		die(_("could not set '%s' to '%s'"), key, value);
+@@ -2996,17 +2996,17 @@ void git_config_set_multivar_in_file(const char *config_filename,
+ }
+ 
+ int git_config_set_multivar_gently(const char *key, const char *value,
+-				   const char *value_regex, int multi_replace)
++				   const char *value_regex, unsigned flags)
+ {
+ 	return git_config_set_multivar_in_file_gently(NULL, key, value, value_regex,
+-						      multi_replace);
++						      flags);
+ }
+ 
+ void git_config_set_multivar(const char *key, const char *value,
+-			     const char *value_regex, int multi_replace)
++			     const char *value_regex, unsigned flags)
+ {
+ 	git_config_set_multivar_in_file(NULL, key, value, value_regex,
+-					multi_replace);
++					flags);
+ }
+ 
+ static int section_name_match (const char *buf, const char *name)
+diff --git a/config.h b/config.h
+index 060874488f..58726c34d6 100644
+--- a/config.h
++++ b/config.h
+@@ -256,9 +256,22 @@ void git_config_set(const char *, const char *);
+ 
+ int git_config_parse_key(const char *, char **, size_t *);
+ int git_config_key_is_valid(const char *key);
+-int git_config_set_multivar_gently(const char *, const char *, const char *, int);
+-void git_config_set_multivar(const char *, const char *, const char *, int);
+-int git_config_set_multivar_in_file_gently(const char *, const char *, const char *, const char *, int);
 +
-+	# These modes do not allow --fixed-value at all
-+	test_must_fail git config --file=config --fixed-value --add dev.null bogus &&
-+	test_must_fail git config --file=config --fixed-value --get-urlmatch dev.null bogus &&
-+	test_must_fail git config --file=config --fixed-value --get-urlmatch dev.null bogus &&
-+	test_must_fail git config --file=config --fixed-value --rename-section dev null &&
-+	test_must_fail git config --file=config --fixed-value --remove-section dev &&
-+	test_must_fail git config --file=config --fixed-value --list &&
-+	test_must_fail git config --file=config --fixed-value --get-color dev.null &&
-+	test_must_fail git config --file=config --fixed-value --get-colorbool dev.null &&
++/*
++ * The following macros specify flag bits that alter the behavior
++ * of the git_config_set_multivar*() methods.
++ */
 +
-+	# These modes complain when --fixed-value has no value-pattern
-+	test_must_fail git config --file=config --fixed-value dev.null bogus &&
-+	test_must_fail git config --file=config --fixed-value --replace-all dev.null bogus &&
-+	test_must_fail git config --file=config --fixed-value --get dev.null &&
-+	test_must_fail git config --file=config --fixed-value --get-all dev.null &&
-+	test_must_fail git config --file=config --fixed-value --get-regexp "dev.*" &&
-+	test_must_fail git config --file=config --fixed-value --unset dev.null &&
-+	test_must_fail git config --file=config --fixed-value --unset-all dev.null
-+'
++/*
++ * When CONFIG_FLAGS_MULTI_REPLACE is specified, all matching key/values
++ * are removed before a single new pair is written. If the flag is not
++ * present, then set operations replace only the first match.
++ */
++#define CONFIG_FLAGS_MULTI_REPLACE (1 << 0)
 +
- test_done
++int git_config_set_multivar_gently(const char *, const char *, const char *, unsigned);
++void git_config_set_multivar(const char *, const char *, const char *, unsigned);
++int git_config_set_multivar_in_file_gently(const char *, const char *, const char *, const char *, unsigned);
+ 
+ /**
+  * takes four parameters:
+@@ -276,13 +289,15 @@ int git_config_set_multivar_in_file_gently(const char *, const char *, const cha
+  * - the value regex, as a string. It will disregard key/value pairs where value
+  *   does not match.
+  *
+- * - a multi_replace value, as an int. If value is equal to zero, nothing or only
+- *   one matching key/value is replaced, else all matching key/values (regardless
+- *   how many) are removed, before the new pair is written.
++ * - a flags value with bits corresponding to the CONFIG_FLAG_* macros.
+  *
+  * It returns 0 on success.
+  */
+-void git_config_set_multivar_in_file(const char *, const char *, const char *, const char *, int);
++void git_config_set_multivar_in_file(const char *config_filename,
++				     const char *key,
++				     const char *value,
++				     const char *value_regex,
++				     unsigned flags);
+ 
+ /**
+  * rename or remove sections in the config file
 -- 
 gitgitgadget
 
