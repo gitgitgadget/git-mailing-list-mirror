@@ -2,135 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7001C56202
-	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 18:31:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 688B6C56201
+	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 18:33:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 435232075A
-	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 18:31:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F2F720656
+	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 18:33:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=powertools-tech.com header.i=@powertools-tech.com header.b="FfJZ7lQz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p/0hv7v1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732478AbgKYSb1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Nov 2020 13:31:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49454 "EHLO
+        id S1730555AbgKYSdF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Nov 2020 13:33:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731956AbgKYSb1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Nov 2020 13:31:27 -0500
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ABC2C0613D4
-        for <git@vger.kernel.org>; Wed, 25 Nov 2020 10:31:26 -0800 (PST)
-Received: by mail-wr1-x442.google.com with SMTP id s8so2872423wrw.10
-        for <git@vger.kernel.org>; Wed, 25 Nov 2020 10:31:26 -0800 (PST)
+        with ESMTP id S1726039AbgKYSdE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Nov 2020 13:33:04 -0500
+Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com [IPv6:2a00:1450:4864:20::541])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67D3FC0613D4
+        for <git@vger.kernel.org>; Wed, 25 Nov 2020 10:33:04 -0800 (PST)
+Received: by mail-ed1-x541.google.com with SMTP id k4so3624346edl.0
+        for <git@vger.kernel.org>; Wed, 25 Nov 2020 10:33:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=powertools-tech.com; s=gsuite;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=L6F69PZ7MFCzXqPYzWcRsH1Qs1hF5mLUP+/m2qDAt4U=;
-        b=FfJZ7lQzDfBDep+BGczlPAcvhA20wfq7jVYckySMQYlmHkapx/knn/aR8rsj9ZFzN9
-         4SC8aKRtHtIZxImtPJABu6f65bg3fjaNuMgN8TR26CYufAjJFxNlgJ1HBhoOr6O7mRkT
-         e9tzBPz5S4YiXH6VwA9W6ggLp1wgMlPQkaJN6Vg8suvEqj5llZnQU4SfQKE7NYpQR3v8
-         5hIHNvUcczHozt/u6juGbFLWXvLi5NzdKjdx7T3G3cH2EdG17CNFtqZNKdAdEvN3Uwvk
-         iQ00sqkrrz1p6jIWEwVAD+vKjd8fNAiwoxYJuE0aDsnoUDcbUZyXC9tVemnQAt8DKb6X
-         qmyA==
+         :content-disposition:in-reply-to:user-agent;
+        bh=5ES5XUk6gLgumDQgszBeTYNgW//GKI/T9bAHYc8wGNc=;
+        b=p/0hv7v1T0fTHMO2roN0yLN9YSEjpLd+LOuIfyzOuulyJkL1xsE9Ek+Kd3Rb54xec0
+         k175UhvrIlh9VHnzrRtBT/HW6WJjxBAdRkJZgw/oj1DUubT/HPq0SGj2MAQSFz1aHevo
+         WhAe8UUNk5+Ek4JE2HQ5T6mSA2tCP2quJ5jalCC3noO+UsYcbnqUIz3KuleoWa1sBSdX
+         z0T1qHCsNz64kDlFN0lubFcasCOIdvJyTvFukm2RPRvon349mi2+Ai6ImqjqtjDIpRHy
+         OLMAIlUR6pL1DpLbjR79bdPv+c3xONcqYm4tybIF2J231CqMsNCrrSbKCURskx0cbesG
+         /Vow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=L6F69PZ7MFCzXqPYzWcRsH1Qs1hF5mLUP+/m2qDAt4U=;
-        b=jSUGojQSCk5LPdQ9k8FJ7lnQdS/+YooSxX924za8cv1gIpSgJ3zKnwDas2HIrkDVoh
-         A9bk+If8LjYTrmVQ+Kbp+02z1nFB/7zTSczQVMDonBmlJ9jory1tivkYGYO9E1+nddAh
-         MR7Qh9AZ+5OF0w8UqocLP9YdLBzvKaeP9ZP4aaJZvaibNoX6IZGOkeuz3gAmpGhvQWt5
-         kchZRIUY2vi/HysypfBm0jRC6eUuq8YEu4ylj/tDcxZLcJb/aXOQSUpw6c7Q6RSRlLA6
-         LelIqT0OTdvNnbc92PKnPxadNJ6gNAW8zm6zR90LfxW9+x4rHG4bL8Z2ne9gcg5E+Gqx
-         g6MA==
-X-Gm-Message-State: AOAM530z5+U8l2QzDGceEKEsGIOH+dYtSXgxXR37lzn5YzReuXZlPoaZ
-        mw4TW76WNOsL9pf1VOqGRXO/MWpIj/0vcoFs
-X-Google-Smtp-Source: ABdhPJzOkzEIqDfmFLUy7bI/55vG1Xul+rP6cPxjJfIQFf3hgIXK4cekOvYqGIoQPAvLjan+fARtDA==
-X-Received: by 2002:a5d:50c6:: with SMTP id f6mr5685025wrt.150.1606329084999;
-        Wed, 25 Nov 2020 10:31:24 -0800 (PST)
-Received: from localhost (96.192.189.46.rev.vodafone.pt. [46.189.192.96])
-        by smtp.gmail.com with ESMTPSA id d3sm5292052wrr.2.2020.11.25.10.31.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Nov 2020 10:31:24 -0800 (PST)
-Date:   Wed, 25 Nov 2020 18:31:23 +0000
-From:   =?utf-8?B?U2ltw6Nv?= Afonso <simao.afonso@powertools-tech.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Jeff King <peff@peff.net>
-Subject: [PATCH v3] crendential-store: use timeout when locking file
-Message-ID: <20201125183123.47praa6hcgrgrib4@safonso-t430>
-References: <xmqq4kleif26.fsf@gitster.c.googlers.com>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=5ES5XUk6gLgumDQgszBeTYNgW//GKI/T9bAHYc8wGNc=;
+        b=KN/YV7tyqBbagF3TAmtWbb6I0AahbBZt4kiary8d59nwcn9Y6NdGEzYiQ2NyAog29c
+         tSDkd3n6f16gmyWwIbG7r1TPPbE0D3PuQkb9HkdUjHn+Mv17J8JYf4nvG16Or86ih70X
+         sqFhe/KHhiTeCS8GupcdJS4V3lNAYIkuSgrg9DOTZKMsLojXCN+3C3lKWV85UyyWrolJ
+         WluS9OKm4qepgHLbcGFfy8F8Hc4oXL40VhkEkaDe5EPBlKI6RTut2ZWxBq45Im/uXs4Q
+         Xtra3ZNOG/uabLESj7jJcijjp1COgGNhPfc9NX44tC7fEtx3tdsPyyT9X7RpimtDCbD1
+         CkWg==
+X-Gm-Message-State: AOAM530WiC3aTJFBbwUOHoIqH8ErXqM5ifc7D//XBpczrfkq4G2f+FUn
+        GTijn1JBgTF66owgE/P90wU=
+X-Google-Smtp-Source: ABdhPJweje5ZjV0ZzWDMqImJmiy3xaMQl21iWSnvNfc05Bv9AxTvd2pnmaGeDqH9/sroKy+dGH4+Pw==
+X-Received: by 2002:aa7:dc05:: with SMTP id b5mr4804530edu.47.1606329183211;
+        Wed, 25 Nov 2020 10:33:03 -0800 (PST)
+Received: from szeder.dev (62-165-236-118.pool.digikabel.hu. [62.165.236.118])
+        by smtp.gmail.com with ESMTPSA id h9sm1697743ejk.118.2020.11.25.10.33.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 25 Nov 2020 10:33:02 -0800 (PST)
+Date:   Wed, 25 Nov 2020 19:33:09 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Drew DeVault <sir@cmpwn.com>, git@vger.kernel.org,
+        lanodan <contact+git@hacktivis.me>
+Subject: Re: [PATCH v4] help.c: expand options for help.autocorrect
+Message-ID: <20201125183309.GF8396@szeder.dev>
+References: <20201118172849.24715-1-sir@cmpwn.com>
+ <xmqq1rgq35my.fsf@gitster.c.googlers.com>
+ <xmqqwnyi1qgs.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq4kleif26.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqwnyi1qgs.fsf@gitster.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When holding the lock for rewriting the credential file, use a timeout
-to avoid race conditions when the credentials file needs to be updated
-in parallel.
+On Wed, Nov 18, 2020 at 10:15:31AM -0800, Junio C Hamano wrote:
+> Also, I think we would want _some_ test, as the base form of
+> help.autocorrect is already tested.  Perhaps something like this.
+> 
+>  t/t9003-help-autocorrect.sh | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+> 
+> diff --git c/t/t9003-help-autocorrect.sh w/t/t9003-help-autocorrect.sh
+> index b1c7919c4a..8f1035c3c2 100755
+> --- c/t/t9003-help-autocorrect.sh
+> +++ w/t/t9003-help-autocorrect.sh
+> @@ -49,4 +49,17 @@ test_expect_success 'autocorrect running commands' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'autocorrect can be declined altogether' '
+> +	git config help.autocorrect never &&
+> +
+> +	test_must_fail git lfg 2>actual &&
+> +	if test_have_prereq C_LOCALE_OUTPUT
+> +	then
+> +		: cannot test with poisoned i18n
+> +	else
+> +		grep "is not a git command" actual &&
+> +		test_line_count = 1 actual
 
-An example would be doing `fetch --all` on a repository with several
-remotes that need credentials, using parallel fetching.
+The two branches of this condition are in the wrong order, as it
+doesn't check the expected error message in normal mode, but it does
+grep for the specific translated error message when run with
+GIT_TEST_GETTEXT_POISON=1 which then fails the test.
 
-The timeout can be configured using "credentialStore.lockTimeoutMS",
-defaulting to 1 second.
+I think we should simply use 'test_i18ngrep' instead of that whole
+if-else block.  
 
-Signed-off-by: Simão Afonso <simao.afonso@powertools-tech.com>
----
+I wonder what that 'test_line_count = 1' is supposed to check, and am
+not sure that it's really necessary.  Anyway, the gettext poisoned
+output should be a single line as well, so we can use that same check
+both with and without C_LOCALE_OUTPUT.
 
-lockTimeoutMS sounds like the consensual name, implemented.
-
- Documentation/config/credential.txt | 6 ++++++
- builtin/credential-store.c          | 8 ++++++--
- 2 files changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/config/credential.txt b/Documentation/config/credential.txt
-index 9d01641c2..512f31876 100644
---- a/Documentation/config/credential.txt
-+++ b/Documentation/config/credential.txt
-@@ -28,3 +28,9 @@ credential.<url>.*::
- 
- credentialCache.ignoreSIGHUP::
- 	Tell git-credential-cache--daemon to ignore SIGHUP, instead of quitting.
-+
-+credentialStore.lockTimeoutMS::
-+	The length of time, in milliseconds, for git-credential-store to retry
-+	when trying to lock the credentials file. Value 0 means not to retry at
-+	all; -1 means to try indefinitely. Default is 1000 (i.e., retry for
-+	1s).
-diff --git a/builtin/credential-store.c b/builtin/credential-store.c
-index 5331ab151..ae3c1ba75 100644
---- a/builtin/credential-store.c
-+++ b/builtin/credential-store.c
-@@ -1,4 +1,5 @@
- #include "builtin.h"
-+#include "config.h"
- #include "lockfile.h"
- #include "credential.h"
- #include "string-list.h"
-@@ -58,8 +59,11 @@ static void print_line(struct strbuf *buf)
- static void rewrite_credential_file(const char *fn, struct credential *c,
- 				    struct strbuf *extra)
- {
--	if (hold_lock_file_for_update(&credential_lock, fn, 0) < 0)
--		die_errno("unable to get credential storage lock");
-+	int timeout_ms = 1000;
-+
-+	git_config_get_int("credentialstore.locktimeoutms", &timeout_ms);
-+	if (hold_lock_file_for_update_timeout(&credential_lock, fn, 0, timeout_ms) < 0)
-+		die_errno(_("unable to get credential storage lock in %d ms"), timeout_ms);
- 	if (extra)
- 		print_line(extra);
- 	parse_credential_file(fn, c, NULL, print_line);
--- 
-2.29.2
-
+> +	fi
+> +'
+> +
+>  test_done
