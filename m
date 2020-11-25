@@ -7,68 +7,65 @@ X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2E05C56201
-	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 09:01:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64D9CC63777
+	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 09:15:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 738AF206B5
-	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 09:01:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 01B5A206F7
+	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 09:15:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZyAL7X9j"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PDbtiOOO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726412AbgKYJBS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Nov 2020 04:01:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45238 "EHLO
+        id S1726832AbgKYJPe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Nov 2020 04:15:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726345AbgKYJBS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Nov 2020 04:01:18 -0500
+        with ESMTP id S1725938AbgKYJPd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Nov 2020 04:15:33 -0500
 Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6294FC0613D4
-        for <git@vger.kernel.org>; Wed, 25 Nov 2020 01:01:02 -0800 (PST)
-Received: by mail-ej1-x643.google.com with SMTP id bo9so1864084ejb.13
-        for <git@vger.kernel.org>; Wed, 25 Nov 2020 01:01:02 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7C3FC0613D4
+        for <git@vger.kernel.org>; Wed, 25 Nov 2020 01:15:32 -0800 (PST)
+Received: by mail-ej1-x643.google.com with SMTP id k27so1946135ejs.10
+        for <git@vger.kernel.org>; Wed, 25 Nov 2020 01:15:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=fpJr1k6uRd7RfTdStR3kx4+6qE6MWcfC4w/qzLaYENM=;
-        b=ZyAL7X9jaL1U+2UJPJZ+Uy6IIjtWAnXZVujd7H5StSbbTB8Z9qpX2t+vDTBkGy7dlO
-         B46nakfQDk4vXpeFitPXC7mng8/v9RlN66R7zdf9R9NY/EKyGe+pgc2eK+YKOTVmLsGN
-         qYAga9EkTdddNJjqxVAxx4t7WwMQVYCLnJD34VY9LQjkHYvvRoJ9ZhdCGyaq1YP+tVrU
-         tl0oGW56PkWyfE3Hp2tF3JUD+ZgwgY4V/4DP3Zul1aByQyvtBtjRpgTLAiHSeKeB0I1e
-         /IOGj3Z8ctpHbLct1h7Dg6tJsQe3LZ6aTbMogEI218tPfHwkQAQxLzYEflJX+mgmrSIg
-         2lzQ==
+        bh=v7eFqi852MHqBvH7Wi5yxSTsFMOZpfvAOsgQGAEVODo=;
+        b=PDbtiOOO2rKefmexCXW08e6DdgP+j4TYRFd1viW2HZOQ6AaQ8oUZgGj3CE2pUwuLPE
+         qoJW6g48mKukjanB8boMOY5X7pI4H6atfZ9WWNFjRJTxKqRnZOT5m5HqW7z4qaHPJfva
+         m1qCioFrnjw9+ZGUeaHP/0yfjNNTxGpHFGJzSEWRUAXDOhim0pc4YaFPgEbRr2HJyUcR
+         7SNHh/21SAiljMmHIhijiGz1FaMYZXqmbUDtV2p9JljVVd+5cKn3tFLZ8mbo1NwbwpKM
+         /lATSUQpT1fE/pgvBZXeIYMSLPsTnr84Y2FsJ7jJItpbuTMWKoKoY5eUHZFUS5sudZEg
+         qZbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version;
-        bh=fpJr1k6uRd7RfTdStR3kx4+6qE6MWcfC4w/qzLaYENM=;
-        b=G8ZF0hNTt+GPNgJHlrU4okQkY1BIMg4bAxXmJB+9k73AIvoYVUURoDj6yy7LAzraG3
-         W5bBQZulKg0Px9ongQ31n+NjoLkj5RY8IguOVMe8bxVx0TDi1OL8imNmY3VBsm5/hQzI
-         3vupshwD0lIQahG++2PKzMPDFco6BgHHQdlfY6CGd7oqtZzT2s5h8pT3fEWc6U7OzyVi
-         KtP2ABjIQUX4IJJMzU0pNx16oNyYAJ/t662eee52KPpYb+Jvt/03xVLy1rIfofl5DYFH
-         aDgiItJo3BpguH/L+w+IC4bPS+M/rE1uxzWYQX2qcyvpH0lo2i4+KUcutMAosE6rIPvk
-         RJGw==
-X-Gm-Message-State: AOAM532vmkx7xmpnv7JFUzlLG1zdDW/PCWqPTLVLf22UBxy0fh6MfwDQ
-        At4Hnqq+m6BUIS4bgENOSdVlo8S7XEM=
-X-Google-Smtp-Source: ABdhPJyvdsZ6ZtOpOqCKsleClQpU2xVt8ZRG+00aBy9aQWVAWMsU8wGn3atPWpqZmH9i5/V1Dq3nrw==
-X-Received: by 2002:a17:906:8691:: with SMTP id g17mr2271309ejx.317.1606294860987;
-        Wed, 25 Nov 2020 01:01:00 -0800 (PST)
+        bh=v7eFqi852MHqBvH7Wi5yxSTsFMOZpfvAOsgQGAEVODo=;
+        b=dLMsbmgc/tgPHC76xY98GgcanwBhG/qX+TS+/1cqpPPHoGM4sC818eUBjPBjQdAbBI
+         W2tPgx3D0Q2gzpfUDf5zKMsEd5+qg4h6DUKkdysYqQNkPmKzLMmvTLG2AhbJIKqObV1r
+         nEHO9teVl2OM40LxJCVTjqKDbYhMYDsb+FE+pM844HSiyxO8qILPffBX0YXW+tunZTrK
+         0Rfaaj50kqRpAYLpdT5HYjYCrX91F7ELzlZ9G8zKTHdeLP1Agt9jFWcHCOWsVHcYQ6Wu
+         sQvYeIPnNasj0LfyIscSv/LHuZQ1Wgt7I1TA0AntmYzQJC2lumh4IfaFKJUBoQOtxRCr
+         +yZQ==
+X-Gm-Message-State: AOAM531NI8/9M7k0zkXyd1LpP/Knvmyzha35CkUuGo7gmsvrTcxse3EX
+        8QCGIavxRGniFfnlUw/8IFs=
+X-Google-Smtp-Source: ABdhPJx4pX40rt6TG6SaRVGk+pUunJnQIjiw7nbh6BNzRd3C3nTybtG57S1EGdFDGDGFUIaCI0A3NA==
+X-Received: by 2002:a17:906:1744:: with SMTP id d4mr2399932eje.176.1606295731575;
+        Wed, 25 Nov 2020 01:15:31 -0800 (PST)
 Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id b7sm824812ejj.85.2020.11.25.01.01.00
+        by smtp.gmail.com with ESMTPSA id u17sm858520eje.11.2020.11.25.01.15.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Nov 2020 01:01:00 -0800 (PST)
+        Wed, 25 Nov 2020 01:15:30 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Philip Oakley <philipoakley@iee.email>
-Subject: Re: [PATCH v2 2/2] config: allow specifying config entries via envvar pairs
-References: <cover.1606214397.git.ps@pks.im> <97740ada840a1e2f151003e695de9f2efa5a7e62.1606214397.git.ps@pks.im>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v2 6/9] Documentation: add Packfile URIs design doc
+References: <cover.1590789428.git.jonathantanmy@google.com> <cover.1591821067.git.jonathantanmy@google.com> <6344c225897de1a2d8aa86d610e9eaf1c6ec82b4.1591821067.git.jonathantanmy@google.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 26.3; mu4e 1.4.13
-In-reply-to: <97740ada840a1e2f151003e695de9f2efa5a7e62.1606214397.git.ps@pks.im>
-Date:   Wed, 25 Nov 2020 10:00:59 +0100
-Message-ID: <87360xq08k.fsf@evledraar.gmail.com>
+In-reply-to: <6344c225897de1a2d8aa86d610e9eaf1c6ec82b4.1591821067.git.jonathantanmy@google.com>
+Date:   Wed, 25 Nov 2020 10:15:29 +0100
+Message-ID: <87zh35okzy.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -76,166 +73,79 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Nov 24 2020, Patrick Steinhardt wrote:
+On Wed, Jun 10 2020, Jonathan Tan wrote:
 
-...some more feedback.
+> +This is the implementation: a feature, marked experimental, that allows the
+> +server to be configured by one or more `uploadpack.blobPackfileUri=<sha1>
+> +<uri>` entries. Whenever the list of objects to be sent is assembled, all such
+> +blobs are excluded, replaced with URIs. The client will download those URIs,
+> +expecting them to each point to packfiles containing single blobs.
 
-> +GIT_CONFIG_COUNT,GIT_CONFIG_KEY_<n>,GIT_CONFIG_VALUE_<n>::
-> +	If GIT_CONFIG_COUNT is set to a positive number, all environment pairs
-> +	GIT_CONFIG_KEY_<n> and GIT_CONFIG_VALUE_<n> up to that number will be
-> +	added to the process's runtime configuration. The config pairs are
-> +	zero-indexed. Any missing key or value is treated as an error. An empty
-> +	GIT_CONFIG_COUNT is treated the same as GIT_CONFIG_COUNT=0, namely no
-> +	pairs are processed. Config entries set this way have command scope,
-> +	but will be overridden by any explicit options passed via `git -c`.
+I was poking at this recently to see whether I could change it into the
+more dumb method I noted in
+https://public-inbox.org/git/87k1hv6eel.fsf@evledraar.gmail.com/
 
-Perhaps work in some/all of some version of these:
+As an aside on a protocol level could that be supported with this
+current verb by having the client say "packfile-uris=early" or something
+like that instead of "packfile-uris"? The server advertising the same,
+and the client then just requesting packfile-uris before ls-refs or
+whatever? The server would need to be stateful about what's requested
+when and serve up something different than the current
+one-blob-per-pack. Any pointers to where/how to implement that would be
+welcome, I got lost in the non-linearity of the
+connect.c/fetch-pack.c/upload-pack.c code yesterday.
 
- - There's also a GIT_CONFIG_PARAMETERS variable, which is considered
-   internal to Git itself. Users are expected to set these.
+But I'm mainly replying here to ask if it's intentional that clients are
+tolerant of the server sending whatever it pleases in the supposedly
+"single blob" packs. As demonstrated by the tests passing with this
+patch:
+    
+    diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+    index 7d5b17909bb..4fe2030f4c1 100755
+    --- a/t/t5702-protocol-v2.sh
+    +++ b/t/t5702-protocol-v2.sh
+    @@ -797,11 +797,12 @@ test_expect_success 'when server does not send "ready", expect FLUSH' '
+     
+     configure_exclusion () {
+     	git -C "$1" hash-object "$2" >objh &&
+    +	echo -n shattered | git -C "$1" hash-object --stdin -w >>objh &&
+     	git -C "$1" pack-objects "$HTTPD_DOCUMENT_ROOT_PATH/mypack" <objh >packh &&
+     	git -C "$1" config --add \
+     		"uploadpack.blobpackfileuri" \
+    -		"$(cat objh) $(cat packh) $HTTPD_URL/dumb/mypack-$(cat packh).pack" &&
+    -	cat objh
+    +		"$(head -n 1 objh) $(cat packh) $HTTPD_URL/dumb/mypack-$(cat packh).pack" &&
+    +	head -n 1 objh
+     }
+     
+     test_expect_success 'part of packfile response provided as URI' '
+    @@ -820,10 +821,11 @@ test_expect_success 'part of packfile response provided as URI' '
+     	configure_exclusion "$P" my-blob >h &&
+     	configure_exclusion "$P" other-blob >h2 &&
+     
+    -	GIT_TRACE=1 GIT_TRACE_PACKET="$(pwd)/log" GIT_TEST_SIDEBAND_ALL=1 \
+    -	git -c protocol.version=2 \
+    +	GIT_TRACE=1 GIT_TRACE2="$(pwd)/log" GIT_TRACE_PACKET="$(pwd)/log" GIT_TEST_SIDEBAND_ALL=1 \
+    +	CHECK_SHATTERED=1 git -c protocol.version=2 \
+     		-c fetch.uriprotocols=http,https \
+     		clone "$HTTPD_URL/smart/http_parent" http_child &&
+    +	cp "$(pwd)/log" /tmp/clone.log &&
+     
+     	# Ensure that my-blob and other-blob are in separate packfiles.
+     	for idx in http_child/.git/objects/pack/*.idx
+    @@ -832,7 +834,7 @@ test_expect_success 'part of packfile response provided as URI' '
+     		{
+     			grep "^[0-9a-f]\{16,\} " out || :
+     		} >out.objectlist &&
+    -		if test_line_count = 1 out.objectlist
+    +		if true
+     		then
+     			if grep $(cat h) out
+     			then
 
-   --> I.e. even if we're not going to support some format for
-   --> GIT_CONFIG_PARAMETERS document what it is.
-
- - This is analogous to the pre-receive `GIT_PUSH_OPTION_*` variables
-   (see linkgit:githooks[5]), but unlike those the `-c` option to
-   linkgit:git(1) does not set `GIT_CONFIG_*`.
-
- - Saying "command scope" here I think is wrong/misleading. If I didn't
-   know how this worked I'd expect the first git process to see it to
-   delete it from the env, so e.g. the "fetch" command would see it, but
-   not the "gc" it spawned (different commands). Maybe just say "the
-   scope of these is as with other GIT_* environment variables, they'll
-   be inherited by subprocesses".
-
-> diff --git a/cache.h b/cache.h
-> index c0072d43b1..8a36146337 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -472,6 +472,7 @@ static inline enum object_type object_type(unsigned int mode)
->  #define TEMPLATE_DIR_ENVIRONMENT "GIT_TEMPLATE_DIR"
->  #define CONFIG_ENVIRONMENT "GIT_CONFIG"
->  #define CONFIG_DATA_ENVIRONMENT "GIT_CONFIG_PARAMETERS"
-> +#define CONFIG_COUNT_ENVIRONMENT "GIT_CONFIG_COUNT"
-
-I was wondering if this shouldn't be "GIT_CONFIG_KEY_COUNT" to be
-consistent with the push options environment, but on a closer look we
-have:
-
- - GIT_CONFIG_COUNT
- - GIT_CONFIG_KEY_N
- - GIT_CONFIG_VALUE_N
- - GIT_PUSH_OPTION_COUNT
- - GIT_PUSH_OPTION_N
-
-So I guess that makes sense & is consistent since we'd like to split the
-key-value here to save the user the effort of figuring out which "="
-they should split on.
-
-> -	if (!env)
-> -		return 0;
-> -
-
-Re the indent question to make the diff more readable question Junio
-had: could set some "do we have this or that" variables here to not
-reindent the existing code, but maybe not worth the effort...
-
-> -	if (sq_dequote_to_argv(envw, &argv, &nr, &alloc) < 0) {
-> -		ret = error(_("bogus format in %s"), CONFIG_DATA_ENVIRONMENT);
-> -		goto out;
-> +		count = strtoul(env, &endp, 10);
-> +		if (*endp) {
-> +			ret = error(_("bogus count in %s"), CONFIG_COUNT_ENVIRONMENT);
-> +			goto out;
-> +		}
-> +		if (count > INT_MAX) {
-> +			ret = error(_("too many entries in %s"), CONFIG_COUNT_ENVIRONMENT);
-> +			goto out;
-> +		}
-> +
-> +		for (i = 0; i < count; i++) {
-> +			const char *key, *value;
-> +
-> +			strbuf_addf(&envvar, "GIT_CONFIG_KEY_%d", i);
-> +			key = getenv(envvar.buf);
-> +			if (!key) {
-> +				ret = error(_("missing config key %s"), envvar.buf);
-> +				goto out;
-> +			}
-> +			strbuf_reset(&envvar);
-> +
-> +			strbuf_addf(&envvar, "GIT_CONFIG_VALUE_%d", i);
-> +			value = getenv(envvar.buf);
-> +			if (!value) {
-> +				ret = error(_("missing config value %s"), envvar.buf);
-> +				goto out;
-> +			}
-> +			strbuf_reset(&envvar);
-> +
-> +			if (config_parse_pair(key, value, fn, data) < 0) {
-> +				ret = -1;
-> +				goto out;
-> +			}
-> +		}
->  	}
->  
-> -	for (i = 0; i < nr; i++) {
-> -		if (git_config_parse_parameter(argv[i], fn, data) < 0) {
-> -			ret = -1;
-> +	env = getenv(CONFIG_DATA_ENVIRONMENT);
-> +	if (env) {
-> +		int nr = 0, alloc = 0;
-> +
-> +		/* sq_dequote will write over it */
-> +		envw = xstrdup(env);
-> +
-> +		if (sq_dequote_to_argv(envw, &argv, &nr, &alloc) < 0) {
-> +			ret = error(_("bogus format in %s"), CONFIG_DATA_ENVIRONMENT);
->  			goto out;
->  		}
-> +
-> +		for (i = 0; i < nr; i++) {
-> +			if (git_config_parse_parameter(argv[i], fn, data) < 0) {
-> +				ret = -1;
-> +				goto out;
-> +			}
-> +		}
->  	}
->  
->  out:
-> +	strbuf_release(&envvar);
->  	free(argv);
->  	free(envw);
->  	cf = source.prev;
-> diff --git a/environment.c b/environment.c
-> index bb518c61cd..e94eca92f3 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -116,6 +116,7 @@ const char * const local_repo_env[] = {
->  	ALTERNATE_DB_ENVIRONMENT,
->  	CONFIG_ENVIRONMENT,
->  	CONFIG_DATA_ENVIRONMENT,
-> +	CONFIG_COUNT_ENVIRONMENT,
->  	DB_ENVIRONMENT,
->  	GIT_DIR_ENVIRONMENT,
->  	GIT_WORK_TREE_ENVIRONMENT,
-> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-> index 825d9a184f..8c90cca79d 100755
-> --- a/t/t1300-config.sh
-> +++ b/t/t1300-config.sh
-> @@ -1316,6 +1316,107 @@ test_expect_success 'detect bogus GIT_CONFIG_PARAMETERS' '
->  		git config --get-regexp "env.*"
->  '
->  
-> +test_expect_success 'git config handles environment config pairs' '
-
-I was wondering if the patch would keep the current
-GIT_CONFIG_PARAMETERS or replace it entirely with the new facility.
-
-On the one hand it would make sense to just replace
-GIT_CONFIG_PARAMETERS, we could make this code loop over the new values.
-
-On the other hand, and this is an edge case I hadn't considered before,
-any change to the semantics of GIT_CONFIG_PARAMETERS means that e.g. a
-fetch->gc spawning would break in the face of a concurrent OS update to
-/usr/bin/git, since "fetch" and "gc" might be of differing versions
+As you may guess from the "shattered" I was trying to find if the
+particulars around the partial fsck allowed me to exploit this somehow,
+I haven't found a way to do that, just be annoying by sending the client
+more than they asked for, but I could also do that with the normal
+dialog. Just wondering if the client should be opening the pack and
+barfing if it has more than one object, or not care.
