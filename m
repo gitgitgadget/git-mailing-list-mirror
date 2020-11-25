@@ -2,66 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02BD9C2D0E4
-	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 00:54:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5566EC63798
+	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 01:00:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A45C82151B
-	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 00:54:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 08FF020BED
+	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 01:00:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ec0wHqcJ"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qsxc/ZLw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726560AbgKYAxs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Nov 2020 19:53:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55366 "EHLO
+        id S1727495AbgKYBA1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Nov 2020 20:00:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725835AbgKYAxs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Nov 2020 19:53:48 -0500
-Received: from mail-qt1-x84a.google.com (mail-qt1-x84a.google.com [IPv6:2607:f8b0:4864:20::84a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0446CC0613D4
-        for <git@vger.kernel.org>; Tue, 24 Nov 2020 16:53:48 -0800 (PST)
-Received: by mail-qt1-x84a.google.com with SMTP id w88so620494qtd.4
-        for <git@vger.kernel.org>; Tue, 24 Nov 2020 16:53:47 -0800 (PST)
+        with ESMTP id S1726287AbgKYBA0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Nov 2020 20:00:26 -0500
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E230C0613D4
+        for <git@vger.kernel.org>; Tue, 24 Nov 2020 17:00:25 -0800 (PST)
+Received: by mail-pl1-x649.google.com with SMTP id x3so532062plr.23
+        for <git@vger.kernel.org>; Tue, 24 Nov 2020 17:00:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=7VqVGOJ+iyv4RIBLagFTsF2etf6D3oEm1Egty3ap7Uw=;
-        b=ec0wHqcJ6JmIfV85hshW+Phw6NHR1GTxSsi3ELaxpH4AVJyFvmNIX9DKRt5ELDifX2
-         sv0ltWUMtUDZQj4f6SETbkfJSuICJmpTFpXe+LYH+Rwbj/SXThRic5+QVQnqdvztDZHE
-         nQpu1PSGOxhQMJjr21woHfHhQm/OaEI8eoD80ajsDqRzIiApshzinwY7G4vW5kPv71Oh
-         7t+CbqyLGZPeG0wYzKBFknN7/XZrGvaevsB03dajY0YnB6f7RCrBQ98jO0SYWvjsO1sW
-         VVKwcjlr9rX9GDLrrX8SzRhndmSUHvYTKHJSd0iKiv8ihFZu4PYfxZ0KqWaxj8uVv0Dv
-         3jbg==
+        bh=zWBqjodVFhpVcAAOjn8/0etH6nGAIPd8Vc6RsdUzy0s=;
+        b=qsxc/ZLw+LE8NbgPclzNkddd0eH9b7UT3/240BFychoi8ZESvzshNlJR5IHRelI99K
+         5feknOFfdLLIjUHTq/l4ctlsVXXP6XNy/wMoEmF8pIumU4YMwjtbwH1d0+mdDcNLSEBc
+         ejxctOpsyjCwbnVPD3brnDI7/UsJM9/2hBIjZPqN2cE+qhNOqTTZcgmswBOppjjMA189
+         T/6eDRQMkxalPBt8OA5YUY3kbEsxca4xAv4J6Erl1l9V5w1RGqWefeMmMTQqtcLipoWq
+         CfK22z7DFQhzjZLYzPnzactVuSyrj0DFapN9w+xciaY1FkrmVwQXUtUyYTViYvLGGO66
+         i/kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=7VqVGOJ+iyv4RIBLagFTsF2etf6D3oEm1Egty3ap7Uw=;
-        b=MKiCEoivBosBPUMxH/WWAsyVuy+EaUdKTU8IYHlHdJJ5HuPODKTqWIdcX+sBITj8uT
-         Fw1p7VIi5PuyLIOvlpigNLWryNAC7Ly/QZgXyrHEPlSQALCYgFG9ZEjFQYWtOxaqplon
-         ojiUVqyU3aQasrKZWpekRJHOd/5CG0+eLHkhXkC0CMGciC0L3RAIrKLKFQaEJlGOD4/i
-         mSUP7g3hwtEAtYpyFFdgrt6ttlJhV8FsMamypZbYeHOEtcTE7e7cEYruhLq6dtniPpZg
-         fhoZ23g1SFe5PVn5882YbfROKbTyAie1EUgRYvJA02ik601aAkQZUqnS3PmHJkY2U6rv
-         TQKg==
-X-Gm-Message-State: AOAM533Ap14KJ0FtWRoYwHgqnfSdDG1tINdt27PJ29mY5wnmi9CimGJT
-        YB3lGYChHmaI0oT3uh5/Sy69uoOyMWg5vWF+VB3a
-X-Google-Smtp-Source: ABdhPJydY3noh0ONh4dZ514MuJLYRsEOWjpL11PbtCMsqIuuX4USCHo9I0O5FPUNb0IExKY1CZEtuK6ee6nQEM/1q4qK
+        bh=zWBqjodVFhpVcAAOjn8/0etH6nGAIPd8Vc6RsdUzy0s=;
+        b=U13YQ7dCTHS5h7yPzVO2qeCWqIxkaY8hyllZf97Bd+LtDKg8HIRpKP//CbUlz9aOHM
+         /oO/BZCdE7xIHoFFhMUsshGf+3fJMrskLd8WOZIkGLrlq3unKiADadxCTxqaHUdThArb
+         SpFEgMs1x2L3sansUpE+B8l9moTwqS90mixSQdDInJMgiyw3m5J4w2bxXkikGH7Qn0sF
+         wKme+0jjXj39L0JRhXkW4VN9f23/awWcQKeZY2GS5/hnEWT6L7VxvD0J4UvF7orCQNI5
+         nU8RN3oOBdXEkP7I3tWQpqdmc2cL1KnPZ4NHZZFq6XYTKQbZGwng7cdnLefCDIa8SIPP
+         w90Q==
+X-Gm-Message-State: AOAM5337fPKl289Dh8V/IN4krr7FVfyeijZY5+3aFMjSmhcfGrggrtYf
+        JjHSsfUsUSKABUWezrMwdH9q04LLBZg96cTv2R+Q
+X-Google-Smtp-Source: ABdhPJwrOLoD9zcO2OLZomAaUqO1g9pJ03XlYlP7N1ezH7iE1aRvvhNypk45aS39X/RegVnNa5k9N0m+mi924yfahlZ+
 Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a25:4189:: with SMTP id
- o131mr1057491yba.95.1606265627105; Tue, 24 Nov 2020 16:53:47 -0800 (PST)
-Date:   Tue, 24 Nov 2020 16:53:44 -0800
-In-Reply-To: <c9512067293c082ad3082262e50dfd04f1bc1648.1605649533.git.me@ttaylorr.com>
-Message-Id: <20201125005344.935924-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a17:902:eaca:b029:d6:807e:95b8 with
+ SMTP id p10-20020a170902eacab02900d6807e95b8mr889830pld.33.1606266024353;
+ Tue, 24 Nov 2020 17:00:24 -0800 (PST)
+Date:   Tue, 24 Nov 2020 17:00:22 -0800
+In-Reply-To: <466dd3036a8ca7dc9718a53f17cf87e0eb22c066.1605649533.git.me@ttaylorr.com>
+Message-Id: <20201125010022.938266-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <c9512067293c082ad3082262e50dfd04f1bc1648.1605649533.git.me@ttaylorr.com>
+References: <466dd3036a8ca7dc9718a53f17cf87e0eb22c066.1605649533.git.me@ttaylorr.com>
 X-Mailer: git-send-email 2.29.2.454.gaff20da3a2-goog
-Subject: Re: [PATCH v2 10/24] pack-bitmap-write: reimplement bitmap writing
+Subject: Re: [PATCH v2 11/24] pack-bitmap-write: pass ownership of
+ intermediate bitmaps
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     me@ttaylorr.com
 Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
@@ -72,218 +74,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[snip commit message]
-
-Thanks for the very clear commit message explaining the new algorithm.
-
-> +struct bb_commit {
-> +	struct commit_list *children;
-> +	struct bitmap *bitmap;
-> +	unsigned selected:1;
-> +	unsigned idx; /* within selected array */
-> +};
-> +
-> +define_commit_slab(bb_data, struct bb_commit);
-> +
-> +struct bitmap_builder {
-> +	struct bb_data data;
-> +	struct commit **commits;
-> +	size_t commits_nr, commits_alloc;
-> +};
-> +
-> +static void bitmap_builder_init(struct bitmap_builder *bb,
-> +				struct bitmap_writer *writer)
->  {
->  	struct rev_info revs;
-> +	struct commit *commit;
-> +	unsigned int i;
-> +
-> +	memset(bb, 0, sizeof(*bb));
-> +	init_bb_data(&bb->data);
-> +
-> +	reset_revision_walk();
-> +	repo_init_revisions(writer->to_pack->repo, &revs, NULL);
-> +	revs.topo_order = 1;
-> +
-> +	for (i = 0; i < writer->selected_nr; i++) {
-> +		struct commit *c = writer->selected[i].commit;
-> +		struct bb_commit *ent = bb_data_at(&bb->data, c);
-> +		ent->selected = 1;
-> +		ent->idx = i;
-> +		add_pending_object(&revs, &c->object, "");
-> +	}
-> +
-> +	if (prepare_revision_walk(&revs))
-> +		die("revision walk setup failed");
-> +
-> +	while ((commit = get_revision(&revs))) {
-> +		struct commit_list *p;
-> +
-> +		parse_commit_or_die(commit);
-> +
-> +		ALLOC_GROW(bb->commits, bb->commits_nr + 1, bb->commits_alloc);
-> +		bb->commits[bb->commits_nr++] = commit;
-> +
-> +		for (p = commit->parents; p; p = p->next) {
-> +			struct bb_commit *ent = bb_data_at(&bb->data, p->item);
-> +			commit_list_insert(commit, &ent->children);
-> +		}
-> +	}
-> +}
-
-Looks straightforward.
-
-> +static void bitmap_builder_clear(struct bitmap_builder *bb)
-> +{
-> +	clear_bb_data(&bb->data);
-> +	free(bb->commits);
-> +	bb->commits_nr = bb->commits_alloc = 0;
-> +}
-
-I was wondering why the commit list and the children in struct bb_commit
-weren't cleared, but that's because they are cleared during the
-algorithm. So this is fine.
-
-> +static void fill_bitmap_tree(struct bitmap *bitmap,
-> +			     struct tree *tree)
-> +{
-> +	uint32_t pos;
-> +	struct tree_desc desc;
-> +	struct name_entry entry;
-> +
-> +	/*
-> +	 * If our bit is already set, then there is nothing to do. Both this
-> +	 * tree and all of its children will be set.
-> +	 */
-> +	pos = find_object_pos(&tree->object.oid);
-> +	if (bitmap_get(bitmap, pos))
-> +		return;
-> +	bitmap_set(bitmap, pos);
-> +
-> +	if (parse_tree(tree) < 0)
-> +		die("unable to load tree object %s",
-> +		    oid_to_hex(&tree->object.oid));
-> +	init_tree_desc(&desc, tree->buffer, tree->size);
-> +
-> +	while (tree_entry(&desc, &entry)) {
-> +		switch (object_type(entry.mode)) {
-> +		case OBJ_TREE:
-> +			fill_bitmap_tree(bitmap,
-> +					 lookup_tree(the_repository, &entry.oid));
-> +			break;
-> +		case OBJ_BLOB:
-> +			bitmap_set(bitmap, find_object_pos(&entry.oid));
-> +			break;
-> +		default:
-> +			/* Gitlink, etc; not reachable */
-> +			break;
-> +		}
-> +	}
-> +
-> +	free_tree_buffer(tree);
-> +}
-
-Looks straightforward.
-
-> +static void fill_bitmap_commit(struct bb_commit *ent,
-> +			       struct commit *commit)
-> +{
-> +	if (!ent->bitmap)
-> +		ent->bitmap = bitmap_new();
-> +
-> +	/*
-> +	 * mark ourselves, but do not bother with parents; their values
-> +	 * will already have been propagated to us
-> +	 */
-> +	bitmap_set(ent->bitmap, find_object_pos(&commit->object.oid));
-> +	fill_bitmap_tree(ent->bitmap, get_commit_tree(commit));
-> +}
-
-OK - when filling the bitmap for a commit, we only set the specific bit
-for the commit itself, and all the bits for the commit's tree and the
-tree's descendants. This is consistent with the explanation of the
-algorithm in the commit message.
-
-> +static void store_selected(struct bb_commit *ent, struct commit *commit)
-> +{
-> +	struct bitmapped_commit *stored = &writer.selected[ent->idx];
-> +	khiter_t hash_pos;
-> +	int hash_ret;
-> +
-> +	/*
-> +	 * the "reuse bitmaps" phase may have stored something here, but
-> +	 * our new algorithm doesn't use it. Drop it.
-> +	 */
-> +	if (stored->bitmap)
-> +		ewah_free(stored->bitmap);
-
-I tried to figure out how the "reuse bitmaps" phase stores things in
-this field, but that led me down a rabbit hole that I didn't pursue.
-But anyway, the new bitmap is correctly generated, so clearing the old
-bitmap is safe (except, possibly, wasting time, but I see that in a
-subsequent patch, existing bitmaps will be reused in a new wawy).
-
-> +
-> +	stored->bitmap = bitmap_to_ewah(ent->bitmap);
-> +
-> +	hash_pos = kh_put_oid_map(writer.bitmaps, commit->object.oid, &hash_ret);
-> +	if (hash_ret == 0)
-> +		die("Duplicate entry when writing index: %s",
-> +		    oid_to_hex(&commit->object.oid));
-> +	kh_value(writer.bitmaps, hash_pos) = stored;
-> +}
-> +
-> +void bitmap_writer_build(struct packing_data *to_pack)
-> +{
-> +	struct bitmap_builder bb;
-> +	size_t i;
-> +	int nr_stored = 0; /* for progress */
+> diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+> index f2f0b6b2c2..d2d46ff5f4 100644
+> --- a/pack-bitmap-write.c
+> +++ b/pack-bitmap-write.c
+> @@ -333,6 +333,7 @@ void bitmap_writer_build(struct packing_data *to_pack)
+>  		struct commit *commit = bb.commits[i-1];
+>  		struct bb_commit *ent = bb_data_at(&bb.data, commit);
+>  		struct commit *child;
+> +		int reused = 0;
 >  
->  	writer.bitmaps = kh_init_oid_map();
->  	writer.to_pack = to_pack;
+>  		fill_bitmap_commit(ent, commit);
 >  
->  	if (writer.show_progress)
->  		writer.progress = start_progress("Building bitmaps", writer.selected_nr);
-> +	trace2_region_enter("pack-bitmap-write", "building_bitmaps_total",
-> +		the_repository);
-> +
-> +	bitmap_builder_init(&bb, &writer);
-> +	for (i = bb.commits_nr; i > 0; i--) {
-> +		struct commit *commit = bb.commits[i-1];
-> +		struct bb_commit *ent = bb_data_at(&bb.data, commit);
-> +		struct commit *child;
-> +
-> +		fill_bitmap_commit(ent, commit);
-> +
-> +		if (ent->selected) {
-> +			store_selected(ent, commit);
-> +			nr_stored++;
-> +			display_progress(writer.progress, nr_stored);
-> +		}
-> +
-> +		while ((child = pop_commit(&ent->children))) {
 
-Here the children (specifically, the struct commit_list) are freed (one
-by one).
+Before the following chunk is the start of a loop:
 
-> +			struct bb_commit *child_ent =
-> +				bb_data_at(&bb.data, child);
-> +
-> +			if (child_ent->bitmap)
-> +				bitmap_or(child_ent->bitmap, ent->bitmap);
-> +			else
-> +				child_ent->bitmap = bitmap_dup(ent->bitmap);
-> +		}
-> +		bitmap_free(ent->bitmap);
-> +		ent->bitmap = NULL;
+"while ((child = pop_commit(&ent->children))) {"
 
-Here the bitmap is freed.
-
+> @@ -348,10 +349,15 @@ void bitmap_writer_build(struct packing_data *to_pack)
+>  
+>  			if (child_ent->bitmap)
+>  				bitmap_or(child_ent->bitmap, ent->bitmap);
+> -			else
+> +			else if (reused)
+>  				child_ent->bitmap = bitmap_dup(ent->bitmap);
+> +			else {
+> +				child_ent->bitmap = ent->bitmap;
+> +				reused = 1;
+> +			}
+>  		}
+> -		bitmap_free(ent->bitmap);
+> +		if (!reused)
+> +			bitmap_free(ent->bitmap);
+>  		ent->bitmap = NULL;
 >  	}
-> +	bitmap_builder_clear(&bb);
->  
->  	stop_progress(&writer.progress);
->  
->  	compute_xor_offsets();
+>  	bitmap_builder_clear(&bb);
+> -- 
+> 2.29.2.312.gabc4d358d8
 
-Thanks - overall this looks straightforward.
+So this is clearly correct.
+
+I asked myself if this optimization is worth it when we're going to
+drastically reduce the number of steps in patch 18, but I think that the
+answer is still yes.
