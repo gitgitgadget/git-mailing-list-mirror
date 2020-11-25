@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F15BCC64E90
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 816CEC64E8A
 	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 22:13:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9F255206D9
+	by mail.kernel.org (Postfix) with ESMTP id 44323206D9
 	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 22:13:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VlMXfkq3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T9IOTIPF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732894AbgKYWNK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Nov 2020 17:13:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56010 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732881AbgKYWNI (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1732871AbgKYWNI (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 25 Nov 2020 17:13:08 -0500
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67D91C0613D4
-        for <git@vger.kernel.org>; Wed, 25 Nov 2020 14:13:08 -0800 (PST)
-Received: by mail-wr1-x444.google.com with SMTP id e7so6914wrv.6
-        for <git@vger.kernel.org>; Wed, 25 Nov 2020 14:13:08 -0800 (PST)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56006 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732602AbgKYWNF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Nov 2020 17:13:05 -0500
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5022FC061A53
+        for <git@vger.kernel.org>; Wed, 25 Nov 2020 14:13:05 -0800 (PST)
+Received: by mail-wr1-x441.google.com with SMTP id u12so31079wrt.0
+        for <git@vger.kernel.org>; Wed, 25 Nov 2020 14:13:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=kRjRrr+jlp4f+qDklro2hVq4wuNrs892V9EMBcsrKy4=;
-        b=VlMXfkq3rPIslWwhC+JHZ/dGg5hjItYUgS+5cNyq8TAwp6aHxMrvGXgQvoU/apJgdf
-         gph8UhFY1cA5jfFtnHOfMH//e9Q7DupQt40nIdM2QqXJm5agKI3iYBDFgi1NmTjReSFg
-         EZlZGANadH4lHhTznxFFVDbZ8xzhmj3+nDQxIWASTOiZMMOESzqQDUMbd214/Qmrkm4T
-         L94y0fhdq/c74OcdqDboVRhSWGuxrQAGJXow3AHRJMcyzW1H4Z5rFsLC1BYIr0X47LU+
-         M4CZnCMB45UxNtRiUXMNvORhn9gO+zDC+0ie7F/jCXVgVOa2iPyeq/vFuxXkhdETxtoT
-         PwaA==
+        bh=ggyTh2xfy1KZsvIVeRaTDC19qP+roOPfuNpnuBpZipQ=;
+        b=T9IOTIPF8J8fFyMq3vaelWIvHjllhyacQk9YjTRPzNP+F9f6bWWauRtxY8Fg0XDiU9
+         BeBl29xyu7vxKSL4t7soPVIrljMH1y8iTdSllS7c8XN75NyJA1TjmbOjDi4E+qtw0mQU
+         jOOehhrnMr058y08NgtJUzh7Ozk/79hTyGlOFx2tNvFodmDd+1cXOI+uZt0e3h1FIqq0
+         fDJv1B78n5ZjUJhejWuGrU7Ekr7xHsvrvq9aSXCusoLUDGwohKFRujvwl3JvyPwStAlR
+         T/ZYHLy33RBFjkrUQb2p8CzcjqZHVDjFRyqNAYBEwKl9vsMIogz6Mmap05Ij8KbutOSm
+         IJ7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=kRjRrr+jlp4f+qDklro2hVq4wuNrs892V9EMBcsrKy4=;
-        b=B0YFDas03mS/4+L8Vxg0M5mgOKJNn4EKnohCQqvblS/xukthzgGoLP6vG+hgiORKRl
-         kdlwgWr1kjPP9LwUg9uxLDp0hEL8E0NeFNlfyLDvH58GykD8UHMSbktkasuc4Ule2E8T
-         qSZ9QVxW8SYSHMJfIv9/+b29YDJkZLtgKxHBDktancmVI9ylw17Q6KdRUGAoXbORkY1b
-         E7EOeaHl9P711flmBGTxyLV0s3CRXZ/nSIxzNiLWHTKsOfH0WHNqTE738Xi0fjtGwP2W
-         PA3LuHFFrqSfO4J8UInHUK5Gcv364Kk+kisZLd68XtNakYIrritfOdgqjVZnbW7cwIsr
-         romQ==
-X-Gm-Message-State: AOAM531IrM9JkTWuVsBFWc3AS9yS2CQE0arMnNpdlygjcxYYgL0cbfTd
-        ApbsnFp3Fs1EykSxv26I9To3qkTGdgE=
-X-Google-Smtp-Source: ABdhPJytuqoAu+HE/tlHwNCHy0VkVHuQfHwJxZbY44fXBeQKUUainTn56pds3meaH46BL4TFjTL7Ng==
-X-Received: by 2002:adf:ef4c:: with SMTP id c12mr54365wrp.242.1606342386917;
-        Wed, 25 Nov 2020 14:13:06 -0800 (PST)
+        bh=ggyTh2xfy1KZsvIVeRaTDC19qP+roOPfuNpnuBpZipQ=;
+        b=jssubx4kNGjPr/FCF9YRCeQd2dNCOKZQ3gPt5Q2o37qYV6aKW85cZuLeg4OtkKvDwU
+         NiBhHJr3IxP31qdPPF7RNSOFg9wU5sVIG9VFer8PrAvtrtSFZBwm4r7avG/1yDawLHGm
+         t1YVS/m4saEI2g+jk8ElXEEwjVF8gtGVVDNSqM2J+cWR86whN2HQHwkoZmpF/sZIH/NV
+         DBygOsgDnaPmmleAurRyAxuYBBFkUVIfhnwS1xYBLJ7pzRZLpcIuevgSU48qVk65TJRM
+         AEcrFT/EqlRyO2H+qXNiznQUiBph8SK5BJF4+syEbzfTrZw1i9VJo4LwfQjzHgdnU2z+
+         KWnA==
+X-Gm-Message-State: AOAM532YkD58wbb/Slynevt2S9TNXeql+94rVQOPoMFp4EVc/M4H5AF7
+        XjIn+SFtH+1rP4rxqzEoLcczcIeBLhY=
+X-Google-Smtp-Source: ABdhPJzEXIowgFGMstqf18As1tuPJYU/upMPEeZe24Mk/WQEqTDHJQokpX+sbHMaf8R6Oxm6YKIQCQ==
+X-Received: by 2002:adf:f542:: with SMTP id j2mr71541wrp.32.1606342383721;
+        Wed, 25 Nov 2020 14:13:03 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d8sm6488705wrp.44.2020.11.25.14.13.06
+        by smtp.gmail.com with ESMTPSA id g186sm7221394wma.1.2020.11.25.14.13.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Nov 2020 14:13:06 -0800 (PST)
-Message-Id: <558775f83d7cbf7ad0e2090ab13be404cdf16b24.1606342377.git.gitgitgadget@gmail.com>
+        Wed, 25 Nov 2020 14:13:03 -0800 (PST)
+Message-Id: <0c276ffcee4be302be3db9b43ab8371ef26a0aec.1606342377.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.796.v3.git.1606342376.gitgitgadget@gmail.com>
 References: <pull.796.v2.git.1606147507.gitgitgadget@gmail.com>
         <pull.796.v3.git.1606342376.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 25 Nov 2020 22:12:56 +0000
-Subject: [PATCH v3 8/8] maintenance: use 'git config --fixed-value'
+Date:   Wed, 25 Nov 2020 22:12:53 +0000
+Subject: [PATCH v3 5/8] config: add --fixed-value option, un-implemented
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,68 +87,164 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-When a repository's leading directories contain regex metacharacters,
-the config calls for 'git maintenance register' and 'git maintenance
-unregister' are not careful enough. Use the new --fixed-value option
-to direct the config machinery to use exact string matches. This is a
-more robust option than escaping these arguments in a piecemeal fashion.
+The 'git config' builtin takes a 'value-pattern' parameter for several
+actions. This can cause confusion when expecting exact value matches
+instead of regex matches, especially when the input string contains
+metacharacters. While callers can escape the patterns themselves, it
+would be more friendly to allow an argument to disable the pattern
+matching in favor of an exact string match.
 
-For the test, require that we are not running on Windows since the '+'
-and '*' characters are not allowed on that filesystem.
+Add a new '--fixed-value' option that does not currently change the
+behavior. The implementation will be filled in by later changes for
+each appropriate action. For now, check and test that --fixed-value
+will abort the command when included with an incompatible action or
+without a 'value-pattern' argument.
 
-Reported-by: Emily Shaffer <emilyshaffer@google.com>
-Reported-by: Jonathan Nieder <jrnieder@gmail.com>
+The name '--fixed-value' was chosen over something simpler like
+'--fixed' because some commands allow regular expressions on the
+key in addition to the value.
+
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/gc.c           |  5 +++--
- t/t7900-maintenance.sh | 12 ++++++++++++
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ Documentation/git-config.txt | 20 +++++++++++++-------
+ builtin/config.c             | 36 ++++++++++++++++++++++++++++++++++++
+ t/t1300-config.sh            | 24 ++++++++++++++++++++++++
+ 3 files changed, 73 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index e3098ef6a1..6dde3ce1bb 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1452,7 +1452,8 @@ static int maintenance_register(void)
- 		git_config_set("maintenance.strategy", "incremental");
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 0be5499952..09a1d273a9 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -9,15 +9,15 @@ git-config - Get and set repository or global options
+ SYNOPSIS
+ --------
+ [verse]
+-'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] name [value [value-pattern]]
++'git config' [<file-option>] [--type=<type>] [--fixed-value] [--show-origin] [--show-scope] [-z|--null] name [value [value-pattern]]
+ 'git config' [<file-option>] [--type=<type>] --add name value
+-'git config' [<file-option>] [--type=<type>] --replace-all name value [value-pattern]
+-'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] --get name [value-pattern]
+-'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] --get-all name [value-pattern]
+-'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--name-only] --get-regexp name_regex [value-pattern]
++'git config' [<file-option>] [--type=<type>] [--fixed-value] --replace-all name value [value-pattern]
++'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] --get name [value-pattern]
++'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] --get-all name [value-pattern]
++'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] [--name-only] --get-regexp name_regex [value-pattern]
+ 'git config' [<file-option>] [--type=<type>] [-z|--null] --get-urlmatch name URL
+-'git config' [<file-option>] --unset name [value-pattern]
+-'git config' [<file-option>] --unset-all name [value-pattern]
++'git config' [<file-option>] [--fixed-value] --unset name [value-pattern]
++'git config' [<file-option>] [--fixed-value] --unset-all name [value-pattern]
+ 'git config' [<file-option>] --rename-section old_name new_name
+ 'git config' [<file-option>] --remove-section name
+ 'git config' [<file-option>] [--show-origin] [--show-scope] [-z|--null] [--name-only] -l | --list
+@@ -165,6 +165,12 @@ See also <<FILES>>.
+ --list::
+ 	List all variables set in config file, along with their values.
  
- 	config_get.git_cmd = 1;
--	strvec_pushl(&config_get.args, "config", "--global", "--get", "maintenance.repo",
-+	strvec_pushl(&config_get.args, "config", "--global", "--get",
-+		     "--fixed-value", "maintenance.repo",
- 		     the_repository->worktree ? the_repository->worktree
- 					      : the_repository->gitdir,
- 			 NULL);
-@@ -1483,7 +1484,7 @@ static int maintenance_unregister(void)
++--fixed-value::
++	When used with the `value-pattern` argument, treat `value-pattern` as
++	an exact string instead of a regular expression. This will restrict
++	the name/value pairs that are matched to only those where the value
++	is exactly equal to the `value-pattern`.
++
+ --type <type>::
+   'git config' will ensure that any input or output is valid under the given
+   type constraint(s), and will canonicalize outgoing values in `<type>`'s
+diff --git a/builtin/config.c b/builtin/config.c
+index 9d97091561..d0adbed872 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -34,6 +34,7 @@ static int respect_includes_opt = -1;
+ static struct config_options config_options;
+ static int show_origin;
+ static int show_scope;
++static int fixed_value;
  
- 	config_unset.git_cmd = 1;
- 	strvec_pushl(&config_unset.args, "config", "--global", "--unset",
--		     "maintenance.repo",
-+		     "--fixed-value", "maintenance.repo",
- 		     the_repository->worktree ? the_repository->worktree
- 					      : the_repository->gitdir,
- 		     NULL);
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 20184e96e1..bc2207edd6 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -367,6 +367,18 @@ test_expect_success 'register and unregister' '
- 	test_cmp before actual
+ #define ACTION_GET (1<<0)
+ #define ACTION_GET_ALL (1<<1)
+@@ -141,6 +142,7 @@ static struct option builtin_config_options[] = {
+ 	OPT_BIT(0, "rename-section", &actions, N_("rename section: old-name new-name"), ACTION_RENAME_SECTION),
+ 	OPT_BIT(0, "remove-section", &actions, N_("remove a section: name"), ACTION_REMOVE_SECTION),
+ 	OPT_BIT('l', "list", &actions, N_("list all"), ACTION_LIST),
++	OPT_BOOL(0, "fixed-value", &fixed_value, N_("use string equality when comparing values to 'value-pattern'")),
+ 	OPT_BIT('e', "edit", &actions, N_("open an editor"), ACTION_EDIT),
+ 	OPT_BIT(0, "get-color", &actions, N_("find the color configured: slot [default]"), ACTION_GET_COLOR),
+ 	OPT_BIT(0, "get-colorbool", &actions, N_("find the color setting: slot [stdout-is-tty]"), ACTION_GET_COLORBOOL),
+@@ -745,6 +747,40 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		usage_builtin_config();
+ 	}
+ 
++	/* check usage of --fixed-value */
++	if (fixed_value) {
++		int allowed_usage = 0;
++
++		switch (actions) {
++		/* git config --get <name> <value-pattern> */
++		case ACTION_GET:
++		/* git config --get-all <name> <value-pattern> */
++		case ACTION_GET_ALL:
++		/* git config --get-regexp <name-pattern> <value-pattern> */
++		case ACTION_GET_REGEXP:
++		/* git config --unset <name> <value-pattern> */
++		case ACTION_UNSET:
++		/* git config --unset-all <name> <value-pattern> */
++		case ACTION_UNSET_ALL:
++			allowed_usage = argc > 1 && !!argv[1];
++			break;
++
++		/* git config <name> <value> <value-pattern> */
++		case ACTION_SET_ALL:
++		/* git config --replace-all <name> <value> <value-pattern> */
++		case ACTION_REPLACE_ALL:
++			allowed_usage = argc > 2 && !!argv[2];
++			break;
++
++		/* other options don't allow --fixed-value */
++		}
++
++		if (!allowed_usage) {
++			error(_("--fixed-value only applies with 'value-pattern'"));
++			usage_builtin_config();
++		}
++	}
++
+ 	if (actions & PAGING_ACTIONS)
+ 		setup_auto_pager("config", 1);
+ 
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index 040b9f7506..f6f071006d 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -1967,4 +1967,28 @@ test_expect_success '--replace-all and value-pattern' '
+ 	test_cmp expect actual
  '
  
-+test_expect_success !MINGW 'register and unregister with regex metacharacters' '
-+	META="a+b*c" &&
-+	git init "$META" &&
-+	git -C "$META" maintenance register &&
-+	git config --get-all --show-origin maintenance.repo &&
-+	git config --get-all --global --fixed-value \
-+		maintenance.repo "$(pwd)/$META" &&
-+	git -C "$META" maintenance unregister &&
-+	test_must_fail git config --get-all --global --fixed-value \
-+		maintenance.repo "$(pwd)/$META"
++test_expect_success 'refuse --fixed-value for incompatible actions' '
++	test_when_finished rm -f config &&
++	git config --file=config dev.null bogus &&
++
++	# These modes do not allow --fixed-value at all
++	test_must_fail git config --file=config --fixed-value --add dev.null bogus &&
++	test_must_fail git config --file=config --fixed-value --get-urlmatch dev.null bogus &&
++	test_must_fail git config --file=config --fixed-value --get-urlmatch dev.null bogus &&
++	test_must_fail git config --file=config --fixed-value --rename-section dev null &&
++	test_must_fail git config --file=config --fixed-value --remove-section dev &&
++	test_must_fail git config --file=config --fixed-value --list &&
++	test_must_fail git config --file=config --fixed-value --get-color dev.null &&
++	test_must_fail git config --file=config --fixed-value --get-colorbool dev.null &&
++
++	# These modes complain when --fixed-value has no value-pattern
++	test_must_fail git config --file=config --fixed-value dev.null bogus &&
++	test_must_fail git config --file=config --fixed-value --replace-all dev.null bogus &&
++	test_must_fail git config --file=config --fixed-value --get dev.null &&
++	test_must_fail git config --file=config --fixed-value --get-all dev.null &&
++	test_must_fail git config --file=config --fixed-value --get-regexp "dev.*" &&
++	test_must_fail git config --file=config --fixed-value --unset dev.null &&
++	test_must_fail git config --file=config --fixed-value --unset-all dev.null
 +'
 +
- test_expect_success 'start from empty cron table' '
- 	GIT_TEST_CRONTAB="test-tool crontab cron.txt" git maintenance start &&
- 
+ test_done
 -- 
 gitgitgadget
+
