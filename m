@@ -2,106 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE831C2D0E4
-	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 00:40:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 393F1C2D0E4
+	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 00:43:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4E44720DD4
-	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 00:40:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D149121527
+	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 00:43:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nnpBnbej"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CdkXN6as"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727620AbgKYAju (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Nov 2020 19:39:50 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54592 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727084AbgKYAju (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Nov 2020 19:39:50 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CA771F41DC;
-        Tue, 24 Nov 2020 19:39:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=g3E9HJ7k99K3bHHooYcL/8AimFY=; b=nnpBnb
-        ejTN2e7KsPkt2S3ZYbAy12PAbhnTb2CjAAHoOO4waHErsLTjVn9BlQnMJvQ/vbYo
-        Ez3xDQ/4IpGZ9IoDNflIuVGxa1jEJsSYC70HOFUBDDToz+5TKBQY3U8H1lS45SZu
-        v6X0j9AMcyeIYPrHbMnZSF7k0wEB43HSg8zcw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tYWPmAHuSk7qBylDGWGy4YulDJTu02tC
-        Zi1nC/PISorFtCbv3CTyAnxpyXbkOEd0K2q4tgxLx/CoIFXY3ifXj8+gKto+3dzo
-        f9DqGjN1O5x5AV3EqJRWUGlfEQ7Ny4/g5qXNS5u+Gqvs4wNOLFcDu/lXWyDgSfC1
-        c3G/u/qvBmo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C2BD2F41DB;
-        Tue, 24 Nov 2020 19:39:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 166A9F41DA;
-        Tue, 24 Nov 2020 19:39:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Jeff King <peff@peff.net>, "Theodore Y. Ts'o" <tytso@mit.edu>,
-        =?utf-8?Q?V=C3=ADt?= Ondruch <vondruch@redhat.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: Pick the right default and stop warn on `git pull`
-References: <20201123191355.GA132317@mit.edu>
-        <CAMP44s3cKVxKa0gOPfi3XRKbGbV=DweFE5pL0HM+v0kECFyPWA@mail.gmail.com>
-        <20201123202003.GB132317@mit.edu>
-        <CAMP44s27oEjScrJjeDVoNcWcvRsn173L_Kx+TOPfchOwge9zUQ@mail.gmail.com>
-        <X7wuMvHRURK1QS/Q@coredump.intra.peff.net>
-        <CAMP44s0QOcMnYQqFFSE1jV_T6=e4=xTM0zr_06C6+aYb7oqb4A@mail.gmail.com>
-        <X7xWSs3/vVqKl6sK@coredump.intra.peff.net>
-        <CAMP44s1Z4tDXO4jstGMtYVOYzkQQnZMHp45pYPOimk+=jwFHcw@mail.gmail.com>
-        <X7xgow4pchnhf2iY@coredump.intra.peff.net>
-        <xmqqy2irjy4f.fsf@gitster.c.googlers.com>
-        <X7xw0xb9UnGKbS8m@coredump.intra.peff.net>
-        <CAMP44s08mEyYqbjOeTeS46CngrbQMqP2=cMr1dtRLLk_BLAq3w@mail.gmail.com>
-        <CAMMLpeSoGtqeCm6u-zrHqvPhW7brvNk_kwde3uqmbPcP1JgMHg@mail.gmail.com>
-        <CAMP44s2z3vv2LwoMesydVL3qWrJh0VvHSUy+FpnqguoipRRD9g@mail.gmail.com>
-        <CAMMLpeQvofhPjcJ19JrqJs1W3YoQSP+hOainuZJa=QeJzYc+5w@mail.gmail.com>
-Date:   Tue, 24 Nov 2020 16:39:42 -0800
-In-Reply-To: <CAMMLpeQvofhPjcJ19JrqJs1W3YoQSP+hOainuZJa=QeJzYc+5w@mail.gmail.com>
-        (Alex Henrie's message of "Tue, 24 Nov 2020 16:23:49 -0700")
-Message-ID: <xmqq7dqagtgx.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727835AbgKYAnm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Nov 2020 19:43:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53820 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727652AbgKYAnl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Nov 2020 19:43:41 -0500
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45891C0613D4
+        for <git@vger.kernel.org>; Tue, 24 Nov 2020 16:43:41 -0800 (PST)
+Received: by mail-wm1-x343.google.com with SMTP id a3so610217wmb.5
+        for <git@vger.kernel.org>; Tue, 24 Nov 2020 16:43:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=geITQjwO8AL5uBbjgYPiBG2hpxSv2jJx0ujrWGI53HA=;
+        b=CdkXN6as1rp5cs1nJh0pQNxqXMAIufAQMCI2l3PsQcVqZheg9TQ8vYxvBuMCQbMKS7
+         3dHJm5glrw/05py7YYSSZE9f34R1PtLZVJ7skkJZpBwQaw7wbQB1mwhLgwY6O8FtFAj9
+         KV8ce1nN75eXWwb/36+JX3gRYedFMBX8bhBdigj9/ZQoQHhHYuN2cmd/p9Dxp98sszKz
+         rYXH5p+CV9BuOSNs9RGNL014VGtsXlZwT62v+j/MhzPIj37LpGMKOQYJUYhPFbEfJzro
+         EbjeWUe/zgtdHNIIgJoHrAjPQzX/39z+/FVgWiPIKUvRzqNDAC440UrgwCzheq6vDDsW
+         fq0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=geITQjwO8AL5uBbjgYPiBG2hpxSv2jJx0ujrWGI53HA=;
+        b=EuNH8t7Qgbf2tBhyY79RNTmgsS9xssqmRPwfmaGo/FFOcA6wWL1LIB9g/0JZDsYUgY
+         WRKI/AyHoKpTiIBHDcDDNx5th5J02rA3CoIDmhasA4Ommso5tYh+u4DFwE9MeNXRKiK2
+         2nNScdv9vhKNwJcFC6UOGf7ne9tdXDvm/zEzwya+auxdaRyh30snU6BrfIIuiJfCJS7y
+         3oYReB5bjnCL1i7hifE5+bqvRhBhTFXifDd9Fyl+ME7h0O3Se1NHuwCVThdTncusbo2T
+         idfJWjDD/H3Ye+S1IRfIY+GwIZfafY9CwdtV7W89wLyZtunyXgZcgtRc2d79ZGx52qPt
+         7AiQ==
+X-Gm-Message-State: AOAM531oopTiI3eyGlQQLPibaHS8ELA/SZOz/Z1yJXui8xD3djDhv8ix
+        ARSR/sq45nv/lHei5YxjxkjXy3XqQBPjrbh/C/4=
+X-Google-Smtp-Source: ABdhPJy6vaRV6v8E6ga/wJBaaiL8MWNK3Yx8/lbQmlKYMdFSuS8fWdRRzDtAuAnrLTUP6U2EbiYana2K2dGA7mVSoFc=
+X-Received: by 2002:a7b:c3d5:: with SMTP id t21mr958447wmj.37.1606265019922;
+ Tue, 24 Nov 2020 16:43:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B639788E-2EB6-11EB-B3D4-E43E2BB96649-77302942!pb-smtp20.pobox.com
+References: <20201125001102.111025-1-felipe.contreras@gmail.com> <xmqqblfmgtlg.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqblfmgtlg.fsf@gitster.c.googlers.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Tue, 24 Nov 2020 18:43:29 -0600
+Message-ID: <CAMP44s2ChcCjhjksS0s5BoYznqLAoXyFvSkP4GxSCh_ALusOtQ@mail.gmail.com>
+Subject: Re: [PATCH v2] refspec: make @ a synonym of HEAD
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Brandon Williams <bwilliams.eng@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Tomo Krajina <tkrajina@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie <alexhenrie24@gmail.com> writes:
+On Tue, Nov 24, 2020 at 6:37 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> We'd only need a warning if both pull.ff and pull.rebase are unset,
-> since that's the only situation where the behavior would change. And
-> providentially, we already have a warning in that exact case, although
-> we should probably tweak it to explain what the new behavior is going
-> to be :-)
-
-If we were starting "git pull" from scratch without any existing
-configuration and command line options, pull.mode might present a
-simpler end user experience, but I have to say that pull.ff and
-pull.rebase that are fairly well ingrained in docs and users' minds,
-the above plan sounds like a better option to reduce the cognitive
-overhead for users.
-
->> And yes, it should be possible to do what you suggest, but have you
->> tried? I suspect both the code and the documentation would be quite
->> convoluted.
+> > +test_expect_success 'push with @' '
+> > +
+> > +     mk_test testrepo heads/master &&
+> > +     git checkout master &&
+> > +     git push testrepo @ &&
+> > +     check_push_result testrepo $the_commit heads/master
+> > +
+> > +'
 >
-> Yes, I have written a very simple patch that implements the behavior
-> that I am suggesting. I will send it to the mailing list later
-> tonight.
+> This is OK, but shouldn't this be placed before the tests with
+> various configuration?  Something along the lines of the attached,
+> but with the body of the loop properly reindented, would also give
+> us a better test coverage at the same time.
 
-Let's see how well the comparison between two approaches play out.
-Thanks.
+I don't see much value in those tests, since I don't see how if one
+passes another one would fail. But I guess it cannot hurt.
+
+-- 
+Felipe Contreras
