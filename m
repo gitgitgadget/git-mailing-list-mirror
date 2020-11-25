@@ -2,136 +2,244 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECD46C5519F
-	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 06:25:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A192C64E75
+	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 07:06:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 83005206E0
-	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 06:25:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C32C1206E5
+	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 07:06:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tmkzph6/"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ekZGrFZO";
+	dkim=temperror (0-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RNgkmgEn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726718AbgKYGZU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Nov 2020 01:25:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49652 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726027AbgKYGZU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Nov 2020 01:25:20 -0500
-Received: from mail-vs1-xe31.google.com (mail-vs1-xe31.google.com [IPv6:2607:f8b0:4864:20::e31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F04BC0613D4
-        for <git@vger.kernel.org>; Tue, 24 Nov 2020 22:25:20 -0800 (PST)
-Received: by mail-vs1-xe31.google.com with SMTP id v8so649479vso.2
-        for <git@vger.kernel.org>; Tue, 24 Nov 2020 22:25:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=oOFsPKzON/8shMikDciScYAjjXRIt9HGnDif0b6/JWE=;
-        b=tmkzph6/VJmWuJsdm/FdM89ncL7DySUA97nwZYE0cQ8m1/+L1e6UBjA4bEwZOStFBI
-         nuaeiqQgixSD0HsuHifGFulLLGshgYM7/lrOo3ZZudB4Epf53YVM+mE2IxY3UFjUxZhR
-         1m8G41FLvcTsN7Oh0lXWVcWNmuiIE4nTvrPcj5mUtBacIcsYVWXHFv6s3A8iIYmkW0nv
-         V0H+EcRDh9aTCGoN2G1ak9ZqPP/uAskkL8xBRYwkRb/h2TED6kHEqVIMbBWmQUXQ5tTt
-         1rNzyZAtCEIb3xO8p4I4Zb5YZba74nk5ET32ABCLHV9yQFl+uBLV1v8qiwzfL4PsyygL
-         2f6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=oOFsPKzON/8shMikDciScYAjjXRIt9HGnDif0b6/JWE=;
-        b=avU7SSuCovAnNhz2k0ZwOxP/kvnkpdjoibrO2bx+fHb6m13KjbUBS8lYw0kYkFDpjd
-         1b64a6FVf6cMAMm4NMoLjeYCByOushY11APQvDYlQFol4ALe1qE5InOBKl1vh731x92R
-         aC7siCj62dHKkuxxlpdklgFCYSSSKm4TkcdX56uN3GF9IRsusKxg24pwIoLtV4+8Qx2n
-         HCpbtkwo0QigFUyMTALyqvs2n4Bzn2A+QktR/YqLMdnfPkIZ9jW0DbhDoEyVcSjvA42G
-         csCpK/3qwqaQ3CXMSq8tqShHTxe2OsovCeFicTHz8q2RSfjh52HHyvluSeO9Ujn1enPK
-         +/+A==
-X-Gm-Message-State: AOAM531+vjb/s2VOXdyZ4bwXKd9Xs+anUNk39tiRcTZ3U4iBoxATM+n9
-        VXjygDeHKvG8lsqlm6RAvCeR1wu8nnHmrYhUw50=
-X-Google-Smtp-Source: ABdhPJwNuxWyUtXUpFFNyTAS5/p8dqRsktzGzcDiBoPMTv5Sbk/jgrnuvyGpT/CBWupXYe7lPKPIXZHov6h+2tUzKjw=
-X-Received: by 2002:a05:6102:22fb:: with SMTP id b27mr957617vsh.49.1606285519338;
- Tue, 24 Nov 2020 22:25:19 -0800 (PST)
-MIME-Version: 1.0
-References: <cover.1605972564.git.martin.agren@gmail.com> <cover.1606251357.git.martin.agren@gmail.com>
- <359355fb4eff6d99cb1baad9b72ff96e7dcda51d.1606251358.git.martin.agren@gmail.com>
- <xmqqsg8ygza7.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqsg8ygza7.fsf@gitster.c.googlers.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Wed, 25 Nov 2020 07:25:07 +0100
-Message-ID: <CAN0heSoM+qQe8BdKHVpqhA0RAqzyyL3Qr98G=O8kD504diruCg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] grep: copy struct in one fell swoop
+        id S1727529AbgKYHG2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Nov 2020 02:06:28 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:39377 "EHLO
+        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727130AbgKYHG1 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 25 Nov 2020 02:06:27 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id 181235C013C;
+        Wed, 25 Nov 2020 02:06:26 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Wed, 25 Nov 2020 02:06:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm2; bh=e56Qr1D6Q0JN4rMrfeGzT4AFV7j
+        tQdKJQ4sStziYIhk=; b=ekZGrFZOe/BnJgVKTavprX8fR8NMA2MeblvoLTTYvgj
+        NxmYgb1jwoEtSgRzAx6Xuxj2b1ZXANwm4+7BsowflFUciZkfFQ195YmYXUm4dDXS
+        lDe0WTX5ThTynIpyVAzkkHrwv/LFsZuTeJL2lFErnEzoTU6ORLjZyowMSKwwcGWj
+        jgY2MIxeoquRiGkaMWc5YTewxL1zZVBZR6/+zgr6Yd8irYpS474/CuVGih+H5IUI
+        CohPo7hKWJQs+RWiLqmfEGELF13v200hYu9ORsME6tTqKtDS7GYZwjfdZ7fHRSoW
+        pocZ11JPG9+EaJyWnvSZCCjAGOCb1Sr8nupDBdxgk6Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=e56Qr1
+        D6Q0JN4rMrfeGzT4AFV7jtQdKJQ4sStziYIhk=; b=RNgkmgEnq+BE7oE51wQJ8P
+        Evh/AA3yUPEF5xkTGsctM+PLY+QUj9H3ujceX2eJo4kTcf7cGHBURh2780+fB9Ho
+        Cd5IUCcwhtyUCQu/RQkUFAew8dyF53ce1G5XJ+e+MactG4eY473nOz/a83p8wCWA
+        nflHBh9vEgjgRCD/Aa6DuI1hYT9PX5o+d33A/e4AWVplvDn4kmEsnvpZaFQxtS7G
+        h44lkr7xbIlcV4SZRj4NlWa2Hq/kEB54rzLK2cr4cFKfoD86AIbQ+EXVXYAHLKor
+        1+5p9EZuODsPhjyzyzsiHT86WJ/ngUnuwInKVLGdltedUrxbG8UBELsd+zktJQpw
+        ==
+X-ME-Sender: <xms:cQK-X1Y0w9BM98oB4x1xcMxE6HZtOG5v2NSfqzerHfvj2TnxCO5mVQ>
+    <xme:cQK-X8aoYF-N8qacssLOGR7s5vfNRfmV2VzRlXcjxsGmHcT6vRpuQgiD8rna588CG
+    lJlNApO47DLexiVCg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudegledguddtgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfh
+    necukfhppeejjedrudeluddrfeelrddvfeehnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:cQK-X38YsrU-LJD8bH5Qczk4BjpGx9TE7SFkS_3-IIUCUByaenhk4w>
+    <xmx:cQK-Xzr0zVqQuxQdDUuI6jma0A-eaN6FGEH1oNpYBRRQYEwHLuZJpQ>
+    <xmx:cQK-Xwrd2GAjmPuixgLjmmn0mOQWKKA8-hKasi1FYBrk6htfN-pv8Q>
+    <xmx:cgK-X7W5VfxnMCu5Xq0BraXlaYxNp_uGjyqaMBIMv7eDZ7Vho_495Q>
+Received: from vm-mail.pks.im (x4dbf27eb.dyn.telefonica.de [77.191.39.235])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 7C2513280065;
+        Wed, 25 Nov 2020 02:06:24 -0500 (EST)
+Received: from localhost (tanuki [10.192.0.23])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id c0c1ada7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 25 Nov 2020 07:06:20 +0000 (UTC)
+Date:   Wed, 25 Nov 2020 08:06:50 +0100
+From:   Patrick Steinhardt <ps@pks.im>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Emily Shaffer <emilyshaffer@google.com>,
+Cc:     git@vger.kernel.org,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Philip Oakley <philipoakley@iee.email>
+Subject: Re: [PATCH v2 2/2] config: allow specifying config entries via
+ envvar pairs
+Message-ID: <X74CigYS7AUtMo9Q@tanuki>
+References: <cover.1606214397.git.ps@pks.im>
+ <97740ada840a1e2f151003e695de9f2efa5a7e62.1606214397.git.ps@pks.im>
+ <xmqqtutef6kb.fsf@gitster.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="/fyQ+076vi/VL8Zy"
+Content-Disposition: inline
+In-Reply-To: <xmqqtutef6kb.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 24 Nov 2020 at 23:34, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Martin =C3=85gren <martin.agren@gmail.com> writes:
->
-> > We don't have any ownership issues with what we're copying now and can
-> > just greedily copy the whole thing. If and when we do need to handle
-> > such elements (`char *`?), we must and can handle it appropriately.
->
-> That is correct, but ...
->
-> > This
-> > commit doesn't really change that.
->
-> ... I suspect this is not.
->
-> In the original code, those who are adding a new field would notice
-> that it is not copied over to the new instance (because they didn't
-> add anything to grep_init() to copy the field) and at that point
-> they must stop and think how the new field need to be copied.
->
-> The structure assignment of the outer shell done in this patch means
-> they are robbed of the opportunity to stop and think, because most
-> of the time it "works" out of the box.  I'd feel safer if we left a
-> clue to future developers if we were to do your clean-up, perhaps
-> like:
->
-> diff --git c/grep.h w/grep.h
-> index b5c4e223a8..388d226da3 100644
-> --- c/grep.h
-> +++ w/grep.h
-> @@ -115,6 +115,14 @@ struct grep_expr {
->         } u;
->  };
->
-> +/*
-> + * grep_config() initializes one "default" instance of this type, and
-> + * it is copied by grep_init() to be used by each individual
-> + * invocation.  When adding a new field to this structure that is
-> + * populated from the configuration, be sure to think about ownership
-> + * (i.e. a shallow copy may not be what you want for the type of your
-> + * newly added field).
-> + */
->  struct grep_opt {
->         struct grep_pat *pattern_list;
->         struct grep_pat **pattern_tail;
 
-Ok, that makes sense. Maybe put it in `grep_config()` though? We can add
-anything we want to to this struct and initialize it from the command
-line. It's when we start pre-filling it in `grep_config()` that we need
-to think about this. What do you think? We could also do both of
-course to really hedge our bets...
+--/fyQ+076vi/VL8Zy
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  /*
-   * The instance of grep_opt that we set up here is copied by
-   * grep_init() to be used by each individual invocation.
-   * When populating a new field of this structure here,
-   * be sure to think about ownership (i.e. a shallow copy in
-   * grep_init() may not be what you want).
-   */
+On Tue, Nov 24, 2020 at 07:39:48PM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> > +GIT_CONFIG_COUNT,GIT_CONFIG_KEY_<n>,GIT_CONFIG_VALUE_<n>::
+>=20
+> I think we write a header with multiple/related items like this
+> instead:
+>=20
+>     GIT_CONFIG_COUNT::
+>     GIT_CONFIG_KEY_<n>::
+>     GIT_CONFIG_VALUE_<n>::
+>=20
+> See how -f/--file is marked up in an earlier part of the same file.
 
-Thanks
-Martin
+Ah, thanks. I wondered how to format these but didn't spot other
+examples.
+
+> > +	If GIT_CONFIG_COUNT is set to a positive number, all environment pairs
+> > +	GIT_CONFIG_KEY_<n> and GIT_CONFIG_VALUE_<n> up to that number will be
+> > +	added to the process's runtime configuration. The config pairs are
+> > +	zero-indexed. Any missing key or value is treated as an error. An emp=
+ty
+> > +	GIT_CONFIG_COUNT is treated the same as GIT_CONFIG_COUNT=3D0, namely =
+no
+> > +	pairs are processed. Config entries set this way have command scope,
+> > +	but will be overridden by any explicit options passed via `git -c`.
+> > +
+> >  See also <<FILES>>.
+>=20
+> Doesn't this <<FILES>> refer to GIT_CONFIG and GIT_CONFIG_NOSYSTEM
+> that are described earlier?  It certainly looks out of place to see
+> it after the KEY/VALUE thing.
+
+Right, my fault.
+
+> > +		for (i =3D 0; i < count; i++) {
+> > +			const char *key, *value;
+> > +
+> > +			strbuf_addf(&envvar, "GIT_CONFIG_KEY_%d", i);
+> > +			key =3D getenv(envvar.buf);
+> > +			if (!key) {
+> > +				ret =3D error(_("missing config key %s"), envvar.buf);
+> > +				goto out;
+> > +			}
+> > +			strbuf_reset(&envvar);
+> > +
+> > +			strbuf_addf(&envvar, "GIT_CONFIG_VALUE_%d", i);
+> > +			value =3D getenv(envvar.buf);
+> > +			if (!value) {
+> > +				ret =3D error(_("missing config value %s"), envvar.buf);
+> > +				goto out;
+> > +			}
+> > +			strbuf_reset(&envvar);
+>=20
+> Didn't we got bitten by number of times that the string returned by
+> getenv() are not necessarily nonvolatile depending on platforms?  I
+> think the result of getenv() would need to be xstrdup'ed.
+>=20
+> cf. 6776a84d (diff: ensure correct lifetime of external_diff_cmd,
+> 2019-01-11)
+
+We did, but do we have to in this case? There is no interleaving calls
+to getenv(3P), so we don't depend on at least $n getenv(3P) calls
+succeeding without clobbering old values. It's true that it could be
+that any other caller in the callchain clobbers the value, but as far as
+I can see none does.
+
+Anyway, I'm not opposed to changing this if you think it to be
+necessary.
+
+> > +			if (config_parse_pair(key, value, fn, data) < 0) {
+> > +				ret =3D -1;
+> > +				goto out;
+> > +			}
+> > +		}
+> >  	}
+> > =20
+> > -	for (i =3D 0; i < nr; i++) {
+> > -		if (git_config_parse_parameter(argv[i], fn, data) < 0) {
+> > -			ret =3D -1;
+> > +	env =3D getenv(CONFIG_DATA_ENVIRONMENT);
+>=20
+> > +	if (env) {
+> > +		int nr =3D 0, alloc =3D 0;
+> > +
+> > +		/* sq_dequote will write over it */
+> > +		envw =3D xstrdup(env);
+> > +
+> > +		if (sq_dequote_to_argv(envw, &argv, &nr, &alloc) < 0) {
+> > +			ret =3D error(_("bogus format in %s"), CONFIG_DATA_ENVIRONMENT);
+> >  			goto out;
+> >  		}
+> > +
+> > +		for (i =3D 0; i < nr; i++) {
+> > +			if (git_config_parse_parameter(argv[i], fn, data) < 0) {
+> > +				ret =3D -1;
+> > +				goto out;
+> > +			}
+> > +		}
+> >  	}
+> > =20
+> >  out:
+> > +	strbuf_release(&envvar);
+> >  	free(argv);
+> >  	free(envw);
+> >  	cf =3D source.prev;
+>=20
+> With re-indentation this patch does, it is a bit hard to see the
+> correspondence between common lines in preimage and postimage, but I
+> think the patch adds the support of the new style environments
+> before the existing support of the GIT_CONFIG_DATA, but when there
+> is no compelling reason not to, new code should be added near the
+> bottom, not before the existing code, in the function.
+>=20
+> Otherwise, this part of the patch looks OK to me.
+>=20
+> Thanks.
+
+It is required as this is what sets precedence of GIT_CONFIG_PARAMETERS
+and thus `git -c` over GIT_CONFIG_COUNT. It's easy enough to split this
+into two patches though, with a first refactoring which does the
+indentation and a second one which adds the new code.
+
+Patrick
+
+--/fyQ+076vi/VL8Zy
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl++AokACgkQVbJhu7ck
+PpThFQ//bFnc1FCkeVUc64gY71PHUIu/iLfVe11D+ISWd0w14Sz3/KCozx0fe6Bt
+fAGvcEICH20x27C88Cz+loAhNQPAywCt906Zi0QLrsl3JRL26gE89dFgYKajXmBm
+EugED/ztMmqUa3zALmN0ITqlSU9xdMmtZlplxvl20de7y1xbPRwGns5KnSF2U2QG
+Z9Gc2O3fuoJl9yJi9qy8MVKKIha524d5kVc8Obt7x628o8SdEnlFsmQR1fLusXlp
+14fMPm4qeHcdRcfISkOdAeiOc0PUzs3oMWXtVizMTmr7gUzdE++JpgWBSQQqajj/
+ubwEXbqXr0rsUShkbNshUIV/pVyrPoJTR50DCMWDx7FE+ydKvrLuWVq9Ep1CTIZV
+7ENvF1z2a9f/oOhu57Va3xd81Q125bg+46aDpee/TAgyFtq5KiIbG+2pnqahUmHg
+XsHGa/wQ5LrM2FWMOqjjZZh+UCITX3V/V6bDKYXJ7NNZPoXcxi+gfY2ezZkNV8zu
+lrpXSHwr+q1uxtp2XGidEQKvIj0TCN02hzGgAk5YCGn9COtqAhlJ5RMboV0NcBfz
+iF8HKyaW9Dx9QghEk4gDT8ZBt40pJJ69yJDSMTPxIzDb9yJrfh7izKPxJb1g+KaH
+5Ijotdh0rs20kiDZ6n5oKfewzbA0t7hKDWLtIU4qPHmuJ8bdclQ=
+=qyim
+-----END PGP SIGNATURE-----
+
+--/fyQ+076vi/VL8Zy--
