@@ -2,162 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5EC6C56202
-	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 23:01:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ACE6EC56201
+	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 23:04:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2FE2A206B5
-	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 23:01:01 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UFFjc1AN"
+	by mail.kernel.org (Postfix) with ESMTP id 5BD17206D8
+	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 23:04:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728673AbgKYXAp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Nov 2020 18:00:45 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52101 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728112AbgKYXAo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Nov 2020 18:00:44 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7728FFCF7F;
-        Wed, 25 Nov 2020 18:00:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+0zzmKcIXu9P5JzWuVRNBqz8TQw=; b=UFFjc1
-        AN2e5qoVDFcc5q9IobLPWNLzyE39QXh5IdwqB2lB6BxNfsHGS5tech+zJX3fbph8
-        uZYM22bqt9mBSGvyttSQ14YMN6ary3QPknvH0p8qrcB0LonDxJMCcEbRx5jQgAXk
-        1OVOG4GcUbr9AwG5N5nsoVmCbrMOH36vfSAD4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cjo4els9LcQpJ1lgVAneDJLrC7Ighm8w
-        bZ0aJw+ec3k572Wk2Jx9anncg0d5j2ghSTTZW442RAxpHe3k1t7Qp49x8ek+/NU2
-        RtDUy4HhqTf4umSLk19d7mueWwlIgbjYmxY8VXQYP7ARr5ZqRrUoPblTMNKQb+rk
-        eJTghZSkuC4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6F1ADFCF7E;
-        Wed, 25 Nov 2020 18:00:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9B021FCF78;
-        Wed, 25 Nov 2020 18:00:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+        id S1729545AbgKYXET (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Nov 2020 18:04:19 -0500
+Received: from mail-ej1-f65.google.com ([209.85.218.65]:36032 "EHLO
+        mail-ej1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729433AbgKYXES (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Nov 2020 18:04:18 -0500
+Received: by mail-ej1-f65.google.com with SMTP id lt17so139559ejb.3
+        for <git@vger.kernel.org>; Wed, 25 Nov 2020 15:04:17 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dNSUJ2eBCtclwqKsbADgiOnBPl94ufWkTN36I+pCmvw=;
+        b=OdYVUJzX7gowV6EeCte4lPVM5+xaWYcUj5I0CUZUqURsIodXmkTxO0Uz8HEgitWm9M
+         h6Qy2Yv2mfsF5ZJur7z2thMQ5OznqJJTbHLkZE+eUzvTWzAnn0VQ817p09r7022lXqAE
+         YeG+U78ZtQvrbD3WvUb/mieFGqO/l6ScDAc4fhrAZtwDazrIxuBU2ZRvDH6Zwzbp2QcV
+         vW60Lr9W7T7KTSGv8zlmlineXEIDJtpICUyZXZPKdEHBXc7N6skCc3MNxKaA5yflBfKE
+         ZUxV+UMkF/RLua5G78rKmcRfki4vAB/k8B2G2F4eWUHM5L/dvJnhCyBGBLgIO21Cfzj5
+         oTog==
+X-Gm-Message-State: AOAM533ifCsCsqxc0h1HVwbeqZHZz7EOK4MaeC2m7c2yOwfcfcOIcQDL
+        3ELkzMyYKnWLS8GOPAo7mO9N5UvqU8nevL2LX2M=
+X-Google-Smtp-Source: ABdhPJxWT4KgCYSii45U5FwpMUsJ2zLwqd5nayR2lb2bNgHaRM3GRrqe2SN5BZVh90A6oyqgobX9BY+zsnlu7IGwaqs=
+X-Received: by 2002:a17:906:5587:: with SMTP id y7mr251897ejp.138.1606345456918;
+ Wed, 25 Nov 2020 15:04:16 -0800 (PST)
+MIME-Version: 1.0
+References: <pull.796.v2.git.1606147507.gitgitgadget@gmail.com>
+ <pull.796.v3.git.1606342376.gitgitgadget@gmail.com> <0c276ffcee4be302be3db9b43ab8371ef26a0aec.1606342377.git.gitgitgadget@gmail.com>
+In-Reply-To: <0c276ffcee4be302be3db9b43ab8371ef26a0aec.1606342377.git.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 25 Nov 2020 18:04:05 -0500
+Message-ID: <CAPig+cTVu4tpvzCyje7_nUbVD0ZdZudzw-SDSm9e8LmOo3w5ng@mail.gmail.com>
+Subject: Re: [PATCH v3 5/8] config: add --fixed-value option, un-implemented
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff King <peff@peff.net>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v3 0/8] config: add --fixed-value option
-References: <pull.796.v2.git.1606147507.gitgitgadget@gmail.com>
-        <pull.796.v3.git.1606342376.gitgitgadget@gmail.com>
-Date:   Wed, 25 Nov 2020 15:00:39 -0800
-In-Reply-To: <pull.796.v3.git.1606342376.gitgitgadget@gmail.com> (Derrick
-        Stolee via GitGitGadget's message of "Wed, 25 Nov 2020 22:12:48
-        +0000")
-Message-ID: <xmqq7dq9ca94.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0AA8A5FA-2F72-11EB-B023-E43E2BB96649-77302942!pb-smtp20.pobox.com
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Wed, Nov 25, 2020 at 5:13 PM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> [...]
+> Add a new '--fixed-value' option that does not currently change the
+> behavior. The implementation will be filled in by later changes for
+> each appropriate action. For now, check and test that --fixed-value
+> will abort the command when included with an incompatible action or
+> without a 'value-pattern' argument.
+> [...]
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+> @@ -9,15 +9,15 @@ git-config - Get and set repository or global options
+> +'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] --get name [value-pattern]
+> +'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] --get-all name [value-pattern]
+> +'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] [--name-only] --get-regexp name_regex [value-pattern]
 
-> As reported [1], 'git maintenance unregister' fails when a repository is
-> located in a directory with regex glob characters.
->
-> [1] 
-> https://lore.kernel.org/git/2c2db228-069a-947d-8446-89f4d3f6181a@gmail.com/T/#mb96fa4187a0d6aeda097cd95804a8aafc0273022
->
-> The discussed solution was to modify 'git config' to specify that the
-> 'value_regex' argument should be treated as an exact string match. This is
-> the primary change in this series, with an additional patch at the end to
-> make 'git maintenance [un]register' use this option, when necessary.
->
-> While we're here, let's rename 'value_regex' to 'value_pattern' to make
-> things a bit clearer.
->
-> Updates in V3
-> =============
->
->  * Renamed 'value_regex' to 'value_pattern' in code and 'value-pattern' in
->    docs (except po/)
->    
->    
->  * Reordered commits slightly to help with that rename.
->    
->    
->  * Updated tests to use 'test_when_finished rm -f ...'
->    
->    
->  * Changed all references to "glob" characters to "meta" characters.
->    
->    
->  * Several other test modifications. Thanks, Emily, for the review!
->    
->    
->
-> Thanks, -Stolee
->
-> P.S. Happy Thanksgiving to those celebrating!
+Didn't notice this before (since I wasn't paying close attention), but
+portions of the command which are to be filled-in by the user are
+normally surrounded by angle brackets. Without the angle brackets, the
+interpretation is that the argument is to be typed literally as shown.
+So, the above should really be <value-pattern> and <name_regex> (or
+even better <name-regex>), just as other fill-in arguments
+<file-option> and <type> are formatted already.
 
-Thanks.  The only thing that still stand out, after the first 7
-patches (queued as its own "add --fixed-value option to config"
-topic) are queued, is that the early part of the documentation,
-namely, a paragraph where it mentions value-pattern, still lives
-in the world where it can only be a regexp.
+I'm not suggesting that this series should tackle such a change since
+that would be straying quite far from the original goal (which, as I
+recall, was fixing a misbehavior of git-maintenance), but just
+pointing out a possible mini-project for someone to tackle at some
+point.
 
-Perhaps insert the following between step 7 and 8?
+> +--fixed-value::
+> +       When used with the `value-pattern` argument, treat `value-pattern` as
+> +       an exact string instead of a regular expression. This will restrict
+> +       the name/value pairs that are matched to only those where the value
+> +       is exactly equal to the `value-pattern`.
 
---- >8 ------ >8 ------ >8 ------ >8 ------ >8 ------ >8 ---
-Subject: config doc: value-pattern is not necessarily a regexp
+Likewise, this would also use the angle brackets as `<value-pattern>`
+(or '<value-pattern>' with single quotes rather than backquotes, for
+which, I believe, Junio recently stated his preference)...
 
-The introductory part of the "git config --help" mentions the
-optional value-pattern argument, but give no hint that it can be
-something other than a regular expression (worse, it just says
-"POSIX regexp", which usually means BRE but the regexp the command
-takes is ERE).  Also, it needs to be documented that the '!' prefix
-to negate the match, which is only mentioned in this part of the
-document, works only with regexp and not with the --fixed-value.
+>  --type <type>::
+>    'git config' will ensure that any input or output is valid under the given
+>    type constraint(s), and will canonicalize outgoing values in `<type>`'s
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-config.txt | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+... just like <type> is shown in angle brackets.
 
-diff --git c/Documentation/git-config.txt w/Documentation/git-config.txt
-index 09a1d273a9..0e9351d3cb 100644
---- c/Documentation/git-config.txt
-+++ w/Documentation/git-config.txt
-@@ -33,10 +33,13 @@ escaped.
- 
- Multiple lines can be added to an option by using the `--add` option.
- If you want to update or unset an option which can occur on multiple
--lines, a POSIX regexp `value-pattern` needs to be given.  Only the
--existing values that match the regexp are updated or unset.  If
--you want to handle the lines that do *not* match the regex, just
--prepend a single exclamation mark in front (see also <<EXAMPLES>>).
-+lines, a `value-pattern` (which is an extended regular expression,
-+unless the `--fixed-value` option is given) needs to be given.  Only the
-+existing values that match the pattern are updated or unset.  If
-+you want to handle the lines that do *not* match the pattern, just
-+prepend a single exclamation mark in front (see also <<EXAMPLES>>),
-+but note that this only works when the `--fixed-value` option is not
-+in use.
- 
- The `--type=<type>` option instructs 'git config' to ensure that incoming and
- outgoing values are canonicalize-able under the given <type>.  If no
+> +       OPT_BOOL(0, "fixed-value", &fixed_value, N_("use string equality when comparing values to 'value-pattern'")),
+
+Here, I think omitting angle brackets is common, so this is probably okay.
