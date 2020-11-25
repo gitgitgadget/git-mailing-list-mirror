@@ -2,262 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DFB04C64E75
-	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 23:35:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D128C56202
+	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 23:43:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 93F812083E
-	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 23:35:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2DF4F20872
+	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 23:43:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BZLb2DlB"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pp6YzIwY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730384AbgKYXev (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Nov 2020 18:34:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40530 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726171AbgKYXev (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Nov 2020 18:34:51 -0500
-Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57C7AC0613D4
-        for <git@vger.kernel.org>; Wed, 25 Nov 2020 15:34:51 -0800 (PST)
-Received: by mail-oi1-x243.google.com with SMTP id o25so242713oie.5
-        for <git@vger.kernel.org>; Wed, 25 Nov 2020 15:34:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ZpHCstE09YwJv82yvtJn1ceRRPvyWL50rX8fZzfn1xE=;
-        b=BZLb2DlBj8QBwFw4VoTC8I06lURq3QI3julNiMkK0i3mzkdHCBuQfdjdOfXFk3qS2i
-         IIP5yXeGAEStn41EgMppXhjgqv1/YW1TjSK8UqHsSq5rVT3Lx0oJFbbNVbNvEQxEAR1L
-         9ffYeuoXTz8WiNqYP+1gm3u69jHe/QpVPzn/ZvAtUABq6pU51pyE0rNt/u3T2iqLwCM+
-         F9VMNav54VAK+bV/4kwYh4rXoM+peklp+DC06UoBRo8mmsF8+lz6LTqv5MPacRgqsZ4B
-         H7ukgVRAuhjVb+hql2pXdfuwfIcH6HFj3B7JrZbVc9QyoKsAlsOpfMw50Bym/YdIjf9S
-         pQKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ZpHCstE09YwJv82yvtJn1ceRRPvyWL50rX8fZzfn1xE=;
-        b=psMNXXLGfpdXZavjqfwP7bkAZuR/iryr/AkbfX2tEDPDe72oWgzPmIiBnajt7cRQ4D
-         u6E/ZAR9/vXA78RMxIUObRqT/WDszayFT17Eq3TLG04VwqpJ086F6iWNAclDSGLiwyus
-         D91W/Q0kGnEOX9AzawvWf1q9xnTQtRh+1gmYnPc0MCgqgw0Q43f9x9tuaF46NEOtQnce
-         JJI5Bz8U87yVFwWRjeZ7m+5oVSxLZQzuuLF+08shkbJxYAHqTtq82vYGLCc6mfPxSE2t
-         2YxciO81+VoSQ0U526tdGy/yjcktlr62y9XFHXiuwWptShaC4H17UV1AmHcJsYRGQW4L
-         b4Lw==
-X-Gm-Message-State: AOAM530Sqet+RgO8VBAN+kl8I+w7YerQxWsm4D3mDuiKazPO49JUHwwm
-        0c1VAWFhtmK3e/tgX1Tr+iKmaCL5Y7HsMg==
-X-Google-Smtp-Source: ABdhPJx5aq3X3vxUvu/jaoCmfgHuLbgG5WdTrGbzGoGTxOPrnqKbXMOD59GvMdvrjUJBNak32UWt9A==
-X-Received: by 2002:a05:6808:b38:: with SMTP id t24mr324780oij.153.1606347290517;
-        Wed, 25 Nov 2020 15:34:50 -0800 (PST)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id m29sm1937345otj.42.2020.11.25.15.34.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Nov 2020 15:34:50 -0800 (PST)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        id S1726970AbgKYXmp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Nov 2020 18:42:45 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61855 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726060AbgKYXmo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Nov 2020 18:42:44 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8D84EFD333;
+        Wed, 25 Nov 2020 18:42:44 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=CsYt7JWzROhJZ3WBLl7Gvm3vfcM=; b=pp6YzI
+        wYLiZB7vtNyDaFhXCqxEA8D7RiFIg6lMS4vmC24sr6q2NNYmsiZHX/abZ4xNBvvU
+        chl7XZwGLxzMoeKMtSaF8NYJLSFlXrjLItgAy9K7oE8F0CHH9iWBwfKtahvlVnC4
+        55TvpDAoowG0ET6yc/GtNy9WahUPkmv3QLSR4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ErCJhbjzve2qZq8mRP6ShfwIRsDhFnsX
+        JahJj34oTDpeORj7oS5slWue4bwXj51dl61fUHCvod5Itws4Qj/HvM6OeKIujGhs
+        vcTEB8RFMwVxEqHz7ZQn+976+q9UkJwpGRwIhIQBpsqL7xvoEgkv8pgd3Uyk0Sqi
+        l0tBkeuW72A=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 85E7DFD332;
+        Wed, 25 Nov 2020 18:42:44 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D1620FD32D;
+        Wed, 25 Nov 2020 18:42:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Brandon Williams <bwilliams.eng@gmail.com>,
         Jacob Keller <jacob.keller@gmail.com>,
-        Tomo Krajina <tkrajina@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 3/3] refspec: make @ a synonym of HEAD
-Date:   Wed, 25 Nov 2020 17:34:43 -0600
-Message-Id: <20201125233443.63130-4-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20201125233443.63130-1-felipe.contreras@gmail.com>
+        Tomo Krajina <tkrajina@gmail.com>
+Subject: Re: [PATCH v3 0/3] refspec: make @ a synonym of HEAD
 References: <20201125233443.63130-1-felipe.contreras@gmail.com>
+Date:   Wed, 25 Nov 2020 15:42:40 -0800
+In-Reply-To: <20201125233443.63130-1-felipe.contreras@gmail.com> (Felipe
+        Contreras's message of "Wed, 25 Nov 2020 17:34:40 -0600")
+Message-ID: <xmqqtutdatqn.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: E8D40B44-2F77-11EB-8659-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since commit 9ba89f484e git learned how to push to a remote branch using
-the source @, for example:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-  git push origin @:master
+> Basically $subject.
 
-However, if the right-hand side is missing, the push fails:
+Will replace what was on 'seen'.
 
-  git push origin @
+Dscho, heads-up as this series will add more references of 'master'
+in the test suite.
 
-It is obvious what is the desired behavior, and allowing the push makes
-things more consistent.
-
-Additionally, @:master now has the same semantics as HEAD:master.
-
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- refspec.c             |   5 +-
- t/t5511-refspec.sh    |   2 +
- t/t5516-fetch-push.sh | 106 ++++++++++++++++++++++--------------------
- 3 files changed, 61 insertions(+), 52 deletions(-)
-
-diff --git a/refspec.c b/refspec.c
-index c49347c2d7..adbfb3283a 100644
---- a/refspec.c
-+++ b/refspec.c
-@@ -71,7 +71,10 @@ static int parse_refspec(struct refspec_item *item, const char *refspec, int fet
- 	}
- 
- 	item->pattern = is_glob;
--	item->src = xstrndup(lhs, llen);
-+	if (llen == 1 && *lhs == '@')
-+		item->src = xstrdup("HEAD");
-+	else
-+		item->src = xstrndup(lhs, llen);
- 	flags = REFNAME_ALLOW_ONELEVEL | (is_glob ? REFNAME_REFSPEC_PATTERN : 0);
- 
- 	if (item->negative) {
-diff --git a/t/t5511-refspec.sh b/t/t5511-refspec.sh
-index f541f30bc2..f808649de4 100755
---- a/t/t5511-refspec.sh
-+++ b/t/t5511-refspec.sh
-@@ -58,6 +58,8 @@ test_refspec fetch 'HEAD~4:refs/remotes/frotz/new'		invalid
- 
- test_refspec push 'HEAD'
- test_refspec fetch 'HEAD'
-+test_refspec push '@'
-+test_refspec fetch '@'
- test_refspec push 'refs/heads/ nitfol'				invalid
- test_refspec fetch 'refs/heads/ nitfol'				invalid
- 
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 245eafb170..0cc5688135 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -436,71 +436,75 @@ test_expect_success 'push ref expression with non-existent, incomplete dest' '
- 
- '
- 
--test_expect_success 'push with HEAD' '
-+for head in HEAD @; do
- 
--	mk_test testrepo heads/master &&
--	git checkout master &&
--	git push testrepo HEAD &&
--	check_push_result testrepo $the_commit heads/master
-+	test_expect_success "push with $head" "
- 
--'
-+		mk_test testrepo heads/master &&
-+		git checkout master &&
-+		git push testrepo $head &&
-+		check_push_result testrepo \$the_commit heads/master
- 
--test_expect_success 'push with HEAD nonexisting at remote' '
-+	"
- 
--	mk_test testrepo heads/master &&
--	git checkout -b local master &&
--	test_when_finished "git checkout master; git branch -D local" &&
--	git push testrepo HEAD &&
--	check_push_result testrepo $the_commit heads/local
--'
-+	test_expect_success "push with $head nonexisting at remote" "
- 
--test_expect_success 'push with +HEAD' '
-+		mk_test testrepo heads/master &&
-+		git checkout -b local master &&
-+		test_when_finished 'git checkout master; git branch -D local' &&
-+		git push testrepo $head &&
-+		check_push_result testrepo \$the_commit heads/local
-+	"
- 
--	mk_test testrepo heads/master &&
--	git checkout -b local master &&
--	test_when_finished "git checkout master; git branch -D local" &&
--	git push testrepo master local &&
--	check_push_result testrepo $the_commit heads/master &&
--	check_push_result testrepo $the_commit heads/local &&
-+	test_expect_success "push with +$head" "
- 
--	# Without force rewinding should fail
--	git reset --hard HEAD^ &&
--	test_must_fail git push testrepo HEAD &&
--	check_push_result testrepo $the_commit heads/local &&
-+		mk_test testrepo heads/master &&
-+		git checkout -b local master &&
-+		test_when_finished 'git checkout master; git branch -D local' &&
-+		git push testrepo master local &&
-+		check_push_result testrepo \$the_commit heads/master &&
-+		check_push_result testrepo \$the_commit heads/local &&
- 
--	# With force rewinding should succeed
--	git push testrepo +HEAD &&
--	check_push_result testrepo $the_first_commit heads/local
-+		# Without force rewinding should fail
-+		git reset --hard $head^ &&
-+		test_must_fail git push testrepo $head &&
-+		check_push_result testrepo \$the_commit heads/local &&
- 
--'
-+		# With force rewinding should succeed
-+		git push testrepo +$head &&
-+		check_push_result testrepo \$the_first_commit heads/local
- 
--test_expect_success 'push HEAD with non-existent, incomplete dest' '
-+	"
- 
--	mk_test testrepo &&
--	git checkout master &&
--	git push testrepo HEAD:branch &&
--	check_push_result testrepo $the_commit heads/branch
-+	test_expect_success "push $head with non-existent, incomplete dest" "
- 
--'
-+		mk_test testrepo &&
-+		git checkout master &&
-+		git push testrepo $head:branch &&
-+		check_push_result testrepo \$the_commit heads/branch
- 
--test_expect_success 'push with config remote.*.push = HEAD' '
-+	"
- 
--	mk_test testrepo heads/local &&
--	git checkout master &&
--	git branch -f local $the_commit &&
--	test_when_finished "git branch -D local" &&
--	(
--		cd testrepo &&
--		git checkout local &&
--		git reset --hard $the_first_commit
--	) &&
--	test_config remote.there.url testrepo &&
--	test_config remote.there.push HEAD &&
--	test_config branch.master.remote there &&
--	git push &&
--	check_push_result testrepo $the_commit heads/master &&
--	check_push_result testrepo $the_first_commit heads/local
--'
-+	test_expect_success "push with config remote.*.push = $head" "
-+
-+		mk_test testrepo heads/local &&
-+		git checkout master &&
-+		git branch -f local \$the_commit &&
-+		test_when_finished 'git branch -D local' &&
-+		(
-+			cd testrepo &&
-+			git checkout local &&
-+			git reset --hard \$the_first_commit
-+		) &&
-+		test_config remote.there.url testrepo &&
-+		test_config remote.there.push $head &&
-+		test_config branch.master.remote there &&
-+		git push &&
-+		check_push_result testrepo \$the_commit heads/master &&
-+		check_push_result testrepo \$the_first_commit heads/local
-+	"
-+
-+done
- 
- test_expect_success 'push with remote.pushdefault' '
- 	mk_test up_repo heads/master &&
--- 
-2.29.2
-
+Thanks.
