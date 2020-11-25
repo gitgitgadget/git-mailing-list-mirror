@@ -4,53 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AACBC56201
-	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 19:30:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96CACC56202
+	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 19:31:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E4F72206F9
-	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 19:30:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31B312083E
+	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 19:31:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YjmJ3o4N"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Xnw2Q6wr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728578AbgKYTaE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Nov 2020 14:30:04 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:53786 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728568AbgKYTaD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Nov 2020 14:30:03 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5D048102EBF;
-        Wed, 25 Nov 2020 14:30:02 -0500 (EST)
+        id S1728655AbgKYTap (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Nov 2020 14:30:45 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51325 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728639AbgKYTao (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Nov 2020 14:30:44 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6A10F9E7C1;
+        Wed, 25 Nov 2020 14:30:42 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fkEofJ8h0JfJVkYZKPqgpil4epM=; b=YjmJ3o
-        4N7KAck9ExIxhtss6Qk4KiJO7Y0zP87CIPImwCu9F+z4/rwZx/xFzAqBze7habG9
-        sFxdOpdEcF3fnLVSt6isz7dV0Af3tXgRUTFHCU0dDHDjjdKFO1nNTMTlOpjfrA5q
-        oCAZzHEttVEUAuacG6mRaCz+ziD5CA0ERricU=
+        :content-type; s=sasl; bh=26eR5sZ0f2xa4TagK/4GHGcRJ0Q=; b=Xnw2Q6
+        wrw+iU/2DXt1EwT9IPPCEL50sskTJgu5OLvjQMx3tzm5UR4qayIOHC5THToD7uWX
+        wtRiTxYVrHCqAbBw2bV5M+TP4cNOEZjaHEznQqt2E+VyOLEzEKo/ZfWj7d6VLR1C
+        YKjcQ8ezrxg6BwFPI2y5YH/TtKlpQ2Gwr9J7o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=eFJzhVVSk57Po+ky10WxIzmyhR6xsgOO
-        Q31+aEW3FMGfHwj6mLh48iJvbqYOP3AHGH9xfvBnhLB5S8wqnIkn0sNzZqL0Lzxt
-        ayay+GR/WmTSbn66tkS78ew4PPQb9PfkOfGsk4P1ROtX0zXaUKsk8WH/u0rEcBkx
-        CHpA2EXDB/k=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 53FC1102EBE;
-        Wed, 25 Nov 2020 14:30:02 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=HGxPOIzZxDvzxiTGblk3cJd/hH2EwLHC
+        EXrugBEIT70aZFXWwo2tDxf6XSKUiz3n2zBO7BJzizo2m680eu/khjab5BYQN6oH
+        QZYbk3s9ByTZTbhS4iynbN/SPktPGhKJ8WJcEK4wAGLYxKn9JaiOTmZQHaNKrkV7
+        dO5iKWB4iuw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5DFA29E7BF;
+        Wed, 25 Nov 2020 14:30:42 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4D539102EB9;
-        Wed, 25 Nov 2020 14:29:59 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8A3199E7BE;
+        Wed, 25 Nov 2020 14:30:41 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff King <peff@peff.net>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
@@ -65,56 +68,37 @@ References: <pull.796.git.1605801143.gitgitgadget@gmail.com>
         <20201123215122.GD499823@google.com>
         <xmqqy2irlmq5.fsf@gitster.c.googlers.com>
         <91af356f-d0a0-1149-15dc-32da803ac6d9@gmail.com>
-Date:   Wed, 25 Nov 2020 11:29:57 -0800
-In-Reply-To: <91af356f-d0a0-1149-15dc-32da803ac6d9@gmail.com> (Derrick
-        Stolee's message of "Wed, 25 Nov 2020 09:08:15 -0500")
-Message-ID: <xmqq8sapfd56.fsf@gitster.c.googlers.com>
+        <CAPig+cTQMCho=wFHhg-ACrP2oOEQwBHnfmV-Rk1vARpF2Fafng@mail.gmail.com>
+Date:   Wed, 25 Nov 2020 11:30:40 -0800
+In-Reply-To: <CAPig+cTQMCho=wFHhg-ACrP2oOEQwBHnfmV-Rk1vARpF2Fafng@mail.gmail.com>
+        (Eric Sunshine's message of "Wed, 25 Nov 2020 12:28:46 -0500")
+Message-ID: <xmqq4kldfd3z.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 9B400EE6-2F54-11EB-A82F-D609E328BF65-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: B46F5584-2F54-11EB-931D-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> On 11/23/2020 5:41 PM, Junio C Hamano wrote:
->> Emily Shaffer <emilyshaffer@google.com> writes:
->> 
->>>>  	OPT_BIT('l', "list", &actions, N_("list all"), ACTION_LIST),
->>>> +	OPT_BOOL(0, "fixed-value", &fixed_value, N_("use string equality when matching values")),
->>> I'm not sure how to feel about this phrasing. I wonder if it would be
->>> clearer to say something like 'treat 'value_regex' as a literal string
->>> instead'? Hmmm.
->> 
->> Update the document and help text with s/value_regex/value_pattern/
->> and say "use value_pattern as a fixed string, not an extended regexp",
->> perhaps?
+> On Wed, Nov 25, 2020 at 9:09 AM Derrick Stolee <stolee@gmail.com> wrote:
+>> On 11/23/2020 5:41 PM, Junio C Hamano wrote:
+>> > Update the document and help text with s/value_regex/value_pattern/
+>> > and say "use value_pattern as a fixed string, not an extended regexp",
+>> > perhaps?
+>>
+>> If I go about changing all documentation and error messages to say
+>> "value_pattern" instead of "value_regex", should I also update the uses
+>> in the *.po translation files? Or, should I leave them unmodified to
+>> trigger manual intervention by the translators?
 >
-> If I go about changing all documentation and error messages to say
-> "value_pattern" instead of "value_regex", should I also update the uses
-> in the *.po translation files? Or, should I leave them unmodified to
-> trigger manual intervention by the translators?
+> A minor request: If you are going to put in the work to make that
+> substitution, perhaps change it to "value-pattern" rather than
+> "value_pattern" since a hyphen is more common in documentation for
+> this sort of thing than underscore.
 
-If you do, you do not have to worry.  The i18n/l10n coordinator will
-update the po/git.pot file when we near the code freeze using an
-automated tool that extracts strings from the sources, and the
-po/xx.po files for languages are updated from the updated po/git.pot
-mechanically with another tool, reusing unmodified entries, adding
-new ones, and marking near-hit ones to help avoid unnecessary work
-by translators.
-
-I earlier thought that the "when matching values" phrase you chose
-in this round, without such a clean-up, would be OK in the context
-of this topic (which is depended on by a bugfix topic), but after
-seeing how we need to clarify the way '!' negation prefix works in
-the documentation that has deeply ingrained assumption that value is
-matched using ERE, it may be necessary to bite the bullet and do the
-regex->pattern now.
-
-Thanks.
-
-
-
+Yup, I misspoke.  s/value_regex/value-regex/ unless it is a variable
+name where '-' cannot appear.
 
