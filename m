@@ -2,113 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ACE6EC56201
-	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 23:04:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78FF9C56201
+	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 23:09:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5BD17206D8
-	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 23:04:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2740D20872
+	for <git@archiver.kernel.org>; Wed, 25 Nov 2020 23:09:21 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NleYgleU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729545AbgKYXET (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Nov 2020 18:04:19 -0500
-Received: from mail-ej1-f65.google.com ([209.85.218.65]:36032 "EHLO
-        mail-ej1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729433AbgKYXES (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Nov 2020 18:04:18 -0500
-Received: by mail-ej1-f65.google.com with SMTP id lt17so139559ejb.3
-        for <git@vger.kernel.org>; Wed, 25 Nov 2020 15:04:17 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dNSUJ2eBCtclwqKsbADgiOnBPl94ufWkTN36I+pCmvw=;
-        b=OdYVUJzX7gowV6EeCte4lPVM5+xaWYcUj5I0CUZUqURsIodXmkTxO0Uz8HEgitWm9M
-         h6Qy2Yv2mfsF5ZJur7z2thMQ5OznqJJTbHLkZE+eUzvTWzAnn0VQ817p09r7022lXqAE
-         YeG+U78ZtQvrbD3WvUb/mieFGqO/l6ScDAc4fhrAZtwDazrIxuBU2ZRvDH6Zwzbp2QcV
-         vW60Lr9W7T7KTSGv8zlmlineXEIDJtpICUyZXZPKdEHBXc7N6skCc3MNxKaA5yflBfKE
-         ZUxV+UMkF/RLua5G78rKmcRfki4vAB/k8B2G2F4eWUHM5L/dvJnhCyBGBLgIO21Cfzj5
-         oTog==
-X-Gm-Message-State: AOAM533ifCsCsqxc0h1HVwbeqZHZz7EOK4MaeC2m7c2yOwfcfcOIcQDL
-        3ELkzMyYKnWLS8GOPAo7mO9N5UvqU8nevL2LX2M=
-X-Google-Smtp-Source: ABdhPJxWT4KgCYSii45U5FwpMUsJ2zLwqd5nayR2lb2bNgHaRM3GRrqe2SN5BZVh90A6oyqgobX9BY+zsnlu7IGwaqs=
-X-Received: by 2002:a17:906:5587:: with SMTP id y7mr251897ejp.138.1606345456918;
- Wed, 25 Nov 2020 15:04:16 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.796.v2.git.1606147507.gitgitgadget@gmail.com>
- <pull.796.v3.git.1606342376.gitgitgadget@gmail.com> <0c276ffcee4be302be3db9b43ab8371ef26a0aec.1606342377.git.gitgitgadget@gmail.com>
-In-Reply-To: <0c276ffcee4be302be3db9b43ab8371ef26a0aec.1606342377.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 25 Nov 2020 18:04:05 -0500
-Message-ID: <CAPig+cTVu4tpvzCyje7_nUbVD0ZdZudzw-SDSm9e8LmOo3w5ng@mail.gmail.com>
-Subject: Re: [PATCH v3 5/8] config: add --fixed-value option, un-implemented
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
+        id S1729482AbgKYXJU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Nov 2020 18:09:20 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56291 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729187AbgKYXJU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Nov 2020 18:09:20 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 97A55A0016;
+        Wed, 25 Nov 2020 18:09:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/ZtXPmWSSPBKijpRMm3//qe2YxU=; b=NleYgl
+        eUkbBbiYWaQJDQXwvP/EqP+jZfgNqP7wRZmIbkkZ4aLgEo9tPoL/NXZ3FMQMS6mn
+        +swzJTGa2TTSxsemMiMkfcUGI9ys/xDN/yEGw9O4on1G1LHrfUNNZ3gL+4YQ8VPA
+        Y9U/CI2Xon0oMT4OKN/nBB9CL8i2NWNeyzvR0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=iknsmppEjZ4v3imINkNSpVBp0rvNRfBm
+        F3pXwH6JQt+X6vDWvdlKF0c62sVce0X0bnCl+i3cDm6W7MbePPEieSCFEZ1Bj3X0
+        6yzJ29RmG21gXsutwxA7+z549uRakpSC999itPiRoY3O+mSIVV2302Yo6peCE2rb
+        oG8q4gewHLQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8E60CA0015;
+        Wed, 25 Nov 2020 18:09:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 12553A0014;
+        Wed, 25 Nov 2020 18:09:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff King <peff@peff.net>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v3 8/8] maintenance: use 'git config --fixed-value'
+References: <pull.796.v2.git.1606147507.gitgitgadget@gmail.com>
+        <pull.796.v3.git.1606342376.gitgitgadget@gmail.com>
+        <558775f83d7cbf7ad0e2090ab13be404cdf16b24.1606342377.git.gitgitgadget@gmail.com>
+Date:   Wed, 25 Nov 2020 15:09:16 -0800
+In-Reply-To: <558775f83d7cbf7ad0e2090ab13be404cdf16b24.1606342377.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Wed, 25 Nov 2020
+        22:12:56 +0000")
+Message-ID: <xmqq360xc9ur.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3DE27954-2F73-11EB-B998-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 25, 2020 at 5:13 PM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> [...]
-> Add a new '--fixed-value' option that does not currently change the
-> behavior. The implementation will be filled in by later changes for
-> each appropriate action. For now, check and test that --fixed-value
-> will abort the command when included with an incompatible action or
-> without a 'value-pattern' argument.
-> [...]
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
-> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-> @@ -9,15 +9,15 @@ git-config - Get and set repository or global options
-> +'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] --get name [value-pattern]
-> +'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] --get-all name [value-pattern]
-> +'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] [--name-only] --get-regexp name_regex [value-pattern]
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Didn't notice this before (since I wasn't paying close attention), but
-portions of the command which are to be filled-in by the user are
-normally surrounded by angle brackets. Without the angle brackets, the
-interpretation is that the argument is to be typed literally as shown.
-So, the above should really be <value-pattern> and <name_regex> (or
-even better <name-regex>), just as other fill-in arguments
-<file-option> and <type> are formatted already.
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> When a repository's leading directories contain regex metacharacters,
+> the config calls for 'git maintenance register' and 'git maintenance
+> unregister' are not careful enough. Use the new --fixed-value option
+> to direct the config machinery to use exact string matches. This is a
+> more robust option than escaping these arguments in a piecemeal fashion.
+>
+> For the test, require that we are not running on Windows since the '+'
+> and '*' characters are not allowed on that filesystem.
 
-I'm not suggesting that this series should tackle such a change since
-that would be straying quite far from the original goal (which, as I
-recall, was fixing a misbehavior of git-maintenance), but just
-pointing out a possible mini-project for someone to tackle at some
-point.
+Thanks.  
 
-> +--fixed-value::
-> +       When used with the `value-pattern` argument, treat `value-pattern` as
-> +       an exact string instead of a regular expression. This will restrict
-> +       the name/value pairs that are matched to only those where the value
-> +       is exactly equal to the `value-pattern`.
+I was hoping there would be some byte we could use, but it seems
+"a[]b" would not work if we go back beyond VFAT or NTFS.  !MINGW
+it is, then.
 
-Likewise, this would also use the angle brackets as `<value-pattern>`
-(or '<value-pattern>' with single quotes rather than backquotes, for
-which, I believe, Junio recently stated his preference)...
-
->  --type <type>::
->    'git config' will ensure that any input or output is valid under the given
->    type constraint(s), and will canonicalize outgoing values in `<type>`'s
-
-... just like <type> is shown in angle brackets.
-
-> +       OPT_BOOL(0, "fixed-value", &fixed_value, N_("use string equality when comparing values to 'value-pattern'")),
-
-Here, I think omitting angle brackets is common, so this is probably okay.
