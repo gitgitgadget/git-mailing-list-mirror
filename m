@@ -2,69 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA5E9C71156
-	for <git@archiver.kernel.org>; Thu, 26 Nov 2020 19:42:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51FF3C8300F
+	for <git@archiver.kernel.org>; Thu, 26 Nov 2020 19:42:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8AB7821D91
-	for <git@archiver.kernel.org>; Thu, 26 Nov 2020 19:42:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0D0D2221E9
+	for <git@archiver.kernel.org>; Thu, 26 Nov 2020 19:42:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nGplTV93"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QPa/QLCd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405173AbgKZTmu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Nov 2020 14:42:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58114 "EHLO
+        id S2405259AbgKZTmx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Nov 2020 14:42:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404765AbgKZTmt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Nov 2020 14:42:49 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6137C0613D4
-        for <git@vger.kernel.org>; Thu, 26 Nov 2020 11:42:47 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id g25so1184775wmh.1
-        for <git@vger.kernel.org>; Thu, 26 Nov 2020 11:42:47 -0800 (PST)
+        with ESMTP id S2404507AbgKZTmw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Nov 2020 14:42:52 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 893ABC0617A7
+        for <git@vger.kernel.org>; Thu, 26 Nov 2020 11:42:51 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id z7so3339706wrn.3
+        for <git@vger.kernel.org>; Thu, 26 Nov 2020 11:42:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=62/HdOtK/bFrgyD8rx+WpeHv+7w6wslOt4Y0m8GaRK0=;
-        b=nGplTV93UDbymg5g+gspPezgmzSA1egHCKoVGMsvMAWZ2J0uaqsgn8z+FiqivL+PpM
-         hPg6NuCTOUBGrih29Fyr5RygsEL7678yFcWcHJ+wMSUu9WLmMj0JgK8a8ocRoq80B9uX
-         14F2IyGzNRjAgbWUSDZJRE1N1PrMrn+je310kkIavG3Rex6k+NyIb9kvNqH6/KT56PaQ
-         rAr/JTbmfroS802pTTaZgyWSgaw1Rb0i5PFPxR5nhb36YOU7hO78Lh5mHln3ZtcRkzzV
-         mycOonWlDk9+XTmnPWHzScmYMTRnZCpTCIXHQMcVIK2gIiIPQ4QW9hHiiD2BnPqh1js5
-         bBaA==
+        bh=1P/X3HCLttG1UWEs3CsZ8TRVtjXtmwWRpladApADCLI=;
+        b=QPa/QLCd7784dBw9/XLd+6v2YlTL+JkhwQ4Hi+sDBog4qq9CjzbNFNfg0eHAqbRk34
+         CLTTV3UhpZhKZe7LjZEINreeQP0vNrAHwu47eYMB1ipl5lroRqQe0l7MN98dcfO9Y8+0
+         dTB7QBt2yakqbBU5l6OGy/+L1R0cScidG5buM/YQmNORKGhh76KMidHFTV23qwpsQZG6
+         uyK9E578ttSB7iWWRStSvVMD80XLBoAOzgvIhE/Hm1dueg9IxJ3fMuydBnPggp+X82ke
+         8O0w3BuC2mKAbWxP2Fv7KkfAFyDRTH8QbY7gdep0/bt5Kr6+9TD3MhrEqHFWL2RD5ZHj
+         CIyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=62/HdOtK/bFrgyD8rx+WpeHv+7w6wslOt4Y0m8GaRK0=;
-        b=IbOv+uqtuASy/CvLc0po0pEAtdMw91Q8cLkgh+UUqHuUBCLUlrBxvY/DViqwKojQSS
-         i36Iwen3x6Y9K99PVd4Uh+Bsa+HHeUFdwcoIUiIgzvs1qhCwvAFy9em2tcUN8e97v6hf
-         xvByhW4XHO5Og3qwbyJmOtxeG/PyQoaZc+LyoXGwy39Bh/4FGEY0H8KaMtlano3PoZHF
-         LBZzdTjqj6d++ujEzCQ5LT6l9GA4S7mj1cuVp+ytZX5BcPQ5QRoOBrxYGpXwTJF2mGCO
-         pYBilzymQxvn4C5RZL2xr42f553DxXiVCl36jcUqjtwJ4eRKNSqE0fNU6C9+NIGaP2GA
-         UZ/Q==
-X-Gm-Message-State: AOAM530xWb5br6A1dsGlv0NZe9uowPzsdTMGk8vbN0/alGT9dOj5fp/q
-        O5g4CgRAkdXvUGkLIsyqhK1ugnJBQpA=
-X-Google-Smtp-Source: ABdhPJz9S4OGzMlRxG1yqoDOLnRaia9gb14uvWdAZ7FS9HpdvZLAdXGnp9W84iE+P8XD2WYa5d6hGg==
-X-Received: by 2002:a1c:7902:: with SMTP id l2mr5181585wme.117.1606419765601;
-        Thu, 26 Nov 2020 11:42:45 -0800 (PST)
+        bh=1P/X3HCLttG1UWEs3CsZ8TRVtjXtmwWRpladApADCLI=;
+        b=GDmLIITa7ZhhiJm7Ppq0VP6NhwzW6BdA5uWbq6q9thIgKHpTUo1WuPwoPP8rI9mzXW
+         E9w4uS0v39imunju8nNnO2E3dGW9jhKqC/9kj2PNyKLzqOSo7in5psYQwhQx985QtAML
+         /s2WuL0HKiJupdvCn/ivEAureLtQIc2T9cVrfbXmuMzSFAY8jLRIXRrTUOfhCSunHVY5
+         ODuuerfnOffZssHqZQp8NjaRvBqgilv4js9cdn7Ka6+rD71NPciUJjCUE+N4lLeI9FMn
+         WKY13FckroLpe489+naMUZoSO8Zuu9sJ0n+cjkiAik5DJwiMdC+lBYhmJgFbColZZsWM
+         7ddw==
+X-Gm-Message-State: AOAM53306cTbpBAnFo7Lw9hErMbdSZXK68fP8Iri7v90AhoTBBpxe77l
+        quw9hEe20pHFjVwRhBcgPswQtmS75B4=
+X-Google-Smtp-Source: ABdhPJy2O4FldVAee7FQTAKpECGtjyhYOkfHFucl1nlxcvlQiPKbf8sDvta6Pf40foMgOwQFiMBqVA==
+X-Received: by 2002:a5d:6186:: with SMTP id j6mr5916795wru.359.1606419769253;
+        Thu, 26 Nov 2020 11:42:49 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x9sm3611547wru.55.2020.11.26.11.42.44
+        by smtp.gmail.com with ESMTPSA id l10sm3732312wme.42.2020.11.26.11.42.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Nov 2020 11:42:44 -0800 (PST)
-Message-Id: <9aa2caade8c50149a2a855606eda284d4cd9acff.1606419752.git.gitgitgadget@gmail.com>
+        Thu, 26 Nov 2020 11:42:48 -0800 (PST)
+Message-Id: <a590865a7008f065b3f4a75deabbf6dc06807623.1606419752.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.847.v3.git.git.1606419752.gitgitgadget@gmail.com>
 References: <pull.847.v2.git.git.1601568663.gitgitgadget@gmail.com>
         <pull.847.v3.git.git.1606419752.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 26 Nov 2020 19:42:26 +0000
-Subject: [PATCH v3 11/16] reftable: read reftable files
+Date:   Thu, 26 Nov 2020 19:42:29 +0000
+Subject: [PATCH v3 14/16] Reftable support for git-core
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,1332 +87,2238 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This supports reading a single reftable file.
+For background, see the previous commit introducing the library.
 
-The commit introduces an abstract iterator type, which captures the usecases
-both of reading individual refs, and iterating over a segment of the ref
-namespace.
+This introduces the file refs/reftable-backend.c containing a reftable-powered
+ref storage backend.
+
+It can be activated by passing --ref-storage=reftable to "git init", or setting
+GIT_TEST_REFTABLE in the environment.
+
+Example use: see t/t0031-reftable.sh
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Co-authored-by: Jeff King <peff@peff.net>
 ---
- Makefile                     |   3 +
- reftable/iter.c              | 242 ++++++++++++
- reftable/iter.h              |  75 ++++
- reftable/reader.c            | 733 +++++++++++++++++++++++++++++++++++
- reftable/reader.h            |  75 ++++
- reftable/reftable-iterator.h |  37 ++
- reftable/reftable-reader.h   |  89 +++++
- 7 files changed, 1254 insertions(+)
- create mode 100644 reftable/iter.c
- create mode 100644 reftable/iter.h
- create mode 100644 reftable/reader.c
- create mode 100644 reftable/reader.h
- create mode 100644 reftable/reftable-iterator.h
- create mode 100644 reftable/reftable-reader.h
+ .../technical/repository-version.txt          |    7 +
+ Makefile                                      |    4 +
+ builtin/clone.c                               |    5 +-
+ builtin/init-db.c                             |   55 +-
+ builtin/worktree.c                            |   27 +-
+ cache.h                                       |    8 +-
+ config.mak.uname                              |    2 +-
+ contrib/buildsystems/Generators/Vcxproj.pm    |   11 +-
+ refs.c                                        |   27 +-
+ refs.h                                        |    3 +
+ refs/refs-internal.h                          |    1 +
+ refs/reftable-backend.c                       | 1418 +++++++++++++++++
+ repository.c                                  |    2 +
+ repository.h                                  |    3 +
+ setup.c                                       |    9 +-
+ t/t0031-reftable.sh                           |  199 +++
+ t/t1409-avoid-packing-refs.sh                 |    6 +
+ t/t1450-fsck.sh                               |    6 +
+ t/t3210-pack-refs.sh                          |    6 +
+ t/test-lib.sh                                 |    5 +
+ 20 files changed, 1771 insertions(+), 33 deletions(-)
+ create mode 100644 refs/reftable-backend.c
+ create mode 100755 t/t0031-reftable.sh
 
+diff --git a/Documentation/technical/repository-version.txt b/Documentation/technical/repository-version.txt
+index 7844ef30ff..7257623583 100644
+--- a/Documentation/technical/repository-version.txt
++++ b/Documentation/technical/repository-version.txt
+@@ -100,3 +100,10 @@ If set, by default "git config" reads from both "config" and
+ multiple working directory mode, "config" file is shared while
+ "config.worktree" is per-working directory (i.e., it's in
+ GIT_COMMON_DIR/worktrees/<id>/config.worktree)
++
++==== `refStorage`
++
++Specifies the file format for the ref database. Values are `files`
++(for the traditional packed + loose ref format) and `reftable` for the
++binary reftable format. See https://github.com/google/reftable for
++more information.
 diff --git a/Makefile b/Makefile
-index 3e33a409f0..51dbcb1b9c 100644
+index 278c489da4..ec91fa14f4 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2393,8 +2393,11 @@ REFTABLE_OBJS += reftable/basics.o
- REFTABLE_OBJS += reftable/error.o
- REFTABLE_OBJS += reftable/block.o
- REFTABLE_OBJS += reftable/blocksource.o
-+REFTABLE_OBJS += reftable/iter.o
- REFTABLE_OBJS += reftable/publicbasics.o
-+REFTABLE_OBJS += reftable/reader.o
- REFTABLE_OBJS += reftable/record.o
-+REFTABLE_OBJS += reftable/reftable.o
- REFTABLE_OBJS += reftable/tree.o
- REFTABLE_OBJS += reftable/writer.o
- REFTABLE_OBJS += reftable/zlib-compat.o
-diff --git a/reftable/iter.c b/reftable/iter.c
-new file mode 100644
-index 0000000000..63d87b758c
---- /dev/null
-+++ b/reftable/iter.c
-@@ -0,0 +1,242 @@
-+/*
-+Copyright 2020 Google LLC
+@@ -978,6 +978,7 @@ LIB_OBJS += reflog-walk.o
+ LIB_OBJS += refs.o
+ LIB_OBJS += refs/debug.o
+ LIB_OBJS += refs/files-backend.o
++LIB_OBJS += refs/reftable-backend.o
+ LIB_OBJS += refs/iterator.o
+ LIB_OBJS += refs/packed-backend.o
+ LIB_OBJS += refs/ref-cache.o
+@@ -2408,8 +2409,11 @@ REFTABLE_OBJS += reftable/zlib-compat.o
+ 
+ REFTABLE_TEST_OBJS += reftable/basics_test.o
+ REFTABLE_TEST_OBJS += reftable/block_test.o
++REFTABLE_TEST_OBJS += reftable/merged_test.o
+ REFTABLE_TEST_OBJS += reftable/record_test.o
++REFTABLE_TEST_OBJS += reftable/refname_test.o
+ REFTABLE_TEST_OBJS += reftable/reftable_test.o
++REFTABLE_TEST_OBJS += reftable/stack_test.o
+ REFTABLE_TEST_OBJS += reftable/test_framework.o
+ REFTABLE_TEST_OBJS += reftable/tree_test.o
+ 
+diff --git a/builtin/clone.c b/builtin/clone.c
+index a0841923cf..974a374e9c 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1138,7 +1138,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	init_db(git_dir, real_git_dir, option_template, GIT_HASH_UNKNOWN, NULL,
+-		INIT_DB_QUIET);
++		default_ref_storage(), INIT_DB_QUIET);
+ 
+ 	if (real_git_dir)
+ 		git_dir = real_git_dir;
+@@ -1273,7 +1273,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		 * Now that we know what algorithm the remote side is using,
+ 		 * let's set ours to the same thing.
+ 		 */
+-		initialize_repository_version(hash_algo, 1);
++		initialize_repository_version(hash_algo, 1,
++					      default_ref_storage());
+ 		repo_set_hash_algo(the_repository, hash_algo);
+ 
+ 		mapped_refs = wanted_peer_refs(refs, &remote->fetch);
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 5c8c67fec6..8b5873ec56 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -179,12 +179,14 @@ static int needs_work_tree_config(const char *git_dir, const char *work_tree)
+ 	return 1;
+ }
+ 
+-void initialize_repository_version(int hash_algo, int reinit)
++void initialize_repository_version(int hash_algo, int reinit,
++				   const char *ref_storage_format)
+ {
+ 	char repo_version_string[10];
+ 	int repo_version = GIT_REPO_VERSION;
+ 
+-	if (hash_algo != GIT_HASH_SHA1)
++	if (hash_algo != GIT_HASH_SHA1 ||
++	    !strcmp(ref_storage_format, "reftable"))
+ 		repo_version = GIT_REPO_VERSION_READ;
+ 
+ 	/* This forces creation of new config file */
+@@ -237,6 +239,7 @@ static int create_default_files(const char *template_path,
+ 	is_bare_repository_cfg = init_is_bare_repository;
+ 	if (init_shared_repository != -1)
+ 		set_shared_repository(init_shared_repository);
++	the_repository->ref_storage_format = xstrdup(fmt->ref_storage);
+ 
+ 	/*
+ 	 * We would have created the above under user's umask -- under
+@@ -246,6 +249,24 @@ static int create_default_files(const char *template_path,
+ 		adjust_shared_perm(get_git_dir());
+ 	}
+ 
++	/*
++	 * Check to see if .git/HEAD exists; this must happen before
++	 * initializing the ref db, because we want to see if there is an
++	 * existing HEAD.
++	 */
++	path = git_path_buf(&buf, "HEAD");
++	reinit = (!access(path, R_OK) ||
++		  readlink(path, junk, sizeof(junk) - 1) != -1);
 +
-+Use of this source code is governed by a BSD-style
-+license that can be found in the LICENSE file or at
-+https://developers.google.com/open-source/licenses/bsd
-+*/
++	/*
++	 * refs/heads is a file when using reftable. We can't reinitialize with
++	 * a reftable because it will overwrite HEAD
++	 */
++	if (reinit && (!strcmp(fmt->ref_storage, "reftable")) ==
++			      is_directory(git_path_buf(&buf, "refs/heads"))) {
++		die("cannot switch ref storage format.");
++	}
 +
-+#include "iter.h"
+ 	/*
+ 	 * We need to create a "refs" dir in any case so that older
+ 	 * versions of git can tell that this is a repository.
+@@ -260,9 +281,6 @@ static int create_default_files(const char *template_path,
+ 	 * Point the HEAD symref to the initial branch with if HEAD does
+ 	 * not yet exist.
+ 	 */
+-	path = git_path_buf(&buf, "HEAD");
+-	reinit = (!access(path, R_OK)
+-		  || readlink(path, junk, sizeof(junk)-1) != -1);
+ 	if (!reinit) {
+ 		char *ref;
+ 
+@@ -279,7 +297,7 @@ static int create_default_files(const char *template_path,
+ 		free(ref);
+ 	}
+ 
+-	initialize_repository_version(fmt->hash_algo, 0);
++	initialize_repository_version(fmt->hash_algo, 0, fmt->ref_storage);
+ 
+ 	/* Check filemode trustability */
+ 	path = git_path_buf(&buf, "config");
+@@ -396,7 +414,7 @@ static void validate_hash_algorithm(struct repository_format *repo_fmt, int hash
+ 
+ int init_db(const char *git_dir, const char *real_git_dir,
+ 	    const char *template_dir, int hash, const char *initial_branch,
+-	    unsigned int flags)
++	    const char *ref_storage_format, unsigned int flags)
+ {
+ 	int reinit;
+ 	int exist_ok = flags & INIT_DB_EXIST_OK;
+@@ -435,6 +453,7 @@ int init_db(const char *git_dir, const char *real_git_dir,
+ 	 * is an attempt to reinitialize new repository with an old tool.
+ 	 */
+ 	check_repository_format(&repo_fmt);
++	repo_fmt.ref_storage = xstrdup(ref_storage_format);
+ 
+ 	validate_hash_algorithm(&repo_fmt, hash);
+ 
+@@ -467,6 +486,9 @@ int init_db(const char *git_dir, const char *real_git_dir,
+ 		git_config_set("receive.denyNonFastforwards", "true");
+ 	}
+ 
++	if (!strcmp(ref_storage_format, "reftable"))
++		git_config_set("extensions.refStorage", ref_storage_format);
 +
-+#include "system.h"
+ 	if (!(flags & INIT_DB_QUIET)) {
+ 		int len = strlen(git_dir);
+ 
+@@ -540,6 +562,7 @@ static const char *const init_db_usage[] = {
+ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ {
+ 	const char *git_dir;
++	const char *ref_storage_format = default_ref_storage();
+ 	const char *real_git_dir = NULL;
+ 	const char *work_tree;
+ 	const char *template_dir = NULL;
+@@ -548,15 +571,18 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 	const char *initial_branch = NULL;
+ 	int hash_algo = GIT_HASH_UNKNOWN;
+ 	const struct option init_db_options[] = {
+-		OPT_STRING(0, "template", &template_dir, N_("template-directory"),
+-				N_("directory from which templates will be used")),
++		OPT_STRING(0, "template", &template_dir,
++			   N_("template-directory"),
++			   N_("directory from which templates will be used")),
+ 		OPT_SET_INT(0, "bare", &is_bare_repository_cfg,
+-				N_("create a bare repository"), 1),
++			    N_("create a bare repository"), 1),
+ 		{ OPTION_CALLBACK, 0, "shared", &init_shared_repository,
+-			N_("permissions"),
+-			N_("specify that the git repository is to be shared amongst several users"),
+-			PARSE_OPT_OPTARG | PARSE_OPT_NONEG, shared_callback, 0},
++		  N_("permissions"),
++		  N_("specify that the git repository is to be shared amongst several users"),
++		  PARSE_OPT_OPTARG | PARSE_OPT_NONEG, shared_callback, 0 },
+ 		OPT_BIT('q', "quiet", &flags, N_("be quiet"), INIT_DB_QUIET),
++		OPT_STRING(0, "ref-storage", &ref_storage_format, N_("backend"),
++			   N_("the ref storage format to use")),
+ 		OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
+ 			   N_("separate git dir from working tree")),
+ 		OPT_STRING('b', "initial-branch", &initial_branch, N_("name"),
+@@ -697,10 +723,11 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	UNLEAK(real_git_dir);
++	UNLEAK(ref_storage_format);
+ 	UNLEAK(git_dir);
+ 	UNLEAK(work_tree);
+ 
+ 	flags |= INIT_DB_EXIST_OK;
+ 	return init_db(git_dir, real_git_dir, template_dir, hash_algo,
+-		       initial_branch, flags);
++		       initial_branch, ref_storage_format, flags);
+ }
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index ce56fdaaa9..7931620788 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -12,6 +12,7 @@
+ #include "submodule.h"
+ #include "utf8.h"
+ #include "worktree.h"
++#include "../refs/refs-internal.h"
+ 
+ static const char * const worktree_usage[] = {
+ 	N_("git worktree add [<options>] <path> [<commit-ish>]"),
+@@ -402,9 +403,29 @@ static int add_worktree(const char *path, const char *refname,
+ 	 * worktree.
+ 	 */
+ 	strbuf_reset(&sb);
+-	strbuf_addf(&sb, "%s/HEAD", sb_repo.buf);
+-	write_file(sb.buf, "%s", oid_to_hex(&null_oid));
+-	strbuf_reset(&sb);
++	if (get_main_ref_store(the_repository)->be == &refs_be_reftable) {
++		/* XXX this is cut & paste from reftable_init_db. */
++		strbuf_addf(&sb, "%s/HEAD", sb_repo.buf);
++		write_file(sb.buf, "%s", "ref: refs/heads/.invalid\n");
++		strbuf_reset(&sb);
 +
-+#include "block.h"
-+#include "constants.h"
-+#include "reader.h"
-+#include "reftable-error.h"
++		strbuf_addf(&sb, "%s/refs", sb_repo.buf);
++		safe_create_dir(sb.buf, 1);
++		strbuf_reset(&sb);
 +
-+int iterator_is_null(struct reftable_iterator *it)
++		strbuf_addf(&sb, "%s/refs/heads", sb_repo.buf);
++		write_file(sb.buf, "this repository uses the reftable format");
++		strbuf_reset(&sb);
++
++		strbuf_addf(&sb, "%s/reftable", sb_repo.buf);
++		safe_create_dir(sb.buf, 1);
++		strbuf_reset(&sb);
++	} else {
++		strbuf_addf(&sb, "%s/HEAD", sb_repo.buf);
++		write_file(sb.buf, "%s", oid_to_hex(&null_oid));
++		strbuf_reset(&sb);
++	}
++
+ 	strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
+ 	write_file(sb.buf, "../..");
+ 
+diff --git a/cache.h b/cache.h
+index e986cf4ea9..545d2b7260 100644
+--- a/cache.h
++++ b/cache.h
+@@ -627,9 +627,10 @@ int path_inside_repo(const char *prefix, const char *path);
+ #define INIT_DB_EXIST_OK 0x0002
+ 
+ int init_db(const char *git_dir, const char *real_git_dir,
+-	    const char *template_dir, int hash_algo,
+-	    const char *initial_branch, unsigned int flags);
+-void initialize_repository_version(int hash_algo, int reinit);
++	    const char *template_dir, int hash_algo, const char *initial_branch,
++	    const char *ref_storage_format, unsigned int flags);
++void initialize_repository_version(int hash_algo, int reinit,
++				   const char *ref_storage_format);
+ 
+ void sanitize_stdfds(void);
+ int daemonize(void);
+@@ -1043,6 +1044,7 @@ struct repository_format {
+ 	int is_bare;
+ 	int hash_algo;
+ 	char *work_tree;
++	char *ref_storage;
+ 	struct string_list unknown_extensions;
+ 	struct string_list v1_only_extensions;
+ };
+diff --git a/config.mak.uname b/config.mak.uname
+index c7eba69e54..ae4e25a1a4 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -709,7 +709,7 @@ vcxproj:
+ 	# Make .vcxproj files and add them
+ 	unset QUIET_GEN QUIET_BUILT_IN; \
+ 	perl contrib/buildsystems/generate -g Vcxproj
+-	git add -f git.sln {*,*/lib,t/helper/*}/*.vcxproj
++	git add -f git.sln {*,*/lib,*/libreftable,t/helper/*}/*.vcxproj
+ 
+ 	# Generate the LinkOrCopyBuiltins.targets and LinkOrCopyRemoteHttp.targets file
+ 	(echo '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">' && \
+diff --git a/contrib/buildsystems/Generators/Vcxproj.pm b/contrib/buildsystems/Generators/Vcxproj.pm
+index d2584450ba..1a25789d28 100644
+--- a/contrib/buildsystems/Generators/Vcxproj.pm
++++ b/contrib/buildsystems/Generators/Vcxproj.pm
+@@ -77,7 +77,7 @@ sub createProject {
+     my $libs_release = "\n    ";
+     my $libs_debug = "\n    ";
+     if (!$static_library) {
+-      $libs_release = join(";", sort(grep /^(?!libgit\.lib|xdiff\/lib\.lib|vcs-svn\/lib\.lib)/, @{$$build_structure{"$prefix${name}_LIBS"}}));
++      $libs_release = join(";", sort(grep /^(?!libgit\.lib|xdiff\/lib\.lib|vcs-svn\/lib\.lib|reftable\/libreftable\.lib)/, @{$$build_structure{"$prefix${name}_LIBS"}}));
+       $libs_debug = $libs_release;
+       $libs_debug =~ s/zlib\.lib/zlibd\.lib/g;
+       $libs_debug =~ s/libexpat\.lib/libexpatd\.lib/g;
+@@ -232,6 +232,7 @@ sub createProject {
+ EOM
+     if (!$static_library || $target =~ 'vcs-svn' || $target =~ 'xdiff') {
+       my $uuid_libgit = $$build_structure{"LIBS_libgit_GUID"};
++      my $uuid_libreftable = $$build_structure{"LIBS_reftable/libreftable_GUID"};
+       my $uuid_xdiff_lib = $$build_structure{"LIBS_xdiff/lib_GUID"};
+ 
+       print F << "EOM";
+@@ -241,6 +242,14 @@ sub createProject {
+       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+     </ProjectReference>
+ EOM
++      if (!($name =~ /xdiff|libreftable/)) {
++        print F << "EOM";
++    <ProjectReference Include="$cdup\\reftable\\libreftable\\libreftable.vcxproj">
++      <Project>$uuid_libreftable</Project>
++      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
++    </ProjectReference>
++EOM
++      }
+       if (!($name =~ 'xdiff')) {
+         print F << "EOM";
+     <ProjectReference Include="$cdup\\xdiff\\lib\\xdiff_lib.vcxproj">
+diff --git a/refs.c b/refs.c
+index 392f0bbf68..1b874db334 100644
+--- a/refs.c
++++ b/refs.c
+@@ -19,10 +19,16 @@
+ #include "repository.h"
+ #include "sigchain.h"
+ 
++const char *default_ref_storage(void)
 +{
-+	return it->ops == NULL;
++	const char *test = getenv("GIT_TEST_REFTABLE");
++	return test ? "reftable" : "files";
 +}
 +
-+static int empty_iterator_next(void *arg, struct reftable_record *rec)
+ /*
+  * List of all available backends
+  */
+-static struct ref_storage_be *refs_backends = &refs_be_files;
++static struct ref_storage_be *refs_backends = &refs_be_reftable;
+ 
+ static struct ref_storage_be *find_ref_storage_backend(const char *name)
+ {
+@@ -1754,13 +1760,13 @@ static struct ref_store *lookup_ref_store_map(struct hashmap *map,
+  * Create, record, and return a ref_store instance for the specified
+  * gitdir.
+  */
+-static struct ref_store *ref_store_init(const char *gitdir,
++static struct ref_store *ref_store_init(const char *gitdir, const char *be_name,
+ 					unsigned int flags)
+ {
+-	const char *be_name = "files";
+-	struct ref_storage_be *be = find_ref_storage_backend(be_name);
++	struct ref_storage_be *be;
+ 	struct ref_store *refs;
+ 
++	be = find_ref_storage_backend(be_name);
+ 	if (!be)
+ 		BUG("reference backend %s is unknown", be_name);
+ 
+@@ -1776,7 +1782,11 @@ struct ref_store *get_main_ref_store(struct repository *r)
+ 	if (!r->gitdir)
+ 		BUG("attempting to get main_ref_store outside of repository");
+ 
+-	r->refs_private = ref_store_init(r->gitdir, REF_STORE_ALL_CAPS);
++	r->refs_private = ref_store_init(r->gitdir,
++					 r->ref_storage_format ?
++						       r->ref_storage_format :
++						       default_ref_storage(),
++					 REF_STORE_ALL_CAPS);
+ 	r->refs_private = maybe_debug_wrap_ref_store(r->gitdir, r->refs_private);
+ 	return r->refs_private;
+ }
+@@ -1832,7 +1842,7 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
+ 		goto done;
+ 
+ 	/* assume that add_submodule_odb() has been called */
+-	refs = ref_store_init(submodule_sb.buf,
++	refs = ref_store_init(submodule_sb.buf, default_ref_storage(),
+ 			      REF_STORE_READ | REF_STORE_ODB);
+ 	register_ref_store_map(&submodule_ref_stores, "submodule",
+ 			       refs, submodule);
+@@ -1846,6 +1856,7 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
+ 
+ struct ref_store *get_worktree_ref_store(const struct worktree *wt)
+ {
++	const char *format = default_ref_storage();
+ 	struct ref_store *refs;
+ 	const char *id;
+ 
+@@ -1859,9 +1870,9 @@ struct ref_store *get_worktree_ref_store(const struct worktree *wt)
+ 
+ 	if (wt->id)
+ 		refs = ref_store_init(git_common_path("worktrees/%s", wt->id),
+-				      REF_STORE_ALL_CAPS);
++				      format, REF_STORE_ALL_CAPS);
+ 	else
+-		refs = ref_store_init(get_git_common_dir(),
++		refs = ref_store_init(get_git_common_dir(), format,
+ 				      REF_STORE_ALL_CAPS);
+ 
+ 	if (refs)
+diff --git a/refs.h b/refs.h
+index 6695518156..7dc60472c9 100644
+--- a/refs.h
++++ b/refs.h
+@@ -11,6 +11,9 @@ struct string_list;
+ struct string_list_item;
+ struct worktree;
+ 
++/* Returns the ref storage backend to use by default. */
++const char *default_ref_storage(void);
++
+ /*
+  * Resolve a reference, recursively following symbolic refererences.
+  *
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 467f4b3c93..28166bf1f8 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -669,6 +669,7 @@ struct ref_storage_be {
+ };
+ 
+ extern struct ref_storage_be refs_be_files;
++extern struct ref_storage_be refs_be_reftable;
+ extern struct ref_storage_be refs_be_packed;
+ 
+ /*
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+new file mode 100644
+index 0000000000..894c72ddc4
+--- /dev/null
++++ b/refs/reftable-backend.c
+@@ -0,0 +1,1418 @@
++#include "../cache.h"
++#include "../chdir-notify.h"
++#include "../config.h"
++#include "../iterator.h"
++#include "../lockfile.h"
++#include "../refs.h"
++#include "../reftable/reftable-stack.h"
++#include "../reftable/reftable-record.h"
++#include "../reftable/reftable-error.h"
++#include "../reftable/reftable-blocksource.h"
++#include "../reftable/reftable-reader.h"
++#include "../reftable/reftable-iterator.h"
++#include "../reftable/reftable-merged.h"
++#include "../reftable/reftable-generic.h"
++#include "../worktree.h"
++#include "refs-internal.h"
++
++extern struct ref_storage_be refs_be_reftable;
++
++struct git_reftable_ref_store {
++	struct ref_store base;
++	unsigned int store_flags;
++
++	int err;
++	char *repo_dir;
++
++	char *reftable_dir;
++	char *worktree_reftable_dir;
++
++	struct reftable_stack *main_stack;
++	struct reftable_stack *worktree_stack;
++};
++
++static struct reftable_stack *stack_for(struct git_reftable_ref_store *store,
++					const char *refname)
 +{
++	if (store->worktree_stack == NULL)
++		return store->main_stack;
++
++	switch (ref_type(refname)) {
++	case REF_TYPE_PER_WORKTREE:
++	case REF_TYPE_PSEUDOREF:
++	case REF_TYPE_OTHER_PSEUDOREF:
++		return store->worktree_stack;
++	default:
++	case REF_TYPE_MAIN_PSEUDOREF:
++	case REF_TYPE_NORMAL:
++		return store->main_stack;
++	}
++}
++
++static int git_reftable_read_raw_ref(struct ref_store *ref_store,
++				     const char *refname, struct object_id *oid,
++				     struct strbuf *referent,
++				     unsigned int *type);
++
++static void clear_reftable_log_record(struct reftable_log_record *log)
++{
++	log->old_hash = NULL;
++	log->new_hash = NULL;
++	log->message = NULL;
++	log->refname = NULL;
++	reftable_log_record_release(log);
++}
++
++static void fill_reftable_log_record(struct reftable_log_record *log)
++{
++	const char *info = git_committer_info(0);
++	struct ident_split split = { NULL };
++	int result = split_ident_line(&split, info, strlen(info));
++	int sign = 1;
++	assert(0 == result);
++
++	reftable_log_record_release(log);
++	log->name =
++		xstrndup(split.name_begin, split.name_end - split.name_begin);
++	log->email =
++		xstrndup(split.mail_begin, split.mail_end - split.mail_begin);
++	log->time = atol(split.date_begin);
++	if (*split.tz_begin == '-') {
++		sign = -1;
++		split.tz_begin++;
++	}
++	if (*split.tz_begin == '+') {
++		sign = 1;
++		split.tz_begin++;
++	}
++
++	log->tz_offset = sign * atoi(split.tz_begin);
++}
++
++static int has_suffix(struct strbuf *b, const char *suffix)
++{
++	size_t len = strlen(suffix);
++
++	if (len > b->len) {
++		return 0;
++	}
++
++	return 0 == strncmp(b->buf + b->len - len, suffix, len);
++}
++
++/* trims the last path component of b. Returns -1 if it is not
++ * present, or 0 on success
++ */
++static int trim_component(struct strbuf *b)
++{
++	char *last;
++	last = strrchr(b->buf, '/');
++	if (!last)
++		return -1;
++	strbuf_setlen(b, last - b->buf);
++	return 0;
++}
++
++/* Returns whether `b` is a worktree path, trimming it to the gitdir
++ */
++static int is_worktree(struct strbuf *b)
++{
++	if (trim_component(b) < 0) {
++		return 0;
++	}
++	if (!has_suffix(b, "/worktrees")) {
++		return 0;
++	}
++	trim_component(b);
 +	return 1;
 +}
 +
-+static void empty_iterator_close(void *arg)
++static struct ref_store *git_reftable_ref_store_create(const char *path,
++						       unsigned int store_flags)
 +{
++	struct git_reftable_ref_store *refs = xcalloc(1, sizeof(*refs));
++	struct ref_store *ref_store = (struct ref_store *)refs;
++	struct reftable_write_options cfg = {
++		.block_size = 4096,
++		.hash_id = the_hash_algo->format_id,
++	};
++	struct strbuf sb = STRBUF_INIT;
++	const char *gitdir = path;
++	struct strbuf wt_buf = STRBUF_INIT;
++	int wt = 0;
++
++	strbuf_addstr(&wt_buf, path);
++
++	/* this is clumsy, but the official worktree functions (eg.
++	 * get_worktrees()) function will try to initialize a ref storage
++	 * backend, leading to infinite recursion.  */
++	wt = is_worktree(&wt_buf);
++	if (wt) {
++		gitdir = wt_buf.buf;
++	}
++
++	base_ref_store_init(ref_store, &refs_be_reftable);
++	ref_store->gitdir = xstrdup(gitdir);
++	refs->store_flags = store_flags;
++	strbuf_addf(&sb, "%s/reftable", gitdir);
++	refs->reftable_dir = xstrdup(sb.buf);
++	strbuf_reset(&sb);
++
++	refs->err =
++		reftable_new_stack(&refs->main_stack, refs->reftable_dir, cfg);
++	assert(refs->err != REFTABLE_API_ERROR);
++
++	if (refs->err == 0 && wt) {
++		strbuf_addf(&sb, "%s/reftable", path);
++		refs->worktree_reftable_dir = xstrdup(sb.buf);
++
++		refs->err = reftable_new_stack(&refs->worktree_stack,
++					       refs->worktree_reftable_dir,
++					       cfg);
++		assert(refs->err != REFTABLE_API_ERROR);
++	}
++
++	strbuf_release(&sb);
++	strbuf_release(&wt_buf);
++	return ref_store;
 +}
 +
-+static struct reftable_iterator_vtable empty_vtable = {
-+	.next = &empty_iterator_next,
-+	.close = &empty_iterator_close,
++static int git_reftable_init_db(struct ref_store *ref_store, struct strbuf *err)
++{
++	struct git_reftable_ref_store *refs =
++		(struct git_reftable_ref_store *)ref_store;
++	struct strbuf sb = STRBUF_INIT;
++
++	safe_create_dir(refs->reftable_dir, 1);
++	assert(refs->worktree_reftable_dir == NULL);
++
++	strbuf_addf(&sb, "%s/HEAD", refs->base.gitdir);
++	write_file(sb.buf, "ref: refs/heads/.invalid");
++	strbuf_reset(&sb);
++
++	strbuf_addf(&sb, "%s/refs", refs->base.gitdir);
++	safe_create_dir(sb.buf, 1);
++	strbuf_reset(&sb);
++
++	strbuf_addf(&sb, "%s/refs/heads", refs->base.gitdir);
++	write_file(sb.buf, "this repository uses the reftable format");
++
++	return 0;
++}
++
++struct git_reftable_iterator {
++	struct ref_iterator base;
++	struct reftable_iterator iter;
++	struct reftable_ref_record ref;
++	struct object_id oid;
++	struct ref_store *ref_store;
++
++	/* In case we must iterate over 2 stacks, this is non-null. */
++	struct reftable_merged_table *merged;
++	unsigned int flags;
++	int err;
++	const char *prefix;
 +};
 +
-+void iterator_set_empty(struct reftable_iterator *it)
++static int reftable_ref_iterator_advance(struct ref_iterator *ref_iterator)
 +{
-+	assert(it->ops == NULL);
-+	it->iter_arg = NULL;
-+	it->ops = &empty_vtable;
-+}
-+
-+int iterator_next(struct reftable_iterator *it, struct reftable_record *rec)
-+{
-+	return it->ops->next(it->iter_arg, rec);
-+}
-+
-+void reftable_iterator_destroy(struct reftable_iterator *it)
-+{
-+	if (it->ops == NULL) {
-+		return;
-+	}
-+	it->ops->close(it->iter_arg);
-+	it->ops = NULL;
-+	FREE_AND_NULL(it->iter_arg);
-+}
-+
-+int reftable_iterator_next_ref(struct reftable_iterator *it,
-+			       struct reftable_ref_record *ref)
-+{
-+	struct reftable_record rec = { NULL };
-+	reftable_record_from_ref(&rec, ref);
-+	return iterator_next(it, &rec);
-+}
-+
-+int reftable_iterator_next_log(struct reftable_iterator *it,
-+			       struct reftable_log_record *log)
-+{
-+	struct reftable_record rec = { NULL };
-+	reftable_record_from_log(&rec, log);
-+	return iterator_next(it, &rec);
-+}
-+
-+static void filtering_ref_iterator_close(void *iter_arg)
-+{
-+	struct filtering_ref_iterator *fri =
-+		(struct filtering_ref_iterator *)iter_arg;
-+	strbuf_release(&fri->oid);
-+	reftable_iterator_destroy(&fri->it);
-+}
-+
-+static int filtering_ref_iterator_next(void *iter_arg,
-+				       struct reftable_record *rec)
-+{
-+	struct filtering_ref_iterator *fri =
-+		(struct filtering_ref_iterator *)iter_arg;
-+	struct reftable_ref_record *ref =
-+		(struct reftable_ref_record *)rec->data;
-+	int err = 0;
-+	while (1) {
-+		err = reftable_iterator_next_ref(&fri->it, ref);
-+		if (err != 0) {
++	struct git_reftable_iterator *ri =
++		(struct git_reftable_iterator *)ref_iterator;
++	while (ri->err == 0) {
++		ri->err = reftable_iterator_next_ref(&ri->iter, &ri->ref);
++		if (ri->err) {
 +			break;
 +		}
 +
-+		if (fri->double_check) {
-+			struct reftable_iterator it = { NULL };
++		if (ref_type(ri->ref.refname) == REF_TYPE_PSEUDOREF) {
++			/*
++			  pseudorefs, eg. HEAD, FETCH_HEAD should not be
++			  produced, by default.
++			 */
++			continue;
++		}
++		ri->base.refname = ri->ref.refname;
++		if (ri->prefix != NULL &&
++		    strncmp(ri->prefix, ri->ref.refname, strlen(ri->prefix))) {
++			ri->err = 1;
++			break;
++		}
++		if (ri->flags & DO_FOR_EACH_PER_WORKTREE_ONLY &&
++		    ref_type(ri->base.refname) != REF_TYPE_PER_WORKTREE)
++			continue;
 +
-+			err = reftable_table_seek_ref(&fri->tab, &it,
-+						      ref->refname);
-+			if (err == 0) {
-+				err = reftable_iterator_next_ref(&it, ref);
-+			}
-+
-+			reftable_iterator_destroy(&it);
-+
-+			if (err < 0) {
-+				break;
-+			}
-+
-+			if (err > 0) {
++		ri->base.flags = 0;
++		if (ri->ref.value != NULL) {
++			hashcpy(ri->oid.hash, ri->ref.value);
++		} else if (ri->ref.target != NULL) {
++			int out_flags = 0;
++			const char *resolved = refs_resolve_ref_unsafe(
++				ri->ref_store, ri->ref.refname,
++				RESOLVE_REF_READING, &ri->oid, &out_flags);
++			ri->base.flags = out_flags;
++			if (resolved == NULL &&
++			    !(ri->flags & DO_FOR_EACH_INCLUDE_BROKEN) &&
++			    (ri->base.flags & REF_ISBROKEN)) {
 +				continue;
 +			}
 +		}
 +
-+		if ((ref->target_value != NULL &&
-+		     !memcmp(fri->oid.buf, ref->target_value, fri->oid.len)) ||
-+		    (ref->value != NULL &&
-+		     !memcmp(fri->oid.buf, ref->value, fri->oid.len))) {
-+			return 0;
-+		}
-+	}
-+
-+	reftable_ref_record_release(ref);
-+	return err;
-+}
-+
-+static struct reftable_iterator_vtable filtering_ref_iterator_vtable = {
-+	.next = &filtering_ref_iterator_next,
-+	.close = &filtering_ref_iterator_close,
-+};
-+
-+void iterator_from_filtering_ref_iterator(struct reftable_iterator *it,
-+					  struct filtering_ref_iterator *fri)
-+{
-+	assert(it->ops == NULL);
-+	it->iter_arg = fri;
-+	it->ops = &filtering_ref_iterator_vtable;
-+}
-+
-+static void indexed_table_ref_iter_close(void *p)
-+{
-+	struct indexed_table_ref_iter *it = (struct indexed_table_ref_iter *)p;
-+	block_iter_close(&it->cur);
-+	reftable_block_done(&it->block_reader.block);
-+	strbuf_release(&it->oid);
-+}
-+
-+static int indexed_table_ref_iter_next_block(struct indexed_table_ref_iter *it)
-+{
-+	uint64_t off;
-+	int err = 0;
-+	if (it->offset_idx == it->offset_len) {
-+		it->is_finished = 1;
-+		return 1;
-+	}
-+
-+	reftable_block_done(&it->block_reader.block);
-+
-+	off = it->offsets[it->offset_idx++];
-+	err = reader_init_block_reader(it->r, &it->block_reader, off,
-+				       BLOCK_TYPE_REF);
-+	if (err < 0) {
-+		return err;
-+	}
-+	if (err > 0) {
-+		/* indexed block does not exist. */
-+		return REFTABLE_FORMAT_ERROR;
-+	}
-+	block_reader_start(&it->block_reader, &it->cur);
-+	return 0;
-+}
-+
-+static int indexed_table_ref_iter_next(void *p, struct reftable_record *rec)
-+{
-+	struct indexed_table_ref_iter *it = (struct indexed_table_ref_iter *)p;
-+	struct reftable_ref_record *ref =
-+		(struct reftable_ref_record *)rec->data;
-+
-+	while (1) {
-+		int err = block_iter_next(&it->cur, rec);
-+		if (err < 0) {
-+			return err;
-+		}
-+
-+		if (err > 0) {
-+			err = indexed_table_ref_iter_next_block(it);
-+			if (err < 0) {
-+				return err;
-+			}
-+
-+			if (it->is_finished) {
-+				return 1;
-+			}
++		ri->base.oid = &ri->oid;
++		if (!(ri->flags & DO_FOR_EACH_INCLUDE_BROKEN) &&
++		    !ref_resolves_to_object(ri->base.refname, ri->base.oid,
++					    ri->base.flags)) {
 +			continue;
 +		}
 +
-+		if (!memcmp(it->oid.buf, ref->target_value, it->oid.len) ||
-+		    !memcmp(it->oid.buf, ref->value, it->oid.len)) {
-+			return 0;
-+		}
++		break;
 +	}
++
++	if (ri->err > 0) {
++		return ITER_DONE;
++	}
++	if (ri->err < 0) {
++		return ITER_ERROR;
++	}
++
++	return ITER_OK;
 +}
 +
-+int new_indexed_table_ref_iter(struct indexed_table_ref_iter **dest,
-+			       struct reftable_reader *r, uint8_t *oid,
-+			       int oid_len, uint64_t *offsets, int offset_len)
++static int reftable_ref_iterator_peel(struct ref_iterator *ref_iterator,
++				      struct object_id *peeled)
 +{
-+	struct indexed_table_ref_iter empty = INDEXED_TABLE_REF_ITER_INIT;
-+	struct indexed_table_ref_iter *itr =
-+		reftable_calloc(sizeof(struct indexed_table_ref_iter));
++	struct git_reftable_iterator *ri =
++		(struct git_reftable_iterator *)ref_iterator;
++	if (ri->ref.target_value != NULL) {
++		hashcpy(peeled->hash, ri->ref.target_value);
++		return 0;
++	}
++
++	return -1;
++}
++
++static int reftable_ref_iterator_abort(struct ref_iterator *ref_iterator)
++{
++	struct git_reftable_iterator *ri =
++		(struct git_reftable_iterator *)ref_iterator;
++	reftable_ref_record_release(&ri->ref);
++	reftable_iterator_destroy(&ri->iter);
++	if (ri->merged) {
++		reftable_merged_table_free(ri->merged);
++	}
++	return 0;
++}
++
++static struct ref_iterator_vtable reftable_ref_iterator_vtable = {
++	reftable_ref_iterator_advance, reftable_ref_iterator_peel,
++	reftable_ref_iterator_abort
++};
++
++static struct ref_iterator *
++git_reftable_ref_iterator_begin(struct ref_store *ref_store, const char *prefix,
++				unsigned int flags)
++{
++	struct git_reftable_ref_store *refs =
++		(struct git_reftable_ref_store *)ref_store;
++	struct git_reftable_iterator *ri = xcalloc(1, sizeof(*ri));
++
++	if (refs->err < 0) {
++		ri->err = refs->err;
++	} else if (refs->worktree_stack == NULL) {
++		struct reftable_merged_table *mt =
++			reftable_stack_merged_table(refs->main_stack);
++		ri->err = reftable_merged_table_seek_ref(mt, &ri->iter, prefix);
++	} else {
++		struct reftable_merged_table *mt1 =
++			reftable_stack_merged_table(refs->main_stack);
++		struct reftable_merged_table *mt2 =
++			reftable_stack_merged_table(refs->worktree_stack);
++		struct reftable_table *tabs =
++			xcalloc(2, sizeof(struct reftable_table));
++		reftable_table_from_merged_table(&tabs[0], mt1);
++		reftable_table_from_merged_table(&tabs[1], mt2);
++		ri->err = reftable_new_merged_table(&ri->merged, tabs, 2,
++						    the_hash_algo->format_id);
++		if (ri->err == 0)
++			ri->err = reftable_merged_table_seek_ref(
++				ri->merged, &ri->iter, prefix);
++	}
++
++	base_ref_iterator_init(&ri->base, &reftable_ref_iterator_vtable, 1);
++	ri->prefix = prefix;
++	ri->base.oid = &ri->oid;
++	ri->flags = flags;
++	ri->ref_store = ref_store;
++	return &ri->base;
++}
++
++static int fixup_symrefs(struct ref_store *ref_store,
++			 struct ref_transaction *transaction)
++{
++	struct strbuf referent = STRBUF_INIT;
++	int i = 0;
 +	int err = 0;
 +
-+	*itr = empty;
-+	itr->r = r;
-+	strbuf_add(&itr->oid, oid, oid_len);
++	for (i = 0; i < transaction->nr; i++) {
++		struct ref_update *update = transaction->updates[i];
++		struct object_id old_oid;
 +
-+	itr->offsets = offsets;
-+	itr->offset_len = offset_len;
++		err = git_reftable_read_raw_ref(ref_store, update->refname,
++						&old_oid, &referent,
++						/* mutate input, like
++						   files-backend.c */
++						&update->type);
++		if (err < 0 && errno == ENOENT &&
++		    is_null_oid(&update->old_oid)) {
++			err = 0;
++		}
++		if (err < 0)
++			goto done;
 +
-+	err = indexed_table_ref_iter_next_block(itr);
-+	if (err < 0) {
-+		reftable_free(itr);
-+	} else {
-+		*dest = itr;
++		if (!(update->type & REF_ISSYMREF))
++			continue;
++
++		if (update->flags & REF_NO_DEREF) {
++			/* what should happen here? See files-backend.c
++			 * lock_ref_for_update. */
++		} else {
++			/*
++			  If we are updating a symref (eg. HEAD), we should also
++			  update the branch that the symref points to.
++
++			  This is generic functionality, and would be better
++			  done in refs.c, but the current implementation is
++			  intertwined with the locking in files-backend.c.
++			*/
++			int new_flags = update->flags;
++			struct ref_update *new_update = NULL;
++
++			/* if this is an update for HEAD, should also record a
++			   log entry for HEAD? See files-backend.c,
++			   split_head_update()
++			*/
++			new_update = ref_transaction_add_update(
++				transaction, referent.buf, new_flags,
++				&update->new_oid, &update->old_oid,
++				update->msg);
++			new_update->parent_update = update;
++
++			/* files-backend sets REF_LOG_ONLY here. */
++			update->flags |= REF_NO_DEREF | REF_LOG_ONLY;
++			update->flags &= ~REF_HAVE_OLD;
++		}
 +	}
++
++done:
++	assert(err != REFTABLE_API_ERROR);
++	strbuf_release(&referent);
 +	return err;
 +}
 +
-+static struct reftable_iterator_vtable indexed_table_ref_iter_vtable = {
-+	.next = &indexed_table_ref_iter_next,
-+	.close = &indexed_table_ref_iter_close,
-+};
-+
-+void iterator_from_indexed_table_ref_iter(struct reftable_iterator *it,
-+					  struct indexed_table_ref_iter *itr)
++static int git_reftable_transaction_prepare(struct ref_store *ref_store,
++					    struct ref_transaction *transaction,
++					    struct strbuf *errbuf)
 +{
-+	assert(it->ops == NULL);
-+	it->iter_arg = itr;
-+	it->ops = &indexed_table_ref_iter_vtable;
-+}
-diff --git a/reftable/iter.h b/reftable/iter.h
-new file mode 100644
-index 0000000000..258bc107af
---- /dev/null
-+++ b/reftable/iter.h
-@@ -0,0 +1,75 @@
-+/*
-+Copyright 2020 Google LLC
-+
-+Use of this source code is governed by a BSD-style
-+license that can be found in the LICENSE file or at
-+https://developers.google.com/open-source/licenses/bsd
-+*/
-+
-+#ifndef ITER_H
-+#define ITER_H
-+
-+#include "system.h"
-+#include "block.h"
-+#include "record.h"
-+
-+#include "reftable-iterator.h"
-+#include "reftable-generic.h"
-+
-+struct reftable_iterator_vtable {
-+	int (*next)(void *iter_arg, struct reftable_record *rec);
-+	void (*close)(void *iter_arg);
-+};
-+
-+void iterator_set_empty(struct reftable_iterator *it);
-+int iterator_next(struct reftable_iterator *it, struct reftable_record *rec);
-+
-+/* Returns true for a zeroed out iterator, such as the one returned from
-+   iterator_destroy. */
-+int iterator_is_null(struct reftable_iterator *it);
-+
-+/* iterator that produces only ref records that point to `oid` */
-+struct filtering_ref_iterator {
-+	int double_check;
-+	struct reftable_table tab;
-+	struct strbuf oid;
-+	struct reftable_iterator it;
-+};
-+#define FILTERING_REF_ITERATOR_INIT \
-+	{                           \
-+		.oid = STRBUF_INIT  \
++	struct git_reftable_ref_store *refs =
++		(struct git_reftable_ref_store *)ref_store;
++	struct reftable_addition *add = NULL;
++	struct reftable_stack *stack =
++		transaction->nr ?
++			      stack_for(refs, transaction->updates[0]->refname) :
++			      refs->main_stack;
++	int err = refs->err;
++	if (err < 0) {
++		goto done;
 +	}
 +
-+void iterator_from_filtering_ref_iterator(struct reftable_iterator *,
-+					  struct filtering_ref_iterator *);
-+
-+/* iterator that produces only ref records that point to `oid`,
-+   but using the object index.
-+ */
-+struct indexed_table_ref_iter {
-+	struct reftable_reader *r;
-+	struct strbuf oid;
-+
-+	/* mutable */
-+	uint64_t *offsets;
-+
-+	/* Points to the next offset to read. */
-+	int offset_idx;
-+	int offset_len;
-+	struct block_reader block_reader;
-+	struct block_iter cur;
-+	int is_finished;
-+};
-+
-+#define INDEXED_TABLE_REF_ITER_INIT                                     \
-+	{                                                               \
-+		.cur = { .last_key = STRBUF_INIT }, .oid = STRBUF_INIT, \
++	err = reftable_stack_reload(stack);
++	if (err) {
++		goto done;
 +	}
 +
-+void iterator_from_indexed_table_ref_iter(struct reftable_iterator *it,
-+					  struct indexed_table_ref_iter *itr);
-+int new_indexed_table_ref_iter(struct indexed_table_ref_iter **dest,
-+			       struct reftable_reader *r, uint8_t *oid,
-+			       int oid_len, uint64_t *offsets, int offset_len);
-+
-+#endif
-diff --git a/reftable/reader.c b/reftable/reader.c
-new file mode 100644
-index 0000000000..a5b7b1d4fe
---- /dev/null
-+++ b/reftable/reader.c
-@@ -0,0 +1,733 @@
-+/*
-+Copyright 2020 Google LLC
-+
-+Use of this source code is governed by a BSD-style
-+license that can be found in the LICENSE file or at
-+https://developers.google.com/open-source/licenses/bsd
-+*/
-+
-+#include "reader.h"
-+
-+#include "system.h"
-+#include "block.h"
-+#include "constants.h"
-+#include "iter.h"
-+#include "record.h"
-+#include "reftable-error.h"
-+#include "tree.h"
-+
-+uint64_t block_source_size(struct reftable_block_source *source)
-+{
-+	return source->ops->size(source->arg);
-+}
-+
-+int block_source_read_block(struct reftable_block_source *source,
-+			    struct reftable_block *dest, uint64_t off,
-+			    uint32_t size)
-+{
-+	int result = source->ops->read_block(source->arg, dest, off, size);
-+	dest->source = *source;
-+	return result;
-+}
-+
-+void block_source_close(struct reftable_block_source *source)
-+{
-+	if (source->ops == NULL) {
-+		return;
++	err = reftable_stack_new_addition(&add, stack);
++	if (err) {
++		goto done;
 +	}
 +
-+	source->ops->close(source->arg);
-+	source->ops = NULL;
-+}
-+
-+static struct reftable_reader_offsets *
-+reader_offsets_for(struct reftable_reader *r, uint8_t typ)
-+{
-+	switch (typ) {
-+	case BLOCK_TYPE_REF:
-+		return &r->ref_offsets;
-+	case BLOCK_TYPE_LOG:
-+		return &r->log_offsets;
-+	case BLOCK_TYPE_OBJ:
-+		return &r->obj_offsets;
-+	}
-+	abort();
-+}
-+
-+static int reader_get_block(struct reftable_reader *r,
-+			    struct reftable_block *dest, uint64_t off,
-+			    uint32_t sz)
-+{
-+	if (off >= r->size)
-+		return 0;
-+
-+	if (off + sz > r->size) {
-+		sz = r->size - off;
++	err = fixup_symrefs(ref_store, transaction);
++	if (err) {
++		goto done;
 +	}
 +
-+	return block_source_read_block(&r->source, dest, off, sz);
++	transaction->backend_data = add;
++	transaction->state = REF_TRANSACTION_PREPARED;
++
++done:
++	assert(err != REFTABLE_API_ERROR);
++	if (err < 0) {
++		transaction->state = REF_TRANSACTION_CLOSED;
++		strbuf_addf(errbuf, "reftable: transaction prepare: %s",
++			    reftable_error_str(err));
++	}
++
++	return err;
 +}
 +
-+uint32_t reftable_reader_hash_id(struct reftable_reader *r)
++static int git_reftable_transaction_abort(struct ref_store *ref_store,
++					  struct ref_transaction *transaction,
++					  struct strbuf *err)
 +{
-+	return r->hash_id;
++	struct reftable_addition *add =
++		(struct reftable_addition *)transaction->backend_data;
++	reftable_addition_destroy(add);
++	transaction->backend_data = NULL;
++	return 0;
 +}
 +
-+const char *reader_name(struct reftable_reader *r)
++static int reftable_check_old_oid(struct ref_store *refs, const char *refname,
++				  struct object_id *want_oid)
 +{
-+	return r->name;
++	struct object_id out_oid;
++	int out_flags = 0;
++	const char *resolved = refs_resolve_ref_unsafe(
++		refs, refname, RESOLVE_REF_READING, &out_oid, &out_flags);
++	if (is_null_oid(want_oid) != (resolved == NULL)) {
++		return REFTABLE_LOCK_ERROR;
++	}
++
++	if (resolved != NULL && !oideq(&out_oid, want_oid)) {
++		return REFTABLE_LOCK_ERROR;
++	}
++
++	return 0;
 +}
 +
-+static int parse_footer(struct reftable_reader *r, uint8_t *footer,
-+			uint8_t *header)
++static int ref_update_cmp(const void *a, const void *b)
 +{
-+	uint8_t *f = footer;
-+	uint8_t first_block_typ;
++	return strcmp((*(struct ref_update **)a)->refname,
++		      (*(struct ref_update **)b)->refname);
++}
++
++static int write_transaction_table(struct reftable_writer *writer, void *arg)
++{
++	struct ref_transaction *transaction = (struct ref_transaction *)arg;
++	struct git_reftable_ref_store *refs =
++		(struct git_reftable_ref_store *)transaction->ref_store;
++	struct reftable_stack *stack =
++		stack_for(refs, transaction->updates[0]->refname);
++	uint64_t ts = reftable_stack_next_update_index(stack);
 +	int err = 0;
-+	uint32_t computed_crc;
-+	uint32_t file_crc;
++	int i = 0;
++	struct reftable_log_record *logs =
++		calloc(transaction->nr, sizeof(*logs));
++	struct ref_update **sorted =
++		malloc(transaction->nr * sizeof(struct ref_update *));
++	COPY_ARRAY(sorted, transaction->updates, transaction->nr);
++	QSORT(sorted, transaction->nr, ref_update_cmp);
++	reftable_writer_set_limits(writer, ts, ts);
 +
-+	if (memcmp(f, "REFT", 4)) {
-+		err = REFTABLE_FORMAT_ERROR;
-+		goto done;
++	for (i = 0; i < transaction->nr; i++) {
++		struct ref_update *u = sorted[i];
++		struct reftable_log_record *log = &logs[i];
++		fill_reftable_log_record(log);
++		log->refname = (char *)u->refname;
++		log->old_hash = u->old_oid.hash;
++		log->new_hash = u->new_oid.hash;
++		log->update_index = ts;
++		log->message = u->msg;
++
++		if (u->flags & REF_LOG_ONLY) {
++			continue;
++		}
++
++		if (u->flags & REF_HAVE_NEW) {
++			struct reftable_ref_record ref = { NULL };
++			struct object_id peeled;
++
++			int peel_error = peel_object(&u->new_oid, &peeled);
++			ref.refname = (char *)u->refname;
++
++			if (!is_null_oid(&u->new_oid)) {
++				ref.value = u->new_oid.hash;
++			}
++			ref.update_index = ts;
++			if (!peel_error) {
++				ref.target_value = peeled.hash;
++			}
++
++			err = reftable_writer_add_ref(writer, &ref);
++			if (err < 0) {
++				goto done;
++			}
++		}
 +	}
-+	f += 4;
 +
-+	if (memcmp(footer, header, header_size(r->version))) {
-+		err = REFTABLE_FORMAT_ERROR;
-+		goto done;
-+	}
-+
-+	f++;
-+	r->block_size = get_be24(f);
-+
-+	f += 3;
-+	r->min_update_index = get_be64(f);
-+	f += 8;
-+	r->max_update_index = get_be64(f);
-+	f += 8;
-+
-+	if (r->version == 1) {
-+		r->hash_id = SHA1_ID;
-+	} else {
-+		r->hash_id = get_be32(f);
-+		switch (r->hash_id) {
-+		case SHA1_ID:
-+			break;
-+		case SHA256_ID:
-+			break;
-+		default:
-+			err = REFTABLE_FORMAT_ERROR;
++	for (i = 0; i < transaction->nr; i++) {
++		err = reftable_writer_add_log(writer, &logs[i]);
++		clear_reftable_log_record(&logs[i]);
++		if (err < 0) {
 +			goto done;
 +		}
-+		f += 4;
 +	}
 +
-+	r->ref_offsets.index_offset = get_be64(f);
-+	f += 8;
-+
-+	r->obj_offsets.offset = get_be64(f);
-+	f += 8;
-+
-+	r->object_id_len = r->obj_offsets.offset & ((1 << 5) - 1);
-+	r->obj_offsets.offset >>= 5;
-+
-+	r->obj_offsets.index_offset = get_be64(f);
-+	f += 8;
-+	r->log_offsets.offset = get_be64(f);
-+	f += 8;
-+	r->log_offsets.index_offset = get_be64(f);
-+	f += 8;
-+
-+	computed_crc = crc32(0, footer, f - footer);
-+	file_crc = get_be32(f);
-+	f += 4;
-+	if (computed_crc != file_crc) {
-+		err = REFTABLE_FORMAT_ERROR;
-+		goto done;
-+	}
-+
-+	first_block_typ = header[header_size(r->version)];
-+	r->ref_offsets.is_present = (first_block_typ == BLOCK_TYPE_REF);
-+	r->ref_offsets.offset = 0;
-+	r->log_offsets.is_present = (first_block_typ == BLOCK_TYPE_LOG ||
-+				     r->log_offsets.offset > 0);
-+	r->obj_offsets.is_present = r->obj_offsets.offset > 0;
-+	err = 0;
 +done:
++	assert(err != REFTABLE_API_ERROR);
++	free(logs);
++	free(sorted);
 +	return err;
 +}
 +
-+int init_reader(struct reftable_reader *r, struct reftable_block_source *source,
-+		const char *name)
++static int git_reftable_transaction_finish(struct ref_store *ref_store,
++					   struct ref_transaction *transaction,
++					   struct strbuf *errmsg)
 +{
-+	struct reftable_block footer = { NULL };
-+	struct reftable_block header = { NULL };
++	struct reftable_addition *add =
++		(struct reftable_addition *)transaction->backend_data;
 +	int err = 0;
++	int i;
 +
-+	memset(r, 0, sizeof(struct reftable_reader));
-+
-+	/* Need +1 to read type of first block. */
-+	err = block_source_read_block(source, &header, 0, header_size(2) + 1);
-+	if (err != header_size(2) + 1) {
-+		err = REFTABLE_IO_ERROR;
-+		goto done;
++	for (i = 0; i < transaction->nr; i++) {
++		struct ref_update *u = transaction->updates[i];
++		if (u->flags & REF_HAVE_OLD) {
++			err = reftable_check_old_oid(transaction->ref_store,
++						     u->refname, &u->old_oid);
++			if (err < 0) {
++				goto done;
++			}
++		}
++	}
++	if (transaction->nr) {
++		err = reftable_addition_add(add, &write_transaction_table,
++					    transaction);
++		if (err < 0) {
++			goto done;
++		}
 +	}
 +
-+	if (memcmp(header.data, "REFT", 4)) {
-+		err = REFTABLE_FORMAT_ERROR;
-+		goto done;
-+	}
-+	r->version = header.data[4];
-+	if (r->version != 1 && r->version != 2) {
-+		err = REFTABLE_FORMAT_ERROR;
-+		goto done;
-+	}
++	err = reftable_addition_commit(add);
 +
-+	r->size = block_source_size(source) - footer_size(r->version);
-+	r->source = *source;
-+	r->name = xstrdup(name);
-+	r->hash_id = 0;
-+
-+	err = block_source_read_block(source, &footer, r->size,
-+				      footer_size(r->version));
-+	if (err != footer_size(r->version)) {
-+		err = REFTABLE_IO_ERROR;
-+		goto done;
-+	}
-+
-+	err = parse_footer(r, footer.data, header.data);
 +done:
-+	reftable_block_done(&footer);
-+	reftable_block_done(&header);
++	assert(err != REFTABLE_API_ERROR);
++	reftable_addition_destroy(add);
++	transaction->state = REF_TRANSACTION_CLOSED;
++	transaction->backend_data = NULL;
++	if (err) {
++		strbuf_addf(errmsg, "reftable: transaction failure: %s",
++			    reftable_error_str(err));
++		return -1;
++	}
 +	return err;
 +}
 +
-+struct table_iter {
-+	struct reftable_reader *r;
-+	uint8_t typ;
-+	uint64_t block_off;
-+	struct block_iter bi;
-+	int is_finished;
-+};
-+#define TABLE_ITER_INIT                          \
-+	{                                        \
-+		.bi = {.last_key = STRBUF_INIT } \
-+	}
-+
-+static void table_iter_copy_from(struct table_iter *dest,
-+				 struct table_iter *src)
++static int
++git_reftable_transaction_initial_commit(struct ref_store *ref_store,
++					struct ref_transaction *transaction,
++					struct strbuf *errmsg)
 +{
-+	dest->r = src->r;
-+	dest->typ = src->typ;
-+	dest->block_off = src->block_off;
-+	dest->is_finished = src->is_finished;
-+	block_iter_copy_from(&dest->bi, &src->bi);
-+}
-+
-+static int table_iter_next_in_block(struct table_iter *ti,
-+				    struct reftable_record *rec)
-+{
-+	int res = block_iter_next(&ti->bi, rec);
-+	if (res == 0 && reftable_record_type(rec) == BLOCK_TYPE_REF) {
-+		((struct reftable_ref_record *)rec->data)->update_index +=
-+			ti->r->min_update_index;
-+	}
-+
-+	return res;
-+}
-+
-+static void table_iter_block_done(struct table_iter *ti)
-+{
-+	if (ti->bi.br == NULL) {
-+		return;
-+	}
-+	reftable_block_done(&ti->bi.br->block);
-+	FREE_AND_NULL(ti->bi.br);
-+
-+	ti->bi.last_key.len = 0;
-+	ti->bi.next_off = 0;
-+}
-+
-+static int32_t extract_block_size(uint8_t *data, uint8_t *typ, uint64_t off,
-+				  int version)
-+{
-+	int32_t result = 0;
-+
-+	if (off == 0) {
-+		data += header_size(version);
-+	}
-+
-+	*typ = data[0];
-+	if (reftable_is_block_type(*typ)) {
-+		result = get_be24(data + 1);
-+	}
-+	return result;
-+}
-+
-+int reader_init_block_reader(struct reftable_reader *r, struct block_reader *br,
-+			     uint64_t next_off, uint8_t want_typ)
-+{
-+	int32_t guess_block_size = r->block_size ? r->block_size :
-+							 DEFAULT_BLOCK_SIZE;
-+	struct reftable_block block = { NULL };
-+	uint8_t block_typ = 0;
-+	int err = 0;
-+	uint32_t header_off = next_off ? 0 : header_size(r->version);
-+	int32_t block_size = 0;
-+
-+	if (next_off >= r->size)
-+		return 1;
-+
-+	err = reader_get_block(r, &block, next_off, guess_block_size);
-+	if (err < 0)
++	int err = git_reftable_transaction_prepare(ref_store, transaction,
++						   errmsg);
++	if (err)
 +		return err;
 +
-+	block_size = extract_block_size(block.data, &block_typ, next_off,
-+					r->version);
-+	if (block_size < 0)
-+		return block_size;
++	return git_reftable_transaction_finish(ref_store, transaction, errmsg);
++}
 +
-+	if (want_typ != BLOCK_TYPE_ANY && block_typ != want_typ) {
-+		reftable_block_done(&block);
-+		return 1;
-+	}
++struct write_delete_refs_arg {
++	struct reftable_stack *stack;
++	struct string_list *refnames;
++	const char *logmsg;
++	unsigned int flags;
++};
 +
-+	if (block_size > guess_block_size) {
-+		reftable_block_done(&block);
-+		err = reader_get_block(r, &block, next_off, block_size);
++static int write_delete_refs_table(struct reftable_writer *writer, void *argv)
++{
++	struct write_delete_refs_arg *arg =
++		(struct write_delete_refs_arg *)argv;
++	uint64_t ts = reftable_stack_next_update_index(arg->stack);
++	int err = 0;
++	int i = 0;
++
++	reftable_writer_set_limits(writer, ts, ts);
++	for (i = 0; i < arg->refnames->nr; i++) {
++		struct reftable_ref_record ref = {
++			.refname = (char *)arg->refnames->items[i].string,
++			.update_index = ts,
++		};
++		err = reftable_writer_add_ref(writer, &ref);
 +		if (err < 0) {
 +			return err;
 +		}
 +	}
 +
-+	return block_reader_init(br, &block, header_off, r->block_size,
-+				 hash_size(r->hash_id));
-+}
++	for (i = 0; i < arg->refnames->nr; i++) {
++		struct reftable_log_record log = {
++			.update_index = ts,
++		};
++		struct reftable_ref_record current = { NULL };
++		fill_reftable_log_record(&log);
++		log.message = xstrdup(arg->logmsg);
++		log.new_hash = NULL;
++		log.old_hash = NULL;
++		log.update_index = ts;
++		log.refname = (char *)arg->refnames->items[i].string;
 +
-+static int table_iter_next_block(struct table_iter *dest,
-+				 struct table_iter *src)
-+{
-+	uint64_t next_block_off = src->block_off + src->bi.br->full_block_size;
-+	struct block_reader br = { 0 };
-+	int err = 0;
++		if (reftable_stack_read_ref(arg->stack, log.refname,
++					    &current) == 0) {
++			log.old_hash = current.value;
++		}
++		err = reftable_writer_add_log(writer, &log);
++		log.old_hash = NULL;
++		reftable_ref_record_release(&current);
 +
-+	dest->r = src->r;
-+	dest->typ = src->typ;
-+	dest->block_off = next_block_off;
-+
-+	err = reader_init_block_reader(src->r, &br, next_block_off, src->typ);
-+	if (err > 0) {
-+		dest->is_finished = 1;
-+		return 1;
-+	}
-+	if (err != 0)
-+		return err;
-+	else {
-+		struct block_reader *brp =
-+			reftable_malloc(sizeof(struct block_reader));
-+		*brp = br;
-+
-+		dest->is_finished = 0;
-+		block_reader_start(brp, &dest->bi);
++		clear_reftable_log_record(&log);
++		if (err < 0) {
++			return err;
++		}
 +	}
 +	return 0;
 +}
 +
-+static int table_iter_next(struct table_iter *ti, struct reftable_record *rec)
++static int git_reftable_delete_refs(struct ref_store *ref_store,
++				    const char *msg,
++				    struct string_list *refnames,
++				    unsigned int flags)
 +{
-+	if (reftable_record_type(rec) != ti->typ)
-+		return REFTABLE_API_ERROR;
-+
-+	while (1) {
-+		struct table_iter next = TABLE_ITER_INIT;
-+		int err = 0;
-+		if (ti->is_finished) {
-+			return 1;
-+		}
-+
-+		err = table_iter_next_in_block(ti, rec);
-+		if (err <= 0) {
-+			return err;
-+		}
-+
-+		err = table_iter_next_block(&next, ti);
-+		if (err != 0) {
-+			ti->is_finished = 1;
-+		}
-+		table_iter_block_done(ti);
-+		if (err != 0) {
-+			return err;
-+		}
-+		table_iter_copy_from(ti, &next);
-+		block_iter_close(&next.bi);
-+	}
-+}
-+
-+static int table_iter_next_void(void *ti, struct reftable_record *rec)
-+{
-+	return table_iter_next((struct table_iter *)ti, rec);
-+}
-+
-+static void table_iter_close(void *p)
-+{
-+	struct table_iter *ti = (struct table_iter *)p;
-+	table_iter_block_done(ti);
-+	block_iter_close(&ti->bi);
-+}
-+
-+static struct reftable_iterator_vtable table_iter_vtable = {
-+	.next = &table_iter_next_void,
-+	.close = &table_iter_close,
-+};
-+
-+static void iterator_from_table_iter(struct reftable_iterator *it,
-+				     struct table_iter *ti)
-+{
-+	assert(it->ops == NULL);
-+	it->iter_arg = ti;
-+	it->ops = &table_iter_vtable;
-+}
-+
-+static int reader_table_iter_at(struct reftable_reader *r,
-+				struct table_iter *ti, uint64_t off,
-+				uint8_t typ)
-+{
-+	struct block_reader br = { 0 };
-+	struct block_reader *brp = NULL;
-+
-+	int err = reader_init_block_reader(r, &br, off, typ);
-+	if (err != 0)
-+		return err;
-+
-+	brp = reftable_malloc(sizeof(struct block_reader));
-+	*brp = br;
-+	ti->r = r;
-+	ti->typ = block_reader_type(brp);
-+	ti->block_off = off;
-+	block_reader_start(brp, &ti->bi);
-+	return 0;
-+}
-+
-+static int reader_start(struct reftable_reader *r, struct table_iter *ti,
-+			uint8_t typ, int index)
-+{
-+	struct reftable_reader_offsets *offs = reader_offsets_for(r, typ);
-+	uint64_t off = offs->offset;
-+	if (index) {
-+		off = offs->index_offset;
-+		if (off == 0) {
-+			return 1;
-+		}
-+		typ = BLOCK_TYPE_INDEX;
-+	}
-+
-+	return reader_table_iter_at(r, ti, off, typ);
-+}
-+
-+static int reader_seek_linear(struct reftable_reader *r, struct table_iter *ti,
-+			      struct reftable_record *want)
-+{
-+	struct reftable_record rec =
-+		reftable_new_record(reftable_record_type(want));
-+	struct strbuf want_key = STRBUF_INIT;
-+	struct strbuf got_key = STRBUF_INIT;
-+	struct table_iter next = TABLE_ITER_INIT;
-+	int err = -1;
-+
-+	reftable_record_key(want, &want_key);
-+
-+	while (1) {
-+		err = table_iter_next_block(&next, ti);
-+		if (err < 0)
-+			goto done;
-+
-+		if (err > 0) {
-+			break;
-+		}
-+
-+		err = block_reader_first_key(next.bi.br, &got_key);
-+		if (err < 0)
-+			goto done;
-+
-+		if (strbuf_cmp(&got_key, &want_key) > 0) {
-+			table_iter_block_done(&next);
-+			break;
-+		}
-+
-+		table_iter_block_done(ti);
-+		table_iter_copy_from(ti, &next);
-+	}
-+
-+	err = block_iter_seek(&ti->bi, &want_key);
-+	if (err < 0)
++	struct git_reftable_ref_store *refs =
++		(struct git_reftable_ref_store *)ref_store;
++	struct reftable_stack *stack =
++		stack_for(refs, refnames->items[0].string);
++	struct write_delete_refs_arg arg = {
++		.stack = stack,
++		.refnames = refnames,
++		.logmsg = msg,
++		.flags = flags,
++	};
++	int err = refs->err;
++	if (err < 0) {
 +		goto done;
-+	err = 0;
++	}
 +
++	string_list_sort(refnames);
++	err = reftable_stack_reload(stack);
++	if (err) {
++		goto done;
++	}
++	err = reftable_stack_add(stack, &write_delete_refs_table, &arg);
 +done:
-+	block_iter_close(&next.bi);
-+	reftable_record_destroy(&rec);
-+	strbuf_release(&want_key);
-+	strbuf_release(&got_key);
++	assert(err != REFTABLE_API_ERROR);
 +	return err;
 +}
 +
-+static int reader_seek_indexed(struct reftable_reader *r,
-+			       struct reftable_iterator *it,
-+			       struct reftable_record *rec)
++static int git_reftable_pack_refs(struct ref_store *ref_store,
++				  unsigned int flags)
 +{
-+	struct reftable_index_record want_index = { .last_key = STRBUF_INIT };
-+	struct reftable_record want_index_rec = { NULL };
-+	struct reftable_index_record index_result = { .last_key = STRBUF_INIT };
-+	struct reftable_record index_result_rec = { NULL };
-+	struct table_iter index_iter = TABLE_ITER_INIT;
-+	struct table_iter next = TABLE_ITER_INIT;
++	struct git_reftable_ref_store *refs =
++		(struct git_reftable_ref_store *)ref_store;
++	int err = refs->err;
++	if (err < 0) {
++		return err;
++	}
++	err = reftable_stack_compact_all(refs->main_stack, NULL);
++	if (err == 0 && refs->worktree_stack != NULL)
++		err = reftable_stack_compact_all(refs->worktree_stack, NULL);
++	return err;
++}
++
++struct write_create_symref_arg {
++	struct git_reftable_ref_store *refs;
++	struct reftable_stack *stack;
++	const char *refname;
++	const char *target;
++	const char *logmsg;
++};
++
++static int write_create_symref_table(struct reftable_writer *writer, void *arg)
++{
++	struct write_create_symref_arg *create =
++		(struct write_create_symref_arg *)arg;
++	uint64_t ts = reftable_stack_next_update_index(create->stack);
 +	int err = 0;
 +
-+	reftable_record_key(rec, &want_index.last_key);
-+	reftable_record_from_index(&want_index_rec, &want_index);
-+	reftable_record_from_index(&index_result_rec, &index_result);
++	struct reftable_ref_record ref = {
++		.refname = (char *)create->refname,
++		.target = (char *)create->target,
++		.update_index = ts,
++	};
++	reftable_writer_set_limits(writer, ts, ts);
++	err = reftable_writer_add_ref(writer, &ref);
++	if (err == 0) {
++		struct reftable_log_record log = { NULL };
++		struct object_id new_oid;
++		struct object_id old_oid;
 +
-+	err = reader_start(r, &index_iter, reftable_record_type(rec), 1);
-+	if (err < 0)
++		fill_reftable_log_record(&log);
++		log.refname = (char *)create->refname;
++		log.message = (char *)create->logmsg;
++		log.update_index = ts;
++		if (refs_resolve_ref_unsafe(
++			    (struct ref_store *)create->refs, create->refname,
++			    RESOLVE_REF_READING, &old_oid, NULL) != NULL) {
++			log.old_hash = old_oid.hash;
++		}
++
++		if (refs_resolve_ref_unsafe((struct ref_store *)create->refs,
++					    create->target, RESOLVE_REF_READING,
++					    &new_oid, NULL) != NULL) {
++			log.new_hash = new_oid.hash;
++		}
++
++		if (log.old_hash != NULL || log.new_hash != NULL) {
++			err = reftable_writer_add_log(writer, &log);
++		}
++		log.refname = NULL;
++		log.message = NULL;
++		log.old_hash = NULL;
++		log.new_hash = NULL;
++		clear_reftable_log_record(&log);
++	}
++	return err;
++}
++
++static int git_reftable_create_symref(struct ref_store *ref_store,
++				      const char *refname, const char *target,
++				      const char *logmsg)
++{
++	struct git_reftable_ref_store *refs =
++		(struct git_reftable_ref_store *)ref_store;
++	struct reftable_stack *stack = stack_for(refs, refname);
++	struct write_create_symref_arg arg = { .refs = refs,
++					       .stack = stack,
++					       .refname = refname,
++					       .target = target,
++					       .logmsg = logmsg };
++	int err = refs->err;
++	if (err < 0) {
 +		goto done;
++	}
++	err = reftable_stack_reload(stack);
++	if (err) {
++		goto done;
++	}
++	err = reftable_stack_add(stack, &write_create_symref_table, &arg);
++done:
++	assert(err != REFTABLE_API_ERROR);
++	return err;
++}
 +
-+	err = reader_seek_linear(r, &index_iter, &want_index_rec);
++struct write_rename_arg {
++	struct reftable_stack *stack;
++	const char *oldname;
++	const char *newname;
++	const char *logmsg;
++};
++
++static int write_rename_table(struct reftable_writer *writer, void *argv)
++{
++	struct write_rename_arg *arg = (struct write_rename_arg *)argv;
++	uint64_t ts = reftable_stack_next_update_index(arg->stack);
++	struct reftable_ref_record ref = { NULL };
++	int err = reftable_stack_read_ref(arg->stack, arg->oldname, &ref);
++
++	if (err) {
++		goto done;
++	}
++
++	/* XXX do ref renames overwrite the target? */
++	if (reftable_stack_read_ref(arg->stack, arg->newname, &ref) == 0) {
++		goto done;
++	}
++
++	free(ref.refname);
++	ref.refname = strdup(arg->newname);
++	reftable_writer_set_limits(writer, ts, ts);
++	ref.update_index = ts;
++
++	{
++		struct reftable_ref_record todo[2] = { { NULL } };
++		todo[0].refname = (char *)arg->oldname;
++		todo[0].update_index = ts;
++		/* leave todo[0] empty */
++		todo[1] = ref;
++		todo[1].update_index = ts;
++
++		err = reftable_writer_add_refs(writer, todo, 2);
++		if (err < 0) {
++			goto done;
++		}
++	}
++
++	if (ref.value != NULL) {
++		struct reftable_log_record todo[2] = { { NULL } };
++		fill_reftable_log_record(&todo[0]);
++		fill_reftable_log_record(&todo[1]);
++
++		todo[0].refname = (char *)arg->oldname;
++		todo[0].update_index = ts;
++		todo[0].message = (char *)arg->logmsg;
++		todo[0].old_hash = ref.value;
++		todo[0].new_hash = NULL;
++
++		todo[1].refname = (char *)arg->newname;
++		todo[1].update_index = ts;
++		todo[1].old_hash = NULL;
++		todo[1].new_hash = ref.value;
++		todo[1].message = (char *)arg->logmsg;
++
++		err = reftable_writer_add_logs(writer, todo, 2);
++
++		clear_reftable_log_record(&todo[0]);
++		clear_reftable_log_record(&todo[1]);
++
++		if (err < 0) {
++			goto done;
++		}
++
++	} else {
++		/* XXX symrefs? */
++	}
++
++done:
++	assert(err != REFTABLE_API_ERROR);
++	reftable_ref_record_release(&ref);
++	return err;
++}
++
++static int git_reftable_rename_ref(struct ref_store *ref_store,
++				   const char *oldrefname,
++				   const char *newrefname, const char *logmsg)
++{
++	struct git_reftable_ref_store *refs =
++		(struct git_reftable_ref_store *)ref_store;
++	struct reftable_stack *stack = stack_for(refs, newrefname);
++	struct write_rename_arg arg = {
++		.stack = stack,
++		.oldname = oldrefname,
++		.newname = newrefname,
++		.logmsg = logmsg,
++	};
++	int err = refs->err;
++	if (err < 0) {
++		goto done;
++	}
++	err = reftable_stack_reload(stack);
++	if (err) {
++		goto done;
++	}
++
++	err = reftable_stack_add(stack, &write_rename_table, &arg);
++done:
++	assert(err != REFTABLE_API_ERROR);
++	return err;
++}
++
++static int git_reftable_copy_ref(struct ref_store *ref_store,
++				 const char *oldrefname, const char *newrefname,
++				 const char *logmsg)
++{
++	BUG("reftable reference store does not support copying references");
++}
++
++struct git_reftable_reflog_ref_iterator {
++	struct ref_iterator base;
++	struct reftable_iterator iter;
++	struct reftable_log_record log;
++	struct object_id oid;
++
++	/* Used when iterating over worktree & main */
++	struct reftable_merged_table *merged;
++	char *last_name;
++};
++
++static int
++git_reftable_reflog_ref_iterator_advance(struct ref_iterator *ref_iterator)
++{
++	struct git_reftable_reflog_ref_iterator *ri =
++		(struct git_reftable_reflog_ref_iterator *)ref_iterator;
++
 +	while (1) {
-+		err = table_iter_next(&index_iter, &index_result_rec);
-+		table_iter_block_done(&index_iter);
-+		if (err != 0)
-+			goto done;
++		int err = reftable_iterator_next_log(&ri->iter, &ri->log);
++		if (err > 0) {
++			return ITER_DONE;
++		}
++		if (err < 0) {
++			return ITER_ERROR;
++		}
 +
-+		err = reader_table_iter_at(r, &next, index_result.offset, 0);
-+		if (err != 0)
-+			goto done;
++		ri->base.refname = ri->log.refname;
++		if (ri->last_name != NULL &&
++		    !strcmp(ri->log.refname, ri->last_name)) {
++			/* we want the refnames that we have reflogs for, so we
++			 * skip if we've already produced this name. This could
++			 * be faster by seeking directly to
++			 * reflog@update_index==0.
++			 */
++			continue;
++		}
 +
-+		err = block_iter_seek(&next.bi, &want_index.last_key);
-+		if (err < 0)
-+			goto done;
++		free(ri->last_name);
++		ri->last_name = xstrdup(ri->log.refname);
++		hashcpy(ri->oid.hash, ri->log.new_hash);
++		return ITER_OK;
++	}
++}
 +
-+		if (next.typ == reftable_record_type(rec)) {
++static int
++git_reftable_reflog_ref_iterator_peel(struct ref_iterator *ref_iterator,
++				      struct object_id *peeled)
++{
++	BUG("not supported.");
++	return -1;
++}
++
++static int
++git_reftable_reflog_ref_iterator_abort(struct ref_iterator *ref_iterator)
++{
++	struct git_reftable_reflog_ref_iterator *ri =
++		(struct git_reftable_reflog_ref_iterator *)ref_iterator;
++	reftable_log_record_release(&ri->log);
++	reftable_iterator_destroy(&ri->iter);
++	if (ri->merged)
++		reftable_merged_table_free(ri->merged);
++	return 0;
++}
++
++static struct ref_iterator_vtable git_reftable_reflog_ref_iterator_vtable = {
++	git_reftable_reflog_ref_iterator_advance,
++	git_reftable_reflog_ref_iterator_peel,
++	git_reftable_reflog_ref_iterator_abort
++};
++
++static struct ref_iterator *
++git_reftable_reflog_iterator_begin(struct ref_store *ref_store)
++{
++	struct git_reftable_reflog_ref_iterator *ri = xcalloc(sizeof(*ri), 1);
++	struct git_reftable_ref_store *refs =
++		(struct git_reftable_ref_store *)ref_store;
++
++	if (refs->worktree_stack == NULL) {
++		struct reftable_stack *stack = refs->main_stack;
++		struct reftable_merged_table *mt =
++			reftable_stack_merged_table(stack);
++		int err = reftable_merged_table_seek_log(mt, &ri->iter, "");
++		if (err < 0) {
++			free(ri);
++			/* XXX is this allowed? */
++			return NULL;
++		}
++	} else {
++		struct reftable_merged_table *mt1 =
++			reftable_stack_merged_table(refs->main_stack);
++		struct reftable_merged_table *mt2 =
++			reftable_stack_merged_table(refs->worktree_stack);
++		struct reftable_table *tabs =
++			xcalloc(2, sizeof(struct reftable_table));
++		int err = 0;
++		reftable_table_from_merged_table(&tabs[0], mt1);
++		reftable_table_from_merged_table(&tabs[1], mt2);
++		err = reftable_new_merged_table(&ri->merged, tabs, 2,
++						the_hash_algo->format_id);
++		if (err < 0) {
++			free(tabs);
++			/* XXX see above */
++			return NULL;
++		}
++		err = reftable_merged_table_seek_ref(ri->merged, &ri->iter, "");
++		if (err < 0) {
++			return NULL;
++		}
++	}
++	base_ref_iterator_init(&ri->base,
++			       &git_reftable_reflog_ref_iterator_vtable, 1);
++	ri->base.oid = &ri->oid;
++
++	return (struct ref_iterator *)ri;
++}
++
++static int git_reftable_for_each_reflog_ent_newest_first(
++	struct ref_store *ref_store, const char *refname, each_reflog_ent_fn fn,
++	void *cb_data)
++{
++	struct reftable_iterator it = { NULL };
++	struct git_reftable_ref_store *refs =
++		(struct git_reftable_ref_store *)ref_store;
++	struct reftable_stack *stack = stack_for(refs, refname);
++	struct reftable_merged_table *mt = NULL;
++	int err = 0;
++	struct reftable_log_record log = { NULL };
++
++	if (refs->err < 0) {
++		return refs->err;
++	}
++
++	mt = reftable_stack_merged_table(stack);
++	err = reftable_merged_table_seek_log(mt, &it, refname);
++	while (err == 0) {
++		struct object_id old_oid;
++		struct object_id new_oid;
++		const char *full_committer = "";
++
++		err = reftable_iterator_next_log(&it, &log);
++		if (err > 0) {
 +			err = 0;
 +			break;
 +		}
-+
-+		if (next.typ != BLOCK_TYPE_INDEX) {
-+			err = REFTABLE_FORMAT_ERROR;
++		if (err < 0) {
 +			break;
 +		}
 +
-+		table_iter_copy_from(&index_iter, &next);
++		if (strcmp(log.refname, refname)) {
++			break;
++		}
++
++		hashcpy(old_oid.hash, log.old_hash);
++		hashcpy(new_oid.hash, log.new_hash);
++
++		full_committer = fmt_ident(log.name, log.email,
++					   WANT_COMMITTER_IDENT,
++					   /*date*/ NULL, IDENT_NO_DATE);
++		err = fn(&old_oid, &new_oid, full_committer, log.time,
++			 log.tz_offset, log.message, cb_data);
++		if (err)
++			break;
 +	}
 +
-+	if (err == 0) {
-+		struct table_iter empty = TABLE_ITER_INIT;
-+		struct table_iter *malloced =
-+			reftable_calloc(sizeof(struct table_iter));
-+		*malloced = empty;
-+		table_iter_copy_from(malloced, &next);
-+		iterator_from_table_iter(it, malloced);
-+	}
-+done:
-+	block_iter_close(&next.bi);
-+	table_iter_close(&index_iter);
-+	reftable_record_release(&want_index_rec);
-+	reftable_record_release(&index_result_rec);
++	reftable_log_record_release(&log);
++	reftable_iterator_destroy(&it);
 +	return err;
 +}
 +
-+static int reader_seek_internal(struct reftable_reader *r,
-+				struct reftable_iterator *it,
-+				struct reftable_record *rec)
++static int git_reftable_for_each_reflog_ent_oldest_first(
++	struct ref_store *ref_store, const char *refname, each_reflog_ent_fn fn,
++	void *cb_data)
 +{
-+	struct reftable_reader_offsets *offs =
-+		reader_offsets_for(r, reftable_record_type(rec));
-+	uint64_t idx = offs->index_offset;
-+	struct table_iter ti = TABLE_ITER_INIT;
++	struct reftable_iterator it = { NULL };
++	struct git_reftable_ref_store *refs =
++		(struct git_reftable_ref_store *)ref_store;
++	struct reftable_stack *stack = stack_for(refs, refname);
++	struct reftable_merged_table *mt = NULL;
++	struct reftable_log_record *logs = NULL;
++	int cap = 0;
++	int len = 0;
 +	int err = 0;
-+	if (idx > 0)
-+		return reader_seek_indexed(r, it, rec);
++	int i = 0;
 +
-+	err = reader_start(r, &ti, reftable_record_type(rec), 0);
-+	if (err < 0)
-+		return err;
-+	err = reader_seek_linear(r, &ti, rec);
-+	if (err < 0)
-+		return err;
-+	else {
-+		struct table_iter *p =
-+			reftable_malloc(sizeof(struct table_iter));
-+		*p = ti;
-+		iterator_from_table_iter(it, p);
++	if (refs->err < 0) {
++		return refs->err;
++	}
++	mt = reftable_stack_merged_table(stack);
++	err = reftable_merged_table_seek_log(mt, &it, refname);
++
++	while (err == 0) {
++		struct reftable_log_record log = { NULL };
++		err = reftable_iterator_next_log(&it, &log);
++		if (err > 0) {
++			err = 0;
++			break;
++		}
++		if (err < 0) {
++			break;
++		}
++
++		if (strcmp(log.refname, refname)) {
++			break;
++		}
++
++		if (len == cap) {
++			cap = 2 * cap + 1;
++			logs = realloc(logs, cap * sizeof(*logs));
++		}
++
++		logs[len++] = log;
 +	}
 +
-+	return 0;
-+}
++	for (i = len; i--;) {
++		struct reftable_log_record *log = &logs[i];
++		struct object_id old_oid;
++		struct object_id new_oid;
++		const char *full_committer = "";
 +
-+int reader_seek(struct reftable_reader *r, struct reftable_iterator *it,
-+		struct reftable_record *rec)
-+{
-+	uint8_t typ = reftable_record_type(rec);
++		hashcpy(old_oid.hash, log->old_hash);
++		hashcpy(new_oid.hash, log->new_hash);
 +
-+	struct reftable_reader_offsets *offs = reader_offsets_for(r, typ);
-+	if (!offs->is_present) {
-+		iterator_set_empty(it);
-+		return 0;
++		full_committer = fmt_ident(log->name, log->email,
++					   WANT_COMMITTER_IDENT, NULL,
++					   IDENT_NO_DATE);
++		err = fn(&old_oid, &new_oid, full_committer, log->time,
++			 log->tz_offset, log->message, cb_data);
++		if (err) {
++			break;
++		}
 +	}
 +
-+	return reader_seek_internal(r, it, rec);
-+}
-+
-+int reftable_reader_seek_ref(struct reftable_reader *r,
-+			     struct reftable_iterator *it, const char *name)
-+{
-+	struct reftable_ref_record ref = {
-+		.refname = (char *)name,
-+	};
-+	struct reftable_record rec = { NULL };
-+	reftable_record_from_ref(&rec, &ref);
-+	return reader_seek(r, it, &rec);
-+}
-+
-+int reftable_reader_seek_log_at(struct reftable_reader *r,
-+				struct reftable_iterator *it, const char *name,
-+				uint64_t update_index)
-+{
-+	struct reftable_log_record log = {
-+		.refname = (char *)name,
-+		.update_index = update_index,
-+	};
-+	struct reftable_record rec = { NULL };
-+	reftable_record_from_log(&rec, &log);
-+	return reader_seek(r, it, &rec);
-+}
-+
-+int reftable_reader_seek_log(struct reftable_reader *r,
-+			     struct reftable_iterator *it, const char *name)
-+{
-+	uint64_t max = ~((uint64_t)0);
-+	return reftable_reader_seek_log_at(r, it, name, max);
-+}
-+
-+void reader_close(struct reftable_reader *r)
-+{
-+	block_source_close(&r->source);
-+	FREE_AND_NULL(r->name);
-+}
-+
-+int reftable_new_reader(struct reftable_reader **p,
-+			struct reftable_block_source *src, char const *name)
-+{
-+	struct reftable_reader *rd =
-+		reftable_calloc(sizeof(struct reftable_reader));
-+	int err = init_reader(rd, src, name);
-+	if (err == 0) {
-+		*p = rd;
-+	} else {
-+		block_source_close(src);
-+		reftable_free(rd);
++	for (i = 0; i < len; i++) {
++		reftable_log_record_release(&logs[i]);
 +	}
++	free(logs);
++
++	reftable_iterator_destroy(&it);
 +	return err;
 +}
 +
-+void reftable_reader_free(struct reftable_reader *r)
++static int git_reftable_reflog_exists(struct ref_store *ref_store,
++				      const char *refname)
 +{
-+	reader_close(r);
-+	reftable_free(r);
-+}
++	struct reftable_iterator it = { NULL };
++	struct git_reftable_ref_store *refs =
++		(struct git_reftable_ref_store *)ref_store;
++	struct reftable_stack *stack = stack_for(refs, refname);
++	struct reftable_merged_table *mt = reftable_stack_merged_table(stack);
++	struct reftable_log_record log = { NULL };
++	int err = refs->err;
 +
-+static int reftable_reader_refs_for_indexed(struct reftable_reader *r,
-+					    struct reftable_iterator *it,
-+					    uint8_t *oid)
-+{
-+	struct reftable_obj_record want = {
-+		.hash_prefix = oid,
-+		.hash_prefix_len = r->object_id_len,
-+	};
-+	struct reftable_record want_rec = { NULL };
-+	struct reftable_iterator oit = { NULL };
-+	struct reftable_obj_record got = { NULL };
-+	struct reftable_record got_rec = { NULL };
-+	int err = 0;
-+	struct indexed_table_ref_iter *itr = NULL;
-+
-+	/* Look through the reverse index. */
-+	reftable_record_from_obj(&want_rec, &want);
-+	err = reader_seek(r, &oit, &want_rec);
-+	if (err != 0)
-+		goto done;
-+
-+	/* read out the reftable_obj_record */
-+	reftable_record_from_obj(&got_rec, &got);
-+	err = iterator_next(&oit, &got_rec);
-+	if (err < 0)
-+		goto done;
-+
-+	if (err > 0 ||
-+	    memcmp(want.hash_prefix, got.hash_prefix, r->object_id_len)) {
-+		/* didn't find it; return empty iterator */
-+		iterator_set_empty(it);
-+		err = 0;
-+		goto done;
-+	}
-+
-+	err = new_indexed_table_ref_iter(&itr, r, oid, hash_size(r->hash_id),
-+					 got.offsets, got.offset_len);
-+	if (err < 0)
-+		goto done;
-+	got.offsets = NULL;
-+	iterator_from_indexed_table_ref_iter(it, itr);
-+
-+done:
-+	reftable_iterator_destroy(&oit);
-+	reftable_record_release(&got_rec);
-+	return err;
-+}
-+
-+static int reftable_reader_refs_for_unindexed(struct reftable_reader *r,
-+					      struct reftable_iterator *it,
-+					      uint8_t *oid)
-+{
-+	struct table_iter ti_empty = TABLE_ITER_INIT;
-+	struct table_iter *ti = reftable_calloc(sizeof(struct table_iter));
-+	struct filtering_ref_iterator *filter = NULL;
-+	struct filtering_ref_iterator empty = FILTERING_REF_ITERATOR_INIT;
-+	int oid_len = hash_size(r->hash_id);
-+	int err;
-+
-+	*ti = ti_empty;
-+	err = reader_start(r, ti, BLOCK_TYPE_REF, 0);
 +	if (err < 0) {
-+		reftable_free(ti);
-+		return err;
++		goto done;
++	}
++	err = reftable_merged_table_seek_log(mt, &it, refname);
++	if (err) {
++		goto done;
++	}
++	err = reftable_iterator_next_log(&it, &log);
++	if (err) {
++		goto done;
 +	}
 +
-+	filter = reftable_malloc(sizeof(struct filtering_ref_iterator));
-+	*filter = empty;
++	if (strcmp(log.refname, refname)) {
++		err = 1;
++	}
 +
-+	strbuf_add(&filter->oid, oid, oid_len);
-+	reftable_table_from_reader(&filter->tab, r);
-+	filter->double_check = 0;
-+	iterator_from_table_iter(&filter->it, ti);
++done:
++	reftable_iterator_destroy(&it);
++	reftable_log_record_release(&log);
++	return !err;
++}
 +
-+	iterator_from_filtering_ref_iterator(it, filter);
++static int git_reftable_create_reflog(struct ref_store *ref_store,
++				      const char *refname, int force_create,
++				      struct strbuf *err)
++{
 +	return 0;
 +}
 +
-+int reftable_reader_refs_for(struct reftable_reader *r,
-+			     struct reftable_iterator *it, uint8_t *oid)
++static int git_reftable_delete_reflog(struct ref_store *ref_store,
++				      const char *refname)
 +{
-+	if (r->obj_offsets.is_present)
-+		return reftable_reader_refs_for_indexed(r, it, oid);
-+	return reftable_reader_refs_for_unindexed(r, it, oid);
++	return 0;
 +}
 +
-+uint64_t reftable_reader_max_update_index(struct reftable_reader *r)
++struct reflog_expiry_arg {
++	struct git_reftable_ref_store *refs;
++	struct reftable_stack *stack;
++	struct reftable_log_record *tombstones;
++	int len;
++	int cap;
++};
++
++static void clear_log_tombstones(struct reflog_expiry_arg *arg)
 +{
-+	return r->max_update_index;
++	int i = 0;
++	for (; i < arg->len; i++) {
++		reftable_log_record_release(&arg->tombstones[i]);
++	}
++
++	FREE_AND_NULL(arg->tombstones);
 +}
 +
-+uint64_t reftable_reader_min_update_index(struct reftable_reader *r)
++static void add_log_tombstone(struct reflog_expiry_arg *arg,
++			      const char *refname, uint64_t ts)
 +{
-+	return r->min_update_index;
++	struct reftable_log_record tombstone = {
++		.refname = xstrdup(refname),
++		.update_index = ts,
++	};
++	if (arg->len == arg->cap) {
++		arg->cap = 2 * arg->cap + 1;
++		arg->tombstones =
++			realloc(arg->tombstones, arg->cap * sizeof(tombstone));
++	}
++	arg->tombstones[arg->len++] = tombstone;
 +}
-diff --git a/reftable/reader.h b/reftable/reader.h
-new file mode 100644
-index 0000000000..6d4927e1c5
++
++static int write_reflog_expiry_table(struct reftable_writer *writer, void *argv)
++{
++	struct reflog_expiry_arg *arg = (struct reflog_expiry_arg *)argv;
++	uint64_t ts = reftable_stack_next_update_index(arg->stack);
++	int i = 0;
++	reftable_writer_set_limits(writer, ts, ts);
++	for (i = 0; i < arg->len; i++) {
++		int err = reftable_writer_add_log(writer, &arg->tombstones[i]);
++		if (err) {
++			return err;
++		}
++	}
++	return 0;
++}
++
++static int
++git_reftable_reflog_expire(struct ref_store *ref_store, const char *refname,
++			   const struct object_id *oid, unsigned int flags,
++			   reflog_expiry_prepare_fn prepare_fn,
++			   reflog_expiry_should_prune_fn should_prune_fn,
++			   reflog_expiry_cleanup_fn cleanup_fn,
++			   void *policy_cb_data)
++{
++	/*
++	  For log expiry, we write tombstones in place of the expired entries,
++	  This means that the entries are still retrievable by delving into the
++	  stack, and expiring entries paradoxically takes extra memory.
++
++	  This memory is only reclaimed when some operation issues a
++	  git_reftable_pack_refs(), which will compact the entire stack and get
++	  rid of deletion entries.
++
++	  It would be better if the refs backend supported an API that sets a
++	  criterion for all refs, passing the criterion to pack_refs().
++	*/
++	struct git_reftable_ref_store *refs =
++		(struct git_reftable_ref_store *)ref_store;
++	struct reftable_stack *stack = stack_for(refs, refname);
++	struct reftable_merged_table *mt = NULL;
++	struct reflog_expiry_arg arg = {
++		.stack = stack,
++		.refs = refs,
++	};
++	struct reftable_log_record log = { NULL };
++	struct reftable_iterator it = { NULL };
++	int err = 0;
++	if (refs->err < 0) {
++		return refs->err;
++	}
++	err = reftable_stack_reload(stack);
++	if (err) {
++		goto done;
++	}
++
++	mt = reftable_stack_merged_table(stack);
++	err = reftable_merged_table_seek_log(mt, &it, refname);
++	if (err < 0) {
++		goto done;
++	}
++
++	while (1) {
++		struct object_id ooid;
++		struct object_id noid;
++
++		int err = reftable_iterator_next_log(&it, &log);
++		if (err < 0) {
++			goto done;
++		}
++
++		if (err > 0 || strcmp(log.refname, refname)) {
++			break;
++		}
++		hashcpy(ooid.hash, log.old_hash);
++		hashcpy(noid.hash, log.new_hash);
++
++		if (should_prune_fn(&ooid, &noid, log.email,
++				    (timestamp_t)log.time, log.tz_offset,
++				    log.message, policy_cb_data)) {
++			add_log_tombstone(&arg, refname, log.update_index);
++		}
++	}
++	err = reftable_stack_add(stack, &write_reflog_expiry_table, &arg);
++
++done:
++	assert(err != REFTABLE_API_ERROR);
++	reftable_log_record_release(&log);
++	reftable_iterator_destroy(&it);
++	clear_log_tombstones(&arg);
++	return err;
++}
++
++static int reftable_error_to_errno(int err)
++{
++	switch (err) {
++	case REFTABLE_IO_ERROR:
++		return EIO;
++	case REFTABLE_FORMAT_ERROR:
++		return EFAULT;
++	case REFTABLE_NOT_EXIST_ERROR:
++		return ENOENT;
++	case REFTABLE_LOCK_ERROR:
++		return EBUSY;
++	case REFTABLE_API_ERROR:
++		return EINVAL;
++	case REFTABLE_ZLIB_ERROR:
++		return EDOM;
++	default:
++		return ERANGE;
++	}
++}
++
++static int git_reftable_read_raw_ref(struct ref_store *ref_store,
++				     const char *refname, struct object_id *oid,
++				     struct strbuf *referent,
++				     unsigned int *type)
++{
++	struct git_reftable_ref_store *refs =
++		(struct git_reftable_ref_store *)ref_store;
++	struct reftable_stack *stack = stack_for(refs, refname);
++
++	struct reftable_ref_record ref = { NULL };
++	int err = 0;
++	if (refs->err < 0) {
++		return refs->err;
++	}
++
++	/* This is usually not needed, but Git doesn't signal to ref backend if
++	   a subprocess updated the ref DB.  So we always check.
++	*/
++	err = reftable_stack_reload(stack);
++	if (err) {
++		goto done;
++	}
++
++	err = reftable_stack_read_ref(stack, refname, &ref);
++	if (err > 0) {
++		errno = ENOENT;
++		err = -1;
++		goto done;
++	}
++	if (err < 0) {
++		errno = reftable_error_to_errno(err);
++		err = -1;
++		goto done;
++	}
++	if (ref.target != NULL) {
++		strbuf_reset(referent);
++		strbuf_addstr(referent, ref.target);
++		*type |= REF_ISSYMREF;
++	} else if (ref.value != NULL) {
++		hashcpy(oid->hash, ref.value);
++	} else {
++		*type |= REF_ISBROKEN;
++		errno = EINVAL;
++		err = -1;
++	}
++done:
++	assert(err != REFTABLE_API_ERROR);
++	reftable_ref_record_release(&ref);
++	return err;
++}
++
++struct ref_storage_be refs_be_reftable = {
++	&refs_be_files,
++	"reftable",
++	git_reftable_ref_store_create,
++	git_reftable_init_db,
++	git_reftable_transaction_prepare,
++	git_reftable_transaction_finish,
++	git_reftable_transaction_abort,
++	git_reftable_transaction_initial_commit,
++
++	git_reftable_pack_refs,
++	git_reftable_create_symref,
++	git_reftable_delete_refs,
++	git_reftable_rename_ref,
++	git_reftable_copy_ref,
++
++	git_reftable_ref_iterator_begin,
++	git_reftable_read_raw_ref,
++
++	git_reftable_reflog_iterator_begin,
++	git_reftable_for_each_reflog_ent_oldest_first,
++	git_reftable_for_each_reflog_ent_newest_first,
++	git_reftable_reflog_exists,
++	git_reftable_create_reflog,
++	git_reftable_delete_reflog,
++	git_reftable_reflog_expire,
++};
+diff --git a/repository.c b/repository.c
+index a4174ddb06..ff0988dac8 100644
+--- a/repository.c
++++ b/repository.c
+@@ -174,6 +174,8 @@ int repo_init(struct repository *repo,
+ 	if (worktree)
+ 		repo_set_worktree(repo, worktree);
+ 
++	repo->ref_storage_format = xstrdup_or_null(format.ref_storage);
++
+ 	clear_repository_format(&format);
+ 	return 0;
+ 
+diff --git a/repository.h b/repository.h
+index b385ca3c94..8019a7d0a1 100644
+--- a/repository.h
++++ b/repository.h
+@@ -78,6 +78,9 @@ struct repository {
+ 	 */
+ 	struct ref_store *refs_private;
+ 
++	/* The format to use for the ref database. */
++	char *ref_storage_format;
++
+ 	/*
+ 	 * Contains path to often used file names.
+ 	 */
+diff --git a/setup.c b/setup.c
+index c04cd25a30..c6b57efd03 100644
+--- a/setup.c
++++ b/setup.c
+@@ -500,6 +500,9 @@ static enum extension_result handle_extension(const char *var,
+ 			return error("invalid value for 'extensions.objectformat'");
+ 		data->hash_algo = format;
+ 		return EXTENSION_OK;
++	} else if (!strcmp(ext, "refstorage")) {
++		data->ref_storage = xstrdup(value);
++		return EXTENSION_OK;
+ 	}
+ 	return EXTENSION_UNKNOWN;
+ }
+@@ -651,6 +654,7 @@ void clear_repository_format(struct repository_format *format)
+ 	string_list_clear(&format->v1_only_extensions, 0);
+ 	free(format->work_tree);
+ 	free(format->partial_clone);
++	free(format->ref_storage);
+ 	init_repository_format(format);
+ }
+ 
+@@ -1308,8 +1312,11 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 				gitdir = DEFAULT_GIT_DIR_ENVIRONMENT;
+ 			setup_git_env(gitdir);
+ 		}
+-		if (startup_info->have_repository)
++		if (startup_info->have_repository) {
+ 			repo_set_hash_algo(the_repository, repo_fmt.hash_algo);
++			the_repository->ref_storage_format =
++				xstrdup_or_null(repo_fmt.ref_storage);
++		}
+ 	}
+ 
+ 	strbuf_release(&dir);
+diff --git a/t/t0031-reftable.sh b/t/t0031-reftable.sh
+new file mode 100755
+index 0000000000..58c7d5d4bc
 --- /dev/null
-+++ b/reftable/reader.h
-@@ -0,0 +1,75 @@
-+/*
-+Copyright 2020 Google LLC
++++ b/t/t0031-reftable.sh
+@@ -0,0 +1,199 @@
++#!/bin/sh
++#
++# Copyright (c) 2020 Google LLC
++#
 +
-+Use of this source code is governed by a BSD-style
-+license that can be found in the LICENSE file or at
-+https://developers.google.com/open-source/licenses/bsd
-+*/
++test_description='reftable basics'
 +
-+#ifndef READER_H
-+#define READER_H
++. ./test-lib.sh
 +
-+#include "block.h"
-+#include "record.h"
-+#include "reftable-iterator.h"
-+#include "reftable-reader.h"
++INVALID_SHA1=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 +
-+uint64_t block_source_size(struct reftable_block_source *source);
++initialize ()  {
++	rm -rf .git &&
++	git init --ref-storage=reftable &&
++	mv .git/hooks .git/hooks-disabled
++}
 +
-+int block_source_read_block(struct reftable_block_source *source,
-+			    struct reftable_block *dest, uint64_t off,
-+			    uint32_t size);
-+void block_source_close(struct reftable_block_source *source);
++test_expect_success 'SHA256 support, env' '
++	rm -rf .git &&
++	GIT_DEFAULT_HASH=sha256 && export GIT_DEFAULT_HASH &&
++	git init --ref-storage=reftable &&
++	mv .git/hooks .git/hooks-disabled &&
++	test_commit file
++'
 +
-+/* metadata for a block type */
-+struct reftable_reader_offsets {
-+	int is_present;
-+	uint64_t offset;
-+	uint64_t index_offset;
-+};
++test_expect_success 'SHA256 support, option' '
++	rm -rf .git &&
++	git init --ref-storage=reftable --object-format=sha256 &&
++	mv .git/hooks .git/hooks-disabled &&
++	test_commit file
++'
 +
-+/* The state for reading a reftable file. */
-+struct reftable_reader {
-+	/* for convience, associate a name with the instance. */
-+	char *name;
-+	struct reftable_block_source source;
++test_expect_success 'delete ref' '
++	initialize &&
++	test_commit file &&
++	SHA=$(git show-ref -s --verify HEAD) &&
++	test_write_lines "$SHA refs/heads/master" "$SHA refs/tags/file" >expect &&
++	git show-ref > actual &&
++	! git update-ref -d refs/tags/file $INVALID_SHA1 &&
++	test_cmp expect actual &&
++	git update-ref -d refs/tags/file $SHA  &&
++	test_write_lines "$SHA refs/heads/master" >expect &&
++	git show-ref > actual &&
++	test_cmp expect actual
++'
 +
-+	/* Size of the file, excluding the footer. */
-+	uint64_t size;
 +
-+	/* 'sha1' for SHA1, 's256' for SHA-256 */
-+	uint32_t hash_id;
++test_expect_success 'clone calls transaction_initial_commit' '
++	test_commit message1 file1 &&
++	git clone . cloned &&
++	(test  -f cloned/file1 || echo "Fixme.")
++'
 +
-+	uint32_t block_size;
-+	uint64_t min_update_index;
-+	uint64_t max_update_index;
-+	/* Length of the OID keys in the 'o' section */
-+	int object_id_len;
-+	int version;
++test_expect_success 'basic operation of reftable storage: commit, show-ref' '
++	initialize &&
++	test_commit file &&
++	test_write_lines refs/heads/master refs/tags/file >expect &&
++	git show-ref &&
++	git show-ref | cut -f2 -d" " > actual &&
++	test_cmp actual expect
++'
 +
-+	struct reftable_reader_offsets ref_offsets;
-+	struct reftable_reader_offsets obj_offsets;
-+	struct reftable_reader_offsets log_offsets;
-+};
++test_expect_success 'reflog, repack' '
++	initialize &&
++	for count in $(test_seq 1 10)
++	do
++		test_commit "number $count" file.t $count number-$count ||
++		return 1
++	done &&
++	git pack-refs &&
++	ls -1 .git/reftable >table-files &&
++	test_line_count = 2 table-files &&
++	git reflog refs/heads/master >output &&
++	test_line_count = 10 output &&
++	grep "commit (initial): number 1" output &&
++	grep "commit: number 10" output &&
++	git gc &&
++	git reflog refs/heads/master >output &&
++	test_line_count = 0 output
++'
 +
-+int init_reader(struct reftable_reader *r, struct reftable_block_source *source,
-+		const char *name);
-+int reader_seek(struct reftable_reader *r, struct reftable_iterator *it,
-+		struct reftable_record *rec);
-+void reader_close(struct reftable_reader *r);
-+const char *reader_name(struct reftable_reader *r);
++test_expect_success 'branch switch in reflog output' '
++	initialize &&
++	test_commit file1 &&
++	git checkout -b branch1 &&
++	test_commit file2 &&
++	git checkout -b branch2 &&
++	git switch - &&
++	git rev-parse --symbolic-full-name HEAD > actual &&
++	echo refs/heads/branch1 > expect &&
++	test_cmp actual expect
++'
 +
-+/* initialize a block reader to read from `r` */
-+int reader_init_block_reader(struct reftable_reader *r, struct block_reader *br,
-+			     uint64_t next_off, uint8_t want_typ);
 +
-+/* generic interface to reftables */
-+struct reftable_table_vtable {
-+	int (*seek_record)(void *tab, struct reftable_iterator *it,
-+			   struct reftable_record *);
-+	uint32_t (*hash_id)(void *tab);
-+	uint64_t (*min_update_index)(void *tab);
-+	uint64_t (*max_update_index)(void *tab);
-+};
++# This matches show-ref's output
++print_ref() {
++	echo "$(git rev-parse "$1") $1"
++}
 +
-+#endif
-diff --git a/reftable/reftable-iterator.h b/reftable/reftable-iterator.h
-new file mode 100644
-index 0000000000..a3d6be7ae0
---- /dev/null
-+++ b/reftable/reftable-iterator.h
-@@ -0,0 +1,37 @@
-+/*
-+Copyright 2020 Google LLC
++test_expect_success 'peeled tags are stored' '
++	initialize &&
++	test_commit file &&
++	git tag -m "annotated tag" test_tag HEAD &&
++	{
++		print_ref "refs/heads/master" &&
++		print_ref "refs/tags/file" &&
++		print_ref "refs/tags/test_tag" &&
++		print_ref "refs/tags/test_tag^{}"
++	} >expect &&
++	git show-ref -d >actual &&
++	test_cmp expect actual
++'
 +
-+Use of this source code is governed by a BSD-style
-+license that can be found in the LICENSE file or at
-+https://developers.google.com/open-source/licenses/bsd
-+*/
++test_expect_success 'show-ref works on fresh repo' '
++	initialize &&
++	rm -rf .git &&
++	git init --ref-storage=reftable &&
++	>expect &&
++	! git show-ref > actual &&
++	test_cmp expect actual
++'
 +
-+#ifndef REFTABLE_ITERATOR_H
-+#define REFTABLE_ITERATOR_H
++test_expect_success 'checkout unborn branch' '
++	initialize &&
++	git checkout -b master
++'
 +
-+#include "reftable-record.h"
 +
-+/* iterator is the generic interface for walking over data stored in a
-+   reftable.
-+*/
-+struct reftable_iterator {
-+	struct reftable_iterator_vtable *ops;
-+	void *iter_arg;
-+};
++test_expect_success 'dir/file conflict' '
++	initialize &&
++	test_commit file &&
++	! git branch master/forbidden
++'
 +
-+/* reads the next reftable_ref_record. Returns < 0 for error, 0 for OK and > 0:
-+   end of iteration.
-+*/
-+int reftable_iterator_next_ref(struct reftable_iterator *it,
-+			       struct reftable_ref_record *ref);
 +
-+/* reads the next reftable_log_record. Returns < 0 for error, 0 for OK and > 0:
-+   end of iteration.
-+*/
-+int reftable_iterator_next_log(struct reftable_iterator *it,
-+			       struct reftable_log_record *log);
++test_expect_success 'do not clobber existing repo' '
++	rm -rf .git &&
++	git init --ref-storage=files &&
++	cat .git/HEAD > expect &&
++	test_commit file &&
++	(git init --ref-storage=reftable || true) &&
++	cat .git/HEAD > actual &&
++	test_cmp expect actual
++'
 +
-+/* releases resources associated with an iterator. */
-+void reftable_iterator_destroy(struct reftable_iterator *it);
++# cherry-pick uses a pseudo ref.
++test_expect_success 'pseudo refs' '
++	initialize &&
++	test_commit message1 file1 &&
++	test_commit message2 file2 &&
++	git branch source &&
++	git checkout HEAD^ &&
++	test_commit message3 file3 &&
++	git cherry-pick source &&
++	test -f file2
++'
 +
-+#endif
-diff --git a/reftable/reftable-reader.h b/reftable/reftable-reader.h
-new file mode 100644
-index 0000000000..827957a8fb
---- /dev/null
-+++ b/reftable/reftable-reader.h
-@@ -0,0 +1,89 @@
-+/*
-+Copyright 2020 Google LLC
++# cherry-pick uses a pseudo ref.
++test_expect_success 'rebase' '
++	initialize &&
++	test_commit message1 file1 &&
++	test_commit message2 file2 &&
++	git branch source &&
++	git checkout HEAD^ &&
++	test_commit message3 file3 &&
++	git rebase source &&
++	test -f file2
++'
 +
-+Use of this source code is governed by a BSD-style
-+license that can be found in the LICENSE file or at
-+https://developers.google.com/open-source/licenses/bsd
-+*/
++test_expect_success 'worktrees' '
++	git init --ref-storage=reftable start &&
++	(cd start && test_commit file1 && git checkout -b branch1 &&
++	git checkout -b branch2 &&
++	git worktree add  ../wt
++	) &&
++	cd wt &&
++	git checkout branch1 &&
++	git branch
++'
 +
-+#ifndef REFTABLE_READER_H
-+#define REFTABLE_READER_H
++test_expect_success 'worktrees 2' '
++	initialize &&
++	test_commit file1 &&
++	mkdir existing_empty &&
++	git worktree add --detach existing_empty master
++'
 +
-+#include "reftable-iterator.h"
-+#include "reftable-blocksource.h"
++test_expect_success 'FETCH_HEAD' '
++	initialize &&
++	test_commit one &&
++	(git init sub && cd sub && test_commit two) &&
++	git --git-dir sub/.git rev-parse HEAD >expect &&
++	git fetch sub &&
++	git checkout FETCH_HEAD &&
++	git rev-parse HEAD >actual &&
++	test_cmp expect actual
++'
 +
-+/*
-+ Reading single tables
++test_done
+diff --git a/t/t1409-avoid-packing-refs.sh b/t/t1409-avoid-packing-refs.sh
+index be12fb6350..c6f7832556 100755
+--- a/t/t1409-avoid-packing-refs.sh
++++ b/t/t1409-avoid-packing-refs.sh
+@@ -4,6 +4,12 @@ test_description='avoid rewriting packed-refs unnecessarily'
+ 
+ . ./test-lib.sh
+ 
++if test_have_prereq REFTABLE
++then
++  skip_all='skipping pack-refs tests; incompatible with reftable'
++  test_done
++fi
 +
-+ The follow routines are for reading single files. For an application-level
-+ interface, skip ahead to struct reftable_merged_table and struct
-+ reftable_stack.
-+*/
+ # Add an identifying mark to the packed-refs file header line. This
+ # shouldn't upset readers, and it should be omitted if the file is
+ # ever rewritten.
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index b17f5c21fb..cc5d01571a 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -8,6 +8,12 @@ test_description='git fsck random collection of tests
+ 
+ . ./test-lib.sh
+ 
++if test_have_prereq REFTABLE
++then
++  skip_all='skipping tests; incompatible with reftable'
++  test_done
++fi
 +
-+/* The reader struct is a handle to an open reftable file. */
-+struct reftable_reader;
+ test_expect_success setup '
+ 	git config gc.auto 0 &&
+ 	git config i18n.commitencoding ISO-8859-1 &&
+diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
+index f41b2afb99..edaef2c175 100755
+--- a/t/t3210-pack-refs.sh
++++ b/t/t3210-pack-refs.sh
+@@ -11,6 +11,12 @@ semantic is still the same.
+ '
+ . ./test-lib.sh
+ 
++if test_have_prereq REFTABLE
++then
++  skip_all='skipping pack-refs tests; incompatible with reftable'
++  test_done
++fi
 +
-+/* reftable_new_reader opens a reftable for reading. If successful, returns 0
-+ * code and sets pp. The name is used for creating a stack. Typically, it is the
-+ * basename of the file. The block source `src` is owned by the reader, and is
-+ * closed on calling reftable_reader_destroy().
-+ */
-+int reftable_new_reader(struct reftable_reader **pp,
-+			struct reftable_block_source *src, const char *name);
+ test_expect_success 'enable reflogs' '
+ 	git config core.logallrefupdates true
+ '
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index a863ccee7e..7b638e0b8c 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1520,6 +1520,11 @@ parisc* | hppa*)
+ 	;;
+ esac
+ 
++if test -n "$GIT_TEST_REFTABLE"
++then
++  test_set_prereq REFTABLE
++fi
 +
-+/* reftable_reader_seek_ref returns an iterator where 'name' would be inserted
-+   in the table.  To seek to the start of the table, use name = "".
-+
-+   example:
-+
-+   struct reftable_reader *r = NULL;
-+   int err = reftable_new_reader(&r, &src, "filename");
-+   if (err < 0) { ... }
-+   struct reftable_iterator it  = {0};
-+   err = reftable_reader_seek_ref(r, &it, "refs/heads/master");
-+   if (err < 0) { ... }
-+   struct reftable_ref_record ref  = {0};
-+   while (1) {
-+     err = reftable_iterator_next_ref(&it, &ref);
-+     if (err > 0) {
-+       break;
-+     }
-+     if (err < 0) {
-+       ..error handling..
-+     }
-+     ..found..
-+   }
-+   reftable_iterator_destroy(&it);
-+   reftable_ref_record_release(&ref);
-+ */
-+int reftable_reader_seek_ref(struct reftable_reader *r,
-+			     struct reftable_iterator *it, const char *name);
-+
-+/* returns the hash ID used in this table. */
-+uint32_t reftable_reader_hash_id(struct reftable_reader *r);
-+
-+/* seek to logs for the given name, older than update_index. To seek to the
-+   start of the table, use name = "".
-+ */
-+int reftable_reader_seek_log_at(struct reftable_reader *r,
-+				struct reftable_iterator *it, const char *name,
-+				uint64_t update_index);
-+
-+/* seek to newest log entry for given name. */
-+int reftable_reader_seek_log(struct reftable_reader *r,
-+			     struct reftable_iterator *it, const char *name);
-+
-+/* closes and deallocates a reader. */
-+void reftable_reader_free(struct reftable_reader *);
-+
-+/* return an iterator for the refs pointing to `oid`. */
-+int reftable_reader_refs_for(struct reftable_reader *r,
-+			     struct reftable_iterator *it, uint8_t *oid);
-+
-+/* return the max_update_index for a table */
-+uint64_t reftable_reader_max_update_index(struct reftable_reader *r);
-+
-+/* return the min_update_index for a table */
-+uint64_t reftable_reader_min_update_index(struct reftable_reader *r);
-+
-+#endif
+ ( COLUMNS=1 && test $COLUMNS = 1 ) && test_set_prereq COLUMNS_CAN_BE_1
+ test -z "$NO_PERL" && test_set_prereq PERL
+ test -z "$NO_PTHREADS" && test_set_prereq PTHREADS
 -- 
 gitgitgadget
 
