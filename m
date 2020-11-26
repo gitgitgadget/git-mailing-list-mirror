@@ -2,89 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFE04C56201
-	for <git@archiver.kernel.org>; Thu, 26 Nov 2020 01:04:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 228CBC56201
+	for <git@archiver.kernel.org>; Thu, 26 Nov 2020 01:07:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 55BE62075A
-	for <git@archiver.kernel.org>; Thu, 26 Nov 2020 01:04:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A650820770
+	for <git@archiver.kernel.org>; Thu, 26 Nov 2020 01:07:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fh0zMMfg"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="fOLMqXE5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729200AbgKZBEx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Nov 2020 20:04:53 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64020 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728364AbgKZBEx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Nov 2020 20:04:53 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 644E3FDC9A;
-        Wed, 25 Nov 2020 20:04:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=moe/0sOuoQrZ6zhE2TdBKtpohno=; b=fh0zMM
-        fgWAgLaZl8HksJSM5LLj+84IMQKeCVjSNsf8bXodYEeCuvMkH1Jh+ad0FkRKiXJs
-        339udgzTwnCAT2+CF4CpyE3tfIdXvA+NQ+Nsxp/CqtNOJpRE5QyEXHDm+B4HiCGP
-        K2GY7oW6Zu9C3dV9qBHFXWFayZQkIllQdJJts=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cgdarVJgJRsMIIN3nJnyrH7VgZXLCJyX
-        7m/++pdb+uyQP6bacZwXtZSPcMcqbBRTYjHE82XkC81Ns2Hjk7lzeVFeirFHwhHe
-        auFtEui37ppP5t7mosLRWk/EHVjC/m5VLV8h4GapjrRTrAdagRmEOmvCL40K3lzn
-        ttGdfjnJPjw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5D02DFDC99;
-        Wed, 25 Nov 2020 20:04:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A66E5FDC98;
-        Wed, 25 Nov 2020 20:04:48 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        =?utf-8?B?5ZSQ5a6H5aWV?= <winglovet@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Bug report: orphaned pack-objects after killing upload-pack on [
-References: <CAFWsj_UwkQX9y0xPQJE3xguo0z3TMkvKAwei5iryCWXvVP8CjA@mail.gmail.com>
-        <badf3777-3970-b714-3ad9-67d2f77f94a5@web.de>
-        <20201121002921.GC353076@coredump.intra.peff.net>
-        <xmqqd006s7ee.fsf@gitster.c.googlers.com>
-        <X7zOKbzR9gwJHMbJ@coredump.intra.peff.net>
-        <xmqqy2ipcdvj.fsf@gitster.c.googlers.com>
-        <X778eIAr3uzdh0H0@coredump.intra.peff.net>
-Date:   Wed, 25 Nov 2020 17:04:47 -0800
-In-Reply-To: <X778eIAr3uzdh0H0@coredump.intra.peff.net> (Jeff King's message
-        of "Wed, 25 Nov 2020 19:53:12 -0500")
-Message-ID: <xmqqo8jllyhc.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1729926AbgKZBHA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Nov 2020 20:07:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54806 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729760AbgKZBHA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Nov 2020 20:07:00 -0500
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24846C0613D4
+        for <git@vger.kernel.org>; Wed, 25 Nov 2020 17:06:59 -0800 (PST)
+Received: by mail-pf1-x42c.google.com with SMTP id x24so104809pfn.6
+        for <git@vger.kernel.org>; Wed, 25 Nov 2020 17:06:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=G2ZAD5EAqr87FzlpPqdJeF+g9m4sR/L4uZQfFaBgazI=;
+        b=fOLMqXE5OzN3qkVRBQYnwgLe0SQhT4Oqye/Li070876Jdnam6urQuWiyb445AS86wD
+         S3DN/W1YNa2wQxM5zr7eEfO07IJqGDSUVRNowEMGTG6VBhwnnUfH8qJk57i3oCTHEsQ4
+         BIk9az/GnDXVwiT5/Rru2ojmM5YT3q4hCk80QWU0M3IlHkttnScITrQjdqbwUhhwsMbD
+         j9jfTgogrA6WMjaKKRDrVakYuh/v6b2F4MclFAZr3YEiNNMcXpKkPGAUq4CvAGSpBYa/
+         +KjN0dvAqtFgZQdpNiQDNFUotoENfWoAN1FRmkaIditOlY0wpUFaClyPSOyJFhqAzW/1
+         PNGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=G2ZAD5EAqr87FzlpPqdJeF+g9m4sR/L4uZQfFaBgazI=;
+        b=D3RvgimtArDwXohUuBd0BLc98Zzdyv/p4IuPrl2tBx+kRPqYKlPsV6rQsjYxLO7peZ
+         QoXHfuGeSlKrwHXnyBpI7H5llFWJ3j+EgLUfe37ImOqRYcjR45d6SymEMhO47BNu9UOa
+         5Pn432T8Li1IKq1UDvV/B68S+uoBWTOJH1P+z9tKRLfwi99h9O09zMtE+9Zq/7Xu01P/
+         MV4l2Q/yQnuXzORjRA78T9O9gY+RRnlGYyedKEG7/DxWZNcjamX0dG36PNf18UNpXugG
+         zuwJLTyNvaH8paF8JO7qwElj53DDvyk2Y4J8T3tFthpkHCS0eQypFpMxfFWzDUhGlG9P
+         KZUA==
+X-Gm-Message-State: AOAM530CslWQ1TUHCIPCxVed0ZnuPcO+dSsbKItezqqHiGlZrPJ4CpY9
+        ZTIy2CQvA1c7yzBYuhZvEhSlM1V+Hd33JxLd
+X-Google-Smtp-Source: ABdhPJzomy0EBv7ZJFeky1CwaGpMaOuQfsp1bYoWzJmlMKBX+hzbXkjraikxf0Imb9zTWbBBZp3eYQ==
+X-Received: by 2002:a62:ea09:0:b029:198:3d34:989 with SMTP id t9-20020a62ea090000b02901983d340989mr598894pfh.42.1606352818068;
+        Wed, 25 Nov 2020 17:06:58 -0800 (PST)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id b29sm3014351pff.194.2020.11.25.17.06.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Nov 2020 17:06:57 -0800 (PST)
+Date:   Wed, 25 Nov 2020 20:06:55 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Nov 2020, #05; Wed, 25)
+Message-ID: <X77/r2bK2gdmC0HD@nand.local>
+References: <xmqqft4xaq7n.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 61715F9C-2F83-11EB-9074-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqft4xaq7n.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> On Wed, Nov 25, 2020 at 01:42:24PM -0800, Junio C Hamano wrote:
+On Wed, Nov 25, 2020 at 04:58:52PM -0800, Junio C Hamano wrote:
+> * tb/pack-bitmap (2020-11-21) 24 commits
+> [...]
 >
->> In the meantime, I may queue this on 'seen' but it cannot move
->> forward without a signoff.
->>  ...
->   We spawn an external pack-objects process to actually send objects to
->   the remote side. If we are killed by a signal during this process,
->   then pack-objects may continue to run. As soon as it starts producing
->   output for the pack, it will see a failure writing to upload-pack and
->   exit itself. But before then, it may do significant work traversing
->   the object graph, compressing deltas, etc, which will all be
->   pointless. So let's make sure to kill as soon as we know that the
->   caller will not read the result.
+>  Various improvement to the codepath that writes out pack bitmaps.
+>
+>  Needs a bit of reshuffling?
+>  cf. <X7xzWClGr3bM3wcg@coredump.intra.peff.net>
 
-Thanks, that reads well.
+Yep, this needs to be shuffled around. I know that Stolee and Jonathan
+Tan are discussing some of the patches, too.
+
+So, half of me is holding off while they discuss, to see if there is
+anything that falls out and needs picking up. The other half of me is
+busy preparing GitHub's MIDX bitmaps patches for upstream, and hasn't
+had the time ;-).
+
+I'll likely send a new version of that series after the US holiday when
+I'm back in the office next week.
+
+Sorry for the delay :-/.
+
+Thanks,
+Taylor
