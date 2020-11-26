@@ -8,63 +8,64 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC37BC64E7A
-	for <git@archiver.kernel.org>; Thu, 26 Nov 2020 19:42:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3998BC64E7D
+	for <git@archiver.kernel.org>; Thu, 26 Nov 2020 19:42:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B9D7A221F9
+	by mail.kernel.org (Postfix) with ESMTP id EA35021D7E
 	for <git@archiver.kernel.org>; Thu, 26 Nov 2020 19:42:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D53v+t5y"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PknjQDqQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404649AbgKZTmm (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S2404687AbgKZTmm (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 26 Nov 2020 14:42:42 -0500
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404516AbgKZTml (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Nov 2020 14:42:41 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5503DC0613D4
-        for <git@vger.kernel.org>; Thu, 26 Nov 2020 11:42:39 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id a3so3480140wmb.5
-        for <git@vger.kernel.org>; Thu, 26 Nov 2020 11:42:39 -0800 (PST)
+        with ESMTP id S2404516AbgKZTmm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Nov 2020 14:42:42 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B47BC0613D4
+        for <git@vger.kernel.org>; Thu, 26 Nov 2020 11:42:42 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id t4so3308148wrr.12
+        for <git@vger.kernel.org>; Thu, 26 Nov 2020 11:42:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=undKgM7TlFUHg4aVh5lQOHw423Y0GZJfqf13qvwRkmg=;
-        b=D53v+t5yWtZDg4OPqFkreuBZjyhhq1QRYO+9ah3msSoP7TX3M04Fm8TBzKXtP55pbI
-         +x2NE1L26k2DBy9iSSLCzmDYUmz+gmyUCY1aml2D67WcHO16WbAe5z9p++PHp2yJSwhM
-         hYVY+z9oFqqtm59QjAmOit4O4m0zrKlHZ5Q5lxuxd5cXLTM/TQGuBIeRZpfjBPWNpyVr
-         C46hRczZLiDNlVE1kK+8KzAqoCCgwBmCYLuqLk3HymPmiDSnLwm0CAs4zFR9EUEtlLKx
-         Aj69yftkKLO6+Y3dKnQVDAY3FtJ7xJHmDwHhrqY4h8a30GbDLISsit7qfJGXOiJSPJV6
-         sZmQ==
+        bh=h2yM1E9OojNUlUVX9WKPZGbLmqBJ4RmwVWs00DpTaC0=;
+        b=PknjQDqQQuMlKxz5MHJ1nwupB7hKhtx6WIGBZFwyB0nITKs9hzP0Sw/p1wRH64/8zT
+         X3MMCxf4ezA5lqChDZt17ihCvWdoJZOscKzj9Y7V6R3Z90YWuSgtw7t7clzzJ15O7VNV
+         QTM8WU5UjY+jOMJMokTH6UjDrbB70GbAUgo/fP+CZijskdVQTXrvR+RAZ6md+Lij4c69
+         PK9NjmRnjF25pAqlvcskVSnWiYndsiWA/YbCD/5CcfOs0AOOJCo10Oe/m6zk36uV3eOu
+         huu1gj462hhXOOG9hok3LkWUrsCgZszXIGAhmUIacBkYDcFQJwBDiJM7JcwHQkpaJAvp
+         HoVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=undKgM7TlFUHg4aVh5lQOHw423Y0GZJfqf13qvwRkmg=;
-        b=G72l9jRo6UhkvACBq4+3nskZILoAVM8FjEv1jWaHjFhMKiWdNMtsAuZoIx1bwa7PQ+
-         wv7g3+cdRkkZBFOxOb42p6XgZQ0IRXRbIkRPf0Da4wxFdiZyV9z/KuONJ+395gmum94P
-         MA77asROo/jqi3M6UDr/RKHegJ1rsOrg/wJGyANsvcg6DxrB8hNXvGgrQA878dA+Lppv
-         Nr1yLI1Umez8lPRBXxRzXyRmv5cvzP5UlReF+TAWVrMv3i7Z6xQDN02inaBhlXg3NZ8N
-         3ZaYuYSVLRYtL4fMfLoSGf9yG2bRjCwA4mHRemdQQFNcGK8VQsAuSIxaXgf9LIG0SpTg
-         FHYQ==
-X-Gm-Message-State: AOAM5314TCsMw1Y4C1R4jmQM8DyJ/ySNUIkkUUmU0imF29FUCnR2xqVb
-        HvaDvOF9ofDTLhR01tu6zeLCNN0N8zo=
-X-Google-Smtp-Source: ABdhPJyGHUoXqDb3o7lpMIbUVz2yjkDSGyd8f22CM7NOl0qj6qyhlk/3BPNCIu7yBHmH4fW7BV6pLQ==
-X-Received: by 2002:a05:600c:218a:: with SMTP id e10mr5211508wme.73.1606419757847;
-        Thu, 26 Nov 2020 11:42:37 -0800 (PST)
+        bh=h2yM1E9OojNUlUVX9WKPZGbLmqBJ4RmwVWs00DpTaC0=;
+        b=VRp9J26kgAO1AOsV9YljNXabIGZuBswul2CfDqugUw7MwkT1AkopawX1QSyryKm+ET
+         F+nU8vfElWks6MsW4L525JRobvZ8UpRzUD/PbTygvkdOIIvrdn9AYOkoj60PABzZcmis
+         42ta4AN8jnH2w3X+yvbrETxtHF0bUWfhQs22Pbgcvi7J4jND1wiKdo8ZIH2eI6ewzguF
+         FMhP7BaymoBt+VbJso+vERwdVtmwj6KQZgAWuoVpvis0yciJa5lpOx5c9S9v2yXTghjc
+         wSTtT7FNMfaxGRFh9qAZO57nLnCV0hdZBGXk58+hY4swYrBIi6LOkbxjrYBrvYPc9IlE
+         +AqQ==
+X-Gm-Message-State: AOAM531SHu+p2z6bSFibgX7r1j9chjx58pmxrezJ2OdLmgTFuI9abtKs
+        t9kLPJ63gabWLqOn8mwO3+f9l0tN8x8=
+X-Google-Smtp-Source: ABdhPJzNJCDgV2Qjr7dpxQQV45HxrPbn7VI20jFZEH6/rfG8qslSOwX/yt8m544TOiynkpqHAel8hA==
+X-Received: by 2002:a5d:438f:: with SMTP id i15mr5857813wrq.121.1606419760341;
+        Thu, 26 Nov 2020 11:42:40 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o4sm9546180wmh.33.2020.11.26.11.42.37
+        by smtp.gmail.com with ESMTPSA id l16sm10596529wrx.5.2020.11.26.11.42.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Nov 2020 11:42:37 -0800 (PST)
-Message-Id: <2aa30f536fb7ce5501d1ecf0315cbcb1c1c5ce38.1606419752.git.gitgitgadget@gmail.com>
+        Thu, 26 Nov 2020 11:42:39 -0800 (PST)
+Message-Id: <f71e82b995dbecffb75767268cb1838c6126325a.1606419752.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.847.v3.git.git.1606419752.gitgitgadget@gmail.com>
 References: <pull.847.v2.git.git.1601568663.gitgitgadget@gmail.com>
         <pull.847.v3.git.git.1606419752.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 26 Nov 2020 19:42:19 +0000
-Subject: [PATCH v3 04/16] reftable: add error related functionality
+Date:   Thu, 26 Nov 2020 19:42:21 +0000
+Subject: [PATCH v3 06/16] reftable: add blocksource, an abstraction for random
+ access reads
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,28 +88,44 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-The reftable/ directory is structured as a library, so it cannot
-crash on misuse. Instead, it returns an error codes.
+The reftable format is usually used with files for storage. However, we abstract
+away this using the blocksource data structure. This has two advantages:
 
-In addition, the error code can be used to signal conditions from lower levels
-of the library to be handled by higher levels of the library. For example, a
-transaction might legitimately write an empty reftable file, but in that case,
-we'd want to shortcut the transaction overhead.
+* log blocks are zlib compressed, and handling them is simplified if we can
+  discard byte segments from within the block layer.
+
+* for unittests, it is useful to read and write in-memory. The blocksource
+  allows us to abstract the data away from on-disk files.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- reftable/error.c          | 39 ++++++++++++++++++++++++
- reftable/reftable-error.h | 62 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 101 insertions(+)
- create mode 100644 reftable/error.c
- create mode 100644 reftable/reftable-error.h
+ Makefile                        |   1 +
+ reftable/blocksource.c          | 148 ++++++++++++++++++++++++++++++++
+ reftable/blocksource.h          |  22 +++++
+ reftable/reftable-blocksource.h |  50 +++++++++++
+ 4 files changed, 221 insertions(+)
+ create mode 100644 reftable/blocksource.c
+ create mode 100644 reftable/blocksource.h
+ create mode 100644 reftable/reftable-blocksource.h
 
-diff --git a/reftable/error.c b/reftable/error.c
+diff --git a/Makefile b/Makefile
+index 5ce78772fd..030b3c0204 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2391,6 +2391,7 @@ XDIFF_OBJS += xdiff/xutils.o
+ 
+ REFTABLE_OBJS += reftable/basics.o
+ REFTABLE_OBJS += reftable/error.o
++REFTABLE_OBJS += reftable/blocksource.o
+ REFTABLE_OBJS += reftable/publicbasics.o
+ 
+ REFTABLE_TEST_OBJS += reftable/test_framework.o
+diff --git a/reftable/blocksource.c b/reftable/blocksource.c
 new file mode 100644
-index 0000000000..1d60137ea7
+index 0000000000..25d4d95b52
 --- /dev/null
-+++ b/reftable/error.c
-@@ -0,0 +1,39 @@
++++ b/reftable/blocksource.c
+@@ -0,0 +1,148 @@
 +/*
 +Copyright 2020 Google LLC
 +
@@ -117,43 +134,152 @@ index 0000000000..1d60137ea7
 +https://developers.google.com/open-source/licenses/bsd
 +*/
 +
++#include "system.h"
++
++#include "basics.h"
++#include "blocksource.h"
++#include "reftable-blocksource.h"
 +#include "reftable-error.h"
 +
-+#include <stdio.h>
-+
-+const char *reftable_error_str(int err)
++static void strbuf_return_block(void *b, struct reftable_block *dest)
 +{
-+	static char buf[250];
-+	switch (err) {
-+	case REFTABLE_IO_ERROR:
-+		return "I/O error";
-+	case REFTABLE_FORMAT_ERROR:
-+		return "corrupt reftable file";
-+	case REFTABLE_NOT_EXIST_ERROR:
-+		return "file does not exist";
-+	case REFTABLE_LOCK_ERROR:
-+		return "data is outdated";
-+	case REFTABLE_API_ERROR:
-+		return "misuse of the reftable API";
-+	case REFTABLE_ZLIB_ERROR:
-+		return "zlib failure";
-+	case REFTABLE_NAME_CONFLICT:
-+		return "file/directory conflict";
-+	case REFTABLE_REFNAME_ERROR:
-+		return "invalid refname";
-+	case -1:
-+		return "general error";
-+	default:
-+		snprintf(buf, sizeof(buf), "unknown error code %d", err);
-+		return buf;
-+	}
++	memset(dest->data, 0xff, dest->len);
++	reftable_free(dest->data);
 +}
-diff --git a/reftable/reftable-error.h b/reftable/reftable-error.h
++
++static void strbuf_close(void *b)
++{
++}
++
++static int strbuf_read_block(void *v, struct reftable_block *dest, uint64_t off,
++			     uint32_t size)
++{
++	struct strbuf *b = (struct strbuf *)v;
++	assert(off + size <= b->len);
++	dest->data = reftable_calloc(size);
++	memcpy(dest->data, b->buf + off, size);
++	dest->len = size;
++	return size;
++}
++
++static uint64_t strbuf_size(void *b)
++{
++	return ((struct strbuf *)b)->len;
++}
++
++static struct reftable_block_source_vtable strbuf_vtable = {
++	.size = &strbuf_size,
++	.read_block = &strbuf_read_block,
++	.return_block = &strbuf_return_block,
++	.close = &strbuf_close,
++};
++
++void block_source_from_strbuf(struct reftable_block_source *bs,
++			      struct strbuf *buf)
++{
++	assert(bs->ops == NULL);
++	bs->ops = &strbuf_vtable;
++	bs->arg = buf;
++}
++
++static void malloc_return_block(void *b, struct reftable_block *dest)
++{
++	memset(dest->data, 0xff, dest->len);
++	reftable_free(dest->data);
++}
++
++static struct reftable_block_source_vtable malloc_vtable = {
++	.return_block = &malloc_return_block,
++};
++
++static struct reftable_block_source malloc_block_source_instance = {
++	.ops = &malloc_vtable,
++};
++
++struct reftable_block_source malloc_block_source(void)
++{
++	return malloc_block_source_instance;
++}
++
++struct file_block_source {
++	int fd;
++	uint64_t size;
++};
++
++static uint64_t file_size(void *b)
++{
++	return ((struct file_block_source *)b)->size;
++}
++
++static void file_return_block(void *b, struct reftable_block *dest)
++{
++	memset(dest->data, 0xff, dest->len);
++	reftable_free(dest->data);
++}
++
++static void file_close(void *b)
++{
++	int fd = ((struct file_block_source *)b)->fd;
++	if (fd > 0) {
++		close(fd);
++		((struct file_block_source *)b)->fd = 0;
++	}
++
++	reftable_free(b);
++}
++
++static int file_read_block(void *v, struct reftable_block *dest, uint64_t off,
++			   uint32_t size)
++{
++	struct file_block_source *b = (struct file_block_source *)v;
++	assert(off + size <= b->size);
++	dest->data = reftable_malloc(size);
++	if (pread(b->fd, dest->data, size, off) != size)
++		return -1;
++	dest->len = size;
++	return size;
++}
++
++static struct reftable_block_source_vtable file_vtable = {
++	.size = &file_size,
++	.read_block = &file_read_block,
++	.return_block = &file_return_block,
++	.close = &file_close,
++};
++
++int reftable_block_source_from_file(struct reftable_block_source *bs,
++				    const char *name)
++{
++	struct stat st = { 0 };
++	int err = 0;
++	int fd = open(name, O_RDONLY);
++	struct file_block_source *p = NULL;
++	if (fd < 0) {
++		if (errno == ENOENT) {
++			return REFTABLE_NOT_EXIST_ERROR;
++		}
++		return -1;
++	}
++
++	err = fstat(fd, &st);
++	if (err < 0)
++		return -1;
++
++	p = reftable_calloc(sizeof(struct file_block_source));
++	p->size = st.st_size;
++	p->fd = fd;
++
++	assert(bs->ops == NULL);
++	bs->ops = &file_vtable;
++	bs->arg = p;
++	return 0;
++}
+diff --git a/reftable/blocksource.h b/reftable/blocksource.h
 new file mode 100644
-index 0000000000..7e55a16aac
+index 0000000000..072e2727ad
 --- /dev/null
-+++ b/reftable/reftable-error.h
-@@ -0,0 +1,62 @@
++++ b/reftable/blocksource.h
+@@ -0,0 +1,22 @@
 +/*
 +Copyright 2020 Google LLC
 +
@@ -162,58 +288,74 @@ index 0000000000..7e55a16aac
 +https://developers.google.com/open-source/licenses/bsd
 +*/
 +
-+#ifndef REFTABLE_ERROR_H
-+#define REFTABLE_ERROR_H
++#ifndef BLOCKSOURCE_H
++#define BLOCKSOURCE_H
 +
++#include "system.h"
++
++struct reftable_block_source;
++
++/* Create an in-memory block source for reading reftables */
++void block_source_from_strbuf(struct reftable_block_source *bs,
++			      struct strbuf *buf);
++
++struct reftable_block_source malloc_block_source(void);
++
++#endif
+diff --git a/reftable/reftable-blocksource.h b/reftable/reftable-blocksource.h
+new file mode 100644
+index 0000000000..fffd19deb2
+--- /dev/null
++++ b/reftable/reftable-blocksource.h
+@@ -0,0 +1,50 @@
 +/*
-+ Errors in reftable calls are signaled with negative integer return values. 0
-+ means success.
++Copyright 2020 Google LLC
++
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
 +*/
-+enum reftable_error {
-+	/* Unexpected file system behavior */
-+	REFTABLE_IO_ERROR = -2,
 +
-+	/* Format inconsistency on reading data
-+	 */
-+	REFTABLE_FORMAT_ERROR = -3,
++#ifndef REFTABLE_BLOCKSOURCE_H
++#define REFTABLE_BLOCKSOURCE_H
 +
-+	/* File does not exist. Returned from block_source_from_file(),  because
-+	   it needs special handling in stack.
-+	*/
-+	REFTABLE_NOT_EXIST_ERROR = -4,
++#include <stdint.h>
 +
-+	/* Trying to write out-of-date data. */
-+	REFTABLE_LOCK_ERROR = -5,
-+
-+	/* Misuse of the API:
-+	   - on writing a record with NULL refname.
-+	   - on writing a reftable_ref_record outside the table limits
-+	   - on writing a ref or log record before the stack's next_update_index
-+	   - on writing a log record with multiline message with
-+	   exact_log_message unset
-+	   - on reading a reftable_ref_record from log iterator, or vice versa.
-+
-+	  When a call misuses the API, the internal state of the library is kept
-+	  unchanged.
-+	*/
-+	REFTABLE_API_ERROR = -6,
-+
-+	/* Decompression error */
-+	REFTABLE_ZLIB_ERROR = -7,
-+
-+	/* Wrote a table without blocks. */
-+	REFTABLE_EMPTY_TABLE_ERROR = -8,
-+
-+	/* Dir/file conflict. */
-+	REFTABLE_NAME_CONFLICT = -9,
-+
-+	/* Illegal ref name. */
-+	REFTABLE_REFNAME_ERROR = -10,
++/* block_source is a generic wrapper for a seekable readable file.
++ */
++struct reftable_block_source {
++	struct reftable_block_source_vtable *ops;
++	void *arg;
 +};
 +
-+/* convert the numeric error code to a string. The string should not be
-+ * deallocated. */
-+const char *reftable_error_str(int err);
++/* a contiguous segment of bytes. It keeps track of its generating block_source
++   so it can return itself into the pool.
++*/
++struct reftable_block {
++	uint8_t *data;
++	int len;
++	struct reftable_block_source source;
++};
++
++/* block_source_vtable are the operations that make up block_source */
++struct reftable_block_source_vtable {
++	/* returns the size of a block source */
++	uint64_t (*size)(void *source);
++
++	/* reads a segment from the block source. It is an error to read
++	   beyond the end of the block */
++	int (*read_block)(void *source, struct reftable_block *dest,
++			  uint64_t off, uint32_t size);
++	/* mark the block as read; may return the data back to malloc */
++	void (*return_block)(void *source, struct reftable_block *blockp);
++
++	/* release all resources associated with the block source */
++	void (*close)(void *source);
++};
++
++/* opens a file on the file system as a block_source */
++int reftable_block_source_from_file(struct reftable_block_source *block_src,
++				    const char *name);
 +
 +#endif
 -- 
