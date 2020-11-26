@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FBB7C6379D
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC37BC64E7A
 	for <git@archiver.kernel.org>; Thu, 26 Nov 2020 19:42:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0D49C21D7E
+	by mail.kernel.org (Postfix) with ESMTP id B9D7A221F9
 	for <git@archiver.kernel.org>; Thu, 26 Nov 2020 19:42:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m2zyUWHq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D53v+t5y"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404611AbgKZTmj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Nov 2020 14:42:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58076 "EHLO
+        id S2404649AbgKZTmm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Nov 2020 14:42:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404550AbgKZTmj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Nov 2020 14:42:39 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55BDCC061A04
-        for <git@vger.kernel.org>; Thu, 26 Nov 2020 11:42:38 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id s8so3316825wrw.10
-        for <git@vger.kernel.org>; Thu, 26 Nov 2020 11:42:38 -0800 (PST)
+        with ESMTP id S2404516AbgKZTml (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Nov 2020 14:42:41 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5503DC0613D4
+        for <git@vger.kernel.org>; Thu, 26 Nov 2020 11:42:39 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id a3so3480140wmb.5
+        for <git@vger.kernel.org>; Thu, 26 Nov 2020 11:42:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HcHNjBh+LHS08DtT9nU5o2hzC6PC18QgYDDpPua43xc=;
-        b=m2zyUWHqr2ze5hFPmxuTSssoZpCAOsloyojNQ6wRYGNTyKuECHdciO94i6YH/TmxO6
-         vRxGn8bVFHK2nyfg8lqw79SfAApepA72fbbqrfYHD8fCmlA862KoxzEfxL2vhpTZqLnt
-         Y7agH9zhLywbkRUtLJ+kHbAqIKd43l4DFmdirw49Lw7jGn5W7CU0O7NMjZEQ5p7y2Xaq
-         181TrCn7D20XAQuJCcvmVtv8aT+WKJymky86Fh65S9zGU24HsGbdAaBdZUxWrp8UbsBw
-         TcxkQFPGwHD0Eopg50FD6bkyohQmWw4KJus4rC71QkQmRMNjFyBrXrZgIOLuIpS3jqUl
-         EVtw==
+        bh=undKgM7TlFUHg4aVh5lQOHw423Y0GZJfqf13qvwRkmg=;
+        b=D53v+t5yWtZDg4OPqFkreuBZjyhhq1QRYO+9ah3msSoP7TX3M04Fm8TBzKXtP55pbI
+         +x2NE1L26k2DBy9iSSLCzmDYUmz+gmyUCY1aml2D67WcHO16WbAe5z9p++PHp2yJSwhM
+         hYVY+z9oFqqtm59QjAmOit4O4m0zrKlHZ5Q5lxuxd5cXLTM/TQGuBIeRZpfjBPWNpyVr
+         C46hRczZLiDNlVE1kK+8KzAqoCCgwBmCYLuqLk3HymPmiDSnLwm0CAs4zFR9EUEtlLKx
+         Aj69yftkKLO6+Y3dKnQVDAY3FtJ7xJHmDwHhrqY4h8a30GbDLISsit7qfJGXOiJSPJV6
+         sZmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HcHNjBh+LHS08DtT9nU5o2hzC6PC18QgYDDpPua43xc=;
-        b=S0C7E2l6d31SCv0LHQQzzUbXGQhmU6TWg2d3SZJovQ/tRbFKZgKM9xld5Iri4jYioa
-         rhXXObPEouGXo+MdCeJzYX/Wk3Z1BQf6e6h543qPrl4CDalEhMBTeffowuv1V5K/GRIC
-         FLQ9uN6ofVoAr/LWFH1xuf19c6cun4hu1JYGI4oO00wB2Z1nw5QPz2YwafW2h4IYLhho
-         rdHhZWJ/UNM7ojM7/Fk2bYq3RgJdBHXVTIxoQw8fe6upH8pMlZEV8nkHbxcRvCgndSlg
-         2ZQzFhZNtE6WMYfitqoMPJOiyQRIf786IL3EQ66cESWwy1rZDMsxCbaFqZnn8db2BnEz
-         6HXA==
-X-Gm-Message-State: AOAM533tx/m+PRnop5QY0ba8R8Fiamenl6WjWKcfmSrmQY27NII/KJOK
-        nEuaNFR+AdxRJA5GIbfOeeZQnZVkezw=
-X-Google-Smtp-Source: ABdhPJzNwkvuFlgjyTG/5ZTQseC9BKPQG6GKNsS/SjhUwinsZDh+RMOvnDOz3Ib8fWi9cFHFHEt5Eg==
-X-Received: by 2002:a5d:634c:: with SMTP id b12mr5741187wrw.130.1606419756877;
-        Thu, 26 Nov 2020 11:42:36 -0800 (PST)
+        bh=undKgM7TlFUHg4aVh5lQOHw423Y0GZJfqf13qvwRkmg=;
+        b=G72l9jRo6UhkvACBq4+3nskZILoAVM8FjEv1jWaHjFhMKiWdNMtsAuZoIx1bwa7PQ+
+         wv7g3+cdRkkZBFOxOb42p6XgZQ0IRXRbIkRPf0Da4wxFdiZyV9z/KuONJ+395gmum94P
+         MA77asROo/jqi3M6UDr/RKHegJ1rsOrg/wJGyANsvcg6DxrB8hNXvGgrQA878dA+Lppv
+         Nr1yLI1Umez8lPRBXxRzXyRmv5cvzP5UlReF+TAWVrMv3i7Z6xQDN02inaBhlXg3NZ8N
+         3ZaYuYSVLRYtL4fMfLoSGf9yG2bRjCwA4mHRemdQQFNcGK8VQsAuSIxaXgf9LIG0SpTg
+         FHYQ==
+X-Gm-Message-State: AOAM5314TCsMw1Y4C1R4jmQM8DyJ/ySNUIkkUUmU0imF29FUCnR2xqVb
+        HvaDvOF9ofDTLhR01tu6zeLCNN0N8zo=
+X-Google-Smtp-Source: ABdhPJyGHUoXqDb3o7lpMIbUVz2yjkDSGyd8f22CM7NOl0qj6qyhlk/3BPNCIu7yBHmH4fW7BV6pLQ==
+X-Received: by 2002:a05:600c:218a:: with SMTP id e10mr5211508wme.73.1606419757847;
+        Thu, 26 Nov 2020 11:42:37 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j8sm10541395wrx.11.2020.11.26.11.42.36
+        by smtp.gmail.com with ESMTPSA id o4sm9546180wmh.33.2020.11.26.11.42.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Nov 2020 11:42:36 -0800 (PST)
-Message-Id: <91c3ac2449edc45db643b0ba6cba66ef31176600.1606419752.git.gitgitgadget@gmail.com>
+        Thu, 26 Nov 2020 11:42:37 -0800 (PST)
+Message-Id: <2aa30f536fb7ce5501d1ecf0315cbcb1c1c5ce38.1606419752.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.847.v3.git.git.1606419752.gitgitgadget@gmail.com>
 References: <pull.847.v2.git.git.1601568663.gitgitgadget@gmail.com>
         <pull.847.v3.git.git.1606419752.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 26 Nov 2020 19:42:18 +0000
-Subject: [PATCH v3 03/16] reftable: add LICENSE
+Date:   Thu, 26 Nov 2020 19:42:19 +0000
+Subject: [PATCH v3 04/16] reftable: add error related functionality
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,51 +87,135 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-TODO: relicense?
+The reftable/ directory is structured as a library, so it cannot
+crash on misuse. Instead, it returns an error codes.
+
+In addition, the error code can be used to signal conditions from lower levels
+of the library to be handled by higher levels of the library. For example, a
+transaction might legitimately write an empty reftable file, but in that case,
+we'd want to shortcut the transaction overhead.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- reftable/LICENSE | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
- create mode 100644 reftable/LICENSE
+ reftable/error.c          | 39 ++++++++++++++++++++++++
+ reftable/reftable-error.h | 62 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 101 insertions(+)
+ create mode 100644 reftable/error.c
+ create mode 100644 reftable/reftable-error.h
 
-diff --git a/reftable/LICENSE b/reftable/LICENSE
+diff --git a/reftable/error.c b/reftable/error.c
 new file mode 100644
-index 0000000000..402e0f9356
+index 0000000000..1d60137ea7
 --- /dev/null
-+++ b/reftable/LICENSE
-@@ -0,0 +1,31 @@
-+BSD License
++++ b/reftable/error.c
+@@ -0,0 +1,39 @@
++/*
++Copyright 2020 Google LLC
 +
-+Copyright (c) 2020, Google LLC
-+All rights reserved.
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
 +
-+Redistribution and use in source and binary forms, with or without
-+modification, are permitted provided that the following conditions are
-+met:
++#include "reftable-error.h"
 +
-+* Redistributions of source code must retain the above copyright notice,
-+this list of conditions and the following disclaimer.
++#include <stdio.h>
 +
-+* Redistributions in binary form must reproduce the above copyright
-+notice, this list of conditions and the following disclaimer in the
-+documentation and/or other materials provided with the distribution.
++const char *reftable_error_str(int err)
++{
++	static char buf[250];
++	switch (err) {
++	case REFTABLE_IO_ERROR:
++		return "I/O error";
++	case REFTABLE_FORMAT_ERROR:
++		return "corrupt reftable file";
++	case REFTABLE_NOT_EXIST_ERROR:
++		return "file does not exist";
++	case REFTABLE_LOCK_ERROR:
++		return "data is outdated";
++	case REFTABLE_API_ERROR:
++		return "misuse of the reftable API";
++	case REFTABLE_ZLIB_ERROR:
++		return "zlib failure";
++	case REFTABLE_NAME_CONFLICT:
++		return "file/directory conflict";
++	case REFTABLE_REFNAME_ERROR:
++		return "invalid refname";
++	case -1:
++		return "general error";
++	default:
++		snprintf(buf, sizeof(buf), "unknown error code %d", err);
++		return buf;
++	}
++}
+diff --git a/reftable/reftable-error.h b/reftable/reftable-error.h
+new file mode 100644
+index 0000000000..7e55a16aac
+--- /dev/null
++++ b/reftable/reftable-error.h
+@@ -0,0 +1,62 @@
++/*
++Copyright 2020 Google LLC
 +
-+* Neither the name of Google LLC nor the names of its contributors may
-+be used to endorse or promote products derived from this software
-+without specific prior written permission.
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
 +
-+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++#ifndef REFTABLE_ERROR_H
++#define REFTABLE_ERROR_H
++
++/*
++ Errors in reftable calls are signaled with negative integer return values. 0
++ means success.
++*/
++enum reftable_error {
++	/* Unexpected file system behavior */
++	REFTABLE_IO_ERROR = -2,
++
++	/* Format inconsistency on reading data
++	 */
++	REFTABLE_FORMAT_ERROR = -3,
++
++	/* File does not exist. Returned from block_source_from_file(),  because
++	   it needs special handling in stack.
++	*/
++	REFTABLE_NOT_EXIST_ERROR = -4,
++
++	/* Trying to write out-of-date data. */
++	REFTABLE_LOCK_ERROR = -5,
++
++	/* Misuse of the API:
++	   - on writing a record with NULL refname.
++	   - on writing a reftable_ref_record outside the table limits
++	   - on writing a ref or log record before the stack's next_update_index
++	   - on writing a log record with multiline message with
++	   exact_log_message unset
++	   - on reading a reftable_ref_record from log iterator, or vice versa.
++
++	  When a call misuses the API, the internal state of the library is kept
++	  unchanged.
++	*/
++	REFTABLE_API_ERROR = -6,
++
++	/* Decompression error */
++	REFTABLE_ZLIB_ERROR = -7,
++
++	/* Wrote a table without blocks. */
++	REFTABLE_EMPTY_TABLE_ERROR = -8,
++
++	/* Dir/file conflict. */
++	REFTABLE_NAME_CONFLICT = -9,
++
++	/* Illegal ref name. */
++	REFTABLE_REFNAME_ERROR = -10,
++};
++
++/* convert the numeric error code to a string. The string should not be
++ * deallocated. */
++const char *reftable_error_str(int err);
++
++#endif
 -- 
 gitgitgadget
 
