@@ -2,128 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE809C63777
-	for <git@archiver.kernel.org>; Thu, 26 Nov 2020 11:22:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85840C56202
+	for <git@archiver.kernel.org>; Thu, 26 Nov 2020 12:43:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 805722173E
-	for <git@archiver.kernel.org>; Thu, 26 Nov 2020 11:22:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2662E20DD4
+	for <git@archiver.kernel.org>; Thu, 26 Nov 2020 12:43:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uCkE3RZD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NCVm8MGk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388945AbgKZLVu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Nov 2020 06:21:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36810 "EHLO
+        id S2389601AbgKZMnP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Nov 2020 07:43:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729932AbgKZLVt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Nov 2020 06:21:49 -0500
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F98EC0613D4
-        for <git@vger.kernel.org>; Thu, 26 Nov 2020 03:21:49 -0800 (PST)
-Received: by mail-qt1-x844.google.com with SMTP id v11so850115qtq.12
-        for <git@vger.kernel.org>; Thu, 26 Nov 2020 03:21:49 -0800 (PST)
+        with ESMTP id S2388830AbgKZMnP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Nov 2020 07:43:15 -0500
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFF9EC0613D4
+        for <git@vger.kernel.org>; Thu, 26 Nov 2020 04:43:14 -0800 (PST)
+Received: by mail-ej1-x642.google.com with SMTP id lt17so2763165ejb.3
+        for <git@vger.kernel.org>; Thu, 26 Nov 2020 04:43:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=kalKIP9CMUNAEp2+5Qy+nJ9wsVTzs7RH3Pr6wrQGbhQ=;
-        b=uCkE3RZDvz87eQY7wXOR8+Amc4e+6Qo4beqVgMeZLeOeY+dkIEGEPUum2ZdavwGPKm
-         HiW8ue6+GkV6ZYdIGjyXeWR5LlQKHXndtV80Ehkx4Ce5hyOQLDXxAjJTNYwMGjh563Gj
-         1PahVmXuR0jAMbU8JHuma1i8Kmdk08puNq0m6iKxieATKlvXLG88yAAnZsjKJZE0tBwR
-         4kkwmf46DlC2u7XXb8Ckr8vj07pZBTdd+c1TkwuCvtX3VYUVguyGUv1Lu8zlg4LeKUoc
-         wXlMZra1MsNxQdwUMJSAgYQGpUGD/kO9Agxc/mhH72hFs/gNBgmFO5SFQJEUGRRKSkSJ
-         BWqg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=t5cZqBlC9kk5vlJtcJHss/o/LFKaB22LSzuxYwmd9gk=;
+        b=NCVm8MGkMfKeIcc0NMlMG3Y4dNlwaw9I8GZgqgn9sxd47YtSXXDx1DF3Yu8RZ7vlGY
+         ObAv5inp5L3m/q4/OfUm2giEmUIdJUSgR/Nnhq7N2+9eGwJKqRGYtNKwJ3hLjcgcHFUC
+         P+lKlnZxnDX8QOXwioevXYx5PZB0POlsycz81/iRl7WZ1gecO8ava3Y0JIQVywLbZZzt
+         2TketgFHR1aUheOQHolQFQZ/PBKgF7Jrnq2T5/azJBD7XB0w07YY8eMO/jxNEPqJs0B7
+         6lrTLD5P3aWii4eWiQ0X0pclZjjN6EgFiWInoI/TJxnp1jhTiQAA3wvKoJzHajIMqaCo
+         +W5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=kalKIP9CMUNAEp2+5Qy+nJ9wsVTzs7RH3Pr6wrQGbhQ=;
-        b=k1mkr18BpPKbJ33YReS2A0PY4yXS7spt5HBgLWS4GZt59NidwTYmkiuXESZuOixBbv
-         5A6lKcaRhZoEqbwh4Yrw47IDJDTWWDJYRmhto8XIwFQ/Jt/SyX5fUFqeSy2MyPk/4cdI
-         xOv9xz9SQsWFRXsaBAeBATk7SdWKgNy0VRAaZ5kVGaOMpukqRawHNovStYfHu0HmTHOx
-         a1zlsQ1BT2UpthzV8JYW5qwMcYY0oymByy3NFmLpK6DAQvxoHFkj5cJ5RrrcdxeZ+VUk
-         RS1c8Didzdvf2yAE88KntlaMqmJ4YimFqUHdDrqiK9Tp85b4zaDqKV8zfid4zrdRlH/E
-         k0Lg==
-X-Gm-Message-State: AOAM531ZZ0/D573ChlxqlV3bxi/KUuAuQtt+0BI3OVNBQct6CC86OH1L
-        32TR80CG1cM379V2Yh2elhw=
-X-Google-Smtp-Source: ABdhPJzHDV7bMVcfQJYCeHDS7Ppxd7BJ6gaIHG9Gu9fY1cFLpjO2b03ob60cNSSfUqB3SPZg4s2AmA==
-X-Received: by 2002:aed:38c8:: with SMTP id k66mr2442882qte.385.1606389708119;
-        Thu, 26 Nov 2020 03:21:48 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
-        by smtp.gmail.com with UTF8SMTPSA id a7sm2272355qth.41.2020.11.26.03.21.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Nov 2020 03:21:47 -0800 (PST)
-Subject: Re: [PATCH 1/1] maintenance: fix a SEGFAULT when no repository
-To:     Rafael Silva <rafaeloliveira.cs@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Jeff King <peff@peff.net>
-References: <20201124164405.29327-1-rafaeloliveira.cs@gmail.com>
- <20201124164405.29327-2-rafaeloliveira.cs@gmail.com>
- <1bfd84da-5b74-be10-fc2c-dee80111ee2d@gmail.com>
- <20201126082255.yyxx2kpskj3td5og@contrib-buster.localdomain>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <54fa678c-7150-8c48-50e5-b33923a69249@gmail.com>
-Date:   Thu, 26 Nov 2020 06:21:46 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101
- Thunderbird/84.0
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=t5cZqBlC9kk5vlJtcJHss/o/LFKaB22LSzuxYwmd9gk=;
+        b=E7ME09z3+EA/fR109EUuRRzBJUtVgmAvQ9CSMqLRAeFq3TPsEydHSF+mqAkK5mJgCi
+         rNdhIWvVGVbjDu8HEX7cO3HQ+vhQfJRLh/DqA3hDv4MZrGUkoFKVRa2yUgZz+CnsuN2u
+         6ptDE85ofu5bTqnkCdscuhVNOIVygYnVvwB6QBX8RShfpueexfuJoKmKXTOIDavCkZws
+         qpwWvdsPsowPWuOpi6lY1udkMZUruLJBZNYrvI69IesmjCC8/zfhQ3yWB5e69MJ0H9tD
+         AEg6eekG0ixJ4Ou0js2UvH0VZMxSuIDNx7PH1kS2Bvxx2C8bq1ZJaG/rhYSbQDA2bUBJ
+         6hYw==
+X-Gm-Message-State: AOAM5334sqRRVPn/0MP+0I91QsRXCj8XSS9JZvecEe7LEQsLG7eovnbS
+        e6lMfSsx5LCxcULjmRURWsk=
+X-Google-Smtp-Source: ABdhPJyOQCM7GbkRhq5NrwoZpsRBD6yQ4Q9XlBbgOSdTPjdVl74GsisxVgb+LvgUZrqZW88nl4wbTw==
+X-Received: by 2002:a17:906:2452:: with SMTP id a18mr2535010ejb.66.1606394593460;
+        Thu, 26 Nov 2020 04:43:13 -0800 (PST)
+Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
+        by smtp.gmail.com with ESMTPSA id n15sm3112864eje.112.2020.11.26.04.43.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Nov 2020 04:43:12 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC/PATCH 07/12] fsck: add new "extra" checks for "mktag"
+References: <X7wq3ba3QoxjyyrQ@coredump.intra.peff.net> <20201126012854.399-8-avarab@gmail.com> <X79hCWF8jDZBw/NG@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 26.3; mu4e 1.4.13
+In-reply-to: <X79hCWF8jDZBw/NG@coredump.intra.peff.net>
+Date:   Thu, 26 Nov 2020 13:43:11 +0100
+Message-ID: <87tutcnva8.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20201126082255.yyxx2kpskj3td5og@contrib-buster.localdomain>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/26/2020 3:22 AM, Rafael Silva wrote:
-> On Tue, Nov 24, 2020 at 12:22:40PM -0500, Derrick Stolee wrote:
->> If the above code change fixes your test (below), then that would
->> probably be a safer change.
-> 
-> I agree, switching the maintenance command option to use RUN_SETUP
-> seems like a nicer approach here. Given the all current operations
-> requires the command to be executed inside the a git repository this
-> will make the command consistent across the subcommand. 
-> 
-> Also, it seems this provides an opportunity to cleanup the
-> register and unregister subcommands that currently implement the
-> check to ensure the commands are running from a git repository.
-> 
->>
->> The reason to use RUN_SETUP_GENTLY was probably due to some thought
->> of modifying the background maintenance schedule without being in a
->> Git repository. However, we currently run the [un]register logic
->> inside of the stop|start subcommands, so a GIT_DIR is required there,
->> too.
->>
-> 
-> Indeed. Aside from this reason, another concern that I have is that
-> switching the validation to all subcommands (on this case by switching
-> the maintenance command option) will change a bit the behaviour of register
-> subcommand. Currently, the behaviour of "register" subcommand is to return
-> with 0 without any messages when running outside of repository and switching
-> will make the command fail instead.
 
-Excellent point. It would be good to cover this case with a test, to
-demonstrate that as _intended_ behavior. It makes sense to fail instead
-of "succeed" when doing nothing.
+On Thu, Nov 26 2020, Jeff King wrote:
 
-> Nevertheless, I am inclined to go with your suggestion given that it seems
-> better approach to support the automatically and make the behaviour
-> consistent for all subcommands given that changing the behaviour of
-> "git maintenance register" command will (hopefully) be okay.
+> On Thu, Nov 26, 2020 at 02:28:49AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>
+>> Add optional "extra" checks to fsck, these are needed to eventually
+>> replace the custom not-quite-fsck code in mktag.c.
+>>=20
+>> The mktag checks differ from fsck_tag() in several ways, one of those
+>> is that fsck doesn't know how to refuse an object with custom headers,
+>> and isn't strict about header and body newline separation.
+>>=20
+>> Teach it how to optionally report these. I thought the best way to do
+>> that given the current structure of the code was to add a new "extra"
+>> category in addition to error/warn/info.
+>
+> Hmm, this new severity (and the extra options bit) feels a bit
+> backwards. We are already passing the information on what we find to the
+> report() callback. It seems like that is the place that should be
+> deciding what is important and what is not.
+>
+> Unfortunately the defaults are somewhat backwards here. We'd have to
+> teach the fsck callbacks to ignore these harmless entries, rather than
+> teaching the mktag caller that they need to be respected.
+>
+> So probably the extra bit in options to say "do these extra tag checks"
+> is the least-bad thing. But then why do we need to put them in their own
+> EXTRA section? The only caller that wants them would treat them as
+> errors.
 
-Yes. I would say that changing that behavior aligns it with what it
-should be doing. The best news is that the 'register' subcommand does
-not exist in a released version of Git, so no one depends on the
-current behavior.
+Right, it'll be hidden behind options->extra, so I could just make them
+ERROR. I guess I was thinking it would be confusing to stick stuff in
+the middle of ERROR that wasn't on by default, e.g. I've sometimes
+skimmed that macro definition and saw "ah, bad parent sha1 is an error",
+as in transfer.fsckObjects would reject it.
 
-Thanks,
--Stolee
+So I'm slightly on the fence about keeping it as it is, what do you
+think?
+
+> I'm slightly on the fence on whether mktag really needs to enforce the
+> "unknown header" thing at all. Sure, we don't encourage them, but it's a
+> plumbing tool one could use to experiment with new headers. I guess the
+> downside is that a typo'd header would not be caught.
+
+The problem is that since verify_headers() in fsck.c wants to allow it,
+there's no way for it to distinguish a fat-fingerd "didn't separate the
+body from the headers" v.s. actually wanting a custom header in some
+cases.
+
+>> Under --strict the "info"
+>> becomes a "warn" and "warn" becomes "error". Existing users of
+>> fsck's (and others, e.g. index-pack) --strict option rely on this.
+>
+> Yeah, this is a weirdness I think we should eventually fix (along with
+> re-prioritizing some of the existing checks). I'm wary of doing anything
+> that further cements that somewhat broken world-view (keep in mind that
+> "index-pack --strict" is not "do fsck more strictly" but "do fsck at
+> all").
+
+*nod*, will note that.
+
+>> I'm not changing fsck_commit() to validate commit objects like this
+>> either, we could do that, but unlike in the tag case that code
+>> wouldn't be used anywhere. If someone wants to write a "mkcommit" they
+>> which behaves like "mktag" they can borrow or refactor this logic for
+>> use in fsck_commit().
+>
+> Seems reasonable.
+>
+> -Peff
 
