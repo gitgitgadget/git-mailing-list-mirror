@@ -2,121 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6D55C2D0E4
-	for <git@archiver.kernel.org>; Fri, 27 Nov 2020 04:17:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C8B2C2D0E4
+	for <git@archiver.kernel.org>; Fri, 27 Nov 2020 07:51:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5A97E2222A
-	for <git@archiver.kernel.org>; Fri, 27 Nov 2020 04:17:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0FE9A21D93
+	for <git@archiver.kernel.org>; Fri, 27 Nov 2020 07:51:53 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NRP3QOcX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388784AbgK0ERp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Nov 2020 23:17:45 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44250 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731568AbgK0ERp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Nov 2020 23:17:45 -0500
-Received: (qmail 18788 invoked by uid 109); 27 Nov 2020 04:17:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 27 Nov 2020 04:17:45 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22679 invoked by uid 111); 27 Nov 2020 04:17:43 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 26 Nov 2020 23:17:43 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 26 Nov 2020 23:17:43 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?5ZSQ5a6H5aWV?= <winglovet@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Bug report: orphaned pack-objects after killing upload-pack on [
-Message-ID: <X8B9589XMlCQEltA@coredump.intra.peff.net>
-References: <CAFWsj_UwkQX9y0xPQJE3xguo0z3TMkvKAwei5iryCWXvVP8CjA@mail.gmail.com>
- <badf3777-3970-b714-3ad9-67d2f77f94a5@web.de>
- <20201121002921.GC353076@coredump.intra.peff.net>
- <xmqqd006s7ee.fsf@gitster.c.googlers.com>
- <X7zOKbzR9gwJHMbJ@coredump.intra.peff.net>
- <xmqqy2ipcdvj.fsf@gitster.c.googlers.com>
- <X778eIAr3uzdh0H0@coredump.intra.peff.net>
- <xmqqo8jllyhc.fsf@gitster.c.googlers.com>
- <bd2c4577-4c8c-851c-6045-ba4b306ca612@web.de>
+        id S2392786AbgK0Hvx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Nov 2020 02:51:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56520 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392782AbgK0Hvw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Nov 2020 02:51:52 -0500
+Received: from mail-il1-x141.google.com (mail-il1-x141.google.com [IPv6:2607:f8b0:4864:20::141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E502C0613D4
+        for <git@vger.kernel.org>; Thu, 26 Nov 2020 23:51:52 -0800 (PST)
+Received: by mail-il1-x141.google.com with SMTP id f5so3818416ilj.9
+        for <git@vger.kernel.org>; Thu, 26 Nov 2020 23:51:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=3N8OmOQFNx6Z25QLFPQLON+DSEIPCgbfupV+r8IndRg=;
+        b=NRP3QOcXel13FewljO+uHJHWpEcEaTCRQ03f/dnP9dqU2Y92nrEXfIcUQXwxokpOYN
+         wDagWYE6ajwSfRCQ1uPxuq3yWMxu/Me4Lc5lava2WvmMwdPcwiuNrMtDgrpX6VFqzHBi
+         vyWsMo7/1C9p3C2suJ9kT6hsZAb7+k6ygmMNUFBxZ1I2EBxUJ2HpbSRJavQNEdZthnjW
+         KyYKV8rL++OWdCvCCnt0mjPvhJJi29b6UIBkvkP0tA7/pLrbO+wvPLdNNrX271+UxXa6
+         cbB4uCQ2c3GH6OHHLoxk72Pd/XfplyFDlzeOehrKB8yyYau84ynta84HDyYZeW782stY
+         eM/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=3N8OmOQFNx6Z25QLFPQLON+DSEIPCgbfupV+r8IndRg=;
+        b=sp3MuaqUkEiCJ85nR7eFoFpHaoj57LNa20moOlVT4IiQ2X8P4xeNGLHkPSdwRnXO9o
+         wjd+cw3px/mqlm34K+CtkeF9av4L3DpdCh9kZ+Xczb3Rfk6GByglFP17AUdU5FPiz4oW
+         EK2tBYM+mWt/aSuZziOlw+JnGLkO0Q6Zp4X7OqhsR6y52eZw8Ylvz2zzwLjgg2ihHwe1
+         inYPgiRYHLe1yIv1gwm0tsYt63AwOEDl7HND33/RHmzJ0c0VY5fnpyRqJ54As0/eu8RJ
+         /wicJ5lOIqZfeyNj8Wq0vGZI8dsoU8pTixqr0AC+jbgLrvmz2s9UhfoC4llnOY73uSft
+         ZTdA==
+X-Gm-Message-State: AOAM530dxyuTVInkBfBGgkKfqFWcrPZ4NnkFG/s59Ix6PwwUYA59O0Cs
+        bddF+kOtq3PsqOcNRTNjowCoI1jQ2Jk=
+X-Google-Smtp-Source: ABdhPJxnAxXTz2mpET/SiQoxfROV/HgqWUvqMfkAsiKdLef8z9hGCNqyUo+jZshFI5LmT5Ex/s1s9Q==
+X-Received: by 2002:a92:2a01:: with SMTP id r1mr5912920ile.22.1606463511372;
+        Thu, 26 Nov 2020 23:51:51 -0800 (PST)
+Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
+        by smtp.gmail.com with ESMTPSA id 10sm4652447ill.75.2020.11.26.23.51.50
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 26 Nov 2020 23:51:50 -0800 (PST)
+Sender: Eric Sunshine <ericsunshine@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH 1/3] t7900: fix test failures when invoked individually via --run
+Date:   Fri, 27 Nov 2020 02:50:52 -0500
+Message-Id: <20201127075054.31174-2-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.29.2.576.ga3fc446d84
+In-Reply-To: <20201127075054.31174-1-sunshine@sunshineco.com>
+References: <20201127075054.31174-1-sunshine@sunshineco.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <bd2c4577-4c8c-851c-6045-ba4b306ca612@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 26, 2020 at 09:04:35PM +0100, René Scharfe wrote:
+A couple tests use `rm expect` to remove a file created by earlier
+tests. The presence of this file is immaterial at the point the attempt
+is made to remove it, yet if it doesn't exist, the test fails
+unnecessarily. One case in which the file may validly not exist is when
+--run or GIT_SKIP_TESTS is used to selectively run particular tests. Fix
+these pointless failures.
 
-> Before I could submit that one (or something similar) formally, I'd need
-> to understand what's happening here a lot better and witness the effect
-> of the patch.
-> 
-> I understand that the main benefit of stopping the child upon
-> termination of the parent is to avoid using CPU cycles on a heavy task
-> whose results will just go to waste.  But wouldn't the orphaned child
-> then become a zombie?  Init would reap it eventually, but are there
-> perhaps init-less deployments (containerized daemon?) where such
-> zombies could pile up?
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
+ t/t7900-maintenance.sh | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-I think an init-less deployment like that is already broken. If we
-encounter any error at all in upload-pack we may quit without reaping
-all of our children. And this could never be protected against entirely;
-we could be killed by SIGSEGV, SIGKILL, etc.
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index 0246e4ce30..ef3aec3253 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -429,7 +429,7 @@ test_expect_success !MINGW 'start and stop macOS maintenance' '
+ 	EOF
+ 	test_cmp expect actual &&
+ 
+-	rm expect &&
++	rm -f expect &&
+ 	for frequency in hourly daily weekly
+ 	do
+ 		PLIST="$HOME/Library/LaunchAgents/org.git-scm.git.$frequency.plist" &&
+@@ -491,7 +491,6 @@ test_expect_success 'start and stop Windows maintenance' '
+ 	# stop does not unregister the repo
+ 	git config --get --global maintenance.repo "$(pwd)" &&
+ 
+-	rm expect &&
+ 	printf "/delete /tn Git Maintenance (%s) /f\n" \
+ 		hourly daily weekly >expect &&
+ 	test_cmp expect args
+-- 
+2.29.2.576.ga3fc446d84
 
-My understanding is container deployments often have a tiny pid-1 init
-that takes care of zombie processes like this (but it's not something
-I've dealt with much myself).
-
-> For a test, winning the race condition should be easy if we cheat by
-> letting the child loop forever.  But I struggle even with the most
-> basic task: Making upload-pack invoked by clone call pack-objects.
-> (Feeling a bit silly.)
-
-Here's an easy reproduction. On a clone of something large-ish (by
-number of objects) like linux.git:
-
-  - make sure you don't have bitmaps on (since they make the enumerating
-    phase go quickly). For linux.git it takes ~30s or so to walk the
-    whole graph on my machine.
-
-  - run "git clone --no-local -q . dst"; the "-q" is important because
-    if pack-objects is writing progress to upload-pack (to get
-    multiplexed over the sideband to the client), then it will notice
-    pretty quickly the failure to write to stderr
-
-  - kill just upload-pack with "pkill git-upload-pack" or whatever you
-    like
-
-  - run "ps au | grep pack-objects" (or just "top") to see pack-objects
-    chugging on 100% CPU (and consuming 1GB+ of RAM)
-
-With the patch adding clean_on_exit, that last step turns up nothing.
-
-Now the situation above is probably pretty rare. Nobody is usually going
-to kill upload-pack specifically. The more common case is when
-upload-pack realizes that the client (or the network) has gone away,
-because it tries to write and finds the connection gone. But what is it
-writing? Most of the time it's stuff from pack-objects! So in the normal
-case, pack-objects is continually writing either data or progress
-reports, so it would notice for its next write.
-
-But again, a client asking for no progress is a problem. upload-pack
-will be sending keepalives every 5s or so, so it will notice client
-death then. But pack-objects will keep running, not generating any
-output until it starts spewing the pack.
-
-So you could probably make the scenario above a bit more realistic by
-killing the parent git-clone process. But don't use ^C; that will send
-SIGINT to all of the processes. Simulate a network failure by killing
-the "git clone" process specifically. This shows the same problem, and
-the same improvement after the patch (though remember it may take up to
-5 seconds for upload-pack to send a keepalive and notice the problem).
-
--Peff
