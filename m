@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE4AFC2D0E4
-	for <git@archiver.kernel.org>; Fri, 27 Nov 2020 10:22:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B06ADC63777
+	for <git@archiver.kernel.org>; Fri, 27 Nov 2020 10:24:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 807DA22201
-	for <git@archiver.kernel.org>; Fri, 27 Nov 2020 10:22:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5C276206F4
+	for <git@archiver.kernel.org>; Fri, 27 Nov 2020 10:24:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mtj2Ky7S"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hslqJgBQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727009AbgK0KWr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Nov 2020 05:22:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51626 "EHLO
+        id S1727791AbgK0KXp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Nov 2020 05:23:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726316AbgK0KWr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Nov 2020 05:22:47 -0500
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6AABC0613D1
-        for <git@vger.kernel.org>; Fri, 27 Nov 2020 02:22:46 -0800 (PST)
-Received: by mail-ed1-x542.google.com with SMTP id q3so5122456edr.12
-        for <git@vger.kernel.org>; Fri, 27 Nov 2020 02:22:46 -0800 (PST)
+        with ESMTP id S1726039AbgK0KXp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Nov 2020 05:23:45 -0500
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F3C0C0613D1
+        for <git@vger.kernel.org>; Fri, 27 Nov 2020 02:23:43 -0800 (PST)
+Received: by mail-ej1-x641.google.com with SMTP id hb22so6639222ejb.12
+        for <git@vger.kernel.org>; Fri, 27 Nov 2020 02:23:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version;
-        bh=zLpF2d4GMfPz4DQUOwGSmWLhUknea/2I5OllLwcfa8E=;
-        b=Mtj2Ky7Sp5atpM/KxiqMUkkbHlRTKFm7buGlUpGurL6D3YAvexO7juHSZzHKlnvzs4
-         MmRMMWrSx9UNw/97KXRwFsSUiD1SIWxcqJgoko5XZ/Aor6do61bZTBAbPW/5mGqAWNU3
-         4BtE3Y2IAjyUefRy/H2eKDpFWRrcBVAsdTJVLtLr3+nDbuvlJiSCqpv2v6OAeFDXZcJk
-         slJgj3GFqDoDK6k4E+CBwEC62Hdz0Vu2bYaRynkJKEFidv+rGeLj9BNlw3/aZMvnuYJ/
-         IF3msAJhKWaXnJBqlA3fZNiS79Ci6Iccltnr2S99dRcjZddYSCycxzgYlZXzHmo1Xx8S
-         jdPA==
+        bh=XhdlVceSgNf3oqtrQ9mzQLLiinSsYPirQ63DVdilpUA=;
+        b=hslqJgBQfRfu6VQ+zVatlYw3odHt+9vTPK38NZLNEgH93MoIl9Qei8i6L3gWM4Vx5X
+         UsLmmRYffxK+EmUWBtEjvs3gQc76JEEwjRcMiRBOZFe9WZ7sZIX8Vmn7mIrIFFOBx9qM
+         DkneE5SqPJauG1rRLqPtg4mf4E0WM3LMuVIt2/ohn2oIKfpLrGaOCwPOd2stq044pqwm
+         I876rOjvPPU/G+JX0c/sVSesNKDbv7hNuw75tFDFjPfqNaqmpYn78osB/BykQ/3de5vt
+         SZ2uY3im9O3qG0cVaeLiCHBGDWxx0c7yf/hE7HTcsBL4GRbnYTUCfwDctAcmpQS3l7xf
+         VIAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version;
-        bh=zLpF2d4GMfPz4DQUOwGSmWLhUknea/2I5OllLwcfa8E=;
-        b=sE+T/FLz9TESLBr1lxWcpuEoI6AheAyqQRuXsXuXKu9cpNompxkNvWBGzNzvCbBJWz
-         9TZ+cY8EWt/KIVhuBq2EuJeLIf72HkF7CgfRhkRMPkHLaG/z8ZOjs27h8/tA0l1iQe6x
-         ofZywajwGaYspjEIhyzduqU3UtckuH+W8v8veKtv147Zye195va90UeDnO3zAvFYtvYs
-         Rik8XnE4QaqzUaZxSljx8TJZtbB34CapWRnE6vVAwlXPvARY0zj8dGQliP09VmrNNv1e
-         RQFFqIEYfTvPHx1jbrvAIHwP096CdJa6fcnCIuM+xWkaCetdGs6Gc163wR3+mgCAUH7W
-         6cwg==
-X-Gm-Message-State: AOAM532sUsNzx9pnUb5wzA/PfBfoWBWKok72qEMMRKMlX9Ot305p0eJ0
-        K66ODk/hfTEaaZyuBwBl0wkGJlJdQVFMLQ==
-X-Google-Smtp-Source: ABdhPJz4ys41QphsyPwur63tRwpeXjt2SpG57vXzk0mcEnwfkPIGipG9J95Y83EQbysNYASmRiAUzw==
-X-Received: by 2002:a05:6402:1ac4:: with SMTP id ba4mr6848792edb.383.1606472565018;
-        Fri, 27 Nov 2020 02:22:45 -0800 (PST)
+        bh=XhdlVceSgNf3oqtrQ9mzQLLiinSsYPirQ63DVdilpUA=;
+        b=Du5wSRbkJc6ldPcUYPu721M8nXyfj1xkaN494SSECRa1kCyFHbI57VS4dN6K+y++sP
+         IXOwg7JuP4hnVNBuCPf6BJJi94z/Qw7W9xwdC8WaFwF51vtBt6dRzwfjvAZwQmmyZE3a
+         gBYakFAUnCavkckFwuaPMFowqtvHAPWS6aqlKfHqhh5ZQCbnVY+wWDWEgrLFt1scb1Rr
+         aE0cuRANUVHNPcaFnz6k3fkmm3KFw0n+XPX5/Ov8laAFJXjCvrxvJHjEKiT0yRcYyyLf
+         0bQ+JvV1lSkmlFaGNF5i5xLgjyk6S3bgJHPtHwTQCIjomYmPGfEy0tQ0OW8DA08KDuEw
+         DMaQ==
+X-Gm-Message-State: AOAM531oGfX2dTUQgEl6N8lgFmb1Jzae2Wimgs11Ujc8wWzRapcjcnIH
+        v2XjbPVbLjAMLGAGr/4II5UGct8pZjERLg==
+X-Google-Smtp-Source: ABdhPJwMRqhu5McpY8HIcJdOdX790JzkX+HLScdSPMdGJyYtxXohVogaRcLCaFhphsSlLTkGLvo56w==
+X-Received: by 2002:a17:906:81da:: with SMTP id e26mr6625397ejx.491.1606472622052;
+        Fri, 27 Nov 2020 02:23:42 -0800 (PST)
 Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id e10sm4713606eds.8.2020.11.27.02.22.43
+        by smtp.gmail.com with ESMTPSA id rk12sm4378415ejb.75.2020.11.27.02.23.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Nov 2020 02:22:44 -0800 (PST)
+        Fri, 27 Nov 2020 02:23:41 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -69,12 +69,12 @@ Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Patrick Steinhardt <ps@pks.im>,
         Han-Wen Nienhuys <hanwenn@gmail.com>,
         Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH v3 02/16] init-db: set the_repository->hash_algo early on
-References: <pull.847.v2.git.git.1601568663.gitgitgadget@gmail.com> <pull.847.v3.git.git.1606419752.gitgitgadget@gmail.com> <cf667653dff437cee4c0d04e8c061a8b9ccc46a7.1606419752.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v3 03/16] reftable: add LICENSE
+References: <pull.847.v2.git.git.1601568663.gitgitgadget@gmail.com> <pull.847.v3.git.git.1606419752.gitgitgadget@gmail.com> <91c3ac2449edc45db643b0ba6cba66ef31176600.1606419752.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bullseye/sid; Emacs 26.3; mu4e 1.4.13
-In-reply-to: <cf667653dff437cee4c0d04e8c061a8b9ccc46a7.1606419752.git.gitgitgadget@gmail.com>
-Date:   Fri, 27 Nov 2020 11:22:42 +0100
-Message-ID: <87o8jjnlot.fsf@evledraar.gmail.com>
+In-reply-to: <91c3ac2449edc45db643b0ba6cba66ef31176600.1606419752.git.gitgitgadget@gmail.com>
+Date:   Fri, 27 Nov 2020 11:23:39 +0100
+Message-ID: <87lfennln8.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -86,12 +86,9 @@ On Thu, Nov 26 2020, Han-Wen Nienhuys via GitGitGadget wrote:
 
 > From: Han-Wen Nienhuys <hanwen@google.com>
 >
-> The reftable backend needs to know the hash algorithm for writing the
-> initialization hash table.
->
-> The initial reftable contains a symref HEAD => "main" (or "master"), which is
-> agnostic to the size of hash value, but this is an exceptional circumstance, and
-> the reftable library does not cater for this exceptional. It insists that all
+> TODO: relicense?
 
-rephrase: "does not cater to this exception" maybe?
-
+On the topics of TODOs, it would be nice to have an answer/some idea the
+"I am concerned..." question in about
+https://lore.kernel.org/git/873625i9tc.fsf@evledraar.gmail.com/ relevant
+to the license etc.
