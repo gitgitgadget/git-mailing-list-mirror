@@ -2,93 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	PDS_TONAME_EQ_TOLOCAL_SHORT,SPF_HELO_NONE,SPF_PASS autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70775C3E8C5
-	for <git@archiver.kernel.org>; Fri, 27 Nov 2020 21:21:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0B4DC63777
+	for <git@archiver.kernel.org>; Fri, 27 Nov 2020 23:21:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0972022210
-	for <git@archiver.kernel.org>; Fri, 27 Nov 2020 21:21:04 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LaQkUteE"
+	by mail.kernel.org (Postfix) with ESMTP id 8BF3D2223D
+	for <git@archiver.kernel.org>; Fri, 27 Nov 2020 23:21:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731390AbgK0VPS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Nov 2020 16:15:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40040 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730815AbgK0VOi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Nov 2020 16:14:38 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97921C0613D1
-        for <git@vger.kernel.org>; Fri, 27 Nov 2020 13:14:18 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id f9so7175742ejw.4
-        for <git@vger.kernel.org>; Fri, 27 Nov 2020 13:14:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=As0yyXhb8FKwq+BrGAxBjx+w/7eyh1W4kqIKDnxZUw8=;
-        b=LaQkUteEV4Spjxkx2VucFye6ra0khWHrVNJSLiuGKbghfCkb0krIFTbY6W8Q+c6wlI
-         uPSLlhjHQWwGDNao515JXYXO/NRWuR0KL0XhJ/Y7NThi5JfYnrQ6p7X2RwCILF+SMBbD
-         WDoH20uF5NpPkL8cV6d8JlOkbfLpKvdwUYpiLkd6N+fD0n02qZUiwqFcyxJ/xXRr/uf/
-         wgKy6lFQmTL6lc6IFVcwBszLeSluYhNfKvEveTHuj7bUe5rA3xmb5J0Z6vYiNmfHkzt8
-         Y+TOFDUwb7O4+rtLONXRyEacNGoi/L7rnFifp2ZddjUjPpXcZ3MTbLAxawxRJY7q4WTt
-         Go5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=As0yyXhb8FKwq+BrGAxBjx+w/7eyh1W4kqIKDnxZUw8=;
-        b=HDnE4cAjWx9ovGD0ZOsY9DZvyCKDvePAmbDQ/35VlWpznPnXVMPRourHH1f5QE+sha
-         mIRwJ4B9e5SJDYrA8GL/JZRN+aeNE3WATmDaAqxY5vpW+xA8Hoi7XW7SUXEdv+kePjeG
-         6e+LchYm9U4DO2NhjkArwyP6ZA5MCd5XbyG/KKyCp9PVonRd2x50EVpjnpp4/i45O9TM
-         JcIG5ohjoH4p5G/6Ocedw46aTwBdUG7j8+rfmu1Hlj4or+0+FWoDiLo/ohHWLRdLNei2
-         XlS+vI3tX8J6Jzl6p8ixEt9fj8lGx+jDqczhr63NPGH1KO0UjxdIeAkIorxfjmnGUbpZ
-         N++A==
-X-Gm-Message-State: AOAM5310l1kS/nhcfVAVSgS1pFDG2emR143jK/tnZ3bIlVkAY+4urlN+
-        NVO/poojmWT5NeQqePQ8k2LMXFp78uI39zx9sDmcRsI+L9GSnQ==
-X-Google-Smtp-Source: ABdhPJyPuyx+XVYGV1x8TqW3RyYVk0lMpanljvYTCGCyyRPXwUpukCk+eYHddr0W/dqjakE3SmrRzB6falyu1B7XNlg=
-X-Received: by 2002:a17:906:3bd6:: with SMTP id v22mr9969362ejf.160.1606511657076;
- Fri, 27 Nov 2020 13:14:17 -0800 (PST)
+        id S1731541AbgK0XUf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Nov 2020 18:20:35 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:49190 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1730213AbgK0XTb (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 27 Nov 2020 18:19:31 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8F37C6045A;
+        Fri, 27 Nov 2020 23:19:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1606519166;
+        bh=DN3oR7+mz7uK5EK9Cp+S95Nh3iykl0x9gyiBOI/5ZAU=;
+        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=AXH3fdDKhK8TDKN2LCxHd/ch/ewdBFYuWTgqbvRPiGtqvQPc6cTyDB4Ca44CV9C2e
+         ftzhtHoWFfc9tIEQ0DX0yVmiLWjnbOF9uJZHKS/K3Lnqy5xe6sCCYNLz7v6SOZTq0e
+         8c56gXqsp0xSSjDkV7QpNIAae4y9eaD8dRYyN6HxyURkP5zEMRRi78rME6e1t8om5x
+         rNQPCtJHKHWstXw0iZkOzaqFQh1qAT9HoTEsxmCxRj1zR29hDWtvpqFsOfTD558Hll
+         Ve/gDQgb8oP7ha14IYf2RKRXQ/YxTfIHZpb9Ay55cIugIos/MV04HtFIw2FrhoFH9s
+         8P/co0Hs5BkorCx8CCUvm8rFlgm2CVakvk5BQP/Wd3Zg4SALKhD9phxnwaMHsHNvP4
+         IXQM760M5DX9fRUi+zx/XhzKZ7iqXXQh6X5RI7ZKpbxwgbydn07U4Ev4QkkRIJtMRZ
+         EYe3s2AAzuQFWTY4w0svrKOeNI2GV/ZEX755UzqDPpu++PpfzSa
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: [PATCH v3 0/2] rev-parse options for absolute or relative paths
+Date:   Fri, 27 Nov 2020 23:19:14 +0000
+Message-Id: <20201127231916.609852-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 27 Nov 2020 22:14:05 +0100
-Message-ID: <CAP8UFD0xoqVh=1BweBqNOt4_9xg4GvDd7Jf5f5_5z4H+PCVt8g@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 69
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>, lwn@lwn.net,
-        Johannes Sixt <j6t@kdbg.org>,
-        Victor Engmark <victor@engmark.name>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Tarun Batra <tarun.batra00@gmail.com>,
-        Semyon Kirnosenko <semyon.kirnosenko@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Luca Milanesio <luca.milanesio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+There are a bunch of different situations in which one would like to
+have an absolute and canonical or a relative path from Git.  In many of
+these cases, these values are already available from git rev-parse, but
+some values only come in one form or another.
 
-The 69th edition of Git Rev News is now published:
+Many operating systems, such as macOS, lack a built-in realpath command
+that can canonicalize paths properly, and additionally some programming
+languages, like Go, currently do as well.  It's therefore helpful for us
+to provide a generic way to request that a path is fully canonicalized
+before using it.  Since users may wish for a relative path, we can
+provide one of those as well.
 
-  https://git.github.io/rev_news/2020/11/27/edition-69/
+The primary impetus for this was Git LFS, which needs paths to be
+canonicalized in the same way as Git in order to function correctly.
+See https://github.com/git-lfs/git-lfs/issues/4012 for more details.
 
-Thanks a lot to Philippe Blain, Semyon Kirnosenko, Tarun Batra, Philip
-Oakley and Luca Milanesio who helped this month!
+Changes from v2:
 
-Enjoy,
-Christian, Jakub, Markus and Kaartic.
+* Incorporate multiple missing segment support into the strbuf_realpath
+  code.
+* Switch some invocations to use DEFAULT_UNMODIFIED, which should not
+  result in a change in behavior.
+* Rebase, resolving some conflicts.
 
-PS: An issue for the next edition is already opened and contributions
-are welcome:
+Changes from v1:
 
-https://github.com/git/git.github.io/issues/468
+* Add a function to handle missing trailing components when
+  canonicalizing paths and use it.
+* Improve commit messages.
+* Fix broken && chain.
+* Fix situation where relative paths are not relative.
+
+brian m. carlson (2):
+  abspath: add a function to resolve paths with missing components
+  rev-parse: add option for absolute or relative path formatting
+
+ Documentation/git-rev-parse.txt |  71 +++++++++++++---------
+ abspath.c                       |  33 +++++++++-
+ builtin/rev-parse.c             | 104 ++++++++++++++++++++++++++++----
+ cache.h                         |   2 +
+ t/t1500-rev-parse.sh            |  57 ++++++++++++++++-
+ 5 files changed, 223 insertions(+), 44 deletions(-)
+
