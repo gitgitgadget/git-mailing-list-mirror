@@ -2,113 +2,202 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D25EC8302C
-	for <git@archiver.kernel.org>; Sat, 28 Nov 2020 22:17:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75821C64E7B
+	for <git@archiver.kernel.org>; Sat, 28 Nov 2020 22:16:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E4FC12224B
-	for <git@archiver.kernel.org>; Sat, 28 Nov 2020 22:17:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 336CA21D40
+	for <git@archiver.kernel.org>; Sat, 28 Nov 2020 22:16:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d/B1UBLm"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="SoUznxWc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388931AbgK1Vtr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 28 Nov 2020 16:49:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42368 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731707AbgK1SzN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Nov 2020 13:55:13 -0500
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91D5AC09424B
-        for <git@vger.kernel.org>; Fri, 27 Nov 2020 22:44:45 -0800 (PST)
-Received: by mail-wm1-x344.google.com with SMTP id g185so228259wmf.3
-        for <git@vger.kernel.org>; Fri, 27 Nov 2020 22:44:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=GjRDj2Bo70S22H0AIBtEElGxzT1vN/EQIzALHBausfA=;
-        b=d/B1UBLm/qMJRBnGBzrLv5DFMed/TBNdQ/O3G7cLSIETUV7cIA+r09aIIQ9SE3a8t0
-         Ezz+PizJ+KZlZJ3fqykN1tfAB7eLh5PWKjYb1p8UyjpRl+DXjz3hgd6c7jveOZoR7Bju
-         NjawOgCikGWDAtPAZfDpXnSysv7zKKvEmXOcFtwnjR1V/2038TNIIdUJtHqh46JfqgXb
-         zmr2H5vcbXrbvOn/suflhULcf5zZDESyPiiQno2j48oCDo0jbOKWSA5Y6PH7q7rePdTa
-         c+ikiPOq3dcc9wOxnYz+jveS/BiOyleU6Enio96z2FqkmQW5erqNq5YHolpatDCPJM7F
-         /aCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=GjRDj2Bo70S22H0AIBtEElGxzT1vN/EQIzALHBausfA=;
-        b=P2pT8KbKr/i2wHoeBy83acKYaVqEeCDxHKPYc5raycgMTgqH2c3Dr6217qZFPz5Yxy
-         6nVHXXZC6FC7W01/NTCVNlISe4mp0NStjxL7llQ1LCIRDdp4/n3ntoRnbhEgfP1QwPei
-         3Zmu2rq5nt28LB3+czTWvzCo8ozF/b/SD6R7+m2Ewp4tMsdJnKzJoL2nT7r8uWlhFOmJ
-         6PRC7qbLvGmdmL3DL0vFlLH6HhGPOZkzNCYKe/n34HeV8rwmEUy0jI02ql4U29t2hhoL
-         Pvvky1cwU4yzuHND/p+dUAd2YgRQtgfWfzYeWmscEEfbyP+CrVG4KQqWxw+eXIJ77lct
-         P/zw==
-X-Gm-Message-State: AOAM530uaHX+Nh7kdY8pOfq+PSrnoEzDC/QAGJ8iTj+WIqLmEXwe8KX+
-        rK31M+6JemWZorMr3ecc2HyyWy4X35o=
-X-Google-Smtp-Source: ABdhPJwE78H/HEBZ/N3U1qSkof0JHkg8pYAYKESIkV09ZTFOiHd2mwQz1qbwFM9sEb4aj2is+qqJ0Q==
-X-Received: by 2002:a7b:cd11:: with SMTP id f17mr12804661wmj.127.1606545884226;
-        Fri, 27 Nov 2020 22:44:44 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v20sm15410454wmh.44.2020.11.27.22.44.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Nov 2020 22:44:43 -0800 (PST)
-Message-Id: <8d2ae6771b6584965920f5d21829b42b7fdba80f.1606545878.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.801.git.1606545878.gitgitgadget@gmail.com>
-References: <pull.801.git.1606545878.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 28 Nov 2020 06:44:37 +0000
-Subject: [PATCH 5/6] fixup! reftable: rest of library
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S2389123AbgK1Vtv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 28 Nov 2020 16:49:51 -0500
+Received: from mout.web.de ([217.72.192.78]:42041 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387599AbgK1Tts (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Nov 2020 14:49:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1606592876;
+        bh=ZMr2oovc6Eg2zCL8XarS5/Cr2QLH3OD4eryTEpI2RW0=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=SoUznxWcmRMdtX3uG3il1JHM05V+RNgQYaJ7hLhxuJuParfPwbkuv9hGxs9fPKBN3
+         QLHz8LTrOIicpjoPvXEJd28IdoOXrxf8n9Dl4KOfsRfGpA17umseNWuGvY+zg7monw
+         uQ4//0Pwhjs1iE5akXvMUdaB4HAUbZkrQfYuGuSw=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.17.45]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MGQGF-1kzins1Z77-00GlgP; Sat, 28
+ Nov 2020 11:08:33 +0100
+Subject: Re: [PATCH v3 1/2] abspath: add a function to resolve paths with
+ missing components
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Emily Shaffer <emilyshaffer@google.com>
+References: <20201127231916.609852-1-sandals@crustytoothpaste.net>
+ <20201127231916.609852-2-sandals@crustytoothpaste.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <374553d7-6027-0152-bf56-9395e8268fa9@web.de>
+Date:   Sat, 28 Nov 2020 11:08:09 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+In-Reply-To: <20201127231916.609852-2-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:eO7s15e2ZPC7HKjDnR5sfYag4pgzv7TNdmLe/TzPEDRsJ19t7GE
+ NH1Suls59sK0ok61wtbao5S5r9vTngZL1r/44dfkSvGYGye96XdsNiKLeAiXrhZgDWWVJC3
+ AcHgDcA0PldBOc0euz3HWYgaB8Fhhy0XaKGH9gUKGgCheibgVHgvEFNiXb0WsT0yQT25t+E
+ gba5iHfzFTwuSG2aVNjXw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:sGobvVkZtyY=:GVRfQzFr3b8QVU6/BAxYdZ
+ 28Hl2cmtkazWVpWfwQUOBOxJGgmHTmWbhabR/0jTtfCjXwQIBGHWMJvfkG4nfg6VU3f887Gbv
+ eGy1hH0cNg+wv0UMF+Ycwu/Nh47JcaBlb81+AMY8CSxfMyTIWF+XvvMD8ZR5W/4idj9FDFTfj
+ FI2ebWqnvacBOYnzxvGvc6Z6B6CdotBmipwrtnZEbeQbFcwX/I/GIwcdOIDqigjnxr/z4nD7O
+ JedEyp1C28U+2WfaQszwVW0SUegynCw7N0QA3fZYfMtJ2McGpJ41ABw/zPu9UnjQZuKVD07NR
+ IFe6tPyL5gHZgRLq1IckfLxEFCms8YkoWzIs1ErCEJiNAoKXqUC8/q+pktPQEnoYHTedB0t7U
+ mzEEOCy8kp56NHbV0zMMyJlrDsJ1gvxGMIG152CM4gkccPnn1yUXdM7FchS/+xzln6U4BAL+I
+ pl+qmUMVYy8SjFgdC+xqq3uwJb2t4/uwZ8TTC+GxF+aq1Oh6YBjMtl/dzO0VeTWwZALijYjoD
+ kkPLq3Yu3W2ZWzXXwrGY7ITJEzLClk9IQ7nT/o2wvn0quWNyP8qjcuNHQMlevb+uhljznCUof
+ uHgoslwPjlrNtzp2OXoPPJ5NePyKIr+2TIz48wnI3qtAdANRG08W+Tw8+x9V7KEWpYZi2+6Qq
+ SFsm6NTIIvedbKHQ1YSDtQgOBU/ucJZNc0fhNg2c8tg/O5gFAcU53sMVXwb5IAIK1TP3bDE1J
+ JqUkXJoHKWdQUoM3Artho1Ktc3UDnw9pj9AOIAoskQdeJQHWYZKpod1vW4kCK5a6yO4M97/zU
+ CZoLesFTuNrcq/znsbLV4IpYKRzBFXP6s3ORoMXh2ZUYtoBm4+ksIXpg77QSRfVXmKUsydMaN
+ +LfCOd5ye0gUljDCEPMw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Am 28.11.20 um 00:19 schrieb brian m. carlson:
+> We'd like to canonicalize paths such that we can preserve any number of
+> trailing components that may be missing.  Let's add a function to do
+> that, taking the number of components to canonicalize, and make
+> strbuf_realpath a wrapper around it that allows just one component.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  abspath.c | 33 ++++++++++++++++++++++++++++++++-
+>  cache.h   |  2 ++
+>  2 files changed, 34 insertions(+), 1 deletion(-)
+>
+> diff --git a/abspath.c b/abspath.c
+> index 6f15a418bb..1d8f3d007c 100644
+> --- a/abspath.c
+> +++ b/abspath.c
+> @@ -20,6 +20,7 @@ static void strip_last_component(struct strbuf *path)
+>  	/* Find start of the last component */
+>  	while (offset < len && !is_dir_sep(path->buf[len - 1]))
+>  		len--;
+> +
+>  	/* Skip sequences of multiple path-separators */
+>  	while (offset < len && is_dir_sep(path->buf[len - 1]))
+>  		len--;
 
-Yet another instance of `= {}` initialization.
+Stray change?
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- reftable/dump.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> @@ -66,6 +67,22 @@ static void get_root_part(struct strbuf *resolved, st=
+ruct strbuf *remaining)
+>  #define MAXSYMLINKS 32
+>  #endif
+>
+> +/* Count non-contiguous directory separators, not including a trailing =
+one. */
+> +static int count_dir_separators(const char *s)
+> +{
+> +	int count =3D 0;
+> +	int last_sep =3D 0;
+> +	const char *p =3D s;
+> +	while (*p) {
+> +		int is_sep =3D is_dir_sep(*p++);
+> +		if (is_sep && !last_sep)
+> +			count++;
+> +		last_sep =3D is_sep;
+> +	}
+> +	return count;
+> +}
 
-diff --git a/reftable/dump.c b/reftable/dump.c
-index e990bffe0c..7d620a3cf0 100644
---- a/reftable/dump.c
-+++ b/reftable/dump.c
-@@ -82,7 +82,7 @@ static int dump_table(const char *tablename)
- static int compact_stack(const char *stackdir)
- {
- 	struct reftable_stack *stack = NULL;
--	struct reftable_write_options cfg = {};
-+	struct reftable_write_options cfg = { 0 };
- 
- 	int err = reftable_new_stack(&stack, stackdir, cfg);
- 	if (err < 0)
-@@ -101,7 +101,7 @@ static int compact_stack(const char *stackdir)
- static int dump_stack(const char *stackdir)
- {
- 	struct reftable_stack *stack = NULL;
--	struct reftable_write_options cfg = {};
-+	struct reftable_write_options cfg = { 0 };
- 	struct reftable_iterator it = { NULL };
- 	struct reftable_ref_record ref = { NULL };
- 	struct reftable_log_record log = { NULL };
--- 
-gitgitgadget
+count_dir_separators("a/") returns 1; is this intended?  It seems to
+contradict the "not including a trailing one" comment.
+
+> +
+> +
+
+Nitpicking: Do we need both empty lines?
+
+>  /*
+>   * Return the real path (i.e., absolute path, with symlinks resolved
+>   * and extra slashes removed) equivalent to the specified path.  (If
+> @@ -80,6 +97,16 @@ static void get_root_part(struct strbuf *resolved, st=
+ruct strbuf *remaining)
+>   */
+>  char *strbuf_realpath(struct strbuf *resolved, const char *path,
+>  		      int die_on_error)
+> +{
+> +	return strbuf_realpath_missing(resolved, path, 1, die_on_error);
+> +}
+> +
+> +/*
+> + * Just like strbuf_realpath, but allows specifying how many missing co=
+mponents
+> + * are permitted.  -1 may be specified to allow an unlimited number.
+> + */
+> +char *strbuf_realpath_missing(struct strbuf *resolved, const char *path=
+,
+> +			      int missing_components, int die_on_error)
+>  {
+>  	struct strbuf remaining =3D STRBUF_INIT;
+>  	struct strbuf next =3D STRBUF_INIT;
+> @@ -128,8 +155,12 @@ char *strbuf_realpath(struct strbuf *resolved, cons=
+t char *path,
+>  		strbuf_addbuf(resolved, &next);
+>
+>  		if (lstat(resolved->buf, &st)) {
+> +			int trailing_components =3D count_dir_separators(remaining.buf) +
+> +						  (remaining.len !=3D 0);
+
+Hmm, so you actually want to count path components, not separators.
+Perhaps like this?
+
+	static size_t count_components(const char *p)
+	{
+		size_t n =3D 0;
+		while (*p) {
+			while (*p && !is_dir_sep(*p))
+				p++;
+			while (is_dir_sep(*p))
+				p++;
+			n++;
+		}
+		return n;
+	}
+
+>  			/* error out unless this was the last component */
+> -			if (errno !=3D ENOENT || remaining.len) {
+> +			if (errno !=3D ENOENT ||
+> +			    !(missing_components =3D=3D -1 ||
+> +			      trailing_components < missing_components)) {
+>  				if (die_on_error)
+>  					die_errno("Invalid path '%s'",
+>  						  resolved->buf);
+> diff --git a/cache.h b/cache.h
+> index c0072d43b1..ee4bc5ec04 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -1320,6 +1320,8 @@ static inline int is_absolute_path(const char *pat=
+h)
+>  int is_directory(const char *);
+>  char *strbuf_realpath(struct strbuf *resolved, const char *path,
+>  		      int die_on_error);
+> +char *strbuf_realpath_missing(struct strbuf *resolved, const char *path=
+,
+> +			      int missing_components, int die_on_error);
+>  char *real_pathdup(const char *path, int die_on_error);
+>  const char *absolute_path(const char *path);
+>  char *absolute_pathdup(const char *path);
+>
 
