@@ -2,173 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7ED9EC83012
-	for <git@archiver.kernel.org>; Sat, 28 Nov 2020 22:17:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E93D0C8301B
+	for <git@archiver.kernel.org>; Sat, 28 Nov 2020 22:17:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4FBB7221FD
-	for <git@archiver.kernel.org>; Sat, 28 Nov 2020 22:17:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B280021D40
+	for <git@archiver.kernel.org>; Sat, 28 Nov 2020 22:17:55 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kvAp7xsv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728063AbgK1Vtq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 28 Nov 2020 16:49:46 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:49704 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730568AbgK1SmJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 28 Nov 2020 13:42:09 -0500
-Received: from camp.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A9DD660743;
-        Sat, 28 Nov 2020 18:41:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1606588888;
-        bh=6GOUGCfXCwrL8SSNMbmffspzlpuYiiak/XwA1JeGj74=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=gFieqphErq0tPNkrTC6VwAkua0Iq8Nf/8ZFifqStVGzwriYoifIKNbIZQBWrMknOS
-         LWXxmuwLIDygkdBdKf7LQVNczp/ZGvElv4bhjRpvF0CQCYDK/5/p6LJgCu6ADQlpLH
-         0dpv/6psmp8bwd7bdKyhoNMf1PI/anB7PIKVkXh0zI7bKxgI8tGb6wpkHyRW5qUl+k
-         9IDD2Mt4HTKUP7+vCfqCztpAz+dtHEFVub4LQgukFrNl3pHc/IkPbgV1UNpq2ZCZ1k
-         e2jKi8bkonVAvGXwjrZKLuarUDC3KXsqSWk/Z8xcqXXrzgDIEUG/zzXsPbu2JAQvSB
-         dZhBXlUPZXhhWow9T8zlhM7Td04klGsHzysl9Kr0YuZd286QfE0zM2uBNCzNlNqgfI
-         AqddIjqqYrgu5bgUCxXsRetD67P4Q0iQfiMwX/YcjsyqTLFQf0oS4WiBUFQ2+SoibG
-         Nv48Smm80ZpVrjDKNAAawyIAwlaky+TlJYgJESPQlfOCQUbfTzM
-Date:   Sat, 28 Nov 2020 18:41:22 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH v3 1/2] abspath: add a function to resolve paths with
- missing components
-Message-ID: <X8KZ0gd85g7fhqm5@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Emily Shaffer <emilyshaffer@google.com>
-References: <20201127231916.609852-1-sandals@crustytoothpaste.net>
- <20201127231916.609852-2-sandals@crustytoothpaste.net>
- <374553d7-6027-0152-bf56-9395e8268fa9@web.de>
+        id S2388913AbgK1Vtr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 28 Nov 2020 16:49:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42376 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731568AbgK1SxE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Nov 2020 13:53:04 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E48A6C02B8E9
+        for <git@vger.kernel.org>; Sat, 28 Nov 2020 00:40:42 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id m16so8112803edr.3
+        for <git@vger.kernel.org>; Sat, 28 Nov 2020 00:40:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FPGYj7V5PlCtqDlMoLmwwgOWaT9qES96bsjC9RyAWfI=;
+        b=kvAp7xsvTwf71dttg9JIs9Kb90CuHamLODr9Y2aqm1C711C0D2qHFGwHiXdkA7Kb58
+         wFB0zFHU4joRR/uC9SBum6HWkzZ1L4oTABJV0fBuMynOaCxHDQgxuqHc/ULyCy40FCop
+         qXs8hPKyeYfrH9EFH+5Sthv4pvO6mSc3aY6s2ILQgbie+TUgE0KBxNJ+PkBNSgD8jlNG
+         qCBF3CG+fyVAl2IaOSCInoB3QFKdyv2GTcVP1e3Q0zvZSbp/fTokBylkysKvJ0t18P+Z
+         XWeRsrKuWZ4MTZ7S24lslS9ScN4SGYNiQl0VzeOzaWSpoQFn2eqC3RdfR9N6Mwj844eX
+         5t0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FPGYj7V5PlCtqDlMoLmwwgOWaT9qES96bsjC9RyAWfI=;
+        b=LEAq3uJYtsjyQgV57HJw/lbpELk0HJ/BZ/xRMpyLDDap0jKReGExrGitVwx32Xd+Jl
+         r9TwVMhNrRfkoy7rcqa9tRqfG/ZFL8lk2YpGSydkyyDyX7HT1Rske+FdkcuipfdBB2s1
+         ARMLxiH8/K9RM38pbUljxahR0akS5mvgruRsqnWTy470XpB0US8iyy4/3fQ0zZ/KkaYP
+         IKGy4NZFxGcmi5DQ509wthoQ/GbYVSkE/MWrl8RJNv5rXvcAt3MkmES11av7v6BIWFiM
+         DDjL0c4EoIRwh/EcLSjS0kTDop9ZjvX9lPQnvMzpbSuZ+kL8hastVGeoce+R5271MLdm
+         PrNw==
+X-Gm-Message-State: AOAM5312mz2ZpaM3Yb/bMhtpuwa2W5XBn1LjW5Dy0b9JPdvAqo4joJIj
+        qv4zV5z6dcfaCm+zFz8G+4Oei2EJ5wSRhk46fqA=
+X-Google-Smtp-Source: ABdhPJy0UUcs4kPt3JpPuS3WIJGWJcShifdrq8+dB0MxqzvrodSZBbT4+l2kgtMYuf/pOF+7eXbFrvWQsbLlYddjwTg=
+X-Received: by 2002:a50:af65:: with SMTP id g92mr11976600edd.273.1606552840077;
+ Sat, 28 Nov 2020 00:40:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="SAF/HeR/vxgAPYdH"
-Content-Disposition: inline
-In-Reply-To: <374553d7-6027-0152-bf56-9395e8268fa9@web.de>
-User-Agent: Mutt/2.0.2 (2020-11-20)
+References: <CAP8UFD0xoqVh=1BweBqNOt4_9xg4GvDd7Jf5f5_5z4H+PCVt8g@mail.gmail.com>
+ <CAMP44s28HEUUvW8hs5PxrW5NwwDdpou-qsNm8nx3kMk_g0brNw@mail.gmail.com>
+In-Reply-To: <CAMP44s28HEUUvW8hs5PxrW5NwwDdpou-qsNm8nx3kMk_g0brNw@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 28 Nov 2020 09:40:28 +0100
+Message-ID: <CAP8UFD32sjT_nttQrxknr=4EYUQLMebg=KhdGmMJ7j+YUmTjwg@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git Rev News edition 69
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+        Victor Engmark <victor@engmark.name>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Tarun Batra <tarun.batra00@gmail.com>,
+        Semyon Kirnosenko <semyon.kirnosenko@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Luca Milanesio <luca.milanesio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, Nov 28, 2020 at 9:27 AM Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
 
---SAF/HeR/vxgAPYdH
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> A nit-pick that has bothered me for years...
+>
+> The font seems to be the same as git-scm.com, which is horrendous [1]
+> in Linux.
 
-On 2020-11-28 at 10:08:09, Ren=C3=A9 Scharfe wrote:
-> Am 28.11.20 um 00:19 schrieb brian m. carlson:
-> > We'd like to canonicalize paths such that we can preserve any number of
-> > trailing components that may be missing.  Let's add a function to do
-> > that, taking the number of components to canonicalize, and make
-> > strbuf_realpath a wrapper around it that allows just one component.
-> >
-> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> > ---
-> >  abspath.c | 33 ++++++++++++++++++++++++++++++++-
-> >  cache.h   |  2 ++
-> >  2 files changed, 34 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/abspath.c b/abspath.c
-> > index 6f15a418bb..1d8f3d007c 100644
-> > --- a/abspath.c
-> > +++ b/abspath.c
-> > @@ -20,6 +20,7 @@ static void strip_last_component(struct strbuf *path)
-> >  	/* Find start of the last component */
-> >  	while (offset < len && !is_dir_sep(path->buf[len - 1]))
-> >  		len--;
-> > +
-> >  	/* Skip sequences of multiple path-separators */
-> >  	while (offset < len && is_dir_sep(path->buf[len - 1]))
-> >  		len--;
->=20
-> Stray change?
+I agree that the fonts haven't looked great to me either.
 
-Ah, yes.  I pulled out the old code from v2, but left the whitespace.
-Will fix.
+> After investigating all the different fonts specified in the list
+> (present in macOS and Windows), I sent a fix [2] to pick similar fonts
+> for Linux.
 
-> Nitpicking: Do we need both empty lines?
+Thanks for your pull request! I hope we can merge it soon.
 
-No, we don't.
+> The best one is Roboto Slab [3], which looks very similar
+> to Adelle, and it's free. Alternatively, DejaVu Serif [4] is a good
+> second option present in many (most?) Linux systems, plus it's how it
+> looks on Windows with Georgia. And lastly, plain old (but not 90s old)
+> sans-serif [5].
 
-> >  /*
-> >   * Return the real path (i.e., absolute path, with symlinks resolved
-> >   * and extra slashes removed) equivalent to the specified path.  (If
-> > @@ -80,6 +97,16 @@ static void get_root_part(struct strbuf *resolved, s=
-truct strbuf *remaining)
-> >   */
-> >  char *strbuf_realpath(struct strbuf *resolved, const char *path,
-> >  		      int die_on_error)
-> > +{
-> > +	return strbuf_realpath_missing(resolved, path, 1, die_on_error);
-> > +}
-> > +
-> > +/*
-> > + * Just like strbuf_realpath, but allows specifying how many missing c=
-omponents
-> > + * are permitted.  -1 may be specified to allow an unlimited number.
-> > + */
-> > +char *strbuf_realpath_missing(struct strbuf *resolved, const char *pat=
-h,
-> > +			      int missing_components, int die_on_error)
-> >  {
-> >  	struct strbuf remaining =3D STRBUF_INIT;
-> >  	struct strbuf next =3D STRBUF_INIT;
-> > @@ -128,8 +155,12 @@ char *strbuf_realpath(struct strbuf *resolved, con=
-st char *path,
-> >  		strbuf_addbuf(resolved, &next);
-> >
-> >  		if (lstat(resolved->buf, &st)) {
-> > +			int trailing_components =3D count_dir_separators(remaining.buf) +
-> > +						  (remaining.len !=3D 0);
->=20
-> Hmm, so you actually want to count path components, not separators.
-> Perhaps like this?
->=20
-> 	static size_t count_components(const char *p)
-> 	{
-> 		size_t n =3D 0;
-> 		while (*p) {
-> 			while (*p && !is_dir_sep(*p))
-> 				p++;
-> 			while (is_dir_sep(*p))
-> 				p++;
-> 			n++;
-> 		}
-> 		return n;
-> 	}
+Thanks for the screenshots too. Yeah, it seems that the fonts you
+suggest look better.
 
-Yeah, I think that's nicer, and simpler, too.  Will reroll with that
-fix.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---SAF/HeR/vxgAPYdH
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX8KZ0QAKCRB8DEliiIei
-gePwAP9RnHtZbFom7ak1beJxbtlcYku/ctk3KOSwp9FB01jhQAD/cvZqX+GWeKd8
-Nx0tw1u6TwK3wLzi19a9QbH/wVlCPg8=
-=n1vz
------END PGP SIGNATURE-----
-
---SAF/HeR/vxgAPYdH--
+Best,
+Christian.
