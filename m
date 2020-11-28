@@ -2,126 +2,200 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7784BC63798
-	for <git@archiver.kernel.org>; Sat, 28 Nov 2020 22:16:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EE4CC63777
+	for <git@archiver.kernel.org>; Sat, 28 Nov 2020 22:16:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 45236221FD
-	for <git@archiver.kernel.org>; Sat, 28 Nov 2020 22:16:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E2ED721D40
+	for <git@archiver.kernel.org>; Sat, 28 Nov 2020 22:16:55 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qjD0307V"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731374AbgK1Vtv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 28 Nov 2020 16:49:51 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44948 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387570AbgK1T5b (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Nov 2020 14:57:31 -0500
-Received: (qmail 26275 invoked by uid 109); 28 Nov 2020 06:30:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 28 Nov 2020 06:30:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30667 invoked by uid 111); 28 Nov 2020 06:30:07 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 28 Nov 2020 01:30:07 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Sat, 28 Nov 2020 01:30:07 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?5ZSQ5a6H5aWV?= <winglovet@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Bug report: orphaned pack-objects after killing upload-pack on [
-Message-ID: <X8Hub2OeFy3V6MhV@coredump.intra.peff.net>
-References: <badf3777-3970-b714-3ad9-67d2f77f94a5@web.de>
- <20201121002921.GC353076@coredump.intra.peff.net>
- <xmqqd006s7ee.fsf@gitster.c.googlers.com>
- <X7zOKbzR9gwJHMbJ@coredump.intra.peff.net>
- <xmqqy2ipcdvj.fsf@gitster.c.googlers.com>
- <X778eIAr3uzdh0H0@coredump.intra.peff.net>
- <xmqqo8jllyhc.fsf@gitster.c.googlers.com>
- <bd2c4577-4c8c-851c-6045-ba4b306ca612@web.de>
- <X8B9589XMlCQEltA@coredump.intra.peff.net>
- <d0fcfa7f-9835-a9e6-c4a4-af4de177ff8c@web.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        id S2388994AbgK1Vts (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 28 Nov 2020 16:49:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43510 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732380AbgK1TAJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Nov 2020 14:00:09 -0500
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BA10C094241
+        for <git@vger.kernel.org>; Fri, 27 Nov 2020 22:44:42 -0800 (PST)
+Received: by mail-wm1-x344.google.com with SMTP id v14so1146049wml.1
+        for <git@vger.kernel.org>; Fri, 27 Nov 2020 22:44:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=/20RZ4uByElgRc3kL6zaVvAcxNYFd//xwDFEk6VI2E8=;
+        b=qjD0307VOnz2x1s5GV4OKSYJ7c5sjug8d6pWsJ3wd6vzsbAWCawHz4nStq9Ad5p9h0
+         BNPkeAqkyVMskxJwHnBx4rhC7cu4RXASq0HIoYR5vZFmWPn/NDNCTQicKlEX1urRiNqk
+         2U9mT1zblRtN82R0L75G2ypnSXMC8bB5KbucZQhQZIyjYGs3csjTpyS9xNrxFBnkL7nw
+         bsal2M80iRuv4cDPy3MDIjXaxtZjXBJiEMpZ5gFD68ReJGOKaIQaMJkOfJwQ1rQThqao
+         ay5NYhqYEyl9fQRC/nFqPMTPW/stJuokyOiJ6LsUmkfxhBIgwmcfuoZh1DhsHywh5BZ1
+         nVEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=/20RZ4uByElgRc3kL6zaVvAcxNYFd//xwDFEk6VI2E8=;
+        b=XCLd0KKs1xIZfuyTvPhnet0DnaCspVtqOUeUCpo3qdo1aqYBc9cIOz5Ymtiy8VYSMb
+         cPlBhnLR9VxpoZVag+E1oWDi9GY0UblmIJ9yPc07oCAMyW6/TkeIz5lFW5cTYBpDapzR
+         SujsF0LWv+H4yzhe4Ty/v2EvXLCJVZPNbSicv5THHBZc/fQnRjy7ASVA5IIVPMZGcz2i
+         txqPtkH+PrhnsGfsgjLkvdlqYexH2YPsC6cmQVfPSCTb34TFEJ1xKEPcEtGQmAlBjMzp
+         vZwTior7kNaVkk1M1WfIn3FkhUxKfWlyIai1H0zGAuI+UN4z6B95AgVHm5iFVLTvHj6q
+         mHWQ==
+X-Gm-Message-State: AOAM530VoA4kouzfAreTGuiXZ16xZdBjuxSAQoyyYj9C40KRNDbfmaDC
+        xgFX0dZ/ztsuuhr1JG2CxT8nBM0rnUQ=
+X-Google-Smtp-Source: ABdhPJzNnKanwYLtSupLrSRbJ9eyNzOtDngQuaWBFMezE+UCvpm/CU8da/BC5hsRnS1rDnL2aQUzvQ==
+X-Received: by 2002:a7b:c1ce:: with SMTP id a14mr13030055wmj.169.1606545880749;
+        Fri, 27 Nov 2020 22:44:40 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w186sm16864486wmb.26.2020.11.27.22.44.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Nov 2020 22:44:40 -0800 (PST)
+Message-Id: <878bffcdfe5ca7657f839de8f7993d9098726636.1606545878.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.801.git.1606545878.gitgitgadget@gmail.com>
+References: <pull.801.git.1606545878.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 28 Nov 2020 06:44:33 +0000
+Subject: [PATCH 1/6] fixup! reftable: rest of library
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <d0fcfa7f-9835-a9e6-c4a4-af4de177ff8c@web.de>
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 27, 2020 at 09:43:06PM +0100, René Scharfe wrote:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-> > [...zombie processes...]
-> OK, so overall the situation sounds a bit messy to me and perhaps
-> there's room for improvement, but I agree now that we can leave the
-> specialists (init, tini) to deal with our zombies.
+Close the file descriptors to obsolete files before trying to delete or
+rename them. This is actually required on Windows.
 
-Keep in mind we are not changing anything here, either. clean_on_exit is
-kicking in when we already would be exiting without calling wait(). We
-could _also_ instruct run-command to wait, but nobody seems to be
-complaining about it.
+Note: this patch is just a band-aid to get the tests pass on Windows.
+The fact that it is needed raises concerns about the overall resource
+handling: are file descriptors closed properly whenever appropriate, or
+are they closed much later (which can lead to rename() problems on
+Windows, and risks running into ulimits)?
 
-> With the debug patch above and GIT_DEBUG_ABANDON_CHILD=git-upload-pack I
-> need the following patch get rid of the spawned process:
+Also, a `reftable_stack_destroy()` call had to be moved in
+`test_reftable_stack_uptodate()` to avoid the prompt complaining that a
+`.ref` file could not be deleted on Windows. This raises the question
+whether the code does the right thing when two concurrent processes want
+to access the reftable, and one wants to compact it. At the moment, it
+does not appear to fail gracefully.
 
-I don't think that is an interesting case, though. We've been discussing
-the spawn between upload-pack and its child pack-objects, but here
-you're running a bogus infinite loop instead of upload-pack. It will
-spin forever, because the client is expecting it to say something.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ reftable/stack.c      | 37 ++++++++++++++++++++++++++++---------
+ reftable/stack_test.c |  2 +-
+ 2 files changed, 29 insertions(+), 10 deletions(-)
 
-In a normal setup, a severing of the connection between the client and
-upload-pack will be noticed quickly, because each one is always either
-trying to read from or write to the other (the exception is while
-pack-objects is processing without progress meters, but there we send a
-keep-alive every 5 seconds).
+diff --git a/reftable/stack.c b/reftable/stack.c
+index 1d632937d7..02c6a370ba 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -212,7 +212,6 @@ static int reftable_stack_reload_once(struct reftable_stack *st, char **names,
+ 		goto done;
+ 
+ 	new_tables = NULL;
+-	st->readers_len = new_readers_len;
+ 	if (st->merged != NULL) {
+ 		merged_table_release(st->merged);
+ 		reftable_merged_table_free(st->merged);
+@@ -220,6 +219,7 @@ static int reftable_stack_reload_once(struct reftable_stack *st, char **names,
+ 	if (st->readers != NULL) {
+ 		reftable_free(st->readers);
+ 	}
++	st->readers_len = new_readers_len;
+ 	st->readers = new_readers;
+ 	new_readers = NULL;
+ 	new_readers_len = 0;
+@@ -939,14 +939,6 @@ static int stack_compact_range(struct reftable_stack *st, int first, int last,
+ 	strbuf_addstr(&new_table_path, "/");
+ 	strbuf_addbuf(&new_table_path, &new_table_name);
+ 
+-	if (!is_empty_table) {
+-		err = rename(temp_tab_file_name.buf, new_table_path.buf);
+-		if (err < 0) {
+-			err = REFTABLE_IO_ERROR;
+-			goto done;
+-		}
+-	}
+-
+ 	for (i = 0; i < first; i++) {
+ 		strbuf_addstr(&ref_list_contents, st->readers[i]->name);
+ 		strbuf_addstr(&ref_list_contents, "\n");
+@@ -960,6 +952,32 @@ static int stack_compact_range(struct reftable_stack *st, int first, int last,
+ 		strbuf_addstr(&ref_list_contents, "\n");
+ 	}
+ 
++	/*
++	 * Now release the merged tables and readers
++	 */
++	if (st->merged != NULL) {
++		reftable_merged_table_free(st->merged);
++		st->merged = NULL;
++	}
++
++	if (st->readers != NULL) {
++		int i = 0;
++		for (i = 0; i < st->readers_len; i++) {
++			reader_close(st->readers[i]);
++			reftable_reader_free(st->readers[i]);
++		}
++		st->readers_len = 0;
++		FREE_AND_NULL(st->readers);
++	}
++
++	if (!is_empty_table) {
++		err = rename(temp_tab_file_name.buf, new_table_path.buf);
++		if (err < 0) {
++			err = REFTABLE_IO_ERROR;
++			goto done;
++		}
++	}
++
+ 	err = write(lock_file_fd, ref_list_contents.buf, ref_list_contents.len);
+ 	if (err < 0) {
+ 		err = REFTABLE_IO_ERROR;
+@@ -1242,6 +1260,7 @@ static int stack_check_addition(struct reftable_stack *st,
+ 
+ 	free(refs);
+ 	reftable_iterator_destroy(&it);
++	reader_close(rd);
+ 	reftable_reader_free(rd);
+ 	return err;
+ }
+diff --git a/reftable/stack_test.c b/reftable/stack_test.c
+index 11d3d30799..c35abd7301 100644
+--- a/reftable/stack_test.c
++++ b/reftable/stack_test.c
+@@ -159,12 +159,12 @@ static void test_reftable_stack_uptodate(void)
+ 	err = reftable_stack_add(st2, &write_test_ref, &ref2);
+ 	EXPECT(err == REFTABLE_LOCK_ERROR);
+ 
++	reftable_stack_destroy(st1);
+ 	err = reftable_stack_reload(st2);
+ 	EXPECT_ERR(err);
+ 
+ 	err = reftable_stack_add(st2, &write_test_ref, &ref2);
+ 	EXPECT_ERR(err);
+-	reftable_stack_destroy(st1);
+ 	reftable_stack_destroy(st2);
+ 	clear_dir(dir);
+ }
+-- 
+gitgitgadget
 
-If one of them were to spin in a true infinite loop due to a bug (but
-not break the connection), we would wait forever. But the solution there
-is a timeout on inactivity.
-
-So...
-
-> --- >8 ---
-> 
-> diff --git a/connect.c b/connect.c
-> index 8b8f56cf6d..e1b1b73ef5 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -1369,6 +1369,7 @@ struct child_process *git_connect(int fd[2], const char *url,
-> 
->  		conn->use_shell = 1;
->  		conn->in = conn->out = -1;
-> +		conn->clean_on_exit = 1;
->  		if (protocol == PROTO_SSH) {
->  			char *ssh_host = hostandport;
->  			const char *port = NULL;
-> 
-> --- 8< ---
-
-I don't think there's much point here. If the client side dies, it will
-close the socket, and upload-pack would notice anyway. It's only your
-fake "spin without doing any I/O" patch that misbehaves.
-
-Moreover, this wouldn't do _anything_ in many cases, because upload-pack
-is going to be on the far side of a network socket. So really you'd be
-killing ssh here for those cases (which then likewise would close the
-socket, but this isn't necessary because ssh will also exit when it sees
-us close _our_ end). And it would do nothing at all for git-over-http,
-git://, etc.
-
-> So is there a downside to clean_on_exit?  It doesn't make sense when we
-> start browsers or pagers, but for hooks and helpers (which are probably
-> the majority of started processes) cascading program termination makes
-> sense, no?
-
-In general, no, I suspect clean_on_exit wouldn't be hurting anything if
-we used it more. But generally we get a natural cascade of termination
-because exiting processes close the input and output pipes going to the
-other sub-processes.
-
--Peff
