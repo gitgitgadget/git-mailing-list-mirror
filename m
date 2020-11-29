@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D92CC83012
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06F57C8300F
 	for <git@archiver.kernel.org>; Sun, 29 Nov 2020 07:45:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EC2FA207CD
+	by mail.kernel.org (Postfix) with ESMTP id BEDAE20809
 	for <git@archiver.kernel.org>; Sun, 29 Nov 2020 07:45:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VBZEfT8B"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ig8v587/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727040AbgK2Hoy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 Nov 2020 02:44:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47332 "EHLO
+        id S1726865AbgK2Hou (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Nov 2020 02:44:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726953AbgK2Hoy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Nov 2020 02:44:54 -0500
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AE6FC061A52
-        for <git@vger.kernel.org>; Sat, 28 Nov 2020 23:43:38 -0800 (PST)
-Received: by mail-wm1-x344.google.com with SMTP id 3so11634088wmg.4
-        for <git@vger.kernel.org>; Sat, 28 Nov 2020 23:43:38 -0800 (PST)
+        with ESMTP id S1726685AbgK2Hot (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Nov 2020 02:44:49 -0500
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53858C061A4A
+        for <git@vger.kernel.org>; Sat, 28 Nov 2020 23:43:34 -0800 (PST)
+Received: by mail-wr1-x444.google.com with SMTP id p8so10820185wrx.5
+        for <git@vger.kernel.org>; Sat, 28 Nov 2020 23:43:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=0/wosQMub37QZjMN2F69GcoUKYnFBqc9X0QlVZOCJT4=;
-        b=VBZEfT8BHjLmtFGOb+xkavWirfdslLanNQVwTJ2WXpUwncoK7Lg/XN9Bk5Ph5jI39A
-         725+j+pNA0mGPBebtfM2GBuR7XdWvKSlqNwGzImI75qV68E9zh0ayuWfcxKkD46SJf84
-         siMddBzbaa7bZmrtA7WO/uUEsaIJt76sX+ni7MriggFVUEDLnBLE5iGGy0cpFyTTJt5Q
-         5UUeX8Pf5uWzaUJPqoo7AYYloBBoyMkUCgONZOFr9OlFOBbb6IGPNYBtNMLXixPSlGNs
-         dGcJOaQLop9poankQ7FklLqbJp+83N9g+n29gSAp/0Nrv32NrvQhXE+lzuyCO2xCxDCS
-         mMeQ==
+        bh=jypN2g+opEybn7lBR3zGoccE0OgSDLejx62gRXxmGi4=;
+        b=ig8v587/xWIsDRkJDlLN6PX/puZThjHu2bwbxzT8hUcbyt45XHkYIH8anjgxDaI+mg
+         ruezEvLW6FRYLu/QwMT8rvjkgxhxIDyGNpmTA53wA51/PdJ6uGN+V8uKTD4EAXcKcjcA
+         m5dkcjKrbLO7hl6GpJ7J8q6MdglAmkduzX3IFT4x8Ju+HyIgpWNdABLvcImXHed6rbuO
+         SU1MwH4nfhmSLrHPomGNtUE3sdGmmYwktmtC2AFB5cKCVco93yi0XSGMwIGodDm1EFtW
+         ml2WPMakSXUq+CLvZq4tyqd5dUtsObxNPXF8yQ4Cok3L6l+xuOODzV1y2jjaQtSbi7tv
+         b3Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0/wosQMub37QZjMN2F69GcoUKYnFBqc9X0QlVZOCJT4=;
-        b=sgi99zEVz8wm2u8tM+D86DveOPGAb8pUp0Jvyl7hzpIrP/Xa1o9eSfe1EaspDUU8Bc
-         FfMIeKjDGpdLW9jRhhQVF62ZWeAacslDHymw6K/lbYc5u/fdFNOhB8WOAefjQ/EwwWVn
-         h3Mog12cWwr0lIDA1Hc1/p7OVTfaBrf5eqaX2HtfC6jyvOs+AtG/OsI6/+/1hQrGISYa
-         Bdf7xaYaFJeuvqcgs9NTB6lZqhotPeFtsW2WSKLYBNVKj0kJ06uMZPnp5UBfdBQQ8OOJ
-         +R19ocfQFArCvoUhHfW2ZQWTsxeqqT6BBUE/mQrBurQXS4BBzbv9pNGPn12GbFgNV4Mg
-         5d8Q==
-X-Gm-Message-State: AOAM532ZSx0T/uopAiJUMYWWp0VxA2UQC9eXySvTfgD2dDdArK5dL15I
-        eOaccrxnsr+3hu/y4j5YJlnM2g5DyBg=
-X-Google-Smtp-Source: ABdhPJzYKewluhnFzE5yrveRO5Tf8sGtKMLm82Z6xGl2EOgCX2F9oBYFzbY8qfDGKg8gxL9jt93HNQ==
-X-Received: by 2002:a7b:c385:: with SMTP id s5mr17752879wmj.30.1606635817056;
-        Sat, 28 Nov 2020 23:43:37 -0800 (PST)
+        bh=jypN2g+opEybn7lBR3zGoccE0OgSDLejx62gRXxmGi4=;
+        b=Gv0/nWYZckBpoTZkrJJzcVrWC2FyBXffIGrqfNur8wh4fNrVoeLpzLGoukl3+JQGAZ
+         Jo5bL8CJuwr7ZDF3A9E5MIBLIBk/7d6W78+dNO8Fg8FFZyq8eq7PPZiZcU03EGR8ncqB
+         X1AC88+6kMLTAutMyGjlTtFgYgGvOSRecG+bFcdZTJ+E5EIzlEl4pMrl855G5p4v4SJB
+         qO+GOD+SBPxwsPfpcWvp1gNe/d6ZCCOjeWL1mN8CKSWvf4TuO1spkozdJS+hx2ZGEOJp
+         JADE0TQsd2NmrR+60R+tLvo3xgCJEkvJpnuXC2ihwluwRs7Ty1yf4dZj1ugp7rPDUFJ+
+         eZvQ==
+X-Gm-Message-State: AOAM531cq9ennwbX5aXzE1Q418T/TDBBi5uVplfww3tVryP0n6Jsao1M
+        IFedVh/Iu2ppR7BwO76XTiJsIgn+pss=
+X-Google-Smtp-Source: ABdhPJyI0YRjHPJhFq958BOJ8uocEYVw+reHn50Gyvh6EWkRAgkELW/7YhOo2Lw2i5lreNAukRfL8A==
+X-Received: by 2002:a5d:514f:: with SMTP id u15mr20527196wrt.385.1606635812860;
+        Sat, 28 Nov 2020 23:43:32 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z189sm20160606wme.23.2020.11.28.23.43.36
+        by smtp.gmail.com with ESMTPSA id q66sm21679004wme.6.2020.11.28.23.43.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Nov 2020 23:43:36 -0800 (PST)
-Message-Id: <33a5d23c85357607997a5138da7eaa8ac401049b.1606635803.git.gitgitgadget@gmail.com>
+        Sat, 28 Nov 2020 23:43:32 -0800 (PST)
+Message-Id: <4e4298fa7077b2f972915b96825528e505f8035e.1606635803.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.923.git.git.1606635803.gitgitgadget@gmail.com>
 References: <pull.923.git.git.1606635803.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 29 Nov 2020 07:43:17 +0000
-Subject: [PATCH 14/20] merge-ort: step 2 of tree writing -- function to create
- tree object
+Date:   Sun, 29 Nov 2020 07:43:12 +0000
+Subject: [PATCH 09/20] merge-ort: record stage and auxiliary info for every
+ path
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,101 +77,158 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Create a new function, write_tree(), which will take a list of
-basenames, modes, and oids for a single directory and create a tree
-object in the object-store.  We do not yet have just basenames, modes,
-and oids for just a single directory (we have a mixture of entries from
-all directory levels in the hierarchy) so we still die() before the
-current call to write_tree(), but the next patch will rectify that.
+Create a helper function, setup_path_info(), which can be used to record
+all the information we want in a merged_info or conflict_info.  While
+there is currently only one caller of this new function, and some of its
+particular parameters are fixed, future callers of this function will be
+added later.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 56 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 55 insertions(+), 1 deletion(-)
+ merge-ort.c | 97 +++++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 90 insertions(+), 7 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 970708fff9..59355de628 100644
+index e5bca25a8d..52a8c41cf8 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -19,6 +19,7 @@
- 
- #include "diff.h"
- #include "diffcore.h"
-+#include "object-store.h"
- #include "strmap.h"
- #include "tree.h"
- #include "xdiff-interface.h"
-@@ -496,6 +497,51 @@ struct directory_versions {
- 	struct string_list versions;
+@@ -158,6 +158,26 @@ struct conflict_info {
+ 	unsigned match_mask:3;
  };
  
-+static void write_tree(struct object_id *result_oid,
-+		       struct string_list *versions,
-+		       unsigned int offset,
-+		       size_t hash_size)
-+{
-+	size_t maxlen = 0, extra;
-+	unsigned int nr = versions->nr - offset;
-+	struct strbuf buf = STRBUF_INIT;
-+	struct string_list relevant_entries = STRING_LIST_INIT_NODUP;
-+	int i;
++/*
++ * For the next three macros, see warning for conflict_info.merged.
++ *
++ * In each of the below, mi is a struct merged_info*, and ci was defined
++ * as a struct conflict_info* (but we need to verify ci isn't actually
++ * pointed at a struct merged_info*).
++ *
++ * INITIALIZE_CI: Assign ci to mi but only if it's safe; set to NULL otherwise.
++ * VERIFY_CI: Ensure that something we assigned to a conflict_info* is one.
++ * ASSIGN_AND_VERIFY_CI: Similar to VERIFY_CI but do assignment first.
++ */
++#define INITIALIZE_CI(ci, mi) do {                                           \
++	(ci) = (!(mi) || (mi)->clean) ? NULL : (struct conflict_info *)(mi); \
++} while (0)
++#define VERIFY_CI(ci) assert(ci && !ci->merged.clean);
++#define ASSIGN_AND_VERIFY_CI(ci, mi) do {    \
++	(ci) = (struct conflict_info *)(mi);  \
++	assert((ci) && !(mi)->clean);        \
++} while (0)
 +
-+	/*
-+	 * We want to sort the last (versions->nr-offset) entries in versions.
-+	 * Do so by abusing the string_list API a bit: make another string_list
-+	 * that contains just those entries and then sort them.
-+	 *
-+	 * We won't use relevant_entries again and will let it just pop off the
-+	 * stack, so there won't be allocation worries or anything.
-+	 */
-+	relevant_entries.items = versions->items + offset;
-+	relevant_entries.nr = versions->nr - offset;
-+	string_list_sort(&relevant_entries);
-+
-+	/* Pre-allocate some space in buf */
-+	extra = hash_size + 8; /* 8: 6 for mode, 1 for space, 1 for NUL char */
-+	for (i = 0; i < nr; i++) {
-+		maxlen += strlen(versions->items[offset+i].string) + extra;
-+	}
-+	strbuf_grow(&buf, maxlen);
-+
-+	/* Write each entry out to buf */
-+	for (i = 0; i < nr; i++) {
-+		struct merged_info *mi = versions->items[offset+i].util;
-+		struct version_info *ri = &mi->result;
-+		strbuf_addf(&buf, "%o %s%c",
-+			    ri->mode,
-+			    versions->items[offset+i].string, '\0');
-+		strbuf_add(&buf, ri->oid.hash, hash_size);
-+	}
-+
-+	/* Write this object file out, and record in result_oid */
-+	write_object_file(buf.buf, buf.len, tree_type, result_oid);
-+	strbuf_release(&buf);
-+}
-+
- static void record_entry_for_tree(struct directory_versions *dir_metadata,
- 				  const char *path,
- 				  struct merged_info *mi)
-@@ -648,9 +694,17 @@ static void process_entries(struct merge_options *opt,
- 		}
- 	}
- 
-+	/*
-+	 * TODO: We can't actually write a tree yet, because dir_metadata just
-+	 * contains all basenames of all files throughout the tree with their
-+	 * mode and hash.  Not only is that a nonsensical tree, it will have
-+	 * lots of duplicates for paths such as "Makefile" or ".gitignore".
-+	 */
-+	die("Not yet implemented; need to process subtrees separately");
-+	write_tree(result_oid, &dir_metadata.versions, 0,
-+		   opt->repo->hash_algo->rawsz);
- 	string_list_clear(&plist, 0);
- 	string_list_clear(&dir_metadata.versions, 0);
--	die("Tree creation not yet implemented");
+ static int err(struct merge_options *opt, const char *err, ...)
+ {
+ 	va_list params;
+@@ -174,6 +194,65 @@ static int err(struct merge_options *opt, const char *err, ...)
+ 	return -1;
  }
  
- void merge_switch_to_result(struct merge_options *opt,
++static void setup_path_info(struct merge_options *opt,
++			    struct string_list_item *result,
++			    const char *current_dir_name,
++			    int current_dir_name_len,
++			    char *fullpath, /* we'll take over ownership */
++			    struct name_entry *names,
++			    struct name_entry *merged_version,
++			    unsigned is_null,     /* boolean */
++			    unsigned df_conflict, /* boolean */
++			    unsigned filemask,
++			    unsigned dirmask,
++			    int resolved          /* boolean */)
++{
++	/* result->util is void*, so mi is a convenience typed variable */
++	struct merged_info *mi;
++
++	assert(!is_null || resolved);
++	assert(!df_conflict || !resolved); /* df_conflict implies !resolved */
++	assert(resolved == (merged_version != NULL));
++
++	mi = xcalloc(1, resolved ? sizeof(struct merged_info) :
++				   sizeof(struct conflict_info));
++	mi->directory_name = current_dir_name;
++	mi->basename_offset = current_dir_name_len;
++	mi->clean = !!resolved;
++	if (resolved) {
++		mi->result.mode = merged_version->mode;
++		oidcpy(&mi->result.oid, &merged_version->oid);
++		mi->is_null = !!is_null;
++	} else {
++		int i;
++		struct conflict_info *ci;
++
++		ASSIGN_AND_VERIFY_CI(ci, mi);
++		for (i = 0; i < 3; i++) {
++			ci->pathnames[i] = fullpath;
++			ci->stages[i].mode = names[i].mode;
++			oidcpy(&ci->stages[i].oid, &names[i].oid);
++		}
++		ci->filemask = filemask;
++		ci->dirmask = dirmask;
++		ci->df_conflict = !!df_conflict;
++		if (dirmask)
++			/*
++			 * Assume is_null for now, but if we have entries
++			 * under the directory then when it is complete in
++			 * write_completed_directory() it'll update this.
++			 * Also, for D/F conflicts, we have to handle the
++			 * directory first, then clear this bit and process
++			 * the file to see how it is handled -- that occurs
++			 * near the top of process_entry().
++			 */
++			mi->is_null = 1;
++	}
++	strmap_put(&opt->priv->paths, fullpath, mi);
++	result->string = fullpath;
++	result->util = mi;
++}
++
+ static int collect_merge_info_callback(int n,
+ 				       unsigned long mask,
+ 				       unsigned long dirmask,
+@@ -188,10 +267,12 @@ static int collect_merge_info_callback(int n,
+ 	 */
+ 	struct merge_options *opt = info->data;
+ 	struct merge_options_internal *opti = opt->priv;
+-	struct conflict_info *ci;
++	struct string_list_item pi;  /* Path Info */
++	struct conflict_info *ci; /* typed alias to pi.util (which is void*) */
+ 	struct name_entry *p;
+ 	size_t len;
+ 	char *fullpath;
++	const char *dirname = opti->current_dir_name;
+ 	unsigned filemask = mask & ~dirmask;
+ 	unsigned match_mask = 0; /* will be updated below */
+ 	unsigned mbase_null = !(mask & 1);
+@@ -260,13 +341,15 @@ static int collect_merge_info_callback(int n,
+ 	make_traverse_path(fullpath, len + 1, info, p->path, p->pathlen);
+ 
+ 	/*
+-	 * TODO: record information about the path other than all zeros,
+-	 * so we can resolve later in process_entries.
++	 * Record information about the path so we can resolve later in
++	 * process_entries.
+ 	 */
+-	ci = xcalloc(1, sizeof(struct conflict_info));
+-	ci->df_conflict = df_conflict;
++	setup_path_info(opt, &pi, dirname, info->pathlen, fullpath,
++			names, NULL, 0, df_conflict, filemask, dirmask, 0);
++
++	ci = pi.util;
++	VERIFY_CI(ci);
+ 	ci->match_mask = match_mask;
+-	strmap_put(&opti->paths, fullpath, ci);
+ 
+ 	/* If dirmask, recurse into subdirectories */
+ 	if (dirmask) {
+@@ -310,7 +393,7 @@ static int collect_merge_info_callback(int n,
+ 		}
+ 
+ 		original_dir_name = opti->current_dir_name;
+-		opti->current_dir_name = fullpath;
++		opti->current_dir_name = pi.string;
+ 		ret = traverse_trees(NULL, 3, t, &newinfo);
+ 		opti->current_dir_name = original_dir_name;
+ 
 -- 
 gitgitgadget
 
