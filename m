@@ -4,186 +4,175 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE1B5C3E8C5
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E059FC64E7C
 	for <git@archiver.kernel.org>; Sun, 29 Nov 2020 07:44:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 66E1E2078D
+	by mail.kernel.org (Postfix) with ESMTP id 95E912080C
 	for <git@archiver.kernel.org>; Sun, 29 Nov 2020 07:44:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hu2LR1LB"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WHnwOmxm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725939AbgK2HoH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 Nov 2020 02:44:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47186 "EHLO
+        id S1726661AbgK2HoY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Nov 2020 02:44:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725830AbgK2HoH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Nov 2020 02:44:07 -0500
+        with ESMTP id S1725830AbgK2HoJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Nov 2020 02:44:09 -0500
 Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9538FC0613D1
-        for <git@vger.kernel.org>; Sat, 28 Nov 2020 23:43:26 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id r3so10836111wrt.2
-        for <git@vger.kernel.org>; Sat, 28 Nov 2020 23:43:26 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 252CAC0613D4
+        for <git@vger.kernel.org>; Sat, 28 Nov 2020 23:43:29 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id 23so10824823wrc.8
+        for <git@vger.kernel.org>; Sat, 28 Nov 2020 23:43:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=TzA4pPq7gC4BoLSbF7Td4y/k0iFWy9Wdrvl1GzecrsA=;
-        b=hu2LR1LBdmQmFe/KwIcQH2bnBMR8ffd3ZZpxaAiWTY89VBMAnRy67No3mu9etkwXNU
-         imAkwYuJ2kanlSKEF2qSDZptCLD5GP1z6pAqUvDw8SL1UaK4YZN9EjIOiDj5m1OEtmvW
-         VtYrfwIk2bQwRKBZR0hh0qeHdIUbn7Ma4bmKvvjlVSOZ+HpPrHX8gxOZrS9mwNFIWxmi
-         Vp0VTlsgS2xL/0V+dVqa7+3sVzz94ep9zGjeeE7a7zFi5GSVBi5NRIOU2sbS5Jv85HzS
-         BrEt8LzGPTPd8cxhvfCUP0Dxl8J3XdB0N/eTplJki9lNZWV1ffKjnwV6Am+JGr0xkBTf
-         63yQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=4d6geiWr0GOYAu9feXFM09HfSTtPef86PNI0FJUU0gk=;
+        b=WHnwOmxmQ6A6tX8Ailg3LYDpPQR3hfpfNWnZ48j+56Wngtj7yZzd9rqCHGrEtHiHA+
+         ++R8Vf3YyC9WbpUu2lfJ9M6VWHw9XvSqxrDJitDNvjsLqoXlt+npLCYlvR8d2P1z8gig
+         aJdlteLmfrb4NkrYeiPAyNW/ZsKIlbIDSmw9nbA4eCuI5vok88MQAl9VvOyyXZvvneYX
+         AEziC8NICYX8M+7A7p6aCqyKmqSwnN1YkuSQqZNuxwgigtndlML8cdjGNVgP4MO3pOp+
+         bS2ToPHWivZTL3zj56HQd1TG/HhOzmYXz8ZOLaLUg5LF4Bc80MJHjlClgp9fDhpWBTuU
+         7nVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=TzA4pPq7gC4BoLSbF7Td4y/k0iFWy9Wdrvl1GzecrsA=;
-        b=NydvXS1YdTKcwyFeIZE8sbmTKfhCs2wx3pyN2lfOavdoXsoUdIm+pv+wG/ngEOzuna
-         muaBmMtziC55X5FZvCCYl2383kEbloVU0BtKQM9nyBgRwfhDe0MXhMIFsQahdZljA44a
-         i+oxlm19J8WW/7HjAyMaf2JFbA7AhKUWlzdhlOGPysRC2xUaTwLyIVKLhdlf+QZ+uoND
-         NnCGo6vPZEYFma97iQLX6Npg6Cph4DSp5Oy7UIC7/EyMUTiW/rxwcuDKhFjY0u0SQA6w
-         OyBAQUpfCwk1i2aGoB/93rKQw+mmrLN+17wX6+sZviP1Yhf5w7ybDjpGmqP/Gs9xfwrU
-         FmAg==
-X-Gm-Message-State: AOAM530xmAFnVGvPNU0G7HAAUGuI6MV6Jx8XzWq/w8ndyJiTB0lIxlUb
-        3Hc+wJJWCCVZqgzq8WBV20IO95JLzgE=
-X-Google-Smtp-Source: ABdhPJwQ/qVZd1ry0HlsFzSkQwOB/rKYkUowNXTWm8v+6v55eTdFhV5YP6zxY2htCiUqtNhdyNS1pw==
-X-Received: by 2002:adf:a3c1:: with SMTP id m1mr21683617wrb.28.1606635805037;
-        Sat, 28 Nov 2020 23:43:25 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=4d6geiWr0GOYAu9feXFM09HfSTtPef86PNI0FJUU0gk=;
+        b=ILCvo2w4oUHdQHkalscYOiTq1iJkw9DzD+9TwhnsNqI/fIEcYPiHGiQfUxMVO9iR40
+         NSkvmA4zpVWOOeOTgrIHCaeE8AoB58o2hgug167gLRYnxIkFFTPZ+ubMcvOtuy3a9bZw
+         rN/sGzoY9AV3EWB+sgY0SmUQKLkIjD/hJ8BAZQ9tR0JQH26m0nKrE6oI714v8p+QWaVC
+         7o/GcQWUqnakM2XGZiPy5LyfykC4jVi2QCMEsCO6uSkAWiW0DAhgA+Qk9outUNsoyR02
+         wk3vxK3+Wf6wpqonLm6LkY++SIrHBoYekNbvFhL+uQs3XoBmvYqMgcztkLhy07PBzAp0
+         cYTA==
+X-Gm-Message-State: AOAM532PBWgY0wKxA+MDqZaTvxiFNEIXbGrq/pbJ+jqU/BlaunnrbxG2
+        a1hev47WyZdFviEU3zXjNht76QcI19k=
+X-Google-Smtp-Source: ABdhPJx1hy6oBR+veGhT45JuKvaHI9C4hbTxM0x2da2FHPceyaklRYu2oG2wC1UtjEe2zY6d3ELF3g==
+X-Received: by 2002:adf:eb05:: with SMTP id s5mr7975883wrn.333.1606635807619;
+        Sat, 28 Nov 2020 23:43:27 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j13sm16343009wrp.70.2020.11.28.23.43.24
+        by smtp.gmail.com with ESMTPSA id b73sm36656152wmb.0.2020.11.28.23.43.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Nov 2020 23:43:24 -0800 (PST)
-Message-Id: <pull.923.git.git.1606635803.gitgitgadget@gmail.com>
+        Sat, 28 Nov 2020 23:43:27 -0800 (PST)
+Message-Id: <5615f0eecb49a7605d316b71fc1c89229c0277f4.1606635803.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.923.git.git.1606635803.gitgitgadget@gmail.com>
+References: <pull.923.git.git.1606635803.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 29 Nov 2020 07:43:03 +0000
-Subject: [PATCH 00/20] fundamentals of merge-ort implementation
+Date:   Sun, 29 Nov 2020 07:43:06 +0000
+Subject: [PATCH 03/20] merge-ort: port merge_start() from merge-recursive
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is actually v3 of this series; but v2 depended on two topics that
-hadn't graduated yet so I couldn't easily use gitgitgadget and get its
-testing. Now that the topics have graduated, I have rebased on master. You
-can see v2 and comments on it over here: 
-https://lore.kernel.org/git/20201102204344.342633-1-newren@gmail.com/
+From: Elijah Newren <newren@gmail.com>
 
-The goal of this series is to show the new design and structure behind
-merge-ort, particularly the bits that are completely different to how
-merge-recursive operates. There are still multiple important codepaths that
-die with a "Not yet implemented" message, so the new merge algorithm is
-still not very usable. However, it can handle very trivial rebases or
-cherry-picks at the end of the series, and the number of test failures when
-run under GIT_TEST_MERGE_ALGORITHM=ort drops from 2281 down to 1453.
+merge_start() basically does a bunch of sanity checks, then allocates
+and initializes opt->priv -- a struct merge_options_internal.
 
-At a high level, merge-ort avoids unpack_trees() and the index, instead
-using traverse_trees() and its own data structure. After it is done
-processing each path, it writes a tree. Only after it has created a new tree
-will it touch the working copy or the index. It does so by using a simple
-checkout-like step to switch from head to the newly created tree. If there
-are conflicted entries, it touches up the index after the checkout-like step
-to record those higher order stages.
+Most of the sanity checks are usable as-is.  The
+allocation/intialization is a bit different since merge-ort has a very
+different merge_options_internal than merge-recursive, but the idea is
+the same.
 
-In the series:
+The weirdest part here is that merge-ort and merge-recursive use the
+same struct merge_options, even though merge_options has a number of
+fields that are oddly specific to merge-recursive's internal
+implementation and don't even make sense with merge-ort's high-level
+design (e.g. buffer_output, which merge-ort has to always do).  I reused
+the same data structure because:
+  * most the fields made sense to both merge algorithms
+  * making a new struct would have required making new enums or somehow
+    externalizing them, and that was getting messy.
+  * it simplifies converting the existing callers by not having to
+    have different code paths for merge_options setup.
 
- * Patch 1 adds some basic data structures.
- * Patch 2 documents the high-level steps.
- * Patches 3-5 are some simple setup.
- * Patches 6-10 collect data from the traverse_trees() operation.
- * Patches 11-15 process the individual paths and create a tree.
- * Patches 16-19 handle checkout-and-then-write-higher-order-stages.
- * Patch 20 frees data from the merge_options_internal data structure
+I also marked detect_renames as ignored.  We can revisit that later, but
+in short: merge-recursive allowed turning off rename detection because
+it was sometimes glacially slow.  When you speed something up by a few
+orders of magnitude, it's worth revisiting whether that justification is
+still relevant.  Besides, if folks find it's still too slow, perhaps
+they have a better scaling case than I could find and maybe it turns up
+some more optimizations we can add.  If it still is needed as an option,
+it is easy to add later.
 
-Changes since v2 (Thanks to Stolee and Jonathan Tan for their excellent and
-detailed reviews!):
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ merge-ort.c | 45 ++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 44 insertions(+), 1 deletion(-)
 
- * Add thorough code comments to data structures, to try to answer multiple
-   questions the reviewers brought up.
- * Add comments in various areas of the code that were a bit tricky.
- * As per Stolee's request/suggestion, restructured accesses to
-   conflict_info* to make the code document that we
- * As per Jonathan's suggestion, restructured tree writing to have
-   "END_TREE" markers for directories -- namely, the directory itself.
- * Removed path_conflict field (will add it back in a later series when it
-   is actually used)
- * Improved requested commit messages
- * Settled on "conflicted" instead of mix of "conflicted" and "unmerged"
- * Fixed various typos, missing words, etc.
- * Fixed various spaces around operators, missing blank lines, etc.
- * Some other small tweaks I probably forgot or overlooked while typing up
-   this summary.
-
-Things for reviewers to concentrate on:
-
- * Patch 1: I added lots of comments describing the data structures, based
-   on reviewer questions/comments. Are they clear?
- * Patch 9: Stolee was worried about the allocation of merged_info OR
-   conflict_info and whether we were safely accessing the fields. Since this
-   is our primary and largest data structure and many times most entries
-   only need a smaller merged_info, I really do want the space savings of
-   not always allocating the larger type. I typically access as a
-   merged_info* now, and added some accessor macros to document why each
-   access as a conflict_info* is okay. Does this seem like a good solution
-   to the concern? 
- * Patch 15: Jonathan felt the previous version of this patch was hard to
-   follow. I've restructured so that we process the directories in
-   opt->priv->paths directly; you can kind of view them as non-synthetic
-   end-of-tree markers. They may not stand out as such, though (since they
-   aren't synthetic with special names or handling), so I've added some
-   pretty big comments to explain things. Does this address concerns?
- * Patches 16-20: these have not yet been reviewed, though these are easier
-   patches to review than many of the first 15! A quick guide: * Patches 16,
-      18, and 20 are very straightforward; patches 17 and 19 are the ones
-      that would benefit more from review.
-    * Patch 17 is
-      basically the twoway_merge subset of merge_working_tree() from
-      builtin/checkout.c. Find that bit of code and it's a direct
-      comparison.
-    * Patch 19
-      amounts to "how do I remove stage 0 entries in the index and replace
-      them with 1-3 higher order stages?".
-
-Elijah Newren (20):
-  merge-ort: setup basic internal data structures
-  merge-ort: add some high-level algorithm structure
-  merge-ort: port merge_start() from merge-recursive
-  merge-ort: use histogram diff
-  merge-ort: add an err() function similar to one from merge-recursive
-  merge-ort: implement a very basic collect_merge_info()
-  merge-ort: avoid repeating fill_tree_descriptor() on the same tree
-  merge-ort: compute a few more useful fields for collect_merge_info
-  merge-ort: record stage and auxiliary info for every path
-  merge-ort: avoid recursing into identical trees
-  merge-ort: add a preliminary simple process_entries() implementation
-  merge-ort: have process_entries operate in a defined order
-  merge-ort: step 1 of tree writing -- record basenames, modes, and oids
-  merge-ort: step 2 of tree writing -- function to create tree object
-  merge-ort: step 3 of tree writing -- handling subdirectories as we go
-  merge-ort: basic outline for merge_switch_to_result()
-  merge-ort: add implementation of checkout()
-  tree: enable cmp_cache_name_compare() to be used elsewhere
-  merge-ort: add implementation of record_conflicted_index_entries()
-  merge-ort: free data structures in merge_finalize()
-
- merge-ort.c | 1207 ++++++++++++++++++++++++++++++++++++++++++++++++++-
- tree.c      |    2 +-
- tree.h      |    2 +
- 3 files changed, 1207 insertions(+), 4 deletions(-)
-
-
-base-commit: e67fbf927dfdf13d0b21dc6ea15dc3c7ef448ea0
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-923%2Fnewren%2Fort-basics-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-923/newren/ort-basics-v1
-Pull-Request: https://github.com/git/git/pull/923
+diff --git a/merge-ort.c b/merge-ort.c
+index 97ef2276bd..3581a7d278 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -17,6 +17,8 @@
+ #include "cache.h"
+ #include "merge-ort.h"
+ 
++#include "diff.h"
++#include "diffcore.h"
+ #include "strmap.h"
+ #include "tree.h"
+ 
+@@ -204,7 +206,48 @@ void merge_finalize(struct merge_options *opt,
+ 
+ static void merge_start(struct merge_options *opt, struct merge_result *result)
+ {
+-	die("Not yet implemented.");
++	/* Sanity checks on opt */
++	assert(opt->repo);
++
++	assert(opt->branch1 && opt->branch2);
++
++	assert(opt->detect_directory_renames >= MERGE_DIRECTORY_RENAMES_NONE &&
++	       opt->detect_directory_renames <= MERGE_DIRECTORY_RENAMES_TRUE);
++	assert(opt->rename_limit >= -1);
++	assert(opt->rename_score >= 0 && opt->rename_score <= MAX_SCORE);
++	assert(opt->show_rename_progress >= 0 && opt->show_rename_progress <= 1);
++
++	assert(opt->xdl_opts >= 0);
++	assert(opt->recursive_variant >= MERGE_VARIANT_NORMAL &&
++	       opt->recursive_variant <= MERGE_VARIANT_THEIRS);
++
++	/*
++	 * detect_renames, verbosity, buffer_output, and obuf are ignored
++	 * fields that were used by "recursive" rather than "ort" -- but
++	 * sanity check them anyway.
++	 */
++	assert(opt->detect_renames >= -1 &&
++	       opt->detect_renames <= DIFF_DETECT_COPY);
++	assert(opt->verbosity >= 0 && opt->verbosity <= 5);
++	assert(opt->buffer_output <= 2);
++	assert(opt->obuf.len == 0);
++
++	assert(opt->priv == NULL);
++
++	/* Initialization of opt->priv, our internal merge data */
++	opt->priv = xcalloc(1, sizeof(*opt->priv));
++
++	/*
++	 * Although we initialize opt->priv->paths with strdup_strings=0,
++	 * that's just to avoid making yet another copy of an allocated
++	 * string.  Putting the entry into paths means we are taking
++	 * ownership, so we will later free it.
++	 *
++	 * In contrast, conflicted just has a subset of keys from paths, so
++	 * we don't want to free those (it'd be a duplicate free).
++	 */
++	strmap_init_with_options(&opt->priv->paths, NULL, 0);
++	strmap_init_with_options(&opt->priv->conflicted, NULL, 0);
+ }
+ 
+ /*
 -- 
 gitgitgadget
+
