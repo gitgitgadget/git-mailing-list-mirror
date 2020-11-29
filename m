@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E059FC64E7C
-	for <git@archiver.kernel.org>; Sun, 29 Nov 2020 07:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C5E5C64E7D
+	for <git@archiver.kernel.org>; Sun, 29 Nov 2020 07:44:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 95E912080C
+	by mail.kernel.org (Postfix) with ESMTP id BCB8C20855
 	for <git@archiver.kernel.org>; Sun, 29 Nov 2020 07:44:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WHnwOmxm"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LkrcK+8E"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726661AbgK2HoY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 Nov 2020 02:44:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47200 "EHLO
+        id S1726472AbgK2HoI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Nov 2020 02:44:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725830AbgK2HoJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Nov 2020 02:44:09 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 252CAC0613D4
-        for <git@vger.kernel.org>; Sat, 28 Nov 2020 23:43:29 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id 23so10824823wrc.8
-        for <git@vger.kernel.org>; Sat, 28 Nov 2020 23:43:29 -0800 (PST)
+        with ESMTP id S1725830AbgK2HoI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Nov 2020 02:44:08 -0500
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AC33C0613D3
+        for <git@vger.kernel.org>; Sat, 28 Nov 2020 23:43:28 -0800 (PST)
+Received: by mail-wr1-x441.google.com with SMTP id u12so10846537wrt.0
+        for <git@vger.kernel.org>; Sat, 28 Nov 2020 23:43:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4d6geiWr0GOYAu9feXFM09HfSTtPef86PNI0FJUU0gk=;
-        b=WHnwOmxmQ6A6tX8Ailg3LYDpPQR3hfpfNWnZ48j+56Wngtj7yZzd9rqCHGrEtHiHA+
-         ++R8Vf3YyC9WbpUu2lfJ9M6VWHw9XvSqxrDJitDNvjsLqoXlt+npLCYlvR8d2P1z8gig
-         aJdlteLmfrb4NkrYeiPAyNW/ZsKIlbIDSmw9nbA4eCuI5vok88MQAl9VvOyyXZvvneYX
-         AEziC8NICYX8M+7A7p6aCqyKmqSwnN1YkuSQqZNuxwgigtndlML8cdjGNVgP4MO3pOp+
-         bS2ToPHWivZTL3zj56HQd1TG/HhOzmYXz8ZOLaLUg5LF4Bc80MJHjlClgp9fDhpWBTuU
-         7nVg==
+        bh=tIc/yVjj5JkzkP94oZThu+8Obk4wAdjeVxslrCVvI4E=;
+        b=LkrcK+8E4LczdveRZv/b0wA4u+67Yr/v5n/6YnujYULCxX46AX/uCC+veVuI3aIA2s
+         bvIjQUl9RWgfNJsYX6hCyOqvY/N/np2ZPNSM33Znv18/sedXvrW/a8pnARYi1hErVaLM
+         MQve0rylkF2Okh4LRX96NvCRmXriRrXMWGNgbOVu/+584dnjav2pv//wJAcqJHZ0EhoH
+         ANUpLUZIXZOfmF/eTyqnQdXbFaDcEoBJFg5bT54kPJgCSmoajtguLEPvLC05e1xJ3D1I
+         ST2TzH8ynZdnlex132sFhCyy53G5cwTkJvQ7W5dnmKp7GDjoRdPqzQzAtkuK5hhz0MP7
+         /yAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4d6geiWr0GOYAu9feXFM09HfSTtPef86PNI0FJUU0gk=;
-        b=ILCvo2w4oUHdQHkalscYOiTq1iJkw9DzD+9TwhnsNqI/fIEcYPiHGiQfUxMVO9iR40
-         NSkvmA4zpVWOOeOTgrIHCaeE8AoB58o2hgug167gLRYnxIkFFTPZ+ubMcvOtuy3a9bZw
-         rN/sGzoY9AV3EWB+sgY0SmUQKLkIjD/hJ8BAZQ9tR0JQH26m0nKrE6oI714v8p+QWaVC
-         7o/GcQWUqnakM2XGZiPy5LyfykC4jVi2QCMEsCO6uSkAWiW0DAhgA+Qk9outUNsoyR02
-         wk3vxK3+Wf6wpqonLm6LkY++SIrHBoYekNbvFhL+uQs3XoBmvYqMgcztkLhy07PBzAp0
-         cYTA==
-X-Gm-Message-State: AOAM532PBWgY0wKxA+MDqZaTvxiFNEIXbGrq/pbJ+jqU/BlaunnrbxG2
-        a1hev47WyZdFviEU3zXjNht76QcI19k=
-X-Google-Smtp-Source: ABdhPJx1hy6oBR+veGhT45JuKvaHI9C4hbTxM0x2da2FHPceyaklRYu2oG2wC1UtjEe2zY6d3ELF3g==
-X-Received: by 2002:adf:eb05:: with SMTP id s5mr7975883wrn.333.1606635807619;
-        Sat, 28 Nov 2020 23:43:27 -0800 (PST)
+        bh=tIc/yVjj5JkzkP94oZThu+8Obk4wAdjeVxslrCVvI4E=;
+        b=Mprvj2NdrLkKLXL/dhQwQCi8KjVJ2NS0m1hcCJN4Og5koFlsuVOJEFMaI0Eep7nNR5
+         /OW+kK92ReXl0KpNkI9zQMaE8CFuMMleoHrUHbpUumVE4IHPBB392IAPBkPiGSZfqZ9J
+         EaXdzzXE3pb6Nq5QYDtHOtOTB/Geud7khc+OyjevWRKrMfeJx51Wr/H2lyNCl4v4TF59
+         DleJ0HtcKLpbWxVetPHtrHyDN17ivy8M07Ioixboh1Ljl5x39evDuNv0M70Mt8BKaDoF
+         fWrHZWXXuOHZu5HJJA6MW+hS4ag9SmodJmEqE5Rwsml2stz3P7Y4jV1TVr7BbCLlhe1d
+         oPJQ==
+X-Gm-Message-State: AOAM533P5J14R1Qen8MG2C1HXoAHqLUWQj6PZoNFtCXGqw2Rj+bnsacZ
+        +8D7AtFd0f1lockziHBRwc0N1HKlnKo=
+X-Google-Smtp-Source: ABdhPJzgyZqD9KPi0XjiP5EAP/ZJslX1UsG8jKZTYzgZW8WqigSBU+IJJLfCIEtZYv/xxsY47tcPhQ==
+X-Received: by 2002:adf:e84e:: with SMTP id d14mr20349540wrn.190.1606635806806;
+        Sat, 28 Nov 2020 23:43:26 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b73sm36656152wmb.0.2020.11.28.23.43.27
+        by smtp.gmail.com with ESMTPSA id d16sm24236451wrw.17.2020.11.28.23.43.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Nov 2020 23:43:27 -0800 (PST)
-Message-Id: <5615f0eecb49a7605d316b71fc1c89229c0277f4.1606635803.git.gitgitgadget@gmail.com>
+        Sat, 28 Nov 2020 23:43:26 -0800 (PST)
+Message-Id: <3a063865c39f9d1d03acc0cda9023811007d92b5.1606635803.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.923.git.git.1606635803.gitgitgadget@gmail.com>
 References: <pull.923.git.git.1606635803.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 29 Nov 2020 07:43:06 +0000
-Subject: [PATCH 03/20] merge-ort: port merge_start() from merge-recursive
+Date:   Sun, 29 Nov 2020 07:43:05 +0000
+Subject: [PATCH 02/20] merge-ort: add some high-level algorithm structure
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,103 +76,131 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-merge_start() basically does a bunch of sanity checks, then allocates
-and initializes opt->priv -- a struct merge_options_internal.
+merge_ort_nonrecursive_internal() will be used by both
+merge_inmemory_nonrecursive() and merge_inmemory_recursive(); let's
+focus on it for now.  It involves some setup -- merge_start() --
+followed by the following chain of functions:
 
-Most of the sanity checks are usable as-is.  The
-allocation/intialization is a bit different since merge-ort has a very
-different merge_options_internal than merge-recursive, but the idea is
-the same.
+  collect_merge_info()
+    This function will populate merge_options_internal's paths field,
+    via a call to traverse_trees() and a new callback that will be added
+    later.
 
-The weirdest part here is that merge-ort and merge-recursive use the
-same struct merge_options, even though merge_options has a number of
-fields that are oddly specific to merge-recursive's internal
-implementation and don't even make sense with merge-ort's high-level
-design (e.g. buffer_output, which merge-ort has to always do).  I reused
-the same data structure because:
-  * most the fields made sense to both merge algorithms
-  * making a new struct would have required making new enums or somehow
-    externalizing them, and that was getting messy.
-  * it simplifies converting the existing callers by not having to
-    have different code paths for merge_options setup.
+  detect_and_process_renames()
+    This function will detect renames, and then adjust entries in paths
+    to move conflict stages from old pathnames into those for new
+    pathnames, so that the next step doesn't have to think about renames
+    and just can do three-way content merging and such.
 
-I also marked detect_renames as ignored.  We can revisit that later, but
-in short: merge-recursive allowed turning off rename detection because
-it was sometimes glacially slow.  When you speed something up by a few
-orders of magnitude, it's worth revisiting whether that justification is
-still relevant.  Besides, if folks find it's still too slow, perhaps
-they have a better scaling case than I could find and maybe it turns up
-some more optimizations we can add.  If it still is needed as an option,
-it is easy to add later.
+  process_entries()
+    This function determines how to take the various stages (versions of
+    a file from the three different sides) and merge them, and whether
+    to mark the result as conflicted or cleanly merged.  It also writes
+    out these merged file versions as it goes to create a tree.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 45 ++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 44 insertions(+), 1 deletion(-)
+ merge-ort.c | 67 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 66 insertions(+), 1 deletion(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 97ef2276bd..3581a7d278 100644
+index bb37fdf838..97ef2276bd 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -17,6 +17,8 @@
- #include "cache.h"
+@@ -18,6 +18,7 @@
  #include "merge-ort.h"
  
-+#include "diff.h"
-+#include "diffcore.h"
  #include "strmap.h"
- #include "tree.h"
++#include "tree.h"
  
-@@ -204,7 +206,48 @@ void merge_finalize(struct merge_options *opt,
+ struct merge_options_internal {
+ 	/*
+@@ -154,6 +155,37 @@ struct conflict_info {
+ 	unsigned match_mask:3;
+ };
  
- static void merge_start(struct merge_options *opt, struct merge_result *result)
- {
--	die("Not yet implemented.");
-+	/* Sanity checks on opt */
-+	assert(opt->repo);
++static int collect_merge_info(struct merge_options *opt,
++			      struct tree *merge_base,
++			      struct tree *side1,
++			      struct tree *side2)
++{
++	die("Not yet implemented.");
++}
 +
-+	assert(opt->branch1 && opt->branch2);
-+
-+	assert(opt->detect_directory_renames >= MERGE_DIRECTORY_RENAMES_NONE &&
-+	       opt->detect_directory_renames <= MERGE_DIRECTORY_RENAMES_TRUE);
-+	assert(opt->rename_limit >= -1);
-+	assert(opt->rename_score >= 0 && opt->rename_score <= MAX_SCORE);
-+	assert(opt->show_rename_progress >= 0 && opt->show_rename_progress <= 1);
-+
-+	assert(opt->xdl_opts >= 0);
-+	assert(opt->recursive_variant >= MERGE_VARIANT_NORMAL &&
-+	       opt->recursive_variant <= MERGE_VARIANT_THEIRS);
++static int detect_and_process_renames(struct merge_options *opt,
++				      struct tree *merge_base,
++				      struct tree *side1,
++				      struct tree *side2)
++{
++	int clean = 1;
 +
 +	/*
-+	 * detect_renames, verbosity, buffer_output, and obuf are ignored
-+	 * fields that were used by "recursive" rather than "ort" -- but
-+	 * sanity check them anyway.
-+	 */
-+	assert(opt->detect_renames >= -1 &&
-+	       opt->detect_renames <= DIFF_DETECT_COPY);
-+	assert(opt->verbosity >= 0 && opt->verbosity <= 5);
-+	assert(opt->buffer_output <= 2);
-+	assert(opt->obuf.len == 0);
-+
-+	assert(opt->priv == NULL);
-+
-+	/* Initialization of opt->priv, our internal merge data */
-+	opt->priv = xcalloc(1, sizeof(*opt->priv));
-+
-+	/*
-+	 * Although we initialize opt->priv->paths with strdup_strings=0,
-+	 * that's just to avoid making yet another copy of an allocated
-+	 * string.  Putting the entry into paths means we are taking
-+	 * ownership, so we will later free it.
++	 * Rename detection works by detecting file similarity.  Here we use
++	 * a really easy-to-implement scheme: files are similar IFF they have
++	 * the same filename.  Therefore, by this scheme, there are no renames.
 +	 *
-+	 * In contrast, conflicted just has a subset of keys from paths, so
-+	 * we don't want to free those (it'd be a duplicate free).
++	 * TODO: Actually implement a real rename detection scheme.
 +	 */
-+	strmap_init_with_options(&opt->priv->paths, NULL, 0);
-+	strmap_init_with_options(&opt->priv->conflicted, NULL, 0);
++	return clean;
++}
++
++static void process_entries(struct merge_options *opt,
++			    struct object_id *result_oid)
++{
++	die("Not yet implemented.");
++}
++
+ void merge_switch_to_result(struct merge_options *opt,
+ 			    struct tree *head,
+ 			    struct merge_result *result,
+@@ -170,13 +202,46 @@ void merge_finalize(struct merge_options *opt,
+ 	die("Not yet implemented");
  }
  
- /*
++static void merge_start(struct merge_options *opt, struct merge_result *result)
++{
++	die("Not yet implemented.");
++}
++
++/*
++ * Originally from merge_trees_internal(); heavily adapted, though.
++ */
++static void merge_ort_nonrecursive_internal(struct merge_options *opt,
++					    struct tree *merge_base,
++					    struct tree *side1,
++					    struct tree *side2,
++					    struct merge_result *result)
++{
++	struct object_id working_tree_oid;
++
++	collect_merge_info(opt, merge_base, side1, side2);
++	result->clean = detect_and_process_renames(opt, merge_base,
++						   side1, side2);
++	process_entries(opt, &working_tree_oid);
++
++	/* Set return values */
++	result->tree = parse_tree_indirect(&working_tree_oid);
++	/* existence of conflicted entries implies unclean */
++	result->clean &= strmap_empty(&opt->priv->conflicted);
++	if (!opt->priv->call_depth) {
++		result->priv = opt->priv;
++		opt->priv = NULL;
++	}
++}
++
+ void merge_incore_nonrecursive(struct merge_options *opt,
+ 			       struct tree *merge_base,
+ 			       struct tree *side1,
+ 			       struct tree *side2,
+ 			       struct merge_result *result)
+ {
+-	die("Not yet implemented");
++	assert(opt->ancestor != NULL);
++	merge_start(opt, result);
++	merge_ort_nonrecursive_internal(opt, merge_base, side1, side2, result);
+ }
+ 
+ void merge_incore_recursive(struct merge_options *opt,
 -- 
 gitgitgadget
 
