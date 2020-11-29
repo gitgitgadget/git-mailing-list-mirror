@@ -8,63 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9ADE7C83017
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70027C83014
 	for <git@archiver.kernel.org>; Sun, 29 Nov 2020 07:45:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6389820809
+	by mail.kernel.org (Postfix) with ESMTP id 3DCE32078D
 	for <git@archiver.kernel.org>; Sun, 29 Nov 2020 07:45:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sb3MJTCs"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vIRsnKTT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727050AbgK2HpC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 Nov 2020 02:45:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47302 "EHLO
+        id S1727068AbgK2HpD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Nov 2020 02:45:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726021AbgK2HpC (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726669AbgK2HpC (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 29 Nov 2020 02:45:02 -0500
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA3A1C061A53
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F06D9C061A54
         for <git@vger.kernel.org>; Sat, 28 Nov 2020 23:43:39 -0800 (PST)
-Received: by mail-wm1-x343.google.com with SMTP id k10so5763058wmi.3
+Received: by mail-wr1-x443.google.com with SMTP id 64so10808657wra.11
         for <git@vger.kernel.org>; Sat, 28 Nov 2020 23:43:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=SxD6GYPL287a7bMQwLJr0FJjpCh//Ag9+xFuDJAjJNE=;
-        b=sb3MJTCs834zk58a0YRuEVwtDdDpHHV6/fiPxB5nY8Rd8Ba8opFWUYyOeA5p9UnVIe
-         Ad+PqQmYxvdHK8BH77Jwhyg+9AiifwyJlPPnZY54MXGZ+0SCH/M57JnKcDSYsZU+bkcQ
-         jGvm0bOGe5YXKrVgFMgx2BwZHErk+KR+N3KAm31rSbT6sK6SjJcWp2kgdbJzzrwEiI8z
-         EL7eUQ3biQ4WRqgp0cqz3rX39YhO3m64Bl7fvGsXLI7vBAOCH31ExJ4ZXK6Tz4kgDMX/
-         09JYqJNxM3fprXb6zGDvSQSXR4C+lQT97bDhKxneu1Bi+AC4KLB6ZjpCGOqIfqBPefME
-         CRwQ==
+        bh=HAnw3NafiijmKfmnnIszEnLNjmX8+tY7kIWxaN1h+ko=;
+        b=vIRsnKTTRSjq1sjNUIRoaT8V3e/kptmdoyTA29180M/Pce4NrTgz653/5vNPIjizzG
+         8NJ5zRqVqmtGyrgCgg4yyemtza1cAZIFpFMcKnvnUp2XVdQgzlDF2fUAAUDm7EA4WR8E
+         YsEWpc6SzS4y6o9rUe96CuAhCyCYAKK6ojNqxRTOmJqb3qj3Vk+GSw/BbSmsudWh+mSB
+         wnqO5TgnbiDmrsgrdjlXocm2M/zpmCjuLy9bLm/5vt04LW1IxOIyTvKYZiODsZsYJbD6
+         Od2bfg2jhcRFSgXpf5s+YKhSSzEWsJ0hYROMB2sKJMHBgT+SzJOeREFXlXZn5AzEB2T4
+         OOtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=SxD6GYPL287a7bMQwLJr0FJjpCh//Ag9+xFuDJAjJNE=;
-        b=e3oQ/uYRhoZzRIrHHHHi4foWZxjD8W6HXHP/bal4V7sYO5PVC+De2e3AzRWNnHQyIQ
-         uUkF/R3SnxvvSMNrn8a4R9qPWSYhyYjKtq5nYA9DahsPgH9BeROe1uYYuetY/4Gmxl35
-         VgpTNTmu/u9kbuHW4F4fYuaayBiXp7+7oaSJcx0Tx616XVrlHSaIYR3JHLpeQq61CeNu
-         aty+SSI5aIM5dfublyLreQRa+GHlz29wi81Meeha9BIzbwM8e1/2dqn9j+BjYo37cojJ
-         xTTuuevdHPlhKtB9lX053KyEIf++r0D7SLkk+vIHhmQsU3O2C+lgnFANywqYgwnNPRoB
-         HVaQ==
-X-Gm-Message-State: AOAM530OQSyFr5GIzqPm3tND4j87kHcgkeOoRb/thYRunPoiMfagrsxt
-        f7fSUqxbiYsJpFnTtkx6oBYQVj9B8ag=
-X-Google-Smtp-Source: ABdhPJy3gSYnCglfdnATKFnBndZq+eroxSnjzRQ0DEfcv9v4WSkH8+713Wqp23PBnFVQaABINI5z1w==
-X-Received: by 2002:a1c:2203:: with SMTP id i3mr11929548wmi.6.1606635817821;
-        Sat, 28 Nov 2020 23:43:37 -0800 (PST)
+        bh=HAnw3NafiijmKfmnnIszEnLNjmX8+tY7kIWxaN1h+ko=;
+        b=SpMHZ6S3JzH8S3v/cnP0wT5J8O/QopwbcKf5f+DpIiISgBXrBxHOkBTcjeAMOXxph9
+         1zeb3hlQP5xlAjPAUg/9Us2gu34OYCJnO9/OUyn9wT3bb9D19stWC25dpS1KOJR4Zv9k
+         xf+xNPInTjNt2K68DjhT+TnnTUNnGJIeR7ndwobkMLgbeAnyP9vkQUGbvpjL2UfJ0zeN
+         Tq97irfxYUlOri7AFnOzw3aWeuFBsvhj9mYgWCDkSc8XwGY/QLAdXurnuo6FCFNg9GuO
+         aNLNhElgR2rxixvHG2oGSWvSbZBDjg7H9zEOn6wnwz/iHUtdaG6uRq3WTCGFgkIO3x0Y
+         g2Wg==
+X-Gm-Message-State: AOAM531Gc+X11hJB/ryrKS1fDsRhtdDQ+zEa3uVmKigPDs5zS33sMeck
+        Lk7UmFWcG8LJI7ZPdPf8VCfIyfubqJ0=
+X-Google-Smtp-Source: ABdhPJxgl7eMmrus0uSvK90zT++plr40k8UUcRr6PDXRKfp4jLHWlaoVnx/ORs/rS16ybrfwwCBqrg==
+X-Received: by 2002:a5d:474f:: with SMTP id o15mr20966952wrs.377.1606635818570;
+        Sat, 28 Nov 2020 23:43:38 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a18sm16217044wrr.20.2020.11.28.23.43.37
+        by smtp.gmail.com with ESMTPSA id s25sm19048289wmh.16.2020.11.28.23.43.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Nov 2020 23:43:37 -0800 (PST)
-Message-Id: <29615c366f46ced1a4b0a17d8e3ec570f60ec437.1606635803.git.gitgitgadget@gmail.com>
+        Sat, 28 Nov 2020 23:43:38 -0800 (PST)
+Message-Id: <da54fa454a4d966495fd5bb4982457938c285634.1606635803.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.923.git.git.1606635803.gitgitgadget@gmail.com>
 References: <pull.923.git.git.1606635803.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 29 Nov 2020 07:43:18 +0000
-Subject: [PATCH 15/20] merge-ort: step 3 of tree writing -- handling
- subdirectories as we go
+Date:   Sun, 29 Nov 2020 07:43:19 +0000
+Subject: [PATCH 16/20] merge-ort: basic outline for merge_switch_to_result()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,381 +76,74 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Our order for processing of entries means that if we have a tree of
-files that looks like
-   Makefile
-   src/moduleA/foo.c
-   src/moduleA/bar.c
-   src/moduleB/baz.c
-   src/moduleB/umm.c
-   tokens.txt
-
-Then we will process paths in the order of the leftmost column below.  I
-have added two additional columns that help explain the algorithm that
-follows; the 2nd column is there to remind us we have oid & mode info we
-are tracking for each of these paths (which differs between the paths
-which I'm not representing well here), and the third column annotates
-the parent directory of the entry:
-   tokens.txt               <version_info>    ""
-   src/moduleB/umm.c        <version_info>    src/moduleB
-   src/moduleB/baz.c        <version_info>    src/moduleB
-   src/moduleB              <version_info>    src
-   src/moduleA/foo.c        <version_info>    src/moduleA
-   src/moduleA/bar.c        <version_info>    src/moduleA
-   src/moduleA              <version_info>    src
-   src                      <version_info>    ""
-   Makefile                 <version_info>    ""
-
-When the parent directory changes, if it's a subdirectory of the previous
-parent directory (e.g. "" -> src/moduleB) then we can just keep appending.
-If the parent directory differs from the previous parent directory and is
-not a subdirectory, then we should process that directory.
-
-So, for example, when we get to this point:
-   tokens.txt               <version_info>    ""
-   src/moduleB/umm.c        <version_info>    src/moduleB
-   src/moduleB/baz.c        <version_info>    src/moduleB
-
-and note that the next entry (src/moduleB) has a different parent than
-the last one that isn't a subdirectory, we should write out a tree for it
-   100644 blob <HASH> umm.c
-   100644 blob <HASH> baz.c
-
-then pop all the entries under that directory while recording the new
-hash for that directory, leaving us with
-   tokens.txt               <version_info>        ""
-   src/moduleB              <new version_info>    src
-
-This process repeats until at the end we get to
-   tokens.txt               <version_info>        ""
-   src                      <new version_info>    ""
-   Makefile                 <version_info>        ""
-
-and then we can write out the toplevel tree.  Since we potentially have
-entries in our string_list corresponding to multiple different toplevel
-directories, e.g. a slightly different repository might have:
-   whizbang.txt             <version_info>        ""
-   tokens.txt               <version_info>        ""
-   src/moduleD              <new version_info>    src
-   src/moduleC              <new version_info>    src
-   src/moduleB              <new version_info>    src
-   src/moduleA/foo.c        <version_info>        src/moduleA
-   src/moduleA/bar.c        <version_info>        src/moduleA
-
-When src/moduleA is popped off, we need to know that the "last
-directory" reverts back to src, and how many entries in our string_list
-are associated with that parent directory.  So I use an auxiliary
-offsets string_list which would have (parent_directory,offset)
-information of the form
-   ""             0
-   src            2
-   src/moduleA    5
-
-Whenever I write out a tree for a subdirectory, I set versions.nr to
-the final offset value and then decrement offsets.nr...and then add
-an entry to versions with a hash for the new directory.
-
-The idea is relatively simple, there's just a lot of accounting to
-implement this.
+This adds a basic implementation for merge_switch_to_result(), though
+just in terms of a few new empty functions that will be defined in
+subsequent commits.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 242 ++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 234 insertions(+), 8 deletions(-)
+ merge-ort.c | 42 +++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 41 insertions(+), 1 deletion(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 59355de628..65dbdadc5e 100644
+index 65dbdadc5e..1ef32a4053 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -494,7 +494,46 @@ static int string_list_df_name_compare(const char *one, const char *two)
+@@ -933,13 +933,53 @@ static void process_entries(struct merge_options *opt,
+ 	string_list_clear(&dir_metadata.offsets, 0);
  }
  
- struct directory_versions {
-+	/*
-+	 * versions: list of (basename -> version_info)
-+	 *
-+	 * The basenames are in reverse lexicographic order of full pathnames,
-+	 * as processed in process_entries().  This puts all entries within
-+	 * a directory together, and covers the directory itself after
-+	 * everything within it, allowing us to write subtrees before needing
-+	 * to record information for the tree itself.
-+	 */
- 	struct string_list versions;
-+
-+	/*
-+	 * offsets: list of (full relative path directories -> integer offsets)
-+	 *
-+	 * Since versions contains basenames from files in multiple different
-+	 * directories, we need to know which entries in versions correspond
-+	 * to which directories.  Values of e.g.
-+	 *     ""             0
-+	 *     src            2
-+	 *     src/moduleA    5
-+	 * Would mean that entries 0-1 of versions are files in the toplevel
-+	 * directory, entries 2-4 are files under src/, and the remaining
-+	 * entries starting at index 5 are files under src/moduleA/.
-+	 */
-+	struct string_list offsets;
-+
-+	/*
-+	 * last_directory: directory that previously processed file found in
-+	 *
-+	 * last_directory starts NULL, but records the directory in which the
-+	 * previous file was found within.  As soon as
-+	 *    directory(current_file) != last_directory
-+	 * then we need to start updating accounting in versions & offsets.
-+	 * Note that last_directory is always the last path in "offsets" (or
-+	 * NULL if "offsets" is empty) so this exists just for quick access.
-+	 */
-+	const char *last_directory;
-+
-+	/* last_directory_len: cached computation of strlen(last_directory) */
-+	unsigned last_directory_len;
- };
- 
- static void write_tree(struct object_id *result_oid,
-@@ -558,6 +597,181 @@ static void record_entry_for_tree(struct directory_versions *dir_metadata,
- 			   basename)->util = &mi->result;
- }
- 
-+static void write_completed_directory(struct merge_options *opt,
-+				      const char *new_directory_name,
-+				      struct directory_versions *info)
++static int checkout(struct merge_options *opt,
++		    struct tree *prev,
++		    struct tree *next)
 +{
-+	const char *prev_dir;
-+	struct merged_info *dir_info = NULL;
-+	unsigned int offset;
-+
-+	/*
-+	 * Some explanation of info->versions and info->offsets...
-+	 *
-+	 * process_entries() iterates over all relevant files AND
-+	 * directories in reverse lexicographic order, and calls this
-+	 * function.  Thus, an example of the paths that process_entries()
-+	 * could operate on (along with the directories for those paths
-+	 * being shown) is:
-+	 *
-+	 *     xtract.c             ""
-+	 *     tokens.txt           ""
-+	 *     src/moduleB/umm.c    src/moduleB
-+	 *     src/moduleB/stuff.h  src/moduleB
-+	 *     src/moduleB/baz.c    src/moduleB
-+	 *     src/moduleB          src
-+	 *     src/moduleA/foo.c    src/moduleA
-+	 *     src/moduleA/bar.c    src/moduleA
-+	 *     src/moduleA          src
-+	 *     src                  ""
-+	 *     Makefile             ""
-+	 *
-+	 * info->versions:
-+	 *
-+	 *     always contains the unprocessed entries and their
-+	 *     version_info information.  For example, after the first five
-+	 *     entries above, info->versions would be:
-+	 *
-+	 *     	   xtract.c     <xtract.c's version_info>
-+	 *     	   token.txt    <token.txt's version_info>
-+	 *     	   umm.c        <src/moduleB/umm.c's version_info>
-+	 *     	   stuff.h      <src/moduleB/stuff.h's version_info>
-+	 *     	   baz.c        <src/moduleB/baz.c's version_info>
-+	 *
-+	 *     Once a subdirectory is completed we remove the entries in
-+	 *     that subdirectory from info->versions, writing it as a tree
-+	 *     (write_tree()).  Thus, as soon as we get to src/moduleB,
-+	 *     info->versions would be updated to
-+	 *
-+	 *     	   xtract.c     <xtract.c's version_info>
-+	 *     	   token.txt    <token.txt's version_info>
-+	 *     	   moduleB      <src/moduleB's version_info>
-+	 *
-+	 * info->offsets:
-+	 *
-+	 *     helps us track which entries in info->versions correspond to
-+	 *     which directories.  When we are N directories deep (e.g. 4
-+	 *     for src/modA/submod/subdir/), we have up to N+1 unprocessed
-+	 *     directories (+1 because of toplevel dir).  Corresponding to
-+	 *     the info->versions example above, after processing five entries
-+	 *     info->offsets will be:
-+	 *
-+	 *     	   ""           0
-+	 *     	   src/moduleB  2
-+	 *
-+	 *     which is used to know that xtract.c & token.txt are from the
-+	 *     toplevel dirctory, while umm.c & stuff.h & baz.c are from the
-+	 *     src/moduleB directory.  Again, following the example above,
-+	 *     once we need to process src/moduleB, then info->offsets is
-+	 *     updated to
-+	 *
-+	 *     	   ""           0
-+	 *     	   src          2
-+	 *
-+	 *     which says that moduleB (and only moduleB so far) is in the
-+	 *     src directory.
-+	 *
-+	 *     One unique thing to note about info->offsets here is that
-+	 *     "src" was not added to info->offsets until there was a path
-+	 *     (a file OR directory) immediately below src/ that got
-+	 *     processed.
-+	 *
-+	 * Since process_entry() just appends new entries to info->versions,
-+	 * write_completed_directory() only needs to do work if the next path
-+	 * is in a directory that is different than the last directory found
-+	 * in info->offsets.
-+	 */
-+
-+	/*
-+	 * If we are working with the same directory as the last entry, there
-+	 * is no work to do.  (See comments above the directory_name member of
-+	 * struct merged_info for why we can use pointer comparison instead of
-+	 * strcmp here.)
-+	 */
-+	if (new_directory_name == info->last_directory)
-+		return;
-+
-+	/*
-+	 * If we are just starting (last_directory is NULL), or last_directory
-+	 * is a prefix of the current directory, then we can just update
-+	 * info->offsets to record the offset where we started this directory
-+	 * and update last_directory to have quick access to it.
-+	 */
-+	if (info->last_directory == NULL ||
-+	    !strncmp(new_directory_name, info->last_directory,
-+		     info->last_directory_len)) {
-+		uintptr_t offset = info->versions.nr;
-+
-+		info->last_directory = new_directory_name;
-+		info->last_directory_len = strlen(info->last_directory);
-+		/*
-+		 * Record the offset into info->versions where we will
-+		 * start recording basenames of paths found within
-+		 * new_directory_name.
-+		 */
-+		string_list_append(&info->offsets,
-+				   info->last_directory)->util = (void*)offset;
-+		return;
-+	}
-+
-+	/*
-+	 * The next entry that will be processed will be within
-+	 * new_directory_name.  Since at this point we know that
-+	 * new_directory_name is within a different directory than
-+	 * info->last_directory, we have all entries for info->last_directory
-+	 * in info->versions and we need to create a tree object for them.
-+	 */
-+	dir_info = strmap_get(&opt->priv->paths, info->last_directory);
-+	assert(dir_info);
-+	offset = (uintptr_t)info->offsets.items[info->offsets.nr-1].util;
-+	if (offset == info->versions.nr) {
-+		/*
-+		 * Actually, we don't need to create a tree object in this
-+		 * case.  Whenever all files within a directory disappear
-+		 * during the merge (e.g. unmodified on one side and
-+		 * deleted on the other, or files were renamed elsewhere),
-+		 * then we get here and the directory itself needs to be
-+		 * omitted from its parent tree as well.
-+		 */
-+		dir_info->is_null = 1;
-+	} else {
-+		/*
-+		 * Write out the tree to the git object directory, and also
-+		 * record the mode and oid in dir_info->result.
-+		 */
-+		dir_info->is_null = 0;
-+		dir_info->result.mode = S_IFDIR;
-+		write_tree(&dir_info->result.oid, &info->versions, offset,
-+			   opt->repo->hash_algo->rawsz);
-+	}
-+
-+	/*
-+	 * We've now used several entries from info->versions and one entry
-+	 * from info->offsets, so we get rid of those values.
-+	 */
-+	info->offsets.nr--;
-+	info->versions.nr = offset;
-+
-+	/*
-+	 * Now we've taken care of the completed directory, but we need to
-+	 * prepare things since future entries will be in
-+	 * new_directory_name.  (In particular, process_entry() will be
-+	 * appending new entries to info->versions.)  So, we need to make
-+	 * sure new_directory_name is the last entry in info->offsets.
-+	 */
-+	prev_dir = info->offsets.nr == 0 ? NULL :
-+		   info->offsets.items[info->offsets.nr-1].string;
-+	if (new_directory_name != prev_dir) {
-+		uintptr_t c = info->versions.nr;
-+		string_list_append(&info->offsets,
-+				   new_directory_name)->util = (void*)c;
-+	}
-+
-+	/* And, of course, we need to update last_directory to match. */
-+	info->last_directory = new_directory_name;
-+	info->last_directory_len = strlen(info->last_directory);
++	die("Not yet implemented.");
 +}
 +
- /* Per entry merge function */
- static void process_entry(struct merge_options *opt,
- 			  const char *path,
-@@ -656,7 +870,9 @@ static void process_entries(struct merge_options *opt,
- 	struct strmap_entry *e;
- 	struct string_list plist = STRING_LIST_INIT_NODUP;
- 	struct string_list_item *entry;
--	struct directory_versions dir_metadata = { STRING_LIST_INIT_NODUP };
-+	struct directory_versions dir_metadata = { STRING_LIST_INIT_NODUP,
-+						   STRING_LIST_INIT_NODUP,
-+						   NULL, 0 };
- 
- 	if (strmap_empty(&opt->priv->paths)) {
- 		oidcpy(result_oid, opt->repo->hash_algo->empty_tree);
-@@ -676,6 +892,11 @@ static void process_entries(struct merge_options *opt,
- 	/*
- 	 * Iterate over the items in reverse order, so we can handle paths
- 	 * below a directory before needing to handle the directory itself.
-+	 *
-+	 * This allows us to write subtrees before we need to write trees,
-+	 * and it also enables sane handling of directory/file conflicts
-+	 * (because it allows us to know whether the directory is still in
-+	 * the way when it is time to process the file at the same path).
- 	 */
- 	for (entry = &plist.items[plist.nr-1]; entry >= plist.items; --entry) {
- 		char *path = entry->string;
-@@ -686,6 +907,8 @@ static void process_entries(struct merge_options *opt,
- 		 */
- 		struct merged_info *mi = entry->util;
- 
-+		write_completed_directory(opt, mi->directory_name,
-+					  &dir_metadata);
- 		if (mi->clean)
- 			record_entry_for_tree(&dir_metadata, path, mi);
- 		else {
-@@ -694,17 +917,20 @@ static void process_entries(struct merge_options *opt,
- 		}
- 	}
- 
--	/*
--	 * TODO: We can't actually write a tree yet, because dir_metadata just
--	 * contains all basenames of all files throughout the tree with their
--	 * mode and hash.  Not only is that a nonsensical tree, it will have
--	 * lots of duplicates for paths such as "Makefile" or ".gitignore".
--	 */
--	die("Not yet implemented; need to process subtrees separately");
-+	if (dir_metadata.offsets.nr != 1 ||
-+	    (uintptr_t)dir_metadata.offsets.items[0].util != 0) {
-+		printf("dir_metadata.offsets.nr = %d (should be 1)\n",
-+		       dir_metadata.offsets.nr);
-+		printf("dir_metadata.offsets.items[0].util = %u (should be 0)\n",
-+		       (unsigned)(uintptr_t)dir_metadata.offsets.items[0].util);
-+		fflush(stdout);
-+		BUG("dir_metadata accounting completely off; shouldn't happen");
++static int record_conflicted_index_entries(struct merge_options *opt,
++					   struct index_state *index,
++					   struct strmap *paths,
++					   struct strmap *conflicted)
++{
++	if (strmap_empty(conflicted))
++		return 0;
++
++	die("Not yet implemented.");
++}
++
+ void merge_switch_to_result(struct merge_options *opt,
+ 			    struct tree *head,
+ 			    struct merge_result *result,
+ 			    int update_worktree_and_index,
+ 			    int display_update_msgs)
+ {
+-	die("Not yet implemented");
++	assert(opt->priv == NULL);
++	if (result->clean >= 0 && update_worktree_and_index) {
++		struct merge_options_internal *opti = result->priv;
++
++		if (checkout(opt, head, result->tree)) {
++			/* failure to function */
++			result->clean = -1;
++			return;
++		}
++
++		if (record_conflicted_index_entries(opt, opt->repo->index,
++						    &opti->paths,
++						    &opti->conflicted)) {
++			/* failure to function */
++			result->clean = -1;
++			return;
++		}
 +	}
- 	write_tree(result_oid, &dir_metadata.versions, 0,
- 		   opt->repo->hash_algo->rawsz);
- 	string_list_clear(&plist, 0);
- 	string_list_clear(&dir_metadata.versions, 0);
-+	string_list_clear(&dir_metadata.offsets, 0);
++
++	if (display_update_msgs) {
++		/* TODO: print out CONFLICT and other informational messages. */
++	}
++
+ 	merge_finalize(opt, result);
  }
  
- void merge_switch_to_result(struct merge_options *opt,
 -- 
 gitgitgadget
 
