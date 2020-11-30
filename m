@@ -2,119 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52215C64E7B
-	for <git@archiver.kernel.org>; Mon, 30 Nov 2020 13:42:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C10CAC64E8A
+	for <git@archiver.kernel.org>; Mon, 30 Nov 2020 14:16:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E0580206F9
-	for <git@archiver.kernel.org>; Mon, 30 Nov 2020 13:42:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 64CCD2084C
+	for <git@archiver.kernel.org>; Mon, 30 Nov 2020 14:16:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BxIUgNiP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kiPuhlSG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726516AbgK3NmK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Nov 2020 08:42:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40012 "EHLO
+        id S1727193AbgK3OQV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Nov 2020 09:16:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726220AbgK3NmJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Nov 2020 08:42:09 -0500
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57D04C0613CF
-        for <git@vger.kernel.org>; Mon, 30 Nov 2020 05:41:29 -0800 (PST)
-Received: by mail-ed1-x542.google.com with SMTP id b2so4007058edy.13
-        for <git@vger.kernel.org>; Mon, 30 Nov 2020 05:41:29 -0800 (PST)
+        with ESMTP id S1727102AbgK3OQT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Nov 2020 09:16:19 -0500
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F022C08E9AA
+        for <git@vger.kernel.org>; Mon, 30 Nov 2020 06:15:16 -0800 (PST)
+Received: by mail-ot1-x330.google.com with SMTP id f48so2871877otf.8
+        for <git@vger.kernel.org>; Mon, 30 Nov 2020 06:15:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:subject:to:cc:message-id:in-reply-to:references
-         :mime-version;
-        bh=qPionrDFmi1qMJp5XKpjM0IE7ifV4EWya9HA8tqzXrI=;
-        b=BxIUgNiPfsPWjpaYLgHGZTLEwRBBzwSkLwaCoN7bpQ+VRylSQFvpCxDw9I2Ey8wIrc
-         Lg0VRoMlMySPLQJO++JluRE4MRqK1b5Jrn/ftaeCNVaOlYl+d1z7wBEcI5PDvvQrONmN
-         hgYMfsKNj44GnwdXPcW8ynkfQvCBlSF9Ic/R0O1R9oNhWk7QHEUKy6bfQfzLmRuppQx3
-         XX79ozxetkfe7hfg+/r+QQJroB2sd61sG4N13jNM7hQeHcG4LtNjLu/pFG3kcUgX8i25
-         kxkCr7uyT444dOIavqUbigBkrL6PAdEpTXsOxL2qzBQX1HaVdTuYd48u3VfBrkgXSelh
-         Askg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=rXYLOBWut/gF+vFGrQw0XaAftj854VPEMJmBPl2q5LE=;
+        b=kiPuhlSGR3HtKU5vwWYNDnXSXGiWX5E3gJ4j9xHahhSF1GM4NDExe5MmJ2+RGVr5Rn
+         hm72Vq8Jx3fXlBL4nPWR1C3PhdacW0J77/QuY3wpG1AzA88RFA/FLtN3Og/Zbt2qdiQ8
+         sQBeu1+O9TDtFe6oxbiH4ygr90icPzy7iMhKUWx+qCrGfvEMMSRm8lmXz43oYhOrLzdY
+         iZ81qvwfvEIJONBC9GJja1fEdWyQt/xsjqfkyNBywnmRnsjTROnZgPSpre2/7oVoFioi
+         FvhUK1WoNwy5Uw8DxMI6u1j9UZyKpOqJ2m/L3nw0H5/KeLOPUCGkDmcLnvV1R16F6agI
+         dimA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:subject:to:cc:message-id:in-reply-to
-         :references:mime-version;
-        bh=qPionrDFmi1qMJp5XKpjM0IE7ifV4EWya9HA8tqzXrI=;
-        b=f0JU/64ZxRu1ro7sLSqSac/trC5pxM7qU9iN1F+eLEVQ6n7Rik9YrQucteJ9CttVA4
-         1XyctShrxSQdZ83aI+9cdD+h6VVkpFMEhLYuqxCzaKunUiPubCY5z8u1K4TCROn7ZwwL
-         MABx5gJBwN9WW32U9E+zRNX+AOc5inqOHN8J73qRkUKRnaH2LRZphWlpw+ol3srymYas
-         eB9J8GOyvSPnBJk0iOn/MNYgo3ky+GE9ZuFE0xjNuobbKgdtjvQib+8ZufwP9vOeHvDQ
-         hp9cACJLjbbuRTRsONpNLY7viz3cUsljZLEDlae/pIuOvMdf21XNbLOcAFJVVge0kr/N
-         JqDA==
-X-Gm-Message-State: AOAM533uJaIahnfLh1ew5PmYXbH+30d0k+I5NnChFnJq6wEc34K+mGHh
-        s+X4f9rrjnAitBClLcLlWQ/+MTxAnpaT/Q==
-X-Google-Smtp-Source: ABdhPJzlo2YwCZcQdtyYv9VBJqgvJVgz+mo1tjj7lusrnpd33pbizIm70o5Y57HFoNmFHrVQ0q0irg==
-X-Received: by 2002:a05:6402:2d4:: with SMTP id b20mr1515014edx.237.1606743688026;
-        Mon, 30 Nov 2020 05:41:28 -0800 (PST)
-Received: from [192.168.1.66] ([46.98.122.199])
-        by smtp.gmail.com with ESMTPSA id rk12sm8383107ejb.75.2020.11.30.05.41.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Nov 2020 05:41:27 -0800 (PST)
-Date:   Mon, 30 Nov 2020 15:41:20 +0200
-From:   serg.partizan@gmail.com
-Subject: Re: [PATCH] git-gui: use gray selection background for inactive
- =?UTF-8?Q?text=0D=0A?= widgets
-To:     Stefan Haller <stefan@haller-berlin.de>
-Cc:     me@yadavpratyush.com, git@vger.kernel.org
-Message-Id: <WC3MKQ.KLJ4EJGGRQYY2@gmail.com>
-In-Reply-To: <1a42781d-0e4c-6478-f26d-5eccbd9c6205@haller-berlin.de>
-References: <DZJ7KQ.UXACXR9SWDQI3@gmail.com>
-        <20201123114805.48800-1-stefan@haller-berlin.de>
-        <1a42781d-0e4c-6478-f26d-5eccbd9c6205@haller-berlin.de>
-X-Mailer: geary/3.38.1
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=rXYLOBWut/gF+vFGrQw0XaAftj854VPEMJmBPl2q5LE=;
+        b=rbyLcjvEi/eEGhR5QuzunCDkec/Egpsg2+ImQG2w5l3KR6609sBSc0P527nWZDaUN6
+         YSCF4tZwZ/MaZ5hZNQplPYG8o0x+SKZw8kqYVp96DBsqRMRrBrAvAOtQG4JdtO4wxZSk
+         O5Anw06fqQlBPwgVLj0wnOI8bNah/JWD/3/lJmw1fjGIsA07J9zeNTo66iYNxaX3M2s2
+         XK0JDK+RUrXPmKc65h0r90EDgEgLmDjujv2roRJQVMMgZ8qotfapAzX10CNF3bseFQRp
+         QS0Xm7O10txv9FQ4/qU0ZnocmiMRXBHE9vPGa+qf0QBMoRTD/kONlJF7aqhlAhKDU6Ui
+         DR9A==
+X-Gm-Message-State: AOAM531KZEOqvS0ti1KMSKkfZscOaht9HOk2wGn16NPg6iZE+e1mWbRR
+        7TwDFIGklM2paJcEj59va0E=
+X-Google-Smtp-Source: ABdhPJxHdPwc4HegkLNOf4yvHWDQcxcaENWAUiuYWoT1uR1skvJtdlG536zqxa8/zuQsRsX/T2zfQg==
+X-Received: by 2002:a9d:7c98:: with SMTP id q24mr15997151otn.147.1606745714379;
+        Mon, 30 Nov 2020 06:15:14 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
+        by smtp.gmail.com with UTF8SMTPSA id l1sm8860675otj.17.2020.11.30.06.15.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Nov 2020 06:15:13 -0800 (PST)
+Subject: Re: [PATCH] perf/fsmonitor: use test_must_be_empty helper
+To:     Nipunn Koorapati via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Nipunn Koorapati <nipunn1313@gmail.com>,
+        Nipunn Koorapati <nipunn@dropbox.com>
+References: <pull.799.git.1606342297403.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <e82aa6f3-af88-246e-6cf8-5d2320133a59@gmail.com>
+Date:   Mon, 30 Nov 2020 09:15:13 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101
+ Thunderbird/84.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+In-Reply-To: <pull.799.git.1606342297403.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Sun, Nov 29, 2020 at 18:40, Stefan Haller <stefan@haller-berlin.de> 
-wrote:
-> After spending quite a while single-stepping through lots of Tk code, 
-> I
-> found the reason. On Mac, disabled text widgets simply don't draw the
-> selection background. [1]
+On 11/25/2020 5:11 PM, Nipunn Koorapati via GitGitGadget wrote:
+> From: Nipunn Koorapati <nipunn@dropbox.com>
 > 
-> I can see three options for solving this:
-> 
-> 1) Don't use "state focus" and "state !focus" on the text widgets, but
->    instead set the selection color manually using "text conf sel
->    -background". Disadvantage: have to calculate the disabled color
->    using a heuristic like I did for the file lists in my v2 patch.
-> 
-> 2) Don't use "configure -state disabled" to make the diff text widget
->    read-only; instead, use one of the other methods from [2].
->    Disadvantage: quite a big change, and seems complex to me.
-> 
-> 3) Enable the the diff widget when it loses focus, and disable it 
-> again
->    when it gets focus. I tried this in a quick prototype, and it works
->    very well. It just *feels* wrong to enable a read-only text widget
->    while it is unfocused; but I couldn't find any situation where it
->    would behave wrong, because as soon as you try to interact with it,
->    the first thing that happens is that it gets disabled again.
-> 
-> I tend towards option 3, because it's reasonably simple and works. 
-> I'll
-> work on a patch tomorrow unless anybody has objections.
-> 
+> Simplify test and make error messages more clear here.
+> Per feedback from Junio in
+> 33226af42b (t/perf/fsmonitor: improve error message if typoing hook
+> name, 2020-10-26)
 
-I don't like any of this options, as it makes code complicated. I 
-personally would prefer to not implement this feature at all, but 
-that's just me.
+Thanks, Nipunn. This patch looks good to me.
 
-Maybe Pratyush can say something reasonable about this, as maintainer.
-
-I propose to wait a week or two for other opinions, before starting to 
-write a patch.
-
-
+-Stolee
