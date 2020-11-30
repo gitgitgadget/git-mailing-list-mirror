@@ -2,180 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D55FC63777
-	for <git@archiver.kernel.org>; Mon, 30 Nov 2020 04:44:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D0D8C5519F
+	for <git@archiver.kernel.org>; Mon, 30 Nov 2020 08:47:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 31AA120809
-	for <git@archiver.kernel.org>; Mon, 30 Nov 2020 04:44:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F19C720643
+	for <git@archiver.kernel.org>; Mon, 30 Nov 2020 08:47:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IbotdLkO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gpb/1KKu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726770AbgK3EoJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 Nov 2020 23:44:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41770 "EHLO
+        id S1726524AbgK3Ir0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Nov 2020 03:47:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726415AbgK3EoJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Nov 2020 23:44:09 -0500
-Received: from mail-il1-x141.google.com (mail-il1-x141.google.com [IPv6:2607:f8b0:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28154C0613CF
-        for <git@vger.kernel.org>; Sun, 29 Nov 2020 20:43:29 -0800 (PST)
-Received: by mail-il1-x141.google.com with SMTP id v3so10052935ilo.5
-        for <git@vger.kernel.org>; Sun, 29 Nov 2020 20:43:29 -0800 (PST)
+        with ESMTP id S1726337AbgK3IrZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Nov 2020 03:47:25 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB62CC0613CF
+        for <git@vger.kernel.org>; Mon, 30 Nov 2020 00:46:39 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id g14so14880178wrm.13
+        for <git@vger.kernel.org>; Mon, 30 Nov 2020 00:46:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qTu79IEzcQ1s9Z71uoGNhtmWYOC6m/D6axf9fl5Ei/A=;
-        b=IbotdLkOEjV1Z1IesioSMK/yTkVM9puGibQWwznOFy+HqW0w0VPQo9PCBZ0oQjSoeE
-         RulRYg7TA/WJQdzXIugBpD+c6JCoN1BexU/uo+XHrz38IzxUKasV4EFKzYjw2xDrchHz
-         L+VcabHQPDzPuMAT/sw3ohg72k88HaflJ7lgCBwc/FQZjibcXR1Dk2vQJsk6yLpkBDHX
-         xD63s9kf0CyFo7N+zlAEdVgfzZKkeYw9NCT/BCt7NVFMjdnp/wZpIvMb/jNQdY3VF+Hm
-         RoSkQhChKIwfN7Sd37IXBhVArv5vMOi1iTptm4dX0liKV1s40vEf2T+7x4Y01cRuUmxC
-         vOlQ==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=OKPW0r5viTsLzQuoQqH3f/yImB3LcAG9IemXovi3re4=;
+        b=Gpb/1KKuYhsAc5SsAJCf4uzzbSD2/lMhK3PtaPfImcsV2Erbimdvnr8w8+TAle5ykX
+         KW1o2zPhXzduKHP0spU/9mGT9Qyps4ahX/jJywU2G3kGUKyvcwseyqvhh+2imO6p+6f8
+         zZwun4N4qJkoIIzXxl1A4dw9eyLP6CHTpM7O7JeTAjHLbYbuIIlY38qI7vQUOxg1BAUf
+         qM84DpVxQkR1wtv98XY4TmaTLlnKnMqiOdMoEBFBwMTEh6zxs8PR6fwOyT7rlc90A9So
+         ztqKFV8z7l9wnH05eREK+LfPt2qq43GXQLBs937TuW5M8qQRrtZhcqaiX05j0GDrgp+L
+         Wmwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :mime-version:content-transfer-encoding;
-        bh=qTu79IEzcQ1s9Z71uoGNhtmWYOC6m/D6axf9fl5Ei/A=;
-        b=DOTX52E3/7m4Dp6KVR6TyIYWmPHfBJElQR11G8l1MlrJAXpazF8qVfYZPSEPSwn/Le
-         ovxaI6FRTsa0ioi56WAJy8rUdo+vOrfdKhikjGs6vf97YzIwCnCrsIQKSwbagtVX/a6o
-         tQxhL/Y9Muw3597ocfmiri5LTToSYbJDxTD/3jcsCibsrclcRZzcZwMegYlbXWffFPMk
-         lFfO+YbxZjYRSnY4ReNFOWmedGNats8oTtBCPrxSLK6SghWIU+hojCILz50wAZsoBzfU
-         POpoRSCb15ARPof5p0VehmLWEyZkrV4Si4ZyDMruYsr6nob8wlTBKw6LKm/rNeUkq4fj
-         CGcQ==
-X-Gm-Message-State: AOAM532lO/5RxcGJrgm+lAWbxbZx+vKShbKWM/fuHsjn25TwY3exRwHT
-        DfoRzPb4t8npAQJ01IKZW1Gk4PvysUc=
-X-Google-Smtp-Source: ABdhPJy/ll0YhQut/5b+DwN6ssrDFBowFZn6kF0uUrjYjhKh9ZmxrUMctEC0Fc8dfY0NC4TN7Q7OOQ==
-X-Received: by 2002:a92:da87:: with SMTP id u7mr17333401iln.230.1606711407670;
-        Sun, 29 Nov 2020 20:43:27 -0800 (PST)
-Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id h16sm9754285ile.14.2020.11.29.20.43.26
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 29 Nov 2020 20:43:27 -0800 (PST)
-Sender: Eric Sunshine <ericsunshine@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 0/2] make macOS `git maintenance` test work on Windows
-Date:   Sun, 29 Nov 2020 23:42:22 -0500
-Message-Id: <20201130044224.12298-1-sunshine@sunshineco.com>
-X-Mailer: git-send-email 2.29.2.576.ga3fc446d84
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=OKPW0r5viTsLzQuoQqH3f/yImB3LcAG9IemXovi3re4=;
+        b=ehTlkkWSSNWmB3/ZIT5bbXhSY3m3Xjh5NGthgFy6E1d5+oEQpVj2PYuzNlQhYboQ9f
+         NRwGkn5b0UapZJqIuCSLLN/2UiQDToElybWCbOuHZ4nsQxw6Qhfs7tpOHshbU1EdtWDL
+         kD2UDMfZloBJEnZEzMj0o+fRhVxZRZH5L31kDMX0BEKXZf4srEiD//p2KBCXSln08ccU
+         1SL+BHkoUD7Ec29eVzoRyXUMiiBH9EmSEdBWuipOhT/LBdy9PBPf2/KvxykxyHLd/as1
+         /zxrU03Njru75VlYtRTL4Z2PPwFJaPGmJYZW1sXnKEr1O8HBWPtiD/hLJHjiDYbepldh
+         BVag==
+X-Gm-Message-State: AOAM530mtEz2BHJm4pBcChBFTKgA4jT0nZD36EknayhqVeXGEHW8DtLB
+        Vjzvjv4SQT6HVKtu1+TLm68oUFYv4uBClkOjW96NgApXnw5Y6Q==
+X-Google-Smtp-Source: ABdhPJwPX4oxMB4edt4gznN0kmHrLiFJB6FbNznwywAT4fLeVE7sjZgo19iwP5ZGvFQr+Wy8kaAf02TrbQeu/KhujI0=
+X-Received: by 2002:a5d:52c1:: with SMTP id r1mr27543425wrv.255.1606725998007;
+ Mon, 30 Nov 2020 00:46:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Mon, 30 Nov 2020 02:46:27 -0600
+Message-ID: <CAMP44s08MH36SYqG1QE8tf5VdxJ-Cb8kpwD3eHeBQH+WSyBnLw@mail.gmail.com>
+Subject: git-smartlist 1.0 released
+To:     Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a re-roll of [1] which makes the macOS-specific test of `git
-maintenance start` and `git maintenance stop` work correctly on Windows
-(since the tests have been otherwise carefully crafted to work on any
-platform even though the `start` and `stop` commands themselves are
-necessarily platform-specific).
+Hello,
 
-v2 makes the macOS-specific test in t7900 UID-agnostic, as suggested by
-Ævar[2], thus the patch which added `test-tool getuid` has been dropped.
+For a while I've been using some shortcuts to visualize my specific
+changes in comparison to some upstream/official/master changes.
 
-This series is built atop ds/maintenance-part-4.
+For example, if I just do "gitk @" it takes a while to load the 61K
+commits that are part of the "current branch", when in fact I'm
+interested in only 10 or so.
 
-[1]: https://lore.kernel.org/git/20201127075054.31174-1-sunshine@sunshineco.com/
-[2]: https://lore.kernel.org/git/87o8jikfh7.fsf@evledraar.gmail.com/
+I can simply do "gitk master..@", and that does the trick, but it gets
+to be a bit tedious to type that every single time.
 
-Eric Sunshine (2):
-  t7900: fix test failures when invoked individually via --run
-  t7900: make macOS-specific test work on Windows
+Moreover, maybe I'm interested in two branches: "fc/feature-a", and
+"fc/feature-b". I can find the specific commits with "fc/feature-a
+fc/feature-b ^master".
 
- t/t7900-maintenance.sh | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+But what if they are not based on "master", but "next". Or worse; what
+if one is based on "next", and the other on "stable"?
 
-Range-diff against v1:
-1:  9f9b26de93 = 1:  d535669fb9 t7900: fix test failures when invoked individually via --run
-2:  07c9e9bd69 < -:  ---------- test-tool: add `getuid` subcommand
-3:  01c6a3229d ! 2:  8561d08bcd t7900: make macOS-specific test work on Windows
-    @@ Commit message
-         invoke platform-specific scheduling utilities, their related tests have
-         been carefully crafted -- with one minor exception -- to work correctly
-         on any platform, thus improving overall coverage. The exception is that
-    -    the macOS-specific test fails on Windows due to unportable use of
-    -    `$(id -u)` and comparison involving the value of $HOME which suffers
-    -    from the typical shortcoming on that platform in which the same path may
-    -    be represented two different ways depending upon its source (i.e. as a
-    -    Windows path `C:/git-sdk-64/usr/src/git/foo` versus as a Unix path
-    -    `/usr/src/git/foo`). Fix both problems and drop the !MINGW prerequisite
-    -    from the macOS-specific test, thus allowing the test to run on Windows,
-    -    as well.
-    +    the macOS-specific test fails on Windows due to non-portable use of
-    +    `$(id -u)` and comparison involving the value of $HOME.
-     
-    +    In particular, on Windows, the value of getuid() called by the C code is
-    +    not guaranteed to be the same as `$(id -u)` invoked by the test. This is
-    +    because `git.exe` is a native Windows program, whereas the utility
-    +    programs run by the test script mostly utilize the MSYS2 runtime, which
-    +    emulates a POSIX-like environment. Since the purpose of the test is to
-    +    check that the input to the hook is well-formed, the actual user ID is
-    +    immaterial, thus we can work around the problem by making the the test
-    +    UID-agnostic.
-    +
-    +    As for comparison of $HOME, it suffers from the typical shortcoming on
-    +    Windows in which the same path may be represented two different ways
-    +    depending upon its source (i.e. as a Windows path
-    +    `C:/git-sdk-64/usr/src/git/foo` versus as a Unix path
-    +    `/usr/src/git/foo`).
-    +
-    +    Fix both problems and drop the !MINGW prerequisite from the
-    +    macOS-specific test, thus allowing the test to run on Windows, as well.
-    +
-    +    Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-         Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-     
-      ## t/t7900-maintenance.sh ##
-    @@ t/t7900-maintenance.sh: test_expect_success 'start preserves existing schedule'
-     -test_expect_success !MINGW 'start and stop macOS maintenance' '
-     -	uid=$(id -u) &&
-     +test_expect_success 'start and stop macOS maintenance' '
-    -+	uid=$(test-tool getuid) &&
-     +	# ensure $HOME can be compared against hook arguments on all platforms
-     +	pfx=$(cd "$HOME" && pwd) &&
-      
-      	write_script print-args <<-\EOF &&
-    - 	echo $* >>args
-    +-	echo $* >>args
-    ++	echo $* | sed "s:gui/[0-9][0-9]*:gui/[UID]:" >>args
-    + 	EOF
-    + 
-    + 	rm -f args &&
-     @@ t/t7900-maintenance.sh: test_expect_success !MINGW 'start and stop macOS maintenance' '
-      	rm -f expect &&
-      	for frequency in hourly daily weekly
-    @@ t/t7900-maintenance.sh: test_expect_success !MINGW 'start and stop macOS mainten
-     +		PLIST="$pfx/Library/LaunchAgents/org.git-scm.git.$frequency.plist" &&
-      		test_xmllint "$PLIST" &&
-      		grep schedule=$frequency "$PLIST" &&
-    - 		echo "bootout gui/$uid $PLIST" >>expect &&
-    +-		echo "bootout gui/$uid $PLIST" >>expect &&
-    +-		echo "bootstrap gui/$uid $PLIST" >>expect || return 1
-    ++		echo "bootout gui/[UID] $PLIST" >>expect &&
-    ++		echo "bootstrap gui/[UID] $PLIST" >>expect || return 1
-    + 	done &&
-    + 	test_cmp expect args &&
-    + 
-     @@ t/t7900-maintenance.sh: test_expect_success !MINGW 'start and stop macOS maintenance' '
-      	# stop does not unregister the repo
-      	git config --get --global maintenance.repo "$(pwd)" &&
-      
-     -	printf "bootout gui/$uid $HOME/Library/LaunchAgents/org.git-scm.git.%s.plist\n" \
-    -+	printf "bootout gui/$uid $pfx/Library/LaunchAgents/org.git-scm.git.%s.plist\n" \
-    ++	printf "bootout gui/[UID] $pfx/Library/LaunchAgents/org.git-scm.git.%s.plist\n" \
-      		hourly daily weekly >expect &&
-      	test_cmp expect args &&
-      	ls "$HOME/Library/LaunchAgents" >actual &&
--- 
-2.29.2.576.ga3fc446d84
+Easy, you just do "fc/feature-a fc/feature-b --not $(git merge-base
+fc/feature-a fc/feature-b)".
 
+At this point it should be clear that perhaps a helper would help.
+
+This is the primary problem git-smartlist is trying to solve.
+
+In its essence git-smartlist tries to generate the revision list you
+most likely want.
+
+The whole point is to avoid typing as much as possible, and generate
+minimal, yet useful, revlist.
+
+In its main mode without any arguments git-smartlist simply generates
+"@{upstream}..@". If you specify a branch, it will generate
+"branch@{upstream}..branch". In both cases if no upstream branch is
+configured, "master" will be used.
+
+Then, if more than two branches are specified (e.g. fc/feature-a,
+fc/feature-b), git-smartlist will find the merge base of both and do
+"fc/feature-a fc/feature-b --not $merge_base".
+
+To configure an alias for this mode:
+
+  ls = smartlist log specific
+
+Then, typing "git ls" will trigger this mode, and you can do "git ls",
+"git ls fc/feature-a", or "git ls fc/feature-a fc/feature-b".
+
+You can replace "log" with your favorite command. In my case it's `lg`
+(log --oneline --decorate --boundary --graph).
+
+A second very useful mode is "branches". If you specify more than one
+branch it's the same as the "specific" mode, however, if you don't
+specify any argument it will be the same as "--branches --not
+$merge_base", and if you specify a namespace like "fc/" it will be
+"--branches=fc/ --not $merge_base", or you can specify a prefix as
+well "fc-*" -> "--branches=fc-* --not $merge_base".
+
+I use this a lot when I want to see a bunch of branches with a certain
+prefix, for example: "git lb fc/completion/".
+
+If on the other hand you use gitk a lot--like me--you might want to
+consider this alias:
+
+  v = "!f() { gitk \"$@\" & }; f
+
+Then you can have shortcuts for both text (lg) and visual (gitk)
+exploration of the commits.
+
+  ls = smartlist lg specific
+  lb = smartlist lg branches
+  vs = smartlist v specific
+  vb = smartlist v branches
+
+For more information check the repository in GitHub.
+
+https://github.com/felipec/git-smartlist
+
+Cheers.
+
+--
+Felipe Contreras
