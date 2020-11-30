@@ -4,112 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23357C64E7B
-	for <git@archiver.kernel.org>; Mon, 30 Nov 2020 14:27:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF05FC64E8A
+	for <git@archiver.kernel.org>; Mon, 30 Nov 2020 14:45:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9C4B320684
-	for <git@archiver.kernel.org>; Mon, 30 Nov 2020 14:27:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9734320731
+	for <git@archiver.kernel.org>; Mon, 30 Nov 2020 14:45:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="S79ULs8o"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ntd3E6Vl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726981AbgK3O1J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Nov 2020 09:27:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46986 "EHLO
+        id S1727327AbgK3Opl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Nov 2020 09:45:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726332AbgK3O1I (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Nov 2020 09:27:08 -0500
-Received: from mail-ua1-x944.google.com (mail-ua1-x944.google.com [IPv6:2607:f8b0:4864:20::944])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D01A6C0613CF
-        for <git@vger.kernel.org>; Mon, 30 Nov 2020 06:26:28 -0800 (PST)
-Received: by mail-ua1-x944.google.com with SMTP id p12so3793775uam.1
-        for <git@vger.kernel.org>; Mon, 30 Nov 2020 06:26:28 -0800 (PST)
+        with ESMTP id S1725980AbgK3Opk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Nov 2020 09:45:40 -0500
+Received: from mail-vk1-xa42.google.com (mail-vk1-xa42.google.com [IPv6:2607:f8b0:4864:20::a42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1779C0617A6
+        for <git@vger.kernel.org>; Mon, 30 Nov 2020 06:44:47 -0800 (PST)
+Received: by mail-vk1-xa42.google.com with SMTP id e5so2759497vkd.4
+        for <git@vger.kernel.org>; Mon, 30 Nov 2020 06:44:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=11iZIUDDoagOHUOoIdm9rARB1Du3VyphodrcMxaXrBU=;
-        b=S79ULs8oFZsJ1JarJ7Bwp1gPwDEHzJV/EIhKesujXAp/la8cQNiT1dD/QVMbulNza8
-         W4lMAF2KRKg3WiY5pdytmUt2SFVIG9JVEOVs6Vlk8PM+mISj9JbX1jgQJhrhuChh5j4M
-         +tRvKVjy2wAMJJFSqX+d3Vb1l22fUSVlxr5hWUpVoMCpoPA/u2zJLM7tHpSeaFkF7El8
-         QQAo2Xydv6zaVEKSvhEkaVGnEzFLvW0XL3ZwAAkGxlKk98Iwfa+C36Iz8qz8qQI7FMhi
-         fVKPkCUCJhSCHDyKkWOi6Ah173yVFvbAa0D1Xosp+ujK+AOrEuJgTvkPuy1Iq3zRNffc
-         wiMA==
+        bh=HJHvzH4mmWWRelIncX3fNaEBtzFCuedBqkZFpd5uAZU=;
+        b=ntd3E6VlZ/d+wVRyFx7PQswfoOwNoFgpHK2DUCfCNvd4XI8XDx9PO0M1FMQyZVGLWk
+         TVWWXEAUTd+w7IaZndgJXa2hd/gZ7Y16E6R/gUiLCba9mROXs5Qvg+1Yp9VTjnexNBM2
+         J9qJ4MegjTiADVsY7l8rFkRS/4B27zqpidItED9zEQBP+LaJ057aTI3m/kwpRtFpOyTq
+         HM8JYOENyAVkBeswzZlGXfwaeWw7SFg19meVaeZRlszpocC1l7mXZsokbPNOTx4aAaw+
+         YUUfw7EWK5ONb0sU5OZcnXHzFDsIljpOzeY/bSnt9DG+6cbLp1F/Ovo4Q/Q/RQ/j6CHH
+         kREw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=11iZIUDDoagOHUOoIdm9rARB1Du3VyphodrcMxaXrBU=;
-        b=iRgdZWoDB9WluA8KcU1wpjM79jR4+Idr4KG48JbADz+9Me/CiUGGUu7Z9PPzxTlidF
-         SttfmQgvqDDqMQwR642JW94cnDX3aBhXDVX+MBs47ukfh67lSBTb9hgek7HacxV7VaaC
-         qQ2K3uSOngdlsLndkWVV/P9NUs1RJCXqHQAgxUuVgRMziLP7sbLyfPA/UFOPoq40HCh3
-         X33Um7AGqlPk4Ix05jd+8OTLynInbXpLRr9YZwLU8LUCsV0gnjmfHnPscMJZtsTnOGcM
-         RnbdOE89DVCBfDOUWcWivES3J7DVSqmWWt+bK2thlxVN/nDr3mG39rX2prv+/Qu1uQ5q
-         /w9A==
-X-Gm-Message-State: AOAM5324PRXCeW14Ew8FOsvGr48OjYmaZ4lF7wqIG8SUd5BSqt3/SGFu
-        HmJWBoLWdDh7V7kbgSJrFOoryaLgfkJR7iURzmkj8VjastP75g==
-X-Google-Smtp-Source: ABdhPJxIzHkOuv5hzFXxcuRtebjPOMR3gJfSK9SD7+uC0UqGw36JA5F7yHuE8Kg690JUdxMcBazCC3EPqjo3eC+sQdY=
-X-Received: by 2002:a9f:24c7:: with SMTP id 65mr10452400uar.112.1606746387748;
- Mon, 30 Nov 2020 06:26:27 -0800 (PST)
+        bh=HJHvzH4mmWWRelIncX3fNaEBtzFCuedBqkZFpd5uAZU=;
+        b=QH0Jk52JrQYekts+2SI0HbHTwUNZmV+55nb4qHhTWu+XFilB759X85Hd7OxiosaqKz
+         DCiCCODnZTYM+vkGHXz3jTmgpx+x0AtvZtV6Okti3NcjrlevTXHF/5z0w5oFOkiLLoMZ
+         OUGwyPE20XsOuYJXLbXzs5A9zahf/AuezsAX9TO6hRHqxetfFn05iYnJaEkqJwdInZII
+         XhfXEq5gjX/P1Ir6GAfahiptcBrgLgNz/eUz8vvUD4pOPJCGOx9AfAFLAC7tYvUQqYRB
+         /UWKvuDpKcHuQ/89yPm64sid42U+LPvTjX2Jgj8Hm0kX8mehXdss9r5i+M6XElag8TYa
+         Ma7w==
+X-Gm-Message-State: AOAM532ACJaaHYkLQV7bT6eYEeykgSmi0dxfeg6sWpiQ4CAaE5veOtYc
+        ds/kMAr8hWkIBggk/N6e4gfQT2xOEX10gPvpo8nMHQ==
+X-Google-Smtp-Source: ABdhPJz1P8pWyJr/SC6dBOFyU5bL0F4P8Ga0kA7wHk/lMSHJ7TTv8a2zW8cwvA4d2SOV+deQqPSTumCUTejYdNfKpqQ=
+X-Received: by 2002:a1f:2ecd:: with SMTP id u196mr15213678vku.19.1606747486711;
+ Mon, 30 Nov 2020 06:44:46 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.801.git.1606545878.gitgitgadget@gmail.com>
-In-Reply-To: <pull.801.git.1606545878.gitgitgadget@gmail.com>
+References: <pull.847.git.git.1600283416.gitgitgadget@gmail.com>
+ <pull.847.v2.git.git.1601568663.gitgitgadget@gmail.com> <5d1b946ab5473504e9599d90c0feda407a179a05.1601568663.git.gitgitgadget@gmail.com>
+ <20201002035851.GB3252492@google.com> <20201009211300.GA2774782@google.com>
+In-Reply-To: <20201009211300.GA2774782@google.com>
 From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Mon, 30 Nov 2020 15:26:16 +0100
-Message-ID: <CAFQ2z_M8N-9pCh=+rQvGoOJNYAxnMo1upJPEgsqMT9VxP5X=YA@mail.gmail.com>
-Subject: Re: [PATCH 0/6] Minimal patches to let reftable pass the CI builds
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Date:   Mon, 30 Nov 2020 15:44:35 +0100
+Message-ID: <CAFQ2z_Oz9KZAVwYVWGBGZG4dB7BG0OBwrj+j67qSyNDrtPHiOw@mail.gmail.com>
+Subject: Re: [PATCH v2 02/13] reftable: define the public API
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 28, 2020 at 7:44 AM Johannes Schindelin via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+On Fri, Oct 9, 2020 at 11:13 PM Emily Shaffer <emilyshaffer@google.com> wro=
+te:
 >
-> These patches fix the PR build failures at
-> https://github.com/git/git/pull/847/checks?check_run_id=3D1460683728, and=
- are
-> designed to be squashed into the 16 patches of the libreftable v3 patch
-> series as submitted at
-> https://lore.kernel.org/git/pull.847.v3.git.git.1606419752.gitgitgadget@g=
-mail.com/
-> .
+> On Thu, Oct 01, 2020 at 08:58:51PM -0700, Jonathan Nieder wrote:
+> >
+> > Hi,
+> >
+> > Han-Wen Nienhuys wrote:
+> >
+> > >  reftable/reftable.h | 585 ++++++++++++++++++++++++++++++++++++++++++=
+++
+> > >  1 file changed, 585 insertions(+)
+> > >  create mode 100644 reftable/reftable.h
+> >
+> > Adding a header in a separate patch from the implementation doesn't
+> > match the usual practice.  Can we add declarations in the same patch
+> > as the functions being declared instead?
+> >
+> > We could still introduce the header early in its own patch if we want,
+> > but it would be a skeleton of a header that gets filled out by later
+> > patches.
 >
-> A smaller form of the first patch was offered on the mailing list on May
-> 4th:
-> https://lore.kernel.org/git/ff60fde10919b6b8c54ecb8f38b710fac37624e3.1588=
-599086.git.gitgitgadget@gmail.com/
-> . The next three patches were presented to the mailing list on October 2n=
-d:
-> https://lore.kernel.org/git/nycvar.QRO.7.76.6.2010021555290.50@tvgsbejvaq=
-bjf.bet/
-> , and
-> https://lore.kernel.org/git/nycvar.QRO.7.76.6.2010021557570.50@tvgsbejvaq=
-bjf.bet/
-> . Some of the patches required slight adjustments to accommodate for cont=
-ext
-> changes.
+> To poke a little deeper into what I think Jonathan is trying to say:
 >
-> Going forward, I would like to avoid the impression that it is the
-> responsibility of the Git for Windows maintainer to keep the CI build
-> passing on Windows. I am happy to assist in case it is unclear how to fix
-> certain issues. I am not happy having to implement and test those fixes
-> myself. How can we ensure this doesn't happen in the future?
+> Of course, taking a completed project - like your initial reftable
+> submission - and then chopping it up into a cute story of commits is a
+> pain in the ***. Doing it twice - or more - is just aggravating. So I
+> wonder whether we can bikeshed what story would look nice before you
+> even pick up your 'git rebase -i'? Doing that bikeshedding here on list
 
-Thanks for the build system fix. I think it's OK to leave it to me to
-solve the logic problems in the C code that you found.
-
-Would you mind if I massaged these contributions directly back into
-github.com/google/reftable? Google has a corporate CLA from Microsoft,
-it's OK to accept this from you. For better or worse, this is still
-where I'm developing reftable, until it has landed in git-core.
+Looks like this didn't happen.  I went with Jonathan's suggestion, and
+chopped the public API header in smaller bits. PTAL.
 
 --=20
 Han-Wen Nienhuys - Google Munich
