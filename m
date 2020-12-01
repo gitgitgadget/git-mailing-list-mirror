@@ -2,95 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17E6EC64E7A
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 20:59:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB472C64E7B
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 21:00:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8AC3D21741
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 20:59:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3CEE1207FF
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 21:00:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="E70hxaJi"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sMOTLbh/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727764AbgLAU7n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Dec 2020 15:59:43 -0500
-Received: from mout.gmx.net ([212.227.17.22]:38407 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725971AbgLAU7n (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Dec 2020 15:59:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1606856290;
-        bh=+yI0M5bDcFWbc7JuyZU7iaMKMiyWbGWVUEejyDfTafk=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=E70hxaJi+S8Xzy3wkBxn3hjnxRlKxD3ptL81ezVCTfqOpsoS7EntLKqx01EWgqPbL
-         xbPdjIuFypiF1V2qC+MPLKvST8kZnxHHS1+kuLnK6a03KG7B40rCZNiN5WSSdeqo+i
-         F+fqZEkyskvYG38XKOTgMsVOqvRw+zB+maw2wpWU=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.88.62] ([213.196.213.207]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MUXpQ-1kbRGU2tZQ-00QR0N; Tue, 01
- Dec 2020 21:58:10 +0100
-Date:   Tue, 1 Dec 2020 21:58:09 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Zaoshi <kabazaoshi@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: git mergetool does not work since 2.29.0
-In-Reply-To: <a284dc99-7da3-a313-6d9b-1dd40cbc5b22@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2012012153310.54@tvgsbejvaqbjf.bet>
-References: <a284dc99-7da3-a313-6d9b-1dd40cbc5b22@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728882AbgLAVAU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Dec 2020 16:00:20 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51816 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725971AbgLAVAU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Dec 2020 16:00:20 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B1C9910E4DA;
+        Tue,  1 Dec 2020 15:59:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=fl4yJ0HQQR1v
+        HXLh16fFX2DGG/M=; b=sMOTLbh/uj50EIfvRjpoJkwKNNntoLI+NXRkzSB1qi1P
+        QanH4PQhy8fCTTSU4njwznIXhI2f1Xr1AtS13goeCIb/6XZDWT1iAyKKpbnLc9MG
+        +slPGSLz5j9bsVqrSmv4TIjsddVtNCfuAI+SNuShQNhjrzXY8ocvipVxen5oRkI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ekv4d9
+        rzL9z/qNcUtkivZZaQPIptCsGpxr/nVs2SrDRCu0s79wKo8deMKLxEto5lpWNLdf
+        hT7ZTLcbWNlInszr2YLc3Qwf89j/RG+dYteIMw5QSeOdn1MqVF96oR1PUVAWBNZ0
+        zBUjMI28tV60CoP5DVWjrGlHbrpUwng5bf4+s=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AA6B310E4D1;
+        Tue,  1 Dec 2020 15:59:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id ED04910E4D0;
+        Tue,  1 Dec 2020 15:59:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 10/10] mktag doc: update to explain why to use this
+References: <20201126012854.399-1-avarab@gmail.com>
+        <20201126222257.5629-11-avarab@gmail.com>
+Date:   Tue, 01 Dec 2020 12:59:32 -0800
+In-Reply-To: <20201126222257.5629-11-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 26 Nov 2020 23:22:57 +0100")
+Message-ID: <xmqq8sahnsy3.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-673543811-1606856290=:54"
-X-Provags-ID: V03:K1:M2fu2UL8Dd598JpvZl7gHMWrllbSijtZokI/0HxSRtIDj7e5N+X
- 9Kos2O1JX1RBWl1uYyKcGMVIf4OuCgMqqD97C0v3X7v3A7W5Fe8uAHcN1w1ZfeGdbZVZ6ZG
- rWV5ImDkhB51VItIjVf+B70ela9S6RZNh6PanBDTNxBBVtZPNhgrzuN0FHEMamXm9hZ5Hb2
- jrG8tvLzfGPMneX4nd7ug==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:rFny7+OdM+Q=:ULuYcYXlz/VEQ0R1rFqvpF
- 4A2P8WCMiIJUY4VnfKCBY0f5/13N3v/4cqEwDBM1bVOkgZPQY+yW4a7W0SvxGiU5fbOYwSTEr
- L2xzLftIfHHypO+gaQqFCT5m1w567Mu7lXEpuIEEtyH1cQmX0U0qFuhKFsr57ImIcNLXh3zXT
- iQV67YoFfSzB2Uh0FfcH4RUeB1IPSgGBTy9WUDQyueSHzvad1rzmK9mibA/MaePzs71bCSMtp
- Gr1nEzPj5dvvxDBN4h4u1OSNbb/dEzUUGD4Wm1TFf/yITeBYNMNcWdvq68MW11Wd+UBESP0Sk
- lR+I/RPqERrt/xbqYVKlxrcwlS24AqmUMo4CA+0gaPhteracVmtoYMjdgKCCY7DdSNh9wsqEp
- UpAcodyO8YFSDHaVovEPvwJlq5Ti/iIAWgHBZzPS0uRzaglTUMivcYnnkoSVphha5XCnGS2rt
- 8h+cgkLcFUGEvO1OVsBoNqHyjzF0uvARYjDeyLajDGubgWZeBTejt6sfLO0eCEpArlruBKDvp
- XxV3+eU78azgy9Lihc/9pFbuwLpeRF/sFpDDDlfUZe76KGC6QU+EkFLADix6y9yWX5HYXsTh1
- oJCS9oxPjHmPAfO00YTG7omdRlgB39nHWnYTm5+6xa0snnFZlKItHWI9OK2vSGBjAaQdTKkhV
- XDhg76HXoPiRAGFKOh1R5YaJdzBplEZSSYC5eeWnv7EMz4pDtwFDZDMR+NdM6eG8MTRrT1lzZ
- t2d9liEh7eYvHz+g7C1lQNwafNtS2x/WOYZ7TRyCs+AV8d/OIwOjkD7ZMN5lyNrb7w4pdTVVK
- qsTef0zB9gK6ze7pkx5ZVnodmXP+A9jGDl/QHRQlZuu0/TDYVXvmNRwp3YzizcOc4bsryiMSp
- GjYrrUj/+Xm0A8NFefNuq4KufsUnTszAcJ9buGK2k=
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 1D4502EE-3418-11EB-BC60-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
---8323328-673543811-1606856290=:54
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+> +Reads a tag contents on standard input and creates a tag object. The
+> +output is the new tag's <object> identifier.
+> +
+> +This command accepts a subset of what linkgit:git-hash-object[1] would
+> +accept with `-t tag --stdin`. I.e. both of these work:
+> +
+> +    git mktag <my-tag
+> +    git hash-object -t tag --stdin <my-tag
 
-Hi,
+It's misleading to say "both of these work", I am afraid.  If the
+former works, the latter would.  That is what "accepts a subset"
+means, no?
 
-On Wed, 28 Oct 2020, Zaoshi wrote:
+> +The difference between the two is that mktag does the equivalent of a
+> +linkgit:git-fsck(1) check on its input, and furthermore disallows some
+> +thing linkgit:git-hash-object[1] would pass, e.g. extra headers in the
+> +object before the message.
 
-> [difftool "bc4"]
-> =C2=A0=C2=A0=C2=A0 cmd =3D \"c:\\Program Files\\Beyond Compare 4\\bcomp.=
-exe\" $LOCAL $REMOTE
-> =C2=A0=C2=A0=C2=A0 trustExitCode =3D true
+Good description.
 
-I believe that this is fixed as per
-https://github.com/gitgitgadget/git/pull/787. It has also been merged into
-Git for Windows' `main` branch via
-https://github.com/git-for-windows/git/pull/2899. This means that it
-should be fixed in the latest snapshot:
-https://wingit.blob.core.windows.net/files/index.html
+> @@ -34,6 +44,17 @@ exists, is separated by a blank line from the header=
+.  The
+>  message part may contain a signature that Git itself doesn't
+>  care about, but that can be verified with gpg.
+> =20
+> +HISTORY
+> +-------
+> +
+> +In versions of Git before v2.30.0 the "mktag" command's validation
 
-Ciao,
-Johannes
+Hardcoding v2.30.0 here feels problematic.  If the series cooks in
+'next' while 2.30 gets released, it has to be kicked out of 'next'
+to update this line before it gets allowed in 'next'.
 
---8323328-673543811-1606856290=:54--
+> +logic was subtly different than that of linkgit:git-fsck[1]. It is now
+> +a strict superset of linkgit:git-fsck[1]'s validation logic.
+
+It may be a better direction to go to drop this section.
+
+Also, I somehow have a feeling that we'd rather want to loosen the
+"no other headers allowed" in the longer run to be consistent with
+what "fsck" does.
+
+I also wonder if we want to teach "commit-tree" to also run fsck
+check like this new version of mktag does.  It is outside the scope
+of this "mktag" series, of course.
+
+Thanks.
+
+> +SEE ALSO
+> +--------
+> +linkgit:git-hash-object[1],
+> +
+>  GIT
+>  ---
+>  Part of the linkgit:git[1] suite
