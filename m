@@ -2,79 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3F0EC64E7B
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 19:13:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D89CDC64E7A
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 19:14:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 61CDB20639
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 19:13:07 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ug5jYv2Y"
+	by mail.kernel.org (Postfix) with ESMTP id 73A4D2151B
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 19:14:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731315AbgLATMv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Dec 2020 14:12:51 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62237 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730070AbgLATMv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Dec 2020 14:12:51 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C16199FEF1;
-        Tue,  1 Dec 2020 14:12:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LTfE+9l0hhRR7Oy1dCmVLfsL620=; b=ug5jYv
-        2YLX2ereBQiK+1leks+tWgtJRnlRw7eUtOwyH7gzEpwJLz21Cm1l+o9prUXerHiI
-        xjY47IGcsx2i6N+TzDxNiEhDJfGqoKw+HTin6mjiBTAjdEDmxBlYqorEsIexEvyb
-        0AHkkEsHAd/+ekeD7Ubu+niivKA55NXBaR60Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kwKqKMLeAMCI8RKwQ+FhLXpbhr6MshyW
-        VdwjNFlDy7JkwX11TjhSnWaiWFFH0yMJmdx07oDN9hAfVcC4f9Kwam/qQ0dANtNk
-        DD6p3bCEYo1DlQ3KOf5XzAhe+kDa6M+k3VZaCjgKaxHJl9zc+XgzjkD5Pw4FqrN9
-        bpGwEPFvJHI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 277A09FEF0;
-        Tue,  1 Dec 2020 14:12:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 341F99FEEF;
-        Tue,  1 Dec 2020 14:12:07 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Nicolas Morey-Chaisemartin <nmoreychaisemartin@suse.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCHv3] imap-send: parse default git config
-References: <51989467-7bac-5e90-5b42-6503c8370988@suse.com>
-Date:   Tue, 01 Dec 2020 11:12:06 -0800
-In-Reply-To: <51989467-7bac-5e90-5b42-6503c8370988@suse.com> (Nicolas
-        Morey-Chaisemartin's message of "Tue, 1 Dec 2020 08:38:16 +0100")
-Message-ID: <xmqqtut5pchl.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1731328AbgLATNa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Dec 2020 14:13:30 -0500
+Received: from relay1-d.mail.gandi.net ([217.70.183.193]:49349 "EHLO
+        relay1-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726213AbgLATN0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Dec 2020 14:13:26 -0500
+X-Originating-IP: 103.82.80.86
+Received: from localhost (unknown [103.82.80.86])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay1-d.mail.gandi.net (Postfix) with ESMTPSA id D56D8240009;
+        Tue,  1 Dec 2020 19:12:43 +0000 (UTC)
+Date:   Wed, 2 Dec 2020 00:42:41 +0530
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     git@vger.kernel.org
+Cc:     Martin =?utf-8?B?U2Now7Zu?= <Martin.Schoen@loewensteinmedical.de>
+Subject: Re: [PATCH v2 0/2] git-gui: Use commit message template
+Message-ID: <20201201191241.6cdzrdcihdzoylwo@yadavpratyush.com>
+References: <20201127145927.26222-1-me@yadavpratyush.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1AB3E6DA-3409-11EB-ADA5-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20201127145927.26222-1-me@yadavpratyush.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nicolas Morey-Chaisemartin <nmoreychaisemartin@suse.com> writes:
+On 27/11/20 08:29PM, Pratyush Yadav wrote:
+> Hi,
+> 
+> This series is a revival of [0] which was pointed to me by [1]. I have
+> made some changes to the patch by Martin.
+> 
+> - The rescan call in proc commit_committree is removed. git-gui goes to
+>   great lengths to avoid a rescan after commit by calculating the status
+>   of the files in memory. It makes sense to keep it that way. The
+>   purpose of the rescan was to reload the commit template in the buffer
+>   after a commit. The rescan path handles that, but we can do that
+>   manually as well.
+> 
+> - Add a call to load the commit message template in 'rescan' directly
+>   instead of relying on 'run_prepare_commit_msg_hook' to do it when the
+>   commit-msg hook does not exist.
+> 
+> In addition, patch 1/2 fixes a small bug in the commit message buffer
+> backup logic that would be exposed by using the template mechanism. If
+> you load git-gui, do some things, and exit it. Then if you change the
+> commit message template (or even remove it), and open git-gui again it
+> will use the previous message for the first commit and then use the new
+> one from the next commit onwards.
+> 
+> This happens because if the commit message buffer in not empty, git-gui
+> saves the contents to save accidental loss of data. And when opening it
+> again, the saved message (which is the older template) obviously gets
+> priority.
+> 
+> [0] https://public-inbox.org/git/1530608011429.41203@loewensteinmedical.de/T/
+> [1] https://github.com/prati0100/git-gui/issues/24
 
-> git imap-send does not parse the default git config settings and thus ignore
-> core.askpass value.
-> Rewrite config parsing to support core settings.
->
-> Reported-by: Philippe Blain <levraiphilippeblain@gmail.com>
-> Signed-off-by: Nicolas Morey-Chaisemartin <nmoreychaisemartin@suse.com>
-> ---
-> Since v2:
-> - Hopefully fixed format-flowed issue in my mail client
-> - Fix style if issues
+Series merged to git-gui/master.
+ 
+> Martin Schön (1):
+>   git-gui: use commit message template
+> 
+> Pratyush Yadav (1):
+>   git-gui: Only touch GITGUI_MSG when needed
+> 
+>  git-gui.sh     | 12 +++++++++---
+>  lib/commit.tcl |  1 +
+>  2 files changed, 10 insertions(+), 3 deletions(-)
+> 
+> --
+> 2.29.2
+> 
 
-Thanks.  Will queue.
+-- 
+Regards,
+Pratyush Yadav
