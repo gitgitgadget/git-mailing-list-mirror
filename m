@@ -2,124 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11785C64E7A
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 11:11:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5CF9C64E7A
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 11:24:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A11A520809
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 11:11:13 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="c9c8FDAP"
+	by mail.kernel.org (Postfix) with ESMTP id 5AD7B206F9
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 11:24:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727473AbgLALLM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Dec 2020 06:11:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42708 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726344AbgLALLM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Dec 2020 06:11:12 -0500
-Received: from mail-vk1-xa44.google.com (mail-vk1-xa44.google.com [IPv6:2607:f8b0:4864:20::a44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41C32C0613D2
-        for <git@vger.kernel.org>; Tue,  1 Dec 2020 03:10:26 -0800 (PST)
-Received: by mail-vk1-xa44.google.com with SMTP id u16so337617vkb.1
-        for <git@vger.kernel.org>; Tue, 01 Dec 2020 03:10:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Aqtwzq5BemVUGNUP5RyBwytY0JIZkCss0EBQtIgx2NQ=;
-        b=c9c8FDAP6H92oevgIsqjVoa11gSH4KtBuJDwyHUeNrqoFwv+LJzDxRGmUrX3diY+Xp
-         qswNDOPjtIhVqcXIfefK5dMV1ygpWPKBYfZn2hd0+oEvw8kKNtfB7QDMf0MMH8e5+/tI
-         8I+lUI+6VTa6EmiliujziA0IvmhS6B4db2bKIEaPhTcdEZSZ2f/4XgWRWnB4hSoHFGLH
-         U4hgTkwKdx0B+jR76vSovLS8V3OBVsmT3L/eEpJeFSvOqUSlg8Yb0yLgAuLNjS2OMCA3
-         UcqdVmiKMM0GpRjyyzw2rmqUeYORlCYS3HzqAx5XdyauwA5Ogc77mkhw0SfBxs6G0/SJ
-         1Wrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Aqtwzq5BemVUGNUP5RyBwytY0JIZkCss0EBQtIgx2NQ=;
-        b=oQK91FomCc/kftYooue+OF8eKV1DIG3JMhP2qImNADquyBXwJxhX80XD5TMP36WP+A
-         oieByYniCiXxCY21i8nuOOGV113wnM+pCZi+Cf8ynblPHDlFdIXItiOGKPJeKiUF8dga
-         GlnovFXIBJ/UgLwRKKTqfGrhVibL4kOrCkJersG00BHGgqHZfA+9piyXyxMXZAY8RtUa
-         gMk1VIP+8kPVf2Wpvd1uQQyCdxXwdKOTZr+R/eWLN8hdTUnWzcO1j+T6IEK8joV3SQiG
-         zCgbvS7id0IEjLInHLmDjhjwa/r76hvF0T8h0qWQj7JJRpHFSEt9/FyxRX6ZBvzErZIe
-         wl9g==
-X-Gm-Message-State: AOAM531AyHZGDdTBb/MzS+InfZoQjenE379deVxHrlUmHbZ+Rx28VTP1
-        Ioum7RhXJDzSN2ajgbaEgsJYXbz3cKitlwBuPYGCjQ==
-X-Google-Smtp-Source: ABdhPJxf+muedVxxhA5DcTRDJuI68+kPjR+FfUK9AtNP3emfmnjgFOGKtKevwl3qfJ8+7WerIndzL9SGauBsxO2SbUs=
-X-Received: by 2002:ac5:c55c:: with SMTP id d28mr1600394vkl.19.1606821025257;
- Tue, 01 Dec 2020 03:10:25 -0800 (PST)
+        id S1729855AbgLALYK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Dec 2020 06:24:10 -0500
+Received: from cloud.peff.net ([104.130.231.41]:47032 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726689AbgLALYK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Dec 2020 06:24:10 -0500
+Received: (qmail 25905 invoked by uid 109); 1 Dec 2020 11:23:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 01 Dec 2020 11:23:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25345 invoked by uid 111); 1 Dec 2020 11:23:29 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 01 Dec 2020 06:23:29 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 1 Dec 2020 06:23:28 -0500
+From:   Jeff King <peff@peff.net>
+To:     Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/5] handling 4GB .idx files
+Message-ID: <X8YnsGsUl53OKFno@coredump.intra.peff.net>
+References: <20201113050631.GA744608@coredump.intra.peff.net>
+ <323fd904-a7ee-061d-d846-5da5afbc88b2@virtuell-zuhause.de>
+ <20201116041051.GA883199@coredump.intra.peff.net>
+ <1403797985.37893.1606777048311@ox.hosteurope.de>
 MIME-Version: 1.0
-References: <pull.801.git.1606545878.gitgitgadget@gmail.com>
- <58f2b0394546e8da2922adcbc38bdb6b53f2b313.1606545878.git.gitgitgadget@gmail.com>
- <X8YaWySkyRU3DA87@coredump.intra.peff.net>
-In-Reply-To: <X8YaWySkyRU3DA87@coredump.intra.peff.net>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Tue, 1 Dec 2020 12:10:14 +0100
-Message-ID: <CAFQ2z_M3C=mCkiPxOLhBSrXR-PDQdb7GLPRWM2egV4cO4a-c0w@mail.gmail.com>
-Subject: Re: [PATCH 3/6] fixup! reftable: rest of library
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1403797985.37893.1606777048311@ox.hosteurope.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 1, 2020 at 11:26 AM Jeff King <peff@peff.net> wrote:
->
-> On Sat, Nov 28, 2020 at 06:44:35AM +0000, Johannes Schindelin via GitGitG=
-adget wrote:
->
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > 0-sized arrays are actually not portable.
->
-> Definitely.
->
-> >  static void test_sizes_to_segments_empty(void)
-> >  {
-> > -     uint64_t sizes[0];
-> > +     uint64_t sizes[1];
-> >
-> >       int seglen =3D 0;
-> >       struct segment *segs =3D
-> > -             sizes_to_segments(&seglen, sizes, ARRAY_SIZE(sizes));
-> > +             sizes_to_segments(&seglen, sizes, 0);
-> >       EXPECT(seglen =3D=3D 0);
-> >       reftable_free(segs);
->
-> I think passing:
->
->   sizes_to_segments(&seglen, NULL, 0);
->
-> may make the code more obvious. Unlike system functions like memcpy(),
-> we can be assured of whether our functions avoid looking at a
-> zero-length array (and size_to_segments does follow that rule).
->
->   This function, of course, is nonsense that real code would not do, and
+On Mon, Nov 30, 2020 at 11:57:27PM +0100, Thomas Braun wrote:
 
-This test was added because 'real' code did this. In particular, if
-you initialize a stack of reftables, the stack has zero elements. The
-test was for the following bugfix
+> Below is what I came up with. It passes here. I've replaced awk with
+> cut from the original draft, and also moved the perl script out of the
+> test as I think the quoting is getting way too messy otherwise. And
+> I've added --no-dangling to git fsck as otherwise it takes forever to
+> output the obvious dangling blobs. The unpack limit is mostly for
+> testing the test itself with a smaller amount of blobs. But I still
+> think it is worthwile to force everything into a pack.
 
-https://github.com/google/reftable/commit/b2e42ecb54e413e494c1fcc13c21e2442=
-2645007
+I think you can get rid of some of the quoting by using perl directly as
+the interpreter, rather than a shell script that only invokes it with
+-e. See below.
 
-Changing the array size to 1 here also prevents Valgrind to mark a
-regression as a OOB write.
+> --- a/t/t1600-index.sh
+> +++ b/t/t1600-index.sh
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+I don't think this should go in t1600; that's about testing the
+.git/index file, not a pack .idx. Probably t5302 would be more
+appropriate.
+
+> @@ -97,4 +97,34 @@ test_expect_success 'index version config precedence' '
+>  	test_index_version 0 true 2 2
+>  '
+>  
+> +{
+> +	echo "#!$SHELL_PATH"
+> +	cat <<'EOF'
+> +	   "$PERL_PATH" -e '
+> +		for (0..154_000_000) {
+> +			print "blob\n";
+> +			print "data <<EOF\n";
+> +			print "$_\n";
+> +			print "EOF\n";
+> +		} '
+> +EOF
+> +
+> +} >dump
+> +chmod +x dump
+
+You can simplify this a bit with write_script, as well. And we do prefer
+to put this stuff in a test block, so verbosity, etc, is handled
+correctly.
+
+I didn't let it run to completion, but something like this seems to
+work:
+
+diff --git a/t/t1600-index.sh b/t/t1600-index.sh
+index 6d83aaf8a4..a4c1dc0f0a 100755
+--- a/t/t1600-index.sh
++++ b/t/t1600-index.sh
+@@ -97,23 +97,16 @@ test_expect_success 'index version config precedence' '
+ 	test_index_version 0 true 2 2
+ '
+ 
+-{
+-	echo "#!$SHELL_PATH"
+-	cat <<'EOF'
+-	   "$PERL_PATH" -e '
+-		for (0..154_000_000) {
+-			print "blob\n";
+-			print "data <<EOF\n";
+-			print "$_\n";
+-			print "EOF\n";
+-		} '
+-EOF
+-
+-} >dump
+-chmod +x dump
+-
+ test_expect_success EXPENSIVE,PERL 'Test 4GB boundary for the index' '
+ 	test_config fastimport.unpacklimit 0 &&
++	write_script dump "$PERL_PATH" <<-\EOF &&
++	for (0..154_000_000) {
++		print "blob\n";
++		print "data <<EOF\n";
++		print "$_\n";
++		print "EOF\n";
++	}
++	EOF
+ 	./dump | git fast-import &&
+ 	blob=$(echo 0 | git hash-object --stdin) &&
+ 	git cat-file blob $blob >actual &&
+
+> +test_expect_success EXPENSIVE,PERL 'Test 4GB boundary for the index' '
+
+You can drop the PERL prereq. Even without it set, we assume that we can
+do basic perl one-liners that would work even in old versions of perl.
+
+I'm not sure if EXPENSIVE is the right ballpark, or if we'd want a
+VERY_EXPENSIVE. On my machine, the whole test suite for v2.29.0 takes 64
+seconds to run, and setting GIT_TEST_LONG=1 bumps that to 103s. It got a
+bit worse since then, as t7900 adds an EXPENSIVE test that takes ~200s
+(it's not strictly additive, since we can work in parallel on other
+tests for the first bit, but still, yuck).
+
+So we're looking at 2-3x to run the expensive tests now. This new one
+would be 20x or more. I'm not sure if anybody would care or not (i.e.,
+whether anyone actually runs the whole suite with this flag). I thought
+we did for some CI job, but it looks like it's just the one-off in
+t5608.
+
+> +	git cat-file blob $final &&
+> +	git cat-file blob fffffff &&
+
+This final cat-file may be a problem when tested with SHA-256. You are
+relying on the fact that there is exactly one object that matches seven
+f's as its prefix. That may be true for SHA-1, but if so it's mostly
+luck.  Seven hex digits is only 28 bits, which is ~260M. For 154M
+objects, we'd expect an average of 0.57 objects per 7-digit prefix. So I
+wouldn't be at all surprised if there are two of them for SHA-256.
+
+I'm also not sure what it's testing that the $final one isn't.
+
+-Peff
