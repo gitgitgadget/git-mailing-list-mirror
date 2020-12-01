@@ -2,105 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A864C63777
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 00:55:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5798C71156
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 02:28:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 463E520809
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 00:55:15 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VVzvDJ2z"
+	by mail.kernel.org (Postfix) with ESMTP id 8F5FC20809
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 02:28:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387924AbgLAAzO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Nov 2020 19:55:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60524 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727473AbgLAAzO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Nov 2020 19:55:14 -0500
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2C0FC0613CF
-        for <git@vger.kernel.org>; Mon, 30 Nov 2020 16:54:33 -0800 (PST)
-Received: by mail-ot1-x336.google.com with SMTP id f12so70586oto.10
-        for <git@vger.kernel.org>; Mon, 30 Nov 2020 16:54:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=T9nVL/dorCCVkE+Ics2KeVkw7mgrd8hr0iScRJ1OoNA=;
-        b=VVzvDJ2zI2B0puqMyhVkJMM3/V3xbkerusaTuS/oFy0qcthTOtrbeURCCu+GkVTyJP
-         pgetjSyV0EhiCVIXp3dJk7wdAey90FAT1l1R5IucuKuhYSpZpG0XMP+OustAySraalCX
-         0ywRPD9MlCLWcB13RV4yxcr85oCDs4TO2A9oWhC3tm+ziU/b5mmCD2xrnxd5sXtdlPjU
-         QLu7UONEeu0apNcSzGMP1itgboTUK5jwtAcSp2kv+WoFKaWseqbqCXwKKCF3nPkiKM3H
-         r6F5dSK4uZKSfDEBoePT+EK1TPrukYoMHLfxWB6p2mJ5Ey325UXwJfKh2p0GgARCg/Kc
-         5VCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=T9nVL/dorCCVkE+Ics2KeVkw7mgrd8hr0iScRJ1OoNA=;
-        b=d6uno5x45YTbMkh8wknVkk18QScvu/TvJe6WsWNmu7i5BsXtBalTpN1O0/lLaXDlGF
-         gjIQPRjBUl4VeUHISiE8m8UoMUV6ogAbHYwXBWhLg4SbFaulw2Wq5bw+UH0W6CpgrUgM
-         D5WKpVGSDQA/xaEquoQQGPfb+iPkU7ulMyfq+YyJ2/6KwoeXgJ4eiKl7O7F1pulH82Mf
-         J8Qu0YkkWiiUrjAUKCPegQipwLQivMYiBryp1v6t9vRIyWzzWTje6uO2cBSKrH2452xc
-         KLxGXMTr0MOkFQdcDhSN3X7ZU/IR7ZHPsCS3sTxSnA89fRpHMVk1pHG201TNWj5GdpMW
-         Q2Cg==
-X-Gm-Message-State: AOAM531I+Dz7AdqtoPLc1eekPtpwcBAJXjiEI85EJY5Xdn7ioLDLZWt4
-        QfSGJ1N5zuagyl+TKTRyFugGVQV1Qj1UPQ==
-X-Google-Smtp-Source: ABdhPJyJzG+nJTFCYwjvortAV04r1MbGvKL8/1tXbcl6Ni5dKhFBU6nAU3cZ/BPyBePs0wBJsKEcAA==
-X-Received: by 2002:a9d:24a6:: with SMTP id z35mr118399ota.61.1606784073121;
-        Mon, 30 Nov 2020 16:54:33 -0800 (PST)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id i43sm9402ota.39.2020.11.30.16.54.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Nov 2020 16:54:32 -0800 (PST)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH try2] completion: zsh: fix file completion regression
-Date:   Mon, 30 Nov 2020 18:54:31 -0600
-Message-Id: <20201201005431.57963-1-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.29.2
+        id S1726483AbgLAC2Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Nov 2020 21:28:16 -0500
+Received: from cloud.peff.net ([104.130.231.41]:46636 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725920AbgLAC2Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Nov 2020 21:28:16 -0500
+Received: (qmail 22208 invoked by uid 109); 1 Dec 2020 02:27:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 01 Dec 2020 02:27:36 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22155 invoked by uid 111); 1 Dec 2020 02:27:35 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 30 Nov 2020 21:27:35 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 30 Nov 2020 21:27:35 -0500
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, emilyshaffer@google.com
+Subject: Re: [PATCH v2] builtin/bugreport.c: use thread-safe localtime_r()
+Message-ID: <X8WqFynk23yWT6E3@coredump.intra.peff.net>
+References: <27fc158339c91f56210f00dae9015da1d6c781ec.1606777520.git.me@ttaylorr.com>
+ <73eb4965807ea2fdf94f815a8f8a2b036296ecca.1606782566.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <73eb4965807ea2fdf94f815a8f8a2b036296ecca.1606782566.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Turns out we always need to set the ignored prefix (compset) to have
-similar behavior as in default Bash.
+On Mon, Nov 30, 2020 at 07:30:06PM -0500, Taylor Blau wrote:
 
-The issue can be seen with:
+> @@ -147,7 +148,7 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
+>  	strbuf_complete(&report_path, '/');
+> 
+>  	strbuf_addstr(&report_path, "git-bugreport-");
+> -	strbuf_addftime(&report_path, option_suffix, localtime(&now), 0, 0);
+> +	strbuf_addftime(&report_path, option_suffix, localtime_r(&now, &tm), 0, 0);
+>  	strbuf_addstr(&report_path, ".txt");
 
-  git show master:<tab>
+I briefly wondered if we'd want a strbuf_addftime() variant that just
+takes a time_t. But the choice of localtime vs gmtime makes this
+awkward, not to mention the gymnastics we do in show_date() to get
+things into the author's zone. So this looks good to me.
 
-Commit 94b2901cfe wrongly removed it.
+We might also want to do this on top:
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+-- >8 --
+Subject: [PATCH] banned.h: mark non-reentrant gmtime, etc as banned
+
+The traditional gmtime(), localtime(), ctime(), and asctime() functions
+return pointers to shared storage. This means they're not thread-safe,
+and they also run the risk of somebody holding onto the result across
+multiple calls (where each call invalidates the previous result).
+
+All callers should be using gmtime_r() or localtime_r() instead.
+
+The ctime_r() and asctime_r() functions are OK in that respect, but have
+no check that the buffer we pass in is long enough (the manpage says it
+"should have room for at least 26 bytes"). Since this is such an
+easy-to-get-wrong interface, and since we have the much safer stftime()
+as well as its more conveinent strbuf_addftime() wrapper, let's likewise
+ban both of those.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
+TBH, ctime() and its variants are so awful that I doubt anybody would
+try to use them, but it doesn't hurt to err on the side of caution.
 
-This is a regression since the last big chunk of changes.
+ banned.h | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
- contrib/completion/git-completion.zsh | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index e0fda27f4c..6c56296997 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -116,6 +116,7 @@ __gitcomp_file ()
- {
- 	emulate -L zsh
+diff --git a/banned.h b/banned.h
+index 60a18d4403..7ab4f2e492 100644
+--- a/banned.h
++++ b/banned.h
+@@ -29,4 +29,17 @@
+ #define vsprintf(buf,fmt,arg) BANNED(vsprintf)
+ #endif
  
-+	compset -P '*[=:]'
- 	compadd -f -p "${2-}" -- ${(f)1} && _ret=0
- }
- 
++#undef gmtime
++#define gmtime(t) BANNED(gmtime)
++#undef localtime
++#define localtime(t) BANNED(localtime)
++#undef ctime
++#define ctime(t) BANNED(ctime)
++#undef ctime_r
++#define ctime_r(t, buf) BANNED(ctime_r)
++#undef asctime
++#define asctime(t) BANNED(asctime)
++#undef asctime_r
++#define asctime_r(t, buf) BANNED(asctime_r)
++
+ #endif /* BANNED_H */
 -- 
-2.29.2
+2.29.2.853.g04e16501f9
 
