@@ -2,85 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40A2EC83016
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 00:32:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93919C63777
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 00:48:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 19DC920706
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 00:32:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 545D520809
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 00:48:02 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eyYQQ2Vc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389158AbgLAAcm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Nov 2020 19:32:42 -0500
-Received: from mail-ej1-f68.google.com ([209.85.218.68]:45922 "EHLO
-        mail-ej1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726316AbgLAAcl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Nov 2020 19:32:41 -0500
-Received: by mail-ej1-f68.google.com with SMTP id qw4so182362ejb.12
-        for <git@vger.kernel.org>; Mon, 30 Nov 2020 16:32:26 -0800 (PST)
+        id S2389162AbgLAArj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Nov 2020 19:47:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59326 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389150AbgLAArj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Nov 2020 19:47:39 -0500
+Received: from mail-oo1-xc44.google.com (mail-oo1-xc44.google.com [IPv6:2607:f8b0:4864:20::c44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E6FAC0617A6
+        for <git@vger.kernel.org>; Mon, 30 Nov 2020 16:46:59 -0800 (PST)
+Received: by mail-oo1-xc44.google.com with SMTP id l20so17882oot.3
+        for <git@vger.kernel.org>; Mon, 30 Nov 2020 16:46:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=J4ApOr0TN5Ls6zxLxW5FNxUuULjVWpIh3mM0eEFSUWE=;
+        b=eyYQQ2VcHgRlmXckWGooRS+Gt7t4791A0guNvDQEsnmOIxH7sZ93i9Cd2m/qZ3T7jo
+         +UVr+o/8eYYccwZtByaNXAK004nPkClptQXj26I6nGqEjFb/ZwDCnxIrTC9HlaNYBnaK
+         hROMMxJQ+7f7HuVbTX3TBGZbJGj7EhTb2xpKZUwiRTYvKouk8VIGgEzf8SZhZsdKl1Mf
+         JaZboDKwQXsbf+0DXkQ5gCq5Q/i7B5p9sCe74aXJEvwZhGl/FyxhnJVIsVJpbMtFn2Oo
+         HlVgtcdgONJkJGHASp6iqahFOd6WVZYyzazhpbLMzyFcuyO3yksaR8AWE2sytNKpwnjC
+         NxSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=I6LyUzWvsYeWKPDCsK1pzrqg4umFylW7dqGuRXkjzRE=;
-        b=qLMeCGTekqXRwq8S9yIs2y0xmHBD3tKGVQw/n6cbYbr0jg4TXvpSn0Z1hHYGitxkof
-         cvudMSCcmB1bDQEfd6ge9sWE5UL07VRwVoHFviHxoRqKpKVrikWW2hHrIJqqiOvr6cuU
-         FrB2EQGY+Jid3vF+IrI8HMXWEty4eP5Vbh8v9w6YFOImp0GWSzZXUmszHIh+63j+BhQd
-         FcPUxsI5dJlt+ejzhqZ7g4vtIdeI+kKDadx1ZEPQ1UQYgZem4kDT1UqoB0VEqpR1b9Uo
-         k9Zs5IGMWMkbGVuEVkeH0+qiN/CqAcffCbH5hpbt4EejuppSdZ+8pqSKOZcZSlyYpdIc
-         8TAg==
-X-Gm-Message-State: AOAM533r/gZNArhDl+ti7GnuoGFChvFjN17cAbhQXRZS4j4p5rNQ3lMp
-        rmaul6IfhTcWomQEJi0ugrek4fU2EHbXypTM5mY=
-X-Google-Smtp-Source: ABdhPJwIk57GvgGCqSGCwKH7SVaAQ0kKJX3T0wBCXqxzrodjb9XdbAFYhOyp9pygh5qT65POGUXyFSwIsc5TNmxL47A=
-X-Received: by 2002:a17:906:d8dc:: with SMTP id re28mr468424ejb.168.1606782720427;
- Mon, 30 Nov 2020 16:32:00 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=J4ApOr0TN5Ls6zxLxW5FNxUuULjVWpIh3mM0eEFSUWE=;
+        b=sjk8LQDcGgBly2cBLGHwpomjijZrLPYlfy3TB+1+HUK7wl2o2sf3o5A4czCAJmwQ7x
+         QXYNxq3m5oKLgEaWb/Nks5+YeX8OoXXwJVrr8kO8+V8AOB63+Cool3NoZgrNXnmPCaE6
+         v0SXik6WR0+aesBQh5KAi8rKnBFIrUxz290MjojZ2VyIv48jd/9ViNCqL3xVU7yo1CF6
+         y6AM54yv+lSSzhgubnBKhVT30cG11sH04k9ABPkQ+GqMbflznHsr2IQV7pzySRlPbHw7
+         5KReqTUKn4ymiT/K8EWComys7L936hXsplEXQrEhXENJCSCXVipBhN68Q7b0Xt4mdwb5
+         LkJg==
+X-Gm-Message-State: AOAM531AE0cmxDPtLIWdk9RFcYchIb/xpuLxzjMtmwkrsNABkWNNq/lu
+        5AEIqE7P3JXUQqgw1QhN1kva1BzO6LDDEg==
+X-Google-Smtp-Source: ABdhPJxxHsec08digfoAe7ETHJhSV72NmQhiETG+/SYz3IWuZEVJT/ENDnflA9bnXrboJGXb21yu7g==
+X-Received: by 2002:a05:6820:104d:: with SMTP id x13mr213785oot.41.1606783618634;
+        Mon, 30 Nov 2020 16:46:58 -0800 (PST)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id r4sm996otd.66.2020.11.30.16.46.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Nov 2020 16:46:58 -0800 (PST)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 4/4] tests: lib-functions: trivial style cleanups
+Date:   Mon, 30 Nov 2020 18:46:49 -0600
+Message-Id: <20201201004649.57548-5-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20201201004649.57548-1-felipe.contreras@gmail.com>
+References: <20201201004649.57548-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
-References: <27fc158339c91f56210f00dae9015da1d6c781ec.1606777520.git.me@ttaylorr.com>
-In-Reply-To: <27fc158339c91f56210f00dae9015da1d6c781ec.1606777520.git.me@ttaylorr.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 30 Nov 2020 19:31:49 -0500
-Message-ID: <CAPig+cRx03potus-ea-4J8mCuG3vVeQBJ8NcEh_Hs2yJqaoXcw@mail.gmail.com>
-Subject: Re: [PATCH] builtin/bugreport.c: use thread-safe localtime_r()
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 30, 2020 at 6:10 PM Taylor Blau <me@ttaylorr.com> wrote:
-> To generate its filename, the 'git bugreport' builtin asks the system
-> for the current time with 'localtime()'. Since this uses a shared
-> buffer, it is not thread-safe.
->
-> Even though 'git bugreport' is not multi-threaded, using localtime() can
-> trigger some static analysis tools to complain, and a quick
->
->     $ git grep -oh 'localtime\(_.\)\?' -- **/*.c | sort | uniq -c
->
-> shows that the only usage of the thread-unsafe 'localtime' is in a piece
-> of documentation.
->
-> So, convert this instance to use the thread-safe version for
-> consistency, and to appease some analysis tools.
-> ---
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ t/test-lib-functions.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Missing sign-off.
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 7ba3011b90..a791f2f1d6 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -955,7 +955,7 @@ test_expect_code () {
+ # - cmp's output is not nearly as easy to read as diff -u
+ # - not all diff versions understand "-u"
+ 
+-test_cmp() {
++test_cmp () {
+ 	eval "$GIT_TEST_CMP" '"$@"'
+ }
+ 
+@@ -968,7 +968,7 @@ test_cmp() {
+ #
+ #    test_cmp_config foo core.bar
+ #
+-test_cmp_config() {
++test_cmp_config () {
+ 	local GD &&
+ 	if test "$1" = "-C"
+ 	then
+@@ -984,7 +984,7 @@ test_cmp_config() {
+ 
+ # test_cmp_bin - helper to compare binary files
+ 
+-test_cmp_bin() {
++test_cmp_bin () {
+ 	cmp "$@"
+ }
+ 
+@@ -1418,7 +1418,7 @@ nongit () {
+ # whitespace and put in a single packet. Note that data containing NULs must be
+ # given on stdin, and that empty input becomes an empty packet, not a flush
+ # packet (for that you can just print 0000 yourself).
+-packetize() {
++packetize () {
+ 	if test $# -gt 0
+ 	then
+ 		packet="$*"
+-- 
+2.29.2
 
-> This is purely academic, since this clearly isn't a thread-unsafe usage
-> of that function, but it should appease any other static analysis tools
-> that folks might run.
-
-It's not only multi-threaded cases for which it could be a problem,
-but also cases in which the caller holds onto the pointer to the
-returned shared buffer assuming it will remain valid until use. If the
-caller invokes some other code which itself calls localtime(), then
-the buffer might be overwritten before the original caller uses the
-value. But, you're right that in this particular case it's academic
-since strbuf_addftime() doesn't do anything which should clobber the
-shared buffer.
-
-The patch itself looks fine.
