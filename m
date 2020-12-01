@@ -2,91 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4F8EC8300F
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 18:31:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4794C64E7A
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 18:35:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5420321741
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 18:31:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6EEF5208C3
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 18:35:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ctAKOF0G"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="EhBJnPMx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392242AbgLASa7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Dec 2020 13:30:59 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64286 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391625AbgLASa5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Dec 2020 13:30:57 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9D4BF113E43;
-        Tue,  1 Dec 2020 13:30:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wWptkOy0A5wa93mS+z3P2l+00QM=; b=ctAKOF
-        0GxwHFcINXGLbdXklhGuEc6VZldA4HY0vfb3Amd6l1CNNxeVCdnSNk03mLFDlVTU
-        MsPIDE5nOQjLeSRWY7Ko9mc/ZvThVk141Lf3SebcThyTRcQZcNFhOyVlwcdQi1U7
-        NoJJwVW07BFhJCk36B49aje4N+UCcSNfZ83yM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HkoI2h1ZqCsIi+DzQAdin24Fj+1sEsHs
-        PWOSwCL/5UmuoERTlNIwTK2rWq5eVFiuE46nlL/KlyaOKk8vMQkx4oVeIc6flb3U
-        ZSdvBVK2+sJ3ITTMgQM5NTR2QYnrcpeO0jHThu8k9wIS/JhJ5sNhg1rUhcT3Da3j
-        nQ9mXnAPFnk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 96608113E42;
-        Tue,  1 Dec 2020 13:30:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6ADF1113E3F;
-        Tue,  1 Dec 2020 13:30:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/4] .gitignore: remove dangling file
-References: <20201201004649.57548-1-felipe.contreras@gmail.com>
-        <20201201004649.57548-3-felipe.contreras@gmail.com>
-Date:   Tue, 01 Dec 2020 10:30:12 -0800
-In-Reply-To: <20201201004649.57548-3-felipe.contreras@gmail.com> (Felipe
-        Contreras's message of "Mon, 30 Nov 2020 18:46:47 -0600")
-Message-ID: <xmqqczztqszv.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S2392264AbgLASfV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Dec 2020 13:35:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56130 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392252AbgLASfV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Dec 2020 13:35:21 -0500
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D436C0613D4
+        for <git@vger.kernel.org>; Tue,  1 Dec 2020 10:34:35 -0800 (PST)
+Received: by mail-pl1-x641.google.com with SMTP id v21so1602216plo.12
+        for <git@vger.kernel.org>; Tue, 01 Dec 2020 10:34:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=5KUiZn07fiM7L5+Tmj0DNGuM7eN6CgFE0NqthSxBwcs=;
+        b=EhBJnPMxRu3yen6o+nCWJR4YjcQTHR3D1C/htleEP9HgD8LhxsvSqNsoMJVPttvqVi
+         047dU4blY+4s9yKcrpnFxLiW8Rnjb+a9e8c/Rs7hZG9zCzInGxjI+sX9p2IrMK9ysnVL
+         4fkW8sKqIkUapu5aNxhr9522+LyUiNZn5b45dE6/zTI9UyUG3GEGE7enOlaGiiWegX78
+         b4M+gbRgpqn7SJlZ72bK8vidgcg+gJkm38x5nFU43M+xqvR2KDhRuo/ntKINqY0mfISi
+         HYp4MEtYSWpcavm2pz2MjzjJjMbbo+Zo+oubQIPDjnfYblvVuINtUXhHbYkSTRnCRV9E
+         6H4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=5KUiZn07fiM7L5+Tmj0DNGuM7eN6CgFE0NqthSxBwcs=;
+        b=LMmiUhBNNsywQ4lec648RJ6fB0axdWi62uoE/CPF88JmN4sST6tyl0RWU6S26oWxOK
+         o2HfeBg+0jNubZm60zC9rEUg8i1x6I+PP4337p4K/ynHzhReOPfYmUv5q99JBfF3z73a
+         iBXwdFM4E4U2sUoL+TdOjo35N/EuFGZ0RhpsBDV5fHtL35nqOH1ay5ox4WNwvlVDt0xS
+         qqal1jYC+l5qeiRpiYAoqvMigzhDYET6dQ4ZARnsBXp/rvb8aMnWr+CX4SL0yLMrGSO5
+         TXYOCsiJ1LYf0E5g05f9T7XWGYHNL47GkNS/If18xFt+ccPCqPnh8xYYyRy2AWP7ill1
+         hMyQ==
+X-Gm-Message-State: AOAM533M8dEcX52DmpVR+Q1DoFpakcXEmxX2ROxUgubCTkeObPeLlnoD
+        Mc6mW148yvmW64Q9ulg/jOLYSw==
+X-Google-Smtp-Source: ABdhPJxcp2NzWw3N/o3fBY0treE5m+5waTn3jFWYUrmk/i+boNzxZxQOcYaKTHOjroTC3pTzj1nqFQ==
+X-Received: by 2002:a17:902:b192:b029:d7:ca4a:4ec1 with SMTP id s18-20020a170902b192b02900d7ca4a4ec1mr4037230plr.76.1606847674593;
+        Tue, 01 Dec 2020 10:34:34 -0800 (PST)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id z126sm464915pfz.120.2020.12.01.10.34.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Dec 2020 10:34:34 -0800 (PST)
+Date:   Tue, 1 Dec 2020 13:34:31 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        git@vger.kernel.org, emilyshaffer@google.com
+Subject: Re: [PATCH v2] builtin/bugreport.c: use thread-safe localtime_r()
+Message-ID: <X8aMt2LEiCLkdV9/@nand.local>
+References: <27fc158339c91f56210f00dae9015da1d6c781ec.1606777520.git.me@ttaylorr.com>
+ <73eb4965807ea2fdf94f815a8f8a2b036296ecca.1606782566.git.me@ttaylorr.com>
+ <X8WqFynk23yWT6E3@coredump.intra.peff.net>
+ <xmqqlfehqt4n.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 40F8D0C2-3403-11EB-9F47-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqlfehqt4n.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Tue, Dec 01, 2020 at 10:27:20AM -0800, Junio C Hamano wrote:
+> I am not opposed to banning ctime_r() and asctime_r(), but I do not
+> want to see our future readers wonder why they are banned by the
+> commit whose title clearly states that we refuse non-reentrant ones
+> in our codebase.
 
-> The library was removed 7 years ago on commit ae34ac126f. But not from
-> the .gitignore file.
->
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
+Agreed. Maybe splitting these into two (one to ban non-reentrant
+functions, and another to ban ctime_r() and asctime_r()) would help.
 
-Good eyes.  Any automation used here, or just mark I eyeballs?
-
->  .gitignore | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/.gitignore b/.gitignore
-> index f85d02c854..7c5096aee5 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -135,7 +135,6 @@
->  /git-remote-ftps
->  /git-remote-fd
->  /git-remote-ext
-> -/git-remote-testpy
->  /git-repack
->  /git-replace
->  /git-request-pull
+Thanks,
+Taylor
