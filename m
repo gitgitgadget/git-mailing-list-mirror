@@ -2,113 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41357C64E7B
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 18:28:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38757C64E7A
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 18:31:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C0D13208C3
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 18:28:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C144521741
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 18:31:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="B0g9NUKq"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RVywcyDd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387531AbgLAS2Q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Dec 2020 13:28:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55010 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728362AbgLAS2P (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Dec 2020 13:28:15 -0500
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B89B6C0613CF
-        for <git@vger.kernel.org>; Tue,  1 Dec 2020 10:27:29 -0800 (PST)
-Received: by mail-pf1-x442.google.com with SMTP id b10so1663345pfo.4
-        for <git@vger.kernel.org>; Tue, 01 Dec 2020 10:27:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=lvpMUdPKFa7WYHIAbjoeqdpjJlKqeoOajEDo8BqpKYQ=;
-        b=B0g9NUKq+TI23mehXvf/Sr0mNff68GOYe4gaKz9j7o1KYcSUqF/hGluuY2hSkScH+h
-         6blFMgK3IwGvP9JvTKShzld59J8DpsOhhyGIVgXTMY0dpr6FQ0jB78FWKZAghueLT9as
-         I0YwhSe1S7fyJDW/lV7joqpaVAUNvMbWq8RTkntN3ibQGkVv15PB7XIYlYMlj7jVFSfo
-         8vRRSmRuLmjYVVMdgVSBkkaX3ZkY9DsF/+mJwilC4ZpX84Y0u/gFiqNlv0tmYxSIqAB1
-         KYfD37YHvDGP8yPP4pNNQ2Bs82jtYk5+r+JVq1sD6yJ8pbkqctQ4UyKXy+Zk7OUmQ1uB
-         4EVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=lvpMUdPKFa7WYHIAbjoeqdpjJlKqeoOajEDo8BqpKYQ=;
-        b=dBxzyT/a/SYpivxR37ns1XWPq36ILz8XrERmoCkSrfBrpVwzjv/7ThRcwld2+YebOd
-         OH3HmK2Ot1SclhU7EncMoLyAJdcX6mmBROY92fEpdHhNUVBTd7X+5yySSREfkY3Ao8Cp
-         SbLzk8LyJFJD0lagl+wJxuUn+RNStcAJi5z/Xu0DDjQhuD/6xft0OqOAeiUCAyEs3QZ+
-         2kjq6jLA3N7ck9bL22bGS/C9pNiPJq0pIdknY+6eURIVofi5ZyzMdMyZMHzVtpHV2S2a
-         PS+j4rTiqz7VV+qJjmZO751BvTw6Ih40Wr3pysUedHxbElrFTC6SwEI6fnrha4d3OB/v
-         OXCg==
-X-Gm-Message-State: AOAM532pM/GYUTS/6VMeEmdxRYQtH0g810OU/mfJ4fXlOagKlfp6d0Qf
-        sOpYdYlgdqcHcWHhr+IWDOBM+w==
-X-Google-Smtp-Source: ABdhPJzm6OmkxQjXES2Um2laFYZZ2opykX8Do7tI6wNeAQ89z68rHZRnH/lC84pIidwQKQ3y9dC/oQ==
-X-Received: by 2002:aa7:9244:0:b029:19a:b335:754b with SMTP id 4-20020aa792440000b029019ab335754bmr3643258pfp.29.1606847249191;
-        Tue, 01 Dec 2020 10:27:29 -0800 (PST)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id q13sm401801pjq.15.2020.12.01.10.27.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Dec 2020 10:27:28 -0800 (PST)
-Date:   Tue, 1 Dec 2020 13:27:26 -0500
-From:   Taylor Blau <me@ttaylorr.com>
+        id S2392208AbgLASam (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Dec 2020 13:30:42 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58757 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391895AbgLASaZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Dec 2020 13:30:25 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 72C229F9FF;
+        Tue,  1 Dec 2020 13:29:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+CA4VEz1tSvDA/enKyhiTEn3FbM=; b=RVywcy
+        DdKi4dt81Dipotv0bpKzL98sjozcTNBZWbiE3AjOk4voagB7qCwJUYvKYGs8uqt3
+        Y88gIx0lzmvhX7u1FwnyBak8cMlfYlx1CBoNxHtvWP42iq0IEsnpPcdNh3Uue3CG
+        Zy/Q7hhHiIRhCjx1BVVVEDegAMBmMy/Gis4hI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=YMAHHG00cLGtd8EVlJVGyCz1STCfF0Sv
+        a73KWVuMiXobSCDL1FSQgkuYbMkvgKKp/3C6KYK1XeQkw+6Fd+TqnC7jCa+K4mBo
+        WdF/Rc/EEHmouVH9MD9mdV5ENrs1N5HyZFJGJhfJAFXOLgHLCh9Muy1NMIHTK0wp
+        bdJD3NKu48w=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6822F9F9FE;
+        Tue,  1 Dec 2020 13:29:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C9EC99F9FD;
+        Tue,  1 Dec 2020 13:29:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Thomas Braun <thomas.braun@virtuell-zuhause.de>,
-        Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/5] handling 4GB .idx files
-Message-ID: <X8aLDlzcNCwP699c@nand.local>
-References: <20201113050631.GA744608@coredump.intra.peff.net>
- <323fd904-a7ee-061d-d846-5da5afbc88b2@virtuell-zuhause.de>
- <20201116041051.GA883199@coredump.intra.peff.net>
- <1403797985.37893.1606777048311@ox.hosteurope.de>
- <X8YnsGsUl53OKFno@coredump.intra.peff.net>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/4] refspec: trivial cleanup
+References: <20201201004649.57548-1-felipe.contreras@gmail.com>
+        <20201201004649.57548-2-felipe.contreras@gmail.com>
+        <X8YsXjN7MQrLnytw@coredump.intra.peff.net>
+Date:   Tue, 01 Dec 2020 10:29:42 -0800
+In-Reply-To: <X8YsXjN7MQrLnytw@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 1 Dec 2020 06:43:26 -0500")
+Message-ID: <xmqqh7p5qt0p.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <X8YnsGsUl53OKFno@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2E219830-3403-11EB-9608-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 01, 2020 at 06:23:28AM -0500, Jeff King wrote:
-> I'm not sure if EXPENSIVE is the right ballpark, or if we'd want a
-> VERY_EXPENSIVE. On my machine, the whole test suite for v2.29.0 takes 64
-> seconds to run, and setting GIT_TEST_LONG=1 bumps that to 103s. It got a
-> bit worse since then, as t7900 adds an EXPENSIVE test that takes ~200s
-> (it's not strictly additive, since we can work in parallel on other
-> tests for the first bit, but still, yuck).
+Jeff King <peff@peff.net> writes:
+
+> On Mon, Nov 30, 2020 at 06:46:46PM -0600, Felipe Contreras wrote:
 >
-> So we're looking at 2-3x to run the expensive tests now. This new one
-> would be 20x or more. I'm not sure if anybody would care or not (i.e.,
-> whether anyone actually runs the whole suite with this flag). I thought
-> we did for some CI job, but it looks like it's just the one-off in
-> t5608.
+>> We can remove one level of indentation and make the code clearer. So why
+>> not do so?
+>
+> I know your question was rhetorical, but a good reason not to do so in
+> general is that the existing pattern reveals some intent. E.g., it
+> sometimes is the case that with the _current_ code we can return early
+> from a function or loop, but that is not inherent to what the code is
+> doing, and the early return or continue makes it harder to understand
+> that.
+>
+> I don't think that is the case here, though. The continue actually
+> expresses the intent more clearly than the existing code.
+>
+> So the patch looks good to me (as do the others in the series).
 
-I had written something similar yesterday before mutt crashed and I
-decided to stop work for the day.
+Yup, the patch text (eh, the source with the patch applied) looks
+good.  I'd agree with your hintand would take rhetorical question
+out of the log message while queuing.
 
-I have a sense that probably very few people actually run GIT_TEST_LONG
-regularly, and that that group may vanish entirely if we added a test
-which increased the runtime of the suite by 20x in this mode.
-
-I have mixed feelings about VERY_EXPENSIVE. On one hand, having this
-test checked in so that we can quickly refer back to it in the case of a
-regression is useful. On the other hand, what is it worth to have this
-in-tree if nobody ever runs it? I'm speculating about whether or not
-people would run this, of course.
-
-My hunch is that anybody who is interested enough to fix regressions in
-this area would be able to refer back to the list archive to dig up this
-thread and recover the script.
-
-I don't feel strongly, really, but just noting some light objections to
-checking this test into the suite.
-
-Thanks,
-Taylor
+Thanks.
