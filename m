@@ -2,159 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0B75C64E7B
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 20:55:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17E6EC64E7A
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 20:59:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5769821741
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 20:55:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8AC3D21741
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 20:59:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E/JHQ2iU"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="E70hxaJi"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387632AbgLAUzn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Dec 2020 15:55:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49712 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725899AbgLAUzm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Dec 2020 15:55:42 -0500
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2453C0613D4
-        for <git@vger.kernel.org>; Tue,  1 Dec 2020 12:55:02 -0800 (PST)
-Received: by mail-ot1-x32d.google.com with SMTP id f12so3032906oto.10
-        for <git@vger.kernel.org>; Tue, 01 Dec 2020 12:55:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=OnWszd/fA8Br7R0VADkUDI3hf2mOENhai6ysMFOotAM=;
-        b=E/JHQ2iUMBuGD6oOV6tpy/6GMuYeATvByHVnhFhbewTihRj5ChVKCZzA7/RMVbZ11G
-         TxceMic6Evr6Ka+/oQ9eEwgGWlNtFifF0u9W431aFJia/asVf5Kdtxim9kzIRF2EoOEw
-         /+YbD9byHyAlxvX/kNUoU41ln2KfOGHsrIvkILHWSdem4pUoxrT9YjNCG+aA6Czyleyk
-         +2knbgmWW54lM8XI+B1Hu2TkwJ/I0PxnX/Md6ealkIwFMeVOqgko+CiRGwZKQESS20jr
-         0/lAArYlBhWpYKeHOzFhO8ddKWOpPNmyaZWq7hBtt0eS9AaRNcZ3VXl+wIWhiTJQbVoj
-         GaUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=OnWszd/fA8Br7R0VADkUDI3hf2mOENhai6ysMFOotAM=;
-        b=nNe4uXPJ0im6ElRTe0rKhfw7jz/q8p8XE3XBqd5rhidyIn1n3QzglOpymTstkLtSTe
-         4OwU9ETlaFr9RfueuziCG0Qvz4swCxx4GBeqgG+jQeIBQTtOjvPbirkmMCuhOg6HFNxm
-         YCUXPBAWmNSgXgPkdQEYeknKS5MoN6G3P3xlFJNVU/MVa03GJ+ZbwGXVfgy4ViTTSNyU
-         p+jsrBD8zIbMX48emDW/amKZPk0HLlshhm+YDvNSoRxr2f1mwoJDC6z0oBgwy4XTughr
-         yyor4vSQ7tHWsKgmrk/RrBbbK6MwEI04bcDgaIFGf9wy4afCsfh8WunHRs/9NsTIGPKY
-         /hRg==
-X-Gm-Message-State: AOAM5301sJQXVSX7KvrK8UAxEFiRHZn1qy1lZVbdbt8iuKRcJqgqroYg
-        Jei6lxSUi7MjCXLCc61FnNJPjGyISoZQNQ==
-X-Google-Smtp-Source: ABdhPJxpO+Tw0hugv8MbvRzKty6qzXbMZbAYWrjp6j114yzDw/OiMR9V363HZ8NrbrwvCD3EL6RM/A==
-X-Received: by 2002:a9d:851:: with SMTP id 75mr3356948oty.102.1606856101391;
-        Tue, 01 Dec 2020 12:55:01 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
-        by smtp.gmail.com with UTF8SMTPSA id e81sm169133oia.30.2020.12.01.12.55.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Dec 2020 12:55:00 -0800 (PST)
-Subject: Re: t7900's new expensive test
-To:     Jeff King <peff@peff.net>,
-        Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Cc:     Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org
-References: <20201113050631.GA744608@coredump.intra.peff.net>
- <323fd904-a7ee-061d-d846-5da5afbc88b2@virtuell-zuhause.de>
- <20201116041051.GA883199@coredump.intra.peff.net>
- <1403797985.37893.1606777048311@ox.hosteurope.de>
- <X8YnsGsUl53OKFno@coredump.intra.peff.net>
- <X8YrbDpC9/EjRr95@coredump.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <373f3dfe-828b-430d-b88e-5e23302090cb@gmail.com>
-Date:   Tue, 1 Dec 2020 15:55:00 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101
- Thunderbird/84.0
+        id S1727764AbgLAU7n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Dec 2020 15:59:43 -0500
+Received: from mout.gmx.net ([212.227.17.22]:38407 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725971AbgLAU7n (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Dec 2020 15:59:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1606856290;
+        bh=+yI0M5bDcFWbc7JuyZU7iaMKMiyWbGWVUEejyDfTafk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=E70hxaJi+S8Xzy3wkBxn3hjnxRlKxD3ptL81ezVCTfqOpsoS7EntLKqx01EWgqPbL
+         xbPdjIuFypiF1V2qC+MPLKvST8kZnxHHS1+kuLnK6a03KG7B40rCZNiN5WSSdeqo+i
+         F+fqZEkyskvYG38XKOTgMsVOqvRw+zB+maw2wpWU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.88.62] ([213.196.213.207]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MUXpQ-1kbRGU2tZQ-00QR0N; Tue, 01
+ Dec 2020 21:58:10 +0100
+Date:   Tue, 1 Dec 2020 21:58:09 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Zaoshi <kabazaoshi@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: git mergetool does not work since 2.29.0
+In-Reply-To: <a284dc99-7da3-a313-6d9b-1dd40cbc5b22@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2012012153310.54@tvgsbejvaqbjf.bet>
+References: <a284dc99-7da3-a313-6d9b-1dd40cbc5b22@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <X8YrbDpC9/EjRr95@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="8323328-673543811-1606856290=:54"
+X-Provags-ID: V03:K1:M2fu2UL8Dd598JpvZl7gHMWrllbSijtZokI/0HxSRtIDj7e5N+X
+ 9Kos2O1JX1RBWl1uYyKcGMVIf4OuCgMqqD97C0v3X7v3A7W5Fe8uAHcN1w1ZfeGdbZVZ6ZG
+ rWV5ImDkhB51VItIjVf+B70ela9S6RZNh6PanBDTNxBBVtZPNhgrzuN0FHEMamXm9hZ5Hb2
+ jrG8tvLzfGPMneX4nd7ug==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:rFny7+OdM+Q=:ULuYcYXlz/VEQ0R1rFqvpF
+ 4A2P8WCMiIJUY4VnfKCBY0f5/13N3v/4cqEwDBM1bVOkgZPQY+yW4a7W0SvxGiU5fbOYwSTEr
+ L2xzLftIfHHypO+gaQqFCT5m1w567Mu7lXEpuIEEtyH1cQmX0U0qFuhKFsr57ImIcNLXh3zXT
+ iQV67YoFfSzB2Uh0FfcH4RUeB1IPSgGBTy9WUDQyueSHzvad1rzmK9mibA/MaePzs71bCSMtp
+ Gr1nEzPj5dvvxDBN4h4u1OSNbb/dEzUUGD4Wm1TFf/yITeBYNMNcWdvq68MW11Wd+UBESP0Sk
+ lR+I/RPqERrt/xbqYVKlxrcwlS24AqmUMo4CA+0gaPhteracVmtoYMjdgKCCY7DdSNh9wsqEp
+ UpAcodyO8YFSDHaVovEPvwJlq5Ti/iIAWgHBZzPS0uRzaglTUMivcYnnkoSVphha5XCnGS2rt
+ 8h+cgkLcFUGEvO1OVsBoNqHyjzF0uvARYjDeyLajDGubgWZeBTejt6sfLO0eCEpArlruBKDvp
+ XxV3+eU78azgy9Lihc/9pFbuwLpeRF/sFpDDDlfUZe76KGC6QU+EkFLADix6y9yWX5HYXsTh1
+ oJCS9oxPjHmPAfO00YTG7omdRlgB39nHWnYTm5+6xa0snnFZlKItHWI9OK2vSGBjAaQdTKkhV
+ XDhg76HXoPiRAGFKOh1R5YaJdzBplEZSSYC5eeWnv7EMz4pDtwFDZDMR+NdM6eG8MTRrT1lzZ
+ t2d9liEh7eYvHz+g7C1lQNwafNtS2x/WOYZ7TRyCs+AV8d/OIwOjkD7ZMN5lyNrb7w4pdTVVK
+ qsTef0zB9gK6ze7pkx5ZVnodmXP+A9jGDl/QHRQlZuu0/TDYVXvmNRwp3YzizcOc4bsryiMSp
+ GjYrrUj/+Xm0A8NFefNuq4KufsUnTszAcJ9buGK2k=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/1/2020 6:39 AM, Jeff King wrote:
-> On Tue, Dec 01, 2020 at 06:23:28AM -0500, Jeff King wrote:
-> 
->> I'm not sure if EXPENSIVE is the right ballpark, or if we'd want a
->> VERY_EXPENSIVE. On my machine, the whole test suite for v2.29.0 takes 64
->> seconds to run, and setting GIT_TEST_LONG=1 bumps that to 103s. It got a
->> bit worse since then, as t7900 adds an EXPENSIVE test that takes ~200s
->> (it's not strictly additive, since we can work in parallel on other
->> tests for the first bit, but still, yuck).
-> 
-> Since Stolee is on the cc and has already seen me complaining about his
-> test, I guess I should expand a bit. ;)
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Ha. I apologize for causing pain here. My thought was that GIT_TEST_LONG=1
-was only used by someone really willing to wait, or someone specifically
-trying to investigate a problem that only triggers on very large cases.
+--8323328-673543811-1606856290=:54
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-In that sense, it's not so much intended as a frequently-run regression
-test, but a "run this if you are messing with this area" kind of thing.
-Perhaps there is a different pattern to use here?
+Hi,
 
-> There are some small wins possible (e.g., using "commit --quiet" seems
-> to shave off ~8s when we don't even think about writing a diff), but
-> fundamentally the issue is that it just takes a long time to "git add"
-> the 5.2GB worth of random data. I almost wonder if it would be worth it
-> to hard-coded the known sha1 and sha256 names of the blobs, and write
-> them straight into the appropriate loose object file. I guess that is
-> tricky, though, because it actually needs to be a zlib stream, not just
-> the output of "test-tool genrandom".
->
-> Though speaking of which, another easy win might be setting
-> core.compression to "0". We know the random data won't compress anyway,
-> so there's no point in spending cycles on zlib.
+On Wed, 28 Oct 2020, Zaoshi wrote:
 
-The intention is mostly to expand the data beyond two gigabytes, so
-dropping compression to get there seems like a good idea. If we are
-not compressing at all, then perhaps we can reliably cut ourselves
-closer to the 2GB limit instead of overshooting as a precaution.
- 
-> Doing this:
-> 
-> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-> index d9e68bb2bf..849c6d1361 100755
-> --- a/t/t7900-maintenance.sh
-> +++ b/t/t7900-maintenance.sh
-> @@ -239,6 +239,8 @@ test_expect_success 'incremental-repack task' '
->  '
->  
->  test_expect_success EXPENSIVE 'incremental-repack 2g limit' '
-> +	test_config core.compression 0 &&
-> +
->  	for i in $(test_seq 1 5)
->  	do
->  		test-tool genrandom foo$i $((512 * 1024 * 1024 + 1)) >>big ||
-> @@ -257,7 +259,7 @@ test_expect_success EXPENSIVE 'incremental-repack 2g limit' '
->  		return 1
->  	done &&
->  	git add big &&
-> -	git commit -m "Add big file (2)" &&
-> +	git commit -qm "Add big file (2)" &&
->  
->  	# ensure any possible loose objects are in a pack-file
->  	git maintenance run --task=loose-objects &&
-> 
-> seems to shave off ~140s from the test. I think we could get a little
-> more by cleaning up the enormous objects, too (they end up causing the
-> subsequent test to run slower, too, though perhaps it was intentional to
-> impact downstream tests).
+> [difftool "bc4"]
+> =C2=A0=C2=A0=C2=A0 cmd =3D \"c:\\Program Files\\Beyond Compare 4\\bcomp.=
+exe\" $LOCAL $REMOTE
+> =C2=A0=C2=A0=C2=A0 trustExitCode =3D true
 
-Cutting out 70% out seems like a great idea. I don't think it was super
-intentional to slow down those tests.
+I believe that this is fixed as per
+https://github.com/gitgitgadget/git/pull/787. It has also been merged into
+Git for Windows' `main` branch via
+https://github.com/git-for-windows/git/pull/2899. This means that it
+should be fixed in the latest snapshot:
+https://wingit.blob.core.windows.net/files/index.html
 
-Thanks,
--Stolee
+Ciao,
+Johannes
 
+--8323328-673543811-1606856290=:54--
