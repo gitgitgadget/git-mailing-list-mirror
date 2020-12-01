@@ -2,131 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D9B5C64E8A
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 03:59:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28C68C64E8A
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 04:47:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E168F20796
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 03:59:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A304B206E3
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 04:47:02 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ga1WvAJ4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727895AbgLAD7a convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 30 Nov 2020 22:59:30 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:43001 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727747AbgLAD73 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Nov 2020 22:59:29 -0500
-Received: by mail-ed1-f67.google.com with SMTP id v22so992332edt.9
-        for <git@vger.kernel.org>; Mon, 30 Nov 2020 19:59:13 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8qBeA1N4Y2zZP8o5sEfXDnwL7+B4U5z7sqVbjs5Ua6w=;
-        b=h0pVIWWk/By2pPs65eh9HBxJaHEv7POzrgGWNgXGQs2PrqG9kDWfD0/dTSJ1s1O5XZ
-         wqBxkFjE1kjDm5HIjHrFL8zvOrwJiGnOa/It4VCRnKj081ihyNSKcPKYnNbB3Zevuagi
-         4F1Kse1Cf9FB5r8CIWH/CBhsjJ0CgeObYjrH61yCrocVhsM8av4ZlVTNAPgNhBgwWI2/
-         J/DLDTueRiPgqDKMs3cCNctl135xxrKcQt8cwmiKw4+7TvFaYmOqMZwZ15dIircxUNc7
-         ggT62uhvGat5dT4JpS7IUtRLWnAyv6BGZCIoy3EIhcVPDtbKVYrAhdbm5kYa+eOEKKkd
-         ilEA==
-X-Gm-Message-State: AOAM530b/hOy9MCKvJvGZwCFigTMPqgzAQLVcQCzrUpexOf5Wd0ChoUr
-        PycxF/5Zk1yoCdSIAZSlaLPfZ02DnyfJJhNg8uQ=
-X-Google-Smtp-Source: ABdhPJxj+g7OBncIRr+8i92T4uee7aNLoqq1+Qw3WGl2SdY+PUSWAMPLZ35z0Jc2d5UJckXrE8yrKVtJvQmKutKAU0g=
-X-Received: by 2002:a05:6402:17b5:: with SMTP id j21mr1089080edy.94.1606795127302;
- Mon, 30 Nov 2020 19:58:47 -0800 (PST)
+        id S1728229AbgLAEql (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Nov 2020 23:46:41 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54899 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726694AbgLAEql (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Nov 2020 23:46:41 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BA3CC108560;
+        Mon, 30 Nov 2020 23:45:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=9fgOXs9uicxooLYyFp6pE6iL/hI=; b=Ga1WvAJ4LUKYE0IBTZ5a
+        rdBjwbhOpKyVrnNoyd77up0BSyrgRSWZvSNr/EHfq3zPMRHVOCo/jB5Fbb3lXiQc
+        AvwoNLUnNvVQrvBQtuenpbOBE75BChBabOFNN3n4XcghyNx4WrqTt+J7AvMBiJP+
+        JTVraJ3xAdqtebqoKOxoTTU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=lvtiQu1+cO+j1uJPe7PQSMvtQbjnJU8soa1X27yHKVap9p
+        djAQkF+VaCt6c3gpH5fZwzzKXiTcBNrg2QDqLOQzCp4cMNDUs+5fco2/WOZ4uSIP
+        G9KgCIKYTwGq1TKGGVjx+h7DcYqOLqr+9Y+iRefctE81tV7bdtkq6vXrwjzns=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A337310855F;
+        Mon, 30 Nov 2020 23:45:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E103A10855E;
+        Mon, 30 Nov 2020 23:45:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v3 0/8] config: add --fixed-value option
+References: <pull.796.v2.git.1606147507.gitgitgadget@gmail.com>
+        <pull.796.v3.git.1606342376.gitgitgadget@gmail.com>
+        <xmqq7dq9ca94.fsf@gitster.c.googlers.com>
+        <94cabd0e-004c-f3fc-315f-f984abce51e6@gmail.com>
+Date:   Mon, 30 Nov 2020 20:45:54 -0800
+Message-ID: <xmqqy2iirv5p.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20201130044224.12298-1-sunshine@sunshineco.com> <87blffjkne.fsf@evledraar.gmail.com>
-In-Reply-To: <87blffjkne.fsf@evledraar.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 30 Nov 2020 22:58:36 -0500
-Message-ID: <CAPig+cT-axeG3UrxaQR3c+r7dMZkjmS19C3cHRVzu5KSc72BOQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] make macOS `git maintenance` test work on Windows
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: 19661196-3390-11EB-870D-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 30, 2020 at 4:20 AM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> LGTM. FWIW I think your v1 is fine too, just meant to comment on the
-> basis of "you could also do it like that". Having a C program call
-> getuid() is fine, so is faking it. If you prefer the latter, cool.
+Derrick Stolee <stolee@gmail.com> writes:
 
-I do like the simplicity of the latter, and I wasn't super happy about
-introducing a new test-tool subcommand just to make this one test
-pass, especially since `test-tool getuid` is so different from most
-other subcommands which are typically added to give us access to some
-internal element of Git otherwise not accessible to the test scripts.
-
-> I did wonder "why not just call perl -e 'print $<' ?"  first. But then
-> found (by reading the Perl source[1], didn't actually test this) that it
-> fakes up UID=0 for everything on Windows.
-
-I totally forgot about Perl's `$<`.
-
-Under the Git for Windows SDK, Perl's `$<` returns a large positive
-number. I suspect this differs from what you saw in the Perl source
-code because the Windows-specific code you looked at does not come
-into play in this case. For Git for Windows SDK, Perl is almost
-certainly instead built in Unix-like mode, linking against the MSYS2
-library for its POSIX-like emulation, thus the Windows-specific Perl
-goop is not needed.
-
-> I couldn't find any "is root?" in our tree that relies on Perl's $< in a
-> bad way (the couuple of occurances seem innocuous), we have some "id -u"
-> checks, but those also seem OK if it returned 0 on Windows (what does it
-> return?). Seems the worst we'd do there is unintentionally skip some
-> "skip this as root" tests.
-
-Under Git for Windows SDK, `id -u` returns the same large positive
-number as returned by Perl's `$<`, which makes sense since `id` is
-also likely linked against the MSYS2 library.
-
-As for getuid() in Git itself, that always returns 1. I see now that's
-because 1 is hard-coded in Git's compat/mingw.h override of getuid().
-So, an alternative would have been for the test to use `uid=1` on
-MINGW, but I like the current approach better of having the test be
-UID-agnostic.
-
-> It's also my impression that just using $("$PERL_PATH" -e ...) is fine,
-> and at least to my reading the Perl RX is more readable with look-behind
-> assertions, but I'm biased by familiarity with it.
-
-The `sed` version seems simpler and more straightforward to me,
-whereas look-behind feels harder to reason about, but of course it's
-all subjective and not terribly important. Either would be fine.
-
-> Our PERL prereq & NO_PERL=YesPlease is just for "this may require a
-> non-ancient Perl" & "don't install Perl for runtime stuff"
-> respectively. Is that not the case and we'd like to avoid new perl
-> invocations where possible?
+> On 11/25/2020 6:00 PM, Junio C Hamano wrote:
 >
-> I don't really care either way (or, if your switch in this case was just
-> a personal preference, also fine), but if we are trying to somewhat
-> discourage perl use (and maybe eventually get rid of it entirely) that
-> would be a useful t/README doc update.
+>> Thanks.  The only thing that still stand out, after the first 7
+>> patches (queued as its own "add --fixed-value option to config"
+>> topic) are queued, is that the early part of the documentation,
+>> namely, a paragraph where it mentions value-pattern, still lives
+>> in the world where it can only be a regexp.
+>> 
+>> Perhaps insert the following between step 7 and 8?
+>
+> This patch LGTM. Thanks!
 
-Using `sed` was just a personal preference, partly because the `sed`
-expression seems simpler to me, but mostly because Perl still feels
-heavyweight to me compared to `sed`. It also may be that I'm just
-old-school, preferring the small, sharp utilities (`sed`, `grep`,
-`sort`, etc.), and only turning to Perl (or one of its ilk) when the
-task demands a more general-purpose tool.
-
-I haven't measured, but it's possible that Perl may indeed be
-heavyweight on Windows in terms of startup time.
-
-> I know Johannes (CC'd) has (this is from wetware memory) wanted to
-> (understandably) not need to bother with Perl as part of GFW, but I
-> can't remember if that's for a reason covered by NO_PERL=YesPlease,
-> i.e. packaging it up, or whether it's also to not wanting to provide a
-> perl for the test suite.
-
-I _think_ that was for the NO_PERL=YesPlease case, but I expect Dscho
-can answer more concretely.
+Thanks.
