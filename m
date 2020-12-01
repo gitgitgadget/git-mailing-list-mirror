@@ -2,87 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-20.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4794C64E7A
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 18:35:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32401C64E7B
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 18:58:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6EEF5208C3
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 18:35:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C7F6C20643
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 18:58:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="EhBJnPMx"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lgZvBM3U"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392264AbgLASfV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Dec 2020 13:35:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56130 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392252AbgLASfV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Dec 2020 13:35:21 -0500
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com [IPv6:2607:f8b0:4864:20::641])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D436C0613D4
-        for <git@vger.kernel.org>; Tue,  1 Dec 2020 10:34:35 -0800 (PST)
-Received: by mail-pl1-x641.google.com with SMTP id v21so1602216plo.12
-        for <git@vger.kernel.org>; Tue, 01 Dec 2020 10:34:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=5KUiZn07fiM7L5+Tmj0DNGuM7eN6CgFE0NqthSxBwcs=;
-        b=EhBJnPMxRu3yen6o+nCWJR4YjcQTHR3D1C/htleEP9HgD8LhxsvSqNsoMJVPttvqVi
-         047dU4blY+4s9yKcrpnFxLiW8Rnjb+a9e8c/Rs7hZG9zCzInGxjI+sX9p2IrMK9ysnVL
-         4fkW8sKqIkUapu5aNxhr9522+LyUiNZn5b45dE6/zTI9UyUG3GEGE7enOlaGiiWegX78
-         b4M+gbRgpqn7SJlZ72bK8vidgcg+gJkm38x5nFU43M+xqvR2KDhRuo/ntKINqY0mfISi
-         HYp4MEtYSWpcavm2pz2MjzjJjMbbo+Zo+oubQIPDjnfYblvVuINtUXhHbYkSTRnCRV9E
-         6H4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=5KUiZn07fiM7L5+Tmj0DNGuM7eN6CgFE0NqthSxBwcs=;
-        b=LMmiUhBNNsywQ4lec648RJ6fB0axdWi62uoE/CPF88JmN4sST6tyl0RWU6S26oWxOK
-         o2HfeBg+0jNubZm60zC9rEUg8i1x6I+PP4337p4K/ynHzhReOPfYmUv5q99JBfF3z73a
-         iBXwdFM4E4U2sUoL+TdOjo35N/EuFGZ0RhpsBDV5fHtL35nqOH1ay5ox4WNwvlVDt0xS
-         qqal1jYC+l5qeiRpiYAoqvMigzhDYET6dQ4ZARnsBXp/rvb8aMnWr+CX4SL0yLMrGSO5
-         TXYOCsiJ1LYf0E5g05f9T7XWGYHNL47GkNS/If18xFt+ccPCqPnh8xYYyRy2AWP7ill1
-         hMyQ==
-X-Gm-Message-State: AOAM533M8dEcX52DmpVR+Q1DoFpakcXEmxX2ROxUgubCTkeObPeLlnoD
-        Mc6mW148yvmW64Q9ulg/jOLYSw==
-X-Google-Smtp-Source: ABdhPJxcp2NzWw3N/o3fBY0treE5m+5waTn3jFWYUrmk/i+boNzxZxQOcYaKTHOjroTC3pTzj1nqFQ==
-X-Received: by 2002:a17:902:b192:b029:d7:ca4a:4ec1 with SMTP id s18-20020a170902b192b02900d7ca4a4ec1mr4037230plr.76.1606847674593;
-        Tue, 01 Dec 2020 10:34:34 -0800 (PST)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id z126sm464915pfz.120.2020.12.01.10.34.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Dec 2020 10:34:34 -0800 (PST)
-Date:   Tue, 1 Dec 2020 13:34:31 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        git@vger.kernel.org, emilyshaffer@google.com
-Subject: Re: [PATCH v2] builtin/bugreport.c: use thread-safe localtime_r()
-Message-ID: <X8aMt2LEiCLkdV9/@nand.local>
-References: <27fc158339c91f56210f00dae9015da1d6c781ec.1606777520.git.me@ttaylorr.com>
- <73eb4965807ea2fdf94f815a8f8a2b036296ecca.1606782566.git.me@ttaylorr.com>
- <X8WqFynk23yWT6E3@coredump.intra.peff.net>
- <xmqqlfehqt4n.fsf@gitster.c.googlers.com>
+        id S1729751AbgLAS6B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Dec 2020 13:58:01 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57268 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726213AbgLAS6A (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Dec 2020 13:58:00 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6293B10D60B;
+        Tue,  1 Dec 2020 13:57:18 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=1bZgpOLLekmJ
+        G8wdBgts5QrK1wk=; b=lgZvBM3UBBLAZfe65USpWc9U4/8a+kI1HMMfSpzk/UJd
+        D7b+ch9hMRHyi+gcCCjyu1hipvLq5bjqPPRKg7SHolUeKIrV0EWS1cj6Yi8Qztwc
+        Cc5gK6VRgh2OvW1VmUKymIx027GqPGluvP69hZL1IXrkeUCBwA3lAfDausYaxk4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=NpmzSO
+        A/pt33abENzTDFXHHc2kvXQQWBD3OtY1ktgwV5fEzU4q/DAx9xRd1VYhQ5LqV+02
+        dz3yxuSbhJUiKbhzh+Xf2CMmO/sAy9Zfp2TOrA93TMIlisZJ7WOv6FISC6ThCXrx
+        WxkjQR7/X21M0cnKS1GHOFxXj5GYTXTkstoj4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5A35310D60A;
+        Tue,  1 Dec 2020 13:57:18 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6FFCF10D609;
+        Tue,  1 Dec 2020 13:57:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] cook: add github.com/git-vcs/git as a URL
+References: <xmqqtut6qf7q.fsf@gitster.c.googlers.com>
+        <20201201094623.4290-1-avarab@gmail.com>
+Date:   Tue, 01 Dec 2020 10:57:12 -0800
+In-Reply-To: <20201201094623.4290-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Tue, 1 Dec 2020 10:46:23 +0100")
+Message-ID: <xmqq7dq1qrqv.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqlfehqt4n.fsf@gitster.c.googlers.com>
+X-Pobox-Relay-ID: 069432EC-3407-11EB-A1FF-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 01, 2020 at 10:27:20AM -0800, Junio C Hamano wrote:
-> I am not opposed to banning ctime_r() and asctime_r(), but I do not
-> want to see our future readers wonder why they are banned by the
-> commit whose title clearly states that we refuse non-reentrant ones
-> in our codebase.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-Agreed. Maybe splitting these into two (one to ban non-reentrant
-functions, and another to ban ctime_r() and asctime_r()) would help.
+As Peff noticed, the typo in the title is at exactly the right place
+as if designed to confuse all readers.  I had to read the body twice
+before I realized s/hub/lab/ is needed.
 
-Thanks,
-Taylor
+> I maintain this mirror, but hopefully we can make it semi-official. It
+
+As Peff hinted, all the current list entries are repositories I push
+into directly, and obviously I do not want to increase the number of
+such direct non-mirrors (I managed to drop sourceforge some time ago
+and I was happy).  But the list is described with a weasel-out
+phrase "My public ... repositories are (mirrored) at:", hinting that
+some of the entries can be mere mirrors.  To most end-users, as long
+as the contents are genuine and lag is minimum, it makes no
+difference if it is a mirror or a directly pushed non-mirror, I
+would think.
+
+So it is OK to add one, as long as it benefits the community.
+
+I would consider adding this repository to the list only if it is
+hosted on GitLab's infrastructure with commitment from GitLab to
+back it officially, as opposed to a mirror being maintained by a
+random GitLab user running a cronjob.  What I expect is that the
+former would get transfer quota boost if/when the mirror gets
+popular enough while the latter would probably not, and I would like
+to make sure we advertise to our users a service that they can rely
+on.
+
+> has the same refs as the GitHub one except for the GitHub "pull" refs:
+>
+>     $ diff -u \
+>         <(git ls-remote https://gitlab.com/git-vcs/git.git/) \
+>         <(git ls-remote https://github.com/git/git/|grep -v refs/pull)
+>     $
+>
+> Although I had to delete the stale "pu" manually just now.
+>
+> As an aside there are also https://gitlab.com/gitlab-org/git and
+> https://gitlab.com/git-vcs/git which mostly mirror but also carry some
+> GitLab Employee topic branches.
+
+These I suspect falls into "are we advertising a service of a
+company, or are we offering service to the community?" bin.
+
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> ---
+>  MaintNotes | 1 +
+>  cook       | 5 +++--
+>  2 files changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/MaintNotes b/MaintNotes
+> index 0dc03080de..bb3064e9ac 100644
+> --- a/MaintNotes
+> +++ b/MaintNotes
+> @@ -136,6 +136,7 @@ My public git.git repositories are (mirrored) at:
+>    https://kernel.googlesource.com/pub/scm/git/git
+>    git://repo.or.cz/alt-git.git/
+>    https://github.com/git/git/
+> +  https://gitlab.com/git-vcs/git/
+> =20
+>  This one shows not just the main integration branches, but also
+>  individual topics broken out:
+> diff --git a/cook b/cook
+> index 03ac0cfbe4..2258390114 100755
+> --- a/cook
+> +++ b/cook
+> @@ -295,8 +295,8 @@ the integration branches, but I am still holding on=
+to them.
+> =20
+> =20
+>  Copies of the source code to Git live in many repositories, and the
+> -following is a list of the ones I push into.  Some repositories have
+> -only a subset of branches.
+> +following is a list of the ones I push into or their mirrors.  Some
+> +repositories have only a subset of branches.
+
+This harmonises the description with the phrase used in MaintNotes,
+and because "What's cooking" is issued much more often than the "A
+note from the maintainer", it matters more to have the new entry
+here (having said that, the text here is only used when starting
+"What's cooking" from scratch, and because we have already issued
+many many issues of "What's cooking" report so far, it makes no
+difference to edit the text above and list below with this patch).
+
+>  With maint, master, next, seen, todo:
+> =20
+> @@ -304,6 +304,7 @@ With maint, master, next, seen, todo:
+>  	git://repo.or.cz/alt-git.git/
+>  	https://kernel.googlesource.com/pub/scm/git/git/
+>  	https://github.com/git/git/
+> +	https://gitlab.com/git-vcs/git/
+> =20
+>  With all the integration branches and topics broken out:
