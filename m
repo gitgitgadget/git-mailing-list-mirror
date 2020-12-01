@@ -2,152 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AEB8C64E7A
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 19:28:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A23AC83014
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 19:30:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C8E562151B
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 19:28:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E9A012151B
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 19:30:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ux5/EGKD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ikthlshk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730358AbgLAT1x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Dec 2020 14:27:53 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51690 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727219AbgLAT1x (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Dec 2020 14:27:53 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3957C114485;
-        Tue,  1 Dec 2020 14:27:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ysU0D3vS12E/
-        MOByKyB/Q0fwhGk=; b=ux5/EGKDPWWWov7Mhs/FisGqLKeHRdtObeF0e6XO42kv
-        sJr8fGfRvkLjjpnC5FOtLgaxP4g5OCkyjFRECxI7cxsDwpagpV3zJmLsT6FYBBep
-        5f4v2a3OUAsOjfzIL++bdmhwMjeJyRku5yGfDo6+hq15wWS+wi3wTeC4nnUuilc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=esnF3u
-        A1MDPSsHvQoqoxuwhay0IIRtluaIb5Z5NM3kwf6ouepZWeBQU04d9hDn1D5pNAyw
-        fAVXgNcxzr9pi76lv8SQU9wp5x/l+mv8m3qNVqGZUiaqk5rMiTzLZx6ahNzsCE4Q
-        KIRjQiDuwIMdjNnJuInhy2Nfhr6Fq0vu727eQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 32319114484;
-        Tue,  1 Dec 2020 14:27:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 72490114480;
-        Tue,  1 Dec 2020 14:27:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     Arnout Engelen <arnout@bzzt.net>, git@vger.kernel.org,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] doc: make HTML manual reproducible
-References: <20201201095037.20715-1-arnout@bzzt.net>
-        <20201201154115.GP748@pobox.com>
-Date:   Tue, 01 Dec 2020 11:27:06 -0800
-In-Reply-To: <20201201154115.GP748@pobox.com> (Todd Zullinger's message of
-        "Tue, 1 Dec 2020 10:41:15 -0500")
-Message-ID: <xmqqpn3tpbsl.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S2404383AbgLATaH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Dec 2020 14:30:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36420 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404330AbgLATaG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Dec 2020 14:30:06 -0500
+Received: from mail-vk1-xa44.google.com (mail-vk1-xa44.google.com [IPv6:2607:f8b0:4864:20::a44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78183C0613D4
+        for <git@vger.kernel.org>; Tue,  1 Dec 2020 11:29:16 -0800 (PST)
+Received: by mail-vk1-xa44.google.com with SMTP id b190so720794vka.0
+        for <git@vger.kernel.org>; Tue, 01 Dec 2020 11:29:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=QCWZrCQF9uYVfvmFRYGTqDFuyw9bqA5fM0x88uK1/ZQ=;
+        b=ikthlshkzgeNvGFhmtDf9eR/ZKQNjt8LH2OWPLRLQDCI+8QU3gi0Iuk+Yei8dIs/Z8
+         Zx+x2ZoE82THc8JQ0ATnSQH5EQE9KHYW1Zexgoh23MqCkK77z63Ao5Gv+O1ew/zdY7ji
+         DFIM/zxFBBqxnjvTpkvzDc5C+6e5XRNnEYjGeVE378GPsshBrBz5Blp2SkWnl7sWb2I0
+         vieedCWJQLUWU4t8j1SH9KYkFMRtjLGNlilcJL/vPGDjH5D1phSrrTLH9qMnMg3LMGVg
+         8ZBEK23dlMBwLKvFLJpVT617j3F4czuQc7o9tP5qJstkcKvcgl0amai/qD7zZk5sY9IV
+         Rqfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=QCWZrCQF9uYVfvmFRYGTqDFuyw9bqA5fM0x88uK1/ZQ=;
+        b=OFG8GFkAIQeRCvynuXAFa9rzXT/OdJA6UM9AjxqJZVmp6Ec3wWGy34u/10H6eWI8Au
+         ocNICfNbosHPYv92HY9Dh2BzpbW0xkT7BU0dppUa6gMx6G46OZ4PlzfCjmH2f2eVFIc6
+         2vM2I/nHFjFUlju8wXYCuBKwS4Qa1K5zRLh/eBcOd/743gh1l18s4JS8YGb0ll9vcPZR
+         mnH+0+UuzTxfLmcgMu4AlHDwOLVpFqXjbCEnD2cWLGGgaLadsP98NjS16DVl+znKIdQR
+         TCFiykoircE1YMEHIIwDEcf/RgkhCYVjzZfe49qBWxsgfTuMo84Xi1LMKcsYjUM0pZou
+         vQug==
+X-Gm-Message-State: AOAM530Ak8DodkUYRd6VQJUt/CelvB2adJeT0khfP2qIXRE3ATfPyc0Q
+        sz1fe5HKl05wJaE8lpY5RuC2tW//BLmVBCBf1s0=
+X-Google-Smtp-Source: ABdhPJwultNq+WLa7Gdx+G3sUq6Rqu49sr2LqR5ilLWt4jZOIpO8Abhka4ChyJiu6UIvuqO+KC3wWFffo5axVVy7XP4=
+X-Received: by 2002:a1f:5587:: with SMTP id j129mr4321891vkb.0.1606850955788;
+ Tue, 01 Dec 2020 11:29:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 33E49922-340B-11EB-B407-D609E328BF65-77302942!pb-smtp21.pobox.com
+References: <20201201121051.186050-1-stepnem@gmail.com>
+In-Reply-To: <20201201121051.186050-1-stepnem@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 1 Dec 2020 20:29:03 +0100
+Message-ID: <CAN0heSpj7hkpy_wXk5hDa0v21a6sMw8RhqsHQBrUf5Up1xwguA@mail.gmail.com>
+Subject: Re: [PATCH] config.txt: fix a typo (backslash != backquote)
+To:     =?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Todd Zullinger <tmz@pobox.com> writes:
+On Tue, 1 Dec 2020 at 13:12, =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec <stepnem@gmai=
+l.com> wrote:
+>  A line that defines a value can be continued to the next line by
+> -ending it with a `\`; the backquote and the end-of-line are
+> +ending it with a `\`; the backslash and the end-of-line are
+>  stripped.  Leading whitespaces after 'name =3D', the remainder of the
 
-> Hi Arnout,
->
-> [cc: brian, Martin, and peff, for their collective wisdom in
-> the area of docs and involvement in the last discussion of
-> docbook-xsl requirements.]
->
-> Arnout Engelen wrote:
->> This makes sure the generated id's inside the html version of the
->> documentation use the same id's when the same version of the
->> manual is generated twice.
->>=20
->> Signed-off-by: Arnout Engelen <arnout@bzzt.net>
->> ---
->>  Documentation/Makefile | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>=20
->> diff --git a/Documentation/Makefile b/Documentation/Makefile
->> index 80d1908a44..4d1fd5e31f 100644
->> --- a/Documentation/Makefile
->> +++ b/Documentation/Makefile
->> @@ -380,7 +380,7 @@ SubmittingPatches.txt: SubmittingPatches
->>  	$(QUIET_GEN) cp $< $@
->> =20
->>  XSLT =3D docbook.xsl
->> -XSLTOPTS =3D --xinclude --stringparam html.stylesheet docbook-xsl.css
->> +XSLTOPTS =3D --xinclude --stringparam html.stylesheet docbook-xsl.css=
- --stringparam generate.consistent.ids 1
->> =20
->>  user-manual.html: user-manual.xml $(XSLT)
->>  	$(QUIET_XSLTPROC)$(RM) $@+ $@ && \
->
-> I think this would raise the minimum supported version of
-> docbook-xsl to 1.77.1.  That might be fine, but we'd
-> probably want to make sure it doesn't negatively impact
-> OS/distributions which build the docs as a likely group who
-> care about reproducible builds.  And we'd want to update the
-> requirement in INSTALL, of course.
->
-> The minimum docbook-xsl version was raised from 1.73 to
-> 1.74, in 5a80d85bbe (INSTALL: drop support for docbook-xsl
-> before 1.74, 2020-03-29).  That change was discussed in
-> <cover.1585486103.git.martin.agren@gmail.com>=C2=B9.
->
-> AFAICT, the generate.consistent.ids param was added in
-> docbook-xsl-1.77.1 which was released in June 2012.  The
-> commit which added it is 74735098e (New param to support
-> replacing generate-id() with xsl:number for more consistent
-> id values., 2011-10-24).
->
-> In any case, a minimum of 1.77.1 is present in the supported
-> releases of CentOS/RHEL and Debian/Ubuntu, at least (most
-> have 1.79.x).  Those are certainly not the only systems Git
-> cares about; they're simply the systems with which I am at
-> least mildly familiar.
->
-> =C2=B9 https://lore.kernel.org/git/cover.1585486103.git.martin.agren@gm=
-ail.com/
+Heh. The backslash is put inside backquotes for rendering as monospace,
+so I can see how that happened. This change makes sense to me.
 
-I think it is in general a good thing to do (can we lose some lines
-from doc-diff, I wonder?) and many of the result of your study shown
-above should be in the log message in a summarised form.  Here is a
-starter.
-
-    Generated ID's in the HTML version of the documentation does not
-    stay the same even when they are generated from the identical
-    source.  Pass generate.consistent.ids=3D1 to the xsltproc tool to
-    make them stable, which would help reproducible build product.
-
-    We currently only support docbook-xsl version 1.74 or newer, but
-    this option requires version at least 1.77.1 (released in June
-    2012), which would be OK for supported releases of CentOS/RHEL
-    and Debian/Ubuntu (most have 1.79.x).
-
-We may probably want to talk about versions commonly distributed for
-macOS and BSDs as well (I do not know if we want to list minor Linux
-distros).  And we definitely need to update INSTALL as you pointed
-out.
-
-Thanks and thanks for CC'ing those who may know the area well.
-
+Martin
