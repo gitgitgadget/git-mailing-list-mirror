@@ -2,163 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32401C64E7B
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 18:58:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95568C64E7B
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 19:08:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C7F6C20643
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 18:58:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3545B2168B
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 19:08:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lgZvBM3U"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Sp3r82ai"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729751AbgLAS6B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Dec 2020 13:58:01 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:57268 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726213AbgLAS6A (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Dec 2020 13:58:00 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6293B10D60B;
-        Tue,  1 Dec 2020 13:57:18 -0500 (EST)
+        id S1730228AbgLATID (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Dec 2020 14:08:03 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51472 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727375AbgLATIC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Dec 2020 14:08:02 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0F3499FE91;
+        Tue,  1 Dec 2020 14:07:19 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=1bZgpOLLekmJ
-        G8wdBgts5QrK1wk=; b=lgZvBM3UBBLAZfe65USpWc9U4/8a+kI1HMMfSpzk/UJd
-        D7b+ch9hMRHyi+gcCCjyu1hipvLq5bjqPPRKg7SHolUeKIrV0EWS1cj6Yi8Qztwc
-        Cc5gK6VRgh2OvW1VmUKymIx027GqPGluvP69hZL1IXrkeUCBwA3lAfDausYaxk4=
+        :content-type:content-transfer-encoding; s=sasl; bh=AZy7DWQKIPc/
+        BfTmmp8wC14iEzk=; b=Sp3r82aiqCpe7+2HLRFXgYRNmzeUgjnb4V8qEMm1d80F
+        1sPkAwMJ8l3SXax1L6mbP6fDghTckbvmKNUB3S29Z/teCgQkCl/LrTElbiydTzKg
+        +ymzOU/f3chAiugVV3/iNnJF+4mMWaGKOqE3iuMME+zAsw1xX6NwPurFMTF64SM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=NpmzSO
-        A/pt33abENzTDFXHHc2kvXQQWBD3OtY1ktgwV5fEzU4q/DAx9xRd1VYhQ5LqV+02
-        dz3yxuSbhJUiKbhzh+Xf2CMmO/sAy9Zfp2TOrA93TMIlisZJ7WOv6FISC6ThCXrx
-        WxkjQR7/X21M0cnKS1GHOFxXj5GYTXTkstoj4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5A35310D60A;
-        Tue,  1 Dec 2020 13:57:18 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=jjNzde
+        10STG6jjyj5cfaaAINBhgjMJqZy+6cW5eywFejiYYzb2tFh8/aTkHIUMFHsfS3aD
+        uVJB/u4MAO+bZMXwRCKmvLgfQmZTd5wmi6mA0z+OydK88bHGAe2f/Q+7K5hY+m6B
+        6BPqChl3u4tlK5a6qFYqPbmBxWovQbVBTFH64=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0147E9FE90;
+        Tue,  1 Dec 2020 14:07:19 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6FFCF10D609;
-        Tue,  1 Dec 2020 13:57:14 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7A73D9FE8F;
+        Tue,  1 Dec 2020 14:07:18 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] cook: add github.com/git-vcs/git as a URL
-References: <xmqqtut6qf7q.fsf@gitster.c.googlers.com>
-        <20201201094623.4290-1-avarab@gmail.com>
-Date:   Tue, 01 Dec 2020 10:57:12 -0800
-In-Reply-To: <20201201094623.4290-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Tue, 1 Dec 2020 10:46:23 +0100")
-Message-ID: <xmqq7dq1qrqv.fsf@gitster.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] MaintNotes: use https:// instead of git:// when possible
+References: <20201201094623.4290-1-avarab@gmail.com>
+        <20201201095815.12850-1-avarab@gmail.com>
+        <X8Yu5CephK3uvMeV@coredump.intra.peff.net>
+Date:   Tue, 01 Dec 2020 11:07:17 -0800
+In-Reply-To: <X8Yu5CephK3uvMeV@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 1 Dec 2020 06:54:12 -0500")
+Message-ID: <xmqq360pqra2.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 069432EC-3407-11EB-A1FF-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 6E9EDC06-3408-11EB-A9B4-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-As Peff noticed, the typo in the title is at exactly the right place
-as if designed to confuse all readers.  I had to read the body twice
-before I realized s/hub/lab/ is needed.
-
-> I maintain this mirror, but hopefully we can make it semi-official. It
-
-As Peff hinted, all the current list entries are repositories I push
-into directly, and obviously I do not want to increase the number of
-such direct non-mirrors (I managed to drop sourceforge some time ago
-and I was happy).  But the list is described with a weasel-out
-phrase "My public ... repositories are (mirrored) at:", hinting that
-some of the entries can be mere mirrors.  To most end-users, as long
-as the contents are genuine and lag is minimum, it makes no
-difference if it is a mirror or a directly pushed non-mirror, I
-would think.
-
-So it is OK to add one, as long as it benefits the community.
-
-I would consider adding this repository to the list only if it is
-hosted on GitLab's infrastructure with commitment from GitLab to
-back it officially, as opposed to a mirror being maintained by a
-random GitLab user running a cronjob.  What I expect is that the
-former would get transfer quota boost if/when the mirror gets
-popular enough while the latter would probably not, and I would like
-to make sure we advertise to our users a service that they can rely
-on.
-
-> has the same refs as the GitHub one except for the GitHub "pull" refs:
+> On Tue, Dec 01, 2020 at 10:58:15AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
 >
->     $ diff -u \
->         <(git ls-remote https://gitlab.com/git-vcs/git.git/) \
->         <(git ls-remote https://github.com/git/git/|grep -v refs/pull)
->     $
+>> Change advertised git:// links to https://. These all work as
+>> arguments to "git clone", but in addition they also have friendly web
+>> interfaces.
 >
-> Although I had to delete the stale "pu" manually just now.
+> This is a good idea, I think. Not only for that reason, but because
+> https:// is more secure. You can verify tags from the maintainer's
+> signature, of course, but if you are just fetching some refs, you are
+> relying on the remote server not to lie to you. With https://, you at
+> least have some assurance that it is the remote server you intended to
+> talk to, and not a man-in-the-middle over the totally unauthenticated
+> git:// protocol.
 >
-> As an aside there are also https://gitlab.com/gitlab-org/git and
-> https://gitlab.com/git-vcs/git which mostly mirror but also carry some
-> GitLab Employee topic branches.
-
-These I suspect falls into "are we advertising a service of a
-company, or are we offering service to the community?" bin.
-
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>> This leaves just git://ozlabs.org/~paulus/gitk as the only git://
+>> URL. As far as I can tell there's no web interface for it. There is
+>> e.g. https://git.ozlabs.org/?p=3Dppp.git which is a frontend for
+>> git://git.ozlabs.org/~paulus/ppp.git, but even though cloning the repo
+>> at git://git.ozlabs.org/~paulus/gitk.git works (not the "git" subdomai=
+n)
 >
-> ---
->  MaintNotes | 1 +
->  cook       | 5 +++--
->  2 files changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/MaintNotes b/MaintNotes
-> index 0dc03080de..bb3064e9ac 100644
-> --- a/MaintNotes
-> +++ b/MaintNotes
-> @@ -136,6 +136,7 @@ My public git.git repositories are (mirrored) at:
->    https://kernel.googlesource.com/pub/scm/git/git
->    git://repo.or.cz/alt-git.git/
->    https://github.com/git/git/
-> +  https://gitlab.com/git-vcs/git/
-> =20
->  This one shows not just the main integration branches, but also
->  individual topics broken out:
-> diff --git a/cook b/cook
-> index 03ac0cfbe4..2258390114 100755
-> --- a/cook
-> +++ b/cook
-> @@ -295,8 +295,8 @@ the integration branches, but I am still holding on=
-to them.
-> =20
-> =20
->  Copies of the source code to Git live in many repositories, and the
-> -following is a list of the ones I push into.  Some repositories have
-> -only a subset of branches.
-> +following is a list of the ones I push into or their mirrors.  Some
-> +repositories have only a subset of branches.
+> s/not/note/ in this last line?
 
-This harmonises the description with the phrase used in MaintNotes,
-and because "What's cooking" is issued much more often than the "A
-note from the maintainer", it matters more to have the new entry
-here (having said that, the text here is only used when starting
-"What's cooking" from scratch, and because we have already issued
-many many issues of "What's cooking" report so far, it makes no
-difference to edit the text above and list below with this patch).
+With or without the tweak, I couldn't figure out what the paragraph
+wanted to say.  On the other hand, I didn't quite get why "friendly
+web interfaces" matters until trying to read the paragraph again to
+realize that it was talking about repository browser like gitweb and
+cgit.
 
->  With maint, master, next, seen, todo:
-> =20
-> @@ -304,6 +304,7 @@ With maint, master, next, seen, todo:
->  	git://repo.or.cz/alt-git.git/
->  	https://kernel.googlesource.com/pub/scm/git/git/
->  	https://github.com/git/git/
-> +	https://gitlab.com/git-vcs/git/
-> =20
->  With all the integration branches and topics broken out:
+I'd probably rephrase the entire proposed commit log message to
+something like:
+
+	Most git:// URLs listed for the copies of the Git repository
+	have working corresponding https:// URLs that can be given
+	to a browser to browse the repository interactively.  List
+	https:// URL instead of git:// URL for such repositories.
+	The former is also more secure, even though it may be more
+	expensive.
+
+without mentioning ozlabs at all.
+
+Thanks.
