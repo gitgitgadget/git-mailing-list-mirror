@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA5BFC71156
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 09:56:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CB9CC83012
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 09:56:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3C8F920657
+	by mail.kernel.org (Postfix) with ESMTP id C8DAD20705
 	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 09:56:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lv0CgTti";
-	dkim=temperror (0-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YlrioKKH"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fxiDPSk8";
+	dkim=temperror (0-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S47Yv3ak"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387811AbgLAJ4n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Dec 2020 04:56:43 -0500
-Received: from wout1-smtp.messagingengine.com ([64.147.123.24]:34939 "EHLO
+        id S1728722AbgLAJ4r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Dec 2020 04:56:47 -0500
+Received: from wout1-smtp.messagingengine.com ([64.147.123.24]:50409 "EHLO
         wout1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726099AbgLAJ4m (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 1 Dec 2020 04:56:42 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id C260BC45;
-        Tue,  1 Dec 2020 04:55:56 -0500 (EST)
+        by vger.kernel.org with ESMTP id S1726099AbgLAJ4q (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 1 Dec 2020 04:56:46 -0500
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.west.internal (Postfix) with ESMTP id 5A6B2E05;
+        Tue,  1 Dec 2020 04:56:00 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Tue, 01 Dec 2020 04:55:57 -0500
+  by compute4.internal (MEProxy); Tue, 01 Dec 2020 04:56:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm2; bh=fCG42qws/iC7MhIKRrRE4pBttVN
-        iHcauADEeTzKtkwk=; b=lv0CgTti8kPWrRCaQ/xs4SFZ4Q2ehBZKmZcSAOiEiQ2
-        VenKW04Wdp3TpPhkPpyDHI2Uj2ZIy0XoOEjGMOpnWDSUzhXSu1jV8E1z3ly8lQTJ
-        k1FH4Ng4fYNM9UrBWM0wQeRXY1v/kgNpDB5fffQl2IwmjHQC+Srr1AVbqeS3Xs8C
-        Jujm/S0Y0hz5HpNj+gcrxX6aERhOvbDwb3Hr3QESdvvT4oUAt1qbcRO5GrYTzyEX
-        SKDPtF7lajfwiNadRqBZZhXgGrBOW6Fg5wKz8PMoKSkRJArYEzTgqCkd+CUDkJnp
-        2zRzjBaI9CCZtILvMEn7tfeIFSFqQxGyo5IPissyb9g==
+        :content-type:in-reply-to; s=fm2; bh=hXzw1sSsyfXPkT47t5UxcSaY3HM
+        EswR4D6ezcBva9A4=; b=fxiDPSk8oZFNUWw40+mSueMzVX8AILTwmjBUy5hsrxw
+        eGVTlI1+oCafOGKM0xZk2N3oRTEV0p8D2YsHaPT9ZS/fTJIaDW0f6g8aJxyzAsTq
+        DVdyCSBUWGNNykw/H4RqTB922W20pYyJh85X+RGRwCysyyNlEb18HVROIVNGfRo2
+        gD9Dn9vqpYLHmCe9MrmWSaoiUxjxboJJvgJE+I5PagKAyPIbQEGnPSNxTbTyINZ6
+        LixEZ7TFTLfPb8+Ymvc6Asl87tZQBZcl/tvikxcg/jdoHj9ZQrPC95U/PA1wFw3j
+        WUlmiNbSbIrJGKkblWMMo6Qsfll23KPuyqtg0yYJW0A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=fCG42q
-        ws/iC7MhIKRrRE4pBttVNiHcauADEeTzKtkwk=; b=YlrioKKHHgtapmIz+nWNXI
-        xsZ3CSUm6L0xl5wnIaFsI+6V3PljR75X4nitR+4G4JDmXjmhmL6+pK4XJ5P0s3yN
-        5Yq5kENG994i0aarrirPJgEO5SSuNhrE/HRxoeTOALpLhR/iciUBr47EALow5lz2
-        kdTfR2x4YU7UGGo1uV+wHoN9kxilN5AEhRO0GnmpZWtEbeXfUmpLgaRbWIGm78aC
-        7oxysCBxXbrTu2pDaEx653ufbtnBiWDWuCw/OJ3QEa7co9vL8f36WF6phwZaasG5
-        v4FCYD9Z6ra7Z/w96SeyAqCBqLIEZu7IEuZBI0TJ44Zsr8L1+Go4O2be9o2ml2WA
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=hXzw1s
+        SsyfXPkT47t5UxcSaY3HMEswR4D6ezcBva9A4=; b=S47Yv3akivpR1MjxivJlr3
+        9afYKT1628wjXnT9pmTGR7ghWNa5Gf8ATRVbmDvz/PRXYH2bgCyFXMNUI11AG/IU
+        w04INXVb8q/dmtxcgBV7+2RP8Z3ZptQuX+6J7CAN6sXlNZpkKJS34JqgZ5VRLwcm
+        peuaTf9xe3GFJducacR1tuHkRGtqpRZQMGaY7YxtaDeKFE5Pu1qk6sv7QQq3zZ3Y
+        2i/0ZmcQzFc0o6IiwAVJoGTM2kXClnriyHgax/XXM7HxORmZIZgiLAo9okS9g5tf
+        n8v0N7n1ZYUlAA1y4RK2Zs06RbOHEK9lU9gS1RSU9vXV0DiOjvjtUdZSjyFQ08WQ
         ==
-X-ME-Sender: <xms:KxPGX9j9byd2MtZtDl5_uGKwQooCNmasiSomgLIuxzusAxONSk2UGw>
-    <xme:KxPGXx-mVCRyIT7lD3cUEw9QeyyVICNZoRHqIpLZCr6CqfZSHYuJbxmfNUZdBUtv_
-    JqqDr7grCVCtoIHHQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudeivddgudduucetufdoteggodetrfdotf
+X-ME-Sender: <xms:LhPGX_1toCJhb7FiCR4EjYeYIDh3QrIS-38fq7osgyeAOtqUiNHtYw>
+    <xme:LhPGX48sLxq8umR3f_QcUPqaBFxe64cPEMCSs-Xd9nMYzamfpINwz5rP1Nt8q84eg
+    Kr0UGerlViCBjPlnA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudeivddguddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
@@ -58,17 +58,17 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudeivddgudduucetufdoteggod
     hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
     ucfkphepjeekrdehgedrudegrdehjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
     grmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:KxPGX5-KAy0iLP5T0gNGLYu_4wyO_MHQtBkj2b8d24G79WKcS_OS7A>
-    <xmx:KxPGX6DMS8c3y9tQ94C0sMdThoBGTWwezo4ZTDO9a4t-Fr4qlLFJuA>
-    <xmx:KxPGX5zpnGcxceJD3Vg2VVDfxhbU0Zp8paGHHS9hA0dtmYS5qSYMqw>
-    <xmx:LBPGXyOwBWXiLw02uBTbCI-8CwTInvDyTHEvZ6MyV_Br7_f05LuEyg>
+X-ME-Proxy: <xmx:LhPGX3szIQED2HNso_I78_wWvJcnRcmWn45g_FneJuTrr0AzdipxYA>
+    <xmx:LhPGXzB7sdw3loTV6iS68jkPcPgL7QG2XlF4yHXfxpDs8BWvq12f1w>
+    <xmx:LhPGX3WhnnUje2eovAV0pTYHm_Sd3lH5CpH7TvZwkmkLFYv0TP98fA>
+    <xmx:LxPGX9NDpF3BMTBzqYDLLaEjPyoHCIG61plZUqD0doviSkX8t5x_6g>
 Received: from vm-mail.pks.im (dynamic-078-054-014-057.78.54.pool.telefonica.de [78.54.14.57])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 075821080068;
-        Tue,  1 Dec 2020 04:55:54 -0500 (EST)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 10EEE1080067;
+        Tue,  1 Dec 2020 04:55:57 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 341202a8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 1 Dec 2020 09:55:53 +0000 (UTC)
-Date:   Tue, 1 Dec 2020 10:55:52 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 32b374bf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 1 Dec 2020 09:55:57 +0000 (UTC)
+Date:   Tue, 1 Dec 2020 10:55:56 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
@@ -76,86 +76,104 @@ Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Jeff King <peff@peff.net>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         Philip Oakley <philipoakley@iee.email>
-Subject: [PATCH v3 0/4] config: allow specifying config entries via envvar
- pairs
-Message-ID: <cover.1606816110.git.ps@pks.im>
+Subject: [PATCH v3 1/4] environment: make `getenv_safe()` non-static
+Message-ID: <87653893b7c80cde158dfb39acb54aa91d4e54f4.1606816110.git.ps@pks.im>
 References: <cover.1606214397.git.ps@pks.im>
+ <cover.1606816110.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="O3q9WxPGI2YGMZIh"
+        protocol="application/pgp-signature"; boundary="ZLXexyvIovfZwaIS"
 Content-Disposition: inline
-In-Reply-To: <cover.1606214397.git.ps@pks.im>
+In-Reply-To: <cover.1606816110.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---O3q9WxPGI2YGMZIh
+--ZLXexyvIovfZwaIS
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+The `getenv_safe()` helper function helps to safely retrieve multiple
+environment values without the need to depend on platform-specific
+behaviour for the return value's lifetime. We'll make use of this
+function in a following patch, so let's make it available by making it
+non-static and adding a declaration.
 
-this is the third version of my patch series which aims to implement a
-way to pass config entries via the enviroment while avoiding any
-requirements to perform shell quoting on the user's side.
-
-Major changes include:
-
-- Another test case to test interaction of GIT_CONFIG_PARAMETERS.
-
-- I've exposed `getenv_safe` and now use that to retrieve envvars to
-  avoid platform-specific lifetime issues of returned envvar values.
-
-- I've split out a patch which performs reindentation of preexisting
-  code to make the actual code change easier to review.
-
-Still missing is the `--config-env` way of doing things. I'd be happy to
-live with both ways of doing things and adopt it as part of this series,
-but I wasn't sure whether this would be welcome or not. Too many ways to
-do the same thing may be confusing in the end, even though their target
-audience is probably different.
-
-Patrick
-
-Patrick Steinhardt (4):
-  environment: make `getenv_safe()` non-static
-  config: extract function to parse config pairs
-  config: refactor parsing of GIT_CONFIG_PARAMETERS
-  config: allow specifying config entries via envvar pairs
-
- Documentation/git-config.txt |  12 ++++
- cache.h                      |   1 +
- config.c                     |  99 +++++++++++++++++++++++-------
- environment.c                |   8 +--
- environment.h                |  12 ++++
- t/t1300-config.sh            | 115 ++++++++++++++++++++++++++++++++++-
- 6 files changed, 220 insertions(+), 27 deletions(-)
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ environment.c |  7 ++-----
+ environment.h | 12 ++++++++++++
+ 2 files changed, 14 insertions(+), 5 deletions(-)
  create mode 100644 environment.h
 
+diff --git a/environment.c b/environment.c
+index bb518c61cd..2234af462c 100644
+--- a/environment.c
++++ b/environment.c
+@@ -9,6 +9,7 @@
+  */
+ #include "cache.h"
+ #include "branch.h"
++#include "environment.h"
+ #include "repository.h"
+ #include "config.h"
+ #include "refs.h"
+@@ -152,11 +153,7 @@ static char *expand_namespace(const char *raw_namespac=
+e)
+ 	return strbuf_detach(&buf, NULL);
+ }
+=20
+-/*
+- * Wrapper of getenv() that returns a strdup value. This value is kept
+- * in argv to be freed later.
+- */
+-static const char *getenv_safe(struct strvec *argv, const char *name)
++const char *getenv_safe(struct strvec *argv, const char *name)
+ {
+ 	const char *value =3D getenv(name);
+=20
+diff --git a/environment.h b/environment.h
+new file mode 100644
+index 0000000000..d438b5c8f3
+--- /dev/null
++++ b/environment.h
+@@ -0,0 +1,12 @@
++#ifndef ENVIRONMENT_H
++#define ENVIRONMENT_H
++
++#include "strvec.h"
++
++/*
++ * Wrapper of getenv() that returns a strdup value. This value is kept
++ * in argv to be freed later.
++ */
++const char *getenv_safe(struct strvec *argv, const char *name);
++
++#endif
 --=20
 2.29.2
 
 
---O3q9WxPGI2YGMZIh
+--ZLXexyvIovfZwaIS
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl/GEycACgkQVbJhu7ck
-PpTovxAAgPHTXTqLujvCHpnweJqzea/IXUyWKZQtvKzTBI8UwIYXmwfU9aVtsSiE
-hl0w7U7/ypVyvqD16/uVHt/p33Q2Qx9nZrF4RB4Z68UZtddCxX9ics40nuq3BwXJ
-LGrdMJbamaTLaikabuz10pt2s4m+cFNjdkr8HL9mjUO+VWtsirLcSuXGXJSlPW6K
-vFXQFr9R1PiJ0/qNvYaM5Y/+ygXoA7u3DMEyH6JOSiQ84dt4nLzEW/nH4teJEJbz
-yhGbosEed9PLJj+sTxq1DSO8r6lExm/AXbLeYZ8CEmC2nbxS6HWiCmV6XjSoFRRL
-GOw4D6iving/zgXrYm9tV0hFhmKpVzcGA4HWJNC6s9RNIazhgRIQampde/Fc55B3
-AdFVLm3WZ49yg2pMl2rclSlJGl7NKYTefnNlVepkX1QSDR1V4PYvkPZ1We055xL3
-iZgOlTpN6OQipteEdZgSCp7HanikZR65y8Kica8ZAnOy+oQGY5t59ELnYcw7v20/
-GnJMXJUC1tNgtlD2JJkA/rKGvH9TfeWYOsAdDvNyklZkWHKqnuS6mFMB1ddXwa1d
-ds6ys1BaDsADb4NAjxr4U8vKhLms+90E4Fmxjiej6Kuyh3k8oWYySqPZj2gaVX3e
-ah8B2dlKmBA0kN9MEupuQdsmV4qI4yOvuRZwBMG9nnDx/LggLxM=
-=v79a
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl/GEysACgkQVbJhu7ck
+PpSk7w/9H0jZEFeVeO1ynoElL0lv4lvOb/mOjD94K5DNgioXY6aFMyUIGq8PYSHK
+JWBNrLKYNlkyI5+JluTkQRG+gVvXqt+bs8rY8m8IXf+uRMIPRUU0QoEwE7CYpMR1
+yuI5fBYsUW/gq0x5GXVpUYqhEhjqpBSV6m0yXwOFN5wFbce1fkg1CYA1OVBGGsaH
+whOzjB/HJmVISC0jeT2I71h47q54/OMez4Ah32zK+ZCL6yUdmSLTDHalDKCkHKQf
+Lyh5hc9hIlMHkvBIsCE3/KmOewV4vOieQpsgYrEvPywyQWsJhuyK8LVhADEEcIbH
+Pa16+xaMS/hQKxdZiMEfTnAEygEcx+PybjmHDXvIa/itW2Ict/cQb4RUZthzHfH6
+YW+rjMrxef4sX76omWgJ2mvJi2aa4WYaoKz3iOpZSIFps4Yl1RnwI4pVTEHaPqY1
+d1lMV0l9mCKYSeQJdty7XZVNuXLboLjQxQTFnkIPKN0fIQXuVWIcm+1rHUPsamx3
+i3d4FkttmtCgE9LRpSTsKGn9H3AkVNC8487lCc0rob4c4efx1DxUUK9yAcPnIlqC
+UVtIhpVMOktCf9W1c/rt0//+rIWaofFRzqRwsRcHRQA4SDXtXr5oUlf5liy2HHIK
+sjTDF+Z7blX9aK1AuDciMhcjTO/iKHQLb06RcKQfiulh7z35iEE=
+=6mDk
 -----END PGP SIGNATURE-----
 
---O3q9WxPGI2YGMZIh--
+--ZLXexyvIovfZwaIS--
