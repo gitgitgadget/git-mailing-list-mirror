@@ -2,110 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75DADC64E7B
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 15:24:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFFF7C64E7A
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 15:42:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DCC3620758
-	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 15:24:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4A25E20857
+	for <git@archiver.kernel.org>; Tue,  1 Dec 2020 15:42:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="Y25z9piE"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SeXEZI7J"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391805AbgLAPY4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Dec 2020 10:24:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54878 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390252AbgLAPYz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Dec 2020 10:24:55 -0500
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88C22C0613CF
-        for <git@vger.kernel.org>; Tue,  1 Dec 2020 07:24:09 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id t22so3574664ljk.0
-        for <git@vger.kernel.org>; Tue, 01 Dec 2020 07:24:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=jCJzuj/ZZiz/Q1LEHTr2r8ONAz14QqM2U6hStZWEYCQ=;
-        b=Y25z9piE34fovAblUfpzZhOPK94pgcbzVJFoS0OjMX2RCZ1C6srvh+7CleZ1Y3jW7v
-         yQa76VY1enlRmj6BkGq5lF/exFeYflLb/eZYjDIi4UvsLCtj8o9aGKidJtmHRweE8wJd
-         BLzFzsnF1zAMVozieUT9Iqghf9748KBMf4CQPSL0B4rGHNSYusEzsFHxqPjElGQlRCDL
-         adTlKVTyFesGKNvR6eB1k9xdxq5q4gAvRAe9oQGlUFdbp/BLut0vUlP1PjwxG2A7yUXX
-         P9u0nCLjGEha0g7TRUFoMsGN/2EA5nfCXjszUYT4nUZpjcjWYG5UPf1XplTZygBB1ltU
-         uGiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=jCJzuj/ZZiz/Q1LEHTr2r8ONAz14QqM2U6hStZWEYCQ=;
-        b=VIU63/duOsvyEpOCmvkzLP4FYWFfsyKIAdrHYnZFjbB9EkxdRRKgYByPMB5p7Jwrbj
-         zsB6EoucwKWDV8qwnPRgGqrqVwgLqfcGUneDKDu9wr2Tfj+Ju23PKyl1N6M+x/rR6Dyh
-         2nh1iY+E7K7DuPpMxSdgVrGCkHMPq2r16TOyHwSJvDHPAbu6/gcaB2oK9tK671sz611V
-         BPV3OoCCSmiazSyTQfxBZn9PUbs/s8McriMRc6TiRvgxTNJAzjKymaAN35BBCJZ2FmEY
-         13zM1AW2dUvJulDxkm+PbYqf0SzRi+m2/rPA9B/Woo/cJ0Iwbqheh9FQmyfjPL616YZO
-         p/YA==
-X-Gm-Message-State: AOAM531kbQCUODAQ97f5IML25FPCTaLh6wXOuGODe75vWcakiO8rkrvl
-        /4bndMWDcSeR9HcCTdg1RHvc8SVtUsYKR87KcuPjMfi+km3lfQ==
-X-Google-Smtp-Source: ABdhPJzJFPhBjacwPqfHJWIwcJl1tPmOUl55a05ykd9ax4mxTuHgeKtsUjX9vfxFDg/umHyyldJl7F/GVwdsHh9MdgA=
-X-Received: by 2002:a2e:95d4:: with SMTP id y20mr1484457ljh.74.1606836247438;
- Tue, 01 Dec 2020 07:24:07 -0800 (PST)
+        id S2388917AbgLAPmC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Dec 2020 10:42:02 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56006 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389376AbgLAPmB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Dec 2020 10:42:01 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E5CBF9E333;
+        Tue,  1 Dec 2020 10:41:17 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; s=sasl; bh=w/QX4ZmSjLOVm
+        XChU0/Ip5DLw2U=; b=SeXEZI7Je14ULRO1p/XS54QjIQV9/aiybxkNXCFXx2jJu
+        Uc832dK1kXF2VRcbnhVDYFFwRlbetrEQZnrsOvqzZ87TcRCe8HLGiKj6+7SOwsGn
+        NBkwd4kWqre75+k/3hK0Z8lA3b4T4I6ZhstXNvgWH7yAbHiX4wAeR4hODU//00=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=HqRzscz
+        HM1lVtWnKxrz4dv4V4wIeFLsvR93hglMOo5SwoleCziW5wS5QK2cjR65vf9mK6LR
+        Gs63WKAAAhzlSzh3jhHJM3qAxn6y9KwHKE6YeiH0QwpxaBk8Gdo7TxVNQ2P39FkM
+        XyjzYN5GDby1ik8leY3xsTogDNGwFIY8tcdg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DAE419E332;
+        Tue,  1 Dec 2020 10:41:17 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+Received: from pobox.com (unknown [173.67.178.181])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4D3BB9E331;
+        Tue,  1 Dec 2020 10:41:17 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+Date:   Tue, 1 Dec 2020 10:41:15 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Arnout Engelen <arnout@bzzt.net>
+Cc:     git@vger.kernel.org,
+        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] doc: make HTML manual reproducible
+Message-ID: <20201201154115.GP748@pobox.com>
+References: <20201201095037.20715-1-arnout@bzzt.net>
 MIME-Version: 1.0
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Tue, 1 Dec 2020 12:23:55 -0300
-Message-ID: <CAHd-oW4yHSTYr0Gwn60tu2c7VY=PJbSbg23Z5Bd_11Do-+juGA@mail.gmail.com>
-Subject: Is git-am expected to honor core.sharedRepository?
-To:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <20201201095037.20715-1-arnout@bzzt.net>
+X-Pobox-Relay-ID: A6CDD888-33EB-11EB-90DD-D152C8D8090B-09356542!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, everyone
+Hi Arnout,
 
-I'm not very familiar with this setting, but to my understanding it
-should only affect files in $GIT_DIR not $GIT_WORK_TREE, is that
-correct? Nevertheless, apply and am (which uses apply) end up
-adjusting the permissions of created directories based on the setting.
-To give an example:
+[cc: brian, Martin, and peff, for their collective wisdom in
+the area of docs and involvement in the last discussion of
+docbook-xsl requirements.]
 
-We first commit the directory 'd':
-$ mkdir d
-$ touch d/f
-$ git add d
-$ git commit -m d
-$ ls -l
-drwxr-xr-x 2 matheus matheus 60 dez  1 11:29 d
+Arnout Engelen wrote:
+> This makes sure the generated id's inside the html version of the
+> documentation use the same id's when the same version of the
+> manual is generated twice.
+>=20
+> Signed-off-by: Arnout Engelen <arnout@bzzt.net>
+> ---
+>  Documentation/Makefile | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index 80d1908a44..4d1fd5e31f 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -380,7 +380,7 @@ SubmittingPatches.txt: SubmittingPatches
+>  	$(QUIET_GEN) cp $< $@
+> =20
+>  XSLT =3D docbook.xsl
+> -XSLTOPTS =3D --xinclude --stringparam html.stylesheet docbook-xsl.css
+> +XSLTOPTS =3D --xinclude --stringparam html.stylesheet docbook-xsl.css =
+--stringparam generate.consistent.ids 1
+> =20
+>  user-manual.html: user-manual.xml $(XSLT)
+>  	$(QUIET_XSLTPROC)$(RM) $@+ $@ && \
 
-Then we create a patch and use am to apply it:
-$ git format-patch -1
-$ git reset --hard HEAD~
-$ git config core.sharedRepository 0700
-$ git am *.patch
+I think this would raise the minimum supported version of
+docbook-xsl to 1.77.1.  That might be fine, but we'd
+probably want to make sure it doesn't negatively impact
+OS/distributions which build the docs as a likely group who
+care about reproducible builds.  And we'd want to update the
+requirement in INSTALL, of course.
 
-The setting was honored by am:
-$ ls -l
-drwx--S--- 2 matheus matheus 60 dez  1 11:30 d
+The minimum docbook-xsl version was raised from 1.73 to
+1.74, in 5a80d85bbe (INSTALL: drop support for docbook-xsl
+before 1.74, 2020-03-29).  That change was discussed in
+<cover.1585486103.git.martin.agren@gmail.com>=B9.
 
-And if we delete 'd' and check it out again, the setting is ignored:
-$ rm -rf d
-$ git checkout d
-$ ls -l
-drwxr-xr-x 2 matheus matheus 60 dez  1 11:31 d
+AFAICT, the generate.consistent.ids param was added in
+docbook-xsl-1.77.1 which was released in June 2012.  The
+commit which added it is 74735098e (New param to support
+replacing generate-id() with xsl:number for more consistent
+id values., 2011-10-24).
 
-Is this expected?
+In any case, a minimum of 1.77.1 is present in the supported
+releases of CentOS/RHEL and Debian/Ubuntu, at least (most
+have 1.79.x).  Those are certainly not the only systems Git
+cares about; they're simply the systems with which I am at
+least mildly familiar.
 
-If not, the place to be changed is probably the
-safe_create_leading_directories() call in apply.c. This function
-internally calls adjust_shared_perm() to modify the permissions
-according to core.sharedRepository, so we could probably pass a flag
-to skip this step. But this function has at least 15 callers, so
-should we introduce a wrapper for the non-shared case, instead?
+=B9 https://lore.kernel.org/git/cover.1585486103.git.martin.agren@gmail.c=
+om/
 
-(For some background, I stumbled across this while considering using
-safe_create_leading_directories() for a parallel-checkout patch. But
-then I noticed it adjusts the directories' permissions based on the
-setting and I was worried whether it could be user for checkout.)
-
-Thanks,
-Matheus
+--=20
+Todd
