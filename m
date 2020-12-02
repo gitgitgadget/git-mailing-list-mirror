@@ -2,129 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA4EEC64E7C
-	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 16:09:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E13F7C64E7C
+	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 16:11:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8EBA6205CA
-	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 16:09:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 72C05205CA
+	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 16:11:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730593AbgLBQIq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Dec 2020 11:08:46 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:65246 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730588AbgLBQIq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Dec 2020 11:08:46 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D0375114A79;
-        Wed,  2 Dec 2020 11:08:02 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=xr8SMfkBFig8ZzRwq/G5Y9ISIKg=; b=C/OU7a4
-        UmB2bagYGDnaYlQ1VARWCwZL5wmNgivDP5N2Ckrxtm9hyQFROpXVS+4bPsetOsSq
-        XxmaBO+FIrJwZ6Ok3qPxQYuMzCgzSO1b9KnZOqOfc1Vt133TyeDf/kUtm2JW1+GT
-        ZQD4MMYFDDuqzEIGk6mep7ja3Q+xcU9XWBOM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=krHeUy7/ppBBBDXpb8IVM/yRx67qb2Nvz
-        g9b5Y56NtbQQl08gPomX+QXwp/zUu8GqyqiBLx3I+rKWHDjHllTRWVNfN4tuGZDR
-        nrPRMlZs5zunrTPhAktQwHvFgusutbhnkLVLYu+ovSpAC1aVwLgXGqV8DrA6xEY3
-        Irc7ZFHOyY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C84FF114A78;
-        Wed,  2 Dec 2020 11:08:02 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-Received: from pobox.com (unknown [173.67.178.181])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D8F55114A75;
-        Wed,  2 Dec 2020 11:07:57 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-Date:   Wed, 2 Dec 2020 11:07:55 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Arnout Engelen <arnout@bzzt.net>, git@vger.kernel.org,
-        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH] doc: make HTML manual reproducible
-Message-ID: <20201202160755.GX748@pobox.com>
-References: <20201201095037.20715-1-arnout@bzzt.net>
- <20201201154115.GP748@pobox.com>
- <X8bhdyu/OlscI1ME@camp.crustytoothpaste.net>
+        id S1730521AbgLBQKu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Dec 2020 11:10:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58266 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726514AbgLBQKu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Dec 2020 11:10:50 -0500
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0174C0613CF
+        for <git@vger.kernel.org>; Wed,  2 Dec 2020 08:10:03 -0800 (PST)
+Received: by mail-oi1-x244.google.com with SMTP id l4so2109578oii.4
+        for <git@vger.kernel.org>; Wed, 02 Dec 2020 08:10:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=v8/GaEkdIKyYByGFW9BZ1FJZQl8i6whvDwzqXBpiY1Y=;
+        b=pcHV2I3R38tfu4gIH6rbhanlCsSEYD5I121r89PCXrc1SZIeK+ZknZI45WXn7v3cDK
+         IraiaxPX7h4djL+33hh+nwgnq32XWMtbH5o3hfFqV4p3kbA4kQMg1OWh2lsjv1BzX9ON
+         Mxr3a7rzga8sNHDzqr7ChjtpywpDPwkayQG3b6JFohLmQ+nk09AG1SeGhqPUhRcFKS3i
+         1C21riW3NcLXpqioJmvUYthLhtUqqI6yUHirwwKxnVhXDz7GXc4s1sBKVu+o2Mkurt1J
+         5JfaoWixcdHJaT7rM6unVw4hh8Nugk3kPwhLYDnXOBk2lGwUNpAGLgEGQDr1sTR8wh1t
+         hJpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=v8/GaEkdIKyYByGFW9BZ1FJZQl8i6whvDwzqXBpiY1Y=;
+        b=r8G/E83rDV1KBmW8Eu2406a9xk8hlzdsyyEaZmayyK6Rba4pu1ikkpDp30tBnwWPqu
+         /F2zGnnLsQWZxHl9hwoBHMdDgKAdcl/I9S79R7JBsc3U7thqYH9396n38uffIysj/fJq
+         WE3PapdFNrsqiIt8u+C7gvXPJoqsPR/VDuD6uDsLH3gCZRWaH5NWAnFb9uSnX7kEuscQ
+         5kzPQfAfmkml0Kbb2Rjqhxccnv6ykIf8j6yxABtkgbY7j5w7/HZtt1fbK6LCrgjdMLvc
+         FHb9qIcAvNSP81QiK+wiRtW8kdVnCupWrHF8IVtfFILmC+Xl40UEFvghzYsLg9XA8OdH
+         lVuA==
+X-Gm-Message-State: AOAM533cAMURMJ2l1KcvvQXzMi/gA4ZIbVql0+Ijxg/HbLcwhcbYbegp
+        4r3DWDGBbAhuN72py3In4732L/VQ+OPG9jZjYLw=
+X-Google-Smtp-Source: ABdhPJzFLIVz/pkMtTvtQew+FRUJjxqZf9ktls2ccULyuk2bLQpyCXSLdCq2Uk2ehuzACINH72Cm3Tqfj9wCe1oN7Uw=
+X-Received: by 2002:aca:49d5:: with SMTP id w204mr2056558oia.167.1606925403210;
+ Wed, 02 Dec 2020 08:10:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="GIrCAcOpC7mETZ4T"
-Content-Disposition: inline
-In-Reply-To: <X8bhdyu/OlscI1ME@camp.crustytoothpaste.net>
-X-Pobox-Relay-ID: 8B6782D8-34B8-11EB-9445-E43E2BB96649-09356542!pb-smtp20.pobox.com
+References: <pull.919.git.git.1605891222.gitgitgadget@gmail.com>
+ <pull.919.v2.git.git.1606861519.gitgitgadget@gmail.com> <1fa263cf3c3d1b0c20ad89e6454a7b903a07f193.1606861519.git.gitgitgadget@gmail.com>
+ <xmqqr1o9m8on.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqr1o9m8on.fsf@gitster.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 2 Dec 2020 08:09:52 -0800
+Message-ID: <CABPp-BGTkGO+19_AUrHFF4P8J8g_RnfbL6r4jHkxYvdE5_h8mw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] stash: remove unnecessary process forking
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Chris Torek <chris.torek@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Dec 1, 2020 at 3:02 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> >     git diff-index --cached --name-only --diff-filter=A $CTREE >"$a"
+> >     git read-tree --reset $CTREE
+> >     git update-index --add --stdin <"$a"
+> >     rm -f "$a"
+>
+> This is orthogonal to what this patch does, as this is supposed to
+> be just bug-for-bug compatible rewrite.
+>
+> But I wonder if the above sequence, whether it is done as a series
+> of plumbing invocations or subroutine calls, is a relic dating back
+> in the days before i-t-a existed.  If we want to revert the changes
+> to the index for working tree files for removed or modified ones, I
+> do not offhand see a good reason why we would want to keep the
+> contents to new paths---if i-t-a were available when the sequence
+> was designed, I suspect we would just have added the path as i-t-a
+> in order to keep track of the presence of the path but not
+> necessarily the contents in it.
 
---GIrCAcOpC7mETZ4T
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-brian m. carlson wrote:
-> On 2020-12-01 at 15:41:15, Todd Zullinger wrote:
->> I think this would raise the minimum supported version of
->> docbook-xsl to 1.77.1.  That might be fine, but we'd
->> probably want to make sure it doesn't negatively impact
->> OS/distributions which build the docs as a likely group who
->> care about reproducible builds.  And we'd want to update the
->> requirement in INSTALL, of course.
->=20
-> I don't think that's necessarily the case.  I just tested using a random
-> name with another DocBook project I have and it seems to work fine, so
-> there shouldn't be a problem with specifying a name undefined in the
-> stylesheet using xsltproc.
-
-Oh, that's very good to know.  Thanks for testing the fine
-details.  I checked that works on a CentOS 6 system where
-the docbook-xsl version is 1.75.2, to test whether an older
-docbook-xsl is similarly forgiving of unknown --param's.
-
-> If we want this to be effective, then yes, people will need to upgrade.
-> But if they're happy with the old behavior on ancient systems, that
-> shouldn't be a problem.
-
-Indeed.  Is it worth mentioning this at all in INSTALL?
-Something like:
-
-  -   The minimum supported version of docbook-xsl is 1.74.
-  +   The minimum supported version of docbook-xsl is 1.74.  For consistent
-  +   IDs in the HTML version of the user-manual, 1.79.1 or newer is
-  +   necessary.
-
-perhaps?
-
-The explicit mention of the user-manual may be overkill,
-particularly if we later apply a similar change to other
-HTML docs (if any other HTML docs even need it)?
-
---=20
-Todd
-
---GIrCAcOpC7mETZ4T
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.14 (GNU/Linux)
-
-iQFEBAEBCAAuBQJfx7vZJxhodHRwczovL3d3dy5wb2JveC5jb20vfnRtei9wZ3Av
-dG16LmFzYwAKCRBDJZOLvq8M4+D5B/91XeMxJ0hMrfA77H8pxH3ODwVcqBEFaoPP
-Y1QVJL4j7/sIlqJj14KmpG3fDLU5fsN4JBlmSYLqJ17MOFK+PFEj2wcFe8QOBL70
-15xLm3O8RGRkibisAnsEPbXYtJiTqOAxXU+5FzfXpxh5g4V1XhYb8idQljLUHh/7
-Ck7ClJrREXT0zzhiotANsDiUXQlXz62Ley6Jw2Iv+BG1aK4RZjZTrYI99ZREmrRa
-RI5DZMHlKQLLlX/hgpAKf8nyiezSDaTX/mdABeVhwAM6V+C5dY9eWNFx9X/5IGmh
-xeWZun94dN2Qz94U8Xq6ZhgD2OMj3K+M70XwfttkX528i7UklSu7
-=Hz2X
------END PGP SIGNATURE-----
-
---GIrCAcOpC7mETZ4T--
+Yeah, I thought a little bit about the same thing, but wasn't sure if
+there was some other reason for the current behavior or if there was
+some workflow that might be relying upon it.  Rather than investigate
+and try to switch it over to i-t-a (which could still be done later),
+I more narrowly focused this series at just doing the "make the
+changes be available in the working tree, but remove them from the
+index unless it'd make it untracked" more carefully.
