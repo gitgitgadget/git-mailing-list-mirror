@@ -2,136 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D951C64E7C
-	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 18:23:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8208EC64E7C
+	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 18:25:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A552221FC
-	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 18:23:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1F79922249
+	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 18:25:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728984AbgLBSXK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Dec 2020 13:23:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50856 "EHLO
+        id S2389311AbgLBSZz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Dec 2020 13:25:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728475AbgLBSXK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Dec 2020 13:23:10 -0500
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D014AC0613CF
-        for <git@vger.kernel.org>; Wed,  2 Dec 2020 10:22:29 -0800 (PST)
-Received: by mail-ot1-x342.google.com with SMTP id f16so2501931otl.11
-        for <git@vger.kernel.org>; Wed, 02 Dec 2020 10:22:29 -0800 (PST)
+        with ESMTP id S1729173AbgLBSZy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Dec 2020 13:25:54 -0500
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6DE9C0613D4
+        for <git@vger.kernel.org>; Wed,  2 Dec 2020 10:25:08 -0800 (PST)
+Received: by mail-pg1-x544.google.com with SMTP id g18so1614417pgk.1
+        for <git@vger.kernel.org>; Wed, 02 Dec 2020 10:25:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=OdXKP2AtiMeynwnoVqGjhC+IAL6zLxtALpnoZNGl71s=;
-        b=jUh1q4yMz+hcll1L6Wf3OtWeQTUbKnOHU8qduNwJqVbsdzeZ53g7gxfZRfRVF4JHqG
-         4pU4aG3Eiurc0zHStSg6ucqP8lDh0swDqBjiR0TK63XfikiZKp7jKb/evBv2ghCRjJsj
-         PxInhlTC1Gs0Wk0BOXrz6p4E98bnU96qXN2ZmqTU8QU9B9TnpvEubluZ6Il+exxXLRsj
-         sWJTC+oraTWR82yNLpcQyOpzTdE6294rvGmR/fmzb3z/VRObciUCFHOylQtVyFiCfdMq
-         C9WDukoBWsOJY4aHtKU+YGEKDG9jQtOyqwPKK16Seq5vcOmtD7+z7n7GeIVrwOa3xtgx
-         Agkg==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=1EfIChaM2Q99M0nbBEoI56UXhXlGfQ7RTlRu1y21qBw=;
+        b=vNzKHAFZ9jv2/2A7RvxV5wDbR3o2jaaHbOYPCXjxdzmM7f5dmx/IbOeNdxeitwrfq0
+         LnNL1VFKf1Wc1u+AJqGgHLGrK4Rtv7KYrKO3EP5B43RdvgFt48iheYs6OEyCv3t4POBr
+         XDAKcRnNHQR3t8BZ5sW2Q3e1G8SsqJpk59lUQuYJvOu4cZTNiYdGPOXG5LOjlapnMeys
+         EV0YL6aEVsCJnbmMP1q1PPjiSDrONrQ2V5ajOcjlmNcaR2Pu+nEkcgkZCsv9EmoEAHSS
+         ZuXOqHPbU0KNYx+aRarvYBkDiMU4u9txvFC0wOrA/vRbPGw+pqJ4sw0m63jCY5zli03W
+         15HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=OdXKP2AtiMeynwnoVqGjhC+IAL6zLxtALpnoZNGl71s=;
-        b=Ze/oPQwUi3i1TlAIS1Mqjo/b22vn745qWJueuV0zaX3L/fl7faY4olI3gMWj8ZUK41
-         8ZO4ipfMq0JuyOdi8nZxNim6R1LImU6lDULgjaY3SQljN6uhdNB/CAyxvpXAUaQazlbo
-         SRlj8ydh8EUWMnm4xmbc8tE+SRM+2vjMKsLH4VjZhAAK5OcFVcEF+VIwY5HpeJJBy0Gn
-         DQafmbGI5yQ835WOGtJduxUYwHJKNNtrEqgFCkVUwmFZSJt2m00PoR+wTudRwAk7ych1
-         5m4ybkJ1HNufywO1t+RQLy7UDhh+1ROSK9z+gBgopYOKfNQDJyLDgS6RbUGKRV2psBSI
-         wYsg==
-X-Gm-Message-State: AOAM532nMdXWrOfmcQXwm2oashMNe+Y6w1gA2aDz4MMTZT/QAYAj0LnY
-        QiwvnwGn0ZFMddxNfd0vjOw=
-X-Google-Smtp-Source: ABdhPJy7AhYPq8zmwDb4gkagVCQe3sCY8YvJeA/icnDKcSzftyQmNEakZH4EdGN2yqfKEUbSDbfsEg==
-X-Received: by 2002:a9d:64c4:: with SMTP id n4mr272683otl.234.1606933349127;
-        Wed, 02 Dec 2020 10:22:29 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
-        by smtp.gmail.com with UTF8SMTPSA id i6sm556137oik.36.2020.12.02.10.22.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Dec 2020 10:22:28 -0800 (PST)
-Subject: Re: [PATCH v2 24/24] pack-bitmap-write: better reuse bitmaps
-To:     Taylor Blau <me@ttaylorr.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=1EfIChaM2Q99M0nbBEoI56UXhXlGfQ7RTlRu1y21qBw=;
+        b=i2IuMGbMGdLRnM8b66oUcqS/ro3PS4aM6iYLYfFjZbBOjw36cESh06qadliWr913jL
+         kGyIEP45Qeykz/ac27i6+NAWFUc1cGWt9Yx9QthppnREjQ4wq/CiNRy41gNZ9Aqz+7l/
+         qGZXuUpc4Cw7wEy8MQntU7RFPNG02K1wOkH7Fpt46uyzVDyZLhVRC5CjJLsq5lOXAl2g
+         vjb0E0ubFzwsFcXbTxYMG3+saHza/MaFKnCV1KAcJ0CtlBzXcP2r9A1m2VxY7Af1ZDge
+         w0+Az7wY0hNiNjRnuy4b5ilWqgHL7NN/FivJoHWrifegFSjQ73BBPh7zwHEXuRurNuPi
+         aEbg==
+X-Gm-Message-State: AOAM530nCe0ujN4gzmlGNtdc5bFlByMpGUBsoEjWtuMWK7xtPk3sfi02
+        P0iWshfvQcbppwTdyqfJHrdSCA==
+X-Google-Smtp-Source: ABdhPJwL0XreJMJdF1DR0MDV34zEhFoChNJeFIFbfBEdSyWNoB0VPMYiaQOhY3GSL8ddQ0lxOmQ4hQ==
+X-Received: by 2002:a63:c43:: with SMTP id 3mr1042981pgm.222.1606933508454;
+        Wed, 02 Dec 2020 10:25:08 -0800 (PST)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id v24sm388223pgi.61.2020.12.02.10.25.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Dec 2020 10:25:07 -0800 (PST)
+Date:   Wed, 2 Dec 2020 13:25:05 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
+        git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
         peff@peff.net, martin.agren@gmail.com, szeder.dev@gmail.com
+Subject: Re: [PATCH v2 24/24] pack-bitmap-write: better reuse bitmaps
+Message-ID: <X8fcAZU30P5MdfRR@nand.local>
 References: <42399a1c2e52e1d055a2d0ad96af2ca4dce6b1a0.1605649533.git.me@ttaylorr.com>
  <20201202080808.3482917-1-jonathantanmy@google.com>
  <X8fCViBtnDek6oAI@nand.local>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <39441f40-f496-af81-87c1-9d7e04fdef20@gmail.com>
-Date:   Wed, 2 Dec 2020 13:22:27 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101
- Thunderbird/84.0
+ <39441f40-f496-af81-87c1-9d7e04fdef20@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <X8fCViBtnDek6oAI@nand.local>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <39441f40-f496-af81-87c1-9d7e04fdef20@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/2/2020 11:35 AM, Taylor Blau wrote:
-> On Wed, Dec 02, 2020 at 12:08:08AM -0800, Jonathan Tan wrote:
->>> +			c_ent->maximal = 1;
->>> +			p = NULL;
->>
->> Here, we're setting maximal without also setting a bit in this commit's
->> commit_mask. This is fine because we're not propagating this commit's
->> commit_mask to any parents (we're not continuing the walk from this
->> commit), but it seems like a code smell. Suggested fix is below.
->>
->>> +		}
->>> +
->>>  		if (c_ent->maximal) {
->>>  			num_maximal++;
->>>  			ALLOC_GROW(bb->commits, bb->commits_nr + 1, bb->commits_alloc);
->>>  			bb->commits[bb->commits_nr++] = commit;
->>>  		}
->>
->> As far as I can tell, this means that this commit occupies a bit
->> position in the commit mask that it doesn't need. Could this go into a
->> separate list instead, to be appended to bb->commits at the very end?
+On Wed, Dec 02, 2020 at 01:22:27PM -0500, Derrick Stolee wrote:
+> >> We could even skip the whole maximal stuff (for commits with existing
+> >> bitmaps) and replace "c_ent->maximal = 1;" above with "add to list that
+> >> we're going to append to bb->commits at the very end". That has the
+> >> advantage of not having to redefine "maximal".
+> >
+> > Hmm. I'd trust Stolee's opinion over mine here, so I'll be curious what
+> > he has to say.
+>
+> It would be equivalent to add it to the list and then continuing the
+> loop instead of piggy-backing on the if (c_ent->maximal) block, followed
+> by a trivial loop over the (nullified) parents.
 
-I don't see any value in having a second list here. That only makes
-things more complicated.
-
->> We could even skip the whole maximal stuff (for commits with existing
->> bitmaps) and replace "c_ent->maximal = 1;" above with "add to list that
->> we're going to append to bb->commits at the very end". That has the
->> advantage of not having to redefine "maximal".
-> 
-> Hmm. I'd trust Stolee's opinion over mine here, so I'll be curious what
-> he has to say.
-
-It would be equivalent to add it to the list and then continuing the
-loop instead of piggy-backing on the if (c_ent->maximal) block, followed
-by a trivial loop over the (nullified) parents.
-
->>>
->>> +		if (!c_ent->commit_mask)
->>> +			continue;
->>
->> I think this should be moved as far up as possible (right after
->> the call to bb_data_at()) and commented, something like:
->>
->>   If there is no commit_mask, there is no reason to iterate over this
->>   commit; it is not selected (if it were, it would not have a blank
->>   commit mask) and all its children have existing bitmaps (see the
->>   comment starting with "This commit has an existing bitmap" below), so
->>   it does not contribute anything to the final bitmap file or its
->>   descendants.
-> 
-> Good suggestion, thanks.
-
-Yeah, makes sense to me.
+Jonathan: does that seem OK to you to leave it as-is? If you don't have
+strong objections, I'll go ahead with sending v3 a little later today.
 
 Thanks,
--Stolee
+Taylor
