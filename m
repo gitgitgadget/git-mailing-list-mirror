@@ -7,109 +7,93 @@ X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CD91C6369E
-	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 23:46:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35EEBC6369E
+	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 23:55:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3C76621D93
-	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 23:46:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C6AC0221EB
+	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 23:55:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727756AbgLBXqz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Dec 2020 18:46:55 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:52512 "EHLO
+        id S1728637AbgLBXzM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Dec 2020 18:55:12 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:52518 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727023AbgLBXqy (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 2 Dec 2020 18:46:54 -0500
-Received: from camp.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
+        by vger.kernel.org with ESMTP id S1726735AbgLBXzL (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 2 Dec 2020 18:55:11 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id F325B6042E;
-        Wed,  2 Dec 2020 23:45:42 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 334B06042E;
+        Wed,  2 Dec 2020 23:54:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1606952743;
-        bh=c9+HluurNmIhzZg8m9PWgh5spGLVmDJ8yfg22VPPwD4=;
+        s=default; t=1606953270;
+        bh=UfCEDD5OH4bS2GljtpQhylf3Q7qsLDeGKfwiDXFh268=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=04leKSFxCOuiUljE+jq5TDnvLzoBx+RKsfMNvS/Klbu5eMGEVC357X/uM8i3bBwvB
-         HsgGaNrLQgKnyJ5+geTro9bN5C7uqDxBCIijZnBe30iHW5tr5EmsvHnNBFV9KixG5T
-         VMRFqinscav0KX2NfIHbXeuSESezaAJDg+ZOiNhDRq+GszQezNjT47aSyMO3FHrFP3
-         CVj5PefnIkyNDQ9ML508EivCHw8/Nagp1F5rr4JLQmg1dP3s8ikAXrsUgIiJI1HZsh
-         /Gi/fY7Fm4snYHac23GoX8Mnlrb8A+v37S6GjTw8RBwCO3HSIEAJeMB8i07CC3y0gg
-         9rzTgxJ0ckzSXlHkvsQHLTAY5QPcE2sYZTxABDJo2DR9vO4M02OERMJ+fgZWJR09Vo
-         3rOHIGAPNWa9Y5Tm1n87DhVN3HpRI/59whujCVMwjn0zXc6KAzkLrPKGZxOsVZVSVO
-         SFtS/kQ2HAg+Ehu7um44igPMYu6rBy0PBuY5F5Xngw4IIvtvDAE
-Date:   Wed, 2 Dec 2020 23:45:38 +0000
+        b=qxV1I7Npgl0KXdX8J6amMF9rhsNSJjfFR6WEaGPre/iV5uyg1MMmYqSQyuHHOqDaZ
+         ztvzbRsNKClhyaahnMRIXaxM+DuxHt/zCIay6Ir9Xdpt939BgzYNouxzozzrsrAtOr
+         9VURTjvScofbBPgJ3+CiMAuinQK11g/M11r4z2TPzS3wLeqo0oncehVMisvHF0eyHC
+         oaV7hRinR6XY/btKADrRBfmCS/uSx8CD6yfxAe93m6YXYqEvRnmMGukoBLOPE1vmRk
+         0uhPdsEfkJwpccY1S5E2GzIN2nFtUyF2fBlhQcSu0XWXLY3/ufkyaWgUaaSJVn+Yzw
+         Fla0Be4Aa1mcnbH1BI5P2obJzEny6k1RpKwJ+bqOY5KvaUeFXs7UK9UaIrHUwbBAeF
+         Rkr8KjOMvOX5BYzr4kVGad5oF/jha08IIHQ1ZQUz6KSJW0lFLpRCO+YodtWS15fYjV
+         qSRqlXEK+OMnsLHtF8mseVyT04yEyLlskiCdwG/V/ZY6pRJAn0u
+Date:   Wed, 2 Dec 2020 23:54:25 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     Arnout Engelen <arnout@bzzt.net>, git@vger.kernel.org,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH] doc: make HTML manual reproducible
-Message-ID: <X8gnItjchqX4wwmt@camp.crustytoothpaste.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH v3 1/2] abspath: add a function to resolve paths with
+ missing components
+Message-ID: <X8gpMUtAHsQ/NfTl@camp.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Todd Zullinger <tmz@pobox.com>, Arnout Engelen <arnout@bzzt.net>,
-        git@vger.kernel.org,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Jeff King <peff@peff.net>
-References: <20201201095037.20715-1-arnout@bzzt.net>
- <20201201154115.GP748@pobox.com>
- <X8bhdyu/OlscI1ME@camp.crustytoothpaste.net>
- <20201202160755.GX748@pobox.com>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
+References: <20201127231916.609852-1-sandals@crustytoothpaste.net>
+ <20201127231916.609852-2-sandals@crustytoothpaste.net>
+ <nycvar.QRO.7.76.6.2012021406020.25979@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Wh0f451vcrYqeiNM"
+        protocol="application/pgp-signature"; boundary="v8vIiJw4myzwXqJQ"
 Content-Disposition: inline
-In-Reply-To: <20201202160755.GX748@pobox.com>
+In-Reply-To: <nycvar.QRO.7.76.6.2012021406020.25979@tvgsbejvaqbjf.bet>
 User-Agent: Mutt/2.0.2 (2020-11-20)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Wh0f451vcrYqeiNM
+--v8vIiJw4myzwXqJQ
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2020-12-02 at 16:07:55, Todd Zullinger wrote:
-> brian m. carlson wrote:
-> > If we want this to be effective, then yes, people will need to upgrade.
-> > But if they're happy with the old behavior on ancient systems, that
-> > shouldn't be a problem.
+On 2020-12-02 at 13:09:49, Johannes Schindelin wrote:
+> I am having a hard time with the name `missing_components`. Taking a step
+> back, I think that we are interested in essentially two modes: allow one
+> missing component, or an arbitrary amount of missing components.
 >=20
-> Indeed.  Is it worth mentioning this at all in INSTALL?
-> Something like:
->=20
->   -   The minimum supported version of docbook-xsl is 1.74.
->   +   The minimum supported version of docbook-xsl is 1.74.  For consiste=
-nt
->   +   IDs in the HTML version of the user-manual, 1.79.1 or newer is
->   +   necessary.
->=20
-> perhaps?
+> If this assumption is correct, we may not even need to count components at
+> all. We only need a flag indicating whether we allow only the last
+> component to be missing, or any number of components. Maybe something like
+> `error_on_missing_parent_directory` or some such?
 
-I don't know that that's even necessary.  Anyone doing reproducible
-builds is already aware of the required versions in order to do a
-reproducible build, and I don't think the average user is going to be
-super interested.
-
-We can if you feel strongly about it, but I don't personally see it as a
-big deal.
+That's certainly easier.  I hope to get a reroll out this week, and I'll
+simplify when I do that.
 --=20
 brian m. carlson (he/him or they/them)
 Houston, Texas, US
 
---Wh0f451vcrYqeiNM
+--v8vIiJw4myzwXqJQ
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.20 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX8gnIgAKCRB8DEliiIei
-gQ9hAP0R7Zs3edrvc6JqdIIlUtUdPahNg5Eie5LPcAyXF2dmbQD7Bl6POit8Xe0A
-9EU0s+BbFt8K49P25IH4by0zc+o1RQ0=
-=mDi0
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX8gpMQAKCRB8DEliiIei
+gZZuAP9wGgy5qaLmy9hA0pl4OK75diN0933MSsQoMDRpEZ2GCgD/ZD8QWJpJzT73
+cKDiRdYWt7KuOLMNbD5tnoJAKIY4rgQ=
+=vmu5
 -----END PGP SIGNATURE-----
 
---Wh0f451vcrYqeiNM--
+--v8vIiJw4myzwXqJQ--
