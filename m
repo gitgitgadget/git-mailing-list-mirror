@@ -2,72 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB4E9C64E7A
-	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 01:51:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2AC3C64E8A
+	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 01:55:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 88FC021D7E
-	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 01:51:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1EA1121D7E
+	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 01:55:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727700AbgLBBvb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Dec 2020 20:51:31 -0500
-Received: from cloud.peff.net ([104.130.231.41]:48190 "EHLO cloud.peff.net"
+        id S1728048AbgLBBzj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Dec 2020 20:55:39 -0500
+Received: from cloud.peff.net ([104.130.231.41]:48204 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727253AbgLBBvb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Dec 2020 20:51:31 -0500
-Received: (qmail 29752 invoked by uid 109); 2 Dec 2020 01:50:51 -0000
+        id S1727353AbgLBBzj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Dec 2020 20:55:39 -0500
+Received: (qmail 29777 invoked by uid 109); 2 Dec 2020 01:54:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 02 Dec 2020 01:50:51 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 02 Dec 2020 01:54:59 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2732 invoked by uid 111); 2 Dec 2020 01:50:50 -0000
+Received: (qmail 2785 invoked by uid 111); 2 Dec 2020 01:54:58 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 01 Dec 2020 20:50:50 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 01 Dec 2020 20:54:58 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 1 Dec 2020 20:50:50 -0500
+Date:   Tue, 1 Dec 2020 20:54:57 -0500
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 6/6] fixup! reftable: rest of library
-Message-ID: <X8by+j24ccvt0F04@coredump.intra.peff.net>
-References: <pull.801.git.1606545878.gitgitgadget@gmail.com>
- <ded8d502d97d3d48dc0e4397b6153f4b06fa319b.1606545878.git.gitgitgadget@gmail.com>
- <X8Ya24TJd87hRq7H@coredump.intra.peff.net>
- <nycvar.QRO.7.76.6.2012011519340.54@tvgsbejvaqbjf.bet>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     Todd Zullinger <tmz@pobox.com>, Arnout Engelen <arnout@bzzt.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] doc: make HTML manual reproducible
+Message-ID: <X8bz8c9enMl8Wqbe@coredump.intra.peff.net>
+References: <20201201095037.20715-1-arnout@bzzt.net>
+ <20201201154115.GP748@pobox.com>
+ <CAN0heSpzA2ecKkjz0kMD8k66x8tDipKs93OHQ0+2efQyrS9_=A@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2012011519340.54@tvgsbejvaqbjf.bet>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAN0heSpzA2ecKkjz0kMD8k66x8tDipKs93OHQ0+2efQyrS9_=A@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 01, 2020 at 03:24:01PM +0100, Johannes Schindelin wrote:
+On Tue, Dec 01, 2020 at 08:18:45PM +0100, Martin Ågren wrote:
 
-> > I don't see it being invoked anywhere,
-> 
-> It is invoked in `t/t0032-reftable-unittest.sh`:
-> https://github.com/dscho/git/blob/reftable-on-windows/t/t0032-reftable-unittest.sh
+> Seems to me like we can go with a change like this. If you're on a
+> pre-1.77.1 system and want user-manual.html, but don't want to update
+> your tool chain, you should still be able to clone the "htmldocs" repo.
+> I'm not sure exactly where the cut-off point is, but I think moving up
+> to mid-2012 should be ok.
 
-Ah, thank you. I was looking at what Junio has queued in hn/reftable.
+Yeah, I think this is the key thing. We can afford to be a bit more
+aggressive with the doc toolchain requirements in general because
+there's an easy fallback.
 
-> > but presumably if we were to add support to our test suite, we'd have a
-> > script which invokes it within a scratch directory.
-> 
-> I agree that it would make most sense for t0032 to prefix the call to
-> `test-tool` with `TMPDIR=$PWD`.
+(Though I think even without that, it sounds like this version is pretty
+safe, and the proposed change would not even break the old versions, but
+keep them with the same behavior).
 
-Yep, that would be fine.
-
-I'm not sure if the long-term goal is to have this opaque unit-test
-program or not. If it is, I was likewise going to suggest that its
-ad-hoc output be replaced with TAP. But it looks like on your branch
-that "test-tool reftable" does not produce output at all. So I may be a
-bit behind on what the current state and forward plans are...
+The overall proposal sounds like a good idea to me, as long as the
+review comments I saw elsewhere.
 
 -Peff
