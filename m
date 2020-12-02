@@ -2,117 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FCA0C64E7A
-	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 00:42:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 718F9C64E8A
+	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 01:44:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2ABCA20659
-	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 00:42:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E5F5A20709
+	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 01:44:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726763AbgLBAmJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Dec 2020 19:42:09 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:51868 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726166AbgLBAmJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 1 Dec 2020 19:42:09 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A8B886042E;
-        Wed,  2 Dec 2020 00:41:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1606869687;
-        bh=o389LNQYZGdQdYqaORYbOxCvwY1IGbcx5GAWhPzDNqc=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=AxJXFn9lYXTi/v+B0w5h7FTq9PY/bm+q6tavmD2xxpp/3vUXlQmLGOQ/m99XAjw+l
-         l1pBIALl+iMZGbSBjz1lgwAAASgSeosBQYUx6yoNY/Siqlrl8mQtTHjSnIJdUNReMm
-         4/GCdjqLcIJRA3xh2Nb9vucgk0vsOUpDTr9KLqyaz1bIjZC783KVi5a30gKU061d2B
-         i19oCEf5uJ1v8zob9hmjwN7QrollDJhTu+KMdrig+jEsXrSMqsyE//VcQqRrKwBbpe
-         bkYRyoeT2DlnIQ5mNTU+T6fniE/qb+tuwont/uzS/YSHbf2oIzXpuBg4VGCpWxEIs+
-         /We3fIfGZ9bTucypwuwVaZMdy2MTSuZfDx4LCgLTb6OVCc+s+Ox6EEjLuQMfdveA8t
-         iRVOToSsjndyYHYTBj8Z5s9xZnNIt8bW4d4gSnJCNfQ6ZiruS6+OUK1rvDlbmpgxku
-         rVTzYn+XSXif1Y2iKXOzjwJVV6RdVg5yUrnEVV1goNK2WtxZh7/
-Date:   Wed, 2 Dec 2020 00:41:23 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Arnout Engelen <arnout@bzzt.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] doc: make HTML manual reproducible
-Message-ID: <X8bis7ZnU8FViHjk@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Arnout Engelen <arnout@bzzt.net>, git@vger.kernel.org
-References: <20201201095037.20715-1-arnout@bzzt.net>
+        id S1727398AbgLBBo2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Dec 2020 20:44:28 -0500
+Received: from cloud.peff.net ([104.130.231.41]:48158 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726761AbgLBBo1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Dec 2020 20:44:27 -0500
+Received: (qmail 29708 invoked by uid 109); 2 Dec 2020 01:43:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 02 Dec 2020 01:43:47 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2640 invoked by uid 111); 2 Dec 2020 01:43:46 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 01 Dec 2020 20:43:46 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 1 Dec 2020 20:43:46 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] MaintNotes: use https:// instead of git:// when possible
+Message-ID: <X8bxUsHN8JcyEKHh@coredump.intra.peff.net>
+References: <20201201094623.4290-1-avarab@gmail.com>
+ <20201201095815.12850-1-avarab@gmail.com>
+ <X8Yu5CephK3uvMeV@coredump.intra.peff.net>
+ <xmqq360pqra2.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="W557ItFGdSmBDCqs"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20201201095037.20715-1-arnout@bzzt.net>
-User-Agent: Mutt/2.0.2 (2020-11-20)
+In-Reply-To: <xmqq360pqra2.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Dec 01, 2020 at 11:07:17AM -0800, Junio C Hamano wrote:
 
---W557ItFGdSmBDCqs
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > s/not/note/ in this last line?
+> 
+> With or without the tweak, I couldn't figure out what the paragraph
+> wanted to say.  On the other hand, I didn't quite get why "friendly
+> web interfaces" matters until trying to read the paragraph again to
+> realize that it was talking about repository browser like gitweb and
+> cgit.
+> 
+> I'd probably rephrase the entire proposed commit log message to
+> something like:
+> 
+> 	Most git:// URLs listed for the copies of the Git repository
+> 	have working corresponding https:// URLs that can be given
+> 	to a browser to browse the repository interactively.  List
+> 	https:// URL instead of git:// URL for such repositories.
+> 	The former is also more secure, even though it may be more
+> 	expensive.
+> 
+> without mentioning ozlabs at all.
 
-On 2020-12-01 at 09:50:37, Arnout Engelen wrote:
-> This makes sure the generated id's inside the html version of the
-> documentation use the same id's when the same version of the
-> manual is generated twice.
->=20
-> Signed-off-by: Arnout Engelen <arnout@bzzt.net>
-> ---
->  Documentation/Makefile | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> index 80d1908a44..4d1fd5e31f 100644
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -380,7 +380,7 @@ SubmittingPatches.txt: SubmittingPatches
->  	$(QUIET_GEN) cp $< $@
-> =20
->  XSLT =3D docbook.xsl
-> -XSLTOPTS =3D --xinclude --stringparam html.stylesheet docbook-xsl.css
-> +XSLTOPTS =3D --xinclude --stringparam html.stylesheet docbook-xsl.css --=
-stringparam generate.consistent.ids 1
+Yeah, I agree that is the important part.
 
-I think we'll want --param here, not --stringparam.  This is documented
-to be an integer, not a string.  The difference is that --stringparam
-sets the value to "1" (that is, a string with a single character)
-instead of the integer 1.
-
-We may also want to wrap this to the next line like so:
-
-  XSLTOPTS =3D  --xinclude --stringparam html.stylesheet docbook-xsl.css
-  XSLTOPTS +=3D --param generate.consistent.ids 1
-
-Otherwise, I think this is a valuable change, as I've mentioned
-downthread.  I already use this option on my own projects for the same
-reason.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---W557ItFGdSmBDCqs
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX8biswAKCRB8DEliiIei
-gTdjAQDnuhpBY65mRM6XYccPyI10g2DWtF2XooLaKCRQ9k/XwgEAmHgGy7T60KdG
-DFl7aKgUwYkVCCWtMoU6/zIQF5F5XgE=
-=k/I1
------END PGP SIGNATURE-----
-
---W557ItFGdSmBDCqs--
+-Peff
