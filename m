@@ -2,64 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2200AC64E7C
-	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 07:45:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 460F5C64E7C
+	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 08:09:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A8E602222C
-	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 07:45:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D898620DD4
+	for <git@archiver.kernel.org>; Wed,  2 Dec 2020 08:09:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726917AbgLBHpW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Dec 2020 02:45:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36558 "EHLO
+        id S1728033AbgLBIIx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Dec 2020 03:08:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726360AbgLBHpW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Dec 2020 02:45:22 -0500
-Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAAB4C0613CF
-        for <git@vger.kernel.org>; Tue,  1 Dec 2020 23:44:41 -0800 (PST)
-Received: by mail-qv1-xf49.google.com with SMTP id b15so595827qvm.10
-        for <git@vger.kernel.org>; Tue, 01 Dec 2020 23:44:41 -0800 (PST)
+        with ESMTP id S1726148AbgLBIIv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Dec 2020 03:08:51 -0500
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CED1AC0613CF
+        for <git@vger.kernel.org>; Wed,  2 Dec 2020 00:08:11 -0800 (PST)
+Received: by mail-yb1-xb49.google.com with SMTP id z29so833761ybi.23
+        for <git@vger.kernel.org>; Wed, 02 Dec 2020 00:08:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=xUlQxe0dzUdR9DxD4SvZxoNJrfK1kEpTHGE6hdZjKx8=;
-        b=aIhwk/gJDvNZeKpCNrmg4X4ko0lS61Nv3X7QhdYo3QLf2SSGjQ6EKBLShsx3hdhRIV
-         3WHQQEM7gSlrb88fUQBgjg9wYa9nMfBTu/khm0D2K38T/p5LE2bkDr0F7c/83crECyio
-         j18KgfXs7v8cJGX22/1wPJnOMug50wk6fZWfwrW6jccyya6rhPCYUKss0Ep2vWqLbxSU
-         SB446xJc7fpqU5oiCO13I+Un9gkMVndjAhuZ8EX3G25+r6dwIdn5DZohGyDT4C1h0Am+
-         tMyVz+QWvFBNVdwyp/i7RwOQKaARKiqdN8HIasdhG35xoZzm6qD571my5mEgdAS6KhNv
-         Ystg==
+        bh=zx2XSakvgklwZarkG14s0QxGh45/G81XJUEuxfktv+M=;
+        b=mmxX+DAxfF60D2DurZa6ZgsZ/gHzNLqgsraXSeqOIwMvMHczib0z9/BQMefaVk6vz+
+         wbzlb22sJU6ti+jBHsWQ5IsE6ALy2fracsJPTUtxTYoU6pykMKCxITguTQCCPemNPxAj
+         jGql0DMzbeFErCyM3OQTsoQPW2BbLIt8BCr/ygN6wC330oKCqw1HC7oemxdeklH5n9eT
+         I4ttieSdDXuzdtqB5cnWMS31eeB2urXu/L424FlE7CC9q+dalG5wp2n9hIDuMpQDyWVz
+         u/PEUF/U4zqX5AlYQGS3IKuW6EG5SnqnLnufCXbMsktH6CNFymxZEIdoJHiGWsomGqPp
+         dMxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=xUlQxe0dzUdR9DxD4SvZxoNJrfK1kEpTHGE6hdZjKx8=;
-        b=Sl7uUeEeRkpYUFFWX3DL0eEryw6ZPZ5IfBlpIE+I5SdT9A9coM6bhI1J4eU4M9DMZ6
-         L+2FLDYzFvX00AcYtRtZQLuL3gjo1VmNKZzuE8NJi+nKdNJKx22a+zbk0gqapvB5zNP3
-         EHerCSpLDbzbkCYykKqDeeGrOuPfpKxsScnYfGGEIrKDQkk5UmmPc3Qm/nKKOOErlbDR
-         eSzyLX7SvjSH+tFEKKI3BZdsifKDLbeReSdJCNrka3qr9qiyyYGRem/6lUf0mdSBFCCM
-         qF0YwRA0cB2ChvaY5swpLQ/3mSb2wah0v6n5yymDz/Azz2E06eWXgrq1vQCSHKZWZuD0
-         s6eQ==
-X-Gm-Message-State: AOAM532QSS3CwjxlhpJi21E+JC2HwKNJDlJNV6S6QucTDyqjquQI7j7r
-        wbeTxSni5euV/3XhfRYhWR2zEblgQywOTE+AjrwV
-X-Google-Smtp-Source: ABdhPJypD8XK29+/iG9ypByj8uknM9vplgEe+nMAdi+wUOr0kSQohylIAHBHiSle1NhxzbK8u+Qyi9DYoebOf14WgMMt
+        bh=zx2XSakvgklwZarkG14s0QxGh45/G81XJUEuxfktv+M=;
+        b=TDmhEZUoQmseHNzlrjXPYq4Aw+ye6AESnjW54jm0ViZqJsYmDR0TKnrjjooWzaxJuN
+         7iNEzGjtgi17/aWBk8ftvgJOoudRSwxeB/59C9JIEZzLKZRYBZh/G0y3VnF+6TpRQIXJ
+         spPKa9LLgVJeHDQSgJSMWMhCYfPcwip3KjmWmep84Cdfzjd3T0bUFbym4tXaaMrv27LP
+         fuClmfZ78fRTrMCAs5N48cOogVXt8MLJKiw8+puU0DS300LNeFBsL0dUphZDnybwYxVZ
+         XzMRxqPm5J4MsUjigaRsq0dMtPRfkEqXHPUhttserQfI+bT/kIC2NcrO2LJx8cYtT4Mn
+         937w==
+X-Gm-Message-State: AOAM531HNZWf+pB6KLNFoO0mPrH0RqMT/akNSFDDDaPp8qyxV8ZOByvS
+        1xuD4rIcM6noFhtrqLMDjfrn10BPygUMuLWOx76G
+X-Google-Smtp-Source: ABdhPJy+tdHMJhKAnG0dMLHSZZKezGHtXIPQtwPKO9ouv2E/3K2tWQYM5oej16xnx6ntQc2vzvpZiUeqkl11J11QN18C
 Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a0c:ebc5:: with SMTP id
- k5mr1513739qvq.40.1606895081065; Tue, 01 Dec 2020 23:44:41 -0800 (PST)
-Date:   Tue,  1 Dec 2020 23:44:39 -0800
-In-Reply-To: <1da4fa0fb85fe848aa86987e767b33d296f8f878.1605649533.git.me@ttaylorr.com>
-Message-Id: <20201202074439.3478090-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a25:d695:: with SMTP id
+ n143mr1909670ybg.125.1606896491070; Wed, 02 Dec 2020 00:08:11 -0800 (PST)
+Date:   Wed,  2 Dec 2020 00:08:08 -0800
+In-Reply-To: <42399a1c2e52e1d055a2d0ad96af2ca4dce6b1a0.1605649533.git.me@ttaylorr.com>
+Message-Id: <20201202080808.3482917-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <1da4fa0fb85fe848aa86987e767b33d296f8f878.1605649533.git.me@ttaylorr.com>
+References: <42399a1c2e52e1d055a2d0ad96af2ca4dce6b1a0.1605649533.git.me@ttaylorr.com>
 X-Mailer: git-send-email 2.29.2.454.gaff20da3a2-goog
-Subject: Re: [PATCH v2 23/24] pack-bitmap-write: relax unique rewalk condition
+Subject: Re: [PATCH v2 24/24] pack-bitmap-write: better reuse bitmaps
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     me@ttaylorr.com
 Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
@@ -70,39 +70,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> However, there was a (significant) drawback: wide histories with many
-> refs had an explosion of memory costs to compute the commit bitmasks
-> during the exploration that discovers these intermediate commits. Since
-> these wide histories are unlikely to repeat walking objects, the benefit
-> of walking objects multiple times was not expensive before. But now, the
-> commit walk *before computing bitmaps* is incredibly expensive.
+> diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+> index b0493d971d..3ac90ae410 100644
+> --- a/pack-bitmap-write.c
+> +++ b/pack-bitmap-write.c
+> @@ -195,7 +195,8 @@ struct bitmap_builder {
+>  };
+>  
+>  static void bitmap_builder_init(struct bitmap_builder *bb,
+> -				struct bitmap_writer *writer)
+> +				struct bitmap_writer *writer,
+> +				struct bitmap_index *old_bitmap)
+>  {
+>  	struct rev_info revs;
+>  	struct commit *commit;
+> @@ -234,12 +235,26 @@ static void bitmap_builder_init(struct bitmap_builder *bb,
+>  
+>  		c_ent = bb_data_at(&bb->data, commit);
+>  
+> +		if (old_bitmap && bitmap_for_commit(old_bitmap, commit)) {
+> +			/*
+> +			 * This commit has an existing bitmap, so we can
+> +			 * get its bits immediately without an object
+> +			 * walk. There is no need to continue walking
+> +			 * beyond this commit.
+> +			 */
 
-Do you have numbers of how large the commit bitmasks are?
+OK - as far as I understand, the reason for continuing the walk would be
+to find reverse edges that connect this commit and its ancestors so that
+this commit's ancestors can contribute bitmaps to this commit, but we do
+not need such contributions, so we do not need to continue the walk.
+Makes sense.
 
-> In an effort to discover a happy medium, this change reduces the walk
-> for intermediate commits to only the first-parent history. This focuses
-> the walk on how the histories converge, which still has significant
-> reduction in repeat object walks. It is still possible to create
-> quadratic behavior in this version, but it is probably less likely in
-> realistic data shapes.
+> +			c_ent->maximal = 1;
+> +			p = NULL;
 
-Would this work? I agree that the width of the commit bitmasks would go
-down (and there would also be fewer commit bitmasks generated, further
-increasing the memory savings). But intuitively, if there is a commit
-that is selected and only accessible through non-1st-parent links, then
-any bitmaps generated for it cannot be contributed to its descendants
-(since there was no descendant-to-ancestor walk that could reach it in
-order to form the reverse edge).
+Here, we're setting maximal without also setting a bit in this commit's
+commit_mask. This is fine because we're not propagating this commit's
+commit_mask to any parents (we're not continuing the walk from this
+commit), but it seems like a code smell. Suggested fix is below.
 
-> Here is some data taken on a fresh clone of the kernel:
-> 
->              |   runtime (sec)    |   peak heap (GB)   |
->              |                    |                    |
->              |   from  |   with   |   from  |   with   |
->              | scratch | existing | scratch | existing |
->   -----------+---------+----------+---------+-----------
->     original |  64.044 |   83.241 |   2.088 |    2.194 |
->   last patch |  44.811 |   27.828 |   2.289 |    2.358 |
->   this patch | 100.641 |   35.560 |   2.152 |    2.224 |
+> +		}
+> +
+>  		if (c_ent->maximal) {
+>  			num_maximal++;
+>  			ALLOC_GROW(bb->commits, bb->commits_nr + 1, bb->commits_alloc);
+>  			bb->commits[bb->commits_nr++] = commit;
+>  		}
 
-Hmm...the jump from 44 to 100 seems rather large.
+As far as I can tell, this means that this commit occupies a bit
+position in the commit mask that it doesn't need. Could this go into a
+separate list instead, to be appended to bb->commits at the very end?
+
+We could even skip the whole maximal stuff (for commits with existing
+bitmaps) and replace "c_ent->maximal = 1;" above with "add to list that
+we're going to append to bb->commits at the very end". That has the
+advantage of not having to redefine "maximal".
+
+>  
+> +		if (!c_ent->commit_mask)
+> +			continue;
+
+I think this should be moved as far up as possible (right after
+the call to bb_data_at()) and commented, something like:
+
+  If there is no commit_mask, there is no reason to iterate over this
+  commit; it is not selected (if it were, it would not have a blank
+  commit mask) and all its children have existing bitmaps (see the
+  comment starting with "This commit has an existing bitmap" below), so
+  it does not contribute anything to the final bitmap file or its
+  descendants.
