@@ -7,104 +7,79 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 738EAC6369E
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 01:34:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB655C6369E
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 01:46:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 10B8B20C56
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 01:34:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 46D5820B80
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 01:46:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729257AbgLCBee (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Dec 2020 20:34:34 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57597 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727402AbgLCBed (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Dec 2020 20:34:33 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0FE5810004A;
-        Wed,  2 Dec 2020 20:33:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=lFh9lpMYylLfqyyGwpl8t0KgQ0Y=; b=PAPLs9
-        h2ExgG/P5G/+c16HGLCNOrj5YCle6FwofXOughst1X61qyJrJlt8cXYupzTBHtEK
-        CdyOMft4wC0WihNgo8oaK0BfphXCgsBsC/OInkePwUYfKgwj9Ov/1uBNEoWkDN96
-        SKLn271ppVLHF+Yfrb0H4VKEXeNzSWQHeZOuk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UwabrgtHLAeyJutsSlZBu1yk8+3DdKdL
-        nnG/FwRPvb+SL/1TP0fl4cXNaAoav5Yd6BCOezgep1KQMLX14Bhyr4QecszSR/Ru
-        3BpFKrImBR8rXp4r5nscNmf9W36HrHcj0ZIkNW11XapSA1arZtqzoPwiHmDv+YRj
-        0O09iZriqBY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0867D100049;
-        Wed,  2 Dec 2020 20:33:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 052D4100048;
-        Wed,  2 Dec 2020 20:33:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Todd Zullinger <tmz@pobox.com>, Arnout Engelen <arnout@bzzt.net>,
-        git@vger.kernel.org,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH] doc: make HTML manual reproducible
-References: <20201201095037.20715-1-arnout@bzzt.net>
-        <20201201154115.GP748@pobox.com>
-        <X8bhdyu/OlscI1ME@camp.crustytoothpaste.net>
-        <20201202160755.GX748@pobox.com>
-        <X8gnItjchqX4wwmt@camp.crustytoothpaste.net>
-Date:   Wed, 02 Dec 2020 17:33:46 -0800
-In-Reply-To: <X8gnItjchqX4wwmt@camp.crustytoothpaste.net> (brian m. carlson's
-        message of "Wed, 2 Dec 2020 23:45:38 +0000")
-Message-ID: <xmqqy2ifisg5.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727799AbgLCBpo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Dec 2020 20:45:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34918 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727757AbgLCBpn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Dec 2020 20:45:43 -0500
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E9B8C061A4D
+        for <git@vger.kernel.org>; Wed,  2 Dec 2020 17:44:57 -0800 (PST)
+Received: by mail-lj1-x22c.google.com with SMTP id j10so700165lja.5
+        for <git@vger.kernel.org>; Wed, 02 Dec 2020 17:44:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp.br; s=usp-google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=sH1DF8hE0pzCXEdiiGmrQgy/wJA5WNhKnpFnD4XzjTk=;
+        b=CW4Ceo9zkKHrcJ4aBgGDU2RWZlV47rMBz0uN5B14yFQOSLKpEjqlXNlDsmrdJMokuZ
+         03CmFwxB4PstZx2oAluzpQanbxzzDW96qUyyltacyLagwYRqmfvMMdVhJzKPLoHrXO0f
+         UKhsbQr65nqA7bReHX2ahXwTjRSzBtZJEDAZBSKJTGJ+3KReBTC98OpL4dM7Jg55nVzG
+         FMsnPAS6T6wk9YzxOQ3x2mVTqI5b6Lie+AUFwBA2nKkYtkKV0X8ejUqGsWC3k6hFhbOl
+         DVmLFveRamgysUW3Qcl84sl50uBSot5qQ5MdU6wQ/KSBiJyBGFrH7Bj+SHYhlFKM/k3B
+         PdEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=sH1DF8hE0pzCXEdiiGmrQgy/wJA5WNhKnpFnD4XzjTk=;
+        b=sxNTj6s0xLx6W8qN3q2ZvT7GOJ2hhQOV831wfgLqvQrOHCToaxJJLK7na0Ezs2eBoX
+         3DNy4YvtRlsvElFDW2ZkXbrcnIlw3OupovRGB8KyaRIDKwI/7o8CQNSsyfJqoQrSJhne
+         owd7ARjvwtxapE8+VkzkDRXMfj7NVo/TCw7zhCItsnCllF3/utUPwbTejjt5R6tJOcry
+         2bYiB3qnu+ept6vPwk778BB17dOoQQp2Zus7ZaS/MCzF/H4fPrfpaj1Qn3Qsudjna54O
+         Y6cPfvqlfy2mM3XfyXzx4pR/D9W0rwR+2yYrkJDZsfCs1tKbK4rtUBzdlaKY8/tSsyY4
+         xHOQ==
+X-Gm-Message-State: AOAM531it3CRcsSEFkJH+TY9zwjYYX4BsOlUVctALLqsr4IQu+qPU9DU
+        ouPJl8kVdNf+MCC4fos8dtI7E4AJyUYDwuws39p1ZDvS3FRoRQ==
+X-Google-Smtp-Source: ABdhPJztqEN0spv1dy7yEEqchl/GmfbQB7guPxKjjlsSZi80prE3dBTezhz81nUFtRhGJVq0swy4qDxv1Q0n08ee0/0=
+X-Received: by 2002:a2e:8315:: with SMTP id a21mr252771ljh.29.1606959895664;
+ Wed, 02 Dec 2020 17:44:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 970FDDC0-3507-11EB-8A1B-D609E328BF65-77302942!pb-smtp21.pobox.com
+References: <CAHd-oW4yHSTYr0Gwn60tu2c7VY=PJbSbg23Z5Bd_11Do-+juGA@mail.gmail.com>
+ <xmqqim9jn9rn.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqim9jn9rn.fsf@gitster.c.googlers.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Wed, 2 Dec 2020 22:44:44 -0300
+Message-ID: <CAHd-oW4bkQ6uDxY87D-8r0E+756unTzmY8eFv_99z=oN2nu16A@mail.gmail.com>
+Subject: Re: Is git-am expected to honor core.sharedRepository?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
-
-> On 2020-12-02 at 16:07:55, Todd Zullinger wrote:
->> brian m. carlson wrote:
->> > If we want this to be effective, then yes, people will need to upgrade.
->> > But if they're happy with the old behavior on ancient systems, that
->> > shouldn't be a problem.
->> 
->> Indeed.  Is it worth mentioning this at all in INSTALL?
->> Something like:
->> 
->>   -   The minimum supported version of docbook-xsl is 1.74.
->>   +   The minimum supported version of docbook-xsl is 1.74.  For consistent
->>   +   IDs in the HTML version of the user-manual, 1.79.1 or newer is
->>   +   necessary.
->> 
->> perhaps?
+On Wed, Dec 2, 2020 at 7:06 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> I don't know that that's even necessary.  Anyone doing reproducible
-> builds is already aware of the required versions in order to do a
-> reproducible build, and I don't think the average user is going to be
-> super interested.
+> Matheus Tavares Bernardino <matheus.bernardino@usp.br> writes:
 >
-> We can if you feel strongly about it, but I don't personally see it as a
-> big deal.
+> > (For some background, I stumbled across this while considering using
+> > safe_create_leading_directories() for a parallel-checkout patch. But
+> > then I noticed it adjusts the directories' permissions based on the
+> > setting and I was worried whether it could be user for checkout.)
+>
+> Forgot to respond to this part, but you are correct.
+>
+> Anything that tries to replace what is in entry.c must not trigger
+> adjust_shared_perm() on files and directories in the working tree,
+> and it is a no-no to call safe_create_leading_directories().
 
-I tend to agree.
-
-The tool being lenient and ignoring a parameter from the future
-makes things very simple, and the way the patch is structured,
-"stable ID" is not even a build option the builder can enable.
-For some version of the toolchain, the option means stable ID and
-some older version, it does not mean anything, and that is fine.
-
-We ship our Makefile with "CFLAGS = -g -O2 -Wall" and we do not say
-things like "Such and such optimizations are only available if you
-use GCC newer than version X.Y"; it is fine to treat the "--param"
-the same way here.
-
+Got it, thanks. I've adjusted the parallel-checkout patch to use the
+_no_share() scld variant from mt/do-not-use-scld-in-working-tree.
