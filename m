@@ -2,249 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0527CC4361A
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 16:48:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4E6BC433FE
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 17:01:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B80720754
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 16:48:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 55C4D207A4
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 17:01:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728009AbgLCQs1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Dec 2020 11:48:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33482 "EHLO
+        id S1730480AbgLCRBI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Dec 2020 12:01:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726610AbgLCQs1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Dec 2020 11:48:27 -0500
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A1D8C061A4E
-        for <git@vger.kernel.org>; Thu,  3 Dec 2020 08:47:47 -0800 (PST)
-Received: by mail-ot1-x343.google.com with SMTP id f12so2328486oto.10
-        for <git@vger.kernel.org>; Thu, 03 Dec 2020 08:47:47 -0800 (PST)
+        with ESMTP id S1725918AbgLCRBI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Dec 2020 12:01:08 -0500
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com [IPv6:2607:f8b0:4864:20::841])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1019C061A4E
+        for <git@vger.kernel.org>; Thu,  3 Dec 2020 09:00:27 -0800 (PST)
+Received: by mail-qt1-x841.google.com with SMTP id p12so1830261qtp.7
+        for <git@vger.kernel.org>; Thu, 03 Dec 2020 09:00:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=TpYjpxROIdqu35c00/p+0b/egSLmM+9o+DEuR+sRcZ4=;
-        b=OZUIgTwPe84eXAMWd/lYU1CrFKsTB0ZQ8atTwx0DW8hnvR5rAW3hgVxVfIA9n/25G3
-         I6uuQIkzFyMc3JM/dQFx01/EzrXw9DEjAuBxc7WiHP/eKPWFONsxMi9ddpjw3TYxqmA1
-         l7ezgGe31/TG1LWd1WHqj4kaRfLcxPRSvpEM1UkL2lKT9smwHQnFzerIsJd7gi03wf9k
-         zvnNPcnQWoq4bm0+Cyln/JSUxABMGe01VPw5NO8SZD68mwGuTDnYLlrSPRvO4riTa+ee
-         gWrwabOR2w3mvej7UFQWhhRLfZqAVpfEGbxMNm2sha3mjjeGbaDWuT0p2RtLfocQav/X
-         /H/g==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=bxiqG1DhiN1UO5GkdJrASCy40sA0hU+MEPQvFeEUBtM=;
+        b=DCcngy3A2gtHv66jakSIIh+T9hrR2ybQgsHzF1w7cl1FkXhkspzpl/Qek85G6bdJcO
+         kMeYkGrTvHgUlV4lTAYpqlzDgQElUEdtzqn/pYitcm3WRMOO1UPFK5srF2sbl4fQIagt
+         xVgaBXeh8fLxWpAde7/vfIiDFCSttcbNEtw556dtJcF/AfL9RQTXmyzKJNeqHV97Uaca
+         dYrf/7940gj7zItCCDr/wY+UkpSxF2sHdGoxSgkXq9/WjDWwr4ZnoDv1WvtLCbcR58TU
+         qqrNtcjC6lR6MkqAlGZzDalvEvLdytBbjbi8WheX42iPJXBKQD7V1TGhmiG/CdeqAaHi
+         bYqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TpYjpxROIdqu35c00/p+0b/egSLmM+9o+DEuR+sRcZ4=;
-        b=KjERK6zVW+3K2IyxXmwFbZfiv2MBvEOrO+FwdAjXdWjeOv8ATjCAYg38f9DNSDC9CT
-         CAyW2McTFpLk2jrtB5jTfsu3lAchSb5hacOMbvM64R+dcu6eVL6132i2J+EM1yGfCbl3
-         4rOj00tGKmSzH9VsyDErRuxq2QVtkC/frJrPFqHo5yBcKJX+EsRDdECcqlDP/dNJvfA+
-         prvJKoZXixa5bhjFO48SCD7DqoANIv3HRw3eVOh6auNv2+v88cVSPyHPP1nKgo6etuUp
-         0qOEs9jSvhJw6I1WPyiGFuGMOw1aa9w1MYcXUJSpy+aTCHXQ3rdJaeINfRJJCPia4TQ7
-         Barw==
-X-Gm-Message-State: AOAM533GuBFGV7cWW3TZbxS5SPkmW2Rlst4s0SwHlLiibGK2vGuCLvVi
-        kdaiTJFoZTdXLFMIpwhqBEuz92VD/wutlMjUMFeg6swEDC6HjQ==
-X-Google-Smtp-Source: ABdhPJzKpUu2FXoTTM6myWHzEthUqrt+HEakYepaXgdco1bWMb29cttoLEDJXX3v+Z1DLxEt+Juo5x229w9evaWQRiA=
-X-Received: by 2002:a05:6830:12c2:: with SMTP id a2mr46412otq.162.1607014066355;
- Thu, 03 Dec 2020 08:47:46 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=bxiqG1DhiN1UO5GkdJrASCy40sA0hU+MEPQvFeEUBtM=;
+        b=AsCJ9ekq5XRJsnIUgoSyf9/Z9Fhw9HY+3DzVHVpazCsjnFNlCgJKFoJCtkkc73fGR8
+         UK0YVYr7rE2zGgATiMMIFALgPG9g8yNCNxDUt/g+TlORTZXzC3NX6xKgSizJK+7Zs9Tn
+         GcXGkJ+ocy2Rbg6wBXg0CNKM+IenB8ieNo3AgMlvp8v0+nJ5biARsxr7PBwmqcEhSf1g
+         txJ8V2dJ2dJy8+E+4Mfd0E1BHMuOccw/jmvcGmbrUIbTm16VBUVuVhRdcsFFlaXWDXEp
+         4rYCwHlNfLsAFK7JL5vieH1ct2vW8/86xdbg4hwiLeewC8CpI3jRQTEGA+EwhrqkoFb0
+         LLrA==
+X-Gm-Message-State: AOAM530gvnXrLr1uz9lleCJcQr4EOslvUF3lRiPhdRdFX+2gmDXQ7wEd
+        GyTt8keVpCsevU9NycXGnQRZSssX4i4Bgw==
+X-Google-Smtp-Source: ABdhPJxXVW8r/E11+SzUNUivhzjKmWFGOv/LEHuxAIgI+wefpP7Mj4QkH0c2N1Kxyy1fvEAJVnjuYQ==
+X-Received: by 2002:a05:622a:291:: with SMTP id z17mr4043960qtw.180.1607014826990;
+        Thu, 03 Dec 2020 09:00:26 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
+        by smtp.gmail.com with UTF8SMTPSA id e19sm1734121qtp.83.2020.12.03.09.00.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Dec 2020 09:00:26 -0800 (PST)
+Subject: Re: [PATCH 2/7] merge-ort: add a clear_internal_opts helper
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>
+References: <pull.803.git.1607011187.gitgitgadget@gmail.com>
+ <5d73827b8d6c254f5bc4a99afa421ae34f07182e.1607011187.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <42a99014-573f-cc5d-ffa0-b22aec288425@gmail.com>
+Date:   Thu, 3 Dec 2020 12:00:26 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101
+ Thunderbird/84.0
 MIME-Version: 1.0
-References: <20201101193330.24775-1-sorganov@gmail.com> <20201108213838.4880-1-sorganov@gmail.com>
- <20201108213838.4880-28-sorganov@gmail.com>
-In-Reply-To: <20201108213838.4880-28-sorganov@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 3 Dec 2020 08:47:35 -0800
-Message-ID: <CABPp-BG_YT2i_27tqkh_e4mwfkYae-zDCEYL=F+NjYQed2gKAg@mail.gmail.com>
-Subject: Re: [PATCH v1 27/27] doc/git-show: include --diff-merges description
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <5d73827b8d6c254f5bc4a99afa421ae34f07182e.1607011187.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Sun, Nov 8, 2020 at 1:44 PM Sergey Organov <sorganov@gmail.com> wrote:
->
-> Move description of --diff-merges option from git-log.txt to
-> diff-options.txt so that it is included in the git-show help.
->
-> While we are at it, make git-show closer to git-log in this area by
-> providing similar wording in the introduction of diff options.
->
-> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+On 12/3/2020 10:59 AM, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
+> 
+> Move most of merge_finalize() into a new helper function,
+> clear_internal_opts().  This is a step to facilitate recursive merges,
+> as well as some future optimizations.
+> 
+> Signed-off-by: Elijah Newren <newren@gmail.com>
 > ---
->  Documentation/diff-options.txt | 54 ++++++++++++++++++++++++++++++++++
->  Documentation/git-log.txt      | 52 --------------------------------
->  Documentation/git-show.txt     |  8 +++--
->  3 files changed, 60 insertions(+), 54 deletions(-)
->
-> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-> index 573fb9bb71e2..f1629887103e 100644
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -33,6 +33,60 @@ endif::git-diff[]
->         show the patch by default, or to cancel the effect of `--patch`.
->  endif::git-format-patch[]
->
-> +ifdef::git-log[]
-> +Note that unless one of `--diff-merges` variants (including short
-> +`-m`, `-c`, and `--cc` options) is explicitly given, merge commits
-> +will not show a diff, even if a diff format like `--patch` is
-> +selected, nor will they match search options like `-S`. The exception
-> +is when `--first-parent` is in use, in which case
-> +`--diff-merges=first-parent` is implied.
+>  merge-ort.c | 40 ++++++++++++++++++++++++----------------
+>  1 file changed, 24 insertions(+), 16 deletions(-)
+> 
+> diff --git a/merge-ort.c b/merge-ort.c
+> index b556897bc0..0654c76c8c 100644
+> --- a/merge-ort.c
+> +++ b/merge-ort.c
+> @@ -194,6 +194,29 @@ static void free_strmap_strings(struct strmap *map)
+>  	}
+>  }
+>  
+> +static void clear_internal_opts(struct merge_options_internal *opti,
+> +				int reinitialize)
+> +{
+> +	assert(!reinitialize);
 
-So, now diff-options says that no diffs are the defaults for merge commits...
+I was first confused by this new assert, but you are essentially
+saying "this parameter doesn't do anything (yet)" which makes sense.
 
 > +
-> +--diff-merges=(off|none|first-parent|separate|combined|dense-combined)::
-> +--no-diff-merges::
-> +       Specify diff format to be used for merge commits. This has no
-> +       effect unless diff output is enabled in the first place (e.g.,
-> +       with `--patch` option.)
-> ++
-> +--diff-merges=(off|none):::
-> +--no-diff-merges:::
-> +       (default) Disable output of diffs for merge commits. Useful to
-> +       override implied value.
-> ++
-> +--diff-merges=first-parent:::
-> +       This option makes merge commits show the full diff with
-> +       respect to the first parent only, exactly like  regular
-> +       commits.
-> ++
-> +--diff-merges=separate:::
-> +-m:::
-> +       This makes merge commits show the full diff with respect to
-> +       each of the parents. Separate log entry and diff is generated
-> +       for each parent.
-> ++
-> +--diff-merges=combined:::
-> +-c:::
-> +       With this option, diff output for a merge commit shows the
-> +       differences from each of the parents to the merge result
-> +       simultaneously instead of showing pairwise diff between a
-> +       parent and the result one at a time. Furthermore, it lists
-> +       only files which were modified from all parents.
-> ++
-> +--diff-merges=dense-combined:::
-> +--cc:::
-> +       With this option the output produced by
-> +       `--diff-merges=combined` is further compressed by omitting
-> +       uninteresting hunks whose contents in the parents have only
-> +       two variants and the merge result picks one of them without
-> +       modification.
+> +	/*
+> +	 * We marked opti->paths with strdup_strings = 0, so that we
+> +	 * wouldn't have to make another copy of the fullpath created by
+> +	 * make_traverse_path from setup_path_info().  But, now that we've
+> +	 * used it and have no other references to these strings, it is time
+> +	 * to deallocate them.
+> +	 */
+> +	free_strmap_strings(&opti->paths);
+> +	strmap_clear(&opti->paths, 1);
 > +
-> +--combined-all-paths::
-> +       This flag causes combined diffs (used for merge commits) to
-> +       list the name of the file from all parents.  It thus only has
-> +       effect when `--diff-merges=[dense-]combined` is in use, and
-> +       is likely only useful if filename changes are detected (i.e.
-> +       when either rename or copy detection have been requested).
-> +endif::git-log[]
-> +
->  -U<n>::
->  --unified=<n>::
->         Generate diffs with <n> lines of context instead of
-> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-> index de498a189646..0cacc780bf30 100644
-> --- a/Documentation/git-log.txt
-> +++ b/Documentation/git-log.txt
-> @@ -120,58 +120,6 @@ DIFF FORMATTING
->  By default, `git log` does not generate any diff output. The options
->  below can be used to show the changes made by each commit.
->
-> -Note that unless one of `--diff-merges` variants (including short
-> -`-m`, `-c`, and `--cc` options) is explicitly given, merge commits
-> -will not show a diff, even if a diff format like `--patch` is
-> -selected, nor will they match search options like `-S`. The exception
-> -is when `--first-parent` is in use, in which case
-> -`--diff-merges=first-parent` is implied.
+> +	/*
+> +	 * All keys and values in opti->conflicted are a subset of those in
+> +	 * opti->paths.  We don't want to deallocate anything twice, so we
+> +	 * don't free the keys and we pass 0 for free_values.
+> +	 */
+> +	strmap_clear(&opti->conflicted, 0);
+...
+> -	/*
+> -	 * We marked opti->paths with strdup_strings = 0, so that we
+> -	 * wouldn't have to make another copy of the fullpath created by
+> -	 * make_traverse_path from setup_path_info().  But, now that we've
+> -	 * used it and have no other references to these strings, it is time
+> -	 * to deallocate them.
+> -	 */
+> -	free_strmap_strings(&opti->paths);
+> -	strmap_clear(&opti->paths, 1);
 > -
-> ---diff-merges=(off|none|first-parent|separate|combined|dense-combined)::
-> ---no-diff-merges::
-> -       Specify diff format to be used for merge commits. This has no
-> -       effect unless diff output is enabled in the first place (e.g.,
-> -       with `--patch` option.)
-> -+
-> ---diff-merges=(off|none):::
-> ---no-diff-merges:::
-> -       (default) Disable output of diffs for merge commits. Useful to
-> -       override implied value.
-> -+
-> ---diff-merges=first-parent:::
-> -       This option makes merge commits show the full diff with
-> -       respect to the first parent only, exactly like  regular
-> -       commits.
-> -+
-> ---diff-merges=separate:::
-> --m:::
-> -       This makes merge commits show the full diff with respect to
-> -       each of the parents. Separate log entry and diff is generated
-> -       for each parent.
-> -+
-> ---diff-merges=combined:::
-> --c:::
-> -       With this option, diff output for a merge commit shows the
-> -       differences from each of the parents to the merge result
-> -       simultaneously instead of showing pairwise diff between a
-> -       parent and the result one at a time. Furthermore, it lists
-> -       only files which were modified from all parents.
-> -+
-> ---diff-merges=dense-combined:::
-> ---cc:::
-> -       With this option the output produced by
-> -       `--diff-merges=combined` is further compressed by omitting
-> -       uninteresting hunks whose contents in the parents have only
-> -       two variants and the merge result picks one of them without
-> -       modification.
-> -
-> ---combined-all-paths::
-> -       This flag causes combined diffs (used for merge commits) to
-> -       list the name of the file from all parents.  It thus only has
-> -       effect when `--diff-merges=[dense-]combined` is in use, and
-> -       is likely only useful if filename changes are detected (i.e.
-> -       when either rename or copy detection have been requested).
-> -
->
->  :git-log: 1
->  include::diff-options.txt[]
-> diff --git a/Documentation/git-show.txt b/Documentation/git-show.txt
-> index fcf528c1b30d..abe58ce5d3a8 100644
-> --- a/Documentation/git-show.txt
-> +++ b/Documentation/git-show.txt
-> @@ -45,8 +45,12 @@ include::pretty-options.txt[]
->  include::pretty-formats.txt[]
->
->
-> -COMMON DIFF OPTIONS
-> --------------------
-> +DIFF FORMATTING
-> +---------------
-> +
-> +By default, `git show` does not generate any diff output. The options
-> +below can be used to show the changes made by each commit.
-> +
+> -	/*
+> -	 * All keys and values in opti->conflicted are a subset of those in
+> -	 * opti->paths.  We don't want to deallocate anything twice, so we
+> -	 * don't free the keys and we pass 0 for free_values.
+> -	 */
+> -	strmap_clear(&opti->conflicted, 0);
 
-This is not right, `git show` generates diff output by default for
-both normal commits and merge commits -- it defaults to -p --cc (see
-show_setup_revisions_tweak() of builtin/log.c).  Also see earlier in
-git-show.txt where it says
+the rest of this is a clear code move.
 
-       For commits it shows the log message and textual diff. It also presents
-       the merge commit in a special format as produced by git diff-tree --cc.
-
->  :git-log: 1
->  include::diff-options.txt[]
-
-...and the included text will contain the repeated claim that no diffs
-are shown by default for merge commits, which is true for `git log`
-but not `git show`.
+Thanks,
+-Stolee
