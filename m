@@ -2,120 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4276DC4361A
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 19:30:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B1ACC4167B
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 19:35:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E9026221ED
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 19:30:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 104F6221EF
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 19:35:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726708AbgLCTam (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Dec 2020 14:30:42 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54119 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726510AbgLCTam (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Dec 2020 14:30:42 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 87AFF9A308;
-        Thu,  3 Dec 2020 14:29:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/B/4ejUuY22MWJo/fYeJ/kg7R8c=; b=mUEwC6
-        pKnrM1QBKkYRF6AIXaHhxwvH7NSJsRCrisNKpTSpL5eAQeX0OTTt1LRC9fQZwtJF
-        RyZaMfkyM9zhSXA53JTVZuRC9jcYaVbxxx+4wuULOVWXNT+x1wo13uEkO0kJSzHH
-        9wZ6YeA3+1vvJN5fmGPlM9WkjZYKQdX5qT2tc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Y7JQttGiT0s1SJn1zknEAVjljNF91Eo4
-        u8Gbru+PKljuxUm+LyDGkBCAkztYV3AsCk7QnmugTUXsAncx1s/Bg0Zp/9NGGc+z
-        kiFaiECjEZAtJXJB+P+Azgrvq32kM2Y/NQuyrwcY1L9cWb1qTQ9zZaZNTjvmscCB
-        1YjBYYIA6Zg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8006A9A307;
-        Thu,  3 Dec 2020 14:29:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1023C9A306;
-        Thu,  3 Dec 2020 14:29:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Alex Henrie <alexhenrie24@gmail.com>, Git <git@vger.kernel.org>,
-        "Raymond E. Pasco" <ray@ameretat.dev>, Jeff King <peff@peff.net>,
-        =?utf-8?Q?V=C3=ADt?= Ondruch <vondruch@redhat.com>,
-        Theodore Tso <tytso@mit.edu>
-Subject: Re: [RFC 2/2] pull: default pull.ff to "only" when pull.rebase is
- not set either
-References: <20201125020931.248427-1-alexhenrie24@gmail.com>
-        <20201125020931.248427-2-alexhenrie24@gmail.com>
-        <xmqqmtyviq9e.fsf@gitster.c.googlers.com>
-        <CAMP44s1Hwun+P=j5BBbVUT-ACS4hJCyRCJT-=6WvwK913fXq7g@mail.gmail.com>
-        <xmqq7dpyix1d.fsf@gitster.c.googlers.com>
-Date:   Thu, 03 Dec 2020 11:29:57 -0800
-In-Reply-To: <xmqq7dpyix1d.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 03 Dec 2020 10:06:54 -0800")
-Message-ID: <xmqqmtyuhemi.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S2389422AbgLCTew (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Dec 2020 14:34:52 -0500
+Received: from mail.javad.com ([54.86.164.124]:51626 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2389419AbgLCTew (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Dec 2020 14:34:52 -0500
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 07B7A3EE68;
+        Thu,  3 Dec 2020 19:34:09 +0000 (UTC)
+Received: from osv by osv with local (Exim 4.92)
+        (envelope-from <sorganov@gmail.com>)
+        id 1kkuMi-0003zD-FQ; Thu, 03 Dec 2020 22:34:08 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v1 24/27] doc/git-log: describe new --diff-merges options
+References: <20201101193330.24775-1-sorganov@gmail.com>
+        <20201108213838.4880-1-sorganov@gmail.com>
+        <20201108213838.4880-25-sorganov@gmail.com>
+        <CABPp-BGZO+7bRdCAGFdetOkmwyFnHxDPQ=SD4f6TSa9ZYGFn=A@mail.gmail.com>
+Date:   Thu, 03 Dec 2020 22:34:08 +0300
+In-Reply-To: <CABPp-BGZO+7bRdCAGFdetOkmwyFnHxDPQ=SD4f6TSa9ZYGFn=A@mail.gmail.com>
+        (Elijah Newren's message of "Wed, 2 Dec 2020 22:09:25 -0800")
+Message-ID: <877dpyhefj.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: EDCF2DE6-359D-11EB-8CC6-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
->> That would require changing the semantics of --ff-only, so that "git
->> pull --no-rebase --ff-only" doesn't make sense (as --ff-only is
->> overridden by --no-rebase).
+> On Sun, Nov 8, 2020 at 1:46 PM Sergey Organov <sorganov@gmail.com> wrote:
+>>
+>> Describe all the new --diff-merges options in the git-log.txt
+>>
+>> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+>> ---
+>>  Documentation/git-log.txt | 79 +++++++++++++++++++++++----------------
+>>  1 file changed, 46 insertions(+), 33 deletions(-)
+>>
+>> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+>> index 2b8ac5ff882a..de498a189646 100644
+>> --- a/Documentation/git-log.txt
+>> +++ b/Documentation/git-log.txt
+>> @@ -120,45 +120,58 @@ DIFF FORMATTING
+>>  By default, `git log` does not generate any diff output. The options
+>>  below can be used to show the changes made by each commit.
+>>
+>> -Note that unless one of `-c`, `--cc`, or `-m` is given, merge commits
+>> -will never show a diff, even if a diff format like `--patch` is
+>> -selected, nor will they match search options like `-S`. The exception is
+>> -when `--first-parent` is in use, in which merges are treated like normal
+>> -single-parent commits (this can be overridden by providing a
+>> -combined-diff option or with `--no-diff-merges`).
+>> +Note that unless one of `--diff-merges` variants (including short
+>> +`-m`, `-c`, and `--cc` options) is explicitly given, merge commits
+>> +will not show a diff, even if a diff format like `--patch` is
+>> +selected, nor will they match search options like `-S`. The exception
+>> +is when `--first-parent` is in use, in which case
+>> +`--diff-merges=first-parent` is implied.
+>>
+>> --c::
+>> -       With this option, diff output for a merge commit
+>> -       shows the differences from each of the parents to the merge result
+>> -       simultaneously instead of showing pairwise diff between a parent
+>> -       and the result one at a time. Furthermore, it lists only files
+>> -       which were modified from all parents.
+>> -
+>> ---cc::
+>> -       This flag implies the `-c` option and further compresses the
+>> -       patch output by omitting uninteresting hunks whose contents in
+>> -       the parents have only two variants and the merge result picks
+>> -       one of them without modification.
+>> +--diff-merges=(off|none|first-parent|separate|combined|dense-combined)::
+>> +--no-diff-merges::
+>> +       Specify diff format to be used for merge commits. This has no
+>> +       effect unless diff output is enabled in the first place (e.g.,
+>> +       with `--patch` option.)
 >
-> I do not think such a conclusion follows from "we do not want to use
-> the 'by default force the --ff-only' when the user chooses between
-> merge and rebase".  Specifically, I do not agree with "as --ff-only
-> is overridden" in your statement.
+> This seems inconsistent with c7eaf8b4c3 ("log: when --cc is given,
+> default to -p unless told otherwise", 2015-08-20); shouldn't these
+> imply -p?
 
-Ah, sorry, I mis-read your three lines above.
+Looks like it is indeed, and worse yet, the patch series don't handle
+this optimally due to my ignorance of this behavior. I think I need to
+make changes to imply -p whenever some of diff-merge options (except
+--diff-merges=none) are explicitly given, cause it's now, after these
+patches, is unclear why only combined diffs imply -p, and not, say,
+--diff-merges=first-parent.
 
-There are currently two ways "git pull" consolidates your work with
-the other history.  By default, you are "pulling" work from your
-contributors (and that is what "pull request" means---contributors
-ask you to pull, and you take their work at your discretion) and the
-only way that makes sense is to merge their history into yours.  The
-other is you are updating your branch by rebasing your work on top
-of what happend in their history.
+Nice catch, thanks!
 
-And if we introduce a third-way, i.e. "we do not handle the case
-where you have your own development at all, this is only to maintain
-pristine copy from your upstream", and repurpose "--ff-only" for
-that purpose, yes, what you said above does make sense.  At that
-point, there is no reason to disagree with "as --ff-only is
-overridden" part of your statement---in your new world, "--ff-only"
-is redesigned to act that way.
+BTW, in the original, why only "git log" is affected? Ah, probably
+because "git show" has -p by default?
 
-In retrospect, "git pull --rebase" was a UI mistake.  What the other
-side means is totally different in the operation from what the other
-side is in "git pull".  The former is for you to catch up with your
-upstream and the latter is for you, who _is_ the upstream to others,
-to take others work in as their upstream.  If we instead introduced
-a separate command, say "git update", that is "fetch followed by
-rebase" (just like "git pull" is "fetch followed by merge"), to
-rebase your work on top of updated upstream, there wouldn't be a
-need for us to be having this discussion.
+While we are at it, why do we have "git show" at all? How is it
+essentially different from "git log -n1 --first-parent ..."? I mean,
+shouldn't it effectively be just an alias?
 
-It probably is water under the bridge at this point.  Perhaps if
-somebody builds a time-machine for me, I'll go back 13 years and
-give my younger self this wisdom ;-)
+>
+>> ++
+>> +--diff-merges=(off|none):::
+>> +--no-diff-merges:::
+>> +       (default) Disable output of diffs for merge commits. Useful to
+>> +       override implied value.
+>> ++
+>> +--diff-merges=first-parent:::
+>> +       This option makes merge commits show the full diff with
+>> +       respect to the first parent only, exactly like  regular
+>> +       commits.
+>
+> Not sure that "exactly like regular commits" is helpful here; I'd
+> personally rather cut those four words out.  I'm worried it'll be
+> taken not as an implementation explanation, but as a "this treats
+> merge commits in the natural way that regular commits are" which users
+> may mistakenly translate to "it shows what changes the user manually
+> made as part of the commit" which is not at all the correct mapping.
 
+Dunno. Don't have strict preference here. Git has no idea how the
+changes in a commit have been made in the first place. Changes are just
+changes.
 
+To my excuse, I took this from git:5fbb4bc191 that has:
 
++Note that unless one of `-c`, `--cc`, or `-m` is given, merge commits
++will never show a diff, even if a diff format like `--patch` is
++selected, nor will they match search options like `-S`. The exception is
++when `--first-parent` is in use, in which merges are treated like normal
++single-parent commits (this can be overridden by providing a
++combined-diff option or with `--no-diff-merges`).
 
-
-
-
+Thanks,
+-- Sergey Organov
