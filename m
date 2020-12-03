@@ -8,61 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 266A5C0007A
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 16:01:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C929EC4361B
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 16:01:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D721C207AA
+	by mail.kernel.org (Postfix) with ESMTP id 7DC4F207A5
 	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 16:01:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731148AbgLCQA4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Dec 2020 11:00:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54230 "EHLO
+        id S1731138AbgLCQAu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Dec 2020 11:00:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731144AbgLCQA4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Dec 2020 11:00:56 -0500
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2363C08C5F2
-        for <git@vger.kernel.org>; Thu,  3 Dec 2020 07:59:58 -0800 (PST)
-Received: by mail-wr1-x443.google.com with SMTP id k14so2402188wrn.1
-        for <git@vger.kernel.org>; Thu, 03 Dec 2020 07:59:58 -0800 (PST)
+        with ESMTP id S1731069AbgLCQAt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Dec 2020 11:00:49 -0500
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC913C061A55
+        for <git@vger.kernel.org>; Thu,  3 Dec 2020 07:59:57 -0800 (PST)
+Received: by mail-wm1-x341.google.com with SMTP id a3so4397215wmb.5
+        for <git@vger.kernel.org>; Thu, 03 Dec 2020 07:59:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ak+BRQLBQOT/BOTqNcUsFX79zLWvFGBTJU8wm3Epus0=;
-        b=Y0qkcXRZoVq0nrOdiYq5ZvCl2wmL4+9LiNNRPi4zW7GFpM8eMKgboynp2ZNPeXR9Vl
-         K866fTIRts1AWTCpi0dlX8Gyz3nbhPSIKnFfORCeAlUdRXFB3MdlDJ0DynPSIJ4IfRz5
-         FKj/d2Kl2DIIAYLXLsb5OPYw5m0AKAFMsMkdZmhpNvbh5c8vzgTv+JM0UezawW1DnDVI
-         a6rJQJlvktRVLrEfQNRsbTRAAvIRZgykvGKXUDJUzWYV9k9ehMN4tp6GruIUF4OgCNWG
-         D8HPWrFIDx1iUBrzr4x+LA0uN1smhFsPpQRpmgPS3PA/Bt80HbGvqn2loJRKQMBv6Rql
-         oIbw==
+        bh=pWC3snMc2nAfv9p5VhZzmW6O2DlfW8pA+/Acchs/81U=;
+        b=o2bnVWfbWBvIpXextcMnisq/ZKPbYxAewAUcfkRiMQKWU98dQWb16JRyE+Ma4sJX5k
+         SVu4qbLbC089nWNNnYrT8WMHJq1W1ltkKnOPgs6x9LxAG6D+6QM7wrwwwTxAdZ0MqOry
+         0SV7xjXo+benSgq359P5F2LSQXrJ+XzZZMW4QyQiiYVpMhbnXEjQ/XsXKaB2EU7Tg7G/
+         MnlK+loPGwwaehxNH9TM9VcF052kqnG51H+U8zQu1YL2cvINxEviTPWhYjY/dygUxm+q
+         weazXWc1rrAH1BEk67YIEJPeTaTfMoWNLTwlfgrNyxLJjAAVPGv22qRKmd9gWQpiUSSD
+         u+Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ak+BRQLBQOT/BOTqNcUsFX79zLWvFGBTJU8wm3Epus0=;
-        b=O9KGZN4jWyBl498br0qZsE3OTImJ8d44e2gE/oTrjs+fVu4kR2qJsL2bB/yTm7xEjD
-         d7qHPpB3+BYIQqy1grxe5XZXzo+7+hC/Je/jwaMYhbgurqqa0XOrLQCjyQm+X9WQgkp+
-         qz5XJ6Nsqezx5RXiqQm3DraYWf+ZHaS/C2fUMqy7nE3rYNT9lvxCLmW+DlYbFbzJ1T+S
-         LuQoqEpHjtrT/t3qcRe6dFjHwPzTxpAMY3jg4yVEWZ1W3fjM2xjvs6v6hDhpgWnaHuBA
-         55BJgYzTztNjUurOzFwH/13VniEI7fhTF8y3U1KkotqB/C3GUNS7OLEm9uuvKHkIKO94
-         AMPg==
-X-Gm-Message-State: AOAM532l7TWlkxuHMbQ4T4s1jQXnPUbMayIpCc66YGHfuipHinP2marA
-        IcmOSy82kmlap72Njc9YfbcxT7LfscE=
-X-Google-Smtp-Source: ABdhPJwwKlTU13TPO89GEeDhdYmZGLcTWD0faq00qK2XuIHDqv1vEpeMh9k8ZWTYEgw+VQNlEhKtqA==
-X-Received: by 2002:a5d:44cf:: with SMTP id z15mr4453988wrr.205.1607011197456;
-        Thu, 03 Dec 2020 07:59:57 -0800 (PST)
+        bh=pWC3snMc2nAfv9p5VhZzmW6O2DlfW8pA+/Acchs/81U=;
+        b=JQiUTlXN+MFuPgElsv5Bi7VSxHhjAakLe05u1z/I3L9OlgqaIWbrisghBzkM0U4web
+         1EOtYy7rrKJO33y/MEp5rrdCBXS2Pb38L2mcv5JN7MVCyRDDxFxgw5wFEOSZWcWg7pZR
+         gFLV8+iXWHQ9kg5k+EhPanooZNqDw6o20azDI2bGzrUnURImmrWdKRSWoeDw2ywAdQaN
+         gl+nvUv3BGNyiXDcoOl0QypgPDKhENTL2x6cIBO2gI+l2KTH27Bafdv0RB7cvR90mgUg
+         2K0JS9Jo+YKP8Nkgzh0HLP3+dqEdsbQQWoe5cY9Wu05TDN78WVOVMrsUTrslM2ywk/oT
+         NpAw==
+X-Gm-Message-State: AOAM5327LduWV9lhGWBxTddgQ+VHBu6NUMA2pCnCxFwUhac1q/1FDw7h
+        ahPQT3Yw6vnGv4oJFp9oOge5HJkt0rY=
+X-Google-Smtp-Source: ABdhPJxxjJskmURQHJOWJ2WDl8fhWHPBF4LTl99E4m9CQa/F94kXz+tcc3nFPfP0KmJLe58J34d2lQ==
+X-Received: by 2002:a1c:3d86:: with SMTP id k128mr4008538wma.66.1607011189495;
+        Thu, 03 Dec 2020 07:59:49 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d13sm2704611wrb.39.2020.12.03.07.59.56
+        by smtp.gmail.com with ESMTPSA id e1sm2716362wra.22.2020.12.03.07.59.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Dec 2020 07:59:57 -0800 (PST)
-Message-Id: <9f1ac20e31886ad7cd56ff582c58cce4ee743fa1.1607011187.git.gitgitgadget@gmail.com>
+        Thu, 03 Dec 2020 07:59:49 -0800 (PST)
+Message-Id: <6cd8ee01c7107f54bdba177f27089321df047eac.1607011187.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.803.git.1607011187.gitgitgadget@gmail.com>
 References: <pull.803.git.1607011187.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 03 Dec 2020 15:59:45 +0000
-Subject: [PATCH 6/7] merge-ort: add die-not-implemented stub
- handle_content_merge() function
+Date:   Thu, 03 Dec 2020 15:59:40 +0000
+Subject: [PATCH 1/7] merge-ort: add a few includes
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,49 +74,31 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-This simplistic and weird-looking patch is here to facilitate future
-patch submissions.  Adding this stub allows rename detection code to
-reference it in one patch series, while a separate patch series can
-define the implementation, and then both series can merge cleanly and
-work nicely together at that point.
+Include blob.h for definition of blob_type, and commit-reach.h for
+declarations of get_merge_bases() and in_merge_bases().  While none of
+these are used yet, we want to avoid cross-dependencies in the next
+three series of patches for merge-ort and merge them at the end; adding
+these "#include"s now avoids textual conflicts.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ merge-ort.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index e653ba35ea..e7220cbbb4 100644
+index ea6a9d7348..b556897bc0 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -523,6 +523,18 @@ static int collect_merge_info(struct merge_options *opt,
+@@ -17,7 +17,9 @@
+ #include "cache.h"
+ #include "merge-ort.h"
  
- /*** Function Grouping: functions related to threeway content merges ***/
- 
-+static int handle_content_merge(struct merge_options *opt,
-+				const char *path,
-+				const struct version_info *o,
-+				const struct version_info *a,
-+				const struct version_info *b,
-+				const char *pathnames[3],
-+				const int extra_marker_size,
-+				struct version_info *result)
-+{
-+	die("Not yet implemented");
-+}
-+
- /*** Function Grouping: functions related to detect_and_process_renames(), ***
-  *** which are split into directory and regular rename detection sections. ***/
- 
-@@ -919,6 +931,8 @@ static void process_entry(struct merge_options *opt,
- 		ci->merged.clean = 0;
- 		ci->merged.result.mode = ci->stages[1].mode;
- 		oidcpy(&ci->merged.result.oid, &ci->stages[1].oid);
-+		/* When we fix above, we'll call handle_content_merge() */
-+		(void)handle_content_merge;
- 	} else if (ci->filemask == 3 || ci->filemask == 5) {
- 		/* Modify/delete */
- 		die("Not yet implemented.");
++#include "blob.h"
+ #include "cache-tree.h"
++#include "commit-reach.h"
+ #include "diff.h"
+ #include "diffcore.h"
+ #include "dir.h"
 -- 
 gitgitgadget
 
