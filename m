@@ -2,238 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43933C4361A
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 19:53:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52C7BC433FE
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 19:57:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D429B22262
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 19:53:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D6104221F4
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 19:57:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726962AbgLCTxX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Dec 2020 14:53:23 -0500
-Received: from mail.javad.com ([54.86.164.124]:53950 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725885AbgLCTxX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Dec 2020 14:53:23 -0500
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 2A9503E96D;
-        Thu,  3 Dec 2020 19:52:42 +0000 (UTC)
-Received: from osv by osv with local (Exim 4.92)
-        (envelope-from <sorganov@gmail.com>)
-        id 1kkuee-0003zZ-Ie; Thu, 03 Dec 2020 22:52:40 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v1 27/27] doc/git-show: include --diff-merges description
-References: <20201101193330.24775-1-sorganov@gmail.com>
-        <20201108213838.4880-1-sorganov@gmail.com>
-        <20201108213838.4880-28-sorganov@gmail.com>
-        <CABPp-BG_YT2i_27tqkh_e4mwfkYae-zDCEYL=F+NjYQed2gKAg@mail.gmail.com>
-Date:   Thu, 03 Dec 2020 22:52:40 +0300
-In-Reply-To: <CABPp-BG_YT2i_27tqkh_e4mwfkYae-zDCEYL=F+NjYQed2gKAg@mail.gmail.com>
-        (Elijah Newren's message of "Thu, 3 Dec 2020 08:47:35 -0800")
-Message-ID: <87wnxyfz07.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        id S1726953AbgLCT47 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Dec 2020 14:56:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34622 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726143AbgLCT47 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Dec 2020 14:56:59 -0500
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19844C061A4E
+        for <git@vger.kernel.org>; Thu,  3 Dec 2020 11:56:19 -0800 (PST)
+Received: by mail-ot1-x342.google.com with SMTP id 11so2951052oty.9
+        for <git@vger.kernel.org>; Thu, 03 Dec 2020 11:56:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=y3bvFsmzNOT2p9WXil76WdI8nJWVImHRwKM7wSt1Ch0=;
+        b=gmeKCrNfFpjLudDZQcR/gUnScOtfFNzmBEOgJFYYZX9lOJerbGxk+V+rJVUtHzVKVM
+         exVDGnD3L3m+o1eq4JBQe1YLLGCP3LaRh95RObsaA6+FoEZy40q7qFUop7sULQDYBJaX
+         ikX/M7WYZuNZnLO+rS8R0uECVDvnucj1ufV3+zV+Jzu5TnheipCBSIl42NfTuag/gzQ9
+         q7kgOO7qJNvNiEh9/wUe7M2IeNFY0dncgoRVlDpfFf6Bg/A/CgZbiv+IiEELFEPyDljr
+         ZKoiZaWa7uAh0H39sMvzpKF/WoLRoHvPWeEteT2Cyn6PJzthGhAPNnpj68m9AxMVFgmp
+         LtzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=y3bvFsmzNOT2p9WXil76WdI8nJWVImHRwKM7wSt1Ch0=;
+        b=FWOMOhPlOJzJDU91eTFyYv/R8Tdwq0BJ0QmQPKr8Y4Hlf+WERwTef5xSjgzBIwr0ic
+         P5doQOTVWjCf/l1F49ug/W7RwxD1dTSU3MObls2EGSqy+Er/Xmc9Hs0HtOqi1BI+7YDm
+         DWMPPMqRok4bgRKabPZfeyu7fSpGpeCmrKRdGA/zb2hhsU2pmFMFzfH3kWCKx99lCEcY
+         CcfejHjbU8iKlVlyv8npilITK2JSWV2p/mAqTq6bb+SBlJAPSWD+/734iQy9i1YehKMu
+         3NYMjlkjw1Vlr/Sp2V/YGmGcR+WdrTZStKlOSBk9DbVYlghONrjGdLjj2WXSthMOh95c
+         /kug==
+X-Gm-Message-State: AOAM531ylXSayJF8JMWzTXVhpvKc9dfok7yQM4Zttpk2aPCnqqgDu63S
+        sI2YmXE0AxnKZY0s5KVcXA3+vXin4XaiZwVchXc=
+X-Google-Smtp-Source: ABdhPJyqGOEsctZqzaYFJt8r9pV0lpCUL4bE2q8NFm7XNve8uJtKeL+WVA28x7inkR/t9azelliaNPeBamWPqexJFNk=
+X-Received: by 2002:a05:6830:1002:: with SMTP id a2mr717628otp.316.1607025377976;
+ Thu, 03 Dec 2020 11:56:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.803.git.1607011187.gitgitgadget@gmail.com>
+ <9f1ac20e31886ad7cd56ff582c58cce4ee743fa1.1607011187.git.gitgitgadget@gmail.com>
+ <8e861bc8-4da1-01aa-7de6-c6c128590170@gmail.com>
+In-Reply-To: <8e861bc8-4da1-01aa-7de6-c6c128590170@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 3 Dec 2020 11:56:07 -0800
+Message-ID: <CABPp-BFytQ5d2s8VpMbNXDGzG3=Jd2Tm2=G_mh+OBYqzhDeHBg@mail.gmail.com>
+Subject: Re: [PATCH 6/7] merge-ort: add die-not-implemented stub
+ handle_content_merge() function
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
-> Hi,
+On Thu, Dec 3, 2020 at 10:40 AM Derrick Stolee <stolee@gmail.com> wrote:
 >
-> On Sun, Nov 8, 2020 at 1:44 PM Sergey Organov <sorganov@gmail.com> wrote:
->>
->> Move description of --diff-merges option from git-log.txt to
->> diff-options.txt so that it is included in the git-show help.
->>
->> While we are at it, make git-show closer to git-log in this area by
->> providing similar wording in the introduction of diff options.
->>
->> Signed-off-by: Sergey Organov <sorganov@gmail.com>
->> ---
->>  Documentation/diff-options.txt | 54 ++++++++++++++++++++++++++++++++++
->>  Documentation/git-log.txt      | 52 --------------------------------
->>  Documentation/git-show.txt     |  8 +++--
->>  3 files changed, 60 insertions(+), 54 deletions(-)
->>
->> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
->> index 573fb9bb71e2..f1629887103e 100644
->> --- a/Documentation/diff-options.txt
->> +++ b/Documentation/diff-options.txt
->> @@ -33,6 +33,60 @@ endif::git-diff[]
->>         show the patch by default, or to cancel the effect of `--patch`.
->>  endif::git-format-patch[]
->>
->> +ifdef::git-log[]
->> +Note that unless one of `--diff-merges` variants (including short
->> +`-m`, `-c`, and `--cc` options) is explicitly given, merge commits
->> +will not show a diff, even if a diff format like `--patch` is
->> +selected, nor will they match search options like `-S`. The exception
->> +is when `--first-parent` is in use, in which case
->> +`--diff-merges=first-parent` is implied.
+> On 12/3/2020 10:59 AM, Elijah Newren via GitGitGadget wrote:
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > This simplistic and weird-looking patch is here to facilitate future
+> > patch submissions.  Adding this stub allows rename detection code to
+> > reference it in one patch series, while a separate patch series can
+> > define the implementation, and then both series can merge cleanly and
+> > work nicely together at that point.
+> >
+> > Signed-off-by: Elijah Newren <newren@gmail.com>
+> > ---
+> >  merge-ort.c | 14 ++++++++++++++
+> >  1 file changed, 14 insertions(+)
+> >
+> > diff --git a/merge-ort.c b/merge-ort.c
+> > index e653ba35ea..e7220cbbb4 100644
+> > --- a/merge-ort.c
+> > +++ b/merge-ort.c
+> > @@ -523,6 +523,18 @@ static int collect_merge_info(struct merge_options *opt,
+> >
+> >  /*** Function Grouping: functions related to threeway content merges ***/
+> >
+> > +static int handle_content_merge(struct merge_options *opt,
+> > +                             const char *path,
+> > +                             const struct version_info *o,
+> > +                             const struct version_info *a,
+> > +                             const struct version_info *b,
+> > +                             const char *pathnames[3],
+> > +                             const int extra_marker_size,
+> > +                             struct version_info *result)
+> > +{
+> > +     die("Not yet implemented");
+> > +}
+> > +
+> >  /*** Function Grouping: functions related to detect_and_process_renames(), ***
+> >   *** which are split into directory and regular rename detection sections. ***/
+> >
+> > @@ -919,6 +931,8 @@ static void process_entry(struct merge_options *opt,
+> >               ci->merged.clean = 0;
+> >               ci->merged.result.mode = ci->stages[1].mode;
+> >               oidcpy(&ci->merged.result.oid, &ci->stages[1].oid);
+> > +             /* When we fix above, we'll call handle_content_merge() */
+> > +             (void)handle_content_merge;
 >
-> So, now diff-options says that no diffs are the defaults for merge commits...
->
->> +
->> +--diff-merges=(off|none|first-parent|separate|combined|dense-combined)::
->> +--no-diff-merges::
->> +       Specify diff format to be used for merge commits. This has no
->> +       effect unless diff output is enabled in the first place (e.g.,
->> +       with `--patch` option.)
->> ++
->> +--diff-merges=(off|none):::
->> +--no-diff-merges:::
->> +       (default) Disable output of diffs for merge commits. Useful to
->> +       override implied value.
->> ++
->> +--diff-merges=first-parent:::
->> +       This option makes merge commits show the full diff with
->> +       respect to the first parent only, exactly like  regular
->> +       commits.
->> ++
->> +--diff-merges=separate:::
->> +-m:::
->> +       This makes merge commits show the full diff with respect to
->> +       each of the parents. Separate log entry and diff is generated
->> +       for each parent.
->> ++
->> +--diff-merges=combined:::
->> +-c:::
->> +       With this option, diff output for a merge commit shows the
->> +       differences from each of the parents to the merge result
->> +       simultaneously instead of showing pairwise diff between a
->> +       parent and the result one at a time. Furthermore, it lists
->> +       only files which were modified from all parents.
->> ++
->> +--diff-merges=dense-combined:::
->> +--cc:::
->> +       With this option the output produced by
->> +       `--diff-merges=combined` is further compressed by omitting
->> +       uninteresting hunks whose contents in the parents have only
->> +       two variants and the merge result picks one of them without
->> +       modification.
->> +
->> +--combined-all-paths::
->> +       This flag causes combined diffs (used for merge commits) to
->> +       list the name of the file from all parents.  It thus only has
->> +       effect when `--diff-merges=[dense-]combined` is in use, and
->> +       is likely only useful if filename changes are detected (i.e.
->> +       when either rename or copy detection have been requested).
->> +endif::git-log[]
->> +
->>  -U<n>::
->>  --unified=<n>::
->>         Generate diffs with <n> lines of context instead of
->> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
->> index de498a189646..0cacc780bf30 100644
->> --- a/Documentation/git-log.txt
->> +++ b/Documentation/git-log.txt
->> @@ -120,58 +120,6 @@ DIFF FORMATTING
->>  By default, `git log` does not generate any diff output. The options
->>  below can be used to show the changes made by each commit.
->>
->> -Note that unless one of `--diff-merges` variants (including short
->> -`-m`, `-c`, and `--cc` options) is explicitly given, merge commits
->> -will not show a diff, even if a diff format like `--patch` is
->> -selected, nor will they match search options like `-S`. The exception
->> -is when `--first-parent` is in use, in which case
->> -`--diff-merges=first-parent` is implied.
->> -
->> ---diff-merges=(off|none|first-parent|separate|combined|dense-combined)::
->> ---no-diff-merges::
->> -       Specify diff format to be used for merge commits. This has no
->> -       effect unless diff output is enabled in the first place (e.g.,
->> -       with `--patch` option.)
->> -+
->> ---diff-merges=(off|none):::
->> ---no-diff-merges:::
->> -       (default) Disable output of diffs for merge commits. Useful to
->> -       override implied value.
->> -+
->> ---diff-merges=first-parent:::
->> -       This option makes merge commits show the full diff with
->> -       respect to the first parent only, exactly like  regular
->> -       commits.
->> -+
->> ---diff-merges=separate:::
->> --m:::
->> -       This makes merge commits show the full diff with respect to
->> -       each of the parents. Separate log entry and diff is generated
->> -       for each parent.
->> -+
->> ---diff-merges=combined:::
->> --c:::
->> -       With this option, diff output for a merge commit shows the
->> -       differences from each of the parents to the merge result
->> -       simultaneously instead of showing pairwise diff between a
->> -       parent and the result one at a time. Furthermore, it lists
->> -       only files which were modified from all parents.
->> -+
->> ---diff-merges=dense-combined:::
->> ---cc:::
->> -       With this option the output produced by
->> -       `--diff-merges=combined` is further compressed by omitting
->> -       uninteresting hunks whose contents in the parents have only
->> -       two variants and the merge result picks one of them without
->> -       modification.
->> -
->> ---combined-all-paths::
->> -       This flag causes combined diffs (used for merge commits) to
->> -       list the name of the file from all parents.  It thus only has
->> -       effect when `--diff-merges=[dense-]combined` is in use, and
->> -       is likely only useful if filename changes are detected (i.e.
->> -       when either rename or copy detection have been requested).
->> -
->>
->>  :git-log: 1
->>  include::diff-options.txt[]
->> diff --git a/Documentation/git-show.txt b/Documentation/git-show.txt
->> index fcf528c1b30d..abe58ce5d3a8 100644
->> --- a/Documentation/git-show.txt
->> +++ b/Documentation/git-show.txt
->> @@ -45,8 +45,12 @@ include::pretty-options.txt[]
->>  include::pretty-formats.txt[]
->>
->>
->> -COMMON DIFF OPTIONS
->> --------------------
->> +DIFF FORMATTING
->> +---------------
->> +
->> +By default, `git show` does not generate any diff output. The options
->> +below can be used to show the changes made by each commit.
->> +
->
-> This is not right, `git show` generates diff output by default for
-> both normal commits and merge commits -- it defaults to -p --cc (see
-> show_setup_revisions_tweak() of builtin/log.c).  Also see earlier in
-> git-show.txt where it says
->
->        For commits it shows the log message and textual diff. It also presents
->        the merge commit in a special format as produced by git diff-tree --cc.
->
->>  :git-log: 1
->>  include::diff-options.txt[]
->
-> ...and the included text will contain the repeated claim that no diffs
-> are shown by default for merge commits, which is true for `git log`
-> but not `git show`.
+> I'm not exactly sure what the value is of this line. Is it just to
+> make sure we have a reference to the 'static' method without actually
+> calling it anywhere?
 
-Yes, I need to re-consider this, as I already admitted in my reply to
-your previous catch of the related problem in the documentation.
+Yes; without the reference the compiler fails with an unused function
+error message.  I know it's not used yet, but I really need it there,
+so I have to fake the compiler out with a lame expression (take the
+address of the function, cast to void, and discard the result since I
+don't assign it anywhere or anything).
 
-They all came from single point of misunderstanding.
+> "weird-looking patch" indeed! I'm more confused than anything.
 
-Will try to get it right in the next re-roll.
+In general, rename detection occurs before process_entry() and thus
+process_entry() can handle the content merging.  However, some unusual
+rename conflicts require multiple content merges (and possibly result
+in nested conflict markers) and so the rename code needs to be able to
+call handle_content_merge() for the first of those.
 
-Thanks,
--- Sergey Organov
+I really wanted to split apart the series for rename detection (12
+patches), and the one for more conflict handling (10 patches),
+especially since the latter series includes 6 patches for building up
+handle_content_merge() (3 for regular file content merging and another
+3 for submodule "merging").  The two series are nearly orthogonal, but
+I had to somehow allow the rename side to call handle_content_merge()
+without having both series try to introduce the same function.  Hence
+this patch.
