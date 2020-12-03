@@ -8,61 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CFB0C4167B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E94FAC0018C
 	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 16:01:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4B6CD207AA
+	by mail.kernel.org (Postfix) with ESMTP id A90BC207A9
 	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 16:01:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731141AbgLCQAu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Dec 2020 11:00:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54224 "EHLO
+        id S1731143AbgLCQAv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Dec 2020 11:00:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726112AbgLCQAt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Dec 2020 11:00:49 -0500
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25326C061A54
-        for <git@vger.kernel.org>; Thu,  3 Dec 2020 07:59:57 -0800 (PST)
-Received: by mail-wr1-x443.google.com with SMTP id e7so2380112wrv.6
+        with ESMTP id S1731069AbgLCQAu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Dec 2020 11:00:50 -0500
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F6DBC061A56
+        for <git@vger.kernel.org>; Thu,  3 Dec 2020 07:59:58 -0800 (PST)
+Received: by mail-wm1-x342.google.com with SMTP id v14so3220664wml.1
         for <git@vger.kernel.org>; Thu, 03 Dec 2020 07:59:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=VNxxLgrPuJxEVC6iKX9rAAyfurlQPJJGP/oQrjVCsek=;
-        b=dxBQhFC6VBdAi+VrH9/CgDZqw9vbD0squCEQJUairMwjt1nck37//5JtEsU20aY87u
-         G6sYBu5+aPfJML30dP+3ni/KAbL0ZYfwno/YiIAPiOPUqjjbu3k5GNsVC56Nduui8D8H
-         2/286DSQ/gStYwF4QtjIOx5yGmnBsncZwoVik6D8yN9CpFPkXAlavq0haAX2jFB6uDSP
-         pha7rliG5QUk4pMUBwFdZI9U16deKrJBm/m5YGjM2Qi+fBC01tJCHQXEz+0J8z3oz2dl
-         XFAamZ8xs2yW8PVVXe/E7YK/XqexpKfgc+nUgx5h3yHx3jjd73iIDb3JSpc3sakseeZ5
-         PAJw==
+        bh=yPu6RUJO5LaNqx6tk96dR9KSLH8x+DNpjquDN/HBBhM=;
+        b=U87Sn9doLqe9C+NzUkuhhfbVclSXw62xvhdHppC4C8Xp60lvvhExNM80j3nP5G91A6
+         tdfbPdUdbdQUDkpS2xqgR03TbSCkdUof7lN4CTnDpPCmNbbHgFSovbKzkaXuS1Wk2Xvd
+         pnzHur+Mm0Fr7vEHWSvpg/ZiW0p2DQH7ZTXqg2ysPZRNjnhHuOjsOF8HvvcI6QRLxeBv
+         NC5TiTHiwRk4xMXNQWDo/owInpLyN7Vn+I7ifROgUwsEOhmsAL1NtZ7E7U6vZWzS0MNB
+         ui/7DK4R72EfissS3XTA3oLpK3xmUI6dtX0iTAbVuWeFFM2ExEa3Yj6G92bTMP9be8+q
+         6WVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=VNxxLgrPuJxEVC6iKX9rAAyfurlQPJJGP/oQrjVCsek=;
-        b=arcxojlsTs1A10/xaPCugGSqYSvGkHZIE63YVc0P4xlTi4Kvub510N8LN62GToPl5A
-         snh6kd0cakJxCi2EhSulwfu3j6I2jbIk+n/7RUm1AT1tn05+D6KTwMWVfGTfXiXXCJHt
-         Fygkcw/sZGQ33IK2w6DpjZQmpxT+y+bbCVeDYlkg5GnWOrdm+UMs3vUKZo4z8/3Lq0Gl
-         yN+wfcoDpMTYQBdWFlIWsgrYD7y4wmSsSFOFpCJ7oYo0lGn3/uutJt/Eq9svGrfqzFSC
-         uAsgjs0VH6FHEPF5J/+Tpjr/Qefdfh97GZ6Qfv+9B5F3oWkatQlMyFTZNfUC+VEptcFV
-         DXew==
-X-Gm-Message-State: AOAM533VGGaDCHynIkjYcfxgnePBIgzsUOHKGGJO55I8UcJM7Ju+NsL0
-        K3YDL889QK2aepdFxFJVQTGKkfge70c=
-X-Google-Smtp-Source: ABdhPJxLoPmkYTNRG3rKBT+eum9OUlO6CeZq3mXk5wvOKNHK/hImazYGbTCfMeRblZ5dEsDYqY53Gw==
-X-Received: by 2002:a5d:4448:: with SMTP id x8mr4520447wrr.364.1607011195698;
-        Thu, 03 Dec 2020 07:59:55 -0800 (PST)
+        bh=yPu6RUJO5LaNqx6tk96dR9KSLH8x+DNpjquDN/HBBhM=;
+        b=pOovI7mKVsN8TZgHszLpUcZSQ6CTnCXzHw3wXmhKr910d33Qj8NWICTx78xG+ZibyX
+         7xMc9pfpC+Z7o00rmS/N6eESMzE/su5QSjausvaQKSasGS8vsV3R7rfnm4QfSeOoTWm0
+         eqWtkj8YnOLezXBI7s2Vr7apMDEegTRbrO81PwBhVJGZzTLLbLWw8STZZGWkH8dMAyHs
+         evk+CYxGpzBrJDQGiYm/vqHBw/LPP3EQnR4ZuMHdzcvi2kci5VuvZmVb+OdciRU1r1ef
+         ywC8r1fAFhugl2YJwKPjcdXQRy04vxsHygYZyRzNvD/Y8PrcyjeBWrXwoaVNWVo0VRSD
+         YbAg==
+X-Gm-Message-State: AOAM531wZ5mk0x/T+coENDCVbZnj0rZnbMfKnlR+gPSbaA8Xn0zAm0r0
+        JA0Nyk2gBwpgkMVpq8Q0E97SRl6z4dQ=
+X-Google-Smtp-Source: ABdhPJz7XkojKeRV4js+9YUOYRBhCK2W/PtPaH9uJi7u9ratmXpNIkKQ8W2Q1gKGskNEtCcG52MvKQ==
+X-Received: by 2002:a1c:a583:: with SMTP id o125mr4023088wme.91.1607011196581;
+        Thu, 03 Dec 2020 07:59:56 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q17sm2290710wrr.53.2020.12.03.07.59.54
+        by smtp.gmail.com with ESMTPSA id b74sm2204344wme.27.2020.12.03.07.59.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Dec 2020 07:59:55 -0800 (PST)
-Message-Id: <d37724031f2bced7b7f6fb3a0a5266a20a99b1cc.1607011187.git.gitgitgadget@gmail.com>
+        Thu, 03 Dec 2020 07:59:56 -0800 (PST)
+Message-Id: <181627c30cc1995b66eb5659e54737d05964f8a1.1607011187.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.803.git.1607011187.gitgitgadget@gmail.com>
 References: <pull.803.git.1607011187.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 03 Dec 2020 15:59:43 +0000
-Subject: [PATCH 4/7] merge-ort: add a paths_to_free field to
- merge_options_internal
+Date:   Thu, 03 Dec 2020 15:59:44 +0000
+Subject: [PATCH 5/7] merge-ort: add function grouping comments
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,78 +74,101 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-This field will be used in future patches to allow removal of paths from
-opt->priv->paths.
+Commit b658536f59 ("merge-ort: add some high-level algorithm structure",
+2020-10-27) added high-level structure of the ort merge algorithm.  As
+we have added more and more functions, that high-level structure has
+been slightly obscured.  Since functions are still grouped according to
+this high-level structure, add comments denoting sections where all the
+functions are specifically tied to a piece of the high-level structure.
+
+This function groupings include a few sub-divisions of the original
+high-level structure, including some sub-divisions that are yet to be
+submitted.  Each has (or will have) several functions all serving as
+helpers to one or two main functions for each section.
+
+As an added bonus, the comments will serve to provide a small textual
+separation between nearby sections and allow the next three patch series
+to be submitted independently and merge cleanly.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 26 +++++++++++++++++++++++++-
- 1 file changed, 25 insertions(+), 1 deletion(-)
+ merge-ort.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index bcd53d3799..89b9fdb04a 100644
+index 89b9fdb04a..e653ba35ea 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -41,6 +41,8 @@ struct merge_options_internal {
- 	 *   * these keys serve to intern all the path strings, which allows
- 	 *     us to do pointer comparison on directory names instead of
- 	 *     strcmp; we just have to be careful to use the interned strings.
-+	 *     (Technically paths_to_free may track some strings that were
-+	 *      removed from froms paths.)
- 	 *
- 	 * The values of paths:
- 	 *   * either a pointer to a merged_info, or a conflict_info struct
-@@ -75,6 +77,16 @@ struct merge_options_internal {
- 	 */
- 	struct strmap conflicted;
+@@ -183,6 +183,8 @@ struct conflict_info {
+ 	unsigned match_mask:3;
+ };
  
-+	/*
-+	 * paths_to_free: additional list of strings to free
-+	 *
-+	 * If keys are removed from "paths", they are added to paths_to_free
-+	 * to ensure they are later freed.  We avoid free'ing immediately since
-+	 * other places (e.g. conflict_info.pathnames[]) may still be
-+	 * referencing these paths.
-+	 */
-+	struct string_list paths_to_free;
++/*** Function Grouping: various utility functions ***/
 +
- 	/*
- 	 * current_dir_name: temporary var used in collect_merge_info_callback()
- 	 *
-@@ -222,6 +234,17 @@ static void clear_internal_opts(struct merge_options_internal *opti,
- 	 * don't free the keys and we pass 0 for free_values.
- 	 */
- 	strmap_clear(&opti->conflicted, 0);
-+
-+	/*
-+	 * opti->paths_to_free is similar to opti->paths; we created it with
-+	 * strdup_strings = 0 to avoid making _another_ copy of the fullpath
-+	 * but now that we've used it and have no other references to these
-+	 * strings, it is time to deallocate them.  We do so by temporarily
-+	 * setting strdup_strings to 1.
-+	 */
-+	opti->paths_to_free.strdup_strings = 1;
-+	string_list_clear(&opti->paths_to_free, 0);
-+	opti->paths_to_free.strdup_strings = 0;
- }
- 
- static int err(struct merge_options *opt, const char *err, ...)
-@@ -1206,13 +1229,14 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
- 	 * Although we initialize opt->priv->paths with strdup_strings=0,
- 	 * that's just to avoid making yet another copy of an allocated
- 	 * string.  Putting the entry into paths means we are taking
--	 * ownership, so we will later free it.
-+	 * ownership, so we will later free it.  paths_to_free is similar.
- 	 *
- 	 * In contrast, conflicted just has a subset of keys from paths, so
- 	 * we don't want to free those (it'd be a duplicate free).
- 	 */
- 	strmap_init_with_options(&opt->priv->paths, NULL, 0);
- 	strmap_init_with_options(&opt->priv->conflicted, NULL, 0);
-+	string_list_init(&opt->priv->paths_to_free, 0);
- }
- 
  /*
+  * For the next three macros, see warning for conflict_info.merged.
+  *
+@@ -263,6 +265,8 @@ static int err(struct merge_options *opt, const char *err, ...)
+ 	return -1;
+ }
+ 
++/*** Function Grouping: functions related to collect_merge_info() ***/
++
+ static void setup_path_info(struct merge_options *opt,
+ 			    struct string_list_item *result,
+ 			    const char *current_dir_name,
+@@ -517,6 +521,15 @@ static int collect_merge_info(struct merge_options *opt,
+ 	return ret;
+ }
+ 
++/*** Function Grouping: functions related to threeway content merges ***/
++
++/*** Function Grouping: functions related to detect_and_process_renames(), ***
++ *** which are split into directory and regular rename detection sections. ***/
++
++/*** Function Grouping: functions related to directory rename detection ***/
++
++/*** Function Grouping: functions related to regular rename detection ***/
++
+ static int detect_and_process_renames(struct merge_options *opt,
+ 				      struct tree *merge_base,
+ 				      struct tree *side1,
+@@ -534,6 +547,8 @@ static int detect_and_process_renames(struct merge_options *opt,
+ 	return clean;
+ }
+ 
++/*** Function Grouping: functions related to process_entries() ***/
++
+ static int string_list_df_name_compare(const char *one, const char *two)
+ {
+ 	int onelen = strlen(one);
+@@ -1001,6 +1016,8 @@ static void process_entries(struct merge_options *opt,
+ 	string_list_clear(&dir_metadata.offsets, 0);
+ }
+ 
++/*** Function Grouping: functions related to merge_switch_to_result() ***/
++
+ static int checkout(struct merge_options *opt,
+ 		    struct tree *prev,
+ 		    struct tree *next)
+@@ -1189,6 +1206,8 @@ void merge_finalize(struct merge_options *opt,
+ 	FREE_AND_NULL(opti);
+ }
+ 
++/*** Function Grouping: helper functions for merge_incore_*() ***/
++
+ static void merge_start(struct merge_options *opt, struct merge_result *result)
+ {
+ 	/* Sanity checks on opt */
+@@ -1239,6 +1258,8 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
+ 	string_list_init(&opt->priv->paths_to_free, 0);
+ }
+ 
++/*** Function Grouping: merge_incore_*() and their internal variants ***/
++
+ /*
+  * Originally from merge_trees_internal(); heavily adapted, though.
+  */
 -- 
 gitgitgadget
 
