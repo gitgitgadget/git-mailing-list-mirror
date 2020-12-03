@@ -2,71 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE55FC4361A
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 15:42:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D180FC4361B
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 16:00:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5C0BA20793
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 15:42:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4568F207AA
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 16:00:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729430AbgLCPmm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Dec 2020 10:42:42 -0500
-Received: from mail.javad.com ([54.86.164.124]:45674 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726120AbgLCPmm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Dec 2020 10:42:42 -0500
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 053CC3E8C8;
-        Thu,  3 Dec 2020 15:42:01 +0000 (UTC)
-Received: from osv by osv with local (Exim 4.92)
-        (envelope-from <sorganov@gmail.com>)
-        id 1kkqk3-0003wQ-Ih; Thu, 03 Dec 2020 18:41:59 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v1 09/27] diff-merges: re-arrange functions to match the
- order they are called in
-References: <20201101193330.24775-1-sorganov@gmail.com>
-        <20201108213838.4880-1-sorganov@gmail.com>
-        <20201108213838.4880-10-sorganov@gmail.com>
-        <CABPp-BESWpqska++EsfxfbncyV0kNo1RGLjF+1BiV=D6zLx2LQ@mail.gmail.com>
-Date:   Thu, 03 Dec 2020 18:41:59 +0300
-In-Reply-To: <CABPp-BESWpqska++EsfxfbncyV0kNo1RGLjF+1BiV=D6zLx2LQ@mail.gmail.com>
-        (Elijah Newren's message of "Wed, 2 Dec 2020 21:52:02 -0800")
-Message-ID: <87wnxyhp6g.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        id S1731128AbgLCQAb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Dec 2020 11:00:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54164 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726112AbgLCQAa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Dec 2020 11:00:30 -0500
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12F03C061A51
+        for <git@vger.kernel.org>; Thu,  3 Dec 2020 07:59:50 -0800 (PST)
+Received: by mail-wr1-x444.google.com with SMTP id e7so2379670wrv.6
+        for <git@vger.kernel.org>; Thu, 03 Dec 2020 07:59:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=dohBzSFAS3V0UqyWnavlqodY9/BGVTVKfvhO5Ex+GPc=;
+        b=PQamqpsIdOpEjYujOq0KgUXUn7c1Lw4OkkAyOdMrra5sMl0ETPCjc6Y8LgGFwnpf+p
+         UFevUOPGyQz0IhqDfqEUmWV5IiyrsdjKd4Dzbn2t5oLEFoLFPd3ji/3PieNigWrVtl9a
+         FaiWmWSGpNbzxj6HgasJTeGAFmRmUkdPnZjC7RHTKgCI0hODlh7GJTGOR5OQWP16zrnO
+         1wbOCU9TXUwOSbdYE91xQ0a9wy6R6Hyx+U8m3GR4eIF84pTpRg9MB8Gj3d/07dbYtxwz
+         HOQM/HIem5CgllD8T8YH6o0kBeCrfLTZVog0XHN7a8ZGz6hq0PY36Gi3i3vpxuJMOKC0
+         ZapQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=dohBzSFAS3V0UqyWnavlqodY9/BGVTVKfvhO5Ex+GPc=;
+        b=XX/yhelu8d3A6cDBXS/3ShMKPhxreFajkqYlOO+hA5/vtB5E5AFH23fUg0adAxptP+
+         tY+Q81wEXS0xWZNs/vm55DPFKqivu907iXaFTrfnvddN/5Vc1jE9W5MD1sua4vc+duYM
+         U96AbAW2wfYYE9APuAV4XLCdpQ6DALrLW6QjDPbloB7Ld8NL07qRQGUnhyRWM3kraB9c
+         Xfw8fmpTvps8HrBGxLKk/ACJfr6DOG69/NmSh5btfvlj9z98WT78y6h4Nhujahm9wQkR
+         86BwIxtYku3S+XHcJH/d9/WTqMDDMxHsQ5sVE/3PWG7KTLBSIg6l5A57VpQX5tICvCBP
+         R9OA==
+X-Gm-Message-State: AOAM531LsOLZyh6IfZZeIlz3rcQwdQDWzBY+QfyEwBWWjs4svgiXxBO8
+        FwDXuBEGlsVzfj5qdpQRkeFBYTG2oTU=
+X-Google-Smtp-Source: ABdhPJx8hsneLa0sPT4cy+DR3Ke+lM2K6UtCaX9BHlkCBbLLDXTrNm7COiVsjXe+VmGPZo11VVwCSw==
+X-Received: by 2002:a5d:6805:: with SMTP id w5mr4641741wru.266.1607011188526;
+        Thu, 03 Dec 2020 07:59:48 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j13sm1979899wmi.36.2020.12.03.07.59.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Dec 2020 07:59:47 -0800 (PST)
+Message-Id: <pull.803.git.1607011187.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 03 Dec 2020 15:59:39 +0000
+Subject: [PATCH 0/7] merge-ort: some groundwork for further implementation
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+This series is based on en/merge-ort-impl. This series sets up three future
+patch series (to add recursive merges, three-way content merging, and rename
+detection) for the merge-ort implementation, and allows the future series to
+be submitted, reviewed, and merged in any order. Since those three things
+actually do have some minor dependencies between them, this preparatory
+series is needed to make a few small changes to set things up to allow them
+to be submitted independently. 
 
-> On Sun, Nov 8, 2020 at 1:43 PM Sergey Organov <sorganov@gmail.com> wrote:
->>
->> For clarity, define public functions in the order they are called, to
->> make logic inter-dependencies easier to grok.
->
-> You added diff-merges.[ch] earlier in this series.  Why not just add
-> them in the correct order initially instead of adding another patch
-> later in the series?
+The first six patches are trivial. They should be easy to review, and as a
+bonus you get to find how I mess up even the trivial stuff. ;-) The final
+patch is more substantive and represents one of the big changes between
+merge-recursive and merge-ort -- namely, how notice/warning/conflict
+messages are reported to the user (I possibly should have included it in
+merge-ort-impl, but that series seemed so long already...).
 
-Well, I did consider it, but there are 2 issues that stopped me.
+Elijah Newren (7):
+  merge-ort: add a few includes
+  merge-ort: add a clear_internal_opts helper
+  merge-ort: add a path_conflict field to merge_options_internal
+  merge-ort: add a paths_to_free field to merge_options_internal
+  merge-ort: add function grouping comments
+  merge-ort: add die-not-implemented stub handle_content_merge()
+    function
+  merge-ort: add modify/delete handling and delayed output processing
 
-First, I didn't want to rearrange functions as I move them from
-revision.c, to avoid mixed commit to simplify review, and second, I
-didn't want to rearrange them in the original to perform as little
-changes to the codebase as possible before isolating my work
-into diff-merges.[ch].
+ merge-ort.c | 210 +++++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 191 insertions(+), 19 deletions(-)
 
-Hope it makes sense.
 
-Thanks,
--- Sergey Organov
+base-commit: 00de8a7763e29fb8a034030afbd0fbfc4c818e07
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-803%2Fnewren%2Fort-common-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-803/newren/ort-common-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/803
+-- 
+gitgitgadget
