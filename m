@@ -2,144 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D62CC433FE
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 15:24:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AF57C433FE
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 15:26:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BE39C206EC
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 15:24:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2908D206F6
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 15:26:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727183AbgLCPYj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Dec 2020 10:24:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48596 "EHLO
+        id S1730871AbgLCP0k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Dec 2020 10:26:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726751AbgLCPYj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Dec 2020 10:24:39 -0500
-Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com [IPv6:2607:f8b0:4864:20::f44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB05CC061A4E
-        for <git@vger.kernel.org>; Thu,  3 Dec 2020 07:23:58 -0800 (PST)
-Received: by mail-qv1-xf44.google.com with SMTP id ek7so1094334qvb.6
-        for <git@vger.kernel.org>; Thu, 03 Dec 2020 07:23:58 -0800 (PST)
+        with ESMTP id S1726751AbgLCP0j (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Dec 2020 10:26:39 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80A65C061A4F
+        for <git@vger.kernel.org>; Thu,  3 Dec 2020 07:25:53 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id x16so4025951ejj.7
+        for <git@vger.kernel.org>; Thu, 03 Dec 2020 07:25:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ouVdo4DJ69F73NXi3RrudjkwVarEROfPWLthz3Dh7uk=;
-        b=RBXU7M0XaYj7uAvpsxugK2wrR5HG3IhkDoSNiVFnzSuwGq0XcSK5ydvaB/FFAuhw9M
-         B6Mu+CUWD+WAimlHmYucfSb53GxaXJOHxH901B4jdT21x8g5sKrrVTKOLPF+/DGdfiC2
-         Psu9epp854jsSH4kLlhI+cBvRdEVsvwqbQWZwchLg1HM5F4gCDmOPmktBITbcaTQy4F7
-         btSJ/nooVzinRwwFrXhvgHapcIOpq6bo2EX6QOqs+Ar0s9YnmVnC8wvwu4PYXmhY9TGT
-         GxM8GKYw7odokpISbPpwDrDvenWprwe9+r9Wq8IoL2lwS5LEG15sg5QoI+fsjo3Hl36r
-         cWJw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=34GzWasZrvFvGpYOrj7Pq673j8chZqB6uYv411jpsZQ=;
+        b=VJ1NxGHMwiMiamlp7wF4vm0nO0UCSTZNnYZwy8XcMgY8FEG6se/cRc6JigKGGlQmq3
+         z2ymyp+7lGxiifnAWo2d3tJrhjIACg0b9VSiFKx6OeIfFoEdMjaTe/Rh5EMD7DCqxmfJ
+         Y2teqD+fXCIPElLFgmFglktI4HupfcmiE3O3sXzxjNINl6PPuSIw9AJHcgy/eeHSDg7D
+         APKMYnyQaciyKVd+TWtUcvVSX+8pYHFOlu55br20/IBwcTd5VT93MN1lpeN/10ETx58I
+         gBqhRUcLvAlNqTkwgpxjApD40+YHcnjcx1wzzzuP1d68ElduZZf3ygSmDgmQ1W/BDXO7
+         UJcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ouVdo4DJ69F73NXi3RrudjkwVarEROfPWLthz3Dh7uk=;
-        b=MPNms2mckGbf8igUAVnxV4DkJAceRLqAUPPdbZuZpky0e+25u8ktbbu8cxxQkpUW/7
-         9mzIB+bN2PM+JR2iAv2RtUnNwAHrKVrXDHpJbTbjKfqwLojKpze9PEda4huY/x+Ttyx+
-         0d5ehbkZzuUyjRaGDDYnFLGaKdxtibiWlIXhG+DZjpBJYEKcc82umzH+Axs+VlovMmdQ
-         Yc01uyGwS5UknQp8YC0LbOuOL2AbimhYa3563Skz1ogBGRnuCidcuk7JCz8+dirJQagR
-         J1EQCZnKWYUFtAolvLHcr/gX33hR1wk55ArZMMM+XTMrezjGxfzVMBp/RWW7TA8kyF9o
-         o3kg==
-X-Gm-Message-State: AOAM530h+BrdmxsFgGZwM5fScZKpHpjNeOdX9IXUcPHEvB8Ehcm8M4VL
-        uCt8u5czXHYS22vx5/c8G6V/7E0xesYISA==
-X-Google-Smtp-Source: ABdhPJyvlyXnCjpYrRA66wLH6yUdfcNDHZwhN4ti1tGKbiGXI1ZJmzwWW6KCKhXYhzKh1KISObpEAg==
-X-Received: by 2002:ad4:548b:: with SMTP id q11mr3686610qvy.44.1607009037466;
-        Thu, 03 Dec 2020 07:23:57 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
-        by smtp.gmail.com with UTF8SMTPSA id w31sm1579275qth.60.2020.12.03.07.23.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Dec 2020 07:23:56 -0800 (PST)
-Subject: Re: [PATCH] t7900: speed up expensive test
-To:     Jeff King <peff@peff.net>
-Cc:     Thomas Braun <thomas.braun@virtuell-zuhause.de>,
-        Derrick Stolee <dstolee@microsoft.com>, git@vger.kernel.org
-References: <20201113050631.GA744608@coredump.intra.peff.net>
- <323fd904-a7ee-061d-d846-5da5afbc88b2@virtuell-zuhause.de>
- <20201116041051.GA883199@coredump.intra.peff.net>
- <1403797985.37893.1606777048311@ox.hosteurope.de>
- <X8YnsGsUl53OKFno@coredump.intra.peff.net>
- <X8YrbDpC9/EjRr95@coredump.intra.peff.net>
- <373f3dfe-828b-430d-b88e-5e23302090cb@gmail.com>
- <X8cAXHJRm+Xz9PFM@coredump.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <b3bfa8df-f750-3dc9-d4e5-1bbd6a636eeb@gmail.com>
-Date:   Thu, 3 Dec 2020 10:23:57 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101
- Thunderbird/84.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=34GzWasZrvFvGpYOrj7Pq673j8chZqB6uYv411jpsZQ=;
+        b=EGKXqFc/IzlRARD8hgzDAkZ7Mx+ARqX8LfMlyDwZdVMl8BdvOh7xj7ScU27+YR4Jei
+         PKqv7JqyYOPwO8Ko/EkjXziyJAlBPkzSpgmLKNu+kDgr8vAKlsre7/JN+hRdXv6cO89B
+         fdY9dvA8Xt6MIANfbOo5aXE1MdPs/lSST7TRmcfQEQ5rIkZPRPi1p7wIPobqQlOI7rOC
+         +89pu2iteHitBRtjcJ4MmtvGiZnmKvl/JxUy62b6Z8xq3qHFMdSLvDjor5+Kg28G1Lqp
+         VclZNbutXnk76stPmwN9WSZYD1S1kiqq2iYHyCAqb5Qvqc9o8gmuQgxEbSy3Z7PdDRms
+         HWmw==
+X-Gm-Message-State: AOAM530vtNrnBCP8o3xWMCRxkjdQG4OpCuRWj4HElbnt78FCZ3AxHwSp
+        fWvGuOiWuS5dh1cp0Ex4O8Lwm4clE/Q5CrKZIMQ=
+X-Google-Smtp-Source: ABdhPJyM9qRFifUooGLx1ucc2YDr4/7CYRQTGNvWH52PVOcu34YIhPksn/nQOxfTXhszUM+2Sm4HkOYb2VreOCQuXDM=
+X-Received: by 2002:a17:906:d72:: with SMTP id s18mr3039211ejh.110.1607009152109;
+ Thu, 03 Dec 2020 07:25:52 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <X8cAXHJRm+Xz9PFM@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <CAN0XMOLiS_8JZKF_wW70BvRRxkDHyUoa=Z3ODtB_Bd6f5Y=7JQ@mail.gmail.com>
+ <CC0FA973-E37A-4BD3-B5A2-1436DD8DF16F@gmail.com> <xmqqzh2vkdu8.fsf@gitster.c.googlers.com>
+ <04968f5c-c8bd-c57e-d646-7c9f7691e1a8@nokia.com>
+In-Reply-To: <04968f5c-c8bd-c57e-d646-7c9f7691e1a8@nokia.com>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Date:   Thu, 3 Dec 2020 10:25:40 -0500
+Message-ID: <CADtb9DxTgEWfOF7jDGGt3eQSCaaqeiyJfS4V-e0SyPenE2SXWA@mail.gmail.com>
+Subject: Re: BUG in fetching non-checked out submodule
+To:     =?UTF-8?Q?Peter_K=C3=A4stle?= <peter.kaestle@nokia.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/1/2020 9:47 PM, Jeff King wrote:
-> Subject: [PATCH] t7900: speed up expensive test
-> 
-> A test marked with EXPENSIVE creates two 2.5GB files and adds them to
-> the repository. This takes 194s to run on my machine, versus 2s when the
-> EXPENSIVE prereq isn't set. We can trim this down a bit by doing two
-> things:
-> 
->   - use "git commit --quiet" to avoid spending time generating a diff
->     summary (this actually only helps for the second commit, but I've
->     added it here to both for consistency). This shaves off 8s.
-> 
->   - set core.compression to 0. We know these files are full of random
->     bytes, and so won't compress (that's the point of the test!).
->     Spending cycles on zlib is pointless. This shaves off 122s.
-> 
-> After this, my total time to run the script is 64s. That won't help
-> normal runs without GIT_TEST_LONG set, of course, but it's easy enough
-> to do.
+Hello Peter,
 
-I'm happy with these easy fixes to make the test faster without
-changing any of the important behavior. Thanks!
+Le jeu. 3 d=C3=A9c. 2020, =C3=A0 02 h 54, Peter K=C3=A4stle <peter.kaestle@=
+nokia.com> a =C3=A9crit :
+>
+> Hi,
+>
+> On 03.12.20 00:06, Junio C Hamano wrote:
+> > Philippe Blain <levraiphilippeblain@gmail.com> writes:
+> >
+> >> Thanks for bisecting it. That commit wanted to fix a different bug
+> >> related to nested submodules, and the route taken was simply
+> >> reverting an earlier commit (a62387b (submodule.c: fetch in
+> >> submodules git directory instead of in worktree, 2018-11-28).
+> >>
+> >> As you discovered, it breaks other scenarios.
+> >>
+> >>>
+> >>> $ git version
+> >>> git version 2.29.2.435.g72ffeb997e
+> >>>
+> >>> $ git config --get submodule.recurse
+> >>> true
+> >
+> > I think the current situation is probably worse.
+> >
+> > As a short-term fix, we should revert 1b7ac4e6d4 until we can come
+> > up with a real fix, probably.
+>
+> Junio: This is why I originally intended to commit the test case for the
+> testsuite separated from the revert and wanted to start a discussion
+> about the actual real fix for the issue:
+> https://public-inbox.org/git/1604413399-63090-1-git-send-email-peter.kaes=
+tle@nokia.com/
+>
+> My proposal would be to revert 1b7ac4e6d4 and isolate the test case
+> "test_expect_success 'setup nested submodule fetch test' '" make it
+> "test_expect_failure" and apply it instead, until we come up with a real
+> solution.
 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  t/t7900-maintenance.sh | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-> index d9e68bb2bf..d9a02df686 100755
-> --- a/t/t7900-maintenance.sh
-> +++ b/t/t7900-maintenance.sh
-> @@ -239,13 +239,15 @@ test_expect_success 'incremental-repack task' '
->  '
->  
->  test_expect_success EXPENSIVE 'incremental-repack 2g limit' '
-> +	test_config core.compression 0 &&
-> +
->  	for i in $(test_seq 1 5)
->  	do
->  		test-tool genrandom foo$i $((512 * 1024 * 1024 + 1)) >>big ||
->  		return 1
->  	done &&
->  	git add big &&
-> -	git commit -m "Add big file (1)" &&
-> +	git commit -qm "Add big file (1)" &&
->  
->  	# ensure any possible loose objects are in a pack-file
->  	git maintenance run --task=loose-objects &&
-> @@ -257,7 +259,7 @@ test_expect_success EXPENSIVE 'incremental-repack 2g limit' '
->  		return 1
->  	done &&
->  	git add big &&
-> -	git commit -m "Add big file (2)" &&
-> +	git commit -qm "Add big file (2)" &&
->  
->  	# ensure any possible loose objects are in a pack-file
->  	git maintenance run --task=loose-objects &&
-> 
 
+I think I have the real solution. I did some debugging and I think it
+is quite easy:
+In 'get_next_submodule', 'get_submodule_repo_for(spf->r, task->sub)'
+fails to get a repo pointer for the submodule repository, since it is
+not initialized. That
+is normal. Then we go in the "else" branch, and hit this code:
+
+/*
+* An empty directory is normal,
+* the submodule is not initialized
+*/
+if (S_ISGITLINK(ce->ce_mode) &&
+!is_empty_dir(ce->name)) {
+
+'is_empty_dir' receives ce->name, but the current working directory is the
+Git directory of 'middle', so clearly is_empty_dir returns false, as
+
+/path/to/git/t/trash
+directory.t5526-fetch-submodules/B/.git/modules/middle/inner
+
+is a non-existent path. The path that we should send is the worktree
+of inner, ie.
+the concatenation of spf->r->worktree and ce->name. This would give
+
+/path/to/git/t/trash directory.t5526-fetch-submodules/B/middle/inner,
+
+which is an empty directory since the inner submodule is not initialized,
+and we would not get the "Could not access submodule inner" error
+that you wanted to solve.
+
+
+Cheers,
+
+Philippe.
