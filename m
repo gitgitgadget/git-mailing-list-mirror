@@ -2,42 +2,44 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EAEBC4361A
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 19:49:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43933C4361A
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 19:53:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B0324221F4
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 19:49:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D429B22262
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 19:53:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727724AbgLCTtO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Dec 2020 14:49:14 -0500
-Received: from mail.javad.com ([54.86.164.124]:53416 "EHLO mail.javad.com"
+        id S1726962AbgLCTxX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Dec 2020 14:53:23 -0500
+Received: from mail.javad.com ([54.86.164.124]:53950 "EHLO mail.javad.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726307AbgLCTtO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Dec 2020 14:49:14 -0500
+        id S1725885AbgLCTxX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Dec 2020 14:53:23 -0500
 Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 1671E3E96D;
-        Thu,  3 Dec 2020 19:48:33 +0000 (UTC)
+        by mail.javad.com (Postfix) with ESMTPSA id 2A9503E96D;
+        Thu,  3 Dec 2020 19:52:42 +0000 (UTC)
 Received: from osv by osv with local (Exim 4.92)
         (envelope-from <sorganov@gmail.com>)
-        id 1kkuad-0003zR-Hf; Thu, 03 Dec 2020 22:48:31 +0300
+        id 1kkuee-0003zZ-Ie; Thu, 03 Dec 2020 22:52:40 +0300
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Elijah Newren <newren@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Philip Oakley <philipoakley@iee.email>,
         Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v1 00/27] git-log: implement new --diff-merge options
+Subject: Re: [PATCH v1 27/27] doc/git-show: include --diff-merges description
 References: <20201101193330.24775-1-sorganov@gmail.com>
         <20201108213838.4880-1-sorganov@gmail.com>
-        <CABPp-BHdhvLRe4jCSsRtPrbh2=kwJxEQs0Dx+Ng1Vutx8Hdqqw@mail.gmail.com>
-Date:   Thu, 03 Dec 2020 22:48:31 +0300
-In-Reply-To: <CABPp-BHdhvLRe4jCSsRtPrbh2=kwJxEQs0Dx+Ng1Vutx8Hdqqw@mail.gmail.com>
-        (Elijah Newren's message of "Wed, 2 Dec 2020 23:54:08 -0800")
-Message-ID: <871rg6hdrk.fsf@osv.gnss.ru>
+        <20201108213838.4880-28-sorganov@gmail.com>
+        <CABPp-BG_YT2i_27tqkh_e4mwfkYae-zDCEYL=F+NjYQed2gKAg@mail.gmail.com>
+Date:   Thu, 03 Dec 2020 22:52:40 +0300
+In-Reply-To: <CABPp-BG_YT2i_27tqkh_e4mwfkYae-zDCEYL=F+NjYQed2gKAg@mail.gmail.com>
+        (Elijah Newren's message of "Thu, 3 Dec 2020 08:47:35 -0800")
+Message-ID: <87wnxyfz07.fsf@osv.gnss.ru>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -46,86 +48,192 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Elijah Newren <newren@gmail.com> writes:
-
-> On Sun, Nov 8, 2020 at 1:43 PM Sergey Organov <sorganov@gmail.com> wrote:
->>
->> These patch series implement new set of options governing the diff output
->> of merge commits, all under the umbrella of the single --diff-merges=<mode>
->> option. Most of the new options being synonyms for -m/-c/--cc options,
->> there is also additional functionality provided, allowing to get the format
->> of "-p --first-parent" without change in history traversal that
->> --first-parent option causes.
->>
->> The net result of these series are the following new options:
->>
->> --diff-merges=   |  old equivalent
->> -----------------+----------------
->> first-parent     | --first-parent (only format implications)
->> separate         | -m
->> combined         | -c
->> dense-combined   | --cc
+> Hi,
 >
-> Interesting.  I have some local patches implementing another choice,
-> with the new flag --remerge-diff.  This flag will cause `git show` or
-> `git log` to automatically remerge the two parents in a 2-parent merge
-> commit, and then diff the merge commit against that automatic merge,
-> showing the result.  Thus, the diff for a merge commit is likely to be
-> empty if the merge was clean, and is likely to show the removal of
-> conflict markers if the merge was not clean.
->
-> I'm curious how it'd interact with this new option.  Would it also get
-> a name, e.g. --diff-merges=remerge-diff?  Feels like a mouthful, but I
-> can't come up with anything better.
-
-Maybe, --diff-merges=remerge?
-
->
-> Also, I'm curious how it'd interact with another option I added, named
-> --remerge-diff-only.  This latter option modifies revision traversal
-> in that it skips octopus merges, root commits, and single parent
-> commits IF no cherry-pick or revert information can be found.  If it
-> finds a 2-parent merge commit, it behaves like --remerge-diff.  If it
-> finds a 1-parent commit with cherry-pick or revert information, it'll
-> do an in memory repeat of that cherry-pick (or revert) and then diff
-> the actual commit against what the automatic cherry-pick would
-> perform.  Again, that likely means an empty diff if the automatic
-> cherry-pick was clean, and showing any changes made by the user to
-> complete the original cherry-pick (such as deleting conflict markers
-> and picking which chunks from which side to keep) if the automatic
-> cherry-pick was not clean.  (I suspect --remerge-diff-only is much
-> more likely to be used with `git show` than with `git log`.)  Anyway,
-> your changes seem to suggest that anything relating to how diffs for
-> merges are handled should be documented in the same section, but
-> --remerge-diff-only doesn't fit.  And it'd seem odd to have
-> --remerge-diff and --remerge-diff-only not show up in adjacently but
-> be split into separate sections.  Any ideas?
-
-Sounds like commits limiting option to me. I think it could be named by
-its limiting behavior only, say, --remerges. Then it will imply
---diff-merges=remerge, that'd allow user to re-define diff format if she
-needs to.
-
-I mean, it looks very similar to --first-parent to me in the ways it
-could be defined/implemented. Recall that --first-parent now implies
---diff-merges=first-parent.
-
-[...]
-
+> On Sun, Nov 8, 2020 at 1:44 PM Sergey Organov <sorganov@gmail.com> wrote:
 >>
->> Updates in v1:
+>> Move description of --diff-merges option from git-log.txt to
+>> diff-options.txt so that it is included in the git-show help.
+>>
+>> While we are at it, make git-show closer to git-log in this area by
+>> providing similar wording in the introduction of diff options.
+>>
+>> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+>> ---
+>>  Documentation/diff-options.txt | 54 ++++++++++++++++++++++++++++++++++
+>>  Documentation/git-log.txt      | 52 --------------------------------
+>>  Documentation/git-show.txt     |  8 +++--
+>>  3 files changed, 60 insertions(+), 54 deletions(-)
+>>
+>> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+>> index 573fb9bb71e2..f1629887103e 100644
+>> --- a/Documentation/diff-options.txt
+>> +++ b/Documentation/diff-options.txt
+>> @@ -33,6 +33,60 @@ endif::git-diff[]
+>>         show the patch by default, or to cancel the effect of `--patch`.
+>>  endif::git-format-patch[]
+>>
+>> +ifdef::git-log[]
+>> +Note that unless one of `--diff-merges` variants (including short
+>> +`-m`, `-c`, and `--cc` options) is explicitly given, merge commits
+>> +will not show a diff, even if a diff format like `--patch` is
+>> +selected, nor will they match search options like `-S`. The exception
+>> +is when `--first-parent` is in use, in which case
+>> +`--diff-merges=first-parent` is implied.
 >
-> A minor point, but this should have been labelled v2.  The unlabelled
-> original submission is v1.
+> So, now diff-options says that no diffs are the defaults for merge commits...
+>
+>> +
+>> +--diff-merges=(off|none|first-parent|separate|combined|dense-combined)::
+>> +--no-diff-merges::
+>> +       Specify diff format to be used for merge commits. This has no
+>> +       effect unless diff output is enabled in the first place (e.g.,
+>> +       with `--patch` option.)
+>> ++
+>> +--diff-merges=(off|none):::
+>> +--no-diff-merges:::
+>> +       (default) Disable output of diffs for merge commits. Useful to
+>> +       override implied value.
+>> ++
+>> +--diff-merges=first-parent:::
+>> +       This option makes merge commits show the full diff with
+>> +       respect to the first parent only, exactly like  regular
+>> +       commits.
+>> ++
+>> +--diff-merges=separate:::
+>> +-m:::
+>> +       This makes merge commits show the full diff with respect to
+>> +       each of the parents. Separate log entry and diff is generated
+>> +       for each parent.
+>> ++
+>> +--diff-merges=combined:::
+>> +-c:::
+>> +       With this option, diff output for a merge commit shows the
+>> +       differences from each of the parents to the merge result
+>> +       simultaneously instead of showing pairwise diff between a
+>> +       parent and the result one at a time. Furthermore, it lists
+>> +       only files which were modified from all parents.
+>> ++
+>> +--diff-merges=dense-combined:::
+>> +--cc:::
+>> +       With this option the output produced by
+>> +       `--diff-merges=combined` is further compressed by omitting
+>> +       uninteresting hunks whose contents in the parents have only
+>> +       two variants and the merge result picks one of them without
+>> +       modification.
+>> +
+>> +--combined-all-paths::
+>> +       This flag causes combined diffs (used for merge commits) to
+>> +       list the name of the file from all parents.  It thus only has
+>> +       effect when `--diff-merges=[dense-]combined` is in use, and
+>> +       is likely only useful if filename changes are detected (i.e.
+>> +       when either rename or copy detection have been requested).
+>> +endif::git-log[]
+>> +
+>>  -U<n>::
+>>  --unified=<n>::
+>>         Generate diffs with <n> lines of context instead of
+>> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+>> index de498a189646..0cacc780bf30 100644
+>> --- a/Documentation/git-log.txt
+>> +++ b/Documentation/git-log.txt
+>> @@ -120,58 +120,6 @@ DIFF FORMATTING
+>>  By default, `git log` does not generate any diff output. The options
+>>  below can be used to show the changes made by each commit.
+>>
+>> -Note that unless one of `--diff-merges` variants (including short
+>> -`-m`, `-c`, and `--cc` options) is explicitly given, merge commits
+>> -will not show a diff, even if a diff format like `--patch` is
+>> -selected, nor will they match search options like `-S`. The exception
+>> -is when `--first-parent` is in use, in which case
+>> -`--diff-merges=first-parent` is implied.
+>> -
+>> ---diff-merges=(off|none|first-parent|separate|combined|dense-combined)::
+>> ---no-diff-merges::
+>> -       Specify diff format to be used for merge commits. This has no
+>> -       effect unless diff output is enabled in the first place (e.g.,
+>> -       with `--patch` option.)
+>> -+
+>> ---diff-merges=(off|none):::
+>> ---no-diff-merges:::
+>> -       (default) Disable output of diffs for merge commits. Useful to
+>> -       override implied value.
+>> -+
+>> ---diff-merges=first-parent:::
+>> -       This option makes merge commits show the full diff with
+>> -       respect to the first parent only, exactly like  regular
+>> -       commits.
+>> -+
+>> ---diff-merges=separate:::
+>> --m:::
+>> -       This makes merge commits show the full diff with respect to
+>> -       each of the parents. Separate log entry and diff is generated
+>> -       for each parent.
+>> -+
+>> ---diff-merges=combined:::
+>> --c:::
+>> -       With this option, diff output for a merge commit shows the
+>> -       differences from each of the parents to the merge result
+>> -       simultaneously instead of showing pairwise diff between a
+>> -       parent and the result one at a time. Furthermore, it lists
+>> -       only files which were modified from all parents.
+>> -+
+>> ---diff-merges=dense-combined:::
+>> ---cc:::
+>> -       With this option the output produced by
+>> -       `--diff-merges=combined` is further compressed by omitting
+>> -       uninteresting hunks whose contents in the parents have only
+>> -       two variants and the merge result picks one of them without
+>> -       modification.
+>> -
+>> ---combined-all-paths::
+>> -       This flag causes combined diffs (used for merge commits) to
+>> -       list the name of the file from all parents.  It thus only has
+>> -       effect when `--diff-merges=[dense-]combined` is in use, and
+>> -       is likely only useful if filename changes are detected (i.e.
+>> -       when either rename or copy detection have been requested).
+>> -
+>>
+>>  :git-log: 1
+>>  include::diff-options.txt[]
+>> diff --git a/Documentation/git-show.txt b/Documentation/git-show.txt
+>> index fcf528c1b30d..abe58ce5d3a8 100644
+>> --- a/Documentation/git-show.txt
+>> +++ b/Documentation/git-show.txt
+>> @@ -45,8 +45,12 @@ include::pretty-options.txt[]
+>>  include::pretty-formats.txt[]
+>>
+>>
+>> -COMMON DIFF OPTIONS
+>> --------------------
+>> +DIFF FORMATTING
+>> +---------------
+>> +
+>> +By default, `git show` does not generate any diff output. The options
+>> +below can be used to show the changes made by each commit.
+>> +
+>
+> This is not right, `git show` generates diff output by default for
+> both normal commits and merge commits -- it defaults to -p --cc (see
+> show_setup_revisions_tweak() of builtin/log.c).  Also see earlier in
+> git-show.txt where it says
+>
+>        For commits it shows the log message and textual diff. It also presents
+>        the merge commit in a special format as produced by git diff-tree --cc.
+>
+>>  :git-log: 1
+>>  include::diff-options.txt[]
+>
+> ...and the included text will contain the repeated claim that no diffs
+> are shown by default for merge commits, which is true for `git log`
+> but not `git show`.
 
-Well, I did consider it when prepared v1, but given:
+Yes, I need to re-consider this, as I already admitted in my reply to
+your previous catch of the related problem in the documentation.
 
-  git format-patch --reroll-count=0
+They all came from single point of misunderstanding.
 
-produces [PATCH], it only sounds natural to follow with
-
-  git format-patch --reroll-count=1
-
-that produces [PATCH v1].
+Will try to get it right in the next re-roll.
 
 Thanks,
 -- Sergey Organov
