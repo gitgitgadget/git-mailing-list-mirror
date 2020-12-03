@@ -2,79 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2A24C4167B
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 18:32:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEC7BC433FE
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 18:39:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 85BAC208A9
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 18:32:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7970D207B6
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 18:39:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729791AbgLCScr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Dec 2020 13:32:47 -0500
-Received: from cloud.peff.net ([104.130.231.41]:50454 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729629AbgLCScq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Dec 2020 13:32:46 -0500
-Received: (qmail 13626 invoked by uid 109); 3 Dec 2020 18:32:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 03 Dec 2020 18:32:06 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3414 invoked by uid 111); 3 Dec 2020 18:32:05 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 03 Dec 2020 13:32:05 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 3 Dec 2020 13:32:05 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1731531AbgLCSjR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Dec 2020 13:39:17 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61340 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726012AbgLCSjQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Dec 2020 13:39:16 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 69BF2FD689;
+        Thu,  3 Dec 2020 13:38:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=K9d2g2yThRs4bUzdZoBvu6CEq6Q=; b=FE3qkz
+        TccGMlEFh7Xq+JeFGZM8zy3z6Y5NwJQxDge9/Tf1EPjFsFOr9Tg9frMN3rFZODmH
+        wu/ZqE1paaZbEapsTqk56loCAYJQ0QiJSwlpJ5w6tv9a9lTHPH6SUXmCVqU9TIWB
+        UGhljtiMqTva+q0twFXB/1rQaTEs2Q8jcLnps=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OTSutd5lsoRiZWXMDrYARX72IjgQx3lI
+        vTkA74eUP8hTLKl7H8IalEaDlZjpq230MLjSGIhE5ZVnfatXUCVVDOu+9uJvvoi2
+        aR8TY8tdG4Wh4kIEQfb+cC29OE3BSGwrVeWLHIJnXbeEHwZyzO9QeUJPAS0DCMM4
+        23lPwx8GzzU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 62E1BFD687;
+        Thu,  3 Dec 2020 13:38:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A22DAFD686;
+        Thu,  3 Dec 2020 13:38:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org
 Subject: Re: [PATCH] style: indent multiline "if" conditions by 4 spaces
-Message-ID: <X8kvJRnOtSEYziRK@coredump.intra.peff.net>
 References: <X8ibEpkel8OMS/hV@coredump.intra.peff.net>
- <xmqqv9dihhqs.fsf@gitster.c.googlers.com>
+        <xmqqv9dihhqs.fsf@gitster.c.googlers.com>
+        <X8kvJRnOtSEYziRK@coredump.intra.peff.net>
+Date:   Thu, 03 Dec 2020 10:38:30 -0800
+In-Reply-To: <X8kvJRnOtSEYziRK@coredump.intra.peff.net> (Jeff King's message
+        of "Thu, 3 Dec 2020 13:32:05 -0500")
+Message-ID: <xmqqr1o6hh09.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqv9dihhqs.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: BE2B3208-3596-11EB-88CF-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 03, 2020 at 10:22:35AM -0800, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Commit 6dc905d974 (config: split repo scope to local and worktree,
-> > 2020-02-10) made some "if" statements multiline, but didn't indent the
-> > second lines in our usual way.
-> >
-> > Signed-off-by: Jeff King <peff@peff.net>
-> > ---
-> > I just happened to be reading nearby code and saw this.
-> 
-> Can we rephrase "by 4 spaces" to avoid misleading new developers,
-> though?  It's not like our rule is to indent continued expression by
-> 4 spaces---it happens to be 4 in this case only because the second
-> line is aligned with the column inside "if (".
-> 
-> If the expression were
-> 
-> 	if ((A == X && B == Y &&
-> 	     boolean_expression_on_the_second_line()) ||
-> 	    C == Z)
-> 
-> we would have indented the second line to align with the inside of
-> the opening parenthesis, which may end up with "by 5 spaces", but
-> four vs five is not the important part of the equation.
+> Yeah, the goal is to align it, but I had trouble thinking of a succinct
+> way to say that. Maybe just:
+>
+>   style: align indent of multiline "if" conditions
 
-Yeah, the goal is to align it, but I had trouble thinking of a succinct
-way to say that. Maybe just:
+I couldn't come up with a good description, and 
+just did s/by 4 spaces/to align/, i.e.
 
-  style: align indent of multiline "if" conditions
+    style: indent multiline "if" conditions to align
 
-?
+while queuing.  I dunno.
 
--Peff
