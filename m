@@ -2,215 +2,194 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.7 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MSGID_FROM_MTA_HEADER,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 334A0C63777
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 07:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90D9AC64E7B
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 07:56:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE39120B80
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 07:55:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2CEB320C56
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 07:56:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728780AbgLCHzA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Dec 2020 02:55:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35142 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725912AbgLCHzA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Dec 2020 02:55:00 -0500
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5294BC061A4D
-        for <git@vger.kernel.org>; Wed,  2 Dec 2020 23:54:20 -0800 (PST)
-Received: by mail-ot1-x343.google.com with SMTP id h19so963999otr.1
-        for <git@vger.kernel.org>; Wed, 02 Dec 2020 23:54:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AxIOFpf2wcPnT98gzdU3TbfMf31xyk2opHmRFD8yaj4=;
-        b=K91m/NJ16fF7ylxjxy00SUt+axqKjHmCEXsD5GHdpK0cEl/sS5dlHluGRIXlG/ZtDy
-         V3MpHdf0AkzkfJ3pPjLRnayLgfulgJ3ahTlSyDQJ4jmWLrrYSCBVy51Zivvoa6F31O3o
-         uaskjW/F2NSRT5uYt3Q+GnDOjXMjRULP93pSkanRSugFVYf3RFuBMzj14o+O+pVmW/KV
-         RP/AxrwXFK1avP/uLJBzcjH8jLR7zC3HeVjBfVdK6gUOplD6LHkcHOFoGRb4BsdwjMRN
-         SoQbdu01R/pp7klRT6aLiIyq5GKXOilnbP2Y2UnMzO24BlIzCygOrbjDKTwW5qzPzWoy
-         5eag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AxIOFpf2wcPnT98gzdU3TbfMf31xyk2opHmRFD8yaj4=;
-        b=OLDAwpfSMFZ5pyaZJuOjI0gmNXCgTKJfWoT3U46v3LTaCgoZyNPna6ZEWnze0j/3CZ
-         Pn9jymIpO1tGKpRw9Uy3nQL6cZGL4yXGTZMzuiQLZvzbJznrcNifHMEChYzu8zT24uK9
-         LOlVnB3/LxUVWDCGqLpndGwGJ9tJvz6FrT+7u+5kcjo4GX1txTml0k7mxsotfLlfiZfu
-         Q84fSXMhCPihgrEFW0vosJ8jStMDxI3LkHkVQRV8iyvMP7zZp7qdF8PDvmECUrMGU5/x
-         Q4gkGfuMYfaEZXTqFf32I9/yPFHsw5CLWC8QhoW25gNphML7w30gR6evfjIq+NQhkR5Q
-         4+FQ==
-X-Gm-Message-State: AOAM533H0kgrpR2dpgKOFb0ZceDZqVrnJxsUeajrRn1AP9KOUFz8Mq+3
-        oXiSa01jh7E+shnsdrlOHvURvHnNqxB8Ysp68Xk=
-X-Google-Smtp-Source: ABdhPJxW2wBJD58BpLtuad218kB6gKUNNdwf/GMB7u3IftkTX4FvWi0U7HCqh945bWfNCTlkVXFJfXsKMDhJfD0c0Ds=
-X-Received: by 2002:a05:6830:1002:: with SMTP id a2mr1240838otp.316.1606982059480;
- Wed, 02 Dec 2020 23:54:19 -0800 (PST)
+        id S2387402AbgLCHzp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Dec 2020 02:55:45 -0500
+Received: from mail-db8eur05on2107.outbound.protection.outlook.com ([40.107.20.107]:51474
+        "EHLO EUR05-DB8-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1728177AbgLCHzo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Dec 2020 02:55:44 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=CHu2KVB9u6LqzjYpEDC6cPlFteOAzbWy9v+PuhYlKQknX3hSQEdN/lo58zjRY/e7WTrEbtDqXiRFuVQvYRXvoAuxPhPdUy9Tkr502LdK5VuL2bd4SXUJK2fFT7Y29HLO/Wcv+gFEkEg5GYGhglsBt2/ItKm7dANfFTJP/d+/03kRe6QqhfgYGH64U/Nvb6LyxytAoP8hl3IHKIg2YNBvKlC/75v69SDGSDNrTayMfGAKEBitEt6K2IfGBhrbTp54B89cwfrXFKSFZuCs5GQxS8iizZPk5PW5PrnnR8U99t3ff72e29XK/d4ld/C6xcfReYNa8BVX5jKKmCqwjyvmGg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=DJTs6GdIk0huTsxcKCips+MJRMnaQu2m2iBd9Bnt2CY=;
+ b=N2I+aSxU2BISbnPfGn945vhEojm2azUklNy7DnWK48B9jxnxEGAB07TmMDyOBvd3RWrn3iUIFd0z3nJ/2zx+CWPh/cAa37yQ2frrF6/nyHXFzcUEUi465WYdJw/u1aYpMhMLl/RzOytysm7QJuand1nhheXNFRX7rsyoZNXrgqo0QKPPhNGkwfOXpm6yaWNcUG7ab5CrihTPAH3McfeqXBse4ykl9hId781slN348RKGkW4FQ9Tj4vlPRfcj+keWfNSwHxszwdpYHgYPNGMWelIKIXrk5BDtXs2nzJw9xVTL77719FLdK0VRE8QRG0uBjZIZinQ1p8veG4V8xqoM3Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nokia.com; dmarc=pass action=none header.from=nokia.com;
+ dkim=pass header.d=nokia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nokia.onmicrosoft.com;
+ s=selector1-nokia-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=DJTs6GdIk0huTsxcKCips+MJRMnaQu2m2iBd9Bnt2CY=;
+ b=kQtsf2WHSJqm07SNl5DnNz1gxJPAlSerr50MoUrQErt2CoJ22E+NpTwncKbncBSPS+VhfE9Gnb+WGAky3e/R6iWUwdiAS5zHSmmaUzGej8B4ltRTF80Tn0bKZ4hASAjMBgViK9Ic667psZ5GgfCOLF6Vdh3SeG7KouhMMhRmyrE=
+Authentication-Results: nokia.com; dkim=none (message not signed)
+ header.d=none;nokia.com; dmarc=none action=none header.from=nokia.com;
+Received: from DBAPR07MB7030.eurprd07.prod.outlook.com (2603:10a6:10:19e::21)
+ by DB7PR07MB5178.eurprd07.prod.outlook.com (2603:10a6:10:60::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3632.15; Thu, 3 Dec
+ 2020 07:54:56 +0000
+Received: from DBAPR07MB7030.eurprd07.prod.outlook.com
+ ([fe80::fdb3:2e1c:5565:9860]) by DBAPR07MB7030.eurprd07.prod.outlook.com
+ ([fe80::fdb3:2e1c:5565:9860%6]) with mapi id 15.20.3632.018; Thu, 3 Dec 2020
+ 07:54:55 +0000
+Subject: Re: BUG in fetching non-checked out submodule
+To:     Junio C Hamano <gitster@pobox.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Ralf Thielow <ralf.thielow@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+References: <CAN0XMOLiS_8JZKF_wW70BvRRxkDHyUoa=Z3ODtB_Bd6f5Y=7JQ@mail.gmail.com>
+ <CC0FA973-E37A-4BD3-B5A2-1436DD8DF16F@gmail.com>
+ <xmqqzh2vkdu8.fsf@gitster.c.googlers.com>
+From:   =?UTF-8?Q?Peter_K=c3=a4stle?= <peter.kaestle@nokia.com>
+Message-ID: <04968f5c-c8bd-c57e-d646-7c9f7691e1a8@nokia.com>
+Date:   Thu, 3 Dec 2020 08:54:47 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.3
+In-Reply-To: <xmqqzh2vkdu8.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [131.228.32.168]
+X-ClientProxiedBy: HE1PR0901CA0062.eurprd09.prod.outlook.com
+ (2603:10a6:3:45::30) To DBAPR07MB7030.eurprd07.prod.outlook.com
+ (2603:10a6:10:19e::21)
 MIME-Version: 1.0
-References: <20201101193330.24775-1-sorganov@gmail.com> <20201108213838.4880-1-sorganov@gmail.com>
-In-Reply-To: <20201108213838.4880-1-sorganov@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 2 Dec 2020 23:54:08 -0800
-Message-ID: <CABPp-BHdhvLRe4jCSsRtPrbh2=kwJxEQs0Dx+Ng1Vutx8Hdqqw@mail.gmail.com>
-Subject: Re: [PATCH v1 00/27] git-log: implement new --diff-merge options
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from [172.30.9.8] (131.228.32.168) by HE1PR0901CA0062.eurprd09.prod.outlook.com (2603:10a6:3:45::30) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3632.17 via Frontend Transport; Thu, 3 Dec 2020 07:54:54 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-HT: Tenant
+X-MS-Office365-Filtering-Correlation-Id: dc9d66e4-4bb9-46c4-44de-08d89760b9a0
+X-MS-TrafficTypeDiagnostic: DB7PR07MB5178:
+X-MS-Exchange-Transport-Forked: True
+X-Microsoft-Antispam-PRVS: <DB7PR07MB5178B19BDD72295F9AAA7BA6EEF20@DB7PR07MB5178.eurprd07.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:10000;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: F4RmjwpBkTd5lZquPyvAHPr0Yy8XBk74Y56Q+XeDw8c0uWwOYSoPGgaoS0vXxC2X9IUiKB9eBP1dp/mKuxLfzGJPJ0H3jgwG8K7hZhh1YEFe38v8RciZpGtufw1I7mF7+BQW9J0iYiCpEyhbmkCqQHlvTtBwuYWF9S4a6XtTHRtvRIES0rUr/ERo45Lo6DNmTpAbi4oCcChwdJSjYX6Ckm4cgQOy/l+dMy3UF2msnDS1et8djVTh4mELueDQnZaJi9eYLhz2x/B/eb+ylLg6ceQNbv6OdR/CUBrpKsscTMBQAUGPCug/flMOJ7o8Zfm7z2/rgxpqZTGSzymA1lcbW2u1cHrIRsKmOED4LlT1Vn6EK0VI5rOub7LmzVJ9DDcTsx3CZv2c35IyqKRMcGbA7qvxBaKtUWOtCkoBy9iPOwsnnGgXv5vh1h4gYAtKg1l7SEOmv4Rlk2eNJjXBtepr6zi0x/wfAG+TT2g1/YusSo4=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DBAPR07MB7030.eurprd07.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(376002)(346002)(396003)(366004)(136003)(39860400002)(16576012)(86362001)(8676002)(110136005)(31686004)(66946007)(4326008)(8936002)(66556008)(316002)(36756003)(31696002)(83380400001)(66476007)(5660300002)(6486002)(186003)(26005)(52116002)(6666004)(4001150100001)(2906002)(2616005)(53546011)(956004)(16526019)(478600001)(966005)(43740500002)(45980500001);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData: =?utf-8?B?TFNlSEhTdExuelFtMXRZejhvS2tuUzVhdStDZGlSa0U1NlRsTEhQMFNnWEVu?=
+ =?utf-8?B?K0ZjUitWTUZHYVdQT1NZMFU2dDI2Qk1LRTFFTDFoVC9YOGZWdU4wMTBnblFT?=
+ =?utf-8?B?cGJGL2xFcFExTVNPU0Z4eHpqK2xYMUJlcjZXMFZtNkxGaStGOXJMZFY0ZlFl?=
+ =?utf-8?B?VVk4STBpeUhYaDk2NjhoNjhOVFJabkhOb3VaZ3g2cnUwOUxrejdPL0grWG14?=
+ =?utf-8?B?d2NRbnpvZE85UzVsRTNGNURFVFlkdjBsQ3ZnZ0gxcFNuQjduaXpSS0lVTkxL?=
+ =?utf-8?B?YUFtR1ZyWE1wUDJ4RWROYnNJQmJTYU9pMm1NbTdOUjYvNHpoVXA4cldWV3Vs?=
+ =?utf-8?B?Y2pPbjllUERJRjhyeDRUeTZTM0gvdUNUUlRZL3VvQnNIckQwSlI3TGhpNFpE?=
+ =?utf-8?B?cEM2R3AvQzlLVmhBNW84clQzTDBuaHJQcWlWemtmbjdTV0lzZ1czeFBDTzNk?=
+ =?utf-8?B?aVVEbFM0S1NIR3E0dXFxcHNIenBCMjdWZ3FXbDdydVk3eGoyUkhXaTFDblNa?=
+ =?utf-8?B?bUxiOTRVbHNOV0syL3Z2N2ZVS0JlK3pGZk50VnEvY25xSitzL05pUTlZMnhk?=
+ =?utf-8?B?Q244cGFPcWlHcU93cEFJaGR3K1h1dkFPRThJTml1Z1pXc29LWEF0OUVxVDlH?=
+ =?utf-8?B?aVc5cVI4MHhSOElCblpVOVJVYVFCSm9WUUVkSE03Z0NHR3VZSkM2cTMxa05N?=
+ =?utf-8?B?bHFtTTcrVHVZNVlKVWIyekVOSTdzYi9PbFNhUXF6cC9iUFVkUEsrczdPUXFm?=
+ =?utf-8?B?RlVTNlY1ZDJBMnJIZjBCeS8wb2FhT1VwbjZ5L09hSWlnRmQ5d2RsMGJYcG1K?=
+ =?utf-8?B?dnVkaWVNN0JWLy83Vmt4TDR4K21XcEVPTDFrWk9DaEFTQWtQREZTdndHMDZq?=
+ =?utf-8?B?R2YvakFDdW01UmtnUlQwS1dJQjRCMzNtRnFjbDNsR0FrbVhwZUZwZ2c1alMv?=
+ =?utf-8?B?UUdlUXhYWCtqU21rMDl5NzQxSGt0UU1kSmtmV0o3eCtlOW5rZHk0QU9sYytC?=
+ =?utf-8?B?Y2llMzY5MXNtc3YwWmxFUFNIRzcyRi9wZk1MQ0lOTHhCdU9CNmRiVkRlV0Vx?=
+ =?utf-8?B?T1pXRG5DWG9HaHBobzAyQUV5WXIxL2RtWlc5SlhtQ1p0MmEzNkFXYk9PaEt2?=
+ =?utf-8?B?c3NzSVpyd3c1REYvWlFkNjdnNE5iZGFSWDdEVzNxcUMzUXRFNWlhMWR0aUFU?=
+ =?utf-8?B?OTJiNFBwOHlXTzNyVmd3azBLOW16VS9wUlZ5RVY3SDN1ZHNlQzdhMnlzd2VU?=
+ =?utf-8?B?cHA0M25USE85V09TR2RCOGNYYzZnVVZqRDZseFpBY0RqUEFhYUNqUTBPK1Fp?=
+ =?utf-8?Q?E9fnJ1JROjHk0D9befvmMyBEaMCkhzwYOt?=
+X-OriginatorOrg: nokia.com
+X-MS-Exchange-CrossTenant-AuthSource: DBAPR07MB7030.eurprd07.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Dec 2020 07:54:55.9211
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 5d471751-9675-428d-917b-70f44f9630b0
+X-MS-Exchange-CrossTenant-Network-Message-Id: dc9d66e4-4bb9-46c4-44de-08d89760b9a0
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: pNukcbQ6ZGQ1VAwlVLp7WFvGri6ImyT7IroKna2R0v1qRgqHHs3t6XVOlCLt9QHY4usM0vzJK+l95bkONcOABQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB7PR07MB5178
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 8, 2020 at 1:43 PM Sergey Organov <sorganov@gmail.com> wrote:
->
-> These patch series implement new set of options governing the diff output
-> of merge commits, all under the umbrella of the single --diff-merges=<mode>
-> option. Most of the new options being synonyms for -m/-c/--cc options,
-> there is also additional functionality provided, allowing to get the format
-> of "-p --first-parent" without change in history traversal that
-> --first-parent option causes.
->
-> The net result of these series are the following new options:
->
-> --diff-merges=   |  old equivalent
-> -----------------+----------------
-> first-parent     | --first-parent (only format implications)
-> separate         | -m
-> combined         | -c
-> dense-combined   | --cc
+Hi,
 
-Interesting.  I have some local patches implementing another choice,
-with the new flag --remerge-diff.  This flag will cause `git show` or
-`git log` to automatically remerge the two parents in a 2-parent merge
-commit, and then diff the merge commit against that automatic merge,
-showing the result.  Thus, the diff for a merge commit is likely to be
-empty if the merge was clean, and is likely to show the removal of
-conflict markers if the merge was not clean.
+On 03.12.20 00:06, Junio C Hamano wrote:
+> Philippe Blain <levraiphilippeblain@gmail.com> writes:
+> 
+>> Thanks for bisecting it. That commit wanted to fix a different bug
+>> related to nested submodules, and the route taken was simply
+>> reverting an earlier commit (a62387b (submodule.c: fetch in
+>> submodules git directory instead of in worktree, 2018-11-28).
+>>
+>> As you discovered, it breaks other scenarios.
+>>
+>>>
+>>> $ git version
+>>> git version 2.29.2.435.g72ffeb997e
+>>>
+>>> $ git config --get submodule.recurse
+>>> true
+> 
+> I think the current situation is probably worse.
+> 
+> As a short-term fix, we should revert 1b7ac4e6d4 until we can come
+> up with a real fix, probably.
 
-I'm curious how it'd interact with this new option.  Would it also get
-a name, e.g. --diff-merges=remerge-diff?  Feels like a mouthful, but I
-can't come up with anything better.
+Junio: This is why I originally intended to commit the test case for the 
+testsuite separated from the revert and wanted to start a discussion 
+about the actual real fix for the issue:
+https://public-inbox.org/git/1604413399-63090-1-git-send-email-peter.kaestle@nokia.com/
 
-Also, I'm curious how it'd interact with another option I added, named
---remerge-diff-only.  This latter option modifies revision traversal
-in that it skips octopus merges, root commits, and single parent
-commits IF no cherry-pick or revert information can be found.  If it
-finds a 2-parent merge commit, it behaves like --remerge-diff.  If it
-finds a 1-parent commit with cherry-pick or revert information, it'll
-do an in memory repeat of that cherry-pick (or revert) and then diff
-the actual commit against what the automatic cherry-pick would
-perform.  Again, that likely means an empty diff if the automatic
-cherry-pick was clean, and showing any changes made by the user to
-complete the original cherry-pick (such as deleting conflict markers
-and picking which chunks from which side to keep) if the automatic
-cherry-pick was not clean.  (I suspect --remerge-diff-only is much
-more likely to be used with `git show` than with `git log`.)  Anyway,
-your changes seem to suggest that anything relating to how diffs for
-merges are handled should be documented in the same section, but
---remerge-diff-only doesn't fit.  And it'd seem odd to have
---remerge-diff and --remerge-diff-only not show up in adjacently but
-be split into separate sections.  Any ideas?
+My proposal would be to revert 1b7ac4e6d4 and isolate the test case 
+"test_expect_success 'setup nested submodule fetch test' '" make it 
+"test_expect_failure" and apply it instead, until we come up with a real 
+solution.
 
-(This doesn't matter yet, since I'm waiting for merge-ort to be
-completed before submitting the --remerge-diff and --remerge-diff-only
-patches, but thought I'd bring it up as food for thought and to query
-if others have good ideas about how to handle the names and
-documentation location.)
+>> Yeah, I think the test suite could make more efforts
+>> to run more tests with that setting turned 'on', but
+>> it would require significants efforts since it changes
+>> the behaviour of several commands.
+> 
+> I am not sure if the question is about amount of efforts.
+> 
+> A configuration variable is there to change the behaviour of
+> commands, so a test of a command that has been running happily and
+> producing a set of expected outcome with a configuration unset
+> should break the expectation when the configuration is set ---
+> otherwise there is no point in having a configuration variable.
+> 
+>> Meta question: is there an easy way to run the whole test
+>> suite with specific config options turned on ?
+> 
+> Hence, I do not think it even makes sense to have such an "easy
+> way".  If the "fetch" command, for example, is expected to change
+> behaviour depending on the value of submodule.recurse, a test
+> written for the case where the variable is not set should produce
+> different outcome when the variable is set.
+> 
+> What we need may be a better test coverage.  submodule.recurse is a
+> later addition, and all tests written earlier do test how the commands
+> behave without the configuration being set.  If one wants to change
+> the behaviour of these commands when the configuration is set, new
+> tests to specify what the expected behaviour need to be added.
 
-> The series also cleanup logic of handling of diff merges options and fix an
-> issue found in the original implementation where logically mutually
-> exclusive options -m/-c/--cc failed to actually override each other.
->
-> The series start with the set of pure refactoring commits that are expected
-> to introduce no functional changes. These are all commits up to and
-> including:
->
-> "diff-merges: revise revs->diff flag handling"
->
-> The aim of these commits is to isolate options handling for diff merges so
-> that it could be easily understood and tweaked to ease introduction of the
-> new options.
->
-> Then the fix of -m/-c/-cc overriding issue follows, starting with a failing
-> test and followed by the fix.
->
-> Then follows a little bit of additional refactoring in order to prepare for
-> introduction of the new options, and finally the series are finished by the
-> implementation, testing, and documentation update for the new options.
->
-> Updates in v1:
+Can we start a new test suite for tests on which this variable is set? 
+The case of Ralf can be used as first test case.
 
-A minor point, but this should have been labelled v2.  The unlabelled
-original submission is v1.
+Ralf: could you please send a command sequence, which recreates the 
+required repository setup from scratch and is able to trigger your 
+observation?  Then we can convert this into a test case.
 
->
->         * Added documentation fix for git-show to include --diff-merges.
->         * Fixed typos in commit messages noticed by Philip Oakley.
->
-> Sergey Organov (27):
->   revision: factor out parsing of diff-merge related options
->   revision: factor out setup of diff-merge related settings
->   revision: factor out initialization of diff-merge related settings
->   revision: provide implementation for diff merges tweaks
->   revision: move diff merges functions to its own diff-merges.c
->   diff-merges: rename all functions to have common prefix
->   diff-merges: move checks for first_parent_only out of the module
->   diff-merges: rename diff_merges_default_to_enable() to match semantics
->   diff-merges: re-arrange functions to match the order they are called
->     in
->   diff-merges: new function diff_merges_suppress()
->   diff-merges: new function diff_merges_set_dense_combined_if_unset()
->   diff-merges: introduce revs->first_parent_merges flag
->   diff-merges: revise revs->diff flag handling
->   t4013: support test_expect_failure through ':failure' magic
->   t4013: add tests for -m failing to override -c/--cc
->   diff-merges: fix -m to properly override -c/--cc
->   diff-merges: split 'ignore_merges' field
->   diff-merges: group diff-merge flags next to each other inside
->     'rev_info'
->   diff-merges: get rid of now empty diff_merges_init_revs()
->   diff-merges: refactor opt settings into separate functions
->   diff-merges: make -m/-c/--cc explicitly mutually exclusive
->   diff-merges: implement new values for --diff-merges
->   t4013: add test for --diff-merges=first-parent
->   doc/git-log: describe new --diff-merges options
->   doc/diff-generate-patch: mention new --diff-merges option
->   doc/rev-list-options: document --first-parent implies
->     --diff-merges=first-parent
->   doc/git-show: include --diff-merges description
->
->  Documentation/diff-generate-patch.txt         |   6 +-
->  Documentation/diff-options.txt                |  54 +++++
->  Documentation/git-log.txt                     |  39 ----
->  Documentation/git-show.txt                    |   8 +-
->  Documentation/rev-list-options.txt            |   3 +
->  Makefile                                      |   1 +
->  builtin/diff-files.c                          |   5 +-
->  builtin/diff.c                                |   9 +-
->  builtin/log.c                                 |  18 +-
->  builtin/merge.c                               |   3 +-
->  diff-merges.c                                 | 120 +++++++++++
->  diff-merges.h                                 |  18 ++
->  fmt-merge-msg.c                               |   3 +-
->  log-tree.c                                    |  17 +-
->  revision.c                                    |  38 +---
->  revision.h                                    |   7 +-
->  t/t4013-diff-various.sh                       |  10 +-
->  t/t4013/diff.log_--cc_-m_-p_master            | 200 ++++++++++++++++++
->  t/t4013/diff.log_-c_-m_-p_master              | 200 ++++++++++++++++++
->  ...f.log_-p_--diff-merges=first-parent_master | 137 ++++++++++++
->  20 files changed, 788 insertions(+), 108 deletions(-)
->  create mode 100644 diff-merges.c
->  create mode 100644 diff-merges.h
->  create mode 100644 t/t4013/diff.log_--cc_-m_-p_master
->  create mode 100644 t/t4013/diff.log_-c_-m_-p_master
->  create mode 100644 t/t4013/diff.log_-p_--diff-merges=first-parent_master
->
-> --
-> 2.25.1
+Thanks.
+
+-- 
+best regards
+--peter;
