@@ -8,193 +8,184 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36C91C63777
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 05:54:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D44B4C63777
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 06:10:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C6E7420B80
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 05:54:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6D7B92067C
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 06:10:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728300AbgLCFxf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Dec 2020 00:53:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44702 "EHLO
+        id S1728076AbgLCGKR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Dec 2020 01:10:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726140AbgLCFxd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Dec 2020 00:53:33 -0500
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A401EC061A4F
-        for <git@vger.kernel.org>; Wed,  2 Dec 2020 21:52:47 -0800 (PST)
-Received: by mail-ot1-x341.google.com with SMTP id z24so730378oto.6
-        for <git@vger.kernel.org>; Wed, 02 Dec 2020 21:52:47 -0800 (PST)
+        with ESMTP id S1727724AbgLCGKR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Dec 2020 01:10:17 -0500
+Received: from mail-oo1-xc41.google.com (mail-oo1-xc41.google.com [IPv6:2607:f8b0:4864:20::c41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F34DC061A4D
+        for <git@vger.kernel.org>; Wed,  2 Dec 2020 22:09:37 -0800 (PST)
+Received: by mail-oo1-xc41.google.com with SMTP id i30so246480ooh.9
+        for <git@vger.kernel.org>; Wed, 02 Dec 2020 22:09:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=W1JyhKYw/tYzwv+xvUH1CgPKtzThUx/orT+PiF/IArU=;
-        b=Z1H8GlYJ7gWy3Z3epkku1MqgNKmpeO7aC7ABuLO20qR7K7BaJUlA+m+1KjWPHFwhSH
-         ti9VJLEjwzrYxYZo5iGjRT7Hi/xBZSIxp+gnIIY9THIRQQAjHlHvSLc53Q7/Q2tmf6N0
-         8m9SePCsBPSu8qnk1LJfeB8jkb/UNtuDW+szhhJAGbWuSh2Gs7uSnKnttJDVKTL7qpKZ
-         o5msatklH/sCXTD6BKX3QY1ttBQ3wnkkkhqXp9rf3yyqLuqv2ai0dB8bPjK61NQGzaHT
-         GCG2/9hQK6nB1FcQennsS73fnD0r5bXJTVuZcVGHHEPdieOUMMnsjxuVCw0DQDH8YrOW
-         ADng==
+        bh=VbXnMeP75DulfCaX/Ztr0FdG6CTKrIGq7OWSSD97TxA=;
+        b=K8XhvBNb25QGVbKPpi18joqRFrD6nL0eHx6B/a+ILcc4j/ZfSvBJPYqvvcCSQ8qNHl
+         SdBPtDVHHZFkX/MrvmefwVne7CthWscI/RJkYsdvFhVTx0SqJyp0JQoSbkQNG6OyhVRo
+         2Fa7rBUlXCCy7A+tgCY+IcopyBVdOv5ZfvW8eDktZADyAy/XcZ4TVMMF1twaID4/JJeI
+         2h8OeWJFSYtEdjPqz2bSXOQqe/lL7XYebESzwNkMXUVpWGUT8EKt2e2u/SrWxFftk4zC
+         STrfk4GmbobJUMDLSemCi1doV+S2jwLqqLy3R2Tx3nZRqspSLohSGP7xgqx8sJLY+k+a
+         s+Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=W1JyhKYw/tYzwv+xvUH1CgPKtzThUx/orT+PiF/IArU=;
-        b=kaL14P20bZAgBCU2AHVM5Og8yjWQH7ombDDkDuOwlgh7EQ1L9HRp7FMFdSxo1q0BzA
-         +VMVzKvGMwvMuLLZT7PunvqJDrLqyCUBL9K59xcA2HMS+9YdpyaOll+Cu4OkqfGIgZnD
-         atajkYYvkWvtj+6f4eIQ1A2R5gc5HjvC0kmQmRs8JLAVOni+aKGcrkfFscuJF5hGX3QT
-         vePuijUdHOmDLxnRRddoqgvWLe5r8w1Ib4gS4T8VozMivDp8VdNoCmqhCsmO6iVpDcU0
-         RiGhIOi2Q1iS3GBIY4fReQ//LlBJMEn2zCq9KH/9xvgb3bQnJ8brVO5XYsYXMCKG5Vj8
-         Okxg==
-X-Gm-Message-State: AOAM531dC6byTgaAtSH/AG+h7Ifm6W3LeYjq1kmixzSRL8jBGNPK/BRb
-        vu/f3q8Auz0t4XMCSqPGesV5SXDmKMESxc1Z1T8=
-X-Google-Smtp-Source: ABdhPJwQGpphKFu8Vg7QYrXirW1kmYeJ+iRHKBd05YmRhH9pDLVMeAMiO2Q1zHfmmkUc8fpmOBX6f2aqZOEzEUV1oCE=
-X-Received: by 2002:a05:6830:1002:: with SMTP id a2mr1033292otp.316.1606974767066;
- Wed, 02 Dec 2020 21:52:47 -0800 (PST)
+        bh=VbXnMeP75DulfCaX/Ztr0FdG6CTKrIGq7OWSSD97TxA=;
+        b=ifrSw9QEu9aJxxFxvjtBsHVhfW2BxcOjUX/pNHIyja1SHe7VMdGh7OUKhDnioqWDwq
+         J2DX3NYvFwm+DCCwhG6p5IIeotGvl1pn6wRLn5YtQlJsu89xS9YcwlkTQksMlP55rhpX
+         L6ujhPlrwxUQ0Vjq3y8/wh5dvYYesu82lxM6LJ2Sbh4xF10kMj8fPfRTEQZy/Dvxc1iz
+         j4PLR/qPylA+RGQ6mA/up7t72dfX5HsXVvlRZ2BEA/vo/9gLXtqdL7Hl+7rz/KvhgHk8
+         OXCAm+EvZIDLoV32UhBh6rP8lkaKQtz2njkoA5magFQ/HZNNQzYM8xNYA+r0nDMP+xQl
+         mvjA==
+X-Gm-Message-State: AOAM530uJMfQ2Z9HDqU7smDvWAB+L0AL4jG+AbRm/u24wB+ZdSAPX0H/
+        HnKxD2fwfya49xiaYYZzb2lGiUBEIWw01QPI9QtZzVNichlkHQ==
+X-Google-Smtp-Source: ABdhPJyonOU8t0MtdLYwUaWLXJRg5dQO8NC5DsZnLa04PNXumz+5BbWJEcifQeMi832hYM6HqzS6VQuJHyoBtirF3TA=
+X-Received: by 2002:a4a:7b4b:: with SMTP id l72mr1067561ooc.45.1606975776393;
+ Wed, 02 Dec 2020 22:09:36 -0800 (PST)
 MIME-Version: 1.0
-References: <20201101193330.24775-1-sorganov@gmail.com> <20201101193330.24775-11-sorganov@gmail.com>
-In-Reply-To: <20201101193330.24775-11-sorganov@gmail.com>
+References: <20201101193330.24775-1-sorganov@gmail.com> <20201108213838.4880-1-sorganov@gmail.com>
+ <20201108213838.4880-25-sorganov@gmail.com>
+In-Reply-To: <20201108213838.4880-25-sorganov@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 2 Dec 2020 21:52:36 -0800
-Message-ID: <CABPp-BGH0+M_6gYYfYsp54X9DjKM4mv8Vssoo3uZtDAY1_Zb1A@mail.gmail.com>
-Subject: Re: [PATCH 10/26] diff-merges: new function diff_merges_suppress()
+Date:   Wed, 2 Dec 2020 22:09:25 -0800
+Message-ID: <CABPp-BGZO+7bRdCAGFdetOkmwyFnHxDPQ=SD4f6TSa9ZYGFn=A@mail.gmail.com>
+Subject: Re: [PATCH v1 24/27] doc/git-log: describe new --diff-merges options
 To:     Sergey Organov <sorganov@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
         Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 1, 2020 at 11:36 AM Sergey Organov <sorganov@gmail.com> wrote:
+On Sun, Nov 8, 2020 at 1:46 PM Sergey Organov <sorganov@gmail.com> wrote:
 >
-> This function sets all the relevant flags to disabled state, so that
-> no code that checks only one of them get it wrong.
->
-> Then we call this new function everywhere where diff merges output
-> suppression is needed.
+> Describe all the new --diff-merges options in the git-log.txt
 >
 > Signed-off-by: Sergey Organov <sorganov@gmail.com>
 > ---
->  builtin/merge.c |  3 ++-
->  diff-merges.c   | 18 ++++++++++++++----
->  diff-merges.h   |  2 ++
->  fmt-merge-msg.c |  3 ++-
->  4 files changed, 20 insertions(+), 6 deletions(-)
+>  Documentation/git-log.txt | 79 +++++++++++++++++++++++----------------
+>  1 file changed, 46 insertions(+), 33 deletions(-)
 >
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> index 9d5359edc2f7..1f7b69982b40 100644
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -14,6 +14,7 @@
->  #include "lockfile.h"
->  #include "run-command.h"
->  #include "diff.h"
-> +#include "diff-merges.h"
->  #include "refs.h"
->  #include "refspec.h"
->  #include "commit.h"
-> @@ -400,7 +401,7 @@ static void squash_message(struct commit *commit, struct commit_list *remotehead
->         printf(_("Squash commit -- not updating HEAD\n"));
+> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+> index 2b8ac5ff882a..de498a189646 100644
+> --- a/Documentation/git-log.txt
+> +++ b/Documentation/git-log.txt
+> @@ -120,45 +120,58 @@ DIFF FORMATTING
+>  By default, `git log` does not generate any diff output. The options
+>  below can be used to show the changes made by each commit.
 >
->         repo_init_revisions(the_repository, &rev, NULL);
-> -       rev.ignore_merges = 1;
-> +       diff_merges_suppress(&rev);
->         rev.commit_format = CMIT_FMT_MEDIUM;
+> -Note that unless one of `-c`, `--cc`, or `-m` is given, merge commits
+> -will never show a diff, even if a diff format like `--patch` is
+> -selected, nor will they match search options like `-S`. The exception is
+> -when `--first-parent` is in use, in which merges are treated like normal
+> -single-parent commits (this can be overridden by providing a
+> -combined-diff option or with `--no-diff-merges`).
+> +Note that unless one of `--diff-merges` variants (including short
+> +`-m`, `-c`, and `--cc` options) is explicitly given, merge commits
+> +will not show a diff, even if a diff format like `--patch` is
+> +selected, nor will they match search options like `-S`. The exception
+> +is when `--first-parent` is in use, in which case
+> +`--diff-merges=first-parent` is implied.
 >
->         commit->object.flags |= UNINTERESTING;
-> diff --git a/diff-merges.c b/diff-merges.c
-> index 8536941e0b56..25bd9b12e667 100644
-> --- a/diff-merges.c
-> +++ b/diff-merges.c
-> @@ -2,6 +2,13 @@
->
->  #include "revision.h"
->
-> +static void suppress(struct rev_info *revs) {
-> +       revs->ignore_merges = 1;
-> +       revs->first_parent_merges = 0;
-> +       revs->combine_merges = 0;
-> +       revs->dense_combined_merges = 0;
-> +}
+> --c::
+> -       With this option, diff output for a merge commit
+> -       shows the differences from each of the parents to the merge result
+> -       simultaneously instead of showing pairwise diff between a parent
+> -       and the result one at a time. Furthermore, it lists only files
+> -       which were modified from all parents.
+> -
+> ---cc::
+> -       This flag implies the `-c` option and further compresses the
+> -       patch output by omitting uninteresting hunks whose contents in
+> -       the parents have only two variants and the merge result picks
+> -       one of them without modification.
+> +--diff-merges=(off|none|first-parent|separate|combined|dense-combined)::
+> +--no-diff-merges::
+> +       Specify diff format to be used for merge commits. This has no
+> +       effect unless diff output is enabled in the first place (e.g.,
+> +       with `--patch` option.)
 
-The function name is not so helpful; why not put all this code
-directly in diff_merges_suppress()?
+This seems inconsistent with c7eaf8b4c3 ("log: when --cc is given,
+default to -p unless told otherwise", 2015-08-20); shouldn't these
+imply -p?
 
-> +
->  /*
->   * Public functions. They are in the order they are called.
->   */
-> @@ -29,16 +36,15 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv) {
->                 revs->combine_merges = 1;
->         } else if (!strcmp(arg, "--cc")) {
->                 revs->diff = 1;
-> -               revs->dense_combined_merges = 1;
-> -               revs->combine_merges = 1;
-> +               set_dense_combined(revs);
->         } else if (!strcmp(arg, "--no-diff-merges")) {
-> -               revs->ignore_merges = 1;
-> +               suppress(revs);
->         } else if (!strcmp(arg, "--combined-all-paths")) {
->                 revs->diff = 1;
->                 revs->combined_all_paths = 1;
->         } else if ((argcount = parse_long_opt("diff-merges", argv, &optarg))) {
->                 if (!strcmp(optarg, "off")) {
-> -                       revs->ignore_merges = 1;
-> +                       suppress(revs);
->                 } else {
->                         die(_("unknown value for --diff-merges: %s"), optarg);
->                 }
-> @@ -48,6 +54,10 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv) {
->         return 1;
->  }
->
-> +void diff_merges_suppress(struct rev_info *revs) {
-> +       suppress(revs);
-> +}
+> ++
+> +--diff-merges=(off|none):::
+> +--no-diff-merges:::
+> +       (default) Disable output of diffs for merge commits. Useful to
+> +       override implied value.
+> ++
+> +--diff-merges=first-parent:::
+> +       This option makes merge commits show the full diff with
+> +       respect to the first parent only, exactly like  regular
+> +       commits.
 
-...especially since all this function does is call suppress()?
+Not sure that "exactly like regular commits" is helpful here; I'd
+personally rather cut those four words out.  I'm worried it'll be
+taken not as an implementation explanation, but as a "this treats
+merge commits in the natural way that regular commits are" which users
+may mistakenly translate to "it shows what changes the user manually
+made as part of the commit" which is not at all the correct mapping.
 
-
-> +
->  void diff_merges_default_to_first_parent(struct rev_info *revs) {
->         if (revs->ignore_merges < 0)            /* No -m */
->                 revs->ignore_merges = 0;
-> diff --git a/diff-merges.h b/diff-merges.h
-> index 4b023c385d00..32720bc9b40f 100644
-> --- a/diff-merges.h
-> +++ b/diff-merges.h
-> @@ -7,6 +7,8 @@ void diff_merges_init_revs(struct rev_info *revs);
+> ++
+> +--diff-merges=separate:::
+> +-m:::
+> +       This makes merge commits show the full diff with respect to
+> +       each of the parents. Separate log entry and diff is generated
+> +       for each parent.
+> ++
+> +--diff-merges=combined:::
+> +-c:::
+> +       With this option, diff output for a merge commit shows the
+> +       differences from each of the parents to the merge result
+> +       simultaneously instead of showing pairwise diff between a
+> +       parent and the result one at a time. Furthermore, it lists
+> +       only files which were modified from all parents.
+> ++
+> +--diff-merges=dense-combined:::
+> +--cc:::
+> +       With this option the output produced by
+> +       `--diff-merges=combined` is further compressed by omitting
+> +       uninteresting hunks whose contents in the parents have only
+> +       two variants and the merge result picks one of them without
+> +       modification.
 >
->  int diff_merges_parse_opts(struct rev_info *revs, const char **argv);
+>  --combined-all-paths::
+>         This flag causes combined diffs (used for merge commits) to
+>         list the name of the file from all parents.  It thus only has
+> -       effect when -c or --cc are specified, and is likely only
+> -       useful if filename changes are detected (i.e. when either
+> -       rename or copy detection have been requested).
+> +       effect when `--diff-merges=[dense-]combined` is in use, and
+> +       is likely only useful if filename changes are detected (i.e.
+> +       when either rename or copy detection have been requested).
 >
-> +void diff_merges_suppress(struct rev_info *revs);
-> +
->  void diff_merges_default_to_first_parent(struct rev_info *revs);
+> --m::
+> -       This flag makes the merge commits show the full diff like
+> -       regular commits; for each merge parent, a separate log entry
+> -       and diff is generated. An exception is that only diff against
+> -       the first parent is shown when `--first-parent` option is given;
+> -       in that case, the output represents the changes the merge
+> -       brought _into_ the then-current branch.
+> -
+> ---diff-merges=off::
+> ---no-diff-merges::
+> -       Disable output of diffs for merge commits (default). Useful to
+> -       override `-m`, `-c`, or `--cc`.
 >
->  void diff_merges_default_to_dense_combined(struct rev_info *revs);
-> diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
-> index bd22e1ea8865..abc3403fb820 100644
-> --- a/fmt-merge-msg.c
-> +++ b/fmt-merge-msg.c
-> @@ -2,6 +2,7 @@
->  #include "refs.h"
->  #include "object-store.h"
->  #include "diff.h"
-> +#include "diff-merges.h"
->  #include "revision.h"
->  #include "tag.h"
->  #include "string-list.h"
-> @@ -668,7 +669,7 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
->                 head = lookup_commit_or_die(&head_oid, "HEAD");
->                 repo_init_revisions(the_repository, &rev, NULL);
->                 rev.commit_format = CMIT_FMT_ONELINE;
-> -               rev.ignore_merges = 1;
-> +               diff_merges_suppress(&rev);
->                 rev.limited = 1;
->
->                 strbuf_complete_line(out);
+>  :git-log: 1
+>  include::diff-options.txt[]
 > --
 > 2.25.1
->
