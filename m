@@ -8,137 +8,177 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52C7BC433FE
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 19:57:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81B38C4361B
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 20:07:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D6104221F4
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 19:57:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 35E402220F
+	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 20:07:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726953AbgLCT47 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Dec 2020 14:56:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34622 "EHLO
+        id S1728354AbgLCUHa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Dec 2020 15:07:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726143AbgLCT47 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Dec 2020 14:56:59 -0500
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19844C061A4E
-        for <git@vger.kernel.org>; Thu,  3 Dec 2020 11:56:19 -0800 (PST)
-Received: by mail-ot1-x342.google.com with SMTP id 11so2951052oty.9
-        for <git@vger.kernel.org>; Thu, 03 Dec 2020 11:56:19 -0800 (PST)
+        with ESMTP id S1725885AbgLCUHa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Dec 2020 15:07:30 -0500
+Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 944A8C061A53
+        for <git@vger.kernel.org>; Thu,  3 Dec 2020 12:06:49 -0800 (PST)
+Received: by mail-lf1-x142.google.com with SMTP id r24so4540147lfm.8
+        for <git@vger.kernel.org>; Thu, 03 Dec 2020 12:06:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=y3bvFsmzNOT2p9WXil76WdI8nJWVImHRwKM7wSt1Ch0=;
-        b=gmeKCrNfFpjLudDZQcR/gUnScOtfFNzmBEOgJFYYZX9lOJerbGxk+V+rJVUtHzVKVM
-         exVDGnD3L3m+o1eq4JBQe1YLLGCP3LaRh95RObsaA6+FoEZy40q7qFUop7sULQDYBJaX
-         ikX/M7WYZuNZnLO+rS8R0uECVDvnucj1ufV3+zV+Jzu5TnheipCBSIl42NfTuag/gzQ9
-         q7kgOO7qJNvNiEh9/wUe7M2IeNFY0dncgoRVlDpfFf6Bg/A/CgZbiv+IiEELFEPyDljr
-         ZKoiZaWa7uAh0H39sMvzpKF/WoLRoHvPWeEteT2Cyn6PJzthGhAPNnpj68m9AxMVFgmp
-         LtzQ==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=fcw4YD0+XTxmFRwAqEdvOkahYRIJbIYNNZD4YJW1HgI=;
+        b=g/0u857LINfeV5RPuk42Sm5I30xacWyt6B9yOOLkbhvDP9vFRdoS/isTFJ4PXAPhAo
+         E8nARchsFfYtxFr2G9wzKmcykZ3eYFOyed8CQ96wfawpfG8EXA7MhEcPp63ihPCWWeei
+         A9q/UJNArfmplfGv3e9C98ZzlpHwh6TD8bt5ZlJbVE0YFtKmQ0mRWAYO58C9dIesieQb
+         cBB2dKmXK7+O7OX7p5gANxlyFo0YeEkGoV02Jw3dRan1mQJnnWoaeeBk00ncY28Qw9cz
+         y4AIPAkpCz9pRAI8fCKOgGxFwIc9KW0sFkK5IOdVxOo0it7Adl939iRDDNQwaFxC6M7o
+         lviA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=y3bvFsmzNOT2p9WXil76WdI8nJWVImHRwKM7wSt1Ch0=;
-        b=FWOMOhPlOJzJDU91eTFyYv/R8Tdwq0BJ0QmQPKr8Y4Hlf+WERwTef5xSjgzBIwr0ic
-         P5doQOTVWjCf/l1F49ug/W7RwxD1dTSU3MObls2EGSqy+Er/Xmc9Hs0HtOqi1BI+7YDm
-         DWMPPMqRok4bgRKabPZfeyu7fSpGpeCmrKRdGA/zb2hhsU2pmFMFzfH3kWCKx99lCEcY
-         CcfejHjbU8iKlVlyv8npilITK2JSWV2p/mAqTq6bb+SBlJAPSWD+/734iQy9i1YehKMu
-         3NYMjlkjw1Vlr/Sp2V/YGmGcR+WdrTZStKlOSBk9DbVYlghONrjGdLjj2WXSthMOh95c
-         /kug==
-X-Gm-Message-State: AOAM531ylXSayJF8JMWzTXVhpvKc9dfok7yQM4Zttpk2aPCnqqgDu63S
-        sI2YmXE0AxnKZY0s5KVcXA3+vXin4XaiZwVchXc=
-X-Google-Smtp-Source: ABdhPJyqGOEsctZqzaYFJt8r9pV0lpCUL4bE2q8NFm7XNve8uJtKeL+WVA28x7inkR/t9azelliaNPeBamWPqexJFNk=
-X-Received: by 2002:a05:6830:1002:: with SMTP id a2mr717628otp.316.1607025377976;
- Thu, 03 Dec 2020 11:56:17 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.803.git.1607011187.gitgitgadget@gmail.com>
- <9f1ac20e31886ad7cd56ff582c58cce4ee743fa1.1607011187.git.gitgitgadget@gmail.com>
- <8e861bc8-4da1-01aa-7de6-c6c128590170@gmail.com>
-In-Reply-To: <8e861bc8-4da1-01aa-7de6-c6c128590170@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 3 Dec 2020 11:56:07 -0800
-Message-ID: <CABPp-BFytQ5d2s8VpMbNXDGzG3=Jd2Tm2=G_mh+OBYqzhDeHBg@mail.gmail.com>
-Subject: Re: [PATCH 6/7] merge-ort: add die-not-implemented stub
- handle_content_merge() function
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=fcw4YD0+XTxmFRwAqEdvOkahYRIJbIYNNZD4YJW1HgI=;
+        b=QHhG0AA2bmgN0HO5hTq31YSSy09JwrT1g6UE4kgC+xBElvtXnADbi8eVJHkWbX4QfN
+         LkV1UREK0ByfIJJI66H7KicuknYuVPCycC/9QIVi6YxOm4c7u68C7ExMUHaKjq8D/32b
+         56y/i5ZJXqDcda+KebID+O6pyUAJCOohVTK3lqdzDa+VccM4T+xUWPC5UF4VcMoFBHoY
+         2/VQlQ1m+J7/FWaKlifYbsqoPY1s0Uhgm082agi8VV4s95V0bD10dN6BSavCtHN52srH
+         colcuzBdwlgK18KNtGiL4160tM0/uId7Jis93FqNoVCgU2mJeJD0YiXDFlZVQ501RJxe
+         iOIg==
+X-Gm-Message-State: AOAM530wqWB2Wrg50eMnZh7Ugmuy1MAZmGfwhQlR3Jp4usoGMs5/rDPK
+        hTlKwBblhE65FsI/KN15cQGHm/c/bjo=
+X-Google-Smtp-Source: ABdhPJztVP42owS2CFWMNrE7quQtn6MWOztVWl9x6PAlye9cjJjgCEB+R8kwAyyluMKAdthZ75VWrA==
+X-Received: by 2002:a19:2d45:: with SMTP id t5mr2001122lft.445.1607026007723;
+        Thu, 03 Dec 2020 12:06:47 -0800 (PST)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id z22sm848475lfb.97.2020.12.03.12.06.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Dec 2020 12:06:46 -0800 (PST)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH 10/26] diff-merges: new function diff_merges_suppress()
+References: <20201101193330.24775-1-sorganov@gmail.com>
+        <20201101193330.24775-11-sorganov@gmail.com>
+        <CABPp-BGH0+M_6gYYfYsp54X9DjKM4mv8Vssoo3uZtDAY1_Zb1A@mail.gmail.com>
+Date:   Thu, 03 Dec 2020 23:06:45 +0300
+In-Reply-To: <CABPp-BGH0+M_6gYYfYsp54X9DjKM4mv8Vssoo3uZtDAY1_Zb1A@mail.gmail.com>
+        (Elijah Newren's message of "Wed, 2 Dec 2020 21:52:36 -0800")
+Message-ID: <87ft4mfycq.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 3, 2020 at 10:40 AM Derrick Stolee <stolee@gmail.com> wrote:
+Elijah Newren <newren@gmail.com> writes:
+
+> On Sun, Nov 1, 2020 at 11:36 AM Sergey Organov <sorganov@gmail.com> wrote:
+>>
+>> This function sets all the relevant flags to disabled state, so that
+>> no code that checks only one of them get it wrong.
+>>
+>> Then we call this new function everywhere where diff merges output
+>> suppression is needed.
+>>
+>> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+>> ---
+>>  builtin/merge.c |  3 ++-
+>>  diff-merges.c   | 18 ++++++++++++++----
+>>  diff-merges.h   |  2 ++
+>>  fmt-merge-msg.c |  3 ++-
+>>  4 files changed, 20 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/builtin/merge.c b/builtin/merge.c
+>> index 9d5359edc2f7..1f7b69982b40 100644
+>> --- a/builtin/merge.c
+>> +++ b/builtin/merge.c
+>> @@ -14,6 +14,7 @@
+>>  #include "lockfile.h"
+>>  #include "run-command.h"
+>>  #include "diff.h"
+>> +#include "diff-merges.h"
+>>  #include "refs.h"
+>>  #include "refspec.h"
+>>  #include "commit.h"
+>> @@ -400,7 +401,7 @@ static void squash_message(struct commit *commit, struct commit_list *remotehead
+>>         printf(_("Squash commit -- not updating HEAD\n"));
+>>
+>>         repo_init_revisions(the_repository, &rev, NULL);
+>> -       rev.ignore_merges = 1;
+>> +       diff_merges_suppress(&rev);
+>>         rev.commit_format = CMIT_FMT_MEDIUM;
+>>
+>>         commit->object.flags |= UNINTERESTING;
+>> diff --git a/diff-merges.c b/diff-merges.c
+>> index 8536941e0b56..25bd9b12e667 100644
+>> --- a/diff-merges.c
+>> +++ b/diff-merges.c
+>> @@ -2,6 +2,13 @@
+>>
+>>  #include "revision.h"
+>>
+>> +static void suppress(struct rev_info *revs) {
+>> +       revs->ignore_merges = 1;
+>> +       revs->first_parent_merges = 0;
+>> +       revs->combine_merges = 0;
+>> +       revs->dense_combined_merges = 0;
+>> +}
 >
-> On 12/3/2020 10:59 AM, Elijah Newren via GitGitGadget wrote:
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > This simplistic and weird-looking patch is here to facilitate future
-> > patch submissions.  Adding this stub allows rename detection code to
-> > reference it in one patch series, while a separate patch series can
-> > define the implementation, and then both series can merge cleanly and
-> > work nicely together at that point.
-> >
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > ---
-> >  merge-ort.c | 14 ++++++++++++++
-> >  1 file changed, 14 insertions(+)
-> >
-> > diff --git a/merge-ort.c b/merge-ort.c
-> > index e653ba35ea..e7220cbbb4 100644
-> > --- a/merge-ort.c
-> > +++ b/merge-ort.c
-> > @@ -523,6 +523,18 @@ static int collect_merge_info(struct merge_options *opt,
-> >
-> >  /*** Function Grouping: functions related to threeway content merges ***/
-> >
-> > +static int handle_content_merge(struct merge_options *opt,
-> > +                             const char *path,
-> > +                             const struct version_info *o,
-> > +                             const struct version_info *a,
-> > +                             const struct version_info *b,
-> > +                             const char *pathnames[3],
-> > +                             const int extra_marker_size,
-> > +                             struct version_info *result)
-> > +{
-> > +     die("Not yet implemented");
-> > +}
-> > +
-> >  /*** Function Grouping: functions related to detect_and_process_renames(), ***
-> >   *** which are split into directory and regular rename detection sections. ***/
-> >
-> > @@ -919,6 +931,8 @@ static void process_entry(struct merge_options *opt,
-> >               ci->merged.clean = 0;
-> >               ci->merged.result.mode = ci->stages[1].mode;
-> >               oidcpy(&ci->merged.result.oid, &ci->stages[1].oid);
-> > +             /* When we fix above, we'll call handle_content_merge() */
-> > +             (void)handle_content_merge;
+> The function name is not so helpful;
+
+Do you have better suggestion? suppress_output()? supress_diff()?
+
+> why not put all this code directly in diff_merges_suppress()?
+
+I prefer the style where module implementation functions don't call its
+interface functions, only vice versa.
+
 >
-> I'm not exactly sure what the value is of this line. Is it just to
-> make sure we have a reference to the 'static' method without actually
-> calling it anywhere?
+>> +
+>>  /*
+>>   * Public functions. They are in the order they are called.
+>>   */
+>> @@ -29,16 +36,15 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv) {
+>>                 revs->combine_merges = 1;
+>>         } else if (!strcmp(arg, "--cc")) {
+>>                 revs->diff = 1;
+>> -               revs->dense_combined_merges = 1;
+>> -               revs->combine_merges = 1;
+>> +               set_dense_combined(revs);
+>>         } else if (!strcmp(arg, "--no-diff-merges")) {
+>> -               revs->ignore_merges = 1;
+>> +               suppress(revs);
+>>         } else if (!strcmp(arg, "--combined-all-paths")) {
+>>                 revs->diff = 1;
+>>                 revs->combined_all_paths = 1;
+>>         } else if ((argcount = parse_long_opt("diff-merges", argv, &optarg))) {
+>>                 if (!strcmp(optarg, "off")) {
+>> -                       revs->ignore_merges = 1;
+>> +                       suppress(revs);
+>>                 } else {
+>>                         die(_("unknown value for --diff-merges: %s"), optarg);
+>>                 }
+>> @@ -48,6 +54,10 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv) {
+>>         return 1;
+>>  }
+>>
+>> +void diff_merges_suppress(struct rev_info *revs) {
+>> +       suppress(revs);
+>> +}
+>
+> ...especially since all this function does is call suppress()?
 
-Yes; without the reference the compiler fails with an unused function
-error message.  I know it's not used yet, but I really need it there,
-so I have to fake the compiler out with a lame expression (take the
-address of the function, cast to void, and discard the result since I
-don't assign it anywhere or anything).
+Yes, it does, but it doesn't mean it will be that way forever. Interface
+function might need to perform additional checks or actions, in general.
 
-> "weird-looking patch" indeed! I'm more confused than anything.
+Besides, if diff_merges_suppress() is OK with you as interface function
+name, why suppress() is not OK as local function name in diff-merges
+module?
 
-In general, rename detection occurs before process_entry() and thus
-process_entry() can handle the content merging.  However, some unusual
-rename conflicts require multiple content merges (and possibly result
-in nested conflict markers) and so the rename code needs to be able to
-call handle_content_merge() for the first of those.
-
-I really wanted to split apart the series for rename detection (12
-patches), and the one for more conflict handling (10 patches),
-especially since the latter series includes 6 patches for building up
-handle_content_merge() (3 for regular file content merging and another
-3 for submodule "merging").  The two series are nearly orthogonal, but
-I had to somehow allow the rename side to call handle_content_merge()
-without having both series try to introduce the same function.  Hence
-this patch.
+Thanks,
+-- Sergey Organov
