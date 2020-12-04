@@ -2,91 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DFD71C4361B
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 21:30:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2B59C433FE
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 21:55:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A036D22CE3
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 21:30:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 84CAA22CE3
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 21:55:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387922AbgLDVan (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 16:30:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46292 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726536AbgLDVan (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 16:30:43 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F378AC061A4F
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 13:29:56 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id 91so2708448wrj.7
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 13:29:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=90hk1FzSogEU4j96cIq9cYGy+L+3yHsl/Qxtxzb8H3Y=;
-        b=pqvLGfhCJuTgw9irzAggIkHanwwoYuM39MExArYaha9wQ16dcFEGauDyuWsnZ1TF+5
-         iR25LqHmBbwm8XcRtiGbgcn6sMjaX5GOlYsokj1ZgjG8hmztbLtjqzUUrym3r00H7zxh
-         B73nT4UhrgpJsB1wYXdTFQT0KViXFMARGte6bnHpkS/e3BYJdOwZGIIj36NNaEdZVHGO
-         fOvUm4d+0s9dgE/UKaH2nF7IJ61pSOyZHrPS9yJpWNNO29bPnVMKIcPSFx7dsTysFLKh
-         jtTL2Tm6l+l4tc94p1AvICqmizT6jfiyl6L3ZjfJntPm8gnZR54vlRySO7DXda9uZPie
-         Vxwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=90hk1FzSogEU4j96cIq9cYGy+L+3yHsl/Qxtxzb8H3Y=;
-        b=sR5lu1T7/iHsCPdAw7QR+cMXwcJPchoGguuHIM4QiRGYaUwpCwGalZviCRcGKRxZw/
-         v60S8yS7v5MEqSt8OppSK30OfIXfp52HWOvQo5626fLLRc8o+3G1EwIrp0cR+gjFLiq/
-         USBcVAkAotsHzMfetxRT/nbPXI/n4rauhMPr4vCOdH51avxu33fsIg/+KQ8iibb7BvSp
-         poZVyFqxQTpwEIZTF6FDcuDm54d/sPUbRTG6sfWJKlSQi1eGAIcL9znvzsx6llGo8rK2
-         CbrQNTuPAmfWU2Lek6wOmOpJ3xPMHN7vuuNvYQZQ7qFOqEJTESBpjvCO7672HPBkoKbn
-         Rv/Q==
-X-Gm-Message-State: AOAM532bjjrqqh8o9kyWVdbvIBYypLzR2LvO26Hnwe9nUgpnNFJ4VoZK
-        /CRvv7IqK0v51K55XwIp2O8/IbDLbr4G1m+Q5e9XTr8vvu30HQ==
-X-Google-Smtp-Source: ABdhPJzhVzjf4vLq7B3F9Gs8FV/0Wu6dRkv5m3hhDmviUmxYgsgWlBDpP4ferHtznGshoS6kHqZeF6LCFGUH2Pxo+MQ=
-X-Received: by 2002:a5d:4349:: with SMTP id u9mr6854264wrr.319.1607117395731;
- Fri, 04 Dec 2020 13:29:55 -0800 (PST)
+        id S1728017AbgLDVzS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 16:55:18 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50265 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725933AbgLDVzR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 16:55:17 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D613110FB12;
+        Fri,  4 Dec 2020 16:54:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=6XNbl9LsnBuPMjTfbN7pvPmSVIo=; b=PyiseZ
+        Wya6n5+j0cz0590NSneG0ZjRTw/fllMhwG9rqOo/3kBuKNpTXvypG6qdtnjcFOz2
+        g5fJ27Ccm7XhkWl0b31pMlUvd1h5SnVK6dT28yomE9Le6Ksuca1pvD6N3Uv6nHQp
+        KG2BCWVQC5o5U4a1UXv/VAs+AZIfBJSUYSTMU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=qqTCfNF1Iiy+wFtw65l4uSPVUK0fkYvx
+        L1jFoyZRkfo303C87EC2nmhfqpWvU2MPjdOF4G3TgyF39GMfxy8F3e9gSMt6Ck1V
+        IoLECl6gRmx0MrTjDqRJhZuV7ZHWIPHuAoPNECTbUk1ECS3TDTdAiSOnGoEF1Sfe
+        3lHkuisSJcI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CF49C10FB11;
+        Fri,  4 Dec 2020 16:54:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 219FF10FB0D;
+        Fri,  4 Dec 2020 16:54:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 6/9] oid-array: provide a for-loop iterator
+References: <X8qEg/KiAQDugPC0@coredump.intra.peff.net>
+        <X8qFo+GJJTbaPV58@coredump.intra.peff.net>
+        <CAPig+cTLs5bkY=Pwg+4tT2KHfVHFjkrNTeS_ygGEwq0cOOJ9wQ@mail.gmail.com>
+Date:   Fri, 04 Dec 2020 13:54:31 -0800
+In-Reply-To: <CAPig+cTLs5bkY=Pwg+4tT2KHfVHFjkrNTeS_ygGEwq0cOOJ9wQ@mail.gmail.com>
+        (Eric Sunshine's message of "Fri, 4 Dec 2020 14:18:45 -0500")
+Message-ID: <xmqq1rg5dyp4.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <a4ae4e1a-b457-4b35-878c-2714ebfc415f@www.fastmail.com>
- <CAMP44s2=3GrXf69jqVJ23U=N9QcmGb-dHP_OEqyb6MVTY2z7Jg@mail.gmail.com> <601563bf-ed54-4795-917a-fce6e9343b79@www.fastmail.com>
-In-Reply-To: <601563bf-ed54-4795-917a-fce6e9343b79@www.fastmail.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Fri, 4 Dec 2020 15:29:43 -0600
-Message-ID: <CAMP44s391U8B5c0iLX84Gqcbg++nbaXs+g_duP82R--JAmLvcA@mail.gmail.com>
-Subject: Re: Unexpected behavior with branch.*.{remote,pushremote,merge}
-To:     Ben Denhartog <ben@sudoforge.com>
-Cc:     Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4AF763B6-367B-11EB-A5DF-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 4, 2020 at 10:45 AM Ben Denhartog <ben@sudoforge.com> wrote:
+Eric Sunshine <sunshine@sunshineco.com> writes:
+
+> On Fri, Dec 4, 2020 at 1:54 PM Jeff King <peff@peff.net> wrote:
+>> [...]
+>> The caller does have to remember to sort the array first. We could add
+>> an assertion into the helper that array->sorted is set, but I didn't
+>> want to complicate what is otherwise a pretty fast code path.
+>> [...]
+>> Signed-off-by: Jeff King <peff@peff.net>
+>> ---
+>> diff --git a/oid-array.h b/oid-array.h
+>> @@ -111,4 +113,24 @@ void oid_array_filter(struct oid_array *array,
+>> +/**
+>> + * Find the next unique oid in the array after position "cur". You
+>> + * can use this to iterate over unique elements, like:
+>> + *
+>> + *   size_t i;
+>> + *   oid_array_sort(array);
+>> + *   for (i = 0; i < array->nr; i = oid_array_next_unique(array, i))
+>> + *     printf("%s", oid_to_hex(array->oids[i]);
+>> + *
+>> + * Non-unique iteration can just increment with "i++" to visit each element.
+>> + */
 >
-> I'm just now hearing the terminology "triangular workflow" (I may live under a rock), but that aptly and succintly describes the workflow I was attempting to simplify with my initial configuration.
+> Minor: I see that the example code sorts the array first -- which is
+> necessary, as explained in the commit message -- but I wonder if it is
+> worth calling out explicitly in the prose:
 >
-> I read the article on your blog, and the solution you propose makes sense to me, at least in the context of triangular workflows. I don't see any public feedback on your patch; bummer to see. Is it something you've brought up since 2014?
+>     Find the next unique oid in the array after position `cur`.
+>     The array must be sorted for this to work. You can use
+>     this to iterate over unique elements like this:
+>
+>> +static inline size_t oid_array_next_unique(struct oid_array *array, size_t cur)
 
-It did receive some positive public feedback. At least v3 of the series:
+Perhaps the function can make it clear that it expects to be fed a
+sorted array in its name, which would be even better?
 
-https://lore.kernel.org/git/xmqq38hkx4lr.fsf@gitster.dls.corp.google.com/
-
-But my patches have a tendency to enact resistance. Perhaps more so back then.
-
-I have not brought it up since then. I currently have like 4 patch
-series stuck, doesn't seem wise to add another one. But I likely will
-at some point.
-
-It is the single most important feature I think Git is lacking. Having
-accustomed myself to the publish branch, I now feel like missing a
-finger without it on git vanilla.
-
-Cheers.
-
--- 
-Felipe Contreras
+>> +{
+>> +       do {
+>> +               cur++;
+>> +       } while (cur < array->nr &&
+>> +                oideq(array->oid + cur, array->oid + cur - 1));
+>> +       return cur;
+>> +}
