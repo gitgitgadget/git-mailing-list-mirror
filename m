@@ -2,191 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CB63C4361A
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 23:19:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A18F8C4361A
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 23:20:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3045C224BE
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 23:19:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 64B6E22519
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 23:20:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727253AbgLDXTk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 18:19:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34798 "EHLO
+        id S1727281AbgLDXUL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 18:20:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725885AbgLDXTk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 18:19:40 -0500
-Received: from mail-oo1-xc42.google.com (mail-oo1-xc42.google.com [IPv6:2607:f8b0:4864:20::c42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D676BC0613D1
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 15:18:59 -0800 (PST)
-Received: by mail-oo1-xc42.google.com with SMTP id q20so31488oos.12
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 15:18:59 -0800 (PST)
+        with ESMTP id S1725885AbgLDXUL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 18:20:11 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39BBFC061A4F
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 15:19:25 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id l1so6830815wrb.9
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 15:19:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cFZgyWJXhPXFp+FFvMpFvj6yCE8HWKZxW9+IEADCuOE=;
-        b=s17yavtg7WncU9IsrnCjzqSnD04B0ZtId6OATzUu2zx8mA2dW1wMp70FiEPczjC+e6
-         vptNFEmFzUXWMnAasvtzWHQV+GBxibp3Iq4MQtym+ffgCRqGi0Yy1WLdBKxni2A4oQRl
-         uu7ey/rTDYn+z2/sZnnWfOE+zeziw72cTYcO9VflRlC4sV+fTnai0KfGD680pDicOJ7f
-         ojlSt1wIhBQ9xNNBo0/5u0YzSIhCY1is6zuP06uf3UsdsxLyE0pSWN14fC12X63rd8lf
-         7c3XG2IdlGwhUhVmBqlc5fz3XGRlDpW9MzalA5N3xJNvErA/6jg1wjbTBxc4DX2q/5HT
-         YtTA==
+        h=message-id:from:date:subject:mime-version:content-transfer-encoding
+         :fcc:to:cc;
+        bh=8p2tRFdHEQcEStNLv/f4qpLBgq1swbhYWm8TEUkVJ4U=;
+        b=sL7KlG55tEpcLFFPKLdrJkQZXxLwV8GHtUSLQw9zzq5/2Wz8bQyUq4nEWtU83LX4Xj
+         ZVbKPQ8IUS0px7gBGowVIX7iK3SSJKdNvK3PQYRcF/YzucztBffdzGGL71nQre/nx2tj
+         qwFsfJCA+xC7/OVtZB0nkUNGKJK2LlWG75zDdPFUbxHfV3msscGTcRk3acCVQEd4lMx3
+         8fe9KiUriJTB8uBsFHdlPT9a7cSgt3FNgt/7pApqTHgR+P2iiEHvQq3zqbN2Gq2Qw2QG
+         N8DyQhh8LBfRev4hb7omg1hDueb0lf2sDu639fOVPn778G7ezrIavlCnmYlPKT4ebmu/
+         aiyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cFZgyWJXhPXFp+FFvMpFvj6yCE8HWKZxW9+IEADCuOE=;
-        b=C7+QfNFe5XE0e/pZuB2Ajfq0SgDFAlY+swLww7lfErrLs6YPePzTwui5EKQ3Rgpdkl
-         qsmviUV+ICneKV3r429L+fBgd7Mn3Aze9VLs08YJI3vikUr4TRYn4YUmUj0mNBNCVfFO
-         aCnD7MtJi5LELCX/oyDeCxvLthrG0LEMD6NXUD79odOi5mQhYbmhaOnhvS1utwLs+Oee
-         ne1ki3TnlcoTgS/LW5OKqpeQ40NfGMvAHyNfqldrHlYWGTZK+fKNgs/Mx1rI4OvHZ8LS
-         O0StYG2tjZT+04RsNyMuf3LfaHSi8cIsMnyLrNjJ1nSnhYQ7LAYXJvSE05+v4Vof/NtJ
-         AM4g==
-X-Gm-Message-State: AOAM5321sYKdM+6oUBG3Cet7IhIpcBalGEkZEqPxYox1p1YpK4L1HqOq
-        TIDVgm28fKMjrLZp/xefhFK24T8LyPHVynwxOXQ=
-X-Google-Smtp-Source: ABdhPJzFn4krmSpIQHqNWdUt2mSCAv9wS9hHu3yFZJfCI5ufFBtywhbvHDdUINa8n+m1RNpLSoT7pkKTRRAT7of6GrA=
-X-Received: by 2002:a4a:c60c:: with SMTP id l12mr3633917ooq.45.1607123939237;
- Fri, 04 Dec 2020 15:18:59 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=8p2tRFdHEQcEStNLv/f4qpLBgq1swbhYWm8TEUkVJ4U=;
+        b=OLw4yR5JQq54UiyvXRqiSkK5XHDD+1I4yZx73OcaijaYb8qWovWMvs/ikTIjiIaFbx
+         o/v71FErs/gTBqd1tlqHpEBrNUYGKNEFa7wDKv57jvyM5FIaDVe3fNm5timDfDG7yxkq
+         1JUxp6sdMJjqxEOPZR4HxqKg/0XcnXgl1NyxYrhOEV7cCRCdA/pC5yHnyhlGwNSvkJTK
+         sD7qnHPY9sYQ9GoS72FNRlE27qxYg4ios7eCcfjvMigg3yNiDy8vvA/Tz0g42OQXt527
+         nPFmK2pfOLQS7OpNMOy5qkV7kHZmckTiYfxL5YTN47W3qlw2sE1e3neJMEFVIkvuSnCU
+         M5Lw==
+X-Gm-Message-State: AOAM532/57jiqogGoS8w+NlEZUMub4uabAZgtuXgK/7kgzCzOaYc/x//
+        ZQb1vBJ3Tk8reDr1OhZC8iclsQmKk2o=
+X-Google-Smtp-Source: ABdhPJw0cGf/enCT5i2MGFRolBuLUfo2u6ocfs/YTPahbGOo7hlrMEsdrlPgz1ZbvuZmPgfIIgO6mQ==
+X-Received: by 2002:adf:df8e:: with SMTP id z14mr7532889wrl.406.1607123963675;
+        Fri, 04 Dec 2020 15:19:23 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d187sm2039658wmd.8.2020.12.04.15.19.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Dec 2020 15:19:23 -0800 (PST)
+Message-Id: <pull.928.git.git.1607123962304.gitgitgadget@gmail.com>
+From:   "David Racine via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 04 Dec 2020 23:19:21 +0000
+Subject: [PATCH] Support having non-utf-8 characters returned by p4
 MIME-Version: 1.0
-References: <20201204061623.1170745-1-felipe.contreras@gmail.com> <20201204061623.1170745-7-felipe.contreras@gmail.com>
-In-Reply-To: <20201204061623.1170745-7-felipe.contreras@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 4 Dec 2020 15:18:48 -0800
-Message-ID: <CABPp-BHH0baiECvtvVOoHR82upJ1C+0hy-ukS9Hi2ZFHh19nOg@mail.gmail.com>
-Subject: Re: [PATCH v2 06/14] pull: move default warning
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        "Theodore Y . Ts'o" <tytso@mit.edu>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        John Keeping <john@keeping.me.uk>,
-        Richard Hansen <rhansen@rhansen.org>,
-        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
-        "W. Trevor King" <wking@tremily.us>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Luke Diamand <luke@diamand.org>,
+        David Racine <bass_dr@hotmail.com>,
+        David Racine <bass_dr@hotmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 3, 2020 at 10:16 PM Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
->
-> Up to the point where can check if we can fast-forward or not.
+From: David Racine <bass_dr@hotmail.com>
 
-Seem to be missing some subjects in that sentence.  ;-)  Perhaps:
+When perforce server is not configured for Unicode, and commands like
+`p4 users` returns a string with non-ascii characters (eg. one of the
+user's FullName has a french `é` in it), git-p4 was giving
+`Exception: failure accessing depot: could not connect`.
+With this patch, if such character is encountered, it will honor the new
+`git-p4.textEncoding` config option, or silently replace the erronous
+character and continue.
 
-Move the default warning to the point where we can check if we can
-fast-forward or not.
+Signed-off-by: David Racine <bass_dr@hotmail.com>
+---
+    git-p4: Support having non-utf-8 characters returned by p4
+    
+    When perforce server is not configured for Unicode, and commands like p4
+    users returns a string with non-ascii characters (eg. one of the user's
+    FullName has a french é in it), git-p4 was giving Exception: failure
+    accessing depot: could not connect. With this patch, if such character
+    is encountered, it will honor the new git-p4.textEncoding config option,
+    or silently replace the erronous character and continue.
 
-> No functional changes.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-928%2Fbassdr%2Fpatch-1-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-928/bassdr/patch-1-v1
+Pull-Request: https://github.com/git/git/pull/928
 
-You didn't explain the reasoning for the change here, though I suspect
-it makes it easier to change the default to ff-only later.  However,
-looking over the patch and pulling up the code, I actually find it
-pretty odd that this warning was in a function named
-config_get_rebase().  The warning is not rebase-specific, and so
-clearly does not belong there.  And for such a function name, the only
-kinds of warnings I'd expect are ones where the user configured some
-option but set it to a value that cannot make sense.  So it all around
-seems like the wrong place to me, and I find your patch to be a good
-cleanup.  It would benefit from a slightly improved commit message
-though.  :-)
+ git-p4.py | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
+diff --git a/git-p4.py b/git-p4.py
+index 6ae5bbfe99..6cbd153419 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -195,16 +195,27 @@ def decode_path(path):
+     """Decode a given string (bytes or otherwise) using configured path encoding options
+     """
+     encoding = gitConfig('git-p4.pathEncoding') or 'utf_8'
++    return p4_decode_stream(path, encoding)
++
++def p4_decode_text(user):
++    """Decode a given string (bytes or otherwise) using configured text encoding options
++    """
++    encoding = gitConfig('git-p4.textEncoding') or 'utf-8'
++    return p4_decode_stream(s, encoding)
++    
++def p4_decode_stream(s, encoding):
++    """Decode a given string (bytes or otherwise) using encoding argument
++    """
+     if bytes is not str:
+-        return path.decode(encoding, errors='replace') if isinstance(path, bytes) else path
++        return s.decode(encoding, errors='replace') if isinstance(s, bytes) else s
+     else:
+         try:
+-            path.decode('ascii')
++            s.decode('ascii')
+         except:
+-            path = path.decode(encoding, errors='replace')
++            s = s.decode(encoding, errors='replace')
+             if verbose:
+-                print('Path with non-ASCII characters detected. Used {} to decode: {}'.format(encoding, path))
+-        return path
++                print('Text with non-ASCII characters detected. Used {} to decode: {}'.format(encoding, s))
++        return s
+ 
+ def run_git_hook(cmd, param=[]):
+     """Execute a hook if the hook exists."""
+@@ -771,7 +782,7 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=False,
+                 for key, value in entry.items():
+                     key = key.decode()
+                     if isinstance(value, bytes) and not (key in ('data', 'path', 'clientFile') or key.startswith('depotFile')):
+-                        value = value.decode()
++                        value = p4_decode_text(value)
+                     decoded_entry[key] = value
+                 # Parse out data if it's an error response
+                 if decoded_entry.get('code') == 'error' and 'data' in decoded_entry:
 
-
->
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  builtin/pull.c | 39 +++++++++++++++++++++++----------------
->  1 file changed, 23 insertions(+), 16 deletions(-)
->
-> diff --git a/builtin/pull.c b/builtin/pull.c
-> index 8daba7539c..f82e214fc8 100644
-> --- a/builtin/pull.c
-> +++ b/builtin/pull.c
-> @@ -27,6 +27,8 @@
->  #include "commit-reach.h"
->  #include "sequencer.h"
->
-> +static int default_mode;
-> +
->  /**
->   * Parses the value of --rebase. If value is a false value, returns
->   * REBASE_FALSE. If value is a true value, returns REBASE_TRUE. If value is
-> @@ -344,21 +346,7 @@ static enum rebase_type config_get_rebase(void)
->         if (!git_config_get_value("pull.rebase", &value))
->                 return parse_config_rebase("pull.rebase", value, 1);
->
-> -       if (opt_verbosity >= 0 && !opt_ff) {
-> -               advise(_("Pulling without specifying how to reconcile divergent branches is\n"
-> -                       "discouraged; you need to specify if you want a merge, or a rebase.\n"
-> -                       "You can squelch this message by running one of the following commands:\n"
-> -                       "\n"
-> -                       "  git config pull.rebase false  # merge (the default strategy)\n"
-> -                       "  git config pull.rebase true   # rebase\n"
-> -                       "  git config pull.ff only       # fast-forward only\n"
-> -                       "\n"
-> -                       "You can replace \"git config\" with \"git config --global\" to set a default\n"
-> -                       "preference for all repositories.\n"
-> -                       "If unsure, run \"git pull --no-rebase\".\n"
-> -                       "Read \"git pull --help\" for more information."
-> -                       ));
-> -       }
-> +       default_mode = 1;
->
->         return REBASE_FALSE;
->  }
-> @@ -927,6 +915,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
->         struct oid_array merge_heads = OID_ARRAY_INIT;
->         struct object_id orig_head, curr_head;
->         struct object_id rebase_fork_point;
-> +       int can_ff;
->
->         if (!getenv("GIT_REFLOG_ACTION"))
->                 set_reflog_message(argc, argv);
-> @@ -1022,6 +1011,24 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
->         if (opt_rebase && merge_heads.nr > 1)
->                 die(_("Cannot rebase onto multiple branches."));
->
-> +       can_ff = get_can_ff(&orig_head, &merge_heads.oid[0]);
-> +
-> +       if (default_mode && opt_verbosity >= 0 && !opt_ff) {
-> +               advise(_("Pulling without specifying how to reconcile divergent branches is\n"
-> +                       "discouraged; you need to specify if you want a merge, or a rebase.\n"
-> +                       "You can squelch this message by running one of the following commands:\n"
-> +                       "\n"
-> +                       "  git config pull.rebase false  # merge (the default strategy)\n"
-> +                       "  git config pull.rebase true   # rebase\n"
-> +                       "  git config pull.ff only       # fast-forward only\n"
-> +                       "\n"
-> +                       "You can replace \"git config\" with \"git config --global\" to set a default\n"
-> +                       "preference for all repositories.\n"
-> +                       "If unsure, run \"git pull --no-rebase\".\n"
-> +                       "Read \"git pull --help\" for more information."
-> +                       ));
-> +       }
-> +
->         if (opt_rebase) {
->                 int ret = 0;
->                 if ((recurse_submodules == RECURSE_SUBMODULES_ON ||
-> @@ -1029,7 +1036,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
->                     submodule_touches_in_range(the_repository, &rebase_fork_point, &curr_head))
->                         die(_("cannot rebase with locally recorded submodule modifications"));
->
-> -               if (get_can_ff(&orig_head, &merge_heads.oid[0])) {
-> +               if (can_ff) {
->                         /* we can fast-forward this without invoking rebase */
->                         opt_ff = "--ff-only";
->                         ret = run_merge();
-> --
-> 2.29.2
->
+base-commit: 3a0b884caba2752da0af626fb2de7d597c844e8b
+-- 
+gitgitgadget
