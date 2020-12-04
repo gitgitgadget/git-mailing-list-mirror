@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58F05C433FE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E02DC4361A
 	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 20:50:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F2C7F22CE3
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 20:50:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2E97F22CF6
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 20:50:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387587AbgLDUtv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 15:49:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40032 "EHLO
+        id S2387728AbgLDUt6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 15:49:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387533AbgLDUtv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 15:49:51 -0500
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86033C08ED7E
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 12:48:31 -0800 (PST)
-Received: by mail-wr1-x442.google.com with SMTP id 23so6574622wrc.8
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 12:48:31 -0800 (PST)
+        with ESMTP id S2387533AbgLDUt4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 15:49:56 -0500
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E8DCC08E9AA
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 12:48:30 -0800 (PST)
+Received: by mail-wr1-x444.google.com with SMTP id x6so2636898wro.11
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 12:48:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4Ef3rtLqdQ3bkXPrtOa/AQcwQqh9txT9O5D8ylnCFp4=;
-        b=nTRm+COIQmx6Ax3aJtnUm8SZ5GguKUEBfhI5edmexWYM+6u2+01sGEJfhGmbBn6u4L
-         QV6C7icdmLV3RJhBx6aCAZ+Uz9sXg4R1Rga9MQHna4BMFNkq0gv6K9/16lf3SfHkaZxx
-         4lWEDA8XmTcfjy4Ma2ItCIowIwF7562ntf35CV2BWMlU+A3vb4C+JQCtWaCnZXUjBmY1
-         m7Z38GFBGQlDryOo7QtHGVHMN0mVUyZQdWBRZrAMEDdBB1CiALFpsdOYvhP9tZ8+Ngqm
-         Z8CFRt0ouTK/ur6Ky293c/3nwlXQJZDQxRd9sXAjdpbqFlmZEdRAuLdaECXqRDpqOi3q
-         Ai3g==
+        bh=Uj/TZ3jFHMQeuQ7H4VVBYYgj6awrEN/LKO888rYPk+0=;
+        b=ZQjr345rkCagPf3DKoL8kITcI5UcVWLs6NFIClRmmVhjbZDwgMj0m3ChvaK+UtUiO+
+         HWy02GWn+QMrjVRMskgya3GL8nQleFhK6NDqU97ekjeo32hktjTADRAsTNLG8CKAkotF
+         4H1rsS703Ej2yrfMqXneFfKjc7i/bfbWDOqqcJvI3tlHi3Rv7kXrukxFsw+R3RQiYRPz
+         NHYHAip5vTCsgf+Q9CyCqA9EBunppr81xnfu0LVvMFtmrIXIBHo9dXGLhLkStocshNEq
+         jtgScIS0uLLBa0rxRe4hZ38TVPKDR58M1Um8c+U5vTRRt2wY8NOU+ku+Y1VQr3Unte4L
+         gicw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4Ef3rtLqdQ3bkXPrtOa/AQcwQqh9txT9O5D8ylnCFp4=;
-        b=PkeE+t+N2B6DvnKVtc/AF9XONlXcxCC/k0UexCjmFLCowibwNysyjSPKuq0nsEFKo9
-         0/isegWb4BXkSV3KdkUvhNVfuOJt6g818+ZFrNu0+2AppGnw6iHHBQfmrm9nEsGLgIh+
-         6B0Er0IcsZhtWkAWMxz68FEKvxFTNoJTXiGcw7cCyhiSGu47akPtx4t1qX69AepIwZWc
-         SZlmV9hqCPK2fOT6KGLWgRu7li7IiDopS1V3drJvuJjMdIC6MXGzoTtGXlINW8cWGEEs
-         5fjI2VVKTqLbLYGkRs4rk4vcrRppRwaEpQZabyUDBpbx5I2dt885WJrWBhikfObiYH8V
-         rY1g==
-X-Gm-Message-State: AOAM530EM6TkbPlDyqlvFmp2SIKDm9GBu0I5u5wORUJByMMTZoo55AEa
-        5nMCLB389LieQUDuGZXplRo4nD1UeJ0=
-X-Google-Smtp-Source: ABdhPJyT7P4GS2wtLP5qcJXhHWPf3EJKF+qF0DLvR/bJK17yZDqlU3yb+HQte2+y+6SDo7A6266imA==
-X-Received: by 2002:adf:f8d2:: with SMTP id f18mr6779749wrq.379.1607114910036;
-        Fri, 04 Dec 2020 12:48:30 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a15sm5184089wrn.75.2020.12.04.12.48.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=Uj/TZ3jFHMQeuQ7H4VVBYYgj6awrEN/LKO888rYPk+0=;
+        b=MEdCuwz55xxKFdEGeXzB7dAJsbGArCp4vcbcTnUMDqjPEIOQY7hM1YRc8vtgchfDwd
+         qebZzbWuaOdZmfqhb+Glz5VjV8TcJnMdTfop+/cIwTckNUpKdG8JUEAGNPf8Vd66nkwE
+         kCSMToR2oRAA7e3OtSLaOMjAv6Eutmo+0aatIXrfkBiXLvlf+zHZtC2IkXF8MXWglwOS
+         PUeHuPKhPMHFcA/aT9/TKzIXkWfn8TB++f3dPYd2qwsTnw/HsAzlVlXnbVjNTgNA+cBk
+         Qysd0lL2vZ7U2zKGpDDrWwExQzWIQcu/D2ys84QJmPjZSJ6hZ21yE3t5OPe3AdUqbmpe
+         MSfA==
+X-Gm-Message-State: AOAM53203m/NexulyB57r35hrMYi3pggGsuJB/b2PM9bTnH0tODYg3zX
+        4uA6ln+Rw0JzJLHpApWiZG47ZTjAmjA=
+X-Google-Smtp-Source: ABdhPJzjynF8SUk1N+Gzx16oKB8Ls1dJCWcA4rGZ77d73FS1pbarWHZI5pE699jkiNo/9h/7v+3XVA==
+X-Received: by 2002:adf:f1c2:: with SMTP id z2mr6843233wro.281.1607114909169;
         Fri, 04 Dec 2020 12:48:29 -0800 (PST)
-Message-Id: <61fada146cf26dd86705d6eeb375c28735f2364b.1607114891.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a1sm4860291wrv.61.2020.12.04.12.48.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Dec 2020 12:48:28 -0800 (PST)
+Message-Id: <8e90d211c5dd5fd62dcd2f3500c47b37ab2b9abf.1607114891.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.923.v2.git.git.1607114890.gitgitgadget@gmail.com>
 References: <pull.923.git.git.1606635803.gitgitgadget@gmail.com>
         <pull.923.v2.git.git.1607114890.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 04 Dec 2020 20:48:07 +0000
-Subject: [PATCH v2 17/20] merge-ort: add implementation of checkout()
+Date:   Fri, 04 Dec 2020 20:48:06 +0000
+Subject: [PATCH v2 16/20] merge-ort: basic outline for
+ merge_switch_to_result()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,95 +80,74 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Since merge-ort creates a tree for its output, when there are no
-conflicts, updating the working tree and index is as simple as using the
-unpack_trees() machinery with a twoway_merge (i.e. doing the equivalent
-of a "checkout" operation).
-
-If there were conflicts in the merge, then since the tree we created
-included all the conflict markers, then using the unpack_trees machinery
-in this manner will still update the working tree correctly.  Further,
-all index entries corresponding to cleanly merged files will also be
-updated correctly by this procedure.  Index entries corresponding to
-conflicted entries will appear as though the user had run "git add -u"
-after the merge to accept all files as-is with conflict markers.
-
-Thus, after running unpack_trees(), there needs to be a separate step
-for updating the entries in the index corresponding to conflicted files.
-This will be the job for the function record_conflicted_index_entris(),
-which will be implemented in a subsequent commit.
+This adds a basic implementation for merge_switch_to_result(), though
+just in terms of a few new empty functions that will be defined in
+subsequent commits.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 45 ++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 44 insertions(+), 1 deletion(-)
+ merge-ort.c | 42 +++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 41 insertions(+), 1 deletion(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index fe22751d22..ba62f80420 100644
+index cf6f395c69..fe22751d22 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -19,9 +19,11 @@
- 
- #include "diff.h"
- #include "diffcore.h"
-+#include "dir.h"
- #include "object-store.h"
- #include "strmap.h"
- #include "tree.h"
-+#include "unpack-trees.h"
- #include "xdiff-interface.h"
- 
- struct merge_options_internal {
-@@ -948,7 +950,48 @@ static int checkout(struct merge_options *opt,
- 		    struct tree *prev,
- 		    struct tree *next)
- {
--	die("Not yet implemented.");
-+	/* Switch the index/working copy from old to new */
-+	int ret;
-+	struct tree_desc trees[2];
-+	struct unpack_trees_options unpack_opts;
-+
-+	memset(&unpack_opts, 0, sizeof(unpack_opts));
-+	unpack_opts.head_idx = -1;
-+	unpack_opts.src_index = opt->repo->index;
-+	unpack_opts.dst_index = opt->repo->index;
-+
-+	setup_unpack_trees_porcelain(&unpack_opts, "merge");
-+
-+	/*
-+	 * NOTE: if this were just "git checkout" code, we would probably
-+	 * read or refresh the cache and check for a conflicted index, but
-+	 * builtin/merge.c or sequencer.c really needs to read the index
-+	 * and check for conflicted entries before starting merging for a
-+	 * good user experience (no sense waiting for merges/rebases before
-+	 * erroring out), so there's no reason to duplicate that work here.
-+	 */
-+
-+	/* 2-way merge to the new branch */
-+	unpack_opts.update = 1;
-+	unpack_opts.merge = 1;
-+	unpack_opts.quiet = 0; /* FIXME: sequencer might want quiet? */
-+	unpack_opts.verbose_update = (opt->verbosity > 2);
-+	unpack_opts.fn = twoway_merge;
-+	if (1/* FIXME: opts->overwrite_ignore*/) {
-+		unpack_opts.dir = xcalloc(1, sizeof(*unpack_opts.dir));
-+		unpack_opts.dir->flags |= DIR_SHOW_IGNORED;
-+		setup_standard_excludes(unpack_opts.dir);
-+	}
-+	parse_tree(prev);
-+	init_tree_desc(&trees[0], prev->buffer, prev->size);
-+	parse_tree(next);
-+	init_tree_desc(&trees[1], next->buffer, next->size);
-+
-+	ret = unpack_trees(2, trees, &unpack_opts);
-+	clear_unpack_trees_porcelain(&unpack_opts);
-+	dir_clear(unpack_opts.dir);
-+	FREE_AND_NULL(unpack_opts.dir);
-+	return ret;
+@@ -944,13 +944,53 @@ static void process_entries(struct merge_options *opt,
+ 	string_list_clear(&dir_metadata.offsets, 0);
  }
  
- static int record_conflicted_index_entries(struct merge_options *opt,
++static int checkout(struct merge_options *opt,
++		    struct tree *prev,
++		    struct tree *next)
++{
++	die("Not yet implemented.");
++}
++
++static int record_conflicted_index_entries(struct merge_options *opt,
++					   struct index_state *index,
++					   struct strmap *paths,
++					   struct strmap *conflicted)
++{
++	if (strmap_empty(conflicted))
++		return 0;
++
++	die("Not yet implemented.");
++}
++
+ void merge_switch_to_result(struct merge_options *opt,
+ 			    struct tree *head,
+ 			    struct merge_result *result,
+ 			    int update_worktree_and_index,
+ 			    int display_update_msgs)
+ {
+-	die("Not yet implemented");
++	assert(opt->priv == NULL);
++	if (result->clean >= 0 && update_worktree_and_index) {
++		struct merge_options_internal *opti = result->priv;
++
++		if (checkout(opt, head, result->tree)) {
++			/* failure to function */
++			result->clean = -1;
++			return;
++		}
++
++		if (record_conflicted_index_entries(opt, opt->repo->index,
++						    &opti->paths,
++						    &opti->conflicted)) {
++			/* failure to function */
++			result->clean = -1;
++			return;
++		}
++	}
++
++	if (display_update_msgs) {
++		/* TODO: print out CONFLICT and other informational messages. */
++	}
++
+ 	merge_finalize(opt, result);
+ }
+ 
 -- 
 gitgitgadget
 
