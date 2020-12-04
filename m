@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC986C433FE
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 23:08:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FE85C4361A
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 23:10:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9066722C9E
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 23:08:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 42C6422C9F
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 23:10:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726811AbgLDXIR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 18:08:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33062 "EHLO
+        id S1726057AbgLDXKF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 18:10:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726369AbgLDXIQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 18:08:16 -0500
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3826C0613D1
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 15:07:36 -0800 (PST)
-Received: by mail-oi1-x241.google.com with SMTP id t143so8023075oif.10
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 15:07:36 -0800 (PST)
+        with ESMTP id S1725885AbgLDXKE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 18:10:04 -0500
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 992FAC0613D1
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 15:09:24 -0800 (PST)
+Received: by mail-oi1-x243.google.com with SMTP id s75so4973909oih.1
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 15:09:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=7bDYMxkSDTH0xPv7gb1NAgm6YB4AyB8X7vtSCq76LSE=;
-        b=X+mq86Yar+oMIKJV/VF+PIADFz5lzX3fU6kw3oeVQYX2f00fBz89b29qpKTvpZKiiY
-         2DNprZaTinAO8KRq8JC1LOUGhH4i+3nUfu8FhZj3gFCkdBJtHJmvAzmMaKE0TdWgeuX8
-         IY6GAN/nqJo3h2TPGL5n5AmY5P04PGDSqaO9AYoDGbcuwZfX/HNt848PPyltUTGO/v1O
-         jRD9MzXrvtwjQ6pxcvv4NaYZsiLrAAlC6GmN6f9y5zi4ssSITgbhBtFyy6cqsnfd9Cb2
-         ZGT5WW70qFys2ub1+Md78MFotiRzi41Y2r/T90rgmlrRguJRcE1WQBIdY/zPbF6N7s+9
-         t39A==
+        bh=bNBUvaXiQLrTd61b53G7hp66JZXUbvgT1hf1zocDb4I=;
+        b=GOv7m7FhzzpBHyCcs8JceQZIXhS1wfwJPAR+PWN3Izilux1zy9TEGtjSxg73aIxibc
+         UIMfjV2Le93QNtJkNx0zxIBjvI7Jyu3mbh0GZBi6f9nqTT3qCaFpU09hpsis62sR+sAK
+         xK7xBqerXosX+CucSKqBMW5gcpGHWf7mBRKh+L4x8MKoFNgZoEsj4UJwOXdGJ+Jsb+08
+         ME6r7eDG5vVdTSzqGfrJiU7eejK3s7VBQIiEVTntaG+HA894/fystZjgDb3+rcFpyiM6
+         RfGvhy3783g1HEf4D3MwYmHs1Y/2V8oKq8XwL9tkkS90p3Zvt+xjc1NWlOPPSIgLiuOO
+         0Utw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=7bDYMxkSDTH0xPv7gb1NAgm6YB4AyB8X7vtSCq76LSE=;
-        b=PMBcZj1G2VaQFfL703f0Mq43sRIAts/K7VGWh1ZkepCCDu/1P1pmDQ4suiRPIVUXa/
-         cr2gOc82Qxo2SDD6Sg4dJPziDCUo6PmswAK/Fu+qwYjBRHXC0eTq6P0VYpUIA24OsAp4
-         zazIh7ZOXKK2p3Vcd5TNkaYIxaNSQ533ov2bcKJX0328BsObVBsjmwj0b/hMsbKSF6nH
-         Ru1HkwbtUf6btMR0hxCh1aYWOatmO5hktkWo6Lkwr/rZ4rHjp5omDH7H/rMCGj+9BHGy
-         crS3D+BzHpZh9BlSBtfuPHmWHKdmyMgiGvMpadGZOdIfTRglc62K1NlCCmCIbVR74wXk
-         ldwg==
-X-Gm-Message-State: AOAM5303JZumY44wyoFCgQlcPZhyD7iGkNHQTPAy6lOrmWxynl4QQc15
-        79e3YiYetKjeAQXJVD/UXjtDAG8sdkm2V/NEosU=
-X-Google-Smtp-Source: ABdhPJwE4jF86k8jqdYYyXmQusO/+YildIM8FR+sfCYBheSkc3yxFR5l1aalsiL4ZuFwrHiT/kc5eVVjysrORzarQ5Y=
-X-Received: by 2002:a54:480b:: with SMTP id j11mr4876649oij.31.1607123256022;
- Fri, 04 Dec 2020 15:07:36 -0800 (PST)
+        bh=bNBUvaXiQLrTd61b53G7hp66JZXUbvgT1hf1zocDb4I=;
+        b=Z0/A5LZubBeNcCXOLvNPTDmn+1EiOyY9miAqHbHVQn37sOGn5QZOR3lWIxHpitD/JA
+         B+ygQcU70UYIftneRr7TrmzaJNOfW2NIaSfxFHjdOvWttxzrBbVv0QyEWHi0xWPQD+35
+         2cTg+PrcL9M1P8J9JxnsfglH3ThDkqrXzuEnT+VFFdiNhmTPEVi3N7vmqEmdTaiQRLp9
+         5+5ivx4kViR94uAvkuRgXMDJ7xuaeUxVv6YjMRap2kFTywR1VEuJXokO7homQU3RRrU5
+         VpgCXLTb58PpYYUzmZrIMXl/5303L1chQgDpLzajJldNpimKFxFyxlLN1pxTs+T2tJ2h
+         fXuA==
+X-Gm-Message-State: AOAM531gTjiEM4EACTwEDJyUF7ONQKi2TUNXSjBEOgakLyoa/5cdjIQL
+        UCEwGy9qdDEJQwoiyu0SdEwxzo22ZofIOIBqSE4=
+X-Google-Smtp-Source: ABdhPJzDst01GY0bdaoHcTSZ23N6ZZgF0l2dnL4iaag49E+8NvTH426Whc+fLxetPFAkxj96Zm5H6Dq7/nKmTwkf9pY=
+X-Received: by 2002:aca:49d5:: with SMTP id w204mr4739433oia.167.1607123363873;
+ Fri, 04 Dec 2020 15:09:23 -0800 (PST)
 MIME-Version: 1.0
-References: <20201204061623.1170745-1-felipe.contreras@gmail.com> <20201204061623.1170745-5-felipe.contreras@gmail.com>
-In-Reply-To: <20201204061623.1170745-5-felipe.contreras@gmail.com>
+References: <20201204061623.1170745-1-felipe.contreras@gmail.com> <20201204061623.1170745-6-felipe.contreras@gmail.com>
+In-Reply-To: <20201204061623.1170745-6-felipe.contreras@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 4 Dec 2020 15:07:24 -0800
-Message-ID: <CABPp-BHjzzhqQW8YY5podav+TU8Eixhp7g-VrQ-tva-0ztAtvA@mail.gmail.com>
-Subject: Re: [PATCH v2 04/14] pull: cleanup autostash check
+Date:   Fri, 4 Dec 2020 15:09:12 -0800
+Message-ID: <CABPp-BHs-eaJcTMcOPEsDx7PbBfoM0Uf7-vWi33OVOcTEgAgmg@mail.gmail.com>
+Subject: Re: [PATCH v2 05/14] pull: trivial cleanup
 To:     Felipe Contreras <felipe.contreras@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
@@ -80,80 +80,45 @@ X-Mailing-List: git@vger.kernel.org
 On Thu, Dec 3, 2020 at 10:16 PM Felipe Contreras
 <felipe.contreras@gmail.com> wrote:
 >
-> This essentially reverts commit f15e7cf5cc.
+> There's no need to store ran_ff. Now it's obvious from the conditionals.
 >
-> Once commit d9f15d37f1 introduced the autostash option for the merge
-> mode, it's not necessary to skip the fast-forward run_merge() when
-> autostash is set.
-
-It helps reviewers and future code readers if you provide a little
-context when referring to commits, making use of git log's
---pretty=reference option to get the output.  So, for example, here
-your commit would read:
-
-"""
-This essentially reverts commit f15e7cf5cc (pull: ff --rebase
---autostash works in dirty repo, 2017-06-01).
-
-Once commit d9f15d37f1 (pull: pass --autostash to merge, 2020-04-07)
-introduced the autostash option for the merge
-mode, it's not necessary to skip the fast-forward run_merge() when
-autostash is set.
-"""
-
-I still found it slightly hard to follow the explanation even with the
-added summaries, though.  An extra sentence at the end of the second
-paragraph to make it clear what is being changed ("So, change the code
-to fast-forward even when autostash is set.") seems to help.
-
-
-
 > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 > ---
->  builtin/pull.c | 15 ++++++---------
->  1 file changed, 6 insertions(+), 9 deletions(-)
+>  builtin/pull.c | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
 >
 > diff --git a/builtin/pull.c b/builtin/pull.c
-> index 6279e9ee37..c38548dab8 100644
+> index c38548dab8..8daba7539c 100644
 > --- a/builtin/pull.c
 > +++ b/builtin/pull.c
-> @@ -927,7 +927,6 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
->         struct oid_array merge_heads = OID_ARRAY_INIT;
->         struct object_id orig_head, curr_head;
->         struct object_id rebase_fork_point;
-> -       int autostash;
+> @@ -1024,19 +1024,18 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
 >
->         if (!getenv("GIT_REFLOG_ACTION"))
->                 set_reflog_message(argc, argv);
-> @@ -960,8 +959,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
->         if (get_oid("HEAD", &orig_head))
->                 oidclr(&orig_head);
->
-> -       autostash = config_autostash;
 >         if (opt_rebase) {
-> +               int autostash = config_autostash;
->                 if (opt_autostash != -1)
->                         autostash = opt_autostash;
->
-> @@ -1030,13 +1029,11 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+>                 int ret = 0;
+> -               int ran_ff = 0;
+>                 if ((recurse_submodules == RECURSE_SUBMODULES_ON ||
 >                      recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND) &&
 >                     submodule_touches_in_range(the_repository, &rebase_fork_point, &curr_head))
 >                         die(_("cannot rebase with locally recorded submodule modifications"));
-> -               if (!autostash) {
-> -                       if (get_can_ff(&orig_head, &merge_heads.oid[0])) {
-> -                               /* we can fast-forward this without invoking rebase */
-> -                               opt_ff = "--ff-only";
-> -                               ran_ff = 1;
-> -                               ret = run_merge();
-> -                       }
-> +               if (get_can_ff(&orig_head, &merge_heads.oid[0])) {
-> +                       /* we can fast-forward this without invoking rebase */
-> +                       opt_ff = "--ff-only";
-> +                       ran_ff = 1;
-> +                       ret = run_merge();
->                 }
->                 if (!ran_ff)
+> +
+spurious change?
+
+(It does make it look nicer, though.)
+
+>                 if (get_can_ff(&orig_head, &merge_heads.oid[0])) {
+>                         /* we can fast-forward this without invoking rebase */
+>                         opt_ff = "--ff-only";
+> -                       ran_ff = 1;
+>                         ret = run_merge();
+> -               }
+> -               if (!ran_ff)
+> +               } else {
 >                         ret = run_rebase(&curr_head, merge_heads.oid, &rebase_fork_point);
+> +               }
+>
+>                 if (!ret && (recurse_submodules == RECURSE_SUBMODULES_ON ||
+>                              recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND))
 > --
 > 2.29.2
->
+
+Yeah, reads better to me after this cleanup.
