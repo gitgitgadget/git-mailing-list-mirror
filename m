@@ -2,308 +2,205 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F10B3C4361B
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 16:46:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5192CC433FE
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 17:24:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C7DAC229C9
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 16:46:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1DA9D22B40
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 17:24:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728340AbgLDQqq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 11:46:46 -0500
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:60273 "EHLO
-        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726330AbgLDQqp (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 4 Dec 2020 11:46:45 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 600D55C021D;
-        Fri,  4 Dec 2020 11:45:38 -0500 (EST)
-Received: from imap2 ([10.202.2.52])
-  by compute1.internal (MEProxy); Fri, 04 Dec 2020 11:45:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sudoforge.com;
-         h=mime-version:message-id:in-reply-to:references:date:from:to
-        :cc:subject:content-type:content-transfer-encoding; s=fm2; bh=N8
-        XGF8kp3kJkMV3CKfYMGr6DjmP3cT4htzv9ylSXoWk=; b=AVEuIZiKwbcEdtS+YR
-        dydR8NvUXgdolsn3eurraNsr6fWRtGOacRRn+6bd2pGWAeT9L9Z+5IHBbqTXNVPg
-        u6USGYWGY/XOOXfIcsm/VOY6nZX4IYD+pdrsYGi7HEgnpfXxQyqELEZ5QMqhOQXX
-        pL8MamTII5GGcyXgCCqST2P+ii+bgAFj/GRv0+aJ7Xrw9iXkz81sEPhqDr/4Z26P
-        Wjn+IMsk6FYf2KmzNXzt/jeCWT/O2jABgD9eJW6IGa84NX3FfDR+3dhgK6sR5/ce
-        5SumgncrDPgEPRiBQzBbnei5vpS9qZJMXKBgOv+PDMPDyo6FlfhzrMtEt0gey9wz
-        jr2Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; bh=N8XGF8kp3kJkMV3CKfYMGr6DjmP3cT4htzv9ylSXo
-        Wk=; b=BhqbHv+zDZ6a7cykUpKAgsimqkXdE+W8oLlkeFhswl1uZYK7U/bQkU0zb
-        WaGRU2PUaQ8Rq2hsQcFzeqnO+oPzkt7SK/+Qx3hLf+lXFOOicDvPfgy+Lz0bBLTn
-        UKt6RGLxQOWXhgri71nxo3WJfBPsrd6uzryowuRVnVRpb2+iJvqugBiK/MzA7xr+
-        aIYz8zftWIgBVVmt0dqV6pmL9UjxBOmyO3M9gcewMw9Buhr0TIvB2vxrUw20e6LY
-        8h9dhYbxUR8GjxiMh1GJTZx/evf+j9ImhZZyLhhY/b+zKkpyyFTUx5H3aTGQZ+SW
-        UGd4x14Qn355gzKaUOUTrsTAyPu1A==
-X-ME-Sender: <xms:smfKX2mK0APVVnGCeFqx6UsDTM9Pj65H4caaV-TAPUQIUWjOpJG_lA>
-    <xme:smfKX91g5-rNqXxmWgcEOPaQXdf1SJ0N-ENDGap-YyYtGkzf2aKcGDHaILhboZp6O
-    Bf53wvwh6c1F43Kpg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudeikedgleefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvufgtgfesth
-    hqredtreerjeenucfhrhhomhepfdeuvghnucffvghnhhgrrhhtohhgfdcuoegsvghnsehs
-    uhguohhfohhrghgvrdgtohhmqeenucggtffrrghtthgvrhhnpeffffeuvdeviefhledtfe
-    dvffeljeffveeigfffjeevtdekhedvfeeftddvheeugfenucffohhmrghinhepghhithhh
-    uhgsrdgtohhmpdhfohhordgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepsggvnhesshhuughofhhorhhgvgdrtghomh
-X-ME-Proxy: <xmx:smfKX0okp84JdkkS-pqNx2j3NFcL2Thbur1w4QKoCj_y34XT8-_57g>
-    <xmx:smfKX6lb4Aw2QG8bzKQHoPkpa43FJ_KZLN8NK5T0HexaNgK5GbvCzw>
-    <xmx:smfKX02h8Fc1hlGf6jHPM_ouIkz6aypoYOO-zsTgQfpufl7TDkFG-A>
-    <xmx:smfKX1jysa9f5Cald3Q9Kvzba8J6VpDOJWyBdYfODOOtZPG30Ln_JA>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 332BFE00BF; Fri,  4 Dec 2020 11:45:36 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.3.0-622-g4a97c0b-fm-20201115.001-g4a97c0b3
-Mime-Version: 1.0
-Message-Id: <112958f6-0eca-453d-86f3-52e7054a88f9@www.fastmail.com>
-In-Reply-To: <X8oL190Vl03B0cQ/@coredump.intra.peff.net>
-References: <a4ae4e1a-b457-4b35-878c-2714ebfc415f@www.fastmail.com>
- <X8oL190Vl03B0cQ/@coredump.intra.peff.net>
-Date:   Fri, 04 Dec 2020 09:45:17 -0700
-From:   "Ben Denhartog" <ben@sudoforge.com>
-To:     "Jeff King" <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: Unexpected behavior with branch.*.{remote,pushremote,merge}
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        id S1731180AbgLDRX7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 12:23:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36304 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731024AbgLDRX5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 12:23:57 -0500
+Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55392C0613D1
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 09:23:17 -0800 (PST)
+Received: by mail-lf1-x142.google.com with SMTP id z21so8656083lfe.12
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 09:23:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=UwkcjKaGwCxuT1BHPFLy03nC3qAIavXtJkRJXCdJi+w=;
+        b=gAxStCikcHBvemeyMTZURDqkQsO9FVDwikcIxRXvJFOMljz49NujpCMkiLhg5SktmQ
+         DFrvf/lUL7bv4GJ45d0z46GtGMShwujIYdyMYMr4K4ADmBSBdaYkuc7L6ivUfVmwniVt
+         xIPZTAZ/EjYgptpvc9+dmrDTPrjlTHbhN/chTd7zQLMoXJHf5zs+d5ubFAGai1ekzpoU
+         3cWvHbLNiZobI4F9hJFpU3AzXKj7Xa/3f91NNJM29Kxqyc92R51GzjZvlm/njaZ/FuNW
+         TXE34q+FLpaS8vyoAIKZsS0DcEHbIL7Bt4xo+uPf8zfbp0BqRLSKFbcWUo17egc5+oZJ
+         3krQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=UwkcjKaGwCxuT1BHPFLy03nC3qAIavXtJkRJXCdJi+w=;
+        b=IpMooslzrQc6N82V1lEmzAiAQEYT5N8D+KulmDO7nqwWmpBe8bKVOotJH5Arsxq80q
+         HO/PnV3yOkP8bI8SeNMX58vXqkyFkYlAXfSdTK77QeX7WmQrSOFDymEA2DNnUINJ/rpZ
+         vpiOT8lwgyAachp+uR0n8eDq9z75sjEKBlcl1r0UcUrQEguopAR0IJZ1agdbhL8ktIj6
+         xdVa5sFmjatFv+0UREoxSNEeDQBtpECQv80f2Q6QT418iwtrOPQ413TEwDs1N/tqW7gV
+         EBqsDKU9qoJnG9YSJk7oMFuqgz7HNqokMHQMqrDtjEBjvEX97vIoSmo9VXcQ7X7gc91g
+         XtWg==
+X-Gm-Message-State: AOAM532p53ewlKx5xDDGfUiGKBuPXtRFjqbro2jR8iE394i/0mgXTcnh
+        /55i8wzSih36kObMzSUgmz+jbvjnUoQ=
+X-Google-Smtp-Source: ABdhPJxhnJYyieRTzKE8uqRAWARYw6QCsok33VyPD49ix+CyoGBBXmN0EXVT/69aesGeEW0qur9vvA==
+X-Received: by 2002:a19:4a87:: with SMTP id x129mr3917319lfa.104.1607102595155;
+        Fri, 04 Dec 2020 09:23:15 -0800 (PST)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id u19sm1954367ljk.128.2020.12.04.09.23.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Dec 2020 09:23:11 -0800 (PST)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 10/26] diff-merges: new function diff_merges_suppress()
+References: <20201101193330.24775-1-sorganov@gmail.com>
+        <20201101193330.24775-11-sorganov@gmail.com>
+        <CABPp-BGH0+M_6gYYfYsp54X9DjKM4mv8Vssoo3uZtDAY1_Zb1A@mail.gmail.com>
+        <87ft4mfycq.fsf@osv.gnss.ru>
+        <CABPp-BFW5ZLvEHFuiRC3rGqdGHWBZRjGHtTq=vVky9U5rZXsvA@mail.gmail.com>
+Date:   Fri, 04 Dec 2020 20:23:10 +0300
+In-Reply-To: <CABPp-BFW5ZLvEHFuiRC3rGqdGHWBZRjGHtTq=vVky9U5rZXsvA@mail.gmail.com>
+        (Elijah Newren's message of "Thu, 3 Dec 2020 12:28:01 -0800")
+Message-ID: <87blf9pjsx.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> I assume you mean "merge =3D refs/heads/main" from your examples
+Hi Elijah,
 
-You're correct; I manually rewrote `master` to `main` in my initial emai=
-l and missed that one instance.
+Elijah Newren <newren@gmail.com> writes:
 
->   - instead of branch.*.pushremote, I usually set remote.pushdefault, =
-so
->     that it covers all branches (i.e., I'd never want to push to the
->     upstream remote, which I do not even have access to).
->=20
->   - in a workflow like this, I generally have push.default set to
->     "current"
->=20
->   - I make frequent use of @{push} to refer to the matching branch on =
-my
->     remote (e.g., after doing some local work, I might use "git
->     range-diff upstream @{push} HEAD" to examine the changes before
->     pushing them up).
-
-This makes sense. I rarely actually write `FETCH_HEAD` manually; in my e=
-mail, I expanded the value of aliases I use. Specifically, my "get every=
-thing up-to-date" alias [0] uses `FETCH_HEAD` -- changing this to `@{u}`=
- makes a lot of sense.
-
-[0]: https://github.com/sudoforge/dotfiles/blob/trunk/git/.config/git/co=
-nfig#L104
-
-> > however `git-pull --rebase=3Dtrue` [works]
->=20
-> That is running a new git-fetch under the hood, which will overwrite
-> FETCH_HEAD (and will only fetch from upstream, since that's what's in
-> branch.main.remote).
-
-D'oh -- I wasn't focusing on the fact that this would only fetch the bra=
-nch's configured remote; I blame it on tunnel vision.
-
-To the rest of your message:
-
-I did not understand the behavior of `fetch --all`; what you've describe=
-d makes sense to me (although I would agree that it sounds like there's =
-a bug). Between the following steps I'll take, I think my fork workflow =
-is "fixed":
-
-* Refactor away from usage of FETCH_HEAD
-* Set `remote.pushdefault =3D origin`
-* Set `push.default =3D current` (instead of `simple`, and is what my gl=
-obal config sets this to)
-
-I appreciate your insight and the identification of the problem.
-
-
---=20
-  Ben Denhartog
-  ben@sudoforge.com
-
-On Fri, Dec 4, 2020, at 03:13, Jeff King wrote:
-> On Thu, Dec 03, 2020 at 06:26:15PM -0700, Ben Denhartog wrote:
->=20
-> > I have a few repositories on my system that exist primarily as local=
- copies of remote repositories, in that I normally just want to track an=
-d follow the upstream project (however, I periodically contribute back u=
-pstream so they are technically forks -- origin is my remote, upstream i=
-s theirs).
-> >=20
-> > In these repositories, I set the following configuration:
-> >=20
-> > ```
-> > [remote "origin"]
-> >   url =3D https://git.foo.com/me/bar.git
-> >   fetch =3D +refs/heads/*:refs/remotes/origin/*
-> > [remote "upstream"]
-> >   url =3D https://git.foo.com/them/bar.git
-> >   fetch =3D +refs/heads/main:refs/remotes/upstream/main
-> >   tagopt =3D --no-tags
-> > [branch "main"]
-> >   remote =3D upstream
-> >   pushRemote =3D origin
-> >   merge =3D refs/heads/master
-> >   rebase =3D true
-> > ```
->=20
-> I use a similar setup myself, and it works well for this kind of
-> triangular flow. A few notes:
->=20
->   - I assume you mean "merge =3D refs/heads/main" from your examples
->=20
->   - instead of branch.*.pushremote, I usually set remote.pushdefault, =
-so
->     that it covers all branches (i.e., I'd never want to push to the
->     upstream remote, which I do not even have access to).
->=20
->   - in a workflow like this, I generally have push.default set to
->     "current"
->=20
->   - I make frequent use of @{push} to refer to the matching branch on =
-my
->     remote (e.g., after doing some local work, I might use "git
->     range-diff upstream @{push} HEAD" to examine the changes before
->     pushing them up).
->=20
-> > Based on my understanding of the branch configuration options, this
-> > should effectively force my local `main` branch to track against
-> > `upstream/main`, but push to `origin/main`. I notice what I believe =
-to
-> > be odd behavior when fetching: that FETCH_HEAD doesn't resolve to
-> > `upstream/main` as I would expect:
-> >=20
-> > =E2=9E=9C git fetch --all
-> > Fetching origin
-> > Fetching upstream
-> > remote: Enumerating objects: 23, done.
-> > remote: Counting objects: 100% (23/23), done.
-> > remote: Total 32 (delta 23), reused 23 (delta 23), pack-reused 9
-> > Unpacking objects: 100% (32/32), 12.97 KiB | 949.00 KiB/s, done.
-> > From https://git.foo.com/them/bar
-> >    63f7159..e65b80e  main     -> upstream/main
->=20
-> The culprit here is using "git fetch --all". It triggers the sub-fetch=
-es
-> with --append, so they'll each add to FETCH_HEAD instead of overwritin=
-g
-> it.  We do truncate it before the first one, so after this completes i=
-t
-> should have the complete set of refs fetched from both remotes (even i=
-f
-> it was a noop to fetch one of them, anything mentioned in the refspecs=
-
-> shows up in FETCH_HEAD).
->=20
-> Which is what you're seeing here:
->=20
-> > =E2=9E=9C cat .git/FETCH_HEAD
-> > 23e6881719f661c37336d9fcf7a9005a7dfce0cf        not-for-merge   bran=
-ch 'main' of https://git.foo.com/me/foo
-> > e65b80edd2a2162f67120a98e84bb489f15fcf97                branch 'main=
-' of https://git.foo.com/them/foo
->=20
-> FETCH_HEAD is not just a ref, but contains some magic instructions tha=
-t
-> get interpreted by git-pull. But when programs besides git-pull try to=
-
-> resolve it to a single object, they just pick whichever value is first=
-.
->=20
-> So I do think there's a bug there, or at least something not
-> well-thought-out in the way that "fetch --all" appends. Normally fetch=
-
-> tries to put the merge branch (or branches) first in the file, exactly=
-
-> so this naive "take the first one" lookup will do the most sensible
-> thing. But when running multiple fetches that all append, we get their=
-
-> individual outputs in the order of fetch (which in turn is the same as=
-
-> the order in the config file).
->=20
-> Perhaps the parent "git fetch --all" triggering the sub-fetches should=
-
-> reorder FETCH_HEAD after they've all finished (to pull any merge heads=
-
-> up to the top, regardless of which remote they came from).
->=20
-> But an obvious workaround, if you know you'll always be merging from
-> upstream, is to just reorder your config stanzas so that it's fetched
-> first (likewise you can run "git fetch --multiple upstream origin" to
-> specify the order manually, or define a group with remotes.<group>).
->=20
-> One reason I suspect nobody has come across this before is that there'=
-s
-> not much reason to use FETCH_HEAD in this setting. If you know you wan=
-t
-> to rebase again upstream/main, then there are a number of ways you can=
-
-> refer to that:
->=20
->   - upstream/main
->=20
->   - upstream, if your refs/remotes/upstream/HEAD is set up (if you
->     didn't clone, you may want to run "git remote set-head upstream -a=
-")
->=20
->   - @{upstream}, if it's configured as your upstream (which it is here=
-)
->=20
->   - @{u}, a shorter synonym
->=20
->   - nothing at all, since rebasing against the upstream is the default=
-
->     for git-rebase these days
->=20
->   - you can say that (or even just "upstream", if your
->     refs/remotes/origin/HEAD is set up)
->=20
-> > Curiously, `git rebase FETCH_HEAD` seems to think the local branch i=
-s
-> > up to date (erroneously),
->=20
-> That's what I'd expect, since it is doing the naive "what is the first=
-
-> one in the file" lookup.
->=20
-> > however `git-pull --rebase=3Dtrue` [works]
->=20
-> That is running a new git-fetch under the hood, which will overwrite
-> FETCH_HEAD (and will only fetch from upstream, since that's what's in
-> branch.main.remote).
->=20
-> > `git-merge FETCH_HEAD` both work as expected and merge/rebase with
-> > `upstream/main`.
->=20
-> I think git-merge, like git-pull, understands the magic FETCH_HEAD
-> format.
->=20
-> > Am I going about this incorrectly? The main purpose behind configuri=
-ng
-> > my "mostly just a fork" repository is that it simplifies tracking
-> > against an upstream remote for projects which I do not work on
-> > actively. Of course, you might argue that I don't need to keep my
-> > remote around for this purpose and can just use a straightforward
-> > `git-clone` here -- but I'd rather not, and would prefer responses
-> > addressing the perceived bug rather than suggesting this particular
-> > alternative workflow.
->=20
-> I think your workflow is perfectly reasonable.
->=20
-> -Peff
+> Hi Sergey,
 >
+> On Thu, Dec 3, 2020 at 12:06 PM Sergey Organov <sorganov@gmail.com> wrote:
+>>
+>> Elijah Newren <newren@gmail.com> writes:
+>>
+>> > On Sun, Nov 1, 2020 at 11:36 AM Sergey Organov <sorganov@gmail.com> wrote:
+>> >>
+>> >> This function sets all the relevant flags to disabled state, so that
+>> >> no code that checks only one of them get it wrong.
+>> >>
+>> >> Then we call this new function everywhere where diff merges output
+>> >> suppression is needed.
+>> >>
+>> >> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+>> >> ---
+>> >>  builtin/merge.c |  3 ++-
+>> >>  diff-merges.c   | 18 ++++++++++++++----
+>> >>  diff-merges.h   |  2 ++
+>> >>  fmt-merge-msg.c |  3 ++-
+>> >>  4 files changed, 20 insertions(+), 6 deletions(-)
+>> >>
+>> >> diff --git a/builtin/merge.c b/builtin/merge.c
+>> >> index 9d5359edc2f7..1f7b69982b40 100644
+>> >> --- a/builtin/merge.c
+>> >> +++ b/builtin/merge.c
+>> >> @@ -14,6 +14,7 @@
+>> >>  #include "lockfile.h"
+>> >>  #include "run-command.h"
+>> >>  #include "diff.h"
+>> >> +#include "diff-merges.h"
+>> >>  #include "refs.h"
+>> >>  #include "refspec.h"
+>> >>  #include "commit.h"
+>> >> @@ -400,7 +401,7 @@ static void squash_message(struct commit *commit, struct commit_list *remotehead
+>> >>         printf(_("Squash commit -- not updating HEAD\n"));
+>> >>
+>> >>         repo_init_revisions(the_repository, &rev, NULL);
+>> >> -       rev.ignore_merges = 1;
+>> >> +       diff_merges_suppress(&rev);
+>> >>         rev.commit_format = CMIT_FMT_MEDIUM;
+>> >>
+>> >>         commit->object.flags |= UNINTERESTING;
+>> >> diff --git a/diff-merges.c b/diff-merges.c
+>> >> index 8536941e0b56..25bd9b12e667 100644
+>> >> --- a/diff-merges.c
+>> >> +++ b/diff-merges.c
+>> >> @@ -2,6 +2,13 @@
+>> >>
+>> >>  #include "revision.h"
+>> >>
+>> >> +static void suppress(struct rev_info *revs) {
+>> >> +       revs->ignore_merges = 1;
+>> >> +       revs->first_parent_merges = 0;
+>> >> +       revs->combine_merges = 0;
+>> >> +       revs->dense_combined_merges = 0;
+>> >> +}
+>> >
+>> > The function name is not so helpful;
+>>
+>> Do you have better suggestion? suppress_output()? supress_diff()?
+>>
+>> > why not put all this code directly in diff_merges_suppress()?
+>>
+>> I prefer the style where module implementation functions don't call its
+>> interface functions, only vice versa.
+>>
+>> >
+>> >> +
+>> >>  /*
+>> >>   * Public functions. They are in the order they are called.
+>> >>   */
+>> >> @@ -29,16 +36,15 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv) {
+>> >>                 revs->combine_merges = 1;
+>> >>         } else if (!strcmp(arg, "--cc")) {
+>> >>                 revs->diff = 1;
+>> >> -               revs->dense_combined_merges = 1;
+>> >> -               revs->combine_merges = 1;
+>> >> +               set_dense_combined(revs);
+>> >>         } else if (!strcmp(arg, "--no-diff-merges")) {
+>> >> -               revs->ignore_merges = 1;
+>> >> +               suppress(revs);
+>> >>         } else if (!strcmp(arg, "--combined-all-paths")) {
+>> >>                 revs->diff = 1;
+>> >>                 revs->combined_all_paths = 1;
+>> >>         } else if ((argcount = parse_long_opt("diff-merges", argv, &optarg))) {
+>> >>                 if (!strcmp(optarg, "off")) {
+>> >> -                       revs->ignore_merges = 1;
+>> >> +                       suppress(revs);
+>> >>                 } else {
+>> >>                         die(_("unknown value for --diff-merges: %s"), optarg);
+>> >>                 }
+>> >> @@ -48,6 +54,10 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv) {
+>> >>         return 1;
+>> >>  }
+>> >>
+>> >> +void diff_merges_suppress(struct rev_info *revs) {
+>> >> +       suppress(revs);
+>> >> +}
+>> >
+>> > ...especially since all this function does is call suppress()?
+>>
+>> Yes, it does, but it doesn't mean it will be that way forever. Interface
+>> function might need to perform additional checks or actions, in general.
+>
+> Ah, I didn't catch the distinction and thus the reasoning in having
+> the two different functions.
+>
+>> Besides, if diff_merges_suppress() is OK with you as interface function
+>> name, why suppress() is not OK as local function name in diff-merges
+>> module?
+>
+> Right, the fact that it's in the diff-merges module as opposed to more
+> general diff-lib code is probably hint enough.  I was skimming over
+> the patches looking for things that jumped out, and although I had
+> read that you were adding it to the new module, I forgot that when I
+> saw the "suppress()" function name.  Thanks for the reminder, and
+> sorry for the noise.
+
+Fine, thanks, and please don't mention it!
+
+-- 
+Sergey Organov
