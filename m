@@ -2,139 +2,183 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BDA9C433FE
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 17:35:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B75C6C4361B
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 18:07:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 63B1D22AAB
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 17:35:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 912A622B4E
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 18:07:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728924AbgLDRfH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 12:35:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38020 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727536AbgLDRfH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 12:35:07 -0500
-Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F00C1C0613D1
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 09:34:20 -0800 (PST)
-Received: by mail-lf1-x142.google.com with SMTP id q13so8728859lfr.10
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 09:34:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=z1jX2sIXpRhWR99ipkjhTtLfvaoKxHQiQGzUVW6WRwY=;
-        b=TvOMt80nCkGkISsAWB23/XY+3nUL/tFOxFuz+mei7S8NIoR0wuGyCy0iVDUpBbeenE
-         Y9htFX8KJDt7f3wKx6hsCIBpNPD/uOZQJk2o3Q/OzCtf63EwBy0tQmwq7fycWeJrXFzO
-         ZZfEQXcxxMdX3yyDlI2eLd+611BLWFuKBhJxZv6wcfTN20E9WjjbC958XOmGAeijVCWW
-         1XMgoYEzakFtuVGQ0dXH+gplC+jmJ3P9t/cAfnBzI3cZpRrGDllaIxe7jgBCfEEy7P5E
-         BwRK1z+IuX+poIgxYz4pdPbce9cv2zNC04s2Gq2jQTunRc//e74K5mU5vcyNJaz3F/nD
-         0wRA==
+        id S1728857AbgLDSHo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 13:07:44 -0500
+Received: from mail-ej1-f52.google.com ([209.85.218.52]:36665 "EHLO
+        mail-ej1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726330AbgLDSHn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 13:07:43 -0500
+Received: by mail-ej1-f52.google.com with SMTP id lt17so9999731ejb.3
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 10:07:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=z1jX2sIXpRhWR99ipkjhTtLfvaoKxHQiQGzUVW6WRwY=;
-        b=Giv517f39ws+RhbL6mRmrB3shB7u4egigzGlprpLLkdQ8nd00QMsmFfae9aNRNPwDk
-         xkI6Z8bN3qcXch9r+yaQm0lIsU1WW6T/WAZoSYIEzO17+4aKpce4kZPMujWkEagAzwuH
-         NlZzvZcL1Q+zIahqDJyxLV9gNmwSHMEmvTpGu6Q9gobE2Jj4jOGKoWNhNMdGSxn3me+x
-         DWD5P+IJzOne9hahr4KB1FMGBHtnuApcAC07/XPvIYj+BALI9WYgqchYcV86mSSvDwJg
-         vZ0ff0/0HLzWvhGpf6rRWw2F3vNTCxGQNdU41Q+yUgcDgtUymYI2wkg1azlQ6DM1suel
-         RdQA==
-X-Gm-Message-State: AOAM530GzuZArU8fejFc2rpseciGH8jmPVyb5RKCJZ6kSNx3peIejGTS
-        /NfT1hm+zlNTNbzCDvGtjwvhwiFk4Cw=
-X-Google-Smtp-Source: ABdhPJzARYV/g4SuKHen62Ng3hj+1epP/Ljvt2CSFprEEMro3QLn8Zr5HWgSKhtLccOhNaTO4DvjKQ==
-X-Received: by 2002:a05:6512:368a:: with SMTP id d10mr3807947lfs.579.1607103259220;
-        Fri, 04 Dec 2020 09:34:19 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id s22sm1881836lfi.187.2020.12.04.09.34.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Dec 2020 09:34:18 -0800 (PST)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v1 24/27] doc/git-log: describe new --diff-merges options
-References: <20201101193330.24775-1-sorganov@gmail.com>
-        <20201108213838.4880-1-sorganov@gmail.com>
-        <20201108213838.4880-25-sorganov@gmail.com>
-        <CABPp-BGZO+7bRdCAGFdetOkmwyFnHxDPQ=SD4f6TSa9ZYGFn=A@mail.gmail.com>
-        <877dpyhefj.fsf@osv.gnss.ru>
-        <CABPp-BEyiLDZ5Ums1D5gL679EMmKXpqxWDF_xGT4scXLMkwseg@mail.gmail.com>
-Date:   Fri, 04 Dec 2020 20:34:17 +0300
-In-Reply-To: <CABPp-BEyiLDZ5Ums1D5gL679EMmKXpqxWDF_xGT4scXLMkwseg@mail.gmail.com>
-        (Elijah Newren's message of "Thu, 3 Dec 2020 12:22:08 -0800")
-Message-ID: <877dpxpjae.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=IuN0//StOEdrBXYOzwayr0QPoXnSYhQZkml4gI0gJgA=;
+        b=fTbcljx50IVik4/b+8YnvEM+gpy3ZrR9DPvU8jj9a5kSu62PYFfPBpgi25eUdXBUC3
+         2NRJNyUeaDAKatwu+STWbZND6mlG9xp+J+EkM82WkuT0BqiZ+bZT9wWMQal4iBk/Slg0
+         X2U70YNEveOfMb2JPK4styQ/E8MKJ8h6fQz6l3OibrltGcEb0FCSAgXWlBw9HDrFgu4z
+         2aGuV6QN2HH3T3GhtQ1SZm/rK/vnqV3/y83A7ZkDjMCZz6n6vZ1lmLsm6tIdNphllO4G
+         PwhJovPc+l3oPs+9Yb19aqPwehbxAjeRikqXWG96tJpvDQPb+9myWcWaYIMeqqTDse9u
+         IbYw==
+X-Gm-Message-State: AOAM530x4SnG+pO45Xy6dC4uGVJRMRBhT54VC3P6b/V6CyU+uf8zHvxh
+        ZiYn2ybJEmidHh1FZBJ9ystuZQRWuZ31zei8iUNojRSPh48=
+X-Google-Smtp-Source: ABdhPJwwIJrTlZ/71bnglyAwGqyNaRGLufl7pIRdrATNbtQd+ohceoRkY0OD2ezdMQ28auLA9KIAg2eAAP47xxjujPg=
+X-Received: by 2002:a17:906:4944:: with SMTP id f4mr8442518ejt.231.1607105221187;
+ Fri, 04 Dec 2020 10:07:01 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <0b6a34a0-428e-5fc4-307d-1217b112659c@nokia.com> <1607095412-40109-1-git-send-email-peter.kaestle@nokia.com>
+In-Reply-To: <1607095412-40109-1-git-send-email-peter.kaestle@nokia.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 4 Dec 2020 13:06:50 -0500
+Message-ID: <CAPig+cR69HJefRMfH_5-dHOMVY-VmVgbqQuWV90ednDEjrnExw@mail.gmail.com>
+Subject: Re: [PATCH] submodules: fix of regression on fetching of non-init subsub-repo
+To:     Peter Kaestle <peter.kaestle@nokia.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On Fri, Dec 4, 2020 at 10:25 AM Peter Kaestle <peter.kaestle@nokia.com> wrote:
+> [...]
+> Furthermore a regression test case is added, which tests for recursive
+> fetches on a superproject with uninitialized sub repositories.  This
+> issue was leading to an infinite loop when doing a revert of a62387b.
 
-> On Thu, Dec 3, 2020 at 11:34 AM Sergey Organov <sorganov@gmail.com> wrote:
->>
->> Elijah Newren <newren@gmail.com> writes:
+Just a few small comments (nothing comprehensive) from a quick scan of
+the patch...
 
-[...]
+Mostly they are just minor style issues, not necessarily worth a
+re-roll, but there is one actionable item.
 
->> >> ++
->> >> +--diff-merges=(off|none):::
->> >> +--no-diff-merges:::
->> >> +       (default) Disable output of diffs for merge commits. Useful to
->> >> +       override implied value.
->> >> ++
->> >> +--diff-merges=first-parent:::
->> >> +       This option makes merge commits show the full diff with
->> >> +       respect to the first parent only, exactly like  regular
->> >> +       commits.
->> >
->> > Not sure that "exactly like regular commits" is helpful here; I'd
->> > personally rather cut those four words out.  I'm worried it'll be
->> > taken not as an implementation explanation, but as a "this treats
->> > merge commits in the natural way that regular commits are" which users
->> > may mistakenly translate to "it shows what changes the user manually
->> > made as part of the commit" which is not at all the correct mapping.
->>
->> Dunno. Don't have strict preference here. Git has no idea how the
->> changes in a commit have been made in the first place. Changes are just
->> changes.
->
-> If you don't have a preference, can we drop those four words?  ;-)
+> Signed-off-by: Peter Kaestle <peter.kaestle@nokia.com>
+> ---
+> diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+> @@ -719,4 +719,98 @@ test_expect_success 'fetch new submodule commit intermittently referenced by sup
+> +add_commit_push () {
+> +       dir="$1"
+> +       msg="$2"
+> +       shift 2
 
-Yeah, sure, dropped.
+We typically recommend including these assignments in the &&-chain to
+future-proof against someone later inserting code above them and not
+realizing that that code is not part of the &&-chain, in which case if
+the new code fails, the failure might go unnoticed.
 
->
->> To my excuse, I took this from git:5fbb4bc191 that has:
->>
->> +Note that unless one of `-c`, `--cc`, or `-m` is given, merge commits
->> +will never show a diff, even if a diff format like `--patch` is
->> +selected, nor will they match search options like `-S`. The exception is
->> +when `--first-parent` is in use, in which merges are treated like normal
->> +single-parent commits (this can be overridden by providing a
->> +combined-diff option or with `--no-diff-merges`).
->
-> Yeah, I can see where you're coming from, though the context change
-> feels like just enough different that the four words you added bother
-> me a bit more.  However, this existing wording does bother me now that
-> you highlight it.  Even though it's not something introduced by your
-> patch, I'd really like to drop "normal" here; I think it is prone to
-> cause confusion to users and as far as I can tell provides no useful
-> meaning for the sentence.  (There are multiple types of single-parent
-> commits?  What is an "unnormal" one?  How do I tell which kind I want?
->  etc...).
+> +       git -C "$dir" add "$@" &&
+> +       git -C "$dir" commit -a -m "$msg" &&
+> +       git -C "$dir" push
+> +}
+> +
+> +compare_refs_in_dir () {
+> +       fail= &&
+> +       if test "x$1" = 'x!'
+> +       then
+> +               fail='!' &&
+> +               shift
+> +       fi &&
+> +       git -C "$1" rev-parse --verify "$2" >expect &&
+> +       git -C "$3" rev-parse --verify "$4" >actual &&
+> +       eval $fail test_cmp expect actual
+> +}
 
-I see your point, but I won't change it in these series. I think that
-it'd be better if you change this yourself, independently.
+We have a test_cmp_rev() similar to this but it doesn't support -C as
+some of our other test functions do. I briefly wondered if it would
+make sense to extend it to understand -C, but even that wouldn't help
+this case since compare_refs_in_dir() introduced here involves two
+distinct directories. The need here is so special-purpose that it
+likely would not make sense to upgrade test_cmp_rev() to accommodate
+it. Okay.
 
-Thanks,
--- 
-Sergey Organov
+> +test_expect_success 'setup nested submodule fetch test' '
+> +       # does not depend on any previous test setups
+> +
+> +       for repo in outer middle inner
+> +       do
+> +               (
+> +                       git init --bare $repo &&
+> +                       git clone $repo ${repo}_content &&
+> +                       echo "$repo" >"${repo}_content/file" &&
+> +                       add_commit_push ${repo}_content "initial" file
+> +               ) || return 1
+> +       done &&
+
+What is the purpose of the subshell here? Is it to ensure that commits
+in each repo have identical timestamps? Or is it just for making the
+&& and || expression more clear? If the latter, we normally don't
+bother with the parentheses.
+
+> +       git clone outer A &&
+> +       git -C A submodule add "$pwd/middle" &&
+> +       git -C A/middle/ submodule add "$pwd/inner" &&
+> +       add_commit_push A/middle/ "adding inner sub" .gitmodules inner &&
+> +       add_commit_push A/ "adding middle sub" .gitmodules middle &&
+> +
+> +       git clone outer B &&
+> +       git -C B/ submodule update --init middle &&
+> +
+> +       compare_refs_in_dir A HEAD B HEAD &&
+> +       compare_refs_in_dir A/middle HEAD B/middle HEAD &&
+> +       test -f B/file &&
+> +       test -f B/middle/file &&
+> +       ! test -f B/middle/inner/file &&
+
+These days we typically use test_path_exists() (or
+test_path_is_file()) and test_path_is_missing() rather than bare
+`test`.
+
+> +test_expect_success 'setup recursive fetch with uninit submodule' '
+> +       # does not depend on any previous test setups
+> +
+> +       git init main &&
+> +       git init sub &&
+> +
+> +       touch sub/file &&
+
+Unless the timestamp of the file is significant to the test, in which
+case `touch` is used, we normally create empty files like this:
+
+    >sub/file &&
+
+> +test_expect_success 'recursive fetch with uninit submodule' '
+> +       git -C main submodule deinit -f sub &&
+> +       ! git -C main fetch --recurse-submodules |&
+> +               grep -v -m1 "Fetching submodule sub$" &&
+
+We want the test scripts to be portable, thus avoid Bashisms such as `|&`.
+
+We also avoid placing a Git command upstream in a pipe since doing so
+causes the exit code of the Git command to be lost. Instead, we would
+normally send the Git output to a file and then send that file to
+whatever would be downstream of the Git command in the pipe. So, a
+mechanical rewrite of the above (without thinking too hard about it)
+might be:
+
+    git -C main fetch --recurse-submodules >out 2>&1 &&
+    ! grep -v -m1 "Fetching submodule sub$" &&
+
+> +       git -C main submodule status |
+> +               sed -e "s/^-//" -e "s/ sub$//" >actual &&
+
+Same comment about avoiding Git upstream in a pipe, so perhaps:
+
+    git -C main submodule status >out &&
+    sed -e "s/^-//" -e "s/ sub$//" out >actual &&
+
+> +       test_cmp expect actual
+> +'
