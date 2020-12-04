@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28CB5C19425
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 18:52:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6EF6C19425
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 18:53:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 02F2B22CA1
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 18:52:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8324822CA0
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 18:53:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730386AbgLDSwV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 13:52:21 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51790 "EHLO cloud.peff.net"
+        id S2387659AbgLDSwt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 13:52:49 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51810 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727997AbgLDSwV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 13:52:21 -0500
-Received: (qmail 31774 invoked by uid 109); 4 Dec 2020 18:51:40 -0000
+        id S1727990AbgLDSws (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 13:52:48 -0500
+Received: (qmail 31795 invoked by uid 109); 4 Dec 2020 18:52:08 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 04 Dec 2020 18:51:40 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 04 Dec 2020 18:52:08 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14046 invoked by uid 111); 4 Dec 2020 18:51:39 -0000
+Received: (qmail 14109 invoked by uid 111); 4 Dec 2020 18:52:07 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 04 Dec 2020 13:51:39 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 04 Dec 2020 13:52:07 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 4 Dec 2020 13:51:39 -0500
+Date:   Fri, 4 Dec 2020 13:52:07 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH 4/9] cache.h: move hash/oid functions to hash.h
-Message-ID: <X8qFOw2TPiu7bFpI@coredump.intra.peff.net>
+Subject: [PATCH 5/9] oid-array: make sort function public
+Message-ID: <X8qFV70BrlPAdpGO@coredump.intra.peff.net>
 References: <X8qEg/KiAQDugPC0@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -42,245 +42,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We define git_hash_algo and object_id in hash.h, but most of the utility
-functions are declared in the main cache.h. Let's move them to hash.h
-along with their struct definitions. This cleans up cache.h a bit, but
-also avoids circular dependencies when other headers need to know about
-these functions (e.g., if oid-array.h were to have an inline that used
-oideq(), it couldn't include cache.h because it is itself included by
-cache.h).
+We sort the oid-array as a side effect of calling the lookup or
+unique-iteration functions. But callers may want to sort it themselves
+(especially as we add new iteration options in future patches).
 
-No including C files should be affected, because hash.h is always
-included in cache.h already.
-
-We do have to mention repository.h at the top of hash.h, though, since
-we depend on the_repository in some of our inline functions.
+We'll also move the check of the "sorted" flag into the sort function,
+so callers don't have to remember to check it.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Pure movement, as shown by --color-moved. I wish we had a clever way to
-annotate that in emailed patches.
+ oid-array.c | 10 +++++-----
+ oid-array.h |  5 +++++
+ 2 files changed, 10 insertions(+), 5 deletions(-)
 
- cache.h | 94 --------------------------------------------------------
- hash.h  | 95 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 95 insertions(+), 94 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index e986cf4ea9..ec98f5d32c 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1123,100 +1123,6 @@ const char *repo_find_unique_abbrev(struct repository *r, const struct object_id
- int repo_find_unique_abbrev_r(struct repository *r, char *hex, const struct object_id *oid, int len);
- #define find_unique_abbrev_r(hex, oid, len) repo_find_unique_abbrev_r(the_repository, hex, oid, len)
+diff --git a/oid-array.c b/oid-array.c
+index 8657a5cedf..29f718d835 100644
+--- a/oid-array.c
++++ b/oid-array.c
+@@ -14,8 +14,10 @@ static int void_hashcmp(const void *a, const void *b)
+ 	return oidcmp(a, b);
+ }
  
--extern const struct object_id null_oid;
--
--static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
--{
--	/*
--	 * Teach the compiler that there are only two possibilities of hash size
--	 * here, so that it can optimize for this case as much as possible.
--	 */
--	if (the_hash_algo->rawsz == GIT_MAX_RAWSZ)
--		return memcmp(sha1, sha2, GIT_MAX_RAWSZ);
--	return memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
--}
--
--static inline int oidcmp(const struct object_id *oid1, const struct object_id *oid2)
--{
--	return hashcmp(oid1->hash, oid2->hash);
--}
--
--static inline int hasheq(const unsigned char *sha1, const unsigned char *sha2)
--{
--	/*
--	 * We write this here instead of deferring to hashcmp so that the
--	 * compiler can properly inline it and avoid calling memcmp.
--	 */
--	if (the_hash_algo->rawsz == GIT_MAX_RAWSZ)
--		return !memcmp(sha1, sha2, GIT_MAX_RAWSZ);
--	return !memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
--}
--
--static inline int oideq(const struct object_id *oid1, const struct object_id *oid2)
--{
--	return hasheq(oid1->hash, oid2->hash);
--}
--
--static inline int is_null_oid(const struct object_id *oid)
--{
--	return oideq(oid, &null_oid);
--}
--
--static inline void hashcpy(unsigned char *sha_dst, const unsigned char *sha_src)
--{
--	memcpy(sha_dst, sha_src, the_hash_algo->rawsz);
--}
--
--static inline void oidcpy(struct object_id *dst, const struct object_id *src)
--{
--	memcpy(dst->hash, src->hash, GIT_MAX_RAWSZ);
--}
--
--static inline struct object_id *oiddup(const struct object_id *src)
--{
--	struct object_id *dst = xmalloc(sizeof(struct object_id));
--	oidcpy(dst, src);
--	return dst;
--}
--
--static inline void hashclr(unsigned char *hash)
--{
--	memset(hash, 0, the_hash_algo->rawsz);
--}
--
--static inline void oidclr(struct object_id *oid)
--{
--	memset(oid->hash, 0, GIT_MAX_RAWSZ);
--}
--
--static inline void oidread(struct object_id *oid, const unsigned char *hash)
--{
--	memcpy(oid->hash, hash, the_hash_algo->rawsz);
--}
--
--static inline int is_empty_blob_sha1(const unsigned char *sha1)
--{
--	return hasheq(sha1, the_hash_algo->empty_blob->hash);
--}
--
--static inline int is_empty_blob_oid(const struct object_id *oid)
--{
--	return oideq(oid, the_hash_algo->empty_blob);
--}
--
--static inline int is_empty_tree_sha1(const unsigned char *sha1)
--{
--	return hasheq(sha1, the_hash_algo->empty_tree->hash);
--}
--
--static inline int is_empty_tree_oid(const struct object_id *oid)
--{
--	return oideq(oid, the_hash_algo->empty_tree);
--}
--
--const char *empty_tree_oid_hex(void);
--const char *empty_blob_oid_hex(void);
--
- /* set default permissions by passing mode arguments to open(2) */
- int git_mkstemps_mode(char *pattern, int suffix_len, int mode);
- int git_mkstemp_mode(char *pattern, int mode);
-diff --git a/hash.h b/hash.h
-index e0f3f16b06..3fb0c3d400 100644
---- a/hash.h
-+++ b/hash.h
-@@ -2,6 +2,7 @@
- #define HASH_H
+-static void oid_array_sort(struct oid_array *array)
++void oid_array_sort(struct oid_array *array)
+ {
++	if (array->sorted)
++		return;
+ 	QSORT(array->oid, array->nr, void_hashcmp);
+ 	array->sorted = 1;
+ }
+@@ -28,8 +30,7 @@ static const unsigned char *sha1_access(size_t index, void *table)
  
- #include "git-compat-util.h"
-+#include "repository.h"
+ int oid_array_lookup(struct oid_array *array, const struct object_id *oid)
+ {
+-	if (!array->sorted)
+-		oid_array_sort(array);
++	oid_array_sort(array);
+ 	return sha1_pos(oid->hash, array->oid, array->nr, sha1_access);
+ }
  
- #if defined(SHA1_PPC)
- #include "ppc/sha1.h"
-@@ -184,4 +185,98 @@ struct object_id {
+@@ -64,8 +65,7 @@ int oid_array_for_each_unique(struct oid_array *array,
+ {
+ 	size_t i;
  
- #define the_hash_algo the_repository->hash_algo
+-	if (!array->sorted)
+-		oid_array_sort(array);
++	oid_array_sort(array);
  
-+extern const struct object_id null_oid;
+ 	for (i = 0; i < array->nr; i++) {
+ 		int ret;
+diff --git a/oid-array.h b/oid-array.h
+index 2c8b64c393..6a22c0ac94 100644
+--- a/oid-array.h
++++ b/oid-array.h
+@@ -106,4 +106,9 @@ void oid_array_filter(struct oid_array *array,
+ 		      for_each_oid_fn want,
+ 		      void *cbdata);
+ 
++/**
++ * Sort the array in order of ascending object id.
++ */
++void oid_array_sort(struct oid_array *array);
 +
-+static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
-+{
-+	/*
-+	 * Teach the compiler that there are only two possibilities of hash size
-+	 * here, so that it can optimize for this case as much as possible.
-+	 */
-+	if (the_hash_algo->rawsz == GIT_MAX_RAWSZ)
-+		return memcmp(sha1, sha2, GIT_MAX_RAWSZ);
-+	return memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
-+}
-+
-+static inline int oidcmp(const struct object_id *oid1, const struct object_id *oid2)
-+{
-+	return hashcmp(oid1->hash, oid2->hash);
-+}
-+
-+static inline int hasheq(const unsigned char *sha1, const unsigned char *sha2)
-+{
-+	/*
-+	 * We write this here instead of deferring to hashcmp so that the
-+	 * compiler can properly inline it and avoid calling memcmp.
-+	 */
-+	if (the_hash_algo->rawsz == GIT_MAX_RAWSZ)
-+		return !memcmp(sha1, sha2, GIT_MAX_RAWSZ);
-+	return !memcmp(sha1, sha2, GIT_SHA1_RAWSZ);
-+}
-+
-+static inline int oideq(const struct object_id *oid1, const struct object_id *oid2)
-+{
-+	return hasheq(oid1->hash, oid2->hash);
-+}
-+
-+static inline int is_null_oid(const struct object_id *oid)
-+{
-+	return oideq(oid, &null_oid);
-+}
-+
-+static inline void hashcpy(unsigned char *sha_dst, const unsigned char *sha_src)
-+{
-+	memcpy(sha_dst, sha_src, the_hash_algo->rawsz);
-+}
-+
-+static inline void oidcpy(struct object_id *dst, const struct object_id *src)
-+{
-+	memcpy(dst->hash, src->hash, GIT_MAX_RAWSZ);
-+}
-+
-+static inline struct object_id *oiddup(const struct object_id *src)
-+{
-+	struct object_id *dst = xmalloc(sizeof(struct object_id));
-+	oidcpy(dst, src);
-+	return dst;
-+}
-+
-+static inline void hashclr(unsigned char *hash)
-+{
-+	memset(hash, 0, the_hash_algo->rawsz);
-+}
-+
-+static inline void oidclr(struct object_id *oid)
-+{
-+	memset(oid->hash, 0, GIT_MAX_RAWSZ);
-+}
-+
-+static inline void oidread(struct object_id *oid, const unsigned char *hash)
-+{
-+	memcpy(oid->hash, hash, the_hash_algo->rawsz);
-+}
-+
-+static inline int is_empty_blob_sha1(const unsigned char *sha1)
-+{
-+	return hasheq(sha1, the_hash_algo->empty_blob->hash);
-+}
-+
-+static inline int is_empty_blob_oid(const struct object_id *oid)
-+{
-+	return oideq(oid, the_hash_algo->empty_blob);
-+}
-+
-+static inline int is_empty_tree_sha1(const unsigned char *sha1)
-+{
-+	return hasheq(sha1, the_hash_algo->empty_tree->hash);
-+}
-+
-+static inline int is_empty_tree_oid(const struct object_id *oid)
-+{
-+	return oideq(oid, the_hash_algo->empty_tree);
-+}
-+
-+const char *empty_tree_oid_hex(void);
-+const char *empty_blob_oid_hex(void);
-+
- #endif
+ #endif /* OID_ARRAY_H */
 -- 
 2.29.2.896.g080220a959
 
