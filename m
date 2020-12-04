@@ -2,151 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A18F8C4361A
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 23:20:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1AF7C433FE
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 23:21:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 64B6E22519
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 23:20:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A2CB522B4E
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 23:21:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727281AbgLDXUL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 18:20:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34862 "EHLO
+        id S1727358AbgLDXVw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 18:21:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725885AbgLDXUL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 18:20:11 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39BBFC061A4F
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 15:19:25 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id l1so6830815wrb.9
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 15:19:25 -0800 (PST)
+        with ESMTP id S1726508AbgLDXVw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 18:21:52 -0500
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7004AC0613D1
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 15:21:06 -0800 (PST)
+Received: by mail-qk1-x72e.google.com with SMTP id z188so7139022qke.9
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 15:21:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:mime-version:content-transfer-encoding
-         :fcc:to:cc;
-        bh=8p2tRFdHEQcEStNLv/f4qpLBgq1swbhYWm8TEUkVJ4U=;
-        b=sL7KlG55tEpcLFFPKLdrJkQZXxLwV8GHtUSLQw9zzq5/2Wz8bQyUq4nEWtU83LX4Xj
-         ZVbKPQ8IUS0px7gBGowVIX7iK3SSJKdNvK3PQYRcF/YzucztBffdzGGL71nQre/nx2tj
-         qwFsfJCA+xC7/OVtZB0nkUNGKJK2LlWG75zDdPFUbxHfV3msscGTcRk3acCVQEd4lMx3
-         8fe9KiUriJTB8uBsFHdlPT9a7cSgt3FNgt/7pApqTHgR+P2iiEHvQq3zqbN2Gq2Qw2QG
-         N8DyQhh8LBfRev4hb7omg1hDueb0lf2sDu639fOVPn778G7ezrIavlCnmYlPKT4ebmu/
-         aiyA==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=3Slx75cKonm4wP8r7PAo9Wxzezl22thRB+mA9y6JEXs=;
+        b=pv+bowrjG+jI1AYUIcipNcCC6N1Fcb5ynx1dRXJaSYVNBQ18xeRk2WSprBNrKk+hBW
+         gH7+7w70E5vwhqMMHQ755yd/8TwJq0JA+VdDtPX/hWiA5vV3tRYS8fo01gFgWBXg4uRp
+         PSQvhkJ76QG4TlaI+4SpX3oGlcyKCzjhte+V/fs+QV9ZPncbnfzPCASntWxEfJOgw79K
+         fBglmbeI92pKtPmB9PqUcag7nMJUoEFlhtzWzSiyGcrVlBGbPrC9pyELd+gbtwnzs27L
+         KDaYbgjHgVXXedtaAyrQ3oGiynwP4RHrjI78r1Fn5G62hvcFG+WWOVSUdoX40jzvb+uZ
+         JC2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=8p2tRFdHEQcEStNLv/f4qpLBgq1swbhYWm8TEUkVJ4U=;
-        b=OLw4yR5JQq54UiyvXRqiSkK5XHDD+1I4yZx73OcaijaYb8qWovWMvs/ikTIjiIaFbx
-         o/v71FErs/gTBqd1tlqHpEBrNUYGKNEFa7wDKv57jvyM5FIaDVe3fNm5timDfDG7yxkq
-         1JUxp6sdMJjqxEOPZR4HxqKg/0XcnXgl1NyxYrhOEV7cCRCdA/pC5yHnyhlGwNSvkJTK
-         sD7qnHPY9sYQ9GoS72FNRlE27qxYg4ios7eCcfjvMigg3yNiDy8vvA/Tz0g42OQXt527
-         nPFmK2pfOLQS7OpNMOy5qkV7kHZmckTiYfxL5YTN47W3qlw2sE1e3neJMEFVIkvuSnCU
-         M5Lw==
-X-Gm-Message-State: AOAM532/57jiqogGoS8w+NlEZUMub4uabAZgtuXgK/7kgzCzOaYc/x//
-        ZQb1vBJ3Tk8reDr1OhZC8iclsQmKk2o=
-X-Google-Smtp-Source: ABdhPJw0cGf/enCT5i2MGFRolBuLUfo2u6ocfs/YTPahbGOo7hlrMEsdrlPgz1ZbvuZmPgfIIgO6mQ==
-X-Received: by 2002:adf:df8e:: with SMTP id z14mr7532889wrl.406.1607123963675;
-        Fri, 04 Dec 2020 15:19:23 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d187sm2039658wmd.8.2020.12.04.15.19.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Dec 2020 15:19:23 -0800 (PST)
-Message-Id: <pull.928.git.git.1607123962304.gitgitgadget@gmail.com>
-From:   "David Racine via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 04 Dec 2020 23:19:21 +0000
-Subject: [PATCH] Support having non-utf-8 characters returned by p4
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Luke Diamand <luke@diamand.org>,
-        David Racine <bass_dr@hotmail.com>,
-        David Racine <bass_dr@hotmail.com>
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=3Slx75cKonm4wP8r7PAo9Wxzezl22thRB+mA9y6JEXs=;
+        b=QwgtFtj8FwnWZ9ZVjYmD0TEUMses25NW2iT52kHYi7RvOiJIc/FuHsmVhesb+ZGRuY
+         esQXPq1JLQyXikCr2yJQ0rhyx+9UMHj6eX2Al84D1RFbGNDnqI0bAFHenvG2Pg6l3szw
+         doVFXHI5wIh0bMD5lt57qmHqA9zVg9Ht1jxiQD0EbAffbhrqVXdO0Zi6NJnLy9Gtym0M
+         uhNDFtne4a0h9fd0KcD8s9+zXPlyHCssFmRbNUT2bqP65M1pdVMEesKBnTXVkUAE0za3
+         7A4PxbLD261RtO5cKVc/EUTn/dIDwMs7fQKZMtNghhk5JVzlBhdK+GFIzqEQ4f8jIjod
+         u2/w==
+X-Gm-Message-State: AOAM5307MKGmmYS9IGu7sprGzWtcl8hmLPQqI0uBY1ER0EgrVB9v5YW5
+        7BWbm61vdbR/UQr21BwmknTJ/NSBFf7pbA==
+X-Google-Smtp-Source: ABdhPJwreB3rWspx5ly9BvcmDt0kwxQP5nYU2ImeRBA8XcMPlbLfzlbHoPns9ygai1CitfVn3UmMGg==
+X-Received: by 2002:a05:620a:62b:: with SMTP id 11mr11808997qkv.229.1607124065270;
+        Fri, 04 Dec 2020 15:21:05 -0800 (PST)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id s134sm7145812qke.99.2020.12.04.15.21.04
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Fri, 04 Dec 2020 15:21:04 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: 'git worktree repair' can't repair when main and linked worktrees are moved
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <63AC7AC2-5D32-479B-BF9E-0E5C31351A1B@gmail.com>
+Date:   Fri, 4 Dec 2020 18:21:03 -0500
+Cc:     Eric Sunshine <sunshine@sunshineco.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <8F01BDC6-81AD-4052-B11E-FFAA6A4C641E@gmail.com>
+References: <63AC7AC2-5D32-479B-BF9E-0E5C31351A1B@gmail.com>
+To:     Git mailing list <git@vger.kernel.org>
+X-Mailer: Apple Mail (2.3124)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: David Racine <bass_dr@hotmail.com>
 
-When perforce server is not configured for Unicode, and commands like
-`p4 users` returns a string with non-ascii characters (eg. one of the
-user's FullName has a french `é` in it), git-p4 was giving
-`Exception: failure accessing depot: could not connect`.
-With this patch, if such character is encountered, it will honor the new
-`git-p4.textEncoding` config option, or silently replace the erronous
-character and continue.
+> Le 4 d=C3=A9c. 2020 =C3=A0 18:14, Philippe Blain =
+<levraiphilippeblain@gmail.com> a =C3=A9crit :
+>=20
+> I tried several things:
+>=20
+> ( cd git && git repair )
 
-Signed-off-by: David Racine <bass_dr@hotmail.com>
----
-    git-p4: Support having non-utf-8 characters returned by p4
-    
-    When perforce server is not configured for Unicode, and commands like p4
-    users returns a string with non-ascii characters (eg. one of the user's
-    FullName has a french é in it), git-p4 was giving Exception: failure
-    accessing depot: could not connect. With this patch, if such character
-    is encountered, it will honor the new git-p4.textEncoding config option,
-    or silently replace the erronous character and continue.
+Oups, please read 'git worktree repair' here and below.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-928%2Fbassdr%2Fpatch-1-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-928/bassdr/patch-1-v1
-Pull-Request: https://github.com/git/git/pull/928
+> ( cd git && git repair ../git2 )
+> ( cd git && git repair /old/path/to/old/filesystem/git2 )
+> ( cd git2 && git repair /old/path/to/old/filesystem/git2 )
+> ( cd git2 && git repair ../git )
 
- git-p4.py | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
-
-diff --git a/git-p4.py b/git-p4.py
-index 6ae5bbfe99..6cbd153419 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -195,16 +195,27 @@ def decode_path(path):
-     """Decode a given string (bytes or otherwise) using configured path encoding options
-     """
-     encoding = gitConfig('git-p4.pathEncoding') or 'utf_8'
-+    return p4_decode_stream(path, encoding)
-+
-+def p4_decode_text(user):
-+    """Decode a given string (bytes or otherwise) using configured text encoding options
-+    """
-+    encoding = gitConfig('git-p4.textEncoding') or 'utf-8'
-+    return p4_decode_stream(s, encoding)
-+    
-+def p4_decode_stream(s, encoding):
-+    """Decode a given string (bytes or otherwise) using encoding argument
-+    """
-     if bytes is not str:
--        return path.decode(encoding, errors='replace') if isinstance(path, bytes) else path
-+        return s.decode(encoding, errors='replace') if isinstance(s, bytes) else s
-     else:
-         try:
--            path.decode('ascii')
-+            s.decode('ascii')
-         except:
--            path = path.decode(encoding, errors='replace')
-+            s = s.decode(encoding, errors='replace')
-             if verbose:
--                print('Path with non-ASCII characters detected. Used {} to decode: {}'.format(encoding, path))
--        return path
-+                print('Text with non-ASCII characters detected. Used {} to decode: {}'.format(encoding, s))
-+        return s
- 
- def run_git_hook(cmd, param=[]):
-     """Execute a hook if the hook exists."""
-@@ -771,7 +782,7 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=False,
-                 for key, value in entry.items():
-                     key = key.decode()
-                     if isinstance(value, bytes) and not (key in ('data', 'path', 'clientFile') or key.startswith('depotFile')):
--                        value = value.decode()
-+                        value = p4_decode_text(value)
-                     decoded_entry[key] = value
-                 # Parse out data if it's an error response
-                 if decoded_entry.get('code') == 'error' and 'data' in decoded_entry:
-
-base-commit: 3a0b884caba2752da0af626fb2de7d597c844e8b
--- 
-gitgitgadget
