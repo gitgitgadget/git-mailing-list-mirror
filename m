@@ -3,70 +3,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E426BC4361A
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 20:58:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3DF2C4361A
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 21:00:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8BE0022CE3
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 20:58:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 85EF822CF6
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 21:00:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726817AbgLDU6B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 15:58:01 -0500
-Received: from mail-ej1-f65.google.com ([209.85.218.65]:45292 "EHLO
-        mail-ej1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726021AbgLDU6B (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 15:58:01 -0500
-Received: by mail-ej1-f65.google.com with SMTP id qw4so10586796ejb.12
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 12:57:45 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TbFz5mwDhDORogVk6lKN1isbCWuvEt+vdKwi7fN9Ccw=;
-        b=XA6snMyN+RrYJ/XR30udcISzmB6E+QPcYemdjg8sLYCpqEHOGWLD7QKon2VmoXLVt7
-         KLi7QfKHSEcjSw8XAbzYqVNKR2z6UF0qwrYFy8fM/D1CnjvRyMCgJcgRYnqaM88YyV4o
-         Oe1720sOGngJ4GpLaj9t4LVrx9QXruoIwatCKtCB5AeCS5hldJZjEV5xFDKuN2QRyq/5
-         2GjnGuaiwcsZF3DAv87PfhwkGRzC2Rj/2z/o0T1f0IUxSFzK2nnEdS/eJZgAYp48BJOj
-         7dvvLwVM3CrdniasTJJEE4a5+p/2aN13tOBQo3f3XPlpE2r9AxflfYaYTI1VyE8ZGnq0
-         8SSA==
-X-Gm-Message-State: AOAM533NjuQYbVjJx1jxji6gDP7Wf2lbNpJNhZ/rzTEC6a3TgN63nMGn
-        RTWABQ2ThMZhKyc81dEgWSyxUQrdyQiPr5JmenQ=
-X-Google-Smtp-Source: ABdhPJwqcdl8KCHTFaxlDw+/lsXNopAZFFWXUg78kkHw8fe0ws4pwXjEcs2mQb71V421XnGTfOckSL5a+1aXovT/JXQ=
-X-Received: by 2002:a17:906:608:: with SMTP id s8mr8959152ejb.371.1607115439992;
- Fri, 04 Dec 2020 12:57:19 -0800 (PST)
+        id S1726623AbgLDVAp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 16:00:45 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52300 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726021AbgLDVAp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 16:00:45 -0500
+Received: (qmail 865 invoked by uid 109); 4 Dec 2020 21:00:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 04 Dec 2020 21:00:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16641 invoked by uid 111); 4 Dec 2020 21:00:04 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 04 Dec 2020 16:00:04 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 4 Dec 2020 16:00:04 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ben Denhartog <ben@sudoforge.com>, git@vger.kernel.org
+Subject: Re: Unexpected behavior with branch.*.{remote,pushremote,merge}
+Message-ID: <X8qjVAGlrYJWO5fc@coredump.intra.peff.net>
+References: <a4ae4e1a-b457-4b35-878c-2714ebfc415f@www.fastmail.com>
+ <X8oL190Vl03B0cQ/@coredump.intra.peff.net>
+ <112958f6-0eca-453d-86f3-52e7054a88f9@www.fastmail.com>
+ <xmqq360lfios.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-References: <X8qEg/KiAQDugPC0@coredump.intra.peff.net> <X8qFo+GJJTbaPV58@coredump.intra.peff.net>
- <CAPig+cTLs5bkY=Pwg+4tT2KHfVHFjkrNTeS_ygGEwq0cOOJ9wQ@mail.gmail.com> <X8qfr2B0OfaySjPh@coredump.intra.peff.net>
-In-Reply-To: <X8qfr2B0OfaySjPh@coredump.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 4 Dec 2020 15:57:09 -0500
-Message-ID: <CAPig+cQms-VgBCWM_CpxkwAu4aQBVmqHkr4TPu9CR08w3RiLVw@mail.gmail.com>
-Subject: Re: [PATCH 6/9] oid-array: provide a for-loop iterator
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq360lfios.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 4, 2020 at 3:45 PM Jeff King <peff@peff.net> wrote:
-> On Fri, Dec 04, 2020 at 02:18:45PM -0500, Eric Sunshine wrote:
-> > Minor: I see that the example code sorts the array first -- which is
-> > necessary, as explained in the commit message -- but I wonder if it is
-> > worth calling out explicitly in the prose:
-> >
-> >     Find the next unique oid in the array after position `cur`.
-> >     The array must be sorted for this to work. You can use
-> >     this to iterate over unique elements like this:
->
-> Thanks, that makes sense; I picked up your wording here.
+On Fri, Dec 04, 2020 at 11:57:23AM -0800, Junio C Hamano wrote:
 
-It's probably not worth a re-roll just to update this comment, but if
-you're re-rolling anyhow, the wording could be improved slightly:
+> > * Refactor away from usage of FETCH_HEAD
+> 
+> Yes, "fetch --all" is about updating the remote-tracking branches
+> and in retrospect, perhaps we might have avoided confusion if we
+> made it not to touch FETCH_HEAD, but it is not going to change now.
 
-    Find the next unique oid in the array after position `cur`.
-    The array must be sorted for this to work. You can iterate
-    over unique elements like this:
+I think its behavior of appending all of the entries is sensible (or at
+least is the least-surprising thing). The only weird part is that it
+does not keep the "make sure heads for merging come before not-for-merge
+entries" property that individual ones have.
+
+It could take a final pass after all of the sub-fetches have run and do
+that. I don't have any plans to work on it, but I'm tempted to call it a
+#leftoverbits candidate.
+
+> > * Set `remote.pushdefault = origin`
+> > * Set `push.default = current` (instead of `simple`, and is what
+> > my global config sets this to)
+> 
+> I have a feeling that simple vs current does not make a difference
+> if you are pusing main to main, and if so, push.default could be
+> left to the default settings of 'simple'.  But the key to successful
+> use of the triangular workflow is to configure so that "fetch/pull"
+> goes to one place (i.e. your upstream) and "push" goes to another
+> (i.e. your publishing repository), and "remote.pushdefault" is a
+> good ingredient to do so.
+
+I think my advice is just out-of-date (by quite a lot). In the early
+days, I remember being bitten by (or at least confused by) simple and
+how its use of upstream could work with multiple remotes. But we long
+ago fixed that, with ed2b18292b (push: change `simple` to accommodate
+triangular workflows, 2013-06-19), and these days it is explicitly
+documented to work the same as "current" when pushing to another remote.
+
+> It is however more common to use 'origin' as the name of your
+> upstream repository (so that "git fetch" and "git pull" would grab
+> things from there by default) and set remote.pushdefault to the
+> remote you push into, though (iow, I found remote.pushdefault
+> pointing at 'origin' a bit unusual).  Doing so may make your
+> triangular workflow work smoother.
+
+Yeah, I wasn't going to nitpick his remote names, but that's the same
+convention I use. :) If people have custom forks of a repository that I
+access, I usually just name the remote for them after their username
+(including my own).
+
+-Peff
