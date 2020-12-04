@@ -2,78 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63E9CC433FE
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 16:40:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E65D3C4361A
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 16:46:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2E8E122AAF
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 16:40:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AD7C922AED
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 16:46:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730618AbgLDQk1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 11:40:27 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51560 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728312AbgLDQk1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 11:40:27 -0500
-Received: (qmail 30442 invoked by uid 109); 4 Dec 2020 16:39:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 04 Dec 2020 16:39:46 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12500 invoked by uid 111); 4 Dec 2020 16:39:45 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 04 Dec 2020 11:39:45 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 4 Dec 2020 11:39:45 -0500
-From:   Jeff King <peff@peff.net>
-To:     Sofia Syria <sofiasyria@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: diff-filter can't identify renaming if not done directly
-Message-ID: <X8pmURHeWcNLwmvs@coredump.intra.peff.net>
-References: <CAOsoBv7ors39UzVgq5VcqEwoaEbkXb5ApEf5NqW4bo_fymdruQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAOsoBv7ors39UzVgq5VcqEwoaEbkXb5ApEf5NqW4bo_fymdruQ@mail.gmail.com>
+        id S1727535AbgLDQqf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 11:46:35 -0500
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:46671 "EHLO
+        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726597AbgLDQqf (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 4 Dec 2020 11:46:35 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id 3F6F15C020D;
+        Fri,  4 Dec 2020 11:45:29 -0500 (EST)
+Received: from imap2 ([10.202.2.52])
+  by compute1.internal (MEProxy); Fri, 04 Dec 2020 11:45:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sudoforge.com;
+         h=mime-version:message-id:in-reply-to:references:date:from:to
+        :cc:subject:content-type; s=fm2; bh=+3XtfZ+D0LIjdd7h+doloiuKv2jE
+        erqiIbUUtS48R/s=; b=X9gDdE31EXlAbZr3NUvTrsCn7++g8GHGLqEFcbUbbUAD
+        g0zL/ZQIwSz59cuV/jrn+wyr95UwjIlNT9kWTceKoSd1u97mvzfnGENqep0Ua713
+        77m+ffUXekOLvAVhd+oVKO5z4d64vq+useI/OBmdICak3DGfbaJbsYGxgU0OZOXy
+        rIrKjZTfdfvYSHdTwCweAQJVECFf4ZJQ6v0ImhMiJgz2Z4H9H9kHv6it9zfQdrnM
+        7fmAGspLXVfaDTEw/V2/DXSmNAxXkreIaI6ntPxevDmBzbIB0Ik/kowQ6N+PGWAP
+        IRk3i/5uPSmR2osOhv6N7TLgEiGXFoVfFpdNZc9NBA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=+3XtfZ
+        +D0LIjdd7h+doloiuKv2jEerqiIbUUtS48R/s=; b=aoVTBBXl8NzFbuqGY4NBaW
+        4X7w/l43WgNK14fRmEcez9XhDFFDh9PNaiL6SD1Tj8NkctxXKI56i2/Ys4VUY5mN
+        k1O1GnwZhuHD9ehsw414EkDW1NEdq3xPmW9AaqGvEaKLwhIYsAYc+03sEqELubxH
+        QY7X9B/bh1WgjkYsB/yD1kjEOpI428Mpy0cZUbWZXFWhQF4W/H7oL7dV8+MEihUd
+        wguG+WL76jPjuTTfcnHeRwkP5B66JT/IHpfbziIOFsA2TrSFAlqpv1Xg7lY/0GiS
+        yCtMEPbIj4p4+P6LElUxoou04B5Z+tHu6YUKB21WCo9goj340lqPbY/x+I5bwzcg
+        ==
+X-ME-Sender: <xms:qGfKX2nEfe6PJdsL_kH3hXihW6hs41ox6pfSARlHH1KUoXDxEid2Ww>
+    <xme:qGfKX90SxfDe8GIOezgWBscqztZnbvpMoARUg547V8sVHcFCEQzAxMW6wz_czNb4X
+    ajgDmrzqH892YLZCw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudeikedgledvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    goufhushhpvggtthffohhmrghinhculdegledmnecujfgurhepofgfggfkjghffffhvffu
+    tgesthdtredtreertdenucfhrhhomhepfdeuvghnucffvghnhhgrrhhtohhgfdcuoegsvg
+    hnsehsuhguohhfohhrghgvrdgtohhmqeenucggtffrrghtthgvrhhnpeeiueelueevvefh
+    jeekleelhfejiedtvdfgjeeuueffffektdfhhfeivdegueeugfenucffohhmrghinhepfi
+    horhguphhrvghsshdrtghomhdpkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihii
+    vgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsggvnhesshhuughofhhorhhgvgdrtg
+    homh
+X-ME-Proxy: <xmx:qGfKX0ru95Mude3yoUfTZM1jZ0zibqnVDmhasZIfSkTe6WN5PpHmyg>
+    <xmx:qGfKX6ldwt1oy9pt6BU1n380sz_kh3Zxao-h6EN9J3tpsFy28seyQw>
+    <xmx:qGfKX0179y1Q1f4zCgO_pRP-jhHQ4j_v88YK0Us44flpxyMdBl3q3g>
+    <xmx:qWfKX1jk09xOqmMHjDYp6W-Gj6O94VLX3hMxLMbIaW3vTn0D8vrFJg>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id D614AE00BF; Fri,  4 Dec 2020 11:45:26 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.3.0-622-g4a97c0b-fm-20201115.001-g4a97c0b3
+Mime-Version: 1.0
+Message-Id: <601563bf-ed54-4795-917a-fce6e9343b79@www.fastmail.com>
+In-Reply-To: <CAMP44s2=3GrXf69jqVJ23U=N9QcmGb-dHP_OEqyb6MVTY2z7Jg@mail.gmail.com>
+References: <a4ae4e1a-b457-4b35-878c-2714ebfc415f@www.fastmail.com>
+ <CAMP44s2=3GrXf69jqVJ23U=N9QcmGb-dHP_OEqyb6MVTY2z7Jg@mail.gmail.com>
+Date:   Fri, 04 Dec 2020 09:44:59 -0700
+From:   "Ben Denhartog" <ben@sudoforge.com>
+To:     "Felipe Contreras" <felipe.contreras@gmail.com>
+Cc:     Git <git@vger.kernel.org>
+Subject: Re: Unexpected behavior with branch.*.{remote,pushremote,merge}
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 04, 2020 at 03:59:03PM +0100, Sofia Syria wrote:
+I'm just now hearing the terminology "triangular workflow" (I may live under a rock), but that aptly and succintly describes the workflow I was attempting to simplify with my initial configuration.
 
-> quick question about using diff-filter in linux. In the scenario
-> that in my repository, I first copy file1 to file2, then move file2 to
-> file3 and delete file1, "git diff" returns:
+I read the article on your blog, and the solution you propose makes sense to me, at least in the context of triangular workflows. I don't see any public feedback on your patch; bummer to see. Is it something you've brought up since 2014?
+
+-- 
+  Ben Denhartog
+  ben@sudoforge.com
+
+On Thu, Dec 3, 2020, at 19:31, Felipe Contreras wrote:
+> On Thu, Dec 3, 2020 at 7:29 PM Ben Denhartog <ben@sudoforge.com> wrote:
+> >
+> > I have a few repositories on my system that exist primarily as local copies of remote repositories, in that I normally just want to track and follow the upstream project (however, I periodically contribute back upstream so they are technically forks -- origin is my remote, upstream is theirs).
 > 
-> diff --git a/file1 b/file3
-> similarity index 100%
-> rename from file1
-> rename to file3
+> Otherwise known as a triangular workflow, for which in my opinion git
+> doesn't have good support.
 > 
->  but running "git diff --diff-filter=r" doesn't return anything. Only
-> flag "t" will return the change. Can this be considered as a bug?
-
-Lowercase filters exclude particular types. From "git help diff":
-
-    --diff-filter=[(A|C|D|M|R|T|U|X|B)...[*]]
-	   Select only files that are Added (A), Copied (C), Deleted
-	   (D), Modified (M), Renamed (R), have their type (i.e. regular
-	   file, symlink, submodule, ...) changed (T), are Unmerged (U),
-	   are Unknown (X), or have had their pairing Broken (B). Any
-	   combination of the filter characters (including none) can be
-	   used. When * (All-or-none) is added to the combination, all
-	   paths are selected if there is any file that matches other
-	   criteria in the comparison; if there is no file that matches
-	   other criteria, nothing is selected.
-
-	   Also, these upper-case letters can be downcased to exclude.
-	   E.g. --diff-filter=ad excludes added and deleted paths.
-
-So "--diff-filter=R" asks to see only renames. But "--diff-filter=r"
-asks to exclude them. And "--diff-filter=t" excludes typechanges, which
-means that renames are still OK. Doing "--diff-filter=a", etc, would
-still show it as well.
-
--Peff
+> I wrote about it in my blog [1], and I wrote the patches to properly
+> support that mode [2]. Unfortunately they were not merged.
+> 
+> Cheers.
+> 
+> [1] https://felipec.wordpress.com/2014/05/11/git-triangular-workflows/
+> [2] 
+> https://lore.kernel.org/git/1398023106-25958-1-git-send-email-felipe.contreras@gmail.com/
+> 
+> -- 
+> Felipe Contreras
+>
