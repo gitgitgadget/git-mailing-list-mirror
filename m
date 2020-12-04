@@ -2,155 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C983DC4361A
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 13:58:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34DD6C433FE
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 14:24:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A0C9D22A83
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 13:58:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA5A622B3A
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 14:24:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729342AbgLDN6V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 08:58:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60736 "EHLO
+        id S1726658AbgLDOXK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 09:23:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727855AbgLDN6V (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 08:58:21 -0500
-Received: from mail-oo1-xc43.google.com (mail-oo1-xc43.google.com [IPv6:2607:f8b0:4864:20::c43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5DD3C061A4F
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 05:57:35 -0800 (PST)
-Received: by mail-oo1-xc43.google.com with SMTP id h10so1372923ooi.10
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 05:57:35 -0800 (PST)
+        with ESMTP id S1726605AbgLDOXE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 09:23:04 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E44FC0613D1
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 06:22:24 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id s8so5483948wrw.10
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 06:22:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=EX1ZtnxzjsoQzOF4V52XtOnVxd2L4fXPE/d3f6kWUHg=;
-        b=Cc5f+ci5lTzFYOVNF6F5gMJJiHJzLcGO6MxOD2w3Jf7/msuzj84WC6XY2P8Gmxob79
-         51v0LUILQkGuvVFMNFv84JbgSAWief3nESSvxBKHAOnm66RQiHjScJ5AjkhGkUCBjIsM
-         hnluRWAxXiJTVd9AelYbkBdunOef56qGHWjjsm55JgQhGP0ZhD9YShjw2Q+rwXibOH1M
-         K21Dtv79SKyWkLn2JpBL599CuXcBHqiXTVWfusEfpZWbcwkc+lbPoIvmJ2ZLk31Rmr5Z
-         A1YDzSb990v98jv4noE5JweMwa/vbtVByzOkIlKUU3ZOgDtwIUZ3C8PQbSSr2nNeEYID
-         7cBQ==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=1i47ruy+214HLTI/BHP0VhA+HMqph9dxLp8/Oa1ugNw=;
+        b=MTehysGBChkNK3NL8vDc3kjW06U6YOWvCeIw4jhjo7HxgZlynacI8gE+n9ry2GsNmX
+         Ap4tWVmAL7n/cFJFYpKU23pR0qmqvWmfX/Vabx87dKdI/OMgzW61OyqUgrvmHKASJdHy
+         YwobEqika/uy6v691hYS550rMJI5NZZvAdfJtQuvDnTCIH+d849cc9kVvGvqoQzMLYak
+         h5T7UimOpoeWuwEPSFffK5/ZxQwbNMIrydkj6v38CUhKfLScfrLChxOtMq/EhWVroCmj
+         nQHXBZ1JSmjLg04TYgR/SLBDgA3xffUYxypcoskGt3wkmajJt9w7rkoSuvylVuHI0nG/
+         QUiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=EX1ZtnxzjsoQzOF4V52XtOnVxd2L4fXPE/d3f6kWUHg=;
-        b=eZaSmBjFa9F0uCLWD4EygNZCaISN044qA705zKZTP7tjz2C8tFfvScWclhcY7CI72o
-         T6N+L25Ab5Ky3eL9JD43iE7fL3WbZ2/o3vXJZx9v/g1x2bcqMWuH9NNi0GESE4TNHnK6
-         t7PVSZMlaMX92HC/5iqiEljd3+fJOBdlFh4QGro+Xb00I0O20OpqxTisqvZzAvSUaAjl
-         Sp7fPUgM+ghpaQYPHhs8tSiVQLfaVwAdux0SdHKgIR/fg6U4xDzqmvDV4Zlv2HrLWFUX
-         3VAxnmplnk3O9FidAWfL7WwWwa5Wx1yLYmD3IpFdS8CyHVGX2XY7+F3wfAxDSZvK721i
-         vxJw==
-X-Gm-Message-State: AOAM533bnnx1n4W1CmcpXEuzwMd/pnW6ptKdzchrHW7Ki2c7ziw7nzuZ
-        rE4UAA60bY9G2JM9xb8azIk=
-X-Google-Smtp-Source: ABdhPJwXNifcuzo1E6nckI4wrL+lNSwRMEGiKW3pMcuozaeJnG56PJg2ZIaC2zMRIcXp87R807HXqw==
-X-Received: by 2002:a4a:91de:: with SMTP id e30mr3556150ooh.58.1607090254993;
-        Fri, 04 Dec 2020 05:57:34 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
-        by smtp.gmail.com with UTF8SMTPSA id h20sm620965otj.57.2020.12.04.05.57.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Dec 2020 05:57:34 -0800 (PST)
-Subject: Re: [PATCH 00/15] Refactor chunk-format into an API
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     szeder.dev@gmail.com, me@ttaylorr.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Abhishek Kumar <abhishekkumar8222@gmail.com>
-References: <pull.804.git.1607012215.gitgitgadget@gmail.com>
- <ee0b73f7-8f59-a1dc-0a21-bf796bf9f2e2@web.de>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <3e3387b6-d2ab-7d86-0535-2ef182fbc469@gmail.com>
-Date:   Fri, 4 Dec 2020 08:57:34 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101
- Thunderbird/84.0
-MIME-Version: 1.0
-In-Reply-To: <ee0b73f7-8f59-a1dc-0a21-bf796bf9f2e2@web.de>
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=1i47ruy+214HLTI/BHP0VhA+HMqph9dxLp8/Oa1ugNw=;
+        b=O/xhmLf0KBbPsoNxgfKlmY/Bew6whrK1IjEg9sHkgIfzOtSbO2kGzUTlDeh3gErPbL
+         rgFIcfufJd9Xw3IPYGCdrUZBTM0DC03xRpVumvHD6X2H57ya0uRbpH9rsUkAvyTyIazi
+         4eu+UunpHg/en5OFSHDpPvBJvx6n8XP+FvoRLyg5pAzlPU8BzSPWu/5ccf4zrPDsu5BY
+         Br5kJvYY6PYuZS7/EAA5HbU/HHPlRpJ37HuApO9O7LC7IOWfRB6RDoZ/M32pVBWS21RT
+         unT1SqVIWxFgWGNVqy/IZof8Tnn5ni7e2ShPZcOg3s6Z8RA7cbamtbKcANZOG4V2Kxzr
+         Yxng==
+X-Gm-Message-State: AOAM531OGc+Z6Wgfh+wCKDx05rADD+VCYi+M2GGgD5+YxIeIL4K+YE0T
+        Pk4Q/0gUFl0mMI8dAfH7wlkokarHO7A=
+X-Google-Smtp-Source: ABdhPJwcKJ3b9s8LHOaKdq2NYUyxIVQfKocc60SetGZLZabjcYigknHqKTGPHY41Nt5/OlVHSbeoEA==
+X-Received: by 2002:adf:fb90:: with SMTP id a16mr5325260wrr.192.1607091742922;
+        Fri, 04 Dec 2020 06:22:22 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id s4sm3769396wra.91.2020.12.04.06.22.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Dec 2020 06:22:22 -0800 (PST)
+Message-Id: <pull.805.git.1607091741254.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 04 Dec 2020 14:22:20 +0000
+Subject: [PATCH] ci(vs-build): stop passing the iconv library location
+ explicitly
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Dennis Ameling <dennis@dennisameling.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/4/2020 7:48 AM, René Scharfe wrote:
-> Am 03.12.20 um 17:16 schrieb Derrick Stolee via GitGitGadget:
-...
->>  Documentation/technical/chunk-format.txt      |  54 ++
->>  .../technical/commit-graph-format.txt         |   3 +
->>  Documentation/technical/pack-format.txt       |   3 +
->>  Makefile                                      |   1 +
->>  chunk-format.c                                | 105 ++++
->>  chunk-format.h                                |  69 +++
->>  commit-graph.c                                | 298 ++++++-----
->>  midx.c                                        | 466 ++++++++----------
->>  t/t5318-commit-graph.sh                       |   2 +-
->>  t/t5319-multi-pack-index.sh                   |   6 +-
->>  10 files changed, 623 insertions(+), 384 deletions(-)
-> 
-> 623-384-54-3-3-1-69-2-6 = 101
-> 
-> So if we ignore changes to documentation, headers, tests and build
-> script this spends ca. 100 more lines of code than the current version.
-> That's roughly the size of the new file chunk-format.c -- from this
-> bird's-eye-view the new API seems to be pure overhead.
+From: Dennis Ameling <dennis@dennisameling.com>
 
-Overhead in terms of lines of code, but many of those are function
-prototypes and single lines containing only "{" and "}". So yes,
-the code files are a bit longer, but the amount of executed code is
-not meaningfully different.
+Something changed in `vcpkg` (which we use in our Visual C++ build to
+provide the dependencies such as libcurl) and our `vs-build` job started
+failing in CI. The reason is that we had a work-around in place to help
+CMake find iconv, and this work-around is neither needed nor does it
+work anymore.
 
-Extra lines of code is an expected cost of refactoring. The remaining
-question is, "is it worth the cost?" I believe it is.
- 
-> In the new code I see several magic numbers, use of void pointers and
-> casting as well as repetition -- is this really going in the right
-> direction?  I get the feeling that YAGNI.
+For the full discussion with the vcpkg project, see this comment:
+https://github.com/microsoft/vcpkg/issues/14780#issuecomment-735368280
 
-void pointers are a cost of abstraction in C that we use all over the
-codebase.
+Signed-off-by: Dennis Ameling <dennis@dennisameling.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    ci: fix the vs-build job so that CI builds pass again
+    
+    This was noticed first in a Git for Windows PR.
 
-You (and Junio) are right to point out my magic numbers. Those should
-be replaced with something better when possible.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-805%2Fdscho%2Fvs-build-and-libiconv-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-805/dscho/vs-build-and-libiconv-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/805
 
-As far as YAGNI, I doubt that very much. First, we have already seen
-extensions to the commit-graph that added several new chunks, and
-plugging into this (documented) API should be easier than the previous
-ad-hoc mechanism.
+ .github/workflows/main.yml      | 1 -
+ compat/vcbuild/scripts/clink.pl | 2 +-
+ contrib/buildsystems/engine.pl  | 2 +-
+ 3 files changed, 2 insertions(+), 3 deletions(-)
 
-I've CC'd Abhishek to get his opinion, since he's recently added chunks
-to the commit-graph file. Outside of the fact that this series conflicts
-with his series (which I will fix), it would be good to see if he
-appreciates this model.
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index a940997f1b..f1f0d1fe35 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -201,7 +201,6 @@ jobs:
+       shell: bash
+       run: |
+         cmake `pwd`/contrib/buildsystems/ -DCMAKE_PREFIX_PATH=`pwd`/compat/vcbuild/vcpkg/installed/x64-windows \
+-        -DIconv_LIBRARY=`pwd`/compat/vcbuild/vcpkg/installed/x64-windows/lib/libiconv.lib -DIconv_INCLUDE_DIR=`pwd`/compat/vcbuild/vcpkg/installed/x64-windows/include \
+         -DMSGFMT_EXE=`pwd`/git-sdk-64-minimal/mingw64/bin/msgfmt.exe -DPERL_TESTS=OFF -DPYTHON_TESTS=OFF -DCURL_NO_CURL_CMAKE=ON
+     - name: MSBuild
+       run: msbuild git.sln -property:Configuration=Release -property:Platform=x64 -maxCpuCount:4 -property:PlatformToolset=v142
+diff --git a/compat/vcbuild/scripts/clink.pl b/compat/vcbuild/scripts/clink.pl
+index df167d1e1a..3bd824154b 100755
+--- a/compat/vcbuild/scripts/clink.pl
++++ b/compat/vcbuild/scripts/clink.pl
+@@ -45,7 +45,7 @@
+ 		push(@args, "zlib.lib");
+ 	    }
+ 	} elsif ("$arg" eq "-liconv") {
+-		push(@args, "libiconv.lib");
++		push(@args, "iconv.lib");
+ 	} elsif ("$arg" eq "-lcrypto") {
+ 		push(@args, "libcrypto.lib");
+ 	} elsif ("$arg" eq "-lssl") {
+diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
+index 2ff9620459..ed6c45988a 100755
+--- a/contrib/buildsystems/engine.pl
++++ b/contrib/buildsystems/engine.pl
+@@ -351,7 +351,7 @@ sub handleLinkLine
+         } elsif ("$part" eq "-lexpat") {
+             push(@libs, "libexpat.lib");
+         } elsif ("$part" eq "-liconv") {
+-            push(@libs, "libiconv.lib");
++            push(@libs, "iconv.lib");
+         } elsif ($part =~ /^[-\/]/) {
+             push(@lflags, $part);
+         } elsif ($part =~ /\.(a|lib)$/) {
 
->> I was thinking about file formats recently and realized that the "chunks"
->> that are common to the commit-graph and multi-pack-index could inform future
->> file formats. To make that process easier, let's combine the process of
->> writing and reading chunks into a common API that both of these existing
->> formats use.
-
-And another point on YAGNI: I'm literally prototyping a new file format and
-want to use this API to build it instead of repeating myself. Specifically,
-I noticed that the commit-graph and multi-pack-index were inconsistent in
-how they protected the file format in different ways during writes and reads.
-This leads to...
-
->> There is some extra benefit immediately: the writing and reading code for
->> each gets a bit cleaner. Also, there were different checks in each that made
->> the process more robust. Now, these share a common set of checks.
-
-...my point that combining these checks make both codepaths slightly more
-robust. I didn't even include the potential extension of storing the size
-of each chunk in "struct commit_graph" and "struct multi_pack_index" for
-run-time bound checks during lookups. That seemed like too much new
-behavior for a series that intends to only refactor.
-
-Thanks,
--Stolee
+base-commit: 898f80736c75878acc02dc55672317fcc0e0a5a6
+-- 
+gitgitgadget
