@@ -2,160 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07E5AC4167B
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 22:42:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BD5CC0018C
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 22:45:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D4D2022C7E
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 22:42:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D8E3A22C97
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 22:45:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726188AbgLDWmh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 17:42:37 -0500
-Received: from mout.gmx.net ([212.227.17.20]:50987 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725912AbgLDWmh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 17:42:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1607121662;
-        bh=NMwMnP2yfl7Lr2FC/E+w15off0DoVyNGeNCRYGccRcY=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=JxM/OMTtFrGJZY+a2uTtef7vbrdvoz/mgzs6wSfsqNU3SSepgK1GFCK3IPiq033j0
-         9sWCef4RG/xlKHW8Yr3Gp27arIF1helqajLGRcNr1Uet1PHsCnTRT4YwgODoFrdOKH
-         egMSlKlSI2REQmZwKK+6k/zC9aiR7J/MjBUkOLks=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.88.62] ([89.1.212.111]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MfYPY-1kE9jC13Iu-00g17N; Fri, 04
- Dec 2020 23:41:02 +0100
-Date:   Fri, 4 Dec 2020 23:41:00 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] cmake: determine list of extra built-ins dynamically
-In-Reply-To: <xmqqczzpe3i6.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2012042338580.25979@tvgsbejvaqbjf.bet>
-References: <pull.807.git.1607110436367.gitgitgadget@gmail.com> <xmqqczzpe3i6.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730825AbgLDWp1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 17:45:27 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53121 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726111AbgLDWp0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 17:45:26 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8BE5C11D094;
+        Fri,  4 Dec 2020 17:44:44 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=o3lsIUUwPVnHYUNOFsYN52bCR/8=; b=SKmsyL
+        6YCi1zUXlUkZ74KcUI/q56RCRRHuSo/TBPe9v0aZVXo2Yd33CeSpQrDcjAeIrW8f
+        Q3abLCPkPDlM4DrmlPWPW9JQcv34GSm89UTmZhc3bTLzHXT6zeTwWMzTld38cEdM
+        ztIL/fP1Z+EsTaH8AEvT3KU/lQNGE33BBg1P4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=jy8KWurJcgyxIsTs6yKmJQQRZZAp0rcl
+        8sQ/bcQ66LGk902NrVshaRlRO0aS9dgX204jb+eXsdITbVrEYoCykLHJgSKeP9bg
+        BcUteTinEGtqGxLDN3rNPd1Mpf8EGk6bk29HWSny19fXQWQRb+e2TUFPPPmFS1rr
+        JkKkeJBENeg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8478511D093;
+        Fri,  4 Dec 2020 17:44:44 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C6AB411D08C;
+        Fri,  4 Dec 2020 17:44:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Samuel Thibault <samuel.thibault@ens-lyon.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] fetch-pack: check result of index_pack_lockfile
+References: <20201204221457.2873935-1-samuel.thibault@ens-lyon.org>
+Date:   Fri, 04 Dec 2020 14:44:39 -0800
+In-Reply-To: <20201204221457.2873935-1-samuel.thibault@ens-lyon.org> (Samuel
+        Thibault's message of "Fri, 4 Dec 2020 23:14:57 +0100")
+Message-ID: <xmqqwnxxcht4.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:g0t0i2dXK/6EYJGNCGpUXI9RvDyzUOE0PeKbbeEOY/924+r5kBo
- 8LY9uxZY57NBAkaXTbKybNfQwGNqfuQ56QYKYz0KJ88a/+ZP9GtoxIZd5y1lucp36so8+ue
- fPIfQI62VA39W8+ffuJcTLREzox/rQxdxPO6v8FwQ43lBP69VryWH52nsdtIRtJGIAIIbEW
- o2HBwulnEd9S4FwsXanaA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:w46K6yOLEQY=:Y9OFjLJKTTStCqAxAjRJCv
- dBB/rTC9Ei6UjOwC2ebXXOQNitUOQkzowU25v3FZhQfo1rLTdTe0tNl117V6Mum+D8S2uxyr3
- aizuETFKYwN2mg1QChETpAYkieWS5PDneSL9Pf6MWVJhhgbD0yGKKLcjoCkqXJjVM+D2u/xfI
- b+DTOMoaf/WYWPR/5ixKCPu/e4OX7jAg3aQo134Dyt5DNAfTE02pNO6IOKyJLXHAV6oqrjhhj
- yHH6G3RrJ5zfL6M+59qQSoJhZ3skWZ7F4mxVEnbMtNqikWCJCJWWOEJBdpdnvvMyET62uCRSz
- GGEieGQx9IbNP7mv1cHegwgY9BPscpxGp82EjeGljw6C7vCUGoet8cXPd1yp51tI+h2hrnvI4
- N9+ZI6kd8/yZQHHQpQCSsWNNqMFwJJ9+rWr29zearACvkABdNlt1BikUwyuzuq+AEIYGO1J+E
- r4xwm35c9DNwGuK57v1e2asccDgcRDcU2/PwsKm+mZ6vEu3PKr/I/KZchy+O7lWcq79NZY6V7
- ffnbKGjn0oTD0wkp6pS1paH5+iFSizs5g9lSpEa6m52ZCoszXuAYLY7l2T4bfKpMLG+DP2TSJ
- effmWDksjlD0lT05xoTzKKQj5fEDE4PWzS8MU0svF4d3QmONHwoD7YbZSlP1mNzRJqyeDEkar
- Wmh1Zxyg97/kka/1/WdR0bwfpyOmybwZMjIojsqvBbMlaFrplkhCLsffQ2ddv1qdNdhPjSrzB
- t33svXO9Vd3BvCy4OV+ENHnVpviPtgJ41fFOld/Ai4xv60O2QR79bxgRlQDIXlD50iWSMxrNb
- s8uphTfR+oBSjpKX7f4mcEfXiFoq2Lzq2lbO9DInKDsQM6Z/kTJc3VEmzWqEWY4msHvHlsMSr
- /05RcRtMZf8HUUWPPYY6cawB21SzKxanhX3gxtWpU=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4BAE10C8-3682-11EB-AE22-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Samuel Thibault <samuel.thibault@ens-lyon.org> writes:
 
-On Fri, 4 Dec 2020, Junio C Hamano wrote:
+> The fetch-pack command may fail (e.g. like in test 15 - fetch into corrupted
+> repo with index-pack), in which case index_pack_lockfile will
+> return ...
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > In 0a21d0e08902 (Makefile: mark git-maintenance as a builtin,
-> > 2020-12-01), we marked git-maintenance as a builtin in the Makefile, b=
-ut
-> > forgot to do the same in `CMakeLists.txt`.
-> >
-> > Rather than always play catch-up and adjust `git_builtin_extra`
-> > manually, use the `BUILT_INS` definitions in the Makefile as
-> > authoritative source and generate `git_builtin_extra` dynamically.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >     ci: fix the vs-build job after adding git maintenance
-> >
-> >     Together with https://github.com/gitgitgadget/git/pull/805, this s=
-hould
-> >     fix the vs-build job in the CI build of seen.
->
-> I suspect that the breakage 805 addresses affects even 'master'; is
-> the breakage this patch fixes limited to 'seen', or affect everybody?
+Thanks.
 
-I haven't checked `master` yet, but `next` definitely was affected. I
-_think_ the problem was introduced when Peff's patch added the
-`git-maintenance` tool to the `BUILT_INS` list in the `Makefile` (and
-hence we try to `tar` it up with all the other build artifacts in the
-`vs-build` job) but wasn't added to `CMakeLists.txt` (and therefore
-`vs-build` would not generate that hard-link).
+It sounds like the same as 6031af38 (fetch-pack: disregard invalid
+pack lockfiles, 2020-11-30), which came from
 
-Ciao,
-Dscho
+    Message-Id: <c54233ce-ff72-ca29-68c2-1416169b8e42@web.de>
 
->
-> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-807%=
-2Fdscho%2Fcmake-and-extra-builtins-v1
-> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-807/dsc=
-ho/cmake-and-extra-builtins-v1
-> > Pull-Request: https://github.com/gitgitgadget/git/pull/807
-> >
-> >  contrib/buildsystems/CMakeLists.txt | 15 +++++++++++----
-> >  1 file changed, 11 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystem=
-s/CMakeLists.txt
-> > index df539a44fa..c151dd7257 100644
-> > --- a/contrib/buildsystems/CMakeLists.txt
-> > +++ b/contrib/buildsystems/CMakeLists.txt
-> > @@ -114,6 +114,16 @@ macro(parse_makefile_for_scripts list_var regex l=
-ang)
-> >  	endif()
-> >  endmacro()
-> >
-> > +macro(parse_makefile_for_executables list_var regex)
-> > +	file(STRINGS ${CMAKE_SOURCE_DIR}/Makefile ${list_var} REGEX "^${rege=
-x} \\+=3D git-(.*)")
-> > +	string(REPLACE "${regex} +=3D" "" ${list_var} ${${list_var}})
-> > +	string(STRIP ${${list_var}} ${list_var}) #remove trailing/leading wh=
-itespaces
-> > +	string(REPLACE "git-" "" ${list_var} ${${list_var}}) #strip `git-` p=
-refix
-> > +	string(REPLACE "\$X" ";" ${list_var} ${${list_var}}) #strip $X, ; is=
- for converting the string into a list
-> > +	list(TRANSFORM ${list_var} STRIP) #remove trailing/leading whitespac=
-es for each element in list
-> > +	list(REMOVE_ITEM ${list_var} "") #remove empty list elements
-> > +endmacro()
-> > +
-> >  include(CheckTypeSize)
-> >  include(CheckCSourceRuns)
-> >  include(CheckCSourceCompiles)
-> > @@ -673,10 +683,7 @@ if(CURL_FOUND)
-> >  	endif()
-> >  endif()
-> >
-> > -set(git_builtin_extra
-> > -	cherry cherry-pick format-patch fsck-objects
-> > -	init merge-subtree restore show
-> > -	stage status switch whatchanged)
-> > +parse_makefile_for_executables(git_builtin_extra "BUILT_INS")
-> >
-> >  #Creating hardlinks
-> >  foreach(s ${git_SOURCES} ${git_builtin_extra})
-> >
-> > base-commit: 898f80736c75878acc02dc55672317fcc0e0a5a6
->
