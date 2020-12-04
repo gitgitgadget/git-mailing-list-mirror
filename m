@@ -2,110 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2B59C433FE
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 21:55:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0DA3C433FE
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 22:15:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 84CAA22CE3
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 21:55:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 800D322CBE
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 22:15:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728017AbgLDVzS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 16:55:18 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50265 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725933AbgLDVzR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 16:55:17 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D613110FB12;
-        Fri,  4 Dec 2020 16:54:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6XNbl9LsnBuPMjTfbN7pvPmSVIo=; b=PyiseZ
-        Wya6n5+j0cz0590NSneG0ZjRTw/fllMhwG9rqOo/3kBuKNpTXvypG6qdtnjcFOz2
-        g5fJ27Ccm7XhkWl0b31pMlUvd1h5SnVK6dT28yomE9Le6Ksuca1pvD6N3Uv6nHQp
-        KG2BCWVQC5o5U4a1UXv/VAs+AZIfBJSUYSTMU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qqTCfNF1Iiy+wFtw65l4uSPVUK0fkYvx
-        L1jFoyZRkfo303C87EC2nmhfqpWvU2MPjdOF4G3TgyF39GMfxy8F3e9gSMt6Ck1V
-        IoLECl6gRmx0MrTjDqRJhZuV7ZHWIPHuAoPNECTbUk1ECS3TDTdAiSOnGoEF1Sfe
-        3lHkuisSJcI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CF49C10FB11;
-        Fri,  4 Dec 2020 16:54:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 219FF10FB0D;
-        Fri,  4 Dec 2020 16:54:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 6/9] oid-array: provide a for-loop iterator
-References: <X8qEg/KiAQDugPC0@coredump.intra.peff.net>
-        <X8qFo+GJJTbaPV58@coredump.intra.peff.net>
-        <CAPig+cTLs5bkY=Pwg+4tT2KHfVHFjkrNTeS_ygGEwq0cOOJ9wQ@mail.gmail.com>
-Date:   Fri, 04 Dec 2020 13:54:31 -0800
-In-Reply-To: <CAPig+cTLs5bkY=Pwg+4tT2KHfVHFjkrNTeS_ygGEwq0cOOJ9wQ@mail.gmail.com>
-        (Eric Sunshine's message of "Fri, 4 Dec 2020 14:18:45 -0500")
-Message-ID: <xmqq1rg5dyp4.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726430AbgLDWPD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 17:15:03 -0500
+Received: from mout.gmx.net ([212.227.17.20]:39991 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725965AbgLDWPD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 17:15:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1607119980;
+        bh=SELL+VJ4C+8lb3iNbvcuhOGjA7tmasWTx06M7xzDUf0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=F8E/Cjmi0zY11aAyo5fm3/FRpWqAxmrHWqvY2YDNMM9OTLWwEmvrIiVC1UiFB+ci+
+         86erOijCxx/8FWEvowJm5Vk4RpapbVWYLgFjUt5xEihqPvIsX8jvWLSXMv4Mu0MSmY
+         3169PjXb9BDOr3lQFF9NdNsdVpCG/FY3LlOGTo34=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.88.62] ([89.1.212.111]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N4hvb-1k42Bv1CmV-011i6w; Fri, 04
+ Dec 2020 23:13:00 +0100
+Date:   Fri, 4 Dec 2020 23:12:57 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Dennis Ameling <dennis@dennisameling.com>
+Subject: Re: [PATCH] ci(vs-build): stop passing the iconv library location
+ explicitly
+In-Reply-To: <xmqqv9dhe3wi.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2012041612300.25979@tvgsbejvaqbjf.bet>
+References: <pull.805.git.1607091741254.gitgitgadget@gmail.com> <xmqqv9dhe3wi.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4AF763B6-367B-11EB-A5DF-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:VpHtvDjaiUF6yUa26YjPxydvgYW66sxTGmOUl21i/leTeFlZjNw
+ ziG43d3eXX7533KP8uwTtu/B2JcOplt+6+y/tFMG/WqwlUVuXR5luP3qyXJV5SGHP0Rrs8j
+ 2PHIKq3l4VYKCHu5mBcu5nFZeY9CInvB/LQfSI1y8Q4a0hhwD2aNlck1DRxO/VQ+n9ME+DW
+ h6cYfokKCAD8IfekTpSBw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:r45dm4U3QeI=:VsfLwDH5GfwtCOcITL9T4t
+ AdczpSBDoGwAfEqLdoXZIGt57h83EVNgMTeFWldWffxPsSoYqLXEZ6+p/e7JfjIyS/uPXmvY9
+ /jkLIBh57VLepuxEaAsl51axNmdDueY6hgyD+Z8QFYo1h+e9iQR+VQriUn5zXjLOV1ocfCrFE
+ jQn0B6IWEejFe4PLvwq2CItziZ/GK/Xb6/08R6wuQl+qoBAGWPJGHl1+TcCOIjjhrJ6xfo5mZ
+ V5Qh9LIBYnmrItv8MRaKxcI2KMYZudfkfqlmdmmSSTG+Aj5V8dgGx13vVbuTf6okdwUV45+e0
+ ytXxpu26tQb8KbsXeHO83aCC9LubrYe2ENeoV3tso1tSofQkWefRcMg9X7+E7RWir6pgcotp/
+ 4KNSSAC7obfI6WandkAQ0lJ/DJa25abdTP654sVirUhRqJgCchjmXZyM1Z+/tkzh3JWpkaK95
+ F6U81Sou/4Ri2S7rUI9BFf8i8zbW1BMY/kXYVLW5qvzYzOtkwiOsMh+S3uR0ZNlLCpIWohyfr
+ NhDs8QT7ZQ47cbs8SdCL7O60onocibjyyveOqeSmtDEDqlR6iSTjb2/JMxvzGNjmIM+iSmBvY
+ PJDeodEBoEyJN2PtGCaTuj6MUQ2Lk0nkuAlKjQRBTgD4G+3VeANvuwAu2zFq3GTd8V+Fh7MuK
+ jHwSYOhYPH+3r38IQ+DZ6MibBSkuqFoB6CK2A9o7IX6xMTcdLhkkiDRUJaYgAF66YtIjusP1R
+ 6wW4e4qzgw53Ji82rPKVfPXC1Fp0U8CXH5gVTMaw1bsUslLSgr120LHecGop6WpqIteZbvrH8
+ ltBjlsQ1Dpqnlw9D0PPJnH6JeimqbmYSHbOkr4k6zVNa9E0rX3j4KGGw3iTR1AIf2HNLdzT3s
+ OEGHbWek7OMdbneUgd/d+fa/BRBLqw/BOQQNIpZNQ=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Hi Junio,
 
-> On Fri, Dec 4, 2020 at 1:54 PM Jeff King <peff@peff.net> wrote:
->> [...]
->> The caller does have to remember to sort the array first. We could add
->> an assertion into the helper that array->sorted is set, but I didn't
->> want to complicate what is otherwise a pretty fast code path.
->> [...]
->> Signed-off-by: Jeff King <peff@peff.net>
->> ---
->> diff --git a/oid-array.h b/oid-array.h
->> @@ -111,4 +113,24 @@ void oid_array_filter(struct oid_array *array,
->> +/**
->> + * Find the next unique oid in the array after position "cur". You
->> + * can use this to iterate over unique elements, like:
->> + *
->> + *   size_t i;
->> + *   oid_array_sort(array);
->> + *   for (i = 0; i < array->nr; i = oid_array_next_unique(array, i))
->> + *     printf("%s", oid_to_hex(array->oids[i]);
->> + *
->> + * Non-unique iteration can just increment with "i++" to visit each element.
->> + */
->
-> Minor: I see that the example code sorts the array first -- which is
-> necessary, as explained in the commit message -- but I wonder if it is
-> worth calling out explicitly in the prose:
->
->     Find the next unique oid in the array after position `cur`.
->     The array must be sorted for this to work. You can use
->     this to iterate over unique elements like this:
->
->> +static inline size_t oid_array_next_unique(struct oid_array *array, size_t cur)
+On Fri, 4 Dec 2020, Junio C Hamano wrote:
 
-Perhaps the function can make it clear that it expects to be fed a
-sorted array in its name, which would be even better?
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > From: Dennis Ameling <dennis@dennisameling.com>
+> >
+> > Something changed in `vcpkg` (which we use in our Visual C++ build to
+> > provide the dependencies such as libcurl) and our `vs-build` job start=
+ed
+> > failing in CI. The reason is that we had a work-around in place to hel=
+p
+> > CMake find iconv, and this work-around is neither needed nor does it
+> > work anymore.
+> >
+> > For the full discussion with the vcpkg project, see this comment:
+> > https://github.com/microsoft/vcpkg/issues/14780#issuecomment-735368280
+> >
+> > Signed-off-by: Dennis Ameling <dennis@dennisameling.com>
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >     ci: fix the vs-build job so that CI builds pass again
+> >
+> >     This was noticed first in a Git for Windows PR.
+>
+> This is probably the same breakage I've been seeing, e.g.
+> https://github.com/git/git/runs/1494253517
 
->> +{
->> +       do {
->> +               cur++;
->> +       } while (cur < array->nr &&
->> +                oideq(array->oid + cur, array->oid + cur - 1));
->> +       return cur;
->> +}
+Yes.
+
+> I guess we should just apply directly to 'master' (or 'maint' and
+> merge up), but I can queue it just like all other topics and have it
+> traverse through 'seen'->'next'->'master'.
+
+Whatever is easier for you.
+
+Thanks,
+Dscho
