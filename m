@@ -2,181 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BED60C433FE
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 10:14:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBAAEC4361A
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 12:50:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6789022518
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 10:14:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 949DB22AAE
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 12:50:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387678AbgLDKO0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 05:14:26 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51278 "EHLO cloud.peff.net"
+        id S1729117AbgLDMu0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 07:50:26 -0500
+Received: from mout.web.de ([212.227.15.14]:60373 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387586AbgLDKO0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 05:14:26 -0500
-Received: (qmail 25145 invoked by uid 109); 4 Dec 2020 10:13:44 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 04 Dec 2020 10:13:44 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9693 invoked by uid 111); 4 Dec 2020 10:13:44 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 04 Dec 2020 05:13:44 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 4 Dec 2020 05:13:43 -0500
-From:   Jeff King <peff@peff.net>
-To:     Ben Denhartog <ben@sudoforge.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Unexpected behavior with branch.*.{remote,pushremote,merge}
-Message-ID: <X8oL190Vl03B0cQ/@coredump.intra.peff.net>
-References: <a4ae4e1a-b457-4b35-878c-2714ebfc415f@www.fastmail.com>
+        id S1726477AbgLDMu0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 07:50:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1607086112;
+        bh=jPzntKxPuOxhnXlSPfx98F+xcdaSgaNup2qO8rEbr08=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=lR3wZokOP3YhjgSaJtnb3XR3fThJ17tPcdm+LufxpYpU/zo6YNVjZTngWxY0L8wVt
+         gE2hR1vVackyY9NGlEwFjAaQbk4Omu6P9cvfI/dJ/rT8VUXoLKnZuaORgcuSWlBcVs
+         tgN+oYrvu+GIjaMmU1qqtlPVZQFWHK1oYmX5EJrI=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.17.45]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1M8Bvz-1kpHNr1sDT-005LX4; Fri, 04
+ Dec 2020 13:48:32 +0100
+Subject: Re: [PATCH 00/15] Refactor chunk-format into an API
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     szeder.dev@gmail.com, me@ttaylorr.com,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.804.git.1607012215.gitgitgadget@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <ee0b73f7-8f59-a1dc-0a21-bf796bf9f2e2@web.de>
+Date:   Fri, 4 Dec 2020 13:48:31 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
+In-Reply-To: <pull.804.git.1607012215.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <a4ae4e1a-b457-4b35-878c-2714ebfc415f@www.fastmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:6LdtzMT58hd8qIObov7J9LoD2DalRClvY+6vNM9XCp1CuSKUra3
+ NfjNs5fyu6GmiQrYPPXBE9O8aGsQf0uD8y+16XhFYWCJiHhsoyHhPlmjX+JHuQlgJaybjwn
+ mJh/BfNAptY1YG37twXv2a+qsRPj+/IEigPZ0Rqp9+uDlXXde/g8OJQ1XQ3rsXUqkQciD9a
+ SEFYuXa2Kqmhuu4JpUmiw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:vCl9wXLOb3I=:v6q5gcUH5N6oRbngNK1bDX
+ W6QuTLCOBBgt2AnkXl/3lo5DxaeFzshdaUAROVoiS7q/yGwqUgdLU9TpWKOees8k+3ZcBhIlA
+ EdLP4dYeP+rKuPoF9V+XMAnbCLP7+hDBoH7ltZIrXhBUJApKUUYAgLtETXYxLl9ipimi5NqMo
+ dorlgePAx7X97481/TSmRxsUf7BExuPBrfWSxvSmtJP2WHIEVzjZSBLLfEsZKNwu4xUynJn4k
+ tCIr2bNy9ktefpBjqzxuH2jWNRX4JAE03Feg1xgDzXBvfkFu2k0zeavM8SujQc9z2dZNdMOKc
+ YdHF1EMi35KUvlISbqbpnTbFf1R2qK/fKm+sHVEBZajiFv0y2WWR0Ed/16g01EQnRAFwnekhz
+ G5u0ZwxRaJzKGn7+l7r4W5aziv8yNNyUcg6p6cp56ZyD8H6y+Dp6+bGOHeOw3BGOTVOJl+dOj
+ vFy2ZBoQtkZLR3HTMLyQN5askP9OzFg/ShV20QOao4HQ3+nKfAbSzNAbuzJPFp+YqGRLry6NM
+ v3h1s2HlqMTq3XIC1MfoCiK+sJNc0efCV7Ro88KBIcvAd19VCjHKzPBorfZenH1RaUTOuuCIi
+ sYiJeuXzNdq87lP2j1dkG5LNwgmWEpCIcDgMXWUTQEoIh9S5a8iPEWbJF4xB3ziFlF91r1f9O
+ m6EKWppUMAlPuCiST/XzsvN+bb7EF/BPV+hVzR1iNUD1+e0pMnMayxTYh4P2kEJO97WMrnWAo
+ bea3eM/s5mqetEYMDUQVN/aCYjUQVEkiAJlVNdOckMoT8XhdAJF2bqGhWNOfhlEiJ/WzwVoCO
+ hsuHQ6o+zz2xiBRVQC4YYcl579OsAP7fmi9oY0iqSIQOrQOYlRLxN24Q9pN+riwpdB4vmBLEJ
+ ewWOVFMHEPVBmviWC1Xg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 03, 2020 at 06:26:15PM -0700, Ben Denhartog wrote:
+Am 03.12.20 um 17:16 schrieb Derrick Stolee via GitGitGadget:
+> I was thinking about file formats recently and realized that the "chunks=
+"
+> that are common to the commit-graph and multi-pack-index could inform fu=
+ture
+> file formats. To make that process easier, let's combine the process of
+> writing and reading chunks into a common API that both of these existing
+> formats use.
+>
+> There is some extra benefit immediately: the writing and reading code fo=
+r
+> each gets a bit cleaner. Also, there were different checks in each that =
+made
+> the process more robust. Now, these share a common set of checks.
 
-> I have a few repositories on my system that exist primarily as local copies of remote repositories, in that I normally just want to track and follow the upstream project (however, I periodically contribute back upstream so they are technically forks -- origin is my remote, upstream is theirs).
-> 
-> In these repositories, I set the following configuration:
-> 
-> ```
-> [remote "origin"]
->   url = https://git.foo.com/me/bar.git
->   fetch = +refs/heads/*:refs/remotes/origin/*
-> [remote "upstream"]
->   url = https://git.foo.com/them/bar.git
->   fetch = +refs/heads/main:refs/remotes/upstream/main
->   tagopt = --no-tags
-> [branch "main"]
->   remote = upstream
->   pushRemote = origin
->   merge = refs/heads/master
->   rebase = true
-> ```
+>  Documentation/technical/chunk-format.txt      |  54 ++
+>  .../technical/commit-graph-format.txt         |   3 +
+>  Documentation/technical/pack-format.txt       |   3 +
+>  Makefile                                      |   1 +
+>  chunk-format.c                                | 105 ++++
+>  chunk-format.h                                |  69 +++
+>  commit-graph.c                                | 298 ++++++-----
+>  midx.c                                        | 466 ++++++++----------
+>  t/t5318-commit-graph.sh                       |   2 +-
+>  t/t5319-multi-pack-index.sh                   |   6 +-
+>  10 files changed, 623 insertions(+), 384 deletions(-)
 
-I use a similar setup myself, and it works well for this kind of
-triangular flow. A few notes:
+623-384-54-3-3-1-69-2-6 =3D 101
 
-  - I assume you mean "merge = refs/heads/main" from your examples
+So if we ignore changes to documentation, headers, tests and build
+script this spends ca. 100 more lines of code than the current version.
+That's roughly the size of the new file chunk-format.c -- from this
+bird's-eye-view the new API seems to be pure overhead.
 
-  - instead of branch.*.pushremote, I usually set remote.pushdefault, so
-    that it covers all branches (i.e., I'd never want to push to the
-    upstream remote, which I do not even have access to).
+In the new code I see several magic numbers, use of void pointers and
+casting as well as repetition -- is this really going in the right
+direction?  I get the feeling that YAGNI.
 
-  - in a workflow like this, I generally have push.default set to
-    "current"
-
-  - I make frequent use of @{push} to refer to the matching branch on my
-    remote (e.g., after doing some local work, I might use "git
-    range-diff upstream @{push} HEAD" to examine the changes before
-    pushing them up).
-
-> Based on my understanding of the branch configuration options, this
-> should effectively force my local `main` branch to track against
-> `upstream/main`, but push to `origin/main`. I notice what I believe to
-> be odd behavior when fetching: that FETCH_HEAD doesn't resolve to
-> `upstream/main` as I would expect:
-> 
-> ➜ git fetch --all
-> Fetching origin
-> Fetching upstream
-> remote: Enumerating objects: 23, done.
-> remote: Counting objects: 100% (23/23), done.
-> remote: Total 32 (delta 23), reused 23 (delta 23), pack-reused 9
-> Unpacking objects: 100% (32/32), 12.97 KiB | 949.00 KiB/s, done.
-> From https://git.foo.com/them/bar
->    63f7159..e65b80e  main     -> upstream/main
-
-The culprit here is using "git fetch --all". It triggers the sub-fetches
-with --append, so they'll each add to FETCH_HEAD instead of overwriting
-it.  We do truncate it before the first one, so after this completes it
-should have the complete set of refs fetched from both remotes (even if
-it was a noop to fetch one of them, anything mentioned in the refspecs
-shows up in FETCH_HEAD).
-
-Which is what you're seeing here:
-
-> ➜ cat .git/FETCH_HEAD
-> 23e6881719f661c37336d9fcf7a9005a7dfce0cf        not-for-merge   branch 'main' of https://git.foo.com/me/foo
-> e65b80edd2a2162f67120a98e84bb489f15fcf97                branch 'main' of https://git.foo.com/them/foo
-
-FETCH_HEAD is not just a ref, but contains some magic instructions that
-get interpreted by git-pull. But when programs besides git-pull try to
-resolve it to a single object, they just pick whichever value is first.
-
-So I do think there's a bug there, or at least something not
-well-thought-out in the way that "fetch --all" appends. Normally fetch
-tries to put the merge branch (or branches) first in the file, exactly
-so this naive "take the first one" lookup will do the most sensible
-thing. But when running multiple fetches that all append, we get their
-individual outputs in the order of fetch (which in turn is the same as
-the order in the config file).
-
-Perhaps the parent "git fetch --all" triggering the sub-fetches should
-reorder FETCH_HEAD after they've all finished (to pull any merge heads
-up to the top, regardless of which remote they came from).
-
-But an obvious workaround, if you know you'll always be merging from
-upstream, is to just reorder your config stanzas so that it's fetched
-first (likewise you can run "git fetch --multiple upstream origin" to
-specify the order manually, or define a group with remotes.<group>).
-
-One reason I suspect nobody has come across this before is that there's
-not much reason to use FETCH_HEAD in this setting. If you know you want
-to rebase again upstream/main, then there are a number of ways you can
-refer to that:
-
-  - upstream/main
-
-  - upstream, if your refs/remotes/upstream/HEAD is set up (if you
-    didn't clone, you may want to run "git remote set-head upstream -a")
-
-  - @{upstream}, if it's configured as your upstream (which it is here)
-
-  - @{u}, a shorter synonym
-
-  - nothing at all, since rebasing against the upstream is the default
-    for git-rebase these days
-
-  - you can say that (or even just "upstream", if your
-    refs/remotes/origin/HEAD is set up)
-
-> Curiously, `git rebase FETCH_HEAD` seems to think the local branch is
-> up to date (erroneously),
-
-That's what I'd expect, since it is doing the naive "what is the first
-one in the file" lookup.
-
-> however `git-pull --rebase=true` [works]
-
-That is running a new git-fetch under the hood, which will overwrite
-FETCH_HEAD (and will only fetch from upstream, since that's what's in
-branch.main.remote).
-
-> `git-merge FETCH_HEAD` both work as expected and merge/rebase with
-> `upstream/main`.
-
-I think git-merge, like git-pull, understands the magic FETCH_HEAD
-format.
-
-> Am I going about this incorrectly? The main purpose behind configuring
-> my "mostly just a fork" repository is that it simplifies tracking
-> against an upstream remote for projects which I do not work on
-> actively. Of course, you might argue that I don't need to keep my
-> remote around for this purpose and can just use a straightforward
-> `git-clone` here -- but I'd rather not, and would prefer responses
-> addressing the perceived bug rather than suggesting this particular
-> alternative workflow.
-
-I think your workflow is perfectly reasonable.
-
--Peff
+Ren=C3=A9
