@@ -2,109 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0DA3C433FE
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 22:15:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09AF7C4361A
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 22:21:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 800D322CBE
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 22:15:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C471E22CBE
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 22:21:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726430AbgLDWPD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 17:15:03 -0500
-Received: from mout.gmx.net ([212.227.17.20]:39991 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725965AbgLDWPD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 17:15:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1607119980;
-        bh=SELL+VJ4C+8lb3iNbvcuhOGjA7tmasWTx06M7xzDUf0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=F8E/Cjmi0zY11aAyo5fm3/FRpWqAxmrHWqvY2YDNMM9OTLWwEmvrIiVC1UiFB+ci+
-         86erOijCxx/8FWEvowJm5Vk4RpapbVWYLgFjUt5xEihqPvIsX8jvWLSXMv4Mu0MSmY
-         3169PjXb9BDOr3lQFF9NdNsdVpCG/FY3LlOGTo34=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.88.62] ([89.1.212.111]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N4hvb-1k42Bv1CmV-011i6w; Fri, 04
- Dec 2020 23:13:00 +0100
-Date:   Fri, 4 Dec 2020 23:12:57 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Dennis Ameling <dennis@dennisameling.com>
-Subject: Re: [PATCH] ci(vs-build): stop passing the iconv library location
- explicitly
-In-Reply-To: <xmqqv9dhe3wi.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2012041612300.25979@tvgsbejvaqbjf.bet>
-References: <pull.805.git.1607091741254.gitgitgadget@gmail.com> <xmqqv9dhe3wi.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:VpHtvDjaiUF6yUa26YjPxydvgYW66sxTGmOUl21i/leTeFlZjNw
- ziG43d3eXX7533KP8uwTtu/B2JcOplt+6+y/tFMG/WqwlUVuXR5luP3qyXJV5SGHP0Rrs8j
- 2PHIKq3l4VYKCHu5mBcu5nFZeY9CInvB/LQfSI1y8Q4a0hhwD2aNlck1DRxO/VQ+n9ME+DW
- h6cYfokKCAD8IfekTpSBw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:r45dm4U3QeI=:VsfLwDH5GfwtCOcITL9T4t
- AdczpSBDoGwAfEqLdoXZIGt57h83EVNgMTeFWldWffxPsSoYqLXEZ6+p/e7JfjIyS/uPXmvY9
- /jkLIBh57VLepuxEaAsl51axNmdDueY6hgyD+Z8QFYo1h+e9iQR+VQriUn5zXjLOV1ocfCrFE
- jQn0B6IWEejFe4PLvwq2CItziZ/GK/Xb6/08R6wuQl+qoBAGWPJGHl1+TcCOIjjhrJ6xfo5mZ
- V5Qh9LIBYnmrItv8MRaKxcI2KMYZudfkfqlmdmmSSTG+Aj5V8dgGx13vVbuTf6okdwUV45+e0
- ytXxpu26tQb8KbsXeHO83aCC9LubrYe2ENeoV3tso1tSofQkWefRcMg9X7+E7RWir6pgcotp/
- 4KNSSAC7obfI6WandkAQ0lJ/DJa25abdTP654sVirUhRqJgCchjmXZyM1Z+/tkzh3JWpkaK95
- F6U81Sou/4Ri2S7rUI9BFf8i8zbW1BMY/kXYVLW5qvzYzOtkwiOsMh+S3uR0ZNlLCpIWohyfr
- NhDs8QT7ZQ47cbs8SdCL7O60onocibjyyveOqeSmtDEDqlR6iSTjb2/JMxvzGNjmIM+iSmBvY
- PJDeodEBoEyJN2PtGCaTuj6MUQ2Lk0nkuAlKjQRBTgD4G+3VeANvuwAu2zFq3GTd8V+Fh7MuK
- jHwSYOhYPH+3r38IQ+DZ6MibBSkuqFoB6CK2A9o7IX6xMTcdLhkkiDRUJaYgAF66YtIjusP1R
- 6wW4e4qzgw53Ji82rPKVfPXC1Fp0U8CXH5gVTMaw1bsUslLSgr120LHecGop6WpqIteZbvrH8
- ltBjlsQ1Dpqnlw9D0PPJnH6JeimqbmYSHbOkr4k6zVNa9E0rX3j4KGGw3iTR1AIf2HNLdzT3s
- OEGHbWek7OMdbneUgd/d+fa/BRBLqw/BOQQNIpZNQ=
-Content-Transfer-Encoding: quoted-printable
+        id S1726734AbgLDWVj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 17:21:39 -0500
+Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:53495 "EHLO
+        wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726810AbgLDWVj (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 4 Dec 2020 17:21:39 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.west.internal (Postfix) with ESMTP id 3C0E5A9C;
+        Fri,  4 Dec 2020 17:20:53 -0500 (EST)
+Received: from imap2 ([10.202.2.52])
+  by compute1.internal (MEProxy); Fri, 04 Dec 2020 17:20:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sudoforge.com;
+         h=mime-version:message-id:in-reply-to:references:date:from:to
+        :cc:subject:content-type; s=fm2; bh=U18eUXDWY6OFCjTDm1XLgrbXLyl1
+        ESC9ZdDxOPsPPuM=; b=yz+PyntPOLk7cMhFaLwv64uwMrdSZL9919KL365cT6o/
+        2PhK1VuUs3+BbZZ9DjPJwepfHqHpJG/77AxxfhlG3JbLCGHY3FRoiJlluV7SBqWP
+        GEmOScT1poiiD7OT1UKv5ArL4Xp5Hu3HQE1R+8Cru2PESA+v3K5Pj1VX168DG+xm
+        XJg0P+PIDyObEXqpJYk9q90cTY1TRy1ucUKeIdDgYspV2xjBnRqQLm9tOybZ5Cwb
+        IF2kjxreTeeo6AQLJ+9X1UmMhj1MeAvJ019/0Vw/m234oxZC50C0nCv4bEkigeg2
+        f60SDv7LMkMq5CFheb8D30rRpp01nGhhDMD18fd+bw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=U18eUX
+        DWY6OFCjTDm1XLgrbXLyl1ESC9ZdDxOPsPPuM=; b=Ksn4v7lj/M02LP6goIDqUH
+        z/NOrX/A7OADZlHGmucqkKVva1+dnQgKt7OJvDTvROYTi4xFQEC/Syaw78Gs+5ok
+        nkZb7S5QKtJUCcIuXrf0tRExdpFvJFOWaW1d+KjSzCFulF/cEBjnnDdeg3TzNNi6
+        qZSySsHKFvG/JOPuTXJ5/MJwevEWRNidlIvWBeIKS4aXJA90GyNoqp7HHSbdgKBS
+        kI+ScD/Jd4cgFC/vdCWSCDnBh63rYLEuXfJM2F8Ef+eHmun8dsYgyMuZJVyIrhMw
+        zIxN5kM5r5shLII9GYEF+o2Z4o3IxR7nI12lJxXULscRVRI51SMJheUX+kMB1nfw
+        ==
+X-ME-Sender: <xms:RLbKX0jvdYRBaUy1nu3Ggbbeagv3rzKCkRltmgCHKjGg1OjxiV5nbQ>
+    <xme:RLbKX9Cth6k-ACXF0pxR5xqgn11T0D5GJhf1QbIYKOmegNTJwK8GSOQYslii7Fgt3
+    x8CygbicDQqWTGStA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudeikedgudeitdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgesth
+    dtredtreertdenucfhrhhomhepfdeuvghnucffvghnhhgrrhhtohhgfdcuoegsvghnsehs
+    uhguohhfohhrghgvrdgtohhmqeenucggtffrrghtthgvrhhnpefggfdtkeduleevjeduge
+    ekueeuheeftdevveekkedvieeigfejheekkeevleejfeenucevlhhushhtvghrufhiiigv
+    pedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsvghnsehsuhguohhfohhrghgvrdgtoh
+    hm
+X-ME-Proxy: <xmx:RLbKX8E5Dqio9ZYyHm_rasebNZwN9U2T07W0EhPhBfKjJp3JvUz1aw>
+    <xmx:RLbKX1RpwTast_HeIn8Fo-6tJiaohFxTfD8ZDj53Kx-ynS84G_8xwA>
+    <xmx:RLbKXxwVr0IJh6zZxaGtQzwCdGuHG5jf1jBzXFOGgzzbv1V0UdQ1Uw>
+    <xmx:RLbKX_Zt5t_z2LhstaLtvTJCbyEh7mGbap3L_Zpx4hNGfO4hrWeWyg>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 7F6AFE00BF; Fri,  4 Dec 2020 17:20:50 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.3.0-622-g4a97c0b-fm-20201115.001-g4a97c0b3
+Mime-Version: 1.0
+Message-Id: <64680dc3-1cae-4572-82ef-ed183aff1746@www.fastmail.com>
+In-Reply-To: <X8qjVAGlrYJWO5fc@coredump.intra.peff.net>
+References: <a4ae4e1a-b457-4b35-878c-2714ebfc415f@www.fastmail.com>
+ <X8oL190Vl03B0cQ/@coredump.intra.peff.net>
+ <112958f6-0eca-453d-86f3-52e7054a88f9@www.fastmail.com>
+ <xmqq360lfios.fsf@gitster.c.googlers.com>
+ <X8qjVAGlrYJWO5fc@coredump.intra.peff.net>
+Date:   Fri, 04 Dec 2020 15:20:32 -0700
+From:   "Ben Denhartog" <ben@sudoforge.com>
+To:     "Jeff King" <peff@peff.net>, "Junio C Hamano" <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Unexpected behavior with branch.*.{remote,pushremote,merge}
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+I guess from my perspective, for these repositories, my fork _is_ the "origin"; I tend to mirror the repositories I contribute to (e.g. use the "fork" feature on Git{Hub,Lab}/etc), then clone my mirror, which lends itself to that mental model (origin is "mine"). 
 
-On Fri, 4 Dec 2020, Junio C Hamano wrote:
+-- 
+  Ben Denhartog
+  ben@sudoforge.com
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+On Fri, Dec 4, 2020, at 14:00, Jeff King wrote:
+> On Fri, Dec 04, 2020 at 11:57:23AM -0800, Junio C Hamano wrote:
+> 
+> > > * Refactor away from usage of FETCH_HEAD
+> > 
+> > Yes, "fetch --all" is about updating the remote-tracking branches
+> > and in retrospect, perhaps we might have avoided confusion if we
+> > made it not to touch FETCH_HEAD, but it is not going to change now.
+> 
+> I think its behavior of appending all of the entries is sensible (or at
+> least is the least-surprising thing). The only weird part is that it
+> does not keep the "make sure heads for merging come before not-for-merge
+> entries" property that individual ones have.
+> 
+> It could take a final pass after all of the sub-fetches have run and do
+> that. I don't have any plans to work on it, but I'm tempted to call it a
+> #leftoverbits candidate.
+> 
+> > > * Set `remote.pushdefault = origin`
+> > > * Set `push.default = current` (instead of `simple`, and is what
+> > > my global config sets this to)
+> > 
+> > I have a feeling that simple vs current does not make a difference
+> > if you are pusing main to main, and if so, push.default could be
+> > left to the default settings of 'simple'.  But the key to successful
+> > use of the triangular workflow is to configure so that "fetch/pull"
+> > goes to one place (i.e. your upstream) and "push" goes to another
+> > (i.e. your publishing repository), and "remote.pushdefault" is a
+> > good ingredient to do so.
+> 
+> I think my advice is just out-of-date (by quite a lot). In the early
+> days, I remember being bitten by (or at least confused by) simple and
+> how its use of upstream could work with multiple remotes. But we long
+> ago fixed that, with ed2b18292b (push: change `simple` to accommodate
+> triangular workflows, 2013-06-19), and these days it is explicitly
+> documented to work the same as "current" when pushing to another remote.
+> 
+> > It is however more common to use 'origin' as the name of your
+> > upstream repository (so that "git fetch" and "git pull" would grab
+> > things from there by default) and set remote.pushdefault to the
+> > remote you push into, though (iow, I found remote.pushdefault
+> > pointing at 'origin' a bit unusual).  Doing so may make your
+> > triangular workflow work smoother.
+> 
+> Yeah, I wasn't going to nitpick his remote names, but that's the same
+> convention I use. :) If people have custom forks of a repository that I
+> access, I usually just name the remote for them after their username
+> (including my own).
+> 
+> -Peff
 >
-> > From: Dennis Ameling <dennis@dennisameling.com>
-> >
-> > Something changed in `vcpkg` (which we use in our Visual C++ build to
-> > provide the dependencies such as libcurl) and our `vs-build` job start=
-ed
-> > failing in CI. The reason is that we had a work-around in place to hel=
-p
-> > CMake find iconv, and this work-around is neither needed nor does it
-> > work anymore.
-> >
-> > For the full discussion with the vcpkg project, see this comment:
-> > https://github.com/microsoft/vcpkg/issues/14780#issuecomment-735368280
-> >
-> > Signed-off-by: Dennis Ameling <dennis@dennisameling.com>
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >     ci: fix the vs-build job so that CI builds pass again
-> >
-> >     This was noticed first in a Git for Windows PR.
->
-> This is probably the same breakage I've been seeing, e.g.
-> https://github.com/git/git/runs/1494253517
-
-Yes.
-
-> I guess we should just apply directly to 'master' (or 'maint' and
-> merge up), but I can queue it just like all other topics and have it
-> traverse through 'seen'->'next'->'master'.
-
-Whatever is easier for you.
-
-Thanks,
-Dscho
