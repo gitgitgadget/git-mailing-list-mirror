@@ -2,147 +2,202 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26159C433FE
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 23:26:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EF98C4361A
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 00:54:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C59F2221EA
-	for <git@archiver.kernel.org>; Thu,  3 Dec 2020 23:26:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC8F122482
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 00:54:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728115AbgLCX0A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Dec 2020 18:26:00 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57067 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725912AbgLCXZ7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Dec 2020 18:25:59 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 72A3F9D15F;
-        Thu,  3 Dec 2020 18:25:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=emBKHwWUny8XO2mHxzJs7PoF4Ho=; b=cWstyU
-        5IF4wHJ79E83+snj6pNNlYjSpp+iNu5C6rdbFadMxxFWa/9Ty7ZgKNNYUomfAbsK
-        pVcjXyNuquwtro69lTy8xV4f/C6NxL90Lvk9SNfyR1vRd0oqw0BuFQu90Oj6Z2Iq
-        cJtZ1UMwoK6ZutzRoq2OLFES9KxOAXeExtWVw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=NoMpMpVb6sTCuz7N8dY+TnXuCDpq1nYo
-        HSMxULZPbxJaJMNybeTdE0cEi6Dvw3FuStFbSNxze2AitbRqgKwgfU9ZAnaDRK0Y
-        VQdJf4xZa6k5PHwicYH3X6/6TnkRPwzXv27q93vb2gvNcERmzRxTOhoUPqJHfbIX
-        dQZXimIoQyY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6981E9D15E;
-        Thu,  3 Dec 2020 18:25:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AF6F59D15D;
-        Thu,  3 Dec 2020 18:25:13 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH] init-db: init the_repository->hash_algo early from
- GIT_DEFAULT_HASH
-References: <pull.924.git.git.1606419582190.gitgitgadget@gmail.com>
-        <xmqq5z5mruia.fsf@gitster.c.googlers.com>
-        <CAFQ2z_M3OO_nR6dhw6zzE0orYxcawP1DaJ_EOL5=+RUiZgCo8w@mail.gmail.com>
-Date:   Thu, 03 Dec 2020 15:25:12 -0800
-In-Reply-To: <CAFQ2z_M3OO_nR6dhw6zzE0orYxcawP1DaJ_EOL5=+RUiZgCo8w@mail.gmail.com>
-        (Han-Wen Nienhuys's message of "Thu, 3 Dec 2020 21:23:36 +0100")
-Message-ID: <xmqqtut2fp5z.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727818AbgLDAyE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Dec 2020 19:54:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52438 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726149AbgLDAyE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Dec 2020 19:54:04 -0500
+Received: from mail-vs1-xe41.google.com (mail-vs1-xe41.google.com [IPv6:2607:f8b0:4864:20::e41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6917DC061A4F
+        for <git@vger.kernel.org>; Thu,  3 Dec 2020 16:53:18 -0800 (PST)
+Received: by mail-vs1-xe41.google.com with SMTP id b23so2337359vsp.9
+        for <git@vger.kernel.org>; Thu, 03 Dec 2020 16:53:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Y+iv3ySemNuBG86lc2J351Wq23kolSmntgvXaJ4+yLs=;
+        b=rYTZbRst3COFpdLlC1cZAflUUbwbNHsUkiptfMPdjvzErrTdJJV02AoxXXSkeOMBMa
+         RiiSpjTF2Fzlg5011nMq+qdQvURkOSvta3GVjiVHWkygCTIHLaAaZJwr0+ifE3VlBFGB
+         6k0+niLHcQ2kPljNYmEdjBhH6uz+ZkMKzpEfBUjMdlFYezkxjt004tw5czeQFMBO8XAB
+         cKO0xYmmcbsvNHbh/+G4wfilW9ISZWi5JCW8EfJ5qk+so+Gxz/8qHrVxgrg7hVxxHiXE
+         nAe/pzgIVgGRe8Rw86axYN1Ki8LSjU6ml+zs71iLMyiQQ8fxt9QqT0UleXXyv0pc3OX6
+         loqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Y+iv3ySemNuBG86lc2J351Wq23kolSmntgvXaJ4+yLs=;
+        b=MCmMA3Gh4CT4ev0XHlcoMvHyyzLpq002/XEarw/bkJENxsQ7yT7oksUA6R/R1s4+2g
+         1sZjEIeEfFq05PHpiLFPcx44P/bv6stQC4L3XmT32mcrLuA6yLQtIkou4iO4gE3kDVhI
+         Ys9Q06G6XaW5DZqPSt91dpcYtX5iQl9gpHMLphlQ3cir1kZBfOcXH5ObJZkNM/lpC1zr
+         h5jlkYG5ycBK4EEAJ3O9UaA871VuNbYroD3QJTq4BMC//c8LAxodkADo005/+lJl79AW
+         /wLVv/X2g5YDMETTZFvU/RK0MkbG5iD1fTrU1YPweMMp4JPx1I1VGwCzUlxeFSrvIMPT
+         X8xA==
+X-Gm-Message-State: AOAM5306aSz3CAxYgdrTKJhgSVhmloDmJjWUSN+HWWtZQKp7G6GrDefF
+        sVsnOsBMy+mZJ5ACDQkb3Rb9cA6io/3RtLIMahs881ikW3k=
+X-Google-Smtp-Source: ABdhPJz6Ssbra34GQRzT89GgQteusuIHI6QvMy9UfggLTVvZvLC3CAdS/OUUxO7MbRy6MCFkpqyqH9nAFbMJo50RQsc=
+X-Received: by 2002:a67:6781:: with SMTP id b123mr2013581vsc.10.1607043197595;
+ Thu, 03 Dec 2020 16:53:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CB655C78-35BE-11EB-A004-D152C8D8090B-77302942!pb-smtp1.pobox.com
+References: <20201125020931.248427-1-alexhenrie24@gmail.com>
+ <20201125020931.248427-2-alexhenrie24@gmail.com> <xmqqmtyviq9e.fsf@gitster.c.googlers.com>
+ <CAMP44s1Hwun+P=j5BBbVUT-ACS4hJCyRCJT-=6WvwK913fXq7g@mail.gmail.com>
+ <xmqq7dpyix1d.fsf@gitster.c.googlers.com> <xmqqmtyuhemi.fsf@gitster.c.googlers.com>
+ <CAMP44s0K48xJy0gD6jLoiDr9GYDmD3MVmWYVbsNyXyBnPcvj1Q@mail.gmail.com>
+In-Reply-To: <CAMP44s0K48xJy0gD6jLoiDr9GYDmD3MVmWYVbsNyXyBnPcvj1Q@mail.gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 3 Dec 2020 16:53:07 -0800
+Message-ID: <CA+P7+xq1QNzKbnZAwNn4bf6b4g5KS1ySB0dvgp7n1jyk13Vrog@mail.gmail.com>
+Subject: Re: [RFC 2/2] pull: default pull.ff to "only" when pull.rebase is not
+ set either
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Git <git@vger.kernel.org>, "Raymond E. Pasco" <ray@ameretat.dev>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
+        Theodore Tso <tytso@mit.edu>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
+On Thu, Dec 3, 2020 at 3:08 PM Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+>
+> On Thu, Dec 3, 2020 at 1:30 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > Junio C Hamano <gitster@pobox.com> writes:
+> >
+> > >> That would require changing the semantics of --ff-only, so that "git
+> > >> pull --no-rebase --ff-only" doesn't make sense (as --ff-only is
+> > >> overridden by --no-rebase).
+> > >
+> > > I do not think such a conclusion follows from "we do not want to use
+> > > the 'by default force the --ff-only' when the user chooses between
+> > > merge and rebase".  Specifically, I do not agree with "as --ff-only
+> > > is overridden" in your statement.
+> >
+> > Ah, sorry, I mis-read your three lines above.
+> >
+> > There are currently two ways "git pull" consolidates your work with
+> > the other history.  By default, you are "pulling" work from your
+> > contributors (and that is what "pull request" means---contributors
+> > ask you to pull, and you take their work at your discretion) and the
+> > only way that makes sense is to merge their history into yours.
+>
+> And this is the reason why I warn about using one's worldview too
+> much. The *vast* majority of users do not use "git pull" this way;
+> there are more contributors than maintainers.
+>
+> What they want is to "merge your history into theirs", not the other
+> way around. So the only way they can do that correctly is by doing
+> "git fetch" + "git merge". Which is why so many people say to avoid
+> "git pull" altogether.
+>
+> So, a newcomer that doesn't know much about git and does a "git pull",
+> is pretty much guaranteed to do something unintended. If he/she is a
+> user, the merge will have the parents the other way around, but even
+> as a maintainer, the project might not like merges, and he/she will
+> introduce an unwanted merge, or worse; an evil merge.
+>
 
-> If the_repository is only half-initialized at this point in init_db(),
-> then why are we passing it in refs_init_db() just a couple of lines
-> further? At what point the_repository considered initialized?
+As someone who spends a significant amount of energy at work educating
+newcomers to git, this is a significant problem.
 
-I would have to say it probably depends on what callees expect.  The
-current implementation of refs_init_db() for files backend may not
-need anything other than the hash algorithm enum, but many other
-fields are missing, and they should ideally be populated, no?  
-
-For example, I see files_ref_store_create() cheats by calling
-get_common_dir_noenv() to find out where the commondir is, instead
-of ever asking the repository the ref store belongs to. At least,
-get_main_ref_store() is told to get the ref store that belongs to
-the_repository, and it would be the right place to learn relevant
-pieces of information (for that matter, I am not sure why struct
-ref_store does not have a pointer to a repository structure; perhaps
-we are seeing the result of piecemeal evolution, not a designed
-structure?).
-
-> I'm a bit at a loss here; I never learned how to cleanly work with so
-> many global variables, so I'm happy to take your suggestion.
-
-I am only interested in giving a clear direction to future
-developers where to populate the_repository's members (and nothing
-else) if their enhancement needs members other than the hash
-algorithm to be populated, as if it were the_repository initialized
-in an already working repository (I am not talking about many global
-variables, whichever you are referring to).
-
-One way to do so would probably be to do something like the
-attached.
-
-The patch that started this thread (or the equivalent one in the
-updated reftable series) may want to initialize a bit more members
-while at it (looking at how commondir from the_repository is not
-used by the refs/files-backend.c::files_init_db() to decide where
-the function creates the refs/heads and refs/tags directories, we
-probably would need to populate the_repository->commondir before
-that codepath can be fixed to look at the member, for example).
-
-
- builtin/init-db.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
-
-diff --git c/builtin/init-db.c w/builtin/init-db.c
-index dcc45bef51..2b5c94596f 100644
---- c/builtin/init-db.c
-+++ w/builtin/init-db.c
-@@ -438,6 +438,27 @@ int init_db(const char *git_dir, const char *real_git_dir,
- 
- 	validate_hash_algorithm(&repo_fmt, hash);
- 
-+	/*
-+	 * At this point, the_repository we have in-core does not look
-+	 * anything like one that we would see initialized in an already
-+	 * working repository after calling setup_git_directory().
-+	 *
-+	 * Calling repository.c::initialize_the_repository() may have
-+	 * prepared the .index .objects and .parsed_objects members, but
-+	 * other members like .gitdir, .commondir, etc. have not been
-+	 * initialized.
-+	 *
-+	 * Many API functions assume they are working with the_repository
-+	 * that has sensibly been initialized, but because we haven't
-+	 * really read from an existing repository, we need to hand-craft
-+	 * the necessary members of the structure to get out of this
-+	 * chicken-and-egg situation.
-+	 *
-+	 * For now, we update the hash algorithm member to what the
-+	 * validate_hash_algorithm() call decided for us.
-+	 */
-+	repo_set_hash_algo(the_repository, repo_fmt->hash_algo);
-+
- 	reinit = create_default_files(template_dir, original_git_dir,
- 				      initial_branch, &repo_fmt,
- 				      flags & INIT_DB_QUIET);
+> > The other is you are updating your branch by rebasing your work on
+> > top of what happend in their history.
+>
+> Again, what the user might want is the opposite. If the user is a
+> maintainer, these two:
+>
+>   git pull --merge github john
+>   git pull --rebase github john
+>
+> Should be about their history to yours (or on top of yours).
+>
+> > And if we introduce a third-way, i.e. "we do not handle the case
+> > where you have your own development at all, this is only to maintain
+> > pristine copy from your upstream", and repurpose "--ff-only" for
+> > that purpose, yes, what you said above does make sense.  At that
+> > point, there is no reason to disagree with "as --ff-only is
+> > overridden" part of your statement---in your new world, "--ff-only"
+> > is redesigned to act that way.
+>
+> That's right. Otherwise "git pull --no-rebase" will fail; you will
+> have to specify --ff (or --no-ff) for it to work. And that doesn't
+> make sense to me.
+>
+> Specifying --no-rebase should override the default --ff-only mode (or
+> pull.mode=ff-only).
+>
+> > In retrospect, "git pull --rebase" was a UI mistake.  What the other
+> > side means is totally different in the operation from what the other
+> > side is in "git pull".  The former is for you to catch up with your
+> > upstream and the latter is for you, who _is_ the upstream to others,
+> > to take others work in as their upstream.  If we instead introduced
+> > a separate command, say "git update", that is "fetch followed by
+> > rebase" (just like "git pull" is "fetch followed by merge"), to
+> > rebase your work on top of updated upstream, there wouldn't be a
+> > need for us to be having this discussion.
+> >
+> > It probably is water under the bridge at this point.  Perhaps if
+> > somebody builds a time-machine for me, I'll go back 13 years and
+> > give my younger self this wisdom ;-)
+>
+> You don't have to go back 13 years ago, you can go back 6 years ago
+> when I wrote all the patches for git update [1], explained the summary
+> of the problem [2], and others urged git developers to pay more
+> attention to the patch [3].
+>
+> But as you say; water under the bridge.
+>
 
 
+> Today there are 3 things to do:
+>
+> 1. Improve the annoying warning
+> 2. Consider changing the semantics of --ff-only, or implement pull.mode=ff-only
+> 3. Consider a new "git update" command
+>
+> Since my new (2020) patches for pull.mode (solve 1 and 2) have not
+> been reviewed, I'm thinking there's too much inertia and perhaps it's
+> time to cash in the chips and concentrate only on 1.
+>
+
+I think that solving (1) is relatively simple and worth doing. I think
+solving (2) is trickier but worth doing in the medium time frame.
+
+Doing (3) may have value.. We did it for git checkout already
+recently, by adding git switch and git restore-files.. But it's a
+bigger undertaking.
+
+I personally like changing the default of pull to be "I will only fast
+forward, and you need to tell me what to do if history isn't fast
+forward". This does cause some strain as it forces users to now have
+to understand and pick which thing they want, (rebase or merge) when
+combining history.. But I think that's better than users not being
+asked to pick and just having merge be the default unless they go out
+of their way to set the rebase by default option.
+
+> Cheers.
+>
+> [1] https://github.com/felipec/git/commit/d38f1641fc33535aa3c92cf6d3a30334324d3488
+> [2] https://lore.kernel.org/git/5366db742d494_18f9e4b308aa@nysa.notmuch/
+> [3] https://lore.kernel.org/git/CAGK7Mr4uucBN=17ph5pBjrz7yP60By1sERU9oBL+c2-gsMDmrw@mail.gmail.com/
+>
+> --
+> Felipe Contreras
