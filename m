@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 991D8C4167B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01C34C4361A
 	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 20:49:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5EC4F22CE3
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 20:49:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C7D5222CF6
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 20:49:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730417AbgLDUtn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 15:49:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40002 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730332AbgLDUtm (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1730394AbgLDUtm (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 4 Dec 2020 15:49:42 -0500
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA00FC08E861
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 12:48:26 -0800 (PST)
-Received: by mail-wm1-x343.google.com with SMTP id g185so8193734wmf.3
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 12:48:26 -0800 (PST)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40004 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730232AbgLDUtm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 15:49:42 -0500
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDE98C08E862
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 12:48:27 -0800 (PST)
+Received: by mail-wm1-x344.google.com with SMTP id a3so8172922wmb.5
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 12:48:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ajsah9vP6m5FStxN4iJIKQQYqeKlqqcbNP8dSaxtu+0=;
-        b=LrNxzJKzV+J2YoYYyS+60OHSQ7x3C7uIqTd1OD10x9304efG1sthMiLqPf65LQCOis
-         CT7XObcbeXxpsCxHdjwHs1IEAJnGXKBbq+L8dQjiVmypX8YiG5V9O0dDFV2144oY0afS
-         W/SmFLGSejpoI2dSdnGEfSSyyf7adI1tdE5f8PaNZ7Mxj6LDFc8Sa8NqqTB/Amipw6ir
-         PidIDKAq60LAS7vIxmhHUbRFoRx37b83soutRxGIc+W/9N3u69gIFfSJFaGO2LFvF0D+
-         IcUIkx0TFzt0np8Z9hMrOVZUoZnYI1XZPtLzysyJrRGtlvsStfPlP69iWr2IdOYH4zk9
-         JDMw==
+        bh=XJPfvf2mmPYAO+WF6XjbOW5AJ00Zwdiy5fArUe9FNv8=;
+        b=JRET0NH4e+TBKL0BjMQCpoKiS92AwMtIFdax0pXYYHvizO9+uMANEPG9odM/rN8BRZ
+         J/LinS4bc3a98kkQu7FkfZLh/kX2wMnODldiol4pEzrBt3Sqgc9bzszGSDvpRKm/QJmh
+         fnH4yWrBC4v3ygHgDqy5XsYlQh4CqTWuh2Tn4PK9gcue63UqQsDaiyYeYSnBXkusv3Ir
+         lOhnDJFkAewmjPE37hqbh27Zel30djdl1hB0pcD4scl5OXYVhwErnabQy3NO9ZwvZNl8
+         KQ26UBDzVRr2eLc5Gl9Fs6ukdzOIT8xcAR2tUPRm7vVdNnuFMgvx+CJ62LCM6S7h2kA9
+         yYNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ajsah9vP6m5FStxN4iJIKQQYqeKlqqcbNP8dSaxtu+0=;
-        b=LIIHwZJuo7jwi90ekFEkmZf4fAi1GifzlAOhYB6/WUiY+KlxMq660zeckSVlNQfgQ7
-         thhOjGQopMhbtcg1kxBNf4AMsnMJIFNThWjL9N4v3BQKK9MfSl6IUz+4Jw4lhliCvDcz
-         23eAodIGIQtSqvU/1/mVKFwaAmQcCZks5XlFddZpj1mlQQsmTx8fTwRFZ3Wulmg1uPfA
-         FsIYGBLvl6dOT9WA3fA9tEzezITVqdF4SpOc2cWy58lnAjAjgtQG9c562E5s6dIEiGjk
-         AJVoP2mVWc+7lzH6jvyIwaJBY+fdpbTVmhUZQ4oGnSp5cVxlKpXBIVLVab3w8xP5KfG3
-         28AA==
-X-Gm-Message-State: AOAM533idH5tIeSC4gfQfvO9sFEk2HglBMRq9Eaul6sD3h2Kxdk00LUU
-        px/fhsWsKiyIeP35s6m8EUq6o9/Ff+E=
-X-Google-Smtp-Source: ABdhPJyvJ8my+CpvPd9vTNNBMF3hKbU7bkaIr6Q5HVH/6RwwEoncAkd5G1iXLhOT6FSvfx4/YehGZA==
-X-Received: by 2002:a1c:17:: with SMTP id 23mr6034021wma.35.1607114905413;
-        Fri, 04 Dec 2020 12:48:25 -0800 (PST)
+        bh=XJPfvf2mmPYAO+WF6XjbOW5AJ00Zwdiy5fArUe9FNv8=;
+        b=VkQDU5TRqplX/wV9YvR3R7LPXklhIuPFonCftZMYfsa7bB681GNqs6h/8Kx/ew7KNV
+         T5sKuL0U7BuC5kcc8cEKE+N7niZQ9Yc/57xJNXhTcLImmFIbeg0b9zMxl3HeioUnvZTo
+         HJYHn83+EFx04EBtlQK2iqrlza/xYpiYxaPxvqrp6mPkAyd6a61XXhKHPWPuP6/EJMaV
+         hXwSbXXkCh17U0N+6BmoFwyRmcJ0Xy5ciHvHZRPiY9q1+8vJRVIkaxedB3NI9z2WIaCg
+         H0QzmwLaFri/lt8EK+ZWVT0eo9QATvAAlbEOiM/oO5vyhH+Awz4Al+FAmIqbMQ4njFRK
+         3Uug==
+X-Gm-Message-State: AOAM5300tp1mAFBY2DGovBy2PFegbrxqJkJExAqAQed5eh8+XrKsBhXz
+        wz2Q0g1Hv0vCUIxfhQvOIpvdUaQSAjo=
+X-Google-Smtp-Source: ABdhPJy6SEgGp+tTx9RlrmsWmcE5j2WmwHe20q2mhOzAghmJYjWvhdNVMsxKgAzS6avthoInU8OZzQ==
+X-Received: by 2002:a1c:f707:: with SMTP id v7mr6281656wmh.85.1607114906426;
+        Fri, 04 Dec 2020 12:48:26 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y7sm4854142wrp.3.2020.12.04.12.48.24
+        by smtp.gmail.com with ESMTPSA id y68sm3563239wmc.0.2020.12.04.12.48.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Dec 2020 12:48:24 -0800 (PST)
-Message-Id: <b54306fd0e6663b78a061f4660b4f76f4d1fd820.1607114891.git.gitgitgadget@gmail.com>
+        Fri, 04 Dec 2020 12:48:25 -0800 (PST)
+Message-Id: <8ee8561d7a3b4cb76ccffbd6061f3a874f386675.1607114891.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.923.v2.git.git.1607114890.gitgitgadget@gmail.com>
 References: <pull.923.git.git.1606635803.gitgitgadget@gmail.com>
         <pull.923.v2.git.git.1607114890.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 04 Dec 2020 20:48:02 +0000
-Subject: [PATCH v2 12/20] merge-ort: have process_entries operate in a defined
- order
+Date:   Fri, 04 Dec 2020 20:48:03 +0000
+Subject: [PATCH v2 13/20] merge-ort: step 1 of tree writing -- record
+ basenames, modes, and oids
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,102 +80,100 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-We want to handle paths below a directory before needing to handle the
-directory itself.  Also, we want to handle the directory immediately
-after the paths below it, so we can't use simple lexicographic ordering
-from strcmp (which would insert foo.txt between foo and foo/file.c).
-Copy string_list_df_name_compare() from merge-recursive.c, and set up a
-string list of paths sorted by that function so that we can iterate in
-the desired order.
+As a step towards transforming the processed path->conflict_info entries
+into an actual tree object, start recording basenames, modes, and oids
+in a dir_metadata structure.  Subsequent commits will make use of this
+to actually write a tree.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 53 ++++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 50 insertions(+), 3 deletions(-)
+ merge-ort.c | 40 +++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 37 insertions(+), 3 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index fbbbde1c3f..c54837999f 100644
+index c54837999f..60cd73416e 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -465,6 +465,33 @@ static int detect_and_process_renames(struct merge_options *opt,
- 	return clean;
+@@ -492,10 +492,31 @@ static int string_list_df_name_compare(const char *one, const char *two)
+ 	return onelen - twolen;
  }
  
-+static int string_list_df_name_compare(const char *one, const char *two)
++struct directory_versions {
++	struct string_list versions;
++};
++
++static void record_entry_for_tree(struct directory_versions *dir_metadata,
++				  const char *path,
++				  struct merged_info *mi)
 +{
-+	int onelen = strlen(one);
-+	int twolen = strlen(two);
-+	/*
-+	 * Here we only care that entries for D/F conflicts are
-+	 * adjacent, in particular with the file of the D/F conflict
-+	 * appearing before files below the corresponding directory.
-+	 * The order of the rest of the list is irrelevant for us.
-+	 *
-+	 * To achieve this, we sort with df_name_compare and provide
-+	 * the mode S_IFDIR so that D/F conflicts will sort correctly.
-+	 * We use the mode S_IFDIR for everything else for simplicity,
-+	 * since in other cases any changes in their order due to
-+	 * sorting cause no problems for us.
-+	 */
-+	int cmp = df_name_compare(one, onelen, S_IFDIR,
-+				  two, twolen, S_IFDIR);
-+	/*
-+	 * Now that 'foo' and 'foo/bar' compare equal, we have to make sure
-+	 * that 'foo' comes before 'foo/bar'.
-+	 */
-+	if (cmp)
-+		return cmp;
-+	return onelen - twolen;
++	const char *basename;
++
++	if (mi->is_null)
++		/* nothing to record */
++		return;
++
++	basename = path + mi->basename_offset;
++	assert(strchr(basename, '/') == NULL);
++	string_list_append(&dir_metadata->versions,
++			   basename)->util = &mi->result;
 +}
 +
  /* Per entry merge function */
  static void process_entry(struct merge_options *opt,
  			  const char *path,
-@@ -551,24 +578,44 @@ static void process_entries(struct merge_options *opt,
+-			  struct conflict_info *ci)
++			  struct conflict_info *ci,
++			  struct directory_versions *dir_metadata)
  {
- 	struct hashmap_iter iter;
+ 	VERIFY_CI(ci);
+ 	assert(ci->filemask >= 0 && ci->filemask <= 7);
+@@ -503,6 +524,14 @@ static void process_entry(struct merge_options *opt,
+ 	assert(ci->match_mask == 0 || ci->match_mask == 3 ||
+ 	       ci->match_mask == 5 || ci->match_mask == 6);
+ 
++	if (ci->dirmask) {
++		record_entry_for_tree(dir_metadata, path, &ci->merged);
++		if (ci->filemask == 0)
++			/* nothing else to handle */
++			return;
++		assert(ci->df_conflict);
++	}
++
+ 	if (ci->df_conflict) {
+ 		die("Not yet implemented.");
+ 	}
+@@ -571,6 +600,7 @@ static void process_entry(struct merge_options *opt,
+ 	 */
+ 	if (!ci->merged.clean)
+ 		strmap_put(&opt->priv->conflicted, path, ci);
++	record_entry_for_tree(dir_metadata, path, &ci->merged);
+ }
+ 
+ static void process_entries(struct merge_options *opt,
+@@ -580,6 +610,7 @@ static void process_entries(struct merge_options *opt,
  	struct strmap_entry *e;
-+	struct string_list plist = STRING_LIST_INIT_NODUP;
-+	struct string_list_item *entry;
+ 	struct string_list plist = STRING_LIST_INIT_NODUP;
+ 	struct string_list_item *entry;
++	struct directory_versions dir_metadata = { STRING_LIST_INIT_NODUP };
  
  	if (strmap_empty(&opt->priv->paths)) {
  		oidcpy(result_oid, opt->repo->hash_algo->empty_tree);
- 		return;
- 	}
- 
-+	/* Hack to pre-allocate plist to the desired size */
-+	ALLOC_GROW(plist.items, strmap_get_size(&opt->priv->paths), plist.alloc);
-+
-+	/* Put every entry from paths into plist, then sort */
- 	strmap_for_each_entry(&opt->priv->paths, &iter, e) {
-+		string_list_append(&plist, e->key)->util = e->value;
-+	}
-+	plist.cmp = string_list_df_name_compare;
-+	string_list_sort(&plist);
-+
-+	/*
-+	 * Iterate over the items in reverse order, so we can handle paths
-+	 * below a directory before needing to handle the directory itself.
-+	 */
-+	for (entry = &plist.items[plist.nr-1]; entry >= plist.items; --entry) {
-+		char *path = entry->string;
- 		/*
- 		 * NOTE: mi may actually be a pointer to a conflict_info, but
- 		 * we have to check mi->clean first to see if it's safe to
- 		 * reassign to such a pointer type.
+@@ -609,13 +640,16 @@ static void process_entries(struct merge_options *opt,
  		 */
--		struct merged_info *mi = e->value;
-+		struct merged_info *mi = entry->util;
+ 		struct merged_info *mi = entry->util;
  
--		if (!mi->clean)
--			process_entry(opt, e->key, e->value);
-+		if (!mi->clean) {
-+			struct conflict_info *ci = (struct conflict_info *)mi;
-+			process_entry(opt, path, ci);
-+		}
+-		if (!mi->clean) {
++		if (mi->clean)
++			record_entry_for_tree(&dir_metadata, path, mi);
++		else {
+ 			struct conflict_info *ci = (struct conflict_info *)mi;
+-			process_entry(opt, path, ci);
++			process_entry(opt, path, ci, &dir_metadata);
+ 		}
  	}
  
-+	string_list_clear(&plist, 0);
+ 	string_list_clear(&plist, 0);
++	string_list_clear(&dir_metadata.versions, 0);
  	die("Tree creation not yet implemented");
  }
  
