@@ -2,59 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21AEFC4361A
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 06:17:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF40BC4361A
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 06:17:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E087922583
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 06:17:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8992622583
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 06:17:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727558AbgLDGRH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 01:17:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45944 "EHLO
+        id S1727920AbgLDGRL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 01:17:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725819AbgLDGRG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 01:17:06 -0500
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 617D0C061A4F
-        for <git@vger.kernel.org>; Thu,  3 Dec 2020 22:16:26 -0800 (PST)
-Received: by mail-ot1-x333.google.com with SMTP id t18so4235199otk.2
-        for <git@vger.kernel.org>; Thu, 03 Dec 2020 22:16:26 -0800 (PST)
+        with ESMTP id S1725819AbgLDGRL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 01:17:11 -0500
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 457F5C061A53
+        for <git@vger.kernel.org>; Thu,  3 Dec 2020 22:16:31 -0800 (PST)
+Received: by mail-ot1-x344.google.com with SMTP id f12so4186056oto.10
+        for <git@vger.kernel.org>; Thu, 03 Dec 2020 22:16:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5UVqyzH8CEqB/hrUc3lSaLAF9ax0HjH4B/5b4VR50H4=;
-        b=QX7eOmb8cMlrl6n+UH+piNIbUOotp97vrMBLEbMXGneMfUag3fZaZQk7rQR+GKLA02
-         FAHZqbnzmleP74BdBcUcEPg7FvEAGCmDledpzSusPP2gcVRD4EDBIKgBoG+dYmaAiWsH
-         AlyFHu3zZ9fDADqOoHoJZuwqL4eXsrbL1SReTB5eOimYbIW+Fju64cyoGcz1mmdjA1TB
-         losQgbXBHVlmEJC4iPAppA2yRd4KidINkQkLn23BddrLP158zsprmnqmy1eiENeFrnn5
-         3+f8jC42wojUItH5hlDzuM6FcmYFCiE8ZM9FasEycsltXvYEBVEGu3RaA68bLcpxRWZo
-         5A1Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=nlxduxWQ2zYB6MQdSxkaIOFRjry5hQNNrUCA0ESi3Vw=;
+        b=g8ukK7YDOfRnGXDCeL94H1pmAVHmRfRi/0EC2RlpNzeYqVGLlOS8DrJ3SlYdCOx/TR
+         sg2U4uomGCauKJiz2Vm9OwbRvxFC1L4vUIsg0Q+9FXzHyfbNCoAl5EMcoKHb2vSOlcIg
+         X3SHMxZof4QJGeyRkfGQ3sczkr2bcCmB0PvyPQ9JYcR6lJXX+AsBSlcXPDrKMI7vfQZG
+         lxwa+hqK7oyLZC5v2cePfTmjyDjutBnxiN+3qUz73gqK21tCuR94neYvell/S5tgFO8j
+         JIXZZB70p0lh+rewvuDRSAJUm4X5a/rMCtXAuoepBLVZVOhmK8xh/lG/YODzf+L6+zFM
+         QgQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=5UVqyzH8CEqB/hrUc3lSaLAF9ax0HjH4B/5b4VR50H4=;
-        b=sPQzDntwHF2UXGrBZtc0qq+QWoqoIfDlmhWueGXpL58OsZShk4moI2S6jvR6kaZOBM
-         TblSsee4/1qBKDaSshp7fRipHkcuS1If4jkHntN//Gx/tH+zgh7nB6xdQJXAAgYZplKz
-         ZqDKCJHtOvr2Dzvpfc76Z7T3VHarBRFTjM9UYhiD7byQU3VPoIU1x1H7wlmS7lPAfwJd
-         aQXpLvovEBOPsdu4t7kHgfS4/pKS438vlcO85g+2kvNboCgF41x/Ssa/OYOZE9ulThGN
-         tYZCIGe18tI2nJUXFV2uDkpOYubJi0i4TjJDqElXazmt2i0hOWXB3AGeDIvD1jmZNraT
-         rwcA==
-X-Gm-Message-State: AOAM530T/FJb9ggk6y+92BO27LUrWrNEvmwHRQwhv5woVrA7/nylUGbW
-        ewkorr5wrRa6t3JTl/lhVgXRXyb7NSeqpg==
-X-Google-Smtp-Source: ABdhPJwlqtU7uSfeCYGvN1nvQExy/wV7HuTr5AQwMbqAdim4pHCK85P6jgay5LoWLCq5KrxylF+PZw==
-X-Received: by 2002:a05:6830:1518:: with SMTP id k24mr2575590otp.366.1607062585533;
-        Thu, 03 Dec 2020 22:16:25 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=nlxduxWQ2zYB6MQdSxkaIOFRjry5hQNNrUCA0ESi3Vw=;
+        b=Mxnl+vHBzbenmDRVXIP1rWzxEBKKou3fWEtG2CAU/AC4aPV3P82qduGqafvXBZ8Zt6
+         e1O6DHhRkWfTrhzokfhFD/hS2Fc5Mzf/RhUjf/qngXiEGtdlEPorM4DAT+plLLr4EqLE
+         r8HaGypYzssfzHQfrrlWF5fTrp9GeBByODjBRXpa89ivGfDryQl4mOIfT55PkWQQbumY
+         tiFtzRDQHa1LsB8fxvBdcWM1XhKRrDOi+rIWlBYMQmOtyXYSVpKc26QY6orehoSW/36q
+         Q739LXcBrJz7qfGV8bEqhrjNTJ3UuOloaqOgXmKNdWtRER25TRYI61E7+fmn+aw7iMLj
+         QkBw==
+X-Gm-Message-State: AOAM532S+4PcRlB0wAoLaUF7xzLTtwMBigtJMG8StHRjtS0MUJLXCQEs
+        H/nWb/LxXykUFjbZgrHcMpzIjlVwm8q/yQ==
+X-Google-Smtp-Source: ABdhPJxbcN9L9YYIWY3vFK/Pa0kAd1dcCQRP0NpdRzKAFICoLLKZS2KwFacgc7toSyUEbRyFVB2jog==
+X-Received: by 2002:a9d:3a24:: with SMTP id j33mr2419919otc.259.1607062590505;
+        Thu, 03 Dec 2020 22:16:30 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id r4sm429763otd.66.2020.12.03.22.16.24
+        by smtp.gmail.com with ESMTPSA id p3sm442050otf.3.2020.12.03.22.16.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Dec 2020 22:16:24 -0800 (PST)
+        Thu, 03 Dec 2020 22:16:29 -0800 (PST)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?V=C3=ADt=20Ondruch?= <vondruch@redhat.com>,
@@ -70,71 +71,75 @@ Cc:     =?UTF-8?q?V=C3=ADt=20Ondruch?= <vondruch@redhat.com>,
         "Brian M. Carlson" <sandals@crustytoothpaste.net>,
         "W. Trevor King" <wking@tremily.us>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 00/14] pull: default warning improvements
-Date:   Fri,  4 Dec 2020 00:16:09 -0600
-Message-Id: <20201204061623.1170745-1-felipe.contreras@gmail.com>
+Subject: [PATCH v2 03/14] pull: refactor fast-forward check
+Date:   Fri,  4 Dec 2020 00:16:12 -0600
+Message-Id: <20201204061623.1170745-4-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20201204061623.1170745-1-felipe.contreras@gmail.com>
+References: <20201204061623.1170745-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The old thread "Pull is Mostly Evil" [1] came to haunt us back again.
+This way we will be able to do the check unconditionally (merge or
+rebase).
 
-The main solution--reject non-fast-forward merges by default--seems to have lost traction (again).
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ builtin/pull.c | 26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-There are multiple approaches floating around, but no clear path forward.
-
-This patch series attempts to fix as much as possible of the current situation without committing to
-any particular solution.
-
-It does:
-
-1. Improve the current documentation
-2. Improve the current default warning
-3. Minimize the instances where we display the default warning
-4. Add a --merge option
-5. Improve the error message with --ff-only
-6. Fix the behavior of the warning with --ff
-
-And tentatively (and this should be the only controversial change):
-
-7. Change the semantics of -ff-only
-
-It does not:
-
-* Introduce the suggested pull.mode
-* Change the current default (still --ff)
-
-It is not a complete solution, but should improve the current situation.
-
-[1] https://lore.kernel.org/git/5363BB9F.40102@xiplink.com/
-
-
-Felipe Contreras (14):
-  doc: pull: explain what is a fast-forward
-  pull: improve default warning
-  pull: refactor fast-forward check
-  pull: cleanup autostash check
-  pull: trivial cleanup
-  pull: move default warning
-  pull: display default warning only when non-ff
-  pull: trivial whitespace style fix
-  pull: introduce --merge option
-  pull: add proper error with --ff-only
-  tentative: pull: change the semantics of --ff-only
-  pull: show warning with --ff
-  test: merge-pull-config: trivial cleanup
-  test: pull-options: revert unnecessary changes
-
- Documentation/git-pull.txt   | 24 ++++++++-
- builtin/pull.c               | 98 ++++++++++++++++++++++--------------
- t/t5520-pull.sh              | 62 +++++++++++++++++++++++
- t/t5521-pull-options.sh      | 22 ++++----
- t/t7601-merge-pull-config.sh | 35 +++++++------
- 5 files changed, 174 insertions(+), 67 deletions(-)
-
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 22a9ffcade..6279e9ee37 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -907,6 +907,20 @@ static int run_rebase(const struct object_id *curr_head,
+ 	return ret;
+ }
+ 
++static int get_can_ff(struct object_id *orig_head, struct object_id *orig_merge_head)
++{
++	int ret;
++	struct commit_list *list = NULL;
++	struct commit *merge_head, *head;
++
++	head = lookup_commit_reference(the_repository, orig_head);
++	commit_list_insert(head, &list);
++	merge_head = lookup_commit_reference(the_repository, orig_merge_head);
++	ret = repo_is_descendant_of(the_repository, merge_head, list);
++	free_commit_list(list);
++	return ret;
++}
++
+ int cmd_pull(int argc, const char **argv, const char *prefix)
+ {
+ 	const char *repo, **refspecs;
+@@ -1017,22 +1031,12 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 		    submodule_touches_in_range(the_repository, &rebase_fork_point, &curr_head))
+ 			die(_("cannot rebase with locally recorded submodule modifications"));
+ 		if (!autostash) {
+-			struct commit_list *list = NULL;
+-			struct commit *merge_head, *head;
+-
+-			head = lookup_commit_reference(the_repository,
+-						       &orig_head);
+-			commit_list_insert(head, &list);
+-			merge_head = lookup_commit_reference(the_repository,
+-							     &merge_heads.oid[0]);
+-			if (repo_is_descendant_of(the_repository,
+-						  merge_head, list)) {
++			if (get_can_ff(&orig_head, &merge_heads.oid[0])) {
+ 				/* we can fast-forward this without invoking rebase */
+ 				opt_ff = "--ff-only";
+ 				ran_ff = 1;
+ 				ret = run_merge();
+ 			}
+-			free_commit_list(list);
+ 		}
+ 		if (!ran_ff)
+ 			ret = run_rebase(&curr_head, merge_heads.oid, &rebase_fork_point);
 -- 
 2.29.2
 
