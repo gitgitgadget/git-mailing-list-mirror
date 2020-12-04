@@ -2,137 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB40CC193FE
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 20:50:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E1EDC4361A
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 20:51:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8A6BE22CF6
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 20:50:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 965B322CF6
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 20:51:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387999AbgLDUuM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 15:50:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40070 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387781AbgLDUuM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 15:50:12 -0500
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E96BC094242
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 12:48:34 -0800 (PST)
-Received: by mail-wr1-x444.google.com with SMTP id s8so6569084wrw.10
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 12:48:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=K29zBB+AFMmeMA/iUOnzryDPtPH0Jw7ZArcsBIzNtsY=;
-        b=qQ7x2IcwR4XUxqyQgRNj/0WQRLuQMtQXHj9qGc0VwdWylwdn3NNLnuAf+ClfClIpGT
-         CHLGfAfO7V8+lOtMDZhQQ6TfsLPxsLFAboQT7LidhaxUxMbHz6ScTjUecyF1aMxsir9Z
-         lDMIz1wbAUYk7o4N56ZZtZotkgSLA0UUKHAskrWE6ueUtuGu3X+XX1J9mbohkotZSWHp
-         WjrlLA+KDqY+UrOLVgJIVvJz1QL2gqHWWTh34ZkEYQk9WVS8eAzYq5GIp3T7P086+im1
-         Wi13NDxivmhuV/ftuaYzZFf9Te0kJhf9SHqumt4uWCPjhIA2LGWc0KZ1TMN7QRln25d9
-         8BiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=K29zBB+AFMmeMA/iUOnzryDPtPH0Jw7ZArcsBIzNtsY=;
-        b=Al4dUggFqEDOsC1/Q7zsZlVbbH/w7kEHfkHhnR2qH47fklJxbA3pqXpjEXOTqXUVSm
-         5udMSAR4v2rBtL3BjNT6isA+hDbMgQuiFiZ19OMvZR8Yh8rUvnSFIkP4d/6oT/1BABQZ
-         EEY4silIfxnjnGRc6qFgDsWS6GXJ2kmgq9YrcGEtFPKImVrQJLafNgNiJtbknl5PGe+O
-         /qDmrh7Z2zlLCRhWni0/40P0dZBRqITUFqk1RdJXC8J23VUp5tTg5IEvXYbP3wot0GQZ
-         7Sn2W+Kr54ner4RhUcA7J0fUhj7/ox3pCZmm7JAaEvKjqPAYW9B7HaVYiohPEMBuYDxV
-         B/HA==
-X-Gm-Message-State: AOAM532xC5drXgRCpJ5tgmm0W/VO+Y6Zxi4yhR4P0swllIgM/tvL4Sez
-        NKrYjXgokp5y2pEfWKI0WeZhdCxCZgo=
-X-Google-Smtp-Source: ABdhPJzH25DmPZo/JtnChSb+eVK9an79u3bn1UY1pgMR2hNk5IbK4HGsRhXToicvzYYwJb5PlzgBRA==
-X-Received: by 2002:a5d:4f10:: with SMTP id c16mr6836099wru.39.1607114912985;
-        Fri, 04 Dec 2020 12:48:32 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y130sm4690822wmc.22.2020.12.04.12.48.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Dec 2020 12:48:32 -0800 (PST)
-Message-Id: <fbeb527d671e55c9264b52146e7d43522cfa7261.1607114891.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.923.v2.git.git.1607114890.gitgitgadget@gmail.com>
-References: <pull.923.git.git.1606635803.gitgitgadget@gmail.com>
-        <pull.923.v2.git.git.1607114890.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 04 Dec 2020 20:48:10 +0000
-Subject: [PATCH v2 20/20] merge-ort: free data structures in merge_finalize()
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S2388072AbgLDUut (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 15:50:49 -0500
+Received: from cloud.peff.net ([104.130.231.41]:52176 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387781AbgLDUut (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 15:50:49 -0500
+Received: (qmail 705 invoked by uid 109); 4 Dec 2020 20:50:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 04 Dec 2020 20:50:09 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16173 invoked by uid 111); 4 Dec 2020 20:50:08 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 04 Dec 2020 15:50:08 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 4 Dec 2020 15:50:08 -0500
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 7/9] commit-graph: drop count_distinct_commits() function
+Message-ID: <X8qhAO6uUDgHjP7S@coredump.intra.peff.net>
+References: <X8qEg/KiAQDugPC0@coredump.intra.peff.net>
+ <X8qGTaIdnNa5mAfC@coredump.intra.peff.net>
+ <1103d97b-668f-8ad6-fc62-3fa09067a8bb@gmail.com>
+ <X8qfRDsfLYTDL3HV@coredump.intra.peff.net>
+ <05c616b0-138a-3e30-5a71-4ba9fb26e6ef@gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     jonathantanmy@google.com, dstolee@microsoft.com,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <05c616b0-138a-3e30-5a71-4ba9fb26e6ef@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+On Fri, Dec 04, 2020 at 03:47:43PM -0500, Derrick Stolee wrote:
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- merge-ort.c | 32 +++++++++++++++++++++++++++++++-
- 1 file changed, 31 insertions(+), 1 deletion(-)
+> > So before we were counting distinct commits, checking that our count
+> > fits, and then _ignoring_ that count in order to create the actual list
+> > of commits, and then checking that the actual list's count fits. We only
+> > need one of those checks, and the important one is the one from the
+> > actual list (they _should_ match, but due to the bug, they sometimes
+> > didn't).
+> > 
+> > My "not likely to happen in practice" is not about the quality of the
+> > check, but rather that being off by one would never matter in practice.
+> > 
+> > Does that make more sense?
+> Makes sense to me. No need to change this patch at all.
 
-diff --git a/merge-ort.c b/merge-ort.c
-index faebee8e7e..5d13932dd9 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -182,6 +182,16 @@ struct conflict_info {
- 	assert((ci) && !(mi)->clean);        \
- } while (0)
- 
-+static void free_strmap_strings(struct strmap *map)
-+{
-+	struct hashmap_iter iter;
-+	struct strmap_entry *entry;
-+
-+	strmap_for_each_entry(map, &iter, entry) {
-+		free((char*)entry->key);
-+	}
-+}
-+
- static int err(struct merge_options *opt, const char *err, ...)
- {
- 	va_list params;
-@@ -1126,7 +1136,27 @@ void merge_switch_to_result(struct merge_options *opt,
- void merge_finalize(struct merge_options *opt,
- 		    struct merge_result *result)
- {
--	die("Not yet implemented");
-+	struct merge_options_internal *opti = result->priv;
-+
-+	assert(opt->priv == NULL);
-+
-+	/*
-+	 * We marked opti->paths with strdup_strings = 0, so that we
-+	 * wouldn't have to make another copy of the fullpath created by
-+	 * make_traverse_path from setup_path_info().  But, now that we've
-+	 * used it and have no other references to these strings, it is time
-+	 * to deallocate them.
-+	 */
-+	free_strmap_strings(&opti->paths);
-+	strmap_clear(&opti->paths, 1);
-+
-+	/*
-+	 * All keys and values in opti->conflicted are a subset of those in
-+	 * opti->paths.  We don't want to deallocate anything twice, so we
-+	 * don't free the keys and we pass 0 for free_values.
-+	 */
-+	strmap_clear(&opti->conflicted, 0);
-+	FREE_AND_NULL(opti);
- }
- 
- static void merge_start(struct merge_options *opt, struct merge_result *result)
--- 
-gitgitgadget
+I brushed up the commit message a bit to make those points clearer:
+
+ 7:  bbccccdc5c !  7:  23420dbd1b commit-graph: drop count_distinct_commits() function
+    @@ Commit message
+         the count are:
+     
+           - check if our count will overflow our data structures. But the limit
+    -        there is 2^31 commits, so it's not likely to happen in practice.
+    +        there is 2^31 commits, so while this is a useful check, the
+    +        off-by-one is not likely to matter.
+     
+           - pre-allocate the array of commit pointers. But over-allocating by
+    -        one isn't a problem.
+    +        one isn't a problem; we'll just waste a few extra bytes.
+     
+         The bug would be easy enough to fix, but we can observe that neither of
+    -    those steps is necessary. We'll check the count of the commit array
+    -    after we build it anyway, so checking at this point is redundant. And we
+    -    use ALLOC_GROW() when building the commit array, so there's no need to
+    -    preallocate it (it's possible that doing so is slightly more efficient,
+    -    but if we care we can just optimistically allocate one slot for each
+    -    oid; I didn't bother here).
+    +    those steps is necessary.
+    +
+    +    After building the actual commit array, we'll likewise check its count
+    +    for overflow. So the extra check of the distinct commit count here is
+    +    redundant.
+    +
+    +    And likewise we use ALLOC_GROW() when building the commit array, so
+    +    there's no need to preallocate it (it's possible that doing so is
+    +    slightly more efficient, but if we care we can just optimistically
+    +    allocate one slot for each oid; I didn't bother here).
+     
+         So count_distinct_commits() isn't doing anything useful. Let's just get
+         rid of that step.
+
+-Peff
