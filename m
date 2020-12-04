@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7AC8C4361A
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 20:49:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 122ADC4361B
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 20:49:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5D39722CF6
+	by mail.kernel.org (Postfix) with ESMTP id D65E222CF6
 	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 20:49:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729762AbgLDUtL (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1729391AbgLDUtL (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 4 Dec 2020 15:49:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39898 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728623AbgLDUtK (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1727517AbgLDUtK (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 4 Dec 2020 15:49:10 -0500
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A28AEC061A55
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 12:48:19 -0800 (PST)
-Received: by mail-wm1-x342.google.com with SMTP id c198so6591619wmd.0
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 12:48:19 -0800 (PST)
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3859C061A54
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 12:48:18 -0800 (PST)
+Received: by mail-wm1-x343.google.com with SMTP id 3so8152330wmg.4
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 12:48:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=MAygxFzJxH6VuIUbTy5dbpWI5LMqtfnM4A8vTiQGh3o=;
-        b=sv8foDz84MwPAZ2IuMTR+FZ/7RsiTRWEftlbcbAielR1Jg1BNQnG0vFhl/BRagudoj
-         YOxdUj+KVqwAA/7WtI1jajLWqUaXiKFlDvsaKQIsZhDUbbPVPWIXXmkAG/ZcCdLBmxGA
-         RUFdWsjjvPlCzNasR/MuO7ORqExQ4fAMLPWFRfithBRBaaWD7yLRTCuBr/DtUMXvWmsJ
-         kcEcWIgghcqbGhta9HafE0rT1XG2AF2crXk0Xri6pxDmlVfdJsNVMfFER6oOO+zJ8qYu
-         mAoj7D0JcBGvb1u78GMpMz0TkUtd8xG0YwN8ypjZELk98J/496XGOfrD8aTZ63E2GC30
-         RJ4A==
+        bh=WYOD5AtdxVLH1YV7SPTrpljjr50F7ig+c9RRQqMMot0=;
+        b=U6gJQlNAOfBo44axlUuz4yDCmCJbiSKUJywicHqjZvSU5BxKvR2svJjE/BlIDgoVB3
+         omKqLckrg+g5KXMyjAhTxaUy/D39nZwGYP0I5H1XUg3cU5ZqECfgHQLsMy4TUYLKTyxW
+         2rBemZRd+IJVXfE31YYuiIgbDzVXkfBfbIhXT46oNhf31utHa/B52fqD5mr7+54UdIXd
+         LkncIyKgaRg2zW77j6W57oqz0nfxsbZ2jWDEnK/t4ejiWUkc53UzHxJxTG2BlVq5+jeq
+         JsyF1NgUGR3XS4DJfZuZM3QYloYzAkxmJuYUetj1jiFWG43p/++CJJpGWnA/lhbsu02B
+         8THA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=MAygxFzJxH6VuIUbTy5dbpWI5LMqtfnM4A8vTiQGh3o=;
-        b=ZXDdDnkmrXDPbzWNZpAV8YZe5j/+WdWScUaZC0qmcOfunRAiKKwPOD1K6XpGXtFvas
-         C8uDUbHKeh4RITVqEU96xOB5XLSGiCV1O0INWqETgto7S4UOSk/1DkhJaCyvdYEc6XKH
-         EmQWhLL2QoENq3DTeeWFNbDwzEDZ3QMhFtprSr1ej9bQYl7M+wBM3wZhNm1a0asgTcar
-         Hf9uJzeQVho/dsnpQAux8tqaCU1v9kOL/Zs0aD0OtsjlFlV+W7ZtZ2BMjSJBJiatyI+r
-         hbzFDY1dyrZv3kB7Bmt5br0xK1vu77SxYR35CavlK4Q10O2rh1lh+b7WQhxVR2zRTZag
-         nWsw==
-X-Gm-Message-State: AOAM530j20EcTjMS+0fE5v9RSR5oOjoZnTv4w9laiboRffs8CtTlFTCL
-        osFzUvMKWNlUJzAA/nOnmNXayRgQZmU=
-X-Google-Smtp-Source: ABdhPJxQtf17WrputJOJj/qJdp4JiFBBIWMFItdUiWL0pUvBRLPvWko8gIQAXPJ0kA25L7+Wflirjw==
-X-Received: by 2002:a1c:a9c8:: with SMTP id s191mr6132615wme.89.1607114898208;
-        Fri, 04 Dec 2020 12:48:18 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w3sm4473945wma.3.2020.12.04.12.48.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=WYOD5AtdxVLH1YV7SPTrpljjr50F7ig+c9RRQqMMot0=;
+        b=bixYaD5zFECCBZoOfihnUr/lMG+Tza0m9hXiiKDeVIIdhqhTRu592IPyrxfA1W7prp
+         YlmMgM1t0yKxlr0dYlAhk86cKXv3eUAmNzF43i4PGn/ENM0dY8e1L6pKUu4RnLOtRChp
+         Wu8gsHZfTNhLN7Q++7mPFHMJzM1Aiq8GB577iU1fgBDW5PppOgabc2hfhNkfMvXA0HUc
+         CrA8NxYiVaieDOvfqChLm4umncPvkr1gw4hRiDkU6JZbPaujkucAowxHJ3yMBeHfjFGp
+         CfdVoyUCahpJA7RZQBZKtF0g7R7GdlZpfOah2KaRv6v1zELqurEJePJxrgxVdRDQG/ZN
+         kOdQ==
+X-Gm-Message-State: AOAM532W31qevd3UopLpzbC5lPolVwMIg0sTqLpFH+33w/8lDtFjuPKn
+        +EtswEdZg1qsxI5KNBwKd3eA42dJACk=
+X-Google-Smtp-Source: ABdhPJw1yESpL5FAkaC7pNItBxAzmlrl+JjNP+MLYWUrajDva2tgBAOSrnn0AYDGuAdG8yvRCsdN8A==
+X-Received: by 2002:a7b:c2e8:: with SMTP id e8mr6010611wmk.103.1607114897237;
         Fri, 04 Dec 2020 12:48:17 -0800 (PST)
-Message-Id: <6c4c0c15b3d1283d817149181cdf88903926a52b.1607114890.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n14sm4471123wmi.1.2020.12.04.12.48.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Dec 2020 12:48:16 -0800 (PST)
+Message-Id: <22fecf6ccd1e1eb80bb8391975b482b3d6233540.1607114890.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.923.v2.git.git.1607114890.gitgitgadget@gmail.com>
 References: <pull.923.git.git.1606635803.gitgitgadget@gmail.com>
         <pull.923.v2.git.git.1607114890.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 04 Dec 2020 20:47:55 +0000
-Subject: [PATCH v2 05/20] merge-ort: add an err() function similar to one from
- merge-recursive
+Date:   Fri, 04 Dec 2020 20:47:54 +0000
+Subject: [PATCH v2 04/20] merge-ort: use histogram diff
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,73 +79,65 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Various places in merge-recursive used an err() function when it hit
-some kind of unrecoverable error.  That code was from the reusable bits
-of merge-recursive.c that we liked, such as merge_3way, writing object
-files to the object store, reading blobs from the object store, etc.  So
-create a similar function to allow us to port that code over, and use it
-for when we detect problems returned from collect_merge_info()'s
-traverse_trees() call, which we will be adding next.
+In my cursory investigation, histogram diffs are about 2% slower than
+Myers diffs.  Others have probably done more detailed benchmarks.  But,
+in short, histogram diffs have been around for years and in a number of
+cases provide obviously better looking diffs where Myers diffs are
+unintelligible but the performance hit has kept them from becoming the
+default.
+
+However, there are real merge bugs we know about that have triggered on
+git.git and linux.git, which I don't have a clue how to address without
+the additional information that I believe is provided by histogram
+diffs.  See the following:
+
+https://lore.kernel.org/git/20190816184051.GB13894@sigill.intra.peff.net/
+https://lore.kernel.org/git/CABPp-BHvJHpSJT7sdFwfNcPn_sOXwJi3=o14qjZS3M8Rzcxe2A@mail.gmail.com/
+https://lore.kernel.org/git/CABPp-BGtez4qjbtFT1hQoREfcJPmk9MzjhY5eEq1QhXT23tFOw@mail.gmail.com/
+
+I don't like mismerges.  I really don't like silent mismerges.  While I
+am sometimes willing to make performance and correctness tradeoff, I'm
+much more interested in correctness in general.  I want to fix the above
+bugs.  I have not yet started doing so, but I believe histogram diff at
+least gives me an angle.  Unfortunately, I can't rely on using the
+information from histogram diff unless it's in use.  And it hasn't been
+used because of a few percentage performance hit.
+
+In testcases I have looked at, merge-ort is _much_ faster than
+merge-recursive for non-trivial merges/rebases/cherry-picks.  As such,
+this is a golden opportunity to switch out the underlying diff algorithm
+(at least the one used by the merge machinery; git-diff and git-log are
+separate questions); doing so will allow me to get additional data and
+improved diffs, and I believe it will help me fix the above bugs at some
+point in the future.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 31 +++++++++++++++++++++++++++++--
- 1 file changed, 29 insertions(+), 2 deletions(-)
+ merge-ort.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index ff305bcbe4..b056db6fc8 100644
+index f8ac721aa3..ff305bcbe4 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -158,12 +158,27 @@ struct conflict_info {
- 	unsigned match_mask:3;
- };
+@@ -21,6 +21,7 @@
+ #include "diffcore.h"
+ #include "strmap.h"
+ #include "tree.h"
++#include "xdiff-interface.h"
  
-+static int err(struct merge_options *opt, const char *err, ...)
-+{
-+	va_list params;
-+	struct strbuf sb = STRBUF_INIT;
-+
-+	strbuf_addstr(&sb, "error: ");
-+	va_start(params, err);
-+	strbuf_vaddf(&sb, err, params);
-+	va_end(params);
-+
-+	error("%s", sb.buf);
-+	strbuf_release(&sb);
-+
-+	return -1;
-+}
-+
- static int collect_merge_info(struct merge_options *opt,
- 			      struct tree *merge_base,
- 			      struct tree *side1,
- 			      struct tree *side2)
- {
--	/* TODO: Implement this using traverse_trees() */
- 	die("Not yet implemented.");
- }
+ struct merge_options_internal {
+ 	/*
+@@ -235,6 +236,9 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
  
-@@ -266,7 +281,19 @@ static void merge_ort_nonrecursive_internal(struct merge_options *opt,
- {
- 	struct object_id working_tree_oid;
+ 	assert(opt->priv == NULL);
  
--	collect_merge_info(opt, merge_base, side1, side2);
-+	if (collect_merge_info(opt, merge_base, side1, side2) != 0) {
-+		/*
-+		 * TRANSLATORS: The %s arguments are: 1) tree hash of a merge
-+		 * base, and 2-3) the trees for the two trees we're merging.
-+		 */
-+		err(opt, _("collecting merge info failed for trees %s, %s, %s"),
-+		    oid_to_hex(&merge_base->object.oid),
-+		    oid_to_hex(&side1->object.oid),
-+		    oid_to_hex(&side2->object.oid));
-+		result->clean = -1;
-+		return;
-+	}
++	/* Default to histogram diff.  Actually, just hardcode it...for now. */
++	opt->xdl_opts = DIFF_WITH_ALG(opt, HISTOGRAM_DIFF);
 +
- 	result->clean = detect_and_process_renames(opt, merge_base,
- 						   side1, side2);
- 	process_entries(opt, &working_tree_oid);
+ 	/* Initialization of opt->priv, our internal merge data */
+ 	opt->priv = xcalloc(1, sizeof(*opt->priv));
+ 
 -- 
 gitgitgadget
 
