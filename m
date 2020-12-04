@@ -2,251 +2,181 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86538C433FE
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 08:38:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BED60C433FE
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 10:14:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4081B22516
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 08:38:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6789022518
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 10:14:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729012AbgLDIik (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 03:38:40 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:55033 "EHLO
-        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725969AbgLDIik (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 4 Dec 2020 03:38:40 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 684585C01E7;
-        Fri,  4 Dec 2020 03:37:28 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Fri, 04 Dec 2020 03:37:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm2; bh=XI3v0Wwtdrk3A9+Gwrk5dP+MePG
-        r2/EPn+HkXNBMl5o=; b=w86DIYWjiQuBVhmM8/00Jn8zJUY8rRIQXkpIG/e5z70
-        pEo+g94guOOL+gDqvCVVFEGg/TPSF8jH4ytnN1KuvBK51xtTLJVZoo1iTUgMboFf
-        N+oAjKk2bJ2vaHzkVXJgqb7M75nT3Uz3/ApzncOFEvGOiX8ylKVdGTEkVnR7M776
-        UUMRBhMXK9fld0IZCs86ap7BiPszW6/vXh5nOtYwMWG8eCXieRXRfqFpy+o+u7Af
-        OwbE/wUPBeVq33XarIN9adIUFSom6vrN5pYqo/+wUtdd8G3b4n2ote3nedDhr+JD
-        0OZ+HE42A22LhDP9BdY2h39Oc5Qzhu/SeBcQDzGybMw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=XI3v0W
-        wtdrk3A9+Gwrk5dP+MePGr2/EPn+HkXNBMl5o=; b=FYIH1gCjdWj8y8plHa7HWu
-        W0GzNtfoLi6M54lq23aSAiNAgLyW3pnbibaoG2HFzWIn0bSU86VyBhFF6yQabbDX
-        2LpYAKiGUGeoxgQOE/oEQUDfYnlhVmgUyMt57mV+3WAkn+VGYlcm7vy/tWxAfUHk
-        VcnbW/y4+rED/tlTL+2SyPHG1a/9TUmKeKglDx+PtnnPQxcIrgswwYz6UhlX3pig
-        Q0EOerJGaoHBgP3r1RPeVIGl1ysq0IYWzJHA385RL6SOQSkqG1uNfEai0dkSLJWH
-        g/NWYQyxmAf/nD/goqTnaLG0v3SwAtA0IJG2C/3p9RI+goEXI7iFysTllHU063Dw
-        ==
-X-ME-Sender: <xms:R_XJX0ofMNfX25ZNcf_CTFpPxJjRvgVIqTaNo5fapSYGUHnz4ja45Q>
-    <xme:R_XJX6rqxycy6FlSLdqfO7nrPBm4Vsp5UpmP_W__4JYPvXa4mrCmgnZwuEjiKl-57
-    SjOpf8BGxqpOELLhg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudeijedguddvfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtd
-    fhvdejkedthfehvdelgfetgfdvtedthfenucfkphepjeejrddukeefrdeffedrudefheen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:R_XJX5P-C0U4yzN66RQln8t3achA9dubWfitqgfcBzhwLZML53S9VA>
-    <xmx:R_XJX77iOptdxcvBtfAF0Qzw3WlcXFItYqBtxfPhJZFzTy59i3isGQ>
-    <xmx:R_XJXz4DNQexJzTQanb5xAuAzXbMgaalGqjuiU5gpVZOoFR94zCs_w>
-    <xmx:SPXJX9RHOHhhguIX4AS6aBwt31--jLxHtRw5SY8wcbFwzFs_in6jSw>
-Received: from vm-mail.pks.im (x4db72187.dyn.telefonica.de [77.183.33.135])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 1F5ED108005B;
-        Fri,  4 Dec 2020 03:37:27 -0500 (EST)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 603e8130 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Fri, 4 Dec 2020 08:37:22 +0000 (UTC)
-Date:   Fri, 4 Dec 2020 09:37:21 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, me@ttaylorr.com, gitster@pobox.com
-Subject: Re: [PATCH] refs: Always pass old object name to reftx hook
-Message-ID: <X8n1Qf7TJyqIOE/l@ncase>
-References: <d255c7a5f95635c2e7ae36b9689c3efd07b4df5d.1604501894.git.ps@pks.im>
+        id S2387678AbgLDKO0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 05:14:26 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51278 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387586AbgLDKO0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 05:14:26 -0500
+Received: (qmail 25145 invoked by uid 109); 4 Dec 2020 10:13:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 04 Dec 2020 10:13:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9693 invoked by uid 111); 4 Dec 2020 10:13:44 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 04 Dec 2020 05:13:44 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 4 Dec 2020 05:13:43 -0500
+From:   Jeff King <peff@peff.net>
+To:     Ben Denhartog <ben@sudoforge.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Unexpected behavior with branch.*.{remote,pushremote,merge}
+Message-ID: <X8oL190Vl03B0cQ/@coredump.intra.peff.net>
+References: <a4ae4e1a-b457-4b35-878c-2714ebfc415f@www.fastmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="w01lz+/3DHZUZC8y"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <d255c7a5f95635c2e7ae36b9689c3efd07b4df5d.1604501894.git.ps@pks.im>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a4ae4e1a-b457-4b35-878c-2714ebfc415f@www.fastmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Dec 03, 2020 at 06:26:15PM -0700, Ben Denhartog wrote:
 
---w01lz+/3DHZUZC8y
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I have a few repositories on my system that exist primarily as local copies of remote repositories, in that I normally just want to track and follow the upstream project (however, I periodically contribute back upstream so they are technically forks -- origin is my remote, upstream is theirs).
+> 
+> In these repositories, I set the following configuration:
+> 
+> ```
+> [remote "origin"]
+>   url = https://git.foo.com/me/bar.git
+>   fetch = +refs/heads/*:refs/remotes/origin/*
+> [remote "upstream"]
+>   url = https://git.foo.com/them/bar.git
+>   fetch = +refs/heads/main:refs/remotes/upstream/main
+>   tagopt = --no-tags
+> [branch "main"]
+>   remote = upstream
+>   pushRemote = origin
+>   merge = refs/heads/master
+>   rebase = true
+> ```
 
-On Wed, Nov 04, 2020 at 03:58:40PM +0100, Patrick Steinhardt wrote:
-> Inputs of the reference-transaction hook currently depends on the
-> command which is being run. For example if the command `git update-ref
-> $REF $A $B` is executed, it will receive "$B $A $REF" as input, but if
-> the command `git update-ref $REF $A` is executed without providing the
-> old value, then it will receive "0*40 $A $REF" as input. This is due to
-> the fact that we directly write queued transaction updates into the
-> hook's standard input, which will not contain the old object value in
-> case it wasn't provided.
->=20
-> While this behaviour reflects what is happening as part of the
-> repository, it doesn't feel like it is useful. The main intent of the
-> reference-transaction hook is to be able to completely audit all
-> reference updates, no matter where they come from. As such, it makes a
-> lot more sense to always provide actual values instead of what the user
-> wanted. Furthermore, it's impossible for the hook to distinguish whether
-> this is intended to be a branch creation or a branch update without
-> doing additional digging with the current format.
->=20
-> Fix the issue by storing the old object value into the queued
-> transaction update operation if it wasn't provided by the caller.
->=20
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+I use a similar setup myself, and it works well for this kind of
+triangular flow. A few notes:
 
-Quick ping on this patch. Is there any interest or shall I just drop it?
+  - I assume you mean "merge = refs/heads/main" from your examples
 
-Patrick
+  - instead of branch.*.pushremote, I usually set remote.pushdefault, so
+    that it covers all branches (i.e., I'd never want to push to the
+    upstream remote, which I do not even have access to).
 
->  Documentation/githooks.txt       |  6 ++++++
->  refs/files-backend.c             |  8 ++++++++
->  refs/packed-backend.c            |  2 ++
->  t/t1416-ref-transaction-hooks.sh | 12 ++++++------
->  4 files changed, 22 insertions(+), 6 deletions(-)
->=20
-> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-> index 4e097dc4e9..8f3540e2f6 100644
-> --- a/Documentation/githooks.txt
-> +++ b/Documentation/githooks.txt
-> @@ -492,6 +492,12 @@ receives on standard input a line of the format:
-> =20
->    <old-value> SP <new-value> SP <ref-name> LF
-> =20
-> +where `<old-value>` is the old object name stored in the ref,
-> +`<new-value>` is the new object name to be stored in the ref and
-> +`<ref-name>` is the full name of the ref.
-> +When creating a new ref, `<old-value>` is 40 `0`.
-> +When deleting an old ref, `<new-value>` is 40 `0`.
-> +
->  The exit status of the hook is ignored for any state except for the
->  "prepared" state. In the "prepared" state, a non-zero exit status will
->  cause the transaction to be aborted. The hook will not be called with
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 04e85e7002..5b10d3822b 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -2452,6 +2452,9 @@ static int lock_ref_for_update(struct files_ref_sto=
-re *refs,
->  				ret =3D TRANSACTION_GENERIC_ERROR;
->  				goto out;
->  			}
-> +
-> +			if (!(update->flags & REF_HAVE_OLD))
-> +				oidcpy(&update->old_oid, &lock->old_oid);
->  		} else {
->  			/*
->  			 * Create a new update for the reference this
-> @@ -2474,6 +2477,9 @@ static int lock_ref_for_update(struct files_ref_sto=
-re *refs,
->  			goto out;
->  		}
-> =20
-> +		if (!(update->flags & REF_HAVE_OLD))
-> +			oidcpy(&update->old_oid, &lock->old_oid);
-> +
->  		/*
->  		 * If this update is happening indirectly because of a
->  		 * symref update, record the old OID in the parent
-> @@ -2484,6 +2490,8 @@ static int lock_ref_for_update(struct files_ref_sto=
-re *refs,
->  		     parent_update =3D parent_update->parent_update) {
->  			struct ref_lock *parent_lock =3D parent_update->backend_data;
->  			oidcpy(&parent_lock->old_oid, &lock->old_oid);
-> +			if (!(parent_update->flags & REF_HAVE_OLD))
-> +				oidcpy(&parent_update->old_oid, &lock->old_oid);
->  		}
->  	}
-> =20
-> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> index b912f2505f..08f0feee3d 100644
-> --- a/refs/packed-backend.c
-> +++ b/refs/packed-backend.c
-> @@ -1178,6 +1178,8 @@ static int write_with_updates(struct packed_ref_sto=
-re *refs,
->  						    oid_to_hex(&update->old_oid));
->  					goto error;
->  				}
-> +			} else {
-> +				oidcpy(&update->old_oid, iter->oid);
->  			}
-> =20
->  			/* Now figure out what to use for the new value: */
-> diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-h=
-ooks.sh
-> index f6e741c6c0..111533682a 100755
-> --- a/t/t1416-ref-transaction-hooks.sh
-> +++ b/t/t1416-ref-transaction-hooks.sh
-> @@ -52,12 +52,12 @@ test_expect_success 'hook gets all queued updates in =
-prepared state' '
->  		fi
->  	EOF
->  	cat >expect <<-EOF &&
-> -		$ZERO_OID $POST_OID HEAD
-> -		$ZERO_OID $POST_OID refs/heads/master
-> +		$PRE_OID $POST_OID HEAD
-> +		$PRE_OID $POST_OID refs/heads/master
->  	EOF
->  	git update-ref HEAD POST <<-EOF &&
-> -		update HEAD $ZERO_OID $POST_OID
-> -		update refs/heads/master $ZERO_OID $POST_OID
-> +		update HEAD $PRE_OID $POST_OID
-> +		update refs/heads/master $PRE_OID $POST_OID
->  	EOF
->  	test_cmp expect actual
->  '
-> @@ -75,8 +75,8 @@ test_expect_success 'hook gets all queued updates in co=
-mmitted state' '
->  		fi
->  	EOF
->  	cat >expect <<-EOF &&
-> -		$ZERO_OID $POST_OID HEAD
-> -		$ZERO_OID $POST_OID refs/heads/master
-> +		$PRE_OID $POST_OID HEAD
-> +		$PRE_OID $POST_OID refs/heads/master
->  	EOF
->  	git update-ref HEAD POST &&
->  	test_cmp expect actual
-> --=20
-> 2.29.2
->=20
+  - in a workflow like this, I generally have push.default set to
+    "current"
 
+  - I make frequent use of @{push} to refer to the matching branch on my
+    remote (e.g., after doing some local work, I might use "git
+    range-diff upstream @{push} HEAD" to examine the changes before
+    pushing them up).
 
+> Based on my understanding of the branch configuration options, this
+> should effectively force my local `main` branch to track against
+> `upstream/main`, but push to `origin/main`. I notice what I believe to
+> be odd behavior when fetching: that FETCH_HEAD doesn't resolve to
+> `upstream/main` as I would expect:
+> 
+> ➜ git fetch --all
+> Fetching origin
+> Fetching upstream
+> remote: Enumerating objects: 23, done.
+> remote: Counting objects: 100% (23/23), done.
+> remote: Total 32 (delta 23), reused 23 (delta 23), pack-reused 9
+> Unpacking objects: 100% (32/32), 12.97 KiB | 949.00 KiB/s, done.
+> From https://git.foo.com/them/bar
+>    63f7159..e65b80e  main     -> upstream/main
 
---w01lz+/3DHZUZC8y
-Content-Type: application/pgp-signature; name="signature.asc"
+The culprit here is using "git fetch --all". It triggers the sub-fetches
+with --append, so they'll each add to FETCH_HEAD instead of overwriting
+it.  We do truncate it before the first one, so after this completes it
+should have the complete set of refs fetched from both remotes (even if
+it was a noop to fetch one of them, anything mentioned in the refspecs
+shows up in FETCH_HEAD).
 
------BEGIN PGP SIGNATURE-----
+Which is what you're seeing here:
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl/J9UAACgkQVbJhu7ck
-PpRT5RAAiBssWf8kaSlSurRqQAHC6o484VnWJv+RRUHeBwnsQFuW5Ajf9S7YCN/t
-DqJ0Y6uw5ejM0I5qUdEpU8U2k0KZ9fAQ+l9p4Hb83Z+aUrqToURVViv3VfJ1VVxv
-An03QbeZG57JKu0GZKdn3dMbRveifHSE2Ensv11Q6lWBrcB7P4pLWYTub7tH8bja
-Qt15aC5O0SMgDvyL8iMD8jlE9qyk66Nyr1ORxzzYLmvZiXxC2bXb7flOeynJCnMx
-JfOAxmjds05gHHTJw7513IOuJWKwPieFGzf8G5ozWY45f+yCZ6z1do24VU/QRmEk
-GRK39139uI/G9M+/5+mWlqcdLSCPnRDwIItYnaWH1MWyIbcvoXgBW2TK2RfcK8Rx
-EAIDTEvHe71UAmtmViP7JSfKQntnaKo/NMX8icSvxkiLELIfiDFROOhn3pIF4oyw
-HsQf5IvLEzg8+1ODBWOkapqOHWYwdgxwhE7uDBbQnuyNy7N9yKiI9tYUY8qo7Db1
-TUzZ3kHHjyCprfH48h2n5wCyLcp0FmUyKqQSf6FwZ5EP/RKFtn95vsvSauQMacbz
-HMgyEh7WGUyCr+gK6b92NObIz/Ml9eHtvAA5u0obbSNiEAMpOGnbWYwPKP1J45uD
-QCBJjPI/Q63lFZpzT+4rKpdKJXhW3u7vTgrWqEy77u1uhCR1lpk=
-=aLoL
------END PGP SIGNATURE-----
+> ➜ cat .git/FETCH_HEAD
+> 23e6881719f661c37336d9fcf7a9005a7dfce0cf        not-for-merge   branch 'main' of https://git.foo.com/me/foo
+> e65b80edd2a2162f67120a98e84bb489f15fcf97                branch 'main' of https://git.foo.com/them/foo
 
---w01lz+/3DHZUZC8y--
+FETCH_HEAD is not just a ref, but contains some magic instructions that
+get interpreted by git-pull. But when programs besides git-pull try to
+resolve it to a single object, they just pick whichever value is first.
+
+So I do think there's a bug there, or at least something not
+well-thought-out in the way that "fetch --all" appends. Normally fetch
+tries to put the merge branch (or branches) first in the file, exactly
+so this naive "take the first one" lookup will do the most sensible
+thing. But when running multiple fetches that all append, we get their
+individual outputs in the order of fetch (which in turn is the same as
+the order in the config file).
+
+Perhaps the parent "git fetch --all" triggering the sub-fetches should
+reorder FETCH_HEAD after they've all finished (to pull any merge heads
+up to the top, regardless of which remote they came from).
+
+But an obvious workaround, if you know you'll always be merging from
+upstream, is to just reorder your config stanzas so that it's fetched
+first (likewise you can run "git fetch --multiple upstream origin" to
+specify the order manually, or define a group with remotes.<group>).
+
+One reason I suspect nobody has come across this before is that there's
+not much reason to use FETCH_HEAD in this setting. If you know you want
+to rebase again upstream/main, then there are a number of ways you can
+refer to that:
+
+  - upstream/main
+
+  - upstream, if your refs/remotes/upstream/HEAD is set up (if you
+    didn't clone, you may want to run "git remote set-head upstream -a")
+
+  - @{upstream}, if it's configured as your upstream (which it is here)
+
+  - @{u}, a shorter synonym
+
+  - nothing at all, since rebasing against the upstream is the default
+    for git-rebase these days
+
+  - you can say that (or even just "upstream", if your
+    refs/remotes/origin/HEAD is set up)
+
+> Curiously, `git rebase FETCH_HEAD` seems to think the local branch is
+> up to date (erroneously),
+
+That's what I'd expect, since it is doing the naive "what is the first
+one in the file" lookup.
+
+> however `git-pull --rebase=true` [works]
+
+That is running a new git-fetch under the hood, which will overwrite
+FETCH_HEAD (and will only fetch from upstream, since that's what's in
+branch.main.remote).
+
+> `git-merge FETCH_HEAD` both work as expected and merge/rebase with
+> `upstream/main`.
+
+I think git-merge, like git-pull, understands the magic FETCH_HEAD
+format.
+
+> Am I going about this incorrectly? The main purpose behind configuring
+> my "mostly just a fork" repository is that it simplifies tracking
+> against an upstream remote for projects which I do not work on
+> actively. Of course, you might argue that I don't need to keep my
+> remote around for this purpose and can just use a straightforward
+> `git-clone` here -- but I'd rather not, and would prefer responses
+> addressing the perceived bug rather than suggesting this particular
+> alternative workflow.
+
+I think your workflow is perfectly reasonable.
+
+-Peff
