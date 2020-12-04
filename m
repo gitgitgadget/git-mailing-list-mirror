@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2B7DC4361A
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 23:43:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4623FC433FE
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 23:50:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 643EE22CAE
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 23:43:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CA1D422CBE
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 23:50:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727440AbgLDXmd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 18:42:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38350 "EHLO
+        id S1726877AbgLDXuE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 18:50:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725847AbgLDXmc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 18:42:32 -0500
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A5C1C061A4F
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 15:42:07 -0800 (PST)
-Received: by mail-oi1-x241.google.com with SMTP id h3so8131825oie.8
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 15:42:07 -0800 (PST)
+        with ESMTP id S1725985AbgLDXuE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 18:50:04 -0500
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34985C0613D1
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 15:49:24 -0800 (PST)
+Received: by mail-ot1-x342.google.com with SMTP id f12so6923695oto.10
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 15:49:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=w8GcOgLCd+CuvJRQJDRVZvB5EEXVGXFptWn0pzecPgs=;
-        b=gNbTUY9ruHYofmE6za185qwSbLOpIejUFgU/VAMQ6MefGip4iBmvojGZ3/4Y+qKLTb
-         xeYYXtrHRQF78zkQq4fVsQnC8bTsMtOLQ9tuTDpJsj7urnp+dEIFfWkQvXhqnDb6yFRU
-         Stzqe8C/Oie4FDsz8V2fpQkCB4MDN3g9y57CrfFiOtNe0ri8W/kEm1xrQ41Xj8q23KsI
-         MVvh249H6Dkun4Igg5BTV/VGXUSWydDzFQGpw4HQ5jOxtiHNz6xRcIBK2rmrBMYF35xy
-         zTHsvbNqQFjAdj7kE87YG7tyHjC/cnCoMEHpKlDfbCyNQAlrYJHWcJuzSmWQoPvopCfW
-         Ldpw==
+        bh=Srah9Btgs9OEFfo4xADPiU77hWf4ah+yR8h+9h6LUwI=;
+        b=T1ovrItJ3x8FE/sK4l9jrvYxpRpxyAuChMdWBZqZ/mJcDLqVfUjHwTgKt3Ll33UXrP
+         hSeBhB0RfYkfWsR4f12lnSZBIP6Uolh4y6uf14v93Ij/VxL3XNmEi564PZUWTeZL26Qn
+         3OpD7gzATe+I6XoE4P74Axg4yF28IccsMXpBB6oORLLvYwR/9DvfF6jytaMxVGX4r982
+         54XgGBrBHl/r/pxb2YidZZ34MSlbsQj5GApnPT6BsVyYJqVyvnrdLaAgjb1xMKTZfXrv
+         NF7U7zKqGucYQVvc7/CqocQb3w0WCV8PQZKO+2pIkBrSJlBiLibkLffTdTKhQOMGmNKu
+         MSzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=w8GcOgLCd+CuvJRQJDRVZvB5EEXVGXFptWn0pzecPgs=;
-        b=Zj1KKhoFOqu9gSvjvywtu4uE4GPSm4SqA14xD7UYRLM+P0+JILX9uXIyZCb6l3ePWp
-         3NfmgtZs9sT0EwHROGYuNRs4N80G0kakWIlS1x6yW0ipSrs24BOqFzAKDeObnWq0uc71
-         Phcr9woac8aLqd+8qdz5uudmLlwj8FEshFg3DacKyq0R8keI+lmkrmMjB+jHW2pG0/CJ
-         rlju7Q+/W6vwJ68a4gsGs1vDeu43PcAHjSgigsOlGBQsP6N7oy+p1cRtg3lioMnWL/E5
-         xzFq9Oxui2Nejjb2cXBDgQ051BFeREzSuMSRvsFOHE2UHisNsQThxF4t+3vFJt0YD/m/
-         qsEQ==
-X-Gm-Message-State: AOAM533lbWUxnnjyX+xIHy1aE5Mpyx0SJaq8PRi7LiiBLYFaWih7ih3C
-        yBCRLHI9tzg12/ba8+gXrcTM00OIVW8zbeuxFqw=
-X-Google-Smtp-Source: ABdhPJw4b4wniubK8Fxa+eFK1vW1lhv+GXmali8lucBowXatKt0/oPr7KtkBNXfGCzp833rnczmTImMYnbteabujciI=
-X-Received: by 2002:aca:49d5:: with SMTP id w204mr4806729oia.167.1607125326471;
- Fri, 04 Dec 2020 15:42:06 -0800 (PST)
+        bh=Srah9Btgs9OEFfo4xADPiU77hWf4ah+yR8h+9h6LUwI=;
+        b=m1Yl80AC8k1JNJ4xqe/mJbaGEQ9FP/2TbCY2N0XoVJo9po2Zjia7Fa2Eqnw3Yw4zZp
+         DoGrRDELoMhlOo2XEjeknh5Mjk0XqJyqk9ysKXr91aDMb/QUE8qr8epNTnlbyY1UmTgY
+         FQ+Ws30OXhsu+faJybizRoqQDdXr3YY2zwQ5/+a1lEiBIPgSvggOIWvZCZsVm9SW3diz
+         loMNsoUVl2FaMVnFJu7JpNeO9udP2LTWqwJtM8tudp+tFwnC7We3fTLplaw9hdFtE3h1
+         VuOeGiigr0lBEWB44h2LNNIN2W8T3LSItVUiDUmaNwMzdKdlZFA9dU1yH1Y3tkulsu+6
+         tmgQ==
+X-Gm-Message-State: AOAM532TfOppuABJPXGgaCAjflUUxk7F5NqfifWBDfm81Hyj+FLVWQGV
+        zdnfelTJT5g4G/esciVKnnbsGlD4ijoUgfYgQf8=
+X-Google-Smtp-Source: ABdhPJxIAsPfFhC7vZ0h6tPFKATQJzX5jDBTMcV1COHgAESeWrdk2aykyGBKgPodltEU3UKyQY6FRnPxfq2K00pFbOY=
+X-Received: by 2002:a9d:b8e:: with SMTP id 14mr3490594oth.316.1607125763591;
+ Fri, 04 Dec 2020 15:49:23 -0800 (PST)
 MIME-Version: 1.0
-References: <20201204061623.1170745-1-felipe.contreras@gmail.com> <20201204061623.1170745-14-felipe.contreras@gmail.com>
-In-Reply-To: <20201204061623.1170745-14-felipe.contreras@gmail.com>
+References: <20201204061623.1170745-1-felipe.contreras@gmail.com> <20201204061623.1170745-15-felipe.contreras@gmail.com>
+In-Reply-To: <20201204061623.1170745-15-felipe.contreras@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 4 Dec 2020 15:41:55 -0800
-Message-ID: <CABPp-BFQXV+FdYXqCzN0LtxrK2zYLux66EPKJ8UumBSo5qgJqA@mail.gmail.com>
-Subject: Re: [PATCH v2 13/14] test: merge-pull-config: trivial cleanup
+Date:   Fri, 4 Dec 2020 15:49:12 -0800
+Message-ID: <CABPp-BEfxvkuVsDR9duwg1QCMxV9O4RqGF_rm2NuiStczggQoA@mail.gmail.com>
+Subject: Re: [PATCH v2 14/14] test: pull-options: revert unnecessary changes
 To:     Felipe Contreras <felipe.contreras@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
@@ -80,26 +80,105 @@ X-Mailing-List: git@vger.kernel.org
 On Thu, Dec 3, 2020 at 10:16 PM Felipe Contreras
 <felipe.contreras@gmail.com> wrote:
 >
-> Commit e01ae2a4a7 introduced an extra space.
+> Commit d18c950a69 changed these tests, but it's unclear why. Probably
+> because earlier versions of the patch series died instead of printing a
+> warning.
+
+Another case where log --pretty=reference notation would be more
+helpful in referring to commits.
+
+Looking up that commit, I see that commit made a number of other test
+changes which seem to be better motivated by the commit message and
+code changes.  I wonder if we could make that clearer in the commit
+message somehow.  Perhaps
+
+Commit d18c950a69 ("pull: warn if the user didn't say whether to
+rebase or to merge", 2020-03-09) changed a number of tests in t5521
+and added some new tests in t7601, but it is not clear why the changes
+in t5521 were made...
+
+
 >
+> Cc: Alex Henrie <alexhenrie24@gmail.com>
 > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 > ---
->  t/t7601-merge-pull-config.sh | 1 -
->  1 file changed, 1 deletion(-)
+>  t/t5521-pull-options.sh | 22 +++++++++++-----------
+>  1 file changed, 11 insertions(+), 11 deletions(-)
 >
-> diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
-> index d709799f8b..8a6aae564a 100755
-> --- a/t/t7601-merge-pull-config.sh
-> +++ b/t/t7601-merge-pull-config.sh
-> @@ -33,7 +33,6 @@ test_expect_success 'pull.rebase not set' '
->         test_decode_color <err >decoded &&
->         test_i18ngrep "<YELLOW>hint: " decoded &&
->         test_i18ngrep "Pulling without specifying how to reconcile" decoded
-> -
+> diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
+> index db1a381cd9..1a4fe2583a 100755
+> --- a/t/t5521-pull-options.sh
+> +++ b/t/t5521-pull-options.sh
+> @@ -11,10 +11,10 @@ test_expect_success 'setup' '
+>          git commit -m one)
 >  '
 >
->  test_expect_success 'pull.rebase not set (fast-forward)' '
+> -test_expect_success 'git pull -q --no-rebase' '
+> +test_expect_success 'git pull -q' '
+>         mkdir clonedq &&
+>         (cd clonedq && git init &&
+> -       git pull -q --no-rebase "../parent" >out 2>err &&
+> +       git pull -q "../parent" >out 2>err &&
+>         test_must_be_empty err &&
+>         test_must_be_empty out)
+>  '
+> @@ -30,10 +30,10 @@ test_expect_success 'git pull -q --rebase' '
+>         test_must_be_empty out)
+>  '
+>
+> -test_expect_success 'git pull --no-rebase' '
+> +test_expect_success 'git pull' '
+>         mkdir cloned &&
+>         (cd cloned && git init &&
+> -       git pull --no-rebase "../parent" >out 2>err &&
+> +       git pull "../parent" >out 2>err &&
+>         test -s err &&
+>         test_must_be_empty out)
+>  '
+> @@ -46,10 +46,10 @@ test_expect_success 'git pull --rebase' '
+>         test_must_be_empty out)
+>  '
+>
+> -test_expect_success 'git pull -v --no-rebase' '
+> +test_expect_success 'git pull -v' '
+>         mkdir clonedv &&
+>         (cd clonedv && git init &&
+> -       git pull -v --no-rebase "../parent" >out 2>err &&
+> +       git pull -v "../parent" >out 2>err &&
+>         test -s err &&
+>         test_must_be_empty out)
+>  '
+> @@ -62,25 +62,25 @@ test_expect_success 'git pull -v --rebase' '
+>         test_must_be_empty out)
+>  '
+>
+> -test_expect_success 'git pull -v -q --no-rebase' '
+> +test_expect_success 'git pull -v -q' '
+>         mkdir clonedvq &&
+>         (cd clonedvq && git init &&
+> -       git pull -v -q --no-rebase "../parent" >out 2>err &&
+> +       git pull -v -q "../parent" >out 2>err &&
+>         test_must_be_empty out &&
+>         test_must_be_empty err)
+>  '
+>
+> -test_expect_success 'git pull -q -v --no-rebase' '
+> +test_expect_success 'git pull -q -v' '
+>         mkdir clonedqv &&
+>         (cd clonedqv && git init &&
+> -       git pull -q -v --no-rebase "../parent" >out 2>err &&
+> +       git pull -q -v "../parent" >out 2>err &&
+>         test_must_be_empty out &&
+>         test -s err)
+>  '
+>  test_expect_success 'git pull --cleanup errors early on invalid argument' '
+>         mkdir clonedcleanup &&
+>         (cd clonedcleanup && git init &&
+> -       test_must_fail git pull --no-rebase --cleanup invalid "../parent" >out 2>err &&
+> +       test_must_fail git pull --cleanup invalid "../parent" >out 2>err &&
+>         test_must_be_empty out &&
+>         test -s err)
+>  '
 > --
 > 2.29.2
-
-Indeed, quite obvious and simple.
+>
