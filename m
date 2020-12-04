@@ -2,101 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DEF8C4361B
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 22:46:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD7BDC433FE
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 22:56:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 60A9622C9D
-	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 22:46:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9FBA222D01
+	for <git@archiver.kernel.org>; Fri,  4 Dec 2020 22:56:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725995AbgLDWpz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 17:45:55 -0500
-Received: from mout.gmx.net ([212.227.17.22]:46255 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725885AbgLDWpy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 17:45:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1607121859;
-        bh=WYOK1hAxivxlhcvFTOlb02vqiCjam4TCvCAAoUxNuGg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=faxWn3nmTNt2sZijiNnQ44aDC3WGLKvMOvcVrvMimBrJxyFuYmE6Hn/zLx4XwkAMz
-         /BPTlWULImSOuzFvHrm8RKQtJIayrSKG63lTqSKYqw0YflNCj1zG0pOGev3A5n336m
-         bHokysRmw5T/JaRVgc+7aH/f/kGkPf0b/OsH0s10=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.88.62] ([89.1.212.111]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M1Ycl-1kipdg1mDj-0037SG; Fri, 04
- Dec 2020 23:44:19 +0100
-Date:   Fri, 4 Dec 2020 23:44:17 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] cmake: determine list of extra built-ins dynamically
-In-Reply-To: <X8qmClPjwYWIoExP@coredump.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.2012042341270.25979@tvgsbejvaqbjf.bet>
-References: <pull.807.git.1607110436367.gitgitgadget@gmail.com> <X8qmClPjwYWIoExP@coredump.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727116AbgLDW4G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 17:56:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59402 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725985AbgLDW4G (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 17:56:06 -0500
+Received: from mail-oo1-xc42.google.com (mail-oo1-xc42.google.com [IPv6:2607:f8b0:4864:20::c42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41AD9C0613D1
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 14:55:20 -0800 (PST)
+Received: by mail-oo1-xc42.google.com with SMTP id w9so1771618ooh.13
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 14:55:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=YZLcuo+In7mzBYmb6YgjFk1O+T8wJklvtREzqO+rj/Y=;
+        b=ZVKGCmdWG1v6wZcDVKFkVGcd1j7URg37RXem43+xmUjYNpomkNdYWUVokMsTkDnku7
+         PzcNL6+PQIuQ+tL9g8rowiQqGWHwdazzAqo9a5g2z5HuXyhzU4r7qMSFzIUSlzfawOqo
+         zHWZwIwkI0bdOTa1X1wq3+C+3C21Xs6LfCd/XmMHKVQWbzej6xsuEA/KQmn4MloZOUhN
+         tfZk7sjW9MHJh4nHUFBfwJrGx+OWa6GEUQXw95w/X8em5BJj9ckYStHROW6V4YW/kh2u
+         xaPSkRwlVLOSeOJ6YmV2GvezGlU3LP8J1nF58Y+cfIrSAYrssMHVJrOtNv0LT+9EafGQ
+         sx+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=YZLcuo+In7mzBYmb6YgjFk1O+T8wJklvtREzqO+rj/Y=;
+        b=pjHS5pnk9Q+x5UopovgTlD3ywKbYKBgRYg+Z0AL+FQi9kw63USZM8HDda5NzzRt1SF
+         +gU6Ccl3W5JnAD5I3O9A2gIdYxkYoq2SxcKhiL+DC/HaN6MmNNLztQ73cM6xtM9kmvms
+         IU1t34JTDCZu/srbOkTenm/KsCj+khCjtvJf2MjNbVQMSBYYoLo15cqORSp+dNpifqca
+         o6lgokY8fZkI0bO6mDQZov5Hu/C5ncrsjCUpoONSFRTTuCUJbP5R9Ao/dIiEVrxc+rwM
+         s38+ZuwEe9HA2wmDNM7E2WxhQW2I+rGsTwsK69vS/Pq5XBx9xzlvHBUZVixzGKEPuxNL
+         9bpA==
+X-Gm-Message-State: AOAM531trHo/HQsl+/UV3EOMdHcTC09wQXIWnn7kmjSpsWyYd/Dx0h++
+        8OXHfaW5/KGSGSX0gsFDf4jFe1xG9KBmBYIBP8I=
+X-Google-Smtp-Source: ABdhPJz2r2XboO5bJYV0HOy7qnUOgjShEAOz0ebHf8J+ithuERUoP1bMa7SyyY5+tGVkqmdMQ1xSkWMYdlYTCDlOy0Y=
+X-Received: by 2002:a4a:8519:: with SMTP id k25mr5174437ooh.32.1607122519582;
+ Fri, 04 Dec 2020 14:55:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:+0ctk/utRRpnl+xDok0lMcHJBDdhbQ7YTo9T3NXjKxzIdBvSlqL
- LzKn56kBzHWF+AJnRNUe5H+R+GD6KQCWrEljsnkNsJtPETlD2n18ko/5G9pMKPiO0P4ID7r
- 3dIN9qSXdylSqBX1onTFPvZCkBM12W5b8NBJIdCXOed/7qtEPCnH/7CC4sWqVut8SNzKH1j
- q9CbVl18k0bcWtULsNufA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:DTsCrzy77UY=:CwD3yZVb58N2NMqw7a0FIy
- UG/ItKp7raP3BjVAEVB8RJAeMfNvRYUCNgPveDa24wlX+x0Eyvn7ve7QTpjurTISDjxAndDGW
- O0/mRNz6yycBO7i7i50u0XlE7dXQrums7/C47dq0L0mtKt2zq37Vf0LxcWd63tIFIueyxNnv4
- MrTspvTvLUYg9VDYxLwuSXTy3s4YgiyDUyO/nOARaC4KipNJdhf//sPcgFV8QWn9C0C00zGrj
- viONjzL77A56biFXHhB/WQg+Q9J023TupMbRSfJXeKvHFslA87jySof7bEZSjgkeRZfqXn/Yp
- WLxvYkKyTaRGS/c/VZOoe5nTSaMC5Wh+EOFNcGzwWIK6pgbKvmb2qvRrs3wMhsg6WXV056DZ2
- z1WVzxdLWqK1krZ2uwbvEepv2QT2AWfUTGGHwXohGmHI1KlHCabKFX/iiLwdJgtdKMvzahJni
- qWF5za8C12ajAlGVwFunkTeVmWQH+GELZt26GByR6fu5/0eOXZg5nIieiiomArBWGS6aYvFzw
- akxmwe9CQ2Pd/OmmhJhT8Nwacm/+4ThY6lLTSGsaPBxLXf16XnUHybzHKhfgB9DNNPrM40eJ9
- zCH5UE9rOFmVzfrydz84+7yUKx5sWT4tJ+FQWaxlYhRFFjR8cF68Z9E/IGwYNKAHw9V/zaxcG
- h6alx5/OKn0SHOcW9ugTlpXhjX3Xw2b+Q3Co0EAEx+QQjxPdDkwPsyCZ381N1Hk5b2tlbYQGQ
- aSopt9I1r9Nn0ONBSItLzdLr4qkzSRrA5SFt6hzZtkCYSmHGbb9HPz727Za4U4y/tgV4gJWIu
- dSl7B4uJfp8koluuL8VmEJ8QDAjMwnD8hR0AWZUfUDmEdOBHHDlYLTKtOOfFDNvrZ//M1143Y
- /X6GyTAPVz8xyNfDt2IuPXmubrgdhd2/4A/0bPrG0=
-Content-Transfer-Encoding: quoted-printable
+References: <20201204061623.1170745-1-felipe.contreras@gmail.com> <20201204061623.1170745-2-felipe.contreras@gmail.com>
+In-Reply-To: <20201204061623.1170745-2-felipe.contreras@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 4 Dec 2020 14:55:08 -0800
+Message-ID: <CABPp-BEsmNv1=yKGZj8kH9EGjnLkeo0+hJvog_b1pYex-59ScQ@mail.gmail.com>
+Subject: Re: [PATCH v2 01/14] doc: pull: explain what is a fast-forward
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        "Theodore Y . Ts'o" <tytso@mit.edu>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        John Keeping <john@keeping.me.uk>,
+        Richard Hansen <rhansen@rhansen.org>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
+        "W. Trevor King" <wking@tremily.us>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
-
-On Fri, 4 Dec 2020, Jeff King wrote:
-
-> On Fri, Dec 04, 2020 at 07:33:56PM +0000, Johannes Schindelin via GitGit=
-Gadget wrote:
+On Thu, Dec 3, 2020 at 10:16 PM Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
 >
-> > Rather than always play catch-up and adjust `git_builtin_extra`
-> > manually, use the `BUILT_INS` definitions in the Makefile as
-> > authoritative source and generate `git_builtin_extra` dynamically.
+> We want users to know what is a fast-forward in order to understand the
+> default warning.
 >
-> Yay. This is exactly how I'd hoped things would work or the cmake file
-> in general. I don't mind following micro-formats within our Makefile to
-> keep things easier for the cmake parsing side.
-
-Me, too. I am somewhat embarrassed that I missed the `git_builtin_extra`
-list in my review of the CMake patch series...
-
-> >  contrib/buildsystems/CMakeLists.txt | 15 +++++++++++----
-> >  1 file changed, 11 insertions(+), 4 deletions(-)
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
+>  Documentation/git-pull.txt | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
 >
-> The implementation looks plausibly correct to me (bearing in mind that
-> I've never written cmake).
+> diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+> index 5c3fb67c01..dc812139f4 100644
+> --- a/Documentation/git-pull.txt
+> +++ b/Documentation/git-pull.txt
+> @@ -38,6 +38,20 @@ as set by linkgit:git-branch[1] `--track`.
+>  Assume the following history exists and the current branch is
+>  "`master`":
+>
+> +------------
+> +         A---B---C master on origin
+> +        /
+> +    D---E master
+> +------------
+> +
+> +Then `git pull` will merge in a fast-foward way up to the new master.
+> +
+> +------------
+> +    D---E---A---B---C master, origin/master
+> +------------
+> +
+> +However, a non-fast-foward case looks very different.
+> +
+>  ------------
+>           A---B---C master on origin
+>          /
+> --
+> 2.29.2
 
-It is a close copy of the two macros we already use to parse the
-`Makefile` for lists of `.o` files and for scripts.
-
-Together with the fact that this patch fixes the CI build of Git for
-Windows' `shears/seen` branch (which is a continuously-rebased version of
-Git for Windows' `main` branch onto `seen`, plus fixups), I am fairly
-confident that it is correct.
-
-Ciao,
-Dscho
+Makes sense to me.
