@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92C41C1B087
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDB6FC1B0E3
 	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:51:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5E856229C4
+	by mail.kernel.org (Postfix) with ESMTP id B2C6D229C4
 	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:51:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731234AbgLEBvT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 20:51:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58068 "EHLO
+        id S1731251AbgLEBv3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 20:51:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731209AbgLEBvT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 20:51:19 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCA19C08E85E
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 17:50:05 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id kk4so4344888pjb.7
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 17:50:05 -0800 (PST)
+        with ESMTP id S1725550AbgLEBv2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 20:51:28 -0500
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBD1DC08E860
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 17:50:09 -0800 (PST)
+Received: by mail-pf1-x44a.google.com with SMTP id l11so4933323pfc.16
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 17:50:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=DkPnR/H7PAZzH4bbaf0ld6sKav/CB6vmj5JV5jjTvg8=;
-        b=jLJtx6Z+9jJf2xcUxd+SalRuktljdNuqIlXBoul/uAseI6IKlWREZiukHtokx8Bb48
-         zzhKBsEXcBlp8/myjo9n5HcX8lyIrNCKtB1VL1Oo9qy3G3/wZEav1gfL+l804Icpo2bn
-         hnebg6mk4+CfFCDnd6+SVy4ptRubv1VQqzGQKG1X8QoHmxHcw9gV/ChgQ0vcvLVo+Xq7
-         A0FM7LVbocY0170Ir7h7zgWGkE5wmW6QuzRdsK9QeNyJCk0X0trjuAXS2Jx45GOtokkA
-         JBappjLRQvH3HCvAwHCQCJ1b6rHXda0moqci2DXNc1OCVUbunwCy2XGMJxMyPyEFsOv4
-         8LpA==
+        bh=isU6Nqto7xVPug27tZI9gPvrR9M1DsWKGAAsSUX9RKA=;
+        b=D19CsepcJIYRmdaz8oiCUXj+f/SlzJZRqbNat8KYxVs/bymlNvlU09n48sukA5W0uV
+         QNELMQoms9zvx7IHPGJaunZg/+lf6dmhIV1B0ZmZ/h89WaewMSbhk9KKwz6bsQRys38+
+         JBxL0V+aUgFpZTe0Jo/RhP4tReG6SzC9cVOhPi6BRSvGI+O8r2+/wnzxIg1ZtIH0NmT5
+         2RG4O5X8a0JSitF9VUKJI133nlqbQSTln6WYQ7LhDtZy87I2XJP1IGDpBAx8mAxpzGf5
+         Q+l1FsUJnJEMhbfTiMouxiDcEIcDK0uXCkf8t2p+8kqUd3Ga6hUMK8eT1I/XGT5FcXxM
+         NUUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=DkPnR/H7PAZzH4bbaf0ld6sKav/CB6vmj5JV5jjTvg8=;
-        b=XRiZFBStO1omNtsfVhrVWIAJ1x2ulRjG4ZmJ1+Ok4QWNTxdhq9r5EY2oiuI99lG+Bb
-         yw+q64sI+yjm4MwoVJ3neLmmFrL0nrYQyg6vt/NfThs1Au0Zla3n+8iLPeDtRKuTa8xW
-         whibLoeW7wyi7CB6bkQpP4pfKGtoCcF8Ez6Lx490VUJCgwqccoozyzYAGouwUereQFak
-         NbsXy3aHeW1FctWdMVGHqvcJdqTpNFvqKkiZ9Oo+3D7I6iRlng9oCdCLXisMb7NIIGq4
-         JejIGlTA5ll8/B3wGxoJNN0Zz9BqcTJHc6grDSxc/HZxMpr02Ido80bdP/j0vPVrZf5+
-         Md2g==
-X-Gm-Message-State: AOAM532GMo3xqXjCdnkhkzqBoFsLy0bua9aK4MVrEVLn3d1veWSWECkw
-        VwMcJagUnUK8XsISJVlgzLRS0J6Ets/VqZWpClIAGrOVsXeY8suC+Cb28o2wyGMSUO8gA+Y0lgv
-        ySWbL/g6/34wvuYiotizNUAvlDKeZkQeK7olW9ZQ2T8pFSFfBeVxcs+h+OMiSDQY+bh56GRX0WQ
+        bh=isU6Nqto7xVPug27tZI9gPvrR9M1DsWKGAAsSUX9RKA=;
+        b=EoRfVnevvJtXpOFAhNLEizcEE7rclokZPbi4tjo1utqt/43RnGQetV7hPkPkTs8wFr
+         3pdYmREyfPehfdZb5UqfL+LfZnkDyn1GkFBKZaHjC8xiz3qpl6iA9x5JNf6E0B6XbRMT
+         f5goGo/GxA8F+Qf25XxO6FV6Sym+x1rNqCrZ6v5q73LhkdQLUivElIxMXwXdQeXcgN/Z
+         KcT4fXzzu/XXNY/UDW7FmTJFy7M+0Y2e8xNW/bguGZQ9uw7BaK93mjRtFbTSm38vBGFD
+         oGNPyRgmyLTrx2T224RMDXpy2gwbHTIwIvIFJWLUujZZW4YHRhkUBHGHarWZ2j/y0iAq
+         E52A==
+X-Gm-Message-State: AOAM531u+82z4W1AyW/ctDtViUj/Q10/LIbpvNUR+ZsJ1ttGTZfb1C4i
+        PmVVAX9EFVROE/dTwumyzJXiJhxWLyytIaYQL7a102csbKw0RAEVmtCq3mhiEozKPUz03Cgko51
+        WZbZB0zlG3SOY7KAXLs7LF/7k0u9IpQvVEefaRlRWSwI+zvQTjfqOib6I7hKJKweXKbUw2ulQag
         ==
-X-Google-Smtp-Source: ABdhPJwpFR1lOvkjzA89sE5WsgbjiyiIZBmzb+EieH3N9BE/hLzwB8uvv7nf8b7Vd+QIjiqiUgwSAuhnc9RWpOrYFKg=
+X-Google-Smtp-Source: ABdhPJyW/eETJyctMjE2Q2AnBBLSbQzfueS3kBUqWJ5Kb4TEXRlLqpra7NQMRD7OSw3n8GQC7w84+f+2zRqFbgG8ikQ=
 Sender: "emilyshaffer via sendgmr" 
         <emilyshaffer@podkayne.svl.corp.google.com>
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
- (user=emilyshaffer job=sendgmr) by 2002:a05:6a00:14cd:b029:18b:fac7:d88 with
- SMTP id w13-20020a056a0014cdb029018bfac70d88mr6432640pfu.6.1607133005254;
- Fri, 04 Dec 2020 17:50:05 -0800 (PST)
-Date:   Fri,  4 Dec 2020 17:49:36 -0800
+ (user=emilyshaffer job=sendgmr) by 2002:a05:6a00:848:b029:197:e659:e236 with
+ SMTP id q8-20020a056a000848b0290197e659e236mr6402483pfk.74.1607133009190;
+ Fri, 04 Dec 2020 17:50:09 -0800 (PST)
+Date:   Fri,  4 Dec 2020 17:49:38 -0800
 In-Reply-To: <20201205014945.1502660-1-emilyshaffer@google.com>
-Message-Id: <20201205014945.1502660-9-emilyshaffer@google.com>
+Message-Id: <20201205014945.1502660-11-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20201205014945.1502660-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.28.0.226.g0268cb6820
-Subject: [PATCH 08/17] git-p4: use 'git hook' to run hooks
+Subject: [PATCH 10/17] hook: convert 'post-rewrite' hook to config
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -73,106 +73,168 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of duplicating the behavior of run-command.h:run_hook_le() in
-Python, we can directly call 'git hook run'. As a bonus, this means
-git-p4 learns how to find hook specifications from the Git config as
-well as from the hookdir.
+By using 'hook.h' for 'post-rewrite', we simplify hook invocations by
+not needing to put together our own 'struct child_process' and we also
+learn to run hooks specified in the config as well as the hook dir.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
+ Documentation/githooks.txt |  2 +
+ builtin/am.c               | 18 +++------
+ sequencer.c                | 76 +++++++++++++++-----------------------
+ 3 files changed, 36 insertions(+), 60 deletions(-)
 
-Notes:
-    Maybe there is a better way to do this - I had a hard time getting this to run
-    locally, and Python is not my forte, so if anybody has a better approach I'd
-    love to just take that patch instead :)
-
- git-p4.py | 70 +++++++------------------------------------------------
- 1 file changed, 9 insertions(+), 61 deletions(-)
-
-diff --git a/git-p4.py b/git-p4.py
-index 6ae5bbfe99..73161a56d9 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -208,70 +208,18 @@ def decode_path(path):
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 14035ef725..db290984f6 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -585,6 +585,8 @@ The hook always runs after the automatic note copying (see
+ "notes.rewrite.<command>" in linkgit:git-config[1]) has happened, and
+ thus has access to these notes.
  
- def run_git_hook(cmd, param=[]):
-     """Execute a hook if the hook exists."""
--    if verbose:
--        sys.stderr.write("Looking for hook: %s\n" % cmd)
--        sys.stderr.flush()
--
--    hooks_path = gitConfig("core.hooksPath")
--    if len(hooks_path) <= 0:
--        hooks_path = os.path.join(os.environ["GIT_DIR"], "hooks")
--
--    if not isinstance(param, list):
--        param=[param]
--
--    # resolve hook file name, OS depdenent
--    hook_file = os.path.join(hooks_path, cmd)
--    if platform.system() == 'Windows':
--        if not os.path.isfile(hook_file):
--            # look for the file with an extension
--            files = glob.glob(hook_file + ".*")
--            if not files:
--                return True
--            files.sort()
--            hook_file = files.pop()
--            while hook_file.upper().endswith(".SAMPLE"):
--                # The file is a sample hook. We don't want it
--                if len(files) > 0:
--                    hook_file = files.pop()
--                else:
--                    return True
--
--    if not os.path.isfile(hook_file) or not os.access(hook_file, os.X_OK):
-+    print('ESS: entering run_git_hook')
-+    if not cmd:
-         return True
++Hooks run during 'post-rewrite' will be run in parallel by default.
++
+ The following command-specific comments apply:
  
--    return run_hook_command(hook_file, param) == 0
--
--def run_hook_command(cmd, param):
--    """Executes a git hook command
--       cmd = the command line file to be executed. This can be
--       a file that is run by OS association.
--
--       param = a list of parameters to pass to the cmd command
--
--       On windows, the extension is checked to see if it should
--       be run with the Git for Windows Bash shell.  If there
--       is no file extension, the file is deemed a bash shell
--       and will be handed off to sh.exe. Otherwise, Windows
--       will be called with the shell to handle the file assocation.
--
--       For non Windows operating systems, the file is called
--       as an executable.
--    """
--    cli = [cmd] + param
--    use_shell = False
--    if platform.system() == 'Windows':
--        (root,ext) = os.path.splitext(cmd)
--        if ext == "":
--            exe_path = os.environ.get("EXEPATH")
--            if exe_path is None:
--                exe_path = ""
--            else:
--                exe_path = os.path.join(exe_path, "bin")
--            cli = [os.path.join(exe_path, "SH.EXE")] + cli
--        else:
--            use_shell = True
--    return subprocess.call(cli, shell=use_shell)
-+    """args are specified with -a <arg> -a <arg> -a <arg>"""
-+    args = (['git', 'hook', 'run'] +
-+	    ["-a" + arg for arg in param] +
-+	    [cmd])
-+    print ('ESS: args:')
-+    print (args)
+ rebase::
+diff --git a/builtin/am.c b/builtin/am.c
+index 22d147bc19..c7cad2cb32 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -449,23 +449,15 @@ static int run_applypatch_msg_hook(struct am_state *state)
+  */
+ static int run_post_rewrite_hook(const struct am_state *state)
+ {
+-	struct child_process cp = CHILD_PROCESS_INIT;
+-	const char *hook = find_hook("post-rewrite");
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_ASYNC;
+ 	int ret;
  
-+    return subprocess.call(args) == 0
+-	if (!hook)
+-		return 0;
+-
+-	strvec_push(&cp.args, hook);
+-	strvec_push(&cp.args, "rebase");
++	strvec_push(&opt.args, "rebase");
++	opt.path_to_stdin = am_path(state, "rewritten");
  
- def write_pipe(c, stdin):
-     if verbose:
+-	cp.in = xopen(am_path(state, "rewritten"), O_RDONLY);
+-	cp.stdout_to_stderr = 1;
+-	cp.trace2_hook_name = "post-rewrite";
++	ret = run_hooks("post-rewrite", &opt);
+ 
+-	ret = run_command(&cp);
+-
+-	close(cp.in);
++	run_hooks_opt_clear(&opt);
+ 	return ret;
+ }
+ 
+diff --git a/sequencer.c b/sequencer.c
+index 5a98fd2fbc..4befd862ff 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -35,6 +35,7 @@
+ #include "rebase-interactive.h"
+ #include "reset.h"
+ #include "hook.h"
++#include "string-list.h"
+ 
+ #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+ 
+@@ -1143,33 +1144,23 @@ int update_head_with_reflog(const struct commit *old_head,
+ static int run_rewrite_hook(const struct object_id *oldoid,
+ 			    const struct object_id *newoid)
+ {
+-	struct child_process proc = CHILD_PROCESS_INIT;
+-	const char *argv[3];
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_ASYNC;
++	struct strbuf tmp = STRBUF_INIT;
+ 	int code;
+-	struct strbuf sb = STRBUF_INIT;
+ 
+-	argv[0] = find_hook("post-rewrite");
+-	if (!argv[0])
+-		return 0;
++	strvec_push(&opt.args, "amend");
+ 
+-	argv[1] = "amend";
+-	argv[2] = NULL;
+-
+-	proc.argv = argv;
+-	proc.in = -1;
+-	proc.stdout_to_stderr = 1;
+-	proc.trace2_hook_name = "post-rewrite";
+-
+-	code = start_command(&proc);
+-	if (code)
+-		return code;
+-	strbuf_addf(&sb, "%s %s\n", oid_to_hex(oldoid), oid_to_hex(newoid));
+-	sigchain_push(SIGPIPE, SIG_IGN);
+-	write_in_full(proc.in, sb.buf, sb.len);
+-	close(proc.in);
+-	strbuf_release(&sb);
+-	sigchain_pop(SIGPIPE);
+-	return finish_command(&proc);
++	strbuf_addf(&tmp,
++		    "%s %s",
++		    oid_to_hex(oldoid),
++		    oid_to_hex(newoid));
++	string_list_append(&opt.str_stdin, tmp.buf);
++
++	code = run_hooks("post-rewrite", &opt);
++
++	run_hooks_opt_clear(&opt);
++	strbuf_release(&tmp);
++	return code;
+ }
+ 
+ void commit_post_rewrite(struct repository *r,
+@@ -4317,30 +4308,21 @@ static int pick_commits(struct repository *r,
+ 		flush_rewritten_pending();
+ 		if (!stat(rebase_path_rewritten_list(), &st) &&
+ 				st.st_size > 0) {
+-			struct child_process child = CHILD_PROCESS_INIT;
+-			const char *post_rewrite_hook =
+-				find_hook("post-rewrite");
+-
+-			child.in = open(rebase_path_rewritten_list(), O_RDONLY);
+-			child.git_cmd = 1;
+-			strvec_push(&child.args, "notes");
+-			strvec_push(&child.args, "copy");
+-			strvec_push(&child.args, "--for-rewrite=rebase");
++			struct child_process notes_cp = CHILD_PROCESS_INIT;
++			struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT_ASYNC;
++
++			notes_cp.in = open(rebase_path_rewritten_list(), O_RDONLY);
++			notes_cp.git_cmd = 1;
++			strvec_push(&notes_cp.args, "notes");
++			strvec_push(&notes_cp.args, "copy");
++			strvec_push(&notes_cp.args, "--for-rewrite=rebase");
+ 			/* we don't care if this copying failed */
+-			run_command(&child);
+-
+-			if (post_rewrite_hook) {
+-				struct child_process hook = CHILD_PROCESS_INIT;
+-
+-				hook.in = open(rebase_path_rewritten_list(),
+-					O_RDONLY);
+-				hook.stdout_to_stderr = 1;
+-				hook.trace2_hook_name = "post-rewrite";
+-				strvec_push(&hook.args, post_rewrite_hook);
+-				strvec_push(&hook.args, "rebase");
+-				/* we don't care if this hook failed */
+-				run_command(&hook);
+-			}
++			run_command(&notes_cp);
++
++			hook_opt.path_to_stdin = rebase_path_rewritten_list();
++			strvec_push(&hook_opt.args, "rebase");
++			run_hooks("post-rewrite", &hook_opt);
++			run_hooks_opt_clear(&hook_opt);
+ 		}
+ 		apply_autostash(rebase_path_autostash());
+ 
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
