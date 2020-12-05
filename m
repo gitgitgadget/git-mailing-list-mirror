@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2573CC433FE
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:47:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C688C4361A
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:47:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 035D922DFB
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:47:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6D0A322DFB
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:47:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731105AbgLEBrq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 20:47:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57476 "EHLO
+        id S1731123AbgLEBrs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 20:47:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725300AbgLEBrp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 20:47:45 -0500
-Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE6F0C061A56
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 17:46:28 -0800 (PST)
-Received: by mail-qt1-x849.google.com with SMTP id v18so6236886qta.22
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 17:46:28 -0800 (PST)
+        with ESMTP id S1725300AbgLEBrr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 20:47:47 -0500
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9671C08E860
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 17:46:35 -0800 (PST)
+Received: by mail-yb1-xb49.google.com with SMTP id z29so9214097ybi.23
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 17:46:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=tYBIp72At1pPq2NwvWzTuSgSJkDuk44JQzLmJTw7OgE=;
-        b=IrR711oKxyB5r8jYdcnsLyLHtTjfJvr79t/+lDexFhPTx1uvAxg3g9350+ZmW2yWa6
-         wjaclTIaibOZ8gQZgM3rhPPaAq3YTw3mcI+DkDDH2CiIkeq9GZHVM4D6hpIYagFBqdQZ
-         4mfDUGDXvUoGSBDptapDY/beRz/YltCkP73JgXofPlu9ie+h/HQ6CdtyANKBYHjLHAFf
-         ulr5HUWiOhQ6H44yUo9mt7WdEZXPIvxPSKNz+95W6Jh5c0mi+G6ktgIBtSb6rhxK0o6n
-         2xgwGkBKfDbq0XSHGgUp9ABkRmujn5Kq4c2O8Nhwt5OOoKkVsWbwCM/e6zDBi9rgcohx
-         UKbA==
+        bh=xksZ8TN+Bx5zxuwy/jMdxbToJEO3CXMa1+UlyOml024=;
+        b=BBu0jpX+Oxo6lcgFxpiasDApHEuNsnoq4r4VFN8Xl3vxcJZuNiMdfVfN4N0GEBtjoY
+         3iIMKU54LjRf2N94HbYadA/eTnKwCfJiD53lkYt4ROPfCVP0CclYEcqVKErVlGtXEuos
+         cXqMb77INliFu43biEREGiT5iMO2Tb0p7EKm+SgFX5qQBrNChk6eIEgW2mXMobiji/Ae
+         sQDbSau6WWND0U1kdBLpCsY18GORgGDsR7eOdjP7TNHW8YeF9qii22+HZYhvPKPz+zrr
+         3m8+PMhDdS7K7cxNKTesuwMMVuf83GI0T+0h7e6DWaQ4kpWsc1zTKgcZbBp0Hq5msecl
+         iTcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=tYBIp72At1pPq2NwvWzTuSgSJkDuk44JQzLmJTw7OgE=;
-        b=VDkChuXBy5buVVKBqTbXiiyrHsPjjJPKYTW6bZ0NliPYQvMdph2loPO0y5nh3xqiz9
-         8I8kRA0fr4aJUADbmZ7wyZIwL4hyJZilE329/umm3HNQ6tROXNk+/fjbVd7f+DWU8NiI
-         4CBSZHO72joCel91NgudQxe8M5MlOPg6P0Y1HfZorh1eFytCCKHXe6io6iabzXvOhFIb
-         9LKd/fdmxIyfN4thLMTQ4MSQZWB+mRNbu0q5VLk/E+1d9kzPD1LZ75xnsuzCdOkkduUZ
-         7YPfT7NrVAxmhlXuxzsMHXS6OhsZkZI0vB/vpftjXy6uKBQg0qT5wlGZpzFmpnZJBJbD
-         ZoWQ==
-X-Gm-Message-State: AOAM530uDWv3vCdWe69LqTAqeC7itnILQbfQpZB6WDTyDimO9tZMKh7e
-        gxsh/sx1s3slH3IXGj0u3CrnFgymH+A6LsNUzdAzxkdNM6yrEtCkoAisuIwSn1aQ/2Guljeyt6g
-        XveZWaDexPXf7rkCzlHeGf/VBjYCbsnRNDuUTWsv8KoPfbSF588SfhFnbj/ydzidHRCGqpsX5uw
+        bh=xksZ8TN+Bx5zxuwy/jMdxbToJEO3CXMa1+UlyOml024=;
+        b=pr+xpNeWR1ktZf9FUYM3fd3zeOUpDycqkhyVuP1I62wNG8HVp1/qbOMYI9XCfuu0rZ
+         Gu+I0T3uMZUUw0ULYDEZhngNDgTME8Glom6QkF7qrxHmHvkRRNr6sjPQja6mju7fZhqS
+         8RBr+T3rH/tBC67FSSAK9TNg/nl5/3PiXzMn6YrkLA6VtKKuM5FWQ6S5eN3VypFnUOqg
+         sVq7I8GSJHN9LI2cRkGAtOnDLRnS5HomxUPN4Le4R1cJrMhQMFiKvLBgpiciLPC59Zuo
+         YY8CLRHJQGq4ZhECnyV+bXEtjxRjpmvhOkzL4HMR5g4sdExwqme/TEjtyoJoehNmMHY/
+         hB9Q==
+X-Gm-Message-State: AOAM532tdTyO4bJ9nzVVIu/iOycrZR+7SZPjGjBoumqnTsWoXinsHwcR
+        O6dlLAKJGR/a1Yy29KaPCCAfHrUjZlNW8nqRsg+uGOkEIPovpA89jsGa9skqn8WsqbqtI86DOK+
+        aWY6e4dxnOiwcWXWtlXy0asoyoV4lqQmGpTpU6VKQaKZUWLayOXejhjwzFFZoHmNs6JWapZlVzQ
         ==
-X-Google-Smtp-Source: ABdhPJwrygg3ICRFKoPGO5pzvtUkcLwHntw8LTnha+Wo6ama9Xo1U5q6MvvzichSo9ctPIxeJHKzOK5twok7wYL1ixo=
+X-Google-Smtp-Source: ABdhPJzE2axp34nWc+SsmBAkpIWEAbz/toBmOe2ZCe8J8IykrHeMhhBdWmPQgWfZdvTi6ftbQN/rzA0UuoJom3Ee+do=
 Sender: "emilyshaffer via sendgmr" 
         <emilyshaffer@podkayne.svl.corp.google.com>
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
- (user=emilyshaffer job=sendgmr) by 2002:a0c:b59a:: with SMTP id
- g26mr9152078qve.26.1607132787887; Fri, 04 Dec 2020 17:46:27 -0800 (PST)
-Date:   Fri,  4 Dec 2020 17:45:57 -0800
+ (user=emilyshaffer job=sendgmr) by 2002:a25:f512:: with SMTP id
+ a18mr10163204ybe.159.1607132794984; Fri, 04 Dec 2020 17:46:34 -0800 (PST)
+Date:   Fri,  4 Dec 2020 17:46:01 -0800
 In-Reply-To: <20201205014607.1464119-1-emilyshaffer@google.com>
-Message-Id: <20201205014607.1464119-8-emilyshaffer@google.com>
+Message-Id: <20201205014607.1464119-12-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20201205014607.1464119-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.28.0.226.g0268cb6820
-Subject: [PATCH 07/17] parse-options: parse into strvec
+Subject: [PATCH 11/17] run-command: allow stdin for run_processes_parallel
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -72,97 +72,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-parse-options already knows how to read into a string_list, and it knows
-how to read into an strvec as a passthrough (that is, including the
-argument as well as its value). string_list and strvec serve similar
-purposes but are somewhat painful to convert between; so, let's teach
-parse-options to read values of string arguments directly into an
-strvec without preserving the argument name.
+While it makes sense not to inherit stdin from the parent process to
+avoid deadlocking, it's not necessary to completely ban stdin to
+children. An informed user should be able to configure stdin safely. By
+setting `some_child.process.no_stdin=1` before calling `get_next_task()`
+we provide a reasonable default behavior but enable users to set up
+stdin streaming for themselves during the callback.
 
-This is useful if collecting generic arguments to pass through to
-another command, for example, 'git hook run --arg "--quiet" --arg
-"--format=pretty" some-hook'. The resulting strvec would contain
-{ "--quiet", "--format=pretty" }.
-
-The implementation is based on that of OPT_STRING_LIST.
+`some_child.process.stdout_to_stderr`, however, remains unmodifiable by
+`get_next_task()` - the rest of the run_processes_parallel() API depends
+on child output in stderr.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
+ run-command.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Notes:
-    Since v4, fixed one or two more places where I missed the argv_array->strvec
-    rename.
-
- Documentation/technical/api-parse-options.txt |  5 +++++
- parse-options-cb.c                            | 16 ++++++++++++++++
- parse-options.h                               |  4 ++++
- 3 files changed, 25 insertions(+)
-
-diff --git a/Documentation/technical/api-parse-options.txt b/Documentation/technical/api-parse-options.txt
-index 5a60bbfa7f..679bd98629 100644
---- a/Documentation/technical/api-parse-options.txt
-+++ b/Documentation/technical/api-parse-options.txt
-@@ -173,6 +173,11 @@ There are some macros to easily define options:
- 	The string argument is stored as an element in `string_list`.
- 	Use of `--no-option` will clear the list of preceding values.
+diff --git a/run-command.c b/run-command.c
+index ea4d0fb4b1..80c8c97bc1 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1683,6 +1683,9 @@ static int pp_start_one(struct parallel_processes *pp)
+ 	if (i == pp->max_processes)
+ 		BUG("bookkeeping is hard");
  
-+`OPT_STRVEC(short, long, &struct strvec, arg_str, description)`::
-+	Introduce an option with a string argument.
-+	The string argument is stored as an element in `strvec`.
-+	Use of `--no-option` will clear the list of preceding values.
++	/* disallow by default, but allow users to set up stdin if they wish */
++	pp->children[i].process.no_stdin = 1;
 +
- `OPT_INTEGER(short, long, &int_var, description)`::
- 	Introduce an option with integer argument.
- 	The integer is put into `int_var`.
-diff --git a/parse-options-cb.c b/parse-options-cb.c
-index 4542d4d3f9..c2451dfb1b 100644
---- a/parse-options-cb.c
-+++ b/parse-options-cb.c
-@@ -207,6 +207,22 @@ int parse_opt_string_list(const struct option *opt, const char *arg, int unset)
- 	return 0;
- }
+ 	code = pp->get_next_task(&pp->children[i].process,
+ 				 &pp->children[i].err,
+ 				 pp->data,
+@@ -1694,7 +1697,6 @@ static int pp_start_one(struct parallel_processes *pp)
+ 	}
+ 	pp->children[i].process.err = -1;
+ 	pp->children[i].process.stdout_to_stderr = 1;
+-	pp->children[i].process.no_stdin = 1;
  
-+int parse_opt_strvec(const struct option *opt, const char *arg, int unset)
-+{
-+	struct strvec *v = opt->value;
-+
-+	if (unset) {
-+		strvec_clear(v);
-+		return 0;
-+	}
-+
-+	if (!arg)
-+		return -1;
-+
-+	strvec_push(v, arg);
-+	return 0;
-+}
-+
- int parse_opt_noop_cb(const struct option *opt, const char *arg, int unset)
- {
- 	return 0;
-diff --git a/parse-options.h b/parse-options.h
-index 7030d8f3da..75cc8c7c96 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -177,6 +177,9 @@ struct option {
- #define OPT_STRING_LIST(s, l, v, a, h) \
- 				    { OPTION_CALLBACK, (s), (l), (v), (a), \
- 				      (h), 0, &parse_opt_string_list }
-+#define OPT_STRVEC(s, l, v, a, h) \
-+				    { OPTION_CALLBACK, (s), (l), (v), (a), \
-+				      (h), 0, &parse_opt_strvec }
- #define OPT_UYN(s, l, v, h)         { OPTION_CALLBACK, (s), (l), (v), NULL, \
- 				      (h), PARSE_OPT_NOARG, &parse_opt_tertiary }
- #define OPT_EXPIRY_DATE(s, l, v, h) \
-@@ -296,6 +299,7 @@ int parse_opt_commits(const struct option *, const char *, int);
- int parse_opt_commit(const struct option *, const char *, int);
- int parse_opt_tertiary(const struct option *, const char *, int);
- int parse_opt_string_list(const struct option *, const char *, int);
-+int parse_opt_strvec(const struct option *, const char *, int);
- int parse_opt_noop_cb(const struct option *, const char *, int);
- enum parse_opt_result parse_opt_unknown_cb(struct parse_opt_ctx_t *ctx,
- 					   const struct option *,
+ 	if (start_command(&pp->children[i].process)) {
+ 		code = pp->start_failure(&pp->children[i].err,
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
