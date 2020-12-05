@@ -2,65 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB066C433FE
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 00:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE18DC4361A
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 00:59:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 86FE022D6E
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 00:57:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 82E5F22D6F
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 00:59:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731049AbgLEA4x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 19:56:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49712 "EHLO
+        id S1731047AbgLEA6p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 19:58:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726930AbgLEA4x (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 19:56:53 -0500
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33AF8C0613D1
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 16:56:27 -0800 (PST)
-Received: by mail-ot1-x344.google.com with SMTP id i6so977658otr.2
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 16:56:27 -0800 (PST)
+        with ESMTP id S1726241AbgLEA6m (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 19:58:42 -0500
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00C0AC0613D1
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 16:58:11 -0800 (PST)
+Received: by mail-oi1-x243.google.com with SMTP id t205so8260653oib.12
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 16:58:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=gJFvgcBlhYYBHWc8uE4NTidoJzo/BaT+zDORaAoM03o=;
-        b=ZMV2kYzvy8XAewbQBqwJ8bG/erS9qsZKYzKR5fS2tPc0mtO1splTH0UBuTpBrPHO6f
-         P9HRy9UF0hrVhFwYS3rOb9B1g+9Az3LPve5nN22I9D+q2omwTlIStGpFHPieYmh3idxu
-         Yont/3t9HqDMPBFlp9ww/CYMYGzU/3gBOws8zWmtim4RJ2XUUWY7aDeEu888y3KOth5b
-         WYL/ETJIIAHSXKm9TEt/zSMuJi4LnBIwz09x+x3KFpB5cBZauue1Zxjrd7osw8AgbFud
-         9I5eA9ujuM7UVb66VOPEArxBFKNE5PtJdW+6r3aeZQQfHnhGVxsikHsKkOlPLitRlroA
-         OaPw==
+        bh=ylJSlscM2HhikR6JdB1ShkQ9Lr2hJd2vijNBGTwbl/c=;
+        b=qW87az1n9rzOZ4w16OsNy6c6PWDQncF11MehyDIcR5n9x6tSGwydZn2ofEvFptIWjM
+         QaPjVdMj7ezS8LznjwWI0cmUSq3/aPSuDaD24hlZiNfL4f/bxBp24Zk9bxfOAlJGhvHC
+         axvOr61XB8AOG/OFLsYqK2JwKaFR4DEjurIuYcJxp88j8FbCzGnBxn76Ovij9dvYv2HP
+         fcomzfCzlDW7zlvEo8B0IRzSU/RTCZviddf/3NlD8cLZQjIOgsX70SYMK2GVORN8LNhC
+         dRR4ut3fgiiVcCopI9NVpZUTm5D63T4JlAvmy/HxUXRYhig410pFzHHtL0JJwGqAUgI0
+         QlOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=gJFvgcBlhYYBHWc8uE4NTidoJzo/BaT+zDORaAoM03o=;
-        b=HgBAD6bwb6DjceMF7eW5JwACFrqKemJ9tW+3WIgjfFrhjTgoir12eJysN5Xfai96ku
-         TsYHMLGP1HSKj6+3pBx2p7/B6PBpRsXcY2p7t3F5CLB+WL+WlxwspIMAXSqs54MCqU3z
-         QK2H+NnaXkadAQGKz0ugrtyCg5bOQGN6CpeTQk4oa4JM5s26uYNhFs5gN/kSCEl2R5O0
-         LNGAzUe1k+5+iW6Iv0sGOs77OKL9diHlNDrNmL8b0LP3g5l1PZe94s6w4pHSgT38bJFv
-         NbtcAaF40nUWVQcIgnV/HZcpysH3sApuvBdRRTsquuHgZ414njzJnWam61duQ6S53tkt
-         yUCw==
-X-Gm-Message-State: AOAM533g1JJtPy+8hYtQyIZ2PJIsqxFTA+pyx095LvjZ1Pmx6WUCBqYQ
-        4qlbrqsVLaxv7gbO/5Wk5pHDwSg+XQZbXoOJZoE=
-X-Google-Smtp-Source: ABdhPJxhW40StQRyRPaefDQk6b33faDZsy+bx0/ZLxlkPtcfEMcGtK3/rJ0W0NsS2acmhb/oP+qxQomBlK4m3CsjTnw=
-X-Received: by 2002:a05:6830:1d6a:: with SMTP id l10mr5551053oti.345.1607129786543;
- Fri, 04 Dec 2020 16:56:26 -0800 (PST)
+        bh=ylJSlscM2HhikR6JdB1ShkQ9Lr2hJd2vijNBGTwbl/c=;
+        b=sJGWHzeDt8T7nVZP7sgdetvesIAhj6ACfUUZ9HHbKR6/XBQXw/ozjyZcgLLy0cz9FK
+         RbFyA8Xi21sku3qI7tPtnPtdCPvt0E6PhXAfA1xhonXhR33xjtYu/h7uxmTeFrj9g6/q
+         +dbrW6UbRRnUXaneC9iHkCUq4YVtEUXNBOl2R7R78G2luRzxuZZYOcxumPcrJ1DK6xtp
+         +ju6swUZm2EN0p4JJKLOESMDGTIxXF4VucT7OoIBWD2nn36SuD2Q6mShAr9IJ5IKV33B
+         o0yPbKGcPrbMmsh3gGldT1JhPw0lNuhFlQO2Lhnc/PzAOld87OI21RVF2SOCPY+hvvGS
+         Hjxg==
+X-Gm-Message-State: AOAM532euZ3phTWr7vd70Fyk7RCpeEerYpilbRqBwr+hNEzPFJQKJ9HR
+        iQRKZTo8oxPipJlI7vu6Q90Gc9YB0Bk+QSczp84=
+X-Google-Smtp-Source: ABdhPJxqaJHW6k8XoBfmhb5/mjoQCywH4rdnyURYpPkO8L9zW3/kNtvBK6aO062XrkiqM1qozPPgAfNsejcs6kxnHz8=
+X-Received: by 2002:aca:49d5:: with SMTP id w204mr4953977oia.167.1607129890406;
+ Fri, 04 Dec 2020 16:58:10 -0800 (PST)
 MIME-Version: 1.0
 References: <20201204061623.1170745-1-felipe.contreras@gmail.com>
- <20201204061623.1170745-3-felipe.contreras@gmail.com> <CABPp-BFdjj=+4jk0vo=kpNc6ug1=UgtKfXJZkseyyxut2VB=Uw@mail.gmail.com>
- <CAMP44s1eTc4+tbULbyz5ENgbcN4tOVBA3Z-4GS4yMpciUD_1Hw@mail.gmail.com>
-In-Reply-To: <CAMP44s1eTc4+tbULbyz5ENgbcN4tOVBA3Z-4GS4yMpciUD_1Hw@mail.gmail.com>
+ <20201204061623.1170745-5-felipe.contreras@gmail.com> <CABPp-BHjzzhqQW8YY5podav+TU8Eixhp7g-VrQ-tva-0ztAtvA@mail.gmail.com>
+ <CAMP44s0D42s=q8TJqxwswOHb4PO-NW6SEUt-LwfvqiGgvkre9A@mail.gmail.com>
+In-Reply-To: <CAMP44s0D42s=q8TJqxwswOHb4PO-NW6SEUt-LwfvqiGgvkre9A@mail.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 4 Dec 2020 16:56:14 -0800
-Message-ID: <CABPp-BFwWBLdFPsKi3o9hznFtAeWWfhNAyuymPS4BhMAHpnSfw@mail.gmail.com>
-Subject: Re: [PATCH v2 02/14] pull: improve default warning
+Date:   Fri, 4 Dec 2020 16:57:59 -0800
+Message-ID: <CABPp-BEsQWsHMAmwc3gmJnXcS+aR-FtoMJxBRQ=BpARP49-L-Q@mail.gmail.com>
+Subject: Re: [PATCH v2 04/14] pull: cleanup autostash check
 To:     Felipe Contreras <felipe.contreras@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
@@ -79,163 +78,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Felipe,
-
-On Fri, Dec 4, 2020 at 4:12 PM Felipe Contreras
+On Fri, Dec 4, 2020 at 4:47 PM Felipe Contreras
 <felipe.contreras@gmail.com> wrote:
 >
-> On Fri, Dec 4, 2020 at 5:00 PM Elijah Newren <newren@gmail.com> wrote:
+> On Fri, Dec 4, 2020 at 5:07 PM Elijah Newren <newren@gmail.com> wrote:
 > >
 > > On Thu, Dec 3, 2020 at 10:16 PM Felipe Contreras
 > > <felipe.contreras@gmail.com> wrote:
 > > >
-> > > We want to:
+> > > This essentially reverts commit f15e7cf5cc.
 > > >
-> > > 1. Be clear about what "specifying" means; merge or rebase.
-> > > 2. Mention a direct shortcut for people that just want to get on with
-> > >    their lives: git pull --no-rebase.
+> > > Once commit d9f15d37f1 introduced the autostash option for the merge
+> > > mode, it's not necessary to skip the fast-forward run_merge() when
+> > > autostash is set.
 > >
-> > This is a shortcut for what?
+> > It helps reviewers and future code readers if you provide a little
+> > context when referring to commits, making use of git log's
+> > --pretty=reference option to get the output.
 >
->   git config --global pull.rebase false
->   git pull
+> Yes, I actually have this alias:
 >
-> It's a shorter way of saying: "do a 'git pull' like you've always done
-> but don't warn me".
+>   short = show --quiet --format='%C(auto)%h (%s)%C(reset)'
 >
-> > > 3. Have a quick reference for users to understand what this
-> > >    "fast-forward" business means.
-> > >
-> > > This patch does all three.
-> > >
-> > > Thanks to the previous patch now "git pull --help" explains what a
-> > > fast-forward is, and a further patch changes --no-rebase to --merge so
-> > > it's actually user friendly.
-> > >
-> > > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> > > ---
-> > >  builtin/pull.c | 23 ++++++++++++-----------
-> > >  1 file changed, 12 insertions(+), 11 deletions(-)
-> > >
-> > > diff --git a/builtin/pull.c b/builtin/pull.c
-> > > index 1034372f8b..22a9ffcade 100644
-> > > --- a/builtin/pull.c
-> > > +++ b/builtin/pull.c
-> > > @@ -346,17 +346,18 @@ static enum rebase_type config_get_rebase(void)
-> > >
-> > >         if (opt_verbosity >= 0 && !opt_ff) {
-> > >                 advise(_("Pulling without specifying how to reconcile divergent branches is\n"
-> > > -                        "discouraged. You can squelch this message by running one of the following\n"
-> > > -                        "commands sometime before your next pull:\n"
-> > > -                        "\n"
-> > > -                        "  git config pull.rebase false  # merge (the default strategy)\n"
-> > > -                        "  git config pull.rebase true   # rebase\n"
-> > > -                        "  git config pull.ff only       # fast-forward only\n"
-> > > -                        "\n"
-> > > -                        "You can replace \"git config\" with \"git config --global\" to set a default\n"
-> > > -                        "preference for all repositories. You can also pass --rebase, --no-rebase,\n"
-> > > -                        "or --ff-only on the command line to override the configured default per\n"
-> > > -                        "invocation.\n"));
-> > > +                       "discouraged; you need to specify if you want a merge, or a rebase.\n"
+> Which shows almost the same thing. I've updated it to
+> --format=reference. Thanks for the suggestion.
+>
+> And I usually add those descriptions.
+>
+> > So, for example, here
+> > your commit would read:
 > >
-> > ...want a merge, a rebase, or neither.
->
-> There is no "git pull --no-merge". Years ago some people argued for a
-> "pull.mode=none" (essentially making "git pull" the same as "git
-> fetch"). But right now there's no option to do that.
->
-> There's an option to do --ff-only, but that's still a merge.
-
-I disagree.  I'm well aware that checkout_fast_forward() (which is
-what is ultimately called to do the fast-forwarding) is in a file
-called merge.c, but that doesn't make it a merge.  I don't believe it
-was anything more than a convenient place to dump some extra code at
-the time.
-
-> Perhaps: a merge, a rebase, or a fast-forward?
-
-Sure, that works; in fact, that's much better than my suggestion.  I like it.
-
-> > > +                       "You can squelch this message by running one of the following commands:\n"
-> > > +                       "\n"
-> > > +                       "  git config pull.rebase false  # merge (the default strategy)\n"
+> > """
+> > This essentially reverts commit f15e7cf5cc (pull: ff --rebase
+> > --autostash works in dirty repo, 2017-06-01).
 > >
-> > Should this be labelled as the default given the desire to make
-> > --ff-only the default?  Perhaps I'm jumping ahead and you plan to
-> > change that later in this series.
->
-> That's right.
->
-> In the previous series which does indeed make "pull.mode=ff-only" the
-> default [1], I do change the warning to specify the future default
-> [2], but in that series the warnings is changed to:
->
->   The pull was not fast-forward, in the future you will have to choose
-> a merge, or a rebase.
->   To squelch this message and maintain the current behavior, use:
->
->     git config --global pull.mode merge
->
->   To squelch this message and adopt the new behavior now, use:
->
->     git config --global push.mode ff-only
->
->   Falling back to old style for now (merge).
->   Read "git pull --help" for more information.
->
-> Since that series didn't get any traction, I decided to only implement
-> step 1: fix the current situation. And later on another series would
-> do step 2: introduce "pull.mode=ff-only" and do the preparations to
-> make it the default.
-
-I like this longer plan.  However, on the shorter scale plan...I think
-the suggestion to use "git pull --no-rebase" makes the current
-situation worse rather than fixing it.
-
-> > > +                       "  git config pull.rebase true   # rebase\n"
-> > > +                       "  git config pull.ff only       # fast-forward only\n"
-> > > +                       "\n"
-> > > +                       "You can replace \"git config\" with \"git config --global\" to set a default\n"
-> > > +                       "preference for all repositories.\n"
+> > Once commit d9f15d37f1 (pull: pass --autostash to merge, 2020-04-07)
+> > introduced the autostash option for the merge
+> > mode, it's not necessary to skip the fast-forward run_merge() when
+> > autostash is set.
+> > """
 > >
-> > Good up to here.
-> >
-> > > +                       "If unsure, run \"git pull --no-rebase\".\n"
-> >
-> > Why is that safe to suggest?  The original text may not have been the
-> > easiest to parse, but this seems more problematic to me.
+> > I still found it slightly hard to follow the explanation even with the
+> > added summaries, though.
 >
-> Because "git pull" has been doing the same as "git pull --no-rebase"
-> for more than a decade. It's safe for people to continue with this
-> behavior for a few more months.
+> And that's the reason I didn't add them. You need to look at both the
+> commits to understand why one cancels the other. In my opinion in this
+> particular case the description only makes the text harder to read.
 >
-> Some people need to get things done today, and they are not interested
-> in future changes, nor changing their default configuration, or what
-> the warning has to say.
+> Probably some better $subjects like f15e7cf5cc (pull: skip ff merge
+> shortcut on --rebase --autostash) would have helped.
 >
-> They just want "git pull" to do the same as yesterday, and the year
-> before, without being bothered with an annoying warning.
+> > An extra sentence at the end of the second
+> > paragraph to make it clear what is being changed ("So, change the code
+> > to fast-forward even when autostash is set.") seems to help.
 >
-> Those people can start training their fingers to do "git pull
-> --merge", and learn the problems with "git pull" later.
+> OK. That's implied by "it's not necessary to skip the fast-forward"
+> but it's better to be explicit.
 >
-> We want to respect the user's time, and not force them to read the
-> warning today.
+> How about this:
+>
+> Currently "git pull --rebase" takes a shortcut in the case a
+> fast-forward merge is possible; run_merge() is called with --ff-only.
+>
+> However, "git merge" didn't have an --autostash option, so, when "git
+> pull --rebase --autostash" was called *and* the fast-forward merge
+> shortcut was taken, then the pull failed.
+>
+> This was fixed in commit f15e7cf5cc (pull: ff --rebase --autostash
+> works in dirty repo, 2017-06-01) by simply skipping the fast-forward
+> merge shortcut.
+>
+> Later on "git merge" learned the --autostash option [a03b55530a
+> (merge: teach --autostash option, 2020-04-07)], and so did "git pull"
+> [d9f15d37f1 (pull: pass --autostash to merge, 2020-04-07)].
+>
+> Therefore it's not necessary to skip the fast-forward merge shortcut
+> anymore when called with --rebase --autostash.
+>
+> Let's always take the fast-forward merge shortcut by essentially
+> reverting f15e7cf5cc.
 
-The warning was added because sending users down paths that break
-things badly is a waste of user's time, and often a much bigger waste
-of user's time than making them read up on the meaning behind the two
-different choices of what kind of changes they can make.  I agree the
-warning went too far, but I fully agree with the original folks who
-put this warning here that we need to have it for at least some cases
-and that there is a decision to be made.  Though I am just one voice,
-and perhaps others will agree with you on your point here, I'll
-continue to disagree with blindly suggesting "git pull --no-rebase".
+Yes, very nice!  Thanks.
 
-> > > +                       "Read \"git pull --help\" for more information."
-> >
-> > Nice addition.
->
-> Especially since now it explains what a fast-forward is.
-
-Indeed.  :-)
+Elijah
