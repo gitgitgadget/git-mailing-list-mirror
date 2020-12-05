@@ -2,208 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3A29C433FE
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 04:07:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5C2CC4361A
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 05:44:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9B01E22DD6
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 04:07:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6D69222D58
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 05:44:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726619AbgLEEHd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 23:07:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50598 "EHLO
+        id S1728673AbgLEFoq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Dec 2020 00:44:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725300AbgLEEHd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 23:07:33 -0500
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62169C0613D1
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 20:06:47 -0800 (PST)
-Received: by mail-oi1-x232.google.com with SMTP id f11so8669835oij.6
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 20:06:47 -0800 (PST)
+        with ESMTP id S1727543AbgLEFop (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Dec 2020 00:44:45 -0500
+Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1A0FC0613D1
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 21:44:04 -0800 (PST)
+Received: by mail-ed1-x542.google.com with SMTP id u19so8091611edx.2
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 21:44:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=OFILQ23Az67Vghx7xAx5E/7bSjKC6TMinFZmUhYj3Q4=;
-        b=S5cTnYO46bcbWL69MJ64gZrYXC7JBgh3+P2aJ8eOihS8M8dF4NhhUPq9+hPQrT8Yx9
-         vYdTWnK9TllB5xzPjg++By6GT/sxbOAkkgIFcDnRnYs2/wPOWzjYldnt0J085bqYkIyv
-         LTRL5fmIBSjl2WBnKJYwVRd+Rnn16BlPB/Vsb78R8mz3//98Ns83ek7WXj8BbWzxRyQf
-         lZzi9YJssABUdXlj7pPyGyye+b6ztiH0dGx0XU7Pghs4DOuVidyl9zyTFzWk4OjyGWAI
-         CqqLBpg1lRIjvWKOv5xaNqkW7NAeaxZ1rE85gZhzkTxo3S0+Nia5B2dQTGqpBzDbF3iS
-         6jIA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=DQiSmFwWat1g0JW1qJ3B4Wc9AdSFer3UGXa7VXC8smQ=;
+        b=afuKiZ4TXCGilv+HNLvYMFIslpeogbpVyxeVAAvLgBpCuF4UJKo9yRcB5dHLDjYIPX
+         1cikiaFmMRGsJAgq0ccrUxEYMToMSRk8nHBWX2Y0Qvgu8GiKehdLrwoaP61/a9fuPJJn
+         TgEtUUn4NUTF0AOF41JkJiIIHRQzWFGctAsOMmWu/bhvK4aHu/h1WSgkOVmgI8xmGndz
+         zoz1YOaFoWKRzyPJ88VT696VZUita33I8QY5Uyz5zEk1YQCOUb1ozir3v8Q8KTHh/ClK
+         YBTCnGnVJN7ndMQw4EuWo2Yun6ZVqSdjzSsE7PuF5YgKTdc7emgK1hv8+5JRs+XMPq7e
+         +VPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=OFILQ23Az67Vghx7xAx5E/7bSjKC6TMinFZmUhYj3Q4=;
-        b=nt54tzFspMZYjFzRNE11Ag4cEUWNDnW5Gg/kCStTXUIT3ueBHMCzxGXhGJrZhM4Hkv
-         hkSdUnp0RD8soV6BxreDEDqP9jUEv00Pghgi7abhiiDhZmCapFsreZ85JVuXS3zrnlFM
-         ws7EfZ783oHpv/rH5YzJyyvT6MmjY2H/aKq3PC5YNwg3rZWVNUJPNdfpwq8m5V8kGFp2
-         OdJvSIZTYD2WPk35KgJKtqP3PEQaPk78dwZovSEU1RewY3eE/f1wspESnG+DaxhLyoN4
-         7hTGkhRx4rFXkPHtFt+sa8LY4gkY6Xi3JButbD+cSSdMo703NOmBUv3Hz1jTx8g0rSRl
-         VbJw==
-X-Gm-Message-State: AOAM530HHTbZD4ZYsBK3y7bMZzUsI8rxFHHK5DtXIVPGcNJYLhy4n+73
-        eXDQ1Wnal23u1vpeUDtP4PRgI3ZLSFGWcA==
-X-Google-Smtp-Source: ABdhPJwYu6/mvNeygx9OqM0ys0N1xP2ZcLZF8DcfiFt+A1TxPj3hvF2NVLO50jET2DnanIsT3rK64A==
-X-Received: by 2002:aca:4d8b:: with SMTP id a133mr5489159oib.79.1607141205760;
-        Fri, 04 Dec 2020 20:06:45 -0800 (PST)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id c19sm1105802otn.59.2020.12.04.20.06.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Dec 2020 20:06:45 -0800 (PST)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] experiment: pull: change --ff-only and default mode
-Date:   Fri,  4 Dec 2020 22:06:43 -0600
-Message-Id: <20201205040644.1259845-1-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <CAMP44s1wFPQ0mEExYUQfxYx2AjMZS2=zL5ihfjp3qjp+EfNe9Q@mail.gmail.com>
-References: <CAMP44s1wFPQ0mEExYUQfxYx2AjMZS2=zL5ihfjp3qjp+EfNe9Q@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=DQiSmFwWat1g0JW1qJ3B4Wc9AdSFer3UGXa7VXC8smQ=;
+        b=Rhs0VoAOGTfiDyS/JZ4gFdwak9DwgPXYnJWezgO9kJGr4qMXWf7Tx4kSIA5cHlzEyR
+         01duipdWGK5XkKYSVNyTYylLk+i8uQfhn/bM7Pvc7rEZpoLScHa2+ocoOqYrfKpAcgCA
+         9bVmKpHd7fcFGIusRZFYQNalZzz1E0RJb+dx7RGGbK+AFirXUMlfXiDag+1oOUOBLo04
+         F4GZo5NQOlpTfNrgEc5G05cVvaRbbzPjutvQMa/ry4DcXuiXu9AGPcsmPIOQLC9J7FS7
+         tY6W0YRlX9qve/e7rIVwKADJmPDiGelY/ZhG0BKQDX9Z87thFouTquz/OaUYO/4OyBme
+         AItA==
+X-Gm-Message-State: AOAM531cFD0nnCb2+l1Rfrq4vWq0dJdm7IEXWzlRJZ38fRIGGAkXkRVO
+        2jwVkgi3T9CitVoFP/NO3GLAnuciBGmwYLbAUek=
+X-Google-Smtp-Source: ABdhPJwrFbrTmJxUbc2cSfXn3AWkFstgCgAnIf8oCN2TskEOkltGVCL4GyPtQMxr0LQmnZ7ZE0r/zvXcjiEs5QnL6kY=
+X-Received: by 2002:a50:99cb:: with SMTP id n11mr10653955edb.362.1607147043763;
+ Fri, 04 Dec 2020 21:44:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20201025212652.3003036-1-anders@0x63.nu> <20201205013918.18981-3-avarab@gmail.com>
+In-Reply-To: <20201205013918.18981-3-avarab@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 5 Dec 2020 06:43:52 +0100
+Message-ID: <CAP8UFD2mYqJA5g+y0Q_48VQ7iCe7xVOkCkN77AdV9T6CBv50kA@mail.gmail.com>
+Subject: Re: [PATCH 2/5] pretty format %(trailers): avoid needless repetition
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Anders Waldenborg <anders@0x63.nu>, Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- builtin/pull.c  | 40 ++++++++++++++++++++++++++--------------
- t/t5520-pull.sh | 23 +++++++++++++++++++++++
- 2 files changed, 49 insertions(+), 14 deletions(-)
+On Sat, Dec 5, 2020 at 2:39 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
+>
+> Change the documentation for the various %(trailers) options so it
+> isn't repeating part of the documentation for "only" about how boolean
+> values are handled. Instead let's split the description of that into
+> general documentation at the top.
 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index e389ffcdc3..95ecbdaad5 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -62,6 +62,7 @@ static int parse_opt_rebase(const struct option *opt, const char *arg, int unset
- 		*value = parse_config_rebase("--rebase", arg, 0);
- 	else
- 		*value = unset ? REBASE_FALSE : REBASE_TRUE;
-+	if (*value != REBASE_INVALID) default_mode = 0;
- 	return *value == REBASE_INVALID ? -1 : 0;
- }
- 
-@@ -114,6 +115,23 @@ static int opt_show_forced_updates = -1;
- static char *set_upstream;
- static struct strvec opt_fetch = STRVEC_INIT;
- 
-+static int parse_opt_ff_only(const struct option *opt, const char *arg, int unset)
-+{
-+	char **value = opt->value;
-+	opt_rebase = REBASE_FALSE;
-+	*value = "--ff-only";
-+	return 0;
-+}
-+
-+static int parse_opt_merge(const struct option *opt, const char *arg, int unset)
-+{
-+	char **value = opt->value;
-+	opt_ff = NULL;
-+	*value = REBASE_FALSE;
-+	default_mode = 0;
-+	return 0;
-+}
-+
- static struct option pull_options[] = {
- 	/* Shared options */
- 	OPT__VERBOSITY(&opt_verbosity),
-@@ -131,8 +149,9 @@ static struct option pull_options[] = {
- 		"(false|true|merges|preserve|interactive)",
- 		N_("incorporate changes by rebasing rather than merging"),
- 		PARSE_OPT_OPTARG, parse_opt_rebase),
--	OPT_SET_INT('m', "merge", &opt_rebase,
--		N_("incorporate changes by merging"), 0),
-+	OPT_CALLBACK_F('m', "merge", &opt_rebase, NULL,
-+		N_("incorporate changes by merging"),
-+		PARSE_OPT_NOARG | PARSE_OPT_NONEG, parse_opt_merge),
- 	OPT_PASSTHRU('n', NULL, &opt_diffstat, NULL,
- 		N_("do not show a diffstat at the end of the merge"),
- 		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
-@@ -161,9 +180,9 @@ static struct option pull_options[] = {
- 	OPT_PASSTHRU(0, "ff", &opt_ff, NULL,
- 		N_("allow fast-forward"),
- 		PARSE_OPT_NOARG),
--	OPT_PASSTHRU(0, "ff-only", &opt_ff, NULL,
-+	OPT_CALLBACK_F(0, "ff-only", &opt_ff, NULL,
- 		N_("abort if fast-forward is not possible"),
--		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
-+		PARSE_OPT_NOARG | PARSE_OPT_NONEG, parse_opt_ff_only),
- 	OPT_PASSTHRU(0, "verify-signatures", &opt_verify_signatures, NULL,
- 		N_("verify that the named commit has a valid GPG signature"),
- 		PARSE_OPT_NOARG),
-@@ -924,6 +943,9 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 
- 	git_config(git_pull_config, NULL);
- 
-+	opt_ff = xstrdup_or_null(config_get_ff());
-+	opt_rebase = config_get_rebase();
-+
- 	argc = parse_options(argc, argv, prefix, pull_options, pull_usage, 0);
- 
- 	if (cleanup_arg)
-@@ -935,12 +957,6 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 
- 	parse_repo_refspecs(argc, argv, &repo, &refspecs);
- 
--	if (!opt_ff)
--		opt_ff = xstrdup_or_null(config_get_ff());
--
--	if (opt_rebase < 0)
--		opt_rebase = config_get_rebase();
--
- 	if (read_cache_unmerged())
- 		die_resolve_conflict("pull");
- 
-@@ -1037,10 +1053,6 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
--	/* Disable --ff-only when --merge is specified */
--	if (!can_ff && !default_mode && !opt_rebase && opt_ff && !strcmp(opt_ff, "--ff-only"))
--		opt_ff = NULL;
--
- 	if (opt_rebase) {
- 		int ret = 0;
- 		if ((recurse_submodules == RECURSE_SUBMODULES_ON ||
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index f48d0f8d50..c0cfde54e1 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -881,4 +881,27 @@ test_expect_success 'git pull non-fast-forward error message' '
- 	grep -q "The pull was not fast-forward" error
- '
- 
-+test_expect_success 'git pull --merge overrides --ffonly' '
-+	test_when_finished "git checkout master && git branch -D other test" &&
-+	test_config pull.ff only &&
-+	git checkout -b other master^ &&
-+	>new &&
-+	git add new &&
-+	git commit -m new &&
-+	git checkout -b test -t other &&
-+	git reset --hard master &&
-+	git pull --ff-only --merge
-+'
-+
-+test_expect_success 'git pull --ff-only overrides --merge' '
-+	test_when_finished "git checkout master && git branch -D other test" &&
-+	git checkout -b other master^ &&
-+	>new &&
-+	git add new &&
-+	git commit -m new &&
-+	git checkout -b test -t other &&
-+	git reset --hard master &&
-+	test_must_fail git pull --merge --ff-only
-+'
-+
- test_done
--- 
-2.29.2
+Great!
 
+> It then suffices to refer to it by listing the options as
+> "opt[=3Dbool]". I'm also changing it to "[=3Dbool]" from "[=3Dval]".
+
+Nice! I wonder if "[=3D<bool>]" or "[=3D<BOOL>]" might be even better as
+we use "=3D<K>" for key and "=3D<SEP>" for separator.
+
+> It took
+> me a couple of readings to realize that while to realize that these
+> options were referring back to the "only" option's treatment of
+> boolean values. Let's try to make this more explicit.
+
+Yeah, it's definitely an improvement.
+
+> --- a/Documentation/pretty-formats.txt
+> +++ b/Documentation/pretty-formats.txt
+> @@ -252,7 +252,14 @@ endif::git-rev-list[]
+>                           interpreted by
+>                           linkgit:git-interpret-trailers[1]. The
+>                           `trailers` string may be followed by a colon
+> -                         and zero or more comma-separated options:
+> +                         and zero or more comma-separated options.
+> ++
+> +The boolean options accept an optional value. The values `true`,
+
+Maybe: s/an optional value./an optional value `[=3D<BOOL>]`./
+
+> +`false`, `on`, `off` etc. are all accepted. See the "boolean"
+> +sub-section in "EXAMPLES" in linkgit:git-config[1]. If a boolean
+> +option is given with no value it's enabled.
+
+s/value it's enabled/value, it's enabled/
+
+> +If any option is provided multiple times the last occurance wins.
+
+It might be better to have this sentence before the above paragraph
+about boolean options, as it's more general.
+
+Thanks,
+Christian.
