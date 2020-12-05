@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B8B9C433FE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 226A6C4361A
 	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 19:54:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D229E23110
+	by mail.kernel.org (Postfix) with ESMTP id E7F1A23122
 	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 19:54:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725730AbgLETyA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Dec 2020 14:54:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55096 "EHLO
+        id S1726359AbgLETyE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Dec 2020 14:54:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725270AbgLETx6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Dec 2020 14:53:58 -0500
+        with ESMTP id S1726241AbgLETyB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Dec 2020 14:54:01 -0500
 Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 114C0C061A4F
-        for <git@vger.kernel.org>; Sat,  5 Dec 2020 11:53:18 -0800 (PST)
-Received: by mail-oi1-x244.google.com with SMTP id q25so2410239oij.10
-        for <git@vger.kernel.org>; Sat, 05 Dec 2020 11:53:18 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EBC0C061A52
+        for <git@vger.kernel.org>; Sat,  5 Dec 2020 11:53:21 -0800 (PST)
+Received: by mail-oi1-x244.google.com with SMTP id d27so2967352oic.0
+        for <git@vger.kernel.org>; Sat, 05 Dec 2020 11:53:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=J6aTBf0SDpHve48rTJ5EpUCFxp9EXKC/Z1a9387wUXY=;
-        b=byXvS+/77dGepIA8hKXnG0fUMGhGLpTcO1C7e+B3QTCl7D221zogxXlNzFRD/Oqo2B
-         UBLzbgqw1uZR5JmHICi0ObeTJInjx9t3Lsb+d3mBKJrSus6rYDZ+y8hddODb9owzHj5Z
-         /WwY0p8yl94i1Ua1wDz9tQVOx2F1UwTkq6txyP1c3YqMRDdGHs10Kq/eL/AjSH+7MtSe
-         KTpfHJyYgpH6ddQGNJq+pg/9wn8kGMZwTeS4d5lS+TOUK6GGFXi6/7MVhkaxDmiK5Ap6
-         VAkDvo91kRP0uDroY4aGMnafSk1CM52TwvOTUEocZm67EEzSpvjxWF3gYp1sgZCOrXX4
-         h1rg==
+        bh=tuazQtJNSs6tffNRzPK8EmqGCGei5rCkO969r89wiak=;
+        b=KoUcPmNiojV9NqrpSKnzmjmfByBn889SvujYsrGfB1Zy5d5nM/NZCHBGv6XyF3HQk3
+         VENGO3TSdWC+F26qeozoFi9LA8459qOYAWPjhybdgkL58dw+xr7SAb0uIOJUYxFnw/vm
+         fTE7dA3vnijuFGY+r6Sz0D2RhrED+xI9JFx4FJiiW0qbm3UNUi8XJSPG7c30UxFig+ca
+         A+kKZ2VbKvHCVk2i6d6x+DmTCtHOO6OzCbC+7zCAS1Nj0zVVUQ1n92KsWIyc5iv/ZpXi
+         4sS+Db/XV2XHaJtrzHii2kzkEBNydZCL0lQU0VrcI+jWp8otqNTzIlNsJg9/5UCLan6Q
+         1GbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=J6aTBf0SDpHve48rTJ5EpUCFxp9EXKC/Z1a9387wUXY=;
-        b=tU5JP6XwM13IetLOtCh9gKMkDzmMV0jVS7HH7jHkiONB0EUem/r3D667y91fbelywC
-         6TC25Fh99Y2ymK09P3Rpe8ZdKoKMl9g4k5kL7INUOM0kWXGJbAnNoJ5KoZlX4rdFSSwb
-         osdwvYTKMj7rv2xaKAQP1L9PY7waUHTbNLhG83XuiCj1pcj1EeMxQxjpowPJ+FfUd3gT
-         GEV0f6jPXf6GywDwBYAHBRnFKjphSNqU947rhDHJ4vsr2MpvQDPzo2IM+6uc1V2ITyoE
-         vlVbYghJs7JKoY2mLaHAR/YP7/ZBDKnZRM11ArPOxBDjxouYOAkg8JMbSsEMN5SdiBd2
-         ujkw==
-X-Gm-Message-State: AOAM533IxNHUMEgr82F3bEDAsyuJ3xg1jAr0l1Dki2zqKG1Ctbue5Q6Q
-        aGb4Njgirw8ryLb+8+GdgM6lRw5rKisZeg==
-X-Google-Smtp-Source: ABdhPJyfT7bpEHGnf5suggmRWyREmZfGSSiELJusztzZdvsxjIi1ZeIzLxg4NbrjFyIdIWH6C1bq2w==
-X-Received: by 2002:a54:4704:: with SMTP id k4mr7307115oik.39.1607197997310;
-        Sat, 05 Dec 2020 11:53:17 -0800 (PST)
+        bh=tuazQtJNSs6tffNRzPK8EmqGCGei5rCkO969r89wiak=;
+        b=Uj9B5O9ILfpGQIfrPx2hbx4TVoOaqgcyZrOA1LSIcJBhZNofiWJg4Y176Lk2yGVjwv
+         QhxJOsV0J106hLiXYIZoUFac3svZNYlgbpkQMrqz0HIFl62w9yoq32t3o6sq7cOlNSsN
+         TCz7Q/wnoxGtRSKAt3bWGKXqu6z+Yq5cbmHmLAhU+2XKsBb0fVNGj4iqGuEt2sVA2y+E
+         8PuhzgN7tiw9/e9owcP1uXYsgYxENe3iW7rf+TstWj69y35pjm5ug3Oj9ouy3vA8WMzO
+         98cEDmX/dgnWsU2y3F2srau7PGDbppkNjdZUoEujD8AQUakNayw/Zrjndcwq0lARTiQF
+         IrTg==
+X-Gm-Message-State: AOAM530yQ/9UKj050Vg+v8fdbrQZ9stNF0ZAqzp27e5DufqtqI+AgSA9
+        wEB9OW03mss2ftrEFIyUsUoUzxwi6pQZMA==
+X-Google-Smtp-Source: ABdhPJwTZMzo6Ro5K0Q9CYSUVUG07lOB9QcHeZGfsluLS6sm9bDCv/q2xZca4PDrpIhqBsGQGn69JQ==
+X-Received: by 2002:aca:b3c3:: with SMTP id c186mr7053050oif.39.1607198000595;
+        Sat, 05 Dec 2020 11:53:20 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id r13sm1524125otq.42.2020.12.05.11.53.16
+        by smtp.gmail.com with ESMTPSA id e5sm1504895otl.75.2020.12.05.11.53.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Dec 2020 11:53:16 -0800 (PST)
+        Sat, 05 Dec 2020 11:53:20 -0800 (PST)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>,
@@ -64,9 +64,9 @@ Cc:     Elijah Newren <newren@gmail.com>,
         Jeff King <peff@peff.net>,
         Philip Oakley <philipoakley@iee.email>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 01/16] doc: pull: explain what is a fast-forward
-Date:   Sat,  5 Dec 2020 13:52:58 -0600
-Message-Id: <20201205195313.1557473-2-felipe.contreras@gmail.com>
+Subject: [PATCH v3 03/16] pull: refactor fast-forward check
+Date:   Sat,  5 Dec 2020 13:53:00 -0600
+Message-Id: <20201205195313.1557473-4-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20201205195313.1557473-1-felipe.contreras@gmail.com>
 References: <20201205195313.1557473-1-felipe.contreras@gmail.com>
@@ -76,39 +76,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We want users to know what is a fast-forward in order to understand the
-default warning.
+This way we will be able to do the check unconditionally (merge or
+rebase).
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/git-pull.txt | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ builtin/pull.c | 26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index 5c3fb67c01..dc812139f4 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -38,6 +38,20 @@ as set by linkgit:git-branch[1] `--track`.
- Assume the following history exists and the current branch is
- "`master`":
+diff --git a/builtin/pull.c b/builtin/pull.c
+index d71344fe28..7a5b343fe2 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -907,6 +907,20 @@ static int run_rebase(const struct object_id *curr_head,
+ 	return ret;
+ }
  
-+------------
-+	  A---B---C master on origin
-+	 /
-+    D---E master
-+------------
++static int get_can_ff(struct object_id *orig_head, struct object_id *orig_merge_head)
++{
++	int ret;
++	struct commit_list *list = NULL;
++	struct commit *merge_head, *head;
 +
-+Then `git pull` will merge in a fast-foward way up to the new master.
++	head = lookup_commit_reference(the_repository, orig_head);
++	commit_list_insert(head, &list);
++	merge_head = lookup_commit_reference(the_repository, orig_merge_head);
++	ret = repo_is_descendant_of(the_repository, merge_head, list);
++	free_commit_list(list);
++	return ret;
++}
 +
-+------------
-+    D---E---A---B---C master, origin/master
-+------------
-+
-+However, a non-fast-foward case looks very different.
-+
- ------------
- 	  A---B---C master on origin
- 	 /
+ int cmd_pull(int argc, const char **argv, const char *prefix)
+ {
+ 	const char *repo, **refspecs;
+@@ -1017,22 +1031,12 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 		    submodule_touches_in_range(the_repository, &rebase_fork_point, &curr_head))
+ 			die(_("cannot rebase with locally recorded submodule modifications"));
+ 		if (!autostash) {
+-			struct commit_list *list = NULL;
+-			struct commit *merge_head, *head;
+-
+-			head = lookup_commit_reference(the_repository,
+-						       &orig_head);
+-			commit_list_insert(head, &list);
+-			merge_head = lookup_commit_reference(the_repository,
+-							     &merge_heads.oid[0]);
+-			if (repo_is_descendant_of(the_repository,
+-						  merge_head, list)) {
++			if (get_can_ff(&orig_head, &merge_heads.oid[0])) {
+ 				/* we can fast-forward this without invoking rebase */
+ 				opt_ff = "--ff-only";
+ 				ran_ff = 1;
+ 				ret = run_merge();
+ 			}
+-			free_commit_list(list);
+ 		}
+ 		if (!ran_ff)
+ 			ret = run_rebase(&curr_head, merge_heads.oid, &rebase_fork_point);
 -- 
 2.29.2
 
