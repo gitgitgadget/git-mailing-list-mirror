@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E940DC4361A
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 19:54:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A65E5C433FE
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 19:54:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BCBC3230FA
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 19:54:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76B01230FA
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 19:54:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726883AbgLETyv (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726875AbgLETyv (ORCPT <rfc822;git@archiver.kernel.org>);
         Sat, 5 Dec 2020 14:54:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55252 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726867AbgLETyu (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726798AbgLETyu (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 5 Dec 2020 14:54:50 -0500
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC96DC08E863
-        for <git@vger.kernel.org>; Sat,  5 Dec 2020 11:53:45 -0800 (PST)
-Received: by mail-oi1-x22a.google.com with SMTP id f11so10503024oij.6
-        for <git@vger.kernel.org>; Sat, 05 Dec 2020 11:53:45 -0800 (PST)
+Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AC44C08E85E
+        for <git@vger.kernel.org>; Sat,  5 Dec 2020 11:53:37 -0800 (PST)
+Received: by mail-oo1-xc34.google.com with SMTP id t23so2271963oov.4
+        for <git@vger.kernel.org>; Sat, 05 Dec 2020 11:53:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=32vlhwz0aXXfZWItJvhvqAt2z1EPs0fSK/cBA/4mVks=;
-        b=AIqx8XkmJPwSzi3cCkk+MnlxdV9nnAJbe83qJlnqhecJ1HgxxlGTUvufuA32T0d4dZ
-         COK2LHb/5qYTh14KDA0QSCxs73BpHXnB4YruvJT9YV3oEUSnK0jBle71AEZ5vxt+iN9b
-         aKZP6vIBg1IwEZzpYhRP9y+0JhG1cJGOefvsDF/hWwSuR4uv7AIhoR/ygQEGm6NW6vKk
-         f37q9mgyL4KoXxCFjHAtlrL2zur6DgAg6XbclTKO1W7jIVsUXC8vI7v+z4Ox9bMeUJhb
-         +zeUm4zbtWpLyL37PYPe4zhnhcGwGoyBiicMGu+MM4gYaAwq8PQ3jj8ae1Am1KpsxPpl
-         2FAQ==
+        bh=Z0c1tLf5NnIZPfC09YAx2DtCiMhMlSBI6uhXPoaXsLQ=;
+        b=lD9Okr9yEzZAiIsN9Z6Ysjoa1ax2oC5hz0zj8DLgaDi6DU8KXhFtzAToDlSy/eWCNK
+         jlOgbxr0Oddw2L40Sut3KWoKHYKoYefHmap1hWoD90+SPqWdPpWlGizy1UxuumbBiByb
+         FF3xjFSpH4BTUXzPNsaDNO554jV0gn6xAPKb5BTEmWaoDx2bKc29DhpDEGqlNGKDXR2t
+         A5eT5eVKhiRhcUqPaJ26OdVED+JyNnXSLcPL3vmwmjAegtLjqFpZGm8urHLzQH03utXQ
+         9Ski6T1OVLQcGNQrgjv7zK93AXUWHU/Q1pISoQsDHdL7CDWloE1LXkIsC/a5LD+oG1go
+         bjWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=32vlhwz0aXXfZWItJvhvqAt2z1EPs0fSK/cBA/4mVks=;
-        b=nC2/cKvhcmY6tMMRUqnm3f2P9V8/t2DMN8LV2f32QvmsRfhXi7cvTNzdhwr6vwNzuw
-         o++Dqvbe2hQ0gEonI+eqoXrcfIWarFN8b+ZnGdOVUm9KOkATTAAqkcNOGS0qyHO9dkE0
-         1H/3NDknzc9o58SowZrmP84S1MPZKJeeEJCcc22VoP/J1EI6e7VBEZbESWsYMs21CYed
-         Kv+vkrqRxssUdodEKy+tCYml0gv+Lch5NwgdDtqWhr40JV8S8IfDk7RYViOBvu3GMYLw
-         WbwG/SFOipqnuMG/FeO6pYc0xxDi4p3TdrdAODwkhb9rcfPGZCZLf6l3vFscnYZJfGbr
-         cWUg==
-X-Gm-Message-State: AOAM533FUWAYLVCmFtwJxWk3oIjIQxPEJaUEKiuzxzJSiwYsglUs+CGG
-        fqGXiH9p6QxsZIOKt483NG9J2uwSK++Ufw==
-X-Google-Smtp-Source: ABdhPJxZ7OcncUd6DvFMQ78j+lsdcS37lBkeKG7OUhsD5oegnUI6pwqYeoN4U765r9JBT0QhjtSICQ==
-X-Received: by 2002:aca:afd0:: with SMTP id y199mr811991oie.7.1607198025013;
-        Sat, 05 Dec 2020 11:53:45 -0800 (PST)
+        bh=Z0c1tLf5NnIZPfC09YAx2DtCiMhMlSBI6uhXPoaXsLQ=;
+        b=GZpwDyqWrOSJOJsmMwi7xuGp4Xly0jOX0itGF5TebSgeEPcxlpzsvd8qRsTsMik3dB
+         6v5kBuwvQ74lCG+I9BZHIrEXZ6VMDQsbbxObL/U4rIoIIVZQmICTFMM/hioVl9Ht4iuZ
+         F+ThjhNWKXfCdbUovIs98KNPE7LE/wBZEp3IfoOhIAkHz208JA3bWGzxlypqCmLJ9aAr
+         M+Lk3e0rdUmyIvSUuFbsku9q24qIooCri+tnt1cTSAFLKS/lviHLGmCodMFyy/zGJEmM
+         7s/hzaGtHKq0yN04SOdNolJb8um2kZlYnMfiB2ztkCrdKqZ3h/bEYelC9R4JXK/fa1nf
+         hEWw==
+X-Gm-Message-State: AOAM532bgtFBoYfYdn8pZoR7dzptUjWY95RrSXxIEiBP+3jSa5QQw4TU
+        6uy/b5qXTNTujGFMurSXsQMWGphxQthhkg==
+X-Google-Smtp-Source: ABdhPJwxxEkylnc1fmp54ZgYEeGrRLf4l9zIunb9ohpmLixUY+u2hpdG8NxZEexcNZVM5sjpYzYjMg==
+X-Received: by 2002:a4a:bb07:: with SMTP id f7mr7869587oop.44.1607198016558;
+        Sat, 05 Dec 2020 11:53:36 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id a21sm1603356otr.36.2020.12.05.11.53.44
+        by smtp.gmail.com with ESMTPSA id b23sm1534011ooa.13.2020.12.05.11.53.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Dec 2020 11:53:44 -0800 (PST)
+        Sat, 05 Dec 2020 11:53:36 -0800 (PST)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>,
@@ -64,9 +64,9 @@ Cc:     Elijah Newren <newren@gmail.com>,
         Jeff King <peff@peff.net>,
         Philip Oakley <philipoakley@iee.email>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 15/16] test: pull-options: revert unnecessary changes
-Date:   Sat,  5 Dec 2020 13:53:12 -0600
-Message-Id: <20201205195313.1557473-16-felipe.contreras@gmail.com>
+Subject: [PATCH v3 10/16] pull: show warning with --ff
+Date:   Sat,  5 Dec 2020 13:53:07 -0600
+Message-Id: <20201205195313.1557473-11-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20201205195313.1557473-1-felipe.contreras@gmail.com>
 References: <20201205195313.1557473-1-felipe.contreras@gmail.com>
@@ -76,94 +76,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit d18c950a69 (pull: warn if the user didn't say whether to
-rebase or to merge, 2020-03-09) changed a number of tests in t5521
-and added some new tests in t7601, but it was not explained why the
-changes in t5521 were made.
+It's unclear why --ff should remove the warning, since:
 
-The reason seems to be to silence the warnings while running the tests,
-but we want to see the warnings if they happen.
+  git pull --ff
 
-Cc: Alex Henrie <alexhenrie24@gmail.com>
+Is implicitly the same as:
+
+  git pull
+
+Unless of course pull.ff is specified otherwise.
+
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- t/t5521-pull-options.sh | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ builtin/pull.c               | 2 +-
+ t/t7601-merge-pull-config.sh | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
-index db1a381cd9..1a4fe2583a 100755
---- a/t/t5521-pull-options.sh
-+++ b/t/t5521-pull-options.sh
-@@ -11,10 +11,10 @@ test_expect_success 'setup' '
- 	 git commit -m one)
+diff --git a/builtin/pull.c b/builtin/pull.c
+index da91d78a22..2bd6ee9d19 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -1015,7 +1015,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 
+ 	can_ff = get_can_ff(&orig_head, &merge_heads.oid[0]);
+ 
+-	if (default_mode && !can_ff && opt_verbosity >= 0 && !opt_ff) {
++	if (default_mode && !can_ff && opt_verbosity >= 0 && (!opt_ff || !strcmp(opt_ff, "--ff"))) {
+ 		advise(_("Pulling without specifying how to reconcile divergent branches is discouraged;\n"
+ 			"you need to specify if you want a merge, a rebase, or a fast-forward.\n"
+ 			"You can squelch this message by running one of the following commands:\n"
+diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
+index 1de64e6cc5..d709799f8b 100755
+--- a/t/t7601-merge-pull-config.sh
++++ b/t/t7601-merge-pull-config.sh
+@@ -46,7 +46,7 @@ test_expect_success 'pull.rebase not set and pull.ff=true' '
+ 	git reset --hard c2 &&
+ 	test_config pull.ff true &&
+ 	git pull . c1 2>err &&
+-	test_i18ngrep ! "Pulling without specifying how to reconcile" err
++	test_i18ngrep "Pulling without specifying how to reconcile" err
  '
  
--test_expect_success 'git pull -q --no-rebase' '
-+test_expect_success 'git pull -q' '
- 	mkdir clonedq &&
- 	(cd clonedq && git init &&
--	git pull -q --no-rebase "../parent" >out 2>err &&
-+	git pull -q "../parent" >out 2>err &&
- 	test_must_be_empty err &&
- 	test_must_be_empty out)
- '
-@@ -30,10 +30,10 @@ test_expect_success 'git pull -q --rebase' '
- 	test_must_be_empty out)
+ test_expect_success 'pull.rebase not set and pull.ff=false' '
+@@ -78,7 +78,7 @@ test_expect_success 'pull.rebase not set and --merge given' '
+ test_expect_success 'pull.rebase not set and --ff given' '
+ 	git reset --hard c2 &&
+ 	git pull --ff . c1 2>err &&
+-	test_i18ngrep ! "Pulling without specifying how to reconcile" err
++	test_i18ngrep "Pulling without specifying how to reconcile" err
  '
  
--test_expect_success 'git pull --no-rebase' '
-+test_expect_success 'git pull' '
- 	mkdir cloned &&
- 	(cd cloned && git init &&
--	git pull --no-rebase "../parent" >out 2>err &&
-+	git pull "../parent" >out 2>err &&
- 	test -s err &&
- 	test_must_be_empty out)
- '
-@@ -46,10 +46,10 @@ test_expect_success 'git pull --rebase' '
- 	test_must_be_empty out)
- '
- 
--test_expect_success 'git pull -v --no-rebase' '
-+test_expect_success 'git pull -v' '
- 	mkdir clonedv &&
- 	(cd clonedv && git init &&
--	git pull -v --no-rebase "../parent" >out 2>err &&
-+	git pull -v "../parent" >out 2>err &&
- 	test -s err &&
- 	test_must_be_empty out)
- '
-@@ -62,25 +62,25 @@ test_expect_success 'git pull -v --rebase' '
- 	test_must_be_empty out)
- '
- 
--test_expect_success 'git pull -v -q --no-rebase' '
-+test_expect_success 'git pull -v -q' '
- 	mkdir clonedvq &&
- 	(cd clonedvq && git init &&
--	git pull -v -q --no-rebase "../parent" >out 2>err &&
-+	git pull -v -q "../parent" >out 2>err &&
- 	test_must_be_empty out &&
- 	test_must_be_empty err)
- '
- 
--test_expect_success 'git pull -q -v --no-rebase' '
-+test_expect_success 'git pull -q -v' '
- 	mkdir clonedqv &&
- 	(cd clonedqv && git init &&
--	git pull -q -v --no-rebase "../parent" >out 2>err &&
-+	git pull -q -v "../parent" >out 2>err &&
- 	test_must_be_empty out &&
- 	test -s err)
- '
- test_expect_success 'git pull --cleanup errors early on invalid argument' '
- 	mkdir clonedcleanup &&
- 	(cd clonedcleanup && git init &&
--	test_must_fail git pull --no-rebase --cleanup invalid "../parent" >out 2>err &&
-+	test_must_fail git pull --cleanup invalid "../parent" >out 2>err &&
- 	test_must_be_empty out &&
- 	test -s err)
- '
+ test_expect_success 'pull.rebase not set and --no-ff given' '
 -- 
 2.29.2
 
