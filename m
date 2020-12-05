@@ -7,90 +7,105 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D0D7C433FE
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 02:28:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF36EC4361A
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 04:02:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D9D5922DFB
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 02:27:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C5C022D72
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 04:02:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728257AbgLEC1q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 21:27:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35360 "EHLO
+        id S1726471AbgLEEB7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 23:01:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728224AbgLEC1p (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 21:27:45 -0500
-Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9CDCC0613D1
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 18:26:59 -0800 (PST)
-Received: by mail-ed1-x544.google.com with SMTP id v22so7823297edt.9
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 18:26:59 -0800 (PST)
+        with ESMTP id S1725300AbgLEEB6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 23:01:58 -0500
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A270C0613D1
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 20:01:18 -0800 (PST)
+Received: by mail-wr1-x442.google.com with SMTP id z7so7199406wrn.3
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 20:01:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=QzE4Z1AUpw7nJLJX+xki1TSsoqo3owyr3FbKd/uuNhE=;
-        b=bpEyhOGUy+957JDFhk3MxtP+yv8XAsJp6QqGLyabd5/WwvvENt6pQfAxQYdtp2TESn
-         MPfBSfmAcWUbrj3aRJ1pPPc0cUyw2hq8eLhyJCamUCsRCCb2Vf/Z3L8t0HuBhrho3MJr
-         WbBdNkwEUYWFdWNVS8g2bibFA+8Aci0EGRnyUK4hrJIh/iMZ0w5Hb0qNhg3k+DAiwaKa
-         /T/NfwlHl/i9Tg1sjsfIbX1tdXKRXI7KwIy+jJqkmY4HhCb8cBqIvO37xSO6ygutJkOh
-         yWa+O3T4GTY8LbUAF3X4SwqybZyuqVPNvjYl9bNc9yQruZ5CQ+40CX5UkiNWSBlMRq3S
-         dLgA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KLqGR4mi9mYGd5FIEgdBl0Zu1kNzn59wYV0tDvOT9g8=;
+        b=qlYp+u6FekomBVsiqzoF9B6TYGE8lWAJN63cxbd8kXoS9kAjUhOT08zaZVWyXW0Zv2
+         2195WQ3LOSaG5f+9E2UfEQyu/jWitvIPMl7JGlwogtUj/NWdX6BfG/xe0WJoqs267XgM
+         LiY0wPPn+SN3KzI42g5wQompGrFbTZcw+ZLHUGr09Uh3Z1AKl/HSgBAB+iIabRRRXLsd
+         Lg5cbFv++fooOJdRiduMidc4uFjWojv44ESlqBFyaYlB85jqfDeDB7lm5CX/Oq2jgPy1
+         eaQBf+JSMel4YttJLEL3FoJDOiDHs8ABq1EqYu7D8cSpPJynIQwvW2vmvhbDKhlKR6dB
+         fKng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=QzE4Z1AUpw7nJLJX+xki1TSsoqo3owyr3FbKd/uuNhE=;
-        b=TL8hUkU72mGm+oYAI0oGLwHadNzfqrHpPx2y+hoI1ACSRv8a7E4LdvlpTaaghKvM0d
-         ejsVYiHTk43YHl13/ZtUzlvio11SfmoBlgSuxupua2nfWVdtlFOHQgIg2uXp93WmewM1
-         aXmLlSi7THA8X7vxkrMtZRkrFouMbfYTGKhgIZHIIuBY6j2at/HqATrF37w6rBobdE0q
-         Igqa2wuFhL1ugg9K8SOSMukkFBzT7LFCEy0Hkr8gVHpgd6wV8G/1CFTTGQuEy4OSezbx
-         Q0xkX4iHya/zuDR0/uoYou0TH6GpWD6qqJV/MzbeYBYiDY+LsULR4zZfWgtxuzBcdyK2
-         iTFA==
-X-Gm-Message-State: AOAM531Q2JweULA1FOU/JTGR4kBrjbmB8RylJTvbAqefVnLkGF5mtHX6
-        x4s7tT1kdzHXsRWhaZ7Q4mk=
-X-Google-Smtp-Source: ABdhPJx4ec01AF0hlnwlTKclFqteKkdIicAgHddDR56hd9s22PUFt7saV80vPNIvoqonlUdARW43kw==
-X-Received: by 2002:a50:eb0a:: with SMTP id y10mr10517971edp.342.1607135218372;
-        Fri, 04 Dec 2020 18:26:58 -0800 (PST)
-Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id mc25sm4287269ejb.58.2020.12.04.18.26.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Dec 2020 18:26:57 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 7/9] commit-graph: drop count_distinct_commits() function
-References: <X8qEg/KiAQDugPC0@coredump.intra.peff.net>
- <X8qGTaIdnNa5mAfC@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.13
-In-reply-to: <X8qGTaIdnNa5mAfC@coredump.intra.peff.net>
-Date:   Sat, 05 Dec 2020 03:26:56 +0100
-Message-ID: <87sg8lxa1b.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KLqGR4mi9mYGd5FIEgdBl0Zu1kNzn59wYV0tDvOT9g8=;
+        b=mHcpCImYbBqa2rI3j4miMds/XcClc7FW5VxmdchioOoGW7eaNmH3lGmWgfNFtSOv3u
+         M8XvkQjmtRtFlX1YpQ2JdwvsgQqwR+UGGPgnA14ahn8b0S4DWhQYC+Aja2o82YFuGUC+
+         QDCBa990UI9LlhyeJK9g5idcJrYdT3PHi9bWFxvs+Nt/2XLLCFZUmKx7rOHCinupuQlo
+         3TAKpgxEoMw8/6c2d8n4hYzCICCFxtRODmddEqC0mIlAIFM3XWd8xrWP03Ef6B6ZR+dx
+         cNlC0OdHdgc22A/8hrhLyKl9hG2gfcp3v51rwBUVelDgiAJbY0C5J7rl5Etv+sLdlZvi
+         MQCQ==
+X-Gm-Message-State: AOAM5311oX3GOg1hUXY2QnTu+Xqywxwz0J5k+dJbylM3mBFISR9+KMVW
+        er2Tu/O3IR4qsfMcL6P2O5LUaMoV+VwuyNREsV8=
+X-Google-Smtp-Source: ABdhPJwkK1Xsi+n2iiGDFpsoaah+twCW73M9S7G5BvO0caTyNhe+Z4/xr40IiytOwj+H4Q8egD8qxKv/snaY4hmW9R8=
+X-Received: by 2002:adf:e788:: with SMTP id n8mr8200170wrm.84.1607140877051;
+ Fri, 04 Dec 2020 20:01:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20201204061623.1170745-1-felipe.contreras@gmail.com>
+ <20201204061623.1170745-12-felipe.contreras@gmail.com> <CABPp-BG0WWvk96T757WMx=004qVqkf+SU8m3cCZsb1feTZJ80Q@mail.gmail.com>
+In-Reply-To: <CABPp-BG0WWvk96T757WMx=004qVqkf+SU8m3cCZsb1feTZJ80Q@mail.gmail.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Fri, 4 Dec 2020 22:01:06 -0600
+Message-ID: <CAMP44s1wFPQ0mEExYUQfxYx2AjMZS2=zL5ihfjp3qjp+EfNe9Q@mail.gmail.com>
+Subject: Re: [PATCH v2 11/14] tentative: pull: change the semantics of --ff-only
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        "Theodore Y . Ts'o" <tytso@mit.edu>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        John Keeping <john@keeping.me.uk>,
+        Richard Hansen <rhansen@rhansen.org>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
+        "W. Trevor King" <wking@tremily.us>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Dec 4, 2020 at 5:39 PM Elijah Newren <newren@gmail.com> wrote:
+>
+> On Thu, Dec 3, 2020 at 10:16 PM Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+> >
+> > We want --ff-only to make sense only when no --merge or --rebase option
+> > is specified.
+>
+> A lot of git commands have opposite options, and git allows them both
+> to be specified with the last one winning.  Thus, much like
+>   git log --patch --no-patch
+> mean show logs without patches and
+>   git log --no-patch --patch
+> means show logs with patches, I would similarly expect the following
+> two commands to have opposite behavior:
+>   git pull --merge --no-ff
+>   git pull --no-ff --merge
 
-On Fri, Dec 04 2020, Jeff King wrote:
+Good point.
 
-> When writing a commit graph, we collect a list of object ids in an
-> array, which we'll eventually copy into an array of "struct commit"
-> pointers. Before we do that, though, we count the number of distinct
-> commit entries. There's a subtle bug in this step, though.
-> [...]
-> -	display_progress(ctx->progress, 0); /* TODO: Measure QSORT() progress */
-> -	QSORT(ctx->oids.list, ctx->oids.nr, oid_compare);
-> [...]
-> +	QSORT(ctx->oids.list, ctx->oids.nr, oid_compare);
+Although I presume you meant --ff-only.
 
-One thing your commit messag doesn't note is the removal of this
-TODO. Theoretically we still have the issue I noted in 890226ccb57
-(commit-graph write: add itermediate progress, 2019-01-19), in practice
-I think it's fine to just forever remove this TODO.
+Taking that into consideration it may be possible to make --ff-only
+work straightforwardly.
 
-I tried now on a really big repo and couldn't even get the progress bar
-you removed to appear, or the one you moved the QSORT() to.
+Further changes to the code are needed though. In the meantime I'm
+sending a quick patch on top of this series.
 
-Maybe I need to go even bigger, but more likely I overdid things a bit
-when I added all these progress bars to commit-graph.c at the time.
+Cheers.
+
+-- 
+Felipe Contreras
