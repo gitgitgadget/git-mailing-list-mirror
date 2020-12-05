@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BAA8C4361A
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:50:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06C12C433FE
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:51:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 462E722DFB
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:50:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CA7C522DFB
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:51:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731174AbgLEBu5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 20:50:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58000 "EHLO
+        id S1731219AbgLEBvN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 20:51:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726242AbgLEBu5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 20:50:57 -0500
-Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E77C3C061A54
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 17:49:58 -0800 (PST)
-Received: by mail-qk1-x74a.google.com with SMTP id s9so7071054qks.2
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 17:49:58 -0800 (PST)
+        with ESMTP id S1731209AbgLEBvM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 20:51:12 -0500
+Received: from mail-qk1-x749.google.com (mail-qk1-x749.google.com [IPv6:2607:f8b0:4864:20::749])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14B97C08E864
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 17:50:19 -0800 (PST)
+Received: by mail-qk1-x749.google.com with SMTP id q25so7038253qkm.17
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 17:50:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=MhrNwqVyKYFixrNJm9hDFpWMUz/77TSmZOCW/lmC/y4=;
-        b=RpwUq2rNwInWQCBt+OtwoeVRO8oSKgsKkJCQSysnUVw1rUcVj2vwSnz2ENMS6SA0wz
-         bDrXGyVyXc3lsALNhSdPKzX/4lQjxEG5QEwFz/kNpJ+HwebMMTSH0kjcg8DC9usgjN0X
-         AooKCLLcPjLXlprsB2wYM0nSgkXuSm5pFyG1XQITRjJz1/FPI3bG3WXxE/WeXQrhcK0S
-         zmcU9pD7JKp+KdO1oQ/gsMVe0zdPIuAiyuw9NPmUhQfT9uaMzDNiQkkfFxTHnhczOQJi
-         Dl2wHoIopHIkDTJjUm2+vnkNFFEUDpE+QQ/MdMQ2LvUAdFJfZBhA6LvvOIbx/Nu3FSHN
-         6wXQ==
+        bh=Mv8LHfO4l+/7PUxhwyKCCiixlZeZ4LmqRPhF2OIQZmM=;
+        b=hJS9UZOX7QDGFpebfa1b5k/BuytG/wxOdQDX2Cp2xzxAirtkuJuORTZ4HjTouuLLo8
+         MyHSgzSLI+Qb8OLxtJKdpXNxVgoUTo4aYB1EsCeSv9kbKsYFIRVOjwoeDZnyICbmHGDC
+         ORpikle2NaOdJAzT49vPWz+JOATcaSl8AbgPqY1qnYLz6Ty6vR3FrnOj00mXVVRtAcue
+         I85oKDY/axT8Ja5+wg8U0WZfCiuEUvpMhgZzYKU7wlrJCIXH63rzaOWvxiyenJN6weFd
+         F5oveK8ZkQqzKVzK9rjjizQ45eFpfk9CpkXqdOhpKRPuU2KZBmEs5oHm8zDXJi1VhU5q
+         0zVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=MhrNwqVyKYFixrNJm9hDFpWMUz/77TSmZOCW/lmC/y4=;
-        b=WAex9L4ws79qsTUY4iP+ltGZ1uiJGrT1tkvLFsmaLp236KknOpVVT+HALAdhgOLs8b
-         0g8UaL9X+57UmY/AZJz8mybQSmzXQlyEhW9qr05UrcZY07bsR1cFhtn6boGWT8fPYfhC
-         SkeeC7t/CSvElLOTgTlZaBSWkcBIrkp4OTb6DWhQ4axxVTeAdAF+2IXSDHIfmI90M4o9
-         6yE9lo1CPcy5isj/g13fIDsuQC4Z89u7K2/wxGRAqgIdTvRs9g5f1LIqoknu14TLRw76
-         mx9vz/9VKJ9NP0sRaFLPozLY9ijx+REPjZqGQJY5DKBRGDa0lDLTiMocYV460tODgZJX
-         znXA==
-X-Gm-Message-State: AOAM53229//gPODutj49xdH0uAznWeoSzpAVONZ8UHdlzUxv9j92Hjkt
-        wrs6eWbC+yuXHwRowZkIG1srH+ONKoY3lEzZSzNDOTpZbyfZjeX2o3OvYXlcVcHuDGf8u7LK5//
-        wd68bEKaMKNYRZdVuTrr6zOsONJ3uAKC2zCTxOWYBACs3j8CvgBsoPAe6Y1vdmElMr1lwakWJfg
+        bh=Mv8LHfO4l+/7PUxhwyKCCiixlZeZ4LmqRPhF2OIQZmM=;
+        b=J4qwgz38BrGhNOl+muxXYPb84F9WUpwcNLUYQYLS+v5dbiZL3z4HQUDqBMMhKBXV3B
+         PHkuZPcnmpZN/gObccRFB/ZOl+vML6fvFbA4au3xFFHiNjBT2lX0K19npp9kugCEJ8hi
+         2dwExXeA3KS8VubJvQMy83A4LplhC+9HpJEaoUyvvTxNBiyyL2kKInPFE67wH9jrNzaO
+         7Cq2Lmf7rk19AQNZgKaOWnPc3LpHmJN9fjyfB/6ZierrBnfz7yuNAs2RS7yyq/UxBElu
+         xVNuYCjAlFrK3SB9J3vuCBD4ydra7E7Eevld4ZbooHoHv9WxPMAH8CfAmgfNe9zKCvRN
+         KEZQ==
+X-Gm-Message-State: AOAM5300i61yAQEaFZriahrOwQpnzdgrozcj3SGnOl78UsanBgrhmK7y
+        /Wxdy/PWjKfC+XNL83vAMqbf0CRb1YmcOfdTmPWap+dW/Kd4kvDqgLQ6tdPzccs72gIj3qqCHjy
+        Eq96rbDuF3TFd1FeGmtRQYYSVMAe5DSJxoft4Lfova5iv3oNbIeVmrjJwvz1ZIqrtIYMf6D1jmg
         ==
-X-Google-Smtp-Source: ABdhPJys/fZzqWqR/qDNBNfezv0F3v+4ZV/OCpExo2Ny4ELldnKCY/6m518EAU30nE5jow/1h+6+cpgXBCLHMKc+h7s=
+X-Google-Smtp-Source: ABdhPJzaw1ad+uyLtU4AfSmBrtLWqYEVoKW1p/0KSoVeaIjhuc767H2kzbgfhr2Uq341bR5lk/gn6HSW5nHV40yAVY0=
 Sender: "emilyshaffer via sendgmr" 
         <emilyshaffer@podkayne.svl.corp.google.com>
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
- (user=emilyshaffer job=sendgmr) by 2002:a05:6214:a69:: with SMTP id
- ef9mr9265847qvb.50.1607132997934; Fri, 04 Dec 2020 17:49:57 -0800 (PST)
-Date:   Fri,  4 Dec 2020 17:49:32 -0800
+ (user=emilyshaffer job=sendgmr) by 2002:ad4:44ef:: with SMTP id
+ p15mr9429020qvt.37.1607133018270; Fri, 04 Dec 2020 17:50:18 -0800 (PST)
+Date:   Fri,  4 Dec 2020 17:49:43 -0800
 In-Reply-To: <20201205014945.1502660-1-emilyshaffer@google.com>
-Message-Id: <20201205014945.1502660-5-emilyshaffer@google.com>
+Message-Id: <20201205014945.1502660-16-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20201205014945.1502660-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.28.0.226.g0268cb6820
-Subject: [PATCH 04/17] gc: use hook library for pre-auto-gc hook
+Subject: [PATCH 15/17] post-update: use hook.h library
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -72,58 +72,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Using the hook.h library instead of the run-command.h library to run
-pre-auto-gc means that those hooks can be set up in config files, as
-well as in the hookdir. pre-auto-gc is called only from builtin/gc.c.
+By using run_hooks() instead of run_hook_le(), 'post-update' hooks can
+be specified in the config as well as the hookdir.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- Documentation/githooks.txt | 2 ++
- builtin/gc.c               | 4 +++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ Documentation/githooks.txt |  2 ++
+ builtin/receive-pack.c     | 26 +++++++-------------------
+ 2 files changed, 9 insertions(+), 19 deletions(-)
 
 diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index f6ddf1aa22..d74308dc20 100644
+index 2c59c537f9..1412cd5846 100644
 --- a/Documentation/githooks.txt
 +++ b/Documentation/githooks.txt
-@@ -553,6 +553,8 @@ This hook is invoked by `git gc --auto` (see linkgit:git-gc[1]). It
- takes no parameter, and exiting with non-zero status from this script
- causes the `git gc --auto` to abort.
+@@ -498,6 +498,8 @@ Both standard output and standard error output are forwarded to
+ `git send-pack` on the other end, so you can simply `echo` messages
+ for the user.
  
-+Hooks run during 'pre-auto-gc' will be run in parallel by default.
++Hooks run during 'post-update' will be run in parallel by default.
 +
- post-rewrite
- ~~~~~~~~~~~~
+ reference-transaction
+ ~~~~~~~~~~~~~~~~~~~~~
  
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 3e8d76fd5a..b01b6eb5fd 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -32,6 +32,7 @@
- #include "remote.h"
- #include "object-store.h"
- #include "exec-cmd.h"
-+#include "hook.h"
- 
- #define FAILED_RUN "failed to run %s"
- 
-@@ -340,6 +341,7 @@ static void add_repack_incremental_option(void)
- 
- static int need_to_gc(void)
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index b929a3505c..66af00fd8c 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1678,33 +1678,21 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ static void run_update_post_hook(struct command *commands)
  {
-+	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT_ASYNC;
- 	/*
- 	 * Setting gc.auto to 0 or negative can disable the
- 	 * automatic gc.
-@@ -386,7 +388,7 @@ static int need_to_gc(void)
- 	else
- 		return 0;
+ 	struct command *cmd;
+-	struct child_process proc = CHILD_PROCESS_INIT;
+-	const char *hook;
+-
+-	hook = find_hook("post-update");
+-	if (!hook)
+-		return;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_ASYNC;
  
--	if (run_hook_le(NULL, "pre-auto-gc", NULL))
-+	if (run_hooks("pre-auto-gc", &hook_opt))
- 		return 0;
- 	return 1;
+ 	for (cmd = commands; cmd; cmd = cmd->next) {
+ 		if (cmd->error_string || cmd->did_not_exist)
+ 			continue;
+-		if (!proc.args.nr)
+-			strvec_push(&proc.args, hook);
+-		strvec_push(&proc.args, cmd->ref_name);
++		strvec_push(&opt.args, cmd->ref_name);
+ 	}
+-	if (!proc.args.nr)
++	if (!opt.args.nr)
+ 		return;
+ 
+-	proc.no_stdin = 1;
+-	proc.stdout_to_stderr = 1;
+-	proc.err = use_sideband ? -1 : 0;
+-	proc.trace2_hook_name = "post-update";
++	if (use_sideband)
++		opt.consume_sideband = hook_output_to_sideband;
+ 
+-	if (!start_command(&proc)) {
+-		if (use_sideband)
+-			copy_to_sideband(proc.err, -1, NULL);
+-		finish_command(&proc);
+-	}
++	run_hooks("post-update", &opt);
++	run_hooks_opt_clear(&opt);
  }
+ 
+ static void check_aliased_update_internal(struct command *cmd,
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
