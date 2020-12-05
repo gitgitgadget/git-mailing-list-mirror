@@ -2,206 +2,225 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B0F9C433FE
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 20:20:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F1A0C4361A
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 21:29:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0133B2246B
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 20:20:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EAD302310B
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 21:29:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726510AbgLEUUS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Dec 2020 15:20:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59126 "EHLO
+        id S1726133AbgLEV2v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Dec 2020 16:28:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725379AbgLEUUR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Dec 2020 15:20:17 -0500
-Received: from mail-oo1-xc42.google.com (mail-oo1-xc42.google.com [IPv6:2607:f8b0:4864:20::c42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EEC5C0613D4
-        for <git@vger.kernel.org>; Sat,  5 Dec 2020 12:19:37 -0800 (PST)
-Received: by mail-oo1-xc42.google.com with SMTP id l10so2279523oom.6
-        for <git@vger.kernel.org>; Sat, 05 Dec 2020 12:19:37 -0800 (PST)
+        with ESMTP id S1726011AbgLEV2u (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Dec 2020 16:28:50 -0500
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2965BC0613CF
+        for <git@vger.kernel.org>; Sat,  5 Dec 2020 13:28:10 -0800 (PST)
+Received: by mail-wr1-x441.google.com with SMTP id k14so8817267wrn.1
+        for <git@vger.kernel.org>; Sat, 05 Dec 2020 13:28:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=XPCwxRe7lx+Cxa1ALv/55JdGdNMDDpytU0DAkwMAdLI=;
-        b=BTRAm/rwPaq5zfMTHWyGZhI72j1V5zxJzL9zK/fSESGQ/AXHxWMRM1pZYzw0w+I0he
-         uqNnEmFz3fTp4BJfBnrnxHOxFUnPD/DMVF+pn9DEaxBrm3hhzG30ZSrzVw6UYBRSqhII
-         Ow50d8R7IQAo9BE8ydXSLn70gEql3v9SbShspHaJAy2Au8QWcw7ecMKj8uaJ9X0SS3fF
-         ehrG0KzM7eLj064V+vTRuiQOQ21EdnFdeYcRRX8aZ1Odom57EJ56L+LD0aFWqrlh4cWp
-         Wz4klxMbdCt0szs9b8QhaMmqJ95vUq50SH3IROirkjE1R+WJsoOJqR705yH+UJsOKAcc
-         uBZA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=+/VkwDPSnMxyaCVy+0YoGfFtH36gy55LLjWJctL5jaM=;
+        b=rjpwSZ+JgQXTzGoYoIf+ga4luuAmH3Nggq86SFggioJAGSnHe0Glua6kkAJ6yKlTiu
+         WcXL+SybT1OZsKyKpcKLaMtmO8FIG6VariF+WBmh50BUL3D+GM5KY4E1BfVME2IrPM5y
+         C7NTjNETVgpbJVSVle2/htcf63/wyL1eeMKBi/2dhmY7AU+iy2ejTg4LaWwopPyIa5Mk
+         HlDdXyuUozZLyvB2OJBkRoj7XIaKgntnxInzM9TKgeJh0fhukHyEeTxm5NZUkw7nuNxp
+         PSzD2P8VCRNCuA9v4w1KInZK9rJEWrgXhstEbu1uvOlVLdPSzIfNMVYAa+It7DUwO8Re
+         +vpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=XPCwxRe7lx+Cxa1ALv/55JdGdNMDDpytU0DAkwMAdLI=;
-        b=iDsQtw3tHdb5oOzKA0j89aDeHqncBha1evUQkjwdReLQGn1IuLvx0Iypwic4Q+vR2H
-         /gct1A8d3iSpmc2PdM0MQvjAYyrGzru2fDfDbLjiZI/N9JeJti2WjWWmAg/CCLLjSO7R
-         6e1OaQFAilkrUcT5pgkQyRySAV03lEebYYi5G9/5K/KOO9Zb6jdro+9gGsBXH1UQEPxJ
-         ypjqij6D/enoi2lMEiV4X94G3tGe46R84/8iO1OLdCRWQ17hvpWA3GI21nqtM0UZOn8d
-         6agC4baqkP75Z1SWTIKynyCbqNnSW6RgPvl97/8aUiFsZQ86QQXHnipCwjDAruzIeifg
-         CbrQ==
-X-Gm-Message-State: AOAM530NQ9uzUQmr41kgXr8ri9C1lCDPdy/9OViZXnz8SQZ3mD8D9Oz7
-        Sk6UuHZvuIiKygdDRCq4/1rpeIWrdEAKxA==
-X-Google-Smtp-Source: ABdhPJxH9nuSSLq/QPUiCqaCZhj9diGDMgm8K4oFHFPYfRMRJp3CgxDFY/GabSzlSttbD6eMpoh7dA==
-X-Received: by 2002:a4a:764e:: with SMTP id w14mr7926615ooe.56.1607199576434;
-        Sat, 05 Dec 2020 12:19:36 -0800 (PST)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id 2sm1633098oir.40.2020.12.05.12.19.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Dec 2020 12:19:35 -0800 (PST)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 2/2] tentative: pull: change the semantics of --ff-only
-Date:   Sat,  5 Dec 2020 14:19:33 -0600
-Message-Id: <20201205201933.1560133-2-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20201205201933.1560133-1-felipe.contreras@gmail.com>
-References: <CAMP44s3xqjoJm5AL6dLcS6R-RFGGOdQ39W+ZY3_PWL+WMeCxjw@mail.gmail.com>
- <20201205201933.1560133-1-felipe.contreras@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=+/VkwDPSnMxyaCVy+0YoGfFtH36gy55LLjWJctL5jaM=;
+        b=QeSIbtCdqvs4r30XpZRBF7+ulueTThkeH5DqhrFZAUHftbsgyWV+gdxYzm0w0Cfs0J
+         Rqt8bMwBAlNA5pPQnNu0RCTslEQdmqUDE3Cbwx4ASLWpxI+0vrc88ChPDnfKNJXPabFY
+         9ZJ0YgvDaDpHKgliLpH0YBVt4oZa4GM/oVDy8VhTob0QxWKipjtPH3nHJtgnw93RXkw1
+         b8kuKpp/w4U0yVEsbJI9CiRTgG9cDjXnhSybyvZUK7pyhGY9TW3yvIJHIKb+CHsIgsYK
+         BQR2DniCoRfngSAjXcVcGagGrx/Me/vYi3ZgMlPjtvhjkuUTnc6eP3hNXkL9rcyECUGv
+         wWPw==
+X-Gm-Message-State: AOAM532WZBhfCT0jp4G0hAxMIazOptZXKwyfGyYDGzRQ4Bg8uepnNxQy
+        PxpfP7YEjOw+AklY4HyAqXbjUrv9Hk7vtw4R4DI=
+X-Google-Smtp-Source: ABdhPJxM9kC/k/8Th02srtnVdh5CJVgGo3e4WhxOCbFpAHWCoYA1hAdWLCmr6IRvzV8LR9YARCGgvLUQun/J8vgG+Y0=
+X-Received: by 2002:a5d:52c1:: with SMTP id r1mr11916560wrv.255.1607203688659;
+ Sat, 05 Dec 2020 13:28:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20201204061623.1170745-1-felipe.contreras@gmail.com>
+ <20201204061623.1170745-3-felipe.contreras@gmail.com> <CABPp-BFdjj=+4jk0vo=kpNc6ug1=UgtKfXJZkseyyxut2VB=Uw@mail.gmail.com>
+ <CAMP44s1eTc4+tbULbyz5ENgbcN4tOVBA3Z-4GS4yMpciUD_1Hw@mail.gmail.com>
+ <CABPp-BFwWBLdFPsKi3o9hznFtAeWWfhNAyuymPS4BhMAHpnSfw@mail.gmail.com>
+ <CAMP44s1=aZL7BMKSjzKJ7qYqg-usScwzRUJmaOhsCGvQ4ieYow@mail.gmail.com> <CABPp-BF4rXBOKsn8bG6y3QUEtNVV9K2Pk5NmwrU5818CqhRt_Q@mail.gmail.com>
+In-Reply-To: <CABPp-BF4rXBOKsn8bG6y3QUEtNVV9K2Pk5NmwrU5818CqhRt_Q@mail.gmail.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Sat, 5 Dec 2020 15:27:57 -0600
+Message-ID: <CAMP44s2L24jhCG9ps72--ZiJkXUovR726jCf8JTLHAs0jV7Whg@mail.gmail.com>
+Subject: Re: [PATCH v2 02/14] pull: improve default warning
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        "Theodore Y . Ts'o" <tytso@mit.edu>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        John Keeping <john@keeping.me.uk>,
+        Richard Hansen <rhansen@rhansen.org>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
+        "W. Trevor King" <wking@tremily.us>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We want the last thing specified to override everything previously.
+On Sat, Dec 5, 2020 at 10:28 AM Elijah Newren <newren@gmail.com> wrote:
+> On Fri, Dec 4, 2020 at 5:56 PM Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
 
-For example --merge should override a previous "pull.ff = only"
-configuration.
+> > Well, I already said I partly agree with you: in the --ff-only case
+> > the suggestion should not be brought forward.
+> >
+> > But in the "git pull" default case, *today* it's doing a merge. If
+> > uttering --merge and thus making the current behavior explicit instead
+> > of implicit seems dangerous it's because it is. But not documenting it
+> > doesn't make it any less dangerous.
+>
+> Sounds like we agree that the future should be ff-only-as-default.  I
+> also agree with you that the primary problem is the current default
+> behavior, and I'll agree with you that documenting the current default
+> is okay.  However, I disagree that your wording here:
+>
+> +                       "If unsure, run \"git pull --no-rebase\".\n"
+>
+> does anything of the sort.  It does not mention that this is the
+> default behavior the users would get if they provided no flags.
 
-And --ff-only should override a previous "pull.rebase = true"
-configuration.
+But that is not the warning, this is the warning:
 
-Currently "git pull --ff-only --merge" fails with:
+  Pulling without specifying how to reconcile divergent branches is discour=
+aged;
+  you need to specify if you want a merge, a rebase, or a fast-forward.
+  You can squelch this message by running one of the following commands:
 
-  fatal: not possible to fast-forward, aborting.
+    git config pull.rebase false  # merge (the default strategy)
+    git config pull.rebase true   # rebase
+    git config pull.ff only       # fast-forward only
 
-But that's not what we want; we want --merge to override --ff-only and
-do a --no-ff merge.
+  You can replace "git config" with "git config --global" to set a default
+  preference for all repositories.
+  If unsure, run "git pull --merge".
+  Read "git pull --help" for more information.
 
-This is a backwards-incompatible change that achieves that.
+This warning says:
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- builtin/pull.c  | 27 +++++++++++++++++++++++----
- t/t5520-pull.sh | 37 ++++++++++++++++++++++++++++++++++++-
- 2 files changed, 59 insertions(+), 5 deletions(-)
+1. There's 3 options: merge, rebase, fast-forward
+2. merge is the default strategy
+3. If unsure, specify --merge (the default strategy)
 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 44ec6e7216..54c58618e9 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -112,6 +112,24 @@ static int opt_show_forced_updates = -1;
- static char *set_upstream;
- static struct strvec opt_fetch = STRVEC_INIT;
- 
-+static int parse_opt_ff_only(const struct option *opt, const char *arg, int unset)
-+{
-+	char **value = opt->value;
-+	opt_rebase = REBASE_DEFAULT;
-+	free(*value);
-+	*value = xstrdup_or_null("--ff-only");
-+	return 0;
-+}
-+
-+static int parse_opt_merge(const struct option *opt, const char *arg, int unset)
-+{
-+	enum rebase_type *value = opt->value;
-+	free(opt_ff);
-+	opt_ff = NULL;
-+	*value = REBASE_FALSE;
-+	return 0;
-+}
-+
- static struct option pull_options[] = {
- 	/* Shared options */
- 	OPT__VERBOSITY(&opt_verbosity),
-@@ -129,8 +147,9 @@ static struct option pull_options[] = {
- 		"(false|true|merges|preserve|interactive)",
- 		N_("incorporate changes by rebasing rather than merging"),
- 		PARSE_OPT_OPTARG, parse_opt_rebase),
--	OPT_SET_INT('m', "merge", &opt_rebase,
--		N_("incorporate changes by merging"), REBASE_FALSE),
-+	OPT_CALLBACK_F('m', "merge", &opt_rebase, NULL,
-+		N_("incorporate changes by merging"),
-+		PARSE_OPT_NOARG | PARSE_OPT_NONEG, parse_opt_merge),
- 	OPT_PASSTHRU('n', NULL, &opt_diffstat, NULL,
- 		N_("do not show a diffstat at the end of the merge"),
- 		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
-@@ -159,9 +178,9 @@ static struct option pull_options[] = {
- 	OPT_PASSTHRU(0, "ff", &opt_ff, NULL,
- 		N_("allow fast-forward"),
- 		PARSE_OPT_NOARG),
--	OPT_PASSTHRU(0, "ff-only", &opt_ff, NULL,
-+	OPT_CALLBACK_F(0, "ff-only", &opt_ff, NULL,
- 		N_("abort if fast-forward is not possible"),
--		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
-+		PARSE_OPT_NOARG | PARSE_OPT_NONEG, parse_opt_ff_only),
- 	OPT_PASSTHRU(0, "verify-signatures", &opt_verify_signatures, NULL,
- 		N_("verify that the named commit has a valid GPG signature"),
- 		PARSE_OPT_NOARG),
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 067780e658..0cdac4010b 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -849,7 +849,7 @@ test_expect_success 'non-fast-forward (ff-only)' '
- 	test_must_fail git pull
- '
- 
--test_expect_failure 'non-fast-forward with merge (ff-only)' '
-+test_expect_success 'non-fast-forward with merge (ff-only)' '
- 	test_config pull.ff only &&
- 	setup_non_ff &&
- 	git pull --merge
-@@ -869,4 +869,39 @@ test_expect_success 'non-fast-forward error message (ff-only)' '
- 	grep -q "The pull was not fast-forward" error
- '
- 
-+test_expect_success '--merge overrides --ff-only' '
-+	setup_non_ff &&
-+	git pull --ff-only --merge
-+'
-+
-+test_expect_success '--rebase overrides --ff-only' '
-+	setup_non_ff &&
-+	git pull --ff-only --rebase
-+'
-+
-+test_expect_success '--ff-only overrides --merge' '
-+	setup_non_ff &&
-+	test_must_fail git pull --merge --ff-only
-+'
-+
-+test_expect_success '--ff-only overrides pull.rebase=false' '
-+	test_config pull.rebase false &&
-+	setup_non_ff &&
-+	test_must_fail git pull --ff-only
-+'
-+
-+test_expect_success 'pull.rebase=true overrides pull.ff=only' '
-+	test_config pull.ff only &&
-+	test_config pull.rebase true &&
-+	setup_non_ff &&
-+	git pull
-+'
-+
-+test_expect_success 'pull.rebase=false overrides pull.ff=only' '
-+	test_config pull.ff only &&
-+	test_config pull.rebase false &&
-+	setup_non_ff &&
-+	test_must_fail git pull
-+'
-+
- test_done
--- 
-2.29.2
+So taken altogether it does say what is the default strategy.
 
+> More
+> importantly, it makes a recommendation...and one that undercuts the
+> point of the message.
+
+So?
+
+When boarding a plane the flight attendants do a safety demonstration
+that passengers should pay attention to. If one passenger is not
+paying attention (listening to music on headphones, and reading a
+book) what should the crew do?
+
+1. Remove the passenger's headphones and force him to pay attention to
+the safety demonstration
+2. Let the passenger ignore the safety demonstration
+
+Human beings are independent agents responsible for their own actions.
+You as a separate human being--a crew member--can argue that it's not
+in the best interest of the passenger to ignore the safety
+demonstration, and you may be right, but the passenger decisions are
+still the passenger's decisions, even if they are bad.
+
+Do you think the crew should disregard the passenger's volition and
+force him to pay attention to the safety demonstration?
+
+> It makes it feel like the message shouldn't
+> exist at all in any circumstances.  I even suspect that adding that
+> sentence may undercut any efforts towards changing the default to
+> ff-only-as-default.  While I'm a big fan of most of what you've done
+> in this series, I will object to its merging for as long as this
+> stays.  (I definitely don't have veto power or anything close to it,
+> just stating what my opinion is.)
+
+The current warning should not exist at all.
+
+The complaint from V=C3=ADt Ondruch [1] that reignited this series is a
+valid one. A *permanent* warning is not good. We should have a
+*temporary* warning with the express purpose of notifying users of an
+upcoming change.
+
+If we have not yet decided on what should be the default (Junio seems
+to have casted some doubt on the consensus [2]), and we don't have a
+clear path forward to implement such change (we can't even tell users
+to use "pull.ff=3Donly", since eventually it may be
+"pull.mode=3Dff-only"), then we must remove the warning.
+
+It was a mistake to put a *permanent* warning before deciding to
+change the default.
+
+So, there's two options:
+
+1. We decide on a path forward and fix the warning so it *temporarily*
+explains what will happen in the future
+2. We remove the *permanent* warning
+
+Since we are already here, we might as well take advantage of that
+warning and repurpose it. But in the meantime--while the git project
+decides what to do, and what configurations to suggest the users to
+change--we should at the very least waste as little as the user's time
+as possible, and give him/her a quick opt-out.
+
+Yes, a quick opt-out defeats the purpose of a warning, but we must
+respect the users' volition. The user may be on a deadline trying to
+push some changes to production before the weekend, and after a system
+update be annoyed with this warning on every pull. The user may not
+have time to look at the warning, decide he wants to read the warning
+in the future, maybe next Monday, and thus not configure anything to
+silence it.
+
+What's wrong with a user saying "I don't have time for this now,
+please tell me what to do for now, I'll look at the warning later"? If
+anything for those users the configuration is the wrong thing to do,
+because being in a hurry they just choose the first configuration and
+forget about the warning without actually looking at it (because they
+didn't have time), and it will not appear any more. By typing "git
+pull --merge" the user can get rid of the warning *for now*, but the
+next time he does "git pull" the warning will reappear, and at that
+time perhaps the user does have the time to read it, and look at the
+manpage.
+
+Nobody likes their workflow to be interrupted and be forced to do anything.
+
+I don't think my patches plus that suggestion for a quick opt-out are
+in any way worse than the current situation. If you think they are,
+then we'll just have to agree to disagree.
+
+I quote the voice of V=C3=ADt Ondruch, which I think represents the typical
+user: "please select any strategy considered more appropriate and stop
+warning me".
+
+Cheers.
+
+[1] https://lore.kernel.org/git/742df4c2-2bc5-8a4b-8de1-cd5e48718398@redhat=
+.com/
+[2] https://lore.kernel.org/git/xmqqh7p1fjml.fsf@gitster.c.googlers.com/
+
+--=20
+Felipe Contreras
