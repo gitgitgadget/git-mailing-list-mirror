@@ -8,63 +8,62 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8BA3C1B0D8
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3DCFC2BB40
 	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:51:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 939D322E00
+	by mail.kernel.org (Postfix) with ESMTP id C753522DFB
 	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:51:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731242AbgLEBvX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 20:51:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58084 "EHLO
+        id S1731247AbgLEBv3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 20:51:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730950AbgLEBvW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 20:51:22 -0500
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 579A5C08E862
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 17:50:13 -0800 (PST)
-Received: by mail-pf1-x449.google.com with SMTP id q13so1765953pfn.18
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 17:50:13 -0800 (PST)
+        with ESMTP id S1731089AbgLEBv2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 20:51:28 -0500
+Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCDD8C08E861
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 17:50:11 -0800 (PST)
+Received: by mail-qv1-xf4a.google.com with SMTP id p3so6380712qvn.15
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 17:50:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=ji++r9XLN8Rr7X/IEi+t7ZCiQClY2IJFMJyN2+5q56Y=;
-        b=ApAiT8bo7JDboJPw9+ErzjKWfMUTsJja84JzeF/x7C73Ep2r0MBYkbJcE1/yoXcbFF
-         UiVuJbmplZk5LnHxKlFpNyBQCaekmFlBz9XO+hd5J3wf28CZP2wITYDw848NH+Mu1/nJ
-         +T0mgRnoBQErLCkQK2Md9K9FJAwZUmZp4flplvz0S9fjJRw2EuaQpOPjfreV7tF2biOM
-         wIE3wMyMnrQ+CdH8fOvk2Z7RaTOElh+Be6XdAxodNIlQEPZ05LOXXdxxSyldU+FZnwsh
-         rsewQs0ABOBvyxd3kUr+sqj/saytKrkoZe8rld6e95pOHCk1BqsZsH1yoGWpDkMg6R4L
-         rMJw==
+        bh=Donh/FHvh4F0njzTIN5avuchvXoVkUEY0MU53TswrPI=;
+        b=TgSiQ/3aOT6pn84Eu7n9WPUe7AAiltIB7TezhTWHI31xupEgPOMetZPiDEFi6Qg4IA
+         kGTnEosiW5wfQf7XPgHrll+qo2SbUhSok8jmhGk6Y0KTqs+3psR3Zd/kM6i9UU/0vRGC
+         B7rnimuLteE9W0LCnTGgbBUzn8WO3M3ohHXI6wFESWTWz1XUJq20qBfHAL5k7fkZp+Uc
+         g8ZFeQLbkVx29soe2PhuUMHoYoBR7+gINqhw3ShuOsHDPnh+ZkGtai22163DV/mfP2TK
+         KrvnNKsaYFHZD4yzsatLsAz/o2qkk69sHe5CPtBJz/fQ7zVri1ZWuuBR6a+50thlf8Fw
+         b6Pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=ji++r9XLN8Rr7X/IEi+t7ZCiQClY2IJFMJyN2+5q56Y=;
-        b=OrmVvvLsuYFd2yu+TZmSlmcE8Z1pyRdllUMxuQbrWrCgL2+ZyVxRlQrz7qdCMR3ZAY
-         hKuqxfbCjYtK0QkvwCcp9PCADW6dMgUwhmq45rKg/+JmtidHUYIv2epdectX6r4TqmSF
-         Mw+QW4+bcVTt9sFVTAFcDCY/ZhDLFND0pf8eVhSOkASPvI1avXV4q4hHe+/mr1QtY8ue
-         BJ3t93bRnZAXI3uoBMqPc/H0wbmjq/gPwM5TXidXBto89ds16zr3xI/2ZT1I8nMJSJcC
-         2L+744cOSq5dWV7sFMIkDMUZteIljEUh1TApBbc8NFVT5c2wZ2Zwf3mBy0iwAbKfXPHg
-         yRyQ==
-X-Gm-Message-State: AOAM531F5HqU3ZmEsvr3Tr46o8FuVqDW+ClIFUpplagxtrMvgKcFSbt5
-        bntzKx84Lkh94sAVjMgApI6ywrTCaQDvbJL55xk8acQlR29OnpmLH4SgttNMVAV79gIJ+30UBHb
-        d/wKUXLBpMNxb3qMFefSSYNalt8ouek5eP4UcXmy+t2mhqUeQ0Kc/DCAkmGPy+7Y3utVPIhJD7g
+        bh=Donh/FHvh4F0njzTIN5avuchvXoVkUEY0MU53TswrPI=;
+        b=KlhXMzSq6Vdyr11bJiugIZnQbe2WxpxVVPS2G2d+fbvHFNHidzUPGh5aYRSyFaJixa
+         +MY6Zcm2b27btw6t7hFbs4s0w3wue6H3PzWDimibVivW1qqxl2qZSBznmYHHTJnNL2zq
+         +8JzkRQ4rxWULhHqllr7NysfYm6hTcIyEKaHUBU24LA8GLsGxymB6v/psluQQx/vxOGY
+         nUhtzvGbOC4kdX+RrrV7H3GWHTAfKDdAjM/f74dLG7/iky7uynf2UgY5NK3TC8JNoAiq
+         l40Js3/SNNgDFzIJJlSvss0zVNCyPPqs44v59FEgF85LD3SPH788jPl+ZseLactsSDE8
+         qKpw==
+X-Gm-Message-State: AOAM531xsaWdkeMCjOStIhFoGJi1kTHw/ZsOOWraoTM2k0Z3gcbj+XUI
+        4ltCJMOhbefeunGYu9s3Gy3xWSuZJK6e1kp+/+MmI/bQjG/hoYvijNs+yWVaSfIPZ9yaG0lTXbE
+        mfJrqnOf4MPJHuWmRD/OLRZz7k3q1+dccGOzujSm4f7s7FB64FkxtsX2X+RCTzIRtZtFSBKlXdg
         ==
-X-Google-Smtp-Source: ABdhPJw+03e6aAiHRG+pi5u/W+wryB6CVhS+eR8ZziTXZKLIJX49ha/t1qyHtdVOZYi/v5EFRgt3hvZ1O9udpVcesio=
+X-Google-Smtp-Source: ABdhPJzTOtVgxmdvrpvr9bW6v3/jQAt9+aZS3kOoNtg8ikMyvrhjtfYyD+hYcAwYer7t1u0Vsbd+frrwNwyr+WmQqoY=
 Sender: "emilyshaffer via sendgmr" 
         <emilyshaffer@podkayne.svl.corp.google.com>
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
- (user=emilyshaffer job=sendgmr) by 2002:a62:37c4:0:b029:197:bfa9:2078 with
- SMTP id e187-20020a6237c40000b0290197bfa92078mr6346496pfa.15.1607133012802;
- Fri, 04 Dec 2020 17:50:12 -0800 (PST)
-Date:   Fri,  4 Dec 2020 17:49:40 -0800
+ (user=emilyshaffer job=sendgmr) by 2002:a05:6214:190f:: with SMTP id
+ er15mr8938620qvb.33.1607133011010; Fri, 04 Dec 2020 17:50:11 -0800 (PST)
+Date:   Fri,  4 Dec 2020 17:49:39 -0800
 In-Reply-To: <20201205014945.1502660-1-emilyshaffer@google.com>
-Message-Id: <20201205014945.1502660-13-emilyshaffer@google.com>
+Message-Id: <20201205014945.1502660-12-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20201205014945.1502660-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.28.0.226.g0268cb6820
-Subject: [PATCH 12/17] reference-transaction: look for hooks in config
+Subject: [PATCH 11/17] transport: convert pre-push hook to use config
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -73,119 +72,114 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-By using the hook.h library, reference-transaction hooks can be
-specified in the config instead.
-
-The expected output of the test is not fully updated to reflect the
-absolute path of the hook called because the 'update' hook has not yet
-been converted to use hook.h.
+By using the hook.h:run_hooks API, pre-push hooks can be specified in
+the config as well as in the hookdir.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- Documentation/githooks.txt       |  2 ++
- refs.c                           | 33 +++++++-------------------------
- t/t1416-ref-transaction-hooks.sh |  8 ++++----
- 3 files changed, 13 insertions(+), 30 deletions(-)
+ Documentation/githooks.txt |  2 ++
+ transport.c                | 55 +++++++++-----------------------------
+ 2 files changed, 14 insertions(+), 43 deletions(-)
 
 diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 8f5524055b..3a35500132 100644
+index db290984f6..8f5524055b 100644
 --- a/Documentation/githooks.txt
 +++ b/Documentation/githooks.txt
-@@ -521,6 +521,8 @@ The exit status of the hook is ignored for any state except for the
- cause the transaction to be aborted. The hook will not be called with
- "aborted" state in that case.
+@@ -271,6 +271,8 @@ If this hook exits with a non-zero status, `git push` will abort without
+ pushing anything.  Information about why the push is rejected may be sent
+ to the user by writing to standard error.
  
-+Hooks run during 'reference-transaction' will be run in parallel by default.
++Hooks executed during 'pre-push' will run in parallel by default.
 +
- push-to-checkout
- ~~~~~~~~~~~~~~~~
- 
-diff --git a/refs.c b/refs.c
-index 392f0bbf68..b67bca367e 100644
---- a/refs.c
-+++ b/refs.c
-@@ -18,6 +18,7 @@
- #include "strvec.h"
- #include "repository.h"
- #include "sigchain.h"
+ [[pre-receive]]
+ pre-receive
+ ~~~~~~~~~~~
+diff --git a/transport.c b/transport.c
+index 47da955e4f..6c67bc0fea 100644
+--- a/transport.c
++++ b/transport.c
+@@ -22,6 +22,7 @@
+ #include "protocol.h"
+ #include "object-store.h"
+ #include "color.h"
 +#include "hook.h"
  
- /*
-  * List of all available backends
-@@ -1957,47 +1958,27 @@ int ref_update_reject_duplicates(struct string_list *refnames,
- static int run_transaction_hook(struct ref_transaction *transaction,
- 				const char *state)
+ static int transport_use_color = -1;
+ static char transport_colors[][COLOR_MAXLEN] = {
+@@ -1162,31 +1163,13 @@ static void die_with_unpushed_submodules(struct string_list *needs_pushing)
+ static int run_pre_push_hook(struct transport *transport,
+ 			     struct ref *remote_refs)
  {
--	struct child_process proc = CHILD_PROCESS_INIT;
- 	struct strbuf buf = STRBUF_INIT;
--	const char *hook;
+-	int ret = 0, x;
++	int ret = 0;
 +	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_ASYNC;
- 	int ret = 0, i;
- 
--	hook = find_hook("reference-transaction");
--	if (!hook)
--		return ret;
++	struct strbuf tmp = STRBUF_INIT;
+ 	struct ref *r;
+-	struct child_process proc = CHILD_PROCESS_INIT;
+-	struct strbuf buf;
+-	const char *argv[4];
 -
--	strvec_pushl(&proc.args, hook, state, NULL);
+-	if (!(argv[0] = find_hook("pre-push")))
+-		return 0;
+-
+-	argv[1] = transport->remote->name;
+-	argv[2] = transport->url;
+-	argv[3] = NULL;
+-
+-	proc.argv = argv;
 -	proc.in = -1;
--	proc.stdout_to_stderr = 1;
--	proc.trace2_hook_name = "reference-transaction";
+-	proc.trace2_hook_name = "pre-push";
 -
--	ret = start_command(&proc);
--	if (ret)
--		return ret;
--
+-	if (start_command(&proc)) {
+-		finish_command(&proc);
+-		return -1;
+-	}
+ 
 -	sigchain_push(SIGPIPE, SIG_IGN);
-+	strvec_push(&opt.args, state);
+-
+-	strbuf_init(&buf, 256);
++	strvec_push(&opt.args, transport->remote->name);
++	strvec_push(&opt.args, transport->url);
  
- 	for (i = 0; i < transaction->nr; i++) {
- 		struct ref_update *update = transaction->updates[i];
+ 	for (r = remote_refs; r; r = r->next) {
+ 		if (!r->peer_ref) continue;
+@@ -1195,30 +1178,16 @@ static int run_pre_push_hook(struct transport *transport,
+ 		if (r->status == REF_STATUS_REJECT_REMOTE_UPDATED) continue;
+ 		if (r->status == REF_STATUS_UPTODATE) continue;
  
- 		strbuf_reset(&buf);
--		strbuf_addf(&buf, "%s %s %s\n",
-+		strbuf_addf(&buf, "%s %s %s",
- 			    oid_to_hex(&update->old_oid),
- 			    oid_to_hex(&update->new_oid),
- 			    update->refname);
+-		strbuf_reset(&buf);
+-		strbuf_addf( &buf, "%s %s %s %s\n",
++		strbuf_reset(&tmp);
++		strbuf_addf(&tmp, "%s %s %s %s",
+ 			 r->peer_ref->name, oid_to_hex(&r->new_oid),
+ 			 r->name, oid_to_hex(&r->old_oid));
 -
 -		if (write_in_full(proc.in, buf.buf, buf.len) < 0) {
+-			/* We do not mind if a hook does not read all refs. */
 -			if (errno != EPIPE)
 -				ret = -1;
 -			break;
 -		}
-+		string_list_append(&opt.str_stdin, buf.buf);
++		string_list_append(&opt.str_stdin, tmp.buf);
  	}
  
--	close(proc.in);
+-	strbuf_release(&buf);
+-
+-	x = close(proc.in);
+-	if (!ret)
+-		ret = x;
+-
 -	sigchain_pop(SIGPIPE);
-+	ret = run_hooks("reference-transaction", &opt);
+-
+-	x = finish_command(&proc);
+-	if (!ret)
+-		ret = x;
++	ret = run_hooks("pre-push", &opt);
 +	run_hooks_opt_clear(&opt);
- 	strbuf_release(&buf);
++	strbuf_release(&tmp);
  
--	ret |= finish_command(&proc);
  	return ret;
  }
- 
-diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-hooks.sh
-index f6e741c6c0..17f11f5cb0 100755
---- a/t/t1416-ref-transaction-hooks.sh
-+++ b/t/t1416-ref-transaction-hooks.sh
-@@ -122,11 +122,11 @@ test_expect_success 'interleaving hook calls succeed' '
- 
- 	cat >expect <<-EOF &&
- 		hooks/update refs/tags/PRE $ZERO_OID $PRE_OID
--		hooks/reference-transaction prepared
--		hooks/reference-transaction committed
-+		$(pwd)/target-repo.git/hooks/reference-transaction prepared
-+		$(pwd)/target-repo.git/hooks/reference-transaction committed
- 		hooks/update refs/tags/POST $ZERO_OID $POST_OID
--		hooks/reference-transaction prepared
--		hooks/reference-transaction committed
-+		$(pwd)/target-repo.git/hooks/reference-transaction prepared
-+		$(pwd)/target-repo.git/hooks/reference-transaction committed
- 	EOF
- 
- 	git push ./target-repo.git PRE POST &&
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
