@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70855C4167B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1077C0018C
 	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:40:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3AB4422E01
+	by mail.kernel.org (Postfix) with ESMTP id 7707923100
 	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:40:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726291AbgLEBkV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 20:40:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56338 "EHLO
+        id S1728429AbgLEBkX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 20:40:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726151AbgLEBkV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 20:40:21 -0500
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 822C7C061A51
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 17:39:40 -0800 (PST)
-Received: by mail-wm1-x342.google.com with SMTP id x22so6865490wmc.5
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 17:39:40 -0800 (PST)
+        with ESMTP id S1728411AbgLEBkX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 20:40:23 -0500
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2B1BC061A53
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 17:39:42 -0800 (PST)
+Received: by mail-wm1-x341.google.com with SMTP id h21so8598073wmb.2
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 17:39:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=IXVkuBMNSbPPBUL0VinOcopXvHrDJwf2Tipikc0D6oQ=;
-        b=Za4fStEuaNXe8gEFgyJxFV1edA4mrsgTWeeEX7suW5jL7woDjVMY9gJC2mVDLUc55R
-         J0QnwqKk44A/WTh2qMV4l8xIjDwnTidl9My/XQwYUIoDD63111dC5XT1k0YObgqHztgs
-         5sD4uPruCNmDHombUf3q4jyNI2WgJTH/wwhJnJ2+4acM5yF/IvOja8oYohhM49f2HmC/
-         NZpOjkS7uZU6kV0/ic8rQJTK41yr3J0AkQfg2UQ9g8vvuqvP99v97+tZ6tho+MJ18kVh
-         UVRxwClK2Fjk7Q4U/85eF0XqEX75h08HFxC8e/iX/AhAECW3g1lSPyM49V5uhcjriLFz
-         UWhA==
+        bh=CduL7JHxRS2/Vst2oCsNVDnmnVm/aVb+SN0eYd+gP3o=;
+        b=kBP3Ig/5QmfrcKYAt8ImyK+LYNZd6JWDdiGkO7eDbHGuL1n98kokqi0xPcXMCxlPgZ
+         Ub+NNMru0830L8dOWqCAguBasXfsaI/A+jjoObG2wYCtqmip4qvsWvP+qdSVmgcAoVlh
+         tCB8SUBY27Il5tcyXE8F+xUlTJ6qTcB8q5YqMhxVfHPxGDI0BpamsXum/Ubeo1fIIkS1
+         csSx26Emih4f0qofIJCV+B+8LxciUMKDOGJOw/iJCO4n38ZGw8vZXaTgxn9z+iACAlbC
+         QWZm4mPsgZPXOzaxknZBFkV3w2nKX69OCho7uQF23C1jR0zA5tAjV/K+sVAClP9xukz2
+         6VyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=IXVkuBMNSbPPBUL0VinOcopXvHrDJwf2Tipikc0D6oQ=;
-        b=cnYDWEL5DOrs72YnzRRszlQn+0phsbroZg3M0dGczHEmN5F3Yq2HFb48e8scskUAjq
-         6kleSTO4JVTrDLkolyLHxIyWARJy5o/UajSmgX0n9LGXPB9zsOpzbBLhLt22ijf/vyKZ
-         MNQHKwK/lmzSJT1bXPzUb8Aw4+S2AhaB+DKie+k1k/tTEpV7eH9Hyy8mpdefADVLqImf
-         iaiQfCA4Ezi4tFNs1jnXW7JkeUarhqjLko/cxQLjLqMDkXxeao452zaOcyTqacRa3Hxb
-         tJ2NQ0TChMz7yPzSJ9A0GcbOuEbIenlLtflJXqh3hwAhkg3CAHHFZVwXw7vW9ilIUToc
-         uQrQ==
-X-Gm-Message-State: AOAM532We0xtxnbc71YDduFFwvaRrHK56rWGmKvrSTuD0pNV93tI69cr
-        A7QtcvJRlfEI9F2OogwzpZxIpc7iNI4I1A==
-X-Google-Smtp-Source: ABdhPJxG9NHDfapqksUTPV1icoXgF2ibbtcEzY9Em5Y5TgOsiXEwNn7b+ZZtCFE0cSqRCfIsI1+qdQ==
-X-Received: by 2002:a7b:cf30:: with SMTP id m16mr6794779wmg.145.1607132378935;
-        Fri, 04 Dec 2020 17:39:38 -0800 (PST)
+        bh=CduL7JHxRS2/Vst2oCsNVDnmnVm/aVb+SN0eYd+gP3o=;
+        b=Lh12gk4YNF5nJAoo5kWjl3LcsgjUdLfaMFwWP9pl4tel8VMsEgx4mAfXkCKXq4VxhL
+         ywibYYJkLAbCgTCSvfdQZ4PqNOIov/6AwaBE20L7ZOcMB1qrq179EPLff6EcaXg2b1zf
+         EKjHevvTltUyFtExolvJXg7vzGbCD5/IXnyNT9fao6lAwbBkj5ivxoPkANSGxzAoiruD
+         6ULOTFT8gnKEWGmGOQnm3NjDnRNYgKD1GHfsdqO+1+jD7lGUXuKLEIt8AGFa7Gz3IHJs
+         TCSm7ztgSg6yyZbwcJ1chOax2Kcgj9DjKe3BBCinfSXFA37MG8atwQCOLzbChgz4LNpG
+         c79A==
+X-Gm-Message-State: AOAM530Ef/vTK6IPL4PYlF7JN4NFm6/wRNPEfoxPuByKrQuC3ygXS73+
+        LgRu/nISW52IHsGMLYKpL7FaXzMMcww/7A==
+X-Google-Smtp-Source: ABdhPJyzbaPbAGYxN/O1Xb9pdTIuSH6nOH+1/ee0AeZdHDU1GIO8oJ4DIV/6EdiHgDCa26dIOsvjIA==
+X-Received: by 2002:a1c:ed13:: with SMTP id l19mr6804824wmh.141.1607132381208;
+        Fri, 04 Dec 2020 17:39:41 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id a1sm5537821wrv.61.2020.12.04.17.39.38
+        by smtp.gmail.com with ESMTPSA id a1sm5537821wrv.61.2020.12.04.17.39.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Dec 2020 17:39:38 -0800 (PST)
+        Fri, 04 Dec 2020 17:39:40 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         peff@peff.net, jonathantanmy@google.com,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 2/5] pretty format %(trailers): avoid needless repetition
-Date:   Sat,  5 Dec 2020 02:39:15 +0100
-Message-Id: <20201205013918.18981-3-avarab@gmail.com>
+Subject: [PATCH 4/5] pretty-format %(trailers): fix broken standalone "valueonly"
+Date:   Sat,  5 Dec 2020 02:39:17 +0100
+Message-Id: <20201205013918.18981-5-avarab@gmail.com>
 X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
 In-Reply-To: <20201025212652.3003036-1-anders@0x63.nu>
 References: <20201025212652.3003036-1-anders@0x63.nu>
@@ -77,77 +77,92 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the documentation for the various %(trailers) options so it
-isn't repeating part of the documentation for "only" about how boolean
-values are handled. Instead let's split the description of that into
-general documentation at the top.
+Fix %(trailers:valueonly) being a noop due to on overly eager
+optimization. When new trailer options were added they needed to be
+listed at the start of the format_trailer_info() function. E.g. as was
+done in 250bea0c165 (pretty: allow showing specific trailers,
+2019-01-28).
 
-It then suffices to refer to it by listing the options as
-"opt[=bool]". I'm also changing it to "[=bool]" from "[=val]". It took
-me a couple of readings to realize that while to realize that these
-options were referring back to the "only" option's treatment of
-boolean values. Let's try to make this more explicit.
+When d9b936db522 (pretty: add support for "valueonly" option in
+%(trailers), 2019-01-28) was added this was omitted by mistake. Thus
+%(trailers:valueonly) was a noop, instead of showing only trailer
+value. This wasn't caught because the tests for it always combined it
+with other options.
+
+Let's fix the bug, and switch away from this pattern requiring us to
+remember to add new flags to the start of the function. Instead as
+soon as we see the ":" in "%(trailers:" we skip the fast path. That
+over-matches for "%(trailers:)", but I think that's OK.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/pretty-formats.txt | 29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+ pretty.c                      |  2 ++
+ t/t4205-log-pretty-formats.sh | 11 +++++++++++
+ trailer.c                     |  3 +--
+ trailer.h                     |  1 +
+ 4 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 54f793d424f..8e066594624 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -252,7 +252,14 @@ endif::git-rev-list[]
- 			  interpreted by
- 			  linkgit:git-interpret-trailers[1]. The
- 			  `trailers` string may be followed by a colon
--			  and zero or more comma-separated options:
-+			  and zero or more comma-separated options.
-++
-+The boolean options accept an optional value. The values `true`,
-+`false`, `on`, `off` etc. are all accepted. See the "boolean"
-+sub-section in "EXAMPLES" in linkgit:git-config[1]. If a boolean
-+option is given with no value it's enabled. If any option is provided
-+multiple times the last occurance wins.
-++
- ** 'key=<K>': only show trailers with specified key. Matching is done
-    case-insensitively and trailing colon is optional. If option is
-    given multiple times trailer lines matching any of the keys are
-@@ -264,27 +271,21 @@ endif::git-rev-list[]
-    desired it can be disabled with `only=false`.  E.g.,
-    `%(trailers:key=Reviewed-by)` shows trailer lines with key
-    `Reviewed-by`.
--** 'only[=val]': select whether non-trailer lines from the trailer
--   block should be included. The `only` keyword may optionally be
--   followed by an equal sign and one of `true`, `on`, `yes` to omit or
--   `false`, `off`, `no` to show the non-trailer lines. If option is
--   given without value it is enabled. If given multiple times the last
--   value is used.
-+** 'only[=bool]': select whether non-trailer lines from the trailer
-+   block should be included.
- ** 'separator=<SEP>': specify a separator inserted between trailer
-    lines. When this option is not given each trailer line is
-    terminated with a line feed character. The string SEP may contain
-    the literal formatting codes described above. To use comma as
-    separator one must use `%x2C` as it would otherwise be parsed as
--   next option. If separator option is given multiple times only the
--   last one is used. E.g., `%(trailers:key=Ticket,separator=%x2C )`
-+   next option. E.g., `%(trailers:key=Ticket,separator=%x2C )`
-    shows all trailer lines whose key is "Ticket" separated by a comma
-    and a space.
--** 'unfold[=val]': make it behave as if interpret-trailer's `--unfold`
--   option was given. In same way as to for `only` it can be followed
--   by an equal sign and explicit value. E.g.,
-+** 'unfold[=bool]': make it behave as if interpret-trailer's `--unfold`
-+   option was given. E.g.,
-    `%(trailers:only,unfold=true)` unfolds and shows all trailer lines.
--** 'valueonly[=val]': skip over the key part of the trailer line and only
--   show the value part. Also this optionally allows explicit value.
-+** 'valueonly[=bool]': skip over the key part of the trailer line and only
-+   show the value part.
+diff --git a/pretty.c b/pretty.c
+index 590f37489f6..d989a6ae712 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1426,6 +1426,8 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 		opts.no_divider = 1;
  
- NOTE: Some placeholders may depend on other options given to the
- revision traversal engine. For example, the `%g*` reflog options will
+ 		if (*arg == ':') {
++			/* over-matches on %(trailers:), but that's OK */
++			opts.have_options = 1;
+ 			arg++;
+ 			for (;;) {
+ 				const char *argval;
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index 5dd080c19b2..e1100082b34 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -737,6 +737,17 @@ test_expect_success '%(trailers:key=foo,valueonly) shows only value' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '%(trailers:valueonly) shows only values' '
++	git log --no-walk --pretty="format:%(trailers:valueonly)" >actual &&
++	test_write_lines \
++		"A U Thor <author@example.com>" \
++		"A U Thor <author@example.com>" \
++		"[ v2 updated patch description ]" \
++		"A U Thor" \
++		"  <author@example.com>" >expect &&
++	test_cmp expect actual
++'
++
+ test_expect_success '%(trailers:key=foo,keyonly,valueonly) shows nothing' '
+ 	git log --no-walk --pretty="format:%(trailers:key=Acked-by,keyonly,valueonly)" >actual &&
+ 	echo >expect &&
+diff --git a/trailer.c b/trailer.c
+index 40f31e4dfc2..da95e1f3c66 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -1206,8 +1206,7 @@ static void format_trailer_info(struct strbuf *out,
+ 	size_t origlen = out->len;
+ 	size_t i;
+ 
+-	/* If we want the whole block untouched, we can take the fast path. */
+-	if (!opts->only_trailers && !opts->unfold && !opts->filter && !opts->separator) {
++	if (!opts->have_options) {
+ 		strbuf_add(out, info->trailer_start,
+ 			   info->trailer_end - info->trailer_start);
+ 		return;
+diff --git a/trailer.h b/trailer.h
+index d4507b4ef2a..e348c970ce7 100644
+--- a/trailer.h
++++ b/trailer.h
+@@ -65,6 +65,7 @@ struct new_trailer_item {
+ };
+ 
+ struct process_trailer_options {
++	int have_options;
+ 	int in_place;
+ 	int trim_empty;
+ 	int only_trailers;
 -- 
 2.29.2.222.g5d2a92d10f8
 
