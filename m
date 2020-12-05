@@ -5,65 +5,65 @@ X-Spam-Level:
 X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
-	autolearn_force=no version=3.4.0
+	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D138C433FE
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:50:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D84DC4361A
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:50:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A74322DFB
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:50:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1DB3A22DFB
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:50:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731012AbgLEBuj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 20:50:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57934 "EHLO
+        id S1731126AbgLEBun (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 20:50:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726210AbgLEBuj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 20:50:39 -0500
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 021C1C061A51
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 17:49:53 -0800 (PST)
-Received: by mail-yb1-xb4a.google.com with SMTP id 4so9319342ybv.11
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 17:49:52 -0800 (PST)
+        with ESMTP id S1731013AbgLEBum (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 20:50:42 -0500
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8E5AC061A53
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 17:49:56 -0800 (PST)
+Received: by mail-pj1-x1049.google.com with SMTP id c1so4350285pjo.6
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 17:49:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=DKmsIxc4f89WV+IsjEfUFNY3Ih4tONMREdtf+PB9Zak=;
-        b=aJsl1Padspq8zI5/uydB3V+nUlmfWRthvpm7cDVHVbGK2I4HP0wZcrtQI8Jve9CvJv
-         sn4E157WNfpL5JCdA5lI8F2ac+GzBlVoZsuPgHpUXANnXI/GsoqJXbsUFFYuqPqi0z5K
-         LwiNzPSaygMvGBJboNnlHTYj2zRmwWe9xpe1J9xLfFNEQPwQknHTTLuU5cJ9yiy0yqkG
-         8SXZY34xprA4n3iwZwvR7bkATWqazLZ+zCIm9S5e+TGqtBQr39yVapMflSAdCOGh4lyA
-         WvmdqleqxSDfAh/m7nWbYmvaKZ5TEqwBblSWY36DYL3VdmEYg3/PGzAr+qvPw8gFRFCM
-         kCtw==
+        bh=JBKVjRnbzqESSv9JqchxvmDRnDuoKg97DbxCNoBxVeU=;
+        b=LRIh3JDz6eZE+Dw8WOsopSpg2X4xGSphGm4fp4IHg8OxsF5gmbGFMIfEVuUJNcdikX
+         fkQWDuvm/07pYLG1eGb4mohMW7H2wwNytMnrF0wVbJ5NIPlWAQOmdVR5ubGpIpgUUjZ9
+         sI4A/JMMdmEP96uV3pQsdagXqHUD1RzlZfcFNn883xr1GP2kgwP6xeRo+HJ4W3DOFhgd
+         S2yHySIlpNncasweUrBc0EBlEH88vY5amDQfuo5OSc4y642St1RtRemqG+ULHMaUU0XU
+         dKEE3znxC4X94SLMKhxSx9P9/M0f9RawRcHOya3TvhYoIPGxxpLUUsOEtkybjrS+KOGV
+         Gtgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=DKmsIxc4f89WV+IsjEfUFNY3Ih4tONMREdtf+PB9Zak=;
-        b=degrtsovRh4Bf37nMRwhkseoTOwbGyXUE0kjh2BxpKR4nFxQXvzKOr6Oc6y52qBzam
-         +J81zedfBqiNRhzCZlmn0LgLUyFkF5sqffbgjKDCEp2zqNP1SmahgRb1Hmzlqn4NZwi4
-         SD3ip8DYR31dZ04QwapOvAST9Fz4P7pCTITbcNwT96mtKqd5TMCnzlib4rgRt/GDBLBx
-         YAVppXZuQN/D4EtG6sYiGrzdNW5/H3iDIC6EaZwn1DISQ/WPEZYYjYZ69wAgFYSW4G7+
-         tx8XW3JOuX4D1nQlm/XCdObOLjjTLDHvSrmz02ifx5MYKbuHjlA8LtlmjG3eTJpCim4o
-         2N2A==
-X-Gm-Message-State: AOAM533Jz73J8M0JFBD/Jsxd9mQBEy/Rq6v+KEcUfEfQ40HP14y3ffaf
-        aPCup2rsDbg0vC2YzUeSnfAC88xMdy5Hcqu0iZdZ4WWLzT6CWyE86h3IAL0fcEgpu/CYxuM8ZOQ
-        UcqQu9RJnXhSd6ksjY8Zu1iygvNsu3VkmLxqrCIOHxpFan+5un2RswE6F8nHahFF6I85WWKo5xw
+        bh=JBKVjRnbzqESSv9JqchxvmDRnDuoKg97DbxCNoBxVeU=;
+        b=duVMjQVIxz22CX/jV95McmiT2iXnx8m5xijkVURE6h/biSM4ZlYM6s4DVY4c3AX01G
+         wY2SZ/CHIAxh/kzfdkeSD5ldQqA6ElUKokfBPqKQQjs08iKqxQHZOfimfrjA8vxv7cGD
+         oOHizi5QskBnZwP3eNaYBMhm/Wix+wwGOXSbLP3DDKUY75WTpvIoNuf2dlourLM/9SCN
+         ivOEtbHG6WKAFsSNRADfPRILIbJ/Dz5TSpx/5w1U3widhRbrD37c9xiqM2oecqq0FoJf
+         ECq1/QdEBUFjSz6tbNb7hyt727lfKYnlymcgDZrgVKDvx19yK2f8Vbkh1azrX+bHbCln
+         W24g==
+X-Gm-Message-State: AOAM531IUOytDDFPctSpwtedTMVN1ufJMN608tvc/t6mYcjRs/B8JTuB
+        euUzXNENpHydz/DEOVSeWLbJFr862CWbKk6bEz686QdQOA5Vgoq8iLX88F2Hq8YdwgBzWZ+BszT
+        SB9pL2WEKXWw5YIvOQyj62trIJLa3qI+9CYD+/FihmuRH8+K4a9HZeA/WDRh01eII2Ml/vpd4YQ
         ==
-X-Google-Smtp-Source: ABdhPJz+VLfzTiZyFWF3Minf5eDMChx1EyMXruqiCoheP5+8tLXIf98jyjQ80hsUIlXFQZlUMBp7TkuqTmE0RcXhGMc=
+X-Google-Smtp-Source: ABdhPJwxZdMVAw24+jSqamdDPtEz/vPNwX0A1/6pCEYUBMP+fu4z2cTVRcfJ5yGOZL6/A6cd+kDNR3K+0oZxG4FnMu0=
 Sender: "emilyshaffer via sendgmr" 
         <emilyshaffer@podkayne.svl.corp.google.com>
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
- (user=emilyshaffer job=sendgmr) by 2002:a25:38c1:: with SMTP id
- f184mr9226288yba.41.1607132992227; Fri, 04 Dec 2020 17:49:52 -0800 (PST)
-Date:   Fri,  4 Dec 2020 17:49:29 -0800
+ (user=emilyshaffer job=sendgmr) by 2002:a17:90a:fa0c:: with SMTP id
+ cm12mr6683903pjb.87.1607132996090; Fri, 04 Dec 2020 17:49:56 -0800 (PST)
+Date:   Fri,  4 Dec 2020 17:49:31 -0800
 In-Reply-To: <20201205014945.1502660-1-emilyshaffer@google.com>
-Message-Id: <20201205014945.1502660-2-emilyshaffer@google.com>
+Message-Id: <20201205014945.1502660-4-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20201205014945.1502660-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.28.0.226.g0268cb6820
-Subject: [PATCH 01/17] commit: use config-based hooks
+Subject: [PATCH 03/17] merge: use config-based hooks for post-merge hook
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -72,319 +72,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As part of the adoption of config-based hooks, teach run_commit_hook()
-to call hook.h instead of run-command.h. This covers 'pre-commit',
-'commit-msg', and 'prepare-commit-msg'. Additionally, ask the hook
-library - not run-command - whether any hooks will be run, as it's
-possible hooks may exist in the config but not the hookdir.
-
-Because all but 'post-commit' hooks are expected to make some state
-change, force all but 'post-commit' hook to run in series. 'post-commit'
-"is meant primarily for notification, and cannot affect the outcome of
-`git commit`," so it is fine to run in parallel.
+Teach post-merge to use the hook.h library instead of the run-command.h
+library to run hooks. This means that post-merge hooks can come from the
+config as well as from the hookdir. post-merge is invoked only from
+builtin/merge.c.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- Documentation/githooks.txt                    | 10 ++++++++++
- builtin/commit.c                              | 11 +++++-----
- builtin/merge.c                               |  9 +++++----
- commit.c                                      | 20 +++++++++++++------
- commit.h                                      |  3 ++-
- sequencer.c                                   |  7 ++++---
- ...3-pre-commit-and-pre-merge-commit-hooks.sh | 17 ++++++++++++++--
- 7 files changed, 56 insertions(+), 21 deletions(-)
+ Documentation/githooks.txt | 2 ++
+ builtin/merge.c            | 5 ++++-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index ffccfc7760..8b352be43f 100644
+index 0842cd812c..f6ddf1aa22 100644
 --- a/Documentation/githooks.txt
 +++ b/Documentation/githooks.txt
-@@ -103,6 +103,8 @@ The default 'pre-commit' hook, when enabled--and with the
- `hooks.allownonascii` config option unset or set to false--prevents
- the use of non-ASCII filenames.
+@@ -236,6 +236,8 @@ save and restore any form of metadata associated with the working tree
+ (e.g.: permissions/ownership, ACLS, etc).  See contrib/hooks/setgitperms.perl
+ for an example of how to do this.
  
-+Hooks executed during 'pre-commit' will not be parallelized.
++Hooks executed during 'post-merge' will run in parallel by default.
 +
- pre-merge-commit
- ~~~~~~~~~~~~~~~~
+ pre-push
+ ~~~~~~~~
  
-@@ -125,6 +127,8 @@ need to be resolved and the result committed separately (see
- linkgit:git-merge[1]). At that point, this hook will not be executed,
- but the 'pre-commit' hook will, if it is enabled.
- 
-+Hooks executed during 'pre-merge-commit' will not be parallelized.
-+
- prepare-commit-msg
- ~~~~~~~~~~~~~~~~~~
- 
-@@ -150,6 +154,8 @@ be used as replacement for pre-commit hook.
- The sample `prepare-commit-msg` hook that comes with Git removes the
- help message found in the commented portion of the commit template.
- 
-+Hooks executed during 'prepare-commit-msg' will not be parallelized.
-+
- commit-msg
- ~~~~~~~~~~
- 
-@@ -166,6 +172,8 @@ file.
- The default 'commit-msg' hook, when enabled, detects duplicate
- `Signed-off-by` trailers, and aborts the commit if one is found.
- 
-+Hooks executed during 'commit-msg' will not be parallelized.
-+
- post-commit
- ~~~~~~~~~~~
- 
-@@ -175,6 +183,8 @@ invoked after a commit is made.
- This hook is meant primarily for notification, and cannot affect
- the outcome of `git commit`.
- 
-+Hooks executed during 'post-commit' will run in parallel by default.
-+
- pre-rebase
- ~~~~~~~~~~
- 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 505fe60956..f4dea2b510 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -36,6 +36,7 @@
- #include "help.h"
- #include "commit-reach.h"
- #include "commit-graph.h"
-+#include "hook.h"
- 
- static const char * const builtin_commit_usage[] = {
- 	N_("git commit [<options>] [--] <pathspec>..."),
-@@ -699,7 +700,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	/* This checks and barfs if author is badly specified */
- 	determine_author_info(author_ident);
- 
--	if (!no_verify && run_commit_hook(use_editor, index_file, "pre-commit", NULL))
-+	if (!no_verify && run_commit_hook(use_editor, 0, index_file, "pre-commit", NULL))
- 		return 0;
- 
- 	if (squash_message) {
-@@ -983,7 +984,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		return 0;
- 	}
- 
--	if (!no_verify && find_hook("pre-commit")) {
-+	if (!no_verify && hook_exists("pre-commit", configured_hookdir_opt())) {
- 		/*
- 		 * Re-read the index as pre-commit hook could have updated it,
- 		 * and write it out as a tree.  We must do this before we invoke
-@@ -998,7 +999,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		return 0;
- 	}
- 
--	if (run_commit_hook(use_editor, index_file, "prepare-commit-msg",
-+	if (run_commit_hook(use_editor, 0, index_file, "prepare-commit-msg",
- 			    git_path_commit_editmsg(), hook_arg1, hook_arg2, NULL))
- 		return 0;
- 
-@@ -1015,7 +1016,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	}
- 
- 	if (!no_verify &&
--	    run_commit_hook(use_editor, index_file, "commit-msg", git_path_commit_editmsg(), NULL)) {
-+	    run_commit_hook(use_editor, 0, index_file, "commit-msg", git_path_commit_editmsg(), NULL)) {
- 		return 0;
- 	}
- 
-@@ -1701,7 +1702,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 
- 	repo_rerere(the_repository, 0);
- 	run_auto_maintenance(quiet);
--	run_commit_hook(use_editor, get_index_file(), "post-commit", NULL);
-+	run_commit_hook(use_editor, 1, get_index_file(), "post-commit", NULL);
- 	if (amend && !no_post_rewrite) {
- 		commit_post_rewrite(the_repository, current_head, &oid);
- 	}
 diff --git a/builtin/merge.c b/builtin/merge.c
-index 1cff730715..d654b6923c 100644
+index d654b6923c..717fbaa019 100644
 --- a/builtin/merge.c
 +++ b/builtin/merge.c
-@@ -42,6 +42,7 @@
- #include "commit-reach.h"
- #include "wt-status.h"
- #include "commit-graph.h"
-+#include "hook.h"
+@@ -443,6 +443,7 @@ static void finish(struct commit *head_commit,
+ 		   const struct object_id *new_head, const char *msg)
+ {
+ 	struct strbuf reflog_message = STRBUF_INIT;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_ASYNC;
+ 	const struct object_id *head = &head_commit->object.oid;
  
- #define DEFAULT_TWOHEAD (1<<0)
- #define DEFAULT_OCTOPUS (1<<1)
-@@ -836,14 +837,14 @@ static void prepare_to_commit(struct commit_list *remoteheads)
- 	struct strbuf msg = STRBUF_INIT;
- 	const char *index_file = get_index_file();
- 
--	if (!no_verify && run_commit_hook(0 < option_edit, index_file, "pre-merge-commit", NULL))
-+	if (!no_verify && run_commit_hook(0 < option_edit, 0, index_file, "pre-merge-commit", NULL))
- 		abort_commit(remoteheads, NULL);
- 	/*
- 	 * Re-read the index as pre-merge-commit hook could have updated it,
- 	 * and write it out as a tree.  We must do this before we invoke
- 	 * the editor and after we invoke run_status above.
- 	 */
--	if (find_hook("pre-merge-commit"))
-+	if (hook_exists("pre-merge-commit", configured_hookdir_opt()))
- 		discard_cache();
- 	read_cache_from(index_file);
- 	strbuf_addbuf(&msg, &merge_msg);
-@@ -864,7 +865,7 @@ static void prepare_to_commit(struct commit_list *remoteheads)
- 		append_signoff(&msg, ignore_non_trailer(msg.buf, msg.len), 0);
- 	write_merge_heads(remoteheads);
- 	write_file_buf(git_path_merge_msg(the_repository), msg.buf, msg.len);
--	if (run_commit_hook(0 < option_edit, get_index_file(), "prepare-commit-msg",
-+	if (run_commit_hook(0 < option_edit, 0, get_index_file(), "prepare-commit-msg",
- 			    git_path_merge_msg(the_repository), "merge", NULL))
- 		abort_commit(remoteheads, NULL);
- 	if (0 < option_edit) {
-@@ -872,7 +873,7 @@ static void prepare_to_commit(struct commit_list *remoteheads)
- 			abort_commit(remoteheads, NULL);
+ 	if (!msg)
+@@ -484,7 +485,9 @@ static void finish(struct commit *head_commit,
  	}
  
--	if (!no_verify && run_commit_hook(0 < option_edit, get_index_file(),
-+	if (!no_verify && run_commit_hook(0 < option_edit, 0, get_index_file(),
- 					  "commit-msg",
- 					  git_path_merge_msg(the_repository), NULL))
- 		abort_commit(remoteheads, NULL);
-diff --git a/commit.c b/commit.c
-index fe1fa3dc41..1bad721a20 100644
---- a/commit.c
-+++ b/commit.c
-@@ -21,6 +21,7 @@
- #include "commit-reach.h"
- #include "run-command.h"
- #include "shallow.h"
-+#include "hook.h"
- 
- static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
- 
-@@ -1630,25 +1631,32 @@ size_t ignore_non_trailer(const char *buf, size_t len)
- 	return boc ? len - boc : len - cutoff;
- }
- 
--int run_commit_hook(int editor_is_used, const char *index_file,
-+int run_commit_hook(int editor_is_used, int parallelize, const char *index_file,
- 		    const char *name, ...)
- {
--	struct strvec hook_env = STRVEC_INIT;
-+	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_SYNC;
- 	va_list args;
-+	const char *arg;
- 	int ret;
- 
--	strvec_pushf(&hook_env, "GIT_INDEX_FILE=%s", index_file);
-+	if (parallelize)
-+		opt.jobs = configured_hook_jobs();
-+
-+	strvec_pushf(&opt.env, "GIT_INDEX_FILE=%s", index_file);
- 
- 	/*
- 	 * Let the hook know that no editor will be launched.
- 	 */
- 	if (!editor_is_used)
--		strvec_push(&hook_env, "GIT_EDITOR=:");
-+		strvec_push(&opt.env, "GIT_EDITOR=:");
- 
- 	va_start(args, name);
--	ret = run_hook_ve(hook_env.v, name, args);
-+	while ((arg = va_arg(args, const char *)))
-+		strvec_push(&opt.args, arg);
- 	va_end(args);
--	strvec_clear(&hook_env);
-+
-+	ret = run_hooks(name, &opt);
+ 	/* Run a post-merge hook */
+-	run_hook_le(NULL, "post-merge", squash ? "1" : "0", NULL);
++	strvec_push(&opt.args, squash ? "1" : "0");
++	run_hooks("post-merge", &opt);
 +	run_hooks_opt_clear(&opt);
  
- 	return ret;
- }
-diff --git a/commit.h b/commit.h
-index 5467786c7b..dd33ead8e0 100644
---- a/commit.h
-+++ b/commit.h
-@@ -352,6 +352,7 @@ int compare_commits_by_commit_date(const void *a_, const void *b_, void *unused)
- int compare_commits_by_gen_then_commit_date(const void *a_, const void *b_, void *unused);
- 
- LAST_ARG_MUST_BE_NULL
--int run_commit_hook(int editor_is_used, const char *index_file, const char *name, ...);
-+int run_commit_hook(int editor_is_used, int parallelize, const char *index_file,
-+		    const char *name, ...);
- 
- #endif /* COMMIT_H */
-diff --git a/sequencer.c b/sequencer.c
-index 8909a46770..5a98fd2fbc 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -34,6 +34,7 @@
- #include "commit-reach.h"
- #include "rebase-interactive.h"
- #include "reset.h"
-+#include "hook.h"
- 
- #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
- 
-@@ -1203,7 +1204,7 @@ static int run_prepare_commit_msg_hook(struct repository *r,
- 	} else {
- 		arg1 = "message";
- 	}
--	if (run_commit_hook(0, r->index_file, "prepare-commit-msg", name,
-+	if (run_commit_hook(0, 0, r->index_file, "prepare-commit-msg", name,
- 			    arg1, arg2, NULL))
- 		ret = error(_("'prepare-commit-msg' hook failed"));
- 
-@@ -1438,7 +1439,7 @@ static int try_to_commit(struct repository *r,
- 		}
- 	}
- 
--	if (find_hook("prepare-commit-msg")) {
-+	if (hook_exists("prepare-commit-msg", configured_hookdir_opt())) {
- 		res = run_prepare_commit_msg_hook(r, msg, hook_commit);
- 		if (res)
- 			goto out;
-@@ -1528,7 +1529,7 @@ static int try_to_commit(struct repository *r,
- 		goto out;
- 	}
- 
--	run_commit_hook(0, r->index_file, "post-commit", NULL);
-+	run_commit_hook(0, 1, r->index_file, "post-commit", NULL);
- 	if (flags & AMEND_MSG)
- 		commit_post_rewrite(r, current_head, oid);
- 
-diff --git a/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh b/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
-index b3485450a2..fc93bc3d23 100755
---- a/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
-+++ b/t/t7503-pre-commit-and-pre-merge-commit-hooks.sh
-@@ -5,8 +5,8 @@ test_description='pre-commit and pre-merge-commit hooks'
- . ./test-lib.sh
- 
- HOOKDIR="$(git rev-parse --git-dir)/hooks"
--PRECOMMIT="$HOOKDIR/pre-commit"
--PREMERGE="$HOOKDIR/pre-merge-commit"
-+PRECOMMIT="$(pwd)/$HOOKDIR/pre-commit"
-+PREMERGE="$(pwd)/$HOOKDIR/pre-merge-commit"
- 
- # Prepare sample scripts that write their $0 to actual_hooks
- test_expect_success 'sample script setup' '
-@@ -103,6 +103,19 @@ test_expect_success 'with succeeding hook' '
- 	test_cmp expected_hooks actual_hooks
- '
- 
-+# NEEDSWORK: when 'git hook add' and 'git hook remove' have been added, use that
-+# instead
-+test_expect_success 'with succeeding hook (config-based)' '
-+	test_when_finished "git config --unset hook.pre-commit.command success.sample" &&
-+	test_when_finished "rm -f expected_hooks actual_hooks" &&
-+	git config hook.pre-commit.command "$HOOKDIR/success.sample" &&
-+	echo "$HOOKDIR/success.sample" >expected_hooks &&
-+	echo "more" >>file &&
-+	git add file &&
-+	git commit -m "more" &&
-+	test_cmp expected_hooks actual_hooks
-+'
-+
- test_expect_success 'with succeeding hook (merge)' '
- 	test_when_finished "rm -f \"$PREMERGE\" expected_hooks actual_hooks" &&
- 	cp "$HOOKDIR/success.sample" "$PREMERGE" &&
+ 	apply_autostash(git_path_merge_autostash(the_repository));
+ 	strbuf_release(&reflog_message);
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
