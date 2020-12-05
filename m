@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3A1FC433FE
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:50:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BAA8C4361A
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:50:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7BDFC22DFB
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:50:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 462E722DFB
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:50:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731178AbgLEBu6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 20:50:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58002 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731013AbgLEBu5 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1731174AbgLEBu5 (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 4 Dec 2020 20:50:57 -0500
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B217C061A55
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 17:50:00 -0800 (PST)
-Received: by mail-yb1-xb4a.google.com with SMTP id v12so9336533ybi.6
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 17:50:00 -0800 (PST)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58000 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726242AbgLEBu5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 20:50:57 -0500
+Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E77C3C061A54
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 17:49:58 -0800 (PST)
+Received: by mail-qk1-x74a.google.com with SMTP id s9so7071054qks.2
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 17:49:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=luXBwOtpikkdNrYnfdM9JMdzWElhhuE/WuLI+XXCgms=;
-        b=sYCHehlm9fyI2CH+m18OL9+sFmirYaYPtv9tSGACbUeI0zoDyMka3oEfat/OfvlVs8
-         i6V7yU15R7QcVtznIrUXprmlek5Co1JsE9JO7gCMutOHpbZSgJFK9/pWaJ6DYp7DyEOj
-         zQquVbrWfKe3PavXROUB9WJd4bGAqTS6TR04eVGVT3OGuWs7SXCrQ7uPDZ3oOQz9lSqD
-         ROHeGmW0OQIRAoT/OisTSktb9OlNVa3dT8RK70CAGyRk59312rqDygX6oJR3tppbDzrt
-         /HNM1Cw7Ycy6Ly52VZ9XD2PbwNAGgs9XnnqxNG13NjwvfvXF+XqeACT8UEKXd5HepgSj
-         PcOg==
+        bh=MhrNwqVyKYFixrNJm9hDFpWMUz/77TSmZOCW/lmC/y4=;
+        b=RpwUq2rNwInWQCBt+OtwoeVRO8oSKgsKkJCQSysnUVw1rUcVj2vwSnz2ENMS6SA0wz
+         bDrXGyVyXc3lsALNhSdPKzX/4lQjxEG5QEwFz/kNpJ+HwebMMTSH0kjcg8DC9usgjN0X
+         AooKCLLcPjLXlprsB2wYM0nSgkXuSm5pFyG1XQITRjJz1/FPI3bG3WXxE/WeXQrhcK0S
+         zmcU9pD7JKp+KdO1oQ/gsMVe0zdPIuAiyuw9NPmUhQfT9uaMzDNiQkkfFxTHnhczOQJi
+         Dl2wHoIopHIkDTJjUm2+vnkNFFEUDpE+QQ/MdMQ2LvUAdFJfZBhA6LvvOIbx/Nu3FSHN
+         6wXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=luXBwOtpikkdNrYnfdM9JMdzWElhhuE/WuLI+XXCgms=;
-        b=lc8BhlAsHdTRq/Hhf1M6FMfVrJja+kLZ9lQXHJ1aJuVzFcpvolfhYVqMKpLlDHycFi
-         dDhUvwfonXs3dqLKZH3QIvJJI6zaXnDoUfwBvCFza08QYNmBJ/hF1t14gYRVc2gjhjAM
-         l0eSHNeCO73zn2yGXJWX0IZkccdeDMu4FWn9xZdctpso7OKeqx1Slz9Pm5XTRrojwOJp
-         iWlAhXgLFhUIGDG2RNRx1yb6fa11qCDgXQJs01fYUlqOnsMOGs7DOXEeskqzvTyKB7sE
-         41ATNLjI/qDX3w7tg8JlaaHP8bQPf2ovaE7hFPWWV6XARqpyBXUMjloQ3rUetVVLYiQm
-         sLbQ==
-X-Gm-Message-State: AOAM533BvzBMpaJwy4pmFnjNxSZX/DpXqmnHKiNqu9s2SvEWF2xn2ZxZ
-        Ahi5ouHbBkxpj9LVEyEc/JGzGq1zBj6VEbIkG2TDECl6v084vlvdHIZdYyTINyLGhbW4KM1U0h/
-        oNW9/RhZJtuJfPhS/d3tvY74gQ5cgcHFktV5xAk0xSxAz1+fcemL9s7MQF/gNWt2hgoc1Skm3lA
+        bh=MhrNwqVyKYFixrNJm9hDFpWMUz/77TSmZOCW/lmC/y4=;
+        b=WAex9L4ws79qsTUY4iP+ltGZ1uiJGrT1tkvLFsmaLp236KknOpVVT+HALAdhgOLs8b
+         0g8UaL9X+57UmY/AZJz8mybQSmzXQlyEhW9qr05UrcZY07bsR1cFhtn6boGWT8fPYfhC
+         SkeeC7t/CSvElLOTgTlZaBSWkcBIrkp4OTb6DWhQ4axxVTeAdAF+2IXSDHIfmI90M4o9
+         6yE9lo1CPcy5isj/g13fIDsuQC4Z89u7K2/wxGRAqgIdTvRs9g5f1LIqoknu14TLRw76
+         mx9vz/9VKJ9NP0sRaFLPozLY9ijx+REPjZqGQJY5DKBRGDa0lDLTiMocYV460tODgZJX
+         znXA==
+X-Gm-Message-State: AOAM53229//gPODutj49xdH0uAznWeoSzpAVONZ8UHdlzUxv9j92Hjkt
+        wrs6eWbC+yuXHwRowZkIG1srH+ONKoY3lEzZSzNDOTpZbyfZjeX2o3OvYXlcVcHuDGf8u7LK5//
+        wd68bEKaMKNYRZdVuTrr6zOsONJ3uAKC2zCTxOWYBACs3j8CvgBsoPAe6Y1vdmElMr1lwakWJfg
         ==
-X-Google-Smtp-Source: ABdhPJzQz2wcrQKp3gqGpaB+4o96IKeV6RlkilM8un+GzSkVs1Wvh2C72Kn1/Hb6+iOS4xci9eh8oHPCFs1HsxOwCdQ=
+X-Google-Smtp-Source: ABdhPJys/fZzqWqR/qDNBNfezv0F3v+4ZV/OCpExo2Ny4ELldnKCY/6m518EAU30nE5jow/1h+6+cpgXBCLHMKc+h7s=
 Sender: "emilyshaffer via sendgmr" 
         <emilyshaffer@podkayne.svl.corp.google.com>
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
- (user=emilyshaffer job=sendgmr) by 2002:a25:254a:: with SMTP id
- l71mr10191891ybl.439.1607132999805; Fri, 04 Dec 2020 17:49:59 -0800 (PST)
-Date:   Fri,  4 Dec 2020 17:49:33 -0800
+ (user=emilyshaffer job=sendgmr) by 2002:a05:6214:a69:: with SMTP id
+ ef9mr9265847qvb.50.1607132997934; Fri, 04 Dec 2020 17:49:57 -0800 (PST)
+Date:   Fri,  4 Dec 2020 17:49:32 -0800
 In-Reply-To: <20201205014945.1502660-1-emilyshaffer@google.com>
-Message-Id: <20201205014945.1502660-6-emilyshaffer@google.com>
+Message-Id: <20201205014945.1502660-5-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20201205014945.1502660-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.28.0.226.g0268cb6820
-Subject: [PATCH 05/17] rebase: teach pre-rebase to use hook.h
+Subject: [PATCH 04/17] gc: use hook library for pre-auto-gc hook
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -72,69 +72,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-By using hook.h instead of run-command.h to run hooks, pre-rebase hooks
-can now be specified in the config as well as in the hookdir. pre-rebase
-is not called anywhere besides builtin/rebase.c.
+Using the hook.h library instead of the run-command.h library to run
+pre-auto-gc means that those hooks can be set up in config files, as
+well as in the hookdir. pre-auto-gc is called only from builtin/gc.c.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
  Documentation/githooks.txt | 2 ++
- builtin/rebase.c           | 7 +++++--
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ builtin/gc.c               | 4 +++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index d74308dc20..5dc0690607 100644
+index f6ddf1aa22..d74308dc20 100644
 --- a/Documentation/githooks.txt
 +++ b/Documentation/githooks.txt
-@@ -200,6 +200,8 @@ two parameters.  The first parameter is the upstream from which
- the series was forked.  The second parameter is the branch being
- rebased, and is not set when rebasing the current branch.
+@@ -553,6 +553,8 @@ This hook is invoked by `git gc --auto` (see linkgit:git-gc[1]). It
+ takes no parameter, and exiting with non-zero status from this script
+ causes the `git gc --auto` to abort.
  
-+Hooks executed during 'pre-rebase' will run in parallel by default.
++Hooks run during 'pre-auto-gc' will be run in parallel by default.
 +
- post-checkout
- ~~~~~~~~~~~~~
+ post-rewrite
+ ~~~~~~~~~~~~
  
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 19c7b377aa..f61ca3e5af 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -28,6 +28,7 @@
- #include "sequencer.h"
- #include "rebase-interactive.h"
- #include "reset.h"
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 3e8d76fd5a..b01b6eb5fd 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -32,6 +32,7 @@
+ #include "remote.h"
+ #include "object-store.h"
+ #include "exec-cmd.h"
 +#include "hook.h"
  
- #define DEFAULT_REFLOG_ACTION "rebase"
+ #define FAILED_RUN "failed to run %s"
  
-@@ -1312,6 +1313,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	char *squash_onto_name = NULL;
- 	int reschedule_failed_exec = -1;
- 	int allow_preemptive_ff = 1;
+@@ -340,6 +341,7 @@ static void add_repack_incremental_option(void)
+ 
+ static int need_to_gc(void)
+ {
 +	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT_ASYNC;
- 	struct option builtin_rebase_options[] = {
- 		OPT_STRING(0, "onto", &options.onto_name,
- 			   N_("revision"),
-@@ -2024,9 +2026,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	}
+ 	/*
+ 	 * Setting gc.auto to 0 or negative can disable the
+ 	 * automatic gc.
+@@ -386,7 +388,7 @@ static int need_to_gc(void)
+ 	else
+ 		return 0;
  
- 	/* If a hook exists, give it a chance to interrupt*/
-+	strvec_pushl(&hook_opt.args, options.upstream_arg, argc ? argv[0] : NULL, NULL);
- 	if (!ok_to_skip_pre_rebase &&
--	    run_hook_le(NULL, "pre-rebase", options.upstream_arg,
--			argc ? argv[0] : NULL, NULL))
-+	    run_hooks("pre-rebase", &hook_opt))
- 		die(_("The pre-rebase hook refused to rebase."));
- 
- 	if (options.flags & REBASE_DIFFSTAT) {
-@@ -2106,6 +2108,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	ret = !!run_specific_rebase(&options, action);
- 
- cleanup:
-+	run_hooks_opt_clear(&hook_opt);
- 	strbuf_release(&buf);
- 	strbuf_release(&revisions);
- 	free(options.head_name);
+-	if (run_hook_le(NULL, "pre-auto-gc", NULL))
++	if (run_hooks("pre-auto-gc", &hook_opt))
+ 		return 0;
+ 	return 1;
+ }
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
