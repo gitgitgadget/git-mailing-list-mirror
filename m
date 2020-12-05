@@ -2,91 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4515DC433FE
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 08:50:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51BA8C433FE
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 09:25:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0CE2322D72
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 08:50:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1168522E00
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 09:25:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728599AbgLEIu3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Dec 2020 03:50:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37150 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726012AbgLEIuB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Dec 2020 03:50:01 -0500
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4A13C0613D1
-        for <git@vger.kernel.org>; Sat,  5 Dec 2020 00:49:14 -0800 (PST)
-Received: by mail-ej1-x643.google.com with SMTP id jx16so12136925ejb.10
-        for <git@vger.kernel.org>; Sat, 05 Dec 2020 00:49:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=enAK9GHnbexDBuJd5MOI8wdXo4RK2sk3Bc8ZPWINNpg=;
-        b=pOrMX7HfuFVDf2rmGSV3mLzdauvSM3hBKWLXqVNt2rVIDLtMjdKXnEExWVH0wYCBDB
-         23Gk+swfEItpzPnoJOcGO6gMRyFvirj6NBFMb7sCMWTl90ocRYq08Y6TvEYtYlKF9iJ8
-         xuCBshGso4zXm0zSfsswVPxGMtivdOs7wAnLgEfuQnZYo7ZC1gdjnfgGGru568qnSXzY
-         r/HjoR+OU9kLI9wTFdrNcibevrUYsHFiYlhovU+cmXaWO3FXQ8ua7i4vFcLHy1ebFNxy
-         Zj1LXtCmfrMTbnhuXHZYnCGEhfT0Au7f9OomVB4SVn9yBt51GGGaz6EB6dXOBwLXYE4o
-         kR0Q==
+        id S1728658AbgLEJYh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Dec 2020 04:24:37 -0500
+Received: from mail-ej1-f42.google.com ([209.85.218.42]:37540 "EHLO
+        mail-ej1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726043AbgLEJXF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Dec 2020 04:23:05 -0500
+Received: by mail-ej1-f42.google.com with SMTP id ga15so12251385ejb.4
+        for <git@vger.kernel.org>; Sat, 05 Dec 2020 01:22:48 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=enAK9GHnbexDBuJd5MOI8wdXo4RK2sk3Bc8ZPWINNpg=;
-        b=Odjie12XFUGJVBmOFN8tG6bnVr3iXcf+Ic4nkZM6huK9MrmlzObG5hUYRU2AcbEacr
-         /jjYEY8zJG/ZpA9NTZFh3xZnSzkh/fGlpePJ0OxgfCyZZJzbmChnvh5H1l5nJub9+zY4
-         tOEScE8wuba8/FhE8JJldYaIZ9VOJnurqFj4sxvxawdK2N0+G3ivqr837mNf03OrE3mY
-         ERSJ2NQfpvRICCB1BZUtQaYgmo0Yig/QVHu+xZIl7i1v51dnK0DHbJVuEkEp/Wa0jsJW
-         TSGpoZBhFbs1eUoiJ7aZDNyi1abZ0Q3f8XtyOJgSnK71pWIuwIh/14yngkMOqxSezvex
-         NKDQ==
-X-Gm-Message-State: AOAM5323vx5b9QMmU5HpZmfd87ShBQ042O1nuR2PQrWC0pwi1l9QoUBF
-        UVuYFb4Y6iVwJ6EhgkYEsuk=
-X-Google-Smtp-Source: ABdhPJxgGN8xsC7sDmp6yf+QAvyQn0HenXRBlGbCu/1LAfoxz9fM/pk1bavxtfrkaqgRAo2dasuqnQ==
-X-Received: by 2002:a17:906:128d:: with SMTP id k13mr10605422ejb.309.1607158153173;
-        Sat, 05 Dec 2020 00:49:13 -0800 (PST)
-Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id f13sm4778266ejf.42.2020.12.05.00.49.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Dec 2020 00:49:12 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Anders Waldenborg <anders@0x63.nu>, Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 5/5] pretty format %(trailers): add a "key_value_separator"
-References: <20201025212652.3003036-1-anders@0x63.nu>
- <20201205013918.18981-6-avarab@gmail.com>
- <CAP8UFD1q7ab5wyhmxknoM8FC5y_QqrF34HCRiS3=MP8YLCx20A@mail.gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.13
-In-reply-to: <CAP8UFD1q7ab5wyhmxknoM8FC5y_QqrF34HCRiS3=MP8YLCx20A@mail.gmail.com>
-Date:   Sat, 05 Dec 2020 09:49:11 +0100
-Message-ID: <87pn3oy6wo.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=jiVBwkaxxbmXHV3mbxpiWG5W4Zpm1W8li5oAdy8jHHM=;
+        b=hLjRIUQyrgsCWorIH7lKe0U15N9sCw1PA2m/qSrFmUWskrszkZeRsGkM2ctCa879kp
+         seXgmIZS6tdO/rjjG991NWXvO+W9JMevTrBJcB3tue6//RA+oDScBnKzPxSWMpEYcVIt
+         T+bCRewta5vpvZOXdP3UiY423LWA6/nnO5xDcyZGr0UteC24F8cE1GCET8Hi68XtWbd7
+         9S3a5LYzSfxjuKsdDmdgjBO+ErqS9ngFgkg316ppoNFRseVdeo2tqPfVBqTeFOGCOLsZ
+         N+2zfpbhWyJkkjg/P4yp2Eka3/ueVL4aoP5JT7CZ6mfFd4KPdlXcD/9vWSFS76HA/vz8
+         JW6w==
+X-Gm-Message-State: AOAM531MKDuvaZ8GcID6WQFEnCd37qnbJSm+g1U1FB6y6C32BpX1nrgd
+        /7ZnwR/BDn8uhChmlY732VUGpdxlvumAbas16I+5JUn/JDo=
+X-Google-Smtp-Source: ABdhPJyTIk5DlXlXi8vMK2jjvb/DhvWOW9m4eDm0EmVu+QEG7YoMyaySIAi9GDdZaVPGTg75IYvhZpQ0cI9Qe+Vw6eY=
+X-Received: by 2002:a17:906:c7d9:: with SMTP id dc25mr11057217ejb.138.1607160137532;
+ Sat, 05 Dec 2020 01:22:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <63AC7AC2-5D32-479B-BF9E-0E5C31351A1B@gmail.com>
+In-Reply-To: <63AC7AC2-5D32-479B-BF9E-0E5C31351A1B@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sat, 5 Dec 2020 04:22:06 -0500
+Message-ID: <CAPig+cT=-nNcfrzjSmTXymhFkB22bPFE6QRKXqPtat2ipUdboQ@mail.gmail.com>
+Subject: Re: 'git worktree repair' can't repair when main and linked worktrees
+ are moved
+To:     Philippe Blain <levraiphilippeblain@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Sat, Dec 05 2020, Christian Couder wrote:
-
-> On Sat, Dec 5, 2020 at 2:39 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <av=
-arab@gmail.com> wrote:
->>
->> As noted in a previous commit which added "keyonly" it's needlessly
+On Fri, Dec 4, 2020 at 6:14 PM Philippe Blain
+<levraiphilippeblain@gmail.com> wrote:
+> I've had to move all my Git clones to a new filesystem.
+> Several of them use secondary worktrees, and all are
+> at the same level ex:
 >
-> Maybe add a comma after `"keyonly"` and s/"keyonly"/the "keyonly" option/
+> I had hoped to use the new 'git worktree repair' command
+> but it seems it does not work for this use case.
+>
+> Is this supposed to work ? Or it's not something that
+> 'git worktree repair' can currently cope with ?
 
-Thanks a lot for all the feedback. I'll work it into a v2 when I send
-it.
+This is a situation which `git worktree repair` can not yet handle.
+The implementation of bare bones `git worktree repair` was
+sufficiently complex that I decided that additional cases like this
+and other bells and whistles should be built later atop the basic
+implementation. At present, only the following cases are handled:
 
-I'll wait a bit to see if Anders W. pops up again and see if he'd like
-to incorporate this into his series or submit his first/after etc.
+* secondary worktree has moved so main worktree doesn't know where it
+is, but secondary worktree still knows where main worktree is, thus
+`git worktree repair` within the secondary can contact the main and
+fix up main's reference to the secondary
+
+* main worktree has moved so secondary worktrees don't know where it
+is, but main worktree still knows where secondary worktrees are, thus
+`git worktree repair` within main can contact each secondary and fix
+up their references back to main
+
+There was a little discussion during review[1,2,3] about how the
+situation might be handled in which both main and secondary worktrees
+have been moved. Primarily, a new command-line option would be added
+allowing the user to tell `git worktree repair` where the main
+worktree is, in addition to also giving the paths to the secondary
+worktrees as arguments (the latter of which is already supported). Now
+that I'm thinking about it, I realize also that if invoked in the main
+worktree, then `git worktree repair` can recognize that it is
+operating in the main worktree (and infer the value of the new
+command-line option for specifying location of the main worktree),
+thus the user would only have to supply paths to the secondary
+worktrees as arguments. My main concern with inferring too much
+automatically is that the command could be used to hijack a worktree
+belonging to another repository (but perhaps that's a case of "don't
+do it if it hurts").
+
+Of course, we could also get more fancy and provide some way to
+specify path transformations. For instance, `git worktree repair
+--map-path=/old/path:/new/path` might make it possible to repair links
+in both directions by applying the path transformation to the paths
+involved in the repair. However, this idea is barely germinated; it's
+far less well thought out than the previous one.
+
+[1]: https://lore.kernel.org/git/CAPig+cT-w6LV490MGNyG_ihWkSzdgfnEBrjQCsafjndTRmMgFA@mail.gmail.com/
+[2]: https://lore.kernel.org/git/xmqqlfi0qaru.fsf@gitster.c.googlers.com/
+[3]: https://lore.kernel.org/git/CAPig+cT-ipENZQ39wpaGukRzx3d52OatKEXjWc3_mv56jMbDRg@mail.gmail.com/
