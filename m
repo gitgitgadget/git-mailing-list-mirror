@@ -2,97 +2,235 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B440C2BB40
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 18:44:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE555C433FE
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 19:45:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0595122EBF
-	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 18:44:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 93A9222DBF
+	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 19:45:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727981AbgLESnW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Dec 2020 13:43:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55314 "EHLO
+        id S1725903AbgLETov (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Dec 2020 14:44:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727181AbgLEQy1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Dec 2020 11:54:27 -0500
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com [IPv6:2a00:1450:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EFA9C061A54
-        for <git@vger.kernel.org>; Sat,  5 Dec 2020 04:07:20 -0800 (PST)
-Received: by mail-ej1-x643.google.com with SMTP id a16so12633530ejj.5
-        for <git@vger.kernel.org>; Sat, 05 Dec 2020 04:07:20 -0800 (PST)
+        with ESMTP id S1725536AbgLETou (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Dec 2020 14:44:50 -0500
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B37DDC0613D1
+        for <git@vger.kernel.org>; Sat,  5 Dec 2020 11:44:09 -0800 (PST)
+Received: by mail-lj1-x244.google.com with SMTP id s11so1849364ljp.4
+        for <git@vger.kernel.org>; Sat, 05 Dec 2020 11:44:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=oCRzzIPSnmfC9rMFovWRjNOH/Zu8Hq6y2ivDPGnAzhA=;
-        b=uYs9IP5jy5pkKY5mEDtumlo9xsHnjIey/25wA/+N2OfA2BPp9kCS02wUlRVrU2bnJs
-         9ip+qmAFVVCsNTOXt+yHrmRAwQ91QvlEwA7TAXDA1cf0mq9lpmntdqdWhrqgNo0jrQ3c
-         xYE3xNzbdCGeEqQEKUmP0I7eiA4mVpV0zQkMT+0zUagP18iIVyZSgYkKT+oy2pdrE/S2
-         I2BNSBlPL8dR2Ku8O39NyM2q5J/lmnjbIi/7hdkMUFGCV3wwt54MoxjOOuRVmveCQuNv
-         RJjxn3JQi6xtXfxGojlBQyY8kKeqBebVfxV3uWXru2r+rpFMP6qgdt3hGs8qcDEhkHHN
-         mxgg==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=GRVMzH+lDLwcOVyOYay6XGS+ocxE3eLnCX4T50s4GvA=;
+        b=EzaG8/B4jrLNII2Xrmzss2ki4JsxDHNPvvdU//BxtMspQ7V80NnjIs+Dytu8l9HXhS
+         Ne/fLujl2tOKHORARx7xK9wg+Fbw8lSKg8l9Cs5quZ09P0xEYw74u6IAFXCLznlxTD2X
+         uxutiNq8XckxPwtD4Ap3kJdLv0eJwji42Qo1IoP5bI8gVXDN/0RDKfmItF1yzk+L8w57
+         mZhgfURKuMIbYKomE4eK5Xu4VnoKwoF+W8RSnbKTsxRELCBfhts1epJMS13eJk7Pc3UT
+         tOhY8kcrlXeSuYqAr3CFbWU1IPC4fKWMheg9fgNotrkCg6VUe0tA2ptX/PZ1xmhwiIDA
+         hu0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=oCRzzIPSnmfC9rMFovWRjNOH/Zu8Hq6y2ivDPGnAzhA=;
-        b=A7DZLTdQsF1yI70XahWnNiYGfCe/szXxY/1m7rGY/4beEgq4LGzIE4LtK/EnO1NXHB
-         Ey6O//y1hoQJoZ/fikNxqTyw2jE9n5j62MpPo0JiHJlatPQ6eEn06UiqzfwGGHX2NnDe
-         +rTP+cOPxwjIzDvqGRujwR44Qrj2iw29yEATghywoRKXtlv2QgSPSEV2sZZwhEw+GSLW
-         eIQAR/ZmJFNpK8y4CCcGOKuTTxqOx8I6aYKuwQWPaqF3kMpeLXpHIY65JCg1rl0yHa5G
-         WACkcbOoBzoxiKMuwxgDEGyz7RgQtJAVDTVEkw8VPi30ujlSeoHCC6q58G62q012LH5Y
-         GaxQ==
-X-Gm-Message-State: AOAM533sSPpZOdTOezmNVPCMwq1KS8/k6tjhg0J7DsMoF+mZaGPq/lTh
-        N0X4oryfkPsEjPvTgObm/vu7wT8iDVqyq4eQPdo=
-X-Google-Smtp-Source: ABdhPJz8glgxk9XsuQjhuCww5bTMQ1Ajhyb1N2jkIl85OkstWiyetYU/0jrVhMxF7RaEQwfKPEphqOaDoQucWiRdgPM=
-X-Received: by 2002:a17:906:9a07:: with SMTP id ai7mr11358550ejc.216.1607170038945;
- Sat, 05 Dec 2020 04:07:18 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=GRVMzH+lDLwcOVyOYay6XGS+ocxE3eLnCX4T50s4GvA=;
+        b=iZVO+CVOohEGD4ZT3Q6EDcBsEw/DwoKImS8UrJaey4DKaTbn7yCB4dNnMPR8Jx5Sw+
+         y15DnMso0lJrFXB+nDnhtDxDLgPHnOvPOtakNtsmWcQnC5QBhuOLTw+wlm0Wnkmnh0Nw
+         58TdAD6lnbZqAWDdeuLNDqdhhkQCeQ0dHZnVIidFCoSUyzd5uJsbNC8Bm8y7FpsPOUHk
+         bdkApbUfRLq0BZrcQi0ohWjCFzxOUF6jhSBdIMDpUChihZYmDke8QUAU9ioz5wLFDP3K
+         sQ1Hcf2IyC+rqti27bMfbGApaxkIkWgqoWnQeobTVEWzIAZLumZYe3T+OLIdiCpN/Gxz
+         5U2w==
+X-Gm-Message-State: AOAM533fV+w/Wo84bG9PnUXs7ckP2fwZq118ZkFIyZav9FSmPte/DevS
+        NpT6qVDdU86vdQYyXGfUG6rAdWlqtXc=
+X-Google-Smtp-Source: ABdhPJwni6PEMkUF6lTVPRGRUEvRPPJfiGORlb9au1d2ixifuiLKA7qbP4TSagbADxj+z3wT1tLJBw==
+X-Received: by 2002:a2e:9cd3:: with SMTP id g19mr5468907ljj.188.1607197445812;
+        Sat, 05 Dec 2020 11:44:05 -0800 (PST)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id b7sm2502395ljf.76.2020.12.05.11.44.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 05 Dec 2020 11:44:04 -0800 (PST)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v1 00/27] git-log: implement new --diff-merge options
+References: <20201101193330.24775-1-sorganov@gmail.com>
+        <20201108213838.4880-1-sorganov@gmail.com>
+        <CABPp-BHdhvLRe4jCSsRtPrbh2=kwJxEQs0Dx+Ng1Vutx8Hdqqw@mail.gmail.com>
+        <871rg6hdrk.fsf@osv.gnss.ru>
+        <CABPp-BGE4rA5=8NUaK5607moR13bE7PcyVKdbw6nDw5YBeq9bQ@mail.gmail.com>
+        <87sg8lnzor.fsf@osv.gnss.ru>
+        <CABPp-BFB9aaJV1uvYk1QQ6E8zQ=_Jv6KhHb1grA5+Bh+qsTG8g@mail.gmail.com>
+Date:   Sat, 05 Dec 2020 22:44:03 +0300
+In-Reply-To: <CABPp-BFB9aaJV1uvYk1QQ6E8zQ=_Jv6KhHb1grA5+Bh+qsTG8g@mail.gmail.com>
+        (Elijah Newren's message of "Sat, 5 Dec 2020 09:49:14 -0800")
+Message-ID: <878sacjaws.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-References: <cover.1604521275.git.matheus.bernardino@usp.br> <aa1eb461f46d200f36b33c07ebc0a350829ab1f5.1604521275.git.matheus.bernardino@usp.br>
-In-Reply-To: <aa1eb461f46d200f36b33c07ebc0a350829ab1f5.1604521275.git.matheus.bernardino@usp.br>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 5 Dec 2020 13:07:07 +0100
-Message-ID: <CAP8UFD30JOhFxxSU=bVY9YfSHAjVJAKabLEv4x28JotOdj8xRA@mail.gmail.com>
-Subject: Re: [PATCH v4 04/19] convert: add conv_attrs classification
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 4, 2020 at 9:33 PM Matheus Tavares
-<matheus.bernardino@usp.br> wrote:
+Elijah Newren <newren@gmail.com> writes:
+
+> On Fri, Dec 4, 2020 at 11:23 AM Sergey Organov <sorganov@gmail.com> wrote:
+>>
+>> Elijah Newren <newren@gmail.com> writes:
+>>
+>> > On Thu, Dec 3, 2020 at 11:48 AM Sergey Organov <sorganov@gmail.com> wrote:
+>> >>
+>> >> Elijah Newren <newren@gmail.com> writes:
+>> >>
+>> >> > On Sun, Nov 8, 2020 at 1:43 PM Sergey Organov
+>> >> > <sorganov@gmail.com> wrote:
+>> >> >>
+>> >> >> These patch series implement new set of options governing the
+>> >> >> diff output
+>> >> >> of merge commits, all under the umbrella of the single
+>> >> >> --diff-merges=<mode>
+>> >> >> option. Most of the new options being synonyms for -m/-c/--cc options,
+>> >> >> there is also additional functionality provided, allowing to get
+>> >> >> the format
+>> >> >> of "-p --first-parent" without change in history traversal that
+>> >> >> --first-parent option causes.
+>> >> >>
+>> >> >> The net result of these series are the following new options:
+>> >> >>
+>> >> >> --diff-merges=   |  old equivalent
+>> >> >> -----------------+----------------
+>> >> >> first-parent     | --first-parent (only format implications)
+>> >> >> separate         | -m
+>> >> >> combined         | -c
+>> >> >> dense-combined   | --cc
+>> >> >
+>> >> > Interesting.  I have some local patches implementing another choice,
+>> >> > with the new flag --remerge-diff.  This flag will cause `git show` or
+>> >> > `git log` to automatically remerge the two parents in a 2-parent merge
+>> >> > commit, and then diff the merge commit against that automatic merge,
+>> >> > showing the result.  Thus, the diff for a merge commit is likely to be
+>> >> > empty if the merge was clean, and is likely to show the removal of
+>> >> > conflict markers if the merge was not clean.
+>> >> >
+>> >> > I'm curious how it'd interact with this new option.  Would it also get
+>> >> > a name, e.g. --diff-merges=remerge-diff?  Feels like a mouthful, but I
+>> >> > can't come up with anything better.
+>> >>
+>> >> Maybe, --diff-merges=remerge?
+>> >>
+>> >> >
+>> >> > Also, I'm curious how it'd interact with another option I added, named
+>> >> > --remerge-diff-only.  This latter option modifies revision traversal
+>> >> > in that it skips octopus merges, root commits, and single parent
+>> >> > commits IF no cherry-pick or revert information can be found.  If it
+>> >> > finds a 2-parent merge commit, it behaves like --remerge-diff.  If it
+>> >> > finds a 1-parent commit with cherry-pick or revert information, it'll
+>> >> > do an in memory repeat of that cherry-pick (or revert) and then diff
+>> >> > the actual commit against what the automatic cherry-pick would
+>> >> > perform.  Again, that likely means an empty diff if the automatic
+>> >> > cherry-pick was clean, and showing any changes made by the user to
+>> >> > complete the original cherry-pick (such as deleting conflict markers
+>> >> > and picking which chunks from which side to keep) if the automatic
+>> >> > cherry-pick was not clean.  (I suspect --remerge-diff-only is much
+>> >> > more likely to be used with `git show` than with `git log`.)  Anyway,
+>> >> > your changes seem to suggest that anything relating to how diffs for
+>> >> > merges are handled should be documented in the same section, but
+>> >> > --remerge-diff-only doesn't fit.  And it'd seem odd to have
+>> >> > --remerge-diff and --remerge-diff-only not show up in adjacently but
+>> >> > be split into separate sections.  Any ideas?
+>> >>
+>> >> Sounds like commits limiting option to me. I think it could be named by
+>> >> its limiting behavior only, say, --remerges. Then it will imply
+>> >> --diff-merges=remerge, that'd allow user to re-define diff format if she
+>> >> needs to.
+>> >
+>> > It is commit limiting, but the focus is more on the behavioral change
+>> > in how diffs are shown:
+>> >   * for 2-parent merges
+>> >   * for single-parent commits with cherry-pick or revert information
+>> > and acknowledging that since it has _altered_ the normal way of
+>> > showing diffs for a number of single-parent commits, that it'd be
+>> > confusing to show normal diffs of unaffected commits (how would you be
+>> > able to tell what type of diff you're looking at if both appear in the
+>> > log?).  Thus, it does commit limiting to only select commits which
+>> > will make use of the new diff type.
+>>
+>> That's how you currently look at it.
+>>
+>> For me it looks like pure commit limiting with these criteria might be
+>> useful by itself, and with my suggestion one could then achieve it
+>> using, say:
+>>
+>> --remerge-diff-only --diff-merges=off
 >
-> From: Jeff Hostetler <jeffhost@microsoft.com>
+> I see what you're saying, and I think there's some value in it.  But I
+> think there's something still missing.  For example, you suggest
+> getting the commit limiting I mention with
 >
-> Create `enum conv_attrs_classification` to express the different ways
-> that attributes are handled for a blob during checkout.
-
-Micronit: the subject of the patch might want to be a bit more
-explicit like "convert: add conv_attrs_classification enum". Otherwise
-it could make one wonder if it is missing an underscore between
-"conv_attrs" and "classification".
-
-> This will be used in a later commit when deciding whether to add a file
-> to the parallel or delayed queue during checkout. For now, we can also
-> use it in get_stream_filter_ca() to simplify the function (as the
-> classifying logic is the same).
+>     --remerge-diff-only --diff-merges=off
 >
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> [matheus.bernardino: use classification in get_stream_filter_ca()]
+> But --diff-merges is only supposed to control _merge_ commits, which I
+> flagged as the big impedance mismatch for my new option.  Why would it
+> turn off diffs for non-merge commits like cherry-picks and rebases?
+>
+>> >
+>> > (I suspect it will be more common for folks to use the
+>> > --remerge-diff-only option, or whatever we end up calling it, with
+>> > `git show` where the commit limiting doesn't matter -- but I have used
+>> > it with log to go looking for "evil" reverts/cherry-picks that might
+>> > have occurred in history.)
+>>
+>> What you describe is complex enough to doubt it could be entirely
+>> described by option name, so shorter --evils might be better choice
+>> in this case.
+>>
+>> Overall, if you add --diff-merges=remerge as a new diff format, and then
+>> --evils that implies the former, then it seems like all possible
+>> use-cases will be covered, and you have short option name for the most
+>> useful case.
+>
+> Since you want things to have orthogonal subcomponents that can be
+> built up, let's assume we did make --remerge-diff-only be solely about
+> commit limiting.  In that case, --evils could be gotten by specifying
+> a combination of flags, and --evils would just be a shorthand.  What
+> are the flags that you would need to specify, though?  In particular,
+> you've only named two options above and they don't cover the necessary
+> behavior; a third is needed:
+>
+>    --remerge-diff-only --diff-merges=remerge
+> --${DIFF_OPTION_NAME_FOR_CHERRY_PICKS_AND_REVERTS}=remerge
+>
+> The first two aren't enough because --diff_merges only changes how
+> diffs for _merge_ commits are shown, and we need a flag for changing
+> how the single-parent cherry-pick and reverts are shown.
 
-Maybe "Co-authored-by: Matheus Tavares <matheus.bernardino@usp.br>" instead?
+Yeah, I see your point. I didn't get it from the beginning that you want
+yet another representation format for regular commits as well. However,
+as far as I can tell, if --evils flag is active, you do consider
+cherry-picks and reverts as kind of merges, that makes sense as they
+actually /are/ expected to be results of specific /merge operation/,
+even though they are not /merge commits/, so semantically they do have
+second parent reference (to the original commit), even if a virtual one.
 
-> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+To further illustrate my point, reverts and cherry-picks could have been
+implemented, for example, as merge commits with, say, 3-rd parent
+pointing back to the original commit (not 2-nd parent, both to
+differentiate from regular merges and to support cherry-picking of merge
+commits.)
+
+As a side-note, people rarely differentiate between
+"merge-the-operation" and "merge-the-result" anyway, even when it leads
+to confusion.
+
+Overall, if we take the above into account, it seems to be fine if
+--diff-merges does affect the representation or such "quasi-merge"
+commits, for the purposes of --evils option.
+
+-- Sergey Organov
