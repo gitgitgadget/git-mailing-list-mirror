@@ -8,62 +8,63 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	URIBL_BLOCKED,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4622CC0018C
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73EBAC19437
 	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:51:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2969722DFB
+	by mail.kernel.org (Postfix) with ESMTP id 3E8C622E00
 	for <git@archiver.kernel.org>; Sat,  5 Dec 2020 01:51:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731225AbgLEBvS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Dec 2020 20:51:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58000 "EHLO
+        id S1731241AbgLEBvT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Dec 2020 20:51:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731209AbgLEBvS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Dec 2020 20:51:18 -0500
-Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70B4BC0613D1
-        for <git@vger.kernel.org>; Fri,  4 Dec 2020 17:50:17 -0800 (PST)
-Received: by mail-qk1-x74a.google.com with SMTP id a68so383933qke.9
-        for <git@vger.kernel.org>; Fri, 04 Dec 2020 17:50:17 -0800 (PST)
+        with ESMTP id S1731226AbgLEBvT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Dec 2020 20:51:19 -0500
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E229CC08E85F
+        for <git@vger.kernel.org>; Fri,  4 Dec 2020 17:50:07 -0800 (PST)
+Received: by mail-pj1-x1049.google.com with SMTP id o13so4362343pjp.1
+        for <git@vger.kernel.org>; Fri, 04 Dec 2020 17:50:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=laI+uaEe5qVGexpios/bNivrDFPmGSTg0P4eL31+qu4=;
-        b=HvMm7FVNLobbIxbZHiNbrvhxkRKoqjN0TDvCC+dRxEPo3QbJxZy056h7YS7HMNVQ8x
-         DogpuLdZ3mlFGbTk9dM9mONfwS9TmGYvj81f9XaXxkrp9TruvGpP9eX0tqrIUUUG9Nce
-         282hezfqrmArCYlAFMiQjAXGKo+HvVUJNyDn41CHCe9ojq7qcN1fV3sMdmBPeY0Tt6L3
-         FYj7WZpNMobeqCvNXGHUujqa6MtU5YInPvx8SvFY11SBrDXHajRl+JartcPwgZkawJ4f
-         +/yKkdXph/wRfI1BMn2/vcqD5dohoyNEeXXcPE+jTW6gzK1w2Kt95BRrc94ZhixpWdzt
-         LsOw==
+        bh=LUxw/hFdF9lowPah09S7Zj467fY7yAG7wcNTSHnpxaE=;
+        b=GBJRC2rWJpp3T02x873IbFrZOToRiJa8/0fgQ523BIUxfk2CopYp2rDrnr71e5HzYk
+         /ctyudQJ15jEZ1QdFbKxGB13/LoqUSN63uMQpWd2JDKCWTuO9qeE8UaC56DEIwsFt7q4
+         gpFL1HVygvPkvP68CAB0NRu9s7rbvD0UdbO7lxaHa08YN5IYTCTw4u/TvzF6P3JHKkQU
+         I0Li8XRqck/5t6YnA+DEFUBCmGeOWfvTuBjP1eAclCIIyjYTJJVerW9X8gSe/XTkOF0e
+         tMIApfEgd37Jck8wyOX/WdHos5fZKeL853uhTaG9mnnOuwqvmESaizHODoHAudcSAWDV
+         PCmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=laI+uaEe5qVGexpios/bNivrDFPmGSTg0P4eL31+qu4=;
-        b=cXmfVT/sjNJAhdFo2sHAV2cMCwiXCM5j15AqBosWhGnwtgAa9FGE6TlKT/mZmW7aw8
-         LoEHsvu8W0N2dIEdCJ4sI/4Jgau+vWVMuoQwDzc05SH5RWNKYtbaDnA0fVqMWMR2cI4r
-         KGW/ZvzE8FKHWCjRlhPij2QkfeGMceXX7lq2Z5IxKNJdPbUuMQoxKseWGxV25XlNIRDW
-         EBwhfTJ9EqwCZr31p1lyr/n+TSTl+aBgyL34jR/667ChLqDYMarR3rLk9jRAw3SQnI88
-         35+4/n4vHWpJWy6DCUGzXFG2Oq8vwBsm3QN4lLD0545KYVMLWzYu77vblkpAJLKTvbFh
-         gfyg==
-X-Gm-Message-State: AOAM533zY24fXaTJGH8iEDDvYckPSgxvDZGEJ6XPSkwhVzLOueaIxaoa
-        AAJFycUD4Ahsa7vxB1sfiU5szpn7WBzlB3QaQNAWdj4J8wE52QUQxl5s1fT5tF4CvjPaTNcZzWv
-        vtmgGSNa43iuvTEierUTcFSBSLKl71ba+Bl19SluR8joHe7Zmi96YnjyZ4RG+KQhclNfWxFR0KA
+        bh=LUxw/hFdF9lowPah09S7Zj467fY7yAG7wcNTSHnpxaE=;
+        b=grtVCiZ65/dpdnFjLSU5utDwhHE+did70/llChREmuDXW2j3ovEbmdav1YnbhAzRmk
+         KkUImugD1svOnEoZPVzHhaf/WsUSM/HznhBg2sYMpnvMVPaYBGOMfTCdg1hck94F9hUk
+         glAeW/BntbFTu5lpu2lAmuc6hzq9EMmNon3N+V2iKj5d4m8hbQCAacuwAiOryWgIuprf
+         zgz9TKKjd94QuRGjQyFJJ87pAfMKWWBHVAzOT9+UlzJiI6z+HtVFy4UKnB/+FQeVYki5
+         6AxxUIiELvsXH8p3/MAgj7SY/OzGGtGyoQ9Ph9LdgwbBLfV8l+0yfnHK3Qt/DNdLFbKq
+         XwAQ==
+X-Gm-Message-State: AOAM532qN5OaHgOlZEM4PzM1FYlPZNpndJ0xP+EVaDkxxIDl9aKVvCNb
+        qwKtf4idg+WqXYTnrpgs9K6m4CDcEe8qEogbqxMG72lR7e0BzQGmT4Va8IDUpK4TUOB0XHjBQUf
+        UtT8j71GOnwjOqkZW4DZgjFjTyyCfJS517ehgTzz5CnPGwg2gJPAsGaDPc7C+ROG+S11uxlRxEw
         ==
-X-Google-Smtp-Source: ABdhPJxQZQhQrHVpnHXtDB2JGGfH9Byqfcrsi0HzWpUzjB7wrS8CTgUDnPY349NyGB9J0xMATP11fLc0W+m0b2f5lKQ=
+X-Google-Smtp-Source: ABdhPJwEHrzlzimhxLjPmnJQKcWPSDqpL1ko/fqTzUV7M6/bZP6nZd238D3QkoWpi96AtPnQkTMQok3BE8g1D4mVb7o=
 Sender: "emilyshaffer via sendgmr" 
         <emilyshaffer@podkayne.svl.corp.google.com>
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
- (user=emilyshaffer job=sendgmr) by 2002:a0c:aed4:: with SMTP id
- n20mr9007235qvd.16.1607133016573; Fri, 04 Dec 2020 17:50:16 -0800 (PST)
-Date:   Fri,  4 Dec 2020 17:49:42 -0800
+ (user=emilyshaffer job=sendgmr) by 2002:a62:8388:0:b029:19b:816e:9cca with
+ SMTP id h130-20020a6283880000b029019b816e9ccamr6624373pfe.31.1607133007311;
+ Fri, 04 Dec 2020 17:50:07 -0800 (PST)
+Date:   Fri,  4 Dec 2020 17:49:37 -0800
 In-Reply-To: <20201205014945.1502660-1-emilyshaffer@google.com>
-Message-Id: <20201205014945.1502660-15-emilyshaffer@google.com>
+Message-Id: <20201205014945.1502660-10-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20201205014945.1502660-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.28.0.226.g0268cb6820
-Subject: [PATCH 14/17] proc-receive: acquire hook list from hook.h
+Subject: [PATCH 09/17] hooks: convert 'post-checkout' hook to hook library
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -72,179 +73,180 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The proc-receive hook differs from most other hooks Git invokes because
-the hook and the parent Git process engage in bidirectional
-communication via stdin/stdout. This bidirectional communication is
-unsuitable for multiple hooks, whether they are in series or in
-parallel, and is incompatible with run-command.h:run_processes_parallel:
-
-- The proc-receive hook is intended to modify the state of the Git repo.
-  From 'git help githooks':
-    This [proc-receive] hook is responsible for updating the relevant
-    references and reporting the results back to 'receive-pack'.
-  This prevents parallelization and implies, at least, specific ordering
-  of hook execution.
-- The proc-receive hook can reject a push by aborting early with an
-  error code. If a former hook ran through the entire push contents
-  successfully but a later hook rejects some of the push, the repo may
-  be left in a partially-updated (and corrupt) state.
-- The callback model of the run_processes_parallel() API is unsuited to
-  the current implementation of proc-receive, which loops through
-  "send-receive-consider" with the child process. proc-receive today
-  relies on stateful communication with the child process, which would be
-  unwieldy to implement with callbacks and saved state.
-- Additionally, run_processes_parallel() is designed to collate the
-  output of many child processes into a single output (stderr or callback),
-  and would require significant work to tell the caller which process sent
-  the output, and indeed to collect any output before the child process
-  has exited.
-
-So, rather than using hook.h:run_hooks() to invoke the proc-receive
-hook, receive-pack.c can learn to ask hook.h:hook_list() for the
-location of a hook to run. This allows users to configure their
-proc-receive in a global config for all repos if they want, or a local
-config if they just don't want to use the hookdir. Because running more
-than one proc-receive hook doesn't make sense from a repo state
-perspective, we can explicitly ban configuring more than one
-proc-receive hook at a time.
-
-If a user wants to globally configure one proc-receive hook for most of
-their repos, but override that hook in a single repo, they should use
-'skip' to manually remove the global hook in their special repo:
-
-~/.gitconfig:
-[hook.proc-receive]
-  command = /usr/bin/usual-proc-receive
-
-~/special-repo/.git/config:
-[hookcmd./usr/bin/usual-proc-receive]
-  skip = true
-[hook.proc-receive]
-  command = /usr/bin/special-proc-receive
+By using the 'hook.h' library, 'post-checkout' hooks can now be
+specified in the config as well as in the hook directory.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- Documentation/githooks.txt                |  4 ++
- builtin/receive-pack.c                    | 33 +++++++++++++++-
- t/t5411/test-0015-too-many-hooks-error.sh | 47 +++++++++++++++++++++++
- 3 files changed, 82 insertions(+), 2 deletions(-)
- create mode 100644 t/t5411/test-0015-too-many-hooks-error.sh
+ Documentation/githooks.txt |  2 ++
+ builtin/checkout.c         | 16 +++++++++++-----
+ builtin/clone.c            |  7 +++++--
+ builtin/worktree.c         | 30 ++++++++++++++----------------
+ reset.c                    | 15 +++++++++++----
+ 5 files changed, 43 insertions(+), 27 deletions(-)
 
 diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 2b3a74f249..2c59c537f9 100644
+index 8de512ee5d..14035ef725 100644
 --- a/Documentation/githooks.txt
 +++ b/Documentation/githooks.txt
-@@ -423,6 +423,10 @@ the input.  The exit status of the 'proc-receive' hook only determines
- the success or failure of the group of commands sent to it, unless
- atomic push is in use.
+@@ -224,6 +224,8 @@ This hook can be used to perform repository validity checks, auto-display
+ differences from the previous HEAD if different, or set working dir metadata
+ properties.
  
-+It is forbidden to specify more than one hook for 'proc-receive'. If a
-+globally-configured 'proc-receive' must be overridden, use
-+'hookcmd.<global-hook>.skip = true' to ignore it.
++Hooks executed during 'post-checkout' will not be parallelized.
 +
- [[post-receive]]
- post-receive
- ~~~~~~~~~~~~
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index cd79ad6bdc..b929a3505c 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1137,11 +1137,40 @@ static int run_proc_receive_hook(struct command *commands,
- 	int version = 0;
- 	int code;
+ post-merge
+ ~~~~~~~~~~
  
--	argv[0] = find_hook("proc-receive");
--	if (!argv[0]) {
-+	struct strbuf hookname = STRBUF_INIT;
-+	struct hook *proc_receive = NULL;
-+	struct list_head *pos, *hooks;
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 9b82119129..20966452b8 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -9,6 +9,7 @@
+ #include "config.h"
+ #include "diff.h"
+ #include "dir.h"
++#include "hook.h"
+ #include "ll-merge.h"
+ #include "lockfile.h"
+ #include "merge-recursive.h"
+@@ -104,13 +105,18 @@ struct branch_info {
+ static int post_checkout_hook(struct commit *old_commit, struct commit *new_commit,
+ 			      int changed)
+ {
+-	return run_hook_le(NULL, "post-checkout",
+-			   oid_to_hex(old_commit ? &old_commit->object.oid : &null_oid),
+-			   oid_to_hex(new_commit ? &new_commit->object.oid : &null_oid),
+-			   changed ? "1" : "0", NULL);
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_SYNC;
++	int rc;
+ 	/* "new_commit" can be NULL when checking out from the index before
+ 	   a commit exists. */
+-
++	strvec_pushl(&opt.args,
++		     oid_to_hex(old_commit ? &old_commit->object.oid : &null_oid),
++		     oid_to_hex(new_commit ? &new_commit->object.oid : &null_oid),
++		     changed ? "1" : "0",
++		     NULL);
++	rc = run_hooks("post-checkout", &opt);
++	run_hooks_opt_clear(&opt);
++	return rc;
+ }
+ 
+ static int update_some(const struct object_id *oid, struct strbuf *base,
+diff --git a/builtin/clone.c b/builtin/clone.c
+index a0841923cf..307336e576 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -32,6 +32,7 @@
+ #include "connected.h"
+ #include "packfile.h"
+ #include "list-objects-filter-options.h"
++#include "hook.h"
+ 
+ /*
+  * Overall FIXMEs:
+@@ -771,6 +772,7 @@ static int checkout(int submodule_progress)
+ 	struct tree *tree;
+ 	struct tree_desc t;
+ 	int err = 0;
++	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT_SYNC;
+ 
+ 	if (option_no_checkout)
+ 		return 0;
+@@ -816,8 +818,9 @@ static int checkout(int submodule_progress)
+ 	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
+ 		die(_("unable to write new index file"));
+ 
+-	err |= run_hook_le(NULL, "post-checkout", oid_to_hex(&null_oid),
+-			   oid_to_hex(&oid), "1", NULL);
++	strvec_pushl(&hook_opt.args, oid_to_hex(&null_oid), oid_to_hex(&oid), "1", NULL);
++	err |= run_hooks("post-checkout", &hook_opt);
++	run_hooks_opt_clear(&hook_opt);
+ 
+ 	if (!err && (option_recurse_submodules.nr > 0)) {
+ 		struct strvec args = STRVEC_INIT;
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 197fd24a55..9a87c4c120 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -12,6 +12,7 @@
+ #include "submodule.h"
+ #include "utf8.h"
+ #include "worktree.h"
++#include "hook.h"
+ 
+ static const char * const worktree_usage[] = {
+ 	N_("git worktree add [<options>] <path> [<commit-ish>]"),
+@@ -455,22 +456,19 @@ static int add_worktree(const char *path, const char *refname,
+ 	 * is_junk is cleared, but do return appropriate code when hook fails.
+ 	 */
+ 	if (!ret && opts->checkout) {
+-		const char *hook = find_hook("post-checkout");
+-		if (hook) {
+-			const char *env[] = { "GIT_DIR", "GIT_WORK_TREE", NULL };
+-			cp.git_cmd = 0;
+-			cp.no_stdin = 1;
+-			cp.stdout_to_stderr = 1;
+-			cp.dir = path;
+-			cp.env = env;
+-			cp.argv = NULL;
+-			cp.trace2_hook_name = "post-checkout";
+-			strvec_pushl(&cp.args, absolute_path(hook),
+-				     oid_to_hex(&null_oid),
+-				     oid_to_hex(&commit->object.oid),
+-				     "1", NULL);
+-			ret = run_command(&cp);
+-		}
++		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_SYNC;
 +
-+	strbuf_addstr(&hookname, "proc-receive");
-+	hooks = hook_list(&hookname);
++		strvec_pushl(&opt.env, "GIT_DIR", "GIT_WORK_TREE", NULL);
++		strvec_pushl(&opt.args,
++			     oid_to_hex(&null_oid),
++			     oid_to_hex(&commit->object.oid),
++			     "1",
++			     NULL);
++		opt.dir = path;
 +
-+	list_for_each(pos, hooks) {
-+		if (proc_receive) {
-+			rp_error("only one 'proc-receive' hook can be specified");
-+			return -1;
-+		}
-+		proc_receive = list_entry(pos, struct hook, list);
-+		/* check if the hookdir hook should be ignored */
-+		if (proc_receive->from_hookdir) {
-+			switch (configured_hookdir_opt()) {
-+			case hookdir_interactive:
-+			case hookdir_no:
-+				proc_receive = NULL;
-+				break;
-+			default:
-+				break;
-+			}
-+		}
++		ret = run_hooks("post-checkout", &opt);
 +
-+	}
-+
-+	if (!proc_receive) {
- 		rp_error("cannot find hook 'proc-receive'");
- 		return -1;
++		run_hooks_opt_clear(&opt);
  	}
-+
-+
-+	argv[0] = proc_receive->command.buf;
- 	argv[1] = NULL;
  
- 	proc.argv = argv;
-diff --git a/t/t5411/test-0015-too-many-hooks-error.sh b/t/t5411/test-0015-too-many-hooks-error.sh
-new file mode 100644
-index 0000000000..de07b27b88
---- /dev/null
-+++ b/t/t5411/test-0015-too-many-hooks-error.sh
-@@ -0,0 +1,47 @@
-+test_expect_success "setup too  many proc-receive hooks (ok, $PROTOCOL)" '
-+	write_script "proc-receive" <<-EOF &&
-+	printf >&2 "# proc-receive hook\n"
-+	test-tool proc-receive -v \
-+		-r "ok refs/for/master/topic"
-+	EOF
-+
-+	git -C "$upstream" config --add "hook.proc-receive.command" proc-receive &&
-+	cp proc-receive "$upstream/hooks/proc-receive"
-+'
-+
-+# Refs of upstream : master(A)
-+# Refs of workbench: master(A)  tags/v123
-+# git push         :                       next(A)  refs/for/master/topic(A)
-+test_expect_success "proc-receive: reject more than one configured hook" '
-+	test_must_fail git -C workbench push origin \
-+		HEAD:next \
-+		HEAD:refs/for/master/topic \
-+		>out 2>&1 &&
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-EOF &&
-+	remote: # pre-receive hook
-+	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/heads/next
-+	remote: pre-receive< <ZERO-OID> <COMMIT-A> refs/for/master/topic
-+	remote: error: only one "proc-receive" hook can be specified
-+	remote: # post-receive hook
-+	remote: post-receive< <ZERO-OID> <COMMIT-A> refs/heads/next
-+	To <URL/of/upstream.git>
-+	 * [new branch] HEAD -> next
-+	 ! [remote rejected] HEAD -> refs/for/master/topic (fail to run proc-receive hook)
-+	EOF
-+	test_cmp expect actual &&
-+	git -C "$upstream" show-ref >out &&
-+	make_user_friendly_and_stable_output <out >actual &&
-+	cat >expect <<-EOF &&
-+	<COMMIT-A> refs/heads/master
-+	<COMMIT-A> refs/heads/next
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+# Refs of upstream : master(A)             next(A)
-+# Refs of workbench: master(A)  tags/v123
-+test_expect_success "cleanup ($PROTOCOL)" '
-+	git -C "$upstream" config --unset "hook.proc-receive.command" "proc-receive" &&
-+	git -C "$upstream" update-ref -d refs/heads/next
-+'
+ 	strvec_clear(&child_env);
+diff --git a/reset.c b/reset.c
+index 2f4fbd07c5..e6bfaf67e1 100644
+--- a/reset.c
++++ b/reset.c
+@@ -7,6 +7,7 @@
+ #include "tree-walk.h"
+ #include "tree.h"
+ #include "unpack-trees.h"
++#include "hook.h"
+ 
+ int reset_head(struct repository *r, struct object_id *oid, const char *action,
+ 	       const char *switch_to_branch, unsigned flags,
+@@ -126,10 +127,16 @@ int reset_head(struct repository *r, struct object_id *oid, const char *action,
+ 			ret = create_symref("HEAD", switch_to_branch,
+ 					    reflog_head);
+ 	}
+-	if (run_hook)
+-		run_hook_le(NULL, "post-checkout",
+-			    oid_to_hex(orig ? orig : &null_oid),
+-			    oid_to_hex(oid), "1", NULL);
++	if (run_hook) {
++		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_SYNC;
++		strvec_pushl(&opt.args,
++			     oid_to_hex(orig ? orig : &null_oid),
++			     oid_to_hex(oid),
++			     "1",
++			     NULL);
++		run_hooks("post-checkout", &opt);
++		run_hooks_opt_clear(&opt);
++	}
+ 
+ leave_reset_head:
+ 	strbuf_release(&msg);
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
