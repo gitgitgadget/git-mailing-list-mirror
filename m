@@ -4,156 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F14BDC1B0E3
-	for <git@archiver.kernel.org>; Sun,  6 Dec 2020 04:09:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80102C4167B
+	for <git@archiver.kernel.org>; Sun,  6 Dec 2020 04:10:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BE1E022DFB
-	for <git@archiver.kernel.org>; Sun,  6 Dec 2020 04:09:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5AB3223104
+	for <git@archiver.kernel.org>; Sun,  6 Dec 2020 04:10:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726619AbgLFEIb (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726508AbgLFEIb (ORCPT <rfc822;git@archiver.kernel.org>);
         Sat, 5 Dec 2020 23:08:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34562 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726151AbgLFEIY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Dec 2020 23:08:24 -0500
-Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D830C061A4F
-        for <git@vger.kernel.org>; Sat,  5 Dec 2020 20:07:43 -0800 (PST)
-Received: by mail-ej1-x642.google.com with SMTP id bo9so14470223ejb.13
-        for <git@vger.kernel.org>; Sat, 05 Dec 2020 20:07:43 -0800 (PST)
+        with ESMTP id S1726210AbgLFEI2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Dec 2020 23:08:28 -0500
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4422C0613D4
+        for <git@vger.kernel.org>; Sat,  5 Dec 2020 20:07:41 -0800 (PST)
+Received: by mail-lj1-x244.google.com with SMTP id r18so11272611ljc.2
+        for <git@vger.kernel.org>; Sat, 05 Dec 2020 20:07:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=b3jJPHDfjc5VlGaFTuqLoZhOsVzYqT1r8ek7ZF/iTCQ=;
-        b=m2OMJOlsmt6Yq75T+3FHIGwoeIvks8bZS3MVwCjxLqll5ZETWBm/38NEyjOMBlFH5r
-         g8CUlIXLwvThHPn3dqlpUXlVrOYpYdnq3sZscqN0USVTWOMSJtnMCcdx/dOyUvnVVJN6
-         irIv40xoUWWp1WBoMxDM85v5WP9RR4LnukaFBFKSJrLeLLgkFOe5lsWegi2wdk97KmFQ
-         mPJR7JpjuU7UWWZAf30/RhwkLxecblkBoD+u9J5wT/VVP20x1LSCm8PatJ8QQKqRQ+sz
-         ruiQxGmaOBHbqDRo7929A5uiHtCr0J9dUNsaQ7oRyfCZTJ3gmVq9hDoNEgmyQP2Hzke5
-         OQ2Q==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=Uk6xQWnJzXIsmhJvsm/JkujDVCw+vRh88TZXc8xY8sA=;
+        b=lB6ZQXQ9d3QomtCap9uCTqls+tUA7N2RoP8O6ClUtlf4GPgrnRJ2Sbj6XLwXrQvwa0
+         1wgaJf5gb+OSDUvbp4OXu7TCvsnFs1p0fUzSsghJ+/OnCHIkG19BqdE8bdJPnGx3+4hy
+         NwF6VUXAWzfE/0pAiJ9vJ3HO4lzCA07bLKld9kFm+VIkLQ2l3mdu+thz7amnUn3BZ5Uo
+         PgdGb3kVw/tqZuvrVuhuf3kO8mLrRvr/jm0w/U11ExKPSYVdgtvBQgKCh6iMDUIEFpTf
+         czWh3+kzeGmrSuHx0En8FtzQkiYuvl3dfLyqNxLztsc/xJrgbmO1qtNXoMrm98YwlxxZ
+         ykYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=b3jJPHDfjc5VlGaFTuqLoZhOsVzYqT1r8ek7ZF/iTCQ=;
-        b=I4c2kS+H25Jo0ohv9PFHD+DMZH3JORJl0xdnmgLuBYzKhuNA9Ibd+4VORQiWQP8WRP
-         o7NgBypuSIbQjI3Xz++MKMjy8Lb+DYDq7DR8poWLnzutZXCxoFcVUB3Ggn5TPSg4yQIn
-         Ni2ewUbRoQc6ajR4LRBdSG924pCbiTjWsKbgXVGzP9nxtdxmOOJCKRCn/JirLIYBoGv1
-         hkXEcpo7U1AW6EDYhac7cY79lgDT/7NyMKBD5Sany4u+oG/4vu7HJ0x2HBb1d44w7i8W
-         EnkHC4mqAR9CAHVrQ8KEjmMRq3heEwdPGyB3osgAr88pzP0RWgqaDeAAv7UjVHAoEDt/
-         EFeA==
-X-Gm-Message-State: AOAM530t3b/Oz98Bz/Xm2rR23G8BE2v4lyYDsvCsqf72jSojULiUd2CX
-        5ArzTRhuwkE03qJo0mlctaC8PI4zcE8=
-X-Google-Smtp-Source: ABdhPJxz3PiYg1CDrq8Sp450x3HABqiROZhheMzm5OJEjIdIWHIlCfDMZwl6+2SLEdgfRetWJO/nOg==
-X-Received: by 2002:adf:efc4:: with SMTP id i4mr12336343wrp.323.1607223284185;
-        Sat, 05 Dec 2020 18:54:44 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Uk6xQWnJzXIsmhJvsm/JkujDVCw+vRh88TZXc8xY8sA=;
+        b=Y7SD3D2RfSPu2PiAMqprWiXty62yB3SR7aINFeKkILWoizcCXOtN/MqITtqKAsJ+TW
+         Dw5YRB1AWb3mDKmduBxKiHjKqOvj6gllWO1cvmZR8+ji66l0S3MzBBt/1eSDV0aDsU1f
+         F9AhduLnWEzoyMUIeSILvKLa7+WwGU8s1STWES8ahjN2nhfwzNjn1KI6q6bK09EyYij9
+         YAtOFbnlxf5rC5uGA/DlONPUn1j4wk7moEB61MUSQ86jUXAtxxIuy1fHq/A6z+cpfd3z
+         T9KLiL5ZK2+ObrmWctx3MSJB0q/Wq1uhX6jUxpC895YM+8uGsPQ7R/RD8EmsJtA8kRsB
+         LnFg==
+X-Gm-Message-State: AOAM531jZBTvRmhRXKi4tb9jyu+67Y27Ht2JBtLo9SrZCGGqrs1EdfSX
+        5gWM37LFUbmD3KxQXWbZIn/jKqct0XQ=
+X-Google-Smtp-Source: ABdhPJwuC9H46jEQm/24gOHak4mDxSJ2rMU5xXVILFpfV5pPqUMWYC4anqZlDX+qMZ55kF5YwP9aJw==
+X-Received: by 2002:a5d:4f0e:: with SMTP id c14mr12348782wru.422.1607223278631;
+        Sat, 05 Dec 2020 18:54:38 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d15sm10095524wrx.93.2020.12.05.18.54.43
+        by smtp.gmail.com with ESMTPSA id q4sm8715244wmc.2.2020.12.05.18.54.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Dec 2020 18:54:43 -0800 (PST)
-Message-Id: <306a48820dd3c338d2b9e2288e5a3e1c7c89f36e.1607223276.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.929.git.git.1607223276.gitgitgadget@gmail.com>
-References: <pull.929.git.git.1607223276.gitgitgadget@gmail.com>
+        Sat, 05 Dec 2020 18:54:37 -0800 (PST)
+Message-Id: <pull.929.git.git.1607223276.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 06 Dec 2020 02:54:35 +0000
-Subject: [PATCH 6/7] diffcore-rename: simplify and accelerate
- register_rename_src()
+Date:   Sun, 06 Dec 2020 02:54:29 +0000
+Subject: [PATCH 0/7] diffcore-rename improvements
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+This patch series include 4 small code cleanups, 1 small bug fix (or perhaps
+just a UI improvement -- it's a very minor issue either way), and 2
+performance improvements. The first 6 patches are relatively easy to review,
+while the last one...is a bit more involved (but provided the biggest
+performance boost).
 
-reigster_rename_src() took pains to create an array in rename_src which
-was sorted by pathname of the contained diff_filepair.  However, the
-fact that this array was sorted was not needed anywhere, and thus
-represented wasted time.  Simply append to the end of the array, which
-in a usecase of note saved 45% of diffcore_rename() setup time for me.
+These patches came out of the merge-ort work, and are related, but there is
+no dependency between any of the series.
 
-Technically, there is one difference in the end result for the code.  IF
-the caller of diffcore-rename provides a set of pairs with a duplicate
-filename in the sources (an erroneous input condition), the old code
-would simply ignore the duplicate (without warning or error).  The new
-code will simply swallow it and thus allow multiple pairings for the
-"same" source file.  Checking for this error condition is expensive
-(basically undoing the optimization) and the only existing callers
-already avoid passing such an invalid input.  If someone really wants to
-add some error checking here on this input condition, I believe they
-should add a separate function which can be called before
-diffcore_rename(), and then other callers that don't need additional
-checks because of their design (such as merge-ort) can avoid the extra
-overhead.
+Elijah Newren (7):
+  diffcore-rename: avoid usage of global in too_many_rename_candidates()
+  diffcore-rename: remove unnecessary if-clause
+  diffcore-rename: rename num_create to num_targets
+  diffcore-rename: change a few comments to use 'add' instead of
+    'create'
+  diffcore-rename: reduce jumpiness in progress counters
+  diffcore-rename: simplify and accelerate register_rename_src()
+  Accelerate rename_dst setup
 
-Also, note that I dropped the return type on the function since it was
-unconditionally discarded anyway.
+ diffcore-rename.c | 225 ++++++++++++++++++++--------------------------
+ 1 file changed, 96 insertions(+), 129 deletions(-)
 
-This patch is being submitted in a different order than its original
-development, but in a large rebase of many commits with lots of renames
-and with several optimizations to inexact rename detection,
-diffcore_rename() setup time was a sizeable chunk of overall runtime.
-This patch dropped execution time of rebasing 35 commits with lots of
-renames by 2% overall.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- diffcore-rename.c | 30 +++---------------------------
- 1 file changed, 3 insertions(+), 27 deletions(-)
-
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 3d637ba4645..816d2fbac44 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -76,36 +76,12 @@ static struct diff_rename_src {
- } *rename_src;
- static int rename_src_nr, rename_src_alloc;
- 
--static struct diff_rename_src *register_rename_src(struct diff_filepair *p)
-+static void register_rename_src(struct diff_filepair *p)
- {
--	int first, last;
--	struct diff_filespec *one = p->one;
--	unsigned short score = p->score;
--
--	first = 0;
--	last = rename_src_nr;
--	while (last > first) {
--		int next = first + ((last - first) >> 1);
--		struct diff_rename_src *src = &(rename_src[next]);
--		int cmp = strcmp(one->path, src->p->one->path);
--		if (!cmp)
--			return src;
--		if (cmp < 0) {
--			last = next;
--			continue;
--		}
--		first = next+1;
--	}
--
--	/* insert to make it at "first" */
- 	ALLOC_GROW(rename_src, rename_src_nr + 1, rename_src_alloc);
-+	rename_src[rename_src_nr].p = p;
-+	rename_src[rename_src_nr].score = p->score;
- 	rename_src_nr++;
--	if (first < rename_src_nr)
--		MOVE_ARRAY(rename_src + first + 1, rename_src + first,
--			   rename_src_nr - first - 1);
--	rename_src[first].p = p;
--	rename_src[first].score = score;
--	return &(rename_src[first]);
- }
- 
- static int basename_same(struct diff_filespec *src, struct diff_filespec *dst)
+base-commit: 3a0b884caba2752da0af626fb2de7d597c844e8b
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-929%2Fnewren%2Fdiffcore-rename-improvements-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-929/newren/diffcore-rename-improvements-v1
+Pull-Request: https://github.com/git/git/pull/929
 -- 
 gitgitgadget
-
