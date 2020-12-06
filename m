@@ -8,58 +8,57 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3027C4361B
-	for <git@archiver.kernel.org>; Sun,  6 Dec 2020 04:05:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D8D9C433FE
+	for <git@archiver.kernel.org>; Sun,  6 Dec 2020 04:06:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A710F23108
-	for <git@archiver.kernel.org>; Sun,  6 Dec 2020 04:05:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0812523108
+	for <git@archiver.kernel.org>; Sun,  6 Dec 2020 04:06:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726056AbgLFEEP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Dec 2020 23:04:15 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:37135 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726023AbgLFEEJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Dec 2020 23:04:09 -0500
-Received: by mail-ed1-f67.google.com with SMTP id cm17so10075704edb.4
-        for <git@vger.kernel.org>; Sat, 05 Dec 2020 20:03:52 -0800 (PST)
+        id S1726120AbgLFEFx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Dec 2020 23:05:53 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:51277 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725966AbgLFEFv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Dec 2020 23:05:51 -0500
+Received: by mail-wm1-f65.google.com with SMTP id v14so8607631wml.1
+        for <git@vger.kernel.org>; Sat, 05 Dec 2020 20:05:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=8vNm8C8pY+aniB0sfkO16uA6z6S5hZqeOass5olf65c=;
-        b=sQ+rf4VpByQ3vs07bkzz1slUTXPyJahBKdvAHmDPBNK8kjbK8fvrqvHL82c5L1BMLa
-         WCwbFBdWqS0cBJdvPtN8o2bCKP/fUm/J29Wny+1RE7lJUpNl/JFAcyhY630y+zzZv6sr
-         7ZCdi3EUyDHDnBVYxYSdJte7WSLS2MJfxCfQS8J1gzD88nK11XG4TA+pi01ZYgS5AgrE
-         XVZxmZzDe2I5cZJBnYkmdbvT1fat+SjlDKGb5Ks5fuP+haCsw4pMl3h+NFcTbRyWA1YL
-         sCDk5u43L6CvLOX0seBd4c5jPAnBETWQgjgrBx1Z16jU4q7j9DMxxMLXyWy+JtgOmAsB
-         DYtg==
+        bh=ryQpPExquUBq583kIRwvMOxUA4LGKZHQxIo9/ZDyZHM=;
+        b=g3Ec82JScVRMwiJgCvupoNA+GUI8Yw7vQNijJCt/Ptj5a0nLQYOFlcD4phNCZrY42Z
+         WZkJ2u0NlKzbeO7+j+ZMhvkDAejI0fc/9aquUluEiK3OPh70HJjXUj5c6tqqcUS5i17H
+         qmqxcfTTkpa4Pb1iIizBmDa+A8qVWbix2DD5aeRrTNGbNNmpwexFY0YzxNgc+YSCRgId
+         WfnpSqsoSb1A30GnX081MHGUPVEcf91+VdSmRZ4vXPaJDq/y8oUgK0x1iK50Dzk05+ky
+         rHEV6u5q+0D7CJzZjzXg4qFxtXixY68HcPWCm3rMXZD+B8iylqLlO7Tz8zJx/aRwgXI7
+         yCIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=8vNm8C8pY+aniB0sfkO16uA6z6S5hZqeOass5olf65c=;
-        b=KpEMKQREOIgpFxYjvuY+FLoFel1tX3r3yPLwTGh+IOZGSO9VranFbkB6d6eBFyjdJL
-         c7QbveAZDMRWtmCkvFWSzpbhxMA87YZM/eooYF/QQFlRbZ8ijs1U9U3RQEKm9TufTFF7
-         cJ34mM+CAXsAkCEtgQFUil+A2nQZyyxg509JV4p7b1xhs/YODSvX6bacZctKG2Cy031P
-         vPW4PToGL2cUrRg9gqCoQs50bybDzmWQKqMVwHLDPDSz0pjFeGJxNIK84xrju6kQ7lmA
-         qEueREdnMK+jylqXQEXwiEa4CWQHGwm+Nq9bclyQmAOUEKuTuG7qeaLWo0GlqOYf5+E1
-         dT/A==
-X-Gm-Message-State: AOAM532IuTvsio0W98d26NLuLrYDr6VwR71yOu1hEFijnFV3lt3yNPWS
-        Qigp3iLLpOwN6twPwuosHW4B+6I1vHY=
-X-Google-Smtp-Source: ABdhPJwF5O/WYfHiMtR65Xy+ySckTQnPjbBDCtdmvcDiTnLzzeydCurTazdUZqsV5VPDwoOynLHppw==
-X-Received: by 2002:a5d:65c8:: with SMTP id e8mr13293281wrw.338.1607223282334;
-        Sat, 05 Dec 2020 18:54:42 -0800 (PST)
+        bh=ryQpPExquUBq583kIRwvMOxUA4LGKZHQxIo9/ZDyZHM=;
+        b=WbiyBeC0dw9wDWtYCfluhJ6F//uLgjF5DUsX896/dciY7RUFWv94faUWALg3bQuVwn
+         kEowpAX7XWrj94SVOtNe5xk5VUo4p002f2h2r60EILY2l9VGQa7FAUsZzeRuwBDPRoLo
+         o5JALm7vOZ2TB9o7fMvxs7RZKAdHEQ8hwO1R5L3iPxuXLnEm44tj5+WvAFzMQrKP14jO
+         d4UiQ7VuznOzCC1fykytQd+KBETcT+ev270CHppAnfO9cztDlkZQJiC5xU+G7NvF2o2u
+         NzDCd8EGdJAFTEq5ZNNaEWT+TzfKZBUVke80EClkBgvKyOvLk8hILPzYb7B2mLQcL7GK
+         HmKg==
+X-Gm-Message-State: AOAM531Dys5E5Dg/pRWxb2y+mNAMkye0OMBAOgfLB7iZ9vZf2ToGmqNt
+        bpa91mmO2KiveapKIZLS9UJOFtouuBQ=
+X-Google-Smtp-Source: ABdhPJwRr3s/Pr+RMUqLf3hDE1Jk3WkXH/fzWIYowaKkcYMucQegixmXtL/0qgqEueNRY5grET2byw==
+X-Received: by 2002:a1c:bc88:: with SMTP id m130mr11883992wmf.82.1607223280569;
+        Sat, 05 Dec 2020 18:54:40 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u66sm9046441wmg.2.2020.12.05.18.54.41
+        by smtp.gmail.com with ESMTPSA id 35sm9181552wro.71.2020.12.05.18.54.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Dec 2020 18:54:41 -0800 (PST)
-Message-Id: <77ca4656ed442321b41e653505c85d0be31b8045.1607223276.git.gitgitgadget@gmail.com>
+        Sat, 05 Dec 2020 18:54:40 -0800 (PST)
+Message-Id: <f96bb36930a6e5e42f0d3b9c5dfa3b2cc27c1f9d.1607223276.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.929.git.git.1607223276.gitgitgadget@gmail.com>
 References: <pull.929.git.git.1607223276.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 06 Dec 2020 02:54:33 +0000
-Subject: [PATCH 4/7] diffcore-rename: change a few comments to use 'add'
- instead of 'create'
+Date:   Sun, 06 Dec 2020 02:54:31 +0000
+Subject: [PATCH 2/7] diffcore-rename: remove unnecessary if-clause
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,50 +71,54 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-As with the last commit, it feels odd to talk about "creation" (which to
-me implies a brand new file, i.e. one not associated with an existing
-file, and thus one that could not have been a rename) when we are using
-the files to look for renames.  Use the term "addition" instead.
+diffcore-rename had two different checks of the form
+
+    if ((a < limit || b < limit) &&
+        a * b <= limit * limit)
+
+Since these are all non-negative integers, this can be simplified to
+
+    if (a * b <= limit * limit)
+
+The only advantage of the former would be in avoiding a couple
+multiplications in the rare case that both a and b are BOTH very large.
+I see no reason for such an optimization given that this code is not in
+any kind of loop.  Prefer code simplicity here and change to the latter
+form.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- diffcore-rename.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ diffcore-rename.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
 diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 655a67759c8..7270eb6af48 100644
+index 68ddf51a2a1..0f8fce9293e 100644
 --- a/diffcore-rename.c
 +++ b/diffcore-rename.c
-@@ -173,7 +173,7 @@ static int estimate_similarity(struct repository *r,
- {
- 	/* src points at a file that existed in the original tree (or
- 	 * optionally a file in the destination tree) and dst points
--	 * at a newly created file.  They may be quite similar, in which
-+	 * at a newly added file.  They may be quite similar, in which
- 	 * case we want to say src is renamed to dst or src is copied into
- 	 * dst, and then some edit has been applied to dst.
- 	 *
-@@ -652,9 +652,9 @@ void diffcore_rename(struct diff_options *options)
- 		}
- 		else if (!DIFF_FILE_VALID(p->one) && DIFF_FILE_VALID(p->two)) {
- 			/*
--			 * Creation
-+			 * Addition
- 			 *
--			 * We would output this create record if it has
-+			 * We would output this add record if it has
- 			 * not been turned into a rename/copy already.
- 			 */
- 			struct diff_rename_dst *dst = locate_rename_dst(p->two);
-@@ -664,7 +664,7 @@ void diffcore_rename(struct diff_options *options)
- 			}
- 			else
- 				/* no matching rename/copy source, so
--				 * record this as a creation.
-+				 * record this as an addition.
- 				 */
- 				diff_q(&outq, p);
- 		}
+@@ -450,9 +450,8 @@ static int too_many_rename_candidates(int num_targets, int num_sources,
+ 	 */
+ 	if (rename_limit <= 0)
+ 		rename_limit = 32767;
+-	if ((num_targets <= rename_limit || num_sources <= rename_limit) &&
+-	    ((uint64_t)num_targets * (uint64_t)num_sources
+-	     <= (uint64_t)rename_limit * (uint64_t)rename_limit))
++	if ((uint64_t)num_targets * (uint64_t)num_sources
++	    <= (uint64_t)rename_limit * (uint64_t)rename_limit)
+ 		return 0;
+ 
+ 	options->needed_rename_limit =
+@@ -468,9 +467,8 @@ static int too_many_rename_candidates(int num_targets, int num_sources,
+ 			continue;
+ 		limited_sources++;
+ 	}
+-	if ((num_targets <= rename_limit || limited_sources <= rename_limit) &&
+-	    ((uint64_t)num_targets * (uint64_t)limited_sources
+-	     <= (uint64_t)rename_limit * (uint64_t)rename_limit))
++	if ((uint64_t)num_targets * (uint64_t)limited_sources
++	    <= (uint64_t)rename_limit * (uint64_t)rename_limit)
+ 		return 2;
+ 	return 1;
+ }
 -- 
 gitgitgadget
 
