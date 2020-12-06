@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E24F8C1B0D9
-	for <git@archiver.kernel.org>; Sun,  6 Dec 2020 04:11:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D1BEC4361B
+	for <git@archiver.kernel.org>; Sun,  6 Dec 2020 04:14:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BABB622D2A
-	for <git@archiver.kernel.org>; Sun,  6 Dec 2020 04:11:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC951207DE
+	for <git@archiver.kernel.org>; Sun,  6 Dec 2020 04:14:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727550AbgLFEK4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Dec 2020 23:10:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34976 "EHLO
+        id S1727660AbgLFEO1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Dec 2020 23:14:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725966AbgLFEKz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Dec 2020 23:10:55 -0500
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E256BC0613D1
-        for <git@vger.kernel.org>; Sat,  5 Dec 2020 20:10:14 -0800 (PST)
-Received: by mail-wm1-x344.google.com with SMTP id f190so10533022wme.1
-        for <git@vger.kernel.org>; Sat, 05 Dec 2020 20:10:14 -0800 (PST)
+        with ESMTP id S1725986AbgLFEOZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Dec 2020 23:14:25 -0500
+Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com [IPv6:2a00:1450:4864:20::543])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E5D1C0613D1
+        for <git@vger.kernel.org>; Sat,  5 Dec 2020 20:13:29 -0800 (PST)
+Received: by mail-ed1-x543.google.com with SMTP id k4so10109229edl.0
+        for <git@vger.kernel.org>; Sat, 05 Dec 2020 20:13:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=n+lCYr38cjGZeNek8Jedf/mHe2Rr+VXfsvOu5CzjCuk=;
-        b=P+lsdoBA/DwVfC8+kTOoJhlk8x0Os1+1xlfeFu/V8BioB024kR3S7s41f0WUbPDTFd
-         Xm8iDPXwNPUvnIeTPWxyQ+Y3alAmmP+v6PUtYaf7+c6/FjU7BpnuiZ6qPsJkU1zQb1b2
-         g9+fO+yNRSG3/X4sf5o2W7mCh1KO+S4mzFk9Ey+UGUqynxdupnn5lBZ3pF45Iajn0xYw
-         JOOc6nC8M+N/yXnBCrFNLMhoiDEYvDulUzzc6PsQGKteY2txiGeKvYE0FfohJtgMJTeF
-         nQ69F4QLiw/V3Rj+m/jZgEVImLAQs7zfEh3+cYNA6mCICOlCLxJ4fs2Vo/V0MgbtEOZ8
-         JdGw==
+        bh=y9HYiViJMgRFGolNXHnXFxwjBwznSI2bWTmSIA8gERY=;
+        b=bbwhKHajsxcVcqzm7xQETQ2iP+oh9bSu05pJDrII2yaLz23xxakJz5o0mJ05uE9Pco
+         imZp6nVuGXb+wlpFKFGuhaKlKJX8SJEzY+kvya4bNxTm00hDWVq3bq3aZPI2oClFoCDo
+         zwsi24yV12m14u+QjSD86d+ACPb0TrKRemjPj5GQazR5An+fq8k1esl44VuMnYnjVzbA
+         1J1owSZVINaUzh/J2ELQhi3350SYEsVFD9QUBpfaFAS+LbCJdGJgqxpjCvBYTXOYEMPg
+         RwrNN2c6lruyGxp2bVBnI3OLjEOsg1Ts/3Yw+ixlz58uJRZ6lt+d4QeydQOPTx/vU5DP
+         ZNLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=n+lCYr38cjGZeNek8Jedf/mHe2Rr+VXfsvOu5CzjCuk=;
-        b=F9Othrs1QR6b00mvRkSgoAwEYdqXT2ximtdm6Gb/ZZbGET1rDKvy29uTrxzpiy74za
-         aeyYZHRi/XIb92FbOW5U3aVjVa6ZiM1Jgp1WMoEV4xSWEQ7cGJcx+zs+eqOUHAwN9Ueh
-         hoHLTWkZfmJBY6fQJpmwJD5fxZonul1AO/xiiJJyn6+yngKUFLc3caDuafXQPql05xot
-         yIIkOzXW3DV9G+xireflPC25hXYIYhXNqHW0l2bo+1Y322ThNA/zVJXleYUlGDNTm/hd
-         qyVUGGLsJUws7sGufB9BA8aTBNj5+nRMTMyecMjQWrpuIXpPML73exCKsURocOXCEqVm
-         SuKQ==
-X-Gm-Message-State: AOAM532EbJGtWke2T2zvQmKX2EPuum4VlZyQuVQmllDNJSxEaVKiqVZe
-        npKOcoeaKPRyBgCytWGIaUVDJXusR1Q=
-X-Google-Smtp-Source: ABdhPJzwnnTaNeDuV9l1lYrSYMKHQE2VmFP61mAXUEulIrVsPFDvsHhS5BoUYxoN4ucVxXxskIZBNA==
-X-Received: by 2002:a1c:80c3:: with SMTP id b186mr11502723wmd.20.1607223283229;
-        Sat, 05 Dec 2020 18:54:43 -0800 (PST)
+        bh=y9HYiViJMgRFGolNXHnXFxwjBwznSI2bWTmSIA8gERY=;
+        b=pYlVLyaOb7r9s4ot5tEIdvAeK3BoMY/BKNP8ZUWjyrYknj0j5LflsnMUdaeT4zuxZ2
+         61n6Zxmr8rVab9ZP0zR0GlP62z3LyYk7w6kratpihnyPLQI+Z4gAiA77u8hBs5Iyv5MU
+         AeIHzdWM+yIpyo+bNvwPV2vR2tv5AmoCRX/vGxuoOICCaay45pXukIWoGGuWiBrJCqyf
+         WmNq6j/aHTt6s+xfuTUJ40yOY1iGEg/B5eZggFbkwmiohzbHNwb7uEb1KULbKtKn0XEn
+         vWeRfH81GEXurrlbCFzGgbZ/P0J0VzMWgcEJqzeRbQBFu6b4Duv1z7lxikrV1rVOn9YU
+         5Y0w==
+X-Gm-Message-State: AOAM533IFVQeAPs5CQJcQORb9bV8z3rJh4bdI2N26HEnfKNItx75MdkZ
+        WiuAhhpT0PwTc7SknpIijn4+JNpKUi0=
+X-Google-Smtp-Source: ABdhPJx/VeTWYp6aD4ORVpL1uomhR9Tk5tnCZCyO+zknLawG8rLoIaHiEwXto6Sb8z4E0FfSn6EX/Q==
+X-Received: by 2002:a5d:5689:: with SMTP id f9mr12728725wrv.181.1607223281408;
+        Sat, 05 Dec 2020 18:54:41 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 90sm9442804wrl.60.2020.12.05.18.54.42
+        by smtp.gmail.com with ESMTPSA id b18sm10031037wrt.54.2020.12.05.18.54.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Dec 2020 18:54:42 -0800 (PST)
-Message-Id: <e8257516c1f983d590b8a81fb32ecd5cb91dc737.1607223276.git.gitgitgadget@gmail.com>
+        Sat, 05 Dec 2020 18:54:40 -0800 (PST)
+Message-Id: <30381addc5ca9f2b5299835020716291c7fe8d68.1607223276.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.929.git.git.1607223276.gitgitgadget@gmail.com>
 References: <pull.929.git.git.1607223276.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 06 Dec 2020 02:54:34 +0000
-Subject: [PATCH 5/7] diffcore-rename: reduce jumpiness in progress counters
+Date:   Sun, 06 Dec 2020 02:54:32 +0000
+Subject: [PATCH 3/7] diffcore-rename: rename num_create to num_targets
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,51 +74,58 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Inexact rename detection works by comparing all sources to all
-destinations, computing similarities, and then finding the best matches
-among those that are sufficiently similar.
-
-However, it is preceded by exact rename detection that works by
-checking if there are files with identical hashes.  If exact renames are
-found, we can exclude some files from inexact rename detection.
-
-The inexact rename detection loops over the full set of files, but
-immediately skips those for which rename_dst[i].is_rename is true and
-thus doesn't compare any sources to that destination.  As such, these
-paths shouldn't be included in the progress counter.
-
-For the eagle eyed, this change hints at an actual optimization -- the
-first one I presented at Git Merge 2020.  I'll be submitting that
-optimization later, once the basic merge-ort algorithm has merged.
+Files added since the base commit serve as targets for rename detection.
+While it is true that added files can be thought of as being "created"
+when they are added IF they have no pairing file that they were renamed
+from, and it is true we start out not knowing what the pairings are, it
+seems a little odd to think in terms of "file creation" when we are
+looking for "file renames".  Rename the variable to avoid this minor
+point of confusion.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- diffcore-rename.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ diffcore-rename.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 7270eb6af48..3d637ba4645 100644
+index 0f8fce9293e..655a67759c8 100644
 --- a/diffcore-rename.c
 +++ b/diffcore-rename.c
-@@ -587,7 +587,7 @@ void diffcore_rename(struct diff_options *options)
- 	if (options->show_rename_progress) {
- 		progress = start_delayed_progress(
- 				_("Performing inexact rename detection"),
--				(uint64_t)rename_dst_nr * (uint64_t)rename_src_nr);
-+				(uint64_t)num_targets * (uint64_t)rename_src_nr);
+@@ -502,7 +502,7 @@ void diffcore_rename(struct diff_options *options)
+ 	struct diff_queue_struct outq;
+ 	struct diff_score *mx;
+ 	int i, j, rename_count, skip_unmodified = 0;
+-	int num_create, dst_cnt;
++	int num_targets, dst_cnt;
+ 	struct progress *progress = NULL;
+ 
+ 	if (!minimum_score)
+@@ -567,13 +567,13 @@ void diffcore_rename(struct diff_options *options)
+ 	 * Calculate how many renames are left (but all the source
+ 	 * files still remain as options for rename/copies!)
+ 	 */
+-	num_create = (rename_dst_nr - rename_count);
++	num_targets = (rename_dst_nr - rename_count);
+ 
+ 	/* All done? */
+-	if (!num_create)
++	if (!num_targets)
+ 		goto cleanup;
+ 
+-	switch (too_many_rename_candidates(num_create, rename_src_nr, options)) {
++	switch (too_many_rename_candidates(num_targets, rename_src_nr, options)) {
+ 	case 1:
+ 		goto cleanup;
+ 	case 2:
+@@ -590,7 +590,7 @@ void diffcore_rename(struct diff_options *options)
+ 				(uint64_t)rename_dst_nr * (uint64_t)rename_src_nr);
  	}
  
- 	mx = xcalloc(st_mult(NUM_CANDIDATE_PER_DST, num_targets), sizeof(*mx));
-@@ -626,7 +626,8 @@ void diffcore_rename(struct diff_options *options)
- 			diff_free_filespec_blob(two);
- 		}
- 		dst_cnt++;
--		display_progress(progress, (uint64_t)(i+1)*(uint64_t)rename_src_nr);
-+		display_progress(progress,
-+				 (uint64_t)dst_cnt * (uint64_t)rename_src_nr);
- 	}
- 	stop_progress(&progress);
- 
+-	mx = xcalloc(st_mult(NUM_CANDIDATE_PER_DST, num_create), sizeof(*mx));
++	mx = xcalloc(st_mult(NUM_CANDIDATE_PER_DST, num_targets), sizeof(*mx));
+ 	for (dst_cnt = i = 0; i < rename_dst_nr; i++) {
+ 		struct diff_filespec *two = rename_dst[i].two;
+ 		struct diff_score *m;
 -- 
 gitgitgadget
 
