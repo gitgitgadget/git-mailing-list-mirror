@@ -8,60 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6511C19437
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F14BDC1B0E3
 	for <git@archiver.kernel.org>; Sun,  6 Dec 2020 04:09:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A806A2332A
+	by mail.kernel.org (Postfix) with ESMTP id BE1E022DFB
 	for <git@archiver.kernel.org>; Sun,  6 Dec 2020 04:09:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727017AbgLFEJp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Dec 2020 23:09:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34776 "EHLO
+        id S1726619AbgLFEIb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Dec 2020 23:08:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726920AbgLFEJn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Dec 2020 23:09:43 -0500
-Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2446C0613D1
-        for <git@vger.kernel.org>; Sat,  5 Dec 2020 20:08:56 -0800 (PST)
-Received: by mail-lf1-x142.google.com with SMTP id d20so13193608lfe.11
-        for <git@vger.kernel.org>; Sat, 05 Dec 2020 20:08:56 -0800 (PST)
+        with ESMTP id S1726151AbgLFEIY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Dec 2020 23:08:24 -0500
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D830C061A4F
+        for <git@vger.kernel.org>; Sat,  5 Dec 2020 20:07:43 -0800 (PST)
+Received: by mail-ej1-x642.google.com with SMTP id bo9so14470223ejb.13
+        for <git@vger.kernel.org>; Sat, 05 Dec 2020 20:07:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=32lKmW0lH3uF5mmulbigiA1YTyjmqc2aI+ww7NNPL2Q=;
-        b=lu5oPrBenk840xqrxpMwAaqyeLL6qziDpN4ZFRiEoGx8tjiWvH6bg6m54oJey3ByXb
-         YtZp3lu5nggPfBPdpfym++iIFyn5tJTd+kK1aJO6wOS2jqx8P3MABuD9O/5lKnZmTMkY
-         UrJyvB7wEU8yfWd0I2am9JgQNYz0GZpln7b2eW7BZ8quUDMAFK7kooo+nugymlc50KkE
-         4mEEJFy1C8+vjKrGxJxNLYatuGPtBMn+ufC7Oicx7A/XqqpnvMXpkdUf2POhK/sgATq6
-         7x/CiXfcrrXcgegzFARS0JLhodnmQOEHqLi0KgWko9LXtKgZfUxEdYHv/lRCNcwnZdZ6
-         JdNA==
+        bh=b3jJPHDfjc5VlGaFTuqLoZhOsVzYqT1r8ek7ZF/iTCQ=;
+        b=m2OMJOlsmt6Yq75T+3FHIGwoeIvks8bZS3MVwCjxLqll5ZETWBm/38NEyjOMBlFH5r
+         g8CUlIXLwvThHPn3dqlpUXlVrOYpYdnq3sZscqN0USVTWOMSJtnMCcdx/dOyUvnVVJN6
+         irIv40xoUWWp1WBoMxDM85v5WP9RR4LnukaFBFKSJrLeLLgkFOe5lsWegi2wdk97KmFQ
+         mPJR7JpjuU7UWWZAf30/RhwkLxecblkBoD+u9J5wT/VVP20x1LSCm8PatJ8QQKqRQ+sz
+         ruiQxGmaOBHbqDRo7929A5uiHtCr0J9dUNsaQ7oRyfCZTJ3gmVq9hDoNEgmyQP2Hzke5
+         OQ2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=32lKmW0lH3uF5mmulbigiA1YTyjmqc2aI+ww7NNPL2Q=;
-        b=dFMqAWvEU/fjI/5YhJMkPFx9nQ0AVaOd2/DtolFIwACOgP76GdosHS9I0fUdc9xN9w
-         BXw4fdZEye+JirVxMa4ZNQ/Yu2ZphZO3gy5Bu9ssgRuO4kQA/zQinV+U5yryPTW/bKV/
-         UCfxBcYRKGWeNzU2XoRt51gwza3JGimCX5Vt4RBWlolteBnD1Ul4lNoFGQWgWIbRwVSc
-         q9uhbsMIgdKf4Bz/pqz8g7LeiY7zG3Ba+B5s/ZQ/upXNTCdqWYFTfXGQ1xMYFIv1VjXi
-         WJ/DLcEbvCMteDHxAXYTfYVCK8YnJsVY37jjkB+rYI3cxAyJTQxd/AQS7QUFugMNnX9Y
-         kTSw==
-X-Gm-Message-State: AOAM530YE14xctIDRT8Pxfwe9NXpLVHsyiwmFddGuMk6c9PJ1vpYqLsT
-        XSpMjshMPGwuVvYSiihPTjKsj4dee98=
-X-Google-Smtp-Source: ABdhPJzzPVbmdoNdtKzYBwwFAgB3c69cHCyQ5OjL0KKaYqHTUtybljSuhDV02vB+2XatwCuGaUXa9A==
-X-Received: by 2002:adf:90d0:: with SMTP id i74mr12913810wri.288.1607223285080;
-        Sat, 05 Dec 2020 18:54:45 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w3sm8815365wma.3.2020.12.05.18.54.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=b3jJPHDfjc5VlGaFTuqLoZhOsVzYqT1r8ek7ZF/iTCQ=;
+        b=I4c2kS+H25Jo0ohv9PFHD+DMZH3JORJl0xdnmgLuBYzKhuNA9Ibd+4VORQiWQP8WRP
+         o7NgBypuSIbQjI3Xz++MKMjy8Lb+DYDq7DR8poWLnzutZXCxoFcVUB3Ggn5TPSg4yQIn
+         Ni2ewUbRoQc6ajR4LRBdSG924pCbiTjWsKbgXVGzP9nxtdxmOOJCKRCn/JirLIYBoGv1
+         hkXEcpo7U1AW6EDYhac7cY79lgDT/7NyMKBD5Sany4u+oG/4vu7HJ0x2HBb1d44w7i8W
+         EnkHC4mqAR9CAHVrQ8KEjmMRq3heEwdPGyB3osgAr88pzP0RWgqaDeAAv7UjVHAoEDt/
+         EFeA==
+X-Gm-Message-State: AOAM530t3b/Oz98Bz/Xm2rR23G8BE2v4lyYDsvCsqf72jSojULiUd2CX
+        5ArzTRhuwkE03qJo0mlctaC8PI4zcE8=
+X-Google-Smtp-Source: ABdhPJxz3PiYg1CDrq8Sp450x3HABqiROZhheMzm5OJEjIdIWHIlCfDMZwl6+2SLEdgfRetWJO/nOg==
+X-Received: by 2002:adf:efc4:: with SMTP id i4mr12336343wrp.323.1607223284185;
         Sat, 05 Dec 2020 18:54:44 -0800 (PST)
-Message-Id: <3e83b51628b6f3aeb71c5e637eca03dd63f9e95f.1607223276.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d15sm10095524wrx.93.2020.12.05.18.54.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 05 Dec 2020 18:54:43 -0800 (PST)
+Message-Id: <306a48820dd3c338d2b9e2288e5a3e1c7c89f36e.1607223276.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.929.git.git.1607223276.gitgitgadget@gmail.com>
 References: <pull.929.git.git.1607223276.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 06 Dec 2020 02:54:36 +0000
-Subject: [PATCH 7/7] Accelerate rename_dst setup
+Date:   Sun, 06 Dec 2020 02:54:35 +0000
+Subject: [PATCH 6/7] diffcore-rename: simplify and accelerate
+ register_rename_src()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,345 +75,85 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-register_rename_src() simply references the passed pair inside
-rename_src.  In contrast, add_rename_dst() did something entirely
-different for rename_dst.  Instead of copying the passed pair, it made a
-copy of the second diff_filespec from the passed pair, referenced it,
-and then set the diff_rename_dst.pair field to NULL.  Later, when a
-pairing is found, record_rename_pair() allocated a full diff_filepair
-via diff_queue() and pointed its src and dst fields at the appropriate
-diff_filespecs.  This contrast between register_rename_src() for the
-rename_src data structure and add_rename_dst() for the rename_dst data
-structure is oddly inconsistent and requires more memory and work than
-necessary.  Let's just reference the original diff_filepair in
-rename_dst as-is, just as we do with rename_src.  Add a new
-rename_dst.is_rename field, since the rename_dst.p field is never NULL
-unlike the old rename_dst.pair field.
+reigster_rename_src() took pains to create an array in rename_src which
+was sorted by pathname of the contained diff_filepair.  However, the
+fact that this array was sorted was not needed anywhere, and thus
+represented wasted time.  Simply append to the end of the array, which
+in a usecase of note saved 45% of diffcore_rename() setup time for me.
 
-Taking advantage of this change and the fact that same-named paths will
-be adjacent, we can get rid of the sorting of the array and most of the
-lookups on it, allowing us to instead just append as we go.  However,
-there is one remaining reason to still keep locate_rename_dst():
-handling broken pairs (i.e. when break detection is on).  Those are
-somewhat rare, but we can set up a simple strintmap to get the map
-between the source and the index.  Doing that allows us to still have a
-fast lookup without sorting the rename_dst array.  Since the sorting had
-been done in a weakly quadratic manner, when many renames are involved
-this time could add up.
+Technically, there is one difference in the end result for the code.  IF
+the caller of diffcore-rename provides a set of pairs with a duplicate
+filename in the sources (an erroneous input condition), the old code
+would simply ignore the duplicate (without warning or error).  The new
+code will simply swallow it and thus allow multiple pairings for the
+"same" source file.  Checking for this error condition is expensive
+(basically undoing the optimization) and the only existing callers
+already avoid passing such an invalid input.  If someone really wants to
+add some error checking here on this input condition, I believe they
+should add a separate function which can be called before
+diffcore_rename(), and then other callers that don't need additional
+checks because of their design (such as merge-ort) can avoid the extra
+overhead.
 
-There is still a strcmp() in add_rename_dst() that I feel is
-unnecessary, because I disagree with a regression test in t4058.
-However, I'm trying to increase performance without changing behavior,
-so I'll leave that fight for a different day (a TODO has been left in
-the code about it).
+Also, note that I dropped the return type on the function since it was
+unconditionally discarded anyway.
 
 This patch is being submitted in a different order than its original
 development, but in a large rebase of many commits with lots of renames
-and with several optimizations to inexact rename detection, both setup
-time and write back to output queue time from diffcore_rename() were
-sizeable chunks of overall runtime.  This patch accelerated the setup
-time by about 65%, and final write back to the output queue time by
-about 50%, resulting in an overall drop of 3.5% on the execution time of
-rebasing a few dozen patches.
+and with several optimizations to inexact rename detection,
+diffcore_rename() setup time was a sizeable chunk of overall runtime.
+This patch dropped execution time of rebasing 35 commits with lots of
+renames by 2% overall.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- diffcore-rename.c | 161 ++++++++++++++++++++++------------------------
- 1 file changed, 77 insertions(+), 84 deletions(-)
+ diffcore-rename.c | 30 +++---------------------------
+ 1 file changed, 3 insertions(+), 27 deletions(-)
 
 diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 816d2fbac44..fb3c2817c6b 100644
+index 3d637ba4645..816d2fbac44 100644
 --- a/diffcore-rename.c
 +++ b/diffcore-rename.c
-@@ -5,67 +5,64 @@
- #include "cache.h"
- #include "diff.h"
- #include "diffcore.h"
--#include "object-store.h"
- #include "hashmap.h"
-+#include "object-store.h"
- #include "progress.h"
- #include "promisor-remote.h"
-+#include "strmap.h"
+@@ -76,36 +76,12 @@ static struct diff_rename_src {
+ } *rename_src;
+ static int rename_src_nr, rename_src_alloc;
  
- /* Table of rename/copy destinations */
- 
- static struct diff_rename_dst {
--	struct diff_filespec *two;
--	struct diff_filepair *pair;
-+	struct diff_filepair *p;
-+	struct diff_filespec *filespec_to_free;
-+	int is_rename; /* false -> just a create; true -> rename or copy */
- } *rename_dst;
- static int rename_dst_nr, rename_dst_alloc;
-+/* Mapping from break source pathname to break destination index */
-+static struct strintmap *break_idx = NULL;
- 
--static int find_rename_dst(struct diff_filespec *two)
--{
+-static struct diff_rename_src *register_rename_src(struct diff_filepair *p)
++static void register_rename_src(struct diff_filepair *p)
+ {
 -	int first, last;
+-	struct diff_filespec *one = p->one;
+-	unsigned short score = p->score;
 -
 -	first = 0;
--	last = rename_dst_nr;
+-	last = rename_src_nr;
 -	while (last > first) {
 -		int next = first + ((last - first) >> 1);
--		struct diff_rename_dst *dst = &(rename_dst[next]);
--		int cmp = strcmp(two->path, dst->two->path);
+-		struct diff_rename_src *src = &(rename_src[next]);
+-		int cmp = strcmp(one->path, src->p->one->path);
 -		if (!cmp)
--			return next;
+-			return src;
 -		if (cmp < 0) {
 -			last = next;
 -			continue;
 -		}
 -		first = next+1;
 -	}
--	return -first - 1;
--}
 -
--static struct diff_rename_dst *locate_rename_dst(struct diff_filespec *two)
-+static struct diff_rename_dst *locate_rename_dst(struct diff_filepair *p)
- {
--	int ofs = find_rename_dst(two);
--	return ofs < 0 ? NULL : &rename_dst[ofs];
-+	/* Lookup by p->ONE->path */
-+	int idx = break_idx ? strintmap_get(break_idx, p->one->path) : -1;
-+	return (idx == -1) ? NULL : &rename_dst[idx];
- }
- 
- /*
-  * Returns 0 on success, -1 if we found a duplicate.
-  */
--static int add_rename_dst(struct diff_filespec *two)
-+static int add_rename_dst(struct diff_filepair *p)
- {
--	int first = find_rename_dst(two);
--
--	if (first >= 0)
-+	/*
-+	 * See t4058; trees might have duplicate entries.  I think
-+	 * trees with duplicate entries should be ignored and we
-+	 * should just leave rename detection on; while the results
-+	 * may be slightly harder to understand, that's merely a
-+	 * result of the underlying tree making no sense.  But I
-+	 * believe everything still works fine, the results do still
-+	 * make sense, and the extra overhead of doing this checking
-+	 * for a few historical weird trees from long ago seems like
-+	 * the dog wagging the tail to me.
-+	 *
-+	 * However: I don't feel like fighting that battle right now.
-+	 * For now, to keep the regression test passing, we have to
-+	 * detect it.  Since the diff machinery passes these to us in
-+	 * adjacent pairs, we just need to check to see if our name
-+	 * matches the previous one.
-+	 *
-+	 * TODO: Dispense with this test, rip out the test in t4058, and
-+	 * lobby folks for the change.
-+	 */
-+	if (rename_dst_nr > 0 &&
-+	    !strcmp(rename_dst[rename_dst_nr-1].p->two->path, p->two->path))
- 		return -1;
--	first = -first - 1;
- 
 -	/* insert to make it at "first" */
- 	ALLOC_GROW(rename_dst, rename_dst_nr + 1, rename_dst_alloc);
-+	rename_dst[rename_dst_nr].p = p;
-+	rename_dst[rename_dst_nr].filespec_to_free = NULL;
-+	rename_dst[rename_dst_nr].is_rename = 0;
- 	rename_dst_nr++;
--	if (first < rename_dst_nr)
--		MOVE_ARRAY(rename_dst + first + 1, rename_dst + first,
--			   rename_dst_nr - first - 1);
--	rename_dst[first].two = alloc_filespec(two->path);
--	fill_filespec(rename_dst[first].two, &two->oid, two->oid_valid,
--		      two->mode);
--	rename_dst[first].pair = NULL;
- 	return 0;
- }
- 
-@@ -78,6 +75,14 @@ static int rename_src_nr, rename_src_alloc;
- 
- static void register_rename_src(struct diff_filepair *p)
- {
-+	if (p->broken_pair) {
-+		if (!break_idx) {
-+			break_idx = xmalloc(sizeof(*break_idx));
-+			strintmap_init(break_idx, -1);
-+		}
-+		strintmap_set(break_idx, p->one->path, rename_dst_nr);
-+	}
-+
  	ALLOC_GROW(rename_src, rename_src_nr + 1, rename_src_alloc);
- 	rename_src[rename_src_nr].p = p;
- 	rename_src[rename_src_nr].score = p->score;
-@@ -117,14 +122,14 @@ static void prefetch(void *prefetch_options)
- 	struct oid_array to_fetch = OID_ARRAY_INIT;
- 
- 	for (i = 0; i < rename_dst_nr; i++) {
--		if (rename_dst[i].pair)
-+		if (rename_dst[i].p->renamed_pair)
- 			/*
- 			 * The loop in diffcore_rename() will not need these
- 			 * blobs, so skip prefetching.
- 			 */
- 			continue; /* already found exact match */
- 		diff_add_if_missing(options->repo, &to_fetch,
--				    rename_dst[i].two);
-+				    rename_dst[i].p->two);
- 	}
- 	for (i = 0; i < rename_src_nr; i++) {
- 		if (options->skip_unmodified &&
-@@ -234,26 +239,24 @@ static int estimate_similarity(struct repository *r,
- 
- static void record_rename_pair(int dst_index, int src_index, int score)
- {
--	struct diff_filespec *src, *dst;
--	struct diff_filepair *dp;
-+	struct diff_filepair *src = rename_src[src_index].p;
-+	struct diff_filepair *dst = rename_dst[dst_index].p;
- 
--	if (rename_dst[dst_index].pair)
-+	if (dst->renamed_pair)
- 		die("internal error: dst already matched.");
- 
--	src = rename_src[src_index].p->one;
--	src->rename_used++;
--	src->count++;
-+	src->one->rename_used++;
-+	src->one->count++;
- 
--	dst = rename_dst[dst_index].two;
--	dst->count++;
-+	rename_dst[dst_index].filespec_to_free = dst->one;
-+	rename_dst[dst_index].is_rename = 1;
- 
--	dp = diff_queue(NULL, src, dst);
--	dp->renamed_pair = 1;
--	if (!strcmp(src->path, dst->path))
--		dp->score = rename_src[src_index].score;
-+	dst->one = src->one;
-+	dst->renamed_pair = 1;
-+	if (!strcmp(dst->one->path, dst->two->path))
-+		dst->score = rename_src[src_index].score;
- 	else
--		dp->score = score;
--	rename_dst[dst_index].pair = dp;
-+		dst->score = score;
++	rename_src[rename_src_nr].p = p;
++	rename_src[rename_src_nr].score = p->score;
+ 	rename_src_nr++;
+-	if (first < rename_src_nr)
+-		MOVE_ARRAY(rename_src + first + 1, rename_src + first,
+-			   rename_src_nr - first - 1);
+-	rename_src[first].p = p;
+-	rename_src[first].score = score;
+-	return &(rename_src[first]);
  }
  
- /*
-@@ -299,7 +302,7 @@ static int find_identical_files(struct hashmap *srcs,
- 				struct diff_options *options)
- {
- 	int renames = 0;
--	struct diff_filespec *target = rename_dst[dst_index].two;
-+	struct diff_filespec *target = rename_dst[dst_index].p->two;
- 	struct file_similarity *p, *best = NULL;
- 	int i = 100, best_score = -1;
- 	unsigned int hash = hash_filespec(options->repo, target);
-@@ -460,7 +463,7 @@ static int find_renames(struct diff_score *mx, int dst_cnt, int minimum_score, i
- 		    (mx[i].score < minimum_score))
- 			break; /* there is no more usable pair. */
- 		dst = &rename_dst[mx[i].dst];
--		if (dst->pair)
-+		if (dst->is_rename)
- 			continue; /* already done, either exact or fuzzy. */
- 		if (!copies && rename_src[mx[i].src].p->one->rename_used)
- 			continue;
-@@ -495,7 +498,7 @@ void diffcore_rename(struct diff_options *options)
- 			else if (!options->flags.rename_empty &&
- 				 is_empty_blob_oid(&p->two->oid))
- 				continue;
--			else if (add_rename_dst(p->two) < 0) {
-+			else if (add_rename_dst(p) < 0) {
- 				warning("skipping rename detection, detected"
- 					" duplicate destination '%s'",
- 					p->two->path);
-@@ -568,10 +571,10 @@ void diffcore_rename(struct diff_options *options)
- 
- 	mx = xcalloc(st_mult(NUM_CANDIDATE_PER_DST, num_targets), sizeof(*mx));
- 	for (dst_cnt = i = 0; i < rename_dst_nr; i++) {
--		struct diff_filespec *two = rename_dst[i].two;
-+		struct diff_filespec *two = rename_dst[i].p->two;
- 		struct diff_score *m;
- 
--		if (rename_dst[i].pair)
-+		if (rename_dst[i].is_rename)
- 			continue; /* dealt with exact match already. */
- 
- 		m = &mx[dst_cnt * NUM_CANDIDATE_PER_DST];
-@@ -628,22 +631,8 @@ void diffcore_rename(struct diff_options *options)
- 			diff_q(&outq, p);
- 		}
- 		else if (!DIFF_FILE_VALID(p->one) && DIFF_FILE_VALID(p->two)) {
--			/*
--			 * Addition
--			 *
--			 * We would output this add record if it has
--			 * not been turned into a rename/copy already.
--			 */
--			struct diff_rename_dst *dst = locate_rename_dst(p->two);
--			if (dst && dst->pair) {
--				diff_q(&outq, dst->pair);
--				pair_to_free = p;
--			}
--			else
--				/* no matching rename/copy source, so
--				 * record this as an addition.
--				 */
--				diff_q(&outq, p);
-+			/* Addition */
-+			diff_q(&outq, p);
- 		}
- 		else if (DIFF_FILE_VALID(p->one) && !DIFF_FILE_VALID(p->two)) {
- 			/*
-@@ -664,8 +653,9 @@ void diffcore_rename(struct diff_options *options)
- 			 */
- 			if (DIFF_PAIR_BROKEN(p)) {
- 				/* broken delete */
--				struct diff_rename_dst *dst = locate_rename_dst(p->one);
--				if (dst && dst->pair)
-+				struct diff_rename_dst *dst = locate_rename_dst(p);
-+				assert(dst);
-+				if (dst->is_rename)
- 					/* counterpart is now rename/copy */
- 					pair_to_free = p;
- 			}
-@@ -675,16 +665,14 @@ void diffcore_rename(struct diff_options *options)
- 					pair_to_free = p;
- 			}
- 
--			if (pair_to_free)
--				;
--			else
-+			if (!pair_to_free)
- 				diff_q(&outq, p);
- 		}
- 		else if (!diff_unmodified_pair(p))
- 			/* all the usual ones need to be kept */
- 			diff_q(&outq, p);
- 		else
--			/* no need to keep unmodified pairs */
-+			/* no need to keep unmodified pairs; FIXME: remove earlier? */
- 			pair_to_free = p;
- 
- 		if (pair_to_free)
-@@ -697,11 +685,16 @@ void diffcore_rename(struct diff_options *options)
- 	diff_debug_queue("done collapsing", q);
- 
- 	for (i = 0; i < rename_dst_nr; i++)
--		free_filespec(rename_dst[i].two);
-+		if (rename_dst[i].filespec_to_free)
-+			free_filespec(rename_dst[i].filespec_to_free);
- 
- 	FREE_AND_NULL(rename_dst);
- 	rename_dst_nr = rename_dst_alloc = 0;
- 	FREE_AND_NULL(rename_src);
- 	rename_src_nr = rename_src_alloc = 0;
-+	if (break_idx) {
-+		strintmap_clear(break_idx);
-+		FREE_AND_NULL(break_idx);
-+	}
- 	return;
- }
+ static int basename_same(struct diff_filespec *src, struct diff_filespec *dst)
 -- 
 gitgitgadget
+
