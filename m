@@ -8,58 +8,58 @@ X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D35F0C433FE
-	for <git@archiver.kernel.org>; Sun,  6 Dec 2020 13:17:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B608DC433FE
+	for <git@archiver.kernel.org>; Sun,  6 Dec 2020 13:17:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7F37C2310E
-	for <git@archiver.kernel.org>; Sun,  6 Dec 2020 13:17:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 796252311B
+	for <git@archiver.kernel.org>; Sun,  6 Dec 2020 13:17:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727842AbgLFNQo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Dec 2020 08:16:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33836 "EHLO
+        id S1727902AbgLFNRr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Dec 2020 08:17:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727395AbgLFNQn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Dec 2020 08:16:43 -0500
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 347E4C0613D0
-        for <git@vger.kernel.org>; Sun,  6 Dec 2020 05:16:03 -0800 (PST)
-Received: by mail-wm1-x341.google.com with SMTP id 3so11115181wmg.4
-        for <git@vger.kernel.org>; Sun, 06 Dec 2020 05:16:03 -0800 (PST)
+        with ESMTP id S1727395AbgLFNRq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Dec 2020 08:17:46 -0500
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80EE8C0613D0
+        for <git@vger.kernel.org>; Sun,  6 Dec 2020 05:17:06 -0800 (PST)
+Received: by mail-wr1-x444.google.com with SMTP id p8so10044670wrx.5
+        for <git@vger.kernel.org>; Sun, 06 Dec 2020 05:17:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:from:date:subject:fcc:content-transfer-encoding
          :mime-version:to:cc;
-        bh=YoSp0hbjWHC1vGp6Zmj0pR0p0PHFZtuEY6HXo+U4EPo=;
-        b=jRj1hAyD5IjTuj049VyQExqo/ZNSIIjT3ULZnIIsOuvW+Sv+NxFjZW+DpZkc8tB+Qt
-         k1RzuCU7aRT83inAmPLqT4+B8lhAQ5WvyUeZj9C6W6lBKnAHSry2rN4OIMZYI5CVK4Je
-         UzcOj5jrUrzXFiwMlDWDnXonmEFWx4H8MbBg6sh3758dgEN/8mxH3tmeTOvgtpQYFgQg
-         HxqjFs10rKid2csogVCN/JtK/0/XKgv8ktaapl5IL6LGk30k65bBfXSl3zscOz5xMCOX
-         vOql7dsF3UAD5sYvcgM+ldu5efYKmfL9RI/4/Gkwglql4pY8Veqez/GOsWUGMUWAJKxV
-         KL4w==
+        bh=PRU6TKl281LMoYfk/yEQRRK9OaUD9gNB/ucYSBnrdnI=;
+        b=DwhJ7ZXsL6sI6NW+BSF4rtttccGp9CzgKFTupw8rqA6ByDyxY3Hde2xEo/39TEmBvS
+         z62nkyOhTHdhWqlUr47iOyr0CvBd+lw2rwBZdmL5+hU4dHxAh7mDAqc1NJ9mydYcHMZA
+         lLFQaIiwJP7zhvVXIZbK26JXz6yUZA7/hG59sQyHzq6bxiOz4yK2Vpbo73BFcOYOLYNT
+         EbotMtn94O/9wsz65Z1eBy3O95FK/UcRRBmt3hgqjRzdQMwHXgBBipc9vTGegeo3klJk
+         czeB9Hhqr8R0ip4jeb7lxtAx8aRDsIPGmkeoPbFzqzd0I8t35Fdi86RjF78UG3K/zEPr
+         2gQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=YoSp0hbjWHC1vGp6Zmj0pR0p0PHFZtuEY6HXo+U4EPo=;
-        b=iHCWW7RF30/y7gd1Oecy0EGhmocsuCm58hR2LHEYdemCXEf0CnIiypL1WurxNDfZ75
-         heB9EqI7GXL/yJCJ9S+PkTExv9JkYqVaZQLO5HCP8JyT2Hs2HJuYtivTxvo8PiJNKXjJ
-         yqvHCuScKt6YXQfwKkGuh25cYsJCDntk6hF/l75wppS/iwkBe5Rl1rBddDeQGRYKFs7V
-         HkXBS6OaJHCtTv9VR+UJS0ePOE9KfHywvEmvtWatH6A2f/DmvZBd7GVEyGP9wS9YpurX
-         Yrhh2f1EykGurlF5+VArhcsBA/VVzgXGdsQ5hvmxN5doC3JC63CTyoqPfMmA/01JAgxV
-         6Uqw==
-X-Gm-Message-State: AOAM530fEriTwdNucYCFC+T1QIC/M8psyM7+ft5Ead6WGIeDQ+KfzJ7m
-        0R4xVCZ3S3DYo1LKSuus6Uqtp+bdFiM=
-X-Google-Smtp-Source: ABdhPJzIkq7GfjF16aMprpbqM3EFKrM+ytAxwpc0QFRFKZ5hLREGcKacSUbyQsuWOfz+S2pxTRUEdA==
-X-Received: by 2002:a1c:b78a:: with SMTP id h132mr13594124wmf.141.1607260561462;
-        Sun, 06 Dec 2020 05:16:01 -0800 (PST)
+        bh=PRU6TKl281LMoYfk/yEQRRK9OaUD9gNB/ucYSBnrdnI=;
+        b=DMApY2teUCp1Nb0v9tqIyd/pRUfKmNRtqv+Zrf9sgWim0ml6ImQj0SpuTI7U83zmmc
+         73JJPjYKFRjLCaCiZRIek8F+12cAmPpR4qBQtxZ/6i0hRhW+AIsxi71xHd3EpuyxAsfU
+         F34d+85sz7kfA+2fOX0xJ/A/WjQzrxAFzeWOQWZr73k7pSYZL/9ifGkQWD3z5IzTV8Fx
+         ac21Vc0Gna5QBTH9+nUpRJKrgydeV8QJsaWu7GIGnB4MaPba1DkEAO68hrY1wYeWJZe0
+         L6uKaF8l+f7PhwXoovXziZO3xUvxLLjIPgyCRNtj3+2jBcxbv6Y842scf4zYRKCyHOU+
+         EgrA==
+X-Gm-Message-State: AOAM533x23U/iltFsqeA/q0H3b4FxzpKsJ/l2naHvgBUpQi47a97hgfO
+        bYLZ1MBoz/RDyHzslICIgttNUFZw4MQ=
+X-Google-Smtp-Source: ABdhPJwGp1V3ffydfweVQhTqexApFmI/lLZjv1WLPuHQ14o1wHKVYa0SBlQirr6HhbMK9YxaB7sP8Q==
+X-Received: by 2002:adf:b64b:: with SMTP id i11mr14527212wre.78.1607260624972;
+        Sun, 06 Dec 2020 05:17:04 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d13sm1048518wrn.90.2020.12.06.05.16.00
+        by smtp.gmail.com with ESMTPSA id u85sm10647592wmu.43.2020.12.06.05.17.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Dec 2020 05:16:00 -0800 (PST)
-Message-Id: <pull.810.git.1607260559712.gitgitgadget@gmail.com>
+        Sun, 06 Dec 2020 05:17:04 -0800 (PST)
+Message-Id: <pull.809.git.1607260623935.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 06 Dec 2020 13:15:59 +0000
-Subject: [PATCH] t6300: avoid using the default name of the initial branch
+Date:   Sun, 06 Dec 2020 13:17:03 +0000
+Subject: [PATCH] t5310: stop expecting the default branch name `master`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,443 +73,161 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Our test suite currently only passes when `git init` uses the name
-`master` for the initial branch. This would stop us from changing the
-default branch name.
+To open the door for changing the fall-back value for
+`init.defaultBranch` when it is not set by the user, we started to
+modify the test suite to work with any such fall-back value (instead of
+expecting the default branch name to be `master`).
 
-Let's adjust t6300 so that it does not rely on any specific default
-branch name. This trick is done by (force-)renaming the initial branch
-to the name `main` in the `setup` and the `:remotename and :remoteref`
-test cases, and then replacing all mentions of `master` and `MASTER`
-with `main` and `MAIN`, respectively.
+To that end, we specifically rename the initial branch from whatever it
+was called to `second` (forcing it, just in case that the hard-coded
+fall-back is `second`, in which case the rename is a no-op that would
+fail unless forced).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
-    t6300: avoid using the default name of the initial branch
+    Adjust t5310 to be independent of the default branch name
     
-    This patch targets master (there is one other topic in flight touching
-    t6300: dr/push-remoteref-fix, but it does not conflict with this patch).
+    Yet another patch making the test suite stop relying on master being the
+    default branch name.
+    
+    This one goes on top of tb/pack-bitmap, and requires an update of
+    js/default-branch-name-tests-final-stretch (it no longer needs to
+    hard-code GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME in t5310).
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-810%2Fdscho%2Ft6300-and-the-default-branch-name-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-810/dscho/t6300-and-the-default-branch-name-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/810
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-809%2Fdscho%2Ft5310-and-the-default-branch-name-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-809/dscho/t5310-and-the-default-branch-name-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/809
 
- t/t6300-for-each-ref.sh | 178 ++++++++++++++++++++--------------------
- 1 file changed, 90 insertions(+), 88 deletions(-)
+ t/t5310-pack-bitmaps.sh | 37 +++++++++++++++++++------------------
+ 1 file changed, 19 insertions(+), 18 deletions(-)
 
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index b3590231899..810cdbb6f88 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -28,12 +28,13 @@ test_expect_success setup '
- 	echo "Using $datestamp" > one &&
- 	git add one &&
- 	git commit -m "Initial" &&
-+	git branch -M main &&
- 	setdate_and_increment &&
- 	git tag -a -m "Tagging at $datestamp" testtag &&
--	git update-ref refs/remotes/origin/master master &&
-+	git update-ref refs/remotes/origin/main main &&
- 	git remote add origin nowhere &&
--	git config branch.master.remote origin &&
--	git config branch.master.merge refs/heads/master &&
-+	git config branch.main.remote origin &&
-+	git config branch.main.merge refs/heads/main &&
- 	git remote add myfork elsewhere &&
- 	git config remote.pushdefault myfork &&
- 	git config push.default current
-@@ -41,7 +42,7 @@ test_expect_success setup '
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index a83e7a93fbc..55b2cde378b 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -23,12 +23,12 @@ has_any () {
+ # To ensure the logic for "maximal commits" is exercised, make
+ # the repository a bit more complicated.
+ #
+-#    other                         master
++#    other                         second
+ #      *                             *
+ # (99 commits)                  (99 commits)
+ #      *                             *
+ #      |\                           /|
+-#      | * octo-other  octo-master * |
++#      | * octo-other  octo-second * |
+ #      |/|\_________  ____________/|\|
+ #      | \          \/  __________/  |
+ #      |  | ________/\ /             |
+@@ -48,10 +48,10 @@ has_any () {
+ #
+ # The important part for the maximal commit algorithm is how
+ # the bitmasks are extended. Assuming starting bit positions
+-# for master (bit 0) and other (bit 1), the bitmasks at the
++# for second (bit 0) and other (bit 1), the bitmasks at the
+ # end should be:
+ #
+-#      master: 1       (maximal, selected)
++#      second: 1       (maximal, selected)
+ #       other: 01      (maximal, selected)
+ #      (base): 11 (maximal)
+ #
+@@ -64,6 +64,7 @@ has_any () {
  
- test_atom() {
- 	case "$1" in
--		head) ref=refs/heads/master ;;
-+		head) ref=refs/heads/main ;;
- 		 tag) ref=refs/tags/testtag ;;
- 		 sym) ref=refs/heads/sym ;;
- 		   *) ref=$1 ;;
-@@ -76,49 +77,49 @@ test_atom() {
- hexlen=$(test_oid hexsz)
- disklen=$(test_oid disklen)
+ test_expect_success 'setup repo with moderate-sized history' '
+ 	test_commit_bulk --id=file 10 &&
++	git branch -M second &&
+ 	git checkout -b other HEAD~5 &&
+ 	test_commit_bulk --id=side 10 &&
  
--test_atom head refname refs/heads/master
--test_atom head refname: refs/heads/master
--test_atom head refname:short master
--test_atom head refname:lstrip=1 heads/master
--test_atom head refname:lstrip=2 master
--test_atom head refname:lstrip=-1 master
--test_atom head refname:lstrip=-2 heads/master
-+test_atom head refname refs/heads/main
-+test_atom head refname: refs/heads/main
-+test_atom head refname:short main
-+test_atom head refname:lstrip=1 heads/main
-+test_atom head refname:lstrip=2 main
-+test_atom head refname:lstrip=-1 main
-+test_atom head refname:lstrip=-2 heads/main
- test_atom head refname:rstrip=1 refs/heads
- test_atom head refname:rstrip=2 refs
- test_atom head refname:rstrip=-1 refs
- test_atom head refname:rstrip=-2 refs/heads
--test_atom head refname:strip=1 heads/master
--test_atom head refname:strip=2 master
--test_atom head refname:strip=-1 master
--test_atom head refname:strip=-2 heads/master
--test_atom head upstream refs/remotes/origin/master
--test_atom head upstream:short origin/master
--test_atom head upstream:lstrip=2 origin/master
--test_atom head upstream:lstrip=-2 origin/master
-+test_atom head refname:strip=1 heads/main
-+test_atom head refname:strip=2 main
-+test_atom head refname:strip=-1 main
-+test_atom head refname:strip=-2 heads/main
-+test_atom head upstream refs/remotes/origin/main
-+test_atom head upstream:short origin/main
-+test_atom head upstream:lstrip=2 origin/main
-+test_atom head upstream:lstrip=-2 origin/main
- test_atom head upstream:rstrip=2 refs/remotes
- test_atom head upstream:rstrip=-2 refs/remotes
--test_atom head upstream:strip=2 origin/master
--test_atom head upstream:strip=-2 origin/master
--test_atom head push refs/remotes/myfork/master
--test_atom head push:short myfork/master
--test_atom head push:lstrip=1 remotes/myfork/master
--test_atom head push:lstrip=-1 master
-+test_atom head upstream:strip=2 origin/main
-+test_atom head upstream:strip=-2 origin/main
-+test_atom head push refs/remotes/myfork/main
-+test_atom head push:short myfork/main
-+test_atom head push:lstrip=1 remotes/myfork/main
-+test_atom head push:lstrip=-1 main
- test_atom head push:rstrip=1 refs/remotes/myfork
- test_atom head push:rstrip=-1 refs
--test_atom head push:strip=1 remotes/myfork/master
--test_atom head push:strip=-1 master
-+test_atom head push:strip=1 remotes/myfork/main
-+test_atom head push:strip=-1 main
- test_atom head objecttype commit
- test_atom head objectsize $((131 + hexlen))
- test_atom head objectsize:disk $disklen
- test_atom head deltabase $ZERO_OID
--test_atom head objectname $(git rev-parse refs/heads/master)
--test_atom head objectname:short $(git rev-parse --short refs/heads/master)
--test_atom head objectname:short=1 $(git rev-parse --short=1 refs/heads/master)
--test_atom head objectname:short=10 $(git rev-parse --short=10 refs/heads/master)
--test_atom head tree $(git rev-parse refs/heads/master^{tree})
--test_atom head tree:short $(git rev-parse --short refs/heads/master^{tree})
--test_atom head tree:short=1 $(git rev-parse --short=1 refs/heads/master^{tree})
--test_atom head tree:short=10 $(git rev-parse --short=10 refs/heads/master^{tree})
-+test_atom head objectname $(git rev-parse refs/heads/main)
-+test_atom head objectname:short $(git rev-parse --short refs/heads/main)
-+test_atom head objectname:short=1 $(git rev-parse --short=1 refs/heads/main)
-+test_atom head objectname:short=10 $(git rev-parse --short=10 refs/heads/main)
-+test_atom head tree $(git rev-parse refs/heads/main^{tree})
-+test_atom head tree:short $(git rev-parse --short refs/heads/main^{tree})
-+test_atom head tree:short=1 $(git rev-parse --short=1 refs/heads/main^{tree})
-+test_atom head tree:short=10 $(git rev-parse --short=10 refs/heads/main^{tree})
- test_atom head parent ''
- test_atom head parent:short ''
- test_atom head parent:short=1 ''
-@@ -171,8 +172,8 @@ test_atom tag deltabase $ZERO_OID
- test_atom tag '*deltabase' $ZERO_OID
- test_atom tag objectname $(git rev-parse refs/tags/testtag)
- test_atom tag objectname:short $(git rev-parse --short refs/tags/testtag)
--test_atom head objectname:short=1 $(git rev-parse --short=1 refs/heads/master)
--test_atom head objectname:short=10 $(git rev-parse --short=10 refs/heads/master)
-+test_atom head objectname:short=1 $(git rev-parse --short=1 refs/heads/main)
-+test_atom head objectname:short=10 $(git rev-parse --short=10 refs/heads/main)
- test_atom tag tree ''
- test_atom tag tree:short ''
- test_atom tag tree:short=1 ''
-@@ -253,7 +254,7 @@ test_date () {
- 	author_date=$3 &&
- 	tagger_date=$4 &&
- 	cat >expected <<-EOF &&
--	'refs/heads/master' '$committer_date' '$author_date'
-+	'refs/heads/main' '$committer_date' '$author_date'
- 	'refs/tags/testtag' '$tagger_date'
- 	EOF
- 	(
-@@ -375,8 +376,8 @@ test_expect_success 'exercise strftime with odd fields' '
- '
+@@ -71,13 +72,13 @@ test_expect_success 'setup repo with moderate-sized history' '
+ 	# ambiguous merge-bases
  
- cat >expected <<\EOF
--refs/heads/master
--refs/remotes/origin/master
-+refs/heads/main
-+refs/remotes/origin/main
- refs/tags/testtag
- EOF
+ 	git checkout -b merge-left other~2 &&
+-	git merge master~2 -m "merge-left" &&
++	git merge second~2 -m "merge-left" &&
  
-@@ -388,8 +389,8 @@ test_expect_success 'Verify ascending sort' '
+-	git checkout -b merge-right master~1 &&
++	git checkout -b merge-right second~1 &&
+ 	git merge other~1 -m "merge-right" &&
  
- cat >expected <<\EOF
- refs/tags/testtag
--refs/remotes/origin/master
--refs/heads/master
-+refs/remotes/origin/main
-+refs/heads/main
- EOF
+-	git checkout -b octo-master master &&
+-	git merge merge-left merge-right -m "octopus-master" &&
++	git checkout -b octo-second second &&
++	git merge merge-left merge-right -m "octopus-second" &&
  
- test_expect_success 'Verify descending sort' '
-@@ -424,8 +425,8 @@ test_expect_success 'exercise glob patterns with prefixes' '
- '
+ 	git checkout -b octo-other other &&
+ 	git merge merge-left merge-right -m "octopus-other" &&
+@@ -85,24 +86,24 @@ test_expect_success 'setup repo with moderate-sized history' '
+ 	git checkout other &&
+ 	git merge octo-other -m "pull octopus" &&
  
- cat >expected <<\EOF
--'refs/heads/master'
--'refs/remotes/origin/master'
-+'refs/heads/main'
-+'refs/remotes/origin/main'
- 'refs/tags/testtag'
- EOF
- 
-@@ -445,8 +446,8 @@ test_expect_success 'Quoting style: python' '
- '
- 
- cat >expected <<\EOF
--"refs/heads/master"
--"refs/remotes/origin/master"
-+"refs/heads/main"
-+"refs/remotes/origin/main"
- "refs/tags/testtag"
- EOF
- 
-@@ -473,8 +474,8 @@ test_atom head upstream:nobracket,track 'ahead 1'
- 
- test_expect_success 'setup for push:track[short]' '
- 	test_commit third &&
--	git update-ref refs/remotes/myfork/master master &&
--	git reset master~1
-+	git update-ref refs/remotes/myfork/main main &&
-+	git reset main~1
- '
- 
- test_atom head push:track '[behind 1]'
-@@ -490,8 +491,8 @@ test_expect_success 'Check that :track[short] works when upstream is invalid' '
- 	[gone]
- 
- 	EOF
--	test_when_finished "git config branch.master.merge refs/heads/master" &&
--	git config branch.master.merge refs/heads/does-not-exist &&
-+	test_when_finished "git config branch.main.merge refs/heads/main" &&
-+	git config branch.main.merge refs/heads/does-not-exist &&
- 	git for-each-ref \
- 		--format="%(upstream:track)$LF%(upstream:trackshort)" \
- 		refs/heads >actual &&
-@@ -504,9 +505,9 @@ test_expect_success 'Check for invalid refname format' '
- 
- test_expect_success 'set up color tests' '
- 	cat >expected.color <<-EOF &&
--	$(git rev-parse --short refs/heads/master) <GREEN>master<RESET>
--	$(git rev-parse --short refs/remotes/myfork/master) <GREEN>myfork/master<RESET>
--	$(git rev-parse --short refs/remotes/origin/master) <GREEN>origin/master<RESET>
-+	$(git rev-parse --short refs/heads/main) <GREEN>main<RESET>
-+	$(git rev-parse --short refs/remotes/myfork/main) <GREEN>myfork/main<RESET>
-+	$(git rev-parse --short refs/remotes/origin/main) <GREEN>origin/main<RESET>
- 	$(git rev-parse --short refs/tags/testtag) <GREEN>testtag<RESET>
- 	$(git rev-parse --short refs/tags/third) <GREEN>third<RESET>
- 	$(git rev-parse --short refs/tags/two) <GREEN>two<RESET>
-@@ -538,8 +539,8 @@ test_expect_success 'color.ui=always does not override tty check' '
- '
- 
- cat >expected <<\EOF
--heads/master
--tags/master
-+heads/main
-+tags/main
- EOF
- 
- test_expect_success 'Check ambiguous head and tag refs (strict)' '
-@@ -549,19 +550,19 @@ test_expect_success 'Check ambiguous head and tag refs (strict)' '
- 	git add one &&
- 	git commit -m "Branch" &&
- 	setdate_and_increment &&
--	git tag -m "Tagging at $datestamp" master &&
--	git for-each-ref --format "%(refname:short)" refs/heads/master refs/tags/master >actual &&
-+	git tag -m "Tagging at $datestamp" main &&
-+	git for-each-ref --format "%(refname:short)" refs/heads/main refs/tags/main >actual &&
- 	test_cmp expected actual
- '
- 
- cat >expected <<\EOF
--heads/master
--master
-+heads/main
-+main
- EOF
- 
- test_expect_success 'Check ambiguous head and tag refs (loose)' '
- 	git config --bool core.warnambiguousrefs false &&
--	git for-each-ref --format "%(refname:short)" refs/heads/master refs/tags/master >actual &&
-+	git for-each-ref --format "%(refname:short)" refs/heads/main refs/tags/main >actual &&
- 	test_cmp expected actual
- '
- 
-@@ -571,7 +572,7 @@ ambiguous
- EOF
- 
- test_expect_success 'Check ambiguous head and tag refs II (loose)' '
 -	git checkout master &&
-+	git checkout main &&
- 	git tag ambiguous testtag^0 &&
- 	git branch ambiguous testtag^0 &&
- 	git for-each-ref --format "%(refname:short)" refs/heads/ambiguous refs/tags/ambiguous >actual &&
-@@ -705,8 +706,8 @@ body contents
- $sig"
+-	git merge octo-master -m "pull octopus" &&
++	git checkout second &&
++	git merge octo-second -m "pull octopus" &&
  
- test_expect_success 'set up refs pointing to tree and blob' '
--	git update-ref refs/mytrees/first refs/heads/master^{tree} &&
--	git update-ref refs/myblobs/first refs/heads/master:one
-+	git update-ref refs/mytrees/first refs/heads/main^{tree} &&
-+	git update-ref refs/myblobs/first refs/heads/main:one
- '
+ 	# Remove these branches so they are not selected
+ 	# as bitmap tips
+ 	git branch -D merge-left &&
+ 	git branch -D merge-right &&
+ 	git branch -D octo-other &&
+-	git branch -D octo-master &&
++	git branch -D octo-second &&
  
- test_atom refs/mytrees/first subject ""
-@@ -778,7 +779,7 @@ test_expect_success 'equivalent sorts fall back on refname' '
- '
+ 	# add padding to make these merges less interesting
+ 	# and avoid having them selected for bitmaps
+ 	test_commit_bulk --id=file 100 &&
+ 	git checkout other &&
+ 	test_commit_bulk --id=side 100 &&
+-	git checkout master &&
++	git checkout second &&
  
- test_expect_success 'do not dereference NULL upon %(HEAD) on unborn branch' '
--	test_when_finished "git checkout master" &&
-+	test_when_finished "git checkout main" &&
- 	git for-each-ref --format="%(HEAD) %(refname:short)" refs/heads/ >actual &&
- 	sed -e "s/^\* /  /" actual >expect &&
- 	git checkout --orphan orphaned-branch &&
-@@ -815,9 +816,9 @@ test_expect_success '%(trailers:unfold) unfolds trailers' '
- 		unfold <trailers
- 		echo
- 	} >expect &&
--	git for-each-ref --format="%(trailers:unfold)" refs/heads/master >actual &&
-+	git for-each-ref --format="%(trailers:unfold)" refs/heads/main >actual &&
- 	test_cmp expect actual &&
--	git for-each-ref --format="%(contents:trailers:unfold)" refs/heads/master >actual &&
-+	git for-each-ref --format="%(contents:trailers:unfold)" refs/heads/main >actual &&
+-	bitmaptip=$(git rev-parse master) &&
++	bitmaptip=$(git rev-parse second) &&
+ 	blob=$(echo tagged-blob | git hash-object -w --stdin) &&
+ 	git tag tagged-blob $blob &&
+ 	git config repack.writebitmaps true
+@@ -141,8 +142,8 @@ rev_list_tests_head () {
+ 	'
+ 
+ 	test_expect_success "counting non-linear history ($state, $branch)" '
+-		git rev-list --count other...master >expect &&
+-		git rev-list --use-bitmap-index --count other...master >actual &&
++		git rev-list --count other...second >expect &&
++		git rev-list --use-bitmap-index --count other...second >actual &&
+ 		test_cmp expect actual
+ 	'
+ 
+@@ -179,7 +180,7 @@ rev_list_tests_head () {
+ rev_list_tests () {
+ 	state=$1
+ 
+-	for branch in "master" "other"
++	for branch in "second" "other"
+ 	do
+ 		rev_list_tests_head
+ 	done
+@@ -215,7 +216,7 @@ test_expect_success 'setup further non-bitmapped commits' '
+ rev_list_tests 'partial bitmap'
+ 
+ test_expect_success 'fetch (partial bitmap)' '
+-	git --git-dir=clone.git fetch origin master:master &&
++	git --git-dir=clone.git fetch origin second:second &&
+ 	git rev-parse HEAD >expect &&
+ 	git --git-dir=clone.git rev-parse HEAD >actual &&
  	test_cmp expect actual
+@@ -317,7 +318,7 @@ test_expect_success 'full repack, reusing previous bitmaps' '
  '
  
-@@ -826,9 +827,9 @@ test_expect_success '%(trailers:only) shows only "key: value" trailers' '
- 		grep -v patch.description <trailers &&
- 		echo
- 	} >expect &&
--	git for-each-ref --format="%(trailers:only)" refs/heads/master >actual &&
-+	git for-each-ref --format="%(trailers:only)" refs/heads/main >actual &&
- 	test_cmp expect actual &&
--	git for-each-ref --format="%(contents:trailers:only)" refs/heads/master >actual &&
-+	git for-each-ref --format="%(contents:trailers:only)" refs/heads/main >actual &&
+ test_expect_success 'fetch (full bitmap)' '
+-	git --git-dir=clone.git fetch origin master:master &&
++	git --git-dir=clone.git fetch origin second:second &&
+ 	git rev-parse HEAD >expect &&
+ 	git --git-dir=clone.git rev-parse HEAD >actual &&
  	test_cmp expect actual
- '
- 
-@@ -837,13 +838,13 @@ test_expect_success '%(trailers:only) and %(trailers:unfold) work together' '
- 		grep -v patch.description <trailers | unfold &&
- 		echo
- 	} >expect &&
--	git for-each-ref --format="%(trailers:only,unfold)" refs/heads/master >actual &&
-+	git for-each-ref --format="%(trailers:only,unfold)" refs/heads/main >actual &&
- 	test_cmp expect actual &&
--	git for-each-ref --format="%(trailers:unfold,only)" refs/heads/master >actual &&
-+	git for-each-ref --format="%(trailers:unfold,only)" refs/heads/main >actual &&
- 	test_cmp actual actual &&
--	git for-each-ref --format="%(contents:trailers:only,unfold)" refs/heads/master >actual &&
-+	git for-each-ref --format="%(contents:trailers:only,unfold)" refs/heads/main >actual &&
- 	test_cmp expect actual &&
--	git for-each-ref --format="%(contents:trailers:unfold,only)" refs/heads/master >actual &&
-+	git for-each-ref --format="%(contents:trailers:unfold,only)" refs/heads/main >actual &&
- 	test_cmp actual actual
- '
- 
-@@ -867,7 +868,7 @@ test_expect_success 'if arguments, %(contents:trailers) shows error if colon is
- '
- 
- test_expect_success 'basic atom: head contents:trailers' '
--	git for-each-ref --format="%(contents:trailers)" refs/heads/master >actual &&
-+	git for-each-ref --format="%(contents:trailers)" refs/heads/main >actual &&
- 	sanitize_pgp <actual >actual.clean &&
- 	# git for-each-ref ends with a blank line
- 	cat >expect <<-EOF &&
-@@ -896,16 +897,16 @@ test_expect_success 'trailer parsing not fooled by --- line' '
- 		echo "trailer: right" &&
- 		echo
- 	} >expect &&
--	git for-each-ref --format="%(trailers)" refs/heads/master >actual &&
-+	git for-each-ref --format="%(trailers)" refs/heads/main >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'Add symbolic ref for the following tests' '
--	git symbolic-ref refs/heads/sym refs/heads/master
-+	git symbolic-ref refs/heads/sym refs/heads/main
- '
- 
- cat >expected <<EOF
--refs/heads/master
-+refs/heads/main
- EOF
- 
- test_expect_success 'Verify usage of %(symref) atom' '
-@@ -914,7 +915,7 @@ test_expect_success 'Verify usage of %(symref) atom' '
- '
- 
- cat >expected <<EOF
--heads/master
-+heads/main
- EOF
- 
- test_expect_success 'Verify usage of %(symref:short) atom' '
-@@ -923,8 +924,8 @@ test_expect_success 'Verify usage of %(symref:short) atom' '
- '
- 
- cat >expected <<EOF
--master
--heads/master
-+main
-+heads/main
- EOF
- 
- test_expect_success 'Verify usage of %(symref:lstrip) atom' '
-@@ -953,22 +954,23 @@ test_expect_success ':remotename and :remoteref' '
- 	(
- 		cd remote-tests &&
- 		test_commit initial &&
-+		git branch -M main &&
- 		git remote add from fifth.coffee:blub &&
--		git config branch.master.remote from &&
--		git config branch.master.merge refs/heads/stable &&
-+		git config branch.main.remote from &&
-+		git config branch.main.merge refs/heads/stable &&
- 		git remote add to southridge.audio:repo &&
- 		git config remote.to.push "refs/heads/*:refs/heads/pushed/*" &&
--		git config branch.master.pushRemote to &&
-+		git config branch.main.pushRemote to &&
- 		for pair in "%(upstream)=refs/remotes/from/stable" \
- 			"%(upstream:remotename)=from" \
- 			"%(upstream:remoteref)=refs/heads/stable" \
--			"%(push)=refs/remotes/to/pushed/master" \
-+			"%(push)=refs/remotes/to/pushed/main" \
- 			"%(push:remotename)=to" \
--			"%(push:remoteref)=refs/heads/pushed/master"
-+			"%(push:remoteref)=refs/heads/pushed/main"
- 		do
- 			echo "${pair#*=}" >expect &&
- 			git for-each-ref --format="${pair%=*}" \
--				refs/heads/master >actual &&
-+				refs/heads/main >actual &&
- 			test_cmp expect actual
- 		done &&
- 		git branch push-simple &&
-@@ -981,12 +983,12 @@ test_expect_success ':remotename and :remoteref' '
- '
- 
- test_expect_success 'for-each-ref --ignore-case ignores case' '
--	git for-each-ref --format="%(refname)" refs/heads/MASTER >actual &&
-+	git for-each-ref --format="%(refname)" refs/heads/MAIN >actual &&
- 	test_must_be_empty actual &&
- 
--	echo refs/heads/master >expect &&
-+	echo refs/heads/main >expect &&
- 	git for-each-ref --format="%(refname)" --ignore-case \
--		refs/heads/MASTER >actual &&
-+		refs/heads/MAIN >actual &&
- 	test_cmp expect actual
- '
- 
 
-base-commit: 3a0b884caba2752da0af626fb2de7d597c844e8b
+base-commit: b2555b4647fd66e043db04796670df89156942b6
 -- 
 gitgitgadget
