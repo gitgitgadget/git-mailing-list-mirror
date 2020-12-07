@@ -7,33 +7,33 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 791C1C4167B
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 19:11:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD6C9C4361B
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 19:11:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3C20823428
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 19:11:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8B5CE23406
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 19:11:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726611AbgLGTLj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Dec 2020 14:11:39 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55258 "EHLO cloud.peff.net"
+        id S1726489AbgLGTLl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Dec 2020 14:11:41 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55262 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725814AbgLGTLj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Dec 2020 14:11:39 -0500
-Received: (qmail 9034 invoked by uid 109); 7 Dec 2020 19:10:58 -0000
+        id S1725814AbgLGTLl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Dec 2020 14:11:41 -0500
+Received: (qmail 9040 invoked by uid 109); 7 Dec 2020 19:11:01 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 07 Dec 2020 19:10:58 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 07 Dec 2020 19:11:01 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25674 invoked by uid 111); 7 Dec 2020 19:10:58 -0000
+Received: (qmail 25679 invoked by uid 111); 7 Dec 2020 19:11:00 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 07 Dec 2020 14:10:58 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 07 Dec 2020 14:11:00 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 7 Dec 2020 14:10:57 -0500
+Date:   Mon, 7 Dec 2020 14:11:00 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <dstolee@microsoft.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 5/9] oid-array: make sort function public
-Message-ID: <X85+QVRIX4L+k44J@coredump.intra.peff.net>
+Subject: [PATCH v2 6/9] oid-array: provide a for-loop iterator
+Message-ID: <X85+RNGwV9WWeIXZ@coredump.intra.peff.net>
 References: <X85+GbvmN4wIjsYY@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -43,67 +43,100 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We sort the oid-array as a side effect of calling the lookup or
-unique-iteration functions. But callers may want to sort it themselves
-(especially as we add new iteration options in future patches).
+We provide oid_array_for_each_unique() for iterating over the
+de-duplicated items in an array. But it's awkward to use for two
+reasons:
 
-We'll also move the check of the "sorted" flag into the sort function,
-so callers don't have to remember to check it.
+  1. It uses a callback, which means marshaling arguments into a struct
+     and passing it to the callback with a void parameter.
+
+  2. The callback doesn't know the numeric index of the oid we're
+     looking at. This is useful for things like progress meters.
+
+Iterating with a for-loop is much more natural for some cases, but the
+caller has to do the de-duping itself. However, we can provide a small
+helper to make this easier (see the docstring in the header for an
+example use).
+
+The caller does have to remember to sort the array first. We could add
+an assertion into the helper that array->sorted is set, but I didn't
+want to complicate what is otherwise a pretty fast code path.
+
+I also considered adding a full iterator type with init/next/end
+functions (similar to what we have for hashmaps). But it ended up making
+the callers much harder to read. This version keeps us close to a basic
+for-loop.
+
+Yet another option would be adding an option to sort the array and
+compact out the duplicates. This would mean iterating over the array an
+extra time, though that's probably not a big deal (we did just do an
+O(n log n) sort). But we'd still have to write a for-loop to iterate, so
+it doesn't really make anything easier for the caller.
+
+No new test, since we'll convert the callback iterator (which is covered
+by t0064, among other callers) to use the new code.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- oid-array.c | 10 +++++-----
- oid-array.h |  5 +++++
- 2 files changed, 10 insertions(+), 5 deletions(-)
+ oid-array.c |  7 ++-----
+ oid-array.h | 23 +++++++++++++++++++++++
+ 2 files changed, 25 insertions(+), 5 deletions(-)
 
 diff --git a/oid-array.c b/oid-array.c
-index 8657a5cedf..29f718d835 100644
+index 29f718d835..8e1bcedc0c 100644
 --- a/oid-array.c
 +++ b/oid-array.c
-@@ -14,8 +14,10 @@ static int void_hashcmp(const void *a, const void *b)
- 	return oidcmp(a, b);
- }
+@@ -67,11 +67,8 @@ int oid_array_for_each_unique(struct oid_array *array,
  
--static void oid_array_sort(struct oid_array *array)
-+void oid_array_sort(struct oid_array *array)
- {
-+	if (array->sorted)
-+		return;
- 	QSORT(array->oid, array->nr, void_hashcmp);
- 	array->sorted = 1;
- }
-@@ -28,8 +30,7 @@ static const unsigned char *sha1_access(size_t index, void *table)
+ 	oid_array_sort(array);
  
- int oid_array_lookup(struct oid_array *array, const struct object_id *oid)
- {
--	if (!array->sorted)
--		oid_array_sort(array);
-+	oid_array_sort(array);
- 	return sha1_pos(oid->hash, array->oid, array->nr, sha1_access);
- }
- 
-@@ -64,8 +65,7 @@ int oid_array_for_each_unique(struct oid_array *array,
- {
- 	size_t i;
- 
--	if (!array->sorted)
--		oid_array_sort(array);
-+	oid_array_sort(array);
- 
- 	for (i = 0; i < array->nr; i++) {
- 		int ret;
+-	for (i = 0; i < array->nr; i++) {
+-		int ret;
+-		if (i > 0 && oideq(array->oid + i, array->oid + i - 1))
+-			continue;
+-		ret = fn(array->oid + i, data);
++	for (i = 0; i < array->nr; i = oid_array_next_unique(array, i)) {
++		int ret = fn(array->oid + i, data);
+ 		if (ret)
+ 			return ret;
+ 	}
 diff --git a/oid-array.h b/oid-array.h
-index 2c8b64c393..6a22c0ac94 100644
+index 6a22c0ac94..72bca78b7d 100644
 --- a/oid-array.h
 +++ b/oid-array.h
-@@ -106,4 +106,9 @@ void oid_array_filter(struct oid_array *array,
- 		      for_each_oid_fn want,
- 		      void *cbdata);
+@@ -1,6 +1,8 @@
+ #ifndef OID_ARRAY_H
+ #define OID_ARRAY_H
+ 
++#include "hash.h"
++
+ /**
+  * The API provides storage and manipulation of sets of object identifiers.
+  * The emphasis is on storage and processing efficiency, making them suitable
+@@ -111,4 +113,25 @@ void oid_array_filter(struct oid_array *array,
+  */
+ void oid_array_sort(struct oid_array *array);
  
 +/**
-+ * Sort the array in order of ascending object id.
++ * Find the next unique oid in the array after position "cur".
++ * The array must be sorted for this to work. You can iterate
++ * over unique elements like this:
++ *
++ *   size_t i;
++ *   oid_array_sort(array);
++ *   for (i = 0; i < array->nr; i = oid_array_next_unique(array, i))
++ *	printf("%s", oid_to_hex(array->oids[i]);
++ *
++ * Non-unique iteration can just increment with "i++" to visit each element.
 + */
-+void oid_array_sort(struct oid_array *array);
++static inline size_t oid_array_next_unique(struct oid_array *array, size_t cur)
++{
++	do {
++		cur++;
++	} while (cur < array->nr &&
++		 oideq(array->oid + cur, array->oid + cur - 1));
++	return cur;
++}
 +
  #endif /* OID_ARRAY_H */
 -- 
