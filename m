@@ -2,142 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8EFAC4361B
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 11:53:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B248EC433FE
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 13:44:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 746EA23357
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 11:53:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 70B5D23603
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 13:44:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726979AbgLGLxE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Dec 2020 06:53:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43848 "EHLO
+        id S1726303AbgLGNoH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Dec 2020 08:44:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726935AbgLGLxE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Dec 2020 06:53:04 -0500
-Received: from mail-vs1-xe2b.google.com (mail-vs1-xe2b.google.com [IPv6:2607:f8b0:4864:20::e2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26345C0613D0
-        for <git@vger.kernel.org>; Mon,  7 Dec 2020 03:52:24 -0800 (PST)
-Received: by mail-vs1-xe2b.google.com with SMTP id b23so7359458vsp.9
-        for <git@vger.kernel.org>; Mon, 07 Dec 2020 03:52:24 -0800 (PST)
+        with ESMTP id S1726067AbgLGNoG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Dec 2020 08:44:06 -0500
+Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 729F8C0613D2
+        for <git@vger.kernel.org>; Mon,  7 Dec 2020 05:43:26 -0800 (PST)
+Received: by mail-qt1-x842.google.com with SMTP id k4so9334670qtj.10
+        for <git@vger.kernel.org>; Mon, 07 Dec 2020 05:43:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=4nPYtVbAA4FMKR68Ryo1N1IA/J2vmZ10Ic2g5jeorFs=;
-        b=ZahTrmqPVawp1e/1OSPF/vYToQLjWq1+faUEAjUgaWHx3Y9mGeq70pDXevuiYp9lvE
-         q1S1v9a+EL3gNdOK51fO+A9YSzECUUr6Lrt4Cpq1OPolGtjiWSpct6xs0hHWAko9XeVY
-         f/euwMQ3IjurIIm0svB8Z301idVf1abaK1KtVT4HjmHLYsBx6O5gd9b5sjT9BcwcRov8
-         tOX45tnDffI0N+DlCfkLtqnWAnbJLOqkCqP5sEo3X5as6qFM87Y/JfXu1m1YUcEserEm
-         AqA/49C2P1T2Eax4gIkQEzkk0SfN6OA0A5BAOPj19Zua869geJhtKIHjGpkGfQQwYWDY
-         hTJw==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=XR+LdUP5zyGOdMTqAXUwZ31aKJrHXLIToZMjP+R4/Us=;
+        b=Ze79Ay0ESJO6ous5tkVkT+FEEKGX0KtJfAgDyQAgtvQvpnzIt2uc8Rtvd2gnE+fwfN
+         vwbqRZbaUx/bWs4/ZuhFtvmD3iYAKpNAkEjjwhcMtjJBD+Tz8sNrO1NnPId0pPH9o/5j
+         eiZ8qIrHfemzUpicVumzGj3ifcQ5Y3vnxfr2lIjgOltiA9UEgEOrEdXDMMomcpbAG86X
+         bTaQbIeLV0PpwHeKSW1mFyLysKxJzsynA0oDEmnmlEdpRjuBpLvapWwRnQa5NExdw/1l
+         oCj05lgz8Y6C8sVTtPauSg3C/NA9cvYrPrkTFbHCos5uhL59ZGG69fULM6fk+xcAraCe
+         r3IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=4nPYtVbAA4FMKR68Ryo1N1IA/J2vmZ10Ic2g5jeorFs=;
-        b=cL4YvkSURkvNK8VtbAYiygqNYyIb4SI33P8YJK4YBo5kqGMaiEJSEieC4JYEl61lLe
-         qHHynV5+lKIQalSfD6VUeDbqVvYCtmNmsE1hWqXKm7pj+PiLKIdfTUlAUdXIhzi3J/sc
-         J6nHsRahXlnmf7Y/PaPHJFs66WCSPpOeIdr12MhI971UmP75TQOBZFbnbH1x30968cbB
-         RMnkjpQV8WDANqtkSkYJ40rNJhAB9NRBbjwgmwMBOcq5sLWhNmmNkX4Xqk0cc2ZjY2KE
-         UptFphFCJICG2jWnXFxnW1b2sGUgFqe0RBKHkRfLXeskM/GDwCfM8EpK3KGqNvck6LwZ
-         n9uQ==
-X-Gm-Message-State: AOAM531igsfrGrjXGmvpF83PdvwUlm0BnPCT+dhn8AtxxOlvSbNqWP8X
-        zadgrkMNNqmNtHBO7uxR+YBvg6PnjBsf70hE+z/OHg==
-X-Google-Smtp-Source: ABdhPJynJLnfhoW4/wLrLy583mq5/SUzWZzpqanO3Yj2GHLgPVjVmlrR+v16lbG4tdOKEWcYe6oebFkQZStvBZkHwCk=
-X-Received: by 2002:a67:f7c8:: with SMTP id a8mr11246547vsp.54.1607341943143;
- Mon, 07 Dec 2020 03:52:23 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=XR+LdUP5zyGOdMTqAXUwZ31aKJrHXLIToZMjP+R4/Us=;
+        b=hHd6mapUi14LfY+HLaDikxml+xykDjgZ5He7WaFfI/prRc8I9NjqyKbkZwQ9/QKGye
+         l7kUn75+YN0UYy+qbgAdQqZFjwBmBj+1PlH40ca7gVV2ed9JuLEvKYq1EU6Qg7M/55av
+         N8x5MqETqYQUGlc0QoIFIHDy67A/kO+btpF7UfecUw2yFoRJDjxZt7I2xKqbUxTJwex9
+         jSCntCuQ5BZzcHAW7k32epngih9Q7kVeNATYxDV3OHlJW45tH4iAjQY23WiQ48y2E7V2
+         4QIbVWFnQkjN8ZePA910UkZLNfoW0ElZx40nd5VV6RlLY01rFocY2yKySDuTkuvOYwsA
+         HDxA==
+X-Gm-Message-State: AOAM532Uc08sPYON3feQYque+PiPfC7t0fUtzNL0RVrlIYz3RBGijwNZ
+        UYg4A3IArAvAAFx9oAvPYB8=
+X-Google-Smtp-Source: ABdhPJy1X6Kn2zTA3AYynI/VKv+oHBt4W1f/dsCk4i05QlUpoeHvenDObQVhIxRRsCLyAtZguV5OUg==
+X-Received: by 2002:ac8:590f:: with SMTP id 15mr24209929qty.249.1607348605618;
+        Mon, 07 Dec 2020 05:43:25 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:8ddc:62f4:9dcc:ce02? ([2600:1700:e72:80a0:8ddc:62f4:9dcc:ce02])
+        by smtp.gmail.com with UTF8SMTPSA id j17sm11368577qtn.2.2020.12.07.05.43.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Dec 2020 05:43:24 -0800 (PST)
+Subject: Re: [PATCH 14/15] commit-graph: restore duplicate chunk checks
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     szeder.dev@gmail.com, me@ttaylorr.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.804.git.1607012215.gitgitgadget@gmail.com>
+ <106dd51f75699fbf4fc1e46687124995f5ef0278.1607012215.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <86e1d647-2242-8a3b-d5a3-832e37e79ff8@gmail.com>
+Date:   Mon, 7 Dec 2020 08:43:24 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101
+ Thunderbird/84.0
 MIME-Version: 1.0
-References: <pull.924.git.git.1606419582190.gitgitgadget@gmail.com>
- <xmqq5z5mruia.fsf@gitster.c.googlers.com> <CAFQ2z_M3OO_nR6dhw6zzE0orYxcawP1DaJ_EOL5=+RUiZgCo8w@mail.gmail.com>
- <xmqqtut2fp5z.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqtut2fp5z.fsf@gitster.c.googlers.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Mon, 7 Dec 2020 12:52:11 +0100
-Message-ID: <CAFQ2z_OsyseuPWxpj9S4R_Pp_Koa0JuJeO2gte+TLxDh+oHPNg@mail.gmail.com>
-Subject: Re: [PATCH] init-db: init the_repository->hash_algo early from GIT_DEFAULT_HASH
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <106dd51f75699fbf4fc1e46687124995f5ef0278.1607012215.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 4, 2020 at 12:25 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Han-Wen Nienhuys <hanwen@google.com> writes:
->
-> > If the_repository is only half-initialized at this point in init_db(),
-> > then why are we passing it in refs_init_db() just a couple of lines
-> > further? At what point the_repository considered initialized?
->
-> I would have to say it probably depends on what callees expect.  The
-> current implementation of refs_init_db() for files backend may not
-> need anything other than the hash algorithm enum, but many other
-> fields are missing, and they should ideally be populated, no?
+On 12/3/2020 11:16 AM, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
+> 
+> The previous change introduced read_table_of_contents() in the
+> chunk-format API, but dropped the duplicate chunk check from the
+> commit-graph parsing logic. This was done to keep flexibility in the
+> chunk-format API.
 
-I think so too, but it looks like a major refactoring by itself, which
-is only very tangentially related to the reftable effort, so I'd like
-to punt on it.
+"keep flexibility" is bogus. This is the biggest YAGNI of this
+series. Instead, consider the patch below instead which restores
+duplicate checks for the commit-graph file AND adds them to the
+multi-pack-index file due to the shared API.
 
-> For example, I see files_ref_store_create() cheats by calling
-> get_common_dir_noenv() to find out where the commondir is, instead
-> of ever asking the repository the ref store belongs to. At least,
-> get_main_ref_store() is told to get the ref store that belongs to
-> the_repository, and it would be the right place to learn relevant
-> pieces of information (for that matter, I am not sure why struct
-> ref_store does not have a pointer to a repository structure; perhaps
-> we are seeing the result of piecemeal evolution, not a designed
-> structure?).
->
-> > I'm a bit at a loss here; I never learned how to cleanly work with so
-> > many global variables, so I'm happy to take your suggestion.
->
-> I am only interested in giving a clear direction to future
-> developers where to populate the_repository's members (and nothing
-> else) if their enhancement needs members other than the hash
-> algorithm to be populated, as if it were the_repository initialized
-> in an already working repository (I am not talking about many global
-> variables, whichever you are referring to).
+This is also roughly half of the added lines from the previous
+patch.
 
-You said earlier that maybe ref_store should hold a link to 'struct
-repository'. However, "struct repository" doesn't have a documented
-purpose (there is literally no comment documenting its purpose), so
-it's hard to tell upfront how to correctly configure the relation
-between "struct ref_store" and "struct repository". Currently, "struct
-repository" has a pointer to 'struct ref_store", which makes it
-suspect for there to be a pointer in the other direction as well.
+Thanks,
+-Stolee
 
-The reason I bring up global variables is that without them, the code
-would enforce a much more clear relation between different entities.
+-- >8 --
 
-Looking at the definition of repository, there seems to be some
-overlap in functionality between struct repository, struct
-repository_format, struct repo_settings, and config_set, and none of
-these structs have a clearly documented role.   Before we change code,
-it's probably better to spell out what these structs are thought to
-be.
+From 0df4959d59d7f9df3e9f6326bb0acb7b84f84980 Mon Sep 17 00:00:00 2001
+From: Derrick Stolee <dstolee@microsoft.com>
+Date: Mon, 7 Dec 2020 08:36:42 -0500
+Subject: [PATCH] chunk-format: restore duplicate chunk checks
 
-> One way to do so would probably be to do something like the
-> attached.
+Before refactoring into the chunk-format API, the commit-graph parsing
+logic included checks for duplicate chunks. It is unlikely that we would
+desire a chunk-based file format that allows duplicate chunk IDs in the
+table of contents, so add duplicate checks into
+read_table_of_contents().
 
-Thanks, I've amended my patch.
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ chunk-format.c | 15 ++++++++++++++-
+ chunk-format.h |  3 +++
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
+diff --git a/chunk-format.c b/chunk-format.c
+index d888ef6ec73..a4891bbd28a 100644
+--- a/chunk-format.c
++++ b/chunk-format.c
+@@ -57,9 +57,13 @@ int read_table_of_contents(const unsigned char *mfile,
+ 			   int nr,
+ 			   void *data)
+ {
++	int i;
+ 	uint32_t chunk_id;
+ 	const unsigned char *table_of_contents = mfile + toc_offset;
+ 
++	for (i = 0; i < nr; i++)
++		chunks[i].found = 0;
++
+ 	while (toc_length--) {
+ 		int i;
+ 		uint64_t chunk_offset, next_chunk_offset;
+@@ -83,7 +87,16 @@ int read_table_of_contents(const unsigned char *mfile,
+ 		}
+ 		for (i = 0; i < nr; i++) {
+ 			if (chunks[i].id == chunk_id) {
+-				int result = chunks[i].read_fn(
++				int result;
++
++				if (chunks[i].found) {
++					error(_("duplicate chunk ID %"PRIx32" found"),
++					      chunk_id);
++					return 1;
++				}
++
++				chunks[i].found = 1;
++				result = chunks[i].read_fn(
+ 						mfile + chunk_offset,
+ 						next_chunk_offset - chunk_offset,
+ 						data);
+diff --git a/chunk-format.h b/chunk-format.h
+index 7049800f734..de45797223a 100644
+--- a/chunk-format.h
++++ b/chunk-format.h
+@@ -56,6 +56,9 @@ typedef int (*chunk_read_fn)(const unsigned char *chunk_start,
+ struct read_chunk_info {
+ 	uint32_t id;
+ 	chunk_read_fn read_fn;
++
++	/* used internally */
++	unsigned found:1;
+ };
+ 
+ int read_table_of_contents(const unsigned char *mfile,
+-- 
+2.29.0.vfs.0.0
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
-Registergericht und -nummer: Hamburg, HRB 86891
 
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
