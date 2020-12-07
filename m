@@ -2,122 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFE83C433FE
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 02:39:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D46EC433FE
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 03:19:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D1D120715
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 02:39:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 292E122D06
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 03:19:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728444AbgLGCjb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Dec 2020 21:39:31 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:55302 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726258AbgLGCjb (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 6 Dec 2020 21:39:31 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BD0B960751;
-        Mon,  7 Dec 2020 02:38:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1607308700;
-        bh=gwtoh+hf8QG0ovMRCbboJFDJhq5lpENKMlmIwOSBTa8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Ke4S1HjGsnl+WDA5yrwp22X/R3H8zbHOE9IJ0v2F677WfkcEKqBesesgwGCmPHDCQ
-         xIBdL0PYZpLbhhDrzrVOUZs6JlP0E+oK0CktFAnLYqXuTT6bk5Hxt4FTgzVoqwNcBp
-         +uTIouFYrAtR+ImHwDRBIMuoU8GLzM88c2x90hzn4VPhAxxXQVrXqcuHi9NCnC7jO1
-         HdEk2VLU/NCPuymeFQrQjp5/eOyZ1Yiqsc5RZWIVxEomxGTq7UW1UT0KHxsrzI4FUT
-         gKNOP6Wd9Ul7+ZO6c+0uDzjuRxD6P2oP1bz88SIUiiwbqttuqvHmqhHPU4FqadP0Ew
-         xjiMPq9u3Lei0ChnfK4zUou2oZXNnPSmlB+yCEUbS3CEBQ4n0PmOuWCTKKv/6yxsas
-         SYQbtAw4cFXF3m2HShlReUXZOaQnsHBfB6pT82q7YUuY/wYa1OlbZD7dKiXbmvPpo4
-         DCMB/+Dblfe1T4XBhG6JUFU6kfeVyr1OYsyTtyzT467n8wOsOjS
-Date:   Mon, 7 Dec 2020 02:38:15 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v4 2/2] rev-parse: add option for absolute or relative
- path formatting
-Message-ID: <X82Vl7YmZ1/Sr4xS@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-References: <20201206225349.3392790-1-sandals@crustytoothpaste.net>
- <20201206225349.3392790-3-sandals@crustytoothpaste.net>
- <CAPig+cS-2Vw84rejMFAiDeF8dd5gtBOmQZUMpOy2ufA8nU7W7g@mail.gmail.com>
+        id S1727040AbgLGDTL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Dec 2020 22:19:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49542 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726400AbgLGDTK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Dec 2020 22:19:10 -0500
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73E5CC0613D0
+        for <git@vger.kernel.org>; Sun,  6 Dec 2020 19:18:30 -0800 (PST)
+Received: by mail-wr1-x444.google.com with SMTP id u12so11342635wrt.0
+        for <git@vger.kernel.org>; Sun, 06 Dec 2020 19:18:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=B7AGZW5UvxFGPUhZEncz3YQz2hBLHvtJF5OfTBBZj5I=;
+        b=qoJCNZrbdhqJq5zvTe8Zh2xWUmhYGayoxu84fB6Bj2U+YxrmHDKxNmWONSzcABq9Tq
+         93aK16/sjHZY3SHbHouVg9WeJWVW5n1ur4Gpj4jsQArUtcG/kMsifbUtxsac9miNhesC
+         tMys3KLNVc4Ayosv5LoCia0hUoTsOf0bptgynJYDFrqCHi0zteTlvB2wgNiuS7PBfkvM
+         RdwlCHodqfufeH20GS/iEKf3giOsncxTKKD9/61pbkBj3eFCSJuI7J3rG/yE0yU4GOQw
+         xruTZXRV7jEDi3g1cTlxSlVbebwLrQzEViLintsbzt4rF4KkB5r09ZOQqmKsViYMm803
+         BWpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=B7AGZW5UvxFGPUhZEncz3YQz2hBLHvtJF5OfTBBZj5I=;
+        b=jP/+TNl8pLdAeMmKpLaA2mrkorOrR+4LbdLfpdutuszFsuf7cisu8ohFPWVXi9tOD+
+         Fxl8pbHiunn+TMwhi/Th6jhYi77TbG29Mh+8c+HoZEWRa5ujhViuaXNJLjiYY74mX5+I
+         mkevJoP+6lNgU3BpdC9LttlagycPNFxCH4LN2rDWkzBVvaVo37lUUFmjY+MG0lvMJLNT
+         eUKU5FeE56O94um4Dq+x/otZUVCjhoqL3OhefZ00vIwShjLP7NNd9LTVjZ5LUJMZdsiJ
+         yR0eagDSxZCX6V3xckny7YvU1BtAsvLdydk1ZAkTBsYhl4Vauo2q2/PZO99hleqLUTzR
+         KXQQ==
+X-Gm-Message-State: AOAM530EeU013Z3uyoUJfOGuXXRbygHtKu4J/fRfe8M0bFsx31QwG8BH
+        bhuqSje2IQ382TlnE7n204UWTznIkXi/a96SkNI=
+X-Google-Smtp-Source: ABdhPJz2Jap50iPbL0TLcdp6ZrOqRq+M+4ibriVEOB9FRUIsVit3WXd96wxi7wmqFmyoI+OxCODEuZZW866NArHGp1E=
+X-Received: by 2002:a5d:52c1:: with SMTP id r1mr17439198wrv.255.1607311109189;
+ Sun, 06 Dec 2020 19:18:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="3nBQJlViqAgsgF4T"
-Content-Disposition: inline
-In-Reply-To: <CAPig+cS-2Vw84rejMFAiDeF8dd5gtBOmQZUMpOy2ufA8nU7W7g@mail.gmail.com>
-User-Agent: Mutt/2.0.2 (2020-11-20)
+References: <a8e1bc9d-ce6c-d065-5a20-fee15967364d@ramsayjones.plus.com>
+In-Reply-To: <a8e1bc9d-ce6c-d065-5a20-fee15967364d@ramsayjones.plus.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Sun, 6 Dec 2020 21:18:18 -0600
+Message-ID: <CAMP44s1eb7O+bYXFyYm7BLCP37r1k80XY4MOC8RRL4nY61CMDQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/5] Documentation/Makefile: conditionally include doc.dep
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Dec 6, 2020 at 6:35 PM Ramsay Jones <ramsay@ramsayjones.plus.com> wrote:
+>
+>
+> The 'clean' target is noticeably slow on cygwin, even for a 'do-nothing'
+> invocation of 'make clean'. For example, the second 'make clean' below:
+>
+>   $ make clean >/dev/null 2>&1
+>   $ make clean
+>   GIT_VERSION = 2.29.0
+>   ...
+>   make[1]: Entering directory '/home/ramsay/git/Documentation'
+>       GEN mergetools-list.made
+>       GEN cmd-list.made
+>       GEN doc.dep
+>   ...
+>   $
+>
+> has been timed at 23.339s, using git v2.29.0, on my laptop (on old core
+> i5-4200M @ 2.50GHz, 8GB RAM, 1TB HDD).
+>
+> Notice that, since the 'doc.dep' file does not exist, make takes the
+> time (about 8s) to generate several files in order to create the doc.dep
+> include file. (If an 'include' file is missing, but a target for the
+> said file is present in the Makefile, make will execute that target
+> and, if that file now exists, throw away all its internal data and
+> re-read and re-parse the Makefile). Having spent the time to include
+> the 'doc.dep' file, the 'clean' target immediately deletes those files.
+>
+> In order to eliminate such wasted effort, use the value of the internal
+> $(MAKECMDGOALS) variable to only '-include doc.dep' when the target is
+> not 'clean'. (This drops the time down to 12.364s, on my laptop, giving
+> an improvement of 47.02%).
 
---3nBQJlViqAgsgF4T
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+All this makes sense, but I had to do "make doc.dep" and take a look
+at that file to understand why:
 
-On 2020-12-07 at 00:30:13, Eric Sunshine wrote:
-> I read the commit message and looked at the implementation so I know
-> that this option can be specified multiple times, but this
-> documentation only vaguely hints at it by saying "options following
-> it". We could do a better job of imparting that knowledge to the
-> reader by saying so explicitly, perhaps like this:
->=20
->     Controls the behavior of some path-printing options. If
->     'absolute', [...]. If 'relative', [...]. May be specified multiple
->     times, each time affecting the path-printing options which
->     follow it. The default path format is option-specific.
+doc.dep contains make rules with targets and dependencies that will
+not be used in "make clean".
 
-I'll improve the documentation in v5.
+This is in my opinion the important information. Maybe mention
+something like that in the commit message?
 
-> Since this option can be specified multiple times, should it also
-> recognize `default` to request the default behavior in addition to
-> `absolute` and `relative`? (Genuine question. Maybe real-world
-> use-cases wouldn't need it, but it would be easy to support and make
-> it functionally complete.)
+Cheers.
 
-I don't think adding the default is helpful.  I can think of situations
-where people want absolute path names or relative path names, but in
-what case would someone want, "meh, whatever Git decides to give me"?
-
-The problem we're solving here is that Git isn't consistent and can't be
-used to provide valuable information that the user wants.  If a user
-doesn't care what format the path is in, then they can always specify
-absolute and it will almost certainly be correct and work for them.
-
-> Leaking `realbuf` and `prefixbuf` here.
-
-Will fix.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---3nBQJlViqAgsgF4T
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX82VlwAKCRB8DEliiIei
-gYriAP9FVc4s2wNXrpBqzwBNhcpmshPkYz0trta5wcTqsvEPoAD8CP5syBApIYtD
-eyEioU8Q0GNDR7Swc/qVHJ4fljmlKgY=
-=4p2V
------END PGP SIGNATURE-----
-
---3nBQJlViqAgsgF4T--
+-- 
+Felipe Contreras
