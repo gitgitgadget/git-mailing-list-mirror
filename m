@@ -7,33 +7,33 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD6C9C4361B
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 19:11:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B661C4167B
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 19:11:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B5CE23406
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 19:11:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D0AFB23428
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 19:11:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726489AbgLGTLl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Dec 2020 14:11:41 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55262 "EHLO cloud.peff.net"
+        id S1726479AbgLGTLo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Dec 2020 14:11:44 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55268 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725814AbgLGTLl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Dec 2020 14:11:41 -0500
-Received: (qmail 9040 invoked by uid 109); 7 Dec 2020 19:11:01 -0000
+        id S1725814AbgLGTLn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Dec 2020 14:11:43 -0500
+Received: (qmail 9050 invoked by uid 109); 7 Dec 2020 19:11:03 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 07 Dec 2020 19:11:01 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 07 Dec 2020 19:11:03 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25679 invoked by uid 111); 7 Dec 2020 19:11:00 -0000
+Received: (qmail 25684 invoked by uid 111); 7 Dec 2020 19:11:02 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 07 Dec 2020 14:11:00 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 07 Dec 2020 14:11:02 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 7 Dec 2020 14:11:00 -0500
+Date:   Mon, 7 Dec 2020 14:11:02 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <dstolee@microsoft.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 6/9] oid-array: provide a for-loop iterator
-Message-ID: <X85+RNGwV9WWeIXZ@coredump.intra.peff.net>
+Subject: [PATCH v2 7/9] commit-graph: drop count_distinct_commits() function
+Message-ID: <X85+RnO5rJQHnmmB@coredump.intra.peff.net>
 References: <X85+GbvmN4wIjsYY@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -43,102 +43,131 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We provide oid_array_for_each_unique() for iterating over the
-de-duplicated items in an array. But it's awkward to use for two
-reasons:
+When writing a commit graph, we collect a list of object ids in an
+array, which we'll eventually copy into an array of "struct commit"
+pointers. Before we do that, though, we count the number of distinct
+commit entries. There's a subtle bug in this step, though.
 
-  1. It uses a callback, which means marshaling arguments into a struct
-     and passing it to the callback with a void parameter.
+We eliminate not only duplicate oids, but also in split mode, any oids
+which are not commits or which are already in a graph file. However, the
+loop starts at index 1, always counting index 0 as distinct. And indeed
+it can't be a duplicate, since we check for those by comparing against
+the previous entry, and there isn't one for index 0. But it could be a
+commit that's already in a graph file, and we'd overcount the number of
+commits by 1 in that case.
 
-  2. The callback doesn't know the numeric index of the oid we're
-     looking at. This is useful for things like progress meters.
+That turns out not to be a problem, though. The only things we do with
+the count are:
 
-Iterating with a for-loop is much more natural for some cases, but the
-caller has to do the de-duping itself. However, we can provide a small
-helper to make this easier (see the docstring in the header for an
-example use).
+  - check if our count will overflow our data structures. But the limit
+    there is 2^31 commits, so while this is a useful check, the
+    off-by-one is not likely to matter.
 
-The caller does have to remember to sort the array first. We could add
-an assertion into the helper that array->sorted is set, but I didn't
-want to complicate what is otherwise a pretty fast code path.
+  - pre-allocate the array of commit pointers. But over-allocating by
+    one isn't a problem; we'll just waste a few extra bytes.
 
-I also considered adding a full iterator type with init/next/end
-functions (similar to what we have for hashmaps). But it ended up making
-the callers much harder to read. This version keeps us close to a basic
-for-loop.
+The bug would be easy enough to fix, but we can observe that neither of
+those steps is necessary.
 
-Yet another option would be adding an option to sort the array and
-compact out the duplicates. This would mean iterating over the array an
-extra time, though that's probably not a big deal (we did just do an
-O(n log n) sort). But we'd still have to write a for-loop to iterate, so
-it doesn't really make anything easier for the caller.
+After building the actual commit array, we'll likewise check its count
+for overflow. So the extra check of the distinct commit count here is
+redundant.
 
-No new test, since we'll convert the callback iterator (which is covered
-by t0064, among other callers) to use the new code.
+And likewise we use ALLOC_GROW() when building the commit array, so
+there's no need to preallocate it (it's possible that doing so is
+slightly more efficient, but if we care we can just optimistically
+allocate one slot for each oid; I didn't bother here).
+
+So count_distinct_commits() isn't doing anything useful. Let's just get
+rid of that step.
+
+Note that a side effect of the function was that we sorted the list of
+oids, which we do rely on in copy_oids_to_commits(), since it must also
+skip the duplicates. So we'll move the qsort there. I didn't copy the
+"TODO" about adding more progress meters. It's actually quite hard to
+make a repository large enough for this qsort would take an appreciable
+amount of time, so this doesn't seem like a useful note.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- oid-array.c |  7 ++-----
- oid-array.h | 23 +++++++++++++++++++++++
- 2 files changed, 25 insertions(+), 5 deletions(-)
+ commit-graph.c | 43 ++-----------------------------------------
+ 1 file changed, 2 insertions(+), 41 deletions(-)
 
-diff --git a/oid-array.c b/oid-array.c
-index 29f718d835..8e1bcedc0c 100644
---- a/oid-array.c
-+++ b/oid-array.c
-@@ -67,11 +67,8 @@ int oid_array_for_each_unique(struct oid_array *array,
+diff --git a/commit-graph.c b/commit-graph.c
+index 6f62a07313..1ac3516cf5 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1588,35 +1588,6 @@ static void fill_oids_from_all_packs(struct write_commit_graph_context *ctx)
+ 	stop_progress(&ctx->progress);
+ }
  
- 	oid_array_sort(array);
+-static uint32_t count_distinct_commits(struct write_commit_graph_context *ctx)
+-{
+-	uint32_t i, count_distinct = 1;
+-
+-	if (ctx->report_progress)
+-		ctx->progress = start_delayed_progress(
+-			_("Counting distinct commits in commit graph"),
+-			ctx->oids.nr);
+-	display_progress(ctx->progress, 0); /* TODO: Measure QSORT() progress */
+-	QSORT(ctx->oids.list, ctx->oids.nr, oid_compare);
+-
+-	for (i = 1; i < ctx->oids.nr; i++) {
+-		display_progress(ctx->progress, i + 1);
+-		if (!oideq(&ctx->oids.list[i - 1], &ctx->oids.list[i])) {
+-			if (ctx->split) {
+-				struct commit *c = lookup_commit(ctx->r, &ctx->oids.list[i]);
+-
+-				if (!c || commit_graph_position(c) != COMMIT_NOT_FROM_GRAPH)
+-					continue;
+-			}
+-
+-			count_distinct++;
+-		}
+-	}
+-	stop_progress(&ctx->progress);
+-
+-	return count_distinct;
+-}
+-
+ static void copy_oids_to_commits(struct write_commit_graph_context *ctx)
+ {
+ 	uint32_t i;
+@@ -1628,6 +1599,7 @@ static void copy_oids_to_commits(struct write_commit_graph_context *ctx)
+ 		ctx->progress = start_delayed_progress(
+ 			_("Finding extra edges in commit graph"),
+ 			ctx->oids.nr);
++	QSORT(ctx->oids.list, ctx->oids.nr, oid_compare);
+ 	for (i = 0; i < ctx->oids.nr; i++) {
+ 		unsigned int num_parents;
  
--	for (i = 0; i < array->nr; i++) {
--		int ret;
--		if (i > 0 && oideq(array->oid + i, array->oid + i - 1))
--			continue;
--		ret = fn(array->oid + i, data);
-+	for (i = 0; i < array->nr; i = oid_array_next_unique(array, i)) {
-+		int ret = fn(array->oid + i, data);
- 		if (ret)
- 			return ret;
- 	}
-diff --git a/oid-array.h b/oid-array.h
-index 6a22c0ac94..72bca78b7d 100644
---- a/oid-array.h
-+++ b/oid-array.h
-@@ -1,6 +1,8 @@
- #ifndef OID_ARRAY_H
- #define OID_ARRAY_H
+@@ -2155,7 +2127,7 @@ int write_commit_graph(struct object_directory *odb,
+ 		       const struct commit_graph_opts *opts)
+ {
+ 	struct write_commit_graph_context *ctx;
+-	uint32_t i, count_distinct = 0;
++	uint32_t i;
+ 	int res = 0;
+ 	int replace = 0;
+ 	struct bloom_filter_settings bloom_settings = DEFAULT_BLOOM_FILTER_SETTINGS;
+@@ -2268,17 +2240,6 @@ int write_commit_graph(struct object_directory *odb,
  
-+#include "hash.h"
-+
- /**
-  * The API provides storage and manipulation of sets of object identifiers.
-  * The emphasis is on storage and processing efficiency, making them suitable
-@@ -111,4 +113,25 @@ void oid_array_filter(struct oid_array *array,
-  */
- void oid_array_sort(struct oid_array *array);
+ 	close_reachable(ctx);
  
-+/**
-+ * Find the next unique oid in the array after position "cur".
-+ * The array must be sorted for this to work. You can iterate
-+ * over unique elements like this:
-+ *
-+ *   size_t i;
-+ *   oid_array_sort(array);
-+ *   for (i = 0; i < array->nr; i = oid_array_next_unique(array, i))
-+ *	printf("%s", oid_to_hex(array->oids[i]);
-+ *
-+ * Non-unique iteration can just increment with "i++" to visit each element.
-+ */
-+static inline size_t oid_array_next_unique(struct oid_array *array, size_t cur)
-+{
-+	do {
-+		cur++;
-+	} while (cur < array->nr &&
-+		 oideq(array->oid + cur, array->oid + cur - 1));
-+	return cur;
-+}
-+
- #endif /* OID_ARRAY_H */
+-	count_distinct = count_distinct_commits(ctx);
+-
+-	if (count_distinct >= GRAPH_EDGE_LAST_MASK) {
+-		error(_("the commit graph format cannot write %d commits"), count_distinct);
+-		res = -1;
+-		goto cleanup;
+-	}
+-
+-	ctx->commits.alloc = count_distinct;
+-	ALLOC_ARRAY(ctx->commits.list, ctx->commits.alloc);
+-
+ 	copy_oids_to_commits(ctx);
+ 
+ 	if (ctx->commits.nr >= GRAPH_EDGE_LAST_MASK) {
 -- 
 2.29.2.980.g762a4e4ed3
 
