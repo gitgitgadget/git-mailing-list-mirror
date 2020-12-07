@@ -7,117 +7,115 @@ X-Spam-Status: No, score=-15.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93092C433FE
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 00:37:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AF08C433FE
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 00:40:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 51D1C22D08
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 00:37:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E44122E03
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 00:40:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728446AbgLGAgs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Dec 2020 19:36:48 -0500
-Received: from avasout01.plus.net ([84.93.230.227]:33556 "EHLO
+        id S1728338AbgLGAkU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Dec 2020 19:40:20 -0500
+Received: from avasout01.plus.net ([84.93.230.227]:33782 "EHLO
         avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726046AbgLGAgs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Dec 2020 19:36:48 -0500
+        with ESMTP id S1726046AbgLGAkU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Dec 2020 19:40:20 -0500
 Received: from [10.0.2.15] ([147.147.167.100])
         by smtp with ESMTPA
-        id m4VukwQlun8O7m4VvkbbRw; Mon, 07 Dec 2020 00:36:27 +0000
+        id m4YskwQy5n8O7m4YtkbbTe; Mon, 07 Dec 2020 00:39:33 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1607301387; bh=YXTxsP4wW85bpUfWsIFOiKObY5kbloIglwJEgk0hVtg=;
+        t=1607301573; bh=gFXeId6R+1zh1wtvuOyg+5SuIAqWXQKRV5Q18Y6QsA4=;
         h=To:Cc:From:Subject:Date;
-        b=jobwQpwiq1HipsUcv/3eWoAf3YYQ9Fwoff+kFCGO/yaeS6uGDfY2ECPNPebQirAFs
-         nLmclnl5QsPyHkb3XadTyT5LCaQOzx5ZzP4F1vdqfht1hQKbZBfd8ynlNx1J7meQ3c
-         vN02Sid0x6W8omxhnb/HOccUy+AC/pM3rrYwByh2L0A9/UuLpdStMO+dN27tzkbT9/
-         k+QhrL6FYTlLNmHG13x+khmGDT9m8wRjH05RWE0mJXG3BBkEz79bJRNeQzrhwHG/Vh
-         gHONto//9+J1RDOmz/qy+e87IdUh61A7gTBIGaKjNVCdI21y7YklDxVo5Wp4QZNP4G
-         tplxBh9G0QhKQ==
+        b=M5OXUiG/d2Pg6GRm5cJ/ij9dpR78+zO/bHLtYFx9sqAtPg08XBP6MntJux56UzcfJ
+         vYa41IIUOm6wzFT5lZa4KBVBS+N61aWpU0nRxUK+nVpGyih0DrRSl+Ymj7SJ2dE6XC
+         KLubvD/CNsi0VoCRkNgtdk+BVE9t9le/Gv+E78tvesPuh0EvmTugkrk4FxiNJuJbce
+         thta1pOy9FgQ9RlcqIhsKGM4JEfNhJzKDxFTWHOaC7XFILB7Nse4Jqat69boQ8wV9E
+         GIG2kC6k1z8m+rJQ0bMbeBGFv2kgQsUg4bJsqmdBYyU35UhI/WW76RrGOsN41mYE0H
+         1UAZRQNhKQ8Rg==
 X-Clacks-Overhead: "GNU Terry Pratchett"
 X-CM-Score: 0.00
 X-CNFS-Analysis: v=2.3 cv=Ld6nFgXi c=1 sm=1 tr=0
  a=qL5TBQHgqnWGdG4DsQFN/Q==:117 a=qL5TBQHgqnWGdG4DsQFN/Q==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=12cImHxmkD7F_EgP1BAA:9 a=QEXdDO2ut3YA:10
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=LmtbTrIp9brtLQbQUBgA:9 a=QEXdDO2ut3YA:10
  a=yJM6EZoI5SlJf8ks9Ge_:22
 X-AUTH: ramsayjones@:2500
-To:     Junio C Hamano <gitster@pobox.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>
 Cc:     GIT Mailing-list <git@vger.kernel.org>
 From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v2 5/5] Makefile: don't use a versioned temp distribution
- directory
-Message-ID: <89325f36-9fae-9575-4fe9-fc6a9261fadb@ramsayjones.plus.com>
-Date:   Mon, 7 Dec 2020 00:36:26 +0000
+Subject: [PATCH] Makefile: conditionally include GIT-VERSION-FILE
+Message-ID: <ceacd2f6-c9c7-ef93-8bc2-0749770a260f@ramsayjones.plus.com>
+Date:   Mon, 7 Dec 2020 00:39:30 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.10.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfECbqnwsqS+ele6llkFxJG0am+7KHEwMo0xUfFiVlrS7LnR9skd3Dyt4w7I+GJesqtUMtHH3VrAHjPC1jROwRgiMZbDqnoPDk/+9fSinjXnOiEhYHyJs
- YV3Bv8mewl4MBs6vQifwswncT5olc7id9qrlj4ipcIfM7xdMH5hjbEciNu/gLMWltZxurUcyJScI5w==
+X-CMAE-Envelope: MS4wfHfjoyN/eyw8yHz1/pS2O9yCpz9MEVh+cvQ+82YL5XrrjJLsJhQ7LERqF+oXnbIQLTDcMSLbCxOtVRtl85pWuUYqVOFATOKY8XfIvi5LPC8im4xYNdos
+ SYpVqg6OpMsJDZR3hp2tTG8SQA92IvpROvO7AEDf4sDkE+QJpSf3wI0LiISxxV+Mh7q6KWHiamRoRg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-The 'dist' target uses a versioned temp directory, $(GIT_TARNAME), into
-which it copies various files added to the distribution tarball. Should
-it be necessary to remove this directory in the 'clean' target, since
-the name depends on $(GIT_VERSION), the current HEAD must be positioned
-on the same commit as when 'make dist' was issued. Otherwise, the target
-will fail to remove that directory.
+The 'clean' target is noticeably slow on cygwin, even for a 'do-nothing'
+invocation of 'make clean'. For example, the second 'make clean' given
+below:
 
-Create an '.dist-tmp-dir' directory and copy the various files into this
-now un-versioned directory while creating the distribution tarball. Change
-the 'clean' target to remove the '.dist-tmp-dir' directory, instead of the
-version dependent $(GIT_TARNAME) directory.
+  $ make clean >/dev/null 2>&1
+  $ make clean
+  GITGUI_VERSION = 0.21.0.85.g3e5c
+  rm -rf git-gui lib/tclIndex po/*.msg
+  rm -rf GIT-VERSION-FILE GIT-GUI-VARS
+  $
+
+has been timed at 1.934s on my laptop (an old core i5-4200M @ 2.50GHz,
+8GB RAM, 1TB HDD).
+
+Notice that the Makefile, as part of processing the 'clean' target, is
+updating the 'GIT-VERSION-FILE' file.  This is to ensure that the
+$(GITGUI_VERSION) make variable is set, once that file had been included.
+However, the 'clean' target does not use the $(GITGUI_VERSION) variable,
+so this is wasted effort.
+
+In order to eliminate such wasted effort, use the value of the internal
+$(MAKECMDGOALS) variable to only '-include GIT-VERSION-FILE' when the
+target is not 'clean'. (This drops the time down to 0.676s, on my laptop,
+giving an improvement of 65.05%).
 
 Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
- Makefile | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+
+Hi Pratyush,
+
+This is the promised 'separated out' patch to git-gui from the "speed up
+'make clean'" series. Note that the speed improvement doesn't appear to
+be as good 'stand-alone'; it seems to be about 1.3s rather than 1.976s
+when called as part of the git Makefile. (Also, on Linux, the numbers
+are 0.091s ->  0.020s for an 78% improvement).
+
+This patch was build on git-gui 'master' branch (@3e5c911) tonight.
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 09d6f23b88..90e91a2185 100644
+index f10caed..56c85a8 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -3060,9 +3060,9 @@ GIT_TARNAME = git-$(GIT_VERSION)
- GIT_ARCHIVE_EXTRA_FILES = \
- 	--prefix=$(GIT_TARNAME)/ \
- 	--add-file=configure \
--	--add-file=$(GIT_TARNAME)/version \
-+	--add-file=.dist-tmp-dir/version \
- 	--prefix=$(GIT_TARNAME)/git-gui/ \
--	--add-file=$(GIT_TARNAME)/git-gui/version
-+	--add-file=.dist-tmp-dir/git-gui/version
- ifdef DC_SHA1_SUBMODULE
- GIT_ARCHIVE_EXTRA_FILES += \
- 	--prefix=$(GIT_TARNAME)/sha1collisiondetection/ \
-@@ -3074,13 +3074,14 @@ GIT_ARCHIVE_EXTRA_FILES += \
- 	--add-file=sha1collisiondetection/lib/ubc_check.h
- endif
- dist: git-archive$(X) configure
--	@mkdir -p $(GIT_TARNAME)
--	@echo $(GIT_VERSION) > $(GIT_TARNAME)/version
--	@$(MAKE) -C git-gui TARDIR=../$(GIT_TARNAME)/git-gui dist-version
-+	@$(RM) -r .dist-tmp-dir
-+	@mkdir .dist-tmp-dir
-+	@echo $(GIT_VERSION) > .dist-tmp-dir/version
-+	@$(MAKE) -C git-gui TARDIR=../.dist-tmp-dir/git-gui dist-version
- 	./git-archive --format=tar \
- 		$(GIT_ARCHIVE_EXTRA_FILES) \
- 		--prefix=$(GIT_TARNAME)/ HEAD^{tree} > $(GIT_TARNAME).tar
--	@$(RM) -r $(GIT_TARNAME)
-+	@$(RM) -r .dist-tmp-dir
- 	gzip -f -9 $(GIT_TARNAME).tar
+@@ -9,7 +9,9 @@ all::
  
- rpm::
-@@ -3149,7 +3150,7 @@ clean: profile-clean coverage-clean cocciclean
- 	$(RM) -r bin-wrappers $(dep_dirs) $(compdb_dir) compile_commands.json
- 	$(RM) -r po/build/
- 	$(RM) *.pyc *.pyo */*.pyc */*.pyo $(GENERATED_H) $(ETAGS_TARGET) tags cscope*
--	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
-+	$(RM) -r .dist-tmp-dir .doc-tmp-dir
- 	$(RM) $(GIT_TARNAME).tar.gz
- 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
- 	$(MAKE) -C Documentation/ clean
+ GIT-VERSION-FILE: FORCE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
++ifneq ($(MAKECMDGOALS),clean)
+ -include GIT-VERSION-FILE
++endif
+ 
+ uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
+ uname_O := $(shell sh -c 'uname -o 2>/dev/null || echo not')
 -- 
 2.29.0
