@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4FDCC4361B
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 03:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E159CC433FE
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 03:27:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A477722D06
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 03:22:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AB21022CA0
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 03:27:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728656AbgLGDWE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Dec 2020 22:22:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49970 "EHLO
+        id S1727375AbgLGD1B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Dec 2020 22:27:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726400AbgLGDWE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Dec 2020 22:22:04 -0500
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5652FC0613D0
-        for <git@vger.kernel.org>; Sun,  6 Dec 2020 19:21:18 -0800 (PST)
-Received: by mail-wm1-x344.google.com with SMTP id g185so12310506wmf.3
-        for <git@vger.kernel.org>; Sun, 06 Dec 2020 19:21:18 -0800 (PST)
+        with ESMTP id S1726400AbgLGD1B (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Dec 2020 22:27:01 -0500
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 285A5C0613D0
+        for <git@vger.kernel.org>; Sun,  6 Dec 2020 19:26:21 -0800 (PST)
+Received: by mail-wr1-x441.google.com with SMTP id 91so7372313wrj.7
+        for <git@vger.kernel.org>; Sun, 06 Dec 2020 19:26:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=YURBYwusBHrnoW2b8vGFDAo4QIbXqENEpgp5EXoSohg=;
-        b=cMXR9qD1UT3/7ke4dti0NNQe4b/ZkAm9tlrpCn+w16dxToP8tIDKSoHqZ6NEUwcoPb
-         9WMmAguraZZuIAU9/C/BArRcaXVbPAmVO8NcHq1ExY0U8nZ+GL6ppMWGqEjB+LSSCvnc
-         nR3yZRR6jK156rxgVQi8LLzD9EOuZ6FUxitYHICI0U5UZNi3zPODe3u1xKidD3FYppaL
-         kVzfw/5KVqlcs1OIxRUfn2mUsVVipZWVh12DBVhvaJd6+mcaeaZl/D06EkaREyUHx0gy
-         zG4PnXLRip1YV8ZvMvi/9Ddl3/icbFWVD7M8Xt5280zgnKQ3kmTRM/JRDW6RPCiRGTcW
-         OtOA==
+        bh=IH/OpjfhkviV5FgvBot4sBQZu0MpRJIAJS+60nWDgEA=;
+        b=R8a7OuJrMZ5xX6F4g1j47NsyG4jm7Hlwi8A6csWXNB6akO4CCdaU4KwcyadwAAwPg2
+         5/dZnVtrWmuOZd6TCBbFna1wgf7AH50cC9p6gibKPrvZXWRe1xRiW50i741S27EjiKqm
+         CtT2xE4m+wCUoep7MAvIYGqIOuZZtGrFnxm9x2WMbZh3iepynnWK3wgXDvC1XHKvJrxJ
+         2eMCGqNEQqVirWNGmSk9g7P2ugAlzrgPKbu5tiJZqgFDpfBvO4bjkXlo11yO4jznoQ8O
+         JO5MYeoHNW0w+v3CxWokHmRjeojcrTnNh1Zg+L3hBSX6oUsKva28HugtIZSgEnxW6Yd+
+         yqhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=YURBYwusBHrnoW2b8vGFDAo4QIbXqENEpgp5EXoSohg=;
-        b=JbEMiC/3FmOf8OJKrjrliT25MRyzHd0dLqyq0K56TbiTmlAGMxdRdYm8paRzhg4ykf
-         2RMg1tlbfCxZ/5k2QVPQZuBHhGnKzeBLcdYl1FvbW27FutdUVNUUhZ2ZmYVuWEINTk9L
-         9UFE6/XyMGXMkw4x5I1Vovon00DLkyQ90RjkGGPPjyLFoCmlfleqSmyxR7rUJ46QYviA
-         YRneLOL3K+s/C+GlD0+ejRMPlMKin6czvGzndGO0IzDTt2aOepZz5+zUKe6q798WWahy
-         GcEYVrLZqnejkAPNCGArxHOMYV+xND+M364yQ7yLVdx0H9eiWVK7kgUKAccs15Hl9p3g
-         6ngA==
-X-Gm-Message-State: AOAM532FvMB4Zeq4FOxAXG9ce2bl8bPjyOrV/2m/T47ao11U2tGNPPlq
-        QlkxYW+keXdOAqlhx/EcWaNSPOgJZnIlwRzzShA=
-X-Google-Smtp-Source: ABdhPJybx7bjy+Tb2YWsaQCR3epLLklO/vLdsymCIVHpr0VPdw+KfKx8ZNvxG81YgWDpXcXo7CdyMv0IfGolHZL6zJE=
-X-Received: by 2002:a1c:f619:: with SMTP id w25mr15975627wmc.55.1607311277114;
- Sun, 06 Dec 2020 19:21:17 -0800 (PST)
+        bh=IH/OpjfhkviV5FgvBot4sBQZu0MpRJIAJS+60nWDgEA=;
+        b=gbpdmt/9piqdqPTqSlvJjLkERPjH3Uyumzleh+5koXAmas6vrl/BI8Zd5+L2B6SUZ7
+         GfGznnDjmoAn6oAVSgKZFIIhgxCPpLqc0gOxCCVnxIAOytRCpLEabzGKQ+UiIZxGalE8
+         w/v4NlgVW3BGoI+ccv09w32kX9I6UzMx3OpJ+zgAmYP1k5njiYmhtBVhDFsviATxjnJ8
+         thFYiEhEgFyx1J98apjJl0l+0+c7uXHFC2t1iCLMWHKo9jJBDUCjDBqH1CcLew3CIeSr
+         q8YqtEPoep7nxkj0kJ0P7lnUHgRvgZkllunteQ+m7jCWphgDtmrMPRKKydJpf8IBhVFG
+         q3cw==
+X-Gm-Message-State: AOAM531e3Ec5K+1lsZQIzxpvsgwlKP/SqhQdIi0nf/wpZRZCXMt3tEws
+        2jVhAb0gsi50Xn8IQDZ1f97o79MRRpt52b5joiT7Hr0wuKEGnA==
+X-Google-Smtp-Source: ABdhPJymMyfERjER7WnI03QzGFWXgC4tC1BDotz7dz93KbRV/WxsbOvnBqSpOLzazsBsSWdvIhHDnX/K3zHmKM1ehA0=
+X-Received: by 2002:a5d:4349:: with SMTP id u9mr16783827wrr.319.1607311579948;
+ Sun, 06 Dec 2020 19:26:19 -0800 (PST)
 MIME-Version: 1.0
-References: <3e085045-99d5-29ee-ed3f-076b1b8bb6b6@ramsayjones.plus.com>
-In-Reply-To: <3e085045-99d5-29ee-ed3f-076b1b8bb6b6@ramsayjones.plus.com>
+References: <f96f5cf3-713f-5c89-d486-e1a3f1c97b07@ramsayjones.plus.com>
+In-Reply-To: <f96f5cf3-713f-5c89-d486-e1a3f1c97b07@ramsayjones.plus.com>
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Sun, 6 Dec 2020 21:21:06 -0600
-Message-ID: <CAMP44s3hCm_2=jRv-4knNWe+V5vR_+XWjHVFkVm_LNzJ+n1sDg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/5] Documentation/Makefile: conditionally include ../GIT-VERSION-FILE
+Date:   Sun, 6 Dec 2020 21:26:09 -0600
+Message-ID: <CAMP44s1TQ3vmn2LT40jXA_3503hLWvadc3oDsatrOZ9weO_t3w@mail.gmail.com>
+Subject: Re: [PATCH v2 3/5] gitweb/Makefile: conditionally include ../GIT-VERSION-FILE
 To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         GIT Mailing-list <git@vger.kernel.org>
@@ -66,36 +66,15 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 6, 2020 at 6:35 PM Ramsay Jones <ramsay@ramsayjones.plus.com> wrote:
->
->
-> The 'clean' target is still noticeably slow on cygwin, despite the
-> substantial improvement made by the previous patch. For example, the
-> second invocation of 'make clean' below:
->
->   $ make clean >/dev/null 2>&1
->   $ make clean
->   ...
->   make[1]: Entering directory '/home/ramsay/git/Documentation'
->   make[2]: Entering directory '/home/ramsay/git'
->   make[2]: 'GIT-VERSION-FILE' is up to date.
->   make[2]: Leaving directory '/home/ramsay/git'
->   ...
->   $
->
-> has been timed at 12.364s on my laptop (on old core i5-4200M @ 2.50GHz,
-> 8GB RAM, 1TB HDD).
->
-> Notice that the 'clean' target is making a nested call to the parent
-> Makefile to ensure that the GIT-VERSION-FILE is up-to-date (prior to
-> the previous patch, there would have been _two_ such invocations).
-> This is to ensure that the $(GIT_VERSION) make variable is set, once
-> that file had been included.  However, the 'clean' target does not use
-> the $(GIT_VERSION) variable, so this is wasted effort.
+On Sun, Dec 6, 2020 at 6:37 PM Ramsay Jones <ramsay@ramsayjones.plus.com> wrote:
 
-Yes, this is the important information: "the 'clean' target does not use
-the $(GIT_VERSION) variable". I would feature it at the start of the
-commit message.
+> Notice that the 'clean' target is making a nested call to the parent
+> Makefile to ensure that the GIT-VERSION-FILE is up-to-date. This is to
+> ensure that the $(GIT_VERSION) make variable is set, once that file had
+> been included. However, the 'clean' target does not use the $(GIT_VERSION)
+> variable, so this is wasted effort.
+
+Same goes here.
 
 -- 
 Felipe Contreras
