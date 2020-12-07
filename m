@@ -7,85 +7,85 @@ X-Spam-Status: No, score=-15.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C43FFC433FE
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 00:32:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CCC1C4361B
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 00:33:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D759224DF
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 00:32:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2222122509
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 00:33:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728075AbgLGAcF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Dec 2020 19:32:05 -0500
+        id S1728281AbgLGAdQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Dec 2020 19:33:16 -0500
 Received: from avasout01.plus.net ([84.93.230.227]:33380 "EHLO
         avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726046AbgLGAcF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Dec 2020 19:32:05 -0500
+        with ESMTP id S1726258AbgLGAdQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Dec 2020 19:33:16 -0500
 Received: from [10.0.2.15] ([147.147.167.100])
         by smtp with ESMTPA
-        id m4RLkwQUCn8O7m4RMkbbPq; Mon, 07 Dec 2020 00:31:44 +0000
+        id m4SUkwQYIn8O7m4SVkbbQM; Mon, 07 Dec 2020 00:32:55 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1607301104; bh=DHHibXVpUqxpYo8MGGEPk7zn1EDWqEDrbF+ceWCWQ3k=;
+        t=1607301175; bh=Af22eD85dsghLR2PX3f0Ji2nUV9RZXl+pRkRnEP/kYM=;
         h=To:Cc:From:Subject:Date;
-        b=pz5X28l+ku0Qa/dLo48g4Mbjj63cDc+8RDW96MU8yFI/Wq12gsHBOt3LJUnqeCmxT
-         MnMujDCIMiC7f4UeT1PACEAMQXDdvZ5dFhBXLomUGSZSBW3abtql1/wQfqs0Ej8Qi3
-         e5LXVBbYKo/b360sk+QlJoEdhZgQd2NnIfVSctMTbDhMuFj9XY5SGfN9k2rkQpXDFL
-         5jyH10bqse8S+yMib443EyVOax3tcP2H55aWYmdjQ20pQCQ6f/fp/binZRo6apCc3w
-         Brbi5AUKCqNNLJkDfoU9BcvVLEgNBWOtfea+hsAsXsHbmFU/CUFHssWT265cJrT8Tg
-         1rpSJNDsPFsdQ==
+        b=hqf/etOth6MEn+68Gdr3UKUSJPNAzipvDtMveFQHFkvchyhxikQnub1HY+PLTB5oP
+         doRzoFXpc1eXDECLMNllb93ycyQDxC0EQe8ai3JolC5jPXiqC6aBe8P3BT1zjfFDo1
+         IacOTLaYJlYs/Qw6aBxyiZy1vqnpu+M5RPP+97pFfP36RTJdWMDQs7clJCwOmABabX
+         VMtIHdaSgWUS/brUNX02XrycsiFzqiv5c+WFQJ1Yrk+Ub/g4GIuR972qCngn/LKcuy
+         4oR8UqqG1E9kB5eyqXL+VyF3ad+Fqwdqc92ly75AlOw2CKR1S9Fv+s6qZ6hQ1tiHAw
+         5i3aLSHee4RQA==
 X-Clacks-Overhead: "GNU Terry Pratchett"
 X-CM-Score: 0.00
 X-CNFS-Analysis: v=2.3 cv=Ld6nFgXi c=1 sm=1 tr=0
  a=qL5TBQHgqnWGdG4DsQFN/Q==:117 a=qL5TBQHgqnWGdG4DsQFN/Q==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=WGfck5Sx_jJAHGwoxU0A:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=lLT4iZDIu0lhsO9_-yEA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22 a=pHzHmUro8NiASowvMSCR:22 a=nt3jZW36AmriUCFCBwmW:22
 X-AUTH: ramsayjones@:2500
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     GIT Mailing-list <git@vger.kernel.org>
 From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v2 1/5] Documentation/Makefile: conditionally include doc.dep
-Message-ID: <a8e1bc9d-ce6c-d065-5a20-fee15967364d@ramsayjones.plus.com>
-Date:   Mon, 7 Dec 2020 00:31:43 +0000
+Subject: [PATCH v2 2/5] Documentation/Makefile: conditionally include
+ ../GIT-VERSION-FILE
+Message-ID: <3e085045-99d5-29ee-ed3f-076b1b8bb6b6@ramsayjones.plus.com>
+Date:   Mon, 7 Dec 2020 00:32:54 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.10.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfEcUaZwEGrstbDWSNrHucy5Q88pGkQj7ACTtyWCJ8m9HZhCQxGQZ9XKZCZn6gHCzN0C1W8/OKcmNIeAhNH6OF/Dw5NTRkBfGz+i9m/MM6gkaOWQAEtk/
- QdHu915tMKGFbU1sbmQ+71AFGWPdHvd7ZECTuljdtJeKQ0uNXUxKM1KPMLlW8+BvqMYijlPEheabng==
+X-CMAE-Envelope: MS4wfKZmuwTrKRjRbvspwwpBIE1YnNiB7W0V9t0O4gzQrkqSrewHT+4IHEvoiTN4hwIAL/9okQRUN+yvyuL6eqMhtoMZNWZYzyEGWr0jaYsorznSoDkJprcR
+ ePn6860Rw4AXpvgwQc7MqHQNBGaQdx6+svzbD0UG4vpWTLxKGNi2Pv3Oh7sHv7i8/O/RdIYajbGfLQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-The 'clean' target is noticeably slow on cygwin, even for a 'do-nothing'
-invocation of 'make clean'. For example, the second 'make clean' below:
+The 'clean' target is still noticeably slow on cygwin, despite the
+substantial improvement made by the previous patch. For example, the
+second invocation of 'make clean' below:
 
   $ make clean >/dev/null 2>&1
   $ make clean
-  GIT_VERSION = 2.29.0
   ...
   make[1]: Entering directory '/home/ramsay/git/Documentation'
-      GEN mergetools-list.made
-      GEN cmd-list.made
-      GEN doc.dep
+  make[2]: Entering directory '/home/ramsay/git'
+  make[2]: 'GIT-VERSION-FILE' is up to date.
+  make[2]: Leaving directory '/home/ramsay/git'
   ...
   $
 
-has been timed at 23.339s, using git v2.29.0, on my laptop (on old core
-i5-4200M @ 2.50GHz, 8GB RAM, 1TB HDD).
+has been timed at 12.364s on my laptop (on old core i5-4200M @ 2.50GHz,
+8GB RAM, 1TB HDD).
 
-Notice that, since the 'doc.dep' file does not exist, make takes the
-time (about 8s) to generate several files in order to create the doc.dep
-include file. (If an 'include' file is missing, but a target for the
-said file is present in the Makefile, make will execute that target
-and, if that file now exists, throw away all its internal data and
-re-read and re-parse the Makefile). Having spent the time to include
-the 'doc.dep' file, the 'clean' target immediately deletes those files.
+Notice that the 'clean' target is making a nested call to the parent
+Makefile to ensure that the GIT-VERSION-FILE is up-to-date (prior to
+the previous patch, there would have been _two_ such invocations).
+This is to ensure that the $(GIT_VERSION) make variable is set, once
+that file had been included.  However, the 'clean' target does not use
+the $(GIT_VERSION) variable, so this is wasted effort.
 
 In order to eliminate such wasted effort, use the value of the internal
-$(MAKECMDGOALS) variable to only '-include doc.dep' when the target is
-not 'clean'. (This drops the time down to 12.364s, on my laptop, giving
-an improvement of 47.02%).
+$(MAKECMDGOALS) variable to only '-include ../GIT-VERSION-FILE' when the
+target is not 'clean'. (This drops the time down to 10.361s, on my laptop,
+giving an improvement of 16.20%).
 
 Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
@@ -93,18 +93,18 @@ Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 80d1908a44..652d57a1b6 100644
+index 652d57a1b6..5c680024eb 100644
 --- a/Documentation/Makefile
 +++ b/Documentation/Makefile
-@@ -286,7 +286,9 @@ doc.dep : $(docdep_prereqs) $(wildcard *.txt) $(wildcard config/*.txt) build-doc
- 	$(PERL_PATH) ./build-docdep.perl >$@+ $(QUIET_STDERR) && \
- 	mv $@+ $@
+@@ -272,7 +272,9 @@ install-html: html
+ ../GIT-VERSION-FILE: FORCE
+ 	$(QUIET_SUBDIR0)../ $(QUIET_SUBDIR1) GIT-VERSION-FILE
  
 +ifneq ($(MAKECMDGOALS),clean)
- -include doc.dep
+ -include ../GIT-VERSION-FILE
 +endif
  
- cmds_txt = cmds-ancillaryinterrogators.txt \
- 	cmds-ancillarymanipulators.txt \
+ #
+ # Determine "include::" file references in asciidoc files.
 -- 
 2.29.0
