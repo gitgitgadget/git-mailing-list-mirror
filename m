@@ -2,73 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF87DC4361B
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 19:11:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98F94C4167B
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 19:21:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A736923428
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 19:11:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 58566238E1
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 19:21:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726298AbgLGTLt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Dec 2020 14:11:49 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55278 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726096AbgLGTLt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Dec 2020 14:11:49 -0500
-Received: (qmail 9066 invoked by uid 109); 7 Dec 2020 19:11:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 07 Dec 2020 19:11:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25694 invoked by uid 111); 7 Dec 2020 19:11:08 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 07 Dec 2020 14:11:08 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 7 Dec 2020 14:11:08 -0500
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 9/9] commit-graph: use size_t for array allocation and
- indexing
-Message-ID: <X85+TEQusPhTUmSj@coredump.intra.peff.net>
-References: <X85+GbvmN4wIjsYY@coredump.intra.peff.net>
+        id S1726348AbgLGTVh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Dec 2020 14:21:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57532 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726247AbgLGTVg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Dec 2020 14:21:36 -0500
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A00A7C061749
+        for <git@vger.kernel.org>; Mon,  7 Dec 2020 11:20:56 -0800 (PST)
+Received: by mail-oi1-x243.google.com with SMTP id q25so8558577oij.10
+        for <git@vger.kernel.org>; Mon, 07 Dec 2020 11:20:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=IflRYolgmSmpXjqCyoEq1gWihhRlhp7NlR4/HZTHQ7c=;
+        b=qxlUSV4ihGhJIEXK8YDlWg8fwCtRvBjoB/LBXcIYWQz5Glr4Glsk4PBD666LidYXPj
+         UFm+0bR/Pc7cLxlkRXD1iV/NxOAcmnmlz1mHsyl9/HvFfznASD7bQmwLMT8Qu9oZzFbo
+         IILv042lrmk9BwTQuM8EsmcZS/LB5nQWWo8UDChiRS3qQQfiQyyOuUxRpqOVQ8gfcATz
+         QN8ADNAajyVGHm2VPH/B+HRKNXpGjqZiaUwDjjwcnUa040kBX304DEZbnlfzVfYXa9Uv
+         71gobwl6gaIrnxQeuFMtQBlxsAGUAbm5VVpN8aP/36onZpVrGZIQZBJSK+txBBQtQwhC
+         BbZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=IflRYolgmSmpXjqCyoEq1gWihhRlhp7NlR4/HZTHQ7c=;
+        b=tZk+Bmc/e7xV1CZ08WBLuXtODk9ewi2XOo40inTd8qDWvVDP8UkD+7lzk6M5luEJK9
+         zMK62FSC9eIud1uKtSzuMmJApdxyM/8XXLxXcQFQi9doJ39/2wl5iNFRoqL7oFg8lfw/
+         cGyoEMFMRmUHYYMqmYl/BvcLwXm41SCA2wDXas4/DfBm9LnmjVAXvnKH7lyB92EBoqFg
+         dzGyLwJFWw/xFXcGXK6kzFfu7Y62gRZsVcsm8v2s9fteY8HfARSvYeIITN/dTc3gFO8y
+         eBY+C0qb291kYi/bQwN/2nOXmFYRp8R7OjrsPZMQVw17Nu5Sp9b1Qjsx6YHrBvc35QUw
+         6Z/g==
+X-Gm-Message-State: AOAM532JoDgBi5NyCbO5PEkit7XqQXHZnaicwBIL7Y/ZbPsh5y4QIqcV
+        fAzG4ZgDPZIjNO4sjz+K9ZQ=
+X-Google-Smtp-Source: ABdhPJy7cxhxPeWP5UmTL4IHhbjQa5/tXBP6Anf3O/CkqnS1eidsha3TT4MMF4Lv/nuieVhpiM+3Yg==
+X-Received: by 2002:aca:45c6:: with SMTP id s189mr262906oia.25.1607368855922;
+        Mon, 07 Dec 2020 11:20:55 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:8ddc:62f4:9dcc:ce02? ([2600:1700:e72:80a0:8ddc:62f4:9dcc:ce02])
+        by smtp.gmail.com with UTF8SMTPSA id 6sm2841940otc.19.2020.12.07.11.20.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Dec 2020 11:20:55 -0800 (PST)
+Subject: Re: [PATCH v2 24/24] pack-bitmap-write: better reuse bitmaps
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     me@ttaylorr.com, git@vger.kernel.org, dstolee@microsoft.com,
+        gitster@pobox.com, peff@peff.net, martin.agren@gmail.com,
+        szeder.dev@gmail.com
+References: <39441f40-f496-af81-87c1-9d7e04fdef20@gmail.com>
+ <20201207182418.3034961-1-jonathantanmy@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <1cd3f001-389f-6e2e-90fd-5e8b4b17119a@gmail.com>
+Date:   Mon, 7 Dec 2020 14:20:54 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101
+ Thunderbird/84.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <X85+GbvmN4wIjsYY@coredump.intra.peff.net>
+In-Reply-To: <20201207182418.3034961-1-jonathantanmy@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Our packed_commit_list is an array of pointers to commit structs. We use
-"int" for the allocation, which is 32-bit even on 64-bit platforms. This
-isn't likely to overflow in practice (we're writing commit graphs, so
-you'd need to actually have billions of unique commits in the
-repository). But it's good practice to use size_t for allocations.
+On 12/7/2020 1:24 PM, Jonathan Tan wrote:
+>> On 12/2/2020 11:35 AM, Taylor Blau wrote:
+>>> On Wed, Dec 02, 2020 at 12:08:08AM -0800, Jonathan Tan wrote:
+>>>>> +			c_ent->maximal = 1;
+>>>>> +			p = NULL;
+>>>>
+>>>> Here, we're setting maximal without also setting a bit in this commit's
+>>>> commit_mask. This is fine because we're not propagating this commit's
+>>>> commit_mask to any parents (we're not continuing the walk from this
+>>>> commit), but it seems like a code smell. Suggested fix is below.
+>>>>
+>>>>> +		}
+>>>>> +
+>>>>>  		if (c_ent->maximal) {
+>>>>>  			num_maximal++;
+>>>>>  			ALLOC_GROW(bb->commits, bb->commits_nr + 1, bb->commits_alloc);
+>>>>>  			bb->commits[bb->commits_nr++] = commit;
+>>>>>  		}
+>>>>
+>>>> As far as I can tell, this means that this commit occupies a bit
+>>>> position in the commit mask that it doesn't need. Could this go into a
+>>>> separate list instead, to be appended to bb->commits at the very end?
+>>
+>> I don't see any value in having a second list here. That only makes
+>> things more complicated.
+> 
+> It does make things more complicated, but it could help shrink commit
+> bitmasks (which seem to be a concern, according to patch 23).
+> 
+> Suppose num_maximal was 3 and we encountered such a commit (not
+> selected, but has an old bitmap). So we increment num_maximal. Then, we
+> encounter a selected commit. That commit would then have a bitmask of
+> ???01. If we had not incremented num_maximal (which would require a
+> second list), then the bitmask would be ???1.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- commit-graph.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+OK, I see the value. The value is bounded, since the number of
+these "0" gaps is bounded by the number of selected commits _and_
+reduces the possible number of maximal commits.
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 4a718fd6e6..06f8dc1d89 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -932,8 +932,8 @@ struct tree *get_commit_tree_in_graph(struct repository *r, const struct commit
- 
- struct packed_commit_list {
- 	struct commit **list;
--	int nr;
--	int alloc;
-+	size_t nr;
-+	size_t alloc;
- };
- 
- struct write_commit_graph_context {
--- 
-2.29.2.980.g762a4e4ed3
+However, that seems like enough justification to create the second
+list.
+
+Thanks,
+-Stolee
