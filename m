@@ -6,67 +6,66 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C99AC4361B
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 18:49:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB382C0018C
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 18:56:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2B9602389F
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 18:49:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B51F9238D6
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 18:56:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726035AbgLGSt1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Dec 2020 13:49:27 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55140 "EHLO cloud.peff.net"
+        id S1726298AbgLGS4X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Dec 2020 13:56:23 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55174 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725960AbgLGSt1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Dec 2020 13:49:27 -0500
-Received: (qmail 8870 invoked by uid 109); 7 Dec 2020 18:48:46 -0000
+        id S1726207AbgLGS4X (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Dec 2020 13:56:23 -0500
+Received: (qmail 8909 invoked by uid 109); 7 Dec 2020 18:55:42 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 07 Dec 2020 18:48:46 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 07 Dec 2020 18:55:42 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25036 invoked by uid 111); 7 Dec 2020 18:48:45 -0000
+Received: (qmail 25121 invoked by uid 111); 7 Dec 2020 18:55:42 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 07 Dec 2020 13:48:45 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 07 Dec 2020 13:55:42 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 7 Dec 2020 13:48:45 -0500
+Date:   Mon, 7 Dec 2020 13:55:41 -0500
 From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     me@ttaylorr.com, git@vger.kernel.org, dstolee@microsoft.com,
-        gitster@pobox.com, martin.agren@gmail.com, szeder.dev@gmail.com
-Subject: Re: [PATCH v2 23/24] pack-bitmap-write: relax unique rewalk condition
-Message-ID: <X855DX0CE//Cndwb@coredump.intra.peff.net>
-References: <X8fBHz2A82hxUzV8@nand.local>
- <20201207181909.3032039-1-jonathantanmy@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jan Engelhardt <jengelh@inai.de>, git@vger.kernel.org
+Subject: Re: `git grep` is too picky about option parsing
+Message-ID: <X856rSHziQcmr/zX@coredump.intra.peff.net>
+References: <704q5rs6-63q1-sp78-9845-227oq8q42o8q@vanv.qr>
+ <X85gMs1gPBNLff7f@coredump.intra.peff.net>
+ <xmqqa6upbgil.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20201207181909.3032039-1-jonathantanmy@google.com>
+In-Reply-To: <xmqqa6upbgil.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 07, 2020 at 10:19:09AM -0800, Jonathan Tan wrote:
+On Mon, Dec 07, 2020 at 10:46:58AM -0800, Junio C Hamano wrote:
 
-> Quoting from the next patch [1]:
+> > Either of those would let "-amend" continue to be an error, but fix
+> > "-lin".
 > 
-> >              |   runtime (sec)    |   peak heap (GB)   |
-> >              |                    |                    |
-> >              |   from  |   with   |   from  |   with   |
-> >              | scratch | existing | scratch | existing |
-> >   -----------+---------+----------+---------+-----------
-> >   last patch | 100.641 |   35.560 |   2.152 |    2.224 |
-> >   this patch |  99.720 |   11.696 |   2.152 |    2.217 |
-> 
-> That is true, but it is not ameliorated much :-(
-> 
-> If you have steps to generate these timings, I would like to try
-> comparing the performance between all patches and all-except-23.
+> I am wondering if a rule like "you cannot concatenate a short option
+> that takes argument with other short options" work.  The problem
+> with "-a -m end" is really that the 'm' takes arbitrary end-user
+> input.  So "commit -ave" would be fine, but "commit -ame" would not
+> be.  This would make both "-line foo" and "--linefoo" consistently
+> invalid, but "-lin -e foo" is still OK and make the rule easier to
+> explain.
 
-Yes, the drop in CPU performance is disappointing. And there may be a
-better way of selecting the commits that recovers some of it.
+Personally, I find "-linefoo" totally unreadable (and in general I find
+the "stuck" form of short options with a string to be pretty ugly,
+though I understand it is the recommended form to handle optional
+arguments). But "-line foo" is not so horrible IMHO, and I think it
+would be sad to lose it. (I don't use it with grep, but my standard perl
+invocation is "perl -lpe 'some script'"; another common one is "tar xvf
+foo.tar").
 
-But all-except-23 is not workable from a memory usage perspective.
-Originally we did not have that commit at all, and a full repack of our
-git/git fork network (i.e., all forks stuffed into one alternates repo)
-went from 16GB to OOM-ing after growing 80+GB (I don't know how large it
-would have gone on a bigger machine).
+And it works now (obviously not in the case we're discussing, but in
+other cases that don't run afoul of the typo fix), so I think people
+would see that as a regression.
 
 -Peff
