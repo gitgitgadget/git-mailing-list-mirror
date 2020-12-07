@@ -2,372 +2,197 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7729CC4361B
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 18:42:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92076C4361B
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 18:44:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2201C2389F
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 18:42:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4A0652389F
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 18:44:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726156AbgLGSmx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Dec 2020 13:42:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51344 "EHLO
+        id S1726063AbgLGSoe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Dec 2020 13:44:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726081AbgLGSmw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Dec 2020 13:42:52 -0500
-Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9106CC061749
-        for <git@vger.kernel.org>; Mon,  7 Dec 2020 10:42:12 -0800 (PST)
-Received: by mail-qk1-x743.google.com with SMTP id h20so13505487qkk.4
-        for <git@vger.kernel.org>; Mon, 07 Dec 2020 10:42:12 -0800 (PST)
+        with ESMTP id S1726035AbgLGSoe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Dec 2020 13:44:34 -0500
+Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com [IPv6:2607:f8b0:4864:20::844])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0D0EC061749
+        for <git@vger.kernel.org>; Mon,  7 Dec 2020 10:43:53 -0800 (PST)
+Received: by mail-qt1-x844.google.com with SMTP id y15so2586977qtv.5
+        for <git@vger.kernel.org>; Mon, 07 Dec 2020 10:43:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=lSH3UrpWckoy8GU8mgiytLp558YYgwnjmXOG6fo4yIc=;
-        b=L79HBOuMZZX2rGUFqWCfrrGFu69Zyes2ti/9lDIcZcoqGt85IKEFKotrQg5ekmkNSj
-         gTmaDNmemE5Nc0P1+Qa7TFW5eij75gZdMj/fv+OPaofqwnijFw3kut15TeRtTCTwlB3C
-         GW5BgkDFrLDo6tGRnbheS2mqWnXv7dnac8CQSUyC640mjOdMil4kWcUUqzC4+WhhB4P/
-         J9XiwgIJqe09fGGlrLCCBMaAKXQnFbxicXTO7KM+uPbuyFr/3In3bki9rhkC4T+JpRG2
-         xXUQkUR/BMw+XERhipdTiPsqF74wltcNIoBJ91EC3o40JGnxrj6+Fg03/U/yprNxftEj
-         +j2A==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=cCY4PFgnQs6juIhSH1c1QzK9BxydwSugj4QZomTG58g=;
+        b=Lw9aekt3utoxK2begpZeKhLRO9sajWXwEToC/fvryzBQL8gHFMYQLS7fUeWk72uxJS
+         ybYOBq29jYhCd8QFQNfuBHkkIJCyTm8U5Sj3hLcR9N8Wi7Vwb/0LScAUwoRK4p8x81ii
+         NuL/zEXJ/LSQkdkw09lLtH5FWb/ZySP9FaQWYoTVylyzq6FG2rEkxW26hYzf93MAmMdd
+         bLQx+pQ5+/TTNw+3mSY1EQPTDTOi+uNHWKVanjpuCComp5MXo3M5uawQXiOyf8YXPCl8
+         eTcu04onI5sDPalDsttqSCB3CuNrw9ueBRNFb3wQAvJUKLzaLYn+j6ocbaz3pC6uznOO
+         Njaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=lSH3UrpWckoy8GU8mgiytLp558YYgwnjmXOG6fo4yIc=;
-        b=Vom2HPGCl+UiRcYrf95IedCsTe2NaPAcZRAtPgrKOy/Y6mcl8qEIeyDfI0Y6CZNZx2
-         1lLnuhzLqiQW36yAn5UDYU1M4uQd/Cj69g4L341Jk6B65/7m1I08wqS1T2IkZKOZwARn
-         nGSFytmF7Uji2Q7ko4WMLkZEJpN+NrBJKdrDnIEsYNNrKvX2RhD45q1tWbEY1gL/7LmH
-         u8OqNZyPgReVKVmh4qc3ql4wZJ8X3NCY2dJpO48SMVylN3UF4y+W3YlTwncMm6SoX7uP
-         ry1Lwd7NJ/OS6Fj40F4HphRKjRh+2qlysfZq7meB6w1epr+HQ4fgspGk8yvDX1s0dgyw
-         vIqA==
-X-Gm-Message-State: AOAM533GUBm2dio9WEajml9xPA29wB0fVY5xFycRzNebTNzTYevzppTT
-        tEm8fsMk30j6Dlzl9Kw+9Xg=
-X-Google-Smtp-Source: ABdhPJzxWTK+TxAZS/pLz61xYD+htJm6nmpri5Ewv+xvuxi9L/J4ndGA+ETnbSC0AOJTVlQLvVwcTw==
-X-Received: by 2002:a05:620a:55b:: with SMTP id o27mr25039484qko.226.1607366531796;
-        Mon, 07 Dec 2020 10:42:11 -0800 (PST)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id c65sm12332874qkf.47.2020.12.07.10.42.10
-        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
-        Mon, 07 Dec 2020 10:42:11 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v2] submodules: fix of regression on fetching of non-init subsub-repo
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-In-Reply-To: <1607348819-61355-1-git-send-email-peter.kaestle@nokia.com>
-Date:   Mon, 7 Dec 2020 13:42:08 -0500
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.us>,
-        Ralf Thielow <ralf.thielow@gmail.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <613FAD04-0D5A-4DE0-8FE8-0C5C5619B7BC@gmail.com>
-References: <CAPig+cQ8VC2q4nuzgM9QxmddH4cMezbZdRZDxX1PqfW6XKcC_A@mail.gmail.com> <1607348819-61355-1-git-send-email-peter.kaestle@nokia.com>
-To:     Peter Kaestle <peter.kaestle@nokia.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=cCY4PFgnQs6juIhSH1c1QzK9BxydwSugj4QZomTG58g=;
+        b=BUsIUZZgQjtQb5Ns7NT40ajFEdwkodabBHTNNmuktVznIU4ipEWd6tKpSc5YCDExLP
+         qQCa46ber4XTygRxsvD9twaTMJvz+whmFNMkrYCAUGdPUJd7AJi8fGPxOCEANy4tRZ94
+         yWdy3uqAo1ZQIlmTu8qU9WThBUz2lrbaylDcsDnzSqpC313Smrgx5heH/+RI6VrpqBsg
+         H5FgTSh61o6+WIOuHP43ElIrvGBcxl9mtOFaK5wt5WHvupWDfOY32s7ZpeT6Adh1De+X
+         wNi0saI2DftEtmSrQawHkKERASAIeFbgO6FbaxuyFlg7CwCLYM7YTWNqHzGpYxj7+FI8
+         m4eQ==
+X-Gm-Message-State: AOAM533q9QXA47SfvaQ0gzQ/LpvIha8dlRwOqWYMirhq8oorgSlaOVXf
+        zuCajnoZGEimWQxIFWhX0C36FbeZZFPw9g==
+X-Google-Smtp-Source: ABdhPJwLg9HWW0Z1yLwml2bNJwHY5PD9G7L/9cXdl3fmOfdwGr+WcZGNDoEP31QX4tnxEJDTgMEEWw==
+X-Received: by 2002:ac8:545a:: with SMTP id d26mr25685832qtq.390.1607366633009;
+        Mon, 07 Dec 2020 10:43:53 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:8ddc:62f4:9dcc:ce02? ([2600:1700:e72:80a0:8ddc:62f4:9dcc:ce02])
+        by smtp.gmail.com with UTF8SMTPSA id p58sm4447719qte.38.2020.12.07.10.43.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Dec 2020 10:43:52 -0800 (PST)
+Subject: Re: [PATCH v2 23/24] pack-bitmap-write: relax unique rewalk condition
+To:     Jonathan Tan <jonathantanmy@google.com>, me@ttaylorr.com
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com,
+        peff@peff.net, martin.agren@gmail.com, szeder.dev@gmail.com
+References: <X8fBHz2A82hxUzV8@nand.local>
+ <20201207181909.3032039-1-jonathantanmy@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <2f0540e6-b4f4-ea9f-bac0-ecf92c7b764d@gmail.com>
+Date:   Mon, 7 Dec 2020 13:43:51 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101
+ Thunderbird/84.0
+MIME-Version: 1.0
+In-Reply-To: <20201207181909.3032039-1-jonathantanmy@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peter,
+On 12/7/2020 1:19 PM, Jonathan Tan wrote:
+>>>> In an effort to discover a happy medium, this change reduces the walk
+>>>> for intermediate commits to only the first-parent history. This focuses
+>>>> the walk on how the histories converge, which still has significant
+>>>> reduction in repeat object walks. It is still possible to create
+>>>> quadratic behavior in this version, but it is probably less likely in
+>>>> realistic data shapes.
+>>>
+>>> Would this work? I agree that the width of the commit bitmasks would go
+>>> down (and there would also be fewer commit bitmasks generated, further
+>>> increasing the memory savings). But intuitively, if there is a commit
+>>> that is selected and only accessible through non-1st-parent links, then
+>>> any bitmaps generated for it cannot be contributed to its descendants
+>>> (since there was no descendant-to-ancestor walk that could reach it in
+>>> order to form the reverse edge).
+>>
+>> s/bitmaps/bitmasks. 
+> 
+> I do mean bitmaps there - bitmasks are contributed to parents, but
+> bitmaps are contributed to descendants, if I remember correctly.
 
-> Le 7 d=C3=A9c. 2020 =C3=A0 08:46, Peter Kaestle =
-<peter.kaestle@nokia.com> a =C3=A9crit :
->=20
-> A regression has been introduced by a62387b (submodule.c: fetch in
-> submodules git directory instead of in worktree, 2018-11-28).
->=20
-> The scenario in which it triggers is when one has a remote repository
-> with a subrepository inside a subrepository like this:
-> superproject/middle_repo/inner_repo
+Ah, the confusion is related around the word "contributed".
 
-The correct terminology is "submodule", not "subrepository".=20
+Yes, without walking all the parents, we will not populate the
+reverse edges with all of the possible connections. Thus, the
+step that pushes reachability bitmap bits along the reverse edges
+will not be as effective.
 
-Also, (minor point) I would just write "when one has a repository",=20
-as its simpler (the repository by itself is not "remote", it is only =
-"remote"=20
-in relation the repositories that are cloned from it).
+And this is the whole point: the reverse-edges existed to get us
+into a state of _never_ walking an object multiple times, but that
+ended up being too expensive to guarantee. This change relaxes that
+condition in a way that still works for large, linear histories.
 
-> Person A and B have both a clone of it, while Person B is not working
-> with the inner_repo and thus does not have it initialized in his =
-working
-> copy.
->=20
-> Now person A introduces a change to the inner_repo and propagates it
-> through the middle_repo and the superproject.
->=20
-> Once person A pushed the changes and person B wants to fetch them =
-using
-> "git fetch" on superproject level,
+Since "pack-bitmap-write: fill bitmap with commit history" changed
+fill_bitmap_commit() to walk commits until reaching those already in
+the precomputed reachability bitmap, it will correctly walk far
+enough to compute the reachability bitmap for that commit. It might
+just walk objects that are part of _another_, already computed bitmap
+that is not reachable via the first-parent history.
 
-s/on/at the/
+The very next patch "pack-bitmap-write: better reuse bitmaps" fixes
+this problem by checking for computed bitmaps during the walk in
+fill_bitmap_commit().
 
-> B's git call will return with error
-> saying:
->=20
-> Could not access submodule 'inner_repo'
-> Errors during submodule fetch:
->         middle_repo
->=20
-> Expectation is that in this case the inner submodule will be =
-recognized
-> as uninitialized subrepository and skipped by the git fetch command.
+>> We'll select commits independent of their first
+>> parent histories, and so in the situation that you're describing, if C
+>> reaches A only through non-1st-parent history, then A's bitmask will not
+>> contain the bits from C.
+> 
+> C is the descendant and A is the ancestor. Yes, A's bitmask will not
+> contain the bits from C.
+> 
+>> But when generating the reachability bitmap for C, we'll still find that
+>> we've generated a bitmap for A, and we can copy its bits directly. 
+> 
+> Here is my contention - this can happen only if there is a reverse edge
+> from A to C, as far as I can tell, but such a reverse edge has not been
+> formed.
 
-here again, terminology: "as an uninitialized submodule"=20
+See above. This patch is completely correct given the changes to
+fill_bitmap_commit() from earlier. It just needs a tweak (in the
+next patch) to recover some of the performance.
 
-> This used to work correctly before 'a62387b (submodule.c: fetch in
-> submodules git directory instead of in worktree, 2018-11-28)'.
->=20
-> Starting with a62387b the code wants to evaluate "is_empty_dir()" =
-inside
-> .git/modules for a directory only existing in the worktree, delivering
-> then of course wrong return value.
->=20
-> This patch ensures is_empty_dir() is getting the correct path of the
-> uninitialized submodule by concatenation of the actual worktree and =
-the
-> name of the uninitialized submodule.
->=20
-> Furthermore a regression test case is added, which tests for recursive
-> fetches on a superproject with uninitialized sub repositories.
->  This
-> issue was leading to an infinite loop when doing a revert of a62387b.
+>> If
+>> this differs from an ancestor P that _is_ in the first-parent history,
+>> then P pushed its bits to C before calling fill_bitmap_commit() through
+>> the reverse edges.
+>>
+>>>> Here is some data taken on a fresh clone of the kernel:
+>>>>
+>>>>              |   runtime (sec)    |   peak heap (GB)   |
+>>>>              |                    |                    |
+>>>>              |   from  |   with   |   from  |   with   |
+>>>>              | scratch | existing | scratch | existing |
+>>>>   -----------+---------+----------+---------+-----------
+>>>>     original |  64.044 |   83.241 |   2.088 |    2.194 |
+>>>>   last patch |  44.811 |   27.828 |   2.289 |    2.358 |
+>>>>   this patch | 100.641 |   35.560 |   2.152 |    2.224 |
+>>>
+>>> Hmm...the jump from 44 to 100 seems rather large.
+>>
+>> Indeed. It's ameliorated a little bit in the later patches. We are
+>> over-walking some objects (as in we are walking them multiple times),
+>> but the return we get is reducing the peak heap usage from what it was
+>> in the last patch.
+>>
+>> In the "unfathomably large" category, this makes things tractable.
+> 
+> Quoting from the next patch [1]:
+> 
+>>              |   runtime (sec)    |   peak heap (GB)   |
+>>              |                    |                    |
+>>              |   from  |   with   |   from  |   with   |
+>>              | scratch | existing | scratch | existing |
+>>   -----------+---------+----------+---------+-----------
+>>   last patch | 100.641 |   35.560 |   2.152 |    2.224 |
+>>   this patch |  99.720 |   11.696 |   2.152 |    2.217 |
+> 
+> That is true, but it is not ameliorated much :-(
+> 
+> If you have steps to generate these timings, I would like to try
+> comparing the performance between all patches and all-except-23.
+> 
+> [1] https://lore.kernel.org/git/42399a1c2e52e1d055a2d0ad96af2ca4dce6b1a0.1605649533.git.me@ttaylorr.com/
 
-I would maybe add more details here, something like the following=20
-(we can cite your previous attempt, because it was merged to 'master'):
+The biggest problem is that all-except-23 is an unnacceptable
+final state, since it has a performance blowout on super-wide
+repos such as the git/git fork network. Perhaps Taylor could
+include some performance numbers on that, but I'm pretty sure
+that the calculation literally OOMs instead of completing. It
+might be worth an explicit mention in the patch.
 
-The first attempt to fix this regression, in 1b7ac4e6d4 (submodules:=20
-fix of regression on fetching of non-init subsub-repo, 2020-11-12), by =
-simply
-reverting a62387b, resulted in
-an infinite loop of submodule fetches in the simpler case of a recursive =
-fetch of a superproject with
-uninitialized submodules, and so this commit was reverted in 7091499bc0 =
-(Revert=20
-"submodules: fix of regression on fetching of non-init subsub-repo", =
-2020-12-02).
-To prevent future breakages, also add a regression test for this =
-scenario.
+It might also be better to always include a baseline from the
+start of the series to ensure that the final state is better
+than the initial state. With only the last/this comparison,
+it doesn't look great when we backtrack in performance (even
+when it is necessary to do so).
 
->=20
-> Signed-off-by: Peter Kaestle <peter.kaestle@nokia.com>
-> CC: Junio C Hamano <gitster@pobox.com>
-> CC: Philippe Blain <levraiphilippeblain@gmail.com>
-> CC: Ralf Thielow <ralf.thielow@gmail.com>
-> CC: Eric Sunshine <sunshine@sunshineco.com>
-> ---
-> submodule.c                 |   7 ++-
-> t/t5526-fetch-submodules.sh | 104 ++++++++++++++++++++++++++++++++++++
-> 2 files changed, 110 insertions(+), 1 deletion(-)
->=20
-> diff --git a/submodule.c b/submodule.c
-> index b3bb59f066..b561445329 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -1477,6 +1477,7 @@ static int get_next_submodule(struct =
-child_process *cp,
-> 			strbuf_release(&submodule_prefix);
-> 			return 1;
-> 		} else {
-> +			struct strbuf empty_submodule_path =3D =
-STRBUF_INIT;
->=20
-> 			fetch_task_release(task);
-> 			free(task);
-> @@ -1485,13 +1486,17 @@ static int get_next_submodule(struct =
-child_process *cp,
-> 			 * An empty directory is normal,
-> 			 * the submodule is not initialized
-> 			 */
-> +			strbuf_addf(&empty_submodule_path, "%s/%s/",
-> +							=
-spf->r->worktree,
-> +							ce->name);
-> 			if (S_ISGITLINK(ce->ce_mode) &&
-> -			    !is_empty_dir(ce->name)) {
-> +			    !is_empty_dir(empty_submodule_path.buf)) {
-> 				spf->result =3D 1;
-> 				strbuf_addf(err,
-> 					    _("Could not access =
-submodule '%s'\n"),
-> 					    ce->name);
-> 			}
-> +			strbuf_release(&empty_submodule_path);
-> 		}
-> 	}
-
-
-Maybe a personal preference, but I would have gone for something a =
-little simpler, like the following:
-
-
-diff --git a/submodule.c b/submodule.c
-index b3bb59f066..4200865174 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1486,7 +1486,7 @@ static int get_next_submodule(struct child_process =
-*cp,
-                         * the submodule is not initialized
-                         */
-                        if (S_ISGITLINK(ce->ce_mode) &&
--                           !is_empty_dir(ce->name)) {
-+                           !is_empty_dir(repo_worktree_path(spf->r, =
-"%s", ce->name))) {
-                                spf->result =3D 1;
-                                strbuf_addf(err,
-                                            _("Could not access =
-submodule '%s'\n"),
-
-> diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-> index dd8e423d25..666dd1e2b7 100755
-> --- a/t/t5526-fetch-submodules.sh
-> +++ b/t/t5526-fetch-submodules.sh
-> @@ -719,4 +719,108 @@ test_expect_success 'fetch new submodule commit =
-intermittently referenced by sup
-> 	)
-> '
->=20
-> +add_commit_push () {
-> +	dir=3D"$1" &&
-> +	msg=3D"$2" &&
-> +	shift 2 &&
-> +	git -C "$dir" add "$@" &&
-> +	git -C "$dir" commit -a -m "$msg" &&
-> +	git -C "$dir" push
-> +}
-> +
-> +compare_refs_in_dir () {
-> +	fail=3D &&
-> +	if test "x$1" =3D 'x!'
-> +	then
-> +		fail=3D'!' &&
-> +		shift
-> +	fi &&
-> +	git -C "$1" rev-parse --verify "$2" >expect &&
-> +	git -C "$3" rev-parse --verify "$4" >actual &&
-> +	eval $fail test_cmp expect actual
-> +}
-> +
-> +
-> +test_expect_success 'setup nested submodule fetch test' '
-> +	# does not depend on any previous test setups
-> +
-> +	for repo in outer middle inner
-> +	do
-> +		git init --bare $repo &&
-> +		git clone $repo ${repo}_content &&
-> +		echo "$repo" >"${repo}_content/file" &&
-> +		add_commit_push ${repo}_content "initial" file ||
-> +		return 1
-> +	done &&
-> +
-> +	git clone outer A &&
-> +	git -C A submodule add "$pwd/middle" &&
-> +	git -C A/middle/ submodule add "$pwd/inner" &&
-> +	add_commit_push A/middle/ "adding inner sub" .gitmodules inner =
-&&
-> +	add_commit_push A/ "adding middle sub" .gitmodules middle &&
-> +
-> +	git clone outer B &&
-> +	git -C B/ submodule update --init middle &&
-> +
-> +	compare_refs_in_dir A HEAD B HEAD &&
-> +	compare_refs_in_dir A/middle HEAD B/middle HEAD &&
-> +	test_path_is_file B/file &&
-> +	test_path_is_file B/middle/file &&
-> +	test_path_is_missing B/middle/inner/file &&
-> +
-> +	echo "change on inner repo of A" >"A/middle/inner/file" &&
-> +	add_commit_push A/middle/inner "change on inner" file &&
-> +	add_commit_push A/middle "change on inner" inner &&
-> +	add_commit_push A "change on inner" middle
-> +'
-> +
-> +test_expect_success 'fetching a superproject containing an =
-uninitialized sub/sub project' '
-> +	# depends on previous test for setup
-> +
-> +	git -C B/ fetch &&
-> +	compare_refs_in_dir A origin/master B origin/master
-> +'
-> +
-> +
-> +test_expect_success 'setup recursive fetch with uninit submodule' '
-> +	# does not depend on any previous test setups
-> +
-> +	git init main &&
-> +	git init sub &&
-> +
-> +	>sub/file &&
-> +	git -C sub add file &&
-> +	git -C sub commit -m "add file" &&
-> +	git -C sub rev-parse HEAD >expect &&
-> +
-> +	git -C main submodule add ../sub &&
-> +	git -C main submodule init &&
-> +	git -C main submodule update --checkout &&
-
-These two steps are unnecessary as they are implicitly done by 'git =
-submodule add'.
-I think we could reflect real life a little bit more by cloning the =
-superproject, and running
-the 'recursive fetch with uninit submodule' test below in the clone.
-
-> +	git -C main submodule status >out &&
-> +	sed -e "s/^ //" -e "s/ sub .*$//" out >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'recursive fetch with uninit submodule' '
-> +	# depends on previous test for setup
-> +
-> +	git -C main submodule deinit -f sub &&
-
-Here you are deiniting the submodule, such that=20
-the Git directory will stay in .git/modules/sub. This is not the same =
-thing
-as a submodule that was never initialized ("uninitialized"), for which =
-.git/modules/sub
-will not yet exist. So maybe we could harden the tests by also testing
-for that scenario ? I don't know... maybe the infinite loop only happens
-if .git/modules/sub actually already exists. If so, the test name should =
-be
-"recursive fetch with deinitialized submodule", I think.
-
-> +
-> +	# In a regression the following git call will run into infinite =
-recursion.
-> +	# To handle that, we connect the grep command to the git call by =
-a pipe
-> +	# so that grep can kill the infinite recusion when detected.
-> +	# The recursion creates git output like:
-> +	# Fetching submodule sub
-> +	# Fetching submodule sub/sub              <-- [1]
-> +	# Fetching submodule sub/sub/sub
-> +	# ...
-> +	# [1] grep will trigger here and kill git by exiting and closing =
-its stdin
-> +
-> +	! git -C main fetch --recurse-submodules 2>&1 |
-> +		grep -v -m1 "Fetching submodule sub$" &&
-> +	git -C main submodule status >out &&
-> +	sed -e "s/^-//" -e "s/ sub$//" out >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> test_done
-
-
-Thanks for working on that, and sorry for not having the time to comment =
-before
-you sent v2.
-
-Cheers,
-
-Philippe.=
+Thanks,
+-Stolee
