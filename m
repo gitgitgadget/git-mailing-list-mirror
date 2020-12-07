@@ -2,120 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AF08C433FE
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 00:40:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C0EBC4361B
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 02:12:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3E44122E03
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 00:40:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C623422C7E
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 02:12:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728338AbgLGAkU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Dec 2020 19:40:20 -0500
-Received: from avasout01.plus.net ([84.93.230.227]:33782 "EHLO
-        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726046AbgLGAkU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Dec 2020 19:40:20 -0500
-Received: from [10.0.2.15] ([147.147.167.100])
-        by smtp with ESMTPA
-        id m4YskwQy5n8O7m4YtkbbTe; Mon, 07 Dec 2020 00:39:33 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1607301573; bh=gFXeId6R+1zh1wtvuOyg+5SuIAqWXQKRV5Q18Y6QsA4=;
-        h=To:Cc:From:Subject:Date;
-        b=M5OXUiG/d2Pg6GRm5cJ/ij9dpR78+zO/bHLtYFx9sqAtPg08XBP6MntJux56UzcfJ
-         vYa41IIUOm6wzFT5lZa4KBVBS+N61aWpU0nRxUK+nVpGyih0DrRSl+Ymj7SJ2dE6XC
-         KLubvD/CNsi0VoCRkNgtdk+BVE9t9le/Gv+E78tvesPuh0EvmTugkrk4FxiNJuJbce
-         thta1pOy9FgQ9RlcqIhsKGM4JEfNhJzKDxFTWHOaC7XFILB7Nse4Jqat69boQ8wV9E
-         GIG2kC6k1z8m+rJQ0bMbeBGFv2kgQsUg4bJsqmdBYyU35UhI/WW76RrGOsN41mYE0H
-         1UAZRQNhKQ8Rg==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=Ld6nFgXi c=1 sm=1 tr=0
- a=qL5TBQHgqnWGdG4DsQFN/Q==:117 a=qL5TBQHgqnWGdG4DsQFN/Q==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=LmtbTrIp9brtLQbQUBgA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] Makefile: conditionally include GIT-VERSION-FILE
-Message-ID: <ceacd2f6-c9c7-ef93-8bc2-0749770a260f@ramsayjones.plus.com>
-Date:   Mon, 7 Dec 2020 00:39:30 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1727879AbgLGCMM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Dec 2020 21:12:12 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:55274 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726482AbgLGCMM (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 6 Dec 2020 21:12:12 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 77A8360751;
+        Mon,  7 Dec 2020 02:11:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1607307090;
+        bh=OWaUG0HoYYl2moXkG+KtRwkK2rYoCZQL60p+0TuDKZY=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=huHKlKRP3RQuF1VW58RSaC8hwwgBOuv7yHav5fwfFdcH3NMSVoLBvTDi+ttypuvUs
+         hAwKI7SRW6CgcRH9Ai/qBp9wr5rs2IY3P7lgQ8qkn15lKPjP9sNytUf7hiXRl4XYUf
+         Uv+s8lcV0Yt1Ed0kT6xtjfOfaeij0EWUS7VaGF90+e2omFNJARfYCKqQeWFyYKRUMp
+         KkFvE8PXtksLHB+IClkMFhbDzff9sii1jKjqRD2gIMKxtlAibWyXve3FzzdWRlxmK4
+         3FQM8yC/sWjDcnAm+QLcZHp1SphA1X1zan0Hjy/3r7c6doow1FazQNGbP5w+yn8myj
+         5boMvurhhrd5+OtcLlG3iEJB/wKwnGMxLnAnaMto21BlGdBEmNaaxu/qydAMABHQjj
+         5HmesNm3gPcGc9JBpGd2vSnTDBVC0SnTjrHOGZdRP8Q2X/oXs2K+/JHXTLIQ0pLH+I
+         PMPsbr8rY3Rq7MfxBUbpvJJ/Yc+7hBkoSl5A8dFBCfDwzZx1jW5
+Date:   Mon, 7 Dec 2020 02:11:23 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH v4 1/2] abspath: add a function to resolve paths with
+ missing components
+Message-ID: <X82PS2RDlpXY0srv@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+References: <20201206225349.3392790-1-sandals@crustytoothpaste.net>
+ <20201206225349.3392790-2-sandals@crustytoothpaste.net>
+ <CAPig+cTbtpzwcQPHUgyf=0Oe5h2_=zory2oj9oFEUrdtaRR6ng@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfHfjoyN/eyw8yHz1/pS2O9yCpz9MEVh+cvQ+82YL5XrrjJLsJhQ7LERqF+oXnbIQLTDcMSLbCxOtVRtl85pWuUYqVOFATOKY8XfIvi5LPC8im4xYNdos
- SYpVqg6OpMsJDZR3hp2tTG8SQA92IvpROvO7AEDf4sDkE+QJpSf3wI0LiISxxV+Mh7q6KWHiamRoRg==
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="SLjK337+kj9z1Ows"
+Content-Disposition: inline
+In-Reply-To: <CAPig+cTbtpzwcQPHUgyf=0Oe5h2_=zory2oj9oFEUrdtaRR6ng@mail.gmail.com>
+User-Agent: Mutt/2.0.2 (2020-11-20)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-The 'clean' target is noticeably slow on cygwin, even for a 'do-nothing'
-invocation of 'make clean'. For example, the second 'make clean' given
-below:
+--SLjK337+kj9z1Ows
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  $ make clean >/dev/null 2>&1
-  $ make clean
-  GITGUI_VERSION = 0.21.0.85.g3e5c
-  rm -rf git-gui lib/tclIndex po/*.msg
-  rm -rf GIT-VERSION-FILE GIT-GUI-VARS
-  $
+On 2020-12-07 at 00:02:16, Eric Sunshine wrote:
+> This commit message is too barebones. As a justification, "We'd
+> like..." is insufficient; it doesn't help the reader understand why
+> this change is desirable.
+>=20
+> Further, the lack of explanation about the seemingly arbitrary "one or
+> infinite" condition confuses the issue. The first question which
+> popped into this reader's head was "why those two specific choices?".
+> What makes one missing path component special as opposed to any number
+> of missing components? (These questions are mostly rhetorical; I can
+> figure out reasonable answers, but the commit message ought to do a
+> better job of explaining.)
 
-has been timed at 1.934s on my laptop (an old core i5-4200M @ 2.50GHz,
-8GB RAM, 1TB HDD).
+Sure, I can expand the commit message to be a little more descriptive.
 
-Notice that the Makefile, as part of processing the 'clean' target, is
-updating the 'GIT-VERSION-FILE' file.  This is to ensure that the
-$(GITGUI_VERSION) make variable is set, once that file had been included.
-However, the 'clean' target does not use the $(GITGUI_VERSION) variable,
-so this is wasted effort.
+> The name of the function is somewhat confusing, especially if you take
+> the suggestion of dropping the `many_missing` argument. Perhaps a name
+> such as strbuf_realpath_forgiving() would be more understandable.
 
-In order to eliminate such wasted effort, use the value of the internal
-$(MAKECMDGOALS) variable to only '-include GIT-VERSION-FILE' when the
-target is not 'clean'. (This drops the time down to 0.676s, on my laptop,
-giving an improvement of 65.05%).
+Sure, I agree that's a better name.  It shouldn't be surprising to
+anyone on the list that I am absolutely terrible at naming things, so I
+appreciate the suggestion.
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
+--SLjK337+kj9z1Ows
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Hi Pratyush,
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
 
-This is the promised 'separated out' patch to git-gui from the "speed up
-'make clean'" series. Note that the speed improvement doesn't appear to
-be as good 'stand-alone'; it seems to be about 1.3s rather than 1.976s
-when called as part of the git Makefile. (Also, on Linux, the numbers
-are 0.091s ->  0.020s for an 78% improvement).
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX82PSwAKCRB8DEliiIei
+gUzdAQCjYwhnlzq45MsK6JV4WA1dMJhvGcOZO6s/Ac8RDPsB0gD/RbWr+Kn5NaFt
+zDTafif0QGmOkMf7CbSmwXsWc6NOAQ8=
+=TBMM
+-----END PGP SIGNATURE-----
 
-This patch was build on git-gui 'master' branch (@3e5c911) tonight.
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
- Makefile | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/Makefile b/Makefile
-index f10caed..56c85a8 100644
---- a/Makefile
-+++ b/Makefile
-@@ -9,7 +9,9 @@ all::
- 
- GIT-VERSION-FILE: FORCE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
-+ifneq ($(MAKECMDGOALS),clean)
- -include GIT-VERSION-FILE
-+endif
- 
- uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
- uname_O := $(shell sh -c 'uname -o 2>/dev/null || echo not')
--- 
-2.29.0
+--SLjK337+kj9z1Ows--
