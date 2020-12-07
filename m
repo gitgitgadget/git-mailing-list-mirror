@@ -2,85 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 415BAC433FE
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 19:27:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72BF6C4361B
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 19:32:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EDE43238A0
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 19:27:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1FFAC238D7
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 19:32:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726604AbgLGT1D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Dec 2020 14:27:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58388 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726522AbgLGT1C (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Dec 2020 14:27:02 -0500
-Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 000E7C061749
-        for <git@vger.kernel.org>; Mon,  7 Dec 2020 11:26:21 -0800 (PST)
-Received: by mail-qt1-x842.google.com with SMTP id z9so10255410qtn.4
-        for <git@vger.kernel.org>; Mon, 07 Dec 2020 11:26:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=IOLzNz1QaXpeC7xF+bsevMbzbtdaLe0sYQEOnEPaOrA=;
-        b=JwsYScJf0wyLCoNKJv5MW1wKYNBHCPBVyTzKjZBMWS7u+9L9C3DHjPiMAMNjsa+yPV
-         Cp+CWcw2LBd1G//IJ85IqNRiwgF1Kr+V2BvmeHvxphUMDj5+lBPstBVzTlvCT0USmlwJ
-         J9pT+PPeRiGamyg2+HVs8LeM/xAc2B/zDTE7lQSuoyFK1ZhZgNqtJP0MV55sAeJhdpVC
-         p9ORxyuPwPBMuTEjctCovtsuQ83AOHiU5nLvQaZ7v35wT5x/u3BlC6MYSl6E5llGt6QK
-         8HR7ya9FC7WaK2G4ZhNRZyF6VL4PuXRoToPB42kVRQLeI0Tl37Mg8wlflb0Z8QS8S1+n
-         u2Og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=IOLzNz1QaXpeC7xF+bsevMbzbtdaLe0sYQEOnEPaOrA=;
-        b=O4gZxUH2ivv8oeRoaMuvz5H1PR5MLCl7Z+0xXnikIQWC3l9Ny27Uwqlk6eGXwLC34Y
-         r7kRTUlgtVSSxz6um6eFr2R1y3CUGMHasiGhTlXm8wKa0mfDQM0GJ9ye6KmhCo+wKy+S
-         6+Qwu6dKE6Pz0QOrArXnfTyvFglmctnconnRXMqiSAIYewcRsDc+4ghjfeqjPgUdgmXr
-         7mwjSPBzsIUsTG3viVAy9it/BW2rKhfH3lfyQ3vFP0oaJVEu33T9JmZo8bvV41iCjT/8
-         E/mJGqJu5lNLthRe0TdGsF6/QLp92UfK+JsO8wmtvZIS1pg0d6W2uRoL0hnQQzgph/3B
-         K4IA==
-X-Gm-Message-State: AOAM530zjv9B1/3CXTubTJzjGNrWsIh6wyVsp9UI1sP1Xga1eLAPouDF
-        kKzoTF8+eBVqjmgmajgbpB3ksWjCPudE5w==
-X-Google-Smtp-Source: ABdhPJxihK9vAJPyLvhm54UxAKLzlhX0JwWR7N27zqKMwbr9N5Ihjbg+OsqmzPgaVPGX4tT3qkRJug==
-X-Received: by 2002:ac8:2bd2:: with SMTP id n18mr23358058qtn.260.1607369181066;
-        Mon, 07 Dec 2020 11:26:21 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:8ddc:62f4:9dcc:ce02? ([2600:1700:e72:80a0:8ddc:62f4:9dcc:ce02])
-        by smtp.gmail.com with UTF8SMTPSA id q27sm3160617qkj.131.2020.12.07.11.26.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Dec 2020 11:26:20 -0800 (PST)
-Subject: Re: [PATCH v2 0/9] misc commit-graph and oid-array cleanups
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-References: <X8qEg/KiAQDugPC0@coredump.intra.peff.net>
- <X85+GbvmN4wIjsYY@coredump.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <581165d3-1590-6a45-2a0e-94c0dfa5627f@gmail.com>
-Date:   Mon, 7 Dec 2020 14:26:20 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101
- Thunderbird/84.0
+        id S1726247AbgLGTcf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Dec 2020 14:32:35 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64586 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725799AbgLGTce (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Dec 2020 14:32:34 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3CA75ADD29;
+        Mon,  7 Dec 2020 14:31:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3iqMURgjGhd6DogN3hObV+87s8g=; b=cLRSug
+        imeS/CPpfQpz5OBQZsc9Jlo82lUKLuQJLuCZ+Zqko940kTKmPJfKUM6xbmTktm9e
+        IYAOcYrbpkpIwCrpMkW3JOolLAhEDuVzwt2+RMvKtxTOZFMA2OFJfA2WJ99Bfiw/
+        FhKDQ7iCDlTyK03cs+VnSK0e+v/HSBe/hsm/g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=SOsmp9VHLlEZVFil2PDYxLUB1kyo1rnd
+        A7ODHRkK/yEZPM3GHke9Gj/OCZ1HRdPemRg/LamtVYr1BqxHdCKE2Y+mYJnD35xp
+        v+0LqyOHeKpnwgcO6Sm5i6Hg9p00kQP8bf5teRbEUuIIuoymi/0rErqwpI2R5KAE
+        os1ZtmuycfU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 347F5ADD28;
+        Mon,  7 Dec 2020 14:31:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B1F1AADD27;
+        Mon,  7 Dec 2020 14:31:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH] init-db: init the_repository->hash_algo early from
+ GIT_DEFAULT_HASH
+References: <pull.924.git.git.1606419582190.gitgitgadget@gmail.com>
+        <xmqq5z5mruia.fsf@gitster.c.googlers.com>
+        <CAFQ2z_M3OO_nR6dhw6zzE0orYxcawP1DaJ_EOL5=+RUiZgCo8w@mail.gmail.com>
+        <xmqqtut2fp5z.fsf@gitster.c.googlers.com>
+        <CAFQ2z_OsyseuPWxpj9S4R_Pp_Koa0JuJeO2gte+TLxDh+oHPNg@mail.gmail.com>
+Date:   Mon, 07 Dec 2020 11:31:51 -0800
+In-Reply-To: <CAFQ2z_OsyseuPWxpj9S4R_Pp_Koa0JuJeO2gte+TLxDh+oHPNg@mail.gmail.com>
+        (Han-Wen Nienhuys's message of "Mon, 7 Dec 2020 12:52:11 +0100")
+Message-ID: <xmqqy2i99zvc.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <X85+GbvmN4wIjsYY@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: DB3587AC-38C2-11EB-A4CA-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/7/2020 2:10 PM, Jeff King wrote:
-> Here's a re-roll of my series to clean up commit-graph and oid-array.
-> The changes are all cosmetic: comments and commit messages (and most of
-> those just in the for-loop patch). I recommend just reading the
-> range-diff below, if you reviewed v1.
+Han-Wen Nienhuys <hanwen@google.com> writes:
 
-Range-diff LGTM. Thanks,
--Stolee
+> You said earlier that maybe ref_store should hold a link to 'struct
+> repository'. However, "struct repository" doesn't have a documented
+> purpose (there is literally no comment documenting its purpose), so
+> it's hard to tell upfront how to correctly configure the relation
+> between "struct ref_store" and "struct repository".
+
+Folks, who have been pushing to recurse into submodules in-process,
+does any of you care to help out?
+
+In order to deal with separate repositories inside a process,
+instead of allowing many API functions to assume that they only have
+to work in the repository "git" started in, you need to be able to
+make them to work on a different repository, which would have
+different configuration files, with working tree locations that are
+different from that of the initial repository, and certainly would
+have different set of refs, etc., and the way to do so is by passing
+an instance of the repository structure.  To the API functions that
+have been converted to take such an instance, working in the
+repository "git" started in is done by working with the_repository
+instance.
+
+
