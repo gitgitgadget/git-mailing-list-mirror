@@ -2,146 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC9A9C433FE
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 19:10:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19D54C433FE
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 19:11:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AEC4623406
-	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 19:10:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B686023406
+	for <git@archiver.kernel.org>; Mon,  7 Dec 2020 19:10:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726640AbgLGTKi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Dec 2020 14:10:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55818 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726559AbgLGTKi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Dec 2020 14:10:38 -0500
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20AC4C061793
-        for <git@vger.kernel.org>; Mon,  7 Dec 2020 11:09:35 -0800 (PST)
-Received: by mail-wr1-x444.google.com with SMTP id 91so9922434wrj.7
-        for <git@vger.kernel.org>; Mon, 07 Dec 2020 11:09:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=yG15oXZSRoxtalpWJUp48doYzFawaJoGjdK4EoQ7cG8=;
-        b=KQhFp/AbeBNSkmtjTb9Suan5b9l9SdFSK1yj1TXGsv1DYbRv2eHYaUmcHXpIvPC63r
-         3YIcrm9VcPrzRuPmP/3BOM3L61g3OQO8+G+sWJ8C228pe6Kf7p1SMNPmD1+Xr+mNyQcP
-         TP3FNkl6suFU/z2B8zcaAdDkofDmpl/ILVOhyh+5lRMzntDuLHHhv+liQoRlha49eZv1
-         Q2EifducUnkLcMwDUUavcQ04ings5SOCICTMgGrPZINjy8L+rw8zWoxmP1cxk4x4vp5r
-         dDRUo3EhezKcFEwwwPykQQvPdLxrhyuxty/wyrVshSlp2EuWIcVm/F+F7NyZjvvhvIfE
-         VwCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yG15oXZSRoxtalpWJUp48doYzFawaJoGjdK4EoQ7cG8=;
-        b=qbRqUMzXzmaHoZ4s/5Bqzd4s81TXF1l8r2VRk9O0Efwoe0XbQLVvGCwSfTWNkc0Ect
-         5R2WFxK+EQEPERUsHVpVI+eQ7wB/wgW23bmALoP//K/68S1QYJuH8KM61dYejCbhaCXZ
-         4byFdhN0PNgsrBGc7qkPS/mwHT6OvWCBlOUfmRX3XwXSWBlaX+2fVUNg/gdO0U2LM2Ej
-         q1trQGYIEc5GpXtBTxEU2/S34tI7lVo+aH/tBwFmrYWZuWAQ1B4NnYSXUko1cc+ggI0y
-         ruxxrHDWw5vQquKQGDVk3uDClUWNBcLYtDLyc8+OZjqLVk1XGANXqLzChiY25/m3y5Z+
-         dddQ==
-X-Gm-Message-State: AOAM531VO/mpFjkSaDP5EKsgBS4++MDNJV5q13mHu7vlvzaEA9U1ESf+
-        OhQub6jabhoZdVaHk1u5ooZmJnJuRVE9mqUnv5U=
-X-Google-Smtp-Source: ABdhPJw5lIG6+embCum5Tuff50w+v0IgZB6tmFWbwcMuGqOGedrdfphin2q4VdcVjhpe8SIG8RHfByNZR/NKM7kgNuw=
-X-Received: by 2002:a5d:52c1:: with SMTP id r1mr21449647wrv.255.1607368173839;
- Mon, 07 Dec 2020 11:09:33 -0800 (PST)
+        id S1726719AbgLGTK6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Dec 2020 14:10:58 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55224 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726396AbgLGTK6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Dec 2020 14:10:58 -0500
+Received: (qmail 8980 invoked by uid 109); 7 Dec 2020 19:10:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 07 Dec 2020 19:10:18 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25634 invoked by uid 111); 7 Dec 2020 19:10:17 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 07 Dec 2020 14:10:17 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 7 Dec 2020 14:10:17 -0500
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v2 0/9] misc commit-graph and oid-array cleanups
+Message-ID: <X85+GbvmN4wIjsYY@coredump.intra.peff.net>
+References: <X8qEg/KiAQDugPC0@coredump.intra.peff.net>
 MIME-Version: 1.0
-References: <20201204061623.1170745-1-felipe.contreras@gmail.com>
- <20201204061623.1170745-3-felipe.contreras@gmail.com> <CABPp-BFdjj=+4jk0vo=kpNc6ug1=UgtKfXJZkseyyxut2VB=Uw@mail.gmail.com>
- <CAMP44s1eTc4+tbULbyz5ENgbcN4tOVBA3Z-4GS4yMpciUD_1Hw@mail.gmail.com>
- <CABPp-BFwWBLdFPsKi3o9hznFtAeWWfhNAyuymPS4BhMAHpnSfw@mail.gmail.com>
- <CAMP44s1=aZL7BMKSjzKJ7qYqg-usScwzRUJmaOhsCGvQ4ieYow@mail.gmail.com>
- <CABPp-BF4rXBOKsn8bG6y3QUEtNVV9K2Pk5NmwrU5818CqhRt_Q@mail.gmail.com>
- <CAMP44s2L24jhCG9ps72--ZiJkXUovR726jCf8JTLHAs0jV7Whg@mail.gmail.com>
- <CABPp-BGdNt8TBMTE9zvaicF5AtvyTBhpiJXqkuZc7mBLGbw0Qw@mail.gmail.com>
- <xmqqeek2cc14.fsf@gitster.c.googlers.com> <CAMP44s2XFQoda_PMULWha-rj9HhNfEddO5fikmswk9=AWN4RCw@mail.gmail.com>
- <xmqqpn3lbhxn.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqpn3lbhxn.fsf@gitster.c.googlers.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Mon, 7 Dec 2020 13:09:22 -0600
-Message-ID: <CAMP44s2nmVnXiBA8S=vHBZznuRNKKe=xGOEBJ80MYhA_XCqNkg@mail.gmail.com>
-Subject: Re: [PATCH v2 02/14] pull: improve default warning
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        "Theodore Y . Ts'o" <tytso@mit.edu>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        John Keeping <john@keeping.me.uk>,
-        Richard Hansen <rhansen@rhansen.org>,
-        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
-        "W. Trevor King" <wking@tremily.us>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <X8qEg/KiAQDugPC0@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 7, 2020 at 12:16 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
-> > When the user has specified "pull.mode=ff-only", the command dies with:
-> >
-> >   The pull was not fast-forward, please either merge or rebase.
-> >
-> > When the user has not specified any mode (by default), the command
-> > would output a warning:
-> >
-> >   The pull was not fast-forward, in the future you will have to choose a
-> >   merge, or a rebase.
->
-> I quite don't get it.  They say the same thing.  At that point the
-> user needs to choose between merge and rebase to move forward and
-> ff-only would not be a sensible choice to offer the user.
+Here's a re-roll of my series to clean up commit-graph and oid-array.
+The changes are all cosmetic: comments and commit messages (and most of
+those just in the for-loop patch). I recommend just reading the
+range-diff below, if you reviewed v1.
 
-The error happens *only* when the user has explicitly set
-"pull.mode=ff-only", and the pull dies. At that point; yes, the user
-must choose between one or the other.
+  [1/9]: oid-array.h: drop sha1 mention from header guard
+  [2/9]: t0064: drop sha1 mention from filename
+  [3/9]: t0064: make duplicate tests more robust
+  [4/9]: cache.h: move hash/oid functions to hash.h
+  [5/9]: oid-array: make sort function public
+  [6/9]: oid-array: provide a for-loop iterator
+  [7/9]: commit-graph: drop count_distinct_commits() function
+  [8/9]: commit-graph: replace packed_oid_list with oid_array
+  [9/9]: commit-graph: use size_t for array allocation and indexing
 
-But the warning happens by default, when the user has not chosen any
-mode, and the pull succeeds. The user doesn't need to choose; the pull
-continues as if the user chose the "merge" mode, which is the historic
-behavior.
+ cache.h                                       |  94 ---------------
+ commit-graph.c                                | 107 +++---------------
+ hash.h                                        |  95 ++++++++++++++++
+ oid-array.c                                   |  17 ++-
+ oid-array.h                                   |  34 +++++-
+ t/{t0064-sha1-array.sh => t0064-oid-array.sh} |   9 +-
+ 6 files changed, 157 insertions(+), 199 deletions(-)
+ rename t/{t0064-sha1-array.sh => t0064-oid-array.sh} (90%)
 
-They start by saying the same thing. But one errors out and says the
-user must choose, and the other warns that in the future the user must
-choose.
+Range-diff from v1:
 
-> > Just to put this series in context: it's only part 1; it does not
-> > introduce pull.mode, and it doesn't make --ff-only the default.
->
-> I'd view the "in a non-fast-forward situation, the warning kicks in
-> to those who haven't chosen between merge and rebase (i.e. no
-> pull.rebase set to either true or false, and pull.ff not set to
-> only), which is a bit more gentle than the current situtation" a
-> good stopping point.  That state is already making ff-only the
-> default for unconfigured users, or you can view it as shipping "git
-> pull" in a shape that has the more dangerous half of its feature
-> disabled to avoid hurting users.  So I am not sure why you keep
-> saying you do not have --ff-only as the default.
-
-The warning doesn't make the pull fail, ff-only does.
-
-On the current master this works:
-
-  test_expect_success 'non-fast-forward (default)' '
-    setup_non_ff &&
-    git pull
-  '
-
-And after my patch series (part 1) it still does. The default behavior
-has not changed.
-
-I'm not sure what it is that I'm not explaining correctly.
-
--- 
-Felipe Contreras
+ 1:  7cfd2f9a29 =  1:  1b52a4ea67 oid-array.h: drop sha1 mention from header guard
+ 2:  82b8902560 =  2:  96ef8b8bb8 t0064: drop sha1 mention from filename
+ 3:  b69af2f0d5 =  3:  7382ad6d52 t0064: make duplicate tests more robust
+ 4:  0e258a486a =  4:  a0b8b9aabf cache.h: move hash/oid functions to hash.h
+ 5:  1ed342fe20 =  5:  336650a307 oid-array: make sort function public
+ 6:  28893c76f8 !  6:  cc1c2a16da oid-array: provide a for-loop iterator
+    @@ oid-array.h: void oid_array_filter(struct oid_array *array,
+      void oid_array_sort(struct oid_array *array);
+      
+     +/**
+    -+ * Find the next unique oid in the array after position "cur". You
+    -+ * can use this to iterate over unique elements, like:
+    ++ * Find the next unique oid in the array after position "cur".
+    ++ * The array must be sorted for this to work. You can iterate
+    ++ * over unique elements like this:
+     + *
+     + *   size_t i;
+     + *   oid_array_sort(array);
+ 7:  d025d6215c !  7:  16fd32e41c commit-graph: drop count_distinct_commits() function
+    @@ Commit message
+         the count are:
+     
+           - check if our count will overflow our data structures. But the limit
+    -        there is 2^31 commits, so it's not likely to happen in practice.
+    +        there is 2^31 commits, so while this is a useful check, the
+    +        off-by-one is not likely to matter.
+     
+           - pre-allocate the array of commit pointers. But over-allocating by
+    -        one isn't a problem.
+    +        one isn't a problem; we'll just waste a few extra bytes.
+     
+         The bug would be easy enough to fix, but we can observe that neither of
+    -    those steps is necessary. We'll check the count of the commit array
+    -    after we build it anyway, so checking at this point is redundant. And we
+    -    use ALLOC_GROW() when building the commit array, so there's no need to
+    -    preallocate it (it's possible that doing so is slightly more efficient,
+    -    but if we care we can just optimistically allocate one slot for each
+    -    oid; I didn't bother here).
+    +    those steps is necessary.
+    +
+    +    After building the actual commit array, we'll likewise check its count
+    +    for overflow. So the extra check of the distinct commit count here is
+    +    redundant.
+    +
+    +    And likewise we use ALLOC_GROW() when building the commit array, so
+    +    there's no need to preallocate it (it's possible that doing so is
+    +    slightly more efficient, but if we care we can just optimistically
+    +    allocate one slot for each oid; I didn't bother here).
+     
+         So count_distinct_commits() isn't doing anything useful. Let's just get
+         rid of that step.
+     
+         Note that a side effect of the function was that we sorted the list of
+         oids, which we do rely on in copy_oids_to_commits(), since it must also
+    -    skip the duplicates. So we'll move the qsort there.
+    +    skip the duplicates. So we'll move the qsort there. I didn't copy the
+    +    "TODO" about adding more progress meters. It's actually quite hard to
+    +    make a repository large enough for this qsort would take an appreciable
+    +    amount of time, so this doesn't seem like a useful note.
+     
+         Signed-off-by: Jeff King <peff@peff.net>
+     
+ 8:  55d6052e0d =  8:  b0f6326fbe commit-graph: replace packed_oid_list with oid_array
+ 9:  c9c6e2de47 =  9:  89848e2214 commit-graph: use size_t for array allocation and indexing
