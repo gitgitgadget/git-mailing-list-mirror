@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF80DC433FE
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 22:06:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A237C1B0D9
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 22:06:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B7BD4222B3
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 22:06:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 315FD23A1D
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 22:06:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731041AbgLHWGE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Dec 2020 17:06:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54294 "EHLO
+        id S1731108AbgLHWGR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Dec 2020 17:06:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730989AbgLHWF7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Dec 2020 17:05:59 -0500
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7D35C061793
-        for <git@vger.kernel.org>; Tue,  8 Dec 2020 14:05:13 -0800 (PST)
-Received: by mail-oi1-x241.google.com with SMTP id 15so190271oix.8
-        for <git@vger.kernel.org>; Tue, 08 Dec 2020 14:05:13 -0800 (PST)
+        with ESMTP id S1731062AbgLHWGP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Dec 2020 17:06:15 -0500
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B2DDC06179C
+        for <git@vger.kernel.org>; Tue,  8 Dec 2020 14:05:29 -0800 (PST)
+Received: by mail-oi1-x244.google.com with SMTP id f132so163180oib.12
+        for <git@vger.kernel.org>; Tue, 08 Dec 2020 14:05:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=LViEVk8iVCd/Fue2tk1lTGL+H9g9t3D0HHU/a47NVcM=;
-        b=gdnydGMQpQ/akHzHPKhjiB48KEHtuVwN8Pnd2TrWDxAUgb9ncLxF5pkIqlxhb/5zTz
-         x6nFWcSUAUqykZL/i/UM4HfCbp+3g1ubCNcJGHCoVZqbT47HkhYRW9CiLESsiIwEGHRb
-         T9zCaOwQ0rvhI2eMppbQla+1f8hLX0k62QzScsEO8+PZWtC8uQA5JLO0QDX/OvKoqHzv
-         lQNqIwLkob5mn6arri7zB+5/VVX0go5blAYtLTeAFoyF7qYSjmR4iholspso+IwfiFDP
-         UrJ7YDwzdPLSP1iY2D0Cfzw9WL1LNF0IqvxBKD/UDdvX9syNP9Wgs42Gnej8haySwB4y
-         x6Qg==
+        bh=w1xB3i7H2Z5DNsLz2Xah7JmKQyWhg02742HJdA61YU0=;
+        b=pCqX8y+Fevi9q8BeLp4N7xBaRE2pxPoBrM1SRj8Vcyr0OZATGXpNKoTi8A1M/Vby+X
+         4phtQSwqsPMZ5MFzh3EFTWo3MRy0B4FbWWzTNXUZqxT0lIHpGfezUilk3H6gmLcmQLIP
+         k495XmWlMayrLZJxwEFQAjgTLSFVZgjnVEInEmqA6s8GFrJxsm3hdJNu7dHRvyh/F97w
+         zMHV+5MCxMARAcQTueM4qwyx167wga6Vgo/ppihPPuUF1WUzToYhzSgQhD9dUggeBgwz
+         8t41LsOXGFnaCgRA1c+/ZPLHqYabosc/8zIywI3L1zATspLo0ko8G+u6DkGVJRKzD6Ow
+         U7mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=LViEVk8iVCd/Fue2tk1lTGL+H9g9t3D0HHU/a47NVcM=;
-        b=RVY5FYyIaMUGZ+XrLwzlx8QDqnCNRRaL3OjI56ne+BpnyWucnMd/DjwZ3R/NRAhc/C
-         Ut7+LrZbjvWBFm1mzb70YJyOHjrAhOWyc99Ao4oseGdh1hG+98UPZl6z4NtE5GYuE2P8
-         ZlW1zBZ3sFxcrNBY5D59NlGAyd3Vhx3SVgQAEd5DDS+P+5fsscZNx7bK06QAOxNY5xTw
-         bYWVkeOXie2uZ1mjrlFc0ROEWiyLwfArS/pt80lr2WQSo3sxbVgmzyuJa7TfGmJl2rSX
-         B+As06P4ZAUTR0dhspaQrzzpgWxqBb5ZRIJo8srTYcFwlpMyEeWKOhYTJ9up/lewXGhV
-         qEuw==
-X-Gm-Message-State: AOAM5315oRXRnCcq8PJgS61Fl/2D5BKn7dN04C2r73INF7C4u8onW1EY
-        mSYYLOakln3kcxiMvTLVzmPwpvzwebitRaAq
-X-Google-Smtp-Source: ABdhPJwzZOqFZJ7DOQrqb0lYwwfwEQyIK+3Wr307PSqF1ltHCZVl5doyJapFwoN4O6UDgu6FRM4RtA==
-X-Received: by 2002:aca:62c2:: with SMTP id w185mr18439oib.20.1607465112898;
-        Tue, 08 Dec 2020 14:05:12 -0800 (PST)
+        bh=w1xB3i7H2Z5DNsLz2Xah7JmKQyWhg02742HJdA61YU0=;
+        b=Lj+FCd547YIdiIPDoCAZyMv8kh1eGmMcKd/oomNQw6+/Lgt13kw9bAbJbZT5hkOozs
+         LpiCgksVL+KxGX4lgYElmZJP5b/vOawAa9gwtup8StiayKVFkdxBFmnp977J7maoaA0O
+         1ObYGfi30nrMBJKs46+lz9ziJs/lBjqKYPWQ930W1vPgvLZM+qJXklvr7GpRAbXA9PWi
+         4JgzrMJEEZxxoxJ3eKbmxUrWNR+ZR0r6FDEhTvUB6EFaNoCbBYGQ5CEOQ4mCqOHwxFzP
+         iZbPodKobf02rkBcbaIg2NEf3C/g+0JwkHTqNYMv6fL5fc6aK/ar5nr/C9V1rJ3ollQ0
+         Bb9A==
+X-Gm-Message-State: AOAM5330lnX0mhEc9etWMJLi1t+CyQuxlo3Ok03YjuNfTtpJ71SBIV7o
+        DAF5/jerpcSdrhRX4J8Hi08JmKZAvYRdBMak
+X-Google-Smtp-Source: ABdhPJzzQ/6IVbCt/zOpHmsVkbf1ci0qgKqTssx+EjXroMNkal8x4o8lW63NqGDfLLGN1VLKO2neTw==
+X-Received: by 2002:aca:5a42:: with SMTP id o63mr4252310oib.69.1607465128462;
+        Tue, 08 Dec 2020 14:05:28 -0800 (PST)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id 189sm62850oob.26.2020.12.08.14.05.12
+        by smtp.gmail.com with ESMTPSA id j62sm14562otc.49.2020.12.08.14.05.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Dec 2020 14:05:12 -0800 (PST)
-Date:   Tue, 8 Dec 2020 17:05:09 -0500
+        Tue, 08 Dec 2020 14:05:27 -0800 (PST)
+Date:   Tue, 8 Dec 2020 17:05:26 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, jonathantanmy@google.com, dstolee@microsoft.com,
         gitster@pobox.com
-Subject: [PATCH v4 20/24] pack-bitmap: factor out 'bitmap_for_commit()'
-Message-ID: <4d7a4184ac141115ef2ede59d9af30ae47b3a387.1607464775.git.me@ttaylorr.com>
+Subject: [PATCH v4 23/24] pack-bitmap-write: relax unique revwalk condition
+Message-ID: <8f9fdb0f43ef6aa6796ef50d39a4c911259aa3db.1607464775.git.me@ttaylorr.com>
 References: <cover.1605123652.git.me@ttaylorr.com>
  <cover.1607464775.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -71,119 +71,170 @@ In-Reply-To: <cover.1607464775.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Message-ID: <20201208220509.LZVA8F3Rbms76vAaAayo8Ncx2kuOWnGEC5nJ2DGYco8@z>
 
-A couple of callers within pack-bitmap.c duplicate logic to lookup a
-given object id in the bitamps khash. Factor this out into a new
-function, 'bitmap_for_commit()' to reduce some code duplication.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-Make this new function non-static, since it will be used in later
-commits from outside of pack-bitmap.c.
+The previous commits improved the bitmap computation process for very
+long, linear histories with many refs by removing quadratic growth in
+how many objects were walked. The strategy of computing "intermediate
+commits" using bitmasks for which refs can reach those commits
+partitioned the poset of reachable objects so each part could be walked
+exactly once. This was effective for linear histories.
 
+However, there was a (significant) drawback: wide histories with many
+refs had an explosion of memory costs to compute the commit bitmasks
+during the exploration that discovers these intermediate commits. Since
+these wide histories are unlikely to repeat walking objects, the benefit
+of walking objects multiple times was not expensive before. But now, the
+commit walk *before computing bitmaps* is incredibly expensive.
+
+In an effort to discover a happy medium, this change reduces the walk
+for intermediate commits to only the first-parent history. This focuses
+the walk on how the histories converge, which still has significant
+reduction in repeat object walks. It is still possible to create
+quadratic behavior in this version, but it is probably less likely in
+realistic data shapes.
+
+Here is some data taken on a fresh clone of the kernel:
+
+             |   runtime (sec)    |   peak heap (GB)   |
+             |                    |                    |
+             |   from  |   with   |   from  |   with   |
+             | scratch | existing | scratch | existing |
+  -----------+---------+----------+---------+-----------
+    original |  64.044 |   83.241 |   2.088 |    2.194 |
+  last patch |  45.049 |   37.624 |   2.267 |    2.334 |
+  this patch |  88.478 |   53.218 |   2.157 |    2.224 |
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 33 +++++++++++++++++++--------------
- pack-bitmap.h |  2 ++
- 2 files changed, 21 insertions(+), 14 deletions(-)
+ pack-bitmap-write.c     | 14 +++++---------
+ t/t5310-pack-bitmaps.sh | 33 +++++++++++++++++----------------
+ 2 files changed, 22 insertions(+), 25 deletions(-)
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index d1368b69bb..5efb8af121 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -380,6 +380,16 @@ struct include_data {
- 	struct bitmap *seen;
- };
- 
-+struct ewah_bitmap *bitmap_for_commit(struct bitmap_index *bitmap_git,
-+				      struct commit *commit)
-+{
-+	khiter_t hash_pos = kh_get_oid_map(bitmap_git->bitmaps,
-+					   commit->object.oid);
-+	if (hash_pos >= kh_end(bitmap_git->bitmaps))
-+		return NULL;
-+	return lookup_stored_bitmap(kh_value(bitmap_git->bitmaps, hash_pos));
-+}
-+
- static inline int bitmap_position_extended(struct bitmap_index *bitmap_git,
- 					   const struct object_id *oid)
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 76c8236f94..d2af4a974f 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -199,7 +199,7 @@ static void bitmap_builder_init(struct bitmap_builder *bb,
  {
-@@ -465,10 +475,10 @@ static void show_commit(struct commit *commit, void *data)
+ 	struct rev_info revs;
+ 	struct commit *commit;
+-	unsigned int i, num_maximal;
++	unsigned int i, num_maximal = 0;
  
- static int add_to_include_set(struct bitmap_index *bitmap_git,
- 			      struct include_data *data,
--			      const struct object_id *oid,
-+			      struct commit *commit,
- 			      int bitmap_pos)
- {
--	khiter_t hash_pos;
-+	struct ewah_bitmap *partial;
+ 	memset(bb, 0, sizeof(*bb));
+ 	init_bb_data(&bb->data);
+@@ -207,6 +207,7 @@ static void bitmap_builder_init(struct bitmap_builder *bb,
+ 	reset_revision_walk();
+ 	repo_init_revisions(writer->to_pack->repo, &revs, NULL);
+ 	revs.topo_order = 1;
++	revs.first_parent_only = 1;
  
- 	if (data->seen && bitmap_get(data->seen, bitmap_pos))
- 		return 0;
-@@ -476,10 +486,9 @@ static int add_to_include_set(struct bitmap_index *bitmap_git,
- 	if (bitmap_get(data->base, bitmap_pos))
- 		return 0;
+ 	for (i = 0; i < writer->selected_nr; i++) {
+ 		struct commit *c = writer->selected[i].commit;
+@@ -221,13 +222,12 @@ static void bitmap_builder_init(struct bitmap_builder *bb,
  
--	hash_pos = kh_get_oid_map(bitmap_git->bitmaps, *oid);
--	if (hash_pos < kh_end(bitmap_git->bitmaps)) {
--		struct stored_bitmap *st = kh_value(bitmap_git->bitmaps, hash_pos);
--		bitmap_or_ewah(data->base, lookup_stored_bitmap(st));
-+	partial = bitmap_for_commit(bitmap_git, commit);
-+	if (partial) {
-+		bitmap_or_ewah(data->base, partial);
- 		return 0;
+ 		add_pending_object(&revs, &c->object, "");
  	}
+-	num_maximal = writer->selected_nr;
  
-@@ -498,8 +507,7 @@ static int should_include(struct commit *commit, void *_data)
- 						  (struct object *)commit,
- 						  NULL);
+ 	if (prepare_revision_walk(&revs))
+ 		die("revision walk setup failed");
  
--	if (!add_to_include_set(data->bitmap_git, data, &commit->object.oid,
--				bitmap_pos)) {
-+	if (!add_to_include_set(data->bitmap_git, data, commit, bitmap_pos)) {
- 		struct commit_list *parent = commit->parents;
+ 	while ((commit = get_revision(&revs))) {
+-		struct commit_list *p;
++		struct commit_list *p = commit->parents;
+ 		struct bb_commit *c_ent;
  
- 		while (parent) {
-@@ -1282,10 +1290,10 @@ void test_bitmap_walk(struct rev_info *revs)
- {
- 	struct object *root;
- 	struct bitmap *result = NULL;
--	khiter_t pos;
- 	size_t result_popcnt;
- 	struct bitmap_test_data tdata;
- 	struct bitmap_index *bitmap_git;
-+	struct ewah_bitmap *bm;
+ 		parse_commit_or_die(commit);
+@@ -235,16 +235,12 @@ static void bitmap_builder_init(struct bitmap_builder *bb,
+ 		c_ent = bb_data_at(&bb->data, commit);
  
- 	if (!(bitmap_git = prepare_bitmap_git(revs->repo)))
- 		die("failed to load bitmap indexes");
-@@ -1297,12 +1305,9 @@ void test_bitmap_walk(struct rev_info *revs)
- 		bitmap_git->version, bitmap_git->entry_count);
- 
- 	root = revs->pending.objects[0].item;
--	pos = kh_get_oid_map(bitmap_git->bitmaps, root->oid);
+ 		if (c_ent->maximal) {
+-			if (!c_ent->selected) {
+-				bitmap_set(c_ent->commit_mask, num_maximal);
+-				num_maximal++;
+-			}
 -
--	if (pos < kh_end(bitmap_git->bitmaps)) {
--		struct stored_bitmap *st = kh_value(bitmap_git->bitmaps, pos);
--		struct ewah_bitmap *bm = lookup_stored_bitmap(st);
-+	bm = bitmap_for_commit(bitmap_git, (struct commit *)root);
++			num_maximal++;
+ 			ALLOC_GROW(bb->commits, bb->commits_nr + 1, bb->commits_alloc);
+ 			bb->commits[bb->commits_nr++] = commit;
+ 		}
  
-+	if (bm) {
- 		fprintf(stderr, "Found bitmap for %s. %d bits / %08x checksum\n",
- 			oid_to_hex(&root->oid), (int)bm->bit_size, ewah_checksum(bm));
+-		for (p = commit->parents; p; p = p->next) {
++		if (p) {
+ 			struct bb_commit *p_ent = bb_data_at(&bb->data, p->item);
+ 			int c_not_p, p_not_c;
  
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index afa4115136..25dfcf5615 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -78,6 +78,8 @@ uint32_t *create_bitmap_mapping(struct bitmap_index *bitmap_git,
- int rebuild_bitmap(const uint32_t *reposition,
- 		   struct ewah_bitmap *source,
- 		   struct bitmap *dest);
-+struct ewah_bitmap *bitmap_for_commit(struct bitmap_index *bitmap_git,
-+				      struct commit *commit);
- void bitmap_writer_select_commits(struct commit **indexed_commits,
- 		unsigned int indexed_commits_nr, int max_bitmaps);
- void bitmap_writer_build(struct packing_data *to_pack);
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index 6815fb6a4e..3a2c9d2d8e 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -23,12 +23,12 @@ has_any () {
+ # To ensure the logic for "maximal commits" is exercised, make
+ # the repository a bit more complicated.
+ #
+-#    other                         master
++#    other                         second
+ #      *                             *
+ # (99 commits)                  (99 commits)
+ #      *                             *
+ #      |\                           /|
+-#      | * octo-other  octo-master * |
++#      | * octo-other  octo-second * |
+ #      |/|\_________  ____________/|\|
+ #      | \          \/  __________/  |
+ #      |  | ________/\ /             |
+@@ -43,23 +43,24 @@ has_any () {
+ #                                   \|
+ #                                    * (base)
+ #
++# We only push bits down the first-parent history, which
++# makes some of these commits unimportant!
++#
+ # The important part for the maximal commit algorithm is how
+ # the bitmasks are extended. Assuming starting bit positions
+-# for master (bit 0) and other (bit 1), and some flexibility
+-# in the order that merge bases are visited, the bitmasks at
+-# the end should be:
++# for second (bit 0) and other (bit 1), the bitmasks at the
++# end should be:
+ #
+-#      master: 1       (maximal, selected)
++#      second: 1       (maximal, selected)
+ #       other: 01      (maximal, selected)
+-# octo-master: 1
+-#  octo-other: 01
+-# merge-right: 111     (maximal)
+-#        (l1): 111
+-#        (r1): 111
+-#  merge-left: 1101    (maximal)
+-#        (l2): 11111   (maximal)
+-#        (r2): 111101  (maximal)
+-#      (base): 1111111 (maximal)
++#      (base): 11 (maximal)
++#
++# This complicated history was important for a previous
++# version of the walk that guarantees never walking a
++# commit multiple times. That goal might be important
++# again, so preserve this complicated case. For now, this
++# test will guarantee that the bitmaps are computed
++# correctly, even with the repeat calculations.
+ 
+ test_expect_success 'setup repo with moderate-sized history' '
+ 	test_commit_bulk --id=file 10 &&
+@@ -114,7 +115,7 @@ test_expect_success 'full repack creates bitmaps' '
+ 	ls .git/objects/pack/ | grep bitmap >output &&
+ 	test_line_count = 1 output &&
+ 	grep "\"key\":\"num_selected_commits\",\"value\":\"106\"" trace &&
+-	grep "\"key\":\"num_maximal_commits\",\"value\":\"111\"" trace
++	grep "\"key\":\"num_maximal_commits\",\"value\":\"107\"" trace
+ '
+ 
+ test_expect_success 'rev-list --test-bitmap verifies bitmaps' '
 -- 
 2.29.2.533.g07db1f5344
 
