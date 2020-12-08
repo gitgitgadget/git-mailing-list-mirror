@@ -2,64 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD8C8C433FE
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 00:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80610C4167B
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 01:23:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7CB9A23A3B
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 00:58:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3D0572343F
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 01:23:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728316AbgLHA6Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Dec 2020 19:58:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53728 "EHLO
+        id S1727096AbgLHBXx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Dec 2020 20:23:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726579AbgLHA6Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Dec 2020 19:58:25 -0500
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC6E8C061793
-        for <git@vger.kernel.org>; Mon,  7 Dec 2020 16:57:44 -0800 (PST)
-Received: by mail-wr1-x443.google.com with SMTP id x6so10647940wro.11
-        for <git@vger.kernel.org>; Mon, 07 Dec 2020 16:57:44 -0800 (PST)
+        with ESMTP id S1725972AbgLHBXx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Dec 2020 20:23:53 -0500
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED672C061749
+        for <git@vger.kernel.org>; Mon,  7 Dec 2020 17:23:12 -0800 (PST)
+Received: by mail-oi1-x22d.google.com with SMTP id q25so9640861oij.10
+        for <git@vger.kernel.org>; Mon, 07 Dec 2020 17:23:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=TUvxLb/bLQq8+pQ2S6Y0d9bCja5vNnDdfitNXQqu3do=;
-        b=ht+LvGSwtczUDlW7fGodzsCiVjCymCDbk8Nbua0nIlhL5i7f7vaD/zIu8uSaBb1NXT
-         YvRMlnC2FnrdohP/x3XtYRzQG2OnjmphU6eMVt5zxB2pGxh+oJa5RCZpbFQaAiJlAWdl
-         ztTQ9alZg2W4UNQacKPYnj+fhyr8rsze4zJfbF4AYtTg+ouHBQBNfko2JHYC/GzWqmyW
-         RcUbAbusppYaUH/fQNzZkPIAwr1qbJk5En+rALVEfKqWDOA19RX79SF3YI0Ktf1zE+3u
-         cHAiuoVthDDsyT/7WtOQijDKdKJ6tonUSpWch7ZF67KzOdrBeRnJyPlJn8zqgQBNFxJ+
-         jPAA==
+        bh=7DKkoPP/6V2n/IF/p+MZOrHVL/DFB9Y5at9sRn99B6I=;
+        b=HCOUnEg/Tttp9lNMBfT1oA9l7kZNFyf3p8bUubBwMINs4ZmnIxE51uqj8FoR2mteWl
+         9z8Jdd0SwaWxDENEsTlRvHcYL327gFRTLxjyucVcZlQct3xbp0nMJ6DLDDO5wZIOaSWg
+         LgQWuu2yPeLIqNhgh3IUIivZg9BJ3xH7unaKPGwkejGyMnPSC5/J6KBmr80k4B98ZkVA
+         t/hWtJXNT63ghFKeKLp3QHRL5ogeiykZKNC7OLTgKbbASiwp3gAccEyKJ24lCoFoZbhg
+         rvdl0NELt9il5dJx4/twwO7wVDX9ZHWP+IJVCRNMnILPbimr5wMs8M67fSBkRuu+OQ2a
+         JpYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=TUvxLb/bLQq8+pQ2S6Y0d9bCja5vNnDdfitNXQqu3do=;
-        b=HYq4ohth1Q9E2W8MUKUYbggX23lGAjVhTsclWJltC/sd+l046z86JmbJMOsPtEUAC+
-         BJYUpfMz9tr2MpIjv9Pq5DDlrt/ei0eY2G+z2wt/I7eSzICcfGQRXOqjOxlOxWXgMskQ
-         RCCNxt8YsszkLcSjEop8X4CVkS+2WCBLn6z9qIp4fD1LADYWhNZEWOe2AqLJMQ0TsEwx
-         nIIE2SpyauL36tSp14v4TDBkS2WUlKXNPI3qsTK4a+KfwsbTckMqTgk6CVAt1Om6kuC7
-         lLSXNnVcVdPnZXFYE+VKKPlX7eOwKsrRQ3unKnj+hbqhRdNe3y8i7ZOW/g335YQmTtd+
-         uMHQ==
-X-Gm-Message-State: AOAM533JFFBFGJnUcxUNwssavApJy01Psx7dYPHYmm+Ob8hT3IY6h5qx
-        u22YnrYoQ457Gn5uVOjsDswDPo4lsbiae9Fp/CXoyrDG3J7HVFkk
-X-Google-Smtp-Source: ABdhPJwTWWF9ign2QDwgIxfCyLc9LE1Bn8FCFlFkgLqHzAsLvaCGuxHJ3GOnZW8ryq8MhK2QEVo93NZypUzH2RnseoE=
-X-Received: by 2002:a5d:68c9:: with SMTP id p9mr14937741wrw.139.1607389063359;
- Mon, 07 Dec 2020 16:57:43 -0800 (PST)
+        bh=7DKkoPP/6V2n/IF/p+MZOrHVL/DFB9Y5at9sRn99B6I=;
+        b=SDRgkeXzyki8ozcjHIj6mJRC7jDZyJ6rbCWcFDs/fyeveIE/kFo7RDgHpqnOMd/UIA
+         kdr3rtzvvGwA/q9wZGLvNkrkr7M9rgpqkXBLvGip8rFX4Gf9PF2xD3LRkVfn3r2JIYEK
+         u/mLq6o/KL1UXEb4nKgUmjvPLsO9MJDKpQXhEve0gJiNrwLb8xNEOXzeR4tlof1RDtBo
+         0pweWwJshNlKAoJNzieZe90T+NHRwU6snvQxGpyVOC/EbP7gBgru+FFVY24YerS4XqHw
+         X9EzpBA0lUp606kVQQ3P3h3qL4gzTYErKiauSkDcVShcDUcPe484sooSWJ+uHHWaqj27
+         d2rQ==
+X-Gm-Message-State: AOAM533KodKRK5Auc7tsb/e4R9PbvOZqlJY7P+5W7Sr10FMYhwuKZzTw
+        9skDRPlLb1wmhaf7R13rJ6h4X8MPjlVoQUA01+WLwzMZbDn+Iw==
+X-Google-Smtp-Source: ABdhPJzUX28iNKUICww41zDn+Yl69ailDtQcP8/M6XhvmVOUDYMWbXbWJ3SwAoDrmmvWux35r3FwNz2+RzELzwSen2o=
+X-Received: by 2002:aca:e083:: with SMTP id x125mr1141937oig.31.1607390592259;
+ Mon, 07 Dec 2020 17:23:12 -0800 (PST)
 MIME-Version: 1.0
-References: <20201208002648.1370414-1-felipe.contreras@gmail.com>
-In-Reply-To: <20201208002648.1370414-1-felipe.contreras@gmail.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Mon, 7 Dec 2020 18:57:32 -0600
-Message-ID: <CAMP44s2hUCd9qc83LReGyjy8N+u++eK6VjwGhDhrX0f0SbKmig@mail.gmail.com>
-Subject: Re: [PATCH v4 00/19] pull: default ff-only mode
-To:     Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren <newren@gmail.com>,
+References: <20201205195313.1557473-1-felipe.contreras@gmail.com>
+ <20201205195313.1557473-2-felipe.contreras@gmail.com> <xmqq8sa99wh3.fsf@gitster.c.googlers.com>
+ <CAMP44s1ZDXzGfEqpTeiG=aGAYK40ebnBLQKAbA7KGtcePGARfw@mail.gmail.com>
+ <CABPp-BEkKMuZHWJ8mrFUFm3okDDsMHeZZNxtGzgq-RLLddMxdw@mail.gmail.com> <CAMP44s0g7JLTZZs=O3gUcEiPt--p3gXEPHL0GsBqoqweKA=9Rw@mail.gmail.com>
+In-Reply-To: <CAMP44s0g7JLTZZs=O3gUcEiPt--p3gXEPHL0GsBqoqweKA=9Rw@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 7 Dec 2020 17:23:00 -0800
+Message-ID: <CABPp-BESMs1tuVoLFMy-BahSChFz7oANqTaeJShFa_zDbEnvBA@mail.gmail.com>
+Subject: Re: [PATCH v3 01/16] doc: pull: explain what is a fast-forward
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
         Alex Henrie <alexhenrie24@gmail.com>,
         Jeff King <peff@peff.net>,
         Philip Oakley <philipoakley@iee.email>
@@ -68,173 +72,143 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Mon, Dec 7, 2020 at 4:17 PM Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+>
+> On Mon, Dec 7, 2020 at 4:40 PM Elijah Newren <newren@gmail.com> wrote:
+> > On Mon, Dec 7, 2020 at 2:22 PM Felipe Contreras
+> > <felipe.contreras@gmail.com> wrote:
+>
+> > > The glossary defines a fast-forward as:
+> > >
+> > >   A fast-forward is a special type of `merge`
+> > >
+> > > So, if you consider "merge" a noun, then a fast-forward is an
+> > > adjective. If you consider it a verb, then it's an adverb. But it's
+> > > not a verb.
+> >
+> > A square is a special type of a rectangle, but that doesn't make
+> > "square" an adjective; both square and rectangle are nouns.
+>
+> Words have multiple definitions. The word "square" is both a noun, and
+> an adjective [1]. It's perfectly fine to say "square corner".
+>
+> Just like it's perfectly fine to say "fast-forward merge", or "quick sort".
+>
+> And that's how many people use it:
+>
+> https://git-scm.com/docs/git-merge#_fast_forward_merge
+> https://docs.gitlab.com/ee/user/project/merge_requests/fast_forward_merge.html
+> https://www.atlassian.com/git/tutorials/using-branches/git-merge#:~:text=Fast%20Forward%20Merge
+>
+> Plus there's many instances in the documentation:
+>
+> * non-fast-forward update
+> * fast-forward merges
+> * fast-forward check
+> * "fast-forward-ness"
+> * fast-forward situation
+> * fast-forward push
+> * non-fast-forward pushes
+> * non-fast-forward reference
+> * fast-forward cases
+> * "fast-forward" merge
 
-Junio, this is intended for you, I will describe step by step how the
-warning evolves.
+Yeah, and the number of "fast-forward merge" instances suggest I'm
+losing the battle on "fast-forward" not being a merge but a different
+thing.  So maybe I'm losing multiple battles here.  :-)
 
-Step 0: This is what we have today:
+> > > If it was a verb, then we should have `git fast-forward`, which may
+> > > not be a terrible idea, but right now a fast-forward is a modifier.
+> > >
+> > > At least that's what I have in my mind, and the glossary seems to agree.
+> >
+> > If you read the release notes and even various messages printed by
+> > git, "fast-forwards", "fast-forwarded", "fast-forwarding", and "to
+> > fast-forward" all appear multiple times.  And yes, "fast-forward" also
+> > appears multiple times as a noun in addition to the various uses as a
+> > verb.  So, I'd say the glossary just isn't comprehensive because in
+> > this case we have a word that serves as both a noun and a verb.
+>
+> It can be a noun, a verb, an adjective, and an adverb. But the
+> question is not what it can be, but what it actually is. I'm just
+> telling you my rationale:
+>
+> 1. noun: it doesn't make sense because you don't create, pick, show,
+> or push a "fast-forward"
+> 2. verb: there's no idiom to tell git "do fast-forward"
+> 3. adjective: there are merge nouns (commits), but no instances of
+> fast-forward merge commits, like say octopus merge commits
+> 4. adverb: you can tell git "do merge", and "do fast-forward merge"
+>
+> So, in my opinion a fast-forward today can only logically be an adverb.
+>
+> Like a bubble sort is a special type of sort, and theoretically you
+> can say "do a bubble", but it's just weird. My mind is left hanging: a
+> bubble $what? Likewise, when people say "do me a solid", I'm
+> annoyed... A solid $what?! They mean "a solid favor". People do it, so
+> it's part of language, but it doesn't stop it from being weird in my
+> opinion.
+>
+> An adverb typically answers the question "in what way?". Do me a
+> favor... In what way? In a solid way. Do a sort... In what way? In a
+> quick way. Do a move... In what way? In a bold way. Do a merge... In
+> what way? In a fast-forward way.
+>
+> > Going back to the text Junio highlighted, I agree with him that the
+> > phrase looks really awkward, and much prefer his suggestion
+> > (regardless of whether it aligns with the current glossary).
+>
+> Normally I don't show credentials, but in this case I think it might
+> be relevant. I've read multiple linguists, like Noam Chomsky, and
+> Steven Pinker. I follow many others and read their articles. I also
+> read The Pinker's Sense of Style: The Thinking Person's Guide to
+> Writing in the 21st Century [2], which I can't recommend enough for
+> people writing technical documents or any other classic style. I have
+> an arguably successful blog with more than 200 articles and more than
+> 1 million views, which is regularly linked from other blogs, and
+> technical resources. I constantly get thanked both in person, and
+> online for what I write. And at some point I was asked by a publisher
+> to write a book about Git (which I didn't feel prepared for at that
+> time).
+>
+> So, clearly at least some people value the way I write.
+>
+> I'm not trying to be stubborn here, I just honestly put effort into
+> the art of writing, and I do care deeply about language.
+>
+> Of course I might be wrong in this particular instance, but if I am,
+> it's not because of lack of effort.
+>
+> I think fast-forward is mainly an adverb, but even if it isn't the
+> main usage; it's still clearly an usage.
+>
+> Cheers.
+>
+> [1] https://www.merriam-webster.com/dictionary/square
+> [2] https://www.amazon.com/Sense-Style-Thinking-Persons-Writing/dp/0143127799
 
-  Pulling without specifying how to reconcile divergent branches is
-  discouraged. You can squelch this message by running one of the following
-  commands sometime before your next pull:
+You have very compelling arguments that fast-forward often serves as
+an adverb (and if I'd thought a little closer, I would have remembered
+that I use "fast-forward update" myself).  You have me convinced.
 
-    git config pull.rebase false  # merge (the default strategy)
-    git config pull.rebase true   # rebase
-    git config pull.ff only       # fast-forward only
+However, I am somewhat less convinced that "fast-forward" doesn't also
+serve as a noun or a verb.  Perhaps you are trying to argue how it
+*should* be used rather than how it *is* used, in which case I don't
+have any counter-arguments for you (I'm less well linguistically
+trained).  But if you look at how it is used, the number of times "a
+fast-forward update" is shortened to "a fast-forward" in the
+documentation suggests to me it's often a noun, and the number of
+times that variants such as "fast-forwards", "fast-forwarded",
+"fast-forwarding", and "to fast-forward" appear in both the docs and
+output messages means that it's also frequently used as a verb as
+well.  The fact that Junio expressed surprise upthread ("I thought
+that the idea that the word can be used as a verb...was given and not
+something anybody needs to be explained about") also suggests that
+usage of fast-forward as a verb is common.  Anyway, I think trying to
+treat "fast-forward" as solely an adverb results in awkward phrases
+like "in a fast-forward way" instead of just using the much simpler
+verb form.
 
-  You can replace "git config" with "git config --global" to set a default
-  preference for all repositories. You can also pass --rebase, --no-rebase,
-  or --ff-only on the command line to override the configured default per
-  invocation.
-
-> Felipe Contreras (19):
->   doc: pull: explain what is a fast-forward
->   pull: improve default warning
-
-Step 1: This is low-hanging fruit that can be fixed today without any
-change in behavior:
-
-  Pulling without specifying how to reconcile divergent branches is discouraged;
-  you need to specify if you want a merge, or a rebase.
-  You can squelch this message by running one of the following commands:
-
-    git config pull.rebase false  # merge (the default strategy)
-    git config pull.rebase true   # rebase
-    git config pull.ff only       # fast-forward only
-
-  You can replace "git config" with "git config --global" to set a default
-  preference for all repositories.
-  If unsure, run "git pull --no-rebase".
-  Read "git pull --help" for more information.
-
->   pull: refactor fast-forward check
->   pull: cleanup autostash check
->   pull: trivial cleanup
->   pull: move default warning
->   pull: display default warning only when non-ff
-
-At this point we can update the warning to mention that we are inside
-a non-fast-forward case. But it's not necessary.
-
->   pull: trivial whitespace style fix
->   pull: introduce --merge option
-
-s/--no-rebase/--merge/
-
->   pull: show warning with --ff
->   rebase: add REBASE_DEFAULT
->   pull: move configurations fetches
->   test: merge-pull-config: trivial cleanup
->   test: pull-options: revert unnecessary changes
->   pull: trivial memory fix
-
-This is the end of part I. At this point the default mode is still
-"merge", and the only behavior change is that the warning is printed
-only on the non-fast-forward case.
-
-========================================================================
-
->   pull: add pull.mode
-
-Step 2: pull.mode={merge,rebase} are specified
-
-  Pulling without specifying how to reconcile divergent branches is discouraged;
-  you need to specify if you want a merge, or a rebase.
-  You can squelch this message by running one of the following commands:
-
-    git config pull.mode merge    # (the default strategy)
-    git config pull.mode rebase
-    git config pull.ff only       # fast-forward only
-
-  You can replace "git config" with "git config --global" to set a default
-  preference for all repositories.
-  If unsure, run "git pull --merge".
-  Read "git pull --help" for more information.
-
->   pull: add pull.mode=ff-only
-
-Step 3: Now pull.mode=ff-only
-
-  Pulling without specifying how to reconcile divergent branches is discouraged;
-  you need to specify if you want a merge, or a rebase.
-  You can squelch this message by running one of the following commands:
-
-    git config pull.mode merge    # (the default strategy)
-    git config pull.mode rebase
-    git config pull.mode ff-only  # fast-forward only
-
-  You can replace "git config" with "git config --global" to set a default
-  preference for all repositories.
-  If unsure, run "git pull --merge".
-  Read "git pull --help" for more information.
-
-However, now in addition to the warning, there's an error message:
-
-  The pull was not fast-forward, please either merge or rebase.
-
-This error message is *only* triggered when the user has manually
-configured "pull.mode=ff-only". And it is an error. The program dies.
-
-And it's not meant to be temporary; it's permanent behavior.
-
->   pull: advice of future changes
-
-Step 4: Now that pull.mode=ff-only is in place, we can aim for it
-being the default, and we can tell our users that it will be the
-default in the future.
-
-  The pull was not fast-forward, in the future you will have to choose
-a merge, or a rebase.
-
-  To quell this message you have two main options:
-
-  1. Adopt the new behavior:
-
-    git config --global pull.mode ff-only
-
-  2. Maintain the current behavior:
-
-    git config --global pull.mode merge
-
-  For now we will fall back to the traditional behavior (merge).
-  Read "git pull --help" for more information.
-
-This is the end of part II. At this point the default is still "merge".
-
-Unlike part I, in part II we have committed to pull.mode=ff-only to be
-the new default, and we are already telling users that they can use
-this new mode to test the new behavior.
-
-We should probably stay a couple of releases at this point, with this
-warning, and the new behavior already configurable.
-
-Elijah: notice how there's no mention of `git pull --merge`, because
-in my opinion now we are telling users this is a temporary *warning*,
-and the way to get rid of it properly should be very clear.
-
-========================================================================
-
->   future: pull: enable ff-only mode by default
-
-The last patch finally enables the ff-only mode by default, and the
-warning is removed forever.
-
-The only thing that remains now is the fatal error:
-
-  The pull was not fast-forward, please either merge or rebase.
-
-This fatal error is avoided by pull.mode=merge, pull.mode=rebase,
-pull.rebase=true, pull.rebase=false, pull.rebase=$other, --merge, or
---rebase.
-
-It *only* happens when the user does a vanilla "git pull", it's a
-non-fast-forward update, the user has configured pull.mode=ff-only or
-has not configured any of the above.
-
-Is it more clear what is my proposal?
-
-Cheers.
-
--- 
-Felipe Contreras
+Also, re-reading my earlier email, it looks like it could easily come
+across as curt.  My apologies if it did read that way.
