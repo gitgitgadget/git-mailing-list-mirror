@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CC76C4361B
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 00:27:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CFD5C4361B
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 00:28:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1ABB823A04
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 00:27:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6C990239EF
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 00:28:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728641AbgLHA1j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Dec 2020 19:27:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48798 "EHLO
+        id S1728654AbgLHA2N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Dec 2020 19:28:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725924AbgLHA1h (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Dec 2020 19:27:37 -0500
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A103BC061749
-        for <git@vger.kernel.org>; Mon,  7 Dec 2020 16:26:51 -0800 (PST)
-Received: by mail-oi1-x241.google.com with SMTP id 15so6406688oix.8
-        for <git@vger.kernel.org>; Mon, 07 Dec 2020 16:26:51 -0800 (PST)
+        with ESMTP id S1728646AbgLHA2N (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Dec 2020 19:28:13 -0500
+Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4441CC061285
+        for <git@vger.kernel.org>; Mon,  7 Dec 2020 16:27:01 -0800 (PST)
+Received: by mail-oi1-x242.google.com with SMTP id x16so17628827oic.3
+        for <git@vger.kernel.org>; Mon, 07 Dec 2020 16:27:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=K0AD2JBGiNlHy90T6GND2uz3DdXgG0Ql/jOUQNFbxH8=;
-        b=uMOm+lZSkgCGl7rSQQGIGlFWtjZYs/FYxnHxjO54XHkiUl7yYGlIZs/UyaMiWnHbEx
-         4k4yJsSTkNq9LXdBGyBMrbfTTDeDTeHa7MXV3jc1vavJkJf4W4+33G1zj90VBoo9QRQd
-         kLikmtiE0RS8HLbXUzbSyWGMsWxOqYrNRRw5fpnr7vLEGtJnj1S2CdblMcNgsUrvvzh2
-         7201u1tE7oVBflYB53i4wkS9q95e2jNKVAOcw/DSMQU1wlxjB8nhIkJ98crW1b7NSiPr
-         hNoCoM3hkqAZujhoFzPKcf3i93gHRaxBjOd1zPxKE6HNQtTFoucODu+duhkTUudlP0/5
-         /1ow==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=QkhDG3b3RniLLbtnc8hYE3uxSx5Awo6T7b6avTc03t4=;
+        b=o3Qdysh2k0A0S7MqPg/AersSDD2xDnwFwZDNulCpZF+5NtU/mw8m0tEkHbxSc1GUev
+         zrNjHtrQNLVUUFEU780fEyA9Hv5DAx9paqpSPaZGqXfG6zk3NAHDQB/wHxA+4lfpvcB7
+         mbY2IVfOk9XrRI9tLkgoWpxbuR+70mIpWrA5o/f+t2QZKK31OnzncKa+tOGKrY3RO7ej
+         +Gd3O5Y15lWQ3ZmHUzZe8gd+JLMFi9OVBfIYVGhSe6apxSEzet6n2vlW9KYeQrtF0A8b
+         bRVi+ny8mzR16TS8EXorsu0ql8NhnrjJBaQXJhAcsmmpq7PCRH8/dBfVwsnLzZ6udZDn
+         T4Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=K0AD2JBGiNlHy90T6GND2uz3DdXgG0Ql/jOUQNFbxH8=;
-        b=aNQkFOnrcpE+SgFXwCPQw607HnTNEZo0AQuF1UOwiLVw1oLjfgZzp7W+lyV/PXnFP7
-         jZ9rIh+DlGCEut3x79JrOpg27d9Pgq1tth2jI+wFqvQfiKZ5h+0q/bJAP5dw69xhfiDN
-         SJgt5oGQofWI5VXjVYfiCDrN40Be7z9rrHqzH/IshmnoBtLfu1cjNOZ3Wu+P9w4BcXn4
-         ApMU2+6K1hc6tHFzKFe1U20O1aq1kxenZNLYpqq8op09akEnpW6iSNIw+nPL/ggUH7x9
-         sixJAMyAnUjp/TqFsSEV2jqwIdKxmO73ASKXe4aXg7+aGO1R64vnbcPZcK+itLnWaBeH
-         i+cA==
-X-Gm-Message-State: AOAM532vx4R3lIdUciQ2DgDssqHhszmGwdNgJDF1QgjDK/RpC+rGEUvZ
-        LMWnH40gNWIndrkLCuiYiNsxzYS4ClcUSM02
-X-Google-Smtp-Source: ABdhPJwFjxC+ixoJUabb7Kb6smRxXE8zQtDWJpT2zk93BtTJ2ssumDDV6tbohh/ShImVEjHRVDDWZg==
-X-Received: by 2002:aca:d4cf:: with SMTP id l198mr988066oig.170.1607387210526;
-        Mon, 07 Dec 2020 16:26:50 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=QkhDG3b3RniLLbtnc8hYE3uxSx5Awo6T7b6avTc03t4=;
+        b=lpBl9MdGBd+JAgDDiNjvUXG7Eayw0RuaeRqmfVPP6Jho+e3Kgx2AOrzfTl6H8PNoa/
+         Kocp+qvkqvjbleMcfH7h+j3vWbI+YMd2GfTn7W7bcdvLnBEcT7sZW8wg0FIqxPmu9Cnw
+         9AkhavUemT07MFIdPZ0qxQgpSTQVJfOY1r77SamNylA1zIJ4l/OcaUdr2t0aQcKvI9o+
+         DF33RIclgwA0rkkfGDZMvc+4QqZct9Frhi3Nz3dVeiaXw5pgHj0ERIIDWVUFWhfXVlHX
+         +kHx4gXYj+EBvfxiJh7n4NogtsbK6fcz9ExPE0Veb/xs0TvCmplxyoQ2K/KGI9WeIXsm
+         IWNw==
+X-Gm-Message-State: AOAM530oVCmbteSTxWP2St2U9E9BGWy/Tj2LLu6ctMBPeF7nJGMtQJSV
+        6Zq+zcorXZui8N/usjHEQAW9RLT/yAqxhaaj
+X-Google-Smtp-Source: ABdhPJwYDDkpIeA6QM2lpR8JHYLvDLHY9pobVo/FYMXBB/RqmfYiYEZ/Arpt3fANz+de9TlBaOxGLA==
+X-Received: by 2002:aca:5594:: with SMTP id j142mr1017754oib.164.1607387220455;
+        Mon, 07 Dec 2020 16:27:00 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id k20sm3360456oig.35.2020.12.07.16.26.49
+        by smtp.gmail.com with ESMTPSA id r19sm3026701ota.14.2020.12.07.16.26.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Dec 2020 16:26:49 -0800 (PST)
+        Mon, 07 Dec 2020 16:26:59 -0800 (PST)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>,
@@ -64,155 +64,85 @@ Cc:     Elijah Newren <newren@gmail.com>,
         Jeff King <peff@peff.net>,
         Philip Oakley <philipoakley@iee.email>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v4 00/19] pull: default ff-only mode
-Date:   Mon,  7 Dec 2020 18:26:29 -0600
-Message-Id: <20201208002648.1370414-1-felipe.contreras@gmail.com>
+Subject: [PATCH v4 06/19] pull: move default warning
+Date:   Mon,  7 Dec 2020 18:26:35 -0600
+Message-Id: <20201208002648.1370414-7-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20201208002648.1370414-1-felipe.contreras@gmail.com>
+References: <20201208002648.1370414-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The old thread "Pull is Mostly Evil" [1] came to haunt us again.
+Eventually we want to be able to display the warning only when
+fast-forward merges are not possible.
 
-This is my latest attempt to try to fix it.
+In order to do so we need to move the default warning up to the point
+where we can check if we can fast-forward or not.
 
-This patch series is divided in 3 parts:
+Additionally, config_get_rebase() was probably never its true home.
 
-== Part I ==
+This requires a temporary variable to check if we are in the
+"default mode" (no --rebase or --no-rebase specified). But this is only
+temporary; another patch in the series gets rid of that.
 
-1. Improve the current documentation
-2. Improve the current default warning
-3. Minimize the instances where we display the default warning
-4. Add a --merge option
-5. Fix the behavior of the warning with --ff
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ builtin/pull.c | 37 ++++++++++++++++++++++---------------
+ 1 file changed, 22 insertions(+), 15 deletions(-)
 
-== Part II ==
-
-1. Introduce pull.mode
-2. Introduce pull.mode=ff-only
-3. Advice on future changes, and suggest changing pull.mode
-
-== Part III ==
-
-1. Change the default mode to pull.mode=ff-only
-
-v3 of the series only did part I, and the interdiff is only of that part.
-
-Since then the change in semantics of --ff-only is dropped, because
-that solution didn't pan out, and now I'm sending the one I think
-it will: "pull.mode=ff-only".
-
-Plus a fixed typo, and fixed a merge conflict with the latest master
-(not in the interdiff).
-
-If this is a bit overwhelming, you can check the branches in my gitlab[2].
-
- * fc/pull/improvements (part 1)
- * fc/pull/ff-only (part 2)
- * fc/pull/ff-only-switch (part 3)
-
-[1] https://lore.kernel.org/git/5363BB9F.40102@xiplink.com/
-[2] https://gitlab.com/felipec/git/
-
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index c220da143a..21b50aff77 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -44,13 +44,13 @@ Assume the following history exists and the current branch is
-     D---E master
- ------------
- 
--Then `git pull` will merge in a fast-foward way up to the new master.
-+Then `git pull` will merge in a fast-forward way up to the new master.
- 
- ------------
-     D---E---A---B---C master, origin/master
- ------------
- 
--However, a non-fast-foward case looks very different.
-+However, a non-fast-forward case looks very different.
- 
- ------------
- 	  A---B---C master on origin
 diff --git a/builtin/pull.c b/builtin/pull.c
-index 0735c77f42..97a7657473 100644
+index 6aeca4aeae..3b84ebf100 100644
 --- a/builtin/pull.c
 +++ b/builtin/pull.c
-@@ -112,24 +112,6 @@ static int opt_show_forced_updates = -1;
- static char *set_upstream;
- static struct strvec opt_fetch = STRVEC_INIT;
+@@ -27,6 +27,8 @@
+ #include "commit-reach.h"
+ #include "sequencer.h"
  
--static int parse_opt_ff_only(const struct option *opt, const char *arg, int unset)
--{
--	char **value = opt->value;
--	opt_rebase = REBASE_DEFAULT;
--	free(*value);
--	*value = xstrdup_or_null("--ff-only");
--	return 0;
--}
--
--static int parse_opt_merge(const struct option *opt, const char *arg, int unset)
--{
--	enum rebase_type *value = opt->value;
--	free(opt_ff);
--	opt_ff = NULL;
--	*value = REBASE_FALSE;
--	return 0;
--}
--
- static struct option pull_options[] = {
- 	/* Shared options */
- 	OPT__VERBOSITY(&opt_verbosity),
-@@ -147,9 +129,8 @@ static struct option pull_options[] = {
- 		"(false|true|merges|preserve|interactive)",
- 		N_("incorporate changes by rebasing rather than merging"),
- 		PARSE_OPT_OPTARG, parse_opt_rebase),
--	OPT_CALLBACK_F('m', "merge", &opt_rebase, NULL,
--		N_("incorporate changes by merging"),
--		PARSE_OPT_NOARG | PARSE_OPT_NONEG, parse_opt_merge),
-+	OPT_SET_INT('m', "merge", &opt_rebase,
-+		N_("incorporate changes by merging"), REBASE_FALSE),
- 	OPT_PASSTHRU('n', NULL, &opt_diffstat, NULL,
- 		N_("do not show a diffstat at the end of the merge"),
- 		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
-@@ -178,9 +159,9 @@ static struct option pull_options[] = {
- 	OPT_PASSTHRU(0, "ff", &opt_ff, NULL,
- 		N_("allow fast-forward"),
- 		PARSE_OPT_NOARG),
--	OPT_CALLBACK_F(0, "ff-only", &opt_ff, NULL,
-+	OPT_PASSTHRU(0, "ff-only", &opt_ff, NULL,
- 		N_("abort if fast-forward is not possible"),
--		PARSE_OPT_NOARG | PARSE_OPT_NONEG, parse_opt_ff_only),
-+		PARSE_OPT_NOARG | PARSE_OPT_NONEG),
- 	OPT_PASSTHRU(0, "verify-signatures", &opt_verify_signatures, NULL,
- 		N_("verify that the named commit has a valid GPG signature"),
- 		PARSE_OPT_NOARG),
-@@ -1027,25 +1008,19 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
++static int default_mode;
++
+ /**
+  * Parses the value of --rebase. If value is a false value, returns
+  * REBASE_FALSE. If value is a true value, returns REBASE_TRUE. If value is
+@@ -344,20 +346,7 @@ static enum rebase_type config_get_rebase(void)
+ 	if (!git_config_get_value("pull.rebase", &value))
+ 		return parse_config_rebase("pull.rebase", value, 1);
  
- 	can_ff = get_can_ff(&orig_head, &merge_heads.oid[0]);
+-	if (opt_verbosity >= 0 && !opt_ff) {
+-		advise(_("Pulling without specifying how to reconcile divergent branches is discouraged;\n"
+-			"you need to specify if you want a merge, or a rebase.\n"
+-			"You can squelch this message by running one of the following commands:\n"
+-			"\n"
+-			"  git config pull.rebase false  # merge (the default strategy)\n"
+-			"  git config pull.rebase true   # rebase\n"
+-			"  git config pull.ff only       # fast-forward only\n"
+-			"\n"
+-			"You can replace \"git config\" with \"git config --global\" to set a default\n"
+-			"preference for all repositories.\n"
+-			"If unsure, run \"git pull --no-rebase\".\n"
+-			"Read \"git pull --help\" for more information."));
+-	}
++	default_mode = 1;
  
--	if (!can_ff && !opt_rebase) {
--		if (opt_ff && !strcmp(opt_ff, "--ff-only"))
--			die(_("The pull was not fast-forward, please either merge or rebase."));
--
--		if (opt_verbosity >= 0 && (!opt_ff || !strcmp(opt_ff, "--ff"))) {
--			advise(_("Pulling without specifying how to reconcile divergent branches is discouraged;\n"
--				"you need to specify if you want a merge, a rebase, or a fast-forward.\n"
--				"You can squelch this message by running one of the following commands:\n"
--				"\n"
--				"  git config pull.rebase false  # merge (the default strategy)\n"
--				"  git config pull.rebase true   # rebase\n"
--				"  git config pull.ff only       # fast-forward only\n"
--				"\n"
--				"You can replace \"git config\" with \"git config --global\" to set a default\n"
--				"preference for all repositories.\n"
--				"If unsure, run \"git pull --merge\".\n"
--				"Read \"git pull --help\" for more information."
--				));
--		}
-+	if (!opt_rebase && !can_ff && opt_verbosity >= 0 && (!opt_ff || !strcmp(opt_ff, "--ff"))) {
+ 	return REBASE_FALSE;
+ }
+@@ -944,6 +933,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 	struct oid_array merge_heads = OID_ARRAY_INIT;
+ 	struct object_id orig_head, curr_head;
+ 	struct object_id rebase_fork_point;
++	int can_ff;
+ 
+ 	if (!getenv("GIT_REFLOG_ACTION"))
+ 		set_reflog_message(argc, argv);
+@@ -1039,6 +1029,23 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 	if (opt_rebase && merge_heads.nr > 1)
+ 		die(_("Cannot rebase onto multiple branches."));
+ 
++	can_ff = get_can_ff(&orig_head, &merge_heads.oid[0]);
++
++	if (default_mode && opt_verbosity >= 0 && !opt_ff) {
 +		advise(_("Pulling without specifying how to reconcile divergent branches is discouraged;\n"
 +			"you need to specify if you want a merge, or a rebase.\n"
 +			"You can squelch this message by running one of the following commands:\n"
@@ -223,140 +153,22 @@ index 0735c77f42..97a7657473 100644
 +			"\n"
 +			"You can replace \"git config\" with \"git config --global\" to set a default\n"
 +			"preference for all repositories.\n"
-+			"If unsure, run \"git pull --merge\".\n"
++			"If unsure, run \"git pull --no-rebase\".\n"
 +			"Read \"git pull --help\" for more information."));
- 	}
++	}
++
+ 	if (opt_rebase) {
+ 		int ret = 0;
  
- 	if (opt_rebase >= REBASE_TRUE) {
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 0cdac4010b..9fae07cdfa 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -819,89 +819,4 @@ test_expect_success 'git pull --rebase against local branch' '
- 	test_cmp expect file2
- '
+@@ -1052,7 +1059,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 		    submodule_touches_in_range(the_repository, &upstream, &curr_head))
+ 			die(_("cannot rebase with locally recorded submodule modifications"));
  
--setup_other () {
--	test_when_finished "git checkout master && git branch -D other test" &&
--	git checkout -b other $1 &&
--	>new &&
--	git add new &&
--	git commit -m new &&
--	git checkout -b test -t other &&
--	git reset --hard master
--}
--
--setup_ff () {
--	setup_other master
--}
--
--setup_non_ff () {
--	setup_other master^
--}
--
--test_expect_success 'fast-forward (ff-only)' '
--	test_config pull.ff only &&
--	setup_ff &&
--	git pull
--'
--
--test_expect_success 'non-fast-forward (ff-only)' '
--	test_config pull.ff only &&
--	setup_non_ff &&
--	test_must_fail git pull
--'
--
--test_expect_success 'non-fast-forward with merge (ff-only)' '
--	test_config pull.ff only &&
--	setup_non_ff &&
--	git pull --merge
--'
--
--test_expect_success 'non-fast-forward with rebase (ff-only)' '
--	test_config pull.ff only &&
--	setup_non_ff &&
--	git pull --rebase
--'
--
--test_expect_success 'non-fast-forward error message (ff-only)' '
--	test_config pull.ff only &&
--	setup_non_ff &&
--	test_must_fail git pull 2> error &&
--	cat error &&
--	grep -q "The pull was not fast-forward" error
--'
--
--test_expect_success '--merge overrides --ff-only' '
--	setup_non_ff &&
--	git pull --ff-only --merge
--'
--
--test_expect_success '--rebase overrides --ff-only' '
--	setup_non_ff &&
--	git pull --ff-only --rebase
--'
--
--test_expect_success '--ff-only overrides --merge' '
--	setup_non_ff &&
--	test_must_fail git pull --merge --ff-only
--'
--
--test_expect_success '--ff-only overrides pull.rebase=false' '
--	test_config pull.rebase false &&
--	setup_non_ff &&
--	test_must_fail git pull --ff-only
--'
--
--test_expect_success 'pull.rebase=true overrides pull.ff=only' '
--	test_config pull.ff only &&
--	test_config pull.rebase true &&
--	setup_non_ff &&
--	git pull
--'
--
--test_expect_success 'pull.rebase=false overrides pull.ff=only' '
--	test_config pull.ff only &&
--	test_config pull.rebase false &&
--	setup_non_ff &&
--	test_must_fail git pull
--'
--
- test_done
-
-
-Felipe Contreras (19):
-  doc: pull: explain what is a fast-forward
-  pull: improve default warning
-  pull: refactor fast-forward check
-  pull: cleanup autostash check
-  pull: trivial cleanup
-  pull: move default warning
-  pull: display default warning only when non-ff
-  pull: trivial whitespace style fix
-  pull: introduce --merge option
-  pull: show warning with --ff
-  rebase: add REBASE_DEFAULT
-  pull: move configurations fetches
-  test: merge-pull-config: trivial cleanup
-  test: pull-options: revert unnecessary changes
-  pull: trivial memory fix
-  pull: add pull.mode
-  pull: add pull.mode=ff-only
-  pull: advice of future changes
-  future: pull: enable ff-only mode by default
-
- Documentation/config/branch.txt |   6 ++
- Documentation/config/pull.txt   |   6 ++
- Documentation/git-pull.txt      |  24 ++++-
- builtin/pull.c                  | 157 +++++++++++++++++++++-----------
- builtin/remote.c                |  22 ++++-
- rebase.c                        |  12 +++
- rebase.h                        |  13 ++-
- t/t5520-pull.sh                 |  87 ++++++++++++++++++
- t/t5521-pull-options.sh         |  22 ++---
- t/t7601-merge-pull-config.sh    |  60 ------------
- 10 files changed, 282 insertions(+), 127 deletions(-)
-
+-		if (get_can_ff(&orig_head, &merge_heads.oid[0])) {
++		if (can_ff) {
+ 			/* we can fast-forward this without invoking rebase */
+ 			opt_ff = "--ff-only";
+ 			ret = run_merge();
 -- 
 2.29.2
 
