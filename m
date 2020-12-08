@@ -2,213 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80610C4167B
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 01:23:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AF26C4361B
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 01:32:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3D0572343F
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 01:23:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C2086221FD
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 01:32:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727096AbgLHBXx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Dec 2020 20:23:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57748 "EHLO
+        id S1726880AbgLHBcL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Dec 2020 20:32:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725972AbgLHBXx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Dec 2020 20:23:53 -0500
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED672C061749
-        for <git@vger.kernel.org>; Mon,  7 Dec 2020 17:23:12 -0800 (PST)
-Received: by mail-oi1-x22d.google.com with SMTP id q25so9640861oij.10
-        for <git@vger.kernel.org>; Mon, 07 Dec 2020 17:23:12 -0800 (PST)
+        with ESMTP id S1726369AbgLHBcL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Dec 2020 20:32:11 -0500
+Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8501FC061749
+        for <git@vger.kernel.org>; Mon,  7 Dec 2020 17:31:25 -0800 (PST)
+Received: by mail-qv1-xf4a.google.com with SMTP id i11so13084734qvo.11
+        for <git@vger.kernel.org>; Mon, 07 Dec 2020 17:31:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7DKkoPP/6V2n/IF/p+MZOrHVL/DFB9Y5at9sRn99B6I=;
-        b=HCOUnEg/Tttp9lNMBfT1oA9l7kZNFyf3p8bUubBwMINs4ZmnIxE51uqj8FoR2mteWl
-         9z8Jdd0SwaWxDENEsTlRvHcYL327gFRTLxjyucVcZlQct3xbp0nMJ6DLDDO5wZIOaSWg
-         LgQWuu2yPeLIqNhgh3IUIivZg9BJ3xH7unaKPGwkejGyMnPSC5/J6KBmr80k4B98ZkVA
-         t/hWtJXNT63ghFKeKLp3QHRL5ogeiykZKNC7OLTgKbbASiwp3gAccEyKJ24lCoFoZbhg
-         rvdl0NELt9il5dJx4/twwO7wVDX9ZHWP+IJVCRNMnILPbimr5wMs8M67fSBkRuu+OQ2a
-         JpYQ==
+        d=google.com; s=20161025;
+        h=sender:date:message-id:mime-version:subject:from:to:cc;
+        bh=nP0ch+rpC1OH0pzccZrCiB2i54pz1HQP/KcsTc58oD4=;
+        b=Z6636E3NaFuv4sNNWdXoPqIw2O1f41vJKMcMPYjPLff4Qx12mvm5wms522DXKtIB1S
+         iO6oEp62AQuBr52tt+H2VDbmNWWVDSak+inW9OEnMs3sXOQeukJgdKjUCQGB5JnfI1kf
+         PTnPOFcX4FjLBOgszOXbJTEIwoi5GtIfl23HuBLbABkLZYZ5IqGxGb1/phcAjAm8/bMy
+         gvK/VZw4A2Xu8vdSIhCRR7XgniTirBrO1g02sX6MUZcXBgJpoxuOii1V3++ZfsRR/wOS
+         nXwp/T9u/sJ1a7EEDIeSn6W4GeLHQOKvT3GWtWjR9ckN7HBqozjdB5+y8df76pONEyvF
+         19ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7DKkoPP/6V2n/IF/p+MZOrHVL/DFB9Y5at9sRn99B6I=;
-        b=SDRgkeXzyki8ozcjHIj6mJRC7jDZyJ6rbCWcFDs/fyeveIE/kFo7RDgHpqnOMd/UIA
-         kdr3rtzvvGwA/q9wZGLvNkrkr7M9rgpqkXBLvGip8rFX4Gf9PF2xD3LRkVfn3r2JIYEK
-         u/mLq6o/KL1UXEb4nKgUmjvPLsO9MJDKpQXhEve0gJiNrwLb8xNEOXzeR4tlof1RDtBo
-         0pweWwJshNlKAoJNzieZe90T+NHRwU6snvQxGpyVOC/EbP7gBgru+FFVY24YerS4XqHw
-         X9EzpBA0lUp606kVQQ3P3h3qL4gzTYErKiauSkDcVShcDUcPe484sooSWJ+uHHWaqj27
-         d2rQ==
-X-Gm-Message-State: AOAM533KodKRK5Auc7tsb/e4R9PbvOZqlJY7P+5W7Sr10FMYhwuKZzTw
-        9skDRPlLb1wmhaf7R13rJ6h4X8MPjlVoQUA01+WLwzMZbDn+Iw==
-X-Google-Smtp-Source: ABdhPJzUX28iNKUICww41zDn+Yl69ailDtQcP8/M6XhvmVOUDYMWbXbWJ3SwAoDrmmvWux35r3FwNz2+RzELzwSen2o=
-X-Received: by 2002:aca:e083:: with SMTP id x125mr1141937oig.31.1607390592259;
- Mon, 07 Dec 2020 17:23:12 -0800 (PST)
-MIME-Version: 1.0
-References: <20201205195313.1557473-1-felipe.contreras@gmail.com>
- <20201205195313.1557473-2-felipe.contreras@gmail.com> <xmqq8sa99wh3.fsf@gitster.c.googlers.com>
- <CAMP44s1ZDXzGfEqpTeiG=aGAYK40ebnBLQKAbA7KGtcePGARfw@mail.gmail.com>
- <CABPp-BEkKMuZHWJ8mrFUFm3okDDsMHeZZNxtGzgq-RLLddMxdw@mail.gmail.com> <CAMP44s0g7JLTZZs=O3gUcEiPt--p3gXEPHL0GsBqoqweKA=9Rw@mail.gmail.com>
-In-Reply-To: <CAMP44s0g7JLTZZs=O3gUcEiPt--p3gXEPHL0GsBqoqweKA=9Rw@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 7 Dec 2020 17:23:00 -0800
-Message-ID: <CABPp-BESMs1tuVoLFMy-BahSChFz7oANqTaeJShFa_zDbEnvBA@mail.gmail.com>
-Subject: Re: [PATCH v3 01/16] doc: pull: explain what is a fast-forward
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>
+        h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
+         :to:cc;
+        bh=nP0ch+rpC1OH0pzccZrCiB2i54pz1HQP/KcsTc58oD4=;
+        b=RNlKQnHr/VQg39PpycjTVOutxmQ/MNdI9JGlUB+CGi42HIy5lUa267sio5GOOzUk2O
+         Rdo7f132LUK/ic7FVfznYiqAGaQo7bY2wu7axhKbY0UK9CM3r9X71b1Stks0UBGKxr7j
+         Qe4Fd/g1r1s55kheOtucaJ19Ky79WR6LC/7yOzsyE0Fh6RvRbufLPU3UiGdP5SKhV6CN
+         Y9kB/GtrrcXPa4XpdqBeuxTv0Kxkw6A3OTMOkx9wlglntr/hhz5X7RpsT/s6ymDZvT5C
+         A9pUpkg6opFxA4TIUaI7ZLx8IeyzQ0DDuz74lqp4ECHCUNhXvHt4KiM7fFw1kTYcHUPR
+         DvGQ==
+X-Gm-Message-State: AOAM533uxv9X6KaMMtIoKS2wRmdWrJ9kK93UGMajkQ4qFuIfCb5rRidU
+        fKSvwxaYXWGV+9jq6exLOzl3yhaGJ3Ff9+mLfPU3O/6RrVoP6PeO7FkM08jZ9CbldjkZeHCDZBS
+        M7YxvU3cg6VOwy81pnQIL9yQo1FlTd+tiRtobacxDFBB9iF4oIBfy+dJ5p/YTUTxIx4sXC82+SC
+        zS
+X-Google-Smtp-Source: ABdhPJx5kE0e+xuQANnxVoRyo6oqvKvLC4lhhRCrX08OvydMI3davFJwMiM4eodpME54JdUJPU8hX5EHlH3SCIe4QR5o
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a0c:d68d:: with SMTP id
+ k13mr24776482qvi.62.1607391084587; Mon, 07 Dec 2020 17:31:24 -0800 (PST)
+Date:   Mon,  7 Dec 2020 17:31:20 -0800
+Message-Id: <20201208013121.677494-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.29.2.576.ga3fc446d84-goog
+Subject: Cloning empty repository uses locally configured default branch name
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 7, 2020 at 4:17 PM Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
->
-> On Mon, Dec 7, 2020 at 4:40 PM Elijah Newren <newren@gmail.com> wrote:
-> > On Mon, Dec 7, 2020 at 2:22 PM Felipe Contreras
-> > <felipe.contreras@gmail.com> wrote:
->
-> > > The glossary defines a fast-forward as:
-> > >
-> > >   A fast-forward is a special type of `merge`
-> > >
-> > > So, if you consider "merge" a noun, then a fast-forward is an
-> > > adjective. If you consider it a verb, then it's an adverb. But it's
-> > > not a verb.
-> >
-> > A square is a special type of a rectangle, but that doesn't make
-> > "square" an adjective; both square and rectangle are nouns.
->
-> Words have multiple definitions. The word "square" is both a noun, and
-> an adjective [1]. It's perfectly fine to say "square corner".
->
-> Just like it's perfectly fine to say "fast-forward merge", or "quick sort".
->
-> And that's how many people use it:
->
-> https://git-scm.com/docs/git-merge#_fast_forward_merge
-> https://docs.gitlab.com/ee/user/project/merge_requests/fast_forward_merge.html
-> https://www.atlassian.com/git/tutorials/using-branches/git-merge#:~:text=Fast%20Forward%20Merge
->
-> Plus there's many instances in the documentation:
->
-> * non-fast-forward update
-> * fast-forward merges
-> * fast-forward check
-> * "fast-forward-ness"
-> * fast-forward situation
-> * fast-forward push
-> * non-fast-forward pushes
-> * non-fast-forward reference
-> * fast-forward cases
-> * "fast-forward" merge
+When cloning an empty repository, a local branch is created. But its
+name is not the name of the branch that the remote HEAD points to - it
+is the locally configured default branch name. This issue arose at
+$DAYJOB and, from my memory, it is also not an uncommon workflow to
+configure things online on a repo host and then use "git clone" so that
+things like remotes are automatically configured.
 
-Yeah, and the number of "fast-forward merge" instances suggest I'm
-losing the battle on "fast-forward" not being a merge but a different
-thing.  So maybe I'm losing multiple battles here.  :-)
+Has anyone looked into solutions for this? Both protocol v0 and v2 do
+not send symref information about unborn branches (v0 because, as
+protocol-capabilities.txt says, "servers SHOULD include this capability
+for the HEAD symref if it is one of the refs being sent"; v2 because
+a symref is included only if it refers to one of the refs being sent).
+In protocol v2, this could be done by adding a capability to ls-remote
+(maybe, "unborn"), and in protocol v0, this could be done either by
+updating the existing "symref" capability to be written even when the
+target branch is unborn (which is potentially backwards incompatible) or
+introducing a new capability which is like "symref".
 
-> > > If it was a verb, then we should have `git fast-forward`, which may
-> > > not be a terrible idea, but right now a fast-forward is a modifier.
-> > >
-> > > At least that's what I have in my mind, and the glossary seems to agree.
-> >
-> > If you read the release notes and even various messages printed by
-> > git, "fast-forwards", "fast-forwarded", "fast-forwarding", and "to
-> > fast-forward" all appear multiple times.  And yes, "fast-forward" also
-> > appears multiple times as a noun in addition to the various uses as a
-> > verb.  So, I'd say the glossary just isn't comprehensive because in
-> > this case we have a word that serves as both a noun and a verb.
->
-> It can be a noun, a verb, an adjective, and an adverb. But the
-> question is not what it can be, but what it actually is. I'm just
-> telling you my rationale:
->
-> 1. noun: it doesn't make sense because you don't create, pick, show,
-> or push a "fast-forward"
-> 2. verb: there's no idiom to tell git "do fast-forward"
-> 3. adjective: there are merge nouns (commits), but no instances of
-> fast-forward merge commits, like say octopus merge commits
-> 4. adverb: you can tell git "do merge", and "do fast-forward merge"
->
-> So, in my opinion a fast-forward today can only logically be an adverb.
->
-> Like a bubble sort is a special type of sort, and theoretically you
-> can say "do a bubble", but it's just weird. My mind is left hanging: a
-> bubble $what? Likewise, when people say "do me a solid", I'm
-> annoyed... A solid $what?! They mean "a solid favor". People do it, so
-> it's part of language, but it doesn't stop it from being weird in my
-> opinion.
->
-> An adverb typically answers the question "in what way?". Do me a
-> favor... In what way? In a solid way. Do a sort... In what way? In a
-> quick way. Do a move... In what way? In a bold way. Do a merge... In
-> what way? In a fast-forward way.
->
-> > Going back to the text Junio highlighted, I agree with him that the
-> > phrase looks really awkward, and much prefer his suggestion
-> > (regardless of whether it aligns with the current glossary).
->
-> Normally I don't show credentials, but in this case I think it might
-> be relevant. I've read multiple linguists, like Noam Chomsky, and
-> Steven Pinker. I follow many others and read their articles. I also
-> read The Pinker's Sense of Style: The Thinking Person's Guide to
-> Writing in the 21st Century [2], which I can't recommend enough for
-> people writing technical documents or any other classic style. I have
-> an arguably successful blog with more than 200 articles and more than
-> 1 million views, which is regularly linked from other blogs, and
-> technical resources. I constantly get thanked both in person, and
-> online for what I write. And at some point I was asked by a publisher
-> to write a book about Git (which I didn't feel prepared for at that
-> time).
->
-> So, clearly at least some people value the way I write.
->
-> I'm not trying to be stubborn here, I just honestly put effort into
-> the art of writing, and I do care deeply about language.
->
-> Of course I might be wrong in this particular instance, but if I am,
-> it's not because of lack of effort.
->
-> I think fast-forward is mainly an adverb, but even if it isn't the
-> main usage; it's still clearly an usage.
->
-> Cheers.
->
-> [1] https://www.merriam-webster.com/dictionary/square
-> [2] https://www.amazon.com/Sense-Style-Thinking-Persons-Writing/dp/0143127799
+A small issue is that upload-pack protocol v0 doesn't even write the
+blank ref line ("000...000 capabilities^{}") if HEAD points to an unborn
+branch, but that can be fixed as in the patch below.
 
-You have very compelling arguments that fast-forward often serves as
-an adverb (and if I'd thought a little closer, I would have remembered
-that I use "fast-forward update" myself).  You have me convinced.
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ upload-pack.c | 40 +++++++++++++++++++++++++++-------------
+ 1 file changed, 27 insertions(+), 13 deletions(-)
 
-However, I am somewhat less convinced that "fast-forward" doesn't also
-serve as a noun or a verb.  Perhaps you are trying to argue how it
-*should* be used rather than how it *is* used, in which case I don't
-have any counter-arguments for you (I'm less well linguistically
-trained).  But if you look at how it is used, the number of times "a
-fast-forward update" is shortened to "a fast-forward" in the
-documentation suggests to me it's often a noun, and the number of
-times that variants such as "fast-forwards", "fast-forwarded",
-"fast-forwarding", and "to fast-forward" appear in both the docs and
-output messages means that it's also frequently used as a verb as
-well.  The fact that Junio expressed surprise upthread ("I thought
-that the idea that the word can be used as a verb...was given and not
-something anybody needs to be explained about") also suggests that
-usage of fast-forward as a verb is common.  Anyway, I think trying to
-treat "fast-forward" as solely an adverb results in awkward phrases
-like "in a fast-forward way" instead of just using the much simpler
-verb form.
+diff --git a/upload-pack.c b/upload-pack.c
+index 1006bebd50..d2359a8560 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -1179,18 +1179,15 @@ static void format_symref_info(struct strbuf *buf, struct string_list *symref)
+ 		strbuf_addf(buf, " symref=%s:%s", item->string, (char *)item->util);
+ }
+ 
+-static int send_ref(const char *refname, const struct object_id *oid,
+-		    int flag, void *cb_data)
++static const char *capabilities = "multi_ack thin-pack side-band"
++	" side-band-64k ofs-delta shallow deepen-since deepen-not"
++	" deepen-relative no-progress include-tag multi_ack_detailed";
++
++static void write_ref_lines(const char *refname_nons,
++			    const struct object_id *oid,
++			    const struct object_id *peeled,
++			    struct upload_pack_data *data)
+ {
+-	static const char *capabilities = "multi_ack thin-pack side-band"
+-		" side-band-64k ofs-delta shallow deepen-since deepen-not"
+-		" deepen-relative no-progress include-tag multi_ack_detailed";
+-	const char *refname_nons = strip_namespace(refname);
+-	struct object_id peeled;
+-	struct upload_pack_data *data = cb_data;
+-
+-	if (mark_our_ref(refname_nons, refname, oid))
+-		return 0;
+ 
+ 	if (capabilities) {
+ 		struct strbuf symref_info = STRBUF_INIT;
+@@ -1213,8 +1210,23 @@ static int send_ref(const char *refname, const struct object_id *oid,
+ 		packet_write_fmt(1, "%s %s\n", oid_to_hex(oid), refname_nons);
+ 	}
+ 	capabilities = NULL;
+-	if (!peel_ref(refname, &peeled))
+-		packet_write_fmt(1, "%s %s^{}\n", oid_to_hex(&peeled), refname_nons);
++	if (peeled)
++		packet_write_fmt(1, "%s %s^{}\n", oid_to_hex(peeled), refname_nons);
++}
++
++static int send_ref(const char *refname, const struct object_id *oid,
++		    int flag, void *cb_data)
++{
++	const char *refname_nons = strip_namespace(refname);
++	struct object_id peeled;
++	struct upload_pack_data *data = cb_data;
++
++	if (mark_our_ref(refname_nons, refname, oid))
++		return 0;
++	write_ref_lines(refname_nons,
++			oid,
++			peel_ref(refname, &peeled) ? NULL : &peeled,
++			data);
+ 	return 0;
+ }
+ 
+@@ -1332,6 +1344,8 @@ void upload_pack(struct upload_pack_options *options)
+ 		reset_timeout(data.timeout);
+ 		head_ref_namespaced(send_ref, &data);
+ 		for_each_namespaced_ref(send_ref, &data);
++		if (capabilities)
++			write_ref_lines("capabilities^{}", &null_oid, NULL, &data);
+ 		advertise_shallow_grafts(1);
+ 		packet_flush(1);
+ 	} else {
+-- 
+2.29.2.576.ga3fc446d84-goog
 
-Also, re-reading my earlier email, it looks like it could easily come
-across as curt.  My apologies if it did read that way.
