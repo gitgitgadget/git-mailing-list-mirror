@@ -2,114 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CCAAC433FE
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 21:04:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF891C4361B
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 21:10:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4BE31239FD
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 21:04:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A405207AA
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 21:10:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729499AbgLHVEI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Dec 2020 16:04:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44642 "EHLO
+        id S1729119AbgLHVKK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Dec 2020 16:10:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729458AbgLHVEI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Dec 2020 16:04:08 -0500
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B908AC0613D6
-        for <git@vger.kernel.org>; Tue,  8 Dec 2020 13:03:27 -0800 (PST)
-Received: by mail-ot1-x343.google.com with SMTP id f16so66902otl.11
-        for <git@vger.kernel.org>; Tue, 08 Dec 2020 13:03:27 -0800 (PST)
+        with ESMTP id S1726766AbgLHVKK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Dec 2020 16:10:10 -0500
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com [IPv6:2a00:1450:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F392C0613CF
+        for <git@vger.kernel.org>; Tue,  8 Dec 2020 13:09:30 -0800 (PST)
+Received: by mail-ed1-x544.google.com with SMTP id dk8so16194119edb.1
+        for <git@vger.kernel.org>; Tue, 08 Dec 2020 13:09:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=e+pVKYuZPwsRJvOEBmH9H1GYXmAc7Y8nZls4rYhUuls=;
-        b=La5oKKC/rkHLo1J7wX9yt0dSXpDDCRVdJBuoBK5aV1HNTxp0cSZXopr/eBoP7koYfm
-         yu1R4p4KypW9x/h2P39VqN+HX85neEwzR18b8+4zHa5PH8Mcq3SCbdLY961rEiRBkNQS
-         hR+lXrFz7Sd5UUgQGxwNSg+Gp9C7B6oIdlaGum0vzAek20Yv6kFr88iqbUteRBMFO6GB
-         hw1DFqwgswtvjUdJIpBkiSi0R9Aa4ZCAbHQeWJl7RfGtXylJxiyQGbPV8CjIqR8duvLg
-         LPQofQyXI+9deNVv5f31ZCS9kunyaD6CGGRNlHE1TRVu90q27OtP1Lc12AezjJNlQ0PH
-         SPGA==
+         :content-disposition:in-reply-to:user-agent;
+        bh=g6N+GnW/6d9i+kQvmPMYh22P48E5BV4Ii/LzrVJHlUg=;
+        b=fwgKJuHZjt//BMkJOrta6QLKjPvrgMsMwRBbZVOjDeXTpZcqbSMrEI9WWv90xGw1qS
+         Tctvg31IJAZEw/UcH5mj/no1Kfvbx+m0x3rS47ZuR/7aTenfPsY/cncfjxYLGUKdgoGV
+         uG43g4DmcFZ0yfwV0ooelhzwkFKM3KpwE5GjIz+f6I9H1PfgC7mhncPhk8KS+eNatorc
+         H/KEh7YKRa1BmpiY8uNSo6MI/bRkmV3SDaRFGzd+hn3YAqcYar5MTy6zypnblz+bxN5O
+         1/jjdbfCKtNym6yjGtnNJIFCyISxVtIOvIxkpWkT09nrjHp9B+UDKpJ5HvjRuoMkCEjl
+         2kKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=e+pVKYuZPwsRJvOEBmH9H1GYXmAc7Y8nZls4rYhUuls=;
-        b=LJ9dOWRGihWDQbyijTo2p2KXGsYk+SqS64yqbiDSTAfN7V+iXC42b/tFELHdBZWUCe
-         EbXo4x3H54yBarN3Wdjzym+4FIcb1PUuQ8+L8o3qw2Zlcr6tWwU1/dAm5usbTmSxPTuf
-         +UHXD6vGRNWaDsF7HPAMtvc+QNXXFekdGGTwqoie8ksIJAu/JXsp6qdYqpw+dRu4eTSP
-         /6GpS86oPnHVq44NYkK6j9myCShjRnWtZ3e4krdYEIJRpcb5Y/IQFl+r4nRpKiYrqxXk
-         iCMnd8Q+uiJIQkuYaulS+qjGAhIuH1jkmgLgfuYBuktZtRJe+RilOYvDx2io96aARK+E
-         wykg==
-X-Gm-Message-State: AOAM5325luaBm3wjz39V/Wmvj4ZvgZOBJr/474+hdFSBqLv02Uz1UVYD
-        XtQ+FDPFg0ZwXDBhVJq1tPrsLA==
-X-Google-Smtp-Source: ABdhPJyKBzya43hnw8FV8F97/rp65xfVHAPMKnnmo24O4dZpF3zZVgyopZemy3XmMu4uAz8+NPONkQ==
-X-Received: by 2002:a9d:64c9:: with SMTP id n9mr12242251otl.282.1607461407050;
-        Tue, 08 Dec 2020 13:03:27 -0800 (PST)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id t19sm1777201otp.36.2020.12.08.13.03.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Dec 2020 13:03:26 -0800 (PST)
-Date:   Tue, 8 Dec 2020 16:03:23 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, peff@peff.net,
-        jonathantanmy@google.com, dstolee@microsoft.com
-Subject: Re: [PATCH v3 00/24] pack-bitmap: bitmap generation improvements
-Message-ID: <X8/qG70Wgd7xInq+@nand.local>
-References: <cover.1605123652.git.me@ttaylorr.com>
- <cover.1607385833.git.me@ttaylorr.com>
- <xmqqmtyo6mqi.fsf@gitster.c.googlers.com>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=g6N+GnW/6d9i+kQvmPMYh22P48E5BV4Ii/LzrVJHlUg=;
+        b=DFIkiidwAhunGIc84glh0JC14PREnJLaOjsl5YkAQha795yPslsnVDax87uHK3pxSL
+         zE10crzhs8ktX1sOvn6Z6UU/g6a7sN92nkJFM8a9E+ih9k+GFDfbmLfSAihktXz8oPAG
+         jF2H50tanrBab6rO/vFGOxtEWUAMixT6snEUcbhR3V3Y/b4ewang9ewOm8O+gYFk3qg6
+         rk1kFgngtxsjXM3sDVIYseHR76gAq2C1n6cdSM3Zp7tgZHADxJw0cWK7MSnv3jEOuwJJ
+         mDGwRlSE6QrLDp7z2/x4xDoJwx1xyE2xMWrC+g+NjSyWyWruqaC3eCX/L3TxAe73uyWU
+         JvFA==
+X-Gm-Message-State: AOAM532aXf3CGdBVoXiMyDHR7s3lc82LaFJpP9sk9U/juoP+T7qoylzy
+        y9yK29/C4vc/Y81KmJG4SP0=
+X-Google-Smtp-Source: ABdhPJz8JsMRyP1UxD8/3efhxF7iFB91yoiUSND9gnT7nPHmAmwGGXg8oqKhJG9Rk7uWpfGtWfutIg==
+X-Received: by 2002:aa7:dd17:: with SMTP id i23mr26038646edv.14.1607461768780;
+        Tue, 08 Dec 2020 13:09:28 -0800 (PST)
+Received: from szeder.dev (78-131-14-139.pool.digikabel.hu. [78.131.14.139])
+        by smtp.gmail.com with ESMTPSA id qu21sm16653915ejb.95.2020.12.08.13.09.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 08 Dec 2020 13:09:27 -0800 (PST)
+Date:   Tue, 8 Dec 2020 22:09:25 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 15/17] hook: provide stdin by string_list or callback
+Message-ID: <20201208210925.GI8396@szeder.dev>
+References: <20201205014607.1464119-1-emilyshaffer@google.com>
+ <20201205014607.1464119-16-emilyshaffer@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqmtyo6mqi.fsf@gitster.c.googlers.com>
+In-Reply-To: <20201205014607.1464119-16-emilyshaffer@google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 08, 2020 at 12:56:05PM -0800, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> > Here's an updated v3 of mine, Stolee, and Peff's series to improve the
-> > CPU performance of generating reachability bitmaps.
->
-> Has the "avoid having to assume the default branch name is 'master',
-> by naming the initial branch we create our history to use in testing
-> 'second'" fix-up by Dscho, which has been queued in 'seen' on top of
-> the previous round of this topic, incorporated to this round?
+On Fri, Dec 04, 2020 at 05:46:05PM -0800, Emily Shaffer wrote:
+> diff --git a/hook.c b/hook.c
+> index f0c052d847..fbb49f241d 100644
+> --- a/hook.c
+> +++ b/hook.c
+> @@ -9,6 +9,8 @@ void free_hook(struct hook *ptr)
+>  {
+>  	if (ptr) {
+>  		strbuf_release(&ptr->command);
+> +		if (ptr->feed_pipe_cb_data)
 
-Unfortunately, no. I wrote you an email a little earlier today, but it's
-possible that our emails may have crossed (vger seems to be rather slow
-today...).
+Coccinelle suggests to drop this condition, because free() can handle
+a NULL pointer just fine.
 
-> I think [4/24] and [15/24] can be adjusted by adding this piece from
-> Dscho to the set-up procedure and ...
->
-> @@ -64,6 +64,7 @@ has_any () {
->
->  test_expect_success 'setup repo with moderate-sized history' '
->  	test_commit_bulk --id=file 10 &&
-> +	git branch -M second &&
->  	git checkout -b other HEAD~5 &&
->  	test_commit_bulk --id=side 10 &&
->
-> ... fixing the remainder of the test script by adjusting for the
-> fallout from the 'master' that is now called 'second'.
-
-That seems reasonable. Another approach would be to leave these patches
-untouched and apply Dscho's fixup on the end, but I'm not sure which
-you'd prefer.
-
-If the latter, then I think you have everything you need. If the former,
-would you like a re-submission of this series? Either is fine with me.
-
-> Thanks.
-
-Thanks,
-Taylor
+> +			free(ptr->feed_pipe_cb_data);
+>  		free(ptr);
+>  	}
+>  }
