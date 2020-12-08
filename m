@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD20FC2BB48
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E33F6C2BB9A
 	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 22:06:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 83D8C23A1D
+	by mail.kernel.org (Postfix) with ESMTP id BE5BD222B3
 	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 22:06:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730468AbgLHWG1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Dec 2020 17:06:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54352 "EHLO
+        id S1731014AbgLHWGD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Dec 2020 17:06:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730971AbgLHWGO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Dec 2020 17:06:14 -0500
+        with ESMTP id S1730821AbgLHWF6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Dec 2020 17:05:58 -0500
 Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E27DC0617A6
-        for <git@vger.kernel.org>; Tue,  8 Dec 2020 14:05:34 -0800 (PST)
-Received: by mail-oi1-x244.google.com with SMTP id f132so163453oib.12
-        for <git@vger.kernel.org>; Tue, 08 Dec 2020 14:05:34 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DE9DC061794
+        for <git@vger.kernel.org>; Tue,  8 Dec 2020 14:05:18 -0800 (PST)
+Received: by mail-oi1-x244.google.com with SMTP id l200so183819oig.9
+        for <git@vger.kernel.org>; Tue, 08 Dec 2020 14:05:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=QL9l0cHKGO73C4wCfiM9Q7odgpoKI5hiF7YgL6COI5Y=;
-        b=cfgB3vlSZ/k+twq9mbxJ5QwReuUG10539HvOdLLYLcUO8Nr7iBGn1pek7DSnf82/A9
-         N7dv9P2Lghwr4rK7mRAyIVlPsn4LlArpo3th5q20aKSPfWviVgpMPrj/u4PhGXbG+nmc
-         G0inTpcOGVe7ViOTh3LdYQvjqiqbuRMkb3IvFwkkjimN8Bp6PEz9bPCPhvtye/KV21lf
-         bvpGP3MEi8OIlrWXP6mi5Y4P/jyyzjP9Peut5+nkvzUlSoFOP8iK7POOAo3ysJuY7kmv
-         Jd4MOJknoy1cVzZy6ZGiiDZQ/nHr+7GP3zIXyap24rW/ievZQGdeeWxe1mUFK9vu+Dk6
-         +UXQ==
+        bh=/3ATCqzziAQFVwBi3ny+EmDvKvp43Oa289NvDRWL6DI=;
+        b=SZPQkqIe9zQEVomKpEuRgLMOvUcoVFXBYipJvAOcaaJCbEZHIZ2WDA85pJwDpFNhZM
+         n+aMmP9jGw4JAz+cDOCBxdcZIzw1u8LQSdTZPQ826HWvIWHkDGAuvWGzV14SM5aibjqE
+         rUarZA2J20fTiTl4Q/jCg187WXSyc+o8kg2MJe+feCstOpXODDAD4GPpkt3kxk8gn+CK
+         eEVKsotpwtG62Om2/uHVhkayX22I3YrZmMhcLJdc8hj8S7/H+2WyrupXrz0fmD2P2EKb
+         QJuk6D4n1S2cQe8N+x/Z80WP4VLnZsTiOwSOJF/7rce2zVBQKi9Qrj3gJS5HseKtpmB4
+         cjow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=QL9l0cHKGO73C4wCfiM9Q7odgpoKI5hiF7YgL6COI5Y=;
-        b=Paw3adlbqEAqJFNAT/s42ZqxL+JCLLrd2PewKk28oiqhjGreKY+/6+B8kx0EWvd8OV
-         NeIJjxQ/Il+fA87Y/IQzar2rWuBMG73q2ANOO4LFKlEjxoO081u/POZTDU3Hbcu50Fwr
-         cSUCHT09l+3MPAgwijf40R/1I5lIO1YzuQmU6Qy6+5rfpSxrjrtzrgZWm3o+b792vwic
-         jZgofMj+y/RsSegVu4oMkTr3HtqUOLRqWLfXaoQPxfwPkL4N1Szm23qkHj12RFJPhSBD
-         OpomeNjszRYV/W815rLsyCKRhXFqa0z51UOf+BIYSJ/z9SL1h+dUYJ3RtOvPARrQMJY7
-         mdug==
-X-Gm-Message-State: AOAM530sbxKEKEBW942XReuKdr05nUPhqlALEXLsLtP5/zc0UOvxCAvm
-        u+gIKrGAGZUsXnosrBdbuq+M9hXYl2TeNltY
-X-Google-Smtp-Source: ABdhPJxXru8+cXKqORtE4BJiYEzoGQDpAGnpV7FYLSsXCJi+5JQTIfDfRTZ7CP/fY17JIe9fd24wBA==
-X-Received: by 2002:aca:5a86:: with SMTP id o128mr4442303oib.23.1607465133262;
-        Tue, 08 Dec 2020 14:05:33 -0800 (PST)
+        bh=/3ATCqzziAQFVwBi3ny+EmDvKvp43Oa289NvDRWL6DI=;
+        b=SqMAc0en8pd9quYYUqzkpJBGrtw/gUT6+FrSjcoGj690B7brBrLp+3iJwL+EIdgB15
+         g/MAh0yGbx4HHT39sWuQ6zxxsVvw3pNbRMqWxOXeZiuhOGPrQjFl/d1KTNF58JVjw6UQ
+         9Ufj5GZBFqQ0Ngx7Fq7qZfmPegFZt4u3kHE1+WzuxmMb5fDd3ziDpx9DhMoH7ROoeYzx
+         toQbEmif1eMnj5Gz7BWrEwySYNzQwQuwrLyuVTOA4Bfq2majPuR7SDDkTgDppeEdnzUY
+         6haKjlRKO9h4ZqiqE+q0IVhI6i2VCTkhYtt05Xt1OQYHezaJmNkcxvKrkpnHOKYbBx5C
+         053A==
+X-Gm-Message-State: AOAM533nCDzivbelPmy/PWR7TxP00rkUzDIdm1vZRI6SKsE5hMbCtWex
+        Zb12SeJNX0c+3q0O7sBuBq5mB0H8pylR/EDa
+X-Google-Smtp-Source: ABdhPJyFxMUduJ2srEsUO8Gzs/EnsvWcLG+pBmiMPjqY8VEBeZI5qQ5Ld/T4nUWdBftTobxQe+166A==
+X-Received: by 2002:aca:bc41:: with SMTP id m62mr18157oif.16.1607465117681;
+        Tue, 08 Dec 2020 14:05:17 -0800 (PST)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id m10sm20112oig.27.2020.12.08.14.05.31
+        by smtp.gmail.com with ESMTPSA id w131sm22911oif.8.2020.12.08.14.05.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Dec 2020 14:05:32 -0800 (PST)
-Date:   Tue, 8 Dec 2020 17:05:30 -0500
+        Tue, 08 Dec 2020 14:05:17 -0800 (PST)
+Date:   Tue, 8 Dec 2020 17:05:14 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, jonathantanmy@google.com, dstolee@microsoft.com,
         gitster@pobox.com
-Subject: [PATCH v4 24/24] pack-bitmap-write: better reuse bitmaps
-Message-ID: <720b6e0dc7d69bf3454c57002a67a488c25050e4.1607464775.git.me@ttaylorr.com>
+Subject: [PATCH v4 21/24] pack-bitmap: factor out 'add_commit_to_bitmap()'
+Message-ID: <bd3a16088b752e789b0b8b050261f0536cb2d818.1607464775.git.me@ttaylorr.com>
 References: <cover.1605123652.git.me@ttaylorr.com>
  <cover.1607464775.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -72,118 +72,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+'find_objects()' currently needs to interact with the bitmaps khash
+pretty closely. To make 'find_objects()' read a little more
+straightforwardly, remove some of the khash-level details into a new
+function that describes what it does: 'add_commit_to_bitmap()'.
 
-If the old bitmap file contains a bitmap for a given commit, then that
-commit does not need help from intermediate commits in its history to
-compute its final bitmap. Eject that commit from the walk and insert it
-into a separate list of reusable commits that are eventually stored in
-the list of commits for computing bitmaps.
-
-This helps the repeat bitmap computation task, even if the selected
-commits shift drastically. This helps when a previously-bitmapped commit
-exists in the first-parent history of a newly-selected commit. Since we
-stop the walk at these commits and we use a first-parent walk, it is
-harder to walk "around" these bitmapped commits. It's not impossible,
-but we can greatly reduce the computation time for many selected
-commits.
-
-             |   runtime (sec)    |   peak heap (GB)   |
-             |                    |                    |
-             |   from  |   with   |   from  |   with   |
-             | scratch | existing | scratch | existing |
-  -----------+---------+----------+---------+-----------
-  last patch |  88.478 |   53.218 |   2.157 |    2.224 |
-  this patch |  86.681 |   16.164 |   2.157 |    2.222 |
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap-write.c | 40 ++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 38 insertions(+), 2 deletions(-)
+ pack-bitmap.c | 36 +++++++++++++++++++++---------------
+ 1 file changed, 21 insertions(+), 15 deletions(-)
 
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index d2af4a974f..cc5ead9990 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -195,10 +195,13 @@ struct bitmap_builder {
- };
- 
- static void bitmap_builder_init(struct bitmap_builder *bb,
--				struct bitmap_writer *writer)
-+				struct bitmap_writer *writer,
-+				struct bitmap_index *old_bitmap)
- {
- 	struct rev_info revs;
- 	struct commit *commit;
-+	struct commit_list *reusable = NULL;
-+	struct commit_list *r;
- 	unsigned int i, num_maximal = 0;
- 
- 	memset(bb, 0, sizeof(*bb));
-@@ -234,6 +237,31 @@ static void bitmap_builder_init(struct bitmap_builder *bb,
- 
- 		c_ent = bb_data_at(&bb->data, commit);
- 
-+		/*
-+		 * If there is no commit_mask, there is no reason to iterate
-+		 * over this commit; it is not selected (if it were, it would
-+		 * not have a blank commit mask) and all its children have
-+		 * existing bitmaps (see the comment starting with "This commit
-+		 * has an existing bitmap" below), so it does not contribute
-+		 * anything to the final bitmap file or its descendants.
-+		 */
-+		if (!c_ent->commit_mask)
-+			continue;
-+
-+		if (old_bitmap && bitmap_for_commit(old_bitmap, commit)) {
-+			/*
-+			 * This commit has an existing bitmap, so we can
-+			 * get its bits immediately without an object
-+			 * walk. That is, it is reusable as-is and there is no
-+			 * need to continue walking beyond it.
-+			 *
-+			 * Mark it as such and add it to bb->commits separately
-+			 * to avoid allocating a position in the commit mask.
-+			 */
-+			commit_list_insert(commit, &reusable);
-+			goto next;
-+		}
-+
- 		if (c_ent->maximal) {
- 			num_maximal++;
- 			ALLOC_GROW(bb->commits, bb->commits_nr + 1, bb->commits_alloc);
-@@ -278,14 +306,22 @@ static void bitmap_builder_init(struct bitmap_builder *bb,
- 			}
- 		}
- 
-+next:
- 		bitmap_free(c_ent->commit_mask);
- 		c_ent->commit_mask = NULL;
- 	}
- 
-+	for (r = reusable; r; r = r->next) {
-+		ALLOC_GROW(bb->commits, bb->commits_nr + 1, bb->commits_alloc);
-+		bb->commits[bb->commits_nr++] = r->item;
-+	}
-+
- 	trace2_data_intmax("pack-bitmap-write", the_repository,
- 			   "num_selected_commits", writer->selected_nr);
- 	trace2_data_intmax("pack-bitmap-write", the_repository,
- 			   "num_maximal_commits", num_maximal);
-+
-+	free_commit_list(reusable);
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 5efb8af121..d88745fb02 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -521,6 +521,23 @@ static int should_include(struct commit *commit, void *_data)
+ 	return 1;
  }
  
- static void bitmap_builder_clear(struct bitmap_builder *bb)
-@@ -420,7 +456,7 @@ void bitmap_writer_build(struct packing_data *to_pack)
- 	else
- 		mapping = NULL;
++static int add_commit_to_bitmap(struct bitmap_index *bitmap_git,
++				struct bitmap **base,
++				struct commit *commit)
++{
++	struct ewah_bitmap *or_with = bitmap_for_commit(bitmap_git, commit);
++
++	if (!or_with)
++		return 0;
++
++	if (*base == NULL)
++		*base = ewah_to_bitmap(or_with);
++	else
++		bitmap_or_ewah(*base, or_with);
++
++	return 1;
++}
++
+ static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
+ 				   struct rev_info *revs,
+ 				   struct object_list *roots,
+@@ -544,21 +561,10 @@ static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
+ 		struct object *object = roots->item;
+ 		roots = roots->next;
  
--	bitmap_builder_init(&bb, &writer);
-+	bitmap_builder_init(&bb, &writer, old_bitmap);
- 	for (i = bb.commits_nr; i > 0; i--) {
- 		struct commit *commit = bb.commits[i-1];
- 		struct bb_commit *ent = bb_data_at(&bb.data, commit);
+-		if (object->type == OBJ_COMMIT) {
+-			khiter_t pos = kh_get_oid_map(bitmap_git->bitmaps, object->oid);
+-
+-			if (pos < kh_end(bitmap_git->bitmaps)) {
+-				struct stored_bitmap *st = kh_value(bitmap_git->bitmaps, pos);
+-				struct ewah_bitmap *or_with = lookup_stored_bitmap(st);
+-
+-				if (base == NULL)
+-					base = ewah_to_bitmap(or_with);
+-				else
+-					bitmap_or_ewah(base, or_with);
+-
+-				object->flags |= SEEN;
+-				continue;
+-			}
++		if (object->type == OBJ_COMMIT &&
++		    add_commit_to_bitmap(bitmap_git, &base, (struct commit *)object)) {
++			object->flags |= SEEN;
++			continue;
+ 		}
+ 
+ 		object_list_insert(object, &not_mapped);
 -- 
 2.29.2.533.g07db1f5344
+
