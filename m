@@ -2,259 +2,184 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24F35C433FE
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 22:30:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 991F0C2BB40
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 22:31:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D2380238EE
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 22:30:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F276239FD
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 22:31:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731364AbgLHWa4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Dec 2020 17:30:56 -0500
-Received: from avasout02.plus.net ([212.159.14.17]:60696 "EHLO
-        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729034AbgLHWaz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Dec 2020 17:30:55 -0500
-Received: from [10.0.2.15] ([147.147.167.100])
-        by smtp with ESMTPA
-        id mlUkkHHYy0K1OmlUlkvn7A; Tue, 08 Dec 2020 22:30:08 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1607466608; bh=gVnAxmjo/bv0IRwN5Jd9dMoKNMoz9m381gnxc02J4yY=;
-        h=To:Cc:From:Subject:Date;
-        b=WxTxjOU/5nYUebb3hExdtl6n46qVKWw7vML/H1qic6GfOhKJx6SjkpxtyxHeZ28LH
-         q35uan1QdiNIUvL/TW3N1NYkzATeo9DOfD1nTmZzQE1/QnXADE7PyjIEiJPFjwroo8
-         DIgvVNtph8J6pkYbJVyVfJCU1CyxdrUILic309DOSToevgx/wiKzpXHHtJjv/UplCC
-         DNPcVwQ+wXuOPfnj+xJh9Y+gMc5tv6wfxjWURGaAB4CCPyw9/FI497gMnps5o2Wisv
-         lynjW7lJ22HO07pc4Uk6XlA57Vjs7uLawLoRb+RhL7tENwVcFRM5Ie2tHyrxuuk995
-         2tkKfcKS6PWaw==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=QaP9QvTv c=1 sm=1 tr=0
- a=qL5TBQHgqnWGdG4DsQFN/Q==:117 a=qL5TBQHgqnWGdG4DsQFN/Q==:17
- a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=vZxbLtyPAAAA:8 a=AUZ_-V6PeF_3qbiQh7UA:9
- a=QEXdDO2ut3YA:10 a=AjGcO6oz07-iQ99wixmX:22 a=YIznc7gRMHvxYRuyG5Sm:22
- a=pHzHmUro8NiASowvMSCR:22 a=xoEH_sTeL_Rfw54TyV31:22
-X-AUTH: ramsayjones@:2500
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>,
-        Pratyush Yadav <me@yadavpratyush.com>,
-        Adam Dinwoodie <adam@dinwoodie.org>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH v3 0/5] speed up 'make clean'
-Message-ID: <e52b82b1-9a8d-4700-d44e-84aada2e3a33@ramsayjones.plus.com>
-Date:   Tue, 8 Dec 2020 22:30:06 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1731515AbgLHWb1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Dec 2020 17:31:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58298 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731512AbgLHWb0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Dec 2020 17:31:26 -0500
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com [IPv6:2a00:1450:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CB8FC061794
+        for <git@vger.kernel.org>; Tue,  8 Dec 2020 14:30:40 -0800 (PST)
+Received: by mail-lj1-x244.google.com with SMTP id x23so22115lji.7
+        for <git@vger.kernel.org>; Tue, 08 Dec 2020 14:30:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=kxFFkkuwjXZlJ//kcm/u9Hykr9r/CGYMUv96Z4HU/3M=;
+        b=YFwJqyiXTNE26S3XLf01X+ofZw6ZQa4TxjuDvk9LbsDjVSICreMYUT19i0fXp0wWt1
+         BR5dmg/V+HWs9X3gB8yRpg3jCfipzHq8NInK7CHdNC9qOGFAPLpE+lUd3ddtaDIz6l+n
+         TSyzsmjbnxAdtKXn+xAVurMD9H3tLLYl3LTUqPaccsMTFS3Z26p+7aD9ryeCR9+V2anW
+         TSdKh1gYpo7FmBBYbjrrdITMsop8riAzEPltDQR2UT9pOnl4obxAVVa9+Sr1Ns4gwLCW
+         4Oyfn6G5RxwYdt3axCN/MtYg21p1dK7i0J4mR3h+bJolX7pM8+MwCuH2hBYVjasqaEh0
+         iCpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=kxFFkkuwjXZlJ//kcm/u9Hykr9r/CGYMUv96Z4HU/3M=;
+        b=tUiGaX4vWue2Ozb999W3JZYoebEPQ4APHPiVY+5a6wt9ys7MVbkh033QSkZ68in00O
+         TwATap2oaGee1aDAEP2Ujp7VWobPgqi2WvVhRXnxHK0lUypyCY23YT41j5d60Z470o0j
+         6C1Cuy0LZGeMGH2HNMY8/TFACq9zWNv+MDI0bXzT0Qpk9BwwY2KBHHa7scJ3MbOQfp3q
+         Hsauix0UQh3iAMcv5UeJToVBDX6AxKT5wUFOMK2loDKzEN2xNrQOnhoYpqTYCnzxZ6F/
+         34GQFub5ARaCEDXZR+BjluNtKZb2wfGIWfJtrOwOn1WrOktk7PjgNDPYhDX03jTaqv4Y
+         HCZg==
+X-Gm-Message-State: AOAM533dOMifVr2WTWzm5iyc2FvtPfef9BKHWkcCn7AZjV1pTYLDhe7F
+        t+gGtXppCyU+KeEVyg/7A1zAEmB+ajE=
+X-Google-Smtp-Source: ABdhPJw5JqTTUVDsVurDQv0GBC9llQorEYQaGpKQC/4hb/N5Bq2vwACq0rKaANyQNk2v3tgI8bFzQA==
+X-Received: by 2002:a2e:9195:: with SMTP id f21mr5178302ljg.191.1607466638720;
+        Tue, 08 Dec 2020 14:30:38 -0800 (PST)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id c18sm16197lfp.307.2020.12.08.14.30.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Dec 2020 14:30:37 -0800 (PST)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 00/26] git-log: implement new --diff-merge options
+References: <20201101193330.24775-1-sorganov@gmail.com>
+        <87y2i8dptj.fsf@osv.gnss.ru>
+        <CABPp-BGuLX8Msghbo6L7vB2Wqys=Xg_uvV2Aui-1q4-+ijuNEw@mail.gmail.com>
+Date:   Wed, 09 Dec 2020 01:30:36 +0300
+In-Reply-To: <CABPp-BGuLX8Msghbo6L7vB2Wqys=Xg_uvV2Aui-1q4-+ijuNEw@mail.gmail.com>
+        (Elijah Newren's message of "Tue, 8 Dec 2020 12:52:52 -0800")
+Message-ID: <87y2i8c4mr.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfEyDP+2xWe1ECXFc+sJWlXeUtXI+o+USvGThDw+PzAKUo2OcS2LvZwVO5AdZ513d6Wyxvjcdjl5aSKFkCp4d3w8pjSWXRKeHB16MaUy7iWc65462Zgfx
- z8JnSBZxs/4Af/8qTqXC0LpI91UHZlrbEe7UirannnKi5FhR/Ax+5eSC5gG0gc4BVZ6c6YbnGx/UbQ==
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Elijah Newren <newren@gmail.com> writes:
 
-cover letter for v1
--------------------
+> Hi Sergey,
 
-Approximately five years ago, I stopped building the documentation
-locally and instead started using the 'pre-built' documentation repos
-from git://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git.
-I placed them next to the git repository (ie. as siblings) and wrote
-a script (mk-dist-doc.sh) to reproduce the effect of 'make dist-doc',
-using git-archive, to place the distribution tarballs at the top of
-the git repo worktree.
+Hi Elijah,
 
-[During the creation of these patches, I actually did a 'make' in
-the Documentation directory and was surprised that it succeeded!
-However, it reminded me why I stopped building the docs! :-P ]
+>
+> On Tue, Dec 8, 2020 at 12:07 PM Sergey Organov <sorganov@gmail.com> wrote:
+>>
+>> Sergey Organov <sorganov@gmail.com> writes:
+>>
+>>
+>> [...]
+>>
+>> > The series also cleanup logic of handling of diff merges options and
+>> > fix an issue found in the original implementation where logically
+>> > mutually exclusive options -m/-c/--cc failed to actually override each
+>> > other.
+>>
+>> Working further on this, I've noticed very irregular interactions
+>> between -m/-c/--cc and --oneline:
+>>
+>> 1. --oneline disables -m output for 'git log', and leaves -m output enabled
+>> for 'git show':
+>>
+>> $ /usr/bin/git show -n1 -m --oneline 2e673356aef | wc -l
+>> 80
+>> $ /usr/bin/git log -n1 -m --oneline 2e673356aef | wc -l
+>> 1
+>
+> If you leave off --oneline, you'll note that git show produces a diff
+> and git log does not (regardless of whether 2e673356aef is a merge
+> commit or a regular commit).  So, I don't think this is related to
+> --oneline.
 
-This meant that the Documentation directory was essentially unused
-for build purposes, so that a 'make clean' should have nothing to
-do in that directory.  However, on cygwin, I noticed a long pause
-during a 'make clean' in that directory and, further, it seemed to
-be GEN-erating some files!  I put an item on my TODO list to take a
-look at that - during the v2.28.0 cycle, I finally found time to look
-at this issue! :-D
+Yeah, looks exactly like this, thanks for correcting!
 
-This patch series is the result. Note that this was mainly about
-speeding up 'make clean' on cygwin (and the performance numbers
-in the patches reflect use on cygwin). Tonight, I did some timings
-on Linux as well, so that I could show this table:
+>
+>> 2. For 'git log', --oneline disables -m output, and leaves -c/--cc output
+>> enabled:
+>>
+>> $ /usr/bin/git log -n1 -m --oneline 2e673356aef | wc -l
+>> 1
+>> $ /usr/bin/git log -n1 -c --oneline 2e673356aef | wc -l
+>> 16
+>> $ /usr/bin/git log -n1 --cc --oneline 2e673356aef | wc -l
+>> 16
+>>
+>> The question is: what's the right interaction between --oneline and
+>> -m/-c/--cc?
+>
+> I believe the right question is: Should -m be a no-op unless -p is
+> also specified?
 
-              CYGWIN              LINUX
-v2.29.0   23.339s              1.709s
-Patch #1  12.364s  -47.02%     0.877s  -48.68%
-Patch #2  10.361s  -16.20%     0.805s   -8.21%
-Patch #3   8.430s  -18.64%     0.672s  -16.52%
-Patch #4   6.454s  -23.44%     0.484s  -27.98%
-Patch #5   6.428s   -0.40%     0.503s   +3.93%
-Patch #6   6.440s   +0.19%     0.517s   +2.78%
-Patch #7   6.430s   -0.16%     0.515s   -0.39%
-Patch #8   4.064s  -36.80%     0.322s  -37.48%
+Right.
 
-         23.339/4.064 = 5.74   1.709/0.322 = 5.31 
+> In the past, --cc and -c were no-ops except when -p
+> was also specified.  It was somewhat unfriendly and surprising, and
+> thus was changed so that --cc and -c implied -p (and thus would cause
+> output for non-merge commits to be shown differently, namely shown
+> with a diff, in addition to affecting the type of diff shown for merge
+> commits).
 
-Note that patches 5-7 are just preparatory patches for the final
-patch, and are not expected to show any improvement.
+Well, so one surprise has been replaced with another, supposedly more
+friendly, right?
 
-This series is marked RFC because I forgot that 'git-gui' patches
-need to be separately submitted to Pratyush Yadav, the git-gui
-maintainer. So, I need to drop patch #4 from this series and
-submit that to Pratyush (the commit message needs to be re-written
-as well). Unfortunately, this means that the following commit
-messages will need to be re-written (and timings re-done).
+I mean, obviously, with --cc I don't ask for diffs for non-merge
+commits, so it is still a surprise they are thrown at me.
 
-Also, since this series is based on v2.29.0, I had anticipated some
-conflicts with the 'rs/dist-doc-with-git-archive' branch when merging
-this with the 'master', 'next' and 'seen' branches. I have just done
-a trial merge with each branch and, to my surprise, there were no
-conflicts and they (auto) merged clean. ;)
+> I think -m was overlooked at the time.
 
-However, I can certainly rebase these onto the 'master' branch, if that
-would be easier to deal with. (There has to be a v2 anyway, so ...)
+Looks like it was, but maybe there was rather an actual reason for not
+implying -p by -m? Maybe Junio will tell?
 
-I should note here that the main idea used in these patches, to use
-the $(MAKECMDGOALS) variable to conditionally include some files, can
-be defeated by invoking make with multiple goals. For example, if you
-were to do 'make clean all', then $(MAKECMDGOALS) would be 'clean all'
-and not 'clean'.
+>
+>> I tend to think they should be independent, so that --oneline doesn't
+>> affect diff output, and then the only offender is -m.
+>
+> I agree that they should be independent, but I believe they are
+> already independent unless you have more evidence of weirdness
+> somewhere.  The differences you are seeing are due to -m, -c, and --cc
+> being handled differently, and I think we should probably just give -m
+> the same treatment that we give to -c and --cc (namely, make all three
+> imply -p).
 
-However, doing so with the top-level Makefile would only negate the
-effect of the last patch, since all of the sub-makes are issued as
-'make -C <dir> clean'. So, all of the conditional includes in patches
-#1-4 will work as intended (and show the noted improvement).
+I think that either all diff-merge options should imply -p, or none,
+from the POV of least surprise.
 
-Changes in v2
--------------
+However, it'd give us yet another challenge: for some time already,
+--first-parent implies -m, that once it starts to imply -p, will result in
 
-Unfortunately, immediately after submitting the v1/RFC version of this
-series, I got rather busy with other commitments until this evening.
-So, I have not had time to look into the 'alternate' patch #8 (I will
-get back to that soon, along with some others). Given that I started
-this series late in the v2.27 cycle, it would be nice to get some
-benefit from this series sooner, rather than later. So, I decided to
-go all conservative:
+  git log --first-parent
 
-  - remove patch #4 and send a 'standalone' patch to Pratyush (as
-    required).
-  - remove the controversial patches #7, and #8
+suddenly producing diff output for everything.
 
-I didn't redo the timings, but looking at the table above, we should
-see the times on cygwin go from 23.339s to 8.430s (or there abouts)
-for this revised series. Also, if Pratyush agrees to apply the new
-patch #4, then we should see approximately another 2s saving.
+One way out I see is to specify that implied -m/-c/--cc don't imply
+-p, only explicit do.
 
-Changes in v3
--------------
+Entirely different approach is to get rid of -m/-c/--cc implying -p, and
+just produce diff output for merges independently on -p being provided
+or not. This will give us additional functionality (ability to get diff
+for merges, but not for regulars), and will get rid of all the related
+surprises.
 
-The following changes are in response to comments from Junio[1] and
-Felipe [2][3] about the commit messages of the first three patches
-(along with a small typo):
+Thoughts?
 
-  - typo: s/on/an/ in commit message for patches #1->#3.
-  - patch #1: refer to the content of 'doc.dep' (as make targets and
-    prerequisites) and the fact that they don't affect target execution.
-  - patch #2,#3: stress that update of GIT-VERSION-FILE/$(GIT_VERSION)
-    does not affect 'clean' target execution.
-
-Thanks to Junio and Felipe.
-
-See the range-diff against v2 below.
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
-[1] https://lore.kernel.org/git/xmqq360icb5x.fsf@gitster.c.googlers.com/T/#mf3f0ffbaf4cfc81e55fdd7e9e1e585425bc4ac95
-[2] https://lore.kernel.org/git/xmqq360icb5x.fsf@gitster.c.googlers.com/T/#ma7efd62ca9c783c23bab20b8a617c412f97f5cb9
-[3] https://lore.kernel.org/git/xmqqy2iaawk8.fsf@gitster.c.googlers.com/T/#m77e36048def91f1e4916cd04f6ce01398dd5a448
-
-
-Ramsay Jones (5):
-  Documentation/Makefile: conditionally include doc.dep
-  Documentation/Makefile: conditionally include ../GIT-VERSION-FILE
-  gitweb/Makefile: conditionally include ../GIT-VERSION-FILE
-  Makefile: don't try to clean old debian build product
-  Makefile: don't use a versioned temp distribution directory
-
- Documentation/Makefile |  4 ++++
- Makefile               | 17 +++++++++--------
- gitweb/Makefile        |  2 ++
- 3 files changed, 15 insertions(+), 8 deletions(-)
-
-range-diff against v2:
-1:  c48e0fbaf4 ! 1:  f5b58cac1e Documentation/Makefile: conditionally include doc.dep
-    @@ Commit message
-           ...
-           $
-     
-    -    has been timed at 23.339s, using git v2.29.0, on my laptop (on old core
-    +    has been timed at 23.339s, using git v2.29.0, on my laptop (an old core
-         i5-4200M @ 2.50GHz, 8GB RAM, 1TB HDD).
-     
-         Notice that, since the 'doc.dep' file does not exist, make takes the
-    @@ Commit message
-         and, if that file now exists, throw away all its internal data and
-         re-read and re-parse the Makefile). Having spent the time to include
-         the 'doc.dep' file, the 'clean' target immediately deletes those files.
-    +    The document dependencies specified in the 'doc.dep' include file,
-    +    expressed as make targets and prerequisites, do not affect what the
-    +    'clean' target removes. Therefore, the time spent in generating the
-    +    dependencies is completely wasted effort.
-     
-         In order to eliminate such wasted effort, use the value of the internal
-         $(MAKECMDGOALS) variable to only '-include doc.dep' when the target is
-2:  08c08f44ad ! 2:  6c26d16d04 Documentation/Makefile: conditionally include ../GIT-VERSION-FILE
-    @@ Commit message
-           ...
-           $
-     
-    -    has been timed at 12.364s on my laptop (on old core i5-4200M @ 2.50GHz,
-    +    has been timed at 12.364s on my laptop (an old core i5-4200M @ 2.50GHz,
-         8GB RAM, 1TB HDD).
-     
-         Notice that the 'clean' target is making a nested call to the parent
-    @@ Commit message
-         the previous patch, there would have been _two_ such invocations).
-         This is to ensure that the $(GIT_VERSION) make variable is set, once
-         that file had been included.  However, the 'clean' target does not use
-    -    the $(GIT_VERSION) variable, so this is wasted effort.
-    +    the $(GIT_VERSION) variable, directly or indirectly, so it does not
-    +    have any affect on what the target removes. Therefore, the time spent
-    +    on ensuring an up to date GIT-VERSION-FILE is wasted effort.
-     
-         In order to eliminate such wasted effort, use the value of the internal
-         $(MAKECMDGOALS) variable to only '-include ../GIT-VERSION-FILE' when the
-3:  f1b6ef23ae ! 3:  835c47993b gitweb/Makefile: conditionally include ../GIT-VERSION-FILE
-    @@ Commit message
-           ...
-           $
-     
-    -    has been timed at 10.361s on my laptop (on old core i5-4200M @ 2.50GHz,
-    +    has been timed at 10.361s on my laptop (an old core i5-4200M @ 2.50GHz,
-         8GB RAM, 1TB HDD).
-     
-         Notice that the 'clean' target is making a nested call to the parent
-         Makefile to ensure that the GIT-VERSION-FILE is up-to-date. This is to
-         ensure that the $(GIT_VERSION) make variable is set, once that file had
-         been included. However, the 'clean' target does not use the $(GIT_VERSION)
-    -    variable, so this is wasted effort.
-    +    variable, directly or indirectly, so it does not have any affect on what
-    +    the target removes. Therefore, the time spent on ensuring an up to date
-    +    GIT-VERSION-FILE is wasted effort.
-     
-         In order to eliminate such wasted effort, use the value of the internal
-         $(MAKECMDGOALS) variable to only '-include ../GIT-VERSION-FILE' when the
-4:  e8eb7f1668 = 4:  c965bb2b2e Makefile: don't try to clean old debian build product
-5:  aad82c5116 = 5:  e8705064cb Makefile: don't use a versioned temp distribution directory
--- 
-2.29.0
+Thanks,
+-- Sergey Organov
