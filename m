@@ -2,83 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 209E8C4167B
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 21:01:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A445C4361B
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 21:03:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D822523B03
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 21:01:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1FEE5239FD
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 21:03:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729719AbgLHVBP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Dec 2020 16:01:15 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55903 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727660AbgLHVBP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Dec 2020 16:01:15 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D6E94B6706;
-        Tue,  8 Dec 2020 16:00:32 -0500 (EST)
+        id S1729376AbgLHVDB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Dec 2020 16:03:01 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63671 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727660AbgLHVDA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Dec 2020 16:03:00 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CB11D95603;
+        Tue,  8 Dec 2020 16:02:16 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4f1szD4mAqOA/UFo/lO1ptdX7K8=; b=FYX8Dk
-        IZ2qIxTgvxW0zOKnwEZX4pXOd95HhKuBp//YpXDAfBHVis9BgHVsIkzdkO2lip5K
-        mRZSWI/p8sbVIWTBjUhHr3SDURKJTL1ETRfjTykqxIdm8ms0/e+2lf2m5QkmTixn
-        ZJ0KgLz2oiHSKMP+Qkg0S7L4gY24/MNgySd6k=
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=cGOo23FnB/h8fNYCjK0kkHFJ3dM=; b=AFge6XMzoXfkNLXD/S1w
+        hn1PyvvjmwWNFxGAWadmeVeLthjZS36O3/9hidCqBIX12twQmwamECqzD9NyoIK6
+        Tr5YODrcHWftqlRcTtQGW7RooB/PJmK1TxYzhBn2gQQfZADw25Bop/WH/gv4VMUB
+        UBa4OUpJ8/DoCAzCIuHUNHE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IAmiZQZ8xHXPGF8d+ODLf03YfmcWq61r
-        GddnGKbiLsWJhC9sZiMWhOJ0RaM1tBP3OWvdFBR1hn9vWkMLqDvcGsD2acmH8+mq
-        9RYOg0qm/W9rYBnedvROnyBnsnuOfRNtQ6xqNReZ3a9qU6OK2B9GlhqVzJQ7gbia
-        r4oe2/9LZMk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CF6C0B6705;
-        Tue,  8 Dec 2020 16:00:32 -0500 (EST)
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=Qhd0wHW2aGJ7MZbipSFSbnSv3oXDlcSoEKsrDhLZMyHGG7
+        3QEOOIwub++yCo+CJIuZNpa7ks1PmGo3RVZ3HccjfC26XwasAUgdqgYd33TFJ1jK
+        9rxXd/jHfrFalOzqy5ztFw6lSFZ6Ido/kR0LmdxSDuJ77jzgidms5/JyXiipw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C383595602;
+        Tue,  8 Dec 2020 16:02:16 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 48E63B6704;
-        Tue,  8 Dec 2020 16:00:32 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3EB0E95601;
+        Tue,  8 Dec 2020 16:02:16 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Cloning empty repository uses locally configured default branch
- name
-References: <xmqq7dpt82l4.fsf@gitster.c.googlers.com>
-        <20201208185538.973044-1-jonathantanmy@google.com>
-Date:   Tue, 08 Dec 2020 13:00:31 -0800
-In-Reply-To: <20201208185538.973044-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Tue, 8 Dec 2020 10:55:38 -0800")
-Message-ID: <xmqqim9c6mj4.fsf@gitster.c.googlers.com>
+To:     Sangeeta <sangunb09@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [Outreachy][PATCH v6] diff: do not show submodule with
+ untracked files as "-dirty"
+References: <pull.751.git.1602781723670.gitgitgadget@gmail.com>
+        <20201026175742.33356-1-sangunb09@gmail.com>
+        <CAHjREB7W2P9_P4LoMHVVzV_YR5-_51zdbRZ0fpEDVkgkd7sh8w@mail.gmail.com>
+        <xmqqblges4ue.fsf@gitster.c.googlers.com>
+        <CAHjREB7-QWHBOQQPdDdEM-gJm=w3+4D=N=5TaS3UE__6XnSpJA@mail.gmail.com>
+Date:   Tue, 08 Dec 2020 13:02:15 -0800
+Message-ID: <xmqqblf46mg8.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 68EDFEFA-3998-11EB-B918-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: A6E4AFB0-3998-11EB-9C43-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Sangeeta <sangunb09@gmail.com> writes:
 
->> > A small issue is that upload-pack protocol v0 doesn't even write the
->> > blank ref line ("000...000 capabilities^{}") if HEAD points to an unborn
->> > branch, but that can be fixed as in the patch below.
->> 
->> I think the codepaths we have today in process_capabilities() and
->> process_dummy_ref() (both in connect.c) would do the right thing
->> when it sees a blank ref line even when nothing gets transported,
->> but I smell that the rewrite of this state machine is fairly recent
->> (say in the past few years) and I do not offhand know if clients
->> before the rewrite of the state machine (say in v2.18.0) would be OK
->> with the change.  It should be easy to check, though.
+> Hey,
 >
-> Yes - I backported my patch to v2.17.0 and it works:
+> I worked on passing --ignore-submodules=none as the default behavior
+> of git status so that the user doesn't end up deleting a submodule
+> that has uncommitted (untracked) files.
+>
+> The following changes make git status pass the ignoreSubmodules none
+> argument as default.
+>
+> @@ -4587,7 +4587,7 @@ void repo_diff_setup(struct repository *r,
+> struct diff_options *options)
+>         options->orderfile = diff_order_file_cfg;
+>
+>         if (!options->flags.ignore_submodule_set)
+> -               handle_ignore_submodules_arg(options, "untracked");
+> +               options->flags.ignore_untracked_in_submodules = 1;
+>
+>         if (diff_no_prefix) {
+>                 options->a_prefix = options->b_prefix = "";
+>
+>
+> @@ -607,6 +607,9 @@ static void
+> wt_status_collect_changes_worktree(struct wt_status *s)
+>                 rev.diffopt.flags.override_submodule_config = 1;
+>                 handle_ignore_submodules_arg(&rev.diffopt,
+> s->ignore_submodule_arg);
+>         }
+> +       else if(!rev.diffopt.flags.ignore_submodule_set){
+> +               handle_ignore_submodules_arg(&rev.diffopt, "none");
+> +       }
+>
+> I have had to set the flag manually in diff.c because when we call
+> handle_ignore_submodules_arg() with "untracked" arg,
+> options->flags.ignore_submodule_set is set to 1 and therefore when we
+> check for it in wt-status.c it appears that user has already set some
+> config and therefore we shouldn't add "none" as ignoreSubmodules arg.
+>
+> Another way to do that is to have one more flag in diff_options that
+> can let us know whether options->flags.ignore_submodule_set was set by
+> the user or by diff passing untracked as the default argument.
+>
+> Can someone please help me with what might be the right way to proceed?
 
-I wouldn't be surprised if other reimplementations of Git (like
-jgit, libgit2 and Go or Python or whatever your favorite language)
-barfs, though.
+Hmph, neither sounds "right"---having to circumvent the assignment
+to _set flag made in the handle_ helper by either manually setting
+the underlying flag, or by introducing another flag that stops from
+the _set flag getting updated, sounds like working around a flaw of
+the approach to use _set flag and set it in the handle_ helper in
+the first place...
+
+
+
