@@ -2,146 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76B4BC433FE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3E77C4167B
 	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 20:17:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2EC1F2312D
+	by mail.kernel.org (Postfix) with ESMTP id 52C8E2388C
 	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 20:17:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726853AbgLHUQm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Dec 2020 15:16:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36996 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731149AbgLHUQY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Dec 2020 15:16:24 -0500
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62C64C0613CF
-        for <git@vger.kernel.org>; Tue,  8 Dec 2020 12:15:38 -0800 (PST)
-Received: by mail-pl1-x649.google.com with SMTP id e11so7698441pld.0
-        for <git@vger.kernel.org>; Tue, 08 Dec 2020 12:15:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:references:subject
-         :from:to:cc;
-        bh=HV2qav3Uk6wRIqRBNDQZpY7X69OrCVCrs1uuCaIvwEQ=;
-        b=G8J12Ub2U6mp7A/91xXBHrss2zOemg01dIdtWcs3IJYxxObzBr+s62VsnumPpO1VYA
-         d0M/TMs5Z7ApXjHCcxAQUibYUCOQd0doFji24gcXfqYWfWy4yYU1frbmkeTyUg+5dht1
-         H4CbcX+fdziobZB5VFvaiAVUXaBlUYtwqIjdMFoEJsNLByP+NO0MdLURqhStfd5900Ir
-         suWGMWXU8TFX6eaS6en5BXDrnWunaeyGBsf+z0Pa8Y/THbHp0JDrS9Odd1b+6WG4hDrG
-         1M3mGV7jmmAFKkPUDk4YVXxJ4HLUVOfBL7WPF7B0v0udk41b9UWnHJ8b3PKRzIVWfdl6
-         zRWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=HV2qav3Uk6wRIqRBNDQZpY7X69OrCVCrs1uuCaIvwEQ=;
-        b=hhUHPdFM3oNfrKS4HzdPaOLUd9ZIH/G0CWXrAhMLk+QzEcGHDRX2wiRbhTvCqLcslm
-         KftbGib+fz9K44giUXdPtco2QePuy3WqR/LoPji5tR+Z16x9j1kn+olfxkHpKQD7NgAt
-         SiLCTQUhgiYhEytXc+cHmY7nZzdW6q2/asRKD0NozRosCCuvUMCExEbwXqcgXwsEMgr4
-         WyVjYNNmDTPqvY5lq+YvZsJapVKzfP4SSYN6nVabsNiyKfM1Jt+e2tgweMtfz1mPDvDj
-         bv9FAR8wT70FcagrM+5z6dlLa2KJlIZTXHTBzU84md7fb3zeBQFp23zfiNJS1Llv1Mwp
-         vWjA==
-X-Gm-Message-State: AOAM53235ulRMFZhhTbopFI1CDr+UBfPC0H0PAQnObAwAqHMNKnKevY5
-        ziGLIhr67/TZ8C3D71+NnzG0BpWVszCo3yDbu55S
-X-Google-Smtp-Source: ABdhPJz7i0yMZ5oQPPY+FbH/wiyTbbHRNNba3iaeZX5WLkztWNN+IZnM0/39FRlyKWj/mwBeMpRpuNH7Z60wgP0bQ6yE
-Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a62:7858:0:b029:19d:c011:1cfe with
- SMTP id t85-20020a6278580000b029019dc0111cfemr20168111pfc.47.1607458011855;
- Tue, 08 Dec 2020 12:06:51 -0800 (PST)
-Date:   Tue,  8 Dec 2020 12:06:49 -0800
-In-Reply-To: <X8+iu/0nPfd0lrSn@coredump.intra.peff.net>
-Message-Id: <20201208200649.998740-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <X8+iu/0nPfd0lrSn@coredump.intra.peff.net>
-X-Mailer: git-send-email 2.29.2.576.ga3fc446d84-goog
-Subject: Re: Cloning empty repository uses locally configured default branch name
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     peff@peff.net
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        id S1726004AbgLHURl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Dec 2020 15:17:41 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58531 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725948AbgLHURa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Dec 2020 15:17:30 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B9643B624E;
+        Tue,  8 Dec 2020 15:16:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=hCNhoHey9ZAFIIkjj3pMgIWql7Q=; b=K3jQFJ
+        X0LKgQ46DNsVBuOXo1rlY7kWJce2OkfEp6KjoyMIx8B0hd/aQo4ZZyjV2dPW5F0b
+        3V39hpekg8IVlIRm4b3ds3AZ5ga+TXwrGpM5Xr0fZmE3YcA/eWv/fRj7ab1M1aLv
+        7c2iwm29iWsbCFxbFMRH1SXIcM0EOPIu/CJjg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=SVON/EMCVZu2qYgmsJu80WCehexrx4Xp
+        VCDFxivkYqpTOryLnowsKab6Qe2ojq/PZVV9S31x92mLIvTGkdTEfZbj2KJwG5ol
+        O7ui0HXHPhDeN31Sa6892jKEtnSfMc3/nghUoxhgidC8jgCDL2D3o/M+4resYuZf
+        TFeQg38eXBY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B0301B624D;
+        Tue,  8 Dec 2020 15:16:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 236D8B624C;
+        Tue,  8 Dec 2020 15:16:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?Q?V?= =?utf-8?Q?=C3=ADt?= Ondruch <vondruch@redhat.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        "Theodore Y . Ts'o" <tytso@mit.edu>,
+        John Keeping <john@keeping.me.uk>,
+        Richard Hansen <rhansen@rhansen.org>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
+        "W. Trevor King" <wking@tremily.us>
+Subject: Re: [PATCH v2 02/14] pull: improve default warning
+References: <20201204061623.1170745-1-felipe.contreras@gmail.com>
+        <20201204061623.1170745-3-felipe.contreras@gmail.com>
+        <CABPp-BFdjj=+4jk0vo=kpNc6ug1=UgtKfXJZkseyyxut2VB=Uw@mail.gmail.com>
+        <CAMP44s1eTc4+tbULbyz5ENgbcN4tOVBA3Z-4GS4yMpciUD_1Hw@mail.gmail.com>
+        <CABPp-BFwWBLdFPsKi3o9hznFtAeWWfhNAyuymPS4BhMAHpnSfw@mail.gmail.com>
+        <CAMP44s1=aZL7BMKSjzKJ7qYqg-usScwzRUJmaOhsCGvQ4ieYow@mail.gmail.com>
+        <CABPp-BF4rXBOKsn8bG6y3QUEtNVV9K2Pk5NmwrU5818CqhRt_Q@mail.gmail.com>
+        <CAMP44s2L24jhCG9ps72--ZiJkXUovR726jCf8JTLHAs0jV7Whg@mail.gmail.com>
+        <CABPp-BGdNt8TBMTE9zvaicF5AtvyTBhpiJXqkuZc7mBLGbw0Qw@mail.gmail.com>
+        <xmqqeek2cc14.fsf@gitster.c.googlers.com>
+        <CAMP44s2XFQoda_PMULWha-rj9HhNfEddO5fikmswk9=AWN4RCw@mail.gmail.com>
+        <xmqqpn3lbhxn.fsf@gitster.c.googlers.com>
+        <CAMP44s2nmVnXiBA8S=vHBZznuRNKKe=xGOEBJ80MYhA_XCqNkg@mail.gmail.com>
+        <xmqqlfe99yvy.fsf@gitster.c.googlers.com>
+        <CA+P7+xp=UGd0iK8uLxnqH0iycrxo--8on3d0Z+jsuyhpV-fVew@mail.gmail.com>
+        <xmqq360h8286.fsf@gitster.c.googlers.com>
+        <CAMP44s3KCoDfRXzarJw5AE7UsY-=eP6GbHzdDcdrs2rsw5tL+w@mail.gmail.com>
+Date:   Tue, 08 Dec 2020 12:16:46 -0800
+In-Reply-To: <CAMP44s3KCoDfRXzarJw5AE7UsY-=eP6GbHzdDcdrs2rsw5tL+w@mail.gmail.com>
+        (Felipe Contreras's message of "Mon, 7 Dec 2020 21:15:05 -0600")
+Message-ID: <xmqqy2i86ok1.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4C387A98-3992-11EB-A940-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On Mon, Dec 07, 2020 at 05:31:20PM -0800, Jonathan Tan wrote:
-> 
-> > When cloning an empty repository, a local branch is created. But its
-> > name is not the name of the branch that the remote HEAD points to - it
-> > is the locally configured default branch name. This issue arose at
-> > $DAYJOB and, from my memory, it is also not an uncommon workflow to
-> > configure things online on a repo host and then use "git clone" so that
-> > things like remotes are automatically configured.
-> > 
-> > Has anyone looked into solutions for this? Both protocol v0 and v2 do
-> > not send symref information about unborn branches (v0 because, as
-> > protocol-capabilities.txt says, "servers SHOULD include this capability
-> > for the HEAD symref if it is one of the refs being sent"; v2 because
-> > a symref is included only if it refers to one of the refs being sent).
-> > In protocol v2, this could be done by adding a capability to ls-remote
-> > (maybe, "unborn"), and in protocol v0, this could be done either by
-> > updating the existing "symref" capability to be written even when the
-> > target branch is unborn (which is potentially backwards incompatible) or
-> > introducing a new capability which is like "symref".
-> 
-> We discussed this a few years ago, and I even wrote a small patch (for
-> v0 at the time, of course):
-> 
->   https://lore.kernel.org/git/20170525155924.hk5jskennph6tta3@sigill.intra.peff.net/
-> 
-> A rebased version of that patch is below (it needed updating to handle
-> some namespacing stuff). Coupled with your patch here for the truly
-> empty repo case, it makes the server side of v0 do what you'd want.
-> 
-> But the client side needs to handle it, too. See the linked thread for
-> some discussion.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Thanks for the pointer.
+> That is exemplified by the fact that this whole thread started from a
+> user that refused to configure pull.rebase and expected the Git
+> project to just do the right thing (which is basically choosing a
+> useful default).
 
-> I wouldn't be too worried about the backwards incompatibility of sending
-> a symref line in the capabilities that doesn't point to a ref we're
-> sending. Old clients are quite likely to ignore it. But...
-> 
-> > A small issue is that upload-pack protocol v0 doesn't even write the
-> > blank ref line ("000...000 capabilities^{}") if HEAD points to an unborn
-> > branch, but that can be fixed as in the patch below.
-> 
-> I would worry how clients handle this bogus entry in the ref
-> advertisement. It looks like the actual Git client is OK, but what about
-> jgit, libgit2, etc? That's not necessarily a deal-breaker, but it would
-> be nice to know how they react.
+Which is basically asking for impossible, and I do not think it is a
+good idea to focus our effort to satisfy such a request in general.
+There is no useful default that suits everybody in this particular
+case.
 
-That bogus entry is defined in the protocol and JGit both produces and
-consumes that line. Consumption was verified by patching Git with my
-patch and running the following commands in separate terminals:
+The "force ff-only" approach indeed gives a very sensible default
+behaviour of dying for those who haven't expressed the choice
+between rebase and merge in a situation where the difference between
+the two results in histories of different shapes.
 
-~/git/bin-wrappers/git daemon --port=9425 --base-path=. .
-sudo tcpdump -i any port 9425 -w -
-~/jgit/bazel-bin/org.eclipse.jgit.pgm/jgit ls-remote git://localhost:9425/empty
+But for anybody who uses git for real (read: produces his or her own
+history), it would be pretty much a useless default that forces the
+user to say rebase or merge every time 'git pull' is run.  That is
+why I am not enthused by the pull.mode=(rebase/merge/ff-only)
+configuration.  The third choice does help completeness.  When a
+user asks "the documentation tells pull.mode can be set to
+non-default behaviour---what value can one set it to to get the
+default behaviour of not allowing any original work?", it can be
+answered if we had pull.mode=ff-only.  But other than that, I do not
+see any real use for the choice, which would mean in practice,
+pull.mode would have only two useful values, rebase or merge.  That
+does not feel a good enough reason to supersede what already exists,
+which is pull.rebase=yes/no.
 
-And production:
+Perhaps there is a good reason why certain classes of users would
+want to configure pull.mode=ff-only (i.e. "I might type 'git pull'
+by mistake, please stop me if I did so on a branch I have real work
+already.").  If that is the case, I would very much agree that it
+would be awkward to express that choice in the current framework to
+choose between pull.rebase=yes/no and pull.mode=(rebase/merge/ff-only)
+would become a lot easier to explain.
 
-~/jgit/bazel-bin/org.eclipse.jgit.pgm/jgit daemon --port=9426 .
-GIT_TRACE_PACKET=1 git ls-remote git://localhost:9426/empty
-
-(Note that the JGit CLI does not have a separate --base-path parameter.)
-
-I have not checked libgit2, but quite a few servers use JGit out there,
-so it presumably should be able to interoperate with them and hence
-support the bogus entry.
-
-> It also only helps with v0 (and I agree with the sentiment that it would
-> be OK to ignore v0 at this point). For v2, we'd have to issue a HEAD
-> line like:
-> 
->   0000000000000000000000000000000000000000 HEAD symref=refs/heads/foo
-> 
-> That probably would break clients, but the unborn capability should take
-> care of that.
-
-Yes - or a special string like "unborn" in place of the 000.000.
+I dunno.
