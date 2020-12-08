@@ -2,304 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10D10C433FE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 555C4C1B0D9
 	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 22:04:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CDBF722472
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 22:04:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 25BC322472
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 22:04:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730590AbgLHWEC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Dec 2020 17:04:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53950 "EHLO
+        id S1730597AbgLHWEH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Dec 2020 17:04:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729455AbgLHWD7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Dec 2020 17:03:59 -0500
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8495DC0613D6
-        for <git@vger.kernel.org>; Tue,  8 Dec 2020 14:03:13 -0800 (PST)
-Received: by mail-ot1-x344.google.com with SMTP id w3so202180otp.13
-        for <git@vger.kernel.org>; Tue, 08 Dec 2020 14:03:13 -0800 (PST)
+        with ESMTP id S1729455AbgLHWED (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Dec 2020 17:04:03 -0500
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com [IPv6:2607:f8b0:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C829C0613CF
+        for <git@vger.kernel.org>; Tue,  8 Dec 2020 14:03:23 -0800 (PST)
+Received: by mail-ot1-x343.google.com with SMTP id b18so281763ots.0
+        for <git@vger.kernel.org>; Tue, 08 Dec 2020 14:03:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=wOfPgTlb7pa69QHxiRbjkFSg0VBvoDvpR5A1tAerswk=;
-        b=v7r5bMX2jLqMtC1mV+PwqSyKxtua8ivyvpoUncUgi2APWldU9XcEULTpKfiwPHltBz
-         Uu3qAWAnygk57BDy1NCdX/dhcz2OmkhZBSxO9wiohA2J90gaOvfXzfM+4Ftp3bZMqnXK
-         e7rlp5/tc37I3Ee9O0KpHDwSTlxOVkL2xu0r69t0p9hMBF/rQ+q5f+nrmIU7dtnwmbd2
-         m0MW/m+eC+rKkdlsdVsR/iFgUppbXKFKR9PUHCFR84sp98f5KMA8FnmgSG0rDxfRNnNH
-         n0cC8erOVhhmOa7uqm/KPRDegYFXEFvIrM9F2H15i5k1O4j0cwGy/57MBTTeCg94eM3N
-         2hiA==
+        bh=0biD3z7zmbAd3yPu0/4ZJpBDWIf7gZwf31aSZXDeAwY=;
+        b=Rj7ZrtgzURLvVzZC8VVInduZrv0kABGBICz5NN1/cr9QyrW0PqWT4FByRNZshzlc1W
+         ByhvvZlnEJJi6JefiHXOFedTYoJjEfGfR5HRbHSvzgnahMVDUV3uH/bij8q9llzKPZNm
+         bFXeDp/KwVxohf4TLVG37CxwtBL7s8XuyC+aa6FP0cdraTBEtlspLfzYYxMQqNbwrNKh
+         pUqRyH1rz5EQlPO8iBTUhHA5H5HjezCzURd0u3bU8yPNmnyzUoEzwH3HkpwuC/g8l5B2
+         23XDeSJpMAA7vxXkaw5u0wttXsrwU/xKRm5+HlO+XMCCA4cBid0COJmFRXVAKTBY7Ovo
+         hqng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=wOfPgTlb7pa69QHxiRbjkFSg0VBvoDvpR5A1tAerswk=;
-        b=A7scZKne3VxGoJHX00h1Gyeq1ksHumSiaIvWPql07RoYUsC1dhuQtb3aoUbkRn33Ja
-         6JR+xwDsZ06KhpmdTiUr0ZW1bNPZVYDt39xwkcano5tTq46tT+t/7BpNCtntXlAESGTs
-         VrBC185CXX85RzS6UOdsad7SMSoLCM59tKgGIxBXUsNDY5VhTsfGhfnNOMDtAxqSm8/z
-         8pzBu2ZR+qvlE28H9jHlsBfWfsjZ7CtDLGEqDAWcf7bcZNoWc6Vx5h6n5NqEB84u+Jgn
-         Kl4d5fUgXeS3zWtTrprbQKRiCD64MvjfToESxkxTBh0yR+g+Z7m7obsUrhnN8LnE0RyV
-         i+Ww==
-X-Gm-Message-State: AOAM530e8AOmUKB2ROrPcrM5GlciNbJP/CGAhbyDi3+RnjmrP+/GJBEc
-        FgmFGD6NCqBrLs4CMRzKNZjeuD7P3j7r48LH
-X-Google-Smtp-Source: ABdhPJwZHyu5Svc39tiwcC8EqpcWD4ge0ZYDAWFbEFd1kZhVN3fZWOFCOInB9Cbju6bfi68nQJdZuw==
-X-Received: by 2002:a05:6830:2371:: with SMTP id r17mr141551oth.236.1607464992282;
-        Tue, 08 Dec 2020 14:03:12 -0800 (PST)
+        bh=0biD3z7zmbAd3yPu0/4ZJpBDWIf7gZwf31aSZXDeAwY=;
+        b=OPA6NC84hthcNCX/UY0pj86aUjjRskFeW+dtP1FCtwEu6OKE6NIkrpGJur467MoKif
+         wVbJzER3INgmxDcwJiobqqEeXv3Omt+0I0JLg5cDo52yY9FTADQnKzG5wjVRG9fKR86x
+         vP0lOx4eiiY9DZ+Yd6MKQ30h43KE7JQ/G825IEvpxtkXojr1Srm1QboUI1W8T0UHzH+F
+         twf7/qCwOemgJtiFWrwC8Oz5Ilt/oSdr5bKOQRzAz+NsonndzsF04ytJjfJrYr0b00Hv
+         CWByQQbXC6eWcjC9mPS5x7byaUYdFq9bvMSHelW7jhrXjU3jQC8zjTLhl/WjyfVku2J9
+         Q08w==
+X-Gm-Message-State: AOAM532N4qK/MyTjXd3vd8Jb7fiqRTnXq2gtdZ+RGfktBPr6zH3+OqMg
+        F8Q174szHmTy3+SU6yjtYdGOzsTeTjOCIg3A
+X-Google-Smtp-Source: ABdhPJyuHwFbS+6CawE8nxGR7uAizAhXpsop3RrN/9AeMCcdIfAAkRgJxEI9qcS5bqbhOEe+QN1mow==
+X-Received: by 2002:a9d:3a2:: with SMTP id f31mr151544otf.216.1607465002235;
+        Tue, 08 Dec 2020 14:03:22 -0800 (PST)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id t24sm67625oou.4.2020.12.08.14.03.11
+        by smtp.gmail.com with ESMTPSA id a18sm17545oia.29.2020.12.08.14.03.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Dec 2020 14:03:11 -0800 (PST)
-Date:   Tue, 8 Dec 2020 17:03:08 -0500
+        Tue, 08 Dec 2020 14:03:21 -0800 (PST)
+Date:   Tue, 8 Dec 2020 17:03:19 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, jonathantanmy@google.com, dstolee@microsoft.com,
         gitster@pobox.com
-Subject: [PATCH v4 00/24] pack-bitmap: bitmap generation improvements
-Message-ID: <cover.1607464775.git.me@ttaylorr.com>
+Subject: [PATCH v4 02/24] pack-bitmap: fix header size check
+Message-ID: <b24395e4b0c1a8643371616cdae4499edf88939d.1607464775.git.me@ttaylorr.com>
 References: <cover.1605123652.git.me@ttaylorr.com>
+ <cover.1607464775.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1605123652.git.me@ttaylorr.com>
+In-Reply-To: <cover.1607464775.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here's v4 as requested from [1, 2], but I think we can safely call this
-"the improved v3", since all we're doing here is removing new instances
-of "master" as part of the ongoing default branch transition.
+From: Jeff King <peff@peff.net>
 
-A range-diff that shows this is included below, but it counts v4's 4/24
-as a complete replacement of v3's, so careful readers are encouraged to
-look at the inter-diff there.
+When we parse a .bitmap header, we first check that we have enough bytes
+to make a valid header. We do that based on sizeof(struct
+bitmap_disk_header). However, as of 0f4d6cada8 (pack-bitmap: make bitmap
+header handling hash agnostic, 2019-02-19), that struct oversizes its
+checksum member to GIT_MAX_RAWSZ. That means we need to adjust for the
+difference between that constant and the size of the actual hash we're
+using. That commit adjusted the code which moves our pointer forward,
+but forgot to update the size check.
 
-I also snuck a typo-fix into 23/24 (which has existed unnoticed since
-v1) changing "rewalk" to "revwalk".
+This meant we were overly strict about the header size (requiring room
+for a 32-byte worst-case hash, when sha1 is only 20 bytes). But in
+practice it didn't matter because bitmap files tend to have at least 12
+bytes of actual data anyway, so it was unlikely for a valid file to be
+caught by this.
 
-Sorry for all of the shuffling around, hopefully this one should do the
-trick.
+Let's fix it by pulling the header size into a separate variable and
+using it in both spots. That fixes the bug and simplifies the code to make
+it harder to have a mismatch like this in the future. It will also come
+in handy in the next patch for more bounds checking.
 
-[1]: https://lore.kernel.org/git/xmqqmtyo6mqi.fsf@gitster.c.googlers.com/
-[2]: https://lore.kernel.org/git/pull.809.git.1607260623935.gitgitgadget@gmail.com/
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ pack-bitmap.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-Derrick Stolee (9):
-  pack-bitmap-write: fill bitmap with commit history
-  bitmap: implement bitmap_is_subset()
-  commit: implement commit_list_contains()
-  t5310: add branch-based checks
-  pack-bitmap-write: rename children to reverse_edges
-  pack-bitmap-write: build fewer intermediate bitmaps
-  pack-bitmap-write: use existing bitmaps
-  pack-bitmap-write: relax unique revwalk condition
-  pack-bitmap-write: better reuse bitmaps
-
-Jeff King (11):
-  pack-bitmap: fix header size check
-  pack-bitmap: bounds-check size of cache extension
-  t5310: drop size of truncated ewah bitmap
-  rev-list: die when --test-bitmap detects a mismatch
-  ewah: factor out bitmap growth
-  ewah: make bitmap growth less aggressive
-  ewah: implement bitmap_or()
-  ewah: add bitmap_dup() function
-  pack-bitmap-write: reimplement bitmap writing
-  pack-bitmap-write: pass ownership of intermediate bitmaps
-  pack-bitmap-write: ignore BITMAP_FLAG_REUSE
-
-Taylor Blau (4):
-  ewah/ewah_bitmap.c: avoid open-coding ALLOC_GROW()
-  pack-bitmap.c: check reads more aggressively when loading
-  pack-bitmap: factor out 'bitmap_for_commit()'
-  pack-bitmap: factor out 'add_commit_to_bitmap()'
-
- builtin/pack-objects.c  |   1 -
- commit.c                |  11 +
- commit.h                |   2 +
- ewah/bitmap.c           |  54 ++++-
- ewah/ewah_bitmap.c      |  15 +-
- ewah/ewok.h             |   3 +-
- pack-bitmap-write.c     | 474 ++++++++++++++++++++++++++--------------
- pack-bitmap.c           | 139 ++++++------
- pack-bitmap.h           |   8 +-
- t/t5310-pack-bitmaps.sh | 177 +++++++++++----
- 10 files changed, 583 insertions(+), 301 deletions(-)
-
-Range-diff against v3:
- 1:  0b25ba4ca7 =  1:  e72f85f82f ewah/ewah_bitmap.c: avoid open-coding ALLOC_GROW()
- 2:  b455b248e4 =  2:  b24395e4b0 pack-bitmap: fix header size check
- 3:  7322427444 =  3:  97533dba27 pack-bitmap: bounds-check size of cache extension
- 4:  055bc1fe66 <  -:  ---------- t5310: drop size of truncated ewah bitmap
- -:  ---------- >  4:  2e7454d7b9 t5310: drop size of truncated ewah bitmap
- 5:  c99cacea67 =  5:  3cb4156372 rev-list: die when --test-bitmap detects a mismatch
- 6:  b79360383e =  6:  570bf22425 ewah: factor out bitmap growth
- 7:  4b56f12932 =  7:  48a1949ee6 ewah: make bitmap growth less aggressive
- 8:  34137a7f35 =  8:  04bf0de474 ewah: implement bitmap_or()
- 9:  fe89f87716 =  9:  c8bd4ed5fa ewah: add bitmap_dup() function
-10:  91cd8b1a49 = 10:  bbeb87a95d pack-bitmap-write: reimplement bitmap writing
-11:  64598024ec = 11:  f87c11700b pack-bitmap-write: pass ownership of intermediate bitmaps
-12:  93fc437a3c = 12:  c466dda576 pack-bitmap-write: fill bitmap with commit history
-13:  0d5213ba44 = 13:  0cfa932b71 bitmap: implement bitmap_is_subset()
-14:  72e745fed8 = 14:  033fb2ed55 commit: implement commit_list_contains()
-15:  c2cae4a8d0 ! 15:  76071f9f4e t5310: add branch-based checks
-    @@ Commit message
-         'master' and 'other' branches.
-
-         Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-    +    Helped-by: Junio C Hamano <gitster@pobox.com>
-         Signed-off-by: Taylor Blau <me@ttaylorr.com>
-
-      ## t/t5310-pack-bitmaps.sh ##
-    @@ t/t5310-pack-bitmaps.sh: test_expect_success 'rev-list --test-bitmap verifies bi
-
-     -	test_expect_success "counting non-linear history ($state)" '
-     +	test_expect_success "counting non-linear history ($state, $branch)" '
-    - 		git rev-list --count other...master >expect &&
-    - 		git rev-list --use-bitmap-index --count other...master >actual &&
-    + 		git rev-list --count other...second >expect &&
-    + 		git rev-list --use-bitmap-index --count other...second >actual &&
-      		test_cmp expect actual
-      	'
-
-    @@ t/t5310-pack-bitmaps.sh: test_expect_success 'rev-list --test-bitmap verifies bi
-     +rev_list_tests () {
-     +	state=$1
-     +
-    -+	for branch in "master" "other"
-    ++	for branch in "second" "other"
-     +	do
-     +		rev_list_tests_head
-     +	done
-16:  c0e2b6f5d9 = 16:  d8c6f0f0bc pack-bitmap-write: rename children to reverse_edges
-17:  37f9636098 = 17:  2e08243706 pack-bitmap.c: check reads more aggressively when loading
-18:  e520c8fdc4 ! 18:  b4c5d2c3df pack-bitmap-write: build fewer intermediate bitmaps
-    @@ Commit message
-
-         Helped-by: Jeff King <peff@peff.net>
-         Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-    +    Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-         Signed-off-by: Taylor Blau <me@ttaylorr.com>
-
-      ## pack-bitmap-write.c ##
-    @@ t/t5310-pack-bitmaps.sh: has_any () {
-      test_expect_success 'setup repo with moderate-sized history' '
-     -	test_commit_bulk --id=file 100 &&
-     +	test_commit_bulk --id=file 10 &&
-    + 	git branch -M second &&
-      	git checkout -b other HEAD~5 &&
-      	test_commit_bulk --id=side 10 &&
-     +
-    @@ t/t5310-pack-bitmaps.sh: has_any () {
-     +	# ambiguous merge-bases
-     +
-     +	git checkout -b merge-left other~2 &&
-    -+	git merge master~2 -m "merge-left" &&
-    ++	git merge second~2 -m "merge-left" &&
-     +
-    -+	git checkout -b merge-right master~1 &&
-    ++	git checkout -b merge-right second~1 &&
-     +	git merge other~1 -m "merge-right" &&
-     +
-    -+	git checkout -b octo-master master &&
-    -+	git merge merge-left merge-right -m "octopus-master" &&
-    ++	git checkout -b octo-second second &&
-    ++	git merge merge-left merge-right -m "octopus-second" &&
-     +
-     +	git checkout -b octo-other other &&
-     +	git merge merge-left merge-right -m "octopus-other" &&
-    @@ t/t5310-pack-bitmaps.sh: has_any () {
-     +	git checkout other &&
-     +	git merge octo-other -m "pull octopus" &&
-     +
-    - 	git checkout master &&
-    -+	git merge octo-master -m "pull octopus" &&
-    + 	git checkout second &&
-    ++	git merge octo-second -m "pull octopus" &&
-     +
-     +	# Remove these branches so they are not selected
-     +	# as bitmap tips
-     +	git branch -D merge-left &&
-     +	git branch -D merge-right &&
-     +	git branch -D octo-other &&
-    -+	git branch -D octo-master &&
-    ++	git branch -D octo-second &&
-     +
-     +	# add padding to make these merges less interesting
-     +	# and avoid having them selected for bitmaps
-     +	test_commit_bulk --id=file 100 &&
-     +	git checkout other &&
-     +	test_commit_bulk --id=side 100 &&
-    -+	git checkout master &&
-    ++	git checkout second &&
-     +
-    - 	bitmaptip=$(git rev-parse master) &&
-    + 	bitmaptip=$(git rev-parse second) &&
-      	blob=$(echo tagged-blob | git hash-object -w --stdin) &&
-      	git tag tagged-blob $blob &&
-     @@ t/t5310-pack-bitmaps.sh: test_expect_success 'setup repo with moderate-sized history' '
-19:  c3975fcf78 = 19:  d973cf240d pack-bitmap-write: ignore BITMAP_FLAG_REUSE
-20:  d5ef2c7f81 = 20:  4d7a4184ac pack-bitmap: factor out 'bitmap_for_commit()'
-21:  f0500190f0 = 21:  bd3a16088b pack-bitmap: factor out 'add_commit_to_bitmap()'
-22:  c6fde2b0c4 = 22:  e0d989b98f pack-bitmap-write: use existing bitmaps
-23:  50d2031deb ! 23:  8f9fdb0f43 pack-bitmap-write: relax unique rewalk condition
-    @@ Metadata
-     Author: Derrick Stolee <dstolee@microsoft.com>
-
-      ## Commit message ##
-    -    pack-bitmap-write: relax unique rewalk condition
-    +    pack-bitmap-write: relax unique revwalk condition
-
-         The previous commits improved the bitmap computation process for very
-         long, linear histories with many refs by removing quadratic growth in
-    @@ Commit message
-           this patch |  88.478 |   53.218 |   2.157 |    2.224 |
-
-         Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-    +    Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-         Signed-off-by: Taylor Blau <me@ttaylorr.com>
-
-      ## pack-bitmap-write.c ##
-    @@ pack-bitmap-write.c: static void bitmap_builder_init(struct bitmap_builder *bb,
-
-
-      ## t/t5310-pack-bitmaps.sh ##
-    +@@ t/t5310-pack-bitmaps.sh: has_any () {
-    + # To ensure the logic for "maximal commits" is exercised, make
-    + # the repository a bit more complicated.
-    + #
-    +-#    other                         master
-    ++#    other                         second
-    + #      *                             *
-    + # (99 commits)                  (99 commits)
-    + #      *                             *
-    + #      |\                           /|
-    +-#      | * octo-other  octo-master * |
-    ++#      | * octo-other  octo-second * |
-    + #      |/|\_________  ____________/|\|
-    + #      | \          \/  __________/  |
-    + #      |  | ________/\ /             |
-     @@ t/t5310-pack-bitmaps.sh: has_any () {
-      #                                   \|
-      #                                    * (base)
-    @@ t/t5310-pack-bitmaps.sh: has_any () {
-     -# for master (bit 0) and other (bit 1), and some flexibility
-     -# in the order that merge bases are visited, the bitmasks at
-     -# the end should be:
-    -+# for master (bit 0) and other (bit 1), the bitmasks at the
-    ++# for second (bit 0) and other (bit 1), the bitmasks at the
-     +# end should be:
-      #
-    - #      master: 1       (maximal, selected)
-    +-#      master: 1       (maximal, selected)
-    ++#      second: 1       (maximal, selected)
-      #       other: 01      (maximal, selected)
-     -# octo-master: 1
-     -#  octo-other: 01
-24:  6b9950771e = 24:  720b6e0dc7 pack-bitmap-write: better reuse bitmaps
---
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 4077e731e8..fe5647e72e 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -138,9 +138,10 @@ static struct ewah_bitmap *read_bitmap_1(struct bitmap_index *index)
+ static int load_bitmap_header(struct bitmap_index *index)
+ {
+ 	struct bitmap_disk_header *header = (void *)index->map;
++	size_t header_size = sizeof(*header) - GIT_MAX_RAWSZ + the_hash_algo->rawsz;
+ 
+-	if (index->map_size < sizeof(*header) + the_hash_algo->rawsz)
+-		return error("Corrupted bitmap index (missing header data)");
++	if (index->map_size < header_size + the_hash_algo->rawsz)
++		return error("Corrupted bitmap index (too small)");
+ 
+ 	if (memcmp(header->magic, BITMAP_IDX_SIGNATURE, sizeof(BITMAP_IDX_SIGNATURE)) != 0)
+ 		return error("Corrupted bitmap index file (wrong header)");
+@@ -164,7 +165,7 @@ static int load_bitmap_header(struct bitmap_index *index)
+ 	}
+ 
+ 	index->entry_count = ntohl(header->entry_count);
+-	index->map_pos += sizeof(*header) - GIT_MAX_RAWSZ + the_hash_algo->rawsz;
++	index->map_pos += header_size;
+ 	return 0;
+ }
+ 
+-- 
 2.29.2.533.g07db1f5344
+
