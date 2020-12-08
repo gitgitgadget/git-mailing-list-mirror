@@ -7,111 +7,103 @@ X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E313C433FE
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 02:33:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12714C433FE
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 02:52:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0A95F23998
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 02:33:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C8A7423976
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 02:52:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727075AbgLHCdS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Dec 2020 21:33:18 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:55914 "EHLO
+        id S1728331AbgLHCwU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Dec 2020 21:52:20 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:55930 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725877AbgLHCdS (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 7 Dec 2020 21:33:18 -0500
+        by vger.kernel.org with ESMTP id S1727881AbgLHCwU (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 7 Dec 2020 21:52:20 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A469D60751;
-        Tue,  8 Dec 2020 02:32:06 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BC2C660751;
+        Tue,  8 Dec 2020 02:51:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1607394727;
-        bh=HD+pp+8QxFEF0XH9zzrGxlegPZx72QJDNaDU2dJogDU=;
+        s=default; t=1607395899;
+        bh=E299gR4976s+YDBHl0r/VZEMDqT6cwoCJwZZ2MC4scc=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=ECAmD1Zl5weuwL/3yH5v0iMChD0pba1Ioxm2CBWDjE9x+8dYdOQMCyNEfc29xibMR
-         A2S3wft/KT8QifNS75WLS/Hak8Ux0/qXVnBlIlcHS7bkz8CXVbKaR8A9XMMWU9goVW
-         f6v6VHhXJMCkIXvgEMgOoEjQIwe5alYWpXmlo5Ovk5+I5BVicS4ApKbp3tUAMadaYo
-         PDT58K4ZA413rnHsvarK6slisgS1ipMRiQKxr2hBOm1hIm+5hdzqfTJofMippDxvcE
-         RVp44Dsm/9BqBI1159df9Nhj2RaVmQbm/d6rlzHVri9ZODm4JzReSJnKkkCAYstQty
-         /2Qs7qwFJ8fHI7JJMsNhXPedasYDmG45lxBO5S6ov5R9l6SF+xRX+DRWGU3vrTK/QZ
-         S8HwJRoApuBcjpRCM3vfMEcQEuUfo1mWIo+X7lcCGMySyhF9OcBx/IPy1GLFGV3jEx
-         JrkK2ebzNA7vTGBd1Wq+g/cix6P+r6HkxDpVeO2wql8liNa8pYr
-Date:   Tue, 8 Dec 2020 02:32:01 +0000
+        b=c7koEpIA12KctV8Yt/jhA/atpU/FpqGLXX9q6Ht7zoqjBXGnw6epmY20GY97P3uKX
+         80Pq3Yc2CC09NqG9FRzXFt2F07/607Q1g4GGYaCLVOeN56Vt0rx0iLrNA6TNb+kKxf
+         2/S1QxHbEZ4q6wQMU9XRNH1mXoT7UnF/QwF0qSLP56S9Wy/gud0F4F92l9ISRXSC9n
+         0+EzOz9f2eEwCqYQZd2uo/mBZoJkR0owsNvHjTwsdf62+0Wcbvnhvvl1dQmF689Feb
+         U1F7YTdgl6Y/s+7LLAkJkbhuOz5n1EsL00j/jBEUpab9bJEdulrtLpklg8mbLbAvuI
+         9kMm4+neUAWw328slzdHqeuJxqXBnggpRHNpk/EOXByuRNSE9btXDwl2UJbBcJ4w1I
+         2lAHbsuPsPh9H2V3A1con5gp9M+YdJ43K5gXA+HOcl02ygd7eOwipZirqWRSWIyeh8
+         ZRaor5nzUTJOYidM327FpHukl9uDZqZifEergoASIMXxjGyZEIh
+Date:   Tue, 8 Dec 2020 02:51:33 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: Cloning empty repository uses locally configured default branch
- name
-Message-ID: <X87lobsQmgncoIpF@camp.crustytoothpaste.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v4 1/2] abspath: add a function to resolve paths with
+ missing components
+Message-ID: <X87qNTiQDlnzm6e2@camp.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-References: <20201208013121.677494-1-jonathantanmy@google.com>
- <xmqq7dpt82l4.fsf@gitster.c.googlers.com>
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20201206225349.3392790-1-sandals@crustytoothpaste.net>
+ <20201206225349.3392790-2-sandals@crustytoothpaste.net>
+ <c1d1fe44-6a7d-3578-cd89-9aea59c4637a@web.de>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="6tYdRp/QeBCZM1Zr"
+        protocol="application/pgp-signature"; boundary="vY1cZ2vexlMIG2kz"
 Content-Disposition: inline
-In-Reply-To: <xmqq7dpt82l4.fsf@gitster.c.googlers.com>
+In-Reply-To: <c1d1fe44-6a7d-3578-cd89-9aea59c4637a@web.de>
 User-Agent: Mutt/2.0.2 (2020-11-20)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---6tYdRp/QeBCZM1Zr
+--vY1cZ2vexlMIG2kz
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2020-12-08 at 02:16:07, Junio C Hamano wrote:
-> Jonathan Tan <jonathantanmy@google.com> writes:
->=20
-> > Has anyone looked into solutions for this? Both protocol v0 and v2 do
-> > not send symref information about unborn branches (v0 because, as
-> > protocol-capabilities.txt says, "servers SHOULD include this capability
-> > for the HEAD symref if it is one of the refs being sent"; v2 because
-> > a symref is included only if it refers to one of the refs being sent).
-> > In protocol v2, this could be done by adding a capability to ls-remote
-> > (maybe, "unborn"), and in protocol v0, this could be done either by
-> > updating the existing "symref" capability to be written even when the
-> > target branch is unborn (which is potentially backwards incompatible) or
-> > introducing a new capability which is like "symref".
->=20
-> Thanks for looking into this (I think this came up again today
-> during my reviews of some topic).
->=20
-> It would be a backward incompatible change to add to v0, but at this
-> point shouldn't we be leaving v0 as-is and move everybody to v2?
->=20
-> If it is a simple and safe enough change, though, saying "why not"
-> is very tempting, though.
+On 2020-12-07 at 17:19:32, Ren=C3=A9 Scharfe wrote:
+> I find the concept of a "real" path with imaginary components strangely
+> amusing.  But perhaps a name like strbuf_resolve_path() would fit better?
 
-Yeah, I think this would be a nice thing to add to v2.  I've considered
-adding a way to push symrefs (that is, update the head on the remote
-side), but that would be a bit trickier.  Still, there's no reason the
-fetch side couldn't learn a "symref" capability in the meantime.
+I think I'm going to take the strbuf_realpath_forgiving solution from
+Eric Sunshine because I think having similar names for similar functions
+helps discoverability.
 
-I don't see a need for this in v0, since all versions of Git that
-support this will also support v2.  I think it's okay if other clients
-have to add support for v2 before they get the cool new features.
+> So the original code errors out if there is a real error
+> (errno !=3D ENOENT).  It also errors out if any component except the last
+> one is missing (errno =3D=3D ENOENT && remaining.len); that's what the
+> comment is about.  This patch adds the ability to ignore ENOENT for all
+> components.
+>=20
+> Perhaps convert many_missing and die_on_error into a single flags
+> parameter and implement the flags DIE_ON_ERR and REQUIRE_BASENAME or
+> similar?  Callers would be easier to read because such an interface is
+> self-documenting -- provided we find good flag names.
+
+As discussed elsewhere in the thread, this will be moving to an internal
+function, but I can make that function take two flag parameters.
 --=20
 brian m. carlson (he/him or they/them)
 Houston, Texas, US
 
---6tYdRp/QeBCZM1Zr
+--vY1cZ2vexlMIG2kz
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.20 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX87loAAKCRB8DEliiIei
-gZZAAQDyzFJdXI72fmY51C5iHHFM+CdsIMLiaTubLi4JyzXicwEAjc+iGWx1yGeS
-+JxYRkYtA3Gx/yOJCQhxir8+0DUZnQ0=
-=pk+K
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX87qNQAKCRB8DEliiIei
+gcyiAQCzAseFPsbvkaNyEfgaGoDacjBmJIrejIHWWqThDPH2VAEAtTLhhZ0BjKnc
+dyIU9W0dG2gXxiVy1rJb5UOf2tY0xws=
+=SdbK
 -----END PGP SIGNATURE-----
 
---6tYdRp/QeBCZM1Zr--
+--vY1cZ2vexlMIG2kz--
