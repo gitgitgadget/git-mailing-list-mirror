@@ -2,66 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D28DC4167B
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 00:06:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CABD5C4361B
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 00:06:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 463BC23A1D
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 00:06:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9987E23A1D
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 00:06:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728607AbgLHAG0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Dec 2020 19:06:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45568 "EHLO
+        id S1728441AbgLHAGe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Dec 2020 19:06:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728300AbgLHAGZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Dec 2020 19:06:25 -0500
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8E8AC061257
-        for <git@vger.kernel.org>; Mon,  7 Dec 2020 16:05:39 -0800 (PST)
-Received: by mail-ot1-x331.google.com with SMTP id h19so14340925otr.1
-        for <git@vger.kernel.org>; Mon, 07 Dec 2020 16:05:39 -0800 (PST)
+        with ESMTP id S1728300AbgLHAGe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Dec 2020 19:06:34 -0500
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 491FEC061794
+        for <git@vger.kernel.org>; Mon,  7 Dec 2020 16:05:48 -0800 (PST)
+Received: by mail-ot1-x344.google.com with SMTP id i6so8222342otr.2
+        for <git@vger.kernel.org>; Mon, 07 Dec 2020 16:05:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=5oK9d8MRvwLAr4PgAX2C7YmL72QhE9Q310xr6XLqZic=;
-        b=apmt2GF7L2sLHpAH0dNeJrVXrW7pWxS8xd9OeVNtvDV69j30dkAGP9TI4qG1fCaXEQ
-         thBPuFfTJtoSXX1XQ7H11EWcPjj8JYgavSKUd9yYmv6dOhF1Hx/eMOVDPeWcrw+AmDqN
-         81s+/d47HY/pu4aGt+qlPzVKzpbAlHZCrcRfzPA4BYh+hLjO8u2jqemc9OYLA3OaSf+1
-         tfNrcEQKcLZvZMqj639iTkNBYXYbXommFZWs8YgT6qvkOZj6LpJcjUeo3o9iQnAjpZu0
-         K01Ted05PD5VuuVmD4z3w57OMPxwx3viFUlvD//25uC1qpWlsCzERk5MMDkQtJu3DSwr
-         hguw==
+        bh=/3ATCqzziAQFVwBi3ny+EmDvKvp43Oa289NvDRWL6DI=;
+        b=WJE5/+PDOsdM5cx7TTmDZKVjZRkDLzTesBZdhNhsWGoGVqWasTo0FQz4DrlaRcBdup
+         6yOnszfh/hL5B3hmKBen1TMkrAXx+AUAIhMI8XGUxX7SPh98bSaRC9/w4vVV7prQ0cm9
+         vXJWCfV60+E8Fp3630QQFkQ2kb2O72bulDlPXpCgPMfqFPCvpwkYV6DbzNXfUZJKWCIz
+         vUoh28TduATJl8KdkcSJC5mI3QyLjl+A1nf+TTtqKv3qvvplIarApEujzyrQm87rooAe
+         wsMvI9nFD2wpeV3jUfFbITHlp0+qdWBiGcwmo7bDj4jPAOjNhch2K55qLPatp5F+yHBu
+         50MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=5oK9d8MRvwLAr4PgAX2C7YmL72QhE9Q310xr6XLqZic=;
-        b=nmZU7rH7prksg2hqQO2NaQRKXGnNeRXD03xrDaeF9DSgFc2qpeHdQxvJ6TAZlQpU32
-         P7EM5u7YT+3YaAODLzSGWjg8u+ACfWS8aiVQPJmm66av/fWdlMaYsAFw9U/DCLw2WIka
-         IhpDF2yvkgrpQvdc+L0CCRVDosbFAisfLTt/hfQ/bRxoLy/Vz/C4KlKjGQwLyePmZyLD
-         G0vQIsSGCHjTEZQzIJRypLHJYG7K0B3qFM4OUjVWcUnBoWiWIDMfhwVw/uOQs3atiLSV
-         UWA43nOHVtJ1xQx8m6RNlip4Zkbe5O+OTEMSnIjbjAo77wLhuXWHeW2vh2e8fXw0OwGo
-         0fyA==
-X-Gm-Message-State: AOAM533r76jWcwRln99nGqWQjxejZyFO3c8Y9/lK6yAcX9O3sbZdpDQp
-        NgkR0ggPl/8Q3FxlcJ9Z9dazqYlKeaLipigw
-X-Google-Smtp-Source: ABdhPJyJFZrGH6Cf2jTQJu7Qnw/atyCH20E+BbsC0NAh4nv6ec6hXATZrFrtQpE2j4dq2sNLGQDV+A==
-X-Received: by 2002:a9d:7a97:: with SMTP id l23mr14763954otn.232.1607385938896;
-        Mon, 07 Dec 2020 16:05:38 -0800 (PST)
+        bh=/3ATCqzziAQFVwBi3ny+EmDvKvp43Oa289NvDRWL6DI=;
+        b=g9cWJu4MCBCMFoZ5+L1DfO+9vzUgZA8AeN7FL0SAbuo5zKXkRgQ0TYUNnPlO4ngmfq
+         IPGxPKP0P1TL98eA1EYMriCo2ls9E7SdK/QSGv88LtMwYb31CSj5YicVT1fORZ+sl2m1
+         sDaatLQNrp7tx70hrG/HVa8kvfJZ/Wha9MSb9meNk209ta1oEQZZDe8CG1c1peQJiAn1
+         478LtSYOxNdTkW/GL+d7OWC9OK1mAty8R8SXs7BY2kMYKjrNQOFPwbEMcu0Kn9E4B/la
+         3eTFh8DWisre1YSmcw71RmxJ7iWpDp3uCeqXp0muCkwajbIep/tZYrZez+oogfbYcmoF
+         KPqA==
+X-Gm-Message-State: AOAM530rmUWN9BZzygs+7HPnMngCVAN5G0VBnNPag9H5swz7yNJYZY2k
+        72YkymJ6hssDSeUQuzZ+6Y1KFLlQkDNoaGAj
+X-Google-Smtp-Source: ABdhPJx8bIObmDKpvbNwnAuYC4EhKRmisXWXmWWfvp8jdlhjyh5zI0IlvuuWJN9qJGmRu8R3ZlVCgw==
+X-Received: by 2002:a05:6830:1551:: with SMTP id l17mr14716154otp.279.1607385947425;
+        Mon, 07 Dec 2020 16:05:47 -0800 (PST)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id n31sm1085775otn.33.2020.12.07.16.05.37
+        by smtp.gmail.com with ESMTPSA id u10sm3542348oig.54.2020.12.07.16.05.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Dec 2020 16:05:38 -0800 (PST)
-Date:   Mon, 7 Dec 2020 19:05:36 -0500
+        Mon, 07 Dec 2020 16:05:46 -0800 (PST)
+Date:   Mon, 7 Dec 2020 19:05:44 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, jonathantanmy@google.com, dstolee@microsoft.com,
         gitster@pobox.com
-Subject: [PATCH v3 19/24] pack-bitmap-write: ignore BITMAP_FLAG_REUSE
-Message-ID: <c3975fcf78f13a17c1326e002d3321e826f0b2cd.1607385833.git.me@ttaylorr.com>
+Subject: [PATCH v3 21/24] pack-bitmap: factor out 'add_commit_to_bitmap()'
+Message-ID: <f0500190f02643aa5b88d58efe72f826bf616ade.1607385833.git.me@ttaylorr.com>
 References: <cover.1605123652.git.me@ttaylorr.com>
  <cover.1607385833.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -72,296 +72,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+'find_objects()' currently needs to interact with the bitmaps khash
+pretty closely. To make 'find_objects()' read a little more
+straightforwardly, remove some of the khash-level details into a new
+function that describes what it does: 'add_commit_to_bitmap()'.
 
-The on-disk bitmap format has a flag to mark a bitmap to be "reused".
-This is a rather curious feature, and works like this:
-
-  - a run of pack-objects would decide to mark the last 80% of the
-    bitmaps it generates with the reuse flag
-
-  - the next time we generate bitmaps, we'd see those reuse flags from
-    the last run, and mark those commits as special:
-
-      - we'd be more likely to select those commits to get bitmaps in
-        the new output
-
-      - when generating the bitmap for a selected commit, we'd reuse the
-        old bitmap as-is (rearranging the bits to match the new pack, of
-        course)
-
-However, neither of these behaviors particularly makes sense.
-
-Just because a commit happened to be bitmapped last time does not make
-it a good candidate for having a bitmap this time. In particular, we may
-choose bitmaps based on how recent they are in history, or whether a ref
-tip points to them, and those things will change. We're better off
-re-considering fresh which commits are good candidates.
-
-Reusing the existing bitmap _is_ a reasonable thing to do to save
-computation. But only reusing exact bitmaps is a weak form of this. If
-we have an old bitmap for A and now want a new bitmap for its child, we
-should be able to compute that only by looking at trees and that are new
-to the child. But this code would consider only exact reuse (which is
-perhaps why it was eager to select those commits in the first place).
-
-Furthermore, the recent switch to the reverse-edge algorithm for
-generating bitmaps dropped this optimization entirely (and yet still
-performs better).
-
-So let's do a few cleanups:
-
- - drop the whole "reusing bitmaps" phase of generating bitmaps. It's
-   not helping anything, and is mostly unused code (or worse, code that
-   is using CPU but not doing anything useful)
-
- - drop the use of the on-disk reuse flag to select commits to bitmap
-
- - stop setting the on-disk reuse flag in bitmaps we generate (since
-   nothing respects it anymore)
-
-We will keep a few innards of the reuse code, which will help us
-implement a more capable version of the "reuse" optimization:
-
- - simplify rebuild_existing_bitmaps() into a function that only builds
-   the mapping of bits between the old and new orders, but doesn't
-   actually convert any bitmaps
-
- - make rebuild_bitmap() public; we'll call it lazily to convert bitmaps
-   as we traverse (using the mapping created above)
-
-Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/pack-objects.c |  1 -
- pack-bitmap-write.c    | 50 +++++-------------------------------------
- pack-bitmap.c          | 46 +++++---------------------------------
- pack-bitmap.h          |  6 ++++-
- 4 files changed, 16 insertions(+), 87 deletions(-)
+ pack-bitmap.c | 36 +++++++++++++++++++++---------------
+ 1 file changed, 21 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 5617c01b5a..2a00358f34 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1104,7 +1104,6 @@ static void write_pack_file(void)
- 				stop_progress(&progress_state);
- 
- 				bitmap_writer_show_progress(progress);
--				bitmap_writer_reuse_bitmaps(&to_pack);
- 				bitmap_writer_select_commits(indexed_commits, indexed_commits_nr, -1);
- 				bitmap_writer_build(&to_pack);
- 				bitmap_writer_finish(written_list, nr_written,
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index 0af93193d8..333058854d 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -30,7 +30,6 @@ struct bitmap_writer {
- 	struct ewah_bitmap *tags;
- 
- 	kh_oid_map_t *bitmaps;
--	kh_oid_map_t *reused;
- 	struct packing_data *to_pack;
- 
- 	struct bitmapped_commit *selected;
-@@ -112,7 +111,7 @@ void bitmap_writer_build_type_index(struct packing_data *to_pack,
-  * Compute the actual bitmaps
-  */
- 
--static inline void push_bitmapped_commit(struct commit *commit, struct ewah_bitmap *reused)
-+static inline void push_bitmapped_commit(struct commit *commit)
- {
- 	if (writer.selected_nr >= writer.selected_alloc) {
- 		writer.selected_alloc = (writer.selected_alloc + 32) * 2;
-@@ -120,7 +119,7 @@ static inline void push_bitmapped_commit(struct commit *commit, struct ewah_bitm
- 	}
- 
- 	writer.selected[writer.selected_nr].commit = commit;
--	writer.selected[writer.selected_nr].bitmap = reused;
-+	writer.selected[writer.selected_nr].bitmap = NULL;
- 	writer.selected[writer.selected_nr].flags = 0;
- 
- 	writer.selected_nr++;
-@@ -372,13 +371,6 @@ static void store_selected(struct bb_commit *ent, struct commit *commit)
- 	khiter_t hash_pos;
- 	int hash_ret;
- 
--	/*
--	 * the "reuse bitmaps" phase may have stored something here, but
--	 * our new algorithm doesn't use it. Drop it.
--	 */
--	if (stored->bitmap)
--		ewah_free(stored->bitmap);
--
- 	stored->bitmap = bitmap_to_ewah(ent->bitmap);
- 
- 	hash_pos = kh_put_oid_map(writer.bitmaps, commit->object.oid, &hash_ret);
-@@ -480,35 +472,6 @@ static int date_compare(const void *_a, const void *_b)
- 	return (long)b->date - (long)a->date;
- }
- 
--void bitmap_writer_reuse_bitmaps(struct packing_data *to_pack)
--{
--	struct bitmap_index *bitmap_git;
--	if (!(bitmap_git = prepare_bitmap_git(to_pack->repo)))
--		return;
--
--	writer.reused = kh_init_oid_map();
--	rebuild_existing_bitmaps(bitmap_git, to_pack, writer.reused,
--				 writer.show_progress);
--	/*
--	 * NEEDSWORK: rebuild_existing_bitmaps() makes writer.reused reference
--	 * some bitmaps in bitmap_git, so we can't free the latter.
--	 */
--}
--
--static struct ewah_bitmap *find_reused_bitmap(const struct object_id *oid)
--{
--	khiter_t hash_pos;
--
--	if (!writer.reused)
--		return NULL;
--
--	hash_pos = kh_get_oid_map(writer.reused, *oid);
--	if (hash_pos >= kh_end(writer.reused))
--		return NULL;
--
--	return kh_value(writer.reused, hash_pos);
--}
--
- void bitmap_writer_select_commits(struct commit **indexed_commits,
- 				  unsigned int indexed_commits_nr,
- 				  int max_bitmaps)
-@@ -522,12 +485,11 @@ void bitmap_writer_select_commits(struct commit **indexed_commits,
- 
- 	if (indexed_commits_nr < 100) {
- 		for (i = 0; i < indexed_commits_nr; ++i)
--			push_bitmapped_commit(indexed_commits[i], NULL);
-+			push_bitmapped_commit(indexed_commits[i]);
- 		return;
- 	}
- 
- 	for (;;) {
--		struct ewah_bitmap *reused_bitmap = NULL;
- 		struct commit *chosen = NULL;
- 
- 		next = next_commit_index(i);
-@@ -542,15 +504,13 @@ void bitmap_writer_select_commits(struct commit **indexed_commits,
- 
- 		if (next == 0) {
- 			chosen = indexed_commits[i];
--			reused_bitmap = find_reused_bitmap(&chosen->object.oid);
- 		} else {
- 			chosen = indexed_commits[i + next];
- 
- 			for (j = 0; j <= next; ++j) {
- 				struct commit *cm = indexed_commits[i + j];
- 
--				reused_bitmap = find_reused_bitmap(&cm->object.oid);
--				if (reused_bitmap || (cm->object.flags & NEEDS_BITMAP) != 0) {
-+				if ((cm->object.flags & NEEDS_BITMAP) != 0) {
- 					chosen = cm;
- 					break;
- 				}
-@@ -560,7 +520,7 @@ void bitmap_writer_select_commits(struct commit **indexed_commits,
- 			}
- 		}
- 
--		push_bitmapped_commit(chosen, reused_bitmap);
-+		push_bitmapped_commit(chosen);
- 
- 		i += next + 1;
- 		display_progress(writer.progress, i);
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 60c781d100..d1368b69bb 100644
+index 5efb8af121..d88745fb02 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -1338,9 +1338,9 @@ void test_bitmap_walk(struct rev_info *revs)
- 	free_bitmap_index(bitmap_git);
+@@ -521,6 +521,23 @@ static int should_include(struct commit *commit, void *_data)
+ 	return 1;
  }
  
--static int rebuild_bitmap(uint32_t *reposition,
--			  struct ewah_bitmap *source,
--			  struct bitmap *dest)
-+int rebuild_bitmap(const uint32_t *reposition,
-+		   struct ewah_bitmap *source,
-+		   struct bitmap *dest)
- {
- 	uint32_t pos = 0;
- 	struct ewah_iterator it;
-@@ -1369,19 +1369,11 @@ static int rebuild_bitmap(uint32_t *reposition,
- 	return 0;
- }
++static int add_commit_to_bitmap(struct bitmap_index *bitmap_git,
++				struct bitmap **base,
++				struct commit *commit)
++{
++	struct ewah_bitmap *or_with = bitmap_for_commit(bitmap_git, commit);
++
++	if (!or_with)
++		return 0;
++
++	if (*base == NULL)
++		*base = ewah_to_bitmap(or_with);
++	else
++		bitmap_or_ewah(*base, or_with);
++
++	return 1;
++}
++
+ static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
+ 				   struct rev_info *revs,
+ 				   struct object_list *roots,
+@@ -544,21 +561,10 @@ static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
+ 		struct object *object = roots->item;
+ 		roots = roots->next;
  
--int rebuild_existing_bitmaps(struct bitmap_index *bitmap_git,
--			     struct packing_data *mapping,
--			     kh_oid_map_t *reused_bitmaps,
--			     int show_progress)
-+uint32_t *create_bitmap_mapping(struct bitmap_index *bitmap_git,
-+				struct packing_data *mapping)
- {
- 	uint32_t i, num_objects;
- 	uint32_t *reposition;
--	struct bitmap *rebuild;
--	struct stored_bitmap *stored;
--	struct progress *progress = NULL;
+-		if (object->type == OBJ_COMMIT) {
+-			khiter_t pos = kh_get_oid_map(bitmap_git->bitmaps, object->oid);
 -
--	khiter_t hash_pos;
--	int hash_ret;
- 
- 	num_objects = bitmap_git->pack->num_objects;
- 	reposition = xcalloc(num_objects, sizeof(uint32_t));
-@@ -1399,33 +1391,7 @@ int rebuild_existing_bitmaps(struct bitmap_index *bitmap_git,
- 			reposition[i] = oe_in_pack_pos(mapping, oe) + 1;
- 	}
- 
--	rebuild = bitmap_new();
--	i = 0;
+-			if (pos < kh_end(bitmap_git->bitmaps)) {
+-				struct stored_bitmap *st = kh_value(bitmap_git->bitmaps, pos);
+-				struct ewah_bitmap *or_with = lookup_stored_bitmap(st);
 -
--	if (show_progress)
--		progress = start_progress("Reusing bitmaps", 0);
+-				if (base == NULL)
+-					base = ewah_to_bitmap(or_with);
+-				else
+-					bitmap_or_ewah(base, or_with);
 -
--	kh_foreach_value(bitmap_git->bitmaps, stored, {
--		if (stored->flags & BITMAP_FLAG_REUSE) {
--			if (!rebuild_bitmap(reposition,
--					    lookup_stored_bitmap(stored),
--					    rebuild)) {
--				hash_pos = kh_put_oid_map(reused_bitmaps,
--							  stored->oid,
--							  &hash_ret);
--				kh_value(reused_bitmaps, hash_pos) =
--					bitmap_to_ewah(rebuild);
+-				object->flags |= SEEN;
+-				continue;
 -			}
--			bitmap_reset(rebuild);
--			display_progress(progress, ++i);
--		}
--	});
--
--	stop_progress(&progress);
--
--	free(reposition);
--	bitmap_free(rebuild);
--	return 0;
-+	return reposition;
- }
++		if (object->type == OBJ_COMMIT &&
++		    add_commit_to_bitmap(bitmap_git, &base, (struct commit *)object)) {
++			object->flags |= SEEN;
++			continue;
+ 		}
  
- void free_bitmap_index(struct bitmap_index *b)
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index 1203120c43..afa4115136 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -73,7 +73,11 @@ void bitmap_writer_set_checksum(unsigned char *sha1);
- void bitmap_writer_build_type_index(struct packing_data *to_pack,
- 				    struct pack_idx_entry **index,
- 				    uint32_t index_nr);
--void bitmap_writer_reuse_bitmaps(struct packing_data *to_pack);
-+uint32_t *create_bitmap_mapping(struct bitmap_index *bitmap_git,
-+				struct packing_data *mapping);
-+int rebuild_bitmap(const uint32_t *reposition,
-+		   struct ewah_bitmap *source,
-+		   struct bitmap *dest);
- void bitmap_writer_select_commits(struct commit **indexed_commits,
- 		unsigned int indexed_commits_nr, int max_bitmaps);
- void bitmap_writer_build(struct packing_data *to_pack);
+ 		object_list_insert(object, &not_mapped);
 -- 
 2.29.2.533.g07db1f5344
 
