@@ -2,141 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27D4AC2BB40
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 20:39:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D47DFC4361B
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 20:42:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0701E22582
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 20:39:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 996AC206EC
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 20:42:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729250AbgLHUjn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Dec 2020 15:39:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40844 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729241AbgLHUjl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Dec 2020 15:39:41 -0500
-Received: from mail-ua1-x931.google.com (mail-ua1-x931.google.com [IPv6:2607:f8b0:4864:20::931])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C2AFC0613CF
-        for <git@vger.kernel.org>; Tue,  8 Dec 2020 12:39:01 -0800 (PST)
-Received: by mail-ua1-x931.google.com with SMTP id y21so6056235uag.2
-        for <git@vger.kernel.org>; Tue, 08 Dec 2020 12:39:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=8RaVqwHhHkxWaMB+N1f3fvy6K+pUD+t2TfPSq9YYZbg=;
-        b=nL1ZWFSHar/a8WucfmYAdMSAlJcWUi3mLoYFr+3X3NX+aTznQDR88REXfJOgPlgUgE
-         egg8QQaZN5BWlKYe9F+u9c4nT+OZ5a3ZEXYBm9hVDEjjTzmvgKxrZlpOhM7NxwVigY+g
-         c405/dIDX5FDUzVklPB0V6GpobJJ+A2oK5i5LlMPm6P/xlMa40hw6ArJoxZfu7eKICyg
-         fYXQGR5cKNmNXwU9pYgXtnf8EeWAcXzgfQNPpyD9uTI6XGhotttOV1NbbZx5zS4qsFru
-         5dzRpc7HlwOTfvz3cb18u96U+KDgOinscHxLWavOBWn1n9KEl/WNx0t/hivDdOl3cA49
-         orug==
+        id S1729618AbgLHUmX convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 8 Dec 2020 15:42:23 -0500
+Received: from mail-ej1-f43.google.com ([209.85.218.43]:34358 "EHLO
+        mail-ej1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728064AbgLHUmX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Dec 2020 15:42:23 -0500
+Received: by mail-ej1-f43.google.com with SMTP id g20so26598230ejb.1
+        for <git@vger.kernel.org>; Tue, 08 Dec 2020 12:42:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=8RaVqwHhHkxWaMB+N1f3fvy6K+pUD+t2TfPSq9YYZbg=;
-        b=Q+xQq0Sl17H9ZOFVkZhKYm2BIUGkTm3DlRaIGD2SI7guVkfBhbefvSKgC9nDiPY+Vm
-         45c5Bs7YlKxccWS4uNyx4ICUgcn/RADm3zCXZUIPtpy3hcbwKWmiT3wwp+aoNkFdSa2v
-         iCkDlPiMwDlxLx5G7/Azn2j230G95OZieafH0MAgz+Tyr81xxWjvjbqrII5RAvELUHhE
-         47pxu2J88Vq6KrLsu+lXozDzB/kbcpuzwo65qKlJ0Ug0V4a2WD8LaNMPBVqOY33gU886
-         xiCLNwkXk2eMKn3jWhNu2L/uWzM3ncgYEVqWonKxGC/jhwEhoMH1eCOI3BCbf4kPqM1X
-         rbnw==
-X-Gm-Message-State: AOAM532pnYtqVC71jb57NemaBmvk4Mj4q5GJwcvCS6OOLC1zYnAztqpD
-        FneA7pDBzHVMCvjVLVwOdbJ+sj6zoIbaIIkl
-X-Google-Smtp-Source: ABdhPJwwSW3GWMSUkwrRu5FF+P91ATp3qGulM8Kof+4BT/8GFPjqBBJP/82Arhd34z2v+pQ42m1/Ug==
-X-Received: by 2002:a05:6830:1650:: with SMTP id h16mr1878737otr.266.1607453400585;
-        Tue, 08 Dec 2020 10:50:00 -0800 (PST)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id z9sm2247129otj.67.2020.12.08.10.49.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Dec 2020 10:49:59 -0800 (PST)
-Date:   Tue, 8 Dec 2020 13:49:57 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, szeder.dev@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 00/15] Refactor chunk-format into an API
-Message-ID: <X8/K1dUgUmwp8ZOv@nand.local>
-References: <pull.804.git.1607012215.gitgitgadget@gmail.com>
- <ee0b73f7-8f59-a1dc-0a21-bf796bf9f2e2@web.de>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=7TFAPEXRQNGwDeD8B09km7UMFfamOaR7wd8lcLJ5ans=;
+        b=NY57+6PZfG8ok1Varv11mplI+2SUskBAXV2w97Zunup6slBJebhSbqm9Zpzkx2DCec
+         GKe0KrI8dOCn9jWgICKig8ECDLrTcVK2q2TzEY4IwitmIe/Z+vSmwDNWp/GUAYmuzmDv
+         O0tXcH11XyvUi0HJnONup2p6cATNZcPPHFT2GlFo/up5I+AIyU6O3XhICA3NH0B/NMM3
+         SOmeysy9joY9k2tRi5Es3YXLN7y4qfh4+V/IHlvfHwcQ5NG8kzXtI/eiA5r0yJZ9Vvrw
+         SzIRxWTv0zQDy/6aVNe+nSS3428NSVEs6bFksQqZnELIDYudor0zRMkfqZuPQ5brsfkR
+         58MQ==
+X-Gm-Message-State: AOAM5313nYDhEN0ZWCCF8uhlN3SG2dGfS1sLdXjZCa8YRFaOcgW6xatS
+        erAPmyU/qiGMlf6nZQujfZbATniuKf5mbAYNy/P62sWdvoo=
+X-Google-Smtp-Source: ABdhPJysljQ96WdtKMCtXCOr0UHSEWAq6BCdwZlaxXCadMcnCzNu9MR568iVsZinZ0NaLCAVS6fHs0hxelswWL45ocM=
+X-Received: by 2002:a05:6402:46:: with SMTP id f6mr11794299edu.163.1607455665693;
+ Tue, 08 Dec 2020 11:27:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ee0b73f7-8f59-a1dc-0a21-bf796bf9f2e2@web.de>
+References: <CAA9rTudStQOK7kRa6jYJHE3D3grnFF3idQe65h9t6oJB30xa1A@mail.gmail.com>
+ <CAPig+cTwNwt+_f4FYDqy5xVsDVU3pqfKXtK6GKtWLLqbU6Y8Vg@mail.gmail.com>
+ <CAPig+cTsEx-puHn1N2=fBVAgdvc7cutCDTC7vBJuLm5utObfJg@mail.gmail.com> <A462326B-505D-4A92-B789-21BB8FE6AA16@gmail.com>
+In-Reply-To: <A462326B-505D-4A92-B789-21BB8FE6AA16@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 8 Dec 2020 14:27:34 -0500
+Message-ID: <CAPig+cQad_yyVgwQQ-NZyy7SergM-fUMeMAm9RsV4zEqNt9TDg@mail.gmail.com>
+Subject: Re: GIT_DIR output from git worktree list
+To:     =?UTF-8?Q?Ganriel_N=C3=BCtzi?= <gnuetzi@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 04, 2020 at 01:48:31PM +0100, René Scharfe wrote:
-> Am 03.12.20 um 17:16 schrieb Derrick Stolee via GitGitGadget:
-> > I was thinking about file formats recently and realized that the "chunks"
-> > that are common to the commit-graph and multi-pack-index could inform future
-> > file formats. To make that process easier, let's combine the process of
-> > writing and reading chunks into a common API that both of these existing
-> > formats use.
-> >
-> > There is some extra benefit immediately: the writing and reading code for
-> > each gets a bit cleaner. Also, there were different checks in each that made
-> > the process more robust. Now, these share a common set of checks.
->
-> >  Documentation/technical/chunk-format.txt      |  54 ++
-> >  .../technical/commit-graph-format.txt         |   3 +
-> >  Documentation/technical/pack-format.txt       |   3 +
-> >  Makefile                                      |   1 +
-> >  chunk-format.c                                | 105 ++++
-> >  chunk-format.h                                |  69 +++
-> >  commit-graph.c                                | 298 ++++++-----
-> >  midx.c                                        | 466 ++++++++----------
-> >  t/t5318-commit-graph.sh                       |   2 +-
-> >  t/t5319-multi-pack-index.sh                   |   6 +-
-> >  10 files changed, 623 insertions(+), 384 deletions(-)
->
-> 623-384-54-3-3-1-69-2-6 = 101
->
-> So if we ignore changes to documentation, headers, tests and build
-> script this spends ca. 100 more lines of code than the current version.
-> That's roughly the size of the new file chunk-format.c -- from this
-> bird's-eye-view the new API seems to be pure overhead.
->
-> In the new code I see several magic numbers, use of void pointers and
-> casting as well as repetition -- is this really going in the right
-> direction?  I get the feeling that YAGNI.
+On Mon, Dec 7, 2020 at 2:28 AM Ganriel Nützi <gnuetzi@gmail.com> wrote:
+> As of your rational, wouldn‘t it be good anyway to have a file
+> „worktree“ inside the .git dir (of the worktree) containing the path
+> to the main worktree? So to speak any worktree always has a .git dir
+> with a back link to its main worktree (the existence of the git dir
+> might pose other problems?)
 
-I think that Stolee is going in the right direction. I suggested earlier
-in the thread making a new "chunkfile" type which can handle allocating
-new chunks, writing their tables of contents, and so on.
+I'm having trouble understanding your proposal. Secondary worktrees
+don't have a .git/ directory; instead they have a "gitfile" named .git
+which is just a pointer to the worktree's administrative directory
+within the repository (specifically, <repo>/worktrees/<id>/, where
+<repo> might be a bare repository or the .git/ directory of the main
+worktree).
 
-So, I think that we should pursues that direction a little further
-before deciding whether or not this is worth continuing. My early
-experiments showed that it does add a little more code to the
-chunk-format.{c,h} files, but you get negative diffs in midx.c and
-commit-graph.c, which is more in line with what I would expect from this
-series.
+So a secondary worktree's back-link is a pointer into the repository;
+it's not necessarily pointing at the main worktree, as you discovered
+and reported in the email which started this thread.
 
-I do think that the "overhead" here is more tolerable than we might
-think; I'd rather have a well-documented "chunkfile" implementation
-written once and called twice, than two near-identical implementations
-of _writing_ the chunks / table of contents at each of the call sites.
-So, even if this does end up being a net-lines-added kind of diff, I'd
-still say that it's worth it.
+What I was suggesting was that it might be the case that the only way
+to solve this would be to store the location of the main worktree
+somewhere within <repo> in some file, and then `git worktree list`
+would consult that file to learn the location of the main worktree.
+This is complicated by the fact that that file would have to be
+updated automatically if the main worktree directory is ever moved. It
+also needs to be done in such a way that it is easy for other Git
+implementations to understand and not trip over.
 
-With regards to the "YAGNI" comment... I do have thoughts about
-extending the reachability bitmap format to use chunks (of course, this
-would break compatibility with JGit, and it isn't something that I plan
-to do in the short-term, or even necessarily in the future).
-
-In any event, I'm sure that this won't be these two won't be the last
-chunk-based formats that we have in Git.
-
-> René
-
-Thanks,
-Taylor
+So, it's certainly possible, but it's something which requires more
+thought, and there might be alternate and better solutions I'm
+overlooking.
