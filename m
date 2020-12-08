@@ -2,97 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5624C433FE
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 20:57:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13B92C1B0D9
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 20:57:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8294C23AFB
+	by mail.kernel.org (Postfix) with ESMTP id E770E23AFE
 	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 20:57:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729477AbgLHU4c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Dec 2020 15:56:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43450 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727988AbgLHU4c (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Dec 2020 15:56:32 -0500
-Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33FD2C0613D6
-        for <git@vger.kernel.org>; Tue,  8 Dec 2020 12:55:46 -0800 (PST)
-Received: by mail-oi1-x243.google.com with SMTP id x16so8945oic.3
-        for <git@vger.kernel.org>; Tue, 08 Dec 2020 12:55:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Inn/xgdv1p2i/lqSSPVEk62bZxaLZD8WiKZFJLblvHk=;
-        b=Xt7htJtag7Jc95qcP/bUEjy3QuGcq6qQHJO3OMaE/AfoVsoBtKghahigoxNVP+NQ2z
-         wcTZJuDrpwllAaiU+VYm9pKQgveS2uI9NAjqEdsVqQTFvpkq/dOkctCipl270rAIX5KJ
-         DBXfSiX8vwMKHMq+2xBTdkg3MAZVBhFe0XhrJjr7Dfz50v7Tw3OqrPgmbJM8sNqzIO0y
-         n3REssL6uy9ig4Kkwb1UvJ3bc2r/Jdc2wmaUYStE/+Be8AMkQBt75SKT/vVq647sdqkK
-         WbchdiaC9RDiW4diAE/UTA3Kzy0V5GOLyXKNy0UFMlmKdUq8u8huJjfTtNWcqUGpAAXD
-         zWng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Inn/xgdv1p2i/lqSSPVEk62bZxaLZD8WiKZFJLblvHk=;
-        b=EdyuqPfd7lV+KeN+x6KQwCNIPo+/h/sivj+jVYftvDzQdc3l8kVRxwXK0l8SvONeJ+
-         IDyIRh7qbXveI5mw13jgrePoSioCIsr/rU/YGa0GZbjxU7CthvW2MQz43SCdOyY6X52V
-         EDYFXUIRi2SCq0/jtN32ioADr+kpfAN6W0Yb9eufhZNz3xt/5zobrm2HYfXEgF2aoKCm
-         evjVE5i0E2Zk//swRP7CT+nDe8HsmywR6QsyZh1dhsh+kEqIJiBQRGu1X1zG1jnTrstL
-         Gf9axtFFwod4hICbo4VCmkfKpVdFr8KoaM5lve6vxdJLFDFtz5Drw4ehv4BNPENAc8Uj
-         Mq/g==
-X-Gm-Message-State: AOAM530hr0BPtBc5oXvQ5JrkQ7T+1Ra0b48eLRqYm2pA92+8eKWrOeTp
-        2PYwgISn3KxCLw4tS+AdkmQAhLhRwb60EGat
-X-Google-Smtp-Source: ABdhPJyK74MzYcSqzP+fhwZow14zwMH5YMddn3Re+WlW7Cz5FnFjKJgYpWfEGtjZxO/BIzqVwyjo1A==
-X-Received: by 2002:aca:ec13:: with SMTP id k19mr3869277oih.97.1607453024531;
-        Tue, 08 Dec 2020 10:43:44 -0800 (PST)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id r4sm3480895ooa.29.2020.12.08.10.43.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Dec 2020 10:43:43 -0800 (PST)
-Date:   Tue, 8 Dec 2020 13:43:41 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, szeder.dev@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 11/15] midx: use 64-bit multiplication for chunk sizes
-Message-ID: <X8/JXfTlbhuhgizF@nand.local>
-References: <pull.804.git.1607012215.gitgitgadget@gmail.com>
- <c6a433efba3214e83a7265e53c24cb4001345f14.1607012215.git.gitgitgadget@gmail.com>
- <xmqqa6uuh7n1.fsf@gitster.c.googlers.com>
+        id S1729527AbgLHU4w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Dec 2020 15:56:52 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55245 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727988AbgLHU4w (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Dec 2020 15:56:52 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0E502EF03E;
+        Tue,  8 Dec 2020 15:56:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=zSVWJV7UB0UGqoxnpMcYU0MUA94=; b=wfidZJ
+        +qwQOG4jsIdzNs8gn3lks5MjmATR4WMhR3QWcf20VRI3CLouCbZ7LhIygzS7eko9
+        K8Sk5wBbw9TcABFWJtrspgrXgyRiNNZdVgyMeSYd1UERWPkucsk9Dj7my4hcilNS
+        +Sb9nhwRaAmjY6gtFBxJWXDuHkDbeSw+0nyXw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=VQw5koF7kSiXhuCp4sgKJ7psRfLlGYbw
+        d2cOfVR+UpiwzJdIWKaVJcbns7+m4B4TCi/AOWC2vxieoD2T6kqNSDAjaAI1sp0W
+        dyhTbTSAVCY1ivrodSi2VZcoGTOtuwiLyfhqK1Tja0YcdJbMmgH76+yKaCYCuW4i
+        Z7BCfbSrFR8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 062ACEF03D;
+        Tue,  8 Dec 2020 15:56:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4FC03EF03C;
+        Tue,  8 Dec 2020 15:56:07 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, peff@peff.net, jonathantanmy@google.com,
+        dstolee@microsoft.com
+Subject: Re: [PATCH v3 00/24] pack-bitmap: bitmap generation improvements
+References: <cover.1605123652.git.me@ttaylorr.com>
+        <cover.1607385833.git.me@ttaylorr.com>
+Date:   Tue, 08 Dec 2020 12:56:05 -0800
+In-Reply-To: <cover.1607385833.git.me@ttaylorr.com> (Taylor Blau's message of
+        "Mon, 7 Dec 2020 19:04:06 -0500")
+Message-ID: <xmqqmtyo6mqi.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqa6uuh7n1.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: CAFDF786-3997-11EB-BC0C-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 03, 2020 at 02:00:50PM -0800, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Derrick Stolee <dstolee@microsoft.com>
-> >
-> > When calculating the sizes of certain chunks, we should use 64-bit
-> > multiplication always. This allows us to properly predict the chunk
-> > sizes without risk of overflow.
->
-> That's quite an obvious fix, applicable even before this entire
-> series.  I think we saw quite similar bugfixes in different parts of
-> the codebase recently.
+Taylor Blau <me@ttaylorr.com> writes:
 
-:-). Indeed, Stolee and I were probably looking at output from the same
-static analysis tool, which seems to be eager to catch these sorts of
-multiplication-widening errors.
+> Here's an updated v3 of mine, Stolee, and Peff's series to improve the
+> CPU performance of generating reachability bitmaps.
 
-I'd be happy to see this patch get applied down regardless of what
-happens with the rest of the series.
+Has the "avoid having to assume the default branch name is 'master',
+by naming the initial branch we create our history to use in testing
+'second'" fix-up by Dscho, which has been queued in 'seen' on top of
+the previous round of this topic, incorporated to this round?  
 
-Thanks,
-Taylor
+I think [4/24] and [15/24] can be adjusted by adding this piece from
+Dscho to the set-up procedure and ...
+
+@@ -64,6 +64,7 @@ has_any () {
+ 
+ test_expect_success 'setup repo with moderate-sized history' '
+ 	test_commit_bulk --id=file 10 &&
++	git branch -M second &&
+ 	git checkout -b other HEAD~5 &&
+ 	test_commit_bulk --id=side 10 &&
+ 
+... fixing the remainder of the test script by adjusting for the
+fallout from the 'master' that is now called 'second'.
+
+Thanks.
+
