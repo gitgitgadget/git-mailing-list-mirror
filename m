@@ -2,66 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-13.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3D47C1B0D9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83D66C0018C
 	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 00:05:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B52E23A1D
+	by mail.kernel.org (Postfix) with ESMTP id 5F16823A22
 	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 00:05:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728549AbgLHAFn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Dec 2020 19:05:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45450 "EHLO
+        id S1728541AbgLHAFc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Dec 2020 19:05:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727744AbgLHAFm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Dec 2020 19:05:42 -0500
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0F13C0611CA
-        for <git@vger.kernel.org>; Mon,  7 Dec 2020 16:04:50 -0800 (PST)
-Received: by mail-ot1-x344.google.com with SMTP id b18so14338255ots.0
-        for <git@vger.kernel.org>; Mon, 07 Dec 2020 16:04:50 -0800 (PST)
+        with ESMTP id S1728460AbgLHAFc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Dec 2020 19:05:32 -0500
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4209FC0611C5
+        for <git@vger.kernel.org>; Mon,  7 Dec 2020 16:04:46 -0800 (PST)
+Received: by mail-ot1-x341.google.com with SMTP id x13so6789356oto.8
+        for <git@vger.kernel.org>; Mon, 07 Dec 2020 16:04:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=bsuIqyXlLj77HI6Jh/NOCqFh+idsp+iFSjpkcZnqfL8=;
-        b=aQM4hreS6KtUL1R136w+xwOYm2V2sqqwsv2J/erkj887bXhFXcv3Gx+yU1WvhiWT6X
-         uRdF2h3iz9rN7VTZFQOV297YD2YuilW//+/vyqVgtXPHOumQevv2zhg1wHJKzKDI4P37
-         ySrk+di+BKJ03hBoYr/dsiI8r8haOn2aZ8+c1S9kPfB1krcqCZpvC6w/skbYIIPoJQT3
-         C8jNm2YQkfZzVwp1h3GH9dsb3Dcy5GOITqAdP5FA0sN+Rg6Jqr6aSXF3jmChjzFlWOSE
-         MtPAIvIl4wIaGkY8CamG/En/CX00NtlV7HCOKL7sblwSNdSiMsXn9NwDPx1nieRk58bA
-         aOxw==
+        bh=TKUdskbrHTgE2dMosZfIVMUOZBpta233l6JHsaPug8M=;
+        b=KC4jZaKhX9ET7KbtFO6OzTIJPzXJQ0tbORMU7vLSLyOAUWVY1gOGGJvNbhccfShU9P
+         6ETyA3jGaYFGMDMFH7xbt+1gWLlCqqwlN7mOcF0lyNtvp2bErf/ev2VZ4FQh4MFf7Ki4
+         iEm6oryNfmubeughJic+PiCE/Uusynu9vHa1b5tMUqSje27vCf9CLUU8sYD90nfiQHQ4
+         KeHkp4A8XpXV/9z29ZqDMS+tPJt2dypHFdBWJ65GmEl/djwghT55KbrAyr2ZnW0drfpu
+         xqCiP1l9OexGmkaUmCDRhiAUyWwTpO7tNObOE/i0rVNCZaxx3pYISmL1WryChrJprFsj
+         6oMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=bsuIqyXlLj77HI6Jh/NOCqFh+idsp+iFSjpkcZnqfL8=;
-        b=hQhPp4zDdIdn53OD4mt1zsjiMztHvbjktta4ZdDdxgAaaIJb72CpofOa1f4uS1S4CT
-         c0KrclMUUDYfI9wNDeo111mElm7nKpcbmvGUnd9pyqfeoSnNgkW/embjig9bhT/vwYq2
-         klfTe1JjZwXTIaj1sU9O9ld0QBr75+xTsaEbvhExTwBtZdk7pnq+PdGmI0b88LfYNvPH
-         Hn/Ap1m0kXWJAQHJynFd7gK0KUnQLln+C7u/Fdj+xopmD/IsVewPOC0W8iGT60jwTKbd
-         4PG/p7K0Yy/Hn5P/dSlPFXVon/FMv65ijWz5CWVuAM3B5eiaDPakz2EDIa7JQ3M2C2+s
-         6aGg==
-X-Gm-Message-State: AOAM532m4MzvOU4fQ9T7sA0GIRHIJeI6AmWg1zU98YAeXCsSbIfk8K2f
-        QcAokxZ2h4Ie+6Gwy+bgJSwgTBpgD0qJ9ShB
-X-Google-Smtp-Source: ABdhPJxfJgOKA7lgXWXOsB1ehCDGtRvcG+wL3MMoe3quKW3Kkeeq8NxK1HzSopN7ftMDs7DFCEtnaw==
-X-Received: by 2002:a9d:1725:: with SMTP id i37mr14866583ota.258.1607385889890;
-        Mon, 07 Dec 2020 16:04:49 -0800 (PST)
+        bh=TKUdskbrHTgE2dMosZfIVMUOZBpta233l6JHsaPug8M=;
+        b=cfYWMIhIGyyLtCW2WdlTG64S7dRiE+t1BP8T/j6laBaMZpVF94fxHJaTrWfRXeCCLm
+         s2Xt64ILdMApCXLLyCxdx2OCAs0ZDBm18rqx0Dzh40+ChGzaTIgYiUEX5BdbcgLnzt9x
+         OYRXTfVOPpQ4pUw2AtSmZMtqRUkhanZ5wIe6cnZl3HqROM4eEwE1DSFoW09MqQ8TcBqK
+         cGSgFejWCBlV9f4NWJeOvW3jL2Io/bmrlqiWXIf6t3P8qYk4VeAoIJGJeFkN1aIGjMXj
+         bUAD9V/taVwErLJGaBhPLlI9r+rvFqluczQpmgiuTDNIMgTQqM0Xbds5WetGSvW4w3It
+         kS2w==
+X-Gm-Message-State: AOAM532FmuVYN7QCSW74Dzqefk/vn0ZazHfWemDxGHG/Fc2N3bvB/6n+
+        2XTNqHizWaqZFngevUPHQ9rVcaQWaJiFUhqM
+X-Google-Smtp-Source: ABdhPJyLQnrmks6+EhwYSG9RtiYquBEZTg750qeeaF2ebhXWCVwS8IdI00thS7x47L9ri7VfHsLDvQ==
+X-Received: by 2002:a05:6830:916:: with SMTP id v22mr11471305ott.257.1607385885386;
+        Mon, 07 Dec 2020 16:04:45 -0800 (PST)
 Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id s189sm3318435oia.7.2020.12.07.16.04.48
+        by smtp.gmail.com with ESMTPSA id n190sm2969199oob.11.2020.12.07.16.04.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Dec 2020 16:04:49 -0800 (PST)
-Date:   Mon, 7 Dec 2020 19:04:47 -0500
+        Mon, 07 Dec 2020 16:04:44 -0800 (PST)
+Date:   Mon, 7 Dec 2020 19:04:42 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, jonathantanmy@google.com, dstolee@microsoft.com,
         gitster@pobox.com
-Subject: [PATCH v3 08/24] ewah: implement bitmap_or()
-Message-ID: <34137a7f35835c923fe9db39049a124a41ca0839.1607385833.git.me@ttaylorr.com>
+Subject: [PATCH v3 07/24] ewah: make bitmap growth less aggressive
+Message-ID: <4b56f12932c0fd9e47a82a1adbeb4080a894013f.1607385833.git.me@ttaylorr.com>
 References: <cover.1605123652.git.me@ttaylorr.com>
  <cover.1607385833.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -74,41 +74,59 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-We have a function to bitwise-OR an ewah into an uncompressed bitmap,
-but not to OR two uncompressed bitmaps. Let's add it.
+If you ask to set a bit in the Nth word and we haven't yet allocated
+that many slots in our array, we'll increase the bitmap size to 2*N.
+This means we might frequently end up with bitmaps that are twice the
+necessary size (as soon as you ask for the biggest bit, we'll size up to
+twice that).
 
-Interestingly, we have a public header declaration going back to
-e1273106f6 (ewah: compressed bitmap implementation, 2013-11-14), but the
-function was never implemented. That was all OK since there were no
-users of 'bitmap_or()', but a first caller will be added in a couple of
-patches.
+But if we just allocate as many words as were asked for, we may not grow
+fast enough. The worst case there is setting bit 0, then 1, etc. Each
+time we grow we'd just extend by one more word, giving us linear
+reallocations (and quadratic memory copies).
+
+A middle ground is relying on alloc_nr(), which causes us to grow by a
+factor of roughly 3/2 instead of 2. That's less aggressive than
+doubling, and it may help avoid fragmenting memory. (If we start with N,
+then grow twice, our total is N*(3/2)^2 = 9N/4. After growing twice,
+that array of size 9N/4 can fit into the space vacated by the original
+array and first growth, N+3N/2 = 10N/4 > 9N/4, leading to less
+fragmentation in memory).
+
+Our worst case is still 3/2N wasted bits (you set bit N-1, then setting
+bit N causes us to grow by 3/2), but our average should be much better.
+
+This isn't usually that big a deal, but it will matter as we shift the
+reachability bitmap generation code to store more bitmaps in memory.
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- ewah/bitmap.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ ewah/bitmap.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/ewah/bitmap.c b/ewah/bitmap.c
-index 6f9e5c529b..0a3502603f 100644
+index 7c1ecfa6fd..6f9e5c529b 100644
 --- a/ewah/bitmap.c
 +++ b/ewah/bitmap.c
-@@ -122,6 +122,15 @@ void bitmap_and_not(struct bitmap *self, struct bitmap *other)
- 		self->words[i] &= ~other->words[i];
+@@ -37,13 +37,10 @@ struct bitmap *bitmap_new(void)
+ 
+ static void bitmap_grow(struct bitmap *self, size_t word_alloc)
+ {
+-	if (word_alloc > self->word_alloc) {
+-		size_t old_size = self->word_alloc;
+-		self->word_alloc = word_alloc * 2;
+-		REALLOC_ARRAY(self->words, self->word_alloc);
+-		memset(self->words + old_size, 0x0,
+-			(self->word_alloc - old_size) * sizeof(eword_t));
+-	}
++	size_t old_size = self->word_alloc;
++	ALLOC_GROW(self->words, word_alloc, self->word_alloc);
++	memset(self->words + old_size, 0x0,
++	       (self->word_alloc - old_size) * sizeof(eword_t));
  }
  
-+void bitmap_or(struct bitmap *self, const struct bitmap *other)
-+{
-+	size_t i;
-+
-+	bitmap_grow(self, other->word_alloc);
-+	for (i = 0; i < other->word_alloc; i++)
-+		self->words[i] |= other->words[i];
-+}
-+
- void bitmap_or_ewah(struct bitmap *self, struct ewah_bitmap *other)
- {
- 	size_t original_size = self->word_alloc;
+ void bitmap_set(struct bitmap *self, size_t pos)
 -- 
 2.29.2.533.g07db1f5344
 
