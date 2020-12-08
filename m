@@ -2,435 +2,191 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,LOTS_OF_MONEY,MAILING_LIST_MULTI,MONEY_NOHTML,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.5 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC5DEC4361B
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 22:48:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13787C433FE
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 23:03:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 958D023AFE
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 22:48:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CE1E123A7B
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 23:03:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730063AbgLHWrs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Dec 2020 17:47:48 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62577 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725940AbgLHWrr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Dec 2020 17:47:47 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 21049108D52;
-        Tue,  8 Dec 2020 17:46:59 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=u27KEDf8GarG+SIlMQor9bpm1CI=; b=igaee2
-        8kSCqZbwD3swcVS5IWzf88+Eeh+nvQ+2SyvI6teNqpvYnGJmmlrbmLFyKIrQDL5W
-        RexHtw8SSMGkCXENx3v+VC8ZvAKZ71NFHEYaDeQHKLeRgnMrssfXc0UI7D79SCsz
-        pIIl9+2AbXw4B7LRUYTFtfiyDfb3E4dquxi2o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=s1HCVhtVKR4436reLFPFYNlJmyZjq+rI
-        xzqxic0aIa4bkZhm9rFNYANuc/+KizoD/jSkMYw+5toSVe/OGfkgxyLX1eefUJsC
-        icykqzntgcEfPlnEg9sYd0Wb1RAYqbbCK2EDhQYTw8KIm73blm8xtnjsdwtvT00P
-        T9HHFGhrHgE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 19AB0108D51;
-        Tue,  8 Dec 2020 17:46:59 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.74.119.39])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5B82A108D50;
-        Tue,  8 Dec 2020 17:46:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v3] t7064: avoid relying on a specific default branch name
-References: <pull.811.git.1607264857628.gitgitgadget@gmail.com>
-        <pull.811.v2.git.1607354380671.gitgitgadget@gmail.com>
-Date:   Tue, 08 Dec 2020 14:46:54 -0800
-In-Reply-To: <pull.811.v2.git.1607354380671.gitgitgadget@gmail.com> (Johannes
-        Schindelin via GitGitGadget's message of "Mon, 07 Dec 2020 15:19:40
-        +0000")
-Message-ID: <xmqq360f6hlt.fsf_-_@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1731501AbgLHXDA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Dec 2020 18:03:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35004 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730728AbgLHXC7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Dec 2020 18:02:59 -0500
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4309C0613CF
+        for <git@vger.kernel.org>; Tue,  8 Dec 2020 15:02:19 -0800 (PST)
+Received: by mail-pf1-x441.google.com with SMTP id c12so83955pfo.10
+        for <git@vger.kernel.org>; Tue, 08 Dec 2020 15:02:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=PDF8BO7HosjUn8NCRGd/DeLsxZrZ7Oytc7eJOHtNOBI=;
+        b=Lo4X1aa8Wt5JDVkH3EdyJP/m441z2WJq5uX1YMiMTYR1Vvfcjj2EGtf54TdhJ4SPct
+         8DcmjR6UO28fZj8MrfD462b23hLWGQX9R5IokG2rRQl8J9/g2695HpmuKCDFNDgiw9FC
+         lTOcuQSqiuiX7q5GW5FirYU0uyFSEIYJgznM5OJJu3hFEUKifddqJzzjopsxlhPMbruI
+         JN5R043PR49nWaRrTDSSj8BxpHvmiZxBJ5dMhuUu8yaYGH/KkQiSCxDbVbYgHfERM02/
+         FDRA0QE7hXqWVQnNqJ9uNzP3fIk1oxh5SDjZyyEpv71yqPQo6nF0DHggXt/S9kzeRsHE
+         uBhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=PDF8BO7HosjUn8NCRGd/DeLsxZrZ7Oytc7eJOHtNOBI=;
+        b=DgQ/TxpFRuDnFsD5qEDhjQYF7gG5PWtL+oWkcGndWJF0fiEBVHi5VTkqG8FSPXtJCC
+         NYIS8m08SyAjVDBu/VP/4ikYGBgsLN+kgiMLN24bYxkLkc9t3cuDrlWlE54BZ5yzIBWh
+         Hf5w4yR8EowgAzv2U6hP6i/kzv8VKpkd+ThgSHvL8Auzj/13DicC/Hevzw5p6keC4/FV
+         whDXUOkYtQjSfgoCZtNhSHR4YQLxAJbCcSuWKCwjgqQ96aJLYT8K0Z6z1rI0K7wKiUEC
+         yKPkYf9tp1vaPMCwAy70ahore8JChJvDyB9abf0JQFynROSyvrxIVaFie33pD1gFkoSS
+         1U0A==
+X-Gm-Message-State: AOAM5302RpySJXUTH/nPtb+0e6rD4y0rFjd3clloEVCqbRPsEee+nQu7
+        nFmA0fKdj8KYHuC1hTg4bYtagA==
+X-Google-Smtp-Source: ABdhPJwX1D+VV/Ef3LQ0Np71wjxaqGugkJiaTWM+QTTJgYrEGLtG7YN6EfNSb3atbVmc/P03i9c5uw==
+X-Received: by 2002:a17:90b:4acc:: with SMTP id mh12mr25163pjb.54.1607468539180;
+        Tue, 08 Dec 2020 15:02:19 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:1ea0:b8ff:fe74:b4c1])
+        by smtp.gmail.com with ESMTPSA id f185sm201897pfa.213.2020.12.08.15.02.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Dec 2020 15:02:18 -0800 (PST)
+Date:   Tue, 8 Dec 2020 15:02:13 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 10/17] hook: convert 'post-rewrite' hook to config
+Message-ID: <20201208230213.GM36751@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+References: <20201205014945.1502660-1-emilyshaffer@google.com>
+ <20201205014945.1502660-11-emilyshaffer@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4621DF2C-39A7-11EB-BA6E-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201205014945.1502660-11-emilyshaffer@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 2020.12.04 17:49, Emily Shaffer wrote:
+> diff --git a/sequencer.c b/sequencer.c
+> index 5a98fd2fbc..4befd862ff 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -35,6 +35,7 @@
+>  #include "rebase-interactive.h"
+>  #include "reset.h"
+>  #include "hook.h"
+> +#include "string-list.h"
+>  
+>  #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+>  
+> @@ -1143,33 +1144,23 @@ int update_head_with_reflog(const struct commit *old_head,
+>  static int run_rewrite_hook(const struct object_id *oldoid,
+>  			    const struct object_id *newoid)
+>  {
+> -	struct child_process proc = CHILD_PROCESS_INIT;
+> -	const char *argv[3];
+> +	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_ASYNC;
+> +	struct strbuf tmp = STRBUF_INIT;
+>  	int code;
+> -	struct strbuf sb = STRBUF_INIT;
+>  
+> -	argv[0] = find_hook("post-rewrite");
+> -	if (!argv[0])
+> -		return 0;
+> +	strvec_push(&opt.args, "amend");
+>  
+> -	argv[1] = "amend";
+> -	argv[2] = NULL;
+> -
+> -	proc.argv = argv;
+> -	proc.in = -1;
+> -	proc.stdout_to_stderr = 1;
+> -	proc.trace2_hook_name = "post-rewrite";
+> -
+> -	code = start_command(&proc);
+> -	if (code)
+> -		return code;
+> -	strbuf_addf(&sb, "%s %s\n", oid_to_hex(oldoid), oid_to_hex(newoid));
+> -	sigchain_push(SIGPIPE, SIG_IGN);
 
-To allow us to consider a change in the default behavior of `git init`
-where it uses a more inclusive name for the initial branch, we must
-first teach the test suite not to rely on a specific default branch
-name. In this patch, we teach t7064 that trick.
+Here and in a few other later patches, we're removing some signal
+handling that doesn't seem to be replicated in the run_hooks()
+implementation. Can you add a note to the commit message about why this
+is OK?
 
-To that end, we set a specific name for the initial branch. Ideally, we
-would simply start out by calling `git branch -M initial-branch`, but
-there is a bug in `git branch -M` that does not allow renaming branches
-unless they already have commits. This will be fixed in the
-`js/init-defaultbranch-advice` topic, and until that time, we use the
-equivalent (but less intuitive) `git checkout -f --orphan`.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- * v2 used to depend on an older round of a topic that is not in
-   'next' (sj/untracked-files-in-submoduledirectory-is-not-dirty).
-   As the topic stopped touching this test, I rebased the patch on
-   top of 3a0b884c (Tenth batch, 2020-12-02)
-
- t/t7064-wtstatus-pv2.sh | 103 ++++++++++++++++++++--------------------
- 1 file changed, 52 insertions(+), 51 deletions(-)
-
-diff --git a/t/t7064-wtstatus-pv2.sh b/t/t7064-wtstatus-pv2.sh
-index 537787e598..601b47830b 100755
---- a/t/t7064-wtstatus-pv2.sh
-+++ b/t/t7064-wtstatus-pv2.sh
-@@ -9,6 +9,7 @@ This test exercises porcelain V2 output for git status.'
- 
- 
- test_expect_success setup '
-+	git checkout -f --orphan initial-branch &&
- 	test_tick &&
- 	git config core.autocrlf false &&
- 	echo x >file_x &&
-@@ -22,7 +23,7 @@ test_expect_success setup '
- test_expect_success 'before initial commit, nothing added, only untracked' '
- 	cat >expect <<-EOF &&
- 	# branch.oid (initial)
--	# branch.head master
-+	# branch.head initial-branch
- 	? actual
- 	? dir1/
- 	? expect
-@@ -45,7 +46,7 @@ test_expect_success 'before initial commit, things added' '
- 
- 	cat >expect <<-EOF &&
- 	# branch.oid (initial)
--	# branch.head master
-+	# branch.head initial-branch
- 	1 A. N... 000000 100644 100644 $ZERO_OID $OID_A dir1/file_a
- 	1 A. N... 000000 100644 100644 $ZERO_OID $OID_B dir1/file_b
- 	1 A. N... 000000 100644 100644 $ZERO_OID $OID_X file_x
-@@ -62,7 +63,7 @@ test_expect_success 'before initial commit, things added' '
- test_expect_success 'before initial commit, things added (-z)' '
- 	lf_to_nul >expect <<-EOF &&
- 	# branch.oid (initial)
--	# branch.head master
-+	# branch.head initial-branch
- 	1 A. N... 000000 100644 100644 $ZERO_OID $OID_A dir1/file_a
- 	1 A. N... 000000 100644 100644 $ZERO_OID $OID_B dir1/file_b
- 	1 A. N... 000000 100644 100644 $ZERO_OID $OID_X file_x
-@@ -81,7 +82,7 @@ test_expect_success 'make first commit, comfirm HEAD oid and branch' '
- 	H0=$(git rev-parse HEAD) &&
- 	cat >expect <<-EOF &&
- 	# branch.oid $H0
--	# branch.head master
-+	# branch.head initial-branch
- 	? actual
- 	? expect
- 	EOF
-@@ -98,7 +99,7 @@ test_expect_success 'after first commit, create unstaged changes' '
- 
- 	cat >expect <<-EOF &&
- 	# branch.oid $H0
--	# branch.head master
-+	# branch.head initial-branch
- 	1 .M N... 100644 100644 100644 $OID_X $OID_X file_x
- 	1 .D N... 100644 100644 000000 $OID_Z $OID_Z file_z
- 	? actual
-@@ -126,7 +127,7 @@ test_expect_success 'after first commit, stage existing changes' '
- 
- 	cat >expect <<-EOF &&
- 	# branch.oid $H0
--	# branch.head master
-+	# branch.head initial-branch
- 	1 M. N... 100644 100644 100644 $OID_X $OID_X1 file_x
- 	1 D. N... 100644 000000 000000 $OID_Z $ZERO_OID file_z
- 	? actual
-@@ -143,7 +144,7 @@ test_expect_success 'rename causes 2 path lines' '
- 
- 	q_to_tab >expect <<-EOF &&
- 	# branch.oid $H0
--	# branch.head master
-+	# branch.head initial-branch
- 	1 M. N... 100644 100644 100644 $OID_X $OID_X1 file_x
- 	1 D. N... 100644 000000 000000 $OID_Z $ZERO_OID file_z
- 	2 R. N... 100644 100644 100644 $OID_Y $OID_Y R100 renamed_yQfile_y
-@@ -161,7 +162,7 @@ test_expect_success 'rename causes 2 path lines (-z)' '
- 	## Lines use NUL path separator and line terminator, so double transform here.
- 	q_to_nul <<-EOF | lf_to_nul >expect &&
- 	# branch.oid $H0
--	# branch.head master
-+	# branch.head initial-branch
- 	1 M. N... 100644 100644 100644 $OID_X $OID_X1 file_x
- 	1 D. N... 100644 000000 000000 $OID_Z $ZERO_OID file_z
- 	2 R. N... 100644 100644 100644 $OID_Y $OID_Y R100 renamed_yQfile_y
-@@ -179,7 +180,7 @@ test_expect_success 'make second commit, confirm clean and new HEAD oid' '
- 
- 	cat >expect <<-EOF &&
- 	# branch.oid $H1
--	# branch.head master
-+	# branch.head initial-branch
- 	? actual
- 	? expect
- 	EOF
-@@ -231,7 +232,7 @@ test_expect_success 'create and commit permanent ignore file' '
- 
- 	cat >expect <<-EOF &&
- 	# branch.oid $H1
--	# branch.head master
-+	# branch.head initial-branch
- 	EOF
- 
- 	git status --porcelain=v2 --branch >actual &&
-@@ -257,14 +258,14 @@ test_expect_success 'verify --intent-to-add output' '
- test_expect_success 'verify AA (add-add) conflict' '
- 	test_when_finished "git reset --hard" &&
- 
--	git branch AA_A master &&
-+	git branch AA_A initial-branch &&
- 	git checkout AA_A &&
- 	echo "Branch AA_A" >conflict.txt &&
- 	OID_AA_A=$(git hash-object -t blob -- conflict.txt) &&
- 	git add conflict.txt &&
- 	git commit -m "branch aa_a" &&
- 
--	git branch AA_B master &&
-+	git branch AA_B initial-branch &&
- 	git checkout AA_B &&
- 	echo "Branch AA_B" >conflict.txt &&
- 	OID_AA_B=$(git hash-object -t blob -- conflict.txt) &&
-@@ -290,7 +291,7 @@ test_expect_success 'verify AA (add-add) conflict' '
- test_expect_success 'verify UU (edit-edit) conflict' '
- 	test_when_finished "git reset --hard" &&
- 
--	git branch UU_ANC master &&
-+	git branch UU_ANC initial-branch &&
- 	git checkout UU_ANC &&
- 	echo "Ancestor" >conflict.txt &&
- 	OID_UU_ANC=$(git hash-object -t blob -- conflict.txt) &&
-@@ -328,18 +329,18 @@ test_expect_success 'verify UU (edit-edit) conflict' '
- '
- 
- test_expect_success 'verify upstream fields in branch header' '
--	git checkout master &&
-+	git checkout initial-branch &&
- 	test_when_finished "rm -rf sub_repo" &&
- 	git clone . sub_repo &&
- 	(
--		## Confirm local master tracks remote master.
-+		## Confirm local initial-branch tracks remote initial-branch.
- 		cd sub_repo &&
- 		HUF=$(git rev-parse HEAD) &&
- 
- 		cat >expect <<-EOF &&
- 		# branch.oid $HUF
--		# branch.head master
--		# branch.upstream origin/master
-+		# branch.head initial-branch
-+		# branch.upstream origin/initial-branch
- 		# branch.ab +0 -0
- 		EOF
- 
-@@ -355,8 +356,8 @@ test_expect_success 'verify upstream fields in branch header' '
- 
- 		cat >expect <<-EOF &&
- 		# branch.oid $HUF
--		# branch.head master
--		# branch.upstream origin/master
-+		# branch.head initial-branch
-+		# branch.upstream origin/initial-branch
- 		# branch.ab +1 -0
- 		EOF
- 
-@@ -367,9 +368,9 @@ test_expect_success 'verify upstream fields in branch header' '
- 		git status --porcelain=v2 --untracked-files=all >actual &&
- 		test_must_be_empty actual &&
- 
--		## Test upstream-gone case. Fake this by pointing origin/master at
--		## a non-existing commit.
--		OLD=$(git rev-parse origin/master) &&
-+		## Test upstream-gone case. Fake this by pointing
-+		## origin/initial-branch at a non-existing commit.
-+		OLD=$(git rev-parse origin/initial-branch) &&
- 		NEW=$ZERO_OID &&
- 		mv .git/packed-refs .git/old-packed-refs &&
- 		sed "s/$OLD/$NEW/g" <.git/old-packed-refs >.git/packed-refs &&
-@@ -378,8 +379,8 @@ test_expect_success 'verify upstream fields in branch header' '
- 
- 		cat >expect <<-EOF &&
- 		# branch.oid $HUF
--		# branch.head master
--		# branch.upstream origin/master
-+		# branch.head initial-branch
-+		# branch.upstream origin/initial-branch
- 		EOF
- 
- 		git status --porcelain=v2 --branch --untracked-files=all >actual &&
-@@ -388,19 +389,19 @@ test_expect_success 'verify upstream fields in branch header' '
- '
- 
- test_expect_success 'verify --[no-]ahead-behind with V2 format' '
--	git checkout master &&
-+	git checkout initial-branch &&
- 	test_when_finished "rm -rf sub_repo" &&
- 	git clone . sub_repo &&
- 	(
--		## Confirm local master tracks remote master.
-+		## Confirm local initial-branch tracks remote initial-branch.
- 		cd sub_repo &&
- 		HUF=$(git rev-parse HEAD) &&
- 
- 		# Confirm --no-ahead-behind reports traditional branch.ab with 0/0 for equal branches.
- 		cat >expect <<-EOF &&
- 		# branch.oid $HUF
--		# branch.head master
--		# branch.upstream origin/master
-+		# branch.head initial-branch
-+		# branch.upstream origin/initial-branch
- 		# branch.ab +0 -0
- 		EOF
- 
-@@ -410,8 +411,8 @@ test_expect_success 'verify --[no-]ahead-behind with V2 format' '
- 		# Confirm --ahead-behind reports traditional branch.ab with 0/0.
- 		cat >expect <<-EOF &&
- 		# branch.oid $HUF
--		# branch.head master
--		# branch.upstream origin/master
-+		# branch.head initial-branch
-+		# branch.upstream origin/initial-branch
- 		# branch.ab +0 -0
- 		EOF
- 
-@@ -428,8 +429,8 @@ test_expect_success 'verify --[no-]ahead-behind with V2 format' '
- 		# Confirm --no-ahead-behind reports branch.ab with ?/? for non-equal branches.
- 		cat >expect <<-EOF &&
- 		# branch.oid $HUF
--		# branch.head master
--		# branch.upstream origin/master
-+		# branch.head initial-branch
-+		# branch.upstream origin/initial-branch
- 		# branch.ab +? -?
- 		EOF
- 
-@@ -439,8 +440,8 @@ test_expect_success 'verify --[no-]ahead-behind with V2 format' '
- 		# Confirm --ahead-behind reports traditional branch.ab with 1/0.
- 		cat >expect <<-EOF &&
- 		# branch.oid $HUF
--		# branch.head master
--		# branch.upstream origin/master
-+		# branch.head initial-branch
-+		# branch.upstream origin/initial-branch
- 		# branch.ab +1 -0
- 		EOF
- 
-@@ -458,7 +459,7 @@ test_expect_success 'verify --[no-]ahead-behind with V2 format' '
- '
- 
- test_expect_success 'create and add submodule, submodule appears clean (A. S...)' '
--	git checkout master &&
-+	git checkout initial-branch &&
- 	git clone . sub_repo &&
- 	git clone . super_repo &&
- 	(	cd super_repo &&
-@@ -471,8 +472,8 @@ test_expect_success 'create and add submodule, submodule appears clean (A. S...)
- 
- 		cat >expect <<-EOF &&
- 		# branch.oid $HSUP
--		# branch.head master
--		# branch.upstream origin/master
-+		# branch.head initial-branch
-+		# branch.upstream origin/initial-branch
- 		# branch.ab +0 -0
- 		1 A. N... 000000 100644 100644 $ZERO_OID $HMOD .gitmodules
- 		1 A. S... 000000 160000 160000 $ZERO_OID $HSUB sub1
-@@ -496,8 +497,8 @@ test_expect_success 'untracked changes in added submodule (AM S..U)' '
- 
- 		cat >expect <<-EOF &&
- 		# branch.oid $HSUP
--		# branch.head master
--		# branch.upstream origin/master
-+		# branch.head initial-branch
-+		# branch.upstream origin/initial-branch
- 		# branch.ab +0 -0
- 		1 A. N... 000000 100644 100644 $ZERO_OID $HMOD .gitmodules
- 		1 AM S..U 000000 160000 160000 $ZERO_OID $HSUB sub1
-@@ -521,8 +522,8 @@ test_expect_success 'staged changes in added submodule (AM S.M.)' '
- 
- 		cat >expect <<-EOF &&
- 		# branch.oid $HSUP
--		# branch.head master
--		# branch.upstream origin/master
-+		# branch.head initial-branch
-+		# branch.upstream origin/initial-branch
- 		# branch.ab +0 -0
- 		1 A. N... 000000 100644 100644 $ZERO_OID $HMOD .gitmodules
- 		1 AM S.M. 000000 160000 160000 $ZERO_OID $HSUB sub1
-@@ -548,8 +549,8 @@ test_expect_success 'staged and unstaged changes in added (AM S.M.)' '
- 
- 		cat >expect <<-EOF &&
- 		# branch.oid $HSUP
--		# branch.head master
--		# branch.upstream origin/master
-+		# branch.head initial-branch
-+		# branch.upstream origin/initial-branch
- 		# branch.ab +0 -0
- 		1 A. N... 000000 100644 100644 $ZERO_OID $HMOD .gitmodules
- 		1 AM S.M. 000000 160000 160000 $ZERO_OID $HSUB sub1
-@@ -575,8 +576,8 @@ test_expect_success 'staged and untracked changes in added submodule (AM S.MU)'
- 
- 		cat >expect <<-EOF &&
- 		# branch.oid $HSUP
--		# branch.head master
--		# branch.upstream origin/master
-+		# branch.head initial-branch
-+		# branch.upstream origin/initial-branch
- 		# branch.ab +0 -0
- 		1 A. N... 000000 100644 100644 $ZERO_OID $HMOD .gitmodules
- 		1 AM S.MU 000000 160000 160000 $ZERO_OID $HSUB sub1
-@@ -602,8 +603,8 @@ test_expect_success 'commit within the submodule appears as new commit in super
- 
- 		cat >expect <<-EOF &&
- 		# branch.oid $HSUP
--		# branch.head master
--		# branch.upstream origin/master
-+		# branch.head initial-branch
-+		# branch.upstream origin/initial-branch
- 		# branch.ab +0 -0
- 		1 A. N... 000000 100644 100644 $ZERO_OID $HMOD .gitmodules
- 		1 AM SC.. 000000 160000 160000 $ZERO_OID $HSUB sub1
-@@ -625,8 +626,8 @@ test_expect_success 'stage submodule in super and commit' '
- 
- 		cat >expect <<-EOF &&
- 		# branch.oid $HSUP
--		# branch.head master
--		# branch.upstream origin/master
-+		# branch.head initial-branch
-+		# branch.upstream origin/initial-branch
- 		# branch.ab +1 -0
- 		EOF
- 
-@@ -646,8 +647,8 @@ test_expect_success 'make unstaged changes in existing submodule (.M S.M.)' '
- 
- 		cat >expect <<-EOF &&
- 		# branch.oid $HSUP
--		# branch.head master
--		# branch.upstream origin/master
-+		# branch.head initial-branch
-+		# branch.upstream origin/initial-branch
- 		# branch.ab +1 -0
- 		1 .M S.M. 160000 160000 160000 $HSUB $HSUB sub1
- 		EOF
--- 
-2.29.2-624-g5c89c56a78
-
+> -	write_in_full(proc.in, sb.buf, sb.len);
+> -	close(proc.in);
+> -	strbuf_release(&sb);
+> -	sigchain_pop(SIGPIPE);
+> -	return finish_command(&proc);
+> +	strbuf_addf(&tmp,
+> +		    "%s %s",
+> +		    oid_to_hex(oldoid),
+> +		    oid_to_hex(newoid));
+> +	string_list_append(&opt.str_stdin, tmp.buf);
+> +
+> +	code = run_hooks("post-rewrite", &opt);
+> +
+> +	run_hooks_opt_clear(&opt);
+> +	strbuf_release(&tmp);
+> +	return code;
+>  }
+>  
+>  void commit_post_rewrite(struct repository *r,
+> @@ -4317,30 +4308,21 @@ static int pick_commits(struct repository *r,
+>  		flush_rewritten_pending();
+>  		if (!stat(rebase_path_rewritten_list(), &st) &&
+>  				st.st_size > 0) {
+> -			struct child_process child = CHILD_PROCESS_INIT;
+> -			const char *post_rewrite_hook =
+> -				find_hook("post-rewrite");
+> -
+> -			child.in = open(rebase_path_rewritten_list(), O_RDONLY);
+> -			child.git_cmd = 1;
+> -			strvec_push(&child.args, "notes");
+> -			strvec_push(&child.args, "copy");
+> -			strvec_push(&child.args, "--for-rewrite=rebase");
+> +			struct child_process notes_cp = CHILD_PROCESS_INIT;
+> +			struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT_ASYNC;
+> +
+> +			notes_cp.in = open(rebase_path_rewritten_list(), O_RDONLY);
+> +			notes_cp.git_cmd = 1;
+> +			strvec_push(&notes_cp.args, "notes");
+> +			strvec_push(&notes_cp.args, "copy");
+> +			strvec_push(&notes_cp.args, "--for-rewrite=rebase");
+>  			/* we don't care if this copying failed */
+> -			run_command(&child);
+> -
+> -			if (post_rewrite_hook) {
+> -				struct child_process hook = CHILD_PROCESS_INIT;
+> -
+> -				hook.in = open(rebase_path_rewritten_list(),
+> -					O_RDONLY);
+> -				hook.stdout_to_stderr = 1;
+> -				hook.trace2_hook_name = "post-rewrite";
+> -				strvec_push(&hook.args, post_rewrite_hook);
+> -				strvec_push(&hook.args, "rebase");
+> -				/* we don't care if this hook failed */
+> -				run_command(&hook);
+> -			}
+> +			run_command(&notes_cp);
+> +
+> +			hook_opt.path_to_stdin = rebase_path_rewritten_list();
+> +			strvec_push(&hook_opt.args, "rebase");
+> +			run_hooks("post-rewrite", &hook_opt);
+> +			run_hooks_opt_clear(&hook_opt);
+>  		}
+>  		apply_autostash(rebase_path_autostash());
+>  
+> -- 
+> 2.28.0.rc0.142.g3c755180ce-goog
+> 
