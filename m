@@ -2,80 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15E83C4361B
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 22:26:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73798C4361B
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 22:28:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C7DA9222B3
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 22:26:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3F221222B3
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 22:28:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731057AbgLHW0m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Dec 2020 17:26:42 -0500
-Received: from avasout02.plus.net ([212.159.14.17]:60439 "EHLO
-        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730538AbgLHW0l (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Dec 2020 17:26:41 -0500
-Received: from [10.0.2.15] ([147.147.167.100])
-        by smtp with ESMTPA
-        id mlQfkHHAy0K1OmlQhkvn2f; Tue, 08 Dec 2020 22:25:55 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1607466355; bh=zHHppHki/B3moJKWgh+BZlBkk3dV4/PBMqmYy+Np0SU=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=l67cR+LlnRMzHOLdnn1r51/KMQJ/1Rgc9rWuedWoZ+sDMj2mmWa+VhXRgjKERYCbj
-         CuoPTsdu3L32SFmzIDUkltDp57g2zFhqwWWe1u4RM6dYOFINNvBwJcAK/s/zq48R3A
-         7hSoAW5MsPsH0kltNYsABIvYytCYl9oAgx0LFOWDXlopcN9fgceI/8gSliKI3ZaDjZ
-         ajwzgO4EsFiEHE/L0ChXWOxRotwkmmyWrll80yPaiMvNAZXUWYR0D5jo29SEtp6Cmw
-         BOHAekUS72R1sNsDXUpWDt8zIvG94px8h1ea4HiOKt/+06fajIHNcoQ1jiTGBqkmnp
-         V65vLmiLvk89w==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=QaP9QvTv c=1 sm=1 tr=0
- a=qL5TBQHgqnWGdG4DsQFN/Q==:117 a=qL5TBQHgqnWGdG4DsQFN/Q==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=bJ6GPNHylWCmqVZ0GUQA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v2 1/5] Documentation/Makefile: conditionally include
- doc.dep
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-References: <a8e1bc9d-ce6c-d065-5a20-fee15967364d@ramsayjones.plus.com>
- <xmqq360icb5x.fsf@gitster.c.googlers.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <7269e3e4-0f1f-7db4-de5f-c26d43bde0df@ramsayjones.plus.com>
-Date:   Tue, 8 Dec 2020 22:25:53 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+        id S1731490AbgLHW1f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Dec 2020 17:27:35 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62628 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730547AbgLHW1f (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Dec 2020 17:27:35 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CD32FEFD11;
+        Tue,  8 Dec 2020 17:26:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3usbgg+hWHhm5Casi2qPcAWdQPI=; b=KHhgLv
+        2sEdyZjv44KsNdZM1h+L3gu9L49inAgDc5Vg3RceRNo+H0s+dFprZYzk/nfGEWJO
+        eQ5YnWQ0lY5uexBzXYtNTX0NFNkvZ/y2UEHbirys3c0MUPhTlucJq+gSOHn/MVw6
+        Xn44iYXTqPA7usrXrHvbHx6zym2gcaamvs0yM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=k8qnpl62bhCR7MPlb51AQ3+uQLrIAnYC
+        L0ADRXpNQpEHabSzf2U9yeAPzkpUrp30l2hJEli8QJAS3uG9zAByBLJ4jj0BsII7
+        N4KrbWvfSqOZ5zZfYcJUhMlV1UpmeeqdsbAxEj962GrZYkKqnX2iIfnN05zeN+cp
+        QqZVHz8xAVM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C6F3BEFD10;
+        Tue,  8 Dec 2020 17:26:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0C9F5EFD0A;
+        Tue,  8 Dec 2020 17:26:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sangeeta <sangunb09@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [Outreachy][PATCH v7] diff: do not show submodule with
+ untracked files as "-dirty"
+References: <pull.751.git.1602781723670.gitgitgadget@gmail.com>
+        <20201110083900.88161-1-sangunb09@gmail.com>
+        <CAHjREB7_BScE3zZVUZho4xi0OTdpsJTqLAbqhS0Tcd_xF6gqHA@mail.gmail.com>
+Date:   Tue, 08 Dec 2020 14:26:50 -0800
+In-Reply-To: <CAHjREB7_BScE3zZVUZho4xi0OTdpsJTqLAbqhS0Tcd_xF6gqHA@mail.gmail.com>
+        (Sangeeta's message of "Tue, 8 Dec 2020 19:06:57 +0530")
+Message-ID: <xmqqczzk53yt.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqq360icb5x.fsf@gitster.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfCjOayQAnObbUXZJfcToEambk+dwuYBcTxVdBWE4dxwOo1LSw4ypyGr3sHftoaaXYbhAOpYbJtzEbn8TDQVs0sDYTZ71zgAmoNHjpmqi0JHRXTjSssD2
- ac/9OXEk96xLI6aYuW0+6lwbJL9xGYQ5T9PyBR3aTEQXLxNMCtI4SZ6Xwp2M6Thm9qez3+sKdN1I+w==
+Content-Type: text/plain
+X-Pobox-Relay-ID: 784D2C98-39A4-11EB-A7F7-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Sangeeta <sangunb09@gmail.com> writes:
 
+> Hey Junio,
+>
+> In the "What's cooking in git.git" you mentioned that this patch is
+> left on doc update and some adjustments in "git status".
 
-On 07/12/2020 07:44, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
-[snip commit message]
-> 
-> Nicely explained.  It might be worth saying
-> 
->     ... the clean target immediately deletes those files.  The rules
->     and definitions of doc.dep however does not affect what 'clean'
->     target removes otherwise, so we can do without all this.
+Ah, thanks for reminding.  I do not think I've picked the updated one
+up yet.
 
-Yep, I have attempted to improve the message along these lines ... Thanks!
-
-v3 coming soon ...
-
-ATB,
-Ramsay Jones
-
+Will find time to take a look later.
