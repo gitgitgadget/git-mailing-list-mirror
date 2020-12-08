@@ -2,131 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D512EC4361B
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 20:54:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 742A0C19437
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 20:55:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8AE4522582
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 20:54:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4392923B04
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 20:55:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728175AbgLHUxp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Dec 2020 15:53:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43030 "EHLO
+        id S1729284AbgLHUzV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Dec 2020 15:55:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726138AbgLHUxp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Dec 2020 15:53:45 -0500
-Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C78E2C0613CF
-        for <git@vger.kernel.org>; Tue,  8 Dec 2020 12:53:04 -0800 (PST)
-Received: by mail-oi1-x244.google.com with SMTP id l207so17996846oib.4
-        for <git@vger.kernel.org>; Tue, 08 Dec 2020 12:53:04 -0800 (PST)
+        with ESMTP id S1726080AbgLHUzV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Dec 2020 15:55:21 -0500
+Received: from mail-oo1-xc41.google.com (mail-oo1-xc41.google.com [IPv6:2607:f8b0:4864:20::c41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1F0CC0613CF
+        for <git@vger.kernel.org>; Tue,  8 Dec 2020 12:54:40 -0800 (PST)
+Received: by mail-oo1-xc41.google.com with SMTP id t23so4353331oov.4
+        for <git@vger.kernel.org>; Tue, 08 Dec 2020 12:54:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=unwhxH4iPMrn93ntrlBNW/EurKvCZxQpmYnVUG7rE18=;
-        b=U10RQSFyAx7LfI6rg/+h5zSB2cIBzC6bwDin7DcwnM+aX+LOWacxJbjcjrFiPOnYk2
-         jIgkmzs5+ws/t1Q+j544VOG0idNNPHSnUmstmSvHl7BbQ0jGLdlX9QDlXyrur2n36gkw
-         SfeN1Kln475Clmfp7FpR2K1SleRZGg7i4TG4nEX2dLOdenhfCp+Sl9rLomP4vEU1spvy
-         oVtU07LqXuMtxxpmDBWwnjPa12ITCH1aWl9p1YbbqBPNPgQL4mMIGMpp9QKkeYLUh632
-         KSdPDEosu29sSVmLmt1G4qk7ihlENesGxLyjVDqMgyJ4q20gBb/pt6lzi/IGe730GPbO
-         v6QQ==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Iqam+DpYSj1L62zYa9l+MgS9oYYeiAKrO5lNLsQXXMw=;
+        b=OIkTsP4uKNTj9s3DntoCFC1xoCswmLNtH6t39FGptJFCyhgaeI0Ey9gKZE3HY/b0wc
+         zOiB4yE6CpFZMl8WM32g2NOSFs148MdKDRG2seIayxL+R3mdzjJq7sLE7P7a5DqfWrSE
+         6XA9RiwB/EA06YZ5LvVRpe9xftNnA8kqhlNb9ySPtDxDy98XdzthwGSdxcW7Zxc5fs2t
+         5pspzrBt2sHWKlSgZelG+iX79yp/hT6oFaF/O0WqjE7FSxpwMa8oz6La1funBGv8fLAL
+         ihJaZnmvFa7HCFEVNLSokzW0QqmrmdIlZECTm3KyI3YPl0GFmN1wf8qUs5kSVEc4bWT2
+         sxGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=unwhxH4iPMrn93ntrlBNW/EurKvCZxQpmYnVUG7rE18=;
-        b=LQWTxcrkPaLJ8BX2MpfX/ppyfG0poAr+v4cnQ7puJQVGJ5rlB8eeB4Ii5dijPBSuiG
-         Y4u5mZpiljx7HsYDhHyYHb5T0jo7n8O/6H4nfFqfZQHsH0m+4dChuOepxYwuY6JtoQQX
-         1E8MEkMnRhKlNsqJzP/ZQS2ZaWB3GAGfRMMNJe4Q9uyD6llIhm1Cklecm8LoAGBfPK9e
-         7lx6MAiAPE7a86gLkDt4RK79nIcKLuXgCGurxQZt1MkoOaiQ/E/DAjU3wVWiJHD4IB57
-         LJDdy2AvhllrJVe1hlWSR9M7TywTfLGS4wh2O/jp/ZP50Ll52vn8MaLYH1eA4LKSM9n4
-         wDQg==
-X-Gm-Message-State: AOAM532phRKZqEWBtVBwkJIrAkmfzhaLSSJzlE6OB5Ps92DfD6Si8hqv
-        joqOAv3Psg3vMRfgu4heBsunCvMrD91woascj6M=
-X-Google-Smtp-Source: ABdhPJzMUGUS76twwEaQtZ3eB9nZcIiVIR2a8wirzzNYw3ptFr0FzhTO4aSLbkVpyKUij9S5B630UOURjZZ59ndJQhc=
-X-Received: by 2002:a05:6808:991:: with SMTP id a17mr4120615oic.167.1607460784109;
- Tue, 08 Dec 2020 12:53:04 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Iqam+DpYSj1L62zYa9l+MgS9oYYeiAKrO5lNLsQXXMw=;
+        b=WqNAs9+Wh+xKZzk8d78Tjk/jqZkQYDq+FIljvyYh1/Z+se3x/OVEXLKQv11V5FBIl1
+         KvNRMf6Fkjr/yN8QZX3/cGLIC3/5f8eF9LmyhUDoJuzwT4bjsIZjnAXI9dS0/0g8qOh5
+         aQZQPhyEl0Y2/1qZ4w4JzbCG6+GwwC7CNLvCFldRfPjmpq1q6QBeqsfhk4FBamTbCmCF
+         iBWNs91Qko389z8IJhpNYEYdXb6pE5gsei6jUtdMykkNTRBsvz6oeEQfn8qPjUIpFSa1
+         mBvEGeLSs2rGZP63TKkXDBQITt2O02jNL1dSafFZpv4LY1ndEqepgEq6AEHPw6SZfbhq
+         CYyQ==
+X-Gm-Message-State: AOAM533WGwyxZRRvuVDUvO0zNALVOIP7/hkrJdH/KR8DszUXvw52g2Aj
+        7gZMIhNrXb+MWJGC3fo6P8GC5LpPV+l3/xf5
+X-Google-Smtp-Source: ABdhPJySGYKtL3eUouhPh9rZg9its/TyTLETo6hIF/ReC2RTW1+ZrSP/iZNX7lO2IBT7P/q1Yz+BKA==
+X-Received: by 2002:a9d:67da:: with SMTP id c26mr10960825otn.321.1607453132327;
+        Tue, 08 Dec 2020 10:45:32 -0800 (PST)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id y84sm1176752oig.36.2020.12.08.10.45.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Dec 2020 10:45:31 -0800 (PST)
+Date:   Tue, 8 Dec 2020 13:45:29 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, szeder.dev@gmail.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 12/15] chunk-format: create write_chunks()
+Message-ID: <X8/JySnLxR2DaO4V@nand.local>
+References: <pull.804.git.1607012215.gitgitgadget@gmail.com>
+ <03f3255c8f4a953065b2ff8e61816f83534c23ed.1607012215.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <20201101193330.24775-1-sorganov@gmail.com> <87y2i8dptj.fsf@osv.gnss.ru>
-In-Reply-To: <87y2i8dptj.fsf@osv.gnss.ru>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 8 Dec 2020 12:52:52 -0800
-Message-ID: <CABPp-BGuLX8Msghbo6L7vB2Wqys=Xg_uvV2Aui-1q4-+ijuNEw@mail.gmail.com>
-Subject: Re: [PATCH 00/26] git-log: implement new --diff-merge options
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <03f3255c8f4a953065b2ff8e61816f83534c23ed.1607012215.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Sergey,
+On Thu, Dec 03, 2020 at 04:16:51PM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> The commit-graph and multi-pack-index files both use a chunk-based file
+> format. They have already unified on using write_table_of_contents(),
+> but we expand upon that by unifying their chunk writing loop.
+>
+> This takes the concepts already present in the commit-graph that were
+> dropped in the multi-pack-index code during refactoring, including:
+>
+> * Check the hashfile for how much data was written by each write_fn.
+>
+> * Allow write_fn() to report an error that results in a failure
+>   without using die() in the low-level commands.
+>
+> This simplifies the code in commit-graph.c and midx.c while laying the
+> foundation for future formats using similar ideas.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  chunk-format.c | 23 +++++++++++++++++++++++
+>  chunk-format.h | 13 +++++++++++++
+>  commit-graph.c | 13 ++-----------
+>  midx.c         |  3 +--
+>  4 files changed, 39 insertions(+), 13 deletions(-)
+>
+> diff --git a/chunk-format.c b/chunk-format.c
+> index 771b6d98d0..a6643a4fc8 100644
+> --- a/chunk-format.c
+> +++ b/chunk-format.c
+> @@ -24,3 +24,26 @@ void write_table_of_contents(struct hashfile *f,
+>  	hashwrite_be32(f, 0);
+>  	hashwrite_be64(f, cur_offset);
+>  }
+> +
+> +int write_chunks(struct hashfile *f,
+> +		 struct chunk_info *chunks,
+> +		 int nr,
+> +		 void *data)
+> +{
 
-On Tue, Dec 8, 2020 at 12:07 PM Sergey Organov <sorganov@gmail.com> wrote:
->
-> Sergey Organov <sorganov@gmail.com> writes:
->
->
-> [...]
->
-> > The series also cleanup logic of handling of diff merges options and
-> > fix an issue found in the original implementation where logically
-> > mutually exclusive options -m/-c/--cc failed to actually override each
-> > other.
->
-> Working further on this, I've noticed very irregular interactions
-> between -m/-c/--cc and --oneline:
->
-> 1. --oneline disables -m output for 'git log', and leaves -m output enabled
-> for 'git show':
->
-> $ /usr/bin/git show -n1 -m --oneline 2e673356aef | wc -l
-> 80
-> $ /usr/bin/git log -n1 -m --oneline 2e673356aef | wc -l
-> 1
+Serves me right for thinking that a function like write_chunks() would
+be a good addition to this series without... actually reading the whole
+series first ;-).
 
-If you leave off --oneline, you'll note that git show produces a diff
-and git log does not (regardless of whether 2e673356aef is a merge
-commit or a regular commit).  So, I don't think this is related to
---oneline.
+I'm glad to see that you're adding such a function, but I think that I
+prefer my version which moves these four parameters into the chunkfile
+struct. That allows for other functions to be created which can, for
+e.g., manage the chunks themselves (like my chunkfile_push_chunk()).
 
-> 2. For 'git log', --oneline disables -m output, and leaves -c/--cc output
-> enabled:
->
-> $ /usr/bin/git log -n1 -m --oneline 2e673356aef | wc -l
-> 1
-> $ /usr/bin/git log -n1 -c --oneline 2e673356aef | wc -l
-> 16
-> $ /usr/bin/git log -n1 --cc --oneline 2e673356aef | wc -l
-> 16
->
-> The question is: what's the right interaction between --oneline and
-> -m/-c/--cc?
-
-I believe the right question is: Should -m be a no-op unless -p is
-also specified?  In the past, --cc and -c were no-ops except when -p
-was also specified.  It was somewhat unfriendly and surprising, and
-thus was changed so that --cc and -c implied -p (and thus would cause
-output for non-merge commits to be shown differently, namely shown
-with a diff, in addition to affecting the type of diff shown for merge
-commits).  I think -m was overlooked at the time.
-
-> I tend to think they should be independent, so that --oneline doesn't
-> affect diff output, and then the only offender is -m.
-
-I agree that they should be independent, but I believe they are
-already independent unless you have more evidence of weirdness
-somewhere.  The differences you are seeing are due to -m, -c, and --cc
-being handled differently, and I think we should probably just give -m
-the same treatment that we give to -c and --cc (namely, make all three
-imply -p).
-
-Hope that helps,
-Elijah
+Thanks,
+Taylor
