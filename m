@@ -2,191 +2,213 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.5 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13787C433FE
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 23:03:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 771A8C4361B
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 23:12:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CE1E123A7B
-	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 23:03:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 49FEA23B23
+	for <git@archiver.kernel.org>; Tue,  8 Dec 2020 23:12:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731501AbgLHXDA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Dec 2020 18:03:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35004 "EHLO
+        id S1731641AbgLHXMd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Dec 2020 18:12:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730728AbgLHXC7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Dec 2020 18:02:59 -0500
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4309C0613CF
-        for <git@vger.kernel.org>; Tue,  8 Dec 2020 15:02:19 -0800 (PST)
-Received: by mail-pf1-x441.google.com with SMTP id c12so83955pfo.10
-        for <git@vger.kernel.org>; Tue, 08 Dec 2020 15:02:19 -0800 (PST)
+        with ESMTP id S1725906AbgLHXM2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Dec 2020 18:12:28 -0500
+Received: from mail-oo1-xc42.google.com (mail-oo1-xc42.google.com [IPv6:2607:f8b0:4864:20::c42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F055C0613CF
+        for <git@vger.kernel.org>; Tue,  8 Dec 2020 15:11:48 -0800 (PST)
+Received: by mail-oo1-xc42.google.com with SMTP id s1so19814oon.2
+        for <git@vger.kernel.org>; Tue, 08 Dec 2020 15:11:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=PDF8BO7HosjUn8NCRGd/DeLsxZrZ7Oytc7eJOHtNOBI=;
-        b=Lo4X1aa8Wt5JDVkH3EdyJP/m441z2WJq5uX1YMiMTYR1Vvfcjj2EGtf54TdhJ4SPct
-         8DcmjR6UO28fZj8MrfD462b23hLWGQX9R5IokG2rRQl8J9/g2695HpmuKCDFNDgiw9FC
-         lTOcuQSqiuiX7q5GW5FirYU0uyFSEIYJgznM5OJJu3hFEUKifddqJzzjopsxlhPMbruI
-         JN5R043PR49nWaRrTDSSj8BxpHvmiZxBJ5dMhuUu8yaYGH/KkQiSCxDbVbYgHfERM02/
-         FDRA0QE7hXqWVQnNqJ9uNzP3fIk1oxh5SDjZyyEpv71yqPQo6nF0DHggXt/S9kzeRsHE
-         uBhw==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FjoEKArDqLgepr0WTz2FHIgMvqg84uQoa4p2T0NsLWU=;
+        b=rmXKQrDJpMbWWjIBa3yIhYvFM7xYn8mxYbIsgJV5HL0QKlZQ9iK6YgjTF8JZugjWtw
+         8bVAFZaWfyLf8fDwon3NO1qFksxKAlpyH2Im64K0py5xVGnCMcInGlNB7uM9pKCyxeLf
+         o2zjmhzuceQeE3/eS35uPLY6FNtlBf9Y2zn6es/ilfYj5BlI97FmbkNEatdMdNi4WOxj
+         kB7zgWkz/O3KFx2ZFxbSTHdKgaDB056sKLJ5B0i+k4xDoNIsbppo47MQUKp8Oi2HLaR2
+         OhBhFDTW+81+7apCS/je4csNTkxlKGHQTMmwZZRkC7E6OqE2Wp4R72x8BNEb+kYiX3+b
+         ovDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=PDF8BO7HosjUn8NCRGd/DeLsxZrZ7Oytc7eJOHtNOBI=;
-        b=DgQ/TxpFRuDnFsD5qEDhjQYF7gG5PWtL+oWkcGndWJF0fiEBVHi5VTkqG8FSPXtJCC
-         NYIS8m08SyAjVDBu/VP/4ikYGBgsLN+kgiMLN24bYxkLkc9t3cuDrlWlE54BZ5yzIBWh
-         Hf5w4yR8EowgAzv2U6hP6i/kzv8VKpkd+ThgSHvL8Auzj/13DicC/Hevzw5p6keC4/FV
-         whDXUOkYtQjSfgoCZtNhSHR4YQLxAJbCcSuWKCwjgqQ96aJLYT8K0Z6z1rI0K7wKiUEC
-         yKPkYf9tp1vaPMCwAy70ahore8JChJvDyB9abf0JQFynROSyvrxIVaFie33pD1gFkoSS
-         1U0A==
-X-Gm-Message-State: AOAM5302RpySJXUTH/nPtb+0e6rD4y0rFjd3clloEVCqbRPsEee+nQu7
-        nFmA0fKdj8KYHuC1hTg4bYtagA==
-X-Google-Smtp-Source: ABdhPJwX1D+VV/Ef3LQ0Np71wjxaqGugkJiaTWM+QTTJgYrEGLtG7YN6EfNSb3atbVmc/P03i9c5uw==
-X-Received: by 2002:a17:90b:4acc:: with SMTP id mh12mr25163pjb.54.1607468539180;
-        Tue, 08 Dec 2020 15:02:19 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:1ea0:b8ff:fe74:b4c1])
-        by smtp.gmail.com with ESMTPSA id f185sm201897pfa.213.2020.12.08.15.02.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Dec 2020 15:02:18 -0800 (PST)
-Date:   Tue, 8 Dec 2020 15:02:13 -0800
-From:   Josh Steadmon <steadmon@google.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 10/17] hook: convert 'post-rewrite' hook to config
-Message-ID: <20201208230213.GM36751@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-References: <20201205014945.1502660-1-emilyshaffer@google.com>
- <20201205014945.1502660-11-emilyshaffer@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FjoEKArDqLgepr0WTz2FHIgMvqg84uQoa4p2T0NsLWU=;
+        b=CKoQjRT2Tvdy5kiQiKCE6288Tr2s7mCeDalfW6ASZm2/vCawxNWQ3x4vOGmZAxOcRL
+         Z39jQJshQe7orLdqKJlxRYRGCpnlJQi4FnErq017nVhMQM1oftERdP1A3Q4qSa3mSzEt
+         SzgdqfwefNZ3bYv+NOf6D6uDm2FolgQIipBcpM9HuTVnzi8XE0sJ+/CSNOAZbI5s4f9h
+         oDqdXKag7sJ4CeoVCo3mgBz9FxiDJf67KkIgN63TnxdmR6pK7FFPwEQZ7WT2MNMfDToC
+         1ZHlhhjTR1yBvZuL6mC9gA2IdIBuiuA/ktTokrVSo54mrSMM9YLS3d24poSzruttIJuB
+         II+A==
+X-Gm-Message-State: AOAM533lJrl2ovaQOOw274+05kzqz5aBKugThloRW+AeCXaEvdG5FD2s
+        6E7N5u9AymdsM6xLcvwi7wpFayY9mZPxEKZV9TA=
+X-Google-Smtp-Source: ABdhPJzCYnUNzjPIqp8oEHGrT6zquhkSt1+R6fT3bYZSotOjMNvjsdlQJdLeY9oLDwoOi7LMQT98wy72Pll6FZoKYWo=
+X-Received: by 2002:a4a:b4c4:: with SMTP id g4mr280123ooo.7.1607469107696;
+ Tue, 08 Dec 2020 15:11:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201205014945.1502660-11-emilyshaffer@google.com>
+References: <20201101193330.24775-1-sorganov@gmail.com> <87y2i8dptj.fsf@osv.gnss.ru>
+ <CABPp-BGuLX8Msghbo6L7vB2Wqys=Xg_uvV2Aui-1q4-+ijuNEw@mail.gmail.com> <87y2i8c4mr.fsf@osv.gnss.ru>
+In-Reply-To: <87y2i8c4mr.fsf@osv.gnss.ru>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 8 Dec 2020 15:11:36 -0800
+Message-ID: <CABPp-BE3D7ifQx6MZCT_ntRnG0QZm1Ga10SJ=DN+6bpF6mX2GQ@mail.gmail.com>
+Subject: Re: [PATCH 00/26] git-log: implement new --diff-merge options
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020.12.04 17:49, Emily Shaffer wrote:
-> diff --git a/sequencer.c b/sequencer.c
-> index 5a98fd2fbc..4befd862ff 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -35,6 +35,7 @@
->  #include "rebase-interactive.h"
->  #include "reset.h"
->  #include "hook.h"
-> +#include "string-list.h"
->  
->  #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
->  
-> @@ -1143,33 +1144,23 @@ int update_head_with_reflog(const struct commit *old_head,
->  static int run_rewrite_hook(const struct object_id *oldoid,
->  			    const struct object_id *newoid)
->  {
-> -	struct child_process proc = CHILD_PROCESS_INIT;
-> -	const char *argv[3];
-> +	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_ASYNC;
-> +	struct strbuf tmp = STRBUF_INIT;
->  	int code;
-> -	struct strbuf sb = STRBUF_INIT;
->  
-> -	argv[0] = find_hook("post-rewrite");
-> -	if (!argv[0])
-> -		return 0;
-> +	strvec_push(&opt.args, "amend");
->  
-> -	argv[1] = "amend";
-> -	argv[2] = NULL;
-> -
-> -	proc.argv = argv;
-> -	proc.in = -1;
-> -	proc.stdout_to_stderr = 1;
-> -	proc.trace2_hook_name = "post-rewrite";
-> -
-> -	code = start_command(&proc);
-> -	if (code)
-> -		return code;
-> -	strbuf_addf(&sb, "%s %s\n", oid_to_hex(oldoid), oid_to_hex(newoid));
-> -	sigchain_push(SIGPIPE, SIG_IGN);
+On Tue, Dec 8, 2020 at 2:30 PM Sergey Organov <sorganov@gmail.com> wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > Hi Sergey,
+>
+> Hi Elijah,
+>
+> >
+> > On Tue, Dec 8, 2020 at 12:07 PM Sergey Organov <sorganov@gmail.com> wrote:
+> >>
+> >> Sergey Organov <sorganov@gmail.com> writes:
+> >>
+> >>
+> >> [...]
+> >>
+> >> > The series also cleanup logic of handling of diff merges options and
+> >> > fix an issue found in the original implementation where logically
+> >> > mutually exclusive options -m/-c/--cc failed to actually override each
+> >> > other.
+> >>
+> >> Working further on this, I've noticed very irregular interactions
+> >> between -m/-c/--cc and --oneline:
+> >>
+> >> 1. --oneline disables -m output for 'git log', and leaves -m output enabled
+> >> for 'git show':
+> >>
+> >> $ /usr/bin/git show -n1 -m --oneline 2e673356aef | wc -l
+> >> 80
+> >> $ /usr/bin/git log -n1 -m --oneline 2e673356aef | wc -l
+> >> 1
+> >
+> > If you leave off --oneline, you'll note that git show produces a diff
+> > and git log does not (regardless of whether 2e673356aef is a merge
+> > commit or a regular commit).  So, I don't think this is related to
+> > --oneline.
+>
+> Yeah, looks exactly like this, thanks for correcting!
+>
+> >
+> >> 2. For 'git log', --oneline disables -m output, and leaves -c/--cc output
+> >> enabled:
+> >>
+> >> $ /usr/bin/git log -n1 -m --oneline 2e673356aef | wc -l
+> >> 1
+> >> $ /usr/bin/git log -n1 -c --oneline 2e673356aef | wc -l
+> >> 16
+> >> $ /usr/bin/git log -n1 --cc --oneline 2e673356aef | wc -l
+> >> 16
+> >>
+> >> The question is: what's the right interaction between --oneline and
+> >> -m/-c/--cc?
+> >
+> > I believe the right question is: Should -m be a no-op unless -p is
+> > also specified?
+>
+> Right.
+>
+> > In the past, --cc and -c were no-ops except when -p
+> > was also specified.  It was somewhat unfriendly and surprising, and
+> > thus was changed so that --cc and -c implied -p (and thus would cause
+> > output for non-merge commits to be shown differently, namely shown
+> > with a diff, in addition to affecting the type of diff shown for merge
+> > commits).
+>
+> Well, so one surprise has been replaced with another, supposedly more
+> friendly, right?
+>
+> I mean, obviously, with --cc I don't ask for diffs for non-merge
+> commits, so it is still a surprise they are thrown at me.
 
-Here and in a few other later patches, we're removing some signal
-handling that doesn't seem to be replicated in the run_hooks()
-implementation. Can you add a note to the commit message about why this
-is OK?
+Actually, that wasn't a side-effect but part of the intended change --
+see https://lore.kernel.org/git/1440110591-12941-1-git-send-email-gitster@pobox.com/.
 
-> -	write_in_full(proc.in, sb.buf, sb.len);
-> -	close(proc.in);
-> -	strbuf_release(&sb);
-> -	sigchain_pop(SIGPIPE);
-> -	return finish_command(&proc);
-> +	strbuf_addf(&tmp,
-> +		    "%s %s",
-> +		    oid_to_hex(oldoid),
-> +		    oid_to_hex(newoid));
-> +	string_list_append(&opt.str_stdin, tmp.buf);
-> +
-> +	code = run_hooks("post-rewrite", &opt);
-> +
-> +	run_hooks_opt_clear(&opt);
-> +	strbuf_release(&tmp);
-> +	return code;
->  }
->  
->  void commit_post_rewrite(struct repository *r,
-> @@ -4317,30 +4308,21 @@ static int pick_commits(struct repository *r,
->  		flush_rewritten_pending();
->  		if (!stat(rebase_path_rewritten_list(), &st) &&
->  				st.st_size > 0) {
-> -			struct child_process child = CHILD_PROCESS_INIT;
-> -			const char *post_rewrite_hook =
-> -				find_hook("post-rewrite");
-> -
-> -			child.in = open(rebase_path_rewritten_list(), O_RDONLY);
-> -			child.git_cmd = 1;
-> -			strvec_push(&child.args, "notes");
-> -			strvec_push(&child.args, "copy");
-> -			strvec_push(&child.args, "--for-rewrite=rebase");
-> +			struct child_process notes_cp = CHILD_PROCESS_INIT;
-> +			struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT_ASYNC;
-> +
-> +			notes_cp.in = open(rebase_path_rewritten_list(), O_RDONLY);
-> +			notes_cp.git_cmd = 1;
-> +			strvec_push(&notes_cp.args, "notes");
-> +			strvec_push(&notes_cp.args, "copy");
-> +			strvec_push(&notes_cp.args, "--for-rewrite=rebase");
->  			/* we don't care if this copying failed */
-> -			run_command(&child);
-> -
-> -			if (post_rewrite_hook) {
-> -				struct child_process hook = CHILD_PROCESS_INIT;
-> -
-> -				hook.in = open(rebase_path_rewritten_list(),
-> -					O_RDONLY);
-> -				hook.stdout_to_stderr = 1;
-> -				hook.trace2_hook_name = "post-rewrite";
-> -				strvec_push(&hook.args, post_rewrite_hook);
-> -				strvec_push(&hook.args, "rebase");
-> -				/* we don't care if this hook failed */
-> -				run_command(&hook);
-> -			}
-> +			run_command(&notes_cp);
-> +
-> +			hook_opt.path_to_stdin = rebase_path_rewritten_list();
-> +			strvec_push(&hook_opt.args, "rebase");
-> +			run_hooks("post-rewrite", &hook_opt);
-> +			run_hooks_opt_clear(&hook_opt);
->  		}
->  		apply_autostash(rebase_path_autostash());
->  
-> -- 
-> 2.28.0.rc0.142.g3c755180ce-goog
-> 
+> > I think -m was overlooked at the time.
+>
+> Looks like it was, but maybe there was rather an actual reason for not
+> implying -p by -m? Maybe Junio will tell?
+>
+> >
+> >> I tend to think they should be independent, so that --oneline doesn't
+> >> affect diff output, and then the only offender is -m.
+> >
+> > I agree that they should be independent, but I believe they are
+> > already independent unless you have more evidence of weirdness
+> > somewhere.  The differences you are seeing are due to -m, -c, and --cc
+> > being handled differently, and I think we should probably just give -m
+> > the same treatment that we give to -c and --cc (namely, make all three
+> > imply -p).
+>
+> I think that either all diff-merge options should imply -p, or none,
+> from the POV of least surprise.
+>
+> However, it'd give us yet another challenge: for some time already,
+> --first-parent implies -m, that once it starts to imply -p, will result in
+>
+>   git log --first-parent
+>
+> suddenly producing diff output for everything.
+
+That is definitely a pickle.
+
+> One way out I see is to specify that implied -m/-c/--cc don't imply
+> -p, only explicit do.
+>
+> Entirely different approach is to get rid of -m/-c/--cc implying -p, and
+> just produce diff output for merges independently on -p being provided
+> or not. This will give us additional functionality (ability to get diff
+> for merges, but not for regulars), and will get rid of all the related
+> surprises.
+>
+> Thoughts?
+
+I was happy when I found out that --cc had changed to imply -p; I
+guess I felt the same as Junio did with his rationale in the link I
+posted above.  I've made --remerge-diff behave like --cc (i.e. it
+implies -p), and I like it there too.  I use it both to turn on diffs
+for merges, and to turn on diffs for regular commits without having to
+specify the extra -p flag.  I guess I'm not sure why one would ever
+want to see diffs for merges and not for normal commits.  Even in the
+unusual case someone did, couldn't they just pass --merges (to strip
+out the normal commits entirely)?
+
+I may not have the best vantage point on this, though, because I
+personally don't see enough utility in diffing a merge to just one of
+its parents that it'd merit having an option to git-log, and yet we
+clearly have two such options already (-m and --first-parent when
+combined with -p).
+
+But, there is at least one more way to get out of this pickle besides
+the two options you listed above: we could make --first-parent be just
+about commit limiting and not imply anything about diff behavior.
+Honestly, I find it a little surprising that despite the fact that log
+-p shows nothing for merge commits, that when I add --first-parent to
+see a subset of commits I suddenly get weird, huge diffs shown for the
+merges (yeah, yeah, I learned recently that it's documented behavior,
+so it's not surprising anymore, just weird).  So, this wouldn't just
+get rid of this new nasty pickle, but would remove another negative
+surprise too.  If we're going to make a behavioral change, I'd rather
+we fixed this side rather than the (IMO) nicely working --cc/-c side.
+
+
+Hope that helps,
+Elijah
