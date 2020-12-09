@@ -2,115 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AD7AC4167B
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 08:53:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6496EC4361B
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 09:03:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 075F723609
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 08:53:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0D14123BDB
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 09:03:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726693AbgLIIxu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 03:53:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40960 "EHLO
+        id S1728139AbgLIJDO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 04:03:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725942AbgLIIxu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 03:53:50 -0500
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ACC4C0613CF
-        for <git@vger.kernel.org>; Wed,  9 Dec 2020 00:53:09 -0800 (PST)
-Received: by mail-wr1-x442.google.com with SMTP id i9so821526wrc.4
-        for <git@vger.kernel.org>; Wed, 09 Dec 2020 00:53:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=hZKbbks1qBxPHsSHA1EbQoBV4OtXvL2bEd9XjQifoLQ=;
-        b=o8HYJvb0/l34syKtkL3Ksi77fezovCzr9zSl9ZwsKRZLdjJI9wIGloxboakN6uI4d6
-         6gC691FFJLEWlVMLg5BE1fLvnpO34KZfLx9GoAIbmhZVDw0phYLxCWjPn5ThNOSuBvcn
-         7qBaukJ0uUn23kGN7bayYk4xZLNlSe+RjrxJkR5qJIkCXFmZ1xE0B0tZawQx89blj8P3
-         mJLFQHo+kMacrdTa+HaxMLspoGGYDmfiayzddgzaF78VVUD6vv4ZsB8bTlSeBqGPaMrT
-         q4WMQAHrRLQeTRpM4/myyBqKPd+qVSW6ZNZsHTwoRa3XdOo5PtfzAb/T/Ryot1qKePlK
-         RAlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hZKbbks1qBxPHsSHA1EbQoBV4OtXvL2bEd9XjQifoLQ=;
-        b=IiyWKHqz7eXcUNivh2+HDp1gIxPQGfSLpGwKoMokG7S2VJ+9tN6KEMipC6bTV8/6un
-         1mkb9Kn/CA12+QobJ/6VG8izz84MEps/m0vY87wHUXpC7H7ejI1CDS1v/wIsZiqs2h3q
-         QTV1PSrk1sINqywG6RIt0vHTnE75i+B1GcBDWjHXHcGg6mPfHzRmONtIYPHkbYrSURJH
-         CAoq3K79paiFziItHNbNJhHm2KcOPUaxal48/sUv3/VPn7SP4L7NV1Ey0zfEzHufSDFl
-         /CA510dGeUKiRYq8xqXYoZvfJSkc9d1yAanSDcwVi8EqgWHnOhXp5wEyqY1hqt4t4Cf6
-         /JUQ==
-X-Gm-Message-State: AOAM531bQJU4KoF6Q0t3RUhPN/WbLb9lYesdjPV06VsK3xsTstGd1gkp
-        dwXGWxFFvLFEFmhL8ScQmNCVF2UEcsXBneBh4L0=
-X-Google-Smtp-Source: ABdhPJxwku/hUyI0iY+3LD8FVSkBBnwsA+CBKvGUccTOy8xcwE4QIxU/WEfQ0ak7Ru+yzctj4C8FTvMM9G6YoAKKREA=
-X-Received: by 2002:a5d:52c1:: with SMTP id r1mr1425747wrv.255.1607503988334;
- Wed, 09 Dec 2020 00:53:08 -0800 (PST)
+        with ESMTP id S1725942AbgLIJDN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 04:03:13 -0500
+X-Greylist: delayed 510 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 09 Dec 2020 01:02:33 PST
+Received: from 256bit.org (256bit.org [IPv6:2a01:4f8:192:14af::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51CCEC0613CF
+        for <git@vger.kernel.org>; Wed,  9 Dec 2020 01:02:33 -0800 (PST)
+Received: from chrisbra by 256bit.org with local (Exim 4.90_1)
+        (envelope-from <cb@256bit.org>)
+        id 1kmvMl-0007Ld-MR
+        for git@vger.kernel.org; Wed, 09 Dec 2020 10:02:31 +0100
+Date:   Wed, 9 Dec 2020 09:53:56 +0100
+From:   Christian Brabandt <cb@256bit.org>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
+        Aaron Schrab <aaron@schrab.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v2 1/2] Add project-wide .vimrc configuration
+Message-ID: <20201209085356.GJ22416@256bit.org>
+Mail-Followup-To: Felipe Contreras <felipe.contreras@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Emily Shaffer <emilyshaffer@google.com>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
+        Aaron Schrab <aaron@schrab.com>, Denton Liu <liu.denton@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+References: <20201209065537.48802-1-felipe.contreras@gmail.com>
+ <20201209065537.48802-2-felipe.contreras@gmail.com>
 MIME-Version: 1.0
-References: <20201209002619.25468-1-felipe.contreras@gmail.com>
- <X9A1On3v35nEjL7i@camp.crustytoothpaste.net> <CAMP44s0W3En0ZuNfBOOZhfeFUeFRvEFs7khAFRraocuDaFpbNA@mail.gmail.com>
- <xmqqlfe731vh.fsf@gitster.c.googlers.com> <CAMP44s2xo=n4z6m7FhuPiZ66yPWvmdQuAodvh2XNpdVAfo6R8g@mail.gmail.com>
- <xmqqh7ov2y97.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqh7ov2y97.fsf@gitster.c.googlers.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Wed, 9 Dec 2020 02:52:57 -0600
-Message-ID: <CAMP44s1vJj6QJjS8ApM_wiVunPo6093_4M-ghJB_PTqZhnmm0A@mail.gmail.com>
-Subject: Re: [PATCH] Add project-wide .vimrc configuration
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20201209065537.48802-2-felipe.contreras@gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 9, 2020 at 2:13 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
-> >> *2* In other words, I doubt these graphs are depicting "how widely
-> >> is an editor used by developers".  It is just showing how often it
-> >> is installed, and I know the primary workstation I use daily has vim
-> >> and nano installed without me choosing to have them, as opposed to
-> >> emacs I had to manually install, and I only use vim once every month
-> >> and nano once every quarter.
-> >
-> > Yes, but in Arch Linux at least no editor is installed by default.
->
-> I thought everybody has nano not because it is adequate and usable
-> for them, but because it comes by default with distros, and distro
-> in turn choose nano not because it is particularly popular but is
-> small enough not to matter if left behind unused when the user
-> chooses a real editor.
->
-> But you are essentially usaying that 80% of Arch users install nano
-> by choice.  I find it doubly surprising.
+Hi,
 
-I double checked. The installation instructions [1] do tell you to
-pick an editor, and they don't suggest any.
+Felipe Contreras schrieb am Mittwoch, den 09. Dezember 2020:
 
-I am half-surprised. The StackOverflow question "How do I exit the Vim
-editor?" has 2.2 million views [2], there's countless memes about that
-ordeal [3], and the SO team even found it wise to write a blog post
-about it [4]. I don't know how to exit emacs (Ctrl-X Ctrl-e?), and I
-suspect many emacs users don't know how to exit vim.
+> +augroup git
+> +	au BufRead,BufNewFile */Documentation/*.txt set filetype=asciidoc
+> +
+> +	au FileType c setl noexpandtab tabstop=8 shiftwidth=0 cino=(s,:0,l1,t0
+> +	au FileType sh setl noexpandtab tabstop=8 shiftwidth=0
+> +	au FileType perl setl noexpandtab tabstop=8 shiftwidth=0
+> +	au FileType asciidoc setl noexpandtab tabstop=8 shiftwidth=0 autoindent
+> +augroup END
 
-Nano doesn't have this problem. Which means for somebody entering the
-world of Linux, that's a plus.
+This will set filetype specific options. So after this file has been 
+loaded, it will set e.g. set tabstop and shiftwidth options for 
+filetypes outside of the git project.
 
-Cheers.
+Shouldn't this only apply to files inside the git code repository?
 
-[1] https://wiki.archlinux.org/index.php/Installation_guide#Install_essential_packages
-[2] https://stackoverflow.com/questions/11828270/how-do-i-exit-the-vim-editor
-[3] https://twitter.com/iamdevloper/status/993821761648103425
-[4] https://stackoverflow.blog/2017/05/23/stack-overflow-helping-one-million-developers-exit-vim/
+> +
+> +" vim: noexpandtab tabstop=8 shiftwidth=0
+> diff --git a/contrib/vim/plugin/gitvimrc.vim b/contrib/vim/plugin/gitvimrc.vim
+> new file mode 100644
+> index 0000000000..c3946e5410
+> --- /dev/null
+> +++ b/contrib/vim/plugin/gitvimrc.vim
+> @@ -0,0 +1,21 @@
+> +let s:gitvimrc_whitelist = get(g:, 'gitvimrc_whitelist', [])
+> +
+> +function LoadGitVimrc()
+> +  let l:top = trim(system('git rev-parse --show-toplevel'))
 
+trim needs at least vim 8.0.1630. Is this recent enough? Could also use 
+systemlist()[0] which is available starting at vim 7.4.248 or just a 
+simple split(system(), "\n")[0] which should be compatible with vim 7.
 
---
-Felipe Contreras
+> +  if l:top == '' | return | endif
+> +  let l:file = l:top . '/.vimrc'
+> +  if !filereadable(l:file) | return | endif
+> +
+> +  let l:found = 0
+> +  for l:pattern in s:gitvimrc_whitelist
+
+You could directly use `get(g:, 'gitvimrc_whitelist', [])` directly, so 
+the script local var s:gitvimrc_whitelist is not really needed.
+
+> +    if (match(l:top, l:pattern) != -1)
+
+This uses a regex match. Perhaps do a string comparsion? If this is 
+needed, consider adding "\C" to force matching case and perhaps also \V 
+to force a literal match. Otherwise the options magic, ignorecase, 
+smartcase etc are applied to the matching.
+
+> +      let l:found = 1
+> +      break
+> +    endif
+> +  endfor
+> +  if !l:found | return | endif
+> +
+> +  exec 'source ' . fnameescape(l:file)
+> +endf
+> +
+> +call LoadGitVimrc()
+
+On the style: I personally dislike the `l:` prefix for function local 
+variables, as this does not add anything. But perhaps this is just my 
+personal preference.
+
+Best,
+Christian
