@@ -2,90 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4132DC433FE
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 21:32:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65726C4361B
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 21:58:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 033B323A02
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 21:32:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B04023D1F
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 21:58:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388207AbgLIVco (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 16:32:44 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56154 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388045AbgLIVcn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 16:32:43 -0500
-Received: (qmail 20372 invoked by uid 109); 9 Dec 2020 21:32:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 09 Dec 2020 21:32:03 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20483 invoked by uid 111); 9 Dec 2020 21:32:02 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 09 Dec 2020 16:32:02 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 9 Dec 2020 16:32:02 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Julien Richard via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Julien Richard <jairbubbles@hotmail.com>,
-        Julien Richard <julien.richard@ubisoft.com>
-Subject: Re: [PATCH] doc: 'T' status code for git status
-Message-ID: <X9FCUseRteZ1n7ec@coredump.intra.peff.net>
-References: <pull.930.git.git.1607501616914.gitgitgadget@gmail.com>
- <X9ELRf7s9sBcs9CD@coredump.intra.peff.net>
- <xmqqsg8e20b8.fsf@gitster.c.googlers.com>
+        id S2388046AbgLIV6j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 16:58:39 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59176 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727030AbgLIV6i (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 16:58:38 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id ABFA39EBB6;
+        Wed,  9 Dec 2020 16:57:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=o9X/9KT5HE8qtnIcaHKZgQkoFX0=; b=s3oEVb
+        /UL3he2vAQycxLc2gDM2WLGYRf4w9qk7mv7YNGk6ieFDLFVH3YDvZgBT0oLboqkK
+        ZGnUGNdmCI7XR07UtWVG+uU6FZzSifTcin2C1QXR+m0n3yq9SZr54V2skPuDpsM+
+        k3wa1nV7dmQB4ri3EaydCi9/ugUYdI/EqKRj8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=hSfbKlj6Qx8NiAaOT0jZ72tZ3k/N1QTS
+        vVb01GCxy41A4wCLJfOFQodG5LSUQwtDTzIUgg0drd1DyuTCgcMQZ3vhj5tg4KIc
+        MI9Rd6yEGoVYUBcaXOAVjJZsAi9PgLeM8ss7Olk0lX7D/pIh6K+Jvh6jGGMNrKk7
+        Yw1kicVQnC0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A34679EBB5;
+        Wed,  9 Dec 2020 16:57:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.75.7.245])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 324F69EBB4;
+        Wed,  9 Dec 2020 16:57:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: js/init-defaultbranch-advice, was Re: What's cooking in git.git
+ (Dec 2020, #01; Tue, 8)
+References: <xmqqpn3j4ved.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2012091510280.25979@tvgsbejvaqbjf.bet>
+Date:   Wed, 09 Dec 2020 13:57:56 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.2012091510280.25979@tvgsbejvaqbjf.bet>
+        (Johannes Schindelin's message of "Wed, 9 Dec 2020 15:11:44 +0100
+        (CET)")
+Message-ID: <xmqqft4e1w2j.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqsg8e20b8.fsf@gitster.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 98AA3E2A-3A69-11EB-BD4A-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 09, 2020 at 12:26:19PM -0800, Junio C Hamano wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> A few things about the attached.
-> 
->  - it drops "updated but" from the explanation of 'U' in the list.
+> Hi Junio,
+>
+> On Tue, 8 Dec 2020, Junio C Hamano wrote:
+>
+>> * js/init-defaultbranch-advice (2020-11-24) 4 commits
+>>  - init: provide useful advice about init.defaultBranch
+>>  - get_default_branch_name(): prepare for showing some advice
+>>  - branch -m: allow renaming a yet-unborn branch
+>>  - init: document `init.defaultBranch` better
+>>
+>>  Our users are going to be trained to prepare for future change of
+>>  init.defaultBranch configuration variable.
+>>
+>>  Expecting a reroll.
+>>  cf. <xmqq8saqjx2n.fsf@gitster.c.googlers.com>
+>>  I think a new advice.defaultBranchName is a bad idea.
+>
+> Unfortunately, this objection is news to me. Why would it be anything but
+> a legitimate interest to say "yeah, whatever, Git, just use the default
+> branch name, I'm fine with it"?
 
-Seems reasonable.
+Message sent on Nov 24 is a news to you now?
 
->  - after that, everything in the list becomes a single-word, so
->    instead of "type changed", it invents a verb "type-change" and
->    uses its pp. form when adding an entry for 'T'.
+Anyway, I do not think those users who said "I'm fine with it" would
+be fine when the switchover happens outside their control.
 
-Also reasonable.
+If they are truly fine, we could invent init.defaultBranch=:random
+that chooses a random branch name and point HEAD at it, and make
+that the default.  Those who are fine do not really care what name
+the initial branch gets would be fine with that as well, but you
+would agree that it is an absurd alternative, no?  I find it equally
+absurd to say "switch to a new name any time without telling me, I
+am fine with it".
 
->  - it updates the table to add 'T' next to 'M'.
 
-Yep, that was what I was thinking would make sense.
 
->  - "work tree changed since index" in the table was awkward; it
->    rephrases it to "modified in work tree relative to index",
->    because (1) these entries are not talking about the working tree
->    as a whole; it is one path in the working tree changing its
->    type. and (2) using "changed" and "updated" for the same 'M' in
->    different context was unnecessarily confusing.  Instead, it uses
->    'modified', which appears in the list before the table.
-
-The first line seems funny to me now, though (diff abridged):
-
-> -	 [AMD]   not updated
-> +        [AMTD]   not changed
-
-If the file is not changed, then why are we even mentioning it? Because
-of course it _is_ changed in the filesystem, but the index was not
-updated to reflect the change. And that's what I think the original was
-getting at with "updated".
-
-TBH, I find the whole table overly confusing. But then, I am completely
-comfortable with the notion that it is really showing two diffs, with
-their results collated. To me it is simpler to just discuss the two
-sides of the diff independently, and then you do not even really need a
-table at all ("M" means modified no matter which column it appears in).
-But I may not be a representative Git user.
-
--Peff
