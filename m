@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ED0CC433FE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22918C4361B
 	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 20:03:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DB3CB239D1
+	by mail.kernel.org (Postfix) with ESMTP id F057E23A02
 	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 20:03:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388038AbgLIUDZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S2388040AbgLIUDZ (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 9 Dec 2020 15:03:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59832 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387598AbgLIUDU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 15:03:20 -0500
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEE7EC0617B0
-        for <git@vger.kernel.org>; Wed,  9 Dec 2020 12:02:05 -0800 (PST)
-Received: by mail-wm1-x343.google.com with SMTP id v14so2625221wml.1
-        for <git@vger.kernel.org>; Wed, 09 Dec 2020 12:02:05 -0800 (PST)
+        with ESMTP id S2387945AbgLIUDV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 15:03:21 -0500
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E453C061257
+        for <git@vger.kernel.org>; Wed,  9 Dec 2020 12:02:11 -0800 (PST)
+Received: by mail-wm1-x341.google.com with SMTP id y23so3005367wmi.1
+        for <git@vger.kernel.org>; Wed, 09 Dec 2020 12:02:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5HYyPIGs75GnN7uh4in8ZLCoKOZWam6NCCaOgCf/FWM=;
-        b=QZxunmj/UvM/wk6vZQACT8Vrxq6dZvW9HZUPHNEQWI5x9h4QyJFrCZTTEMV2HY0FAl
-         gki4VhjRW9MxiaCix86tPVZYNUQwqxqgL0t8VRLImvJ+ke9V2VDbG/9j8abppRo3citp
-         j9MIwyVx2aijeiZY2NZH2QSed0emqEvERRdTjPoedwRewgILgMdmmmbuk3siZYUeJhyE
-         o8aPtaDZVv+admNkmAZLENTGXtQN8E0hz6s7vc3H1JAtJ/RdIR4aNZ5QyQG9MRpZTUgT
-         ss3/C2zEisw8lIRReosBKOm6C4I0yF55EWi2fiQVUFS43yt9K/0O7sB1aStd6RoKuovn
-         +PGw==
+        bh=6H387cs7FalftOl7XqMA6J0IueyK82JpCf0QGoCsyNQ=;
+        b=lP40sb6xMb4nsIptcI0l5KivO/05bxCqX0pWOhOidFVDOK/FRspHtg4u4eDET3uq/0
+         Gj5SwfT1T9p1mrxPzQOb7b8G1L9GsXHB7MGMRTvZ71HyNJy3pyCedHm/bNZLcVmv7Ifp
+         TCNwAE7huW/EyoY9ZLZ673JdEMQg3lcc9BvFvS5aWbpTgaeRcSh7soFEvZWAlMPYZ1gE
+         voUO6rE8v5D+/bolp6uPdC2rl+oSupNRMCNEIunczHdEpGBbfqNKC01VVTXINwvJw6E5
+         ++rc15S6WJrEpHAPhiT66NaTMVa24AMJ4i01jS1V58vQKmYL2qZRnQmN9b26F3iH+gG7
+         S6Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5HYyPIGs75GnN7uh4in8ZLCoKOZWam6NCCaOgCf/FWM=;
-        b=ZPuwXKYQ1qB+vsiG/kcnwEZwFixPXzORfMmOuby9oVo69LAyYAtlC9+YkT6VwzOXh/
-         I54rNOzAEPkmDUby5EjPl87UQfawJl4YkBBEz1hTtlPyOiO2II11bvf0T+NOqKIhWKIx
-         RdGLlnII5KEuMp/4eWifALTRtQPHQyUP0VRjkZgM6TSgUxpg+C74a76+1KQGyCJAB6HG
-         NS3oCjzs0xwXM+OtD892+asUL3dhb5dwbzTVRJt0OPC9p8e9ex5WB1+s14lssCoe6+Uc
-         hHZAq/cjTwvo/baRYm2uPwiFdZ6aIjC3J/pkfJwC4MpH1JmDaIkx1xYm0tFkDUdUmt1S
-         3N2w==
-X-Gm-Message-State: AOAM5309Oi3Wlz2mKOCia3RqCudowKoaKQf3QGbWoFPjfN4wMOXp1l+W
-        N2/ttjQnIyRC283wtCXw69dNt88k2B4D+w==
-X-Google-Smtp-Source: ABdhPJwdJmGa3+vQn6yew0SRJ4s47utRA1sF1OarhHRo9SnoFrs8LiKLZJhNUBPqpPK0v2q5CWfQ5Q==
-X-Received: by 2002:a1c:491:: with SMTP id 139mr4436399wme.81.1607544124520;
-        Wed, 09 Dec 2020 12:02:04 -0800 (PST)
+        bh=6H387cs7FalftOl7XqMA6J0IueyK82JpCf0QGoCsyNQ=;
+        b=Y9GouqMDXF95xPk8FzymWiIubxSpApp9I4hLkqMb3y7sYkcPtEy/Bf025YgiguOW2E
+         hdwAOq1wB+Twn5gOqzu/2mgZ7Xca4qrDovLUBJQagI/5iNjzaWZUqsb1XhV6B+nVN7kZ
+         O4rYoRUZIWYrYEC8M8UpDZjvQemW8/oaZX9MkoxhUuc+jaI+6B/Mb//Bb3ELmPkXs3hb
+         Z5/ULSKf223Yiu4uysaQQvEwhwvL2nUsl902YDq/P4sv1+vlVhm4HOtD9ygkELJSbLPT
+         wzt8mMgvPF/qoP24QR87MNKsimq6Ce0u6k2cmIeGPU6ZZoHjo4XoFfH1XzozAjegKukg
+         bTLg==
+X-Gm-Message-State: AOAM533L45O7nOnWoeFRxqNrNr3+4TMtFmleqqlh5P7y5v6Y5IEHkhzL
+        CwUNvTaDRJMmPUuTUcHuMyrOA4CpX7c13Q==
+X-Google-Smtp-Source: ABdhPJxnOatq6r0EqE7GmvI0yT/cITwrBI1XkcqNRNpHrtzG38L3JXYNTU5JlDSaGW9BnSdn5pRjUQ==
+X-Received: by 2002:a7b:cf08:: with SMTP id l8mr4584800wmg.189.1607544129811;
+        Wed, 09 Dec 2020 12:02:09 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 34sm5762128wrh.78.2020.12.09.12.02.03
+        by smtp.gmail.com with ESMTPSA id 34sm5762128wrh.78.2020.12.09.12.02.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Dec 2020 12:02:03 -0800 (PST)
+        Wed, 09 Dec 2020 12:02:08 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 06/10] mktag tests: improve verify_object() test coverage
-Date:   Wed,  9 Dec 2020 21:01:36 +0100
-Message-Id: <20201209200140.29425-7-avarab@gmail.com>
+Subject: [PATCH v3 10/10] mktag: allow turning off fsck.extraHeaderEntry
+Date:   Wed,  9 Dec 2020 21:01:40 +0100
+Message-Id: <20201209200140.29425-11-avarab@gmail.com>
 X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
 In-Reply-To: <20201126222257.5629-1-avarab@gmail.com>
 References: <20201126222257.5629-1-avarab@gmail.com>
@@ -78,81 +78,113 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The verify_object() function in "mktag.c" is tasked with ensuring that
-our tag refers to a valid object.
+In earlier commits mktag learned to use the fsck machinery, at which
+point we needed to add fsck.extraHeaderEntry so it could be as strict
+about extra headers as it's been ever since it was implemented.
 
-The existing test for this might fail because it was also testing that
-"type taggg" didn't refer to a valid object type (it should be "type
-tag"), or because we referred to a valid object but got the type
-wrong.
+But it's not nice to need to switch away from "mktag" to "hash-object"
++ manual "fsck" just because you'd like to have an extra header. So
+let's support turning it off by getting "fsck.*" variables from the
+config.
 
-Let's split these tests up, so we're testing all combinations of a
-non-existing object and in invalid/wrong "type" lines.
+Pedantically speaking it's still not possible to make "mktag" behave
+just like "hash-object -t tag" does, since we're unconditionally going
+to check the referenced object in verify_object_in_tag(), which is our
+own check, and not one that exists in fsck.c.
+
+But the spirit of "this works like fsck" is preserved, in that if you
+created such a tag with "hash-object" and did a full "fsck" on the
+repository it would also error out about that invalid object, it just
+wouldn't emit the same message as fsck does.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t3800-mktag.sh | 37 +++++++++++++++++++++++++++++++++++--
- 1 file changed, 35 insertions(+), 2 deletions(-)
+ Documentation/git-mktag.txt |  9 +++++++--
+ builtin/mktag.c             | 11 ++++++++++-
+ t/t3800-mktag.sh            | 14 ++++++++++++++
+ 3 files changed, 31 insertions(+), 3 deletions(-)
 
+diff --git a/Documentation/git-mktag.txt b/Documentation/git-mktag.txt
+index b164ab563bd..e1506dde561 100644
+--- a/Documentation/git-mktag.txt
++++ b/Documentation/git-mktag.txt
+@@ -30,8 +30,13 @@ tag doesn't pass a linkgit:git-fsck[1] check.
+ The "fsck" check done mktag is is stricter than what
+ linkgit:git-fsck[1] would run by default in that all `fsck.<msg-id>`
+ messages are promoted from warnings to errors (so e.g. a missing
+-"tagger" line is an error). Extra headers in the object are also an
+-error under mktag, but ignored by linkgit:git-fsck[1].
++"tagger" line is an error).
++
++Extra headers in the object are also an error under mktag, but ignored
++by linkgit:git-fsck[1]. This extra check can be turned off by setting
++the appropriate `fsck.<msg-id>` varible:
++
++    git -c fsck.extraHeaderEntry=ignore mktag <my-tag-with-headers
+ 
+ Tag Format
+ ----------
+diff --git a/builtin/mktag.c b/builtin/mktag.c
+index 5765cde0032..c1398ccf133 100644
+--- a/builtin/mktag.c
++++ b/builtin/mktag.c
+@@ -3,6 +3,14 @@
+ #include "replace-object.h"
+ #include "object-store.h"
+ #include "fsck.h"
++#include "config.h"
++
++static struct fsck_options fsck_options = FSCK_OPTIONS_STRICT;
++
++static int mktag_config(const char *var, const char *value, void *cb)
++{
++	return fsck_config_internal(var, value, cb, &fsck_options);
++}
+ 
+ static int mktag_fsck_error_func(struct fsck_options *o,
+ 				 const struct object_id *oid,
+@@ -53,7 +61,6 @@ static int verify_object_in_tag(struct object_id *tagged_oid, int *tagged_type)
+ int cmd_mktag(int argc, const char **argv, const char *prefix)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+-	struct fsck_options fsck_options = FSCK_OPTIONS_STRICT;
+ 	struct object_id tagged_oid;
+ 	int tagged_type;
+ 	struct object_id result;
+@@ -66,6 +73,8 @@ int cmd_mktag(int argc, const char **argv, const char *prefix)
+ 
+ 	fsck_options.error_func = mktag_fsck_error_func;
+ 	fsck_set_msg_type(&fsck_options, "extraheaderentry", "warn");
++	/* config might set fsck.extraHeaderEntry=* again */
++	git_config(mktag_config, NULL);
+ 	if (fsck_tag_standalone(NULL, buf.buf, buf.len, &fsck_options,
+ 				&tagged_oid, &tagged_type))
+ 		die("tag on stdin did not pass our strict fsck check");
 diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
-index a22a0954d5e..9ae1b0bb0af 100755
+index 19b3c1bca9c..59082e06277 100755
 --- a/t/t3800-mktag.sh
 +++ b/t/t3800-mktag.sh
-@@ -125,19 +125,52 @@ check_verify_failure '"type" line type-name length check' \
- 	'^error: char.*: type too long$'
+@@ -375,6 +375,20 @@ EOF
+ check_verify_failure 'detect invalid header entry' \
+ 	'^error:.* extraHeaderEntry:'
  
- ############################################################
--#  9. verify object (SHA1/type) check
-+#  9. verify object (hash/type) check
- 
++test_expect_success 'invalid header entry config & fsck' '
++	test_must_fail git mktag <tag.sig &&
++	test_must_fail git -c fsck.extraHeaderEntry=error mktag <tag.sig &&
++	test_must_fail git -c fsck.extraHeaderEntry=warn mktag <tag.sig &&
++	git -c fsck.extraHeaderEntry=ignore mktag <tag.sig &&
++	git fsck &&
++	env GIT_TEST_GETTEXT_POISON=false \
++		git -c fsck.extraHeaderEntry=warn fsck 2>err &&
++	grep "warning .*extraHeaderEntry:" err &&
++	test_must_fail env GIT_TEST_GETTEXT_POISON=false \
++		git -c fsck.extraHeaderEntry=error 2>err fsck &&
++	grep "error .* extraHeaderEntry:" err
++'
++
  cat >tag.sig <<EOF
- object $(test_oid deadbeef)
-+type tag
-+tag mytag
-+tagger . <> 0 +0000
-+
-+EOF
-+
-+check_verify_failure 'verify object (hash/type) check -- correct type, nonexisting object' \
-+	'^error: char7: could not verify object.*$'
-+
-+cat >tag.sig <<EOF
-+object $head
- type tagggg
- tag mytag
- tagger . <> 0 +0000
- 
- EOF
- 
--check_verify_failure 'verify object (SHA1/type) check' \
-+check_verify_failure 'verify object (hash/type) check -- made-up type, nonexisting object' \
-+	'^fatal: invalid object type'
-+
-+cat >tag.sig <<EOF
-+object $(test_oid deadbeef)
-+type tagggg
-+tag mytag
-+tagger . <> 0 +0000
-+
-+EOF
-+
-+check_verify_failure 'verify object (hash/type) check -- incorrect type, valid object' \
- 	'^error: char7: could not verify object.*$'
- 
-+cat >tag.sig <<EOF
-+object $head
-+type tree
-+tag mytag
-+tagger . <> 0 +0000
-+
-+EOF
-+
-+check_verify_failure 'verify object (hash/type) check -- incorrect type, valid object' \
-+	'^error: char7: could not verify object'
-+
- ############################################################
- # 10. verify tag-name check
- 
+ object $head
+ type commit
 -- 
 2.29.2.222.g5d2a92d10f8
 
