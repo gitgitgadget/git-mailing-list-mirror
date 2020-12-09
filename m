@@ -2,97 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34FE4C4361B
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 01:42:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49A75C433FE
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 02:25:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DC94B238E4
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 01:42:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1EF4A23A5A
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 02:25:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725987AbgLIBlo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Dec 2020 20:41:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59608 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725791AbgLIBlo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Dec 2020 20:41:44 -0500
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5857CC0613CF
-        for <git@vger.kernel.org>; Tue,  8 Dec 2020 17:41:04 -0800 (PST)
-Received: by mail-oi1-x234.google.com with SMTP id d189so31057oig.11
-        for <git@vger.kernel.org>; Tue, 08 Dec 2020 17:41:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=xDShpG5hcv65KzNrC10RnGhN7SIzghZXFbe+7pJGyUY=;
-        b=naaInTWLKU8V906epocg711zQYSX3Gqov854xS8+40skURS7v21wx2OE7KRRAn/VGn
-         rZsK5MkJZrWuY3qA6d+XdM9LyLcH0p/GRlc3KGAjAmw1LHiOxH6x/0Jnr1GFvUmAqUHk
-         ZqAwqOBCLdJ8EhtrKtt6ceyz8FQxRbMMmAepwFqNEyJ5VdLdnUbTHnZRjnP7uYLMSfg+
-         TYYzJDJAbyqQLnnGcraTvycJzS2jsP9kr/0jaxG+AF+zkVoC3ew0LEO6pESn1IybSCir
-         96krLJMeEYYIufMhnQVzP4me+Gf8tr+uu6eiNfpgSJG+L0zQ3AYb/PdJi3cgYPEJehTP
-         fkUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=xDShpG5hcv65KzNrC10RnGhN7SIzghZXFbe+7pJGyUY=;
-        b=SWjVvtGb2wCYRqBTOwWtb+plFVGQwlHQeqHANN2baZ11J7tSdZMAknRI9iODpRkcfy
-         M9SlKVecs4/SDs2JXJ/2QnIWoP22NL5Gg+DwOTh/+OufakVUNyaa9IaheLOEwlM69umg
-         /JXo/tiOfgcNtxsGy//VFnHnldKoquxgw+MYSMzIcbnZBshWtfdkmBH9tVpbumYe374o
-         3o8AGgz27mqfpF7rgeLyhiI/fTZXPyzmJYDKFcgCf802dnn7ujoMN56Fmeiax9Y+f75l
-         7wa1G19LXf1oz7ZzQ1qfOkYKd57OENWE5rAaGtr96iJ1y5tmH0cIS+iblQ2TtXIQZSZp
-         cA2Q==
-X-Gm-Message-State: AOAM530885hP7mHwbA4sFA6uwUBUppG/qwthzOULtZVNh5JJTWhrKKmK
-        f3vi1+7Ee5Xpat9bF2KCBt/VAg==
-X-Google-Smtp-Source: ABdhPJzKXxHmyBZhK66yHNAapnvWd6nSpUizGm0ERHkUxzOjb2Y9oprLKcpaLJAR+NM+x9NgfkFfiA==
-X-Received: by 2002:aca:fc96:: with SMTP id a144mr209264oii.146.1607478063744;
-        Tue, 08 Dec 2020 17:41:03 -0800 (PST)
-Received: from localhost ([8.44.146.30])
-        by smtp.gmail.com with ESMTPSA id y204sm22367oiy.38.2020.12.08.17.41.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Dec 2020 17:41:03 -0800 (PST)
-Date:   Tue, 8 Dec 2020 20:41:00 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: What's cooking in git.git (Dec 2020, #01; Tue, 8)
-Message-ID: <X9ArLOecIhoivhym@nand.local>
-References: <xmqqpn3j4ved.fsf@gitster.c.googlers.com>
+        id S1726684AbgLICZL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Dec 2020 21:25:11 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:56566 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726339AbgLICZK (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 8 Dec 2020 21:25:10 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3677060751;
+        Wed,  9 Dec 2020 02:23:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1607480639;
+        bh=hNqgYPfyrgJmWzWNk6hC80crS30dwwGUUhEsdMyQfLE=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=cSdSEd38dTfx5Xcp6l/lrSUDPKGXxEzHSELJXfK5wL3KaCuZZ1hQCqtwvoVYLOT8a
+         9ZN5/7bxS06P0veiuBbU+x7EahgXVIZMjuLG8XTtOLorQS6hCBIuoYCn+3UkoqaWU0
+         YOMpk5BHg9ZeakgcLOmM4x5XXr9ODRMabYDoMT0jJRtTFtYVqAopd31ONWqi+53o2Z
+         OhBxIuvwXDGITEEDGrQbT0k6RrM0dnSWXzkrveoVaC2Fxj59KZccc3C2r5SCOZMY+P
+         b3/0OFXu3sfF1lGZ32Sa9DpcpMsDLx74ngn4mlV9+ILvsfBhYsd97fL/i6ijyM2qfX
+         EhjDHk38qvyii5gj/CpJ2P9CSgzduqgKYluv8hZ2E098XTuvZVF/uorKQGOjaG59Ti
+         PV7nbQ/WWK0+edtmz9ez8AASoGY8TdlQO0pDnsnyBOIlTUbZL3NL6C7NJb7769kPTL
+         S8uMRR7nFIMZ9ah0wfssGk4AlSr+uhT3U3DWTFNJM4qrj6XwuCw
+Date:   Wed, 9 Dec 2020 02:23:54 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH] Add project-wide .vimrc configuration
+Message-ID: <X9A1On3v35nEjL7i@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Emily Shaffer <emilyshaffer@google.com>
+References: <20201209002619.25468-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="+YDBSF/AB6pAbS11"
 Content-Disposition: inline
-In-Reply-To: <xmqqpn3j4ved.fsf@gitster.c.googlers.com>
+In-Reply-To: <20201209002619.25468-1-felipe.contreras@gmail.com>
+User-Agent: Mutt/2.0.2 (2020-11-20)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 08, 2020 at 05:31:54PM -0800, Junio C Hamano wrote:
-> * tb/partial-clone-filters-fix (2020-12-03) 2 commits
->  - upload-pack.c: don't free allowed_filters util pointers
->  - builtin/clone.c: don't ignore transport_fetch_refs() errors
->
->  Fix potential server side resource deallocation issues when
->  responding to a partial clone request.
->
->  Will merge to 'next'.
 
-This is one that I'd like to see in -rc0, if possible. It's fixing a
-regression that has existed for two releases (both 2.28 and 2.29). On
-the other hand, I don't think that anybody has reported these issues...
+--+YDBSF/AB6pAbS11
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> * tb/pack-bitmap (2020-12-08) 24 commits
->
->  Various improvement to the codepath that writes out pack bitmaps.
->
->  Will merge to 'next'?
+On 2020-12-09 at 00:26:19, Felipe Contreras wrote:
+> It's not efficient that everyone must set specific configurations in all
+> their ~/.vimrc files; we can have a project-wide .vimrc that everyone
+> can use.
+>=20
+> By default it's ignored, you need the following in your ~/.vimrc
+>=20
+>   set exrc
+>   set secure
 
-I'm obviously biased, but I'd be quite happy to see this get onto next.
-I would like Jonathan Tan to take another look over the series (since he
-reviewed many parts of v2), in addition to anybody else with interest
-and time.
+I would strongly recommend against advising users to use this
+configuration.  Vim has been known to have repeated security problems
+with what options are allowed in restricted environments, and even with
+the secure option, it's still easy to do something like this:
 
-Thanks,
-Taylor
+  func Foo()
+    !echo >/tmp/foo
+  endfunction
+
+  nmap i :call Foo()<CR>
+
+When the user hits "i" to enter insert mode, they'll execute the
+attacker's arbitrary code.
+
+> We could add the vim modelines at the bottom of every file, like other
+> projects do, but this seems more sensible.
+
+We have an .editorconfig file[0], which is a cross-editor file that can be
+used to specify these settings.  It is supported by many editors out of
+the box, although Vim requires a plugin.  Since we don't want to support
+configuration for every editor under the sun, it makes sense to use a
+single file for multiple editors and let people configure their editor
+accordingly.
+
+Since Vim would require configuration either way and .editorconfig files
+don't have any known security issues, the .editorconfig file seems like
+a better option.
+
+[0] https://editorconfig.org/
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--+YDBSF/AB6pAbS11
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX9A1OQAKCRB8DEliiIei
+gdYBAQCtg80/5Hl6dKeth1Ylw7nn8KKuyItNimQYPB2EgDSOVQD8DmQtU/eTnLZt
+0VkXlCN3aA4vvx/Xez0uwuosRYlEMAg=
+=icGz
+-----END PGP SIGNATURE-----
+
+--+YDBSF/AB6pAbS11--
