@@ -2,188 +2,221 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60F79C4361B
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 13:35:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E195CC19425
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 14:01:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1B51E23A6C
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 13:35:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B1C3123B42
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 14:01:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732431AbgLINfW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 08:35:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56244 "EHLO
+        id S1728695AbgLIOBS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 09:01:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732043AbgLINfS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 08:35:18 -0500
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 757E2C0613CF
-        for <git@vger.kernel.org>; Wed,  9 Dec 2020 05:34:38 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id m25so3091222lfc.11
-        for <git@vger.kernel.org>; Wed, 09 Dec 2020 05:34:38 -0800 (PST)
+        with ESMTP id S1728607AbgLIOBQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 09:01:16 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D83BBC06179C
+        for <git@vger.kernel.org>; Wed,  9 Dec 2020 06:00:35 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id a12so1850418wrv.8
+        for <git@vger.kernel.org>; Wed, 09 Dec 2020 06:00:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=TNFe1b81jxZ8P73g9LUrWhoKhSJv0m/PHJrSXUZuVdI=;
-        b=QNuJd+J64WdguobLt2wwANaByL8QJcZGkrkos0hR9kfTlcsncrgD6MEfxZpf7UMMAx
-         1AymXqXEci6nKgdm6oLxfeqyA8Vd+zlhY1q4r+14bVQ+/uuh51IvKTbjccsEdoZep9cH
-         9qrqM3bf5lLJJGPpa/NCtqbKvS9x14yV8Y2NmOsU6AcIso6THoypxf4dCsOdBrCXDJyc
-         fxI6LbzvnwbD3T6cR0V2xyYGfKSTzO53vyA4IS7bfKhFo+Y3c/V2tlaeIlZNxLzCFdr8
-         /h58BHKj6WnJzkNpmq2gUw3LaIRPcvMo5K9f1hUeNm0Zu/S846nRFOgYAWO7KQ0RyBpF
-         KOiA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=/Izbl9wexLtHbO918dhEysjpUsFaAvsDqZEji3I0p88=;
+        b=krahg221RGeviBhJK6BCiHCv4wOL4Y6jtZAw8hXvO5Vx+1Rp6Rc+Msj30XGnbP2IgF
+         RdJZF7obJ8O9azcqn1WshRIHY296VQqseCfW9HG8rW/OgFSnZqYH0M4rYFjzw56iDb8/
+         3VqmwZyGNsvv1rz1U47PerDIJC4v4uU42A+zL3FaXvcS0o0euNbRQwklEqsUjb/NI/tW
+         RDRjYSUO1rrF2NZZDQvqbwwHUCDVQHn2WWAvX/o90fbMqpFXfcDAJaB8wcfQ7CrEkcwC
+         KPhbd2R3NavGR7veIZ4kUrR7gsDXyOSTY76fgLtzcqXjmk2xJZYz+s/LBAzOczgUoMKe
+         bsNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=TNFe1b81jxZ8P73g9LUrWhoKhSJv0m/PHJrSXUZuVdI=;
-        b=iz8K+yCNA7Q091H8bjHztrQIZTuQm98IPqjBX2tVK5848oTtAA4HdARx0XC2/T6JJ0
-         +nSzOqupyUEdpR8bnrqoTRleztzZyDf+ZovbGE+I5EJgHafbB/7ifkOjDhrlAnYPt5zy
-         D6YNMtMvh9hdW5HjNVTEHZ2cvpL2VukCCPByHudic7albroLj5azUFg+Oxlyzv1PCV3e
-         qXY2Pq8FtqENlkJqDClciE5czVyVReXUOy2gTbVnDdvnx1rAI4/NvJJEthtVdd3HR4kR
-         XF9oGu044DdrPRWq9jlfMFRI5uw5Imfmf+3pxE6AOMzSRpTWht/O6maPEz5PWre8AjYs
-         OOmw==
-X-Gm-Message-State: AOAM531qgoDYOj+BnZMOi7AJCTsO/YIr8X8Wlmu1xmxUz78wzgJvHwYD
-        oh7VyTD5OsyxO8IltgO7Fy5NKZPLykY=
-X-Google-Smtp-Source: ABdhPJx0NsGr7qHaNwqDfKSFfpUGjCZ/PK2o60ho2MlOi7OHC2DDILEkrLaOPA/m12UbGwTYAw/A6Q==
-X-Received: by 2002:ac2:5689:: with SMTP id 9mr1038298lfr.175.1607520873130;
-        Wed, 09 Dec 2020 05:34:33 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id b25sm173443lfi.173.2020.12.09.05.34.29
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=/Izbl9wexLtHbO918dhEysjpUsFaAvsDqZEji3I0p88=;
+        b=qNTPupVHnC1yc1llCWFcgdm4YFtOsPjcM72ATUs0Wn1V8fPzCckertRDegALOZwD2a
+         CeoTxkskTTKFrPlhmyZY6299dMnW8PlgmdazLmvDhE+yN9vQMzs5l78oBG3XyTcIMIyF
+         zXJLkRSd0xRZ4Fc+IIKPrKGiJKu8PP7rpTKTZCAyDMfy9+JmAmwwloVRzUayp5FKqw5C
+         dXvBCJJyfjnMeZ1fz2p3Rk+kkBKNPid8WqQEAgTQn9109OdtocN4a5vIE4p17i/q3Jxp
+         5ZuiI/Mt81H7rWffZCULhh0m4ccNGqHMAnwdFI5s5RjZN9JXhBcrorVWCsQ32WeEWf5d
+         eUBw==
+X-Gm-Message-State: AOAM530axXG3iLQPAfxRjJX63xnObIEo0rAxdF/LZStAjabKRAjhZ+gu
+        yFnCj6aPKsAetuYK80qfMnWmtmi84oU=
+X-Google-Smtp-Source: ABdhPJwZDNxFYcgT0S+EbmZr3ql6406YHCbj+1LPw/NoVMy3/vY7bT4w1RqhERkWiXEe/SnQscVTGQ==
+X-Received: by 2002:adf:ec86:: with SMTP id z6mr2919787wrn.17.1607522434420;
+        Wed, 09 Dec 2020 06:00:34 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k2sm3568326wru.43.2020.12.09.06.00.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Dec 2020 05:34:30 -0800 (PST)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 00/26] git-log: implement new --diff-merge options
-References: <20201101193330.24775-1-sorganov@gmail.com>
-        <87y2i8dptj.fsf@osv.gnss.ru>
-        <CABPp-BGuLX8Msghbo6L7vB2Wqys=Xg_uvV2Aui-1q4-+ijuNEw@mail.gmail.com>
-        <87y2i8c4mr.fsf@osv.gnss.ru>
-        <CABPp-BE3D7ifQx6MZCT_ntRnG0QZm1Ga10SJ=DN+6bpF6mX2GQ@mail.gmail.com>
-        <xmqqtusv4w2g.fsf@gitster.c.googlers.com>
-        <CABPp-BHCtrKAWR1v3OrUgX8iSfxvDwN8p+yiJy=G1BFfnSopjw@mail.gmail.com>
-        <xmqq7dpr4qa0.fsf@gitster.c.googlers.com>
-        <CABPp-BHWhiUZ=wCSz1f0oxtHiRzAKCPVmoUYDf+mvvm63ykCEw@mail.gmail.com>
-        <xmqq360f4npg.fsf@gitster.c.googlers.com>
-        <CABPp-BEAmB9DA7RXrf6vJGbHfGU37V4sE0d1CW+2vRwp_uAudw@mail.gmail.com>
-Date:   Wed, 09 Dec 2020 16:34:29 +0300
-In-Reply-To: <CABPp-BEAmB9DA7RXrf6vJGbHfGU37V4sE0d1CW+2vRwp_uAudw@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 8 Dec 2020 20:54:31 -0800")
-Message-ID: <87360fgl22.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        Wed, 09 Dec 2020 06:00:33 -0800 (PST)
+Message-Id: <798f680b800b6ef23c220fef88f82b7064b796ff.1607522429.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.847.v4.git.git.1607522429.gitgitgadget@gmail.com>
+References: <pull.847.v3.git.git.1606419752.gitgitgadget@gmail.com>
+        <pull.847.v4.git.git.1607522429.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 09 Dec 2020 14:00:17 +0000
+Subject: [PATCH v4 03/15] reftable: add error related functionality
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Han-Wen Nienhuys <hanwen@google.com>, Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+From: Han-Wen Nienhuys <hanwen@google.com>
 
-> On Tue, Dec 8, 2020 at 8:18 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Elijah Newren <newren@gmail.com> writes:
->>
->> >> If I can run "git log --some-options master..next" (or more
->> >> realistically, over the range ko/next..next) to get individual
->> >> commits (without patch) and merges (only when --cc gives some
->> >> interesting nearby-changes), I would be very happy.  But is there a
->> >> set of options that lets me do so?
->> >
->> > So, you're saying you changed your mind since five years ago?[1]  Or
->> > that what you said five years ago is still valid, but you'd appreciate
->> > more/different options that allow this new thing?
->> >
->> > [1]
->> > https://lore.kernel.org/git/1440110591-12941-1-git-send-email-gitster@pobox.com/
->>
->> Sorry, but I am not seeing in [1] anything that relates to the above
->> "want to see --cc patch for merge but just log message for single
->> parent commit". 5 years is a long time even in Git timescale, so I
->> would not be surprised if I changed my mind over time, but I am not
->> sure what opinion on the matter you think I expressed back then.
->>
->> "git log --cc master..next" shows all commits' log messages, patch
->> for each single-parent commit, and combined-dense patch for each
->> merge.  There is no option to squelch the patch for only single
->> parent commits.  It may not be such a bad thing to have as an extra
->> option.
->>
->> So, I think what I am saying is that ...
->>
->> > > ...  As I said, I'm not sure why
->> > > anyone would ever want to see diffs for merges and not for normal
->> > > commits, the closest useful thing I can imagine is commit messages +
->> > > diffs for just merges, stripping the normal commits.
->>
->> ... I see use for such a feature (assuming that you didn't mean by
->> "diffs for merges" a regular "--first-parent -p" patch, but meant to
->> say "--cc" patch) in my workflow.  I'd review "log ko/next..next"
->> before deciding to push out the day's integration of 'next', and at
->> that point, I trust individual commits that came from contributors
->> well enough (otherwise I wouldn't be merging them to 'next'), but I
->> would appreciate the last chance to re-examine conflict resolutions
->> in merges.
->>
->> It does not mean that I do not like the current behaviour that
->> "--cc" always implies "-p"; it is convenient.  It's just I find the
->> lack of feature slightly less than ideal, but I do not care deeply
->> enough to design how to express such a feature from the command
->> line.
->
-> Okay, thanks for clarifying.  It sounds like you were focusing on the
-> tangentially related comment I made (diffs for merges and not for
-> normal commits) while I was focusing on Sergey's question (should we
-> revert --cc implies -p).  I was having a hard time understanding if
-> you were answering his question or not.  This last paragraph of yours
-> acknowledges the question, though you still avoid answering it.  :-)
->
-> However, even my focus was on a secondary question.  His real original
-> question is: -m and --cc are inconsistent -- one requires -p, while
-> the other doesn't.  Should that be fixed...and which option(s) should
-> change?  He gave two possibilities I didn't like.  I added a third
-> that you didn't like.  So...
+The reftable/ directory is structured as a library, so it cannot
+crash on misuse. Instead, it returns an error codes.
 
-I believe you've misunderstood me slightly.
+In addition, the error code can be used to signal conditions from lower levels
+of the library to be handled by higher levels of the library. For example, a
+transaction might legitimately write an empty reftable file, but in that case,
+we'd want to shortcut the transaction overhead.
 
-I didn't suggest bare reverting of the "-c/-cc imply -p" commit. I
-rather suggested to modify current behavior to "-c/--cc enable diff
-output for merge commits", then add "-m" to the mix, so that we finally
-get:
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+---
+ reftable/error.c          | 41 ++++++++++++++++++++++++++
+ reftable/reftable-error.h | 62 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 103 insertions(+)
+ create mode 100644 reftable/error.c
+ create mode 100644 reftable/reftable-error.h
 
-  "-m/-c/--c enable diff output for merge commits".
-
-And I should emphasize that what I mean differs from "-m/-c/--cc imply -p
-for merge commits only" as Junio has put it in this discussion, even if
-slightly, -- it won't imply -p, to avoid messing with --first-parent
-that would imply -p through -m and enable diff for merges, that is not
-what we want.
-
-This is what I'd like to see, as it finally makes -m/-c/--cc (as well as
-other --diff-merges options) focus on merge commits only and never
-affect regular commits, -- the way it should be.
-
-My alternative suggestion was to rather add "-m implies -p" to the
-current state, resulting in:
-
-  "-m/-c/--c imply -p".
-
-However, the latter one has additional complication in handling of
-"--first-parent" that currently implies -m that'd then imply -p and
-suddenly give lengthy output on bare "git log --first-parent".
-
-Fixing the latter is still possible by complicating of options handling
-by specifying that implied options don't imply other options, only
-explicit options do, but somehow I don't like this, -- too complex for
-the job at hand. I'm still on position that option management in Git
-could rather be done in much simpler manner, without need for such
-complexities.
-
-Thanks,
--- Sergey
+diff --git a/reftable/error.c b/reftable/error.c
+new file mode 100644
+index 00000000000..f6f16def921
+--- /dev/null
++++ b/reftable/error.c
+@@ -0,0 +1,41 @@
++/*
++Copyright 2020 Google LLC
++
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
++
++#include "reftable-error.h"
++
++#include <stdio.h>
++
++const char *reftable_error_str(int err)
++{
++	static char buf[250];
++	switch (err) {
++	case REFTABLE_IO_ERROR:
++		return "I/O error";
++	case REFTABLE_FORMAT_ERROR:
++		return "corrupt reftable file";
++	case REFTABLE_NOT_EXIST_ERROR:
++		return "file does not exist";
++	case REFTABLE_LOCK_ERROR:
++		return "data is outdated";
++	case REFTABLE_API_ERROR:
++		return "misuse of the reftable API";
++	case REFTABLE_ZLIB_ERROR:
++		return "zlib failure";
++	case REFTABLE_NAME_CONFLICT:
++		return "file/directory conflict";
++	case REFTABLE_EMPTY_TABLE_ERROR:
++		return "wrote empty table";
++	case REFTABLE_REFNAME_ERROR:
++		return "invalid refname";
++	case -1:
++		return "general error";
++	default:
++		snprintf(buf, sizeof(buf), "unknown error code %d", err);
++		return buf;
++	}
++}
+diff --git a/reftable/reftable-error.h b/reftable/reftable-error.h
+new file mode 100644
+index 00000000000..6f89bedf1a5
+--- /dev/null
++++ b/reftable/reftable-error.h
+@@ -0,0 +1,62 @@
++/*
++Copyright 2020 Google LLC
++
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
++
++#ifndef REFTABLE_ERROR_H
++#define REFTABLE_ERROR_H
++
++/*
++ * Errors in reftable calls are signaled with negative integer return values. 0
++ * means success.
++ */
++enum reftable_error {
++	/* Unexpected file system behavior */
++	REFTABLE_IO_ERROR = -2,
++
++	/* Format inconsistency on reading data */
++	REFTABLE_FORMAT_ERROR = -3,
++
++	/* File does not exist. Returned from block_source_from_file(), because
++	 * it needs special handling in stack.
++	 */
++	REFTABLE_NOT_EXIST_ERROR = -4,
++
++	/* Trying to write out-of-date data. */
++	REFTABLE_LOCK_ERROR = -5,
++
++	/* Misuse of the API:
++	 *  - on writing a record with NULL refname.
++	 *  - on writing a reftable_ref_record outside the table limits
++	 *  - on writing a ref or log record before the stack's
++	 * next_update_inde*x
++	 *  - on writing a log record with multiline message with
++	 *  exact_log_message unset
++	 *  - on reading a reftable_ref_record from log iterator, or vice versa.
++	 *
++	 * When a call misuses the API, the internal state of the library is
++	 * kept unchanged.
++	 */
++	REFTABLE_API_ERROR = -6,
++
++	/* Decompression error */
++	REFTABLE_ZLIB_ERROR = -7,
++
++	/* Wrote a table without blocks. */
++	REFTABLE_EMPTY_TABLE_ERROR = -8,
++
++	/* Dir/file conflict. */
++	REFTABLE_NAME_CONFLICT = -9,
++
++	/* Invalid ref name. */
++	REFTABLE_REFNAME_ERROR = -10,
++};
++
++/* convert the numeric error code to a string. The string should not be
++ * deallocated. */
++const char *reftable_error_str(int err);
++
++#endif
+-- 
+gitgitgadget
 
