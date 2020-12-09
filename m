@@ -2,126 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3BEBC4361B
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 14:55:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11A61C433FE
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 15:30:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A620523406
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 14:55:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C816E23AFE
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 15:30:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733144AbgLIOzR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 09:55:17 -0500
-Received: from mout.gmx.net ([212.227.17.20]:36233 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1733142AbgLIOzR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 09:55:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1607525622;
-        bh=7uRB1ILDCNH77CKQx3zX8wVegQnkZlfTV5wMtonNakU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=k2XjIi5ma3/ALgzWW3rlvpFTFwJ7+7B5hvP6Bu7lEuSvKgiAYkdqv0LmVvWprOkye
-         8DYFDZZII4WvuD8n4VmxbQ6fNnTKwzsPUzRa90puMmplYzTJYsRARJ6mdy5hnCt2Cb
-         8fZybp9zXeOClzV6aZ681PfV51jJGl1UXASM9tXY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.88.62] ([89.1.212.111]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MJE6F-1kYNiA3CoN-00KgDY; Wed, 09
- Dec 2020 15:53:41 +0100
-Date:   Wed, 9 Dec 2020 15:53:40 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Taylor Blau <me@ttaylorr.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] t5310: stop expecting the default branch name `master`
-In-Reply-To: <X8/x5LaeZgbvXT0l@nand.local>
-Message-ID: <nycvar.QRO.7.76.6.2012091553210.25979@tvgsbejvaqbjf.bet>
-References: <pull.809.git.1607260623935.gitgitgadget@gmail.com> <xmqqim9dbh17.fsf@gitster.c.googlers.com> <X8/bYzjP569wEL5x@nand.local> <xmqq360g6lxc.fsf@gitster.c.googlers.com> <X8/x5LaeZgbvXT0l@nand.local>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730113AbgLIPaT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 10:30:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45834 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728313AbgLIPaS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 10:30:18 -0500
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com [IPv6:2a00:1450:4864:20::641])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69410C0613CF
+        for <git@vger.kernel.org>; Wed,  9 Dec 2020 07:29:38 -0800 (PST)
+Received: by mail-ej1-x641.google.com with SMTP id a16so2705667ejj.5
+        for <git@vger.kernel.org>; Wed, 09 Dec 2020 07:29:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=Z5akfwwye6bXWWFxM8foy9KJThrdkI0ulE0NRqq3bmk=;
+        b=o35ULhyGZ1ax1i5sBRptbh45oS6sUGXu3lA1FP5oSm/inAfUr+XvvtNujdMuHWjomw
+         B9okut9aHm8IYvJfAl60KEsOtfsH1knNfxUmt0+ZomN5AiMUbolzsoMHl5IrvUckUp0r
+         BPwBBxkNqm7ZDoXC5XkUzrB6rTdkcotV9qTwYYomO+cLWrKPbllkjZg0fci+isD9AZgJ
+         4baknTxyh4rT1G4QXbRLNPTykRgnr/rSGbjOk6Gj6M8ofxRBlAdlb9Yzoar1zHKOX3pV
+         Yg6YDgJEi1cA6dHImduahP3DCQKSjDJ/FXoG8mANwr0MHSMo/HUxvyCfmG+qh0NHqE9L
+         LfAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=Z5akfwwye6bXWWFxM8foy9KJThrdkI0ulE0NRqq3bmk=;
+        b=dqeP/nIVTYo4R0l2ok0EhlGt6MYDUZayMiQet9hsA84Bt82Hg/S4cMJEfl0ZFc1qrb
+         gdomP+8dNQ8/T3UEAsdUiH6aA1YFum4q0GW3C7zxDbpqQt1BKXoLoFSj+5hdIf3GQOpv
+         KL2yH0Tf8HNzQSPVi7po/iG6hDjqp0V/IXrX1bXGd5UR8kOQ8ywIGuW2bEx2YUGrF4MF
+         xk6fTLqLk7nV8EyIqrDLDy0DoHbsSamtBRyC8OX0mXM8wTmLY1SS2JiPyQwYTl8PxXCH
+         AFAUeTap06WstQormx7TdG3g3ps3xEbp6S5VZTwdZ6kJqWRREmG/KnKi9+fcuKyNYQQq
+         UBCQ==
+X-Gm-Message-State: AOAM530BnLLuuWkboSPFWp+3jU7nsBH1NSB/kxEH7iJithoCRfTKBCXF
+        Mmx8rfQP37DGiVrPP1UszsA=
+X-Google-Smtp-Source: ABdhPJzxKslDG6nCS6z9uv1s1oXcIUz2roAaBG1e3ugd0oWUxcFWDMWvHY+5YbpV9Wu5qSYdXSnIlQ==
+X-Received: by 2002:a17:906:1481:: with SMTP id x1mr2552340ejc.186.1607527776991;
+        Wed, 09 Dec 2020 07:29:36 -0800 (PST)
+Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
+        by smtp.gmail.com with ESMTPSA id a12sm1949703edu.89.2020.12.09.07.29.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Dec 2020 07:29:35 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Philip Oakley <philipoakley@iee.email>
+Subject: Re: [PATCH v4 0/6] config: allow specifying config entries via env
+References: <cover.1606214397.git.ps@pks.im> <cover.1607514692.git.ps@pks.im>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.13
+In-reply-to: <cover.1607514692.git.ps@pks.im>
+Date:   Wed, 09 Dec 2020 16:29:35 +0100
+Message-ID: <87y2i7vvz4.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:w0p6rFaMQ4wG1AEoH0w0vUdW5bTu4CLB5NcQzYQShRGsTtDhUSm
- GxQZGAUQ17+9MFfO9Ve4v4zglQoJG9dNpw3xOaH/Ks1bEJzStg6cqSKBE26gwHnh1f2W0O5
- cl2XedUVmU9fMBpoJBQaSoi1+/+JYXo4hB6hlBw/OBgpBMl+DviwxbyLzb2ltbffiGore96
- gS6LSnOYx74p9GHheUCiQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:sdhD0R+oLMk=:In/IACXohXyPde9uCfmadr
- D+joXUJ7WsWfnjw90Hc/DbM9DG/kM5qIfcM2bOSiNNyRl9yTlTbetoyyAEoLF34KBq/Qs3TXY
- l6jyDLFv7DII5BQAnlAveZy+6YS4VbbDL39AlrlwEfJMagDCmXfoK5JaUoJZ331XEnM7wr669
- yd5xMKtE7LE+FgsbJWcmwDE5o/2M6XBF88AvTOF61awofHK4sTLf/OybocfjIorIkDwxIbOsU
- iFCSQuB+o5PQPKg5OyR9Ucqsi/VVIqb17p3DPuRostBe3E9p7q/Xedtfp5hk20EhUIanp0I9A
- wofNf8UOyZdeeucZXOZdFJlyHUCtJbuTVWNHCigx07+ubLodQRqLcAksnnc6h6H7/IQjL7GqC
- iAFKerUUDxXwskzbPlztngmr2TXEvB7lJYs4ydsK7LzIS6X/oDrvGE8U/w7sNqVKd6UGEfZ9n
- 5PbgF80mjVUGa/P2/zFiliAvtKhq9PZ6Rr8wi3AkjF/LUBedMNqw0SG8sXrEwOVU3WldOiTmP
- g5CYcdo00mGCHD9H+a+FlDjQ9OyrdFffTMPXlkCuJ7XaUA73x7rf+JaLFhQUX/eAwOfHhErJx
- L5n7CiY1MXhVrUhaI5rk/ETciMX46M1hDuBabTcBQWqG4BnG/RD9rOSa/86jfy5MqIWNpTai4
- yFyBFakFNcepMNV6rQ4aWwTnDB58xDG3xUFu7pEv7YK4u7Sfxj5oP3f3qtf+tBuKDYoDYqtVa
- 6RxW37KQtIa5OSuxnyB2PIe8l3DZmTG7Ml5w0BZpT5IShnpRBqAwAzPyKXeSTmSU5G5Nlu555
- 9fruYq48Y0ryZaKk7iBZWbHiGyFC1b8Ep5pFpVpbUuHKiBUO+aX+DtWHUfcPvxKNkDK2JA/jF
- i/EX+DG8q348rFtGnAd/CRZAu3BH3U5paw/+dqXLk=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Taylor,
 
-On Tue, 8 Dec 2020, Taylor Blau wrote:
+On Wed, Dec 09 2020, Patrick Steinhardt wrote:
 
-> On Tue, Dec 08, 2020 at 01:13:35PM -0800, Junio C Hamano wrote:
-> > Taylor Blau <me@ttaylorr.com> writes:
-> >
-> > > On Mon, Dec 07, 2020 at 10:35:48AM -0800, Junio C Hamano wrote:
-> > >> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> > >> writes:
-> > >>
-> > >> >     This one goes on top of tb/pack-bitmap, and requires an updat=
-e of
-> > >> >     js/default-branch-name-tests-final-stretch (it no longer need=
-s to
-> > >> >     hard-code GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME in t5310).
-> > >>
-> > >> As the targetted topic is not in 'next' and marked with "Needs a bi=
-t
-> > >> of reshuffling?", I'd appreciate this patch to be also forwarded so
-> > >> that I do not have to worry about it myself.
-> > >
-> > > Ah, sorry that I missed this before sending out v3. I was hoping tha=
-t
-> > > the fixup would be limited to one patch, but this needs to be either
-> > > spread across multiple patches, or applied at the end.
-> > >
-> > > Since I already sent v3, how do you want to handle this?
-> >
-> > As I have many other topics on the table to attend to, I can skip v3
-> > and take v4 if it is not too much trouble to fix the issue at the
-> > source.  Thanks.
+> this is the fourth version of my patch series which aims to implement a
+> way to pass config entries via the environment while avoiding any
+> requirements to perform shell quoting on the user's side.
 >
-> No problem at all. Your instructions were spot on (4/24 and 15/24 needed
-> adjusting, as well as the later patches which could no longer be
-> applied after modifying those two).
+> Given that the What's Cooking report notes that my third version is
+> about to be dropped dropped because the `--config-env` way of doing
+> things is preferred, I've now adopted that approach. I've taken the
+> patch which Peff posted originally (with one change strchr->strrchr) and
+> added documentation and tests to it.
 >
-> Checking my work against upstream, I can see that the only diff lines
-> which mention "master" are removals:
->
-> $ git diff @{u}.. | grep master
-> -	git checkout master &&
-> -	bitmaptip=3D$(git rev-parse master) &&
-> -		git rev-list --count other...master >expect &&
-> -		git rev-list --use-bitmap-index --count other...master >actual &&
-> -	git --git-dir=3Dclone.git fetch origin master:master &&
-> -	git --git-dir=3Dclone.git fetch origin master:master &&
->
-> and spot checking the inter-diff between what I have and what Johannes
-> posted I can see that they are the same. I've added some Helped-by lines
-> in the relevant patches to indicate where the suggestions came from.
->
-> v4 coming shortly...
+> This patch series still includes my old proposal as it would actually be
+> a better fit for our usecase at GitLab I have in mind, which is to put
+> all configuration which applies to all git commands into the commands
+> instead of using a config file for this. I have structured the series in
+> such a way though that those patches come last -- so if you continue to
+> think this approach shouldn't make it in, please feel free to drop
+> patches 3-6.
 
-Thank you so much for picking this up!
+To add even more to your headaches (sorry!) I hadn't really fully looked
+at that --config-env proposal.
 
-Ciao,
-Dscho
+As noted in my per-patch reply in [1] it will still expose the key part
+of the key=value, and in at least one place (url.<base>.insteadOf) the
+key is where we'll pass the user/password on the command-line still with
+that.
+
+I'd much prefer either your 6/6 over --config-env for that reason & that
+--config-env makes it impossible to pass a key with "=" in. For "-c" I
+don't think that's much of an issue, but e.g. with
+"url.<base>.insteadOf" needing to take arbitrary passwords + us
+implicitly/explicitly advertising this as a "here's how you can pass the
+password" feature not being able to have "=" is more painful.
+
+I mildly prefer Jeff's suggestion of just getting GIT_CONFIG_PARAMETERS
+to the point where we could document it [2][3] to both of those, but
+that's mostly an asthetic concern of dealing with N values. It won't
+matter for the security aspect (but I think you (but haven't tested)
+that you still can't pass a "=", but your 6/6 does allow that).
+
+I still can't quite shake the bad spidey-sense feeling that any of these
+are bad in some way we haven't thought of, just from the perspective
+that no other tool I can think of that accepts a password has this
+mechanism for passing in a user/password or other sensitive data.
+
+E.g. openssh explicitly has refused to add anything of the sort (a
+--password parameter, but maybe they didn't consider
+--password=ENV_VAR). E.g. curl has a mode where you can have a password
+on the command-line, but they then make you use -netrc-file to grab it
+from a file. From searching around I see concerns about shell histories
+being part of the security model, maybe that's why it's not a common
+pattern.
+
+So I still wonder if some version of what I tried with /dev/fd/321 in
+[4] would be best, i.e. something that combines transitory+no extra
+command invocation+not adding things to shell history. We support that
+pattern in general, just not in fetch.c/remote.c for no particular good
+reason AFAICT.
+
+I do that that whatever we go for this series would be much better if
+the commit messages / added docs explained why we're doing particular
+things, and to users why they'd use one method but not the other.
+
+E.g. IIRC this whole series is because it's a hassle to invoke
+core.askpass in some stateful program where you'd like to just provide a
+transitory password. I think some brief cross-linking or explanation
+somewhere of these various ways to pass sensitive values around would be
+relly helpful.
+
+1. https://lore.kernel.org/git/871rfzxctq.fsf@evledraar.gmail.com/
+2. https://lore.kernel.org/git/20201117023454.GA34754@coredump.intra.peff.net/
+3. https://lore.kernel.org/git/20201118015907.GD650959@coredump.intra.peff.net/
+4. https://lore.kernel.org/git/87k0upflk4.fsf@evledraar.gmail.com/
+
