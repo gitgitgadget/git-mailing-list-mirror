@@ -2,216 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 346EDC433FE
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 19:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26364C433FE
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 19:13:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D42B4233F8
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 19:06:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C656423B99
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 19:13:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387463AbgLITGQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 14:06:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50970 "EHLO
+        id S2387513AbgLITMv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 14:12:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728997AbgLITGD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 14:06:03 -0500
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2656C0613CF
-        for <git@vger.kernel.org>; Wed,  9 Dec 2020 11:05:22 -0800 (PST)
-Received: by mail-oi1-x242.google.com with SMTP id o25so2874145oie.5
-        for <git@vger.kernel.org>; Wed, 09 Dec 2020 11:05:22 -0800 (PST)
+        with ESMTP id S1733289AbgLITMu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 14:12:50 -0500
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42A8AC0613CF
+        for <git@vger.kernel.org>; Wed,  9 Dec 2020 11:12:10 -0800 (PST)
+Received: by mail-wm1-x343.google.com with SMTP id x22so2496458wmc.5
+        for <git@vger.kernel.org>; Wed, 09 Dec 2020 11:12:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gj8lX9vRgN43jH5nWRYAagt1l3NM1WRO4XMg19MI0bU=;
-        b=GzcUAjWrW3ao5A8eySkYZO6GWbqNvUMNyebJ/f7jqRW35mYyPvzfK243WZlEcw3HHB
-         VH7drhE5LgnH+hBad7ZlErY+Tsk5bcbub2HO8qbuYIMEZcdWZ5KPUT4FrnP8lzcF9FlL
-         jI9q+l+AJnyG5Qe+jF8JWVIEHYtGYBBLWyimLO+2Xelz1QdEVQILKzhaaHpCnaAEdcE7
-         vnSCINZflCklDoIZws54C6rSJnmIOSFAeFO56ua+cT305hTR9zVMU4a4b3qZelr1dVj0
-         1DEUAkv8tUoysvQb5hLIQ5d72XCpu5K99oopNWz46ucR9F7yIbJmlhv3gRk4WNXReBFv
-         luFg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=JkAeqA5yWCve78SCia5B6zbaWS8Ay+vkRf7jweSf0Sw=;
+        b=CyBaDIroQgt68Wiai0ijWf5Rfo9ElowoMUqwQrhoRMCqAvJAXdJLazsxr4SSSNDboS
+         p7F4u9tSKLOZdDlHLNvVJ3S7zY/JxLVKo3q1Q8dKNWDNqjt9OdAXqPCrkTXsmz0Spssi
+         OBxx6W0haXQdDsUiyE9uBgULe99zSI2mtjNNXbmokzpMZ9fC0Kah5D4QCdx0xkZknvly
+         8/2f06NNqN33tRVKG/00wDTbN8up97/CkzoIa/IENfdsM0cbLQ5kdIKluTJZMtDS3fnl
+         MhEAjeqwQOR8jO9hkc8pa6aezh9HY1BjxoYpifGMDZj2Dl4Gno3rQzdF+KuH7J1Ccw8L
+         3z1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gj8lX9vRgN43jH5nWRYAagt1l3NM1WRO4XMg19MI0bU=;
-        b=gLw8j4dhHbK82AlzcwADRXY7LFkvUrAo+WZlmiyl7jL1P/QIDxNtNZ/fxXtk2GexgA
-         Xn8hNW55QJdrIMlIV/zHR+LANrOgdco8U8Wkx7swAhoceKrNquW7Lq/j/n2jWl2VpDUp
-         5kZ7rfanF1t6qXnrH87FQT0QbeDgYPD63U8LvPFdJ8KfM9d2dl0s+f89yqeR2TfgXJ1Z
-         edQjnO8HhNTpE2ytidIAAvKELHDGHyHafHUcS85k+iXTOWCWTJ21wdO4jq+9ktRp6/Qw
-         zZUvwf38BvH4ikZNekFYXV6oP1cVi7jZN+t4EIDNssqMqMXBv20ltcAPO7brmMszOt0Q
-         AN7w==
-X-Gm-Message-State: AOAM530lbSUssKLf2zr+Zjy3W+dqW5yv6B3vHYcrV8ki07AtqF/bQWsI
-        OH7yAMI12GLSQAo9vsM0XSjMwAdW5tutWvrDhHp9XWRSoojD4w==
-X-Google-Smtp-Source: ABdhPJwg9hZiMF2lCfeO7xZSBJMbSkbTHR2OwAV8lAmmvmOsil0gqPb4GTa5XL3LdvJ11iDwfAZ2UYvy1f5t/UhGNRE=
-X-Received: by 2002:a54:4704:: with SMTP id k4mr2833981oik.39.1607540722025;
- Wed, 09 Dec 2020 11:05:22 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=JkAeqA5yWCve78SCia5B6zbaWS8Ay+vkRf7jweSf0Sw=;
+        b=h49LAVkl4Wls4mbMt1u0byev+0JK8XUbFUbXef5AWStIbGzH1H/MTM0NLh8LJ5o0+j
+         7w2+xoCdPRsjJHErlTJ//MP4k30uncH0R1asK5/a0lVQluffEVklL6+T1e7re9sE/fFk
+         p6OIZu5p64Sn47142fG3ZWPr2KpOomfh3F2o1IJ9+9cCsrzK5fQCTzGNBZ/kQBdEfa2+
+         y4YMlcykist5izfmLrFGDmsXWVdBnau+UU9g2zPy0OVfOrcX9OY13ZcTlhTjy1iVqUrc
+         WWcJfFh6wFUituEFAGmqMTYzw0b8BDdqDOfqSiNrBfAUTDkL1aJf3mynC1hbKr7H5w5b
+         0EPQ==
+X-Gm-Message-State: AOAM530sHxD7DtsA9vS7zHBIoyf6wNjCdpxo+SYF6W9JnLNYDCDwCCpk
+        Zli8ycDPqA704JUXLun7L6ciTnNt8Ic=
+X-Google-Smtp-Source: ABdhPJwZzoywoWi8JLT+cITChY9vF3khItExu571ERkJ+eEvckAEsvfBgiib4xRkR2C5XB39/xskgA==
+X-Received: by 2002:a1c:6689:: with SMTP id a131mr4291661wmc.33.1607541128668;
+        Wed, 09 Dec 2020 11:12:08 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e16sm5591483wra.94.2020.12.09.11.12.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Dec 2020 11:12:08 -0800 (PST)
+Message-Id: <pull.930.v2.git.git.1607541127701.gitgitgadget@gmail.com>
+In-Reply-To: <pull.930.git.git.1607501616914.gitgitgadget@gmail.com>
+References: <pull.930.git.git.1607501616914.gitgitgadget@gmail.com>
+From:   "Julien Richard via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 09 Dec 2020 19:12:07 +0000
+Subject: [PATCH v2] doc: 'T' status code for git status
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20201204061623.1170745-1-felipe.contreras@gmail.com>
- <20201204061623.1170745-3-felipe.contreras@gmail.com> <CABPp-BFdjj=+4jk0vo=kpNc6ug1=UgtKfXJZkseyyxut2VB=Uw@mail.gmail.com>
- <CAMP44s1eTc4+tbULbyz5ENgbcN4tOVBA3Z-4GS4yMpciUD_1Hw@mail.gmail.com>
- <CABPp-BFwWBLdFPsKi3o9hznFtAeWWfhNAyuymPS4BhMAHpnSfw@mail.gmail.com>
- <CAMP44s1=aZL7BMKSjzKJ7qYqg-usScwzRUJmaOhsCGvQ4ieYow@mail.gmail.com>
- <CABPp-BF4rXBOKsn8bG6y3QUEtNVV9K2Pk5NmwrU5818CqhRt_Q@mail.gmail.com>
- <CAMP44s2L24jhCG9ps72--ZiJkXUovR726jCf8JTLHAs0jV7Whg@mail.gmail.com>
- <CABPp-BGdNt8TBMTE9zvaicF5AtvyTBhpiJXqkuZc7mBLGbw0Qw@mail.gmail.com>
- <xmqqeek2cc14.fsf@gitster.c.googlers.com> <CAMP44s2XFQoda_PMULWha-rj9HhNfEddO5fikmswk9=AWN4RCw@mail.gmail.com>
- <xmqqpn3lbhxn.fsf@gitster.c.googlers.com> <CAMP44s2nmVnXiBA8S=vHBZznuRNKKe=xGOEBJ80MYhA_XCqNkg@mail.gmail.com>
- <xmqqlfe99yvy.fsf@gitster.c.googlers.com> <CA+P7+xp=UGd0iK8uLxnqH0iycrxo--8on3d0Z+jsuyhpV-fVew@mail.gmail.com>
- <xmqq360h8286.fsf@gitster.c.googlers.com> <CAMP44s3KCoDfRXzarJw5AE7UsY-=eP6GbHzdDcdrs2rsw5tL+w@mail.gmail.com>
- <xmqqy2i86ok1.fsf@gitster.c.googlers.com> <CAMP44s13YFZeOMz6V5sPdOnLXD-v3aQZiP7vvXXNfQLZP4Puwg@mail.gmail.com>
-In-Reply-To: <CAMP44s13YFZeOMz6V5sPdOnLXD-v3aQZiP7vvXXNfQLZP4Puwg@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 9 Dec 2020 11:05:11 -0800
-Message-ID: <CABPp-BGZcmHhge7JnM12baL_86yV-+7z4kkvFwUUrP+db8QD8Q@mail.gmail.com>
-Subject: Re: [PATCH v2 02/14] pull: improve default warning
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        "Theodore Y . Ts'o" <tytso@mit.edu>,
-        John Keeping <john@keeping.me.uk>,
-        Richard Hansen <rhansen@rhansen.org>,
-        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
-        "W. Trevor King" <wking@tremily.us>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        Julien Richard <julien.richard@ubisoft.com>,
+        Julien Richard <jairbubbles@hotmail.com>,
+        Julien Richard <julien.richard@ubisoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+From: Julien Richard <julien.richard@ubisoft.com>
 
-On Wed, Dec 9, 2020 at 1:53 AM Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
->
-> On Tue, Dec 8, 2020 at 2:16 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > Felipe Contreras <felipe.contreras@gmail.com> writes:
-> >
-> > > That is exemplified by the fact that this whole thread started from a
-> > > user that refused to configure pull.rebase and expected the Git
-> > > project to just do the right thing (which is basically choosing a
-> > > useful default).
-> >
-> > Which is basically asking for impossible, and I do not think it is a
-> > good idea to focus our effort to satisfy such a request in general.
-> > There is no useful default that suits everybody in this particular
-> > case.
->
-> I think I already made this point, but this is the nirvana fallacy
-> (the perfect is the enemy of the good) [1]. Just because we can't have
-> the perfect solution doesn't mean we can't pursue something better
-> than the current state.
->
-> What was asked was not a perfect solution, just a better default. If
-> right now the default is good enough for 20% of users, and with some
-> changes we can make it better for 40%... that's progress. We don't
-> have to wait until we have a solution for 100% of them.
->
-> > But for anybody who uses git for real (read: produces his or her own
-> > history), it would be pretty much a useless default that forces the
-> > user to say rebase or merge every time 'git pull' is run.
->
-> This is not true.
->
-> I will give you a real example.
->
-> I create a branch named "fc/margin" based on "master", I make my
-> changes, I push the branch to my personal repository, and create a
-> pull request. This is the typical triangular workflow.
->
-> Then I do "git pull [--ff-only]". What will happen? 1) As long as my
-> branch is not merged upstream, I will get an error, and my branch will
-> stay where it is. But then, 2) when my branch is finally merged to
-> "master" it will be fast-forwarded, so now both "fc/margin" and
-> "origin/master" point to the same commit.
->
-> A. Did I use git "for real"? (produce my own history)
-> B. Was "git pull [--ff-only]" useful in this case?
->
-> I think that one of the problems is that Git has so many different
-> workflows that finding another person that has your same workflow is
-> like finding a person with your same birthday. It's not impossible,
-> just takes more than a few tries.
->
-> Also, and this is not a deriding question, I'm genuinely curious: how
-> often do you send pull requests?
->
-> BTW, this example above is real [2]. In my particular case very often
-> I'm creating history, I'm just not the one pulling it.
->
-> > But other than that, I do not
-> > see any real use for the choice, which would mean in practice,
-> > pull.mode would have only two useful values, rebase or merge.  That
-> > does not feel a good enough reason to supersede what already exists,
-> > which is pull.rebase=yes/no.
->
-> The fact that you don't see the use doesn't mean the use is not there.
->
-> Why do you think this issue keeps coming back again and again, and
-> again? And every time it comes back people say the same thing:
-> "fast-forward-only merges should be the default".
->
-> Unfortunately it's not that simple. It's a rabbit hole that leads to a
-> cacophony of issues in git pull. However, we can fix some of them
-> *today*.
->
-> > Perhaps there is a good reason why certain classes of users would
-> > want to configure pull.mode=ff-only (i.e. "I might type 'git pull'
-> > by mistake, please stop me if I did so on a branch I have real work
-> > already.").  If that is the case, I would very much agree that it
-> > would be awkward to express that choice in the current framework to
-> > choose between pull.rebase=yes/no and pull.mode=(rebase/merge/ff-only)
-> > would become a lot easier to explain.
->
-> There's three options:
->
-> 1. pull.ff=only (that doesn't work IMO)
-> 2. pull.rebase=ff-only (that works, but it's kind of wonky)
-> 3. pull.mode=ff-only (maybe it should be pull.mode=fast-forward)
->
-> But the current option (pull.mode=merge) just doesn't fly. And BTW, I
-> did create a poll in reddit's r/git [3], and 67% (of 789) said they
-> didn't specify anything, just "git pull".
->
-> So, most people simply do "git pull" and hope for the best.
->
-> Moreover, in 2014 I said if we don't fix it now (which is likely), we
-> will be discussing it again [4], and here we are now. And I'm saying
-> it again: leave the mode as "merge", we will be discussing this again.
->
-> I could do some mail archeology if you want, but this issue starts to
-> be mentioned at least since 2010, and virtually everyone (except one
-> person) agreed the default must change, even Linus Torvalds. Reading
-> back what Linus said [5], it's something very, *very* close to what
-> I'm proposing (I would argue my proposal is better).
->
-> So you let me know. Do you want me to dig a decade of discussions and
-> coalesce those conclusions into a summary so we can decide how to
-> proceed? Or should I drop the plan? Only that if we drop it, I
-> *guarantee* we will discuss it yet again years later.
->
-> Moreover, this is the reason why I split the series in 3. Even if you
-> decide you don't want to change the default, part I of the series can
-> still be merged *today*, and everyone would benefit.
+Git status can return 'T' status code which stands for "typechange", fixing the documentation accordingly.
 
-Have I missed some subtlety here?  This whole email appears to me to
-be arguing against a strawman.  Reading Junio's other emails in this
-thread[1][2], it's pretty clear he thinks the current behavior is
-buggy and suggests how it should be changed.  From what I can tell,
-you appear to be arguing against doing nothing and against only
-accepting perfection, neither of which were positions I saw anyone
-take.  In fact, the positions you argue for at length appear to
-exactly match the ones he took[1][2].  What am I missing?
+Signed-off-by: Julien Richard <jairbubbles@hotmail.com>
+---
+    Document 'T' status code for git status
+    
+    Git status can return 'T' status code which stands for "typechange". I
+    can't document more the behavior but it would have helped me a lot to
+    see that line in the documentation so I guess it can help others too.
 
-[1] https://lore.kernel.org/git/xmqq360h8286.fsf@gitster.c.googlers.com/
-[2] https://lore.kernel.org/git/xmqqlfe99yvy.fsf@gitster.c.googlers.com/
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-930%2Fjairbubbles%2FgitStatusTypeChangeCode-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-930/jairbubbles/gitStatusTypeChangeCode-v2
+Pull-Request: https://github.com/git/git/pull/930
+
+Range-diff vs v1:
+
+ 1:  ee106c427a0 ! 1:  8511a2d4f10 doc: 'T' status code for git status
+     @@ Documentation/git-status.txt: codes can be interpreted as follows:
+       * 'R' = renamed
+       * 'C' = copied
+       * 'U' = updated but unmerged
+     -+* 'T' = type changed
+     ++* 'T' = type changed (e.g. a symbolic link becoming a file)
+       
+       Ignored files are not listed, unless `--ignored` option is in effect,
+       in which case `XY` are `!!`.
+
+
+ Documentation/git-status.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index 7731b45f078..21c406a812c 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -197,6 +197,7 @@ codes can be interpreted as follows:
+ * 'R' = renamed
+ * 'C' = copied
+ * 'U' = updated but unmerged
++* 'T' = type changed (e.g. a symbolic link becoming a file)
+ 
+ Ignored files are not listed, unless `--ignored` option is in effect,
+ in which case `XY` are `!!`.
+
+base-commit: 3a0b884caba2752da0af626fb2de7d597c844e8b
+-- 
+gitgitgadget
