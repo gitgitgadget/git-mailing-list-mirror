@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 311CAC19425
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 20:02:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2754CC4361B
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 20:03:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F1E6323C43
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 20:02:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EFC7F23BEF
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 20:03:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387952AbgLIUCm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 15:02:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59718 "EHLO
+        id S2387595AbgLIUC7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 15:02:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388060AbgLIUCj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 15:02:39 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C25DFC061793
-        for <git@vger.kernel.org>; Wed,  9 Dec 2020 12:01:58 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id r7so3087279wrc.5
-        for <git@vger.kernel.org>; Wed, 09 Dec 2020 12:01:58 -0800 (PST)
+        with ESMTP id S2387945AbgLIUCm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 15:02:42 -0500
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4971AC06179C
+        for <git@vger.kernel.org>; Wed,  9 Dec 2020 12:02:02 -0800 (PST)
+Received: by mail-wm1-x341.google.com with SMTP id g185so2992700wmf.3
+        for <git@vger.kernel.org>; Wed, 09 Dec 2020 12:02:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TE/H6ocKosx2Jp2qItIeJhggW3gbgKvO2QtcAZMksw0=;
-        b=fs968EATjmnF0Df/PjinjtHqCpZMuS2AuihA8sex99G4UOt/8JmXX4WBBE4vkMcAEU
-         7/rfcrg2jCOXDVoU195qKCbAr4AHER9CNsq9BMSpKV3d4f+L8aRN5IZn9L7KinCFB5CJ
-         h2U0ntr9gSeACVSj/pIsZWfmRl81HVC6584lrUMCp/dx7EtcTkb1krq6PcnB/Wsx0PAe
-         aEppmZ6sPQIa84IWYiH5Diy9ZVdqFff/I5aKq2IpLYPOwJv68iEKwcg19NIPiT8OXK8q
-         dz9hfs2/ZN+3tJvCSG/ifu7OsgOmF0zi9Mam5fZ5iRPirzkkU0foyfEwIGBtwclhb9iK
-         /ECQ==
+        bh=g0UJ+359V/LQdHfLW7yM0GtnBSIOEuMSuU1g6/NH5NI=;
+        b=AS/mL7wxqGCIiUC6zsnTQS0oL8mUMtj+52OT9D1rtEQuRBcF8aCLGoUWduhblre4ED
+         hllxFUJiYGrjF4z644ppChC5tNefDFo7J9Eggig0DEGOhq+2DY0+/BJIY+OOBWt1foNE
+         FPXV9qtc74ZPJa3Da5DazHaGhg0nbOXMGjjW2KCSm+VuAASAgp321zOxHsTDdTXbxj1G
+         Ov/yiFL3CWGobQCmlKcP8CSgZVbKa+WhwvhzWuq0rYYYXpgmwPwyIRAU9iil/aNOdPYp
+         BETOb47Hmq84oq9ykG6p+AVrfEsAsDnpAuhq/S9t86kggqDYZrb5MM0qMtwCeVzXyge3
+         eOWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TE/H6ocKosx2Jp2qItIeJhggW3gbgKvO2QtcAZMksw0=;
-        b=L18Xw98jf0b+4ywY8cgvsytyxjsfTqbp5BfjQghwj4S/N2Sw7+yS0A9Ga9ETrCJdqw
-         SvIPWXCzg98dFQsL5FNwnrxmG0LAXGhI37Lvzjkly0j0l/E6m51l1235nVqtulSL4dZd
-         NQ/GRIS5ImLgQ0zdkcd3i4Tiy1wM0YBvWWajnLzfNHNMXe5AOC29JfAdE0WZGqRx3s+Y
-         9DvoFZTmeiIeqXsfuEimpXnJ51ytc4IgxU00c3g8BQhi1afv1FbztddP38Tvj018on6r
-         O9cE91f9gGgtP5RQY33PLj2OXE7QHhp5gF4LI/fLEsIB9x0oUh4YpejMtVmuyaEDCVyk
-         Nc9A==
-X-Gm-Message-State: AOAM531t9wyCYq1iPvHsE9DVYjpKI/GvWydIoB/ysrajxnSw0kDuE2Ak
-        L9rMuYVoUd7kuUyw81bJbwl0exUtzPeXgQ==
-X-Google-Smtp-Source: ABdhPJz1gQ5LJBO9h74uweUbszBaOWGBXW8oX/6qWEpD68TI8FJPm0k1kx/ZkGCm+EbhHWmWziYAxA==
-X-Received: by 2002:adf:c40e:: with SMTP id v14mr4469948wrf.163.1607544117568;
-        Wed, 09 Dec 2020 12:01:57 -0800 (PST)
+        bh=g0UJ+359V/LQdHfLW7yM0GtnBSIOEuMSuU1g6/NH5NI=;
+        b=CYfustSUdFqhf2FGgnAdRT/LMSusx5V5aTOeMLXUNFxw/DBK3HTMnXxo+SwShTwE6x
+         zqeyQUIC8wlcXD4QYCPxAwfs76WNm5tUgj+z0axDuwQk7wIkyPGlLTshZ5gkIZSuN/LY
+         rklSNehbpwIAY0OKdXbm3gM2MuT8zw5i/L40p4qJLYqQz9Qua0Ey2mpouwTtn7WpgtZF
+         OCwkJC0VvVXhkNNUu9dz3lNCifUHD9m+JpX+Jo7CFdtkLXXfiOvyF7fMFpVENj0MMzeC
+         gAYganWGSU14zvRiXcS+BMVWzoEQGJg6AkF0cnAyRIEz1wnqegpuGgdYk4/pc4w2loYS
+         mKWg==
+X-Gm-Message-State: AOAM533Tb9H8nCzN/YWiHYHY11ivxGVBS4p1Gr6QCRk1OMl4WsfYt85r
+        TngivxPgVH5wCq3KJ/NKLWzG2jlubId+iw==
+X-Google-Smtp-Source: ABdhPJyMEj4EjXigS3U7/6aQNSsb+AK5IDtPx4b2qMbYrVQ8QuHrq6hXaLs2oj/BxniazJytZhONWA==
+X-Received: by 2002:a7b:c385:: with SMTP id s5mr4461908wmj.170.1607544121075;
+        Wed, 09 Dec 2020 12:02:01 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 34sm5762128wrh.78.2020.12.09.12.01.56
+        by smtp.gmail.com with ESMTPSA id 34sm5762128wrh.78.2020.12.09.12.01.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Dec 2020 12:01:56 -0800 (PST)
+        Wed, 09 Dec 2020 12:02:00 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 01/10] mktag doc: say <hash> not <sha1>
-Date:   Wed,  9 Dec 2020 21:01:31 +0100
-Message-Id: <20201209200140.29425-2-avarab@gmail.com>
+Subject: [PATCH v3 03/10] mktag: remove redundant braces in one-line body "if"
+Date:   Wed,  9 Dec 2020 21:01:33 +0100
+Message-Id: <20201209200140.29425-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
 In-Reply-To: <20201126222257.5629-1-avarab@gmail.com>
 References: <20201126222257.5629-1-avarab@gmail.com>
@@ -78,28 +78,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the "mktag" documentation to refer to the input hash as just
-"hash", not "sha1". This command has supported SHA-256 for a while
-now.
+This minor stylistic churn is usually something we'd avoid, but if we
+don't do this then the file after changes in subsequent commits will
+only have this minor style inconsistency, so let's change this while
+we're at it.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-mktag.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/mktag.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/Documentation/git-mktag.txt b/Documentation/git-mktag.txt
-index fa6a7561236..a158428eb9f 100644
---- a/Documentation/git-mktag.txt
-+++ b/Documentation/git-mktag.txt
-@@ -23,7 +23,7 @@ Tag Format
- A tag signature file, to be fed to this command's standard input,
- has a very simple fixed format: four lines of
+diff --git a/builtin/mktag.c b/builtin/mktag.c
+index ff7ac8e0e5d..97ca5f28b1b 100644
+--- a/builtin/mktag.c
++++ b/builtin/mktag.c
+@@ -161,9 +161,8 @@ int cmd_mktag(int argc, const char **argv, const char *prefix)
+ 	if (argc != 1)
+ 		usage("git mktag");
  
--  object <sha1>
-+  object <hash>
-   type <typename>
-   tag <tagname>
-   tagger <tagger>
+-	if (strbuf_read(&buf, 0, 0) < 0) {
++	if (strbuf_read(&buf, 0, 0) < 0)
+ 		die_errno("could not read from stdin");
+-	}
+ 
+ 	/* Verify it for some basic sanity: it needs to start with
+ 	   "object <sha1>\ntype\ntagger " */
 -- 
 2.29.2.222.g5d2a92d10f8
 
