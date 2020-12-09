@@ -2,104 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65726C4361B
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 21:58:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 844EDC4361B
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 22:00:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2B04023D1F
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 21:58:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 57A4B23C85
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 22:00:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388046AbgLIV6j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 16:58:39 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59176 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727030AbgLIV6i (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 16:58:38 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ABFA39EBB6;
-        Wed,  9 Dec 2020 16:57:57 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=o9X/9KT5HE8qtnIcaHKZgQkoFX0=; b=s3oEVb
-        /UL3he2vAQycxLc2gDM2WLGYRf4w9qk7mv7YNGk6ieFDLFVH3YDvZgBT0oLboqkK
-        ZGnUGNdmCI7XR07UtWVG+uU6FZzSifTcin2C1QXR+m0n3yq9SZr54V2skPuDpsM+
-        k3wa1nV7dmQB4ri3EaydCi9/ugUYdI/EqKRj8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hSfbKlj6Qx8NiAaOT0jZ72tZ3k/N1QTS
-        vVb01GCxy41A4wCLJfOFQodG5LSUQwtDTzIUgg0drd1DyuTCgcMQZ3vhj5tg4KIc
-        MI9Rd6yEGoVYUBcaXOAVjJZsAi9PgLeM8ss7Olk0lX7D/pIh6K+Jvh6jGGMNrKk7
-        Yw1kicVQnC0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A34679EBB5;
-        Wed,  9 Dec 2020 16:57:57 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 324F69EBB4;
-        Wed,  9 Dec 2020 16:57:57 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: js/init-defaultbranch-advice, was Re: What's cooking in git.git
- (Dec 2020, #01; Tue, 8)
-References: <xmqqpn3j4ved.fsf@gitster.c.googlers.com>
-        <nycvar.QRO.7.76.6.2012091510280.25979@tvgsbejvaqbjf.bet>
-Date:   Wed, 09 Dec 2020 13:57:56 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.2012091510280.25979@tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Wed, 9 Dec 2020 15:11:44 +0100
-        (CET)")
-Message-ID: <xmqqft4e1w2j.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S2388378AbgLIV7v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 16:59:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49650 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388349AbgLIV7v (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 16:59:51 -0500
+Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com [IPv6:2607:f8b0:4864:20::842])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A52B3C0613CF
+        for <git@vger.kernel.org>; Wed,  9 Dec 2020 13:59:10 -0800 (PST)
+Received: by mail-qt1-x842.google.com with SMTP id c14so2210153qtn.0
+        for <git@vger.kernel.org>; Wed, 09 Dec 2020 13:59:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=rAPlC66E9TKDC+9zT5kQnhPcZN/KKpvTaOZ1ZgHGZcE=;
+        b=PHf4RN9ejlqehI8Iv/DtuXUgnbgGGBevWwi4B40UHBrDp8kZCTUY5jypG6oqQ3eTCc
+         uU0hhiJY1dmQOcKRfLMy/00s3G+Tolx7xKtGnNnikle1lCj0obyK0/qOR/jtsKQVl0r5
+         JFAL8bOCpuch9IinpEky47q6uWjek1A+I7SOKwuzLl/g2+jOHKIucjsO5RV4IDUJAdZS
+         j4fmQolXcNHeH27ei3LIFPOBjjk/rFnXezHw273gsYGKjSjt4iwDKgGJUjaHF8gvNllJ
+         dRjdUFQOXffz0rhEWMynFtsV7IYsqiONvE4DTE38P+BjEvJnWVXMCX4v8+fFCl8Kidns
+         L9vA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=rAPlC66E9TKDC+9zT5kQnhPcZN/KKpvTaOZ1ZgHGZcE=;
+        b=pI98/QbDaO2Lp/h+8F/qr4vOlnAoT1IKJJ2CdMdYCmADAnSBPjbrisGWajohhOQEBX
+         881rsM7Yv7M6wyvpMZDCPciIUs1eNFzAw4TaP99fOFEmYA4O8X6cLcGvj+ZbRgyTXTel
+         L1DmBFbTXZAHnSm+6FPJV3v3kFQ3A853WUlwnU9R/AP2BCmKPD2wXnQgEBuXrkaGWLAr
+         Z0sXbFzsa7gERYaURfwlF1HjJauqz9aETN5WeNwPYZrZhnZEeaH7s5b9X/7r55iQevnl
+         GC9rRXklkOBpH1mu1NdFcUhmqDlqYVp2p6T8IX7FZbKk9vgZBM6vaAXyXak3gEwddxT3
+         pv5A==
+X-Gm-Message-State: AOAM532yFTyzvHbXNgvdneeNzJJ03a3h63/4youoDPUefeJvi56v2+kB
+        7Pu0px0vyFMeg4LgjxV1Suk=
+X-Google-Smtp-Source: ABdhPJy4wKkl5Mkmyldezlv/90Z/aS64wUx6fv5Tc7UBRp2AhAJ2zqrDAPYy474O410vQ3leSg9Ouw==
+X-Received: by 2002:ac8:5a04:: with SMTP id n4mr5597690qta.21.1607551149652;
+        Wed, 09 Dec 2020 13:59:09 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:49a5:bddc:9642:d852? ([2600:1700:e72:80a0:49a5:bddc:9642:d852])
+        by smtp.gmail.com with UTF8SMTPSA id e10sm1883218qte.48.2020.12.09.13.59.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Dec 2020 13:59:08 -0800 (PST)
+Subject: Re: [PATCH v4 5/8] maintenance: add start/stop subcommands
+To:     Josh Steadmon <steadmon@google.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, jrnieder@gmail.com, jonathantanmy@google.com,
+        sluongng@gmail.com, congdanhqx@gmail.com,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.724.v3.git.1601902635.gitgitgadget@gmail.com>
+ <pull.724.v4.git.1602782524.gitgitgadget@gmail.com>
+ <5194f6b1facbd14cc17eea0337c0cc397a2a51fc.1602782524.git.gitgitgadget@gmail.com>
+ <20201209185114.GN36751@google.com> <20201209191616.GO36751@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <19201a12-7df5-9b95-cd8d-ab2be90cbb40@gmail.com>
+Date:   Wed, 9 Dec 2020 16:59:07 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101
+ Thunderbird/84.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 98AA3E2A-3A69-11EB-BD4A-D152C8D8090B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <20201209191616.GO36751@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 12/9/2020 2:16 PM, Josh Steadmon wrote:
+> Whoops, had a small think-o while writing the patch message. Fixed
+> below.
+> 
+> -- >8 --
+> Subject: [PATCH] t7900: use --fixed-value in git-maintenance tests
+> 
+> Use --fixed-value in git-config calls in the git-maintenance tests, so
+> that the tests will continue to work even if the repo path contains
+> regexp metacharacters.
+> 
+> Signed-off-by: Josh Steadmon <steadmon@google.com>
+> ---
+>  t/t7900-maintenance.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+> index fab0e01c39..41bf523953 100755
+> --- a/t/t7900-maintenance.sh
+> +++ b/t/t7900-maintenance.sh
+> @@ -422,7 +422,7 @@ test_expect_success 'start from empty cron table' '
+>  	GIT_TEST_CRONTAB="test-tool crontab cron.txt" git maintenance start &&
+>  
+>  	# start registers the repo
+> -	git config --get --global maintenance.repo "$(pwd)" &&
+> +	git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
+>  
+>  	grep "for-each-repo --config=maintenance.repo maintenance run --schedule=daily" cron.txt &&
+>  	grep "for-each-repo --config=maintenance.repo maintenance run --schedule=hourly" cron.txt &&
+> @@ -433,7 +433,7 @@ test_expect_success 'stop from existing schedule' '
+>  	GIT_TEST_CRONTAB="test-tool crontab cron.txt" git maintenance stop &&
+>  
+>  	# stop does not unregister the repo
+> -	git config --get --global maintenance.repo "$(pwd)" &&
+> +	git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
+>  
+>  	# Operation is idempotent
+>  	GIT_TEST_CRONTAB="test-tool crontab cron.txt" git maintenance stop &&
 
-> Hi Junio,
->
-> On Tue, 8 Dec 2020, Junio C Hamano wrote:
->
->> * js/init-defaultbranch-advice (2020-11-24) 4 commits
->>  - init: provide useful advice about init.defaultBranch
->>  - get_default_branch_name(): prepare for showing some advice
->>  - branch -m: allow renaming a yet-unborn branch
->>  - init: document `init.defaultBranch` better
->>
->>  Our users are going to be trained to prepare for future change of
->>  init.defaultBranch configuration variable.
->>
->>  Expecting a reroll.
->>  cf. <xmqq8saqjx2n.fsf@gitster.c.googlers.com>
->>  I think a new advice.defaultBranchName is a bad idea.
->
-> Unfortunately, this objection is news to me. Why would it be anything but
-> a legitimate interest to say "yeah, whatever, Git, just use the default
-> branch name, I'm fine with it"?
+Thank you for this. While I went to make sure the maintenance builtin worked
+properly, I forgot to check the rest of the test script worked as well. This
+is a good way to fix that.
 
-Message sent on Nov 24 is a news to you now?
-
-Anyway, I do not think those users who said "I'm fine with it" would
-be fine when the switchover happens outside their control.
-
-If they are truly fine, we could invent init.defaultBranch=:random
-that chooses a random branch name and point HEAD at it, and make
-that the default.  Those who are fine do not really care what name
-the initial branch gets would be fine with that as well, but you
-would agree that it is an absurd alternative, no?  I find it equally
-absurd to say "switch to a new name any time without telling me, I
-am fine with it".
-
-
+Thanks,
+-Stolee
+ 
 
