@@ -5,64 +5,63 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5055DC433FE
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 19:42:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D00A7C4167B
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 19:42:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0CFDB23C91
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 19:42:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 917D623C92
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 19:42:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732038AbgLITmb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 14:42:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56570 "EHLO
+        id S1727162AbgLITme (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 14:42:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387855AbgLITmO (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1732302AbgLITmO (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 9 Dec 2020 14:42:14 -0500
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7078DC06179C
-        for <git@vger.kernel.org>; Wed,  9 Dec 2020 11:41:34 -0800 (PST)
-Received: by mail-wm1-x341.google.com with SMTP id v14so2579289wml.1
-        for <git@vger.kernel.org>; Wed, 09 Dec 2020 11:41:34 -0800 (PST)
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FCBBC061794
+        for <git@vger.kernel.org>; Wed,  9 Dec 2020 11:41:33 -0800 (PST)
+Received: by mail-wr1-x443.google.com with SMTP id r7so3031595wrc.5
+        for <git@vger.kernel.org>; Wed, 09 Dec 2020 11:41:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=9o26fS35UK0LREBqC+PayUR5LfFCNU4XZ7QxCHWU0xo=;
-        b=Zc2clqDjlyo1lDDsoAl2Nt0IBtgfJMdSFJQyeV88D/mlrjtis13OP8GwLMj2Pz9m2T
-         St/YRnMYvwf3FnW32UxZSwpt/L/pL9s39GQoZ0K1cSexSJmil41lXTww1vYGUK4SGQQz
-         94QfUUHx31qMLroear9yr+OnZcjYn219VxU5qMFb4ZGxOxEqdSlQWYDVO8Vcm74XvpQJ
-         YibJhPJpx74IDxQaCti1qNbtvUbbwaYTHWlLliaPhWM7T6ILZ2qJpPK4D/c1CFP+AUyl
-         LxX/l8hbl7HM172Yvx7Gi0XmcODkJzF7gKx4Gt7uFql0OntEN/DWsK0cdKcuerCTZcMB
-         LkxA==
+        bh=nOg+LmwailRaVuyEjDjA0uYgU3WumywkoJgRf7dQFBQ=;
+        b=bwXY1szCvxAKDYaFBxVhdWVWCGYVC9MnKWMrVvE00qddC0gkcaqqMLRjK7FEYrri73
+         zlzBp9MaTmxqDyx6M/3klZ156gNi09FuChKTVpIzQ/1t0Y65JDaaTVx4vwpLCuZ4GQvH
+         p6+Ui6pBThYMGYIH2HJyjdA7b80DJS00pghxiXpMdKVnNwqXH7MQlTM8eqWVT2ydrW6m
+         y2+dOk7uEGWwucF5sPTby24u8IO119Zc9WKzSOhgV8GsXpn2JZbH9qwOmKlPINeuIRoA
+         ZiywFJXExH2J6J5nmwvds+kmw6QlNzImA8kOlClp75QNNpvI30qiQHDdr4uPV3RfZvs0
+         hRHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=9o26fS35UK0LREBqC+PayUR5LfFCNU4XZ7QxCHWU0xo=;
-        b=tY0UmoOwWdbdyV9SXngGlDvDWt1t1ero1Es2+FiMDvNGuFwkQe5ORUkyLiLX0TiGz/
-         z9jWcLwdsW9N8+DPQLBGI1YN7E9t/xKvgrrN/29PIkUA1wZbqfVeNl+WHhnAqgvLk4Zl
-         PaL7ikVKzorakKctKBvAQaxn1XTV5RJP0K+SdVGjaDkK7jXnkvMKPTssYmYY2gr/kjeX
-         1Z3Z2cUr7rzbnKs/rGAkxmca7qTl44lVzYOlC2lbGJ8SJZEBjCL6muSe8Yz9I4Ofo8w4
-         oECRyC5BGumw6uVAMu8P3nNLyMP5taui7vP/kENQf0lXoQBWqPzrYZqbS3HqKr3OlfXu
-         YfRw==
-X-Gm-Message-State: AOAM532DwE8AFv/rIrm8sCULPaDl/d3k4buyLNy0Ejs/H0FFT/Jc1/s9
-        TYEWm/5N9fltE/glIcXrefCOyP/7t7E=
-X-Google-Smtp-Source: ABdhPJwzyAnY87kqhZPMloQWP6/pwTormJKmZ5rMP6LJ7gsuAewpZh8R6Cj4M7Y7yEaGvjw2O/RhGQ==
-X-Received: by 2002:a1c:b4c4:: with SMTP id d187mr4408800wmf.38.1607542893051;
-        Wed, 09 Dec 2020 11:41:33 -0800 (PST)
+        bh=nOg+LmwailRaVuyEjDjA0uYgU3WumywkoJgRf7dQFBQ=;
+        b=PXwoosMhnpGq9FKF7Ejw8SiET8Ot9nm6sFEI/vJ86zcnc9Bx5ldXRELWkyKC3S2q7J
+         SxxjVcdmYrVb4KzX/J02qUgkaz058T4huLz3XFFR3HYwlCtTMIpJkHZlpkXh0guigtTv
+         RAVsZ5u11uzmVvfnRIxLJF+TPMB3CI6nn8FlmZzQxI4cYQonUNTlP+b/L9aJrtXwRYpt
+         NSibrCpYmVc6auEIwj+uZDLYi0CpuCoWKfHKxt+5H6QJRnrc+CUepDIxd0m0PMKPzh41
+         k2bYbxnIUK1pERhCx82UqRF1XjMOSUU2+EMFeWZvjYEJcDjFt679hqSXKiBC+H5zV6iy
+         LoIg==
+X-Gm-Message-State: AOAM533WBOeuDPTWN9p74OgPEqxD4ho8a5xK5Gbw/D0tXBQfJKQJRVxB
+        mO3D+7MTi9bl6wTlBguCK2v83HJjSw0=
+X-Google-Smtp-Source: ABdhPJyO3mFudcZ+eV/oVQg/jzICLjtD+l70UdAzBDCGFMnDNNoVi9lwh7e40j4kfRKAJnm+4wcsPQ==
+X-Received: by 2002:adf:db44:: with SMTP id f4mr4475707wrj.97.1607542891974;
+        Wed, 09 Dec 2020 11:41:31 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m4sm5245769wrw.16.2020.12.09.11.41.32
+        by smtp.gmail.com with ESMTPSA id y130sm5745779wmc.22.2020.12.09.11.41.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Dec 2020 11:41:32 -0800 (PST)
-Message-Id: <207bb9a837cb855721daa88caaad80e37cb40ffe.1607542887.git.gitgitgadget@gmail.com>
+        Wed, 09 Dec 2020 11:41:31 -0800 (PST)
+Message-Id: <ba30bc8686ef11115b369d351b4447c75a7bb9b5.1607542887.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.812.git.1607542887.gitgitgadget@gmail.com>
 References: <pull.812.git.1607542887.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 09 Dec 2020 19:41:20 +0000
-Subject: [PATCH 04/11] merge-ort: implement compare_pairs() and
- collect_renames()
+Date:   Wed, 09 Dec 2020 19:41:19 +0000
+Subject: [PATCH 03/11] merge-ort: implement detect_regular_renames()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,56 +74,63 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
+Based heavily on merge-recursive's get_diffpairs() function.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 27 +++++++++++++++++++++++++--
- 1 file changed, 25 insertions(+), 2 deletions(-)
+ merge-ort.c | 32 +++++++++++++++++++++++++++++++-
+ 1 file changed, 31 insertions(+), 1 deletion(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 1ff637e57af..3cdf8124b85 100644
+index 92b765dd3f0..1ff637e57af 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -625,7 +625,13 @@ static int process_renames(struct merge_options *opt,
- 
- static int compare_pairs(const void *a_, const void *b_)
+@@ -634,7 +634,33 @@ static void detect_regular_renames(struct merge_options *opt,
+ 				   struct tree *side,
+ 				   unsigned side_index)
  {
 -	die("Not yet implemented.");
-+	const struct diff_filepair *a = *((const struct diff_filepair **)a_);
-+	const struct diff_filepair *b = *((const struct diff_filepair **)b_);
-+
-+	int cmp = strcmp(a->one->path, b->one->path);
-+	if (cmp)
-+		return cmp;
-+	return a->score - b->score;
- }
- 
- /* Call diffcore_rename() to compute which files have changed on given side */
-@@ -671,7 +677,24 @@ static int collect_renames(struct merge_options *opt,
- 			   struct diff_queue_struct *result,
- 			   unsigned side_index)
- {
--	die("Not yet implemented.");
-+	int i, clean = 1;
-+	struct diff_queue_struct *side_pairs;
++	struct diff_options diff_opts;
 +	struct rename_info *renames = opt->priv->renames;
 +
-+	side_pairs = &renames->pairs[side_index];
++	repo_diff_setup(opt->repo, &diff_opts);
++	diff_opts.flags.recursive = 1;
++	diff_opts.flags.rename_empty = 0;
++	diff_opts.detect_rename = DIFF_DETECT_RENAME;
++	diff_opts.rename_limit = opt->rename_limit;
++	if (opt->rename_limit <= 0)
++		diff_opts.rename_limit = 1000;
++	diff_opts.rename_score = opt->rename_score;
++	diff_opts.show_rename_progress = opt->show_rename_progress;
++	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
++	diff_setup_done(&diff_opts);
++	diff_tree_oid(&merge_base->object.oid, &side->object.oid, "",
++		      &diff_opts);
++	diffcore_std(&diff_opts);
 +
-+	for (i = 0; i < side_pairs->nr; ++i) {
-+		struct diff_filepair *p = side_pairs->queue[i];
++	if (diff_opts.needed_rename_limit > opt->priv->renames->needed_limit)
++		opt->priv->renames->needed_limit = diff_opts.needed_rename_limit;
 +
-+		if (p->status != 'R') {
-+			diff_free_filepair(p);
-+			continue;
-+		}
-+		p->score = side_index;
-+		result->queue[result->nr++] = p;
-+	}
++	renames->pairs[side_index] = diff_queued_diff;
 +
-+	return clean;
++	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
++	diff_queued_diff.nr = 0;
++	diff_queued_diff.queue = NULL;
++	diff_flush(&diff_opts);
  }
  
- static int detect_and_process_renames(struct merge_options *opt,
+ /*
+@@ -1379,6 +1405,10 @@ void merge_switch_to_result(struct merge_options *opt,
+ 			printf("%s", sb->buf);
+ 		}
+ 		string_list_clear(&olist, 0);
++
++		/* Also include needed rename limit adjustment now */
++		diff_warn_rename_limit("merge.renamelimit",
++				       opti->renames->needed_limit, 0);
+ 	}
+ 
+ 	merge_finalize(opt, result);
 -- 
 gitgitgadget
 
