@@ -2,88 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC6FFC4361B
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 16:25:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C6BBC4361B
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 16:35:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9415A23BE3
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 16:25:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 580F623B98
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 16:35:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730238AbgLIQYs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 11:24:48 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55658 "EHLO cloud.peff.net"
+        id S1729749AbgLIQfi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 11:35:38 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55678 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728751AbgLIQYs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 11:24:48 -0500
-Received: (qmail 18378 invoked by uid 109); 9 Dec 2020 16:24:04 -0000
+        id S1726227AbgLIQfi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 11:35:38 -0500
+Received: (qmail 18437 invoked by uid 109); 9 Dec 2020 16:34:58 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 09 Dec 2020 16:24:04 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 09 Dec 2020 16:34:58 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16587 invoked by uid 111); 9 Dec 2020 16:24:03 -0000
+Received: (qmail 16669 invoked by uid 111); 9 Dec 2020 16:34:57 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 09 Dec 2020 11:24:03 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 09 Dec 2020 11:34:57 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 9 Dec 2020 11:24:03 -0500
+Date:   Wed, 9 Dec 2020 11:34:57 -0500
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         Philip Oakley <philipoakley@iee.email>
-Subject: Re: [PATCH v4 2/6] config: add new way to pass config via
- `--config-env`
-Message-ID: <X9D6IyPchkGkYgeB@coredump.intra.peff.net>
-References: <cover.1606214397.git.ps@pks.im>
- <cover.1607514692.git.ps@pks.im>
- <766ffe31a6f14c55d1b58a8f53edbb7f731b1b24.1607514692.git.ps@pks.im>
- <871rfzxctq.fsf@evledraar.gmail.com>
+Subject: Re: [PATCH 3/3] config: store "git -c" variables using more robust
+ format
+Message-ID: <X9D8sTX3envTCi75@coredump.intra.peff.net>
+References: <X9D23LQv34A5Q5DC@coredump.intra.peff.net>
+ <X9D5SnXca2rGnJFl@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <871rfzxctq.fsf@evledraar.gmail.com>
+In-Reply-To: <X9D5SnXca2rGnJFl@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 09, 2020 at 03:40:17PM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Wed, Dec 09, 2020 at 11:20:26AM -0500, Jeff King wrote:
 
-> > +--config-env=<name>=<envvar>::
-> > +	Pass a configuration parameter to the command. The <envvar>
-> > +	given will be replaced with the contents of the environment
-> > +	variable of that name. In contrast to `-c`, an envvar must
-> > +	always be given and exist in the environment. Passing an
-> > +	environment variable with empty value will set <name> to the
-> > +	empty string which `git config --type=bool` will convert to
-> > +	`false`.
-> 
-> Okey, because "-c foo.bar" (true) "-c foo.bar=" is the empty string, but
-> that doesn't make sene with "--config-env". Also the whole part about
-> --type=bool is just confusing, because it's referring to `-c`'s magic
-> behavior when it comes to `bool` which we don't have here.
+> One other side effect I just noticed is that we're very aggressive about
+> trimming leading and trailing whitespace in the old-style format, but
+> the new one will store values verbatim. IMHO that's better overall, but
+> we might consider a preparatory patch to remove that trimming
+> explicitly.
 
-Yeah, I agree.
+Actually, it looks like we just trim either side of the key. Which
+is...weird. We've never generated any, and I wouldn't expect people to
+write:
 
-> I think it's also worth describing what this is for & what the
-> limitations are. Maybe:
+  git -c '  some.key = value'
 
-Agreed, and the text you gave looks reasonable. Another reason to use it
-is that it will (if we add the patches I just sent on top) avoid the
-key/value ambiguity with equals in the section name.
+And even if they did, then "value" would have extra whitespace. So I
+don't think this is really changing anything important, though I'm still
+tempted to do something like the patch below to clean up the reading
+side (and as a bonus, it gets rid of a strbuf_split call, which is a
+terrible and awkward interface).
 
-> Not something new, and maybe not something for this series, but I wish
-> -c and --config-env would document this limitation that we support "="
-> in keys in config, but not via those parameters.
-
-Yeah. If we add in my patches, then the limitation is gone here (but we
-should mention the limitation on the environment variable name).
-
-I stopped short of adding a variant of "-c" that avoids the ambiguity.
-I'm certainly not opposed to one if somebody wants to do it, but I think
-documenting the current limitation makes sense in the meantime (and we
-should do it in this series while we're thinking about it).
-
--Peff
+diff --git a/config.c b/config.c
+index 04029e45dc..ede33cf3d0 100644
+--- a/config.c
++++ b/config.c
+@@ -516,29 +516,21 @@ static int config_parse_pair(const char *key, const char *value,
+ int git_config_parse_parameter(const char *text,
+ 			       config_fn_t fn, void *data)
+ {
+-	const char *value;
+-	struct strbuf **pair;
++	char *to_free = NULL;
++	const char *key, *value;
+ 	int ret;
+ 
+-	pair = strbuf_split_str(text, '=', 2);
+-	if (!pair[0])
+-		return error(_("bogus config parameter: %s"), text);
+-
+-	if (pair[0]->len && pair[0]->buf[pair[0]->len - 1] == '=') {
+-		strbuf_setlen(pair[0], pair[0]->len - 1);
+-		value = pair[1] ? pair[1]->buf : "";
++	value = strchr(text, '=');
++	if (value) {
++		key = to_free = xmemdupz(text, value - text);
++		value++;
+ 	} else {
+-		value = NULL;
++		key = text;
+ 	}
+ 
+-	strbuf_trim(pair[0]);
+-	if (!pair[0]->len) {
+-		strbuf_list_free(pair);
+-		return error(_("bogus config parameter: %s"), text);
+-	}
++	ret = config_parse_pair(key, value, fn, data);
+ 
+-	ret = config_parse_pair(pair[0]->buf, value, fn, data);
+-	strbuf_list_free(pair);
++	free(to_free);
+ 	return ret;
+ }
+ 
