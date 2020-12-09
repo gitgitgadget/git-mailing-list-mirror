@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 636C4C1B0D8
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 382C2C4167B
 	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 20:03:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 437AB23A02
+	by mail.kernel.org (Postfix) with ESMTP id 127A623BEF
 	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 20:03:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388014AbgLIUDZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 15:03:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59836 "EHLO
+        id S2388044AbgLIUD0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 15:03:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387713AbgLIUDU (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S2387827AbgLIUDU (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 9 Dec 2020 15:03:20 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBED8C061282
-        for <git@vger.kernel.org>; Wed,  9 Dec 2020 12:02:08 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id m5so3085339wrx.9
-        for <git@vger.kernel.org>; Wed, 09 Dec 2020 12:02:08 -0800 (PST)
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEA2AC061285
+        for <git@vger.kernel.org>; Wed,  9 Dec 2020 12:02:09 -0800 (PST)
+Received: by mail-wm1-x344.google.com with SMTP id d3so2620332wmb.4
+        for <git@vger.kernel.org>; Wed, 09 Dec 2020 12:02:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=IVk5sEKV5o4yCpPZ9+sZdlq59QLbdXgEld6bx+c/E7Q=;
-        b=m26ZApixRGBhsoS1dQM1YPHc37EujofFsKF4YWEBwdm4aG3wZfJnWxX6W8GxeUBEG5
-         T86/YaOkRnSbgXGtSqqE6EL7KqyUAcCOkl8aJ0iZu0IftixBxwPCOj5IQPRUIYyg7fHw
-         Ww8nr4VZVpL8iR/TM9qCqp6kmDDtwTcLZxWQUq4xj2QS/NAtscVIFYYzX951zWPKcova
-         4bBEOgCs0MN4h//MV1qYCL+qjIlcbvbZ/S5AGYrwSTsNPTRnNbkorOOD/Csaz5YdRgwJ
-         aZFCotQGM/cqCPKUg3rTBNoz3H6riQW/rt9eyBuxhQPEXk2PA2I4ibggbGiP41vlDFt9
-         3L4w==
+        bh=kb74uT4iBhesBQhjLaQ7t4/yZcNCQYxHO6w0RWtzxOA=;
+        b=ZpIdwQwGvOLSBox7UpLQqFAQUCXNvrLFe8u9FLVJdN7vcn/Bf+QJ2pa+xDOPS1IJv9
+         na5MOhjiPUNhSoQCh50qEhEdNwE3YbT78fSgvu2pgzXUfy+8bPk7+sNcHHR1k6W0+csw
+         +KYE5PVLSGGewdTdf5lwqKYARj0DHDzxJaVoUpRJc4PEO3YEdWZ5mCWm7tiupMrZYS1+
+         qCHGsRDTs8X9SjnztpEv+k6fgFzER5sMnrHNDPYqzx3d3aVrV0WywwMkFKFhMWUlSmzN
+         kp7Hs5UzW/9oULts7yMHDmDIF8MXDQec8SfQC64+Fs/XTbxVkd30sIvmPRSRIeA9eppy
+         fTdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=IVk5sEKV5o4yCpPZ9+sZdlq59QLbdXgEld6bx+c/E7Q=;
-        b=kOaCYM7QXPrS7x0lDYsGFEqbStF3+Y50Y9E6T7IyrHT3ivZiC0C9Wh2gbf053ohzm/
-         6niR25Co+UH1+8/fKR497HuH3ICCQ4Q9fvrUhTJo/g7kfALn9gKOtQWWikZc8tDhbs6T
-         re5ljDXAnnQh/tXt6k5aOBXiIJC/kJr9hVrs3jLO/0Hpf2uy5wduIw+RzKW2mcBAzkEo
-         T1VA5g/IxQHRpPXgRoWVr03c/oD9h8kTT6MJ+zaBs4zFJ5Q+m00MXrXG3SVbJIiBJXch
-         T8MNY49R/UaiERVtannzrlwFIYoZFZTEmCONA3XfYM/8U6P+eBj6iGz0gFFqEv6enAeT
-         UizA==
-X-Gm-Message-State: AOAM531hLFEkR7fuUxf3qEce2tZhkrvABANYZOBAEHGStetVMEoZImKM
-        a/CrlcWzMKlUbzEGI2C1hfVWfr3O7l2bTg==
-X-Google-Smtp-Source: ABdhPJxxYH0M7AtrgmEPsGZdemELetErEMVfXNU/wQyC2SykTfRzqr9PeoAuXhp9hxPJCNeR55s5OQ==
-X-Received: by 2002:adf:f6c7:: with SMTP id y7mr4419671wrp.147.1607544127475;
-        Wed, 09 Dec 2020 12:02:07 -0800 (PST)
+        bh=kb74uT4iBhesBQhjLaQ7t4/yZcNCQYxHO6w0RWtzxOA=;
+        b=t8Ol+UjAAF9ossLmZsILa13XniKaqmthABHmN3nPaVrj8l7B5JGZNBcWQzUolpzrX/
+         XqLlkEnvAdUk+2t8dsghYCRV4/1NmWCRMMnzHipRu95noUcUmKoAWxhZpjanVftJX6SK
+         dx9C14C9lrSLUitTbPtnz9aN+ePjopmkrcjYCQJg6MEYPqROzDv7vWtg8xNT3bP7e4ys
+         UT/r0v9JMWtKoZyd6yKFxziZNJ6oco3d64WurCNcgnVqmxo8BDNxXZ2WpE8jo167aDwR
+         TqitJ8kbpFwk/SQSA9nKDB/P+FQpt5LWEAxgLm3NTbtH//qqwscGV8RVpXR7Xb2PeRff
+         Yg/A==
+X-Gm-Message-State: AOAM532RDhdm9aaNlUKnlc1NOR/rbZkCRzSm+b93mK+GB014T28uv4h1
+        Rt0uUxETA/YMT/cJqe0QGvkBFPyDEx4BZA==
+X-Google-Smtp-Source: ABdhPJwrfY+Q3HUoYgsqtlTzkhaXHRebIAYjj/yr/qLKAzk3htS+znGTkoGSaMHqUyATL9trSKXJxw==
+X-Received: by 2002:a7b:c841:: with SMTP id c1mr4635371wml.31.1607544128648;
+        Wed, 09 Dec 2020 12:02:08 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 34sm5762128wrh.78.2020.12.09.12.02.05
+        by smtp.gmail.com with ESMTPSA id 34sm5762128wrh.78.2020.12.09.12.02.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Dec 2020 12:02:06 -0800 (PST)
+        Wed, 09 Dec 2020 12:02:07 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 08/10] mktag doc: update to explain why to use this
-Date:   Wed,  9 Dec 2020 21:01:38 +0100
-Message-Id: <20201209200140.29425-9-avarab@gmail.com>
+Subject: [PATCH v3 09/10] fsck: make fsck_config() re-usable
+Date:   Wed,  9 Dec 2020 21:01:39 +0100
+Message-Id: <20201209200140.29425-10-avarab@gmail.com>
 X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
 In-Reply-To: <20201126222257.5629-1-avarab@gmail.com>
 References: <20201126222257.5629-1-avarab@gmail.com>
@@ -78,89 +78,114 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the mktag documentation to compare itself to the similar
-"hash-object -t tag" command. Before this someone reading the
-documentation wouldn't have much of an idea what the difference
-was.
+Move the fsck_config() function from builtin/fsck.c to fsck.[ch]. This
+allows for re-using it in other tools that expose fsck logic and want
+to support its configuration variables.
 
-Let's make it clear that it's to do with slightly different fsck
-validation logic, and cross-link the "mktag" and "hash-object"
-documentation to aid discover-ability.
+A logical continuation of this change would be to use a common
+function for all of {fetch,receive}.fsck.* and fsck.*. See
+5d477a334a6 (fsck (receive-pack): allow demoting errors to warnings,
+2015-06-22) and my own 1362df0d413 (fetch: implement fetch.fsck.*,
+2018-07-27) for the relevant code.
+
+However, those routines want to not parse the fsck.skipList into OIDs,
+but rather pass them along with the --strict option to another
+process. It would be possible to refactor that whole thing so we
+support e.g. a "fetch." prefix, then just keep track of the skiplist
+as a filename instead of parsing it, and learn to spew that all out
+from our internal structures into something we can append to the
+--strict option.
+
+But instead I'm planning to re-use this in "mktag", which'll just
+re-use these "fsck.*" variables as-is.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-hash-object.txt |  4 ++++
- Documentation/git-mktag.txt       | 27 +++++++++++++++++++++++----
- 2 files changed, 27 insertions(+), 4 deletions(-)
+ builtin/fsck.c | 20 +-------------------
+ fsck.c         | 25 +++++++++++++++++++++++++
+ fsck.h         |  7 +++++++
+ 3 files changed, 33 insertions(+), 19 deletions(-)
 
-diff --git a/Documentation/git-hash-object.txt b/Documentation/git-hash-object.txt
-index df9e2c58bdb..c535661ced8 100644
---- a/Documentation/git-hash-object.txt
-+++ b/Documentation/git-hash-object.txt
-@@ -58,6 +58,10 @@ OPTIONS
- 	stress-testing Git itself or reproducing characteristics of corrupt or
- 	bogus objects encountered in the wild.
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index fbf26cafcfd..821e7798c70 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -73,25 +73,7 @@ static const char *printable_type(const struct object_id *oid,
  
-+SEE ALSO
-+--------
-+linkgit:git-mktag[1]
+ static int fsck_config(const char *var, const char *value, void *cb)
+ {
+-	if (strcmp(var, "fsck.skiplist") == 0) {
+-		const char *path;
+-		struct strbuf sb = STRBUF_INIT;
+-
+-		if (git_config_pathname(&path, var, value))
+-			return 1;
+-		strbuf_addf(&sb, "skiplist=%s", path);
+-		free((char *)path);
+-		fsck_set_msg_types(&fsck_obj_options, sb.buf);
+-		strbuf_release(&sb);
+-		return 0;
+-	}
+-
+-	if (skip_prefix(var, "fsck.", &var)) {
+-		fsck_set_msg_type(&fsck_obj_options, var, value);
+-		return 0;
+-	}
+-
+-	return git_default_config(var, value, cb);
++	return fsck_config_internal(var, value, cb, &fsck_obj_options);
+ }
+ 
+ static int objerror(struct object *obj, const char *err)
+diff --git a/fsck.c b/fsck.c
+index bed5e20e03b..9067a290a2e 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -1310,3 +1310,28 @@ int fsck_finish(struct fsck_options *options)
+ 	oidset_clear(&gitmodules_done);
+ 	return ret;
+ }
 +
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/Documentation/git-mktag.txt b/Documentation/git-mktag.txt
-index a158428eb9f..b164ab563bd 100644
---- a/Documentation/git-mktag.txt
-+++ b/Documentation/git-mktag.txt
-@@ -3,7 +3,7 @@ git-mktag(1)
- 
- NAME
- ----
--git-mktag - Creates a tag object
-+git-mktag - Creates a tag object with extra validation
- 
- 
- SYNOPSIS
-@@ -13,10 +13,25 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--Reads a tag contents on standard input and creates a tag object
--that can also be used to sign other objects.
- 
--The output is the new tag's <object> identifier.
-+Reads a tag contents on standard input and creates a tag object. The
-+output is the new tag's <object> identifier.
++int fsck_config_internal(const char *var, const char *value, void *cb,
++			 struct fsck_options *options)
++{
++	if (strcmp(var, "fsck.skiplist") == 0) {
++		const char *path;
++		struct strbuf sb = STRBUF_INIT;
 +
-+This command is mostly equivalent to linkgit:git-hash-object[1]
-+invoked with `-t tag -w --stdin`. I.e. both of these will create and
-+write a tag found in `my-tag`:
++		if (git_config_pathname(&path, var, value))
++			return 1;
++		strbuf_addf(&sb, "skiplist=%s", path);
++		free((char *)path);
++		fsck_set_msg_types(options, sb.buf);
++		strbuf_release(&sb);
++		return 0;
++	}
 +
-+    git mktag <my-tag
-+    git hash-object -t tag -w --stdin <my-tag
++	if (skip_prefix(var, "fsck.", &var)) {
++		fsck_set_msg_type(options, var, value);
++		return 0;
++	}
 +
-+The difference is that mktag will die before writing the tag if the
-+tag doesn't pass a linkgit:git-fsck[1] check.
++	return git_default_config(var, value, cb);
++}
 +
-+The "fsck" check done mktag is is stricter than what
-+linkgit:git-fsck[1] would run by default in that all `fsck.<msg-id>`
-+messages are promoted from warnings to errors (so e.g. a missing
-+"tagger" line is an error). Extra headers in the object are also an
-+error under mktag, but ignored by linkgit:git-fsck[1].
+diff --git a/fsck.h b/fsck.h
+index 29ee4c45e87..423c467feb7 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -103,4 +103,11 @@ void fsck_put_object_name(struct fsck_options *options,
+ const char *fsck_describe_object(struct fsck_options *options,
+ 				 const struct object_id *oid);
  
- Tag Format
- ----------
-@@ -34,6 +49,10 @@ exists, is separated by a blank line from the header.  The
- message part may contain a signature that Git itself doesn't
- care about, but that can be verified with gpg.
- 
-+SEE ALSO
-+--------
-+linkgit:git-hash-object[1],
++/*
++ * git_config() callback for use by fsck-y tools that want to support
++ * fsck.<msg> fsck.skipList etc.
++ */
++int fsck_config_internal(const char *var, const char *value, void *cb,
++			 struct fsck_options *options);
 +
- GIT
- ---
- Part of the linkgit:git[1] suite
+ #endif
 -- 
 2.29.2.222.g5d2a92d10f8
 
