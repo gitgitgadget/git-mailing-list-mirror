@@ -2,211 +2,209 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MSGID_FROM_MTA_HEADER,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 495D7C4167B
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 09:53:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06FD8C433FE
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 10:00:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E529623433
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 09:53:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B23BD2343F
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 10:00:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729084AbgLIJxn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 04:53:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50338 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728504AbgLIJxm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 04:53:42 -0500
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78F90C0613D6
-        for <git@vger.kernel.org>; Wed,  9 Dec 2020 01:53:02 -0800 (PST)
-Received: by mail-ed1-x542.google.com with SMTP id p22so840454edu.11
-        for <git@vger.kernel.org>; Wed, 09 Dec 2020 01:53:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=zGf1q52F7emFA9yc9jtn6O6WNrWyUT5IHH34C6KJVwo=;
-        b=gct0AXeAYyz9Uc4xTWbwQXcBDE9HOToh5gJIIDIlradTRGsNV4CLIjiUfhKchacZXA
-         jPAqzYupApo/1dWwlGKMec5M3TzYuJW8k1UOEhqrYXXi4VIgDTeSfW7PF5+qn89pFWKM
-         QL19p833rRPwrdDXu4M5DLqg+Zixx2oMz+GeYJgtpguA2312PWayBuTNWY19mv+PWxlC
-         qLqH5/w5Yhk8elSU9QfHh5shVtACG9STNW4t6dHz19iMDXZeZQh3R0/uFdJ80BHYN/yu
-         SxaJz/ADJop4L0DuDa/ar4EWUZ2k6H3MVRGhTozxuLdvlFrwCJM+rNsPdXqrbTOfPsG7
-         XwAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zGf1q52F7emFA9yc9jtn6O6WNrWyUT5IHH34C6KJVwo=;
-        b=etKy4C1rdMiTcj3DlyyClw8MhYrOLTlzpC+UB1LXWuni3sj1mRRIgWmwHs0Gf0j8e2
-         XL6XLZyL1+XtFXsdP0eymIfFc2vTjF+ImIf2yozSNiIVSya1wkQXUlU4WfcbsTf56Lxz
-         aH/jWSfWlEQiWwKOMRqDexIpR8arfw8oe15UAVAPUOKZ6fwNB7gumGpNF9OOakeFkUkG
-         pwr8q7C5FoXnGXc8xMmgZflGUE924tBxFN7KJIvw9hTWvUuC6f2m5Mmzu9S2daFLYTWZ
-         GKRUXKdiZlROjLJ5aI/6Vh8hthChCRwZFx+AoyQIhGoAgk9hWOahuFUK3tsJw1aWa6FU
-         sU/A==
-X-Gm-Message-State: AOAM530Bf9EIYirGjToZ3ACN+q0wbHTMryaXfJ0IWaDDX9UQ7wMKUan4
-        0JcQ9hio6YcA/ThBftm0//Hy6M907OVByiJM1U8=
-X-Google-Smtp-Source: ABdhPJwlEYJgAQvgTubc3XmJorWektjrZdNxhVc9sjGQwzcWYe6AzivbazuNQnmqA4FZ2ncQzAmmmMhftxhJxztAeBc=
-X-Received: by 2002:aa7:dd17:: with SMTP id i23mr1216804edv.14.1607507581176;
- Wed, 09 Dec 2020 01:53:01 -0800 (PST)
+        id S1729299AbgLIJ7q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 04:59:46 -0500
+Received: from mail-vi1eur05on2116.outbound.protection.outlook.com ([40.107.21.116]:11713
+        "EHLO EUR05-VI1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1729089AbgLIJ7i (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 04:59:38 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=CAQ9S5rRJ4DdqVFBvuZ1gLzr47VLS8dACLfmCR8dJ9Dk1axHVNuS+RLvglZbWWYJbkW3Ot5e7Wf4WzO4LdBy+dw4vHvqGAnBYRVRWDPSMM2oDqPiafIjyAzX0JzJahHqD6VnJCdTLoNRZnLikT0l7XolwFrPdaTi1Kum13ZIR6lY5GDXtuo3bdPtZPZV0mbaZuKJwO6db60LXKePrNBm+ZPEhGJWkcX6Zd+Buqa3rwETtOgZlwdJtpFvMhTIAclhGpeK6kyzCqTI817lEvfXe3iSVWCrriXQlouoWuwI79qeYzSs4j1VKVfDCOxDUKHftl44PU9v3X81n7tqErQ4ag==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ZjFonaTMk9J2Ldicu57PLi0xC61jy+yk5Yc/27SoFv8=;
+ b=gsVdnJTNKdkhExaY60PY8J3CBiyTG0NQSXOAPkCCHyKjcgp0TkttxTkS3dRC/ojN0SNFlBdAn6P8MPmxOgn5v+Zt3fHhW+Picucu/YGUPq9Bef0reqAMDLeg/D9JGqSqjGB4vzwtL5JtIiloi2idFHbosaLQc9Xqr+FQYAD0trbFa5IhxQ07ougYlm9pHUpvtBe9DjerCys7ugYedfzaPndNGKKbDcY1QdShy40++d3O6at+vAX43I51/WgH6923bD0gh9UgeMsDAIYQcISZ9CaiG93vrldcZkgmYsVlFEmYhsw55v7jMEw7BQjtEgZFRjTNXubrpzJhP7iYFb567g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nokia.com; dmarc=pass action=none header.from=nokia.com;
+ dkim=pass header.d=nokia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nokia.onmicrosoft.com;
+ s=selector1-nokia-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ZjFonaTMk9J2Ldicu57PLi0xC61jy+yk5Yc/27SoFv8=;
+ b=GkWWlKSzNU/MaPLb6HSPzv3a49QCOnCMFDfePVKVomuQPcS3a/WeoKqkwJz/Mbp3Jre4zMrsbIR1eARzj5PHa5hfxceLGhsqc1t08+tmahRXk0a4HQEJGsaiwsrpv8E0bAucBKyDdgd50XPnVrgNcxoy+ejDoU90SdpnoiPMKVo=
+Authentication-Results: nokia.com; dkim=none (message not signed)
+ header.d=none;nokia.com; dmarc=none action=none header.from=nokia.com;
+Received: from DBAPR07MB7030.eurprd07.prod.outlook.com (2603:10a6:10:19e::21)
+ by DB7PR07MB5896.eurprd07.prod.outlook.com (2603:10a6:10:2b::31) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3654.11; Wed, 9 Dec
+ 2020 09:58:47 +0000
+Received: from DBAPR07MB7030.eurprd07.prod.outlook.com
+ ([fe80::fc22:a9ab:215:7d1e]) by DBAPR07MB7030.eurprd07.prod.outlook.com
+ ([fe80::fc22:a9ab:215:7d1e%6]) with mapi id 15.20.3654.011; Wed, 9 Dec 2020
+ 09:58:47 +0000
+Subject: Re: [PATCH v3] submodules: fix of regression on fetching of non-init
+ subsub-repo
+To:     Philippe Blain <levraiphilippeblain@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.us>,
+        Ralf Thielow <ralf.thielow@gmail.com>
+References: <d52db91d-af6d-c93c-2c4a-e2460905623d@nokia.com>
+ <1607442126-34705-1-git-send-email-peter.kaestle@nokia.com>
+ <CADtb9DwwfAG69YmM0+0FC6qkO361-95Uy8dNZ8jXnrVcxHSrMQ@mail.gmail.com>
+From:   =?UTF-8?Q?Peter_K=c3=a4stle?= <peter.kaestle@nokia.com>
+Message-ID: <c0971d1b-3bc5-8004-09f8-7ce10fb3df26@nokia.com>
+Date:   Wed, 9 Dec 2020 10:58:35 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.3
+In-Reply-To: <CADtb9DwwfAG69YmM0+0FC6qkO361-95Uy8dNZ8jXnrVcxHSrMQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [131.228.32.168]
+X-ClientProxiedBy: HE1PR05CA0304.eurprd05.prod.outlook.com
+ (2603:10a6:7:93::35) To DBAPR07MB7030.eurprd07.prod.outlook.com
+ (2603:10a6:10:19e::21)
 MIME-Version: 1.0
-References: <20201204061623.1170745-1-felipe.contreras@gmail.com>
- <20201204061623.1170745-3-felipe.contreras@gmail.com> <CABPp-BFdjj=+4jk0vo=kpNc6ug1=UgtKfXJZkseyyxut2VB=Uw@mail.gmail.com>
- <CAMP44s1eTc4+tbULbyz5ENgbcN4tOVBA3Z-4GS4yMpciUD_1Hw@mail.gmail.com>
- <CABPp-BFwWBLdFPsKi3o9hznFtAeWWfhNAyuymPS4BhMAHpnSfw@mail.gmail.com>
- <CAMP44s1=aZL7BMKSjzKJ7qYqg-usScwzRUJmaOhsCGvQ4ieYow@mail.gmail.com>
- <CABPp-BF4rXBOKsn8bG6y3QUEtNVV9K2Pk5NmwrU5818CqhRt_Q@mail.gmail.com>
- <CAMP44s2L24jhCG9ps72--ZiJkXUovR726jCf8JTLHAs0jV7Whg@mail.gmail.com>
- <CABPp-BGdNt8TBMTE9zvaicF5AtvyTBhpiJXqkuZc7mBLGbw0Qw@mail.gmail.com>
- <xmqqeek2cc14.fsf@gitster.c.googlers.com> <CAMP44s2XFQoda_PMULWha-rj9HhNfEddO5fikmswk9=AWN4RCw@mail.gmail.com>
- <xmqqpn3lbhxn.fsf@gitster.c.googlers.com> <CAMP44s2nmVnXiBA8S=vHBZznuRNKKe=xGOEBJ80MYhA_XCqNkg@mail.gmail.com>
- <xmqqlfe99yvy.fsf@gitster.c.googlers.com> <CA+P7+xp=UGd0iK8uLxnqH0iycrxo--8on3d0Z+jsuyhpV-fVew@mail.gmail.com>
- <xmqq360h8286.fsf@gitster.c.googlers.com> <CAMP44s3KCoDfRXzarJw5AE7UsY-=eP6GbHzdDcdrs2rsw5tL+w@mail.gmail.com>
- <xmqqy2i86ok1.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqy2i86ok1.fsf@gitster.c.googlers.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Wed, 9 Dec 2020 03:52:49 -0600
-Message-ID: <CAMP44s13YFZeOMz6V5sPdOnLXD-v3aQZiP7vvXXNfQLZP4Puwg@mail.gmail.com>
-Subject: Re: [PATCH v2 02/14] pull: improve default warning
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        "Theodore Y . Ts'o" <tytso@mit.edu>,
-        John Keeping <john@keeping.me.uk>,
-        Richard Hansen <rhansen@rhansen.org>,
-        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
-        "W. Trevor King" <wking@tremily.us>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from [172.30.9.8] (131.228.32.168) by HE1PR05CA0304.eurprd05.prod.outlook.com (2603:10a6:7:93::35) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3654.12 via Frontend Transport; Wed, 9 Dec 2020 09:58:45 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-HT: Tenant
+X-MS-Office365-Filtering-Correlation-Id: efc91849-f8d7-4f0e-f4d4-08d89c29056c
+X-MS-TrafficTypeDiagnostic: DB7PR07MB5896:
+X-MS-Exchange-Transport-Forked: True
+X-Microsoft-Antispam-PRVS: <DB7PR07MB5896CCED9A575E14446C147DEECC0@DB7PR07MB5896.eurprd07.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:138;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: BZ78rFk3Rsp4Sn5jJGm+/pzY1deapGnL/bBogbzgCljqOhxLtHBj0XDHtvIWo7S1yopHTM9XOdQO16+Uj0UD2JVwDUl5PRrJWWcDXRSfOHdpc8Urr48jF0pCUxYmhzMnXLu6GLwDJCv4Ns5JmEWPAGtyeM2408rnWKIhrR1olyxTGOXsBYdmF+dpm0eFzfoEf6sLcROw936cNx1i+E/4ANUAkrc3Oyzewi2Ro2/VK+3P7DVdLNZUPfX8D8rJ225fYLC7A17bFL0z+CZgRBHGrH5uMehPlfbkXjrshSmAWsrJI60NrmhLJGveQPjTEchwKqy4oFQaPf6YBU3nRlGlIIC5tcJnrI64nVQ2ZNCB3Dn3X3N+fcownj5c71s0/RXcpoTEG0NmXLfsxXCw9gWgiqkkiKANkwD5fgdCw6J9g9Y=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DBAPR07MB7030.eurprd07.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(346002)(366004)(396003)(39860400002)(136003)(376002)(2616005)(8676002)(2906002)(956004)(186003)(36756003)(478600001)(83380400001)(8936002)(66574015)(6916009)(6666004)(54906003)(6486002)(86362001)(66476007)(16576012)(26005)(52116002)(53546011)(5660300002)(31696002)(16526019)(4326008)(66556008)(66946007)(316002)(31686004)(45980500001)(43740500002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData: =?utf-8?B?N0FBTkxHUyswOUN0NzNXSGhmc3VRaUxzdGZOMFM1Z0JteCtJdUxnYlk3ekxY?=
+ =?utf-8?B?allDNzZxZjNnY3VMR29IWUdnUzgvMmpITzduRlRVcDJTTHgxR2JQWjAreEdD?=
+ =?utf-8?B?TG9aTnhTQzdBSi9IU1hDZ0c5ajlhSExGeVl2OVBqOW1tRDlyS3hIeUFIU2ZH?=
+ =?utf-8?B?elBFK2ozTWZzOVRXalRwUDdwOGp1b3VTYmg4cWZLWXhlVDZ1T09uaG9kc2tI?=
+ =?utf-8?B?OGwycVRFTW5EZjdXQzUzUUdKN3RhRWxqcHBVNFFIc1QzWGNkZ3hwVDJyblp0?=
+ =?utf-8?B?VkZpSTEwUkdtcWQ4SWtFWFJ1V2M2YmRxSmdWVnBmWnVEWUdLVkQ2U3pEZGFD?=
+ =?utf-8?B?WnlZdStEMUxQZE4yVjFOQnJFT1FyN09VdEVIWmtXRDhNay8zYkVlenlJZld3?=
+ =?utf-8?B?TmhmeGRTWU10QjdLVWpkdnlxaDBGNGRlS0NRVmVvSVp4TkQ2L1BZUjRzdEZU?=
+ =?utf-8?B?MjNvbUhoU3JlM29GQm05dDBPakVUZXVNK2Vya0Znem1YVW5Lb3o4TE1yMGtt?=
+ =?utf-8?B?Mlo2elNuRHlWTVppUkxwVWZoMTVLUk4vSjU1NHNxaHkwUXBiNHdNYW16WWR1?=
+ =?utf-8?B?ZWxWTGEwdEZjdGNObjQ0VjJUNTdhSFFPb3lBR3hBMGoxb3NWWFZFL1JZbWFX?=
+ =?utf-8?B?OVBKS0pVTVBWaVNHVkV0NmZyNmwzbTNjWVBnWC9xelhpMmQ1dTllc1g4OFBR?=
+ =?utf-8?B?QWZVcWR5K2FrNGkvVWxGQWtPNit6NmozMC9ieW9EUjViQzZjK29mRGwwZ1JK?=
+ =?utf-8?B?MHNHWk92WmJHK1pyRFpVa0djRVVjWVl3dmFDejREOTRzOGdXbkoxK1NOUk1y?=
+ =?utf-8?B?M3FVdWlEbHZSWGlKSXlaN1NwMEtDRENZek9INUQvR2JEMDEzOEVPVXVkS25m?=
+ =?utf-8?B?U3JNWmZPQzFKdkZMV2h3ZGFuYkkrbFNTQ3Q4RHFiZlAvTGlJVVNpMFN3aDN6?=
+ =?utf-8?B?S05tNkdDN25QaEcrVmZnMktLZGdqcGRMQVJncnVlMGNKS3drenVjcHB1YjR3?=
+ =?utf-8?B?NUpDTmpEMERreG8xWE9hQSs4UmxEa3hPM1oybDZvR1Rxd1cyYldHU0pkRk5o?=
+ =?utf-8?B?T3V6UnNOYWJ4R09TYzZDVE5ueXM2RFBKY0IweDBJdE1ZYmZKY0FJZWxZejVI?=
+ =?utf-8?B?azZvVXlQU3lMamZFemFFODUvT2RldGtGeHZWU0ZNTmNnTG5RaGl6VHdWU0N2?=
+ =?utf-8?B?ajBiNmRMNlU2RlVFa2Z6THVYRTB0RHdMMHJCZmMzZ1N4NGZqVmJzbUNlcWpy?=
+ =?utf-8?B?YUx5dVkyblhyc2NPSlI0QXhwbWRqVWU3VmRpZytKRlREY2pVZHMzSWRXSjFZ?=
+ =?utf-8?Q?74pefhwu9ZBvQV197lnldh6WvqjdSWXtkd?=
+X-OriginatorOrg: nokia.com
+X-MS-Exchange-CrossTenant-AuthSource: DBAPR07MB7030.eurprd07.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Dec 2020 09:58:47.0996
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 5d471751-9675-428d-917b-70f44f9630b0
+X-MS-Exchange-CrossTenant-Network-Message-Id: efc91849-f8d7-4f0e-f4d4-08d89c29056c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: IfwcC4udsLhAwCifsyZiegT7Fosq2GLWsMa4opuLrsBPgL9NjRfOEIUiTezGNBGCr5I0WoNNvvVS44FuzVhk1Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB7PR07MB5896
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 8, 2020 at 2:16 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
-> > That is exemplified by the fact that this whole thread started from a
-> > user that refused to configure pull.rebase and expected the Git
-> > project to just do the right thing (which is basically choosing a
-> > useful default).
->
-> Which is basically asking for impossible, and I do not think it is a
-> good idea to focus our effort to satisfy such a request in general.
-> There is no useful default that suits everybody in this particular
-> case.
+Hi Philippe,
 
-I think I already made this point, but this is the nirvana fallacy
-(the perfect is the enemy of the good) [1]. Just because we can't have
-the perfect solution doesn't mean we can't pursue something better
-than the current state.
+when sending the patch yesterday, I had the gut feeling to hold it back 
+to double check it a day later.  Should have done so, some of your 
+findings were really stupid mistakes.
 
-What was asked was not a perfect solution, just a better default. If
-right now the default is good enough for 20% of users, and with some
-changes we can make it better for 40%... that's progress. We don't
-have to wait until we have a solution for 100% of them.
 
-> But for anybody who uses git for real (read: produces his or her own
-> history), it would be pretty much a useless default that forces the
-> user to say rebase or merge every time 'git pull' is run.
+On 09.12.20 00:25, Philippe Blain wrote:
+> Le mar. 8 déc. 2020, à 10 h 43, Peter Kaestle
+> <peter.kaestle@nokia.com> a écrit :
+>>
+>>   -- 8< --
+>>
+>> Furthermore a regression test case is added, which tests for recursive
+>> fetches on a superproject with uninitialized sub repositories.  This
+>> issue was leading to an infinite loop when doing a revert of a62387b.
+> 
+> I think this paragraph could be removed as it's saying the same thing as
+> the one below.
 
-This is not true.
+jip.
 
-I will give you a real example.
+[...]
 
-I create a branch named "fc/margin" based on "master", I make my
-changes, I push the branch to my personal repository, and create a
-pull request. This is the typical triangular workflow.
+>> +fetch_with_recusion_abort () {
+> 
+> s/recusion/recursion/
+> 
 
-Then I do "git pull [--ff-only]". What will happen? 1) As long as my
-branch is not merged upstream, I will get an error, and my branch will
-stay where it is. But then, 2) when my branch is finally merged to
-"master" it will be fast-forwarded, so now both "fc/margin" and
-"origin/master" point to the same commit.
+yes.
 
-A. Did I use git "for real"? (produce my own history)
-B. Was "git pull [--ff-only]" useful in this case?
+[...]
 
-I think that one of the problems is that Git has so many different
-workflows that finding another person that has your same workflow is
-like finding a person with your same birthday. It's not impossible,
-just takes more than a few tries.
+>> +test_expect_success 'setup recursive fetch with uninit submodule' '
+>> +       # does not depend on any previous test setups
+>> +
+>> +       # setup a remote superproject to make git fetch work with an uninit submodule
+>> +       git init --bare super_bare &&
+>> +       git clone super_bare super &&
+>> +       git init sub &&
+>> +
+>> +       >sub/file &&
+>> +       git -C sub add file &&
+>> +       git -C sub commit -m "add file" &&
+>> +       git -C sub rev-parse HEAD >expect &&
+>> +
+>> +       # adding submodule without cloning
+>> +       echo "[submodule \"sub\"]" >super/.gitmodules &&
+>> +       echo "path = sub" >>super/.gitmodules &&
+>> +       echo "url = ../sub" >>super/.gitmodules &&
+>> +       git -C super update-index --add --cacheinfo 160000 $(cat expect) sub &&
+>> +       mkdir super/sub &&
+>> +
+>> +       git -C super submodule status >out &&
+>> +       sed -e "s/^-//" -e "s/ sub.*$//" out >actual &&
+>> +       test_cmp expect actual
+>> +'
+> 
+> I think this is overly complicated, what I was hinting at was adding
+> the submodule
+> in the superproject before cloning it, so something along these lines:
+> 
+> test_create_repo super &&
+> test_commit -C super initial &&
+> test_create_repo sub &&
+> test_commit -C sub initial &&
+> git -C sub rev-parse HEAD >expect &&
+> 
+> git -C super submodule add ../sub &&
+> git -C super commit -m "add sub" &&
+> 
+> git clone super superclone &&
+> git -C superclone submodule status >out &&
+> sed -e "s/^-//" -e "s/ sub.*$//" out >actual &&
+> test_cmp expect actual
+> 
+> And then running the two tests below in "superclone".
 
-Also, and this is not a deriding question, I'm genuinely curious: how
-often do you send pull requests?
+Indeed, looks much simpler, I gave it a try run and it resulted in same 
+behavior, will double check the logic of it and then send v4.  Thanks a lot.
 
-BTW, this example above is real [2]. In my particular case very often
-I'm creating history, I'm just not the one pulling it.
+[...]
 
-> But other than that, I do not
-> see any real use for the choice, which would mean in practice,
-> pull.mode would have only two useful values, rebase or merge.  That
-> does not feel a good enough reason to supersede what already exists,
-> which is pull.rebase=yes/no.
-
-The fact that you don't see the use doesn't mean the use is not there.
-
-Why do you think this issue keeps coming back again and again, and
-again? And every time it comes back people say the same thing:
-"fast-forward-only merges should be the default".
-
-Unfortunately it's not that simple. It's a rabbit hole that leads to a
-cacophony of issues in git pull. However, we can fix some of them
-*today*.
-
-> Perhaps there is a good reason why certain classes of users would
-> want to configure pull.mode=ff-only (i.e. "I might type 'git pull'
-> by mistake, please stop me if I did so on a branch I have real work
-> already.").  If that is the case, I would very much agree that it
-> would be awkward to express that choice in the current framework to
-> choose between pull.rebase=yes/no and pull.mode=(rebase/merge/ff-only)
-> would become a lot easier to explain.
-
-There's three options:
-
-1. pull.ff=only (that doesn't work IMO)
-2. pull.rebase=ff-only (that works, but it's kind of wonky)
-3. pull.mode=ff-only (maybe it should be pull.mode=fast-forward)
-
-But the current option (pull.mode=merge) just doesn't fly. And BTW, I
-did create a poll in reddit's r/git [3], and 67% (of 789) said they
-didn't specify anything, just "git pull".
-
-So, most people simply do "git pull" and hope for the best.
-
-Moreover, in 2014 I said if we don't fix it now (which is likely), we
-will be discussing it again [4], and here we are now. And I'm saying
-it again: leave the mode as "merge", we will be discussing this again.
-
-I could do some mail archeology if you want, but this issue starts to
-be mentioned at least since 2010, and virtually everyone (except one
-person) agreed the default must change, even Linus Torvalds. Reading
-back what Linus said [5], it's something very, *very* close to what
-I'm proposing (I would argue my proposal is better).
-
-So you let me know. Do you want me to dig a decade of discussions and
-coalesce those conclusions into a summary so we can decide how to
-proceed? Or should I drop the plan? Only that if we drop it, I
-*guarantee* we will discuss it yet again years later.
-
-Moreover, this is the reason why I split the series in 3. Even if you
-decide you don't want to change the default, part I of the series can
-still be merged *today*, and everyone would benefit.
-
-Cheers.
-
-[1] https://en.wikipedia.org/wiki/Nirvana_fallacy
-[2] https://github.com/git/git.github.io/commit/5d90fd64d80847e3d873da43515750bc04b639e2
-[3] https://www.reddit.com/r/git/comments/k6uj7c/do_you_use_git_pull/
-[4] https://lore.kernel.org/git/536429e97cf5a_200c12912f094@nysa.notmuch/
-[5] https://lore.kernel.org/git/CA+55aFz2Uvq4vmyjJPao5tS-uuVvKm6mbP7Uz8sdq1VMxMGJCw@mail.gmail.com/
 
 -- 
-Felipe Contreras
+kind regards
+--peter;
+
