@@ -2,118 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CDCDC4361B
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 00:27:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51DFFC4361B
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 00:31:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5EC02224B0
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 00:27:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F3E68233A2
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 00:31:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732013AbgLIA1H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Dec 2020 19:27:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48092 "EHLO
+        id S1731984AbgLIAbp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Dec 2020 19:31:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730991AbgLIA1C (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Dec 2020 19:27:02 -0500
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B6B8C0613CF
-        for <git@vger.kernel.org>; Tue,  8 Dec 2020 16:26:22 -0800 (PST)
-Received: by mail-ot1-x341.google.com with SMTP id i6so591308otr.2
-        for <git@vger.kernel.org>; Tue, 08 Dec 2020 16:26:22 -0800 (PST)
+        with ESMTP id S1731945AbgLIAbo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Dec 2020 19:31:44 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9875AC0613D6
+        for <git@vger.kernel.org>; Tue,  8 Dec 2020 16:30:58 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id t16so146262wra.3
+        for <git@vger.kernel.org>; Tue, 08 Dec 2020 16:30:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=S4sico8mQnuC7Md9k0O6Sgny/hJXtpWpE4Xl4DbxpJU=;
-        b=ToxsxyxRSysqeX7PBB5GmtY/9hbD7tdqupjzkAdyllZTmx9VQfrVG3MvbRHTy55Ee0
-         fF9m63TgDcZ4ljSAJXKg2V10TFqbvi7IJHKNN17ssQ85BREPzj3hGTISNNENws0+YZ9B
-         i1fMKoWdEQefFIVsNGa807IojAzty4van0G9OCnT8Ry/4JCuj1bAJP3wJft2OQzrG5xF
-         JFNNhpZe9/si+00YlsViyCp/kz/mTRq/VhhUkSgcHq7CPBui5mpeWn4Mpni1cazJtUII
-         7usiUPUw4Xb8xHsuGpRfXBqI+bhb7vbdyTsPnDF1UMwGPNj5wlvCfdlFk9BNVl5XI5Df
-         Rc1Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=7LrbCosmNnAL1RQPV5fryxT8N4NzlnVzyXtLWL/Gno4=;
+        b=gweW/euWgRVohz1dx3FgAk31nBbGvEgVnNdi2YvsRgUCIQeJopQ7u1yFrMoAaYRYvb
+         E0SmOtUFQt6Jk0WRajfKUB0HoOeZR77S7g+Oo5NKw4YXJmTBSYy6TBK9fdWiKFRcWVzM
+         vYtXK02ryPaXYzgTxMjAI00BZvge2qd380LQdICZu/gg54XwDtnuCiF+4NYs3XPOY+Z0
+         EiKaOa9N5uDP6n+MYLOBL8kehTQKnKFJM6hYcDG1Sb2KDhN/jtN0W3OmrgT+1ZZH4P9m
+         84UWFbg7GeSr6liX1E8GG33xuLkBCHU/GjKbza6aTg7bo8mlkygppk2moi7G4Q30sman
+         Uwhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=S4sico8mQnuC7Md9k0O6Sgny/hJXtpWpE4Xl4DbxpJU=;
-        b=CDzTXmv33BcwESbB+8HQs2gWYvY2XzQ6pi+IDuNSEAxFLvB9rTjIN136nX5eVum0FA
-         cM9sm/6wOpTnx9EBtA6xsDzQNYgi5BpaPB0XNvFqcPG8LO4Y0ubE4qiFuQy9CJ9MPTmQ
-         QaZjGjRnpyF1I0MMYqbw0GlPvyu2Aj3Ydml5RJz6tZAks2nlAfkxt4ONHZsSxQCzsUjA
-         c18pM9VYX+wrFvOm3yGwVBj5TMlxW4zsiL3XrTFYzubOHzRcr98W1nvp+5MBoJMEQbYg
-         yYXke8wW6J8v2ykJ6CvhezpsyAuN37ir8GDMT/anbyNlnmIx7AbzZzGTZ0GAWUmxcJp6
-         GSIg==
-X-Gm-Message-State: AOAM530TShzQkOfcAwWhhwfkpTlJdfnZ1cuBkHWR/wI2t1vZzr29dJZK
-        H1NKugFHibjtO4d65DYh4bFNG9jruqF4Yk0j
-X-Google-Smtp-Source: ABdhPJzS9jJIID5CSSg5Uq7Q3FR0dLBW8e5M+EgxNyVy6vcJe/SI1EXOlvG/pu7obE0rJWRu3cZd5w==
-X-Received: by 2002:a9d:2ab:: with SMTP id 40mr606240otl.280.1607473581230;
-        Tue, 08 Dec 2020 16:26:21 -0800 (PST)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id l1sm137833ooi.48.2020.12.08.16.26.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Dec 2020 16:26:20 -0800 (PST)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] Add project-wide .vimrc configuration
-Date:   Tue,  8 Dec 2020 18:26:19 -0600
-Message-Id: <20201209002619.25468-1-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.29.2
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7LrbCosmNnAL1RQPV5fryxT8N4NzlnVzyXtLWL/Gno4=;
+        b=e9sNLN9sk7hCGGRNvJcj5gZJj+D0V0ih498VmXgWT+BQpeVuFlSSlxRPrIdFm9kxgs
+         m3OvCRaAAkc2Sx195Xf7psy/61q4xZckG1mabpQFRl8rlue3RF49x34HMXxT6HFjfbmT
+         trzyH1hlG98XmfmkpK9ReWHLOnOmgxLJhprq9763u98wTntrgYHaqxJVoR6s6k9urTYn
+         sPHpcxZKkBrP7mSLqgeA0t7taAisFgaqbgmU33DX3345UEvDRecQNufcFHNkspqYdirg
+         a4MdXM8RmOZ2IIOvgGgftnLxBJxGObjoCrADlYK6tI8VLW4mnGyDQz9JlU8lVKZSSQqA
+         TKbw==
+X-Gm-Message-State: AOAM532DPJrv1vYP5i764kBJ5LBxMC00fjze+BmC9eIhjEc/8GII5uMz
+        jk+cyzAPyJll8zda6+gWMvbaDr3JPeaSCxrhERg=
+X-Google-Smtp-Source: ABdhPJxazQxjCle8y807/ZZtKZnq5VuJxBr0sCOCTXDTAp0CK6x05sYsr6qw8tF5D63/H+H72khAUzqJYZ/Dpsbs4QY=
+X-Received: by 2002:adf:ce90:: with SMTP id r16mr691693wrn.100.1607473857294;
+ Tue, 08 Dec 2020 16:30:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAMP44s1D-Zp3KDS+Hi74a=Lkc7Nc_0qiEzQEF0Pmj=bD8i+=JQ@mail.gmail.com>
+ <X8++TTnv95IAIkZL@coredump.intra.peff.net> <20201208215411.GB3783238@google.com>
+In-Reply-To: <20201208215411.GB3783238@google.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Tue, 8 Dec 2020 18:30:46 -0600
+Message-ID: <CAMP44s3qUNdGHV2sCovj1Ls7MGesB8_uuX39h4zhCZ_aG-jCsQ@mail.gmail.com>
+Subject: Re: New sharness/test vim syntax
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Jeff King <peff@peff.net>, Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It's not efficient that everyone must set specific configurations in all
-their ~/.vimrc files; we can have a project-wide .vimrc that everyone
-can use.
+On Tue, Dec 8, 2020 at 3:54 PM Emily Shaffer <emilyshaffer@google.com> wrote:
+>
+> On Tue, Dec 08, 2020 at 12:56:29PM -0500, Jeff King wrote:
+> >
+> > On Thu, Nov 26, 2020 at 04:24:42AM -0600, Felipe Contreras wrote:
+> >
+> > > It gets a bit tedious to see all the tests in the same color, so I
+> > > wrote my own vim syntax file so that at least the body of
+> > > test_expect_success is highlighted properly.
+> >
+> > Thanks for sharing this. Over the years I've gotten used to the horrible
+> > all-red view when editing our test scripts, but I'm looking forward to
+> > leaving that behind. :)
+>
+> Thanks for bumping this mail, Peff - I saw it come in, said "oh heck
+> yeah, I'll install that later" ... and then forgot :)
+>
+> But I've installed it now. This is awesome. Thanks for sharing it
+> Felipe!
 
-By default it's ignored, you need the following in your ~/.vimrc
+You're welcome!
 
-  set exrc
-  set secure
+I also sent a patch to add a project-wide .vimrc file, to minimize the
+burden on each individual developer.
 
-Then the project-wide configuration is loaded, which sets the correct
-filetype for the documentation and tests, and also the default
-indentation of c, sh, and asciidoc files.
+A little bit of quality of life never hurts.
 
-If you have the shareness syntax file it will be used for the tests, but
-if not the sh syntax will still be used.
+Cheers.
 
-These default configurations can be overriden in the typical way (by
-adding the corresponding file in ~/.vim/after/ftplugin).
-
-We could add the vim modelines at the bottom of every file, like other
-projects do, but this seems more sensible.
-
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- .vimrc | 9 +++++++++
- 1 file changed, 9 insertions(+)
- create mode 100644 .vimrc
-
-diff --git a/.vimrc b/.vimrc
-new file mode 100644
-index 0000000000..d250ab26e0
---- /dev/null
-+++ b/.vimrc
-@@ -0,0 +1,9 @@
-+augroup git
-+  au!
-+  au BufRead,BufNewFile */t/*.sh set ft=sharness.sh
-+  au BufRead,BufNewFile */Documentation/*.txt set ft=asciidoc
-+
-+  au FileType c setl noet ts=8 sw=0 cino=(s,:0,l1,t0
-+  au FileType sh setl noet ts=8 sw=0
-+  au FileType asciidoc setl noet ts=8 sw=0 autoindent
-+augroup END
 -- 
-2.29.2
-
+Felipe Contreras
