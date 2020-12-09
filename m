@@ -2,145 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4FA9C4361B
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 14:41:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D593C1B0D9
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 14:49:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8045E20829
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 14:41:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E2945233EA
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 14:49:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733023AbgLIOlA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 09:41:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38186 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731544AbgLIOlA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 09:41:00 -0500
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EE4AC0613CF
-        for <git@vger.kernel.org>; Wed,  9 Dec 2020 06:40:20 -0800 (PST)
-Received: by mail-ej1-x644.google.com with SMTP id g20so2480001ejb.1
-        for <git@vger.kernel.org>; Wed, 09 Dec 2020 06:40:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=EiJtVaMgbU+4uSOOH6n5rAyH8vhayNAseJxNYZzB4tU=;
-        b=qqcVzHO4DeJXmv0ybc3rDkXPIuUGV2PjVsbxOA4VCllatOJ4aepSdBHQ8B0gdmBBwC
-         jhmyv3+jQoV8E9zsYPFaatoeo7aM5I/nbEzI79qOS937G2A1JCu3gGP5scvEMiZdj9yy
-         RFqBq3G4bIMZjl0jvRFQnk67kNGDdqSWvJ8hpihZmRWEjus02kmEAX03mL3D2kxxogbb
-         HrjwNYrPzpZRUnRHSXbEw9AQfmR+w5pnL/2TKTtwBJv1i0DJ3GpSShYMdWGTexZE/rZw
-         3Mkyo41QKGqE53cwk/ks4mt8QeJid+I2v3sojMgLR60DdnjxFQ/Wguxm4OxmJ7d+MxnS
-         2p3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=EiJtVaMgbU+4uSOOH6n5rAyH8vhayNAseJxNYZzB4tU=;
-        b=D4ARtL+OXTndFw8PEc+8eapzlvC7p4raRdOUdXBrSQPLv5+JrGK2ufMtfGL5njU39p
-         j/kTTRSFBaXI89JnEjew4XQDQSFnje7L8SeCIUtcKTUZv5poPNfxloYVhpWStrn9e5tJ
-         NBDo1fVb7Hq8ekQ9S8sE43ul5dTRCz/Kir9kWYz8kFTFUXwdYkg/APAtWb2wQCNlNRJ4
-         0Bx4sLsiOvn8XWa4l1uMNw4FGWtJmLVQLbfCaoBhvjQGUKiiLSyGnwLXBTKqxeaeVJlL
-         rwH9eaZF0AMiqfPzxzsVyVwwQ6LZ8WXMJnDPYui5JDF4y2+6EMn8tQBWtahR8YcUwNox
-         eRSw==
-X-Gm-Message-State: AOAM531vjhOA3y3wvvDHbLa3VPuazKvbBN2odVIphZa2ZMf+PWDtTp7P
-        B0n9wPKzIwIiCEl9YcNn4CYqNFRUSJ0=
-X-Google-Smtp-Source: ABdhPJz8ZVyyDsJmlxxZhGlubTAbsR6il7eawiwjzvmTjArI0Jk/Uvu/mw+7hxSmwEOnIM7ua/7bEg==
-X-Received: by 2002:a17:906:f0c3:: with SMTP id dk3mr2288409ejb.366.1607524818724;
-        Wed, 09 Dec 2020 06:40:18 -0800 (PST)
-Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id cc8sm2005749edb.17.2020.12.09.06.40.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Dec 2020 06:40:18 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Philip Oakley <philipoakley@iee.email>
-Subject: Re: [PATCH v4 2/6] config: add new way to pass config via
- `--config-env`
-References: <cover.1606214397.git.ps@pks.im>
- <cover.1607514692.git.ps@pks.im>
- <766ffe31a6f14c55d1b58a8f53edbb7f731b1b24.1607514692.git.ps@pks.im>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.13
-In-reply-to: <766ffe31a6f14c55d1b58a8f53edbb7f731b1b24.1607514692.git.ps@pks.im>
-Date:   Wed, 09 Dec 2020 15:40:17 +0100
-Message-ID: <871rfzxctq.fsf@evledraar.gmail.com>
+        id S1733103AbgLIOtH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 09:49:07 -0500
+Received: from mout.gmx.net ([212.227.17.22]:38825 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1733205AbgLIOso (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 09:48:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1607525228;
+        bh=c5spJx2Rn1Hy7WCSXVt9P/KSNks28wdWI8ZaqeGNUIU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=bE60wnMFbfD+IuNWnpcELpefc0U3j7s+IgJwvgW47CuTb9si7iRrDwmxoRpqUdETs
+         uQlRXy06LhUmJzEL5rkDfdVHKyW/mfAWxkW/PuYsvsIeNr0EeHO682vh5OJJJBZVLW
+         oGMaqtuwghfVEypFWo/wW2I6Ms9JiAGFU7cVhwaM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.88.62] ([89.1.212.111]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQvD5-1kSt230aNr-00NyMC; Wed, 09
+ Dec 2020 15:47:08 +0100
+Date:   Wed, 9 Dec 2020 15:47:05 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 4/4] init: provide useful advice about
+ init.defaultBranch
+In-Reply-To: <xmqq8saqjx2n.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2012091513540.25979@tvgsbejvaqbjf.bet>
+References: <pull.921.git.git.1606087406.gitgitgadget@gmail.com>        <pull.921.v2.git.git.1606173607.gitgitgadget@gmail.com>        <bccef953913da629057b3e9b211bc54081fa4475.1606173607.git.gitgitgadget@gmail.com>        <xmqq8sarljfn.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2011240648160.56@tvgsbejvaqbjf.bet> <xmqq8saqjx2n.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:LdXOyhZjo4aSZzoW8ShAb8r6fZB5PDBGtjXf+0z37pnYwICSodx
+ uQSSbJJ2h6ywjNOHT+jyo0F1KMmCbOiN/j5567tVmiKITK82FsUCogUFXoNOMVIYfyNZIFG
+ qI0yF1E2GS/FYw0R+dMVybF/ieFCDBkLQBPEFmi5OIsp5X4taNW3OqSqChyL/7lV/SURDcC
+ t9JPNUTkvfJcqxJVCMf7Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:uoo/owuuw9M=:25fztCg+uHl5d9n9ytK/10
+ Ycnbn+9Fc2rG9n4nG3AJrDSmZ0pwjfZJfcPN0XEVn/vRyHVEb4G1YcPCshz9fFtFoKjTlrmxD
+ d5OSnN+9+Fvcs+ywS6jxW5oDYR+sK0Z8xI5JMdqJtTZNGH3APeDe4IZWPLN3ognuml/Q0qw00
+ gyXpKowPVAEuezHKshC+5e9GNuzuXwji0PkoXdzyK/9xQtdsxJDU0+7sXuRxg10rI5OPnX4XH
+ w8WWrg6otQxqDfB9gBPqzkIj5qOd2gwvP4DlQS5HAtuPyCVgUoQogcpNp8KuzoWxpKjffB8Tu
+ QSNYuDMo6FrXTkqP48BWdrLX7oASJQJqUiCfLys60HFzRFDngvZdeJJ8W8aFFrf91cFVOHMSm
+ ZgsKYz9kHx/6dxhZKIxJN4cuLqa1OzZcQi5GVCpmGh0f/KZzo0ZwunoKQ6/rMHitCXF8PbbDq
+ wDe9fTCl7hXpifDh8A6g/MeyCRvMXP56/IiZ5sac8dSUJLNqyaU0wBNJmlKURb7yV9av2xtGZ
+ 9LAkxo0ZntAbkeBxWsYBax0VmHJKgqGGzMiBSX9n1W9icBg3kugitavQfxmSMiWUa2iQn1Ksk
+ zBEFE3MJhCTl6t2wL5UNu2s1iDptYM69InunOQLo99W1ifA9MVGT5X4NHlpsWDGoO7OYTpXel
+ FLYXfl61b1lwcfMOgwaadPUB6j0JPYKWJwULR+bVCoRt88Y/V+ZJX/r49A6He2HR1EqTlGkOS
+ Xsfw/z7jilwyjo8iiWIRM7PGl7jHFPhofY6nzHrKvdxh9tt8S9VYVmiKKZARwrwnRLUEY3qmB
+ M1u1cARZ9cUtN7Z2jHQNlYlQNDNpw16NOFZysbMO4NW7Pmua0O8zoK03akBv11fczuVRwRqVB
+ M1QjZsM+14Zc4oQFkqjxCJjNfn2g9b9Z4JZrAsIZDSuOS7g9AwlI3Mi6iwnAQUVPdGT7oSx5A
+ Y62cmGTS/EQ==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
-On Wed, Dec 09 2020, Patrick Steinhardt wrote:
+On Tue, 24 Nov 2020, Junio C Hamano wrote:
 
-> While it's already possible to pass runtime configuration via `git -c
-> <key>=<value>`, it may be undesirable to use when the value contains
-> sensitive information. E.g. if one wants to set `http.extraHeader` to
-> contain an authentication token, doing so via `-c` would trivially leak
-> those credentials via e.g. ps(1), which typically also shows command
-> arguments.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> To enable this usecase without leaking credentials, this commit
-> introduces a new switch `--config-env=<key>=<envvar>`. Instead of
-> directly passing a value for the given key, it instead allows the user
-> to specify the name of an environment variable. The value of that
-> variable will then be used as value of the key.
-> [...]
-> +--config-env=<name>=<envvar>::
-> +	Pass a configuration parameter to the command. The <envvar>
-> +	given will be replaced with the contents of the environment
-> +	variable of that name. In contrast to `-c`, an envvar must
-> +	always be given and exist in the environment. Passing an
-> +	environment variable with empty value will set <name> to the
-> +	empty string which `git config --type=bool` will convert to
-> +	`false`.
+> >>     To configure the initial branch name to use in all of your new
+> >>     repositories and squelch this message, run:
+> >>
+> >> may be better---it makes it clear that the offered two choices are
+> >> (1) do nothing and see this message every time, or (2) commit to a
+> >> name and not see this message again.
+> >
+> > Well, I think I finally understand what you are saying: there is a
+> > legitimate need for a way to go with Git's preference but still suppre=
+ss
+> > that message.
+>
+> I am not saying it is a legitimate need.  I just wanted to make it
+> clear that we deliberately chose not to grant that wish in the
+> message.  An advice flag in this context means that the users can
+> choose to let their distro and sysadm to flip the default silently,
+> which is much worse than having to see the message every time they
+> start a new repository with "git init".
 
-Okey, because "-c foo.bar" (true) "-c foo.bar=" is the empty string, but
-that doesn't make sene with "--config-env". Also the whole part about
---type=bool is just confusing, because it's referring to `-c`'s magic
-behavior when it comes to `bool` which we don't have here.
+The distribution already can add patches, so this objection is a red
+herring. The sysadm can pick a different value for `init.defaultBranch`
+and dictate to the user silently what initial branch name to use, so that
+is also a red herring.
 
-I think it's also worth describing what this is for & what the
-limitations are. Maybe:
+I still think that there is a legitimate need for this config option to
+turn the advice off, without having to override Git's default branch name.
 
-    --config-env=<name>=<envvar>
+In particular in this context, I would think that most users will want to
+just go with whatever is Git's default.
 
-        Like `-c <name>=<var>` except the value is the name of an
-        environment variable from which to retrieve the value. Unlike
-        `-c` there is no shortcut for directly setting the value to an
-        empty string, instead the environment variable itself must be
-        set to the empty strin. Errors if the `<envvar>` does not exist
-        in the environment.
-
-        This is useful for cases where you want to pass transitory
-        configuration options to git, but are doing so on OS's where
-        other processes might be able to read your cmdline
-        (e.g. `/proc/self/cmdline`), but not your environ
-        (e.g. `/proc/self/environ`). That behavior is the default on
-        Linux, but may not be on your system.
-
-	Note that this might add security for variables such as
-	`http.extraHeader` where the sensitive information is part of
-	the value, but not e.g. `url.<base.insteadOf` where the
-	sensitive information can be part of the key.
-
-> +void git_config_push_env(const char *spec)
-> +{
-> +	struct strbuf buf = STRBUF_INIT;
-> +	const char *env_name;
-> +	const char *env_value;
-> +
-> +	env_name = strrchr(spec, '=');
-> +	if (!env_name)
-> +		die("invalid config format: %s", spec);
-> +	env_name++;
-
-Not something new, and maybe not something for this series, but I wish
--c and --config-env would document this limitation that we support "="
-in keys in config, but not via those parameters.
+Ciao,
+Dscho
