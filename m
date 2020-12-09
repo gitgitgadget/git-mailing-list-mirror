@@ -2,124 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41F6AC433FE
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 07:17:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07D53C433FE
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 08:14:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CEE16238E9
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 07:17:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C1E7E23B98
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 08:14:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726129AbgLIHRH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 02:17:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54296 "EHLO
+        id S1726010AbgLIIOT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 03:14:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725829AbgLIHRG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 02:17:06 -0500
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6639EC0613CF
-        for <git@vger.kernel.org>; Tue,  8 Dec 2020 23:16:26 -0800 (PST)
-Received: by mail-wr1-x444.google.com with SMTP id m5so531739wrx.9
-        for <git@vger.kernel.org>; Tue, 08 Dec 2020 23:16:26 -0800 (PST)
+        with ESMTP id S1725816AbgLIIOT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 03:14:19 -0500
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 473F7C0613D6
+        for <git@vger.kernel.org>; Wed,  9 Dec 2020 00:13:39 -0800 (PST)
+Received: by mail-wm1-x343.google.com with SMTP id k10so609995wmi.3
+        for <git@vger.kernel.org>; Wed, 09 Dec 2020 00:13:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=S4JCzbZiZpxNmX23eEoldA266rbpYbdA+knLJNGbGyw=;
-        b=utHwvqazZ+MvyXnrE3Bxyg6T7TM6Ns4aslASdDDM5/GQ1pfChnoShbQORsH19X//VK
-         tDqgQscI8Dfh90fxrlokPVP8lzJsZPeXIVHBFfN6BYzrkQTlRmtaebaGzUdC5ox7bH7u
-         5leJ6oJvjadkndOwVr82AkN3OaojdvRvhWgnnSm4PGzH58UCU7McSDsoM3OjHZuifCJr
-         WCHCccb9CQyOGSbtQzb1HrHsa8IttI7Doixy7GPlkaEWM2cVS1juFHScOj0+ytI+EjLr
-         CL66hXhuzGMJZ3QO0yYLuJIX1cCVG6xchcZ+VgkdoY8xXS+5nafpwSqSOIXGe2rR6X5d
-         yK4A==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=fxjGSUKgCdZlFj539nfmyP3r7nbeZgzDaxsQWLwOOS0=;
+        b=gJAV0jXov353aW+Xy1TnHNoFZXeLvqOC6TiaZAGFV5NKM2gzmy2zSuAPnA3baE5CpI
+         HQiGoNUJREDeXuHDJmB/6j6oM4hfh9GEsu/vTbAwdH8T2jk16MdxOXd7Aem53SemjbPF
+         uyQeXV6G6OEbnH9xjm+gl45KwrG3O2bPDyLuGaXig/bFTXAMc1hE6FL1RAsQvJ4Du2Xd
+         mEZXkZ2httgeNx+Ro/gtg1Xbf2AsfR1J9QLpp4tD9XzYkF/DxgzuWX+614V0h6ehBv63
+         i9PfkE0f1UOt2UeA/7rF/UZKUtUCZvqeIy+0P6LnPWgTaMRkjcux7nObIW/A4l0cMKQZ
+         IbJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=S4JCzbZiZpxNmX23eEoldA266rbpYbdA+knLJNGbGyw=;
-        b=YH4Dyl+ASth3nYxUru/I3gQmADB7G68dqReXlqGDyqNCoEea/ZtW4hrzEf/47w3UAT
-         dFdJ11CrleuRw0yavQ+dtRVl44zDWeGcwyjpf+rdOtBIdloVwRguWCpZEez20QS9c5pz
-         WZ8pN715mK6AA+YvRiafgN2qZfvayWplXYyS5JLXu5hloMEV1THa4IbSxAk7arlrORF0
-         pH6LPYZhP1ahEfluFot1TT1WI2BO+IbvFIrGO8cIRIRhTvpTxHleXvMrLFXpM3hiY/eW
-         fX90wXLWzLFQEOf5maSvBrPGlYarCgTavDAUMJViVGc47QP8guVNIZDxUiErUbA9Gsrv
-         YfFQ==
-X-Gm-Message-State: AOAM530aIQAqkDdBVkANnAP02FEMcL49EP8kTQSfn6CdXNOm0esd7wSG
-        S1Shfa7nm66hHIIQTcfI85Q7pQCLns9E9DJgQ7o=
-X-Google-Smtp-Source: ABdhPJwLpzdzKI7wrapZSWKk464sneNEOae3UWTySfZijUtKtwGDCfASNBMRgn5yee8L2jcbbC/RtwaVcrxB8IBzjeg=
-X-Received: by 2002:adf:e788:: with SMTP id n8mr1036817wrm.84.1607498185062;
- Tue, 08 Dec 2020 23:16:25 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=fxjGSUKgCdZlFj539nfmyP3r7nbeZgzDaxsQWLwOOS0=;
+        b=CZz+z0ENRolNwb1wqI8Je2BQp++J69b8C4Ppo7TIz9/4yURVszSE3QsaLFNrIDLlC+
+         Qkn1OXFq7XbchQm+k7qpo5ZlnCjQB9wpNyux7zRLwXO6tgVFHMh5K3apNwbBqfXL2ZTN
+         lT0eplfvIbI/h6PVMZfU/lhrbKyYPqsGhCXDAzysBFOPyOtLfZTFpUb3H4jjDdeWk7GX
+         kl9J2Pop1p7R9hnkfpTvTuGUJ2ngD25fz64eGN/JADior3B90Xj0/Vc/jxFkfNFtF2WE
+         mTF8M9ZRkIhFgdDdCasSscF1DY6lhCLro+a3IaBPcRCBjv0V7i62aHaGCskm57UY31bo
+         wwLg==
+X-Gm-Message-State: AOAM5330bTrnTLXzpBIrOZFbY1tzc/SLO1CxCO5GjCF0F+GEfbmjTaZb
+        Oj2f9yfC0uO3SCRlGCJWPieO0rbev4c=
+X-Google-Smtp-Source: ABdhPJz2602mwDwdxfk7Nhr0qOR01IUpleWuYXJqWRyMGLLg9E4FBB/3BXgS5pnSxJr1+sb4SEzAng==
+X-Received: by 2002:a7b:c4d5:: with SMTP id g21mr1418706wmk.92.1607501617812;
+        Wed, 09 Dec 2020 00:13:37 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id i11sm1763310wmd.47.2020.12.09.00.13.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Dec 2020 00:13:37 -0800 (PST)
+Message-Id: <pull.930.git.git.1607501616914.gitgitgadget@gmail.com>
+From:   "Julien Richard via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 09 Dec 2020 08:13:36 +0000
+Subject: [PATCH] doc: 'T' status code for git status
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20201209002619.25468-1-felipe.contreras@gmail.com>
- <X9A1On3v35nEjL7i@camp.crustytoothpaste.net> <CAMP44s0W3En0ZuNfBOOZhfeFUeFRvEFs7khAFRraocuDaFpbNA@mail.gmail.com>
- <xmqqlfe731vh.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqlfe731vh.fsf@gitster.c.googlers.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Wed, 9 Dec 2020 01:16:14 -0600
-Message-ID: <CAMP44s2xo=n4z6m7FhuPiZ66yPWvmdQuAodvh2XNpdVAfo6R8g@mail.gmail.com>
-Subject: Re: [PATCH] Add project-wide .vimrc configuration
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Julien Richard <jairbubbles@hotmail.com>,
+        Julien Richard <julien.richard@ubisoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 9, 2020 at 12:55 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
-> >> We have an .editorconfig file[0], which is a cross-editor file that can be
-> >> used to specify these settings.  It is supported by many editors out of
-> > ...
-> > Also, we don't have to support configurations for every editor under
-> > the sun, that's a slippery slope fallacy.
-> >
-> > We can stop at 1 editor: the most widely used editor by developers by far [1].
-> >
-> > Cheers.
-> >
-> > [1] https://pkgstats.archlinux.de/packages#query=vim
->
-> It shows 71% (for vim-runtime), that is a lot higher than ~20% for
-> emacs.
->
-> Amusingly, https://pkgstats.archlinux.de/packages#query=nano tells
-> us that nano clicks at 80%, which makes it the editor with the
-> largest number with your yardstick ;-) [*2*].
+From: Julien Richard <julien.richard@ubisoft.com>
 
-Right. But I doubt there's many git developers using nano.
+Git status can return 'T' status code which stands for "typechange", fixing the documentation accordingly.
 
-Anyway, that's not my yardstick, I just recall I've seen multiple
-surveys of the editors that developers use, and vim always comes at
-the top, by far. I just quickly searched for some evidence to sustain
-my notion.
+Signed-off-by: Julien Richard <jairbubbles@hotmail.com>
+---
+    Document 'T' status code for git status
+    
+    Git status can return 'T' status code which stands for "typechange". I
+    can't document more the behavior but it would have helped me a lot to
+    see that line in the documentation so I guess it can help others too.
 
-> In any case, I think it is a worthy goal to ship a sample set of
-> "vimrc" entries that people can readily accept for their use.  It
-> also is a reasonable "feature request" to consider doing something
-> similar to "editorconfig" to give other editors similar convenience.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-930%2Fjairbubbles%2FgitStatusTypeChangeCode-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-930/jairbubbles/gitStatusTypeChangeCode-v1
+Pull-Request: https://github.com/git/git/pull/930
 
-Indeed. Editors are kind of a touchy subject, but I don't think
-anybody can deny that vim and emacs are the two most popular. My only
-point is that we don't have to support "every editor under the sun".
+ Documentation/git-status.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
-Cheers.
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index 7731b45f078..850c33b3696 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -197,6 +197,7 @@ codes can be interpreted as follows:
+ * 'R' = renamed
+ * 'C' = copied
+ * 'U' = updated but unmerged
++* 'T' = type changed
+ 
+ Ignored files are not listed, unless `--ignored` option is in effect,
+ in which case `XY` are `!!`.
 
-> [Footnote]
->
-> *2* In other words, I doubt these graphs are depicting "how widely
-> is an editor used by developers".  It is just showing how often it
-> is installed, and I know the primary workstation I use daily has vim
-> and nano installed without me choosing to have them, as opposed to
-> emacs I had to manually install, and I only use vim once every month
-> and nano once every quarter.
-
-Yes, but in Arch Linux at least no editor is installed by default.
-
+base-commit: 3a0b884caba2752da0af626fb2de7d597c844e8b
 -- 
-Felipe Contreras
+gitgitgadget
