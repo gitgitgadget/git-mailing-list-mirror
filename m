@@ -2,189 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AB62C433FE
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 11:54:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12B6DC433FE
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 13:12:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 28B7023B77
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 11:54:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DD2AB23B45
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 13:12:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731080AbgLILy3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 06:54:29 -0500
-Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:34677 "EHLO
-        wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730836AbgLILy3 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 9 Dec 2020 06:54:29 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id BF922AFB;
-        Wed,  9 Dec 2020 06:52:41 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Wed, 09 Dec 2020 06:52:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm2; bh=3zWg1KeVrbfxMY/F8qBmTI/lfPh
-        qwCFOKLa4/AmfQdg=; b=bZtPtNsVc77T9En9e+h/mnonPkRnhA7blU2fx4rI++f
-        BXvsemv4W9P/Hr5d2Z5frNEr3gyIXJlW/kK2+h71VyCA+jdbceG6UC3L8svP/lKn
-        2USMIEmS0HIAS0xkSVOZAuIaQE8qTcTgHCTER3kLWWa3+xFnKbJyvNWs8wiVLzQG
-        Ww/Td2BVGsP01n6Sq+ye0h1RprXpi4ecj2WO8nF7P6kIJ+yN4Ov83VmSOLZ8DvFc
-        JCmBetWDPNMr012N0U0YmyhvGl0cdc+YdXy1LlJHB/qdWP0WsH1Ny7tPkxEFO6lJ
-        wyDKND6oLgnUR/meeKKhyb2rQ2sPa2cdexF/CpVWqnA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=3zWg1K
-        eVrbfxMY/F8qBmTI/lfPhqwCFOKLa4/AmfQdg=; b=O4SOobTpYXVBNjEVh/DV5T
-        AUL/U3P/SsJeUCRhiUIzYCFUHvpaf93yb80Hz3Bq0aJlA8xJ7ff6n3lvZQUsIiEy
-        mQAW6rftbUBIfy2ozHPoC5xWAzbjsQnwiMVFUlhoX4kMXpDNW2zAJzP9lXuy1X6R
-        dJDRZssnjmXMQgxi7odr57aWVU4hY2yG3xNDYjCC6a14lCloQsr4ZrJcU8c9AefY
-        jiVIzT+p234aIny6IeYhEDYD9Q7BpsOWe16WogryclqOObWDAGECRzGsw15/jfDC
-        AziJn+iR1WWMbGLHrjCjcwO/HqPyhY+BYjKo13dQMr30+zmM+W3w8EPXxT3delZg
-        ==
-X-ME-Sender: <xms:ibrQX15xVDJvlXRgEvhYYli3NVQltFRffOj72degqGrAuaqzW_Y_wA>
-    <xme:ibrQXy7VbJqHE89h3lebTdcVJhrEN3TaFjv0xxrka3g0MdreP4HbbCjkstrWZIlTi
-    uPKCW4OyAJzEF1cAQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudejkedgfeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
-    ucfkphepjeekrdehhedriedurdduvdeknecuvehluhhsthgvrhfuihiivgepheenucfrrg
-    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:ibrQX8dwpumJjIaIdlYfUQ9FmfUkyKvJnyQYlwTZm5PCgf_Ua3XEdw>
-    <xmx:ibrQX-I6iNPVA5_yo6qfa6KE60kBxTl812w0h3lek0FsXy2Mg1ahiA>
-    <xmx:ibrQX5Lig_ZRbtY90AlPAxrNTWIdb8eSf17QfGD3Adx8_W_ftjWx5g>
-    <xmx:ibrQX525fqRSH3wjzklzKlxjT7Ck6fIs_E-DY2ry43qEqzFUJOe-0w>
-Received: from vm-mail (dynamic-078-055-061-128.78.55.pool.telefonica.de [78.55.61.128])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 6CEEC1080063;
-        Wed,  9 Dec 2020 06:52:40 -0500 (EST)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail (OpenSMTPD) with ESMTPSA id d9dfc387 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 9 Dec 2020 11:52:40 +0000 (UTC)
-Date:   Wed, 9 Dec 2020 12:52:38 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
+        id S1732161AbgLINMq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 08:12:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52774 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732026AbgLINMp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 08:12:45 -0500
+Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5669CC0613CF
+        for <git@vger.kernel.org>; Wed,  9 Dec 2020 05:12:05 -0800 (PST)
+Received: by mail-ed1-x542.google.com with SMTP id cm17so1491549edb.4
+        for <git@vger.kernel.org>; Wed, 09 Dec 2020 05:12:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=LVMU6FtCzZHwH6a5Wmc5QLnl0OufG+9D4W5jF3XQP9o=;
+        b=k2YYF9LGJ6pVDl7s3T3vbsjyMgOgZsPrtukekWPq3X4mHrm2DBUQlVu5Yuf4AbqM/P
+         yPSMybphT7Mw4kHkd05RHxIEhZuHDB0asMEpm4p8TVeuwaTHnQf67O34zrosbK2EBNP6
+         1G7XIe+u2yOX4W+Yv7FX9NSaXD5EyfnMIoS1oJ84sStpWTCCB3lGg5DaXFZmVqfncRxo
+         iabEvHNtpY3Yk8zRq8z9c76TY3GGp15lQ65fDVGAtMvevh7sMph0PR2spKxb3VDV2+9V
+         KB2n5pdtTg55o2B7XynhzMMWwwMIz0qZ00cT5eV+6tnjgsxm5wz2x4aNahAqculs4VVl
+         c4iA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=LVMU6FtCzZHwH6a5Wmc5QLnl0OufG+9D4W5jF3XQP9o=;
+        b=nkM2oM8lXxGLq8T+mVgQ4KhB+c0rEi7dlkSLhKuSN3psOcplUZclC0TLvaupvS69WT
+         gCKHTFbw9XQy4J900ziq8gbRViDssxU34CkdSmlwOyB6vDhQ1I9/Tz11Y7dqe+r2n+Nv
+         K/cvdHyqk2NiiTpUqIfs1eaEO92xEf0ey/8qY/PdR5Q0XxMLZZ4y6O/sN10J2wQrp3Hk
+         OrFVDelJTJKDauHnN13pNAu6A5PpZkJHyMOt1J4rJDiwMqjip83VcOVgTR19Sod8o6FW
+         z7as10om9cv/YFcCE65PlwEm+QxvUzoib1DuQ91qclvNcZNTFsA6OMnh8vpc04PIKH8c
+         X87w==
+X-Gm-Message-State: AOAM531nuyqwA2d7HsT7zh3PrVq83ydPjPiHiUdHUtkCm4l3uLHCVJju
+        OZPqAXohYMgmEDTENR6DjvgrrAC35WI=
+X-Google-Smtp-Source: ABdhPJwklM/Id/fallx51usQ1OF1qM5htPtLv2sII1wmnpMZqAcDkPw6jyLADJQE7P0Sm53vY3kQow==
+X-Received: by 2002:a50:8d89:: with SMTP id r9mr1862800edh.144.1607519523727;
+        Wed, 09 Dec 2020 05:12:03 -0800 (PST)
+Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
+        by smtp.gmail.com with ESMTPSA id l1sm1465763eje.12.2020.12.09.05.12.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Dec 2020 05:12:02 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         Philip Oakley <philipoakley@iee.email>
-Subject: [PATCH v4 5/6] config: refactor parsing of GIT_CONFIG_PARAMETERS
-Message-ID: <1afda0a536bb431a4acc8ca312c2daf5ff26e5ef.1607514692.git.ps@pks.im>
+Subject: Re: [PATCH v4 4/6] config: extract function to parse config pairs
 References: <cover.1606214397.git.ps@pks.im>
  <cover.1607514692.git.ps@pks.im>
+ <63fb8ad99742d748dc00306be6d2e05bd0ed583d.1607514692.git.ps@pks.im>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.13
+In-reply-to: <63fb8ad99742d748dc00306be6d2e05bd0ed583d.1607514692.git.ps@pks.im>
+Date:   Wed, 09 Dec 2020 14:12:01 +0100
+Message-ID: <875z5bxgwu.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="v9nxxHfbtY0VJcXY"
-Content-Disposition: inline
-In-Reply-To: <cover.1607514692.git.ps@pks.im>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---v9nxxHfbtY0VJcXY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Wed, Dec 09 2020, Patrick Steinhardt wrote:
 
-We're about to introduce a new way of passing parameters via environment
-variables to git, which will require us to change the way we parse
-config entries from parameters. Currently, `git_config_from_parameters`
-is written in a way which makes it rather hard to extend.
+> +static int config_parse_pair(const char *key, const char *value,
+> +			  config_fn_t fn, void *data)
+> +{
+> +	char *canonical_name;
+> +	int ret;
+> +
+> +	if (!strlen(key))
+> +		return error(_("empty config key"));
 
-Refactor the function to make it ready for the new logic as a
-preparatory step in order to avoid reindenting code and adding new logic
-in the same step, which would be much harder to reason about. This
-refactoring is not expected to change any behaviour.
+We just did this check (just before the context of the second hunk in
+this patch) before calling this function:
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- config.c | 31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+    if (!pair[0]->len) {
+        strbuf_list_free(pair);
+        return error(_("bogus config parameter: %s"), text);
 
-diff --git a/config.c b/config.c
-index 151980e5c9..8162f3cec8 100644
---- a/config.c
-+++ b/config.c
-@@ -505,35 +505,36 @@ int git_config_parse_parameter(const char *text,
-=20
- int git_config_from_parameters(config_fn_t fn, void *data)
- {
--	const char *env =3D getenv(CONFIG_DATA_ENVIRONMENT);
-+	const char *env;
- 	int ret =3D 0;
--	char *envw;
-+	char *envw =3D NULL;
- 	const char **argv =3D NULL;
--	int nr =3D 0, alloc =3D 0;
- 	int i;
- 	struct config_source source;
-=20
--	if (!env)
--		return 0;
--
- 	memset(&source, 0, sizeof(source));
- 	source.prev =3D cf;
- 	source.origin_type =3D CONFIG_ORIGIN_CMDLINE;
- 	cf =3D &source;
-=20
--	/* sq_dequote will write over it */
--	envw =3D xstrdup(env);
-+	env =3D getenv(CONFIG_DATA_ENVIRONMENT);
-+	if (env) {
-+		int nr =3D 0, alloc =3D 0;
-=20
--	if (sq_dequote_to_argv(envw, &argv, &nr, &alloc) < 0) {
--		ret =3D error(_("bogus format in %s"), CONFIG_DATA_ENVIRONMENT);
--		goto out;
--	}
-+		/* sq_dequote will write over it */
-+		envw =3D xstrdup(env);
-=20
--	for (i =3D 0; i < nr; i++) {
--		if (git_config_parse_parameter(argv[i], fn, data) < 0) {
--			ret =3D -1;
-+		if (sq_dequote_to_argv(envw, &argv, &nr, &alloc) < 0) {
-+			ret =3D error(_("bogus format in %s"), CONFIG_DATA_ENVIRONMENT);
- 			goto out;
- 		}
-+
-+		for (i =3D 0; i < nr; i++) {
-+			if (git_config_parse_parameter(argv[i], fn, data) < 0) {
-+				ret =3D -1;
-+				goto out;
-+			}
-+		}
- 	}
-=20
- out:
---=20
-2.29.2
+I think just removing this is best, for such a closely coupled static
+function we can just rely on the sanity of the caller, but it should at
+least be:
+
+    if (!strlen(key))
+        BUG("clear that it's unreachable, and a translator won't bother with it, like _()...");
+
+Aside: It's more C-idiom-y in this case to write:
+
+    if (!*key)
 
 
---v9nxxHfbtY0VJcXY
-Content-Type: application/pgp-signature; name="signature.asc"
+> +	if (git_config_parse_key(key, &canonical_name, NULL))
+> +		return -1;
+> +
+> +	ret = (fn(canonical_name, value, data) < 0) ? -1 : 0;
+> +	free(canonical_name);
+> +	return ret;
+> +}
+> +
+>  int git_config_parse_parameter(const char *text,
+>  			       config_fn_t fn, void *data)
+>  {
+>  	const char *value;
+> -	char *canonical_name;
+>  	struct strbuf **pair;
+>  	int ret;
+>  
+> @@ -483,12 +498,7 @@ int git_config_parse_parameter(const char *text,
+>  		return error(_("bogus config parameter: %s"), text);
+>  	}
+>  
+> -	if (git_config_parse_key(pair[0]->buf, &canonical_name, NULL)) {
+> -		ret = -1;
+> -	} else {
+> -		ret = (fn(canonical_name, value, data) < 0) ? -1 : 0;
+> -		free(canonical_name);
+> -	}
+> +	ret = config_parse_pair(pair[0]->buf, value, fn, data);
+>  	strbuf_list_free(pair);
+>  	return ret;
+>  }
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl/QuoUACgkQVbJhu7ck
-PpTHyw/+L+8Z9ckh/x+iSv2hgaLpAnlxwEcrAQxU3d9RneagCjmuSWU8d6prkBKx
-1rcP5IUX81HPxQum6GhMKQsk8TAks9hXM/+Rr+dNBrYNi3Ihss9K6i2lFO3vQcKu
-YSdzl1mLS4D43bEuO/wrPI+ZTl+JDj2x8AjrB6N+qdjDwxHOt8YGZdiPRSPegcAK
-cEqCrZ+8hB7fpIwusvSS3mMz558cXWGcEarNSIty7TLieOBPaZVwZ+LohasqtHJa
-GvrHgBxq2dRzd2or9ZzM5l3yP/cw6qAcerHzmfIxmzDUDW3AgfUBUKOm/sDOegK8
-R+lxb2bZzUb0zef+MxVgUUMAsQEH69l/GkDnJ/Uz6Mfgpi7cOjBURX1BIMwkCo8x
-NaMHSAu88Lu7pQig9loNjaAljjTgXYkynXYjvg9greDQ4l0BJDJM8EJDAoc6sJJ0
-qJTuEMXvaxoHqpUIlLB9EKkL8+Zjbt9rKsjc5L1qI3aTJKzH6FTn0vRsQ2FA0NVO
-773iOlU/PZRhP9ioCchx7c6fL9mmkY8NnoPVAE3z/gU4ParYfqnXuX0hRJIH/eZz
-C9bfbQw19En9f8rHLX+r3z3OyS+N1MpodXNEfAyRKXcEZgUivi5MUfSdv/fKVBvH
-iTti9dEychQLcwIqXYNia5wEICryS+4c8QwHEQA1CocaF+6EsJs=
-=RvDm
------END PGP SIGNATURE-----
-
---v9nxxHfbtY0VJcXY--
