@@ -8,61 +8,60 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E05EC4167B
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 19:47:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48C64C2BBCA
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 19:48:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E0B9823BC6
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 19:47:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B23423BC6
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 19:48:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387900AbgLITnG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 14:43:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56678 "EHLO
+        id S2387892AbgLITnF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 14:43:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387859AbgLITm4 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S2387862AbgLITm4 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 9 Dec 2020 14:42:56 -0500
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CE55C0617A7
-        for <git@vger.kernel.org>; Wed,  9 Dec 2020 11:41:36 -0800 (PST)
-Received: by mail-wr1-x444.google.com with SMTP id a12so3024990wrv.8
-        for <git@vger.kernel.org>; Wed, 09 Dec 2020 11:41:36 -0800 (PST)
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BDC9C061285
+        for <git@vger.kernel.org>; Wed,  9 Dec 2020 11:41:40 -0800 (PST)
+Received: by mail-wr1-x442.google.com with SMTP id l9so3013520wrt.13
+        for <git@vger.kernel.org>; Wed, 09 Dec 2020 11:41:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=koxMBDcb1fAdRxwvk1liqoKIKXbP2FQzrjy1Xyv+aiA=;
-        b=WElcu2yqQg5/F0FFpZAAIRXNUlluEIAxGJGw9fEO81fPLWOAQv1ysIUrIV0fDuSitp
-         ynUzyKVHZfudw2WBbFqYUw+PCYdSIhaNfBcGqrtqMntq5si1WRsTGjXOd4rJu9eD4Hmg
-         gFps9Sc2YFHh7WBXPqqPE13b/QH8ScpFR6yFoV0UvLRlxvC+DL90YhVrmgWhDbef8WU0
-         eW+9U9z6YJe7rNj+1d5CwZ3mz1uc7mlCwvfDLHKnc7fYfpLFJEBrwvAjtWrevh+5CkXO
-         smM0zOxBfS02/aaoYeWZHtMKXa1abaHNlPRI+7G4QXaU1X3a5ctPV35IcHt8Ug4QKXXD
-         0xOQ==
+        bh=hyvwgKigN49SfW+u94jG33nqWjb5pbiDPIv9LvaOhYc=;
+        b=STlDTH9IhcbK2/nUpqrDdePTDLxK5WSyCOnQn+6BtjTMFn5g5x9mHQvNDx7cwIQeBs
+         6lYp7ocvU6tLX5//KuANNj9LmwxWC7k7V1elzSTQRHDnyyk2TNjB4n+vAThJ9VGcXB61
+         YFTDkGem828yJ0aY1LKnnqMxlxOLBhYkMnpKPhQ2yEkijGDtHZOjdsmb6JclfLWt8Y8j
+         /kT+qc43faX+JJqvi2aqGdjSed1XwMLwylq7Qx42sqRIXvWivMGpSziMzj6T9DgQ/+Gi
+         7h0Rb4YXa6zqKhJx/c84RC0vMvPjHH8eHs2pI5//csG+RN2TSyPk+ezNoroGyr5QLDlk
+         aOMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=koxMBDcb1fAdRxwvk1liqoKIKXbP2FQzrjy1Xyv+aiA=;
-        b=ZFOm3EXyNbKNGnGW7pzfqr1gwnZ1l7m5SAD0k59jGt7NbOhnLLzJ3YYJenloxBFATT
-         /AcnMcpyvyA1N9VOTHXH/cC1nF11kmv2L/Fhm7gnURaU96RGyCUCSlkumFV+WLNj4Z57
-         fU+it2gQ8PDjYljak/NksCykGv8POj+VWOrHaTnGDslpnOi5JzzXFlkS0HtwUArG0NE1
-         zg+Mnqh4zcWWfuRaHHvesAMo4VH9Af4mEYaDuiVlJCWX2G4qpAVPUZmoNvTrPNuhnvqA
-         nzAOXDRGKwDLOy/u06l2vhekceydJYUCoRwv+pqWuMr7u5Ev9CuqoQibpDcYI6zW9Mwn
-         +0/A==
-X-Gm-Message-State: AOAM532b5oHdv16/kKj7B+lwXx3AS7gsII3T2B37kIhX9Dx8Xj83Mhyt
-        FLtTfNXsnYsPQJnLc343iB+X+IKOCNA=
-X-Google-Smtp-Source: ABdhPJyS8wk5HvbKXgxJqGgdK3A4QRrDsnwkhpZj6DKz3qQJtDWRJMk415Q/RtzUU+9fMbSBwCTW0Q==
-X-Received: by 2002:a5d:6351:: with SMTP id b17mr4367693wrw.80.1607542894896;
-        Wed, 09 Dec 2020 11:41:34 -0800 (PST)
+        bh=hyvwgKigN49SfW+u94jG33nqWjb5pbiDPIv9LvaOhYc=;
+        b=IyBszgzp+zuADWOv4GVuhaMsv4FFJat+xa3GonmGjmqZRyzWFRzNCahS07jFCBD8A9
+         TJ3Y2mme2f1VXKgZFH6tzB1KUE9LHCjbEeqyV7BN9BNQSai9fSVEBHFGl78qzPPVbsHn
+         otSx6fjB//Kiu18wm9+h9RfeIcKQkhxdS7gxBeh080fy363mpBVKMZ5bUa5BMDHKj6xn
+         q4qvCvYE3B7HHc54GLfBP6MWZCQ5APdhMsm0iPzTClnJ4Pdf6dWtJcMNLabYAPLV79c6
+         lH6KPmoqOMraT1MX2+NXAjG3gZOwpWeMsvOUlR7zSfz//8E6k41JjcmpNbxhhdMl0SP/
+         h2rw==
+X-Gm-Message-State: AOAM531FM3+I2aIQBduLG9x/t9WmhLF1yf5m560s58bmWoTNtqJzMYKx
+        MLXmk7hMFUmUbUK3eR4zfHKu8Q1b/HI=
+X-Google-Smtp-Source: ABdhPJxkqAFc5RLP2iWZ+x+U91Ne0tcCufgUTzgcQr8+u9k3ooTX7w9JAn6RchnE9jyhU5J+DoMSaw==
+X-Received: by 2002:a5d:5385:: with SMTP id d5mr484949wrv.384.1607542898614;
+        Wed, 09 Dec 2020 11:41:38 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z22sm4649495wml.1.2020.12.09.11.41.34
+        by smtp.gmail.com with ESMTPSA id k18sm6186905wrd.45.2020.12.09.11.41.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Dec 2020 11:41:34 -0800 (PST)
-Message-Id: <9c79b9f4a096afeef620ff4fc1f85525923e3d02.1607542887.git.gitgitgadget@gmail.com>
+        Wed, 09 Dec 2020 11:41:38 -0800 (PST)
+Message-Id: <14baa5874afc12f3ba9534c71b9d70f2c481c465.1607542887.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.812.git.1607542887.gitgitgadget@gmail.com>
 References: <pull.812.git.1607542887.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 09 Dec 2020 19:41:22 +0000
-Subject: [PATCH 06/11] merge-ort: add implementation of both sides renaming
- identically
+Date:   Wed, 09 Dec 2020 19:41:26 +0000
+Subject: [PATCH 10/11] merge-ort: add implementation of normal rename handling
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,12 +74,11 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Implement rename/rename(1to1) handling, i.e. both sides of history
-renaming a file but renaming the same way.  This code replaces the
-following from merge-recurisve.c:
+Implement handling of normal renames.  This code replaces the following
+from merge-recurisve.c:
 
-  * all the 1to1 code in process_renames()
-  * the RENAME_ONE_FILE_TO_ONE case of process_entry()
+  * the code relevant to RENAME_NORMAL in process_renames()
+  * the RENAME_NORMAL case of process_entry()
 
 Also, there is some shared code from merge-recursive.c for multiple
 different rename cases which we will no longer need for this case (or
@@ -102,49 +100,31 @@ That, together with letting worktree/index updating be handled
 orthogonally in the merge_switch_to_result() function, dramatically
 simplifies the code for various special rename cases.
 
+(To be fair, the code for handling normal renames wasn't all that
+complicated beforehand, but it's still much simpler now.)
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ merge-ort.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index faec29db955..085e81196a5 100644
+index 412a3b1da76..f2e4edf6506 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -647,14 +647,31 @@ static int process_renames(struct merge_options *opt,
- 		    !strcmp(oldpath, renames->queue[i+1]->one->path)) {
- 			/* Handle rename/rename(1to2) or rename/rename(1to1) */
- 			const char *pathnames[3];
-+			struct version_info merged;
-+			struct conflict_info *base, *side1, *side2;
-+			unsigned was_binary_blob = 0;
- 
- 			pathnames[0] = oldpath;
- 			pathnames[1] = newpath;
- 			pathnames[2] = renames->queue[i+1]->two->path;
- 
-+			base = strmap_get(&opt->priv->paths, pathnames[0]);
-+			side1 = strmap_get(&opt->priv->paths, pathnames[1]);
-+			side2 = strmap_get(&opt->priv->paths, pathnames[2]);
-+
-+			VERIFY_CI(base);
-+			VERIFY_CI(side1);
-+			VERIFY_CI(side2);
-+
- 			if (!strcmp(pathnames[1], pathnames[2])) {
--				/* Both sides renamed the same way. */
+@@ -843,7 +843,11 @@ static int process_renames(struct merge_options *opt,
+ 					 rename_branch, delete_branch);
+ 			} else {
+ 				/* normal rename */
 -				die("Not yet implemented");
-+				/* Both sides renamed the same way */
-+				assert(side1 == side2);
-+				memcpy(&side1->stages[0], &base->stages[0],
-+				       sizeof(merged));
-+				side1->filemask |= (1 << 0);
-+				/* Mark base as resolved by removal */
-+				base->merged.is_null = 1;
-+				base->merged.clean = 1;
++				memcpy(&newinfo->stages[other_source_index],
++				       &oldinfo->stages[other_source_index],
++				       sizeof(newinfo->stages[0]));
++				newinfo->filemask |= (1 << other_source_index);
++				newinfo->pathnames[other_source_index] = oldpath;
+ 			}
+ 		}
  
- 				/* We handled both renames, i.e. i+1 handled */
- 				i++;
 -- 
 gitgitgadget
 
