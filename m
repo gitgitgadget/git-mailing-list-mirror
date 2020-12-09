@@ -8,65 +8,66 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 380E3C4167B
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 14:02:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C30EC433FE
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 14:02:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 07A3423B51
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 14:02:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4815623B31
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 14:02:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732679AbgLIOBf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 09:01:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60282 "EHLO
+        id S1732793AbgLIOCN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 09:02:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728541AbgLIOBO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 09:01:14 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F13DFC0613D6
-        for <git@vger.kernel.org>; Wed,  9 Dec 2020 06:00:33 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id v14so1572731wml.1
-        for <git@vger.kernel.org>; Wed, 09 Dec 2020 06:00:33 -0800 (PST)
+        with ESMTP id S1732785AbgLIOB6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 09:01:58 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9DD0C0611CC
+        for <git@vger.kernel.org>; Wed,  9 Dec 2020 06:00:46 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id w206so953426wma.0
+        for <git@vger.kernel.org>; Wed, 09 Dec 2020 06:00:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=vo6M8ti1rMOOBfY3vJMb/+0k6SEpCQ9PI6s3OSwMbqo=;
-        b=kR/8qolaJxtVaO6D8VMSeFm6E99kTsbDAULOfMhPd+ir1zoLXDrJcL7sfYXmBjLbqT
-         l6wBtu76aKMp+nL+URUobBAtIiHv38q75WWMNqL5UfBrohPKKZ5ugp57Tpbsk1Sz1x6d
-         d1hhPbV1alYNFBzdD/jPNEtQ/SE6Xmjx+izk20HMPk2WW9PE/IWWWCtPiF4VlChdaTLJ
-         wf3PhVOvRDRHp3IYXDW9756fSF3jgqggZnGafqwM5IdT7No4sFqQQH2BnTosgqchhB2G
-         Dk1p+azeIHUmkDZtLtChXe8COwNr7zzkl/lR7oX+UDTzNLzmr7dT4GGmHaF551t+cN5T
-         lzlQ==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=+6PYEuFV+jKAR8TJMsA1Qhghy1Wlzfn68uworvrq0zQ=;
+        b=gm8GvRzNVMGrCTkp3ZIPmi3ugqhksdPJI68JgSIpvI0qOt3T78qimkLXwWE7nTwSFQ
+         hzup3J/bGN+oto4lBIQ9QECmi5O+zZZhrS8FwP3mmHG6DoCMjZgHnLeTnRhw2i7rOwlW
+         owDrW3O5kGFQvKfAP/YLMiGPfq2gbzqzq85sHuaarpyM1zHra8itrf2aoajMwH/ePn3B
+         nBrHrASJWtelsbHT5+7734R9dqPXUhGD4H2eK7EuI3cbL+nLi0SLrIIGWVcRjwIWTg5X
+         VeTXNv8p5EtE0G2JPevGOmL10iQpXkOXQcVYgiE61+LFVWkmPRFl17pb0q2u3N1ukrYF
+         +Wjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=vo6M8ti1rMOOBfY3vJMb/+0k6SEpCQ9PI6s3OSwMbqo=;
-        b=myLwWh6aJeP+DjVYN4sq7TcBhk3JdmIIUhfALIjt074tCjuvlJJbfiJ/Oiig3TlwkS
-         eYuZj48f/lWtLsilN1cawq4BXqLKR3B8vnAz2nMAOzkxnbRo/A0yS7jIMoJEmBuX0Zau
-         3WTTjmmpURrLkWSvWbrgYJTqlIuS0EDwoZTis9tbn27ALPBRO+uNH6sU4/oZ+/Xo1oAv
-         U2WeFQVF7Ay24ex8SxIRyPP13VgTzQyu72g1sqBsGswpK6PoiMYdCVTSZe2kipSI4PDG
-         pB/rNC/h+KDsGJ/Ld0lnSw4sIMjNZboKVtgFD4KOjlkFhBwaLpItT9UVB6fIWZC8vZz8
-         f8Bw==
-X-Gm-Message-State: AOAM530azSDrtwiIdE0WC7afy+hrCnfawEjSw0fx2ofAQFA1fXmwcMe1
-        5lp5gsNKAAoKwhW0b0G3y/n6/mcNV+Y=
-X-Google-Smtp-Source: ABdhPJy+gw7ze0Z+dhPafDTlhdVjCr3hfvBUEn8zZ1GjHehqZkJr/fEhCqhrp7ObUZZ5JK2T16QWWg==
-X-Received: by 2002:a1c:5447:: with SMTP id p7mr2953578wmi.116.1607522432498;
-        Wed, 09 Dec 2020 06:00:32 -0800 (PST)
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=+6PYEuFV+jKAR8TJMsA1Qhghy1Wlzfn68uworvrq0zQ=;
+        b=P9qia8cwYatCK7Sn/WDKxSsAcNba0cWBS9BK5t6hy40/SvHXHXyXnT2I1IZDHuz2Mk
+         xF3s5DHOHSNV21GSa5/foVDYmNX8Qlp5LMVS+R11MnGw58IuwJG84uiXD9oEASjAGuqh
+         LlrYw/1h85JgQ9q9AxBJUPPisXF5Y/bA47aTYV2DYv+PFvL7jIDQuscVMy8GdcHDfnX8
+         S37FWf2c2v7BGek06ExbT57UsvnlgV3K6Lx5lp19iTfq2pprAKz/bIYvCn1LbqJRrTGE
+         uyNbQte1/ZyMZ1jgqKquw+G6fN9RFCDCHgKB+ZJU6bEaUKn901bqKvLwgBlZA1ZxC8cg
+         qZ3Q==
+X-Gm-Message-State: AOAM531CezCzcfxzoC9JSSEi8SN01AuI4yIKjxyVo2khNaGt3aeb1gQI
+        V0ZJOxV++iSk+B//h6Peu+ZQLfxEuSk=
+X-Google-Smtp-Source: ABdhPJww5p1O8gHww2LlDyJkCeGqmzY+DXXV8lSEUKheAbWcjtQU4wvEEEDUBGk3hxwdv2QLNn2EPw==
+X-Received: by 2002:a7b:c24b:: with SMTP id b11mr2974455wmj.168.1607522445073;
+        Wed, 09 Dec 2020 06:00:45 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d3sm3626935wrr.2.2020.12.09.06.00.31
+        by smtp.gmail.com with ESMTPSA id x17sm3445074wro.40.2020.12.09.06.00.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Dec 2020 06:00:32 -0800 (PST)
-Message-Id: <40ac041d0efef7a7baec56354265176235137444.1607522429.git.gitgitgadget@gmail.com>
+        Wed, 09 Dec 2020 06:00:44 -0800 (PST)
+Message-Id: <9df5bc69f971dc2b51d519a2db9a2b0f22f9d87b.1607522430.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.847.v4.git.git.1607522429.gitgitgadget@gmail.com>
 References: <pull.847.v3.git.git.1606419752.gitgitgadget@gmail.com>
         <pull.847.v4.git.git.1607522429.gitgitgadget@gmail.com>
-From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 09 Dec 2020 14:00:15 +0000
-Subject: [PATCH v4 01/15] init-db: set the_repository->hash_algo early on
-Fcc:    Sent
+From:   "=?UTF-8?q?SZEDER=20G=C3=A1bor?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Wed, 09 Dec 2020 14:00:28 +0000
+Subject: [PATCH v4 14/15] git-prompt: prepare for reftable refs backend
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     Han-Wen Nienhuys <hanwen@google.com>, Jeff King <peff@peff.net>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
@@ -79,62 +80,56 @@ Cc:     Han-Wen Nienhuys <hanwen@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>,
         Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Han-Wen Nienhuys <hanwen@google.com>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 
-The reftable backend needs to know the hash algorithm for writing the
-initialization hash table.
+In our git-prompt script we strive to use Bash builtins wherever
+possible, because fork()-ing subshells for command substitutions and
+fork()+exec()-ing Git commands are expensive on some platforms.  We
+even read and parse '.git/HEAD' using Bash builtins to get the name of
+the current branch [1].  However, the upcoming reftable refs backend
+won't use '.git/HEAD' at all, but will write an invalid refname as
+placeholder for backwards compatibility instead, which will break our
+git-prompt script.
 
-The initial reftable contains a symref HEAD => "main" (or "master"), which is
-agnostic to the size of hash value, but this is an exceptional circumstance, and
-the reftable library does not cater to this exception. It insists that all
-tables in the stack have a consistent format ID for the hash algorithm.
+Update the git-prompt script to recognize the placeholder '.git/HEAD'
+written by the reftable backend (its content is specified in the
+reftable specs), and then fall back to use 'git symbolic-ref' to get
+the name of the current branch.
 
-Call set_repo_hash_algo directly after calling validate_hash_algorithm() (which
-reads $GIT_DEFAULT_HASH).
+[1] 3a43c4b5bd (bash prompt: use bash builtins to find out current
+    branch, 2011-03-31)
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- builtin/init-db.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ contrib/completion/git-prompt.sh | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 01bc648d416..dcb7015db48 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -437,6 +437,27 @@ int init_db(const char *git_dir, const char *real_git_dir,
- 
- 	validate_hash_algorithm(&repo_fmt, hash);
- 
-+	/*
-+	 * At this point, the_repository we have in-core does not look
-+	 * anything like one that we would see initialized in an already
-+	 * working repository after calling setup_git_directory().
-+	 *
-+	 * Calling repository.c::initialize_the_repository() may have
-+	 * prepared the .index .objects and .parsed_objects members, but
-+	 * other members like .gitdir, .commondir, etc. have not been
-+	 * initialized.
-+	 *
-+	 * Many API functions assume they are working with the_repository
-+	 * that has sensibly been initialized, but because we haven't
-+	 * really read from an existing repository, we need to hand-craft
-+	 * the necessary members of the structure to get out of this
-+	 * chicken-and-egg situation.
-+	 *
-+	 * For now, we update the hash algorithm member to what the
-+	 * validate_hash_algorithm() call decided for us.
-+	 */
-+	repo_set_hash_algo(the_repository, repo_fmt.hash_algo);
-+
- 	reinit = create_default_files(template_dir, original_git_dir,
- 				      initial_branch, &repo_fmt);
- 	if (reinit && initial_branch)
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index 4640a1535d1..2e5a5d80271 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -478,10 +478,15 @@ __git_ps1 ()
+ 			if ! __git_eread "$g/HEAD" head; then
+ 				return $exit
+ 			fi
+-			# is it a symbolic ref?
+ 			b="${head#ref: }"
+ 			if [ "$head" = "$b" ]; then
+ 				detached=yes
++			elif [ "$b" = "refs/heads/.invalid" ]; then
++				# Reftable
++				b="$(git symbolic-ref HEAD 2>/dev/null)" ||
++				detached=yes
++			fi
++			if [ "$detached" = yes ]; then
+ 				b="$(
+ 				case "${GIT_PS1_DESCRIBE_STYLE-}" in
+ 				(contains)
 -- 
 gitgitgadget
 
