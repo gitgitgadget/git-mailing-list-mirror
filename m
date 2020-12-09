@@ -5,64 +5,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A85E8C19425
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C09AFC2BB40
 	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 14:03:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7FC5623B42
+	by mail.kernel.org (Postfix) with ESMTP id 971F923B31
 	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 14:03:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727589AbgLIOCi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 09:02:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60506 "EHLO
+        id S1732777AbgLIOBy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 09:01:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728849AbgLIOCd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 09:02:33 -0500
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2629CC0611CE
-        for <git@vger.kernel.org>; Wed,  9 Dec 2020 06:00:48 -0800 (PST)
-Received: by mail-wr1-x444.google.com with SMTP id r3so1870629wrt.2
-        for <git@vger.kernel.org>; Wed, 09 Dec 2020 06:00:48 -0800 (PST)
+        with ESMTP id S1728855AbgLIOBw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 09:01:52 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3371BC0617A7
+        for <git@vger.kernel.org>; Wed,  9 Dec 2020 06:00:37 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id a12so1850506wrv.8
+        for <git@vger.kernel.org>; Wed, 09 Dec 2020 06:00:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=QeG/Uiv06sgOLRIt9htHLskysMZMELPOfsIsuyKEoEU=;
-        b=GsSgBWmIjt/eV8E81HLGEF9k8eM/BPVMzHTOIpI1ZGQs0V/rHjRxoQ4ap5x4+v6cgs
-         rz5PkEPzni4PaS+vF23gZ+2bQ+n/ezYMsJhoPhBwrYBLe4kQ0JBhQm0S9JXlTw2x9yxm
-         opLLSU85kRO4wGFQC+QRyMpM3dUuEqy/QGEQdqBFn8HJnB0gXYJkD2KB7qXJ9Svm2xmn
-         YXi9QPXOKNBNIicYMSYwflVAkRTdCqRm/bCrc0lzlckEYJDSxrdW54nqn06Trplwdfdl
-         q4RsaHHKVGNUvznV7hKqmPQWEzxgZIIacQOI52e11BSgd1VLcWkUppPnKmkPsmOyIbql
-         8feg==
+        bh=OfGJ5NrDw8OMe/NyNtXg2/cynsBeyBHSQCiL5LjTUms=;
+        b=cYiadi+ETWb6HxUZrPbls6YOWVYQqZlFaemPrTvek+7zLUUvQWrd2bSGTS65C+NDf0
+         SgA7o1sWqDlnGdjoH7zwak1Q2BVtd18iA5AHkkgFF9xQnKwESfpY16XckWyko4kXIjvO
+         gDynjFJ+RZww+C4WazNU6DB3D+Ol5KUwEPARi8LC85eLUd00973hR65hkv6mgwvKqj/x
+         mp/G6/FLGgR+DvstWSJxmDm8RqmuPPAx8QOcmpLg0rmfBMo7hAUkx9QPey4J+tRdgLbK
+         0wb3W2STDplUdazV84cMkeFGvdGZUathPGZ2Sw9XeaoHs8Fn42gBtIdmZWluWoR2/D14
+         JAfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=QeG/Uiv06sgOLRIt9htHLskysMZMELPOfsIsuyKEoEU=;
-        b=C6p1kEYSEurPMDcgrxBkslEDOCwWhwjk7PJZQvPyfp5x6vjAJnrpjcMhT7fcus+2LD
-         m0DSCcaqTZGp3wo7FP9zLrGdhFw+imZfd23cEscNSMnQlaAMlpNMN4gJ8d06FL09IcMh
-         5VQ9i1zX01U5Ds71Hn1uwxdN5i4RgmxE9BMWmZZd4HjT0dGGLpokrVSpKvqQYm1Rl1FO
-         swv3D1vSLmBnyaRSD01fSg2+VqYkSSWtSpJVAkn1oKj6EbHBQiAGbXp2onye+ntpzONa
-         iGMxHYD+y4F+b1h0O9r8cHlG/Z4NQGNqO8j6di471QGBSIA6/2QMK6RMog7MVMV7TAJx
-         7egw==
-X-Gm-Message-State: AOAM533cJuIW4WCCaQpK/c24R0WNA34o/B1F+UeIKOKBvWW9f1jK1D4B
-        Jv0fhtMK9nPLYsM+Oc5JdtoXA+/SPW4=
-X-Google-Smtp-Source: ABdhPJyXMJySKYICwXiN2yiVBexLl+RYPDA5ZJazuqd9Oig8DAU8O4qjGu6hgzNhncsPsLKh1T1hWQ==
-X-Received: by 2002:a5d:5710:: with SMTP id a16mr2907934wrv.229.1607522446608;
-        Wed, 09 Dec 2020 06:00:46 -0800 (PST)
+        bh=OfGJ5NrDw8OMe/NyNtXg2/cynsBeyBHSQCiL5LjTUms=;
+        b=A4V3AgrhipQ2kHunqmEpCgBj7RrrnPqB5QE5ElX8s5Qmv2qo0VNm0FFdIIKUpNpXBP
+         kr0Hw2z/5UA16iiQ5GjJmyVMXstbIo6chy/XILghF4KxzIrLo0chaU1eWks/R0cbVsNT
+         i1rujLALRR24Ybil+zhmROpjY4VA9VT5cBIu75TvEMFDXTy3ck4qT6Sl3iGH6oaBJ4dz
+         9M1TlAsz5DHo/kDyjwIk/qkIcSs3r4vOAlsh6n0Fu19kOsToaxcgL0PNQ/HI2zya+wyX
+         eUub4PMCtfYsUJmASHIYaLX74jEQgGxypC/ZnGO3cDlyFU0DCCv0dAWslA3r+MHOjIWp
+         uayQ==
+X-Gm-Message-State: AOAM531eGRs89pU64Kip/5zaJP+rKk42/swZ3mM+4M8sxJOUJe2HzDey
+        Gw87qN8C+B/ln2EgJ0u1KznspUbJF/4=
+X-Google-Smtp-Source: ABdhPJz6j5pgcmCe8eORYdudpAPpnWfELlhI+TTDaz/bH/+yFatjeOP9+HKcN22UOWX4sk00hQfYzA==
+X-Received: by 2002:adf:e481:: with SMTP id i1mr2832378wrm.282.1607522435408;
+        Wed, 09 Dec 2020 06:00:35 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q1sm3336137wrj.8.2020.12.09.06.00.45
+        by smtp.gmail.com with ESMTPSA id f14sm4122943wme.14.2020.12.09.06.00.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Dec 2020 06:00:46 -0800 (PST)
-Message-Id: <4076ef5d20b4986cf857e70fffe1de9da3bb12e3.1607522430.git.gitgitgadget@gmail.com>
+        Wed, 09 Dec 2020 06:00:34 -0800 (PST)
+Message-Id: <2f55ff6d2406612c6fea16e0abefc41299642305.1607522429.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.847.v4.git.git.1607522429.gitgitgadget@gmail.com>
 References: <pull.847.v3.git.git.1606419752.gitgitgadget@gmail.com>
         <pull.847.v4.git.git.1607522429.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 09 Dec 2020 14:00:29 +0000
-Subject: [PATCH v4 15/15] Add "test-tool dump-reftable" command.
+Date:   Wed, 09 Dec 2020 14:00:18 +0000
+Subject: [PATCH v4 04/15] reftable: utility functions
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,222 +86,777 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This command dumps individual tables or a stack of of tables.
+This commit provides basic utility classes for the reftable library.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Makefile                 |  1 +
- reftable/dump.c          | 67 ++++++++++++++++++++--------------------
- t/helper/test-reftable.c |  5 +++
- t/helper/test-tool.c     |  1 +
- t/helper/test-tool.h     |  1 +
- 5 files changed, 42 insertions(+), 33 deletions(-)
+ Makefile                            |  24 +++++-
+ contrib/buildsystems/CMakeLists.txt |  14 ++-
+ reftable/basics.c                   | 128 ++++++++++++++++++++++++++++
+ reftable/basics.h                   |  60 +++++++++++++
+ reftable/basics_test.c              |  98 +++++++++++++++++++++
+ reftable/publicbasics.c             |  58 +++++++++++++
+ reftable/reftable-malloc.h          |  18 ++++
+ reftable/reftable-tests.h           |  22 +++++
+ reftable/system.h                   |  32 +++++++
+ reftable/test_framework.c           |  23 +++++
+ reftable/test_framework.h           |  53 ++++++++++++
+ t/helper/test-reftable.c            |   9 ++
+ t/helper/test-tool.c                |   3 +-
+ t/helper/test-tool.h                |   1 +
+ t/t0032-reftable-unittest.sh        |  15 ++++
+ 15 files changed, 552 insertions(+), 6 deletions(-)
+ create mode 100644 reftable/basics.c
+ create mode 100644 reftable/basics.h
+ create mode 100644 reftable/basics_test.c
+ create mode 100644 reftable/publicbasics.c
+ create mode 100644 reftable/reftable-malloc.h
+ create mode 100644 reftable/reftable-tests.h
+ create mode 100644 reftable/system.h
+ create mode 100644 reftable/test_framework.c
+ create mode 100644 reftable/test_framework.h
+ create mode 100644 t/helper/test-reftable.c
+ create mode 100755 t/t0032-reftable-unittest.sh
 
 diff --git a/Makefile b/Makefile
-index 6b7c8a165f4..2f9bf61fffb 100644
+index 45bce31016b..9b6d84af8f6 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2409,6 +2409,7 @@ REFTABLE_OBJS += reftable/zlib-compat.o
+@@ -731,6 +731,7 @@ TEST_BUILTINS_OBJS += test-read-cache.o
+ TEST_BUILTINS_OBJS += test-read-graph.o
+ TEST_BUILTINS_OBJS += test-read-midx.o
+ TEST_BUILTINS_OBJS += test-ref-store.o
++TEST_BUILTINS_OBJS += test-reftable.o
+ TEST_BUILTINS_OBJS += test-regex.o
+ TEST_BUILTINS_OBJS += test-repository.o
+ TEST_BUILTINS_OBJS += test-revision-walking.o
+@@ -820,6 +821,8 @@ TEST_SHELL_PATH = $(SHELL_PATH)
  
- REFTABLE_TEST_OBJS += reftable/basics_test.o
- REFTABLE_TEST_OBJS += reftable/block_test.o
-+REFTABLE_TEST_OBJS += reftable/dump.o
- REFTABLE_TEST_OBJS += reftable/merged_test.o
- REFTABLE_TEST_OBJS += reftable/record_test.o
- REFTABLE_TEST_OBJS += reftable/refname_test.o
-diff --git a/reftable/dump.c b/reftable/dump.c
-index 00b444e8c9b..7d620a3cf0f 100644
---- a/reftable/dump.c
-+++ b/reftable/dump.c
-@@ -12,18 +12,25 @@ license that can be found in the LICENSE file or at
- #include <unistd.h>
- #include <string.h>
+ LIB_FILE = libgit.a
+ XDIFF_LIB = xdiff/lib.a
++REFTABLE_LIB = reftable/libreftable.a
++REFTABLE_TEST_LIB = reftable/libreftable_test.a
  
--#include "reftable.h"
-+#include "reftable-blocksource.h"
-+#include "reftable-error.h"
-+#include "reftable-merged.h"
-+#include "reftable-record.h"
- #include "reftable-tests.h"
-+#include "reftable-writer.h"
-+#include "reftable-iterator.h"
-+#include "reftable-reader.h"
-+#include "reftable-stack.h"
+ GENERATED_H += command-list.h
+ GENERATED_H += config-list.h
+@@ -1185,7 +1188,7 @@ THIRD_PARTY_SOURCES += compat/regex/%
+ THIRD_PARTY_SOURCES += sha1collisiondetection/%
+ THIRD_PARTY_SOURCES += sha1dc/%
  
- static uint32_t hash_id;
+-GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB)
++GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB)
+ EXTLIBS =
  
- static int dump_table(const char *tablename)
- {
--	struct reftable_block_source src = { 0 };
-+	struct reftable_block_source src = { NULL };
- 	int err = reftable_block_source_from_file(&src, tablename);
--	struct reftable_iterator it = { 0 };
--	struct reftable_ref_record ref = { 0 };
--	struct reftable_log_record log = { 0 };
-+	struct reftable_iterator it = { NULL };
-+	struct reftable_ref_record ref = { NULL };
-+	struct reftable_log_record log = { NULL };
- 	struct reftable_reader *r = NULL;
+ GIT_USER_AGENT = git/$(GIT_VERSION)
+@@ -2386,10 +2389,19 @@ XDIFF_OBJS += xdiff/xpatience.o
+ XDIFF_OBJS += xdiff/xprepare.o
+ XDIFF_OBJS += xdiff/xutils.o
  
- 	if (err < 0)
-@@ -49,7 +56,7 @@ static int dump_table(const char *tablename)
- 		reftable_ref_record_print(&ref, hash_id);
- 	}
- 	reftable_iterator_destroy(&it);
--	reftable_ref_record_clear(&ref);
-+	reftable_ref_record_release(&ref);
- 
- 	err = reftable_reader_seek_log(r, &it, "");
- 	if (err < 0) {
-@@ -66,7 +73,7 @@ static int dump_table(const char *tablename)
- 		reftable_log_record_print(&log, hash_id);
- 	}
- 	reftable_iterator_destroy(&it);
--	reftable_log_record_clear(&log);
-+	reftable_log_record_release(&log);
- 
- 	reftable_reader_free(r);
- 	return 0;
-@@ -75,7 +82,7 @@ static int dump_table(const char *tablename)
- static int compact_stack(const char *stackdir)
- {
- 	struct reftable_stack *stack = NULL;
--	struct reftable_write_options cfg = {};
-+	struct reftable_write_options cfg = { 0 };
- 
- 	int err = reftable_new_stack(&stack, stackdir, cfg);
- 	if (err < 0)
-@@ -94,10 +101,10 @@ static int compact_stack(const char *stackdir)
- static int dump_stack(const char *stackdir)
- {
- 	struct reftable_stack *stack = NULL;
--	struct reftable_write_options cfg = {};
--	struct reftable_iterator it = { 0 };
--	struct reftable_ref_record ref = { 0 };
--	struct reftable_log_record log = { 0 };
-+	struct reftable_write_options cfg = { 0 };
-+	struct reftable_iterator it = { NULL };
-+	struct reftable_ref_record ref = { NULL };
-+	struct reftable_log_record log = { NULL };
- 	struct reftable_merged_table *merged = NULL;
- 
- 	int err = reftable_new_stack(&stack, stackdir, cfg);
-@@ -122,7 +129,7 @@ static int dump_stack(const char *stackdir)
- 		reftable_ref_record_print(&ref, hash_id);
- 	}
- 	reftable_iterator_destroy(&it);
--	reftable_ref_record_clear(&ref);
-+	reftable_ref_record_release(&ref);
- 
- 	err = reftable_merged_table_seek_log(merged, &it, "");
- 	if (err < 0) {
-@@ -139,7 +146,7 @@ static int dump_stack(const char *stackdir)
- 		reftable_log_record_print(&log, hash_id);
- 	}
- 	reftable_iterator_destroy(&it);
--	reftable_log_record_clear(&log);
-+	reftable_log_record_release(&log);
- 
- 	reftable_stack_destroy(stack);
- 	return 0;
-@@ -160,40 +167,34 @@ static void print_help(void)
- int reftable_dump_main(int argc, char *const *argv)
- {
- 	int err = 0;
--	int opt;
- 	int opt_dump_table = 0;
- 	int opt_dump_stack = 0;
- 	int opt_compact = 0;
--	const char *arg = NULL;
--	while ((opt = getopt(argc, argv, "2chts")) != -1) {
--		switch (opt) {
--		case '2':
--			hash_id = 0x73323536;
-+	const char *arg = NULL, *argv0 = argv[0];
++REFTABLE_OBJS += reftable/basics.o
++REFTABLE_OBJS += reftable/error.o
++REFTABLE_OBJS += reftable/publicbasics.o
 +
-+	for (; argc > 1; argv++, argc--)
-+		if (*argv[1] != '-')
- 			break;
--		case 't':
-+		else if (!strcmp("-2", argv[1]))
-+			hash_id = 0x73323536;
-+		else if (!strcmp("-t", argv[1]))
- 			opt_dump_table = 1;
--			break;
--		case 's':
-+		else if (!strcmp("-s", argv[1]))
- 			opt_dump_stack = 1;
--			break;
--		case 'c':
-+		else if (!strcmp("-c", argv[1]))
- 			opt_compact = 1;
--			break;
--		case '?':
--		case 'h':
-+		else if (!strcmp("-?", argv[1]) || !strcmp("-h", argv[1])) {
- 			print_help();
- 			return 2;
--			break;
- 		}
--	}
- 
--	if (argv[optind] == NULL) {
-+	if (argc != 2) {
- 		fprintf(stderr, "need argument\n");
- 		print_help();
- 		return 2;
- 	}
- 
--	arg = argv[optind];
-+	arg = argv[1];
- 
- 	if (opt_dump_table) {
- 		err = dump_table(arg);
-@@ -204,7 +205,7 @@ int reftable_dump_main(int argc, char *const *argv)
- 	}
- 
- 	if (err < 0) {
--		fprintf(stderr, "%s: %s: %s\n", argv[0], arg,
-+		fprintf(stderr, "%s: %s: %s\n", argv0, arg,
- 			reftable_error_str(err));
- 		return 1;
- 	}
-diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
-index 3b702f4855e..c1ba131c3a4 100644
---- a/t/helper/test-reftable.c
-+++ b/t/helper/test-reftable.c
-@@ -13,3 +13,8 @@ int cmd__reftable(int argc, const char **argv)
- 	tree_test_main(argc, argv);
- 	return 0;
- }
++REFTABLE_TEST_OBJS += reftable/test_framework.o
++REFTABLE_TEST_OBJS += reftable/basics_test.o
 +
-+int cmd__dump_reftable(int argc, const char **argv)
+ TEST_OBJS := $(patsubst %$X,%.o,$(TEST_PROGRAMS)) $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
+ OBJECTS := $(LIB_OBJS) $(BUILTIN_OBJS) $(PROGRAM_OBJS) $(TEST_OBJS) \
+ 	$(XDIFF_OBJS) \
+ 	$(FUZZ_OBJS) \
++	$(REFTABLE_OBJS) \
++	$(REFTABLE_TEST_OBJS) \
+ 	common-main.o \
+ 	git.o
+ ifndef NO_CURL
+@@ -2541,6 +2553,12 @@ $(LIB_FILE): $(LIB_OBJS)
+ $(XDIFF_LIB): $(XDIFF_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+ 
++$(REFTABLE_LIB): $(REFTABLE_OBJS)
++	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
++
++$(REFTABLE_TEST_LIB): $(REFTABLE_TEST_OBJS)
++	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
++
+ export DEFAULT_EDITOR DEFAULT_PAGER
+ 
+ Documentation/GIT-EXCLUDED-PROGRAMS: FORCE
+@@ -2821,7 +2839,7 @@ perf: all
+ 
+ t/helper/test-tool$X: $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
+ 
+-t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS)
++t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS) $(REFTABLE_TEST_LIB)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(filter %.a,$^) $(LIBS)
+ 
+ check-sha1:: t/helper/test-tool$X
+@@ -3150,7 +3168,7 @@ cocciclean:
+ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) *.res
+ 	$(RM) $(OBJECTS)
+-	$(RM) $(LIB_FILE) $(XDIFF_LIB)
++	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(REFTABLE_TEST_LIB)
+ 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
+ 	$(RM) $(TEST_PROGRAMS)
+ 	$(RM) $(FUZZ_PROGRAMS)
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index df539a44fa0..f3a2fd35616 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -591,6 +591,12 @@ parse_makefile_for_sources(libxdiff_SOURCES "XDIFF_OBJS")
+ list(TRANSFORM libxdiff_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
+ add_library(xdiff STATIC ${libxdiff_SOURCES})
+ 
++#reftable
++parse_makefile_for_sources(reftable_SOURCES "REFTABLE_OBJS")
++
++list(TRANSFORM reftable_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
++add_library(reftable STATIC ${reftable_SOURCES})
++
+ if(WIN32)
+ 	if(NOT MSVC)#use windres when compiling with gcc and clang
+ 		add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/git.res
+@@ -613,7 +619,7 @@ endif()
+ #link all required libraries to common-main
+ add_library(common-main OBJECT ${CMAKE_SOURCE_DIR}/common-main.c)
+ 
+-target_link_libraries(common-main libgit xdiff ${ZLIB_LIBRARIES})
++target_link_libraries(common-main libgit xdiff reftable ${ZLIB_LIBRARIES})
+ if(Intl_FOUND)
+ 	target_link_libraries(common-main ${Intl_LIBRARIES})
+ endif()
+@@ -848,11 +854,15 @@ if(BUILD_TESTING)
+ add_executable(test-fake-ssh ${CMAKE_SOURCE_DIR}/t/helper/test-fake-ssh.c)
+ target_link_libraries(test-fake-ssh common-main)
+ 
++#reftable-tests
++parse_makefile_for_sources(test-reftable_SOURCES "REFTABLE_TEST_OBJS")
++list(TRANSFORM test-reftable_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
++
+ #test-tool
+ parse_makefile_for_sources(test-tool_SOURCES "TEST_BUILTINS_OBJS")
+ 
+ list(TRANSFORM test-tool_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/t/helper/")
+-add_executable(test-tool ${CMAKE_SOURCE_DIR}/t/helper/test-tool.c ${test-tool_SOURCES})
++add_executable(test-tool ${CMAKE_SOURCE_DIR}/t/helper/test-tool.c ${test-tool_SOURCES} ${test-reftable_SOURCES})
+ target_link_libraries(test-tool common-main)
+ 
+ set_target_properties(test-fake-ssh test-tool
+diff --git a/reftable/basics.c b/reftable/basics.c
+new file mode 100644
+index 00000000000..abd027b9888
+--- /dev/null
++++ b/reftable/basics.c
+@@ -0,0 +1,128 @@
++/*
++Copyright 2020 Google LLC
++
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
++
++#include "basics.h"
++
++void put_be24(uint8_t *out, uint32_t i)
 +{
-+	return reftable_dump_main(argc, (char *const *)argv);
++	out[0] = (uint8_t)((i >> 16) & 0xff);
++	out[1] = (uint8_t)((i >> 8) & 0xff);
++	out[2] = (uint8_t)(i & 0xff);
++}
++
++uint32_t get_be24(uint8_t *in)
++{
++	return (uint32_t)(in[0]) << 16 | (uint32_t)(in[1]) << 8 |
++	       (uint32_t)(in[2]);
++}
++
++void put_be16(uint8_t *out, uint16_t i)
++{
++	out[0] = (uint8_t)((i >> 8) & 0xff);
++	out[1] = (uint8_t)(i & 0xff);
++}
++
++int binsearch(size_t sz, int (*f)(size_t k, void *args), void *args)
++{
++	size_t lo = 0;
++	size_t hi = sz;
++
++	/* Invariants:
++	 *
++	 *  (hi == sz) || f(hi) == true
++	 *  (lo == 0 && f(0) == true) || fi(lo) == false
++	 */
++	while (hi - lo > 1) {
++		size_t mid = lo + (hi - lo) / 2;
++
++		if (f(mid, args))
++			hi = mid;
++		else
++			lo = mid;
++	}
++
++	if (lo)
++		return hi;
++
++	return f(0, args) ? 0 : 1;
++}
++
++void free_names(char **a)
++{
++	char **p;
++	if (a == NULL) {
++		return;
++	}
++	for (p = a; *p; p++) {
++		reftable_free(*p);
++	}
++	reftable_free(a);
++}
++
++int names_length(char **names)
++{
++	char **p = names;
++	for (; *p; p++) {
++		/* empty */
++	}
++	return p - names;
++}
++
++void parse_names(char *buf, int size, char ***namesp)
++{
++	char **names = NULL;
++	size_t names_cap = 0;
++	size_t names_len = 0;
++
++	char *p = buf;
++	char *end = buf + size;
++	while (p < end) {
++		char *next = strchr(p, '\n');
++		if (next && next < end) {
++			*next = 0;
++		} else {
++			next = end;
++		}
++		if (p < next) {
++			if (names_len == names_cap) {
++				names_cap = 2 * names_cap + 1;
++				names = reftable_realloc(
++					names, names_cap * sizeof(*names));
++			}
++			names[names_len++] = xstrdup(p);
++		}
++		p = next + 1;
++	}
++
++	names = reftable_realloc(names, (names_len + 1) * sizeof(*names));
++	names[names_len] = NULL;
++	*namesp = names;
++}
++
++int names_equal(char **a, char **b)
++{
++	int i = 0;
++	for (; a[i] && b[i]; i++) {
++		if (strcmp(a[i], b[i])) {
++			return 0;
++		}
++	}
++
++	return a[i] == b[i];
++}
++
++int common_prefix_size(struct strbuf *a, struct strbuf *b)
++{
++	int p = 0;
++	for (; p < a->len && p < b->len; p++) {
++		if (a->buf[p] != b->buf[p])
++			break;
++	}
++
++	return p;
++}
+diff --git a/reftable/basics.h b/reftable/basics.h
+new file mode 100644
+index 00000000000..096b36862b9
+--- /dev/null
++++ b/reftable/basics.h
+@@ -0,0 +1,60 @@
++/*
++Copyright 2020 Google LLC
++
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
++
++#ifndef BASICS_H
++#define BASICS_H
++
++/*
++ * miscellaneous utilities that are not provided by Git.
++ */
++
++#include "system.h"
++
++/* Bigendian en/decoding of integers */
++
++void put_be24(uint8_t *out, uint32_t i);
++uint32_t get_be24(uint8_t *in);
++void put_be16(uint8_t *out, uint16_t i);
++
++/*
++ * find smallest index i in [0, sz) at which f(i) is true, assuming
++ * that f is ascending. Return sz if f(i) is false for all indices.
++ *
++ * Contrary to bsearch(3), this returns something useful if the argument is not
++ * found.
++ */
++int binsearch(size_t sz, int (*f)(size_t k, void *args), void *args);
++
++/*
++ * Frees a NULL terminated array of malloced strings. The array itself is also
++ * freed.
++ */
++void free_names(char **a);
++
++/* parse a newline separated list of names. `size` is the length of the buffer,
++ * without terminating '\0'. Empty names are discarded. */
++void parse_names(char *buf, int size, char ***namesp);
++
++/* compares two NULL-terminated arrays of strings. */
++int names_equal(char **a, char **b);
++
++/* returns the array size of a NULL-terminated array of strings. */
++int names_length(char **names);
++
++/* Allocation routines; they invoke the functions set through
++ * reftable_set_alloc() */
++void *reftable_malloc(size_t sz);
++void *reftable_realloc(void *p, size_t sz);
++void reftable_free(void *p);
++void *reftable_calloc(size_t sz);
++
++/* Find the longest shared prefix size of `a` and `b` */
++struct strbuf;
++int common_prefix_size(struct strbuf *a, struct strbuf *b);
++
++#endif
+diff --git a/reftable/basics_test.c b/reftable/basics_test.c
+new file mode 100644
+index 00000000000..6d52f0f9d5a
+--- /dev/null
++++ b/reftable/basics_test.c
+@@ -0,0 +1,98 @@
++/*
++Copyright 2020 Google LLC
++
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
++
++#include "system.h"
++
++#include "basics.h"
++#include "test_framework.h"
++#include "reftable-tests.h"
++
++struct binsearch_args {
++	int key;
++	int *arr;
++};
++
++static int binsearch_func(size_t i, void *void_args)
++{
++	struct binsearch_args *args = (struct binsearch_args *)void_args;
++
++	return args->key < args->arr[i];
++}
++
++static void test_binsearch(void)
++{
++	int arr[] = { 2, 4, 6, 8, 10 };
++	size_t sz = ARRAY_SIZE(arr);
++	struct binsearch_args args = {
++		.arr = arr,
++	};
++
++	int i = 0;
++	for (i = 1; i < 11; i++) {
++		int res;
++		args.key = i;
++		res = binsearch(sz, &binsearch_func, &args);
++
++		if (res < sz) {
++			EXPECT(args.key < arr[res]);
++			if (res > 0) {
++				EXPECT(args.key >= arr[res - 1]);
++			}
++		} else {
++			EXPECT(args.key == 10 || args.key == 11);
++		}
++	}
++}
++
++static void test_names_length(void)
++{
++	char *a[] = { "a", "b", NULL };
++	EXPECT(names_length(a) == 2);
++}
++
++static void test_parse_names_normal(void)
++{
++	char in[] = "a\nb\n";
++	char **out = NULL;
++	parse_names(in, strlen(in), &out);
++	EXPECT(!strcmp(out[0], "a"));
++	EXPECT(!strcmp(out[1], "b"));
++	EXPECT(out[2] == NULL);
++	free_names(out);
++}
++
++static void test_parse_names_drop_empty(void)
++{
++	char in[] = "a\n\n";
++	char **out = NULL;
++	parse_names(in, strlen(in), &out);
++	EXPECT(!strcmp(out[0], "a"));
++	EXPECT(out[1] == NULL);
++	free_names(out);
++}
++
++static void test_common_prefix(void)
++{
++	struct strbuf s1 = STRBUF_INIT;
++	struct strbuf s2 = STRBUF_INIT;
++	strbuf_addstr(&s1, "abcdef");
++	strbuf_addstr(&s2, "abc");
++	EXPECT(common_prefix_size(&s1, &s2) == 3);
++	strbuf_release(&s1);
++	strbuf_release(&s2);
++}
++
++int basics_test_main(int argc, const char *argv[])
++{
++	RUN_TEST(test_common_prefix);
++	RUN_TEST(test_parse_names_normal);
++	RUN_TEST(test_parse_names_drop_empty);
++	RUN_TEST(test_binsearch);
++	RUN_TEST(test_names_length);
++	return 0;
++}
+diff --git a/reftable/publicbasics.c b/reftable/publicbasics.c
+new file mode 100644
+index 00000000000..25639f61af6
+--- /dev/null
++++ b/reftable/publicbasics.c
+@@ -0,0 +1,58 @@
++/*
++Copyright 2020 Google LLC
++
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
++
++#include "reftable-malloc.h"
++
++#include "basics.h"
++#include "system.h"
++
++static void *(*reftable_malloc_ptr)(size_t sz) = &malloc;
++static void *(*reftable_realloc_ptr)(void *, size_t) = &realloc;
++static void (*reftable_free_ptr)(void *) = &free;
++
++void *reftable_malloc(size_t sz)
++{
++	return (*reftable_malloc_ptr)(sz);
++}
++
++void *reftable_realloc(void *p, size_t sz)
++{
++	return (*reftable_realloc_ptr)(p, sz);
++}
++
++void reftable_free(void *p)
++{
++	reftable_free_ptr(p);
++}
++
++void *reftable_calloc(size_t sz)
++{
++	void *p = reftable_malloc(sz);
++	memset(p, 0, sz);
++	return p;
++}
++
++void reftable_set_alloc(void *(*malloc)(size_t),
++			void *(*realloc)(void *, size_t), void (*free)(void *))
++{
++	reftable_malloc_ptr = malloc;
++	reftable_realloc_ptr = realloc;
++	reftable_free_ptr = free;
++}
++
++int hash_size(uint32_t id)
++{
++	switch (id) {
++	case 0:
++	case SHA1_ID:
++		return SHA1_SIZE;
++	case SHA256_ID:
++		return SHA256_SIZE;
++	}
++	abort();
++}
+diff --git a/reftable/reftable-malloc.h b/reftable/reftable-malloc.h
+new file mode 100644
+index 00000000000..5f2185f1f34
+--- /dev/null
++++ b/reftable/reftable-malloc.h
+@@ -0,0 +1,18 @@
++/*
++Copyright 2020 Google LLC
++
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
++
++#ifndef REFTABLE_H
++#define REFTABLE_H
++
++#include <stddef.h>
++
++/* Overrides the functions to use for memory management. */
++void reftable_set_alloc(void *(*malloc)(size_t),
++			void *(*realloc)(void *, size_t), void (*free)(void *));
++
++#endif
+diff --git a/reftable/reftable-tests.h b/reftable/reftable-tests.h
+new file mode 100644
+index 00000000000..5e7698ae654
+--- /dev/null
++++ b/reftable/reftable-tests.h
+@@ -0,0 +1,22 @@
++/*
++Copyright 2020 Google LLC
++
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
++
++#ifndef REFTABLE_TESTS_H
++#define REFTABLE_TESTS_H
++
++int basics_test_main(int argc, const char **argv);
++int block_test_main(int argc, const char **argv);
++int merged_test_main(int argc, const char **argv);
++int record_test_main(int argc, const char **argv);
++int refname_test_main(int argc, const char **argv);
++int reftable_test_main(int argc, const char **argv);
++int stack_test_main(int argc, const char **argv);
++int tree_test_main(int argc, const char **argv);
++int reftable_dump_main(int argc, char *const *argv);
++
++#endif
+diff --git a/reftable/system.h b/reftable/system.h
+new file mode 100644
+index 00000000000..07277ca0627
+--- /dev/null
++++ b/reftable/system.h
+@@ -0,0 +1,32 @@
++/*
++Copyright 2020 Google LLC
++
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
++
++#ifndef SYSTEM_H
++#define SYSTEM_H
++
++#include "git-compat-util.h"
++#include "strbuf.h"
++
++#include <zlib.h>
++
++struct strbuf;
++/* In git, this is declared in dir.h */
++int remove_dir_recursively(struct strbuf *path, int flags);
++
++#define SHA1_ID 0x73686131
++#define SHA256_ID 0x73323536
++#define SHA1_SIZE 20
++#define SHA256_SIZE 32
++
++/* This is uncompress2, which is only available in zlib as of 2017.
++ */
++int uncompress_return_consumed(Bytef *dest, uLongf *destLen,
++			       const Bytef *source, uLong *sourceLen);
++int hash_size(uint32_t id);
++
++#endif
+diff --git a/reftable/test_framework.c b/reftable/test_framework.c
+new file mode 100644
+index 00000000000..a5ff4e2a2d2
+--- /dev/null
++++ b/reftable/test_framework.c
+@@ -0,0 +1,23 @@
++/*
++Copyright 2020 Google LLC
++
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
++
++#include "system.h"
++#include "test_framework.h"
++
++#include "basics.h"
++
++void set_test_hash(uint8_t *p, int i)
++{
++	memset(p, (uint8_t)i, hash_size(SHA1_ID));
++}
++
++int strbuf_add_void(void *b, const void *data, size_t sz)
++{
++	strbuf_add((struct strbuf *)b, data, sz);
++	return sz;
++}
+diff --git a/reftable/test_framework.h b/reftable/test_framework.h
+new file mode 100644
+index 00000000000..5fdc9519a5a
+--- /dev/null
++++ b/reftable/test_framework.h
+@@ -0,0 +1,53 @@
++/*
++Copyright 2020 Google LLC
++
++Use of this source code is governed by a BSD-style
++license that can be found in the LICENSE file or at
++https://developers.google.com/open-source/licenses/bsd
++*/
++
++#ifndef TEST_FRAMEWORK_H
++#define TEST_FRAMEWORK_H
++
++#include "system.h"
++#include "reftable-error.h"
++
++#define EXPECT_ERR(c)                                                  \
++	if (c != 0) {                                                  \
++		fflush(stderr);                                        \
++		fflush(stdout);                                        \
++		fprintf(stderr, "%s: %d: error == %d (%s), want 0\n",  \
++			__FILE__, __LINE__, c, reftable_error_str(c)); \
++		abort();                                               \
++	}
++
++#define EXPECT_STREQ(a, b)                                               \
++	if (strcmp(a, b)) {                                              \
++		fflush(stderr);                                          \
++		fflush(stdout);                                          \
++		fprintf(stderr, "%s:%d: %s (%s) != %s (%s)\n", __FILE__, \
++			__LINE__, #a, a, #b, b);                         \
++		abort();                                                 \
++	}
++
++#define EXPECT(c)                                                          \
++	if (!(c)) {                                                        \
++		fflush(stderr);                                            \
++		fflush(stdout);                                            \
++		fprintf(stderr, "%s: %d: failed assertion %s\n", __FILE__, \
++			__LINE__, #c);                                     \
++		abort();                                                   \
++	}
++
++#define RUN_TEST(f)                          \
++	fprintf(stderr, "running %s\n", #f); \
++	fflush(stderr);                      \
++	f();
++
++void set_test_hash(uint8_t *p, int i);
++
++/* Like strbuf_add, but suitable for passing to reftable_new_writer
++ */
++int strbuf_add_void(void *b, const void *data, size_t sz);
++
++#endif
+diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
+new file mode 100644
+index 00000000000..3b58e423e7b
+--- /dev/null
++++ b/t/helper/test-reftable.c
+@@ -0,0 +1,9 @@
++#include "reftable/reftable-tests.h"
++#include "test-tool.h"
++
++int cmd__reftable(int argc, const char **argv)
++{
++	basics_test_main(argc, argv);
++
++	return 0;
 +}
 diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index 0208a0a41cf..f064440a319 100644
+index 9d6d14d9293..0208a0a41cf 100644
 --- a/t/helper/test-tool.c
 +++ b/t/helper/test-tool.c
-@@ -56,6 +56,7 @@ static struct test_cmd cmds[] = {
+@@ -48,13 +48,14 @@ static struct test_cmd cmds[] = {
+ 	{ "path-utils", cmd__path_utils },
+ 	{ "pkt-line", cmd__pkt_line },
+ 	{ "prio-queue", cmd__prio_queue },
+-	{ "proc-receive", cmd__proc_receive},
++	{ "proc-receive", cmd__proc_receive },
+ 	{ "progress", cmd__progress },
+ 	{ "reach", cmd__reach },
+ 	{ "read-cache", cmd__read_cache },
+ 	{ "read-graph", cmd__read_graph },
  	{ "read-midx", cmd__read_midx },
  	{ "ref-store", cmd__ref_store },
- 	{ "reftable", cmd__reftable },
-+	{ "dump-reftable", cmd__dump_reftable },
++	{ "reftable", cmd__reftable },
  	{ "regex", cmd__regex },
  	{ "repository", cmd__repository },
  	{ "revision-walking", cmd__revision_walking },
 diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 1de39ce5b58..226af8c6b89 100644
+index a6470ff62c4..1de39ce5b58 100644
 --- a/t/helper/test-tool.h
 +++ b/t/helper/test-tool.h
-@@ -18,6 +18,7 @@ int cmd__dump_cache_tree(int argc, const char **argv);
- int cmd__dump_fsmonitor(int argc, const char **argv);
- int cmd__dump_split_index(int argc, const char **argv);
- int cmd__dump_untracked_cache(int argc, const char **argv);
-+int cmd__dump_reftable(int argc, const char **argv);
- int cmd__example_decorate(int argc, const char **argv);
- int cmd__fast_rebase(int argc, const char **argv);
- int cmd__genrandom(int argc, const char **argv);
+@@ -44,6 +44,7 @@ int cmd__read_cache(int argc, const char **argv);
+ int cmd__read_graph(int argc, const char **argv);
+ int cmd__read_midx(int argc, const char **argv);
+ int cmd__ref_store(int argc, const char **argv);
++int cmd__reftable(int argc, const char **argv);
+ int cmd__regex(int argc, const char **argv);
+ int cmd__repository(int argc, const char **argv);
+ int cmd__revision_walking(int argc, const char **argv);
+diff --git a/t/t0032-reftable-unittest.sh b/t/t0032-reftable-unittest.sh
+new file mode 100755
+index 00000000000..0ed14971a58
+--- /dev/null
++++ b/t/t0032-reftable-unittest.sh
+@@ -0,0 +1,15 @@
++#!/bin/sh
++#
++# Copyright (c) 2020 Google LLC
++#
++
++test_description='reftable unittests'
++
++. ./test-lib.sh
++
++test_expect_success 'unittests' '
++	TMPDIR=$(pwd) && export TMPDIR &&
++	test-tool reftable
++'
++
++test_done
 -- 
 gitgitgadget
+
