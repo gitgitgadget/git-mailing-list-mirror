@@ -5,63 +5,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D00A7C4167B
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 19:42:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69822C4361B
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 19:42:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 917D623C92
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 19:42:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 224DD23C92
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 19:42:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727162AbgLITme (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 14:42:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56568 "EHLO
+        id S2387855AbgLITmm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 14:42:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732302AbgLITmO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 14:42:14 -0500
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FCBBC061794
-        for <git@vger.kernel.org>; Wed,  9 Dec 2020 11:41:33 -0800 (PST)
-Received: by mail-wr1-x443.google.com with SMTP id r7so3031595wrc.5
-        for <git@vger.kernel.org>; Wed, 09 Dec 2020 11:41:33 -0800 (PST)
+        with ESMTP id S1732198AbgLITmM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 14:42:12 -0500
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51261C061793
+        for <git@vger.kernel.org>; Wed,  9 Dec 2020 11:41:32 -0800 (PST)
+Received: by mail-wr1-x442.google.com with SMTP id k14so3053992wrn.1
+        for <git@vger.kernel.org>; Wed, 09 Dec 2020 11:41:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=nOg+LmwailRaVuyEjDjA0uYgU3WumywkoJgRf7dQFBQ=;
-        b=bwXY1szCvxAKDYaFBxVhdWVWCGYVC9MnKWMrVvE00qddC0gkcaqqMLRjK7FEYrri73
-         zlzBp9MaTmxqDyx6M/3klZ156gNi09FuChKTVpIzQ/1t0Y65JDaaTVx4vwpLCuZ4GQvH
-         p6+Ui6pBThYMGYIH2HJyjdA7b80DJS00pghxiXpMdKVnNwqXH7MQlTM8eqWVT2ydrW6m
-         y2+dOk7uEGWwucF5sPTby24u8IO119Zc9WKzSOhgV8GsXpn2JZbH9qwOmKlPINeuIRoA
-         ZiywFJXExH2J6J5nmwvds+kmw6QlNzImA8kOlClp75QNNpvI30qiQHDdr4uPV3RfZvs0
-         hRHA==
+        bh=v5ff/3V5zCDHnxLgjmtWFllBH95eypHAvqX8wSVf7ns=;
+        b=gitU+ftiZgElpm3v/eXm1v2gnAxDnUcoUIDn9Z9rxeQdT/LDp9+HlOA/9cdlYE53CQ
+         yBXGhZAUoPovw4FEFDtJ7jw4VbHNp2sZf8oAGSc7WeFtpM+fp/Ys8/AIX0dXjQttvJX1
+         D//u0EOKyzeM3PqKwnkML22PyqcATEqz3pBVD+BvS+uGyf622+vFdmHZt/dBlu3TFPib
+         njchf4RPC0X5FQ/SkhsG6rZ9b02CueGh+UvofhJ5Usr8mCNzIohTsp3YLJoK2W6CgyY7
+         QjRQj3/BpfHReUuaWmpaNY73Fs+wW4NmKNYkJRrviMwNFcDRQQnL4wJAf0/MgMC5GHEg
+         tJgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=nOg+LmwailRaVuyEjDjA0uYgU3WumywkoJgRf7dQFBQ=;
-        b=PXwoosMhnpGq9FKF7Ejw8SiET8Ot9nm6sFEI/vJ86zcnc9Bx5ldXRELWkyKC3S2q7J
-         SxxjVcdmYrVb4KzX/J02qUgkaz058T4huLz3XFFR3HYwlCtTMIpJkHZlpkXh0guigtTv
-         RAVsZ5u11uzmVvfnRIxLJF+TPMB3CI6nn8FlmZzQxI4cYQonUNTlP+b/L9aJrtXwRYpt
-         NSibrCpYmVc6auEIwj+uZDLYi0CpuCoWKfHKxt+5H6QJRnrc+CUepDIxd0m0PMKPzh41
-         k2bYbxnIUK1pERhCx82UqRF1XjMOSUU2+EMFeWZvjYEJcDjFt679hqSXKiBC+H5zV6iy
-         LoIg==
-X-Gm-Message-State: AOAM533WBOeuDPTWN9p74OgPEqxD4ho8a5xK5Gbw/D0tXBQfJKQJRVxB
-        mO3D+7MTi9bl6wTlBguCK2v83HJjSw0=
-X-Google-Smtp-Source: ABdhPJyO3mFudcZ+eV/oVQg/jzICLjtD+l70UdAzBDCGFMnDNNoVi9lwh7e40j4kfRKAJnm+4wcsPQ==
-X-Received: by 2002:adf:db44:: with SMTP id f4mr4475707wrj.97.1607542891974;
-        Wed, 09 Dec 2020 11:41:31 -0800 (PST)
+        bh=v5ff/3V5zCDHnxLgjmtWFllBH95eypHAvqX8wSVf7ns=;
+        b=F9FQUIEbaD3a3K8fhX7Dn8hZhtx0KV2BxJ+w/4YxG7iQmavodl9AtYR2SHw5ZEZ1lt
+         bAOBRAATWE+1S1K38hkL5sLFIPpmMPpALlh4AE1bsxE+tuYNz7/F41rbUleTBeCSqJuB
+         oQ0fY6sM63XoNglMO605Qtmr+ZXq8baaHMVkLZ5lHNbhHw4XLMOwjUlSTZSEn/0LDWiq
+         9E2FtOzQ1ioJwOeaJYc++L6icfFA3+rJhtJcWOiveRyys81HxPByq58YudvoR8vEw6Do
+         TvzEV/BTPuXT9A/KKvMr0gdzTQx34doIGXIWAbtZbL2wD36m3rOePtJO+9OwVF6zVzm3
+         dPCg==
+X-Gm-Message-State: AOAM532daW8ZwKdi/Xljxk+sfRQLzyYjUulFgceKvpt9/wTTGsbC7ZSc
+        IlXYqgVrC0QJzpvETxktX2kigfxEPbk=
+X-Google-Smtp-Source: ABdhPJxHz5JKJlWWjctgn3i/Yzwu/X4q/nTznJxMsoH33ORd19C3p/ivpK/J6r1Ekz8iWpTOQcYIuA==
+X-Received: by 2002:adf:8b09:: with SMTP id n9mr4269392wra.180.1607542890864;
+        Wed, 09 Dec 2020 11:41:30 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y130sm5745779wmc.22.2020.12.09.11.41.31
+        by smtp.gmail.com with ESMTPSA id b12sm5559885wmj.2.2020.12.09.11.41.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Dec 2020 11:41:31 -0800 (PST)
-Message-Id: <ba30bc8686ef11115b369d351b4447c75a7bb9b5.1607542887.git.gitgitgadget@gmail.com>
+        Wed, 09 Dec 2020 11:41:30 -0800 (PST)
+Message-Id: <b9e0e1a60b92a6a220193bf9fe80796df91126a7.1607542887.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.812.git.1607542887.gitgitgadget@gmail.com>
 References: <pull.812.git.1607542887.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 09 Dec 2020 19:41:19 +0000
-Subject: [PATCH 03/11] merge-ort: implement detect_regular_renames()
+Date:   Wed, 09 Dec 2020 19:41:18 +0000
+Subject: [PATCH 02/11] merge-ort: add initial outline for basic rename
+ detection
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,63 +75,96 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Based heavily on merge-recursive's get_diffpairs() function.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 32 +++++++++++++++++++++++++++++++-
- 1 file changed, 31 insertions(+), 1 deletion(-)
+ merge-ort.c | 68 ++++++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 60 insertions(+), 8 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 92b765dd3f0..1ff637e57af 100644
+index 90baedac407..92b765dd3f0 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -634,7 +634,33 @@ static void detect_regular_renames(struct merge_options *opt,
- 				   struct tree *side,
- 				   unsigned side_index)
+@@ -617,20 +617,72 @@ static int handle_content_merge(struct merge_options *opt,
+ 
+ /*** Function Grouping: functions related to regular rename detection ***/
+ 
++static int process_renames(struct merge_options *opt,
++			   struct diff_queue_struct *renames)
++{
++	die("Not yet implemented.");
++}
++
++static int compare_pairs(const void *a_, const void *b_)
++{
++	die("Not yet implemented.");
++}
++
++/* Call diffcore_rename() to compute which files have changed on given side */
++static void detect_regular_renames(struct merge_options *opt,
++				   struct tree *merge_base,
++				   struct tree *side,
++				   unsigned side_index)
++{
++	die("Not yet implemented.");
++}
++
++/*
++ * Get information of all renames which occurred in 'side_pairs', discarding
++ * non-renames.
++ */
++static int collect_renames(struct merge_options *opt,
++			   struct diff_queue_struct *result,
++			   unsigned side_index)
++{
++	die("Not yet implemented.");
++}
++
+ static int detect_and_process_renames(struct merge_options *opt,
+ 				      struct tree *merge_base,
+ 				      struct tree *side1,
+ 				      struct tree *side2)
  {
--	die("Not yet implemented.");
-+	struct diff_options diff_opts;
+-	int clean = 1;
++	struct diff_queue_struct combined;
 +	struct rename_info *renames = opt->priv->renames;
++	int s, clean = 1;
 +
-+	repo_diff_setup(opt->repo, &diff_opts);
-+	diff_opts.flags.recursive = 1;
-+	diff_opts.flags.rename_empty = 0;
-+	diff_opts.detect_rename = DIFF_DETECT_RENAME;
-+	diff_opts.rename_limit = opt->rename_limit;
-+	if (opt->rename_limit <= 0)
-+		diff_opts.rename_limit = 1000;
-+	diff_opts.rename_score = opt->rename_score;
-+	diff_opts.show_rename_progress = opt->show_rename_progress;
-+	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	diff_setup_done(&diff_opts);
-+	diff_tree_oid(&merge_base->object.oid, &side->object.oid, "",
-+		      &diff_opts);
-+	diffcore_std(&diff_opts);
++	memset(&combined, 0, sizeof(combined));
 +
-+	if (diff_opts.needed_rename_limit > opt->priv->renames->needed_limit)
-+		opt->priv->renames->needed_limit = diff_opts.needed_rename_limit;
++	detect_regular_renames(opt, merge_base, side1, 1);
++	detect_regular_renames(opt, merge_base, side2, 2);
 +
-+	renames->pairs[side_index] = diff_queued_diff;
++	ALLOC_GROW(combined.queue,
++		   renames->pairs[1].nr + renames->pairs[2].nr,
++		   combined.alloc);
++	clean &= collect_renames(opt, &combined, 1);
++	clean &= collect_renames(opt, &combined, 2);
++	QSORT(combined.queue, combined.nr, compare_pairs);
 +
-+	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	diff_queued_diff.nr = 0;
-+	diff_queued_diff.queue = NULL;
-+	diff_flush(&diff_opts);
++	clean &= process_renames(opt, &combined);
++
++	/* Free memory for renames->pairs[] and combined */
++	for (s = 1; s <= 2; s++) {
++		free(renames->pairs[s].queue);
++		DIFF_QUEUE_CLEAR(&renames->pairs[s]);
++	}
++	if (combined.nr) {
++		int i;
++		for (i = 0; i < combined.nr; i++)
++			diff_free_filepair(combined.queue[i]);
++		free(combined.queue);
++	}
+ 
+-	/*
+-	 * Rename detection works by detecting file similarity.  Here we use
+-	 * a really easy-to-implement scheme: files are similar IFF they have
+-	 * the same filename.  Therefore, by this scheme, there are no renames.
+-	 *
+-	 * TODO: Actually implement a real rename detection scheme.
+-	 */
+ 	return clean;
  }
  
- /*
-@@ -1379,6 +1405,10 @@ void merge_switch_to_result(struct merge_options *opt,
- 			printf("%s", sb->buf);
- 		}
- 		string_list_clear(&olist, 0);
-+
-+		/* Also include needed rename limit adjustment now */
-+		diff_warn_rename_limit("merge.renamelimit",
-+				       opti->renames->needed_limit, 0);
- 	}
- 
- 	merge_finalize(opt, result);
 -- 
 gitgitgadget
 
