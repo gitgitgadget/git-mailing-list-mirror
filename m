@@ -2,174 +2,169 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A5ACC4361B
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 14:09:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 487B1C433FE
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 14:10:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 36FD523B42
-	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 14:09:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0C6B423B51
+	for <git@archiver.kernel.org>; Wed,  9 Dec 2020 14:10:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729295AbgLIOJB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 09:09:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33298 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728446AbgLIOJB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 09:09:01 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D37D3C0613CF
-        for <git@vger.kernel.org>; Wed,  9 Dec 2020 06:08:20 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id o17so346011lfg.4
-        for <git@vger.kernel.org>; Wed, 09 Dec 2020 06:08:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=iHBk1L9XTrUhNyIZsRB3O3SaFOdCsx41ZWeifshGRko=;
-        b=NSTALt8tqCOANbWsZMkC395zcypLBSjkhgxVu6uenvqs6y/jlSkck6EIoYOsREV2+s
-         /hkUUZuWIjqI96WEoZc3zjsa/b4aNajSTXva+wiEJPa+m6249v/Q0/9izaoBwxd1IFYK
-         XdtRHkwgRcUneiz2MdWrVIEsZeom8+9cmGqpyYQ3ugQW+QGiH8JS3h2XUmhEWJlPDAx9
-         nyCFzQVzfzVDYpHgdFOGxH9H3ED/A5XXtY3aGdfcjhE3hOMIzpKOQbL55ARAFjYA3Tqq
-         u/kzlVjO+csjK5eWdOFf/81M3rWt9Mef3HbODNE98oE2UXMDzMW9945qlcaQK4UoS20T
-         PFbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=iHBk1L9XTrUhNyIZsRB3O3SaFOdCsx41ZWeifshGRko=;
-        b=D9CmPiodk1fDzz9Skf03xHURTcKHhTNh6WnCtmpoORQvimpQmbW0hnMH9k6w7z5Och
-         tFbQC1tPxCTKRx3p8r5PnMZ59+WJS51mlWoNvC4DQNPB8XmXQHnNNCVHw0VOZd7JC/ak
-         j4VWJy3amSmH7Zv3oPITvz7P5RWuSu57txnR626mdECp1iK1UpWaYMAQoPzgrL/cs9vl
-         AjA382NeFkfbwYdTgwCfR9myHpslT6xtbVSRfKW2LsbqvfVeBuori9ytzklbO6TeAASu
-         ElzAuXosxx/iEvvOma+SHnyiNHeqgHNV3yvnVUq9lEGWvh4qnKbHWJr3+DNV8Kl5qPwL
-         RWPQ==
-X-Gm-Message-State: AOAM532ujkZDv8ZYr5C++GovOmfnVscTFSIg1pNmeJdoW8XI9TwuqNhc
-        +SeLz4DApPtVCV5lY1vWTRIj6b6HTp0=
-X-Google-Smtp-Source: ABdhPJxywcLa/3TM7Uf/fzdKPsgp/YM8lTILriMeST5qqOIAkzIBeuO9Xq8pcLmliGlgi0V/V/z4Ng==
-X-Received: by 2002:ac2:51ab:: with SMTP id f11mr1153417lfk.510.1607522898878;
-        Wed, 09 Dec 2020 06:08:18 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id b8sm243388ljo.68.2020.12.09.06.08.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Dec 2020 06:08:15 -0800 (PST)
-From:   Sergey Organov <sorganov@gmail.com>
+        id S1732761AbgLIOKm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 09:10:42 -0500
+Received: from mout.gmx.net ([212.227.15.18]:54295 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732758AbgLIOKm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 09:10:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1607522945;
+        bh=pTmhaJ0RFM+XSeIXCqJYU0sRbtTqbhyOPIx6STyyHYo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=FJ7P2QSMHNj/30KA3t4kDoUhvxRwFqrS1Mrau8PAPiHRT7RgO3L7cLBNySOT2IsKk
+         zI2aGzhqnmmYvW6gIn9F7KaE3hK/asKeGnzMW5+z5DvwxuuH3TJPEb6Th/dtZD8E4P
+         Ijd/iUDerXB4XAy4AYQnEB+8Xi3cXwvN0WcgqHds=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.88.62] ([89.1.212.111]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mj8mV-1kAd4G1Sg1-00fAgc; Wed, 09
+ Dec 2020 15:09:05 +0100
+Date:   Wed, 9 Dec 2020 15:09:03 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 00/26] git-log: implement new --diff-merge options
-References: <20201101193330.24775-1-sorganov@gmail.com>
-        <87y2i8dptj.fsf@osv.gnss.ru>
-        <CABPp-BGuLX8Msghbo6L7vB2Wqys=Xg_uvV2Aui-1q4-+ijuNEw@mail.gmail.com>
-        <87y2i8c4mr.fsf@osv.gnss.ru>
-        <CABPp-BE3D7ifQx6MZCT_ntRnG0QZm1Ga10SJ=DN+6bpF6mX2GQ@mail.gmail.com>
-        <xmqqtusv4w2g.fsf@gitster.c.googlers.com>
-        <CABPp-BHCtrKAWR1v3OrUgX8iSfxvDwN8p+yiJy=G1BFfnSopjw@mail.gmail.com>
-        <xmqq7dpr4qa0.fsf@gitster.c.googlers.com>
-        <CABPp-BHWhiUZ=wCSz1f0oxtHiRzAKCPVmoUYDf+mvvm63ykCEw@mail.gmail.com>
-        <xmqq360f4npg.fsf@gitster.c.googlers.com>
-        <CABPp-BEAmB9DA7RXrf6vJGbHfGU37V4sE0d1CW+2vRwp_uAudw@mail.gmail.com>
-        <xmqqtusv362t.fsf@gitster.c.googlers.com>
-        <xmqqpn3j32ka.fsf@gitster.c.googlers.com>
-Date:   Wed, 09 Dec 2020 17:08:14 +0300
-In-Reply-To: <xmqqpn3j32ka.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Tue, 08 Dec 2020 22:40:05 -0800")
-Message-ID: <87v9dbf4xd.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+cc:     git@vger.kernel.org
+Subject: fc/pull-merge-rebase, was Re: What's cooking in git.git (Dec 2020,
+ #01; Tue, 8)
+In-Reply-To: <xmqqpn3j4ved.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2012091502000.25979@tvgsbejvaqbjf.bet>
+References: <xmqqpn3j4ved.fsf@gitster.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:flIep3Vf3A5T83VH+NcSD/x182CqZ64sG+lzOabql19ayayEOPQ
+ f6uOiFak2hIof6ePleTszPSkHvC66TcSyQhRWWdr0odv/2PzUAMAKlPCWG2e2HL9xWvF1mF
+ F+C9W55V1yNt5w8S4fuw/M0X+s60IcZnmsl8B0TuHu28Z1XIkcF8r1neH/xkQthyARB6akY
+ zxlzuVDAOC0WopSqN+YCA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:11Kmj4VfqcM=:+ghefbFpqpuDJ55nkpdlEw
+ QANtl27z83L3b4DIzlByeG5f20BebXClHfIg7bLS4wfI6RUWRsW70kyskjvpeo+lNZrOhmsvB
+ ljcO8wF8JUqfIz9xdflL3beeY+VXS9Ibel6XaKWCj22AVh8WuSexqtLc1FuXmDE6NjDKUY07h
+ V2EjzFDW7QNy1HYPfROEEK8Xvu3tLUUJmPRS4H5sh0gdhgwTvMtrXufU2rxw20IykSJT8i9Vp
+ CkTt10K6dppqLn+XlCaH85WxPBN32EpqAvQv0k/WdmKzKef1N77AQdlIbeCFVf7KLBgyusSRM
+ sqATKYI4POaITs9YO0rtvTxL36lRE2CPJVND5dMSrd2YuAhkvD7oJ9cdxrlLLxMoYme+/ictT
+ wT/86IMjd8J8n33niDB007tv3WdhGC5Ewcr7uhilCL23ZnB0mK/UFyeiZNM/hXel2fvxmvwIe
+ gip0aAIpIe6HwmC7CfNkliVYr0HHJic7kX6zvn0RRP6+OUFFD/ZYr0Hq1bfCgfRfxMq6IR84/
+ yYJVpBHvRLIuRfGojL6mS2qUygJol0zcmJV0HZ7S/rMOo9sXBNg6Ew01e3W+O0KA0skuDIHX3
+ xHWktbGVObZpMfiVhA3AdNgezzmZPSDUgzk6fSqrvsZ8nd9IGegEEbxsTohvqkP+Kxv0W0v2U
+ F/HHl4oqp7w870/ggK1XDNfAA3ZFmkxXahXzJ9opohMcMt5OeqydUevmzcDMXsG/FOcHGkXTN
+ DTW/mclgN0lHuwD4DnMLTxCiDzuuFlzXXSp1mh727/VJyncTtEWs8GNKt2p9WWgb6IfEGSQVa
+ +VGBCYgDoeqFQ0U7c8txWhwLcy2JytHOqImhGEr6Pm3OhcBLLknU9Wu/g5FjAl8RSTNsqJkMt
+ OlUaE+EdlyNV3KvPSxyUIaxdBzbn7Ya3w51T8j0o4=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Junio,
 
-> Junio C Hamano <gitster@pobox.com> writes:
+On Tue, 8 Dec 2020, Junio C Hamano wrote:
+
+> * fc/pull-merge-rebase (2020-12-08) 19 commits
+>  - future: pull: enable ff-only mode by default
+>  - pull: advice of future changes
+>  - pull: add pull.mode=3Dff-only
+>  - pull: add pull.mode
+>  - pull: trivial memory fix
+>  - test: pull-options: revert unnecessary changes
+>  - test: merge-pull-config: trivial cleanup
+>  - pull: move configurations fetches
+>  - rebase: add REBASE_DEFAULT
+>  - pull: show warning with --ff
+>  - pull: introduce --merge option
+>  - pull: trivial whitespace style fix
+>  - pull: display default warning only when non-ff
+>  - pull: move default warning
+>  - pull: trivial cleanup
+>  - pull: cleanup autostash check
+>  - pull: refactor fast-forward check
+>  - pull: improve default warning
+>  - doc: pull: explain what is a fast-forward
 >
-> A clarification and a correction.
->
->> I suspect that the real reason why "-m" does not imply "-p" was
->> merely a historical implementation detail...
->
-> Now I remember better.  The reason was pure oversight.
->
-> In the beginning, there was no patch output for merges.  As most
-> merges just resolve cleanly, and back then the first-parent chains
-> were treated as much much less special than we treat them today,
-> "git log -p" showed only patches for single-parent commits and
-> everybody was happy.  It could have been a possible alternative
-> design to show first-parent diff for a merge instead of showing no
-> patch, but because the traversal went to side branches, the changes
-> made by the merge to the mainline as a single big patch would have
-> been redundant---we would be seeing individual patches from the side
-> branch anyway.
->
-> Then later we introduced "-m -p"; since the first-parent chain was
-> not considered all that special, we treated each parent equally.
-> Nobody, not even Linus and I, thought it was useful by itself even
-> back then, but we didn't have anything better.
->
-> I think it was Paul Mackerras's "gitk" that invented the concept of
-> combined merges.  We liked it quite a lot, and added "-c" and "--cc"
-> soon after that, to the core git and kept polishing, until "gitk"
-> stopped combining the patches with each parent in tcl/tk script and
-> instead started telling "git" to show with "--cc".
->
-> By the time the change to make "--cc" imply "-p" was introduced, it
-> was pretty much given that "-m -p" was useful to anybody, unless you
-> are consuming these individual patches in a script or something like
-> that.  So simply I didn't even think of making "-m" imply "-p".  It
-> would be logical to make it so, but it would not add much practical
-> value, I would have to say.
+>  When a user does not tell "git pull" to use rebase or merge, the
+>  command gives a loud message telling a user to choose between
+>  rebase or merge but creates a merge anyway, forcing users who would
+>  want to rebase to redo the operation.  Fix this by (1) tightening
+>  the condition to give the message---there is no reason to stop or
+>  force the user to choose between rebase or merge if the history
+>  fast-forwards, and (2) failing the operation when the history does
+>  not fast-forward, instead of making a merge, in such a case.
 
-... and then later the "--first-parent implies -m" change has been made,
-that would't work as expected if -m implied -p in the fist place, as
-it'd break "git log --first-parent".
+Despite what the commit message of the tip commit says, it is not "time to
+flip the switch and make ff-only the default" because it breaks our very
+own test suite left and right. See for yourself:
 
->
->> If I were to decide now with hindsight, perhaps I'd make "--cc" and
->> "-m" imply "-p" only for merge commits, and the user can explicitly
->> give "--cc -p" and "-m -p" to ask patches for single-parent commits
->> to be shown as well.
->
-> After "now with hindsight", I need to add "and without having to
-> worry about backward compatibility issues" here.  IOW, the above is
-> not my recommendation.  It would be the other way around: "--cc"
-> implies "-p" for both merges and non-merges, "-m" implies "-p" for
-> both merges and non-merges.  It is acceptable to add a new option
-> "--no-patch-for-non-merge" so that the user can ask to see only the
-> combined diff for merges and no patches for individual commits.
+https://github.com/gitgitgadget/git/runs/1521231966?check_suite_focus=3Dtr=
+ue
+claims that a whopping 120 (!!!) test cases fail. Here's the exact list:
 
-OK, so, do we decide that -c/--cc must continue to imply -p and thus
-request diffs for everything?
+Test Summary Report
+=2D------------------
+t4013-diff-various.sh                            (Wstat: 256 Tests: 195
+Failed: 84)
+  Failed tests:  1, 49-62, 66-68, 70-84, 94-109, 113-117
+                120-123, 131-134, 137-138, 140-143, 145-146
+                164-168, 182-186, 188-191
+  Non-zero exit status: 1
+t5524-pull-msg.sh                                (Wstat: 256 Tests: 3
+Failed: 2)
+  Failed tests:  2-3
+  Non-zero exit status: 1
+t5521-pull-options.sh                            (Wstat: 256 Tests: 20
+Failed: 2)
+  Failed tests:  12, 16
+  Non-zero exit status: 1
+t5553-set-upstream.sh                            (Wstat: 256 Tests: 19
+Failed: 6)
+  Failed tests:  11-14, 16-17
+  Non-zero exit status: 1
+t5520-pull.sh                                    (Wstat: 256 Tests: 81
+Failed: 8)
+  Failed tests:  16, 33-39
+  Non-zero exit status: 1
+t5604-clone-reference.sh                         (Wstat: 256 Tests: 33
+Failed: 4)
+  Failed tests:  13-16
+  Non-zero exit status: 1
+t6409-merge-subtree.sh                           (Wstat: 256 Tests: 12
+Failed: 3)
+  Failed tests:  9, 11-12
+  Non-zero exit status: 1
+t6417-merge-ours-theirs.sh                       (Wstat: 256 Tests: 7
+Failed: 1)
+  Failed test:  6
+  Non-zero exit status: 1
+t6402-merge-rename.sh                            (Wstat: 256 Tests: 46
+Failed: 8)
+  Failed tests:  2-8, 11
+  Non-zero exit status: 1
+t7603-merge-reduce-heads.sh                      (Wstat: 256 Tests: 13
+Failed: 1)
+  Failed test:  3
+  Non-zero exit status: 1
+Files=3D915, Tests=3D22158, 448 wallclock secs ( 5.63 usr  1.64 sys + 555.=
+46
+cusr 190.71 csys =3D 753.44 CPU)
+Result: FAIL
 
-If so, I can rather change --diff-merges=combined/dense-combined
-behavior to /not/ imply -p, thus effectively making --cc a synonym for
-"--diff-merges=dense-combined --patch", that will have zero backward
-compatibility issues.
+Given that not even our very own test suite is well-suited to this change,
+I rather doubt that this is a safe thing to do.
 
-Looks like it'd have everything covered. Old options won't change their
-behavior at all, and the new set of options will behave differently,
-exactly if designed from scratch, providing new functionality.
+In the _least_, the patch series should put in the effort to show just how
+much work it is to adjust the test suite to let it pass again. This would
+also give an indication how much work we impose on our users by that
+ff-only change in behavior.
 
->
-> Both "--no-patch-for-non-merge" option, and making "-m" imply "-p"
-> are very low priority from my point of view, though, since our users
-> (including me) lived without the former and have been happily using
-> "log --cc" for a long time, and we've written off the latter as
-> pretty much useless combination unless you are a script.
-
-I think my above suggestion covers all the worries without need for this
-nasty "--no-patch-for-non-merge" option.
-
-That said, -m is useless, period. It'd likely have some merit in
-plumbing, but definitely not in porcelain. So I'm inclined to let it
-rest in peace indeed, dying.
-
-Thanks,
--- Sergey
-
-
+Ciao,
+Dscho
