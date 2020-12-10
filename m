@@ -7,88 +7,91 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2B9DC4361B
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 00:59:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 519B8C4361B
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 01:05:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 03E9D2343F
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 00:59:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 24134239FD
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 01:05:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731561AbgLJA6S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 19:58:18 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53021 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729760AbgLJA6M (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 19:58:12 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0F7C1102B57;
-        Wed,  9 Dec 2020 19:57:31 -0500 (EST)
+        id S1731588AbgLJBFG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 20:05:06 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58745 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731095AbgLJBE5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 20:04:57 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 736941122D5;
+        Wed,  9 Dec 2020 20:04:16 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=rQuabmdh4YBJH55xNaP7f1YfdmY=; b=paoqq7
-        L05AIrIUx94d6RvkV0AEdtp38WbPDhHoP5cO2/0ZfJ3kiRZDo0e6nkfiXH/BeAzR
-        P9CYuCA5tAk4Dj8VbjjimxbMfLtbxf3oKE4lxAp20DOaNYv/GHsMlAGsBaBumU/6
-        86QygNM3htDcUyfQhEG2pNjH1RKL8Hjr2LBUk=
+        :content-type; s=sasl; bh=NWSYsCnECfA1K5Pr+7n29733oUg=; b=qTS4Cr
+        TA+j8dXzF9iA6sCxJ/Ehh1EZ6DA3UBCGRznNzjlhyZK5rJFGEgjhHg/YMXZeN84b
+        KPBc3/fhRICQ94Ru+HJ5Zp16bSDAQmKLJTac5tlS7MZcXUhOo9grEoQHrHGeSfJw
+        15fhXOyOIqilNlyMnY+dZCOotOpCnX8sesWeU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mRV0o1anV3UUZ13c2MySrAZcZlK6ixvj
-        ppH5JQLbEiA6LrUaDpXnB6RaxQSQApxOUzJldcr6hSFtUJQYdAHkCjweHXzg6neK
-        kDP65QRbscOP0/uxy8olnrFer9Ljz1qnOIobWqiVYcMxFNWZuFFrQCPlF7l4whHM
-        +FMf5oec50g=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 08176102B56;
-        Wed,  9 Dec 2020 19:57:31 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=j+EnPnzxrH+L0R0/FhkMirakE28nw8BX
+        MTApJNCscrtts+wbm3b/iW3H92WpMlzL95aEDG/JjcE7sQBjsPXmOmRZIqsCVSmx
+        5zXPgOGxM7TDAVWy3eAtfp1cQjxnBalOrHrW3T0LkDrIZlG7xIneJQgU8kxTx8lv
+        vty5ELGt7vE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6C2591122D4;
+        Wed,  9 Dec 2020 20:04:16 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.74.119.39])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 500BD102B55;
-        Wed,  9 Dec 2020 19:57:28 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B71EB1122D2;
+        Wed,  9 Dec 2020 20:04:13 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Dec 2020, #01; Tue, 8)
-References: <xmqqpn3j4ved.fsf@gitster.c.googlers.com>
-        <CABPp-BGcyRURykePOafjcE1z9J8U5awF=PZw1ufx+8Ow+k3j3w@mail.gmail.com>
-        <xmqqy2i738x1.fsf@gitster.c.googlers.com>
-        <X9FXnWLFT/2v8acE@nand.local>
-Date:   Wed, 09 Dec 2020 16:57:26 -0800
-In-Reply-To: <X9FXnWLFT/2v8acE@nand.local> (Taylor Blau's message of "Wed, 9
-        Dec 2020 18:02:53 -0500")
-Message-ID: <xmqqa6umzde1.fsf@gitster.c.googlers.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v6 0/4] Maintenance IV: Platform-specific background
+ maintenance
+References: <pull.776.v5.git.1606191405.gitgitgadget@gmail.com>
+        <pull.776.v6.git.1607542142.gitgitgadget@gmail.com>
+        <xmqqpn3izeit.fsf@gitster.c.googlers.com>
+        <CAPig+cSciupmmupdgynfBO98EFke5fneC5W+k2vCo9Zkh3KF5w@mail.gmail.com>
+Date:   Wed, 09 Dec 2020 17:04:12 -0800
+In-Reply-To: <CAPig+cSciupmmupdgynfBO98EFke5fneC5W+k2vCo9Zkh3KF5w@mail.gmail.com>
+        (Eric Sunshine's message of "Wed, 9 Dec 2020 19:49:27 -0500")
+Message-ID: <xmqq5z5azd2r.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: ACC1331E-3A82-11EB-BC2E-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 9E67B1CA-3A83-11EB-B83C-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> On Tue, Dec 08, 2020 at 08:22:50PM -0800, Junio C Hamano wrote:
->> Elijah Newren <newren@gmail.com> writes:
->>
->> > On Tue, Dec 8, 2020 at 5:37 PM Junio C Hamano <gitster@pobox.com> wrote:
->> >>
->> >> * en/diffcore-rename (2020-12-07) 5 commits
->> >>  - diffcore-rename: simplify and accelerate register_rename_src()
->> >>  - diffcore-rename: reduce jumpiness in progress counters
->> >>  - diffcore-rename: rename num_create to num_targets
->> >>  - diffcore-rename: remove unnecessary if-clause
->> >>  - diffcore-rename: avoid usage of global in too_many_rename_candidates()
+> On Wed, Dec 9, 2020 at 7:33 PM Junio C Hamano <gitster@pobox.com> wrote:
+>> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> > Update in V6
+>> > ============
 >> >
->> > Curious.  I submitted 7 patches for this series.
+>> >  * The Windows platform uses the tempfile API a bit better, including using
+>> >    the frequency in the filename to make the test simpler.
 >>
->> Yeah, I wanted to leave the "hard-to-digest" one out, and queued the
->> "relatively easy to review" ones.  Even then, I ran out of time to
->> read these early 6 (and nobody else seems to have done so, either).
+>> Are two fix-up patches from Eric that have been queued near the top
+>> of ds/maintenance-part-4 still relevant?
 >
-> I reviewed all seven, and would be happy to see these merged up. The
-> first five were all pretty trivial to review, and the last two
-> definitely required more attention, but I couldn't spot any correctness
-> issues with them.
+> Both of the patches from Sunshine are still relevant atop Stolee's
+> latest (v6), and they should apply cleanly (I would think) since v6
+> didn't change anything related to those patches.
 
-Thanks for helping out.  Greatly appreciated.
+Yup, I tried rebasing these two and they applied cleanly, so I'll
+include them in today's pushout (which I haven't finished yet).
+
+I probably would not notice if the updated 4-patch series already
+solved the issue in another way without causing the textual conflict
+with your two fix-up patches, though ;-)
+
+Thanks.
+
+
