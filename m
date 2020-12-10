@@ -2,91 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC6C2C4361B
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 00:13:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24B7CC4361B
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 00:26:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9F79A23609
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 00:13:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D363322B2E
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 00:26:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728499AbgLJANv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 19:13:51 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56315 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726777AbgLJANv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 19:13:51 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4BC0989AA4;
-        Wed,  9 Dec 2020 19:13:09 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=p67s7MnqqvBxejwBPRlCzA610BQ=; b=Gzf2tK
-        0jS4jm1RaRnzM7YSu3QcsElrnsySgEYtaJ6YQ9pJQv0Of9tMbKwsZcR+pXaTjuAb
-        yYIZyKnLrsyBcEB6QEkm5o/oxHnQHIRXfC+uDWgjaMzCF2CZEKKHTR/5CnlSsL0u
-        BLQhC7UqblSgraICeKOYCii84vc4Cmh+w6HUU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hjbwMeU4nIn9ryBW3luVeCXGeGW4XeWU
-        Gkr+P9wkDI/uVwyRxLjtvgUWkOaOdZAse6TOXsD0piZwlWcMPIQu2R+ba1/zkl6A
-        xP5MT3oAAfqMNzEP6Ppheh6uZpMnr9PKXHHkoAg6Bkj2hlXpW6/YWmQqOXzISEze
-        xYqHUgOZIfc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4324389AA3;
-        Wed,  9 Dec 2020 19:13:09 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BDA8589AA2;
-        Wed,  9 Dec 2020 19:13:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, jrnieder@gmail.com, jonathantanmy@google.com,
-        sluongng@gmail.com, congdanhqx@gmail.com,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v4 5/8] maintenance: add start/stop subcommands
-References: <pull.724.v3.git.1601902635.gitgitgadget@gmail.com>
-        <pull.724.v4.git.1602782524.gitgitgadget@gmail.com>
-        <5194f6b1facbd14cc17eea0337c0cc397a2a51fc.1602782524.git.gitgitgadget@gmail.com>
-        <20201209185114.GN36751@google.com>
-        <20201209191616.GO36751@google.com>
-Date:   Wed, 09 Dec 2020 16:13:08 -0800
-In-Reply-To: <20201209191616.GO36751@google.com> (Josh Steadmon's message of
-        "Wed, 9 Dec 2020 11:16:16 -0800")
-Message-ID: <xmqqtusuzffv.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1728791AbgLJA0O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 19:26:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43876 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726674AbgLJA0K (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 19:26:10 -0500
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 299EFC061793
+        for <git@vger.kernel.org>; Wed,  9 Dec 2020 16:25:30 -0800 (PST)
+Received: by mail-ot1-x344.google.com with SMTP id 11so3267883oty.9
+        for <git@vger.kernel.org>; Wed, 09 Dec 2020 16:25:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=IfjDtQorzVCYA31n1Rd6YbzQRoTd1pdMiWJAHy5iWog=;
+        b=VwvXor9hV6FiYdhB6oBVO/UjYCGOL2AUAWgJJscCdf5qIeKb63yDJAo5Th06ERt3or
+         O0fkCXVhzkHsVmIr25US5Son73Oz6IfJGMv0SX7YD5IaLTinkSetMuUPGG+3nXyXDjUw
+         sox5R+jwf4xZfD7XU0obkVfSn1oi6j/3C2tGNGtRdWNweMCU9+BadHSZcocgChmex9Ci
+         rgh9ZkZwRxL0jTxtczEmCTrMRC5jBXIk7KAmIjy8ikaDnLHn8UL+iRvSUnK3/qgSFZq4
+         /qVoyUP+M0X6PMREwZIrGecIrE23eOvFVuIBPllcDY6XDf2a46wz4b+4FEtqfsmBkWwx
+         vcxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=IfjDtQorzVCYA31n1Rd6YbzQRoTd1pdMiWJAHy5iWog=;
+        b=LSycO8qJXE11Mzh3rJQPiOVFEez1oB7seOccRTxz4G5Sf2fTJsHqZ/NrJVa6zXXqqW
+         5ReshsOJ97ZHiH9U44+Ltwnltf6iPG6TyJFKCtriINLgePRnFnvLMAKXXIJGbKPNH/uK
+         Qd/TiQvtV9OkewfQKLAg33UNwGyDDfEHlsmMoYeqB0qjv0ChJwjKia6W2dbAuNewQVNM
+         khbjnWcP1nUZNKWR+b3ZrLAR5TNiZmCbF0RArAHY7qe8x8pZKt93gzCuE45K7ye0ywI/
+         9E2mrb+9CtlaxiJtEypQjSZX/RL7ciR/SXZteJqnAZq8jQ7kjFXhTu8XLV665W8vUAJ2
+         tomg==
+X-Gm-Message-State: AOAM533rzqlr2h5MnoDzKoWmUbwhtZrRwmGrpvJjzd856eRKchY09Yee
+        Q0MQxUPET+LxCSy7hxNUj/meoN+oWL82asU6Skg=
+X-Google-Smtp-Source: ABdhPJzEjh/8A5+rkFWNACRebDsqYNdjZH2wvr4NlirHy41nOqfdOia3/sYr1PGQAM5POonzNQR8J9PKcqPGGSL0lRM=
+X-Received: by 2002:a05:6830:10:: with SMTP id c16mr3951812otp.162.1607559929407;
+ Wed, 09 Dec 2020 16:25:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7B8ADF12-3A7C-11EB-B911-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+References: <pull.929.git.git.1607223276.gitgitgadget@gmail.com>
+ <306a48820dd3c338d2b9e2288e5a3e1c7c89f36e.1607223276.git.gitgitgadget@gmail.com>
+ <X9FScb3pzY0EBLvS@nand.local>
+In-Reply-To: <X9FScb3pzY0EBLvS@nand.local>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 9 Dec 2020 16:25:18 -0800
+Message-ID: <CABPp-BGPfdFj1q09XVa7UOVz-0K9yf9Lp-h2wh6+nVVbVu94yg@mail.gmail.com>
+Subject: Re: [PATCH 6/7] diffcore-rename: simplify and accelerate register_rename_src()
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+On Wed, Dec 9, 2020 at 2:40 PM Taylor Blau <me@ttaylorr.com> wrote:
+>
+> On Sun, Dec 06, 2020 at 02:54:35AM +0000, Elijah Newren via GitGitGadget wrote:
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > reigster_rename_src() took pains to create an array in rename_src which
+> > was sorted by pathname of the contained diff_filepair.  However, the
+> > fact that this array was sorted was not needed anywhere, and thus
+> > represented wasted time.  Simply append to the end of the array, which
+> > in a usecase of note saved 45% of diffcore_rename() setup time for me.
+> >
+> > Technically, there is one difference in the end result for the code.  IF
+>
+> s/IF/If ?
 
->  	# start registers the repo
-> -	git config --get --global maintenance.repo "$(pwd)" &&
-> +	git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
+Indeed; will fix.
 
-The rewrite makes it better than the original, but I wonder why the
-original did not do a more obvious
+> > the caller of diffcore-rename provides a set of pairs with a duplicate
+> > filename in the sources (an erroneous input condition), the old code
+> > would simply ignore the duplicate (without warning or error).  The new
+> > code will simply swallow it and thus allow multiple pairings for the
+> > "same" source file.  Checking for this error condition is expensive
+> > (basically undoing the optimization) and the only existing callers
+> > already avoid passing such an invalid input.  If someone really wants to
+> > add some error checking here on this input condition, I believe they
+> > should add a separate function which can be called before
+> > diffcore_rename(), and then other callers that don't need additional
+> > checks because of their design (such as merge-ort) can avoid the extra
+> > overhead.
+>
+> It seems like this is currently impossible to trigger, making any extra
+> (expensive) checking of it worthless, no?
 
-	git config --get maintenance.repo >actual &&
-	pwd >expect &&
-	test_cmp expect actual
+I believe that's what it currently amounts to, and I debated just
+ripping the paragraph out.
 
->  	# stop does not unregister the repo
-> -	git config --get --global maintenance.repo "$(pwd)" &&
-> +	git config --get --global --fixed-value maintenance.repo "$(pwd)" &&
+However, a natural question that can easily arise for current
+reviewers or future readers of the patch is why was there ever sorting
+in the first place if the sorting isn't used?  That question came up
+for me, and I dug into it.  Sorting is also used with rename_dst in
+nearby code in the file, and there are a few reasons for it there.
+The quick indexing that rename_dst needs doesn't apply to rename_src,
+but it's not as obvious whether the
+broken-trees-with-duplicate-entries rationale applies or not.  I spent
+a while digging into it.  (And it's possible that I didn't correctly
+check the callers or that in the seven months since I wrote this
+message someone added another caller of this code that does pass
+multiple diff_filepair-s for the "same" source file.)  Anyway, this
+paragraph exists because I had to go down a goose chase to answer this
+natural question, and I wanted to provide an answer to anyone else
+asking the same question.  Also, in the off chance that anyone did
+want to add callers that passed multiple copies of any source file, I
+wanted to point out that this modified algorithm would result in a
+slight behavioral difference, but that otherwise the modified
+algorithm gives identical results.  (And if some future reader
+stumbled on the paragraph because they had made such a change, I
+wanted to provide a quick suggestion of how to get what they wanted
+without adversely affecting performance.)
 
-Ditto.
+I hope that helps.  I'm sorry if my worrying about these cases and
+discussing them made the patch harder to read or review, but I feel
+like diffcore-rename is one of those low-level components you want to
+be careful with.  diffcore-rename is one of those parts of the code
+where a bug in it might not result in a directly observable breakage
+to users but in some secondary or tertiary side-effect showing weird
+results (e.g. in a merge you won't necessarily see that A was renamed
+to B, instead you get a three-way content merge of original A, other
+A, and new B -- or don't get a three-way content merge you might
+expect).
+
+> > Also, note that I dropped the return type on the function since it was
+> > unconditionally discarded anyway.
+> >
+> > This patch is being submitted in a different order than its original
+> > development, but in a large rebase of many commits with lots of renames
+> > and with several optimizations to inexact rename detection,
+> > diffcore_rename() setup time was a sizeable chunk of overall runtime.
+> > This patch dropped execution time of rebasing 35 commits with lots of
+> > renames by 2% overall.
+>
+> Neat!
+>
+> > Signed-off-by: Elijah Newren <newren@gmail.com>
+> > ---
+> >  diffcore-rename.c | 30 +++---------------------------
+> >  1 file changed, 3 insertions(+), 27 deletions(-)
+> >
+> > diff --git a/diffcore-rename.c b/diffcore-rename.c
+> > index 3d637ba4645..816d2fbac44 100644
+> > --- a/diffcore-rename.c
+> > +++ b/diffcore-rename.c
+> > @@ -76,36 +76,12 @@ static struct diff_rename_src {
+> > [...]
+>
+> This looks obviously correct.
+
+Thanks for taking a look!
