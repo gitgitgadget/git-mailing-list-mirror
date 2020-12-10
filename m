@@ -2,155 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5B3FC433FE
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 01:56:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C896C433FE
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 02:03:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 830B923BC7
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 01:56:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EB85823BC7
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 02:03:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727358AbgLJB4z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 20:56:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57944 "EHLO
+        id S1727554AbgLJCCq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 21:02:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727313AbgLJB4u (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 20:56:50 -0500
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF518C0613CF
-        for <git@vger.kernel.org>; Wed,  9 Dec 2020 17:56:07 -0800 (PST)
-Received: by mail-wm1-x344.google.com with SMTP id q75so3687767wme.2
-        for <git@vger.kernel.org>; Wed, 09 Dec 2020 17:56:07 -0800 (PST)
+        with ESMTP id S1727179AbgLJCCp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 21:02:45 -0500
+Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com [IPv6:2607:f8b0:4864:20::74a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BC9BC0613D6
+        for <git@vger.kernel.org>; Wed,  9 Dec 2020 18:02:05 -0800 (PST)
+Received: by mail-qk1-x74a.google.com with SMTP id 198so2640718qkj.7
+        for <git@vger.kernel.org>; Wed, 09 Dec 2020 18:02:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=q3Qwv1BNNm13Llj2smw810AX1mscfbkR3+o7HJhNMLg=;
-        b=MFoVdj8XWOko0Ul5SPVisGzZnz0VkDyqw8CETOQ9BXtzyJ5hIXpbj38TWhAy94XI60
-         yIBhZohWiQ066ZWBCf4/nJQL/TrWn3IG1DhNAN4lOCCha5ooRbR+p7tdKirY/uKcRx2w
-         SineK/VwALxAuKqZsG9hNYSvffM0kQzedxQrzMyg2Ss78Rei6ARbJrNIHj0ga4dgzbgP
-         MrSr7D3zjLiu9k6abdFkzazVK2Chtt2Lm6eculYSQfCh3++jxT4ohPMNTGd+oGgK5j4A
-         CzBa54kUgnOo6Fd3O9tbwdNypVL/WAWtNcT+oDvWQyoQQKtMT80kuSl07CKCaE0BqzcN
-         /mZw==
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=zlhc6YluhPMkrrQviWed9nPEQLGVkbuwqsTFGuIC97Q=;
+        b=k98+hhrXfmvyTp/kAsQ8z4xG3vhhp+W4UXWAQ7uvt/He7ffxOUtH+T/T10p6TjUgVd
+         rTOOjg6sbVrcFrs5d9Nz5EX2H7KJHJNY+T3+r3qsdUxhwyRpCxJHr2h+fVW3x8IlocjG
+         l8PissielUyfKcSTFffinN3PfFjmDl88bdpEBEV1MiZHJxsEfyDUsYfC8NqBo+gzDMY5
+         y/0CxifJ9lcKoppmdnDw6aZ0bkJi7CKdmYa+NX7ToQbFPP/0/8w9ionUFldb+hkmLIb1
+         6Yn8onnvVaXwgBTlNOaahP05jG/bno4Qt66Q1cdAjSbfYOQAtH19VXAakDjw6A+csWZl
+         HlkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=q3Qwv1BNNm13Llj2smw810AX1mscfbkR3+o7HJhNMLg=;
-        b=tfk16EMVi+Gjdl3oTR/vLgnIUpl6enkMkjS9tfxAgBq7zXxZRoDLLVd3E40uYDQAhI
-         SAG4zFw8qASH2saNrem0xyQ8otLcCHOMWwXST1nfvnQauJa6s1kX4qQrYZED5FEfMWL6
-         kCfcnBjRlRjGmDSsdVKGLzKIytq8RX0ByjX243f26FV5Z+WHIyXWpnooXslMZmtmM5PT
-         D3Iqc0zdNs1mAhNx9AoCokcV9xO9scG5z9CG4SxIJ0MyOjjNP+ecc4lRaeUUojayV0jq
-         lbsGORlFQ6MVzs+z1ys14H5HC6S7vp/pXpd0tfttm8VfMlyEOCOAClQ+EDfirNHZYd6D
-         n1Zw==
-X-Gm-Message-State: AOAM5305gvedoFFKaJygDO/MvxuqyLa5zfrrR1ouBDLgj1MEEq6xbC2K
-        NmzwD2ngdoqGh+asI6JZFUkr+1aJadfUktFkzbY=
-X-Google-Smtp-Source: ABdhPJw9CAam56aC7Mc9sjNTGWSk4bn+cN/BBaSdAw0TA5AH2JUr5SzB5EKfDbY+EKpXUQrkJqpACmNSAFh7/MsjR3s=
-X-Received: by 2002:a05:600c:210e:: with SMTP id u14mr5623408wml.48.1607565366448;
- Wed, 09 Dec 2020 17:56:06 -0800 (PST)
-MIME-Version: 1.0
-References: <20201209065537.48802-1-felipe.contreras@gmail.com>
- <20201209065537.48802-2-felipe.contreras@gmail.com> <X9EI8c9yeX136ewm@coredump.intra.peff.net>
-In-Reply-To: <X9EI8c9yeX136ewm@coredump.intra.peff.net>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Wed, 9 Dec 2020 19:55:55 -0600
-Message-ID: <CAMP44s19FKYT5LNUxbGZP3czFmhe9t5B-FAfH+V2btNvMNW31g@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] Add project-wide .vimrc configuration
-To:     Jeff King <peff@peff.net>
-Cc:     Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
-        Aaron Schrab <aaron@schrab.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=zlhc6YluhPMkrrQviWed9nPEQLGVkbuwqsTFGuIC97Q=;
+        b=nUctEKYWeY1c6tbcYbljLASk3yCznLZH/l7W3vmZQwM0bDvSI2y+PxY/CJ/oewXHU7
+         ahpa3xhMzD/p9n1kSB6eGPh3QxE00+Kj3bVI50ikJxjsqPVqMLE1IesH1lLKU07iD54O
+         d3/0h3OGreGEhAtLwqIcUrwFO7owCKFr0/xZw2D1IBWukhoB3Z0r+0fTHhVuqBRpCH5N
+         hxsfkjMKgjpuHl0+2DzxJbECRHERirOxG5sWiG7nty34kIxdM2R5tpc6+bUw5qjGnLG5
+         cH1D7uavyvd1iNFFqrYgqfy6GsnRuH7VHrLQSH7UXzNp/x2PRZSghEeDRXY/EOv91Z/n
+         dKFA==
+X-Gm-Message-State: AOAM530f/xdywG4bHrpeqtiNEJGhKw5VIDAnvA7L/YWpKXL60kVVhrmx
+        E2ujq4/UQt+Vn7nPH0ugHTECloiWY24/Mfrc7HZd
+X-Google-Smtp-Source: ABdhPJxdO3R1F1qK7Pv/1mGfIaiAumbvwr5Ds9fb6GYklAopIWDD8kdyRNO/xqeN+dTiqtxrprUNQ2siQwpoqfYYaNFx
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a0c:f38a:: with SMTP id
+ i10mr6744423qvk.32.1607565723764; Wed, 09 Dec 2020 18:02:03 -0800 (PST)
+Date:   Wed,  9 Dec 2020 18:02:00 -0800
+In-Reply-To: <X9ArLOecIhoivhym@nand.local>
+Message-Id: <20201210020200.1636414-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <X9ArLOecIhoivhym@nand.local>
+X-Mailer: git-send-email 2.29.2.576.ga3fc446d84-goog
+Subject: Re: What's cooking in git.git (Dec 2020, #01; Tue, 8)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     me@ttaylorr.com
+Cc:     gitster@pobox.com, git@vger.kernel.org, jonathantanmy@google.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 9, 2020 at 11:27 AM Jeff King <peff@peff.net> wrote:
->
-> On Wed, Dec 09, 2020 at 12:55:36AM -0600, Felipe Contreras wrote:
->
-> > +augroup git
-> > +     au BufRead,BufNewFile */Documentation/*.txt set filetype=asciidoc
-> > +
-> > +     au FileType c setl noexpandtab tabstop=8 shiftwidth=0 cino=(s,:0,l1,t0
->
-> I had to read up on a few of these settings, and I'm still slightly
-> puzzled:
->
->   - I generally leave shiftwidth=8, but reading the documentation says
->     that 0 is equivalent to "1 tabstop". So that should be equivalent.
+> > * tb/pack-bitmap (2020-12-08) 24 commits
+> >
+> >  Various improvement to the codepath that writes out pack bitmaps.
+> >
+> >  Will merge to 'next'?
+> 
+> I'm obviously biased, but I'd be quite happy to see this get onto next.
+> I would like Jonathan Tan to take another look over the series (since he
+> reviewed many parts of v2), in addition to anybody else with interest
+> and time.
 
-Yes. It is.
-
-If you read the help of tabstop [1] it says there are four main ways
-of using tab, and we are using the fourth one: "always set 'tabstop'
-and 'shiftwidth' to the same value, and 'noexpandtab'."
-
-Other projects use a different tabstop, and expandtab (mode 2),
-however, I have *never* found a use case where it made sense to have a
-different shiftwidth than tabstop. And it gets tedious to *always* do
-ts=X sw=X, when you can just do sw=0 in your ~/.vimrc, and ts=X per
-project.
-
->   - I've been using "(0" for years for my git work (which indents to
->     align new lines with the unclosed parenthesis). I'm not quite sure
->     what "(s" means. The documentation says "1s" would be "one
->     shiftwidth". Is just "s" the same?
-
-Yes. If you read CodingGuidelines it says there are two schools of
-thought when it comes to splitting long logical lines. The first
-example is "(s", the second one is "(0".
-
-The reason why I prefer "(s" is that this is more commonly used in the
-Linux kernel. However, it's not quite the same in vim (when there's
-more than one parenthesis). I've planned to contact vim developers
-about that, but I haven't yet. Just for that reason it might make
-sense to use "(0" for the project.
-
->   - I also have ":0", which doesn't indent case labels. Matches our
->     style.
->
->   - I didn't have "l" set myself. I never noticed because it only
->     matters if you open a case with an extra brace, which is relatively
->     rare. For non-vim folks, it is preferring:
->
->         switch (foo) {
->         case 0: {
->                 break;
->         }
->
->     to:
->
->         switch (foo) {
->         case 0: {
->                         break;
->                 }
->
->     which seems consistent with our style. So I think that is worth
->     doing.
->
->   - t0 is specifying not to indent function return types when they
->     appear on a separate line. But our style is not to put those return
->     types on a separate line, anyway. Do we need this?
-
-Right. I recall at some point it was annoying me that types were auto
-indented magically at wrong times. Testing "ts" that doesn't seem to
-happen anymore, but it also doesn't seem to be working at all.
-
-Do you see some difference from "t0" and "ts" with:
-
-  void
-  main(void) { }
-
-Cheers.
-
-[1] https://vimhelp.org/options.txt.html#%27tabstop%27
-
--- 
-Felipe Contreras
+I think this patch set can be merged to 'next'. I've looked at v3's and
+v4's range-diffs and my comments have been addressed. (Well, I was still
+hoping for more information about the git/git fork network - in
+particular, how wide the commit bitmasks got - but that does not need to
+prevent merging this patch set into 'next'.)
