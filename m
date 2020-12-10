@@ -2,80 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8F06C4361B
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 19:04:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8297C2BB9A
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 19:05:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7B58823440
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 19:04:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90AB523C18
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 19:05:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390900AbgLJTCo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Dec 2020 14:02:44 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54840 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389213AbgLJTCg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Dec 2020 14:02:36 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 92D9CA66E6;
-        Thu, 10 Dec 2020 14:01:53 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=0qlF7cIA/hli
-        P7V9UEbyWLEscs4=; b=R0dZ+To8QDlXDjzzprLP0OTx26zag3Bsa/uVY+KG0S/F
-        ffVUzpe/EhqErEyRlP/Q1kvOJMuazNULpfupoG1/p7NCYC5vxtUpebUQ2H5eY3Ci
-        VDtHZTDelfAUtHNqCE2GX6B66acenH7pX5A7V1smMhGCn75CHwKWNz5FD97wZeQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=rM9aSm
-        sHlCcU0jnMALxetlyTdJ9p9jlbO1TTnXllSiN6rp0zLjIU0E6nNOdoZPeCc/XQ5m
-        DIzJt6hi8gDVWASVDYaaRIKX1yli+XhlnEo7Kq8U8SQKPWxQOgUzKB0DEy957uR7
-        HMDj29J0yZtmYjmBBfCBkPzkXfvMiJWH757mY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8944AA66E5;
-        Thu, 10 Dec 2020 14:01:53 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0A6D2A66E4;
-        Thu, 10 Dec 2020 14:01:53 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Anders Waldenborg <anders@0x63.nu>,
-        christian.couder@gmail.com, peff@peff.net,
-        jonathantanmy@google.com, Hariom Verma <hariom18599@gmail.com>
-Subject: Re: [PATCH v3 2/5] pretty format %(trailers) doc: avoid repetition
-References: <20201206002449.31452-1-avarab@gmail.com>
-        <20201209155208.17782-3-avarab@gmail.com>
-Date:   Thu, 10 Dec 2020 11:01:52 -0800
-In-Reply-To: <20201209155208.17782-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Wed, 9 Dec 2020 16:52:05 +0100")
-Message-ID: <xmqqv9d9v61r.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S2403946AbgLJTEw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Dec 2020 14:04:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60812 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390475AbgLJObL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Dec 2020 09:31:11 -0500
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com [IPv6:2607:f8b0:4864:20::544])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1D4BC0613CF
+        for <git@vger.kernel.org>; Thu, 10 Dec 2020 06:30:30 -0800 (PST)
+Received: by mail-pg1-x544.google.com with SMTP id o4so4391934pgj.0
+        for <git@vger.kernel.org>; Thu, 10 Dec 2020 06:30:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AKgz0zCpdr5vhn4a1Qj2+HeQE70qszUVaGsBeRrqs9k=;
+        b=rDhLNI0CPpo/G6wrMYtIrlZNFJ0fuY3Emg2slA83ZaRfX+Sdn+BfWh51E3oyTJzR68
+         74rO1AXJESumaQjkQZo0CCcAmFawGrcEtQs3QonqM/S5oPXOcWDrfYgS6VFjdyd8+YZz
+         idsEKukaiocEsekYvj64aZUExGGJ0OMX+h2ChmEXSTexUPYEjFs6cvUs3v47HbvJvxFm
+         uWErrFx5Oh9jPi1gP8HH8XzdWtQOlGucXxWCSVxS2XTSIBvIsO3clVXOzCjyoa/wNICC
+         U2RSjfJuEAY3+PnsAvfHVPi+0+3c3stM86L+kHBQ7cuJgfMD50n5mH1EdxnzhSwxguvw
+         xa8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=AKgz0zCpdr5vhn4a1Qj2+HeQE70qszUVaGsBeRrqs9k=;
+        b=iRiZ90RcnMOuclNDNRu0acHyopcr/7e3zPQnhu6l+9Pr9dCSnVrBZC/qHBcUMOyhHZ
+         zCqclAzlfvJoXrp8w1R1lZeWlsrptK8nM7+cgMC6PkKbN4CGeS6UwaBaBCEMSUi7J2XP
+         BOvCuMfeCTYVe0hF18qqKIUaK8O8VVDek/zpMjlptfuM5GY1S0z5W8z5GdopqlpFOTYw
+         qeL/JgAfaxlSpCoN6C3VXYA7eQ5SD2sg0SvCdUnTacHX2gbJe92kVFwYUSfXH5lPsGyd
+         /QEOzhe8Wbv3qSLf8NLs80W5Fug0Kh8xBw40wXFEgx3UMun7DcAITmUUfcWlUVLqT9ah
+         0gcA==
+X-Gm-Message-State: AOAM5301T8Ja7MdYAqY5Lwn0Ahep4hrcTWCf2nsJtTP/xbJr7JYJT1NC
+        ZBs6+vYzdbviDmTNtQihw7OXw0jbZkYmqA==
+X-Google-Smtp-Source: ABdhPJybd+WJ2fBk+5P8M1xEIW0emLrLYkBVjBtv1jRBBXkl/p0K1WB0eEY3rSnNrtbo+t+q3YbiaA==
+X-Received: by 2002:a63:c26:: with SMTP id b38mr6878036pgl.333.1607610630095;
+        Thu, 10 Dec 2020 06:30:30 -0800 (PST)
+Received: from athena.localdomain ([2402:800:63a8:f620:b9b1:54d8:784e:d28b])
+        by smtp.gmail.com with ESMTPSA id u6sm6637507pfb.197.2020.12.10.06.30.27
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 10 Dec 2020 06:30:29 -0800 (PST)
+From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+Subject: [PATCH] doc: mention Python 3.x supports
+Date:   Thu, 10 Dec 2020 21:30:17 +0700
+Message-Id: <20201210143017.24615-1-congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.29.2.299.gdc1121823c
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 2A59D3B6-3B1A-11EB-B0E9-D152C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Commit 0b4396f068, (git-p4: make python2.7 the oldest supported version,
+2019-12-13) pointed out that git-p4 uses Python 2.7-or-later features
+in the code.
 
-> -			  and zero or more comma-separated options:
-> +			  and zero or more comma-separated options.
-> +			  If any option is provided multiple times the
-> +			  last occurance wins.
-> ++
-> +The boolean options accept an optional value `[=3D<BOOL>]`. The values
-> +`true`, `false`, `on`, `off` etc. are all accepted. See the "boolean"
-> +sub-section in "EXAMPLES" in linkgit:git-config[1]. If a boolean
-> +option is given with no value, it's enabled.
+In addition, git-p4 gained enough support for Python 3 from
+6cec21a82f, (git-p4: encode/decode communication with p4 for
+python3, 2019-12-13).
 
-Nicely written.
+Let's update our documentation to reflect that fact.
+
+Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+---
+ INSTALL  | 3 +--
+ Makefile | 2 +-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/INSTALL b/INSTALL
+index 9ba33e6a14..8474ad01bf 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -165,8 +165,7 @@ Issues of note:
+ 	  use English. Under autoconf the configure script will do this
+ 	  automatically if it can't find libintl on the system.
+ 
+-	- Python version 2.4 or later (but not 3.x, which is not
+-	  supported by Perforce) is needed to use the git-p4 interface
++	- Python version 2.7 or later is needed to use the git-p4 interface
+ 	  to Perforce.
+ 
+  - Some platform specific issues are dealt with Makefile rules,
+diff --git a/Makefile b/Makefile
+index 6fb86c5862..a751065b24 100644
+--- a/Makefile
++++ b/Makefile
+@@ -303,7 +303,7 @@ all::
+ # modules, instead of the fallbacks shipped with Git.
+ #
+ # Define PYTHON_PATH to the path of your Python binary (often /usr/bin/python
+-# but /usr/bin/python2.7 on some platforms).
++# but /usr/bin/python2.7 or /usr/bin/python3 on some platforms).
+ #
+ # Define NO_PYTHON if you do not want Python scripts or libraries at all.
+ #
+-- 
+2.29.2.299.gdc1121823c
+
