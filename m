@@ -4,131 +4,297 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17A35C433FE
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 07:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3825AC433FE
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 09:10:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BB35B23D37
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 07:28:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E305622C7D
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 09:10:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729495AbgLJH1x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Dec 2020 02:27:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52088 "EHLO
+        id S1732215AbgLJJJw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Dec 2020 04:09:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729099AbgLJH1g (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Dec 2020 02:27:36 -0500
-Received: from mail-oo1-xc44.google.com (mail-oo1-xc44.google.com [IPv6:2607:f8b0:4864:20::c44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3B3EC061794
-        for <git@vger.kernel.org>; Wed,  9 Dec 2020 23:26:55 -0800 (PST)
-Received: by mail-oo1-xc44.google.com with SMTP id h10so1053246ooi.10
-        for <git@vger.kernel.org>; Wed, 09 Dec 2020 23:26:55 -0800 (PST)
+        with ESMTP id S1730792AbgLJJJw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Dec 2020 04:09:52 -0500
+Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6AF2C0613CF
+        for <git@vger.kernel.org>; Thu, 10 Dec 2020 01:09:11 -0800 (PST)
+Received: by mail-wm1-x342.google.com with SMTP id d3so3930762wmb.4
+        for <git@vger.kernel.org>; Thu, 10 Dec 2020 01:09:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=4rBssI+FxCJxJx5ol5PSRDY2H1Vb3IkZc9OPe8AexzU=;
-        b=dAjbfbtHx8Dj/pyck5lFhEONPVKY0ScyhzPGYrFZvVgYp46EIpmfoo6kPtrwnCLrqU
-         4ZZqM70KJHYXsPLLBZC3xkFOMvL+zu/Vhn1d19dr9uskvAlzcHA2P1B8v9m/5G30TKsg
-         FBGDeCmmIFeCfML6R7C38PGCaQwb3aY2VHWpzxNIK6lVch2jzwcwYqeYQoYMo/aAJkku
-         K6dnOJSRM42KLDsgRX8GsYlQeNUghGLRs7L5SRLsvHTToejDTjM2sGMPCKuJ95fPdekq
-         4VbgQMhVMWrHcFWAKp0ihGC+Wxc6AjMKNd2kwDnRQ8IIwYkBRsvIpNZVx0ecTabCr0GX
-         YkeA==
+        bh=FySRewJrZlK52eDowG0NtmtAuVxKNf5zERalI9ex6uY=;
+        b=GBLAxgCknVYVgqfcgPeLaPmKnzdBi3aa4OkqbeM9PecUHa5oSyEsNWn2GaaFmf0YOQ
+         9tMWzXrnw/pPLLGwtWxEVmTSO+onCMOe2gjjEXvDP8sBF4CYqxH4aDCo8s3y/S1ruxsC
+         e7udeQfO3+VBnziGTv8BT3LyZjdgTwCRvyqekWKLcLkWNGUKjTyXC4u341uEPTcrrFM4
+         xMKbv76MGnu3ErrA3QBpjTKCb6bpDaxfmguMKPc800XY6/pWdoqL4EgEOZLDfgWRxV3O
+         yOlOC8Tab1H32PO7IJnD5E5wxFTGs7Hlb6o3HW9KMuO1IIrVzKdabLWsbsnyVceE+nSD
+         kgjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=4rBssI+FxCJxJx5ol5PSRDY2H1Vb3IkZc9OPe8AexzU=;
-        b=gDrC2GzjmEDHo9kjlUkTta/uIzJA+KGaW4yYSi0OexCGVt8stXg0y7io1NRBFBtWjN
-         3Xm+4O98ZEhFU5aJRLBm8dUQcYgb7RTCaL7scG4bEhru3a2kFKoe0l+P1KVfjE7VDty8
-         aio7NTtbouHh1rWZWmSr/kjvWD1vsiZ1zllrSpznkOANZ2ZvRR23E9TFpnKHAnkFTARq
-         Jetti9StZkm64ZcYYDMFKSSg5myThFyWvg+V5yVXLZQ/C2o/yVJP7Ia/950ktAWckecR
-         EQKKpEfpTAxNqmyAhwgvyJ+vI8XkGepVhzQTmUWb524JyoUM4utZl2168fZ4djF82heV
-         x4Yw==
-X-Gm-Message-State: AOAM530awWafMusYJe++mX9UdDwcFikvS9+bozDg7Keg6Bv6twodilI3
-        7bpkuXKNSpz10sQueYvPstuCPwygFuy5jX3tME0=
-X-Google-Smtp-Source: ABdhPJx4Jea5R8GACAJPyG2vrUkg3TJjaD1JVctKEmk+pGJe6KVIK0AVJ1SNb/Qqkb0dGetv3+E9Dpzj0nspGIL/Mpw=
-X-Received: by 2002:a4a:b4c4:: with SMTP id g4mr4935823ooo.7.1607585215293;
- Wed, 09 Dec 2020 23:26:55 -0800 (PST)
+        bh=FySRewJrZlK52eDowG0NtmtAuVxKNf5zERalI9ex6uY=;
+        b=BBp5HcUC2LqRiMRlT+GibaUqIdgr7VEXxJ9YnxMjAKqgsLRRwZt5D1MexIBIyc+nYj
+         +tU/8wkcbxFq/Eg6YXx2K4bLwZBw8pQC3g/PFzSa2lsOcjoBpw52JPvn1QlZFPQNvWVa
+         ldFgU5IS4z3D3/vDlGgWTn28ZQieHVNFbICfYI0W8hjG44TnidSmlfe0i22c7Tbiun/6
+         vrhuo8ZjLn3KTddPY/uOE2n9VZQ+pQQS7rr2FZ/kTpSad8LrhvunnuevEcNKngu8Cr+0
+         gvqw1OLgD2a3oluR2QXNyRlHfxKULzW2E0IHfJDm/H6sPWPMkAdwhl9vHIHCjBfIfvyA
+         mdPQ==
+X-Gm-Message-State: AOAM533VEVEp1GmvebODPwQOuqBZ9VxPClwSmvZy76og0eDSCh9hPLwE
+        eERqhDYIpgvOb8THbYI7ybUlLgC6/MSFLy4/AB4=
+X-Google-Smtp-Source: ABdhPJzk0DXrkeJx4EVWWqsA6UK5Ifu2m2G9Ur2hwVGrP5tNDbyzjc86e/cB8g1Jttsdi5McAwC69T09tedduo6F9Ac=
+X-Received: by 2002:a05:600c:210e:: with SMTP id u14mr7124416wml.48.1607591350553;
+ Thu, 10 Dec 2020 01:09:10 -0800 (PST)
 MIME-Version: 1.0
-References: <20201101193330.24775-1-sorganov@gmail.com> <87y2i8dptj.fsf@osv.gnss.ru>
- <CABPp-BGuLX8Msghbo6L7vB2Wqys=Xg_uvV2Aui-1q4-+ijuNEw@mail.gmail.com>
- <87y2i8c4mr.fsf@osv.gnss.ru> <CABPp-BE3D7ifQx6MZCT_ntRnG0QZm1Ga10SJ=DN+6bpF6mX2GQ@mail.gmail.com>
- <xmqqtusv4w2g.fsf@gitster.c.googlers.com> <CABPp-BHCtrKAWR1v3OrUgX8iSfxvDwN8p+yiJy=G1BFfnSopjw@mail.gmail.com>
- <xmqq7dpr4qa0.fsf@gitster.c.googlers.com> <CABPp-BHWhiUZ=wCSz1f0oxtHiRzAKCPVmoUYDf+mvvm63ykCEw@mail.gmail.com>
- <xmqq360f4npg.fsf@gitster.c.googlers.com> <CABPp-BEAmB9DA7RXrf6vJGbHfGU37V4sE0d1CW+2vRwp_uAudw@mail.gmail.com>
- <xmqqtusv362t.fsf@gitster.c.googlers.com> <xmqqpn3j32ka.fsf@gitster.c.googlers.com>
- <87k0tqdasa.fsf@osv.gnss.ru>
-In-Reply-To: <87k0tqdasa.fsf@osv.gnss.ru>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 9 Dec 2020 23:26:44 -0800
-Message-ID: <CABPp-BE7r4iUc6VD60Bdi+fF2bBn6_ZwVPrz_niFpY=LTZMXzw@mail.gmail.com>
-Subject: Re: [PATCH 00/26] git-log: implement new --diff-merge options
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+References: <20201204061623.1170745-1-felipe.contreras@gmail.com>
+ <20201204061623.1170745-3-felipe.contreras@gmail.com> <CABPp-BFdjj=+4jk0vo=kpNc6ug1=UgtKfXJZkseyyxut2VB=Uw@mail.gmail.com>
+ <CAMP44s1eTc4+tbULbyz5ENgbcN4tOVBA3Z-4GS4yMpciUD_1Hw@mail.gmail.com>
+ <CABPp-BFwWBLdFPsKi3o9hznFtAeWWfhNAyuymPS4BhMAHpnSfw@mail.gmail.com>
+ <CAMP44s1=aZL7BMKSjzKJ7qYqg-usScwzRUJmaOhsCGvQ4ieYow@mail.gmail.com>
+ <CABPp-BF4rXBOKsn8bG6y3QUEtNVV9K2Pk5NmwrU5818CqhRt_Q@mail.gmail.com>
+ <CAMP44s2L24jhCG9ps72--ZiJkXUovR726jCf8JTLHAs0jV7Whg@mail.gmail.com>
+ <CABPp-BGdNt8TBMTE9zvaicF5AtvyTBhpiJXqkuZc7mBLGbw0Qw@mail.gmail.com>
+ <xmqqeek2cc14.fsf@gitster.c.googlers.com> <CAMP44s2XFQoda_PMULWha-rj9HhNfEddO5fikmswk9=AWN4RCw@mail.gmail.com>
+ <xmqqpn3lbhxn.fsf@gitster.c.googlers.com> <CAMP44s2nmVnXiBA8S=vHBZznuRNKKe=xGOEBJ80MYhA_XCqNkg@mail.gmail.com>
+ <xmqqlfe99yvy.fsf@gitster.c.googlers.com> <CA+P7+xp=UGd0iK8uLxnqH0iycrxo--8on3d0Z+jsuyhpV-fVew@mail.gmail.com>
+ <xmqq360h8286.fsf@gitster.c.googlers.com> <CAMP44s3KCoDfRXzarJw5AE7UsY-=eP6GbHzdDcdrs2rsw5tL+w@mail.gmail.com>
+ <xmqqy2i86ok1.fsf@gitster.c.googlers.com> <CAMP44s13YFZeOMz6V5sPdOnLXD-v3aQZiP7vvXXNfQLZP4Puwg@mail.gmail.com>
+ <CABPp-BGZcmHhge7JnM12baL_86yV-+7z4kkvFwUUrP+db8QD8Q@mail.gmail.com> <xmqqy2i6w45c.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqy2i6w45c.fsf@gitster.c.googlers.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Thu, 10 Dec 2020 03:08:59 -0600
+Message-ID: <CAMP44s3NNDL+zJjaukV9D2dJyU=ugSrnWz9o-whO9hKnBTxAow@mail.gmail.com>
+Subject: Re: [PATCH v2 02/14] pull: improve default warning
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Jeff King <peff@peff.net>,
         Philip Oakley <philipoakley@iee.email>,
-        Git Mailing List <git@vger.kernel.org>
+        "Theodore Y . Ts'o" <tytso@mit.edu>,
+        John Keeping <john@keeping.me.uk>,
+        Richard Hansen <rhansen@rhansen.org>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
+        "W. Trevor King" <wking@tremily.us>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 9, 2020 at 11:44 AM Sergey Organov <sorganov@gmail.com> wrote:
+On Thu, Dec 10, 2020 at 12:45 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Junio C Hamano <gitster@pobox.com> writes:
+> Elijah Newren <newren@gmail.com> writes:
 >
-> [...]
+> > Have I missed some subtlety here?  This whole email appears to me to
+> > be arguing against a strawman.  Reading Junio's other emails in this
+> > thread[1][2], it's pretty clear he thinks the current behavior is
+> > buggy and suggests how it should be changed.  From what I can tell,
+> > you appear to be arguing against doing nothing and against only
+> > accepting perfection, neither of which were positions I saw anyone
+> > take.  In fact, the positions you argue for at length appear to
+> > exactly match the ones he took[1][2].  What am I missing?
+> >
+> > [1] https://lore.kernel.org/git/xmqq360h8286.fsf@gitster.c.googlers.com/
+> > [2] https://lore.kernel.org/git/xmqqlfe99yvy.fsf@gitster.c.googlers.com/
 >
-> > By the time the change to make "--cc" imply "-p" was introduced, it
-> > was pretty much given that "-m -p" was useful to anybody, unless you
-> > are consuming these individual patches in a script or something like
-> > that.  So simply I didn't even think of making "-m" imply "-p".  It
-> > would be logical to make it so, but it would not add much practical
-> > value, I would have to say.
+> I tend to agree that the endgame state I want is pretty similar to
+> what Felipe wants.  The seeming confusion is probably due to what
+> exactly I mean by "default" is different from what he means.
 >
-> I need some help here.
+> I view the proposed "for unconfigured users, pull dies, and tells
+> them to choose between rebase or merge before it can continue, when
+> faced with a non-ff history" as a safe fallback behaviour until the
+> users make their choice.
 >
-> Looking at the code and trying to follow the flow, I can't figure what
-> rev->diff flag is for? Why rev->diffopt.output_format, that actually
-> affects the output, is not enough?
+> It is a safe fallback to disable the more dangerous half of the
+> command until the user gives enough information to the command to do
+> its job without damaging the resulting history; it is not something
+> the users would actively want to choose.
+>
+> And that is what I meant by the default behaviour.
+>
+> And when we stop in such a manner, it is sensible to give an error
+> message telling them
+>
+>  - why we are stopping,
+>
+>  - what they can do to move the immediate situation forward
+>    (i.e. command line option that lets them choose), and
+>
+>  - what they can do to make their choice permanent so that they
+>    would never see the command stop when facing a non-ff history
+>    (i.e. the configuration variables).
+>
+> Up to this point, I think both of us agree with the above.
 
-I'm not a revision walking expert, but to the best of my understanding...
+I don't agree with the above.
 
-Showing a diff is not the only reason you might need to compute one.
-You may also need to compute them if you are filtering commits by
-pathspec (-- $filename), using the pickaxe (-S foo), checking if
-commits are cherry-picks (--cherry-mark), checking for commits with
-certain type of file changes (--diff-filter=A), selecting commits that
-modified a certain function (-L :funcname:filename --no-patch), or
-others I've overlooked.  None of these cause a diff to be shown.  I
-don't know if all these set rev->diff to 1 or if they special case
-some other way, but I suspect that rev->diff exists as a shorthand for
-"need a diff", so that the code can check for it without having to
-check a half dozen special conditions.
+The error I propose is just:
 
->> My confusion originates from the fact that the code in revision.c sets
-> rev->diff to 1 for -c/--cc , while it doesn't set it for -m, and this
-> was the case *before* -c/--cc started to imply -p and -m.
->
-> It seems that the only place where rev->diff is tested is at the start
-> of log_tree_diff(), and even there its absence could be ignored when
-> rev->diffopt.flags.exit_with_status is set.
+  The pull was not fast-forward, please either merge or rebase.
 
-rev->diffopt.flags.exit_with_status seems quite unlikely to be set,
-though.  That setting was added with the --exit-code flag to git log
-in 2008 (in the pm/log-exit-code topic), but was never documented
-(other than to say it's incompatible with --check), the commit message
-adding it doesn't say what behavior was intended, and the commit
-message which added it added no regression tests either.  I know what
-diff --exit-code does, but I'm really not sure what git-log's
---exit-code does (random guess: sets the exit code to an OR of what
-git diff would have shown for any one of the commits shown?).  Since I
-don't know and can't even figure it out looking at the commits in
-question, I suspect there aren't too many users out there using it.
-As such, I suspect rev->diffopt.flags.exit_with_status will be 0 most
-of the time and that the relevant check at the top of log_tree_diff()
-really is the "if (!opt->diff)" part of it.
+That's it. Nothing more.
 
-> Is rev->diff an optimization, does it play another significant role, or
-> is it a remnant?
+I explained that was the final end goal in my list of steps [1]. I do
+not think any suggestion for commands or configurations belongs in a
+*permanent* error message.
+
+Do we even have an error message that long?
+
+> We start to differ after this point.  I would want to see only
+> "rebase" and "merge in the "choice" in the above list.  Felipe, if I
+> understand correctly, wants to add the third one, "ff-only", which
+> means the more dangerous half of "pull" is disabled by default.
+
+No. I don't want to present the user *any* configuration option in the
+*permanent error* message, just: "please either merge or rebase".
+That's it.
+
+> I do not want to include that choice, as it would mean the more
+> familiar pull.rebase=yes/no would no longer work, and we'd need to
+> introduce a new variable, like pull.mode=ff-only.
+
+Whether we present the user with that option or not doesn't matter.
+"pull.rebase=yes/no", would still work. The only thing that changes is
+what happens if the user does *not* set that option.
+
+The reason "pull.mode=ff-only" needs to be introduced is that
+--ff-only doesn't work. Otherwise there's no way the user cannot
+select the "safe default" mode. It has absolutely nothing to do with
+what we present the user with.
+
+> Without introducing pull.mode, the only thing the users cannot do,
+> as far as I can tell, is to explicitly ask for the behaviour of an
+> unconfigured user (i.e. error out when faced with non-ff history)
+> without being told about the way to use configuration variable to
+> permanently record their choice.
+
+That's right, which is a *crucial* thing they must have.
+
+Part II of the proposal has these:
+
+  pull: add pull.mode
+  pull: add pull.mode=ff-only
+  pull: advice of future changes
+
+This is where we want to be for a good considerable amount of time. A
+point where the user is a) warned about future changes, b) can
+configure both the old and the new behavior, and c) we have time to
+test and tune this new behavior (in case there are mistakes), *BEFORE*
+forcing all our users to switch to this new mode (unless they haven't
+configured otherwise).
+
+This is what happened with "push.default=simple". We didn't just say:
+the simple mode is the default mode, so just leave "push.default"
+blank if you want this mode. No. Because in theory we might have
+decided before v2.0 that another mode was to be the default, or
+perhaps in v3.0 another one will. We want the user to be able to say:
+this is the mode I want. Not whatever mode the Git project decides
+it's better this day of the week: *this* mode.
+
+There is nothing good about the user being unable to specify the mode
+he/she wants instead of the default, even if at this moment in time
+they happen to be the same.
+
+Moreover, I can attach a patch on top of part I that skips right ahead
+towards part 3, and flips the switch without any intermediary steps.
+The patch is simple, but it's likely to be wrong. And I doubt anyone
+has tested this patch series at this point. No amount of looking at
+the code is going to spot all the problems.
+
+People actually need to try this code.
+
+Otherwise it's just some patches flying around that will never be
+merged, and the problem will remain forever there.
+
+> Other than that, the existing
+> pull.rebase=yes/no is perfectly adequate.
+
+You cannot specify "pull.rebase=ff-only", but I did send a patch for
+that [2]. It was you the one that said it looked "quite funny" [3]:
+"it looks quite funny for that single variable that controls the way
+how pull works, whether rebase or merge is used, is pull.REBASE".
+
+If you think it's fine to have this warning:
+
+  The pull was not fast-forward, in the future you will have to choose
+a merge, or a rebase.
+
+  To quell this message you have two main options:
+
+  1. Adopt the new behavior:
+
+    git config --global pull.rebase ff-only
+
+  2. Maintain the current behavior:
+
+    git config --global pull.rebase false
+
+  For now we will fall back to the traditional behavior (merge).
+  Read "git pull --help" for more information.
+
+For months, possibly a year, possibly until v3.0, instead of this one
+(which is my proposal):
+
+  The pull was not fast-forward, in the future you will have to choose
+a merge, or a rebase.
+
+  To quell this message you have two main options:
+
+  1. Adopt the new behavior:
+
+    git config --global pull.mode fast-forward
+
+  2. Maintain the current behavior:
+
+    git config --global pull.mode merge
+
+  For now we will fall back to the traditional behavior (merge).
+  Read "git pull --help" for more information.
+
+By all means, let's go for that, make the decision.
+
+But it was you who wanted to see how a pull.mode solution would look
+like [4][5]. Well, this is how it looks like: 3 patches.
+
+> Felipe seems to think
+> otherwise and wants not just the "safe fallback behaviour", but can
+> explicitly be configured using pull.mode=ff-only (and if that is not
+> what Felipe thinks, perhaps we are already in agreement without
+> realizing it).
+
+No. It doesn't matter if it's "pull.mode=ff-only", or
+"pull.rebase=ff-only", or "pull.ff=only", but one of those must turn
+on the behavior that we want. And right now no option does.
+
+> Thinking about it again, I guess pull.rebase=yes/no plus a new
+> advise entry can easily give what Felipe seems to want.
+
+It's not about what I want, it's about what the project wants. And I
+think it's pretty clear what the project wants:
+
+  1. git pull to eventually fail in non-fast-forward cases
+  2. A grace period before that switch is flipped
+
+That's it.
+
+My proposal is the only one (so far) that gives us that.
+
+Cheers.
+
+[1] https://lore.kernel.org/git/CAMP44s2hUCd9qc83LReGyjy8N+u++eK6VjwGhDhrX0f0SbKmig@mail.gmail.com/
+[2] https://lore.kernel.org/git/20201123224621.2573159-2-felipe.contreras@gmail.com/
+[3] https://lore.kernel.org/git/xmqqim9vlkdn.fsf@gitster.c.googlers.com/
+[4] https://lore.kernel.org/git/xmqqy2irjy4f.fsf@gitster.c.googlers.com/
+[5] https://lore.kernel.org/git/xmqq7dqagtgx.fsf@gitster.c.googlers.com/
+
+-- 
+Felipe Contreras
