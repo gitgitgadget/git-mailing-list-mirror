@@ -2,153 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB7B0C4361B
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 00:34:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BBC7C4361B
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 00:42:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 75E4B235F7
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 00:34:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 265BF23B98
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 00:42:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727732AbgLJAdp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 19:33:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45060 "EHLO
+        id S1729736AbgLJAlo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 19:41:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726092AbgLJAdc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 19:33:32 -0500
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 989DDC061794
-        for <git@vger.kernel.org>; Wed,  9 Dec 2020 16:32:52 -0800 (PST)
-Received: by mail-ot1-x341.google.com with SMTP id b62so3293765otc.5
-        for <git@vger.kernel.org>; Wed, 09 Dec 2020 16:32:52 -0800 (PST)
+        with ESMTP id S1730230AbgLJAlh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 19:41:37 -0500
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16FBCC0613CF
+        for <git@vger.kernel.org>; Wed,  9 Dec 2020 16:40:57 -0800 (PST)
+Received: by mail-wr1-x441.google.com with SMTP id l9so3662100wrt.13
+        for <git@vger.kernel.org>; Wed, 09 Dec 2020 16:40:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=nwdwin5kamTRjNnIjQC9Kn6Q+56c8+H8FZrG45ATPQg=;
-        b=BBoyWX7lXCK7EWUNolyY33CEl4ikjqVje5cjclNKY/PuPfmGQR2huvzU4mAQyY52cx
-         f96ZG/dXzwhRj0MlicJGtwg6rsMyQJV8XVVDAnDnEGdmIOHpaUygQJBenWjK/qvIw5Oc
-         FM+ebld8W9MAGm4JhoKQ2XYR7IuE6Gs6n3mDwROo6BNLrL4afXd6deP477ouTLjKmN10
-         OLbHp5AGCI117AVKcQMiS5DFsQAf2t6QCQy6LK/6ZRaS5DEWeu+jC/BAN/QQSN4xWA6m
-         P64Lmf2dwKmtdr+nANioDHjjaxMjmFadmTc1m2M3zMf/GaSqTbUJ7Eews93TCzX85Zqs
-         ImXg==
+        bh=zOhtjyGDeLQPGtXtkJYU2uLd3WpHp8U38q0JKbkH1xM=;
+        b=Na6PPCcemgY5+tb3WoZYU8qeamy1eb54fLl8BhsjGvuHWUgp0sfonTSCWZ19cmPGzN
+         HfmSCLGW1RNafZvV/wXPNCSxkl96lXyp1BQaeO0W5+mCulV0E592pKojC55IZ5GSbQoB
+         pnF+QIgK6DeMG/6uuX47Bc3M9j/djO9lLDS2y8ZwRuhNh3Y0/EQed1LwjexmQMXH4+kV
+         +lQmEVPs1dNjxHLXxZ+4bvNSfQbOIzsLs6V4D9tahZUH3l5astkW0JA8IcQaGE6NzAAg
+         eM7SZkNd8WkJSQXozT4kgfkJZb6oIhN0dfdcKBIgsjxM1bOZSNkuoVZF18MrvrcId4Sq
+         MYyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=nwdwin5kamTRjNnIjQC9Kn6Q+56c8+H8FZrG45ATPQg=;
-        b=IKjYkhdUxVzaKoSx0T92LArEuDkqD2KzUIqGct7k+DDboYZ4vUHZubkNI6cKm9E81+
-         ZcDaK/+uUleg4L1iyKlUXWngYZ34cqhBVoBmUsEf9XVe9s1i/yMADgnCmIfeAgg5YOoA
-         1wS77DtK2i6HQJd5aPhZYIeUWUKaU3281sPH2V1sg1EwZ27/SP0HbNhMax+KPGAF3Kvq
-         AHBMEK5DFCUh7ScycWqs8zKSgS2nLUrhyj7KYx9WMYd9ciSW7dF48gMypguPx+Ldajdy
-         YoDuWc/XMsBrZLzr0fDhGZsnymWlWWtFQ4JIEs76OcRBugCnIQ9FScVDn73j/1XjqT/z
-         v+PQ==
-X-Gm-Message-State: AOAM533fgKTfe3SxEx4ZNY9j5uP4EkjWT2yPcis+po3aWiUV0RKkdRLR
-        Rvw/qsWrDeISTXHO85OhyXzO/ft5q5Rmd2V9fqY=
-X-Google-Smtp-Source: ABdhPJyU+VVmeONdnsLZ7DFgBe7O+x7Xy79j/m8MTpJ/xSqIWtRA+GK/RsZZSeWJSvicFIi+uMaCHp3KKdBXakdQV4Q=
-X-Received: by 2002:a05:6830:1610:: with SMTP id g16mr4011592otr.345.1607560371893;
- Wed, 09 Dec 2020 16:32:51 -0800 (PST)
+        bh=zOhtjyGDeLQPGtXtkJYU2uLd3WpHp8U38q0JKbkH1xM=;
+        b=tBAlDIFmDjgVkvIsfU3EOjJ0El+y/2HV2T5u7SOx4BsA8SS9VOH4iSFMHmUv9NjqyM
+         NfyY2c7iWWB7UAzVn9hHI/bY5w3VHYdpHGokoqbgWFhTlTghsD7qQxbP5KHwfuHuImP8
+         0evKhU4YhH+yPkEutix/H6VfKOMoj858NpMOWiywXXAX0xIju0BMtiqEYWOgEOndWn7m
+         rubH98hMhW2B9uZDmTxN2KkLcw3YzUfoTAQfNArz1O6TO490/z+cc5ISEw+736d6FV47
+         s0nb0+QOtjhI7rs+kWOYVdGaRCtXD2vOe63wUS3n1uH5eq7/ct4xz0muQCv3iCaYLMcZ
+         IZWw==
+X-Gm-Message-State: AOAM5319tKj5Th71mu4FIyIwg/KuGlh9o87lxMF6IjcaGGysurQHv4iz
+        9MarzdHVW7iCjT6ycrJ9jR/Ks5iGJKB73acehts=
+X-Google-Smtp-Source: ABdhPJyoKiYUjbDcRksY3CvVh0eYPsYBHeDJEcghJxrt+o5y8XKvy3OwBLCDTvGHi30pvGQgyMBGc5M5U6IDgeZR2yA=
+X-Received: by 2002:a5d:4349:: with SMTP id u9mr5136533wrr.319.1607560855916;
+ Wed, 09 Dec 2020 16:40:55 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.929.git.git.1607223276.gitgitgadget@gmail.com>
- <f96bb36930a6e5e42f0d3b9c5dfa3b2cc27c1f9d.1607223276.git.gitgitgadget@gmail.com>
- <X9FLaiuWpYely6es@nand.local>
-In-Reply-To: <X9FLaiuWpYely6es@nand.local>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 9 Dec 2020 16:32:40 -0800
-Message-ID: <CABPp-BHQNy3MQ9u=sZKd0h2vqOzhFZC35XqR-QbHgzeiJ7VbLQ@mail.gmail.com>
-Subject: Re: [PATCH 2/7] diffcore-rename: remove unnecessary if-clause
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
+References: <pull.921.git.git.1606087406.gitgitgadget@gmail.com>
+ <pull.921.v2.git.git.1606173607.gitgitgadget@gmail.com> <bccef953913da629057b3e9b211bc54081fa4475.1606173607.git.gitgitgadget@gmail.com>
+ <xmqq8sarljfn.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2011240648160.56@tvgsbejvaqbjf.bet>
+ <xmqq8saqjx2n.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2012091513540.25979@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2012091513540.25979@tvgsbejvaqbjf.bet>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Wed, 9 Dec 2020 18:40:45 -0600
+Message-ID: <CAMP44s0H-bpmYF-iTy1n=kGgn9sGdofNLoG0-w_S9+9jU-259A@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] init: provide useful advice about init.defaultBranch
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 9, 2020 at 2:10 PM Taylor Blau <me@ttaylorr.com> wrote:
->
-> On Sun, Dec 06, 2020 at 02:54:31AM +0000, Elijah Newren via GitGitGadget wrote:
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > diffcore-rename had two different checks of the form
-> >
-> >     if ((a < limit || b < limit) &&
-> >         a * b <= limit * limit)
-> >
-> > Since these are all non-negative integers, this can be simplified to
-> >
-> >     if (a * b <= limit * limit)
->
-> Makes sense.
->
-> > The only advantage of the former would be in avoiding a couple
-> > multiplications in the rare case that both a and b are BOTH very large.
-> > I see no reason for such an optimization given that this code is not in
-> > any kind of loop.  Prefer code simplicity here and change to the latter
-> > form.
->
-> If you were really paranoid, you could perform these checks with
-> unsigned_mult_overflows(), but I don't think that it's worth doing so
-> here.
->
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > ---
-> >  diffcore-rename.c | 10 ++++------
-> >  1 file changed, 4 insertions(+), 6 deletions(-)
-> >
-> > diff --git a/diffcore-rename.c b/diffcore-rename.c
-> > index 68ddf51a2a1..0f8fce9293e 100644
-> > --- a/diffcore-rename.c
-> > +++ b/diffcore-rename.c
-> > @@ -450,9 +450,8 @@ static int too_many_rename_candidates(int num_targets, int num_sources,
-> >        */
-> >       if (rename_limit <= 0)
-> >               rename_limit = 32767;
-> > -     if ((num_targets <= rename_limit || num_sources <= rename_limit) &&
-> > -         ((uint64_t)num_targets * (uint64_t)num_sources
-> > -          <= (uint64_t)rename_limit * (uint64_t)rename_limit))
-> > +     if ((uint64_t)num_targets * (uint64_t)num_sources
-> > +         <= (uint64_t)rename_limit * (uint64_t)rename_limit)
->
-> One small nit here (and below) is that not all of these need casting.
-> Only one operand of each multiplication needs to be widened for the
-> compiler to widen the other, too. So, I'd write this instead as:
->
-> > +     if ((num_targets * (uint64_t)num_sources) <=
-> > +     (rename_limit * (uint64_t)rename_limit))
->
-> or something. (I tend to prefer the cast on the right-most operand,
-> since it makes clear that there's no need to cast the "first" operand,
-> and that casting either will do the trick).
+On Wed, Dec 9, 2020 at 5:24 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Tue, 24 Nov 2020, Junio C Hamano wrote:
 
-Yeah, I think that reads slightly better too, but on the other hand it
-does make the diff slightly harder to read.  *shrug*.
+> The distribution already can add patches, so this objection is a red
+> herring. The sysadm can pick a different value for `init.defaultBranch`
+> and dictate to the user silently what initial branch name to use, so that
+> is also a red herring.
 
-> >               return 0;
-> >
-> >       options->needed_rename_limit =
-> > @@ -468,9 +467,8 @@ static int too_many_rename_candidates(int num_targets, int num_sources,
-> >                       continue;
-> >               limited_sources++;
-> >       }
-> > -     if ((num_targets <= rename_limit || limited_sources <= rename_limit) &&
-> > -         ((uint64_t)num_targets * (uint64_t)limited_sources
-> > -          <= (uint64_t)rename_limit * (uint64_t)rename_limit))
-> > +     if ((uint64_t)num_targets * (uint64_t)limited_sources
-> > +         <= (uint64_t)rename_limit * (uint64_t)rename_limit)
->
-> Same notes here, of course. I was hoping that we could only do this
-> multiplication once, but it looks like limited_sources grows between the
-> two checks, so we have to repeat it here, I suppose.
+Yes, but if they do; they have picked the ball. The user would blame
+them--and not Git--for any unexpected change in behavior.
 
-The right hand side of the expression is the same -- rename_limit *
-rename_limit -- so it could be stored off (though I don't think
-there's much point in doing so unless it made the code clearer; this
-is not remotely close to a hot path).  However, in the left hand side,
-it's not so much that one of the variables has changed since the last
-check, it's that it uses a different set of variables in the check.
-In particular, it replaces 'num_sources' with 'limited_sources'.
+Cheers.
+
+-- 
+Felipe Contreras
