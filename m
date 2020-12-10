@@ -7,60 +7,61 @@ X-Spam-Status: No, score=-0.7 required=3.0 tests=BAYES_00,DATE_IN_PAST_06_12,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50DA9C4361B
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 14:18:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EF85C433FE
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 15:00:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 18BA423D20
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 14:18:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E7D152310D
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 15:00:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389701AbgLJORA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Dec 2020 09:17:00 -0500
-Received: from mout.gmx.net ([212.227.17.20]:44287 "EHLO mout.gmx.net"
+        id S1729459AbgLJPAX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Dec 2020 10:00:23 -0500
+Received: from mout.gmx.net ([212.227.17.20]:58053 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2389288AbgLJOQp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Dec 2020 09:16:45 -0500
+        id S1729076AbgLJPAN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Dec 2020 10:00:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1607609709;
-        bh=C24pwoev+27oTQll+RI3XWh3jQQYG9ihqRoczc9/qSo=;
+        s=badeba3b8450; t=1607612313;
+        bh=XqeiPAnP9tXxKMedquZtY00f9YsrrlJ9pAYB2jtCQ4s=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=YkuNtQuvv+7akZBE4kFfnQ5x9LnM7r6KUIGDPV6eK0Mb0jmSZcVgtpEBK+LjN+0gG
-         nhcWvKFvXaWd6r62Jh7doAT66amSmSGsxOswqRP0/pjnc3dTQxv1V6JVvsvSO2nUOf
-         6T8zqA+f+2S8fIRKfIAXERmQTfpcoMed8rT5s3jw=
+        b=leqibk4grKGsS1tZnVcK+d/PEF0eIqK74Vb4TObR0egdCsCtNPI1JijLSHji1axhp
+         1QJB3R9O5lItEkspj28izxGkdZZ7ThjyyEMCOyOh4RqaucFtMc6UajcOrFDmBK3L/3
+         34lGujxAxKJrRL5e50hapD8p3nq7PrOKWWflBMTc=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.88.62] ([89.1.212.111]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MvsEx-1jxb5836ql-00sz3p; Thu, 10
- Dec 2020 15:15:09 +0100
-Date:   Thu, 10 Dec 2020 04:56:45 +0100 (CET)
+Received: from [172.28.88.62] ([89.1.212.111]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MGQnF-1kvIpB3JKn-00GqFR; Thu, 10
+ Dec 2020 15:58:32 +0100
+Date:   Thu, 10 Dec 2020 05:40:09 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: bc/rev-parse-path-format, was Re: What's cooking in git.git (Dec
+cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: fc/pull-merge-rebase, was Re: What's cooking in git.git (Dec
  2020, #01; Tue, 8)
-In-Reply-To: <xmqqpn3j4ved.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2012100454120.25979@tvgsbejvaqbjf.bet>
-References: <xmqqpn3j4ved.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqk0tq1xf3.fsf@gitster.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2012100507450.25979@tvgsbejvaqbjf.bet>
+References: <xmqqpn3j4ved.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2012091502000.25979@tvgsbejvaqbjf.bet> <xmqqk0tq1xf3.fsf@gitster.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:cDHUIxASUHuBDaM67olrdwz48Fn/v22knmqAk5u5b8NzKC3zy4Y
- 7w7upzAEU/nzdC1xUCWFEymvHZNUfi+0Ro4CxYQkZ1UykwDbP3CqtSeWWR+qvpVhDfMSQlt
- 0+k9aZt7Hdk/MHi1j39i2Y2uAZATy4kK3flV9Ca8kl7tKfdCGxqlTaXGqynzjtSVS0mLj1y
- gZlrN0dYUn3133kRAWqCA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:wkpAoHyENcI=:sqLmdxwl/0+SBCTHlIsJTR
- tJYRaS6KT3n3CQqb9YmNpj7d+fUY1SSSF5IXy0/GLTk8rjmBOOdZjSlYGbYYJQjDTxiaDEe7P
- EEguekEjuH6IW4mqrwDcqvXAO+9GOo6cOxe1G3HfIjrFGiPkBx94Bk9Kj8YZ7c2YafqEQqBsS
- 3EvbN48THz0b/DoL61nqe3mLztARzRU78cf633Z/Wf115OzriRyhtzvbLqKEGYVVMw/TNY7Ab
- hFwCmYbKqdj5FpK1MzYrcdyGgPMTZLmwwJd0UgpJvwtI+oIw1H/9g797WwZRnudrThpNNauiR
- wNSGjeKcCaiQPNOSPZLJ28EL62YhESxvuyDg0o62M7fQ/OEUuWAf2l5mqOtmfMopaNRd6t+WR
- Btzz6TEtQQ3s0MsmBbJX2ScEuDB5o2/o1P7pXXH43PDXDbeNLrlm8RksXNA2wGwIOk5XsaJln
- pWfxOBSaswl3y0tFOVL0TjCuN0h4fpIP/A51NSthxwj4+v9c02MlBDSrhKbN62vRgPM1mLeiF
- EZrSGnYUQYoKd2ZRkWI4q0yZYf/pfex//VsC7XjuuiijhcM/H94BZIxTksop832fsuymS+ssQ
- GhJ/d6bWeOqBAKynGueLaxdBpyknXAnKVfLQwW4yzhA+fNVG2rSOYJkdF5bR3dMIwvEQQ0ykt
- GigYqxhYvVaZtlXIG5z7CNWcpQDv10dOJCuZUKqSduTluDxRWPK9p5C1dWbGImJl8TD1nFNgB
- Ho7KnEU54DDoegDEo1njSEizJjt5uqxPeTqfrlw+Eoh5pNKHlgOZTfHP89MHj7gSrkpA7my+d
- AdK9/SPBPogRan9ysadNS6oubno+nd842k9QS26JzG7ch+2jqyjgV1XmwEQ5+eSqhrf9OwCWn
- nLi3F0RiO8+OrrBkW70UmEtqbHsZv6Wf9DOMUQa9o=
+X-Provags-ID: V03:K1:NGhXxOld8HP6q8joVQT4Sju18K8QsFhtHvuBVZ8v9hrdcLawZTy
+ yLvYiGKLtw+0VBbwXxg1ua14VYuvGPa8xdtJJOh702hcHLmC+s9Q71k8L4meL9Ti+2me1qN
+ vCVf4F2G7v2DPHEGU5nqv7tk5uSHVuuOazVY81a91w/C2Bh5BbG4Vy62w/k5yIGM0Jb7HvV
+ 32iMEtyHnJNbyhgL1dKCQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:v+v+q6dfWus=:Ff/3XnLlDSg5OtLB8MYYtB
+ CZFfrGLHDT7fUdg74bOa3GGiENKeUsxlzW76uL+uVU66RzbC2PMcbYd6l9CqYK+j0XG9Gwynx
+ csgb1LBdLsdaBIVicnxSD+P9ShuN4qytuCFdzlF9d6kEdUwHyp8GucUZROfSWSBWS9Yva6rn3
+ 9a/OrN30Z9/+bt9hwXWKyUvoGsJVSHoqLvS3tgQKJV2LfCv1Ky/c9qFxwnvd6kWnQgcPESDtv
+ WMsN5W/zNZsnEGKpRR5lZWODZec8SOZBMM1uvBHvugh3jw0Z5yJoqBD3B/yR2odgo0cR4FI1b
+ 3V3XfIp1VuezYpCoxp6FjLMHUTB+6ZoD8aiow9h6d2fiaimAx6HAuhYsMSePBh1xQngroWkbL
+ 3RsKRIzJ7qWxw9w+/CGCHmWsZ7Blabf3zS9/17ZlKk5gQ/bXYDfm8wV+pGVAbGHSwX4OPTnWx
+ JzQmjmtJT9nz8r2uWIPlgKeNdAkqQ/zen4TXLEb0Cb3VvbAldKNJCqXaH1OX7IdkENDbNWpm6
+ tePIa4t+K3b93XHJ7oH9G4mqRAobTI+3RppANFdEbGa79numN41b16jT1nvXkT9QPTCRz8+kM
+ z3Tu/SuRTSoQQSWNnTZqQ/B1rfEEoIJ2lE1FLZTw6q9Rohz8Cm0uYABO+cbnzpnLZPr+ScGVX
+ YlLUGJ5yG/Q8tGBS5v+G5dOl6IB6tvrTysQ46TC0H27d1mGCqwhhZQXR+2txnnzA3LM3YQDI/
+ wMmX0GxABkaJ04UzTlbzuulfV1UTg5vGzlam7pJz93f0fDgsuWJWTGrPlAHDJULGKjlmJyIxo
+ ViJZ84YWUBmIhxCo6DGZKX1wE4paJ7FuPj0ID5jCtuZrNCIA/cunuDFKORMIp7NeNNKqDfRkX
+ mCcVYXlpLxb1+YjBil5H96szV5305Rq9b+3E5YhLU=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -68,21 +69,169 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Junio,
 
-On Tue, 8 Dec 2020, Junio C Hamano wrote:
+On Wed, 9 Dec 2020, Junio C Hamano wrote:
 
-> * bc/rev-parse-path-format (2020-10-09) 2 commits
->  - rev-parse: add option for absolute or relative path formatting
->  - abspath: add a function to resolve paths with missing components
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
->  "git rev-parse" can be explicitly told to give output as absolute
->  or relative path.
+> > On Tue, 8 Dec 2020, Junio C Hamano wrote:
+> >
+> >> * fc/pull-merge-rebase (2020-12-08) 19 commits
+> >>  - future: pull: enable ff-only mode by default
+> >>  - pull: advice of future changes
+> >>  - pull: add pull.mode=3Dff-only
+> >>  - pull: add pull.mode
+> >>  - pull: trivial memory fix
+> >>  - test: pull-options: revert unnecessary changes
+> >>  - test: merge-pull-config: trivial cleanup
+> >>  - pull: move configurations fetches
+> >>  - rebase: add REBASE_DEFAULT
+> >>  - pull: show warning with --ff
+> >>  - pull: introduce --merge option
+> >>  - pull: trivial whitespace style fix
+> >>  - pull: display default warning only when non-ff
+> >>  - pull: move default warning
+> >>  - pull: trivial cleanup
+> >>  - pull: cleanup autostash check
+> >>  - pull: refactor fast-forward check
+> >>  - pull: improve default warning
+> >>  - doc: pull: explain what is a fast-forward
+> >>
+> >>  When a user does not tell "git pull" to use rebase or merge, the
+> >>  command gives a loud message telling a user to choose between
+> >>  rebase or merge but creates a merge anyway, forcing users who would
+> >>  want to rebase to redo the operation.  Fix this by (1) tightening
+> >>  the condition to give the message---there is no reason to stop or
+> >>  force the user to choose between rebase or merge if the history
+> >>  fast-forwards, and (2) failing the operation when the history does
+> >>  not fast-forward, instead of making a merge, in such a case.
+> >
+> > Despite what the commit message of the tip commit says, it is not "tim=
+e to
+> > flip the switch and make ff-only the default" because it breaks our ve=
+ry
+> > own test suite left and right. See for yourself:
+>
+> With respect to what is in 'seen' that are not marked as "Will merge
+> to...", I am merely a messenger, and you are shooting one ;-).
 
-This is listed in the "Stalled" section, but v4 has been sent out this
-past Sunday, and in the replies brian promised to work on a v5:
-https://lore.kernel.org/git/20201206225349.3392790-1-sandals@crustytoothpa=
-ste.net/
+Yes, I guess my complaint was not actually directed to _you_.
 
-May I suggest to move the item to the "Cooking" section?
+> I know of these breakages, becuase I've seen them before pushing the
+> integration results out.  The first-parent history near the tip of
+> 'seen' looks like so:
+>
+>     4a386f47a7 Merge branch 'fc/pull-merge-rebase' into seen
+>     e0b9615ea3 Merge branch 'es/config-hooks' into seen
+>     addabb0fb7 ### start breaking 5411,5520,4013,5524,6402,5604,...
+>     0ffeed16ab Merge branch 'sj/untracked-files-in-submodule-dir...
+>
+> Notice the ### separator?  Everything above the line breaks 'seen'.
+> (Emily cc'ed---even though her config-hooks is not on topic of your
+> message, it is above the separator as the result of merging it to
+> 'seen' breaks 5411).
+
+I had not actually noticed that separator because I had worked off of the
+topic branch itself, and it does not pass the test suite.
+
+> The reason why I am experimenting with this is because I suspect
+> that those who are involved in the topics above the separator would
+> want them in 'seen', as it would be easier to work with, when the
+> breakage may be coming from interactions with other topics, to
+> pinpoint what interaction may be at fault.
+>
+> But if you and others who are not involved in these topics above the
+> separator want to see 'seen' in a buildable/testable state by
+> excluding them, I am fine with that, too.  It is a hassle for me to
+> maintain the two parts of 'seen' the way I pushed out last night.  I
+> have to identify which merge of the topics into 'seen' breaks
+> builds/tests, shuffle the order of topics, minimizing the number of
+> topics above the breakage point, and tentatively rewind 'seen' to
+> below the breakage point when building and installing for my own
+> use, etc.  It would become unnecessary if I can just discard new
+> topics after seeing builds/tests break in 'seen'.
+
+It is up to you what you integrate into `seen`. From a purely procedural
+point of view, if it was up to me, I would liberally drop any patch series
+that does not pass our CI build. In my mind, patches must be correct
+enough to pass that check before they are ready for review.
+
+Please note that I am making a big difference between patches that work on
+their own (but break the test suite when being merged into `seen`) and
+patches that break the test suite "without any outside help".
+
+I am happy to assist in fixing problems with the first category (those
+that only break when merged with other topics). It's what I do already in
+Git for Windows' `shears/*` branches where Git for Windows' `main` branch
+is continuously rebased onto the four integration branches of git.git. The
+idea is to catch conflicts between topics that are in-flight.
+
+At the same time, I would rather like to avoid having to fix the CI build
+for topics that are already broken without even being integrated into
+`seen`. I did that in the past so that I could benefit from seeing
+conflicts between Git for Windows' topics and upcoming changes in Git, but
+I plan on leaving things in a broken state when I see broken topics (i.e.
+the second category I mentioned above).
+
+> > Given that not even our very own test suite is well-suited to this cha=
+nge,
+> > I rather doubt that this is a safe thing to do.
+> >
+> > In the _least_, the patch series should put in the effort to show just=
+ how
+> > much work it is to adjust the test suite to let it pass again. This wo=
+uld
+> > also give an indication how much work we impose on our users by that
+> > ff-only change in behavior.
+>
+> I do not doubt the need to make sure that the test suite covers the
+> new use case as well as the need to adjust the existing tests.
+>
+> Having said that, I have a strong suspicion that the "turn the
+> current warn-but-go-ahead-to-merge into error-out-and-stop for those
+> who haven't chosen between rebase and merge when we see a non-ff
+> situation" this topic aims for *can* be made without causing as much
+> harm to existing users' workflows as these test failures imply.  The
+> reason why I say so is because the existing behaviour of loudly
+> warning is so annoying, even with the current behaviour of making a
+> merge after showing the warning, existing users would have made and
+> recorded the choice in pull.rebase long time ago already.  Those who
+> want to rebase by default would have had more incentive to avoid
+> the "warn but still go ahead to merge" doing a wrong thing to them,
+> but those who want to merge by default would also have set it, if
+> only to squelch the annoying loud warning.
+>
+> A spot check: do you have pull.rebase set to anything in your
+> config?
+
+I do, as a matter of fact.
+
+As do Git for Windows users as of version v2.27.1 or so, because Git for
+Windows' installer now asks specifically about the desired behavior and
+configures it explicitly.
+
+> So, if this "default change" is done in such a way so that it won't
+> make any difference to those who have pull.rebase set to either yes
+> or no, I suspect that the fallout would not be as bad as what these
+> test failures imply.
+
+That assumes that all setups call `git pull` interactively.
+
+In my case, I have tons of automation (how would I be able to maintain Git
+for Windows otherwise?) and I recently stumbled over a `pull.rebase`
+advice in one of those pipelines.
+
+Since the advice was non-fatal, I did not fix it (and would not have seen
+the advice at all, if it hadn't been for an unrelated problem I had to
+track down).
+
+> On the other hand, if the implementation in the topic forces
+> everybody (including those who have made the choice by setting
+> pull.rebase) to set another variable before allowing to work with a
+> non-ff pull, it would break everybody and is a disaster.
+
+Well, here's my vote for keeping the current behavior to continue to merge
+and show that advice about pull.rebase. I find it the least annoying
+option of all that are available to us.
 
 Ciao,
 Dscho
