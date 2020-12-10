@@ -2,151 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10EC3C4361B
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 03:52:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3358EC433FE
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 06:14:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DC1AC23A1D
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 03:52:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E9C95239FD
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 06:14:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731290AbgLJDwT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 22:52:19 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57278 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730646AbgLJDwO (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 9 Dec 2020 22:52:14 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1733112AbgLJGNm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Dec 2020 01:13:42 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56505 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730894AbgLJGN3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Dec 2020 01:13:29 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 89AE8104A13;
+        Thu, 10 Dec 2020 01:12:46 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ESvXrfdtPzDeGbQvlcC99LZMx8o=; b=VGL6qk
+        mKd1mPVSbj0wlQLoP4tDJ1z9yk7T0PQNcUyErm9xXvzNmgBPwFZoh3KhzxdrUu9D
+        ktdpx4jaXzgrt+yiWHLfXVp0TBhdVTYmxXV02cF0T0aOnODQ7xd/V2FEt8Q1le03
+        TJs3/19v8D3/o4pWskCo8k8UsZ2o0Ak0cSU98=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kljuy4KbMDYkv5czxRliESWQz2CW6rsM
+        Z4LJSEoLJsD5uSY3PamuSmzcjd0BrFECFeBGUsiP0/afhoq9B0R/Hi4oUa4Iox/g
+        3RcpdJceGngcFKHGvFmiErwBq8OYrqL+BGpX2Crr0S1Fo9LrM5DyrJd/S4KoW04d
+        LfHF9P2Y4w4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 81BED104A12;
+        Thu, 10 Dec 2020 01:12:46 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.74.119.39])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9459160751;
-        Thu, 10 Dec 2020 03:51:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1607572261;
-        bh=oWTuOLHLMoA1jimozF4OKTZJfc0DVGeAP7G4R8Y4A8g=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Kg3Va02qHlSubh7hLK61pjUFupKmWDPaNjS9VjoBGlbtVbIfsjfTYPCasmP+znrD0
-         m5+52yuuo3LOOo+WQ71QdAQeKuor9FBMkDI9YPLW9oAoXpSfuEWjqfrGcm4Dheqe1A
-         dr3AkGTTVVjKLsAElpstzinjAtfM6jzlUqZsMtxYJ3WK1xtlqrtT9j+N/2eeA5CdxB
-         AO1t+udw04evB4potBS6dSeHXdVmKyDQup4VEt7/XtiiGOyjGxS++9gpoZ3QQ+UmxQ
-         9P83hx4y2zAK9NdtGl3wulTaNTWnk9/Oj7Du9biEzkD/fTAjtIUZ6sExnYeKrjsWCQ
-         a4jgasXsgizDM3VaxsOuNHxI29C+O4/Iq4KG/zdvYNl1plOj1FvzyHeUlU3tG4+dMA
-         wtIkml25Y/4mgeZ5CMVNQ+JJsnpqvalilZOgpumMzzuS83GDSOylEjdbgPC5P/+DHX
-         MrTaI9yVj4K4re5SzduqEOUfJQvbZiZHGoUtElDfadu+xSMumPR
-Date:   Thu, 10 Dec 2020 03:50:56 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Aaron Schrab <aaron@schrab.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2 1/2] Add project-wide .vimrc configuration
-Message-ID: <X9GbIG9vZbK1pEoi@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Aaron Schrab <aaron@schrab.com>, Denton Liu <liu.denton@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-References: <20201209065537.48802-1-felipe.contreras@gmail.com>
- <20201209065537.48802-2-felipe.contreras@gmail.com>
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C9B3B104A11;
+        Thu, 10 Dec 2020 01:12:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 00/26] git-log: implement new --diff-merge options
+References: <20201101193330.24775-1-sorganov@gmail.com>
+        <87y2i8dptj.fsf@osv.gnss.ru>
+        <CABPp-BGuLX8Msghbo6L7vB2Wqys=Xg_uvV2Aui-1q4-+ijuNEw@mail.gmail.com>
+        <87y2i8c4mr.fsf@osv.gnss.ru>
+        <CABPp-BE3D7ifQx6MZCT_ntRnG0QZm1Ga10SJ=DN+6bpF6mX2GQ@mail.gmail.com>
+        <xmqqtusv4w2g.fsf@gitster.c.googlers.com>
+        <CABPp-BHCtrKAWR1v3OrUgX8iSfxvDwN8p+yiJy=G1BFfnSopjw@mail.gmail.com>
+        <xmqq7dpr4qa0.fsf@gitster.c.googlers.com>
+        <CABPp-BHWhiUZ=wCSz1f0oxtHiRzAKCPVmoUYDf+mvvm63ykCEw@mail.gmail.com>
+        <xmqq360f4npg.fsf@gitster.c.googlers.com>
+        <CABPp-BEAmB9DA7RXrf6vJGbHfGU37V4sE0d1CW+2vRwp_uAudw@mail.gmail.com>
+        <xmqqtusv362t.fsf@gitster.c.googlers.com>
+        <xmqqpn3j32ka.fsf@gitster.c.googlers.com> <87k0tqdasa.fsf@osv.gnss.ru>
+Date:   Wed, 09 Dec 2020 22:12:42 -0800
+In-Reply-To: <87k0tqdasa.fsf@osv.gnss.ru> (Sergey Organov's message of "Wed,
+        09 Dec 2020 22:44:37 +0300")
+Message-ID: <xmqq5z5axk85.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="wYkn5fNWbi9ikok+"
-Content-Disposition: inline
-In-Reply-To: <20201209065537.48802-2-felipe.contreras@gmail.com>
-User-Agent: Mutt/2.0.2 (2020-11-20)
+Content-Type: text/plain
+X-Pobox-Relay-ID: B74549B6-3AAE-11EB-99E3-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Sergey Organov <sorganov@gmail.com> writes:
 
---wYkn5fNWbi9ikok+
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> My confusion originates from the fact that the code in revision.c sets
+> rev->diff to 1 for -c/--cc , while it doesn't set it for -m, and this
+> was the case *before* -c/--cc started to imply -p and -m.
 
-On 2020-12-09 at 06:55:36, Felipe Contreras wrote:
-> diff --git a/.vimrc b/.vimrc
-> new file mode 100644
-> index 0000000000..602c746477
-> --- /dev/null
-> +++ b/.vimrc
-> @@ -0,0 +1,22 @@
-> +" To make use of these configurations install the git plugin provided in
-> +" the contrib section:
-> +"
-> +"   cp -aT contrib/vim ~/.vim/pack/plugins/start/git
-> +"
-> +" Then whitelist the location of this directory to your ~/.vimrc:
-> +"
-> +"   let g:gitvimrc_whitelist =3D [ expand('$HOME') . '/dev/git' ]
-> +"
-> +" You can add multiple locations, or specify a regexp pattern.
-> +"
-> +
-> +augroup git
-> +	au BufRead,BufNewFile */Documentation/*.txt set filetype=3Dasciidoc
-> +
-> +	au FileType c setl noexpandtab tabstop=3D8 shiftwidth=3D0 cino=3D(s,:0,=
-l1,t0
-> +	au FileType sh setl noexpandtab tabstop=3D8 shiftwidth=3D0
-> +	au FileType perl setl noexpandtab tabstop=3D8 shiftwidth=3D0
-> +	au FileType asciidoc setl noexpandtab tabstop=3D8 shiftwidth=3D0 autoin=
-dent
-> +augroup END
+Yes, all of this was from cd2bdc53 (Common option parsing for "git
+log --diff" and friends, 2006-04-14).  We can see that "-m" is not
+treated among the first class citizen in the output of "git show" on
+the commit.  Namely, "-m" alone is merely a modifier for "-p" and
+does not cause a diff to be generated (in other words, it only
+affects the output if used together with "-p").
 
-I don't think this should go in this location.  It should go in contrib.
-Here's why:
+"git show cd2bdc53:git.c" would give you how "git log" looked like
+back then, and how rev.diff field is used.
 
-* We should not ship editor-specific files in the main directory of the
-  repository.  Even though Vim is very popular, it is one of many
-  editors, and it is not even the most popular editor (which is now VS
-  Code).  We have editor-independent files, and users can copy this into
-  the root of the repository and ignore it if they want it there.
-* Whether a user wants to use automatic indentation is a personal
-  preference.  I do happen to like it, but there are others who don't
-  and prefer to leave it off.  Similarly, whether to use cindent,
-  smartindent, or autoindent is a preference, as is which cindent
-  options to use (I use different ones).
-* These settings affect every file that's loaded in the same editor
-  process.  While many people open different editor windows for
-  different projects, other people prefer to use the client-server
-  functionality to load all of their projects in the same editor.  These
-  are not, for example, the editor settings I normally use for non-Git
-  AsciiDoc files.
+    static int cmd_log(int argc, const char **argv, char **envp)
+    {
+    ...
 
-So while I agree that these are common settings, they are not
-universally applicable, even for Vim and Neovim users, and we shouldn't
-try to claim that all or even most Vim and Neovim users should use them.
-In contrast, the .editorconfig file specifies things which are (a)
-guaranteed to affect only this repository and (b) are essential parts of
-our coding style.  It notably omits things like line endings which are a
-matter of user or platform preference.
+	prepare_revision_walk(&rev);
+	setup_pager();
+	while ((commit = get_revision(&rev)) != NULL) {
+		if (shown && rev.diff && rev.commit_format != CMIT_FMT_ONELINE)
+			putchar('\n');
 
-So I think contrib makes more sense here.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
+We grab the next commit to show, and if we have already shown
+something in the previous iteration, and if we are told to produce
+patch output, we put an extra blank line after the patch for the
+previous commit.  We omit that extra blank when showing the log
+message in oneline format.  And then ...
 
---wYkn5fNWbi9ikok+
-Content-Type: application/pgp-signature; name="signature.asc"
+		fputs(commit_prefix, stdout);
+		if (rev.abbrev_commit && rev.abbrev)
+			fputs(find_unique_abbrev(commit->object.sha1, rev.abbrev),
+			      stdout);
+		else
+			fputs(sha1_to_hex(commit->object.sha1), stdout);
+		if (rev.parents) {
+    ...
+		}
+		if (rev.commit_format == CMIT_FMT_ONELINE)
+			putchar(' ');
+		else
+			putchar('\n');
+		pretty_print_commit(rev.commit_format, commit, ~0, buf,
+				    LOGSIZE, rev.abbrev);
+		printf("%s\n", buf);
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
+... after showing the log message, if we were told to produce diff,
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX9GbHgAKCRB8DEliiIei
-gX8/AQC47P0eDGbR+yqMqDixESx+u2HkoihOqxRAk5YdGZZvVAEA9Ad1RNDVKcC/
-S7jqUAQPObyI8DSXZURgDMHqBEjITAg=
-=uRn1
------END PGP SIGNATURE-----
+		if (rev.diff)
+			log_tree_commit(&rev, commit);
 
---wYkn5fNWbi9ikok+--
+we ask log_tree_commit() to show the patch.
+
+		shown = 1;
+		free(commit->buffer);
+		commit->buffer = NULL;
+	}
+    ...
+
+I think the code these days have most of the per-commit logic moved
+to log_tree_commit() compared to the code we see above, but the
+check at the beginning of log_tree_diff() we have, i.e.
+
+    static int log_tree_diff(struct rev_info *opt, struct commit *...
+    {
+	int showed_log;
+	struct commit_list *parents;
+	struct object_id *oid;
+
+	if (!opt->diff && !opt->diffopt.flags.exit_with_status)
+		return 0;
+
+directly corresponds to the "if rev.diff is true, then call
+log_tree_commit()" in the 2006 code.
