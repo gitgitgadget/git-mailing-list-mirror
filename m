@@ -2,113 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66D92C19425
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 649CAC4361B
 	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 00:51:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 43CF923770
+	by mail.kernel.org (Postfix) with ESMTP id 2FC51235F7
 	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 00:51:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727977AbgLJAeA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 19:34:00 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63438 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727700AbgLJAdq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 19:33:46 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 697D29FC98;
-        Wed,  9 Dec 2020 19:32:59 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7J7JsgeQOt3dFAI6fLNUMWOrcyc=; b=AU6mDn
-        A5FQc8G/ibYPnOoNQFrFWhQT3tMFKCLgRCnb3ztwI0XUGSjCkvqzD87nkOVbKoPT
-        l3ZuClepTWY492dUDB5fmkabaSXHy5faQnC5rwX8QfnARc+efk9UI0OEMuQ7LY4k
-        0XhOZahk2LD32TKsfQPiKJHibPYQO1t1RqIgY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fcrlsLsVH8V0o832Mp2DwwPSVdaAIyei
-        ahAO3U8coWEuax/+UbsOKl0CEYWRl5bHYEZedl43xjKh9RbBb0tzGuDjbIXBmoiL
-        OpJj2HOJeblJPXhtJO+OuXl/t3RjoXIFOfwLfj4Ow7cmynKN72fQec2oXi36Gcvl
-        yAGiDC8anf0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 60DD69FC97;
-        Wed,  9 Dec 2020 19:32:59 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.75.7.245])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E040C9FC96;
-        Wed,  9 Dec 2020 19:32:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        id S1729011AbgLJAvT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 19:51:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47888 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728054AbgLJAvK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 19:51:10 -0500
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2798C0613CF
+        for <git@vger.kernel.org>; Wed,  9 Dec 2020 16:50:29 -0800 (PST)
+Received: by mail-ot1-x341.google.com with SMTP id 11so3317260oty.9
+        for <git@vger.kernel.org>; Wed, 09 Dec 2020 16:50:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=k8vKlKMrl5aSxr4jhZoBQnQxOtMFDuDWOx4oRvS9rW0=;
+        b=u0x/0buGE/+6fNZ+vdJmAnQE8P9jFnsAAj7xofgMU8MRxdxmRy1GA6oDjoc3kE9Gt6
+         Yq6X5PWzBCmTrFJouQQQn+kXdJuScgeijRNrqWsTIopm/c44KkFIEmRTCID2MQLzku3/
+         +fY3rrgNHkKZf4cQnwbSdzIp0rLN64Xs3EVZ36/O2i19cGyTuPpC6BudM7Z4SS+4LT2T
+         du44R8G0UJoJNdlcd15jGWFpgY4BDpQyu994IGbsdUq3Okg7g6gdWnz5kfDXL4E9P2yF
+         aMgFPBfprR/J9OKk5JMHWYNP3sne3aD9hIT1y2crLaSElCIeeswBhyBLs1GNHfG2iULG
+         ArfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=k8vKlKMrl5aSxr4jhZoBQnQxOtMFDuDWOx4oRvS9rW0=;
+        b=o+PSKQ0+EIw3Sv9ae2qvI6F6ylxHNkJwiKsejfVEM7xL9WdnRufNPeLb4w0HtytKaY
+         4MDDb/xU5R+yb8EgaqTDy6uRBa7CvYDIx21ug0WDov9Fyonp9zFO/T+kn9XIJsfuS1PI
+         S6X6jB3DAwtsXtPLZ416bMPz9GPpwMNj3Mv64W8CpYbzLz9ILpHdsGbwwD9n8skGeJz4
+         akyVcRpcEYJnn93azeCb5e2cXggRWuz8IFnqEQNDLI8rAa75fAlJIHSKUTWFsSoV6bj5
+         TvOjdIApDm8mYE3lX1ugGFKlu+qUaSDrB/01MbGTbU9FAw7OWyXxLC+PRO7LNjJ5UFHZ
+         fBUw==
+X-Gm-Message-State: AOAM533dPh3xt4D2A94BQN2gEGTIZXo9Cftx4CO4EW8iME4q6xKgrUde
+        hdNqnR6/2pL1LVSrCVS3Yc532A==
+X-Google-Smtp-Source: ABdhPJwfQ3n3NbolRZKkuoboft7n1llX9IGjzW1QJwc9X7SrSH6MO3tc5axIEDkW4Mdr9UttKxb0Mw==
+X-Received: by 2002:a05:6830:114a:: with SMTP id x10mr4091439otq.350.1607561428367;
+        Wed, 09 Dec 2020 16:50:28 -0800 (PST)
+Received: from localhost ([8.44.146.30])
+        by smtp.gmail.com with ESMTPSA id 186sm677632oof.16.2020.12.09.16.50.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Dec 2020 16:50:27 -0800 (PST)
+Date:   Wed, 9 Dec 2020 19:50:24 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, szeder.dev@gmail.com,
         Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v6 0/4] Maintenance IV: Platform-specific background
- maintenance
-References: <pull.776.v5.git.1606191405.gitgitgadget@gmail.com>
-        <pull.776.v6.git.1607542142.gitgitgadget@gmail.com>
-Date:   Wed, 09 Dec 2020 16:32:58 -0800
-In-Reply-To: <pull.776.v6.git.1607542142.gitgitgadget@gmail.com> (Derrick
-        Stolee via GitGitGadget's message of "Wed, 09 Dec 2020 19:28:58
-        +0000")
-Message-ID: <xmqqpn3izeit.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+Subject: Re: [PATCH 00/15] Refactor chunk-format into an API
+Message-ID: <X9Fw0Pzn5wsy3wt0@nand.local>
+References: <pull.804.git.1607012215.gitgitgadget@gmail.com>
+ <ee0b73f7-8f59-a1dc-0a21-bf796bf9f2e2@web.de>
+ <X8/K1dUgUmwp8ZOv@nand.local>
+ <4696bd93-9406-0abd-25ec-a739665a24d5@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 40EB2008-3A7F-11EB-89D1-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4696bd93-9406-0abd-25ec-a739665a24d5@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Wed, Dec 09, 2020 at 06:13:18PM +0100, René Scharfe wrote:
+> I'm not too familiar with the chunk producers and consumers, so I can
+> only offer some high-level observations.  And I don't have to use the
+> API, so go wild! ;)  I was just triggered by the appearance of two
+> working pieces of code being replaced by two slightly different pieces
+> of code plus a third one on top.
 
-> This is based on ds/maintenance-part-3.
+:-).
+
+> > With regards to the "YAGNI" comment... I do have thoughts about
+> > extending the reachability bitmap format to use chunks (of course, this
+> > would break compatibility with JGit, and it isn't something that I plan
+> > to do in the short-term, or even necessarily in the future).
+> >
+> > In any event, I'm sure that this won't be these two won't be the last
+> > chunk-based formats that we have in Git.
 >
-> After sitting with the background maintenance as it has been cooking, I
-> wanted to come back around and implement the background maintenance for
-> Windows. However, I noticed that there were some things bothering me with
-> background maintenance on my macOS machine. These are detailed in PATCH 3,
-> but the tl;dr is that 'cron' is not recommended by Apple and instead
-> 'launchd' satisfies our needs.
->
-> This series implements the background scheduling so git maintenance
-> (start|stop) works on those platforms. I've been operating with these
-> schedules for a while now without the problems described in the patches.
->
-> There is a particularly annoying case about console windows popping up on
-> Windows, but PATCH 4 describes a plan to get around that.
->
->
-> Update in V6
-> ============
->
->  * The Windows platform uses the tempfile API a bit better, including using
->    the frequency in the filename to make the test simpler.
+> OK, so perhaps we can do better before this scheme is copied.  The write
+> side is complicated by the fact that the table of contents (TOC) is
+> written first, followed by the actual chunks.  That requires two passes
+> over the data.
 
-Are two fix-up patches from Eric that have been queued near the top
-of ds/maintenance-part-4 still relevant?  
+"Two passes" meaning that we have to both compute the size of and then
+write the data? This is relatively cheap to do, at least so I think.
 
-At least, the "when invoked individually" patch that added an "-f"
-option to two invocations of "rm" is still applicable, I would
-think (I didn't look at the other one).
+For e.g., the OIDLOOKUP commit-graph chunk is just the_hash_algo->hashsz
+* commits->nr bytes wide, so that can be done in constant time. A more
+heavyweight case might be for e.g., the Bloom data section, where Bloom
+filters have to first be computed, their lengths accounted for, and
+_then_ written when we eventually get to writing that chunk.
 
-commit e3801c41e4d4cb1dd899942e04ab78310e781d07
-Author: Eric Sunshine <sunshine@sunshineco.com>
+This happens in compute_bloom_filters(); and write_chunk_bloom_indexes()
++ write_chunk_bloom_data(), respectively. Those Bloom filters are all
+stored in a commit slab until they are written, so these "two passes"
+are just paid for in memory.
 
-    t7900: make macOS-specific test work on Windows
+> The ZIP format solved a similar issue by placing the TOC at the end,
+> which allows for one-pass streaming.  Another way to achieve that would
+> be to put the TOC in a separate file, like we do for .pack and .idx
+> files.  This way you could have a single write function for chunks, and
+> writers would just be a single sequence of calls for the different
+> types.
 
-Notes (amlog):
-    Message-Id: <20201130044224.12298-3-sunshine@sunshineco.com>
+Interesting. I'm not opposed to changing any of these formats (and maybe
+there is some compelling argument for doing so, I am not sure) but I
+think that unifying the implementation for reading / writing the chunk
+format _before_ changing it is a postive step.
 
-commit 1e5ddd79e2da18ee19b665a045d4187c5dc6234e
-Author: Eric Sunshine <sunshine@sunshineco.com>
+> But seeing that the read side just loads all of the chunks anyway
+> (skipping unknown IDs) I wonder why we need a TOC at all.  That would
+> only be useful if callers were trying to read just some small subset
+> of the whole file.  A collection of chunks for easy dumping and loading
+> could be serialized by writing just a small header for each chunk
+> containing its type and size followed by its payload.
 
-    t7900: fix test failures when invoked individually via --run
+AFAIK, we do use the table of contents to locate where the chunks are so
+that we can for e.g., set up the commit_graph structure's pointers to
+point at each chunk appropriately.
 
-Notes (amlog):
-    Message-Id: <20201130044224.12298-2-sunshine@sunshineco.com>
+> René
+
+Thanks,
+Taylor
