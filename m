@@ -6,99 +6,110 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 518A6C2BB40
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 18:30:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E42C5C4361B
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 18:34:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2E4C123E1D
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 18:30:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A152823DE3
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 18:34:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393012AbgLJS3O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Dec 2020 13:29:14 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58813 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390832AbgLJS3L (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Dec 2020 13:29:11 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5C11E91029;
-        Thu, 10 Dec 2020 13:28:24 -0500 (EST)
+        id S2393110AbgLJSef (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Dec 2020 13:34:35 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60934 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2393076AbgLJSe0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Dec 2020 13:34:26 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8CD54117F22;
+        Thu, 10 Dec 2020 13:33:44 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+Gi3y6aPsG6c5nJdf3VG1nam0II=; b=M9nlm6
-        N29CE0qG+dgOGWrSP2rJ0I9F4RhM0TjkfxQUGH7lANPQBeKJF0ztrGPDq50TreJ+
-        NJ/QsVFle5Bnf2nAk9TgPe9ZhpxbzkPSDLDuK5rz+s2gMze6wwFbB/AAEO4oEJE+
-        P1rfsuJvZaFnjt8V5JSCjpcDXha5PQ7+voQMY=
+        :content-type; s=sasl; bh=NwJGpjCrn1n5JSbsXafiF1+Uf2s=; b=Vvwhol
+        PawWBRP500njKe3SA6pJL0nF6cuGFijpUXZyI+bdnN2obR/y+1DWeLL6F0HtkcjK
+        wgGmO0mAZY7Yxjo2Njm1+YVOlowGVsnJ2uDAt7m5LfHcQ0l/7VifqZ/qcHyClT47
+        VMBP1VgbBJUindkH4EjMxKo4yFFbHBd+DVP3U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gTps7hd4BixcrWDxYmIWuMhZc35dtQhT
-        j+GOvIb5XB+bBS0XemX1TeAGSCEbFRu45WHqGlWSuPxKmCY/7R2wFdK4cT3SytTm
-        +5T/40BxFMTWUBES9bAL2dds0TLyacvN3jzKisUthGPKcWXwa3Lj/1UQrj6i9Ev+
-        22YwRwDnkAo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 53A0091028;
-        Thu, 10 Dec 2020 13:28:24 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=mwM/uw6Y5Zfh9y/hUsge4pu3EQhZYtjS
+        sOV+wjfbsulWd/EQZUf1sqdSiEtSI/4SggcLZkyhutfTpIv1p8He5F+eMnMxVpw7
+        DloWO8W4cUwcRm2wERQSmoZ+johQ7MHqtZgqK0MLlynMIA3Ti2kC+GRjPFwTJ0Mh
+        z/lckJoorBM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 85157117F21;
+        Thu, 10 Dec 2020 13:33:44 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B3D5191026;
-        Thu, 10 Dec 2020 13:28:23 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 56F81117F20;
+        Thu, 10 Dec 2020 13:33:40 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Theodore Y. Ts'o" <tytso@mit.edu>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: fc/pull-merge-rebase, was Re: What's cooking in git.git (Dec
- 2020, #01; Tue, 8)
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: js/init-defaultbranch-advice, was Re: What's cooking in git.git
+ (Dec 2020, #01; Tue, 8)
 References: <xmqqpn3j4ved.fsf@gitster.c.googlers.com>
-        <nycvar.QRO.7.76.6.2012091502000.25979@tvgsbejvaqbjf.bet>
-        <xmqqk0tq1xf3.fsf@gitster.c.googlers.com>
-        <20201210152715.GQ52960@mit.edu>
-Date:   Thu, 10 Dec 2020 10:28:22 -0800
-In-Reply-To: <20201210152715.GQ52960@mit.edu> (Theodore Y. Ts'o's message of
-        "Thu, 10 Dec 2020 10:27:15 -0500")
-Message-ID: <xmqqim99wm61.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2012091510280.25979@tvgsbejvaqbjf.bet>
+        <xmqqft4e1w2j.fsf@gitster.c.googlers.com>
+        <nycvar.QRO.7.76.6.2012100540220.25979@tvgsbejvaqbjf.bet>
+Date:   Thu, 10 Dec 2020 10:33:38 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.2012100540220.25979@tvgsbejvaqbjf.bet>
+        (Johannes Schindelin's message of "Thu, 10 Dec 2020 05:54:09 +0100
+        (CET)")
+Message-ID: <xmqqeejxwlx9.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 7CB663EA-3B15-11EB-BA7E-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 396D4E2C-3B16-11EB-8830-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Theodore Y. Ts'o" <tytso@mit.edu> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Wed, Dec 09, 2020 at 01:28:48PM -0800, Junio C Hamano wrote:
->> 
->> A spot check: do you have pull.rebase set to anything in your
->> config?
+> On Wed, 9 Dec 2020, Junio C Hamano wrote:
 >
-> FWIW, I haven't set pull.rebase to anything, but what I have done is
-> to simply added --ff-only or --rebase to my "git pull" commands.  I
-> type fast, though, so it's not that a big deal, and I like the fact
-> that the warning is making me explicitly express what it is that I
-> want to have happen.
+>> Anyway, I do not think those users who said "I'm fine with it" would be
+>> fine when the switchover happens outside their control.
+>
+> As of September 29th, Git for Windows' installer asks users to specify
+> their preferences:
+>
+> 	Adjusting the name of the initial branch in new repositories
+>
+> 	What would you like Git to name the initial branch after
+> 	"git init"?
+>
+> 	[ ] Let Git decide
+>
+> 	    Let Git use its default branch name (currently: "master")
+> 	    for the initial branch in newly created repositories.
+> 	    The Git project intends to change this default to a more
+> 	    inclusive name in the near future.
+>
+> 	[ ] Override the default branch name for new repositories
+>
+> 	    NEW! Many teams already renamed their default branches;
+> 	    common choices are "main", "trunk" and "development".
+> 	    Specify the name "git init" should use for the initial
+> 	    branch:
+>
+> 	    __________________________
+>
+> Obviously, I have no idea how many users chose the first option because we
+> do not collect any usage data in the Git for Windows project. However,
+> anecdotal data suggests that most users go with the first one, not caring
+> one iota and simply going with what Git decides for them.
 
-OK, so I would tone down my optimism that the loud warning we have
-been issuing for a long time would be sufficient---the switching of
-the default would break people like you.
+Even if you knew the numbers, it would not give us much useful
+information (besides, I do not think you give these checkboxes
+randomized to suppress bias), I am afraid.  The users haven't
+experienced the real impact of letting Git decide yet, and do not
+have enough information to assess their future grief before making
+the choice between the two.
 
-> It's also true that very often, I end up running "git fetch", then
-> look at what I got pulled down, and only then run either "git merge"
-> or "git merge --ff-only" or "git rebase" explicitly.
+But I do not strongly care---I certainly care about this even less
+than I care about keeping the differences between Git and its
+Windows port smaller.
 
-That is very understandable.
-
-"git pull", which is "git fetch" followed by some way to reconcile
-two histories, does not have to be the only way to interact with
-histories from other people.
-
-It however doesn't give useful input to help us answer the questions
-Johannes raised: is it sensible to force users to tell "git pull" if
-they want to merge or to rebase explicitly, instead of defaulting to
-merge like we currently do?  how much damage are we causing to
-existing users who expect the command to work the way it currently
-does?
-
-Thanks.
