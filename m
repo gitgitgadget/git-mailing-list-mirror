@@ -2,64 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A05FC4167B
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 23:06:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A198C3527A
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 23:08:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DD75F23DB4
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 23:06:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8218723B85
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 23:08:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729452AbgLJXGC convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 10 Dec 2020 18:06:02 -0500
-Received: from mx-out2.deshaw.net ([149.77.95.28]:38080 "EHLO
-        mx-out2.deshaw.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726190AbgLJWcK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Dec 2020 17:32:10 -0500
-X-Greylist: delayed 600 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Dec 2020 17:32:10 EST
-Received: from mx-relay2.deshaw.net (localhost [127.0.0.1])
-        by mx-out2.deshaw.net (Postfix) with ESMTPS id 3060F806EAC
-        for <git@vger.kernel.org>; Thu, 10 Dec 2020 17:15:12 -0500 (EST)
-Received: from deshaw.com (mail-multi.dr.deshaw.com [10.218.243.33])
-        by mx-relay2.deshaw.net (Postfix) with ESMTPS id 2E0191403D1F
-        for <git@vger.kernel.org>; Thu, 10 Dec 2020 17:15:12 -0500 (EST)
-Received: from exchmbxpsc1a.deshaw.com (exchmbxpsc1a.deshaw.com [10.218.74.16])
-        by mail-multi.dr.deshaw.com (Postfix) with ESMTPS id 25758600012C
-        for <git@vger.kernel.org>; Thu, 10 Dec 2020 17:15:12 -0500 (EST)
-Received: from exchmbxtoa1b.deshaw.com (10.219.74.15) by
- exchmbxpsc1a.deshaw.com (10.218.74.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2044.4; Thu, 10 Dec 2020 17:15:11 -0500
-Received: from exchmbxtoa1b.deshaw.com ([fe80::b55e:2430:4455:ec8c]) by
- exchmbxtoa1b.deshaw.com ([fe80::b55e:2430:4455:ec8c%8]) with mapi id
- 15.01.2044.006; Thu, 10 Dec 2020 17:15:11 -0500
-From:   "Shupak, Vitaly" <Vitaly.Shupak@deshaw.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Why does "git pull --rebase" require a clean git directory?
-Thread-Topic: Why does "git pull --rebase" require a clean git directory?
-Thread-Index: AdbPP61Cqd2qDGLkQBqcxA5WNQltwg==
-Date:   Thu, 10 Dec 2020 22:15:11 +0000
-Message-ID: <ea1e654cec62411884e2c260524fb05a@deshaw.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.219.66.99]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S2394138AbgLJWbT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Dec 2020 17:31:19 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57195 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2405150AbgLJW3p (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Dec 2020 17:29:45 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A4EA6F97CC;
+        Thu, 10 Dec 2020 16:49:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=A7KM8MMscdOE
+        tMpsW3+xFsTSlIg=; b=qFzckk5HRpqH7bg/VsTgBG6RQXyPNz48XALK00Clz0FS
+        Bzd+6gAkW7KYaCVnQrS9NfRMrXtCt7oCFLhgWAWcwq7rJ9UCVuE4MXbeVp3iwsYC
+        nRfh7OyXUoSfs1YotkfP1/NO1Vcym0rC5nznnGNWKOvrdmpBU7JcqNzcy8EXKR0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ONqGro
+        6J6ltAXX0rfYhm9YIPSGeCKY33rk86fxe9f8ss5MIIxFF9dbbdxSoZuIdv0IsXjt
+        vgP6gZP0g12eDHmINELf93SeneIq70wnQrI6doXaapbO9XSXr/ZpemFYODxS9Nnb
+        bX/ppiptFElKrJntj+m/fb4WLHJUF/5C+AEQ0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9E510F97CB;
+        Thu, 10 Dec 2020 16:49:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EC300F97C8;
+        Thu, 10 Dec 2020 16:49:29 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
+        git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Philip Oakley <philipoakley@iee.email>
+Subject: Re: [PATCH 3/3] config: store "git -c" variables using more robust
+ format
+References: <X9D23LQv34A5Q5DC@coredump.intra.peff.net>
+        <X9D5SnXca2rGnJFl@coredump.intra.peff.net>
+        <87pn3hwfd5.fsf@evledraar.gmail.com>
+Date:   Thu, 10 Dec 2020 13:49:28 -0800
+In-Reply-To: <87pn3hwfd5.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Thu, 10 Dec 2020 21:55:18 +0100")
+Message-ID: <xmqqsg8dtjpz.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 94BDA07C-3B31-11EB-8BA2-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-"git pull --rebase" requires having NO uncommitted changes, even if the locally modified files haven't been updated upstream, or even if there are no changes to upstream at all. I know I could use --autostash, but that's inefficient and may be undesirable if it would create a conflict.
+> On Wed, Dec 09 2020, Jeff King wrote:
+> ...
+>> +test_expect_success '--config-env handles keys with equals' '
+>> +	echo value=3Dwith=3Dequals >expect &&
+>> +	ENVVAR=3Dvalue=3Dwith=3Dequals git \
+>> +		--config-env=3Dsection.subsection=3Dwith=3Dequals.key=3DENVVAR \
+>> +		config section.subsection=3Dwith=3Dequals.key >actual &&
+>> +	test_cmp expect actual
+>> +'
+>> +
+>
+> Maybe worth adding a test for the strrchr() semantics here with:
+>
+>     perl -we '$ENV{"Y=3DZ"}=3D"why and zed"; system "Z=3Dzed git --conf=
+ig-env=3DX=3DY=3DZ ..."'
+>
+> Which would show that we can't look up "Y=3DZ", but will always get "Z"=
+.
 
-Would it be possible to change the behavior of "git pull --rebase" so that it only fails if the locally modified files conflict with the files modified upstream (similar to the default git pull behavior without --rebase)?
+Yes, that was explained in the cover letter of these three patches
+in <X9D23LQv34A5Q5DC@coredump.intra.peff.net>. =20
 
-Thanks,
-Vitaly
+We really should document that <envvar> can't contain an "=3D" sign,
+but I do not see much point in casting that limitation in stone with
+a test.  As long as we know things work correctly with environment
+variables without '=3D' in their names, we should be happy.
+
 
