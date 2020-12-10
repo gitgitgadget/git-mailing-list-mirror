@@ -2,113 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3AC9C3527E
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 23:08:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CAC12C0018C
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 23:14:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C5F662332A
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 23:08:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 97B4923BE5
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 23:14:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393565AbgLJWbS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Dec 2020 17:31:18 -0500
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:33781 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2405126AbgLJWZi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Dec 2020 17:25:38 -0500
-Received: by mail-lj1-f194.google.com with SMTP id t22so8588941ljk.0
-        for <git@vger.kernel.org>; Thu, 10 Dec 2020 14:25:20 -0800 (PST)
+        id S2391812AbgLJXN2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Dec 2020 18:13:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44866 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391839AbgLJXNR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Dec 2020 18:13:17 -0500
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47035C0611CB
+        for <git@vger.kernel.org>; Thu, 10 Dec 2020 14:37:17 -0800 (PST)
+Received: by mail-wm1-x344.google.com with SMTP id a6so6021143wmc.2
+        for <git@vger.kernel.org>; Thu, 10 Dec 2020 14:37:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=A0s/M57IBE90xfI8PWYqlE7fs0bCLICPYSyS8x2+/HY=;
-        b=lUnMSfuqFLWW8j1oF+gH9F6lIfMoLrM3Md0XAtuELl0Hlpo7bY8fS7F+QAIh3Blg5V
-         O7Y6/akOrkF9j2BnOnAgmVmG+VEh+b9S46AbmfoYsC884cYH3EYeaj55CRizhppr5jSF
-         lmfaY0n4czzpUxEOviipB6hOvWrnTkBR1oQV7xkhEzRmwI4O6QV6uJuKMq64zLLl3cdl
-         G3OPkgpt1143vKvwscAXGkSk2mrO1JDgvj7noWd//s1Cy02vSISoJjLS6wHo5Onr/z7Q
-         VrBHbGSJCgx6XuLVGvMnpae04s/Io0/lzgZjRlO2+2AAZhw1kXMWYUAfLtWQzGZQOTdd
-         PDGw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=wgxnSsbC7L9Mc1xpGuOrcn+3CuCN0TyjlWT75S2Kiac=;
+        b=jnhs3at7b6gjTcSeSjPpMq76cgMVqyKNjSIu4e25jVN0EtJovXtYIeSJS/yqjzTKMq
+         neBLv88jXC5XbrBAe1ATBJqHU33mHyxLFangqK3lkCNpnFyOmQMjLyWtGciHVTIOLRXv
+         RYL3WbDaeEoK9KEZylpAZlh/cIYIi6B56NwVM9ccC5/r3hJAoPBgasZCeHvojbIQjQTp
+         4TaZkSkiMcQJ33zX5LjNsAEyakj/gycwX+6sKiiK74CKI+A057eqd5caFESaTol4cKQU
+         Yzn4xWpxsNfoDG+Tn625pAi3RfKPrwY2fMqNkJpees2rKaAFXIfl3ko7xzC2fRrXaKQ0
+         CQFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=A0s/M57IBE90xfI8PWYqlE7fs0bCLICPYSyS8x2+/HY=;
-        b=WkMHMwZdGbC0ufi9Kv7p4cE04D8cH28siCX7u8Mbfh2S4rKtkc6Dcb4C/iOTQPx0fl
-         qvZVvzUp06AJEiDOOTmhRsvCGQmugC5hhIV4Bv3ACQL7S8qT4ASFzxHlVh7I5a5vYoDS
-         wJUTih/aWDoFR9d1oMImWFcuKiB0PTiQFooAcnR+Ao9vDd4St01flzr7brotaxQtpJJp
-         rI4u1gl3J0hVPEJI9LrjdL0IGBBOOEne+FopSgTeefwdY0lMv7Pk9KxjxMJdV0ZiEmhP
-         JQ/oZ2tYtzkEYCRshGf6j/auYrF39VfTyzk7Hqw93SZOGum1G7h2tQuD8N4osfvvf0PK
-         Oi6w==
-X-Gm-Message-State: AOAM530jwaAVTQH3YK0O+RkFa/biN+b0o/dxoqfKCIcLplP2RUr/3KtJ
-        Zgy9hDd5w8916gjGvIskxyZZvX8kg6F0Pw==
-X-Google-Smtp-Source: ABdhPJz4bqXA7AsKNlhdtOJQT2OwOusbB9w3bKeeGLAKKAsSnMswYNy/IKcpsAu+b0wKjE4Hm1xdgg==
-X-Received: by 2002:aa7:da01:: with SMTP id r1mr9127874eds.45.1607638665370;
-        Thu, 10 Dec 2020 14:17:45 -0800 (PST)
-Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
-        by smtp.gmail.com with ESMTPSA id m2sm5985159edf.27.2020.12.10.14.17.44
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=wgxnSsbC7L9Mc1xpGuOrcn+3CuCN0TyjlWT75S2Kiac=;
+        b=dY2lyXp60i9UdWTLlJv95ReOLK0y72bWKuXgsa5SYyUhmqMObYoHea/WKHYxnRSsLp
+         oVWikbEXwbPRyhn86/1j6q5n399WvK50rsYCB+IGClB+F2aIdoC3vOmPiWGBdHrStOWp
+         1Ieklqry+4tOjt4N9mivleLv0WBHFdSv0VDqLF8P8Qa8MVGRyMdmaKRJJYAwus/9LUrB
+         kg2SEE2uqNehX1bdYJlLudoGVAavCo3SNCK2/6uEWOmFVisOQ8d0MRrrhMQjb+wKx9Tt
+         ujwjytuCLfSZFO2pmhEKMIFnnRAJe6gFOKIhyTvJYPOsGIQjjHtfmSDpPdEejg8CAW6N
+         2kNA==
+X-Gm-Message-State: AOAM533PA9lhMUJ9VVa0YEF/kkMoqm6WJ3TXAw2Q7CCInEGBt9DtyxvG
+        P1yZF01or9/o/qX7cgm9W5gumbtgMhU=
+X-Google-Smtp-Source: ABdhPJxFalV0NNm2DR4IV0YZOH/kFJBHOA2DsGVMFqKuCanFdyYpoDOXkK19QSibAr9+aF1g/8Paeg==
+X-Received: by 2002:a1c:bc88:: with SMTP id m130mr10588234wmf.82.1607637519814;
+        Thu, 10 Dec 2020 13:58:39 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d9sm12240237wrc.87.2020.12.10.13.58.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Dec 2020 14:17:44 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] refs: warn on non-pseudoref looking .git/<file> refs
-References: <20201210125321.19456-1-avarab@gmail.com>
- <20201210125321.19456-2-avarab@gmail.com>
- <CAPig+cQpB3B+Ywc1aFd7QMrqVKy29VmNKJfzcFeSCYz=mwO0Hw@mail.gmail.com>
- <87sg8dwglk.fsf@evledraar.gmail.com>
- <CAPig+cSph9EcnGDUBjWsvR3yfbydK=mOMPmCEas=YC6bUJS=zA@mail.gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.13
-In-reply-to: <CAPig+cSph9EcnGDUBjWsvR3yfbydK=mOMPmCEas=YC6bUJS=zA@mail.gmail.com>
-Date:   Thu, 10 Dec 2020 23:17:43 +0100
-Message-ID: <87mtylwbjs.fsf@evledraar.gmail.com>
+        Thu, 10 Dec 2020 13:58:39 -0800 (PST)
+Message-Id: <483e490349165223a80a0bdf7716c5189560c977.1607637517.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.921.v4.git.git.1607637517.gitgitgadget@gmail.com>
+References: <pull.921.v3.git.git.1606230450.gitgitgadget@gmail.com>
+        <pull.921.v4.git.git.1607637517.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 10 Dec 2020 21:58:33 +0000
+Subject: [PATCH v4 1/4] init: document `init.defaultBranch` better
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Thu, Dec 10 2020, Eric Sunshine wrote:
+Our documentation does not mention any future plan to change 'master' to
+other value. It is a good idea to document this, though.
 
-> On Thu, Dec 10, 2020 at 3:29 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->> On Thu, Dec 10 2020, Eric Sunshine wrote:
->> > On Thu, Dec 10, 2020 at 7:55 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
->> > <avarab@gmail.com> wrote:
->> >> +       GIT_TEST_GETTEXT_POISON=3Dfalse grep "like a pseudoref" err &&
->> >
->> > What is the purpose of assigning GIT_TEST_GETTEXT_POISON here?
->>
->> Since 6cdccfce1e0 (i18n: make GETTEXT_POISON a runtime option,
->> 2018-11-08) we haven't needed to use the C_LOCALE_OUTPUT prerequisite
->> for any new code, since we can just turn the poisoning off.
->>
->> I think we should just slowly refactor things away from that
->> prerequisite and test_i18ngrep, which were only needed because it used
->> to be a compile-time switch, but I haven't gotter around to that
->> refactoring.
->>
->> In liue of that I think it makes more sense to always run the full test
->> if possible, no matter what the GIT_TEST_* mode is.
->
-> I must be missing something. I've looked at 6cdccfce1e0 but I still
-> don't see how or why `GIT_TEST_GETTEXT_POISON=3Dfalse` could affect the
-> simple `grep` invocation being done by this test. I could understand
-> if GIT_TEST_GETTEXT_POISON was applied to the invocation of a Git
-> command, but that's not the case here.
->
-> (I also notice that 6cdccfce1e0 only checks whether
-> GIT_TEST_GETTEXT_POISON is empty or not -- and the changes in
-> 6cdccfce1e0 set GIT_TEST_GETTEXT_POISON to an empty value rather than
-> to "false", so I find myself doubly confused by this application of
-> GIT_TEST_GETTEXT_POISON to `grep`.)
+Initial-patch-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ Documentation/git-init.txt | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-You're not missing something, but it seems I need to step away from the
-computer for the day. I managed to write this & reply to your E-Mail
-without noticing I'd put the GIT_TEST[...] env variable in front of the
-wrong command. It should indeed be in front of the rev-parse above.
+diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
+index 59ecda6c17d..2b399cb73d7 100644
+--- a/Documentation/git-init.txt
++++ b/Documentation/git-init.txt
+@@ -20,8 +20,9 @@ DESCRIPTION
+ 
+ This command creates an empty Git repository - basically a `.git`
+ directory with subdirectories for `objects`, `refs/heads`,
+-`refs/tags`, and template files.  An initial `HEAD` file that
+-references the HEAD of the master branch is also created.
++`refs/tags`, and template files.  An initial branch without any
++commits will be created (see the `--initial-branch` option below
++for its name).
+ 
+ If the `$GIT_DIR` environment variable is set then it specifies a path
+ to use instead of `./.git` for the base of the repository.
+@@ -73,8 +74,10 @@ If this is reinitialization, the repository will be moved to the specified path.
+ -b <branch-name>::
+ --initial-branch=<branch-name>::
+ 
+-Use the specified name for the initial branch in the newly created repository.
+-If not specified, fall back to the default name: `master`.
++Use the specified name for the initial branch in the newly created
++repository.  If not specified, fall back to the default name (currently
++`master`, but that will be changed in the future; the name can be customized
++via the `init.defaultBranch` configuration variable).
+ 
+ --shared[=(false|true|umask|group|all|world|everybody|0xxx)]::
+ 
+-- 
+gitgitgadget
+
