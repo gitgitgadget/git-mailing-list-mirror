@@ -7,102 +7,98 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDA1AC4361B
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 03:08:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F542C433FE
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 03:26:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7A88F23BE5
-	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 03:08:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1FCD823440
+	for <git@archiver.kernel.org>; Thu, 10 Dec 2020 03:26:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728183AbgLJDIM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Dec 2020 22:08:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40556 "EHLO
+        id S1729563AbgLJD0J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Dec 2020 22:26:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726278AbgLJDH6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Dec 2020 22:07:58 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34469C0613D6
-        for <git@vger.kernel.org>; Wed,  9 Dec 2020 19:07:18 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id d3so3298779wmb.4
-        for <git@vger.kernel.org>; Wed, 09 Dec 2020 19:07:18 -0800 (PST)
+        with ESMTP id S1729541AbgLJD0G (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Dec 2020 22:26:06 -0500
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12773C0613CF
+        for <git@vger.kernel.org>; Wed,  9 Dec 2020 19:25:26 -0800 (PST)
+Received: by mail-wr1-x442.google.com with SMTP id r3so3941673wrt.2
+        for <git@vger.kernel.org>; Wed, 09 Dec 2020 19:25:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=xF3jA9Kj2M8pj03BhmEglpE6VClR7plkbk8SAbYJ2yk=;
-        b=LsmzallyDhIEmD/FyLu6SAZOqSdBzg3RWCeMltWwfpxZ8MBubL0J/CvoFHgt+FL9VW
-         nQs0tjLtDtrrfidLeabfFa+0stjM1V0adCELP6TuH+ghZRkb256IZlr65hxhXsq5jU09
-         9xbij0HYW4dNeZqIr6buqEoIzX3RdXAoT0Z7zfDelRIyxckKF/gYUJQpbmgR4o3AH77p
-         gRvmamSK43rVi7/Jb09Q4XKnphwInOX/Pw5L0DhK/PsER/NvbUbbKjIYQryuKVocEJDO
-         3ShS3jvzVWeY7ifIbLUHzZIIgk90HBbOAwjSx85wem+CXCtc22g0YMuzruPEyLmTsFMD
-         +Hnw==
+         :cc;
+        bh=9jfs+UfolIU6rpbNVQkaZ+E3fTj8IDAIa/U1NDCRWS8=;
+        b=ghFEV4W7Moj6cOojNWz4ctJV/IkoYRKkbfonbqfs670mxAHV4hzPiBtv1CnLUR/XWf
+         tZEuphsfjH1X4/nlyVdw05N5Se0DpNFexLEgS5fBoqnA5Xp5ePreEUOA3hiMeqnr50TR
+         ohr8htQZezryetvMkT4tHqiOu70zDcBHXZT8A6M7MwbcrweCm3GuJybWQiIHdV6tnLb7
+         WMO9flCCSI+TE/Afg+WaHEt6pXIXe8eWtOzi5xgwmh9iIplHlElVfTZVyco4nU5XRiP8
+         KHIE481jVaNpPEinzLjERRKR06eXyRA3XSWcKCKmDHQIMc2CYH7lhIBBWI5S6xczk0v7
+         bt3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=xF3jA9Kj2M8pj03BhmEglpE6VClR7plkbk8SAbYJ2yk=;
-        b=HdWc3cGXdcAW34f3LYZB+bTOip0qVmNtSZ/LvCefXE5hfRowNR2+6jedliZ0LqW7Lu
-         BI71YYm45Qd6VVVII2/b516sD6yrSjC++U/1cP9oSf1An1jahg3BGcr2oiBB79wtPpz+
-         a2n+f1+xI7aieSBv6E8W4W6L/n7nJGfZTdxQZkQFPy5jcWysVYWAzkpJpoWeSTzU9QIZ
-         iu0QiEz421xBXKfXz6zPzDcJcYpRxUY2bXa7ZIXIKzTxWbnjFozwwif4iFn5NzNwCpDu
-         Rfy4d2H054TLv/9wgKxnGCBFBKKfZsQl+a1WFvUCeMZjFOupH+4Wy9wwYKcoN+nRmKyl
-         wAnA==
-X-Gm-Message-State: AOAM532HZ88A3dKGFGCIA3q8elb11IasOBo0DgwCANo3XvjGjUY+oMzB
-        8nQXewomvMusGJeTcQ0K/sZRh1sybXTzaODeyv0raFEEJuc=
-X-Google-Smtp-Source: ABdhPJyPY2FmLZEohLglREKstOPzkZs/N/tEYF0KDRWrm4LPh/1EzIjcQW86b3eHdKaKMHPrzaRtwSIvAd6KBwdmN/o=
-X-Received: by 2002:a1c:6008:: with SMTP id u8mr5540850wmb.173.1607569637005;
- Wed, 09 Dec 2020 19:07:17 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=9jfs+UfolIU6rpbNVQkaZ+E3fTj8IDAIa/U1NDCRWS8=;
+        b=ewI9zrR5IShqttpk8F5ygXm1MJAJgDSJLdA/5rCyZzZkLWhvaPnAYVs0GjIpm4JRYg
+         NUbruqdkZBpESGILXzkNOC9BeMKG6u7vnSgmoiQCuYsC1VAcpG6gbYMaaKeItBJx7SJO
+         apLZGUu/A3qvn61gC6vQlRYHfFNBGJSgROMThwEIK3/NxNDAdGDyAOs6rLt2XM89zyso
+         XJfIT43rq7YdtbUDdT49udriJoO7kHIzNa/SSOvCQM6Zgqh4xbYFj3HoOqNND/IzyUOt
+         vc2ySzse2fy8wgi6J8AjalCB0+ol6RsrhIzu/2g70xuPOJtaegrbEKtjMFt8CzG91uTt
+         tL3A==
+X-Gm-Message-State: AOAM532aX9CivtOpa77E/1L621tOm/aHfjH+/+suHFPXD2YzCfiVd5t2
+        vGOoF2iFQFSknLHvZD+MYSZfhJQY67/vHwLZmURVHINaJcs=
+X-Google-Smtp-Source: ABdhPJxoUBOVm7ZEtEJVIB6t14kG1SDZTC2w6foAanf4dSjehndcHG+vAM9XewEk00g7B0Pla7AHqFG+Yi2eFP9KAqs=
+X-Received: by 2002:a5d:52c1:: with SMTP id r1mr5764605wrv.255.1607570724874;
+ Wed, 09 Dec 2020 19:25:24 -0800 (PST)
 MIME-Version: 1.0
-References: <878sa7xujm.fsf@evledraar.gmail.com>
-In-Reply-To: <878sa7xujm.fsf@evledraar.gmail.com>
+References: <20201209065537.48802-1-felipe.contreras@gmail.com> <X9EFVIlm8sYKtLwr@coredump.intra.peff.net>
+In-Reply-To: <X9EFVIlm8sYKtLwr@coredump.intra.peff.net>
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Wed, 9 Dec 2020 21:07:06 -0600
-Message-ID: <CAMP44s1bemXUC2wR-2X2-Pp+=OU-=UrMsSroCwqu5jZ0krAy0A@mail.gmail.com>
-Subject: Re: RFC: Modernizing the contept of plumbing v.s. porcelain
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git <git@vger.kernel.org>
+Date:   Wed, 9 Dec 2020 21:25:14 -0600
+Message-ID: <CAMP44s24shbskATDCyffE4HC9vP6fnxQcWc-SBHLZQ2DEXaiwg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] vim: configuration and sharness syntax
+To:     Jeff King <peff@peff.net>
+Cc:     Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
+        Aaron Schrab <aaron@schrab.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 9, 2020 at 5:02 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
+On Wed, Dec 9, 2020 at 11:11 AM Jeff King <peff@peff.net> wrote:
 >
-> A lot of external guides and people's mental models of /usr/bin/git as a
-> scriptable client reference the concept of plumbing & porcelain. Just
-> one such example [1] prompted me to write this E-Mail.
+> On Wed, Dec 09, 2020 at 12:55:35AM -0600, Felipe Contreras wrote:
 >
-> I've wondered if we shouldn't be updating this concept to reflect the
-> reality on the ground in the git command ecosystem.
+> > After investigating alternatives for exrc I found too many, doing a wide
+> > range of irrelevant stuff, many unmaintained, others requiring multiple
+> > dependencies, and some loaded the configuration too late.
 >
-> I.e. if you look at "git help git"'s list of plumbing v.s. porcelain it
-> makes no mention or distinction between those commands & functionalities
-> that are truly transitory "porcelain". E.g. the specific error message a
-> command might return, and those that are effectively plumbing. E.g. some
-> "git config" functionality, "git init", the pretty formats in "git log"
-> etc.
+> I'm not opposed to this solution, but I probably wouldn't use it myself.
+> I wonder if it would be sufficient to just say "here are some sensible
+> vim options", coupled with human-readable instructions for how to
+> integrate them into your .vimrc, along with some path-selection.
 >
-> I'm not quite sure what I'm proposing if anything, just putting out
-> feelers to see if others think this documentary status quo has drifted
-> from reality.
+> It's perhaps not quite as turnkey. On the other hand, it's easy for
+> people who are even moderate vim users to understand what each line
+> does. In the plugin solution, there are more lines dedicated to loading
+> the config than there are actual config lines.
 
-One option would be to split git into two binaries: "git" and
-"git-tool". Obviously the latter would be plumbing.
+If they only code for Git, it's straightforward to tell them how to
+configure vim.
 
-We could slowly move the documentation to git-tool and by doing so we
-could see that if a porcelain man page has too many links to git-tool
-documentation, that's some area of opportunity.
+But if the user contributes to two projects with two different
+code-styles it gets to get tricky to tell them what to do. And when
+you get to three, my bet is that the vast majority of people wouldn't
+know what's the best solution for the user.
 
-Every time you access a git-tool command inside git, it still would
-work, but you will get a warning: "you are using a plumbing command,
-use git-tool instead". Scripts could enable GIT_TOOL_MODE=3D1 if they
-are going to access many of these commands and don't want to
-s/git/git-tool/.
-
-I would be a ton of work, but it's something I see value in doing.
+This is the most non-intrusive solution.
 
 Cheers.
 
---=20
+-- 
 Felipe Contreras
