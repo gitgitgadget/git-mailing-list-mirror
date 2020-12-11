@@ -2,134 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D038AC433FE
-	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 00:26:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3A23C433FE
+	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 00:46:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8A9AC23CD0
-	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 00:26:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76F1923DB4
+	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 00:46:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394555AbgLKAZ2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Dec 2020 19:25:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56008 "EHLO
+        id S2392429AbgLKAoq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Dec 2020 19:44:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2394556AbgLKAZC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Dec 2020 19:25:02 -0500
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B24BC0613CF
-        for <git@vger.kernel.org>; Thu, 10 Dec 2020 16:24:22 -0800 (PST)
-Received: by mail-wr1-x444.google.com with SMTP id t4so7275743wrr.12
-        for <git@vger.kernel.org>; Thu, 10 Dec 2020 16:24:22 -0800 (PST)
+        with ESMTP id S1733153AbgLKAoP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Dec 2020 19:44:15 -0500
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8D82C0613CF
+        for <git@vger.kernel.org>; Thu, 10 Dec 2020 16:43:30 -0800 (PST)
+Received: by mail-wm1-x344.google.com with SMTP id g185so7071126wmf.3
+        for <git@vger.kernel.org>; Thu, 10 Dec 2020 16:43:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=lqdrDpArYZsejqzME/nN5UGoqlspTqWkw4bsQl8ysLw=;
-        b=YFwTXIfTsSeUJxo/UrJWRGNQL1AXR9XAXkxMsg0CYF9+1oAW/TwlArNHQrwAg4UliN
-         R1w9UXacsaYuK5v6HEM169klT+/i0E3IRq79MIcYo87IQxRHp5cJ5skTStUMxU2duHle
-         Q21VzwJQNILrgZPGQeBXuitL3W4wpom32UUcE68mU/qtp74Uu7gEqHnY1mRzqp7N7udm
-         mNU4bOPfgUyymg9cmiBM3zRHqUl3/FpnA14rBKeIz0GaqM2qUC7rJLwSpgFl0lSi9nFr
-         YLJjN4HRsbocKE9ooL9J7bMBKBYSr2/WPBDatQ9cNQdzTm6Wc9Z3BSqUxyW0DcglO5+o
-         XuGg==
+        bh=c+cmaO3HSbaLVXG8n9Dx55EWjbTr38xRYTrkwUFQslc=;
+        b=b2GrsO7yDpBluA1NE1qVui9jfbqCtOG7ZY49VpcswG+ZHoI9c2eJpisHwYyckg0GyX
+         wSlSsJU3z5yQ1+IH1OJXXswhPuNb1oi1Iyq1NB+Ou8cfYFafPcPH4rc2LVGdsFJellch
+         mB+0QWFl4RvjEawZrgcggZ5M9ViE03zBoUBp93bAN78Sco0c4Yd7c7F5G2D1Udm2Qn95
+         quB7rcnevgeCu/oELinUM3HDcSSD7VT5ZPmsGQSfOp0dOGC+PZaesuxqR+rJ3zgmSR49
+         2GW28qB6MX9QmTdUhiIrdKtIX1CVE9MpnH9daUI/16NDfaGOLGfrNIx1qmEYjawdSa2x
+         04Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=lqdrDpArYZsejqzME/nN5UGoqlspTqWkw4bsQl8ysLw=;
-        b=CbRD03BEaIZ4VepRSnOa5oLwrYTbWiGQ8nx3V7kzW4O/LjqaA+gK8CPj93MTCJTw3x
-         4AVk8XgOZ5sAjCxsvt0+lzSdaWKtSMYrveJTvfULejM5SQgDpjndlIDMB9lq10Emb2Sa
-         k3EabxT4Uw9ByA53obipmftgSfH/+W1Af6z+cylVqiP8Pg6Rp435jWpXk0dvuUjjmRiq
-         Dt0pHhN8BO1H7mpgmui/lBFS6fLCUzIZZ4B0p211MtOlz8S5oVIHm7CwejOClh2JZnva
-         TwoU4I+13SNmMD1XrRyCRs36oQGmB2DJGrhpPMo+Q6EChH+8cJmqhP/HI6f58vX69BA6
-         5RFg==
-X-Gm-Message-State: AOAM532tPr5sG67Z0G3BbqkaXd/BF8CKT+s9/aqsBQJqSV5Fz+JH2+GY
-        ZwlS4uHG1LNffTMdz4lrGIvVwIn1uUjRTkAHRQc=
-X-Google-Smtp-Source: ABdhPJwKS4+MNySyMaMQUm+etyTcoVkjOO48IF/UTIb5oM2ifcFFuXc+mtr93B9Q6P60QBK0z8aLc9b06BKn+MfRLNg=
-X-Received: by 2002:a5d:68c9:: with SMTP id p9mr10907947wrw.139.1607646260938;
- Thu, 10 Dec 2020 16:24:20 -0800 (PST)
+        bh=c+cmaO3HSbaLVXG8n9Dx55EWjbTr38xRYTrkwUFQslc=;
+        b=cYMK+gfmBEsykTJE60idP2sicYH43wX85lVRu7PYbCTnxWDF3lJwJRzKIlXgvrL0p0
+         0PVaPR1v1/ZeCJrmGjEHlNdVFBueV6vS83riH9mgaFShE2eUIs5dUn8RMQw+h5oHn1S/
+         6sjd/YY1Bhxjj40TxOecjiWPiBOAM4dgShWU+K24pm4j/uIDwSK56i7CMP6FT43OkDrE
+         E3FEv1GDfdGVPsjE0vzCxgRdkIKUEdV8iobFsFuRsz8MP36RSitCS4HoesmPZ9ZIrzdk
+         1ukiWqS/+pN8NgW8tb54b2aFVo3DWegziskuDk7RlgOeN9ES5xmMb4SiuvXi9nGLCkXb
+         WPtA==
+X-Gm-Message-State: AOAM532IpCGsruxk0QK908KKjU1Mjo4iQvSRfMUdtErIm3ZRHY3sTkrV
+        OMEPqoe2F5+QqOe3BNK6ivAQnZ7T/5rxgj5290Q=
+X-Google-Smtp-Source: ABdhPJw1ZS6HQlb6GjPn3oeilSCVIeqgMPjj1qNXH4iTevIynJ1JHhc0WDsVhjLfS3pVijnSdJT6nuZxzc5FoRbposQ=
+X-Received: by 2002:a1c:df57:: with SMTP id w84mr10769278wmg.37.1607647409620;
+ Thu, 10 Dec 2020 16:43:29 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.921.v3.git.git.1606230450.gitgitgadget@gmail.com>
- <pull.921.v4.git.git.1607637517.gitgitgadget@gmail.com> <483e490349165223a80a0bdf7716c5189560c977.1607637517.git.gitgitgadget@gmail.com>
-In-Reply-To: <483e490349165223a80a0bdf7716c5189560c977.1607637517.git.gitgitgadget@gmail.com>
+References: <20201209065537.48802-1-felipe.contreras@gmail.com>
+ <20201209065537.48802-2-felipe.contreras@gmail.com> <X9EI8c9yeX136ewm@coredump.intra.peff.net>
+ <CAMP44s19FKYT5LNUxbGZP3czFmhe9t5B-FAfH+V2btNvMNW31g@mail.gmail.com> <X9I+eisn7sQuWZ1J@coredump.intra.peff.net>
+In-Reply-To: <X9I+eisn7sQuWZ1J@coredump.intra.peff.net>
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Thu, 10 Dec 2020 18:24:09 -0600
-Message-ID: <CAMP44s3mtCd9RnZdW7-HLcKVG13UW8u_1VNC0_7jByQRv61+vw@mail.gmail.com>
-Subject: Re: [PATCH v4 1/4] init: document `init.defaultBranch` better
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:   Thu, 10 Dec 2020 18:43:18 -0600
+Message-ID: <CAMP44s2yBLD+4GTny-GxAuoUdg66zChebsKc=-V7AeOw+RTx-A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] Add project-wide .vimrc configuration
+To:     Jeff King <peff@peff.net>
+Cc:     Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
+        Aaron Schrab <aaron@schrab.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 10, 2020 at 3:58 PM Johannes Schindelin via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+On Thu, Dec 10, 2020 at 9:27 AM Jeff King <peff@peff.net> wrote:
 >
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> On Wed, Dec 09, 2020 at 07:55:55PM -0600, Felipe Contreras wrote:
 >
-> Our documentation does not mention any future plan to change 'master' to
-> other value. It is a good idea to document this, though.
+> > >   - t0 is specifying not to indent function return types when they
+> > >     appear on a separate line. But our style is not to put those return
+> > >     types on a separate line, anyway. Do we need this?
+> >
+> > Right. I recall at some point it was annoying me that types were auto
+> > indented magically at wrong times. Testing "ts" that doesn't seem to
+> > happen anymore, but it also doesn't seem to be working at all.
+> >
+> > Do you see some difference from "t0" and "ts" with:
+> >
+> >   void
+> >   main(void) { }
 >
-> Initial-patch-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  Documentation/git-init.txt | 11 +++++++----
->  1 file changed, 7 insertions(+), 4 deletions(-)
+> No, but picking it does seem to impact a larger example. If I open up
+> wt-status.c and modify the first function to be:
 >
-> diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-> index 59ecda6c17d..2b399cb73d7 100644
-> --- a/Documentation/git-init.txt
-> +++ b/Documentation/git-init.txt
-> @@ -20,8 +20,9 @@ DESCRIPTION
+>   static const char *
+>   color(int slot, struct wt_status *s)
+>   {
 >
->  This command creates an empty Git repository - basically a `.git`
->  directory with subdirectories for `objects`, `refs/heads`,
-> -`refs/tags`, and template files.  An initial `HEAD` file that
-> -references the HEAD of the master branch is also created.
+> then reindenting it with t0 versus ts makes a difference (and I do
+> prefer the t0 behavior).
 
-The current sentence: "An initial `HEAD` file that references the HEAD
-of the master branch is also created." is still true. There's no need
-to change that (yet).
+I see.
 
-> +`refs/tags`, and template files.  An initial branch without any
-> +commits will be created (see the `--initial-branch` option below
-> +for its name).
+For some reason this is indented:
 
-Perhaps: (see the `--initial-branch` option below to choose another name).
+  void
+  main(void)
+  {
 
->  If the `$GIT_DIR` environment variable is set then it specifies a path
->  to use instead of `./.git` for the base of the repository.
-> @@ -73,8 +74,10 @@ If this is reinitialization, the repository will be moved to the specified path.
->  -b <branch-name>::
->  --initial-branch=<branch-name>::
->
-> -Use the specified name for the initial branch in the newly created repository.
-> -If not specified, fall back to the default name: `master`.
-> +Use the specified name for the initial branch in the newly created
+But not this:
 
-Again; the default name has not changed.
+  void
+  main(void) {
 
-> +repository.  If not specified, fall back to the default name (currently
-> +`master`, but that will be changed in the future; the name can be customized
-> +via the `init.defaultBranch` configuration variable).
+> But we would not use that split-line style in
+> our project in the first place, I don't think.
 
-Wait a second. The advice warning said "this is subject to change",
-and the documentation says "that will be changed in the future". Which
-is it?
+No, we don't use it, but I recall some problems when not setting it
+(perhaps pasting code with that style).
 
-"I might give you a fine", and "I will give you a fine" are most
-definitely not the same thing.
-
-Either say "this is subject to change" in both the documentation and
-the warning. Or say "that will be changed in the future".
-
-Don't say one thing in one and another thing in the other.
+Anyway, I can't reproduce any of the problems, so I'm fine with dropping it.
 
 Cheers.
 
