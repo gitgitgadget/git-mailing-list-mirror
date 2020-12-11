@@ -2,146 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F7D4C2D0E4
-	for <git@archiver.kernel.org>; Sat, 12 Dec 2020 01:00:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53A32C49EBD
+	for <git@archiver.kernel.org>; Sat, 12 Dec 2020 01:01:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7202C2343E
-	for <git@archiver.kernel.org>; Sat, 12 Dec 2020 01:00:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2381E23A33
+	for <git@archiver.kernel.org>; Sat, 12 Dec 2020 01:01:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2395484AbgLKOMA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Dec 2020 09:12:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41842 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390571AbgLKOLl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Dec 2020 09:11:41 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2B83C0613CF
-        for <git@vger.kernel.org>; Fri, 11 Dec 2020 06:11:00 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id a12so9167005wrv.8
-        for <git@vger.kernel.org>; Fri, 11 Dec 2020 06:11:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ktM5ME3t8px68f+M6cBhXfD7VP4fHOVQEfHAbNzd4z4=;
-        b=C6CHGDi4bmQ/a58w0SiW1crvK35FJXm1IE6Fh6/FpD8JpfRmiJzs7TENXkO3tKlff7
-         bKICUhitNTNNvjHfNqQG+3hcCTB6zbOJJlWNzvcqDo3tR6vF9MlVbiyXQBW8qN4oDx6K
-         jh/FR/dTlyc1P+bZ9gFqluIarTAz5yGsW/awjtAxW9zW4zHExjl3LGGGsSLTY98kpuHC
-         aBIOb0tIBx3ThMrnTNiZD0KSR81qoKp5uWRFzbNjRoo2mwDUbG3SCY1JJ1e6gXuoNrm7
-         C9LW0SNN8x4oYrJ/sh29lAwzq3HIJISx5dFl6/lBegovtSkVmMUPysUwQOuR1K9CYrNm
-         O4Eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ktM5ME3t8px68f+M6cBhXfD7VP4fHOVQEfHAbNzd4z4=;
-        b=LgY1JIsrR3MF1GXZ/eV2sYItC/p3ugPxaWz4E154hUdh6Hvo1s96QfJUFnjT04WEDx
-         UirN0T+hyZ8bef+PF57QJiXI5xQ48mB7JvdyunA0fdv2+00s90mlp1VO1vHeChh2jVCL
-         1Uw2vARzeZfaiCoqCvh9KzV7vVPbtbXHi6ICru6ux9sZJGrddGG36PaFH3Y/lrDgD3JO
-         gG2/Bd97YlJPs90MfRgnurkvwlcVu+9xQi87KFirbhBYm7/htmqmwuK3rJLFuvHTAoBI
-         +LRnXXELfFDDSBkoBtyIdqWa1RmHEK5ZfaAzeAuI88wArqZdyD50hPN7OC1Dghx9qSxO
-         yulQ==
-X-Gm-Message-State: AOAM532sE2X2o+PXg5P3gdjEzAXcBQNsjpT4gyTkqIzenxn2Q1HOYlV9
-        +1+BLON0MixzodCQevqUOm20oyvJh5H3uykbMpQ=
-X-Google-Smtp-Source: ABdhPJxJ6BZ3lwReCVJvSOFvrrZc8IdxFb38G69VQ4KzckRSwQErWcdpdh0W1RBoZP3PXl5UD1/Q01+FJAxxNK6eOow=
-X-Received: by 2002:a5d:68c9:: with SMTP id p9mr14164782wrw.139.1607695859474;
- Fri, 11 Dec 2020 06:10:59 -0800 (PST)
+        id S2394068AbgLKOVe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Dec 2020 09:21:34 -0500
+Received: from cloud.peff.net ([104.130.231.41]:58220 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2406087AbgLKOVA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Dec 2020 09:21:00 -0500
+Received: (qmail 9073 invoked by uid 109); 11 Dec 2020 14:20:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 11 Dec 2020 14:20:19 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7045 invoked by uid 111); 11 Dec 2020 14:20:18 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 11 Dec 2020 09:20:18 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 11 Dec 2020 09:20:18 -0500
+From:   Jeff King <peff@peff.net>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Philip Oakley <philipoakley@iee.email>
+Subject: Re: [PATCH v4 2/6] config: add new way to pass config via
+ `--config-env`
+Message-ID: <X9OAIs6cGdNVt4xV@coredump.intra.peff.net>
+References: <cover.1606214397.git.ps@pks.im>
+ <cover.1607514692.git.ps@pks.im>
+ <766ffe31a6f14c55d1b58a8f53edbb7f731b1b24.1607514692.git.ps@pks.im>
+ <X9D23LQv34A5Q5DC@coredump.intra.peff.net>
+ <X9NzE5+LNYqG1s+o@ncase>
 MIME-Version: 1.0
-References: <xmqqpn3j4ved.fsf@gitster.c.googlers.com> <nycvar.QRO.7.76.6.2012091502000.25979@tvgsbejvaqbjf.bet>
- <xmqqk0tq1xf3.fsf@gitster.c.googlers.com> <20201210152715.GQ52960@mit.edu>
- <xmqqim99wm61.fsf@gitster.c.googlers.com> <CAMP44s2Po25VyHs-xQG0_oKhAOvPK_PNu5edQkYYsScZeBw1nw@mail.gmail.com>
- <xmqqim98inml.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqim98inml.fsf@gitster.c.googlers.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Fri, 11 Dec 2020 08:10:48 -0600
-Message-ID: <CAMP44s1MMGN-uUf0NFBrmza0n-p0+evTqFBBM5YqdQapEVy-TQ@mail.gmail.com>
-Subject: Re: fc/pull-merge-rebase, was Re: What's cooking in git.git (Dec
- 2020, #01; Tue, 8)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "Theodore Y. Ts'o" <tytso@mit.edu>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git <git@vger.kernel.org>,
-        Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <X9NzE5+LNYqG1s+o@ncase>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 11, 2020 at 5:32 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
-> > On Thu, Dec 10, 2020 at 12:28 PM Junio C Hamano <gitster@pobox.com> wrote:
-> > ...
-> >> how much damage are we causing to
-> >> existing users who expect the command to work the way it currently
-> >> does?
-> >
-> > Zero. Because my proposal does *not* make the pull fail, it merely
-> > prints a warning that it will change in the future.
->
-> The approach to hold the "future" patch of and keep giving a
-> "warning" is still likely to cause damage to people like Ted and
-> Dscho (both gave examples of workflowsand automation that currently
-> happily creating merges as the user expects, while the user just
-> ignores the warning, without being configured at all), when finally
-> the "future" patch (after fixing the test breakages, of course)
-> lands.
+On Fri, Dec 11, 2020 at 02:24:35PM +0100, Patrick Steinhardt wrote:
 
-That's right. But it doesn't have to land.
+> > > +--config-env=<name>=<envvar>::
+> > > +	Pass a configuration parameter to the command. The <envvar>
+> > > +	given will be replaced with the contents of the environment
+> > > +	variable of that name. In contrast to `-c`, an envvar must
+> > > +	always be given and exist in the environment. Passing an
+> > > +	environment variable with empty value will set <name> to the
+> > > +	empty string which `git config --type=bool` will convert to
+> > > +	`false`.
+> > 
+> > I agree with Ævar that we probably should keep an empty variable as the
+> > empty string. I think some options use an empty string to clear a list
+> > (e.g., push.pushOption), and I'm not sure how they'd react to a bool
+> > instead. It would be nice to also have a way to do the implicit-bool
+> > thing, but I don't think it's strictly necessary (it's always correct to
+> > put the string "true" into the variable instead).
+> 
+> I think this is just weirdly worded in the `-c` case, which I mostly
+> copied. We _do_ keep the empty string, which effectively means that `git
+> config --type=bool` will return `false`.
 
-If after seeing the warning too many people complain about the
-upcoming change, we can backtrack and decide not to pull the trigger.
+Oh indeed, I misread what you wrote in the documentation. I think it is
+doing the right thing, then. IMHO it is not worth even calling out
+specially, since there is no matching implicit-bool form. I.e., I'd
+probably just cut the final sentence.
 
-> They just ignored the current loud messages---I do not see
-> any reason to expect the updated "warning" would have any effect on
-> them and help them to prepare for the future default change.
+> Or do you mean that we should allow `--config-env=foo.bar=`?
 
-Nobody has offered them the chance to set "pull.mode=ff-only".
+Hmm, yeah, that would work as an "implicit bool". But it's sufficiently
+ugly and non-intuitive (and weirdly overlapping with "-c") that I'm not
+sure it is worth supporting.
 
-So how do you know they will not take the offer of something they
-haven't been offered yet?
-
-There's only one way to know.
-
-> It is either being dishonest or deliberatly closing eyes to say
-> "Zero" after hearing what they said, I would have to say.
-
-It is a fact that a different warning (which is what I'm proposing)
-will not affect them. There's no two ways about it.
-
-Moreover, Ts'o said that he is already typing "git pull --rebase", so
-he won't be affected.
-
-We can leave this warning indefinitely; one year, two years... until
-v3.0 is released. As much time as is needed, and after ten years
-decide we don't want to pull the trigger after all.
-
-Take a look at what happened with `merge.defaultToUpstream`. You
-introduced it in 2011 after others and I suggested it:
-
-93e535a5b7 (merge: merge with the default upstream branch without
-argument, 2011-03-23)
-
-And it was not actually made the default until 2014:
-
-a01f7f2ba0 (merge: enable defaulttoupstream by default, 2014-04-20)
-
-But *only* after we were confident this is what users actually wanted.
-
-This gives us the best of all worlds; 1) a configuration that is sane
-and potentially most people want to use, and they can use, as an
-opt-in, 2) a potential to flip the switch and make this behavior the
-default any time we want (after it has been extensively tested), and
-3) the potential to backtrack and leave it forever as an option, and
-never make it a default.
-
-Cheers.
-
--- 
-Felipe Contreras
+-Peff
