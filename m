@@ -2,155 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5E82C433FE
-	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 06:28:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A684C4167B
+	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 06:56:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7930223EB3
-	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 06:28:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1606F23F57
+	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 06:56:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2395493AbgLKG2L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Dec 2020 01:28:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55182 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2395491AbgLKG1n (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Dec 2020 01:27:43 -0500
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D540C0613CF
-        for <git@vger.kernel.org>; Thu, 10 Dec 2020 22:27:03 -0800 (PST)
-Received: by mail-wr1-x444.google.com with SMTP id t16so7831597wra.3
-        for <git@vger.kernel.org>; Thu, 10 Dec 2020 22:27:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=j0Bzx9DV5+JYti0ZWSmFtl9GgpewWEjM4LhH5Gu0SQY=;
-        b=YpR4zMBSpBGoAnIlmFzqtq7IgFJ0qh9CGBZTIvhTR1t0eSEAcYqy8IwoPxPdPn7Kpa
-         AqYLCBcrnNgroWzawrVcRFC/qvKYgNRvyJGlZnW7drlM+/AUbj4TaJKcamTC0tsmprNY
-         wRJUBCJqiUFi0YsgmWb67KvNEOS9kjTOJ6tPGnlC7SI6md4ofmqNAr+DhaeVWsEaJHnW
-         M6f08CjnSOvQfJE2hHP+5lbpM5Z4G/p1qCm6jgFbgsbVuVhpXw+Eq8D8aZXkXedvQ3kJ
-         mGK4jvpRVSiMrfgojA71SqDVispp0V8P2yStf++M0+z1D1HcHriafHcHxthS2gKJAG5c
-         35oQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=j0Bzx9DV5+JYti0ZWSmFtl9GgpewWEjM4LhH5Gu0SQY=;
-        b=fwtn8fpMeJB39pTgoOcNotOXYaKCdBRddvR9bDPg+FbI24/IFJ8xipuexXDdVRrcPB
-         On/Pbhbf8mPI4yAxBNy+Zei3JQfkfLQZKkQ4II8a+JNu2TOOBxBBx3DOVG353sMBbG1q
-         ejTpo6ko5CvevXeo0qprJwTMoAAiNZVBWh7i20Cv3EeQeM30GH9x7hURpDwtl8iiwmaC
-         Tbj33dN9iFU56DEG5uD68JJMVOEX6UbAZJWIGbVEf3chJwJjd/WP/u2I3Cpmh699CyOi
-         83NreE3noNAba4NyFsU899m40hAa0hMr/MrkmibgsY/rz+PIfaCxzmZ8hAHEB/7cWWFp
-         OpWQ==
-X-Gm-Message-State: AOAM532i5b4FADruTdP7UERglOEpdBTAlRHVRh+YpGifAsgTAH542BVc
-        4j0rhICshpEuiAMAFvGLPshrY3xdXN/mGVBAVRE=
-X-Google-Smtp-Source: ABdhPJyxlp+zxAqZVCYvWy0Zf7DdXiVYTYyfJzQcdwFMbgAuwSKrnTgt8K3z3z8mrdmAq2yJlWzRPy26OrNGXVbQCZ8=
-X-Received: by 2002:a5d:68c9:: with SMTP id p9mr12020726wrw.139.1607668022285;
- Thu, 10 Dec 2020 22:27:02 -0800 (PST)
+        id S2391245AbgLKGzb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Dec 2020 01:55:31 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59139 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2436599AbgLKGy4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Dec 2020 01:54:56 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 12D3D8B97E;
+        Fri, 11 Dec 2020 01:54:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=dHxHnYUHS63qHOWJI5InpjsmtCE=; b=W1d+QYkD5Ca9SQoJ9ZM5
+        SVqOHq9Am3usWe0xz+QTNiATdxIf24cBeT5m/mTZqDwdv3aONTDgYVNa7Sn/Ac5H
+        AY6nYpLy4SyXTYdynt07OtwMt+CplgDRImVWcciWr1m+7/j4F6loq7odgQ4wUS4x
+        7mqpVzaE2OC36WL3dick76A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=UiIzIALWM20az/5Obz/cQ/+HM6ePFrE15Bwgbnd5b+eunR
+        9+O7rEhVJ1uLSii77ndrnU8rr+ilbbwzhVpvhUNcH4A7Ty88jvm1Uhvtu68TEf4x
+        IlcFTSQVuPzWS2aurA4s2KbVDEFobbClyGgavw1TNpF6QGNLs0ufPMO6XUFUY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 08C878B97D;
+        Fri, 11 Dec 2020 01:54:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8331C8B97C;
+        Fri, 11 Dec 2020 01:54:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?Q?V=C3=ADt?= Ondruch <vondruch@redhat.com>
+Subject: Re: [PATCH v5 2/3] pull: move default warning
+References: <20201210100538.696787-1-felipe.contreras@gmail.com>
+        <20201210100538.696787-3-felipe.contreras@gmail.com>
+Date:   Thu, 10 Dec 2020 22:54:12 -0800
+Message-ID: <xmqqy2i4ltnv.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.921.v3.git.git.1606230450.gitgitgadget@gmail.com>
- <pull.921.v4.git.git.1607637517.gitgitgadget@gmail.com> <483e490349165223a80a0bdf7716c5189560c977.1607637517.git.gitgitgadget@gmail.com>
- <CAMP44s3mtCd9RnZdW7-HLcKVG13UW8u_1VNC0_7jByQRv61+vw@mail.gmail.com> <xmqqblf0opwn.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqblf0opwn.fsf@gitster.c.googlers.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Fri, 11 Dec 2020 00:26:51 -0600
-Message-ID: <CAMP44s1qW=_x6FeU7-dho+bxmY+0n4EehW8-Xy3PX_+sbhjmcg@mail.gmail.com>
-Subject: Re: [PATCH v4 1/4] init: document `init.defaultBranch` better
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: ADAAD284-3B7D-11EB-B7F7-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 10, 2020 at 11:47 PM Junio C Hamano <gitster@pobox.com> wrote:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+
+> Eventually we want to be able to display the warning only when
+> fast-forward merges are not possible.
 >
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
-> >> -`refs/tags`, and template files.  An initial `HEAD` file that
-> >> -references the HEAD of the master branch is also created.
-> >> +`refs/tags`, and template files.  An initial branch without any
-> >> +commits will be created (see the `--initial-branch` option below
-> >> +for its name).
-> >
-> > The current sentence: "An initial `HEAD` file that references the HEAD
-> > of the master branch is also created." is still true. There's no need
-> > to change that (yet).
->
-> The change updates the description for readability, lowering the
-> technical level of description, and correcting inaccuracies.
+> In order to do so we need to move the default warning up to the point
+> where we can check if we can fast-forward or not.
 
-OK.
+Makes sense.
 
->  - The readers in the context of understanding what "git init"
->    performs does not have to know nor care that HEAD is implemented
->    as a file.  In fact, there is an effort to introduce HEAD and
->    other refs that are implemented as individual files under
->    $GIT_DIR/.  Dropping the word "file" is to correct these.
+> Additionally, config_get_rebase() was probably never its true home.
 
-Right.
+I agree with this point.  I've always found it suboptimal.
 
->  - Also we no longer say "the HEAD of" a branch, even if we used to
->    use that expression.  When we really need to refer to the commit
->    directly pointed at by a branch ref, we say "the tip of" instead
->    there days.
+> This requires a temporary variable to check if we are in the
+> "default mode" (no --rebase or --no-rebase specified).
 
-Sure.
+Two points:
 
->  - It used to be left unsaid that the initial branch begins its life
->    without any commit.  Now it does.
+ - "mode" is so overused a word; a more focused word is preferrable.
 
-OK.
+ - by introducing a local variable in cmd_pull() and passing a
+   pointer to it to config_get_rebase(), we can easily avoid having
+   to rely on an extra global variable.
 
-> None of these is about "'master' or any other name?" issue.
+I'd suggest addressing the above along the following lines.
 
-Indeed, but the commit message clearly states:
+   -static enum rebase_type config_get_rebase(void)
+   +static enum rebase_type config_get_rebase(int *rebase_unspecified)
+    {
+   +        *rebase_unspecified = 0;
 
-  Our documentation does not mention any future plan to change 'master'
-  to other value. It is a good idea to document this, though.
+            ... various "return" of configured values ...
 
-It doesn't say anything about improving the documentation of "git
-init", nor any of your three points. The main intention is clear.
+   +        *rebase_unspecified = 1;
+            return REBASE_FALSE;
+    }
 
-On top of your three points it sneaks another change; avoiding the
-"master" branch name. If this really had nothing to do with the
-"master" branch name, it could very well be sent as a separate
-independent patch.
+Then the caller would declare
 
-The following text has your three valid points, but doesn't sneak in
-the extra change:
+	int rebase_unspecified = 0;
 
-  An initial "master" branch without any commits will be created (see
-  the `--initial-branch` option below to choose another name).
+and call 
 
-> > Perhaps: (see the `--initial-branch` option below to choose another name).
->
-> That changes the meaning of the explanation.  It is compensating for
-> not saying what the name of the initial branch is, and is not trying
-> to teach that the name can be changed.  The text in the patch is good
-> as-is.
+	if (opt_rebase < 0)
+		opt_rebase = config_get_rebase(&rebase_unspecified);
 
-In English parentheses are used to clarify information, and typically
-it's *supplementary* information. That is; the sentence must stand on
-its own without them.
+to possibly cause it to set to true, and use that instead of the
+global variable to decide if we want to give the help text.  When
+the helper is not called due to opt_rebase already being set, it is
+not using configured value but using the choice from the command
+line, so rebase_unspecified is still false after this point.
 
-This sentence is missing crucial information and it doesn't stand on its own:
+> @@ -1040,6 +1029,21 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+>  	if (opt_rebase && merge_heads.nr > 1)
+>  		die(_("Cannot rebase onto multiple branches."));
 
-  An initial branch without any commits will be created.
+And this is the point where we finish various error checks and
+starts to run either rebase or merge.  It is as late as we could
+delay the "non-ff and you are not configured" message.  In other
+words, the place chosen in cmd_pull() to move this code to is
+optimal.
 
-This one does stand on its own:
+> +	if (default_mode && opt_verbosity >= 0 && !opt_ff) {
+> +		advise(_("Pulling without specifying how to reconcile divergent branches is\n"
+> +			 "discouraged. You can squelch this message by running one of the following\n"
+> +			 "commands sometime before your next pull:\n"
+> +			 "\n"
+> +			 "  git config pull.rebase false  # merge (the default strategy)\n"
+> +			 "  git config pull.rebase true   # rebase\n"
+> +			 "  git config pull.ff only       # fast-forward only\n"
+> +			 "\n"
+> +			 "You can replace \"git config\" with \"git config --global\" to set a default\n"
+> +			 "preference for all repositories. You can also pass --rebase, --no-rebase,\n"
+> +			 "or --ff-only on the command line to override the configured default per\n"
+> +			 "invocation.\n"));
+> +	}
 
-  An initial "master" branch without any commits will be created.
+Either as a part of this step, as a part of the next step, or a
+separate follow-up patch, we should
 
-(and doesn't omit any current information.)
+ - create a single-purpose helper function that only calls advise()
+   with the message and returns; name it show_advice_pull_non_ff().
 
-Cheers.
+ - correct the if() statement above, so that regardless of verbosity
+   level, we can do _something_ common when the history does not
+   fast-forward.  I.e.
 
--- 
-Felipe Contreras
+	if (rebase_unspecified && !opt_ff) {
+		if (opt_verbosity >= 0)
+			show_advice_pull_non_ff();
+	}
+
+These would allow us to further turn the logic to
+
+	if (rebase_unspecified && !opt_ff) {
+		if (opt_verbosity >= 0 && advice_pull_non_ff)
+			show_advice_pull_non_ff();
+		die("not a fast-forward; must merge or rebase");
+	}
+
+later in the far future, and we do not want that die() to be
+affected by verbosity settings.
+
+I'll queue such a fix-up patch on top of the series before pushing
+the integration results out on 'seen'.
+
+Thanks.
