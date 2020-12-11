@@ -2,253 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EEE0C433FE
-	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 02:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C69FC4361B
+	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 03:02:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B517F23E54
-	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 02:58:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ECC4F23C82
+	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 03:02:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404734AbgLKC5m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Dec 2020 21:57:42 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57962 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2403848AbgLKC5S (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 10 Dec 2020 21:57:18 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 96F9460769;
-        Fri, 11 Dec 2020 02:56:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1607655397;
-        bh=NQ9kANgg95sthEgPz9h5kp/YJWsSzeNZoUta1Q3w1V0=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=DsvuxezHc9NDg61FsXTzNmUmtq+dJaqKz6Mp23JXNKlxCb6dlvXVSaYZsUGUkKCo6
-         NmeI52upTGaiAOCsikubUaLtuqaG/sh7LoAhQR61UPaProHSoTafQyCHHgxf/8uW1X
-         UcIKbEZq1COMnUXGKR4IoMpBQXFBqLfs7ZQJTSSMfeg7LCg5hljioyJ4Yre7V51OWa
-         msE7H2Qu3ybLFIGJ5xYvBdKEq7VoDgOlSAUna3Uny4GgqmvQWQ7qfGRXuYOazyvP1K
-         H+KqOOBC71ZpZTRdAhXkRHrlghfJQKUoTlbu42xuxZPmP1ZFlfCCmpF/JMyDzRGPno
-         8sbBM93HVliHZ8gACYrbOKa8/vh0Bcl7fZIDeyooJLyu6kjmH5LrnXTJQQsklVwcKu
-         +ughwl4yACJqTp4lHiiVc3+fVjBFNLdf9a1mGginACyHIWE95ZiK/c7VblpuYpuMFl
-         YEi2jPXYt6RbwiTjdXL5ele4EP4nq+jFP6SqNIRwBLaSlSPaiWL
-Date:   Fri, 11 Dec 2020 02:56:22 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Aaron Schrab <aaron@schrab.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2 1/2] Add project-wide .vimrc configuration
-Message-ID: <X9Lf1p++YktzZMWe@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Emily Shaffer <emilyshaffer@google.com>,
-        Aaron Schrab <aaron@schrab.com>, Denton Liu <liu.denton@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-References: <20201209065537.48802-1-felipe.contreras@gmail.com>
- <20201209065537.48802-2-felipe.contreras@gmail.com>
- <X9GbIG9vZbK1pEoi@camp.crustytoothpaste.net>
- <CAMP44s33J6F60W=2Yd2WSGE78VT0XBkewi8m3unXvathBH2TOQ@mail.gmail.com>
+        id S2404953AbgLKDB6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Dec 2020 22:01:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51954 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2404635AbgLKDBb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Dec 2020 22:01:31 -0500
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com [IPv6:2607:f8b0:4864:20::843])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96915C0613CF
+        for <git@vger.kernel.org>; Thu, 10 Dec 2020 19:00:51 -0800 (PST)
+Received: by mail-qt1-x843.google.com with SMTP id b9so5504312qtr.2
+        for <git@vger.kernel.org>; Thu, 10 Dec 2020 19:00:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=xnAj6P36mRFrOKlNFGBIp59D8zj41WyOisgqN/6E1gQ=;
+        b=Gl9QI9sE73Hub3GGL5GHCwqujxktsRwiSHWKJxmft2NAeTRxo4CXmtI8/3sLmkmnfW
+         00Hea5ZrZfjHeXm0AYy9w0Mi01KxxIC8gaAvNK+YLu/QqIyhJc1Pbg3o8SMhw6zZB+Rp
+         XQGh8NHg3s27j1o19XcZpOWsnww1y6j+OAe5CXlhDvbIWR2FAxyFpx63Ic6pfSNNwKC6
+         20oagtLgxP4uqy48v4X1NRTu9C5rbaAqEEejjm2mwv4Kfh9jmNb79qZm3bjD/0acVa2/
+         H2XwQgV6mAAzHAHGZHHstFCM5jVr5Po8y1Wkl1Bl6+p7zb7PPlTpTjCd2KYiSf8rFl1p
+         a5HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=xnAj6P36mRFrOKlNFGBIp59D8zj41WyOisgqN/6E1gQ=;
+        b=STkRZa2oxzHHIVNwuplGJQHF8CPpIChY3vEljtON3e1b0qDdWo4SYlCa3nABx8LGYg
+         hru2Yz1Bq3MrA/shuHo0+W8KReoARANx73RlE3EqQpCHwLjx6oRMIzqCihMfDBv56qmz
+         eEG/5LtBm3J+PrQPWZjHZr/14de6zzfuSzpu6mK0YliesCqMrN42uos9i8oxW6CaPupS
+         CSb4zKbVm8LACfWAU/691PcC+keOVT+b0fpic9a6c3TGIrIMhQ0VQEFU1R4sAoIxPSVb
+         /ACZK4/bZJiYjaWrAdQyIx26Z9qjP70QteGQFjmGafKpC0KAfSwj4S4nR846rOdm3iaV
+         lOKQ==
+X-Gm-Message-State: AOAM530IsmGbW6neM2Fej6H2oqrJ1edc7n96K02DFcuWF7CXwHpMqOuR
+        wm4Sd5xly3eCjR4DeZtT/Ds=
+X-Google-Smtp-Source: ABdhPJzKR+Aoy6FLy7TPWNwX9N2WPSb//1PkOV75g4h1ZpdloUZ5Hx0XJ2hIDVfUULSLnEEbZvdsDg==
+X-Received: by 2002:ac8:45d7:: with SMTP id e23mr12743050qto.149.1607655650677;
+        Thu, 10 Dec 2020 19:00:50 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:585e:c315:5afa:f8a1? ([2600:1700:e72:80a0:585e:c315:5afa:f8a1])
+        by smtp.gmail.com with UTF8SMTPSA id k32sm5476988qte.59.2020.12.10.19.00.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Dec 2020 19:00:50 -0800 (PST)
+Subject: Re: [PATCH 04/11] merge-ort: implement compare_pairs() and
+ collect_renames()
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>
+References: <pull.812.git.1607542887.gitgitgadget@gmail.com>
+ <207bb9a837cb855721daa88caaad80e37cb40ffe.1607542887.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <8d744966-2344-1dbc-f2a2-7411be3bfc8b@gmail.com>
+Date:   Thu, 10 Dec 2020 22:00:49 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101
+ Thunderbird/84.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="zvyZUAG8fIa2htdR"
-Content-Disposition: inline
-In-Reply-To: <CAMP44s33J6F60W=2Yd2WSGE78VT0XBkewi8m3unXvathBH2TOQ@mail.gmail.com>
-User-Agent: Mutt/2.0.2 (2020-11-20)
+In-Reply-To: <207bb9a837cb855721daa88caaad80e37cb40ffe.1607542887.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 12/9/2020 2:41 PM, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
 
---zvyZUAG8fIa2htdR
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Perhaps worth pointing out comparison to score_compare() 
 
-On 2020-12-11 at 01:08:00, Felipe Contreras wrote:
-> On Wed, Dec 9, 2020 at 9:51 PM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > On 2020-12-09 at 06:55:36, Felipe Contreras wrote:
->=20
-> > I don't think this should go in this location.  It should go in contrib.
-> > Here's why:
-> >
-> > * We should not ship editor-specific files in the main directory of the
-> >   repository.
->=20
-> Why not?
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  merge-ort.c | 27 +++++++++++++++++++++++++--
+>  1 file changed, 25 insertions(+), 2 deletions(-)
+> 
+> diff --git a/merge-ort.c b/merge-ort.c
+> index 1ff637e57af..3cdf8124b85 100644
+> --- a/merge-ort.c
+> +++ b/merge-ort.c
+> @@ -625,7 +625,13 @@ static int process_renames(struct merge_options *opt,
+>  
+>  static int compare_pairs(const void *a_, const void *b_)
+>  {
+> -	die("Not yet implemented.");
+> +	const struct diff_filepair *a = *((const struct diff_filepair **)a_);
+> +	const struct diff_filepair *b = *((const struct diff_filepair **)b_);
+> +
+> +	int cmp = strcmp(a->one->path, b->one->path);
+> +	if (cmp)
+> +		return cmp;
+> +	return a->score - b->score;
 
-Best practices indicate that we don't check in files which are specific
-to a developer.  Anything that controls the specific editor people use
-is by definition specific to the developer.  Checking in these files
-leads to conflicts over which settings to apply and whose settings are
-better when they could just be avoided.
+Hm. I wasn't sure what would happen when subtracting these
+"unsigned short" scores, but I see that score_compare() does
+the same. Any potential for an existing, hidden bug here?
 
-If we have style policies, those should be expressed in a general,
-universal way so that all users can take advantage of them in the same
-way.
-
-Furthermore, some editors want entire large directories of configuration
-files in order to work correctly, which we don't want to include.
-
-If we treat all editors in the same way, then every developer gets the
-same experience when they work on our code.  If that experience is
-inadequate, our time would be better spent improving it in a universal
-way so that all developers can benefit.
-
-> >   Even though Vim is very popular, it is one of many
-> >   editors, and it is not even the most popular editor (which is now VS
-> >   Code).
->=20
-> Even if vim is not the most popular, it certainly is among the top 3
-> (and I doubt VS Code is the most popular, I would like to see some
-> numbers on that, but even then; VS Code is not an editor).
->=20
-> Nobody is arguing to have editor-specific files for "every editor
-> under the sun", just perhaps 2 (or maybe even 3).
->=20
-> No slippery slope fallacy here.
-
-Because we don't need them.  Your solution requires the user to
-configure Vim with a plugin _and then_ allow the specific directory in
-order to be secure, which means it doesn't work with worktrees.  It also
-requires that the user never pull an untrusted branch into their
-repository.  It also has other undesirable effects which I mentioned in
-my original email.
-
-The .editorconfig file also requires a user to configure a plugin, once,
-and then things automatically work in a secure way across projects.  In
-other words, the existing solution requires a user to affirmatively act,
-but with less effort, less potential for security problems, and better
-cross-project support.
-
-So the .vimrc solution requires more effort, has more potential security
-problems, is less flexible, is less like how other projects solve this
-problem, and is less general.
-
-> >   We have editor-independent files, and users can copy this into
-> >   the root of the repository and ignore it if they want it there.
->=20
-> Which are insufficient. They are certainly better than nothing. Plus,
-> it's unclear how many people are actually using those.
-
-Why are they insufficient?  Multiple developers are using them on Git
-already.  They're used on projects from Microsoft[0], W3C[1], and folks
-working on JSONPath[2].  They are the de facto standard for this
-purpose.
-
-In contrast, searching GitHub commits for ".vimrc" shows overwhelmingly
-that the repositories in which these commits are named are called
-"dotfiles".  I was unable to find any projects from major organizations
-using this configuration style.
-
-My general rule is that when I'm unsure what decision to make on a
-project, I should make the decision that everybody else has made,
-because users and developers will expect my project to work just like
-everyone else's.
-
-> And I'm still waiting for the argument against adding such a top-level fi=
-le.
->=20
-> What is the harm?
-
-As mentioned, enabling the use of this file is still risky from a
-security perspective because it precludes even pulling in an untrusted
-branch and then spawning an editor.  We already have a more general
-solution that is more widely adopted and has fewer downsides, so there's
-no point in adding files which really provide little benefit over what
-we already have.
-
-If there's little benefit, we shouldn't carry files which are going to
-be subject mostly to pointless arguments over personal preference.  The
-fact that two heavy Vim users disagree so strongly over relatively
-simple settings is an argument for not adopting this approach as a set
-of project settings.
-
-> > * Whether a user wants to use automatic indentation is a personal
-> >   preference.  I do happen to like it, but there are others who don't
-> >   and prefer to leave it off.  Similarly, whether to use cindent,
-> >   smartindent, or autoindent is a preference, as is which cindent
-> >   options to use (I use different ones).
->=20
-> So?
->=20
-> These options will not be forced on users, they have to specifically
-> enable them by doing at least two steps, *and* they can still
-> selectively override them in their ~/.vim files.
-
-Right, but why are your preferred settings checked into Git as a project
-setting?  They are objectively no better than my settings, which differ.
-Absent a compelling reason that these settings are objectively better,
-we should not endorse them as preferred project settings.
-
-> > * These settings affect every file that's loaded in the same editor
-> >   process.
->=20
-> That is not true.
->=20
-> :setlocal [1] applies the setting to the current buffer only, not
-> globally, and *only* when the buffer is of the filetype specified in
-> the autocommand.
-
-So if I spawn an editor process using this .vimrc in my Git directory
-and then I load an AsciiDoc file from a different repository into that
-same Vim process, are you arguing that the Git settings will not be
-applied to the AsciiDoc file from other directory?  I'm pretty sure that
-Vim will in fact use the Git settings.  It's possible, however, that
-I've misunderstood how Vim works.
-
-=2Eeditorconfig doesn't have these downsides.
-
-> > So while I agree that these are common settings, they are not
-> > universally applicable, even for Vim and Neovim users, and we shouldn't
-> > try to claim that all or even most Vim and Neovim users should use them.
->=20
-> We don't. These are defaults, which a) the user must consciously
-> choose to apply them, and b) can be easily overridden (as is explained
-> in the commit message).
-
-I'm arguing that they are not universal enough to be defaults.
-Moreover, a set of defaults for how a user _could_ configure their
-editor would belong in contrib, much like defaults for how a user
-_could_ configure their MUA to send properly to the mailing list.
-
-We already have files for Emacs and VS Code, and those live properly in
-contrib, along with code for Thunderbird and alternative build systems.
-If we're treating this proposal like existing code, it belongs in
-contrib.
-
-The .editorconfig file, on the other hand, doesn't express defaults.  It
-expresses only project standards and doesn't specify any other settings.
-
-[0] https://github.com/microsoft/fabrikate
-[1] https://github.com/w3c/specberus
-[2] https://github.com/jsonpath-standard/internet-draft
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---zvyZUAG8fIa2htdR
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX9Lf1QAKCRB8DEliiIei
-gTDYAP9Mqt1mr3WwOPzPOrADjp55+fixIiizeZVqvC/9jBjx1wEAkeslFRfawDZQ
-JFnwGwN1A7a7eteNpeHOIhf700eHGgU=
-=45Gu
------END PGP SIGNATURE-----
-
---zvyZUAG8fIa2htdR--
+Thanks,
+-Stolee
