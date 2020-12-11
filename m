@@ -2,174 +2,170 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F730C433FE
-	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 13:26:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C5C1C4361B
+	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 13:30:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 498D723108
-	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 13:26:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0BFDC23137
+	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 13:30:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406150AbgLKN0B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Dec 2020 08:26:01 -0500
-Received: from wout3-smtp.messagingengine.com ([64.147.123.19]:41013 "EHLO
-        wout3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2404972AbgLKNZu (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 11 Dec 2020 08:25:50 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id C4EFAA7C;
-        Fri, 11 Dec 2020 08:24:38 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Fri, 11 Dec 2020 08:24:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm2; bh=g3x8XHBxQDyiKHUAoo8b761ljNc
-        RpznD5HNJb+szZZ4=; b=vn7QqlsrpuRTShRsktIS24H9ZXyPeVhFyjFWZ7/b7nR
-        WH+hNhOnqjJzgbYIcmarzQNpzhSultK4K7+BP/q6vSxchzM4saDu0rEO6tq9krWK
-        +VBCTHMj0PBOFETtB/tNuam7/PbFw/gpJZJCwaBQHDMzYMs19l0raVQ91sZymXhd
-        9KceI7XxcGMUA85ZIUiTe+mf39v4FRCafG+nHRkNTJ7InU4G3otxol89rA2q5ypx
-        XNRO2truOQTp7Wsjco/aY4xlQD08ZevIJW8ocQwOoO+TIxWKc751vO28894lhu1C
-        w8iM8KNRaQ2mz3jb3rmzjxov4D9PGRyc7668UYG0nJQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=g3x8XH
-        BxQDyiKHUAoo8b761ljNcRpznD5HNJb+szZZ4=; b=mzpIFSwzxgZ45AU13oUgyx
-        hol/x3uoi8yzREEpgi+w1L3gOVuOvym8ui+6pEx0rO/APWb+CIZBtIcuvSfPnE0P
-        pDM1DzwP1MvQTZcNBqIGcKJbAciU4KyAmLsZ9qNWyPl8xWQXaerSeblFJIhfr0RV
-        PGBjYyfjlA8bh/XW5Z1Prra8Or7fhnf6gHrreHUsHS/FvDZ5LGAI9c9XR8wFVi7r
-        eikG+rMyDWhrE+X4AkV+Ax2pAorQF7+X2Kg1JRqu0gVxbo4CSg6KHz0eGk1W20nt
-        aM8FquKVYJRE8mVsY/+lmL6qdyAK00PiNTmZcSIfkVSrLO1pDrlCOizd2tkxoSGg
-        ==
-X-ME-Sender: <xms:FXPTX1pP34BFX4RjU4kG2RCb5rihZrUllnQhh93i1iDC8n73bQqNGw>
-    <xme:FXPTX3rBTfuzZPv3FoegwGNbK17i4XemFaO36eFI7yAuRcHXSyaisv-ykUR1Dwn_V
-    Gk-13jD3erXRG-dJA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudekvddghedvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddunecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpedtffejieduudelhedvgfetieefleehjeetvdetudeitdetvddtfffffefhvdfggfen
-    ucfkphepjeejrddukeefrdehvddruddvieenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:FXPTXyNVx_tNINAY3l0OmeY0UI9QvBtfbWyJHDysLWDEPPlwikf4_w>
-    <xmx:FXPTXw4ehGXWqQ9yDw7txDoPAKYskId7GjcbPMrChOx6jNv_zbMR_A>
-    <xmx:FXPTX04kbQHyPS3z1qVCYwCaHlhhAz7H9gXxHE_m_4LXLx6GiiJkIg>
-    <xmx:FnPTXym0KUD6YptbiCXqlBkXGSyWGesBcAQo1rAZC-VczYiAg1xtVg>
-Received: from vm-mail (x4db7347e.dyn.telefonica.de [77.183.52.126])
-        by mail.messagingengine.com (Postfix) with ESMTPA id E88341080066;
-        Fri, 11 Dec 2020 08:24:36 -0500 (EST)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail (OpenSMTPD) with ESMTPSA id 80ffd84c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Fri, 11 Dec 2020 13:24:36 +0000 (UTC)
-Date:   Fri, 11 Dec 2020 14:24:35 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Philip Oakley <philipoakley@iee.email>
-Subject: Re: [PATCH v4 2/6] config: add new way to pass config via
- `--config-env`
-Message-ID: <X9NzE5+LNYqG1s+o@ncase>
-References: <cover.1606214397.git.ps@pks.im>
- <cover.1607514692.git.ps@pks.im>
- <766ffe31a6f14c55d1b58a8f53edbb7f731b1b24.1607514692.git.ps@pks.im>
- <X9D23LQv34A5Q5DC@coredump.intra.peff.net>
+        id S2405704AbgLKN3u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Dec 2020 08:29:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35262 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2393478AbgLKN3R (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Dec 2020 08:29:17 -0500
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC090C0613D3
+        for <git@vger.kernel.org>; Fri, 11 Dec 2020 05:28:36 -0800 (PST)
+Received: by mail-wr1-x443.google.com with SMTP id q18so1508287wrn.1
+        for <git@vger.kernel.org>; Fri, 11 Dec 2020 05:28:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=eI4OZenneslnl3hixqpe/dbVh5fFTBVrRZgxTIuOyFY=;
+        b=IP8qvaYxpxrv1c2s8IiKMcRZJq192f6FAENX+YIrFXLPDYMifOw8Ya6cVcdcwArbIf
+         luo//q27DItUdaS0Si3oQ2khrdy2Tdq4ORiFXhOG7xJh7CxtxxTStWsqZC9IJgkJcRSB
+         OYSuQaC0YGV06TWfxKPc1mYDww6XTQhG2qY4oVSejRWBeSixP0BAu7AxweJDXYASNTEA
+         vwm6N8pEntk1TNeQTNCzEY6ITz0Awbrr+0NfwFXsDwd6ctFZQDADID9sYLT7/4zX9mtr
+         IB6afhEl+drTwpoMqgMVzuOjrcr8T5yx4TEdSLaOG18R9RzZ5ddLcHm31Qhc1jOJn1B+
+         1kGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=eI4OZenneslnl3hixqpe/dbVh5fFTBVrRZgxTIuOyFY=;
+        b=P87mEKyWp4UUI5J5sAZBKWVQsfdJDbP7B0qRAuA7BAeo1f4MNgXNroBknrESIgmpQN
+         ZhmQyivodx9VKx8O1wF08CDOx0z4ayNiznE4lnmhf30nZeJL29fPaGKFo8Lv2niR+/Oo
+         cJxuVyjJVmeTXycIMxSQeHx4UhTw7mJf1rbnOAn0+zTjxfKpG3CI82Exm06mUJhObFpL
+         +3aeRoIzUljf8JowRZ89vDF4CDFKsLd3w83NyYQGq2L1wN4owD4QZ9DrqHPN5SvJSAMZ
+         UiKon6BYruxNePQ6iqT4w8Cdj1mdgqAWq141M0O7rPilLHs2JqsCpK9XpTgjGuBE2UxZ
+         R7Qw==
+X-Gm-Message-State: AOAM532D5PqoCXSkhNxlEMmFi3XjwBALyyGzX22rZ5LSCemsguwJ2kWc
+        HI2eIF502GJ0M4jCPG3Zeuk04uB5rikv5QvkO34=
+X-Google-Smtp-Source: ABdhPJxZZz97B6OOnJ1xYeXQ6WzjKZfqQt1ysGkssjdSV8HnN7pAtJL13CQT+w4h2e1rg6uoiojlt+W9Xat3FQpdAEU=
+X-Received: by 2002:a5d:4f0e:: with SMTP id c14mr7071660wru.84.1607693315627;
+ Fri, 11 Dec 2020 05:28:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="+2ESzqCL1nZplwan"
-Content-Disposition: inline
-In-Reply-To: <X9D23LQv34A5Q5DC@coredump.intra.peff.net>
+References: <20201210100538.696787-1-felipe.contreras@gmail.com> <xmqqo8j0io39.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqo8j0io39.fsf@gitster.c.googlers.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Fri, 11 Dec 2020 07:28:24 -0600
+Message-ID: <CAMP44s0uyxs4p+HJ5ZDrrKJs9wQW4tSCZzPonpvP=FcTGCcxSA@mail.gmail.com>
+Subject: Re: [PATCH v5 0/3] pull: stop warning on every pull
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Dec 11, 2020 at 5:22 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>
+> > The discussion about making fast-forward-only pulls the default is
+> > stuck on mud, and there's no agreement about what we should even
+> > be warning our users about.
+>
+> The above perception of yours is mostly due to misunderstanding, I
+> would have to say.  We are in agreement on what we should be warning
+> about at least, assuming that you are expressing what you want
+> clearly in the latest round of responses and I understood them
+> correctly [*1*].
 
---+2ESzqCL1nZplwan
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'm not trying to be difficult here, but at every round where you have
+stated what it is that I want, it's not actually what I want, and the
+last round is no exception, in my option.
 
-On Wed, Dec 09, 2020 at 11:10:04AM -0500, Jeff King wrote:
-> On Wed, Dec 09, 2020 at 12:52:26PM +0100, Patrick Steinhardt wrote:
->=20
-> > Co-authored-by: Jeff King <peff@peff.net>
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
->=20
-> In case we want it, this is also:
->=20
->   Signed-off-by: Jeff King <peff@peff.net>
->=20
-> > +--config-env=3D<name>=3D<envvar>::
-> > +	Pass a configuration parameter to the command. The <envvar>
-> > +	given will be replaced with the contents of the environment
-> > +	variable of that name. In contrast to `-c`, an envvar must
-> > +	always be given and exist in the environment. Passing an
-> > +	environment variable with empty value will set <name> to the
-> > +	empty string which `git config --type=3Dbool` will convert to
-> > +	`false`.
->=20
-> I agree with =C6var that we probably should keep an empty variable as the
-> empty string. I think some options use an empty string to clear a list
-> (e.g., push.pushOption), and I'm not sure how they'd react to a bool
-> instead. It would be nice to also have a way to do the implicit-bool
-> thing, but I don't think it's strictly necessary (it's always correct to
-> put the string "true" into the variable instead).
+Let's assume that I'm not explaining clearly what I want.
 
-I think this is just weirdly worded in the `-c` case, which I mostly
-copied. We _do_ keep the empty string, which effectively means that `git
-config --type=3Dbool` will return `false`.
+In the last round you said you wanted an error, not a warning. That's
+not what I want; I'm proposing a warning.
 
-Or do you mean that we should allow `--config-env=3Dfoo.bar=3D`?
+But that's not what I was referring to here.
 
-> I think we should also document that <envvar> can't contain an "=3D" sign.
-> Of course using strrchr() here doesn't help much with just this patch,
-> because we flatten the string before stuffing it into
-> $GIT_CONFIG_PARAMETERS, so the reading side would mis-parse it.
+> I do not know if others on the list agree, though.
 
-Makes sense.
+This is what I was referring to. Initially there seemed to be some
+interest, and suddenly that interest disappeared.
 
-Patrick
+> I do agree that there is no agreement on the behaviour in the
+> endgame.
 
-> But here's a fix for that. I built it on top of your whole series, since
-> you touched some of the related functions, but it could easily be
-> rebased onto just this part.
->=20
->   [1/3]: quote: make sq_dequote_step() a public function
->   [2/3]: config: parse more robust format in GIT_CONFIG_PARAMETERS
->   [3/3]: config: store "git -c" variables using more robust format
->=20
->  config.c          | 118 +++++++++++++++++++++++++++++++++++++---------
->  quote.c           |  15 ++++--
->  quote.h           |  18 ++++++-
->  t/t1300-config.sh |  60 +++++++++++++++++++++++
->  4 files changed, 183 insertions(+), 28 deletions(-)
->=20
-> -Peff
+See? I disagree.
 
---+2ESzqCL1nZplwan
-Content-Type: application/pgp-signature; name="signature.asc"
+I think the endgame is clear. How we get there is where there's no agreement.
 
------BEGIN PGP SIGNATURE-----
+> In principle, I am in favor of disabling the more
+> dangerous half of the "git pull" command for those who haven't
+> configured anything.  But I can understand those who do not want
+> that behaviour, as the fallout would be quite big.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl/TcxIACgkQVbJhu7ck
-PpTozw/8DuPIKeodo/hFxIzWVQgyO+qTfmdh1ahw6bW+ny4ZpD1awPVVhN19boLO
-PGVO+q6MUciClbmz4BBo0LWxvF7EioUUD3Qwl9TW1W0dDvaoHGCor5bqSRjbC/iv
-EMYj4YcQnM6stXxVlXT6qiwCNn017u+uGlyw2P7RmNpwslQ5uuROLOEpFUndo0Y2
-FHG026OSuLELK8SuY4zOmOXHB1MD+KTfMX8xVnvHgrUcwEtSoBka67WN9uZp9HZn
-WF39Z7WJzjLpOni8Pae/gxHfM+KkAGcV3qneggNj/uEBIut6hyRUTsh5wXk9lKPT
-PBCRlhSbIPZw7J/ss/kKtc44RP53+6GrxtvW5fa7oJn3IfWiauqyv4wPQvfGq8U9
-EQUCXupItXZu88Np6iBcJqrLX9vMt6WndKsQtQ1VHk3j96gTfMlSCzQV5Z2AkTtv
-zpCYtplEH87cppkndVKAYUb4eAPKtRIMsSz9/GeNtG9Zq+Fzp8ux+WxiDTx2bnl8
-NAbdELcP5OIbMZUaGLaV19fPCGGO6sOtV0QUHYuUXVaTeH7oZnLYZqKlRrN57KFj
-ECip9J8JbGGllAy/Jfrot1CZlNOLwJaWNSsOo9vKD7CoXrJWurDr40N3DhKApbuE
-sUVzooGyOvgA6/J+xunDTvt3tmEnZSBe5cJHgk30teRzoXfMJ8Q=
-=pe29
------END PGP SIGNATURE-----
+And who is that? Did anyone in the list express that they did not want
+that behavior?
 
---+2ESzqCL1nZplwan--
+> > Even my straightforward patches about improving documentation, and
+> > the consistency of the UI with --merge and other obvious fixes
+> > lost traction.
+>
+> It may be obvious to you, but may not be to others on the list who
+> spoke in the thread and who didn't speak but read the discussion.
+>
+> I did see potential goodness in the documentation update and that
+> was why I offered polishment on top of your patches in a v3 round,
+> but seeing the suggestions dismissed without convincing arguments
+> before v4 was sent out would have discouraged even the most patient
+> reviewers among us.  If you meant by "lost traction" the lack of
+> comments on v4, that was my reason for not commenting.
+
+I did not dismiss your suggestions, I replied to your suggestions [1].
+You did not reply back.
+
+Moreover, in patch 2 I saw you had some confusion [2], in which you
+said you didn't see any value in updating the message without changing
+the condition that triggers, to which I replied [3]: "Maybe it will be
+clearer when I send all the patches."
+
+That's why I sent v4; not because I thought the review of v3 was done,
+but because we were stuck not seeing the evolution of the warning.
+
+In v4 I went through every step of the evolution [4], and I went back
+to what I said in v3:
+
+  At this point we can update the warning to mention that we are inside
+  a non-fast-forward case. But it's not necessary.
+
+So I did not dismiss the suggestion, I replied to it, and put a pin on it.
+
+You can certainly bring the same suggestion in v4, but I seem to have
+convinced Elijah Newren that "fast-forward" can be used as an adverb
+perfectly well, and it in fact is, in many places in the documentation
+both internal, and external.
+
+> In any case, these three patches in this round looked quite sensible
+> to me, except for the tests in 3/3, and minor details of 2/3, both
+> of which I gave a more detailed review and suggestion.
+
+Great.
+
+That should improve the situation of most users. And also has the
+added benefit that it's 3 less patches I have to carry around on every
+round.
+
+Cheers.
+
+[1] https://lore.kernel.org/git/CAMP44s1ZDXzGfEqpTeiG=aGAYK40ebnBLQKAbA7KGtcePGARfw@mail.gmail.com/
+[2] https://lore.kernel.org/git/xmqq4kkx9vzx.fsf@gitster.c.googlers.com/
+[3] https://lore.kernel.org/git/CAMP44s1aYqzCVvELH8zULaTkOdgLSSAQ0LE8WfgQKLPfU2MHfg@mail.gmail.com/
+[4] https://lore.kernel.org/git/CAMP44s2hUCd9qc83LReGyjy8N+u++eK6VjwGhDhrX0f0SbKmig@mail.gmail.com
+
+-- 
+Felipe Contreras
