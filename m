@@ -2,113 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=3.0 tests=BAYES_00,DATE_IN_PAST_06_12,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5717C4361B
-	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 11:07:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89680C433FE
+	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 11:24:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A0DE223EF2
-	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 11:07:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4AE1A23EF4
+	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 11:24:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732022AbgLKLHL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Dec 2020 06:07:11 -0500
-Received: from mout.gmx.net ([212.227.17.21]:54537 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2388605AbgLKLG7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Dec 2020 06:06:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1607684723;
-        bh=RMORzVlNPeNuDGgcdj7puidmREEBEJS7BsGj5CjJTAs=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Hz9HXsN4p3QSelo6vyFaSL5BAKzTNsfCMqe4jIZP5tLECSHh6I748AzSr5r3i6bWQ
-         xHB6au1k06YMm6C+/cdI6DTLLw4XPgvnmJyqOnlnq4h0oYW+Ts8YBekXPXIPFuaQNe
-         yrnyjqiATjFTvef9GJuDY2+JM1ZXW4/cOa3vIf3Q=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.88.62] ([89.1.214.172]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MYNJq-1kZsQr0ILK-00VMSP; Fri, 11
- Dec 2020 12:05:23 +0100
-Date:   Fri, 11 Dec 2020 01:47:00 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git <git@vger.kernel.org>
-Subject: Re: [PATCH v4 4/4] init: provide useful advice about
- init.defaultBranch
-In-Reply-To: <xmqq360dqgpa.fsf@gitster.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2012110145200.25979@tvgsbejvaqbjf.bet>
-References: <pull.921.v3.git.git.1606230450.gitgitgadget@gmail.com> <pull.921.v4.git.git.1607637517.gitgitgadget@gmail.com> <2f21c505d560132b4563849f955554fc7d79a9cb.1607637517.git.gitgitgadget@gmail.com> <CAMP44s0mEsfmc7gT6Yv10_nt8d=HrbETmnwNNqxVmRGdHSOHYw@mail.gmail.com>
- <xmqq360dqgpa.fsf@gitster.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2391495AbgLKLXp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Dec 2020 06:23:45 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53606 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390046AbgLKLXi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Dec 2020 06:23:38 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C054210F533;
+        Fri, 11 Dec 2020 06:22:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:references:message-id:mime-version:content-type;
+         s=sasl; bh=k+jABQPm48H8IHwC+rqe8K0piVM=; b=o6SrlHu8aa9y+uZ0LH9P
+        KHBvkm5qutMNQ5Asf/UCunFWfVXk4S6J2iMQvZP+h06Dg/UEvwZ9BlU7DlzMGfUh
+        SAnQfo4plAvsKbx8w+FdxN1b080LgbXPEACsHc9tna7x52dHAaOIwxaQ4QOpulag
+        1f7I+36e11V8lhKJbQbpESA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:date:references:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=FeEfSqNTDGHa9/WKYTrsueV/P7wck/lmDD7pYF1dyocM1Z
+        JCFj98bGo8XtjvRL9Y9F30LVKwI95zonOQ5v9P5dg27kSqyhHTeRCNqd6ktTZRfJ
+        Z4t7JWtuODZK4dS8vVdUhqUJQvNHDCKJRNXSUyQGaDuGk1WDf3FFXqpy0YY/4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B8C4110F532;
+        Fri, 11 Dec 2020 06:22:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 10E3410F531;
+        Fri, 11 Dec 2020 06:22:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?Q?V=C3=ADt?= Ondruch <vondruch@redhat.com>
+Subject: Re: [PATCH v5 0/3] pull: stop warning on every pull
+Date:   Thu, 10 Dec 2020 23:17:13 -0800
+References: <20201210100538.696787-1-felipe.contreras@gmail.com>
+Message-ID: <xmqqo8j0io39.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:d/9Dg7DoRkgBlkBmcQGL/53VJ/g+qfgkTXZ+jClpJPydyobB4Oj
- v+1VKUhuQ0zALKKHBJIBrvp1z6CH9NWCitNrQYv0zjW2fzEzWL7ML72O+BBUM/tiSPmtmUv
- r0Pbk7rSgL/LQ/lYv0xnb7tW8alS/xCH20IUOsUvyiXGqeh7Lc7yDWaSa46f15VSnzLNbvG
- rmsTMJacw0Ox3LlgAmK3w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:KhJzOk/0CEo=:gTvVMOTW+FTMP5lDhLqNdD
- 6pAqbvKuor/DsxVd+A6nyTnsylSneq766jw3021xGwkPKXXPKMO7GueW1XooLUO7Yp+H2z7vH
- oHonWAeY/xLVXmzLHjwCmCzDKmE5QBYDB4YqYbmaCuSRV4pfUWIJIgQXKRY0OHkgXMrpZK3xu
- YYOzbCJCc6xDFl45Y2/3qQgObXPHoTkZn1oKlRDOzhCraIrStuixwQXk16EwraxXcDTd1tMEq
- 93R704+8JaCkErhpKLGYSs5IYxv2eVwDO0YD4zJpzEsfld2C/W4RWtOdsrqjp+e8GFS+X+Mlp
- 7BHktG2iIAgarOtfS9b0+NE1WY5ei5jluzhMZz5saEGl1W8RVDOv4oU44u1od5nrU0aZBZWYn
- DL1vIaStSsahyJsdJvuPzrRSyMvTfZUMHMCfh4kG1bFLLHA8Osyv4vT0XPpJ3Bpwzd8cE4jqW
- 8Vg9uSX56AJEOWnMVjOhatbNQ5FRSEFtEWRGFClTNuq90Uunelfd7mXM/PjrJ46X56YVnq4Ab
- bOQCO5z1+/2GXsVRtVmEyEh5BDyKWXLstRWQsPRTw8yz9tIb0CC5qCh4AEF9ML/vx9KnbzmmA
- o8CQhgbt1ZZcAW4elydLoJnE+crhwrxRkYPFHjPvOYyjisYn1JVUSftV9UUk2TqKiTEOTrDrM
- FbsAIFWZJZF3TdQJywLn/GGO9F/6HMactUQQFu/7tiOefR3bDHTHiGEbD6+brQ04VnTUtJKqr
- XMsGP7dJBtQJFBMLlWqsSUCHJmahXbzZMs2cGa7HCFIXJTs1RtBNHSqT3raj6XGbCH67Um39f
- JL4h8idgXdzUPqCCIsST97GGNRJ5PKzCk+G8XcvmEUOoEsqcxKgd7Xwc8o4gGdqZoDFroA3cX
- pVKbkIXLk1iuwH0C8phYVfdcnWdCxMfnIAsxU9UNw=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 350F782C-3BA3-11EB-9924-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-On Thu, 10 Dec 2020, Junio C Hamano wrote:
+> The discussion about making fast-forward-only pulls the default is
+> stuck on mud, and there's no agreement about what we should even
+> be warning our users about.
 
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
-> > On Thu, Dec 10, 2020 at 3:58 PM Johannes Schindelin via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
-> >
-> >> +static const char default_branch_name_advice[] =3D N_(
-> >> +"Using '%s' as the name for the initial branch. This default branch =
-name\n"
-> >> +"is subject to change. To configure the initial branch name to use i=
-n all\n"
-> >> +"of your new repositories, which will suppress this warning, call:\n=
-"
-> >> +"\n"
-> >> +"\tgit config --global init.defaultBranch <name>\n"
-> >> +"\n"
-> >> +"Common names are 'main', 'trunk' and 'development'. The initial bra=
-nch\n"
-> >
-> > This is disingenuous; the most common name is "master"... by far. In a
-> > couple years this might change, but not right now.
-> >
-> > If you don't want to mention "master", then don't mention "common
-> > names" that are not really the most common names.
->
-> Names commonly chosen by those who want to move away from 'master'
-> are...
+The above perception of yours is mostly due to misunderstanding, I
+would have to say.  We are in agreement on what we should be warning
+about at least, assuming that you are expressing what you want
+clearly in the latest round of responses and I understood them
+correctly [*1*].
 
-"those who want to move away" sounds a bit too non-committal for my
-liking. So I changed it to:
+I do not know if others on the list agree, though.
 
-	Names commonly chosen instead of 'master' are 'main', 'trunk'
-	and 'development'.
+I do agree that there is no agreement on the behaviour in the
+endgame.  In principle, I am in favor of disabling the more
+dangerous half of the "git pull" command for those who haven't
+configured anything.  But I can understand those who do not want
+that behaviour, as the fallout would be quite big.
 
-While at it, I also improved the next sentence:
+> Even my straightforward patches about improving documentation, and
+> the consistency of the UI with --merge and other obvious fixes
+> lost traction.
 
-	 The just-created branch can be renamed via this command:
+It may be obvious to you, but may not be to others on the list who
+spoke in the thread and who didn't speak but read the discussion.
 
-Ciao,
-Dscho
+I did see potential goodness in the documentation update and that
+was why I offered polishment on top of your patches in a v3 round,
+but seeing the suggestions dismissed without convincing arguments
+before v4 was sent out would have discouraged even the most patient
+reviewers among us.  If you meant by "lost traction" the lack of
+comments on v4, that was my reason for not commenting.
+
+In any case, these three patches in this round looked quite sensible
+to me, except for the tests in 3/3, and minor details of 2/3, both
+of which I gave a more detailed review and suggestion.
+
+Thanks.
+
+
+[Footnote]
+
+*1* The only difference between us is whether it is sensible to
+allow explicitly ask to see the same behaviour as an unconfigured
+user except for the help text---I do not think it is, and I do want
+to avoid introducing pull.mode, but I've shown a way or two to get
+the behaviour without adding pull.mode in the mix.
