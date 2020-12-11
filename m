@@ -2,186 +2,253 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83C27C4361B
-	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 02:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EEE0C433FE
+	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 02:58:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 47FD723E54
-	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 02:56:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B517F23E54
+	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 02:58:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403933AbgLKCzj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Dec 2020 21:55:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50996 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404668AbgLKCzR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Dec 2020 21:55:17 -0500
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com [IPv6:2607:f8b0:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47666C0613CF
-        for <git@vger.kernel.org>; Thu, 10 Dec 2020 18:54:37 -0800 (PST)
-Received: by mail-ot1-x342.google.com with SMTP id q25so6988771otn.10
-        for <git@vger.kernel.org>; Thu, 10 Dec 2020 18:54:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=XJ417GVKvrTmfLXZGXD02k3cdU82VRXW3fofvQoP4Ss=;
-        b=HUbyGssvI/NyLWFJ283A9YBEastIX4o1xZLB9CeiPe1VrUUMncs35pw+8XgyXlzxIT
-         rkWMjTEO0UCSNekYFXEjhEDTfZhN/OtnpO4VBTPEDz4JCw9Cxx91H0BN9L2bIvhvpbGj
-         i2Y+sSSGI3P7tWdp2r8ZmqeS0iypRl39IEhhNv+0IXlvBKnH26/jUbfe0ZxqDn4pFXqy
-         YTlaEVYFX6TTJq1KfjzGhLq5xRL/9EafFEYMdIdqDp71Y0F07u5KGYA80/rmmMG+Ghqs
-         wxLxoBPVaamTm/gZD4N8U6d2aCimyGxZODAOhu8u0zuZNWgKbNaK+HoAl7ayv5baX2EU
-         3G5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=XJ417GVKvrTmfLXZGXD02k3cdU82VRXW3fofvQoP4Ss=;
-        b=jNS40MAVE5j2ZcGyHxXcq6A28pvKtAwz39s5FJRZtv+2fi5HPR3UGDiF3nhwKvjjOk
-         qgvxB1o2ymRJYh6ycQOX80cqpULsla7muzY7t0skFF517pgZHWpKAvwxWvjyhjlyu4C6
-         niXhRzMOnp1rwDG7eqiMLVnkl5xjVAon59w9glSUZPew+dm3oxZi+qVy8l1+2mdWhq03
-         zzOLUgEmfjCYXp4fCg2vq+KLSU4f8h0gQnpI3I9hiXf8dclwfEbiu+hAZGav0UDCBF8f
-         A2PSu+QtsnSZx85S/tpk/QMkZGoNtwHqWezxJllu7GgAReyUMXd1V6LfU5RHaKdYmhXw
-         d4CQ==
-X-Gm-Message-State: AOAM530OwV3ewBZzBVnVgAZYkvbObERZyQTzuOhMJtAzrWwwHQZy9dGA
-        n+CluQlGBBY03G76HPE9ZVKVvrZdY4AUQg==
-X-Google-Smtp-Source: ABdhPJzlbQh2XA21KYCy5kpuWAGLG95Fqqc4FA0q108YeKc7JFe33t3tA+ySUDk8dKmpnu3S9ye4AQ==
-X-Received: by 2002:a9d:7c82:: with SMTP id q2mr8158899otn.205.1607655276449;
-        Thu, 10 Dec 2020 18:54:36 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:585e:c315:5afa:f8a1? ([2600:1700:e72:80a0:585e:c315:5afa:f8a1])
-        by smtp.gmail.com with UTF8SMTPSA id b28sm1482659oob.22.2020.12.10.18.54.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Dec 2020 18:54:35 -0800 (PST)
-Subject: Re: [PATCH 03/11] merge-ort: implement detect_regular_renames()
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-References: <pull.812.git.1607542887.gitgitgadget@gmail.com>
- <ba30bc8686ef11115b369d351b4447c75a7bb9b5.1607542887.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <59863009-1a11-ba74-fdd3-6271977b6ec9@gmail.com>
-Date:   Thu, 10 Dec 2020 21:54:34 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101
- Thunderbird/84.0
+        id S2404734AbgLKC5m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Dec 2020 21:57:42 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57962 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2403848AbgLKC5S (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 10 Dec 2020 21:57:18 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 96F9460769;
+        Fri, 11 Dec 2020 02:56:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1607655397;
+        bh=NQ9kANgg95sthEgPz9h5kp/YJWsSzeNZoUta1Q3w1V0=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=DsvuxezHc9NDg61FsXTzNmUmtq+dJaqKz6Mp23JXNKlxCb6dlvXVSaYZsUGUkKCo6
+         NmeI52upTGaiAOCsikubUaLtuqaG/sh7LoAhQR61UPaProHSoTafQyCHHgxf/8uW1X
+         UcIKbEZq1COMnUXGKR4IoMpBQXFBqLfs7ZQJTSSMfeg7LCg5hljioyJ4Yre7V51OWa
+         msE7H2Qu3ybLFIGJ5xYvBdKEq7VoDgOlSAUna3Uny4GgqmvQWQ7qfGRXuYOazyvP1K
+         H+KqOOBC71ZpZTRdAhXkRHrlghfJQKUoTlbu42xuxZPmP1ZFlfCCmpF/JMyDzRGPno
+         8sbBM93HVliHZ8gACYrbOKa8/vh0Bcl7fZIDeyooJLyu6kjmH5LrnXTJQQsklVwcKu
+         +ughwl4yACJqTp4lHiiVc3+fVjBFNLdf9a1mGginACyHIWE95ZiK/c7VblpuYpuMFl
+         YEi2jPXYt6RbwiTjdXL5ele4EP4nq+jFP6SqNIRwBLaSlSPaiWL
+Date:   Fri, 11 Dec 2020 02:56:22 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Aaron Schrab <aaron@schrab.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v2 1/2] Add project-wide .vimrc configuration
+Message-ID: <X9Lf1p++YktzZMWe@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Emily Shaffer <emilyshaffer@google.com>,
+        Aaron Schrab <aaron@schrab.com>, Denton Liu <liu.denton@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+References: <20201209065537.48802-1-felipe.contreras@gmail.com>
+ <20201209065537.48802-2-felipe.contreras@gmail.com>
+ <X9GbIG9vZbK1pEoi@camp.crustytoothpaste.net>
+ <CAMP44s33J6F60W=2Yd2WSGE78VT0XBkewi8m3unXvathBH2TOQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <ba30bc8686ef11115b369d351b4447c75a7bb9b5.1607542887.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="zvyZUAG8fIa2htdR"
+Content-Disposition: inline
+In-Reply-To: <CAMP44s33J6F60W=2Yd2WSGE78VT0XBkewi8m3unXvathBH2TOQ@mail.gmail.com>
+User-Agent: Mutt/2.0.2 (2020-11-20)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/9/2020 2:41 PM, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
-> 
-> Based heavily on merge-recursive's get_diffpairs() function.
 
-(You're not kidding, and I should have looked here before making
-some comments below.)
+--zvyZUAG8fIa2htdR
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  merge-ort.c | 32 +++++++++++++++++++++++++++++++-
->  1 file changed, 31 insertions(+), 1 deletion(-)
-> 
-> diff --git a/merge-ort.c b/merge-ort.c
-> index 92b765dd3f0..1ff637e57af 100644
-> --- a/merge-ort.c
-> +++ b/merge-ort.c
-> @@ -634,7 +634,33 @@ static void detect_regular_renames(struct merge_options *opt,
->  				   struct tree *side,
->  				   unsigned side_index)
->  {
-> -	die("Not yet implemented.");
-> +	struct diff_options diff_opts;
-> +	struct rename_info *renames = opt->priv->renames;
-> +
-> +	repo_diff_setup(opt->repo, &diff_opts);
-> +	diff_opts.flags.recursive = 1;
-> +	diff_opts.flags.rename_empty = 0;
-> +	diff_opts.detect_rename = DIFF_DETECT_RENAME;
-> +	diff_opts.rename_limit = opt->rename_limit;
+On 2020-12-11 at 01:08:00, Felipe Contreras wrote:
+> On Wed, Dec 9, 2020 at 9:51 PM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > On 2020-12-09 at 06:55:36, Felipe Contreras wrote:
+>=20
+> > I don't think this should go in this location.  It should go in contrib.
+> > Here's why:
+> >
+> > * We should not ship editor-specific files in the main directory of the
+> >   repository.
+>=20
+> Why not?
 
-I assume that opt->rename_limit has been initialized properly
-against merge.renameLimit/diff.renameLimit in another location...
+Best practices indicate that we don't check in files which are specific
+to a developer.  Anything that controls the specific editor people use
+is by definition specific to the developer.  Checking in these files
+leads to conflicts over which settings to apply and whose settings are
+better when they could just be avoided.
 
-> +	if (opt->rename_limit <= 0)
-> +		diff_opts.rename_limit = 1000;
+If we have style policies, those should be expressed in a general,
+universal way so that all users can take advantage of them in the same
+way.
 
-(I made the following comments before thinking to look at
-get_diffpairs() which behaves in an equivalent way with this
-"1000" constant limit. I'm not sure if there is a reason why
-this limit is different from the _other_ limits I discovered,
-but it might still be good to reduce magic literal ints by
-grouping this "1000" into a const or macro.)
+Furthermore, some editors want entire large directories of configuration
+files in order to work correctly, which we don't want to include.
 
-...and this just assigns the default again. Why is this done
-here instead of inside the diff machinery? Also, wouldn't a
-diff.renameLimit = 0 imply no renames, not "use default"?
+If we treat all editors in the same way, then every developer gets the
+same experience when they work on our code.  If that experience is
+inadequate, our time would be better spent improving it in a universal
+way so that all developers can benefit.
 
-I notice that the docs don't make this explicit:
+> >   Even though Vim is very popular, it is one of many
+> >   editors, and it is not even the most popular editor (which is now VS
+> >   Code).
+>=20
+> Even if vim is not the most popular, it certainly is among the top 3
+> (and I doubt VS Code is the most popular, I would like to see some
+> numbers on that, but even then; VS Code is not an editor).
+>=20
+> Nobody is arguing to have editor-specific files for "every editor
+> under the sun", just perhaps 2 (or maybe even 3).
+>=20
+> No slippery slope fallacy here.
 
-diff.renameLimit::
-	The number of files to consider when performing the copy/rename
-	detection; equivalent to the 'git diff' option `-l`. This setting
-	has no effect if rename detection is turned off.
+Because we don't need them.  Your solution requires the user to
+configure Vim with a plugin _and then_ allow the specific directory in
+order to be secure, which means it doesn't work with worktrees.  It also
+requires that the user never pull an untrusted branch into their
+repository.  It also has other undesirable effects which I mentioned in
+my original email.
 
-but also too_many_rename_candidates() has this strange
-default check:
+The .editorconfig file also requires a user to configure a plugin, once,
+and then things automatically work in a secure way across projects.  In
+other words, the existing solution requires a user to affirmatively act,
+but with less effort, less potential for security problems, and better
+cross-project support.
 
-	/*
-	 * This basically does a test for the rename matrix not
-	 * growing larger than a "rename_limit" square matrix, ie:
-	 *
-	 *    num_create * num_src > rename_limit * rename_limit
-	 */
-	if (rename_limit <= 0)
-		rename_limit = 32767;
+So the .vimrc solution requires more effort, has more potential security
+problems, is less flexible, is less like how other projects solve this
+problem, and is less general.
 
-this is... a much larger limit than I would think is reasonable.
+> >   We have editor-independent files, and users can copy this into
+> >   the root of the repository and ignore it if they want it there.
+>=20
+> Which are insufficient. They are certainly better than nothing. Plus,
+> it's unclear how many people are actually using those.
 
-Of course, diff_rename_limit_default is set to 400 inside diff.c.
-Should that be extracted as a constant so we can repeat it here?
+Why are they insufficient?  Multiple developers are using them on Git
+already.  They're used on projects from Microsoft[0], W3C[1], and folks
+working on JSONPath[2].  They are the de facto standard for this
+purpose.
 
-> +	diff_opts.rename_score = opt->rename_score;
-> +	diff_opts.show_rename_progress = opt->show_rename_progress;
-> +	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-> +	diff_setup_done(&diff_opts);
-> +	diff_tree_oid(&merge_base->object.oid, &side->object.oid, "",
-> +		      &diff_opts);
-> +	diffcore_std(&diff_opts);
-> +
-> +	if (diff_opts.needed_rename_limit > opt->priv->renames->needed_limit)
-> +		opt->priv->renames->needed_limit = diff_opts.needed_rename_limit;
-> +
-> +	renames->pairs[side_index] = diff_queued_diff;
-> +
-> +	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-> +	diff_queued_diff.nr = 0;
-> +	diff_queued_diff.queue = NULL;
-> +	diff_flush(&diff_opts);
->  }
->  
->  /*
-> @@ -1379,6 +1405,10 @@ void merge_switch_to_result(struct merge_options *opt,
->  			printf("%s", sb->buf);
->  		}
->  		string_list_clear(&olist, 0);
-> +
-> +		/* Also include needed rename limit adjustment now */
-> +		diff_warn_rename_limit("merge.renamelimit",
-> +				       opti->renames->needed_limit, 0);
+In contrast, searching GitHub commits for ".vimrc" shows overwhelmingly
+that the repositories in which these commits are named are called
+"dotfiles".  I was unable to find any projects from major organizations
+using this configuration style.
 
-I suppose this new call is appropriate in this patch, since you assign
-the value inside detect_regular_renames(), but it might be good to
-describe its presence in the commit message.
+My general rule is that when I'm unsure what decision to make on a
+project, I should make the decision that everybody else has made,
+because users and developers will expect my project to work just like
+everyone else's.
 
-Thanks,
--Stolee
+> And I'm still waiting for the argument against adding such a top-level fi=
+le.
+>=20
+> What is the harm?
 
+As mentioned, enabling the use of this file is still risky from a
+security perspective because it precludes even pulling in an untrusted
+branch and then spawning an editor.  We already have a more general
+solution that is more widely adopted and has fewer downsides, so there's
+no point in adding files which really provide little benefit over what
+we already have.
+
+If there's little benefit, we shouldn't carry files which are going to
+be subject mostly to pointless arguments over personal preference.  The
+fact that two heavy Vim users disagree so strongly over relatively
+simple settings is an argument for not adopting this approach as a set
+of project settings.
+
+> > * Whether a user wants to use automatic indentation is a personal
+> >   preference.  I do happen to like it, but there are others who don't
+> >   and prefer to leave it off.  Similarly, whether to use cindent,
+> >   smartindent, or autoindent is a preference, as is which cindent
+> >   options to use (I use different ones).
+>=20
+> So?
+>=20
+> These options will not be forced on users, they have to specifically
+> enable them by doing at least two steps, *and* they can still
+> selectively override them in their ~/.vim files.
+
+Right, but why are your preferred settings checked into Git as a project
+setting?  They are objectively no better than my settings, which differ.
+Absent a compelling reason that these settings are objectively better,
+we should not endorse them as preferred project settings.
+
+> > * These settings affect every file that's loaded in the same editor
+> >   process.
+>=20
+> That is not true.
+>=20
+> :setlocal [1] applies the setting to the current buffer only, not
+> globally, and *only* when the buffer is of the filetype specified in
+> the autocommand.
+
+So if I spawn an editor process using this .vimrc in my Git directory
+and then I load an AsciiDoc file from a different repository into that
+same Vim process, are you arguing that the Git settings will not be
+applied to the AsciiDoc file from other directory?  I'm pretty sure that
+Vim will in fact use the Git settings.  It's possible, however, that
+I've misunderstood how Vim works.
+
+=2Eeditorconfig doesn't have these downsides.
+
+> > So while I agree that these are common settings, they are not
+> > universally applicable, even for Vim and Neovim users, and we shouldn't
+> > try to claim that all or even most Vim and Neovim users should use them.
+>=20
+> We don't. These are defaults, which a) the user must consciously
+> choose to apply them, and b) can be easily overridden (as is explained
+> in the commit message).
+
+I'm arguing that they are not universal enough to be defaults.
+Moreover, a set of defaults for how a user _could_ configure their
+editor would belong in contrib, much like defaults for how a user
+_could_ configure their MUA to send properly to the mailing list.
+
+We already have files for Emacs and VS Code, and those live properly in
+contrib, along with code for Thunderbird and alternative build systems.
+If we're treating this proposal like existing code, it belongs in
+contrib.
+
+The .editorconfig file, on the other hand, doesn't express defaults.  It
+expresses only project standards and doesn't specify any other settings.
+
+[0] https://github.com/microsoft/fabrikate
+[1] https://github.com/w3c/specberus
+[2] https://github.com/jsonpath-standard/internet-draft
+--=20
+brian m. carlson (he/him or they/them)
+Houston, Texas, US
+
+--zvyZUAG8fIa2htdR
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.20 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX9Lf1QAKCRB8DEliiIei
+gTDYAP9Mqt1mr3WwOPzPOrADjp55+fixIiizeZVqvC/9jBjx1wEAkeslFRfawDZQ
+JFnwGwN1A7a7eteNpeHOIhf700eHGgU=
+=45Gu
+-----END PGP SIGNATURE-----
+
+--zvyZUAG8fIa2htdR--
