@@ -2,118 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D38DC4361B
-	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 02:02:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C680C433FE
+	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 02:05:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 31B7623E23
-	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 02:02:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5982123E54
+	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 02:05:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389283AbgLKCBj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Dec 2020 21:01:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42698 "EHLO
+        id S2388226AbgLKCEo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Dec 2020 21:04:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389439AbgLKCBF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Dec 2020 21:01:05 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64913C0613CF
-        for <git@vger.kernel.org>; Thu, 10 Dec 2020 18:00:24 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id x22so6268751wmc.5
-        for <git@vger.kernel.org>; Thu, 10 Dec 2020 18:00:24 -0800 (PST)
+        with ESMTP id S2388577AbgLKCEH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Dec 2020 21:04:07 -0500
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A2DAC0613CF
+        for <git@vger.kernel.org>; Thu, 10 Dec 2020 18:03:27 -0800 (PST)
+Received: by mail-ot1-x344.google.com with SMTP id d8so6913949otq.6
+        for <git@vger.kernel.org>; Thu, 10 Dec 2020 18:03:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ZSyCZUy5mOvlTOSl2Yg3SOBdKCj0dCG3d4NSh4jvCkE=;
-        b=HZzFww/qh2XzgKPlig5O5CwCn6gjxrO5BFGQOpWd64DZmbnp3D514GMaCbkcBNRZb1
-         Hi9y6k7HcDma1NE8a8yqYsQSO3SMToYX1UXwmUKkvkCR/qBJV2Lvj5EroyIukhf/qUn6
-         Ij0IbqGV9UxWLSWask66YjPRuLvHKFHBdKjuOHMjhU44jwP37c+OzSnZ5Vs7MRkLVT+A
-         /ODEeDQA5N2duE1f+ldrfARs4JqhDmt90YC+mcvaMGrjMHq7XJEug3oR97YstYDCsQQK
-         q80PMnNf+vxiSKm5Q+OG6Sb7o2pwMx4nwHKF0n/PDDYQK2kN8zG8k7xTR7DEmqWDDdoS
-         /v8A==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=6qNueoxTq3A0VO0PYlnc1jHGVkrFQ2SgB/MtaZK3F/8=;
+        b=B4mf2rqA4HakasYn98sDoixpktFLHk/a6ChmqTm/DFU54k2PtEuu2YKpTeYjVvPi7F
+         JqpS+msYSSK4fxzDJbeW6ozaawZJTR0Ky1jqaWaiwLeAhNlhox2+yZ/nR4SgmpSxqWBO
+         wURMNBTD5LWGoJTzX/YiBF9Re+GnVGlH9BF+UCOIpJ2xzbCoTZZYuimoMjidKBl3eIU4
+         dYC1AXj54NzqvXlzpEe/K8D7LadQI59BKVUNKIej+jNq0GWOvgwRwgMM55Rn00fnsytT
+         6JlsmkHmYSnJLw0Smy6vWmcLxPs9I/SHSSoPakZ3e1JKccG4OV+Ew12ckJ0syYnLHM/n
+         YQ2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZSyCZUy5mOvlTOSl2Yg3SOBdKCj0dCG3d4NSh4jvCkE=;
-        b=bQ3wSz2GB5gSyvqej0wPXp/MYklK4KY8Xsu1zN65N1n1mOHhvMoZaUxB+v3elN8K1h
-         3Jq4MCldd07DUYZm7l/piUdeacHWvdSS3Pxq41OTevTdaodPXvu9d8qbVZSfi6Pnd/Yu
-         ZUBWoMA2S9WAmY0Ty2gzYkarGozJ92ZklOvcnwYmRfKjohWZ4jaol7PrUjo/mOgvQ7nl
-         DemTkHvMaYUjqCrP6MQUQa7aAkBrec+DHXNY4gvsRQ2UV3fzerd1yBUSQCzDO/6e7vKj
-         slWbIkvYn8neBNRY6EYuCDmz7VjF6xWnlUoB9hR3whcq8A1g86xipXgq6SMWn+ZUgljn
-         jqfg==
-X-Gm-Message-State: AOAM530tL6n72U+dqNPn+snJapfC5LpVtV6VqerX6buu0swaZjC3Ezv+
-        OKlv4FYdesnFqjr+tkaBh7uk5k4cEOLZy+frevM=
-X-Google-Smtp-Source: ABdhPJxoOshH/B2Qb3Qs6zn9IaV1tLIrAeq5BM1m4qKAkHXy5pD76TM7Z5Lq0X8II/AAfkHjU87IBY3v4GRhy/0R1+k=
-X-Received: by 2002:a1c:df57:: with SMTP id w84mr10983079wmg.37.1607652023169;
- Thu, 10 Dec 2020 18:00:23 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=6qNueoxTq3A0VO0PYlnc1jHGVkrFQ2SgB/MtaZK3F/8=;
+        b=nFEtybe/GmKlrFGb0t6WrW843Q86CMj/AlkmaeZ06KrmP6oHyZytUDwtCgxTbc5FYE
+         RmHdnd8oAIyWSIQZg5C2z6GX+9zJNwokpTAsV4mvh5wkhZNeXbjL4GXn/sKkm4f0yQpH
+         NFjKPOj1Y0VqzObYfOk292bRFMNzTPF8he8/VDaqODlmPAFfdOBGlOyM4Mt9DALzY+80
+         CS9FgdaQTJFreLkNgv2ymO5TiWegaPJSrYEs2C92NgZoLXGszCFysdRqr4xvTQYnfGfq
+         DLo2XP9+EH1tkL0dR39SiuI3kOd488AJlrvOo6fvOpUgI1iC4IvyO+2Buth+Kd16BMUg
+         DvzA==
+X-Gm-Message-State: AOAM533YEcPBMglBvP2J8FlVK5Tok5u9knWj2T2tF2ERsRj/Dr4bwvg9
+        /EqZIp+z3Le/OmoKAraZRlM=
+X-Google-Smtp-Source: ABdhPJyJXBgUkEwkY+k1ftWckjflp9fq5XXSAPgBRZFQkdAvU2xr/n7kWF8PjVEy/MJgxquShvcJIQ==
+X-Received: by 2002:a9d:1b29:: with SMTP id l38mr7025265otl.159.1607652206558;
+        Thu, 10 Dec 2020 18:03:26 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:585e:c315:5afa:f8a1? ([2600:1700:e72:80a0:585e:c315:5afa:f8a1])
+        by smtp.gmail.com with UTF8SMTPSA id h62sm1548616oia.9.2020.12.10.18.03.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Dec 2020 18:03:25 -0800 (PST)
+Subject: Re: [PATCH 01/11] merge-ort: add basic data structures for handling
+ renames
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>
+References: <pull.812.git.1607542887.gitgitgadget@gmail.com>
+ <ef8f315f828319a3390fde14e3aee6c5e587405e.1607542887.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <38f68a01-4d22-d88d-dfda-c85f67340819@gmail.com>
+Date:   Thu, 10 Dec 2020 21:03:24 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101
+ Thunderbird/84.0
 MIME-Version: 1.0
-References: <pull.921.v3.git.git.1606230450.gitgitgadget@gmail.com>
- <pull.921.v4.git.git.1607637517.gitgitgadget@gmail.com> <2f21c505d560132b4563849f955554fc7d79a9cb.1607637517.git.gitgitgadget@gmail.com>
- <CAMP44s0mEsfmc7gT6Yv10_nt8d=HrbETmnwNNqxVmRGdHSOHYw@mail.gmail.com> <xmqq360dqgpa.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq360dqgpa.fsf@gitster.c.googlers.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Thu, 10 Dec 2020 20:00:12 -0600
-Message-ID: <CAMP44s3bhPP4BcNCfa4KeaoaDLm+XZqV1cX8wyaMmZyHzJujuw@mail.gmail.com>
-Subject: Re: [PATCH v4 4/4] init: provide useful advice about init.defaultBranch
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <ef8f315f828319a3390fde14e3aee6c5e587405e.1607542887.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 10, 2020 at 7:23 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
-> > On Thu, Dec 10, 2020 at 3:58 PM Johannes Schindelin via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
-> >
-> >> +static const char default_branch_name_advice[] = N_(
-> >> +"Using '%s' as the name for the initial branch. This default branch name\n"
-> >> +"is subject to change. To configure the initial branch name to use in all\n"
-> >> +"of your new repositories, which will suppress this warning, call:\n"
-> >> +"\n"
-> >> +"\tgit config --global init.defaultBranch <name>\n"
-> >> +"\n"
-> >> +"Common names are 'main', 'trunk' and 'development'. The initial branch\n"
-> >
-> > This is disingenuous; the most common name is "master"... by far. In a
-> > couple years this might change, but not right now.
-> >
-> > If you don't want to mention "master", then don't mention "common
-> > names" that are not really the most common names.
->
-> Names commonly chosen by those who want to move away from 'master'
-> are...
+On 12/9/2020 2:41 PM, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
+> 
+> This will grow later, but we only need a few fields for basic rename
+> handling.
 
-But we don't want to spill drama into the user interface.
+Perhaps these things will be extremely clear as the patch
+series continues, but...
 
-I think the vast majority of users haven't heard of this drama. Just
-like the vast majority of users had not heard of the git-foo
-obsoletion even after several years. Our vantage point is skewed for
-being too close to Git development.
+> +struct rename_info {
+> +	/*
+> +	 * pairs: pairing of filenames from diffcore_rename()
+> +	 *
+> +	 * Index 1 and 2 correspond to sides 1 & 2 as used in
+> +	 * conflict_info.stages.  Index 0 unused.
 
-Those users will ask: "who wants to move away from 'master'?"
+Hm. This seems wasteful. I'm sure that you have a reason to use
+index 0 in the future instead of just avoiding instances of [i-1]
+indexes.
 
-If we don't presume our users have the same knowledge as us, we have to explain:
+> +	 */
+> +	struct diff_queue_struct pairs[3];
+> +
+> +	/*
+> +	 * needed_limit: value needed for inexact rename detection to run
+> +	 *
+> +	 * If the current rename limit wasn't high enough for inexact
+> +	 * rename detection to run, this records the limit needed.  Otherwise,
+> +	 * this value remains 0.
+> +	 */
+> +	int needed_limit;
+> +};
+> +
+>  struct merge_options_internal {
+>  	/*
+>  	 * paths: primary data structure in all of merge ort.
+> @@ -96,6 +115,11 @@ struct merge_options_internal {
+>  	 */
+>  	struct strmap output;
+>  
+> +	/*
+> +	 * renames: various data relating to rename detection
+> +	 */
+> +	struct rename_info *renames;
+> +
 
-  Names commonly chosen by those who want to move away from 'master'
-  are; 'main', 'trunk', and 'development'. For more information read
-  this post:
-  https://dev.to/rhymu8354/git-renaming-the-master-branch-137b.
+And here, you create this as a pointer, but...
+>  	/* Initialization of opt->priv, our internal merge data */
+>  	opt->priv = xcalloc(1, sizeof(*opt->priv));
+> +	opt->priv->renames = xcalloc(1, sizeof(*opt->priv->renames));
 
-I say don't. If the user wants to know why anyone would want to change
-"the default branch name", she can google it and find out.
+...unconditionally allocate it here. Perhaps there are other cases
+where 'struct merge_options_internal' is allocated without the renames
+member?
 
-Cheer.
+Searching merge-ort.c at this point does not appear to have any
+other allocations of opt->priv or struct merge_options_internal.
+Perhaps it would be best to include struct rename_info not as a
+pointer?
 
--- 
-Felipe Contreras
+If you do have a reason to keep it as a pointer, then perhaps it
+should be freed in clear_internal_opts()?
+
+Thanks,
+-Stolee
