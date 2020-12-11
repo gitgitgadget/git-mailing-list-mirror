@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E254C433FE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B1DFC4361B
 	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 11:38:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 643CE23EF6
+	by mail.kernel.org (Postfix) with ESMTP id 4D89B23ED0
 	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 11:38:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391060AbgLKLi2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Dec 2020 06:38:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46338 "EHLO
+        id S2390055AbgLKLiS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Dec 2020 06:38:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403930AbgLKLhn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Dec 2020 06:37:43 -0500
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93D8DC061794
-        for <git@vger.kernel.org>; Fri, 11 Dec 2020 03:37:02 -0800 (PST)
-Received: by mail-wm1-x341.google.com with SMTP id c198so7285469wmd.0
-        for <git@vger.kernel.org>; Fri, 11 Dec 2020 03:37:02 -0800 (PST)
+        with ESMTP id S2403810AbgLKLhm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Dec 2020 06:37:42 -0500
+Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95BA9C061793
+        for <git@vger.kernel.org>; Fri, 11 Dec 2020 03:37:01 -0800 (PST)
+Received: by mail-wm1-x343.google.com with SMTP id d3so7275525wmb.4
+        for <git@vger.kernel.org>; Fri, 11 Dec 2020 03:37:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=wMOlFeqr3KyQUvif43DnFXMdTbT099ZsyX8APEFwt4M=;
-        b=PIZDGz8RUoE/VE8TmqENZdhqwUSyPgLFuPTeii6C+o29lV88LyYUqZvUHW6uegyDGA
-         jaOWiSGwy036+FFrK8KYEy7mSKFFYngH0H3SCtzcoOLW0znV0uo6m/0FQOFKnNTnNrvN
-         iDos6nh8ir8V6DEY3JpeRK9U0h5/kpV9TYEQmgJaplPPjxD+w2j3hmnFZ9RSrF7AMrAZ
-         qB6BgFvGxbamaL3YhdL1EMDNwC1nknmZDkDNydV0gOvMrkOLeZWcPmBQWEv0OXokD/R+
-         8voHbbmugsiVTG1l0jlmNtyZ4l15DTWqwYvpGxINmuAX4JY9Tgem0LccD0sswIIIkq0p
-         5MeA==
+        bh=p0enlMc/568fNOt3yvkxyzEyBOUTnOaQV/xOUwc/+so=;
+        b=bz0U5Fk2jDZliG5Q2QwH9TmtZqjkYJ5xYCep6+AoWk4H6b3ick3ohjdyf2ZdH2kLN6
+         WHOUqodJqBA+CLDqo628lBftM6ha/gveVo+gNzLBse9hHA13Ue2hUF40YZdtIl0mtj2k
+         ju7CfD4TVoAAxXyESzroeAu3r/E4v3s8cC1Qe6JSdadCl16nU3fPL+T52TMrckEDSchm
+         U6hJT/iRtujTe3g0c7pqUlEYq6veUruSCDtC7ldhSaIdACSsmm3XUrnLHszUBG1H303J
+         9IMl+djj7bkAcR8+UbmLwYgaZuCFqjjG2MkzaU924XeSKiWf1PdGy09eRnPSFAYv8c5c
+         b8AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=wMOlFeqr3KyQUvif43DnFXMdTbT099ZsyX8APEFwt4M=;
-        b=NP3pCE7kkk3zjqxnOkvuE0TNtdD/2uUyKMoDDAMIgpXSZtB/yGf4N/RfDtAq+XlKEL
-         3OkHwjhqDZxH3H/PXqfROdctHVTBU2aNQto3+CSQeSmi934S067ceYDCxnuoBejtvlkn
-         3W1OUWjIDVDGuGz0EK5mebqx6VUvHMPrnTP9YvGrFkMdltXbUBZJ9EIK2h6aXpUMbWc/
-         LzWZ6BU+Sq4m17iK36ubGATalUBxq+wvw5OkG9AO7qPtJS35tsgV1Q1OhzQ2NJeMcvr/
-         F9+OGY0F3ko6ocec24ELkmZoLstAn5ku1aBsMa3RfJb979j6zSxAbFHEObWFXLnNiXFl
-         S9Qw==
-X-Gm-Message-State: AOAM530QIfoFxRLPrfBJYXpZKZ1cr1RRIVTOE0xTH0CBWcHCZW2TYGwI
-        Uh2qhBqCKZL6a/28LWDRM7CoVmUJA64=
-X-Google-Smtp-Source: ABdhPJyV5ExBTfYOQFb2hR9LP3CFKEoYBC/8Cz802EdBPeOra7NmcZs0TlLZaUjDedEvGO0HEMWlxQ==
-X-Received: by 2002:a1c:2182:: with SMTP id h124mr13089712wmh.25.1607686621158;
-        Fri, 11 Dec 2020 03:37:01 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r20sm14701399wrg.66.2020.12.11.03.37.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=p0enlMc/568fNOt3yvkxyzEyBOUTnOaQV/xOUwc/+so=;
+        b=Vg1cAxp8DPOETQOOZIbqs12HGx+1+b2BJP6nK+5qm6Em3J70DozPa67pwBhQdywMo6
+         62Rs7ggabx7kcRX/Gt/LLuPFsMeLKPdMAWlPn5fX6tCJOadKtI9zb9HIRJGl34IQFTD5
+         6jJNOI/rjUR192pf0NCfNIhEJl8oRrQolzn8jAb1vEWUn3N2Sp2x09T6JDjiQMCOZkrB
+         MHmcDYdFSUlQaRBZf/dPfJn630P0nyEOEc/SAhhQrJ+b1v3vR/NmjbLim0uvmnQQ7gys
+         Lg6OLKsyQQGxTIefGO7m9Ex24AZqC9tzLgYoFcAiWNKL5O92qwJmbWCS5afV5MSFu05r
+         ix8A==
+X-Gm-Message-State: AOAM530+ZI0EMQPn5B34oIvS7HxwhLDZSowZ6JPcpjGJqXIeTXprbkNl
+        ccZqcylnKZRY57/2jiAWSe/4qivCwzU=
+X-Google-Smtp-Source: ABdhPJzZRR9KAIBN75l5T2KumyC+sSetT+SVCD5tyvkNMDylASN5caitiI8zacReLAVj4BxAdI5nuw==
+X-Received: by 2002:a1c:e445:: with SMTP id b66mr13330590wmh.187.1607686620195;
         Fri, 11 Dec 2020 03:37:00 -0800 (PST)
-Message-Id: <ac7b352a0ba604f9b10a5a5ce5487d1002169443.1607686618.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u85sm13454532wmu.43.2020.12.11.03.36.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Dec 2020 03:36:59 -0800 (PST)
+Message-Id: <ce35cf3da65c60980d1dfdce20928a1498b6390b.1607686618.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.921.v5.git.git.1607686618.gitgitgadget@gmail.com>
 References: <pull.921.v4.git.git.1607637517.gitgitgadget@gmail.com>
         <pull.921.v5.git.git.1607686618.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 11 Dec 2020 11:36:55 +0000
-Subject: [PATCH v5 2/4] branch -m: allow renaming a yet-unborn branch
+Date:   Fri, 11 Dec 2020 11:36:54 +0000
+Subject: [PATCH v5 1/4] init: document `init.defaultBranch` better
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,50 +78,44 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In one of the next commits, we would like to give users some advice
-regarding the initial branch name, and how to modify it.
+Our documentation does not mention any future plan to change 'master' to
+other value. It is a good idea to document this, though.
 
-To that end, it would be good if `git branch -m <name>` worked in a
-freshly initialized repository without any commits. Let's make it so.
-
+Initial-patch-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/branch.c | 4 +++-
- t/t0001-init.sh  | 8 ++++++++
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ Documentation/git-init.txt | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index efb30b88206..200da319f1d 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -538,7 +538,9 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
- 		strbuf_addf(&logmsg, "Branch: renamed %s to %s",
- 			    oldref.buf, newref.buf);
+diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
+index 59ecda6c17d..b611d80697d 100644
+--- a/Documentation/git-init.txt
++++ b/Documentation/git-init.txt
+@@ -20,8 +20,9 @@ DESCRIPTION
  
--	if (!copy && rename_ref(oldref.buf, newref.buf, logmsg.buf))
-+	if (!copy &&
-+	    (!head || strcmp(oldname, head) || !is_null_oid(&head_oid)) &&
-+	    rename_ref(oldref.buf, newref.buf, logmsg.buf))
- 		die(_("Branch rename failed"));
- 	if (copy && copy_existing_ref(oldref.buf, newref.buf, logmsg.buf))
- 		die(_("Branch copy failed"));
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index 69a320489fc..bb23e56a165 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -571,4 +571,12 @@ test_expect_success 'invalid default branch name' '
- 	test_i18ngrep "invalid branch name" err
- '
+ This command creates an empty Git repository - basically a `.git`
+ directory with subdirectories for `objects`, `refs/heads`,
+-`refs/tags`, and template files.  An initial `HEAD` file that
+-references the HEAD of the master branch is also created.
++`refs/tags`, and template files.  An initial branch without any
++commits will be created (see the `--initial-branch` option below
++for its name).
  
-+test_expect_success 'branch -m with the initial branch' '
-+	git init rename-initial &&
-+	git -C rename-initial branch -m renamed &&
-+	test renamed = $(git -C rename-initial symbolic-ref --short HEAD) &&
-+	git -C rename-initial branch -m renamed again &&
-+	test again = $(git -C rename-initial symbolic-ref --short HEAD)
-+'
-+
- test_done
+ If the `$GIT_DIR` environment variable is set then it specifies a path
+ to use instead of `./.git` for the base of the repository.
+@@ -73,8 +74,10 @@ If this is reinitialization, the repository will be moved to the specified path.
+ -b <branch-name>::
+ --initial-branch=<branch-name>::
+ 
+-Use the specified name for the initial branch in the newly created repository.
+-If not specified, fall back to the default name: `master`.
++Use the specified name for the initial branch in the newly created
++repository.  If not specified, fall back to the default name (currently
++`master`, but this is subject to change in the future; the name can be
++customized via the `init.defaultBranch` configuration variable).
+ 
+ --shared[=(false|true|umask|group|all|world|everybody|0xxx)]::
+ 
 -- 
 gitgitgadget
 
