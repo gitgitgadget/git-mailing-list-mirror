@@ -6,47 +6,47 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BDAAC4361B
-	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 15:18:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD193C4361B
+	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 15:26:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 532C522CB3
-	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 15:18:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9436D22D73
+	for <git@archiver.kernel.org>; Fri, 11 Dec 2020 15:26:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405019AbgLKOzh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Dec 2020 09:55:37 -0500
-Received: from wout2-smtp.messagingengine.com ([64.147.123.25]:39893 "EHLO
+        id S2406460AbgLKO74 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Dec 2020 09:59:56 -0500
+Received: from wout2-smtp.messagingengine.com ([64.147.123.25]:53385 "EHLO
         wout2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2394582AbgLKOzO (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 11 Dec 2020 09:55:14 -0500
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.west.internal (Postfix) with ESMTP id EE5385F2;
-        Fri, 11 Dec 2020 09:54:07 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Fri, 11 Dec 2020 09:54:08 -0500
+        by vger.kernel.org with ESMTP id S2406455AbgLKO7o (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 11 Dec 2020 09:59:44 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.west.internal (Postfix) with ESMTP id B02728D4;
+        Fri, 11 Dec 2020 09:58:38 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Fri, 11 Dec 2020 09:58:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm2; bh=BL8Ar71zCI+xyBdQjTYtspTy3Kk
-        MQV+ak40zXlAHDI0=; b=LDVe2plXLmuzZxrC93DLsq62qBhKKtTmQ+81zTbfiZ8
-        tr5QLKvrAd2frN0KMkKBN/oggpG+naXQFbq92mARXLuU7ZFyAvS21e9knpyp1Rlt
-        4BK0dvWDYoRfZ5DCF6F8IFyrrJicum8LRgKheUp7UzUFGrUZuj8kLMs9QUVxhjac
-        6azDvec4dN3pxz3ZRyUWvkCmAdtMPIbD9i5dOjCYKeT/Tz67YYudmEKbAYDArscz
-        lBK+qsg2j0DCKykvS6ahkW6c7gP5h0g9kmLQIQ55Nc1ybDrWSCigXnTx71c2Oy/G
-        RtsZfLFauafMXbAETA9xOyW0Cq3IqxJvgI4o48JwTSg==
+        :content-type:in-reply-to; s=fm2; bh=Th8qvLOgXJF74k7mt6+NCOIPbAs
+        F8DpkXCuwTij6w0w=; b=EOrkPAlPKCvj1aaJAaLKM4SnvR3cAQOtVTCd6ORY5Km
+        hPUJkEH/6bvzXsaBCfTTOyABp8NycrLuxH+e8+wk9hJhb4fDjSgTLPhHcezHJY4n
+        mnks7iWlGI+a9yOoRsSlAgQI/6T+j6sUnEDZLEJQyN2zvWxe5FKmesoGAhKwHocV
+        mrevBGZFtxtmPVuiP2pbZwZC5Du5olC3o4V4bxHcqWAPYsccMYgm2IclBxVpkaXG
+        vSDSRJefgHXV77Jx7z/IGOvbHOYrz+cbwZLlA/8KdsXTR2oIDIKKYPzj4CfFk/Vs
+        A1eFZLSira6iP/lCkkaF2WmzAEw19p7Pt5KOBSD5Xyg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=BL8Ar7
-        1zCI+xyBdQjTYtspTy3KkMQV+ak40zXlAHDI0=; b=CkyDrOmDT//GtPMQ+OYbFT
-        o/rp9r9TiRZNnSoENFFCIQTKW/qcSiflSjMcx/2axGB31/yP3wFbS68K8fNWC181
-        7rzXs8NcxwjmBYXPRVpGym7UrL9UIsk8atoo0Pi2PCGsj/QQyLPWB97ZkJVXE2wS
-        mPA/ZiL5L/3OQzwLrrZVVsQCOvDGMWNAJd4etgbF0FBXbjB3z7l+JybvcpONG4NV
-        rCppYTL7jVod+h9RduuutoVdbUPsIPuFBUnIb2LbAhGsFiZW6R3VQlRIDlS0b8Iz
-        WFPuh+6MTt3a4iaKFiqJyBNdgjiorvFNIEKV/bmb5xzxLmXWr7ruUBFgL9K/gV6g
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=Th8qvL
+        OgXJF74k7mt6+NCOIPbAsF8DpkXCuwTij6w0w=; b=BH776U0UF9VroX13MMxMq0
+        Y2wEAvena3JN1zWCEWAwNxpxACcCaXyDnLdu3EnV8WK7H87Wq0+EhhqL7DPJsB5U
+        QOV9XQC5p+PaTAubWEkhds4BdNLKp53aC1OaurfbQHz2/xRVgRDHhGJEAnL74UuR
+        ZRYYUVIrWDmZ8VD8MKhpuNcN9x6L6Thnb/rS5gBqI1xVzRRZ8KlAe0LoXSnYFP/Z
+        9ioA0vAFMyL2ikWiE8UepKkN0U2frYqz3DuZlKAo7Kh2vfus1ccOF7CeI21uBgbV
+        QAwl15S9poTlj6jsHanV1kBcGzIC8/OJfjOovZ2735bMvr2t54msNkx3OmDm/sNA
         ==
-X-ME-Sender: <xms:D4jTXxJCSE8YwJf8xo_tCa3RkFsM7QU9Ct_oVjgtTXUb9vVQHVrM2Q>
-    <xme:D4jTX0lFiuPw7NbLtlTmNnqS4vyOh7EMVS4TiJTsevLojzV16NOEOio77HP9z6f_S
-    mL11Qj15csGq6wNQQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudekvddgjedtucetufdoteggodetrfdotf
+X-ME-Sender: <xms:HInTX04UiqEncL9iGhRjX2l4YlMXKVLZqvnU9ZTnbv50bh2xfMWdNw>
+    <xme:HInTX17V5nn_lWoy487w-lLDhmZUUVcn8yR5k0TmPPfHsGvGF4S_kjj4Alh4fr91c
+    06xv5mQt95RjZMrOw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudekvddgjedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
@@ -54,89 +54,109 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudekvddgjedtucetufdoteggod
     hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
     ucfkphepjeejrddukeefrdehvddruddvieenucevlhhushhtvghrufhiiigvpedtnecurf
     grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:D4jTX3Ee6X1gF33KQiJX8Uw-tNq1xouOveHIdbEHbq9y-GQtXqUbpg>
-    <xmx:D4jTX8H_kQQK6HfqlB_g5n9B-qnFAosB1Hidgqu528V0kNyAT9pYqg>
-    <xmx:D4jTX8PGPqwJWpRYg_uVG95PG4oDaNvPIKnqxy8iA3nGDwjMJTavNg>
-    <xmx:D4jTXzdmZJdDigB4IkTqqCIem1RZ5NC4gWHb2By9ZhP6SweZLcOc5Q>
+X-ME-Proxy: <xmx:HInTXzelA3mMugw9i7FuknwzsfUx2nAo_juCflVEPh8qcLn56nI9sA>
+    <xmx:HInTX5IulBIerwB6Y4qRUElu66dojLz1zHqG-WI5aRivhxe_7xeA6Q>
+    <xmx:HInTX4LEytEOvtAUFzl477OOPYvAd3a-AX3Fz-V0TZ6DQDq2ZpB_7Q>
+    <xmx:HonTX83CfxUbwDEWAP2sc-J2B9eSem9bVmoVWmpel7qa4o7R8HuwMQ>
 Received: from vm-mail (x4db7347e.dyn.telefonica.de [77.183.52.126])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 497981080067;
-        Fri, 11 Dec 2020 09:54:06 -0500 (EST)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 6D1D824005A;
+        Fri, 11 Dec 2020 09:58:35 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail (OpenSMTPD) with ESMTPSA id aecabf35 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Fri, 11 Dec 2020 14:54:05 +0000 (UTC)
-Date:   Fri, 11 Dec 2020 15:54:03 +0100
+        by vm-mail (OpenSMTPD) with ESMTPSA id 1dc32678 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Fri, 11 Dec 2020 14:58:34 +0000 (UTC)
+Date:   Fri, 11 Dec 2020 15:58:33 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     Jeff King <peff@peff.net>
 Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         Philip Oakley <philipoakley@iee.email>
-Subject: Re: [PATCH v4 2/6] config: add new way to pass config via
- `--config-env`
-Message-ID: <X9OICyWMn0sSRb/3@ncase>
+Subject: Re: [PATCH v4 0/6] config: allow specifying config entries via env
+Message-ID: <X9OJGZhJFjqG/t3S@ncase>
 References: <cover.1606214397.git.ps@pks.im>
  <cover.1607514692.git.ps@pks.im>
- <766ffe31a6f14c55d1b58a8f53edbb7f731b1b24.1607514692.git.ps@pks.im>
- <871rfzxctq.fsf@evledraar.gmail.com>
- <X9D6IyPchkGkYgeB@coredump.intra.peff.net>
- <X9NzEfzjvdnvnX42@ncase>
- <X9OAcgPxyYIJo+J/@coredump.intra.peff.net>
+ <87y2i7vvz4.fsf@evledraar.gmail.com>
+ <X9N1hcGl2rKH+CUU@ncase>
+ <X9OB7ek8fVRXUBdK@coredump.intra.peff.net>
+ <X9OFRiqDDYtbg87i@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="fpr8edCh5zGVGYKF"
+        protocol="application/pgp-signature"; boundary="3WkKyvvWai+ABszO"
 Content-Disposition: inline
-In-Reply-To: <X9OAcgPxyYIJo+J/@coredump.intra.peff.net>
+In-Reply-To: <X9OFRiqDDYtbg87i@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---fpr8edCh5zGVGYKF
+--3WkKyvvWai+ABszO
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Dec 11, 2020 at 09:21:38AM -0500, Jeff King wrote:
-> On Fri, Dec 11, 2020 at 02:24:33PM +0100, Patrick Steinhardt wrote:
+On Fri, Dec 11, 2020 at 09:42:14AM -0500, Jeff King wrote:
+> On Fri, Dec 11, 2020 at 09:27:57AM -0500, Jeff King wrote:
 >=20
-> > Do you want me to adopt your patches as part of this series?
+> > I don't know what kinds of variables you want to set exactly, but
+> > another possible option here is some mechanism to point Git to an extra
+> > config file. This would work if you are setting a bunch of options in
+> > some static way, but not if you're setting them to custom values for
+> > each command invocation (because then you'd be dealing with a temp file,
+> > which is annoying and error-prone).
+> >=20
+> > I'm thinking something like a $GIT_CONFIG_ENV_FILE that is parsed after
+> > repo config but before $GIT_CONFIG_PARAMETERS.
 >=20
-> Yeah, if you're willing to. I don't mind spinning it off into its own
-> series if you don't want to (the tricky part is that we're touching a
-> couple of the same spots, though, so if you're willing to pick them up,
-> I think that makes coordination easier).
+> One more (probably insane) idea, that you are free to ignore unless it
+> sparks your interest.
+>=20
+> $GIT_CONFIG_ENV could contain an actual config-file snippet itself.
+> I.e.:
+>=20
+>   GIT_CONFIG_ENV=3D'
+> 	[foo]
+> 	bar =3D value
+> 	[another "section"]
+> 	key =3D "more complicated value"
+>   '
+>=20
+> In fact, we could have implemented $GIT_CONFIG_PARAMETERS that way from
+> the very beginning. I'd be hesitant to change it now, though.
+>=20
+> It doesn't really make your quoting problem go away, in that you'd now
+> have to generate a valid and correct config file, which is even more
+> complicated than shell-quoting. :) But it is at least a well-documented
+> format whose generator might be used for other things, too.
 >=20
 > -Peff
 
-I can do so. The only question that I have is whether I should rebase it
-on top of 6/6 or on top of 2/6. It's hard for me to gauge whether 6/6 is
-going to make it in or not due to the conflicting opinions on it. It
-currently seems to me like we tend towards a "no", which is also what
-the "What's cooking" report said. But there were also some opinions in
-favor of it, which made me wonder. If this is a definitive "no", then
-I'm happy to stop bothering with them to make the patch series easier to
-manage.
+Our mails crossed, but I did have the same idea. I don't even think it
+that insane -- the format is well-documented, it solves some of the
+issues I have and implementing it shouldn't be hard considering that all
+infra for it exists already. True, it won't fix the quoting issue. But
+it would neatly fix our "global config" problem without cluttering
+output of ps(1).
 
 Patrick
 
---fpr8edCh5zGVGYKF
+--3WkKyvvWai+ABszO
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl/TiAsACgkQVbJhu7ck
-PpQD7Q//Vbr8ZhgX1Bf4AMDawDPCBzeFX1zQ6RoQGrEzlZzPQHL92b2qz2hGSRV7
-yYMXoZiVkBaobDstUDkwzzztc5MoX1p7psjZ9VYPRVGlvrp/oUz+TXRtwxksS4R9
-Wqsz+T4xPG5jUekiB+EMRKs/XhjGKLEx83txX8xgqmHTjBEBQSvRn8B+eoRaK0Wc
-IONPhRpFHkeSA9cEgOW+fqKq7mPc8S+h+uZLZgOawyTc2VcvQhMbFsUokOmpxx90
-nCeqfkYJBFL9B9ER9OYSpuRZDuPCXTMoX59kSTo/tfAykDw3lT2ySIG97zxKmI2s
-lwtsmyKG5euXe54G7zb2irFTqKuZIdEAz6JaETEHfVy5GUt5p5JOc24jpXGEuqcr
-7FwHnrYbgEfN1AVUTMpLThWlS2WrgIMsmxTxL8GtfhQHwwyXDKuKLa14qPp+nnKE
-kVORfN5HBpz3O8YGJRbMmcUsZVwHfF7tZP7Q6J+SBXB25vhcvke3623ChJIJNV3t
-/CHYEjYwqTQlwm47XHbcvczGMQ83NqCrr1ghgugYVD0Gcz6CnGJ5IhGRJR8VNNmo
-LYtJH8tJ7M2yK15Vdu5R+Rs/vQvj7m0GCtBj9gudFmPJCY99E03eH+rtrN2MuXMD
-y5Iq5YjCnAbjWWkfd43efx8GsDt71RhbxGRFryTLIoUolqzPl1k=
-=xxTW
+iQIyBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl/TiRgACgkQVbJhu7ck
+PpThKw/49jJfhcE8V3n9HFUYcqGoxpYuDCyBMXIOnHABzimIZM3kDd+I0/KdiNmd
+O3FbuA7pZ2at2K/OR+sd56YB6Cv4K9yzIa19Jva7PzZ/OGYX5fPC2AQCAg5ulO1D
+sNCP+f3L+e7szUk+yWqlozJnRUconhxcgFUatBNemBc8BU6vlgWJ6LmQMSh3vnaw
+gevEukz9Zaw8KRT56LOhy5u7KK/+FsBnsiDA8JVa6a4OQKkgH2UGWhWwYrBq+RUg
+ITNqB4ryFmfUo4zf6jewvfVztUegzZIv9L4XGACTx+s4T1WlXzyJ23mk9id2akkV
+MP6/ZZ3qKewDmPmIHElb/RxPuuQ8rKtJJflp/q+e1YdQeZ/XXBsmUgPMFFMNRThW
+XfGSPN8Pp3UwmrsGBURbOvgyi83ZgM5gOZFVuC2linL9ExbQCac1uVNbrzNoiL5J
+60bZXFPrdTAueMjfSGcU8ep97XZfPEoLeAASsTxHDonQ7VplbSCp403/yIvDHXVl
+QYkHU5wAW8ScP5/BKE0JqLV8bHRTgh+7X77pI2PRglEApUV5tdMyR5S1rXNwRn12
+lz+oCu/Kj5cUfV8Z6BP2WIZcZTq6Lu9vSi77j9/87j62I6xxOcdhKwBuuEyNI2cK
+Kd3ZL1jRM94uUMdGCXQ+GaXIQHxd8c2GCrS2lezrKpmNdf0LBA==
+=sbEx
 -----END PGP SIGNATURE-----
 
---fpr8edCh5zGVGYKF--
+--3WkKyvvWai+ABszO--
