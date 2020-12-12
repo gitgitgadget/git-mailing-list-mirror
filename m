@@ -2,108 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DATE_IN_PAST_06_12,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CDFDC433FE
-	for <git@archiver.kernel.org>; Sat, 12 Dec 2020 12:53:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54796C4361B
+	for <git@archiver.kernel.org>; Sat, 12 Dec 2020 15:19:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E0D52225E
-	for <git@archiver.kernel.org>; Sat, 12 Dec 2020 12:53:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1AFF5221E8
+	for <git@archiver.kernel.org>; Sat, 12 Dec 2020 15:19:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438880AbgLLMxe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Dec 2020 07:53:34 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54551 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725764AbgLLMxe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Dec 2020 07:53:34 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 988EF970C9;
-        Sat, 12 Dec 2020 07:52:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:references:message-id:mime-version:content-type;
-         s=sasl; bh=a9kpP2OmgcnRZFvRovxO+lhrUoY=; b=UW7P7pbP5R4KiCHwRwsY
-        bhhw+Uh/FKUtmyMx1Bk6X7MBYl30IOyMMmLL851vh5W7mBGk4bJiLa0yZOfDLIoU
-        dz7Wv6h9/kw1xXBRYhd8/gwwFLCyHDlsD3TN+Yqff+spzmnBPdJG2icO8/sINtRu
-        EB/rk/ZjOoAJ9MOhlV+PsHs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:date:references:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=le+RUToDX1PFYyiQbP9IV6nEeLJn98pmZos+x8HK0a7Apr
-        hJFLnLm74BpS8ONrhzFNuFCmj52RIKmlnZWsKuYBLUUS3FF/b4jdlHrh3nFGzbXR
-        s2mFG35du3hu8lGp64PIph9IIKSc8TMPyH3Rybr864aCD2v/vU3te5OPtVJ8A=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 90A74970C8;
-        Sat, 12 Dec 2020 07:52:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 18FF7970C7;
-        Sat, 12 Dec 2020 07:52:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+        id S2439236AbgLLPTG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Dec 2020 10:19:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34760 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725550AbgLLPTG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Dec 2020 10:19:06 -0500
+Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com [IPv6:2607:f8b0:4864:20::241])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D22CCC0613CF
+        for <git@vger.kernel.org>; Sat, 12 Dec 2020 07:18:25 -0800 (PST)
+Received: by mail-oi1-x241.google.com with SMTP id q205so906461oig.13
+        for <git@vger.kernel.org>; Sat, 12 Dec 2020 07:18:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=YroVYB66SxbQgg5Sccg3nGdLV+ZP7a+lvUmK5HZcFi4=;
+        b=UWazgBOlgxQbIWXSZyDw48ueRPepEyDYuTYCsaiLxIOAAs05jV+JXGtIhipRLP8Lau
+         RCN3uzyYAIbZaEr47Zx/V43anrqyoyUS8iFtnpyyVchhSM8D3krk1jfONOXH/AXbXMi7
+         lVxPEkzZy0QF6ren4ufHDGSge5sFL/aYFjSHhr0IRaUC/JsexY3kigNjuCgrlxh8wgUf
+         IjDGHNexaBzMZpE0D9O3QNavQl9y67bOvWGruK3ctPg5TnVmpr5YcqpWeTbs3Tm26aEY
+         bSTc+ER4kLanrIcCOkr23fiEMxyVAtRaSIbnzEXZ5YU2MZEsw8Snl03p388nD6ZVscan
+         QAQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=YroVYB66SxbQgg5Sccg3nGdLV+ZP7a+lvUmK5HZcFi4=;
+        b=U9C7A0I5ZGaAio5ljf57SB9nqqCs4Ky9ea60Xy1Vl+W7qkMjBzhOWjfEVHC/7w93AS
+         hqO4uYIBq6MN7Gnq7tKz5lTRD1zNA9CQqSgHRwIlIHrlPi0wT6aQF6IyVvOJNQJ0oZdR
+         glelBBIL09DIZXQfrHeptWBZclm7HhDlkQLNBzqvv8ODfbh2edmHZS41Xgu9HLzvmfy5
+         6BMeDcqzCPeAGUC8Rv0hZEvzY8ACCvXwjRMVr0V7kCp7GMpnRyytfUcsEwEKsRSw2+rg
+         jR/1iIgUjwZf0FyyFYOOeOChG6lok9UFK6z3Ld5FH2UeF+VnizHu4S41LSykVUCUk1VF
+         OFcg==
+X-Gm-Message-State: AOAM530se90Y7ONuDU/z5IYREXbqmpG5IPMb0M+7UYRV8eDrG8uzgQPb
+        0el+EdB6sFIGFUFTP3Itb5Ik0J5Ti7FQdQ==
+X-Google-Smtp-Source: ABdhPJx9QK88VZ3U9A+xgcK0i8nDFKEXVyq/xHwJlcLczGv1Q5REMtsSfZRQci4bU9/7N4Vq0LfJ0g==
+X-Received: by 2002:a05:6808:993:: with SMTP id a19mr13048055oic.65.1607786305216;
+        Sat, 12 Dec 2020 07:18:25 -0800 (PST)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id i25sm2672449oto.56.2020.12.12.07.18.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 12 Dec 2020 07:18:24 -0800 (PST)
+Date:   Sat, 12 Dec 2020 09:18:23 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
         Jeff King <peff@peff.net>,
-        =?utf-8?Q?V=C3=ADt?= Ondruch <vondruch@redhat.com>
-Subject: Re: [PATCH v5 0/3] pull: stop warning on every pull
-Date:   Fri, 11 Dec 2020 18:50:14 -0800
+        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>
+Message-ID: <5fd4df3f51f40_bc1eb20810@natae.notmuch>
+In-Reply-To: <xmqq5z58n88i.fsf@gitster.c.googlers.com>
 References: <20201210100538.696787-1-felipe.contreras@gmail.com>
-        <xmqqo8j0io39.fsf@gitster.c.googlers.com>
-        <CAMP44s0uyxs4p+HJ5ZDrrKJs9wQW4tSCZzPonpvP=FcTGCcxSA@mail.gmail.com>
-Message-ID: <xmqqv9d7faot.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F18D0566-3C78-11EB-8134-D152C8D8090B-77302942!pb-smtp1.pobox.com
+ <20201210100538.696787-2-felipe.contreras@gmail.com>
+ <xmqq5z58n88i.fsf@gitster.c.googlers.com>
+Subject: Re: [PATCH v5 1/3] pull: refactor fast-forward check
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Hello,
 
-> But that's not what I was referring to here.
->
->> I do not know if others on the list agree, though.
->
-> This is what I was referring to. Initially there seemed to be some
-> interest, and suddenly that interest disappeared.
+Just to state that I'm not ignoring this feedback.
 
-Perhaps most of them are happy enough with the current behaviour.
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > It's much cleaner this way.
+> 
+> It is obvious that a focused single purpose helper with less
+> indentation is easier to follow both at the calling site and the
+> implementation itself.
 
-Perhaps nobody cares strongly enough to say what they want to see,
-as they fear that by speaking up they would be drawn into a
-discussion that is needlessly hot and unpleasant.
+Yes, but the reader hasn't reached that point of the story yet.
 
->> I do agree that there is no agreement on the behaviour in the
->> endgame.
->
-> See? I disagree.
->
-> I think the endgame is clear. How we get there is where there's no agreement.
+> "It's much cleaner" is not something you need to say.
 
-What you want as the endgame may be clear to you.
+From the top of my head I can think of a few other reasons to refactor
+code: a) it's more logical, b) it's less code, c) it's helps further
+changes.
 
-But I do not think there is clear concensus among people on the
-list.
+It's not necessary to say, but that's what I want to say; this reason,
+and no other reason, is the main reason for this patch's existence.
 
->> In principle, I am in favor of disabling the more
->> dangerous half of the "git pull" command for those who haven't
->> configured anything.  But I can understand those who do not want
->> that behaviour, as the fallout would be quite big.
->
-> And who is that? Did anyone in the list express that they did not want
-> that behavior?
+> > Also, we would like to be able to make this check before the decision to
+> > rebase is made.
+> 
+> ... in a future step.
 
-I thought that you at least saw Dscho's reaction to the breakage
-caused by "future" patch in response to one of the recent What's
-cooking reports.  Doesn't that count "anyone on the list express"?
+Right.
 
-I am starting to feel myself that "don't do anything if this is not
-a fast-forward" may be something that would have been great if we
-had it from day one but is no longer a feasible default with
-existing users, to be quite honest, so you can count my 20% as
-another example.
+It's not necessarily the case (could be an indeterminate future), but it
+is the case in this patch series.
+
+> That is something we want to say upfront, not "Also".
+
+Not from my point of view. Even if it didn't help in future steps,
+cleaning up code is generally desirable.
+
+Cheers.
+
+-- 
+Felipe Contreras
