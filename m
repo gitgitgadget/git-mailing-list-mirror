@@ -2,91 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.9 required=3.0 tests=BAYES_50,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DATE_IN_PAST_06_12,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5381C433FE
-	for <git@archiver.kernel.org>; Sat, 12 Dec 2020 10:29:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9261C4361B
+	for <git@archiver.kernel.org>; Sat, 12 Dec 2020 11:14:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8B84F22D3E
-	for <git@archiver.kernel.org>; Sat, 12 Dec 2020 10:29:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A813220771
+	for <git@archiver.kernel.org>; Sat, 12 Dec 2020 11:14:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438680AbgLLK2v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Dec 2020 05:28:51 -0500
-Received: from 213-229-72-132.static.as29550.net ([213.229.72.132]:50816 "EHLO
-        host.syrsecserve.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391220AbgLLK2v (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Dec 2020 05:28:51 -0500
-X-Greylist: delayed 14220 seconds by postgrey-1.27 at vger.kernel.org; Sat, 12 Dec 2020 05:28:50 EST
-Received: from syrsecserve.com (ec2-18-188-134-62.us-east-2.compute.amazonaws.com [18.188.134.62])
-        by host.syrsecserve.com (Postfix) with ESMTPA id D258B3276905
-        for <git@vger.kernel.org>; Sat, 12 Dec 2020 01:53:09 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 host.syrsecserve.com D258B3276905
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syrsecserve.com;
-        s=default; t=1607737991;
-        bh=TyDrvEeEFdXlR/MshqaTYzQ7nnR7m/zs1uM19XkvmD0=;
-        h=Reply-To:From:To:Subject:Date:From;
-        b=QV19Va9Tyj2jlShpi3RR6Xp2KnJR+6ieTd1vbms+5XWXI02qwtDRPqEAG+m0ePJCf
-         0w08+Bco7KjUNnldIq+OZQV468g8s6w/RHeHofcr1Z+xgJ0DzX6FMyx2J38si7iccJ
-         YjlmHLSP0YwzSS3QEKzLjhU06IFM5kSroByAllLQ=
-DKIM-Filter: OpenDKIM Filter v2.11.0 host.syrsecserve.com D258B3276905
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syrsecserve.com;
-        s=default; t=1607737991;
-        bh=TyDrvEeEFdXlR/MshqaTYzQ7nnR7m/zs1uM19XkvmD0=;
-        h=Reply-To:From:To:Subject:Date:From;
-        b=QV19Va9Tyj2jlShpi3RR6Xp2KnJR+6ieTd1vbms+5XWXI02qwtDRPqEAG+m0ePJCf
-         0w08+Bco7KjUNnldIq+OZQV468g8s6w/RHeHofcr1Z+xgJ0DzX6FMyx2J38si7iccJ
-         YjlmHLSP0YwzSS3QEKzLjhU06IFM5kSroByAllLQ=
-Reply-To: moutraore01@syriservas.com
-From:   Moussa <moutraore01@syrsecserve.com>
-To:     git@vger.kernel.org
-Subject: Response Required
-Date:   12 Dec 2020 01:53:06 +0000
-Message-ID: <20201212015306.5F56EE8FC4BE5518@syrsecserve.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        id S2438372AbgLLLNf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Dec 2020 06:13:35 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60481 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2438333AbgLLLNf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Dec 2020 06:13:35 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9879C968DE;
+        Sat, 12 Dec 2020 06:12:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:references:message-id:mime-version:content-type;
+         s=sasl; bh=49OPi8cNYK6SKs7/CjdFlONpNv4=; b=adGYUvyQ8Pm1w3Jtw4x9
+        TDilioyrea9tstiuyqK4BzIo+FT4OtiX7AlHyZFIdqhdcLqe9X8cz0yqxGJKmP/o
+        cvRU11X8xvBOhlumFHPnhfhcGCN1vS5hpaqkQiU29/YyB1INB668NWtfHt0fELGl
+        Mxs8cRZ+zGwTBPzzVLHfg8I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:date:references:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=v83feE3JpgsU5cZB3LbQ8jjigMCFow/KPG+8bbnyVRYZuw
+        IIO+K6xfa0I0FqJDnl05PkJMPnEJ8jXT4mPZjHTYi0dQRWfwNE0ONR8hdKyHoFSc
+        Wdu7gae2EHGuULtJ/3wX0n2BaqtESXoKu+GK4oPv4gKUoCzCzuGbgtcCbum5c=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 90EF1968DD;
+        Sat, 12 Dec 2020 06:12:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1D429968DC;
+        Sat, 12 Dec 2020 06:12:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?Q?V=C3=ADt?= Ondruch <vondruch@redhat.com>
+Subject: Re: [PATCH v5 3/3] pull: display default warning only when non-ff
+Date:   Fri, 11 Dec 2020 18:11:44 -0800
+References: <20201210100538.696787-1-felipe.contreras@gmail.com>
+        <20201210100538.696787-4-felipe.contreras@gmail.com>
+        <xmqqzh2kitn9.fsf@gitster.c.googlers.com>
+        <CAMP44s0wjfZ9TeQzpJvVD-OzFA47HFd87TABiJo3Ec9H8j-fjA@mail.gmail.com>
+        <xmqqa6ujj3s4.fsf@gitster.c.googlers.com>
+Message-ID: <xmqq1rfvgtvx.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: F947E3C4-3C6A-11EB-B5E7-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Greeetings from Mali. I am sorry for contacting you like this but=20
-I do have a very urgent matter that I want to discuss with you.=20
-Before I proceed, I want you to keep an open mind while reading=20
-this proposal. My name is Moussa Traore, I am the Personal=20
-Assistant to Mr. Issa Saley Maiga who was the head of the civil=20
-aviation agency in Mali during the tenure of Ibrahim Boubacar=20
-Ke=C3=AFta, the former president of Mali. His tenure was overtaken by=20
-the military during a coup d'etat. I am sure you would have read=20
-about this in your country because it was covered by the=20
-international news agencies worldwide. 
+Junio C Hamano <gitster@pobox.com> writes:
 
-Anyway, my boss was also affected by the coup d'etat and he was=20
-arrested along with other high profile politicians. Also, all of=20
-his local assets (bother property and financial assets) were=20
-seized by the Government. Due to this situation, my boss belives=20
-that he is at risk and he is now very scared for the safety of=20
-his family especially his wife and kids. In order to ensure that=20
-his family is taken care of and protected incase anything happens=20
-to him, he has asked me to help him find a foreign investor who=20
-can help him accommodate and manage the finanical assets that he=20
-has in Europe. These assets was secured with the help of a proxy=20
-and it is currently held with an offshore financial bank so it is=20
-safe so secure. Also, the Government of his country do not know=20
-of this asset hence why they are unable to seize it as they have=20
-done his other assets.
+>>  test_expect_success 'pull.rebase not set and --rebase given' '
+>> -	git reset --hard c0 &&
+>> +	git reset --hard c2 &&
+>>  	git pull --rebase . c1 2>err &&
+>>  	test_i18ngrep ! "Pulling without specifying how to reconcile" err
+>>  '
+>
+> This used to make sure an attempt to rebase c1 onto c0, which can be
+> fast-forwarded, would work fine, even though it used to give
+> warning.  We should keep testing the same condition.  The
+> expectation of seeing the warning is what must be changed, not the
+> test condition (i.e. rebasing c1 onto c2 instead of c0)---you are no
+> longer making sure that c1 can be rebased onto c0 cleanly.
 
-My proposal to you is for you to help us manage these funds, and=20
-invest it in lucrative projects in your country that will yeild=20
-good profits. You also do not have to worry about if this is safe=20
-or not because everything will be handled in a legal and=20
-transparent manner. You will also be handosmely rewarded for your=20
-help if you decide to work with us. If this proposal interests=20
-you, please kindly respond so that I can give you more details. I=20
-hope to hear from you soon.
+Let's try to explain it in a different way.
 
-Regards,
+The original author of this test cared that pulling c1 with --rebase
+into c0 succeeds, and that it does not give the error message.  We
+have no right [*1*] to say that scenario (i.e. "pull --rebase" c1
+into c0) no longer matters without a good justification.  And it is
+not a good justification to say that the current code happens to
+behave identically whether running "pull --rebase" of c1 into c0 or
+c2 so it is sufficient to test the operation into c2.  The test is
+*not* about how the current code happens to work.  It is to make
+sure the scenarios test authors care about will keep behaving the
+same way.
 
-Moussa.
+Some tests may be expecting that pulling c1 into c0 would issue the
+message, and that the command succeeds, and with the patch 3/3 the
+outcome may become different, i.e. the command succeeds without
+annoying message.  That would break the expectation of the original
+test authors, and it is a good thing.  By recording a change to the
+expectation, we can document how the new behaviour works better under
+the same scenario.
+
+
+[Footnote]
+
+*1* That does not mean we must not care about other scenarios that
+are different from what have been tested with existing tests.  If
+there is new behaviour introduced by patch 3/3, it is prudent to
+protect it from future breakage by adding a test that pulls c1 into
+c2, if that case is not already tested with existing tests.  
+
+I suspect we already make sure a non-ff merge gives the annoying
+message while going ahead, so there may be no new additional test
+required, though.
