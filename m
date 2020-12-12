@@ -2,85 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B675C433FE
-	for <git@archiver.kernel.org>; Sat, 12 Dec 2020 16:57:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F20E8C433FE
+	for <git@archiver.kernel.org>; Sat, 12 Dec 2020 21:00:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3FC32229C4
-	for <git@archiver.kernel.org>; Sat, 12 Dec 2020 16:57:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A1D5D22507
+	for <git@archiver.kernel.org>; Sat, 12 Dec 2020 21:00:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2439581AbgLLQ5G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Dec 2020 11:57:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50168 "EHLO
+        id S2407890AbgLLU7q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Dec 2020 15:59:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2439377AbgLLQ5G (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Dec 2020 11:57:06 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAFD0C0613CF
-        for <git@vger.kernel.org>; Sat, 12 Dec 2020 08:56:25 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id a11so4428853wrr.13
-        for <git@vger.kernel.org>; Sat, 12 Dec 2020 08:56:25 -0800 (PST)
+        with ESMTP id S2392132AbgLLU7q (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Dec 2020 15:59:46 -0500
+Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6BB6C0613CF
+        for <git@vger.kernel.org>; Sat, 12 Dec 2020 12:59:05 -0800 (PST)
+Received: by mail-lf1-x144.google.com with SMTP id m19so20442480lfb.1
+        for <git@vger.kernel.org>; Sat, 12 Dec 2020 12:59:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=pd51Lq6rrVdoA8YsQhHVeUTtJvVqIhode6ev++98ttU=;
-        b=GQ1SzIUj1mJGN2tVCfBiDEKFB0KFgaxc0OVBR4DXqkapnsEi4lqFqRruvNV7L0Dyt4
-         M29gU/QT+aUqDG/HtJX3MTrkyaFyHqyMrTZCx0so6EZPq+pLipgURkXmidX3QHjgidFt
-         vQ0rnrkj1UxcuCp6TCZVZZ307X78uaacn/SG+PcKLzdSBcTS1RwYV7InhkPxHTBRXGbg
-         CxrCCVA0TMd64n247qnmQ+rqtcwyi+bKRTuXNSz+jZCgB4cyPOr8FnwXyrie3rcdTGo5
-         7zkRwN0HgiuzhrBNKWMJUIGyFUvJEY/MXYHywJZsksm1AKplL3jhhtRhx24CYxakiKk1
-         lxRg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3Sil2ipWLaHzmM6B3ooqVKTDv95KPauqrEpWUGNSM5g=;
+        b=b2S2L9o8GslxMlEk/J55YIe/Ze18t4mksPUgFujIbMD5L2M9EoI2Si0kGm6ywPsXt1
+         6FWImLKg/YiTSW+3Nm93eqQub5KdqV69k94eNlVQ13zD1RjrN+PYzXonO9iUK6Cfh0SF
+         C79HGAw8uuytFSc5J7bYUBcCfozl57+yWkoedY0v7Nw3zA+z7nTWrlEk+5naGpiUWf8X
+         0HE23VEZ6Orv0oLMFMPgomGuQLUhhcN0RFKMMYsIJ2twEhWsJM0hthpm2c8mtBZP9+gR
+         pkKRycd1TrYCb1rDTIuzBLROq8rnVEy4tsFV4rIeNnwpNMKBp4jAw5XmiwE8StQBlzxC
+         ogzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=pd51Lq6rrVdoA8YsQhHVeUTtJvVqIhode6ev++98ttU=;
-        b=Z08UBS5qkwyWapooXc/SYkbhgATPTffScg6BFyP7vXXeiLZzGUHOOH/9q0Voh4i3ZB
-         pmZ2jZpociKNpX4lK5Po0Ou64TCGW6KWaKOtlcCnJp6enRBIwW96LDPtKDQjjf9IG34o
-         iWI1fWgYHb/uMb5jN7kx2XuA9bNnsaS+A0QYdcSAbPJgeH9BOwyo+83FnGLZScOfB4iq
-         iltqcRs6M6cLoRQFSW+75mNIzgRPZE1WHKCpAmfMwVCG5UAx5lYKcTCsyTfZSSPGzBCe
-         7JCf7LX52IMaggcFKvIrppGmV7o0EqsH++9dAa1P0yylbSLvxUjZTKSIyQzjkzhVvpn4
-         Utvg==
-X-Gm-Message-State: AOAM533qsjyOkQrvuLBQVTVyU6GnI2bgxPVecBfLvP2exbmNvQpDBnRq
-        Iq35TxYNmU1LKFEf1PmxtcA4Qm4TGQGkTRGBo/jfqph8StQ=
-X-Google-Smtp-Source: ABdhPJwQRpaoKiuSKfDvBX6nelGIzzaD0bgkdVnDCRC7qeyHYdNXCBENdIbHgFxTgOCPEWWLlaqiC38K5n7qG/1oz8g=
-X-Received: by 2002:a5d:52c1:: with SMTP id r1mr20105178wrv.255.1607792184408;
- Sat, 12 Dec 2020 08:56:24 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3Sil2ipWLaHzmM6B3ooqVKTDv95KPauqrEpWUGNSM5g=;
+        b=Wxc45EJH6rMF6O0hvTNxVLNvTS3ZVgmbWVN2kIe+ut4HIuGG8nWT8Oxg+BLHo71bst
+         t8DAQlEUB9x9u5aow2QLW3Zm9sJywI86Fq/r0lESzELLIli29fDz+H7KlrfLFXJWHqKP
+         x35cjlZNe4ALcn6FtKGCgQyWIPfT5wURS1LU1MhfQT4ZU3tRhrzbTjkCS+j/azaSwaAo
+         BDb+/I3zyRRIxmZcauCEwwilpaTeT7ZJMyNvMnJk6R7DzMHKVARBXSFHd3lAl1GTMd3B
+         baFhxfTkVMJalIkhCKsfhc2l5tz9JnB+KO5MUzioS3hgXxDtfg5LVo9TxxjCto1Cogmw
+         zLZA==
+X-Gm-Message-State: AOAM533q9aANbFfyMUf2QQrqAvCCmQqPDRaUPuAt8RGDa8UbUbCaXAHY
+        jDgzjwNDA8hAvcA9QVooeLBFJhTTaBs=
+X-Google-Smtp-Source: ABdhPJxWC9phAbwyaXQ98o73Hp8chuQjNthlF+H/XeaP0+6zQ4+7yLMluwdlqPJ2cQFwfVyGKHNsrg==
+X-Received: by 2002:a2e:3216:: with SMTP id y22mr7615055ljy.178.1607806743980;
+        Sat, 12 Dec 2020 12:59:03 -0800 (PST)
+Received: from localhost.localdomain ([213.24.126.14])
+        by smtp.gmail.com with ESMTPSA id e25sm503454lfc.40.2020.12.12.12.59.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 12 Dec 2020 12:59:03 -0800 (PST)
+From:   Alexey Roslyakov <alexey.roslyakov@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Alexey Roslyakov <alexey.roslyakov@gmail.com>
+Subject: [PATCH] l10n: ru.po: fix typo in Russian translation
+Date:   Sat, 12 Dec 2020 23:58:58 +0300
+Message-Id: <20201212205858.1224141-1-alexey.roslyakov@gmail.com>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-References: <20201212165208.780798-1-felipe.contreras@gmail.com>
-In-Reply-To: <20201212165208.780798-1-felipe.contreras@gmail.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Sat, 12 Dec 2020 10:56:13 -0600
-Message-ID: <CAMP44s0WPpGzZHU2tQS4OJwuC2P_zXW+ZpO4rB4w2hEgVUcp+A@mail.gmail.com>
-Subject: Re: [PATCH v5 0/3] pull: stop warning on every pull
-To:     Git <git@vger.kernel.org>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 12, 2020 at 10:52 AM Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
->
-> The future of having a sensible "git pull" default is uncertain (it's
-> very likely that nothing will change), in the meantime there's no reason
-> to keep annoying our users unnecessarily.
->
-> This patch is doing one thing, and one thing only: stops warning the
-> users on every single pull (warns only if they are not-fast-forward).
->
-> Changes since v4:
+Signed-off-by: Alexey Roslyakov <alexey.roslyakov@gmail.com>
+---
+ po/ru.po | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Hmm, it's not 4 -> 5, It's 5 -> 6.
-
+diff --git a/po/ru.po b/po/ru.po
+index a77b462e62..3cf7b6ad33 100644
+--- a/po/ru.po
++++ b/po/ru.po
+@@ -11578,7 +11578,7 @@ msgstr "разрешить обновление ссылки HEAD"
+ 
+ #: builtin/fetch.c:143 builtin/fetch.c:149 builtin/pull.c:226
+ msgid "deepen history of shallow clone"
+-msgstr "улугубить историю частичного клона"
++msgstr "углубить историю частичного клона"
+ 
+ #: builtin/fetch.c:145
+ msgid "deepen history of shallow repository based on time"
 -- 
-Felipe Contreras
+2.26.2
+
