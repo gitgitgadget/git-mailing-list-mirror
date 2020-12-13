@@ -2,214 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-15.3 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2229AC4361B
-	for <git@archiver.kernel.org>; Sun, 13 Dec 2020 08:08:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E8E3C4361B
+	for <git@archiver.kernel.org>; Sun, 13 Dec 2020 09:35:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D74B122D72
-	for <git@archiver.kernel.org>; Sun, 13 Dec 2020 08:08:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 27B082312C
+	for <git@archiver.kernel.org>; Sun, 13 Dec 2020 09:35:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404088AbgLMIIH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Dec 2020 03:08:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48396 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393439AbgLMIF7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Dec 2020 03:05:59 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20590C061285
-        for <git@vger.kernel.org>; Sun, 13 Dec 2020 00:04:40 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id w5so9519810wrm.11
-        for <git@vger.kernel.org>; Sun, 13 Dec 2020 00:04:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=E53HHn76OO/MGWBVwoA3qT9wPi5++SZ9bkb3Jqk0C6M=;
-        b=d4MRoFqJzLHWt5ADkRL6Kgy2gzRGrEY7mbEHPklNFKbvq+Gr/oGA21xbr5laWqFIim
-         rY6Zk7jcxqwFHjwTvI3Om3+9YPdHh6dpq1Iu+fgcIVKlQAKnCAycDDqaNYdEIgETuJiU
-         FI5MeuVDHgDV9SEirHQYmG8uhoE5gZIQnLFo9FT6ccs2w3KS1v0ys74chRKcy+NZ6dmf
-         BphjSsGWd8OJDyrIBmB0akqmn+sn+u7QIcxwXSCjRPWU80DLzlUAhuL7He0uglIejXb9
-         QKvG6aYW4mgwkXobWJwQ7Gtuo1sVq3b9my2TWS36Kh2PLmH57ez27e0b/oESceJykZCb
-         Si1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=E53HHn76OO/MGWBVwoA3qT9wPi5++SZ9bkb3Jqk0C6M=;
-        b=dyxGbUkSBF4JjjYnKpvjPSE+LBs2Vnv0etcOEkWiMQI/qWDu6HvDQUbe0cdKsDg+QG
-         3u9OOBp0BGFUx0tmU3Wxi1j8zsnJB+XQaX0WrLx45yQZSCeNchqxIyhdmPX6aAzhvOgg
-         fsUCNXD38PMC+2uaOJJUubdH+LVuCrp8LgSaTgqxjSa3kYUg0+ILERV+KS19EKy5SkEI
-         IQK8sgoCco5WXUr10YQ54+gMAwg3SMvwu99ORKK2bokHH9vjIckNdQcacWmvmJHPy6Hk
-         X650aZ8lBx+XFkuG9q6wMphCx3N779ZvPQxUafpuD+bQw63UGnYKNZ2bVL2Cpq0o9Prz
-         Dtwg==
-X-Gm-Message-State: AOAM530Si4b6FUYA+2QVk+mOUEi8mEE1y9x2OnoYraeB6KdKAiSEvIyx
-        Qg7nMixhE2/hb9obWy72KSz6rTOa+EU=
-X-Google-Smtp-Source: ABdhPJxZt2xPQBC1muqYXv4Di+b7JhiYHw1EywDchCgfE7xqsnYI1e2ywiutlQuAjV08dmWxwv2s/A==
-X-Received: by 2002:adf:a319:: with SMTP id c25mr23130987wrb.262.1607846678701;
-        Sun, 13 Dec 2020 00:04:38 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g11sm24869409wrq.7.2020.12.13.00.04.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Dec 2020 00:04:38 -0800 (PST)
-Message-Id: <8b001ae643a2aba66e3c16fbe33bf145a4662703.1607846667.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.923.v3.git.git.1607846667.gitgitgadget@gmail.com>
-References: <pull.923.v2.git.git.1607114890.gitgitgadget@gmail.com>
-        <pull.923.v3.git.git.1607846667.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 13 Dec 2020 08:04:18 +0000
-Subject: [PATCH v3 11/20] merge-ort: add a preliminary simple
- process_entries() implementation
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S2405883AbgLMJex (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Dec 2020 04:34:53 -0500
+Received: from bsmtp2.bon.at ([213.33.87.16]:19727 "EHLO bsmtp2.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728947AbgLMJev (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Dec 2020 04:34:51 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp2.bon.at (Postfix) with ESMTPSA id 4Ctzqh2Kj0z5tl9;
+        Sun, 13 Dec 2020 10:34:07 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id E14FA20C5;
+        Sun, 13 Dec 2020 10:34:06 +0100 (CET)
+Subject: Re: [PATCH 1/1] mailmap: support hashed entries in mailmaps
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <20201213010539.544101-1-sandals@crustytoothpaste.net>
+ <20201213010539.544101-2-sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <2cc4925f-3661-1dfb-2668-5f56edcb8455@kdbg.org>
+Date:   Sun, 13 Dec 2020 10:34:06 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     jonathantanmy@google.com, dstolee@microsoft.com,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+In-Reply-To: <20201213010539.544101-2-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Am 13.12.20 um 02:05 schrieb brian m. carlson:
+> Many people, through the course of their lives, will change either a
+> name or an email address.  For this reason, we have the mailmap, to map
+> from a user's former name or email address to their current, canonical
+> forms.  Normally, this works well as it is.
+> 
+> However, sometimes people change a name or an email address and wish to
+> wholly disassociate themselves from that former name or email address.
+> For example, a person may have left a company which engaged in a deeply
+> unethical act with which the person does not want to be associated, or
+> they may have changed their name to disassociate themselves from an
+> abusive family or partner.  In such a case, using the former name or
+> address in any way may be undesirable and the person may wish to replace
+> it as completely as possible.
+> 
+> For projects which wish to support this, introduce hashed forms into the
+> mailmap.  These forms, which start with "@sha256:" followed by a SHA-256
+> hash of the entry, can be used in place of the form used in the commit
+> field.  This form is intentionally designed to be unlikely to conflict
+> with legitimate use cases.  For example, this is not a valid email
+> address according to RFC 5322.  In the unlikely event that a user has
+> put such a form into the actual commit as their name, we will accept it.
+> 
+> While the form of the data is designed to accept multiple hash
+> algorithms, we intentionally do not support SHA-1.  There is little
+> reason to support such a weak algorithm in new use cases and no
+> backwards compatibility to consider.  Moreover, SHA-256 is faster than
+> the SHA1DC implementation we use, so this not only improves performance,
+> but simplifies the current implementation somewhat as well.
+> 
+> Note that it is, of course, possible to perform a lookup on all commit
+> objects to determine the actual entry which matches the hashed form of
+> the data.  However, a project for which this feature is valuable may
+> simply insert entries for many contributors in order to make discovery
+> of "interesting" entries significantly less convenient.
+> 
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
 
-Add a process_entries() implementation that just loops over the paths
-and processes each one individually with an auxiliary process_entry()
-call.  Add a basic process_entry() as well, which handles several cases
-but leaves a few of the more involved ones with die-not-implemented
-messages.  Also, although process_entries() is supposed to create a
-tree, it does not yet have code to do so -- except in the special case
-of merging completely empty trees.
+...
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- merge-ort.c | 103 +++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 102 insertions(+), 1 deletion(-)
+> diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+> index 586c3a86b1..794133ba5d 100755
+> --- a/t/t4203-mailmap.sh
+> +++ b/t/t4203-mailmap.sh
+> @@ -62,6 +62,41 @@ test_expect_success 'check-mailmap --stdin arguments' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'hashed mailmap' '
+> +	test_config mailmap.file ./hashed &&
+> +	hashed_author_name="@sha256:$(printf "$GIT_AUTHOR_NAME" | test-tool sha256)" &&
+> +	hashed_author_email="@sha256:$(printf "$GIT_AUTHOR_EMAIL" | test-tool sha256)" &&
+> +	cat >expect <<-EOF &&
+> +	$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
+> +	EOF
+...
+> +	cat >hashed <<-EOF &&
+> +	$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> <$hashed_author_email>
+> +	EOF
+> +	git check-mailmap  "$GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL>" >actual &&
+> +	test_cmp expect actual
 
-diff --git a/merge-ort.c b/merge-ort.c
-index 868ac65091b..d78b6b0873d 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -492,10 +492,111 @@ static int detect_and_process_renames(struct merge_options *opt,
- 	return clean;
- }
- 
-+/* Per entry merge function */
-+static void process_entry(struct merge_options *opt,
-+			  const char *path,
-+			  struct conflict_info *ci)
-+{
-+	VERIFY_CI(ci);
-+	assert(ci->filemask >= 0 && ci->filemask <= 7);
-+	/* ci->match_mask == 7 was handled in collect_merge_info_callback() */
-+	assert(ci->match_mask == 0 || ci->match_mask == 3 ||
-+	       ci->match_mask == 5 || ci->match_mask == 6);
-+
-+	if (ci->df_conflict) {
-+		die("Not yet implemented.");
-+	}
-+
-+	/*
-+	 * NOTE: Below there is a long switch-like if-elseif-elseif... block
-+	 *       which the code goes through even for the df_conflict cases
-+	 *       above.  Well, it will once we don't die-not-implemented above.
-+	 */
-+	if (ci->match_mask) {
-+		ci->merged.clean = 1;
-+		if (ci->match_mask == 6) {
-+			/* stages[1] == stages[2] */
-+			ci->merged.result.mode = ci->stages[1].mode;
-+			oidcpy(&ci->merged.result.oid, &ci->stages[1].oid);
-+		} else {
-+			/* determine the mask of the side that didn't match */
-+			unsigned int othermask = 7 & ~ci->match_mask;
-+			int side = (othermask == 4) ? 2 : 1;
-+
-+			ci->merged.result.mode = ci->stages[side].mode;
-+			ci->merged.is_null = !ci->merged.result.mode;
-+			oidcpy(&ci->merged.result.oid, &ci->stages[side].oid);
-+
-+			assert(othermask == 2 || othermask == 4);
-+			assert(ci->merged.is_null ==
-+			       (ci->filemask == ci->match_mask));
-+		}
-+	} else if (ci->filemask >= 6 &&
-+		   (S_IFMT & ci->stages[1].mode) !=
-+		   (S_IFMT & ci->stages[2].mode)) {
-+		/*
-+		 * Two different items from (file/submodule/symlink)
-+		 */
-+		die("Not yet implemented.");
-+	} else if (ci->filemask >= 6) {
-+		/*
-+		 * TODO: Needs a two-way or three-way content merge, but we're
-+		 * just being lazy and copying the version from HEAD and
-+		 * leaving it as conflicted.
-+		 */
-+		ci->merged.clean = 0;
-+		ci->merged.result.mode = ci->stages[1].mode;
-+		oidcpy(&ci->merged.result.oid, &ci->stages[1].oid);
-+	} else if (ci->filemask == 3 || ci->filemask == 5) {
-+		/* Modify/delete */
-+		die("Not yet implemented.");
-+	} else if (ci->filemask == 2 || ci->filemask == 4) {
-+		/* Added on one side */
-+		int side = (ci->filemask == 4) ? 2 : 1;
-+		ci->merged.result.mode = ci->stages[side].mode;
-+		oidcpy(&ci->merged.result.oid, &ci->stages[side].oid);
-+		ci->merged.clean = !ci->df_conflict;
-+	} else if (ci->filemask == 1) {
-+		/* Deleted on both sides */
-+		ci->merged.is_null = 1;
-+		ci->merged.result.mode = 0;
-+		oidcpy(&ci->merged.result.oid, &null_oid);
-+		ci->merged.clean = 1;
-+	}
-+
-+	/*
-+	 * If still conflicted, record it separately.  This allows us to later
-+	 * iterate over just conflicted entries when updating the index instead
-+	 * of iterating over all entries.
-+	 */
-+	if (!ci->merged.clean)
-+		strmap_put(&opt->priv->conflicted, path, ci);
-+}
-+
- static void process_entries(struct merge_options *opt,
- 			    struct object_id *result_oid)
- {
--	die("Not yet implemented.");
-+	struct hashmap_iter iter;
-+	struct strmap_entry *e;
-+
-+	if (strmap_empty(&opt->priv->paths)) {
-+		oidcpy(result_oid, opt->repo->hash_algo->empty_tree);
-+		return;
-+	}
-+
-+	strmap_for_each_entry(&opt->priv->paths, &iter, e) {
-+		/*
-+		 * NOTE: mi may actually be a pointer to a conflict_info, but
-+		 * we have to check mi->clean first to see if it's safe to
-+		 * reassign to such a pointer type.
-+		 */
-+		struct merged_info *mi = e->value;
-+
-+		if (!mi->clean)
-+			process_entry(opt, e->key, e->value);
-+	}
-+
-+	die("Tree creation not yet implemented");
- }
- 
- void merge_switch_to_result(struct merge_options *opt,
--- 
-gitgitgadget
+I don't understand the concept. A mailmap entry of the form
 
+   A <a@b> <x@y>
+
+tells that the former address <x@y>, which is recorded in old project
+history, should be replaced by A <a@b> when a commit is displayed. I am
+assuming that the idea is that old <x@y> should be the "banned" address.
+How does a hashed entry help when the hashed value appears at the right
+side of a mailmap entry and that literal string never appears anywhere
+in the history?
+
+-- Hannes
