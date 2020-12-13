@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B72CC4361B
-	for <git@archiver.kernel.org>; Sun, 13 Dec 2020 08:05:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B93FC4361B
+	for <git@archiver.kernel.org>; Sun, 13 Dec 2020 08:06:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E9E3C22D73
-	for <git@archiver.kernel.org>; Sun, 13 Dec 2020 08:05:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D2FBA22D6F
+	for <git@archiver.kernel.org>; Sun, 13 Dec 2020 08:06:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391790AbgLMIFN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Dec 2020 03:05:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48260 "EHLO
+        id S2403792AbgLMIGT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Dec 2020 03:06:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725777AbgLMIFM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Dec 2020 03:05:12 -0500
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24C16C0613D6
-        for <git@vger.kernel.org>; Sun, 13 Dec 2020 00:04:32 -0800 (PST)
-Received: by mail-wm1-x341.google.com with SMTP id v14so11036342wml.1
-        for <git@vger.kernel.org>; Sun, 13 Dec 2020 00:04:32 -0800 (PST)
+        with ESMTP id S2393158AbgLMIFw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Dec 2020 03:05:52 -0500
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 710B3C0617B0
+        for <git@vger.kernel.org>; Sun, 13 Dec 2020 00:04:37 -0800 (PST)
+Received: by mail-wr1-x441.google.com with SMTP id i9so13258309wrc.4
+        for <git@vger.kernel.org>; Sun, 13 Dec 2020 00:04:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=RNb+86sFrfx/u9J090MtIk+rxf0vfyt/r7AKOVdVyZE=;
-        b=mJD+e+JhLH9muZ08J0OZXJFLSIEqjID97Elry5hD8yS6NEPPX5RcZuCFhMTzpY3MlB
-         gDrzskFjVnmaSYKbd5iHVeju6UCopmgTU52g61OgNr9H+7c2spbxCxQypQu1rPkOLn1G
-         TgBC5aIMJk5bjSA5kacWtlMfWXahwBgvRUHimN17+ehABS1aeFjEJXr1KknQ41ciFfRw
-         BYBQHxhq7FTrmHQ6otio3gxOyV+12g7jeai7FTr8McQpElt7lGuGhQrWW+3CgpG4FxBU
-         3A45LByJXIeik3+H88EXgdejMJEyrWXM17Esn/VTa0kYRmXcXxk3w4E/LqAWx6MAWgoe
-         H+Cg==
+        bh=yfwQ8J3b23+d8uTmuuKp67sJovO5cdSWtQBt3v2Hv7M=;
+        b=gxqzDonTrARLsw5rLoi0lIcEEqblfzX+Zk7l+DX3ZI9zSTKZHbG490LnZE4C47HPtw
+         Ka/FPGcx+8nvkQFJlgQYawiI7jSzxeiKBFbTNoPcaTs//hMdOhDNlVOlSP4XC567jex9
+         FEA9ePrhn9Npr4fJb6IxGXrIBVaSJz2qwQxZwGRy8fCdpGTLtDfBdm893PVcfwq006iP
+         62STK4yysozKTaKKAcmZeq9OCYCm17d8cfuiffnH4sArauTvN97suMpwuV9RwjtInKcB
+         Sf45RRsKG4hMfSLEF73NfJz8DsrdhmGoaj/FNq1EbZbplgydEheJlJfJcEOIxFVm6dSX
+         IUiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=RNb+86sFrfx/u9J090MtIk+rxf0vfyt/r7AKOVdVyZE=;
-        b=oImJlJZ/BEoHzxmcKkS2ZGXa0yjLPwVWqmjIhEkBSN/pm9hfTYqW2AgjtMfyJyhafE
-         8UnUP6MRmdWWr9o/OXHOnCpqWJO0BzAGscpPFbbKaKoZJ15SePCL967sRYv4fgmHHRVr
-         reKtaY4SKuaxqU2dlT+xkOSAqkvi3xl3Zg3Kt09P6FWMl+wbL2vGVes9Xzwb9/CE+d9Q
-         urAOddIPYw6BoITvPemYMyaFTLb27B/16cOQjMO2ynEqtTKzo7bpR9hH6BY5MIazmssw
-         0Gk2V6fftTGwmVYEQOyBlIXZXc75LO7nLL5HX5KHHY+3hj6n2H7pJ9cM4feMqVUQCJ6K
-         Bc6Q==
-X-Gm-Message-State: AOAM530Dv4ID8zxn/EOBFWvMUgGkNsR7Xjzi/B+HxSETFVAyZdhOQ0a9
-        D/PhI7nCvpEjFLcstzW0k/wabf1nams=
-X-Google-Smtp-Source: ABdhPJxDjO7kbd2kM+3gijQ6ru6TIeP+u0i2x4zZ3j3yixTHc+Lcu/X4DQwY3Nv5RYlGIgZ81PGhWA==
-X-Received: by 2002:a1c:bc57:: with SMTP id m84mr21761872wmf.163.1607846670749;
-        Sun, 13 Dec 2020 00:04:30 -0800 (PST)
+        bh=yfwQ8J3b23+d8uTmuuKp67sJovO5cdSWtQBt3v2Hv7M=;
+        b=d7P+JCCHtVQgk3UAwNAxjZ2MCW2KET37A2g0N6pD96aYe7OZp7ITjcCpsFwz5Cac9O
+         4q6PJlr1/RkhjafL8PUQRmWUb8AraAw2bBULk4j2IhsHiuuaLKx4OtaQms7XDyCNGuAQ
+         V4zS9YCIULMg2KOA7Vjg9qsQVNMyBHBt3Wudz1HBFbOo5aTMqo6X6FxrE076MKOeu+TV
+         KFPsFpuDciXbQOrLTHW9shvYy6Ig9Z4x8Cok3wafYFnG90TS1Eetv1gATh3MsfuS2Swh
+         BVj2iFB7h17ZNKg8hUUBNDlTPsHXh1znU1WfAFTTHVy1hdAX1Yz8uTlNhvlNy8fKhs4m
+         9JyQ==
+X-Gm-Message-State: AOAM5333exo9J1Q5Jd96XExQbnjzNj3Zlt1LPWOkB121BpE6Rd7d+q89
+        UjnucGas/iwBrXc3umhUkKwaebi2fBs=
+X-Google-Smtp-Source: ABdhPJzkabo5dFGrVyzd5H0pAOcT1h4yPCr35XaLQs+60pKrd2yZf7VN/oCTv73+q7qC4XdsuWqT6g==
+X-Received: by 2002:a5d:4c45:: with SMTP id n5mr15023374wrt.396.1607846676063;
+        Sun, 13 Dec 2020 00:04:36 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j7sm23571366wmb.40.2020.12.13.00.04.30
+        by smtp.gmail.com with ESMTPSA id 35sm26750900wrf.9.2020.12.13.00.04.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Dec 2020 00:04:30 -0800 (PST)
-Message-Id: <5827ec7f3ebf7f333c15a64aea6d25ce596bf0cf.1607846667.git.gitgitgadget@gmail.com>
+        Sun, 13 Dec 2020 00:04:35 -0800 (PST)
+Message-Id: <be5708dc628b23e9f6d9b6088f86f033605759a4.1607846667.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.923.v3.git.git.1607846667.gitgitgadget@gmail.com>
 References: <pull.923.v2.git.git.1607114890.gitgitgadget@gmail.com>
         <pull.923.v3.git.git.1607846667.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 13 Dec 2020 08:04:09 +0000
-Subject: [PATCH v3 02/20] merge-ort: add some high-level algorithm structure
+Date:   Sun, 13 Dec 2020 08:04:15 +0000
+Subject: [PATCH v3 08/20] merge-ort: compute a few more useful fields for
+ collect_merge_info
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,132 +80,86 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-merge_ort_nonrecursive_internal() will be used by both
-merge_inmemory_nonrecursive() and merge_inmemory_recursive(); let's
-focus on it for now.  It involves some setup -- merge_start() --
-followed by the following chain of functions:
-
-  collect_merge_info()
-    This function will populate merge_options_internal's paths field,
-    via a call to traverse_trees() and a new callback that will be added
-    later.
-
-  detect_and_process_renames()
-    This function will detect renames, and then adjust entries in paths
-    to move conflict stages from old pathnames into those for new
-    pathnames, so that the next step doesn't have to think about renames
-    and just can do three-way content merging and such.
-
-  process_entries()
-    This function determines how to take the various stages (versions of
-    a file from the three different sides) and merge them, and whether
-    to mark the result as conflicted or cleanly merged.  It also writes
-    out these merged file versions as it goes to create a tree.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 68 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 67 insertions(+), 1 deletion(-)
+ merge-ort.c | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 3325c9c0a2c..d0abee9b6ab 100644
+index 690c64fe264..a6876191c02 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -18,6 +18,7 @@
- #include "merge-ort.h"
+@@ -220,6 +220,7 @@ static int collect_merge_info_callback(int n,
+ 	size_t len;
+ 	char *fullpath;
+ 	unsigned filemask = mask & ~dirmask;
++	unsigned match_mask = 0; /* will be updated below */
+ 	unsigned mbase_null = !(mask & 1);
+ 	unsigned side1_null = !(mask & 2);
+ 	unsigned side2_null = !(mask & 4);
+@@ -233,6 +234,22 @@ static int collect_merge_info_callback(int n,
+ 				names[1].mode == names[2].mode &&
+ 				oideq(&names[1].oid, &names[2].oid));
  
- #include "strmap.h"
-+#include "tree.h"
- 
- struct merge_options_internal {
- 	/*
-@@ -164,6 +165,38 @@ struct conflict_info {
- 	unsigned match_mask:3;
- };
- 
-+static int collect_merge_info(struct merge_options *opt,
-+			      struct tree *merge_base,
-+			      struct tree *side1,
-+			      struct tree *side2)
-+{
-+	/* TODO: Implement this using traverse_trees() */
-+	die("Not yet implemented.");
-+}
-+
-+static int detect_and_process_renames(struct merge_options *opt,
-+				      struct tree *merge_base,
-+				      struct tree *side1,
-+				      struct tree *side2)
-+{
-+	int clean = 1;
-+
 +	/*
-+	 * Rename detection works by detecting file similarity.  Here we use
-+	 * a really easy-to-implement scheme: files are similar IFF they have
-+	 * the same filename.  Therefore, by this scheme, there are no renames.
-+	 *
-+	 * TODO: Actually implement a real rename detection scheme.
++	 * Note: When a path is a file on one side of history and a directory
++	 * in another, we have a directory/file conflict.  In such cases, if
++	 * the conflict doesn't resolve from renames and deletions, then we
++	 * always leave directories where they are and move files out of the
++	 * way.  Thus, while struct conflict_info has a df_conflict field to
++	 * track such conflicts, we ignore that field for any directories at
++	 * a path and only pay attention to it for files at the given path.
++	 * The fact that we leave directories were they are also means that
++	 * we do not need to worry about getting additional df_conflict
++	 * information propagated from parent directories down to children
++	 * (unlike, say traverse_trees_recursive() in unpack-trees.c, which
++	 * sets a newinfo.df_conflicts field specifically to propagate it).
 +	 */
-+	return clean;
-+}
++	unsigned df_conflict = (filemask != 0) && (dirmask != 0);
 +
-+static void process_entries(struct merge_options *opt,
-+			    struct object_id *result_oid)
-+{
-+	die("Not yet implemented.");
-+}
-+
- void merge_switch_to_result(struct merge_options *opt,
- 			    struct tree *head,
- 			    struct merge_result *result,
-@@ -180,13 +213,46 @@ void merge_finalize(struct merge_options *opt,
- 	die("Not yet implemented");
- }
+ 	/* n = 3 is a fundamental assumption. */
+ 	if (n != 3)
+ 		BUG("Called collect_merge_info_callback wrong");
+@@ -248,6 +265,14 @@ static int collect_merge_info_callback(int n,
+ 	assert(!mbase_null || !side1_null || !side2_null);
+ 	assert(mask > 0 && mask < 8);
  
-+static void merge_start(struct merge_options *opt, struct merge_result *result)
-+{
-+	die("Not yet implemented.");
-+}
++	/* Determine match_mask */
++	if (side1_matches_mbase)
++		match_mask = (side2_matches_mbase ? 7 : 3);
++	else if (side2_matches_mbase)
++		match_mask = 5;
++	else if (sides_match)
++		match_mask = 6;
 +
-+/*
-+ * Originally from merge_trees_internal(); heavily adapted, though.
-+ */
-+static void merge_ort_nonrecursive_internal(struct merge_options *opt,
-+					    struct tree *merge_base,
-+					    struct tree *side1,
-+					    struct tree *side2,
-+					    struct merge_result *result)
-+{
-+	struct object_id working_tree_oid;
-+
-+	collect_merge_info(opt, merge_base, side1, side2);
-+	result->clean = detect_and_process_renames(opt, merge_base,
-+						   side1, side2);
-+	process_entries(opt, &working_tree_oid);
-+
-+	/* Set return values */
-+	result->tree = parse_tree_indirect(&working_tree_oid);
-+	/* existence of conflicted entries implies unclean */
-+	result->clean &= strmap_empty(&opt->priv->conflicted);
-+	if (!opt->priv->call_depth) {
-+		result->priv = opt->priv;
-+		opt->priv = NULL;
-+	}
-+}
-+
- void merge_incore_nonrecursive(struct merge_options *opt,
- 			       struct tree *merge_base,
- 			       struct tree *side1,
- 			       struct tree *side2,
- 			       struct merge_result *result)
- {
--	die("Not yet implemented");
-+	assert(opt->ancestor != NULL);
-+	merge_start(opt, result);
-+	merge_ort_nonrecursive_internal(opt, merge_base, side1, side2, result);
- }
+ 	/*
+ 	 * Get the name of the relevant filepath, which we'll pass to
+ 	 * setup_path_info() for tracking.
+@@ -266,6 +291,8 @@ static int collect_merge_info_callback(int n,
+ 	 * so we can resolve later in process_entries.
+ 	 */
+ 	ci = xcalloc(1, sizeof(struct conflict_info));
++	ci->df_conflict = df_conflict;
++	ci->match_mask = match_mask;
+ 	strmap_put(&opti->paths, fullpath, ci);
  
- void merge_incore_recursive(struct merge_options *opt,
+ 	/* If dirmask, recurse into subdirectories */
+@@ -282,6 +309,15 @@ static int collect_merge_info_callback(int n,
+ 		newinfo.name = p->path;
+ 		newinfo.namelen = p->pathlen;
+ 		newinfo.pathlen = st_add3(newinfo.pathlen, p->pathlen, 1);
++		/*
++		 * If this directory we are about to recurse into cared about
++		 * its parent directory (the current directory) having a D/F
++		 * conflict, then we'd propagate the masks in this way:
++		 *    newinfo.df_conflicts |= (mask & ~dirmask);
++		 * But we don't worry about propagating D/F conflicts.  (See
++		 * comment near setting of local df_conflict variable near
++		 * the beginning of this function).
++		 */
+ 
+ 		for (i = MERGE_BASE; i <= MERGE_SIDE2; i++) {
+ 			if (i == 1 && side1_matches_mbase)
 -- 
 gitgitgadget
 
