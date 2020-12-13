@@ -2,209 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AA38C4361B
-	for <git@archiver.kernel.org>; Sun, 13 Dec 2020 00:27:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECD7CC4361B
+	for <git@archiver.kernel.org>; Sun, 13 Dec 2020 01:10:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 608D2224F9
-	for <git@archiver.kernel.org>; Sun, 13 Dec 2020 00:27:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BBFE922AEC
+	for <git@archiver.kernel.org>; Sun, 13 Dec 2020 01:10:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2439952AbgLMA1j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Dec 2020 19:27:39 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:59288 "EHLO
+        id S2390939AbgLMBKQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Dec 2020 20:10:16 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:59318 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2439944AbgLMA1L (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 12 Dec 2020 19:27:11 -0500
+        by vger.kernel.org with ESMTP id S1726074AbgLMBKQ (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 12 Dec 2020 20:10:16 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 901276076A;
-        Sun, 13 Dec 2020 00:25:51 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BE37860769
+        for <git@vger.kernel.org>; Sun, 13 Dec 2020 01:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1607819152;
-        bh=Swdyd6ZrgAQapM/BV/UyfoN/f73IbnjriGtsAe+jxx0=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=r7zwnVpK4rWOGML2mlLiiGCImFGzUbGEk5qmlEwPAK0rtdEtR6ux3K96YKGydTrGQ
-         UXk9BGx5Dpq2O87iECgqBzJJliGEuH4o+Oms9SxXXzw8OZXd/wVCB6nwQKevnNJjNF
-         s8lcoZkF2Nwq4mQrdjbJVDYDl+ht1PuPUUVBeXl2RiGUkOHek0WQga2kaeo1Bl6FuY
-         uaMdJfZNAr4Gr9FdQlxXsmDk7OvmIe/4qJiA0bBRSdfkHvuaGr4vqi9psvpAwRcY2I
-         QozRqO60HlAh3xpx5itpnwOCbUaIejW4/x31oVrLiqwcH+efQIlC/MRpIQAH6LNQL7
-         al/43oUWNXb7z+Rg6jcoigPs9Us/Im5xNn3hJwatM5g7w1ZrjR4uYC9jPYlvxhHN8U
-         j9DN9XCklE7qPf1njNt+9Tf06b/mqGMtkCXl/QSTgF7zV9ynD/DFZtkHIsEsTzNN9X
-         CnlXe0sNEkF/xxM2JyUuHUjNPUhi6V1FWksiRAfM8k+fZq4U0r6
+        s=default; t=1607821745;
+        bh=h8LvH2246cp+NNm3rM4BehuSR7DuJXRDgUrNabKN5sY=;
+        h=From:To:Subject:Date:From:Reply-To:Subject:Date:To:CC:Resent-Date:
+         Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=t3FfH516BzAe3DhMQRZ2G6pqILOMt2yfxzijvfxbyiLSdNfW1gWQ17AjWomb8GRHw
+         MzKbwYfF549XRYD8g+ft08qhuJoKGV0r27NDEb+t9Lhk5sOmCucWZdPeGFeDmHmquL
+         HfVfMk40qGObp/o/BgKp1Ajh81XNeC0be5JFTelfxlOZ+CWnoLfQpkHSqF+ktdjF81
+         yGhXi5B1UiLer3jVdZSQqUYZV4JB5IOFwwJRvnPL/izTGA8iaYqqx1duRgIHyDteNr
+         KYA5nietO5NAUabAaYDERpurFgsSBPkcJEWrdTGHYY0vGfM25koTU10WHafKjsXC8M
+         WbNzDtF1Dkty5fNdDLPUdwAY6tO0Wc2d5+xpx1w2gDICBoYlXC1jQEtuxWVw1x+kBr
+         6H2jtEb0cWUOODtCS1zQHn09llMJ08QlOvnUXVhfVEpL2Zsv7ijioEwgBnbl6v+azb
+         Y4pgs0ikwdhTF6fRkKdOaDj0x5DYF+453SQlf170NO84umaOXo/
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
-Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v5 1/2] abspath: add a function to resolve paths with missing components
-Date:   Sun, 13 Dec 2020 00:25:28 +0000
-Message-Id: <20201213002529.542928-2-sandals@crustytoothpaste.net>
+Subject: [PATCH 0/1] Hashed mailmap support
+Date:   Sun, 13 Dec 2020 01:05:38 +0000
+Message-Id: <20201213010539.544101-1-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
-In-Reply-To: <20201213002529.542928-1-sandals@crustytoothpaste.net>
-References: <20201213002529.542928-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, we have a function to resolve paths, strbuf_realpath.  This
-function canonicalizes paths like realpath(3), but permits a trailing
-component to be absent from the file system.  In other words, this is
-the behavior of the GNU realpath(1) without any arguments.
+Many people, through the course of their lives, will change either a
+name or an email address.  For this reason, we have the mailmap, to map
+from a user's former name or email address to their current, canonical
+forms.  Normally, this works well as it is.
 
-In the future, we'll need this same behavior, except that we want to
-allow for any number of missing trailing components, which is the
-behavior of GNU realpath(1) with the -m option.  This is useful because
-we'll want to canonicalize a path that may point to a not yet present
-path under the .git directory.  For example, a user may want to know
-where an arbitrary ref would be stored if it existed in the file system.
+However, sometimes people change a name (or an email) and want to
+completely cease use of the former name or email.  This could be because
+a transgender person has transitioned, because a person has left an
+abusive partner or broken ties with an abusive family member, or for any
+other number of good and valuable reasons.  In these cases, placing the
+former name in the .mailmap may be undesirable.
 
-Let's refactor strbuf_realpath to move most of the code to an internal
-function and then pass it two flags to control its behavior.  We'll add
-a strbuf_realpath_forgiving function that has our new behavior, and
-leave strbuf_realpath with the older, stricter behavior.
+For those situations, let's introduce a hashed mailmap, where the user's
+former name or email address can be in the form @sha256:<hash>.  This
+obscures the former name or email.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- abspath.c | 64 +++++++++++++++++++++++++++++++++++++++----------------
- cache.h   |  2 ++
- 2 files changed, 48 insertions(+), 18 deletions(-)
+Note that this is not perfect, because a user can simply look up all the
+hashed values and find out the old values.  However, for projects which
+wish to adopt the feature, it can be somewhat effective to hash all
+existing mailmap entries and include some no-op entries from other
+contributors as well, so as to make this process less convenient.
 
-diff --git a/abspath.c b/abspath.c
-index 6f15a418bb..39e06b5848 100644
---- a/abspath.c
-+++ b/abspath.c
-@@ -67,19 +67,15 @@ static void get_root_part(struct strbuf *resolved, struct strbuf *remaining)
- #endif
- 
- /*
-- * Return the real path (i.e., absolute path, with symlinks resolved
-- * and extra slashes removed) equivalent to the specified path.  (If
-- * you want an absolute path but don't mind links, use
-- * absolute_path().)  Places the resolved realpath in the provided strbuf.
-- *
-- * The directory part of path (i.e., everything up to the last
-- * dir_sep) must denote a valid, existing directory, but the last
-- * component need not exist.  If die_on_error is set, then die with an
-- * informative error message if there is a problem.  Otherwise, return
-- * NULL on errors (without generating any output).
-+ * If set, any number of trailing components may be missing; otherwise, only one
-+ * may be.
-  */
--char *strbuf_realpath(struct strbuf *resolved, const char *path,
--		      int die_on_error)
-+#define REALPATH_MANY_MISSING (1 << 0)
-+/* Should we die if there's an error? */
-+#define REALPATH_DIE_ON_ERROR (1 << 1)
-+
-+static char *strbuf_realpath_1(struct strbuf *resolved, const char *path,
-+			       int flags)
- {
- 	struct strbuf remaining = STRBUF_INIT;
- 	struct strbuf next = STRBUF_INIT;
-@@ -89,7 +85,7 @@ char *strbuf_realpath(struct strbuf *resolved, const char *path,
- 	struct stat st;
- 
- 	if (!*path) {
--		if (die_on_error)
-+		if (flags & REALPATH_DIE_ON_ERROR)
- 			die("The empty string is not a valid path");
- 		else
- 			goto error_out;
-@@ -101,7 +97,7 @@ char *strbuf_realpath(struct strbuf *resolved, const char *path,
- 	if (!resolved->len) {
- 		/* relative path; can use CWD as the initial resolved path */
- 		if (strbuf_getcwd(resolved)) {
--			if (die_on_error)
-+			if (flags & REALPATH_DIE_ON_ERROR)
- 				die_errno("unable to get current working directory");
- 			else
- 				goto error_out;
-@@ -129,8 +125,9 @@ char *strbuf_realpath(struct strbuf *resolved, const char *path,
- 
- 		if (lstat(resolved->buf, &st)) {
- 			/* error out unless this was the last component */
--			if (errno != ENOENT || remaining.len) {
--				if (die_on_error)
-+			if (errno != ENOENT ||
-+			   (!(flags & REALPATH_MANY_MISSING) && remaining.len)) {
-+				if (flags & REALPATH_DIE_ON_ERROR)
- 					die_errno("Invalid path '%s'",
- 						  resolved->buf);
- 				else
-@@ -143,7 +140,7 @@ char *strbuf_realpath(struct strbuf *resolved, const char *path,
- 			if (num_symlinks++ > MAXSYMLINKS) {
- 				errno = ELOOP;
- 
--				if (die_on_error)
-+				if (flags & REALPATH_DIE_ON_ERROR)
- 					die("More than %d nested symlinks "
- 					    "on path '%s'", MAXSYMLINKS, path);
- 				else
-@@ -153,7 +150,7 @@ char *strbuf_realpath(struct strbuf *resolved, const char *path,
- 			len = strbuf_readlink(&symlink, resolved->buf,
- 					      st.st_size);
- 			if (len < 0) {
--				if (die_on_error)
-+				if (flags & REALPATH_DIE_ON_ERROR)
- 					die_errno("Invalid symlink '%s'",
- 						  resolved->buf);
- 				else
-@@ -202,6 +199,37 @@ char *strbuf_realpath(struct strbuf *resolved, const char *path,
- 	return retval;
- }
- 
-+/*
-+ * Return the real path (i.e., absolute path, with symlinks resolved
-+ * and extra slashes removed) equivalent to the specified path.  (If
-+ * you want an absolute path but don't mind links, use
-+ * absolute_path().)  Places the resolved realpath in the provided strbuf.
-+ *
-+ * The directory part of path (i.e., everything up to the last
-+ * dir_sep) must denote a valid, existing directory, but the last
-+ * component need not exist.  If die_on_error is set, then die with an
-+ * informative error message if there is a problem.  Otherwise, return
-+ * NULL on errors (without generating any output).
-+ */
-+char *strbuf_realpath(struct strbuf *resolved, const char *path,
-+		      int die_on_error)
-+{
-+	return strbuf_realpath_1(resolved, path,
-+				 die_on_error ? REALPATH_DIE_ON_ERROR : 0);
-+}
-+
-+/*
-+ * Just like strbuf_realpath, but allows an arbitrary number of path
-+ * components to be missing.
-+ */
-+char *strbuf_realpath_forgiving(struct strbuf *resolved, const char *path,
-+				int die_on_error)
-+{
-+	return strbuf_realpath_1(resolved, path,
-+				 ((die_on_error ? REALPATH_DIE_ON_ERROR : 0) |
-+				  REALPATH_MANY_MISSING));
-+}
-+
- char *real_pathdup(const char *path, int die_on_error)
- {
- 	struct strbuf realpath = STRBUF_INIT;
-diff --git a/cache.h b/cache.h
-index 8d279bc110..487ebab8b0 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1325,6 +1325,8 @@ static inline int is_absolute_path(const char *path)
- int is_directory(const char *);
- char *strbuf_realpath(struct strbuf *resolved, const char *path,
- 		      int die_on_error);
-+char *strbuf_realpath_forgiving(struct strbuf *resolved, const char *path,
-+				int die_on_error);
- char *real_pathdup(const char *path, int die_on_error);
- const char *absolute_path(const char *path);
- char *absolute_pathdup(const char *path);
+I've spoken to a variety of folks about this, and while we all agree
+this design isn't perfect, it is an improvement over the status quo.  It
+is obfuscation, not security, and in this case, I think that's fine.
+I'm open to hearing ideas about how to improve this design if there are
+any.
+
+I welcome feedback on this patch, while encouraging people to be mindful
+of our code of conduct.
+
+brian m. carlson (1):
+  mailmap: support hashed entries in mailmaps
+
+ mailmap.c          | 39 +++++++++++++++++++++++++++++++++++++--
+ t/t4203-mailmap.sh | 35 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 72 insertions(+), 2 deletions(-)
+
