@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 972FEC4167B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EBC5C0018C
 	for <git@archiver.kernel.org>; Sun, 13 Dec 2020 08:05:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 45C8F22D6F
+	by mail.kernel.org (Postfix) with ESMTP id 1D28422DCC
 	for <git@archiver.kernel.org>; Sun, 13 Dec 2020 08:05:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393147AbgLMIFp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Dec 2020 03:05:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48266 "EHLO
+        id S2393113AbgLMIFd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Dec 2020 03:05:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725777AbgLMIFO (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S2391839AbgLMIFO (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 13 Dec 2020 03:05:14 -0500
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA966C061793
-        for <git@vger.kernel.org>; Sun, 13 Dec 2020 00:04:33 -0800 (PST)
-Received: by mail-wm1-x343.google.com with SMTP id a6so11036085wmc.2
-        for <git@vger.kernel.org>; Sun, 13 Dec 2020 00:04:33 -0800 (PST)
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35153C061794
+        for <git@vger.kernel.org>; Sun, 13 Dec 2020 00:04:34 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id r14so13265158wrn.0
+        for <git@vger.kernel.org>; Sun, 13 Dec 2020 00:04:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HmYvvwe91lf2YCvD8rHvJQ8LBJ8qQf8gKQo72XVX0JI=;
-        b=mlp7h9PoVVq1mCGH+ObfvyV7q6+e0aIy8CDPEGcPIB+z0xHu9SIKJXBqOKh+MZNvSU
-         9ZAzPEvBuJEDs9/bw5tz9FQUd95vaHV9LAc7vmOqfvGldcXvZrbHhHw90MDjYX1Kb+An
-         s8qZlhN7EZJsXRBnLHzeXw5ULeMbjRs+fuvgPRZtGigl2MbxDGE8LgWPy+dKt6BfDrb3
-         URrnY+lje7M9pkt/0GJTYRTgxxtSflMI5jX9cEdX1BVivuUI8VglHciH9fgeztZgcTyH
-         ihczHESYEuR/BY1uoEulpbNxvyTwzUJYu6JFE08+qXC9yDHAx48hqYG67NTmPUPjtOzB
-         vkeQ==
+        bh=c1FRh8KHfITLyIKVnDMkVjqTG8SNjqfSu6W0ryaVzGo=;
+        b=BoasK2InoHgrym38bdAlempw50V2+jqF7J2hPDHCJwidtTyu4USf8bTQdS+WwZmQgP
+         AYvNAZl4x9bErS3kUKvXoCm6oKbQPr1ucsE9QW8xPwq0dXxg8RnnhuFuegT851lmwzw8
+         dAn6Q/93mZUkZaTatJVmRLeCEp6Swu0tsWS0e+Ea098RysXzchK/hOXGqlYNnjFnwhc1
+         baGKGoM+PuupEnhs60mXnNIERxva4h8kxazoDuYzpBeQefiUkPyrBCSuozdf1oq0aI21
+         Otzizz2Dp2Kc54ppKwttDemGZaCPCpvYTsOu/NFeYHXUehneJqr5vLfHtTDUxWqL6Fex
+         b3Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HmYvvwe91lf2YCvD8rHvJQ8LBJ8qQf8gKQo72XVX0JI=;
-        b=FOJib3fHnP6CD24yoc6PcN4KcCOhASdWxzs+4FQTSDylyNauY44NFLEOPWRqsLmXXy
-         /1T5iTy+hrUnxueeWgVQyyG4R6NiEb9nbdgWCUsefute18dwXir2uqDXzr385BVVt8fC
-         b0ENCxdX260dGvAR1m3hZiVHUsRBYEauRtW5TInLtK2cDnC6WLAOgMAV+Ur6hbed+FxK
-         6qlYjlmbwowsFMdNiISKf73THeDiWlTVZhYFvrYr73nJE/m423GCJn26JNNO/z1kE89V
-         qN2AB9lKOxkijUCLTa6hodAUV1AOc70WWACSi2YVh9mXfGpZFpG92mwGLMVrZ4WlF+JD
-         HwMA==
-X-Gm-Message-State: AOAM530OY62FrjrlGhDGMmM4tlznkHHiA1IvOTu4xEJEVHQfRrFgw5pf
-        ITmkH6Aob4HXzK10QLBYNT82CuUFLJw=
-X-Google-Smtp-Source: ABdhPJyDP1fCkh5k0IdXOEUz0bQFkOWwonygTMICAY1fpj0tMq7ezjNH7G+7Qlt0qP4IIgjaZD7O9Q==
-X-Received: by 2002:a1c:4d0c:: with SMTP id o12mr22487978wmh.134.1607846672535;
-        Sun, 13 Dec 2020 00:04:32 -0800 (PST)
+        bh=c1FRh8KHfITLyIKVnDMkVjqTG8SNjqfSu6W0ryaVzGo=;
+        b=uM12J11cJScxchL3ozkchqLE+ijBVFQB+gMKJwbCoCa0Hi091pRow4m6Y61dVUR6F8
+         ILb/jrDdv4+e+hWarGZV42o0b9YDSooSH/lkw167M9FkbCBktRHa1dalkipUkcQEXTEH
+         WFthp+xKbFiUvK5SZ7Ust6Ks8h1l4dIUMq0+GsaWXn9OM44n7Ol43F22b3JjxyOhebhv
+         DgUFxPbVk3DEF4kobmKNk3rpfTXMvrbCeYEFau111ihsbgDUXvBUqLyc+ZerO9QNw4co
+         a2mb8oJHEp5q6FkF+t4UpXWULLtIYY3PsJwWW9zXpZN5cfhvfUuBNwjPE3GLRNxpl2Zi
+         SyfA==
+X-Gm-Message-State: AOAM532lnZTd//u2v2J3ma1ZFV6wjpEWOaVMQTtUT2Frrp+m/z4AvSFE
+        36vpToCo9s4gmgJKieqjAQd+Iix1cYA=
+X-Google-Smtp-Source: ABdhPJw1L73SLSdZHtuPR3GOP5RNqOIialoE6kH0R0o3ycWfojlY2A31i0/JljbZzsSBm5T0frErJw==
+X-Received: by 2002:adf:8184:: with SMTP id 4mr23533302wra.63.1607846671643;
+        Sun, 13 Dec 2020 00:04:31 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s205sm25154328wmf.46.2020.12.13.00.04.31
+        by smtp.gmail.com with ESMTPSA id q17sm24189426wrr.53.2020.12.13.00.04.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sun, 13 Dec 2020 00:04:31 -0800 (PST)
-Message-Id: <38b4f9cf78c885e958158a3960dd74715dc22d97.1607846667.git.gitgitgadget@gmail.com>
+Message-Id: <8295591ee13a500502cb35cc0fa1b557d4696ef6.1607846667.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.923.v3.git.git.1607846667.gitgitgadget@gmail.com>
 References: <pull.923.v2.git.git.1607114890.gitgitgadget@gmail.com>
         <pull.923.v3.git.git.1607846667.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 13 Dec 2020 08:04:11 +0000
-Subject: [PATCH v3 04/20] merge-ort: use histogram diff
+Date:   Sun, 13 Dec 2020 08:04:10 +0000
+Subject: [PATCH v3 03/20] merge-ort: port merge_start() from merge-recursive
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,65 +79,103 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-In my cursory investigation, histogram diffs are about 2% slower than
-Myers diffs.  Others have probably done more detailed benchmarks.  But,
-in short, histogram diffs have been around for years and in a number of
-cases provide obviously better looking diffs where Myers diffs are
-unintelligible but the performance hit has kept them from becoming the
-default.
+merge_start() basically does a bunch of sanity checks, then allocates
+and initializes opt->priv -- a struct merge_options_internal.
 
-However, there are real merge bugs we know about that have triggered on
-git.git and linux.git, which I don't have a clue how to address without
-the additional information that I believe is provided by histogram
-diffs.  See the following:
+Most of the sanity checks are usable as-is.  The
+allocation/intialization is a bit different since merge-ort has a very
+different merge_options_internal than merge-recursive, but the idea is
+the same.
 
-https://lore.kernel.org/git/20190816184051.GB13894@sigill.intra.peff.net/
-https://lore.kernel.org/git/CABPp-BHvJHpSJT7sdFwfNcPn_sOXwJi3=o14qjZS3M8Rzcxe2A@mail.gmail.com/
-https://lore.kernel.org/git/CABPp-BGtez4qjbtFT1hQoREfcJPmk9MzjhY5eEq1QhXT23tFOw@mail.gmail.com/
+The weirdest part here is that merge-ort and merge-recursive use the
+same struct merge_options, even though merge_options has a number of
+fields that are oddly specific to merge-recursive's internal
+implementation and don't even make sense with merge-ort's high-level
+design (e.g. buffer_output, which merge-ort has to always do).  I reused
+the same data structure because:
+  * most the fields made sense to both merge algorithms
+  * making a new struct would have required making new enums or somehow
+    externalizing them, and that was getting messy.
+  * it simplifies converting the existing callers by not having to
+    have different code paths for merge_options setup.
 
-I don't like mismerges.  I really don't like silent mismerges.  While I
-am sometimes willing to make performance and correctness tradeoff, I'm
-much more interested in correctness in general.  I want to fix the above
-bugs.  I have not yet started doing so, but I believe histogram diff at
-least gives me an angle.  Unfortunately, I can't rely on using the
-information from histogram diff unless it's in use.  And it hasn't been
-used because of a few percentage performance hit.
-
-In testcases I have looked at, merge-ort is _much_ faster than
-merge-recursive for non-trivial merges/rebases/cherry-picks.  As such,
-this is a golden opportunity to switch out the underlying diff algorithm
-(at least the one used by the merge machinery; git-diff and git-log are
-separate questions); doing so will allow me to get additional data and
-improved diffs, and I believe it will help me fix the above bugs at some
-point in the future.
+I also marked detect_renames as ignored.  We can revisit that later, but
+in short: merge-recursive allowed turning off rename detection because
+it was sometimes glacially slow.  When you speed something up by a few
+orders of magnitude, it's worth revisiting whether that justification is
+still relevant.  Besides, if folks find it's still too slow, perhaps
+they have a better scaling case than I could find and maybe it turns up
+some more optimizations we can add.  If it still is needed as an option,
+it is easy to add later.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ merge-ort.c | 45 ++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 44 insertions(+), 1 deletion(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index fb07c8f2b30..85942cfa7c7 100644
+index d0abee9b6ab..fb07c8f2b30 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -21,6 +21,7 @@
- #include "diffcore.h"
+@@ -17,6 +17,8 @@
+ #include "cache.h"
+ #include "merge-ort.h"
+ 
++#include "diff.h"
++#include "diffcore.h"
  #include "strmap.h"
  #include "tree.h"
-+#include "xdiff-interface.h"
  
- struct merge_options_internal {
- 	/*
-@@ -245,6 +246,9 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
+@@ -215,7 +217,48 @@ void merge_finalize(struct merge_options *opt,
  
- 	assert(opt->priv == NULL);
- 
-+	/* Default to histogram diff.  Actually, just hardcode it...for now. */
-+	opt->xdl_opts = DIFF_WITH_ALG(opt, HISTOGRAM_DIFF);
+ static void merge_start(struct merge_options *opt, struct merge_result *result)
+ {
+-	die("Not yet implemented.");
++	/* Sanity checks on opt */
++	assert(opt->repo);
 +
- 	/* Initialization of opt->priv, our internal merge data */
- 	opt->priv = xcalloc(1, sizeof(*opt->priv));
++	assert(opt->branch1 && opt->branch2);
++
++	assert(opt->detect_directory_renames >= MERGE_DIRECTORY_RENAMES_NONE &&
++	       opt->detect_directory_renames <= MERGE_DIRECTORY_RENAMES_TRUE);
++	assert(opt->rename_limit >= -1);
++	assert(opt->rename_score >= 0 && opt->rename_score <= MAX_SCORE);
++	assert(opt->show_rename_progress >= 0 && opt->show_rename_progress <= 1);
++
++	assert(opt->xdl_opts >= 0);
++	assert(opt->recursive_variant >= MERGE_VARIANT_NORMAL &&
++	       opt->recursive_variant <= MERGE_VARIANT_THEIRS);
++
++	/*
++	 * detect_renames, verbosity, buffer_output, and obuf are ignored
++	 * fields that were used by "recursive" rather than "ort" -- but
++	 * sanity check them anyway.
++	 */
++	assert(opt->detect_renames >= -1 &&
++	       opt->detect_renames <= DIFF_DETECT_COPY);
++	assert(opt->verbosity >= 0 && opt->verbosity <= 5);
++	assert(opt->buffer_output <= 2);
++	assert(opt->obuf.len == 0);
++
++	assert(opt->priv == NULL);
++
++	/* Initialization of opt->priv, our internal merge data */
++	opt->priv = xcalloc(1, sizeof(*opt->priv));
++
++	/*
++	 * Although we initialize opt->priv->paths with strdup_strings=0,
++	 * that's just to avoid making yet another copy of an allocated
++	 * string.  Putting the entry into paths means we are taking
++	 * ownership, so we will later free it.
++	 *
++	 * In contrast, conflicted just has a subset of keys from paths, so
++	 * we don't want to free those (it'd be a duplicate free).
++	 */
++	strmap_init_with_options(&opt->priv->paths, NULL, 0);
++	strmap_init_with_options(&opt->priv->conflicted, NULL, 0);
+ }
  
+ /*
 -- 
 gitgitgadget
 
