@@ -2,223 +2,225 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-21.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDF92C4361B
-	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 19:19:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DCED5C2BB9A
+	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 19:26:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 76E8422525
-	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 19:19:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90D7C224B0
+	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 19:26:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2408868AbgLNTTT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Dec 2020 14:19:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33334 "EHLO
+        id S2440614AbgLNT0k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Dec 2020 14:26:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2408560AbgLNTRq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Dec 2020 14:17:46 -0500
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14DB6C0613D3
-        for <git@vger.kernel.org>; Mon, 14 Dec 2020 11:17:06 -0800 (PST)
-Received: by mail-wr1-x441.google.com with SMTP id w5so13818488wrm.11
-        for <git@vger.kernel.org>; Mon, 14 Dec 2020 11:17:06 -0800 (PST)
+        with ESMTP id S2440954AbgLNT0T (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Dec 2020 14:26:19 -0500
+Received: from mail-qv1-xf4a.google.com (mail-qv1-xf4a.google.com [IPv6:2607:f8b0:4864:20::f4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 010A6C061793
+        for <git@vger.kernel.org>; Mon, 14 Dec 2020 11:25:39 -0800 (PST)
+Received: by mail-qv1-xf4a.google.com with SMTP id m91so12541446qva.21
+        for <git@vger.kernel.org>; Mon, 14 Dec 2020 11:25:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=n0jEoKCH97+nWF/8mJQniFfc3/Vn4TKkj05rYH77xXs=;
-        b=T1j1u/Okq6caQPyQYpXOdfVEi/tQwIfpGrujQCd6xM1w9N50O1geLfXyyPUjiWW5Ew
-         6x7sPPZQ1AUSMUMMw5VbRk1F/vKmFraxt6ec1NcTJ6JP4+CNJ1oApb1y2E7TqQt+rQ0+
-         9kHHyFRRdqX+Pks5en3zYTabuQj6rxkVMFgkI3d0kNvEpyIyA/j+NXSKNI9QHXrZqJXK
-         SMMZFYkcel2u3JsHsfhgU5X5T5lsZA6rm808oQp5eweenRGt0pvJgc3LyOgdbmGHx9SO
-         It5DE9rkM9pvyC8bS0AWuigqFx2nWpQg/zmoXmFbQmg/TPUYGELkNRkpZrqnK1IDffP2
-         ADgA==
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=3C5STMxpb5DHH2uczSS57bP3bc/4tjKfIYmJukuhR9s=;
+        b=cD8mRsNYhKccUecb9ebChhEcTzJiQ1k27Qf2P7dQoA0hoLDC/EBeVQR0Y5HqSboRJt
+         qYIrMet1XPC5/6hoNMFkxX+PD4YUVteB5wRHVgq4FUXNdcj01aHGXfUXA5oynxMK4TkI
+         kUqlmPz9qlSv7qJlSlGqduZeLIs92QCw5a+Yd4TCulIai/+GvwnRjqdnSPVmsC6Z8KNy
+         yfGXf5GrNhSC7v+5CTBV3vGz3BNUSnf+19lNMSpLlbhT7rkVmsz5FykNZHe8GPJ1OJGr
+         s0Loz+dTd8ZSJ+Yp6Kihe1Ia5I8j5LoF+agr2D6m84nHsQf+zjlvcwdbF+3KRGvCgo7y
+         pEIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=n0jEoKCH97+nWF/8mJQniFfc3/Vn4TKkj05rYH77xXs=;
-        b=A1bMNt3rJ5crQBhnUNgokYIJmRYof4AeamRjrSbIi2/Xku3L0lwOAZSfLaBGN+xm9D
-         EwlqrSfSRWECGwz7zQOPb73sCw6bUef85Y2W5SkBtNzoPhbs/zcrEFiNbOUDA8/HswR9
-         DAEEXM1VqpRf68/G5E0MNH8WcmB22S60n8Puisrti1jKM0n2AAvYOGFf3SRds6i10Ol6
-         wOkCOHi9wFoe+cVeUykYpgryE5jUfMCosaeTKcmS0Bz1BSrEZxenVvCHoTc9ODQJskV2
-         qgbGbib9ubgv1LdGn/wy8FM+kWR5O5qEdYS5UJrrlb1qeZqm7SzguJYOZHeR8hsv9VKu
-         Tcjw==
-X-Gm-Message-State: AOAM5302WNcMdQ929fsT68ch2ny76RxxwUyquvKp0u6Q64PytSAOtVeJ
-        0q1JI48CQacgbDbQ8RxP2dVFgqgz8DePrg==
-X-Google-Smtp-Source: ABdhPJxM53F+X8lHUaNgr3peZXOr6sFpLj9Cr7DpFneIU2PlyG+8jjYHcSiT0de6cZNNOHHoqZ10vw==
-X-Received: by 2002:a5d:4fc4:: with SMTP id h4mr29764111wrw.129.1607973424729;
-        Mon, 14 Dec 2020 11:17:04 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id s13sm32078616wmj.28.2020.12.14.11.17.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Dec 2020 11:17:04 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 0/2] warn on non-pseudoref looking .git/<file> refs
-Date:   Mon, 14 Dec 2020 20:16:58 +0100
-Message-Id: <20201214191700.16405-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
-In-Reply-To: <20201210125321.19456-2-avarab@gmail.com>
-References: <20201210125321.19456-2-avarab@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=3C5STMxpb5DHH2uczSS57bP3bc/4tjKfIYmJukuhR9s=;
+        b=ZecisRHqHDC96A0IVUjd+/Q9l6gyHLf4Qc3W7odRdY8gZuCAfv4xGExq8qj9XHPNGH
+         yOU7jfu6NAgtjD39wPkQU9rm4sdUU3a+sSQRN4DZ+UPdj1z7VKzN42rbUhX8TagX8vje
+         rn0SREE9TZfg0lnChS5IyEnXNt2+iMKSVM7fk1crVhmtmnR12yUmmwENC04DqI1UCdUu
+         9P/COkkuH6HuI0q8h6WOJTWa6t1Kww1kG5PPO+dufKf8zN273VcXGaDgeuXQDOBcNPDK
+         S74AhrIFdrkT4iFSnCvwXaBjvtwcKjPY04meXCnKGIwftK+6z59RtGtnXVkSwoQ4KfkY
+         8xDQ==
+X-Gm-Message-State: AOAM531kQuqehH0NLpKkNnyPvTcoPU8dq/hEJouyWZ/pRt/Z5/Kac71+
+        GFqJmYvVCxWiZFKuASIJPAGl5q8o9C8I/zUcigNR
+X-Google-Smtp-Source: ABdhPJybwWNiAzTm+w+S3p0dCXKPCXWeDYUwKIEA/uIhiYO0KgO5+qGeCMUhepObRu0Z2NK7zQVdTqz4CsQiOWkMeI07
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6214:140d:: with SMTP id
+ n13mr30181340qvx.45.1607973938071; Mon, 14 Dec 2020 11:25:38 -0800 (PST)
+Date:   Mon, 14 Dec 2020 11:25:34 -0800
+In-Reply-To: <87blewwoil.fsf@evledraar.gmail.com>
+Message-Id: <20201214192534.3105508-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <87blewwoil.fsf@evledraar.gmail.com>
+X-Mailer: git-send-email 2.29.2.684.gfbc64c5ab5-goog
+Subject: Re: [PATCH] clone: in protocol v2, use remote's default branch
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     avarab@gmail.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now with a cover letter to show the range-diff. I addressed all of
-Eric's comments, and found some other minor issues myself. The check
-for whether we need to warn has also been simplified, we just needed
-to check if we have "/" in the resolved "r" variable.
+> I'm not a fan of this change not because of the whole s/master/whatever/
+> discussion, but because of the magic it adds for seemingly little gain &
+> without any documentation.
+> 
+> So if I have init.defaultBranch explicitly set that'll be ignored on
+> "clone", but on "init/git remote add/fetch" it won't?
+> 
+> I think so, and I swear I knew yesterday when I read this patch, but now
+> I can't remember. Anyway, the point that I avoided re-reading the patch
+> to find out, because even if there's an on-list answer to that it should
+> really be documented because I'll forget it next week, and our users
+> will never know :)
 
-Ævar Arnfjörð Bjarmason (2):
-  refs: move is_pseudoref_syntax() earlier in the file
-  refs: warn on non-pseudoref looking .git/<file> refs
+That's the plan - yes. It makes sense to me that "git clone" will not
+use "init.defaultBranch" (especially since it has "init" in the name),
+but "git init" will. (It also makes sense to me that "git remote add"
+and "git fetch" will not change HEAD.)
 
- Documentation/config/core.txt | 11 ++++++++
- cache.h                       |  1 +
- config.c                      |  5 ++++
- environment.c                 |  1 +
- refs.c                        | 50 ++++++++++++++++++++++-------------
- t/t1430-bad-ref-name.sh       | 41 ++++++++++++++++++++++++++++
- 6 files changed, 90 insertions(+), 19 deletions(-)
+> This patch also leaves Documentation/config/init.txt untouched, and now
+> under lsrefs.unborn it explicitly contradicts the behavior of git:
+> 
+>     Allows overriding the default branch name e.g. when initializing
+>     a new repository or when cloning an empty repository.
 
-Range-diff:
--:  ----------- > 1:  e86e55f2828 refs: move is_pseudoref_syntax() earlier in the file
-1:  cad73aba664 ! 2:  0573da1d381 refs: warn on non-pseudoref looking .git/<file> refs
-    @@ Commit message
-     
-         The refs parsing machinery will first try to parse arbitrary
-         .git/<name> for a given <name>, before moving onto refs/<name>,
-    -    refs/tags/<name> etc. See "ref_rev_parse_rules" in refs.c, but
-    -    e.g. "for-each-ref" and other things that list references ignore these
-    -    ancient-style refs.
-    +    refs/tags/<name> etc. See "ref_rev_parse_rules" in refs.c. Things that
-    +    list references such as "for-each-ref" ignore these on the assumption
-    +    that they're pseudorefs such as "HEAD".
-     
-         Thus if you end up in a repository that contains e.g. .git/master the
-         likes of "checkout" can emit seemingly nonsensical error
-    @@ Commit message
-         .git/MERGE_HEAD and other non-pseudoref looking refs at the top-level.
-     
-         Let's help the user in this case by doing a very loose check for
-    -    whether the ref name looks like a pseudoref such as "HEAD" (i.e. only
-    -    has upper case, dashes, underbars), and if not issue a warning:
-    +    whether the ref name looks like a special pseudoref such as
-    +    "HEAD" (i.e. only has upper case, dashes, underbars), and if not issue
-    +    a warning:
-     
-             $ git rev-parse master
-             warning: matched ref .git/master doesn't look like a pseudoref
-    @@ Commit message
-         instead of "warning" passes with this approach.
-     
-         Our own test suite makes use of a few refs in .git/ that aren't
-    -    produced by git itself, e.g. "FOO", "TESTSYMREFTWO" etc, external
-    +    produced by git itself, e.g. "FOO", "TESTSYMREFTWO" etc. External
-         tools probably rely on this as well, so I don't think it's viable to
-    -    e.g. have a whitelist of "HEAD", "MERGE_HEAD" etc. As an aside that
-    -    list is quite large, I counted 12 names used in the C code before I
-    -    abandoned that approach.
-    +    e.g. have a whitelist of them. That list is quite large just fr
-    +    git.git, I counted 12 names used in the C code before I abandoned that
-    +    approach.
-     
-         This approach of checking the case of e.g. "master" is not an issue on
-         case-insensitive filesystems, since we're not checking against the
-    @@ Commit message
-         without warning on that system. Now we'll warn about that.
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-    +    Modified-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## Documentation/config/core.txt ##
-     @@ Documentation/config/core.txt: core.warnAmbiguousRefs::
-    @@ Documentation/config/core.txt: core.warnAmbiguousRefs::
-     ++
-     +These references are ignored by linkgit:for-each-ref[1], but resolved
-     +by linkgit:git-show[1], linkgit:git-rev-parse[1] etc. So it can be
-    -+confusing to have e.g. an errant `.git/master` being confused with
-    -+`.git/refs/heads/master`.
-    ++confusing to have e.g. an errant `.git/mybranch` being confused with
-    ++`.git/refs/heads/mybranch`.
-     +
-      core.compression::
-      	An integer -1..9, indicating a default compression level.
-    @@ refs.c: int expand_ref(struct repository *repo, const char *str, int len,
-      					    this_result, &flag);
-      		if (r) {
-     +			if (warn_non_pseudo_refs &&
-    -+			    !starts_with(fullref.buf, "refs/") &&
-    -+			    !starts_with(r, "refs/") &&
-     +			    !strchr(r, '/') &&
-     +			    !is_any_pseudoref_syntax(r) &&
-    -+			    !warned_on_non_pseudo_ref++) {
-    -+				/*
-    -+				 * TRANSLATORS: The 1st argument is
-    -+				 * e.g. "master", and the 2nd can be
-    -+				 * e.g. "master~10".
-    -+				 */
-    -+				warning(_("matched ref name .git/%s doesn't look like a pseudoref"), r);
-    -+			}
-    ++			    !warned_on_non_pseudo_ref++)
-    ++				warning(_(".git/%s doesn't look like a pseudoref"), r);
-      			if (!refs_found++)
-      				*ref = xstrdup(r);
-      			if (!warn_ambiguous_refs)
-    @@ t/t1430-bad-ref-name.sh: test_expect_success 'branch -m can rename refs/heads/-d
-      
-     +test_expect_success 'warn on non-pseudoref syntax refs in .git/' '
-     +	test_when_finished "
-    -+		rm -f .git/mybranch &&
-    -+		rm -rf .git/a-dir &&
-    -+		rm -rf .git/MY-BRANCH_NAME &&
-    -+		rm -rf .git/MY-branch_NAME
-    ++		rm -rf .git/mybranch \
-    ++			.git/a-dir \
-    ++			.git/MY-BRANCH_NAME \
-    ++			.git/MY-branch_NAME
-     +	" &&
-     +
-     +	# Setup
-    -+	git rev-parse master >expect &&
-    ++	git rev-parse HEAD >expect &&
-    ++	mkdir .git/a-dir &&
-     +
-     +	# We ignore anything with slashes
-    -+	mkdir .git/a-dir &&
-     +	cp expect .git/a-dir/mybranch &&
-     +	git rev-parse a-dir/mybranch >hash 2>err &&
-     +	test_must_be_empty err &&
-    @@ t/t1430-bad-ref-name.sh: test_expect_success 'branch -m can rename refs/heads/-d
-     +
-     +	# We do not ignore lower-case
-     +	cp expect .git/mybranch &&
-    -+	git rev-parse mybranch >hash 2>err &&
-    ++	env GIT_TEST_GETTEXT_POISON=false \
-    ++		git rev-parse mybranch >hash 2>err &&
-     +	test_cmp expect hash &&
-    -+	GIT_TEST_GETTEXT_POISON=false grep "like a pseudoref" err &&
-    ++	grep "like a pseudoref" err &&
-     +	git -c core.warnNonPseudoRefs=false rev-parse mybranch >hash 2>err &&
-     +	test_cmp expect hash &&
-    -+	test_must_be_empty err &&
-    -+	rm .git/mybranch
-    ++	test_must_be_empty err
-     +'
-     +
-      test_done
--- 
-2.29.2.222.g5d2a92d10f8
+Ah...thanks for the pointer. I'll change it.
 
+> Shouldn't this at the very least be a
+> init.defaultBranchFromRemote=<bool> which if set overrides
+> init.defaultBranch? We could turn that to "true" by default and get the
+> same behavior as you have here, but with less inexplicable magic for the
+> user, no?
+
+I think you're coming with the idea that it is perfectly natural for
+"git clone" to respect "init.defaultBranch", but that doesn't even
+happen in the typical case wherein we clone a non-empty repository - so
+I don't agree with that idea.
+
+> It seems if you're a user and wonder why a clone of a bare repo doesn't
+> give you "init" defaults the only way you'll find out is
+> GIT_TRACE_PACKET and the like.
+
+I assume you mean empty repo instead of bare repo? For me, I would find
+it more surprising that the resulting local repo didn't have the same
+HEAD as the remote.
+
+> Another reason I'm not a fan of it is because it's another piece of
+> magic "clone" does that you can't emulate in "init/fetch". We have
+> e.g. --single-branch as an existing case of that (although you can at
+> least do that with parse ls-remote -> init -> config -> fetch), and
+> that's a case that doesn't fit into a refspec.
+
+Same answer as above.
+
+> But shouldn't there at least be a corresponding "fetch" option? On init
+> we'll create head, but "git fetch --clobber-my-idea-of-HEAD-with-remote
+> ..."?
+
+I think that it's OK for "clone" to create HEAD, but not OK for "fetch"
+to modify HEAD.
+
+> Maybe not for reasons I haven't thought of, but I'd at least be much
+> happier with an updated commit message justifying another special-case
+> in clone that you can't do with "init/fetch".
+
+Same answer as above - I don't think this is a special case.
+
+> And on the "litte gain" side of things: I very much suspect that the
+> only users who'll ever use this will be some big hosting providers (but
+> maybe not, the commit doesn't suggest a use-case). Wouldn't this be even
+> more useful in those cases by just a pre-receive hook on their side
+> detecting an initial push refusing "master", and:
+> 
+>     git push -o yes-use-old-init-default <...>
+> 
+> Instead of a patch to git to do the same & which would take $SOMEYEARS
+> to be rolled out, since it depends on client-side understanding.
+
+This would detect the problem only upon push.
+
+> > @@ -62,7 +62,7 @@ struct protocol_capability {
+> >  
+> >  static struct protocol_capability capabilities[] = {
+> >  	{ "agent", agent_advertise, NULL },
+> > -	{ "ls-refs", always_advertise, ls_refs },
+> > +	{ "ls-refs", ls_refs_advertise, ls_refs },
+> >  	{ "fetch", upload_pack_advertise, upload_pack_v2 },
+> >  	{ "server-option", always_advertise, NULL },
+> >  	{ "object-format", object_format_advertise, NULL },
+> 
+> All of this looks good to me, and re unrelated recent questions about
+> packfile-uri I had it's really nice to have a narrow example of adding a
+> simple ls-refs time verb / functionality like this to the protocol.
+
+Thanks.
+
+> > diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
+> > index 7f082fb23b..d3bd79987b 100755
+> > --- a/t/t5606-clone-options.sh
+> > +++ b/t/t5606-clone-options.sh
+> > @@ -102,11 +102,12 @@ test_expect_success 'redirected clone -v does show progress' '
+> >  '
+> >  
+> >  test_expect_success 'chooses correct default initial branch name' '
+> > -	git init --bare empty &&
+> > +	git -c init.defaultBranch=foo init --bare empty &&
+> > +	test_config -C empty lsrefs.unborn advertise &&
+> 
+> Isn't this reducing test coverage? You're changing an existing
+> argument-less "init --bare" test's behavior,
+
+The test here is regarding "clone", not the behavior of "init". I'm
+doing some textual comparison below, so I want to insulate this test
+against future default branch name changes.
+
+> 
+> >  	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
+> >  	git -c init.defaultBranch=up clone empty whats-up &&
+> > -	test refs/heads/up = $(git -C whats-up symbolic-ref HEAD) &&
+> > -	test refs/heads/up = $(git -C whats-up config branch.up.merge)
+> > +	test refs/heads/foo = $(git -C whats-up symbolic-ref HEAD) &&
+> > +	test refs/heads/foo = $(git -C whats-up config branch.foo.merge)
+> >  '
+> 
+> Also re the above point about discoverability: Right below this we test
+> "init --initial-branch=guess". Wouldn't a way to unify bring
+> fetch/init/clone functionality be to use that as a jump-off point,
+> i.e. clone having --use-remote-initial-branch, 
+
+OK - this is already happening for non-empty repositories, and my patch
+makes it also happen for empty repositories.
+
+> init optionally leaving
+> behind a (broken) empty/nonexisting HEAD, 
+
+I'm not sure how this is superior to just using what the remote has
+(upon "clone") and using init.defaultBranch when no remote is involved
+(upon "init").
+
+> and "fetch" with an argument
+> also supporting --use-remote-initial-branch or something.
+
+Again, I don't think that "fetch" should update HEAD.
+
+> 
+> > +test_expect_success 'clone of empty repo propagates name of default branch' '
+> > +	git -c init.defaultbranch=mydefaultbranch init file_empty_parent &&
+> > +	test_config -C file_empty_parent lsrefs.unborn advertise &&
+> > +
+> > +	git -c init.defaultbranch=main -c protocol.version=2 \
+> > +		clone "file://$(pwd)/file_empty_parent" file_empty_child &&
+> 
+> Nit. Let's spell config.likeThis not config.likethis when not in the C
+> code.
+
+OK - will do.
