@@ -7,72 +7,95 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CBA5C2BB48
-	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 21:41:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BC08C4361B
+	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 22:31:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D1C4222258
-	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 21:41:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EEAFA224F9
+	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 22:31:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407405AbgLNVlg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Dec 2020 16:41:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56204 "EHLO
+        id S2438831AbgLNWbR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Dec 2020 17:31:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729590AbgLNVle (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Dec 2020 16:41:34 -0500
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 972E3C0613D3
-        for <git@vger.kernel.org>; Mon, 14 Dec 2020 13:40:52 -0800 (PST)
-Received: by mail-oi1-x242.google.com with SMTP id l207so20942123oib.4
-        for <git@vger.kernel.org>; Mon, 14 Dec 2020 13:40:52 -0800 (PST)
+        with ESMTP id S2406303AbgLNWbD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Dec 2020 17:31:03 -0500
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39456C0613D3
+        for <git@vger.kernel.org>; Mon, 14 Dec 2020 14:30:23 -0800 (PST)
+Received: by mail-ot1-x341.google.com with SMTP id j20so12961222otq.5
+        for <git@vger.kernel.org>; Mon, 14 Dec 2020 14:30:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=dw9HKhHDXzwcqUq8G4DtGcYG9IHq3MNlZIe23p2LFcM=;
-        b=e9S1g3gPvbSz/JLQRS5lb5z04xvUsfDg84srxR7SXsNgy2UqN5FDweS2YuCbqtRLNH
-         CePtB4Mmb4UG3GwNDwNf1yjX7ElfNuOP1QVrZ7Dk5UwivMvFgkFwUCR8b22TF9Z/CHnw
-         yCppWlAjI7n6dHkxbBtCddBmcOclepIN2ber1dju/Qs04WL0ZDGafa/m+1FR3hnXOpmX
-         Qxhj7/0T6utNjz67g/OasdH4W7KqqyFDST/Gjc6CGZnVCH15/U/V9IT4wayqDuAdI3m/
-         5ghyy3EqlKy3vxiPrT5mPYC9dUESv5/qRqc4HoMl2m/iGhAvb0GYqiQinJ4BI6LxUJKU
-         s8hQ==
+        bh=Le9wsIT6ELsiAbLIbQkVfN2BPH1cwblw7jpEW7sq34M=;
+        b=EopX/vWgA15MAmXuVi0QKnbGP38Xk0qsVX+9BAz5Uq+EmyMcZa2lZVwozxEF77kY30
+         LBS81r5i+v85wEGZ9/sxjO9er52Ulb4007RYLSRJT1n/UTMOUL+5FCp8/Dwd+UogqlGN
+         kTIqr03danmAZx6XW+OBojnhWk08Uh6ieRhCg/11Mad9EcvYwl8u5+1gICP4R45eRpDR
+         SxIBsyhVngoAeUVannlrGm1hV2pzFovwV2vNhpUIi6wfu2j2ja5erZjfGu3f3QBsUAUW
+         Q33Iv1v5M3Ug05CqIH/u4GSXVbdI5pFHhfHOorbYYZqdSW+08GWai/B5zwSIvMwQU//N
+         EEQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=dw9HKhHDXzwcqUq8G4DtGcYG9IHq3MNlZIe23p2LFcM=;
-        b=ii5jU1bd+u9JgxY0/k/fam/ex3/YjpFfY5H2GwPlq0lFOqIE20zH/pLcyyFyDmhIM2
-         Fmr6T3+pL35pJsg5RL2dpbugfO3bjNc0ZoE22d3lUfssX8vPfSJNpu75cmZMwkc7rE4K
-         efcQ8yZ+4bWi9ealVgdlXFbVr6vXKOUtG43hwxn4DjUV3N9bZiHn8HN5QF0cgundqRdO
-         efF3omkLnMd1ZUu3XPG5qI0/pbBzrklU/K6pBc6FnBNGND07NFYJZdS7AHzTgFM/eRQs
-         eSByvp7J+2Noic49hbhjpEKS7HnxInWMNbSyhJSl46dwsZRQ02IBYZYGG9ZlXsHXf+lr
-         q2NA==
-X-Gm-Message-State: AOAM531PJghk7K2JElSdWVc/JPs/5yMZUPtkw6Qo2zMhpL9FSBlfIc9w
-        6xZ3Wbx7lYelIfHiIY1VRlc=
-X-Google-Smtp-Source: ABdhPJyi5GTKDcPwMmuij6eBhZw3XTSz5JxW6luhHWxBp5Q71A9VNzuSkavNbiD3CYgzTKRbYdPKig==
-X-Received: by 2002:aca:4fd6:: with SMTP id d205mr19161825oib.34.1607982052057;
-        Mon, 14 Dec 2020 13:40:52 -0800 (PST)
+        bh=Le9wsIT6ELsiAbLIbQkVfN2BPH1cwblw7jpEW7sq34M=;
+        b=EoshGjp2JXHJQcLdC5EUhS1UNbuuLGGvmFZWVbFXv9L7OwrgMAPnlvxEXs2Bqae+Ep
+         uBUxCnp1gmCYFhHwxcs3a9wZmW+qzG1XEnekc5X5/RzXiHteqHwOoD8JIQfyM8JjWlmv
+         stV0cywxmf10vHDW7acrJygs57G1svIYt0fDlnnioRLpeU6THRG2XqBulHTdn0HdbE+M
+         bdTwqncZ0jlM6FjpSFA2m1p3Q1e+oLpcJ041xc6lKa0zQtCtG6rPHPv5oKvkZT1+rinb
+         MKomYCmRFuWdUavRPR0oQEMY20rNwkqGWmMVywa023VVGal3qZZGJJe1K3suimRkpW6o
+         xwzA==
+X-Gm-Message-State: AOAM530rFSmHktqAuZt4uulaWfser2qf1wAWgCkk4MDjtvshit5xJJAa
+        7pnJ64ZpAYXSOqiSzF67d03FedxUQlvlNA==
+X-Google-Smtp-Source: ABdhPJw5XMwi15EyxGsz018ZW5WmA9LkvGeuhm1eJ3IEUgbDz6EqySvzi1vMW72VIFtl5dbWmdMcjg==
+X-Received: by 2002:a9d:1b01:: with SMTP id l1mr8226907otl.295.1607985022609;
+        Mon, 14 Dec 2020 14:30:22 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id w131sm4557506oif.8.2020.12.14.13.40.50
+        by smtp.gmail.com with ESMTPSA id l134sm3908947oig.25.2020.12.14.14.30.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Dec 2020 13:40:51 -0800 (PST)
-Date:   Mon, 14 Dec 2020 15:40:49 -0600
+        Mon, 14 Dec 2020 14:30:21 -0800 (PST)
+Date:   Mon, 14 Dec 2020 16:30:20 -0600
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+Cc:     Elijah Newren <newren@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
         Jeff King <peff@peff.net>,
-        =?UTF-8?B?VsOtdCBPbmRydWNo?= <vondruch@redhat.com>
-Message-ID: <5fd7dbe1eb26d_d5985208e1@natae.notmuch>
-In-Reply-To: <xmqqo8iwje0h.fsf@gitster.c.googlers.com>
-References: <20201210100538.696787-1-felipe.contreras@gmail.com>
- <20201210100538.696787-4-felipe.contreras@gmail.com>
- <xmqqzh2kitn9.fsf@gitster.c.googlers.com>
- <CAMP44s0wjfZ9TeQzpJvVD-OzFA47HFd87TABiJo3Ec9H8j-fjA@mail.gmail.com>
- <xmqqa6ujj3s4.fsf@gitster.c.googlers.com>
- <xmqq1rfvgtvx.fsf@gitster.c.googlers.com>
- <5fd4e94317d67_bc1eb208da@natae.notmuch>
- <xmqqo8iwje0h.fsf@gitster.c.googlers.com>
-Subject: Re: [PATCH v5 3/3] pull: display default warning only when non-ff
+        Philip Oakley <philipoakley@iee.email>,
+        "Theodore Y . Ts'o" <tytso@mit.edu>,
+        John Keeping <john@keeping.me.uk>,
+        Richard Hansen <rhansen@rhansen.org>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
+        "W. Trevor King" <wking@tremily.us>
+Message-ID: <5fd7e77c78e06_d59852083e@natae.notmuch>
+In-Reply-To: <xmqqh7ooje03.fsf@gitster.c.googlers.com>
+References: <20201204061623.1170745-1-felipe.contreras@gmail.com>
+ <CABPp-BFwWBLdFPsKi3o9hznFtAeWWfhNAyuymPS4BhMAHpnSfw@mail.gmail.com>
+ <CAMP44s1=aZL7BMKSjzKJ7qYqg-usScwzRUJmaOhsCGvQ4ieYow@mail.gmail.com>
+ <CABPp-BF4rXBOKsn8bG6y3QUEtNVV9K2Pk5NmwrU5818CqhRt_Q@mail.gmail.com>
+ <CAMP44s2L24jhCG9ps72--ZiJkXUovR726jCf8JTLHAs0jV7Whg@mail.gmail.com>
+ <CABPp-BGdNt8TBMTE9zvaicF5AtvyTBhpiJXqkuZc7mBLGbw0Qw@mail.gmail.com>
+ <xmqqeek2cc14.fsf@gitster.c.googlers.com>
+ <CAMP44s2XFQoda_PMULWha-rj9HhNfEddO5fikmswk9=AWN4RCw@mail.gmail.com>
+ <xmqqpn3lbhxn.fsf@gitster.c.googlers.com>
+ <CAMP44s2nmVnXiBA8S=vHBZznuRNKKe=xGOEBJ80MYhA_XCqNkg@mail.gmail.com>
+ <xmqqlfe99yvy.fsf@gitster.c.googlers.com>
+ <CA+P7+xp=UGd0iK8uLxnqH0iycrxo--8on3d0Z+jsuyhpV-fVew@mail.gmail.com>
+ <xmqq360h8286.fsf@gitster.c.googlers.com>
+ <CAMP44s3KCoDfRXzarJw5AE7UsY-=eP6GbHzdDcdrs2rsw5tL+w@mail.gmail.com>
+ <xmqqy2i86ok1.fsf@gitster.c.googlers.com>
+ <CAMP44s13YFZeOMz6V5sPdOnLXD-v3aQZiP7vvXXNfQLZP4Puwg@mail.gmail.com>
+ <CABPp-BGZcmHhge7JnM12baL_86yV-+7z4kkvFwUUrP+db8QD8Q@mail.gmail.com>
+ <xmqqy2i6w45c.fsf@gitster.c.googlers.com>
+ <CAMP44s3NNDL+zJjaukV9D2dJyU=ugSrnWz9o-whO9hKnBTxAow@mail.gmail.com>
+ <xmqqtussirsl.fsf@gitster.c.googlers.com>
+ <CAMP44s3CcNAT4dFogyo61zV+D1pZ-0K+1rDBk_BUk-RYVUW0RQ@mail.gmail.com>
+ <xmqqh7ooje03.fsf@gitster.c.googlers.com>
+Subject: Re: [PATCH v2 02/14] pull: improve default warning
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -84,20 +107,131 @@ X-Mailing-List: git@vger.kernel.org
 Junio C Hamano wrote:
 > Felipe Contreras <felipe.contreras@gmail.com> writes:
 > 
-> >> The original author of this test cared that pulling c1 with --rebase
-> >> into c0 succeeds, and that it does not give the error message.
-> >
-> > I prefer not to attempt to read minds (plus, the author might have not
-> > cared that the pulling succeeds), and anyway; that's not what matters.
-> > ...
-> > Again, I don't particularly care to mindread what the test authors might
-> > have cared about.
+> > This is irrelevant.
 > 
-> You do not have to read mind.  What is written in the test is clear
-> enough: run "git pull --rebase . c1" into c0 and see what happens.
+> Oh, now you are saying that you do not need a way to squelch these
+> message to help unconfigured users choose between rebase or merge?
+> I am confused.
 
-That is precisely my point: it is written in the test, no mindreading
-neccessary.
+We need a way to squelch the *advise* message, yes.
+
+But this is a secondary priority. The first priority is not to break
+current behavior users rely on.
+
+> > As long as it's an error I don't care if it's short or long. I'm
+> > against turning on an error from one version to the next.
+> 
+> Now you are changing your mind?  Current version and past ones do
+> not make it an error to pull non-ff history without choosing rebase
+> or merge---we go ahead and merge anyway.  I thought that in the far
+> future agreed between two of us, it would be turnend into an error
+> at some point.  There needs one version that turns it into an error
+> for that to happen.  Puzzled.
+
+Yes, in the future, *after* a deprecation period.
+
+Once the users have had a chance to configure git to do what they want,
+have tried the new mode, haven't had issues with the new mode, or if
+they disagree with the proposed *future* behavior; complain in the
+forums at their disposal.
+
+Not before.
+
+> >> I too initially thought that pull.mode may be needed, but probably I
+> >> was wrong.  I do think this can be done without pull.mode at all, at
+> >> least in two ways, without adding different ways to do the same
+> >> thing.
+> >>
+> >>  - When pull.rebase is set to 'no' and pull.ff is set to 'only',
+> >>    "git pull" that sees a non-ff history should error out safely.
+> >>    The user is telling that their preference is to merge, but the
+> >>    difference between merge and rebase does not really matter
+> >>    because pull.ff=only would mean we forbid merges of non-ff
+> >>    history anyway.  The message you'd get would be "fatal: Not
+> >>    possible to fast-forward, aborting." though.
+> >>
+> >>  - Or with the advice that hides the latter two points, a user can
+> >>    unset pull.rebase and set the advice.pullNonFF to false to get
+> >>    the same behaviour (i.e. disable the more dangerous half of
+> >>    "pull") with just the "we stopped" error message.
+> >
+> > So, after your hypothetical patch, there would be no difference between:
+> >
+> >   git -c pull.rebase=no -c pull.ff=only pull
+> >
+> > and:
+> >
+> >   git -c advice.pullnonff=false pull
+> >
+> > ?
+> 
+> We do not have to or implement both, but either should give us the
+> "when pull sees a non-ff history, it should stop without merging or
+> rebasing, and the user won't be given the advice on how to choose
+> between merge and rebase" behaviour, I would think.
+
+Right, so both should error out.
+
+And what should these do?
+
+  git -c pull.rebase=no -c pull.ff=only pull --merge
+
+  git -c advice.pullnonff=false pull --merge
+
+I'm going to answer because I think it's obvious what you would expect:
+if you pass --merge, both should succeed.
+
+Except they won't, because "git pull --ff-only --merge" fails.
+
+Correct?
+
+> >> I think either of these are close enough to what you want, and I
+> >> think the latter gives us more flexibility in how we tone down the
+> >> message with advice.pullNonFF.
+> >
+> > You are missing at least two things.
+> 
+> I am guessing that the '?' above I just answered is one you wanted
+> to ask me, but what's the other one?
+
+Yes. The other is what I explained above; we need a grace deprecation
+period where we can explain to the user in a simple way what to expect
+in the future.
+
+And it's much easier to explain to the user that:
+
+  git pull --merge -> pull.mode = merge
+  git pull --rebase -> pull.mode = rebase
+  git pull -> pull.mode = fast-forward
+
+Than:
+
+  git pull --merge -> pull.rebase = false
+  git pull --rebase -> pull.rebase = true
+  git pull -> pull.rebase = false + pull.ff = only
+
+But those are not the only two. For example there's this additional
+problem of how to interact with the other values of pull.rebase (other
+than true and false):
+
+  pull.mode = merge
+  pull.rebase = merges
+
+I would expect in this particular configuration that:
+
+  git pull -> git pull --merge
+  git pull --rebase -> git pull --rebase=merges
+
+There's no way to represent that with just pull.rebase.
+
+And there's more: some people suggested other modes in 2013, like
+"pull.mode=none" (essentially "git fetch"), or
+"pull.mode=merge-reverse-parents".
+
+But the first one should be enough ("git pull --ff-only --merge" doesn't
+work).
+
+Cheers.
 
 -- 
 Felipe Contreras
