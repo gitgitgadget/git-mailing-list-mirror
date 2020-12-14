@@ -5,615 +5,303 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 456C1C4361B
-	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 23:21:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63E85C4361B
+	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 23:21:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E436722510
-	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 23:21:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2729F22512
+	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 23:21:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730164AbgLNXVJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Dec 2020 18:21:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43584 "EHLO
+        id S2387613AbgLNXV1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Dec 2020 18:21:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730125AbgLNXU6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Dec 2020 18:20:58 -0500
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA8D8C06179C
-        for <git@vger.kernel.org>; Mon, 14 Dec 2020 15:20:17 -0800 (PST)
-Received: by mail-pf1-x430.google.com with SMTP id w6so13272316pfu.1
-        for <git@vger.kernel.org>; Mon, 14 Dec 2020 15:20:17 -0800 (PST)
+        with ESMTP id S2387564AbgLNXVK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Dec 2020 18:21:10 -0500
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9E9CC0617A6
+        for <git@vger.kernel.org>; Mon, 14 Dec 2020 15:20:29 -0800 (PST)
+Received: by mail-pg1-x52d.google.com with SMTP id w4so13828246pgg.13
+        for <git@vger.kernel.org>; Mon, 14 Dec 2020 15:20:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fd1fXi9m1l1mhZajB/LYRejAIfDw4F321k8Mw5gn+6c=;
-        b=n/ABJunPOssNwglgR0WDbfhbGQTLx5e1Aj2HjD1ARHhUbvLxbzaYVmfS3zHNw+Gt1G
-         CsnO6lX2BQ0d3gOjk8DGFveUu6946euuq1LMOfnIfmsWXKG8wdB5HgA2UwjlCnrwxVg+
-         iVaCwh2JG39TmqwAQrOb8kNdEQHSNF6b8OP8OMbZKpCOWNU7o6+foWBdKQ0bk6p3myCw
-         g6dxMDbKZdLRVy/TSI4bMARXUF4BxW2WUn1T18Lrk6rdjt340rEqmoR7sWy8Ooohu9am
-         2ksqSCcgD7fQ1uPQQcSyTD2BPVjhMOhbEi5BFxeKiQba4Ve4IE+Uri1FSyCyW/zxi2Qr
-         Jl/A==
+        bh=79tTbPZOShGYYys7xQgdks7p8Jf/crJ9P9t9KXsl4U4=;
+        b=RgsXqnw2hhqr/aB7i7dlQA3inLgkAZUTJhQbgwGbKNDE03S5H5FCcI1hu1iAP7gvOh
+         jIQWyQ73xx66/QilPqudhDg7KDd0HO8DXdy1MSJVgP3F8weH62Mau132RpQV/IpBrYUN
+         829D+52daEP48vOoXXPJSg3qS4qumacUJTVLAJzBL/+GjxmEJp0fBH5HhMSOCq7fbVx2
+         PhO+3Dpa7ZjqCHOfxehM7gMVV6/tALpitdtZGDMpce4UPuUy0hRY9JAbDNIxVNSbcAy8
+         sZ50ADvlUNX3jFIVw7Ojl0nYtjT4MMo0O9yNPajxSG5cZEar/14KWDr0Np5NBV3B89Wh
+         PmdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fd1fXi9m1l1mhZajB/LYRejAIfDw4F321k8Mw5gn+6c=;
-        b=FGfaXil/fO2DyRLJJ/wTYc7WOR2Jlek/UMuW3tsizqwL4fcG5bQWJ2pcZKbzwPJz1R
-         BtMDPGgKKivYWAQ/TpqXrk0KWZupg/0r/+J8lk01z75IKlxTz6ziNwKF2IlafLiEaumf
-         +20DqesNBSR5Bhfi+xs+dfDnj2X2vpclVJniH7v5c6I8hL3DgUwEfE6YZr4yguP78nQq
-         glazaqarMBodXUnPm3LlaCH6wmjwFvw3nqnOYiOun69bMUwPLvL7m9gjnl64GRQ+Heu8
-         UDkXoEGpYkv9uZY63GuICztyIVgMFKR1iRIgO4XCcdzOGDuW75njs5p1elnCNeT3e5zn
-         jTvw==
-X-Gm-Message-State: AOAM532MupMuc3iH9zTdkFkiCSzxhBOwX4jAzwuv/4fj0ZDHCGcue9x7
-        hjsdBe/GHy02oOsuigJ17X4U4te02DHaTQ==
-X-Google-Smtp-Source: ABdhPJwf8of6PkZ2eX/pScui4Ru8GggXV3dZirg6TaVP6KbN5C3DUPfWtU+AJl2GwUkNVZ4Y9mKEsQ==
-X-Received: by 2002:a63:531b:: with SMTP id h27mr26196093pgb.371.1607988016764;
-        Mon, 14 Dec 2020 15:20:16 -0800 (PST)
+        bh=79tTbPZOShGYYys7xQgdks7p8Jf/crJ9P9t9KXsl4U4=;
+        b=hEejq1Asxrx8upHasP9adBREas5mD5/qa4wfegpDhRnuOT5O2X4RMsxJMIlP3lZoLV
+         gZ8OfA9W0N5hcfOCQPuohnA0+tz+PjxXySiaqNPucBrAVWUfYve6588X1bqWqbC0G0vk
+         U77HyT3Ythg9cfwki4Wm9Es9B9tTVe1cDsl/gFlGYwpnO9ulEDURlGp+hJ81ESEN5C1b
+         eNOtZsYsov4pG9z4LWxeBBvYXf/AZ+vLmwGZtCz2FQHmzArbupPSWSdD6aWq2oHBfw60
+         acoa+gdPGrBbRJz68D43A/SfUalaIz+l099CHdaVJn6cncd2WDiigJ9X5YA+cE4IGEZH
+         zSXA==
+X-Gm-Message-State: AOAM531ttqcXy5Z0zdubCJe+Asv4brJHDvv7h2tFtnl9JajZdP0ofLuu
+        wsvhnajdS6BU77gYLssXtZGR0hGKvmQBuA==
+X-Google-Smtp-Source: ABdhPJwIRxo8An2LaiZMqOyn0a/50UJ+WftcHmB2+h0I/WfM6aBStDrkJCJaciI2887YnfzqEI1Hsw==
+X-Received: by 2002:a65:450d:: with SMTP id n13mr3505628pgq.208.1607988029212;
+        Mon, 14 Dec 2020 15:20:29 -0800 (PST)
 Received: from localhost.localdomain ([27.56.186.8])
-        by smtp.gmail.com with ESMTPSA id z10sm21282983pfr.204.2020.12.14.15.20.09
+        by smtp.gmail.com with ESMTPSA id z10sm21282983pfr.204.2020.12.14.15.20.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Dec 2020 15:20:16 -0800 (PST)
+        Mon, 14 Dec 2020 15:20:28 -0800 (PST)
 From:   Shourya Shukla <periperidip@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Johannes.Schindelin@gmx.de,
         liu.denton@gmail.com, christian.couder@gmail.com,
-        kaartic.sivaraam@gmail.com, Shourya Shukla <periperidip@gmail.com>
-Subject: [PATCH v3 1/3] dir: change the scope of function 'directory_exists_in_index()'
-Date:   Tue, 15 Dec 2020 04:49:37 +0530
-Message-Id: <20201214231939.644175-2-periperidip@gmail.com>
+        kaartic.sivaraam@gmail.com, Shourya Shukla <periperidip@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Prathamesh Chavan <pc44800@gmail.com>
+Subject: [PATCH v3 2/3] submodule: port submodule subcommand 'add' from shell to C
+Date:   Tue, 15 Dec 2020 04:49:38 +0530
+Message-Id: <20201214231939.644175-3-periperidip@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20201214231939.644175-1-periperidip@gmail.com>
 References: <20201214231939.644175-1-periperidip@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the scope of the function 'directory_exists_in_index()' as well
-as declare it in 'dir.h'.
+Convert submodule subcommand 'add' to a builtin and call it via
+'git-submodule.sh'.
 
-Since the return type of the function is the enumerator 'exist_status',
-change its scope as well and declare it in 'dir.h'. While at it, rename
-the members of the aforementioned enum so as to avoid any naming clashes
-or confusions later on.
+Also, since the command die()s out in case of absence of commits in the
+submodule, the keyword 'fatal' is prefixed in the error messages.
+Therefore, prepend the keyword in the expected output of test t7400.6.
 
-Helped-by: Christian Couder <christian.couder@gmail.com>
-Helped-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+While at it, eliminate the extra preprocessor directive
+`#include "dir.h"` at the start of 'submodule--helper.c'.
+
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Mentored-by: Stefan Beller <stefanbeller@gmail.com>
+Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
+Mentored-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 Signed-off-by: Shourya Shukla <periperidip@gmail.com>
 ---
- builtin/submodule--helper.c | 408 ++++++++++++++++++++++++++++++++++++
- dir.c                       |  30 ++-
- dir.h                       |   9 +
- 3 files changed, 429 insertions(+), 18 deletions(-)
+ builtin/submodule--helper.c |   2 +-
+ git-submodule.sh            | 161 +-----------------------------------
+ t/t7400-submodule-basic.sh  |   2 +-
+ 3 files changed, 3 insertions(+), 162 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index c30896c897..4dfad35d77 100644
+index 4dfad35d77..4f1d892b9a 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2744,6 +2744,414 @@ static int module_set_branch(int argc, const char **argv, const char *prefix)
- 	return !!ret;
- }
+@@ -19,7 +19,6 @@
+ #include "diffcore.h"
+ #include "diff.h"
+ #include "object-store.h"
+-#include "dir.h"
+ #include "advice.h"
  
-+struct add_data {
-+	const char *prefix;
-+	const char *branch;
-+	const char *reference_path;
-+	const char *sm_path;
-+	const char *sm_name;
-+	const char *repo;
-+	const char *realrepo;
-+	int depth;
-+	unsigned int force: 1;
-+	unsigned int quiet: 1;
-+	unsigned int progress: 1;
-+	unsigned int dissociate: 1;
-+};
-+#define ADD_DATA_INIT { 0 }
-+
-+/*
-+ * Guess the directory name from the repository URL by performing the
-+ * operations below in the following order:
-+ *
-+ * - If the URL ends with '/', remove that.
-+ *
-+ * - If the result of the above ends with zero or more ':', followed
-+ *  by zero or more '/', followed by ".git", drop the matching part.
-+ *
-+ * - If the result of the above has '/' or ':' in it, remove everything
-+ *  before it and '/' or ':' itself.
-+ */
-+static char *guess_dir_name(const char *repo)
-+{
-+	const char *start, *end;
-+
-+	start = repo;
-+	end = repo + strlen(repo);
-+
-+	/* remove the trailing '/' */
-+	if (repo < end - 1 && end[-1] == '/')
-+		end--;
-+
-+	/* remove the trailing ':', '/' and '.git' */
-+	if (repo < end - 4 && !memcmp(".git", end - 4, 4)) {
-+		end -= 4;
-+		while (repo < end - 1 && end[-1] == '/')
-+			end--;
-+		while (repo < end - 1 && end[-1] == ':')
-+			end--;
-+	}
-+
-+	/* find the last ':' or '/' */
-+	for (start = end - 1; repo <= start; start--) {
-+		if (*start == '/' || *start == ':')
-+			break;
-+	}
-+	/* exclude '/' or ':' itself */
-+	start++;
-+
-+	return xmemdupz(start, end - start);
-+}
-+
-+static int can_create_submodule(unsigned int force, const char *path)
-+{
-+	int cache_pos, dir_in_cache = 0;
-+
-+	if (read_cache() < 0)
-+		die(_("index file corrupt"));
-+
-+	cache_pos = cache_name_pos(path, strlen(path));
-+	if(cache_pos < 0 &&
-+	   directory_exists_in_index(&the_index, path, strlen(path)) == is_cache_directory)
-+		dir_in_cache = 1;
-+
-+	if (!force) {
-+		if (cache_pos >= 0 || dir_in_cache)
-+			die(_("'%s' already exists in the index"), path);
-+	} else {
-+		struct cache_entry *ce = NULL;
-+		if (cache_pos >= 0)
-+			ce = the_index.cache[cache_pos];
-+		if (dir_in_cache || (ce && !S_ISGITLINK(ce->ce_mode)))
-+			die(_("'%s' already exists in the index and is not a "
-+			      "submodule"), path);
-+	}
-+	return 0;
-+}
-+
-+static const char *parse_token(const char *cp, int *len)
-+{
-+	const char *p = cp, *start, *end;
-+	char *str;
-+
-+	start = p;
-+	while (*p != ' ')
-+		p++;
-+	end = p;
-+	str = xstrndup(start, end - start);
-+
-+	while(*p == ' ')
-+		p++;
-+
-+	return str;
-+}
-+
-+static void report_fetch_remotes(FILE *output, const char *sm_name, const char *git_dir)
-+{
-+	struct child_process cp_rem = CHILD_PROCESS_INIT;
-+	struct strbuf sb_rem = STRBUF_INIT;
-+
-+	cp_rem.git_cmd = 1;
-+	fprintf(stderr, _("A git directory for '%s' is "
-+		"found locally with remote(s):\n"), sm_name);
-+	strvec_pushf(&cp_rem.env_array,
-+		     "GIT_DIR=%s", git_dir);
-+	strvec_push(&cp_rem.env_array, "GIT_WORK_TREE=.");
-+	strvec_pushl(&cp_rem.args, "remote", "-v", NULL);
-+	if (!capture_command(&cp_rem, &sb_rem, 0)) {
-+		int i;
-+
-+		for (i = 0; i < sb_rem.len; i++) {
-+			char *start = sb_rem.buf + i, *end = start;
-+			const char *name = start, *url, *tail;
-+			int namelen, urllen;
-+
-+			while (sb_rem.buf[i++] != '\n')
-+				end++;
-+			url = parse_token(name, &namelen);
-+			tail = parse_token(url, &urllen);
-+			if (!memcmp(tail, "(fetch)", 7))
-+				fprintf(stderr, "  %s\t%s\n", name, url);
-+			start = *end ? end + 1 : end;
-+		}
-+	}
-+}
-+
-+static int add_submodule(struct add_data *info)
-+{
-+	/* perhaps the path exists and is already a git repo, else clone it */
-+	if (is_directory(info->sm_path)) {
-+		char *sub_git_path = xstrfmt("%s/.git", info->sm_path);
-+		if (is_directory(sub_git_path) || file_exists(sub_git_path))
-+			printf(_("Adding existing repo at '%s' to the index\n"),
-+				 info->sm_path);
-+		else
-+			die(_("'%s' already exists and is not a valid git repo"),
-+			      info->sm_path);
-+		free(sub_git_path);
-+	} else {
-+		struct strvec clone_args = STRVEC_INIT;
-+		struct child_process cp = CHILD_PROCESS_INIT;
-+		char *submodule_git_dir = xstrfmt(".git/modules/%s", info->sm_name);
-+
-+		if (is_directory(submodule_git_dir)) {
-+			if (!info->force) {
-+				report_fetch_remotes(stderr, info->sm_name,
-+						     submodule_git_dir);
-+				error(_("If you want to reuse this local git "
-+				      "directory instead of cloning again from\n "
-+				      "  %s\n"
-+				      "use the '--force' option. If the local "
-+				      "git directory is not the correct repo\n"
-+				      "or you are unsure what this means choose "
-+				      "another name with the '--name' option."),
-+				      info->realrepo);
-+				return 1;
-+			} else {
-+				printf(_("Reactivating local git directory for "
-+					 "submodule '%s'."), info->sm_path);
-+			}
-+		}
-+		free(submodule_git_dir);
-+
-+		strvec_push(&clone_args, "clone");
-+
-+		if (info->quiet)
-+			strvec_push(&clone_args, "--quiet");
-+
-+		if (info->progress)
-+			strvec_push(&clone_args, "--progress");
-+
-+		if (info->prefix)
-+			strvec_pushl(&clone_args, "--prefix", info->prefix, NULL);
-+		strvec_pushl(&clone_args, "--path", info->sm_path, "--name",
-+			     info->sm_name, "--url", info->realrepo, NULL);
-+		if (info->reference_path)
-+			strvec_pushl(&clone_args, "--reference",
-+				     info->reference_path, NULL);
-+		if (info->dissociate)
-+			strvec_push(&clone_args, "--dissociate");
-+
-+		if (info->depth >= 0)
-+			strvec_pushf(&clone_args, "--depth=%d", info->depth);
-+
-+		if (module_clone(clone_args.nr, clone_args.v, info->prefix)) {
-+			strvec_clear(&clone_args);
-+			return -1;
-+		}
-+
-+		prepare_submodule_repo_env(&cp.env_array);
-+		cp.git_cmd = 1;
-+		cp.dir = info->sm_path;
-+		strvec_pushl(&cp.args, "checkout", "-f", "-q", NULL);
-+
-+		if (info->branch) {
-+			strvec_pushl(&cp.args, "-B", info->branch, NULL);
-+			strvec_pushf(&cp.args, "origin/%s", info->branch);
-+		}
-+
-+		if (run_command(&cp))
-+			die(_("unable to checkout submodule '%s'"), info->sm_path);
-+	}
-+	return 0;
-+}
-+
-+static void config_added_submodule(struct add_data *info)
-+{
-+	char *key, *var = NULL;
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	struct child_process cp2 = CHILD_PROCESS_INIT;
-+
-+	key = xstrfmt("submodule.%s.url", info->sm_name);
-+	git_config_set_gently(key, info->realrepo);
-+	free(key);
-+
-+	cp.git_cmd = 1;
-+	strvec_pushl(&cp.args, "add", "--no-warn-embedded-repo", NULL);
-+	if (info->force)
-+		strvec_push(&cp.args, "--force");
-+	strvec_pushl(&cp.args, "--", info->sm_path, NULL);
-+
-+	if (run_command(&cp))
-+		die(_("failed to add submodule '%s'"), info->sm_path);
-+
-+	key = xstrfmt("submodule.%s.path", info->sm_name);
-+	config_set_in_gitmodules_file_gently(key, info->sm_path);
-+	free(key);
-+	key = xstrfmt("submodule.%s.url", info->sm_name);
-+	config_set_in_gitmodules_file_gently(key, info->repo);
-+	free(key);
-+	key = xstrfmt("submodule.%s.branch", info->sm_name);
-+	if (info->branch)
-+		config_set_in_gitmodules_file_gently(key, info->branch);
-+	free(key);
-+
-+	cp2.git_cmd = 1;
-+	strvec_pushl(&cp2.args, "add", "--force", NULL);
-+	strvec_pushl(&cp2.args, "--", ".gitmodules", NULL);
-+
-+	if (run_command(&cp2))
-+		die(_("Failed to register submodule '%s'"), info->sm_path);
-+
-+	/*
-+	 * NEEDSWORK: In a multi-working-tree world, this needs to be
-+	 * set in the per-worktree config.
-+	 */
-+	if (!git_config_get_string("submodule.active", &var) && var) {
-+
-+		/*
-+		 * If the submodule being adding isn't already covered by the
-+		 * current configured pathspec, set the submodule's active flag
-+		 */
-+		if (!is_submodule_active(the_repository, info->sm_path)) {
-+			key = xstrfmt("submodule.%s.active", info->sm_name);
-+			git_config_set_gently(key, "true");
-+			free(key);
-+		}
-+	} else {
-+		key = xstrfmt("submodule.%s.active", info->sm_name);
-+		git_config_set_gently(key, "true");
-+		free(key);
-+	}
-+}
-+
-+static int module_add(int argc, const char **argv, const char *prefix)
-+{
-+	const char *branch = NULL, *custom_name = NULL, *realrepo = NULL;
-+	const char *reference_path = NULL, *repo = NULL, *name = NULL;
-+	char *sm_path;
-+	int force = 0, quiet = 0, depth = -1, progress = 0, dissociate = 0;
-+	struct add_data info = ADD_DATA_INIT;
-+	struct strbuf sb = STRBUF_INIT;
-+
-+	struct option options[] = {
-+		OPT_STRING('b', "branch", &branch, N_("branch"),
-+			   N_("branch of repository to add as submodule")),
-+		OPT_BOOL('f', "force", &force, N_("allow adding an otherwise "
-+						  "ignored submodule path")),
-+		OPT__QUIET(&quiet, N_("print only error messages")),
-+		OPT_BOOL(0, "progress", &progress, N_("force cloning progress")),
-+		OPT_STRING(0, "reference", &reference_path, N_("repository"),
-+			   N_("reference repository")),
-+		OPT_BOOL(0, "dissociate", &dissociate, N_("borrow the objects from reference repositories")),
-+		OPT_STRING(0, "name", &custom_name, N_("name"),
-+			   N_("sets the submodule’s name to the given string "
-+			      "instead of defaulting to its path")),
-+		OPT_INTEGER(0, "depth", &depth, N_("depth for shallow clones")),
-+		OPT_END()
-+	};
-+
-+	const char *const usage[] = {
-+		N_("git submodule--helper add [<options>] [--] [<path>]"),
-+		NULL
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, options, usage, 0);
-+
-+	if (!is_writing_gitmodules_ok())
-+		die(_("please make sure that the .gitmodules file is in the working tree"));
-+
-+	if (prefix && *prefix && reference_path &&
-+	    !is_absolute_path(reference_path))
-+		reference_path = xstrfmt("%s%s", prefix, reference_path);
-+
-+	if (argc == 0 || argc > 2) {
-+		usage_with_options(usage, options);
-+	} else if (argc == 1) {
-+		repo = argv[0];
-+		sm_path = guess_dir_name(repo);
-+	} else {
-+		repo = argv[0];
-+		sm_path = xstrdup(argv[1]);
-+	}
-+
-+	if (prefix && *prefix && !is_absolute_path(sm_path))
-+		sm_path = xstrfmt("%s%s", prefix, sm_path);
-+
-+	/* assure repo is absolute or relative to parent */
-+	if (starts_with_dot_dot_slash(repo) || starts_with_dot_slash(repo)) {
-+		char *remote = get_default_remote();
-+		char *remoteurl;
-+		struct strbuf sb = STRBUF_INIT;
-+
-+		if (prefix)
-+			die(_("relative path can only be used from the toplevel "
-+			      "of the working tree"));
-+		/* dereference source url relative to parent's url */
-+		strbuf_addf(&sb, "remote.%s.url", remote);
-+		if (git_config_get_string(sb.buf, &remoteurl))
-+			remoteurl = xgetcwd();
-+		realrepo = relative_url(remoteurl, repo, NULL);
-+
-+		free(remoteurl);
-+		free(remote);
-+	} else if (is_dir_sep(repo[0]) || strchr(repo, ':')) {
-+		realrepo = repo;
-+	} else {
-+		die(_("repo URL: '%s' must be absolute or begin with ./|../"),
-+		      repo);
-+	}
-+
-+	/*
-+	 * normalize path:
-+	 * multiple //; leading ./; /./; /../;
-+	 */
-+	normalize_path_copy(sm_path, sm_path);
-+	/* strip trailing '/' */
-+	if (is_dir_sep(sm_path[strlen(sm_path) -1]))
-+		sm_path[strlen(sm_path) - 1] = '\0';
-+
-+	if (can_create_submodule(force, sm_path))
-+		return 1;
-+
-+	strbuf_addstr(&sb, sm_path);
-+	if (is_nonbare_repository_dir(&sb)) {
-+		struct object_id oid;
-+		if (resolve_gitlink_ref(sm_path, "HEAD", &oid) < 0)
-+			die(_("'%s' does not have a commit checked out"), sm_path);
-+	}
-+
-+	if (!force) {
-+		int exit_code = -1;
-+		struct strbuf sb = STRBUF_INIT;
-+		struct child_process cp = CHILD_PROCESS_INIT;
-+		cp.git_cmd = 1;
-+		cp.no_stdout = 1;
-+		strvec_pushl(&cp.args, "add", "--dry-run", "--ignore-missing",
-+			     "--no-warn-embedded-repo", sm_path, NULL);
-+		if ((exit_code = pipe_command(&cp, NULL, 0, NULL, 0, &sb, 0))) {
-+			strbuf_complete_line(&sb);
-+			fputs(sb.buf, stderr);
-+			return exit_code;
-+		}
-+		strbuf_release(&sb);
-+	}
-+
-+	name = custom_name ? custom_name : sm_path;
-+	if (check_submodule_name(name))
-+		die(_("'%s' is not a valid submodule name"), name);
-+
-+	info.prefix = prefix;
-+	info.sm_name = name;
-+	info.sm_path = sm_path;
-+	info.repo = repo;
-+	info.realrepo = realrepo;
-+	info.reference_path = reference_path;
-+	info.branch = branch;
-+	info.depth = depth;
-+	info.progress = !!progress;
-+	info.dissociate = !!dissociate;
-+	info.force = !!force;
-+	info.quiet = !!quiet;
-+
-+	if (add_submodule(&info))
-+		return 1;
-+	config_added_submodule(&info);
-+	free(sm_path);
-+
-+	return 0;
-+}
-+
- #define SUPPORT_SUPER_PREFIX (1<<0)
+ #define OPT_QUIET (1 << 0)
+@@ -3185,6 +3184,7 @@ static struct cmd_struct commands[] = {
+ 	{"config", module_config, 0},
+ 	{"set-url", module_set_url, 0},
+ 	{"set-branch", module_set_branch, 0},
++	{"add", module_add, SUPPORT_SUPER_PREFIX},
+ };
  
- struct cmd_struct {
-diff --git a/dir.c b/dir.c
-index d637461da5..f37de276f2 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1655,12 +1655,6 @@ struct dir_entry *dir_add_ignored(struct dir_struct *dir,
- 	return dir->ignored[dir->ignored_nr++] = dir_entry_new(pathname, len);
- }
+ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+diff --git a/git-submodule.sh b/git-submodule.sh
+index eb90f18229..b586f9532d 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -145,166 +145,7 @@ cmd_add()
+ 		shift
+ 	done
  
--enum exist_status {
--	index_nonexistent = 0,
--	index_directory,
--	index_gitdir
--};
+-	if ! git submodule--helper config --check-writeable >/dev/null 2>&1
+-	then
+-		 die "$(eval_gettext "please make sure that the .gitmodules file is in the working tree")"
+-	fi
 -
- /*
-  * Do not use the alphabetically sorted index to look up
-  * the directory name; instead, use the case insensitive
-@@ -1672,13 +1666,13 @@ static enum exist_status directory_exists_in_index_icase(struct index_state *ist
- 	struct cache_entry *ce;
- 
- 	if (index_dir_exists(istate, dirname, len))
--		return index_directory;
-+		return is_cache_directory;
- 
- 	ce = index_file_exists(istate, dirname, len, ignore_case);
- 	if (ce && S_ISGITLINK(ce->ce_mode))
--		return index_gitdir;
-+		return is_cache_gitdir;
- 
--	return index_nonexistent;
-+	return is_cache_absent;
+-	if test -n "$reference_path"
+-	then
+-		is_absolute_path "$reference_path" ||
+-		reference_path="$wt_prefix$reference_path"
+-
+-		reference="--reference=$reference_path"
+-	fi
+-
+-	repo=$1
+-	sm_path=$2
+-
+-	if test -z "$sm_path"; then
+-		sm_path=$(printf '%s\n' "$repo" |
+-			sed -e 's|/$||' -e 's|:*/*\.git$||' -e 's|.*[/:]||g')
+-	fi
+-
+-	if test -z "$repo" || test -z "$sm_path"; then
+-		usage
+-	fi
+-
+-	is_absolute_path "$sm_path" || sm_path="$wt_prefix$sm_path"
+-
+-	# assure repo is absolute or relative to parent
+-	case "$repo" in
+-	./*|../*)
+-		test -z "$wt_prefix" ||
+-		die "$(gettext "Relative path can only be used from the toplevel of the working tree")"
+-
+-		# dereference source url relative to parent's url
+-		realrepo=$(git submodule--helper resolve-relative-url "$repo") || exit
+-		;;
+-	*:*|/*)
+-		# absolute url
+-		realrepo=$repo
+-		;;
+-	*)
+-		die "$(eval_gettext "repo URL: '\$repo' must be absolute or begin with ./|../")"
+-	;;
+-	esac
+-
+-	# normalize path:
+-	# multiple //; leading ./; /./; /../; trailing /
+-	sm_path=$(printf '%s/\n' "$sm_path" |
+-		sed -e '
+-			s|//*|/|g
+-			s|^\(\./\)*||
+-			s|/\(\./\)*|/|g
+-			:start
+-			s|\([^/]*\)/\.\./||
+-			tstart
+-			s|/*$||
+-		')
+-	if test -z "$force"
+-	then
+-		git ls-files --error-unmatch "$sm_path" > /dev/null 2>&1 &&
+-		die "$(eval_gettext "'\$sm_path' already exists in the index")"
+-	else
+-		git ls-files -s "$sm_path" | sane_grep -v "^160000" > /dev/null 2>&1 &&
+-		die "$(eval_gettext "'\$sm_path' already exists in the index and is not a submodule")"
+-	fi
+-
+-	if test -d "$sm_path" &&
+-		test -z $(git -C "$sm_path" rev-parse --show-cdup 2>/dev/null)
+-	then
+-	    git -C "$sm_path" rev-parse --verify -q HEAD >/dev/null ||
+-	    die "$(eval_gettext "'\$sm_path' does not have a commit checked out")"
+-	fi
+-
+-	if test -z "$force"
+-	then
+-	    dryerr=$(git add --dry-run --ignore-missing --no-warn-embedded-repo "$sm_path" 2>&1 >/dev/null)
+-	    res=$?
+-	    if test $res -ne 0
+-	    then
+-		 echo >&2 "$dryerr"
+-		 exit $res
+-	    fi
+-	fi
+-
+-	if test -n "$custom_name"
+-	then
+-		sm_name="$custom_name"
+-	else
+-		sm_name="$sm_path"
+-	fi
+-
+-	if ! git submodule--helper check-name "$sm_name"
+-	then
+-		die "$(eval_gettext "'$sm_name' is not a valid submodule name")"
+-	fi
+-
+-	# perhaps the path exists and is already a git repo, else clone it
+-	if test -e "$sm_path"
+-	then
+-		if test -d "$sm_path"/.git || test -f "$sm_path"/.git
+-		then
+-			eval_gettextln "Adding existing repo at '\$sm_path' to the index"
+-		else
+-			die "$(eval_gettext "'\$sm_path' already exists and is not a valid git repo")"
+-		fi
+-
+-	else
+-		if test -d ".git/modules/$sm_name"
+-		then
+-			if test -z "$force"
+-			then
+-				eval_gettextln >&2 "A git directory for '\$sm_name' is found locally with remote(s):"
+-				GIT_DIR=".git/modules/$sm_name" GIT_WORK_TREE=. git remote -v | grep '(fetch)' | sed -e s,^,"  ", -e s,' (fetch)',, >&2
+-				die "$(eval_gettextln "\
+-If you want to reuse this local git directory instead of cloning again from
+-  \$realrepo
+-use the '--force' option. If the local git directory is not the correct repo
+-or you are unsure what this means choose another name with the '--name' option.")"
+-			else
+-				eval_gettextln "Reactivating local git directory for submodule '\$sm_name'."
+-			fi
+-		fi
+-		git submodule--helper clone ${GIT_QUIET:+--quiet} ${progress:+"--progress"} --prefix "$wt_prefix" --path "$sm_path" --name "$sm_name" --url "$realrepo" ${reference:+"$reference"} ${dissociate:+"--dissociate"} ${depth:+"$depth"} || exit
+-		(
+-			sanitize_submodule_env
+-			cd "$sm_path" &&
+-			# ash fails to wordsplit ${branch:+-b "$branch"...}
+-			case "$branch" in
+-			'') git checkout -f -q ;;
+-			?*) git checkout -f -q -B "$branch" "origin/$branch" ;;
+-			esac
+-		) || die "$(eval_gettext "Unable to checkout submodule '\$sm_path'")"
+-	fi
+-	git config submodule."$sm_name".url "$realrepo"
+-
+-	git add --no-warn-embedded-repo $force "$sm_path" ||
+-	die "$(eval_gettext "Failed to add submodule '\$sm_path'")"
+-
+-	git submodule--helper config submodule."$sm_name".path "$sm_path" &&
+-	git submodule--helper config submodule."$sm_name".url "$repo" &&
+-	if test -n "$branch"
+-	then
+-		git submodule--helper config submodule."$sm_name".branch "$branch"
+-	fi &&
+-	git add --force .gitmodules ||
+-	die "$(eval_gettext "Failed to register submodule '\$sm_path'")"
+-
+-	# NEEDSWORK: In a multi-working-tree world, this needs to be
+-	# set in the per-worktree config.
+-	if git config --get submodule.active >/dev/null
+-	then
+-		# If the submodule being adding isn't already covered by the
+-		# current configured pathspec, set the submodule's active flag
+-		if ! git submodule--helper is-active "$sm_path"
+-		then
+-			git config submodule."$sm_name".active "true"
+-		fi
+-	else
+-		git config submodule."$sm_name".active "true"
+-	fi
++	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper add ${force:+--force} ${GIT_QUIET:+--quiet} ${progress:+--progress} ${branch:+--branch "$branch"} ${reference_path:+--reference "$reference_path"} ${dissociate:+--dissociate} ${custom_name:+--name "$custom_name"} ${depth:+"$depth"} -- "$@"
  }
  
- /*
-@@ -1688,8 +1682,8 @@ static enum exist_status directory_exists_in_index_icase(struct index_state *ist
-  * the files it contains) will sort with the '/' at the
-  * end.
-  */
--static enum exist_status directory_exists_in_index(struct index_state *istate,
--						   const char *dirname, int len)
-+enum exist_status directory_exists_in_index(struct index_state *istate,
-+					    const char *dirname, int len)
- {
- 	int pos;
+ #
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index fec7e0299d..4ab8298385 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -48,7 +48,7 @@ test_expect_success 'submodule update aborts on missing gitmodules url' '
  
-@@ -1709,11 +1703,11 @@ static enum exist_status directory_exists_in_index(struct index_state *istate,
- 		if (endchar > '/')
- 			break;
- 		if (endchar == '/')
--			return index_directory;
-+			return is_cache_directory;
- 		if (!endchar && S_ISGITLINK(ce->ce_mode))
--			return index_gitdir;
-+			return is_cache_gitdir;
- 	}
--	return index_nonexistent;
-+	return is_cache_absent;
- }
- 
- /*
-@@ -1767,11 +1761,11 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
- 	/* The "len-1" is to strip the final '/' */
- 	enum exist_status status = directory_exists_in_index(istate, dirname, len-1);
- 
--	if (status == index_directory)
-+	if (status == is_cache_directory)
- 		return path_recurse;
--	if (status == index_gitdir)
-+	if (status == is_cache_gitdir)
- 		return path_none;
--	if (status != index_nonexistent)
-+	if (status != is_cache_absent)
- 		BUG("Unhandled value for directory_exists_in_index: %d\n", status);
- 
- 	/*
-@@ -2190,7 +2184,7 @@ static enum path_treatment treat_path(struct dir_struct *dir,
- 	if ((dir->flags & DIR_COLLECT_KILLED_ONLY) &&
- 	    (dtype == DT_DIR) &&
- 	    !has_path_in_index &&
--	    (directory_exists_in_index(istate, path->buf, path->len) == index_nonexistent))
-+	    (directory_exists_in_index(istate, path->buf, path->len) == is_cache_absent))
- 		return path_none;
- 
- 	excluded = is_excluded(dir, istate, path->buf, &dtype);
-diff --git a/dir.h b/dir.h
-index a3c40dec51..af817a21b2 100644
---- a/dir.h
-+++ b/dir.h
-@@ -370,6 +370,15 @@ int read_directory(struct dir_struct *, struct index_state *istate,
- 		   const char *path, int len,
- 		   const struct pathspec *pathspec);
- 
-+enum exist_status {
-+	is_cache_absent = 0,
-+	is_cache_directory,
-+	is_cache_gitdir
-+};
-+
-+enum exist_status directory_exists_in_index(struct index_state *istate,
-+					    const char *dirname, int len);
-+
- enum pattern_match_result {
- 	UNDECIDED = -1,
- 	NOT_MATCHED = 0,
+ test_expect_success 'add aborts on repository with no commits' '
+ 	cat >expect <<-\EOF &&
+-	'"'repo-no-commits'"' does not have a commit checked out
++	fatal: '"'repo-no-commits'"' does not have a commit checked out
+ 	EOF
+ 	git init repo-no-commits &&
+ 	test_must_fail git submodule add ../a ./repo-no-commits 2>actual &&
 -- 
 2.25.1
 
