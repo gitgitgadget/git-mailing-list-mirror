@@ -2,100 +2,224 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9B68C4361B
-	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 22:33:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 340A6C4361B
+	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 22:45:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B38FB224F9
-	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 22:33:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EEB1E224F9
+	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 22:45:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2440920AbgLNWcz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Dec 2020 17:32:55 -0500
-Received: from mout.gmx.net ([212.227.17.22]:35233 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2438762AbgLNWcs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Dec 2020 17:32:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1607985074;
-        bh=uYlfbjs0+K76Z9OG2Kt84pPjKQW8hii8MQD0MPbKiVI=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=ZnbSxRVUtEj0Y82M7yKCKmV/DaM0pcF1r/ECkY1rEmlD8Zbqt0W4J4qiEzdQXoDdf
-         xbszc28wYTnMbvofqboCs+DdkeMA/KUx6GBdSerj4ljFnwLpPSVBUl06WowPadjPXB
-         hy9+OR6WtQEBv1hpkz5bW6JKd83ndwZmwbWaewGY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from fv-az764-8.ahgcmg1qrdqujhq32x33etjafb.dx.internal.cloudapp.net
- ([13.64.105.188]) by mail.gmx.com (mrgmx104 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 1MmDEm-1kOMyo18V6-00iELa; Mon, 14 Dec 2020 23:31:14 +0100
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.30.0-rc0
-Date:   Mon, 14 Dec 2020 22:31:10 +0000
-Message-Id: <20201214223110.6121-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.29.2
-Content-Type: text/plain; charset=UTF-8
+        id S2441230AbgLNWpe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Dec 2020 17:45:34 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56370 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2441209AbgLNWpR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Dec 2020 17:45:17 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0080411B327;
+        Mon, 14 Dec 2020 17:44:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=ggtxmRd0mIw1
+        OPMqH2y8DfN9JWk=; b=wP3Xw+dkXnelj6PJo2yDPbeBhD/3qgykh1o/U17UOoGv
+        dwZbbEYT78icxHRRXp30D3CQTG6hTlwfIw/k4rk13+GBLnalvsHTDhEgkm8FCDU7
+        465DAUowvVe+f0XdUIaPJV3XAoQfaJYqzJgqAv02pnMUs2Drwcl/cWrVVlbHnTE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=aPz05U
+        V3NX0urvcqNMRqoqSvj+qj/pficnS4XwY0YgtIMCGKPu291fuHVJNOACOi4SexS/
+        AbeB7W2IpNyqNRqiiNEyEv5lU3V0D2pogPKDpKIEkKPJsfIlyqkZDQsNyKpQZkly
+        QtHb4+pG6oTOJAuwIqFj/zglYfmrjItkJxZmE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id ED95611B326;
+        Mon, 14 Dec 2020 17:44:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 34FFA11B324;
+        Mon, 14 Dec 2020 17:44:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 2/2] refs: warn on non-pseudoref looking .git/<file>
+ refs
+References: <20201210125321.19456-2-avarab@gmail.com>
+        <20201214191700.16405-3-avarab@gmail.com>
+Date:   Mon, 14 Dec 2020 14:44:28 -0800
+In-Reply-To: <20201214191700.16405-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Mon, 14 Dec 2020 20:17:00 +0100")
+Message-ID: <xmqqczzcatyr.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:mAcqiBUuNPjJeEfylkJGPZs36mlcoY9J6TonCZvPORLOesvcFx1
- HvcmZjkj2RlsC5bmJB0/BQIxPl84yLm9W2CFUFCl8ww837k95lGhmSPX8E11hb3dLn4KUeI
- zP45Muoks63kkRkSUi8eAMZ3pR9Qj8UrzqHJ5w8O2sgWrcMH6wKx0f/d+rjNkhgcIRcE8lk
- 8VARxewMHLgbDIpaahu4g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/QmQBHX9pUc=:64PMbXC76HPmB4TKsbjBjz
- dPFBrGWA4pFGc/WpLoEeHXrBOUwnfjK4h+yZM7wSfQxIbjt2/6w1ShDII7YhdvxyxXCTFVgyx
- LQrW1YLQ+xbGWt05X+6s/labBV5WiTXMJupTHfj2wz9bS1qatoDbhblDwN6V+c7GFpAMT0N32
- OSJEMf7gJ9YKfsgz7/3OWfDn9Rz1Jmp/a8TI1mu+Apwh68xmiRrdnPvXTL3t7KWxSB6Yp/5im
- p0JDAx6Xpig4QR+oJfzEey3udqe2oHjIXLBJhaksPviaGQ2TjTP2hKhTcvkj54Ko++s7IN/BZ
- EY7+Fpz1ikDDBB4m0DHYP9HjziPZIO2N7/6tCcDnPdPB6msLeGfZyNPFsmNjFehMkNyvlvMY4
- ZxnMvvWDvlFooVjA+kFWINwnQCxnpSfcOWH/wGJYBmWY+VWsZGhdHa7l+Vy9YwWdpoOORY5ev
- 6DSGwmhpMRFMfLOQ5EnleVB84MvjItrCauoO7n+1AiiU08oElId64pmdsQI8DyI9+ky/ikzhM
- QYSdsKmXmTxB22A1YnjUjCViqrNH1qbRSe+zmYNnJHdKG7LjXhve2+Uu5DEzeThil5ZsUAl4r
- OwdvqXJ1whL/RKZkxxaZX887DDNq5X80saioYW3aOLaVZmndiZ6s0jIVH5NiOd5++JjtcvzNR
- zldGCkpmBE+DzLbVx2agw7y5tpKwHsdOzXWzeyBraSwJYY9Y7hLWJP215UF6mSS7KWGozp8sS
- /40kZmxx2KOgadV4IfxDsKSI5LQWu54fS6J/pSQz95ixD7SbpwWkij8ecFWSKCkgYqhTB1tU5
- NzpuQVTzMmGQAdW0QDgWfx/w6e1edYM69IieLxXonxbTDQ6bCCs+nQhYOBC09RJf1ao8isvYy
- xswgDdHKotNNWU1wRXY6jnvG9At89IoCssyP21oLo=
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: EE1781FE-3E5D-11EB-94E6-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-I hereby announce that Git for Windows 2.30.0-rc0 is available from:
+> The refs parsing machinery will first try to parse arbitrary
+> .git/<name> for a given <name>, before moving onto refs/<name>,
+> refs/tags/<name> etc. See "ref_rev_parse_rules" in refs.c. Things that
+> list references such as "for-each-ref" ignore these on the assumption
+> that they're pseudorefs such as "HEAD".
+>
+> Thus if you end up in a repository that contains e.g. .git/master the
+> likes of "checkout" can emit seemingly nonsensical error
+> messages. E.g. I happened to have a .git/master with a non-commit
+> SHA-1:
+>
+>     $ git checkout master
+>     fatal: Cannot switch branch to a non-commit 'master'
 
-    https://github.com/git-for-windows/git/releases/tag/v2.30.0-rc0.windows.1
+Or, without even any funny files created in .git to make it
+misbehave, "git checkout config" would already give you
 
-Changes since Git for Windows v2.29.2(3) (December 8th 2020)
+    $ git checkout config
+    error: pathspec 'config' did not match any file(s) known to git
+    $ git checkout config --
+    fatal: invalid reference: config
 
-New Features
+You were unlucky enough to have 40-hex in that garbage file.  How
+did you end up with it, I wonder, but anyway, a move to make it
+easier to diagnose the situation is very welcome.
 
-  * Comes with Git v2.30.0-rc0.
-  * Comes with OpenSSL v1.1.1i.
-  * Comes with cURL v7.74.0.
-  * Comes with Git LFS v2.13.1.
+> Let's help the user in this case by doing a very loose check for
+> whether the ref name looks like a special pseudoref such as
+> "HEAD" (i.e. only has upper case, dashes, underbars), and if not issue
+> a warning:
+>
+>     $ git rev-parse master
+>     warning: matched ref .git/master doesn't look like a pseudoref
+>     c87c83a2e9eb6d309913a0f59389f808024a58f9
 
-Bug Fixes
+With the problem this patch addressed solved, what should happen if
+you did this?
 
-  * The auto-updater now shows the progress while installing.
-  * The credential-helper selector (which is the default credential
-    helper in the Portable version of Git for Windows) now handles
-    paths with spaces correctly.
+    $ git rev-parse refs/heads/master~4 >.git/master
+    $ git checkout master
 
-Git-2.30.0-rc0-64-bit.exe | 3553a38d833e3710e72c0f47e0f3c88e29dc9e44f36755c6e7e9fc2948f9e6d4
-Git-2.30.0-rc0-32-bit.exe | 26a852536de851a97d0744e639a25b03ee229b42ac5fc650d41a2dcb1693bbac
-PortableGit-2.30.0-rc0-64-bit.7z.exe | 51cbc961ff05c12b72205220c7a5b4f5eba9e807b83a01b722250de783fa0136
-PortableGit-2.30.0-rc0-32-bit.7z.exe | 1ff6e083f583c81ebb35d954ee39bd6076eb0d64e7c2a43434e59efa76641f93
-MinGit-2.30.0-rc0-64-bit.zip | a2bd449ba4ac2537540f98a7cfd5716bffb2abd25c142c8a8c98fc85893772a1
-MinGit-2.30.0-rc0-32-bit.zip | 7406ffee301caa1eedbd4ffb25021fae1631cf0b18249cfda40af5eb4c84ade1
-MinGit-2.30.0-rc0-busybox-64-bit.zip | 987c9bebf0cbef64e6a08ad0edb09bde8206ecd6f0259f121d9287eaeb1d4c2d
-MinGit-2.30.0-rc0-busybox-32-bit.zip | e75318a33f91d9e9a25e2b74b8be659eae926f89a11ba41253323abee0844492
-Git-2.30.0-rc0-64-bit.tar.bz2 | f9f5ddc208538c02c473ad468edf2c7dc56bf1a6e9c0fce841352762d787a7a3
-Git-2.30.0-rc0-32-bit.tar.bz2 | 02018265aa07447ccef82a18276375c5922f49a94c7aef10e115ec9b80aa51f2
+My knee-jerk reaction to the question is that we should still give
+the same warning, even though the "checkout" should successfully
+detach the HEAD at the commit, to remind you that the name you used
+came from may have been resolved to something you did not expect,
+and the value you used may not be what you wanted to use.
 
-Ciao,
-Johannes
+> I think it's conservative enough to just turn this on by default, but
+> place it under a configurable option similar to the existing
+> core.warnAmbiguousRefs. Running the entire test suite with "die"
+> instead of "warning" passes with this approach.
+
+Sounds sensible.
+
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> Modified-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+
+Huh?
+
+> +core.warnNonPseudoRefs::
+> +	If true, Git will warn you if the `<ref>` you passed
+> +	unexpectedly resolves to a top-level ref stored in
+> +	`.git/<file>` but doesn't look like a pseudoref such as
+> +	`HEAD`, `MERGE_HEAD` etc. True by default.
+
+I'd really prefer to see us to think, design and describe in terms
+of a more generic ref API, when we do not have to limit us to the
+behaviour only with files backend.  Reading the file `.git/<ref>` on
+the filesystem happens to be one way to resolve a ref to its value
+(i.e. reference to an object), but even with different ref backends,
+we want 'master' that sits next to 'refs/heads/master' to trigger
+this warning.  So
+
+	... if the `<ref>` you passed refers to a <ref> outside the
+	`refs/{heads,tags,...}/` hierarchy but does not look like
+	...
+
+or something like that, perhaps.
+
+> ++
+> +These references are ignored by linkgit:for-each-ref[1], but resolved
+> +by linkgit:git-show[1], linkgit:git-rev-parse[1] etc. So it can be
+> +confusing to have e.g. an errant `.git/mybranch` being confused with
+> +`.git/refs/heads/mybranch`.
+
+Here, ".git/mybranch" and ".git/refs/heads/mybranch" are good as
+examples.  I just want to avoid tying the main description to the
+files backend.
+
+> diff --git a/refs.c b/refs.c
+> index 3ec5dcba0be..634ab64cc9e 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -649,12 +649,19 @@ static int is_main_pseudoref_syntax(const char *r=
+efname)
+>  		is_pseudoref_syntax(refname);
+>  }
+> =20
+> +static int is_any_pseudoref_syntax(const char *refname)
+> +{
+> +	return is_main_pseudoref_syntax(refname) ||
+> +		is_pseudoref_syntax(refname);
+> +}
+
+Hmph, why is this needed, I wonder.
+
+"git show main-worktree/master" is specific enough to tell us that
+the user did not mean "git show main-worktree/refs/heads/master",
+no?  If so, then wouldn't it be sufficient to check only with
+is_pseudoref_syntax() and nothing else?  I may probably missing
+something to make me convince is_main_pseudoref_syntax() matters
+here.
+
+>  int expand_ref(struct repository *repo, const char *str, int len,
+>  	       struct object_id *oid, char **ref)
+>  {
+>  	const char **p, *r;
+>  	int refs_found =3D 0;
+>  	struct strbuf fullref =3D STRBUF_INIT;
+> +	static int warned_on_non_pseudo_ref;
+> =20
+>  	*ref =3D NULL;
+>  	for (p =3D ref_rev_parse_rules; *p; p++) {
+> @@ -669,6 +676,11 @@ int expand_ref(struct repository *repo, const char=
+ *str, int len,
+>  					    fullref.buf, RESOLVE_REF_READING,
+>  					    this_result, &flag);
+>  		if (r) {
+> +			if (warn_non_pseudo_refs &&
+> +			    !strchr(r, '/') &&
+> +			    !is_any_pseudoref_syntax(r) &&
+> +			    !warned_on_non_pseudo_ref++)
+> +				warning(_(".git/%s doesn't look like a pseudoref"), r);
+
+I do not see much point in reporting only the first one.
+
+Isn't the conditional "if (r)" sufficiently limiting the ref only to
+those that the user showed immediate interest in?  In other words,
+even if there were .git/foo and .git/bar, both of which happens to
+contain something that looks like an object name, "git show foo"
+would cause this code to warn only about .git/foo and .git/bar, no?
+
+If there are more than one hits, why shouldn't we report all of
+them?
+
+Or is this some performance thing (i.e. there only can be one hit,
+so repeated calls to strchr() and is_any_pseudoref_syntax() after
+seeing one hit would all be wasteful)?  If so, "have we warned? if
+so skip the remainder of checking, as we won't warn" should be the
+first in the &&-chain.
+
+Puzzled.
+
+Thanks.
