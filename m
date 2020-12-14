@@ -2,124 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01AD9C4361B
-	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 13:35:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D620C4361B
+	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 14:25:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A9AEC225AC
-	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 13:35:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1AE0A2054F
+	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 14:25:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437505AbgLNNej (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Dec 2020 08:34:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36520 "EHLO
+        id S2395296AbgLNOY7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Dec 2020 09:24:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2439830AbgLNNe0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Dec 2020 08:34:26 -0500
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F17DDC0613D6
-        for <git@vger.kernel.org>; Mon, 14 Dec 2020 05:33:45 -0800 (PST)
-Received: by mail-wm1-x344.google.com with SMTP id e25so15276908wme.0
-        for <git@vger.kernel.org>; Mon, 14 Dec 2020 05:33:45 -0800 (PST)
+        with ESMTP id S1727084AbgLNOYr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Dec 2020 09:24:47 -0500
+Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61CC8C0613CF
+        for <git@vger.kernel.org>; Mon, 14 Dec 2020 06:24:07 -0800 (PST)
+Received: by mail-oo1-xc2a.google.com with SMTP id t23so3957839oov.4
+        for <git@vger.kernel.org>; Mon, 14 Dec 2020 06:24:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=aKtgIfODIJsDeCysGo/NnQK/4VzUArW8A+kCnIoZcXc=;
-        b=Ei8IOp788jEytWXLSoEO5jwSif+yATEYPPpM6Of8FL5nYOGGTJesxu4/HrY4kei9jQ
-         7DuRX+rlB1J2OHOm6qsB2MPwsHSROUuUIlPr/nXIGS0DJFgz5Wr3RuZHFZDuOXyIX8jl
-         PoQj01FKtS1jMZsbEiNxQcg+x9cheumZ6y5KaJIMGsqNHgt/kfM+0bFEf6DSxNeX3+y3
-         RFk5a02oCu/Lfspqt5tMF8tX+WkRLzBwN2g2u7QxGX4oA5y1+EeuSgWCilhMMS3xL2FI
-         pnX2Q7wSOD+4F693Idku6UAnDYodcH0uaU7rbhYdtn1VHaBvBvAHdwlm00NCDl9G9xuA
-         mZZg==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=hk/KVFMIeLtUioPZdQ8GMk7oNqbFAhP4KOKURPLDf3Q=;
+        b=vY1AnDCf7q9MOvt/xM/mIJQSHHXCqIDN7gBDyOdHQ03gP1KS8qlYED3tKCPhatFpjB
+         4LFFzBT3OqIDs+gKFQJENCtkzdXHVYo5c+Dqt3GCVDbG9ZTTi8cF7t4prMPLjpa29CBs
+         wL3dABOhX61heCs8Bw1ubXPEJJbg98i5bP6QfkjBogZqVSX/9r6P4ecr/NUdpGYGJTC6
+         ixiR0SWN8reYeF09ff836HCSR5dUHuSBE40vd6LB8cXYUO3Uik8HLQWgqjkHWe4bAVSI
+         BdDwYub2NOO/be9IPjIockQ4gtNu/iw1dAJMvEg83mLIocQnvWls6msoLl4LR4/tEBu0
+         cSew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=aKtgIfODIJsDeCysGo/NnQK/4VzUArW8A+kCnIoZcXc=;
-        b=niqap+lFZXLdUnI4zq3Ou2Ff6bw2ZKNet+gkQt8Dl35ASfRVaf8O0IoRExExb671po
-         knfGbKaZVGCTgiFEA4U2t4v4CRO49LfMHtIdHqtb/sO8Pq5F3LPDrOZnq8lGyuEHb45U
-         F4aWImlH0mKXKs8FLB+NTBQLB5REzAeRgyhwXG6pY2kBCCwG2BNlYSLraqIsdy5gT/ji
-         6QDFZwPlUXKeVwg77e8l1Lx7TffT7bsDovIQmBjnDt0GRgVAd2OLc+0nU5blxDTE6t0f
-         vCyzexgVI5eKjAIYdL3iycfXFdy6RBVc1/PizNK0eLyG9ZY3mMNro0WcLfuFZKf7zcig
-         NdPw==
-X-Gm-Message-State: AOAM530g3kc6yTvMcOL0IpgZQmnwfJ7+i38pvlR2HEwnwtxVUUukz/No
-        Jd8VlCpOWUR2JqhHy8EC2yvImR4blSc=
-X-Google-Smtp-Source: ABdhPJxP79ua89I7qC08ya3cDx4L8ezVHC+3YjBTtmfi52lpYm4IZfJ8XpNADtMN9hNPgg/A4TC27Q==
-X-Received: by 2002:a1c:7201:: with SMTP id n1mr27459411wmc.139.1607952824538;
-        Mon, 14 Dec 2020 05:33:44 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h98sm34869856wrh.69.2020.12.14.05.33.43
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=hk/KVFMIeLtUioPZdQ8GMk7oNqbFAhP4KOKURPLDf3Q=;
+        b=Ya1mN7usV/0O8WCwiwQcI5581G+POinwXNk4d6Z6eGyVd/exhLMRWwDRLuYnDJUZNp
+         AKcg/ie7VfVcrdvdMh8M0MhG3DMGOPp9gzz4rs6lPwDw1s/yLdTxPaPlOpdMflijw2sZ
+         AbL2UN8cIpQu1ES6mquMIGvqYf1czmg1kzuOinfbcCNT4/gwqt6ahkz4JHP0Cqn//8kU
+         wR2vcHpbqIzECvn5lUvEWXPhZ/dwJrtb1ZVRFu0iKRNY0PklY3/P79Ta/S1gzkt0zgcc
+         1NUXdk3qe+CElVd/+OBNr9JKVFLeflc1nMWwrPIYazPnKwNIFTHbOfFsM6wU3KnBI+EF
+         gZuw==
+X-Gm-Message-State: AOAM530ck1/Cl0Zaa3dMHwDCclERlm+CF4MOWww7WPPi0CLeUdagjt88
+        jrqTomBgN7sJY3nRxBBIELA=
+X-Google-Smtp-Source: ABdhPJylfOstgjZ84jC0pXIfDAMG1dTVIXeVYSX17eUQ+VWQ31xq9yzaftu4HcEb0jz728d1hv9DPQ==
+X-Received: by 2002:a4a:e1b5:: with SMTP id 21mr19448643ooy.64.1607955846765;
+        Mon, 14 Dec 2020 06:24:06 -0800 (PST)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id 30sm4328370oth.7.2020.12.14.06.24.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Dec 2020 05:33:43 -0800 (PST)
-Message-Id: <pull.813.git.1607952822848.gitgitgadget@gmail.com>
-From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 14 Dec 2020 13:33:42 +0000
-Subject: [PATCH] index-format.txt: document v2 format of file system monitor
- extension
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
+        Mon, 14 Dec 2020 06:24:06 -0800 (PST)
+Date:   Mon, 14 Dec 2020 08:24:04 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     jonathantanmy@google.com, dstolee@microsoft.com,
+        Elijah Newren <newren@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Message-ID: <5fd77584dda74_d1ec120827@natae.notmuch>
+In-Reply-To: <pull.923.v3.git.git.1607846667.gitgitgadget@gmail.com>
+References: <pull.923.v2.git.git.1607114890.gitgitgadget@gmail.com>
+ <pull.923.v3.git.git.1607846667.gitgitgadget@gmail.com>
+Subject: RE: [PATCH v3 00/20] fundamentals of merge-ort implementation
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+Elijah Newren via GitGitGadget wrote:
+> This is actually v5 of this series, and is being sent due to review comments
+> from a different series, namely en/merge-ort-3[1].
+> 
+> I have rerolls of en/merge-ort-2 and en/merge-ort-3 already prepared, but
+> since gitgitgadget will not allow me to send a series dependent on a
+> not-published-by-Junio series, I cannot yet send them. You will need to
+> temporarily drop them, and I'll resend after you publish the updated version
+> of this series. I do not like this solution, and I was tempted to just push
+> the updates into en/merge-ort-3, but since this series was still hanging in
+> 'seen' awaiting feedback and a lot of the suggestions were for things from
+> this series, I decided to go this route anyway...
 
-Update the documentation of the file system monitor extension to
-describe version 2.
+You could send it the old-fashioned way.
 
-The format was extended to support opaque tokens in:
-56c6910028 fsmonitor: change last update timestamp on the index_state to opaque token
-
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
-    index-format.txt: document v2 format of file system monitor extension
-    
-    While studying the FSMonitor code I noticed that the documentation for
-    the FSMN index extension did not get updated for V2 format.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-813%2Fjeffhostetler%2Ffix-fsmonitor-v2-documentation-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-813/jeffhostetler/fix-fsmonitor-v2-documentation-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/813
-
- Documentation/technical/index-format.txt | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/technical/index-format.txt b/Documentation/technical/index-format.txt
-index f9a3644711b..69edf46c031 100644
---- a/Documentation/technical/index-format.txt
-+++ b/Documentation/technical/index-format.txt
-@@ -306,12 +306,18 @@ The remaining data of each directory block is grouped by type:
- 
-   The extension starts with
- 
--  - 32-bit version number: the current supported version is 1.
-+  - 32-bit version number: the current supported versions are 1 and 2.
- 
--  - 64-bit time: the extension data reflects all changes through the given
-+  - (Version 1)
-+    64-bit time: the extension data reflects all changes through the given
- 	time which is stored as the nanoseconds elapsed since midnight,
- 	January 1, 1970.
- 
-+  - (Version 2)
-+    A null terminated string: an opaque token defined by the file system
-+    monitor application.  The extension data reflects all changes relative
-+    to that token.
-+
-   - 32-bit bitmap size: the size of the CE_FSMONITOR_VALID bitmap.
- 
-   - An ewah bitmap, the n-th bit indicates whether the n-th index entry
-
-base-commit: 3cf59784d42c4152a0b3de7bb7a75d0071e5f878
 -- 
-gitgitgadget
+Felipe Contreras
