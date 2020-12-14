@@ -2,153 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A3DFC4361B
-	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 16:31:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40E15C4361B
+	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 16:52:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1445C21D42
-	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 16:31:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 00B9C22286
+	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 16:52:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2440047AbgLNQbR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Dec 2020 11:31:17 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54833 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2439397AbgLNQbR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Dec 2020 11:31:17 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 315C892129;
-        Mon, 14 Dec 2020 11:30:36 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=3AiXS1pGzWGk
-        QS6geTtfRN8/hE8=; b=UVi5T6ntFjshUlrA/mvURqZwUnb1eoE2HYttux+qPm+n
-        vwi7YEyJG1PSluTbU53yqNMBJgweb/pua8g7ELWcQ4MAQk21bx+5ZlFIOJwBLrPw
-        HbKMb9dMNMMgTv59I26nupGg83GOiksIBM/EitIppDcLj+woYqkF+qDzQd3gQWE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=wxl50x
-        N00JNCVeXQvCaTned1UCQOHPFNvbc/yvNcvqWmKpm0JGVsOUsMunSPN/2NsqhShD
-        c3SM/a/GYIOytxoOKHb8O9x3fbtGlIbEnAQYtPlHyNAYuSapcybD6XRKfSomhIic
-        lpxg7kBECts+ZaU+hfU8YPTLvOZKaZZZJByoY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2529592128;
-        Mon, 14 Dec 2020 11:30:36 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 88EDF92127;
-        Mon, 14 Dec 2020 11:30:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] clone: in protocol v2, use remote's default branch
-References: <20201208013121.677494-1-jonathantanmy@google.com>
-        <20201211210508.2337494-1-jonathantanmy@google.com>
-        <87blewwoil.fsf@evledraar.gmail.com>
-Date:   Mon, 14 Dec 2020 08:30:34 -0800
-In-Reply-To: <87blewwoil.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Mon, 14 Dec 2020 13:38:58 +0100")
-Message-ID: <xmqqim94e4et.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S2389013AbgLNQv4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Dec 2020 11:51:56 -0500
+Received: from mout.gmx.net ([212.227.15.18]:38321 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731110AbgLNQvx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Dec 2020 11:51:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1607964620;
+        bh=bEsX12v2mHUNYqlLNXHsz+Xens5OWY+1q/TletNHM3A=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=DSktD+4swDAv9Y+IwpMzYIYKfx0dYH6iiZ+br9l0fX+1UhW0i4AeU2ulos6OnhHiI
+         WBEEPKpsAVTVB+q57Sff3vy1UxwZKRGRLOf4T5WT8Rc7gJDRsYHQTKFu2F0oXBUbgk
+         NqFWxGA94jBHkxTc1X5l+GWQB7lPalmvL692OfT0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.88.62] ([89.1.214.172]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N8GMk-1k2PD20g5I-014G61; Mon, 14
+ Dec 2020 17:50:20 +0100
+Date:   Mon, 14 Dec 2020 17:50:18 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren <newren@gmail.com>
+cc:     Derrick Stolee <stolee@gmail.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 02/11] merge-ort: add initial outline for basic rename
+ detection
+In-Reply-To: <CABPp-BHyNuhNtc6JQgQRBsQFbobzYyS6fs=nopRuv8c1+9zW_w@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2012141747400.25979@tvgsbejvaqbjf.bet>
+References: <pull.812.git.1607542887.gitgitgadget@gmail.com> <b9e0e1a60b92a6a220193bf9fe80796df91126a7.1607542887.git.gitgitgadget@gmail.com> <84a4d97b-8496-4c83-5d32-19f57e17a871@gmail.com> <CABPp-BHa0zehQd-axmb4bF6fR4PTWwGu9uLjOzgTW8_Gu12iZA@mail.gmail.com>
+ <7b0aafae-cd57-d4f7-ac85-238471428d24@gmail.com> <nycvar.QRO.7.76.6.2012141641230.25979@tvgsbejvaqbjf.bet> <CABPp-BHyNuhNtc6JQgQRBsQFbobzYyS6fs=nopRuv8c1+9zW_w@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: B1668F90-3E29-11EB-B297-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:wx6qmolFTWmWfxNCiE/pp8OyGHEvM/4IuWSi0604uPisjjhJuFH
+ WxzFkxWmJwzpb+csmnW31p6aGKgH2Y1qiri/VZvloHIK75JlAwJNJsa9xSC7fCSZDisBdp5
+ YMTujMSR8bYx4jErvVvwZwGlXDNduH7D0SywdXegUTydygAmRQMTG3MXXJXQ3A0NremfMNi
+ PrPqCPbZHCkQ2hL+SbLNQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:r5h7m9YuBow=:yWjDyl8ERi6NrPZ2YpVIBO
+ 0GzPG0tKDmNiZmQmLrKXb8Y2mEv/RGIn9qXyBYpIj8HiA4PBgQBP9+nazPcx1zDEsDqlWF9cP
+ VYnhtWw2ApflOZruFnFU6gRY3+dwJ3673Qxc1+TGp3x1GFgRvXrJXpNSkfpYRrxh2Hj0dW6vU
+ 1OVOMhYZZPOssmjtktnMyipI+3/DVDItxX0gokwArx3bcFUpjHvgmHKn7T4lpurxFtj1pxqx/
+ ZBZeJo9rc1JzTSKPmHAl1jCZpTGWFaIaaR49I8vlC7r7gxq2Xyy2kSZ23TnnON40HboWnQMjY
+ EN3//51D27xwd9BTqk+1YdhkmZY1YmpyOJQBBC5inhpOiI/MAyvBKHz8UqX1apcYQqA4O2ovP
+ 0sY+0mxr4EFWasofj6WfVtbLRgvUnC+qwx0rW1NI29eqWIWMG2SMhuAQOEyO8V0zjPvYUaYIA
+ tYAElV/ZPw4oyyowuBokUWCSImE1VnxpcObsLzWvw3eN5oIWXbDv8TtOS92JrddRp74QlPaIu
+ FoYLpZNyuX3gqTe4BGFQP8AcQU+PCizwCrEjuAO+lMDbycpVeKTfvebJ6bBArTCSuPohBmsHX
+ NBtmN71xUjzgM8NEQ0yfnOWaLPuoFUVhHpYi25hWQ9KkJKhR0A84p6K2NfbNVnMXv8Vn9NlC0
+ 45sB+Rv8UQm+CsWOO5qZ+lVs+efbIstTE0cNsV3r4/9fE1uzFxqGJBFiqNLWGvoAP20RI2Hu/
+ Hb7OrzZ5bfRevIchVEjaPs8qg2gRNM7yvue/93rSR0MCSSwaPZwx9higaa8IMw1IODNWuwfOb
+ RgyUIuSpiHblciBiWxBUMBPQsmv7pxmiQblQPeqL56nuw7yCpYEwDCxEWw+cl+WGONIBCevMn
+ 7zrERC0RZlcwDm8AmMTGYKB1fTLz52Di7YDl9EBgM=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Hi Elijah,
 
->> On the client side, Git will always send the "unborn" argument if it i=
+On Mon, 14 Dec 2020, Elijah Newren wrote:
+
+> On Mon, Dec 14, 2020 at 7:42 AM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > Hi Elijah & Stolee,
+> >
+> > On Mon, 14 Dec 2020, Derrick Stolee wrote:
+> >
+> > > On 12/13/2020 2:47 AM, Elijah Newren wrote:
+> > > >
+> > > > Sorry for two different email responses to the same email...
+> > > >
+> > > > Addressing the comments on this patchset mean re-submitting
+> > > > en/merge-ort-impl, and causing conflicts in en/merge-ort-2 and thi=
 s
->> supported by the server. During "git clone", if cloning an empty
->> repository, Git will use the new information to determine the local
->> branch to create. In all other cases, Git will ignore it.
+> > > > series en/merge-ort-3.  Since gitgitgadget will not allow me to su=
+bmit
+> > > > patches against a series that isn't published by Junio, I'll need =
+to
+> > > > ask Junio to temporarily drop both of these series, then later
+> > > > resubmit en/merge-ort-2 after he publishes my updates to
+> > > > en/merge-ort-impl.  Then when he publishes my updates to
+> > > > en/merge-ort-2, I'll be able to submit my already-rebased patches =
+for
+> > > > en/merge-ort-3.
+> > >
+> > > Let's chat privately about perhaps creatin
+> >
+> > Yes, I am totally willing to push up temporary branches if that helps =
+you,
+> > or even giving you push permissions to do that.
+> >
+> > Ciao,
+> > Dscho
 >
-> I'm not a fan of this change not because of the whole s/master/whatever=
-/
-> discussion, but because of the magic it adds for seemingly little gain =
-&
-> without any documentation.
->
-> So if I have init.defaultBranch explicitly set that'll be ignored on
-> "clone", but on "init/git remote add/fetch" it won't?
+> Given the amount of changes left to push up, I suspect there'll be
+> more cases where it'd be useful.  If I could get push permissions, and
+> a suggested namespace to use for such temporary branches, that'd help.
 
-That description is backwards.
+I invited you into the GitGitGadget organization.
 
-To help interoperate with the repository you cloned from better, we
-made it easy to use whatever your 'origin' uses. "git clone" does so
-by (1) in the original implementation, by inferring where HEAD
-points at over there by comparing the objects reported for HEAD and
-tips of branches (2) later, by adding symref capability to the
-protocl so that the sending repository can tell exactly which branch
-its HEAD points at.  What was lacking was that symref capability is
-not sent if there is nothing in the repository.  And I think this is
-an attempt to bring that "cloning nothing" case in line with a clone
-of a repository with contents.
+Recently, I pushed up `hanwen/libreftable` to have a proper base branch
+for myself, but I think that was probably not a good idea. I should have
+opened a namespace like `temp/` or some such.
 
-> Shouldn't this at the very least be a
-> init.defaultBranchFromRemote=3D<bool> which if set overrides
-> init.defaultBranch? We could turn that to "true" by default and get the
-> same behavior as you have here, but with less inexplicable magic for th=
-e
-> user, no?
+> In this particular case, though, one of my two fears was already
+> realized -- Junio jumped in and did the work of rebasing and conflict
+> resolving for en/merge-ort-2 and en/merge-ort-3.  I didn't want to
+> burden him with that extra work, but what he pushed up for
+> en/merge-ort-2 is identical to what I have.  So, all I have to do is
+> push en/merge-ort-3 with the extra changes I have in it.  So this
+> particular time is taken care of.
 
-I view the change in the patch being discussed a bugfix (clone ought
-to follow whatever the other side uses by default, unless you say -b,
-and the case when cloning an empty repository was buggy).  I am OK
-if we wanted to consider a _new_ feature to always use the name you
-want locally (i.e. as if you added "-b $(git config init.defaultBranch)"
-on your "git clone" command line), but that is a new feature that needs
-to be discussed in a separate topic.
+Understood.
 
-> Another reason I'm not a fan of it is because it's another piece of
-> magic "clone" does that you can't emulate in "init/fetch".
-
-That ship has sailed longlonglong time ago when dfeff66e (revamp
-git-clone., 2006-03-20) started pointing our HEAD to match theirs.
-
-> But shouldn't there at least be a corresponding "fetch" option? On init
-> we'll create head, but "git fetch --clobber-my-idea-of-HEAD-with-remote
-> ..."?
-
-It may be nice to have a corresponding one, but again, that is a
-separate topic on a new feature, and not relevant in the context of
-this fix.
-
-> Maybe not for reasons I haven't thought of, but I'd at least be much
-> happier with an updated commit message justifying another special-case
-> in clone that you can't do with "init/fetch".
-
-This is *not* another special-case, but is 14-year old outstanding
-one, so I do not think there specifically needs such justification.
-The log message DOES need to be clarified.  Your mistaking that this
-is a new feature and not a bugfix may be a good indication that the
-proposed log message is not doing its job.
-
-> And on the "litte gain" side of things: I very much suspect that the
-> only users who'll ever use this will be some big hosting providers (but
-> maybe not, the commit doesn't suggest a use-case).
-
-Explorers who learn this new GitHub or GitLab thingy, create an
-empty repository there and then clone it to their local disk, just
-to dip their toes in the water, would most benefit.  Those of us who
-are working on an already existing and populated projects won't be
-helped or bothered.  We do sometimes create our own repositories and
-publish to hosting sites, and I expect that many experienced Git
-users follow the "local first and the push", and they won't be
-helped or bothered.
-
-But I expect some do "create a void at the hosting site and clone to
-get a local playpen" for their real projects.  They would be helped,
-and because Git userbase is populous enough that their number in
-absolute terms would not be insignificant, even if they weren't in
-percentage terms.
+Thanks,
+Dscho
