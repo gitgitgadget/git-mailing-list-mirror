@@ -2,148 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CE53C4361B
-	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 16:25:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4546DC4361B
+	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 16:26:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D1025225AC
-	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 16:25:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 01DE022795
+	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 16:26:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2440137AbgLNQZo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Dec 2020 11:25:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34440 "EHLO
+        id S1730761AbgLNQ0I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Dec 2020 11:26:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2440261AbgLNQXL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Dec 2020 11:23:11 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4FFEC0611C5
-        for <git@vger.kernel.org>; Mon, 14 Dec 2020 08:21:54 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id r7so17015525wrc.5
-        for <git@vger.kernel.org>; Mon, 14 Dec 2020 08:21:54 -0800 (PST)
+        with ESMTP id S2440140AbgLNQZu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Dec 2020 11:25:50 -0500
+Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com [IPv6:2607:f8b0:4864:20::341])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC03EC0613D3
+        for <git@vger.kernel.org>; Mon, 14 Dec 2020 08:25:09 -0800 (PST)
+Received: by mail-ot1-x341.google.com with SMTP id d8so16265969otq.6
+        for <git@vger.kernel.org>; Mon, 14 Dec 2020 08:25:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=HKfFEAEP56e8cli3HrU4PsQz5b6i5gxzOGNKStkT99I=;
-        b=lY5PxzGs6Xcongk2q0NWls/XW6vM2KeE9cRuoS9PfDQnta3quL+E6j6NnkqXYj9PiI
-         zaPPNIhcQAnvBtz4fp6EwloBuWT+aWzmI43ZIvJ7KH5fjYAYGmzOiOZQTwoLAFcWDdEM
-         06ntDaOe+wvOfAH+EyU2DV6GV8+uiQUWhrQbfRQXd6RM0l0NoTka3arB8piXYByceDrv
-         dOPVgacFK31sStpjwW7a39/fxVgKsfcChY5SIs9nudh6Nx5TJdTkp3mGj1Z7BQ3hgVFu
-         w70eeY+8F3mUGSvssnZYrRPng30F/jSqLJbnzWDyHjE4HlC/8wJSinmqqDrayzg5i9Vr
-         SrPg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=MN//4iw2w+zAXaazTEORVnZVTck7Ap4r3jUyrmAu3xY=;
+        b=e5IfGpJk3JozPXQ/J5h3J9+cqn8tVd0b7EsYBVl28MNCXLakkA4VaqpfkbP88GL50K
+         2IoMl4u1Mmaz7iALik/qep12Npf0e2sPpOqqTn2q1ed5kGJOiQAkhoOrk3BfRxQ+6lM4
+         Yl/a775lhgmlC2y9XW63tSZTg4ZhHSOlmvMMh6WXbWNIPTqqV7RIOOg3BwlZhTvJghan
+         GPKxiY9IgyZXmQq6wCbByEvhzJj7LXAXr6VoRbqM4Wl8QGL3GZqkll1gyQppFKn+dUJG
+         9Ts9kfqdpzsCMi9GbAZWK1s3CQYc2YsjXYcRf68O0yg1UAyKLSa6ttzf326EWmP6gGk/
+         5P2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HKfFEAEP56e8cli3HrU4PsQz5b6i5gxzOGNKStkT99I=;
-        b=BasqMahXAZnRd/5SM3cSKUs79B8/OVUKbOkTKFRLQCNYoOY/JJgRkZ+1BGaM1qT0MV
-         WDV3qF4/lMglmkkyhCR5gwbHM+9MeBneJJmrDFy42gb+jAqqfrKowQHtyU0bpczDT34v
-         uZwsB9AyM65YVZ5zGCxESSG5DlqMSwZe6Y6jPaeQBaXJRvd0wLlVPqrfAwwP8SEDJdtv
-         tf7GLmylbHdZ9Ie0s/nHIVnVAjKDQ8eSZZnJi5OHDaOK7h40AasR99saFdSXUlwF17mC
-         jIUlN0u1KjQ1/ZXNRNBlyKVmD9z+FHxR8p8KpSL7hZyErNPne5IBFnzcrG0cOE4OwYlR
-         j+/w==
-X-Gm-Message-State: AOAM530fmAxYBR781hRTrL0+tCRjoLDeIzc1G1ns8pXPxDyoL5ye0tAK
-        yhx7LCv3+RYmeQmpGZqaclxXGaVQSNo=
-X-Google-Smtp-Source: ABdhPJzaiva9DaAFSOypgan9wsSUaVgccwDzOiP1KHBnbHJ6mD7XBAL7GZzbGUeqVCIFOcxdZlvULw==
-X-Received: by 2002:adf:e705:: with SMTP id c5mr28961515wrm.303.1607962913111;
-        Mon, 14 Dec 2020 08:21:53 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a18sm31982919wrr.20.2020.12.14.08.21.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Dec 2020 08:21:52 -0800 (PST)
-Message-Id: <ff09ddb9caf73632c9792c07f1f7499a75a09606.1607962900.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.812.v2.git.1607962900.gitgitgadget@gmail.com>
-References: <pull.812.git.1607542887.gitgitgadget@gmail.com>
-        <pull.812.v2.git.1607962900.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 14 Dec 2020 16:21:40 +0000
-Subject: [PATCH v2 11/11] merge-ort: add implementation of type-changed rename
- handling
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MN//4iw2w+zAXaazTEORVnZVTck7Ap4r3jUyrmAu3xY=;
+        b=Ea6pSYx/AUbPXWhmrhtWG3y2gK27x2e94yKadTab2g7rVK5kCQQeIUOZ82CVvTJbnw
+         VZoP0eLsitPsovoQQGF0+DkMgHZ5OvHCSYACPFSVmn71qb1+KdsramD6RCsSA4XYadZR
+         EAYWawUykihiBaVxY8/bsFWHSzMfU3+UB8TO0FTN8iOgpB5cBiOy8gqe9IbQOWK7g1p7
+         pxmiGsqtEamkRIVI7EQ1A+ZfkWKLJX5zQ0phi9OyT35yX7HaSa0XfVd3kslPpW62ZhAa
+         +oukhkErrKZRi/1pFFW8a6pPAONn/rMIhHAsJzPyeEIttAmA7rf+kpOrhIw5BC83PXcG
+         U+SQ==
+X-Gm-Message-State: AOAM532JO2srBwGM7RhuqUpFyAZs5DIhpHBg3MdIxD+jZB4d/bJPFFcx
+        S+5IxyDEvAQ9SvgE5zEp7UOheHTLgtKWrWnZ5ks=
+X-Google-Smtp-Source: ABdhPJzKsXrgDlawIYy1C5d5mZ6TtnjTVDDcso2MvG5nLArPgFA+x+ZMPhrHcd2kXXEZ5yBOtvp4JXhhjj9B/yBjDwQ=
+X-Received: by 2002:a9d:b8e:: with SMTP id 14mr20098169oth.316.1607963109010;
+ Mon, 14 Dec 2020 08:25:09 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+References: <pull.923.v2.git.git.1607114890.gitgitgadget@gmail.com>
+ <pull.923.v3.git.git.1607846667.gitgitgadget@gmail.com> <5fd77584dda74_d1ec120827@natae.notmuch>
+In-Reply-To: <5fd77584dda74_d1ec120827@natae.notmuch>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 14 Dec 2020 08:24:58 -0800
+Message-ID: <CABPp-BFkXcxMR=2kh6mBR5ymy2s5-Gdngw182SUs5EweZdj-fw@mail.gmail.com>
+Subject: Re: [PATCH v3 00/20] fundamentals of merge-ort implementation
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+On Mon, Dec 14, 2020 at 6:24 AM Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+>
+> Elijah Newren via GitGitGadget wrote:
+> > This is actually v5 of this series, and is being sent due to review comments
+> > from a different series, namely en/merge-ort-3[1].
+> >
+> > I have rerolls of en/merge-ort-2 and en/merge-ort-3 already prepared, but
+> > since gitgitgadget will not allow me to send a series dependent on a
+> > not-published-by-Junio series, I cannot yet send them. You will need to
+> > temporarily drop them, and I'll resend after you publish the updated version
+> > of this series. I do not like this solution, and I was tempted to just push
+> > the updates into en/merge-ort-3, but since this series was still hanging in
+> > 'seen' awaiting feedback and a lot of the suggestions were for things from
+> > this series, I decided to go this route anyway...
+>
+> You could send it the old-fashioned way.
 
-Implement cases where renames are involved in type changes (i.e. the
-side of history that didn't rename the file changed its type from a
-regular file to a symlink or submodule).  There was some code to handle
-this in merge-recursive but only in the special case when the renamed
-file had no content changes.  The code here works differently -- it
-knows process_entry() can handle mode conflicts, so it does a few
-minimal tweaks to ensure process_entry() can just finish the job as
-needed.
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- merge-ort.c | 33 +++++++++++++++++++++++++++++++--
- 1 file changed, 31 insertions(+), 2 deletions(-)
-
-diff --git a/merge-ort.c b/merge-ort.c
-index 9aac33c8e31..11e33f56edf 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -778,7 +778,32 @@ static int process_renames(struct merge_options *opt,
- 			 S_ISREG(newinfo->stages[target_index].mode));
- 		if (type_changed && collision) {
- 			/* special handling so later blocks can handle this */
--			die("Not yet implemented");
-+			/*
-+			 * if type_changed && collision are both true, then this
-+			 * was really a double rename, but one side wasn't
-+			 * detected due to lack of break detection.  I.e.
-+			 * something like
-+			 *    orig: has normal file 'foo'
-+			 *    side1: renames 'foo' to 'bar', adds 'foo' symlink
-+			 *    side2: renames 'foo' to 'bar'
-+			 * In this case, the foo->bar rename on side1 won't be
-+			 * detected because the new symlink named 'foo' is
-+			 * there and we don't do break detection.  But we detect
-+			 * this here because we don't want to merge the content
-+			 * of the foo symlink with the foo->bar file, so we
-+			 * have some logic to handle this special case.  The
-+			 * easiest way to do that is make 'bar' on side1 not
-+			 * be considered a colliding file but the other part
-+			 * of a normal rename.  If the file is very different,
-+			 * well we're going to get content merge conflicts
-+			 * anyway so it doesn't hurt.  And if the colliding
-+			 * file also has a different type, that'll be handled
-+			 * by the content merge logic in process_entry() too.
-+			 *
-+			 * See also t6430, 'rename vs. rename/symlink'
-+			 */
-+			collision = 0;
-+		}
- 		if (source_deleted) {
- 			if (target_index == 1) {
- 				rename_branch = opt->branch1;
-@@ -858,7 +883,11 @@ static int process_renames(struct merge_options *opt,
- 			newinfo->pathnames[0] = oldpath;
- 			if (type_changed) {
- 				/* rename vs. typechange */
--				die("Not yet implemented");
-+				/* Mark the original as resolved by removal */
-+				memcpy(&oldinfo->stages[0].oid, &null_oid,
-+				       sizeof(oldinfo->stages[0].oid));
-+				oldinfo->stages[0].mode = 0;
-+				oldinfo->filemask &= 0x06;
- 			} else if (source_deleted) {
- 				/* rename/delete */
- 				newinfo->path_conflict = 1;
--- 
-gitgitgadget
+As mentioned in the first line of the message, I already did the first
+two rounds that way.  There are sometimes reasons to use send-email,
+but gitgitgadget comes with really nice cross-platform testing so I do
+tend to prefer it.  Also, mix-and-matching between send-email and
+gitgitgadget causes some confusion on which-number-in-the-series-is-it
+counts (as noted above), so I tend to avoid it.
