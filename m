@@ -2,202 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CBB8C2BB48
-	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 16:26:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A3DFC4361B
+	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 16:31:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1F6E422A99
-	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 16:26:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1445C21D42
+	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 16:31:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2440093AbgLNQZv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Dec 2020 11:25:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34432 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727624AbgLNQXL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Dec 2020 11:23:11 -0500
-Received: from mail-wm1-x342.google.com (mail-wm1-x342.google.com [IPv6:2a00:1450:4864:20::342])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 722B2C061282
-        for <git@vger.kernel.org>; Mon, 14 Dec 2020 08:21:50 -0800 (PST)
-Received: by mail-wm1-x342.google.com with SMTP id a3so15797238wmb.5
-        for <git@vger.kernel.org>; Mon, 14 Dec 2020 08:21:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=3wvkdW5XE1G4uCvT4fhJgWOMCaldDUb3UyHgtne7vvg=;
-        b=UXFeTWcPBK8C//Y5CBimTV79+qphhQY4S26vDvH10pOI9S/RVenz3/IyfQcBM3bfhO
-         Mu/IYLjrwR11qgHLmD1gfXjfMyyIMKTZJrUwZrR67P9DBPD1kSfBt3NAI9dj6fJwxG5F
-         +pjPMb0Fw1P+13agtesc69X++Si9fJtEvnli74UhWTewrU6s9Bl5jJPlPbRnLuAINCHK
-         8sxVBAXMEpDJpPONgLSRUKm5DkEBt3+1a9qzznmouD+hfWXKGaC6mOzcAFaao2HzcOPy
-         5Ji+lLFEny5qEhtCwSOcIEkmVnBH90Yg7aBSlWpeWUQSBGUH3mfLnZZGwRIg5KcLf+o4
-         fa+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=3wvkdW5XE1G4uCvT4fhJgWOMCaldDUb3UyHgtne7vvg=;
-        b=BNQMXjPYwRyW5x6pvVxzwcYZJSw74od8MbZmzkVTyVUy8XFaxOlEJ2nmyQJZiTVpcp
-         pQXWTzxiEHFTCcAsQ3X2GldXKbkBZxDcpN71dvczgrsiO0UwBWJ4IPRQRusAnM8AmcB1
-         IlAadrAbhjcq9Lt4Xy+dk3/v0nyj903a/3OQwFSTV0HiqULqnde4gmcf5ADmafKu3Y6s
-         uA73ZxacNRHlhEFUqZNinuaV3E2HB3AlUoVtgc6sAx32Uw7CVYp4W8bXyoOJ94xSM0Je
-         IvZoUdiYVqvWW7VVXm6rxw5O493klzg88PGmEQorp+zO7X4AawcZ5OwjpuX6xsJCY12Y
-         NbxA==
-X-Gm-Message-State: AOAM531OK7z9JRY6VfBBixgiZrJmIj6ouPVvrBJAIgD14DOcEMqvptUS
-        IKvLXbmTxlqRwww+gdASLFOy7eYh0jE=
-X-Google-Smtp-Source: ABdhPJyZ38AlbB42SG2+/WUdK0ZsfVsX114z9Vj2D4QOtgmjjmlKBjVmPkMAOBxqaZwsPfjj52KpcA==
-X-Received: by 2002:a1c:7ec9:: with SMTP id z192mr28159109wmc.126.1607962908896;
-        Mon, 14 Dec 2020 08:21:48 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z6sm9402438wmi.15.2020.12.14.08.21.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Dec 2020 08:21:48 -0800 (PST)
-Message-Id: <d00e26be784d7915b2d476b0c86f37aa366a4274.1607962900.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.812.v2.git.1607962900.gitgitgadget@gmail.com>
-References: <pull.812.git.1607542887.gitgitgadget@gmail.com>
-        <pull.812.v2.git.1607962900.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 14 Dec 2020 16:21:36 +0000
-Subject: [PATCH v2 07/11] merge-ort: add implementation of both sides renaming
- differently
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S2440047AbgLNQbR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Dec 2020 11:31:17 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54833 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2439397AbgLNQbR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Dec 2020 11:31:17 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 315C892129;
+        Mon, 14 Dec 2020 11:30:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=3AiXS1pGzWGk
+        QS6geTtfRN8/hE8=; b=UVi5T6ntFjshUlrA/mvURqZwUnb1eoE2HYttux+qPm+n
+        vwi7YEyJG1PSluTbU53yqNMBJgweb/pua8g7ELWcQ4MAQk21bx+5ZlFIOJwBLrPw
+        HbKMb9dMNMMgTv59I26nupGg83GOiksIBM/EitIppDcLj+woYqkF+qDzQd3gQWE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=wxl50x
+        N00JNCVeXQvCaTned1UCQOHPFNvbc/yvNcvqWmKpm0JGVsOUsMunSPN/2NsqhShD
+        c3SM/a/GYIOytxoOKHb8O9x3fbtGlIbEnAQYtPlHyNAYuSapcybD6XRKfSomhIic
+        lpxg7kBECts+ZaU+hfU8YPTLvOZKaZZZJByoY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2529592128;
+        Mon, 14 Dec 2020 11:30:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 88EDF92127;
+        Mon, 14 Dec 2020 11:30:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] clone: in protocol v2, use remote's default branch
+References: <20201208013121.677494-1-jonathantanmy@google.com>
+        <20201211210508.2337494-1-jonathantanmy@google.com>
+        <87blewwoil.fsf@evledraar.gmail.com>
+Date:   Mon, 14 Dec 2020 08:30:34 -0800
+In-Reply-To: <87blewwoil.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Mon, 14 Dec 2020 13:38:58 +0100")
+Message-ID: <xmqqim94e4et.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: B1668F90-3E29-11EB-B297-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Implement rename/rename(1to2) handling, i.e. both sides of history
-renaming a file and rename it differently.  This code replaces the
-following from merge-recurisve.c:
+>> On the client side, Git will always send the "unborn" argument if it i=
+s
+>> supported by the server. During "git clone", if cloning an empty
+>> repository, Git will use the new information to determine the local
+>> branch to create. In all other cases, Git will ignore it.
+>
+> I'm not a fan of this change not because of the whole s/master/whatever=
+/
+> discussion, but because of the magic it adds for seemingly little gain =
+&
+> without any documentation.
+>
+> So if I have init.defaultBranch explicitly set that'll be ignored on
+> "clone", but on "init/git remote add/fetch" it won't?
 
-  * all the 1to2 code in process_renames()
-  * the RENAME_ONE_FILE_TO_TWO case of process_entry()
-  * handle_rename_rename_1to2()
+That description is backwards.
 
-Also, there is some shared code from merge-recursive.c for multiple
-different rename cases which we will no longer need for this case (or
-other rename cases):
+To help interoperate with the repository you cloned from better, we
+made it easy to use whatever your 'origin' uses. "git clone" does so
+by (1) in the original implementation, by inferring where HEAD
+points at over there by comparing the objects reported for HEAD and
+tips of branches (2) later, by adding symref capability to the
+protocl so that the sending repository can tell exactly which branch
+its HEAD points at.  What was lacking was that symref capability is
+not sent if there is nothing in the repository.  And I think this is
+an attempt to bring that "cloning nothing" case in line with a clone
+of a repository with contents.
 
-  * handle_file_collision()
-  * setup_rename_conflict_info()
+> Shouldn't this at the very least be a
+> init.defaultBranchFromRemote=3D<bool> which if set overrides
+> init.defaultBranch? We could turn that to "true" by default and get the
+> same behavior as you have here, but with less inexplicable magic for th=
+e
+> user, no?
 
-The consolidation of five separate codepaths into one is made possible
-by a change in design: process_renames() tweaks the conflict_info
-entries within opt->priv->paths such that process_entry() can then
-handle all the non-rename conflict types (directory/file, modify/delete,
-etc.) orthogonally.  This means we're much less likely to miss special
-implementation of some kind of combination of conflict types (see
-commits brought in by 66c62eaec6 ("Merge branch 'en/merge-tests'",
-2020-11-18), especially commit ef52778708 ("merge tests: expect improved
-directory/file conflict handling in ort", 2020-10-26) for more details).
-That, together with letting worktree/index updating be handled
-orthogonally in the merge_switch_to_result() function, dramatically
-simplifies the code for various special rename cases.
+I view the change in the patch being discussed a bugfix (clone ought
+to follow whatever the other side uses by default, unless you say -b,
+and the case when cloning an empty repository was buggy).  I am OK
+if we wanted to consider a _new_ feature to always use the name you
+want locally (i.e. as if you added "-b $(git config init.defaultBranch)"
+on your "git clone" command line), but that is a new feature that needs
+to be discussed in a separate topic.
 
-To be fair, there is a _slight_ tweak to process_entry() here to make
-sure that the two different paths aren't marked as clean but are left in
-a conflicted state.  So process_renames() and process_entry() aren't
-quite entirely orthogonal, but they are pretty close.
+> Another reason I'm not a fan of it is because it's another piece of
+> magic "clone" does that you can't emulate in "init/fetch".
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- merge-ort.c | 57 ++++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 54 insertions(+), 3 deletions(-)
+That ship has sailed longlonglong time ago when dfeff66e (revamp
+git-clone., 2006-03-20) started pointing our HEAD to match theirs.
 
-diff --git a/merge-ort.c b/merge-ort.c
-index 4034ffcf501..19477cfae60 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -707,7 +707,58 @@ static int process_renames(struct merge_options *opt,
- 			}
- 
- 			/* This is a rename/rename(1to2) */
--			die("Not yet implemented");
-+			clean_merge = handle_content_merge(opt,
-+							   pair->one->path,
-+							   &base->stages[0],
-+							   &side1->stages[1],
-+							   &side2->stages[2],
-+							   pathnames,
-+							   1 + 2 * opt->priv->call_depth,
-+							   &merged);
-+			if (!clean_merge &&
-+			    merged.mode == side1->stages[1].mode &&
-+			    oideq(&merged.oid, &side1->stages[1].oid))
-+				was_binary_blob = 1;
-+			memcpy(&side1->stages[1], &merged, sizeof(merged));
-+			if (was_binary_blob) {
-+				/*
-+				 * Getting here means we were attempting to
-+				 * merge a binary blob.
-+				 *
-+				 * Since we can't merge binaries,
-+				 * handle_content_merge() just takes one
-+				 * side.  But we don't want to copy the
-+				 * contents of one side to both paths.  We
-+				 * used the contents of side1 above for
-+				 * side1->stages, let's use the contents of
-+				 * side2 for side2->stages below.
-+				 */
-+				oidcpy(&merged.oid, &side2->stages[2].oid);
-+				merged.mode = side2->stages[2].mode;
-+			}
-+			memcpy(&side2->stages[2], &merged, sizeof(merged));
-+
-+			side1->path_conflict = 1;
-+			side2->path_conflict = 1;
-+			/*
-+			 * TODO: For renames we normally remove the path at the
-+			 * old name.  It would thus seem consistent to do the
-+			 * same for rename/rename(1to2) cases, but we haven't
-+			 * done so traditionally and a number of the regression
-+			 * tests now encode an expectation that the file is
-+			 * left there at stage 1.  If we ever decide to change
-+			 * this, add the following two lines here:
-+			 *    base->merged.is_null = 1;
-+			 *    base->merged.clean = 1;
-+			 * and remove the setting of base->path_conflict to 1.
-+			 */
-+			base->path_conflict = 1;
-+			path_msg(opt, oldpath, 0,
-+				 _("CONFLICT (rename/rename): %s renamed to "
-+				   "%s in %s and to %s in %s."),
-+				 pathnames[0],
-+				 pathnames[1], opt->branch1,
-+				 pathnames[2], opt->branch2);
- 
- 			i++; /* We handled both renames, i.e. i+1 handled */
- 			continue;
-@@ -1292,13 +1343,13 @@ static void process_entry(struct merge_options *opt,
- 		int side = (ci->filemask == 4) ? 2 : 1;
- 		ci->merged.result.mode = ci->stages[side].mode;
- 		oidcpy(&ci->merged.result.oid, &ci->stages[side].oid);
--		ci->merged.clean = !ci->df_conflict;
-+		ci->merged.clean = !ci->df_conflict && !ci->path_conflict;
- 	} else if (ci->filemask == 1) {
- 		/* Deleted on both sides */
- 		ci->merged.is_null = 1;
- 		ci->merged.result.mode = 0;
- 		oidcpy(&ci->merged.result.oid, &null_oid);
--		ci->merged.clean = 1;
-+		ci->merged.clean = !ci->path_conflict;
- 	}
- 
- 	/*
--- 
-gitgitgadget
+> But shouldn't there at least be a corresponding "fetch" option? On init
+> we'll create head, but "git fetch --clobber-my-idea-of-HEAD-with-remote
+> ..."?
 
+It may be nice to have a corresponding one, but again, that is a
+separate topic on a new feature, and not relevant in the context of
+this fix.
+
+> Maybe not for reasons I haven't thought of, but I'd at least be much
+> happier with an updated commit message justifying another special-case
+> in clone that you can't do with "init/fetch".
+
+This is *not* another special-case, but is 14-year old outstanding
+one, so I do not think there specifically needs such justification.
+The log message DOES need to be clarified.  Your mistaking that this
+is a new feature and not a bugfix may be a good indication that the
+proposed log message is not doing its job.
+
+> And on the "litte gain" side of things: I very much suspect that the
+> only users who'll ever use this will be some big hosting providers (but
+> maybe not, the commit doesn't suggest a use-case).
+
+Explorers who learn this new GitHub or GitLab thingy, create an
+empty repository there and then clone it to their local disk, just
+to dip their toes in the water, would most benefit.  Those of us who
+are working on an already existing and populated projects won't be
+helped or bothered.  We do sometimes create our own repositories and
+publish to hosting sites, and I expect that many experienced Git
+users follow the "local first and the push", and they won't be
+helped or bothered.
+
+But I expect some do "create a void at the hosting site and clone to
+get a local playpen" for their real projects.  They would be helped,
+and because Git userbase is populous enough that their number in
+absolute terms would not be insignificant, even if they weren't in
+percentage terms.
