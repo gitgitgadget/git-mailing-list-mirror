@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 962C8C2BB9A
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 797EBC2BB40
 	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 16:25:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6448122795
+	by mail.kernel.org (Postfix) with ESMTP id 439CC225AB
 	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 16:25:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2439900AbgLNQXV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Dec 2020 11:23:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34418 "EHLO
+        id S2440272AbgLNQX1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Dec 2020 11:23:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2440195AbgLNQXG (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S2440248AbgLNQXG (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 14 Dec 2020 11:23:06 -0500
-Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35775C06138C
-        for <git@vger.kernel.org>; Mon, 14 Dec 2020 08:21:49 -0800 (PST)
-Received: by mail-wm1-x341.google.com with SMTP id v14so14284193wml.1
-        for <git@vger.kernel.org>; Mon, 14 Dec 2020 08:21:49 -0800 (PST)
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58CEEC0617B0
+        for <git@vger.kernel.org>; Mon, 14 Dec 2020 08:21:48 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id a6so14283167wmc.2
+        for <git@vger.kernel.org>; Mon, 14 Dec 2020 08:21:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=7v3XyS7wFDYvaHnBwPBHVVEgN/vtjPftIMXATY8yNR8=;
-        b=k/hGyWAhFZ4IKshh43z4wTLqkLgS+EykMm9Cv9UurfaQ3U/rRWvgznNjASjDB6BpfZ
-         gm5Ft959hTnKRjNV9CvGffEW5jJaZwgKg0dmuU5rLTHlAjaZ9W0j97vLtOihaNGF3haI
-         BkBMZqrs3vtyxNCHda9DrNxE3MdqSQYgUJIYMdhJ4erht7I6q25NjJlaIHRXeJ7rWfQ6
-         EULCLFZp6+E66OHLSY0gYgEJQiXZgIEI+AhghyNQWrqfjSRCf0CoKutNuV6GoeH2mMQH
-         ymKmoczGOpxvFzvFxzrRT8rTC2S6S26PF+2voxzFzchj4M2jehS8TT7SzfrrDH/cM0Zi
-         Eaxg==
+        bh=ZmaFFlhRcNBXHdv7esqe3Jf3vYqKLnuvVwTH5JzTLmk=;
+        b=jGq9WWQ4ug+jTNzMdiy6rNmSS7QBfZwV+46Skhw0Ela9fpXnxD2tbLpSSPZP9iAd3w
+         ZQR44zgkZivlw0ieB3e4pHwP0U3DWD4mYrsJVXW/tGBM6svSvapnzkSTF4RvNz92OTYo
+         aPeegslEzaU5IFw8AexSP5nzz3hEsg+jIehvtm56L6+oa+AU+iTacYs6Zf5Pei2isbvx
+         lKNm7I5ZV4kFopV/ebYxm0Y01Cf8ULLtKAsAU053sRUlc8uYC1ORE1JUx+HnAnZ8qH6Y
+         admUbP5pVJw+4RJkLFrSNhYih7snaW79/sBEedyDqvp1wOZAVUiJvT79nzEG2k2S9KYf
+         bO4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7v3XyS7wFDYvaHnBwPBHVVEgN/vtjPftIMXATY8yNR8=;
-        b=shkx66Ur1oZzjpWu+lPyDHewKhJqtO95G3ViezPdwEDjnN2tg0oDQzyFYL7jTXVG3Q
-         RMtzJj8PlrwvSCnn/OqXMqhGx6BcxzDRs5OT1Lc9NYpCYI6NuIytU4Qr4O365RZyHRtJ
-         OdX3gtp9wqFonMlIfpU0CjjZZF7XorAseu/hpBNSMbbprKAe50CvrcND4K9FUntOEcvE
-         yFaqJwZHYu8Rq2Q7VsOPJVDQ8G9ePSVmLhDaR7Oe//8DmTyYpTHL9ZpABxto8R327Fwz
-         GmGwzKJvGTct72fK1UpYCOLjlEv1YHXiN/MkJAaETr1a4kSFe8iWJckPPCZDIQ2vdgxA
-         4w6w==
-X-Gm-Message-State: AOAM532e7DMdoZps+RLuxtHLs7N1lBLkYhwiWgH8EtRw+Dx2faxj2vD9
-        aCpY4U8UmixL5S4+SEJNGum6gsbCOb4=
-X-Google-Smtp-Source: ABdhPJyWMakOkCPgDdHyyiWNJctZi2ZIlMaOwmirsVQeJKtoNbYgQthINF9sT2RGvU4RY6kEYk+QZg==
-X-Received: by 2002:a1c:4c0a:: with SMTP id z10mr133730wmf.95.1607962907750;
-        Mon, 14 Dec 2020 08:21:47 -0800 (PST)
+        bh=ZmaFFlhRcNBXHdv7esqe3Jf3vYqKLnuvVwTH5JzTLmk=;
+        b=aOOyncsoBYQjFwQT+xq4+E7Z8rW44x4YVaJqswBU3HTM4DZsj7iRgcjI9joi82S2XG
+         g2q5YwjeehKeNJ2pKwXUfQ0nRfOxdlsWjv6vypGUn0g3MgUiINOatTjBMbTbu73k5GuZ
+         inlES6bJWaRtrnYo1vEVZFruilQRGPlJ1L39bJlFKIcQXryghw6r3b0bHEeQrwFAiPmH
+         bxncxuuMzRkBTBgD8it+gdnJ4FA0Xo/X4qAzkCEB3wxI70rG+PTd4YVmN5Q02B6sPWxx
+         mAVOC55yD4/vB1diCjtQBP3GefuLYOxuvB1dXHFtIm7eLS1AqmWMumc9CX68QdaQPjb9
+         JqQg==
+X-Gm-Message-State: AOAM5322VDFuWCdckfWJb0BlWJyBcBTCSt7sSvVK7JLq8gkgg1ZfCTvd
+        ze+dW2DqFvfNzfCcokfxv5Dzt9WkLhM=
+X-Google-Smtp-Source: ABdhPJz+jfM/rYAY9zXv3NSB9vYIF25V22oaquAo4H4Wx4wPyojyX/N6BOzgpgp2rlzz9JXj8BaiWg==
+X-Received: by 2002:a05:600c:2246:: with SMTP id a6mr28699292wmm.80.1607962906865;
+        Mon, 14 Dec 2020 08:21:46 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w189sm20214115wmg.31.2020.12.14.08.21.47
+        by smtp.gmail.com with ESMTPSA id t1sm33856791wro.27.2020.12.14.08.21.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Dec 2020 08:21:47 -0800 (PST)
-Message-Id: <15fff3dd0c48c301bfcb7fe335fa02fad1c686ab.1607962900.git.gitgitgadget@gmail.com>
+        Mon, 14 Dec 2020 08:21:46 -0800 (PST)
+Message-Id: <d20fab8d403851ff9247d8b6bb950927f72b2729.1607962900.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.812.v2.git.1607962900.gitgitgadget@gmail.com>
 References: <pull.812.git.1607542887.gitgitgadget@gmail.com>
         <pull.812.v2.git.1607962900.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 14 Dec 2020 16:21:35 +0000
-Subject: [PATCH v2 06/11] merge-ort: add implementation of both sides renaming
- identically
+Date:   Mon, 14 Dec 2020 16:21:34 +0000
+Subject: [PATCH v2 05/11] merge-ort: add basic outline for process_renames()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,76 +79,131 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Implement rename/rename(1to1) handling, i.e. both sides of history
-renaming a file but renaming the same way.  This code replaces the
-following from merge-recurisve.c:
+Add code which determines which kind of special rename case each rename
+corresponds to, but leave the handling of each type unimplemented for
+now.  Future commits will implement each one.
 
-  * all the 1to1 code in process_renames()
-  * the RENAME_ONE_FILE_TO_ONE case of process_entry()
-
-Also, there is some shared code from merge-recursive.c for multiple
-different rename cases which we will no longer need for this case (or
-other rename cases):
-
-  * handle_rename_normal()
-  * setup_rename_conflict_info()
-
-The consolidation of four separate codepaths into one is made possible
-by a change in design: process_renames() tweaks the conflict_info
-entries within opt->priv->paths such that process_entry() can then
-handle all the non-rename conflict types (directory/file, modify/delete,
-etc.) orthogonally.  This means we're much less likely to miss special
-implementation of some kind of combination of conflict types (see
-commits brought in by 66c62eaec6 ("Merge branch 'en/merge-tests'",
-2020-11-18), especially commit ef52778708 ("merge tests: expect improved
-directory/file conflict handling in ort", 2020-10-26) for more details).
-That, together with letting worktree/index updating be handled
-orthogonally in the merge_switch_to_result() function, dramatically
-simplifies the code for various special rename cases.
+There is some tenuous resemblance to merge-recursive's
+process_renames(), but comparing the two is very unlikely to yield any
+insights.  merge-ort's process_renames() is a bit complex and I would
+prefer if I could simplify it more, but it is far easier to grok than
+merge-recursive's function of the same name in my opinion.  Plus,
+merge-ort handles more rename conflict types than merge-recursive does.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ merge-ort.c | 98 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 97 insertions(+), 1 deletion(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index ebe275ef73c..4034ffcf501 100644
+index 10550c542b8..ebe275ef73c 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -674,14 +674,31 @@ static int process_renames(struct merge_options *opt,
- 		    !strcmp(oldpath, renames->queue[i+1]->one->path)) {
- 			/* Handle rename/rename(1to2) or rename/rename(1to1) */
- 			const char *pathnames[3];
-+			struct version_info merged;
-+			struct conflict_info *base, *side1, *side2;
-+			unsigned was_binary_blob = 0;
- 
- 			pathnames[0] = oldpath;
- 			pathnames[1] = newpath;
- 			pathnames[2] = renames->queue[i+1]->two->path;
- 
-+			base = strmap_get(&opt->priv->paths, pathnames[0]);
-+			side1 = strmap_get(&opt->priv->paths, pathnames[1]);
-+			side2 = strmap_get(&opt->priv->paths, pathnames[2]);
+@@ -647,7 +647,103 @@ static int handle_content_merge(struct merge_options *opt,
+ static int process_renames(struct merge_options *opt,
+ 			   struct diff_queue_struct *renames)
+ {
+-	die("Not yet implemented.");
++	int clean_merge = 1, i;
 +
-+			VERIFY_CI(base);
-+			VERIFY_CI(side1);
-+			VERIFY_CI(side2);
++	for (i = 0; i < renames->nr; ++i) {
++		const char *oldpath = NULL, *newpath;
++		struct diff_filepair *pair = renames->queue[i];
++		struct conflict_info *oldinfo = NULL, *newinfo = NULL;
++		struct strmap_entry *old_ent, *new_ent;
++		unsigned int old_sidemask;
++		int target_index, other_source_index;
++		int source_deleted, collision, type_changed;
 +
- 			if (!strcmp(pathnames[1], pathnames[2])) {
--				/* Both sides renamed the same way. */
--				die("Not yet implemented");
-+				/* Both sides renamed the same way */
-+				assert(side1 == side2);
-+				memcpy(&side1->stages[0], &base->stages[0],
-+				       sizeof(merged));
-+				side1->filemask |= (1 << MERGE_BASE);
-+				/* Mark base as resolved by removal */
-+				base->merged.is_null = 1;
-+				base->merged.clean = 1;
++		old_ent = strmap_get_entry(&opt->priv->paths, pair->one->path);
++		oldpath = old_ent->key;
++		oldinfo = old_ent->value;
++
++		new_ent = strmap_get_entry(&opt->priv->paths, pair->two->path);
++		newpath = new_ent->key;
++		newinfo = new_ent->value;
++
++		/*
++		 * diff_filepairs have copies of pathnames, thus we have to
++		 * use standard 'strcmp()' (negated) instead of '=='.
++		 */
++		if (i + 1 < renames->nr &&
++		    !strcmp(oldpath, renames->queue[i+1]->one->path)) {
++			/* Handle rename/rename(1to2) or rename/rename(1to1) */
++			const char *pathnames[3];
++
++			pathnames[0] = oldpath;
++			pathnames[1] = newpath;
++			pathnames[2] = renames->queue[i+1]->two->path;
++
++			if (!strcmp(pathnames[1], pathnames[2])) {
++				/* Both sides renamed the same way. */
++				die("Not yet implemented");
++
++				/* We handled both renames, i.e. i+1 handled */
++				i++;
++				/* Move to next rename */
++				continue;
++			}
++
++			/* This is a rename/rename(1to2) */
++			die("Not yet implemented");
++
++			i++; /* We handled both renames, i.e. i+1 handled */
++			continue;
++		}
++
++		VERIFY_CI(oldinfo);
++		VERIFY_CI(newinfo);
++		target_index = pair->score; /* from collect_renames() */
++		assert(target_index == 1 || target_index == 2);
++		other_source_index = 3 - target_index;
++		old_sidemask = (1 << other_source_index); /* 2 or 4 */
++		source_deleted = (oldinfo->filemask == 1);
++		collision = ((newinfo->filemask & old_sidemask) != 0);
++		type_changed = !source_deleted &&
++			(S_ISREG(oldinfo->stages[other_source_index].mode) !=
++			 S_ISREG(newinfo->stages[target_index].mode));
++		if (type_changed && collision) {
++			/* special handling so later blocks can handle this */
++			die("Not yet implemented");
++		}
++
++		assert(source_deleted || oldinfo->filemask & old_sidemask);
++
++		/* Need to check for special types of rename conflicts... */
++		if (collision && !source_deleted) {
++			/* collision: rename/add or rename/rename(2to1) */
++			die("Not yet implemented");
++		} else if (collision && source_deleted) {
++			/* rename/add/delete or rename/rename(2to1)/delete */
++			die("Not yet implemented");
++		} else {
++			/* a few different cases... */
++			if (type_changed) {
++				/* rename vs. typechange */
++				die("Not yet implemented");
++			} else if (source_deleted) {
++				/* rename/delete */
++				die("Not yet implemented");
++			} else {
++				/* normal rename */
++				die("Not yet implemented");
++			}
++		}
++
++		if (!type_changed) {
++			/* Mark the original as resolved by removal */
++			oldinfo->merged.is_null = 1;
++			oldinfo->merged.clean = 1;
++		}
++
++	}
++
++	return clean_merge;
+ }
  
- 				/* We handled both renames, i.e. i+1 handled */
- 				i++;
+ static int compare_pairs(const void *a_, const void *b_)
 -- 
 gitgitgadget
 
