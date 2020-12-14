@@ -2,89 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF668C4361B
-	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 19:43:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36E9BC4361B
+	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 19:50:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 95103224B1
-	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 19:43:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D283C22510
+	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 19:50:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2502639AbgLNTn0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Dec 2020 14:43:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37882 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2502558AbgLNTnY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Dec 2020 14:43:24 -0500
-Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com [IPv6:2607:f8b0:4864:20::242])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BA44C0613D6
-        for <git@vger.kernel.org>; Mon, 14 Dec 2020 11:42:44 -0800 (PST)
-Received: by mail-oi1-x242.google.com with SMTP id q25so20496473oij.10
-        for <git@vger.kernel.org>; Mon, 14 Dec 2020 11:42:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=D35EWQ1ebIenCbtPvK1J65nHSlt5NzgKqFX0LH22wgU=;
-        b=nr0OcJ4l7fysJdpvs49M4b+SQiSQye+7PyQCggPm1Zfi8IAqj0VX4t9WJ4LEAfDpOo
-         KmHfihGU10oCPWpfN6eVTusnm12Z9XAHvq35c5DoMLTGupEvGH4NO43SoTDBHM07WXgn
-         M/fE0f9MIMm4ckDvEcICeIsYoi9hlkyNdyi8+wkfsMHf3JVYvnP+6QLDrkEhQWzBMrpU
-         +azEg/Iw7fRR8ZwarMWvLwuJ4uHyTvQM8YQ0Ux664xcEB3pQNbFCmB5i0kytwuPOY47f
-         u6WJIfBcAN0zPX6SJfiBFyDmPyHHPZ1adx7KxvfbkF7MhXgd2cHH1UqcKopGm9reMsHW
-         ca5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=D35EWQ1ebIenCbtPvK1J65nHSlt5NzgKqFX0LH22wgU=;
-        b=RHV9ooxljuleTDic7EOOxhnhyuhmxLn/azLPowc9z4z32FRR4Uk8FwYkUKR9HaKOvL
-         KtNTmgevApTSNmY/9eaSLSPAnu8EP0kmLILo50B+qAgMbQlAqcbXpi27TlWnIAAC95vD
-         PFA5S6FGnLVbv6yqpo9Rhno79wsmor/j6joWQ1/tZIF3rK7w/TRAaoVNq0GB7+4R5Sx7
-         I8prGmsPdPm4Z4phOer8HXX4F3ySe41wVJQ6cuRHAzcujllbXQ25vaH7CR3q5ZI5CGyh
-         ozKUtCmOIC5BCc40GJzW6SNsnhaSbQKeevKb9St/iLN1w/dQ2hz28h07baiudScgfQO3
-         xRMw==
-X-Gm-Message-State: AOAM5306WhoGiUceG33O9dm6au9iim/wAwH8sqSeoGI9igTl24WjHuvz
-        ats6Qf9X50sxwNqxKXkxNOw=
-X-Google-Smtp-Source: ABdhPJzFJ60XX+QRVyZTMudCI/W45sxNImVdJsVlcBOX/aL3YSH+7g7kLLCDQwdsW+stsZqj/UACwg==
-X-Received: by 2002:aca:3cc5:: with SMTP id j188mr19615389oia.100.1607974963433;
-        Mon, 14 Dec 2020 11:42:43 -0800 (PST)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id o49sm4533927ota.51.2020.12.14.11.42.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Dec 2020 11:42:42 -0800 (PST)
-Date:   Mon, 14 Dec 2020 13:42:41 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>, avarab@gmail.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Message-ID: <5fd7c03160b1c_d3c9c20853@natae.notmuch>
-In-Reply-To: <20201214192534.3105508-1-jonathantanmy@google.com>
-References: <87blewwoil.fsf@evledraar.gmail.com>
- <20201214192534.3105508-1-jonathantanmy@google.com>
-Subject: Re: [PATCH] clone: in protocol v2, use remote's default branch
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S2502646AbgLNTuK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Dec 2020 14:50:10 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63734 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2502796AbgLNTt4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Dec 2020 14:49:56 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 61A8811A00F;
+        Mon, 14 Dec 2020 14:49:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=uUPJiHXI8XAyAiher6G5UCiYybE=; b=fzsdnG
+        thGrq9OgmnmhYMLuv7yg7OmDwQWaFa95uGQtaQOu7FJ94RlHxmO5T7qY+pxu0Qht
+        eWf5e4lyX2t+snW/b8uMLNbSd2/JIB9l0oEqDmGGqMLGY4Y6aHES6b1eeN+DDcN2
+        ogusynUobEDp0G8T1hXMONeKFSyj0KRP1XSKA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=omPZPDoK50cvwOUbPVMDFW1Z4Tr7w/Ok
+        3S2605p5VrRRjKBwD6VjQXuR2xQDBDVfKuavvCyzb2MiiRrsGelJyw062VpQIIvT
+        2Fj8JIoOI6j4F0wMCocuqBIivfFXjhSU5gGB0bhRWHCXor1jVWposK3wvdykPKYm
+        SB2emy0PSaI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5A2D311A00E;
+        Mon, 14 Dec 2020 14:49:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A907311A00D;
+        Mon, 14 Dec 2020 14:49:08 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Altmanninger <aclopte@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Unexpected behavior on diff -I<regex> --name-only
+References: <20201214190054.lrdllbpf6jfrz573@gmail.com>
+Date:   Mon, 14 Dec 2020 11:49:06 -0800
+In-Reply-To: <20201214190054.lrdllbpf6jfrz573@gmail.com> (Johannes
+        Altmanninger's message of "Mon, 14 Dec 2020 20:00:54 +0100")
+Message-ID: <xmqqeejsdv7x.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6E2D795C-3E45-11EB-8EE6-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan wrote:
-> > But shouldn't there at least be a corresponding "fetch" option? On init
-> > we'll create head, but "git fetch --clobber-my-idea-of-HEAD-with-remote
-> > ..."?
-> 
-> I think that it's OK for "clone" to create HEAD, but not OK for "fetch"
-> to modify HEAD.
+Johannes Altmanninger <aclopte@gmail.com> writes:
 
-Not the local HEAD, the remote HEAD.
+> Since v2.28.0-2-g296d4a94e7 (diff: add -I<regex> that ignores matching changes)
+> diff -I<regex> can be used to suppress hunks of only matching lines.
+> This interacts in a surprising way with --name-only, which lists
+> all changed files, regardless of whether they are filtered out by -I<regex>:
+>
+> 	git diff HEAD~ -I ''			# always empty
+> 	git diff HEAD~ -I '' --name-only	# not empty, "-I" does nothing
+>
+> It could be nice to only show names of files with matching hunks
+> (or reject this combination of options?).
 
-See my proposal to update the remote head in different scenarios:
+Interesting.  
 
-https://lore.kernel.org/git/20201118091219.3341585-1-felipe.contreras@gmail.com/
+This is not a new issue limited to -I at all.  If you did this:
 
--- 
-Felipe Contreras
+	$ echo "hello" >world
+	$ git add world ; git commit -m 'add world'
+	$ echo " hello" >world ; git add world
+	$ git diff -w --cached
+	$ git diff --name-only --cached
+	world
+	$ git diff --name-only -w --cached
+	world
+
+I think "--name-only", and perhaps other options, has too aggressive
+an optimization that takes advantage of the fact that we can tell if
+a path has changed or not without looking at the contents at all by
+looking at the object name recorded.  That optimization may have
+been valid until many newer and more expensive features came around,
+but not anymore.
+
+I think diff.c::flush_one_pair() needs to learn to pay attention to
+opt->diff_from_contents in its third branch where DIFF_FORMAT_NAME
+is handled.  I do not offhand remember if -I flips diff_from_contents
+bit, but I wouldn't be surprised if the recent change added the
+support for -I forgot to do so.
+
+Thanks.
+
+
+
+
+
+
+
+
+
