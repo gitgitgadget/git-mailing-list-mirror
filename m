@@ -4,146 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7094EC2BB48
-	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 17:54:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BB10C4361B
+	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 17:55:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3A6B922ADC
-	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 17:54:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1223622B2D
+	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 17:55:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730841AbgLORyk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Dec 2020 12:54:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45782 "EHLO
+        id S1731149AbgLORyr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Dec 2020 12:54:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730804AbgLORyL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Dec 2020 12:54:11 -0500
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7544C0617A7
-        for <git@vger.kernel.org>; Tue, 15 Dec 2020 09:53:30 -0800 (PST)
-Received: by mail-wr1-x443.google.com with SMTP id r3so20779519wrt.2
-        for <git@vger.kernel.org>; Tue, 15 Dec 2020 09:53:30 -0800 (PST)
+        with ESMTP id S1725973AbgLORyK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Dec 2020 12:54:10 -0500
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com [IPv6:2a00:1450:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEE7CC06179C
+        for <git@vger.kernel.org>; Tue, 15 Dec 2020 09:53:29 -0800 (PST)
+Received: by mail-wr1-x441.google.com with SMTP id w5so17007594wrm.11
+        for <git@vger.kernel.org>; Tue, 15 Dec 2020 09:53:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=nIuyIOARPhQtreLsEnoTwXZduaCDfrdPYxbtSn8C4DA=;
-        b=VujWLEm0JnACRGzpi40NjyqsKCnpVB+G09QDDdk35BeajVUZDWQl8iR6d+hDY27FLh
-         gGWcoU7m6qjm0cLIdleOBZXdAjx/7Lm2BkWzmQiCqD1BRS/re5FFbmSFw11kZGaEdxzN
-         lIUvWfrwiqYe9LTw6bd7Ttd45APsKtNejD2WHnkmeZNfkBispwM8DUaNAqodU6ZxRqK/
-         H0EuUCIf++N1GSDZbS3omwNkzZUgk260XJ9j460fEjU6OemOKBEFG0y3eQo8/8LzKpmH
-         ShncWBj9l/OkjG4BjqnfVMpHrZGNtmbxZNXSj19HAVnE5F9QPoosebEGDCHK8CY17IXf
-         gmVw==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=TFMSu/oqfHckzc8ycVrCxz8yn3r9KRTpZtLbUBGRZ3I=;
+        b=Bf+pGH/jcuU+DClT+YqqFLQEkwhwmjsC1yuyhzftHLRarVWQcjSESFnT69sY3DD3E0
+         7R6RfLUjJU87AFJjyDRqhNMc6Ixf3jyZG2Ej4wsazHM6r5OYYfNMNTANlnXS7f96hypE
+         o3UQoYbqYGNXGJElImZQsg5izo22eMuqvQc+PPSjKJxXcXstJDzfyZuSatAl25qsLAFY
+         zr1OQRBt9r9ykflc71/IGC/gX5hPTLqc07pTkZbFIMSv4VT7jDb47AZ5Y72D/gMomfzW
+         IOQM4i8svV9iavsdcPvaks9my3PyN9zwIHzsNgfdELRFSGpQkKlbca65q9Ta1EDBfJ+b
+         WgGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=nIuyIOARPhQtreLsEnoTwXZduaCDfrdPYxbtSn8C4DA=;
-        b=kmHDpm4FvIuQhNxSEyVKGml7BlFpQQoNa6aBRpSiTSG9HoNdCdnNCXHm9STGIRye0z
-         ngu0DWZEpQZ1ZCGYxwsYi/6qFCf5YEHkfO611jFkrUrcKZLUql+LJUPCEgYTOcgUs0qg
-         nGePRGpaikYewvJfmDUnwKFgSna/lFkiOY1/0F06tMTELazdov6PeeWwcESM/zS6ekmx
-         LfmGCYG+tkoI75fgYTHemsCRdpjYBu6Dt61Q8qaRenmOSRk0arg4sRx7GctshQHLCfC0
-         G8ADrSb0mxs9+5ef7ItJRQKJV+wpyHwxge3tHfe54vy7LooPDSjiiJyp1cexHLw23VXw
-         8jtQ==
-X-Gm-Message-State: AOAM531QJlsqgBlUWxN+tUvnazqrBg0RV9MltjUpzj/XWHiZi0iwE/u1
-        3pKhXCO9zwjv5E7vBB5vG7xEUtWjELk=
-X-Google-Smtp-Source: ABdhPJxRVqNBbGTP70TWmf/BItLI4eI2R5ysiMZy05huQjkz0YAhMh6IqQbrUfvjqdc+77PCZTrhIg==
-X-Received: by 2002:a5d:4f0e:: with SMTP id c14mr3894080wru.84.1608054809269;
-        Tue, 15 Dec 2020 09:53:29 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z15sm40351557wrv.67.2020.12.15.09.53.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=TFMSu/oqfHckzc8ycVrCxz8yn3r9KRTpZtLbUBGRZ3I=;
+        b=AW2btK/XfyMxQ5ipb/jKFFaAy7JLBOvGzhZCT4DlpsFLmPsQaQwebkOgL9Z3nGGBWW
+         uK3PoUi3Jwo8fkmwNiTZNe7ZRjoxaJfves27zHBp/+ZeGhE9kjlCxgZKa4ANHrGfBII5
+         52uBzdOHH7CMTH+6sL65anrmXoxNL7hN4ZZ7j5B7O0yDnLc9CfrxpDQPgCmqepVnt3sh
+         4BDf/nC23ZwZ6gash/PSmazF8aQW87ib81KQMBCYLKenUaKPni7piXpwcEhPxotY/1ZR
+         nWtcbM9xnwjQ5eQi3IUQ3M5bRkqXFC05XJ6UMjppJrBgLxx5TdxNsY2oEWV5FyIAteeM
+         xR7w==
+X-Gm-Message-State: AOAM532C/DBM+V5uSlOrX3/KLirKtdQS+S3MAvaIrQ6XPmD7aIU5+0LX
+        teyx1WJS835kZ93cby2wsJegun0LquY=
+X-Google-Smtp-Source: ABdhPJwwvnIROXniZCuLAvrzWzZWgua7PaBwiFgOST/bc14Q7Iky92qurIxL/sRO2XQDFFWfeeqPNw==
+X-Received: by 2002:adf:902d:: with SMTP id h42mr34348365wrh.175.1608054808489;
         Tue, 15 Dec 2020 09:53:28 -0800 (PST)
-Message-Id: <0b455bd6fe7dff72c1849eb8466b97b96b2b90a9.1608054807.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.814.git.1608054807.gitgitgadget@gmail.com>
-References: <pull.814.git.1608054807.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b14sm38394863wrx.77.2020.12.15.09.53.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Dec 2020 09:53:27 -0800 (PST)
+Message-Id: <pull.814.git.1608054807.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Dec 2020 17:53:25 +0000
-Subject: [PATCH 1/3] merge-ort: copy a few small helper functions from
- merge-recursive.c
+Date:   Tue, 15 Dec 2020 17:53:24 +0000
+Subject: [PATCH 0/3] merge-ort: implement recursive merges
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+This series depends on en/merge-ort-2 (it does NOT depend on en/merge-ort-3
+and can thus be reviewed/merged independently of it).
 
-In a subsequent commit, we will implement the traditional recursiveness
-that gave merge-recursive its name, namely merging non-unique
-merge-bases to come up with a single virtual merge base.  Copy a few
-helper functions from merge-recursive.c that we will use in the
-implementation.
+This short series adds handling of recursive merges (merging of multiple
+merge-bases to create a virtual merge base) to merge-ort. With this short
+series the number of test failures under GIT_TEST_MERGE_ALGORITHM=ort drops
+by 801 (from 1448 to 647).
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- merge-ort.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+Elijah Newren (3):
+  merge-ort: copy a few small helper functions from merge-recursive.c
+  merge-ort: make clear_internal_opts() aware of partial clearing
+  merge-ort: implement merge_incore_recursive()
 
-diff --git a/merge-ort.c b/merge-ort.c
-index 414e7b7eeac..05ba92c91a6 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -17,8 +17,10 @@
- #include "cache.h"
- #include "merge-ort.h"
- 
-+#include "alloc.h"
- #include "blob.h"
- #include "cache-tree.h"
-+#include "commit.h"
- #include "commit-reach.h"
- #include "diff.h"
- #include "diffcore.h"
-@@ -1348,6 +1350,34 @@ void merge_finalize(struct merge_options *opt,
- 
- /*** Function Grouping: helper functions for merge_incore_*() ***/
- 
-+static inline void set_commit_tree(struct commit *c, struct tree *t)
-+{
-+	c->maybe_tree = t;
-+}
-+
-+static struct commit *make_virtual_commit(struct repository *repo,
-+					  struct tree *tree,
-+					  const char *comment)
-+{
-+	struct commit *commit = alloc_commit_node(repo);
-+
-+	set_merge_remote_desc(commit, comment, (struct object *)commit);
-+	set_commit_tree(commit, tree);
-+	commit->object.parsed = 1;
-+	return commit;
-+}
-+
-+static struct commit_list *reverse_commit_list(struct commit_list *list)
-+{
-+	struct commit_list *next = NULL, *current, *backup;
-+	for (current = list; current; current = backup) {
-+		backup = current->next;
-+		current->next = next;
-+		next = current;
-+	}
-+	return next;
-+}
-+
- static void merge_start(struct merge_options *opt, struct merge_result *result)
- {
- 	/* Sanity checks on opt */
-@@ -1462,5 +1492,7 @@ void merge_incore_recursive(struct merge_options *opt,
- 			    struct commit *side2,
- 			    struct merge_result *result)
- {
-+	(void)reverse_commit_list;
-+	(void)make_virtual_commit;
- 	die("Not yet implemented");
- }
+ merge-ort.c | 133 +++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 126 insertions(+), 7 deletions(-)
+
+
+base-commit: c5a6f65527aa3b6f5d7cf25437a88d8727ab0646
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-814%2Fnewren%2Fort-recursive-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-814/newren/ort-recursive-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/814
 -- 
 gitgitgadget
-
