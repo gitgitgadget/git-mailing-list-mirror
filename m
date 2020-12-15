@@ -2,93 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63E6FC2BB48
-	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 23:21:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E97CDC4361B
+	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 01:28:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 25E3822512
-	for <git@archiver.kernel.org>; Mon, 14 Dec 2020 23:21:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 85A0221D42
+	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 01:28:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731611AbgLNXVd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Dec 2020 18:21:33 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59656 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726385AbgLNXVZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Dec 2020 18:21:25 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B4A9F11B6B2;
-        Mon, 14 Dec 2020 18:20:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=74Z8IIEcUivfJNCHDaVk7aIFedg=; b=Z5NloL
-        ho4StyUzd8GcDho7gBkTfzj8N+TeBOIt80eWDESWWsKbHufgK81ZSXTDt7iKbey/
-        hZMFT9yUlwIrQoIhCgRgUj66dCKaLqfDN6vHsDpEmqb1MLhHe2BWwvcP23DyWd8E
-        WVceGkS/JlByKWQ5mJZIvv+WdScuobkbnaEIg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=PtN8uftAMm5xQ4t6J9tZjRLFT9sIx8Hy
-        GaoFQW+o187xtdZrs7aOigbnxXMnoKiBIyxNtP4fL6UvBCGVjXOHONKgkqPD/ITT
-        n+sKJCswu+y2VasLU1dY7RkAlz2YRks8/LY59VtI7KnY/vblZEaxTLMEHOIQGnBd
-        E1vNU8KaJfE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id ACF7211B6B1;
-        Mon, 14 Dec 2020 18:20:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id F14AF11B6B0;
-        Mon, 14 Dec 2020 18:20:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
+        id S1727298AbgLOB20 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Dec 2020 20:28:26 -0500
+Received: from cloud.peff.net ([104.130.231.41]:60654 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726580AbgLOB20 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Dec 2020 20:28:26 -0500
+Received: (qmail 9980 invoked by uid 109); 15 Dec 2020 01:27:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 15 Dec 2020 01:27:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6241 invoked by uid 111); 15 Dec 2020 01:27:45 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 14 Dec 2020 20:27:45 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 14 Dec 2020 20:27:45 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v7 5/5] pull: display default warning only when non-ff
-References: <20201214202647.3340193-1-gitster@pobox.com>
-        <20201214202647.3340193-6-gitster@pobox.com>
-        <5fd7d82a9b6ab_d44af208bb@natae.notmuch>
-Date:   Mon, 14 Dec 2020 15:20:39 -0800
-In-Reply-To: <5fd7d82a9b6ab_d44af208bb@natae.notmuch> (Felipe Contreras's
-        message of "Mon, 14 Dec 2020 15:24:58 -0600")
-Message-ID: <xmqqmtyg9dq0.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+Subject: Re: [PATCH] clone: in protocol v2, use remote's default branch
+Message-ID: <X9gREadU/cxBYREY@coredump.intra.peff.net>
+References: <20201208013121.677494-1-jonathantanmy@google.com>
+ <20201211210508.2337494-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FB602636-3E62-11EB-89E7-D609E328BF65-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20201211210508.2337494-1-jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Fri, Dec 11, 2020 at 01:05:08PM -0800, Jonathan Tan wrote:
 
-> Junio C Hamano wrote:
->> @@ -1044,7 +1045,9 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
->>  	if (opt_rebase && merge_heads.nr > 1)
->>  		die(_("Cannot rebase onto multiple branches."));
->>  
->> -	if (rebase_unspecified && !opt_ff) {
->> +	can_ff = get_can_ff(&orig_head, &merge_heads.oid[0]);
->> +
->> +	if (rebase_unspecified && !opt_ff && !can_ff) {
->>  		if (opt_verbosity >= 0)
->>  			show_advice_pull_non_ff();
->>  	}
->
-> I strongly predict the conditionals will end up looking similar to:
->
->   if (!can_ff) {
->           if (rebase_unspecified && !opt_ff && opt_verbosity >= 0)
->                   show_advice_pull_non_ff();
->   }
->
-> But OK.
+> Subject: Re: [PATCH] clone: in protocol v2, use remote's default branch
+> 
+> When cloning an empty repository, a default branch is created. However,
+> it is named after the locally configured init.defaultBranch, not the
+> default branch of the remote repository.
 
-I may have failed to mention this in the cover letter, but I think
-the placement of opt_ff in this part of the logic needs to be
-rethought, so I strongly predict that this part will have to further
-change ;-)
+Your subject line puzzled me at first, because I thought we already did
+that. And indeed we do, but this is about adding the unborn case. I
+think this contributed to Ævar's confusion.
+
+Maybe:
+
+  Subject: clone: respect unborn remote HEAD
+
+  When cloning, we choose the default branch based on the remote HEAD.
+  But if there is no remote HEAD, we'll fall back to using our local
+  init.defaultBranch. Traditionally this hasn't been a big deal, because
+  everybody used "master" as the default. But these days it is likely to
+  cause confusion if the server and client implementations choose
+  different values (e.g., if the remote started with "main", we may
+  choose "master" locally, create commits there, and then the user is
+  surprised when they push to "master" and not "main").
+
+  To solve this...
+
+makes the current state more clear, as well as motivating why we care.
+
+It might also be worth breaking the patch up a bit. E.g., implement the
+capability in upload-pack, then infrastructure for the client to use the
+capability and surface the info to transport callers, and then finally
+surface it to in the program logic of ls-refs, then clone, etc.
+
+Not strictly necessary, but it make it easier to see what is being
+changed at each step.
+
+> Currently, symrefs that have unborn targets (such as in this case) are
+> not communicated by the protocol. Teach Git to advertise and support the
+> "unborn" feature in "ls-refs" (guarded by the lsrefs.unborn config).
+> This feature indicates that "ls-refs" supports the "unborn" argument;
+> when it is specified, "ls-refs" will send the HEAD symref with the name
+> of its unborn target.
+
+It's probably also worth mentioning that v0 won't get any support here,
+and why.
+
+-Peff
