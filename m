@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FA66C2BB9A
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E626C2BB48
 	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 08:47:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 241EC206C3
+	by mail.kernel.org (Postfix) with ESMTP id 4395A20702
 	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 08:47:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726985AbgLOIre (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Dec 2020 03:47:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45824 "EHLO
+        id S1727657AbgLOIr2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Dec 2020 03:47:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727637AbgLOIrF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Dec 2020 03:47:05 -0500
-Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 667ACC0617A7
-        for <git@vger.kernel.org>; Tue, 15 Dec 2020 00:46:25 -0800 (PST)
-Received: by mail-oi1-x243.google.com with SMTP id d203so1352858oia.0
-        for <git@vger.kernel.org>; Tue, 15 Dec 2020 00:46:25 -0800 (PST)
+        with ESMTP id S1727639AbgLOIrH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Dec 2020 03:47:07 -0500
+Received: from mail-oo1-xc42.google.com (mail-oo1-xc42.google.com [IPv6:2607:f8b0:4864:20::c42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30274C0617B0
+        for <git@vger.kernel.org>; Tue, 15 Dec 2020 00:46:27 -0800 (PST)
+Received: by mail-oo1-xc42.google.com with SMTP id j21so2047319oou.11
+        for <git@vger.kernel.org>; Tue, 15 Dec 2020 00:46:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=KYDiKYX/5IAMfGrlhEdxXBHLvJIRGCS8whMuAeHVwi4=;
-        b=YYWmotE234DNWoQwuw0zeKplEESpaeGFGqYhq+Mc1tJikAKg8zdy495Ne5Ofxrc7zc
-         sx6pKgYzkXuEUgEqVWiNjo1HbOaKCrnJSxxK/EmcOA+wmgGfPlT8ozhVZeSV0AgfNSOq
-         OP+/sanFfIK+lmMKXFGFs44HWqvfrLx/VWhix9UBB7m44YioL3jJKTu/QHNgWjgigLIZ
-         LewsBP5IPA7gum0WDUMPyFen5MTRR5l9WZt9l9UQARosQFVTKV9vZXvzMpamhGKt3/ka
-         OPlsJ0QBGOMG44BZjBzKicMqefflYlJL8wWRDk/MR7+2pO6dVfgdOmHrhYtMURcjHZml
-         2uPQ==
+        bh=KkYrVv2KHmTz7s4ZgMh7yIFtmkXt+jX3Cnc0G5u+1L8=;
+        b=Fi3oR8FhthsO+oz+7anY+k0TFaTRghb3Rc0YU5sexmp77EoasRjivtA0EH8d83Pj0q
+         iJg94utfRfSsfImwELVfUZ7/pcPJB/uGdJk9N4TN/eIJb0gXYBu1z2a8mkAhMV4idiGM
+         YkWZltlDcYtydcuM8kFLKR4rSV0odBHQckMd4x6Wf5rJpB1TtwfvqKlwiY5u3MbGXs4G
+         L+HOpi1XTwxZELyMLWu/WxgDLOwWBfacaM0du8MwH3e7e9iQ3EgyvzWjeEPZMCfjMLwp
+         yP6IJoFWVyl0Z9QQ2g5YpJz4dGRekwGjmKs3erDc4koiRkaEgJgV3y+lunEM+6rHxvM9
+         TZ+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=KYDiKYX/5IAMfGrlhEdxXBHLvJIRGCS8whMuAeHVwi4=;
-        b=r0+t287PmRxlsGOdHVSYtRVSGZB/J55THmrV9451iM7W5uBuT9+iJBTfJ6JVLgnQ1Y
-         tJkP8pP1s6hFOCBNMD4iq5S1BlS7P535aoi0Sh6ECKhpU8etFZb3BJSy2XjzRqWcl/bH
-         zRNIkeWRmyQditxoFn569avZa2IffAmhNMFnznhE50wN9bn9xWWxp/+8zT+XPjT2jMqH
-         vhZfWIWDhsLSRTeupDa11IpQeC3lEdJzoGOn7BBtYpD4DQHLgW5i4ZVhGCZS5Ccg//oV
-         DDBU5u+upMgR88GL5L3uuQrSpwZVOe3NpM8jxhge0YawGP/Vvx4mgrB+JnsfDRzZOX4G
-         wEZA==
-X-Gm-Message-State: AOAM532tEw/yO+iG86np27TlnfNJVF9Xmbvz2SaUFrK3b/Ms1Z2+EIGc
-        ArUemGIFI590TrFJ5K798hzspmhqPoMS4Q==
-X-Google-Smtp-Source: ABdhPJx9VMYK9U1vwVLAOhM68wdREkhjw28N7F1khWooQLDJnssui6pLyDIWT5CxHv8978fWfCWPdw==
-X-Received: by 2002:aca:b789:: with SMTP id h131mr12896286oif.83.1608021984540;
-        Tue, 15 Dec 2020 00:46:24 -0800 (PST)
+        bh=KkYrVv2KHmTz7s4ZgMh7yIFtmkXt+jX3Cnc0G5u+1L8=;
+        b=deZ240WfKyV1BbPvDPv4ADHE1OmJu4BYdvz1iTrrYXQnpORY36/aX3qx+mkHJ1UoFb
+         IHL5pvktZXtIDCArWc0wDIJy+M4aFDOnvJ7ZY4xl+lXsK0OkjK0hNaTlRV6/TVQu2FlR
+         xugeQg7IOit9RjvgSiZ83vW/eVHjF3dN0GQ92jX5yR7ajVRW5lgUx361FreLeGcUyNkm
+         FprRDUhWyOjZXfcqt1OidwBLgiLGGnGvoFNriUXME8RDhvh5M0v8nwGNFm+Uf5+Yrg2C
+         asLeqV8rESnwleT3hcFZ8LMOPqjDrs8drgWRKKSMe5MDUOQBEW81WYcpyuFPNWyjlRsN
+         F64g==
+X-Gm-Message-State: AOAM530lXOSevTK8GWjCn4kl8XzAHBEcD2TH5AEcIOsNyyis4k/iEo3T
+        9/+rKHzjr8LoC1vr11S9ds0a6YYVfdFvRA==
+X-Google-Smtp-Source: ABdhPJy+y7c9InlXpDFqlr/hU0X/nX66dADnDqDrNKa3FJ0PJFhpJJAAf4UCEodgkKx4BqFPtFBz0w==
+X-Received: by 2002:a4a:9c5:: with SMTP id 188mr12794810ooa.77.1608021986392;
+        Tue, 15 Dec 2020 00:46:26 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id e81sm4928519oia.30.2020.12.15.00.46.23
+        by smtp.gmail.com with ESMTPSA id t24sm4584105oou.4.2020.12.15.00.46.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Dec 2020 00:46:24 -0800 (PST)
+        Tue, 15 Dec 2020 00:46:25 -0800 (PST)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Elijah Newren <newren@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [RFC/PATCH 2/3] pull: improve default warning
-Date:   Tue, 15 Dec 2020 02:46:18 -0600
-Message-Id: <20201215084619.1631180-3-felipe.contreras@gmail.com>
+Subject: [RFC/PATCH 3/3] pull: cleanup autostash check
+Date:   Tue, 15 Dec 2020 02:46:19 -0600
+Message-Id: <20201215084619.1631180-4-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20201215084619.1631180-1-felipe.contreras@gmail.com>
 References: <20201215084619.1631180-1-felipe.contreras@gmail.com>
@@ -73,69 +73,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-According to feedback from GitHub trainers [1], most newcomers don't
-understand what a rebase is. So in the default warning we want to
-provide our users with a command that does the most sensible thing,
-fixes the divergence, gets rid of the warning, with the minimum mental
-effort, and happens to be the default:
+Currently "git pull --rebase" takes a shortcut in the case a
+fast-forward merge is possible; run_merge() is called with --ff-only.
 
-  git pull --no-rebase (later --merge)
+However, "git merge" didn't have an --autostash option, so, when "git
+pull --rebase --autostash" was called *and* the fast-forward merge
+shortcut was taken, then the pull failed.
 
-In addition, we don't want to start by recommending a permanent
-configuration, but a temporary solution so they start training their
-fingers and maybe learn how to do a rebase. So we start with the commands.
+This was fixed in commit f15e7cf5cc (pull: ff --rebase --autostash
+works in dirty repo, 2017-06-01) by simply skipping the fast-forward
+merge shortcut.
 
-Also, we need to be clear about what we mean by "specifying"; merge, or
-rebase.
+Later on "git merge" learned the --autostash option [a03b55530a
+(merge: teach --autostash option, 2020-04-07)], and so did "git pull"
+[d9f15d37f1 (pull: pass --autostash to merge, 2020-04-07)].
 
-Moreover, thanks to the previous patch now "git pull --help" explains
-what a fast-forward is, let's mention that reference.
+Therefore it's not necessary to skip the fast-forward merge shortcut
+anymore when called with --rebase --autostash.
 
-And finally, use --global in the configuration commands like we did with
-push.default.
+Let's always take the fast-forward merge shortcut by essentially
+reverting f15e7cf5cc.
 
-[1] https://lore.kernel.org/git/20130909201751.GA14437@sigill.intra.peff.net/
-
+Reviewed-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- builtin/pull.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ builtin/pull.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
 diff --git a/builtin/pull.c b/builtin/pull.c
-index e8927fc2ff..a766d9762c 100644
+index a766d9762c..42cd6c38d8 100644
 --- a/builtin/pull.c
 +++ b/builtin/pull.c
-@@ -927,18 +927,20 @@ static int get_can_ff(struct object_id *orig_head, struct object_id *orig_merge_
+@@ -949,7 +949,6 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 	struct oid_array merge_heads = OID_ARRAY_INIT;
+ 	struct object_id orig_head, curr_head;
+ 	struct object_id rebase_fork_point;
+-	int autostash;
+ 	int rebase_unspecified = 0;
+ 	int can_ff;
  
- static void show_advice_pull_non_ff(void)
- {
--	advise(_("Pulling without specifying how to reconcile divergent branches is\n"
--		 "discouraged. You can squelch this message by running one of the following\n"
--		 "commands sometime before your next pull:\n"
-+	advise(_("Pulling without specifying how to reconcile divergent branches is discouraged;\n"
-+		 "you need to specify if you want a merge, or a rebase.\n"
- 		 "\n"
--		 "  git config pull.rebase false  # merge (the default strategy)\n"
--		 "  git config pull.rebase true   # rebase\n"
--		 "  git config pull.ff only       # fast-forward only\n"
-+		 "  git pull --no-rebase # the default (merge)\n"
-+		 "  git pull --rebase\n"
- 		 "\n"
--		 "You can replace \"git config\" with \"git config --global\" to set a default\n"
--		 "preference for all repositories. You can also pass --rebase, --no-rebase,\n"
--		 "or --ff-only on the command line to override the configured default per\n"
--		 "invocation.\n"));
-+		 "You can squelch this message by running one of the following commands:\n"
-+		 "\n"
-+		 "  git config --global pull.rebase false  # merge\n"
-+		 "  git config --global pull.rebase true   # rebase\n"
-+		 "  git config --global pull.ff only       # fast-forward only\n"
-+		 "\n"
-+		 "If unsure, run \"git pull --no-rebase\".\n"
-+		 "Read \"git pull --help\" for more information."));
- }
+@@ -984,8 +983,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 	if (get_oid("HEAD", &orig_head))
+ 		oidclr(&orig_head);
  
- int cmd_pull(int argc, const char **argv, const char *prefix)
+-	autostash = config_autostash;
+ 	if (opt_rebase) {
++		int autostash = config_autostash;
+ 		if (opt_autostash != -1)
+ 			autostash = opt_autostash;
+ 
+@@ -1067,13 +1066,12 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 		     recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND) &&
+ 		    submodule_touches_in_range(the_repository, &upstream, &curr_head))
+ 			die(_("cannot rebase with locally recorded submodule modifications"));
+-		if (!autostash) {
+-			if (can_ff) {
+-				/* we can fast-forward this without invoking rebase */
+-				opt_ff = "--ff-only";
+-				ran_ff = 1;
+-				ret = run_merge();
+-			}
++
++		if (can_ff) {
++			/* we can fast-forward this without invoking rebase */
++			opt_ff = "--ff-only";
++			ran_ff = 1;
++			ret = run_merge();
+ 		}
+ 		if (!ran_ff)
+ 			ret = run_rebase(&newbase, &upstream);
 -- 
 2.29.2
 
