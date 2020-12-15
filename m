@@ -7,98 +7,104 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B05D4C4361B
-	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 03:23:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94316C4361B
+	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 03:35:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 85286206E5
-	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 03:23:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 67F8F207B3
+	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 03:35:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726241AbgLODXk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Dec 2020 22:23:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52706 "EHLO
+        id S1726597AbgLODez (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Dec 2020 22:34:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726883AbgLODXU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Dec 2020 22:23:20 -0500
-Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com [IPv6:2607:f8b0:4864:20::344])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0986C061793
-        for <git@vger.kernel.org>; Mon, 14 Dec 2020 19:22:40 -0800 (PST)
-Received: by mail-ot1-x344.google.com with SMTP id d8so18029479otq.6
-        for <git@vger.kernel.org>; Mon, 14 Dec 2020 19:22:40 -0800 (PST)
+        with ESMTP id S1726296AbgLODEj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Dec 2020 22:04:39 -0500
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com [IPv6:2607:f8b0:4864:20::244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22598C06179C
+        for <git@vger.kernel.org>; Mon, 14 Dec 2020 19:03:59 -0800 (PST)
+Received: by mail-oi1-x244.google.com with SMTP id w124so18638873oia.6
+        for <git@vger.kernel.org>; Mon, 14 Dec 2020 19:03:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=AJ1JZ5G6FdkLKsVmh4Id2OQfFQ3nlZ2j2aBovS+WVuI=;
-        b=snM13diXFxswTvv8K0dvH1jJPQSdtRNDrkHJ8PsDCilJBreMBI2WsxCPuMkItN3OCm
-         gipuFNE3vHYH799ixfiA7uveiTQ6zvzA64fBSlvC8CqrlbU1V7by88JWU7A6Hi74bKOX
-         leZtoQc4nqUXk4Uq55NfEbWweOgZCiedPVPD+PTtwp8ResMmGKcP4DW/k2UTPzcBODVM
-         EBIYOA3AKQ6e4OzA783SUxzUFA9JfKu28od0IrNJh9umrPMfodtuoREZa4Pw0yHQKV/l
-         XreCXY2BKVenl8KDRkmzu6Axnq8BZV5A++qK5ctDF2NqnA6W3opyxG3DMQ4hXJxa1I6O
-         ZoCg==
+        bh=/5MH8D6HfE6JufCaRO5bk/WI4WyQw1SoLodWrzWzXHk=;
+        b=nAzkrZgLM2Oh++jxhT3byuiHNoJay89tgxvsnNeC6OPnbnPRlhDsfjuSh8z10QcjVn
+         x1gSKnV3AlNI3w3FuiQ3eXy9JKr0SYrgQYoUBog7+f1PtSzqGrIOcpZMdr/9RnT8FLYl
+         snXJKF3gX1cq679LJuXYxVCIbSdbf5u0ZhJme8287e8tgYodeGbCzToKZELo/6ZQSORh
+         Lk9rHXaRU/A2Cj+XbtR7p3Jm4YECWv3+hki9TCxPQwm0WcyvW4Ts1l30ArqL/k6bJPke
+         yNROjni5T7J9gzlUMYMaijMVfpfqDS60EZRiXhNuEIi3oyrxbve7VoFEFOR+Z1Or4v+u
+         N6qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=AJ1JZ5G6FdkLKsVmh4Id2OQfFQ3nlZ2j2aBovS+WVuI=;
-        b=WOO69X0/vgWyGGllalOkBsLfC7X+VMWd6+FdVeBnqlapy/A79G3yFg++z63q1w7xYV
-         WbbuFbXSX0TH3r69vN4qAwsR8sragtJ1WllYRVQCqJ5yTrTA0FDJgJKdL641V/TEDziY
-         /J0I7n0y3JXohp0BsFrNn342XHpeSn3cTxlC40dicxs+wsEqrkeuOmLj0YuE2NBO9q5b
-         kW5JfhJAy8Ww0NupJ+vZnbl2Z/VMoMkvuLvCLffjAe54lCirfGvOn/s4eUWtwLKp3gs3
-         vuQL6ivsLfS6GkMjiMea20eX1+35A1uufpFs5lGLvDTc/LiAGnx8RxEChyS1Dnh54+2c
-         D/6g==
-X-Gm-Message-State: AOAM532mj5JSRovSv70I0lvGLDZcHpaTlts0ywlvpGaEjeynfsDuaLLt
-        47ZqSIxs8tteDTJr3u0TAGw=
-X-Google-Smtp-Source: ABdhPJwFxcjopw9Mymx1JxmAx9V1k3eqXMrc57fcTEkZ/hnew/DvYREYjizqOQlf/zEzrQI86HvH5Q==
-X-Received: by 2002:a9d:7f81:: with SMTP id t1mr22207766otp.166.1608002560204;
-        Mon, 14 Dec 2020 19:22:40 -0800 (PST)
+        bh=/5MH8D6HfE6JufCaRO5bk/WI4WyQw1SoLodWrzWzXHk=;
+        b=WgF7dXWnAUgC9FvH2zo7OiQWaGpPWlr0da6iJ7vhsXfUQ6tbFIq4kwVG5oNHH4RDGv
+         DM6yV2VysZy6KpEYKijIlVj+DkZhfSrrqLjBdP3hWzD2kwa/Dtfv2sC5h7yPvjdEUyrO
+         U1/VL292+FT3LCT21N/yfsNY1Ekn1Xtl55jmayKlpsuvQFLB7nhmMhuQHwpa3TarLd3t
+         mHx1UuJFitiwU1+OWMr3cUgbauCAr3GJez93Rv4qHn/+vfjB8cKyYAaXgaTtP7E4luhc
+         aev/aPAVEdWJGRPS7d8DLAe20m2tHVUnAWoPF9TU2my/xFs5b2uXR4s0RNdne1pc9mX/
+         6YLw==
+X-Gm-Message-State: AOAM533yJqYXCe5X8V615/W49MP8x99MIiuatZ6yFZ1UhXL1oFzG2ttY
+        xs+xmFFhdDj2t39lD0+ZWaw=
+X-Google-Smtp-Source: ABdhPJxurOmQJx73avS5qDSxZgy2l0bypPpQEQJ8Hkeqw9RFWqwtfa22en2vxI+hJYWniH7PPqdLSg==
+X-Received: by 2002:aca:4a84:: with SMTP id x126mr19945321oia.111.1608001438620;
+        Mon, 14 Dec 2020 19:03:58 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id g200sm4702242oib.19.2020.12.14.19.22.39
+        by smtp.gmail.com with ESMTPSA id i1sm100988otr.81.2020.12.14.19.03.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Dec 2020 19:22:39 -0800 (PST)
-Date:   Mon, 14 Dec 2020 21:22:38 -0600
+        Mon, 14 Dec 2020 19:03:57 -0800 (PST)
+Date:   Mon, 14 Dec 2020 21:03:56 -0600
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Message-ID: <5fd82bfe20d9c_d7c48208da@natae.notmuch>
-In-Reply-To: <878s9zx2ul.fsf@evledraar.gmail.com>
-References: <20201208013121.677494-1-jonathantanmy@google.com>
- <20201211210508.2337494-1-jonathantanmy@google.com>
- <87blewwoil.fsf@evledraar.gmail.com>
- <xmqqim94e4et.fsf@gitster.c.googlers.com>
- <878s9zx2ul.fsf@evledraar.gmail.com>
-Subject: Re: [PATCH] clone: in protocol v2, use remote's default branch
+To:     Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Aaron Schrab <aaron@schrab.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Message-ID: <5fd8279ce0696_d7c482087@natae.notmuch>
+In-Reply-To: <X9gT57SAHzGm3ET2@coredump.intra.peff.net>
+References: <20201209065537.48802-1-felipe.contreras@gmail.com>
+ <20201209065537.48802-2-felipe.contreras@gmail.com>
+ <X9GbIG9vZbK1pEoi@camp.crustytoothpaste.net>
+ <CAMP44s33J6F60W=2Yd2WSGE78VT0XBkewi8m3unXvathBH2TOQ@mail.gmail.com>
+ <X9Lf1p++YktzZMWe@camp.crustytoothpaste.net>
+ <X9gT57SAHzGm3ET2@coredump.intra.peff.net>
+Subject: Re: [PATCH v2 1/2] Add project-wide .vimrc configuration
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Jeff King wrote:
+> On Fri, Dec 11, 2020 at 02:56:22AM +0000, brian m. carlson wrote:
 
-> To borrow from Felipe Contreras's reply in the side-thread "I expect th=
-e
-> branch name to be chosen by the person who created that repository".
-> =
+>   - it doesn't suggest any actions that might be bad practices. I agree
+>     that the instructions for auto-loading this .vimrc are more
+>     complicated than necessary and might have security implications.
+>     Carrying a file in contrib/vim that says "copy this to ~/.vim/foo"
+>     or even "copy these lines to your ~/.vimrc" seems a lot safer. And
+>     it makes it easier for people who prefer to adapt the config to
+>     their own setup.
+> 
+> So I'm not opposed to carrying some vim config, but I think it's best to
+> focus on simplicity and providing human-readable instructions, rather
+> than ad-hoc plugin infrastructure.
 
-> I suppose this comes down to a mental model of what it means to have
-> "created a repository". When I click "create repo" on those popular
-> hosting sites (e.g. github & gitlab) and clone it I was expecting it to=
+Generally I would agree, but do you know what such instructions would look like?
 
-> just be a shorthand init + a URL in my config (and refspecs...).
+In particular what instructions would look like for a person that
+contributes to more than 3 projects with different C code-style.
 
-Indeed. But then it would be *them* taking away agency from the user (by
-not allowing the user to choose the name of the branch), not us.
+I can assure they are anything but human-readable.
 
-In Spanish we have a saying: "don't give extra change", which is similar =
-to
-the lawyery advice: "don't volunteer [information]".
+Cheers.
 
-Let's not volunteer user complaints. Let GitHub take some of those.
-
--- =
-
-Felipe Contreras=
+-- 
+Felipe Contreras
