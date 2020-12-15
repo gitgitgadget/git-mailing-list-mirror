@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63C40C4361B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95A3EC2BB48
 	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 18:33:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2D8B2227C3
+	by mail.kernel.org (Postfix) with ESMTP id 668A622B47
 	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 18:33:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731667AbgLOScl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Dec 2020 13:32:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51234 "EHLO
+        id S1731562AbgLOSct (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Dec 2020 13:32:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731252AbgLOS3b (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1731267AbgLOS3b (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 15 Dec 2020 13:29:31 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34048C0611C5
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC5F1C0611CA
         for <git@vger.kernel.org>; Tue, 15 Dec 2020 10:28:16 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id c5so17197952wrp.6
+Received: by mail-wr1-x436.google.com with SMTP id m5so20823301wrx.9
         for <git@vger.kernel.org>; Tue, 15 Dec 2020 10:28:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=jqrshys1PBZBm3tZpHK86UWzCXBVH+6N8C7lohnC76k=;
-        b=Isk7qSbm+47mHJsEF6XGNrmSS+VTQVjFxcEjXIkah6P7iPDpcCnDjCrdWDoVYAiiHX
-         azCUtY531GIUp+nfEvWOFxDKg0RuP6jAtKbPYU8fyUCnswSbFrzI8x+cUCCSK73RjvhF
-         yrQKdqFJSGbvG6gfkPSKU3B2q32PcPCrj3coZvvvWFh0u7w4TnGu2L5GBy/O+bp98wds
-         hw+F9uxxSKQoG7BO68KLJc2QkctlUeiD6dZrOiyp8GzF62KS0iXbh5pSzFk3Avdz587z
-         4eLjed9nakcL09m000M9H7VZpZgoS2har3GaRtfon6ex2CAeP8h9lW/HNyPLTJS+fYFg
-         Rzaw==
+        bh=9dXUSfk4gXDbJgWZJ+YVJrGIa/oWkxkwmFfnDNWUNoI=;
+        b=obA2UbWBb0kAy6qMpGHy4xFTh+SV9F+L+b0whgeP3+pNzAYEz/XT+Yedi+70DGmU6H
+         pv1+42vgGpi4fRo3HioPaQmY/ayMNbrDrFs7eDBCZrl/XSIfD2x05krx0KpF0ScrOhCR
+         lYj3vSR3LHBhEaxzOHXK7VNSm3iyy7+qQDl9wbPqXvMLcdFo1ye7qNpU1wMkwptmI7VI
+         VLHk55hsFGis5+XADqRwbT0VTk6nW/6y77koijhjRyUPvr3X7eer0QcNvoRSUL5Xk4oq
+         QcEGW0YWuV2VkpskdAOC9RM7MLH1Y3JnyBjzhkSBrNVVbqMhDc7QTPStGCGCd4RPRslc
+         OChg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=jqrshys1PBZBm3tZpHK86UWzCXBVH+6N8C7lohnC76k=;
-        b=DoATyscG6gvNvoGRGqejin8WOdBRyECCh3+CBtCZSYc1ZqmpruP9Dj87w3Tyspl2dn
-         HT2+nA02DVOoMSzcfpBGXTU9pi/i61vAnbvPXQRvhfLNiZpQs89Q7v7aedJhsHQRvjAa
-         jq4pO6zbveYlAXZl3V4XSFn4JoThzBupxwEaEoERfEtQ9U8ZHMqGbTs8E8wBq1exNxdD
-         XM8UmGLjMk/1QNKiHHN9EFqLgzhOyNQm4biW605mfPfqEm9n/YX36YyWiW9rbuPIFiEe
-         JJ421jMORUC3XUpQVcoOydtXi5w7tDVvKakjjZTCrWhXP344L0EeSlWbY2MDakG9vOKj
-         6jAw==
-X-Gm-Message-State: AOAM530+XExe6UAaFAa6PaOGmv6MhNMWrhdoLGPk0H95kq7sz4CoxFX0
-        O5PhEk4YKx9UxGi+kAuytY3PLFflFP8=
-X-Google-Smtp-Source: ABdhPJxi2CCCwmDOSjxlt3kg75LxraT3Uk54eij/z5IPmKYF/a8W+oB6vlSlyoEpLx/KN7SJClGt7g==
-X-Received: by 2002:adf:fb05:: with SMTP id c5mr6058121wrr.69.1608056894473;
-        Tue, 15 Dec 2020 10:28:14 -0800 (PST)
+        bh=9dXUSfk4gXDbJgWZJ+YVJrGIa/oWkxkwmFfnDNWUNoI=;
+        b=oiwTnxRnlhhjznzv9okm5H3x7T3XydTBDznPPONTGvbIh5Afoc1ZuMSkKg0AsVKkOi
+         t2U6eKwBuagsEGMZsIOEChREl3qa5MMdGaVC21Q5Vr/BbHsB4l5HeptHRx5KStb89xzu
+         OPnZg37scmylYPpLrRB8XuxrXSXH9zflp2g7lAYABP7e8r9y5yt1Bb+Z1NAjEfTxX81K
+         otnEzi5YGk08Bw5y4re9FrAC/rc69uzsPdxGUFr62LI9qNRD8chmvyjzCc9Fdbr1LS6A
+         R2w9VOvT1a5XoQLYYPE1oh7g2WS7XwqNCefixaqnPGH+XgSypTnUaFPT6y86duGfd2k7
+         LoMQ==
+X-Gm-Message-State: AOAM533AaPhsUHE2DH6FdVWP+n67v2B+lwokOhl8UA/UMBXwz/OiFMj8
+        cusJbZlqjxfbwsmKzKMuMPJ/8SL0Kr4=
+X-Google-Smtp-Source: ABdhPJw7tQG2PQC4mezMUbDnFw2HZWVjrsBTjyn548Ni2ghYRaaoYw4PqbJ2czwxUitIKD1blQdCfw==
+X-Received: by 2002:adf:fd0c:: with SMTP id e12mr33786397wrr.61.1608056895389;
+        Tue, 15 Dec 2020 10:28:15 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q73sm39341506wme.44.2020.12.15.10.28.13
+        by smtp.gmail.com with ESMTPSA id t10sm38218819wrp.39.2020.12.15.10.28.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 15 Dec 2020 10:28:14 -0800 (PST)
-Message-Id: <d37e2626c30b03ecd5d091e0e1860144a1c0283b.1608056886.git.gitgitgadget@gmail.com>
+Message-Id: <6b79da5e8a40e768b91d0742aff2919a0095a3f9.1608056886.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.812.v3.git.1608056886.gitgitgadget@gmail.com>
 References: <pull.812.v2.git.1607962900.gitgitgadget@gmail.com>
         <pull.812.v3.git.1608056886.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Dec 2020 18:28:02 +0000
-Subject: [PATCH v3 07/11] merge-ort: add implementation of both sides renaming
- differently
+Date:   Tue, 15 Dec 2020 18:28:03 +0000
+Subject: [PATCH v3 08/11] merge-ort: add implementation of rename/delete
+ conflicts
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,19 +80,19 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Implement rename/rename(1to2) handling, i.e. both sides of history
-renaming a file and rename it differently.  This code replaces the
-following from merge-recurisve.c:
+Implement rename/delete conflicts, i.e. one side renames a file and the
+other deletes the file.  This code replaces the following from
+merge-recurisve.c:
 
-  * all the 1to2 code in process_renames()
-  * the RENAME_ONE_FILE_TO_TWO case of process_entry()
-  * handle_rename_rename_1to2()
+  * the code relevant to RENAME_DELETE in process_renames()
+  * the RENAME_DELETE case of process_entry()
+  * handle_rename_delete()
 
 Also, there is some shared code from merge-recursive.c for multiple
 different rename cases which we will no longer need for this case (or
 other rename cases):
 
-  * handle_file_collision()
+  * handle_change_delete()
   * setup_rename_conflict_info()
 
 The consolidation of five separate codepaths into one is made possible
@@ -108,104 +108,103 @@ That, together with letting worktree/index updating be handled
 orthogonally in the merge_switch_to_result() function, dramatically
 simplifies the code for various special rename cases.
 
-To be fair, there is a _slight_ tweak to process_entry() here to make
-sure that the two different paths aren't marked as clean but are left in
-a conflicted state.  So process_renames() and process_entry() aren't
-quite entirely orthogonal, but they are pretty close.
+To be fair, there is a _slight_ tweak to process_entry() here, because
+rename/delete cases will also trigger the modify/delete codepath.
+However, we only want a modify/delete message to be printed for a
+rename/delete conflict if there is a content change in the renamed file
+in addition to the rename.  So process_renames() and process_entry()
+aren't quite fully orthogonal, but they are pretty close.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 58 ++++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 55 insertions(+), 3 deletions(-)
+ merge-ort.c | 48 ++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 40 insertions(+), 8 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index da3715baa63..19477cfae60 100644
+index 19477cfae60..a10c3f5046f 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -676,6 +676,7 @@ static int process_renames(struct merge_options *opt,
- 			const char *pathnames[3];
- 			struct version_info merged;
- 			struct conflict_info *base, *side1, *side2;
-+			unsigned was_binary_blob = 0;
+@@ -657,6 +657,7 @@ static int process_renames(struct merge_options *opt,
+ 		unsigned int old_sidemask;
+ 		int target_index, other_source_index;
+ 		int source_deleted, collision, type_changed;
++		const char *rename_branch = NULL, *delete_branch = NULL;
  
- 			pathnames[0] = oldpath;
- 			pathnames[1] = newpath;
-@@ -706,7 +707,58 @@ static int process_renames(struct merge_options *opt,
- 			}
- 
- 			/* This is a rename/rename(1to2) */
--			die("Not yet implemented");
-+			clean_merge = handle_content_merge(opt,
-+							   pair->one->path,
-+							   &base->stages[0],
-+							   &side1->stages[1],
-+							   &side2->stages[2],
-+							   pathnames,
-+							   1 + 2 * opt->priv->call_depth,
-+							   &merged);
-+			if (!clean_merge &&
-+			    merged.mode == side1->stages[1].mode &&
-+			    oideq(&merged.oid, &side1->stages[1].oid))
-+				was_binary_blob = 1;
-+			memcpy(&side1->stages[1], &merged, sizeof(merged));
-+			if (was_binary_blob) {
-+				/*
-+				 * Getting here means we were attempting to
-+				 * merge a binary blob.
-+				 *
-+				 * Since we can't merge binaries,
-+				 * handle_content_merge() just takes one
-+				 * side.  But we don't want to copy the
-+				 * contents of one side to both paths.  We
-+				 * used the contents of side1 above for
-+				 * side1->stages, let's use the contents of
-+				 * side2 for side2->stages below.
-+				 */
-+				oidcpy(&merged.oid, &side2->stages[2].oid);
-+				merged.mode = side2->stages[2].mode;
+ 		old_ent = strmap_get_entry(&opt->priv->paths, pair->one->path);
+ 		oldpath = old_ent->key;
+@@ -779,6 +780,15 @@ static int process_renames(struct merge_options *opt,
+ 			/* special handling so later blocks can handle this */
+ 			die("Not yet implemented");
+ 		}
++		if (source_deleted) {
++			if (target_index == 1) {
++				rename_branch = opt->branch1;
++				delete_branch = opt->branch2;
++			} else {
++				rename_branch = opt->branch2;
++				delete_branch = opt->branch1;
 +			}
-+			memcpy(&side2->stages[2], &merged, sizeof(merged));
-+
-+			side1->path_conflict = 1;
-+			side2->path_conflict = 1;
++		}
+ 
+ 		assert(source_deleted || oldinfo->filemask & old_sidemask);
+ 
+@@ -790,13 +800,26 @@ static int process_renames(struct merge_options *opt,
+ 			/* rename/add/delete or rename/rename(2to1)/delete */
+ 			die("Not yet implemented");
+ 		} else {
+-			/* a few different cases... */
 +			/*
-+			 * TODO: For renames we normally remove the path at the
-+			 * old name.  It would thus seem consistent to do the
-+			 * same for rename/rename(1to2) cases, but we haven't
-+			 * done so traditionally and a number of the regression
-+			 * tests now encode an expectation that the file is
-+			 * left there at stage 1.  If we ever decide to change
-+			 * this, add the following two lines here:
-+			 *    base->merged.is_null = 1;
-+			 *    base->merged.clean = 1;
-+			 * and remove the setting of base->path_conflict to 1.
++			 * a few different cases...start by copying the
++			 * existing stage(s) from oldinfo over the newinfo
++			 * and update the pathname(s).
 +			 */
-+			base->path_conflict = 1;
-+			path_msg(opt, oldpath, 0,
-+				 _("CONFLICT (rename/rename): %s renamed to "
-+				   "%s in %s and to %s in %s."),
-+				 pathnames[0],
-+				 pathnames[1], opt->branch1,
-+				 pathnames[2], opt->branch2);
++			memcpy(&newinfo->stages[0], &oldinfo->stages[0],
++			       sizeof(newinfo->stages[0]));
++			newinfo->filemask |= (1 << MERGE_BASE);
++			newinfo->pathnames[0] = oldpath;
+ 			if (type_changed) {
+ 				/* rename vs. typechange */
+ 				die("Not yet implemented");
+ 			} else if (source_deleted) {
+ 				/* rename/delete */
+-				die("Not yet implemented");
++				newinfo->path_conflict = 1;
++				path_msg(opt, newpath, 0,
++					 _("CONFLICT (rename/delete): %s renamed"
++					   " to %s in %s, but deleted in %s."),
++					 oldpath, newpath,
++					 rename_branch, delete_branch);
+ 			} else {
+ 				/* normal rename */
+ 				die("Not yet implemented");
+@@ -1332,12 +1355,21 @@ static void process_entry(struct merge_options *opt,
+ 		modify_branch = (side == 1) ? opt->branch1 : opt->branch2;
+ 		delete_branch = (side == 1) ? opt->branch2 : opt->branch1;
  
- 			i++; /* We handled both renames, i.e. i+1 handled */
- 			continue;
-@@ -1291,13 +1343,13 @@ static void process_entry(struct merge_options *opt,
+-		path_msg(opt, path, 0,
+-			 _("CONFLICT (modify/delete): %s deleted in %s "
+-			   "and modified in %s.  Version %s of %s left "
+-			   "in tree."),
+-			 path, delete_branch, modify_branch,
+-			 modify_branch, path);
++		if (ci->path_conflict &&
++		    oideq(&ci->stages[0].oid, &ci->stages[side].oid)) {
++			/*
++			 * This came from a rename/delete; no action to take,
++			 * but avoid printing "modify/delete" conflict notice
++			 * since the contents were not modified.
++			 */
++		} else {
++			path_msg(opt, path, 0,
++				 _("CONFLICT (modify/delete): %s deleted in %s "
++				   "and modified in %s.  Version %s of %s left "
++				   "in tree."),
++				 path, delete_branch, modify_branch,
++				 modify_branch, path);
++		}
+ 	} else if (ci->filemask == 2 || ci->filemask == 4) {
+ 		/* Added on one side */
  		int side = (ci->filemask == 4) ? 2 : 1;
- 		ci->merged.result.mode = ci->stages[side].mode;
- 		oidcpy(&ci->merged.result.oid, &ci->stages[side].oid);
--		ci->merged.clean = !ci->df_conflict;
-+		ci->merged.clean = !ci->df_conflict && !ci->path_conflict;
- 	} else if (ci->filemask == 1) {
- 		/* Deleted on both sides */
- 		ci->merged.is_null = 1;
- 		ci->merged.result.mode = 0;
- 		oidcpy(&ci->merged.result.oid, &null_oid);
--		ci->merged.clean = 1;
-+		ci->merged.clean = !ci->path_conflict;
- 	}
- 
- 	/*
 -- 
 gitgitgadget
 
