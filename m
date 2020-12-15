@@ -2,155 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F21F5C4361B
-	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 21:43:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2948FC4361B
+	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 21:45:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B995822B47
-	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 21:43:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EAEFB22CBB
+	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 21:45:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730659AbgLOVnL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Dec 2020 16:43:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53148 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730266AbgLOVl4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Dec 2020 16:41:56 -0500
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com [IPv6:2607:f8b0:4864:20::1041])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2EB7C0613D6
-        for <git@vger.kernel.org>; Tue, 15 Dec 2020 13:41:14 -0800 (PST)
-Received: by mail-pj1-x1041.google.com with SMTP id z12so338613pjn.1
-        for <git@vger.kernel.org>; Tue, 15 Dec 2020 13:41:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=G1EshF5G1UBdpvjIV0c7HLorPlArb/d3TDyWWSH9CLg=;
-        b=BS1Beb21zMVpFz1KegZPS/dHm5lWDNIew+PhiVsZKSw9gY9NbZ59+21w9MOL09eoaW
-         rD/JEoSKaUPfayqH3Fd230vy5zZ5YZsILobOZK+UgyJBFgnPHV2mlcueeLSYSkqyyy6y
-         aS4qV33QdelgDnc9xhSOaMbTt/9JTbjr0J/RNn5E12MAEcMkJFPZwhXQ6XeSsnt6TfXR
-         A/kqo45FAL7mVVuKHPyr8dWvqaeczKK/st3Sj26OpwnQneb6jrCfslSOhVXCY8V+ucha
-         4zvakwNUyfs1QjlWGtzuPzLjgXPbIZ8VASWFLG08PLaJHif4/4rYQ4hJGAJYnIIcFEdO
-         TIwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=G1EshF5G1UBdpvjIV0c7HLorPlArb/d3TDyWWSH9CLg=;
-        b=JrJKH6hGcXqih2BmeF19uTxZLW5eLjQe63D/XJZBlc+0uZJVOiSY58XPgFRBH1y3au
-         gNhMaFrwgGUYaypFZTxezICmgsmY74IZxUmSS1SX+ursxWEaqZgHwe8EueKeeRdfbvXP
-         8ptSgXgggF4rV97CPUJUf5H5dPTUm2ivKPA1XjcNmdSGagPSG5XBas3eBN81TN2gZbuA
-         XUvwbH7Rtl1pap7WZVCy55eyJC3mdNWdy9Qn0ebQyt+M2vJ9LZbX5OOjylARsvHrHnJV
-         6QUg1mBlLI/xiQomHoZMtINKh8RBgB+tFHIcfP+XX6SNvPQ7kusQbY9yGU+HRupmuAnA
-         f0Ww==
-X-Gm-Message-State: AOAM532jWPRb0oNmVelxJaVwOnA6T7ySjpqC2wUDvn8LMxXc8MO2zEpr
-        J9shzsrinYebjgX843h1/MamDhe+boNRWg==
-X-Google-Smtp-Source: ABdhPJwcxbhRk5REAdLGBa7yomL1l6QnbfgiYxX76ie6n/AM3k8REsaD71unZzH2kUldUgmIgIULew==
-X-Received: by 2002:a17:90a:bf88:: with SMTP id d8mr673197pjs.102.1608068474288;
-        Tue, 15 Dec 2020 13:41:14 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
-        by smtp.gmail.com with ESMTPSA id t23sm56672pfc.0.2020.12.15.13.41.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Dec 2020 13:41:13 -0800 (PST)
-Date:   Tue, 15 Dec 2020 13:41:09 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 08/17] hook: add 'run' subcommand
-Message-ID: <20201215214109.GD3783238@google.com>
-References: <20201205014607.1464119-1-emilyshaffer@google.com>
- <20201205014607.1464119-9-emilyshaffer@google.com>
- <23cb3575-7706-45a6-7a50-0fc9ef850b9f@gmail.com>
+        id S1730989AbgLOVpG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Dec 2020 16:45:06 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62406 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728176AbgLOVow (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Dec 2020 16:44:52 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6633D115D1A;
+        Tue, 15 Dec 2020 16:44:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qWkDCW2gY5YfC2OalEzS2lfuFe4=; b=YsdWIy
+        8j2cYvULWrhBIXt1MCGgFJ9tk57i134TXYHUpmBiEDFnkTY2u1GxW8oq+SbpplFR
+        n3r1ts+ECH7til8JEkHwstoUb7+6HB0VX9OMNPc4s/E6XweAlU4LUptuYEwlkY3e
+        PhWOCKxyFBg9i3uwFjXlt1ZhRrB/3TVqORtmk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=s2CrGOB7D3K9SlfVmkmupOnXde7XHMkD
+        SLJuLeme0v44B3bmodR7of9kTu6R3XOssEFsLzaaGaJKyiwYraMN/z9BdsDqDxBH
+        Ua5nMqYVC4zWMRRsN22N9fE9f0Th2Bc7riw/JefHcBNlosazsJmtlJvxlwSMb1Vb
+        r/qE5f1XF1g=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5E216115D19;
+        Tue, 15 Dec 2020 16:44:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A5F5C115D18;
+        Tue, 15 Dec 2020 16:44:07 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Shourya Shukla <periperidip@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+        liu.denton@gmail.com, christian.couder@gmail.com,
+        kaartic.sivaraam@gmail.com
+Subject: Re: [PATCH v3 0/3] submodule: port subcommand add from shell to C
+References: <20201214231939.644175-1-periperidip@gmail.com>
+Date:   Tue, 15 Dec 2020 13:44:05 -0800
+In-Reply-To: <20201214231939.644175-1-periperidip@gmail.com> (Shourya Shukla's
+        message of "Tue, 15 Dec 2020 04:49:36 +0530")
+Message-ID: <xmqqlfdy7niy.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <23cb3575-7706-45a6-7a50-0fc9ef850b9f@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: A8B5606A-3F1E-11EB-8001-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 11, 2020 at 10:15:26AM +0000, Phillip Wood wrote:
-> 
-> Hi Emily
-> 
-> On 05/12/2020 01:45, Emily Shaffer wrote:
-> > In order to enable hooks to be run as an external process, by a
-> > standalone Git command, or by tools which wrap Git, provide an external
-> > means to run all configured hook commands for a given hook event.
-> > 
-> > For now, the hook commands will run in config order, in series. As
-> > alternate ordering or parallelism is supported in the future, we should
-> > add knobs to use those to the command line as well.
-> > 
-> > As with the legacy hook implementation, all stdout generated by hook
-> > commands is redirected to stderr. Piping from stdin is not yet
-> > supported.
-> > 
-> > Legacy hooks (those present in $GITDIR/hooks) are run at the end of the
-> > execution list. For now, there is no way to disable them.
-> > 
-> > Users may wish to provide hook commands like 'git config
-> > hook.pre-commit.command "~/linter.sh --pre-commit"'. To enable this, the
-> > contents of the 'hook.*.command' and 'hookcmd.*.command' strings are
-> > first split by space or quotes into an argv_array, then expanded with
-> > 'expand_user_path()'.
-> 
-> I'm a bit confused by this last paragraph, the docs below say we pass the
-> string to the shell and that's what the implementation seems to do. If we're
-> running a lot of hooks then maybe it would be worth using split_cmdline()
-> and expand_user_path() rather than invoking the shell for each hook we run.
+Shourya Shukla <periperidip@gmail.com> writes:
 
-Yeah, I think you are right that the commit message is stale. I had some
-trouble getting things to work correctly with split_cmdline() and
-expand_user_path(), so I'd prefer to run with shell.
+>     3. In the following segment:
+>         /*
+>          * NEEDSWORK: In a multi-working-tree world, this needs to be
+>          * set in the per-worktree config.
+>          */
+>         if (!git_config_get_string("submodule.active", &var) && var) {
+>
+>         There was a comment: "What if this were a valueless true
+>         ("[submodule] active\n" without "= true")?  Wouldn't get_string()
+>         fail?"
+>
+>         I was under the impression that even if the above failed, it
+>         will not really affect the big picture since at the we will set
+>         'submodule.name.active" as true irrespective of the above value.
+>         Is this correct?
 
-> 
-> I'm afraid I've only had time to skip the patch, there are a couple of minor
-> comments below.
+Let's see what kind of value the "submodule.active" variable is
+meant to be set to.  Documentation/config/submodule.txt has this:
 
-No problem. Thanks for having a look.
+    submodule.active::
+            A repeated field which contains a pathspec used to match against a
+            submodule's path to determine if the submodule is of interest to git
+            commands. See linkgit:gitsubmodules[7] for details.
 
-> > +static int should_include_hookdir(const char *path, enum hookdir_opt cfg)
-> > +{
-> > +	struct strbuf prompt = STRBUF_INIT;
-> > +	/*
-> > +	 * If the path doesn't exist, don't bother adding the empty hook and
-> > +	 * don't bother checking the config or prompting the user.
-> > +	 */
-> > +	if (!path)
-> > +		return 0;
-> > +
-> > +	switch (cfg)
-> > +	{
-> > +		case hookdir_no:
-> 
-> Style nit: we normally use uppercase for constants and enums.
+It definitely is a string value, and making it a valueless true is
+an error in the configuration.  I wonder if we want to diagnose such
+an error, or can we just pretend we didn't see it and keep going?
 
-OK. Thanks - will fix where it's introduced and update subsequent
-patches.
-
-> 
-> > +			return 0;
-> > +		case hookdir_unknown:
-> > +			fprintf(stderr,
-> > +				_("Unrecognized value for 'hook.runHookDir'. "
-> > +				  "Is there a typo? "));
-> 
-> What happens at the moment if core.hooksPath does not exist?
-
-When core.hooksPath does not exist then $GIT_DIR/hooks/ is used instead.
-My setup currently doesn't have $GIT_DIR/hooks/ and runs happily. That
-bit of logic (core.hooksPath or $GIT_DIR/hooks) is done in
-run-command.h:find_hook() so I don't worry about it manually here.
-
-However, your comment caused me to investigate what happens when
-core.hooksPath DOES exist - and I found a bug. Because the 'git hook'
-builtin doesn't call the default configuration callback, I miss
-core.hooksPath hooks during 'git hook list' - but not during hooks
-invoked during regular Git process runs. Very confusing :) So thanks for
-the hint.
-
- - Emily
+Also the "var" (one of the values set for this multi-valued
+variable) is never used in the body of the "if" statement.  The
+other user of "submodule.active" in module_init() seems to use
+config_get_value_multi() on it.  The new code may deserve a comment
+to explain why that is OK to (1) grab just a single value out of the
+multi-valued variable, and (2) not even look at its value.
