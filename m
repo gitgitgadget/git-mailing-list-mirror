@@ -2,260 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FCA0C4361B
-	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 22:34:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0871AC2BB48
+	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 23:05:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3887222582
-	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 22:34:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BF5AE22D2C
+	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 23:05:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729816AbgLOWdl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Dec 2020 17:33:41 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:57065 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726899AbgLOWdZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Dec 2020 17:33:25 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 91B9D11630C;
-        Tue, 15 Dec 2020 17:32:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=o7twrcAYKTSp9ag2vVdCkiCtnX4=; b=fyV60v
-        6UvTvrMMgjuzd9J0MrOSmUmtWFfv15LTS0DWoWB+vG3KNv7awhOYuv+ba6Mhy3rm
-        69hv5u9NslIKuRQQYfawiR+FLnYtqgwaNVBC5eY0+CZsBaJXIKJiYu1o+3mUH+VK
-        dX6PIiaKrRH0mE9DVr/GVLzENLngW9INPkQ6w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=v3FDNET8p9TiSSQ5w3D0xJB3pDVyEguQ
-        Wt5HGNPW39SwWljZs8O9qupZMUIWtvzDzoid7IAu0lUg6GimFMv3t2+oL7maMuOH
-        qNiWwAa/BoADo93q4EgivdQQXLCCx1FaL/wOdXTbyCfes9/JQCeSDlTUwV47e6od
-        5AQ6wekg5XA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8B59611630B;
-        Tue, 15 Dec 2020 17:32:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B898011630A;
-        Tue, 15 Dec 2020 17:32:36 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "Daniel C. Klauer" <daniel.c.klauer@web.de>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>, git@vger.kernel.org
-Subject: Re: bug report: "git pack-redundant --all" crash in minimize()
-References: <dc410ef1-fc05-162e-ed4e-c843e0bc285d@web.de>
-        <X9j+nuzjiYyw/vQx@coredump.intra.peff.net>
-Date:   Tue, 15 Dec 2020 14:32:34 -0800
-In-Reply-To: <X9j+nuzjiYyw/vQx@coredump.intra.peff.net> (Jeff King's message
-        of "Tue, 15 Dec 2020 13:21:18 -0500")
-Message-ID: <xmqq8s9y7la5.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1730759AbgLOXFF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Dec 2020 18:05:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38516 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730813AbgLOXEZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Dec 2020 18:04:25 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04A82C0613D6
+        for <git@vger.kernel.org>; Tue, 15 Dec 2020 15:03:45 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id b9so5124322ejy.0
+        for <git@vger.kernel.org>; Tue, 15 Dec 2020 15:03:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=3EuazkXaNnmRiNYbnroCJ3gwNZc0BWpZXP3j25bUljc=;
+        b=b9XO/FdcPU+UENBeyhxvaKVi6PA6RsHKRLyAfXDMSWZUY/2Hi4YjMADoV3153N27lf
+         wmkNbZkCAOyJTVFXPcmmM7JZhFp/SXhrR+YnP4AjyHTEIXD3HkBb/bfFZOHlmlQx9iYy
+         OWjaCNvXX8QoRZN6WYtScTGek8CBNu00c2rWqTt4L3/EFz9OH2JUminCi45vbWAd0RK8
+         9fN/p5pePTMXwmFRG1IHjA2wIobLJDzTKGFRAaMDJI/K+uKBNvaCIc9hYQxgUCED1Hfu
+         PRfKtRws98sNvfFuPKylYowVbY1hmnO+OaZeUKM81vKmn/57Z0dSB084cOoI6mlzy0QT
+         HPUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=3EuazkXaNnmRiNYbnroCJ3gwNZc0BWpZXP3j25bUljc=;
+        b=IISuzK/G7kcUIz5/RJMdo92GPYhR5LxzTNOXrDnXRK0Hkoe+vDbiw/Pu0u6kk703tH
+         9f3CREn31tWHyK8EfG9gWE1MEMpaMbgSdeytnfndow9a6B51gMMRmJ4Oycp82N3rQ5Vr
+         LLB4/E/JiVulUM4996ltWjJcD5AmyaJuyh+7z1aaF0yd0hZi89sLHOgPivXJ1fYU7V7N
+         8j54EbKgWTMBtiKsWtitfigWyc1zjoMNFxYufjZimKujEGCdUjXcjTItebZUE0wr4zHk
+         hf7MaQuRuc43D2wOvXxf0ewj5Tpl6gtaPIPNT2r+njM0Ame0hhNgz8XdhmQ0BtTNrHD4
+         p/7w==
+X-Gm-Message-State: AOAM5318A4LH94P6i5PAnLis8EotCrVpSGlSHwAPKck8dOuZ1nRlHL/X
+        axLP78HxoQ+QYUQqskNl6fQEBU50vj6U6A==
+X-Google-Smtp-Source: ABdhPJxsdUu1AY+uJFxIW0c9cdbfODtM3d8X8uF75OeL5gcbekD7U4vj5XM4zzRX0MrBqRfytIAyOQ==
+X-Received: by 2002:a17:906:7090:: with SMTP id b16mr29149032ejk.76.1608073423584;
+        Tue, 15 Dec 2020 15:03:43 -0800 (PST)
+Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
+        by smtp.gmail.com with ESMTPSA id e19sm20239186edr.61.2020.12.15.15.03.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Dec 2020 15:03:42 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Stuart MacDonald <stuartm.coding@gmail.com>
+Cc:     git@vger.kernel.org, Raphael Stolt <raphael.stolt@gmail.com>,
+        Sebastian Schuberth <sschuberth@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [Bug report] includeIf config is not displayed in normal
+ directories
+References: <CAPQE4+qq11W9VzftJ6y+cbdJ1x64c8Astjwd4z4M-oc5hv1jeA@mail.gmail.com>
+        <F55DC360-9C1E-45B9-B8BA-39E1001BD620@gmail.com>
+        <20170511234259.gnbr6aiu26oqysxo@sigill.intra.peff.net>
+        <CACBZZX7-Gw7G7yY=ah6AQCJKzWKB002iAo6RNJwZmvMRe4Pd+w@mail.gmail.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.13
+In-reply-to: <CAPQE4+qq11W9VzftJ6y+cbdJ1x64c8Astjwd4z4M-oc5hv1jeA@mail.gmail.com>
+Date:   Wed, 16 Dec 2020 00:03:41 +0100
+Message-ID: <875z52wu2a.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 6EA73978-3F25-11EB-AA29-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> We had a discussion not too long ago[1] about whether we should
-> deprecate and remove pack-redundant, as it's not generally useful. I'm
-> curious if you have any more context on why it's used in that tool.
+On Tue, Dec 15 2020, Stuart MacDonald wrote:
+
+> Hello,
 >
-> -Peff
+> I've seen this thread:
+> https://public-inbox.org/git/F55DC360-9C1E-45B9-B8BA-39E1001BD620@gmail.com/t/#u
+
+[I took the liberty of CC-ing the original thread participants & adding
+the Message-Id's to the "References" header, hopefully the archive will
+thread it and this together for future spelunking]
+
+> and respectfully disagree with the conclusion. Conditionally included
+> configuration can contain items like core.sshCommand that are required
+> for git clone while in a normal non-git directory. These should be
+> displayed properly so users know what configuration they are operating
+> with.
 >
-> [1] https://lore.kernel.org/git/20200825172214.GC1414394@coredump.intra.peff.net/
+> Also, conditionally included config is acted upon despite not being
+> displayed. This makes tracking down problems much more difficult.
+>
+> Further, most complaints online are about user.name and user.email not
+> being displayed correctly. If those items are in ~/.gitconfig, then
+> they are displayed in a normal non-git directory by normal git config
+> commands. This makes conditionally included configuration display
+> inconsistent with regular configuration display. Inconsistency is bad
+> and should be fixed.
+>
+> See 'git bugreport' attached for further information, reproduction steps, etc.
 
-Hmm, it seems that we didn't follow through.
+As the person with the last reply in that old thread & only a vague
+recollection of it until I re-read it now: please don't take a "why
+would you want this" question as dismissive of the use-case, but in
+invite to tease out some of the nuances.
 
-I do want to learn from the answer you just asked above, but in the
-meantime, here is to save future work of digging the archive for me ;-)
+It's often easy to vaguely conceptualize a feature, but the hard work is
+dealing with all the edge cases & emergent properties of something like
+new IncludeIf semantics.
 
-Thanks.
+There's two interesting questions here: Is the current feature buggy (or
+just has surprised but ultimately consistent & correct semantics), and
+could we have some new IncludeIf use-case that covers use-case Y, where
+now we can only do X?
 
--- >8 --
-Subject: [PATCH] pack-redundant: gauge the usage before proposing its removal
+Junio covered that in more detail in his reply.
 
-The subcommand is unusably slow and the reason why nobody reports it
-as a performance bug is suspected to be the absense of users.  Let's
-show a big message that asks the user to tell us that they still
-care about the command when an attempt is made to run the command,
-with an escape hatch to override it with a command line option.
+Neither you nor anyone reading this from the archive later should read
+that thread (or this one) as some refusal of a feature that does Y.
 
-In a few releases, we may turn it into an error and keep it for a
-few more releases before finally removing it (during the whole time,
-the plan to remove it would be interrupted by end user raising hand).
+Whether we can have that ultimately depends on whether someone's going
+to invest the time in coming up with patches for it, and in writing
+those patches will either figure out all the expected & unexpected edge
+cases involved & get past them, or not.
 
-Reviewed-by: Taylor Blau <me@ttaylorr.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/pack-redundant.c  | 13 +++++++++++++
- t/t5323-pack-redundant.sh | 28 +++++++++++++++-------------
- 2 files changed, 28 insertions(+), 13 deletions(-)
-
-diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-index 3e70f2a4c1..d3b5ee8364 100644
---- a/builtin/pack-redundant.c
-+++ b/builtin/pack-redundant.c
-@@ -554,6 +554,7 @@ static void load_all(void)
- int cmd_pack_redundant(int argc, const char **argv, const char *prefix)
- {
- 	int i;
-+	int i_still_use_this = 0;
- 	struct pack_list *min = NULL, *red, *pl;
- 	struct llist *ignore;
- 	struct object_id *oid;
-@@ -580,12 +581,24 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix)
- 			alt_odb = 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "--i-still-use-this")) {
-+			i_still_use_this = 1;
-+			continue;
-+		}
- 		if (*arg == '-')
- 			usage(pack_redundant_usage);
- 		else
- 			break;
- 	}
- 
-+	if (!i_still_use_this) {
-+		fputs(_("'git pack-redundant' is nominated for removal.\n"
-+			"If you still use this command, please add an extra\n"
-+			"option, '--i-still-use-this', on the command line\n"
-+			"and let us know you still use it by sending an e-mail\n"
-+			"to <git@vger.kernel.org>.  Thanks.\n"), stderr);
-+	}
-+
- 	if (load_all_packs)
- 		load_all();
- 	else
-diff --git a/t/t5323-pack-redundant.sh b/t/t5323-pack-redundant.sh
-index 6b4d1ca353..2dd2d67b9e 100755
---- a/t/t5323-pack-redundant.sh
-+++ b/t/t5323-pack-redundant.sh
-@@ -39,6 +39,8 @@ relationship between packs and objects is as follows:
- master_repo=master.git
- shared_repo=shared.git
- 
-+git_pack_redundant='git pack-redundant --i-still-use-this'
-+
- # Create commits in <repo> and assign each commit's oid to shell variables
- # given in the arguments (A, B, and C). E.g.:
- #
-@@ -154,7 +156,7 @@ test_expect_success 'master: no redundant for pack 1, 2, 3' '
- 		EOF
- 	(
- 		cd "$master_repo" &&
--		git pack-redundant --all >out &&
-+		$git_pack_redundant --all >out &&
- 		test_must_be_empty out
- 	)
- '
-@@ -192,7 +194,7 @@ test_expect_success 'master: one of pack-2/pack-3 is redundant' '
- 		cat >expect <<-EOF &&
- 			P3:$P3
- 			EOF
--		git pack-redundant --all >out &&
-+		$git_pack_redundant --all >out &&
- 		format_packfiles <out >actual &&
- 		test_cmp expect actual
- 	)
-@@ -231,7 +233,7 @@ test_expect_success 'master: pack 2, 4, and 6 are redundant' '
- 			P4:$P4
- 			P6:$P6
- 			EOF
--		git pack-redundant --all >out &&
-+		$git_pack_redundant --all >out &&
- 		format_packfiles <out >actual &&
- 		test_cmp expect actual
- 	)
-@@ -266,7 +268,7 @@ test_expect_success 'master: pack-8 (subset of pack-1) is also redundant' '
- 			P6:$P6
- 			P8:$P8
- 			EOF
--		git pack-redundant --all >out &&
-+		$git_pack_redundant --all >out &&
- 		format_packfiles <out >actual &&
- 		test_cmp expect actual
- 	)
-@@ -284,9 +286,9 @@ test_expect_success 'master: clean loose objects' '
- test_expect_success 'master: remove redundant packs and pass fsck' '
- 	(
- 		cd "$master_repo" &&
--		git pack-redundant --all | xargs rm &&
-+		$git_pack_redundant --all | xargs rm &&
- 		git fsck &&
--		git pack-redundant --all >out &&
-+		$git_pack_redundant --all >out &&
- 		test_must_be_empty out
- 	)
- '
-@@ -304,7 +306,7 @@ test_expect_success 'setup shared.git' '
- test_expect_success 'shared: all packs are redundant, but no output without --alt-odb' '
- 	(
- 		cd "$shared_repo" &&
--		git pack-redundant --all >out &&
-+		$git_pack_redundant --all >out &&
- 		test_must_be_empty out
- 	)
- '
-@@ -343,7 +345,7 @@ test_expect_success 'shared: show redundant packs in stderr for verbose mode' '
- 			P5:$P5
- 			P7:$P7
- 			EOF
--		git pack-redundant --all --verbose >out 2>out.err &&
-+		$git_pack_redundant --all --verbose >out 2>out.err &&
- 		test_must_be_empty out &&
- 		grep "pack$" out.err | format_packfiles >actual &&
- 		test_cmp expect actual
-@@ -356,9 +358,9 @@ test_expect_success 'shared: remove redundant packs, no packs left' '
- 		cat >expect <<-EOF &&
- 			fatal: Zero packs found!
- 			EOF
--		git pack-redundant --all --alt-odb | xargs rm &&
-+		$git_pack_redundant --all --alt-odb | xargs rm &&
- 		git fsck &&
--		test_must_fail git pack-redundant --all --alt-odb >actual 2>&1 &&
-+		test_must_fail $git_pack_redundant --all --alt-odb >actual 2>&1 &&
- 		test_cmp expect actual
- 	)
- '
-@@ -386,7 +388,7 @@ test_expect_success 'shared: create new objects and packs' '
- test_expect_success 'shared: no redundant without --alt-odb' '
- 	(
- 		cd "$shared_repo" &&
--		git pack-redundant --all >out &&
-+		$git_pack_redundant --all >out &&
- 		test_must_be_empty out
- 	)
- '
-@@ -417,7 +419,7 @@ test_expect_success 'shared: no redundant without --alt-odb' '
- test_expect_success 'shared: one pack is redundant with --alt-odb' '
- 	(
- 		cd "$shared_repo" &&
--		git pack-redundant --all --alt-odb >out &&
-+		$git_pack_redundant --all --alt-odb >out &&
- 		format_packfiles <out >actual &&
- 		test_line_count = 1 actual
- 	)
-@@ -454,7 +456,7 @@ test_expect_success 'shared: ignore unique objects and all two packs are redunda
- 			Px1:$Px1
- 			Px2:$Px2
- 			EOF
--		git pack-redundant --all --alt-odb >out <<-EOF &&
-+		$git_pack_redundant --all --alt-odb >out <<-EOF &&
- 			$X
- 			$Y
- 			$Z
--- 
-2.30.0-rc0-186-g20447144ec
-
+But it's not a "no" until that point (and not even then, maybe we can
+keep the general idea of Y, but have Z which is mostly the same & works
+for most people), it's just "nobody's really worked on it yet".
