@@ -2,133 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F0CFC4361B
-	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 02:23:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9473C4361B
+	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 02:34:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2ECCA2084D
-	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 02:23:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 99ADC20782
+	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 02:34:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727120AbgLOCXX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Dec 2020 21:23:23 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57758 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727077AbgLOCXB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Dec 2020 21:23:01 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AAE1F9651F;
-        Mon, 14 Dec 2020 21:22:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=GcPxHIyUd85Q
-        1S2yaoQ5UNUCpbQ=; b=g26WudLaHN6dUtJglS9lngVwH3U7UqKQqQYpkRKVPL0q
-        63jkYt1EdWD7zVh4Ax04htKZTLNUS12P6EFBvjao63g0UO8QFQ3Y0Cyi0ZxXPGmy
-        bPrgzmgwYA8lMoBdlJHgtbZc3g6CDAEcuUZ6G6dCirwR83J3bVE1WIQL4g1JWuY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=S2evZA
-        di9fZotGaezYdqu+vtD2finiyIwDRfUn3kfKGnbg15OkYfSNGGgPGQbGCIb3LHJu
-        sQHs3pybDD5KZ1uf8C9fJVO7zz2Jwk8le3PMAdhGn88+wUygisIx0/VzCI6z6VvK
-        47vcjHL6Rlbhb0nRHL3SLKBfs+P0I/+gCjW8M=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A20EF9651E;
-        Mon, 14 Dec 2020 21:22:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2C7999651D;
-        Mon, 14 Dec 2020 21:22:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] clone: in protocol v2, use remote's default branch
-References: <20201208013121.677494-1-jonathantanmy@google.com>
-        <20201211210508.2337494-1-jonathantanmy@google.com>
-        <87blewwoil.fsf@evledraar.gmail.com>
-        <xmqqim94e4et.fsf@gitster.c.googlers.com>
-        <878s9zx2ul.fsf@evledraar.gmail.com>
-Date:   Mon, 14 Dec 2020 18:22:17 -0800
-In-Reply-To: <878s9zx2ul.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Tue, 15 Dec 2020 02:41:38 +0100")
-Message-ID: <xmqqim93ajvq.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727697AbgLOCcV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Dec 2020 21:32:21 -0500
+Received: from cloud.peff.net ([104.130.231.41]:60750 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727621AbgLOCcP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Dec 2020 21:32:15 -0500
+Received: (qmail 11402 invoked by uid 109); 15 Dec 2020 02:31:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 15 Dec 2020 02:31:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6950 invoked by uid 111); 15 Dec 2020 02:31:32 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 14 Dec 2020 21:31:32 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 14 Dec 2020 21:31:31 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?Q?V=C3=ADt?= Ondruch <vondruch@redhat.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        "Theodore Y . Ts'o" <tytso@mit.edu>,
+        John Keeping <john@keeping.me.uk>,
+        Richard Hansen <rhansen@rhansen.org>,
+        "Brian M. Carlson" <sandals@crustytoothpaste.net>,
+        "W. Trevor King" <wking@tremily.us>
+Subject: Re: [PATCH v2 02/14] pull: improve default warning
+Message-ID: <X9ggAxk/z0D9Qom+@coredump.intra.peff.net>
+References: <xmqqlfe99yvy.fsf@gitster.c.googlers.com>
+ <CA+P7+xp=UGd0iK8uLxnqH0iycrxo--8on3d0Z+jsuyhpV-fVew@mail.gmail.com>
+ <xmqq360h8286.fsf@gitster.c.googlers.com>
+ <CAMP44s3KCoDfRXzarJw5AE7UsY-=eP6GbHzdDcdrs2rsw5tL+w@mail.gmail.com>
+ <xmqqy2i86ok1.fsf@gitster.c.googlers.com>
+ <CAMP44s13YFZeOMz6V5sPdOnLXD-v3aQZiP7vvXXNfQLZP4Puwg@mail.gmail.com>
+ <CABPp-BGZcmHhge7JnM12baL_86yV-+7z4kkvFwUUrP+db8QD8Q@mail.gmail.com>
+ <xmqqy2i6w45c.fsf@gitster.c.googlers.com>
+ <CAMP44s3NNDL+zJjaukV9D2dJyU=ugSrnWz9o-whO9hKnBTxAow@mail.gmail.com>
+ <xmqqtussirsl.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5A9C30AE-3E7C-11EB-BC20-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqtussirsl.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Thu, Dec 10, 2020 at 11:17:01PM -0800, Junio C Hamano wrote:
 
-> I.e. this feature seems like a candidate to be exposed by something lik=
-e
-> by a ls-remote flag if you'd like to do an init/config/fetch. AFAIK the
-> only way to do it is to mock a "clone" with GIT_TRACE_PACKET or get the
-> information out-of-bounds.
+> You want to let the user express: "I do not want to choose either
+> rebase or merge.  I want 'pull' to fail when it needs to deal with
+> non-ff history.  But I do not need to be told about command line
+> option and configuration every time."
+> 
+> I said I don't (I view that disabling half the "git pull" just a
+> safe fallback behaviour until the user chooses between merge and
+> rebase), but if we wanted to offer it as a valid choice to users, we
+> can do so.  We just make it possible to squelch the latter two parts
+> of the three-part message---you leave pull.rebase unconfigured and
+> squelch the latter two parts of the message, and you got the "stop
+> me, I do not merge or rebase, but don't even tell me how to further
+> configure" already.
 
-Yes, I think the updated protocol should be able to help adding a
-new feature usable by script writers, and I agree that ls-remote may
-be the ideal home for such a feature.
+FWIW, I would be such a user who would want to squelch the error but
+keep the ff-only behavior (and have been doing so for years via
+pull.ff=only).
 
-> To borrow from Felipe Contreras's reply in the side-thread "I expect th=
-e
-> branch name to be chosen by the person who created that repository".
+I primarily use "git pull" only with branches where I am tracking
+upstream work, but don't have any of my own (e.g., if I do all of my
+work on topic branches, I may still keep a "master" branch that mirrors
+"origin/master", and use "git checkout master && git pull" to
+fast-forward it).
 
-I expect a bit differently.  My expectation is that "git clone"
-tries to help you inter-operate well with the project you clone.
-You may be creating your local repository by cloning theirs, but
-because I do not expect "who created" matters more than how well
-end-users' workflows would work in the resulting repository, I
-do not expect local init.defaultBranch should matter here.
+So I think this is a valuable thing to have. And it does work just fine
+already, without pull.mode. The reasons to care about pull.mode (IMHO)
+are mostly about explaining it:
 
-If the project you would eventually push back to designates one
-branch as its primary branch everybody is expected to work off of
-(which is what it means to point it with their HEAD), it is
-convenient if your local clone names your primary branch to match.
-The push.default settings like 'simple' and 'current' are designed
-to work well when your local branch namespace matches what they
-have.
+  - it isn't respected with rebase. So if you set pull.rebase=true, now
+    pull.ff=only does nothing. This is arguably confusing, though I
+    doubt it comes up much in practice.
 
-> I suppose this comes down to a mental model of what it means to have
-> "created a repository". When I click "create repo" on those popular
-> hosting sites (e.g. github & gitlab) and clone it I was expecting it to
-> just be a shorthand init + a URL in my config (and refspecs...).
+  - having a single tri-state of merge/rebase/error for "what do I do
+    when pulling a non-fast-forward merge" is conceptually simple and
+    easy to explain.
 
-So, no, I do not think "who created a repository" has much to do
-with the objective of the patch in question.  It's really "what's
-the upstream's view of the primary branch".
+So I like pull.mode in that sense. But it is also weighed against the
+fact that we'd still have to support pull.rebase, and we'd still have to
+support pull.ff, and explain how those interact with pull.mode (and I
+think any new error in this area must be squelched by those existing
+variables, or it would be a regression for people who already picked
+their default long ago).
 
-> That's also what happens with this patch if you "git init --bare
-> /tmp/my.git", then edit the HEAD symref to point to "foobar" and clone
-> it with file:///, it'll be "master" in your clone (or whatever
-> init.defaultBranch is). Isn't that discrepancy a bug then?
+> But there is an established way used in this project when we allow
+> squelching overly-helpful help messages, and we can apply it here as
+> well.  That way:
+> 
+>  - unconfigured folks would get all the three parts of the messages,
+>    just like the current system.
+> 
+>  - if you tell rebase or merge, you do not see any.
+> 
+>  - if you do not choose between rebase or merge, you can still
+>    squelch the latter two by setting advice.pullNonFF to false.
+> 
+> The last one is "keep the more dangerous half of 'git pull' disabled,
+> without getting told how to enable it over and over", which is what
+> you want to be able to specify.
 
-Yes, I view it as the same bug to be fixed; JTan's protocol update
-patch only deals with the transport based on the git protocol and
-does not (yet?) address the --local short-cut.  In principle, it
-should be a lot easier than the protocol update.  Any takers?
+Using advice.* to squelch the advice would be fine with me, provided it
+was _also_ squelched by the existing config options.
 
-> On both of those big hosting sites (didn't test others) whatever their
-> preferred default name is they'll go with your idea and update HEAD's
-> pointer on the first such push. So this notion that the default unborn
-> symref isn't transported & it's up to the client to set it on-push (or
-> manually afterwards) has been reinforced by in-the-wild use.
+Which I think is where your thinking is ending up.
 
-I think it would be great if somebody comes up with a protocol
-update for that "other" direction to push into an unborn HEAD.  I
-haven't thought things through, but you may be right to point out
-that the "clone learns and prepares local to match the other side"
-we are discussing may not be complete with such a corresponding fix
-in the opposite direction.
-
-Thanks.
+-Peff
