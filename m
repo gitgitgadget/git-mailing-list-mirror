@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 586F1C2BB9A
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7094EC2BB48
 	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 17:54:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 220FE2255F
+	by mail.kernel.org (Postfix) with ESMTP id 3A6B922ADC
 	for <git@archiver.kernel.org>; Tue, 15 Dec 2020 17:54:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730942AbgLORyc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Dec 2020 12:54:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45786 "EHLO
+        id S1730841AbgLORyk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Dec 2020 12:54:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730813AbgLORyM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Dec 2020 12:54:12 -0500
-Received: from mail-wm1-x343.google.com (mail-wm1-x343.google.com [IPv6:2a00:1450:4864:20::343])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AAA3C0617B0
-        for <git@vger.kernel.org>; Tue, 15 Dec 2020 09:53:31 -0800 (PST)
-Received: by mail-wm1-x343.google.com with SMTP id k10so49267wmi.3
-        for <git@vger.kernel.org>; Tue, 15 Dec 2020 09:53:31 -0800 (PST)
+        with ESMTP id S1730804AbgLORyL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Dec 2020 12:54:11 -0500
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com [IPv6:2a00:1450:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7544C0617A7
+        for <git@vger.kernel.org>; Tue, 15 Dec 2020 09:53:30 -0800 (PST)
+Received: by mail-wr1-x443.google.com with SMTP id r3so20779519wrt.2
+        for <git@vger.kernel.org>; Tue, 15 Dec 2020 09:53:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=oGniVBwEFHKszGc3iJr/1jBXdjZM5vgMkG10Ypha1l8=;
-        b=JOBR0SRUHBCPsWaHlKGzD4dMROg/5lcw/DE8F/wrlR5Pm/cAnN0wsq69k2x0V+Zh9A
-         HdLIlL3iPTRwXYnvB33pgJSqT8pwIQ2bGyE6vzNsBHRv5aEjjGQdheQv52fiNkc6AWZK
-         JLQbFC70X+yW/k9QsaQl9BiYKoq5L0wMHcle8QQQ3lsMq9RMsYDDXNW3hX8oOZC0Z3hw
-         +viKBTD+VXDX3Tltj8UWllxX/cyEFfKbLWgYFQGhi0otJ9syf//nExeIeepJU01dHZAK
-         RT1x5PDIVLHiWHzCUMoZroEr9HUlFGPjWMTkZnBVk9d9vDcvz2TPxyF5haSYfUQu6xvQ
-         Ljzw==
+        bh=nIuyIOARPhQtreLsEnoTwXZduaCDfrdPYxbtSn8C4DA=;
+        b=VujWLEm0JnACRGzpi40NjyqsKCnpVB+G09QDDdk35BeajVUZDWQl8iR6d+hDY27FLh
+         gGWcoU7m6qjm0cLIdleOBZXdAjx/7Lm2BkWzmQiCqD1BRS/re5FFbmSFw11kZGaEdxzN
+         lIUvWfrwiqYe9LTw6bd7Ttd45APsKtNejD2WHnkmeZNfkBispwM8DUaNAqodU6ZxRqK/
+         H0EuUCIf++N1GSDZbS3omwNkzZUgk260XJ9j460fEjU6OemOKBEFG0y3eQo8/8LzKpmH
+         ShncWBj9l/OkjG4BjqnfVMpHrZGNtmbxZNXSj19HAVnE5F9QPoosebEGDCHK8CY17IXf
+         gmVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=oGniVBwEFHKszGc3iJr/1jBXdjZM5vgMkG10Ypha1l8=;
-        b=NhWSZKDAfM7PTUe1oE+0jAuOQnidCG5W+wCNCtwBVekK7YQXC5rmdi7UX+rktsoZ3s
-         yTiU+IBzMbYrb//C7qd0P4FhwkNCFv0ZPfFk2O5+0PpEneSMHdYoiA9/MT6U0d7SlrLm
-         uiqBuDRZBN1cyPaWZ89NSSRxerIkr3c/qv3Pf93ROdtqbuqa/yTD6084J8jClVZBPMTE
-         GML9p98LGx/s8Tty4LxXHsd+GMngsmTgbJjIO5JT3KvQqWsWiPlH8W29ci57t5uj6vTT
-         gHlGvgRrdMZcP3e+/rIty8OEerovKeEL6+JVwTQVeYL979N/F70xl5Q9cZ9cb3Nn1X1m
-         b+Eg==
-X-Gm-Message-State: AOAM531ohmrw9zcgO46GUarTEcKyp0p8FVd/vKZgcWReQ6XDimgIbvU1
-        y9X5oSxi4Y2Y9W5zxzineLcNggA3734=
-X-Google-Smtp-Source: ABdhPJyr9E1nzEa8dVkNmPlpXhKP5NFMYDP0CmNHAUnf46kXVPQYsX+8EMJV1QAOo788fQ1H3zL4Og==
-X-Received: by 2002:a1c:630b:: with SMTP id x11mr42930wmb.138.1608054810186;
-        Tue, 15 Dec 2020 09:53:30 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f9sm40595039wrw.81.2020.12.15.09.53.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=nIuyIOARPhQtreLsEnoTwXZduaCDfrdPYxbtSn8C4DA=;
+        b=kmHDpm4FvIuQhNxSEyVKGml7BlFpQQoNa6aBRpSiTSG9HoNdCdnNCXHm9STGIRye0z
+         ngu0DWZEpQZ1ZCGYxwsYi/6qFCf5YEHkfO611jFkrUrcKZLUql+LJUPCEgYTOcgUs0qg
+         nGePRGpaikYewvJfmDUnwKFgSna/lFkiOY1/0F06tMTELazdov6PeeWwcESM/zS6ekmx
+         LfmGCYG+tkoI75fgYTHemsCRdpjYBu6Dt61Q8qaRenmOSRk0arg4sRx7GctshQHLCfC0
+         G8ADrSb0mxs9+5ef7ItJRQKJV+wpyHwxge3tHfe54vy7LooPDSjiiJyp1cexHLw23VXw
+         8jtQ==
+X-Gm-Message-State: AOAM531QJlsqgBlUWxN+tUvnazqrBg0RV9MltjUpzj/XWHiZi0iwE/u1
+        3pKhXCO9zwjv5E7vBB5vG7xEUtWjELk=
+X-Google-Smtp-Source: ABdhPJxRVqNBbGTP70TWmf/BItLI4eI2R5ysiMZy05huQjkz0YAhMh6IqQbrUfvjqdc+77PCZTrhIg==
+X-Received: by 2002:a5d:4f0e:: with SMTP id c14mr3894080wru.84.1608054809269;
         Tue, 15 Dec 2020 09:53:29 -0800 (PST)
-Message-Id: <fc26c1a11db76843b0a439d2c69567fcd7ad9ac2.1608054807.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z15sm40351557wrv.67.2020.12.15.09.53.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Dec 2020 09:53:28 -0800 (PST)
+Message-Id: <0b455bd6fe7dff72c1849eb8466b97b96b2b90a9.1608054807.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.814.git.1608054807.gitgitgadget@gmail.com>
 References: <pull.814.git.1608054807.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Dec 2020 17:53:26 +0000
-Subject: [PATCH 2/3] merge-ort: make clear_internal_opts() aware of partial
- clearing
+Date:   Tue, 15 Dec 2020 17:53:25 +0000
+Subject: [PATCH 1/3] merge-ort: copy a few small helper functions from
+ merge-recursive.c
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,71 +75,75 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-In order to handle recursive merges, after merging merge-bases we need
-to clear away most of the data we had built up but some of it needs to
-be kept -- in particular the "output" field.  Rename the function to
-reflect its future change in use.
-
-Further, since "reinitialize" means we'll be reusing the fields
-immediately, take advantage of this to only partially clear maps,
-leaving the hashtable allocated and pre-sized.  (This may be slightly
-out-of-order since the speedups aren't realized until there are far
-more strmaps in use, but the patch submission process already went out
-of order because of various questions and requests for strmap.  Anyway,
-see commit 6ccdfc2a20 ("strmap: enable faster clearing and reusing of
-strmaps", 2020-11-05), for performance details about the use of
-strmap_partial_clear().)
+In a subsequent commit, we will implement the traditional recursiveness
+that gave merge-recursive its name, namely merging non-unique
+merge-bases to come up with a single virtual merge base.  Copy a few
+helper functions from merge-recursive.c that we will use in the
+implementation.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ merge-ort.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 05ba92c91a6..10a97e944c4 100644
+index 414e7b7eeac..05ba92c91a6 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -253,10 +253,11 @@ static void free_strmap_strings(struct strmap *map)
- 	}
- }
+@@ -17,8 +17,10 @@
+ #include "cache.h"
+ #include "merge-ort.h"
  
--static void clear_internal_opts(struct merge_options_internal *opti,
--				int reinitialize)
-+static void clear_or_reinit_internal_opts(struct merge_options_internal *opti,
-+					  int reinitialize)
++#include "alloc.h"
+ #include "blob.h"
+ #include "cache-tree.h"
++#include "commit.h"
+ #include "commit-reach.h"
+ #include "diff.h"
+ #include "diffcore.h"
+@@ -1348,6 +1350,34 @@ void merge_finalize(struct merge_options *opt,
+ 
+ /*** Function Grouping: helper functions for merge_incore_*() ***/
+ 
++static inline void set_commit_tree(struct commit *c, struct tree *t)
++{
++	c->maybe_tree = t;
++}
++
++static struct commit *make_virtual_commit(struct repository *repo,
++					  struct tree *tree,
++					  const char *comment)
++{
++	struct commit *commit = alloc_commit_node(repo);
++
++	set_merge_remote_desc(commit, comment, (struct object *)commit);
++	set_commit_tree(commit, tree);
++	commit->object.parsed = 1;
++	return commit;
++}
++
++static struct commit_list *reverse_commit_list(struct commit_list *list)
++{
++	struct commit_list *next = NULL, *current, *backup;
++	for (current = list; current; current = backup) {
++		backup = current->next;
++		current->next = next;
++		next = current;
++	}
++	return next;
++}
++
+ static void merge_start(struct merge_options *opt, struct merge_result *result)
  {
--	assert(!reinitialize);
-+	void (*strmap_func)(struct strmap *, int) =
-+		reinitialize ? strmap_partial_clear : strmap_clear;
- 
- 	/*
- 	 * We marked opti->paths with strdup_strings = 0, so that we
-@@ -266,14 +267,14 @@ static void clear_internal_opts(struct merge_options_internal *opti,
- 	 * to deallocate them.
- 	 */
- 	free_strmap_strings(&opti->paths);
--	strmap_clear(&opti->paths, 1);
-+	strmap_func(&opti->paths, 1);
- 
- 	/*
- 	 * All keys and values in opti->conflicted are a subset of those in
- 	 * opti->paths.  We don't want to deallocate anything twice, so we
- 	 * don't free the keys and we pass 0 for free_values.
- 	 */
--	strmap_clear(&opti->conflicted, 0);
-+	strmap_func(&opti->conflicted, 0);
- 
- 	/*
- 	 * opti->paths_to_free is similar to opti->paths; we created it with
-@@ -1344,7 +1345,7 @@ void merge_finalize(struct merge_options *opt,
- 
- 	assert(opt->priv == NULL);
- 
--	clear_internal_opts(opti, 0);
-+	clear_or_reinit_internal_opts(opti, 0);
- 	FREE_AND_NULL(opti);
+ 	/* Sanity checks on opt */
+@@ -1462,5 +1492,7 @@ void merge_incore_recursive(struct merge_options *opt,
+ 			    struct commit *side2,
+ 			    struct merge_result *result)
+ {
++	(void)reverse_commit_list;
++	(void)make_virtual_commit;
+ 	die("Not yet implemented");
  }
- 
 -- 
 gitgitgadget
 
