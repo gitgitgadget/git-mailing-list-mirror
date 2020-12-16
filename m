@@ -2,85 +2,160 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6469C4361B
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 23:33:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63DBCC4361B
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 23:42:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 926142371F
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 23:33:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 32E9323730
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 23:42:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729927AbgLPXdc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Dec 2020 18:33:32 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63231 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726110AbgLPXdc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Dec 2020 18:33:32 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A51C0FEC7D;
-        Wed, 16 Dec 2020 18:32:50 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/CG9Q1d0woFyVSoWOx2O8fOtg5c=; b=C+M02U
-        XXYsbbeNvDTCb9cVuNOz5dinJiGKysfufxP1GRAm6xPWM996WSRsZGKTWloEsoFt
-        jwE4hKwPF0+Qu8KpUYXyKT1m08mMsWvXiYmN0D7x+GYjtX1sX5Hz6IIRFu+hzLEe
-        jFJ51IuIfg81m0HBI0lijRHTgY+7frGoFZn6g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Ng3tRglz/341IpQVKvFbqFWncFt5P746
-        2N4uF4CrZXNCp9UzsVSk+98qz6y77O6tWIie5pA9+H4G2h6iGqMATVnr1VGyClzI
-        In1HsQ3jItCVlCkudFeAIgsdmWVPu+/+FVuaaygazv1w3BDxY8XvldlBgAKopnTf
-        //tCh11wM7M=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9D048FEC7C;
-        Wed, 16 Dec 2020 18:32:50 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DF601FEC79;
-        Wed, 16 Dec 2020 18:32:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, James Ramsay <james@jramsay.com.au>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v6 00/17] propose config-based hooks (part I)
-References: <20201014232447.3050579-1-emilyshaffer@google.com>
-        <20201205014607.1464119-1-emilyshaffer@google.com>
-        <20201216003408.GR36751@google.com>
-        <xmqqlfdy6025.fsf@gitster.c.googlers.com>
-        <20201216201625.GF3783238@google.com>
-Date:   Wed, 16 Dec 2020 15:32:46 -0800
-In-Reply-To: <20201216201625.GF3783238@google.com> (Emily Shaffer's message of
-        "Wed, 16 Dec 2020 12:16:25 -0800")
-Message-ID: <xmqqwnxh1g4h.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 017BE5F6-3FF7-11EB-8D9C-D609E328BF65-77302942!pb-smtp21.pobox.com
+        id S1730032AbgLPXme (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Dec 2020 18:42:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41104 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727769AbgLPXme (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Dec 2020 18:42:34 -0500
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E68DFC061794
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 15:41:53 -0800 (PST)
+Received: by mail-ot1-x32a.google.com with SMTP id q25so25215090otn.10
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 15:41:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=wbU6F2RRG9xc82Us3rbYSoAzjnzl8kxC6eVIG9ipgyc=;
+        b=TCNNPJ3S4iHxj9y1LEpgMXpKV1gcb1gTEN91L7s1NJYMjFr0yJhd2L/DlyLMX7aEL5
+         Dj/kGh/YtNsP9Q0J5n53eBFsHOgzMvhnxCI8MyCYxvr79quB2coMuMQ1LvYtuAUAmO9i
+         c7PIedP9Iuxxv7l35T4r9rydcipcQ1uymx1EvBnXrgoXaoasmNXXpmDVZKXY4svxuHDc
+         087OMOOKC/4vnvcBhMSf8GUAANpak6zyxNpydkFfPE9G3o7rVhym0PXTFU6JrAMnWHpm
+         wU3HMysAJVyXSRYAuICkh56pTBluhCgLPuvtHCuB0SdwfPV6dt42qlhUxrci2sBJqHXD
+         ocEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=wbU6F2RRG9xc82Us3rbYSoAzjnzl8kxC6eVIG9ipgyc=;
+        b=DM1dwKkSXvBsUfqPI/t0X4ERxDLNB+2SX/sYhr3M/pLuFp1YBl5c4Khh/c8M+sYy4F
+         5ZXx+r+KLaJlGWsbSNkacnTGcOje3lKo9xZmMCnfbTIYdmD8vFUPRx3iGDw5hqV0PrHR
+         yodhHlLvgjTaZ2xmWABh8KUh/26MGl1TBbzw/4QUjUGWtwL08DWfIycSennJvazI6f4b
+         M5nJ72l6fHuNSiuU4doJ9n2Ci3/8w3brY60gQseV0l8cbyUgtgy6glQcoHbU1IxGnDqF
+         ZjjM3yBqOa5R1n76QmYBtEchI+0kiqOQoPM7UI4z2JgYVHjh1bAlJIRFYbieFoLw58qV
+         qCqw==
+X-Gm-Message-State: AOAM533lvJ2EPu/NdcGtCZJJqJrPnoLhtDSd3POjmEvhMndtwz9mwYSO
+        HYkiR71HYKXDm6z5W0MTye4=
+X-Google-Smtp-Source: ABdhPJwS68B94hXfdX3JjUQREPR8bwZ1Y+CcH5oEdZuTLT9TAQTr5LUe7AsY1tAOR+fuZZqVsdTYpA==
+X-Received: by 2002:a9d:372:: with SMTP id 105mr23398087otv.118.1608162113320;
+        Wed, 16 Dec 2020 15:41:53 -0800 (PST)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id b25sm908241ooe.18.2020.12.16.15.41.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Dec 2020 15:41:52 -0800 (PST)
+Date:   Wed, 16 Dec 2020 17:41:51 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>, Seth House <seth@eseth.com>
+Message-ID: <5fda9b3f4979c_973f2083@natae.notmuch>
+In-Reply-To: <xmqqa6ud2xuw.fsf@gitster.c.googlers.com>
+References: <20201216174345.28146-1-felipe.contreras@gmail.com>
+ <xmqqa6ud2xuw.fsf@gitster.c.googlers.com>
+Subject: Re: [RFC/PATCH] mergetool: use resolved conflicts in all the views
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > It doesn't make sense to display already-resolved conflicts in the
+> > different views of all mergetools.
+> >
+> > We already have the best version in MERGED, with annotations that can
+> > be used to extract a pruned version of LOCAL and REMOTE. If we are using
+> > the diff3 conflict-style, we can even extract BASE.
+> >
+> > Let's use these annotations instead of using the original files before
+> > the conflict resolution.
+> >
+> > TODO: There may be a better way to extract these files that doesn't rely
+> > on the user's conflict-style configuration.
+> >
+> > See Seth House's blog post [1] for the idea and the rationale.
+> >
+> > [1] https://www.eseth.org/2020/mergetools.html
+> >
+> > Cc: Seth House <seth@eseth.com>
+> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> 
+> Hmph, I got what Seth showed, but I do not quite see how the ideas
+> in the post relate to what this patch does.  The patch just avoids
+> grabbing the contents of each stage out to a file for three stages
+> using "git checkout-index" and instead does the same by munging the
+> diff3 output, which ought to have the same information at least for
+> text files, using "sed", or is there something I am not seeing?
 
->> By the way, es/config-hooks does not seem to pass 5411 (at least)
->> even as a standalone topic, and has been kicked out of 'seen' for
->> some time.  Has anybody took a look into the issue?
->
-> Yeah, I looked at it today. Looks like an issue with not paying
-> attention to master->main default config, since I added a new test to
-> the 5411 suite (which means it wouldn't have made a conflict for someone
-> to say "ah yes, s/master/main/g"). I am tracking down couple of other CI
-> errors today and will send a reroll today or tomorrow.
+It's not quite the same information.
 
-Thanks.
+Take the following script that uses Seth's example:
+
+----------------------------------------
+cat > BASE <<EOF
+A
+
+"Beware the Jabberwock, my son!
+The jaws that bite, the claws that catch!
+Beware the Jub jub bird, and shun
+The frumious bandersnatch!"
+EOF
+
+cat > LOCAL <<EOF
+B
+
+"Beware the Jabberwock, my son!
+The jaws that bite, the claws that catch!
+Beware the Jub jub bird, and shun
+The frumious bandersnatch!"
+EOF
+
+cat > REMOTE <<EOF
+C
+
+"Beware the Jabberwock, my son!
+The jaws that bite, the claws that catch!
+Beware the Jubjub bird, and shun
+The frumious Bandersnatch!"
+EOF
+
+git merge-file "$@" --diff3 -p LOCAL BASE REMOTE
+----------------------------------------
+
+Notice how git is smart enough to resolve the conflicts of the second
+paragraph, so the user doesn't have to do anything.
+
+LOCAL is the equivalent of "git checkout-index --stage 2", but that
+doesn't have the resolved conflict.
+
+We could call "git merge-file --ours" and overwrite $LOCAL; that way the
+user is not presented with any diff for the second paragraph. The same
+with --theirs and $REMOTE, but there's no "git merge-file --base".
+
+
+The implementation details of the proposed patch are not relevant at
+this point; it was just to show an example of what Seth's diffconflicts
+vim plugin does.
+
+Cheers.
+
+-- 
+Felipe Contreras
