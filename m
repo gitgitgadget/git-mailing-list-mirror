@@ -2,89 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93772C4361B
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 20:20:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67979C0018C
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 20:36:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6211A2370D
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 20:20:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3EB4E233CE
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 20:36:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728960AbgLPUTw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Dec 2020 15:19:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37936 "EHLO
+        id S1727474AbgLPUgE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Dec 2020 15:36:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726877AbgLPUTw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Dec 2020 15:19:52 -0500
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31A93C06179C
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 12:19:12 -0800 (PST)
-Received: by mail-pj1-x1031.google.com with SMTP id iq13so2117000pjb.3
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 12:19:12 -0800 (PST)
+        with ESMTP id S1727459AbgLPUgD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Dec 2020 15:36:03 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B6CEC06179C
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 12:35:23 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id x22so3574883wmc.5
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 12:35:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=arK79jdoghoAOfJQ/SM9E4/xFx43Pp/K99HZZnDVvVE=;
-        b=SLs+HDx9B9ZqKwRm4azgl1mGjRU7J/Nj1+sC20Se21m3s1EATK2jdM1nK9WIdjOpm4
-         RVWoTM3Tk0gmfLVUpel3qjEM849kq+reWTkmQhmJD5yqVywO9zt7OluOMxC0YdGsKLeG
-         CnL8jTpwl4PWvyfcuqQlxLlUvmSIqVhfi+Wh6lfgiv3gf5HFIPutCjfgXgdfj7Y1QC4z
-         +3tSnjckqQfjZUGEx83E70c84EvbuBgJT5/i/1hcEAhWjXfv++IOphbAglqhVgB/pSmv
-         otOdDwiLiNGCufcpx8LIIs/PmgXhOdH0zWBXCG7OQZiXpzZXvzAJYZshy8EX2K08NLSc
-         7eQg==
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=XGikWbQ/uqhrZg/jR4gVAQvl4psVFSLa+sJDq8YkCRk=;
+        b=Sl7Slzgl4LKZPhRhMlCeZY2+qu9bp4E07R/xe+zmdc2Xfld93ZunUPnRLF1Mt7ax1v
+         gfBeFNkHuIsLUnCx/qtXMVi7Js1hXpaRlzXCJE2GmPPzU8lqxK7Jv6PmAzWmlboHTk9m
+         WfmHpvFx771imCqLYBbw4LIMRhC72BtIw5l5qTMxWFRTly755JITTt0yFtL8qvweIo3M
+         t74NMcQfj0VibiFdgGdln2yOgvMdawBvr0VuJu7HyTB+ztzUSK2ULr8C23vxrCX9ZQ77
+         MnR5ccRfUq0aH55TQPU+l+mLI5wCxImOEyJ5Fnlah7FqBjjKem5myXDnYhZk5YK7i3xr
+         I5CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=arK79jdoghoAOfJQ/SM9E4/xFx43Pp/K99HZZnDVvVE=;
-        b=tSJWnZ68tOHY2I3dIaceHRIRyOc8rw3Bhr3Z9Qn3Iflpvypg3DTiN2MIc2Z9/PhKQP
-         2ONnp60c3x30cIVpc6nQCkvNkUiLg5COqdG/o4NFNfWieHFJSyJxL2L81EH8vo2vs7gT
-         02Obftm2sOTRl1RiH9DlqrUyRkSOrr6yJu8FOjarDHWoe7GFvtFdkX69g3x55OqR7hwK
-         Ahrwa5WqYJ8J+TKHkykxPPobjKAuMUgnOfxDKSZEwV+xe1QybUP4aJM3lJ1PEMp1nPgN
-         H+BwSzYHltnRO062DSbeA/nJvembtDFX4fBGUKa3E/g9nPi6NrwV9aYxgHDt+LNq0NQn
-         m19Q==
-X-Gm-Message-State: AOAM532y6cxTowDpLVdyUtJ0yUi7bJ9AVvDiB83vZJrlJlzgibXaIFIR
-        JoGx8GHQTPk/QuUdWHUCJ1lCtYgKShHoiw==
-X-Google-Smtp-Source: ABdhPJy2KGe+SxwwEzDQ2g0q1vkUdxWsBVfozai5et55q1cQfm7JaBw+x/YDA2SHwUdVeLeQmfnlQw==
-X-Received: by 2002:a17:90a:a24:: with SMTP id o33mr4488153pjo.191.1608149951548;
-        Wed, 16 Dec 2020 12:19:11 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
-        by smtp.gmail.com with ESMTPSA id p187sm3200380pfp.60.2020.12.16.12.19.10
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=XGikWbQ/uqhrZg/jR4gVAQvl4psVFSLa+sJDq8YkCRk=;
+        b=KVpT2OKavw0Uch9jY+oJkyW3dS+3b2pUqNTeJ+WhW/bh4GT0wLdqcdU9U2NyjAMRIe
+         uatUXoVOIexxaDuSei6+WTo/qJvehPxpP/DTagwSv0PQ3L5eZeblfTVFqwdkJbLMBXwN
+         aLjuoilFeyF4XG4XLlJjX5xcbN0KyWD3t5+PfyIUDtygcuW31UdrCuGRlzC7+Tyd1Ejq
+         A+xiJsNC0DgdFNQujP4Ijz9SKqSQdpkOSoBm/J3RIc5uDcpxtPkpYAd5Rc7wpzRddaVd
+         w7MqK5iVpgQ9ZTwHXTrDvc3hMo5kYWmMoe0mj+sxsp7M/zLQKdz4tdfZmUkk4Oa8S1MN
+         hoGA==
+X-Gm-Message-State: AOAM5335VYy9IAMDF1cCGUM/MWSu+VNSDrHzT+uvOQscH4+58WlQ6qE+
+        PO7M/goJ2+ZKlVZAgZQflS0RfY8rg8Q=
+X-Google-Smtp-Source: ABdhPJyvqe1YuR5wcOTssUVeRguWSbaHCXE9+t6DEzNXx67i6KgDw1Vypf5/BS0LIUPhvon2h0MS6w==
+X-Received: by 2002:a05:600c:22d9:: with SMTP id 25mr5057321wmg.158.1608150921770;
+        Wed, 16 Dec 2020 12:35:21 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a62sm5432233wmh.40.2020.12.16.12.35.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Dec 2020 12:19:10 -0800 (PST)
-Date:   Wed, 16 Dec 2020 12:19:06 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH 08/17] git-p4: use 'git hook' to run hooks
-Message-ID: <20201216201906.GG3783238@google.com>
-References: <20201205014945.1502660-1-emilyshaffer@google.com>
- <20201205014945.1502660-9-emilyshaffer@google.com>
- <20201216002712.GP36751@google.com>
+        Wed, 16 Dec 2020 12:35:21 -0800 (PST)
+Message-Id: <dcf28565ad35729a0c5a755689ab47185bf56ccd.1608150919.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.814.v4.git.1608150919.gitgitgadget@gmail.com>
+References: <pull.814.v3.git.1608139034.gitgitgadget@gmail.com>
+        <pull.814.v4.git.1608150919.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 16 Dec 2020 20:35:17 +0000
+Subject: [PATCH v4 1/3] merge-ort: copy a few small helper functions from
+ merge-recursive.c
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201216002712.GP36751@google.com>
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 15, 2020 at 04:27:12PM -0800, Josh Steadmon wrote:
-> 
-> On 2020.12.04 17:49, Emily Shaffer wrote:
-> > +    print('ESS: entering run_git_hook')
-> 
-> Looks like a stray debug message here?
-> 
-...
-> > +    print ('ESS: args:')
-> 
-> Here as well.
+From: Elijah Newren <newren@gmail.com>
 
+In a subsequent commit, we will implement the traditional recursiveness
+that gave merge-recursive its name, namely merging non-unique
+merge-bases to come up with a single virtual merge base.  Copy a few
+helper functions from merge-recursive.c that we will use in the
+implementation.
 
-:X Have fixed locally and will include with a new reroll this week.
-Oops. :)
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ merge-ort.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
- - Emily
+diff --git a/merge-ort.c b/merge-ort.c
+index 414e7b7eeac..b66f8a6f100 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -17,8 +17,10 @@
+ #include "cache.h"
+ #include "merge-ort.h"
+ 
++#include "alloc.h"
+ #include "blob.h"
+ #include "cache-tree.h"
++#include "commit.h"
+ #include "commit-reach.h"
+ #include "diff.h"
+ #include "diffcore.h"
+@@ -1348,6 +1350,36 @@ void merge_finalize(struct merge_options *opt,
+ 
+ /*** Function Grouping: helper functions for merge_incore_*() ***/
+ 
++static inline void set_commit_tree(struct commit *c, struct tree *t)
++{
++	c->maybe_tree = t;
++}
++
++MAYBE_UNUSED
++static struct commit *make_virtual_commit(struct repository *repo,
++					  struct tree *tree,
++					  const char *comment)
++{
++	struct commit *commit = alloc_commit_node(repo);
++
++	set_merge_remote_desc(commit, comment, (struct object *)commit);
++	set_commit_tree(commit, tree);
++	commit->object.parsed = 1;
++	return commit;
++}
++
++MAYBE_UNUSED
++static struct commit_list *reverse_commit_list(struct commit_list *list)
++{
++	struct commit_list *previous = NULL, *current, *backup;
++	for (current = list; current; current = backup) {
++		backup = current->next;
++		current->next = previous;
++		previous = current;
++	}
++	return previous;
++}
++
+ static void merge_start(struct merge_options *opt, struct merge_result *result)
+ {
+ 	/* Sanity checks on opt */
+-- 
+gitgitgadget
+
