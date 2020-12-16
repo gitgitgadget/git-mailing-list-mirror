@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93387C2BBCA
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 18:52:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8131C4361B
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 18:52:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6BA222342C
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 18:52:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B64A22342C
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 18:52:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732255AbgLPSwJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Dec 2020 13:52:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52628 "EHLO
+        id S1732271AbgLPSwK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Dec 2020 13:52:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732259AbgLPSwG (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1732260AbgLPSwG (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 16 Dec 2020 13:52:06 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5385AC0619DE
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 10:51:03 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id o19so25353328lfo.1
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 10:51:03 -0800 (PST)
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A51FC0619DD
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 10:51:02 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id m25so50938099lfc.11
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 10:51:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PaSmZ/RBecu+NFyjcFfJUxhbi320cgCBZWTJ9QUWVDw=;
-        b=LCG7jhccGx+mZio3CxOJ4/5RPLjqaisEjM1sFOQDCVG4rqea2eH+FVvp7EyiUXzDGX
-         kqpH451BXMELBk5Qy78WSOHMjT8fXa2kaZ4T1WmZ1DUz6fdIEPkm0OrjtepokjNtMnv8
-         KVhVld6OW90qQ8HUcvornDTDwPAO5fNKgkB80LzldzUdsYPetYXYK7r6lAMoDPZipHAe
-         WKscFJ/CqLXJ/DbYlTJYjxqrowEoVVORdAwuc/r1JzU2fEKHcztevXGq11e8uxsmq8sC
-         uR8yv6BssYbI6Wl2p6ol6A/UA4d5mCvuxjs0EEUxhew0oy9MuvAR98BNZxLd0QhnmdXR
-         y1kg==
+        bh=F7skkKHM5R05UGdkMu1617woWQOZ5h6BpD7foIYbeG8=;
+        b=DUD5SnLTAzGR5KYNFqM4o6EZd7xSq2lJSWAXMfZ7+Zy1Km/ShFXwe8Epq0xF2z9av7
+         zTq+0qnFT8tasNK4mvjzv2y6XYLQsXHBA2zWKYBkrrvfJ8CIt6YLHwHfJ99drXXCwFfm
+         fFJCBAncT7JMgJtxohx8+aGGuqTRbJu9mmUDZOzvzEvIOhk2LGZ4rP0NbVpcMQl2fRj1
+         ufYPA/NwUE0Ot1b3Wl4U/5TAFpAlPF0S/CpLRtNLyO9r6x6ubD8fk+c0nJveBatVM576
+         YEFYBi6PUg+4tdSZBRxHMT88ewjSPIP3napqu/TekCXLKnMQfm36yt6bfOpxLjoGOrTO
+         W/Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=PaSmZ/RBecu+NFyjcFfJUxhbi320cgCBZWTJ9QUWVDw=;
-        b=jVKkSD4qsmz8XDm16mK895neCVx3xyNJhqBQvw81o7G0/KWm/7izIyvmI5bShK1T+h
-         G2w/1c5ahyw3dzBdVZykbh4BS/lcw2aX7XaGSJCl98UHLhdFgCvW+9gvNFEW/ZPh6ZkP
-         7xsRoLQUNgCGFeiJXJr2BSuvBDFVeFsgnWVZGhS60Sapc8Z7C1hngHcOkCCbxzE9Sxoi
-         pRzfG8vIK4i9URwTH/9EDZE2lO9ZITZp7yRlpyrhn76mCmPjqF18pGVBTSJQFoR9DIIk
-         d3sqHCI3gNXMVEjM5GXKtyVlP2b5i933/CzLc+N1rLgO/x5twzdOggUma4IjyxY8h7uq
-         5rvg==
-X-Gm-Message-State: AOAM530i1nUPB8jW/Scrjpz5X7g3jGvH7WnixshEFJiVMJ9Bx9GivO5Q
-        4+gpNcmiYylkJTZr6iJDXnw=
-X-Google-Smtp-Source: ABdhPJzsVVM1vzUoSOgXMIMiuPE3yV18h2tsTJwK5ssQq8gzyf9IEgCqEXZOecZPZAVf5wTOJ2u3UQ==
-X-Received: by 2002:a2e:9296:: with SMTP id d22mr5891373ljh.197.1608144661081;
-        Wed, 16 Dec 2020 10:51:01 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id 197sm313871lfe.158.2020.12.16.10.51.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=F7skkKHM5R05UGdkMu1617woWQOZ5h6BpD7foIYbeG8=;
+        b=YjxwBVanPfZMl9FRlUhXKcd5IHXGcBCgiOHrdZ5D8DHpnAsDDeWacy0wIU2L7HyzwH
+         nsELx8m7ylM2kPcZDxSb7qnipJpu37gpUOQoBuyLdYbATOcutY5I3kBIFdeDx7fgRYsq
+         IVTQq9WWqJsSk0EYIgXareb3pGxGug4vszbKWG+f4JVqmOOpKqVnoNOlfkWL3X/kTEEq
+         wN3jByph/htg/TjLFSA9++HLDTVftnZG4+NI9ZYzmGEAF6DVI4YzlS46xmFeSCsDD3aw
+         Czos102Xq1GSxjNu4WCEgALLfTUDH+7nc2uhFi76S0an4VelOW4nOkxQ+/BDi1T1hlsl
+         rW7A==
+X-Gm-Message-State: AOAM530BEFQzv0/GNEvoTEplAd+62Jk6JzgQ4Cgzim4dYtciGlN81P+R
+        B19qS1nSh/SY2e4ieTa7da0=
+X-Google-Smtp-Source: ABdhPJya9kQPg/zFX94g+NdE8TrAneCk1T9oGgZueiapSijnPrSFM7U7LAvNauIrLm9uSkUiRURNbQ==
+X-Received: by 2002:a2e:2a86:: with SMTP id q128mr15013825ljq.158.1608144660033;
         Wed, 16 Dec 2020 10:51:00 -0800 (PST)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id 197sm313871lfe.158.2020.12.16.10.50.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Dec 2020 10:50:59 -0800 (PST)
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
         Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
         Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH v2 31/33] doc/rev-list-options: document --first-parent changes merges format
-Date:   Wed, 16 Dec 2020 21:49:27 +0300
-Message-Id: <20201216184929.3924-32-sorganov@gmail.com>
+Subject: [PATCH v2 30/33] doc/diff-generate-patch: mention new --diff-merges option
+Date:   Wed, 16 Dec 2020 21:49:26 +0300
+Message-Id: <20201216184929.3924-31-sorganov@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20201216184929.3924-1-sorganov@gmail.com>
 References: <20201101193330.24775-1-sorganov@gmail.com>
@@ -74,32 +74,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After introduction of the --diff-merges=first-parent, the
---first-parent sets the default format for merges to the same value as
-this new option. Document this behavior and add corresponding
-reference to --diff-merges.
+Mention --diff-merges instead of -m in a note to merge formats to aid
+discoverability, as -m is now described among --diff-merges options
+anyway.
 
 Signed-off-by: Sergey Organov <sorganov@gmail.com>
 ---
- Documentation/rev-list-options.txt | 5 +++++
- 1 file changed, 5 insertions(+)
+ Documentation/diff-generate-patch.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 002379056a07..96cc89d157d2 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -130,6 +130,11 @@ parents) and `--max-parents=-1` (negative numbers denote no upper limit).
- 	this option allows you to ignore the individual commits
- 	brought in to your history by such a merge.
+diff --git a/Documentation/diff-generate-patch.txt b/Documentation/diff-generate-patch.txt
+index b10ff4caa6c5..2db8eacc3ec7 100644
+--- a/Documentation/diff-generate-patch.txt
++++ b/Documentation/diff-generate-patch.txt
+@@ -81,9 +81,9 @@ Combined diff format
+ Any diff-generating command can take the `-c` or `--cc` option to
+ produce a 'combined diff' when showing a merge. This is the default
+ format when showing merges with linkgit:git-diff[1] or
+-linkgit:git-show[1]. Note also that you can give the `-m` option to any
+-of these commands to force generation of diffs with individual parents
+-of a merge.
++linkgit:git-show[1]. Note also that you can give suitable
++`--diff-merges` option to any of these commands to force generation of
++diffs in specific format.
  
-+ifdef::git-log[]
-+	This option also changes default diff format for merge commits
-+	to `first-parent`, see `--diff-merges=first-parent` for details.
-+endif::git-log[]
-+
- --not::
- 	Reverses the meaning of the '{caret}' prefix (or lack thereof)
- 	for all following revision specifiers, up to the next `--not`.
+ A "combined diff" format looks like this:
+ 
 -- 
 2.25.1
 
