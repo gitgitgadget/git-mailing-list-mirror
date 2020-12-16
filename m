@@ -2,125 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBF09C4361B
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 00:31:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6408CC4361B
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 00:32:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B9F9722DA9
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 00:31:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2029522D75
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 00:32:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725943AbgLPAbp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Dec 2020 19:31:45 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50786 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725838AbgLPAbm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Dec 2020 19:31:42 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 267669ECEC;
-        Tue, 15 Dec 2020 19:30:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=YkcolAAcPmnn
-        iIfUOV5fhYLdSbs=; b=d6Krt62XAlIPKgBofEOf1bV/y9JVy+mQtN5N5YXKoE16
-        OsMVhfjSAgQkZ/bY+EejsHvDKzo++UPp0YUubIEF73p9pHpWT6wyYNP3/VBRwFqS
-        FYbskwjHrm4iZc9ypSw0FR9M+G16eVs7G3uxOADZI792FwgwCSU9CW6T7OaDXNo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=in4L1e
-        qQH+pQsArSADitp+6DPfHaBSmajizLDy02i5kxWrZVKEuPudQHUaur1yEQUwnwwi
-        XQqaKQnqb+iIbSVDJGzshS65f7HBgnPqZxOG/eTawR+OVzDaImO/HBmviZLdPgU3
-        n1SimF0SpHnhOJbcx+cwfte7YCEJFCyivYTzU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1EADC9ECEA;
-        Tue, 15 Dec 2020 19:30:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9157B9ECE9;
-        Tue, 15 Dec 2020 19:30:57 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 2/2] style: do not "break" in switch() after "return"
-In-Reply-To: <20201215235027.10401-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Wed, 16 Dec 2020 00:50:27 +0100")
-References: <xmqq7dpkdup6.fsf@gitster.c.googlers.com>
-        <20201215235027.10401-3-avarab@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-Date:   Tue, 15 Dec 2020 16:30:57 -0800
-Message-ID: <xmqqtusm618e.fsf@gitster.c.googlers.com>
+        id S1725962AbgLPAcO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Dec 2020 19:32:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52330 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725275AbgLPAcN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Dec 2020 19:32:13 -0500
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5459C0613D6
+        for <git@vger.kernel.org>; Tue, 15 Dec 2020 16:31:32 -0800 (PST)
+Received: by mail-pj1-x1043.google.com with SMTP id iq13so518939pjb.3
+        for <git@vger.kernel.org>; Tue, 15 Dec 2020 16:31:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Pb/kG4gDxxDk3yUbIGjCq4uI0hg8dFXe/6cFijJsI5k=;
+        b=aKiDoUkr/EfUv26t4tMbTkzuLLQJ1PY1LZSWnc4b9PhpwFNnspsW17bInYJdflavpj
+         5US4dCoFGPAf/zuH1XMyqRFx+XVgwjkLbvTTFElR0v4i/yCDBqkotmxH5rCmw9+Ksvxd
+         HqzYSdazUxWWbve6DYp4dOww3m6HjIlfITOYW7KRpZzdcKS1F1olliqOLHAoF7nuKHHX
+         rbLJHAB1m5jsnJEfcETBvikBdAsv5JdHNkYBSOGzrWiGEasnO5qDy94wd4l5qaF8G+uO
+         f/76XkJo/VqxOQjNUhM/oZIIz++/9TGBZK02fnL7MBD0HtekuNmTAX2FtvOHtCFeKM15
+         enSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=Pb/kG4gDxxDk3yUbIGjCq4uI0hg8dFXe/6cFijJsI5k=;
+        b=SwiRsLbpcjyKV3ad/C/940juJqNd2opLn03IqYjXae+iXjNvQKHjd63gzJaLBptX3H
+         mAsrmppZ4XD+jCpKNox0PChK+dJvp0riOz6oLWbYjcD7quz0lWgBek7VZ0siSfcxKhL4
+         lJ6HpXOREXZhnGeb5Gerh6tN9Op+LpxO+s4jEf9ql7F/irtiJy4dsDcGbYpx4/d1WrLF
+         0cRzrQWgjDc1GqOr5dPYlMCTJUBnWX4aiD64FXoc/K/GYOh1eBbN98tqxZV27IuxotRa
+         Br4m+Z8kdmuM43WTZNEunoyTtJx/MfDPfgBnWa/XuDgJPX0dD4suHkKlnUOFsMAD8t6A
+         i/Rw==
+X-Gm-Message-State: AOAM5328gjx3UGCJAkOzpCY7Pyuypeyw2QqDhF9zupM3KaJdcUVNb2yd
+        mhR79cd8XVMDpmwGRhdEHmCLAQ==
+X-Google-Smtp-Source: ABdhPJyFsZ5cKjA4YJirGtLx2agU8FC547uY1uDcaM9APpgRkaM1h3Q0V7yueTX2b42I7SMcfoA08Q==
+X-Received: by 2002:a17:902:d907:b029:db:cb2b:8bcc with SMTP id c7-20020a170902d907b02900dbcb2b8bccmr29783699plz.9.1608078692223;
+        Tue, 15 Dec 2020 16:31:32 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:1ea0:b8ff:fe74:b4c1])
+        by smtp.gmail.com with ESMTPSA id u24sm43954pjx.56.2020.12.15.16.31.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Dec 2020 16:31:31 -0800 (PST)
+Date:   Tue, 15 Dec 2020 16:31:26 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] commit: use config-based hooks (config-based hooks part
+ II)
+Message-ID: <20201216003126.GQ36751@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+References: <20201014232517.3068298-1-emilyshaffer@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F715E3D0-3F35-11EB-8BB8-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201014232517.3068298-1-emilyshaffer@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
-
-> Remove this unreachable code. It was found by SunCC, it's found by a
-> non-fatal warning emitted by SunCC. It's one of the things it's more
-> vehement about than GCC & Clang.
-
-This is a borderline Meh to me.
-
-I am even tempted to suggest that, unless all other case arms
-return, iow, if there is even a single arm that breaks, it may even
-be more future-proof to end any and all case arms that do not
-fall-thru to consistently end with break.
-
-If there is some way to fix the compiler, that may be preferrable,
-but as I said, this is borderline Meh and I do not care too deeply
-either way.
-
-Thanks.
-
-> These return/break cases are just unnecessary however, and as seen
-> here the surrounding code just did a plain "return" without a "break"
-> already.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
+On 2020.10.14 16:25, Emily Shaffer wrote:
+> As part of the adoption of config-based hooks, teach run_commit_hook()
+> to call hook.h instead of run-command.h. This covers 'pre-commit',
+> 'commit-msg', and 'prepare-commit-msg'. Additionally, ask the hook
+> library - not run-command - whether any hooks will be run, as it's
+> possible hooks may exist in the config but not the hookdir.
+> 
+> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 > ---
->  apply.c               | 2 --
->  builtin/fast-export.c | 1 -
->  2 files changed, 3 deletions(-)
->
-> diff --git a/apply.c b/apply.c
-> index 4a4e9a0158c..668b16e9893 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -3948,10 +3948,8 @@ static int check_patch(struct apply_state *state=
-, struct patch *patch)
->  			break; /* happy */
->  		case EXISTS_IN_INDEX:
->  			return error(_("%s: already exists in index"), new_name);
-> -			break;
->  		case EXISTS_IN_INDEX_AS_ITA:
->  			return error(_("%s: does not match index"), new_name);
-> -			break;
->  		case EXISTS_IN_WORKTREE:
->  			return error(_("%s: already exists in working directory"),
->  				     new_name);
-> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-> index d2e33f50052..0a60356b06e 100644
-> --- a/builtin/fast-export.c
-> +++ b/builtin/fast-export.c
-> @@ -923,7 +923,6 @@ static struct commit *get_commit(struct rev_cmdline=
-_entry *e, char *full_name)
->  		if (!tag)
->  			die("Tag %s points nowhere?", e->name);
->  		return (struct commit *)tag;
-> -		break;
->  	}
->  	default:
->  		return NULL;
+
+Apart from the minor issues I noted on patches 8 & 10, this looks good
+to me.
+
+Reviewed-by: Josh Steadmon <steadmon@google.com>
