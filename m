@@ -7,265 +7,134 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 468DFC2BBCA
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DDEFC0018C
 	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 14:52:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0BF1A233F6
+	by mail.kernel.org (Postfix) with ESMTP id 30CFC233EA
 	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 14:52:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726056AbgLPOwK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Dec 2020 09:52:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43624 "EHLO
+        id S1726165AbgLPOwR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Dec 2020 09:52:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725951AbgLPOwJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Dec 2020 09:52:09 -0500
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CA1FC061282
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 06:51:13 -0800 (PST)
-Received: by mail-qk1-x72a.google.com with SMTP id b64so18677962qkc.12
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 06:51:13 -0800 (PST)
+        with ESMTP id S1726050AbgLPOwQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Dec 2020 09:52:16 -0500
+Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65CF3C061285
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 06:51:16 -0800 (PST)
+Received: by mail-qv1-xf36.google.com with SMTP id s6so11417892qvn.6
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 06:51:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=yqvjEPwDySi5qCZ9C1GDjHrDd4rLxD1WRnAODmeT4Ko=;
-        b=j+EGkkxub9kUDMyBxmQBnunFy0yeo94rGa+7zsitZt4SqmJ33qvBMNlZUe4Uec8EL8
-         QJOIp31W17OL5JjyPh62BUP7w473Tu7FdOeuBw8Xv8dBBJi/IfY426SL568KBuzospbx
-         I1+CKmml3ZdbccCFJu7fEytxQToluhVV4eLaNjmf0zVt55g0IK7g5lTIp7R4cC+d/Nd6
-         YtTMUoORDXnHDlxHugR1Tb9P76SuvYSg/8sVgHGxHt6XAqNHtT5sICs9/E35PS7HDR1M
-         ZmVVj8Tx2g5gpxUCB0SuVqRfZDrBBqAwUgBof7ax0kV/5Q7QluatIElVCFKBlNoAeFJu
-         oeIg==
+        bh=UM8E71D5hsgpPDsL4/mS1QuAqEZ2fo6QhgV2151KP+4=;
+        b=a9Yj3zfAAMu0vxloDvv/ylEgd/oLlEbMzugEQNMA4nm2jJ24P59AoT84YWwknlHks0
+         dmhcrEcZ8Vg2HryU5KIQpeev6Ty4mUgQE4l95JiuoKKBuUApEnWkwIXKjGehIDc8GKdL
+         SWTyB49rwmZIBC59F5l3Wgayixc0K9bjh1ukWguYza3Nq4qAZQilKs/Nlo9h9ldXaDDF
+         ahUxDloQxyVBpohlt/CRqMOhQ8hNQA5LTFpFwSHnjRVHWHqEDRqzHuppgnly8XKf8h6A
+         9WQvcxskOgnzYf0aRovWFLQfCisdGrYZJv1Z/dECkSZ1KE0dA4ut8P+9tPgRW4+sZ96G
+         RjjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=yqvjEPwDySi5qCZ9C1GDjHrDd4rLxD1WRnAODmeT4Ko=;
-        b=MTUohbM15xduEGImb5xa7zo/2cK58xD+B0x71lo7NikwQVOInB7izq0DPYZcYAV5iF
-         a62aYYvyBslbtFfIkv9i/9Dlg1nLFCam2sKFCWxEP36bfQz5gnt7PApqNRQ7v9PbRI3x
-         l2BNBSmiDPppZDSOBxIgv9XRcq5OmbcgN7QMj9sNC5X17cqychYvqEOApysCvMfanfAq
-         EabtxhGKLDHhYMqq4M2rNLHgYtOhG42Cv9GY02Ysk/zPtKsrREsOWCs+A6iAxiSmrUaB
-         Cfh8wYFnkT8/B20ptc1BVsmed51iT9ob+8vJZMZBRL9jZYaVWYF/s2T4SryHfWP41Y6h
-         431g==
-X-Gm-Message-State: AOAM533fMtqs8F6PUU7cKsGDE/v07URPRx081/q1txUP8cwGGN75KJ8+
-        jfy3iXyNQVuVKRkGAP5wMmRDcGN45N2dDw==
-X-Google-Smtp-Source: ABdhPJxseIhuewYJlpCXCtMVG5iFIKTNmqa55zamxfBrwOpA/W8VjpIWfRrZaGcVBy4IrXlLNxLC6g==
-X-Received: by 2002:a37:458:: with SMTP id 85mr43302092qke.61.1608130272025;
-        Wed, 16 Dec 2020 06:51:12 -0800 (PST)
+        bh=UM8E71D5hsgpPDsL4/mS1QuAqEZ2fo6QhgV2151KP+4=;
+        b=jgG0W0AIbR1e4dPD00F/LHZmXrMoCOSN9F213LDMHDpg/ICradJ/xhsRsHx5yYJtDV
+         by/EBphfbFGFsf6IoovaHKxNT0spyvLGLJBJngXBAFcZfONnnsdIKkE2wwGCh8woXO1b
+         +vBuN/AbpF0bDOdo7CalCeZA2P7VV//HuDDvUzPBpHhpsFJaWKraw3e8pEdWXY7cFF5P
+         6wHFDvnAiWMPdqkfvcudR8dxb0zPrws770GFEg8VvJVcT7JdlOc7xfgx3543I1u9F3Uz
+         xENhv8CT/JYLjz3ToDua4BixCKhgk62n8xcK/s4PtuBuiq9R+TUSYPp5YVmfB4EhoT+K
+         moEQ==
+X-Gm-Message-State: AOAM533dTUJKNbEZp70rCgTksBZUUe3mp43ckHIVABWW1A+fRjfQL5+f
+        JMQqdm96CNaY8tWmtYP351NUiIdzjeR5GQ==
+X-Google-Smtp-Source: ABdhPJxG3O9A1WBpofpCtOR/PPiMHLMZD0d0H35ICHIj96vo9lVD96w6gdMxloywZiyj31JmqZGW2Q==
+X-Received: by 2002:a0c:b8ae:: with SMTP id y46mr44071479qvf.51.1608130275267;
+        Wed, 16 Dec 2020 06:51:15 -0800 (PST)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id j142sm1211420qke.117.2020.12.16.06.51.09
+        by smtp.gmail.com with ESMTPSA id j142sm1211420qke.117.2020.12.16.06.51.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Dec 2020 06:51:11 -0800 (PST)
+        Wed, 16 Dec 2020 06:51:14 -0800 (PST)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, gitster@pobox.com,
         git@jeffhostetler.com, chriscool@tuxfamily.org, peff@peff.net,
         newren@gmail.com, jrnieder@gmail.com, martin.agren@gmail.com
-Subject: [PATCH v5 5/9] entry: extract a header file for entry.c functions
-Date:   Wed, 16 Dec 2020 11:50:34 -0300
-Message-Id: <934ead9519a97e404a76e27331db32ac65670268.1608128666.git.matheus.bernardino@usp.br>
+Subject: [PATCH v5 6/9] entry: make fstat_output() and read_blob_entry() public
+Date:   Wed, 16 Dec 2020 11:50:35 -0300
+Message-Id: <da6d1d762472ad0fdbe3d6145384078741d6516b.1608128666.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <cover.1608128666.git.matheus.bernardino@usp.br>
 References: <cover.1608128666.git.matheus.bernardino@usp.br>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The declarations of entry.c's public functions and structures currently
-reside in cache.h. Although not many, they contribute to the size of
-cache.h and, when changed, cause the unnecessary recompilation of
-modules that don't really use these functions. So let's move them to a
-new entry.h header. While at it let's also move a comment related to
-checkout_entry() from entry.c to entry.h as it's more useful to describe
-the function there.
+These two functions will be used by the parallel checkout code, so let's
+make them public. Note: fstat_output() is renamed to
+fstat_checkout_output(), now that it has become public, seeking to avoid
+future name collisions.
 
-Original-patch-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- apply.c                  |  1 +
- builtin/checkout-index.c |  1 +
- builtin/checkout.c       |  1 +
- builtin/difftool.c       |  1 +
- cache.h                  | 24 -----------------------
- entry.c                  |  9 +--------
- entry.h                  | 42 ++++++++++++++++++++++++++++++++++++++++
- unpack-trees.c           |  1 +
- 8 files changed, 48 insertions(+), 32 deletions(-)
- create mode 100644 entry.h
+ entry.c | 8 ++++----
+ entry.h | 3 +++
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index 4a4e9a0158..fda7b4f770 100644
---- a/apply.c
-+++ b/apply.c
-@@ -21,6 +21,7 @@
- #include "quote.h"
- #include "rerere.h"
- #include "apply.h"
-+#include "entry.h"
- 
- struct gitdiff_data {
- 	struct strbuf *root;
-diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
-index 4bbfc92dce..9276ed0258 100644
---- a/builtin/checkout-index.c
-+++ b/builtin/checkout-index.c
-@@ -11,6 +11,7 @@
- #include "quote.h"
- #include "cache-tree.h"
- #include "parse-options.h"
-+#include "entry.h"
- 
- #define CHECKOUT_ALL 4
- static int nul_term_line;
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 9b82119129..f92f29bad3 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -26,6 +26,7 @@
- #include "unpack-trees.h"
- #include "wt-status.h"
- #include "xdiff-interface.h"
-+#include "entry.h"
- 
- static const char * const checkout_usage[] = {
- 	N_("git checkout [<options>] <branch>"),
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index 6e18e623fd..ef25729d49 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -23,6 +23,7 @@
- #include "lockfile.h"
- #include "object-store.h"
- #include "dir.h"
-+#include "entry.h"
- 
- static int trust_exit_code;
- 
-diff --git a/cache.h b/cache.h
-index 8d279bc110..a3a70cd8a4 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1711,30 +1711,6 @@ const char *show_ident_date(const struct ident_split *id,
-  */
- int ident_cmp(const struct ident_split *, const struct ident_split *);
- 
--struct checkout {
--	struct index_state *istate;
--	const char *base_dir;
--	int base_dir_len;
--	struct delayed_checkout *delayed_checkout;
--	struct checkout_metadata meta;
--	unsigned force:1,
--		 quiet:1,
--		 not_new:1,
--		 clone:1,
--		 refresh_cache:1;
--};
--#define CHECKOUT_INIT { NULL, "" }
--
--#define TEMPORARY_FILENAME_LENGTH 25
--int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *topath, int *nr_checkouts);
--void enable_delayed_checkout(struct checkout *state);
--int finish_delayed_checkout(struct checkout *state, int *nr_checkouts);
--/*
-- * Unlink the last component and schedule the leading directories for
-- * removal, such that empty directories get removed.
-- */
--void unlink_entry(const struct cache_entry *ce);
--
- struct cache_def {
- 	struct strbuf path;
- 	int flags;
 diff --git a/entry.c b/entry.c
-index a0532f1f00..b0b8099699 100644
+index b0b8099699..b36071a610 100644
 --- a/entry.c
 +++ b/entry.c
-@@ -6,6 +6,7 @@
- #include "submodule.h"
- #include "progress.h"
- #include "fsmonitor.h"
-+#include "entry.h"
+@@ -84,7 +84,7 @@ static int create_file(const char *path, unsigned int mode)
+ 	return open(path, O_WRONLY | O_CREAT | O_EXCL, mode);
+ }
  
- static void create_directories(const char *path, int path_len,
- 			       const struct checkout *state)
-@@ -429,14 +430,6 @@ static void mark_colliding_entries(const struct checkout *state,
+-static void *read_blob_entry(const struct cache_entry *ce, unsigned long *size)
++void *read_blob_entry(const struct cache_entry *ce, unsigned long *size)
+ {
+ 	enum object_type type;
+ 	void *blob_data = read_object_file(&ce->oid, &type, size);
+@@ -109,7 +109,7 @@ static int open_output_fd(char *path, const struct cache_entry *ce, int to_tempf
  	}
  }
  
--/*
-- * Write the contents from ce out to the working tree.
-- *
-- * When topath[] is not NULL, instead of writing to the working tree
-- * file named by ce, a temporary file is created by this function and
-- * its name is returned in topath[], which must be able to hold at
-- * least TEMPORARY_FILENAME_LENGTH bytes long.
-- */
- int checkout_entry(struct cache_entry *ce, const struct checkout *state,
- 		   char *topath, int *nr_checkouts)
+-static int fstat_output(int fd, const struct checkout *state, struct stat *st)
++int fstat_checkout_output(int fd, const struct checkout *state, struct stat *st)
  {
-diff --git a/entry.h b/entry.h
-new file mode 100644
-index 0000000000..acbbb90220
---- /dev/null
-+++ b/entry.h
-@@ -0,0 +1,42 @@
-+#ifndef ENTRY_H
-+#define ENTRY_H
-+
-+#include "cache.h"
-+#include "convert.h"
-+
-+struct checkout {
-+	struct index_state *istate;
-+	const char *base_dir;
-+	int base_dir_len;
-+	struct delayed_checkout *delayed_checkout;
-+	struct checkout_metadata meta;
-+	unsigned force:1,
-+		 quiet:1,
-+		 not_new:1,
-+		 clone:1,
-+		 refresh_cache:1;
-+};
-+#define CHECKOUT_INIT { NULL, "" }
-+
-+#define TEMPORARY_FILENAME_LENGTH 25
-+/*
-+ * Write the contents from ce out to the working tree.
-+ *
-+ * When topath[] is not NULL, instead of writing to the working tree
-+ * file named by ce, a temporary file is created by this function and
-+ * its name is returned in topath[], which must be able to hold at
-+ * least TEMPORARY_FILENAME_LENGTH bytes long.
-+ */
-+int checkout_entry(struct cache_entry *ce, const struct checkout *state,
-+		   char *topath, int *nr_checkouts);
-+
-+void enable_delayed_checkout(struct checkout *state);
-+int finish_delayed_checkout(struct checkout *state, int *nr_checkouts);
-+
-+/*
-+ * Unlink the last component and schedule the leading directories for
-+ * removal, such that empty directories get removed.
-+ */
-+void unlink_entry(const struct cache_entry *ce);
-+
-+#endif /* ENTRY_H */
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 323280dd48..a511fadd89 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -16,6 +16,7 @@
- #include "fsmonitor.h"
- #include "object-store.h"
- #include "promisor-remote.h"
-+#include "entry.h"
+ 	/* use fstat() only when path == ce->name */
+ 	if (fstat_is_reliable() &&
+@@ -132,7 +132,7 @@ static int streaming_write_entry(const struct cache_entry *ce, char *path,
+ 		return -1;
  
- /*
-  * Error messages expected by scripts out of plumbing commands such as
+ 	result |= stream_blob_to_fd(fd, &ce->oid, filter, 1);
+-	*fstat_done = fstat_output(fd, state, statbuf);
++	*fstat_done = fstat_checkout_output(fd, state, statbuf);
+ 	result |= close(fd);
+ 
+ 	if (result)
+@@ -346,7 +346,7 @@ static int write_entry(struct cache_entry *ce,
+ 
+ 		wrote = write_in_full(fd, new_blob, size);
+ 		if (!to_tempfile)
+-			fstat_done = fstat_output(fd, state, &st);
++			fstat_done = fstat_checkout_output(fd, state, &st);
+ 		close(fd);
+ 		free(new_blob);
+ 		if (wrote < 0)
+diff --git a/entry.h b/entry.h
+index acbbb90220..60df93ca78 100644
+--- a/entry.h
++++ b/entry.h
+@@ -39,4 +39,7 @@ int finish_delayed_checkout(struct checkout *state, int *nr_checkouts);
+  */
+ void unlink_entry(const struct cache_entry *ce);
+ 
++void *read_blob_entry(const struct cache_entry *ce, unsigned long *size);
++int fstat_checkout_output(int fd, const struct checkout *state, struct stat *st);
++
+ #endif /* ENTRY_H */
 -- 
 2.29.2
 
