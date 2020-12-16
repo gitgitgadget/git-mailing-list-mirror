@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
 	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC346C2BBCF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC2C4C2BBCD
 	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 14:52:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5F75A23407
+	by mail.kernel.org (Postfix) with ESMTP id 8B2BF233CF
 	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 14:52:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726357AbgLPOwR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Dec 2020 09:52:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43648 "EHLO
+        id S1726434AbgLPOwU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Dec 2020 09:52:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726098AbgLPOwR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Dec 2020 09:52:17 -0500
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AC7FC061248
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 06:51:19 -0800 (PST)
-Received: by mail-qt1-x82b.google.com with SMTP id u21so17313642qtw.11
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 06:51:19 -0800 (PST)
+        with ESMTP id S1725951AbgLPOwU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Dec 2020 09:52:20 -0500
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52B67C061257
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 06:51:27 -0800 (PST)
+Received: by mail-qt1-x833.google.com with SMTP id z3so17312286qtw.9
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 06:51:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp.br; s=usp-google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Ke/NvkM355z48YS6G4lDF36Qx2Gzpv7OGCXzNnG+leM=;
-        b=yAaxyJ/kkmHnUJKBOJ0cLh2Cp4J+XTK95TtSRbBPX5saCG6Fmwqte66XT6ikBi/Bla
-         HAx9XV0D0WAM+SuD0XwjvWgJVIlXBQgZ2K5FRpwvxL+88QhPFrOivs3TvdFr4+u4HE1S
-         vFB/IsFsQo950ETSrq5KSNs0n72Tyj+rrZJa40WaDSz8JwiwWu7tuSiUGsbC3qL5VvQp
-         o3GxMeJ3BP1d4AqatAif/cnOFRIyMwDmUUF/f8G4acVTRynWXN9Djz2phFCvezayFs6x
-         TtgkLy8X7KoH0OnsNGTaExWdGRX2i2X8M9mCCicpywNaSj6e1Kkxzry4gVI8xRrAvMM0
-         RHMg==
+        bh=9aFe1FIjV2nEk+qK1MY1nd3faF3m4ENjbzT4ASabjiQ=;
+        b=cNUYD83zZwaffOdqzX2bDMkbHtLzXgy91jjIwcfSJTfuHuR6e5hvq55vcGkEFssUwR
+         09XNdlYDDdg2QrVgdDNUvWGvTbJI8DFlQ+oRQV8kPFjk8Foqy6p+pUQATB7/sUQKevYQ
+         Gcj8PNIwR+4QIU7ndPSKbGyBtO23WTKqYZy+vmx5Oy0nXZR+EDW4XoN86837m2CmnrsW
+         jYn0M02uf0KCnGJ054KrKwHCLGqaGQp/wF5C+beQtQD6ouEhyFDKhvp320kXGl3RzamS
+         sbeaPgO/9sP3WSfKAypJSinYiVX1VkKg5p7SiIduMfqe35EA49Mo3XOYDPRh79d5fAYq
+         2mdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Ke/NvkM355z48YS6G4lDF36Qx2Gzpv7OGCXzNnG+leM=;
-        b=Nwio+qkrp7mpSLiTp4goGbGWB6i89/gurepEaqA2u9l+65xNI4FON7q5ukjy99oyR3
-         J6evRxwo/zn87/1OouvknHtL871ZegjOGmi1ibh8IUgdmAZF3h+bGrwl2RPWzOW+yS4N
-         t6XTyEiqkq9KzCDnDMsq85dM5f7Pkdd1WubtJlm0yqJPkDkfbR+8UzBCp7ikWi22BF4B
-         AHWQuF/epMit/vhhNSsM8nHFLk9T6kR3xFW1CfKSMuE0ljBWHXQcsFcXedGztrQANyyy
-         T6Qi7PHOhml4ihX0VA8xgV3mo9bg1gvFlzrnNnkAD06DRJ0SZnwMTn3ulpK6zk6a+J27
-         aWjg==
-X-Gm-Message-State: AOAM533JZSZemoTLQqKSfKHJwWv+JHzve7cDJlCMQxsDk6SzOgdvVmnW
-        4E3Knr4G+w1uSfQP6dxx5M45CKSrcmH/3w==
-X-Google-Smtp-Source: ABdhPJyIlCZjVYji0Vy/VkjWpWz4OgfT5mj97fvri0HrNve8fiZaVWQp/37fC5XoQudx/5sOch/ogA==
-X-Received: by 2002:ac8:4648:: with SMTP id f8mr42265126qto.5.1608130278474;
-        Wed, 16 Dec 2020 06:51:18 -0800 (PST)
+        bh=9aFe1FIjV2nEk+qK1MY1nd3faF3m4ENjbzT4ASabjiQ=;
+        b=pYGKDHnZ1QWUhv9w2toY8+XSCVK58Vf1+tEmLMdEnJAgAgZRgwY/koxUGkQsRkKK5j
+         r5a9ebpmEgVOAc7z8QKpOn3AuDGm2p1flN59I1bTZwjnuBocw0dSCSlgxDqfiIEob4Wt
+         U84cpEhdSOJl7pd94v2X4DISloq+9Xz4kZWiFkZ7IR4ADDIJhBkQ2Ms5JOX3Vm8ssMfV
+         FIXMW6d0umbk6TcsX3fK11dBAIhQXrvPioKHQNYDJ5X0Y21xMTwOhk6MkAzBEROt9fFL
+         Rjs8XRBxz8kpkwBllRuvEEqN6D/MSDMF/vA2l+RrnNWhyVUSoIuKr2PYp1JJmF3lpC/V
+         mGoQ==
+X-Gm-Message-State: AOAM533qQL7ANa7UL0/O7zkbobH+6pVjcZFokYI/OLfZvvEwQCNG1Mfg
+        0ogjwGl+g8k1T0o0w5VoM/m+8+Ttnb5OGA==
+X-Google-Smtp-Source: ABdhPJzzPJFx4I4yK4FB8LPElyZOzhnrtXUkium5iHwF5+jTrcH07vGvaz4oq4OTgV0C7PejnSHdCg==
+X-Received: by 2002:a05:622a:34d:: with SMTP id r13mr44433957qtw.93.1608130286074;
+        Wed, 16 Dec 2020 06:51:26 -0800 (PST)
 Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id j142sm1211420qke.117.2020.12.16.06.51.15
+        by smtp.gmail.com with ESMTPSA id j142sm1211420qke.117.2020.12.16.06.51.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Dec 2020 06:51:17 -0800 (PST)
+        Wed, 16 Dec 2020 06:51:25 -0800 (PST)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, gitster@pobox.com,
         git@jeffhostetler.com, chriscool@tuxfamily.org, peff@peff.net,
         newren@gmail.com, jrnieder@gmail.com, martin.agren@gmail.com
-Subject: [PATCH v5 7/9] entry: extract update_ce_after_write() from write_entry()
-Date:   Wed, 16 Dec 2020 11:50:36 -0300
-Message-Id: <def654606d1ec8aef0d3807db15ebe259a30ac68.1608128666.git.matheus.bernardino@usp.br>
+Subject: [PATCH v5 9/9] entry: add checkout_entry_ca() taking preloaded conv_attrs
+Date:   Wed, 16 Dec 2020 11:50:38 -0300
+Message-Id: <0556d32e8c9b3119fd343f719db4be41617d5365.1608128666.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <cover.1608128666.git.matheus.bernardino@usp.br>
 References: <cover.1608128666.git.matheus.bernardino@usp.br>
@@ -72,72 +72,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The code that updates the in-memory index information after an entry is
-written currently resides in write_entry(). Extract it to a public
-function so that it can be called by the parallel checkout functions,
-outside entry.c, in a later patch.
+The parallel checkout machinery will call checkout_entry() for entries
+that could not be written in parallel due to path collisions. At this
+point, we will already be holding the conversion attributes for each
+entry, and it would be wasteful to let checkout_entry() load these
+again. Instead, let's add the checkout_entry_ca() variant, which
+optionally takes a preloaded conv_attrs struct.
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- entry.c | 25 ++++++++++++++++---------
- entry.h |  2 ++
- 2 files changed, 18 insertions(+), 9 deletions(-)
+ entry.c | 11 ++++++-----
+ entry.h | 16 ++++++++++++++--
+ 2 files changed, 20 insertions(+), 7 deletions(-)
 
 diff --git a/entry.c b/entry.c
-index b36071a610..1d2df188e5 100644
+index 62ddd348bc..9d79a5671f 100644
 --- a/entry.c
 +++ b/entry.c
-@@ -251,6 +251,18 @@ int finish_delayed_checkout(struct checkout *state, int *nr_checkouts)
- 	return errs;
+@@ -440,12 +440,13 @@ static void mark_colliding_entries(const struct checkout *state,
+ 	}
  }
  
-+void update_ce_after_write(const struct checkout *state, struct cache_entry *ce,
-+			   struct stat *st)
-+{
-+	if (state->refresh_cache) {
-+		assert(state->istate);
-+		fill_stat_cache_info(state->istate, ce, st);
-+		ce->ce_flags |= CE_UPDATE_IN_BASE;
-+		mark_fsmonitor_invalid(state->istate, ce);
-+		state->istate->cache_changed |= CE_ENTRY_CHANGED;
-+	}
-+}
-+
- static int write_entry(struct cache_entry *ce,
- 		       char *path, const struct checkout *state, int to_tempfile)
+-int checkout_entry(struct cache_entry *ce, const struct checkout *state,
+-		   char *topath, int *nr_checkouts)
++int checkout_entry_ca(struct cache_entry *ce, struct conv_attrs *ca,
++		      const struct checkout *state, char *topath,
++		      int *nr_checkouts)
  {
-@@ -371,15 +383,10 @@ static int write_entry(struct cache_entry *ce,
+ 	static struct strbuf path = STRBUF_INIT;
+ 	struct stat st;
+-	struct conv_attrs ca_buf, *ca = NULL;
++	struct conv_attrs ca_buf;
  
- finish:
- 	if (state->refresh_cache) {
--		assert(state->istate);
--		if (!fstat_done)
--			if (lstat(ce->name, &st) < 0)
--				return error_errno("unable to stat just-written file %s",
--						   ce->name);
--		fill_stat_cache_info(state->istate, ce, &st);
--		ce->ce_flags |= CE_UPDATE_IN_BASE;
--		mark_fsmonitor_invalid(state->istate, ce);
--		state->istate->cache_changed |= CE_ENTRY_CHANGED;
-+		if (!fstat_done && lstat(ce->name, &st) < 0)
-+			return error_errno("unable to stat just-written file %s",
-+					   ce->name);
-+		update_ce_after_write(state, ce , &st);
+ 	if (ce->ce_flags & CE_WT_REMOVE) {
+ 		if (topath)
+@@ -459,7 +460,7 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state,
  	}
- delayed:
- 	return 0;
+ 
+ 	if (topath) {
+-		if (S_ISREG(ce->ce_mode)) {
++		if (S_ISREG(ce->ce_mode) && !ca) {
+ 			convert_attrs(state->istate, &ca_buf, ce->name);
+ 			ca = &ca_buf;
+ 		}
+@@ -530,7 +531,7 @@ int checkout_entry(struct cache_entry *ce, const struct checkout *state,
+ 	if (nr_checkouts)
+ 		(*nr_checkouts)++;
+ 
+-	if (S_ISREG(ce->ce_mode)) {
++	if (S_ISREG(ce->ce_mode) && !ca) {
+ 		convert_attrs(state->istate, &ca_buf, ce->name);
+ 		ca = &ca_buf;
+ 	}
 diff --git a/entry.h b/entry.h
-index 60df93ca78..ea7290bcd5 100644
+index ea7290bcd5..b8c0e170dc 100644
 --- a/entry.h
 +++ b/entry.h
-@@ -41,5 +41,7 @@ void unlink_entry(const struct cache_entry *ce);
+@@ -26,9 +26,21 @@ struct checkout {
+  * file named by ce, a temporary file is created by this function and
+  * its name is returned in topath[], which must be able to hold at
+  * least TEMPORARY_FILENAME_LENGTH bytes long.
++ *
++ * With checkout_entry_ca(), callers can optionally pass a preloaded
++ * conv_attrs struct (to avoid reloading it), when ce refers to a
++ * regular file. If ca is NULL, the attributes will be loaded
++ * internally when (and if) needed.
+  */
+-int checkout_entry(struct cache_entry *ce, const struct checkout *state,
+-		   char *topath, int *nr_checkouts);
++int checkout_entry_ca(struct cache_entry *ce, struct conv_attrs *ca,
++		      const struct checkout *state, char *topath,
++		      int *nr_checkouts);
++static inline int checkout_entry(struct cache_entry *ce,
++				 const struct checkout *state, char *topath,
++				 int *nr_checkouts)
++{
++	return checkout_entry_ca(ce, NULL, state, topath, nr_checkouts);
++}
  
- void *read_blob_entry(const struct cache_entry *ce, unsigned long *size);
- int fstat_checkout_output(int fd, const struct checkout *state, struct stat *st);
-+void update_ce_after_write(const struct checkout *state, struct cache_entry *ce,
-+			   struct stat *st);
- 
- #endif /* ENTRY_H */
+ void enable_delayed_checkout(struct checkout *state);
+ int finish_delayed_checkout(struct checkout *state, int *nr_checkouts);
 -- 
 2.29.2
 
