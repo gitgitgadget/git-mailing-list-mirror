@@ -2,130 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 292C6C4361B
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 02:18:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C6FBC4361B
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 03:10:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E6735230FF
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 02:18:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 39D5322D75
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 03:10:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725385AbgLPCSq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Dec 2020 21:18:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40606 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725274AbgLPCSq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Dec 2020 21:18:46 -0500
-Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com [IPv6:2607:f8b0:4864:20::f42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9019C0613D6
-        for <git@vger.kernel.org>; Tue, 15 Dec 2020 18:18:05 -0800 (PST)
-Received: by mail-qv1-xf42.google.com with SMTP id p12so10626477qvj.13
-        for <git@vger.kernel.org>; Tue, 15 Dec 2020 18:18:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:subject:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=zB7pptHzYvAi7BK3mz5zxeviAlhoToos6nQslCMNh/8=;
-        b=aiM/jQryS+e65h+DTOLwWW9suCPK8IPCsoo8C0Xy6Iu4X4kWVb9zCjhGeNVCfN4MUe
-         F/N94DrQ9qXfFXNukerzFxTkhIdI3X1zeY5SgtY1RK4fHTqmpqryuiCAyOtwMATm4r3S
-         OkvuS8sZBOho/J1L1whHBptCQx0FRv+xAbjXiRp12v99zLdZQbscAtg8x+ewpD9XPgrW
-         6LAm5egbzWqlEzCi/lj0WJuakLdctGaNenGkRFkFYkFTOAsilQiz2R402AJJCbShclgR
-         7De4U87L6JRysskOlTQh/egBNbn+r4NCIYkXYlIarOC9ENRxCgXTj7iZWqG5NCPkc8/6
-         O/DQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:subject:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=zB7pptHzYvAi7BK3mz5zxeviAlhoToos6nQslCMNh/8=;
-        b=p5YoM/TdykO8/iIpgf5lW0Um2WO5cbmFUOgLhME7lUOzjJlZHuBYhuAb0+mjxLUKW2
-         PpnCCxnsHu9HNJFcWtHz9Djg08QDEBjk3GW/Mb9sQTVJP5eJhI7efK4ZOosGxWtWr9td
-         2yZsFC5tQCG2j3OTiS4YmB6/Al0ojNE5IZm3uFoBlqlcNYaC1b6Mm+wYy16tzMlcWEyg
-         i8XH0apV2cOoaACQGLjlAMrnpV4TO6IB3fdU6dgJIXx1+TLf77ReSXZtMCc3hU9R3vG6
-         zypUZH0gamwGT6i6hF04gm9ql7WYnTEF9ZpjTV7YxzHz0t+Qt/E+1K1or/sgsWuz4p48
-         SCjA==
-X-Gm-Message-State: AOAM530uW7RiaaySKgkGOUslyWdgGd34FJKTb8pjTbTQ6pTQqeMCent9
-        DWWcKrIhIBzfke5SYZ52FQg=
-X-Google-Smtp-Source: ABdhPJxxkMI9bzvxMjTwZInIBswuD2yuGYj26x6D2GgXzCin6gAdi+PPJAkNZvfXjwh2ymJ5DqOXiQ==
-X-Received: by 2002:a05:6214:d4a:: with SMTP id 10mr38396661qvr.62.1608085085223;
-        Tue, 15 Dec 2020 18:18:05 -0800 (PST)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id 127sm389562qkj.51.2020.12.15.18.18.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Dec 2020 18:18:04 -0800 (PST)
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: Perf lib sanity tests fail on OSX
-To:     Sangeeta <sangunb09@gmail.com>, Git List <git@vger.kernel.org>
-Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <CAHjREB6QrR-FQzwOphgw1z1Rba=o7gNvEwomHc60aNH3EkQg5A@mail.gmail.com>
-Message-ID: <fde32488-97e7-55f3-86d5-25f525492844@gmail.com>
-Date:   Tue, 15 Dec 2020 21:18:02 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.5.1
+        id S1725776AbgLPDKk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Dec 2020 22:10:40 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63654 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725440AbgLPDKk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Dec 2020 22:10:40 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 112F4117CCC;
+        Tue, 15 Dec 2020 22:09:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XnlU49PHHFudpqMiyNOyfGWAmkw=; b=oJIT0O
+        YUsxgf3M646WD6184D5WdyNE/s4Hg1SGoMblL2+II9qDwoNNUnwhFpIKXiOz08IC
+        c5fhP0LoGeI5a8LUI6IdIe5sq3gTsJ4Zi+c1iWiPKkYUjj1JLmjAiAaQ5U90Wt2u
+        dK3EGsgQKakzRk+5Gfo8/wb3oyncvWb8Wqv88=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kC+UzCJ0bcr4DyjdXf/FVq2AQCU7sNww
+        swTNzlONVwndAhnwJaaufLd3NNJ6L7h1Rg92mJLSFWlUhlkEXvPT80B+WKCWT/A3
+        vLLWGM6svA+FaJ3cEWaM4dHIeUHlhgU6h8Ye9LyeuGUQSUlVIS1d4sTbEodiASRY
+        +dquS4I84oc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 09202117CCB;
+        Tue, 15 Dec 2020 22:09:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 48107117CCA;
+        Tue, 15 Dec 2020 22:09:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] clone: in protocol v2, use remote's default branch
+References: <20201208013121.677494-1-jonathantanmy@google.com>
+        <20201211210508.2337494-1-jonathantanmy@google.com>
+        <87blewwoil.fsf@evledraar.gmail.com>
+        <xmqqim94e4et.fsf@gitster.c.googlers.com>
+        <878s9zx2ul.fsf@evledraar.gmail.com>
+        <X9ghqMo5WS8FrBEz@coredump.intra.peff.net>
+        <xmqq8s9zaica.fsf@gitster.c.googlers.com>
+        <X9g9Y9LWc0NtHlQn@coredump.intra.peff.net>
+Date:   Tue, 15 Dec 2020 19:09:50 -0800
+In-Reply-To: <X9g9Y9LWc0NtHlQn@coredump.intra.peff.net> (Jeff King's message
+        of "Mon, 14 Dec 2020 23:36:51 -0500")
+Message-ID: <xmqq7dpi5tvl.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAHjREB6QrR-FQzwOphgw1z1Rba=o7gNvEwomHc60aNH3EkQg5A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2A346528-3F4C-11EB-B8B2-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Sangeeta,
+Jeff King <peff@peff.net> writes:
 
-Le 2020-12-15 à 14:08, Sangeeta a écrit :
-
-> Hey everyone,
+>> Meaning "git checkout origin" would look at origin/HEAD and find the
+>> remote-tracking branch it points at, and uses that name?  I think
+>> that does make quite a lot of sense.  You are correct to point out
+>> that not just "git checkout origin/HEAD", but "git checkout origin",
+>> currently detaches the HEAD at that commit, if you have origin/HEAD
+>> pointing at one of the remote-tracking branches.
 >
-> The performance test, p0000-perf-lib-sanity.sh[1], is failing on my
-> local OSX machine due to an error in the test_export of the foo
-> variable. I think the test is failing because it is not able to export
-> the `foo` variable using `test_export`.
-> [1] https://github.com/git/git/blob/master/t/perf/p0000-perf-lib-sanity.sh#L26
+> I'm not sure if it's a good idea to change "git checkout origin" here or
+> not. It already does something useful. I was mostly suggesting that the
+> other thing might _also_ be useful, but I'm not sure if it is wise to
+> change the current behavior.
 
-It is not the export per se that fails (that would be very bad news
-indeed), it is the shell magic in the 'test_run_perf_' function in
-'perf-lib.sh' that uses a non-portable sed(1) invocation:
+Well, "git checkout origin/HEAD" would also do something useful,
+which happens to be identical to "git checkout origin", to detach
+HEAD at the commit.
 
-      set | sed -n "s'"/'/'\\\\''/g"';s/^\\($test_export_\\)/export 
-'"'&'"'/p" >test_vars
+> I was thinking more like an explicit way to trigger the dwim-behavior,
+> like:
+>
+>   # same as "git checkout foo" magic that creates "foo", but we
+>   # have said explicitly both that we expect to make the new branch, and
+>   # also that we expect it to come from origin.
+>   git checkout --make-local origin/foo
 
-As you might already know, since macOS has some BSD background/ancestry,
-most POSIX utilities are closer to the OpenBSD/FreeBSD versions than to
-their GNU/Linux counterparts.
+By default I think --guess (formerly known as --dwim) is enabled, so
+"git checkout foo" is "git checkout --guess foo", which is making
+local 'foo' out of the uniquely found remote-tracking branch.  This
+new one is to reduce the "uniquely found" part from the magic and
+let you be a bit more explicit, but not explicit enough to say "-t"
+or "-b foo"?  I am not sure if this is all that useful.
 
-I successfully ran p0000-perf-lib-sanity.sh on my Mac after installing 
-the GNU version of sed using Homebrew and making sure to follow the
-indications in the 'Caveats' so that the sed from Homebrew is first in
-PATH:
+If this were a slightly different proposal, I would see the
+convenience value in it, though.  Currently what "--guess" does is:
 
-      brew install gnu-sed
+      If the name 'foo' given does not exist as a local branch,
+      and the name appears exactly once as a remote-tracking branch
+      from some remote (i.e. 'refs/remotes/origin/foo' exists, but
+      there is no other 'refs/remotes/*/foo'), create a local 'foo'
+      that builds on that remote-tracking branch and check it out.
 
-      export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+What would happen if we tweaked the existing "--guess" behaviour
+slightly?
 
-      ./p0000-perf-lib-sanity.sh
+      "git checkout --guess origin/foo", even when there is a second
+      remote 'publish' that also has a remote-tracking branch for
+      its 'foo' (i.e. both 'refs/remotes/{origin,publish}/foo'
+      exists), can be used to disambiguate among these remotes with
+      'foo'.  You'd get local 'foo' that builds on 'foo' from the
+      remote 'origin' and check it out.
 
-I do not know sed syntax enough to fix the invocation to make it
-portable (nor do I know if it's possible).
+>   # similar, but because we are being explicit, we know it is reasonable
+>   # to dereference HEAD to find the actual branch name
+>   git checkout --make-local origin/HEAD
 
-I've CC-ed Johannes and Lars since they were involved in the thread you 
-mentioned.
+The user does not need "git symbolic-ref refs/remotes/origin/HEAD"
+if such a feature were available.  "git checkout --some-option origin"
+without having to say /HEAD may be a better UI, though.
 
-> Thanks and Regards,
-> Sangeeta
+And "checkout" being a Porcelain, and the DWIM feature that is
+always on is subject to be improved for human use, I do not see why
+that --some-option cannot be --guess.  If I want to get the current
+behaviour, I can explicitly say "git checkout --detach origin"
+anyway, no?
 
-Cheers,
+> That seems orthogonal. Whether there is checkout magic or not, changing
+> what origin/HEAD points to would be disruptive to selecting it as a
+> tracking source, or doing diffs, or whatever. But that is why the
+> proposal in that series was to make the behavior configurable, and
+> default to "fill it in if missing" as the default, not "always update on
+> fetch".
 
-Philippe.
+Ah, I totally forgot that the favoured variant was "fill in if
+missing, but don't move once it is set".  Yes, I think that is a
+sensible default.
 
-P.S. my usual email setup is broken at the moment so I'm sorry if this 
-email is formatted wrong.
-P.P.S. and sorry for the re-send.
-
+Thanks.
