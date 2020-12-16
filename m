@@ -2,101 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-16.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5AC4C4361B
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 23:50:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CF8BC4361B
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 23:55:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6F34223731
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 23:50:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 42E5223382
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 23:55:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730384AbgLPXuA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Dec 2020 18:50:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42240 "EHLO
+        id S1730182AbgLPXz1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Dec 2020 18:55:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726110AbgLPXuA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Dec 2020 18:50:00 -0500
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29533C061794
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 15:49:20 -0800 (PST)
-Received: by mail-pf1-x449.google.com with SMTP id v26so6260076pff.23
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 15:49:20 -0800 (PST)
+        with ESMTP id S1726110AbgLPXz1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Dec 2020 18:55:27 -0500
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E42DDC061794
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 15:54:46 -0800 (PST)
+Received: by mail-pl1-x64a.google.com with SMTP id ba10so3229227plb.11
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 15:54:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=c4yoEcUyVYdUyOpfP8nH+5iiHTFA6F+Pr/AjIZ8vTUg=;
-        b=qAnxV+eyJvhz2DBxZMzWGYOuZ17o5RsNQ7S573x/QBD5LxLuA6T94BbaWHF1mN3UV9
-         IBd8wfmvivY98hHFSLQ4RyLDhVPCnapdt1+tEUOjC34VnglMd/jLzFQ87HSSsuXJ773p
-         ZOYavgwaG11WvszUJHRT9kPWMnUqo+KHRUlIQZlGjkwRMgGeQmhb6PBeTNUFSRGf3goH
-         acpUGvS1TB2XhQwS13TAHqxfHwwGZzQ+EYhrEiYWV0DR8FXqOO/LnQAm5NEWs7G61ETj
-         RdhcUH5ZhQCKOmE41xhED8TLKmhD6HyAPIhuLbiSMoinoltIOfdu4Rpc/OEdZBvPTaWV
-         p7PA==
+        bh=uv5lt73DSuGrA8yISvk9KQzyt86gDMX9Z6UGao922Jk=;
+        b=lhnK2UMMj+ayyLke/wypwPdAU22sJvu5e3hzUvjy3FHg1UT7DcY0fqqdGSlCBhYy0H
+         DKuMiwnXEhNRNAtT1ykIofkYMqxO/5p+VhLD6gp1310kCI37FeOlvbKf4GEn9nLEsMAe
+         7+UjzJqPTG5hPopFsG0bEC+R7IO3e5F9SQagyAtjABq/LZew6bgAj1aAZi5w2rHgXlMH
+         3BuDuG97BcTa+RpNl3Fw+rsAQ7J72wf/h18q6uuTc3KYRZ2OOovOIRQqlWxGK+fh7dVH
+         7yb5FPSB1paGjZaJqNxNuqtptniGkNi6/tKFMERh/OkvcNrutWelMOPqhRVjbgtl1PBd
+         7azw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=c4yoEcUyVYdUyOpfP8nH+5iiHTFA6F+Pr/AjIZ8vTUg=;
-        b=W2sqTqQz2yM5KySDXzf+VJP2/2fBgAvo80+64VLz8yLZCMPAgOF0Drf7W37k0dKnre
-         p/5Ih+dssjN8GBPmjz0Zc4W/GOTg7Cy6Mvk4pF0n3DaHLdeBgcohD4g1ef0lSn2U0FAc
-         zFAX0FyamesiiSvlRUWRciErd614El83OC1+iyIKln7B/5IT6Oo2ULPjALNUUk2/aMcG
-         hKKFqHmc30BUv5aY55XALaKXvhwfMmBxZgekPDSPL4OPGGsv9nCb5pgnhlm/TZcDVpVA
-         uUkibZtTQR/nYY4SJSLRyEdeOqAE0ASqrfSlzZ175epG+W6pZ+5mq0zejrk2tpzHMYxJ
-         NJ2g==
-X-Gm-Message-State: AOAM5328lXbJ6ienIehyJDGltQzQ59gr/FIm4noVVHP3i/5EPR7ADhCd
-        kCVGSRJY2VPOJ4qL35/sUKpBKmikJ4ApMJN4k7qF
-X-Google-Smtp-Source: ABdhPJxnqXjvUfECiJBxIxXB/79VExRw6THp26nRu5yYu5kl4b6pSLYN19Xg/UsGxc4IDSJgMR4vwx94FNANjVTW3cJ1
+        bh=uv5lt73DSuGrA8yISvk9KQzyt86gDMX9Z6UGao922Jk=;
+        b=mo2RyuBbnT76p0yoo0xZAeUtPw8a5BJ4i/3t3kIZmDuFlWkzmZ/zEkdcSxTGXp31JT
+         6oZFx82gTrvzrFeTbVz1Bq7nHo2pbbyz0UG/6rpwgpgQZou+id70T5FwXRHrJUVkVkdo
+         OdDy/4+XEVcaIUuhUXFH60Z7ztc7brEQCf02SG/P3peckR7eWsMaolMucWHWquWdv5xK
+         jxd9rDvc/dxXlqRtaDcUrraFlQeSLxPbMsRoZAkeQoYvJhlJ72eQR6v+/7HAifqsxpSD
+         FZsjtYGE3M/PcCUE8LsBFrBrhRa7h4EcQ+fvF1e6iF7AIqKHgT34m0Pv/rSbOeq8rD3o
+         +EzQ==
+X-Gm-Message-State: AOAM530NetsR3b3mNhd/uqoDtGat3s2tBb2joe5ydaKbTJxT68TSyMUH
+        Oa3nRbbHBcAn6au4GIfYDJE2CsLv/M6SWAVsuESC
+X-Google-Smtp-Source: ABdhPJyRwf2ByF8ivY0/Ia2Q63tYS02fohtkO1Pa7X9oxk0tfaBBdPfwfi5Xf9DQpCPFB9PxXiE+n93ES1j1J8+kf08r
 Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:aa7:9198:0:b029:18b:3835:3796 with
- SMTP id x24-20020aa791980000b029018b38353796mr5620600pfa.9.1608162558760;
- Wed, 16 Dec 2020 15:49:18 -0800 (PST)
-Date:   Wed, 16 Dec 2020 15:49:14 -0800
-In-Reply-To: <xmqq1rfq5l8x.fsf@gitster.c.googlers.com>
-Message-Id: <20201216234914.1671487-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a17:902:8343:b029:dc:231e:110a with
+ SMTP id z3-20020a1709028343b02900dc231e110amr1369139pln.67.1608162886170;
+ Wed, 16 Dec 2020 15:54:46 -0800 (PST)
+Date:   Wed, 16 Dec 2020 15:54:43 -0800
+In-Reply-To: <X9pQjHrRQQqB6AFI@coredump.intra.peff.net>
+Message-Id: <20201216235443.1674103-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <xmqq1rfq5l8x.fsf@gitster.c.googlers.com>
+References: <X9pQjHrRQQqB6AFI@coredump.intra.peff.net>
 X-Mailer: git-send-email 2.29.2.684.gfbc64c5ab5-goog
 Subject: Re: [PATCH v2 1/3] ls-refs: report unborn targets of symrefs
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org, peff@peff.net,
-        felipe.contreras@gmail.com, avarab@gmail.com
+To:     peff@peff.net
+Cc:     jonathantanmy@google.com, git@vger.kernel.org,
+        felipe.contreras@gmail.com, gitster@pobox.com, avarab@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > @@ -74,8 +79,28 @@ static int send_ref(const char *refname, const struct object_id *oid,
-> >  	return 0;
-> >  }
-> >  
-> > -static int ls_refs_config(const char *var, const char *value, void *data)
-> > +static void send_possibly_unborn_head(struct ls_refs_data *data)
-> >  {
-> > +	struct strbuf namespaced = STRBUF_INIT;
-> > +	struct object_id oid;
-> > +	int flag;
-> > +	int null_oid;
+> On Tue, Dec 15, 2020 at 06:07:56PM -0800, Jonathan Tan wrote:
 > 
-> I'd suggest renaming this one, which masks the global null_oid of
-> "const struct object_id" type.  This code does not break only
-> because is_null_oid() happens to be implemented as a static inline,
-> and not as a C-preprocessor macro, right?
-
-OK - will rename.
-
-> > +	strbuf_addf(&namespaced, "%sHEAD", get_git_namespace());
-> > +	resolve_ref_unsafe(namespaced.buf, 0, &oid, &flag);
-> > +	null_oid = is_null_oid(&oid);
-> > +	if (!null_oid || (data->symrefs && (flag & REF_ISSYMREF)))
-> > +		send_ref(namespaced.buf, null_oid ? NULL : &oid, flag, data);
-> > +	strbuf_release(&namespaced);
-> > +}
-> > +
 > > +static int ls_refs_config(const char *var, const char *value, void *cb_data)
 > > +{
 > > +	struct ls_refs_data *data = cb_data;
@@ -105,72 +80,24 @@ OK - will rename.
 > > +		data->allow_unborn = !strcmp(value, "allow") ||
 > > +			!strcmp(value, "advertise");
 > 
-> Are there differences between allow and advertise?  Would
-> lsrefs.allowUnborn that is a boolean, thus allowing the value to be
-> parsed by git_config_bool(), make more sense here, I wonder.  Or is
-> this meant as some future enhancement, e.g. you plan to have some
-> servers that allow "unborn" request even though they do not actively
-> advertise the support of the feature?  Without documentation update
-> or an in-code comment, it is rather hard to guess the intention
-> here.
+> What's the reason we would want this to be configurable? I would think
+> we would just want it always on for the server, and then clients can
+> choose to make us of it or not (and probably not by omitting the
+> capability; the question is what they want to do with the information
+> about HEAD, but that is true whether it is unborn or not, and is
+> controlled by options like "clone -b").
 
-I'll update the documentation. With this current patch, yes, some
-servers will allow "unborn" requests even though they do not actively
-advertise it. This allows servers in load-balanced environments to first
-be configured to support the feature, then after ensuring that the
-configuration for all servers is complete, to turn on advertisement.
+Firstly, this allows a staged rollout in load-balancing situations
+wherein we turn on "allow" for all servers, then "advertise", so that we
+don't end up with a client that sees the advertisement but then sends
+the follow-up request to a server that has not received the latest
+configuration yet.
 
-> > @@ -91,7 +116,7 @@ int ls_refs(struct repository *r, struct strvec *keys,
-> >  
-> >  	memset(&data, 0, sizeof(data));
-> >  
-> > -	git_config(ls_refs_config, NULL);
-> > +	git_config(ls_refs_config, &data);
-> >  
-> >  	while (packet_reader_read(request) == PACKET_READ_NORMAL) {
-> >  		const char *arg = request->line;
-> > @@ -103,14 +128,35 @@ int ls_refs(struct repository *r, struct strvec *keys,
-> >  			data.symrefs = 1;
-> >  		else if (skip_prefix(arg, "ref-prefix ", &out))
-> >  			strvec_push(&data.prefixes, out);
-> > +		else if (data.allow_unborn && !strcmp("unborn", arg))
-> > +			data.unborn = 1;
-> 
-> Somehow, it appears to me that writing it in a way along with this
-> line ...
-> 
-> 		else if (!strcmp("unborn", arg))
-> 			data.unborn = data.allow_unborn;
-> 
-> ... would make more sense.  Whether we allowed "unborn" request or
-> not, when the other side says "unborn", we are handling the request
-> for the unborn feature, and the condition with strcmp() alone
-> signals that better (in other words, when we acquire more request
-> types, we do not want to pass the control to "else if" clauses that
-> may come after this part when we see "unborn" request and when we
-> are configured not to accept "unborn" requests.
-> 
-> It does not make any difference in the current code, of course, and
-> it is more about future-proofing the cleanness of the code.
+Secondly, I wonder if some people purposely set HEAD to an unborn branch
+just so that the repository would be presented as not having a HEAD.
+Now, the name of the unborn branch would be revealed. I don't know if
+that's a problem, though - but if it is, at least this configuration
+variable is a way to solve that.
 
-Good point. I'll go ahead and write it as you describe.
-
-I was following the style in upload-pack, where writing it my way versus
-your way would make a difference because we die on invalid arguments at
-the end. (It does raise the question whether we should die on invalid
-arguments, but maybe that's for another time.)
-
-> 
-> > -	head_ref_namespaced(send_ref, &data);
-> > +	if (data.unborn)
-> > +		send_possibly_unborn_head(&data);
-> > +	else
-> > +		head_ref_namespaced(send_ref, &data);
-> 
-> I found the "send_possibly 70% duplicates what the more generic
-> head_ref_namespaced() does" a bit disturbing.
-
-There's more duplication in refs.c (e.g. head_ref_namespaced() and
-refs_head_ref()) too. I'll see if I can refactor those into something
-more generic.
-
+I'll include this in the documentation in a next version of this patch
+set.
