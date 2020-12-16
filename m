@@ -2,118 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB23AC0018C
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 17:44:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46B13C4361B
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 17:44:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6FBE724B0A
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 17:44:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2074124B27
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 17:44:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727697AbgLPRoH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Dec 2020 12:44:07 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55991 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727672AbgLPRoH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Dec 2020 12:44:07 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 674EEFD862;
-        Wed, 16 Dec 2020 12:43:23 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Mak1o2SiXJdXQyXH+L4haSLgzhE=; b=rmPiFY
-        bOXUX1nnsuc+ZyZQgH5SU1RCFfcIMOEffW5+8zBeIdFay3geYzubtWC+9cblbBSX
-        7Q0OHcJTITJu3jZW45w69NW6/zX1qgAJgkx6BoQHa0sKxR4mHEfzFskKWZchETno
-        p11NEoyveMMhhL0WuZok+rXP3YOyZhVIh8/0M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UGT8I8aYUCIgEAq2B0T1LKrn7fevWIAP
-        hiVroUCHG/DkSUhY49rGEjrupVByUUmh/8EBo+Y+JyxSZh7DpGzKpYcjyVBOx9w8
-        hEhlV4IHCYRZBrsxE5u5qlGZ11kkQ0eP11I2QHfPhTYMKQoEaRyAvGyKQrb1NCXq
-        oIvoqM4+mOA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5EC63FD861;
-        Wed, 16 Dec 2020 12:43:23 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 977DCFD860;
-        Wed, 16 Dec 2020 12:43:20 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 1/3] merge-ort: copy a few small helper functions from
- merge-recursive.c
-References: <pull.814.git.1608054807.gitgitgadget@gmail.com>
-        <0b455bd6fe7dff72c1849eb8466b97b96b2b90a9.1608054807.git.gitgitgadget@gmail.com>
-        <4a4d9d29-ccba-8d39-a7cd-34b1ba785e22@gmail.com>
-Date:   Wed, 16 Dec 2020 09:43:19 -0800
-In-Reply-To: <4a4d9d29-ccba-8d39-a7cd-34b1ba785e22@gmail.com> (Derrick
-        Stolee's message of "Wed, 16 Dec 2020 08:30:23 -0500")
-Message-ID: <xmqqim914pfs.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727723AbgLPRob (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Dec 2020 12:44:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42198 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727718AbgLPRo3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Dec 2020 12:44:29 -0500
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEA5BC0617A6
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 09:43:48 -0800 (PST)
+Received: by mail-oi1-x231.google.com with SMTP id l207so28439874oib.4
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 09:43:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pxD9c+qq72ObQPLy5mGVO52AlNrPW+keMtvBU/kZSJE=;
+        b=lwpPOMWi5mBP0rr7p/qflq3B4jcd9mkfizkxlEi5q/Gpr1GGT5jPWU8O1+wg4qt5b5
+         VTiK9yUMmq+w1l8Damibpwt1kwf2x4/UsArmVzfUB15aPnZhEZfQ1paS4F6xuMcUhp+X
+         s2vyM+qcEdDHiBNLmjYIh8HhlzCchidQCOpBdJvm5PRiXSkSqy84pxU2RXNfR9Z1FYZI
+         2wKwySfrBcwWi7zTTdbzEJzAmBUkyOGfAqlUsuqvdeUOu90HAnTG2YvtmU59zWwxTe9l
+         yZIhnxurwhmPiLzLlvcjhDlWSr3luhVeCvdI5RikEg3Ra2xhEZYpMTAwmWOna3iRjwqg
+         G6sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pxD9c+qq72ObQPLy5mGVO52AlNrPW+keMtvBU/kZSJE=;
+        b=L7jOLOdbSfAn0txRpYeby/hzd1/rKGv3oWb7ntdKgMq8bZLXcJtQ66gfHFhEoougnc
+         l3tmhaPcHsY5EiBQxt9M8MrAI3pp17l8LNqoUFldoyD5HazntWsKxLrB+q+YGZGGu8nZ
+         NzQm8RecwcgFEHvF6kfs0DfuVc4UqokAyJ8Ac6+W5fPQUYZC/MHxblEmklpX6qt1zJpH
+         jpR6W6P+oS0YVUYmbtxwkTZTKwNnkQYdykcRKjeJESTZ4uSPyCFiT8kZl6eTPbAyjIu2
+         wY+oOPlxQ/k8HUCZf++8sZK6yVoYoCq1kxvBIlX+j5OxcxB8p5RkBnHpUiWtNK+Qbwe/
+         CRUw==
+X-Gm-Message-State: AOAM531VS2Ym/Gbl5UAKM8rzt6r+24/vfyKW4xV6NOChaLPwoeXjCUjQ
+        ydBlyzsoz8kNotTv11okWwmBAqhIwHAKiw==
+X-Google-Smtp-Source: ABdhPJxvzp3IzfnkCPA628MhERUa/lquG3OAlVWnIaws/c9OY+9Acdj7nu6LNSnKrMgY37AXSTGGug==
+X-Received: by 2002:aca:4ec9:: with SMTP id c192mr2704139oib.115.1608140627738;
+        Wed, 16 Dec 2020 09:43:47 -0800 (PST)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id z6sm643758ooz.17.2020.12.16.09.43.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Dec 2020 09:43:47 -0800 (PST)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        David Aguilar <davvid@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Seth House <seth@eseth.com>
+Subject: [RFC/PATCH] mergetool: use resolved conflicts in all the views
+Date:   Wed, 16 Dec 2020 11:43:45 -0600
+Message-Id: <20201216174345.28146-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.30.0.rc0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 30004F4C-3FC6-11EB-8867-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+It doesn't make sense to display already-resolved conflicts in the
+different views of all mergetools.
 
-> On 12/15/2020 12:53 PM, Elijah Newren via GitGitGadget wrote:
->> From: Elijah Newren <newren@gmail.com>
->> 
->> In a subsequent commit, we will implement the traditional recursiveness
->> that gave merge-recursive its name, namely merging non-unique
->> merge-bases to come up with a single virtual merge base.  Copy a few
->> helper functions from merge-recursive.c that we will use in the
->> implementation.
->
-> I'm sure these are copies, but...
->
->> +static struct commit_list *reverse_commit_list(struct commit_list *list)
->> +{
->> +	struct commit_list *next = NULL, *current, *backup;
->> +	for (current = list; current; current = backup) {
->> +		backup = current->next;
->> +		current->next = next;
->> +		next = current;
->> +	}
->
-> The naming of 'next' seems backwards to me, since it is really
-> the "previous" node. Using something like 'previous' makes it
-> clear that you are reversing when you say
->
-> 	current->next = previous;
+We already have the best version in MERGED, with annotations that can
+be used to extract a pruned version of LOCAL and REMOTE. If we are using
+the diff3 conflict-style, we can even extract BASE.
 
-Hmph.  I took "next" commit_list as "list is the original one, and
-next is the reversed list, the next generation of what we received".
+Let's use these annotations instead of using the original files before
+the conflict resolution.
 
-Calling it "previous" feels even more backwards when you view among
-three "struct commit_list *" pointers, one (the one that holds the
-eventual return value) is primarily used to denote the resulting
-list itself, and the other two are used to point individual elements
-on the original list.
+TODO: There may be a better way to extract these files that doesn't rely
+on the user's conflict-style configuration.
 
-I wonder if a slightly different codeflow may be easier to follow
+See Seth House's blog post [1] for the idea and the rationale.
 
-	struct commit_list *result = NULL;
-	while (list) {
-        	struct commit_list *next = list->next;
-		list->next = result;
-		result = list;
-		list = next;
-	}
-	return result;
+[1] https://www.eseth.org/2020/mergetools.html
 
-if we were to try improving this for readability?  
+Cc: Seth House <seth@eseth.com>
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ git-mergetool.sh | 19 ++++---------------
+ 1 file changed, 4 insertions(+), 15 deletions(-)
 
-I dunno if it matters too much, though.
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index e3f6d543fb..4759433d46 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -227,18 +227,6 @@ stage_submodule () {
+ 	git update-index --add --replace --cacheinfo 160000 "$submodule_sha1" "${work_rel_path%/}" || die
+ }
+ 
+-checkout_staged_file () {
+-	tmpfile="$(git checkout-index --temp --stage="$1" "$2" 2>/dev/null)" &&
+-	tmpfile=${tmpfile%%'	'*}
+-
+-	if test $? -eq 0 && test -n "$tmpfile"
+-	then
+-		mv -- "$(git rev-parse --show-cdup)$tmpfile" "$3"
+-	else
+-		>"$3"
+-	fi
+-}
+-
+ merge_file () {
+ 	MERGED="$1"
+ 
+@@ -318,9 +306,10 @@ merge_file () {
+ 	# where the base's directory no longer exists.
+ 	mkdir -p "$(dirname "$MERGED")"
+ 
+-	checkout_staged_file 1 "$MERGED" "$BASE"
+-	checkout_staged_file 2 "$MERGED" "$LOCAL"
+-	checkout_staged_file 3 "$MERGED" "$REMOTE"
++	# TODO: How do we get $MERGED always with diff3?
++	sed -e '/^<<<<<<< /,/^||||||| /d' -e '/^=======$/,/^>>>>>>> /d' "$MERGED" > "$BASE"
++	sed -e '/^<<<<<<< /,/^=======$/d' -e '/^>>>>>>> /d' "$MERGED" > "$LOCAL"
++	sed -e '/^||||||| /,/^>>>>>>> /d' -e '/^<<<<<<< /d' "$MERGED" > "$REMOTE"
+ 
+ 	if test -z "$local_mode" || test -z "$remote_mode"
+ 	then
+-- 
+2.30.0.rc0
 
