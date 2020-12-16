@@ -2,127 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C9E4C4361B
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 20:57:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DE42C4361B
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 21:25:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E777238E9
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 20:57:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D332222D2B
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 21:25:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729082AbgLPU5H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Dec 2020 15:57:07 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64168 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726979AbgLPU5H (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Dec 2020 15:57:07 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 589E8A6571;
-        Wed, 16 Dec 2020 15:56:23 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5fOF5IRZHCzPxhJyAgygIiY076A=; b=KSpYb0
-        MtYLeqJjhhnekPxUsLENCVoqDSxnbXynLEElms8+9HHNgf9tC93zW+aMMRwb/408
-        zjE8Xbc8HJKlK7mde5FIs4zE0F7o4+cpsDW+tBcQJF8hZNgq4RDEBGhah6cO2P+K
-        ppprgoO0zCVj93Z1HE6QJMioCw/QDOcHg4kGU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ePcq2gHtzIyCny2uTjd1Inw+QTsWcrmg
-        Hnvk0D2Oz4KXvQJPS4xQoWQdqhL/Wo4Cpcuxriwti7BFPSMC3HcUZx0m7mnERqZJ
-        5B1TBPRkQU6B54ERspOh4vYJ+LcH/7H3WnjruQkf06PAkUm2CRdlP8AGahEAoC50
-        LsOcq2SeR/M=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 50E76A6570;
-        Wed, 16 Dec 2020 15:56:23 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CF941A656F;
-        Wed, 16 Dec 2020 15:56:22 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] clone: in protocol v2, use remote's default branch
-References: <20201208013121.677494-1-jonathantanmy@google.com>
-        <20201211210508.2337494-1-jonathantanmy@google.com>
-        <87blewwoil.fsf@evledraar.gmail.com>
-        <xmqqim94e4et.fsf@gitster.c.googlers.com>
-        <878s9zx2ul.fsf@evledraar.gmail.com>
-        <X9ghqMo5WS8FrBEz@coredump.intra.peff.net>
-        <xmqq8s9zaica.fsf@gitster.c.googlers.com>
-        <X9g9Y9LWc0NtHlQn@coredump.intra.peff.net>
-        <xmqq7dpi5tvl.fsf@gitster.c.googlers.com>
-        <X9pUc2HXUr3+WHbR@coredump.intra.peff.net>
-Date:   Wed, 16 Dec 2020 12:56:22 -0800
-In-Reply-To: <X9pUc2HXUr3+WHbR@coredump.intra.peff.net> (Jeff King's message
-        of "Wed, 16 Dec 2020 13:39:47 -0500")
-Message-ID: <xmqqft4531xl.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 278CBC22-3FE1-11EB-8778-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+        id S1726437AbgLPVZV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Dec 2020 16:25:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48114 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725274AbgLPVZU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Dec 2020 16:25:20 -0500
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C5FDC06179C
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 13:25:05 -0800 (PST)
+Received: by mail-oi1-x232.google.com with SMTP id w124so26306589oia.6
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 13:25:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=OkXEKKHqphxx5Y5rxxMyPanMEFGzQ0j9pOrHu0j4nJI=;
+        b=iiAmJwHcD3sB5RjDhNkcPq+6eO2j6DL85DkYc5HnjS/zwSPBY4R1jTe34exBnKXCqC
+         p+W/91lYa6UteBbL5E87Vg9Ma7FyFdYgnS1LDacCM0B8iJ7Koe6eUE5VQCd7fTgpYw1P
+         bP7fEXvezzxR/wbPhbtNH/vNXRcoEPObc7b72Ex28gAdlEKZP8bi0q4PKxcvBCk+Wfff
+         zOqt+Bs0tL2pksg+rHxc27iJvsKWMUjJ9Mo4thNClhYYZttJ3EE+8EaYz+fJxmEd7gPc
+         YlY19jqeKBOvZRSP8AGZzt7pXSXmQdnnVOS/8Dy830yHON9uxWKg9xwioAo8MctyR4VB
+         ZoHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=OkXEKKHqphxx5Y5rxxMyPanMEFGzQ0j9pOrHu0j4nJI=;
+        b=GPO8qVx42v2FEnBuct5FqI1ukqtUsjHmMiAs8G5l/Jm3xsV1uFc5rWd61U0d4l5zIV
+         3eOozjr173Z9USPNnbJyRhudqMeP5yspxnDNN/Z4hcZpVDMk5SDcx9GxxGLE4zDTTiHE
+         78+PdzXMLdAjwiTuFwbOUrgVMl0yt5r8jPVVH6vnaAFTBlbWiczkAuXDrjwpKHygRPcx
+         z21twiDi+8q6n4pF5ApRL2wo6t5DrRKTPq72kG8KWHKtXic0rDn30ZyIl/+49j6kSvaS
+         sMVqVBEtVSZtVz2znRwTd6QhYln/qy/6i6aY2LhxuOCBNC6CoOm2f0rEAzzdxQXGhlLx
+         2c0w==
+X-Gm-Message-State: AOAM531NyzXPvrt/4doxvZusRBnxBGBweyLXjWo4kkWAHu7vitKGS8Sr
+        fdpM+A3lsGO0ot6+C0UyWW8=
+X-Google-Smtp-Source: ABdhPJxS68DA/jD9xqxOYpeEYt/q8upAkHS3uc4nknDMKT+F2mhe5A2j+N0B2nuJe2tmihIKusET2g==
+X-Received: by 2002:a05:6808:210:: with SMTP id l16mr3076648oie.155.1608153904909;
+        Wed, 16 Dec 2020 13:25:04 -0800 (PST)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id r15sm674120oie.33.2020.12.16.13.25.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Dec 2020 13:25:04 -0800 (PST)
+Date:   Wed, 16 Dec 2020 15:25:02 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Message-ID: <5fda7b2ee79df_8c35208e1@natae.notmuch>
+In-Reply-To: <xmqqlfdx32ln.fsf@gitster.c.googlers.com>
+References: <pull.814.git.1608054807.gitgitgadget@gmail.com>
+ <0b455bd6fe7dff72c1849eb8466b97b96b2b90a9.1608054807.git.gitgitgadget@gmail.com>
+ <4a4d9d29-ccba-8d39-a7cd-34b1ba785e22@gmail.com>
+ <xmqqim914pfs.fsf@gitster.c.googlers.com>
+ <CABPp-BG+_4Dv_+HNgQxW8KNe1q04NwuhRpExeOuc=wLeunsj_w@mail.gmail.com>
+ <xmqqlfdx32ln.fsf@gitster.c.googlers.com>
+Subject: Re: [PATCH 1/3] merge-ort: copy a few small helper functions from
+ merge-recursive.c
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano wrote:
+> Elijah Newren <newren@gmail.com> writes:
+> 
+> > I wonder if a slightly different codeflow may be easier to follow
+> >>
+> >>         struct commit_list *result = NULL;
+> >>         while (list) {
+> >>                 struct commit_list *next = list->next;
+> >>                 list->next = result;
+> >>                 result = list;
+> >>                 list = next;
+> >>         }
+> >>         return result;
+> >>
+> >> if we were to try improving this for readability?
+> >
+> > Looks like Felipe also came up with the same version you did (modulo
+> > the temporary variable name).
+> 
+> Funny if it was sent as a response to the message that already had
+> the same answer...
 
-> I think:
->
->   git checkout --guess origin
->
-> would make sense to dereference origin/HEAD to "foo", as if we had said
-> "git checkout foo". That's the explicit part that seems safe. My
-> question is whether:
->
->   git checkout origin
->
-> should likewise do so.
+It's two changes, actually: s/result/current/ and s/next/tmp/.
 
-I see.  I think "--guess" is by default true, so unless you have
-checkout.guess=false configured, my answer to the above question is
-yes.
+But yeah, it's interesting that I used Elijahs's version as a basis and
+arrived at virtually the same thing.
 
-> As you note, one can always use --detach to make
-> their intention clear, and checkout is a porcelain, so we are OK to
-> change it. But would users find that annoying? I frequently use "git
-> checkout origin" to get a detached HEAD pointing at your master (e.g.,
-> because I want to reproduce a bug, or do a "something like this..."
-> patch). I'm sure I could retrain my fingers, but I wonder if I'm not the
-> only one.
+Cheers.
 
-My fingers say "git checkout X^0" instead of "--detach" when I want
-to detach for any value of X (e.g. "HEAD", "v2.28.0").  But I do
-understand people like to be implicit when they can.
-
-> Doing it for only an explicit "--guess" turns that feature into a
-> tri-state (explicitly off, explicitly on, or "implicit, so be a little
-> more conservative"). Which perhaps is harder to explain, but I think
-> cleanly adds the new feature in a consistent way, without really
-> changing any existing behavior.
-
-Hmmmm...  I do not offhand know if that is a good idea or not.
-
-> Related, I assume that:
->
->   git checkout --guess origin/foo
->   git checkout origin/foo
->
-> should behave the same as their "origin" or "origin/HEAD" counterparts
-> for consistency (obviously making "foo" in the former case, and either
-> detaching or making "foo" in the second case, depending on what you
-> think of the earlier paragraphs).
-
-I think that is what I said in the "what would happen if we tweaked"
-paragraph about using origin/ prefix as a disambiguator?  Then yes,
-I think we are in agreement.
-
-Thanks.
+-- 
+Felipe Contreras
