@@ -2,163 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6FFFC4361B
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 21:35:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AEB7C0018C
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 22:09:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A648623433
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 21:35:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 24D5F22573
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 22:09:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726684AbgLPVfd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Dec 2020 16:35:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49726 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725821AbgLPVfc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Dec 2020 16:35:32 -0500
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A169CC061794
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 13:34:52 -0800 (PST)
-Received: by mail-ot1-x32b.google.com with SMTP id d8so24802576otq.6
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 13:34:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ErMf6Z+AErvSXwRX5iNuYbJoF/yoQ8G8qCFiiRlG2sM=;
-        b=RVDx09e8kZDGZSEOkbFmulnm5m/qsgRxcaDknwiaQMFkS7b0gJxpRVia+u++n0R4d1
-         zz/J3vUEXJnRbbavPLttF0JzNPSCd7YS7LPkj9uGZMUJJy68jlYb92RserI23Z88LmZv
-         BePHBeM4lvwp31rGt6zwwR5VaqfoBc/DyRc+QmBcRGoIYmolwQnemiy2Mzb9CBQ1CjAa
-         eOlxfWvkMoT0tPwVpFah3VtJRVxueCdhTzCjzkKXlwGzbYVxUYRe8sv0Ug9npVvciNJ+
-         XNklYOPf9iEIF2i/9GJ73JW7EKy9j6Idu3VfI5B81qejkNNDtOE0Iz6OWwuvZnjbVKd0
-         A8qA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ErMf6Z+AErvSXwRX5iNuYbJoF/yoQ8G8qCFiiRlG2sM=;
-        b=bEtuRcZRFb1v7F2jdRWHL1sMUAkD93I3neuW2t/39y54g31fEQFjgDfznkMTJKmUK5
-         NKNKBrDvjjJf8PF/HcbXZP6lTzxZm4TML+PLtn+uJ2TOuBQPsoSReAYkrHeDGe2RmkVA
-         h9ktRM/KqSv2lJBlxDuH9pePat6VoiQAD5J4iHlMLDTBGTNCSIe10bxqTsCdSTfHnmGB
-         krLefP7MdSqgC5pIZ5ChoCSZbCqbLmUbnuwvXPoQOJsjU5H5O0jSV+Dw2u0UKEaSh02q
-         v49u6g0Squ+3zdcmqdB5l/Jt7NmxqO8TtsxON6wUtUOiKMrDDMMkAbwqbWY3ge5oRrrl
-         7eaA==
-X-Gm-Message-State: AOAM530EF30I7Zq2Fq73PyWhsTOZ7cFo1iwK0IRX2AgWG+IoOp7McMZU
-        jM9qxWR5Es1aRWCib1o1YIwHps8KrI9fg0rf0qY=
-X-Google-Smtp-Source: ABdhPJyj0pYT7Hsyc+0z6Y6hHq3AdGCORq40/ol0Wo31iUcXwsXWxb5XnWJcXId3biovBPtBxjX8vLVt4LXq9ca6NtM=
-X-Received: by 2002:a05:6830:10:: with SMTP id c16mr26786915otp.162.1608154491949;
- Wed, 16 Dec 2020 13:34:51 -0800 (PST)
+        id S1730119AbgLPWJA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Dec 2020 17:09:00 -0500
+Received: from sonic304-13.consmr.mail.bf2.yahoo.com ([74.6.128.36]:44234 "EHLO
+        sonic304-13.consmr.mail.bf2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1730024AbgLPWJA (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 16 Dec 2020 17:09:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1608156493; bh=Lu9haA1qhU3M5BKqSszly8GST6dzVjWLh2VrLTQRy78=; h=From:To:Cc:Subject:Date:References:From:Subject; b=r0MtFfzCKcVQNBzxFK1uZiNrB1la3moTjemGPmP8h92i8At4zggf81/Mo/bjvAsN48bJPvs32RT76GDfq2LJkLcwAj+x8fRxL5wtMVnHBdHE6mkChtdo6UJA856B6744Pg2pBAVpwqyx3P4TQU2RspKxR5yonPr6yXd7epSl8AK07jlgyI4Bf89yGLF8nnmOeGYE9Gj1hWnwbT141CfOLwecKKkIi9lSCc7oO7cmIe6V4V7T6e+O/xI7K4wDLtKj5ao3aUGXFRs7HHQIN/lrm6d4e9zXpJPnBSee6Fq+lSPitu8HRp7UJuWiRmUTZKYzILfWrgp8FH8oGUraBO12ug==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1608156493; bh=y1N9cPzmOKbHGxpzHes0rgX7hmFwiB/To3PZljG2SgE=; h=From:To:Subject:Date:From:Subject; b=jCyz1ypoawpzZ4li8pLNeeMI/TD53iOZne8uT3NJh5NPX/3nuriqtbORDt8fgRGLpau1GVckFJCQCdnS9iM9WjNDHB1mW+aqNcnQb+7KSUXJcW/3KXR58MOFg9Y6z5bOkhQl8jPjvWyJa9xvuYeeenbq+5mckRroSE4tWW6VBlOvZMO5oej+AB7qQmzkxrNUVX/4Gtt/kTR90GGOo6T+og+Srf71IvkSTTEgMablmqyHjMK0HA1WqAOayKRyMw00+WOGB9o8RYUTQHYvOn2T/UFa4PLYFWglenbo6VzgefgzMCJvMQyYa3qEUVtD7PLRFpi8hV1VRURRp9hO4LGQgA==
+X-YMail-OSG: GGuwxDkVM1kvFt_zma9a3B5kXEhXPA.RLr2ip6QWsOUe_QIjUzOGtaDYUoBQsqa
+ EevrgHgEytHuiyaZAVDMebiBMklj3u.90pPux7yenOaPWCATbZc32hoozGpaNerbTNRWoab3s_ze
+ m0rrVR217O5tugNqCB61YEsJUWDHmlf3._5HR2d9IpXjzdrAPg8F33w5ep2z7Q_.HPcP6bWgeF25
+ wft.t7JVASyuikwZ_DtuotrQwqcMBAk57nSCKFc7o7imlyZAd59a1G.h9kJdR9tqJ0hEfUY4m2AO
+ SlBW9L5tXH9x.OmkkeMT3zZHeeZIKKdCoTFzMSHa.FVmt7cD2lfOFhwZpRYx4rreW_UyNfk8Lyt7
+ E2BkX68sxnMZI74PruPDwL1xgMj2zGN2q5a2TVlK9oERIL22qUMtBB4umDWnoCX88Ll838ha.2di
+ PnlIMNuUOF18_qiZEkXJyOw..3Q1WF0AKNDuxsRZ0D_qLD45EwTAzTN2FqeCxl_oHRm5m40uajCA
+ 95lXuKVeFbkolHnghFmfLOyVzxC_ZiPpVYrEMNvlvPjA2MwV5HvodoOeQryPBuBn29Hrh4xoHY1A
+ S_4OxFwG1UvBGU5305wdndy7TnnJ4xkiOrfE3kMAXwBY1iO5rVALVpTrQdPbV.wsgFQ44BdOlDH9
+ LrAVLyNhEUTbUe7tcj6uH2JdiovpO_w1pBKzfGwd.ZFWVDckcgl5NllbgLCUyEX3zOZvGf6N1H9N
+ 9drkgxTgmotiGHp4TBl_IeCRPWChOHEk1TksZHc5uytfLndUUud4cyN7GU4nMehy3qTNYM8m49yd
+ 80iYunUebRwyHJQwKIl9QfAQULU6kL4TYYyqcBtbWU9GzypD6ySKn7teLXj_VYY3Me0zn3zBP.E7
+ cCBTL2kSWgChnBjfb3dbyZ0xnvpwG.8y4jUIO_v.jPn0r03A39yiir6p0r_IqkpBWagI2DXdwWay
+ DMAiaPkDWeOwpV_NKhc5Ot2H3BIlr5xthp3WEqQ407D7_UOurB4NUiF6ppDfZCD2qo2FgBYY6JFf
+ 2aURtjkcHUc0I3hMb8Up.8rqGr5yEYIZ6F0d8WuVgShsx_8Ndda.8ZNUrakIup_HquSLHbkXr0Pn
+ D4cN4fMODnwESvCQhaxTNUGI4pHiz_VpkSDV2p9KXaA4gtgu0D11seCohhXyFKBeyHdyHmXeBRqk
+ QFT2EFt6VdNtsaBa_uazbMEdpzE6ijUHuqYCQ6m7hDXLIjg3JUqy.PPzmrpBxowefoKaYz62YXk9
+ R7iDtucnSJx6yi66hRbvjMdh5R1taDK0dMhJARCpH_i6wFhzj_GxYJb4gymb9OJVR4mU3QvqOmcP
+ jJWD8T0XfZ8EWl8ufTyuNfLa2yIapKz5QdHU8D0ZTHfCgqY.WHc1LUZG4_p.uANbnD1UOUQE9K4B
+ FtuNdg5GlTD5kqsCuPUcds369qOLjnGq4cRi9afESyiFyKHmf.auYQSESgtJ7TRk0LYY9lEY9Wkg
+ j8wCz.cc9rlPTkLCNDalgHO1ujmniVcDkMITfPp8rcMKLjlvHpLBj7Mgn1ckKKI4ugMP3.KZZ.mc
+ D1VMliVzsyvXR_1tRqw1DFdVa93DOIevdvxL3wil6GhldiBURcwIk92KGxhMsVFSBHlASPGDylZu
+ 2M8Y8j54A.JC.D5Pydzgcn7PH715TTfv9chtNBr9z.Xca7Ckst8.BSRC3LrNVEI4_qE5pgJ.bxt8
+ 25QGGDPgBwjDqODLoQQdWObh_9Orsk_UVgpx8LeBvmGQzNfF.cumjl54.rGTri9RV938.E66HVv1
+ WyCa4LXHMhVOPzF9kmqPh7TMCBI2ouFMgJ6LfCkMuETTD1msutG5JSNSZ3vcMa0zTNKLNpszkYDE
+ 1X1vO3H6UvpF4IqmCfE_8RJyaS3uVMSpS4NJPYXryIHtw1I1pMQfJXt6P4TAByFdLvgENvxfCVAF
+ Fv4gnwIDjXRkPCzrSl0m0DxVvcgS7pDV83y9cxhFNYQla7j4fKPjhBBfNpTKQKZ3I6r.bfgUhGjV
+ qIip6PtNHnCtg3q_jOolvEOI9SCAmcd1Lakw8deb9Nvfypexe0u48WoI6rcVpbEJiR2UeSlER7qG
+ p2ySFETKNp9fNU0vAVEaiHlcd.OnpyWxYPG_tfhkCyjOzk7f_BPbwwRWX1IRZszx2zsgkVpXNvHq
+ J.Fsc6yhP0qasYWz6ny._xWQpNMqvPjXeysvF_cK8UCxrsJKWpw6M7oQoze_Qks_SEJceJXMjvmk
+ tsQ6CY7MxSlEz_5Mpf1eWjZdHsWZXejPQ8DDBzI_CDE1yT9uf6EHo.RTksV8r7p1ZniYQKdFSjpl
+ ycfcefR3EXC3ewfN71kC90A89mkG0zMLsU3n74DWwVsdFzLX2Co2aSySW4ZTDPy.fsMMP1jRTjIU
+ 6bGTbfxakYbBjJVFOMQ_7WtIe24T3UHJuQj13a7xT3cyKFN4Hka85apUJ9_j1a7_SVv4kHDbAs09
+ r2HChhlRmS5U33epMuAp343J3UDByJGOldaw8v2ShPdEsktet2p3NgWCkO6GYZvqqvZe_15iiZtG
+ g3ksiZuJQsTDtMl3zLVzO.KQSMinPfRlWaems8IO2uhSwyF9hoRgLMHEDSnjNwIssww--
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic304.consmr.mail.bf2.yahoo.com with HTTP; Wed, 16 Dec 2020 22:08:13 +0000
+Received: by smtp411.mail.ne1.yahoo.com (VZM Hermes SMTP Server) with ESMTPA ID b0561eb04c317a8b2712f91f841e1bc0;
+          Wed, 16 Dec 2020 22:08:08 +0000 (UTC)
+From:   randall.s.becker@rogers.com
+To:     git@vger.kernel.org
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: [Patch 0/1] Remove obsolete compatibility settings for NonStop
+Date:   Wed, 16 Dec 2020 17:07:51 -0500
+Message-Id: <20201216220752.6371-1-randall.s.becker@rogers.com>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-References: <pull.814.git.1608054807.gitgitgadget@gmail.com>
- <0b455bd6fe7dff72c1849eb8466b97b96b2b90a9.1608054807.git.gitgitgadget@gmail.com>
- <4a4d9d29-ccba-8d39-a7cd-34b1ba785e22@gmail.com> <xmqqim914pfs.fsf@gitster.c.googlers.com>
- <CABPp-BG+_4Dv_+HNgQxW8KNe1q04NwuhRpExeOuc=wLeunsj_w@mail.gmail.com> <xmqqlfdx32ln.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqlfdx32ln.fsf@gitster.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 16 Dec 2020 13:34:40 -0800
-Message-ID: <CABPp-BE-EXbJxvJ-dy8SfK3-1rjsM0eKAq1G_vWMfC+A5UTHaQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] merge-ort: copy a few small helper functions from merge-recursive.c
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+References: <20201216220752.6371-1-randall.s.becker.ref@rogers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 16, 2020 at 12:42 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > I wonder if a slightly different codeflow may be easier to follow
-> >>
-> >>         struct commit_list *result = NULL;
-> >>         while (list) {
-> >>                 struct commit_list *next = list->next;
-> >>                 list->next = result;
-> >>                 result = list;
-> >>                 list = next;
-> >>         }
-> >>         return result;
-> >>
-> >> if we were to try improving this for readability?
-> >
-> > Looks like Felipe also came up with the same version you did (modulo
-> > the temporary variable name).
->
-> Funny if it was sent as a response to the message that already had
-> the same answer...
+From: "Randall S. Becker" <rsbecker@nexbridge.com>
 
+Since the original port, capabilities have been added to the
+platform that no longer require compatibility emulation.
 
->
-> >> I dunno if it matters too much, though.
-> >
-> > Yeah, reverse_commit_list() has been unchanged in merge-recursive.c
-> > since its introduction in August of 2006.  The function's purpose
-> > seems obvious from its name, so no one ever needs to look at or modify
-> > the implementation.  I'm certain I'll never touch it again.  So, I
-> > personally don't care what the particular implementation is, and I'm
-> > happy to take whatever reviewers prefer here.
-> >
-> > Since we have three people weighing in with opinions though -- and on
-> > a point that's irrelevant to me -- do you want to make the call here
-> > Junio?
->
-> If I were pressed to give a suggestion, I have two ;-)
->
-> I would prefer to see us first find out if all other callers of
-> get_merge_bases() _care_ about a particular order of the resulting
-> list.  If they do not care [*1*] and if it seems feasible to teach
-> get_merge_bases() build its return value reversed already without
-> too much extra effort, then the commit list reverser can
-> disappear and get_merge_bases() can be fixed to return its commit
-> list in older-to-newer order.
+Randall S. Becker (1):
+  config.mak.uname: remove old NonStop platform supported settings.
 
-The ones in sequencer.c and builtin/merge.c care about the order, but
-they manually reverse it (because they are going to call the merge
-machinery).  So, these two would benefit from it being reversed.
-However...
+ config.mak.uname | 4 ----
+ 1 file changed, 4 deletions(-)
 
-notes-merge.c and submodule.c both have subtle dependencies on the
-order (in ways that might be buggy).  They could perhaps be taught to
-depend on the reversed order, but I'm leery of touching something that
-looks possibly buggy (one even has a TODO highlighting it) and
-becoming responsible.
+-- 
+2.29.2
 
-get_octopus_merge_bases() depends on the order from get_merge_bases(),
-and builtin/merge-base.c depends on that function.  So, the output
-order of a command depends on it, which might thus affect user
-scripts.
-
-builtin/pull.c also depends on the order returned by get_octopus_merge_bases().
-
-That's enough dependencies that I'm inclined to just leave this side
-of things as they are.
-
-
-> If the above does not happen, then I'd prefer to see a single commit
-> list reverser in commit.c and have it *shared* between the two merge
-> backends, instead of adding another one in merge-ort.c while leaving
-> the one in merge-recursive.c behind.  And the single implementation
-> can be either "copied from merge-recursive as that may be
-> unintuitive or harder to follow but at least we know it is battle
-> tested", or the one we see above.  If we were to take the latter, we
-> really need to avoid making stupid mistakes while attempting to
-> replace an existing awkward one with "simplified" version, though.
-
-commit.c seems like a natural location.  I'll insert a patch at the
-beginning of the series to move the function there, and just use
-Johannes' original version from 2006 as-is -- that'll make it easier
-to verify that my patch is simply moving things, anyway.
-
-> Sorry for listing even more work, but since you asked ... ;-)
->
->
-> [Footnote]
->
-> *1* if those who care actually would benefit if we used
-> older-to-newer order, it would be even better.
