@@ -2,113 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11608C4361B
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 10:49:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30062C4361B
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 13:31:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AB88C2333E
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 10:49:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D1875233CF
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 13:31:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726015AbgLPKt1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Dec 2020 05:49:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34326 "EHLO
+        id S1726241AbgLPNbG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Dec 2020 08:31:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725440AbgLPKt0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Dec 2020 05:49:26 -0500
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4901C06179C
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 02:48:46 -0800 (PST)
-Received: by mail-ot1-x330.google.com with SMTP id d8so22467634otq.6
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 02:48:46 -0800 (PST)
+        with ESMTP id S1726232AbgLPNbF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Dec 2020 08:31:05 -0500
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DBF6C06179C
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 05:30:25 -0800 (PST)
+Received: by mail-ot1-x32a.google.com with SMTP id 11so22871718oty.9
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 05:30:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=sXkbJ9/dfqz7wLw7g9BFlviV7zGKZ7zqH+zXebpu8Fk=;
-        b=dsfcgDZjjN+3uWbiBGKHJPDxUtKeOxjc0ERtbrfbq2wT8L9agMuyebPjNeg1obuTOh
-         l7vQ19n8rrkM5FZAdtesUZR1k4jXc+7Mt4wbyMATE1K0GdSLPeyE2F9NCY66WwU0wwTy
-         nQfe+aw1nmI9yw4RfxjtAhj0BZbVcjl+BYIkQ6TceQ/HrlpSyk1E9nYPw4YEdBli43PA
-         no7ZNNu4jSEbiHSTKapinz3ZzEFWAY444XjucAUrSNu0rCGuV78mjhKn/kizAqYiYgZA
-         uq+wKgrsZn1CDGZnR7I0z8HB0cpelvXhIR0QXMnJnD/o+jZOK0C1odgZYCizpgAj1jj1
-         PGaw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=PPZJjJvaZQfIKnff5xJHuNHluNeWw8g1zVdv/epzfwQ=;
+        b=qA0jD4a2cLyLDuCMI6eegIHW7fQ1Kg1D+mtAMqqV2hAlsOUjyzWs2a1Hifr1OVVkCI
+         jyLjuLg7lHaujxfEXnIDPbRAnxfDIxkMK01KVDo6OSrpaUvXke5Mmx1GVPyp9iBVYDdO
+         qdBp9u5H0GF+n70R/zQX1nc58IHGdPomLwTXgcD0lUIkKvEEdnMMDyELVq7vHdQnjvqc
+         UyERW54mXViHAe6Jbx2oDSBaG7WeUPyVproQKjMydYRKzvZjTOIoOJSHwMJ9FcaF46Yz
+         1ygXRIgSpDdCr3zL4yljIbzMG+SPGiuLpyxxNfbb3LqFkH7luXUWci3V6Y8TZx0uCSYp
+         Ad0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=sXkbJ9/dfqz7wLw7g9BFlviV7zGKZ7zqH+zXebpu8Fk=;
-        b=btk7uBGVb76/bKZNTYb7tRFm4lVVHoPEwJlhE38OYS+qxwHip2ffG+Qlvx1lxMnq/S
-         jLLV6cCz3g9DqAgD1/Hj/8SHbitr53ldRtyUZdYK6n9w5xT1if7XC+DOpmITkOEny2K/
-         CzrcqsGRD4VQmvByFAoAZo6A2wXulIMvz+L8T/FIVsiC6Zhx6uqX2tsBbEK7gA8Sp3m3
-         Dv/rXVbbqTr1RhXJI9rJRWYzTHjS1RCsyH+mslRRe0XyuvqQ1uPpkQ7qrbC+c3cuno9a
-         DEk9FmweZFXLXrIvN6rsTRd7OEUzkBcqfxOz7m7oD3/Eecl7xzgFvHuR76RLTmbPfK0k
-         L1fg==
-X-Gm-Message-State: AOAM530jYvz2zw86g3scwQY1hpDW2UXvOE5LlOXQONVADYKcPYY4GIOk
-        eDpKR3xfKY0gobOkUHxqexZZIwS2SboJhCyNLtFcZLTDIiQHCg==
-X-Google-Smtp-Source: ABdhPJyI2BM970BAscY3LrayMSsGTtR+PPMLugqizdK/4FWAob/JwZsC7KA6suXclWv4IVXzlfbCN/4eYdxqL/FCmNA=
-X-Received: by 2002:a05:6830:17c7:: with SMTP id p7mr25762883ota.21.1608115725599;
- Wed, 16 Dec 2020 02:48:45 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=PPZJjJvaZQfIKnff5xJHuNHluNeWw8g1zVdv/epzfwQ=;
+        b=t8qdwqzlRAlC8M81+EItPPf5Tyyi9W0sOcLqe9leJXJjdPHddRkZ5nTt6a5A8ZcGn+
+         d3djTaEOTWM6C5KXRDP8N4Wp0qGc1PwUTcPbYg7BtXl2Zo2BInKoI0He42FVI8VG+q1G
+         TS0VkDPZPX9WeQlLKhjT8gnpuuQlglnxciikinEgV745SwBCsGSJtJe2EPlJtc96pNeK
+         aHLEFJjlI4t+xnPvstJMurEvBk3zMHlDEZ4KwMGmNLyKWvAVlSpDcJU2mPWp4MYZQ6MI
+         kdcZa9vH1QkE2n2LHniXo0qcU9LZjLxNbMtqlGRaSoHgtQHJ8WaIx41J4n96W26+dOjF
+         LnWQ==
+X-Gm-Message-State: AOAM533jGS85zYYL0yYauZZxTPD8wiwv6/3sJKM7LOoUiaY57Yrk5n9m
+        rX+GzPS5r7LIJvnv9IFVn8wy2RvsXQOAcA==
+X-Google-Smtp-Source: ABdhPJzH2RCHAxdF5TnrwDnEtc0c1PPfi+i7Wzr33oWj4hNjwi5Yfa/kmTtli9v3CQKdgTeOiP206g==
+X-Received: by 2002:a05:6830:118b:: with SMTP id u11mr26154582otq.130.1608125424910;
+        Wed, 16 Dec 2020 05:30:24 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
+        by smtp.gmail.com with UTF8SMTPSA id i1sm439576ool.43.2020.12.16.05.30.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Dec 2020 05:30:24 -0800 (PST)
+Subject: Re: [PATCH 1/3] merge-ort: copy a few small helper functions from
+ merge-recursive.c
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>
+References: <pull.814.git.1608054807.gitgitgadget@gmail.com>
+ <0b455bd6fe7dff72c1849eb8466b97b96b2b90a9.1608054807.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <4a4d9d29-ccba-8d39-a7cd-34b1ba785e22@gmail.com>
+Date:   Wed, 16 Dec 2020 08:30:23 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101
+ Thunderbird/84.0
 MIME-Version: 1.0
-References: <CAHMHMxW-LwjLWF9PPuSJmbAafw37d_18j+HmOd4+8MKbajb_8A@mail.gmail.com>
-In-Reply-To: <CAHMHMxW-LwjLWF9PPuSJmbAafw37d_18j+HmOd4+8MKbajb_8A@mail.gmail.com>
-From:   =?UTF-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
-        <stdedos@gmail.com>
-Date:   Wed, 16 Dec 2020 12:48:04 +0200
-Message-ID: <CAHMHMxW_zwq_xK3Mh5QjC4dM1muVotESZdGQkRAx8xeKYmHzbw@mail.gmail.com>
-Subject: Fwd: Bug in `git add -N xyz ; git stash` command
-To:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <0b455bd6fe7dff72c1849eb8466b97b96b2b90a9.1608054807.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello there,
+On 12/15/2020 12:53 PM, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
+> 
+> In a subsequent commit, we will implement the traditional recursiveness
+> that gave merge-recursive its name, namely merging non-unique
+> merge-bases to come up with a single virtual merge base.  Copy a few
+> helper functions from merge-recursive.c that we will use in the
+> implementation.
 
-I think I have found a bug with the following series of commands:
+I'm sure these are copies, but...
 
-$ git add -N xyz ; git stash
-error: Entry 'xyz' not uptodate. Cannot merge.
-Cannot save the current worktree state
+> +static struct commit_list *reverse_commit_list(struct commit_list *list)
+> +{
+> +	struct commit_list *next = NULL, *current, *backup;
+> +	for (current = list; current; current = backup) {
+> +		backup = current->next;
+> +		current->next = next;
+> +		next = current;
+> +	}
 
-It has bothered me that `git add -N xyz` "is not obvious that it is
-done", unless you know that you did it - and now it seems that there
-is some buggy behavior about that.
-I could've sworn that there is not even a file change on the
-repository (because I sync it between a VM, and after a `git pull` I
-saw 3 file changes, two of them being the branch head and the log
-branch head)
+The naming of 'next' seems backwards to me, since it is really
+the "previous" node. Using something like 'previous' makes it
+clear that you are reversing when you say
 
-With regards,
-Ntentos Stavros
+	current->next = previous;
 
-
----------- Forwarded message ---------
-From: =CE=A3=CF=84=CE=B1=CF=8D=CF=81=CE=BF=CF=82 =CE=9D=CF=84=CE=AD=CE=BD=
-=CF=84=CE=BF=CF=82 <stdedos@gmail.com>
-Date: Wed, 16 Dec 2020 at 12:32
-Subject: Bug in `git add -N xyz ; git stash` command
-To: git <git@vger.kernel.org>
-
-
-Hello there,
-
-I think I have found a bug with the following series of commands:
-
-$ git add -N xyz ; git stash
-error: Entry 'xyz' not uptodate. Cannot merge.
-Cannot save the current worktree state
-
-It has bothered me that `git add -N xyz` "is not obvious that it is
-done", unless you know that you did it - and now it seems that there
-is some buggy behavior about that.
-I could've sworn that there is not even a file change on the
-repository (because I sync it between a VM, and after a `git pull` I
-saw 3 file changes, two of them being the branch head and the log
-branch head)
-
-With regards,
-Ntentos Stavros
+Thanks,
+-Stolee
