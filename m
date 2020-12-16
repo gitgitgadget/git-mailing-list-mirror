@@ -2,135 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDB78C4361B
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 00:51:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26A59C4361B
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 00:57:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A2EF322DD6
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 00:51:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E6C3022DD6
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 00:57:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726246AbgLPAvO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Dec 2020 19:51:14 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33066 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725815AbgLPAvM (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 15 Dec 2020 19:51:12 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:7d4e:cde:7c41:71c2])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1726335AbgLPA5D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Dec 2020 19:57:03 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64743 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726190AbgLPA5C (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Dec 2020 19:57:02 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0DBC79F017;
+        Tue, 15 Dec 2020 19:56:20 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=kZqBnN8L7a3UlBg80+h8EVXJ3Ew=; b=ZgSLhV
+        7YoZYJNH++JZfZoUgarjf+wJpmNldwekuAApBTs+DTkPPMKulGYv5E2ZY9oL23bV
+        vIeUmSjHshQun3ZxB9EyXXDNX6et29gZe1YCZLZ55WWtEA1s7NhA3v6w5ibpcBBF
+        /Cgs0Enq0ARxmic7uwZGQDTF4Hft+BjDAvXW0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=bNNvWPVa3dSIWoOxFshUUWEM70frBM7l
+        OabGhQkh97pv9e4hwJBEFVSTZbmjTdaDfkl5IPZklCh0xTXgRQ6rrocJiIbFuyfL
+        nQ+wlrrT/+KK0JozOQPNSxOInnQ3NdLRynyeCPvt6NSdgdIPdfzQXcvHm/KjaDUv
+        mkuT+Ub/7uI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 03F7A9F016;
+        Tue, 15 Dec 2020 19:56:20 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0FB3060769;
-        Wed, 16 Dec 2020 00:50:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1608079830;
-        bh=vGRFuOm7xgA4PHC9/Bwp+71YncjXKSNqFiDDk9Gs2iQ=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=P/XXe6nt7cUI9boL+BwtweVMyBIB6w2tMrE4puB3n1E6Fx9xJIkuX74DsU7TcNjcF
-         fgL1+gzF1mY0W0ebt5lFyX+B4Pxt16e0LjgQRKJiSfowate7CDwt+L9l0C68V8yDXl
-         1zmRZmkwN0CZM67/rVEGN2wpHJjaXWninpNn8cQKrC1K0Cq+o66UpTlqTLjPOFcjiR
-         8nGtWdh4hX4VPrqrdftwFYscVMZNbqOi9NdtKfp/FhK+f9X19rcuJYl9hCF4YHDmY1
-         ZQ8OZx2MV05AqGjjBh0VIl4/9gSsQSY2u6DPtkdNVDwjZyzenTDKmFf2K7UKHjj/nk
-         /PqLzP6bBzelgxR5EOOJJZ46PDZyC6icrFkz3Qs1vzGvHvT6aRaRdiUpTZyTWa5aWW
-         lw6fQITKBVSrs6uEa/DnlPev6XZI4TbSv3W+7Df4j7coebcyKX6IZVl6Wvi5swvOHZ
-         i0gVXlDA0wh3+wJGIRO+OoVp7TXI0RK9TJ5i3ZJu3KqZQNkHPxl
-Date:   Wed, 16 Dec 2020 00:50:24 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/1] mailmap: support hashed entries in mailmaps
-Message-ID: <X9lZ0ABtWvjS+Zsv@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20201213010539.544101-1-sandals@crustytoothpaste.net>
- <20201213010539.544101-2-sandals@crustytoothpaste.net>
- <xmqqv9d4ergd.fsf@gitster.c.googlers.com>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 826619F015;
+        Tue, 15 Dec 2020 19:56:19 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, James Ramsay <james@jramsay.com.au>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v6 00/17] propose config-based hooks (part I)
+References: <20201014232447.3050579-1-emilyshaffer@google.com>
+        <20201205014607.1464119-1-emilyshaffer@google.com>
+        <20201216003408.GR36751@google.com>
+Date:   Tue, 15 Dec 2020 16:56:18 -0800
+In-Reply-To: <20201216003408.GR36751@google.com> (Josh Steadmon's message of
+        "Tue, 15 Dec 2020 16:34:08 -0800")
+Message-ID: <xmqqlfdy6025.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="uEJ5X9jtSgsKcAjP"
-Content-Disposition: inline
-In-Reply-To: <xmqqv9d4ergd.fsf@gitster.c.googlers.com>
-User-Agent: Mutt/2.0.2 (2020-11-20)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 823AC8E2-3F39-11EB-BF74-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Josh Steadmon <steadmon@google.com> writes:
 
---uEJ5X9jtSgsKcAjP
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On 2020.12.04 17:45, Emily Shaffer wrote:
+>> Hi folks, and thanks for the patience - I ran into many, many last-mile
+>> challenges.
+>> 
+>> I haven't addressed many comments on the design doc yet - I was keen to get the
+>> "functionally complete" implementation and conversion to the list.
+>> 
+>> Next on my plate:
+>>  - Update the design doc to make sense with what's in the implementation.
+>>  - A blog post! How to set up new hooks, why they're neat, etc.
+>>  - We seem to have some Googlers interested in trying it out internally, so
+>>    I'm hoping we'll gather and collate feedback from that soon too.
+>>  - And of course addressing comments on this series.
+>> 
+>> Thanks!
+>>  - Emily
+>
+> This approach looks good to me. I'll look forward to seeing the updated
+> design and the feedback from the internal tests.
 
-On 2020-12-14 at 00:09:19, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > Come to think of it, this probably needs documentation as well, so I'll
-> > wait for any other feedback and then reroll with that in there.
-> > Hopefully that will clear up any potential confusion.
->=20
-> Not just "where does the hashed entry can appear in the file", but
-> "how exactly does it gets computed" needs to be described.  If it is
-> sufficient to do something like
->=20
-> 	set x $(echo doe@example.com | sha256sum) &&
-> 	echo "@sha256sum:$2"
->=20
-> that exact procedure must be described to the users in the
-> documentation (note: I know the above is not correct as I looked at
-> the tests---it is a demonstration of the need for a procedure using
-> commonly available tools).
+Thanks.
 
-I believe the difference is that "echo" adds a newline and you probably
-wanted "printf" here.  But I get your point: we need documentation to
-explain how to do this that's simple and straightforward, and as we've
-both pointed out, there isn't any at all.  I'll add some.
+By the way, es/config-hooks does not seem to pass 5411 (at least)
+even as a standalone topic, and has been kicked out of 'seen' for
+some time.  Has anybody took a look into the issue?
 
-> I wonder if somebody may want to do a dedicated tool that lets you
->=20
->  (1) given an e-mail and/or a name, look-up existing entries and
->      show what <name, e-mail> pair it maps to;
->=20
->  (2) take a new <name, e-mail> pair and add mapping from it to some
->      other <name, e-mail> pair.
->=20
->  (3) take an existing mailmap file, and obfuscate all the existing
->      entries.
->=20
-> The first one is covered by "check-mailmap", so the other two could
-> be new features added to the command to be triggered with a command
-> line option.
 
-That could be a useful tool.
-
-> > +	cat >hashed <<-EOF &&
-> > +	$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $hashed_author_name <$GIT_=
-AUTHOR_EMAIL>
-> > +	EOF
-> > +	git check-mailmap  "$GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL>" >actual &&
->=20
-> The two spaces after "check-mailmap" is not significant but drew my
-> attention.  Let's not do so.
-
-That wasn't intentional.  Will fix.
---=20
-brian m. carlson (he/him or they/them)
-Houston, Texas, US
-
---uEJ5X9jtSgsKcAjP
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.20 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCX9lZzwAKCRB8DEliiIei
-gRHVAQDOfjKJE0bh+ZBmrIQTfbz9+86k1dwd9wNSKkpcO8HKGQD/e+sswtAIaPZ1
-71IB3287orf2gbGRIsG9hqL5Wq8xLw8=
-=k4DU
------END PGP SIGNATURE-----
-
---uEJ5X9jtSgsKcAjP--
