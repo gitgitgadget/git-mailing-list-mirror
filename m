@@ -2,136 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46B13C4361B
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 17:44:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B195C0018C
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 18:10:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2074124B27
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 17:44:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4242A259CD
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 18:10:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727723AbgLPRob (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Dec 2020 12:44:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42198 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727718AbgLPRo3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Dec 2020 12:44:29 -0500
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEA5BC0617A6
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 09:43:48 -0800 (PST)
-Received: by mail-oi1-x231.google.com with SMTP id l207so28439874oib.4
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 09:43:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=pxD9c+qq72ObQPLy5mGVO52AlNrPW+keMtvBU/kZSJE=;
-        b=lwpPOMWi5mBP0rr7p/qflq3B4jcd9mkfizkxlEi5q/Gpr1GGT5jPWU8O1+wg4qt5b5
-         VTiK9yUMmq+w1l8Damibpwt1kwf2x4/UsArmVzfUB15aPnZhEZfQ1paS4F6xuMcUhp+X
-         s2vyM+qcEdDHiBNLmjYIh8HhlzCchidQCOpBdJvm5PRiXSkSqy84pxU2RXNfR9Z1FYZI
-         2wKwySfrBcwWi7zTTdbzEJzAmBUkyOGfAqlUsuqvdeUOu90HAnTG2YvtmU59zWwxTe9l
-         yZIhnxurwhmPiLzLlvcjhDlWSr3luhVeCvdI5RikEg3Ra2xhEZYpMTAwmWOna3iRjwqg
-         G6sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=pxD9c+qq72ObQPLy5mGVO52AlNrPW+keMtvBU/kZSJE=;
-        b=L7jOLOdbSfAn0txRpYeby/hzd1/rKGv3oWb7ntdKgMq8bZLXcJtQ66gfHFhEoougnc
-         l3tmhaPcHsY5EiBQxt9M8MrAI3pp17l8LNqoUFldoyD5HazntWsKxLrB+q+YGZGGu8nZ
-         NzQm8RecwcgFEHvF6kfs0DfuVc4UqokAyJ8Ac6+W5fPQUYZC/MHxblEmklpX6qt1zJpH
-         jpR6W6P+oS0YVUYmbtxwkTZTKwNnkQYdykcRKjeJESTZ4uSPyCFiT8kZl6eTPbAyjIu2
-         wY+oOPlxQ/k8HUCZf++8sZK6yVoYoCq1kxvBIlX+j5OxcxB8p5RkBnHpUiWtNK+Qbwe/
-         CRUw==
-X-Gm-Message-State: AOAM531VS2Ym/Gbl5UAKM8rzt6r+24/vfyKW4xV6NOChaLPwoeXjCUjQ
-        ydBlyzsoz8kNotTv11okWwmBAqhIwHAKiw==
-X-Google-Smtp-Source: ABdhPJxvzp3IzfnkCPA628MhERUa/lquG3OAlVWnIaws/c9OY+9Acdj7nu6LNSnKrMgY37AXSTGGug==
-X-Received: by 2002:aca:4ec9:: with SMTP id c192mr2704139oib.115.1608140627738;
-        Wed, 16 Dec 2020 09:43:47 -0800 (PST)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id z6sm643758ooz.17.2020.12.16.09.43.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Dec 2020 09:43:47 -0800 (PST)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        David Aguilar <davvid@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Seth House <seth@eseth.com>
-Subject: [RFC/PATCH] mergetool: use resolved conflicts in all the views
-Date:   Wed, 16 Dec 2020 11:43:45 -0600
-Message-Id: <20201216174345.28146-1-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.30.0.rc0
+        id S1729463AbgLPSKL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Dec 2020 13:10:11 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53408 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729193AbgLPSKK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Dec 2020 13:10:10 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4521CA519F;
+        Wed, 16 Dec 2020 13:09:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9LYAhtl4oprdOvyzJPQv+N3g7eA=; b=mJDCoh
+        TZG6UCnPbilUrBiix+/V7IE4KNkHyJPpgK3alTquvwS6e9y7f3vtYAsbeK35lH8Q
+        sBDa1bbXkTAE9IPEc5LIR4j9PkB2AyD+wQA79VFiJKT4+D4c5XPo/GSPKfAKvfSC
+        GciX/3sG9shRlETSdWvzC4UbrzY7GRRtc1C8o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=pyxX6kCqZrJHn9Ax/+I4IlFFl9S0ZGLi
+        gFiPH9kDNuYHK5Pz+B6shhaV17nQExKtJS1rRF4xIZRMeRNE7O6tFJJPBxpIPMWT
+        VQxxLwZJzsNN3tPpqE/4GrNDjYSOL+oCqT3YtErfZMrz3XK7U9pWNwRA1T9k7tPP
+        ATh7cOuyGRg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D641A519E;
+        Wed, 16 Dec 2020 13:09:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B4370A519D;
+        Wed, 16 Dec 2020 13:09:24 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 3/3] merge-ort: implement merge_incore_recursive()
+References: <pull.814.git.1608054807.gitgitgadget@gmail.com>
+        <pull.814.v2.git.1608097965.gitgitgadget@gmail.com>
+        <d8f79450a40e5a91b401ccbbedc7326cfe8a33d6.1608097965.git.gitgitgadget@gmail.com>
+Date:   Wed, 16 Dec 2020 10:09:22 -0800
+In-Reply-To: <d8f79450a40e5a91b401ccbbedc7326cfe8a33d6.1608097965.git.gitgitgadget@gmail.com>
+        (Elijah Newren via GitGitGadget's message of "Wed, 16 Dec 2020
+        05:52:44 +0000")
+Message-ID: <xmqqeejp4o8d.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: D44A7034-3FC9-11EB-84F8-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It doesn't make sense to display already-resolved conflicts in the
-different views of all mergetools.
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-We already have the best version in MERGED, with annotations that can
-be used to extract a pruned version of LOCAL and REMOTE. If we are using
-the diff3 conflict-style, we can even extract BASE.
+> +	/*
+> +	 * merge_incore_nonrecursive() exists for cases where we always
+> +	 * know there is a well-defined single merge base.  However,
+> +	 * despite a similar structure, merge-recursive.c noted that some
+> +	 * callers preferred to call the recursive logic anyway and still
+> +	 * set a special name for opt->ancestor that would appear in
+> +	 * merge.conflictStyle=diff3 output.
 
-Let's use these annotations instead of using the original files before
-the conflict resolution.
+Sorry, I do not understand the comment, especially the "anyway"
+part.  There is no such thing as nonrecursive variant of
+merge-recursive, is it?  If somebody wanted to perform a merge of
+two trees with a designated single common ancestor ("am -3" would
+want to do so using a fabricated tree, "cherry-pick" would want to
+do so using the parent commit of what gets picked), it would be
+natural to call "git merge-recursive O -- A B" if it is a scripted
+Porcelain, or would call merge_recursive() with the single merge
+base on the merge_bases commit_list parameter if it is written in C,
+I would think.
 
-TODO: There may be a better way to extract these files that doesn't rely
-on the user's conflict-style configuration.
+> +	 * git-am was one such example (it wanted to set opt->ancestor to
+> +	 * "constructed merge base", since it created a fake merge base);
+> +	 * it called the recursive merge logic through a special
+> +	 * merge_recursive_generic() wrapper.
+> +	 *
+> +	 * Allow the same kind of special case here.
+> +	 */
 
-See Seth House's blog post [1] for the idea and the rationale.
+In any case, the mention of "constructed merge base" may explain
+very well why the assert in the previous iteration checked for the
+string, but it does not seem relevant after the condition changed.
 
-[1] https://www.eseth.org/2020/mergetools.html
+> +	int num_merge_bases_is_1 = (merge_bases && !merge_bases->next);
+> +	assert(opt->ancestor == NULL || num_merge_bases_is_1);
 
-Cc: Seth House <seth@eseth.com>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- git-mergetool.sh | 19 ++++---------------
- 1 file changed, 4 insertions(+), 15 deletions(-)
+The above comment may have explained why some callers that call the
+machinery with a single merge base want to use its own diff3 label,
+but the assert the comment applies to is stricter than that.
 
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index e3f6d543fb..4759433d46 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -227,18 +227,6 @@ stage_submodule () {
- 	git update-index --add --replace --cacheinfo 160000 "$submodule_sha1" "${work_rel_path%/}" || die
- }
- 
--checkout_staged_file () {
--	tmpfile="$(git checkout-index --temp --stage="$1" "$2" 2>/dev/null)" &&
--	tmpfile=${tmpfile%%'	'*}
--
--	if test $? -eq 0 && test -n "$tmpfile"
--	then
--		mv -- "$(git rev-parse --show-cdup)$tmpfile" "$3"
--	else
--		>"$3"
--	fi
--}
--
- merge_file () {
- 	MERGED="$1"
- 
-@@ -318,9 +306,10 @@ merge_file () {
- 	# where the base's directory no longer exists.
- 	mkdir -p "$(dirname "$MERGED")"
- 
--	checkout_staged_file 1 "$MERGED" "$BASE"
--	checkout_staged_file 2 "$MERGED" "$LOCAL"
--	checkout_staged_file 3 "$MERGED" "$REMOTE"
-+	# TODO: How do we get $MERGED always with diff3?
-+	sed -e '/^<<<<<<< /,/^||||||| /d' -e '/^=======$/,/^>>>>>>> /d' "$MERGED" > "$BASE"
-+	sed -e '/^<<<<<<< /,/^=======$/d' -e '/^>>>>>>> /d' "$MERGED" > "$LOCAL"
-+	sed -e '/^||||||| /,/^>>>>>>> /d' -e '/^<<<<<<< /d' "$MERGED" > "$REMOTE"
- 
- 	if test -z "$local_mode" || test -z "$remote_mode"
- 	then
--- 
-2.30.0.rc0
+In other words, it is unclear why the caller is forbidden from
+giving the diff3 label, when the recursive merge needs to synthesize
+the virtual ancestor using all the given merge bases?
 
+The answer could be a simple "opt->ancestor field is managed by the
+recursive machinery itself when it needs to create virtual ancestor,
+and must start as NULL, but when we do not create virtual ancestor,
+it is allowed to start with any value, as the machinery itself does
+not assign any new value to the field", but I cannot read if that is
+the case from the comments in the patch.
+
+> +
+> +	merge_start(opt, result);
+> +	merge_ort_internal(opt, merge_bases, side1, side2, result);
+>  }
+> diff --git a/merge-ort.h b/merge-ort.h
+> index 55ae7ee865d..d53a0a339f3 100644
+> --- a/merge-ort.h
+> +++ b/merge-ort.h
+> @@ -34,6 +34,16 @@ struct merge_result {
+>  /*
+>   * rename-detecting three-way merge with recursive ancestor consolidation.
+>   * working tree and index are untouched.
+> + *
+> + * merge_bases will be consumed (emptied) so make a copy if you need it.
+> + *
+> + * NOTE: empirically, the recursive algorithm will perform better if you
+> + *       pass the merge_bases in the order of oldest commit to the
+> + *       newest[1][2].
+> + *
+> + *       [1] https://lore.kernel.org/git/nycvar.QRO.7.76.6.1907252055500.21907@tvgsbejvaqbjf.bet/
+> + *       [2] commit 8918b0c9c2 ("merge-recur: try to merge older merge bases
+> + *           first", 2006-08-09)
+>   */
+
+I initially thought that this was a bit out-of-place for the comment
+that explains why the merge bases list gets reversed in the code, but
+it is actually the right place---it guides the callers that hand a
+list of merge_bases to the function.
+
+>  void merge_incore_recursive(struct merge_options *opt,
+>  			    struct commit_list *merge_bases,
+
+Thanks.
