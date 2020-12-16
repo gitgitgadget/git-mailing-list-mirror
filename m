@@ -2,160 +2,175 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-21.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63DBCC4361B
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 23:42:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5AC4C4361B
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 23:50:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 32E9323730
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 23:42:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6F34223731
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 23:50:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730032AbgLPXme (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Dec 2020 18:42:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41104 "EHLO
+        id S1730384AbgLPXuA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Dec 2020 18:50:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727769AbgLPXme (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Dec 2020 18:42:34 -0500
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E68DFC061794
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 15:41:53 -0800 (PST)
-Received: by mail-ot1-x32a.google.com with SMTP id q25so25215090otn.10
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 15:41:53 -0800 (PST)
+        with ESMTP id S1726110AbgLPXuA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Dec 2020 18:50:00 -0500
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29533C061794
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 15:49:20 -0800 (PST)
+Received: by mail-pf1-x449.google.com with SMTP id v26so6260076pff.23
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 15:49:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=wbU6F2RRG9xc82Us3rbYSoAzjnzl8kxC6eVIG9ipgyc=;
-        b=TCNNPJ3S4iHxj9y1LEpgMXpKV1gcb1gTEN91L7s1NJYMjFr0yJhd2L/DlyLMX7aEL5
-         Dj/kGh/YtNsP9Q0J5n53eBFsHOgzMvhnxCI8MyCYxvr79quB2coMuMQ1LvYtuAUAmO9i
-         c7PIedP9Iuxxv7l35T4r9rydcipcQ1uymx1EvBnXrgoXaoasmNXXpmDVZKXY4svxuHDc
-         087OMOOKC/4vnvcBhMSf8GUAANpak6zyxNpydkFfPE9G3o7rVhym0PXTFU6JrAMnWHpm
-         wU3HMysAJVyXSRYAuICkh56pTBluhCgLPuvtHCuB0SdwfPV6dt42qlhUxrci2sBJqHXD
-         ocEw==
+        d=google.com; s=20161025;
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=c4yoEcUyVYdUyOpfP8nH+5iiHTFA6F+Pr/AjIZ8vTUg=;
+        b=qAnxV+eyJvhz2DBxZMzWGYOuZ17o5RsNQ7S573x/QBD5LxLuA6T94BbaWHF1mN3UV9
+         IBd8wfmvivY98hHFSLQ4RyLDhVPCnapdt1+tEUOjC34VnglMd/jLzFQ87HSSsuXJ773p
+         ZOYavgwaG11WvszUJHRT9kPWMnUqo+KHRUlIQZlGjkwRMgGeQmhb6PBeTNUFSRGf3goH
+         acpUGvS1TB2XhQwS13TAHqxfHwwGZzQ+EYhrEiYWV0DR8FXqOO/LnQAm5NEWs7G61ETj
+         RdhcUH5ZhQCKOmE41xhED8TLKmhD6HyAPIhuLbiSMoinoltIOfdu4Rpc/OEdZBvPTaWV
+         p7PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=wbU6F2RRG9xc82Us3rbYSoAzjnzl8kxC6eVIG9ipgyc=;
-        b=DM1dwKkSXvBsUfqPI/t0X4ERxDLNB+2SX/sYhr3M/pLuFp1YBl5c4Khh/c8M+sYy4F
-         5ZXx+r+KLaJlGWsbSNkacnTGcOje3lKo9xZmMCnfbTIYdmD8vFUPRx3iGDw5hqV0PrHR
-         yodhHlLvgjTaZ2xmWABh8KUh/26MGl1TBbzw/4QUjUGWtwL08DWfIycSennJvazI6f4b
-         M5nJ72l6fHuNSiuU4doJ9n2Ci3/8w3brY60gQseV0l8cbyUgtgy6glQcoHbU1IxGnDqF
-         ZjjM3yBqOa5R1n76QmYBtEchI+0kiqOQoPM7UI4z2JgYVHjh1bAlJIRFYbieFoLw58qV
-         qCqw==
-X-Gm-Message-State: AOAM533lvJ2EPu/NdcGtCZJJqJrPnoLhtDSd3POjmEvhMndtwz9mwYSO
-        HYkiR71HYKXDm6z5W0MTye4=
-X-Google-Smtp-Source: ABdhPJwS68B94hXfdX3JjUQREPR8bwZ1Y+CcH5oEdZuTLT9TAQTr5LUe7AsY1tAOR+fuZZqVsdTYpA==
-X-Received: by 2002:a9d:372:: with SMTP id 105mr23398087otv.118.1608162113320;
-        Wed, 16 Dec 2020 15:41:53 -0800 (PST)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id b25sm908241ooe.18.2020.12.16.15.41.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Dec 2020 15:41:52 -0800 (PST)
-Date:   Wed, 16 Dec 2020 17:41:51 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>, Seth House <seth@eseth.com>
-Message-ID: <5fda9b3f4979c_973f2083@natae.notmuch>
-In-Reply-To: <xmqqa6ud2xuw.fsf@gitster.c.googlers.com>
-References: <20201216174345.28146-1-felipe.contreras@gmail.com>
- <xmqqa6ud2xuw.fsf@gitster.c.googlers.com>
-Subject: Re: [RFC/PATCH] mergetool: use resolved conflicts in all the views
+        h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=c4yoEcUyVYdUyOpfP8nH+5iiHTFA6F+Pr/AjIZ8vTUg=;
+        b=W2sqTqQz2yM5KySDXzf+VJP2/2fBgAvo80+64VLz8yLZCMPAgOF0Drf7W37k0dKnre
+         p/5Ih+dssjN8GBPmjz0Zc4W/GOTg7Cy6Mvk4pF0n3DaHLdeBgcohD4g1ef0lSn2U0FAc
+         zFAX0FyamesiiSvlRUWRciErd614El83OC1+iyIKln7B/5IT6Oo2ULPjALNUUk2/aMcG
+         hKKFqHmc30BUv5aY55XALaKXvhwfMmBxZgekPDSPL4OPGGsv9nCb5pgnhlm/TZcDVpVA
+         uUkibZtTQR/nYY4SJSLRyEdeOqAE0ASqrfSlzZ175epG+W6pZ+5mq0zejrk2tpzHMYxJ
+         NJ2g==
+X-Gm-Message-State: AOAM5328lXbJ6ienIehyJDGltQzQ59gr/FIm4noVVHP3i/5EPR7ADhCd
+        kCVGSRJY2VPOJ4qL35/sUKpBKmikJ4ApMJN4k7qF
+X-Google-Smtp-Source: ABdhPJxnqXjvUfECiJBxIxXB/79VExRw6THp26nRu5yYu5kl4b6pSLYN19Xg/UsGxc4IDSJgMR4vwx94FNANjVTW3cJ1
+Sender: "jonathantanmy via sendgmr" <jonathantanmy@twelve4.c.googlers.com>
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:10:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:aa7:9198:0:b029:18b:3835:3796 with
+ SMTP id x24-20020aa791980000b029018b38353796mr5620600pfa.9.1608162558760;
+ Wed, 16 Dec 2020 15:49:18 -0800 (PST)
+Date:   Wed, 16 Dec 2020 15:49:14 -0800
+In-Reply-To: <xmqq1rfq5l8x.fsf@gitster.c.googlers.com>
+Message-Id: <20201216234914.1671487-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+References: <xmqq1rfq5l8x.fsf@gitster.c.googlers.com>
+X-Mailer: git-send-email 2.29.2.684.gfbc64c5ab5-goog
+Subject: Re: [PATCH v2 1/3] ls-refs: report unborn targets of symrefs
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org, peff@peff.net,
+        felipe.contreras@gmail.com, avarab@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> > @@ -74,8 +79,28 @@ static int send_ref(const char *refname, const struct object_id *oid,
+> >  	return 0;
+> >  }
+> >  
+> > -static int ls_refs_config(const char *var, const char *value, void *data)
+> > +static void send_possibly_unborn_head(struct ls_refs_data *data)
+> >  {
+> > +	struct strbuf namespaced = STRBUF_INIT;
+> > +	struct object_id oid;
+> > +	int flag;
+> > +	int null_oid;
 > 
-> > It doesn't make sense to display already-resolved conflicts in the
-> > different views of all mergetools.
-> >
-> > We already have the best version in MERGED, with annotations that can
-> > be used to extract a pruned version of LOCAL and REMOTE. If we are using
-> > the diff3 conflict-style, we can even extract BASE.
-> >
-> > Let's use these annotations instead of using the original files before
-> > the conflict resolution.
-> >
-> > TODO: There may be a better way to extract these files that doesn't rely
-> > on the user's conflict-style configuration.
-> >
-> > See Seth House's blog post [1] for the idea and the rationale.
-> >
-> > [1] https://www.eseth.org/2020/mergetools.html
-> >
-> > Cc: Seth House <seth@eseth.com>
-> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> I'd suggest renaming this one, which masks the global null_oid of
+> "const struct object_id" type.  This code does not break only
+> because is_null_oid() happens to be implemented as a static inline,
+> and not as a C-preprocessor macro, right?
+
+OK - will rename.
+
+> > +	strbuf_addf(&namespaced, "%sHEAD", get_git_namespace());
+> > +	resolve_ref_unsafe(namespaced.buf, 0, &oid, &flag);
+> > +	null_oid = is_null_oid(&oid);
+> > +	if (!null_oid || (data->symrefs && (flag & REF_ISSYMREF)))
+> > +		send_ref(namespaced.buf, null_oid ? NULL : &oid, flag, data);
+> > +	strbuf_release(&namespaced);
+> > +}
+> > +
+> > +static int ls_refs_config(const char *var, const char *value, void *cb_data)
+> > +{
+> > +	struct ls_refs_data *data = cb_data;
+> > +
+> > +	if (!strcmp("lsrefs.unborn", var))
+> > +		data->allow_unborn = !strcmp(value, "allow") ||
+> > +			!strcmp(value, "advertise");
 > 
-> Hmph, I got what Seth showed, but I do not quite see how the ideas
-> in the post relate to what this patch does.  The patch just avoids
-> grabbing the contents of each stage out to a file for three stages
-> using "git checkout-index" and instead does the same by munging the
-> diff3 output, which ought to have the same information at least for
-> text files, using "sed", or is there something I am not seeing?
+> Are there differences between allow and advertise?  Would
+> lsrefs.allowUnborn that is a boolean, thus allowing the value to be
+> parsed by git_config_bool(), make more sense here, I wonder.  Or is
+> this meant as some future enhancement, e.g. you plan to have some
+> servers that allow "unborn" request even though they do not actively
+> advertise the support of the feature?  Without documentation update
+> or an in-code comment, it is rather hard to guess the intention
+> here.
 
-It's not quite the same information.
+I'll update the documentation. With this current patch, yes, some
+servers will allow "unborn" requests even though they do not actively
+advertise it. This allows servers in load-balanced environments to first
+be configured to support the feature, then after ensuring that the
+configuration for all servers is complete, to turn on advertisement.
 
-Take the following script that uses Seth's example:
+> > @@ -91,7 +116,7 @@ int ls_refs(struct repository *r, struct strvec *keys,
+> >  
+> >  	memset(&data, 0, sizeof(data));
+> >  
+> > -	git_config(ls_refs_config, NULL);
+> > +	git_config(ls_refs_config, &data);
+> >  
+> >  	while (packet_reader_read(request) == PACKET_READ_NORMAL) {
+> >  		const char *arg = request->line;
+> > @@ -103,14 +128,35 @@ int ls_refs(struct repository *r, struct strvec *keys,
+> >  			data.symrefs = 1;
+> >  		else if (skip_prefix(arg, "ref-prefix ", &out))
+> >  			strvec_push(&data.prefixes, out);
+> > +		else if (data.allow_unborn && !strcmp("unborn", arg))
+> > +			data.unborn = 1;
+> 
+> Somehow, it appears to me that writing it in a way along with this
+> line ...
+> 
+> 		else if (!strcmp("unborn", arg))
+> 			data.unborn = data.allow_unborn;
+> 
+> ... would make more sense.  Whether we allowed "unborn" request or
+> not, when the other side says "unborn", we are handling the request
+> for the unborn feature, and the condition with strcmp() alone
+> signals that better (in other words, when we acquire more request
+> types, we do not want to pass the control to "else if" clauses that
+> may come after this part when we see "unborn" request and when we
+> are configured not to accept "unborn" requests.
+> 
+> It does not make any difference in the current code, of course, and
+> it is more about future-proofing the cleanness of the code.
 
-----------------------------------------
-cat > BASE <<EOF
-A
+Good point. I'll go ahead and write it as you describe.
 
-"Beware the Jabberwock, my son!
-The jaws that bite, the claws that catch!
-Beware the Jub jub bird, and shun
-The frumious bandersnatch!"
-EOF
+I was following the style in upload-pack, where writing it my way versus
+your way would make a difference because we die on invalid arguments at
+the end. (It does raise the question whether we should die on invalid
+arguments, but maybe that's for another time.)
 
-cat > LOCAL <<EOF
-B
+> 
+> > -	head_ref_namespaced(send_ref, &data);
+> > +	if (data.unborn)
+> > +		send_possibly_unborn_head(&data);
+> > +	else
+> > +		head_ref_namespaced(send_ref, &data);
+> 
+> I found the "send_possibly 70% duplicates what the more generic
+> head_ref_namespaced() does" a bit disturbing.
 
-"Beware the Jabberwock, my son!
-The jaws that bite, the claws that catch!
-Beware the Jub jub bird, and shun
-The frumious bandersnatch!"
-EOF
+There's more duplication in refs.c (e.g. head_ref_namespaced() and
+refs_head_ref()) too. I'll see if I can refactor those into something
+more generic.
 
-cat > REMOTE <<EOF
-C
-
-"Beware the Jabberwock, my son!
-The jaws that bite, the claws that catch!
-Beware the Jubjub bird, and shun
-The frumious Bandersnatch!"
-EOF
-
-git merge-file "$@" --diff3 -p LOCAL BASE REMOTE
-----------------------------------------
-
-Notice how git is smart enough to resolve the conflicts of the second
-paragraph, so the user doesn't have to do anything.
-
-LOCAL is the equivalent of "git checkout-index --stage 2", but that
-doesn't have the resolved conflict.
-
-We could call "git merge-file --ours" and overwrite $LOCAL; that way the
-user is not presented with any diff for the second paragraph. The same
-with --theirs and $REMOTE, but there's no "git merge-file --base".
-
-
-The implementation details of the proposed patch are not relevant at
-this point; it was just to show an example of what Seth's diffconflicts
-vim plugin does.
-
-Cheers.
-
--- 
-Felipe Contreras
