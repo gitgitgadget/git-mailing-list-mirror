@@ -2,95 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59B3CC4361B
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 23:28:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6469C4361B
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 23:33:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2C2D42371F
-	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 23:28:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 926142371F
+	for <git@archiver.kernel.org>; Wed, 16 Dec 2020 23:33:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730766AbgLPX22 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Dec 2020 18:28:28 -0500
-Received: from out03.mta.xmission.com ([166.70.13.233]:37498 "EHLO
-        out03.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726806AbgLPX22 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Dec 2020 18:28:28 -0500
-X-Greylist: delayed 2074 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Dec 2020 18:28:27 EST
-Received: from in01.mta.xmission.com ([166.70.13.51])
-        by out03.mta.xmission.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.93)
-        (envelope-from <seth@eseth.com>)
-        id 1kpffT-001GeP-Bh; Wed, 16 Dec 2020 15:53:11 -0700
-Received: from mta5.zcs.xmission.com ([166.70.13.69])
-        by in01.mta.xmission.com with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.87)
-        (envelope-from <seth@eseth.com>)
-        id 1kpffS-0003ee-Cn; Wed, 16 Dec 2020 15:53:10 -0700
-Received: from localhost (localhost [127.0.0.1])
-        by mta5.zcs.xmission.com (Postfix) with ESMTP id 32C141280BD3;
-        Wed, 16 Dec 2020 15:53:10 -0700 (MST)
-X-Amavis-Modified: Mail body modified (using disclaimer) -
-        mta5.zcs.xmission.com
-Received: from mta5.zcs.xmission.com ([127.0.0.1])
-        by localhost (mta5.zcs.xmission.com [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id hUlqNIB_W5Nr; Wed, 16 Dec 2020 15:53:10 -0700 (MST)
-Received: from zms05.zcs.xmission.com (zms05.zcs.xmission.com [166.70.13.75])
-        by mta5.zcs.xmission.com (Postfix) with ESMTP id 08CB01280BC7;
-        Wed, 16 Dec 2020 15:53:10 -0700 (MST)
-Date:   Wed, 16 Dec 2020 15:53:09 -0700 (MST)
-From:   Seth House <seth@eseth.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-        David Aguilar <davvid@gmail.com>, Johannes Sixt <j6t@kdbg.org>
-Message-ID: <105041520.23756286.1608159189934.JavaMail.zimbra@eseth.com>
-In-Reply-To: <xmqqa6ud2xuw.fsf@gitster.c.googlers.com>
-References: <20201216174345.28146-1-felipe.contreras@gmail.com> <xmqqa6ud2xuw.fsf@gitster.c.googlers.com>
+        id S1729927AbgLPXdc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Dec 2020 18:33:32 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63231 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726110AbgLPXdc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Dec 2020 18:33:32 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A51C0FEC7D;
+        Wed, 16 Dec 2020 18:32:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/CG9Q1d0woFyVSoWOx2O8fOtg5c=; b=C+M02U
+        XXYsbbeNvDTCb9cVuNOz5dinJiGKysfufxP1GRAm6xPWM996WSRsZGKTWloEsoFt
+        jwE4hKwPF0+Qu8KpUYXyKT1m08mMsWvXiYmN0D7x+GYjtX1sX5Hz6IIRFu+hzLEe
+        jFJ51IuIfg81m0HBI0lijRHTgY+7frGoFZn6g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Ng3tRglz/341IpQVKvFbqFWncFt5P746
+        2N4uF4CrZXNCp9UzsVSk+98qz6y77O6tWIie5pA9+H4G2h6iGqMATVnr1VGyClzI
+        In1HsQ3jItCVlCkudFeAIgsdmWVPu+/+FVuaaygazv1w3BDxY8XvldlBgAKopnTf
+        //tCh11wM7M=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9D048FEC7C;
+        Wed, 16 Dec 2020 18:32:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DF601FEC79;
+        Wed, 16 Dec 2020 18:32:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, James Ramsay <james@jramsay.com.au>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v6 00/17] propose config-based hooks (part I)
+References: <20201014232447.3050579-1-emilyshaffer@google.com>
+        <20201205014607.1464119-1-emilyshaffer@google.com>
+        <20201216003408.GR36751@google.com>
+        <xmqqlfdy6025.fsf@gitster.c.googlers.com>
+        <20201216201625.GF3783238@google.com>
+Date:   Wed, 16 Dec 2020 15:32:46 -0800
+In-Reply-To: <20201216201625.GF3783238@google.com> (Emily Shaffer's message of
+        "Wed, 16 Dec 2020 12:16:25 -0800")
+Message-ID: <xmqqwnxh1g4h.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [139.60.10.209]
-X-Mailer: Zimbra 8.8.15_GA_3968 (ZimbraWebClient - FF83 (Linux)/8.8.15_GA_3968)
-Thread-Topic: mergetool: use resolved conflicts in all the views
-Thread-Index: 6TTPYSebax0Im9qfQQj7F8sIKhj/gQ==
-X-XM-SPF: eid=1kpffS-0003ee-Cn;;;mid=<105041520.23756286.1608159189934.JavaMail.zimbra@eseth.com>;;;hst=in01.mta.xmission.com;;;ip=166.70.13.69;;;frm=seth@eseth.com;;;spf=none
-X-SA-Exim-Connect-IP: 166.70.13.69
-X-SA-Exim-Mail-From: seth@eseth.com
-Subject: Re: [RFC/PATCH] mergetool: use resolved conflicts in all the views
-X-SA-Exim-Version: 4.2.1 (built Thu, 05 May 2016 13:38:54 -0600)
-X-SA-Exim-Scanned: Yes (on in01.mta.xmission.com)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 017BE5F6-3FF7-11EB-8D9C-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I appreciate Felipe getting the discussion started.
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-On Wed, Dec 16, 2020 at 02:24:23PM -0800, Junio C Hamano wrote:
-> If there is none, then what is the benefit of doing the same thing
-> without running 3 checkout-index?
+>> By the way, es/config-hooks does not seem to pass 5411 (at least)
+>> even as a standalone topic, and has been kicked out of 'seen' for
+>> some time.  Has anybody took a look into the issue?
+>
+> Yeah, I looked at it today. Looks like an issue with not paying
+> attention to master->main default config, since I added a new test to
+> the 5411 suite (which means it wouldn't have made a conflict for someone
+> to say "ah yes, s/master/main/g"). I am tracking down couple of other CI
+> errors today and will send a reroll today or tomorrow.
 
-I wasn't aware of this plubming when I wrote the initial shell-script
-version of the technique. This is a much better approach (even *if*
-there's a negligible performance penalty). This nicely avoids
-UNIX/Windows line-ending surprises, and instead leans on
-already-configured Git defaults for those. Plus the non-text files
-benefit you mentioned is also huge.
-
-> as I understand "mergetool" is handed an
-> already conflicted state and asked to resolve it, it would not be
-> possible without at least looking at the stage #1 to recover the
-> base for folks who do not use diff3 style.
-
-I feel strongly that LOCAL, REMOTE, and BASE should be left intact for
-this reason, Also because they aid readers in understanding the
-pre-conflicts versions of the file.
-
-Rather mergetools (that support it) should be given the stage 1-3
-versions of the file in addition to the usual, unmodified, above three.
-Then each tool can decide whether or how to show each. Some graphical
-tools might be able to make effective use of all five (six?).
-
-(Feedback & other ideas are very welcome.)
-
+Thanks.
