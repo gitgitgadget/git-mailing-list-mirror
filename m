@@ -2,84 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A1ACC4361B
-	for <git@archiver.kernel.org>; Thu, 17 Dec 2020 19:43:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F3C7C4361B
+	for <git@archiver.kernel.org>; Thu, 17 Dec 2020 19:46:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 35DC1239ED
-	for <git@archiver.kernel.org>; Thu, 17 Dec 2020 19:43:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DD7392389F
+	for <git@archiver.kernel.org>; Thu, 17 Dec 2020 19:46:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726918AbgLQTnV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Dec 2020 14:43:21 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52663 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725930AbgLQTnV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Dec 2020 14:43:21 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 03D2110677A;
-        Thu, 17 Dec 2020 14:42:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=WMw6L/fWNRFb
-        zA1ttJ/3CXMOgBo=; b=JRn8UYXbRla+lNFF2z7XcBMv7CGzQGDlpIG4Wtk1Rtc9
-        0BGf3AozTtpQNXVwLfRUhobld1lm2vyF/bGLwit0uTmdZ3m35ySznJT5KC24wOjx
-        LJq0hWda6avhfxlTQIehb3lXtWxOoIYe1VuER3y08yYtUAd4m1q6E7xuFDMzqL4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=EVmdE3
-        oEUbNUSt5gpc05yD0bTEkXMWFYvc7e12efU3Jje2BiSURNsyd1UWGj084SRDb3B1
-        IiUk+v0wncZrZ3ptbIPKi0lUHlRdsD3ymoCVH4RCwxzfpi4fgbvNyg8S1rVqx4w4
-        PQtBZYqtQQSP/Q81K/PBFL7eVMwElYrprin3c=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EFECD106778;
-        Thu, 17 Dec 2020 14:42:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 42714106776;
-        Thu, 17 Dec 2020 14:42:38 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
-        <stdedos@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: Fwd: Bug in `git add -N xyz ; git stash` command
-References: <CAHMHMxW-LwjLWF9PPuSJmbAafw37d_18j+HmOd4+8MKbajb_8A@mail.gmail.com>
-        <CAHMHMxW_zwq_xK3Mh5QjC4dM1muVotESZdGQkRAx8xeKYmHzbw@mail.gmail.com>
-        <xmqq1rfp4l35.fsf@gitster.c.googlers.com>
-        <CAHMHMxUdt1cxE1UkjbjUxpL=4fcjrE64udR6YJidbzLJS0ca2w@mail.gmail.com>
-Date:   Thu, 17 Dec 2020 11:42:36 -0800
-In-Reply-To: <CAHMHMxUdt1cxE1UkjbjUxpL=4fcjrE64udR6YJidbzLJS0ca2w@mail.gmail.com>
-        (=?utf-8?B?Is6jz4TOsc+Nz4HOv8+CIM6dz4TOrc69z4TOv8+CIidz?= message of "Thu,
- 17 Dec 2020 10:43:20
-        +0200")
-Message-ID: <xmqq1rfoz0b7.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1728185AbgLQTqX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Dec 2020 14:46:23 -0500
+Received: from bsmtp2.bon.at ([213.33.87.16]:9962 "EHLO bsmtp2.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728080AbgLQTqW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Dec 2020 14:46:22 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp2.bon.at (Postfix) with ESMTPSA id 4CxjCR53JTz5tlF;
+        Thu, 17 Dec 2020 20:45:39 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id CE789246;
+        Thu, 17 Dec 2020 20:45:38 +0100 (CET)
+Subject: Re: [PATCH 0/2] git-gui: Auto-rescan on activate
+To:     Stefan Haller <stefan@haller-berlin.de>
+Cc:     me@yadavpratyush.com, git@vger.kernel.org
+References: <20201101170505.71246-1-stefan@haller-berlin.de>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <e5f6753b-10b3-1291-1b39-34af63792037@kdbg.org>
+Date:   Thu, 17 Dec 2020 20:45:38 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
+In-Reply-To: <20201101170505.71246-1-stefan@haller-berlin.de>
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 04B53E80-40A0-11EB-953E-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=CE=A3=CF=84=CE=B1=CF=8D=CF=81=CE=BF=CF=82 =CE=9D=CF=84=CE=AD=CE=BD=CF=84=
-=CE=BF=CF=82  <stdedos@gmail.com> writes:
+Am 01.11.20 um 18:05 schrieb Stefan Haller:
+> Do an automatic rescan whenever the git-gui window receives focus. Most other
+> GUI tools do this, and it's very convenient; no more pressing F5 manually.
+> 
+> People who don't like this behavior can turn it off using
+> "git config gui.autorescan false".
+> 
+> Stefan Haller (2):
+>   git-gui: Delay rescan until idle time
+>   git-gui: Auto-rescan on activate
+> 
+>  git-gui.sh | 26 ++++++++++++++++++++++----
+>  1 file changed, 22 insertions(+), 4 deletions(-)
+> 
 
-> Not deciding to fix that (or not agreeing on how to fix it), should be
-> orthogonal from the "what does the error message says" about it.
-> I would expect something like "'xyz' is marked with intent-to-add;
-> either stage (git add xyz) or remove the file (git ... xyz); refusing
-> to stage."
+I've been using these patches in the past days.
 
-"refusing to stash", you mean?
+I am still a bit ambivalent on whether I like the behavior. I do switch
+among windows *a lot* and there is a short flicker on every rescan. And
+there is muscle memory...
 
-I think that your wording may be an improvement.  Care to whip up a
-patch?
+I observe a bug and a half:
 
-Thanks.
+It is unclear which file is selected automatically when there are
+unstaged changes. But there is one misbehavior: after I have invoked the
+merge tool, resolved the conflict, and then switch back to Git GUI, the
+conflicted file is not selected anymore when it is not the first file in
+the list. That is *very* annoying.
+
+And then there is the following use-case. While Git GUI is not active
+(think Git GUI and Gitk side-by-side and Gitk active), I click on a
+particular file that is not at the top of the list; then Git GUI becomes
+active and rescans, but also forgets on which file I have clicked. But I
+expected the clicked-on file to become visible, which it doesn't, and I
+have to click again. This is mildly annoying.
+
+-- Hannes
