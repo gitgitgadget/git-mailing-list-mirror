@@ -7,64 +7,66 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A553C4361B
-	for <git@archiver.kernel.org>; Thu, 17 Dec 2020 05:42:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AC6DC4361B
+	for <git@archiver.kernel.org>; Thu, 17 Dec 2020 05:44:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 343A42360D
-	for <git@archiver.kernel.org>; Thu, 17 Dec 2020 05:42:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04E39236F9
+	for <git@archiver.kernel.org>; Thu, 17 Dec 2020 05:44:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726428AbgLQFmH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Dec 2020 00:42:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39876 "EHLO
+        id S1726640AbgLQFoH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Dec 2020 00:44:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725468AbgLQFmH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Dec 2020 00:42:07 -0500
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 764D2C061794
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 21:41:26 -0800 (PST)
-Received: by mail-oi1-x22c.google.com with SMTP id d189so30945701oig.11
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 21:41:26 -0800 (PST)
+        with ESMTP id S1726012AbgLQFoH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Dec 2020 00:44:07 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5962C061794
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 21:43:26 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id l207so30994458oib.4
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 21:43:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=bWDmeWM49doFmBSWYWwNE9uuIG6qbUYy9h+kW8ru4Is=;
-        b=iQZn5Lzqr6efK0NgKtPTh3IPOEffDVD06XuMb55+PX/fLWMyAAJBHClwo1O8BNbjK5
-         LlgOKuP2pGrGkxrpg708u7hTedVkIis0ZWx+H5k/u8PMgpMbM7U3/RnHrPrEn1o0wxSa
-         PDIS1cQj7GYpcbVpsRqUwihkGY/tg2ki4YrjSsHEN884NB8Ew+HU+TN1Ud5587PEwf98
-         H7n74fA+wmtsHyUaF373s8FI+HT5gcdEkF/sHoTYWX5AutIKbsCsjuvk0BD1zpdBsB6e
-         x/Yf1YDK4g80y1EU7Dcvnr37X+ftbmnRLdgdO5T2UzywsWEBPQTe1zb+Z/DwO2iStkPf
-         9oOw==
+        bh=EUgQn1RlspN0Bv704kMJ8PTEHueM1DFNi1gfElRQdzI=;
+        b=r1MgySsn9MJAOOFqyEAd5o5/gHwQqt2X2M7f9w44n/wFezJlBaQ+TX0Co5ElPG5FqG
+         dj+d3/JW1pERdLByO0jqzu7nvphAUzXZLeqGN/vjsT6ErUkJ8Sokq0t65Dn8wV4R7POE
+         r5LnJELHUT7O00mw+mfMsWg+j5NUge1axCrVQB8q+K8kW62xFRlcNm/YFpV6W9rnlRB6
+         RlxetORdj2Q2wvpuIGlFK+QBDQ933MPfaZNVZitnQn21dbjF7ht2Uq4m8p5ZE5x9Z2f9
+         pLzlZEW3ks5QrEIcWBKvwRXyWhqWNLeGBYjzdPBbz5wzrReUk/fnHiCVyf5UYMxyqLT/
+         fJHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=bWDmeWM49doFmBSWYWwNE9uuIG6qbUYy9h+kW8ru4Is=;
-        b=KYb9nRozlW6oL6+M1PaFn+uqYN3Wq3vNeCwUP8T9nnWxLWgtYY79hZI+ZHiTyj+ONE
-         01K7FMJ2MXuxqsWLtOW/wuVtNAvtIM1ZylP3+ueFw4ALMFl+KBEHGPiIMEcT7bXoJVud
-         itnTbboeuP5A1ktYMtTspC17+st/6zL9ykyAh9IH7ry/slJqoMcSH80c5ivFMQyZZQgB
-         LFo07iJySKbK7vvSzk8zwESue/WzKKXvIKz+56wLtJvw9usKIDlFloQQ3vM7Z3pybWe5
-         IVXCq9Z8tqVqxc7n9cn2duZe0CGtgRBgyCJbuBuxzsTuUpJr7Yi61pJOgwi+V3gTMv8h
-         tm1A==
-X-Gm-Message-State: AOAM531Kbnyx9IAERoGRUR/Ak+gpoBRlSTlMO7/FqLnKP1gTYiMX5hYY
-        7fVy8fp9xWDsHrjReKmPqXQ=
-X-Google-Smtp-Source: ABdhPJzC7ziA7CD3oKRYVhy+TLVh4ssFh+PvJsp5wJyiDIYhiIh7AwXqrg9VqY8+okb2AIEV7lD/GA==
-X-Received: by 2002:aca:f289:: with SMTP id q131mr3786878oih.159.1608183685877;
-        Wed, 16 Dec 2020 21:41:25 -0800 (PST)
+        bh=EUgQn1RlspN0Bv704kMJ8PTEHueM1DFNi1gfElRQdzI=;
+        b=TOKoBLjpHqC3xrkGNKlyVq9FTSjIQfxf0X7zb6roX75HOkTEs/Z78WxSihy9e4BY+i
+         8+MPerL/ApOJVh1MJqST1L7fVw3AaxmhW+F+iapN/8+8Ej8D/zfS8NiplST2kVOUydJo
+         Ezd/x7D9keCYeDi4W2IYktMFVjxtQbQjEov/gVOxX0U1g1eEFTCiBKjpZem6rjJf5m4n
+         GemzWLEF1FhW1ejrAXu0uVM+e8NhQDud5P+fwb/6fB2YepDYipyX0LiYLvhRqIwd/yGr
+         nsoSD75m8/IpIgoJ4W35HALXyP7Es7agBX1V0pkDdCUKAIZRZf5p7k3iLTvLZJV0c0mb
+         wd5g==
+X-Gm-Message-State: AOAM531MAw+h+w79KSTuQhvTOkQJbDEvrTu06gSvLXjyifBSFNqRAfXF
+        HY16iE0oXfmYIomEAbzy4uY=
+X-Google-Smtp-Source: ABdhPJxOpmxbt0HsXn7BNDj3Fwia5auhTxlx34DvW2/RgvuYTRIA5FDifqNH3trb9SDco/67pD7V4g==
+X-Received: by 2002:aca:ef44:: with SMTP id n65mr4102530oih.90.1608183806089;
+        Wed, 16 Dec 2020 21:43:26 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id m81sm918921oib.37.2020.12.16.21.41.24
+        by smtp.gmail.com with ESMTPSA id w8sm1034456oos.37.2020.12.16.21.43.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Dec 2020 21:41:25 -0800 (PST)
-Date:   Wed, 16 Dec 2020 23:41:23 -0600
+        Wed, 16 Dec 2020 21:43:25 -0800 (PST)
+Date:   Wed, 16 Dec 2020 23:43:24 -0600
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Seth House <seth@eseth.com>, Junio C Hamano <gitster@pobox.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-        David Aguilar <davvid@gmail.com>, Johannes Sixt <j6t@kdbg.org>
-Message-ID: <5fdaef83a40ba_d0e26208f6@natae.notmuch>
-In-Reply-To: <105041520.23756286.1608159189934.JavaMail.zimbra@eseth.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>, Seth House <seth@eseth.com>
+Message-ID: <5fdaeffc8b6c_d0e262088b@natae.notmuch>
+In-Reply-To: <xmqqmtydypp4.fsf@gitster.c.googlers.com>
 References: <20201216174345.28146-1-felipe.contreras@gmail.com>
  <xmqqa6ud2xuw.fsf@gitster.c.googlers.com>
- <105041520.23756286.1608159189934.JavaMail.zimbra@eseth.com>
+ <5fda9b3f4979c_973f2083@natae.notmuch>
+ <xmqqmtydypp4.fsf@gitster.c.googlers.com>
 Subject: Re: [RFC/PATCH] mergetool: use resolved conflicts in all the views
 Mime-Version: 1.0
 Content-Type: text/plain;
@@ -74,68 +76,21 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Seth House wrote:
-> I appreciate Felipe getting the discussion started.
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 > 
-> On Wed, Dec 16, 2020 at 02:24:23PM -0800, Junio C Hamano wrote:
-> > If there is none, then what is the benefit of doing the same thing
-> > without running 3 checkout-index?
+> > The implementation details of the proposed patch are not relevant at
+> > this point; it was just to show an example of what Seth's diffconflicts
+> > vim plugin does.
 > 
-> I wasn't aware of this plubming when I wrote the initial shell-script
-> version of the technique. This is a much better approach (even *if*
-> there's a negligible performance penalty). This nicely avoids
-> UNIX/Windows line-ending surprises, and instead leans on
-> already-configured Git defaults for those. Plus the non-text files
-> benefit you mentioned is also huge.
+> Sorry for commenting on the "irrelevant" part; as the patch was
+> marked with RFC label, I bothered to read it and tried to give
+> comments, but it wasn't clear which part was welcoming comments
+> and which parts were off limits ;-)
 
-I think you misunderstood.
+All parts welcomed comments.
 
-This command:
-
-  git checkout-index --stage 2 --temp -- poem.txt
-
-Will give you *exactly* the same output as LOCAL.
-
-The context is "git mergetool", not the mergetool itself.
-
-> > as I understand "mergetool" is handed an
-> > already conflicted state and asked to resolve it, it would not be
-> > possible without at least looking at the stage #1 to recover the
-> > base for folks who do not use diff3 style.
-> 
-> I feel strongly that LOCAL, REMOTE, and BASE should be left intact for
-> this reason, Also because they aid readers in understanding the
-> pre-conflicts versions of the file.
-> 
-> Rather mergetools (that support it) should be given the stage 1-3
-> versions of the file in addition to the usual, unmodified, above three.
-> Then each tool can decide whether or how to show each. Some graphical
-> tools might be able to make effective use of all five (six?).
-
-Except as you stated in your blog post, not a *single* tool does this
-correctly using LOCAL, REMOTE, and BASE.
-
- * Araxis: a mess of changes
- * Beyond Compare: a mess of changes
- * DiffMerge: a mess of changes
- * kdiff3: a mess of changes
- * Meld: a mess of changes
- * Sublime Merge: displays unnecessary changes
- * SmartGit: ignores the other files
- * Fork: displays unnecessary changes
- * P4Merge: displays unnecessary changes
- * IntelliJ: a mess of changes
- * Tortoise Merge: uncertain
- * tkdiff: displays unnecessary changes
- * vimdiff: so, so wrong
- * vimdiff2: displays unnecessary changes
- * diffconflicts: RIGHT!
-
-So all tools would benefit from the patch (except yours).
-
-Which tool would be negatively affected?
-
-Cheers.
+I'm just saying the idea is what's important in my opinion.
 
 -- 
 Felipe Contreras
