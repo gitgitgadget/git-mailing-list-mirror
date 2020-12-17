@@ -2,169 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.3 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CCF0C4361B
-	for <git@archiver.kernel.org>; Thu, 17 Dec 2020 06:08:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96D10C4361B
+	for <git@archiver.kernel.org>; Thu, 17 Dec 2020 07:36:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA5F12371F
-	for <git@archiver.kernel.org>; Thu, 17 Dec 2020 06:08:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 44D4D2371F
+	for <git@archiver.kernel.org>; Thu, 17 Dec 2020 07:36:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726293AbgLQGI5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Dec 2020 01:08:57 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53931 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725828AbgLQGI4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Dec 2020 01:08:56 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CA3F681FC8;
-        Thu, 17 Dec 2020 01:08:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Us5t978x+V/wZlq+pwasaYs2pHc=; b=XTK1Vb
-        nUAPit92+ER3ihGscWRQBNTbGP2fHlv5tZkjFUwH2ufPuDux3kpmrYW/l2BuejKX
-        J82JhX0bPb79sPEVqcMleRFI2YdaKWN9TlNwlmL+VTKDt5qnysE1vQPsTxPpxA7K
-        svFGfSt5qSP905sbgblrqn5L7GQvwCtOAz0b0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=aM9FhRf7hK2c2QYQBXCM9P+ZCjzYxmlS
-        FJW3LXQ/UzThx/mZ9vn/5/BDbemj+N3o7bwrb3OyyCCjQET5rItZ1w4mk/Tb/7To
-        +fl4tl5zzRSuB84D8ffKX226mHJtQ4yAYDp1SCl0MGZ8gFJXOERGyHVcBvUxS99j
-        JaCxZvbxRRk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C004981FC7;
-        Thu, 17 Dec 2020 01:08:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5034281FC4;
-        Thu, 17 Dec 2020 01:08:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        "Daniel C . Klauer" <daniel.c.klauer@web.de>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH v2] pack-redundant: fix crash when one packfile in repo
-References: <xmqqo8it4pxt.fsf@gitster.c.googlers.com>
-        <20201217015709.28827-1-worldhello.net@gmail.com>
-Date:   Wed, 16 Dec 2020 22:08:11 -0800
-In-Reply-To: <20201217015709.28827-1-worldhello.net@gmail.com> (Jiang Xin's
-        message of "Wed, 16 Dec 2020 20:57:09 -0500")
-Message-ID: <xmqqczz9yng4.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726599AbgLQHgI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Dec 2020 02:36:08 -0500
+Received: from bsmtp.bon.at ([213.33.87.14]:23147 "EHLO bsmtp.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726533AbgLQHgG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Dec 2020 02:36:06 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 4CxP0q06g8z5tlD;
+        Thu, 17 Dec 2020 08:35:22 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id CB38449B3;
+        Thu, 17 Dec 2020 08:35:21 +0100 (CET)
+Subject: Re: [RFC/PATCH] mergetool: use resolved conflicts in all the views
+To:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Seth House <seth@eseth.com>, Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+References: <20201216174345.28146-1-felipe.contreras@gmail.com>
+ <xmqqa6ud2xuw.fsf@gitster.c.googlers.com>
+ <105041520.23756286.1608159189934.JavaMail.zimbra@eseth.com>
+ <5fdaef83a40ba_d0e26208f6@natae.notmuch>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <e5c73fed-b87e-2091-794e-19aced4dd25b@kdbg.org>
+Date:   Thu, 17 Dec 2020 08:35:21 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3E56DD46-402E-11EB-97E4-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+In-Reply-To: <5fdaef83a40ba_d0e26208f6@natae.notmuch>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Am 17.12.20 um 06:41 schrieb Felipe Contreras:
+> Seth House wrote:
+>> I appreciate Felipe getting the discussion started.
+>>
+>> On Wed, Dec 16, 2020 at 02:24:23PM -0800, Junio C Hamano wrote:
+>>> If there is none, then what is the benefit of doing the same thing
+>>> without running 3 checkout-index?
+>>
+>> I wasn't aware of this plubming when I wrote the initial shell-script
+>> version of the technique. This is a much better approach (even *if*
+>> there's a negligible performance penalty). This nicely avoids
+>> UNIX/Windows line-ending surprises, and instead leans on
+>> already-configured Git defaults for those. Plus the non-text files
+>> benefit you mentioned is also huge.
+> 
+> I think you misunderstood.
+> 
+> This command:
+> 
+>   git checkout-index --stage 2 --temp -- poem.txt
+> 
+> Will give you *exactly* the same output as LOCAL.
+> 
+> The context is "git mergetool", not the mergetool itself.
+> 
+>>> as I understand "mergetool" is handed an
+>>> already conflicted state and asked to resolve it, it would not be
+>>> possible without at least looking at the stage #1 to recover the
+>>> base for folks who do not use diff3 style.
+>>
+>> I feel strongly that LOCAL, REMOTE, and BASE should be left intact for
+>> this reason, Also because they aid readers in understanding the
+>> pre-conflicts versions of the file.
+>>
+>> Rather mergetools (that support it) should be given the stage 1-3
+>> versions of the file in addition to the usual, unmodified, above three.
+>> Then each tool can decide whether or how to show each. Some graphical
+>> tools might be able to make effective use of all five (six?).
+> 
+> Except as you stated in your blog post, not a *single* tool does this
+> correctly using LOCAL, REMOTE, and BASE.
+> 
+>  * Araxis: a mess of changes
+>  * Beyond Compare: a mess of changes
+>  * DiffMerge: a mess of changes
+>  * kdiff3: a mess of changes
+>  * Meld: a mess of changes
+>  * Sublime Merge: displays unnecessary changes
+>  * SmartGit: ignores the other files
+>  * Fork: displays unnecessary changes
+>  * P4Merge: displays unnecessary changes
+>  * IntelliJ: a mess of changes
+>  * Tortoise Merge: uncertain
+>  * tkdiff: displays unnecessary changes
+>  * vimdiff: so, so wrong
+>  * vimdiff2: displays unnecessary changes
+>  * diffconflicts: RIGHT!
+> 
+> So all tools would benefit from the patch (except yours).
+> 
+> Which tool would be negatively affected?
 
-> From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
->
-> Command `git pack-redundant --all` will crash if there is only one
-> packfile in the repository.  This is because, if there is only one
-> packfile in local_packs, `cmp_local_packs` will do nothing and will
-> leave `pl->unique_objects` as uninitialized.
->
-> Also add testcases for repository with no packfile and one packfile
-> in t5323.
->
-> Reported-by: Daniel C. Klauer <daniel.c.klauer@web.de>
-> Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> ---
->  builtin/pack-redundant.c  |  6 ++++++
->  t/t5323-pack-redundant.sh | 37 +++++++++++++++++++++++++++++++++----
->  2 files changed, 39 insertions(+), 4 deletions(-)
+Where's WinMerge in your list? I'm mostly using WinMerge these days, and
+it can do what your patch does all by itself. It does not require the
+proposed post-processing of stages in order to show only the real
+conflicts. I would say that this is a hint that post-processing should
+be moved to the tool drivers, and should not be done at the proposed level.
 
-Thanks.
+I don't know, though, whether your patch would have a negative effect
+for WinMerge.
 
->
-> diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-> index 178e3409b7..690775fa82 100644
-> --- a/builtin/pack-redundant.c
-> +++ b/builtin/pack-redundant.c
-> @@ -473,6 +473,12 @@ static void cmp_local_packs(void)
->  {
->  	struct pack_list *subset, *pl = local_packs;
->  
-> +	/* only one packfile */
-> +	if (!pl->next) {
-> +		llist_init(&pl->unique_objects);
-> +		return;
-> +	}
-> +
->  	while ((subset = pl)) {
->  		while ((subset = subset->next))
->  			cmp_two_packs(pl, subset);
-> diff --git a/t/t5323-pack-redundant.sh b/t/t5323-pack-redundant.sh
-> index 6b4d1ca353..7e3340843f 100755
-> --- a/t/t5323-pack-redundant.sh
-> +++ b/t/t5323-pack-redundant.sh
-> @@ -112,19 +112,28 @@ test_expect_success 'setup master repo' '
->  	create_commits_in "$master_repo" A B C D E F G H I J K L M N O P Q R
->  '
->  
-> +test_expect_success 'master: pack-redundant works with no packfile' '
-> +	(
-> +		cd "$master_repo" &&
-> +		cat >expect <<-EOF &&
-> +			fatal: Zero packs found!
-> +			EOF
-> +		test_must_fail git pack-redundant --all >actual 2>&1 &&
-> +		test_cmp expect actual
-> +	)
-> +'
-> +
->  #############################################################################
->  # Chart of packs and objects for this test case
->  #
->  #         | T A B C D E F G H I J K L M N O P Q R
->  #     ----+--------------------------------------
->  #     P1  | x x x x x x x                       x
-> -#     P2  |     x x x x   x x x
-> -#     P3  |             x     x x x x x
->  #     ----+--------------------------------------
-> -#     ALL | x x x x x x x x x x x x x x         x
-> +#     ALL | x x x x x x x                       x
->  #
->  #############################################################################
-> -test_expect_success 'master: no redundant for pack 1, 2, 3' '
-> +test_expect_success 'master: pack-redundant works with one packfile' '
->  	create_pack_in "$master_repo" P1 <<-EOF &&
->  		$T
->  		$A
-> @@ -135,6 +144,26 @@ test_expect_success 'master: no redundant for pack 1, 2, 3' '
->  		$F
->  		$R
->  		EOF
-> +	(
-> +		cd "$master_repo" &&
-> +		git pack-redundant --all >out &&
-> +		test_must_be_empty out
-> +	)
-> +'
-> +
-> +#############################################################################
-> +# Chart of packs and objects for this test case
-> +#
-> +#         | T A B C D E F G H I J K L M N O P Q R
-> +#     ----+--------------------------------------
-> +#     P1  | x x x x x x x                       x
-> +#     P2  |     x x x x   x x x
-> +#     P3  |             x     x x x x x
-> +#     ----+--------------------------------------
-> +#     ALL | x x x x x x x x x x x x x x         x
-> +#
-> +#############################################################################
-> +test_expect_success 'master: no redundant for pack 1, 2, 3' '
->  	create_pack_in "$master_repo" P2 <<-EOF &&
->  		$B
->  		$C
+-- Hannes
