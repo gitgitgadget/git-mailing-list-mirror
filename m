@@ -2,95 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AC6DC4361B
-	for <git@archiver.kernel.org>; Thu, 17 Dec 2020 05:44:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22438C4361B
+	for <git@archiver.kernel.org>; Thu, 17 Dec 2020 05:46:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 04E39236F9
-	for <git@archiver.kernel.org>; Thu, 17 Dec 2020 05:44:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CF25023741
+	for <git@archiver.kernel.org>; Thu, 17 Dec 2020 05:46:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726640AbgLQFoH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Dec 2020 00:44:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40182 "EHLO
+        id S1726644AbgLQFqH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Dec 2020 00:46:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726012AbgLQFoH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Dec 2020 00:44:07 -0500
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5962C061794
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 21:43:26 -0800 (PST)
-Received: by mail-oi1-x235.google.com with SMTP id l207so30994458oib.4
-        for <git@vger.kernel.org>; Wed, 16 Dec 2020 21:43:26 -0800 (PST)
+        with ESMTP id S1725882AbgLQFqH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Dec 2020 00:46:07 -0500
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A232C061794
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 21:45:27 -0800 (PST)
+Received: by mail-ot1-x333.google.com with SMTP id j20so21698293otq.5
+        for <git@vger.kernel.org>; Wed, 16 Dec 2020 21:45:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=EUgQn1RlspN0Bv704kMJ8PTEHueM1DFNi1gfElRQdzI=;
-        b=r1MgySsn9MJAOOFqyEAd5o5/gHwQqt2X2M7f9w44n/wFezJlBaQ+TX0Co5ElPG5FqG
-         dj+d3/JW1pERdLByO0jqzu7nvphAUzXZLeqGN/vjsT6ErUkJ8Sokq0t65Dn8wV4R7POE
-         r5LnJELHUT7O00mw+mfMsWg+j5NUge1axCrVQB8q+K8kW62xFRlcNm/YFpV6W9rnlRB6
-         RlxetORdj2Q2wvpuIGlFK+QBDQ933MPfaZNVZitnQn21dbjF7ht2Uq4m8p5ZE5x9Z2f9
-         pLzlZEW3ks5QrEIcWBKvwRXyWhqWNLeGBYjzdPBbz5wzrReUk/fnHiCVyf5UYMxyqLT/
-         fJHQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YUSAYZjCXkoiyyFQlpoBCUWL0G7jA0+UUvvaeP8PLUc=;
+        b=I/k6a/8tBSYnNe8E78gWiqBnLsuxgC4QyeG8/kNtTyBTmnl89ZX3w72gegzhg7tsjA
+         CcO4zkX357qbJBx4J8QoeSQ1V1CAK7d4EVwynWFRl6iGLzjE24c106vDxC33tucQA2A/
+         4rgzEbcIq0/cFXpxUaRZxqSraacAGEVdVbo3ENU/M9GXJ4voRTQqb+vexplAZU7F6a7e
+         jeuIWeu0PsSXZcXujE6WuJqZDf2nVT2IhkFMBRuRNaxmQK9kSw52HcRTtYAuCPB5fb7H
+         09KGoR7lRe9RxO9w7InfmlShVKssbWz+dVrY2OqDNqDy8QXL3J6ol2GfTWhtndfuUsEp
+         ZRIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=EUgQn1RlspN0Bv704kMJ8PTEHueM1DFNi1gfElRQdzI=;
-        b=TOKoBLjpHqC3xrkGNKlyVq9FTSjIQfxf0X7zb6roX75HOkTEs/Z78WxSihy9e4BY+i
-         8+MPerL/ApOJVh1MJqST1L7fVw3AaxmhW+F+iapN/8+8Ej8D/zfS8NiplST2kVOUydJo
-         Ezd/x7D9keCYeDi4W2IYktMFVjxtQbQjEov/gVOxX0U1g1eEFTCiBKjpZem6rjJf5m4n
-         GemzWLEF1FhW1ejrAXu0uVM+e8NhQDud5P+fwb/6fB2YepDYipyX0LiYLvhRqIwd/yGr
-         nsoSD75m8/IpIgoJ4W35HALXyP7Es7agBX1V0pkDdCUKAIZRZf5p7k3iLTvLZJV0c0mb
-         wd5g==
-X-Gm-Message-State: AOAM531MAw+h+w79KSTuQhvTOkQJbDEvrTu06gSvLXjyifBSFNqRAfXF
-        HY16iE0oXfmYIomEAbzy4uY=
-X-Google-Smtp-Source: ABdhPJxOpmxbt0HsXn7BNDj3Fwia5auhTxlx34DvW2/RgvuYTRIA5FDifqNH3trb9SDco/67pD7V4g==
-X-Received: by 2002:aca:ef44:: with SMTP id n65mr4102530oih.90.1608183806089;
-        Wed, 16 Dec 2020 21:43:26 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YUSAYZjCXkoiyyFQlpoBCUWL0G7jA0+UUvvaeP8PLUc=;
+        b=UjoeIp3OG0NzBSLJgNF/533JPQdVZ3oyCfOto1is+ADkTn1/KfUBXRqJipHdTwRJ2A
+         daCs318I/+MyMWfFR8IfQS1xa5S5ZAdQ90dfYj7b/QpMdZY2VQRkr3MOo0+KVMZ+wVJp
+         MGhhFXGpGuNyanujBOQs5We9ju873w+IxSo30J7uaUxAtsVZZT4E3RYIq2itoeadmSX6
+         qYKZWPEvjT765k0Fs39tevo37Z/EAgViqhnr/ePT9w6v35NOOt0pV2xCFe9fR3lgYpKs
+         pkaixT17sOX/j0lWlEMOVRtsV3m0IIr8yFg9uenpHlhWtd+s9f+tqgKZiCAo9DCvVO2W
+         05+w==
+X-Gm-Message-State: AOAM532nQEEOEPv7KX8cjVMDO6l0eMyDH6gKG2Ak0tLT3hDCRJx1DN+0
+        UH+jFMW13ciid+JVrSBVDT7XsKMAcYAOVQ==
+X-Google-Smtp-Source: ABdhPJzHkAtw4v4ZbhwgBh3VJfQREP3HzIzO/t0ns8mfY2fGsIHAscU5xuNyXxzUpvPZyMS4VdTZzA==
+X-Received: by 2002:a05:6830:1257:: with SMTP id s23mr24602645otp.69.1608183926422;
+        Wed, 16 Dec 2020 21:45:26 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id w8sm1034456oos.37.2020.12.16.21.43.24
+        by smtp.gmail.com with ESMTPSA id s204sm66042oib.42.2020.12.16.21.45.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Dec 2020 21:43:25 -0800 (PST)
-Date:   Wed, 16 Dec 2020 23:43:24 -0600
+        Wed, 16 Dec 2020 21:45:25 -0800 (PST)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        David Aguilar <davvid@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        Seth House <seth@eseth.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>, Seth House <seth@eseth.com>
-Message-ID: <5fdaeffc8b6c_d0e262088b@natae.notmuch>
-In-Reply-To: <xmqqmtydypp4.fsf@gitster.c.googlers.com>
-References: <20201216174345.28146-1-felipe.contreras@gmail.com>
- <xmqqa6ud2xuw.fsf@gitster.c.googlers.com>
- <5fda9b3f4979c_973f2083@natae.notmuch>
- <xmqqmtydypp4.fsf@gitster.c.googlers.com>
-Subject: Re: [RFC/PATCH] mergetool: use resolved conflicts in all the views
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+Subject: [PATCH v3] mergetool: add automerge configuration
+Date:   Wed, 16 Dec 2020 23:45:24 -0600
+Message-Id: <20201217054524.856258-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.30.0.rc0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > The implementation details of the proposed patch are not relevant at
-> > this point; it was just to show an example of what Seth's diffconflicts
-> > vim plugin does.
-> 
-> Sorry for commenting on the "irrelevant" part; as the patch was
-> marked with RFC label, I bothered to read it and tried to give
-> comments, but it wasn't clear which part was welcoming comments
-> and which parts were off limits ;-)
+It doesn't make sense to display easily-solvable conflicts in the
+different views of all mergetools.
 
-All parts welcomed comments.
+Only the chunks that warrant conflict markers should be displayed.
 
-I'm just saying the idea is what's important in my opinion.
+In order to unobtrusively do this, add a new configuration:
+mergetool.autoMerge.
 
+See Seth House's blog post [1] for the idea, and the rationale.
+
+[1] https://www.eseth.org/2020/mergetools.html
+
+Original-idea-by: Seth House <seth@eseth.com>
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ Documentation/config/mergetool.txt |  3 +++
+ git-mergetool.sh                   | 10 ++++++++++
+ t/t7610-mergetool.sh               | 18 ++++++++++++++++++
+ 3 files changed, 31 insertions(+)
+
+diff --git a/Documentation/config/mergetool.txt b/Documentation/config/mergetool.txt
+index 16a27443a3..43af7a96f9 100644
+--- a/Documentation/config/mergetool.txt
++++ b/Documentation/config/mergetool.txt
+@@ -61,3 +61,6 @@ mergetool.writeToTemp::
+ 
+ mergetool.prompt::
+ 	Prompt before each invocation of the merge resolution program.
++
++mergetool.autoMerge::
++	Automatically resolve conflicts that don't require user intervention.
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index e3f6d543fb..6e86d3b492 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -274,6 +274,7 @@ merge_file () {
+ 		BASE=${BASE##*/}
+ 	fi
+ 
++	DIFF3="$MERGETOOL_TMPDIR/${BASE}_DIFF3_$$$ext"
+ 	BACKUP="$MERGETOOL_TMPDIR/${BASE}_BACKUP_$$$ext"
+ 	LOCAL="$MERGETOOL_TMPDIR/${BASE}_LOCAL_$$$ext"
+ 	REMOTE="$MERGETOOL_TMPDIR/${BASE}_REMOTE_$$$ext"
+@@ -322,6 +323,15 @@ merge_file () {
+ 	checkout_staged_file 2 "$MERGED" "$LOCAL"
+ 	checkout_staged_file 3 "$MERGED" "$REMOTE"
+ 
++	if test "$(git config --bool mergetool.autoMerge)" = "true"
++	then
++		git merge-file --diff3 -q -p "$LOCAL" "$BASE" "$REMOTE" >"$DIFF3"
++		sed -e '/^<<<<<<< /,/^||||||| /d' -e '/^=======\r\?$/,/^>>>>>>> /d' "$DIFF3" >"$BASE"
++		sed -e '/^||||||| /,/^>>>>>>> /d' -e '/^<<<<<<< /d' "$DIFF3" >"$LOCAL"
++		sed -e '/^<<<<<<< /,/^=======\r\?$/d' -e '/^>>>>>>> /d' "$DIFF3" >"$REMOTE"
++		rm -- "$DIFF3"
++	fi
++
+ 	if test -z "$local_mode" || test -z "$remote_mode"
+ 	then
+ 		echo "Deleted merge conflict for '$MERGED':"
+diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+index 70afdd06fa..b75c91199b 100755
+--- a/t/t7610-mergetool.sh
++++ b/t/t7610-mergetool.sh
+@@ -828,4 +828,22 @@ test_expect_success 'mergetool -Oorder-file is honored' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'mergetool automerge' '
++	test_config mergetool.automerge true &&
++	test_when_finished "git reset --hard" &&
++	git checkout -b test${test_count}_b master &&
++	echo -e "base\n\na" >file1 &&
++	git commit -a -m "base" &&
++	echo -e "base\n\nc" >file1 &&
++	git commit -a -m "remote update" &&
++	git checkout -b test${test_count}_a HEAD~ &&
++	echo -e "local\n\nb" >file1 &&
++	git commit -a -m "local update" &&
++	test_must_fail git merge test${test_count}_b &&
++	yes "" | git mergetool file1 &&
++	echo -e "local\n\nc" >expect &&
++	test_cmp expect file1 &&
++	git commit -m "test resolved with mergetool"
++'
++
+ test_done
 -- 
-Felipe Contreras
+2.30.0.rc0
+
