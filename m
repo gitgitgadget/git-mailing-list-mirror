@@ -4,105 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A84D4C4361B
-	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 05:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6782BC2BBD4
+	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 05:52:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5AB3023A57
-	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 05:52:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1940A23A57
+	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 05:52:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727380AbgLRFwL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Dec 2020 00:52:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37064 "EHLO
+        id S1728140AbgLRFwM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Dec 2020 00:52:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
         with ESMTP id S1726045AbgLRFwL (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 18 Dec 2020 00:52:11 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7455CC0617A7
-        for <git@vger.kernel.org>; Thu, 17 Dec 2020 21:51:30 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id q18so832556wrn.1
-        for <git@vger.kernel.org>; Thu, 17 Dec 2020 21:51:30 -0800 (PST)
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 597ABC0617B0
+        for <git@vger.kernel.org>; Thu, 17 Dec 2020 21:51:31 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id 3so1214151wmg.4
+        for <git@vger.kernel.org>; Thu, 17 Dec 2020 21:51:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=Q0T9dTBzYaoejxK9VZWwcQi2E3NS06Mc02LZSRNj79c=;
-        b=nG+uRB0kBnotDkoxXH1L8wZRnk04GEO+DvTxPQ2vRZZr637naEcciFtBVFa8JOJ88L
-         48cf77pdFWBrpwsy0mDD2rn9TYOiXZO4vGG937mopvLU8XZjsnkj8phRwMPBlY2rUMpB
-         c8Ry6cpka79rMH7qP25zLLDcGCtDuHqTsJiiXPP7ryZU+wiOr+EgRGvw8lqrLOC9K2D4
-         481wAF4xV5gCSuaRo7gnYcWjmKI6v6nVQhD9SDY5ORx25DjzXIRPsHjq09h9AlDhDoKh
-         mST6RxkbHiqkhJmKruh/uuGaVBvqF+NUAEPXaYTX036GeUiSjZnlnRDUWsTbhLH9bHIl
-         +YXg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=z7fgkyh1UyUiX/qF3rRPmjr7ypy84zpeUgU7ex7QbZg=;
+        b=Jo3Cz10ThrWS1YIny8B8xa6+ekrTpj+SJwul75ASFZT7obhFmv1a6XTiHDA6n3G0Ts
+         WssD/No/gj358UzvwzdGcb1E3uHzGjhev06xL0QMGGlC07f4G0cmPxc7GfGgFiBBMm7h
+         t10CYxOppEwbsz/M1OWyRGf/08NQb3xwCKlHQDXDWD/oNB4ue2kT3UzSRC+pYykoWHsj
+         88m0CyYSssLaamRkoe26fFiKNdQBoPji0ReIzAa/MZpRrwPw2U7CtHV+EKyvnXBUcJGD
+         /87JwOUSt2NTnVfQY9DjTma7LUY0UdVdn8Ov3ASGCY/Oc9BajJyEk0nkzE+tqN/9sh6t
+         54UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Q0T9dTBzYaoejxK9VZWwcQi2E3NS06Mc02LZSRNj79c=;
-        b=qZFAHzqL7PUlJrL000E0HJ/yhbb3g2ECOzQOTaAZimWxvdNr3QdM18dCdWujW2WUWF
-         gALaU5Nc8+ahFb35A5T10TCri86E7Sq0mVY9ugVE7L4UFPI+W4rrwAqaiH0ERZDH+xcy
-         1czWoOGoLiji3ziRkteWY9HuPxjxG+ZPOC9ZGLRy/V7l6uA6J4iK1+waz4rFfYLV+9B7
-         Nby9ASc0WTnWnHYvUrwNNAIN2EwqUV7bvclJLg4bSM8Pj56xxBECqN3sWZ7D4CejS+Gb
-         HL6EURaJZ2RyI3JGYvskDU79kVt+DDDdxOZwVUbFZsW1w8MQKvrZneOxNN4ELjKHJ5mL
-         dsbg==
-X-Gm-Message-State: AOAM533tXWbkQKCmzbI98P9fWxwwjAWyVfwYlhVZw+2yIl/dbDzJE2tn
-        lT+bdfQ1Lo0QAetfHpNuRcTt1AHbf98=
-X-Google-Smtp-Source: ABdhPJzl8BS2HOiBhTVTIC4eu3A7peADOz3vJ5wwjjabqaWtSu6813iJgA/SNBCyWPcWUXoEHOiVng==
-X-Received: by 2002:adf:fbd2:: with SMTP id d18mr2380225wrs.222.1608270689047;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=z7fgkyh1UyUiX/qF3rRPmjr7ypy84zpeUgU7ex7QbZg=;
+        b=OrBTJQlBF24pvOKyo9ocIVolKutsNaWRA400Qp+weB9QAjn0NpwO1wH861YWsEH95p
+         OTxMIXSR8G0n2BmrikffAhZKXyArJCtfZU9k1aQHc/hGW4UyPv0Uxk0tLrPRGLAsPKd9
+         umYY7rzijd+iclOzp89CshJ40snAj44j6rbRNMpyfMCJnjeFqoZ3Z46RSl2RkrCD6xS9
+         RWGmwn0cKTuFkml9wwF3Dmlr/7I0MWoiAvzF0XyjImzSoP+cKMvrltQlkjoVP2z9CbIe
+         t7mJcxtjPUDmT4Hmz3tU/vLnsJ4kRobeuFedQQC5PwM4VIJ9FedOiq2eklvt4+/ySJ2r
+         24BA==
+X-Gm-Message-State: AOAM533JbuuwHncbPlgMeLgMbuHoWqM5lYpwytbjGbnHBISvHnuwCutz
+        3y5Ekqu3E2Is2FitJeeL6ZNTPNvX5ts=
+X-Google-Smtp-Source: ABdhPJwHyhrV/GsCZWwF6XT0Ul9yTHXOAcaFufhcehjIK8TxKAZ24ONy8vdsuGmXvCfsvqlp6KlUsQ==
+X-Received: by 2002:a1c:f706:: with SMTP id v6mr2508945wmh.85.1608270689876;
         Thu, 17 Dec 2020 21:51:29 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b127sm7029709wmc.45.2020.12.17.21.51.28
+        by smtp.gmail.com with ESMTPSA id a12sm13363666wrh.71.2020.12.17.21.51.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Dec 2020 21:51:28 -0800 (PST)
-Message-Id: <pull.815.git.1608270687.gitgitgadget@gmail.com>
+        Thu, 17 Dec 2020 21:51:29 -0800 (PST)
+Message-Id: <382a009c18efc8a46a9c0210754f2266c3116ee4.1608270687.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.815.git.1608270687.gitgitgadget@gmail.com>
+References: <pull.815.git.1608270687.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 18 Dec 2020 05:51:17 +0000
-Subject: [PATCH 00/10] merge-ort: add more handling of basic conflict types
+Date:   Fri, 18 Dec 2020 05:51:18 +0000
+Subject: [PATCH 01/10] merge-ort: handle D/F conflict where directory
+ disappears due to merge
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series depends on en/merge-ort-2 (it does not depend on en/merge-ort-3
-or en/merge-ort-recursive).
+From: Elijah Newren <newren@gmail.com>
 
-This series adds handling of additional basic conflict types (directory/file
-conflicts, three-way content merging, very basic submodule divergence
-reconciliation, and different filetypes). This series drops the number of
-test failures under GIT_TEST_MERGE_ALGORITHM=ort by 211 (from 1448 to 1237).
+When one side has a directory at a given path and the other side of
+history has a file at the path, but the merge resolves the directory
+away (e.g. because no path within that directory was modified and the
+other side deleted it, or because renaming moved all the files
+elsewhere), then we don't actually have a conflict anymore.  We just
+need to clear away any information related to the relevant directory,
+and then the subsequent process_entry() handling can handle the given
+path.
 
-Further, if en/merge-tests, en/merge-ort-3, en/merge-ort-recursive, and this
-series are all merged down (in any order), then collectively they drop the
-number of test failure under GIT_TEST_MERGE_ALGORITHM=ort from 1448 down to
-60.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ merge-ort.c | 25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
 
-Elijah Newren (10):
-  merge-ort: handle D/F conflict where directory disappears due to merge
-  merge-ort: handle directory/file conflicts that remain
-  merge-ort: implement unique_path() helper
-  merge-ort: handle book-keeping around two- and three-way content merge
-  merge-ort: flesh out implementation of handle_content_merge()
-  merge-ort: copy and adapt merge_3way() from merge-recursive.c
-  merge-ort: copy and adapt merge_submodule() from merge-recursive.c
-  merge-ort: implement format_commit()
-  merge-ort: copy find_first_merges() implementation from
-    merge-recursive.c
-  merge-ort: add handling for different types of files at same path
-
- merge-ort.c | 671 ++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 653 insertions(+), 18 deletions(-)
-
-
-base-commit: c5a6f65527aa3b6f5d7cf25437a88d8727ab0646
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-815%2Fnewren%2Fort-conflict-handling-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-815/newren/ort-conflict-handling-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/815
+diff --git a/merge-ort.c b/merge-ort.c
+index 414e7b7eeac..f9a79eb25e6 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -976,14 +976,35 @@ static void process_entry(struct merge_options *opt,
+ 		assert(ci->df_conflict);
+ 	}
+ 
+-	if (ci->df_conflict) {
++	if (ci->df_conflict && ci->merged.result.mode == 0) {
++		int i;
++
++		/*
++		 * directory no longer in the way, but we do have a file we
++		 * need to place here so we need to clean away the "directory
++		 * merges to nothing" result.
++		 */
++		ci->df_conflict = 0;
++		assert(ci->filemask != 0);
++		ci->merged.clean = 0;
++		ci->merged.is_null = 0;
++		/* and we want to zero out any directory-related entries */
++		ci->match_mask = (ci->match_mask & ~ci->dirmask);
++		ci->dirmask = 0;
++		for (i = MERGE_BASE; i <= MERGE_SIDE2; i++) {
++			if (ci->filemask & (1 << i))
++				continue;
++			ci->stages[i].mode = 0;
++			oidcpy(&ci->stages[i].oid, &null_oid);
++		}
++	} else if (ci->df_conflict && ci->merged.result.mode != 0) {
+ 		die("Not yet implemented.");
+ 	}
+ 
+ 	/*
+ 	 * NOTE: Below there is a long switch-like if-elseif-elseif... block
+ 	 *       which the code goes through even for the df_conflict cases
+-	 *       above.  Well, it will once we don't die-not-implemented above.
++	 *       above.
+ 	 */
+ 	if (ci->match_mask) {
+ 		ci->merged.clean = 1;
 -- 
 gitgitgadget
+
