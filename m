@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1388EC2D0E4
-	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 22:29:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E810FC4361B
+	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 22:57:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CCD5D23B5D
-	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 22:29:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B05B823B97
+	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 22:57:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726031AbgLRW3M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Dec 2020 17:29:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48950 "EHLO
+        id S1726016AbgLRW44 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Dec 2020 17:56:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725957AbgLRW3L (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Dec 2020 17:29:11 -0500
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D3DAC0617B0
-        for <git@vger.kernel.org>; Fri, 18 Dec 2020 14:28:31 -0800 (PST)
-Received: by mail-ot1-x32f.google.com with SMTP id x13so3407554oto.8
-        for <git@vger.kernel.org>; Fri, 18 Dec 2020 14:28:31 -0800 (PST)
+        with ESMTP id S1725957AbgLRW44 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Dec 2020 17:56:56 -0500
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24DB4C0617A7
+        for <git@vger.kernel.org>; Fri, 18 Dec 2020 14:56:16 -0800 (PST)
+Received: by mail-ot1-x331.google.com with SMTP id b24so3510158otj.0
+        for <git@vger.kernel.org>; Fri, 18 Dec 2020 14:56:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=WLkgNPeXUGA/uQ5Io7jedb2TIfseJMUNDb6VpMyQ+BM=;
-        b=C9PiUXLIoxmXBLHGr8yx0/D0WKl9A/bGRYynOwTAkRxB2iQeEQLKBjF3pNXN/wEiTt
-         0zrjgm01KcE9wf2u81b08isTNIJks8oseCkILZPCTvrOWi3aR59WHVffkTDa2XmJGWLG
-         D0Ox/SWpL1Gr5r8oJ++klT4770EaZ4/u/gnlGPy5jzxJyEOaotAZFYxaZ0lDRfTse0sX
-         ey5ZBArwo+qxy7UyTdjAjvb9Ex738x2HiT+y1qUIm/56/0jPeNqK/JWBX6Uf4ZV0o+EE
-         9eY5nEnUHi1+jnQd38m4Z59BUfV5nOTdYPZqj+AgQmdMh3sudxfi9WoSh6W+KKSaDGd2
-         4nlA==
+        bh=YJUwid5EAXCwsSEzB3+yBZH5KEOAaOA/xu4iebpUMuk=;
+        b=jkVPzs56KyqJH8lSPJi7HzPUDwKAz8rda9nEyOIGGSpdRfMRKGDNxLg5sDOak4ERql
+         nnafK6XXcYs9ba/9G0Go0HrIzdcr5zBOVQXxiAK8l6XnAmeBkozffGQJonXZzROMYW6s
+         3o+e/DsI7B2bI96Di74fsGuNKIpWAhmcdILvMZAPORooaub5Tr6JFtplz3+UBKz/IYFh
+         UmuFH3WgBuR/r4v58ik/2hlyaL6i9l6IDHimEOLZ7tRBX6dSsWmIxnn4AnfS/EhkDakk
+         7ss1HGhY4sD7xc2oKeyqN+HuSuUcvfxTAPrm6VqZJYPMRb7kG6j62odirH4a8Ioq/ahW
+         rndQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=WLkgNPeXUGA/uQ5Io7jedb2TIfseJMUNDb6VpMyQ+BM=;
-        b=sabraXlddd8wPzXGu+tkBP6oj9JpXZniSLPP5qb65EIAV0JER1jc9WlUMALCoumZe9
-         cY2JpLaSFws8mwSsQIk+vcCdglE6ob7hPzZw+W+oHsrZ7rgVYp78lOJqfjoCAA/3pHER
-         ayGyXOgMfrbo6U/VbUdcvWCreFPL6B+70nRcV1GNzohzFgUAP3N2ApLUzHXeRZsKI003
-         SDA4MMuD7dAlZznZXNZKVh9h75OCtauw3EhtUih+ymcqSmed8pp73i1mpnWTJR7G/SSo
-         wzM4ydr61jEyhLVBk2MTo4dEXg9v1gELUPAXzUwgfp4qqhcN/uYGRyxV1pg7skZ+rNn1
-         MnwQ==
-X-Gm-Message-State: AOAM530eu7GriBdyd2mxqTcv8IbnIYzGbRjK5qiijJB0+RGhXcI1qOAF
-        puLXGuvODC/JWsH//Cf1vOfZNiNQwwx2H7/RegM=
-X-Google-Smtp-Source: ABdhPJyS+z5mmhCWodHt5wuktOi1qbs9ken+smzen4lsSQWxtd4Vn8qfndEvmdF95q2V2fOX5ApjHt7qjBaHlc1HQbU=
-X-Received: by 2002:a05:6830:10:: with SMTP id c16mr4363596otp.162.1608330510791;
- Fri, 18 Dec 2020 14:28:30 -0800 (PST)
+        bh=YJUwid5EAXCwsSEzB3+yBZH5KEOAaOA/xu4iebpUMuk=;
+        b=VeU4yiukziqKSezbwGw/auF7MSFDINmtBnRHpyi1NOqoMeVJE6sn6HDTh0XmMT21mC
+         mRFvJZLlI5aJhFneXx3BXbTfSeQaU/RGenbQAPNMEU88GeAzL6G4MUNNIUF5sX8XNv7K
+         ypClqO9g1AdZmLSWS2RXGy9HimWQgbk8deVCUTNNF59PGXWoC9NRHgmvPyytu8u/oOPq
+         y0zi9sGf2r2VK/EXwxLjTStmUQ1aCXvPa8eQJKXGcnmCyK5t4VE/8wIhOj/JT1Zuj8Za
+         IvqvEzT6x8qwLZA6HHHblfw/iGmbX6V0436vcqa3Al3wnSzltJYpaRxnT1MHRuxsq9Zx
+         cPhA==
+X-Gm-Message-State: AOAM530jhHC/P05vCEBSwT4OGmUCzdQebs9Q79aqYevl2QzdFMq7ifrJ
+        UAdenhIXk/sKJj5JcWHFzeNWFqPWZzcgBXgUhH0=
+X-Google-Smtp-Source: ABdhPJzRamBKkzjNuOiUmB2GSrJnaT2oCzwEbQ5QMoc65u0+euhKMfgGhynNqBtiiIv4Zwk+luSuwEDxjeBJD0uiGyQ=
+X-Received: by 2002:a05:6830:10:: with SMTP id c16mr4418469otp.162.1608332175552;
+ Fri, 18 Dec 2020 14:56:15 -0800 (PST)
 MIME-Version: 1.0
 References: <20201101193330.24775-1-sorganov@gmail.com> <20201216184929.3924-1-sorganov@gmail.com>
- <20201216184929.3924-30-sorganov@gmail.com> <CABPp-BFRPFxm=SuJFwfG+QYCivMKp2VRpnHGwxNL+extK7UdtA@mail.gmail.com>
- <87lfdvaymn.fsf@osv.gnss.ru> <CABPp-BGAHFLZDWaK5q+ZHOShUOZnRqUQd+T-X6mXxkg5cp7QpQ@mail.gmail.com>
- <87o8iq7oj3.fsf@osv.gnss.ru>
-In-Reply-To: <87o8iq7oj3.fsf@osv.gnss.ru>
+ <20201216184929.3924-24-sorganov@gmail.com> <CABPp-BEf2nbahjzR6aLLNy0YsHYcHqCozCe6veoZOH3LAM892g@mail.gmail.com>
+ <87blercju2.fsf@osv.gnss.ru> <CABPp-BGPZiwjSzZw5PLwkctW7hnG2S6UGHmkTGCh1BqgXJ+vEQ@mail.gmail.com>
+ <871rfm95b9.fsf@osv.gnss.ru>
+In-Reply-To: <871rfm95b9.fsf@osv.gnss.ru>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 18 Dec 2020 14:28:19 -0800
-Message-ID: <CABPp-BFFKVBtOSLbxbrSg+seG5zVftfuo=H35V5GKo+3iimLng@mail.gmail.com>
-Subject: Re: [PATCH v2 29/33] doc/git-log: describe new --diff-merges options
+Date:   Fri, 18 Dec 2020 14:56:04 -0800
+Message-ID: <CABPp-BEZ6VqyTah7QCzkuUm-p7tA_6cnpGPWpgpQbHp_c3Wc5Q@mail.gmail.com>
+Subject: Re: [PATCH v2 23/33] diff-merges: fix style of functions definitions
 To:     Sergey Organov <sorganov@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Philip Oakley <philipoakley@iee.email>,
@@ -71,206 +71,92 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 18, 2020 at 2:11 PM Sergey Organov <sorganov@gmail.com> wrote:
+On Fri, Dec 18, 2020 at 1:23 PM Sergey Organov <sorganov@gmail.com> wrote:
 >
 > Elijah Newren <newren@gmail.com> writes:
 >
-> > On Fri, Dec 18, 2020 at 8:05 AM Sergey Organov <sorganov@gmail.com> wrote:
+> > On Fri, Dec 18, 2020 at 5:41 AM Sergey Organov <sorganov@gmail.com> wrote:
 > >>
 > >> Elijah Newren <newren@gmail.com> writes:
 > >>
 > >> > On Wed, Dec 16, 2020 at 10:50 AM Sergey Organov <sorganov@gmail.com> wrote:
 > >> >>
-> >> >> Describe all the new --diff-merges options in the git-log.txt and
-> >> >> adopt description of originals accordingly.
-> >> >
-> >> > You also took care to explain interactions of options with -p that
-> >> > were previously undocumented, which is a nice bonus.  That wording
-> >> > could still be improved a bit, though, as noted below.
-> >> >
+> >> >> Put open curly brace on its own line
+> >> >>
 > >> >> Signed-off-by: Sergey Organov <sorganov@gmail.com>
 > >> >> ---
-> >> >>  Documentation/git-log.txt | 85 ++++++++++++++++++++++++---------------
-> >> >>  1 file changed, 52 insertions(+), 33 deletions(-)
+> >> >>  diff-merges.c | 36 ++++++++++++++++++++++++------------
+> >> >>  1 file changed, 24 insertions(+), 12 deletions(-)
 > >> >>
-> >> >> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-> >> >> index 2b8ac5ff882a..27bc619490c6 100644
-> >> >> --- a/Documentation/git-log.txt
-> >> >> +++ b/Documentation/git-log.txt
-> >> >> @@ -120,45 +120,64 @@ DIFF FORMATTING
-> >> >>  By default, `git log` does not generate any diff output. The options
-> >> >>  below can be used to show the changes made by each commit.
+> >> >> diff --git a/diff-merges.c b/diff-merges.c
+> >> >> index cba391604ac7..0165fa22fcd1 100644
+> >> >> --- a/diff-merges.c
+> >> >> +++ b/diff-merges.c
+> >> >> @@ -2,7 +2,8 @@
 > >> >>
-> >> >> -Note that unless one of `-c`, `--cc`, or `-m` is given, merge commits
-> >> >> -will never show a diff, even if a diff format like `--patch` is
-> >> >> -selected, nor will they match search options like `-S`. The exception is
-> >> >> -when `--first-parent` is in use, in which merges are treated like normal
-> >> >> -single-parent commits (this can be overridden by providing a
-> >> >> -combined-diff option or with `--no-diff-merges`).
-> >> >> +Note that unless one of `--diff-merges` variants (including short
-> >> >> +`-m`, `-c`, and `--cc` options) is explicitly given, merge commits
-> >> >> +will not show a diff, even if a diff format like `--patch` is
-> >> >> +selected, nor will they match search options like `-S`. The exception
-> >> >> +is when `--first-parent` is in use, in which case `first-parent` is
-> >> >> +the default format.
-> >> >
-> >> > Thanks for fixing this up.  :-)
 > >>
-> >> Don't mention it :-)
+> >> [...]
 > >>
-> >> >
 > >> >>
-> >> >> --c::
-> >> >> -       With this option, diff output for a merge commit
-> >> >> -       shows the differences from each of the parents to the merge result
-> >> >> -       simultaneously instead of showing pairwise diff between a parent
-> >> >> -       and the result one at a time. Furthermore, it lists only files
-> >> >> -       which were modified from all parents.
-> >> >> -
-> >> >> ---cc::
-> >> >> -       This flag implies the `-c` option and further compresses the
-> >> >> -       patch output by omitting uninteresting hunks whose contents in
-> >> >> -       the parents have only two variants and the merge result picks
-> >> >> -       one of them without modification.
-> >> >> +--diff-merges=(off|none|first-parent|1|separate|m|combined|c|dense-combined|cc)::
-> >> >> +--no-diff-merges::
-> >> >> +       Specify diff format to be used for merge commits. Default is
-> >> >> +       `off` unless `--first-parent` is in use, in which case
-> >> >> +       `first-parent` is the default.
-> >> >> ++
-> >> >> +--diff-merges=(off|none):::
-> >> >> +--no-diff-merges:::
-> >> >> +       Disable output of diffs for merge commits. Useful to override
-> >> >> +       implied value.
-> >> >> ++
-> >> >> +--diff-merges=first-parent:::
-> >> >> +--diff-merges=1:::
-> >> >> +       This option makes merge commits show the full diff with
-> >> >> +       respect to the first parent only.
+> >> >> -void diff_merges_set_dense_combined_if_unset(struct rev_info *revs) {
+> >> >> +void diff_merges_set_dense_combined_if_unset(struct rev_info *revs)
+> >> >> +{
+> >> >>         if (!revs->combine_merges)
+> >> >>                 set_dense_combined(revs);
+> >> >>  }
+> >> >> --
+> >> >> 2.25.1
+> >> >>
 > >> >
-> >> > Does it imply -p?
+> >> > But...didn't you add all these functions yourself earlier in the
+> >> > series?
 > >>
-> >> No, none of --diff-merges options do. This one is not any special. Why
-> >> the question?
-> >
-> > The documentation on -m was vague enough that it made me wonder.
-> > Fixing it would probably prevent me from having asked this question.
->
-> OK, I see, so let's try to fix the cause, please see below.
-
-Sounds good.
-
-> >
-> >> >> ++
-> >> >> +--diff-merges=separate:::
-> >> >> +--diff-merges=m:::
-> >> >> +-m:::
-> >> >> +       This makes merge commits show the full diff with respect to
-> >> >> +       each of the parents. Separate log entry and diff is generated
-> >> >> +       for each parent. `-m` is different in that it doesn't produce
-> >> >> +       any output without `-p`.
-> >> >
-> >> > Different from what?  From --first-parent?  From flags that haven't
-> >> > been covered yet?  (-c and --cc show up below)
+> >> Yes, I did indeed and somehow picked wrong style from one of the
+> >> occurrences of this style in the existing Git codebase.
 > >>
-> >> Well, from --diff-merges=m and --diff-merges=separate, that, as any
-> >> other --diff-merge option, do produce output (for merge commits) even
-> >> without -p.
-> >
-> > That wasn't at all clear to me as the intent of the last sentence.
->
-> Well, actually, the right answer to your question is: -m is different
-> from *everything* ;-)
->
-> Maybe the confusion you got is not caused by the documentation, but
-> rather by some of your expectations? In particular, I wonder, how comes
-> --first-parent appeared in your question, that is entirely unrelated?
-
-When you said "`-m` is different" it was not clear what you were
-contrasting to.  The fact that you were contrasting to the other
-values in the set of three being described by this paragraph may seem
-obvious to you, and I suspect many other readers may catch on to that,
-but that really honestly did not occur to me while reading it.  Maybe
-I'm weird.  Maybe some subset of users will be like me and we should
-tighten up the wording.  Hard to say.
-
-> I mean I'm still unsure how to make this description more clear, maybe
-> this will do:
->
-> --diff-merges=separate:::
-> --diff-merges=m:::
-> -m:::
->        This makes merge commits show the full diff with respect to
->        each of the parents. Separate log entry and diff is generated
->        for each parent. `-m` doesn't produce any output without `-p`.
-
-Works for me.  :-)
-
-> >
-> >> >> ++
-> >> >> +--diff-merges=combined:::
-> >> >> +--diff-merges=c:::
-> >> >> +-c:::
-> >> >> +       With this option, diff output for a merge commit shows the
-> >> >> +       differences from each of the parents to the merge result
-> >> >> +       simultaneously instead of showing pairwise diff between a
-> >> >> +       parent and the result one at a time. Furthermore, it lists
-> >> >> +       only files which were modified from all parents. Historically,
-> >> >> +       `-c` enables diff output for non-merge commits as well.
-> >> >
-> >> > "Historically"?  Does that mean it doesn't anymore?
+> >> > Why didn't you split this patch up and squash it into the
+> >> > relevant previous patches?
 > >>
-> >> Eh, I don't think "historically" means that, but I'm not sure, being
-> >> non-native English speaker.
-> >
-> > Sometimes non-native speakers use the language more accurately.  This
-> > might be such a case, but that sentence did make me think you might be
-> > attempting to document past behavior as a way of helping people adjust
-> > to current/new behavior.
-> >
-> >> > (Maybe, "The short form, `-c`, also enables diff output for non-merge
-> >> > commits as well." or something like that?)
+> >> When Junio noticed and pointed to this deficiency, I asked him if I
+> >> should fix all the series from the start, or it'd be OK to use fixup
+> >> commit. As he didn't answer and nobody else commented either, I opted
+> >> for the latter.
 > >>
-> >> ... and then try to explain why this otherwise illogical behavior is
-> >> there? I thought "historically" would cover that.
+> >> I can still do it if it's that essential, but I'd prefer not to, to
+> >> avoid both the hand-work and causing entire series to change. The
+> >> problem is that there were code movements in the series, so such a fix
+> >> to earlier patches would cause conflicts down the commits chain, to be
+> >> resolved by hand.
 > >
-> > It doesn't seem like illogical behavior to me.   Perhaps the view of
-> > -c as a diff-merges option, reinforced by placing -c right next to
-> > --diff-merges in the documentation, is what causes you to think so?
+> > That's what add -p and interactive rebase is for.  :-)  Code is read
+> > more than it is written, so it's important to get things clean.  And
+> > not just for immediate reviewers, but for people who look at it later.
 >
-> -c, described as selecting specific format of representation of merge
-> commits, suddenly enabling diff output of non-merge commits, is logical?
-> No. Useful? Maybe. Logical? Not to me. Just saying, see below.
+> I do know how to do it, but I'd still prefer it to be accepted in its
+> current form, as I don't see this particular case being that important
+> to justify rewriting of all the series. I'll go through the pain if
+> it's a show-stopper though.
 
-:-)
+Personally, I think that a really important point to keep in mind when
+submitting patch series is trying to figure out the easiest way to
+move the code from point A to point B, not the route you took to get
+from point A to point B.  This is especially true for longer patch
+series.  It's common after you've finished a series to discover there
+was an easier or cleaner route to follow that would have arrived at
+the same end-point.  It's not uncommon for me to spend a significant
+chunk of time rebasing and restructuring a patch series to try to
+highlight such a better path.  This includes not just style fixups,
+but different patch orderings, alternate ways to break up functions,
+using different data structures, etc.
 
-I didn't say the former documentation was correct, or that the
-behavior logically flowed from the documentation's claims.  And you do
-bring up good points that the past documentation should have been
-updated when -c and --cc were made to imply -p.  I only claimed that
--c and --cc provide logical behaviors (I want diffs for everything,
-for merges do it this way...all expressed in a nice compact bundle).
+All that said, I don't get to choose what's accepted or not, so I
+can't say if it'll be required.  What I can say is I like your series
+and I think it provides obvious improvements, but I'd still recommend
+against its inclusion as it stands for as long as this patch is still
+present.  (I have a feeling that there are other things in this series
+that possibly should be squashed, restructured, or refactored, e.g.
+[1]).  This is just my opinion, of course.  You are free to disagree
+with me, and wait to see what others say and what Junio does.
 
-> > If so, maybe we should document -c (and --cc) separately after all the
-> > --diff-merges options, using something like the following:
-> >
-> > -c:::
-> >     Implies both --patch and --diff-merges=combined, i.e. turn on
-> > patches for normal commits and show a combined diff format for merges.
->
-> The problem with this is that it'd then be preferable to describe -m
-> separately as well, and that's not that simple.
->
-> Overall, I'd rather change that in place, like this:
->
-> --diff-merges=combined:::
-> --diff-merges=c:::
-> -c:::
->        With this option, diff output for a merge commit shows the
->        differences from each of the parents to the merge result
->        simultaneously instead of showing pairwise diff between a
->        parent and the result one at a time. Furthermore, it lists
->        only files which were modified from all parents. `-c` implies
->        `--patch`.
 
-Works for me.  --cc needs a similar change, obviously.
+[1] https://lore.kernel.org/git/CABPp-BESWpqska++EsfxfbncyV0kNo1RGLjF+1BiV=D6zLx2LQ@mail.gmail.com/
