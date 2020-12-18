@@ -8,60 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43D3FC2BBD4
-	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 05:52:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC053C4361B
+	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 05:52:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 103CA23A57
-	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 05:52:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9C70D23A57
+	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 05:52:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731747AbgLRFwO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Dec 2020 00:52:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37080 "EHLO
+        id S1732146AbgLRFww (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Dec 2020 00:52:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726045AbgLRFwO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Dec 2020 00:52:14 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71EE6C061282
-        for <git@vger.kernel.org>; Thu, 17 Dec 2020 21:51:33 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id t16so822805wra.3
-        for <git@vger.kernel.org>; Thu, 17 Dec 2020 21:51:33 -0800 (PST)
+        with ESMTP id S1725290AbgLRFwv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Dec 2020 00:52:51 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AF82C061248
+        for <git@vger.kernel.org>; Thu, 17 Dec 2020 21:51:35 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id r3so824044wrt.2
+        for <git@vger.kernel.org>; Thu, 17 Dec 2020 21:51:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=b/lQQhK8bSffDw3/2icwtSxNT2UhUhNVLirkuVtqw5E=;
-        b=IjtTPoHWFQ5WopaSUmaAz5G4usug9Tv1AhEp50ADR8LlKobNFttmNXNV7IDrDKbGhR
-         MY8rx4qqwF/TFTKJ9aOAHofXqMMJXs2RBugjcP1qv0CYSs/5rXtuRwJWaYdia+JnbQD/
-         KHwiv1L8thv+0fIiuClnP6DYrlfmV2hub8LJHpz3+bNVwHfplxsf5uuonHn46aNVGxyk
-         K+h8l9WOVCToIyRtfSNnwS4agPJjBBYihT23O6Ngqe0wKdHW+s3GbYZyfdWqd00q853/
-         ocKVyjW4TyoEd+UmD5gjqVhR5vEJEEjt7sbits2Ao9HSP3i196Xx9VZYYg8+CZ9U0FwC
-         NVDg==
+        bh=5nRPYtOpZEu778+nvTAeqzOIXuhD9jlfLfk7n+GwGJM=;
+        b=b3WVzoHoGXcO8tex62ZawtOx0tAiaBodJKk4jRC1dr1xpDxcYiai3BJGIyc/g7zaAy
+         usTsy00Bb5/KAmtyRQPDLXll6Hj2y9PByxT3HKlRVUfPRkKWTJRm4bodYhSYiOshx2QG
+         naV2nkUiW0amIPHNqS8ORUfLPgakLcKiHr+coplLuHGqk9ZJS2TQSpdwPzX+t3Gqj3qU
+         zh8o+tl1mquqqPEI0+PEARgYybqQci/Wao5qwFsQivTg6+oEGCOseRhsHx85SLwx43qJ
+         CkaWvWVPPpYQ9G8PI2Oi25UfpB4qozSCkwLC3wfPFNgdiN5MIAxLotNBs2MA0icUO7q8
+         AHAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=b/lQQhK8bSffDw3/2icwtSxNT2UhUhNVLirkuVtqw5E=;
-        b=eAwAoWQ2TftZ9FPdqMmWpmQ+kpXwGiEqnLUqTuwpKxP9HL6YCvH5DgXl3YWxt1+Q/g
-         iaM8RhqdIXihCVIBC//F1mb3/QCPlLCR1BY98VKiJrQ50v8IpD3YqZ+N19oJOqaPb4A5
-         9UZXPcmModCr5NUCWk4jjUjtUPJQQa0EDpzI1gPV2UdNt3GqLKb3Z8kw6z26fYbaDjn0
-         vzOvgUbqqRS1puJuI5aifwM95XP8Cy2XydwySj6O956AkSqBnIrNK7Xt20cXoBZLdLJw
-         VLeY4lDa/kkYKQEbc+NGQarZLAdi5nIFOUnGB+Sj6IoeSRuPup7iLN1tp+tKHiOdssjl
-         weUw==
-X-Gm-Message-State: AOAM532SGiRzrA9UT8VGMS7c2QaYFzE+YGYZYcPas1jeaoWPMVljIqmM
-        +vQct+PoIW1txZh5519BubwOG11l7uo=
-X-Google-Smtp-Source: ABdhPJwXbvFMQ1BgjTbN1E940cD6r/O14CMw94FZQOd1D0/D2ZCtcuxtNZp03cTXyMvggA+ca+FuTQ==
-X-Received: by 2002:adf:b74d:: with SMTP id n13mr2393191wre.101.1608270690707;
-        Thu, 17 Dec 2020 21:51:30 -0800 (PST)
+        bh=5nRPYtOpZEu778+nvTAeqzOIXuhD9jlfLfk7n+GwGJM=;
+        b=WQCUrVUJOfi8FNGompVAzIraA+zMq4JePWZI0tmDTkmwPeCyI4i94XLW7yEda1vsIU
+         jqcv2zJLf38w+M0eH+Ump4gvJ1n8OSsMyXVH3CirMl2GQ/J2p5ZH0fWMFJ8LQNT7grpH
+         riIn048WyR7L2IX+IY0jweNnqhXrbDqCGkXEnazjiD4FHoz0mPycaHhYT26i9L16a/zv
+         ZYHROx6KlhdYXFjwZdmIrNPRTKZBqG60IZjtEcgO3y2TaxzQlwKqaaW463BKfQNRssmo
+         HisQt/IwktdQHUNUJA/e++V2cNmVxIdkxyZa3X5QIB0JRg361WuTtGjYQVMuCLOp82MF
+         VGiA==
+X-Gm-Message-State: AOAM53102nc4frxxDbcpIzy2MS8cAdW/BM5fd2tEhGppO+VcmN6UYo8B
+        1BqX+xcB4PGOYSAoeeZ2G6PVx+oRKlY=
+X-Google-Smtp-Source: ABdhPJytog6dhhC+U05IaQRCvqcBWgcBGqeYCiB+6E/2FY6H1aJMrrn6dAaXW2bpkUc2pa1JWoU7Jw==
+X-Received: by 2002:adf:f344:: with SMTP id e4mr2370161wrp.25.1608270693372;
+        Thu, 17 Dec 2020 21:51:33 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i4sm13242181wri.88.2020.12.17.21.51.30
+        by smtp.gmail.com with ESMTPSA id m18sm12060604wrw.43.2020.12.17.21.51.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Dec 2020 21:51:30 -0800 (PST)
-Message-Id: <46953226ba86fa159180262adb068b3218c74a9b.1608270687.git.gitgitgadget@gmail.com>
+        Thu, 17 Dec 2020 21:51:32 -0800 (PST)
+Message-Id: <0e7321e67f83c197e84ad7b281ab2ce79c90b784.1608270687.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.815.git.1608270687.gitgitgadget@gmail.com>
 References: <pull.815.git.1608270687.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 18 Dec 2020 05:51:19 +0000
-Subject: [PATCH 02/10] merge-ort: handle directory/file conflicts that remain
+Date:   Fri, 18 Dec 2020 05:51:22 +0000
+Subject: [PATCH 05/10] merge-ort: flesh out implementation of
+ handle_content_merge()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,130 +75,191 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-When a directory/file conflict remains, we can leave the directory where
-it is, but need to move the information about the file to a different
-pathname.  After moving the file to a different pathname, we allow
-subsequent process_entry() logic to handle any additional details that
-might be relevant.
+This implementation is based heavily on merge_mode_and_contents() from
+merge-recursive.c, though it has some fixes for recursive merges (i.e.
+when call_depth > 0), and has a number of changes throughout based on
+slight differences in data structures and in how the functions are
+called.
 
-This depends on a new helper function, unique_path(), that dies with an
-unimplemented error currently but will be implemented in a subsequent
-commit.
+It is, however, based on two new helper functions -- merge_3way() and
+merge_submodule -- for which we only provide die-not-implemented stubs
+at this point.  Future commits will add implementations of these
+functions.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 84 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 83 insertions(+), 1 deletion(-)
+ merge-ort.c | 149 +++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 143 insertions(+), 6 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index f9a79eb25e6..d300a02810e 100644
+index 47e230fe341..2cfb7ffa3b0 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -343,6 +343,13 @@ static void path_msg(struct merge_options *opt,
- 	strbuf_addch(sb, '\n');
- }
+@@ -631,6 +631,28 @@ static int collect_merge_info(struct merge_options *opt,
  
-+static char *unique_path(struct strmap *existing_paths,
-+			 const char *path,
-+			 const char *branch)
+ /*** Function Grouping: functions related to threeway content merges ***/
+ 
++static int merge_submodule(struct merge_options *opt,
++			   const char *path,
++			   const struct object_id *o,
++			   const struct object_id *a,
++			   const struct object_id *b,
++			   struct object_id *result)
 +{
 +	die("Not yet implemented.");
 +}
 +
- /*** Function Grouping: functions related to collect_merge_info() ***/
- 
- static void setup_path_info(struct merge_options *opt,
-@@ -962,6 +969,8 @@ static void process_entry(struct merge_options *opt,
- 			  struct conflict_info *ci,
- 			  struct directory_versions *dir_metadata)
++static int merge_3way(struct merge_options *opt,
++		      const char *path,
++		      const struct object_id *o,
++		      const struct object_id *a,
++		      const struct object_id *b,
++		      const char *pathnames[3],
++		      const int extra_marker_size,
++		      mmbuffer_t *result_buf)
++{
++	die("Not yet implemented.");
++}
++
+ static int handle_content_merge(struct merge_options *opt,
+ 				const char *path,
+ 				const struct version_info *o,
+@@ -640,14 +662,129 @@ static int handle_content_merge(struct merge_options *opt,
+ 				const int extra_marker_size,
+ 				struct version_info *result)
  {
-+	int df_file_index = 0;
-+
- 	VERIFY_CI(ci);
- 	assert(ci->filemask >= 0 && ci->filemask <= 7);
- 	/* ci->match_mask == 7 was handled in collect_merge_info_callback() */
-@@ -998,7 +1007,80 @@ static void process_entry(struct merge_options *opt,
- 			oidcpy(&ci->stages[i].oid, &null_oid);
- 		}
- 	} else if (ci->df_conflict && ci->merged.result.mode != 0) {
--		die("Not yet implemented.");
-+		/*
-+		 * This started out as a D/F conflict, and the entries in
-+		 * the competing directory were not removed by the merge as
-+		 * evidenced by write_completed_directory() writing a value
-+		 * to ci->merged.result.mode.
-+		 */
-+		struct conflict_info *new_ci;
-+		const char *branch;
-+		const char *old_path = path;
-+		int i;
-+
-+		assert(ci->merged.result.mode == S_IFDIR);
-+
-+		/*
-+		 * If filemask is 1, we can just ignore the file as having
-+		 * been deleted on both sides.  We do not want to overwrite
-+		 * ci->merged.result, since it stores the tree for all the
-+		 * files under it.
-+		 */
-+		if (ci->filemask == 1) {
-+			ci->filemask = 0;
-+			return;
-+		}
-+
-+		/*
-+		 * This file still exists on at least one side, and we want
-+		 * the directory to remain here, so we need to move this
-+		 * path to some new location.
-+		 */
-+		new_ci = xcalloc(1, sizeof(*new_ci));
-+		/* We don't really want new_ci->merged.result copied, but it'll
-+		 * be overwritten below so it doesn't matter.  We also don't
-+		 * want any directory mode/oid values copied, but we'll zero
-+		 * those out immediately.  We do want the rest of ci copied.
-+		 */
-+		memcpy(new_ci, ci, sizeof(*ci));
-+		new_ci->match_mask = (new_ci->match_mask & ~new_ci->dirmask);
-+		new_ci->dirmask = 0;
-+		for (i = MERGE_BASE; i <= MERGE_SIDE2; i++) {
-+			if (new_ci->filemask & (1 << i))
-+				continue;
-+			/* zero out any entries related to directories */
-+			new_ci->stages[i].mode = 0;
-+			oidcpy(&new_ci->stages[i].oid, &null_oid);
-+		}
-+
-+		/*
-+		 * Find out which side this file came from; note that we
-+		 * cannot just use ci->filemask, because renames could cause
-+		 * the filemask to go back to 7.  So we use dirmask, then
-+		 * pick the opposite side's index.
-+		 */
-+		df_file_index = (ci->dirmask & (1 << 1)) ? 2 : 1;
-+		branch = (df_file_index == 1) ? opt->branch1 : opt->branch2;
-+		path = unique_path(&opt->priv->paths, path, branch);
-+		strmap_put(&opt->priv->paths, path, new_ci);
-+
-+		path_msg(opt, path, 0,
-+			 _("CONFLICT (file/directory): directory in the way "
-+			   "of %s from %s; moving it to %s instead."),
-+			 old_path, branch, path);
-+
-+		/*
-+		 * Zero out the filemask for the old ci.  At this point, ci
-+		 * was just an entry for a directory, so we don't need to
-+		 * do anything more with it.
-+		 */
-+		ci->filemask = 0;
-+
-+		/*
-+		 * Now note that we're working on the new entry (path was
-+		 * updated above.
-+		 */
-+		ci = new_ci;
- 	}
- 
+-	int clean = 0;
  	/*
+-	 * TODO: Needs a two-way or three-way content merge, but we're
+-	 * just being lazy and copying the version from HEAD and
+-	 * leaving it as conflicted.
++	 * path is the target location where we want to put the file, and
++	 * is used to determine any normalization rules in ll_merge.
++	 *
++	 * The normal case is that path and all entries in pathnames are
++	 * identical, though renames can affect which path we got one of
++	 * the three blobs to merge on various sides of history.
++	 *
++	 * extra_marker_size is the amount to extend conflict markers in
++	 * ll_merge; this is neeed if we have content merges of content
++	 * merges, which happens for example with rename/rename(2to1) and
++	 * rename/add conflicts.
+ 	 */
+-	result->mode = a->mode;
+-	oidcpy(&result->oid, &a->oid);
++	unsigned clean = 1;
++
++	/*
++	 * handle_content_merge() needs both files to be of the same type, i.e.
++	 * both files OR both submodules OR both symlinks.  Conflicting types
++	 * needs to be handled elsewhere.
++	 */
++	assert((S_IFMT & a->mode) == (S_IFMT & b->mode));
++
++	/* Merge modes */
++	if (a->mode == b->mode || a->mode == o->mode)
++		result->mode = b->mode;
++	else {
++		/* must be the 100644/100755 case */
++		assert(S_ISREG(a->mode));
++		result->mode = a->mode;
++		clean = (b->mode == o->mode);
++		/*
++		 * FIXME: If opt->priv->call_depth && !clean, then we really
++		 * should not make result->mode match either a->mode or
++		 * b->mode; that causes t6036 "check conflicting mode for
++		 * regular file" to fail.  It would be best to use some other
++		 * mode, but we'll confuse all kinds of stuff if we use one
++		 * where S_ISREG(result->mode) isn't true, and if we use
++		 * something like 0100666, then tree-walk.c's calls to
++		 * canon_mode() will just normalize that to 100644 for us and
++		 * thus not solve anything.
++		 *
++		 * Figure out if there's some kind of way we can work around
++		 * this...
++		 */
++	}
++
++	/*
++	 * Trivial oid merge.
++	 *
++	 * Note: While one might assume that the next four lines would
++	 * be unnecessary due to the fact that match_mask is often
++	 * setup and already handled, renames don't always take care
++	 * of that.
++	 */
++	if (oideq(&a->oid, &b->oid) || oideq(&a->oid, &o->oid))
++		oidcpy(&result->oid, &b->oid);
++	else if (oideq(&b->oid, &o->oid))
++		oidcpy(&result->oid, &a->oid);
++
++	/* Remaining rules depend on file vs. submodule vs. symlink. */
++	else if (S_ISREG(a->mode)) {
++		mmbuffer_t result_buf;
++		int ret = 0, merge_status;
++		int two_way;
++
++		/*
++		 * If 'o' is different type, treat it as null so we do a
++		 * two-way merge.
++		 */
++		two_way = ((S_IFMT & o->mode) != (S_IFMT & a->mode));
++
++		merge_status = merge_3way(opt, path,
++					  two_way ? &null_oid : &o->oid,
++					  &a->oid, &b->oid,
++					  pathnames, extra_marker_size,
++					  &result_buf);
++
++		if ((merge_status < 0) || !result_buf.ptr)
++			ret = err(opt, _("Failed to execute internal merge"));
++
++		if (!ret &&
++		    write_object_file(result_buf.ptr, result_buf.size,
++				      blob_type, &result->oid))
++			ret = err(opt, _("Unable to add %s to database"),
++				  path);
++
++		free(result_buf.ptr);
++		if (ret)
++			return -1;
++		clean &= (merge_status == 0);
++		path_msg(opt, path, 1, _("Auto-merging %s"), path);
++	} else if (S_ISGITLINK(a->mode)) {
++		int two_way = ((S_IFMT & o->mode) != (S_IFMT & a->mode));
++		clean = merge_submodule(opt, pathnames[0],
++					two_way ? &null_oid : &o->oid,
++					&a->oid, &b->oid, &result->oid);
++		if (opt->priv->call_depth && two_way && !clean) {
++			result->mode = o->mode;
++			oidcpy(&result->oid, &o->oid);
++		}
++	} else if (S_ISLNK(a->mode)) {
++		if (opt->priv->call_depth) {
++			clean = 0;
++			result->mode = o->mode;
++			oidcpy(&result->oid, &o->oid);
++		} else {
++			switch (opt->recursive_variant) {
++			case MERGE_VARIANT_NORMAL:
++				clean = 0;
++				oidcpy(&result->oid, &a->oid);
++				break;
++			case MERGE_VARIANT_OURS:
++				oidcpy(&result->oid, &a->oid);
++				break;
++			case MERGE_VARIANT_THEIRS:
++				oidcpy(&result->oid, &b->oid);
++				break;
++			}
++		}
++	} else
++		BUG("unsupported object type in the tree: %06o for %s",
++		    a->mode, path);
++
+ 	return clean;
+ }
+ 
 -- 
 gitgitgadget
 
