@@ -6,101 +6,77 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02498C4361B
-	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 06:17:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DC91C4361B
+	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 06:20:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C07C62151B
-	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 06:17:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1A2F320793
+	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 06:20:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732675AbgLRGQz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Dec 2020 01:16:55 -0500
-Received: from cloud.peff.net ([104.130.231.41]:37480 "EHLO cloud.peff.net"
+        id S1732779AbgLRGUC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Dec 2020 01:20:02 -0500
+Received: from cloud.peff.net ([104.130.231.41]:37494 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728146AbgLRGQz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Dec 2020 01:16:55 -0500
-Received: (qmail 10436 invoked by uid 109); 18 Dec 2020 06:16:15 -0000
+        id S1732650AbgLRGUC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Dec 2020 01:20:02 -0500
+Received: (qmail 10497 invoked by uid 109); 18 Dec 2020 06:19:21 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 18 Dec 2020 06:16:15 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 18 Dec 2020 06:19:21 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11825 invoked by uid 111); 18 Dec 2020 06:16:15 -0000
+Received: (qmail 11861 invoked by uid 111); 18 Dec 2020 06:19:22 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Dec 2020 01:16:15 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Dec 2020 01:19:22 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 18 Dec 2020 01:16:13 -0500
+Date:   Fri, 18 Dec 2020 01:19:20 -0500
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        felipe.contreras@gmail.com, avarab@gmail.com
-Subject: Re: [PATCH v2 1/3] ls-refs: report unborn targets of symrefs
-Message-ID: <X9xJLWdFJfNJTn0p@coredump.intra.peff.net>
-References: <X9pQjHrRQQqB6AFI@coredump.intra.peff.net>
- <20201216235443.1674103-1-jonathantanmy@google.com>
- <xmqqzh2dz071.fsf@gitster.c.googlers.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] clone: in protocol v2, use remote's default branch
+Message-ID: <X9xJ6BHM9VY0/yLs@coredump.intra.peff.net>
+References: <20201211210508.2337494-1-jonathantanmy@google.com>
+ <87blewwoil.fsf@evledraar.gmail.com>
+ <xmqqim94e4et.fsf@gitster.c.googlers.com>
+ <878s9zx2ul.fsf@evledraar.gmail.com>
+ <X9ghqMo5WS8FrBEz@coredump.intra.peff.net>
+ <xmqq8s9zaica.fsf@gitster.c.googlers.com>
+ <X9g9Y9LWc0NtHlQn@coredump.intra.peff.net>
+ <xmqq7dpi5tvl.fsf@gitster.c.googlers.com>
+ <X9pUc2HXUr3+WHbR@coredump.intra.peff.net>
+ <xmqqft4531xl.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqzh2dz071.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqqft4531xl.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 16, 2020 at 05:32:50PM -0800, Junio C Hamano wrote:
+On Wed, Dec 16, 2020 at 12:56:22PM -0800, Junio C Hamano wrote:
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
+> > I think:
+> >
+> >   git checkout --guess origin
+> >
+> > would make sense to dereference origin/HEAD to "foo", as if we had said
+> > "git checkout foo". That's the explicit part that seems safe. My
+> > question is whether:
+> >
+> >   git checkout origin
+> >
+> > should likewise do so.
 > 
-> > Firstly, this allows a staged rollout in load-balancing situations
-> > wherein we turn on "allow" for all servers, then "advertise", so that we
-> > don't end up with a client that sees the advertisement but then sends
-> > the follow-up request to a server that has not received the latest
-> > configuration yet.
-> 
-> If this were the _first_ capability we are adding to the system, the
-> above makes quite a lot of sense, but I do not recall any existing
-> capability that can be configured this way.  How would one deploy a
-> set of servers that gradually start allowing fetching unadvertised
-> but reachable commits, for example?  I am not saying that the "I'll
-> accept if asked, but I won't actively advertise" is a bad feature; I
-> just find it disturbing that only this knob has that feature.
+> I see.  I think "--guess" is by default true, so unless you have
+> checkout.guess=false configured, my answer to the above question is
+> yes.
 
-Yeah, that was my thought. It is a real problem, but not one we've dealt
-with before in this way (or at all, really). Two recent examples:
+Yes, I agree with the current definition of "--guess", the two would be
+the same. I'm just concerned that people will be unhappy with changing
+the behavior of the latter, so everything else (the "tri-state --guess"
+thing) is an attempt to band-aid over that.
 
-  - for fetching, the object-format=sha1 capability is always parroted
-    back by v2.28 and higher clients. But there's no config to disable
-    the advertisement, so during a partial deployment to a load-balanced
-    cluster, a client may say "object-format=sha1" to a server that
-    doesn't understand it.
-
-  - for pushing, we added report-status-v2, which is likewise always
-    repeated back by any v2.29 and higher client.
-
-At GitHub we recently merged in v2.29, and just hacked report-status-v2
-out of the advertisement within the code (leaving it in the "we can read
-this but won't advertise it state"). Temporarily modifying the code is
-definitely ugly, and I don't mind a cleaner solution, but:
-
-  - it would be nice if this were done in a more consistent way for all
-    new capabilities
-
-  - one nice thing about the code change is that after the rollout is
-    done, it's safe to make the code unconditional again, which makes
-    it simpler to read/reason about.
-
-    This may be oversimplifying it a bit, of course. On one platform, we
-    know when the rollout is happening. But if it's something we ship
-    upstream, then "rollout" may be on the jump from v2.28 to v2.29, or
-    to v2.30, or v2.31, etc. You can never say "rollouts are done, and
-    existing server versions know about this feature". So any upstream
-    support like config has to stay forever.
-
-So I dunno. My biggest complaint is that the config option defaults to
-_off_.  So it's helping load-balanced rollouts, but creating complexity
-for everyone else who might want to enable the feature.
-
-(I know there was also an indication that some people might want it off
-because they somehow want to have no HEAD at all. I don't find this
-particularly compelling, but even if it were, I think we could leave it
-the config as an escape hatch for such folks, but still default it to
-"on").
+If we decide it's not a concern worth addressing, then I agree the two
+should behave the same. I'm just not convinced it won't annoy people who
+are used to how "git checkout" works now with non-local branches.
 
 -Peff
