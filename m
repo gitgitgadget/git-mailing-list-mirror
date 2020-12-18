@@ -3,92 +3,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 020C2C4361B
-	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 06:24:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BD4CC2BBCF
+	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 06:25:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9912A23138
-	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 06:24:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C19E23A3C
+	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 06:25:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732755AbgLRGYf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Dec 2020 01:24:35 -0500
-Received: from cloud.peff.net ([104.130.231.41]:37514 "EHLO cloud.peff.net"
+        id S1732817AbgLRGZg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Dec 2020 01:25:36 -0500
+Received: from cloud.peff.net ([104.130.231.41]:37520 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726045AbgLRGYf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Dec 2020 01:24:35 -0500
-Received: (qmail 10545 invoked by uid 109); 18 Dec 2020 06:23:55 -0000
+        id S1726045AbgLRGZg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Dec 2020 01:25:36 -0500
+Received: (qmail 10565 invoked by uid 109); 18 Dec 2020 06:24:55 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 18 Dec 2020 06:23:55 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 18 Dec 2020 06:24:55 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11923 invoked by uid 111); 18 Dec 2020 06:23:56 -0000
+Received: (qmail 11930 invoked by uid 111); 18 Dec 2020 06:24:56 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Dec 2020 01:23:56 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Dec 2020 01:24:56 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 18 Dec 2020 01:23:54 -0500
+Date:   Fri, 18 Dec 2020 01:24:54 -0500
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stuart MacDonald <stuartm.coding@gmail.com>, git@vger.kernel.org
-Subject: Re: [Bug report] includeIf config is not displayed in normal
- directories
-Message-ID: <X9xK+rn8vZGtBuuo@coredump.intra.peff.net>
-References: <CAPQE4+qq11W9VzftJ6y+cbdJ1x64c8Astjwd4z4M-oc5hv1jeA@mail.gmail.com>
- <xmqqczza7lpm.fsf@gitster.c.googlers.com>
- <X9pe119edtL5KQTU@coredump.intra.peff.net>
- <CAPQE4+rhWT9kgusNXOw5cnJ-oFq++4G1FMaXvQ3wppQ0GE0hSA@mail.gmail.com>
- <xmqq5z512v2r.fsf@gitster.c.googlers.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Sangeeta <sangunb09@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] t/perf: fix test_export() failure with BSD `sed`
+Message-ID: <X9xLNrzyEv6GSKan@coredump.intra.peff.net>
+References: <20201216073907.62591-1-sunshine@sunshineco.com>
+ <xmqq5z514lj5.fsf@gitster.c.googlers.com>
+ <CAPig+cR+4Wh4Sgk6UhUML4SHqaQsvYmw_77ih+oec2YmqQJCCg@mail.gmail.com>
+ <X9xBRXW7/tXsqLT5@coredump.intra.peff.net>
+ <CAPig+cQvaOBo=zx=f2ZsPy7QnPXgcdc0SUZyGWaZPZ31FUUwZg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq5z512v2r.fsf@gitster.c.googlers.com>
+In-Reply-To: <CAPig+cQvaOBo=zx=f2ZsPy7QnPXgcdc0SUZyGWaZPZ31FUUwZg@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 16, 2020 at 03:24:28PM -0800, Junio C Hamano wrote:
+On Fri, Dec 18, 2020 at 01:15:05AM -0500, Eric Sunshine wrote:
 
-> Stuart MacDonald <stuartm.coding@gmail.com> writes:
-> 
-> > My old understanding of git clone:
-> > - create sub-directory
-> > - create subdir/.git and whatever initial states are needed
-> > - clone the repo from origin into the directory
-> > - all never having left $CWD
+> On Fri, Dec 18, 2020 at 12:44 AM Jeff King <peff@peff.net> wrote:
+> > On Wed, Dec 16, 2020 at 02:29:26PM -0500, Eric Sunshine wrote:
+> > > Perhaps a test_unexport() might be handy in the distant future, but
+> > > presently there is only a single call to test_export() in the entire
+> > > suite, so it's probably not worth worrying about now.
 > >
-> > It's actually:
-> > - create sub-directory
-> > - cd subdir
-> > - create ./.git and initial states
-> > - clone the repo _while inside_ a gitdir
-> > - cd ..
+> > I actually wonder if we could drop test_export entirely. I assume you
+> > mean the call in p0001. It is inside a test_expect_success block, where
+> > we don't need to do anything fancier than just "export". It is already
+> > running in the main script's environment, just like a normal test. If it
+> > were in a test_perf, then we would need to take special care to get it
+> > back into the main script.
 > 
-> I am not sure how the above two should make any difference with the
-> [includeif "gitdir:<pattern>"] matching.  Regardless of where your
-> $CWD is, the inclusion is decided on the location of the .git/
-> directory we are dealing with, so as long as "subdir/.git" matches
-> the pattern given to "gitdir:<pattern>" the inclusion should work
-> the same way even if the internal implementation of "git clone"
-> changes between the above two.
+> Considering that test_export() hasn't seen much use since its
+> introduction nine years ago and that the one and only existing call
+> doesn't even need the special subprocess magic, retiring the function
+> is certainly an option. On the other hand, aside from this one minor
+> portability fix, it hasn't been a maintenance burden and may actually
+> come in handy someday if people start writing more "perf" tests. So, I
+> don't feel strongly one way or the other, though I lean somewhat
+> toward keeping it around.
 
-I think the question is just "are we in a repository as part of clone or
-not". Stuart's original world-view was that we were not, as we were
-creating a clone but not "entering" it. But that is not how it is
-implemented (nor the conceptual model I think we would want to give the
-user).
-
-> IIRC "includeif" is a Peff's brainchild, so I'd ask him to correct
-> any mistakes in the above paragraph,
-
-The notion of conditional includes was my thing, but gitdir: was Duy's.
-That said...
-
-> but I am a bit puzzled as to
-> what the true misunderstanding is, where the misunderstanding came
-> from, and which documentation if any we should look into improving.
-
-I think it might just be a case of mistaken assumptions. But I am
-certainly open to hearing from Stuart if there are places in the
-documentation that misled him (or could have led him better).
+That more or less matches my feeling. I just like deleting things. ;)
 
 -Peff
