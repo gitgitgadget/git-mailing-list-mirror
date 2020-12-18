@@ -2,110 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26F83C4361B
-	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 05:57:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05DCCC2BBD4
+	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 06:02:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C6FF123A79
-	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 05:57:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BFC1323A79
+	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 06:02:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726756AbgLRF52 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Dec 2020 00:57:28 -0500
-Received: from cloud.peff.net ([104.130.231.41]:37446 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725298AbgLRF51 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Dec 2020 00:57:27 -0500
-Received: (qmail 10227 invoked by uid 109); 18 Dec 2020 05:56:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 18 Dec 2020 05:56:47 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11551 invoked by uid 111); 18 Dec 2020 05:56:48 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Dec 2020 00:56:48 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 18 Dec 2020 00:56:46 -0500
-From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/1] Hashed mailmap support
-Message-ID: <X9xEnpLeZ4mCjwWF@coredump.intra.peff.net>
-References: <20201213010539.544101-1-sandals@crustytoothpaste.net>
- <X9gV3mKwGrHL7PzV@coredump.intra.peff.net>
- <X9wUGaR3IXcpV0nT@camp.crustytoothpaste.net>
+        id S1732612AbgLRGBq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Dec 2020 01:01:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38564 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725870AbgLRGBq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Dec 2020 01:01:46 -0500
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C827C0617A7
+        for <git@vger.kernel.org>; Thu, 17 Dec 2020 22:01:06 -0800 (PST)
+Received: by mail-ot1-x332.google.com with SMTP id a109so988883otc.1
+        for <git@vger.kernel.org>; Thu, 17 Dec 2020 22:01:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Of4AELxqV/0nR8kIWCQJKR7bW1xY8EQc17EBHI8g1a8=;
+        b=le6U7VqC2llizRjEo6ihJ74IwRll+HOA29eEFzzSM/q53wXvkPB5dQhfNUh2Tzzvsq
+         bxi5Nm/Zs6Img5+Or+FEUO8XH5HUW75p78/3SQbtXc2x9Q5zsUH4Goc9wplgm5C+bb/a
+         LgPKm9QNFSEz5+b5Rqpp+fJh9e+JXTmkC3/OOlpKJsIBa+VZKhrD6ARJsL6iETn0lmG3
+         T4SA1e2cbg3yUJ2iMXj0q1XlLiGyNSwtWv9gITGZpx546oJKxtftI+OPEqT+xkmSfnr4
+         9jhJJxhH+qnU3ITgtzMZyLRGvgYEjF2p6aCUOJCqkE7i8qpl+MrhXZCEtqqr5wPgzXwY
+         e1Pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Of4AELxqV/0nR8kIWCQJKR7bW1xY8EQc17EBHI8g1a8=;
+        b=p48cjEIyUssei4tZk8qPNjVm9T3u52ZlhuusTyQ40r3nbn36uQk4MinKsnqDYUoHe0
+         e80DE9685JAL+B4rIXdXRaOHqh3ChqtumEHv9jMR+iBtyHhF/+qBqlfuo0L3jnOAZzgA
+         3OUOgiLkI970pmmkMGv9j0Uhm0aeqnMQWuK0TsXlnWbrbYGZW3Zap3tffsrCZdP3vXwD
+         0ouRkLXLLUhlf3wg/5yF/1mhNZxw1Si2XO39/9LHqAR7mFDk0ZEQY8sabZgpE8ZXGk8o
+         FTsfOEjr9iWXuGwMzPQb6f0LhciZkFrnsNgYBGJjQ8kuTIy6jbzlBccagNlCLU0b7g24
+         rpaA==
+X-Gm-Message-State: AOAM5325FWhK4aLbKWLa7wW9jsvmpOkpxZIo7ECLs7XuPIhawEjHLR/t
+        AHZlCPbgGhXbsiEao33MtsNeBXefG4drnTlX04k=
+X-Google-Smtp-Source: ABdhPJymS6iygYqQuXLF3cbdqlHfMFVgaTf3Ltdpfs7/bYfg0W7ZV7E2rg3BBA3Avafa68QzRiJGxxvETDdItEQuF8E=
+X-Received: by 2002:a9d:b8e:: with SMTP id 14mr1795681oth.316.1608271265587;
+ Thu, 17 Dec 2020 22:01:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <X9wUGaR3IXcpV0nT@camp.crustytoothpaste.net>
+References: <20201101193330.24775-1-sorganov@gmail.com> <20201216184929.3924-1-sorganov@gmail.com>
+ <20201216184929.3924-25-sorganov@gmail.com>
+In-Reply-To: <20201216184929.3924-25-sorganov@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 17 Dec 2020 22:00:54 -0800
+Message-ID: <CABPp-BHh4VSTQ=VOzik5H34OcJaQ63wSgPgrZqJ5-_XvBSow+g@mail.gmail.com>
+Subject: Re: [PATCH v2 24/33] diff-merges: handle imply -p on -c/--cc logic
+ for log.c
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 18, 2020 at 02:29:45AM +0000, brian m. carlson wrote:
+On Wed, Dec 16, 2020 at 10:50 AM Sergey Organov <sorganov@gmail.com> wrote:
+>
+> Move logic that handles implying -p on -c/--cc from
+> log_setup_revisions_tweak() to diff_merges_setup_revs(), where it
+> belongs.
 
-> > And from that argument, I think the obvious question becomes: is it
-> > worth using a real one-way function, as opposed to just obscuring the
-> > raw bytes (which Ævar went into in more detail). I don't have a strong
-> > opinion either way (the obvious one in favor is that it's less expensive
-> > to do so; and something like "git log" will have to either compute a lot
-> > of these hashes, or cache the hash computations internally).
-> [...]
-> So I think I'm firmly in favor of hashing.  If that means my patch needs
-> to implement caching, then I'll reroll with that change.  I think by
-> switching to a hash table I may be able to actually improve total
-> performance overall, at least in some cases.
+A very minor point, but I'd probably drop the "where it belongs";
+while I think the new place makes sense for it, it reads to me like
+you're either relying on a consensus to move it or implying there was
+a mistake to not put it here previously, neither of which makes sense.
 
-OK. I agree it raises the bar a little bit. Whether that matters or not
-depends on your threat model (e.g., casual spammers versus dedicated
-information seekers). I don't have a particularly strong opinion on
-what's realistic, but I don't mind erring on the side of caution here.
+Much more importantly, this patch doesn't do what you said in
+discussions on the previous round.  It'd be helpful if the commit
+message called out that you are just moving the logic for now and that
+a subsequent patch will tweak the logic to only trigger this for
+-c/--cc and not for --diff-merges=.* flags.
 
-It might be worth making a short argument along those lines in the
-commit message.
 
-As far as caching goes, my main concern is mostly that people who are
-not using the feature do not pay a performance penalty. So:
-
-  - if the feature is not used in the repository's mailmap, it should
-    have zero cost (i.e., we do not bother hashing lookup entries if
-    there are no hashed entries in the map)
-
-  - as soon as there is one hashed entry, we need to hash the key for
-    every lookup in the map. I'm not sure what the overhead is like. It
-    might be negligible. But I think we should confirm that before
-    proceeding.
-
-> And as someone who had to download all 21 GB of the Chromium repository
-> for testing purposes recently, I can tell you that absent a very
-> compelling use case, nobody's going to want to download that entire
-> repository just to extract some personal information, especially since
-> the git index-pack operation is essentially guaranteed to take at least
-> 7 minutes at maximum speed.  So by hashing, we've guaranteed significant
-> inconvenience unless you have the repository, whereas that's not the
-> case for base64.  And making abuse even slightly harder can often deter
-> a surprising amount of it[0].
-
-They just need the objects that have ident lines in them, so:
-
-  $ time git clone --bare --filter=tree:0 https://github.com/chromium/chromium
-  Cloning into bare repository 'chromium.git'...
-  remote: Enumerating objects: 202, done.
-  remote: Counting objects: 100% (202/202), done.
-  remote: Compressing objects: 100% (161/161), done.
-  remote: Total 1105453 (delta 49), reused 194 (delta 41), pack-reused 1105251
-  Receiving objects: 100% (1105453/1105453), 462.14 MiB | 11.13 MiB/s, done.
-  Resolving deltas: 100% (99790/99790), done.
-  
-  real	0m49.304s
-  user	0m21.330s
-  sys	0m4.727s
-
-gets you there much quicker. I don't think that negates your point about
-raising the bar, but my guess is that the threat model of "casual
-spammer" would probably be deterred, but "troll who wants to annoy
-specific person" would probably not be.
-
--Peff
+> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+> ---
+>  builtin/log.c | 4 ----
+>  diff-merges.c | 7 ++++++-
+>  2 files changed, 6 insertions(+), 5 deletions(-)
+>
+> diff --git a/builtin/log.c b/builtin/log.c
+> index 63875c3aeec9..c3caf0955b2b 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -723,10 +723,6 @@ static void log_setup_revisions_tweak(struct rev_info *rev,
+>             rev->prune_data.nr == 1)
+>                 rev->diffopt.flags.follow_renames = 1;
+>
+> -       /* Turn --cc/-c into -p --cc/-c when -p was not given */
+> -       if (!rev->diffopt.output_format && rev->combine_merges)
+> -               rev->diffopt.output_format = DIFF_FORMAT_PATCH;
+> -
+>         if (rev->first_parent_only)
+>                 diff_merges_default_to_first_parent(rev);
+>  }
+> diff --git a/diff-merges.c b/diff-merges.c
+> index 0165fa22fcd1..2ac25488d53e 100644
+> --- a/diff-merges.c
+> +++ b/diff-merges.c
+> @@ -127,6 +127,11 @@ void diff_merges_setup_revs(struct rev_info *revs)
+>                 revs->first_parent_merges = 0;
+>         if (revs->combined_all_paths && !revs->combine_merges)
+>                 die("--combined-all-paths makes no sense without -c or --cc");
+> -       if (revs->combine_merges)
+> +       if (revs->combine_merges) {
+>                 revs->diff = 1;
+> +               /* Turn --cc/-c into -p --cc/-c when -p was not given */
+> +               if (!revs->diffopt.output_format)
+> +                       revs->diffopt.output_format = DIFF_FORMAT_PATCH;
+> +       }
+> +
+>  }
+> --
+> 2.25.1
+>
