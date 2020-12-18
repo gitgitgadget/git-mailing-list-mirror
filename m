@@ -2,140 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DEE8C4361B
-	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 10:05:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 513E1C4361B
+	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 10:13:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5449B23A84
-	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 10:05:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 25DBE235FA
+	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 10:13:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733161AbgLRKFK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Dec 2020 05:05:10 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59957 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725875AbgLRKFK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Dec 2020 05:05:10 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C527D94890;
-        Fri, 18 Dec 2020 05:04:24 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=AAuALYN6Y1M2PPoXcoUh+lWuUd4=; b=MOmIa/oc70zEXh0cNiVP
-        +ar1WhUym4N2aanp+1H3lu5QppGT44zQFceE7T9Ds5WdB6sXdbU3As4tsI0MW4FS
-        Bb+EynxfdwqiIJYI7/2BrjA1ukEN/JPvXD5ihnhlJSFFcMWAwYlJVq9N4/eZZnmJ
-        IYy6FyakQzb/3OpfVnBdoCo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=KAnpCEgWzhCcmMUlsfko7gEnsmDMwlsiISJUmfns6NaGg6
-        5ZEocnv0flKEub8nGMqNpY3kzq9xf+5gfYcT0mhS562e/41l+WKNkJ9ojZAFG6Uy
-        aect5TYnq0NlZBRTi9TWvpTEIXysBbDVpkGHrpIBtpq2XF40WpRWXZqJkQeUg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BC1249488F;
-        Fri, 18 Dec 2020 05:04:24 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 42A449488D;
-        Fri, 18 Dec 2020 05:04:24 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Seth House <seth@eseth.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-        David Aguilar <davvid@gmail.com>
-Subject: Re: [RFC/PATCH] mergetool: use resolved conflicts in all the views
-References: <xmqqa6ud2xuw.fsf@gitster.c.googlers.com>
-        <105041520.23756286.1608159189934.JavaMail.zimbra@eseth.com>
-        <5fdaef83a40ba_d0e26208f6@natae.notmuch>
-        <e5c73fed-b87e-2091-794e-19aced4dd25b@kdbg.org>
-        <20201217094424.GA75257@ellen> <5fdb3471c6bb7_d6d032087@natae.notmuch>
-        <20201217175037.GA80608@ellen>
-        <5fdc0e6dd79a7_f2faf208a1@natae.notmuch>
-        <20201218023534.GA117762@ellen>
-        <5fdc18a91c402_f2faf20837@natae.notmuch>
-        <20201218054947.GA123376@ellen>
-Date:   Fri, 18 Dec 2020 02:04:23 -0800
-Message-ID: <xmqq3603v3a0.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S2389073AbgLRKNr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Dec 2020 05:13:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48842 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733180AbgLRKNq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Dec 2020 05:13:46 -0500
+Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B25CFC0617A7
+        for <git@vger.kernel.org>; Fri, 18 Dec 2020 02:13:06 -0800 (PST)
+Received: by mail-oo1-xc2d.google.com with SMTP id o5so407129oop.12
+        for <git@vger.kernel.org>; Fri, 18 Dec 2020 02:13:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=7UbjpNH7qNp+Dsgw58c4XG8EIDasVTHBCl+6SZsDfXY=;
+        b=BDT53SBa3H3ToRdYynkaWSd2+PdZ8jjcK+VqrG62ugnDM/QaChAumKSJnwJT+7++dw
+         mOX3YAviBKbEBjqHaOmGO8/LoXQpCowcH4WYaagof7agPvyuM8VTq5LX2JGQwrkT2jEh
+         BwIvNrzS0wXt1peIBS7ZWbeqWweMCM5edyYlYYaz8DysGXCI5G4dtRmYJqSuPDuPAV8H
+         wA7EwOxFkNQdmCfH0ZX8N/UhNUgT9XQ5wsFjz0iuX2zdPKpSGa4Ztq57Cbn0ecIKPY84
+         7jyo826v1Z4MTPO3GvWdvTJvlKHUnRjWxkoATbi0wPArAoZZYQFhg4hXmUzYZcifhux9
+         zfsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=7UbjpNH7qNp+Dsgw58c4XG8EIDasVTHBCl+6SZsDfXY=;
+        b=cD4YmRyJNUdAEnHnf0ti+xu6zWfWRCzU6YOi/u1N5KB5xrx9ebBVWDIcxiZoBRwXGe
+         PC9j2DHccsLe1GqEjQu937UBYpmGSkn+/CYB86IXlH9iwnq249b5V6C8MuFqAHLW12SC
+         IAYo2UaTqnDJA8eP7lmaM3WNbiK7RPc58DL6Swoqf9CBSzbFMncaZCgiY0VvT9kDwsnK
+         6pVf6Z+WQvtcnBpgWgh6z7IZAySvXFRlQUAeoGqCAjzRPlsgRQQO3+MMKJwDsPxOc7Dz
+         3q4b0xhdaXS8auyrNEMChnuZj694Kcn4tplTQd3Xo7sD746zU3CuwZqLaEaWbfM0YG5T
+         VFRg==
+X-Gm-Message-State: AOAM532mxMTypWPxRo/xYaGuw4X0ChK4MDDc+C+ohbJuza3keOU8xWtF
+        5xm+5zQOka7iJyRzlG9y1pxG6UDDn9vxMuMhZb+8VsnAQ6SVJQ==
+X-Google-Smtp-Source: ABdhPJxzO7t7l0B4ukk/wsHCruKtCDAC7AEqvhP9I6xw0l4jGTTuTepMXmG5JN3ph4zwjBR32NqJrR6iV87YjK55q5k=
+X-Received: by 2002:a05:6820:381:: with SMTP id r1mr2185127ooj.73.1608286385861;
+ Fri, 18 Dec 2020 02:13:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 67E38C64-4118-11EB-84FA-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+References: <CAHjREB6+=ZT9B-XASAk7Hqt7qD5YhgROjDLCKoJR7cNyJDpDMw@mail.gmail.com>
+ <CAP8UFD2AOaPC+7+qcJHQ4+Q5=dhY7ReNbRfJQ=HCS6=4bTPuVA@mail.gmail.com>
+ <CAHjREB6ynLFW46C9s8D_nvUpavkugo7syegGuvCMdnfVNiZ+0Q@mail.gmail.com> <3bd5cef1-cda7-5118-07ac-a2f91cc80371@gmail.com>
+In-Reply-To: <3bd5cef1-cda7-5118-07ac-a2f91cc80371@gmail.com>
+From:   Sangeeta <sangunb09@gmail.com>
+Date:   Fri, 18 Dec 2020 15:42:54 +0530
+Message-ID: <CAHjREB7UonP7TPCd9dvXLX2ho+rJP07JM8nk33AYj9K=Mi7EYw@mail.gmail.com>
+Subject: Re: [Outreachy] Blog Post Submission
+To:     Git List <git@vger.kernel.org>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Seth House <seth@eseth.com> writes:
+Hey everyone,
 
-> On Thu, Dec 17, 2020 at 08:49:13PM -0600, Felipe Contreras wrote:
->> And no person is the sole arbiter of truth, in this list, or anywhere.
->> People have managed to change Junio's mind.
+Here's my second blog post on "everybody struggles".
+https://sangu09.github.io/everybody-struggles/
+
+Do give it a read let me know if you have any suggestions.
+
+Thanks and Regards,
+Sangeeta
+
+On Fri, Dec 4, 2020 at 2:08 PM Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
 >
-> I'm not worried about Junio but I am wondering if anyone has managed to
-> change your mind. You and I have been going back and forth on this list
-> and on Reddit for two solid days and, to be frank, I'm running out of
-> steam.
-> ...
-> I, as a user of diffconflicts, may want to both disable this flag for
-> diffconflicts but enable this flag for VS Code and kdiff3. It is not
-> unusual for people to use more than one mergetool. Some of them are
-> better or worse at visualizing different kinds of conflicts. Sometimes
-> a conflict is small and straightforward; othertimes a conflict is
-> complicated and requires deep knowledge of the history of both branches.
-> If we force this to be a global flag only then users will not be able to
-> make different choices for different tools.
+> Hi Sangeeta,
 >
-> Someone who does use multiple mergetools but only uses tools from group
-> one may appreciate a single global flag so s/he doesn't need to set it
-> for each tool.
-> ... there's every possibility that a user will prefer it a different
-> way or that a mergetool author will. And there's every possibility that
-> there will be differing opinions between users and authors like there is
-> between you and me. But that's ok! Because it's just a configuration
-> option.
-
-Well explained.  I do not think I need to add much.
-
-It makes sense to at least allow people to enable/disable the
-behaviour independently for different tools.  When unconfigured, I
-would say we should enable the feature by default to give it wider
-exposure.
-
-Because what I care is not about the set of tools we happen to have
-right now, but is about leaving users access to an escape hatch in
-case things go wrong.  If it turns out that all the tools we happen
-to have do not seem to break with this new option with just a few
-days' survey, it does not mean we do not need a per-tool escape
-hatch they can use until the next release either fixes the feature
-or makes it disabled by default, when there is unexpected breakages
-discovered later.  The time between a release and the next is a long
-time that the users cannot keep the tool they have learned to rely
-on broken.  And that's a conservative maintainer's view.
-
-When a tool that never wants its input munged appears, we might
-further want to have the mechanism to give different default per
-each tool for users who have no configuration, so that such a tool
-can be disabled while other tools are enabled by default while
-allowing users to choose.  But such a code to set different
-enabled/disabled default per tool (the one I outlined in the
-footnote of the other message) won't be exercised in practice with
-the set of tools we have (hence a bug in such a code would go
-unnoticed for a long time), so I tend to think we might be better
-off to wait until the need arises before implementing per-tool
-fallback default for users who do not configure at all.
-
-Another reason why allowing users to disable the feature per tool is
-important is because as far as I know we have kept the mergetool
-framework to allow adding a tool that can merge binary data, and
-leaving these three files pristine was one ingredient for that.
-With only a single knob, we would be making a decision to declare
-that such a tool is unwelcome, which is not quite acceptable.  I
-expect that users would want the new feature most of the time
-because they would be managing text files more of the time, and
-having only a single knob would force an unnecessary choice on those
-who want to use such a binary-capable tool as well.
+> On 03/12/20 4:27 pm, Sangeeta wrote:
+> >
+> > First of all thanks for the feedback! I have made the changes.
+> >
+> > Secondly, regarding the microproject, it is still under review and I
+> > read that in the mail[1](What's cooking in Git)(you can search for
+> > "untracked" in the mail), Junio states that it is left on some changes
+> > which I have already made in patch 7[2]. What is stopping me to reply
+> > to that mail is that I might not have answers to some of the questions
+> > that Danh asked[3](Should this change applicable to diff-index,
+> > diff-files and other plumbing commands?) because I don't know whether
+> > that would be breaking changes or not. I tried to test it in my local
+> > and I found everything was working fine as expected but I don't know
+> > the reason for that nor do I know the reason for whether things should
+> > break or not. >
+>
+> Thanks for checking. Don't hesitate to reply to Danh's e-mail with what
+> you've done and what you're not certain about. It's a good way to move
+> things forward. Also, you could try Cc-ing people who seem to have
+> worked in the diff code recently. For instance using `git log` to see
+> the people who've modified the diff.c and `wt-status.c` recently, I
+> could observe that:
+>
+>      Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+>
+>      Elijah Newren <newren@gmail.com>
+>
+>      Jeff King <peff@peff.net>
+>
+> are some contributes who might be able to provide you some inputs.
+>
+> > [1] https://lore.kernel.org/git/xmqqtut6qf7q.fsf@gitster.c.googlers.com=
+/
+> > [2] https://lore.kernel.org/git/20201110083900.88161-1-sangunb09@gmail.=
+com/
+> > [3] https://lore.kernel.org/git/X6rJWpuUHz1qHYZL@danh.dev/
+> >
+> > To give you a context of my changes, I have made
+> > `--ignore-submodules=3Duntracked` the default for `git diff` when there
+> > is no configuration variable or command-line option, to ensure that
+> > the command doesn't give '-dirty' suffix to a submodule whose working
+> > tree has untracked files. This was done to make it consistent with
+> > `git describe`. For this, I had to make a global variable to check
+> > whether ignoreSubmodules is set or not in the user config so that it
+> > doesn't override that. Also to ensure that `git status` remains the
+> > same, I have made `--ignore-submodules=3Dnone` the default for `git
+> > status` so that the user doesn't end up deleting a submodule that has
+> > uncommitted (untracked) files.
+> >
+>
+> Also, thanks for the helpful summary!
+>
+> --
+> Sivaraam
