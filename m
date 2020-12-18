@@ -2,192 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7199BC2BBCF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A170CC2BBD4
 	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 05:43:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 36EAE22D01
-	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 05:43:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A99123A5B
+	for <git@archiver.kernel.org>; Fri, 18 Dec 2020 05:43:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727264AbgLRFm4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Dec 2020 00:42:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35656 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727098AbgLRFmz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Dec 2020 00:42:55 -0500
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D67F4C0617A7
-        for <git@vger.kernel.org>; Thu, 17 Dec 2020 21:42:14 -0800 (PST)
-Received: by mail-ot1-x330.google.com with SMTP id b24so965997otj.0
-        for <git@vger.kernel.org>; Thu, 17 Dec 2020 21:42:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=h1mnKnYL/6ZQTxGqvbKx+gZswbb1ocL6SzjcD88G+1U=;
-        b=K55p+xlcNeFFhawiZ+s7lwo9OOiIMdlyjg1wU9yjfiEx+WHiU8sho89+QEv1DX19u5
-         TCJV8vWV+zqPI+wdbay0lpF7YS+Zquz0/TklwQeB714wxUgi7csx31dR1vbXfhSFLykI
-         RwbWHUxzDR5tUm4sw6lJT45YDdpTxBU52P/4RB1BlqzfSowRWixyznz3zBiv8K14sbUp
-         qxv7IFlcrG5Dw9PsTFlmH62R6CYThcId4Q2HKeshKPX6zO3llJAgLpHBpJpIhwoRc/EX
-         6wJ8cWm4TsOEr0ulGq5N4//nVwVxPSzx+3AnPcbhn1FZWcntZXNfoMj5bjgfYECyaviy
-         6OoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=h1mnKnYL/6ZQTxGqvbKx+gZswbb1ocL6SzjcD88G+1U=;
-        b=cGgQymS/i/Oq5PAcyDC3W03ueTND3XXhYvadVIB0PGvqspi4+ATf+uG7n4rE5V23OE
-         cKGkW3t8kxmyR22lruxzmV3hYt/B9hQGrRB6s2jwvglm++sJplAtHov8tva9Y0gechEc
-         gZoJjj+lc5rj+2khMCVN6Tvk2bP0B7Azs0alklxAHyaX/nnZayIVme4IzQT/XcEAYD8H
-         z3K6AF2tBxsJqN2/EJcB7L6fKi97dFbG+9Trwy8jMmD+N6mfhzaBw+kUoRP5suL7jbzF
-         T2eh7D8EgRkjQPFmyjqGWtUcMToCyaqwKI3GzCx4tlxsvySaTSaYx96IBY++4Tt85dL8
-         Fb9w==
-X-Gm-Message-State: AOAM533qqvm+ArlmJwIt9gsd82MGm2IhFihSsCmGP+EtCbNAWIXhaVyk
-        fRl7Gvwd1alQ7R8Jj/HTiYxXexPUjUqEU9V35efLlAbnJ2o=
-X-Google-Smtp-Source: ABdhPJxFo6sYN3MzaDFsUsuRIazMLaBfNKqIydDWeJGu8WPSZYoNjCzBfAhYz8coodM/8boysnaQ/wmEPwnPc6ZGZJA=
-X-Received: by 2002:a9d:b8e:: with SMTP id 14mr1762610oth.316.1608270134146;
- Thu, 17 Dec 2020 21:42:14 -0800 (PST)
+        id S1728174AbgLRFnL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Dec 2020 00:43:11 -0500
+Received: from cloud.peff.net ([104.130.231.41]:37360 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727098AbgLRFnK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Dec 2020 00:43:10 -0500
+Received: (qmail 10056 invoked by uid 109); 18 Dec 2020 05:42:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 18 Dec 2020 05:42:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11287 invoked by uid 111); 18 Dec 2020 05:42:30 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Dec 2020 00:42:30 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 18 Dec 2020 00:42:29 -0500
+From:   Jeff King <peff@peff.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Sangeeta <sangunb09@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] t/perf: fix test_export() failure with BSD `sed`
+Message-ID: <X9xBRXW7/tXsqLT5@coredump.intra.peff.net>
+References: <20201216073907.62591-1-sunshine@sunshineco.com>
+ <xmqq5z514lj5.fsf@gitster.c.googlers.com>
+ <CAPig+cR+4Wh4Sgk6UhUML4SHqaQsvYmw_77ih+oec2YmqQJCCg@mail.gmail.com>
 MIME-Version: 1.0
-References: <20201101193330.24775-1-sorganov@gmail.com> <20201216184929.3924-1-sorganov@gmail.com>
- <20201216184929.3924-24-sorganov@gmail.com>
-In-Reply-To: <20201216184929.3924-24-sorganov@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 17 Dec 2020 21:42:03 -0800
-Message-ID: <CABPp-BEf2nbahjzR6aLLNy0YsHYcHqCozCe6veoZOH3LAM892g@mail.gmail.com>
-Subject: Re: [PATCH v2 23/33] diff-merges: fix style of functions definitions
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPig+cR+4Wh4Sgk6UhUML4SHqaQsvYmw_77ih+oec2YmqQJCCg@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 16, 2020 at 10:50 AM Sergey Organov <sorganov@gmail.com> wrote:
->
-> Put open curly brace on its own line
->
-> Signed-off-by: Sergey Organov <sorganov@gmail.com>
-> ---
->  diff-merges.c | 36 ++++++++++++++++++++++++------------
->  1 file changed, 24 insertions(+), 12 deletions(-)
->
-> diff --git a/diff-merges.c b/diff-merges.c
-> index cba391604ac7..0165fa22fcd1 100644
-> --- a/diff-merges.c
-> +++ b/diff-merges.c
-> @@ -2,7 +2,8 @@
->
->  #include "revision.h"
->
-> -static void suppress(struct rev_info *revs) {
-> +static void suppress(struct rev_info *revs)
-> +{
->         revs->separate_merges = 0;
->         revs->first_parent_merges = 0;
->         revs->combine_merges = 0;
-> @@ -10,17 +11,20 @@ static void suppress(struct rev_info *revs) {
->         revs->combined_all_paths = 0;
->  }
->
-> -static void set_separate(struct rev_info *revs) {
-> +static void set_separate(struct rev_info *revs)
-> +{
->         suppress(revs);
->         revs->separate_merges = 1;
->  }
->
-> -static void set_first_parent(struct rev_info *revs) {
-> +static void set_first_parent(struct rev_info *revs)
-> +{
->         set_separate(revs);
->         revs->first_parent_merges = 1;
->  }
->
-> -static void set_m(struct rev_info *revs) {
-> +static void set_m(struct rev_info *revs)
-> +{
->         /*
->          * To "diff-index", "-m" means "match missing", and to the "log"
->          * family of commands, it means "show full diff for merges". Set
-> @@ -30,19 +34,22 @@ static void set_m(struct rev_info *revs) {
->         revs->match_missing = 1;
->  }
->
-> -static void set_combined(struct rev_info *revs) {
-> +static void set_combined(struct rev_info *revs)
-> +{
->         suppress(revs);
->         revs->combine_merges = 1;
->         revs->dense_combined_merges = 0;
->  }
->
-> -static void set_dense_combined(struct rev_info *revs) {
-> +static void set_dense_combined(struct rev_info *revs)
-> +{
->         suppress(revs);
->         revs->combine_merges = 1;
->         revs->dense_combined_merges = 1;
->  }
->
-> -static void set_diff_merges(struct rev_info *revs, const char *optarg) {
-> +static void set_diff_merges(struct rev_info *revs, const char *optarg)
-> +{
->         if (0) ;
->         else if (!strcmp(optarg, "off")   || !strcmp(optarg, "none"))
->                 suppress(revs);
-> @@ -62,7 +69,8 @@ static void set_diff_merges(struct rev_info *revs, const char *optarg) {
->   * Public functions. They are in the order they are called.
->   */
->
-> -int diff_merges_parse_opts(struct rev_info *revs, const char **argv) {
-> +int diff_merges_parse_opts(struct rev_info *revs, const char **argv)
-> +{
->         int argcount = 1;
->         const char *optarg;
->         const char *arg = argv[0];
-> @@ -86,23 +94,27 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv) {
->         return argcount;
->  }
->
-> -void diff_merges_suppress(struct rev_info *revs) {
-> +void diff_merges_suppress(struct rev_info *revs)
-> +{
->         suppress(revs);
->  }
->
-> -void diff_merges_default_to_first_parent(struct rev_info *revs) {
-> +void diff_merges_default_to_first_parent(struct rev_info *revs)
-> +{
->         if (!revs->explicit_diff_merges)
->                 revs->separate_merges = 1;
->         if (revs->separate_merges)
->                 revs->first_parent_merges = 1;
->  }
->
-> -void diff_merges_default_to_dense_combined(struct rev_info *revs) {
-> +void diff_merges_default_to_dense_combined(struct rev_info *revs)
-> +{
->         if (!revs->explicit_diff_merges)
->                 set_dense_combined(revs);
->  }
->
-> -void diff_merges_set_dense_combined_if_unset(struct rev_info *revs) {
-> +void diff_merges_set_dense_combined_if_unset(struct rev_info *revs)
-> +{
->         if (!revs->combine_merges)
->                 set_dense_combined(revs);
->  }
-> --
-> 2.25.1
->
+On Wed, Dec 16, 2020 at 02:29:26PM -0500, Eric Sunshine wrote:
 
-But...didn't you add all these functions yourself earlier in the
-series?  Why didn't you split this patch up and squash it into the
-relevant previous patches?
+> > Oh, does anybody need to clear test_export_ to an empty string (or
+> > unset it), by the way?
+> 
+> Perhaps a test_unexport() might be handy in the distant future, but
+> presently there is only a single call to test_export() in the entire
+> suite, so it's probably not worth worrying about now.
+
+I actually wonder if we could drop test_export entirely. I assume you
+mean the call in p0001. It is inside a test_expect_success block, where
+we don't need to do anything fancier than just "export". It is already
+running in the main script's environment, just like a normal test. If it
+were in a test_perf, then we would need to take special care to get it
+back into the main script.
+
+There are some calls in p0000 like that, but they are really about
+testing test_export itself.
+
+-Peff
