@@ -4,162 +4,166 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63C2FC3526C
-	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 17:53:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C38F3C4361B
+	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 18:06:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 364C22388E
-	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 17:53:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 98CA62395C
+	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 18:06:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727257AbgLSRw4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Dec 2020 12:52:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57034 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727252AbgLSRw4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Dec 2020 12:52:56 -0500
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8E5CC0617B0
-        for <git@vger.kernel.org>; Sat, 19 Dec 2020 09:52:15 -0800 (PST)
-Received: by mail-qk1-x730.google.com with SMTP id h4so5275149qkk.4
-        for <git@vger.kernel.org>; Sat, 19 Dec 2020 09:52:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=mpIDmXQD6lHcn7qmXP/6BRsgWcsD6TF9uk+4ivyKpC0=;
-        b=s0OQzZDOzyPKlAIgMJAXOw+9mZ6Yn22NEtD2iKe6vrzOKXHZDiH///x00CDu9hDZab
-         8Bpq4mjdovBFvIDJ0YFvNYQb6RISN1xrmISc/YVU+MPrWaCmRn07AwgeEL1UGqz+P8DV
-         jbGD0Gp3J5JkON4KdXLQkbV5QXwrw2bEdYyOs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=mpIDmXQD6lHcn7qmXP/6BRsgWcsD6TF9uk+4ivyKpC0=;
-        b=Cngxmq8J5kDmWDpPMP41r6cm3eBe39f/5t26ujCo73meC3TsoKbpquIWVtD1hGZO8e
-         +SHwgWXcV1zGK0ziFYnClFeKXM7cCK2Xs9tmfnvYPtF2NxSRYmj8Ey6eaE2VRMnU4zQy
-         AJk5lYy6PwxF15UMFTYaaukVtOTlpEKuy7l/rARO7W1ejV4vyyTQnSPQqD0yWr0YAEGf
-         c/gamiw/1KjbsDcdoYmbLOnyAFhNITEN5AmDRce3Il08Zt3WvQhDcLHqBt0gKg+J8HIO
-         gkRpQX+oylPyYrTn1UCsO5myH9zT0BFHJK6ODN46IJyCuPh6yeQrHJOrt5/u52MevCz6
-         x30A==
-X-Gm-Message-State: AOAM5317HhZB0itAfRs6u8jriwcpn/6T2Q4FI/4NNFi2qK+7UxNL4USu
-        WrNrN473chE3NMmWUJhWG4ezzFFc9R4imnkuGshGAQovSLhubH74
-X-Google-Smtp-Source: ABdhPJyXZv09aqRM+/B/mp/yWADZa2L7uey5riy8q1OLV2NizsiU3NbCoMVsZa7yiduh1CC7YK7MarFrJqYMJ37da3Y=
-X-Received: by 2002:a05:620a:4054:: with SMTP id i20mr10816903qko.72.1608400334849;
- Sat, 19 Dec 2020 09:52:14 -0800 (PST)
+        id S1727359AbgLSSGD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Dec 2020 13:06:03 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:65168 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727254AbgLSSGC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Dec 2020 13:06:02 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 29686117B18;
+        Sat, 19 Dec 2020 13:05:19 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=aTL+5ahZ+cv9FZnyeqgTOoeZzBc=; b=YXTpzp
+        jU69LzFrE4WNeOmI84DLo5R4oEShhc2NekW0CJvUU4/+HAcjgBGEAGMcENvz9+Wb
+        LeJFET+GVXLxRn91SaWHX8FTZR3RA+oHTdfbwPGZuWTWlT9qifKAK0dwKyEYR7mE
+        WBzrBU1zdgvnutpOdBgpyanCJ9+rnxXc3dsLo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Z93ciAfYFNUeVfoXXLWeILQrZdjXXiV4
+        H6hEyZDlRqEQrIcmOATDI9qUIPs0iDdWXHKjd9H/YF3Gk3mG6IH6J5zEofHWhcZv
+        6Y8euycgkEFZN0BEaBsYWYs7U/hHepzbPIC3vhvx1u8OTxusVgcvKZ1hgq9tIsht
+        6xeb5AdG1pY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 10BE1117B17;
+        Sat, 19 Dec 2020 13:05:19 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 47936117B13;
+        Sat, 19 Dec 2020 13:05:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Nipunn Koorapati via GitGitGadget" <gitgitgadget@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Cc:     git@vger.kernel.org, Nipunn Koorapati <nipunn1313@gmail.com>,
+        Nipunn Koorapati <nipunn@dropbox.com>
+Subject: Re: [PATCH] negative-refspec: fix segfault on : refspec
+References: <pull.820.git.1608398598893.gitgitgadget@gmail.com>
+Date:   Sat, 19 Dec 2020 10:05:14 -0800
+In-Reply-To: <pull.820.git.1608398598893.gitgitgadget@gmail.com> (Nipunn
+        Koorapati via GitGitGadget's message of "Sat, 19 Dec 2020 17:23:18
+        +0000")
+Message-ID: <xmqqy2htoen9.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <xmqqpn3tqugm.fsf@gitster.c.googlers.com> <3f0403b84ab06b9deb7c5c189792bebe1db586a7.1606866276.git.matheus.bernardino@usp.br>
-In-Reply-To: <3f0403b84ab06b9deb7c5c189792bebe1db586a7.1606866276.git.matheus.bernardino@usp.br>
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-Date:   Sat, 19 Dec 2020 17:51:39 +0000
-Message-ID: <CA+kUOamDD_SDNLk3sPSwNAojrAAP+g38MjkfG4JMPRTGOVAKAQ@mail.gmail.com>
-Subject: Re: [PATCH] apply: don't use core.sharedRepository to create working
- tree files
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: BF71E144-4224-11EB-BC01-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This commit =E2=80=93 eb3c027e17 ("apply: don't use core.sharedRepository t=
-o
-create working tree files", 2020-12-01) =E2=80=93 seems to have introduced =
-a
-new test failure in the Cygwin builds for v2.30.0-rc0, and which is
-still present in rc1. I'm not quite sure I understand what the
-expected behaviour here is, but I expect the issue is down to Cygwin's
-slightly odd file permission handling.
+"Nipunn Koorapati via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-To my surprise, the test fails if the worktree is under "/cygdrive",
-but not if it's under "/home" within the Cygwin filesystem. I expect
-this is some complexity with Cygwin's mount handling, but it's not a
-failure mode I've seen before. I'm also going to follow up on the
-Cygwin mailing list to see if the folk with a better understanding of
-Cygwin's filesystem wrangling have a better understanding of what's
-going on.
+> From: Nipunn Koorapati <nipunn@dropbox.com>
+>
+> Previously, if remote.origin.push was set to ":",
+> git would segfault during a push operation, due to bad
+> parsing logic in query_matches_negative_refspec. Per
+> bisect, the bug was introduced in:
+> c0192df630 (refspec: add support for negative refspecs, 2020-09-30)
+>
+> Added testing for this case in fetch-negative-refspec
 
-Extract from the relevant section of ./t4129-apply-samemode.sh -x
-output, when run with that commit checked out, below:
+Thanks.
 
-expecting success of 4129.10 'do not use core.sharedRepository for
-working tree files':
-        git reset --hard &&
-        test_config core.sharedRepository 0666 &&
-        (
-                # Remove a default ACL if possible.
-                (setfacl -k newdir 2>/dev/null || true) &&
-                umask 0077 &&
+Our local convention in this project is to write about the
+status-quo without the patch under discussion in the present tense,
+and describe the fix as if we are giving orders to the codebase to
+become like so (or giving orders to the monkeys sitting in front of
+the keyboard to update the code).  I'd explain the "problem
+description" part of the above perhaps like so:
 
-                # Test both files (f1) and leading dirs (d)
-                mkdir d &&
-                touch f1 d/f2 &&
-                git add f1 d/f2 &&
-                git diff --staged >patch-f1-and-f2.txt &&
+	The logic added to check for negative pathspec match by
+	c0192df630 (refspec: add support for negative refspecs,
+	2020-09-30) looks at refspec->src assuming it never is NULL,
+	but when remote.origin.push is set to ":" (i.e. "matching"),
+	refspec->src is NULL, causing a segfauilt.
+	
+But stepping back a bit, a "matching" push is saying "if we have
+branch 'hello', and they also have branch 'hello', push ours to
+theirs".  So if the query is asking about 'hello' (e.g. needle is
+'hello'), shouldn't a refspec ":" have the same effect as a refspec
+"hello:hello", instead of getting ignored like this patch does?
 
-                rm -rf d f1 &&
-                git apply patch-f1-and-f2.txt &&
+Original author of the feature (Jacob) cc'ed for insight.
 
-                echo "-rw-------" >f1_mode.expected &&
-                echo "drwx------" >d_mode.expected &&
-                test_modebits f1 >f1_mode.actual &&
-                test_modebits d >d_mode.actual &&
-                test_cmp f1_mode.expected f1_mode.actual &&
-                test_cmp d_mode.expected d_mode.actual
-        )
+ - Can we have refspec->src==NULL in cases other than where
+   refspec->matching is true?  If not, then perhaps the patch should
+   insert, before the problematic "else if" clause, something like
 
-++ git reset --hard
-HEAD is now at e950771 initial
-++ test_config core.sharedRepository 0666
-++ config_dir=3D
-++ test core.sharedRepository =3D -C
-++ test_when_finished 'test_unconfig  '\''core.sharedRepository'\'''
-++ test 0 =3D 0
-++ test_cleanup=3D'{ test_unconfig  '\''core.sharedRepository'\''
-                } && (exit "$eval_ret"); eval_ret=3D$?; :'
-++ git config core.sharedRepository 0666
-++ setfacl -k newdir
-++ true
-++ umask 0077
-++ mkdir d
-++ touch f1 d/f2
-++ git add f1 d/f2
-++ git diff --staged
-++ rm -rf d f1
-++ git apply patch-f1-and-f2.txt
-++ echo -rw-------
-++ echo drwx------
-++ test_modebits f1
-++ ls -ld f1
-++ sed -e 's|^\(..........\).*|\1|'
-++ test_modebits d
-++ ls -ld d
-++ sed -e 's|^\(..........\).*|\1|'
-++ test_cmp f1_mode.expected f1_mode.actual
-++ test 2 -eq 2
-++ eval 'diff -u' '"$@"'
-+++ diff -u f1_mode.expected f1_mode.actual
---- f1_mode.expected    2020-12-19 16:50:20.169378700 +0000
-+++ f1_mode.actual      2020-12-19 16:50:20.249126000 +0000
-@@ -1 +1 @@
---rw-------
-+-rw-rw-r--
-++ test xf1_mode.expected =3D x-
-++ test -e f1_mode.expected
-++ test xf1_mode.actual =3D x-
-++ test -e f1_mode.actual
-++ return 1
-error: last command exited with $?=3D1
-++ test_unconfig core.sharedRepository
-++ config_dir=3D
-++ test core.sharedRepository =3D -C
-++ git config --unset-all core.sharedRepository
-++ config_status=3D0
-++ case "$config_status" in
-++ return 0
-++ exit 1
-++ eval_ret=3D1
-++ :
+		if (match_name_with_pattern(...))
+			string_list_append_nodup(...);
+   +	} else if (refspec->matching) {
+   +		... behaviour for the matching case ...
+   +	} else if (refspec->src == NULL) {
+   +		BUG("refspec->src cannot be null here");
+	} else {
+		if (!strcmp(needle, refspec->src))
+
+ - We'd need to decide if ignoring is the right behaviour for the
+   matching refspec.  I do not recall what we decided the logic of
+   the function should be offhand.
+
+>     We found this issue when rolling out git 2.29 at Dropbox - as several
+>     folks had "push = :" in their configuration. I based my diff off the
+>     master branch, but also confirmed that it patches cleanly onto maint -
+>     if the maintainers would like to also fix the segfault on 2.29
+
+Yes, it is very much appreciated you were considerate to base the
+patch on the maintenance track.  We want the code to do with the
+right thing with ":" matching refspec.
+
+> diff --git a/remote.c b/remote.c
+> index 9f2450cb51b..8ab8d25294c 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -751,9 +751,8 @@ static int query_matches_negative_refspec(struct refspec *rs, struct refspec_ite
+>  
+>  			if (match_name_with_pattern(key, needle, value, &expn_name))
+>  				string_list_append_nodup(&reversed, expn_name);
+> -		} else {
+> -			if (!strcmp(needle, refspec->src))
+> -				string_list_append(&reversed, refspec->src);
+> +		} else if (refspec->src != NULL && !strcmp(needle, refspec->src)) {
+> +			string_list_append(&reversed, refspec->src);
+>  		}
+>  	}
+>  
+> diff --git a/t/t5582-fetch-negative-refspec.sh b/t/t5582-fetch-negative-refspec.sh
+> index 8c61e28fec8..4960378e0b7 100755
+> --- a/t/t5582-fetch-negative-refspec.sh
+> +++ b/t/t5582-fetch-negative-refspec.sh
+> @@ -186,4 +186,14 @@ test_expect_success "fetch --prune with negative refspec" '
+>  	)
+>  '
+>  
+> +test_expect_success "push with empty refspec" '
+
+s/empty/matching/ (see "git push --help" and look for "The special
+refspec :").
+
+> +	(
+> +		cd two &&
+> +		git config remote.one.push : &&
+> +		# Fails w/ tip behind counterpart - but should not segfault
+> +		test_must_fail git push one master &&
+> +		git config --unset remote.one.push
+> +	)
+> +'
+> +
+>  test_done
+>
+> base-commit: 6d3ef5b467eccd2769f1aa1c555d317d3c8dc707
