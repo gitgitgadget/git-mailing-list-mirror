@@ -4,101 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73003C4361B
-	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 19:01:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E0FCC4361B
+	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 19:58:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3F3D1238E8
-	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 19:01:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BB8BD23136
+	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 19:58:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727330AbgLSTBL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Dec 2020 14:01:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39232 "EHLO
+        id S1727435AbgLST6y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Dec 2020 14:58:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727298AbgLSTBL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Dec 2020 14:01:11 -0500
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BE29C0613CF
-        for <git@vger.kernel.org>; Sat, 19 Dec 2020 11:00:26 -0800 (PST)
-Received: by mail-qv1-xf2c.google.com with SMTP id p12so2582694qvj.13
-        for <git@vger.kernel.org>; Sat, 19 Dec 2020 11:00:26 -0800 (PST)
+        with ESMTP id S1727312AbgLST6y (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Dec 2020 14:58:54 -0500
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AA84C0613CF
+        for <git@vger.kernel.org>; Sat, 19 Dec 2020 11:57:50 -0800 (PST)
+Received: by mail-qk1-x72e.google.com with SMTP id d14so5398929qkc.13
+        for <git@vger.kernel.org>; Sat, 19 Dec 2020 11:57:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=dinwoodie.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=StE5wQxgOYHwse1P05jhe1I7vfA5VYRNlyxkI+YKheA=;
-        b=fdSt9JzZMZfCtK2wnJfXVE3aHt0/ui5uwPovneEz764Ppm/VVeY450SGu3RzKZ1uHC
-         hbeUTyok3AGivUBNJheUHR4Vs419ybKvkG/KouZgvQE4ifnTfW7oI2/VBE+5ZKY3r65z
-         AkAE/LelVfd1ic+INdhmjuxx7MLj0/rsLjsiE=
+        bh=S1U+GV0l9RajrHvyksyNIO0Kj7OomkFpIhM/G28fFHw=;
+        b=wdgw0kwDTjkR0jzxrKl837UXiSnwK8nCToXYuR5M0hb7vv7TxnNDbkFvs4eUO1hkz1
+         tLK8zLLgu2a7eSV92MydK3QH2LKItzHJdv8u3Q3iS0UL0ePb5VxfnF+LBOMLOQtOXi2n
+         UejFJoj+Yyetz81UJXAr7nKkUTKujK87CsbRc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=StE5wQxgOYHwse1P05jhe1I7vfA5VYRNlyxkI+YKheA=;
-        b=a6Qe9ar4uMbOnTVcsMalf2735LorwqNlyyXfc6T1/b7DfIU0ySfOAzxUoneP3PiROc
-         RB/nCEMVtXc9tUILKeihFA27ohjB/eGblisg/NCg8Dm2UaQtxUiOPwBOaHtYW7mWPGI5
-         r7u/M41aylephqem+mEfupe4PG5UHtJMc+nnFx/N0vNBtVSxpJ0VaFZ3anpo2NvWdv0j
-         PJpji942Xpm1DwqriRE+AMGTVGJPyVo9pBP62ZrNyCwf/MKBYHA8opSHQUDN9K0VSoWW
-         9X96W88YzEchGZf/1LT149hxS6tLNYUaRUk/t1rC94vbQ5ATlSkKzUK4LD5kyEeEAgf9
-         phgg==
-X-Gm-Message-State: AOAM530ZT2pQTR7TF4u6fCIUrZL/MIVqLzyXng/CRzBr2PgiC2P0YTY7
-        XyNiAfEIXbBMC1a52bfLoPRN8RLZYCi6WVmBRhXtXA==
-X-Google-Smtp-Source: ABdhPJzkLm25WIYNGx0PVUQAA2qXoRkyPk72dM3w8kXy3GWBbDSC9CZ9O/EkO6osIpXgMFB9lC1tJkHhwoEP71qepPE=
-X-Received: by 2002:ad4:4f11:: with SMTP id fb17mr11108809qvb.46.1608404425258;
- Sat, 19 Dec 2020 11:00:25 -0800 (PST)
+        bh=S1U+GV0l9RajrHvyksyNIO0Kj7OomkFpIhM/G28fFHw=;
+        b=HHdttNA/W/290q+qSsyEzG1iUWJMV14+4yKrgXsFcaCgKA5Q85c84Rm0qV6On/9Fh2
+         ar9WhmqMa2wM4rLXvvKE8BEUIDy/i72OP0Va2cWFx7lzHS0qUonyLeRKOqCvEIDUE+FK
+         9DQ4lqR6P55De7i5CGURwhfOsk9D/Pblyp9T29JBAT1u7JklrYdeDBugOPH3dP0DmHqW
+         9qAXEnjtjQvQL8qQWyow6oBiztYFo6eN6PsLfC1iXHilBqTn5tnu7enSl5DN3etSLifK
+         0XO9X9pL3Yiq2ugUmgduvWt1s1R7Z0R1kbjiuOuWDNZwRwv6s3Jiq1UqfRjnA1EVHV5T
+         pxFA==
+X-Gm-Message-State: AOAM532XJO2dag/ajNQZCKjKImHRklimY5bL08Cb77S0ieCijQX0B74v
+        9qrNMTsai5kgxpSfHtz1BneRK6abTcacdZdRoDONfcFZSFulaw==
+X-Google-Smtp-Source: ABdhPJwMXCYLt1iIyTBNmkEktI/pfyLhwY0ljpQR+3iaBjT90yLHJSfGQPH33JlyZRGSFg0iUWqepkfBqFAiy/DrzbQ=
+X-Received: by 2002:a37:90c4:: with SMTP id s187mr11233173qkd.6.1608407869109;
+ Sat, 19 Dec 2020 11:57:49 -0800 (PST)
 MIME-Version: 1.0
 References: <xmqqpn3tqugm.fsf@gitster.c.googlers.com> <3f0403b84ab06b9deb7c5c189792bebe1db586a7.1606866276.git.matheus.bernardino@usp.br>
- <CA+kUOamDD_SDNLk3sPSwNAojrAAP+g38MjkfG4JMPRTGOVAKAQ@mail.gmail.com> <xmqqtushoeaf.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqtushoeaf.fsf@gitster.c.googlers.com>
+ <CA+kUOamDD_SDNLk3sPSwNAojrAAP+g38MjkfG4JMPRTGOVAKAQ@mail.gmail.com> <87y2ht4pfr.fsf@Rainer.invalid>
+In-Reply-To: <87y2ht4pfr.fsf@Rainer.invalid>
 From:   Adam Dinwoodie <adam@dinwoodie.org>
-Date:   Sat, 19 Dec 2020 18:59:50 +0000
-Message-ID: <CA+kUOanL3Kix4iH8dvsj1sf75y_3+v4qYwDWseMtaRFBqKkNwg@mail.gmail.com>
+Date:   Sat, 19 Dec 2020 19:57:14 +0000
+Message-ID: <CA+kUOam3h859kK76QuS9OFojeavXO15JNpinUQ0vPrAXrcsCoA@mail.gmail.com>
 Subject: Re: [PATCH] apply: don't use core.sharedRepository to create working
  tree files
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Matheus Tavares <matheus.bernardino@usp.br>,
-        Git Mailing List <git@vger.kernel.org>
+To:     Achim Gratz <Stromeko@nexgo.de>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 19 Dec 2020 at 18:13, Junio C Hamano <gitster@pobox.com> wrote:
-> Adam Dinwoodie <adam@dinwoodie.org> writes:
-> > Extract from the relevant section of ./t4129-apply-samemode.sh -x
-> > output, when run with that commit checked out, below:
-> >
-> > expecting success of 4129.10 'do not use core.sharedRepository for
-> > working tree files':
-> >         git reset --hard &&
-> >         test_config core.sharedRepository 0666 &&
-> >         (
-> >                 # Remove a default ACL if possible.
-> >                 (setfacl -k newdir 2>/dev/null || true) &&
-> >                 umask 0077 &&
-> >
-> >                 # Test both files (f1) and leading dirs (d)
-> >                 mkdir d &&
-> >                 touch f1 d/f2 &&
-> >                 git add f1 d/f2 &&
-> >                 git diff --staged >patch-f1-and-f2.txt &&
+On Sat, 19 Dec 2020 at 18:34, Achim Gratz <Stromeko@nexgo.de> wrote:
 >
-> ... "point X" (see below) ...
+> Adam Dinwoodie writes:
+> > To my surprise, the test fails if the worktree is under "/cygdrive",
 >
-> >
-> >                 rm -rf d f1 &&
-> >                 git apply patch-f1-and-f2.txt &&
-> >
-> >                 echo "-rw-------" >f1_mode.expected &&
-> >                 echo "drwx------" >d_mode.expected &&
-> >                 test_modebits f1 >f1_mode.actual &&
-> >                 test_modebits d >d_mode.actual &&
-> >                 test_cmp f1_mode.expected f1_mode.actual &&
-> >                 test_cmp d_mode.expected d_mode.actual
-> >         )
-> > ...
+> /cygdrive is normally mounted with "posix=0", which only affects case
+> sensitivity, so that isn't the reason for this particular fail.  You
+> should anyway not build a Cygwin package with that option in effect,
+> instead create your own mount point for that directory (with
+> "binary,user" options).
+>
 > > +++ diff -u f1_mode.expected f1_mode.actual
 > > --- f1_mode.expected    2020-12-19 16:50:20.169378700 +0000
 > > +++ f1_mode.actual      2020-12-19 16:50:20.249126000 +0000
@@ -106,18 +82,29 @@ On Sat, 19 Dec 2020 at 18:13, Junio C Hamano <gitster@pobox.com> wrote:
 > > --rw-------
 > > +-rw-rw-r--
 >
-> This tells us that we are getting the umask (set to "me only")
-> ignored by "git apply".
->
-> What would we see in the "t4129-*.sh -x" output if we inserted
->
->                 ls -ld f1 d d/f2 &&
->
-> at "point X" above?
+> You seemingly can't change the ACL and/or several mode bits and see the
+> effective access that your euid / egid has instead.  It is possible to
+> set up the (default) ACL in a way that removes the permission to change
+> them while otherwise still giving you what is effectively full access,
+> in which case the test fail is the result of an inability to remove the
+> default ACL from the directory.  I suspect your build directory is owned
+> by a different user than the one you're building with and/or has been
+> moved or re-used from another Windows installation that has different
+> SID.
 
-Additional output as below:
+Having done a bit more digging, you're (unsurprisingly) right that
+this seems to be about permissions rather than mount points per se. I
+see the same failure with a build in
+/cygdrive/c/Users/Adam/Documents/git, though, where that directory was
+created solely using Git commands with the installed version of Cygwin
+Git (v2.29.2-1). I'm using a test VM here that was created from
+scratch solely to run these tests, and where there has only ever been
+a single login user account, so the permissions setup should be about
+as straightforward as they possibly could be.
 
-++ ls -ld f1 d d/f2
-drwxrwxr-x+ 1 Adam None 0 Dec 19 18:57 d
--rw-rw-r--+ 1 Adam None 0 Dec 19 18:57 d/f2
--rw-rw-r--+ 1 Adam None 0 Dec 19 18:57 f1
+This seems like a scenario that Cygwin should be able to handle, but I
+don't have a clear enough grasp of how Windows ACLs work in normal
+circumstances, let alone when Cygwin is handling them in its
+non-standard ways, to know what an appropriate solution here is. "Only
+ever build things within the Cygwin home directory" seems like a
+decidedly suboptimal workaround, though.
