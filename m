@@ -2,99 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2CF4C4361B
-	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 16:24:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8499AC3526C
+	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 17:09:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8EA5123A79
-	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 16:24:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4CBE123B7E
+	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 17:09:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726939AbgLSQYS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Dec 2020 11:24:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43482 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726790AbgLSQYS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Dec 2020 11:24:18 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC92DC0613CF
-        for <git@vger.kernel.org>; Sat, 19 Dec 2020 08:23:37 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id s26so13378836lfc.8
-        for <git@vger.kernel.org>; Sat, 19 Dec 2020 08:23:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=nR10U+IKKc4RX2OuX4Nnmz/JlIv69/FprrMANolvbj0=;
-        b=cGRhDO9aVTvMPBkmQpewUcrobAkUp1b62lzavEDK01Fax5M2gseKU8bd2gIXQgDFE+
-         PKZmSkomnkEigzLhGzpKfNAb9E3beqpBIGPxmQUPm0wXGkzIUZLVMFEE4uLkSUBXuTKB
-         2P1KH4eLnY8CQQ/AD1E6uZlveDDGCljJ+hGzuZVIP/kxtLEh9ejw2Lsx+DqWy8m/Ve/o
-         MHZwNWviF123Ul285vgWkO2i0PrQ1IPZkm41vapxPGLu8cvQV90ffSUjyrjtScKVcku9
-         fpjNBCsJ8WwLuwsHQgj3dnUhHoBWF8mmSbRPfeWFjYI9uWkuVZtoD2lVzkfof8kG8Rjm
-         qjDw==
+        id S1727180AbgLSRIb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Dec 2020 12:08:31 -0500
+Received: from mail-qv1-f50.google.com ([209.85.219.50]:39772 "EHLO
+        mail-qv1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727023AbgLSRIb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Dec 2020 12:08:31 -0500
+Received: by mail-qv1-f50.google.com with SMTP id s6so2508573qvn.6
+        for <git@vger.kernel.org>; Sat, 19 Dec 2020 09:08:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version;
-        bh=nR10U+IKKc4RX2OuX4Nnmz/JlIv69/FprrMANolvbj0=;
-        b=n/8cgpTVagQIY4636X/d6l6zrDMSGD9PXww0j9RqobNya6ZAnzSUv0DY17gYR5bu+C
-         py8c3WTBuQMQk2AUKDYuzUfGYQsGtAMdlqjJlf22OIUqHYbblafZunPJAsDxfQ/y8tMD
-         Sc8LAuByDFUQHENWB1fJA0qYd32COlqmE/1icE03toDi+3yH+Z29WSXRFX1gRWqZOU+p
-         IbTqxSI9l9tKF37ikDc2sffdlcBo/jqrWSGi/3hvzxggAeHYSRwm0mb3+nnX42tQae5z
-         yz0hW8BPZRanLcZE48X1+roIiI8Vo29kShrIqXFqbh7H7WkwGPbgmokKUhRTv86kXvx7
-         yPbQ==
-X-Gm-Message-State: AOAM531QYmnBq1JNV6P+1RPiltj3dFOyv0Dy3iUObJzlQsnB9xnViviV
-        jfENvUNlnSBfiqqe5A9UQqXM5e7+qnw=
-X-Google-Smtp-Source: ABdhPJyk5tnU79arpkR0dib1M5T2o+bif24RynB96xzAain00C9///c3kSPDXQuPoThQmxJksdCzDg==
-X-Received: by 2002:a19:40d7:: with SMTP id n206mr3453946lfa.27.1608395016230;
-        Sat, 19 Dec 2020 08:23:36 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id o6sm1459301ljc.124.2020.12.19.08.23.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Dec 2020 08:23:35 -0800 (PST)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 26/33] diff-merges: let new options enable diff
- without -p
-References: <20201101193330.24775-1-sorganov@gmail.com>
-        <20201216184929.3924-1-sorganov@gmail.com>
-        <20201216184929.3924-27-sorganov@gmail.com>
-        <CABPp-BHu2xLZLfwBg+hzNEKQ0K=EyT1HLqJO9=pNzBFf4MqR=A@mail.gmail.com>
-        <87wnxfb2gt.fsf@osv.gnss.ru>
-        <CABPp-BG4GEmv20YK39M51nzTYVZtcLgD-UbmQLfgynjUhBKx9w@mail.gmail.com>
-        <87o8iqm1wq.fsf@osv.gnss.ru> <5fde01924f744_1de0de208ea@natae.notmuch>
-Date:   Sat, 19 Dec 2020 19:23:34 +0300
-In-Reply-To: <5fde01924f744_1de0de208ea@natae.notmuch> (Felipe Contreras's
-        message of "Sat, 19 Dec 2020 07:35:14 -0600")
-Message-ID: <87im8xlq7t.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=SxpvNlVSKSQnTLplEgnTC/9Ph35aak9UbvRG3CP9FME=;
+        b=dO8dQ7L3NxFrGl/YXQv7ToeQd2seHuyDs5i2prwyR5vFeUS+CHzkrssZopalkqAjRB
+         vKoj73VWFFLzxU2tUnAeqwU+Zg94Bh7TP0h5OG7kY69Xe0B6RnaLYqBtRZaBhznOSxzs
+         9+nLZ1EwZ+Cc9/CJhSftOyVaPj+z40/VuXRwTslo+88P7AqmyF6vefE2rgWCQ3rMwI5b
+         We/9q5uuXVjcmzwzVTiIpDvmHT19C3FoPHO8wo9fKrBCVNGwPwJIh+qZWpAOdrnXFPXO
+         5f/ou8/tjoOUEqMUvpw/v5UwWm1LzY5iZKUi3quAXGrR+NkCYCmZztgiWYcxJ7+z+/t8
+         48Jg==
+X-Gm-Message-State: AOAM530F32Z/Sjxrc2V4XBPrLpQidu7ojdGpwy+8rDX1U5bEM3VjTv8P
+        937AojunS4nUsaOVrU1PnqnNdi9av6U=
+X-Google-Smtp-Source: ABdhPJzCLfoP/81ue0ylXiQ4T/tuGZhGtLc38GsSv5K7ypEFIMUsHdLRM7EUGzrJHr/GuB7VkLMyCw==
+X-Received: by 2002:a0c:e583:: with SMTP id t3mr10484992qvm.42.1608397669822;
+        Sat, 19 Dec 2020 09:07:49 -0800 (PST)
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com. [209.85.160.179])
+        by smtp.gmail.com with ESMTPSA id p58sm7654451qte.38.2020.12.19.09.07.49
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 19 Dec 2020 09:07:49 -0800 (PST)
+Received: by mail-qt1-f179.google.com with SMTP id z9so3726540qtn.4
+        for <git@vger.kernel.org>; Sat, 19 Dec 2020 09:07:49 -0800 (PST)
+X-Received: by 2002:ac8:41cf:: with SMTP id o15mr10088576qtm.98.1608397669198;
+ Sat, 19 Dec 2020 09:07:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+From:   Ross Light <ross@zombiezen.com>
+Date:   Sat, 19 Dec 2020 09:07:35 -0800
+X-Gmail-Original-Message-ID: <CAEs=z9Pajgjnq56+umA+g9-NFv-Rzo9m5sa-7cow_byckLiJ0A@mail.gmail.com>
+Message-ID: <CAEs=z9Pajgjnq56+umA+g9-NFv-Rzo9m5sa-7cow_byckLiJ0A@mail.gmail.com>
+Subject: Documentation errors for HTTP protocol v2 and packfile
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Hello Git mailing list,
 
-> Sergey Organov wrote:
->> The problem is that original name I've used lies to the reader, or, more
->> precisely, tells half-truth. True meaning of the variable is "do run
->> diff for any commit, no matter if it's merge or not". So "need_diff" is
->> already better than "regulars_need_diff".
->> 
->> Maybe "diff_all_commits" will do?
->
-> all_need_diff
+I'm working on a library to interoperate with the Git wire protocol.
+While doing so, I noticed two omissions in the documentation:
 
-Fine with me.
+1. In the protocol-v2 doc [1], the HTTP example implies that the first
+bytes in the response are "000eversion 2\n" when in fact they will be
+PKT-LINE("# service=git-upload-pack" LF) followed by a flush packet,
+then the version 2 data.
 
-Thanks,
--- Sergey
+2. In the pack-format doc, the Deltified representation section [2]
+describes the instruction sequence well, but neglects to mention the
+two size varints [3] at the beginning of such an object.
+
+I think it would be good to correct these documents for others
+attempting to work with Git internals. Let me know how I can help.
+
+-Ross Light
+
+[1]: https://github.com/git/git/blob/ae46588be0cd730430dded4491246dfb4eac5557/Documentation/technical/protocol-v2.txt#L72-L79
+[2]: https://github.com/git/git/blob/ae46588be0cd730430dded4491246dfb4eac5557/Documentation/technical/pack-format.txt#L70-L76
+[3]: https://github.com/git/git/blob/ae46588be0cd730430dded4491246dfb4eac5557/patch-delta.c#L29-L36
