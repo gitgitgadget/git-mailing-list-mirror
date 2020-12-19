@@ -7,106 +7,159 @@ X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38F82C4361B
-	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 17:41:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63C2FC3526C
+	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 17:53:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EBF3622472
-	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 17:41:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 364C22388E
+	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 17:53:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727186AbgLSRlb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Dec 2020 12:41:31 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60408 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726131AbgLSRla (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Dec 2020 12:41:30 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6A8FB11788F;
-        Sat, 19 Dec 2020 12:40:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=NCUr4wcktl81Xim2yumj1SXvpc4=; b=QTyJ5s
-        DIspUtUoq4kSmw79l7MIqr92z82pqhtP4jwffDBSluQ/yr6BiwtYnGF0R1CFUSPO
-        RgMC+WcHrpuCjB+5/MPZgHyIQJA166RUonYWBsWL1DW29My5dVytvlwSjvps/ugF
-        QcU0ZGd5e+wOdQbGqG+1eyV6fYoTgzoNVmv34=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=k0IE8VYQYirO7drwZ5nqkic0XdpFwEvq
-        T/uRSjKZw4LvYHGI+iDD5lE1WTPZVaezHDOV7aB6IU2O/61yrq4ZLJ8V/qZLgUoj
-        hGL+SGUGVPaOIezt/ViyqPeT/eKJbQagLNzWWecCIT2HMXjQho1RlOh85HjVgpu+
-        BOR39lpnc+4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 641FA11788E;
-        Sat, 19 Dec 2020 12:40:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AFD4E11788D;
-        Sat, 19 Dec 2020 12:40:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] checkout -p: handle tree arguments correctly again
-References: <pull.819.git.1608389760050.gitgitgadget@gmail.com>
-Date:   Sat, 19 Dec 2020 09:40:43 -0800
-In-Reply-To: <pull.819.git.1608389760050.gitgitgadget@gmail.com> (Johannes
-        Schindelin via GitGitGadget's message of "Sat, 19 Dec 2020 14:55:59
-        +0000")
-Message-ID: <xmqq5z4xpuck.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727257AbgLSRw4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Dec 2020 12:52:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57034 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727252AbgLSRw4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Dec 2020 12:52:56 -0500
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8E5CC0617B0
+        for <git@vger.kernel.org>; Sat, 19 Dec 2020 09:52:15 -0800 (PST)
+Received: by mail-qk1-x730.google.com with SMTP id h4so5275149qkk.4
+        for <git@vger.kernel.org>; Sat, 19 Dec 2020 09:52:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dinwoodie.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=mpIDmXQD6lHcn7qmXP/6BRsgWcsD6TF9uk+4ivyKpC0=;
+        b=s0OQzZDOzyPKlAIgMJAXOw+9mZ6Yn22NEtD2iKe6vrzOKXHZDiH///x00CDu9hDZab
+         8Bpq4mjdovBFvIDJ0YFvNYQb6RISN1xrmISc/YVU+MPrWaCmRn07AwgeEL1UGqz+P8DV
+         jbGD0Gp3J5JkON4KdXLQkbV5QXwrw2bEdYyOs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=mpIDmXQD6lHcn7qmXP/6BRsgWcsD6TF9uk+4ivyKpC0=;
+        b=Cngxmq8J5kDmWDpPMP41r6cm3eBe39f/5t26ujCo73meC3TsoKbpquIWVtD1hGZO8e
+         +SHwgWXcV1zGK0ziFYnClFeKXM7cCK2Xs9tmfnvYPtF2NxSRYmj8Ey6eaE2VRMnU4zQy
+         AJk5lYy6PwxF15UMFTYaaukVtOTlpEKuy7l/rARO7W1ejV4vyyTQnSPQqD0yWr0YAEGf
+         c/gamiw/1KjbsDcdoYmbLOnyAFhNITEN5AmDRce3Il08Zt3WvQhDcLHqBt0gKg+J8HIO
+         gkRpQX+oylPyYrTn1UCsO5myH9zT0BFHJK6ODN46IJyCuPh6yeQrHJOrt5/u52MevCz6
+         x30A==
+X-Gm-Message-State: AOAM5317HhZB0itAfRs6u8jriwcpn/6T2Q4FI/4NNFi2qK+7UxNL4USu
+        WrNrN473chE3NMmWUJhWG4ezzFFc9R4imnkuGshGAQovSLhubH74
+X-Google-Smtp-Source: ABdhPJyXZv09aqRM+/B/mp/yWADZa2L7uey5riy8q1OLV2NizsiU3NbCoMVsZa7yiduh1CC7YK7MarFrJqYMJ37da3Y=
+X-Received: by 2002:a05:620a:4054:: with SMTP id i20mr10816903qko.72.1608400334849;
+ Sat, 19 Dec 2020 09:52:14 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5251AF7A-4221-11EB-8C88-E43E2BB96649-77302942!pb-smtp20.pobox.com
+References: <xmqqpn3tqugm.fsf@gitster.c.googlers.com> <3f0403b84ab06b9deb7c5c189792bebe1db586a7.1606866276.git.matheus.bernardino@usp.br>
+In-Reply-To: <3f0403b84ab06b9deb7c5c189792bebe1db586a7.1606866276.git.matheus.bernardino@usp.br>
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+Date:   Sat, 19 Dec 2020 17:51:39 +0000
+Message-ID: <CA+kUOamDD_SDNLk3sPSwNAojrAAP+g38MjkfG4JMPRTGOVAKAQ@mail.gmail.com>
+Subject: Re: [PATCH] apply: don't use core.sharedRepository to create working
+ tree files
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+This commit =E2=80=93 eb3c027e17 ("apply: don't use core.sharedRepository t=
+o
+create working tree files", 2020-12-01) =E2=80=93 seems to have introduced =
+a
+new test failure in the Cygwin builds for v2.30.0-rc0, and which is
+still present in rc1. I'm not quite sure I understand what the
+expected behaviour here is, but I expect the issue is down to Cygwin's
+slightly odd file permission handling.
 
->     I literally just ran into this segmentation fault after rebasing Git for
->     Windows onto -rc1, and did not really think that the regression was
->     introduced in the v2.30.0 cycle, but was proven wrong by my
->     investigation: it was introduced by v2.30.0-rc0151^23.
+To my surprise, the test fails if the worktree is under "/cygdrive",
+but not if it's under "/home" within the Cygwin filesystem. I expect
+this is some complexity with Cygwin's mount handling, but it's not a
+failure mode I've seen before. I'm also going to follow up on the
+Cygwin mailing list to see if the folk with a better understanding of
+Cygwin's filesystem wrangling have a better understanding of what's
+going on.
 
-As "checkout -p branch~4" is easier than "checkout -p branch~4:", I
-think you have to work harder to give a true tree object rather than
-the containing commit object.
+Extract from the relevant section of ./t4129-apply-samemode.sh -x
+output, when run with that commit checked out, below:
 
-It still is curious how you stumbled onto this, but I am glad you
-did ;-)
+expecting success of 4129.10 'do not use core.sharedRepository for
+working tree files':
+        git reset --hard &&
+        test_config core.sharedRepository 0666 &&
+        (
+                # Remove a default ACL if possible.
+                (setfacl -k newdir 2>/dev/null || true) &&
+                umask 0077 &&
 
-> @@ -482,7 +482,7 @@ static int checkout_paths(const struct checkout_opts *opts,
->  		 * properly. However, there is special logic for the HEAD case
->  		 * so we mustn't replace that.
->  		 */
-> -		if (rev && strcmp(rev, "HEAD"))
-> +		if (rev && new_branch_info->commit && strcmp(rev, "HEAD"))
+                # Test both files (f1) and leading dirs (d)
+                mkdir d &&
+                touch f1 d/f2 &&
+                git add f1 d/f2 &&
+                git diff --staged >patch-f1-and-f2.txt &&
 
-The comment above talks about why "&& strcmp()" is there.  We now
-have two.
+                rm -rf d f1 &&
+                git apply patch-f1-and-f2.txt &&
 
-I'd squash this in while queuing.  Thanks.
+                echo "-rw-------" >f1_mode.expected &&
+                echo "drwx------" >d_mode.expected &&
+                test_modebits f1 >f1_mode.actual &&
+                test_modebits d >d_mode.actual &&
+                test_cmp f1_mode.expected f1_mode.actual &&
+                test_cmp d_mode.expected d_mode.actual
+        )
 
-
- builtin/checkout.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git c/builtin/checkout.c w/builtin/checkout.c
-index 6f24b381c5..728c67e8ca 100644
---- c/builtin/checkout.c
-+++ w/builtin/checkout.c
-@@ -479,7 +479,9 @@ static int checkout_paths(const struct checkout_opts *opts,
- 		 * with the hex of the commit (whether it's in `...` form or
- 		 * not) for the run_add_interactive() machinery to work
- 		 * properly. However, there is special logic for the HEAD case
--		 * so we mustn't replace that.
-+		 * so we mustn't replace that.  Also, when we were given a
-+		 * tree-object, new_branch_info->commit would be NULL, but we
-+		 * do not have to do any replacement, either.
- 		 */
- 		if (rev && new_branch_info->commit && strcmp(rev, "HEAD"))
- 			rev = oid_to_hex_r(rev_oid, &new_branch_info->commit->object.oid);
+++ git reset --hard
+HEAD is now at e950771 initial
+++ test_config core.sharedRepository 0666
+++ config_dir=3D
+++ test core.sharedRepository =3D -C
+++ test_when_finished 'test_unconfig  '\''core.sharedRepository'\'''
+++ test 0 =3D 0
+++ test_cleanup=3D'{ test_unconfig  '\''core.sharedRepository'\''
+                } && (exit "$eval_ret"); eval_ret=3D$?; :'
+++ git config core.sharedRepository 0666
+++ setfacl -k newdir
+++ true
+++ umask 0077
+++ mkdir d
+++ touch f1 d/f2
+++ git add f1 d/f2
+++ git diff --staged
+++ rm -rf d f1
+++ git apply patch-f1-and-f2.txt
+++ echo -rw-------
+++ echo drwx------
+++ test_modebits f1
+++ ls -ld f1
+++ sed -e 's|^\(..........\).*|\1|'
+++ test_modebits d
+++ ls -ld d
+++ sed -e 's|^\(..........\).*|\1|'
+++ test_cmp f1_mode.expected f1_mode.actual
+++ test 2 -eq 2
+++ eval 'diff -u' '"$@"'
++++ diff -u f1_mode.expected f1_mode.actual
+--- f1_mode.expected    2020-12-19 16:50:20.169378700 +0000
++++ f1_mode.actual      2020-12-19 16:50:20.249126000 +0000
+@@ -1 +1 @@
+--rw-------
++-rw-rw-r--
+++ test xf1_mode.expected =3D x-
+++ test -e f1_mode.expected
+++ test xf1_mode.actual =3D x-
+++ test -e f1_mode.actual
+++ return 1
+error: last command exited with $?=3D1
+++ test_unconfig core.sharedRepository
+++ config_dir=3D
+++ test core.sharedRepository =3D -C
+++ git config --unset-all core.sharedRepository
+++ config_status=3D0
+++ case "$config_status" in
+++ return 0
+++ exit 1
+++ eval_ret=3D1
+++ :
