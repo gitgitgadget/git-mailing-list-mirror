@@ -2,137 +2,175 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-20.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D3F8C3526E
-	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 00:23:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33210C4361B
+	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 00:48:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E021B23BCA
-	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 00:23:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F10E923BA7
+	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 00:48:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726351AbgLSAXC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Dec 2020 19:23:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38130 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726004AbgLSAXC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Dec 2020 19:23:02 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1C33C0617B0
-        for <git@vger.kernel.org>; Fri, 18 Dec 2020 16:22:21 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id v14so4101785wml.1
-        for <git@vger.kernel.org>; Fri, 18 Dec 2020 16:22:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:mime-version:content-transfer-encoding
-         :fcc:to:cc;
-        bh=/7NfLBnvfbI0YQSKC/h9kgQi+p2GtPGFZ2m1ve1QIUc=;
-        b=kDIJg8ao75mfH4pdi22/XPlfCm64TOSiBcPbVydpH/Fpa2EfD2Xoe6ymlcZ2QBN7Qe
-         ViyywUZ0rAiW77tCJQp3mQmEpnkx/wt6PxExLbxRxIyeEc9iy7dYpjX5MI7XGoLtjRFk
-         Zaq1E8FF+dKVCFalvPEX50dv8rkXy/W/4gm6/kfijtIzJ/fiWvYXiKEXi+n6EnFtUmDd
-         9hH1nHsOQcTb5oZRXsI1Ja4LksSooA98dVwpKNMqCK5iGtffsX1TkgtRGNTc/g99SKgL
-         vhfMjQI4QhLkLtaaGClwDrsTweHIMn0zn3lou5QO3Rfza/xyvBRytiRnCJLbUoo6nIcF
-         2pww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=/7NfLBnvfbI0YQSKC/h9kgQi+p2GtPGFZ2m1ve1QIUc=;
-        b=CWMywJyqP3FyrZb/6Hka2Dqchrd2poAB1mqhX9VHTM20Uv1dmSH5WitU5h6vL2EDVa
-         KBHgUglpitNDo3pJex24zSbKt4xZTS6/Wb6cJxE0+C9f8dQzy+685JaUVNPbhLfKK/nA
-         qhGD14kG0IUBE/0UWqayObn7D2+stmj3h46DFF2FYNY4Yvyf03Ww3W/a+mCXFrAjRDRa
-         UZOp1Ox4f3GWQNbZmwxHL7YpwEyQvkqW6rCKYRFZGUVK0QVmjZUwrin5giHqSqMIKRZ1
-         pSsS0CNef1rBX5jDLWZ4Xofe2zMQxoXO4PZRBf3HTqXHSRZ1Vnd3gK1kkWXEt704oXDF
-         0PvA==
-X-Gm-Message-State: AOAM531WjqASSE/L88f7TAoCemMBsgRqPtS2wFlRy3EdcTsdNPDWQrkb
-        +cnvVOlcM5zTz9iu3x0zws3An6kp2jQ=
-X-Google-Smtp-Source: ABdhPJzlAo/A94XYACX1uCNE3C6crxUeU/JndurdpWi+3Lm5dyUrVhs+6f/1tdTjpebGBjArwGT5FQ==
-X-Received: by 2002:a1c:7f8c:: with SMTP id a134mr4309911wmd.184.1608337340293;
-        Fri, 18 Dec 2020 16:22:20 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t13sm16227615wrs.26.2020.12.18.16.22.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Dec 2020 16:22:19 -0800 (PST)
-Message-Id: <pull.818.git.1608337339246.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 19 Dec 2020 00:22:18 +0000
-Subject: [PATCH] rebase -i: do leave commit message intact in fixup! chains
+        id S1726173AbgLSAr7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Dec 2020 19:47:59 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53536 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725824AbgLSAr7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Dec 2020 19:47:59 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9728711102A;
+        Fri, 18 Dec 2020 19:47:15 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=YztTZcuWkYa2XYHEIRXZfecL+vE=; b=AJe0C9
+        vfU5ajgGK701qqSfN3sVMrByYucZWH2VDcfWzrKPFRxHxV/1ZYjVlzDYv427tOQx
+        fGXCTe1/msc/C6DQoJ6i1AhzxLTTy4wKl6CYrhQagDNMjpbKXozrll4YdUI+dsqE
+        jM5gCd4F6kPHIHlxf1eXuvfqaPs2jQveOu2VY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=YisUAUG4b2nGClbUDFw1tqNlZh1mTG7A
+        0VqEoLfDmcE5A/reMmH3sai8ueJ18BunByGvvqVkV2+jERjQ93WXui1Ju0fnwMp5
+        1LwjrJENIi4/jHr044TW8d8MLCa8ZB+s3/V+UXqcs2ZxbL6DJMgQzWovaSrH35Lz
+        o/+HCC/HoMc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8FBB6111029;
+        Fri, 18 Dec 2020 19:47:15 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 121ED111028;
+        Fri, 18 Dec 2020 19:47:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Shourya Shukla <periperidip@gmail.com>, git@vger.kernel.org,
+        liu.denton@gmail.com, christian.couder@gmail.com,
+        kaartic.sivaraam@gmail.com
+Subject: Re: [PATCH v3 1/3] dir: change the scope of function
+ 'directory_exists_in_index()'
+References: <20201214231939.644175-1-periperidip@gmail.com>
+        <20201214231939.644175-2-periperidip@gmail.com>
+        <nycvar.QRO.7.76.6.2012190104140.56@tvgsbejvaqbjf.bet>
+Date:   Fri, 18 Dec 2020 16:47:11 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.2012190104140.56@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Sat, 19 Dec 2020 01:08:11 +0100 (CET)")
+Message-ID: <xmqqsg82tyeo.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?Vojt=C4=9Bch?= Knyttl <vojtech@knyt.tl>,
-        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID: BBC09716-4193-11EB-9666-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-In 6e98de72c03 (sequencer (rebase -i): add support for the 'fixup' and
-'squash' commands, 2017-01-02), this developer introduced a change of
-behavior by mistake: when encountering a `fixup!` commit (or multiple
-`fixup!` commits) without any `squash!` commit thrown in, the final `git
-commit` was invoked with `--cleanup=strip`. Prior to that commit, the
-commit command had been called without that `--cleanup` option.
+> Hi Shourya,
+>
+> On Tue, 15 Dec 2020, Shourya Shukla wrote:
+>
+>> Change the scope of the function 'directory_exists_in_index()' as well
+>> as declare it in 'dir.h'.
+>>
+>> Since the return type of the function is the enumerator 'exist_status',
+>> change its scope as well and declare it in 'dir.h'. While at it, rename
+>> the members of the aforementioned enum so as to avoid any naming clashes
+>> or confusions later on.
+>
+> This makes it sound as if only existing code was adjusted, in a minimal
+> way, but no new code was introduced. But that's not true:
 
-Since we explicitly read the original commit message from a file in that
-case, there is really no sense in forcing that clean-up.
+I noticed it last night, too---I suspect it was a mistake made while
+shuffling changes across steps with rebase -i.
 
-Reported-by: Vojtěch Knyttl <vojtech@knyt.tl>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    Fix bug in interactive rebases where fixup! cleans up the commit message
+>> Helped-by: Christian Couder <christian.couder@gmail.com>
+>> Helped-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+>> Signed-off-by: Shourya Shukla <periperidip@gmail.com>
+>> ---
+>>  builtin/submodule--helper.c | 408 ++++++++++++++++++++++++++++++++++++
+>>  dir.c                       |  30 ++-
+>>  dir.h                       |   9 +
+>>  3 files changed, 429 insertions(+), 18 deletions(-)
+>
+> Tons of new code there. And unfortunately...
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-818%2Fdscho%2Fautosquash-without-scissors-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-818/dscho/autosquash-without-scissors-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/818
+>> +static const char *parse_token(const char *cp, int *len)
+>> +{
+>> +	const char *p = cp, *start, *end;
+>> +	char *str;
+>> +
+>> +	start = p;
+>> +	while (*p != ' ')
+>> +		p++;
+>> +	end = p;
+>> +	str = xstrndup(start, end - start);
+>> +
+>> +	while(*p == ' ')
+>> +		p++;
+>> +
+>> +	return str;
+>> +}
+>
+> This function is not careful enough to avoid buffer overruns. It even
+> triggers a segmentation fault in our test suite:
+> https://github.com/gitgitgadget/git/runs/1574891976?check_suite_focus=true#step:6:3152
 
- sequencer.c                  | 5 ++---
- t/t3415-rebase-autosquash.sh | 8 ++++++++
- 2 files changed, 10 insertions(+), 3 deletions(-)
+I notice that len is not used at all ;-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 8909a467700..749bddd7a1f 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2001,10 +2001,9 @@ static int do_pick_commit(struct repository *r,
- 		flags |= AMEND_MSG;
- 		if (!final_fixup)
- 			msg_file = rebase_path_squash_msg();
--		else if (file_exists(rebase_path_fixup_msg())) {
--			flags |= CLEANUP_MSG;
-+		else if (file_exists(rebase_path_fixup_msg()))
- 			msg_file = rebase_path_fixup_msg();
--		} else {
-+		else {
- 			const char *dest = git_path_squash_msg(r);
- 			unlink(dest);
- 			if (copy_file(dest, rebase_path_squash_msg(), 0666))
-diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-index 7bab6000dc7..4c83c98b3fc 100755
---- a/t/t3415-rebase-autosquash.sh
-+++ b/t/t3415-rebase-autosquash.sh
-@@ -440,4 +440,12 @@ test_expect_success 'fixup a fixup' '
- 	test XZWY = $(git show | tr -cd W-Z)
- '
- 
-+test_expect_success 'fixup does not clean up commit message' '
-+	oneline="#818" &&
-+	git commit --allow-empty -m "$oneline" &&
-+	git commit --fixup HEAD --allow-empty &&
-+	git rebase -ki --autosquash HEAD~2 &&
-+	test "$oneline" = "$(git show -s --format=%s)"
-+'
-+
- test_done
-
-base-commit: ba2aa15129e59f248d8cdd30404bc78b5178f61d
--- 
-gitgitgadget
+> I need this to make it pass (only tested locally so far, but I trust you
+> to take the baton from here):
+>
+> -- snipsnap --
+> From c28c0cd3ac21d546394335957fbaa350ab287c3f Mon Sep 17 00:00:00 2001
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Date: Sat, 19 Dec 2020 01:02:04 +0100
+> Subject: [PATCH] fixup??? dir: change the scope of function
+>  'directory_exists_in_index()'
+>
+> This fixes the segmentation fault reported in the linux-musl job of our
+> CI builds. Valgrind has this to say about it:
+>
+> ==32354==
+> ==32354== Process terminating with default action of signal 11 (SIGSEGV)
+> ==32354==  Access not within mapped region at address 0x5C73000
+> ==32354==    at 0x202F5A: parse_token (submodule--helper.c:2837)
+> ==32354==    by 0x20319B: report_fetch_remotes (submodule--helper.c:2871)
+> ==32354==    by 0x2033FD: add_submodule (submodule--helper.c:2898)
+> ==32354==    by 0x204612: module_add (submodule--helper.c:3146)
+> ==32354==    by 0x20478A: cmd_submodule__helper (submodule--helper.c:3202)
+> ==32354==    by 0x12655E: run_builtin (git.c:458)
+> ==32354==    by 0x1269B4: handle_builtin (git.c:712)
+> ==32354==    by 0x126C79: run_argv (git.c:779)
+> ==32354==    by 0x12715C: cmd_main (git.c:913)
+> ==32354==    by 0x2149A2: main (common-main.c:52)
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  builtin/submodule--helper.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 4f1d892b9a9..29a6f80b937 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -2834,12 +2834,12 @@ static const char *parse_token(const char *cp, int *len)
+>  	char *str;
+>
+>  	start = p;
+> -	while (*p != ' ')
+> +	while (*p && *p != ' ')
+>  		p++;
+>  	end = p;
+>  	str = xstrndup(start, end - start);
+>
+> -	while(*p == ' ')
+> +	while(*p && *p == ' ')
+>  		p++;
+>
+>  	return str;
+> --
+> 2.29.2.windows.1.1.g3464b98ce68
