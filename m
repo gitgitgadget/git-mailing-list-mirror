@@ -2,101 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81741C4361B
-	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 14:57:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86354C4361B
+	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 15:02:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4C40123107
-	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 14:57:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 49DB8233FC
+	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 15:02:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726614AbgLSO5k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Dec 2020 09:57:40 -0500
-Received: from mout.gmx.net ([212.227.17.21]:50633 "EHLO mout.gmx.net"
+        id S1726693AbgLSPCC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Dec 2020 10:02:02 -0500
+Received: from mout.gmx.net ([212.227.15.15]:41569 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726578AbgLSO5k (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Dec 2020 09:57:40 -0500
+        id S1726510AbgLSPCB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Dec 2020 10:02:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1608389767;
-        bh=jSIP08LvxJpmAy9GHOfdmIBS0sd85gRVdROhJRLGkbg=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=EnZ0vWy79v/m0a+HGAoZYDKlT6i47L+Acu4Yx+DHEJeLp4GffXODZnBEQpqukcIyk
-         9Mf/I2ev9wC7t/aDGjG0MqQN9C/TY2RCT7hn1cE+ZfeQSiQ+oyEIAoQOqk4NO6zEdI
-         jmN8ajPXZpHfOICtMBA41IwM0JNss4e9Kyfrzmpw=
+        s=badeba3b8450; t=1608390028;
+        bh=jizKfMf+k7cRl9p3iklJDQVrl01HQGe7Dyg3XCWFjcs=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=h/i3Hd/LEwdxDPei66YACD58G8O55MBiO0f3L9rrYnhgAzNdJaW/mChIm9C+RECWy
+         6khkOVMhHBltcYv3mq+7hKGyx7aw01asG9QHaSHa9EEGt3WN9l8ufKFciQAuO77utf
+         7bEas6a82yyTea7ZnFlHOChtDPwagc0olbXj+rd4=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from
- fv-az767-492.win2iadty13evphfa0g0fnw2kb.bx.internal.cloudapp.net
- ([13.82.229.20]) by mail.gmx.com (mrgmx104 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 1MhU9j-1kCtBk1viF-00efza; Sat, 19 Dec 2020 15:56:07 +0100
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.30.0-rc1
-Date:   Sat, 19 Dec 2020 14:56:05 +0000
-Message-Id: <20201219145605.6272-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.29.2
-Content-Type: text/plain; charset=UTF-8
+Received: from [192.168.251.4] ([89.1.213.150]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MirjS-1kC3e3472S-00eqsD; Sat, 19
+ Dec 2020 16:00:28 +0100
+Date:   Sat, 19 Dec 2020 16:00:27 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?Vojt=C4=9Bch_Knyttl?= <vojtech@knyt.tl>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH] rebase -i: do leave commit message intact in fixup!
+ chains
+In-Reply-To: <CAN0heSpEnZGN9DBCabYg8JPWdSzRGh5YQ6CdrN4ubLqG-JkN8A@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2012191559180.56@tvgsbejvaqbjf.bet>
+References: <pull.818.git.1608337339246.gitgitgadget@gmail.com> <CAN0heSpEnZGN9DBCabYg8JPWdSzRGh5YQ6CdrN4ubLqG-JkN8A@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:38bQ7k2SFOErhRVqAkzypHbOUEhigSfJYfAAuTbiOsVvCrGK7+s
- uLDFDJw+i40Yc2/5ikLfMdPm9QilkiQl6+Gwmsh29ZJhF7Kt6uUvc0J7rtdI3XQBl6kOdZB
- lPomkOgpbIu7LosSP/LzNCi3+/r4O8XS8HTwPboPVIIZQtxflkENwl9e1/jd2n97QO3XLOX
- 6EhlQPhMIRkDcFmmC7eEg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:gaLPF48wvMc=:LwTGEyrjow2WlfpwszaDP/
- jMmnwsQXxLGtPZJcaVlLNiN66RRrQd8MSvZII1sah/RomDBvcjDiIOJhtLQORHOv2zxDVSNpQ
- h6Wa3qX/Coe6ou4NCX+9jeB1d+840K9oH6T9K61nY41bYzRfAX1Y+8Byim/SEU3pXeQZ22TZn
- r818nqQAhGRNEmVHxnVFmbLZIoDQsunB1M5d2GSINL2okI7PBpplv0rjARefr6VAij3C9OOXL
- oWFPl24qxH6s76RurrL3k+n82RTtYJfyBA0bOh68l9crs5EhQ3UVtg0l8Gtm8PhRF05FYHdib
- 1C4yNQ4AJlDGQdKhAaLjvIp0/GtgKyFbRU5SIv50lb6srW3GJZfmDeasCsT54PTAwg5ALh7Je
- 6CZFr20WwSa3lLDKL/qk7JjCvkHecMIRi7VgUu/jMOoqoIMQf+cdt5dstDNAogOevw7nSO580
- JipYWCwAMs6sCWjrxZnlsMza5ZxTz6eYWHRICXAIgjo0RwX5GU/hYaZil5JKtHbFtaffVizyV
- O3/kr5YR+/e0BBxoX9GxXToDreI8GRdLCO2TjaMutxio+m6kqK5d7lFpV0NGcd1Ayh6jT1WJU
- F64rJH4hj5uphNrBbBzW4QTHwzPcK9LZBPmtRUgBCurcv73uuzWVTk6GS3bT39/HRs0rgkFiW
- Ok6LBKXhkzUObynaRnandWPmYJ5JuqUm/QwLEewvRLizF/UOuGjEbe7gy4L+59K5E5+L1efth
- Y8qDP0cwZZi1wCZdLJTCir/GESJrQYcGGOTxdS2RXDVAGugga9gXLLiATTwKdSU9Qby4bwZvN
- JI8E6ruAcKdEMNJYxBZ7smlsxe7yhutgqw1rn+L+9FDtfob7d2yMsvWySW0S7nZkws8wA6KUw
- +/Ubu4atB2/MA910XNwj6V8bk86OH+t5ES9Z2DRQE=
+Content-Type: multipart/mixed; boundary="8323328-1675503112-1608390028=:56"
+X-Provags-ID: V03:K1:O7vK+P6JNC3fyluMxFuudoRElD79Dl9QLih4AI3y05YJDr+XwX/
+ bVTo0GL6Z5kVlo7xi8ro3aqzNdUckenQrPd2+vDJZUCJ2X2pB6tOCRLt/iyufrNskGMZpcW
+ aEfV0KBBrUnX9y5O4xZ5thThqPrVx7mXyX9sr1BRG4DAc31wAbtG4JrSZ4AJLXliZmUI870
+ puOFK0dDEYOOh6/iC/djw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:XqmTSYIFYIw=:x2/Mfkr2ZaL0psy0tiPdUx
+ HZgiWdO1mCJSQScRjvmwksLbSwMdWrGOUDbCVYyg3L/SwdCs+rWFFHFuZUnWO92o8QRrD9iU0
+ KHIWI3835ovMfi42s4pIpPZwESmB26ZzPN316m6zxC/0Zn8DyCwd/vUaytbfnJXBOG0YQVF0M
+ 8+51zpIMW9lvOB/q4VlKfLaiFIF2oCG9rg1c4rWMbbNFEx4+MyjSF7JT9QxNuI7fVI98lSApT
+ Hj/u85zqFm1r7SjzFjnCcxflmvdI1yna1vj44sH4kvMi4TEDC/oYBJECkK2qDcqWFoxykeeiv
+ 1teNL5Z6Ufv95b/Is3maaOpKKrRfaqCwXW7EOwvZkC/PRj04Bjrnli8/QGSJleMIU9n2d5YHH
+ 8q5VsEZOFR+fNrxRep+xT++05zM3doSOfNRkz4gRJRI3leWVUHqpQAT0/haAREeDq3P1nHcM/
+ b5Fpu4FS3WglEHEaZKrLcAFfl6nBhAOfaTwhnYx7d28lJ+NSWSCc68leFCKblqFkBjzVcTu0z
+ 4LxMgxYuypkNTAP4Y+1t2G3SkC7xgBQtYc6rjrrQqUInXjBj1qJ6q0xDp1xKR9QzdZZCLaUlt
+ Md34s9uvsLJZ3dwQZrTjT0/zZnqfDe2K6n9AT8/wg+VJ1U5dzUCdJJnQ992I0roZb8oIkt9Xm
+ c3ppnT3sdmJ2SRG30/+7LknMYm2zo1OJsS6K5O5mjI0wR5AjiJcLA7Hg5nDQRZOwkkfIlOjB9
+ bFwxKslxyew3XdW4KttcWrusJprtjQJROehDrpfpbrzz8O9fFeod+fDH/lB3SP+kvlGxGJRzf
+ 7/iR1vL7Y5v1kYELnSwbL3+mayJSIElQa1AayHtihvE3DZFz4Pizv8FEvrnVApVnkjpBI1Zp7
+ Zntea6jsz2JbFvye+etUja7W0Tc7LYfQtSfChyDy0=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I hereby announce that Git for Windows 2.30.0-rc1 is available from:
+--8323328-1675503112-1608390028=:56
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-    https://github.com/git-for-windows/git/releases/tag/v2.30.0-rc1.windows.1
+Hi Martin,
 
-Changes since Git for Windows v2.29.2(3) (December 8th 2020)
+On Sat, 19 Dec 2020, Martin =C3=85gren wrote:
 
-New Features
+> On Sat, 19 Dec 2020 at 01:25, Johannes Schindelin via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > In 6e98de72c03 (sequencer (rebase -i): add support for the 'fixup' and
+> > 'squash' commands, 2017-01-02), this developer introduced a change of
+> > behavior by mistake: when encountering a `fixup!` commit (or multiple
+> > `fixup!` commits) without any `squash!` commit thrown in, the final `g=
+it
+> > commit` was invoked with `--cleanup=3Dstrip`. Prior to that commit, th=
+e
+> > commit command had been called without that `--cleanup` option.
+> >
+> > Since we explicitly read the original commit message from a file in th=
+at
+> > case, there is really no sense in forcing that clean-up.
+>
+> >                 if (!final_fixup)
+> >                         msg_file =3D rebase_path_squash_msg();
+> > -               else if (file_exists(rebase_path_fixup_msg())) {
+> > -                       flags |=3D CLEANUP_MSG;
+> > +               else if (file_exists(rebase_path_fixup_msg()))
+> >                         msg_file =3D rebase_path_fixup_msg();
+> > -               } else {
+> > +               else {
+>
+> I see. The bug survived your 789b3effec ("sequencer: make commit
+> options more extensible", 2017-03-23). Which isn't surprising for such a
+> mechanical change.
+>
+> Nit: The "else" still needs braces, so if we follow the coding
+> guidelines, the "else if" should also use them. And even the "if",
+> FWIW. So it would arguably be more in line with CodingGuidelines to have
+> this diff just drop a single line, no additions needed.
+>
+> So what this does in the end is, it stops adding `--cleanup=3Dstrip` and
+> it doesn't do anything instead, i.e., not even `--cleanup=3Dwhitespace`.
+> OK, we want to use the exact original message. But what if
+> `commit.cleanup` happens to be "strip"?
+>
+> > +test_expect_success 'fixup does not clean up commit message' '
+> > +       oneline=3D"#818" &&
+> > +       git commit --allow-empty -m "$oneline" &&
+> > +       git commit --fixup HEAD --allow-empty &&
+> > +       git rebase -ki --autosquash HEAD~2 &&
+> > +       test "$oneline" =3D "$(git show -s --format=3D%s)"
+> > +'
+>
+> I changed your test to use
+>
+>   git -c commit.cleanup=3Dstrip rebase ...
+>
+> and it started failing. Maybe `run_git_command()` in sequencer.c could
+> learn to pass `--cleanup=3Dverbatim` or in some other way make sure to
+> override any user configuration here? I couldn't figure out how to get
+> this to actually work, though...
+>
+> Looking around for `CLEANUP_MSG`, I spotted the logic added by
+> 15ef69314d ("rebase --skip: clean up commit message after a failed
+> fixup/squash", 2018-04-27). It seems like it has the same problem, but
+> that this proposed patch misses it. I did some testing that seemed to
+> confirm it:
+>
+> Adding a commit with some "#message", then adding a fixup and then
+> adding a fixup that will conflict, then running the rebase and skipping
+> the conflicting fixup, I end up with a commit with the empty log
+> message. That's both before and after this proposed patch.
 
-  * Comes with Git v2.30.0-rc1.
-  * Comes with OpenSSL v1.1.1i.
-  * Comes with cURL v7.74.0.
-  * Comes with Git LFS v2.13.1.
-
-Bug Fixes
-
-  * The auto-updater now shows the progress while installing.
-  * The credential-helper selector (which is the default credential
-    helper in the Portable version of Git for Windows) now handles
-    paths with spaces correctly.
-
-Git-2.30.0-rc1-64-bit.exe | 14430c3a485cb82f70477193267368220aef05a4f10a55d5863393d30cd91bd2
-Git-2.30.0-rc1-32-bit.exe | bb8f18ae3fe0f15b779d5bda4bf645fb60552f33827c0ee2e99ebd350dfe96b8
-PortableGit-2.30.0-rc1-64-bit.7z.exe | 7543997e29e49454691608e6100615812c6c19e945efc9924049f857523e64b7
-PortableGit-2.30.0-rc1-32-bit.7z.exe | fd57c45c0f6645e18ba688c1fa05010687d13f85c8388c20213f17168a63b781
-MinGit-2.30.0-rc1-64-bit.zip | 4044633f44ebda10259cb6518b1f51b665064cc9cf00f2ed4a25fba9f4194b84
-MinGit-2.30.0-rc1-32-bit.zip | 1cfd59e8cf4767a0957a0d4dba5ca719495165d927d50f0683faa8f4e8811b1d
-MinGit-2.30.0-rc1-busybox-64-bit.zip | e4fa351738ec0b3da595daca1322de9323c0cad9f8a0669e3fcfdcee87428c76
-MinGit-2.30.0-rc1-busybox-32-bit.zip | 46d3f54e83cab21e4b6f0dffe87cee6ab05f243546f48c110065541c23e111dd
-Git-2.30.0-rc1-64-bit.tar.bz2 | 6bde9df69a51f9aa55be301d391a20e6c3fa37b69e700f5905bee6f98f78468d
-Git-2.30.0-rc1-32-bit.tar.bz2 | 0a75a23f8b3745f8289bd417ade3aa733b2c9becae70a825970b1fd72eacf1d0
+Thank you so much for this detailed feedback. I will take care of it next
+year, after taking a semi-vacation interrupted only by releasing -rc1
+(check), -rc2 (TBD) and v2.30.0 final (TBD).
 
 Ciao,
-Johannes
+Dscho
+
+--8323328-1675503112-1608390028=:56--
