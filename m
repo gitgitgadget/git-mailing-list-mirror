@@ -2,168 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FF48C4361B
-	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 21:00:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B087C4361B
+	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 21:02:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C5F97224BE
-	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 20:59:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0191323B54
+	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 21:02:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727633AbgLSU7o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Dec 2020 15:59:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57340 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727487AbgLSU7n (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Dec 2020 15:59:43 -0500
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49E81C0613CF
-        for <git@vger.kernel.org>; Sat, 19 Dec 2020 12:59:03 -0800 (PST)
-Received: by mail-oi1-x22b.google.com with SMTP id s2so7095210oij.2
-        for <git@vger.kernel.org>; Sat, 19 Dec 2020 12:59:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=WmoKtqDQMcCdW1YcneeHROiqFAGWk+7wekUGI1uEgM8=;
-        b=CckxdQhNYyiw+UptC7Xildas8bfxzniqbYMP4fLwpCnRsQYVIgVbAXBG7jdu4Ta4nW
-         YTuyGChmav2vw+c06232krgciLtvY4urHEbPqbuxVcPVFI1xvpHnZnNg1yNS4R6+mdXM
-         mehEdCqF84d3g2RWLL0TCtCDS/OKPJu9c+wrBZlPfnwddMB2Wdw5GcDkQ+sOd26E/ixN
-         9SM5mM3VlcV7XK84PYwnd8DpfKQp9KTg25EoDjhNJQFoz7Ab5Ldifter9vgiCGCNWRYS
-         gp/XKa9zaAhU21VViwtC6OD2+KChku0CrOAqeeahEHkH3kt4b13f66DXrZGViho/FxW0
-         qXWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=WmoKtqDQMcCdW1YcneeHROiqFAGWk+7wekUGI1uEgM8=;
-        b=GAH6FiPGncm4f1rV05ftYpYrTyq4xpcRIcPNaaVW3PVTRFpaQzDkBDae0Ct6YBa/xP
-         gFAX3kU0D1RU+rc2ZpjqjMiPgdZ3aAy3dqcRZWiXlrUYfmPNp0EW/mRydcjKpWQVNM1M
-         ZLhxgcOmsYsTRW3dwjF4R6Aa+4RQnovIFrkYZu+6rWTgusZ41Mx/AEnr/kXB+D8QBmIT
-         sEzG8m8J1sDbb2y+qar8U0XNWB+7EIXzKd8fGJh0zXBWPlwprdDprm7lmodWWVwPpy68
-         j40LNXFR8T4ibR7+lrlEwnLQuCG9iZntl6jKS1doztMuSNklO1qXL/DxtP5ELnaZ78NQ
-         iKYA==
-X-Gm-Message-State: AOAM530p5xlg08fpO8BBGzAOd8ObUPhltL7uffa/fGTYBg2vRadSxi4a
-        rAq52p8gN9US/MUCeujN7nJzzBCygHuVYg==
-X-Google-Smtp-Source: ABdhPJySPLK3Y5Ls+mDUonpDd+vtNbPws7l/is256HFKtkEsRhrpv5YO+3fUR7i6XNw5IMOygSrE8g==
-X-Received: by 2002:aca:b06:: with SMTP id 6mr6660940oil.74.1608411542242;
-        Sat, 19 Dec 2020 12:59:02 -0800 (PST)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id i1sm2852016otr.81.2020.12.19.12.59.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Dec 2020 12:59:01 -0800 (PST)
-Date:   Sat, 19 Dec 2020 14:59:00 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Seth House <seth@eseth.com>, Johannes Sixt <j6t@kdbg.org>,
-        git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-Message-ID: <5fde69944fe4d_1e50c7208f@natae.notmuch>
-In-Reply-To: <xmqqlfdtoch2.fsf@gitster.c.googlers.com>
-References: <xmqqa6ud2xuw.fsf@gitster.c.googlers.com>
- <105041520.23756286.1608159189934.JavaMail.zimbra@eseth.com>
- <5fdaef83a40ba_d0e26208f6@natae.notmuch>
- <e5c73fed-b87e-2091-794e-19aced4dd25b@kdbg.org>
- <20201217094424.GA75257@ellen>
- <5fdb3471c6bb7_d6d032087@natae.notmuch>
- <20201217175037.GA80608@ellen>
- <5fdc0e6dd79a7_f2faf208a1@natae.notmuch>
- <20201218023534.GA117762@ellen>
- <5fdc18a91c402_f2faf20837@natae.notmuch>
- <20201218054947.GA123376@ellen>
- <xmqq3603v3a0.fsf@gitster.c.googlers.com>
- <5fdc998216c89_104e15208da@natae.notmuch>
- <xmqqlfdtoch2.fsf@gitster.c.googlers.com>
-Subject: Re: [RFC/PATCH] mergetool: use resolved conflicts in all the views
+        id S1727525AbgLSVCE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Dec 2020 16:02:04 -0500
+Received: from ciao.gmane.io ([116.202.254.214]:46658 "EHLO ciao.gmane.io"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726473AbgLSVCD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Dec 2020 16:02:03 -0500
+Received: from list by ciao.gmane.io with local (Exim 4.92)
+        (envelope-from <gcvg-git-3@m.gmane-mx.org>)
+        id 1kqjLt-0000kW-JS
+        for git@vger.kernel.org; Sat, 19 Dec 2020 22:01:21 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To:     git@vger.kernel.org
+From:   Achim Gratz <Stromeko@nexgo.de>
+Subject: Re: [PATCH] apply: don't use core.sharedRepository to create working tree files
+Date:   Sat, 19 Dec 2020 22:01:16 +0100
+Organization: Linux Private Site
+Message-ID: <87pn354ijn.fsf@Rainer.invalid>
+References: <xmqqpn3tqugm.fsf@gitster.c.googlers.com>
+        <3f0403b84ab06b9deb7c5c189792bebe1db586a7.1606866276.git.matheus.bernardino@usp.br>
+        <CA+kUOamDD_SDNLk3sPSwNAojrAAP+g38MjkfG4JMPRTGOVAKAQ@mail.gmail.com>
+        <87y2ht4pfr.fsf@Rainer.invalid>
+        <CA+kUOam3h859kK76QuS9OFojeavXO15JNpinUQ0vPrAXrcsCoA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+Cancel-Lock: sha1:Lk6QYjO/SpTtscHsS0Av7dazo1U=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> >> Another reason why allowing users to disable the feature per tool is
-> >> important is because as far as I know we have kept the mergetool
-> >> framework to allow adding a tool that can merge binary data, and
-> >> leaving these three files pristine was one ingredient for that.
-> >> With only a single knob, we would be making a decision to declare
-> >> that such a tool is unwelcome, which is not quite acceptable.  I
-> >> expect that users would want the new feature most of the time
-> >> because they would be managing text files more of the time, and
-> >> having only a single knob would force an unnecessary choice on those
-> >> who want to use such a binary-capable tool as well.
-> >
-> > I can't imagine what that binary data could look like, and how any tool
-> > could represent that to the user.
-> 
-> What I had in mind are use cases like merging "comment"-ish part of
-> media files (e.g. exif in jpeg, id3 in mp3---things like that), as
-> I've heard some people do use Git to manage their photo collection.
+Adam Dinwoodie writes:
+> Having done a bit more digging, you're (unsurprisingly) right that
+> this seems to be about permissions rather than mount points per se. I
+> see the same failure with a build in
+> /cygdrive/c/Users/Adam/Documents/git, though, where that directory was
+> created solely using Git commands with the installed version of Cygwin
+> Git (v2.29.2-1).
 
-Right. They can do that with a text editor.
+Windows is "protecting" various directories and that can get in the way
+as well.
 
-> Of course, I can imagine that a cartoonist first draws a background
-> picture, cop es it twice, and then draws a dog on top of the
-> background in one copy while drawing a cat in the other.  You should
-> be able to merge the resulting two pictures cleanly by following the
-> three-way merge idea (take what got changed on only one side plus
-> what did not change--anything else is a conflict) as long as these
-> animals do not overlap.  You probably can even do an equivalent of
-> -Xours (not --ours) to essentially say which object is closer to the
-> viewer in a conflicting case.
+> I'm using a test VM here that was created from
+> scratch solely to run these tests, and where there has only ever been
+> a single login user account, so the permissions setup should be about
+> as straightforward as they possibly could be.
 
-The whole point of separating the background from the foreground is that
-the foreground can be animated on top of the background, so they would
-always be two different files.
+You haven't shown what these are in detail, though.  Use getfacl to see
+what Cygwin thinks the permissions are and icacls to get the Windows
+view.  Once you know what the ACL look like it usually becomes clear
+what you need to do to get what you want.  In your particular case I'd
+try to recursively do a 'setfacl -kb' to remove all ACL and inheritable
+defaults.  Again, it's possible that your user has insufficient
+permisions to do that (which will then result in some ACL still present,
+i.e. a '+' sign after the permission bits in 'ls -l' output).
 
-Even if we force the issue and make two graphic artists work on two
-different branches, what they would inevitably end up doing is work on
-different layers, which for all intents and purposes are like two files.
-No mergetool is going to help them integrate their changes.
+Keep in mind that running things as a member of the Administrator group
+usually confers some extra permissions on top of that, like
+Backup/Restore privileges.
 
-> > But either way "git merge-file" fails on those cases, so we can just
-> > check if the file is empty, and bail out.
-> 
-> Catching failures from merge-file and reverting back to the original
-> behaviour would be an improvement, if the code in the earlier
-> iteration was not checking errors.  But I would prefer not count on
-> the tool always to fail, as there are image file formats that appear
-> to be text that are unreadable to humans (like pnm),
+> This seems like a scenario that Cygwin should be able to handle, but I
+> don't have a clear enough grasp of how Windows ACLs work in normal
+> circumstances, let alone when Cygwin is handling them in its
+> non-standard ways, to know what an appropriate solution here is. "Only
+> ever build things within the Cygwin home directory" seems like a
+> decidedly suboptimal workaround, though.
 
-git would not add conflict markers on the part of a pnm file that did
-not change, so in fact, a person merging pnm files might in fact desire
-automerge.
-
-> and my primary reason for configurability is as an escape hatch to be
-> used in cases where we do not anticipate here.
-
-Once again: "mergetool.automerge=false" is a thing.
-
-> Listing "what about this case, it does not break" million times would
-> not help us here.
-
-This is the philosophical problem of induction: a million white swans
-doesn't prove all swans are white.
-
-The only thing we know for certain is that there is no known problem.
-And that if and when such a problem occurs, we would need to think about
-the proper solution.
-
-> With per-tool enable/disable option, the users do not have to rely
-> on failure from merge-file anyway.
-
-They don't have to rely on that failure, they can just turn off
-mergetool.automerge.
+I have a dedicated build directory outside anything that Windows cares
+about and mount that under /mnt/share from Cygwin.  I usually remove all
+inheritable and default ACL on the toplevel directory before populating
+it.
 
 
-But fine. Let's the perfect be the enemy of the good. That seems wise.
-
+Regards,
+Achim.
 -- 
-Felipe Contreras
++<[Q+ Matrix-12 WAVE#46+305 Neuron microQkb Andromeda XTk Blofeld]>+
+
+Factory and User Sound Singles for Waldorf Blofeld:
+http://Synth.Stromeko.net/Downloads.html#WaldorfSounds
+
