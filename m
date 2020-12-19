@@ -2,79 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8499AC3526C
-	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 17:09:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2127FC4361B
+	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 17:10:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4CBE123B7E
-	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 17:09:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DD9D123A9F
+	for <git@archiver.kernel.org>; Sat, 19 Dec 2020 17:10:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727180AbgLSRIb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Dec 2020 12:08:31 -0500
-Received: from mail-qv1-f50.google.com ([209.85.219.50]:39772 "EHLO
-        mail-qv1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727023AbgLSRIb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Dec 2020 12:08:31 -0500
-Received: by mail-qv1-f50.google.com with SMTP id s6so2508573qvn.6
-        for <git@vger.kernel.org>; Sat, 19 Dec 2020 09:08:15 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=SxpvNlVSKSQnTLplEgnTC/9Ph35aak9UbvRG3CP9FME=;
-        b=dO8dQ7L3NxFrGl/YXQv7ToeQd2seHuyDs5i2prwyR5vFeUS+CHzkrssZopalkqAjRB
-         vKoj73VWFFLzxU2tUnAeqwU+Zg94Bh7TP0h5OG7kY69Xe0B6RnaLYqBtRZaBhznOSxzs
-         9+nLZ1EwZ+Cc9/CJhSftOyVaPj+z40/VuXRwTslo+88P7AqmyF6vefE2rgWCQ3rMwI5b
-         We/9q5uuXVjcmzwzVTiIpDvmHT19C3FoPHO8wo9fKrBCVNGwPwJIh+qZWpAOdrnXFPXO
-         5f/ou8/tjoOUEqMUvpw/v5UwWm1LzY5iZKUi3quAXGrR+NkCYCmZztgiWYcxJ7+z+/t8
-         48Jg==
-X-Gm-Message-State: AOAM530F32Z/Sjxrc2V4XBPrLpQidu7ojdGpwy+8rDX1U5bEM3VjTv8P
-        937AojunS4nUsaOVrU1PnqnNdi9av6U=
-X-Google-Smtp-Source: ABdhPJzCLfoP/81ue0ylXiQ4T/tuGZhGtLc38GsSv5K7ypEFIMUsHdLRM7EUGzrJHr/GuB7VkLMyCw==
-X-Received: by 2002:a0c:e583:: with SMTP id t3mr10484992qvm.42.1608397669822;
-        Sat, 19 Dec 2020 09:07:49 -0800 (PST)
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com. [209.85.160.179])
-        by smtp.gmail.com with ESMTPSA id p58sm7654451qte.38.2020.12.19.09.07.49
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 19 Dec 2020 09:07:49 -0800 (PST)
-Received: by mail-qt1-f179.google.com with SMTP id z9so3726540qtn.4
-        for <git@vger.kernel.org>; Sat, 19 Dec 2020 09:07:49 -0800 (PST)
-X-Received: by 2002:ac8:41cf:: with SMTP id o15mr10088576qtm.98.1608397669198;
- Sat, 19 Dec 2020 09:07:49 -0800 (PST)
+        id S1727086AbgLSRJ6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Dec 2020 12:09:58 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56686 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727009AbgLSRJ5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Dec 2020 12:09:57 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 72387A67D8;
+        Sat, 19 Dec 2020 12:09:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=C1mQsY/1hVJwT8Ap8HuSCPXfQGg=; b=C0+OzB
+        vAKJRXR4/vsXIreM5eoJeVcm+l5mF+6qGhD13pWkc2gWEGn4sn/Rpkmfwu/aOL8Y
+        hzlpqPbk/fuHypzFcFlOqDw5DCWRgAPkXuOP1zqyfMhNYXIdLN8264MS5Vm0T09c
+        iDVjj9jBb7Wks2zZC7x97phedCy54ecX9W21Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=H6f4/AP8zIe+EZwvdIFqW+PumMIxIzNM
+        Q5h7WqSHOzXWLzhKV/yNIZQbEGGFMLp93wyCBAXl5fDpFXZx05Ax6/EpUu68ZFDt
+        8Kx5bD44084rDTfI3vYO3zfeGYwVoDtjmjYk1x8kwhTcazEICwrgy5Z2CZNtP41t
+        KZtAehFzNnw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 68FE8A67D7;
+        Sat, 19 Dec 2020 12:09:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E707DA67D2;
+        Sat, 19 Dec 2020 12:09:15 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Dec 2020, #03; Fri, 18)
+References: <xmqq7dpeqrz4.fsf@gitster.c.googlers.com>
+        <5fde09c1ac7d_1def912083c@natae.notmuch>
+Date:   Sat, 19 Dec 2020 09:09:15 -0800
+In-Reply-To: <5fde09c1ac7d_1def912083c@natae.notmuch> (Felipe Contreras's
+        message of "Sat, 19 Dec 2020 08:10:09 -0600")
+Message-ID: <xmqqwnxdpvt0.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-From:   Ross Light <ross@zombiezen.com>
-Date:   Sat, 19 Dec 2020 09:07:35 -0800
-X-Gmail-Original-Message-ID: <CAEs=z9Pajgjnq56+umA+g9-NFv-Rzo9m5sa-7cow_byckLiJ0A@mail.gmail.com>
-Message-ID: <CAEs=z9Pajgjnq56+umA+g9-NFv-Rzo9m5sa-7cow_byckLiJ0A@mail.gmail.com>
-Subject: Documentation errors for HTTP protocol v2 and packfile
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: EC85AC9A-421C-11EB-97DB-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Git mailing list,
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-I'm working on a library to interoperate with the Git wire protocol.
-While doing so, I noticed two omissions in the documentation:
+> Junio C Hamano wrote:
+>> * fc/bash-completion-post-2.29 (2020-11-10) 26 commits
+>>  - completion: bash: shuffle __gitcomp functions
+>>  - completion: bash: cleanup __gitcomp* invocations
+>>  - completion: bash: add __gitcomp_opts
+>>  - completion: bash: improve __gitcomp description
+>>  - completion: bash: rename _get_comp_words_by_ref()
+>>  - completion: bash: trivial cleanup
+>>  - completion: bash: cleanup _get_comp_words_by_ref()
+>>  - completion: bash: refactor _get_comp_words_by_ref()
+>>  - completion: bash: simplify _get_comp_words_by_ref()
+>>  - test: completion: switch __gitcomp_nl prefix test
+>>  - completion: bash: simplify config_variable_name
+>>  - completion: bash: improve __gitcomp suffix code
+>>  - completion: bash: change suffix check in __gitcomp
+>>  - completion: bash: simplify __gitcomp
+>>  - completion: bash: refactor __gitcomp
+>>  - completion: bash: simplify equal suffix check
+>>  - completion: bash: factor out check in __gitcomp
+>>  - completion: bash: get rid of any non-append code
+>>  - completion: bash: get rid of _append() functions
+>>  - completion: bash: remove non-append functionality
+>>  - test: completion: add run_func() helper
+>>  - test: completion: fix currently typed words
+>>  - completion: bash: do not modify COMP_WORDBREAKS
+>>  - completion: bash: fix for suboptions with value
+>>  - completion: bash: add correct suffix in variables
+>>  - completion: bash: fix prefix detection in branch.*
+>> 
+>>  Needs review.
+>
+> I think I already mentioned these should be dropped in favor of an
+> easier to digest series [1].
 
-1. In the protocol-v2 doc [1], the HTTP example implies that the first
-bytes in the response are "000eversion 2\n" when in fact they will be
-PKT-LINE("# service=git-upload-pack" LF) followed by a flush packet,
-then the version 2 data.
+Thanks.  I didn't even notice these were still in my tree, as these
+didn't seem to get any attention to those who know/care about
+completion.
 
-2. In the pack-format doc, the Deltified representation section [2]
-describes the instruction sequence well, but neglects to mention the
-two size varints [3] at the beginning of such an object.
+> I just sent another try as a reminder [2].
 
-I think it would be good to correct these documents for others
-attempting to work with Git internals. Let me know how I can help.
-
--Ross Light
-
-[1]: https://github.com/git/git/blob/ae46588be0cd730430dded4491246dfb4eac5557/Documentation/technical/protocol-v2.txt#L72-L79
-[2]: https://github.com/git/git/blob/ae46588be0cd730430dded4491246dfb4eac5557/Documentation/technical/pack-format.txt#L70-L76
-[3]: https://github.com/git/git/blob/ae46588be0cd730430dded4491246dfb4eac5557/patch-delta.c#L29-L36
+Will eject and replace.
