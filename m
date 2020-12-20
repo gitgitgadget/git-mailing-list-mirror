@@ -7,78 +7,170 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CEFDDC4361B
-	for <git@archiver.kernel.org>; Sun, 20 Dec 2020 04:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49C06C4361B
+	for <git@archiver.kernel.org>; Sun, 20 Dec 2020 06:46:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8725022D0A
-	for <git@archiver.kernel.org>; Sun, 20 Dec 2020 04:24:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0653C22D37
+	for <git@archiver.kernel.org>; Sun, 20 Dec 2020 06:46:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726923AbgLTEX5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Dec 2020 23:23:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40222 "EHLO
+        id S1727050AbgLTGqM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Dec 2020 01:46:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726815AbgLTEX5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Dec 2020 23:23:57 -0500
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F165BC0613CF
-        for <git@vger.kernel.org>; Sat, 19 Dec 2020 20:23:16 -0800 (PST)
-Received: by mail-pg1-x52e.google.com with SMTP id e2so4242890pgi.5
-        for <git@vger.kernel.org>; Sat, 19 Dec 2020 20:23:16 -0800 (PST)
+        with ESMTP id S1726985AbgLTGqL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Dec 2020 01:46:11 -0500
+Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6908C0613CF
+        for <git@vger.kernel.org>; Sat, 19 Dec 2020 22:45:31 -0800 (PST)
+Received: by mail-il1-x12c.google.com with SMTP id g1so6079697ilk.7
+        for <git@vger.kernel.org>; Sat, 19 Dec 2020 22:45:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=F+vGUQAlDqf48JoAWBV6RtLJPnDgyA2D9FKMlBKvmfY=;
-        b=U/aoNvnINYFiTuiEVP8bqaeXY6HQzcE0WARp53MPa4kubqb63eSlBdL4pgeWvSLndK
-         wYqM88LaziHdkcXBEUXLWs6Lom/Rhx+Cvnv2AQaRDCJZWe5ZczU2PC0IQhzF6zmiKKQB
-         QBHx53SAoFeGOX0yCEhJ1q36F2c9UMMu/QtthHz6fLEc0ob6ohXOIqXNXlHxySp6H+WH
-         jDeUvB+wUsvzVO2kFX9j0c4uQ0sITEd+e1XPuZmjX+R4I93IKYb3zK3FHuAB93kQ9aE7
-         v8sJYFJICXFFR0lCmhR/Ix//sLYB41gkp/qN78qSGrdi+V2BrxKMhYZMl0yO/DAJNS7a
-         JAlQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=UTeFlVwjU1PwUZfhFn/q67nidZe31GLAGPIv3xNIYMU=;
+        b=e8MvikLJFD4Gjvt6A9QlmMQCJqgiaGSpo/Xt/ts1tshF2E2Lwh/LmvfC6E9JzHspN9
+         i+9VqUIbRC9QLa+RxGJBnmiL1JqQoiw7tV5dIQDEhvc7p6I47uLg56laEH9VE1thTZoC
+         6BezaL5VRX70euFfpzKg7JKShm9j0gepiLDsjgocjAMKahg5kgkinktCXFVwwgWKwQE1
+         fGz+PFNHLauZJIGps0Zj+Cb6mAcL9mr3B8iesBflDjzg5puIU40DoLiJwxCi2PDMNScl
+         OxI7C1kK1QS5SfztOcE14Kmsu5x9CCvLt9iU7USU7xFEdNdjhbbOXFr9SwIXOsDfGaF1
+         knfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=F+vGUQAlDqf48JoAWBV6RtLJPnDgyA2D9FKMlBKvmfY=;
-        b=P4KhTM8qgqbm1pjOrONbV/F/QABAY7jGkwQpXwy/QBUvx880AaLtrsaYWFOeu0ZuEc
-         P0fPoRBSolBph3Dlr1ZYvctl2qFlUjooAWEnyjWMHRhtzxG0LhRV0/PrUj4NsjHNDLPL
-         9/pF947yBjDrwUkqmwwHsdOTT26zNNQjjbK3uBatccJCYDG45OUgzPAPVp6Yx94bqy2I
-         Sq446WpbS7dXzKo0lPsNDthWsMFkKreWK7IRPKKMTuh51glFR8iP7RqB8PTRr+HLf+c+
-         PsmzAjtOUc+FJV9zPkwW3kFVsBKZsmNdbBJenPSG8uxz5CWfRWMUYERpOORXME/zB5Wu
-         vj5w==
-X-Gm-Message-State: AOAM533BO2PM084TyT3RYy0eMpdyUgjWM7TEvUDKAZugX20Ut+YHIplj
-        wWH3Jvsi5BDqpcB1b+Rd+/elW8ECFL4sc96BKRshlAEqDGU=
-X-Google-Smtp-Source: ABdhPJw61tu7rNz6TmVBXuX/5ZCuHdnyf/av7qmeD+UAekKrwp3waKgbYmBxBcS+PkDgNOKxTWzpQgiqvS07Sw2wSgs=
-X-Received: by 2002:a65:6a46:: with SMTP id o6mr10515304pgu.36.1608438195985;
- Sat, 19 Dec 2020 20:23:15 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=UTeFlVwjU1PwUZfhFn/q67nidZe31GLAGPIv3xNIYMU=;
+        b=ZmtYsQpxTONTpIW3ZK+zjPKhoXe1GZM52AGPpxI2hb5ZCVrY7060O2q5aY4MehQx3F
+         6Sbezdx5L8yah/sq1yj86jUH42TrjLtbZofGipsb4bsB2IO3CPpepxHsKnTtO1uYQG3V
+         rEeXMHQGpMt86XQ8D72hRRWMfE91dhTGdOkzuzXKeWqQbUZJdwiSPjuyYbgVjA83OwuG
+         KWJ7TYt/1zWQdxiGJv38jQkoKJn+6ABImub0b9hW4mDh2cXUsEVzrktRIOmoOimAKy8s
+         Uvp2VhGx4m+td9AKHUIBJruxQsvbA0xVjBtg0XmUjai8YFin12wo0U+xkagbVobENrr9
+         5iLg==
+X-Gm-Message-State: AOAM532kGTZ6Ow5WO7e571HEC1XAaoPvh88dhcqDUCM1wbGooOkiXFhw
+        79bsguQS8YDPltVCSeCL9rvgSQcg0htyIMvGU+M=
+X-Google-Smtp-Source: ABdhPJylwoe+fsqHDJdiZFNHcI/QA7TXu4dTSU35jy0qRqVgTe/8rTQQQMy1+PGqmm+TZathz1McxnOILTKOYZ2moDQ=
+X-Received: by 2002:a92:9ada:: with SMTP id c87mr11854750ill.5.1608446730935;
+ Sat, 19 Dec 2020 22:45:30 -0800 (PST)
 MIME-Version: 1.0
-From:   =?UTF-8?B?w4lyaWNvIFJvbGlt?= <erico.erc@gmail.com>
-Date:   Sun, 20 Dec 2020 01:23:05 -0300
-Message-ID: <CAFDeuWOit1vKUT38Uvbj2wAsb5CBo59p2h=SE6FGNb6XGOGG-w@mail.gmail.com>
-Subject: [BUG] In git-log, --name-status flag overrides the --patch flag
-To:     git@vger.kernel.org
+References: <xmqqa6ud2xuw.fsf@gitster.c.googlers.com> <105041520.23756286.1608159189934.JavaMail.zimbra@eseth.com>
+ <5fdaef83a40ba_d0e26208f6@natae.notmuch> <e5c73fed-b87e-2091-794e-19aced4dd25b@kdbg.org>
+ <20201217094424.GA75257@ellen> <5fdb3471c6bb7_d6d032087@natae.notmuch>
+ <20201217175037.GA80608@ellen> <5fdc0e6dd79a7_f2faf208a1@natae.notmuch>
+ <20201218023534.GA117762@ellen> <5fdc18a91c402_f2faf20837@natae.notmuch>
+ <20201218054947.GA123376@ellen> <xmqq3603v3a0.fsf@gitster.c.googlers.com>
+ <5fdc998216c89_104e15208da@natae.notmuch> <xmqqlfdtoch2.fsf@gitster.c.googlers.com>
+ <5fde69944fe4d_1e50c7208f@natae.notmuch>
+In-Reply-To: <5fde69944fe4d_1e50c7208f@natae.notmuch>
+From:   David Aguilar <davvid@gmail.com>
+Date:   Sat, 19 Dec 2020 22:44:54 -0800
+Message-ID: <CAJDDKr6RP+TPFF2mHph7sqa-eG9uoRtqS4d4vUU84V3HJ_CMBA@mail.gmail.com>
+Subject: Re: [RFC/PATCH] mergetool: use resolved conflicts in all the views
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Seth House <seth@eseth.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!
+On Sat, Dec 19, 2020 at 12:59 PM Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+>
+> Junio C Hamano wrote:
+> > Felipe Contreras <felipe.contreras@gmail.com> writes:
+> >
+> > >> Another reason why allowing users to disable the feature per tool is
+> > >> important is because as far as I know we have kept the mergetool
+> > >> framework to allow adding a tool that can merge binary data, and
+> > >> leaving these three files pristine was one ingredient for that.
+> > >> With only a single knob, we would be making a decision to declare
+> > >> that such a tool is unwelcome, which is not quite acceptable.  I
+> > >> expect that users would want the new feature most of the time
+> > >> because they would be managing text files more of the time, and
+> > >> having only a single knob would force an unnecessary choice on those
+> > >> who want to use such a binary-capable tool as well.
+> > >
+> > > I can't imagine what that binary data could look like, and how any tool
+> > > could represent that to the user.
+> >
+> > What I had in mind are use cases like merging "comment"-ish part of
+> > media files (e.g. exif in jpeg, id3 in mp3---things like that), as
+> > I've heard some people do use Git to manage their photo collection.
+>
+> Right. They can do that with a text editor.
+>
+> > Of course, I can imagine that a cartoonist first draws a background
+> > picture, cop es it twice, and then draws a dog on top of the
+> > background in one copy while drawing a cat in the other.  You should
+> > be able to merge the resulting two pictures cleanly by following the
+> > three-way merge idea (take what got changed on only one side plus
+> > what did not change--anything else is a conflict) as long as these
+> > animals do not overlap.  You probably can even do an equivalent of
+> > -Xours (not --ours) to essentially say which object is closer to the
+> > viewer in a conflicting case.
+>
+> The whole point of separating the background from the foreground is that
+> the foreground can be animated on top of the background, so they would
+> always be two different files.
+>
+> Even if we force the issue and make two graphic artists work on two
+> different branches, what they would inevitably end up doing is work on
+> different layers, which for all intents and purposes are like two files.
+> No mergetool is going to help them integrate their changes.
+>
+> > > But either way "git merge-file" fails on those cases, so we can just
+> > > check if the file is empty, and bail out.
+> >
+> > Catching failures from merge-file and reverting back to the original
+> > behaviour would be an improvement, if the code in the earlier
+> > iteration was not checking errors.  But I would prefer not count on
+> > the tool always to fail, as there are image file formats that appear
+> > to be text that are unreadable to humans (like pnm),
+>
+> git would not add conflict markers on the part of a pnm file that did
+> not change, so in fact, a person merging pnm files might in fact desire
+> automerge.
+>
+> > and my primary reason for configurability is as an escape hatch to be
+> > used in cases where we do not anticipate here.
+>
+> Once again: "mergetool.automerge=false" is a thing.
+>
+> > Listing "what about this case, it does not break" million times would
+> > not help us here.
+>
+> This is the philosophical problem of induction: a million white swans
+> doesn't prove all swans are white.
+>
+> The only thing we know for certain is that there is no known problem.
+> And that if and when such a problem occurs, we would need to think about
+> the proper solution.
+>
+> > With per-tool enable/disable option, the users do not have to rely
+> > on failure from merge-file anyway.
+>
+> They don't have to rely on that failure, they can just turn off
+> mergetool.automerge.
+>
+>
+> But fine. Let's the perfect be the enemy of the good. That seems wise.
 
-When using the command
 
-  git log --patch --name-status
+FWIW I'm in favor of having per-tool configuration precisely for
+custom mergetools that do things with custom file formats and benefit
+from having all of LOCAL REMOTE and BASE.
 
-It seems the name-status flag somehow overrides the patch flag, by which I =
-mean
-that I get the same output as simply running
+I don't have to imagine these use cases, they are very real. No survey
+can be exhaustive so being flexible and allowing for a mixed tool
+ecosystem is the right choice.
 
-  git log --name-status
+This design choice is also in alignment with the general
+mergetool/difftool per-tool configuration paradigm.  If we didn't
+support per-tool, then it would be inconsistent.
+-- 
+David
 
-It would be nice for the combination of these two flags to work, as it woul=
-d
-allow one to view both a summary of changed files as well as the changes
-themselves, at the same time.
-
-Happy holidays,
-=C3=89rico
+(sorry, posting from gmail's web interface so this probably won't hit
+the public lists, but I probably won't reply beyond this email stating
+my preference)
