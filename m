@@ -8,63 +8,63 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0194FC433E0
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 18:09:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8808C433DB
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 18:10:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A60B722D08
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 18:09:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B92B622D08
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 18:10:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726480AbgLUSJQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Dec 2020 13:09:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49446 "EHLO
+        id S1725898AbgLUSJy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Dec 2020 13:09:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726336AbgLUSJP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Dec 2020 13:09:15 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05110C0613D6
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 10:08:35 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id u19so10470443edx.2
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 10:08:34 -0800 (PST)
+        with ESMTP id S1725878AbgLUSJx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Dec 2020 13:09:53 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC42EC0613D3
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 10:09:12 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id o17so25881645lfg.4
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 10:09:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=rCg+5kbzmz51UX6bsWImblE4lls6ZuhM0R+PAqA8Wl8=;
-        b=X2/+hNUE2K8wLHWAzQCuuZK1pX7EG4uAjDRmC4M4VgVbfhAYO4qQCKwAIXiHSEFIJh
-         QUKeij3Py9pKWY29ahD7ZbO5EaAZzE63HZYKZWwUEqvjVv1setoghs3CDdrKLITcs6GT
-         rTad8uEXpJ6yvue52qu6igCqZ+1CbjqqzNRfC/w2UnCkGLnfI4csSNKpY4AQjt1ZZF+b
-         nbzTNRfF1w/dPVcAGD25ya37K4BEGLMthx8WwQykt8/CdsdGgjbyv9PzLDYqQHJCjuPg
-         LW69c2I7uOjkGKaePe2Rh1WwZxqLhkr6ldDB2a40UIJ9T6wmKAkc5oWJfjniCk9XODKp
-         A/Dw==
+        bh=CQyNXsn+HkrFHz92ETGJmgSUu0rpCl53hUo7mEoQf+s=;
+        b=m32Ex0OUuP2ElyPbKbLVsddoaNqOxWloINbXMiHPTaUSEoBYCIE9SwGrJwfpJ0OGo2
+         rEXo/64+yngQ9BQciovwxpdKRkl2/FtbHVi7O3w4yyxy0eIyZbOIeb6Nuq1X8ZCsxmjh
+         Vhz4wxDw5i2jpBMw0m7l5YAnIl8m0C/0hlm7fehTWpqXvsETKeq+CDM470hzPWhqpUVl
+         9LhNWU2ABOk8DEEp3ZwkR0DMNLROZ7iB+pIb00gb76ElsoiEIfI+EuEuCLMYNZ2WEzUL
+         bik6BFwhnvwADPMeoZnF/nUjUcz46pRgTfjiyHLOrW8eeXDm1yhiI5JC1/m+B98gHfEQ
+         vuhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=rCg+5kbzmz51UX6bsWImblE4lls6ZuhM0R+PAqA8Wl8=;
-        b=jcUxZfu9U2uae7ceabDfZ0uUpQqxWuKVU1MCi0OXXgEoG6cfkzCbmNGZRmIjuEcD1Y
-         7ZhrB1LtmY2rV1Bs5eYJg/w8EV2e6tfHYQDj3m3zwX+lzVTeBeHAEmSMDS5CvIUXjX2F
-         8CjYorJWPgX2/sqRO1NzEfynCyFEPtQpXVcsNYo4sCYiNV9mRQ2efxps255bsJIakZ3d
-         wnDA9i9d832wZk18ekq2sVisKVnaQ9VVROJ1vR58yT9zpKjkHuTQS4EzGXo3gzva+iAH
-         t6lXsBpiABhqwFSHm9Y7Uy+epAVyAocivKHBU29cPs16XzLx8nbgj/soSAWhdIMAV36a
-         +GlQ==
-X-Gm-Message-State: AOAM532tTrhXK/hpIESFCfrZpzLJGMo7HdsxznUWDdRdTGnBV8b+2Q8E
-        SttaGiFfhGHmd6hQ1ML3UVCaNvLiMRA=
-X-Google-Smtp-Source: ABdhPJx9zK6Gu6cEjBVnb06+d7hdiL0pLKmw4aCwcV3ShwTy78p39gPD2V7AtgsQ2Rn9Ghmn7Dsl5w==
-X-Received: by 2002:a2e:98ca:: with SMTP id s10mr7192119ljj.417.1608564054253;
-        Mon, 21 Dec 2020 07:20:54 -0800 (PST)
+        bh=CQyNXsn+HkrFHz92ETGJmgSUu0rpCl53hUo7mEoQf+s=;
+        b=ZDlCtZfP3CtTz8GEQiWeSpKJBx8IKUIezODsS/ebxy52PJW9K2bPp4r5nyxthmU9xr
+         RgepgsqTtf4dLRbwDbGOrBFi7iDxx+TYLiryUCRjI2NFynUDaaz/qWpiceglR6qcJvNS
+         CxnNGEC0CUy+61R4eBi1VhzEe6MEAr4pzAzxlULDha6Ak1Xq233UrAH+ycvTZeXZpz79
+         lhRvI6dAGhVmyHZMqlU6LzOIABOkiXAYFDPrFOjpwVHxc2JTGpWn4MIvTgyw2lQ2RA7s
+         Ad0J1wzz5ypuIxKEmNIvhgjVJmLhi4EXEV0ju7p8Bpt0rSZ50K4pbnMk2+0VAyg7PK3b
+         /L2g==
+X-Gm-Message-State: AOAM533qxj2ZJ4e3yjTUlkSjQKrgM53jlc/uF2eiCOnoXq3MS1BAgkXd
+        IYQYHDzpfuqaFk/P+Ce+tdmjilc5NhA=
+X-Google-Smtp-Source: ABdhPJyBbZmwQ2q+ToYRKbSrrSnjvGiAKc8JeJxHTVB+Xr0ogQcjy390HcdUQeBqIFg6QPlPRDg5XQ==
+X-Received: by 2002:a2e:b006:: with SMTP id y6mr7426051ljk.366.1608564060714;
+        Mon, 21 Dec 2020 07:21:00 -0800 (PST)
 Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id c5sm2220085ljj.67.2020.12.21.07.20.53
+        by smtp.gmail.com with ESMTPSA id c5sm2220085ljj.67.2020.12.21.07.20.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Dec 2020 07:20:53 -0800 (PST)
+        Mon, 21 Dec 2020 07:21:00 -0800 (PST)
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
         Elijah Newren <newren@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
         git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH v3 18/32] diff-merges: split 'ignore_merges' field
-Date:   Mon, 21 Dec 2020 18:19:46 +0300
-Message-Id: <20201221152000.13134-19-sorganov@gmail.com>
+Subject: [PATCH v3 24/32] diff-merges: do not imply -p for new options
+Date:   Mon, 21 Dec 2020 18:19:52 +0300
+Message-Id: <20201221152000.13134-25-sorganov@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20201221152000.13134-1-sorganov@gmail.com>
 References: <20201101193330.24775-1-sorganov@gmail.com>
@@ -75,153 +75,89 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'ignore_merges' was 3-way field that served two distinct purposes that
-we now assign to 2 new independent flags: 'separate_merges', and
-'explicit_diff_merges'.
+Add 'combined_imply_patch' field and set it only for old --cc/-c
+options, then imply -p if this flag is set instead of implying -p
+whenever 'combined_merge' flag is set.
 
-'separate_merges' tells that we need to output diff format containing
-separate diff for every parent (as opposed to 'combine_merges').
+We don't want new --diff-merge options to imply -p, to make it
+possible to enable output of diffs for merges independently from
+non-merge commits. At the same time we want to preserve behavior of
+old --c/-c/-m options and their interactions with --first-parent, to
+stay backward-compatible.
 
-'explicit_diff_merges' tells that at least one of diff-merges options
-has been explicitly specified on the command line, so no defaults
-should apply.
+This patch is first step in this direction: it separates old "--cc/-c
+imply -p" logic from the rest of the options.
 
 Signed-off-by: Sergey Organov <sorganov@gmail.com>
 ---
- diff-merges.c | 31 +++++++++++++------------------
- log-tree.c    | 15 ++++++++-------
- revision.h    |  3 ++-
- 3 files changed, 23 insertions(+), 26 deletions(-)
+ diff-merges.c | 20 ++++++++++++--------
+ revision.h    |  1 +
+ 2 files changed, 13 insertions(+), 8 deletions(-)
 
 diff --git a/diff-merges.c b/diff-merges.c
-index 047bf81e6777..eff54cca8287 100644
+index 4d22da179577..6d48ac5ab93d 100644
 --- a/diff-merges.c
 +++ b/diff-merges.c
-@@ -4,7 +4,7 @@
- 
- static void suppress(struct rev_info *revs)
- {
--	revs->ignore_merges = 1;
-+	revs->separate_merges = 0;
- 	revs->first_parent_merges = 0;
+@@ -9,6 +9,7 @@ static void suppress(struct rev_info *revs)
  	revs->combine_merges = 0;
  	revs->dense_combined_merges = 0;
-@@ -23,7 +23,6 @@ static void set_dense_combined(struct rev_info *revs)
- 
- void diff_merges_init_revs(struct rev_info *revs)
- {
--	revs->ignore_merges = -1;
+ 	revs->combined_all_paths = 0;
++	revs->combined_imply_patch = 0;
  }
  
- int diff_merges_parse_opts(struct rev_info *revs, const char **argv)
-@@ -39,7 +38,7 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv)
- 		 * family of commands, it means "show full diff for merges". Set
- 		 * both fields appropriately.
- 		 */
--		revs->ignore_merges = 0;
-+		revs->separate_merges = 1;
- 		revs->match_missing = 1;
- 	} else if (!strcmp(arg, "-c")) {
- 		revs->dense_combined_merges = 0;
-@@ -57,8 +56,9 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv)
- 			die(_("unknown value for --diff-merges: %s"), optarg);
- 		}
- 	} else
--		argcount = 0;
-+		return 0;
+ static void set_separate(struct rev_info *revs)
+@@ -74,19 +75,21 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv)
+ 	const char *optarg;
+ 	const char *arg = argv[0];
  
-+	revs->explicit_diff_merges = 1;
- 	return argcount;
- }
+-	if (!strcmp(arg, "-m"))
++	if (!strcmp(arg, "-m")) {
+ 		set_m(revs);
+-	else if (!strcmp(arg, "-c"))
++	} else if (!strcmp(arg, "-c")) {
+ 		set_combined(revs);
+-	else if (!strcmp(arg, "--cc"))
++		revs->combined_imply_patch = 1;
++	} else if (!strcmp(arg, "--cc")) {
+ 		set_dense_combined(revs);
+-	else if (!strcmp(arg, "--no-diff-merges"))
++		revs->combined_imply_patch = 1;
++	} else if (!strcmp(arg, "--no-diff-merges")) {
+ 		suppress(revs);
+-	else if (!strcmp(arg, "--combined-all-paths"))
++	} else if (!strcmp(arg, "--combined-all-paths")) {
+ 		revs->combined_all_paths = 1;
+-	else if ((argcount = parse_long_opt("diff-merges", argv, &optarg)))
++	} else if ((argcount = parse_long_opt("diff-merges", argv, &optarg))) {
+ 		set_diff_merges(revs, optarg);
+-	else
++	} else
+ 		return 0;
  
-@@ -69,21 +69,16 @@ void diff_merges_suppress(struct rev_info *revs)
- 
- void diff_merges_default_to_first_parent(struct rev_info *revs)
- {
--	if (revs->ignore_merges < 0)		/* No -m */
--		revs->ignore_merges = 0;
--	if (!revs->combine_merges)		/* No -c/--cc" */
-+	if (!revs->explicit_diff_merges)
-+		revs->separate_merges = 1;
-+	if (revs->separate_merges)
- 		revs->first_parent_merges = 1;
- }
- 
- void diff_merges_default_to_dense_combined(struct rev_info *revs)
- {
--	if (revs->ignore_merges < 0) {		/* No -m */
--		revs->ignore_merges = 0;
--		if (!revs->combine_merges) {	/* No -c/--cc" */
--			revs->combine_merges = 1;
--			revs->dense_combined_merges = 1;
--		}
--	}
-+	if (!revs->explicit_diff_merges)
-+		set_dense_combined(revs);
- }
- 
- void diff_merges_set_dense_combined_if_unset(struct rev_info *revs)
-@@ -94,10 +89,10 @@ void diff_merges_set_dense_combined_if_unset(struct rev_info *revs)
- 
- void diff_merges_setup_revs(struct rev_info *revs)
- {
--	if (revs->combine_merges && revs->ignore_merges < 0)
--		revs->ignore_merges = 0;
--	if (revs->ignore_merges < 0)
--		revs->ignore_merges = 1;
-+	if (revs->combine_merges == 0)
-+		revs->dense_combined_merges = 0;
-+	if (revs->separate_merges == 0)
-+		revs->first_parent_merges = 0;
+ 	revs->explicit_diff_merges = 1;
+@@ -126,8 +129,9 @@ void diff_merges_setup_revs(struct rev_info *revs)
+ 		revs->first_parent_merges = 0;
  	if (revs->combined_all_paths && !revs->combine_merges)
  		die("--combined-all-paths makes no sense without -c or --cc");
- 	if (revs->combine_merges) {
-diff --git a/log-tree.c b/log-tree.c
-index 3fdc0fc64bfb..f9385b1dae6f 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -918,14 +918,15 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
- 
- 	/* More than one parent? */
- 	if (parents->next) {
--		if (opt->ignore_merges)
--			return 0;
--		else if (opt->combine_merges)
-+		if (opt->combine_merges)
- 			return do_diff_combined(opt, commit);
--		else if (!opt->first_parent_merges) {
--			/* If we show multiple diffs, show the parent info */
--			log->parent = parents->item;
--		}
-+		if (opt->separate_merges) {
-+			if (!opt->first_parent_merges) {
-+				/* Show parent info for multiple diffs */
-+				log->parent = parents->item;
-+			}
-+		} else
-+			return 0;
- 	}
- 
- 	showed_log = 0;
+-	if (revs->combine_merges) {
++	if (revs->combine_merges)
+ 		revs->diff = 1;
++	if (revs->combined_imply_patch) {
+ 		/* Turn --cc/-c into -p --cc/-c when -p was not given */
+ 		if (!revs->diffopt.output_format)
+ 			revs->diffopt.output_format = DIFF_FORMAT_PATCH;
 diff --git a/revision.h b/revision.h
-index ba2aef79215e..fcc532c873d1 100644
+index dcfa14454a55..bfbae526ad6e 100644
 --- a/revision.h
 +++ b/revision.h
-@@ -191,12 +191,13 @@ struct rev_info {
- 			match_missing:1,
- 			no_commit_id:1,
- 			verbose_header:1,
-+			explicit_diff_merges: 1,
-+			separate_merges: 1,
+@@ -197,6 +197,7 @@ struct rev_info {
+ 			separate_merges: 1,
  			combine_merges:1,
  			combined_all_paths:1,
++			combined_imply_patch:1,
  			dense_combined_merges:1,
- 			first_parent_merges:1,
- 			always_show_header:1;
--	int             ignore_merges:2;
+ 			first_parent_merges:1;
  
- 	/* Format info */
- 	int		show_notes;
 -- 
 2.25.1
 
