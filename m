@@ -2,153 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20630C4332D
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 18:01:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4586BC433E0
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 18:02:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DAC2522CA1
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 18:01:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 17271230FC
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 18:02:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726070AbgLUSBS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Dec 2020 13:01:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48152 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726010AbgLUSBS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Dec 2020 13:01:18 -0500
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12855C061793
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 10:00:38 -0800 (PST)
-Received: by mail-ej1-x634.google.com with SMTP id qw4so14619911ejb.12
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 10:00:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=eUK7HQQtb6M9Y8IMrQ8BaFwNOI4UclqRgx2ySDNUJmo=;
-        b=nF4WOwHypqktJY0Dq7hpV93ZotwWHqWUZaNyxKEj+cd/OQOWY0FL5jxwUydIrFo+DE
-         X1izt3JMyeCIx9BI8n8oSAEEigo0PHiqkR0VvjwVHkp9JjVznikFW/h8ibF0PNNAxpN0
-         wqwOj1ycQhLFM6CCD/esyjToXCa5RbdYZyKVgFFsLAkObRIKDKyfJMgQ0KWJ3lot/cs8
-         1tJGCZN4fQuvw4FDzz08LdTkmntBfvGIR+5V/gZCP3xAJFCkk7NdvGvFHeHY7rfu+A6U
-         m/0evHE1UtVwIrProHGWfdh/UB+KqkdfiaBGCpq9ZlFY6Wvzi34P3ARS6on6mWUXeSn2
-         X//g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=eUK7HQQtb6M9Y8IMrQ8BaFwNOI4UclqRgx2ySDNUJmo=;
-        b=JIvpVVYF1HZPSoIFe/XKESJUGxjwV8ZvjgbSVKij7Np/7LdXLOwH4tmIis2LFbag0/
-         Gr5q+SYtAyQuEibWdhwxrEhS98Juojr0mBMQYltkX2HuJbhK0Isx8D1/Irtcl4CFL5YJ
-         62Olk16T5Cahu23ot97IqmNvob0HqUIWDQq49/gp33sd/313sGQI6uRqv//Vr4r7k0sz
-         xfbT6X24ZWuTu4zYc3Xk93y3soGE8TmoyXOvpWi4R2w7LyT1EY6S0JBIcDE+uPKrgwG8
-         HDb8uOq6QRJsKZu3gmoLlCuFKEYSmyvidiELDdE7JqkomlruCQyskHlOZ0qh9mzfkILH
-         16CQ==
-X-Gm-Message-State: AOAM531UMcn64lvs8nEaLEvnY1EDFfR2uV5eesgIKaqHEBbFkhM+4mKM
-        pOXo01rXFXLGIr0zgmJpVRiF45nKRGc=
-X-Google-Smtp-Source: ABdhPJxDMwGcVTfzSlzZHRMSHQWCoH/okQVNw/0VKVOOY6HgdVKD3F2GYMKLFieBQteoYS3rh9MwTg==
-X-Received: by 2002:a2e:9757:: with SMTP id f23mr7538443ljj.55.1608564043770;
-        Mon, 21 Dec 2020 07:20:43 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id c5sm2220085ljj.67.2020.12.21.07.20.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Dec 2020 07:20:42 -0800 (PST)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
-        Elijah Newren <newren@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH v3 09/32] diff-merges: re-arrange functions to match the order they are called in
-Date:   Mon, 21 Dec 2020 18:19:37 +0300
-Message-Id: <20201221152000.13134-10-sorganov@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20201221152000.13134-1-sorganov@gmail.com>
-References: <20201101193330.24775-1-sorganov@gmail.com>
- <20201221152000.13134-1-sorganov@gmail.com>
+        id S1725844AbgLUSCc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Dec 2020 13:02:32 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52865 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725785AbgLUSCb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Dec 2020 13:02:31 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5D635AE470;
+        Mon, 21 Dec 2020 13:01:49 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=g9LtDTeWH6Z6QHDKVYyuwQB6OyA=; b=etYzeo
+        WuYLYFozmjYV3lcor3MIVVby//DPfI+g+ZoH33fTdxJ+MYbSjnvyAracvcpuguPO
+        oCxhaCKET52fLGNEwyD8hD4DqIYl5+MUMXRgVcnmiDZBuagrVTrDC5/0xLAwN8Cp
+        WhJxtZTxnpALud32hoqo1Uln7DeexQSK2ZLAs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=imrqCRD1WeBkuIEoJpSeh9Lg8wna0O6V
+        VU2LxmSyIyGdOeWL8e7FgZv7m6EZg2jXTUTORYkYm9W9seoVZm6TEGUV1+/1Aemx
+        j+w3kwi0yym3Qo5DGj2keIfcXy7mtKKfRwxSL/kQ+TaMp3YKKGBWQ5+7NIk+HeHq
+        fBaNqfe3GrA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 54952AE46F;
+        Mon, 21 Dec 2020 13:01:49 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D6B9AAE46E;
+        Mon, 21 Dec 2020 13:01:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Dec 2020, #03; Fri, 18)
+References: <xmqq7dpeqrz4.fsf@gitster.c.googlers.com>
+        <CAFQ2z_MtpPNSpL9=OoyPfDRfkFxnCO19qBDnY9bnZiEEGtuMsQ@mail.gmail.com>
+Date:   Mon, 21 Dec 2020 10:01:47 -0800
+In-Reply-To: <CAFQ2z_MtpPNSpL9=OoyPfDRfkFxnCO19qBDnY9bnZiEEGtuMsQ@mail.gmail.com>
+        (Han-Wen Nienhuys's message of "Mon, 21 Dec 2020 13:40:03 +0100")
+Message-ID: <xmqqim8vm41g.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 98A49C6C-43B6-11EB-8571-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For clarity, define public functions in the order they are called, to
-make logic inter-dependencies easier to grok.
+Han-Wen Nienhuys <hanwen@google.com> writes:
 
-Signed-off-by: Sergey Organov <sorganov@gmail.com>
----
- diff-merges.c | 24 ++++++++++++++----------
- diff-merges.h |  7 +++----
- 2 files changed, 17 insertions(+), 14 deletions(-)
+> On Sat, Dec 19, 2020 at 6:36 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> * hn/reftable (2020-12-09) 15 commits
+>>  . Add "test-tool dump-reftable" command.
+>>  . git-prompt: prepare for reftable refs backend
+>>  . Reftable support for git-core
+>>  . reftable: rest of library
+>>  . reftable: reftable file level tests
+>>  . reftable: read reftable files
+>>  . reftable: write reftable files
+>>  . reftable: a generic binary tree implementation
+>>  . reftable: reading/writing blocks
+>>  . reftable: (de)serialization for the polymorphic record type.
+>>  . reftable: add blocksource, an abstraction for random access reads
+>>  . reftable: utility functions
+>>  . reftable: add error related functionality
+>>  . reftable: add LICENSE
+>>  . init-db: set the_repository->hash_algo early on
+>>
+>>  The "reftable" backend for the refs API.
+>>
+>>  Ejected for now, as it has been breaking the tip of 'seen' for too
+>>  long.
+>
+>
+> Can you provide more information here? The PR at
+> https://github.com/git/git/pull/847 passes all tests (except for the
+> VSBuild, with errors that seem unrelated.)
 
-diff --git a/diff-merges.c b/diff-merges.c
-index 76c804579758..8325ab880166 100644
---- a/diff-merges.c
-+++ b/diff-merges.c
-@@ -2,6 +2,10 @@
- 
- #include "revision.h"
- 
-+/*
-+ * Public functions. They are in the order they are called.
-+ */
-+
- void diff_merges_init_revs(struct rev_info *revs)
- {
- 	revs->ignore_merges = -1;
-@@ -46,16 +50,6 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv)
- 	return argcount;
- }
- 
--void diff_merges_setup_revs(struct rev_info *revs)
--{
--	if (revs->combine_merges && revs->ignore_merges < 0)
--		revs->ignore_merges = 0;
--	if (revs->ignore_merges < 0)
--		revs->ignore_merges = 1;
--	if (revs->combined_all_paths && !revs->combine_merges)
--		die("--combined-all-paths makes no sense without -c or --cc");
--}
--
- void diff_merges_default_to_first_parent(struct rev_info *revs)
- {
- 	if (revs->ignore_merges < 0)		/* No -m */
-@@ -72,3 +66,13 @@ void diff_merges_default_to_dense_combined(struct rev_info *revs)
- 		}
- 	}
- }
-+
-+void diff_merges_setup_revs(struct rev_info *revs)
-+{
-+	if (revs->combine_merges && revs->ignore_merges < 0)
-+		revs->ignore_merges = 0;
-+	if (revs->ignore_merges < 0)
-+		revs->ignore_merges = 1;
-+	if (revs->combined_all_paths && !revs->combine_merges)
-+		die("--combined-all-paths makes no sense without -c or --cc");
-+}
-diff --git a/diff-merges.h b/diff-merges.h
-index 18861dc5480e..243ef915c4cd 100644
---- a/diff-merges.h
-+++ b/diff-merges.h
-@@ -13,11 +13,10 @@ void diff_merges_init_revs(struct rev_info *revs);
- 
- int diff_merges_parse_opts(struct rev_info *revs, const char **argv);
- 
--void diff_merges_setup_revs(struct rev_info *revs);
--
--void diff_merges_default_to_dense_combined(struct rev_info *revs);
--
- void diff_merges_default_to_first_parent(struct rev_info *revs);
- 
-+void diff_merges_default_to_dense_combined(struct rev_info *revs);
-+
-+void diff_merges_setup_revs(struct rev_info *revs);
- 
- #endif
--- 
-2.25.1
+Sorry, but it has been a long time that I have no more detail than
+the above handy.  Older CI history might know more, but I have no
+time to dig that right now (and I'd be just as efficient as you
+would for doing such things).
 
+I can try including it in one of the today's pushout of 'seen' and
+see what breaks, which would be the easiest ;-)
+
+Thanks for pinging.
