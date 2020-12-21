@@ -2,99 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.6 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC9CEC433E0
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 13:17:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03B68C433E0
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 15:02:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 768F622B43
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 13:17:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C6C7522BEA
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 15:02:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726161AbgLUNRF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Dec 2020 08:17:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60960 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725891AbgLUNRE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Dec 2020 08:17:04 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A90FCC0613D3
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 05:16:24 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id b5so6458547pjk.2
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 05:16:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=9yONtl0m8GdD2M9S0AlXkXnRCsZMW3lAVdFarFJKSaU=;
-        b=dIfcIYyJFAWMWqWFU3mGYsJLsRLhu8AymPFR1Lx3Pi+jfUInJeysY7rm8WToigHgsc
-         aTDYJQV8LaYU56/VRn+/bG+V8j3PmWqKirkvmru0tBwLZnLwWLJA/uGcsBLLuD329cDK
-         VI4oh4gpdZj9ayC6Tu1PqSM1YsfIfb1PgX8m7/ImIPP40ueDnEXmDMebG0cYH9DIP4Ud
-         RxsHbncqHK2CSCe59emY3xa8UEUMsvSYXi1FOZD9tYepx1e89KyJsIsVaGtuk83+HPml
-         5uWATyzdm8YFeCgDT5JAiYdYxI4r/siws2ZHdd6j3Vm29NYqxeFNwYPH0dav/25ooCg1
-         1x5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=9yONtl0m8GdD2M9S0AlXkXnRCsZMW3lAVdFarFJKSaU=;
-        b=ZzqhOesXliPt0PlGNwRZZduQrSfcTna9/IEahGz69YRCNRcFQZ9QI/IQz5qZPqSK8T
-         2tueOItFZD4cKzsUuzUoi9HwHEgqIxUsbsrWk9dRifgy8/Mwr9C6JN8T0tkD5o/XGapr
-         U091hrOBzUjfkviIh9Ibzq9b3cildyWZnVvkWvPA9UHm1CYst+ZJXpgyAUgCkq/7dkct
-         Y/XVFC/p3D2pwZrsvpJbfqgjTFFpe0cW6994bVWlJITLYDVWmjkN0ef/IOPiIxvnyBXy
-         seV/Ea2MqgLB1wzNXbQK08WKof7vMkDWAfmAEw+c4lLqDJ63ro+ZfSBDyQUGVJ0uESJ4
-         Jptg==
-X-Gm-Message-State: AOAM532l60ErZmb45uu4+jVqVhYzO3XqpdKsUkSX7Z7oLCbMAWs0amJW
-        t5QjnfmR81097tLQXZfFvnk=
-X-Google-Smtp-Source: ABdhPJy5G7Nq46ZNH20y0K2S5NUh79aYEkG26EJm1IeaqNm+Ka5SqxlwLP49uf+hL07LAw9ol9kqcg==
-X-Received: by 2002:a17:902:ee52:b029:da:4dee:1a54 with SMTP id 18-20020a170902ee52b02900da4dee1a54mr16388598plo.29.1608556584083;
-        Mon, 21 Dec 2020 05:16:24 -0800 (PST)
-Received: from localhost ([2402:800:63a8:c764:b10d:95e8:e1a5:df80])
-        by smtp.gmail.com with ESMTPSA id p15sm17188325pgi.40.2020.12.21.05.16.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Dec 2020 05:16:23 -0800 (PST)
-Date:   Mon, 21 Dec 2020 20:16:20 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     =?utf-8?B?w4lyaWNv?= Rolim <erico.erc@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] In git-log, --name-status flag overrides the --patch flag
-Message-ID: <X+CgJCj7/tadldUg@danh.dev>
-References: <CAFDeuWOit1vKUT38Uvbj2wAsb5CBo59p2h=SE6FGNb6XGOGG-w@mail.gmail.com>
+        id S1725875AbgLUPCh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Dec 2020 10:02:37 -0500
+Received: from sebres.de ([5.181.51.239]:60380 "EHLO sebres.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725820AbgLUPCg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Dec 2020 10:02:36 -0500
+X-Greylist: delayed 1069 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Dec 2020 10:02:35 EST
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=sebres.de;
+         s=dkim; h=Message-ID:Reply-To:From:Date:Content-Transfer-Encoding:
+        Content-Type:MIME-Version:Subject:To:Sender:Cc:Content-ID:Content-Description
+        :Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=VY53x/1b/x+P9enMcH6dZPon7FgDRPC8tTWeMPNVBRk=; b=S2pPS/BVCumY47aGcKgnJTI8xl
+        1++5sk+S2DH3CTpE8rfgqbddTULtYDoJIK6uoor7u65n+1LKshHCWTOMUmy1x7eHIiVu+6ekh7qY/
+        NjkEhw4evrwOSUc4BAn9nndKZSpL+Faaz9E01O+PNb3OV2x9p3ttEgo68sMp5aoNQZIb0JPT2uUFG
+        jQ5OlAfpW+N/Qe3mcjFnZsXNPL92dH7jb6OlWHi0B3L2riL9bA2lR4C2eeouLa1sx8r8mksv5Tikj
+        ED8yMXIcvsD1J4JxG0n5j2DaWvrCJWS7P3Yl1yj7VfNAxm4l+iHOJef/gQ/1GQ9dYE/2bioBAQiBi
+        dcHEpOvA==;
+To:     git@vger.kernel.org
+Subject: git diff --ignore-space-change -- ignore whitespace prefers  unmodified next line to modified one in patch
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFDeuWOit1vKUT38Uvbj2wAsb5CBo59p2h=SE6FGNb6XGOGG-w@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 21 Dec 2020 15:43:59 +0100
+From:   "Dipl. Ing. Sergey Brester" <serg.brester@sebres.de>
+Reply-To: serg.brester@gmx.net
+Mail-Reply-To: serg.brester@gmx.net
+Message-ID: <8a6a45cbda00ae1f0f679daf62fba27c@sebres.de>
+X-Sender: serg.brester@sebres.de
+User-Agent: Webmail/1.0.3
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-12-20 01:23:05-0300, Érico Rolim <erico.erc@gmail.com> wrote:
-> Hi!
-> 
-> When using the command
-> 
->   git log --patch --name-status
-> 
-> It seems the name-status flag somehow overrides the patch flag, by which I mean
-> that I get the same output as simply running
-> 
->   git log --name-status
-> 
-> It would be nice for the combination of these two flags to work, as it would
-> allow one to view both a summary of changed files as well as the changes
-> themselves, at the same time.
+Steps to reproduce the issue:
 
-I'm not arguing if this your expectation is make sense or not,
-however, the Documentation says something about "Show only"...
+  1. create two simple C files and diff both ignoring whitespaces:
+```
+printf "if (some_var1) {\n  do {\n    some-code\n  } while (1);\n}\n" > 
+a.c
+printf "if (some_var1) {\n  do {\n    if (some_var2) {\n      
+some-code\n    }\n  } while (1);\n}\n" > b.c
+git diff --ignore-space-change --no-index a.c b.c
+```
+     which would produce fully correct resulting patch:
+```
+diff --git a/a.c b/b.c
+--- a/a.c
++++ b/b.c
+@@ -1,5 +1,7 @@
+  if (some_var1) {
+    do {
++    if (some_var2) {
+        some-code
++    }
+    } while (1);
+  }
+```
+     but this behavior will change if line 5 would be equal line 6 
+(containing only brace ...).
 
-Anyway, --patch-with-raw provides more information than
---patch --name-status combined.
-I guess it's too much information?
+  2. now we'll modify that a bit (e. g. use while instead of do, to make 
+the lines more similar
+     (containing only braces):
+```
+printf "if (some_var1) {\n  while (1) {\n    some-code\n  }\n}\n" > a.c
+printf "if (some_var1) {\n  while (1) {\n    if (some_var2) {\n      
+some-code\n    }\n  }\n}\n" > b.c
+git diff --ignore-space-change --no-index a.c b.c
+```
+     which then would produce this result:
+```
+diff --git a/a.c b/b.c
+--- a/a.c
++++ b/b.c
+@@ -1,5 +1,7 @@
+  if (some_var1) {
+    while (1) {
++    if (some_var2) {
+        some-code
+      }
++  }
+  }
+```
+     As one can see, a line 6 instead of line 5 is marked as new (thereby 
+line 6 was **completely unmodified**).
+     In my opinion correct would be this variant (also similar patch of 
+test in step 1):
+```
+diff --git a/a.c b/b.c
+--- a/a.c
++++ b/b.c
+@@ -1,5 +1,7 @@
+  if (some_var1) {
+    while (1) {
++    if (some_var2) {
+        some-code
++    }
+    }
+  }
+```
+
+I understand that using --ignore-space-change both lines are quasi 
+"equal", and then first "change"
+will be noticed as a new created line, but from point of view of the 
+developer (and common sense)
+it is very strange either, especially if one considers that whole code 
+starting from line 6 is totally unmodified.
+
+This causes that on some much complex nested blocks, this simple "first 
+wins" logic (without a simple look-ahead),
+confuses still more (because affects several unmodified blocks, braces 
+etc), especially if some
+conflicts should be resolved or a 3-way merge/review takes place.
+
+This makes the usage of option "--ignore-space-change" pretty pointless, 
+because the diff of larger nested blocks
+is often error prune on braces, brackets etc, so the review is often 
+needless complicated.
+
+
+[System Info]
+git version:
+git version 2.28.0.windows.1
+cpu: x86_64
+built from commit: 77982caf269b7ee713a76da2bcf260c34d3bf7a7
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Windows 10.0 18363
+compiler info: gnuc: 10.2
+libc info: no libc information available
+$SHELL (typically, interactive shell): <unset>
 
 -- 
-Danh
+
+Regards,
+Sergey Brester
+
