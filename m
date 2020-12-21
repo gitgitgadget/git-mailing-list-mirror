@@ -5,315 +5,137 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72C0AC433DB
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 18:29:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54CDAC433E6
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 18:31:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4119322D08
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 18:29:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2024822D49
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 18:31:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726670AbgLUS3S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Dec 2020 13:29:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52698 "EHLO
+        id S1726867AbgLUSbT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Dec 2020 13:31:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726599AbgLUS3R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Dec 2020 13:29:17 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DEDEC061282
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 10:28:37 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id x22so10754106wmc.5
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 10:28:37 -0800 (PST)
+        with ESMTP id S1726514AbgLUSbT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Dec 2020 13:31:19 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6FCDC061282
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 10:30:38 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id x20so25913092lfe.12
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 10:30:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=rJqhNm87GSjCdCywAYJpS4qIgGDyQgol4K63s9C25jQ=;
-        b=hz/5wd5pGXchAaQBhmLv87KDI4MjpfV/UEQ/ElCdm3tQ0HSSv5+jRpbShmn6/LsCcW
-         WeladbuBF67Ic3a6ND6LJYglcG0RSbnHwWVxLIVr4VwU/lbfvOG2LKhPpC/SzD+bvlmH
-         uHtheV50pEN7aWPLRRlU2hohgbnXdZk8A4whICGc6mfmXgrCRtg1a1WyjegXUJ6/fYsr
-         Fh4UzoACNTjLnN3HnGPuIfC7HT0lTHTfG81JQnLf0gJCLwnvD4iUi8C0mSfsjCVNFpD+
-         m6OTNHtAE0cp7szptq7dXWl7D+vOTMzkow6tX04G//vPycbCn74sPCYkvbBMyP0lJPDX
-         hsGQ==
+        bh=zqcafpKHKxDK3E24G5BLPajTI0iF1/0C2lXgtKLMD60=;
+        b=Dx2OeBIv4Bz9O/3ZV8+A3Z6a8tH9ufhzXi/qxyMpe4uqevSaJX2MbSIclL2t7gpfmG
+         q7k9pi+bgDpJFTGbmfVqHquq7/EhJ6JhW3eTelX6tt3KkweDLg37QBFgRIsFSCUCTMvA
+         bnpsxAK36ILuMP5yStac+8wFGOaU4n/oibSAohAohpc4lSZa4D3YDdX8tQ5DWclLwxIz
+         uJeScIWuTbs8xBdqHZ4PfP3oS3dp825JpP9aASj8Vxv8cZwP9cq7IDDG7XciGMlKh/8T
+         fSTaXl1vuGLVLlWNVgAwVd/Z/8P2xhrDXFv/9JHO+JkkzQvpoAu/BopHLv01MU/H2WKj
+         g+Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=rJqhNm87GSjCdCywAYJpS4qIgGDyQgol4K63s9C25jQ=;
-        b=nvNq+MDuOWSPl4NcJAt0BimHWDnwhs0HZFrjCCTAuOlG6l+ioAyvP+1LJ128kkHFxt
-         0hSJqUvw0K0zRFsNTZ9DIZqJbk27Twh/kJBDSzyRBIkJNHqBj31FQ/vm8/CWaFn1zApb
-         EbvgKfP7T9IJDY53CNBHovtfRI2/ksZyDzydKUO1/xZxUF+pEOYMm+RpAu5/rdtTqx4A
-         w4i3IyJWqesxG+PP63fBvj80WAfDWG7ih2HDulV+5NuJLSDAtpyTmMBzMpPO+Vn91ige
-         ZGOmMEQqx3k0q0QjHtdiWn8BosdR/lcxgbLmygZI6uwK8dMWK4hgQZs4YXGJsuVHBqFQ
-         GxtA==
-X-Gm-Message-State: AOAM532+TlCqKx6L/MYqjQ6KvTno5zfYLyFG5btF9XKTjeUlO2FFEU33
-        ZDkchV7EK0krYGJj0g/zvA4pYS0ea67XLQ==
-X-Google-Smtp-Source: ABdhPJz0yNA/mkH82QxR8A8Nhg7gwq5S4Bz3BvJZa4YjQnnIv3vxGgQpEarkNYOVNOuexlqc8hCNWw==
-X-Received: by 2002:a1c:2155:: with SMTP id h82mr17210194wmh.132.1608568169437;
-        Mon, 21 Dec 2020 08:29:29 -0800 (PST)
-Received: from localhost.localdomain ([81.0.34.85])
-        by smtp.gmail.com with ESMTPSA id w18sm28523532wrn.2.2020.12.21.08.29.28
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Dec 2020 08:29:28 -0800 (PST)
-From:   Miriam Rubio <mirucam@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v2 2/7] bisect--helper: reimplement `bisect_replay` shell function in C
-Date:   Mon, 21 Dec 2020 17:27:38 +0100
-Message-Id: <20201221162743.96056-3-mirucam@gmail.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20201221162743.96056-1-mirucam@gmail.com>
-References: <20201221162743.96056-1-mirucam@gmail.com>
+        bh=zqcafpKHKxDK3E24G5BLPajTI0iF1/0C2lXgtKLMD60=;
+        b=BDZ84ifkSub7gU5bkQiz0gVOv0Gov6m6yDxDLhEPUFLsa1eI/bFHAx0pLgjRUyDEIt
+         zjxPxFVAIGRHnEcoATNwVFCuoF0z2uyQst6Izn0b4qMrMKmFbcjIBNB1wRvNgkeCCul0
+         69Z7lHzDohPMg59faDsOZL7kacwVifEilygzyko8BRm+G0HJFG40gBo4EVVblVw+OKKo
+         wIAZeUQHvcugP7VkUeybfjuCSHiZzOi/43qRJ41YUMy0ujjRUmIjd+RKcs0KqyJvkfmw
+         tDOvISXNA/AE98ZwAjUNK7yc8XiOEeF35QH+PVXrLIqVtMlyEoKZBnkxlTDxK5iEkRQx
+         RGaw==
+X-Gm-Message-State: AOAM531cVtnSvFOsECvIruw65Ok8DR+wcysCqdxBSta0SRtZz8z4bkL8
+        KKPhi3FRaOxqLgCnvxsTfzpLFLg4msg=
+X-Google-Smtp-Source: ABdhPJwQfEJYYwkABv1EA25HbdwecXkai8XMM2hT+Cv3nATn2Xt18HA2SkojTTXqMQ2bgOTVBehmaw==
+X-Received: by 2002:a2e:50b:: with SMTP id 11mr7507022ljf.484.1608564047310;
+        Mon, 21 Dec 2020 07:20:47 -0800 (PST)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id c5sm2220085ljj.67.2020.12.21.07.20.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Dec 2020 07:20:46 -0800 (PST)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>
+Subject: [PATCH v3 12/32] diff-merges: introduce revs->first_parent_merges flag
+Date:   Mon, 21 Dec 2020 18:19:40 +0300
+Message-Id: <20201221152000.13134-13-sorganov@gmail.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20201221152000.13134-1-sorganov@gmail.com>
+References: <20201101193330.24775-1-sorganov@gmail.com>
+ <20201221152000.13134-1-sorganov@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Pranit Bauva <pranit.bauva@gmail.com>
+This new field allows us to separate format of diff for merges from
+'first_parent_only' flag which primary purpose is limiting history
+traversal.
 
-Reimplement the `bisect_replay` shell function in C and also add
-`--bisect-replay` subcommand to `git bisect--helper` to call it from
-git-bisect.sh
+This change further localizes diff format selection logic into the
+diff-merges.c file.
 
-Using `--bisect-replay` subcommand is a temporary measure to port shell
-function to C so as to use the existing test suite.
-
-Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
-Signed-off-by: Miriam Rubio <mirucam@gmail.com>
+Signed-off-by: Sergey Organov <sorganov@gmail.com>
 ---
- builtin/bisect--helper.c | 127 ++++++++++++++++++++++++++++++++++++++-
- git-bisect.sh            |  34 +----------
- 2 files changed, 127 insertions(+), 34 deletions(-)
+ diff-merges.c | 2 ++
+ log-tree.c    | 4 ++--
+ revision.h    | 1 +
+ 3 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 1854377fa6..92c783237d 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -31,6 +31,7 @@ static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --bisect-auto-next"),
- 	N_("git bisect--helper --bisect-state (bad|new) [<rev>]"),
- 	N_("git bisect--helper --bisect-state (good|old) [<rev>...]"),
-+	N_("git bisect--helper --bisect-replay <filename>"),
- 	NULL
- };
- 
-@@ -916,6 +917,121 @@ static enum bisect_error bisect_log(void)
- 	return status ? BISECT_FAILED : BISECT_OK;
- }
- 
-+static int get_next_word(const char *line, int pos, struct strbuf *word)
-+{
-+	int i, len = strlen(line), begin = 0;
-+
-+	strbuf_reset(word);
-+	for (i = pos; i < len; i++) {
-+		if (line[i] == ' ' && begin)
-+			return i + 1;
-+
-+		if (!begin)
-+			begin = 1;
-+		strbuf_addch(word, line[i]);
-+	}
-+
-+	return i;
-+}
-+
-+static int process_line(struct bisect_terms *terms, struct strbuf *line, struct strbuf *word)
-+{
-+	int res = 0;
-+	int pos = 0;
-+
-+	while (pos < line->len) {
-+		pos = get_next_word(line->buf, pos, word);
-+
-+		if (!strcmp(word->buf, "git"))
-+			continue;
-+		else if (!strcmp(word->buf, "git-bisect"))
-+			continue;
-+		else if (!strcmp(word->buf, "bisect"))
-+			continue;
-+		else if (starts_with(word->buf, "#"))
-+			break;
-+
-+		get_terms(terms);
-+		if (check_and_set_terms(terms, word->buf))
-+			return -1;
-+
-+		if (!strcmp(word->buf, "start")) {
-+			struct strvec argv = STRVEC_INIT;
-+			int res;
-+			sq_dequote_to_strvec(line->buf+pos, &argv);
-+			res = bisect_start(terms, argv.v, argv.nr);
-+			strvec_clear(&argv);
-+			if (res)
-+				return -1;
-+			break;
-+		}
-+
-+		if (one_of(word->buf, terms->term_good,
-+			   terms->term_bad, "skip", NULL)) {
-+			if (bisect_write(word->buf, line->buf+pos, terms, 0))
-+				return -1;
-+			break;
-+		}
-+
-+		if (!strcmp(word->buf, "terms")) {
-+			struct strvec argv = STRVEC_INIT;
-+			int res;
-+			sq_dequote_to_strvec(line->buf+pos, &argv);
-+			res = bisect_terms(terms, argv.nr == 1 ? argv.v[0] : NULL);
-+			strvec_clear(&argv);
-+			if (res)
-+				return -1;
-+			break;
-+		}
-+
-+		error(_("Replay file contains rubbish (\"%s\")"),
-+		      word->buf);
-+		res = -1;
-+	}
-+	return res;
-+}
-+
-+static int process_replay_file(FILE *fp, struct bisect_terms *terms)
-+{
-+	struct strbuf line = STRBUF_INIT;
-+	struct strbuf word = STRBUF_INIT;
-+	int res = 0;
-+
-+	while (strbuf_getline(&line, fp) != EOF) {
-+		res = process_line(terms, &line, &word);
-+		if (res)
-+			break;
-+	}
-+
-+	strbuf_release(&line);
-+	strbuf_release(&word);
-+	return res;
-+}
-+
-+static enum bisect_error bisect_replay(struct bisect_terms *terms, const char *filename)
-+{
-+	FILE *fp = NULL;
-+	enum bisect_error res = BISECT_OK;
-+
-+	if (is_empty_or_missing_file(filename))
-+		return error(_("cannot read file '%s' for replaying"), filename);
-+
-+	if (bisect_reset(NULL))
-+		return BISECT_FAILED;
-+
-+	fp = fopen(filename, "r");
-+	if (!fp)
-+		return BISECT_FAILED;
-+
-+	res = process_replay_file(fp, terms);
-+	fclose(fp);
-+
-+	if (res)
-+		return BISECT_FAILED;
-+
-+	return bisect_auto_next(terms, NULL);
-+}
-+
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+diff --git a/diff-merges.c b/diff-merges.c
+index 24f922cf8a0f..fb591a933959 100644
+--- a/diff-merges.c
++++ b/diff-merges.c
+@@ -73,6 +73,8 @@ void diff_merges_default_to_first_parent(struct rev_info *revs)
  {
- 	enum {
-@@ -929,7 +1045,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		BISECT_NEXT,
- 		BISECT_AUTO_NEXT,
- 		BISECT_STATE,
--		BISECT_LOG
-+		BISECT_LOG,
-+		BISECT_REPLAY
- 	} cmdmode = 0;
- 	int res = 0, nolog = 0;
- 	struct option options[] = {
-@@ -953,6 +1070,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("mark the state of ref (or refs)"), BISECT_STATE),
- 		OPT_CMDMODE(0, "bisect-log", &cmdmode,
- 			 N_("output the contents of BISECT_LOG"), BISECT_LOG),
-+		OPT_CMDMODE(0, "bisect-replay", &cmdmode,
-+			 N_("replay the bisection process from the given file"), BISECT_REPLAY),
- 		OPT_BOOL(0, "no-log", &nolog,
- 			 N_("no log for BISECT_WRITE")),
- 		OPT_END()
-@@ -1020,6 +1139,12 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			return error(_("--bisect-log requires 0 arguments"));
- 		res = bisect_log();
- 		break;
-+	case BISECT_REPLAY:
-+		if (argc != 1)
-+			return error(_("no logfile given"));
-+		set_terms(&terms, "bad", "good");
-+		res = bisect_replay(&terms, argv[0]);
-+		break;
- 	default:
- 		BUG("unknown subcommand %d", cmdmode);
- 	}
-diff --git a/git-bisect.sh b/git-bisect.sh
-index c6149846ff..79bcd31bd7 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -77,38 +77,6 @@ bisect_visualize() {
- 	eval '"$@"' --bisect -- $(cat "$GIT_DIR/BISECT_NAMES")
+ 	if (revs->ignore_merges < 0)		/* No -m */
+ 		revs->ignore_merges = 0;
++	if (!revs->combine_merges)		/* No -c/--cc" */
++		revs->first_parent_merges = 1;
  }
  
--bisect_replay () {
--	file="$1"
--	test "$#" -eq 1 || die "$(gettext "No logfile given")"
--	test -r "$file" || die "$(eval_gettext "cannot read \$file for replaying")"
--	git bisect--helper --bisect-reset || exit
--	oIFS="$IFS" IFS="$IFS$(printf '\015')"
--	while read git bisect command rev tail
--	do
--		test "$git $bisect" = "git bisect" || test "$git" = "git-bisect" || continue
--		if test "$git" = "git-bisect"
--		then
--			rev="$command"
--			command="$bisect"
--		fi
--		get_terms
--		git bisect--helper --check-and-set-terms "$command" "$TERM_GOOD" "$TERM_BAD" || exit
--		get_terms
--		case "$command" in
--		start)
--			eval "git bisect--helper --bisect-start $rev $tail" ;;
--		"$TERM_GOOD"|"$TERM_BAD"|skip)
--			git bisect--helper --bisect-write "$command" "$rev" "$TERM_GOOD" "$TERM_BAD" || exit;;
--		terms)
--			git bisect--helper --bisect-terms $rev || exit;;
--		*)
--			die "$(gettext "?? what are you talking about?")" ;;
--		esac
--	done <"$file"
--	IFS="$oIFS"
--	git bisect--helper --bisect-auto-next || exit
--}
--
- bisect_run () {
- 	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD fail || exit
+ void diff_merges_default_to_dense_combined(struct rev_info *revs)
+diff --git a/log-tree.c b/log-tree.c
+index 1927f917ce94..3fdc0fc64bfb 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -922,7 +922,7 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
+ 			return 0;
+ 		else if (opt->combine_merges)
+ 			return do_diff_combined(opt, commit);
+-		else if (!opt->first_parent_only) {
++		else if (!opt->first_parent_merges) {
+ 			/* If we show multiple diffs, show the parent info */
+ 			log->parent = parents->item;
+ 		}
+@@ -941,7 +941,7 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
  
-@@ -203,7 +171,7 @@ case "$#" in
- 	reset)
- 		git bisect--helper --bisect-reset "$@" ;;
- 	replay)
--		bisect_replay "$@" ;;
-+		git bisect--helper --bisect-replay "$@" || exit;;
- 	log)
- 		git bisect--helper --bisect-log || exit;;
- 	run)
+ 		/* Set up the log info for the next parent, if any.. */
+ 		parents = parents->next;
+-		if (!parents || opt->first_parent_only)
++		if (!parents || opt->first_parent_merges)
+ 			break;
+ 		log->parent = parents->item;
+ 		opt->loginfo = log;
+diff --git a/revision.h b/revision.h
+index f6bf860d19e5..ba2aef79215e 100644
+--- a/revision.h
++++ b/revision.h
+@@ -194,6 +194,7 @@ struct rev_info {
+ 			combine_merges:1,
+ 			combined_all_paths:1,
+ 			dense_combined_merges:1,
++			first_parent_merges:1,
+ 			always_show_header:1;
+ 	int             ignore_merges:2;
+ 
 -- 
-2.29.2
+2.25.1
 
