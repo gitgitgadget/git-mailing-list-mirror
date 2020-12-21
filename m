@@ -5,126 +5,176 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00A42C433E9
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 18:13:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFECBC43381
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 18:14:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AEDB7230FC
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 18:13:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9F31C22D49
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 18:14:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726181AbgLUSNU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Dec 2020 13:13:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50114 "EHLO
+        id S1726429AbgLUSOb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Dec 2020 13:14:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726144AbgLUSNU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Dec 2020 13:13:20 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 916B2C061793
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 10:12:39 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id ce23so14700821ejb.8
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 10:12:39 -0800 (PST)
+        with ESMTP id S1726352AbgLUSOa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Dec 2020 13:14:30 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D860FC0611C5
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 10:13:49 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id y17so11999115wrr.10
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 10:13:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TBQfAvQHFoAwnp3CaECXiSS6MZvFWi5N71SL0nb3uxs=;
-        b=HQZuAF7Pb9BHXAULn0A7AbXRQmGx7+HB+7JXZQF+VJFQps7XK5zlWwe19rArtyHklb
-         sxoKdvDhhUzG/NuBrrC+UiqRWS69XmUgu2NkLDmgHTr1ZPsrQad7u/3HP2goL/dlR1fv
-         ZIJtEJ9k/uDK4mVgTLfsuUPI0I/SIj01b1/A3RmqeqylhMWt6Hc5Bvr2tqah6wWThjWv
-         URncfe3w8BbDtouR+YuEy416oC6tTPf5Op3koim/duFiRwOm3qK3MTmR7VlHrL3Bdm7r
-         M1pL+bHZXF9c85yne1LMOKGlsMgzGLywHqDdZfJXgrUOsr+ssCTRXqrmNEX60MeFI+06
-         Lp4Q==
+        bh=1SSxn00D6lEx94ttp23aI5Puw/LoAFasEmLcpM5Su8k=;
+        b=W6gC6Ivc+PX4exDRa+He2CoORIvENH6xVehCOdrIPI7D6JubhMBnq2yaqCuxwOjSur
+         h310059ZHjq4GdYTSRrWaglH5BqSW567FV2N3BWIleggY4n5FywUpOW5g2q+5YTjZtLu
+         spXX8oWPNUAu9eLoMALdj89VOurk6/cOFlV+V/1ectETOJVrfSFR3GubQkw7grbU4qaZ
+         64p30ESZEu4jntpndrcdbCthOFXxj7YGBwL2TgYOXUIj+oqIW2Ew9tE9DRan53SVd6mA
+         47QxdZTxSCswJCoWy7XsUKqh2SY/mBg7OOaG0Hq2FJTKjKjWJCGUWUCxOzyiWTlWOn+z
+         7cgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TBQfAvQHFoAwnp3CaECXiSS6MZvFWi5N71SL0nb3uxs=;
-        b=LzdKUD1uj+zPvzfnffL9Nlz0v9tDnltVhXM9JFCO75OZidpjrkx3Q5ug33R58Dn/4Q
-         MYueCW63NxUsCpsdPbEet9wDYXjLPALvf3Oq9GxDsdBv+hJYKYylX/b8ne/c38PtxZFA
-         NJWPSJP+Ed3UWlA40ZfY5dEMWKZXCSDAeetQ1FOpHrxpCJNOsnoDRfRqzUp2xGlszkui
-         TGSKaOzi5vZeD+q3mp7kXTF84xQvfzmcWfCLOEwrLy4042Tz+XW2Q07sxPeJ9e0RzS0y
-         deGv+LHa7j8LIeorKY9HRY8QJLAE5hfvnABpxRSrYjVThtvvMbiIg+RZMSUIifmqtGDq
-         gE1Q==
-X-Gm-Message-State: AOAM5324iGN6ZHZ2g/Ojw8WmdaMeStWQSGlfFoZQp+eblg92sL+tueV2
-        fUJe3vcSJKP4fJ95gFQ51Op7jBpzflU=
-X-Google-Smtp-Source: ABdhPJwcE0jkThJP//opD6am1NEITIKY7CQ9Z5Kkr+XJPH7ert6Ladrh9ALaFfJUY3ixYOSHkoBCpw==
-X-Received: by 2002:a19:4813:: with SMTP id v19mr7165221lfa.655.1608564056348;
-        Mon, 21 Dec 2020 07:20:56 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id c5sm2220085ljj.67.2020.12.21.07.20.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Dec 2020 07:20:55 -0800 (PST)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
-        Elijah Newren <newren@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>
-Subject: [PATCH v3 20/32] diff-merges: get rid of now empty diff_merges_init_revs()
-Date:   Mon, 21 Dec 2020 18:19:48 +0300
-Message-Id: <20201221152000.13134-21-sorganov@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20201221152000.13134-1-sorganov@gmail.com>
-References: <20201101193330.24775-1-sorganov@gmail.com>
- <20201221152000.13134-1-sorganov@gmail.com>
+        bh=1SSxn00D6lEx94ttp23aI5Puw/LoAFasEmLcpM5Su8k=;
+        b=O8dUNOW6gNWinwX/xQi5KmCIxvs5U42D0SbEdk7yROOxjNTWXnqm1p3UZc22rpbZ08
+         h6fQ+OqUtqnwX3XIk1tg8d3YlUyEFTXhf+jzlj7N+y1eqySWAmGnC+OjSHgq8qCR4Ye5
+         QX/9ogaSf/5o0RzRslzYhIPPGSJ/pj8aot/1pYwjcIUuhNJGgFg5pdu2Ggvhj9YJMqbX
+         CtSivrQKVM4YQYJKAPdeb4yOpNTtlz51g2Aa410rKvWn3SiGgCcVYI+H137iHj24hycz
+         VtPHnK477nYLeW2jMxzSFxDWh8lJvcpaxEBVaDVlMv3ydlmHP/T92VLEEJd3vPEiykhC
+         hlEw==
+X-Gm-Message-State: AOAM531Swcl9Sm5tAYN7Nvcd+ZYRCaZu2ovurJ10nFsNb69TyQDEMg+j
+        8mpO+h/y/0Ca/2f9fe7Q5YEavPpwlZaAqw==
+X-Google-Smtp-Source: ABdhPJw+k4y/TVrOXG56FvHWxzBuvGba+P0XM+c/LOzxYmXURh5ObcIAoDtTcbY8XfHVELPEd2wGjw==
+X-Received: by 2002:a5d:6cc9:: with SMTP id c9mr19105366wrc.411.1608568168393;
+        Mon, 21 Dec 2020 08:29:28 -0800 (PST)
+Received: from localhost.localdomain ([81.0.34.85])
+        by smtp.gmail.com with ESMTPSA id w18sm28523532wrn.2.2020.12.21.08.29.27
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 21 Dec 2020 08:29:27 -0800 (PST)
+From:   Miriam Rubio <mirucam@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        Miriam Rubio <mirucam@gmail.com>
+Subject: [PATCH v2 1/7] bisect--helper: reimplement `bisect_log` shell function in C
+Date:   Mon, 21 Dec 2020 17:27:37 +0100
+Message-Id: <20201221162743.96056-2-mirucam@gmail.com>
+X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20201221162743.96056-1-mirucam@gmail.com>
+References: <20201221162743.96056-1-mirucam@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After getting rid of 'ignore_merges' field, the diff_merges_init_revs()
-function became empty. Get rid of it.
+From: Pranit Bauva <pranit.bauva@gmail.com>
 
-Signed-off-by: Sergey Organov <sorganov@gmail.com>
+Reimplement the `bisect_log()` shell function in C and also add
+`--bisect-log` subcommand to `git bisect--helper` to call it from
+git-bisect.sh .
+
+Using `--bisect-log` subcommand is a temporary measure to port shell
+function to C so as to use the existing test suite.
+
+Mentored-by: Lars Schneider <larsxschneider@gmail.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
+Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
- diff-merges.c | 4 ----
- diff-merges.h | 2 --
- revision.c    | 1 -
- 3 files changed, 7 deletions(-)
+ builtin/bisect--helper.c | 22 +++++++++++++++++++++-
+ git-bisect.sh            |  7 +------
+ 2 files changed, 22 insertions(+), 7 deletions(-)
 
-diff --git a/diff-merges.c b/diff-merges.c
-index eff54cca8287..34d7ed7c70b7 100644
---- a/diff-merges.c
-+++ b/diff-merges.c
-@@ -21,10 +21,6 @@ static void set_dense_combined(struct rev_info *revs)
-  * Public functions. They are in the order they are called.
-  */
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 709eb713a3..1854377fa6 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -904,6 +904,18 @@ static enum bisect_error bisect_state(struct bisect_terms *terms, const char **a
+ 	return bisect_auto_next(terms, NULL);
+ }
  
--void diff_merges_init_revs(struct rev_info *revs)
--{
++static enum bisect_error bisect_log(void)
++{
++	int fd, status;
++	fd = open(git_path_bisect_log(), O_RDONLY);
++	if (fd < 0)
++		return BISECT_FAILED;
++
++	status = copy_fd(fd, STDOUT_FILENO);
++	close(fd);
++	return status ? BISECT_FAILED : BISECT_OK;
++}
++
+ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	enum {
+@@ -916,7 +928,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		BISECT_AUTOSTART,
+ 		BISECT_NEXT,
+ 		BISECT_AUTO_NEXT,
+-		BISECT_STATE
++		BISECT_STATE,
++		BISECT_LOG
+ 	} cmdmode = 0;
+ 	int res = 0, nolog = 0;
+ 	struct option options[] = {
+@@ -938,6 +951,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			 N_("verify the next bisection state then checkout the next bisection commit"), BISECT_AUTO_NEXT),
+ 		OPT_CMDMODE(0, "bisect-state", &cmdmode,
+ 			 N_("mark the state of ref (or refs)"), BISECT_STATE),
++		OPT_CMDMODE(0, "bisect-log", &cmdmode,
++			 N_("output the contents of BISECT_LOG"), BISECT_LOG),
+ 		OPT_BOOL(0, "no-log", &nolog,
+ 			 N_("no log for BISECT_WRITE")),
+ 		OPT_END()
+@@ -1000,6 +1015,11 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		get_terms(&terms);
+ 		res = bisect_state(&terms, argv, argc);
+ 		break;
++	case BISECT_LOG:
++		if (argc)
++			return error(_("--bisect-log requires 0 arguments"));
++		res = bisect_log();
++		break;
+ 	default:
+ 		BUG("unknown subcommand %d", cmdmode);
+ 	}
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 1f3f6e9fc5..c6149846ff 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -169,11 +169,6 @@ exit code \$res from '\$command' is < 0 or >= 128" >&2
+ 	done
+ }
+ 
+-bisect_log () {
+-	test -s "$GIT_DIR/BISECT_LOG" || die "$(gettext "We are not bisecting.")"
+-	cat "$GIT_DIR/BISECT_LOG"
 -}
 -
- int diff_merges_parse_opts(struct rev_info *revs, const char **argv)
- {
- 	int argcount = 1;
-diff --git a/diff-merges.h b/diff-merges.h
-index f92de137d3a0..659467c99a4f 100644
---- a/diff-merges.h
-+++ b/diff-merges.h
-@@ -9,8 +9,6 @@
- 
- struct rev_info;
- 
--void diff_merges_init_revs(struct rev_info *revs);
--
- int diff_merges_parse_opts(struct rev_info *revs, const char **argv);
- 
- void diff_merges_suppress(struct rev_info *revs);
-diff --git a/revision.c b/revision.c
-index 5a0e3d6ad542..46645ca0b6df 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1814,7 +1814,6 @@ void repo_init_revisions(struct repository *r,
- 
- 	revs->repo = r;
- 	revs->abbrev = DEFAULT_ABBREV;
--	diff_merges_init_revs(revs);
- 	revs->simplify_history = 1;
- 	revs->pruning.repo = r;
- 	revs->pruning.flags.recursive = 1;
+ get_terms () {
+ 	if test -s "$GIT_DIR/BISECT_TERMS"
+ 	then
+@@ -210,7 +205,7 @@ case "$#" in
+ 	replay)
+ 		bisect_replay "$@" ;;
+ 	log)
+-		bisect_log ;;
++		git bisect--helper --bisect-log || exit;;
+ 	run)
+ 		bisect_run "$@" ;;
+ 	terms)
 -- 
-2.25.1
+2.29.2
 
