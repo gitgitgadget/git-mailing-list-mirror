@@ -6,74 +6,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79B9AC433E0
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 17:22:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73780C433DB
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 17:51:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 557AF22C9C
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 17:22:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 354EB22BEA
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 17:51:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725946AbgLURWw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Dec 2020 12:22:52 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:52492 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725927AbgLURWw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Dec 2020 12:22:52 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [173.33.197.34])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 0BLHMAOl006313
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 12:22:10 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     <git@vger.kernel.org>
-Subject: [BUG] git-2.30.0-rc1 - Transitive OpenLDAP requirement in libcurl
-Date:   Mon, 21 Dec 2020 12:22:04 -0500
-Message-ID: <002001d6d7bd$d03d7e10$70b87a30$@nexbridge.com>
+        id S1725791AbgLURvV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Dec 2020 12:51:21 -0500
+Received: from mail-ej1-f54.google.com ([209.85.218.54]:46224 "EHLO
+        mail-ej1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725782AbgLURvU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Dec 2020 12:51:20 -0500
+Received: by mail-ej1-f54.google.com with SMTP id j22so14580417eja.13
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 09:51:04 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=bKsqPrzxwVJqmRJGk1zGvuHEL0oB8tyGmGhy69LIbTA=;
+        b=uBSO0eZWvxj6XTLXYBkbwo/GPucJzpnx5D55WLG45vrrPem8IEk84EAxMpGprrhzFA
+         K8gJ/7L8rvURv1ECcBR1OGGc+KdOqZLhPkMlKBoysptfzLNAGLDvNSKYt8jRgENE7G4d
+         D/nYMeIqN2XGCxgSMZbdCM6bPpkhyop9UAGV2mH2XBjsYytInbiQxJfCLg30Fe3/etce
+         N1A99vCSRGRlKTM6JABQywvEiRGL6RzbqMs8lCdghtkIojRnboFUDTrqWjYwUAqTdjFw
+         gyHflF2ZTNf9nRzieFWZEZIE9LqjpX/n92fRUGE9nDo9C2X9ov/bJxQZ0QBjO1WInQ8e
+         BMAw==
+X-Gm-Message-State: AOAM533Yy3bvKH2dWyqilIuXA4K8yKetmAkWAukp6gDxuryBycUkeChc
+        IMsybD81AN67uAWsFqp4HrjumbQCoJLYeKC9+ZlFo+lw
+X-Google-Smtp-Source: ABdhPJx6CFE0rcJhjysZ+cd8yP5ZHt0uSstq4xlz/1KCUP+dlSqE+3wOrtuS7ClRWE19pbN476KY0R99XwAz8aJhMfE=
+X-Received: by 2002:a17:906:15ca:: with SMTP id l10mr15976295ejd.402.1608573039029;
+ Mon, 21 Dec 2020 09:50:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AdbXvbUOUZQ9pwoIQXmdIwbpq/sdrg==
+References: <xmqq7dpeqrz4.fsf@gitster.c.googlers.com> <CABPp-BFoSz40-1mNLrxCgMTccYqLOg6ifX5PeLDutbimF9ysPQ@mail.gmail.com>
+ <xmqqblepnd9k.fsf@gitster.c.googlers.com> <CABPp-BErnY+zfmp-LWTe0EUB5QKKcLCP=4t9VxwvA_+DaBvDuw@mail.gmail.com>
+In-Reply-To: <CABPp-BErnY+zfmp-LWTe0EUB5QKKcLCP=4t9VxwvA_+DaBvDuw@mail.gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+Date:   Mon, 21 Dec 2020 09:50:27 -0800
+Message-ID: <CAPc5daWFn3Y_MYUAPWgmYQEu9-9PYROewczrzGfd4qs8dvaZAw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Dec 2020, #03; Fri, 18)
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The NonStop platform does not have an implementation of OpenLDAP, but git is
-attempting to use it. We are getting unresolved references from libcurl,
-which makes references to openldap regardless of whether it exists. We do
-not expect git to use ldap_setup_connection, for example. We need a way of
-disabling the use of this package. This appears to be is a net new for issue
-for 2.23.0, which we just did not get far enough on rc0 to encounter. 
+> I'm still confused.  en/merge-ort-3 and en/merge-ort-recursive do not
+> share any commits.  The only tie is that each "uses en/merge-ort-2",
+> as you noted, but that was already noted separately.  Am I missing
+> something?
 
-Need assistance to resolve this.
-
-Thanks,
-Randall
-
-Sample (there are more) references:
-
-eld command line:
-   /usr/bin/eld -o git-imap-send -set systype oss -set highpin on -set
-   highrequestor on -set inspect on /usr/lib/ccplmain.o imap-send.o http.o
-   common-main.o -L/usr/local/lib -lcurl -lssl -lcrypto -lssl -lcrypto -lz
-   -lssl -lcrypto -lcrypto libgit.a xdiff/lib.a -lz -lintl -liconv
-   -L/usr/local/lib -lfloss -lutil -lrld -L /G/system/sys04 -lcre -lcrtl
-   -lossk -lossf -lsec -li18n -licnv -losse -linet -lossh -lossc
-   -allow_duplicate_procs
-
-**** ERROR **** [1210]:
-   /usr/local/lib/libcurl.a(libcurl_la-openldap.o): In function
-   `ldap_setup_connection':
-   libcurl_la-openldap.o(.text._153926392+0x72): unresolved reference to
-   ldap_url_parse.
-
-
--- Brief whoami:
- NonStop developer since approximately 211288444200000000
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
-
-
+Yes, en/merge-ort-2 is not yet merged to 'master' and these two share
+the commits on them. Due to lack of better phrase that is labeled as
+"tangled".
