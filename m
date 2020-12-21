@@ -2,103 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DCEAC4332E
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 19:10:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A4A0C433E9
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 19:12:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1205B229C5
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 19:10:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0389B22527
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 19:12:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727142AbgLUTKl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Dec 2020 14:10:41 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60010 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725785AbgLUTKl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Dec 2020 14:10:41 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C4D1298C96;
-        Mon, 21 Dec 2020 14:09:59 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=W51ajVngLKWg
-        j6nLjvoyJ2OPeiM=; b=qUAtez3+ypfuc3APTZXybiPgN/RGp9yo2D+qlHTx6QM9
-        IMBXD72BNB/uHXukAADfwpUUWJHklVAr2mWX7yz8Pkr5+Q9p6ek2zVRXCdNbfcP/
-        hKZXutlrNHYygUzOX2+OaqlvBSP1U+l188+RKWbYeAGYiLQ53g1MQ4dAJ8HiTz4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=WX+8IV
-        i1+e4q8oDirZ4wgBSSK9GtKtK40Y1xdzWp/M4KTGvpDqdqzv8hod08RpWF+jWSTm
-        LG1dLhj0Qmn5NCUXz1HpaGK07M16uxy7yD95D+Ps50m8EOoO0dQvKGpzi1z2M5Ir
-        m6yz/6iqRDr40cRGMuF27w7BaGinlucNohGNE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BC52398C95;
-        Mon, 21 Dec 2020 14:09:59 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 50F0998C94;
-        Mon, 21 Dec 2020 14:09:59 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     =?utf-8?Q?=C3=89rico?= Rolim <erico.erc@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [BUG] In git-log, --name-status flag overrides the --patch flag
-References: <CAFDeuWOit1vKUT38Uvbj2wAsb5CBo59p2h=SE6FGNb6XGOGG-w@mail.gmail.com>
-        <X+CgJCj7/tadldUg@danh.dev>
-Date:   Mon, 21 Dec 2020 11:09:58 -0800
-In-Reply-To: <X+CgJCj7/tadldUg@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcuG6p24g?=
- =?utf-8?B?Q8O0bmc=?= Danh"'s message of
-        "Mon, 21 Dec 2020 20:16:20 +0700")
-Message-ID: <xmqq5z4vm0vt.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727321AbgLUTL7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Dec 2020 14:11:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59468 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727245AbgLUTLy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Dec 2020 14:11:54 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C037C0613D6
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 11:11:14 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id h22so16736621lfu.2
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 11:11:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=F7skkKHM5R05UGdkMu1617woWQOZ5h6BpD7foIYbeG8=;
+        b=PbxVEfLQIdBUnkMz8ERfIGwUxDMjHlNsX3rI/peShOOxNNqrrZxcAfST5MipFKvgTR
+         +z0/VxuVsKpsPdjI4C0BRa83V8Xnijkq7Q30JqjWoimyTL4Kd8qsaTFNYhIbaZbc1/e5
+         v76p4bWQ2wjLjVCau+vFsjOcm0hYrETF5eNxPd38lkvVcK79DUOdsbSd0k6Qxq3dVHvD
+         2pOBB1cdCew/Qw3/Z8LEyQg4/sNRnSIzDTFkWdaXwzWjXlSolMaZyfNsuvowAx7EoByq
+         yyKrPGpjIDBTq+W1cAagipnCYLsTvzla0INZrwdvCH5P3KkuVZMCA+YtEicvNeLyXHkr
+         nyZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=F7skkKHM5R05UGdkMu1617woWQOZ5h6BpD7foIYbeG8=;
+        b=E3U/JmW/3OP4VuNQuWj076NPdTd4QA22Yk5Sc9nvEGFL202m4Y/Px/yKue3EBCN1km
+         OkEXiJ4OXabA7qFQD89o5SmJmTqNga8WrHZ+T4sfU8BwFuUftzT2CgFvJQ9M5xD5PxEu
+         Zjm6KaMvLAz395DVYcjLGmO9YrTH7RVdzEXQCjlgXjrZQC9Qog5xQ0Se09hXjdnB3QwH
+         vWRMJAxv5LEJrCJAnfL+4hZKdASx3FdN91oObX5MsDqzML0VpNUoI9odGJIwdV3yLZkp
+         PzW9Y1ZFi7k54WbmHKzsfnR8EVfGhazWBn6ClOs/Ajvb1Rpv2vA+Vvx9fDdw9XCBEtsT
+         hfFg==
+X-Gm-Message-State: AOAM530lzpTVUbbGylsrtEcz/g9oAOZnLUau3Q9AhVfj/e8rCwmUMGK3
+        3zXk3IqXHs1UltPMsXI9lVAk91Loo5o=
+X-Google-Smtp-Source: ABdhPJwXTWtWmRg//EToJsu4UtbrnHuaYAtdKIE92ioRRx4+ApwrQSUO/oIoXR8+WDIgIIAGp83Pgw==
+X-Received: by 2002:a05:6512:3212:: with SMTP id d18mr7158359lfe.420.1608564066196;
+        Mon, 21 Dec 2020 07:21:06 -0800 (PST)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id c5sm2220085ljj.67.2020.12.21.07.21.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Dec 2020 07:21:05 -0800 (PST)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        git@vger.kernel.org, Sergey Organov <sorganov@gmail.com>
+Subject: [PATCH v3 29/32] doc/diff-generate-patch: mention new --diff-merges option
+Date:   Mon, 21 Dec 2020 18:19:57 +0300
+Message-Id: <20201221152000.13134-30-sorganov@gmail.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20201221152000.13134-1-sorganov@gmail.com>
+References: <20201101193330.24775-1-sorganov@gmail.com>
+ <20201221152000.13134-1-sorganov@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 1EBDACEA-43C0-11EB-A017-D152C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
-:
+Mention --diff-merges instead of -m in a note to merge formats to aid
+discoverability, as -m is now described among --diff-merges options
+anyway.
 
-> On 2020-12-20 01:23:05-0300, =C3=89rico Rolim <erico.erc@gmail.com> wro=
-te:
->> Hi!
->>=20
->> When using the command
->>=20
->>   git log --patch --name-status
->>=20
->> It seems the name-status flag somehow overrides the patch flag, by whi=
-ch I mean
->> that I get the same output as simply running
->>=20
->>   git log --name-status
->>=20
->> It would be nice for the combination of these two flags to work, as it=
- would
->> allow one to view both a summary of changed files as well as the chang=
-es
->> themselves, at the same time.
->
-> I'm not arguing if this your expectation is make sense or not,
-> however, the Documentation says something about "Show only"...
+Signed-off-by: Sergey Organov <sorganov@gmail.com>
+---
+ Documentation/diff-generate-patch.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Perhaps the documentation would need to be clarified?  I suspect
-this is not very useful combination [*1*] and if this were years
-ago, I would suggest making the command line error out, instead of
-silently ignore one and keep the other one in effect.
+diff --git a/Documentation/diff-generate-patch.txt b/Documentation/diff-generate-patch.txt
+index b10ff4caa6c5..2db8eacc3ec7 100644
+--- a/Documentation/diff-generate-patch.txt
++++ b/Documentation/diff-generate-patch.txt
+@@ -81,9 +81,9 @@ Combined diff format
+ Any diff-generating command can take the `-c` or `--cc` option to
+ produce a 'combined diff' when showing a merge. This is the default
+ format when showing merges with linkgit:git-diff[1] or
+-linkgit:git-show[1]. Note also that you can give the `-m` option to any
+-of these commands to force generation of diffs with individual parents
+-of a merge.
++linkgit:git-show[1]. Note also that you can give suitable
++`--diff-merges` option to any of these commands to force generation of
++diffs in specific format.
+ 
+ A "combined diff" format looks like this:
+ 
+-- 
+2.25.1
 
-
-[Footnote]
-
-*1* "--patch --stat --summmary" was designed as the standard "both a
-    summary as well as the changes".
