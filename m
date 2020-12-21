@@ -2,284 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B20AEC433E6
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 19:56:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE904C433E0
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 20:07:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 63C9122CB2
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 19:56:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 792A822BF3
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 20:07:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726594AbgLUT4d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Dec 2020 14:56:33 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:65182 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725807AbgLUT4d (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Dec 2020 14:56:33 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EB48F10819D;
-        Mon, 21 Dec 2020 14:55:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HreIcTzPxf33Pntk5ELd99j42qw=; b=AFw0dq
-        EtqwRdl22v2f2FfRUqy403kIgYyAssKxtnyVyQKoiW+IHpnU4hNi0q9UJA5D+pko
-        tKE17YN2NUPc8PslnXabjjxE6XY/qQDSfuk7SRKHEkyph3p2dKPMDxGA/pIuT8lQ
-        5R3+GVWTsjkO7CQukkZDAd92EOc+uYdfjvGu8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=WPEy3YPLp02xyYFKO6KdJVMJTSqCiJTg
-        YDCNi79n3Zk3nW4XxMcq1KJhs8Ss/2N2dwtyTkpgnm0kxyYPMJue7mSMz6cKbZWl
-        1B/8RyR2XGplJ0SMkTSbGo8c1luq9aXKBfLJ/7GQLQGa7ulsqf5Mhrg2hMdHCYqR
-        rhU9DA2lzVQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E2F6510819C;
-        Mon, 21 Dec 2020 14:55:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 285D6108197;
-        Mon, 21 Dec 2020 14:55:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     git <git@vger.kernel.org>
-Subject: [PATCH] SQUASH??? allow t0031 to run with any default branch name
-References: <xmqq7dpeqrz4.fsf@gitster.c.googlers.com>
-        <CAFQ2z_MtpPNSpL9=OoyPfDRfkFxnCO19qBDnY9bnZiEEGtuMsQ@mail.gmail.com>
-        <xmqqim8vm41g.fsf@gitster.c.googlers.com>
-Date:   Mon, 21 Dec 2020 11:55:42 -0800
-In-Reply-To: <xmqqim8vm41g.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Mon, 21 Dec 2020 10:01:47 -0800")
-Message-ID: <xmqqsg7zkk75.fsf_-_@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1725875AbgLUUHw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Dec 2020 15:07:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39888 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725820AbgLUUHw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Dec 2020 15:07:52 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3C2FC061793
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 12:07:11 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id m12so26613178lfo.7
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 12:07:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=u2SpiRznsEgEML4pJY2XBR3VMYGpsSjbMNYWxbn6Iq4=;
+        b=K5VPPvNnkGxS5xOpHjdGx/M9M91fQsJsM3nJ1eSstEx0Xsism1zA5Lrqg9OIXrlUjl
+         t0ScrzVdJ+29Km3nbKZ36NAoFPQfbr2GofIlclB9iVTEIVis7XTAojaNTUT95OtRyB+h
+         9ZPzK3jHb7JBOdxfXp1EAj29iYWjlbMi9Yto0UWkP2rkPaxAfYQlgtsZeyV6uIt1xPbN
+         A9+N4SWjY5/P5FMh582xW13NwGdPbkV7bDTDi8Cvo2ZQjZ5a+xjVL1FVMnu0H/e/5mni
+         4Kn4BY9BK9rddOqwneA1AF8PHJ2HZzWG0kFWWIjAJAQMnk/xwF8+X+3OTc4RsVuFCc1P
+         WmFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=u2SpiRznsEgEML4pJY2XBR3VMYGpsSjbMNYWxbn6Iq4=;
+        b=mc8UcX04DslMrRvgnboUjC2Fdp6ysLzCq8Ow3rnZjBYAZ/F6Zw3yXd6FdOCTKieZd9
+         g+IxoV1M4JaNb095+79ax5XNWh2hktHlXNQiC/1hjMlakjwfcAM6z+mJVxx2YNAQOC5m
+         GY4JRFH3Pmpu21wlEq4asiK66OKohUiv6JK33WI1eWPavQf8Bgu86j68icqjdiTVgNRB
+         LIh5Mf5vXV52rREmNoAufj65oLfUfUp+bBWWvDjNkAL/niva+2yRPnh6PSdwsroBHmKU
+         BmBG0hoeZvL2CKDqdeplALd+3ImOz+SzXYThd/4CMJ0tA6LrFfHMVCYiRlv8yF4RRjN+
+         XcWw==
+X-Gm-Message-State: AOAM530uEZZqKqFzX2+lxyOM6wJQ8iOAKNpcuegjzchPjecPUPS6unXr
+        a/Ag5CjfcGvLRw9RXwCZcKVXQw7eU98=
+X-Google-Smtp-Source: ABdhPJzWVjfKcaxi7iiYSyOZBaNfTeJwxD7pmApxeiD/43tvJIezMw+F7yKE6C4EiXc0TNMAWj9NJQ==
+X-Received: by 2002:a19:ecb:: with SMTP id 194mr7186045lfo.70.1608581230070;
+        Mon, 21 Dec 2020 12:07:10 -0800 (PST)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id 206sm2232120lfd.180.2020.12.21.12.07.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Dec 2020 12:07:09 -0800 (PST)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v3 25/32] diff-merges: let new options enable diff
+ without -p
+References: <20201101193330.24775-1-sorganov@gmail.com>
+        <20201221152000.13134-1-sorganov@gmail.com>
+        <20201221152000.13134-26-sorganov@gmail.com>
+        <5fe0ec103ad4f_e6ff208f5@natae.notmuch>
+Date:   Mon, 21 Dec 2020 23:07:08 +0300
+In-Reply-To: <5fe0ec103ad4f_e6ff208f5@natae.notmuch> (Felipe Contreras's
+        message of "Mon, 21 Dec 2020 12:40:16 -0600")
+Message-ID: <87sg7yrkib.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 82C9F6DE-43C6-11EB-8168-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
->>>  The "reftable" backend for the refs API.
->>>
->>>  Ejected for now, as it has been breaking the tip of 'seen' for too
->>>  long.
->>
->>
->> Can you provide more information here? The PR at
->> https://github.com/git/git/pull/847 passes all tests (except for the
->> VSBuild, with errors that seem unrelated.)
+> Sergey Organov wrote:
+>> diff --git a/log-tree.c b/log-tree.c
+>> index f9385b1dae6f..9f50a81e537e 100644
+>> --- a/log-tree.c
+>> +++ b/log-tree.c
+>> @@ -899,15 +899,21 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
+>>  	int showed_log;
+>>  	struct commit_list *parents;
+>>  	struct object_id *oid;
+>> +	int is_merge;
+>> +	int all_need_diff = opt->diff || opt->diffopt.flags.exit_with_status;
+>>  
+>> -	if (!opt->diff && !opt->diffopt.flags.exit_with_status)
+>> +	if (!all_need_diff && !opt->merges_need_diff)
+>>  		return 0;
+>>  
+>>  	parse_commit_or_die(commit);
+>>  	oid = get_commit_tree_oid(commit);
+>>  
+>> -	/* Root commit? */
+>>  	parents = get_saved_parents(opt, commit);
+>> +	is_merge = parents && parents->next;
+>> +	if (!is_merge && !all_need_diff)
+>> +		return 0;
+>> +
+>> +	/* Root commit? */
+>>  	if (!parents) {
+>>  		if (opt->show_root_diff) {
+>>  			diff_root_tree_oid(oid, "", &opt->diffopt);
 >
-> Sorry, but it has been a long time that I have no more detail than
-> the above handy.  Older CI history might know more, but I have no
-> time to dig that right now (and I'd be just as efficient as you
-> would for doing such things).
->
-> I can try including it in one of the today's pushout of 'seen' and
-> see what breaks, which would be the easiest ;-)
->
-> Thanks for pinging.
+> FWIW this logic does make sense to me.
 
-I just pushed one this morning, the only change from yesterday's
-'seen' is that it has hn/reftable at the tip.
+Thanks for reviewing!
 
-  https://travis-ci.org/github/git/git/jobs/750888904
-
-It seems that we should stop assuming what the name of the default
-branch is in a new repository.  One good way to do so would be to
-change "git init" to "git init -b primary" so that the tests won't
-get affected whether the default name is master or main or any other
-value, and then use 'primary' throughout the name, instead of
-assuming 'master' will stay to be the name used when unspecified
-forever.
-
-I'll queue the following on tip to force the test pass, but please
-squash it into an appropriate step in the patch series; fixing it in
-a different way may also be acceptable and welcome, if you or others
-can come up with a cleaner way to do so.
-
-Thanks.
-
---- >8 ------ >8 ------ >8 ------ >8 ------ >8 ------ >8 ------ >8 ------ >8 ---
-Subject: [PATCH] SQUASH??? allow t0031 to run with any default branch name
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t0031-reftable.sh | 54 ++++++++++++++++++++++++---------------------
- 1 file changed, 29 insertions(+), 25 deletions(-)
-
-diff --git a/t/t0031-reftable.sh b/t/t0031-reftable.sh
-index 58c7d5d4bc..ba0738e515 100755
---- a/t/t0031-reftable.sh
-+++ b/t/t0031-reftable.sh
-@@ -9,23 +9,27 @@ test_description='reftable basics'
- 
- INVALID_SHA1=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
- 
-+git_init () {
-+	git init -b primary "$@"
-+}
-+
- initialize ()  {
- 	rm -rf .git &&
--	git init --ref-storage=reftable &&
-+	git_init --ref-storage=reftable &&
- 	mv .git/hooks .git/hooks-disabled
- }
- 
- test_expect_success 'SHA256 support, env' '
- 	rm -rf .git &&
- 	GIT_DEFAULT_HASH=sha256 && export GIT_DEFAULT_HASH &&
--	git init --ref-storage=reftable &&
-+	git_init --ref-storage=reftable &&
- 	mv .git/hooks .git/hooks-disabled &&
- 	test_commit file
- '
- 
- test_expect_success 'SHA256 support, option' '
- 	rm -rf .git &&
--	git init --ref-storage=reftable --object-format=sha256 &&
-+	git_init --ref-storage=reftable --object-format=sha256 &&
- 	mv .git/hooks .git/hooks-disabled &&
- 	test_commit file
- '
-@@ -34,13 +38,13 @@ test_expect_success 'delete ref' '
- 	initialize &&
- 	test_commit file &&
- 	SHA=$(git show-ref -s --verify HEAD) &&
--	test_write_lines "$SHA refs/heads/master" "$SHA refs/tags/file" >expect &&
--	git show-ref > actual &&
-+	test_write_lines "$SHA refs/heads/primary" "$SHA refs/tags/file" >expect &&
-+	git show-ref >actual &&
- 	! git update-ref -d refs/tags/file $INVALID_SHA1 &&
- 	test_cmp expect actual &&
- 	git update-ref -d refs/tags/file $SHA  &&
--	test_write_lines "$SHA refs/heads/master" >expect &&
--	git show-ref > actual &&
-+	test_write_lines "$SHA refs/heads/primary" >expect &&
-+	git show-ref >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -54,9 +58,9 @@ test_expect_success 'clone calls transaction_initial_commit' '
- test_expect_success 'basic operation of reftable storage: commit, show-ref' '
- 	initialize &&
- 	test_commit file &&
--	test_write_lines refs/heads/master refs/tags/file >expect &&
-+	test_write_lines refs/heads/primary refs/tags/file >expect &&
- 	git show-ref &&
--	git show-ref | cut -f2 -d" " > actual &&
-+	git show-ref | cut -f2 -d" " >actual &&
- 	test_cmp actual expect
- '
- 
-@@ -70,12 +74,12 @@ test_expect_success 'reflog, repack' '
- 	git pack-refs &&
- 	ls -1 .git/reftable >table-files &&
- 	test_line_count = 2 table-files &&
--	git reflog refs/heads/master >output &&
-+	git reflog refs/heads/primary >output &&
- 	test_line_count = 10 output &&
- 	grep "commit (initial): number 1" output &&
- 	grep "commit: number 10" output &&
- 	git gc &&
--	git reflog refs/heads/master >output &&
-+	git reflog refs/heads/primary >output &&
- 	test_line_count = 0 output
- '
- 
-@@ -86,8 +90,8 @@ test_expect_success 'branch switch in reflog output' '
- 	test_commit file2 &&
- 	git checkout -b branch2 &&
- 	git switch - &&
--	git rev-parse --symbolic-full-name HEAD > actual &&
--	echo refs/heads/branch1 > expect &&
-+	git rev-parse --symbolic-full-name HEAD >actual &&
-+	echo refs/heads/branch1 >expect &&
- 	test_cmp actual expect
- '
- 
-@@ -102,7 +106,7 @@ test_expect_success 'peeled tags are stored' '
- 	test_commit file &&
- 	git tag -m "annotated tag" test_tag HEAD &&
- 	{
--		print_ref "refs/heads/master" &&
-+		print_ref "refs/heads/primary" &&
- 		print_ref "refs/tags/file" &&
- 		print_ref "refs/tags/test_tag" &&
- 		print_ref "refs/tags/test_tag^{}"
-@@ -114,32 +118,32 @@ test_expect_success 'peeled tags are stored' '
- test_expect_success 'show-ref works on fresh repo' '
- 	initialize &&
- 	rm -rf .git &&
--	git init --ref-storage=reftable &&
-+	git_init --ref-storage=reftable &&
- 	>expect &&
--	! git show-ref > actual &&
-+	! git show-ref >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'checkout unborn branch' '
- 	initialize &&
--	git checkout -b master
-+	git checkout -b primary
- '
- 
- 
- test_expect_success 'dir/file conflict' '
- 	initialize &&
- 	test_commit file &&
--	! git branch master/forbidden
-+	! git branch primary/forbidden
- '
- 
- 
- test_expect_success 'do not clobber existing repo' '
- 	rm -rf .git &&
--	git init --ref-storage=files &&
--	cat .git/HEAD > expect &&
-+	git_init --ref-storage=files &&
-+	cat .git/HEAD >expect &&
- 	test_commit file &&
--	(git init --ref-storage=reftable || true) &&
--	cat .git/HEAD > actual &&
-+	(git_init --ref-storage=reftable || true) &&
-+	cat .git/HEAD >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -168,7 +172,7 @@ test_expect_success 'rebase' '
- '
- 
- test_expect_success 'worktrees' '
--	git init --ref-storage=reftable start &&
-+	git_init --ref-storage=reftable start &&
- 	(cd start && test_commit file1 && git checkout -b branch1 &&
- 	git checkout -b branch2 &&
- 	git worktree add  ../wt
-@@ -182,13 +186,13 @@ test_expect_success 'worktrees 2' '
- 	initialize &&
- 	test_commit file1 &&
- 	mkdir existing_empty &&
--	git worktree add --detach existing_empty master
-+	git worktree add --detach existing_empty primary
- '
- 
- test_expect_success 'FETCH_HEAD' '
- 	initialize &&
- 	test_commit one &&
--	(git init sub && cd sub && test_commit two) &&
-+	(git_init sub && cd sub && test_commit two) &&
- 	git --git-dir sub/.git rev-parse HEAD >expect &&
- 	git fetch sub &&
- 	git checkout FETCH_HEAD &&
--- 
-2.30.0-rc1-180-g539a9eda38
-
+-- Sergey
