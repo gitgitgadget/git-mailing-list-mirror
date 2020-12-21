@@ -2,142 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CEDAC433DB
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 20:10:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C458C433E0
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 20:20:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F28BD22BF3
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 20:10:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C0F12224D4
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 20:20:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725935AbgLUUKu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Dec 2020 15:10:50 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50533 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725807AbgLUUKu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Dec 2020 15:10:50 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 27173F8BD0;
-        Mon, 21 Dec 2020 15:10:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4gIGZyITArFmEK4GYX9iB8gMgME=; b=NdwOWE
-        jOmWuk7n6qYTXHuimTyxrDpKIKTKhGsUk6eiiP+S6G1pYh52UYlUzs58kNgOVi3i
-        NpKDr5FjFKxUDuv77IIEbUgj4O0p86kOqMTZUhJiBdb6elaYK1Bd8cFz6CSjevls
-        rfcYGpH3DIwXKdZePLtkIyR/R+QPJAxRWzXgM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fNxtTR3Kk0IUB+UHry6/D/ocZ2vXDdc/
-        q5RF0K9azGzisbP4xKE5kyX6HKufGbRj1AIie6yPQu7+OgnNopjKfbiaxCv7t/Ha
-        TIftQ4TShz0q38jZ0D2B6dEGddJ1vjxCg7Y6+EMP6Jy8+CiAyoQmuZa96kLqJFBh
-        3rd51oHJRbo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 20418F8BCF;
-        Mon, 21 Dec 2020 15:10:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 606F0F8BCC;
-        Mon, 21 Dec 2020 15:10:04 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        git <git@vger.kernel.org>, Pranit Bauva <pranit.bauva@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH] test: bisect-porcelain: fix location of files
-References: <20201218151406.1193792-1-felipe.contreras@gmail.com>
-        <CAP8UFD0X5HR67T6msOhJwgAGKQfgW4JxH+pJprseBi9XAZ2rCw@mail.gmail.com>
-Date:   Mon, 21 Dec 2020 12:10:02 -0800
-In-Reply-To: <CAP8UFD0X5HR67T6msOhJwgAGKQfgW4JxH+pJprseBi9XAZ2rCw@mail.gmail.com>
-        (Christian Couder's message of "Fri, 18 Dec 2020 16:36:40 +0100")
-Message-ID: <xmqqo8imly3p.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8386CB04-43C8-11EB-9706-E43E2BB96649-77302942!pb-smtp20.pobox.com
+        id S1725910AbgLUUUl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Dec 2020 15:20:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41848 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725870AbgLUUUk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Dec 2020 15:20:40 -0500
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BC58C0613D3
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 12:20:00 -0800 (PST)
+Received: by mail-ot1-x32c.google.com with SMTP id b24so9978200otj.0
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 12:20:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=0RRxN3SPVC5dOg1Kk1jWbcSCWdoAKsUqodD1JYzBQV0=;
+        b=c1ooz0KICzTaVVbIsmBqGp+HOOoHtakQakgvbK8PMkCnhkJo2j75xdSqd91iTnLxiN
+         0kM7ECxMIs1Wb1KM4kJoWFof0+2Gs4xzEDu9eH2HvDBr1Tf6Gh1BgL65HfSM7ffBcmgi
+         iHVgLuqJhs0nOiRGtm7Nd4ZuFbXlL/FvPAJnFmauy2DkG2PZRuARzU8Aa9xYQh8Hy+a3
+         /B+0rkkXQwvcKkflGiP+q2XuGtmwUim1OlWs+4E6TqcUbYfzNVw9cuPdf1FNgonBAUF/
+         1UG8hKynblqSIJx9t93uBFOJbO35Qayrfv+jagjauLe92pqiEGLXV4z+b66l7PHADWp5
+         uBWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=0RRxN3SPVC5dOg1Kk1jWbcSCWdoAKsUqodD1JYzBQV0=;
+        b=TCdQnYYMOEi3rHVKN/3V9zNzMyQ1i8KsTJ/ZoBXfmj9FnMVNhN8bQmMb4yp6Q0T7AZ
+         3BcYtSOmIVExsqZpb7L1t4RBJ8A2J4HC4XVhfBWKmI7u4jFP2Qb9ain4CV7kocC5pQqr
+         fLpc/oi5ClY7pZWj7WHnFWmiumljybQzCEB6VmIy30Dxqv6OJlyJ0v9CT8Tn7j275uCj
+         DsDSq1rrPUzIPy4gVoyOaV1vhX9vttZnQGRbkvuh7uQNa28/woHfMSZ23HI9YAR546E8
+         4Ljrzakok/dWRAGhLvi9E0Z2WsZmOGhvYWSNi5y1ZLuX3Yhh0sixRoA0dGrH/oHgd1KI
+         T7AA==
+X-Gm-Message-State: AOAM532FNwhZP4z4T0SzdV3HmIARgv6mboRM94jQDpe+DfOi2qqGvCRw
+        HAbqRCiTXup2juKtWPJ0+Ls=
+X-Google-Smtp-Source: ABdhPJzbDAYMhe3DNmCegz9hFCDIynzH4LIlzZVrIyazrKtBHA9e5n1XQT1btBNL6v+4EBdILpb94A==
+X-Received: by 2002:a9d:c68:: with SMTP id 95mr13139657otr.328.1608582000034;
+        Mon, 21 Dec 2020 12:20:00 -0800 (PST)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id t2sm986953otj.47.2020.12.21.12.19.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Dec 2020 12:19:59 -0800 (PST)
+Date:   Mon, 21 Dec 2020 14:19:57 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Cc:     git <git@vger.kernel.org>
+Message-ID: <5fe1036d63729_f938208b3@natae.notmuch>
+In-Reply-To: <xmqqsg7zkk75.fsf_-_@gitster.c.googlers.com>
+References: <xmqq7dpeqrz4.fsf@gitster.c.googlers.com>
+ <CAFQ2z_MtpPNSpL9=OoyPfDRfkFxnCO19qBDnY9bnZiEEGtuMsQ@mail.gmail.com>
+ <xmqqim8vm41g.fsf@gitster.c.googlers.com>
+ <xmqqsg7zkk75.fsf_-_@gitster.c.googlers.com>
+Subject: RE: [PATCH] SQUASH??? allow t0031 to run with any default branch name
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Junio C Hamano wrote:
+> It seems that we should stop assuming what the name of the default
+> branch is in a new repository.  One good way to do so would be to
+> change "git init" to "git init -b primary" so that the tests won't
+> get affected whether the default name is master or main or any other
+> value, and then use 'primary' throughout the name, instead of
+> assuming 'master' will stay to be the name used when unspecified
+> forever.
 
-> On Fri, Dec 18, 2020 at 4:14 PM Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->>
->> Commit ba7eafe146 (t6030: explicitly test for bisection cleanup,
->> 2017-09-29) introduced checks for files in the $GIT_DIR directory, but
->> that variable is not always defined, and in this test file it's not.
->>
->> Therefore these checks always passed regardless of the presence of these
->> files (unless the user has some /BISECT_LOG file, for some reason).
->>
->> Let's check the files in the correct location.
->
-> This looks good to me, but...
->
->> index 34099160ed..6d5440d704 100755
->> --- a/t/t6030-bisect-porcelain.sh
->> +++ b/t/t6030-bisect-porcelain.sh
->> @@ -926,14 +926,14 @@ test_expect_success 'git bisect reset cleans bisection state properly' '
->>         git bisect bad $HASH4 &&
->
-> ...if we wanted this kind of bug not to happen again, we could add a
-> test here, before `git bisect reset`, to check that here one of the
-> files below actually exists.
+A better name would be "initial".
 
-It may make sense in the larger context of making sure "git bisect"
-keeps the log in expected location.
+Even in tests branch names should mean something, and in the context of
+git, the master branch means the original branch from which all the
+other branches were copied from (usually). In tests the primary branch
+is not necessarily the master branch, so "primary" doesn't cut it.
 
-If we do not have the basic test to do so, we probably should add
-one separately.  But "git bisect reset cleans" test should be able
-to assume that these files are stored in their correct place, and
-test only their removal.
+Another option is "original".
 
-An alternative and possibly a better way may be, before reset, to
-ask "git bisect" command itself to see if it can retrieve what is
-stored in one of these files.  Perhaps "git bisect terms" would work
-only when .git/BISECT_TERMS is there.  You need to cover other files
-in a similar way.
+If the meaning of the word is not defined yet, a placeholder can be "nonce".
 
-Such a testing strategy would make sure what we truly care about
-will keep working, no matter how internal implementation changes in
-the future.  In a sense, we do not really care the log file is
-called BISECT_LOG or stored directly under .git/ directory ---we
-care that the information is kept somewhere to allow "git bisect" to
-work with, and upon "git bisect reset", the information is wiped
-away (so you'd test that, after "git bisect reset", "git bisect
-terms" would behave differently without the BISECT_TERMS file).
+Or if we don't want to assign any meaning at all, just "blank", "nil",
+and of course "foobar".
 
-Hmm?
+Cheers.
 
-For now, the hunk I see below looks like a pure improvement, but I
-do not have the original patch handy, so... 
-
->>         git bisect reset &&
->>         test -z "$(git for-each-ref "refs/bisect/*")" &&
->> -       test_path_is_missing "$GIT_DIR/BISECT_EXPECTED_REV" &&
->> -       test_path_is_missing "$GIT_DIR/BISECT_ANCESTORS_OK" &&
->> -       test_path_is_missing "$GIT_DIR/BISECT_LOG" &&
->> -       test_path_is_missing "$GIT_DIR/BISECT_RUN" &&
->> -       test_path_is_missing "$GIT_DIR/BISECT_TERMS" &&
->> -       test_path_is_missing "$GIT_DIR/head-name" &&
->> -       test_path_is_missing "$GIT_DIR/BISECT_HEAD" &&
->> -       test_path_is_missing "$GIT_DIR/BISECT_START"
->> +       test_path_is_missing ".git/BISECT_EXPECTED_REV" &&
->> +       test_path_is_missing ".git/BISECT_ANCESTORS_OK" &&
->> +       test_path_is_missing ".git/BISECT_LOG" &&
->> +       test_path_is_missing ".git/BISECT_RUN" &&
->> +       test_path_is_missing ".git/BISECT_TERMS" &&
->> +       test_path_is_missing ".git/head-name" &&
->> +       test_path_is_missing ".git/BISECT_HEAD" &&
->> +       test_path_is_missing ".git/BISECT_START"
->>  '
-
-Thanks.
+-- 
+Felipe Contreras
