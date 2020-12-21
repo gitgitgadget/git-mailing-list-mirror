@@ -2,80 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06B61C433DB
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 23:49:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 762E5C433E0
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 23:51:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B337922AED
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 23:49:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 375A622B2D
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 23:51:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726327AbgLUXtX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Dec 2020 18:49:23 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64245 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726095AbgLUXtX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Dec 2020 18:49:23 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4930F109C1E;
-        Mon, 21 Dec 2020 18:48:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8cditPUoYOGCAA9HiFBPY6aFRZQ=; b=Es2/pl
-        x8XQKP7j6JqYd9G+QcIjLLMZFbL6Bso8BAad4sYQ5UQUQX86q/Ilree5/rkhjxwX
-        Ovu6nZUFrNFqvbEI7dSOGBuX4vLkO7PBRlFyoULPiNq8Q0P+sKQ2eNpFTDLXx8lf
-        EYpBPNVFWdhkSJa+/vV1J0LVxNim+Vq0k8Fjc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DBaVODdJi34nitwWCi5F+PFUXha/dlHo
-        XFcxH7FSW0tC14fxuvz2HWBgQzvApzwyIJ3mkDwqxApUJzkeblHg3ymAogduApcn
-        alkmlTNBadywJ2V4qqJyup9VrZ53U54stEcoMQyilDJvJ+RZSb8rrBWZ9uKi65Qv
-        v6pHKoDvAlQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4117F109C1D;
-        Mon, 21 Dec 2020 18:48:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 80C86109C1C;
-        Mon, 21 Dec 2020 18:48:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 0/3] Cloning with remote unborn HEAD
-References: <20201211210508.2337494-1-jonathantanmy@google.com>
-        <cover.1608587839.git.jonathantanmy@google.com>
-Date:   Mon, 21 Dec 2020 15:48:38 -0800
-In-Reply-To: <cover.1608587839.git.jonathantanmy@google.com> (Jonathan Tan's
-        message of "Mon, 21 Dec 2020 14:30:58 -0800")
-Message-ID: <xmqq7dpalnzd.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0D599BCC-43E7-11EB-9C43-D609E328BF65-77302942!pb-smtp21.pobox.com
+        id S1726274AbgLUXvx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Dec 2020 18:51:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46102 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726209AbgLUXvx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Dec 2020 18:51:53 -0500
+Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 002AAC0613D3
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 15:51:12 -0800 (PST)
+Received: by mail-oo1-xc2f.google.com with SMTP id j21so2590418oou.11
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 15:51:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=600/KOGdO3BNjrv/KY+EUZSrY40tBprrJLbiQokMtWg=;
+        b=rqomvDyLxUQSzQrHbX7Ln2E5ZonWapW+2ahP0TjKdrjr4CuaAN6DFanH1rHHeXoC2J
+         /PYkfA7AvXJJcs3VGmC70VHjuOjxMD4SA7ci2FXdUeq348EaXQJGa0vZ8eShWkG2/4oJ
+         N0xr0RDrxS6Xe4Dpv9/wGWsjAKbPbrvmuZFF9MfCUEw7l4RAdvoMDFIO0hf5DlM0HRaU
+         wSTguy7PBKvRL2IrQPRkJCSPWf99im17rCL/o6O5/cN4RNiN5cykgqCWT/Y8CQerNKMy
+         HHJneRiNpLtu2C81Wdc8S+oMCJ8UHjLD8I8M/8veX4NcIMWqNjcD1Ql0oIOjtm8gA8Q7
+         x5XQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=600/KOGdO3BNjrv/KY+EUZSrY40tBprrJLbiQokMtWg=;
+        b=OUPDQZFZK5CJTJnxFEuDP1p8CrqclV2GAvLISBMNYitVxL2dom2M4e1+xbB0h06cEQ
+         cgjH1GAFrpFH5Z7YvSPoReGRMIlH1m1pCruRpUEzHGhv3GKr2UEMIOrxGSPX6XfxmDC7
+         U7xZSoNjIHOZy+2/dM7jRdI28YcTthBjYRFwfLRwuZ4vMHqpWkFKPz97oO9bVjyMbOww
+         EIUE/8mRjqfrnOtO2J8Bp597UTzyNyaB/P2af8KZmwtj3ck/tgayalkDBK6FM70hqnHd
+         9O0rslcAMT3NzayFkdgAA9Q69kELmoq05o7uttc59gft/o2wIcWn1srZoZvPHg9iG28w
+         MAYA==
+X-Gm-Message-State: AOAM531fIwbMw0oufYNJXoK9TcgtXV92VXYiSHxBm1ZE/ZjT3GAVuu45
+        1id20G7nlw0WSmxgKTW4MlE=
+X-Google-Smtp-Source: ABdhPJwU+KMVQzEQqqpVekfeHcWUNv+9HRgCsU8m9GC5d2sbENJuhtjNdZFjSbvKNt4WPyhHz5d6rQ==
+X-Received: by 2002:a4a:e606:: with SMTP id f6mr5100120oot.4.1608594672450;
+        Mon, 21 Dec 2020 15:51:12 -0800 (PST)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id v13sm4005353ook.13.2020.12.21.15.51.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Dec 2020 15:51:11 -0800 (PST)
+Date:   Mon, 21 Dec 2020 17:51:10 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     David Aguilar <davvid@gmail.com>, Seth House <seth@eseth.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        git@sfconservancy.org
+Message-ID: <5fe134eeaec71_11498208f9@natae.notmuch>
+In-Reply-To: <CAJDDKr6LrBMyfdp5Tutp29W9OqhbW4ffcP5e6PD8ruyxk3rQxA@mail.gmail.com>
+References: <20201217175037.GA80608@ellen>
+ <5fdc0e6dd79a7_f2faf208a1@natae.notmuch>
+ <20201218023534.GA117762@ellen>
+ <5fdc18a91c402_f2faf20837@natae.notmuch>
+ <20201218054947.GA123376@ellen>
+ <5fdc7a7d3a933_f4673208d0@natae.notmuch>
+ <20201219001358.GA153461@ellen>
+ <xmqq1rfmqc8g.fsf@gitster.c.googlers.com>
+ <20201221042501.GA146725@ellen>
+ <5fe033e0ec278_96932089d@natae.notmuch>
+ <20201221073633.GA157132@ellen>
+ <CAJDDKr6LrBMyfdp5Tutp29W9OqhbW4ffcP5e6PD8ruyxk3rQxA@mail.gmail.com>
+Subject: Code of conduct violation?
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+David Aguilar wrote:
+> Just a heads-up that Felipe has a history on this list of creating
+> long, never-ending, pointless rant threads so sometimes the best
+> course of action is to ignore him.
 
-> Jonathan Tan (3):
->   ls-refs: report unborn targets of symrefs
->   connect, transport: add no-op arg for future patch
->   clone: respect remote unborn HEAD
+I think this can be considered a personal attack, which goes against the
+code of conduct.
 
-This passes standalone all its tests, but in 'seen', seems to break
-some tests.
+The code of conduct suggests behavior like:
 
-https://travis-ci.org/github/git/git/builds/750936755 has just
-started, but my local tests before publishing the day's integration
-result failed 5702, 0031, and 5606 with this topic, and all passed
-without the topic.
+ * Being respectful of differing viewpoints and experiences
+ * Showing empathy towards other community members
 
-Thanks.
+It seems to me the above comment is an example of the opposite.
+
+If you feel that my feedback is pointless, then don't engage with it.
+There's no need to put aggravating labels, especially on a public
+setting. Even if most people agree with you.
+
+I tolerate your opinion, but it's just that; an opinion.
+
+I think you should treat it as such (an opinion), and not blatantly
+disregard the viewpoints of people you disagree with, and worse;
+publicly suggest others do the same.
+
+The Git project engages in outreach programs precisely to increase the
+diversity of the project, and this interest should not exclude diversity
+of thought. Seems counterproductive to allow these kinds of attacks
+against a minority opinion. It is in fact the minority opinion that
+needs protection, the majority opinion can defend itself.
+
+Cheers.
+
+-- 
+Felipe Contreras
