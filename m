@@ -2,108 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3F7DC433E0
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 12:41:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC9CEC433E0
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 13:17:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 810A622582
-	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 12:41:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 768F622B43
+	for <git@archiver.kernel.org>; Mon, 21 Dec 2020 13:17:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726699AbgLUMk4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Dec 2020 07:40:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54790 "EHLO
+        id S1726161AbgLUNRF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Dec 2020 08:17:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725807AbgLUMkz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Dec 2020 07:40:55 -0500
-Received: from mail-ua1-x936.google.com (mail-ua1-x936.google.com [IPv6:2607:f8b0:4864:20::936])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7182C0613D3
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 04:40:15 -0800 (PST)
-Received: by mail-ua1-x936.google.com with SMTP id s42so3245935uad.11
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 04:40:15 -0800 (PST)
+        with ESMTP id S1725891AbgLUNRE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Dec 2020 08:17:04 -0500
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A90FCC0613D3
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 05:16:24 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id b5so6458547pjk.2
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 05:16:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=KcIpez0zgun8j2n9CeVX1xYo/+EtXwjKuzZnQVP0EY4=;
-        b=AKC2Ltb/4XdmqjJWfs6laV/I/yVnnLYve6TmHzV5B7oQKmaYIbSsuj92Apk8Fq37vW
-         vFRoExQKK0T7nqienuTI3HgPkOAptPCZPuPQGCjIVKVHoaDAtSq91TN9x9ukqFBpufMm
-         UBktdvhW7l7agiEwGkFe1yC0xgmd7WUZLVPXEdfqVL8+lKxqFlsmpmsHMTUg5akNQT6F
-         4pri6zOL9m7mCXfxwW9fQUKWzZ52yrdLNGF0JOwOdVW7e1WoYxejP3gPjkDawSX3rpFv
-         VFKe7lXA2/ve01uaBY7UccYTLd/xkVJbVp3gxX8veXRb7JdNMNmd9SqNhop9kLKjdPnx
-         i/0A==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=9yONtl0m8GdD2M9S0AlXkXnRCsZMW3lAVdFarFJKSaU=;
+        b=dIfcIYyJFAWMWqWFU3mGYsJLsRLhu8AymPFR1Lx3Pi+jfUInJeysY7rm8WToigHgsc
+         aTDYJQV8LaYU56/VRn+/bG+V8j3PmWqKirkvmru0tBwLZnLwWLJA/uGcsBLLuD329cDK
+         VI4oh4gpdZj9ayC6Tu1PqSM1YsfIfb1PgX8m7/ImIPP40ueDnEXmDMebG0cYH9DIP4Ud
+         RxsHbncqHK2CSCe59emY3xa8UEUMsvSYXi1FOZD9tYepx1e89KyJsIsVaGtuk83+HPml
+         5uWATyzdm8YFeCgDT5JAiYdYxI4r/siws2ZHdd6j3Vm29NYqxeFNwYPH0dav/25ooCg1
+         1x5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=KcIpez0zgun8j2n9CeVX1xYo/+EtXwjKuzZnQVP0EY4=;
-        b=fLDB9RlhYzHFLHHSKLZsUShobMDpkP7nNbfIyE6xe+6KYxYQfVkhA9anvcShCJqgoi
-         LNpUYZslRXLMOFb4YSeH53IPf4wiwWCnCXir0Z82gQFQ6JsqqfgkxEc18NElY47hWuNJ
-         9/gDoGKpQ0cfYu3SB27b1tnvgU1TlXfZVq18LFb+VpwtgiO91lfRhkcIFwMlXjKnIl0q
-         101ndg1v9Y6MJKynasQpECXe7O1Pf2a5ge5QirFyEHwd3aveggBk0QZjPEmpB2dpqZqd
-         ld7c1Mpzl7LrI7I29qbJlvS2M9hUHXAxEdmDbZEugjXxVeWNg3xFiwsvVMsybXrhmKqi
-         7WtQ==
-X-Gm-Message-State: AOAM530P/OmyIG5ucSC55C3ME0KrPL7wxlaozHms4qnVSRKxyg7K8FFQ
-        Olfhrox4OvRI71/bejhngi5D06S7jb/2aV0hkQdM0Q==
-X-Google-Smtp-Source: ABdhPJyuyLWef0Uz1Y/SvPDfIUHtR9toYG+PKNj9rCXroIaQ9ncPjInQIElSQz6u0tlXcHtTezwYck5cPljqHjIAn6g=
-X-Received: by 2002:a9f:2628:: with SMTP id 37mr9824477uag.87.1608554414443;
- Mon, 21 Dec 2020 04:40:14 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=9yONtl0m8GdD2M9S0AlXkXnRCsZMW3lAVdFarFJKSaU=;
+        b=ZzqhOesXliPt0PlGNwRZZduQrSfcTna9/IEahGz69YRCNRcFQZ9QI/IQz5qZPqSK8T
+         2tueOItFZD4cKzsUuzUoi9HwHEgqIxUsbsrWk9dRifgy8/Mwr9C6JN8T0tkD5o/XGapr
+         U091hrOBzUjfkviIh9Ibzq9b3cildyWZnVvkWvPA9UHm1CYst+ZJXpgyAUgCkq/7dkct
+         Y/XVFC/p3D2pwZrsvpJbfqgjTFFpe0cW6994bVWlJITLYDVWmjkN0ef/IOPiIxvnyBXy
+         seV/Ea2MqgLB1wzNXbQK08WKof7vMkDWAfmAEw+c4lLqDJ63ro+ZfSBDyQUGVJ0uESJ4
+         Jptg==
+X-Gm-Message-State: AOAM532l60ErZmb45uu4+jVqVhYzO3XqpdKsUkSX7Z7oLCbMAWs0amJW
+        t5QjnfmR81097tLQXZfFvnk=
+X-Google-Smtp-Source: ABdhPJy5G7Nq46ZNH20y0K2S5NUh79aYEkG26EJm1IeaqNm+Ka5SqxlwLP49uf+hL07LAw9ol9kqcg==
+X-Received: by 2002:a17:902:ee52:b029:da:4dee:1a54 with SMTP id 18-20020a170902ee52b02900da4dee1a54mr16388598plo.29.1608556584083;
+        Mon, 21 Dec 2020 05:16:24 -0800 (PST)
+Received: from localhost ([2402:800:63a8:c764:b10d:95e8:e1a5:df80])
+        by smtp.gmail.com with ESMTPSA id p15sm17188325pgi.40.2020.12.21.05.16.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Dec 2020 05:16:23 -0800 (PST)
+Date:   Mon, 21 Dec 2020 20:16:20 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     =?utf-8?B?w4lyaWNv?= Rolim <erico.erc@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [BUG] In git-log, --name-status flag overrides the --patch flag
+Message-ID: <X+CgJCj7/tadldUg@danh.dev>
+References: <CAFDeuWOit1vKUT38Uvbj2wAsb5CBo59p2h=SE6FGNb6XGOGG-w@mail.gmail.com>
 MIME-Version: 1.0
-References: <xmqq7dpeqrz4.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqq7dpeqrz4.fsf@gitster.c.googlers.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Mon, 21 Dec 2020 13:40:03 +0100
-Message-ID: <CAFQ2z_MtpPNSpL9=OoyPfDRfkFxnCO19qBDnY9bnZiEEGtuMsQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2020, #03; Fri, 18)
-To:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFDeuWOit1vKUT38Uvbj2wAsb5CBo59p2h=SE6FGNb6XGOGG-w@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 19, 2020 at 6:36 AM Junio C Hamano <gitster@pobox.com> wrote:
+On 2020-12-20 01:23:05-0300, Érico Rolim <erico.erc@gmail.com> wrote:
+> Hi!
+> 
+> When using the command
+> 
+>   git log --patch --name-status
+> 
+> It seems the name-status flag somehow overrides the patch flag, by which I mean
+> that I get the same output as simply running
+> 
+>   git log --name-status
+> 
+> It would be nice for the combination of these two flags to work, as it would
+> allow one to view both a summary of changed files as well as the changes
+> themselves, at the same time.
 
-> * hn/reftable (2020-12-09) 15 commits
->  . Add "test-tool dump-reftable" command.
->  . git-prompt: prepare for reftable refs backend
->  . Reftable support for git-core
->  . reftable: rest of library
->  . reftable: reftable file level tests
->  . reftable: read reftable files
->  . reftable: write reftable files
->  . reftable: a generic binary tree implementation
->  . reftable: reading/writing blocks
->  . reftable: (de)serialization for the polymorphic record type.
->  . reftable: add blocksource, an abstraction for random access reads
->  . reftable: utility functions
->  . reftable: add error related functionality
->  . reftable: add LICENSE
->  . init-db: set the_repository->hash_algo early on
->
->  The "reftable" backend for the refs API.
->
->  Ejected for now, as it has been breaking the tip of 'seen' for too
->  long.
+I'm not arguing if this your expectation is make sense or not,
+however, the Documentation says something about "Show only"...
 
+Anyway, --patch-with-raw provides more information than
+--patch --name-status combined.
+I guess it's too much information?
 
-Can you provide more information here? The PR at
-https://github.com/git/git/pull/847 passes all tests (except for the
-VSBuild, with errors that seem unrelated.)
-
-
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+-- 
+Danh
