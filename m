@@ -6,79 +6,84 @@ X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9D7FC433E0
-	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 19:43:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E203C433DB
+	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 19:56:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9EAC723137
-	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 19:43:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C250B20700
+	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 19:56:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726350AbgLVTnP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Dec 2020 14:43:15 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59472 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726261AbgLVTnO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Dec 2020 14:43:14 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8A63B10213B;
-        Tue, 22 Dec 2020 14:42:32 -0500 (EST)
+        id S1727235AbgLVT4J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Dec 2020 14:56:09 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57825 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726557AbgLVT4J (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Dec 2020 14:56:09 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 263B0A1CCE;
+        Tue, 22 Dec 2020 14:55:28 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xfo/nlvnvQp/MrOFWL5FfQ9fu7c=; b=SaARuz
-        rGYYmOCO2OUPo/PaCrL+IWKNvl8+ST7y/pkGoxC3DDIisJ+pV0rB5jLcZpRChC3x
-        Lf8y2BN62vsxT5Bd6JGqCjAsjx+zZ/XOU3Gvft233KYjj1kcW6hbzm5etkLrThoH
-        oWhGbczzE3ekb4L/ct8t4agiafGqHeXuB3KNs=
+        :content-type; s=sasl; bh=UWtGNocePuMiaOnpLNelS+0/XMo=; b=W/S3+l
+        +HewxhF4Uwb599y71MqVe/YlmqjclZyrzb0hhp+tSeMbtZt4LCER6ht/T78/PpRx
+        xGJtfRFGFd5AWhvwflkkRSdli6rcz+PjVDjmpebZe2T8DwMin/YdfvBex7Q47RVG
+        7ggT73mrQSK1pjqaf8KomudtiBaWI7sWmDTgw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=NO6rK2gaFEuM3/KAUW4aQAqB4RXldDIY
-        4jCXVVVRcHHfTcLYgRbe1gnx2h4TaAIUE3TphtMJHVirfI4GCkvbCIpv7KPogxLU
-        ZmIl3CJs1NOF4zd0FQu6CW7gxismYoiFmEpH9DzyvE2bSc//DFPTySX0OtQIGgtC
-        H7YLWfZL1/U=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8271310213A;
-        Tue, 22 Dec 2020 14:42:32 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=JdagOk9OH+Wv+6l7LVnJcvNnV2j2zxq0
+        FT+ahun2YTYirZO0hajDbPv4Tq4JSlmtORDdDif374QEE/AMZUgmbWUDkhB+fBxR
+        NggPuTQNyjrwn/r0E9jjbcASlIsFueWxbM66sL1wVpSnrT9AS08aQQR00GwnzPRS
+        xXvIdoVS5xU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1DE6CA1CCD;
+        Tue, 22 Dec 2020 14:55:28 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B8A14102139;
-        Tue, 22 Dec 2020 14:42:28 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 81BE7A1CCA;
+        Tue, 22 Dec 2020 14:55:26 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] core.abbrev <off|false|no> disables abbreviations
-References: <20200901074355.GA4498@dcvr>
-        <9c00f29b-45e4-ccdf-6d81-5eabd58c875b@gmail.com>
-        <20200901144323.GA14554@dcvr>
-Date:   Tue, 22 Dec 2020 11:42:27 -0800
-In-Reply-To: <20200901144323.GA14554@dcvr> (Eric Wong's message of "Tue, 1 Sep
-        2020 14:43:23 +0000")
-Message-ID: <xmqqbleliq58.fsf@gitster.c.googlers.com>
+To:     Alex Riesen <alexander.riesen@cetitec.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] Config option to set the transport protocol version for
+ network fetches
+References: <20200916200203.GA37225@coredump.intra.peff.net>
+        <20200917132047.GA14771@pflmari>
+        <20200917133153.GA3038002@coredump.intra.peff.net>
+        <20200917133525.GE8079@pflmari>
+        <20200917145142.GA3076467@coredump.intra.peff.net>
+        <20200917151730.GG8079@pflmari>
+Date:   Tue, 22 Dec 2020 11:55:25 -0800
+In-Reply-To: <20200917151730.GG8079@pflmari> (Alex Riesen's message of "Thu,
+        17 Sep 2020 17:17:30 +0200")
+Message-ID: <xmqq1rfhipjm.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: D319EDE8-448D-11EB-BFAC-E43E2BB96649-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: A2B1B260-448F-11EB-8EBF-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong <e@80x24.org> writes:
+Alex Riesen <alexander.riesen@cetitec.com> writes:
 
-> Thanks for the comments, will wait a few days for comments
-> before sending out v2.
+> Jeff King, Thu, Sep 17, 2020 16:51:42 +0200:
+>> No problem, and no rush. I just wanted to make sure those bits didn't
+>> get overlooked.
+>
+> I'll try and do my best :)
 
-This has seen some review suggestions and as far as I remember, can
-be summarised as:
+If I remember correctly, this discussion started as an introduction
+of useful feature, but got stuck at the implementation phase of how
+the feature is presented at the UI level after we had general
+concensus on the design.
 
- - there was a rough consensus that this was a desirable feature.
-
- - a one-off hardcoded list of "false" would rather want to be
-   consistent with config.c::git_parse_maybe_bool_text().
-
- - documentation is missing for the configuration variable.
-
-It has been almost three months; has a v2 been posted that I missed?
+It has been about 3 months; has anything happened that I missed?  It
+seems that I kept the thread-starter patch in the 'seen' branch, but
+and haven't updated with a later attempt in the discussion.
 
 Thanks.
+
