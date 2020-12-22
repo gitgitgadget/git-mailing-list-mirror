@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C23AC433DB
-	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:06:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9463C433E9
+	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:06:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6826122AED
-	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:06:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A73F622AED
+	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:06:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726429AbgLVAGi (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726230AbgLVAGi (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 21 Dec 2020 19:06:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48424 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726048AbgLVAGh (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1725780AbgLVAGh (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 21 Dec 2020 19:06:37 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17BE6C0611E4
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:05:11 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id c21so312307pjr.8
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:05:11 -0800 (PST)
+Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1D16C0611CD
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:05:03 -0800 (PST)
+Received: by mail-qv1-xf49.google.com with SMTP id t16so9293595qvk.13
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:05:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=95WssQGkSGjhfagG6g7ltjwqaKVtmBM5EOhXY6N4OsU=;
-        b=GqbLcAxteGCqKS5gtMrqZBhFYHWyNNmIadqjeZBxasr+jT0R+OETaLieEK0T+/sBmK
-         Ik4Tr/ClxCQW2rEyMS9beIae4qIfKQ8nLd82UbtXWrKjxGst0S3/pVQhjF54whLN+QZl
-         hYDdqcWd2FK8G4WfN0ZF1+JIqeCyL36ciOR3oRrwvGtO1g23W91lqxg5lDjkDOw6vWq5
-         JJN67P6oBnpVEUZGYOnICdS3ChrtjGeyB+UeX3yphJCMV98UmwmyAnrO2TAtRxeGDgS5
-         RGu/8z4W5o4zLDniRiEy3NvepzStQrLZc1ar1LVVhOBpdAC88YSyoPN6TuHB2JiNuLFr
-         0kCQ==
+        bh=CVbnpWOwK+ivPuNaZHaYPy5vxV5u/BNDRDW9Ol7Q52s=;
+        b=qNlfx5p6Nh2uHYdR+c9wiMQAj7kTH1h2mlE52opYmthPfeW6wRqMkWO9DQ4LchX05Q
+         0RoDNTa7+daLuoEQbcmLbsZTuRbgME1UbedbmGZY6glrsVL1gSetbwBGEX2ebp9yd2O/
+         Z19UlN14E7vZJy7WdLZ9+bZlciLSXjAVI+ocYa+KsgNnGkdoUIiMIacyI/N5uqvYrKRx
+         IoHxnK6s2Mti/SNGHwPo5EtI4473O9wEjE76U4aaejMoixCO+PEL/IcduD7gcMbPSbZ2
+         OwcO6EO7r+IPUBDnYPhpU/6QxwDuFraDjMq8J/TK+t3DMTGxdKL4aZxzIs6bjV3CLG4N
+         yXeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=95WssQGkSGjhfagG6g7ltjwqaKVtmBM5EOhXY6N4OsU=;
-        b=FPjmbTY1FWULM1GRtPqwHH0FwbU4Zf6tiyc8Qvv6rPz1KEo/3rfdQb2MOCuhDD4Rcd
-         DEb1PUgX9Ql0ynkUwivo+pg0f07h9Ie5kGl24jQ36S2jDeoyEbU1fQ0D+INHGbkpnn2r
-         raBA+xI9aUa6/0l3cYC6IvFayBKBxBFAAHdoEPtwldXZF4gITa0La/c3xbJ8gmVBGmwG
-         srIIXoxhvE96AIs/scWcCLv5D26ogliofxWBr98Gt5T32GaOU2Zro6/kFiBn3E4wjXTQ
-         PaMnFuvn64D+4ZVNWSVTKF12SuC+Am8D/XHphgiueaugCdMvw99+/HfaynJSHtBjR17S
-         msHQ==
-X-Gm-Message-State: AOAM5319/f/UUk3Au5CU1YwjzeRQzzLyyewJkbtF4QtHQTClcJ2vvXhi
-        dP9CZlyyIx31mjzZCgjdyjIYXKNaVdkle91AvPuLpwnhh49+zAY836XTlhtH553pp3PMZvEnRlG
-        DYECkC829aOQ9mNHGRAP9dpHek5MNkfxAdgua7BrYtpyurXrAQcPUlnc283QUoSJUIKDnXOumxQ
+        bh=CVbnpWOwK+ivPuNaZHaYPy5vxV5u/BNDRDW9Ol7Q52s=;
+        b=CqnGu+LR70BJiGv3U8oxNLSGmM6bl8CQi+5jTp/HkWc0b8b2zx7lDda7H1iENXB+4A
+         vi68HZWVtH2fgP6Qzea72fou5jo6DNc4aqFuXypGTMD3IIsmz7cTR/012rmppGo613wO
+         C9/o+QBdKswZxs744io9svhQLYz30HqBKcF93vfICYCsJUF/Bn7NjfF6ktth+be0YOzn
+         Osu3lW9Z/0Yc5nXQvKlsbXDygkkjmxTLBh/rRq4pYAtehJezkvk8xHrxKY+X4jySlkwN
+         Zdy1oanJ1yWW8nWnT68eARpxJzDQP/pSrfUlJbYfJdjIV76l/pnOCowYxMtgqawWYvUS
+         xdLw==
+X-Gm-Message-State: AOAM530be079buVbTAQVeo0BeMiKvwz/WgyzY7vEa2jc17K+DySEYA92
+        jvc9/18r0twv6xbCw4Mp0T3R5ia1kRiu0T8qIBwva2JuLcn6qghJc0XY3NWfngu7/MAozjJ3ZHe
+        ZRqNXlFUEVnFXIg4Nv4bj3s5PXq/lyOFe2DOAdxbbVxAIIyfy5DY6n+0nxFBwktZ4HAP4bI9Yig
         ==
-X-Google-Smtp-Source: ABdhPJyNcTYN5Omu4FPnBHXdlsoFAAFgwfts4h3RThiCVGtZgBefq0f5ihJHDi71C8YqyQ2+vn68vsQYRGGJ1C2TjvI=
+X-Google-Smtp-Source: ABdhPJyo2G0eFKolNZQCahm25P53lJ83aVw74CabZtMPsn16xlVHNURsPieAaXf334DoXDKsF0rZ0QjHDHBllW5ZJ3c=
 Sender: "emilyshaffer via sendgmr" 
         <emilyshaffer@podkayne.svl.corp.google.com>
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
- (user=emilyshaffer job=sendgmr) by 2002:a63:d846:: with SMTP id
- k6mr17297051pgj.167.1608595510444; Mon, 21 Dec 2020 16:05:10 -0800 (PST)
-Date:   Mon, 21 Dec 2020 16:04:33 -0800
+ (user=emilyshaffer job=sendgmr) by 2002:a05:6214:d4a:: with SMTP id
+ 10mr19507745qvr.62.1608595502933; Mon, 21 Dec 2020 16:05:02 -0800 (PST)
+Date:   Mon, 21 Dec 2020 16:04:29 -0800
 In-Reply-To: <20201222000435.1529768-1-emilyshaffer@google.com>
-Message-Id: <20201222000435.1529768-16-emilyshaffer@google.com>
+Message-Id: <20201222000435.1529768-12-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20201222000435.1529768-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.29.2.490.gc7ae633391
-Subject: [PATCH v3 15/17] post-update: use hook.h library
+Subject: [PATCH v3 11/17] transport: convert pre-push hook to use config
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -72,73 +72,114 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-By using run_hooks() instead of run_hook_le(), 'post-update' hooks can
-be specified in the config as well as the hookdir.
+By using the hook.h:run_hooks API, pre-push hooks can be specified in
+the config as well as in the hookdir.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
  Documentation/githooks.txt |  2 ++
- builtin/receive-pack.c     | 26 +++++++-------------------
- 2 files changed, 9 insertions(+), 19 deletions(-)
+ transport.c                | 55 +++++++++-----------------------------
+ 2 files changed, 14 insertions(+), 43 deletions(-)
 
 diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 2c59c537f9..1412cd5846 100644
+index db290984f6..8f5524055b 100644
 --- a/Documentation/githooks.txt
 +++ b/Documentation/githooks.txt
-@@ -498,6 +498,8 @@ Both standard output and standard error output are forwarded to
- `git send-pack` on the other end, so you can simply `echo` messages
- for the user.
+@@ -271,6 +271,8 @@ If this hook exits with a non-zero status, `git push` will abort without
+ pushing anything.  Information about why the push is rejected may be sent
+ to the user by writing to standard error.
  
-+Hooks run during 'post-update' will be run in parallel by default.
++Hooks executed during 'pre-push' will run in parallel by default.
 +
- reference-transaction
- ~~~~~~~~~~~~~~~~~~~~~
+ [[pre-receive]]
+ pre-receive
+ ~~~~~~~~~~~
+diff --git a/transport.c b/transport.c
+index 679a35e7c1..58fee65815 100644
+--- a/transport.c
++++ b/transport.c
+@@ -22,6 +22,7 @@
+ #include "protocol.h"
+ #include "object-store.h"
+ #include "color.h"
++#include "hook.h"
  
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 4a6ad27404..5c23d5ed86 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1686,33 +1686,21 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- static void run_update_post_hook(struct command *commands)
+ static int transport_use_color = -1;
+ static char transport_colors[][COLOR_MAXLEN] = {
+@@ -1172,31 +1173,13 @@ static void die_with_unpushed_submodules(struct string_list *needs_pushing)
+ static int run_pre_push_hook(struct transport *transport,
+ 			     struct ref *remote_refs)
  {
- 	struct command *cmd;
--	struct child_process proc = CHILD_PROCESS_INIT;
--	const char *hook;
--
--	hook = find_hook("post-update");
--	if (!hook)
--		return;
+-	int ret = 0, x;
++	int ret = 0;
 +	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_ASYNC;
- 
- 	for (cmd = commands; cmd; cmd = cmd->next) {
- 		if (cmd->error_string || cmd->did_not_exist)
- 			continue;
--		if (!proc.args.nr)
--			strvec_push(&proc.args, hook);
--		strvec_push(&proc.args, cmd->ref_name);
-+		strvec_push(&opt.args, cmd->ref_name);
- 	}
--	if (!proc.args.nr)
-+	if (!opt.args.nr)
- 		return;
- 
--	proc.no_stdin = 1;
--	proc.stdout_to_stderr = 1;
--	proc.err = use_sideband ? -1 : 0;
--	proc.trace2_hook_name = "post-update";
-+	if (use_sideband)
-+		opt.consume_sideband = hook_output_to_sideband;
- 
--	if (!start_command(&proc)) {
--		if (use_sideband)
--			copy_to_sideband(proc.err, -1, NULL);
++	struct strbuf tmp = STRBUF_INIT;
+ 	struct ref *r;
+-	struct child_process proc = CHILD_PROCESS_INIT;
+-	struct strbuf buf;
+-	const char *argv[4];
+-
+-	if (!(argv[0] = find_hook("pre-push")))
+-		return 0;
+-
+-	argv[1] = transport->remote->name;
+-	argv[2] = transport->url;
+-	argv[3] = NULL;
+-
+-	proc.argv = argv;
+-	proc.in = -1;
+-	proc.trace2_hook_name = "pre-push";
+-
+-	if (start_command(&proc)) {
 -		finish_command(&proc);
+-		return -1;
 -	}
-+	run_hooks("post-update", &opt);
-+	run_hooks_opt_clear(&opt);
- }
  
- static void check_aliased_update_internal(struct command *cmd,
+-	sigchain_push(SIGPIPE, SIG_IGN);
+-
+-	strbuf_init(&buf, 256);
++	strvec_push(&opt.args, transport->remote->name);
++	strvec_push(&opt.args, transport->url);
+ 
+ 	for (r = remote_refs; r; r = r->next) {
+ 		if (!r->peer_ref) continue;
+@@ -1205,30 +1188,16 @@ static int run_pre_push_hook(struct transport *transport,
+ 		if (r->status == REF_STATUS_REJECT_REMOTE_UPDATED) continue;
+ 		if (r->status == REF_STATUS_UPTODATE) continue;
+ 
+-		strbuf_reset(&buf);
+-		strbuf_addf( &buf, "%s %s %s %s\n",
++		strbuf_reset(&tmp);
++		strbuf_addf(&tmp, "%s %s %s %s",
+ 			 r->peer_ref->name, oid_to_hex(&r->new_oid),
+ 			 r->name, oid_to_hex(&r->old_oid));
+-
+-		if (write_in_full(proc.in, buf.buf, buf.len) < 0) {
+-			/* We do not mind if a hook does not read all refs. */
+-			if (errno != EPIPE)
+-				ret = -1;
+-			break;
+-		}
++		string_list_append(&opt.str_stdin, tmp.buf);
+ 	}
+ 
+-	strbuf_release(&buf);
+-
+-	x = close(proc.in);
+-	if (!ret)
+-		ret = x;
+-
+-	sigchain_pop(SIGPIPE);
+-
+-	x = finish_command(&proc);
+-	if (!ret)
+-		ret = x;
++	ret = run_hooks("pre-push", &opt);
++	run_hooks_opt_clear(&opt);
++	strbuf_release(&tmp);
+ 
+ 	return ret;
+ }
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
