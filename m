@@ -8,273 +8,101 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CDE6C433DB
-	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:16:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E525EC433DB
+	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 01:12:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1692322518
-	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:16:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B4BA822525
+	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 01:12:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725844AbgLVAQw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Dec 2020 19:16:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49984 "EHLO
+        id S1725852AbgLVBMj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Dec 2020 20:12:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725780AbgLVAQw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Dec 2020 19:16:52 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67B7CC0613D3
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:16:11 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id lt17so15930041ejb.3
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:16:11 -0800 (PST)
+        with ESMTP id S1725780AbgLVBMi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Dec 2020 20:12:38 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E05FC0613D6
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 17:11:58 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id g185so603956wmf.3
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 17:11:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=references:user-agent:from:to:cc:subject:message-id:in-reply-to
-         :date:mime-version;
-        bh=ilcqou8UDdtiuoOLGwmodaYdSMvMJBkRaGqjGkTk1zw=;
-        b=VA7dL1+qpLYj5sX9lmt7feOKqwSAybWi3sf1Tp3N6/iy5BoFn3umKJGAFdbOo8vAHS
-         AR0PsouegxwURaZORPVXhja9q+7ndihzSofZ1MRlPC+0FB6xw94xCLggCpxjTd4oxYBY
-         xrMmP/0aVqD891Ei4jIRE6QwWwlVZD9YsYpoHk7xnKMWONX1r7p6gN2pmQs1VobA7pBi
-         UZMXNEmZWJTIrPVZSDgJSOeLI2GE9gIziSY24N0N8VPCr14c6TiimBtSBTCjV6nfpRNk
-         IvsqAp6ZIQ/Ym6I5GH+T9ydYCb5RCFTlgrG7cHUuk0aHVmDQ60Hhj8dNOK0KmjSvgEdW
-         yYYA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=78P5B0EZI5YNm8H+irWULeMUTdacwATcznV9pFTYRBU=;
+        b=N4BVeBnPCTDXKA02H9vC1Bh1U+7YhPl5QiZ2Y4hrGuYWgqWQlFslLKnTMmslo/IDdR
+         a/5ONvsmv5lEJJVQS5AOsHaJTyS+9yrdvAnJRrf3nJ1JY4br9QwW9tiB2Ez+ZaZSm4ow
+         +z22pDyKHdDzi9Qw3DV2CJIIAmHtu6QuhJuz/plvLhTwL99I04Z2ipzZF4u4rFs/8k2M
+         RiXZyGDysdsIrU8S/CL1f092mnbbgdwZTCEck5r1+LCP754GMyJe03lRS9WuSU8vPVGU
+         XXQYCje9hxoA6Bp+PvJ0mSegktyiovupU5vy3qHOhOv2UCFt8oXSpOiuyi3OGdLL9+D5
+         f2Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:references:user-agent:from:to:cc:subject
-         :message-id:in-reply-to:date:mime-version;
-        bh=ilcqou8UDdtiuoOLGwmodaYdSMvMJBkRaGqjGkTk1zw=;
-        b=LQP8SdYg85loZnQnhJkVdpEvgeB09U9Uvj4Ry9dYxK/coJGEqXAIXWXjcDujMTbIBG
-         jA0cFmVmLnpH42b3c1E8Otqk8g4dVVco/6n12mAuCsHgDLeQ7atdRxV2LhW1ElZcFmen
-         PItYedMHpYlM0iAYk5CeR6P7tgV04P7NFZ4KFEMp3aqByoGb0/JHLMtl6XCLdpgcYPM8
-         wupKXtPtstHAFBNuf77moo8OkHF00CNJGRyk9WfkqfYzOlGXYPe4zH22P2bCn/fDB791
-         dtunXnd72MS2oijXHxjzsucvwHwpYaM6x/iLXDxiO++z8gyemjZOUUL7J+Ry+L9YIXP3
-         gY9g==
-X-Gm-Message-State: AOAM532Li4NsxLamPbb/1wmHPCdaKOD1aW0oa7u0CpxZIRY/Yfmtq9v1
-        WMoyJvod8WG75iA3eavWcKg=
-X-Google-Smtp-Source: ABdhPJyThsBQxcnIpTHCeX76tWuzOgIb88GlPjHDEeJcJnuXRLtsMldxBMUUnxvG6P/1zMeELYbkqA==
-X-Received: by 2002:a17:906:4a4f:: with SMTP id a15mr17945223ejv.541.1608596169935;
-        Mon, 21 Dec 2020 16:16:09 -0800 (PST)
-Received: from cpm12071.fritz.box ([79.140.123.225])
-        by smtp.gmail.com with ESMTPSA id y16sm2228898edd.50.2020.12.21.16.16.09
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=78P5B0EZI5YNm8H+irWULeMUTdacwATcznV9pFTYRBU=;
+        b=Hxa2QlvN1LG9URMnN7UlUVc/uuVpfzk5q6FCdwMnYKFzbttPTryM7AqNuQ+IRA41gT
+         s7eTfg5M+Vt/wPyI3jOJyHenPRyLg2V0sLIY1ey01OMhFNy0HXPbvsq9lf4ItDOnk0JT
+         8xmTUWtopbCs2LquygjxGQVYd/N9PjxLpECF/B/MaAZSMHCAw7iQCObGGeAlGIDOY+Q9
+         ETnZBvrgU7y1pbWp/G1FDb51zXbwlM8lPD05v6TNzrVAp0elnKDbiQlJd0FwkPHA5sed
+         leOtjgNLxavzdqDVFDF7zOAsx0IctW4yNTRP8XQaDz8wfB3PTzybC+cv0ylNlFRgl6uu
+         P5cw==
+X-Gm-Message-State: AOAM530hzdkixENmE2QwAgttfhmqTODbopsisCZYe/qi+0Wa1NTCM03W
+        6FBYFSA7BCeST4j+yXTMkykUqF+w+IM=
+X-Google-Smtp-Source: ABdhPJxz5Nn5lCoBG5dh/jPv8XddnXVGf6G8Z6p4Ub4urEc02zH2EVF+FUO85z7C7YfGKixjc/e81Q==
+X-Received: by 2002:a05:600c:224b:: with SMTP id a11mr19022129wmm.97.1608599516918;
+        Mon, 21 Dec 2020 17:11:56 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y2sm22453298wma.6.2020.12.21.17.11.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Dec 2020 16:16:09 -0800 (PST)
-References: <20201221162743.96056-1-mirucam@gmail.com>
- <20201221162743.96056-3-mirucam@gmail.com>
-User-agent: mu4e 1.4.13; emacs 27.1
-From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
-To:     Miriam Rubio <mirucam@gmail.com>
-Cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tanushree Tumane <tanushreetumane@gmail.com>
-Subject: Re: [PATCH v2 2/7] bisect--helper: reimplement `bisect_replay`
- shell function in C
-Message-ID: <gohp6ky2hqzovu.fsf@cpm12071.fritz.box>
-In-reply-to: <20201221162743.96056-3-mirucam@gmail.com>
-Date:   Tue, 22 Dec 2020 01:15:51 +0100
+        Mon, 21 Dec 2020 17:11:56 -0800 (PST)
+Message-Id: <20575407cc0d60a1c0a0f8251b45b2e5a317d465.1608599513.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.820.v4.git.1608599513.gitgitgadget@gmail.com>
+References: <pull.820.v3.git.1608516320.gitgitgadget@gmail.com>
+        <pull.820.v4.git.1608599513.gitgitgadget@gmail.com>
+From:   "Nipunn Koorapati via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 22 Dec 2020 01:11:53 +0000
+Subject: [PATCH v4 2/2] negative-refspec: improve comment on
+ query_matches_negative_refspec
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Nipunn Koorapati <nipunn1313@gmail.com>,
+        Nipunn Koorapati <nipunn@dropbox.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Nipunn Koorapati <nipunn@dropbox.com>
 
-Miriam Rubio writes:
+Comment did not adequately explain how the two loops work
+together to achieve the goal of querying for matching of any
+negative refspec.
 
-> From: Pranit Bauva <pranit.bauva@gmail.com>
->
-> Reimplement the `bisect_replay` shell function in C and also add
-> `--bisect-replay` subcommand to `git bisect--helper` to call it from
-> git-bisect.sh
->
-> Using `--bisect-replay` subcommand is a temporary measure to port shell
-> function to C so as to use the existing test suite.
->
-> Mentored-by: Lars Schneider <larsxschneider@gmail.com>
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-> Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
-> Signed-off-by: Miriam Rubio <mirucam@gmail.com>
-> ---
->  builtin/bisect--helper.c | 127 ++++++++++++++++++++++++++++++++++++++-
->  git-bisect.sh            |  34 +----------
->  2 files changed, 127 insertions(+), 34 deletions(-)
->
-> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> index 1854377fa6..92c783237d 100644
-> --- a/builtin/bisect--helper.c
-> +++ b/builtin/bisect--helper.c
-> @@ -31,6 +31,7 @@ static const char * const git_bisect_helper_usage[] = {
->  	N_("git bisect--helper --bisect-auto-next"),
->  	N_("git bisect--helper --bisect-state (bad|new) [<rev>]"),
->  	N_("git bisect--helper --bisect-state (good|old) [<rev>...]"),
-> +	N_("git bisect--helper --bisect-replay <filename>"),
->  	NULL
->  };
->  
-> @@ -916,6 +917,121 @@ static enum bisect_error bisect_log(void)
->  	return status ? BISECT_FAILED : BISECT_OK;
->  }
->  
-> +static int get_next_word(const char *line, int pos, struct strbuf *word)
-> +{
-> +	int i, len = strlen(line), begin = 0;
-> +
-> +	strbuf_reset(word);
-> +	for (i = pos; i < len; i++) {
-> +		if (line[i] == ' ' && begin)
-> +			return i + 1;
-> +
-> +		if (!begin)
-> +			begin = 1;
-> +		strbuf_addch(word, line[i]);
-> +	}
-> +
-> +	return i;
-> +}
-> +
+Signed-off-by: Nipunn Koorapati <nipunn@dropbox.com>
+---
+ remote.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-I would like to suggest a slight different approach to handling the "is
-the begin of the loop?" logic. If I understood correctly, the `begin`
-variable is to check whether is the beginning of the word processing
-and is changed to 1 (aka: to true) on the first loop interaction after
-the loop is executed for the first time.
-
-However, I believe we can check this information in different way that
-will simplify the logic by removing the "begin" and the
-"if (!begin)..." altogether. The for-loop is initialize with "i" set to
-"pos" which means that on the first execution the expression "i == pos"
-is going to be true, and "false" for the next interactions. Thus, checking
-if "i" is different, or better checking if "i" is greater should bring
-the same result.
-
-that said, the implementation might look like this:
-
-  	strbuf_reset(word);
-	for (i = pos; i < len; i++) {
-		if (line[i] == ' ' && i > pos)
-			return i + 1;
-
-		strbuf_addch(word, line[i]);
-	}
-
-With additionally, removing the "begin" from the beginning of the function.
-
-The above was copied into the email without major tests, although
-I have this implementation locally just to ensure its compiles
-successfully.
-
-Please take this suggestion as you wish, I do not have any strong
-opinion on the current implementation. Also, I'm a recent contributor to
-the project and should not be much trusted when proposing changes as when
-proposal comes from project maintainer and/or Senior contributors ;).
-
-> +static int process_line(struct bisect_terms *terms, struct strbuf *line, struct strbuf *word)
-> +{
-> +	int res = 0;
-> +	int pos = 0;
-> +
-> +	while (pos < line->len) {
-> +		pos = get_next_word(line->buf, pos, word);
-> +
-> +		if (!strcmp(word->buf, "git"))
-> +			continue;
-> +		else if (!strcmp(word->buf, "git-bisect"))
-> +			continue;
-> +		else if (!strcmp(word->buf, "bisect"))
-> +			continue;
-> +		else if (starts_with(word->buf, "#"))
-> +			break;
-> +
-> +		get_terms(terms);
-> +		if (check_and_set_terms(terms, word->buf))
-> +			return -1;
-> +
-> +		if (!strcmp(word->buf, "start")) {
-> +			struct strvec argv = STRVEC_INIT;
-> +			int res;
-
-I believe this variable is already defined and initialize on the
-beginning of the function, right? If that is the case then the
-declaration seems duplicated here and can be avoided.
-
-> +			sq_dequote_to_strvec(line->buf+pos, &argv);
-> +			res = bisect_start(terms, argv.v, argv.nr);
-> +			strvec_clear(&argv);
-> +			if (res)
-> +				return -1;
-
-Also, (see bellow)
-
-> +			break;
-> +		}
-> +
-> +		if (one_of(word->buf, terms->term_good,
-> +			   terms->term_bad, "skip", NULL)) {
-> +			if (bisect_write(word->buf, line->buf+pos, terms, 0))
-> +				return -1;
-> +			break;
-> +		}
-> +
-> +		if (!strcmp(word->buf, "terms")) {
-> +			struct strvec argv = STRVEC_INIT;
-> +			int res;
-
-In case this supposed to be the same from the beginning of the function,
-the declaration seems duplicated here as well. 
-
-> +			sq_dequote_to_strvec(line->buf+pos, &argv);
-> +			res = bisect_terms(terms, argv.nr == 1 ? argv.v[0] : NULL);
-> +			strvec_clear(&argv);
-> +			if (res)
-> +				return -1;
-> +			break;
-> +		}
-
-Another suggestion, again take as you wish, you can place the "if"
-directly on the call of the "bisect_start()" and set the "res = -1"
-as the value of "res" will be used for the function return anyways.
-Again with the intent of simplify the implementation.
-
-The code will look something like the similar:
-
-        if (bisect_terms(terms, argv.nr == 1 ? argv.v[0] : NULL))
-                res = -1;
-        strvec_clear(&argv);
-        break;
-
-I did not test the above code thoroughly though.
-
-
-> +		error(_("Replay file contains rubbish (\"%s\")"),
-> +		      word->buf);
-
-I think this will be nicer on the same line ;). Not worth a re-roll
-
-> +		res = -1;
-> +	}
-> +	return res;
-> +}
-> +
-> +static int process_replay_file(FILE *fp, struct bisect_terms *terms)
-> +{
-> +	struct strbuf line = STRBUF_INIT;
-> +	struct strbuf word = STRBUF_INIT;
-> +	int res = 0;
-> +
-> +	while (strbuf_getline(&line, fp) != EOF) {
-> +		res = process_line(terms, &line, &word);
-> +		if (res)
-> +			break;
-> +	}
-> +
-> +	strbuf_release(&line);
-> +	strbuf_release(&word);
-> +	return res;
-> +}
-> +
-
-
+diff --git a/remote.c b/remote.c
+index 4f1a4099f1a..4d150a316ed 100644
+--- a/remote.c
++++ b/remote.c
+@@ -736,6 +736,12 @@ static int query_matches_negative_refspec(struct refspec *rs, struct refspec_ite
+ 	 * item uses the destination. To handle this, we apply pattern
+ 	 * refspecs in reverse to figure out if the query source matches any
+ 	 * of the negative refspecs.
++	 *
++	 * The first loop finds and expands all positive refspecs
++	 * matched by the queried ref.
++	 *
++	 * The second loop checks if any of the results of the first loop
++	 * match any negative refspec.
+ 	 */
+ 	for (i = 0; i < rs->nr; i++) {
+ 		struct refspec_item *refspec = &rs->items[i];
 -- 
-Thanks
-Rafael
+gitgitgadget
