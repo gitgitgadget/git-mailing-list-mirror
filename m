@@ -7,135 +7,94 @@ X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F88DC433DB
-	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 22:07:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75B92C433E9
+	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 22:25:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5AF0D22B2D
-	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 22:07:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4EE49207B6
+	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 22:25:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727235AbgLVWH3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Dec 2020 17:07:29 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53856 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727165AbgLVWH3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Dec 2020 17:07:29 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8F6D1103290;
-        Tue, 22 Dec 2020 17:06:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=av+Y3rrQyUjzXJjmqhn1K7BViaI=; b=rQ/JZT
-        ooHbMktjHCToIT+SkM0FpVnowkLAf0uDGOyYoMtzUz9sl9/v4tUADsk0MgWrmvvV
-        22cryunwG2wH6OJEsQIxYvTMvLHb8AzFDSt8x6fkMTar4MBl9QzFbz5iCD/dkaVU
-        r0qQeXsryLHBsfLBW7ydZQqlrtzn/C7NPvaxo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ZTB7xKmP5Rs4PFnAaii0VukACS6E93mA
-        +GPDDLGzGRGTh//TiLNKoDDDLOmDULD+Dcq4dJ1hUzLOB21vrLI4g8AeTuf5lYzL
-        882VWBqTTBnOw5W+//I614vwV4ssSr13nRBlUBPwiCzUKIb+ZZhA0wFSuvQBARXr
-        q4rbNkKoEcc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 895D610328F;
-        Tue, 22 Dec 2020 17:06:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D261310328E;
-        Tue, 22 Dec 2020 17:06:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 0/3] Cloning with remote unborn HEAD
-References: <20201211210508.2337494-1-jonathantanmy@google.com>
-        <cover.1608673963.git.jonathantanmy@google.com>
-Date:   Tue, 22 Dec 2020 14:06:43 -0800
-In-Reply-To: <cover.1608673963.git.jonathantanmy@google.com> (Jonathan Tan's
-        message of "Tue, 22 Dec 2020 13:54:17 -0800")
-Message-ID: <xmqqwnx9fqbw.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1728151AbgLVWZ0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Dec 2020 17:25:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56396 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728144AbgLVWZ0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Dec 2020 17:25:26 -0500
+Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9909C0613D3
+        for <git@vger.kernel.org>; Tue, 22 Dec 2020 14:24:45 -0800 (PST)
+Received: by mail-qv1-xf33.google.com with SMTP id 4so6757780qvh.1
+        for <git@vger.kernel.org>; Tue, 22 Dec 2020 14:24:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dinwoodie.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5XvchChnQh8pq3T9HvuYMTVBLQsksDb84hyLD8Ob53Q=;
+        b=AdAFqm7yO6PoyysFDOIdtg62l3r/DEH92qslqwdrWg5NuH9cFc9TPcaYw+dg/iwLfD
+         uC4OUh5EG8mdu80GSWMURFyJTmd8saHzozOHJe5ukub+PBumZm4HayxjxZcprDPcLyzx
+         fcu0PpAYR2K/V5/wF92X+gc9i5gFEA32hyB9E=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5XvchChnQh8pq3T9HvuYMTVBLQsksDb84hyLD8Ob53Q=;
+        b=fruX7nIQUKtnmpZQfVeG8mRVeXppaZLcoL+/eBHL3oq8lkSLNLGnbuEH+H+/0n4Hx2
+         6HlAqgqEupDQAHHW8ZuSsVfoXQpxPg1lDVGQXzAWF54xHYaFxngN+WI3+xfSj1X2a5tu
+         +Sy9hhlRI2MuKnHAn2y4SxH+nGv36Nk149+iyN31bwbKjwxYEnZ316n342+6O36D0Hm5
+         9zyQnA/KdBTzn3uXQmrQAg4B75fb2GFBafACXhKTZx0DYajrqkoW8E+JjpOvi4Go9H3p
+         3WXb+P2pcBQPLQyyA9MKnYpoGjGYBgSmG9rUq1yCrWCUaauVfvqGZZtsEf5rX8VyXgro
+         3ssQ==
+X-Gm-Message-State: AOAM532i78qDIIp7Jl+zc27XYZ/n608xrABWQLGuNUZn5Pprml+E5m81
+        JTzPhCHscUlUXSkm8fs65A+Up56f5wx/Q6VCGur8cg==
+X-Google-Smtp-Source: ABdhPJzhpb9ShPg7f9GQhAkQbFQV6WRieKS+PMQZSsVwAtoxKtfDMWFIwPaqd3/gNeLUJdJ0hBKjfpOTmIpZ2bcqrwA=
+X-Received: by 2002:ad4:45a9:: with SMTP id y9mr24131106qvu.15.1608675884586;
+ Tue, 22 Dec 2020 14:24:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FA8AB038-44A1-11EB-91A6-E43E2BB96649-77302942!pb-smtp20.pobox.com
+References: <xmqqpn3tqugm.fsf@gitster.c.googlers.com> <3f0403b84ab06b9deb7c5c189792bebe1db586a7.1606866276.git.matheus.bernardino@usp.br>
+ <CA+kUOamDD_SDNLk3sPSwNAojrAAP+g38MjkfG4JMPRTGOVAKAQ@mail.gmail.com>
+ <87y2ht4pfr.fsf@Rainer.invalid> <CA+kUOam3h859kK76QuS9OFojeavXO15JNpinUQ0vPrAXrcsCoA@mail.gmail.com>
+ <87pn354ijn.fsf@Rainer.invalid>
+In-Reply-To: <87pn354ijn.fsf@Rainer.invalid>
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+Date:   Tue, 22 Dec 2020 22:24:08 +0000
+Message-ID: <CA+kUOamSd_3z8LbYt8QRx==HauYXoCe95B5hAW1W-LdnwGP-xw@mail.gmail.com>
+Subject: Re: [PATCH] apply: don't use core.sharedRepository to create working
+ tree files
+To:     Matheus Tavares <matheus.bernardino@usp.br>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     Achim Gratz <Stromeko@nexgo.de>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Cracked it, and it's a simple error in the test script. It wasn't
+readily obvious because the error gets silently swallowed, and
+presumably because the command isn't necessary on most *nix systems
+that have different behaviour for inheriting permissions, but the
+entire problem is fixed with the following diff:
 
-> Thanks Junio for informing me of the test failures. Turns out that it
-> was partly because I didn't memset oid (and in some code paths, it gets
-> read without being written to), and partly because I didn't set
-> GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME. Here's an updated patch set with
-> the fixes.
->
-> Jonathan Tan (3):
->   ls-refs: report unborn targets of symrefs
->   connect, transport: add no-op arg for future patch
->   clone: respect remote unborn HEAD
+--- a/t/t4129-apply-samemode.sh
++++ b/t/t4129-apply-samemode.sh
+@@ -78,7 +78,7 @@
+        test_config core.sharedRepository 0666 &&
+        (
+                # Remove a default ACL if possible.
+-               (setfacl -k newdir 2>/dev/null || true) &&
++               (setfacl -k . 2>/dev/null || true) &&
+                umask 0077 &&
 
-Having to unset the GIT_TEST_* environment even when we have an
-explicit "git -c init.defaultBranch=<val>" is a bit awkward and
-frustrating, but hopefully this would futureproof the tests for
-the current and future world ;-)
+                # Test both files (f1) and leading dirs (d)
 
-Will replace.
+It looks like the erroneous line was copied from t0001-init.sh, but
+that's a test where "newdir" is actually an existent directory, where
+we never use a directory of that name in this test script. A more
+likely candidate in the circumstances would have been
+t1301-shared-repo.sh, which does call `setfacl -k .` as part of its
+setup.
 
->
->  Documentation/config.txt                |  2 +
->  Documentation/config/init.txt           |  2 +-
->  Documentation/config/lsrefs.txt         |  3 ++
->  Documentation/technical/protocol-v2.txt | 10 ++++-
->  builtin/clone.c                         | 19 +++++++--
->  builtin/fetch-pack.c                    |  3 +-
->  builtin/fetch.c                         |  2 +-
->  builtin/ls-remote.c                     |  2 +-
->  builtin/remote.c                        |  2 +-
->  connect.c                               | 29 ++++++++++++--
->  ls-refs.c                               | 52 +++++++++++++++++++++++--
->  ls-refs.h                               |  1 +
->  remote.h                                |  3 +-
->  serve.c                                 |  2 +-
->  t/t5606-clone-options.sh                |  8 ++--
->  t/t5702-protocol-v2.sh                  | 11 ++++++
->  transport-helper.c                      |  7 +++-
->  transport-internal.h                    | 13 +++----
->  transport.c                             | 29 ++++++++------
->  transport.h                             |  7 +++-
->  20 files changed, 164 insertions(+), 43 deletions(-)
->  create mode 100644 Documentation/config/lsrefs.txt
->
-> Range-diff against v3:
-> 1:  7d20ec323a ! 1:  a66e50626e ls-refs: report unborn targets of symrefs
->     @@ ls-refs.c: static int send_ref(const char *refname, const struct object_id *oid,
->      +	int flag;
->      +	int oid_is_null;
->      +
->     ++	memset(&oid, 0, sizeof(oid));
->      +	strbuf_addf(&namespaced, "%sHEAD", get_git_namespace());
->      +	resolve_ref_unsafe(namespaced.buf, 0, &oid, &flag);
->      +	oid_is_null = is_null_oid(&oid);
-> 2:  b5a78857eb = 2:  14f3962adc connect, transport: add no-op arg for future patch
-> 3:  c2303dc976 ! 3:  e770fc46eb clone: respect remote unborn HEAD
->     @@ t/t5606-clone-options.sh: test_expect_success 'redirected clone -v does show pro
->       
->       test_expect_success 'chooses correct default initial branch name' '
->      -	git init --bare empty &&
->     ++	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
->      +	git -c init.defaultBranch=foo init --bare empty &&
->      +	test_config -C empty lsrefs.allowUnborn true &&
->       	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
->     @@ t/t5702-protocol-v2.sh: test_expect_success 'clone with file:// using protocol v
->       '
->       
->      +test_expect_success 'clone of empty repo propagates name of default branch' '
->     ++	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
->      +	git -c init.defaultBranch=mydefaultbranch init file_empty_parent &&
->      +	test_config -C file_empty_parent lsrefs.allowUnborn true &&
->      +
->     ++	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME= \
->      +	git -c init.defaultBranch=main -c protocol.version=2 \
->      +		clone "file://$(pwd)/file_empty_parent" file_empty_child &&
->      +	grep "refs/heads/mydefaultbranch" file_empty_child/.git/HEAD
+I'm assuming this is a simple and obvious enough fix that it can just
+get squashed into the original commit, but I don't know if that breaks
+things given the original commit is now included in rc tags. Let me
+know if I need to format and submit this as a full patch?
+
+Adam
