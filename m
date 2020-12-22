@@ -4,148 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	INCLUDES_CR_TRAILER,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85139C433DB
-	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:05:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CE68C433DB
+	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:06:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5339222AED
-	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:05:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA2C522512
+	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:06:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726209AbgLVAFY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Dec 2020 19:05:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48216 "EHLO
+        id S1726579AbgLVAF6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Dec 2020 19:05:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726296AbgLVAFY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Dec 2020 19:05:24 -0500
-Received: from mail-qv1-xf49.google.com (mail-qv1-xf49.google.com [IPv6:2607:f8b0:4864:20::f49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CF37C0613D3
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:04:43 -0800 (PST)
-Received: by mail-qv1-xf49.google.com with SMTP id bp20so9289564qvb.20
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:04:43 -0800 (PST)
+        with ESMTP id S1726167AbgLVAF5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Dec 2020 19:05:57 -0500
+Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AC08C061285
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:04:51 -0800 (PST)
+Received: by mail-qt1-x849.google.com with SMTP id i13so9113870qtp.10
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:04:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=sender:date:in-reply-to:message-id:mime-version:subject:from:to:cc;
-        bh=jvaydvpx4TvmN4pmx7oMeXxZIuLIpX6i3jcuz7chFog=;
-        b=C52FN9GQIK2PCYmvP0j2dj57OMekFbI8tj5+W5Jadc7wiJNrZr4cD3p8YbNnkTgHnj
-         qd09tMf5APdHh7AQ3s44Q2ERDEsQpbCGE1EQRDM37/dXnNT8Lj2othOshjXnP6ZsU18S
-         Flfd3rfZTCCLlFmsUCHMAOnWOM98/+x3aiWm6TwinZ+h8mtwsSinbniwodoFckQLOr3e
-         c5aGWymPr6lGElKzux0VVNfKzw8BtKcagLviU9T2+SceBE5/OkbxhEl4rI0/LPxpwJaG
-         lGFAORKM2tl7RQfdDSu/OPTPqM/BFt1Tm7yAaJqCMeanumzCTnftR89mHuQfeLDfApP4
-         taDA==
+        h=sender:date:in-reply-to:message-id:mime-version:references:subject
+         :from:to:cc;
+        bh=szzTHJd6sqRvu0qG5IShlxbRdUP7g1k3ZqXUc4Z/QWk=;
+        b=AxIyqaytIPJHKxvI76D3hsCXrK9ohOnipMqnBbBawwgJ5E4uCAMlWMsp2Ge3fDeVFP
+         bp5hQEAFZQLTH/dzEeXE1wW9rawP0Qrhi5Qylk2UpSXzIRrZ+YiiRIdxx/nFZmlcDp3L
+         zZEhN2IKnJwb8wwvjM6H2nnH4p1yMroufFkbJ0FfZLyIVU25iQWwAswy89zPQQRR0NDX
+         76RJwK/QajojFTn8eOddElzoEUqHGo05MlWhxF9dQp8TSToPqUo4qhT9FEim+ESW/37T
+         Aewhn7q+KXA1GKtrmWcfYghEs7izvcvHOYkavVlPx4WZCLnOL32zfcn8PF3w7m61LFC/
+         4klA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
-         :subject:from:to:cc;
-        bh=jvaydvpx4TvmN4pmx7oMeXxZIuLIpX6i3jcuz7chFog=;
-        b=SxNCZrlzA1AFClitT6Kq+DDtEqY06cO6zlWza+lWfl8LLg5jITL1oqWIDqXVIHtKlB
-         3Ku6AoEmp49XMdzYVwxcrB/gZwtUVlwx7gYh663ThnvN/mE8k0VFe+GmkimStL3lUQBN
-         m4z8I1u9gI0QiWpdE1uIdKLRCj8j0W+TrwHhlJB8i0iPPuCzqsi6+K2A2BljCaUHxKZd
-         QvaJ7/TjY0rCbI2V9dkvv3sRCbhJD7HLs6s9zfk3HEaRyMhYm8wPiEL/hQTYR225vTqb
-         D1Yw9Lt21eZ0pTmEgaYYt2nZDkCRcDOELZHSrq2hZASDDOCnSPykxTLzPzbLGwIALP80
-         pg2A==
-X-Gm-Message-State: AOAM531hZacYm4ozCs1+jW1w7Xhp2GsZ0t78N8vXQ/xTCPsSEARVgnF1
-        xyfBxul4UtHnEDIV25tP7pdSyeImEoCxteKgZIiDH3PY3nlEQkzT1f+rtY5gl3JltWgTzrIYLMZ
-        CSyvCzSChUylZVYVj6hbpZ4VVnmI9XwA/QRcQOmhJ24CL0OyEO6uks6htx6ohw4erEKpZ2XuQbA
+         :references:subject:from:to:cc;
+        bh=szzTHJd6sqRvu0qG5IShlxbRdUP7g1k3ZqXUc4Z/QWk=;
+        b=ZqDdbrBgkCwbROjT9zVvXE/gOF57ViHQkiEULBllExvo4tgVfaC9vRVB4Eb8x+ER7H
+         84+qd6ZEKBmdbPJ8nE7vUa8BICanTGaY+3shCnQL4kAwKf0MNwVzscdNn3vR6rq+gpbd
+         gRqpOqMuh0KixX7jsDLL75KLAzwPaJDIPBtFosVfNpNchrIlF88+xNFV3qG6nj8O4UWO
+         06s+DOfMowYXiDNSMFktdWj4/g61Udi+4Kys8O/+h0ohBG7Z8eAfu7stnQRzQHQea67M
+         kQkVF4qJm+cglIBYySicIeF1Ku87FjpTLPbi/2Rl2HeklLQkF4Wt3hrxtYpEqH0Kwu5K
+         wJRw==
+X-Gm-Message-State: AOAM532vs8L/QDOznQh+aGCIyz2tIXZF0e7ohcZUVHKCt90zL21eqxzc
+        SNouUKm6+HhKBmi2s6+XODT9cdu2+B5inr62iH1o3+2iq3IARcj2NNyONSC1/bxzRDIJI4HzP/K
+        DjkqIk6/QW0qqYGk6d3hggu9/5s+6v5u6I9bUuex45B3wrbBIvIiNVz0ZOIIe/c0aHcyHxFxslQ
         ==
-X-Google-Smtp-Source: ABdhPJzgCR97+HgKmPECoprm79GLOp6O+cwEc621HfnabpkpMxm2oGOb9Y5JX8bijZHDtEdnu0zk8Y7GP8043ufaypI=
+X-Google-Smtp-Source: ABdhPJwJkx0NLueH7AVdVA53FhCFPyo6gp6arsOvuY9HpoN/hivesYIcKI8PvwKbIPpv5jiDDvM6jTDyb5OPVB1OOag=
 Sender: "emilyshaffer via sendgmr" 
         <emilyshaffer@podkayne.svl.corp.google.com>
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
- (user=emilyshaffer job=sendgmr) by 2002:a0c:ebc2:: with SMTP id
- k2mr19170089qvq.24.1608595482889; Mon, 21 Dec 2020 16:04:42 -0800 (PST)
-Date:   Mon, 21 Dec 2020 16:04:18 -0800
-In-Reply-To: <20201205014945.1502660-1-emilyshaffer@google.com>
-Message-Id: <20201222000435.1529768-1-emilyshaffer@google.com>
+ (user=emilyshaffer job=sendgmr) by 2002:a0c:b59e:: with SMTP id
+ g30mr19864459qve.30.1608595490098; Mon, 21 Dec 2020 16:04:50 -0800 (PST)
+Date:   Mon, 21 Dec 2020 16:04:22 -0800
+In-Reply-To: <20201222000435.1529768-1-emilyshaffer@google.com>
+Message-Id: <20201222000435.1529768-5-emilyshaffer@google.com>
 Mime-Version: 1.0
+References: <20201222000435.1529768-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.29.2.490.gc7ae633391
-Subject: [PATCH v3 00/17] use config-based hooks (config-based hooks part II)
+Subject: [PATCH v3 04/17] gc: use hook library for pre-auto-gc hook
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        James Ramsay <james@jramsay.com.au>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
-        <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Emily Shaffer <emilyshaffer@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since v2:
- - Renamed 'master' to 'main' in new t5411 (proc-receive) test.
- - Removed some accidentally included debug strings.
- - Fixed a nasty bug in the reference-transaction hook conversion where calling
-   'oid_to_hex()' would invalidate references to the output of earlier
-   'oid_to_hex()' runs farther up the callstack. Instead, the hook callsite now
-   uses 'oid_to_hex_r()'.
+Using the hook.h library instead of the run-command.h library to run
+pre-auto-gc means that those hooks can be set up in config files, as
+well as in the hookdir. pre-auto-gc is called only from builtin/gc.c.
 
-Another thing I wanted to do in this series but ended up not having time
-for before the holidays was to figure out a way to consolidate
-Documentation/githooks.txt and Documentation/git-hook.txt. My personal
-preference would be to remove githooks.txt's contents, move the "Hooks"
-header from there into git-hook.txt, and have 'git help githooks'/'git
-help hooks' redirect to git-hook.txt; I don't have a patch to share here
-because I ran out of time before vacation :) What do others envision the
-documentation looking like?
+Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+---
+ Documentation/githooks.txt | 2 ++
+ builtin/gc.c               | 4 +++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-Thanks!
- - Emily
-
-CI run: https://github.com/nasamuffin/git/actions/runs/436905873
-
-Emily Shaffer (17):
-  commit: use config-based hooks
-  am: convert applypatch hooks to use config
-  merge: use config-based hooks for post-merge hook
-  gc: use hook library for pre-auto-gc hook
-  rebase: teach pre-rebase to use hook.h
-  read-cache: convert post-index-change hook to use config
-  receive-pack: convert push-to-checkout hook to hook.h
-  git-p4: use 'git hook' to run hooks
-  hooks: convert 'post-checkout' hook to hook library
-  hook: convert 'post-rewrite' hook to config
-  transport: convert pre-push hook to use config
-  reference-transaction: look for hooks in config
-  receive-pack: convert 'update' hook to hook.h
-  proc-receive: acquire hook list from hook.h
-  post-update: use hook.h library
-  receive-pack: convert receive hooks to hook.h
-  run-command: stop thinking about hooks
-
- Documentation/githooks.txt                    |  45 +++
- builtin/am.c                                  |  30 +-
- builtin/checkout.c                            |  16 +-
- builtin/clone.c                               |   7 +-
- builtin/commit.c                              |  11 +-
- builtin/gc.c                                  |   4 +-
- builtin/merge.c                               |  14 +-
- builtin/rebase.c                              |   7 +-
- builtin/receive-pack.c                        | 326 ++++++++++--------
- builtin/worktree.c                            |  30 +-
- commit.c                                      |  20 +-
- commit.h                                      |   3 +-
- git-p4.py                                     |  67 +---
- hook.c                                        |  39 ++-
- read-cache.c                                  |  12 +-
- refs.c                                        |  38 +-
- reset.c                                       |  15 +-
- run-command.c                                 |  66 ----
- run-command.h                                 |  24 --
- sequencer.c                                   |  83 ++---
- t/t1416-ref-transaction-hooks.sh              |  12 +-
- t/t5411/test-0015-too-many-hooks-error.sh     |  47 +++
- ...3-pre-commit-and-pre-merge-commit-hooks.sh |  17 +-
- transport.c                                   |  55 +--
- 24 files changed, 493 insertions(+), 495 deletions(-)
- create mode 100644 t/t5411/test-0015-too-many-hooks-error.sh
-
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index f6ddf1aa22..d74308dc20 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -553,6 +553,8 @@ This hook is invoked by `git gc --auto` (see linkgit:git-gc[1]). It
+ takes no parameter, and exiting with non-zero status from this script
+ causes the `git gc --auto` to abort.
+ 
++Hooks run during 'pre-auto-gc' will be run in parallel by default.
++
+ post-rewrite
+ ~~~~~~~~~~~~
+ 
+diff --git a/builtin/gc.c b/builtin/gc.c
+index b57fda4924..edcc873c70 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -32,6 +32,7 @@
+ #include "remote.h"
+ #include "object-store.h"
+ #include "exec-cmd.h"
++#include "hook.h"
+ 
+ #define FAILED_RUN "failed to run %s"
+ 
+@@ -340,6 +341,7 @@ static void add_repack_incremental_option(void)
+ 
+ static int need_to_gc(void)
+ {
++	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT_ASYNC;
+ 	/*
+ 	 * Setting gc.auto to 0 or negative can disable the
+ 	 * automatic gc.
+@@ -386,7 +388,7 @@ static int need_to_gc(void)
+ 	else
+ 		return 0;
+ 
+-	if (run_hook_le(NULL, "pre-auto-gc", NULL))
++	if (run_hooks("pre-auto-gc", &hook_opt))
+ 		return 0;
+ 	return 1;
+ }
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
