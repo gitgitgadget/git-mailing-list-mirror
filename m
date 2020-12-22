@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 436E7C43333
-	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:06:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1868C4332E
+	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:06:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 295B822B43
-	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:06:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC13822B3B
+	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:06:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726680AbgLVAGN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Dec 2020 19:06:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48302 "EHLO
+        id S1726651AbgLVAGF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Dec 2020 19:06:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726597AbgLVAGM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Dec 2020 19:06:12 -0500
+        with ESMTP id S1726636AbgLVAGE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Dec 2020 19:06:04 -0500
 Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0815C0611CF
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:05:07 -0800 (PST)
-Received: by mail-qt1-x849.google.com with SMTP id b11so9162697qtj.11
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:05:07 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E56D0C0611CB
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:04:59 -0800 (PST)
+Received: by mail-qt1-x849.google.com with SMTP id l7so9113808qth.15
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:04:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=iDqJWsAPBG3G1J20vMEo0a/NxzvZWVs472i9yb8IPXA=;
-        b=IbCUee66QH6JP09LlerCOebl26j9eTk+FPxlsSqgJ5FwobCx3xWXQWl9zc32DuF3Ah
-         6HdWY/UmQL1w86wp/s+CnP6E8mzXcdbydGAQcrwm+2xeMS/ZdTa2c4xyZYBDevoLldMI
-         KnJlsmzaGKUwv+me7heEBrBBH1fkUc5Lk6d39R24f+Q3eEEEilOojpf7xTS0iZ16ZSoj
-         Dy4FlmukD8k9VT7Sx+EUX19gihv5YAGaDZzilj0ySM3LmSCEU5ND86JsVCXRJSMYovFb
-         JwfS2R6fbkQRnaaNO2ImuqmRElR3NktLYQkkDSZEDIcK8/wdyyswiKYUaPbqyusF+KQi
-         fwOw==
+        bh=LUxw/hFdF9lowPah09S7Zj467fY7yAG7wcNTSHnpxaE=;
+        b=pRsHALvO3OybA+4+vuCn/zpiQ5GxTueiRQqDWAXi2N01rZv5/c/FTOPqXIDoAzt5c1
+         qSUVZj8HCdudtb0Ub43Xx+MUeORJTuwv95Xm/LS0cCRjHWjDdOUDoy7ILbrIX7idxXAG
+         IDL1TlFedfyEBJJg6KFr2z4zpgtY+k/f0okBKXSc0Md3bS5TRd+q0GcV4eg3oprRFDaO
+         Y27rSL2M5XOwZ8YWgRgcpjNpn8+UXYC16Qgdv68hygOcDn4B7yIvIVsdBlvj9JVWAk9n
+         7BTTLHwHz8nQe6zli3KIGYuUNP2Wl8FMjlIRehDDiSyg25t71Qazr2t8mNeuOSc3xvxX
+         BW0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=iDqJWsAPBG3G1J20vMEo0a/NxzvZWVs472i9yb8IPXA=;
-        b=UliQwwCIjwToQ6NajVmyJXUOIMcujce8W1eIDUhC//boCpqqFvCJDB53arwhBQx/Tn
-         +FTMx71zzKL7QEKbsbHt6J7I9E6/BVfy/e08o0uf3S4HV3Ggj4RQjWz2b9t1JaBaCUKr
-         M6GmhL7Z8tMLFDfoJl5d8JuU1cyryNfW8JmODwMYmX0W9t4SmfoEKl7GS+lX+crn/sPP
-         ILPaCgcUh1leR9eXEL1fKgo9dBujID93qfWF7FwImh1kKE5EDEx5AU6dZiTOHTlDTNiX
-         Owu2YWikpPO7XB2ItPvZNUkT7j0GhwnkYZfhMWN9kIWUqpa7mymN6reak+nj+u67lxFN
-         1SEw==
-X-Gm-Message-State: AOAM5312TNw3Duh0rw93rW/Pj6MoAzNuIekIi1S05Jo4iWWVoKXJ3Bsh
-        wn4lefam28Q7vbbaEWLgY1QzMVDhymgjyW9bf/9JtqbAr5tpmVe0SD9X7JeLFprpxq8ooKB+P+8
-        WOo+mauC0Wq6ZjopK/lZFtSsXUZ1P5CToBByiBM3gNMOxL4WkEZriBzjXglbfkj9/7RlIZwIJWg
+        bh=LUxw/hFdF9lowPah09S7Zj467fY7yAG7wcNTSHnpxaE=;
+        b=cmWi1XYGP5eYqnq2spbeISvBNo1Ts9g+GpVFzDOmDp86X4SxVVZ8ALpIjNvb0gE6qz
+         9LQav59P0T+ijGy6PkmlK4lgDGAAmqA3LEigmAaCLItWVeWZgQg2ZKFxWVxOtxjfpRRj
+         ceG4cD2wO9EjrL9UWqzGqY3trWx+ZQOmUOIEAiNb7UAFfN3WXhQVcO1Q/i0byUdBZT8u
+         HZ/AhtwGR4Gm6jCmqzK7kdzHFhI6uyJNt5oGbSXRBwxDbbNPgDVJHEqtCWuaNu0Qa8Rk
+         4dT1XPC55i5SJMmG7sAtT2zVWLpFR2n326qyv3WjKSIGoIIobv6UnlbA1yPe4KRLk/MF
+         yoYA==
+X-Gm-Message-State: AOAM530kEetIOyr4kZUuuYto1OKBlXXx5EuBJdjL7VRpiLFd7bFKjmUn
+        RCfNndd+x2LW3Z2UNXZrFQJlRQ0k9RrsdDSsq70u2LK6ok5BMFxqbIBkpfw3QqZGC3CHvTQUHIg
+        Iv6/Ezt8EUZyv44olAAqcDvWWitmHkLHLN5SV2kdElMC014skZV8/ioLXSR9/MLUzgSKrA1+bgA
         ==
-X-Google-Smtp-Source: ABdhPJzaHIaD4Ut5WPEUPRHThmYsK5zdhZxLtuTY2mX3WqlLtgnzsIJn6eYK3wNiE00S4gf8gnH6FuKzkDhphob60O8=
+X-Google-Smtp-Source: ABdhPJz0uPhwxJX4GOY0vRaX3NEIoQmfi6Vqk27+CoCo9sKZwIr8gDhQ7hPm6miLGTOtcscNhg0Vr6nxJzDbGbjhk0k=
 Sender: "emilyshaffer via sendgmr" 
         <emilyshaffer@podkayne.svl.corp.google.com>
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
- (user=emilyshaffer job=sendgmr) by 2002:a05:6214:124d:: with SMTP id
- q13mr19673177qvv.52.1608595506839; Mon, 21 Dec 2020 16:05:06 -0800 (PST)
-Date:   Mon, 21 Dec 2020 16:04:31 -0800
+ (user=emilyshaffer job=sendgmr) by 2002:a0c:8642:: with SMTP id
+ p60mr17002905qva.6.1608595499088; Mon, 21 Dec 2020 16:04:59 -0800 (PST)
+Date:   Mon, 21 Dec 2020 16:04:27 -0800
 In-Reply-To: <20201222000435.1529768-1-emilyshaffer@google.com>
-Message-Id: <20201222000435.1529768-14-emilyshaffer@google.com>
+Message-Id: <20201222000435.1529768-10-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20201222000435.1529768-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.29.2.490.gc7ae633391
-Subject: [PATCH v3 13/17] receive-pack: convert 'update' hook to hook.h
+Subject: [PATCH v3 09/17] hooks: convert 'post-checkout' hook to hook library
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -72,128 +72,180 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-By using hook.h to invoke the 'update' hook, now hooks can be specified
-in the config in addition to the hookdir.
+By using the 'hook.h' library, 'post-checkout' hooks can now be
+specified in the config as well as in the hook directory.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- Documentation/githooks.txt       |  2 +
- builtin/receive-pack.c           | 65 +++++++++++++++++++++-----------
- t/t1416-ref-transaction-hooks.sh |  4 +-
- 3 files changed, 48 insertions(+), 23 deletions(-)
+ Documentation/githooks.txt |  2 ++
+ builtin/checkout.c         | 16 +++++++++++-----
+ builtin/clone.c            |  7 +++++--
+ builtin/worktree.c         | 30 ++++++++++++++----------------
+ reset.c                    | 15 +++++++++++----
+ 5 files changed, 43 insertions(+), 27 deletions(-)
 
 diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 3a35500132..2b3a74f249 100644
+index 8de512ee5d..14035ef725 100644
 --- a/Documentation/githooks.txt
 +++ b/Documentation/githooks.txt
-@@ -359,6 +359,8 @@ The default 'update' hook, when enabled--and with
- `hooks.allowunannotated` config option unset or set to false--prevents
- unannotated tags to be pushed.
+@@ -224,6 +224,8 @@ This hook can be used to perform repository validity checks, auto-display
+ differences from the previous HEAD if different, or set working dir metadata
+ properties.
  
-+Hooks executed during 'update' are run in parallel by default.
++Hooks executed during 'post-checkout' will not be parallelized.
 +
- [[proc-receive]]
- proc-receive
- ~~~~~~~~~~~~
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 1c0bad0448..57f3bb979c 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -938,33 +938,56 @@ static int run_receive_hook(struct command *commands,
- 	return status;
- }
+ post-merge
+ ~~~~~~~~~~
  
--static int run_update_hook(struct command *cmd)
-+static void hook_output_to_sideband(struct strbuf *output, void *cb_data)
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 9b82119129..20966452b8 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -9,6 +9,7 @@
+ #include "config.h"
+ #include "diff.h"
+ #include "dir.h"
++#include "hook.h"
+ #include "ll-merge.h"
+ #include "lockfile.h"
+ #include "merge-recursive.h"
+@@ -104,13 +105,18 @@ struct branch_info {
+ static int post_checkout_hook(struct commit *old_commit, struct commit *new_commit,
+ 			      int changed)
  {
--	const char *argv[5];
--	struct child_process proc = CHILD_PROCESS_INIT;
--	int code;
-+	int keepalive_active = 0;
- 
--	argv[0] = find_hook("update");
--	if (!argv[0])
--		return 0;
-+	if (keepalive_in_sec <= 0)
-+		use_keepalive = KEEPALIVE_NEVER;
-+	if (use_keepalive == KEEPALIVE_ALWAYS)
-+		keepalive_active = 1;
- 
--	argv[1] = cmd->ref_name;
--	argv[2] = oid_to_hex(&cmd->old_oid);
--	argv[3] = oid_to_hex(&cmd->new_oid);
--	argv[4] = NULL;
-+	/* send a keepalive if there is no data to write */
-+	if (keepalive_active && !output->len) {
-+		static const char buf[] = "0005\1";
-+		write_or_die(1, buf, sizeof(buf) - 1);
-+		return;
-+	}
- 
--	proc.no_stdin = 1;
--	proc.stdout_to_stderr = 1;
--	proc.err = use_sideband ? -1 : 0;
--	proc.argv = argv;
--	proc.trace2_hook_name = "update";
-+	if (use_keepalive == KEEPALIVE_AFTER_NUL && !keepalive_active) {
-+		const char *first_null = memchr(output->buf, '\0', output->len);
-+		if (first_null) {
-+			/* The null bit is excluded. */
-+			size_t before_null = first_null - output->buf;
-+			size_t after_null = output->len - (before_null + 1);
-+			keepalive_active = 1;
-+			send_sideband(1, 2, output->buf, before_null, use_sideband);
-+			send_sideband(1, 2, first_null + 1, after_null, use_sideband);
-+
-+			return;
-+		}
-+	}
-+
-+	send_sideband(1, 2, output->buf, output->len, use_sideband);
-+}
-+
-+static int run_update_hook(struct command *cmd)
-+{
-+	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_ASYNC;
-+	int code;
-+
+-	return run_hook_le(NULL, "post-checkout",
+-			   oid_to_hex(old_commit ? &old_commit->object.oid : &null_oid),
+-			   oid_to_hex(new_commit ? &new_commit->object.oid : &null_oid),
+-			   changed ? "1" : "0", NULL);
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_SYNC;
++	int rc;
+ 	/* "new_commit" can be NULL when checking out from the index before
+ 	   a commit exists. */
+-
 +	strvec_pushl(&opt.args,
-+		     cmd->ref_name,
-+		     oid_to_hex(&cmd->old_oid),
-+		     oid_to_hex(&cmd->new_oid),
++		     oid_to_hex(old_commit ? &old_commit->object.oid : &null_oid),
++		     oid_to_hex(new_commit ? &new_commit->object.oid : &null_oid),
++		     changed ? "1" : "0",
 +		     NULL);
- 
--	code = start_command(&proc);
--	if (code)
--		return code;
- 	if (use_sideband)
--		copy_to_sideband(proc.err, -1, NULL);
--	return finish_command(&proc);
-+		opt.consume_sideband = hook_output_to_sideband;
-+
-+	code = run_hooks("update", &opt);
++	rc = run_hooks("post-checkout", &opt);
 +	run_hooks_opt_clear(&opt);
-+	return code;
++	return rc;
  }
  
- static struct command *find_command_by_refname(struct command *list,
-diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-hooks.sh
-index 17f11f5cb0..28359f6099 100755
---- a/t/t1416-ref-transaction-hooks.sh
-+++ b/t/t1416-ref-transaction-hooks.sh
-@@ -121,10 +121,10 @@ test_expect_success 'interleaving hook calls succeed' '
- 	EOF
+ static int update_some(const struct object_id *oid, struct strbuf *base,
+diff --git a/builtin/clone.c b/builtin/clone.c
+index a0841923cf..307336e576 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -32,6 +32,7 @@
+ #include "connected.h"
+ #include "packfile.h"
+ #include "list-objects-filter-options.h"
++#include "hook.h"
  
- 	cat >expect <<-EOF &&
--		hooks/update refs/tags/PRE $ZERO_OID $PRE_OID
-+		$(pwd)/target-repo.git/hooks/update refs/tags/PRE $ZERO_OID $PRE_OID
- 		$(pwd)/target-repo.git/hooks/reference-transaction prepared
- 		$(pwd)/target-repo.git/hooks/reference-transaction committed
--		hooks/update refs/tags/POST $ZERO_OID $POST_OID
-+		$(pwd)/target-repo.git/hooks/update refs/tags/POST $ZERO_OID $POST_OID
- 		$(pwd)/target-repo.git/hooks/reference-transaction prepared
- 		$(pwd)/target-repo.git/hooks/reference-transaction committed
- 	EOF
+ /*
+  * Overall FIXMEs:
+@@ -771,6 +772,7 @@ static int checkout(int submodule_progress)
+ 	struct tree *tree;
+ 	struct tree_desc t;
+ 	int err = 0;
++	struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT_SYNC;
+ 
+ 	if (option_no_checkout)
+ 		return 0;
+@@ -816,8 +818,9 @@ static int checkout(int submodule_progress)
+ 	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
+ 		die(_("unable to write new index file"));
+ 
+-	err |= run_hook_le(NULL, "post-checkout", oid_to_hex(&null_oid),
+-			   oid_to_hex(&oid), "1", NULL);
++	strvec_pushl(&hook_opt.args, oid_to_hex(&null_oid), oid_to_hex(&oid), "1", NULL);
++	err |= run_hooks("post-checkout", &hook_opt);
++	run_hooks_opt_clear(&hook_opt);
+ 
+ 	if (!err && (option_recurse_submodules.nr > 0)) {
+ 		struct strvec args = STRVEC_INIT;
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 197fd24a55..9a87c4c120 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -12,6 +12,7 @@
+ #include "submodule.h"
+ #include "utf8.h"
+ #include "worktree.h"
++#include "hook.h"
+ 
+ static const char * const worktree_usage[] = {
+ 	N_("git worktree add [<options>] <path> [<commit-ish>]"),
+@@ -455,22 +456,19 @@ static int add_worktree(const char *path, const char *refname,
+ 	 * is_junk is cleared, but do return appropriate code when hook fails.
+ 	 */
+ 	if (!ret && opts->checkout) {
+-		const char *hook = find_hook("post-checkout");
+-		if (hook) {
+-			const char *env[] = { "GIT_DIR", "GIT_WORK_TREE", NULL };
+-			cp.git_cmd = 0;
+-			cp.no_stdin = 1;
+-			cp.stdout_to_stderr = 1;
+-			cp.dir = path;
+-			cp.env = env;
+-			cp.argv = NULL;
+-			cp.trace2_hook_name = "post-checkout";
+-			strvec_pushl(&cp.args, absolute_path(hook),
+-				     oid_to_hex(&null_oid),
+-				     oid_to_hex(&commit->object.oid),
+-				     "1", NULL);
+-			ret = run_command(&cp);
+-		}
++		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_SYNC;
++
++		strvec_pushl(&opt.env, "GIT_DIR", "GIT_WORK_TREE", NULL);
++		strvec_pushl(&opt.args,
++			     oid_to_hex(&null_oid),
++			     oid_to_hex(&commit->object.oid),
++			     "1",
++			     NULL);
++		opt.dir = path;
++
++		ret = run_hooks("post-checkout", &opt);
++
++		run_hooks_opt_clear(&opt);
+ 	}
+ 
+ 	strvec_clear(&child_env);
+diff --git a/reset.c b/reset.c
+index 2f4fbd07c5..e6bfaf67e1 100644
+--- a/reset.c
++++ b/reset.c
+@@ -7,6 +7,7 @@
+ #include "tree-walk.h"
+ #include "tree.h"
+ #include "unpack-trees.h"
++#include "hook.h"
+ 
+ int reset_head(struct repository *r, struct object_id *oid, const char *action,
+ 	       const char *switch_to_branch, unsigned flags,
+@@ -126,10 +127,16 @@ int reset_head(struct repository *r, struct object_id *oid, const char *action,
+ 			ret = create_symref("HEAD", switch_to_branch,
+ 					    reflog_head);
+ 	}
+-	if (run_hook)
+-		run_hook_le(NULL, "post-checkout",
+-			    oid_to_hex(orig ? orig : &null_oid),
+-			    oid_to_hex(oid), "1", NULL);
++	if (run_hook) {
++		struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_SYNC;
++		strvec_pushl(&opt.args,
++			     oid_to_hex(orig ? orig : &null_oid),
++			     oid_to_hex(oid),
++			     "1",
++			     NULL);
++		run_hooks("post-checkout", &opt);
++		run_hooks_opt_clear(&opt);
++	}
+ 
+ leave_reset_head:
+ 	strbuf_release(&msg);
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
