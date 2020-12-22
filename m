@@ -2,120 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAFECC433DB
-	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 22:46:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1541C433E6
+	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 22:50:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7D3B522B2D
-	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 22:46:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7302E23139
+	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 22:50:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728115AbgLVWqO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Dec 2020 17:46:14 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55054 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726534AbgLVWqO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Dec 2020 17:46:14 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AF92F914D6;
-        Tue, 22 Dec 2020 17:45:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=WQ3BCY9cBfrh
-        ZU72LvSvjLL0Hos=; b=uOzl3A6ZO7BnsD0n9vOMoqRValeCFA+qlRAtLWmz3x4D
-        mob5V7pf/30war+9SBNY3XK6gVB20TywsOin9EKFaav2I1uYlTf4Byjcv+XgFZwP
-        0YYa8N8B5cdOFKg4eWyTHSHkb3j/3KD86pm/LbZpBAHdkiGuu3WrZf/nT7KRQ+o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=MtgfGz
-        S0pJ2tardTt03bfrOWTOOUsHPMz34Q7/DauoS85HzFkExIwhK+LLRvCO9op0bsBC
-        6gPM4jBZ6B5H2LvR/xuavTfZWjwO/7kpXv/slN9ssoX8SUB+kXcoca/nrsWTB8kT
-        ImEtdF0Ukne8nMRFkkv1hYaQBexld/DlOuHeA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A80D6914D5;
-        Tue, 22 Dec 2020 17:45:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E64A0914D4;
-        Tue, 22 Dec 2020 17:45:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/3] gc: fix handling of crontab magic markers
-References: <cover.1608585497.git.martin.agren@gmail.com>
-        <689d3150e9822eeccac0e1d07c2ba26dac47b4c9.1608585497.git.martin.agren@gmail.com>
-Date:   Tue, 22 Dec 2020 14:45:30 -0800
-In-Reply-To: <689d3150e9822eeccac0e1d07c2ba26dac47b4c9.1608585497.git.martin.agren@gmail.com>
-        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Mon, 21 Dec 2020 22:26:32
- +0100")
-Message-ID: <xmqqsg7xfoj9.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727723AbgLVWuT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Dec 2020 17:50:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60256 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726072AbgLVWuT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Dec 2020 17:50:19 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA3C0C0613D3
+        for <git@vger.kernel.org>; Tue, 22 Dec 2020 14:49:38 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id y19so35554022lfa.13
+        for <git@vger.kernel.org>; Tue, 22 Dec 2020 14:49:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=usp.br; s=usp-google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2Ne/WNH+yStUV/Gp72jffMrcVWeC3yS87li7TjMWnjw=;
+        b=rVabJzcgEwnEt0+EieawkES7zIo5VOcMl37udz5M5kR9WSRE2QHsZ++p7F0LLuJx7B
+         Fmy56UADnJJgYF9wQr2hProX7FlrDLdhhQ0hDKPPhIIszXwfk6+6mNgzk+XBhdUGblWc
+         cUACsjEp9iUbXtUgDCOuh2akssxNdGlAewgSkLkXM3/j20iudMJS5OnFVN/fJRILszxV
+         R0vD41PVmFC7mzZbOy+cs6QCnIL0DWD6RBAfnWNPH3YxRGg6cGZwdjMgbxkviAr9vZIR
+         o7ZbFDQ1gdiQY9a4aUD0hqEnPuMwqHhR+DuffI0CqEtf1PX26FVQt+9YG+YQP8HltWzW
+         BsnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2Ne/WNH+yStUV/Gp72jffMrcVWeC3yS87li7TjMWnjw=;
+        b=j9WRapl/9pYcqkIlx35Gjxk7pi6DD/FS+XC4X8L2AnjP8siwZ2pVZ6uSUU6LlvdKtM
+         XKkrr1aw2SS3p3wR4yZ42icAoZnIMGab9ZZlLYSumdRS6CWC/7levdXZfhV0ESoYOVZG
+         vN7NERDX4IBk+DOPB68//2QHSn2kNRHku4yfNCYk5Hs8hFBsHm7wKQn/p4rEhB6OGNg6
+         /iDOYrX5EtKDcQSXlJUAkk7gBtXRYPuOq8DRFjvPykM7sVHC/9GbzeW+NerpNqgY+6aC
+         gjO4NfTnXxEAKSsuCx79BNu979mfqJOLnYUbdeoit2eB2LE/GgPorYwQ3HaeYzeMIRTR
+         WjAg==
+X-Gm-Message-State: AOAM533WjYies4LSYeHjg6slWMIRvIeX+I/EB3XRvj6ZFYqliNcn8YXY
+        /ji6fvJnRbGZe0xkgjhpe8jvRuIwpH3AllJyOi+2Vw==
+X-Google-Smtp-Source: ABdhPJzD4USFy8XB1OevPDuAdvR0yepU7TrPo6Nkd93GTjwdT+ZxqVFF+iGzRH1GUNSUpubhP96XApfJiClyzUZKZHk=
+X-Received: by 2002:a05:651c:1386:: with SMTP id k6mr10304784ljb.113.1608677377148;
+ Tue, 22 Dec 2020 14:49:37 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 64FF26D8-44A7-11EB-8D1F-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <xmqqpn3tqugm.fsf@gitster.c.googlers.com> <3f0403b84ab06b9deb7c5c189792bebe1db586a7.1606866276.git.matheus.bernardino@usp.br>
+ <CA+kUOamDD_SDNLk3sPSwNAojrAAP+g38MjkfG4JMPRTGOVAKAQ@mail.gmail.com>
+ <87y2ht4pfr.fsf@Rainer.invalid> <CA+kUOam3h859kK76QuS9OFojeavXO15JNpinUQ0vPrAXrcsCoA@mail.gmail.com>
+ <87pn354ijn.fsf@Rainer.invalid> <CA+kUOamSd_3z8LbYt8QRx==HauYXoCe95B5hAW1W-LdnwGP-xw@mail.gmail.com>
+In-Reply-To: <CA+kUOamSd_3z8LbYt8QRx==HauYXoCe95B5hAW1W-LdnwGP-xw@mail.gmail.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Tue, 22 Dec 2020 19:49:26 -0300
+Message-ID: <CAHd-oW7XJL_a1zMAUetHzvrh8DrLT4g2awv-fjbTdeLVLKVsew@mail.gmail.com>
+Subject: Re: [PATCH] apply: don't use core.sharedRepository to create working
+ tree files
+To:     Adam Dinwoodie <adam@dinwoodie.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Achim Gratz <Stromeko@nexgo.de>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin =C3=85gren <martin.agren@gmail.com> writes:
-
-> On `git maintenance start`, we add a few entries to the user's cron
-> table. We wrap our entries using two magic markers, "# BEGIN GIT
-> MAINTENANCE SCHEDULE" and "# END GIT MAINTENANCE SCHEDULE". At a later
-> `git maintenance stop`, we will go through the table and remove these
-> lines. Or rather, we will remove the "BEGIN" marker, the "END" marker
-> and everything between them.
+On Tue, Dec 22, 2020 at 7:24 PM Adam Dinwoodie <adam@dinwoodie.org> wrote:
 >
-> Alas, we have a bug in how we detect the "END" marker: we don't. As we
-> loop through all the lines of the crontab, if we are in the "old
-> region", i.e., the region we're aiming to remove, we make an early
-> `continue` and don't get as far as checking for the "END" marker. Thus,
-> once we've seen our "BEGIN", we remove everything until the end of the
-> file.
+> Cracked it, and it's a simple error in the test script. It wasn't
+> readily obvious because the error gets silently swallowed, and
+> presumably because the command isn't necessary on most *nix systems
+> that have different behaviour for inheriting permissions, but the
+> entire problem is fixed with the following diff:
 >
-> Rewrite the logic for identifying these markers. There are four cases
-> that are mutually exclusive: The current line starts a region or it end=
-s
-> it, or it's firmly within the region, or it's outside of it (and should
-> be printed).
+> --- a/t/t4129-apply-samemode.sh
+> +++ b/t/t4129-apply-samemode.sh
+> @@ -78,7 +78,7 @@
+>         test_config core.sharedRepository 0666 &&
+>         (
+>                 # Remove a default ACL if possible.
+> -               (setfacl -k newdir 2>/dev/null || true) &&
+> +               (setfacl -k . 2>/dev/null || true) &&
+>                 umask 0077 &&
 >
-> Signed-off-by: Martin =C3=85gren <martin.agren@gmail.com>
-> ---
->  t/t7900-maintenance.sh | 7 +++++++
->  builtin/gc.c           | 7 +++----
->  2 files changed, 10 insertions(+), 4 deletions(-)
+>                 # Test both files (f1) and leading dirs (d)
 >
-> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-> index d1e0c8f830..4bbfce31e9 100755
-> --- a/t/t7900-maintenance.sh
-> +++ b/t/t7900-maintenance.sh
-> @@ -446,6 +446,13 @@ test_expect_success 'start preserves existing sche=
-dule' '
->  	grep "Important information!" cron.txt
->  '
-> =20
-> +test_expect_success 'stop preserves surrounding schedule' '
-> +	echo "Crucial information!" >>cron.txt &&
-> +	GIT_TEST_CRONTAB=3D"test-tool crontab cron.txt" git maintenance stop =
-&&
+> It looks like the erroneous line was copied from t0001-init.sh, but
+> that's a test where "newdir" is actually an existent directory, where
+> we never use a directory of that name in this test script.
 
-31345d55 (maintenance: extract platform-specific scheduling,
-2020-11-24) in ds/maintenance-part-4 needs to adjust this
-exported variable for the tests to pass in 'seen'
+My bad, I should have been more careful here. Thanks for finding the problem!
 
-Is it just the matter of replacing it with
+> I'm assuming this is a simple and obvious enough fix that it can just
+> get squashed into the original commit, but I don't know if that breaks
+> things given the original commit is now included in rc tags. Let me
+> know if I need to format and submit this as a full patch?
 
-	GIT_TEST_MAINT_SCHEDULER=3D"crontab:test-tool crontab ..."
+Yeah, since the original patch is already merged into `master`, I
+think a new patch fixing the problem would be more appropriate.
 
-or is there more to it?
-
-Thanks
+Thanks,
+Matheus
