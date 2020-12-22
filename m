@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16440C433E0
-	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:03:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08B28C433DB
+	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:03:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D60FE22AED
-	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:03:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CE1A322AED
+	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:03:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725961AbgLVADy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Dec 2020 19:03:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47976 "EHLO
+        id S1726551AbgLVADz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Dec 2020 19:03:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726531AbgLVADx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Dec 2020 19:03:53 -0500
-Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35E53C0611D0
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:02:52 -0800 (PST)
-Received: by mail-pl1-x64a.google.com with SMTP id d6so6535377plr.17
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:02:52 -0800 (PST)
+        with ESMTP id S1726487AbgLVADw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Dec 2020 19:03:52 -0500
+Received: from mail-qt1-x84a.google.com (mail-qt1-x84a.google.com [IPv6:2607:f8b0:4864:20::84a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83F5EC0611CF
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:02:50 -0800 (PST)
+Received: by mail-qt1-x84a.google.com with SMTP id w3so9128895qti.17
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:02:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=Nv71DuML1QIaSxo4P2u/LBfhdUA0RnaHc/b/8aYsNa4=;
-        b=p2E3Uty/3GVxH5WovAhIzTCB/CPuKpTTIp2YgqBkDt0Ya1psOmS3OBL8+dNOGYqzGC
-         l79qNl18P+qhQ/A1SuPYFeO1P4xgf929Hw6d8IxAr7SA8RNKoJJqWmuY64fqlGR3R4w6
-         Hye7t6qLul8vka7eFMSR/VA+yhG9/uhQ7FfiVt67bVtiWiblq1PE3GItO09UYlm+9U42
-         F2iKuJbkkoRpU1OnekWxPN+O+3E7fPaOqoiOYfDm35ZaJHvhCxh1B3cm86PMlubtxDn0
-         fJFDiVFSPa4V1LijEnuZsJ0y/ukky3yJovfXf2QvdhcygTSchfp89GDbIkjUiVieWEBv
-         gwZQ==
+        bh=eOkRt3sHO+DZ9MfMNfj2MOvU3rJSy7G5czli6umbxR4=;
+        b=AkzPb5X3A6kpRMK+irevjvYUy9huT3VUjClyE1b/B3G6DUNKVgRY7wtmdFGxqBddJt
+         mys6yvKKRQ+iK8HXp7bcgZ+KvlEEtQoZ8OSLOmZDZjMTviXgWolqpE/TzUEPvm0ADsl9
+         f4aoKv9L+VGvGizNBw15xLaANZb4u2K3/seD4O/fOBRpikxODd6tbnTdBhBZS/qVOccK
+         oDARVZr3xUU538wHogGOOmje1N/mIf+FzGoWx7SiolLb+3byIMdTiHx/NFMTxG5NeHT9
+         +tqf/0QM6RoiRjveetuSOPAPRH9poynPNAJiAo2ra6AlWQzqBvRTJcP22vWqr8bcxKov
+         Z9XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=Nv71DuML1QIaSxo4P2u/LBfhdUA0RnaHc/b/8aYsNa4=;
-        b=sLIRNcuGCHmoPbrsEw5ZQvi0NHm8U4trqpwJY0AUYpXBdGam0V1ALKS4Es3T2Ggc94
-         JSP7V0v8ZauRw+upeXaIoPnPahnIJh4N6lyjWALf9K+b4UTyzRhI+sck+1ggwF05W+aw
-         IiA+tNjAT3Zkr2vQbTMIlt6YqUrd6xeFjx/Mvm/ib4qKvqjlUCcWoi9pvuFvh3ufgEN+
-         +4AQzng5iNgsEPQor5uwUMVyt35dvCaJ+sIYz6o56fsPpsvvim8onyJZ/ZD9mZWd62RH
-         bsMqr//R+Ph1fZI9ncudtSZtDdnysN20MKb3fggQ9m2S0614MjRMsnmqbkyLju51Yexv
-         SCbA==
-X-Gm-Message-State: AOAM530CLk9W3tplNeFlmqOQwllxyv9C4I1hzASxbkL1oHCZvJTY7W2q
-        OnD+Bu1XIYSvEEtLdmQBaXodEvJ6jPybAxA7wN3V1ljJtwOZS+Sf+uV+zEzGKZdojGeWPutWVUn
-        AmNfymfMk2MHqFSAS+IKukSloXdi9QoU9gnJ+Gx5khwAbUmtiUUhWHR5Z6l7xSa7NHwD9q5e4vA
+        bh=eOkRt3sHO+DZ9MfMNfj2MOvU3rJSy7G5czli6umbxR4=;
+        b=tKoYRBAtjc1K3IThsqNkc2FTGcqYDJP8ONzbfPWDmer7As1smvhEadIDgrPYJkqBvr
+         wta4okXrwRKAJCsHw8WnhyFj7kfMOhyta+bpPmDZ3f8r+reFPkyxmdjTT4LlfGpeiY8h
+         R2IYD2vgFjE7nkyLs+WLf4jTyGLZ0dqNFK11xh14km0/Urs8KaFX9BcOfgdrgtImBjMc
+         GK2BzZyi6fz47fm0QCDEOGnWnamglnBrtl69DFrehS8RweDAqe1P6DwFatGFTkdXKC3a
+         GiKybU2KJsstfyuf6sA7cLCDCjjsHZlbD5RGY1ep62J9HeqYI022mIhjZNHZQQ2lBOQl
+         z+6w==
+X-Gm-Message-State: AOAM5300W/h8jCUcSjHkxJw4t8XenGoGRc8a9H0rwgnFrlx1BXz0Gn4X
+        aYyOOQJqzDDeO5kPgkimf4nucrV3lKdRzz6uYjnLbOpK/2B8TAeLFFB75oZIolOVWDezF6DWVzg
+        DnwZpmCP0xLusN4Bf/rRYPqa8qcO2V4ZmCUeRmzrpnGoSxfljF3a7aguWxIjOq/C3MsKTlMMJRg
         ==
-X-Google-Smtp-Source: ABdhPJw20mAWDwFCiF/N+4MxjpCin950DiPCwUGSRjApCcsJmlDSYLoF5jEFuxCXPl4WsW2LBCzI3yhWQcyImBbAUh8=
+X-Google-Smtp-Source: ABdhPJx3dY6P7iKxcP9In3280iYF5LpyVc8J74PR/RpHzfpUlV7N/bacsW9OXhWaoufMlUKZp+TpWLKR65oCwwV3Sz8=
 Sender: "emilyshaffer via sendgmr" 
         <emilyshaffer@podkayne.svl.corp.google.com>
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
- (user=emilyshaffer job=sendgmr) by 2002:a63:5004:: with SMTP id
- e4mr17327167pgb.338.1608595371555; Mon, 21 Dec 2020 16:02:51 -0800 (PST)
-Date:   Mon, 21 Dec 2020 16:02:17 -0800
+ (user=emilyshaffer job=sendgmr) by 2002:a0c:da87:: with SMTP id
+ z7mr19381539qvj.41.1608595369674; Mon, 21 Dec 2020 16:02:49 -0800 (PST)
+Date:   Mon, 21 Dec 2020 16:02:16 -0800
 In-Reply-To: <20201222000220.1491091-1-emilyshaffer@google.com>
-Message-Id: <20201222000220.1491091-15-emilyshaffer@google.com>
+Message-Id: <20201222000220.1491091-14-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20201222000220.1491091-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.29.2.490.gc7ae633391
-Subject: [PATCH v7 14/17] run-command: add stdin callback for parallelization
+Subject: [PATCH v7 13/17] hook: allow specifying working directory for hooks
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -72,371 +72,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If a user of the run_processes_parallel() API wants to pipe a large
-amount of information to stdin of each parallel command, that
-information could exceed the buffer of the pipe allocated for that
-process's stdin.  Generally this is solved by repeatedly writing to
-child_process.in between calls to start_command() and finish_command();
-run_processes_parallel() did not provide users an opportunity to access
-child_process at that time.
+Hooks like "post-checkout" require that hooks have a different working
+directory than the initial process. Pipe that directly through to struct
+child_process.
 
-Because the data might be extremely large (for example, a list of all
-refs received during a push from a client) simply taking a string_list
-or strbuf is not as scalable as using a callback; the rest of the
-run_processes_parallel() API also uses callbacks, so making this feature
-match the rest of the API reduces mental load on the user.
+Because we can just run 'git -C <some-dir> hook run ...' it shouldn't be
+necessary to pipe this option through the frontend. In fact, this
+reduces the possibility of users running hooks which affect some part of
+the filesystem outside of the repo in question.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- builtin/fetch.c             |  1 +
- builtin/submodule--helper.c |  2 +-
- hook.c                      |  1 +
- run-command.c               | 54 +++++++++++++++++++++++++++++++++++--
- run-command.h               | 17 +++++++++++-
- submodule.c                 |  1 +
- t/helper/test-run-command.c | 31 ++++++++++++++++++---
- t/t0061-run-command.sh      | 30 +++++++++++++++++++++
- 8 files changed, 129 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index ecf8537605..5e153b5193 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1647,6 +1647,7 @@ static int fetch_multiple(struct string_list *list, int max_children)
- 		result = run_processes_parallel_tr2(max_children,
- 						    &fetch_next_remote,
- 						    &fetch_failed_to_start,
-+						    NULL,
- 						    &fetch_finished,
- 						    &state,
- 						    "fetch", "parallel/fetch");
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index c30896c897..bb623c1852 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2294,7 +2294,7 @@ static int update_submodules(struct submodule_update_clone *suc)
- 	int i;
- 
- 	run_processes_parallel_tr2(suc->max_jobs, update_clone_get_next_task,
--				   update_clone_start_failure,
-+				   update_clone_start_failure, NULL,
- 				   update_clone_task_finished, suc, "submodule",
- 				   "parallel/update");
- 
+Notes:
+    Needed later for "post-checkout" conversion.
+
+ hook.c | 1 +
+ hook.h | 5 +++++
+ 2 files changed, 6 insertions(+)
+
 diff --git a/hook.c b/hook.c
-index eea90ec1d0..312ede1251 100644
+index b190afa33b..eea90ec1d0 100644
 --- a/hook.c
 +++ b/hook.c
-@@ -368,6 +368,7 @@ int run_hooks(const char *hookname, struct run_hooks_opt *options)
- 	run_processes_parallel_tr2(options->jobs,
- 				   pick_next_hook,
- 				   notify_start_failure,
-+				   NULL,
- 				   notify_hook_finished,
- 				   &cb_data,
- 				   "hook",
-diff --git a/run-command.c b/run-command.c
-index 80c8c97bc1..7b65c087f8 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1548,6 +1548,7 @@ struct parallel_processes {
+@@ -271,6 +271,7 @@ static int pick_next_hook(struct child_process *cp,
+ 	cp->env = hook_cb->options->env.v;
+ 	cp->stdout_to_stderr = 1;
+ 	cp->trace2_hook_name = hook->command.buf;
++	cp->dir = hook_cb->options->dir;
  
- 	get_next_task_fn get_next_task;
- 	start_failure_fn start_failure;
-+	feed_pipe_fn feed_pipe;
- 	task_finished_fn task_finished;
+ 	/* reopen the file for stdin; run_command closes it. */
+ 	if (hook_cb->options->path_to_stdin) {
+diff --git a/hook.h b/hook.h
+index 0d973d090f..8a7542610c 100644
+--- a/hook.h
++++ b/hook.h
+@@ -60,6 +60,9 @@ struct run_hooks_opt
  
- 	struct {
-@@ -1575,6 +1576,13 @@ static int default_start_failure(struct strbuf *out,
- 	return 0;
+ 	/* Number of threads to parallelize across */
+ 	int jobs;
++
++	/* Path to initial working directory for subprocess */
++	const char *dir;
+ };
+ 
+ /*
+@@ -77,6 +80,7 @@ struct hook_cb_data {
+ 	.args = STRVEC_INIT, 			\
+ 	.path_to_stdin = NULL,			\
+ 	.jobs = 1,				\
++	.dir = NULL,				\
+ 	.run_hookdir = configured_hookdir_opt()	\
  }
  
-+static int default_feed_pipe(struct strbuf *pipe,
-+			     void *pp_cb,
-+			     void *pp_task_cb)
-+{
-+	return 1;
-+}
-+
- static int default_task_finished(int result,
- 				 struct strbuf *out,
- 				 void *pp_cb,
-@@ -1605,6 +1613,7 @@ static void pp_init(struct parallel_processes *pp,
- 		    int n,
- 		    get_next_task_fn get_next_task,
- 		    start_failure_fn start_failure,
-+		    feed_pipe_fn feed_pipe,
- 		    task_finished_fn task_finished,
- 		    void *data)
- {
-@@ -1623,6 +1632,7 @@ static void pp_init(struct parallel_processes *pp,
- 	pp->get_next_task = get_next_task;
- 
- 	pp->start_failure = start_failure ? start_failure : default_start_failure;
-+	pp->feed_pipe = feed_pipe ? feed_pipe : default_feed_pipe;
- 	pp->task_finished = task_finished ? task_finished : default_task_finished;
- 
- 	pp->nr_processes = 0;
-@@ -1715,6 +1725,37 @@ static int pp_start_one(struct parallel_processes *pp)
- 	return 0;
+@@ -85,6 +89,7 @@ struct hook_cb_data {
+ 	.args = STRVEC_INIT, 			\
+ 	.path_to_stdin = NULL,			\
+ 	.jobs = configured_hook_jobs(),		\
++	.dir = NULL,				\
+ 	.run_hookdir = configured_hookdir_opt()	\
  }
  
-+static void pp_buffer_stdin(struct parallel_processes *pp)
-+{
-+	int i;
-+	struct strbuf sb = STRBUF_INIT;
-+
-+	/* Buffer stdin for each pipe. */
-+	for (i = 0; i < pp->max_processes; i++) {
-+		if (pp->children[i].state == GIT_CP_WORKING &&
-+		    pp->children[i].process.in > 0) {
-+			int done;
-+			strbuf_reset(&sb);
-+			done = pp->feed_pipe(&sb, pp->data,
-+					      pp->children[i].data);
-+			if (sb.len) {
-+				if (write_in_full(pp->children[i].process.in,
-+					      sb.buf, sb.len) < 0) {
-+					if (errno != EPIPE)
-+						die_errno("write");
-+					done = 1;
-+				}
-+			}
-+			if (done) {
-+				close(pp->children[i].process.in);
-+				pp->children[i].process.in = 0;
-+			}
-+		}
-+	}
-+
-+	strbuf_release(&sb);
-+}
-+
- static void pp_buffer_stderr(struct parallel_processes *pp, int output_timeout)
- {
- 	int i;
-@@ -1779,6 +1820,7 @@ static int pp_collect_finished(struct parallel_processes *pp)
- 		pp->nr_processes--;
- 		pp->children[i].state = GIT_CP_FREE;
- 		pp->pfd[i].fd = -1;
-+		pp->children[i].process.in = 0;
- 		child_process_init(&pp->children[i].process);
- 
- 		if (i != pp->output_owner) {
-@@ -1812,6 +1854,7 @@ static int pp_collect_finished(struct parallel_processes *pp)
- int run_processes_parallel(int n,
- 			   get_next_task_fn get_next_task,
- 			   start_failure_fn start_failure,
-+			   feed_pipe_fn feed_pipe,
- 			   task_finished_fn task_finished,
- 			   void *pp_cb)
- {
-@@ -1820,7 +1863,9 @@ int run_processes_parallel(int n,
- 	int spawn_cap = 4;
- 	struct parallel_processes pp;
- 
--	pp_init(&pp, n, get_next_task, start_failure, task_finished, pp_cb);
-+	sigchain_push(SIGPIPE, SIG_IGN);
-+
-+	pp_init(&pp, n, get_next_task, start_failure, feed_pipe, task_finished, pp_cb);
- 	while (1) {
- 		for (i = 0;
- 		    i < spawn_cap && !pp.shutdown &&
-@@ -1837,6 +1882,7 @@ int run_processes_parallel(int n,
- 		}
- 		if (!pp.nr_processes)
- 			break;
-+		pp_buffer_stdin(&pp);
- 		pp_buffer_stderr(&pp, output_timeout);
- 		pp_output(&pp);
- 		code = pp_collect_finished(&pp);
-@@ -1848,11 +1894,15 @@ int run_processes_parallel(int n,
- 	}
- 
- 	pp_cleanup(&pp);
-+
-+	sigchain_pop(SIGPIPE);
-+
- 	return 0;
- }
- 
- int run_processes_parallel_tr2(int n, get_next_task_fn get_next_task,
- 			       start_failure_fn start_failure,
-+			       feed_pipe_fn feed_pipe,
- 			       task_finished_fn task_finished, void *pp_cb,
- 			       const char *tr2_category, const char *tr2_label)
- {
-@@ -1862,7 +1912,7 @@ int run_processes_parallel_tr2(int n, get_next_task_fn get_next_task,
- 				   ((n < 1) ? online_cpus() : n));
- 
- 	result = run_processes_parallel(n, get_next_task, start_failure,
--					task_finished, pp_cb);
-+					feed_pipe, task_finished, pp_cb);
- 
- 	trace2_region_leave(tr2_category, tr2_label, NULL);
- 
-diff --git a/run-command.h b/run-command.h
-index 6472b38bde..e058c0e2c8 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -436,6 +436,20 @@ typedef int (*start_failure_fn)(struct strbuf *out,
- 				void *pp_cb,
- 				void *pp_task_cb);
- 
-+/**
-+ * This callback is called repeatedly on every child process who requests
-+ * start_command() to create a pipe by setting child_process.in < 0.
-+ *
-+ * pp_cb is the callback cookie as passed into run_processes_parallel, and
-+ * pp_task_cb is the callback cookie as passed into get_next_task_fn.
-+ * The contents of 'send' will be read into the pipe and passed to the pipe.
-+ *
-+ * Return nonzero to close the pipe.
-+ */
-+typedef int (*feed_pipe_fn)(struct strbuf *pipe,
-+			    void *pp_cb,
-+			    void *pp_task_cb);
-+
- /**
-  * This callback is called on every child process that finished processing.
-  *
-@@ -470,10 +484,11 @@ typedef int (*task_finished_fn)(int result,
- int run_processes_parallel(int n,
- 			   get_next_task_fn,
- 			   start_failure_fn,
-+			   feed_pipe_fn,
- 			   task_finished_fn,
- 			   void *pp_cb);
- int run_processes_parallel_tr2(int n, get_next_task_fn, start_failure_fn,
--			       task_finished_fn, void *pp_cb,
-+			       feed_pipe_fn, task_finished_fn, void *pp_cb,
- 			       const char *tr2_category, const char *tr2_label);
- 
- #endif
-diff --git a/submodule.c b/submodule.c
-index b3bb59f066..953f41818c 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1638,6 +1638,7 @@ int fetch_populated_submodules(struct repository *r,
- 	run_processes_parallel_tr2(max_parallel_jobs,
- 				   get_next_submodule,
- 				   fetch_start_failure,
-+				   NULL,
- 				   fetch_finish,
- 				   &spf,
- 				   "submodule", "parallel/fetch");
-diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
-index 7ae03dc712..9348184d30 100644
---- a/t/helper/test-run-command.c
-+++ b/t/helper/test-run-command.c
-@@ -32,8 +32,13 @@ static int parallel_next(struct child_process *cp,
- 		return 0;
- 
- 	strvec_pushv(&cp->args, d->argv);
-+	cp->in = d->in;
-+	cp->no_stdin = d->no_stdin;
- 	strbuf_addstr(err, "preloaded output of a child\n");
- 	number_callbacks++;
-+
-+	*task_cb = xmalloc(sizeof(int));
-+	*(int*)(*task_cb) = 2;
- 	return 1;
- }
- 
-@@ -55,6 +60,17 @@ static int task_finished(int result,
- 	return 1;
- }
- 
-+static int test_stdin(struct strbuf *pipe, void *cb, void *task_cb)
-+{
-+	int *lines_remaining = task_cb;
-+
-+	if (*lines_remaining)
-+		strbuf_addf(pipe, "sample stdin %d\n", --(*lines_remaining));
-+
-+	return !(*lines_remaining);
-+}
-+
-+
- struct testsuite {
- 	struct string_list tests, failed;
- 	int next;
-@@ -185,7 +201,7 @@ static int testsuite(int argc, const char **argv)
- 		suite.tests.nr, max_jobs);
- 
- 	ret = run_processes_parallel(max_jobs, next_test, test_failed,
--				     test_finished, &suite);
-+				     test_stdin, test_finished, &suite);
- 
- 	if (suite.failed.nr > 0) {
- 		ret = 1;
-@@ -413,15 +429,22 @@ int cmd__run_command(int argc, const char **argv)
- 
- 	if (!strcmp(argv[1], "run-command-parallel"))
- 		exit(run_processes_parallel(jobs, parallel_next,
--					    NULL, NULL, &proc));
-+					    NULL, NULL, NULL, &proc));
- 
- 	if (!strcmp(argv[1], "run-command-abort"))
- 		exit(run_processes_parallel(jobs, parallel_next,
--					    NULL, task_finished, &proc));
-+					    NULL, NULL, task_finished, &proc));
- 
- 	if (!strcmp(argv[1], "run-command-no-jobs"))
- 		exit(run_processes_parallel(jobs, no_job,
--					    NULL, task_finished, &proc));
-+					    NULL, NULL, task_finished, &proc));
-+
-+	if (!strcmp(argv[1], "run-command-stdin")) {
-+		proc.in = -1;
-+		proc.no_stdin = 0;
-+		exit (run_processes_parallel(jobs, parallel_next, NULL,
-+					     test_stdin, NULL, &proc));
-+	}
- 
- 	fprintf(stderr, "check usage\n");
- 	return 1;
-diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index 7d599675e3..87759482ad 100755
---- a/t/t0061-run-command.sh
-+++ b/t/t0061-run-command.sh
-@@ -143,6 +143,36 @@ test_expect_success 'run_command runs in parallel with more tasks than jobs avai
- 	test_cmp expect actual
- '
- 
-+cat >expect <<-EOF
-+preloaded output of a child
-+listening for stdin:
-+sample stdin 1
-+sample stdin 0
-+preloaded output of a child
-+listening for stdin:
-+sample stdin 1
-+sample stdin 0
-+preloaded output of a child
-+listening for stdin:
-+sample stdin 1
-+sample stdin 0
-+preloaded output of a child
-+listening for stdin:
-+sample stdin 1
-+sample stdin 0
-+EOF
-+
-+test_expect_success 'run_command listens to stdin' '
-+	write_script stdin-script <<-\EOF &&
-+	echo "listening for stdin:"
-+	while read line; do
-+		echo "$line"
-+	done
-+	EOF
-+	test-tool run-command run-command-stdin 2 ./stdin-script 2>actual &&
-+	test_cmp expect actual
-+'
-+
- cat >expect <<-EOF
- preloaded output of a child
- asking for a quick stop
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
