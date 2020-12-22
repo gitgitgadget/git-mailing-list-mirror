@@ -8,63 +8,62 @@ X-Spam-Status: No, score=-26.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDF3BC43219
-	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81133C432C3
+	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:06:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9BF2722AED
-	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:06:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5249F22B43
+	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 00:06:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726667AbgLVAGM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Dec 2020 19:06:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48306 "EHLO
+        id S1726690AbgLVAGN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Dec 2020 19:06:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726596AbgLVAGM (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726637AbgLVAGM (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 21 Dec 2020 19:06:12 -0500
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8242CC0611CE
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:05:05 -0800 (PST)
-Received: by mail-pf1-x44a.google.com with SMTP id y2so5844975pfr.12
-        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:05:05 -0800 (PST)
+Received: from mail-qt1-x849.google.com (mail-qt1-x849.google.com [IPv6:2607:f8b0:4864:20::849])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3858BC0611BB
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:05:13 -0800 (PST)
+Received: by mail-qt1-x849.google.com with SMTP id n12so9215708qta.9
+        for <git@vger.kernel.org>; Mon, 21 Dec 2020 16:05:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=sender:date:in-reply-to:message-id:mime-version:references:subject
          :from:to:cc;
-        bh=mgaJUEyE3U2GM/t3u/ymLmxNso4EbETblhtJPcndBjI=;
-        b=tNfH1/T9qs68wLH3IKVyo/RvR9pM8uSeCL/R93TUA69hrgj26cTLWSAvvDMD4q9NZ7
-         6E6t+6XuNtsQSexdi40kDJr1htKdMKnxBqGiky+xOSgKPlIXsVQ23vdvR1wDBw0RqNSw
-         AnNN+9mwcyA2SfZ2GeCGQRJlqrjSMHNX8gOiRaRLV46p4co06J1KpdcPhgb5cppePAmQ
-         6ZUpAR92Be71dE0msPbM6x9v7DG4hZJVCYOzrzcXAb9JHuz79IM9uJPsh/y6Om2+HQ0/
-         gWkR1FhADos1NBWWHVHHxDUudfFJ0kOp/VEI266PSFM8zG6M26wDN6Oy9QQcMIlKNq50
-         3BkQ==
+        bh=u9/hXbeix7Y1mawzrALxseBhGQVFK8WA3OIjXSsgTA8=;
+        b=GUHwy6OMRVDlpOYS1kn6GuIvyh/s0+UwP/V80Vde2+fqloCY3EErc/oagTBuQzYA+V
+         Ji3WJFigjFkVTcy0Nfq1dIu8skaWPcXiYmZ0jhg8j8mmsMWqdH50QOy5L9ugkgGwT07T
+         3z6qV3rF4lcwd1D7mKacNZKkxWfl/VyVYCQ0GhNHNZQFWST28iPmZr3O/+t+DH1rYhAf
+         EBGWLaqaHGKOo6u9VUQIrFN1PfRroWWUVpiak0yQxO1zx5IQ0cQyMk60cPis25+auOyo
+         fjzxejEImk8JFIk67qgmggVpqBy9JXkAhhocrbNT10t4x44MNSTG9e4FugHuDYHwPN0/
+         xI3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=mgaJUEyE3U2GM/t3u/ymLmxNso4EbETblhtJPcndBjI=;
-        b=CjDJYgdmagA0s65FwxZ/QKusklmPjjG8MSjba5YnFrLqIb+wSmB9P9K2xONmXC+Vhy
-         xCoD5Oi1brMB/C8u2hBpwK5BkT955hu/5GbptwzE2NmUkgFjxFbSae9wLl2T8eb1De9x
-         jRLmYkKmFhF5PtP8x9v6ipNleqS3BqARwpqOfhbZU2vY4AO6gW6Dd3A3h5Oh6tKrjYio
-         hvZkFZTQ0ZbgfYVfFEPhE42+3HHdpEa+nyDmoT8c9dNWs8Vl3Hw/xmRvAlCodrLNPIO7
-         oEXGsNXa1GRr/yU1br3pJUMj4xStY0emRZ00MjdL785OictF5JQocMaIACrIyWwYcbbv
-         JyaQ==
-X-Gm-Message-State: AOAM532vsbiY1jRmAgWkXnReS0gNV/DPOz6Uy9e399kCgYiXLs2+bjNX
-        NMKjRPy4nidiFH+A2UmJs6QigbdmA/7OKJZXVTon1IG17PnhiP/99kJ88V7R4YjZjnupBYQ+a+A
-        WRB7GymoqNoEFCV2S/teoXehUkvuGhP6vCypeKpV+V8KwW87MY01xuPKWXxj5WbcNt1TNBTk9Hg
+        bh=u9/hXbeix7Y1mawzrALxseBhGQVFK8WA3OIjXSsgTA8=;
+        b=Md41wQwnW9Tyr1r7NbXzO5eaNgbXC7VaeRKi3wFaz8XmuxDzhWQFyR2V5nZNGjVS5X
+         ZdOYd2wuXBQw+bl0XqQ9nX7csfAXrDh8LY9H8vjmafwEfWGE9/sCOJJHGPci0kz4EuX2
+         0vUb5yXFnV2AVpRxBTBBQWwohS324wlmOBNw063ApQAMFEt7XIeYft4mMhpXN0JWQKNj
+         Y8aekj/JViHCXM00VEo1AtsXpiWc8N6NTYOGqAHF7MJcuFUOzEQKucLkfTepgbphycYw
+         8a+EDOA080VklXGeoZ22a17Qky71ZFozXEA5sOtBr+LUGRqW0HeYEv524r2yDkDRjvS6
+         B4jg==
+X-Gm-Message-State: AOAM533i2RD4l23OosIGtVeWBxF6tMmZWQnxGDqBo9H+6iI5rDqdcQ+P
+        +097MEFEHQ+bVuIYnXGKaHrd49ZkcSWEQJYLE6e3tc/Xgxh0rSVKI/FbxlWHyzyZsaIt2cy1UZY
+        2ZkqyDnaEgrKEkR9lfPVbgdLWuU58pY0+52u+dv+ufIV5Jb8jBlzmA6Tqf6u3bl70Gu3DkleKvA
         ==
-X-Google-Smtp-Source: ABdhPJyMkLC2JzxAcu5gvM/ZW5YMEAlgVXqGfeD5DiBcKH3VdQeK7bnSBqWAM6aZr3fzqGSQ0CkWTQqHuC1OEtwpgXo=
+X-Google-Smtp-Source: ABdhPJwrKG2SX2xJEbQqmt4M25DCpkTvad5BYX408+IJCvQGajfGU87p6CHLkoLY6LvzteCv4ValeWWpo2n/WPGCoUw=
 Sender: "emilyshaffer via sendgmr" 
         <emilyshaffer@podkayne.svl.corp.google.com>
 X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
- (user=emilyshaffer job=sendgmr) by 2002:a17:902:bcc6:b029:dc:44a5:c363 with
- SMTP id o6-20020a170902bcc6b02900dc44a5c363mr1973563pls.5.1608595504939; Mon,
- 21 Dec 2020 16:05:04 -0800 (PST)
-Date:   Mon, 21 Dec 2020 16:04:30 -0800
+ (user=emilyshaffer job=sendgmr) by 2002:a0c:f0d3:: with SMTP id
+ d19mr19582886qvl.55.1608595512295; Mon, 21 Dec 2020 16:05:12 -0800 (PST)
+Date:   Mon, 21 Dec 2020 16:04:34 -0800
 In-Reply-To: <20201222000435.1529768-1-emilyshaffer@google.com>
-Message-Id: <20201222000435.1529768-13-emilyshaffer@google.com>
+Message-Id: <20201222000435.1529768-17-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20201222000435.1529768-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.29.2.490.gc7ae633391
-Subject: [PATCH v3 12/17] reference-transaction: look for hooks in config
+Subject: [PATCH v3 16/17] receive-pack: convert receive hooks to hook.h
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -73,123 +72,300 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-By using the hook.h library, reference-transaction hooks can be
-specified in the config instead.
-
-The expected output of the test is not fully updated to reflect the
-absolute path of the hook called because the 'update' hook has not yet
-been converted to use hook.h.
+By using the hook.h library to run receive hooks, they can be specified
+in the config as well as in the hookdir.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- Documentation/githooks.txt       |  2 ++
- refs.c                           | 38 +++++++++-----------------------
- t/t1416-ref-transaction-hooks.sh |  8 +++----
- 3 files changed, 17 insertions(+), 31 deletions(-)
+ Documentation/githooks.txt |   4 +
+ builtin/receive-pack.c     | 197 +++++++++++++++++--------------------
+ 2 files changed, 94 insertions(+), 107 deletions(-)
 
 diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 8f5524055b..3a35500132 100644
+index 1412cd5846..c450f7a27e 100644
 --- a/Documentation/githooks.txt
 +++ b/Documentation/githooks.txt
-@@ -521,6 +521,8 @@ The exit status of the hook is ignored for any state except for the
- cause the transaction to be aborted. The hook will not be called with
- "aborted" state in that case.
+@@ -314,6 +314,8 @@ will be set to zero, `GIT_PUSH_OPTION_COUNT=0`.
+ See the section on "Quarantine Environment" in
+ linkgit:git-receive-pack[1] for some caveats.
  
-+Hooks run during 'reference-transaction' will be run in parallel by default.
++Hooks executed during 'pre-receive' will not be parallelized.
 +
- push-to-checkout
- ~~~~~~~~~~~~~~~~
+ [[update]]
+ update
+ ~~~~~~
+@@ -466,6 +468,8 @@ environment variables will not be set. If the client selects
+ to use push options, but doesn't transmit any, the count variable
+ will be set to zero, `GIT_PUSH_OPTION_COUNT=0`.
  
-diff --git a/refs.c b/refs.c
-index 392f0bbf68..b025dc4140 100644
---- a/refs.c
-+++ b/refs.c
-@@ -18,6 +18,7 @@
- #include "strvec.h"
- #include "repository.h"
- #include "sigchain.h"
-+#include "hook.h"
- 
- /*
-  * List of all available backends
-@@ -1957,47 +1958,30 @@ int ref_update_reject_duplicates(struct string_list *refnames,
- static int run_transaction_hook(struct ref_transaction *transaction,
- 				const char *state)
- {
--	struct child_process proc = CHILD_PROCESS_INIT;
- 	struct strbuf buf = STRBUF_INIT;
--	const char *hook;
-+	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_ASYNC;
- 	int ret = 0, i;
-+	char o[GIT_MAX_HEXSZ + 1], n[GIT_MAX_HEXSZ + 1];
- 
--	hook = find_hook("reference-transaction");
--	if (!hook)
-+	if (!hook_exists("reference-transaction", configured_hookdir_opt()))
- 		return ret;
- 
--	strvec_pushl(&proc.args, hook, state, NULL);
--	proc.in = -1;
--	proc.stdout_to_stderr = 1;
--	proc.trace2_hook_name = "reference-transaction";
--
--	ret = start_command(&proc);
--	if (ret)
--		return ret;
--
--	sigchain_push(SIGPIPE, SIG_IGN);
-+	strvec_push(&opt.args, state);
- 
- 	for (i = 0; i < transaction->nr; i++) {
- 		struct ref_update *update = transaction->updates[i];
-+		oid_to_hex_r(o, &update->old_oid);
-+		oid_to_hex_r(n, &update->new_oid);
- 
- 		strbuf_reset(&buf);
--		strbuf_addf(&buf, "%s %s %s\n",
--			    oid_to_hex(&update->old_oid),
--			    oid_to_hex(&update->new_oid),
--			    update->refname);
--
--		if (write_in_full(proc.in, buf.buf, buf.len) < 0) {
--			if (errno != EPIPE)
--				ret = -1;
--			break;
--		}
-+		strbuf_addf(&buf, "%s %s %s", o, n, update->refname);
-+		string_list_append(&opt.str_stdin, buf.buf);
- 	}
- 
--	close(proc.in);
--	sigchain_pop(SIGPIPE);
-+	ret = run_hooks("reference-transaction", &opt);
-+	run_hooks_opt_clear(&opt);
- 	strbuf_release(&buf);
- 
--	ret |= finish_command(&proc);
- 	return ret;
++Hooks executed during 'post-receive' are run in parallel by default.
++
+ [[post-update]]
+ post-update
+ ~~~~~~~~~~~
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 5c23d5ed86..348d5b0a9b 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -748,7 +748,7 @@ static int check_cert_push_options(const struct string_list *push_options)
+ 	return retval;
  }
  
-diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-hooks.sh
-index f6e741c6c0..17f11f5cb0 100755
---- a/t/t1416-ref-transaction-hooks.sh
-+++ b/t/t1416-ref-transaction-hooks.sh
-@@ -122,11 +122,11 @@ test_expect_success 'interleaving hook calls succeed' '
+-static void prepare_push_cert_sha1(struct child_process *proc)
++static void prepare_push_cert_sha1(struct run_hooks_opt *opt)
+ {
+ 	static int already_done;
  
- 	cat >expect <<-EOF &&
- 		hooks/update refs/tags/PRE $ZERO_OID $PRE_OID
--		hooks/reference-transaction prepared
--		hooks/reference-transaction committed
-+		$(pwd)/target-repo.git/hooks/reference-transaction prepared
-+		$(pwd)/target-repo.git/hooks/reference-transaction committed
- 		hooks/update refs/tags/POST $ZERO_OID $POST_OID
--		hooks/reference-transaction prepared
--		hooks/reference-transaction committed
-+		$(pwd)/target-repo.git/hooks/reference-transaction prepared
-+		$(pwd)/target-repo.git/hooks/reference-transaction committed
- 	EOF
+@@ -772,110 +772,42 @@ static void prepare_push_cert_sha1(struct child_process *proc)
+ 		nonce_status = check_nonce(push_cert.buf, bogs);
+ 	}
+ 	if (!is_null_oid(&push_cert_oid)) {
+-		strvec_pushf(&proc->env_array, "GIT_PUSH_CERT=%s",
++		strvec_pushf(&opt->env, "GIT_PUSH_CERT=%s",
+ 			     oid_to_hex(&push_cert_oid));
+-		strvec_pushf(&proc->env_array, "GIT_PUSH_CERT_SIGNER=%s",
++		strvec_pushf(&opt->env, "GIT_PUSH_CERT_SIGNER=%s",
+ 			     sigcheck.signer ? sigcheck.signer : "");
+-		strvec_pushf(&proc->env_array, "GIT_PUSH_CERT_KEY=%s",
++		strvec_pushf(&opt->env, "GIT_PUSH_CERT_KEY=%s",
+ 			     sigcheck.key ? sigcheck.key : "");
+-		strvec_pushf(&proc->env_array, "GIT_PUSH_CERT_STATUS=%c",
++		strvec_pushf(&opt->env, "GIT_PUSH_CERT_STATUS=%c",
+ 			     sigcheck.result);
+ 		if (push_cert_nonce) {
+-			strvec_pushf(&proc->env_array,
++			strvec_pushf(&opt->env,
+ 				     "GIT_PUSH_CERT_NONCE=%s",
+ 				     push_cert_nonce);
+-			strvec_pushf(&proc->env_array,
++			strvec_pushf(&opt->env,
+ 				     "GIT_PUSH_CERT_NONCE_STATUS=%s",
+ 				     nonce_status);
+ 			if (nonce_status == NONCE_SLOP)
+-				strvec_pushf(&proc->env_array,
++				strvec_pushf(&opt->env,
+ 					     "GIT_PUSH_CERT_NONCE_SLOP=%ld",
+ 					     nonce_stamp_slop);
+ 		}
+ 	}
+ }
  
- 	git push ./target-repo.git PRE POST &&
++struct receive_hook_feed_context {
++	struct command *cmd;
++	int skip_broken;
++};
++
+ struct receive_hook_feed_state {
+ 	struct command *cmd;
+ 	struct ref_push_report *report;
+ 	int skip_broken;
+ 	struct strbuf buf;
+-	const struct string_list *push_options;
+ };
+ 
+-typedef int (*feed_fn)(void *, const char **, size_t *);
+-static int run_and_feed_hook(const char *hook_name, feed_fn feed,
+-			     struct receive_hook_feed_state *feed_state)
+-{
+-	struct child_process proc = CHILD_PROCESS_INIT;
+-	struct async muxer;
+-	const char *argv[2];
+-	int code;
+-
+-	argv[0] = find_hook(hook_name);
+-	if (!argv[0])
+-		return 0;
+-
+-	argv[1] = NULL;
+-
+-	proc.argv = argv;
+-	proc.in = -1;
+-	proc.stdout_to_stderr = 1;
+-	proc.trace2_hook_name = hook_name;
+-
+-	if (feed_state->push_options) {
+-		int i;
+-		for (i = 0; i < feed_state->push_options->nr; i++)
+-			strvec_pushf(&proc.env_array,
+-				     "GIT_PUSH_OPTION_%d=%s", i,
+-				     feed_state->push_options->items[i].string);
+-		strvec_pushf(&proc.env_array, "GIT_PUSH_OPTION_COUNT=%d",
+-			     feed_state->push_options->nr);
+-	} else
+-		strvec_pushf(&proc.env_array, "GIT_PUSH_OPTION_COUNT");
+-
+-	if (tmp_objdir)
+-		strvec_pushv(&proc.env_array, tmp_objdir_env(tmp_objdir));
+-
+-	if (use_sideband) {
+-		memset(&muxer, 0, sizeof(muxer));
+-		muxer.proc = copy_to_sideband;
+-		muxer.in = -1;
+-		code = start_async(&muxer);
+-		if (code)
+-			return code;
+-		proc.err = muxer.in;
+-	}
+-
+-	prepare_push_cert_sha1(&proc);
+-
+-	code = start_command(&proc);
+-	if (code) {
+-		if (use_sideband)
+-			finish_async(&muxer);
+-		return code;
+-	}
+-
+-	sigchain_push(SIGPIPE, SIG_IGN);
+-
+-	while (1) {
+-		const char *buf;
+-		size_t n;
+-		if (feed(feed_state, &buf, &n))
+-			break;
+-		if (write_in_full(proc.in, buf, n) < 0)
+-			break;
+-	}
+-	close(proc.in);
+-	if (use_sideband)
+-		finish_async(&muxer);
+-
+-	sigchain_pop(SIGPIPE);
+-
+-	return finish_command(&proc);
+-}
+-
+-static int feed_receive_hook(void *state_, const char **bufp, size_t *sizep)
++static int feed_receive_hook(void *state_)
+ {
+ 	struct receive_hook_feed_state *state = state_;
+ 	struct command *cmd = state->cmd;
+@@ -884,9 +816,7 @@ static int feed_receive_hook(void *state_, const char **bufp, size_t *sizep)
+ 	       state->skip_broken && (cmd->error_string || cmd->did_not_exist))
+ 		cmd = cmd->next;
+ 	if (!cmd)
+-		return -1; /* EOF */
+-	if (!bufp)
+-		return 0; /* OK, can feed something. */
++		return 1; /* EOF - close the pipe*/
+ 	strbuf_reset(&state->buf);
+ 	if (!state->report)
+ 		state->report = cmd->report;
+@@ -910,32 +840,36 @@ static int feed_receive_hook(void *state_, const char **bufp, size_t *sizep)
+ 			    cmd->ref_name);
+ 		state->cmd = cmd->next;
+ 	}
+-	if (bufp) {
+-		*bufp = state->buf.buf;
+-		*sizep = state->buf.len;
+-	}
+ 	return 0;
+ }
+ 
+-static int run_receive_hook(struct command *commands,
+-			    const char *hook_name,
+-			    int skip_broken,
+-			    const struct string_list *push_options)
++static int feed_receive_hook_cb(struct strbuf *pipe, void *pp_cb, void *pp_task_cb)
+ {
+-	struct receive_hook_feed_state state;
+-	int status;
+-
+-	strbuf_init(&state.buf, 0);
+-	state.cmd = commands;
+-	state.skip_broken = skip_broken;
+-	state.report = NULL;
+-	if (feed_receive_hook(&state, NULL, NULL))
+-		return 0;
+-	state.cmd = commands;
+-	state.push_options = push_options;
+-	status = run_and_feed_hook(hook_name, feed_receive_hook, &state);
+-	strbuf_release(&state.buf);
+-	return status;
++	struct hook *hook = pp_task_cb;
++	struct receive_hook_feed_state *feed_state = hook->feed_pipe_cb_data;
++	int rc;
++
++	/* first-time setup */
++	if (!feed_state) {
++		struct hook_cb_data *hook_cb = pp_cb;
++		struct run_hooks_opt *opt = hook_cb->options;
++		struct receive_hook_feed_context *ctx = opt->feed_pipe_ctx;
++		if (!ctx)
++			BUG("run_hooks_opt.feed_pipe_ctx required for receive hook");
++
++		feed_state = xmalloc(sizeof(struct receive_hook_feed_state));
++		strbuf_init(&feed_state->buf, 0);
++		feed_state->cmd = ctx->cmd;
++		feed_state->skip_broken = ctx->skip_broken;
++		feed_state->report = NULL;
++
++		hook->feed_pipe_cb_data = feed_state;
++	}
++
++	rc = feed_receive_hook(feed_state);
++	if (!rc)
++		strbuf_addbuf(pipe, &feed_state->buf);
++	return rc;
+ }
+ 
+ static void hook_output_to_sideband(struct strbuf *output, void *cb_data)
+@@ -971,6 +905,55 @@ static void hook_output_to_sideband(struct strbuf *output, void *cb_data)
+ 	send_sideband(1, 2, output->buf, output->len, use_sideband);
+ }
+ 
++static int run_receive_hook(struct command *commands,
++			    const char *hook_name,
++			    int skip_broken,
++			    const struct string_list *push_options)
++{
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_ASYNC;
++	struct receive_hook_feed_context ctx;
++	int rc;
++	struct command *iter = commands;
++
++	/* if there are no valid commands, don't invoke the hook at all. */
++	while (iter && skip_broken && (iter->error_string || iter->did_not_exist))
++		iter = iter->next;
++	if (!iter)
++		return 0;
++
++	/* pre-receive hooks should run in series as the hook updates refs */
++	if (!strcmp(hook_name, "pre-receive"))
++		opt.jobs = 1;
++
++	if (push_options) {
++		int i;
++		for (i = 0; i < push_options->nr; i++)
++			strvec_pushf(&opt.env, "GIT_PUSH_OPTION_%d=%s", i,
++				     push_options->items[i].string);
++		strvec_pushf(&opt.env, "GIT_PUSH_OPTION_COUNT=%d", push_options->nr);
++	} else
++		strvec_push(&opt.env, "GIT_PUSH_OPTION_COUNT");
++
++	if (tmp_objdir)
++		strvec_pushv(&opt.env, tmp_objdir_env(tmp_objdir));
++
++	prepare_push_cert_sha1(&opt);
++
++	/* set up sideband printer */
++	if (use_sideband)
++		opt.consume_sideband = hook_output_to_sideband;
++
++	/* set up stdin callback */
++	ctx.cmd = commands;
++	ctx.skip_broken = skip_broken;
++	opt.feed_pipe = feed_receive_hook_cb;
++	opt.feed_pipe_ctx = &ctx;
++
++	rc = run_hooks(hook_name, &opt);
++	run_hooks_opt_clear(&opt);
++	return rc;
++}
++
+ static int run_update_hook(struct command *cmd)
+ {
+ 	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT_ASYNC;
 -- 
 2.28.0.rc0.142.g3c755180ce-goog
 
