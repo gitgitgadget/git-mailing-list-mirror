@@ -8,58 +8,60 @@ X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9313CC433E0
-	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 15:33:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0E9DC433DB
+	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 15:45:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5178822B2B
-	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 15:33:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C65502312E
+	for <git@archiver.kernel.org>; Tue, 22 Dec 2020 15:45:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727952AbgLVPdF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Dec 2020 10:33:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49514 "EHLO
+        id S1727815AbgLVPpZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Dec 2020 10:45:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727865AbgLVPdE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Dec 2020 10:33:04 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6837BC0613D3
-        for <git@vger.kernel.org>; Tue, 22 Dec 2020 07:32:24 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id q18so14935592wrn.1
-        for <git@vger.kernel.org>; Tue, 22 Dec 2020 07:32:24 -0800 (PST)
+        with ESMTP id S1727373AbgLVPpZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Dec 2020 10:45:25 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23BE0C0613D6
+        for <git@vger.kernel.org>; Tue, 22 Dec 2020 07:44:45 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id q18so14975369wrn.1
+        for <git@vger.kernel.org>; Tue, 22 Dec 2020 07:44:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=r5z/E12NYzETvfw6QUyONvXhaTnymkv+1GGfE/Hgjew=;
-        b=XD8i4qk8seU7bXYn2vq2YWKLzFH5Xf/rDTFDcBs0CFk3CLA3eOd6Xn62DfZ/NlCxZV
-         crtyHtciRh0bUwoiw7LY6RNLQQa4J1rk+1lQJxhwhqIP04cLkzQbOrdyoq/J+FkGLypC
-         bhefpinkvUdGpQoq9Tpey9BxtiDdnF6je3/sVcUCEm8dTwqaCyCsxo5N12dmXC2j8lqp
-         Hzu042vX8p6iLePLjnQD8b7RPAgNiQVVpAYQmMAtmJkkBuAUXnDwc1jlI6FA6K/dEOsL
-         a4K4/rhsWpnEXW2B//a7ZQsmGveaB7qBLIMDAKcDKzaQJFbYE7xEvDXHHBW1RSPXhwcF
-         VQ3A==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=dyMK4vZmrOiEqLUs/dxFjrtO7MaPPo64wqdwyzBuONk=;
+        b=TFGxzOHTkT/SnStTj7VVDr/HjOpQy+TZDLefIz3/si2H9WRIN+h6ubdogFQndHGt2P
+         oMli0eXNS7TeB1tnAGatTAjgjVPIE0XAYAAxllq3yMrDdz4E8bShPFzTrQz8W/3lC8r0
+         64PVJ2yta4lPYu82k9TQ12cEUK/xLyxGi2UAkFg0dEBAx4bmB/ue56AOZCMUxSjkFbEP
+         Lgn9Gf54XjiwR/IzavW04PcOk2xag0kGbL3Wb+g3h87ox99eB5+4+Ur86Bl37RBXcr2K
+         QxXe4bWgVCg0Zrqz1XFio0Uq4kHd1kELbtwdv7hy1GPH2i7bQkA9BenZNmx4zwoV9tUT
+         K2nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=r5z/E12NYzETvfw6QUyONvXhaTnymkv+1GGfE/Hgjew=;
-        b=fSZfDg8VFbbB0heaNC8N5o/9zhGmSMApW4TgO0DbmvG8jh6hN1rJ1tUCUqv3+4KA8G
-         PxHIjjdUKYn1Nd/kjAb+4WJ1Ra/r2TMc0taZnLVwDejqam+S2Kc6HEYp4ahh8GHJwL6w
-         EkwuC1+j2LnFvEoVsEjGTinNbM2Q7TxUIgoJ2T4npUAIe9TBMpAnGetGMFxEhhej4clY
-         Rfxp15k0Ats0HcTFH46vtIVIy2fet0XQVsBiGItAJ+4l7Gx5dISJqjO3HD6IBMnHk2ME
-         d1tWqmWygfQXXKGNdRoQOj2/8VQ4v6G2vqNGtEQoZFID2fHB1fXhfGyEgQ6u3Edq3JfB
-         OtkQ==
-X-Gm-Message-State: AOAM533KYuWjQMf1nnCUwnqbq/nuO4HLx7Ujbf9bjguE0nTYUIDCIiZM
-        xTmwjo2lVk+LThjypkru7k0ixx3amz0=
-X-Google-Smtp-Source: ABdhPJxodQCqM3+S4jNAwMbqI4oJemeI2klR/r29h8o32dXn/1vJUwLZZdKaUpfCOdXU3ixDyPAa9A==
-X-Received: by 2002:adf:fbc5:: with SMTP id d5mr24523422wrs.82.1608651141846;
-        Tue, 22 Dec 2020 07:32:21 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=dyMK4vZmrOiEqLUs/dxFjrtO7MaPPo64wqdwyzBuONk=;
+        b=MLR8UeOpwrZC8rfvWLhBr7FWlbHYB0yMQAN4Hw3BxBlUiaGX6BVtunrmRzo8Ra6L95
+         1qQUaEFRCPA+VjJUgVEL5G22Md/dUj7eCSZ1n4mKNttQRFYQZbxFrljQJ1LNzaii6+Qb
+         ZIzk8wNpIpqbq5ybL8iMpNW5UzCSyr8PVbfHWj4haLRdSESTpYmCNxVECdBnFEgHf5Xn
+         27TuUzJENhBgIzeFWem7scDwmne5FYpmO5ylGcxrtmaeZvW0kF0LGREPpKUXrgaCoCtK
+         9iLBwnj812Z18sOiTh/th1uPvOrxpuIDejmumxswmPhvbn7qUgaHAwA59TplfYXlAO0n
+         QyxA==
+X-Gm-Message-State: AOAM532Xa1boIe86BA2KCZkYt51wSmzVyvkPS5tNfJPkA1qUJChcPd8J
+        mpqa73EcOAXGDwbG5vQsoXWS7pqORkg=
+X-Google-Smtp-Source: ABdhPJyTRfm9+IkKT1bzhwZ5tYCQs+vYVd1+vZXJNk7zfrdqoCInFML85vbUTbdkq3Uk9H2lMEUqNw==
+X-Received: by 2002:a5d:6a4f:: with SMTP id t15mr25628897wrw.62.1608651883706;
+        Tue, 22 Dec 2020 07:44:43 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x25sm26787983wmc.3.2020.12.22.07.32.20
+        by smtp.gmail.com with ESMTPSA id x7sm26658640wmi.11.2020.12.22.07.44.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Dec 2020 07:32:21 -0800 (PST)
-Message-Id: <pull.934.git.git.1608651140403.gitgitgadget@gmail.com>
+        Tue, 22 Dec 2020 07:44:43 -0800 (PST)
+Message-Id: <pull.934.v2.git.git.1608651882510.gitgitgadget@gmail.com>
+In-Reply-To: <pull.934.git.git.1608651140403.gitgitgadget@gmail.com>
+References: <pull.934.git.git.1608651140403.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Dec 2020 15:32:20 +0000
-Subject: [PATCH] git.txt: fix typos in 'linkgit' macro invocation
+Date:   Tue, 22 Dec 2020 15:44:42 +0000
+Subject: [PATCH v2] git.txt: fix typos in 'linkgit' macro invocation
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,23 +78,56 @@ From: Philippe Blain <levraiphilippeblain@gmail.com>
 The 'linkgit' Asciidoc macro is misspelled as 'linkit' in the
 description of 'GIT_SEQUENCE_EDITOR' since the addition of that variable
 to git(1) in 902a126eca (doc: mention GIT_SEQUENCE_EDITOR and
-'sequence.editor' more, 2020-08-31).
+'sequence.editor' more, 2020-08-31). Also, it uses two colons instead of
+one.
 
 Fix that.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
     git.txt: fix typos in 'linkgit' macro invocation
+    
+    Changes since v1:
+    
+     * also fixed the fact that I had used two colons instead of one.
+    
+    Sorry for not checking the doc build before sending v1.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-934%2Fphil-blain%2Ffix-linkgit-git1-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-934/phil-blain/fix-linkgit-git1-v1
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-934%2Fphil-blain%2Ffix-linkgit-git1-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-934/phil-blain/fix-linkgit-git1-v2
 Pull-Request: https://github.com/git/git/pull/934
+
+Range-diff vs v1:
+
+ 1:  978e328fb94 ! 1:  494173a5865 git.txt: fix typos in 'linkgit' macro invocation
+     @@ Commit message
+          The 'linkgit' Asciidoc macro is misspelled as 'linkit' in the
+          description of 'GIT_SEQUENCE_EDITOR' since the addition of that variable
+          to git(1) in 902a126eca (doc: mention GIT_SEQUENCE_EDITOR and
+     -    'sequence.editor' more, 2020-08-31).
+     +    'sequence.editor' more, 2020-08-31). Also, it uses two colons instead of
+     +    one.
+      
+          Fix that.
+      
+     @@ Documentation/git.txt: other
+       	when editing the todo list of an interactive rebase. See also
+      -	linkit::git-rebase[1] and the `sequence.editor` option in
+      -	linkit::git-config[1].
+     -+	linkgit::git-rebase[1] and the `sequence.editor` option in
+     -+	linkgit::git-config[1].
+     ++	linkgit:git-rebase[1] and the `sequence.editor` option in
+     ++	linkgit:git-config[1].
+       
+       `GIT_SSH`::
+       `GIT_SSH_COMMAND`::
+
 
  Documentation/git.txt | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/git.txt b/Documentation/git.txt
-index c463b937a86..aaa3668a7e9 100644
+index c463b937a86..a6d4ad0818b 100644
 --- a/Documentation/git.txt
 +++ b/Documentation/git.txt
 @@ -609,8 +609,8 @@ other
@@ -101,8 +136,8 @@ index c463b937a86..aaa3668a7e9 100644
  	when editing the todo list of an interactive rebase. See also
 -	linkit::git-rebase[1] and the `sequence.editor` option in
 -	linkit::git-config[1].
-+	linkgit::git-rebase[1] and the `sequence.editor` option in
-+	linkgit::git-config[1].
++	linkgit:git-rebase[1] and the `sequence.editor` option in
++	linkgit:git-config[1].
  
  `GIT_SSH`::
  `GIT_SSH_COMMAND`::
