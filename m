@@ -4,72 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78E6DC433DB
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 15:19:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6A31C433E0
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 15:52:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 2F7F62333B
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 15:19:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76F5A2220B
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 15:52:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726282AbgLWPTz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Dec 2020 10:19:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42624 "EHLO
+        id S1727815AbgLWPw1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Dec 2020 10:52:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725267AbgLWPTz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Dec 2020 10:19:55 -0500
-Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D70D0C06179C
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 07:19:14 -0800 (PST)
-Received: by mail-oo1-xc29.google.com with SMTP id j21so3764457oou.11
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 07:19:14 -0800 (PST)
+        with ESMTP id S1726390AbgLWPw1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Dec 2020 10:52:27 -0500
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33873C061794
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 07:51:47 -0800 (PST)
+Received: by mail-ot1-x32d.google.com with SMTP id q25so15357117otn.10
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 07:51:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=QgzdQmekAl6K4LITTbDGnG78oyN8QbFLUFdT+zOZ9e4=;
-        b=FAGc2j2BGqeS8BwWTiQ4dkFbZrP0gynpfZvNQvCVBM/zMlAyZq/aGrvqxXWDw0bXLm
-         4qYka1Kt1Vtb2N3p9WYnUGfZCFAbdQyO0dKhb/38OuIO+eKz9zudpWdcofotPloFrN79
-         ntcEnkX/KW6VVH05lRtZv5u0S//fRvhhqbaYGQT9WlzU4gAibAqEEgSfjqL7eYw/2vYp
-         a1efEpYtYLRx/RtUZJ5Kom/cxgUOnfSTiDgXKNg4oEo/T/SoBuvxBxvVSil69REg91Z6
-         IgP+7UcKvlmEnGijz/tCw2L+bHL3jFy0zVww2j0U+5N0qdNTH2yX0o/pLD43xjqcaHSb
-         syRw==
+        bh=M7rLR3I7sGZXF+Rrtb5WKZTsEui/wsWHVx978QSSfv4=;
+        b=d54/RbI0Jw7nAf7bJd7w4i6zoo0mKEzTt5yNxnX8s1ksNIl7kDBLCT7aD+g3lJ7UMB
+         gMb2kcBCISez1AQAFIMIRi2Qur1XsZXhTkr+4JKwykkpDvmaENO/cidiohsQQueOcUjP
+         1PJ441z0PREHBo8ZOlRdyZjQQYUvjBuaRSHOMFBlC6LnWCEmOWt4Nj4Ut6k3vF7nOMOT
+         8QGVsCyqZ/KWO+OBahuiYDHEKky1VexnHJZjf8F6u+rKLWiLCTaAFnuyFsXZoGY9gwsY
+         wOkGJ63ZK12ibx4XfXRqla3RrBjlCEqUtymM7fmUdoJHbySi6Em/NAHqY9tZBe9DFJ0Q
+         sZjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=QgzdQmekAl6K4LITTbDGnG78oyN8QbFLUFdT+zOZ9e4=;
-        b=koCM38LN9K9GJc6kuWFg4Twd0wofLOjkZednV0Sn57msgifWat8VKHyiGq3fp/FTwn
-         zryReAXaD/gVKONQ6NUjuH3vxsCd9DNSKYl9o38Gy+LSdrW5Ttu9Kv2+4d7GiIwXlurR
-         6L2h8CqMOESV/eFv9Kh+/pCU3Is8n827rhVtx3DnQUVsP4Hmzoa+JNg3OmltWWNVFnKi
-         HzLBjA5y6Sl02OW4Tce5IisO5Hi3gZM6AkprwAXr9ZVVWBcT+O2NW3HAopzo4Ru694Jg
-         wMNKjrBnaxQVpmKu/tDsI5ol/CvIQ5WNzGfPZeuoro7y2TL8HQNzgaHKfm6yGmHXkf2Q
-         3uww==
-X-Gm-Message-State: AOAM530RZc2wrHcBYa2xwF7ZI9eQoWL0ogRAZqgY7EPciFuK7r7PvSuu
-        pXdBiqpphUSZ7P+ORZ0Mltocu2FqXjnvcg==
-X-Google-Smtp-Source: ABdhPJx4YsNR1WpuwNSIx9DPCWecowXXbkOs9m01VNf+mL8mwDgm5JdP0B73FXTLgimO9ClKpu4rNw==
-X-Received: by 2002:a4a:db78:: with SMTP id o24mr14025556ood.69.1608736753318;
-        Wed, 23 Dec 2020 07:19:13 -0800 (PST)
+        bh=M7rLR3I7sGZXF+Rrtb5WKZTsEui/wsWHVx978QSSfv4=;
+        b=BtUAg1CzDdnJ7Zgpyi5SXv7l492fDXVtYbxuSlROme3cGoscG9VVyzD8m0TRmkt28C
+         5gsVwnxSHQ4YNGItVvORcMW3+y9imJVFf0nxkR6nf5I4kwr7jCj4wwDJ/MDnrjZKW5Zn
+         ZUGNbF0QZ/N2Ok6en7s6XPNl6h1XG7AhuGKU5J0QKcE6cGEIT97SKgYv5JLxb4w6CZTm
+         2F8D3+RGM7SifLrHCeeSGplk2cLPVE0rKP2dtSWwBIEGY0aNWvmrtLazPNH/8LZNYy7d
+         i1Anh9qrzHeXtcxVDdvpwLGnIrSIr/JJxAnxVjFEUBaZczzV/UiyZUYjLDygXPxwD5c+
+         785w==
+X-Gm-Message-State: AOAM532QVqlf+SS1OM3f8AsQE5jCk8MnvxCWV4BdYZFySW+0HMul1geH
+        RS69veUt91n4M8bfWZMO1dg=
+X-Google-Smtp-Source: ABdhPJw30KbQobm41Jwhvbo16x+GFtDDpkFTPn2jhOST8TZjsIXGiO2zeTX9wr5W+L4inBBm3IddNA==
+X-Received: by 2002:a05:6830:8c:: with SMTP id a12mr19621914oto.167.1608738706544;
+        Wed, 23 Dec 2020 07:51:46 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id 31sm5429229otd.24.2020.12.23.07.19.12
+        by smtp.gmail.com with ESMTPSA id t25sm3445207oic.15.2020.12.23.07.51.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Dec 2020 07:19:12 -0800 (PST)
-Date:   Wed, 23 Dec 2020 09:19:11 -0600
+        Wed, 23 Dec 2020 07:51:45 -0800 (PST)
+Date:   Wed, 23 Dec 2020 09:51:44 -0600
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        git@vger.kernel.org
-Cc:     git@sfconservancy.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+To:     Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Pratyush Yadav <me@yadavpratyush.com>,
+        David Aguilar <davvid@gmail.com>, Seth House <seth@eseth.com>,
+        Git Mailing List <git@vger.kernel.org>,
         Christian Couder <christian.couder@gmail.com>,
-        Jeff King <peff@peff.net>,
-        'Junio C Hamano ' <gitster@pobox.com>
-Message-ID: <5fe35fef595de_22f222088f@natae.notmuch>
-In-Reply-To: <3d21cc06-415d-860b-7bd2-31047d68bc05@gmail.com>
-References: <20201223061718.102779-1-felipe.contreras@gmail.com>
- <3d21cc06-415d-860b-7bd2-31047d68bc05@gmail.com>
-Subject: Re: [PATCH] CODE_OF_CONDUCT: expect tolerance, not respect
+        git@sfconservancy.org
+Message-ID: <5fe36790793ae_2354120839@natae.notmuch>
+In-Reply-To: <xmqqzh248sy0.fsf@gitster.c.googlers.com>
+References: <5fdc18a91c402_f2faf20837@natae.notmuch>
+ <20201218054947.GA123376@ellen>
+ <5fdc7a7d3a933_f4673208d0@natae.notmuch>
+ <20201219001358.GA153461@ellen>
+ <xmqq1rfmqc8g.fsf@gitster.c.googlers.com>
+ <20201221042501.GA146725@ellen>
+ <5fe033e0ec278_96932089d@natae.notmuch>
+ <20201221073633.GA157132@ellen>
+ <CAJDDKr6LrBMyfdp5Tutp29W9OqhbW4ffcP5e6PD8ruyxk3rQxA@mail.gmail.com>
+ <5fe134eeaec71_11498208f9@natae.notmuch>
+ <20201222150124.mnfcyofm4qyvvj4n@yadavpratyush.com>
+ <5fe2c64bd3790_17f6720897@natae.notmuch>
+ <xmqq5z4tdsiz.fsf@gitster.c.googlers.com>
+ <5fe2d89c212e8_18dc12083e@natae.notmuch>
+ <xmqqzh248sy0.fsf@gitster.c.googlers.com>
+Subject: RE: Nobody is THE one making contribution
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -78,79 +90,102 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee wrote:
-> On 12/23/2020 1:17 AM, Felipe Contreras wrote:
-> > As many argued; respect cannot be manufactured at will. If you don't
-> > respect an idea (for example that the Earth is flat), then it doesn't
-> > matter how hard you try; you still will not respect it.
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 > 
-> ...
+> >> > But I'm not going to pretend I'm fine with a change I disagree with; I'm
+> >> > not. Especially when nobody is paying me to do this.
+> >> ...
+> >> >> The community needs to do its part in making you and everyone else
+> >> >> feel welcome. At the same time you need to do your part in making
+> >> >> contributors, especially the new ones, feel welcome and appreciated.
+> >> >> Being overly critical can turn developers away from the project.
+> >> >
+> >> > Who are you talking about? I'm the one who made the contribution.
+> >> 
+> >> What does the "change you disagree with" you mention above refer to?
+> >> Changes suggested by reviewers to add per-tool knob?
+> >
+> > Yes.
 > 
-> >  * Using welcoming and inclusive language
-> > -* Being respectful of differing viewpoints and experiences
-> > +* Being tolerant of differing viewpoints and experiences
-> >  * Gracefully accepting constructive criticism
-> >  * Focusing on what is best for the community
-> >  * Showing empathy towards other community members
-> 
-> As mentioned in 5cdf230 (add a Code of Conduct document, 2019-09-24):
-> 
->     This patch adapts the Contributor Covenant Code of Conduct. As opposed
->     to writing our own from scratch, this uses common and well-accepted
->     language, and strikes a good balance between illustrating expectations
->     and avoiding a laundry list of behaviors. It's also the same document
->     used by the Git for Windows project.
-> 
-> It is highly recommended to stick to the widely-used and carefully
-> crafted phrasing.
+> If so, please realize that this is a team effort.
 
-No widely-used and carefully crafted phrasing is perfect.
+Yes, but different people in a team have different roles. There's the
+maintainers, the contributors, the reviewers, the translators, etc.
 
-> Specifically, "Being respectful" is different from "Have respect",
+> You are not THE one making contribution.
 
-Indeed.
+When I'm sending a patch, I have the role of "contributor".
 
- 1. Having respect is something that cannot be chosen at will. Either
-    you have it, or you don't.
+That doesn't mean the people revieweing the patch aren't making a
+contribution as well, but traditionally they are not the ones being
+assigned the role of "contributor".
 
- 2. Being respectful is something you can choose, but it is *showing*
-    respect, even though you might not actually have it.
+In your own release notes [1] you say:
 
-If you don't have the first, then the second is an act.
+  New contributors whose contributions weren't in v2.29.0 are as
+  follows.
 
-> which negates your argument for changing this word.
+Presumably these are the people who contributed patches, not reviews.
 
-It's not my argument. It's the argument of dozens of intellectuals (and
-others) who criticized the original University of Cambridge freedom of
-speech policy.
+> If you are not fine with a change others will make on top of what
+> you did, well, tough.
 
-> We can only enforce what is evidenced by actual communication, not the
-> internal lives of community members.
+Yes, I know.
 
-Indeed. But it's not wise to ask community members to *pretend* to have
-something they don't.
+I don't know why you feel the need to explain that to me. I have been
+contributing to open source projects for more than 20 years.
 
-> I could just as easily argue that it is possible to be tolerant without
-> being respectful.
+> It's not like by sending a patch you lick a corner of the cake and
+> make it untouchable by others.
 
-It is, and that's precisely the point; the change matters.
+No, but just because others have an opinion that doesn't mean I must
+have the same opinion as others.
 
-If you say "I think this proposal doesn't make any sense", that's being
-disrespectful towards that viewpoint, but it is honest, and tolerant.
+Take judicial panels as an analogy. A group of judges must arrive at an
+opinion [2], and sometimes they do without problems; all of them agree,
+which is called an "unanimous opinion". Sometimes not everyone agrees,
+in which case it's called a "majority opinion". When not everyone
+agrees, a judge is perfectly entitled to write his or her "dissenting
+opinion", which is a disagreement with the "majority opinion".
 
-If you police language and demand that members *pretend* to have respect
-towards certain viewpoints, even though they don't have it, that just
-stifles the expression of opinions. Not to mention the cognitive burden
-of being constantly lying.
+When there's a dissenting opinion, the court still moves forward with
+the majority opinion, the dissenting opinion is written down for the
+record.
 
-Either way, if you leave it as "being respectful", then the document is
-a sham, because people are disrespectul towards the viewpoints of others
-all the time, in this mailing list, and many others.
+When I express my dissenting opinion I'm not saying nobody should write
+a patch on top of mine. Of course they can. Anybody can take my code and
+do whatever they want with it (as long as they don't violate the license
+of the project).
 
-That point is not currently being enforced as it is, and I think (and
-hope) it never will.
+What they cannot do is add my Signed-off-by line to code I don't agree
+with.
+
+> Just as you said, you can agree to disagree and move on.
+
+Yes, with my disagreement stated for the record. Just like dissenting
+opinions in judicial panels.
+
+> Once a rough concensus is reached that the work on top of what you did
+> is a good direction to go, it would not get us anywhere to repeat the
+> same opinion over and over again to block it.
+
+I am not repeating the same opinion over and over, I am responding to
+the comments of others, with an argument they fail to address.
+
+If person A doesn't address my argument, and person B doesn't address my
+argument, and person C comes along with comments that warrant the repeat
+of the argument; I'm going to repeat the argument.
+
+Nobody has addressed the argument.
+
+It is the fault of person A that didn't address my argument that I had
+to repeat it to person B, and so on. Not mine.
 
 Cheers.
+
+[1] https://lore.kernel.org/git/xmqqsg82qur4.fsf@gitster.c.googlers.com/
+[2] https://en.wikipedia.org/wiki/Judicial_opinion#Kinds_of_judicial_opinions
 
 -- 
 Felipe Contreras
