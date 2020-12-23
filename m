@@ -5,100 +5,131 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3372BC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15E58C433DB
 	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 14:49:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id F22032333D
+	by mail.kernel.org (Postfix) with ESMTP id D894D2255F
 	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 14:49:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727815AbgLWOtb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Dec 2020 09:49:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37950 "EHLO
+        id S1727107AbgLWOt3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Dec 2020 09:49:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726419AbgLWOta (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Dec 2020 09:49:30 -0500
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CFE1C0613D6
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:48:50 -0800 (PST)
-Received: by mail-ot1-x331.google.com with SMTP id q25so15177959otn.10
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:48:50 -0800 (PST)
+        with ESMTP id S1726530AbgLWOt2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Dec 2020 09:49:28 -0500
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CC9AC0613D3
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:48:48 -0800 (PST)
+Received: by mail-ot1-x32f.google.com with SMTP id n42so9254789ota.12
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:48:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=nksOzkRO7V89Iku9LV9aw38tUKmP672WcontRTEUnR8=;
-        b=o10qyCcP3fnrnbN4Xwa8gpN4mpYJu/Ueh8ZEATqIHJToZrIA3i/ycI9Iv0xajrZETs
-         mQIkII/TZcLcLiqakQ++Pk7r3maBHfqe6qXvQys+680hHlTdxLG16+vn/REJ4I4kic6n
-         wEthQf5v7YvmNXbkAZUTQPXO8gVbV0nCzDyDnPDKTXFC2LQplS6OJzZsYdeAW5QEkgtT
-         ayLZHvfy0csinoqkdRJogz16KVm2XOAchQeuqhNBbpuUc+HEbl1quDetNS79FCtRqKpa
-         U0BtKQxKSuA9LOBs7qa67rGXHfsHIzZW5DLo0GYC9vv5hXMuVFBDCe2rOr6jQ9QPUdUe
-         HcsA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yzgVh8q72e5lcVm++2IIzif8zM7VA/v9GcMX12EZvI4=;
+        b=qTGe4qx+osG+RhdivIR/Z27aHJDF05dHjWB697D7obg4u4GZSveThPNc8cob/jtl0A
+         6uh01ruVNv5NbDNATk3GDtxwE9cd1cjLDorwxCYiSI/Cv9EglOkqz/ym04BiBPRlBbIO
+         2/hUYO/nfH31cW6YZfDu+VM8JrwvEiBGJMsFN8hO40sZMP7C6CUdl/Q3ONIz92bs1e4U
+         9zfgl3dC99kyIXwTe5fmOwV5VhorSp/yy4DdYdx78zqUQl98JQV/NplRnfc50lchkZBR
+         3uPnIiNYYp/xbU8debVFOig5/dSJDwzAVE717DfytpSoIvwI9mBf6MoN94XkQVlIBwb+
+         A+qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=nksOzkRO7V89Iku9LV9aw38tUKmP672WcontRTEUnR8=;
-        b=DVTCUjpo/fEOqrWuQ8PyyKD3irYshPZBnqzOFj664ZEYx2UVeR+62jj1vRXdItyAro
-         ZfDfgPGtb+sZVy6ijWhmVenS810x5NzotBAxi/Ou2bLfzuOFcNlnpdXiYH4pcBlaR55P
-         f3/tJcz3eBTZWt6HKD/hEpBfU01mFbPmeEsVGB2FgoP2/Moi+FUfC9DNc+QQjPHcwHnH
-         T2yFC45SD4htPXbfkZKUEHWUmUsp81/VeqAQZTsICBEh5jTvfKgY3LVeYncTld3Qi+GW
-         96wMDu4kAkiOXY0fIuzU+4aB1QI4Xu6d7VfV1q8a3Xq0Spiqu8iqAZXxj3mppWQaytT5
-         Zy0Q==
-X-Gm-Message-State: AOAM532CANk9+t/69YgC9D3WgD+CbowJAPawlgrXcLkmZyUmFQ3Rxugu
-        juhu/fz+Cu4FqwhjmVnV2VDN3db91W3/Eg==
-X-Google-Smtp-Source: ABdhPJylj9NhiCOrTEP2LO1TH8C7tA77bqHRPg2XwTnUypa/UrofRELNn4RFfcMSgUhszENWhRTpOA==
-X-Received: by 2002:a9d:7301:: with SMTP id e1mr19130784otk.304.1608734929574;
-        Wed, 23 Dec 2020 06:48:49 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=yzgVh8q72e5lcVm++2IIzif8zM7VA/v9GcMX12EZvI4=;
+        b=JlEqKxS2QATrZ9GyDWsphiG8icKJbtDOQSg5sUX9yNUPPdmhSuXlzNBVMRoZdSyY+M
+         hY0NYLtFYaWoGggNv7faGjTnEKoEVEfoXksaL1zkk0E7xDQMyFE80P+BQ76R5hwWDv++
+         j8vy35jxZWnEeUysfC045k671Q8TBEC6I9GgkoGeN1M9hX5DwV3JIJah9NXOvfPI7KzE
+         OA2gBwksWq0woss5SmjumU5AdKbGGtH8NQQvPeiZSlp3lKhuTpfbkLHn7doFdN4UpNKP
+         9di52yVkpWRtS+oX4uvzJgXQdoWeuijGX6gf2bP8emUEE6NkLKPIze8ciAumbewvlyNt
+         QeMQ==
+X-Gm-Message-State: AOAM532RuBaN5a/dIPAz0L4T7/OBv0zNKNkZbE7wvwn/TJKgwgSs+whm
+        PSuY47uT5sd+XivcVmLXPdAIZXXwD5566A==
+X-Google-Smtp-Source: ABdhPJzNUpxtOW+qJzPD1/pacNCzbKWwlgkT1vIDA3lYNXCEZxg/bl1driv5OQ+9GMWKvA8/REmXoA==
+X-Received: by 2002:a9d:3d64:: with SMTP id a91mr19198477otc.144.1608734927776;
+        Wed, 23 Dec 2020 06:48:47 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id h93sm5382873otb.29.2020.12.23.06.48.48
+        by smtp.gmail.com with ESMTPSA id i8sm2909690oih.2.2020.12.23.06.48.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Dec 2020 06:48:49 -0800 (PST)
+        Wed, 23 Dec 2020 06:48:47 -0800 (PST)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 1/4] completion: bash: fix prefix detection in branch.*
-Date:   Wed, 23 Dec 2020 08:48:42 -0600
-Message-Id: <20201223144845.143039-2-felipe.contreras@gmail.com>
+Subject: [PATCH v2 0/4] completion: bash: a bunch of fixes
+Date:   Wed, 23 Dec 2020 08:48:41 -0600
+Message-Id: <20201223144845.143039-1-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.30.0.rc1
-In-Reply-To: <20201223144845.143039-1-felipe.contreras@gmail.com>
-References: <20201223144845.143039-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Otherwise we are completely ignoring the --cur argument.
+These should be pretty obvious and straightforward.
 
-The issue can be tested with:
+Changes since v1:
 
-  git clone --config=branch.<tab>
+ * Removed test for suffix in variable names
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/completion/git-completion.bash | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Felipe Contreras (4):
+  completion: bash: fix prefix detection in branch.*
+  completion: bash: fix for suboptions with value
+  completion: bash: fix for multiple dash commands
+  completion: bash: add correct suffix in variables
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 463a3124da..10d225cc9c 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2633,8 +2633,8 @@ __git_complete_config_variable_name ()
- 		return
- 		;;
- 	branch.*)
--		local pfx="${cur%.*}."
--		cur_="${cur#*.}"
-+		local pfx="${cur_%.*}."
-+		cur_="${cur_#*.}"
- 		__gitcomp_direct "$(__git_heads "$pfx" "$cur_" ".")"
- 		__gitcomp_nl_append $'autoSetupMerge\nautoSetupRebase\n' "$pfx" "$cur_" "$sfx"
- 		return
+ contrib/completion/git-completion.bash | 14 +++++++-------
+ t/t9902-completion.sh                  | 15 +++++++++++++++
+ 2 files changed, 22 insertions(+), 7 deletions(-)
+
+Range-diff:
+1:  26bbb19677 = 1:  dd49b0e680 completion: bash: fix prefix detection in branch.*
+3:  aad0bc6a0f = 2:  6ac184b9a4 completion: bash: fix for suboptions with value
+4:  77a4b0b0d0 = 3:  960a692fda completion: bash: fix for multiple dash commands
+2:  4bcc8a5fca ! 4:  a95c3edaf9 completion: bash: add correct suffix in variables
+    @@ Commit message
+     
+           git config branch.autoSetupMe<tab>
+     
+    +    This fix only works for versions of bash greater than 4.0, before that
+    +    "local sfx" creates an empty string, therefore the unset expansion
+    +    doesn't work. The same happens in zsh.
+    +
+    +    Therefore we don't add the test for that for now.
+    +
+    +    The correct fix for all shells requires semantic changes in __gitcomp,
+    +    but that can be done later.
+    +
+    +    Cc: SZEDER Gábor <szeder.dev@gmail.com>
+         Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+     
+      ## contrib/completion/git-completion.bash ##
+    @@ contrib/completion/git-completion.bash: __git_complete_config_variable_name ()
+      		return
+      		;;
+      	url.*.*)
+    -
+    - ## t/t9902-completion.sh ##
+    -@@ t/t9902-completion.sh: test_expect_success 'git config - value' '
+    - 	EOF
+    - '
+    - 
+    -+test_expect_success 'git config - direct completions' '
+    -+	test_completion "git config branch.autoSetup" <<-\EOF
+    -+	branch.autoSetupMerge Z
+    -+	branch.autoSetupRebase Z
+    -+	EOF
+    -+'
+    -+
+    - test_expect_success 'git -c - section' '
+    - 	test_completion "git -c br" <<-\EOF
+    - 	branch.Z
 -- 
 2.30.0.rc1
 
