@@ -2,128 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2876AC433DB
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 00:11:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27109C433DB
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 00:24:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DACDD224D3
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 00:11:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E9C9022AAC
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 00:24:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725907AbgLWALL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Dec 2020 19:11:11 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61951 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725785AbgLWALK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Dec 2020 19:11:10 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 677D71040CB;
-        Tue, 22 Dec 2020 19:10:27 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=C3QMUwdJ4zcwh+xsokdSyXOiRzU=; b=mnbCF+
-        +8Molrfe0rcyqGis9vwZUD+ogTOiHZELnnXUUBvdvsg3t6JKU0REfqyH4+ZoypU6
-        i41rZwNgi2ApLtpSs/bbjOqHeEBakO+fV1gOhNwFns6FZMPdWzdtLF4p4Gzbauas
-        j+WNb7dXz6EasHlr4rsGZFGYMIzSOY+YskbLQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DB9bOIs42HR4gsZu+FLyF+5hXwy/AFXH
-        5THFxys6h/YzGT1I5ciycuJ1IKzz2lo2BxlTYeAgM3c1ZNux23qeevWbcWsdswF9
-        NsL6SGwRbY1OSgThLCjzNnJWjsavn2Qzdn3OYW9P87V0QzqLVViar2oHe9ALbvDc
-        YZD+081stws=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 609801040CA;
-        Tue, 22 Dec 2020 19:10:27 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A98721040C3;
-        Tue, 22 Dec 2020 19:10:24 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Eric Wong <e@80x24.org>, Derrick Stolee <stolee@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] core.abbrev <off|false|no> disables abbreviations
-References: <20200901074355.GA4498@dcvr>
-        <9c00f29b-45e4-ccdf-6d81-5eabd58c875b@gmail.com>
-        <20200901144323.GA14554@dcvr>
-        <xmqqbleliq58.fsf@gitster.c.googlers.com>
-        <20201222231702.GA17661@dcvr>
-        <xmqqk0t9fmq6.fsf@gitster.c.googlers.com>
-Date:   Tue, 22 Dec 2020 16:10:23 -0800
-In-Reply-To: <xmqqk0t9fmq6.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Tue, 22 Dec 2020 15:24:33 -0800")
-Message-ID: <xmqq8s9pfkls.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726408AbgLWAYe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Dec 2020 19:24:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46456 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725988AbgLWAYe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Dec 2020 19:24:34 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F250C06179C
+        for <git@vger.kernel.org>; Tue, 22 Dec 2020 16:23:54 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id r5so14544236eda.12
+        for <git@vger.kernel.org>; Tue, 22 Dec 2020 16:23:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=references:user-agent:from:to:cc:subject:in-reply-to:message-id
+         :date:mime-version;
+        bh=apAanhlebEk869PkLx055/F8VQbP4JNYXb+pWV+xOgo=;
+        b=bNLo2US+9KtaUqYeTUhm7oR+l+Em29IbUgQG9PBk+CQZoq9kr7mTq7bUwWwapYRvLU
+         gmiT6BCLdxT82hUNoqZ13POlodgFGrMP2pirEqN5g+/Xy2YXZo35jpnXpedf6LkEz389
+         zHLEtHeRP1mKXvpi0hiXw0X7aCp05SbfmXrK8iiuW2+6m0Sh0gV55u2YLZxNXhRwd6sv
+         v5xktggTVbV4oXiv25nhIUooSVoPbAeKkxcLEkV6E75/kne0sm0lvinR5Bs7jlhM34O5
+         6sadFbV2dbT1ZvElHoLbFgQNr9usNmnFUelE5+eSDCNxoYMEB3Q0+NXKlq7SG46QGNNT
+         ypsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:references:user-agent:from:to:cc:subject
+         :in-reply-to:message-id:date:mime-version;
+        bh=apAanhlebEk869PkLx055/F8VQbP4JNYXb+pWV+xOgo=;
+        b=bOLLjCNrCO8ChWfn4FWS9ayV3uRJBAA3N1QFG/IoNU3hRM1mUIGCnv+z/F4lMx7PBC
+         NgnOhbpl4ggMhZPrQJ1MCfbVXM8xqnh/5sJxoeZG+iWDbkJKRopp2OpY71DBScE09af4
+         p0jpmCec+xFYqkDyuDp2BRl5avQU40FOVFHNF8vXLWD6geJLL9pKoLixOjFAcp6jQ8bi
+         VZGhREIJo0xZfpr/I2272wg081ZRw5PXCAsZ8c1KeIKYeUtKdJ0nP9Uy0q4rHGhcFQbH
+         xCxDyS9njexuUW3trnDjfvul0w4gGttfjWSxu/p/0GmW5xGFlwHylZNVzs2cHtN08Rmj
+         YKYQ==
+X-Gm-Message-State: AOAM533DYCfmjVS69k9qXQSNIUqfkiDdYQqFKYIpYKSNSjBH5RgZ84mm
+        fhXnxxpalbNmq+se0pwwnd8=
+X-Google-Smtp-Source: ABdhPJxPeFZNVmPs9OGahojW5a6MrjYh5Xjrl4dJwEC0uILMltmLqPnjuzX+sSEZT9G+G5xEf9gm+Q==
+X-Received: by 2002:a05:6402:3049:: with SMTP id bu9mr22520275edb.127.1608683032843;
+        Tue, 22 Dec 2020 16:23:52 -0800 (PST)
+Received: from cpm12071.fritz.box ([79.140.123.225])
+        by smtp.gmail.com with ESMTPSA id mb22sm10901974ejb.35.2020.12.22.16.23.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Dec 2020 16:23:52 -0800 (PST)
+References: <20201221162743.96056-1-mirucam@gmail.com>
+ <20201221162743.96056-3-mirucam@gmail.com>
+User-agent: mu4e 1.4.13; emacs 27.1
+From:   Rafael Silva <rafaeloliveira.cs@gmail.com>
+To:     Miriam Rubio <mirucam@gmail.com>
+Cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tanushree Tumane <tanushreetumane@gmail.com>
+Subject: Re: [PATCH v2 2/7] bisect--helper: reimplement `bisect_replay`
+ shell function in C
+In-reply-to: <20201221162743.96056-3-mirucam@gmail.com>
+Message-ID: <gohp6klfdpbca4.fsf@cpm12071.fritz.box>
+Date:   Wed, 23 Dec 2020 01:23:49 +0100
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 411BD4DA-44B3-11EB-AED4-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Eric Wong <e@80x24.org>
-Date: Tue, 1 Sep 2020 07:43:55 +0000
-Subject: [PATCH] core.abbrev=no disables abbreviations
 
-These allows users to write hash-agnostic scripts and configs to
-disable abbreviations.  Using "-c core.abbrev=40" will be
-insufficient with SHA-256, and "-c core.abbrev=64" won't work
-with SHA-1 repos today.
+Hi Miriam,
 
-Signed-off-by: Eric Wong <e@80x24.org>
-[jc: tweaked implementation, added doc and a test]
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/config/core.txt | 2 ++
- config.c                      | 2 ++
- t/t3200-branch.sh             | 2 ++
- 3 files changed, 6 insertions(+)
+Miriam Rubio writes:
 
-diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-index 160aacad84..c04f62a54a 100644
---- a/Documentation/config/core.txt
-+++ b/Documentation/config/core.txt
-@@ -625,4 +625,6 @@ core.abbrev::
- 	computed based on the approximate number of packed objects
- 	in your repository, which hopefully is enough for
- 	abbreviated object names to stay unique for some time.
-+	If set to "no", no abbreviation is made and the object names
-+	are shown in their full length.
- 	The minimum length is 4.
-diff --git a/config.c b/config.c
-index 1137bd73af..4c0cf3a1c1 100644
---- a/config.c
-+++ b/config.c
-@@ -1217,6 +1217,8 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
- 			return config_error_nonbool(var);
- 		if (!strcasecmp(value, "auto"))
- 			default_abbrev = -1;
-+		else if (!git_parse_maybe_bool_text(value))
-+			default_abbrev = the_hash_algo->hexsz;
- 		else {
- 			int abbrev = git_config_int(var, value);
- 			if (abbrev < minimum_abbrev || abbrev > the_hash_algo->hexsz)
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index a0b832d59e..67db316911 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -305,7 +305,9 @@ test_expect_success 'git branch --list -v with --abbrev' '
- 
- 	git branch -v --list --no-abbrev t >actual.noabbrev &&
- 	git branch -v --list --abbrev=0 t >actual.0abbrev &&
-+	git -c core.abbrev=no branch -v --list t >actual.noabbrev-conf &&
- 	test_cmp actual.noabbrev actual.0abbrev &&
-+	test_cmp actual.noabbrev actual.noabbrev-conf &&
- 
- 	git branch -v --list --abbrev=36 t >actual.36abbrev &&
- 	# how many hexdigits are used?
+> +
+> +static int process_replay_file(FILE *fp, struct bisect_terms *terms)
+> +{
+> +	struct strbuf line = STRBUF_INIT;
+> +	struct strbuf word = STRBUF_INIT;
+> +	int res = 0;
+> +
+> +	while (strbuf_getline(&line, fp) != EOF) {
+> +		res = process_line(terms, &line, &word);
+> +		if (res)
+> +			break;
+> +	}
+> +
+
+I spotted another place where an optimization can be performed.
+
+The "if (res) .. break" conditional is only used to break the loop,
+which is the same job of the expression from the while-loop
+itself. Hence, as the purpose is to control the loop execution itself,
+checking the response of "process_line()" via the "res" value can be
+move to the loop expression itself and simplifying the code further,
+as shown on the following patch:
+
+-- >8 --
+
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index b887413d8d..fb15587af8 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -988,11 +988,8 @@ static int process_replay_file(FILE *fp, struct bisect_terms *terms)
+        struct strbuf word = STRBUF_INIT;
+        int res = 0;
+
+-       while (strbuf_getline(&line, fp) != EOF) {
++       while (!res && strbuf_getline(&line, fp) != EOF)
+                res = process_line(terms, &line, &word);
+-               if (res)
+-                       break;
+-       }
+
+        strbuf_release(&line);
+        strbuf_release(&word);
+
+-- >8 --
+
+This also seems to be similar approach from "one_of()" introduced by
+4ba1e5c414 (bisect--helper: rewrite `check_term_format` shell function
+in C, 2017-09-29).
+
+Once more, the intention is to simplify the code and improve the code
+maintainability.
+
+> +	strbuf_release(&line);
+> +	strbuf_release(&word);
+> +	return res;
+> +}
+> +
+
+I hope this helps increase the code quality.
+Happy Holidays
+
 -- 
-2.30.0-rc1-197-gdf840da780
-
+Thanks
+Rafael
