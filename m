@@ -2,402 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 740A7C433DB
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 13:35:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37802C433E0
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 13:39:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 347F7224B0
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 13:35:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 08D6E22571
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 13:39:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728576AbgLWNfN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Dec 2020 08:35:13 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51915 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728251AbgLWNfN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Dec 2020 08:35:13 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 014ED96632;
-        Wed, 23 Dec 2020 08:34:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=SyENY1+fj6uIYxM4hw0TeJnVq
-        Rs=; b=ePHqddwPIh0hWe+NEKZ30lbthoykqE9/CUiZpC3O2reHhS3poDDxmMdUy
-        4vKmYfSp/6bczYGR/FZFmN6anBLz+tmRNn69EDK5bn55psjsXFRAeqBI7l0PkbDv
-        pivhIY8s7t6gD+z81EdXr8OsPw/nh1tcUU1ODDGi94vrbbE3kw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=U0V0lEElznt3NzCElMX
-        4IAjRvbRevXuJ/lu1FXdi+X0VeIvqrec6KPcC5mtmuyltEHAvXkTUK09UJv/ZDmH
-        L/F39HKKM2iZ58E9dY1tOr2MJNbRN7BkZRlWmtF8nJfCMmOx8HEiSSGJRWGRiNnw
-        y1g+lLYnxg7LolRuHA97N/t8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EBFB696631;
-        Wed, 23 Dec 2020 08:34:24 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 71ADF96630;
-        Wed, 23 Dec 2020 08:34:24 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v4 14/20] mktag: use fsck instead of custom verify_tag()
-References: <20201209200140.29425-1-avarab@gmail.com>
-        <20201223013606.7972-15-avarab@gmail.com>
-Date:   Wed, 23 Dec 2020 05:34:23 -0800
-Message-ID: <xmqqh7ocabog.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 924159E6-4523-11EB-B457-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        id S1728649AbgLWNi4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Dec 2020 08:38:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55392 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728251AbgLWNiz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Dec 2020 08:38:55 -0500
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7749EC0613D3
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 05:38:15 -0800 (PST)
+Received: by mail-ot1-x331.google.com with SMTP id j20so14993968otq.5
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 05:38:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=w74y14i91hezbc+JtNDI6UKGtk4P9VH3T6zlOU45GT4=;
+        b=OF1zVsU5y1Fm1AaddIVazZ8RIJlJhkVPGiV9miHn5YMpCqYoUZekcnqscP5ikkBR6B
+         YNE09jnSD0Gtj40gLY9XF1Jv3hWPt1vskRon5LYrwTbskvGh6giQ6GJE5CvavU2EABG6
+         FaMIab6Nn+jFX0ekweGdrdbMxWiDJ2cQjb8XwS1ULn6TpY2iw4qj+Dj1r3e9R1lpZBTc
+         FlFRCjJaKunWy4DjI63kCsqULi6a4gwipZdEVl08o+pmGQFDJQ592u1EcIE0JjuuZD/T
+         wabTNiAj63kGVedNFQrlYGnWGzQKbvE+OqBM3Z5CVzH/zjgEAkefpoz/joA8Nsaz0Kt+
+         jOYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=w74y14i91hezbc+JtNDI6UKGtk4P9VH3T6zlOU45GT4=;
+        b=aqaqRGjJoeAHvgcVceP4iKNCoCg7gzRb+vGV3Gexmo1FMUWgC6Xro0BSUc+Bn9BQQ5
+         9RPhklNiTjhkDn7tzRH0o4BHJgdbLIt97JEl6JasSobSjlyFtOObjH020ZmQk4FDqEXc
+         6R6TnrGIclstxb9iB3uYVh1UdyEaJ+AJgDkCzIIsuCBUt6Jn7OwojGiFGgcKoKjOjVud
+         afKtk7j/y3Y5CDsa1j6pcjwW6sWZDfDpFNLO6n3d0GqKuxNDNBc3n0Cv7bVj6tPfUYre
+         8uEFGP6ktgR9g4r+ZK74n8mniFa0PenoLsiCwpqvViYC9TeYTvTk5HJ4cah4my1jtIPc
+         88WA==
+X-Gm-Message-State: AOAM532DS1WvJuG/bniOd9svPAX6gqmxmf9O9C021rTXk7EG7n/tWs39
+        dj20jrSDyI3aezgoT+gLilQ=
+X-Google-Smtp-Source: ABdhPJzVqcwAJ8a1w8AM7ImgUeZB6tvbienPbjNPKxTvhT/2Ovqb7LqfQi68WsAzqwg256eb5Raqeg==
+X-Received: by 2002:a05:6830:3154:: with SMTP id c20mr20480648ots.286.1608730694863;
+        Wed, 23 Dec 2020 05:38:14 -0800 (PST)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id l21sm5480996otd.0.2020.12.23.05.38.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Dec 2020 05:38:13 -0800 (PST)
+Date:   Wed, 23 Dec 2020 07:38:12 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder.dev@gmail.com>
+Message-ID: <5fe3484465fac_198be208bf@natae.notmuch>
+In-Reply-To: <xmqqy2hoanps.fsf@gitster.c.googlers.com>
+References: <20201219140621.1961760-1-felipe.contreras@gmail.com>
+ <xmqqy2hoanps.fsf@gitster.c.googlers.com>
+Subject: Re: [PATCH try2 0/4] completion: bash: a bunch of fixes
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > This is just the bug fixes from the previous series.
+> >
+> > These should be pretty obvious and straightforward.
+> >
+> > Felipe Contreras (4):
+> >   completion: bash: fix prefix detection in branch.*
+> >   completion: bash: add correct suffix in variables
+> >   completion: bash: fix for suboptions with value
+> >   completion: bash: fix for multiple dash commands
+> 
+> It seems that this tickles some platform specific glitches in the
+> tests (the detailed CI report can only be seen when logged in, it
+> seems):
+> 
+>     https://github.com/git/git/runs/1597682180#step:5:35614
 
-> +static int verify_object_in_tag(struct object_id *tagged_oid, int *tag=
-ged_type)
->  {
-> +	int ret;
-> +	enum object_type type;
-> +	unsigned long size;
-> +	void *buffer;
-> +	const struct object_id *repl;
-> +
-> +	buffer =3D read_object_file(tagged_oid, &type, &size);
-> +	if (!buffer)
-> +		die("could not read tagged object '%s'",
-> +		    oid_to_hex(tagged_oid));
-> +	if (type !=3D *tagged_type)
-> +		die("object '%s' tagged as '%s', but is a '%s' type",
-> +		    oid_to_hex(tagged_oid),
-> +		    type_name(*tagged_type), type_name(type));
-> +
-> +	repl =3D lookup_replace_object(the_repository, tagged_oid);
-> +	ret =3D check_object_signature(the_repository, repl,
-> +				     buffer, size, type_name(*tagged_type));
-> +	free(buffer);
+I found that output very hard to parse, but I think I understand the
+issue. It's interesting.
 
-This is not new, but I wonder if the object whose name is repl can
-be of different type than the object whose name is tagged_oid, and
-what happens when such a replacement is defined.
+Apaprently macOS uses zsh by default, and in zsh, this:
 
-> +	return ret;
->  }
-> ...
-> +/*
-> + * fsck a tag, and pass info about it back to the caller. This is
-> + * exposed fsck_object() internals for git-mktag(1).
-> + */
-> +int fsck_tag_standalone(const struct object_id *oid, const char *buffe=
-r,
-> +			unsigned long size, struct fsck_options *options,
-> +			struct object_id *tagged_oid,
-> +			int *tag_type);
-> +
+  local sfx
+  echo "'${sfx- }'"
 
-OK.
+Prints an empty string.
 
-> diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
-> index c6826762d9..d20adf0544 100755
-> --- a/t/t3800-mktag.sh
-> +++ b/t/t3800-mktag.sh
-> @@ -47,7 +47,7 @@ too short for a tag
->  EOF
+That's because in zsh "local sfx" is effectively "local sfx=''" which in
+my opinion is a bug.
 
-OK.  This seems to show rather nicely what checks got loosened
-(and nothing got tightened it seems).
+I did catch this issue for zsh some time ago.
 
-Thanks.  Looking good so far.
+I contacted the zsh developers a while ago, and that triggered a huge
+discussion, since they don't consider it a bug, but they are working on
+tentative changes. That's another story though.
 
-> =20
->  check_verify_failure 'Tag object length check' \
-> -	'^error: .*size wrong.*$'
-> +	'^error:.* missingObject:'
-> =20
->  ############################################################
->  #  2. object line label check
-> @@ -60,7 +60,7 @@ tagger . <> 0 +0000
-> =20
->  EOF
-> =20
-> -check_verify_failure '"object" line label check' '^error: char0: .*"ob=
-ject "$'
-> +check_verify_failure '"object" line label check' '^error:.* missingObj=
-ect:'
-> =20
->  ############################################################
->  #  3. object line hash check
-> @@ -73,7 +73,7 @@ tagger . <> 0 +0000
-> =20
->  EOF
-> =20
-> -check_verify_failure '"object" line SHA1 check' '^error: char7: .*SHA1=
- hash$'
-> +check_verify_failure '"object" line check' '^error:.* badObjectSha1:'
-> =20
->  ############################################################
->  #  4. type line label check
-> @@ -86,7 +86,7 @@ tagger . <> 0 +0000
-> =20
->  EOF
-> =20
-> -check_verify_failure '"type" line label check' '^error: char.*: .*"\\n=
-type "$'
-> +check_verify_failure '"type" line label check' '^error:.* missingTypeE=
-ntry:'
-> =20
->  ############################################################
->  #  5. type line eol check
-> @@ -94,7 +94,7 @@ check_verify_failure '"type" line label check' '^erro=
-r: char.*: .*"\\ntype "$'
->  echo "object $head" >tag.sig
->  printf "type tagsssssssssssssssssssssssssssssss" >>tag.sig
-> =20
-> -check_verify_failure '"type" line eol check' '^error: char.*: .*"\\n"$=
-'
-> +check_verify_failure '"type" line eol check' '^error:.* unterminatedHe=
-ader:'
-> =20
->  ############################################################
->  #  6. tag line label check #1
-> @@ -108,7 +108,7 @@ tagger . <> 0 +0000
->  EOF
-> =20
->  check_verify_failure '"tag" line label check #1' \
-> -	'^error: char.*: no "tag " found$'
-> +	'^error:.* missingTagEntry:'
-> =20
->  ############################################################
->  #  7. tag line label check #2
-> @@ -120,7 +120,7 @@ tag
->  EOF
-> =20
->  check_verify_failure '"tag" line label check #2' \
-> -	'^error: char.*: no "tag " found$'
-> +	'^error:.* badType:'
-> =20
->  ############################################################
->  #  8. type line type-name length check
-> @@ -132,7 +132,7 @@ tag mytag
->  EOF
-> =20
->  check_verify_failure '"type" line type-name length check' \
-> -	'^error: char.*: type too long$'
-> +	'^error:.* badType:'
-> =20
->  ############################################################
->  #  9. verify object (hash/type) check
-> @@ -146,7 +146,7 @@ tagger . <> 0 +0000
->  EOF
-> =20
->  check_verify_failure 'verify object (hash/type) check -- correct type,=
- nonexisting object' \
-> -	'^error: char7: could not verify object.*$'
-> +	'^fatal: could not read tagged object'
-> =20
->  cat >tag.sig <<EOF
->  object $head
-> @@ -157,7 +157,7 @@ tagger . <> 0 +0000
->  EOF
-> =20
->  check_verify_failure 'verify object (hash/type) check -- made-up type,=
- nonexisting object' \
-> -	'^fatal: invalid object type'
-> +	'^error:.* badType:'
-> =20
->  cat >tag.sig <<EOF
->  object $(test_oid deadbeef)
-> @@ -168,7 +168,7 @@ tagger . <> 0 +0000
->  EOF
-> =20
->  check_verify_failure 'verify object (hash/type) check -- incorrect typ=
-e, valid object' \
-> -	'^error: char7: could not verify object.*$'
-> +	'^error:.* badType:'
-> =20
->  cat >tag.sig <<EOF
->  object $head
-> @@ -179,7 +179,7 @@ tagger . <> 0 +0000
->  EOF
-> =20
->  check_verify_failure 'verify object (hash/type) check -- incorrect typ=
-e, valid object' \
-> -	'^error: char7: could not verify object'
-> +	'^fatal: object.*tagged as.*tree.*but is.*commit'
-> =20
->  ############################################################
->  # 10. verify tag-name check
-> @@ -193,7 +193,7 @@ tagger . <> 0 +0000
->  EOF
-> =20
->  check_verify_failure 'verify tag-name check' \
-> -	'^error: char.*: could not verify tag name$'
-> +	'^error:.* badTagName:'
-> =20
->  ############################################################
->  # 11. tagger line label check #1
-> @@ -207,7 +207,7 @@ This is filler
->  EOF
-> =20
->  check_verify_failure '"tagger" line label check #1' \
-> -	'^error: char.*: could not find "tagger "$'
-> +	'^error:.* missingTaggerEntry:'
-> =20
->  ############################################################
->  # 12. tagger line label check #2
-> @@ -222,10 +222,10 @@ This is filler
->  EOF
-> =20
->  check_verify_failure '"tagger" line label check #2' \
-> -	'^error: char.*: could not find "tagger "$'
-> +	'^error:.* missingTaggerEntry:'
-> =20
->  ############################################################
-> -# 13. disallow missing tag author name
-> +# 13. allow missing tag author name like fsck
-> =20
->  cat >tag.sig <<EOF
->  object $head
-> @@ -236,8 +236,7 @@ tagger  <> 0 +0000
->  This is filler
->  EOF
-> =20
-> -check_verify_failure 'disallow missing tag author name' \
-> -	'^error: char.*: missing tagger name$'
-> +test_expect_mktag_success 'allow missing tag author name'
-> =20
->  ############################################################
->  # 14. disallow missing tag author name
-> @@ -252,7 +251,7 @@ tagger T A Gger <
->  EOF
-> =20
->  check_verify_failure 'disallow malformed tagger' \
-> -	'^error: char.*: malformed tagger field$'
-> +	'^error:.* badEmail:'
-> =20
->  ############################################################
->  # 15. allow empty tag email
-> @@ -268,7 +267,7 @@ EOF
->  test_expect_mktag_success 'allow empty tag email'
-> =20
->  ############################################################
-> -# 16. disallow spaces in tag email
-> +# 16. allow spaces in tag email like fsck
-> =20
->  cat >tag.sig <<EOF
->  object $head
-> @@ -278,8 +277,7 @@ tagger T A Gger <tag ger@example.com> 0 +0000
-> =20
->  EOF
-> =20
-> -check_verify_failure 'disallow spaces in tag email' \
-> -	'^error: char.*: malformed tagger field$'
-> +test_expect_mktag_success 'allow spaces in tag email like fsck'
-> =20
->  ############################################################
->  # 17. disallow missing tag timestamp
-> @@ -293,7 +291,7 @@ tagger T A Gger <tagger@example.com>__
->  EOF
-> =20
->  check_verify_failure 'disallow missing tag timestamp' \
-> -	'^error: char.*: missing tag timestamp$'
-> +	'^error:.* badDate:'
-> =20
->  ############################################################
->  # 18. detect invalid tag timestamp1
-> @@ -307,7 +305,7 @@ tagger T A Gger <tagger@example.com> Tue Mar 25 15:=
-47:44 2008
->  EOF
-> =20
->  check_verify_failure 'detect invalid tag timestamp1' \
-> -	'^error: char.*: missing tag timestamp$'
-> +	'^error:.* badDate:'
-> =20
->  ############################################################
->  # 19. detect invalid tag timestamp2
-> @@ -321,7 +319,7 @@ tagger T A Gger <tagger@example.com> 2008-03-31T12:=
-20:15-0500
->  EOF
-> =20
->  check_verify_failure 'detect invalid tag timestamp2' \
-> -	'^error: char.*: malformed tag timestamp$'
-> +	'^error:.* badDate:'
-> =20
->  ############################################################
->  # 20. detect invalid tag timezone1
-> @@ -335,7 +333,7 @@ tagger T A Gger <tagger@example.com> 1206478233 GMT
->  EOF
-> =20
->  check_verify_failure 'detect invalid tag timezone1' \
-> -	'^error: char.*: malformed tag timezone$'
-> +	'^error:.* badTimezone:'
-> =20
->  ############################################################
->  # 21. detect invalid tag timezone2
-> @@ -349,10 +347,10 @@ tagger T A Gger <tagger@example.com> 1206478233 +=
-  30
->  EOF
-> =20
->  check_verify_failure 'detect invalid tag timezone2' \
-> -	'^error: char.*: malformed tag timezone$'
-> +	'^error:.* badTimezone:'
-> =20
->  ############################################################
-> -# 22. detect invalid tag timezone3
-> +# 22. allow invalid tag timezone3 (the maximum is -1200/+1400)
-> =20
->  cat >tag.sig <<EOF
->  object $head
-> @@ -362,8 +360,7 @@ tagger T A Gger <tagger@example.com> 1206478233 -14=
-30
-> =20
->  EOF
-> =20
-> -check_verify_failure 'detect invalid tag timezone3' \
-> -	'^error: char.*: malformed tag timezone$'
-> +test_expect_mktag_success 'allow invalid tag timezone'
-> =20
->  ############################################################
->  # 23. detect invalid header entry
-> @@ -378,7 +375,7 @@ this line should not be here
->  EOF
-> =20
->  check_verify_failure 'detect invalid header entry' \
-> -	'^error: char.*: trailing garbage in tag header$'
-> +	'^error:.* extraHeaderEntry:'
-> =20
->  cat >tag.sig <<EOF
->  object $head
-> @@ -412,7 +409,7 @@ tagger T A Gger <tagger@example.com> 1206478233 -05=
-00$space
->  EOF
-> =20
->  check_verify_failure 'extra whitespace at end of headers' \
-> -	'^error: char.*: malformed tag timezone$'
-> +	'^error:.* badTimezone:'
-> =20
->  cat >tag.sig <<EOF
->  object $head
-> @@ -422,7 +419,7 @@ tagger T A Gger <tagger@example.com> 1206478233 -05=
-00
->  EOF
-> =20
->  check_verify_failure 'disallow no header / body newline separator' \
-> -	'^error: char.*: trailing garbage in tag header$'
-> +	'^error:.* extraHeaderEntry:'
-> =20
->  ############################################################
->  # 24. create valid tag
+My previous series with 26 patches didn't trigger that issue because I have
+fixes on top of of __gitcomp so suffixes work correctly, and the code
+can eventually be changed to:
+
+  local sfx=" "
+
+That makes the completion work correctly for both bash and zsh.
+
+I see 5 courses of action:
+
+ 1. Drop the offending patch: this is wrong because the bug is still
+    there, we are just not checking for it.
+ 2. Add a BASH prereq just for that test, or test_expect_unstable (we
+    would need to add extra code for both of those).
+ 3. Add the fix, but not the test for the fix.
+ 4. Backport my __gitcomp to make the code work for both shells.
+ 5. Update the patch series to include all the changes up to the point
+    that is fixed.
+
+For me obviously 1 and 5 require the least work, but in 1 the bug is
+still there, and in 5 the patches might get stuck more time than
+necessary.
+
+Either way I think the real problem is that not enough eyes are looking
+at these patches, so it's unclear if and when they will be merged.
+
+The issues are real though, and they are present in the current code.
+
+Cheers.
+
+-- 
+Felipe Contreras
