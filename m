@@ -2,134 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFFC6C433E0
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 14:38:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCE66C433DB
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 14:39:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6BFDA22482
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 14:38:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A183F22482
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 14:39:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727050AbgLWOiL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Dec 2020 09:38:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36208 "EHLO
+        id S1727876AbgLWOiy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Dec 2020 09:38:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726387AbgLWOiL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Dec 2020 09:38:11 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABA8AC0613D3
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:37:30 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id d13so18784939wrc.13
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:37:30 -0800 (PST)
+        with ESMTP id S1727521AbgLWOix (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Dec 2020 09:38:53 -0500
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7C50C0613D3
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:38:13 -0800 (PST)
+Received: by mail-ot1-x32a.google.com with SMTP id i6so15210334otr.2
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:38:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=bwzHKyXAzS9cUzH4qvzugmYgkP2eOh8oN1xo+0rll5w=;
-        b=MH7b8hoehcfVR/QMQEMWIoEXQCxarNZbtm4jpqH25ALgtc6elH6S3BkJv+k5iQfcXW
-         XwveJxSSjMT1t0/XtskwB8imG1Aop5E+zOb6TrR/aNnJV/mpeaEoiKrhjPcXUZLOnqg0
-         dMUcuQzFrN5e7O7aVt0AtWNWEiQvQF7K15v0780i9sr2Ca7F7UqEqZpqvnZdYGSkRBba
-         JV7N/eWtkLXhbpopTQxHsbZK5Xj9ilvd0KmX723O6XUtUeinlEA5Pr1UJZBu7q4JpqY7
-         bHvcOG/FsCoj8bmqoT3If1GsEYXKSfuvghdN6GdpLv3GPh6Q7JCFQe6LasIs3LdjRHyL
-         yBSg==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=owgWS5gCRwQNp2AKktld2nYwY2LaUY8rS6Szkwhq0FM=;
+        b=On3CIAV1KX13k0l4KHtlCJKCGkNVQGWNvkA+mes2rSMps1hJPta1bxW4j6u9I/BqRO
+         dcv+8HKCYSJP6YdKzmRMq2v09YkNdtI9HXudg4omTmxVoaZNWc0rxvFGAhQA+6pqik5c
+         E9he/10a6YtPAcxibd+8ZokTNvGeFw/EtnNre2anBMYjEQxnVS03G7vjIZLKsTS2PMxX
+         l09O8ecqNltktsyPSVMiGEBogu39N5pcVv135xBSjkdPAxbXkQbuZ02hyLxYsr8eAYR6
+         nT8k1eNLtZIfmqYaogVBMs3aq7zJBrk7LeDU4WruwtbNA9PRsavwYtm7sVWO/WPnFjLH
+         dTgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=bwzHKyXAzS9cUzH4qvzugmYgkP2eOh8oN1xo+0rll5w=;
-        b=JmlLonutEnQElTGJdBbkTIfj9ETrLAY6Ua+b0iNM9IYtfPODAWtrgr2jZAaG8SlVvb
-         lw3NoTXSfvtmCu2rC0WM0JOxDa8wl9/wVp/BqN4iwJbuGc5Dz5KoAh8IqEG5xTvCeZ4v
-         Tmjc3b77Q0J9Y+fWvrWXntga614F9fM+84ZdYfOxpgOJC5K+BPSBgPc1wkWkFomRPls1
-         oTBZuOmPJQ4IMtJ0UN1KiGS7RR9ZBY6SeVHlE+ZJLvouCqqCUGj4/3I/qzr5FIg/cDcJ
-         bDDMezUCBktAmWLNau6ADPQ133rt4vCxtKyhTLQuvnrGapn0Ku6s0h49KnKooBRRlh5K
-         AB+A==
-X-Gm-Message-State: AOAM533//GY6s9E/kI8db7zYMmLAQGsEKFu1OBY48UOsr6cLXe52qxLE
-        bCdNzv053hIkaP9X86nqksMJdGcYws4=
-X-Google-Smtp-Source: ABdhPJxGH1TYAarIseVYsVvYWlu0ZW5IYMK9z6uPxwMBzrh7oDTVXQszxjxNXHMY9vNctlXHzVP47Q==
-X-Received: by 2002:adf:ba47:: with SMTP id t7mr29291284wrg.285.1608734249117;
-        Wed, 23 Dec 2020 06:37:29 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u13sm35208301wrw.11.2020.12.23.06.37.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Dec 2020 06:37:28 -0800 (PST)
-Message-Id: <pull.823.v2.git.1608734248194.gitgitgadget@gmail.com>
-In-Reply-To: <pull.823.git.1608727731733.gitgitgadget@gmail.com>
-References: <pull.823.git.1608727731733.gitgitgadget@gmail.com>
-From:   "Daniel Levin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Dec 2020 14:37:27 +0000
-Subject: [PATCH v2] git-p4: fix syncing file types with pattern
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=owgWS5gCRwQNp2AKktld2nYwY2LaUY8rS6Szkwhq0FM=;
+        b=c/OSlM03A9aTkGPRacjgQk6Lj8e3gWJkVNcqrrGwpBglvorgb115v8KRF+rR3UJNeT
+         EvJrDvoQhK4q5YuwLfV6lxKtW4vi08xFmpfBlZVQrUGXhsJ1hiZbPIwvxJwajqVsTiKi
+         yWrypgUHkxqJwSwGH8+5rY9/5nurJISAjF4Ilz5PyW6NmXERiTulJ8LogxGE7DO21dFv
+         uEzCUskM2Ejm6ZPVP+Qt4MJqjgxsSHo+qq2ByKWQ4v5Uw328wf8MVrf8r2spcpWD7eLW
+         8xxCXetFj/Lqw3xCXHUTl5dmbpuDtXpEvMgHfZQru7Z5KoMoSEH6yZJP1qw88J4LiQal
+         KENA==
+X-Gm-Message-State: AOAM5331rjxvTYm9rLhuq+5KxsZKbAeFLtzpMx1c94il61ibR7BE/Ugj
+        iBLtv1+5jMQv70+7lVbl5VrHtVNEf3SoEg==
+X-Google-Smtp-Source: ABdhPJzR2ZcqFJyCZ5l/mg3EGjM7F3QkLWUD9Ki2WPdRffd3ldl3/Xc1GpXLOvdmRix9JZ7FdsDK8w==
+X-Received: by 2002:a9d:6b99:: with SMTP id b25mr20017875otq.49.1608734293074;
+        Wed, 23 Dec 2020 06:38:13 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
+        by smtp.gmail.com with UTF8SMTPSA id w138sm5096404oie.44.2020.12.23.06.38.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Dec 2020 06:38:12 -0800 (PST)
+Message-ID: <ab6e0536-19ed-99b3-a13d-873008b0f70e@gmail.com>
+Date:   Wed, 23 Dec 2020 09:38:11 -0500
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Yang Zhao <yang.zhao@skyboxlabs.com>,
-        Daniel Levin <dendy.ua@gmail.com>,
-        Daniel Levin <dendy.ua@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
+ Thunderbird/85.0
+Subject: Re: [PATCH] core.abbrev <off|false|no> disables abbreviations
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     Eric Wong <e@80x24.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <20200901074355.GA4498@dcvr>
+ <9c00f29b-45e4-ccdf-6d81-5eabd58c875b@gmail.com>
+ <20200901144323.GA14554@dcvr> <xmqqbleliq58.fsf@gitster.c.googlers.com>
+ <20201222231702.GA17661@dcvr> <xmqqk0t9fmq6.fsf@gitster.c.googlers.com>
+ <xmqq8s9pfkls.fsf@gitster.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqq8s9pfkls.fsf@gitster.c.googlers.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Daniel Levin <dendy.ua@gmail.com>
+On 12/22/2020 7:10 PM, Junio C Hamano wrote:
+> From: Eric Wong <e@80x24.org>
+> Date: Tue, 1 Sep 2020 07:43:55 +0000
+> Subject: [PATCH] core.abbrev=no disables abbreviations
+> 
+> These allows users to write hash-agnostic scripts and configs to
+> disable abbreviations.  Using "-c core.abbrev=40" will be
+> insufficient with SHA-256, and "-c core.abbrev=64" won't work
+> with SHA-1 repos today.
+> 
+> Signed-off-by: Eric Wong <e@80x24.org>
+> [jc: tweaked implementation, added doc and a test]
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-Example of pattern file type: text+k
+Thanks for picking this back up. Your version LGTM.
 
-Text filtered through the p4 pattern regexp must be converted from
-string back to bytes, otherwise 'data' command for the fast-import
-will receive extra invalid characters, followed by the fast-import
-process error.
-
-CC: Yang Zhao <yang.zhao@skyboxlabs.com>
-Signed-off-by: Daniel Levin <dendy.ua@gmail.com>
----
-    git-p4: fix syncing file types with pattern
-    
-    Example of pattern file type: text+k
-    
-    Text filtered through the p4 pattern regexp must be converted from
-    string back to bytes, otherwise 'data' command for the fast-import will
-    receive extra invalid characters, followed by the fast-import process
-    error.
-    
-    Signed-off-by: Daniel Levin dendy.ua@gmail.com
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-823%2Fdendy%2Fp4-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-823/dendy/p4-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/823
-
-Range-diff vs v1:
-
- 1:  109fdb6df91 ! 1:  78729f51f3b git-p4: fix syncing file types with pattern
-     @@
-       ## Metadata ##
-     -Author: Daniel Levin <dlevin@roku.com>
-     +Author: Daniel Levin <dendy.ua@gmail.com>
-      
-       ## Commit message ##
-          git-p4: fix syncing file types with pattern
-
-
- git-p4.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/git-p4.py b/git-p4.py
-index 4433ca53de7..90b02f6b22c 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -3031,7 +3031,7 @@ def streamOneP4File(self, file, contents):
-             regexp = re.compile(pattern, re.VERBOSE)
-             text = ''.join(decode_text_stream(c) for c in contents)
-             text = regexp.sub(r'$\1$', text)
--            contents = [ text ]
-+            contents = [ encode_text_stream(text) ]
- 
-         if self.largeFileSystem:
-             (git_mode, contents) = self.largeFileSystem.processContent(git_mode, relPath, contents)
-
-base-commit: 898f80736c75878acc02dc55672317fcc0e0a5a6
--- 
-gitgitgadget
+-Stolee
