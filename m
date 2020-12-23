@@ -2,149 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26B83C433DB
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 14:20:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E11CAC433E0
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 14:24:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EA20623159
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 14:20:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B8F892313C
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 14:24:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727435AbgLWOUi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Dec 2020 09:20:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33520 "EHLO
+        id S1727900AbgLWOYP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Dec 2020 09:24:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725957AbgLWOUh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Dec 2020 09:20:37 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34EA2C0613D3
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:19:57 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id r5so16292792eda.12
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:19:57 -0800 (PST)
+        with ESMTP id S1726142AbgLWOYO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Dec 2020 09:24:14 -0500
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E423C0613D3
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:23:34 -0800 (PST)
+Received: by mail-oi1-x22c.google.com with SMTP id f132so18323982oib.12
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:23:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=VcSbkcvqJkLWmPpqBw2gOAsDN7p6rLnqK46v41DlAb8=;
-        b=baC09d/gzda87HMUKF2gpaEqkP3n12kyW1DCw+4ILH5NECIthQGvTK0klkOoFDoJmo
-         xi/QJiWUYDiiAHSpzfV6k5KGOhOIa8lEFk4vF/SbjZLt1vr+uvELGU6OYcoEU1TfGYcN
-         Sp2sdj2ssnFPXGBbNggNiCyZegiqmMBBaqQWrEo3Kg/SBWAusBbsyc9G19DTPfUsX+Ii
-         K/ebegs3nXVN8USadPjdindKITPhopAjSIpsb+U5YDC66BZ8HaICCv3gfUw9aMgi+Io2
-         VP9X7DFEhx6IWIgX3cTjJZFCljHJxugMLU1ZYw4wuWDpbIvU0tqT6gqUyGmh0jRsHule
-         Og0g==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=B1hCPzqNztvgqNW7ruXSSoHAJ9YSRiwNfYjjpx1ADAU=;
+        b=njVs6RGD6fmEdKpUMsMa6EKfH/Lx4t6Q5/aJHLEcWa/GfRNBMpvp26HiS8CxB3gaA2
+         NOtHrhHs/LdX/Fxlgk16jeDjaxlq3mI8BHrLob9lTlJdsxwPU2Sy5REJzfi4WFrWVmtj
+         ZmAn6rT2k8K1u0AQcYCZajs+P+3QZF3IewM2UDtNdi9U9hBCVRpn+VNx3SDMntTxRmdL
+         JbRYRj9joOHbleKtGcoYT7pR+SJBqjdiIMCv14yFNR8UsJLL8NIRv57uoZ60MCD+BqP/
+         6UrVyiCaYaZt8B+HML3eFKfb36mNMhhysTzIDYtftczEqXhc2oN91VKWJ1Az4qMGSMYJ
+         eUvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VcSbkcvqJkLWmPpqBw2gOAsDN7p6rLnqK46v41DlAb8=;
-        b=pIropJk/QY2ytWQg/EmDn3SSHPn9wigKmyHB+ZHMIW0R2HRDWrnbFAMsr2oGtFeDPE
-         I5kcxLezIJKcLQOVQH/m6WbxIDPitE9bOdn0nuyWat/hp54tV2l8lvsiEvqTLOdVgJHc
-         0SprrJ8D3gkGWY3ev3zMkIV40MdvE1aDPqTppxDyvF9Y/R1pbDjdpTpztz35VbWRZqkh
-         JwqSm0cTYL4bRXnbNBnmNag8XdxToCOk9ge3LIQmpS8GbR0lNhdPcbvPzAXcrJy8y0Pm
-         3FAE9dJGB1hBi536GFYXLU4j57E6EA+ZLIduAwsKMWgLxy2QnH8HGwUmSXPJTdXo7TTb
-         rotA==
-X-Gm-Message-State: AOAM530FZH1zvf8NQ+I9DA2zwLGDEnZPjj0rUH98N7d4p5S/ydO9LYlt
-        IEZFrmuDnrxNW9pVQeKMXI1Xv9cPzgI=
-X-Google-Smtp-Source: ABdhPJx5yKTUxIBSUjjGt0OM9twfr5cwH12RjlDewtK5Y5KnW0X5OdwFjJsDsNxOuB1hMJWKtsLz+w==
-X-Received: by 2002:a05:6402:45:: with SMTP id f5mr24690398edu.273.1608733195947;
-        Wed, 23 Dec 2020 06:19:55 -0800 (PST)
-Received: from szeder.dev (94-21-146-153.pool.digikabel.hu. [94.21.146.153])
-        by smtp.gmail.com with ESMTPSA id ga37sm10885935ejc.96.2020.12.23.06.19.54
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Dec 2020 06:19:55 -0800 (PST)
-Date:   Wed, 23 Dec 2020 15:19:50 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH try2 0/4] completion: bash: a bunch of fixes
-Message-ID: <20201223141950.GA23264@szeder.dev>
-References: <20201219140621.1961760-1-felipe.contreras@gmail.com>
- <xmqqy2hoanps.fsf@gitster.c.googlers.com>
- <5fe3484465fac_198be208bf@natae.notmuch>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <5fe3484465fac_198be208bf@natae.notmuch>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=B1hCPzqNztvgqNW7ruXSSoHAJ9YSRiwNfYjjpx1ADAU=;
+        b=Dua9oBoasWVC9RTM2lwUtABaMce2aw0TLU1mZHdH+5yVv9a0WqDmffrc/nj+Zm6AoW
+         LTpruv7cja2UDbtvbFGQ0ywzaqdQQiCFhhVxm22lUJXS5aMyIGMiL1/bpWf3DejILndD
+         mlsbtA0d6Df6B/eFedmzgRG2W5D29sAKXVKrbrEF2xMVIrgMydRya4fx+8EJJDOYTbw+
+         p87pTXOI9TNwUGHTEWSyQuGbjTpLZuRFjwlSOpQZhcFM4kuaW4CIcUXOmGaQ7AY/9R4a
+         exgdj6KM9cArfzxmNSxb1xKoz+JRqmtdzDatTwdIyF0swSsLo9VVbpuyPC+pr6j1e7+T
+         1ZqA==
+X-Gm-Message-State: AOAM532XeifTX8ho3nlw9Lcyw40JHpo+u5MKIx+0BX5/3WvJn5LNZ2FY
+        lGIOfJoSWvOCiwcPdXM7odjen8sDfUUaeQ==
+X-Google-Smtp-Source: ABdhPJxTGBrzhejnupsqYwLLtG9OfAlcg80pQ8xN71PRlLsr9bAB+DwrAlIMjbn99lrFReqJJrOSzw==
+X-Received: by 2002:aca:4b0d:: with SMTP id y13mr17486814oia.7.1608733413717;
+        Wed, 23 Dec 2020 06:23:33 -0800 (PST)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id 59sm5306788oti.69.2020.12.23.06.23.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Dec 2020 06:23:32 -0800 (PST)
+Date:   Wed, 23 Dec 2020 08:23:31 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>, Seth House <seth@eseth.com>
+Message-ID: <5fe352e3968f6_198be2083@natae.notmuch>
+In-Reply-To: <xmqqblekabof.fsf@gitster.c.googlers.com>
+References: <20201223045358.100754-1-felipe.contreras@gmail.com>
+ <20201223045358.100754-2-felipe.contreras@gmail.com>
+ <xmqqblekabof.fsf@gitster.c.googlers.com>
+Subject: Re: [PATCH v5 1/1] mergetool: add automerge configuration
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 23, 2020 at 07:38:12AM -0600, Felipe Contreras wrote:
-> Junio C Hamano wrote:
-> > Felipe Contreras <felipe.contreras@gmail.com> writes:
-> > 
-> > > This is just the bug fixes from the previous series.
-> > >
-> > > These should be pretty obvious and straightforward.
-> > >
-> > > Felipe Contreras (4):
-> > >   completion: bash: fix prefix detection in branch.*
-> > >   completion: bash: add correct suffix in variables
-> > >   completion: bash: fix for suboptions with value
-> > >   completion: bash: fix for multiple dash commands
-> > 
-> > It seems that this tickles some platform specific glitches in the
-> > tests (the detailed CI report can only be seen when logged in, it
-> > seems):
-> > 
-> >     https://github.com/git/git/runs/1597682180#step:5:35614
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 > 
-> I found that output very hard to parse, but I think I understand the
-> issue. It's interesting.
+> > +auto_merge () {
+> > +	git merge-file --diff3 --marker-size=7 -q -p "$LOCAL" "$BASE" "$REMOTE" >"$DIFF3"
+> > +	if test -s "$DIFF3"
+> > +	then
 > 
-> Apaprently macOS uses zsh by default,
-
-The completion and prompt tests are suppsed to be run by Bash, no
-matter what the default shell, or are skipped, or the setup is broken
-(a non-Bash shell sets $BASH, or 'exec bash' runs zsh).
-
-Our CI jobs use the default Bash version, which in the macOS jobs
-is v3.2.
-
-> and in zsh, this:
+> We do not want to ignore the exit status from the command.  IOW, I
+> think the above wants to be rather
 > 
->   local sfx
->   echo "'${sfx- }'"
+> 	if git merge-file ... >"$DIFF3" &&
+> 	   test -s "$DIFF3"
+> 	then
+> 		...
+
+That doesn't work.
+
+"git merge-file" always returns non-zero status when it succeeds (it's
+the number of conflicts generated).
+
+> > +		sed -e '/^<<<<<<< /,/^||||||| /d' -e '/^=======\r\?$/,/^>>>>>>> /d' "$DIFF3" >"$BASE"
 > 
-> Prints an empty string.
+> Does everybody's sed take "\?" and interprets it as zero-or-one?
+
+I don't know.
+
+> POSIX uses BRE and it doesn't like \? as far as I recall, and "-E"
+> to force ERE is a GNUism.
+
+Another possibility is \s\*. It's less specific though.
+
+> > +		sed -e '/^||||||| /,/^>>>>>>> /d' -e '/^<<<<<<< /d' "$DIFF3" >"$LOCAL"
+> > +		sed -e '/^<<<<<<< /,/^=======\r\?$/d' -e '/^>>>>>>> /d' "$DIFF3" >"$REMOTE"
 > 
-> That's because in zsh "local sfx" is effectively "local sfx=''" which in
-> my opinion is a bug.
-
-Bash versions up to 4.0-alpha suffered from this bug as well; I believe
-the relevant changelog entry for 4.0-beta is this:
-
-  e.  Fixed a bug that caused local variables to be created with the empty
-      string for a value rather than no value.
-
-So the default Bash version on macOS still has this bug, thus
-__gitcomp_nl_append() is invoked with an empty string sfx parameter
-instead of a space, causing the test failure.  I can reproduce the
-test failure on Linux using Bash v3.2 (and v3.1 and v3.0), and it
-passes with v4.0 and later versions.
-
- 
-> I see 5 courses of action:
+> I'd feel safer if these resulting $BASE, $LOCAL and $REMOTE are
+> validated to be conflict-marker free (i.e. '^\([<|=>]\)\1\1\1\1\1\1'
+> does not appear) to make sure there was no funny virtual ancestor
+> that records a conflicted recursive merge result confused our logic.
 > 
->  1. Drop the offending patch: this is wrong because the bug is still
->     there, we are just not checking for it.
->  2. Add a BASH prereq just for that test, or test_expect_unstable (we
->     would need to add extra code for both of those).
->  3. Add the fix, but not the test for the fix.
+> When we see an unfortunate sign that it happened, we can revert the
+> automerge and let the tool handle the original input.
 
-I'm for this option 3: this patch does fix a bug for users of Bash
-v4.0 or later, while it doesn't change the behavior with v3.2 or
-earlier (and with zsh, if I understand correctly).  OTOH, the test
-doesn't seem to be all that useful: while it does demonstrate the
-issue, it checks only one of those callsites that passed the wrong
-suffix, and, more importantly, it doesn't protect us from adding
-another callsites with similarly wrong suffex in the future.
+What if the original file does have these markers?
 
-In any case, the commit message should note that the fix doesn't work
-with all Bash versions and why.
+Which is probably something we should be checking beforehand and not
+attempt an automerge in those cases.
 
+Or we could add the --base option to "git merge-file" so we don't have
+to do that work by hand.
+
+> > +	fi
+> > +	rm -- "$DIFF3"
+> > +}
+> > +
+> 
+> "$DIFF3" is always created (unless shell redirection into it fails),
+> so "rm --" would be fine in practice, I guess, but "rm -f --" would
+> not hurt.
+
+I just did the same as below:
+
+  rm -- "$BACKUP"
+
+> > +	DIFF3="$MERGETOOL_TMPDIR/${BASE}_DIFF3_$$$ext"
+> 
+> $MERGETOOL_TMPDIR is either "mktemp -d -t "git-mergetool-XXXXXX" or
+> ".".  Also, we liberally pass "$DIFF3" to "sed" as an argument and
+> assume that the command would take it as a filename and not an
+> option.
+> 
+> For the above reason, "rm --", while it is not wrong per-se, can be
+> just a simple "rm", as there is no funny leading letters in "$DIFF3"
+> that requires disambiguation.
+
+Other parts of the file do this:
+
+  rm -f -- "$LOCAL" "$REMOTE" "$BASE" "$BACKUP"
+
+I'm just following what the script already does.
+
+Cheers.
+
+-- 
+Felipe Contreras
