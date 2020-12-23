@@ -7,84 +7,103 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 261EEC433DB
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 19:47:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9973FC433E0
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 20:01:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D99A9223E0
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 19:47:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 559CF223E4
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 20:01:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728843AbgLWTrb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Dec 2020 14:47:31 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52249 "EHLO
+        id S1728524AbgLWUBe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Dec 2020 15:01:34 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59583 "EHLO
         pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728075AbgLWTra (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Dec 2020 14:47:30 -0500
+        with ESMTP id S1728460AbgLWUBd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Dec 2020 15:01:33 -0500
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C8AE410AEE6;
-        Wed, 23 Dec 2020 14:46:48 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 098E110B011;
+        Wed, 23 Dec 2020 15:00:50 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=raZefzfG8T125aM9M+qRFH09G2A=; b=OOzZM6
-        TgDUa4gAL+X1te7baFPtourhx727o4ZdSNJPtOct5UPmU2Pwm9aXTl/s1wmz+V1a
-        udUNtIRDbS4lkpSPd+3JBElRPti8JThSMpeKUqvu3ALm+P5SnunoSnTgVVr96LG9
-        2+aHlOMecds+vPSZ+Jq8z7lvI9Oal/0p6Knv8=
+        :content-type:content-transfer-encoding; s=sasl; bh=cJ5EMAhE9GjD
+        Zk4KNSiYZtsje8s=; b=unF+sYCdWpzyKZhWkcfk3x5Zigx+k0cvXP2NfQIzwvAp
+        Atj5ilki6O1M/nfGCIg7Rk7s+q6BVJsaothXc1cD4LA4npmyOUAfwuCKw22kQU/8
+        vb1/+9A7gTRfekCO2lvrEgNZjNbdFRziYW+HcAP/M5VBsyXeP7abJe+lQX9uOzg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Fgf2Jjp77aVlQKeCCUMNUc+3HrGa3rUO
-        d8L2lanzTXOZL04s+2eOAE6Psg/3yC2UgPFw4xztd+q+9wi86i6TcBsSKRnoB0sV
-        JTKXvFatGYXtx19GUYcnSYStpVAyeYo9TLgGxwRlZ8HN7QI40JHiGNQ7BLOk6YE0
-        mdNt8p1A2Y4=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=rg/LU8
+        +gpDql297PZsZ93Np9u2DKAapaONz4Z42F/qpiVCCuZdx0/xHL6IHb5uWXk5W7s4
+        qg3uxaKXlnwaza7xOhPnjAuOyjyNnI8A3TIyIhxSoDYDh0iDgoZRldvAoINTuyfx
+        x92DMu/hUuMzkR0cQsI863Qk7Uo3zP7f/fjoo=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C13BD10AEE5;
-        Wed, 23 Dec 2020 14:46:48 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 013F910B010;
+        Wed, 23 Dec 2020 15:00:50 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0F06010AEE2;
-        Wed, 23 Dec 2020 14:46:45 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 03D0110B00B;
+        Wed, 23 Dec 2020 15:00:46 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Beat Bolli <dev+git@drbeat.li>
-Cc:     Matt Turner <mattst88@gentoo.org>,
-        gentoo-portage-dev@lists.gentoo.org, git@vger.kernel.org
-Subject: Re: [RFC PATCH gentoolkit] bin: Add merge-driver-ekeyword
-References: <20201221034452.307153-1-mattst88@gentoo.org>
-        <CAEdQ38E9Fepp9gmidcf_HvFMacwPZBr0XgPT5HFs8bHw-SJDZQ@mail.gmail.com>
-        <b2adb41b-b2d2-fecf-3a93-7eb3f1f2247d@drbeat.li>
-Date:   Wed, 23 Dec 2020 11:46:44 -0800
-In-Reply-To: <b2adb41b-b2d2-fecf-3a93-7eb3f1f2247d@drbeat.li> (Beat Bolli's
-        message of "Wed, 23 Dec 2020 19:11:38 +0100")
-Message-ID: <xmqqo8ik8fvf.fsf@gitster.c.googlers.com>
+To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 2/3] gc: fix handling of crontab magic markers
+References: <cover.1608585497.git.martin.agren@gmail.com>
+        <689d3150e9822eeccac0e1d07c2ba26dac47b4c9.1608585497.git.martin.agren@gmail.com>
+        <xmqqsg7xfoj9.fsf@gitster.c.googlers.com>
+        <CAPig+cRmatC0Q22XBBx-ouzNSn5uiarTes1tSehGZuBWucSt1g@mail.gmail.com>
+        <CAN0heSrWjpdcPN7v9kS-A43TQ5RW_8kW9x_S7c70vUW5cX-fUA@mail.gmail.com>
+Date:   Wed, 23 Dec 2020 12:00:45 -0800
+In-Reply-To: <CAN0heSrWjpdcPN7v9kS-A43TQ5RW_8kW9x_S7c70vUW5cX-fUA@mail.gmail.com>
+        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Wed, 23 Dec 2020 11:06:48
+ +0100")
+Message-ID: <xmqqk0t88f82.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 96E19C8E-4557-11EB-A2EB-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 8C213B22-4559-11EB-9B3E-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Beat Bolli <dev+git@drbeat.li> writes:
+Martin =C3=85gren <martin.agren@gmail.com> writes:
 
-> You can probably put each of the keywords on a separate line:
+> On Wed, 23 Dec 2020 at 04:51, Eric Sunshine <sunshine@sunshineco.com> w=
+rote:
+>>
+>> On Tue, Dec 22, 2020 at 5:47 PM Junio C Hamano <gitster@pobox.com> wro=
+te:
+>> > Martin =C3=85gren <martin.agren@gmail.com> writes:
+>> > > +test_expect_success 'stop preserves surrounding schedule' '
+>> > > +     echo "Crucial information!" >>cron.txt &&
+>> > > +     GIT_TEST_CRONTAB=3D"test-tool crontab cron.txt" git maintena=
+nce stop &&
+>> >
+>> > 31345d55 (maintenance: extract platform-specific scheduling,
+>> > 2020-11-24) in ds/maintenance-part-4 needs to adjust this
+>> > exported variable for the tests to pass in 'seen'
+>> >
+>> > Is it just the matter of replacing it with
+>> >         GIT_TEST_MAINT_SCHEDULER=3D"crontab:test-tool crontab ..."
+>> > or is there more to it?
 >
-> KEYWORDS="
-> ~alpha
-> ~amd64
-> ~arm
-> ~arm64
-> ~hppa
-> ~ia64
-> ~mips
-> ~ppc
-> ~ppc64
-> ~riscv
-> ~s390
-> ~sparc~x86
-> "
+> Oh, I never realized this could be a problem. My merge with seen had a
+> textual conflict, but nothing difficult, and the tests passed, so I
+> didn't even stop to think if there was more to it. I clearly didn't
+> notice the environment variable changed both name and value.
 >
-> The shell should handle both forms about the same.
+>> Yes, renaming GIT_TEST_CRONTAB to GIT_TEST_MAINT_SCHEDULER and
+>> prepending "crontab:" to the value should be sufficient (per the
+>> proposal by [1] and realization by [2]).
+>>
+>> [1]: https://lore.kernel.org/git/X6+iJNYEbpQjHCb0@flurp.local/
+>> [2]: https://lore.kernel.org/git/4807342b0019be29bb369ed3403a485f0ce9c=
+15d.1605647598.git.gitgitgadget@gmail.com/
+>
+> Thanks Junio and Eric for helping out.
 
-I agree that it is a more practical approach than writing an one-off
-merge driver.
+Thanks for coming up with the fix.
