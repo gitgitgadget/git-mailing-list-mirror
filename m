@@ -2,176 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-9.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA116C433E6
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 14:11:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26B83C433DB
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 14:20:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 79C5023159
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 14:11:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA20623159
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 14:20:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728729AbgLWOKw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Dec 2020 09:10:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60254 "EHLO
+        id S1727435AbgLWOUi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Dec 2020 09:20:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728710AbgLWOKv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Dec 2020 09:10:51 -0500
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 663D9C0613D3
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:10:11 -0800 (PST)
-Received: by mail-ot1-x335.google.com with SMTP id a109so15116647otc.1
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:10:11 -0800 (PST)
+        with ESMTP id S1725957AbgLWOUh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Dec 2020 09:20:37 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34EA2C0613D3
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:19:57 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id r5so16292792eda.12
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:19:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=Su9evugEjpuVNyj02w304ICpZrthvZ2zlNQDxUsd7ks=;
-        b=oujn1RV8n25to4oenaah6aasjNAawNRX7yQU8fTFGj00WXU2ADYeemExu8rCzIfZW5
-         T/3ZKZWECe5PELuFS6s5oCBNAvsP5vrNJLC/08H+mZC8kt3dejEqD153vRnmZmgKLYsY
-         szrh5Xg0N/22H6CjFVmrNzAMP2/qTDHTZAZO+s0d7Is8N21DJNT+iHcmw2mVoy2AXji8
-         JxxYEVHtrb0NvjlH6maRdKSsPDvDEWQY8P7+dr2rdjWt8GTVGo8wN/c4g3QhiQIm/J1F
-         Rt5rNFKzHLsG+XIPasF6VkQeKBd0t2HV0IQ9IaRfkTirmCCdhomyezC/r5a4lgixt1tc
-         BMBA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=VcSbkcvqJkLWmPpqBw2gOAsDN7p6rLnqK46v41DlAb8=;
+        b=baC09d/gzda87HMUKF2gpaEqkP3n12kyW1DCw+4ILH5NECIthQGvTK0klkOoFDoJmo
+         xi/QJiWUYDiiAHSpzfV6k5KGOhOIa8lEFk4vF/SbjZLt1vr+uvELGU6OYcoEU1TfGYcN
+         Sp2sdj2ssnFPXGBbNggNiCyZegiqmMBBaqQWrEo3Kg/SBWAusBbsyc9G19DTPfUsX+Ii
+         K/ebegs3nXVN8USadPjdindKITPhopAjSIpsb+U5YDC66BZ8HaICCv3gfUw9aMgi+Io2
+         VP9X7DFEhx6IWIgX3cTjJZFCljHJxugMLU1ZYw4wuWDpbIvU0tqT6gqUyGmh0jRsHule
+         Og0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=Su9evugEjpuVNyj02w304ICpZrthvZ2zlNQDxUsd7ks=;
-        b=rqzka9XFINmlYGn6aMbwH1jd/019pGEpP5bFJFf73YFvc4Tc8FMFJEYSBl52nCO2YS
-         kIY36G58DUJSrkz0/zfP/lEBB1UgHXnxfx2uyxtRh0hrtDmxO5NH+e+GmeLXIEMSgrP6
-         VAdTL6o93qkmtWWFU4+V4a4Jk85/DEYW6RUv4EiY5eIykvPJAIvGHJ3yePXB5ZnxoUb1
-         rEei9Q/8BnwZrDpKqVoPWacqoIXXNqiUSvcoTsdubsyeRAVaqgBF6P2CiYbsyRfkaIdo
-         kBfGcLS1ipKgE2+lsaDJiM2N6NKq2LtFZoGxN8Q4Z2GroQoypP8yQTsgAfEokb/W8V7i
-         QySw==
-X-Gm-Message-State: AOAM531CqCBPEg3sJ7wlvKei1dR88fTa8IBYYgIrndhPGjr6DFzRqllD
-        xToXIg+pEp0exof4/QkVCO4=
-X-Google-Smtp-Source: ABdhPJxZkCX+aHZJ60FRyvKPfP6xSxOb+MP3TTFG5zHV4bFbwWEY0VmgPtxNafyHFeOazpJPPu9JPA==
-X-Received: by 2002:a9d:68d8:: with SMTP id i24mr20439627oto.31.1608732610795;
-        Wed, 23 Dec 2020 06:10:10 -0800 (PST)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id d124sm5318390oib.54.2020.12.23.06.10.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Dec 2020 06:10:10 -0800 (PST)
-Date:   Wed, 23 Dec 2020 08:10:09 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org
-Message-ID: <5fe34fc13163_198be208bd@natae.notmuch>
-In-Reply-To: <xmqqsg7waleg.fsf@gitster.c.googlers.com>
-References: <20201214202647.3340193-1-gitster@pobox.com>
- <5fd85811c3a6_d7c48208aa@natae.notmuch>
- <xmqqmtyf8hfm.fsf@gitster.c.googlers.com>
- <5fd8aa6a52e81_190cd7208c8@natae.notmuch>
- <5fdd154264baf_130e182082b@natae.notmuch>
- <xmqqsg7waleg.fsf@gitster.c.googlers.com>
-Subject: Re: [PATCH v7 0/5] making pull advice not to trigger when unneeded
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=VcSbkcvqJkLWmPpqBw2gOAsDN7p6rLnqK46v41DlAb8=;
+        b=pIropJk/QY2ytWQg/EmDn3SSHPn9wigKmyHB+ZHMIW0R2HRDWrnbFAMsr2oGtFeDPE
+         I5kcxLezIJKcLQOVQH/m6WbxIDPitE9bOdn0nuyWat/hp54tV2l8lvsiEvqTLOdVgJHc
+         0SprrJ8D3gkGWY3ev3zMkIV40MdvE1aDPqTppxDyvF9Y/R1pbDjdpTpztz35VbWRZqkh
+         JwqSm0cTYL4bRXnbNBnmNag8XdxToCOk9ge3LIQmpS8GbR0lNhdPcbvPzAXcrJy8y0Pm
+         3FAE9dJGB1hBi536GFYXLU4j57E6EA+ZLIduAwsKMWgLxy2QnH8HGwUmSXPJTdXo7TTb
+         rotA==
+X-Gm-Message-State: AOAM530FZH1zvf8NQ+I9DA2zwLGDEnZPjj0rUH98N7d4p5S/ydO9LYlt
+        IEZFrmuDnrxNW9pVQeKMXI1Xv9cPzgI=
+X-Google-Smtp-Source: ABdhPJx5yKTUxIBSUjjGt0OM9twfr5cwH12RjlDewtK5Y5KnW0X5OdwFjJsDsNxOuB1hMJWKtsLz+w==
+X-Received: by 2002:a05:6402:45:: with SMTP id f5mr24690398edu.273.1608733195947;
+        Wed, 23 Dec 2020 06:19:55 -0800 (PST)
+Received: from szeder.dev (94-21-146-153.pool.digikabel.hu. [94.21.146.153])
+        by smtp.gmail.com with ESMTPSA id ga37sm10885935ejc.96.2020.12.23.06.19.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 Dec 2020 06:19:55 -0800 (PST)
+Date:   Wed, 23 Dec 2020 15:19:50 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH try2 0/4] completion: bash: a bunch of fixes
+Message-ID: <20201223141950.GA23264@szeder.dev>
+References: <20201219140621.1961760-1-felipe.contreras@gmail.com>
+ <xmqqy2hoanps.fsf@gitster.c.googlers.com>
+ <5fe3484465fac_198be208bf@natae.notmuch>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5fe3484465fac_198be208bf@natae.notmuch>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Wed, Dec 23, 2020 at 07:38:12AM -0600, Felipe Contreras wrote:
+> Junio C Hamano wrote:
+> > Felipe Contreras <felipe.contreras@gmail.com> writes:
+> > 
+> > > This is just the bug fixes from the previous series.
+> > >
+> > > These should be pretty obvious and straightforward.
+> > >
+> > > Felipe Contreras (4):
+> > >   completion: bash: fix prefix detection in branch.*
+> > >   completion: bash: add correct suffix in variables
+> > >   completion: bash: fix for suboptions with value
+> > >   completion: bash: fix for multiple dash commands
+> > 
+> > It seems that this tickles some platform specific glitches in the
+> > tests (the detailed CI report can only be seen when logged in, it
+> > seems):
+> > 
+> >     https://github.com/git/git/runs/1597682180#step:5:35614
 > 
-> > It's clear --ff doesn't imply a merge, so we shouldn't act as if it was.
+> I found that output very hard to parse, but I think I understand the
+> issue. It's interesting.
 > 
-> Do you specifically mean --ff, or do you talk collectively about
-> anything that goes in opt_ff in the C code?
+> Apaprently macOS uses zsh by default,
 
-I meant --ff, but the rationale can be extended to all of opt_ff.
+The completion and prompt tests are suppsed to be run by Bash, no
+matter what the default shell, or are skipped, or the setup is broken
+(a non-Bash shell sets $BASH, or 'exec bash' runs zsh).
 
-> The "--ff" option means "we are allowing fast-forward, so please do
-> not make new commit object unnecessarily, but it is just we are
-> allowing---we are not limiting ourselves to fast-forard; feel free
-> to create a merge commit if necessary".
+Our CI jobs use the default Bash version, which in the macOS jobs
+is v3.2.
 
-Yes. *If* a rebase is not specified.
-
-> So it does imply that the user prefers to merge and does not want to
-> rebase.
-
-We could imply that, but currently it doesn't.
-
-Currently this does not do a merge:
-
-  git config pull.rebase true
-  git pull --ff
-
-> If you meant what opt_ff can relay, then there are "--no-ff" and
-> "--ff-only" to consider:
+> and in zsh, this:
 > 
->  - "--no-ff" says "we do not allow fast-forward; when the other side
->    is pure descendant of ours, create a merge commit to make them
->    the second parent, so that our side of the history stays to be
->    the first-parent chain that merged them as a side topic."  It may
->    not say what should happen when the history does not
->    fast-forward, and it _is_ possible to argue, for the sake of
->    argument, that it asks to rebase if not fast-forward (so that
->    their history becomes the primary and we build on top of them)
->    while asking to merge if fast-forward (so that our history stays
->    the primary and we absorb their work as a side branch), but that
->    is a behavior that does not make much sense.
-
-I agree it doesn't make much sense; if the user wants a rebase in case
-of non-fast-forward, --no-ff is the only way.
-
->    It is much easier to reason about if we accept that the user who
->    says "--no-ff" expects a merge to happen, not a rebase.
-
-Yes, but currently that's not the case.
-
-Currently this doesn't do a merge:
-
-  git config pull.rebase true
-  git pull --no-ff
-
-We would need to change the semantics.
-
->  - "--ff-only" says "when their history is pure descendant of ours,
->    just fast-forward our branch to match their history, and
->    otherwise fail."  This one does not have to imply either merge or
->    rebase, as both would give us identical result (i.e. merge would
->    fast-forward and rebase would replay *no* work of our own on top
->    of theirs.  Either case, the result is that our branch tip now
->    points at the tip of their history).
+>   local sfx
+>   echo "'${sfx- }'"
 > 
->    The topic under discussion is based on the "we do not have to
->    give advice between merge and rebase if the history
->    fast-forwards", and anybody in support of the topic would be in
->    agreement with this case.
+> Prints an empty string.
+> 
+> That's because in zsh "local sfx" is effectively "local sfx=''" which in
+> my opinion is a bug.
 
-Yes.
+Bash versions up to 4.0-alpha suffered from this bug as well; I believe
+the relevant changelog entry for 4.0-beta is this:
 
-> In any case, I think what we have in 'seen' already is a good
-> stopping point for this cycle.
+  e.  Fixed a bug that caused local variables to be created with the empty
+      string for a value rather than no value.
 
-It's not a bad stopping point.
+So the default Bash version on macOS still has this bug, thus
+__gitcomp_nl_append() is invoked with an empty string sfx parameter
+instead of a space, causing the test failure.  I can reproduce the
+test failure on Linux using Bash v3.2 (and v3.1 and v3.0), and it
+passes with v4.0 and later versions.
 
-But the next patches are needed too. Up to the first 6 patches should be
-uncontroversial.
+ 
+> I see 5 courses of action:
+> 
+>  1. Drop the offending patch: this is wrong because the bug is still
+>     there, we are just not checking for it.
+>  2. Add a BASH prereq just for that test, or test_expect_unstable (we
+>     would need to add extra code for both of those).
+>  3. Add the fix, but not the test for the fix.
 
-> We are not erroring out any new case and simply not showing an advice
-> in a situation that it would not apply---the question "does --ff imply
-> merge?" does not have to be answered in order to evaluate the 5-patch
-> series we have.
+I'm for this option 3: this patch does fix a bug for users of Bash
+v4.0 or later, while it doesn't change the behavior with v3.2 or
+earlier (and with zsh, if I understand correctly).  OTOH, the test
+doesn't seem to be all that useful: while it does demonstrate the
+issue, it checks only one of those callsites that passed the wrong
+suffix, and, more importantly, it doesn't protect us from adding
+another callsites with similarly wrong suffex in the future.
 
-Not my patches.
+In any case, the commit message should note that the fix doesn't work
+with all Bash versions and why.
 
-The patch you introduced regarding rebase_unspecified does depend on
-what happens next. If we decide to change the semantics of --ff* and
-imply a merge, then my patch to add REBASE_DEFAULT is needed, and as you
-can see in another patch series [1], that basically has to revert your patch.
-
-Cheers.
-
-[1] https://lore.kernel.org/git/20201218211026.1937168-8-felipe.contreras@gmail.com/
-
--- 
-Felipe Contreras
