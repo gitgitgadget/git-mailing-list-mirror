@@ -2,124 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B648CC433DB
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 06:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E536FC433E0
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 07:48:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5CE8F224D4
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 06:18:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9881920729
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 07:48:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727282AbgLWGSB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Dec 2020 01:18:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44246 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726069AbgLWGSB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Dec 2020 01:18:01 -0500
-Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCD5CC0613D3
-        for <git@vger.kernel.org>; Tue, 22 Dec 2020 22:17:20 -0800 (PST)
-Received: by mail-oo1-xc2a.google.com with SMTP id o5so3470032oop.12
-        for <git@vger.kernel.org>; Tue, 22 Dec 2020 22:17:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=tL2UocJoFL6L/lUSQXx9r4lTYSUjGAPK1f/DQKiwOPk=;
-        b=M1Smj2b8rsPIT3VLSb9XqZnKcWVg4El1g+CJLjZdsG+cqg3uIpE23F81vwU2YY+kFc
-         E6Ced7pVFLVqjeNVShB9ggO7OT1U5STwDIejVUc9z9wpxteE8I9TzcHUrhVYpAJYQD2U
-         voS6NMH0XjEAb78XkgqlTuK2MChH6ZvY6sHfmvFNBK3eQ8b6v+06waJo5e7rmGz1QQov
-         YJP8x9QTG89HFCWScmJkyqyHwMRgu0oxFqB/gkEA0ENCLyaJrNhUkD5ZOcKKlWIfsVei
-         Kwo24jZeiWePdr1SK6HaLPSomBo3qbbV+YEUTkjjq82JgKbewhh1NwlwmTwyC8u/BiJS
-         dByw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=tL2UocJoFL6L/lUSQXx9r4lTYSUjGAPK1f/DQKiwOPk=;
-        b=tLJNfACi+vqiidqSN8dUCrQ8MZXxlPCrK8WCD6SpBpoTnqBnDkiYUJVzFammVWbf7Q
-         SHC76L2v8hOlZy9HGF9Xjw6VPyU/snSm8TDZsAFNjlgIetgo3+gySR5eIR35cXeATQWf
-         Tovkuw7Vlf3uDkdDBvxvVJePLocMVaEdJh8bT24qklCmykQCTrQ9YEWWnUsh6pR8/Si6
-         un4WVZZA0xYXj+S3LOUllyi2Y1MG4oOHTCXnLpTJc45aVPEgaiHInjPI7YxueKkDskaf
-         ARqYg6roJ9Lg6ggxD4oxnDDuIi+0ip7yjd/0uBMGIZaXmOfjMjbKXenr8GQcnjui7dSL
-         WBDw==
-X-Gm-Message-State: AOAM532hE5Pb96Prx0E3vHwUj3BO+psqcDRekNKD78anBmBFhFhIFeQd
-        VEYMIkSXPLnYyViYtDWxZHkRF7+8NqwLOw==
-X-Google-Smtp-Source: ABdhPJyCc3srrMO+OwfYnAeSJxusbReRAcSyZ/EiXmBAdb5/JmurX/lpbXYz7Ydml6GJkKA+0VNXvQ==
-X-Received: by 2002:a4a:a289:: with SMTP id h9mr17423932ool.86.1608704239898;
-        Tue, 22 Dec 2020 22:17:19 -0800 (PST)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id n22sm4753369oig.32.2020.12.22.22.17.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Dec 2020 22:17:19 -0800 (PST)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     git@sfconservancy.org,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Christian Couder <christian.couder@gmail.com>,
-        Jeff King <peff@peff.net>,
-        'Junio C Hamano ' <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] CODE_OF_CONDUCT: expect tolerance, not respect
-Date:   Wed, 23 Dec 2020 00:17:18 -0600
-Message-Id: <20201223061718.102779-1-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.30.0.rc1
+        id S1727663AbgLWHrE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Dec 2020 02:47:04 -0500
+Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:44663 "EHLO
+        wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727441AbgLWHrE (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 23 Dec 2020 02:47:04 -0500
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.west.internal (Postfix) with ESMTP id 947529F7;
+        Wed, 23 Dec 2020 02:45:52 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Wed, 23 Dec 2020 02:45:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm2; bh=6XBP6lnLcFME7HEK4v7peEfEYi3
+        YPsSQ7eZ7f0qpURM=; b=LFHzQCsgp+2XYlI4StVeiR3cAL3qYLmkfng2O7431KK
+        9Rw1H50T4imBjGRz1HLAxvy3xW9INIerWSAhIOJNL2kP07lMeNEB5Nw+9hiau/r2
+        iUHUcbJNMhnz/90xxdnSDD0JZKW7vY5YkdAR+HN0bf5+nyMz7XYAYGMmoiPH8YoQ
+        TLbPLKGsITaylXRRkVtA5p5L8aleqoFY7jiZ8CyIXxgzuqEAu0bsncbA5C/kWsZm
+        euLxHW1K9ZMLNw3f3wxtNBH9O/AaZsl5FAvbpvwbNSSGAILZhPU8lKPbr5IoDWdW
+        qdp/TBz5GX7te0eKu4rcYJER5OS96dCtvxZD5wBmSpA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=6XBP6l
+        nLcFME7HEK4v7peEfEYi3YPsSQ7eZ7f0qpURM=; b=kaOKrlzX7t6Rldxw6PXRpS
+        CcfVpdSuKzo/5FCe2g1aaS6o+FDh+qkSNcO9vH5iIeG/pljpA8/mkomQoGITjcrj
+        aIAXAi0NKwsOB6fEG1uz1schPOA8+C/auSG3LdeKtf1e1I7eT5svdOWQrggcYPPD
+        hti8m1r4u7J2cI3Rrik9HBuha5qmSlypoH7l+PpCDKSAVhPgEocUugwgcn/xvCoR
+        Svv38cfFe9ADkaz0WQnJbYQ8S2IlowEscWd+vWfhpX3NvkEN7soiYLmFCD+rxrPo
+        q1FRPUMyGY5n52lufd1KZxULvtmfqv3Ny4GkHLPZ4EmMoZjMmPYbVk2p80DRnOTQ
+        ==
+X-ME-Sender: <xms:r_XiX6rLH6nBTQ2ec4JMBHi1VONrIL3s500wGIc5pzIcWgBr1h5ZPg>
+    <xme:r_XiX4qPMgio4oGN7_CIRpIZdZzDBLjk9ekBabXGvLq2xhUht8ZziLAt1OJmMwFxB
+    ted-5Fdybx2NpiiIw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrvddtiedgjeehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepieeilefgkedvhffhhfffgfehjeegjedute
+    elieffffdtieegfeekvdeggeehieefnecuffhomhgrihhnpehpuhgslhhitgdqihhnsgho
+    gidrohhrghenucfkphepjeekrdehgedrjedrgeejnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:r_XiX_NxFeGJWezlD3Ynu2hGgHvj71aTwx4GangqM_ScwbMzNvhcGA>
+    <xmx:r_XiX55CaSXF6rTd6NTRT7LJuhAV-5vpNq4kwN7O-zys1wvDTGwkGA>
+    <xmx:r_XiX54Vlyn08SKiWjHBS6mo8GIaaGi2FHtEgLlcf07RBdt1lyrsKw>
+    <xmx:sPXiX6VpYVpxRxBLO8aCG-H2v4hZ9IxO2seeDNwnhxUlGJ4zgO925Q>
+Received: from vm-mail.pks.im (dynamic-078-054-007-047.78.54.pool.telefonica.de [78.54.7.47])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 0B6D81080059;
+        Wed, 23 Dec 2020 02:45:50 -0500 (EST)
+Received: from localhost (tanuki [10.192.0.23])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id c53c308e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 23 Dec 2020 07:45:45 +0000 (UTC)
+Date:   Wed, 23 Dec 2020 08:46:43 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Dec 2020, #04; Tue, 22)
+Message-ID: <X+L14/K8OI1Epa20@tanuki>
+References: <xmqqo8ilhafa.fsf@gitster.c.googlers.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="PkQgd8x/o2fG2/Dx"
+Content-Disposition: inline
+In-Reply-To: <xmqqo8ilhafa.fsf@gitster.c.googlers.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A lot of people confuse respect with tolerance, but they are not the
-same thing.
 
-This was debated when Cambridge University decided to implement a
-freedom of speech policy demanding respect, which caused a huge
-backlash, not just within the university.
+--PkQgd8x/o2fG2/Dx
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-As many argued; respect cannot be manufactured at will. If you don't
-respect an idea (for example that the Earth is flat), then it doesn't
-matter how hard you try; you still will not respect it.
+On Tue, Dec 22, 2020 at 12:07:21PM -0800, Junio C Hamano wrote:
+> * jk/disambiguate-equal-in-config-param (2020-12-09) 3 commits
+>  - config: store "git -c" variables using more robust format
+>  - config: parse more robust format in GIT_CONFIG_PARAMETERS
+>  - quote: make sq_dequote_step() a public function
+>  (this branch uses ps/config-env-pairs.)
+>=20
+>  The quoting rules used to pass "git -c var=3Dval" configuration
+>  across processes have been updated in a backward compatible way, so
+>  that the value read from an environment variable can contain an
+>  equal sign when using the "git --config-env var=3Denv" feature.
+>=20
+>  We may want to make this just a middle part of the
+>  ps/config-env-pairs topic with a bit of patch shuffling.
 
-In that sense respect is like belief; nobody can force you to believe
-the Moon is made of cheese.
+Please note that this has already happened with v5 of my patch series
+[1], which I've sent out last week. So you may want to swap out those
+two series and use the combined v5 as it also improves documentation.
 
-You can pretend to believe in something, and you can pretend to
-respect something, but you really don't. Any policy that asks people to
-pretend is not a good policy.
+[1]: https://public-inbox.org/git/cover.1608104755.git.ps@pks.im/
 
-What should be asked for is tolerance.
+Patrick
 
-Tolerance simply means allowing an idea to exist, and that's what the
-Git project should ask from participants within the community.
+> * ps/config-env-pairs (2020-12-09) 6 commits
+>  - config: allow specifying config entries via envvar pairs
+>  - config: refactor parsing of GIT_CONFIG_PARAMETERS
+>  - config: extract function to parse config pairs
+>  - environment: make `getenv_safe()` non-static
+>  - config: add new way to pass config via `--config-env`
+>  - git: add `--super-prefix` to usage string
+>  (this branch is used by jk/disambiguate-equal-in-config-param.)
+>=20
+>  Introduce two new ways to feed configuration variable-value pairs
+>  via environment variables.
 
-We don't need to pretend we respect other viewpoints, we just need to
-tolerate them.
+--PkQgd8x/o2fG2/Dx
+Content-Type: application/pgp-signature; name="signature.asc"
 
-[1] https://www.theguardian.com/world/2020/dec/09/cambridge-university-rejects-proposal-it-be-respectful-of-all-views
+-----BEGIN PGP SIGNATURE-----
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- CODE_OF_CONDUCT.md | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAl/i9eIACgkQVbJhu7ck
+PpS9rRAAqU/OtZo45AhDFGeKjpxDPK1386U0AvE/XGYDoyVOqN1ufg1cIWdZcvVM
+3e3qDJMC/rag388t2hbo9vqX5r+2kJNJWxbs3qWdYrGlgYV+79+7xoUnfNu1HAwl
+T3S92GvLcxqwyW4JinSZ+u7TIhm2wPbP7Zmu4KYMz3cTfxk3Sonsfv/mHb3WbDwQ
+6RYaW2JvOCIp99RGg2uZGnHluGbevbU/i/zn7RNOwUPIeJF3CvefiSq4VC2L/bCO
+OpsvDU3j6CopQ7dC1VjnSDBMbgt2A8WhSfuRelQtGI1pn4xAbqVPYsIoxAaJ9+7b
+ICxhwO76HjSFLa+GsctSsasFPIfFqSsRfj9eOtEbJ5k+SsG36JSHl2f3uPOaWV6Q
+z1tzjdWqcudp5eaOL5jrhMhMi7Fcy8dmCcKAcyo1/aA0RO1Us7t3PPLc4GVST2rq
+FByCekDa3/FHB4k35iJx5JTCXS7ui1xTkL7SQCGqztfEY82qdec7a7b5xJ9LObai
+fskLDOhacS4F1TZjn14aR1FYX78kFH7plbirLCqEGZkMIDDGdgGy+x8ulN3cyrUd
+Ts8uyxVMjQZqrAjMCgkX5X8UyHTgbzkq4ciKCKsf2Yx8BkitypPTovE0x7ez5UtI
+Gf2r8BH/YCwcfyXJSuGBEan88+rXnpZ26e2j1SVECbKjZLboBhE=
+=Re0h
+-----END PGP SIGNATURE-----
 
-diff --git a/CODE_OF_CONDUCT.md b/CODE_OF_CONDUCT.md
-index fc4645d5c0..3324d9f151 100644
---- a/CODE_OF_CONDUCT.md
-+++ b/CODE_OF_CONDUCT.md
-@@ -22,7 +22,7 @@ Examples of behavior that contributes to creating a positive environment
- include:
- 
- * Using welcoming and inclusive language
--* Being respectful of differing viewpoints and experiences
-+* Being tolerant of differing viewpoints and experiences
- * Gracefully accepting constructive criticism
- * Focusing on what is best for the community
- * Showing empathy towards other community members
--- 
-2.30.0.rc1
-
+--PkQgd8x/o2fG2/Dx--
