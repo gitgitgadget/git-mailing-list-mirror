@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BBCDBC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F34B2C433E6
 	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 01:39:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 865C022583
+	by mail.kernel.org (Postfix) with ESMTP id C3E9822571
 	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 01:39:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727118AbgLWBiq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Dec 2020 20:38:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57838 "EHLO
+        id S1727220AbgLWBjC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Dec 2020 20:39:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726614AbgLWBip (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Dec 2020 20:38:45 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DB06C0611CE
-        for <git@vger.kernel.org>; Tue, 22 Dec 2020 17:37:58 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id a12so16956916wrv.8
-        for <git@vger.kernel.org>; Tue, 22 Dec 2020 17:37:58 -0800 (PST)
+        with ESMTP id S1727196AbgLWBjB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Dec 2020 20:39:01 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93FAEC0619D4
+        for <git@vger.kernel.org>; Tue, 22 Dec 2020 17:38:03 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id 190so3976363wmz.0
+        for <git@vger.kernel.org>; Tue, 22 Dec 2020 17:38:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=r7sYPWeONmrGGR0qbt5CPdxdx/Sv0Xrxa5ktcyyH7fY=;
-        b=e2PG5QBIwLWF/sWaWYrlFjrUf8bGXfzfVA5Qv9c4noDChZ+F+lO3N3JAP9LW2BLidg
-         JVLaPvl5+BDsvUOGPVSe1MsSCet+hcxqijsR3fri7mJYShJ6GckHotokQqH+dP6UmEb3
-         Vn9aO6mDRxxlAfrgb5yfOSG3yExCNB1rArRahtoStzVnMjMx+8lzRGvXf0ndriEVlfWB
-         7QuR4kvx4VKyZP71TW4g8Y1aKtCaRMOQ+LwLD/N1QxESeJquld1iwpsVPGqaZ8j+fPcg
-         R/kRHS5HAv8xnmwIURwd+O6hSM6eCAk4Q6A0b9ilYUx7JVwKUqEisBzkKCqFUa6/+qgT
-         weJA==
+        bh=MWx18jxWyxVp2Ztnq2TkFSIVS3GEDccOKICuIjaapIQ=;
+        b=s/ZA/IAliTJOFm4aLPbXBynvioigjK3T2JmBBDe+V0jd0oNb527gDCcMNzB/TidjAO
+         FXxe26g6eybFHAi7N4pg8+yF7ZEGrEJQOh3uLfXVLULGR2dj97QM2/W1Sbvxk6nx0YFI
+         u4O9N4hAb5B7S7VkikroEkxDzSkMD3wjRDzmYVVGhOwszHE1eSuT5b9fnR0HqOnQuQ64
+         9WqodcX8QKBMOvz1rN2MlL//IduDEgqCxH0XQUkpsRvnNXF+Nif3IsBE8rOKNDXqKtoo
+         QmMTnc1Cj0E5tWrzCtpplRpJ5meiLhBEfT0SkHF4FK+tczPVB/ijLbh7G5MaS+YlLTUV
+         9XFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=r7sYPWeONmrGGR0qbt5CPdxdx/Sv0Xrxa5ktcyyH7fY=;
-        b=mi28z6X3xYmre61W6pSuPBP3afoQrpMXvipx4lWrzOT1nObqCdX3WHDJLQLTRAXCVQ
-         VsmIBBuffeeg4gBJkAPLlh03NA/0doFMFBHGKHtMWr2+CbUtSyhQMS7CpdcyNC4q+yhz
-         NrrYLJ5bjkxIq69KtQoHNbc+Esl5L2jhlGXLfqxJJholnV54qFxql8Gp64UhxE2Y0zcO
-         wOsAXeT9UmUaVav74BJIhJ3nQ3SPi/LUyVt7l3E9IDD+ju5sYAeSiIwmtp4VWg9NAkvD
-         AyCtoq3IX4jJmytRCRyiPAQCo5vxjpAgi6QFMYLP1mWMMIfd14NkpMFu3G/358uWN7fs
-         BoDg==
-X-Gm-Message-State: AOAM531Qv37CShgpT/YUGgmU7p5qFhWFkXR8JGsljmilIn6nH13Rd3I3
-        BQa4mWOaU1psiPrCCQHagh05zFvs7LBM2A==
-X-Google-Smtp-Source: ABdhPJz2dgrAJkJn96y9iSHlJJk1LJlT7EgCYLhSr0TP4tevdzENdYtIdWPiI933Cpo4OMnq1cpSfw==
-X-Received: by 2002:adf:d84e:: with SMTP id k14mr26896148wrl.104.1608687476413;
-        Tue, 22 Dec 2020 17:37:56 -0800 (PST)
+        bh=MWx18jxWyxVp2Ztnq2TkFSIVS3GEDccOKICuIjaapIQ=;
+        b=WKEkFWkPzGYr9LJ1x4aiYMTvXy0uEZ/vbyMnxFVVrPgA4aaKNTFyRky3FzrwCUSHld
+         gWH8yaLx5VsBkvxlQYLTdeQ/j4AgyAdLIlg2R8O8g6v9BlLtvzIUL6P7TSnTOWziGYFG
+         dB0HvbhLjb3ly6vRRRwKzDqWRvNu3jC7ZvHfCYx2MXBWtHyYkGoSdknJtM16IWHGIRDb
+         ScIEAmzYJW0B32dSb51OXEeAVOYqp1BInK0dDCqmnrq3pfLd8aTI8LhFrCw8jUOjhpfz
+         XG1dU/PYO4CQiHSi/RTmEM1nkuyKJGhSRP1kujI1S+lEMQ0RyDgw/4VCujxIGALPAA/p
+         OzPg==
+X-Gm-Message-State: AOAM5311cLmKufgEUBFAjcT6b30HQO9uvvb2W2yFBRyz2EAAvQfj1N0z
+        sUc+qV1CbIHE6SbzmURH9v/JseLBCVp1ug==
+X-Google-Smtp-Source: ABdhPJwxTq8mgepe22kg2GHMooNseKEa5ts+N/8QV+Ql0KC298GqezzCX0SVgs7ZrDl9owm6yrYA6w==
+X-Received: by 2002:a1c:7d94:: with SMTP id y142mr24446008wmc.105.1608687482053;
+        Tue, 22 Dec 2020 17:38:02 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id d191sm28492563wmd.24.2020.12.22.17.37.55
+        by smtp.gmail.com with ESMTPSA id d191sm28492563wmd.24.2020.12.22.17.38.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Dec 2020 17:37:55 -0800 (PST)
+        Tue, 22 Dec 2020 17:38:01 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 14/20] mktag: use fsck instead of custom verify_tag()
-Date:   Wed, 23 Dec 2020 02:35:59 +0100
-Message-Id: <20201223013606.7972-15-avarab@gmail.com>
+Subject: [PATCH v4 20/20] mktag: add a --no-strict option
+Date:   Wed, 23 Dec 2020 02:36:05 +0100
+Message-Id: <20201223013606.7972-21-avarab@gmail.com>
 X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
 In-Reply-To: <20201209200140.29425-1-avarab@gmail.com>
 References: <20201209200140.29425-1-avarab@gmail.com>
@@ -78,693 +78,190 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the validation logic in "mktag" to use fsck's fsck_tag()
-instead of its own custom parser. Curiously the logic for both dates
-back to the same commit[1]. Let's unify them so we're not maintaining
-two sets functions to verify that a tag is OK.
+Now that mktag has been migrated to use the fsck machinery to check
+its input, it makes sense to teach it to run in the equivalent of "git
+fsck"'s default mode, instead of hardcoding "git fsck --strict". Let's
+do that and support the "--no-strict" option.
 
-The behavior of fsck_tag() and the old "mktag" code being removed here
-is different in few aspects.
-
-I think it makes sense to remove some of those checks, namely:
-
- A. fsck only cares that the timezone matches [-+][0-9]{4}. The mktag
-    code disallowed values larger than 1400.
-
-    Yes there's currently no timezone with a greater offset[2], but
-    since we allow any number of non-offical timezones (e.g. +1234)
-    passing this through seems fine. Git also won't break in the
-    future if e.g. French Polynesia decides it needs to outdo the Line
-    Islands when it comes to timezone extravagance.
-
- B. fsck allows missing author names such as "tagger <email>", mktag
-    wouldn't, but would allow e.g. "tagger [2 spaces] <email>" (but
-    not "tagger [1 space] <email>"). Now we allow all of these.
-
- C. Like B, but "mktag" disallowed spaces in the <email> part, fsck
-    allows it.
-
-In some ways fsck_tag() is stricter than "mktag" was, namely:
-
- D. fsck disallows zero-padded dates, but mktag didn't care. So
-    e.g. the timestamp "0000000000 +0000" produces an error now. A
-    test in "t1006-cat-file.sh" relied on this, it's been changed to
-    use "hash-object" (without fsck) instead.
-
-There was one check I deemed worth keeping by porting it over to
-fsck_tag():
-
- E. "mktag" did not allow any custom headers, and by extension (as an
-    empty commit is allowed) also forbade an extra stray trailing
-    newline after the headers it knew about.
-
-    Add a new check in the "ignore" category to fsck and use it. This
-    somewhat abuses the facility added in efaba7cc77f (fsck:
-    optionally ignore specific fsck issues completely, 2015-06-22).
-
-    This is somewhat of hack, but probably the least invasive change
-    we can make here. The fsck command will shuffle these categories
-    around, e.g. under --strict the "info" becomes a "warn" and "warn"
-    becomes "error". Existing users of fsck's (and others,
-    e.g. index-pack) --strict option rely on this.
-
-    So we need to put something into a category that'll be ignored by
-    all existing users of the API. Pretending that
-    fsck.extraHeaderEntry=error ("ignore" by default) was set serves
-    to do this for us.
-
-1. ec4465adb38 (Add "tag" objects that can be used to sign other
-   objects., 2005-04-25)
-
-2. https://en.wikipedia.org/wiki/List_of_UTC_time_offsets
+Since this is a new option we don't need to cater to parse-option.c's
+default of automatically supporting --strict. So let's use
+PARSE_OPT_NONEG, using a new trivial helper macro.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-mktag.txt |   9 +-
- builtin/mktag.c             | 196 +++++++++---------------------------
- fsck.c                      |  32 +++++-
- fsck.h                      |   9 ++
- t/t1006-cat-file.sh         |   2 +-
- t/t3800-mktag.sh            |  63 ++++++------
- 6 files changed, 127 insertions(+), 184 deletions(-)
+ Documentation/git-mktag.txt |  7 +++++++
+ builtin/mktag.c             |  9 +++++++++
+ parse-options.h             |  1 +
+ t/t3800-mktag.sh            | 35 ++++++++++++++++++++++++-----------
+ 4 files changed, 41 insertions(+), 11 deletions(-)
 
 diff --git a/Documentation/git-mktag.txt b/Documentation/git-mktag.txt
-index adc63f6d4e..03cd63d9f6 100644
+index d04657b219..05e49b6787 100644
 --- a/Documentation/git-mktag.txt
 +++ b/Documentation/git-mktag.txt
-@@ -25,7 +25,14 @@ write a tag found in `my-tag`:
-     git hash-object -t tag -w --stdin <my-tag
+@@ -11,6 +11,13 @@ SYNOPSIS
+ [verse]
+ 'git mktag'
  
- The difference is that mktag will die before writing the tag if the
--tag doesn't pass a sanity check.
-+tag doesn't pass a linkgit:git-fsck[1] check.
++OPTIONS
++-------
 +
-+The "fsck" check done mktag is stricter than what linkgit:git-fsck[1]
-+would run by default in that all `fsck.<msg-id>` messages are promoted
-+from warnings to errors (so e.g. a missing "tagger" line is an error).
++--no-strict::
++	By default mktag turns on the equivalent of
++	linkgit:git-fsck[1] `--strict` mode. This disables it.
 +
-+Extra headers in the object are also an error under mktag, but ignored
-+by linkgit:git-fsck[1]
+ DESCRIPTION
+ -----------
  
- Tag Format
- ----------
 diff --git a/builtin/mktag.c b/builtin/mktag.c
-index d89a3c201d..4dd35bc79e 100644
+index 9b04b61c2b..a6a4612247 100644
 --- a/builtin/mktag.c
 +++ b/builtin/mktag.c
-@@ -2,160 +2,60 @@
- #include "tag.h"
- #include "replace-object.h"
- #include "object-store.h"
-+#include "fsck.h"
+@@ -10,6 +10,7 @@ static char const * const builtin_mktag_usage[] = {
+ 	N_("git mktag"),
+ 	NULL
+ };
++static int option_no_strict;
  
--/*
-- * A signature file has a very simple fixed format: four lines
-- * of "object <sha1>" + "type <typename>" + "tag <tagname>" +
-- * "tagger <committer>", followed by a blank line, a free-form tag
-- * message and a signature block that git itself doesn't care about,
-- * but that can be verified with gpg or similar.
-- *
-- * The first four lines are guaranteed to be at least 83 bytes:
-- * "object <sha1>\n" is 48 bytes, "type tag\n" at 9 bytes is the
-- * shortest possible type-line, "tag .\n" at 6 bytes is the shortest
-- * single-character-tag line, and "tagger . <> 0 +0000\n" at 20 bytes is
-- * the shortest possible tagger-line.
-- */
--
--/*
-- * We refuse to tag something we can't verify. Just because.
-- */
--static int verify_object(const struct object_id *oid, const char *expected_type)
-+static int mktag_fsck_error_func(struct fsck_options *o,
-+				 const struct object_id *oid,
-+				 enum object_type object_type,
-+				 int msg_type, const char *message)
+ static struct fsck_options fsck_options = FSCK_OPTIONS_STRICT;
+ 
+@@ -25,6 +26,12 @@ static int mktag_fsck_error_func(struct fsck_options *o,
  {
--	int ret = -1;
--	enum object_type type;
--	unsigned long size;
--	void *buffer = read_object_file(oid, &type, &size);
--	const struct object_id *repl = lookup_replace_object(the_repository, oid);
--
--	if (buffer) {
--		if (type == type_from_string(expected_type)) {
--			ret = check_object_signature(the_repository, repl,
--						     buffer, size,
--						     expected_type);
--		}
--		free(buffer);
-+	switch (msg_type) {
-+	case FSCK_WARN:
-+	case FSCK_ERROR:
-+		/*
-+		 * We treat both warnings and errors as errors, things
-+		 * like missing "tagger" lines are "only" warnings
-+		 * under fsck, we've always considered them an error.
-+		 */
-+		fprintf_ln(stderr, "error: tag input does not pass fsck: %s", message);
-+		return 1;
-+	default:
-+		BUG("%d (FSCK_IGNORE?) should never trigger this callback",
-+		    msg_type);
- 	}
--	return ret;
- }
- 
--static int verify_tag(char *buffer, unsigned long size)
-+static int verify_object_in_tag(struct object_id *tagged_oid, int *tagged_type)
- {
--	int typelen;
--	char type[20];
--	struct object_id oid;
--	const char *object, *type_line, *tag_line, *tagger_line, *lb, *rb, *p;
--	size_t len;
--
--	if (size < 84)
--		return error("wanna fool me ? you obviously got the size wrong !");
--
--	buffer[size] = 0;
--
--	/* Verify object line */
--	object = buffer;
--	if (memcmp(object, "object ", 7))
--		return error("char%d: does not start with \"object \"", 0);
--
--	if (parse_oid_hex(object + 7, &oid, &p))
--		return error("char%d: could not get SHA1 hash", 7);
--
--	/* Verify type line */
--	type_line = p + 1;
--	if (memcmp(type_line - 1, "\ntype ", 6))
--		return error("char%d: could not find \"\\ntype \"", 47);
--
--	/* Verify tag-line */
--	tag_line = strchr(type_line, '\n');
--	if (!tag_line)
--		return error("char%"PRIuMAX": could not find next \"\\n\"",
--				(uintmax_t) (type_line - buffer));
--	tag_line++;
--	if (memcmp(tag_line, "tag ", 4) || tag_line[4] == '\n')
--		return error("char%"PRIuMAX": no \"tag \" found",
--				(uintmax_t) (tag_line - buffer));
--
--	/* Get the actual type */
--	typelen = tag_line - type_line - strlen("type \n");
--	if (typelen >= sizeof(type))
--		return error("char%"PRIuMAX": type too long",
--				(uintmax_t) (type_line+5 - buffer));
--
--	memcpy(type, type_line+5, typelen);
--	type[typelen] = 0;
--
--	/* Verify that the object matches */
--	if (verify_object(&oid, type))
--		return error("char%d: could not verify object %s", 7, oid_to_hex(&oid));
--
--	/* Verify the tag-name: we don't allow control characters or spaces in it */
--	tag_line += 4;
--	for (;;) {
--		unsigned char c = *tag_line++;
--		if (c == '\n')
--			break;
--		if (c > ' ')
--			continue;
--		return error("char%"PRIuMAX": could not verify tag name",
--				(uintmax_t) (tag_line - buffer));
--	}
--
--	/* Verify the tagger line */
--	tagger_line = tag_line;
--
--	if (memcmp(tagger_line, "tagger ", 7))
--		return error("char%"PRIuMAX": could not find \"tagger \"",
--			(uintmax_t) (tagger_line - buffer));
--
--	/*
--	 * Check for correct form for name and email
--	 * i.e. " <" followed by "> " on _this_ line
--	 * No angle brackets within the name or email address fields.
--	 * No spaces within the email address field.
--	 */
--	tagger_line += 7;
--	if (!(lb = strstr(tagger_line, " <")) || !(rb = strstr(lb+2, "> ")) ||
--		strpbrk(tagger_line, "<>\n") != lb+1 ||
--		strpbrk(lb+2, "><\n ") != rb)
--		return error("char%"PRIuMAX": malformed tagger field",
--			(uintmax_t) (tagger_line - buffer));
--
--	/* Check for author name, at least one character, space is acceptable */
--	if (lb == tagger_line)
--		return error("char%"PRIuMAX": missing tagger name",
--			(uintmax_t) (tagger_line - buffer));
--
--	/* timestamp, 1 or more digits followed by space */
--	tagger_line = rb + 2;
--	if (!(len = strspn(tagger_line, "0123456789")))
--		return error("char%"PRIuMAX": missing tag timestamp",
--			(uintmax_t) (tagger_line - buffer));
--	tagger_line += len;
--	if (*tagger_line != ' ')
--		return error("char%"PRIuMAX": malformed tag timestamp",
--			(uintmax_t) (tagger_line - buffer));
--	tagger_line++;
--
--	/* timezone, 5 digits [+-]hhmm, max. 1400 */
--	if (!((tagger_line[0] == '+' || tagger_line[0] == '-') &&
--	      strspn(tagger_line+1, "0123456789") == 4 &&
--	      tagger_line[5] == '\n' && atoi(tagger_line+1) <= 1400))
--		return error("char%"PRIuMAX": malformed tag timezone",
--			(uintmax_t) (tagger_line - buffer));
--	tagger_line += 6;
--
--	/* Verify the blank line separating the header from the body */
--	if (*tagger_line != '\n')
--		return error("char%"PRIuMAX": trailing garbage in tag header",
--			(uintmax_t) (tagger_line - buffer));
-+	int ret;
-+	enum object_type type;
-+	unsigned long size;
-+	void *buffer;
-+	const struct object_id *repl;
+ 	switch (msg_type) {
+ 	case FSCK_WARN:
++		if (option_no_strict) {
++			fprintf_ln(stderr, _("warning: tag input does not pass fsck: %s"), message);
++			return 0;
 +
-+	buffer = read_object_file(tagged_oid, &type, &size);
-+	if (!buffer)
-+		die("could not read tagged object '%s'",
-+		    oid_to_hex(tagged_oid));
-+	if (type != *tagged_type)
-+		die("object '%s' tagged as '%s', but is a '%s' type",
-+		    oid_to_hex(tagged_oid),
-+		    type_name(*tagged_type), type_name(type));
-+
-+	repl = lookup_replace_object(the_repository, tagged_oid);
-+	ret = check_object_signature(the_repository, repl,
-+				     buffer, size, type_name(*tagged_type));
-+	free(buffer);
- 
--	/* The actual stuff afterwards we don't care about.. */
--	return 0;
-+	return ret;
- }
- 
++		}
++		/* fallthrough */
+ 	case FSCK_ERROR:
+ 		/*
+ 		 * We treat both warnings and errors as errors, things
+@@ -67,6 +74,8 @@ static int verify_object_in_tag(struct object_id *tagged_oid, int *tagged_type)
  int cmd_mktag(int argc, const char **argv, const char *prefix)
  {
+ 	static struct option builtin_mktag_options[] = {
++		OPT_NO_BOOL(0, "no-strict", &option_no_strict,
++			    N_("don't do strict fsck checks")),
+ 		OPT_END(),
+ 	};
  	struct strbuf buf = STRBUF_INIT;
-+	struct fsck_options fsck_options = FSCK_OPTIONS_STRICT;
-+	struct object_id tagged_oid;
-+	int tagged_type;
- 	struct object_id result;
- 
- 	if (argc != 1)
-@@ -164,10 +64,14 @@ int cmd_mktag(int argc, const char **argv, const char *prefix)
- 	if (strbuf_read(&buf, 0, 0) < 0)
- 		die_errno("could not read from stdin");
- 
--	/* Verify it for some basic sanity: it needs to start with
--	   "object <sha1>\ntype\ntagger " */
--	if (verify_tag(buf.buf, buf.len) < 0)
--		die("invalid tag signature file");
-+	fsck_options.error_func = mktag_fsck_error_func;
-+	fsck_set_msg_type(&fsck_options, "extraheaderentry", "warn");
-+	if (fsck_tag_standalone(NULL, buf.buf, buf.len, &fsck_options,
-+				&tagged_oid, &tagged_type))
-+		die("tag on stdin did not pass our strict fsck check");
-+
-+	if (verify_object_in_tag(&tagged_oid, &tagged_type))
-+		die("tag on stdin did not refer to a valid object");
- 
- 	if (write_object_file(buf.buf, buf.len, tag_type, &result) < 0)
- 		die("unable to write tag file");
-diff --git a/fsck.c b/fsck.c
-index f82e2fe9e3..bed5e20e03 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -80,7 +80,9 @@ static struct oidset gitmodules_done = OIDSET_INIT;
- 	/* infos (reported as warnings, but ignored by default) */ \
- 	FUNC(GITMODULES_PARSE, INFO) \
- 	FUNC(BAD_TAG_NAME, INFO) \
--	FUNC(MISSING_TAGGER_ENTRY, INFO)
-+	FUNC(MISSING_TAGGER_ENTRY, INFO) \
-+	/* ignored (elevated when requested) */ \
-+	FUNC(EXTRA_HEADER_ENTRY, IGNORE)
- 
- #define MSG_ID(id, msg_type) FSCK_MSG_##id,
- enum fsck_msg_id {
-@@ -911,6 +913,16 @@ static int fsck_tag(const struct object_id *oid, const char *buffer,
- 		    unsigned long size, struct fsck_options *options)
- {
- 	struct object_id tagged_oid;
-+	int tagged_type;
-+	return fsck_tag_standalone(oid, buffer, size, options, &tagged_oid,
-+				   &tagged_type);
-+}
-+
-+int fsck_tag_standalone(const struct object_id *oid, const char *buffer,
-+			unsigned long size, struct fsck_options *options,
-+			struct object_id *tagged_oid,
-+			int *tagged_type)
-+{
- 	int ret = 0;
- 	char *eol;
- 	struct strbuf sb = STRBUF_INIT;
-@@ -924,7 +936,7 @@ static int fsck_tag(const struct object_id *oid, const char *buffer,
- 		ret = report(options, oid, OBJ_TAG, FSCK_MSG_MISSING_OBJECT, "invalid format - expected 'object' line");
- 		goto done;
- 	}
--	if (parse_oid_hex(buffer, &tagged_oid, &p) || *p != '\n') {
-+	if (parse_oid_hex(buffer, tagged_oid, &p) || *p != '\n') {
- 		ret = report(options, oid, OBJ_TAG, FSCK_MSG_BAD_OBJECT_SHA1, "invalid 'object' line format - bad sha1");
- 		if (ret)
- 			goto done;
-@@ -940,7 +952,8 @@ static int fsck_tag(const struct object_id *oid, const char *buffer,
- 		ret = report(options, oid, OBJ_TAG, FSCK_MSG_MISSING_TYPE, "invalid format - unexpected end after 'type' line");
- 		goto done;
- 	}
--	if (type_from_string_gently(buffer, eol - buffer, 1) < 0)
-+	*tagged_type = type_from_string_gently(buffer, eol - buffer, 1);
-+	if (*tagged_type < 0)
- 		ret = report(options, oid, OBJ_TAG, FSCK_MSG_BAD_TYPE, "invalid 'type' value");
- 	if (ret)
- 		goto done;
-@@ -975,6 +988,19 @@ static int fsck_tag(const struct object_id *oid, const char *buffer,
- 	else
- 		ret = fsck_ident(&buffer, oid, OBJ_TAG, options);
- 
-+	if (!starts_with(buffer, "\n")) {
-+		/*
-+		 * The verify_headers() check will allow
-+		 * e.g. "[...]tagger <tagger>\nsome
-+		 * garbage\n\nmessage" to pass, thinking "some
-+		 * garbage" could be a custom header. E.g. "mktag"
-+		 * doesn't want any unknown headers.
-+		 */
-+		ret = report(options, oid, OBJ_TAG, FSCK_MSG_EXTRA_HEADER_ENTRY, "invalid format - extra header(s) after 'tagger'");
-+		if (ret)
-+			goto done;
-+	}
-+
- done:
- 	strbuf_release(&sb);
- 	return ret;
-diff --git a/fsck.h b/fsck.h
-index 69cf715e79..29ee4c45e8 100644
---- a/fsck.h
-+++ b/fsck.h
-@@ -62,6 +62,15 @@ int fsck_walk(struct object *obj, void *data, struct fsck_options *options);
- int fsck_object(struct object *obj, void *data, unsigned long size,
- 	struct fsck_options *options);
- 
-+/*
-+ * fsck a tag, and pass info about it back to the caller. This is
-+ * exposed fsck_object() internals for git-mktag(1).
-+ */
-+int fsck_tag_standalone(const struct object_id *oid, const char *buffer,
-+			unsigned long size, struct fsck_options *options,
-+			struct object_id *tagged_oid,
-+			int *tag_type);
-+
- /*
-  * Some fsck checks are context-dependent, and may end up queued; run this
-  * after completing all fsck_object() calls in order to resolve any remaining
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 2f501d2dc9..5d2dc99b74 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -166,7 +166,7 @@ tag_content="$tag_header_without_timestamp 0000000000 +0000
- 
- $tag_description"
- 
--tag_sha1=$(echo_without_newline "$tag_content" | git mktag)
-+tag_sha1=$(echo_without_newline "$tag_content" | git hash-object -t tag --stdin -w)
- tag_size=$(strlen "$tag_content")
- 
- run_tests 'tag' $tag_sha1 $tag_size "$tag_content" "$tag_content" 1
+diff --git a/parse-options.h b/parse-options.h
+index 7030d8f3da..90d6a817d7 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -166,6 +166,7 @@ struct option {
+ #define OPT_COUNTUP(s, l, v, h)     OPT_COUNTUP_F(s, l, v, h, 0)
+ #define OPT_SET_INT(s, l, v, h, i)  OPT_SET_INT_F(s, l, v, h, i, 0)
+ #define OPT_BOOL(s, l, v, h)        OPT_BOOL_F(s, l, v, h, 0)
++#define OPT_NO_BOOL(s, l, v, h)     OPT_BOOL_F(s, l, v, h, PARSE_OPT_NONEG)
+ #define OPT_HIDDEN_BOOL(s, l, v, h) { OPTION_SET_INT, (s), (l), (v), NULL, \
+ 				      (h), PARSE_OPT_NOARG | PARSE_OPT_HIDDEN, NULL, 1}
+ #define OPT_CMDMODE(s, l, v, h, i)  { OPTION_SET_INT, (s), (l), (v), NULL, \
 diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
-index c6826762d9..d20adf0544 100755
+index 2e8b718379..b436ae1e44 100755
 --- a/t/t3800-mktag.sh
 +++ b/t/t3800-mktag.sh
-@@ -47,7 +47,7 @@ too short for a tag
+@@ -12,12 +12,16 @@ test_description='git mktag: tag object verify test'
+ # given in the expect.pat file.
+ 
+ check_verify_failure () {
+-	expect="$2"
+-	test_expect_success "$1" '
++	test_expect_success "$1" "
+ 		test_must_fail env GIT_TEST_GETTEXT_POISON=false \
+ 			git mktag <tag.sig 2>message &&
+-		grep "$expect" message
+-	'
++		grep '$2' message &&
++		if test '$3' != '--no-strict'
++		then
++			test_must_fail git mktag --no-strict <tag.sig 2>message.no-strict &&
++			grep '$2' message.no-strict
++		fi
++	"
+ }
+ 
+ test_expect_mktag_success() {
+@@ -49,7 +53,8 @@ test_expect_success 'basic usage' '
+ 	EOF
+ 	git mktag <tag.sig &&
+ 	git mktag --end-of-options <tag.sig &&
+-	test_expect_code 129 git mktag --unknown-option
++	test_expect_code 129 git mktag --unknown-option &&
++	test_expect_code 129 git mktag --strict
+ '
+ 
+ ############################################################
+@@ -60,7 +65,7 @@ too short for a tag
  EOF
  
  check_verify_failure 'Tag object length check' \
--	'^error: .*size wrong.*$'
-+	'^error:.* missingObject:'
+-	'^error:.* missingObject:'
++	'^error:.* missingObject:' 'strict'
  
  ############################################################
  #  2. object line label check
-@@ -60,7 +60,7 @@ tagger . <> 0 +0000
- 
- EOF
- 
--check_verify_failure '"object" line label check' '^error: char0: .*"object "$'
-+check_verify_failure '"object" line label check' '^error:.* missingObject:'
- 
- ############################################################
- #  3. object line hash check
-@@ -73,7 +73,7 @@ tagger . <> 0 +0000
- 
- EOF
- 
--check_verify_failure '"object" line SHA1 check' '^error: char7: .*SHA1 hash$'
-+check_verify_failure '"object" line check' '^error:.* badObjectSha1:'
- 
- ############################################################
- #  4. type line label check
-@@ -86,7 +86,7 @@ tagger . <> 0 +0000
- 
- EOF
- 
--check_verify_failure '"type" line label check' '^error: char.*: .*"\\ntype "$'
-+check_verify_failure '"type" line label check' '^error:.* missingTypeEntry:'
- 
- ############################################################
- #  5. type line eol check
-@@ -94,7 +94,7 @@ check_verify_failure '"type" line label check' '^error: char.*: .*"\\ntype "$'
- echo "object $head" >tag.sig
- printf "type tagsssssssssssssssssssssssssssssss" >>tag.sig
- 
--check_verify_failure '"type" line eol check' '^error: char.*: .*"\\n"$'
-+check_verify_failure '"type" line eol check' '^error:.* unterminatedHeader:'
- 
- ############################################################
- #  6. tag line label check #1
-@@ -108,7 +108,7 @@ tagger . <> 0 +0000
- EOF
- 
- check_verify_failure '"tag" line label check #1' \
--	'^error: char.*: no "tag " found$'
-+	'^error:.* missingTagEntry:'
- 
- ############################################################
- #  7. tag line label check #2
-@@ -120,7 +120,7 @@ tag
- EOF
- 
- check_verify_failure '"tag" line label check #2' \
--	'^error: char.*: no "tag " found$'
-+	'^error:.* badType:'
- 
- ############################################################
- #  8. type line type-name length check
-@@ -132,7 +132,7 @@ tag mytag
- EOF
- 
- check_verify_failure '"type" line type-name length check' \
--	'^error: char.*: type too long$'
-+	'^error:.* badType:'
- 
- ############################################################
- #  9. verify object (hash/type) check
-@@ -146,7 +146,7 @@ tagger . <> 0 +0000
- EOF
- 
- check_verify_failure 'verify object (hash/type) check -- correct type, nonexisting object' \
--	'^error: char7: could not verify object.*$'
-+	'^fatal: could not read tagged object'
- 
- cat >tag.sig <<EOF
- object $head
-@@ -157,7 +157,7 @@ tagger . <> 0 +0000
- EOF
- 
- check_verify_failure 'verify object (hash/type) check -- made-up type, nonexisting object' \
--	'^fatal: invalid object type'
-+	'^error:.* badType:'
- 
- cat >tag.sig <<EOF
- object $(test_oid deadbeef)
-@@ -168,7 +168,7 @@ tagger . <> 0 +0000
- EOF
- 
- check_verify_failure 'verify object (hash/type) check -- incorrect type, valid object' \
--	'^error: char7: could not verify object.*$'
-+	'^error:.* badType:'
- 
- cat >tag.sig <<EOF
- object $head
-@@ -179,7 +179,7 @@ tagger . <> 0 +0000
- EOF
- 
- check_verify_failure 'verify object (hash/type) check -- incorrect type, valid object' \
--	'^error: char7: could not verify object'
-+	'^fatal: object.*tagged as.*tree.*but is.*commit'
- 
- ############################################################
- # 10. verify tag-name check
-@@ -193,7 +193,7 @@ tagger . <> 0 +0000
+@@ -206,7 +211,7 @@ tagger . <> 0 +0000
  EOF
  
  check_verify_failure 'verify tag-name check' \
--	'^error: char.*: could not verify tag name$'
-+	'^error:.* badTagName:'
+-	'^error:.* badTagName:'
++	'^error:.* badTagName:' '--no-strict'
  
  ############################################################
  # 11. tagger line label check #1
-@@ -207,7 +207,7 @@ This is filler
+@@ -220,7 +225,7 @@ This is filler
  EOF
  
  check_verify_failure '"tagger" line label check #1' \
--	'^error: char.*: could not find "tagger "$'
-+	'^error:.* missingTaggerEntry:'
+-	'^error:.* missingTaggerEntry:'
++	'^error:.* missingTaggerEntry:' '--no-strict'
  
  ############################################################
  # 12. tagger line label check #2
-@@ -222,10 +222,10 @@ This is filler
+@@ -235,7 +240,7 @@ This is filler
  EOF
  
  check_verify_failure '"tagger" line label check #2' \
--	'^error: char.*: could not find "tagger "$'
-+	'^error:.* missingTaggerEntry:'
+-	'^error:.* missingTaggerEntry:'
++	'^error:.* missingTaggerEntry:' '--no-strict'
  
  ############################################################
--# 13. disallow missing tag author name
-+# 13. allow missing tag author name like fsck
- 
- cat >tag.sig <<EOF
- object $head
-@@ -236,8 +236,7 @@ tagger  <> 0 +0000
- This is filler
- EOF
- 
--check_verify_failure 'disallow missing tag author name' \
--	'^error: char.*: missing tagger name$'
-+test_expect_mktag_success 'allow missing tag author name'
- 
- ############################################################
- # 14. disallow missing tag author name
-@@ -252,7 +251,7 @@ tagger T A Gger <
+ # 13. allow missing tag author name like fsck
+@@ -264,7 +269,7 @@ tagger T A Gger <
  EOF
  
  check_verify_failure 'disallow malformed tagger' \
--	'^error: char.*: malformed tagger field$'
-+	'^error:.* badEmail:'
+-	'^error:.* badEmail:'
++	'^error:.* badEmail:' '--no-strict'
  
  ############################################################
  # 15. allow empty tag email
-@@ -268,7 +267,7 @@ EOF
- test_expect_mktag_success 'allow empty tag email'
- 
- ############################################################
--# 16. disallow spaces in tag email
-+# 16. allow spaces in tag email like fsck
- 
- cat >tag.sig <<EOF
- object $head
-@@ -278,8 +277,7 @@ tagger T A Gger <tag ger@example.com> 0 +0000
- 
- EOF
- 
--check_verify_failure 'disallow spaces in tag email' \
--	'^error: char.*: malformed tagger field$'
-+test_expect_mktag_success 'allow spaces in tag email like fsck'
- 
- ############################################################
- # 17. disallow missing tag timestamp
-@@ -293,7 +291,7 @@ tagger T A Gger <tagger@example.com>__
- EOF
- 
- check_verify_failure 'disallow missing tag timestamp' \
--	'^error: char.*: missing tag timestamp$'
-+	'^error:.* badDate:'
- 
- ############################################################
- # 18. detect invalid tag timestamp1
-@@ -307,7 +305,7 @@ tagger T A Gger <tagger@example.com> Tue Mar 25 15:47:44 2008
- EOF
- 
- check_verify_failure 'detect invalid tag timestamp1' \
--	'^error: char.*: missing tag timestamp$'
-+	'^error:.* badDate:'
- 
- ############################################################
- # 19. detect invalid tag timestamp2
-@@ -321,7 +319,7 @@ tagger T A Gger <tagger@example.com> 2008-03-31T12:20:15-0500
- EOF
- 
- check_verify_failure 'detect invalid tag timestamp2' \
--	'^error: char.*: malformed tag timestamp$'
-+	'^error:.* badDate:'
- 
- ############################################################
- # 20. detect invalid tag timezone1
-@@ -335,7 +333,7 @@ tagger T A Gger <tagger@example.com> 1206478233 GMT
- EOF
- 
- check_verify_failure 'detect invalid tag timezone1' \
--	'^error: char.*: malformed tag timezone$'
-+	'^error:.* badTimezone:'
- 
- ############################################################
- # 21. detect invalid tag timezone2
-@@ -349,10 +347,10 @@ tagger T A Gger <tagger@example.com> 1206478233 +  30
- EOF
- 
- check_verify_failure 'detect invalid tag timezone2' \
--	'^error: char.*: malformed tag timezone$'
-+	'^error:.* badTimezone:'
- 
- ############################################################
--# 22. detect invalid tag timezone3
-+# 22. allow invalid tag timezone3 (the maximum is -1200/+1400)
- 
- cat >tag.sig <<EOF
- object $head
-@@ -362,8 +360,7 @@ tagger T A Gger <tagger@example.com> 1206478233 -1430
- 
- EOF
- 
--check_verify_failure 'detect invalid tag timezone3' \
--	'^error: char.*: malformed tag timezone$'
-+test_expect_mktag_success 'allow invalid tag timezone'
- 
- ############################################################
- # 23. detect invalid header entry
-@@ -378,7 +375,7 @@ this line should not be here
+@@ -388,13 +393,21 @@ this line should not be here
  EOF
  
  check_verify_failure 'detect invalid header entry' \
--	'^error: char.*: trailing garbage in tag header$'
-+	'^error:.* extraHeaderEntry:'
+-	'^error:.* extraHeaderEntry:'
++	'^error:.* extraHeaderEntry:' '--no-strict'
  
- cat >tag.sig <<EOF
- object $head
-@@ -412,7 +409,7 @@ tagger T A Gger <tagger@example.com> 1206478233 -0500$space
- EOF
- 
- check_verify_failure 'extra whitespace at end of headers' \
--	'^error: char.*: malformed tag timezone$'
-+	'^error:.* badTimezone:'
- 
- cat >tag.sig <<EOF
- object $head
-@@ -422,7 +419,7 @@ tagger T A Gger <tagger@example.com> 1206478233 -0500
- EOF
- 
- check_verify_failure 'disallow no header / body newline separator' \
--	'^error: char.*: trailing garbage in tag header$'
-+	'^error:.* extraHeaderEntry:'
- 
- ############################################################
- # 24. create valid tag
+ test_expect_success 'invalid header entry config & fsck' '
+ 	test_must_fail git mktag <tag.sig &&
++	git mktag --no-strict <tag.sig &&
++
+ 	test_must_fail git -c fsck.extraHeaderEntry=error mktag <tag.sig &&
++	test_must_fail git -c fsck.extraHeaderEntry=error mktag --no-strict <tag.sig &&
++
+ 	test_must_fail git -c fsck.extraHeaderEntry=warn mktag <tag.sig &&
++	git -c fsck.extraHeaderEntry=warn mktag --no-strict <tag.sig &&
++
+ 	git -c fsck.extraHeaderEntry=ignore mktag <tag.sig &&
++	git -c fsck.extraHeaderEntry=ignore mktag --no-strict <tag.sig &&
++
+ 	git fsck &&
+ 	env GIT_TEST_GETTEXT_POISON=false \
+ 		git -c fsck.extraHeaderEntry=warn fsck 2>err &&
 -- 
 2.29.2.222.g5d2a92d10f8
 
