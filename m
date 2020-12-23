@@ -7,120 +7,89 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A892C433E0
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 23:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 273C8C433E6
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 23:57:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 06AD720724
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 23:56:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E978322512
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 23:57:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727183AbgLWXzn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Dec 2020 18:55:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36846 "EHLO
+        id S1727851AbgLWX4x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Dec 2020 18:56:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727029AbgLWXzm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Dec 2020 18:55:42 -0500
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82710C061794
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 15:55:02 -0800 (PST)
-Received: by mail-pf1-x429.google.com with SMTP id 11so332650pfu.4
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 15:55:02 -0800 (PST)
+        with ESMTP id S1727029AbgLWX4x (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Dec 2020 18:56:53 -0500
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54FE1C061794
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 15:56:13 -0800 (PST)
+Received: by mail-ot1-x335.google.com with SMTP id n42so524670ota.12
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 15:56:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=bFXlx1RiUHhweI15PdyL1ieAAneShrtWIC2xZMp2w+Q=;
-        b=W00QLaklWg/YWlGjb2xe5OHnTMqNpFUmwVxOjw3ycU6Q+whr+hhGdiGxOZ7HIn/Lnf
-         wTjeZt7azXvZ3qb42RFHO06K6YrhcUQqidl6nHr3rL88D0cf1EWEdX0w5sMzRAkPeUS0
-         gEkGduTU2lHeWUY4d7ZDhDuD1ZLZ0WxBkSvrwSm0YJyAYyiP6T7+UOtreDRaLnv2Jtrc
-         QCDrQiPRXZ+fg3KjDOE0CnI2jvzzEc9oy+Znn+SnqkBIWFkMq1NAYHwJHmD+dN+FLFou
-         VsR3IYw85paIzXw/9SchVj4A4nODV8VSmrFKZxSKpJdvI9/pjkcJn6Mv5apVTjD2pmU2
-         SNJw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0etxNN3HorBPdkdjRbKVnFrDqzTQ81SckVkHLNBN0zU=;
+        b=m0Tw7Ud00GLzfzgPK8KNH3t+hhST0EFSJFmFw5tOJQehRbtBIW7zudNrp8I7SctTWw
+         7HV6DAdSpwpueD4fU+xu7N1bAbxk3yvZcsQtyHYK67hHRgA3Phx0dosb3ksaDvBSIvcU
+         /dxTOws6Vl2MenRgeBoBAdCzWNSoo6/i1CNw4O6s9bJQVa68pDplPplFzWMbuqhl5lwI
+         GyXjlA3MprT+o5Ntr4c3epEZ5uiBeJ3wThn6U3Fa0TboZefcL+p+B4tq+BfZvGdeGks9
+         d8vbzl3ImJwLQU9KfVoW4TklE+BqXCnqHai4dztOOxz/zNUMx+LFnI+1bemlZoL8WS+S
+         xZYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=bFXlx1RiUHhweI15PdyL1ieAAneShrtWIC2xZMp2w+Q=;
-        b=pVLK4lG4c67pRTCkpKbDgOWMNPPHnbKMkseFEh3CWUq7+b7zbE0Exyt7DW6N+sfUe7
-         EfHg8nCWdC6VfmVAZ+7TA3elWogIQGmKNjBNK4JvVsyhYzb4t9ZqnY9hZEpCV9SQHP2q
-         aDf/7YvMTNcN4tG1EFyRJ5fIMQaO4REs0SMaC6DRcvvwG1ev9rQv6rlnedgOboPmwT37
-         a6x9XPtKbA8qWXVvH/9Fe6HgIJvGo6yOtP16twcEUWMV+N7qKYNR9fh3FuHh5b+E+PEa
-         gw+e/MhzBwDvmlaJWos424/AzAb8JWBYiOHUmjYYON9gISv2o1EDyKW4C1VbVYTzjL0N
-         1lPw==
-X-Gm-Message-State: AOAM531mPNMoQ9+xhNvJZrsWWmunPdNgmS6eZge6Jzibk41/eWT0zNNt
-        3nbJl1ONrxCe0YjZkQbbENY=
-X-Google-Smtp-Source: ABdhPJyikwk/r4eYx2maTUHN6YN0wghVnPGtLt9Jx+IIUJLFco1l9kbyFhEt0olh0vHIMl9Barp03A==
-X-Received: by 2002:a63:2b42:: with SMTP id r63mr26026547pgr.316.1608767701947;
-        Wed, 23 Dec 2020 15:55:01 -0800 (PST)
-Received: from localhost ([2402:800:63a8:c764:b10d:95e8:e1a5:df80])
-        by smtp.gmail.com with ESMTPSA id q15sm13078092pgk.11.2020.12.23.15.55.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Dec 2020 15:55:01 -0800 (PST)
-Date:   Thu, 24 Dec 2020 06:54:59 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4lyaWNv?= Rolim <erico.erc@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [BUG] In git-log, --name-status flag overrides the --patch flag
-Message-ID: <X+PY0/yTwrXjVRvb@danh.dev>
-References: <CAFDeuWOit1vKUT38Uvbj2wAsb5CBo59p2h=SE6FGNb6XGOGG-w@mail.gmail.com>
- <X+CgJCj7/tadldUg@danh.dev>
- <xmqq5z4vm0vt.fsf@gitster.c.googlers.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0etxNN3HorBPdkdjRbKVnFrDqzTQ81SckVkHLNBN0zU=;
+        b=jEXHUaU6936uSjDkIn6TpqTTHy/R8cdSk62xfYEy3yMdWed0psFyS050DjSQiddZ1v
+         nIS2W5TPDLOxSsA2LjA+3+rHmzlVjkuvAE9xx6zLtTKnGLDk8mk6tMN169b1LoxNfvTQ
+         TPQ1kdLzsfoIiEsisuZS7zzg4l2ZjxwraIJu1kOYycZaEFNR9qrMQMZC0ns7xmLQnVAM
+         s0IhgjcunHvzGjkOhfkV0ReyUwYHYOpFgbCckfAb1hX6TsxYQy+M4zsR8yCry97Yf0Dg
+         ULjURq++I1F8AcZ5o/frYKs02kkADAW++B4w52E65IpJxHku8a10iajLNnBOj2rVQzUf
+         2Hzg==
+X-Gm-Message-State: AOAM5334BV16VaDp4uuvfLD4iLDpDRmGIw07xrkKwd4zmty+DBSvUc4n
+        LNudfsz5z8VApC3OxGfNTORT9xYHrY/m3G23Mqs=
+X-Google-Smtp-Source: ABdhPJymxZ+P2vDAtsZvgT8gmYha389UXtqMaSnztqVj1Q34hd3dsIf4BPsNQZHAHi9ZkebwIwl35uB/tZoef+OVmic=
+X-Received: by 2002:a9d:6642:: with SMTP id q2mr21009646otm.172.1608767771948;
+ Wed, 23 Dec 2020 15:56:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq5z4vm0vt.fsf@gitster.c.googlers.com>
+References: <pull.820.v4.git.1608599513.gitgitgadget@gmail.com>
+ <pull.820.v5.git.1608609498.gitgitgadget@gmail.com> <xmqq1rfijpyf.fsf@gitster.c.googlers.com>
+In-Reply-To: <xmqq1rfijpyf.fsf@gitster.c.googlers.com>
+From:   Nipunn Koorapati <nipunn1313@gmail.com>
+Date:   Wed, 23 Dec 2020 23:56:01 +0000
+Message-ID: <CAN8Z4-VQJsXWmJPNg0Fdu98csK7ZQ0yDNzxPqRhsbuw9CUJjnw@mail.gmail.com>
+Subject: Re: [PATCH v5 0/2] negative-refspec: fix segfault on : refspec
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Nipunn Koorapati via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2020-12-21 11:09:58-0800, Junio C Hamano <gitster@pobox.com> wrote:
-> Đoàn Trần Công Danh  <congdanhqx@gmail.com> writes:
-> 
-> > On 2020-12-20 01:23:05-0300, Érico Rolim <erico.erc@gmail.com> wrote:
-> >> Hi!
-> >> 
-> >> When using the command
-> >> 
-> >>   git log --patch --name-status
-> >> 
-> >> It seems the name-status flag somehow overrides the patch flag, by which I mean
-> >> that I get the same output as simply running
-> >> 
-> >>   git log --name-status
-> >> 
-> >> It would be nice for the combination of these two flags to work, as it would
-> >> allow one to view both a summary of changed files as well as the changes
-> >> themselves, at the same time.
-> >
-> > I'm not arguing if this your expectation is make sense or not,
-> > however, the Documentation says something about "Show only"...
-> 
-> Perhaps the documentation would need to be clarified?
+Is this something we want to merge into the 2.29 maint branch?
+It is a segfault for anyone pushing with matching refspecs on 2.29
+At what point does git stop patching bugs in the maint branch?
 
-Honestly, I think documentation is fine, "Show only"... should mean
-only.
+--Nipunn
 
+
+--Nipunn
+
+On Tue, Dec 22, 2020 at 6:49 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> I suspect
-> this is not very useful combination [*1*] and if this were years
-> ago, I would suggest making the command line error out, instead of
-> silently ignore one and keep the other one in effect.
-
-Although, I don't have strong opinion on this combination,
-I would say yes, and we should error out for other combination like
---name-status --patch too. And Érico, in a reply to me, said he would
-prefer seeing an error instead of silencely discard one option.
-I'll look into the implementation in this weekend.
-
-> 
-> 
-> [Footnote]
-> 
-> *1* "--patch --stat --summmary" was designed as the standard "both a
->     summary as well as the changes".
-
--- 
-Danh
+> "Nipunn Koorapati via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > Update since Patch series V4
+> >
+> >  * Squashed in Junio's patch to handle non-master named branches
+> >  * Explicitly use test_unconfig
+> >
+> > Appreciate the reviews from Junio and Eric! Happy Holidays!
+> >
+> > Nipunn Koorapati (2):
+> >   negative-refspec: fix segfault on : refspec
+> >   negative-refspec: improve comment on query_matches_negative_refspec
+>
+> Thanks, will replace.  Happy holidays to you, too.
