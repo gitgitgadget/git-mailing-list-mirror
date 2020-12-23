@@ -2,108 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51847C433E0
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 15:05:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78E6DC433DB
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 15:19:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 179352332A
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 15:05:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2F7F62333B
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 15:19:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727196AbgLWPFK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Dec 2020 10:05:10 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56628 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726614AbgLWPFK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Dec 2020 10:05:10 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7AAFA116C44;
-        Wed, 23 Dec 2020 10:04:29 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=28LAZgDnbAQ7cTkwikR+U4dI1Fk=; b=rVxXbxCvgstC8nsi4XVm
-        PvYq0go1UJV41G1/NwRlf27x/+AcaOapgXRwTmo5I6oDw0gM9DYKoJkm2o0sAYoY
-        eLZgGEZjB3ER8qtGFtQBW7Qrgn82GyVT+/NatPsO9siMRfoR+NfgmssTArO9hMA1
-        LhhRcM+7ABxCd91B0L0+TTc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=w/fzx5Rq1FoMXwtgsmi3jUKExmjMJfBE+NXNyNLNT8BYhp
-        jiWA4NZKGo3gY2SP5pAxgxSOBbBXeLK0K+r9chtefRjpc4bybt4ehGei9Rz+kNkV
-        0ds1thuX8AuH/k3siR4uuTARTu1V6mnkhxkS9vm04R+lYZ6kUatDCSCMZRKSs=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 71632116C43;
-        Wed, 23 Dec 2020 10:04:29 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5FB38116C42;
-        Wed, 23 Dec 2020 10:04:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Pratyush Yadav <me@yadavpratyush.com>,
-        David Aguilar <davvid@gmail.com>, Seth House <seth@eseth.com>,
-        Git Mailing List <git@vger.kernel.org>,
+        id S1726282AbgLWPTz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Dec 2020 10:19:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42624 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725267AbgLWPTz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Dec 2020 10:19:55 -0500
+Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D70D0C06179C
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 07:19:14 -0800 (PST)
+Received: by mail-oo1-xc29.google.com with SMTP id j21so3764457oou.11
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 07:19:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=QgzdQmekAl6K4LITTbDGnG78oyN8QbFLUFdT+zOZ9e4=;
+        b=FAGc2j2BGqeS8BwWTiQ4dkFbZrP0gynpfZvNQvCVBM/zMlAyZq/aGrvqxXWDw0bXLm
+         4qYka1Kt1Vtb2N3p9WYnUGfZCFAbdQyO0dKhb/38OuIO+eKz9zudpWdcofotPloFrN79
+         ntcEnkX/KW6VVH05lRtZv5u0S//fRvhhqbaYGQT9WlzU4gAibAqEEgSfjqL7eYw/2vYp
+         a1efEpYtYLRx/RtUZJ5Kom/cxgUOnfSTiDgXKNg4oEo/T/SoBuvxBxvVSil69REg91Z6
+         IgP+7UcKvlmEnGijz/tCw2L+bHL3jFy0zVww2j0U+5N0qdNTH2yX0o/pLD43xjqcaHSb
+         syRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=QgzdQmekAl6K4LITTbDGnG78oyN8QbFLUFdT+zOZ9e4=;
+        b=koCM38LN9K9GJc6kuWFg4Twd0wofLOjkZednV0Sn57msgifWat8VKHyiGq3fp/FTwn
+         zryReAXaD/gVKONQ6NUjuH3vxsCd9DNSKYl9o38Gy+LSdrW5Ttu9Kv2+4d7GiIwXlurR
+         6L2h8CqMOESV/eFv9Kh+/pCU3Is8n827rhVtx3DnQUVsP4Hmzoa+JNg3OmltWWNVFnKi
+         HzLBjA5y6Sl02OW4Tce5IisO5Hi3gZM6AkprwAXr9ZVVWBcT+O2NW3HAopzo4Ru694Jg
+         wMNKjrBnaxQVpmKu/tDsI5ol/CvIQ5WNzGfPZeuoro7y2TL8HQNzgaHKfm6yGmHXkf2Q
+         3uww==
+X-Gm-Message-State: AOAM530RZc2wrHcBYa2xwF7ZI9eQoWL0ogRAZqgY7EPciFuK7r7PvSuu
+        pXdBiqpphUSZ7P+ORZ0Mltocu2FqXjnvcg==
+X-Google-Smtp-Source: ABdhPJx4YsNR1WpuwNSIx9DPCWecowXXbkOs9m01VNf+mL8mwDgm5JdP0B73FXTLgimO9ClKpu4rNw==
+X-Received: by 2002:a4a:db78:: with SMTP id o24mr14025556ood.69.1608736753318;
+        Wed, 23 Dec 2020 07:19:13 -0800 (PST)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id 31sm5429229otd.24.2020.12.23.07.19.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Dec 2020 07:19:12 -0800 (PST)
+Date:   Wed, 23 Dec 2020 09:19:11 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        git@vger.kernel.org
+Cc:     git@sfconservancy.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Christian Couder <christian.couder@gmail.com>,
-        git@sfconservancy.org
-Subject: Nobody is THE one making contribution
-References: <5fdc18a91c402_f2faf20837@natae.notmuch>
-        <20201218054947.GA123376@ellen>
-        <5fdc7a7d3a933_f4673208d0@natae.notmuch>
-        <20201219001358.GA153461@ellen>
-        <xmqq1rfmqc8g.fsf@gitster.c.googlers.com>
-        <20201221042501.GA146725@ellen>
-        <5fe033e0ec278_96932089d@natae.notmuch>
-        <20201221073633.GA157132@ellen>
-        <CAJDDKr6LrBMyfdp5Tutp29W9OqhbW4ffcP5e6PD8ruyxk3rQxA@mail.gmail.com>
-        <5fe134eeaec71_11498208f9@natae.notmuch>
-        <20201222150124.mnfcyofm4qyvvj4n@yadavpratyush.com>
-        <5fe2c64bd3790_17f6720897@natae.notmuch>
-        <xmqq5z4tdsiz.fsf@gitster.c.googlers.com>
-        <5fe2d89c212e8_18dc12083e@natae.notmuch>
-Date:   Wed, 23 Dec 2020 07:04:23 -0800
-Message-ID: <xmqqzh248sy0.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2574CA2A-4530-11EB-A69F-D609E328BF65-77302942!pb-smtp21.pobox.com
+        Jeff King <peff@peff.net>,
+        'Junio C Hamano ' <gitster@pobox.com>
+Message-ID: <5fe35fef595de_22f222088f@natae.notmuch>
+In-Reply-To: <3d21cc06-415d-860b-7bd2-31047d68bc05@gmail.com>
+References: <20201223061718.102779-1-felipe.contreras@gmail.com>
+ <3d21cc06-415d-860b-7bd2-31047d68bc05@gmail.com>
+Subject: Re: [PATCH] CODE_OF_CONDUCT: expect tolerance, not respect
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Derrick Stolee wrote:
+> On 12/23/2020 1:17 AM, Felipe Contreras wrote:
+> > As many argued; respect cannot be manufactured at will. If you don't
+> > respect an idea (for example that the Earth is flat), then it doesn't
+> > matter how hard you try; you still will not respect it.
+> 
+> ...
+> 
+> >  * Using welcoming and inclusive language
+> > -* Being respectful of differing viewpoints and experiences
+> > +* Being tolerant of differing viewpoints and experiences
+> >  * Gracefully accepting constructive criticism
+> >  * Focusing on what is best for the community
+> >  * Showing empathy towards other community members
+> 
+> As mentioned in 5cdf230 (add a Code of Conduct document, 2019-09-24):
+> 
+>     This patch adapts the Contributor Covenant Code of Conduct. As opposed
+>     to writing our own from scratch, this uses common and well-accepted
+>     language, and strikes a good balance between illustrating expectations
+>     and avoiding a laundry list of behaviors. It's also the same document
+>     used by the Git for Windows project.
+> 
+> It is highly recommended to stick to the widely-used and carefully
+> crafted phrasing.
 
->> > But I'm not going to pretend I'm fine with a change I disagree with; I'm
->> > not. Especially when nobody is paying me to do this.
->> ...
->> >> The community needs to do its part in making you and everyone else
->> >> feel welcome. At the same time you need to do your part in making
->> >> contributors, especially the new ones, feel welcome and appreciated.
->> >> Being overly critical can turn developers away from the project.
->> >
->> > Who are you talking about? I'm the one who made the contribution.
->> 
->> What does the "change you disagree with" you mention above refer to?
->> Changes suggested by reviewers to add per-tool knob?
->
-> Yes.
+No widely-used and carefully crafted phrasing is perfect.
 
-If so, please realize that this is a team effort.  You are not THE
-one making contribution.  Everybody else also is.  You are building
-on top of others' code, others are helping you to improve your
-patches with their input, and others can and will later build on top
-of what you have done.
+> Specifically, "Being respectful" is different from "Have respect",
 
-If you are not fine with a change others will make on top of what
-you did, well, tough.  It's not like by sending a patch you lick a
-corner of the cake and make it untouchable by others.
+Indeed.
 
-Just as you said, you can agree to disagree and move on.  Once a
-rough concensus is reached that the work on top of what you did is a
-good direction to go, it would not get us anywhere to repeat the
-same opinion over and over again to block it.
+ 1. Having respect is something that cannot be chosen at will. Either
+    you have it, or you don't.
 
+ 2. Being respectful is something you can choose, but it is *showing*
+    respect, even though you might not actually have it.
+
+If you don't have the first, then the second is an act.
+
+> which negates your argument for changing this word.
+
+It's not my argument. It's the argument of dozens of intellectuals (and
+others) who criticized the original University of Cambridge freedom of
+speech policy.
+
+> We can only enforce what is evidenced by actual communication, not the
+> internal lives of community members.
+
+Indeed. But it's not wise to ask community members to *pretend* to have
+something they don't.
+
+> I could just as easily argue that it is possible to be tolerant without
+> being respectful.
+
+It is, and that's precisely the point; the change matters.
+
+If you say "I think this proposal doesn't make any sense", that's being
+disrespectful towards that viewpoint, but it is honest, and tolerant.
+
+If you police language and demand that members *pretend* to have respect
+towards certain viewpoints, even though they don't have it, that just
+stifles the expression of opinions. Not to mention the cognitive burden
+of being constantly lying.
+
+Either way, if you leave it as "being respectful", then the document is
+a sham, because people are disrespectul towards the viewpoints of others
+all the time, in this mailing list, and many others.
+
+That point is not currently being enforced as it is, and I think (and
+hope) it never will.
+
+Cheers.
+
+-- 
+Felipe Contreras
