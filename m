@@ -2,151 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FB00C433E0
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 21:56:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04ED9C433DB
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 22:10:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 13609224B0
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 21:56:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B793B2225E
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 22:10:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726014AbgLWVzz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Dec 2020 16:55:55 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63400 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725536AbgLWVzz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Dec 2020 16:55:55 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3583499BC9;
-        Wed, 23 Dec 2020 16:55:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BhTgtyIW7SQm8Fw59pHWN+JlW90=; b=ZgmjLd
-        8Y5wQmGfyH4Fgklvr96pUUK2ZOc3mXPseH01yYZkDOMlmYisipwr7aHDw6URAfTt
-        AzLOdtUaPQrJcar5gIkar9T52OZyFvFc9PZI7Cod0FGPqGIoIv7JlyrPPG1awovv
-        XbgdDE5jxLuJKScob11ppsVeBMkyQ4r5K9Cmk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=TQxhk6XHs6KRXifsvgNqSwfPhEjWbpXv
-        PXgsUPcLW+CroBnPxMwLfY8ad24SP8pKV8KlLKy3T2eIdPehfewDJcbwjRsPnCIA
-        88iXwjcf9AlAHQhBEcl3ypZ9U8XrJABXfNFQoRxAPaW/CE9GfFOVp2lfPM/Tkoq2
-        IFFi+QfFQo4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2D4BD99BC8;
-        Wed, 23 Dec 2020 16:55:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9109799BC7;
-        Wed, 23 Dec 2020 16:55:09 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        id S1726477AbgLWWKH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Dec 2020 17:10:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48960 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725270AbgLWWKG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Dec 2020 17:10:06 -0500
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C4F7C061794
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 14:09:26 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id w1so1044565ejf.11
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 14:09:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=tjuzM+6MUprWZeWYiAyot+Yv/IEStBJ5nZJmIhnSJu0=;
+        b=srdvzsaSdkeShFgb6EWXsI6FlMgoqrZXCGRfoQqQUzmREGX8EKbsy5r9HU1q3S+kW3
+         MLQyWxPoUDEV/PHmguK0SRI718D86Nc4/MbeE/bttNTz0IikyyrTkNXvuwVZwYefX1Qj
+         O065am01AEu4g3xS5U4AV+vSywxwOD3u1SuB/kcBeG0c3+tpDiJ0HCIemd7MppHHyKL0
+         AioQ6DThF6+Uv3naszr8kQz6xXh/S0DvWJxPN2TQtQO9JTqto1KGxPOlIdvH3XIEFokM
+         PBQG5FqIl8/6MOD8M1EgXIujhHBEaFFvk266N5tdi7H4iGgniElBhC1CNi+adwTbFyt6
+         aQ5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=tjuzM+6MUprWZeWYiAyot+Yv/IEStBJ5nZJmIhnSJu0=;
+        b=Wamdg7pPFVjQyJwYbom28nQalTjIPKdwarDep8L0dDDfzjFE+Oiz2+4DAqmu9yIAHC
+         500uhTbcK/QY0mw/Vq+5qdmGjUDyGMbwY7RmpOISmS0V+d+L88c8knJZOYy0/OzxmAND
+         mwj5ow5pPHun3c+bVxfN2BFI8D/ynnRkOFbhMZQ3yErC5LvLsiyfU1RyvN0DHgUy04K8
+         +NSneVtBSgMJ2WP2EesHBsbTO91OHcUUAP9h1WYm3WC/y7HJHBCnzzB+5koLu75idJWH
+         QPM9MkzWVP+Sq7t1KfhoLettWXhwcCi8WTH8fQMFLMsgGdf4n0bdX7kvyJqpQEZdtn/h
+         D3OQ==
+X-Gm-Message-State: AOAM531S+EAYJzU/7v1PRWQd+KUNpTVCHX+Vb9qupJoec6vIn8XI6+ds
+        Qyx+qdDv1wJ/FDhwrXz94vMIoZWuNZc=
+X-Google-Smtp-Source: ABdhPJyTOOM/fVXqpUnt1NTcqYWZn3ZK3m4N20omq2Hpc63LtBsj2Kyj0XcmpY+Kl6A4Vn2zHShcqA==
+X-Received: by 2002:a17:907:444f:: with SMTP id on23mr26514757ejb.300.1608761365113;
+        Wed, 23 Dec 2020 14:09:25 -0800 (PST)
+Received: from szeder.dev (94-21-146-153.pool.digikabel.hu. [94.21.146.153])
+        by smtp.gmail.com with ESMTPSA id qn4sm11893489ejb.50.2020.12.23.14.09.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 Dec 2020 14:09:24 -0800 (PST)
+Date:   Wed, 23 Dec 2020 23:09:22 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Philip Oakley <philipoakley@iee.email>
-Subject: Re: [PATCH v5 8/8] config: allow specifying config entries via
- envvar pairs
-References: <cover.1606214397.git.ps@pks.im> <cover.1608104755.git.ps@pks.im>
-        <dfceffd8d4fbc3c99cfa7c5d838e4c3a2db6598a.1608104755.git.ps@pks.im>
-        <xmqqczz06x83.fsf@gitster.c.googlers.com>
-Date:   Wed, 23 Dec 2020 13:55:08 -0800
-In-Reply-To: <xmqqczz06x83.fsf@gitster.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 23 Dec 2020 13:14:52 -0800")
-Message-ID: <xmqq1rfg6vcz.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v4 16/20] mktag: allow turning off fsck.extraHeaderEntry
+Message-ID: <20201223220922.GJ8396@szeder.dev>
+References: <20201209200140.29425-1-avarab@gmail.com>
+ <20201223013606.7972-17-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 868C5B50-4569-11EB-82EE-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20201223013606.7972-17-avarab@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Dec 23, 2020 at 02:36:01AM +0100, Ævar Arnfjörð Bjarmason wrote:
+> In earlier commits mktag learned to use the fsck machinery, at which
+> point we needed to add fsck.extraHeaderEntry so it could be as strict
+> about extra headers as it's been ever since it was implemented.
+> 
+> But it's not nice to need to switch away from "mktag" to "hash-object"
+> + manual "fsck" just because you'd like to have an extra header. So
+> let's support turning it off by getting "fsck.*" variables from the
+> config.
+> 
+> Pedantically speaking it's still not possible to make "mktag" behave
+> just like "hash-object -t tag" does, since we're unconditionally going
+> to check the referenced object in verify_object_in_tag(), which is our
+> own check, and not one that exists in fsck.c.
+> 
+> But the spirit of "this works like fsck" is preserved, in that if you
+> created such a tag with "hash-object" and did a full "fsck" on the
+> repository it would also error out about that invalid object, it just
+> wouldn't emit the same message as fsck does.
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
 
-> The same problem may exist in new paragraphs in git.txt that
-> describes the "--config-env" stuff.
+> diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
+> index d20adf0544..1019b42378 100755
+> --- a/t/t3800-mktag.sh
+> +++ b/t/t3800-mktag.sh
+> @@ -377,6 +377,20 @@ EOF
+>  check_verify_failure 'detect invalid header entry' \
+>  	'^error:.* extraHeaderEntry:'
+>  
+> +test_expect_success 'invalid header entry config & fsck' '
+> +	test_must_fail git mktag <tag.sig &&
+> +	test_must_fail git -c fsck.extraHeaderEntry=error mktag <tag.sig &&
+> +	test_must_fail git -c fsck.extraHeaderEntry=warn mktag <tag.sig &&
+> +	git -c fsck.extraHeaderEntry=ignore mktag <tag.sig &&
+> +	git fsck &&
+> +	env GIT_TEST_GETTEXT_POISON=false \
 
-Here is what I tentatively queued on top of these 8 patches as a fixup.
+Why this 'env GIT_TEST_GETTEXT_POISON=false' here...
 
-Thanks.
+> +		git -c fsck.extraHeaderEntry=warn fsck 2>err &&
+> +	grep "warning .*extraHeaderEntry:" err &&
 
+... instead of test_i18ngrep here?
 
- Documentation/git-config.txt |  8 ++++----
- Documentation/git.txt        | 29 +++++++++++++++--------------
- 2 files changed, 19 insertions(+), 18 deletions(-)
-
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index b71c1ac7b8..67eb40f506 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -348,10 +348,10 @@ GIT_CONFIG_VALUE_<n>::
- 	pairs are processed. These environment variables will override values
- 	in configuration files, but will be overridden by any explicit options
- 	passed via `git -c`.
--
--	This is useful for cases where you want to spawn multiple git commands
--	with a common configuration but cannot depend on a configuration file,
--	for example when writing scripts.
-++
-+This is useful for cases where you want to spawn multiple git commands
-+with a common configuration but cannot depend on a configuration file,
-+for example when writing scripts.
- 
- 
- [[EXAMPLES]]
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 80fb8fab11..3b0f87a71b 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -81,25 +81,26 @@ foo.bar= ...`) sets `foo.bar` to the empty string which `git config
- --type=bool` will convert to `false`.
- 
- --config-env=<name>=<envvar>::
--	Like `-c <name>=<var>` except the value is the name of an
-+	Like `-c <name>=<value>`, give configuration variable
-+	'<name>' a value, where <envvar> is the name of an
- 	environment variable from which to retrieve the value. Unlike
- 	`-c` there is no shortcut for directly setting the value to an
- 	empty string, instead the environment variable itself must be
--	set to the empty strin. Errors if the `<envvar>` does not exist
-+	set to the empty string.  It is an error if the `<envvar>` does not exist
- 	in the environment. `<envvar>` may not contain an equals sign
- 	to avoid ambiguity with `<name>`s which contain one.
--
--	This is useful for cases where you want to pass transitory
--	configuration options to git, but are doing so on OS's where
--	other processes might be able to read your cmdline
--	(e.g. `/proc/self/cmdline`), but not your environ
--	(e.g. `/proc/self/environ`). That behavior is the default on
--	Linux, but may not be on your system.
--
--	Note that this might add security for variables such as
--	`http.extraHeader` where the sensitive information is part of
--	the value, but not e.g. `url.<base.insteadOf` where the
--	sensitive information can be part of the key.
-++
-+This is useful for cases where you want to pass transitory
-+configuration options to git, but are doing so on OS's where
-+other processes might be able to read your cmdline
-+(e.g. `/proc/self/cmdline`), but not your environ
-+(e.g. `/proc/self/environ`). That behavior is the default on
-+Linux, but may not be on your system.
-++
-+Note that this might add security for variables such as
-+`http.extraHeader` where the sensitive information is part of
-+the value, but not e.g. `url.<base>.insteadOf` where the
-+sensitive information can be part of the key.
- 
- --exec-path[=<path>]::
- 	Path to wherever your core Git programs are installed.
--- 
-2.30.0-rc1-197-ga312a798fc
-
+> +	test_must_fail env GIT_TEST_GETTEXT_POISON=false \
+> +		git -c fsck.extraHeaderEntry=error 2>err fsck &&
+> +	grep "error .* extraHeaderEntry:" err
+> +'
+> +
+>  cat >tag.sig <<EOF
+>  object $head
+>  type commit
+> -- 
+> 2.29.2.222.g5d2a92d10f8
+> 
