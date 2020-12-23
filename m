@@ -5,128 +5,135 @@ X-Spam-Level:
 X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 645B0C43381
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43ACBC433E6
 	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 14:49:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4BD542333B
+	by mail.kernel.org (Postfix) with ESMTP id 15B1B23340
 	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 14:49:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728280AbgLWOtg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Dec 2020 09:49:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37968 "EHLO
+        id S1727904AbgLWOtc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Dec 2020 09:49:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726419AbgLWOtg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Dec 2020 09:49:36 -0500
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B72B9C06179C
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:48:55 -0800 (PST)
-Received: by mail-ot1-x334.google.com with SMTP id 11so15166665oty.9
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:48:55 -0800 (PST)
+        with ESMTP id S1727332AbgLWOtc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Dec 2020 09:49:32 -0500
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 246A3C061793
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:48:52 -0800 (PST)
+Received: by mail-ot1-x32c.google.com with SMTP id w3so15162093otp.13
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:48:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=dCnqKx5xU0TmL3ov36P1ihb2ldMl1bapdBSxq3KpjnQ=;
-        b=QiufhfLfIUoKpf1WjEwg8S5AlxcKxBd2Wwzet1Chn4667czseaXw+HvmPqB8bfT1HG
-         IgcSje4RQPZKggfUb7nyOunLLos3aDMJ+eot7S4J70mQV8v7XfP4+FQWQ/XE67z3KMzi
-         fMMS8sjgrod126WASK5AhNoObB4xMKnZkOwPaEzLRmkjF+uTxblJ0jTXXSXYiWrQyHBZ
-         5Otiqvfb853sOFlPUrhTe3l/1culkH9M8/JGoUNRrReohFK3DCV4/aAcIeVc3GXHALLy
-         Gku6F5eK2X4YXYn15fvfoRwS4eTRzVV0B+0geV2jucDSwCm3wIetyZEjgEcwojznR65i
-         GZFg==
+        bh=VqtDNFOwOU5xPt2CVHgesK1Ini4o5oeEVc3kkxCYIak=;
+        b=VOeEF864EtO/ZUa1k0eFqpVQ4vH0XUfKibD6+D4I6dgo8GHaqr3I3AUCMZcA3Zius+
+         aaUBcLBiAbRj+eLT7zcKuMRE1Tc1fp53NWpOga2KIboOVXnHgaIZ+QcYAqPt2h7veME0
+         a6ztImBtw7RxhkPJW95Qm3UxbOudL/24PZG3QaL8wht56R2sQ/gzQxVVJJaO9+cqdeE/
+         iL4WWbm/wiGZYneGCNrcnBSuwxh5J6ZgOoYQ0YLN3E8XWexsEIbGyvwo5scTrqTjjLK6
+         AT2eBEiII2ANqR+5fVLXGaz6FyZnqafdKZZwSisr5ZrHabhIgwaIQnKoooOmc7qJdztC
+         W4uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=dCnqKx5xU0TmL3ov36P1ihb2ldMl1bapdBSxq3KpjnQ=;
-        b=Yx0EheUvk+vS8LqCUQdy08rPARAZ6HfXifGC7Y0lGhouP3vVuHLzm8sZr8aK66kRqI
-         rUHONrS8fkIVZtXqOe8P/CCGqJanFIPQk07wvxuDwCJQRnduR+qk+F4wt9dsiPaXyVq7
-         KdUsLjF3JK807z7b/HpWjqjeU/EXWdmmn+bwJYbi43IbqNzIiZhIlq69p1fiwvAgU2G8
-         yUGjILvaH5QB7MU6l/ahiWNrrQPRv0rWXRC7AQLxS89R6ThQRNtSYem8Ig2nXOpaJ7w9
-         KpNm8QgXtK1J58DQlwyu1zv15wEiQZQ7u9hReRwXm4wCcCIgk8MBJw+iGJB6fHC1LYk5
-         xKfA==
-X-Gm-Message-State: AOAM530kmSbxyAJ3xlsOPaREUMeF0YQK1KFopHSPrAppjWOx8pZz9vCU
-        QH2eDrJhbtPqATZ2nAI/pPuzf9Aq2MbiOw==
-X-Google-Smtp-Source: ABdhPJwyDdiyD5wc0e9FTr5zh3nujyyD3RmV5vvJIpRlvv4+8yfgQhQUiC4F6nEk3LrNhO2GYTDEMQ==
-X-Received: by 2002:a9d:6e0e:: with SMTP id e14mr20256644otr.30.1608734934954;
-        Wed, 23 Dec 2020 06:48:54 -0800 (PST)
+        bh=VqtDNFOwOU5xPt2CVHgesK1Ini4o5oeEVc3kkxCYIak=;
+        b=ek7Q9YOsU06smECtcJAAFU1/gcn2sXzCxIQjISbHS4IiT9834fmT6aygy55Rg/CD0z
+         qFPaQ73OQvREHm7D6iz35URFkSAYGF4G2A4AJkgrtmN5s3d5DY4bRCqTv/SZF29cLp88
+         Ztkg57DDoyb/FsicMg7sjepMD4RPX1UwtBbYY5l24T0LpDPiP/Wqq1Limv0zuR+QuT8C
+         LYnY9vW/8EHXQQcWWpPUwoXzRAAfam6a0bvxXpFWkUqUvaCZkHxQ1EGeBo9YUNJk+pQK
+         WlkTBvZczbYYuVs1XTBJ9W2HRlEN+XhnXr5lr08lWfXMFslFzHERplPUghXv/+1KfXUw
+         L5Og==
+X-Gm-Message-State: AOAM533sJx075W0Hv7/Ac0ysVkXOmdZaVDm/nBNsAqd8yrALpLfLzibm
+        +tU/dfn3yzBBTwX5wsBuGG9mD+nHecijyQ==
+X-Google-Smtp-Source: ABdhPJxoWZVqeTFBhOdv3dxGbMImJ99VMTqwq9e/l05nD4E19QekNRnfWxrs6kj0eHAxOGrjPEawYw==
+X-Received: by 2002:a05:6830:1be9:: with SMTP id k9mr19748623otb.226.1608734931354;
+        Wed, 23 Dec 2020 06:48:51 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id q1sm5533010oij.9.2020.12.23.06.48.54
+        by smtp.gmail.com with ESMTPSA id 126sm3303699oop.30.2020.12.23.06.48.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Dec 2020 06:48:54 -0800 (PST)
+        Wed, 23 Dec 2020 06:48:50 -0800 (PST)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 4/4] completion: bash: add correct suffix in variables
-Date:   Wed, 23 Dec 2020 08:48:45 -0600
-Message-Id: <20201223144845.143039-5-felipe.contreras@gmail.com>
+Subject: [PATCH v2 2/4] completion: bash: fix for suboptions with value
+Date:   Wed, 23 Dec 2020 08:48:43 -0600
+Message-Id: <20201223144845.143039-3-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.30.0.rc1
 In-Reply-To: <20201223144845.143039-1-felipe.contreras@gmail.com>
 References: <20201223144845.143039-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-__gitcomp automatically adds a suffix, but __gitcomp_nl and others
-don't, we need to specify a space by default.
+We need to ignore options that don't start with -- as well.
+
+Depending on the value of COMP_WORDBREAKS the last word could be
+duplicated otherwise.
 
 Can be tested with:
 
-  git config branch.autoSetupMe<tab>
+  git merge -X diff-algorithm=<tab>
 
-This fix only works for versions of bash greater than 4.0, before that
-"local sfx" creates an empty string, therefore the unset expansion
-doesn't work. The same happens in zsh.
-
-Therefore we don't add the test for that for now.
-
-The correct fix for all shells requires semantic changes in __gitcomp,
-but that can be done later.
-
-Cc: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.bash | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ contrib/completion/git-completion.bash |  2 +-
+ t/t9902-completion.sh                  | 15 +++++++++++++++
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 64cf35ba04..926e9ceb56 100644
+index 10d225cc9c..10e69af9ed 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -2636,7 +2636,7 @@ __git_complete_config_variable_name ()
- 		local pfx="${cur_%.*}."
- 		cur_="${cur_#*.}"
- 		__gitcomp_direct "$(__git_heads "$pfx" "$cur_" ".")"
--		__gitcomp_nl_append $'autoSetupMerge\nautoSetupRebase\n' "$pfx" "$cur_" "$sfx"
-+		__gitcomp_nl_append $'autoSetupMerge\nautoSetupRebase\n' "$pfx" "$cur_" "${sfx- }"
- 		return
+@@ -347,7 +347,7 @@ __gitcomp ()
+ 	local cur_="${3-$cur}"
+ 
+ 	case "$cur_" in
+-	--*=)
++	*=)
  		;;
- 	guitool.*.*)
-@@ -2670,7 +2670,7 @@ __git_complete_config_variable_name ()
- 		local pfx="${cur_%.*}."
- 		cur_="${cur_#*.}"
- 		__git_compute_all_commands
--		__gitcomp_nl "$__git_all_commands" "$pfx" "$cur_" "$sfx"
-+		__gitcomp_nl "$__git_all_commands" "$pfx" "$cur_" "${sfx- }"
- 		return
- 		;;
- 	remote.*.*)
-@@ -2686,7 +2686,7 @@ __git_complete_config_variable_name ()
- 		local pfx="${cur_%.*}."
- 		cur_="${cur_#*.}"
- 		__gitcomp_nl "$(__git_remotes)" "$pfx" "$cur_" "."
--		__gitcomp_nl_append "pushDefault" "$pfx" "$cur_" "$sfx"
-+		__gitcomp_nl_append "pushDefault" "$pfx" "$cur_" "${sfx- }"
- 		return
- 		;;
- 	url.*.*)
+ 	--no-*)
+ 		local c i=0 IFS=$' \t\n'
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 81a728c743..c41030b6cc 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -537,6 +537,15 @@ test_expect_success '__gitcomp - expand/narrow all negative options' '
+ 	EOF
+ '
+ 
++test_expect_success '__gitcomp - equal skip' '
++	test_gitcomp "--option=" "--option=" <<-\EOF &&
++
++	EOF
++	test_gitcomp "option=" "option=" <<-\EOF
++
++	EOF
++'
++
+ test_expect_success '__gitcomp - doesnt fail because of invalid variable name' '
+ 	__gitcomp "$invalid_variable_name"
+ '
+@@ -2354,6 +2363,12 @@ test_expect_success 'git clone --config= - value' '
+ 	EOF
+ '
+ 
++test_expect_success 'options with value' '
++	test_completion "git merge -X diff-algorithm=" <<-\EOF
++
++	EOF
++'
++
+ test_expect_success 'sourcing the completion script clears cached commands' '
+ 	__git_compute_all_commands &&
+ 	verbose test -n "$__git_all_commands" &&
 -- 
 2.30.0.rc1
 
