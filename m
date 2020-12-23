@@ -2,138 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43ACBC433E6
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 14:49:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51847C433E0
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 15:05:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 15B1B23340
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 14:49:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 179352332A
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 15:05:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727904AbgLWOtc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Dec 2020 09:49:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37958 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727332AbgLWOtc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Dec 2020 09:49:32 -0500
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 246A3C061793
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:48:52 -0800 (PST)
-Received: by mail-ot1-x32c.google.com with SMTP id w3so15162093otp.13
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 06:48:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=VqtDNFOwOU5xPt2CVHgesK1Ini4o5oeEVc3kkxCYIak=;
-        b=VOeEF864EtO/ZUa1k0eFqpVQ4vH0XUfKibD6+D4I6dgo8GHaqr3I3AUCMZcA3Zius+
-         aaUBcLBiAbRj+eLT7zcKuMRE1Tc1fp53NWpOga2KIboOVXnHgaIZ+QcYAqPt2h7veME0
-         a6ztImBtw7RxhkPJW95Qm3UxbOudL/24PZG3QaL8wht56R2sQ/gzQxVVJJaO9+cqdeE/
-         iL4WWbm/wiGZYneGCNrcnBSuwxh5J6ZgOoYQ0YLN3E8XWexsEIbGyvwo5scTrqTjjLK6
-         AT2eBEiII2ANqR+5fVLXGaz6FyZnqafdKZZwSisr5ZrHabhIgwaIQnKoooOmc7qJdztC
-         W4uA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=VqtDNFOwOU5xPt2CVHgesK1Ini4o5oeEVc3kkxCYIak=;
-        b=ek7Q9YOsU06smECtcJAAFU1/gcn2sXzCxIQjISbHS4IiT9834fmT6aygy55Rg/CD0z
-         qFPaQ73OQvREHm7D6iz35URFkSAYGF4G2A4AJkgrtmN5s3d5DY4bRCqTv/SZF29cLp88
-         Ztkg57DDoyb/FsicMg7sjepMD4RPX1UwtBbYY5l24T0LpDPiP/Wqq1Limv0zuR+QuT8C
-         LYnY9vW/8EHXQQcWWpPUwoXzRAAfam6a0bvxXpFWkUqUvaCZkHxQ1EGeBo9YUNJk+pQK
-         WlkTBvZczbYYuVs1XTBJ9W2HRlEN+XhnXr5lr08lWfXMFslFzHERplPUghXv/+1KfXUw
-         L5Og==
-X-Gm-Message-State: AOAM533sJx075W0Hv7/Ac0ysVkXOmdZaVDm/nBNsAqd8yrALpLfLzibm
-        +tU/dfn3yzBBTwX5wsBuGG9mD+nHecijyQ==
-X-Google-Smtp-Source: ABdhPJxoWZVqeTFBhOdv3dxGbMImJ99VMTqwq9e/l05nD4E19QekNRnfWxrs6kj0eHAxOGrjPEawYw==
-X-Received: by 2002:a05:6830:1be9:: with SMTP id k9mr19748623otb.226.1608734931354;
-        Wed, 23 Dec 2020 06:48:51 -0800 (PST)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id 126sm3303699oop.30.2020.12.23.06.48.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Dec 2020 06:48:50 -0800 (PST)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 2/4] completion: bash: fix for suboptions with value
-Date:   Wed, 23 Dec 2020 08:48:43 -0600
-Message-Id: <20201223144845.143039-3-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.30.0.rc1
-In-Reply-To: <20201223144845.143039-1-felipe.contreras@gmail.com>
-References: <20201223144845.143039-1-felipe.contreras@gmail.com>
+        id S1727196AbgLWPFK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Dec 2020 10:05:10 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56628 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726614AbgLWPFK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Dec 2020 10:05:10 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7AAFA116C44;
+        Wed, 23 Dec 2020 10:04:29 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=28LAZgDnbAQ7cTkwikR+U4dI1Fk=; b=rVxXbxCvgstC8nsi4XVm
+        PvYq0go1UJV41G1/NwRlf27x/+AcaOapgXRwTmo5I6oDw0gM9DYKoJkm2o0sAYoY
+        eLZgGEZjB3ER8qtGFtQBW7Qrgn82GyVT+/NatPsO9siMRfoR+NfgmssTArO9hMA1
+        LhhRcM+7ABxCd91B0L0+TTc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=w/fzx5Rq1FoMXwtgsmi3jUKExmjMJfBE+NXNyNLNT8BYhp
+        jiWA4NZKGo3gY2SP5pAxgxSOBbBXeLK0K+r9chtefRjpc4bybt4ehGei9Rz+kNkV
+        0ds1thuX8AuH/k3siR4uuTARTu1V6mnkhxkS9vm04R+lYZ6kUatDCSCMZRKSs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 71632116C43;
+        Wed, 23 Dec 2020 10:04:29 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5FB38116C42;
+        Wed, 23 Dec 2020 10:04:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Pratyush Yadav <me@yadavpratyush.com>,
+        David Aguilar <davvid@gmail.com>, Seth House <seth@eseth.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        git@sfconservancy.org
+Subject: Nobody is THE one making contribution
+References: <5fdc18a91c402_f2faf20837@natae.notmuch>
+        <20201218054947.GA123376@ellen>
+        <5fdc7a7d3a933_f4673208d0@natae.notmuch>
+        <20201219001358.GA153461@ellen>
+        <xmqq1rfmqc8g.fsf@gitster.c.googlers.com>
+        <20201221042501.GA146725@ellen>
+        <5fe033e0ec278_96932089d@natae.notmuch>
+        <20201221073633.GA157132@ellen>
+        <CAJDDKr6LrBMyfdp5Tutp29W9OqhbW4ffcP5e6PD8ruyxk3rQxA@mail.gmail.com>
+        <5fe134eeaec71_11498208f9@natae.notmuch>
+        <20201222150124.mnfcyofm4qyvvj4n@yadavpratyush.com>
+        <5fe2c64bd3790_17f6720897@natae.notmuch>
+        <xmqq5z4tdsiz.fsf@gitster.c.googlers.com>
+        <5fe2d89c212e8_18dc12083e@natae.notmuch>
+Date:   Wed, 23 Dec 2020 07:04:23 -0800
+Message-ID: <xmqqzh248sy0.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2574CA2A-4530-11EB-A69F-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We need to ignore options that don't start with -- as well.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Depending on the value of COMP_WORDBREAKS the last word could be
-duplicated otherwise.
+>> > But I'm not going to pretend I'm fine with a change I disagree with; I'm
+>> > not. Especially when nobody is paying me to do this.
+>> ...
+>> >> The community needs to do its part in making you and everyone else
+>> >> feel welcome. At the same time you need to do your part in making
+>> >> contributors, especially the new ones, feel welcome and appreciated.
+>> >> Being overly critical can turn developers away from the project.
+>> >
+>> > Who are you talking about? I'm the one who made the contribution.
+>> 
+>> What does the "change you disagree with" you mention above refer to?
+>> Changes suggested by reviewers to add per-tool knob?
+>
+> Yes.
 
-Can be tested with:
+If so, please realize that this is a team effort.  You are not THE
+one making contribution.  Everybody else also is.  You are building
+on top of others' code, others are helping you to improve your
+patches with their input, and others can and will later build on top
+of what you have done.
 
-  git merge -X diff-algorithm=<tab>
+If you are not fine with a change others will make on top of what
+you did, well, tough.  It's not like by sending a patch you lick a
+corner of the cake and make it untouchable by others.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/completion/git-completion.bash |  2 +-
- t/t9902-completion.sh                  | 15 +++++++++++++++
- 2 files changed, 16 insertions(+), 1 deletion(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 10d225cc9c..10e69af9ed 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -347,7 +347,7 @@ __gitcomp ()
- 	local cur_="${3-$cur}"
- 
- 	case "$cur_" in
--	--*=)
-+	*=)
- 		;;
- 	--no-*)
- 		local c i=0 IFS=$' \t\n'
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 81a728c743..c41030b6cc 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -537,6 +537,15 @@ test_expect_success '__gitcomp - expand/narrow all negative options' '
- 	EOF
- '
- 
-+test_expect_success '__gitcomp - equal skip' '
-+	test_gitcomp "--option=" "--option=" <<-\EOF &&
-+
-+	EOF
-+	test_gitcomp "option=" "option=" <<-\EOF
-+
-+	EOF
-+'
-+
- test_expect_success '__gitcomp - doesnt fail because of invalid variable name' '
- 	__gitcomp "$invalid_variable_name"
- '
-@@ -2354,6 +2363,12 @@ test_expect_success 'git clone --config= - value' '
- 	EOF
- '
- 
-+test_expect_success 'options with value' '
-+	test_completion "git merge -X diff-algorithm=" <<-\EOF
-+
-+	EOF
-+'
-+
- test_expect_success 'sourcing the completion script clears cached commands' '
- 	__git_compute_all_commands &&
- 	verbose test -n "$__git_all_commands" &&
--- 
-2.30.0.rc1
+Just as you said, you can agree to disagree and move on.  Once a
+rough concensus is reached that the work on top of what you did is a
+good direction to go, it would not get us anywhere to repeat the
+same opinion over and over again to block it.
 
