@@ -2,104 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8003C433E0
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 10:07:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 312E1C433E0
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 11:45:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 8D3012246B
-	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 10:07:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE5AE207AA
+	for <git@archiver.kernel.org>; Wed, 23 Dec 2020 11:45:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728245AbgLWKHm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Dec 2020 05:07:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51246 "EHLO
+        id S1728431AbgLWLpW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Dec 2020 06:45:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728147AbgLWKHm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Dec 2020 05:07:42 -0500
-Received: from mail-ua1-x92b.google.com (mail-ua1-x92b.google.com [IPv6:2607:f8b0:4864:20::92b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2A9DC061793
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 02:07:01 -0800 (PST)
-Received: by mail-ua1-x92b.google.com with SMTP id j59so3502118uad.5
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 02:07:01 -0800 (PST)
+        with ESMTP id S1728216AbgLWLpV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Dec 2020 06:45:21 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04903C0613D3
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 03:44:41 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id w5so18315872wrm.11
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 03:44:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Kfh4Z8OBR2B/HRxvmY7PT5Jo90/uROxKtl6Bj1dJ4Vs=;
-        b=R/cfiLkaIvzTkhNsM2RBDohNY3yDd7lR1if0kgjX17GvSRK0gl1Qtqm75FZm3QqCOW
-         fPDnErkaRzS/GjNXhLhoEBLjNL2qrlsEViDqDQPJ5eNK3tTY3gDXCypnpdKoF3EURQqh
-         3DODlalD8BbJrJlm+dwbxA3HhyViJeWUwC22CupCdfsuwVn3m2i8f4tXcMOB2+zvEhuu
-         BH6samNTM1t7vzH8PKODOgOfRmDLDFdIVKzTFE2otCCQOQ/UNwKTn2CbuV7e1B9E5+r8
-         VLLVixe5HuwNjzfz66SfXw9ms6xf0P7zwAqj11NsXA9RiL74P8tw7M6VzJ06wCKn75F5
-         deJQ==
+        d=dinwoodie.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ALE0mm36NBwbOAKCxLdGLXXHXnrXdJ8y9nL8J4ber5E=;
+        b=RNeBCyQbA+4AdBPe3wNcttFE6vL1f0CaY8SzOv9BdH6+7tYV8eePfsFmDGaFVAmJrF
+         w1Hxeq5CumDez0vQSxkQyoQm4QaQsO5YOqYWr5UA0FOLv+OExm82eVD9DY48R2OtfpZ0
+         pgSmmzsNrIL1S26KxBYwpNlYCTEE1Ujs5U54A=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Kfh4Z8OBR2B/HRxvmY7PT5Jo90/uROxKtl6Bj1dJ4Vs=;
-        b=gogdNCgx4oby+nBoouPNOxS9WfAZSnOWeqWstpAoBZUJuoPGljBva//HDFbbPEHMPf
-         SNInkyTtGFd3ETqnfFJ9EFGaNrV+83LE1ls7NxF+aGiHSQk/bKJw+KOVZVqsjlqZX1Jw
-         +Y4n2ruJG1DFMZxWxtrdPi/g4yBx/yAiTdNaLzp73kyIaFwRFQvympgyKzshdXmjz3Zj
-         SCgbw6azAwFVhS/uAiCFC5lSCLxz5SrTMuEkkNYeowsJP93ENnndoLCjWRUE1CvX2vOO
-         nvo8q7QYJb8gh1VeYCKqvrHbiOlfBgsW/tu860hJMeOFmg4ckhkduHvdIC0asmXRGfYr
-         v1Dw==
-X-Gm-Message-State: AOAM532qU61VTOl9mwyZ36PecV38YDAh3/LUIlAePIf0Ke0278+vztb9
-        7QAj5j1saiPr4/gXcNoN7xGGLVXiYpIbySXCdVL4dmYW90M=
-X-Google-Smtp-Source: ABdhPJzv2sMTzMfYomWjqWrx7H72LTJnZIM5+nLvSU9T9F8iVZa7v1UEmO29DyStzdiBbgQKFZ5/2eXIoktB6GEJ0l8=
-X-Received: by 2002:ab0:3b59:: with SMTP id o25mr18608180uaw.62.1608718020842;
- Wed, 23 Dec 2020 02:07:00 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ALE0mm36NBwbOAKCxLdGLXXHXnrXdJ8y9nL8J4ber5E=;
+        b=cxqxkAuNFYGpb1Mmo/1B7iJeM1fJltQdPcmzrsgQvnVBynsF3W+MZaIuIQtP0iAtID
+         Abapm3ly7Mr/JdDRjXXZT7c8dInQFNBStMoz0VlSW27N3h0I90+ofGDOGlCYz2jp6ZJE
+         8tS6sykv4TksP7QWodPr7dVnL7REXSOof1p0PsC+F5EMB9vRv628+DCZWR87rYH4B7q2
+         Drv5nwoc4pGspFUJSotnX43saT9d2Rp/+vU8mHNjDvf/jxaS/kXph49I91CAaIi0HeY+
+         uh8MeVzI3AUGLvPVIJV5i0JFdI3bl5UcEt5HsSxLBd6z7HTSwXOl1illhOO+1oONxIMU
+         buAA==
+X-Gm-Message-State: AOAM532gGARoWwrPFTpp+hfnUYcsHYJwVz1atj+meQKrBqcu4VBfA0Qi
+        TJsEVPxFNMW/n4hLRzmrP6g76a+ZeGm/Zdhy
+X-Google-Smtp-Source: ABdhPJzj/ulH3R0AMkPVnaEfw67AR/BSSCBKNRFSq1YiYYyi2hqfsXTLGn6GGO6DDE70TcnUXjHNyw==
+X-Received: by 2002:adf:ba48:: with SMTP id t8mr8637309wrg.288.1608723879472;
+        Wed, 23 Dec 2020 03:44:39 -0800 (PST)
+Received: from localhost.localdomain (77.116.2.81.in-addr.arpa. [81.2.116.77])
+        by smtp.gmail.com with ESMTPSA id h29sm38156531wrc.68.2020.12.23.03.44.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Dec 2020 03:44:38 -0800 (PST)
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+To:     git@vger.kernel.org
+Cc:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Achim Gratz <Stromeko@nexgo.de>
+Subject: [PATCH] t4129: fix setfacl-related permissions failure
+Date:   Wed, 23 Dec 2020 11:44:31 +0000
+Message-Id: <20201223114431.4595-1-adam@dinwoodie.org>
+X-Mailer: git-send-email 2.30.0.rc1
+In-Reply-To: <CAHd-oW7XJL_a1zMAUetHzvrh8DrLT4g2awv-fjbTdeLVLKVsew@mail.gmail.com>
+References: <CAHd-oW7XJL_a1zMAUetHzvrh8DrLT4g2awv-fjbTdeLVLKVsew@mail.gmail.com>
 MIME-Version: 1.0
-References: <cover.1608585497.git.martin.agren@gmail.com> <689d3150e9822eeccac0e1d07c2ba26dac47b4c9.1608585497.git.martin.agren@gmail.com>
- <xmqqsg7xfoj9.fsf@gitster.c.googlers.com> <CAPig+cRmatC0Q22XBBx-ouzNSn5uiarTes1tSehGZuBWucSt1g@mail.gmail.com>
-In-Reply-To: <CAPig+cRmatC0Q22XBBx-ouzNSn5uiarTes1tSehGZuBWucSt1g@mail.gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Wed, 23 Dec 2020 11:06:48 +0100
-Message-ID: <CAN0heSrWjpdcPN7v9kS-A43TQ5RW_8kW9x_S7c70vUW5cX-fUA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] gc: fix handling of crontab magic markers
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 23 Dec 2020 at 04:51, Eric Sunshine <sunshine@sunshineco.com> wrote=
-:
->
-> On Tue, Dec 22, 2020 at 5:47 PM Junio C Hamano <gitster@pobox.com> wrote:
-> > Martin =C3=85gren <martin.agren@gmail.com> writes:
-> > > +test_expect_success 'stop preserves surrounding schedule' '
-> > > +     echo "Crucial information!" >>cron.txt &&
-> > > +     GIT_TEST_CRONTAB=3D"test-tool crontab cron.txt" git maintenance=
- stop &&
-> >
-> > 31345d55 (maintenance: extract platform-specific scheduling,
-> > 2020-11-24) in ds/maintenance-part-4 needs to adjust this
-> > exported variable for the tests to pass in 'seen'
-> >
-> > Is it just the matter of replacing it with
-> >         GIT_TEST_MAINT_SCHEDULER=3D"crontab:test-tool crontab ..."
-> > or is there more to it?
+When running this test in Cygwin, it's necessary to remove the inherited
+access control lists from the Git working directory in order for later
+permissions tests to work as expected.
 
-Oh, I never realized this could be a problem. My merge with seen had a
-textual conflict, but nothing difficult, and the tests passed, so I
-didn't even stop to think if there was more to it. I clearly didn't
-notice the environment variable changed both name and value.
+As such, fix an error in the test script so that the ACLs are set for
+the working directory, not a nonexistent subdirectory.
 
-> Yes, renaming GIT_TEST_CRONTAB to GIT_TEST_MAINT_SCHEDULER and
-> prepending "crontab:" to the value should be sufficient (per the
-> proposal by [1] and realization by [2]).
->
-> [1]: https://lore.kernel.org/git/X6+iJNYEbpQjHCb0@flurp.local/
-> [2]: https://lore.kernel.org/git/4807342b0019be29bb369ed3403a485f0ce9c15d=
-.1605647598.git.gitgitgadget@gmail.com/
+Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
+---
+ t/t4129-apply-samemode.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks Junio and Eric for helping out.
+diff --git a/t/t4129-apply-samemode.sh b/t/t4129-apply-samemode.sh
+index 41818d8315..576632f868 100755
+--- a/t/t4129-apply-samemode.sh
++++ b/t/t4129-apply-samemode.sh
+@@ -78,7 +78,7 @@ test_expect_success POSIXPERM 'do not use core.sharedRepository for working tree
+ 	test_config core.sharedRepository 0666 &&
+ 	(
+ 		# Remove a default ACL if possible.
+-		(setfacl -k newdir 2>/dev/null || true) &&
++		(setfacl -k . 2>/dev/null || true) &&
+ 		umask 0077 &&
+ 
+ 		# Test both files (f1) and leading dirs (d)
+-- 
+2.30.0.rc1
 
-Martin
