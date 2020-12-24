@@ -7,204 +7,226 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99FB7C433DB
-	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 02:11:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D05E7C433DB
+	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 03:15:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 540162256F
-	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 02:11:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90FE5224B8
+	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 03:15:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728367AbgLXCLJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Dec 2020 21:11:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57548 "EHLO
+        id S1728578AbgLXDOo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Dec 2020 22:14:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726288AbgLXCLI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Dec 2020 21:11:08 -0500
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 247BEC061794
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 18:10:00 -0800 (PST)
-Received: by mail-ot1-x335.google.com with SMTP id i6so782648otr.2
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 18:10:00 -0800 (PST)
+        with ESMTP id S1728280AbgLXDOo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Dec 2020 22:14:44 -0500
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E46FC061794
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 19:14:04 -0800 (PST)
+Received: by mail-ot1-x32f.google.com with SMTP id w3so817882otp.13
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 19:14:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=QXSKJOyk5bwQ/3Kp2y4XkRBiw2icQrgtlsI5xoGiCBA=;
-        b=EKktB/bPTLK/Lscpk7Gm/pKM0z8fvxlXdXfuG/SXM8NjhVpouy5UJXrKNlCTk8z5ef
-         KAdZpXYDULh16RW86wxR91Ubvz/uwbt4jTNwjJbTKALwhs7npLM2rYILGCEVWiaFt63V
-         lyvFcdMzL4cNUxIPVfyrRirPueVQ80YFqxNSXB8t6LqvDfnetAhJkjSHtc8IHkPl7nNq
-         WR+jPpOKNEC+G5/6CcbNOo7oV1fOfmryN+MCh41L4wVx3f2ECug3HCZhxfk37aKT6H/1
-         pU+olHCHmn/JaBKeDRtXVPngBvMfR3Vkvt5/vPS4Ol4fbC0jZtQX2MGmUsgmYuV8532T
-         IgYQ==
+        bh=Y5rJELhRxLoRqjohZuZNU0DocM1XAW+wIhySw8oZOtQ=;
+        b=loSaJ/yoWJWf//XlkPOUJ2Owh4HDZTpIA6Z6ITO07ibVvf5s4OhznP1Rim4XKdtFb2
+         fVIJCHM72mC+dtfz2XgjsZ2Iw+l1EEh5N3gJ/cf7tPHiRMvk+RG3YvPJthDyIH55rEZx
+         dWT9avJdykhw2z42mM2uLfVVxMBGRb0La0wFgFCaj3Ki7BK8A/lsT906DllfjueYbQR8
+         GNUYSzdmhwBydoKFgnVFCEmjGMofWcxwLa6kzsYe+clZ5BqhYUwCFytrK+0YCtHfUJ6L
+         H2nwr4THOrLCQDvOsnNfKSqPQQOfnJbH1CZMTQFuVxrO7NV6kctm/LqYdP+lf6qnUHhM
+         H1qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=QXSKJOyk5bwQ/3Kp2y4XkRBiw2icQrgtlsI5xoGiCBA=;
-        b=bBRq3h1K1boIEqVLqabbpcZQBk5Vtj3GUIeDZP72m0qEY5Wns7JEDXcjUqn07tsttM
-         lB9hm1NMGcNth25f8u7Lt2HHPykNPDVi0jtsWgbxUVTVhxnRVHgdJdQSgCMLlMkVjVm0
-         Bibzc0xX6zVL9Xdb8SE9exfWr0Mlkbxo93PV2RZLMUWN3Dkwov+AWISXWeQCsgUaeVsX
-         GblNuwgL3aAm2hyjy2jjbzBiizsxLOs3Mo9xE2+Duh/IivILsXMw1asb03alC7DJ7ww1
-         KpV5DOPK0uDdbtXl6nmugCtXvOUZ1sTS6LhT5f5VbdxEW2tUsCxocQ4POadNFYSMG3ml
-         GjGQ==
-X-Gm-Message-State: AOAM530fpzJR6hpJK50YQu89I+yK1OUf/+O6gqSxUDz3schUkR4BSnK7
-        on5WNqBqMTm5Rwuxh0qztJEO4wwVRd/fbw==
-X-Google-Smtp-Source: ABdhPJwbJUk08rGswmO/pESxiVcGZQHNuH2DVR09dW9QuzKmsOpKH7Lg6xkJ0e0a2ZI6EhOb0e+kFQ==
-X-Received: by 2002:a9d:37c4:: with SMTP id x62mr21891357otb.87.1608775800220;
-        Wed, 23 Dec 2020 18:10:00 -0800 (PST)
+        bh=Y5rJELhRxLoRqjohZuZNU0DocM1XAW+wIhySw8oZOtQ=;
+        b=BvhNNltKkdgt0mvnVlNOj1uWgEzBD0ZKj2G7v8ccwuhZYMi8H0GK/1Qxc7xsWV4BRv
+         FVwzpHQ5lov9iHUy4roem6cqQk1XAVZw9q8vDFfMLMWaWI/N274vZ2cEqfmEzzAAzomM
+         YRSb/7MRYWcOub/nEOSmWsPxr9P4X8nmn7ViFJU2O1Q0NtPoQonmKdmGtHxU2+0Kw+IS
+         4aNU5ETWc9Ty6V3fzsGnUgDkL5hMwc+hWwQHMGiEt87Oq/LBNGyG10hLRazI68mz4SVK
+         pUJIJNJmhFbfc6rmeNtdbK5YkBxPSBIVIHVEc5ux4bvtN8BY1Rb6WIAJJbhzJ/hcsZ04
+         4xUg==
+X-Gm-Message-State: AOAM530ON2AyWfys4XaD/C8v+7w1VejtdEpMp51Xr8mJbuL1KufTMdZC
+        tog9pphldDBHf8xA4PpdgbI=
+X-Google-Smtp-Source: ABdhPJyi1jZ6YnZcYIj+GelnP+BsPpFp6QoAoM4LC90zmZGZoE8GoIAuzHhsyK+dff2ZD7QTBqgCXQ==
+X-Received: by 2002:a9d:73d1:: with SMTP id m17mr21014724otk.187.1608779642751;
+        Wed, 23 Dec 2020 19:14:02 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id p132sm5045659oia.41.2020.12.23.18.09.59
+        by smtp.gmail.com with ESMTPSA id h93sm6443429otb.29.2020.12.23.19.14.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Dec 2020 18:09:59 -0800 (PST)
-Date:   Wed, 23 Dec 2020 20:09:58 -0600
+        Wed, 23 Dec 2020 19:14:01 -0800 (PST)
+Date:   Wed, 23 Dec 2020 21:14:00 -0600
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-Message-ID: <5fe3f8763207f_7855a20860@natae.notmuch>
-In-Reply-To: <X+OkOGkBrpbHhHkb@camp.crustytoothpaste.net>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, git@sfconservancy.org,
+        Christian Couder <christian.couder@gmail.com>,
+        Jeff King <peff@peff.net>,
+        'Junio C Hamano ' <gitster@pobox.com>
+Message-ID: <5fe40778321c5_7855a20819@natae.notmuch>
+In-Reply-To: <87wnx8uirn.fsf@evledraar.gmail.com>
 References: <20201223061718.102779-1-felipe.contreras@gmail.com>
- <3d21cc06-415d-860b-7bd2-31047d68bc05@gmail.com>
- <X+OkOGkBrpbHhHkb@camp.crustytoothpaste.net>
+ <87wnx8uirn.fsf@evledraar.gmail.com>
 Subject: Re: [PATCH] CODE_OF_CONDUCT: expect tolerance, not respect
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-brian m. carlson wrote:
-> On 2020-12-23 at 14:46:56, Derrick Stolee wrote:
-> > On 12/23/2020 1:17 AM, Felipe Contreras wrote:
-> > > As many argued; respect cannot be manufactured at will. If you don't
-> > > respect an idea (for example that the Earth is flat), then it doesn't
-> > > matter how hard you try; you still will not respect it.
-> > 
-> > ...
-> > 
-> > >  * Using welcoming and inclusive language
-> > > -* Being respectful of differing viewpoints and experiences
-> > > +* Being tolerant of differing viewpoints and experiences
-> > >  * Gracefully accepting constructive criticism
-> > >  * Focusing on what is best for the community
-> > >  * Showing empathy towards other community members
-> > 
-> > As mentioned in 5cdf230 (add a Code of Conduct document, 2019-09-24):
-> > 
-> >     This patch adapts the Contributor Covenant Code of Conduct. As opposed
-> >     to writing our own from scratch, this uses common and well-accepted
-> >     language, and strikes a good balance between illustrating expectations
-> >     and avoiding a laundry list of behaviors. It's also the same document
-> >     used by the Git for Windows project.
-> > 
-> > It is highly recommended to stick to the widely-used and carefully
-> > crafted phrasing.
-> 
-> I am also strongly in favor of keeping the commonly used wording.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> =
 
-Do you care to explain why?
+> On Wed, Dec 23 2020, Felipe Contreras wrote:
+> =
 
-> If you feel that wording is inappropriate, it would be better to have
-> the change adopted upstream.
+> >  * Using welcoming and inclusive language
+> > -* Being respectful of differing viewpoints and experiences
+> > +* Being tolerant of differing viewpoints and experiences
+> >  * Gracefully accepting constructive criticism
+> >  * Focusing on what is best for the community
+> >  * Showing empathy towards other community members
+> =
 
-What is upstream? [1]?
+> [I happen to be on the PLC, and I'm not speaking for the PLC, just
+> myself]
+> =
 
-> > Specifically, "Being respectful" is different from "Have respect", which
-> > negates your argument for changing this word. We can only enforce what
-> > is evidenced by actual communication, not the internal lives of community
-> > members.
-> >
-> > I could just as easily argue that it is possible to be tolerant without
-> > being respectful.
-> 
-> I agree with this.
-> 
-> I should also point out that the situation at a university is different
-> than the situation on this list.  A university is a large institution
-> which is dedicated to the pursuit of learning and in which one may find
-> a variety of ideas.  Sometimes those ideas (both past and present) will
-> be offensive, but they are a part of learning more about the world.  We
-> may tolerate those ideas as existing and being subject to critical
-> analysis, but ultimately reject them and have little respect for them.
+> Generally speaking, and not just commenting on this specific patch: I'm=
 
-Yes. But ultimately it's about truth.
+> not in principle against us forking the upstream CoC if we as a project=
 
-> On the other hand, many people work on Git or other open source projects
-> as part of their job duties.
+> & community deem that a worthy trade-off for whatever reason.
+> =
 
-Nobody has ever paid me a cent to work on git.
+> But in the case of this specific patch, (and I'm focusing on points not=
 
-Should the minority of open source contributors be held hostage because
-the majority are corporate contributors?
+> already raised by others):
+> =
 
-> As such, this is a professional environment for many contributors.  In
-> a professional environment, we need to be respectful of people who are
-> different than us.
+> 1. The specific wording you're changing is something that changed in th=
+e
+>    CoC from version 1.4 (which we adopted) to upstream's 2.0.
+> =
 
-Yes, because somebody is paying you to behave in a certain way.
+>    My reading of the 2.0 wording is that it contradicts your
+>    interpretation, it talks about "being respectful of differing
+>    opinions".
 
-If a company is paying you to smile to customers, you smile to
-customers.
+I don't see how the change from "differing viewpoints" to "differing opin=
+ions,
+viewpoints" contradicts my interpretation.
 
-What about the rest of us?
+>    If the CoC means to enforce something about privately held views as
+>    you seem to suggest (and not just behavior in public),
 
-> We are aiming to have a common goal, which is to build a great version
-> control system, and to have a coherent group of people who are willing
-> to join together in that endeavor and best meet the needs of a
-> diverse, multicultural base of users.
+No, that's not necessarily what I'm suggesting.
 
-Indeed. And that's why we aim for the lowest common denominator.
+Let me try again:
 
-We don't say; the majority of us use bash, so either you use bash, or
-you are screwed.
+  1. Respecting differing opinions is an internal matter. You can't
+     really do it, even if you want to. Also, it can't be enforced,
+     because nobody can know if you are actually doing it or not.
 
-We say; POSIX covers almost all of us, so let's try to aim for POSIX.
+  2. Behaving respectfully of differing opinions is an external matter.
+     You can do it, even if you don't really respect an opinion, you can
+     act as if you do. It can be enforced, because others can see how
+     you behave.
 
-> The connotation I have of "tolerate" is "to suffer".
+Even if the CoC is trying to enforce #2, it's still not desirable to do
+so.
 
-I don't think your definition is right.
+Now, it's debatable whether or not "being respectful" is taking about #1
+or #2, I don't think it particularly matters, since #1 is asking for
+something impossible, and #2 is asking to lie. Either way it's not good.
 
-Respect implies tolerance.
+>    then it seems like a paradox to me that it also asks participants
+>    to be respectful of differing opinions.
 
-If you respect X, you tolerate X.
+I don't see how "views" or "opinions" alter the argument.
 
-> In a healthy community, we try to minimize suffering due to others.  I
-> am respectful of the fact that my colleagues may have different
-> religious or cultural beliefs than I do and I try to consider those
-> beliefs, such as considering their holidays when I ask someone to
-> switch an on-call shift or schedule a meeting.  That can be a neutral
-> or positive experience for all involved; no suffering need occur.
+>    To be clear I don't agree with your reading of it. I'm just
+>    suggesting that any proposed updates to the CoC that rely on reading=
 
-Therefore you are also tolerating those things.
+>    specific intent into the wording therein attempt to do the legwork o=
+f
+>    convincing this ML to accept the proposed change in a way that
+>    provides more context for the change.
 
-> So I think the original Code of Conduct is more consistent with
-> producing the positive, healthy environment we're looking for and best
-> meeting our users' needs, and as a result, I don't agree at all that it
-> should be changed.
+It is not my reading; it's literally saying "being respectful". The word
+"respect" has an established meaning, and it doesn't matter if they are
+asking to actually *be* respectful (#1), or merely *show* respect (#2);
+both are a problem.
 
-OK. I have an opinion about this, but I cannot express it without
-violating the code of conduct, so... I have three options.
+So at the very least it's asking to show respect.
 
-  1. I pretend (i.e. lie) saying that I respect that idea.
-  2. I express what I honestly think, but in theory I violate the code
-     of conduct (like many people constantly do in this mailing list).
-  3. I keep my mouth shut.
+What is your reading? Does your reading not imply showing respect?
 
-The reason so many intellectuals were against the word "respect" in
-University of Cambridge's freedom of speech policy is not because
-universities are special; it's because 1. and 3. are not conducive
-towards truth.
+>    Discussing that upstream has changed the relevant part from A to B,
+>    but we're proposing a change from A to C seems highly relevant.
 
-As Stephen Fry put it: 'A demand for respect is like a demand for a
-laugh, or demands for love, loyalty and allegiance. They cannot be given
-if not felt' (you can only fake then).
+Yes, it is relevant, and I will contact upstream about it, but even if
+they deny the change, what part of the rationale is not correct?
 
-Tolerance is the lowest common denominator everyone should be aiming
-for.
+Many more people with a lot more knowledge about the philosophy of
+freedom of speech weighted in the University of Cambridge debate, and
+the exact same rationale applies here.
+
+> 2. The CoC has official translations into a bunch of languages:
+>    https://www.contributor-covenant.org/translations/
+> =
+
+>    So I think that even if we deem a git.git-specific change to the CoC=
+
+>    to be worthwhile losing a 1=3D1 mapping between our version and thos=
+e
+>    translations should give us pause since we'd be less inclusive to
+>    non-native English speaking contributors of the project.
+> =
+
+>    Furthermore, I think a really basic sanity check on any specific
+>    reading or interpretation of the CoC is to see if also holds true if=
+
+>    you read some of the official translations.
+
+Yes, that is a good point.
+
+This is why usually it's a good idea to look back at the etymology of
+a word.
+
+In both words the etymology goes back to Latin, and since I speak
+Spanish I can grasp pretty clearly what is meant in the four cases
+{English,Spanish}{respect,tolerance}.
+
+From my point of view it's really simple:
+
+ a. Respect: hold in high regard
+ b. Tolerance: endure
+
+Whether it's "respect" (English), or "respeto" (Spanish), doesn't really
+change the meaning. Same with "tolerance" and "tolerancia".
+
+>    In the language I speak natively this reading of "respect" doesn't
+>    agree with your interpretation.
+
+We would need to see which interpretation you are talking about.
+
+One example to show the difference is that you are supposed to hold in
+high regard (respect) your parents, or the King, whereas in a Thanksgivin=
+g dinner
+you are supposed to endure (tolerate) your uncle talking about conspiracy=
+
+theories.
+
+These are of course culturally-specific examples. But I hope you get the
+point.
+
+How is it different in Icelandic?
 
 Cheers.
 
-[1] https://www.contributor-covenant.org/
+-- =
 
--- 
-Felipe Contreras
+Felipe Contreras=
