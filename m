@@ -7,127 +7,165 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F151C433DB
-	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 00:54:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6273AC4332E
+	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 01:11:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4D49622517
-	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 00:54:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31AA222517
+	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 01:11:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727719AbgLXAyB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Dec 2020 19:54:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45736 "EHLO
+        id S1729055AbgLXBK7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Dec 2020 20:10:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726288AbgLXAyB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Dec 2020 19:54:01 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2A9DC061794
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 16:53:20 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id dk8so873161edb.1
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 16:53:20 -0800 (PST)
+        with ESMTP id S1729043AbgLXBK7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Dec 2020 20:10:59 -0500
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53E36C0611D0
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 17:09:53 -0800 (PST)
+Received: by mail-ot1-x329.google.com with SMTP id 11so659886oty.9
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 17:09:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=66nWlEd1QDWvUkkLjEujYktd0w0PTDF7QZLAGRDE1kE=;
-        b=Hoe7g34tgQ0uHerHkf50lzAHpjQmb8MFxzXzavNxedTE5lpROW86ByWAcYvS1k+9On
-         a2pzmx4nNp+IF6zAEbt68+IjlX98o+JHTrU0jrRZmQ1uOvAV40FN+uHfyC4eEI87hMqT
-         jDD4LrM3WUWlq3+kvPjjWFx/G5er2UgTXjAr1lcc1jg6kMN7e4anbZ/cdkMPK6gURlU1
-         3HVGO3O72YtM24nXE98fpUGFAQAzA1HggEudkan+OmxOha++KQRGT2ZRoMBxEsBKdQ1N
-         6eF2wllbpSRPB1fY4F9EEQ4i+YX20taPzk8hrBrjRcz+1bF1UxXTEEbfvo7n4mEnB51Y
-         QFCQ==
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=aVtpXJ7JmWYLC3y2V7ANojDd8/Faok+fXV4tt1+QxRU=;
+        b=nauNe6PqX+e5t3GonVf26auaO2pMYMRY2J0uitPSYqVm4YliyB+9n8g+z3GAGijF/U
+         Yz5i40bSxvi42sN0yhX6SJArCv5SsUUOKV374YfoWJjbZcsvfpWzGQLtv+SNqj3YnxwH
+         3OmpFCyufZ83ro6jY/3XaIuNpxI2t/6MiDDBnIkqzNLYcstLfxwRTUbicqlbHI23LZ9v
+         xod+qOXOV4fiUhsB9qs0ZPlYZHwCamJiqRb1WEc7n86m+1c3ZE94prHyZI9igX28tdBs
+         kYIcweeeTMmppl8J7yfcEDfS/o/qUivGosSeQMSq2lrB5bk7c3Nxl6LsvUl8eIw95lb9
+         NHVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=66nWlEd1QDWvUkkLjEujYktd0w0PTDF7QZLAGRDE1kE=;
-        b=AiT7ch4oxPDg/h98ggvaNqs57oBq6PQbx/7VDR/buxd2QU+UAXvjGMeTIqq0g71oH8
-         Pi2KBqTyac67nFoBKm4ljUtAOW449SoJDJ0wMrGJUTSNd7u6QwmXxWBOucqAlPe+fZsA
-         0m4rDdY0s6PW8fZ4pEThnn0WRPYIP50xkB0NCLWpIiS2QAqdSNnTH12X/f/IGUdPy+sL
-         /Jd1W7nuWcBLSBoKhHkWKWUHObjy0h7Z3yaLqTaMQMuE8dRMeRVmdwm8j/XUirwUt0Sz
-         BrQucuhmWMI5hDLmDCkL0wtIWvK+OgC3h5TuWZkHz6bieh6upIJ9GxF8Z1jaEcVjEVVl
-         o8ww==
-X-Gm-Message-State: AOAM531+ij/9QxrmKn6zGNTGBHC2VazTNZmuQlv0DgK0sSxMPRaG1WBf
-        gYmnMDzPJ0U/zbi34oxq54chCCosMwMhRA==
-X-Google-Smtp-Source: ABdhPJzqsTsNS6pBj8nVWdI+gqC2SaCOosRuyelry5IFl23wa6PcR3yhiEhcFEI7LxVItn27m5GnwQ==
-X-Received: by 2002:a05:6402:17:: with SMTP id d23mr26993557edu.341.1608771198953;
-        Wed, 23 Dec 2020 16:53:18 -0800 (PST)
-Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id r24sm31283572edo.4.2020.12.23.16.53.17
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=aVtpXJ7JmWYLC3y2V7ANojDd8/Faok+fXV4tt1+QxRU=;
+        b=llZlGO7mDA77otTf4wWiFVFhO1hwwO5ozo9WzTypQmBABiRmL8PS3oct9061LYzhab
+         X87VodZMvu/rqXEtRliyDxEb90gPzuuQb8dLwNPuz76cd7S4T3KP23gIF5P0Xi85qSJq
+         bgfNnjh8yjEM7xodsGwD5VYpIwqn7BbSZgY/Pd1HegNc2a6RgrDsiaMf1rul5QcELlM7
+         zSgxC7wb9HsXgl1dNiHgoWpbU8FMhv+SxU65NRD5kRHMte4WVdbRZ3KPuXY58HElrPZC
+         3/espV0aY+52knnrL84B9j80/UzkX3qnN4qE3gZjIIysv6wiXCTNWklS/e/P4fKibum/
+         qOiQ==
+X-Gm-Message-State: AOAM530lxI2ejfRRwiqO2u9pCmoriPXvBMu7+/tDufKkNbQcZn3xRaQI
+        ptery0LRbg74EWlzghTfO4o=
+X-Google-Smtp-Source: ABdhPJy1eiUWqfc9iUkHWvmHGEvErlSbLK6SbdjCM+C85QCuq0aA6w6SQ2QIzogVE5iRkh38SxX2dw==
+X-Received: by 2002:a9d:3e42:: with SMTP id h2mr21890565otg.275.1608772192660;
+        Wed, 23 Dec 2020 17:09:52 -0800 (PST)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id h26sm6901138ots.9.2020.12.23.17.09.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Dec 2020 16:53:18 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, git@sfconservancy.org,
+        Wed, 23 Dec 2020 17:09:51 -0800 (PST)
+Date:   Wed, 23 Dec 2020 19:09:50 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Pratyush Yadav <me@yadavpratyush.com>,
+        David Aguilar <davvid@gmail.com>, Seth House <seth@eseth.com>,
+        Git Mailing List <git@vger.kernel.org>,
         Christian Couder <christian.couder@gmail.com>,
-        Jeff King <peff@peff.net>,
-        'Junio C Hamano ' <gitster@pobox.com>
-Subject: Re: [PATCH] CODE_OF_CONDUCT: expect tolerance, not respect
-References: <20201223061718.102779-1-felipe.contreras@gmail.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.13
-In-reply-to: <20201223061718.102779-1-felipe.contreras@gmail.com>
-Date:   Thu, 24 Dec 2020 01:53:16 +0100
-Message-ID: <87wnx8uirn.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+        git@sfconservancy.org
+Message-ID: <5fe3ea5eb3f5b_7855a208c6@natae.notmuch>
+In-Reply-To: <xmqqpn306y3a.fsf@gitster.c.googlers.com>
+References: <5fdc18a91c402_f2faf20837@natae.notmuch>
+ <20201218054947.GA123376@ellen>
+ <5fdc7a7d3a933_f4673208d0@natae.notmuch>
+ <20201219001358.GA153461@ellen>
+ <xmqq1rfmqc8g.fsf@gitster.c.googlers.com>
+ <20201221042501.GA146725@ellen>
+ <5fe033e0ec278_96932089d@natae.notmuch>
+ <20201221073633.GA157132@ellen>
+ <CAJDDKr6LrBMyfdp5Tutp29W9OqhbW4ffcP5e6PD8ruyxk3rQxA@mail.gmail.com>
+ <5fe134eeaec71_11498208f9@natae.notmuch>
+ <20201222150124.mnfcyofm4qyvvj4n@yadavpratyush.com>
+ <5fe2c64bd3790_17f6720897@natae.notmuch>
+ <xmqq5z4tdsiz.fsf@gitster.c.googlers.com>
+ <5fe2d89c212e8_18dc12083e@natae.notmuch>
+ <xmqqzh248sy0.fsf@gitster.c.googlers.com>
+ <5fe36790793ae_2354120839@natae.notmuch>
+ <xmqqpn306y3a.fsf@gitster.c.googlers.com>
+Subject: Re: Nobody is THE one making contribution
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> >> You are not THE one making contribution.
+> >
+> > When I'm sending a patch, I have the role of "contributor".
+> 
+> Yes, you are a contributor, but there are other contributors to the
+> change under discussion.
 
-On Wed, Dec 23 2020, Felipe Contreras wrote:
+There are other people _contributing_, but typically they are not
+assigned the role of _contributor_.
 
->  * Using welcoming and inclusive language
-> -* Being respectful of differing viewpoints and experiences
-> +* Being tolerant of differing viewpoints and experiences
->  * Gracefully accepting constructive criticism
->  * Focusing on what is best for the community
->  * Showing empathy towards other community members
+This has been my experience in all the open source projects I've worked
+on.
 
-[I happen to be on the PLC, and I'm not speaking for the PLC, just
-myself]
+My guess is that semantically the role of contributor is different
+because they are the ones bearing the brunt of the work (thinking the
+idea, coding, testing, cleaning, sending the patch, addressing comments,
+re-coding, re-testing, re-cleaing, sending another patch... etc).
 
-Generally speaking, and not just commenting on this specific patch: I'm
-not in principle against us forking the upstream CoC if we as a project
-& community deem that a worthy trade-off for whatever reason.
+Of course everyone contributes, but in any given patch series, the
+"contributor" contributes the most.
 
-But in the case of this specific patch, (and I'm focusing on points not
-already raised by others):
+> > In your own release notes [1] you say:
+> >
+> >   New contributors whose contributions weren't in v2.29.0 are as
+> >   follows.
+> >
+> > Presumably these are the people who contributed patches, not reviews.
+> 
+> If I said "These community members have their name as an author of a
+> patch for the first time since v2.29", would that mean those who do
+> not have any commit under their name are not community members?
 
-1. The specific wording you're changing is something that changed in the
-   CoC from version 1.4 (which we adopted) to upstream's 2.0.
+No. It would just mean they had other roles (not contributor).
 
-   My reading of the 2.0 wording is that it contradicts your
-   interpretation, it talks about "being respectful of differing
-   opinions".
+For example, when a company pays their employees to contribute to the
+project, the company can be considered a contributor (e.g. Google).
 
-   If the CoC means to enforce something about privately held views as
-   you seem to suggest (and not just behavior in public), then it seems
-   like a paradox to me that it also asks participants to be respectful
-   of differing opinions.
+> > I don't know why you feel the need to explain that to me. I have been
+> > contributing to open source projects for more than 20 years.
+> 
+> Because you are acting as if you don't know and have to always be
+> the right one no matter what.  You may not mean to do so, but that
+> is how your behaviour appears to me (note that I did not know say
+> "to others").
 
-   To be clear I don't agree with your reading of it. I'm just
-   suggesting that any proposed updates to the CoC that rely on reading
-   specific intent into the wording therein attempt to do the legwork of
-   convincing this ML to accept the proposed change in a way that
-   provides more context for the change.
+Yes, but you do not read minds, and you can't know what is happening
+inside mine.
 
-   Discussing that upstream has changed the relevant part from A to B,
-   but we're proposing a change from A to C seems highly relevant.
+Attempting to do so is usually not a good idea [1].
 
-2. The CoC has official translations into a bunch of languages:
-   https://www.contributor-covenant.org/translations/
+> I won't have time to respond to your word games after I send this
+> message.
 
-   So I think that even if we deem a git.git-specific change to the CoC
-   to be worthwhile losing a 1=1 mapping between our version and those
-   translations should give us pause since we'd be less inclusive to
-   non-native English speaking contributors of the project.
+Words are the only tool we have to communicate among minds.
 
-   Furthermore, I think a really basic sanity check on any specific
-   reading or interpretation of the CoC is to see if also holds true if
-   you read some of the official translations.
+There's a reason why linguistics is an entire field of study; some
+people are trying to really understand what other people are really
+trying to say.
 
-   In the language I speak natively this reading of "respect" doesn't
-   agree with your interpretation. It's a really tiny language
-   (Icelandic) whose translation is likely to have received little to no
-   peer review (I didn't look into it), but presumably speakers of other
-   languages can chime on this point if needed.
+I for one don't understand why you would change the subject of the
+thread to "Nobody is THE one making contribution", and then not be
+interested in understanding what others understand by the word
+"contribution".
+
+But I'm not going to read into it something you didn't attempt to say.
+
+I don't read minds.
+
+Cheers.
+
+[1] https://cogbtherapy.com/cbt-blog/common-cognitive-distortions-mind-reading
+
+-- 
+Felipe Contreras
