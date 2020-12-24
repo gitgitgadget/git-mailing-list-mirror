@@ -7,100 +7,101 @@ X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 057E0C433E0
-	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 16:18:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53E64C433DB
+	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 17:16:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BD6D1224B1
-	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 16:18:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 17DB322288
+	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 17:16:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728462AbgLXQQq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Dec 2020 11:16:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45840 "EHLO
+        id S1728805AbgLXRQZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Dec 2020 12:16:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727081AbgLXQQp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Dec 2020 11:16:45 -0500
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 710F4C061573
-        for <git@vger.kernel.org>; Thu, 24 Dec 2020 08:16:05 -0800 (PST)
-Received: by mail-oi1-x22c.google.com with SMTP id l200so2737357oig.9
-        for <git@vger.kernel.org>; Thu, 24 Dec 2020 08:16:05 -0800 (PST)
+        with ESMTP id S1727901AbgLXRQY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Dec 2020 12:16:24 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F02FC061573
+        for <git@vger.kernel.org>; Thu, 24 Dec 2020 09:15:44 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id i24so2602732edj.8
+        for <git@vger.kernel.org>; Thu, 24 Dec 2020 09:15:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=GGiIy1rjq8gyG66zTeU1SPZxod7TYo4pRetXJfgQl1c=;
-        b=ZSpvEoeNTWEge1mBdQ7/3e3yePyObx92M/qwnRLtWPTIASoVBH6JIwJOj/6NFnn05X
-         5h6OfoGfyrpnrFxLACm2m7dApbclrtZgnzMSzpoXVvxuRFMA2A8VP83X8zEtN89mUyt4
-         lbBYi1KM5DY86AcLp9hEP+L9N9hyQ8vkRlWzH26qqLlW4tFTAETE9FJ1H/FAx8nizHO7
-         6JRFjFYZbj/7T3qCrA6LjsmNXjsTDjpzLnAZVrPNsNz9O7Wi/lrfyonRINM97BchY0pv
-         F3BKZNuVtw9afbpn/CcFChrMDn0tiiFow61x8tVtZrcCRI/agSOBFcxMLwAwEbapBKDG
-         AFow==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=dbDmL994Vhe0hXjxzaEanvZdXD0IdPbePe09QjRulZg=;
+        b=ULGNfBoDPA6JDTYQwNlL7Q7p55veK2SFD1YBXqRhK3iI3fxdPQfDc/b3REPZeU/aew
+         YzlZ/SIsI+dOLt3uKskqJPbLXouYwT2EHyNZyDBwvzhci1nrLg2z3nmODZNmHQGT9E/k
+         gaNcNQGrMnWUmQeDb8xqhvWVKBn71SNY6AyPWPhz0YCe3DqmFX1L88juh/osaJxX1HRJ
+         5O2xHWFrueJ3PbzTiBBpjJIozVAKeOcGQ2ntBTJEDI+PkDshRWxWebM0zjW6EQYv2zDd
+         CpL0HnWbQcUVphM1Sk7Uvkeor51FmZEwKrenEKi5eZQQ9Y0OG0r+NUBY3p/rwyjdfwHm
+         dqfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=GGiIy1rjq8gyG66zTeU1SPZxod7TYo4pRetXJfgQl1c=;
-        b=ctWjZVkV3H2KLWcNkUozIaOGfcRkhS3U0DcMM5Cpf8fy3G5Yk4ryAp8Xy7N+yiAjjR
-         dJfW+GhC6VevNj2Awef89dnmmVrzr/INYps7WSSTTEjvlSOzz+zOGqR/+ULllONttSi1
-         nkAJ5nNN7cIIdjtLBxsjtYA2c+v5LPQ9frw2FNsdhuhKxDhVI8eDQsEmvrwapBoCdkiq
-         A4Kwabc8m6Tr1i+nP/6EGpRurKyIWRQn0z9OQweXoK77XQUYHRHWk+qNWrTvggsIejy1
-         XT0SA6HGdjpV3OosA6TmJos3o4QYdk8Es9KAnCkPaLMVJpJpd/JXJqkaCSNiCVrkzky8
-         aGAQ==
-X-Gm-Message-State: AOAM531Wq0qFXdL1sqvqPeOhCo6RCRn6Qm7NchhoNtUmPV02KSMpOF02
-        LDrbTcKGC1HvpMmde4CmeGs=
-X-Google-Smtp-Source: ABdhPJxxl0GAhzIKPg766cy718HfzAjx9iD0+CPUWfnlsuTfNIdwNLYpnapUkLIx0xHoDopLnfrGFA==
-X-Received: by 2002:a54:4005:: with SMTP id x5mr3356935oie.74.1608826564855;
-        Thu, 24 Dec 2020 08:16:04 -0800 (PST)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id c12sm3916962ots.7.2020.12.24.08.16.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Dec 2020 08:16:03 -0800 (PST)
-Date:   Thu, 24 Dec 2020 10:16:02 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=dbDmL994Vhe0hXjxzaEanvZdXD0IdPbePe09QjRulZg=;
+        b=capxjERZctDif19FYbgkaqPgMEzMtkcEtpMdKTa8Apyu7kF07uFl0kgGMubWR2xQZn
+         8CQkCoaU/Y0Uz6m/4EVqtZjwq/qppauFWC9N1QCkrnnvP2bTw8jewLSscwhzJJ246KrZ
+         /hlXDSXiI1O7G34XUzBX4Vx3tQoebqCtTlESMBWkIZD82jwHO2u3qVrw3UKfyXd2Fzog
+         gjvMGhQmiz+OwLHo0AwPAklYVTijWRMu4flzsWBLHXIzLmcbIzSvH1UQ8ayaZ861GCbx
+         G0ht0hogVZrML9LhI4XnbEdcAbqk6DkIBIfUzDt0r10fiCDRshA7hp/Adj4xfA9po5a8
+         5hsA==
+X-Gm-Message-State: AOAM5320yU/9s9IgqgeLRVdtSCdzVkhbeGXwNCLSFWXeRTO/4QYVvebF
+        4Wi5L7cZXHKebkxcyW2YGfvZcPlQJRrsfeHfiHYqC0bOSTAZnA==
+X-Google-Smtp-Source: ABdhPJwOqeuO2jVdVy5jKXW2Ol1FNCOKt0JVTD0NsGqZ4EyRhyPRj6ud4pOlJGMHTWGsbfu2KNGpfnyHT5En0O3Epqg=
+X-Received: by 2002:a05:6402:3049:: with SMTP id bu9mr29390765edb.127.1608830142897;
+ Thu, 24 Dec 2020 09:15:42 -0800 (PST)
+MIME-Version: 1.0
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 24 Dec 2020 18:15:31 +0100
+Message-ID: <CAP8UFD0uKV+PK6wkyyNV=--SBFOE8MGZRUdXCmMeGD4x3emOug@mail.gmail.com>
+Subject: Draft of Git Rev News edition 70
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>, Seth House <seth@eseth.com>
-Message-ID: <5fe4bec2da21a_19c92085f@natae.notmuch>
-In-Reply-To: <xmqqim8r36ba.fsf@gitster.c.googlers.com>
-References: <20201223045358.100754-1-felipe.contreras@gmail.com>
- <xmqqim8r36ba.fsf@gitster.c.googlers.com>
-Subject: Re: [PATCH v5 0/1] mergetool: remove unconflicted lines
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        Philip Oakley <philipoakley@iee.email>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Sangeeta NB <sangunb09@gmail.com>,
+        Charvi Mendiratta <charvi077@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Joey Salazar <jgsal@protonmail.com>,
+        Sangeeta Bhandari <bhandarisangeeta0909@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > There's not much to say other that what the commit message of the patch says.
-> >
-> > Note: no feedback has been ignored; I replied to all the feedback, I didn't hear anything back.
-> >
-> > Changes since v4:
-> >
-> >  * Improved commit message with suggestions from Phillip Wood.
-> >
-> > Felipe Contreras (1):
-> >   mergetool: add automerge configuration
-> 
-> This breakage is possibly a fallout from either this patch or
-> 1e2ae142 (t7[5-9]*: adjust the references to the default branch name
-> "main", 2020-11-18).
-> 
->   https://github.com/git/git/runs/1602803804#step:7:10358
+Hi everyone!
 
-It seems likely it's the mergetool patch.
+A draft of a new Git Rev News edition is available here:
 
-This regex '/^=======\r\?$/' is supposed to handle the crlf situation.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-70.md
 
-I can't imagine what would be different in Windows regarding that
-situation.
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
--- 
-Felipe Contreras
+  https://github.com/git/git.github.io/issues/468
+
+You can also reply to this email.
+
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub, and
+so on, are very much appreciated.
+
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Kaartic and me plan to publish this edition on Saturday
+December 26th.
+
+Thanks,
+Christian.
