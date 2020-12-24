@@ -2,133 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EF9EC433E0
-	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 21:05:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67BD8C433E0
+	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 22:22:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 118E622C9D
-	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 21:05:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1EF9122AAA
+	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 22:22:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728814AbgLXVCC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Dec 2020 16:02:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32998 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728266AbgLXVCC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Dec 2020 16:02:02 -0500
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 382F1C061573
-        for <git@vger.kernel.org>; Thu, 24 Dec 2020 13:01:22 -0800 (PST)
-Received: by mail-il1-x12e.google.com with SMTP id g1so2814817ilk.7
-        for <git@vger.kernel.org>; Thu, 24 Dec 2020 13:01:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WQjr9EwdoGUm1gnsGSILCHu8LwK8XH8nUsz3gKl17wI=;
-        b=cN70iyRBlR8XsqdNkGxwZFKZi7RqrsYoviHoCBtd6JupvAaBmIL5ccrgsVt3lt+Dd8
-         gVGiIBGe2gY3GKC0PE8j3DtMSV10lZspNrnJx/yPweyH/N+UQISyqNwEB5v2GaPX8bHF
-         N8bMRrIyiWmaL/Der8YonaeU4pPL5gKM3bONss0vsDXucY9kqiwotvp/lV8i7ek3LDJr
-         sZl8ePHuJj/uv8dHB5lSB8MTc61ke8N0SGR0DGkHvietXjNPBrMMrYcwIHBcG22zA+8f
-         7nGC9rLu6dHkFTKWM1/DuyQuaQZwMRC6XXfHQFkunCOmP0XbccHaljkKQoZn3KowAAIU
-         bN9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WQjr9EwdoGUm1gnsGSILCHu8LwK8XH8nUsz3gKl17wI=;
-        b=O7S4qSlsMpG0cHtMbK4dB5xmStgf+vhqtX8I9w7Hp0Ta4MciNBA9ubycVNKejPoKAG
-         gKhnVnhlD3WsUORwgvNphyGFgS7FpxYsnTWqUFDHmWI4rf3oitSPin9qmigwrodlQ44L
-         le9Ox7H5ZmTpQF0gOzJQBc6YYn7f3xlhmm7wvflDvr+idUh9svvvEs8MFDD8ECTXtsTX
-         uzbMlJBS+qxSQ1+mcR8yHT31LNwtry2GQ/s6OqHRpK1GzmE87WKdWPHZN3z0KWNazdZR
-         QPzrSP2YUS2H3Pd9qzvur2cHdy5tF5EhMxLy2VM5biu+ri5s1TOm2CX6DNAg9Ux+qBL5
-         2SMw==
-X-Gm-Message-State: AOAM533nOqccM0HSpLBQRglqcFRWHLTSBWO+xk/RKPn2CaAIFg73Hhq5
-        ot3BZ21knnKBaeHzlHs7m35N45BIt9iFKZvMX7s=
-X-Google-Smtp-Source: ABdhPJwA/JUGQamcfFoNFLcXEpV23qLDxG3BPPqWQnzAQN3+FQJ7N6zdGKLJmfuzHHTSbEc/K9laGSA5rpNQsfqOBI4=
-X-Received: by 2002:a92:444e:: with SMTP id a14mr31133458ilm.129.1608843681455;
- Thu, 24 Dec 2020 13:01:21 -0800 (PST)
+        id S1728901AbgLXWV5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Dec 2020 17:21:57 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51509 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728704AbgLXWV4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Dec 2020 17:21:56 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EE60FA207A;
+        Thu, 24 Dec 2020 17:21:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=tkgObC+OluVTYbT8RnEcmhTEfN4=; b=BRcuop
+        HQTq3qCsg/H4sF1JCiqoDl1jFZYAHr3njId4eJVUvSjTRGjy5sOusTZWAaOoPrBW
+        TjUNNdih5mLbHMGfCtk79F1rE2IcaJ39Ojsnrk8OfLYgibRkLC0PXbFo83j+88cj
+        KPhUDIEdShY73Yf8KeDtZq2UqCb2X+EeABKqA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ehHPuVcZqj+vZJeNLrpi+oQ5+0KJMrQB
+        OW9Zb2HQb9xb/UvdF2dHsnEYYzh3Dajbo0LisOHElOJdBIXnF8eluW5UxuJ+ey96
+        pajIPs+VgyiGvLSuaJO9Pp56Ur4BkCwD7iEJ+NUKsMF9qw/Fy5nfN2trsyuTodKi
+        +VLT+STg50w=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E663AA2079;
+        Thu, 24 Dec 2020 17:21:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 70DABA2078;
+        Thu, 24 Dec 2020 17:21:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Mike McLean <stixmclean@googlemail.com>, git@vger.kernel.org
+Subject: Re: Git Feature Request (Fixdown in interactive rebase)
+References: <CAM0jFOeCE-iTAMkiGE6m8bVNjJRn-BUmbUAP2ANrj4FbhuQG=g@mail.gmail.com>
+        <CAM0jFOdCD1uEcHaPB_go7aarapEBKx6M4d35zVOP8h9=MuZEmA@mail.gmail.com>
+        <xmqqczz05b4x.fsf@gitster.c.googlers.com>
+        <CAM0jFOfSE3_TQ7WXiR_G6eHOZnr-0ryv=CniXs4sxs1=JnucUg@mail.gmail.com>
+        <ab835195-0c69-830b-c7cb-71d50b4ce4db@kdbg.org>
+Date:   Thu, 24 Dec 2020 14:21:11 -0800
+In-Reply-To: <ab835195-0c69-830b-c7cb-71d50b4ce4db@kdbg.org> (Johannes Sixt's
+        message of "Thu, 24 Dec 2020 10:16:00 +0100")
+Message-ID: <xmqq8s9m3kx4.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20201217175037.GA80608@ellen> <5fdc0e6dd79a7_f2faf208a1@natae.notmuch>
- <20201218023534.GA117762@ellen> <5fdc18a91c402_f2faf20837@natae.notmuch>
- <20201218054947.GA123376@ellen> <5fdc7a7d3a933_f4673208d0@natae.notmuch>
- <20201219001358.GA153461@ellen> <xmqq1rfmqc8g.fsf@gitster.c.googlers.com>
- <20201221042501.GA146725@ellen> <5fe033e0ec278_96932089d@natae.notmuch>
- <20201221073633.GA157132@ellen> <CAJDDKr6LrBMyfdp5Tutp29W9OqhbW4ffcP5e6PD8ruyxk3rQxA@mail.gmail.com>
- <5fe134eeaec71_11498208f9@natae.notmuch>
-In-Reply-To: <5fe134eeaec71_11498208f9@natae.notmuch>
-From:   David Aguilar <davvid@gmail.com>
-Date:   Thu, 24 Dec 2020 13:00:45 -0800
-Message-ID: <CAJDDKr7bhnbr6NZfV28rJN5JrHkO+gZCLY_LkwiCxxBp=HWfbg@mail.gmail.com>
-Subject: Re: Code of conduct violation?
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Seth House <seth@eseth.com>, Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        git@sfconservancy.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 548030E6-4636-11EB-AE35-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 21, 2020 at 3:51 PM Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
+Johannes Sixt <j6t@kdbg.org> writes:
+
+> But consider a situation like this, which I find myself in regularly:
 >
-> David Aguilar wrote:
-> > Just a heads-up that Felipe has a history on this list of creating
-> > long, never-ending, pointless rant threads so sometimes the best
-> > course of action is to ignore him.
+>     $ work
+>     $ git commit -m "WIP begin feature"
+>     $ work -- ah, this can be done independently:
+>     $ git commit -m "refactor stuff"
+>     $ do the real feature (takes time, many commits)
+>     # finally:
+>     $ git commit -m "the real feature"
 >
-> I think this can be considered a personal attack, which goes against the
-> code of conduct.
+> Here I wish that the final commit carries an author date that should be
+> after the "refactor" commit to be realistic. But 'squash' takes
+> authorship including the date from the first commit (the "WIP" commit in
+> this example). That is where the suggested feature could help. I admit,
+> though, that it's not a huge deal.
 
+Yeah, I actually find that an interesting scenario.
 
-Sorry Felipe -- there is no explanation that will satisfy you and this
-is not the place to try and "make a case" for what was said. The
-downsides of further engagement and messages that did not need to be
-exchanged has already played itself out.
+In such a workflow, you'd want to view all the previous steps
+building pieces as preparing for the final step that makes the
+cumulative effort into presentable whole.  Whether you want to use
+the log message only from the last step or want to use the "squash"
+to collect pieces from all the WIP commits, you would want the other
+aspects of the resulting single commit to be more similar to the
+final one rather than the earlier one(s), as if you did something
+like "commit --reset-author --amend" (yes, I am including the case
+where the work on the branch was a team effort and the one that
+collects them into a single resulting commit would become the
+"corresponding author").
 
-Please take this apology so that you can have the last word.  I am not
-going to try and convince anyone that my response was appropriate.
+I wonder if we deliberately designed how each insn you can write in
+the todo list should come up with the authorship data (i.e. ident
+and timestamp), or if we are just using the natural consequence of
+how the implementation happens to work?  I think it makes sense for
+"fixup", as an instruction used to make a small tweak to the bulk of
+work you've done some time ago, to use the authorship information of
+the original commit that gets fixed up. I don't know offhand what
+other insns like "edit", "reword", etc. do, and if there is a room
+to improve them.
 
-
-
-> The code of conduct suggests behavior like:
->
->  * Being respectful of differing viewpoints and experiences
->  * Showing empathy towards other community members
->
-> It seems to me the above comment is an example of the opposite.
->
-> If you feel that my feedback is pointless, then don't engage with it.
-> There's no need to put aggravating labels, especially on a public
-> setting. Even if most people agree with you.
->
-> I tolerate your opinion, but it's just that; an opinion.
->
-> I think you should treat it as such (an opinion), and not blatantly
-> disregard the viewpoints of people you disagree with, and worse;
-> publicly suggest others do the same.
-
-
-I could try and explain that being intolerant of my and others'
-viewpoints and dismissing them as being inadequately defended or
-non-existent is ironic, but arguing is a pointless endeavor.  I gave
-you an honest, but inappropriate, response in public because being
-honest and candid is a form of empathy, but that doesn't make it okay.
-
-I appreciate your talents and tenacity. I can't ask you to be less
-abrasive.  I can't ask you to not ignore the opinions of others.  All
-I can offer you is my respect and an apology.
-
-Sorry for saying that.
-
-Much respect to you Felipe.  In respect for you, I will politely
-refrain from responding to this thread.
-
-Sometimes the best arguments are the ones that are not made.
--- 
-David
