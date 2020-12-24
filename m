@@ -7,83 +7,70 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6273AC4332E
-	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 01:11:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D915C433DB
+	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 01:37:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 31AA222517
-	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 01:11:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 632EA221FA
+	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 01:37:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729055AbgLXBK7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Dec 2020 20:10:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48314 "EHLO
+        id S1728039AbgLXBgr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Dec 2020 20:36:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729043AbgLXBK7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Dec 2020 20:10:59 -0500
+        with ESMTP id S1726004AbgLXBgr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Dec 2020 20:36:47 -0500
 Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53E36C0611D0
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 17:09:53 -0800 (PST)
-Received: by mail-ot1-x329.google.com with SMTP id 11so659886oty.9
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 17:09:53 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 017B8C061794
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 17:36:06 -0800 (PST)
+Received: by mail-ot1-x329.google.com with SMTP id b24so745885otj.0
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 17:36:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=aVtpXJ7JmWYLC3y2V7ANojDd8/Faok+fXV4tt1+QxRU=;
-        b=nauNe6PqX+e5t3GonVf26auaO2pMYMRY2J0uitPSYqVm4YliyB+9n8g+z3GAGijF/U
-         Yz5i40bSxvi42sN0yhX6SJArCv5SsUUOKV374YfoWJjbZcsvfpWzGQLtv+SNqj3YnxwH
-         3OmpFCyufZ83ro6jY/3XaIuNpxI2t/6MiDDBnIkqzNLYcstLfxwRTUbicqlbHI23LZ9v
-         xod+qOXOV4fiUhsB9qs0ZPlYZHwCamJiqRb1WEc7n86m+1c3ZE94prHyZI9igX28tdBs
-         kYIcweeeTMmppl8J7yfcEDfS/o/qUivGosSeQMSq2lrB5bk7c3Nxl6LsvUl8eIw95lb9
-         NHVQ==
+        bh=45rTaiMC6hpeabBjF+Vzi0SumsIH8u3QwYYyPHbNQBM=;
+        b=VA8gOh0h9sDcWANGu5jxOfdOD0gkTk7KoEzXMDZBZraJOHlsRmPldGXFkOon7T7uY1
+         85ISJmTnxpp/yCz+SzvCD9RDfa9gDPtto9+kOBAuoRydubr55Dha+5u42GeaG4SmO/3q
+         +9LWX9rVfXh0ht1Tcq/w4NNfhQDDOaQTKxshk9LCyShbtupNmgDGhozCiB/5PWTxOa0Q
+         /awi/fgnMHyjhqExB+9KerCL9cryC7ZhhXT57C4hjyte6QVOXN/d1878lrAX9j5MMN3W
+         6OyXIwN0UuIuDr+8GrrSR07zBYZZOugFOhbm1UoDkZzRqbW4tTDr1Meb0wWXsb8VyCFe
+         DEsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=aVtpXJ7JmWYLC3y2V7ANojDd8/Faok+fXV4tt1+QxRU=;
-        b=llZlGO7mDA77otTf4wWiFVFhO1hwwO5ozo9WzTypQmBABiRmL8PS3oct9061LYzhab
-         X87VodZMvu/rqXEtRliyDxEb90gPzuuQb8dLwNPuz76cd7S4T3KP23gIF5P0Xi85qSJq
-         bgfNnjh8yjEM7xodsGwD5VYpIwqn7BbSZgY/Pd1HegNc2a6RgrDsiaMf1rul5QcELlM7
-         zSgxC7wb9HsXgl1dNiHgoWpbU8FMhv+SxU65NRD5kRHMte4WVdbRZ3KPuXY58HElrPZC
-         3/espV0aY+52knnrL84B9j80/UzkX3qnN4qE3gZjIIysv6wiXCTNWklS/e/P4fKibum/
-         qOiQ==
-X-Gm-Message-State: AOAM530lxI2ejfRRwiqO2u9pCmoriPXvBMu7+/tDufKkNbQcZn3xRaQI
-        ptery0LRbg74EWlzghTfO4o=
-X-Google-Smtp-Source: ABdhPJy1eiUWqfc9iUkHWvmHGEvErlSbLK6SbdjCM+C85QCuq0aA6w6SQ2QIzogVE5iRkh38SxX2dw==
-X-Received: by 2002:a9d:3e42:: with SMTP id h2mr21890565otg.275.1608772192660;
-        Wed, 23 Dec 2020 17:09:52 -0800 (PST)
+        bh=45rTaiMC6hpeabBjF+Vzi0SumsIH8u3QwYYyPHbNQBM=;
+        b=TJfE06XOUT0ztlfxeBYUC9azLGFZ1gVju4n7wMlWjyJXcjnGGHr+M8jQsFVSC2sxWw
+         Ez1xcAYO4KmOEtzdhXqC+0Wa7mX5CLfFIA+wckYaALOFROd1Ljz0qJ/K0WWXEdEELBEN
+         6Zi3g7cq9kSd8TiR7smII1bxFzhY4/w6XEL3230Y/etlHlIlAZruwsE5HoUcLUAsKxF1
+         VyWvcqeruLXTfpt93LFWLv+zhMP8C8dhaQ5XLJeHA8T6jFGQ6sNAz0PAuw2nLsGDLUsa
+         /Zp2RaI/G1gDlvMlUACbyPs2vJaCjeCZAnqH4/t5WjoHXUY3rD7HP0GFnPpg2zZXCX/3
+         rMsQ==
+X-Gm-Message-State: AOAM531cAvRPvJFkmasCrGtlrKrgqrllDZn4PTDml71ucFmty+OqtEnx
+        LBbEstt/rwne4im0CcdksqQ=
+X-Google-Smtp-Source: ABdhPJxZHqLnBHAeX/lpGvCI1XBPN+P/xF3ZiyafvAXcGGHeyMtuydyRdcF8vmxyIVJUvxBnWtkXIA==
+X-Received: by 2002:a05:6830:1f54:: with SMTP id u20mr3515406oth.104.1608773766279;
+        Wed, 23 Dec 2020 17:36:06 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id h26sm6901138ots.9.2020.12.23.17.09.51
+        by smtp.gmail.com with ESMTPSA id 31sm6319505otd.24.2020.12.23.17.36.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Dec 2020 17:09:51 -0800 (PST)
-Date:   Wed, 23 Dec 2020 19:09:50 -0600
+        Wed, 23 Dec 2020 17:36:05 -0800 (PST)
+Date:   Wed, 23 Dec 2020 19:36:03 -0600
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Pratyush Yadav <me@yadavpratyush.com>,
-        David Aguilar <davvid@gmail.com>, Seth House <seth@eseth.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        git@sfconservancy.org
-Message-ID: <5fe3ea5eb3f5b_7855a208c6@natae.notmuch>
-In-Reply-To: <xmqqpn306y3a.fsf@gitster.c.googlers.com>
-References: <5fdc18a91c402_f2faf20837@natae.notmuch>
- <20201218054947.GA123376@ellen>
- <5fdc7a7d3a933_f4673208d0@natae.notmuch>
- <20201219001358.GA153461@ellen>
- <xmqq1rfmqc8g.fsf@gitster.c.googlers.com>
- <20201221042501.GA146725@ellen>
- <5fe033e0ec278_96932089d@natae.notmuch>
- <20201221073633.GA157132@ellen>
- <CAJDDKr6LrBMyfdp5Tutp29W9OqhbW4ffcP5e6PD8ruyxk3rQxA@mail.gmail.com>
- <5fe134eeaec71_11498208f9@natae.notmuch>
- <20201222150124.mnfcyofm4qyvvj4n@yadavpratyush.com>
- <5fe2c64bd3790_17f6720897@natae.notmuch>
- <xmqq5z4tdsiz.fsf@gitster.c.googlers.com>
- <5fe2d89c212e8_18dc12083e@natae.notmuch>
- <xmqqzh248sy0.fsf@gitster.c.googlers.com>
- <5fe36790793ae_2354120839@natae.notmuch>
- <xmqqpn306y3a.fsf@gitster.c.googlers.com>
-Subject: Re: Nobody is THE one making contribution
+Cc:     git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>, Seth House <seth@eseth.com>
+Message-ID: <5fe3f083f27cd_7855a20885@natae.notmuch>
+In-Reply-To: <xmqqv9cs3uxo.fsf@gitster.c.googlers.com>
+References: <20201223045358.100754-1-felipe.contreras@gmail.com>
+ <20201223045358.100754-2-felipe.contreras@gmail.com>
+ <xmqqblekabof.fsf@gitster.c.googlers.com>
+ <5fe352e3968f6_198be2083@natae.notmuch>
+ <xmqqblek8e94.fsf@gitster.c.googlers.com>
+ <5fe3dd62e12f8_7855a2081f@natae.notmuch>
+ <xmqqv9cs3uxo.fsf@gitster.c.googlers.com>
+Subject: Re: [PATCH v5 1/1] mergetool: add automerge configuration
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -95,77 +82,91 @@ X-Mailing-List: git@vger.kernel.org
 Junio C Hamano wrote:
 > Felipe Contreras <felipe.contreras@gmail.com> writes:
 > 
-> >> You are not THE one making contribution.
+> >> Ah, I forgot about that one.  I think "the number of conflicts" was
+> >> a UI mistake (the original that it mimics is "merge" from RCS suite,
+> >> which uses 1 and 2 for "conflicts" and "trouble") but we know we
+> >> will get conflicts, so it is wrong to expect success from the
+> >> command.  Deliberately ignoring the return status is the right thing
+> >> to do.
 > >
-> > When I'm sending a patch, I have the role of "contributor".
+> > I agree. My bet is that nobody is checking the return status of "git
+> > merge-file" to find out the number of conflicts. Plus, how can you check
+> > the difference between 255 conflicts and error -1?
 > 
-> Yes, you are a contributor, but there are other contributors to the
-> change under discussion.
+> Yup, I already mentioned UI mistake so you do not have to repeat
 
-There are other people _contributing_, but typically they are not
-assigned the role of _contributor_.
+You said it was a UI mistake, not me. I am a different mind than yours.
 
-This has been my experience in all the open source projects I've worked
-on.
+This [1] is the first time *you* communicated it was a UI mistake.
 
-My guess is that semantically the role of contributor is different
-because they are the ones bearing the brunt of the work (thinking the
-idea, coding, testing, cleaning, sending the patch, addressing comments,
-re-coding, re-testing, re-cleaing, sending another patch... etc).
+This [2] is the first time *I* communicated it was a UI mistake.
 
-Of course everyone contributes, but in any given patch series, the
-"contributor" contributes the most.
+I communicated that fact after you, so I did not repeat anything,
+because I hadn't said that before. *You* did, not *me*.
 
-> > In your own release notes [1] you say:
+> it to consume more bandwidth.
+
+This is what is consuming bandwidth.
+
+Not me stating *for the first time* that I agree what you just stated.
+
+You could have skipped what I said *for the first time*, if you didn't
+find it particularly interesting, and that would have saved bandwidth.
+
+> > We could do something like --marker-size=13 to minimize the chances of
+> > that happening.
 > >
-> >   New contributors whose contributions weren't in v2.29.0 are as
-> >   follows.
+> > In that case I would prefer '/^<\{13\} /' (to avoid too many
+> > characters). I see those regexes used elsewhere in git, but I don't know
+> > how portable that is.
+> 
+> If it is used elsewhere with "sed", then that would be OK, but if it
+> is not with "sed" but with "grep", that's quite a different story.
+
+In t/t3427-rebase-subtree.sh there is:
+
+  sed -e "s%\([0-9a-f]\{40\} \)files_subtree/%\1%"
+
+Not sure if that counts. There's other places in the tests.
+
+However, I don't see the point if the marker-size is a low enough number, like 7.
+
+> > So, do we want those three things?
 > >
-> > Presumably these are the people who contributed patches, not reviews.
+> >  1. A non-standard marker-size
+> >  2. Check beforehand the existence of those markers and disable
+> >     automerge
+> >  3. Check afterwards the existence of those markers and disable
+> >     automerge
 > 
-> If I said "These community members have their name as an author of a
-> patch for the first time since v2.29", would that mean those who do
-> not have any commit under their name are not community members?
+> I do not think 3 is needed if we do 2 and I do not think 1 would
+> particularly be useful *UNLESS* the code consults with the attribute
+> system to see what marker size the path uses to avoid crashing with
+> the non-standard marker-size the path already uses.
 
-No. It would just mean they had other roles (not contributor).
+But what is more likely? a) That the marker-size is 7 (the default), or
+b) that the marker-size is not the default, but that there's a
+marker-size attribute *and* the value is precisely 13?
 
-For example, when a company pays their employees to contribute to the
-project, the company can be considered a contributor (e.g. Google).
+I think a) is way more likely than b).
 
-> > I don't know why you feel the need to explain that to me. I have been
-> > contributing to open source projects for more than 20 years.
-> 
-> Because you are acting as if you don't know and have to always be
-> the right one no matter what.  You may not mean to do so, but that
-> is how your behaviour appears to me (note that I did not know say
-> "to others").
+> So the easiest would be not to do anything for now, with a note
+> about known limitations in the doc.  The second easiest would be to
+> do 2. alone.  We could do 1. to be more complete but I tend to think
+> that it is better to leave it as #leftoverbits.
 
-Yes, but you do not read minds, and you can't know what is happening
-inside mine.
+OK. I think 1. is low-hanging fruit, but I'm fine with not doing
+anything, or trying 2.
 
-Attempting to do so is usually not a good idea [1].
+I don't think 2. would be that hard, so I will try that before
+re-rolling the series.
 
-> I won't have time to respond to your word games after I send this
-> message.
-
-Words are the only tool we have to communicate among minds.
-
-There's a reason why linguistics is an entire field of study; some
-people are trying to really understand what other people are really
-trying to say.
-
-I for one don't understand why you would change the subject of the
-thread to "Nobody is THE one making contribution", and then not be
-interested in understanding what others understand by the word
-"contribution".
-
-But I'm not going to read into it something you didn't attempt to say.
-
-I don't read minds.
+(unless somebody replies to my other pending arguments)
 
 Cheers.
 
-[1] https://cogbtherapy.com/cbt-blog/common-cognitive-distortions-mind-reading
+[1] https://lore.kernel.org/git/xmqqblek8e94.fsf@gitster.c.googlers.com/
+[2] https://lore.kernel.org/git/5fe3dd62e12f8_7855a2081f@natae.notmuch/
 
 -- 
 Felipe Contreras
