@@ -7,193 +7,151 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26A4BC433E0
-	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 00:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2ADBBC433DB
+	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 00:15:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D94D022517
-	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 00:14:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EB75722517
+	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 00:15:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727435AbgLXAOt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Dec 2020 19:14:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39752 "EHLO
+        id S1727591AbgLXAPK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Dec 2020 19:15:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727029AbgLXAOs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Dec 2020 19:14:48 -0500
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DF3AC061794
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 16:14:08 -0800 (PST)
-Received: by mail-qv1-xf2e.google.com with SMTP id d11so583549qvo.11
-        for <git@vger.kernel.org>; Wed, 23 Dec 2020 16:14:08 -0800 (PST)
+        with ESMTP id S1727029AbgLXAPJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Dec 2020 19:15:09 -0500
+Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A407DC06179C
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 16:14:29 -0800 (PST)
+Received: by mail-oo1-xc35.google.com with SMTP id o5so142333oop.12
+        for <git@vger.kernel.org>; Wed, 23 Dec 2020 16:14:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=DrFKosXkBdCKJlU+SaNNyB/aWae8Gi9YVpZhuIkydU4=;
-        b=bpLTjy3tlTwRacz+vxqizZ6gEM+XSMnDuMy0Yv0vbyX/A9/sxcDw6kALe0Sn8dPewT
-         3nb/zIiyX3C+ex3OivYBVACPTshm+KrvKhw6/WVbd/bn27sPIop2Es+AXjzAMgrujGM+
-         jPmaDbPkyPQ5D8iGhfUtBLcizZ9rWi8aNCkK4c8o8MRMs1xng1NrOFzD6tyn52PytutW
-         Vag53t8BbQhl4AeM9hhKUKjTP+viYPlTjd3/Wie46DRhS4s9Yi3q/79dce6ukh8bh2Rh
-         bUwpU3TuiEv9uBlJPNjoLrApKs1bWKZ4sh8hrZp6lWvjWfDZlUalb+i3Kk35a1lyXz4z
-         iR1w==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=ncSCUZP/7d5/gndcdvmY8h8UEGA7wQogS/5zvtES8O8=;
+        b=nd7x9T2vOUtVh0PulWPqOsmzV8eYhhTcKsDQS/9VWL91vt+mIDyKPK2pfujrdB/Evy
+         MiJ7QeHKFIwiLSrQTkDH5zlkkvlXJypkZxmXAnqIsRRofyHcOLxS5M032WWyk37Z/KxH
+         YPUu8IV/uRG/DWoqozsEfgJqxEISFK+1FF+/uqNvxb03GlIs6WiAG25C09rA8gvxKwkQ
+         LwM8rRxDEcJps5HbyH0XbWppSc7vOYyuqRZATLipQb92hz2dFJjyesG7mg15bBF6lcIu
+         HpTCLSWT/E98+6QpIfGuk1fQEDvmNrsDOkekwuDZP9QdrWK345cd6pnBhuqFf1DOLg2H
+         GQ6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=DrFKosXkBdCKJlU+SaNNyB/aWae8Gi9YVpZhuIkydU4=;
-        b=Yjy6Dh6iZOtwp8R03oHDnR5GS+D2dVjopAi5zEhSN9euTbPUICRmdnX0d7LvZR31tj
-         BG6biPxTZkmNG4ViRhHNVxv+VxJkeAsC/1j5hZotv8cFQbHlcEixOgmIzpF3v9a7ZNF5
-         /B3FeZ1oi8LCSVtsH8SpKX4jqm7/bafZf+p0OBJGD+8sHscef0uFNCTVxcDeRDAdGkCY
-         ifvwQYQ8Q+aghzhGo77bAEfYchIFgNSJrVhfwT2yYAxhFTDkhLsQBpalTX9zMP72kx9L
-         yUJjeTULHrqzceahfR9IATyJluK7DcFm/fLX3fIVlgRct52FPDjOYUhXwDhzfz66D5r+
-         MfAQ==
-X-Gm-Message-State: AOAM530eDL+JUw5NLz2GoZ23I2Bh4PShnljGXlD2/xJoAvNhs9ngh1sZ
-        +Pd4gv1WsyZKM6yRJ2p9Etl8/1q4ARKGJrxmHoCCcsBkMZQ=
-X-Google-Smtp-Source: ABdhPJyYicvwL8yp9apoBcO8qYtYQ+EYZ0X+K2wHAETKqnUcU+V81nAJaNX1hUAmT2wyrztfNHnNd7LOK2oQZsfFIDI=
-X-Received: by 2002:a05:6214:cb:: with SMTP id f11mr29753691qvs.15.1608768847461;
- Wed, 23 Dec 2020 16:14:07 -0800 (PST)
-MIME-Version: 1.0
-References: <CAM0jFOeCE-iTAMkiGE6m8bVNjJRn-BUmbUAP2ANrj4FbhuQG=g@mail.gmail.com>
- <CAM0jFOdCD1uEcHaPB_go7aarapEBKx6M4d35zVOP8h9=MuZEmA@mail.gmail.com> <xmqqczz05b4x.fsf@gitster.c.googlers.com>
-In-Reply-To: <xmqqczz05b4x.fsf@gitster.c.googlers.com>
-From:   Mike McLean <stixmclean@googlemail.com>
-Date:   Thu, 24 Dec 2020 00:13:56 +0000
-Message-ID: <CAM0jFOfSE3_TQ7WXiR_G6eHOZnr-0ryv=CniXs4sxs1=JnucUg@mail.gmail.com>
-Subject: Re: Git Feature Request (Fixdown in interactive rebase)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=ncSCUZP/7d5/gndcdvmY8h8UEGA7wQogS/5zvtES8O8=;
+        b=eSh0E6cAVmhTd3HgH1rvLW1Wn4iglfRgxva7ciRulASEajt06E7k1+H6HoDuRyWrLE
+         0Z3CMHILOlq6q1TiVWsQa4MMDVzCja5OqUnkQ2WFYQIOjvqWDlYA7yNNg0R0yLCPy8vo
+         3DEVHWoPV33R5SM78SMG6mHF3PgNYkSfydCZ0Qj56ar11dUNZOFmfjofeToV2msT/x9t
+         OVvNWlIIqmKAZQ1Q7CTik8MGZEx3e6lh1A1fr1+Tw+GbQVCDIwCBckpLx38gt2p6kTRc
+         Pmb+gxA1Gven6mzfZiZLOplGau3juP6R/GXOxgooxK/SQpojkxDbNq3agR8803uL3dop
+         bEOg==
+X-Gm-Message-State: AOAM531MtgMGLpLBDKOa9VHJDyt45PobpHrkijVe3D0G2DKt1Ii0TO9l
+        zyUE77NduHleLpI1T55mb/s=
+X-Google-Smtp-Source: ABdhPJwrlwzN436xy1OvvInYnl+TLEY6lGuJYTJ0XYm+Hiby28gLzK9LVXtZyhTkrjngHh55UPKtCg==
+X-Received: by 2002:a4a:e14f:: with SMTP id p15mr20044694oot.25.1608768868826;
+        Wed, 23 Dec 2020 16:14:28 -0800 (PST)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id a24sm6096183oop.40.2020.12.23.16.14.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Dec 2020 16:14:27 -0800 (PST)
+Date:   Wed, 23 Dec 2020 18:14:26 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>, Seth House <seth@eseth.com>
+Message-ID: <5fe3dd62e12f8_7855a2081f@natae.notmuch>
+In-Reply-To: <xmqqblek8e94.fsf@gitster.c.googlers.com>
+References: <20201223045358.100754-1-felipe.contreras@gmail.com>
+ <20201223045358.100754-2-felipe.contreras@gmail.com>
+ <xmqqblekabof.fsf@gitster.c.googlers.com>
+ <5fe352e3968f6_198be2083@natae.notmuch>
+ <xmqqblek8e94.fsf@gitster.c.googlers.com>
+Subject: Re: [PATCH v5 1/1] mergetool: add automerge configuration
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I agree that "realism and frequency of use case" is a critical metric :D
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > Junio C Hamano wrote:
+> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> >> 
+> >> > +auto_merge () {
+> >> > +	git merge-file --diff3 --marker-size=7 -q -p "$LOCAL" "$BASE" "$REMOTE" >"$DIFF3"
+> >> > +	if test -s "$DIFF3"
+> >> > +	then
+> >> 
+> >> We do not want to ignore the exit status from the command.  IOW, I
+> >> think the above wants to be rather
+> >> 
+> >> 	if git merge-file ... >"$DIFF3" &&
+> >> 	   test -s "$DIFF3"
+> >> 	then
+> >> 		...
+> >
+> > That doesn't work.
+> >
+> > "git merge-file" always returns non-zero status when it succeeds (it's
+> > the number of conflicts generated).
+> 
+> Ah, I forgot about that one.  I think "the number of conflicts" was
+> a UI mistake (the original that it mimics is "merge" from RCS suite,
+> which uses 1 and 2 for "conflicts" and "trouble") but we know we
+> will get conflicts, so it is wrong to expect success from the
+> command.  Deliberately ignoring the return status is the right thing
+> to do.
 
-For me it's very much the 2nd case you described and there are 2
-scenarios that it comes up in most frequently:
+I agree. My bet is that nobody is checking the return status of "git
+merge-file" to find out the number of conflicts. Plus, how can you check
+the difference between 255 conflicts and error -1?
 
-1) WIP commits.
-For whatever reason I want to create a commit even though the work is
-nowhere near ready or functional. It's not that I've done part of the
-task and there's a separate extra bit pending - I'm just creating a
-temporary save point.
-Maybe I'm putting work down in the middle due to some external factor.
-(Perhaps a colleague needed some help for something, for which jumping
-over onto their branch was the most useful thing to do. Perhaps a
-blocking bug was just found in our UAT that needs a 2 line fix put in
-right *now*. Whatever... :D)
-Or Maybe I'm part way through some work and want to attempt a
-different approach but I want a "save point" if I get part way through
-and decide I was right the first time.
+But that's the situation we are in now.
 
-Whatever the case, I've created a WIP commit because I don't want the
-hassle of crafting a good commit message right now. When I come back
-to it, I forget there was a WIP commit, and finish the work and create
-a sensible commit message. When reviewing my commit history prior to
-review, I notice the WIP commit and want to squash it into the final
-commit.
+> > What if the original file does have these markers?
+> >
+> > Which is probably something we should be checking beforehand and not
+> > attempt an automerge in those cases.
+> 
+> Yes, that is a much better approach to avoid unnecessary work.
+> 
+> When we made the conflict marker length configurable, we were hoping
+> that we no longer have to worry about the cases where payload files
+> (original or ours or theirs) have lines that are confusingly similar
+> to the conflict markers, but because we are interfacing external tools
+> that are unaware of the facility, it probably would not help us in
+> this case all that much.
+> 
+> FWIW, we use a fiarly large size for our own files in t/ and
+> Documentation/ directories ourselves, and it does help topic branch
+> merges somewhat frequently.
 
-2) Interactive rebases
-I make heavy use of interactive rebases, in order to make committing
-be a REALLY low effort task. If I don't have to clean up my commits
-when I make them, then I can commit really easily, which means I
-commit frequently, which is a good thing :D But then I have a messy
-git history. Especially if I'm juggling a bunch of small fixes at
-once, and I end up with bits of one fix/refactor in a commit that was
-mostly about another thing.
+We could do something like --marker-size=13 to minimize the chances of
+that happening.
 
-Not a problem: Interactive rebase to the rescue!
+In that case I would prefer '/^<\{13\} /' (to avoid too many
+characters). I see those regexes used elsewhere in git, but I don't know
+how portable that is.
 
-I use `edit` mode to split stuff apart and then squash mode to push
-the relevant bits back together again.
-But a downside of this is that frequently I end up with the commit
-with the good message being *after* the scrappy bit that's just been
-split off from another commit.
-Sometimes I can just pull that scrappy bit past the main commit and
-then `fixup` that bit, but often that would cause merge conflicts, so
-it'd be easier to have a fixdown that does exactly what I'm going to
-do with `squash`.
+If we wanted to make sure none of those markers remain it's not enough
+to check for '^[<|=>]{13}', what follows up should be a space, or some
+delimiter, not another < for example. So maybe '^[<|=>]{13}[^<|=>]'?
 
-=-=-=-=-=-=-=-=-=-=-=
+So, do we want those three things?
 
-I recognise that these might be very niche or non-standard usages, and
-if you don't think there would be much demand for such functionality
-then I'm fine with that :D
-Just figured I'd throw it in and see whether there was an appetite.
+ 1. A non-standard marker-size
+ 2. Check beforehand the existence of those markers and disable
+    automerge
+ 3. Check afterwards the existence of those markers and disable
+    automerge
 
-On Wed, Dec 23, 2020 at 11:57 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Mike McLean <stixmclean@googlemail.com> writes:
->
-> > Can we have a similar convenience-command that squashes, and retains
-> > the second commit's message? Purpose is the same as the fixup command
-> > - saving a bit of time and unnecessary typing during a common
-> > operation.
->
-> We can view "fixup" as a slight variant of "squash" that gives us
-> the right tree by applying the change in the second commit while
-> reusing the message from the first commit, and the reason why its
-> existence makes sense is because it often happens that users find
-> small mistakes in the committed content that needs "fixing up" but
-> the small mistakes do not change the intent of the original change
-> so the message does not need any "fixing up".
->
-> It also often happens that users find small mistakes in the log
-> message text that needs "fixing up", but there is no need to change
-> the committed content (iow the recorded tree object), and that is
-> why "reword" is a useful command to have.
->
-> You are bringing up another variant of "squash" that gives us the
-> right tree by applying the change in the second commit while
-> discarding the message from the first commit and replacing it with
-> the message from the second commit.  Can we justify existence of
-> such a mode in a similar way (like I showed above to justify why
-> "fixup" and "reword" make sense)?
->
-> What is the most unclear to me is where the log message in the
-> second commit comes from.  Was it first copied from the first commit
-> and then edited?  IOW, did the user do something like this?
->
->         $ work work work
->         $ git commit -e
->         ... record and explain the work of the first commit
->         ... with sufficient detail
->         $ work a bit more to fix things
->         $ git commit -c HEAD
->         ... record and explain the work of both the first and
->         ... the second by copying the existing first commit's log
->         ... and expanding to cover what the user further did
->
-> Or did the user do something more like this, in which case the log
-> message of the second was written pretty much from scratch to cover
-> work done by both commits?
->
->         $ work work work
->         $ git commit -m snapshot
->         ... record but give it a meaningless and expendable log
->         ... message
->         $ work a lot more to advance
->         $ git commit -e
->         ... record and explain what was done on the branch as
->         ... a whole; the log message of this commit fully describes
->         ... what the both commit did
->
-> Both workflows may benefit from such a feature, but at the same
-> time, it is unclear how realistic they are.
->
-> If two commits did comparable amount of work with similar
-> complexity, it would be more realistic for them to have their own
-> explanation that is usable as a part of the final, squashed commit,
-> and that is why "squash" exists.  It just is not obvious when the
-> new variant would be useful.  Especially if the workflow it expects
-> to support is the latter kind I gave (i.e. the user delays writing
-> meaningful log message until the last commit in the series and then
-> squashes everything down to one), it smells good enough to use
-> "squash" and get rid of a few lines at the beginning.  So there must
-> be some realistic workflow that benefits from the new variant, but I
-> do not think of one myself.
->
-> When such an explanation is given, I may agree that such a mode is a
-> good thing to add, but "similar to fixup" does not look like a good
-> enough reason.
->
-> Thanks.
+Cheers.
+
+-- 
+Felipe Contreras
