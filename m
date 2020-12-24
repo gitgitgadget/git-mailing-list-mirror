@@ -7,66 +7,69 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 073E0C433E0
-	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 15:27:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BA7DC433DB
+	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 15:38:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D682F224B0
-	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 15:27:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 171662246B
+	for <git@archiver.kernel.org>; Thu, 24 Dec 2020 15:38:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728620AbgLXP1h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Dec 2020 10:27:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38304 "EHLO
+        id S1728222AbgLXPib (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Dec 2020 10:38:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727039AbgLXP1g (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Dec 2020 10:27:36 -0500
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48CA9C061574
-        for <git@vger.kernel.org>; Thu, 24 Dec 2020 07:26:56 -0800 (PST)
-Received: by mail-ot1-x329.google.com with SMTP id j20so2059014otq.5
-        for <git@vger.kernel.org>; Thu, 24 Dec 2020 07:26:56 -0800 (PST)
+        with ESMTP id S1727861AbgLXPia (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Dec 2020 10:38:30 -0500
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60E5BC061575
+        for <git@vger.kernel.org>; Thu, 24 Dec 2020 07:37:50 -0800 (PST)
+Received: by mail-ot1-x330.google.com with SMTP id d20so2093150otl.3
+        for <git@vger.kernel.org>; Thu, 24 Dec 2020 07:37:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=wlcrb5FYH2mMlyzF6oLmmPmdEjClDzSbMhMfYAzOiXE=;
-        b=L0ZEC/m2RHOR5l57kH7LeG+nwuVCLdrULdU7LmUbclRTZE4OA97nzLeg+tLGpqHvc4
-         baskLjctfhNhVqDr+btt7GY/EWMwq4MukBjMTg++PZsh4NDYZHMM/viJ9Ju9T/FIbRqG
-         T4bOeAp0lfl1SUwssQ0MlAhAf5owEC2AWhsupxlLI9aeA6J5d2nOVE2wmcZtGsfnc3WE
-         6FrIlAlw+lDCmYVuzza26aHavGOJ+EcnTxuFKfs6hbxNBWkwwogcg7h/LaoAIexb5l6S
-         XbpgyVqsl40p9ndqUSewwnMvZLTxReB/fLwWgtBDi27HVpX/26WrfATdnWFz83B8TkZD
-         aSWQ==
+        bh=M86iHojF3eXV6NlI3XJSUTRi9y1+Bvn+2GHFboUIe8M=;
+        b=ZWm6lnonmx5IE1Sn97CHbmZ77A3AeDN8GJhxfTM80LMDJg7N5bUTuKANPhyPH/5v43
+         EjBA7lRfreRZfxsHnO2+9Y9dgjCk5pbNPrUtQoj9JMLeVkcTmTl53Zqjws2whlcBxuf2
+         dteqcwZDzYZuKkjY3jZ1QbQKXzo+1IJHc7V5YlLBXP7DHYtnfOJHjuEEhm04sbPt6oJP
+         HiJQDLonQeuFVRuSJ3d6pS4NqhNtq+w1b2ZLuC5oKzFXR2HmuB8lrGQQvddPcCTMqjPF
+         ZWQCBNepfrMbECYHdViKNeOsieOPCTfHB6HFxkPH+3/teGHpsHVmxaFayVMalpuLlJA7
+         9maw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=wlcrb5FYH2mMlyzF6oLmmPmdEjClDzSbMhMfYAzOiXE=;
-        b=P0XS1Hz+JgXnlJ1qvLfaoggfiDRQ6Umt6r+k7WlenHykSCTBCYzqRF53/217D+rrDs
-         7ESVPDiP6X7QArcr7n1Mvriq5qD9ar4DaisTN4m3UT6yjFSlvAl50XFS3B0SsTtb1ZdT
-         qY/abVS7uQdXFSyjvd57bfqa+Ar9pbeknHpyiKUeXX+YMry3g4Mdahl0Wzi4zTGIVVqe
-         ATNpYpY3gHQMePBhcUGP8Wiso01T+vb2Ft9rb1i7EuIHFqskw6S0kQVJ9yx9x8+3uFAs
-         BcznirVx6EGnKKMCCCee/1ae95Vq06YjnG2EclUstvPbiWoMM2zpTKytseH3LGQV7bqq
-         aADA==
-X-Gm-Message-State: AOAM533usSmRziG3q490XZ4yAiLr+/XJI9urNKI/SffLnMh0VFDn3J5z
-        JQC1PIeVUb7Ei7OlP8eB02A=
-X-Google-Smtp-Source: ABdhPJzDhknBfafi2WAez38AQPf8AUngu0w5OdO2dJHHygVlcYKSbC22vxDngLQgoT9tzxx1ZSHJ5A==
-X-Received: by 2002:a05:6830:2413:: with SMTP id j19mr23940651ots.251.1608823615707;
-        Thu, 24 Dec 2020 07:26:55 -0800 (PST)
+        bh=M86iHojF3eXV6NlI3XJSUTRi9y1+Bvn+2GHFboUIe8M=;
+        b=oMSdPxCP9W/22zgIsLw5elGuwyORr+6x5Ej2X3JqeKaMcKXtw+b3ZXkqVsuPnogXuu
+         7S7kCOMRNxEDR2eJlUWrZkYfcsDWafCmshbMPILDNWJwwbl4lht2y+nfL1Ek4SlnbOCN
+         JVKxZO2kean+85b+z/cnmM5idq8MExlCJyNoHDP3C6JtJUnTl7JD2oAOz2hkn0Jc8RCN
+         TYxn5SU/pXSbbfDw4JGt9A79z2CIP8/AMXIcWD8iyDu90ZHOT4tAY6zxqujFg2OxAYk8
+         i0WPMs4nd4I71pSzv6iRT3GGSTPg2wXJiyn2DNKem1jMg3FTovP12urtq3tUGaT77h4I
+         cBcw==
+X-Gm-Message-State: AOAM531mxHA0OBVROVcuJ9xOqG7o5oEiHrMsG9qV3ikGzx3jyZ1FuRwy
+        F4LtihGGtDYvhLNvLABO+2Y=
+X-Google-Smtp-Source: ABdhPJzZspog52JibXcmXW3fkC208q6fu2yQSo1VLZiGI45j9xjYiX3iFLuGO65AriOPjuPbgwDTww==
+X-Received: by 2002:a05:6830:10d8:: with SMTP id z24mr23514751oto.359.1608824269772;
+        Thu, 24 Dec 2020 07:37:49 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id v3sm3385531ool.16.2020.12.24.07.26.54
+        by smtp.gmail.com with ESMTPSA id 31sm6850632otd.24.2020.12.24.07.37.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Dec 2020 07:26:54 -0800 (PST)
-Date:   Thu, 24 Dec 2020 09:26:53 -0600
+        Thu, 24 Dec 2020 07:37:49 -0800 (PST)
+Date:   Thu, 24 Dec 2020 09:37:47 -0600
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Pratyush Yadav <me@yadavpratyush.com>,
-        David Aguilar <davvid@gmail.com>, Seth House <seth@eseth.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'Felipe Contreras' <felipe.contreras@gmail.com>,
+        =?UTF-8?B?J8OGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29uJw==?= 
+        <avarab@gmail.com>
+Cc:     'Junio C Hamano' <gitster@pobox.com>,
+        'Pratyush Yadav' <me@yadavpratyush.com>,
+        'David Aguilar' <davvid@gmail.com>,
+        'Seth House' <seth@eseth.com>,
+        'Git Mailing List' <git@vger.kernel.org>,
+        'Christian Couder' <christian.couder@gmail.com>,
         git@sfconservancy.org
-Message-ID: <5fe4b33dbc028_19c920834@natae.notmuch>
-In-Reply-To: <87o8ijv124.fsf@evledraar.gmail.com>
+Message-ID: <5fe4b5cbacf0d_19c92087f@natae.notmuch>
+In-Reply-To: <00f401d6da06$be415560$3ac40020$@nexbridge.com>
 References: <5fdc18a91c402_f2faf20837@natae.notmuch>
  <20201218054947.GA123376@ellen>
  <5fdc7a7d3a933_f4673208d0@natae.notmuch>
@@ -85,179 +88,41 @@ References: <5fdc18a91c402_f2faf20837@natae.notmuch>
  <5fe36790793ae_2354120839@natae.notmuch>
  <87r1ngufmf.fsf@evledraar.gmail.com>
  <5fe424d0528a2_7855a208d3@natae.notmuch>
- <87o8ijv124.fsf@evledraar.gmail.com>
-Subject: Re: Nobody is THE one making contribution
+ <00f401d6da06$be415560$3ac40020$@nexbridge.com>
+Subject: RE: Nobody is THE one making contribution
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Thu, Dec 24 2020, Felipe Contreras wrote:
-> =
-
-> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >> On Wed, Dec 23 2020, Felipe Contreras wrote:
-> >> =
-
-> >> > When I express my dissenting opinion I'm not saying nobody should =
-write
-> >> > a patch on top of mine. Of course they can. Anybody can take my co=
-de and
-> >> > do whatever they want with it (as long as they don't violate the l=
-icense
-> >> > of the project).
-> >> >
-> >> > What they cannot do is add my Signed-off-by line to code I don't a=
-gree
-> >> > with.
-> >> =
-
-> >> I don't think that's what Signed-off-by means, per SubmittingPatches=
-:
-> >> =
-
-> >>     To improve tracking of who did what, we ask you to certify that =
-you
-> >>     wrote the patch or have the right to pass it on under the same
-> >>     license as ours, by "signing off" your patch[...under the DCO:
-> >>     https://developercertificate.org/]
-> >
-> > Yes, but the DCO requires (d):
-> >
-> >   d. I understand and agree that this project and the contribution ar=
-e
-> >      public and that a record of the contribution (including all pers=
-onal
-> >      information I submit with it, including my sign-off) is maintain=
-ed
-> >      indefinitely and may be redistributed consistent with this proje=
-ct or
-> >      the open source license(s) involved.
-> >
+Randall S. Becker wrote:
+> On December 24, 2020 12:19 AM, Felipe Contreras wrote:
 > > We can narrow down the part I'm talking about:
-> >
+> > 
 > >   d. I *agree* that a record of the contribution is maintained
 > >      indefinitely.
-> >
+> > 
 > > I don't agree with that.
-> =
+> 
+> Clause d is important to maintain compatibility with GRPD[1] rules
+> about maintaining identifying information. This clause is more than
+> about the contribution. It is about consent to maintain your name and
+> email on record indefinitely, as part of the contribution, in the git
+> repository, without the ability to rescind the permission at some
+> point in the future.
 
-> I don't understand you here. You don't agree that we retain
-> Signed-off-by lines indefinitely, or just in the case of amended
-> patches?
+I didn't mean I don't agree that clause (d) should be there.
 
-The DCO requires that I agree that a record of my contribution is
-maintained indefinitely.
+I mean if in a particular contribution I don't agree that a record of
+the contribution is maintained indefinitely with my name, then clause
+(d) is not met. And it is not actually my true contribution, but a
+bastardization of it made by somebody else.
 
-If I don't agree that a record of a particular contribution is
-maintained indefinitely, the DCO says you shouldn't use it.
+You shouldn't assign to my name changes I don't agree with in
+perpetuity.
 
-> > Moreover, the relevant definition of "sign off" in English in my opin=
-ion
-> > is [1]:
-> >
-> >   to approve or acknowledge something by or as if by a signature (sig=
-n
-> >   off on a memo)
-> >
-> > If I didn't put my "signature" in a commit, then it's not signed off =
-by
-> > me.
-> =
-
-> I think this use of 'signed off" makes perfect sense if you interpret
-> the sign-off to mean "I signed off on the copyright eligibility of this=
-
-> work for inclusion" which is what I think it means.
-> =
-
-> Not "I signed off on my subjective approval of this patch & what it's
-> for etc.", which seems to be closer to your interpretation.
-
-Why does it have to be only one meaning?
-
-Junio doesn't sign off on a patch that he doesn't think is good.
-
-Same happens with all the lieutenants of Linux.
-
-> >> "No Discrimination Against Fields of Endeavor" is an integral part o=
-f
-> >> free software & open source. In our case it means that when you
-> >> contribute code under our COPYING terms someone else might use in a =
-way
-> >> you don't approve of.
-> >
-> > Yes, you just have to make the record straight; do your changes in a
-> > separate commit without my "sign off".
-> =
-
-> We like to maintain "make test" passing for every commit, and sometimes=
-
-> we have patches on the ML with a SOB that don't even compile yet, let
-> alone pass tests, because they were provided by their authors as "maybe=
-
-> try this" or other near-pseudocode.
-> =
-
-> We also like to optimize patch order/size/splits/etc. for the benefit o=
-f
-> reviewers. Sometimes someone might send a patch with a SOB that's bette=
-r
-> squashed into another one, or refactored into N commits spread across a=
-
-> series etc.
-
-Yes. And most of the time that's fine, because the original author is
-not objecting to the clause (d).
-
-> >> E.g. I'm sure that arms contractors, totalitarian regimes etc. or ot=
-her
-> >> entities some might disapprove of are using git in some way.
-> >
-> > Yes, and you can modify my patch and keep my s-o-b, I'm not going to =
-sue
-> > you.
-> >
-> > I just don't think that's right.
-> >
-> >> That non-restriction on fields of endeavor also extends to individua=
-l
-> >> patches licensed under a free software license & the necessity to
-> >> maintain a paper trail about who their authors are and if they certi=
-fied
-> >> them under the DCO.
-> >
-> > Sure, so if you need to keep a paper trail about the copyright of the=
-
-> > code, why would you risk that simply because the author didn't agree =
-on
-> > the further changes.
-> >
-> > Just do them on a separate commit. Problem solved.
-> =
-
-> I don't understand how the copyright paper trail is at risk just becaus=
-e
-> we combine N patches into one.
-
-It's not just a copyright paper trail, the DCO clearly states that the
-author should:
-
-  d. I *agree* that a record of the contribution is maintained
-     indefinitely.
-
-> The important part is that we have a declaration that the sum of the
-> work (and whatever it's derived from) is properly licensed, that the
-> authors had the right to license it for inclusion etc.
-
-That's the important part, yes. It's not the only part.
-
-Cheers.
-
--- =
-
-Felipe Contreras=
+-- 
+Felipe Contreras
