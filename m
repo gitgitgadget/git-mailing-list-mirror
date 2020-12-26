@@ -3,102 +3,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	PDS_TONAME_EQ_TOLOCAL_SHORT,SPF_HELO_NONE,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44817C433E0
-	for <git@archiver.kernel.org>; Sat, 26 Dec 2020 21:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 707E4C433DB
+	for <git@archiver.kernel.org>; Sat, 26 Dec 2020 22:09:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 067FA21D7A
-	for <git@archiver.kernel.org>; Sat, 26 Dec 2020 21:57:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 33EDA2054F
+	for <git@archiver.kernel.org>; Sat, 26 Dec 2020 22:09:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726021AbgLZVxF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Dec 2020 16:53:05 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:57122 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725849AbgLZVxF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Dec 2020 16:53:05 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 339571035B9;
-        Sat, 26 Dec 2020 16:52:23 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=F5KO1Ypn9Kek
-        OIROeQSU1EwkLus=; b=yAHUsj5M+67Da0KQZHqFIxfJDr4WSYS/tRZ0B1j8G9Ce
-        GR7Ck1MA/AUZ396OdIEuXcBfxNVzf0EyIe0BhEPMrYJcbsDra65CZ6ivpugM0S5j
-        WB9J80V6zzWIJtjpRbl3MmLOCq2c+sgPbxtzxThKAVzze0eyfUOf+N3D7gOUmIc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=SdqAlE
-        L24pMbxm0fly54i+alZ6fPpRYcxaH6IT8hifq+wcA2Asu//yra441TqNB+ozP4Wc
-        dgpOL900PsJXERoikGHctOIAISHZ4VC8cXJbv4axaGXmjVeoOrBLWClGAK72FjT9
-        G9YodKfrY9iyAAOpcZvqQEH0K693aLRhEtlZI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2B6A71035B8;
-        Sat, 26 Dec 2020 16:52:23 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7AD641035B7;
-        Sat, 26 Dec 2020 16:52:20 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?SsOpcsOpbWll?= Detrey <Jeremie.Detrey@altu.fr>
-Cc:     git@vger.kernel.org, Shulhan <m.shulhan@gmail.com>,
-        Brandon Williams <bwilliams.eng@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-remote: load config whenever create_symref() might
- be called
-References: <20201226134420.722643-1-Jeremie.Detrey@altu.fr>
-Date:   Sat, 26 Dec 2020 13:52:17 -0800
-In-Reply-To: <20201226134420.722643-1-Jeremie.Detrey@altu.fr>
- (=?utf-8?B?IkrDqXLDqW1pZQ==?=
-        Detrey"'s message of "Sat, 26 Dec 2020 14:44:20 +0100")
-Message-ID: <xmqqeejcqlpq.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1726039AbgLZWFC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Dec 2020 17:05:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58388 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725986AbgLZWFB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Dec 2020 17:05:01 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B14AC061757
+        for <git@vger.kernel.org>; Sat, 26 Dec 2020 14:04:21 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id r5so6547095eda.12
+        for <git@vger.kernel.org>; Sat, 26 Dec 2020 14:04:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=mognBMX1kAEd/ZU21RceCkqycezbL9VLXDExHmXCGgk=;
+        b=oPr1rXY9QRc9mDPGcTBePb9A6wpU3gSWmML21R+Djs7Lfmphv9nyBRLkQ9rKaEwib3
+         zOG2p5+EiNvXCpSMRKTCduYium/0BfI6V9oLsa4b8cvxEdodUeXST7Dos8MZIh3oPRYg
+         avssxV8LgwRlBoT4MW6o9MqxSDG+6CBC1lJr/aseOc8duVP/1IOu6MeH/9XPACto/tRu
+         irna4LdrRWFc+fwze5CzkFTDdaY93mv9/9Vs9HUvsz1tC3pmTsuOEkPDnWjOY8kSPRQB
+         VzNychBZYudfnm5FUC1rzIJsF/2lle5Xe0P2TYoQbWjfmfku0vTz8JLiM8wW1J7PofWB
+         +47w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=mognBMX1kAEd/ZU21RceCkqycezbL9VLXDExHmXCGgk=;
+        b=nocQF66Y+CWcqx694Jjdkrcvn1SK2DrevXPAUAjVlFBpxkXqFiwYFVmUPFTk6V+RaA
+         eV2gFtFysK2UyIXXN9wMcPqm+37p59+3WjjLp6VgSmDpIODdo8FW6RLc8GN7C41jytS0
+         b1GtvRszTzHvyXvMNw84q83QyLbe7FwvMemPwxiwPyskAG1nH3yQrEeSRrkXgWCRfROH
+         cLsGxkDBnX1OJslYQZJvPHiDLkBFfjufJ9OmFz9q3OOW+dknjuUkEkewLLIfHptAPqM3
+         7f9bmtqGpJT/jr+DXUleQxMpbwacA5pr0jdbiiTwlQgf96/5A6sAp4z459a/6k/FsaIg
+         qQuQ==
+X-Gm-Message-State: AOAM5331CTLb60pSx531bBqXh46h+X9vHt87uEjBsz8ZtLU9+4PYVSB0
+        kZdTjcBZe+fHjkSVKR8AXeT8nwj8MLKkkakvCSg7O6wyPZTARQ==
+X-Google-Smtp-Source: ABdhPJyJXc50BoM0TQu8C9bmUFep1RxRLVU/9Ywtke0moaLR1UtXuqSsUUaz0CNEt8Nrt4106cSHFuBRqWzcdc0wabI=
+X-Received: by 2002:aa7:ca03:: with SMTP id y3mr37244750eds.87.1609020259260;
+ Sat, 26 Dec 2020 14:04:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A0FEED1A-47C4-11EB-8D48-E43E2BB96649-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 26 Dec 2020 23:04:08 +0100
+Message-ID: <CAP8UFD2V5EdY2VBgP0Ah7BNri_znrGCMQ7LLwhATzJ5PaEymqQ@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 70
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>, lwn@lwn.net,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Sangeeta NB <sangunb09@gmail.com>,
+        Charvi Mendiratta <charvi077@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Joey Salazar <jgsal@protonmail.com>,
+        Sangeeta Bhandari <bhandarisangeeta0909@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-J=C3=A9r=C3=A9mie Detrey <Jeremie.Detrey@altu.fr> writes:
+Hi everyone,
 
-> Currently, the calls to `create_symref()` do not honor the
-> `core.logAllRefUpdates` nor the `user.{name,email}` configuration
-> settings, and therefore write reflogs even when explicitly asked not
-> to, and ignore the configured user identity.
->
-> This happens on `git remote add --fetch`, `git remote set-head`, and
-> `git remote rename`: these are the three commands which may create
-> a symbolic-ref for the remote's HEAD.
+The 70th edition of Git Rev News is now published:
 
-Good problem description.
+  https://git.github.io/rev_news/2020/12/26/edition-70/
 
-The usual way we structure the program start-up is do things in the
-following order:
+Thanks a lot to Felipe Contreras and Philip Oakley who helped this month!
 
- - have the hard-coded built-in default in the form of file-scope
-   static variable definition with initial values; remote.c::value
-   is an example that by default we are not verbose unless anybody
-   else (below) says otherwise.
+Enjoy,
+Christian, Jakub, Markus and Kaartic.
 
- - call git_config() to read and set configured defaults, which
-   would override the hard-coded built-in default values.
+PS: An issue for the next edition is already opened and contributions
+are welcome:
 
- - call parse_options(), or other use some other means, to parse the
-   command line options to further override the values that may have
-   been set by reading the configuration files.
-
-My gut feeling says that the best place to call git_config() on
-git_default_config would actually be in cmd_remote(), immediately
-before we call parse_options() to parse the main options shared by
-all subcommands of "git remote".  Is there a reason why codepaths
-other than the three you singled out should *not* be affected by the
-basic set of configuration variables?
-
-Thanks.
+https://github.com/git/git.github.io/issues/475
