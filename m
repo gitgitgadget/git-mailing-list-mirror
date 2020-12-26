@@ -2,112 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62989C433E0
-	for <git@archiver.kernel.org>; Sat, 26 Dec 2020 13:55:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44817C433E0
+	for <git@archiver.kernel.org>; Sat, 26 Dec 2020 21:57:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 26B1E207D1
-	for <git@archiver.kernel.org>; Sat, 26 Dec 2020 13:55:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 067FA21D7A
+	for <git@archiver.kernel.org>; Sat, 26 Dec 2020 21:57:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726130AbgLZNzE convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sat, 26 Dec 2020 08:55:04 -0500
-Received: from nibbler.ldn-fai.net ([80.67.188.164]:54308 "EHLO
-        nibbler.ldn-fai.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725969AbgLZNzD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Dec 2020 08:55:03 -0500
-X-Greylist: delayed 543 seconds by postgrey-1.27 at vger.kernel.org; Sat, 26 Dec 2020 08:55:03 EST
-Received: from localhost (localhost [127.0.0.1])
-        by nibbler.ldn-fai.net (Postfix) with ESMTP id B30CE8ED5A1;
-        Sat, 26 Dec 2020 14:45:19 +0100 (CET)
-Received: from nibbler.ldn-fai.net ([127.0.0.1])
-        by localhost (nibbler.ldn-fai.net [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id AA49uNd-9KVf; Sat, 26 Dec 2020 14:45:19 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-        by nibbler.ldn-fai.net (Postfix) with ESMTP id 2AA948ED59F;
-        Sat, 26 Dec 2020 14:45:19 +0100 (CET)
-X-Virus-Scanned: amavisd-new at nibbler.ldn-fai.net
-Received: from nibbler.ldn-fai.net ([127.0.0.1])
-        by localhost (nibbler.ldn-fai.net [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id RNq19qR_okuM; Sat, 26 Dec 2020 14:45:19 +0100 (CET)
-Received: from pica.home.lan (82-64-239-100.subs.proxad.net [82.64.239.100])
-        by nibbler.ldn-fai.net (Postfix) with ESMTPSA id CC8E48ED59E;
-        Sat, 26 Dec 2020 14:45:18 +0100 (CET)
-From:   =?UTF-8?q?J=C3=A9r=C3=A9mie=20Detrey?= <Jeremie.Detrey@altu.fr>
-To:     git@vger.kernel.org
-Cc:     Shulhan <m.shulhan@gmail.com>,
+        id S1726021AbgLZVxF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Dec 2020 16:53:05 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57122 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725849AbgLZVxF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Dec 2020 16:53:05 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 339571035B9;
+        Sat, 26 Dec 2020 16:52:23 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=F5KO1Ypn9Kek
+        OIROeQSU1EwkLus=; b=yAHUsj5M+67Da0KQZHqFIxfJDr4WSYS/tRZ0B1j8G9Ce
+        GR7Ck1MA/AUZ396OdIEuXcBfxNVzf0EyIe0BhEPMrYJcbsDra65CZ6ivpugM0S5j
+        WB9J80V6zzWIJtjpRbl3MmLOCq2c+sgPbxtzxThKAVzze0eyfUOf+N3D7gOUmIc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=SdqAlE
+        L24pMbxm0fly54i+alZ6fPpRYcxaH6IT8hifq+wcA2Asu//yra441TqNB+ozP4Wc
+        dgpOL900PsJXERoikGHctOIAISHZ4VC8cXJbv4axaGXmjVeoOrBLWClGAK72FjT9
+        G9YodKfrY9iyAAOpcZvqQEH0K693aLRhEtlZI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2B6A71035B8;
+        Sat, 26 Dec 2020 16:52:23 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7AD641035B7;
+        Sat, 26 Dec 2020 16:52:20 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?SsOpcsOpbWll?= Detrey <Jeremie.Detrey@altu.fr>
+Cc:     git@vger.kernel.org, Shulhan <m.shulhan@gmail.com>,
         Brandon Williams <bwilliams.eng@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?J=C3=A9r=C3=A9mie=20Detrey?= <Jeremie.Detrey@altu.fr>
-Subject: [PATCH] git-remote: load config whenever create_symref() might be called
-Date:   Sat, 26 Dec 2020 14:44:20 +0100
-Message-Id: <20201226134420.722643-1-Jeremie.Detrey@altu.fr>
-X-Mailer: git-send-email 2.29.2
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-remote: load config whenever create_symref() might
+ be called
+References: <20201226134420.722643-1-Jeremie.Detrey@altu.fr>
+Date:   Sat, 26 Dec 2020 13:52:17 -0800
+In-Reply-To: <20201226134420.722643-1-Jeremie.Detrey@altu.fr>
+ (=?utf-8?B?IkrDqXLDqW1pZQ==?=
+        Detrey"'s message of "Sat, 26 Dec 2020 14:44:20 +0100")
+Message-ID: <xmqqeejcqlpq.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: A0FEED1A-47C4-11EB-8D48-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, the calls to `create_symref()` do not honor the
-`core.logAllRefUpdates` nor the `user.{name,email}` configuration
-settings, and therefore write reflogs even when explicitly asked not
-to, and ignore the configured user identity.
+J=C3=A9r=C3=A9mie Detrey <Jeremie.Detrey@altu.fr> writes:
 
-This happens on `git remote add --fetch`, `git remote set-head`, and
-`git remote rename`: these are the three commands which may create
-a symbolic-ref for the remote's HEAD.
+> Currently, the calls to `create_symref()` do not honor the
+> `core.logAllRefUpdates` nor the `user.{name,email}` configuration
+> settings, and therefore write reflogs even when explicitly asked not
+> to, and ignore the configured user identity.
+>
+> This happens on `git remote add --fetch`, `git remote set-head`, and
+> `git remote rename`: these are the three commands which may create
+> a symbolic-ref for the remote's HEAD.
 
-A call to `git_config(git_default_config, NULL);` for these three
-commands is enough to load the necessary configuration beforehand.
+Good problem description.
 
-The call to `git_config()` was inserted right after command-line
-processing for these three commands. One might also decide to push
-it closer to the actual call to `create_symref()`, as it is not
-needed elsewhere, but it made more sense not to have it buried into
-nested `if` conditions.
+The usual way we structure the program start-up is do things in the
+following order:
 
-Signed-off-by: Jérémie Detrey <Jeremie.Detrey@altu.fr>
----
- builtin/remote.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ - have the hard-coded built-in default in the form of file-scope
+   static variable definition with initial values; remote.c::value
+   is an example that by default we are not verbose unless anybody
+   else (below) says otherwise.
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 64b4b551eb..f797fc3f65 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -190,6 +190,8 @@ static int add(int argc, const char **argv)
- 	name = argv[0];
- 	url = argv[1];
- 
-+	git_config(git_default_config, NULL);
-+
- 	remote = remote_get(name);
- 	if (remote_is_configured(remote, 1))
- 		die(_("remote %s already exists."), name);
-@@ -685,6 +687,8 @@ static int mv(int argc, const char **argv)
- 	rename.new_name = argv[2];
- 	rename.remote_branches = &remote_branches;
- 
-+	git_config(git_default_config, NULL);
-+
- 	oldremote = remote_get(rename.old_name);
- 	if (!remote_is_configured(oldremote, 1))
- 		die(_("No such remote: '%s'"), rename.old_name);
-@@ -1326,6 +1330,8 @@ static int set_head(int argc, const char **argv)
- 	if (argc)
- 		strbuf_addf(&buf, "refs/remotes/%s/HEAD", argv[0]);
- 
-+	git_config(git_default_config, NULL);
-+
- 	if (!opt_a && !opt_d && argc == 2) {
- 		head_name = xstrdup(argv[1]);
- 	} else if (opt_a && !opt_d && argc == 1) {
--- 
-2.29.2
+ - call git_config() to read and set configured defaults, which
+   would override the hard-coded built-in default values.
 
+ - call parse_options(), or other use some other means, to parse the
+   command line options to further override the values that may have
+   been set by reading the configuration files.
+
+My gut feeling says that the best place to call git_config() on
+git_default_config would actually be in cmd_remote(), immediately
+before we call parse_options() to parse the main options shared by
+all subcommands of "git remote".  Is there a reason why codepaths
+other than the three you singled out should *not* be affected by the
+basic set of configuration variables?
+
+Thanks.
