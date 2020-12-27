@@ -2,88 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FC9AC433E9
-	for <git@archiver.kernel.org>; Sun, 27 Dec 2020 21:00:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 016E9C433E0
+	for <git@archiver.kernel.org>; Sun, 27 Dec 2020 22:07:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3930D22581
-	for <git@archiver.kernel.org>; Sun, 27 Dec 2020 21:00:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BB362224DE
+	for <git@archiver.kernel.org>; Sun, 27 Dec 2020 22:07:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726263AbgL0U71 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Dec 2020 15:59:27 -0500
-Received: from out03.mta.xmission.com ([166.70.13.233]:46484 "EHLO
-        out03.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726199AbgL0U70 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Dec 2020 15:59:26 -0500
-Received: from in02.mta.xmission.com ([166.70.13.52])
-        by out03.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <seth@eseth.com>)
-        id 1ktd7k-004xay-00; Sun, 27 Dec 2020 13:58:44 -0700
-Received: from mta5.zcs.xmission.com ([166.70.13.69])
-        by in02.mta.xmission.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <seth@eseth.com>)
-        id 1ktd7j-00FgVI-0n; Sun, 27 Dec 2020 13:58:43 -0700
-Received: from localhost (localhost [127.0.0.1])
-        by mta5.zcs.xmission.com (Postfix) with ESMTP id 8A89C1280796;
-        Sun, 27 Dec 2020 13:58:42 -0700 (MST)
-X-Amavis-Modified: Mail body modified (using disclaimer) -
-        mta5.zcs.xmission.com
-Received: from mta5.zcs.xmission.com ([127.0.0.1])
-        by localhost (mta5.zcs.xmission.com [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id 5nyf3PZgxodF; Sun, 27 Dec 2020 13:58:42 -0700 (MST)
-Received: from localhost.localdomain (unknown [139.60.10.209])
-        by mta5.zcs.xmission.com (Postfix) with ESMTPSA id D70C8128062A;
-        Sun, 27 Dec 2020 13:58:41 -0700 (MST)
-From:   Seth House <seth@eseth.com>
-To:     git@vger.kernel.org
-Cc:     Seth House <seth@eseth.com>, Junio C Hamano <gitster@pobox.com>,
-        David Aguilar <davvid@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Sun, 27 Dec 2020 13:58:33 -0700
-Message-Id: <20201227205835.502556-1-seth@eseth.com>
-X-Mailer: git-send-email 2.30.0.rc0.dirty
-In-Reply-To: <20201223045358.100754-1-felipe.contreras@gmail.com>
+        id S1726227AbgL0WHn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Dec 2020 17:07:43 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54167 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726194AbgL0WHm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Dec 2020 17:07:42 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 01DEFA92AA;
+        Sun, 27 Dec 2020 17:07:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=bueTQlDKsCJCZGefqmAet5ugJ3U=; b=Qhu+AJ
+        l0yfbRUYbIjVU/pmdnFamnoPw4Hz37a1pe9Kx84u1CxzH6MS5MRtw9smOstwGRSn
+        qwv/YkanipiiHRFcaGKRo1oNZMKXO7ao1Y3CShBNcrNG9wW/8Sv0uiuWIoz3HfQ+
+        1Z0x/dgOCPJzqpXitvpr5Zk3zb6w4vvxjpvwk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=v3H1q14QDrkvQFcqV0x4r17fvioqIWA+
+        WC9I9fSFprac27osf5qbupD/1oV5MZiUsoi8D7fS2/lSP86bJVDyrQHyUw1BflEV
+        P042Wd8zBH33Mc+aG0TJ6kCmPPMDkdsTW4B+lcjS/tjWJNOrRPaDayldGJUnQIw4
+        +xB8t2UlZ8A=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EEC27A92A9;
+        Sun, 27 Dec 2020 17:06:59 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7BF34A92A7;
+        Sun, 27 Dec 2020 17:06:59 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Seth House <seth@eseth.com>
+Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v6 1/2] mergetool: add automerge configuration
 References: <20201223045358.100754-1-felipe.contreras@gmail.com>
+        <20201227205835.502556-1-seth@eseth.com>
+        <20201227205835.502556-2-seth@eseth.com>
+Date:   Sun, 27 Dec 2020 14:06:58 -0800
+In-Reply-To: <20201227205835.502556-2-seth@eseth.com> (Seth House's message of
+        "Sun, 27 Dec 2020 13:58:34 -0700")
+Message-ID: <xmqq1rfarji5.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-XM-SPF: eid=1ktd7j-00FgVI-0n;;;mid=<20201227205835.502556-1-seth@eseth.com>;;;hst=in02.mta.xmission.com;;;ip=166.70.13.69;;;frm=seth@eseth.com;;;spf=none
-X-SA-Exim-Connect-IP: 166.70.13.69
-X-SA-Exim-Mail-From: seth@eseth.com
-Subject: [PATCH v6 0/1] mergetool: add automerge configuration
-X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
-X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
+Content-Type: text/plain
+X-Pobox-Relay-ID: D756F288-488F-11EB-8823-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry for the slow turnaround on this. I haven't used Git via email
-patches before now so it took me quite a few hours to read through
-tutorials, configure git-send-email and fight missing Perl libs. Please
-let me know if I did anything incorrectly! I should be able to
-contribute more quickly from now on.
+Seth House <seth@eseth.com> writes:
 
-Changes since v5:
+> ...
+> See Seth House's blog post [1] for the idea, and the rationale.
+>
+> [1] https://www.eseth.org/2020/mergetools.html
+>
+> Original-idea-by: Seth House <seth@eseth.com>
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> ---
 
- * Add per-tool configuration that Felipe has a "deep philosophical"
-   opposition to adding.
+Missing Sign-off as a relayer.
 
-Felipe Contreras (1):
-  mergetool: add automerge configuration
+> diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+> index 70afdd06fa..b75c91199b 100755
+> --- a/t/t7610-mergetool.sh
+> +++ b/t/t7610-mergetool.sh
+> @@ -828,4 +828,22 @@ test_expect_success 'mergetool -Oorder-file is honored' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'mergetool automerge' '
+> +	test_config mergetool.automerge true &&
+> +	test_when_finished "git reset --hard" &&
+> +	git checkout -b test${test_count}_b master &&
+> +	echo -e "base\n\na" >file1 &&
 
-Seth House (1):
-  mergetool: Add per-tool support for the autoMerge flag
+These do not seem to be taken from the version that has been
+improved by reviwer comments after v3.
 
- Documentation/config/mergetool.txt |  6 ++++++
- git-mergetool.sh                   | 13 +++++++++++++
- t/t7610-mergetool.sh               | 18 ++++++++++++++++++
- 3 files changed, 37 insertions(+)
-
--- 
-2.29.2
-
+> +	git commit -a -m "base" &&
+> +	echo -e "base\n\nc" >file1 &&
+> +	git commit -a -m "remote update" &&
+> +	git checkout -b test${test_count}_a HEAD~ &&
+> +	echo -e "local\n\nb" >file1 &&
+> +	git commit -a -m "local update" &&
+> +	test_must_fail git merge test${test_count}_b &&
+> +	yes "" | git mergetool file1 &&
+> +	echo -e "local\n\nc" >expect &&
+> +	test_cmp expect file1 &&
+> +	git commit -m "test resolved with mergetool"
+> +'
+> +
+>  test_done
