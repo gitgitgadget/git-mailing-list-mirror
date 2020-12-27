@@ -2,75 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 338F7C433DB
-	for <git@archiver.kernel.org>; Sun, 27 Dec 2020 22:30:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40440C433DB
+	for <git@archiver.kernel.org>; Sun, 27 Dec 2020 22:32:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id EC4EE22838
-	for <git@archiver.kernel.org>; Sun, 27 Dec 2020 22:30:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0D51822838
+	for <git@archiver.kernel.org>; Sun, 27 Dec 2020 22:32:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726276AbgL0WaH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Dec 2020 17:30:07 -0500
-Received: from out03.mta.xmission.com ([166.70.13.233]:55512 "EHLO
-        out03.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726194AbgL0WaG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Dec 2020 17:30:06 -0500
-Received: from in02.mta.xmission.com ([166.70.13.52])
-        by out03.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <seth@eseth.com>)
-        id 1kteXV-0052lO-Ox; Sun, 27 Dec 2020 15:29:25 -0700
-Received: from mta5.zcs.xmission.com ([166.70.13.69])
-        by in02.mta.xmission.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <seth@eseth.com>)
-        id 1kteXU-00FtcP-OP; Sun, 27 Dec 2020 15:29:25 -0700
-Received: from localhost (localhost [127.0.0.1])
-        by mta5.zcs.xmission.com (Postfix) with ESMTP id 76BA212805F3;
-        Sun, 27 Dec 2020 15:29:24 -0700 (MST)
-X-Amavis-Modified: Mail body modified (using disclaimer) -
-        mta5.zcs.xmission.com
-Received: from mta5.zcs.xmission.com ([127.0.0.1])
-        by localhost (mta5.zcs.xmission.com [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id t01RF7s1DD-9; Sun, 27 Dec 2020 15:29:24 -0700 (MST)
-Received: from ellen (unknown [139.60.10.209])
-        by mta5.zcs.xmission.com (Postfix) with ESMTPSA id E1D2E128058D;
-        Sun, 27 Dec 2020 15:29:23 -0700 (MST)
-Date:   Sun, 27 Dec 2020 15:29:22 -0700
-From:   Seth House <seth@eseth.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>
-Message-ID: <20201227222922.GA509599@ellen>
+        id S1726279AbgL0Wbu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Dec 2020 17:31:50 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64255 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726199AbgL0Wbu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Dec 2020 17:31:50 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BF8DAA9525;
+        Sun, 27 Dec 2020 17:31:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=m9YHSk/w59N2Wo+J79MBUpX50RQ=; b=fxVE8N1jIV33UnIJORVJ
+        HbeZezNuYKcSsBv6x4PzamgB6L7vWWrmN71Jw0e4zFYEM+XFmPLDmNq2hChxpavy
+        g8yy8sJnHHMg5YcmH7b8KfHMk9xtgiG66/sJh221NCuolxUP0sSKWT5KSEL1Gmdl
+        9At0uS0QfD5HOA0lrmYWGR0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=FhE9egBNn9yertQMEcQwCR6fBhEP63CX7nDNZwbeUqJhq9
+        cSmYuiSa4pdgr/88SENGMXVknWFvlw7zVqiJd4/zQVuEuzr/BTn2d0t56cFd+OnD
+        /a5kNd6zgsdjdIb/KL0b5z0P/4uSTb9B+U8C1iKlMqdRuDtat1qpujmtXfwl8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9B4D6A9524;
+        Sun, 27 Dec 2020 17:31:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8CBFFA9523;
+        Sun, 27 Dec 2020 17:31:04 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Seth House <seth@eseth.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v6 2/2] mergetool: Add per-tool support for the
+ autoMerge flag
 References: <20201223045358.100754-1-felipe.contreras@gmail.com>
- <20201227205835.502556-1-seth@eseth.com>
- <20201227205835.502556-2-seth@eseth.com>
- <xmqq1rfarji5.fsf@gitster.c.googlers.com>
+        <20201227205835.502556-1-seth@eseth.com>
+        <20201227205835.502556-3-seth@eseth.com>
+Date:   Sun, 27 Dec 2020 14:31:03 -0800
+Message-ID: <xmqqsg7qop94.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq1rfarji5.fsf@gitster.c.googlers.com>
-X-XM-SPF: eid=1kteXU-00FtcP-OP;;;mid=<20201227222922.GA509599@ellen>;;;hst=in02.mta.xmission.com;;;ip=166.70.13.69;;;frm=seth@eseth.com;;;spf=none
-X-SA-Exim-Connect-IP: 166.70.13.69
-X-SA-Exim-Mail-From: seth@eseth.com
-Subject: Re: [PATCH v6 1/2] mergetool: add automerge configuration
-X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
-X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 34AB75D2-4893-11EB-B469-D152C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 27, 2020 at 02:06:58PM -0800, Junio C Hamano wrote:
-> Missing Sign-off as a relayer.
+Seth House <seth@eseth.com> writes:
 
-I haven't come across that in the docs on contributing to Git and my
-Google searches aren't helping. Do you mind pointing me to what to add?
+> Keep the global mergetool flag and add a per-tool override flag so that
+> users may enable the flag for one tool and disable it for another.
+>
+> Signed-off-by: Seth House <seth@eseth.com>
+> ---
+>  Documentation/config/mergetool.txt | 3 +++
+>  git-mergetool.sh                   | 5 ++++-
+>  2 files changed, 7 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/config/mergetool.txt b/Documentation/config/mergetool.txt
+> index 43af7a96f9..7f32281a61 100644
+> --- a/Documentation/config/mergetool.txt
+> +++ b/Documentation/config/mergetool.txt
+> @@ -21,6 +21,9 @@ mergetool.<tool>.trustExitCode::
+>  	if the file has been updated, otherwise the user is prompted to
+>  	indicate the success of the merge.
+>  
+> +mergetool.<tool>.autoMerge::
+> +	Automatically resolve conflicts that don't require user intervention.
+> +
+>  mergetool.meld.hasOutput::
+>  	Older versions of `meld` do not support the `--output` option.
+>  	Git will attempt to detect whether `meld` supports `--output`
+> diff --git a/git-mergetool.sh b/git-mergetool.sh
+> index 6e86d3b492..81df301734 100755
+> --- a/git-mergetool.sh
+> +++ b/git-mergetool.sh
+> @@ -323,7 +323,10 @@ merge_file () {
+>  	checkout_staged_file 2 "$MERGED" "$LOCAL"
+>  	checkout_staged_file 3 "$MERGED" "$REMOTE"
+>  
+> -	if test "$(git config --bool mergetool.autoMerge)" = "true"
+> +	if test "$(
+> +		git config --get --bool "mergetool.$merge_tool.automerge" ||
+> +		git config --get --bool "mergetool.automerge" ||
+> +		echo true)" = true
 
-> These do not seem to be taken from the version that has been
-> improved by reviwer comments after v3.
+Your [v6 1/2] that you build this step on does not enable the
+feature by default, but this step does; it deserves to be documented
+and mentioned in the proposed log message.
 
-Whoops! Thanks for the catch. Seems I fished the wrong version out of my
-email. Created a new v7 based off the correct v5.
+But I think you'd want to build this step on top of newer one, if
+only to take the portability fix to the tests, and that patch
+enables the feature by default, so ...
 
+>  	then
+>  		git merge-file --diff3 -q -p "$LOCAL" "$BASE" "$REMOTE" >"$DIFF3"
+>  		sed -e '/^<<<<<<< /,/^||||||| /d' -e '/^=======\r\?$/,/^>>>>>>> /d' "$DIFF3" >"$BASE"
+
+Thanks.
