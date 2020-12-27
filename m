@@ -2,79 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01575C433DB
-	for <git@archiver.kernel.org>; Sun, 27 Dec 2020 00:40:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5874EC433E6
+	for <git@archiver.kernel.org>; Sun, 27 Dec 2020 06:26:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AEB0C217A0
-	for <git@archiver.kernel.org>; Sun, 27 Dec 2020 00:40:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 20A5120866
+	for <git@archiver.kernel.org>; Sun, 27 Dec 2020 06:26:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726031AbgL0AfX convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sat, 26 Dec 2020 19:35:23 -0500
-Received: from mail-ej1-f50.google.com ([209.85.218.50]:42204 "EHLO
-        mail-ej1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725834AbgL0AfW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Dec 2020 19:35:22 -0500
-Received: by mail-ej1-f50.google.com with SMTP id d17so9920417ejy.9
-        for <git@vger.kernel.org>; Sat, 26 Dec 2020 16:35:06 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8TdFmm89mykux1vkAXCsJmiX9NfIaOk537BDNyx2Fgo=;
-        b=eHNfTk2VuiEQ0H9sTCemBu4pW1qYbk1GO+rzGtNZuW7pEDbv0sAqoaJk5LwjQ/YHEJ
-         DmvfPUPM0ER+NeKLHjqQdj90BrKn9pp04KEgN1t6+Psvu978HqC/AI6hBgKl5ySv9Xcr
-         CBzES5qO6koYKLrILe/8ys6xJaWanoknvlVo0WmnKtTtvNGKYBxP4oIkrYg8Ol/+V18J
-         PTfLHcY/8BkC3Ur8ZT4MdxuIEwNu4lX6P3O/cvgUWoGzuO8c802zlbq4RnvzGbSCRKxY
-         BEAh3RMnYu3s09GzUj3FDYZUGRDK5xzQ0O92jyRTPnpQYQLJrFKKFbHsbBB5Bn3BQtC3
-         Fgzg==
-X-Gm-Message-State: AOAM531Vp9erzTBE/jJNX6WQ9lQN7R4RZesq0fB5CJaezk/FdrEj3OJb
-        tFitgXVCmsPVEPDuLsbVtfaz99zCFTkwEE9+4pM=
-X-Google-Smtp-Source: ABdhPJwUJHyhF+RPB63w1vyJwRpUOXp3XRiSBaeFuzCoCYENaJitF1jdpl6ltxfyeZ/9R8LIwFz5qIw5UW3WPlnGEUw=
-X-Received: by 2002:a17:906:6b88:: with SMTP id l8mr36482680ejr.482.1609029280837;
- Sat, 26 Dec 2020 16:34:40 -0800 (PST)
-MIME-Version: 1.0
-References: <20201226134420.722643-1-Jeremie.Detrey@altu.fr>
- <xmqqeejcqlpq.fsf@gitster.c.googlers.com> <X+e48UEE4wf3fMNI@pica>
-In-Reply-To: <X+e48UEE4wf3fMNI@pica>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 26 Dec 2020 19:34:30 -0500
-Message-ID: <CAPig+cQqObQj6djn_EvfurbwsEKuU2fB+GZ8EE1HA-Hn1hUkuQ@mail.gmail.com>
-Subject: Re: [PATCH] git-remote: load config whenever create_symref() might be called
-To:     =?UTF-8?B?SsOpcsOpbWllIERldHJleQ==?= <Jeremie.Detrey@altu.fr>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Shulhan <m.shulhan@gmail.com>,
+        id S1726019AbgL0GXW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Dec 2020 01:23:22 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62539 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725963AbgL0GXW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Dec 2020 01:23:22 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7CA92104139;
+        Sun, 27 Dec 2020 01:22:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4V8whdK9zoLIdWsmkdmgQbfrzMk=; b=GzqHgp
+        nyTOnASR2EradzQznRZbJgv2elKNDrdppBoCIcVKuzUsJWxeKmxEmbBhbs2vA0vy
+        Go+V4RTMbL7HYBbDd4SO0+vayIYgZo1kMETTOO3ce4vzBh4pbOymbg201zNpPu6b
+        xp2E1Nf3mmRsulz1VRjUSzR+oTSc8Du+FEN8E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=H69+ag1ppf7kvdiivv0F6PAUVvnJFB+u
+        R99hIQgJ5T7KmFWiweoO8A9UEp/EmUNpQAbK1G6G1u9g7J2xf52o4K7HO/Tt+Ax5
+        KxKJiMm+xMCHJuIz8ugQJA1TB5RqVa78al35JGWjFuTJqlFgB12819tIjghGCTFP
+        13Us9XifVAA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 69B10104138;
+        Sun, 27 Dec 2020 01:22:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A492A104135;
+        Sun, 27 Dec 2020 01:22:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     =?utf-8?B?SsOpcsOpbWll?= Detrey <Jeremie.Detrey@altu.fr>,
+        Git List <git@vger.kernel.org>, Shulhan <m.shulhan@gmail.com>,
         Brandon Williams <bwilliams.eng@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Subject: Re: [PATCH] git-remote: load config whenever create_symref() might
+ be called
+References: <20201226134420.722643-1-Jeremie.Detrey@altu.fr>
+        <xmqqeejcqlpq.fsf@gitster.c.googlers.com> <X+e48UEE4wf3fMNI@pica>
+        <CAPig+cQqObQj6djn_EvfurbwsEKuU2fB+GZ8EE1HA-Hn1hUkuQ@mail.gmail.com>
+Date:   Sat, 26 Dec 2020 22:22:36 -0800
+In-Reply-To: <CAPig+cQqObQj6djn_EvfurbwsEKuU2fB+GZ8EE1HA-Hn1hUkuQ@mail.gmail.com>
+        (Eric Sunshine's message of "Sat, 26 Dec 2020 19:34:30 -0500")
+Message-ID: <xmqqa6tzrcnn.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: EAD97E4A-480B-11EB-B12A-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 26, 2020 at 5:31 PM Jérémie Detrey <Jeremie.Detrey@altu.fr> wrote:
-> Junio C Hamano:
-> > My gut feeling says that the best place to call git_config() on
-> > git_default_config would actually be in cmd_remote(), immediately
-> > before we call parse_options() to parse the main options shared by
-> > all subcommands of "git remote".  Is there a reason why codepaths
-> > other than the three you singled out should *not* be affected by the
-> > basic set of configuration variables?
->
-> No, none that I can think of. I'll leave more knowledgeable people
-> than me confirm this, but if that's the way to go, I'll be happy to
-> submit a revised patch following your suggestion :)
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-I took a quick look at builtin/remote.c. It appears that several of
-the subcommands already make their own calls to git_config(), each
-with its own special-purpose `config_fn_t` as argument. Jérémie's
-patch, which invokes git_config() for specific cases, therefore, is
-consistent with existing practice in that file. Taking the approach of
-calling git_config() once before parse_options() should be possible
-but would require more surgery. The end result after surgery likely
-would be more maintainable going forward, but the localized fixes his
-patch makes might be reasonable in the short term. (But I'm not an
-area expert, so don't take my word for it.)
+> ... The end result after surgery likely
+> would be more maintainable going forward, but the localized fixes his
+> patch makes might be reasonable in the short term.
+
+OK, I guess.
+
+Thanks.
