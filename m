@@ -2,159 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE07CC433DB
-	for <git@archiver.kernel.org>; Sun, 27 Dec 2020 18:13:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ABA8AC433DB
+	for <git@archiver.kernel.org>; Sun, 27 Dec 2020 18:32:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9B49822507
-	for <git@archiver.kernel.org>; Sun, 27 Dec 2020 18:13:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7317522582
+	for <git@archiver.kernel.org>; Sun, 27 Dec 2020 18:32:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726200AbgL0SC3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Dec 2020 13:02:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43054 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726065AbgL0SC2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Dec 2020 13:02:28 -0500
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 563B5C061794
-        for <git@vger.kernel.org>; Sun, 27 Dec 2020 10:01:48 -0800 (PST)
-Received: by mail-oi1-x22a.google.com with SMTP id q205so9431728oig.13
-        for <git@vger.kernel.org>; Sun, 27 Dec 2020 10:01:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-transfer-encoding;
-        bh=FZ21dHrF4Q/nxK2uam8AxS5Fn6XBiLIlIeIW7W0Ea9o=;
-        b=Rng4TBtEWZ0fd3raum5rveovNhSOlRToiel7gAeq0nzfyo3ISBpSr2LiO2LMRp6KlK
-         E1rsgHUZs6ILH61vQLYkgyjkS0/dsYFyrraIi4TvgalRPY1VLEvuW/pEnZPPGjToBCkl
-         skxJ5dXuGqhU1cj0+S9UKmQEWMJa9KwU4rMlh2qobfhUxSuKeElo4/jO1q18VyNPU/Ii
-         CMRIj/5W6TC0BO0WwB8ImMLMHiYNfheCCHQuC5zUdOVxbql1p6HLcUmolt9CpopKHObm
-         MqZrOnoetcqRsYFpEJo9a6JsvYgmnjOpF4yOVvFMFbRelSXU5fIZRySWxAM/SHxZHI6a
-         234w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
-         :references:subject:mime-version:content-transfer-encoding;
-        bh=FZ21dHrF4Q/nxK2uam8AxS5Fn6XBiLIlIeIW7W0Ea9o=;
-        b=O8xNeNZkQETQmAmelV78rLFjILzBBS0LzJ01X0XZydyjRxBo62jlWZVXuWik1xN0gb
-         zjCfdBIMv5MN89b9J1ad7Raq62jtUu2G4DoiHoAChqv68eVELCTBqYXNy96PKaEku0C6
-         AH/SVdJqeMyiIBnumlvX53VvdoGeYXc+vdWwq2Pv0cfQPNaKRT2moYuSQkJ4ch8PlsmN
-         QBPmQJ/0WqyDRf6rGsJE2f8acy3kOh+Hga72xiVBzgdwqKcGwGcvpWwVTRddYGp4iinj
-         +AWROGOkzHh0WQWqaox1HVHrcBxHtWPrEoCGtNdYMphK5mnaLgInoRYUz5mWkG6FyrNB
-         nIGA==
-X-Gm-Message-State: AOAM533PtTPJmTF6WU4FN3unhEBtlFzuzGayi0IerZW0S1Tkmn7y+c+V
-        A1AKcFpcVB948qi3P9ED864=
-X-Google-Smtp-Source: ABdhPJxmMtaaUdo8q0oaPPFTxyzfXQo+FaH4YmdvRYWfrb9lNtqjUXpiqLF8fif2uadTHAz0ANgiYQ==
-X-Received: by 2002:aca:ebd0:: with SMTP id j199mr9901153oih.155.1609092107601;
-        Sun, 27 Dec 2020 10:01:47 -0800 (PST)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id m18sm8681509ooa.24.2020.12.27.10.01.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Dec 2020 10:01:46 -0800 (PST)
-Date:   Sun, 27 Dec 2020 12:01:45 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>, Seth House <seth@eseth.com>
-Message-ID: <5fe8cc0998fc0_e22d208c5@natae.notmuch>
-In-Reply-To: <xmqq4kka3ke8.fsf@gitster.c.googlers.com>
-References: <20201223045358.100754-1-felipe.contreras@gmail.com>
- <20201223045358.100754-2-felipe.contreras@gmail.com>
- <xmqqblekabof.fsf@gitster.c.googlers.com>
- <5fe352e3968f6_198be2083@natae.notmuch>
- <xmqqblek8e94.fsf@gitster.c.googlers.com>
- <5fe3dd62e12f8_7855a2081f@natae.notmuch>
- <xmqqv9cs3uxo.fsf@gitster.c.googlers.com>
- <5fe3f083f27cd_7855a20885@natae.notmuch>
- <xmqqim8r4tjh.fsf@gitster.c.googlers.com>
- <5fe4baed206cc_19c9208e8@natae.notmuch>
- <xmqq4kka3ke8.fsf@gitster.c.googlers.com>
-Subject: Re: [PATCH v5 1/1] mergetool: add automerge configuration
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        id S1726282AbgL0Sbc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Dec 2020 13:31:32 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50268 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725975AbgL0Sbb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Dec 2020 13:31:31 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5584A109D0D;
+        Sun, 27 Dec 2020 13:30:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pmd+xyXdpZ1zsFJDPiVy272qj7U=; b=Nrx39B
+        +Rs09/UXM6bswPQDs1nxSNdydjjLkmU23KusdCj3/SwtDA6wSC4dPsRbMzLPwb4Z
+        Bw/4BGZ8408QEAmQg0JPV1nduDMKHqDIi+dATjvk9+iP9KW60kXwj+BBS63j8oeH
+        57OFZRRmva0Mnvd555M26Q+tFr9jV09W6rCz0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=qV96TYZNymDtCbNtJ3OR5iF56GjvbLT6
+        ScX2MgflC7fKGAkWW4Qp/YP2tOSTCvMcKTqsEFNzkbyoCHU3YPx1WGRzGe8o+vnS
+        x8lUdPbE4Kw8PbG+r3bvYT3iZArejuW4x31BbZ5nPXjWN4mXfcmqnQfcsfUyrZNC
+        Fc+ikwTS3cI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4C25A109D0C;
+        Sun, 27 Dec 2020 13:30:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 94CC9109D0B;
+        Sun, 27 Dec 2020 13:30:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Pratyush Yadav <me@yadavpratyush.com>,
+        David Aguilar <davvid@gmail.com>, Seth House <seth@eseth.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        git@sfconservancy.org
+Subject: Re: Nobody is THE one making contribution
+References: <5fdc18a91c402_f2faf20837@natae.notmuch>
+        <5fdc7a7d3a933_f4673208d0@natae.notmuch>
+        <20201219001358.GA153461@ellen>
+        <xmqq1rfmqc8g.fsf@gitster.c.googlers.com>
+        <20201221042501.GA146725@ellen>
+        <5fe033e0ec278_96932089d@natae.notmuch>
+        <20201221073633.GA157132@ellen>
+        <CAJDDKr6LrBMyfdp5Tutp29W9OqhbW4ffcP5e6PD8ruyxk3rQxA@mail.gmail.com>
+        <5fe134eeaec71_11498208f9@natae.notmuch>
+        <20201222150124.mnfcyofm4qyvvj4n@yadavpratyush.com>
+        <5fe2c64bd3790_17f6720897@natae.notmuch>
+        <xmqq5z4tdsiz.fsf@gitster.c.googlers.com>
+        <5fe2d89c212e8_18dc12083e@natae.notmuch>
+        <xmqqzh248sy0.fsf@gitster.c.googlers.com>
+        <5fe36790793ae_2354120839@natae.notmuch>
+        <87r1ngufmf.fsf@evledraar.gmail.com>
+        <5fe424d0528a2_7855a208d3@natae.notmuch>
+        <87o8ijv124.fsf@evledraar.gmail.com>
+        <5fe4b33dbc028_19c920834@natae.notmuch>
+        <xmqqtusa24oa.fsf@gitster.c.googlers.com>
+        <5fe8c464bc190_e22d2086a@natae.notmuch>
+Date:   Sun, 27 Dec 2020 10:30:46 -0800
+In-Reply-To: <5fe8c464bc190_e22d2086a@natae.notmuch> (Felipe Contreras's
+        message of "Sun, 27 Dec 2020 11:29:08 -0600")
+Message-ID: <xmqq5z4nqey1.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: A4149F24-4871-11EB-AA66-E43E2BB96649-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > Junio C Hamano wrote:
-> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> >> 
-> >> >> Yup, I already mentioned UI mistake so you do not have to repeat
-> >> >
-> >> > You said it was a UI mistake, not me. I am a different mind than yours.
-> >> 
-> >> Yes, but the point is that I do not need to nor particularly want to
-> >> hear your opinion on the behaviour of "git merge-file".
-> >
-> >> I know (and others reading the thread on the list also know) that the
-> >> exit code of the command is misdesigned already.
-> >
-> > Unless you can read minds, you don't know that.
-> 
-> Actually I do, because they heard from me already ;-).
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-They heard that you *think* it's a UI mistake.
+>> But if you are arguing that when you write "Signed-off-by:" your
+>> sign-off can mean something other than what DCO says it means,
+>
+> The DCO has clause (d), which clearly states the developer must agree
+> that a record of his/her contribution is maintained indefinitely (and
+> that includes his/her sign off).
 
-The fact that you think something is a mistake doesn't necessarily mean
-it's actually a mistake, and other community members might think
-otherwise.
+Yes.  Are you saying that you are OK with (a)-(c) but not (d)?
 
-You do not dictate what others on the list know.
+> So there's at least two meanings in the DCO itself.
 
-> >> Again, please realize that on list discussion is a team effort to
-> >> come up together a better design of a shared solution.
-> >
-> > Which is why agreement in a team with different minds and different
-> > viewpoints is important.
-> 
-> It is not like opinions on all points are important.  Whether the
-> exit code from merge-file is or is not a UI mistake does NOT have
-> any influence on what we were discussing.
+I am not sure what you mean.  DCO itself has a to d (four) clauses,
+so that is not where your two comes from (unless you are hedging by
+saying "at least two").  What are you counting to reach two?
 
-Which is why I initially did not express such an opinion.
-
-But you did, presumably you had some reason to do so, so I simply
-did the same and expressed mine.
-
-> I am already trying to ignore your opinions on things that do not
-> matter in the context of this project, as you told me earlier ;-)
-> But just like patches, messages are written only once but read by
-> many people, so I'd always aim for reducing noise at the source.
-
-What you consider noise others might not.
-
-Good writers say you should not assume what your readers know.
-
-Yes, some readers might think exactly like you do, and they don't need
-what you consider obvious information. But for every person that
-thinks exactly like you, there are dozens that don't, and it's those you
-should keep in mind.
-
-Most people err on the side of not providing enough information to the
-minds dissimilar to theirs.
-
-This is called the curse of knowledge [1].
-
-I try not to do that.
-
-> Anyway, happy holidays and pleasant new year to you and to
-> everybody.
-
-Same to you.
-
-Cheers.
-
-[1] https://en.wikipedia.org/wiki/Curse_of_knowledge
-
--- 
-Felipe Contreras
+Still puzzled.
