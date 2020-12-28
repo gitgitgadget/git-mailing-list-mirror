@@ -7,325 +7,872 @@ X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B851BC433DB
-	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 19:10:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37DDBC433E6
+	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 19:11:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6B7D522AEC
-	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 19:10:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 00E4B22B2E
+	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 19:11:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729017AbgL1TKo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Dec 2020 14:10:44 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62338 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729009AbgL1TKo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Dec 2020 14:10:44 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 702B79ED5E;
+        id S1729048AbgL1TKt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Dec 2020 14:10:49 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64137 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729008AbgL1TKr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Dec 2020 14:10:47 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1759F10FFC6;
         Mon, 28 Dec 2020 14:09:59 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=F
-        lsu7/VVQHbOfIJTFHJjHvNnhFM=; b=YWE4VMHtLLdQQer6PaBjSg24cBwYmxECF
-        L1MfECwGDGg5bpUG1AtPPSzJLe9xr42sizb660AQisgWw/KffXdGpgw+kDuOynJS
-        DrTO9OVAYHVj3+0mesUps8Ry9CxDKIZL3xZPKIX16pePYeMD3yhhxQRSW3xdmMiL
-        sSeOXAcLPE=
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=G
+        O1qCdOVnHga7JlPeOnX0dAlv+A=; b=Ikd5ievGENjeMNbOKuGHztBnvSE9EFWBY
+        avsGFK4z4TKL6GHUR13NQwTxx5SXN7Dn4ZNWQvb/XGmjjByf48UyC34Nv3ksoSJr
+        /PcZSdN0Ap4Pkfp8TFSXdwg0y0f6vqTOPE49KvTmhWQCY4XSJkfH0Rmy/L9R+qeg
+        VKZxTxXzT4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=me1
-        5AsZJ/4KGC9mxT0xQDO+7Ep7tqWQAtjZvaNcsnGpIP9infqVoHqVCTs/kgTnbiP9
-        hYOBo/K5Hw0EOAdvmPC9ww4QAKVn6P4gUwMtS8vXe7c4fMM2MBU3fQ8ejQqmCBvH
-        MgyirKOIlN7vdKi/6jGurcIRRISmfKVuz01QjzcU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 66A5E9ED5D;
+        :date:message-id:mime-version:content-type; q=dns; s=sasl; b=GM/
+        FC5bDCwI9/Bgw6MDe5FCzu1DkdN5c5WeEyuTREqT5FgPGYqm8QysBHBgDjYpxO2J
+        O5ddeZKIBxPPXHMBjIm5Ci4fEUCxGmjQPvgEzuQswJxrub59cr78f3iPzJyLqnpD
+        BJpy80uSTLuOncruKITcJymDxvzw411+q4yNkX/8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0F75E10FFC5;
         Mon, 28 Dec 2020 14:09:59 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C4D029ED5C;
-        Mon, 28 Dec 2020 14:09:58 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3D06510FFC4;
+        Mon, 28 Dec 2020 14:09:56 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Subject: A note from the maintainer
-Date:   Mon, 28 Dec 2020 11:09:58 -0800
-Message-ID: <xmqq8s9hg321.fsf@gitster.c.googlers.com>
+Subject: What's cooking in git.git (Dec 2020, #05; Mon, 28)
+X-master-at: 71ca53e8125e36efbda17293c50027d31681a41f
+X-next-at: d98b1dd5eaa7327399716162c746c9bd3cac3866
+Date:   Mon, 28 Dec 2020 11:09:54 -0800
+Message-ID: <xmqqeej9g325.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 47527002-4940-11EB-98F7-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 45CB8C14-4940-11EB-8EA5-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Welcome to the Git development community.
+Here are the topics that have been cooking.  Commits prefixed with '-' are
+only in 'seen' (formerly 'pu'---proposed updates) while commits prefixed
+with '+' are in 'next'.  The ones marked with '.' do not appear in any of
+the integration branches, but I am still holding onto them.
 
-This message is written by the maintainer and talks about how Git
-project is managed, and how you can work with it.
+Git 2.30 final is out.  I expect things will quiet down while people
+celebrate year-end and new year, unless a bad regression is found
+post release.
 
-The current maintainer is Junio C Hamano <gitster@pobox.com>; please
-do not send any private message to this address, because it is likely
-that such a message will not be seen by any human being.  Spam filters
-learned that legitimate messages to the address come only from a very
-few sender addresses that are known to be good, and messages from all
-others are likely to be spam unless they are also sent to the mailing
-list at the same time (i.e. "Reply-all" to the list message would
-reach the mailbox, but "Reply" will likely be thrown into the spam
-folder).
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
+With maint, master, next, seen, todo:
 
-* Mailing list and the community
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-vcs/git/
 
-The development is primarily done on the Git mailing list. Help
-requests, feature proposals, bug reports and patches should be sent to
-the list address <git@vger.kernel.org>.  You don't have to be
-subscribed to send messages.  The convention on the list is to keep
-everybody involved on Cc:, so it is unnecessary to say "Please Cc: me,
-I am not subscribed".
+With all the integration branches and topics broken out:
 
-As an anti-spam measure, the mailing list software rejects messages
-that are not text/plain and drops them on the floor.  If you are a
-GMail user, you'd want to make sure "Plain text mode" is checked.
+	https://github.com/gitster/git/
 
-Before sending patches, please read Documentation/SubmittingPatches
-and Documentation/CodingGuidelines to familiarize yourself with the
-project convention.
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
 
-If you sent a patch and you did not hear any response from anybody for
-several days, it could be that your patch was totally uninteresting,
-but it also is possible that it was simply lost in the noise.  Please
-do not hesitate to send a reminder message in such a case.  Messages
-getting lost in the noise may be a sign that those who can evaluate
-your patch don't have enough mental/time bandwidth to process them
-right at the moment, and it often helps to wait until the list traffic
-becomes calmer before sending such a reminder.
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
 
-The list archive is available at a few public sites:
+Release tarballs are available at:
 
-        http://lore.kernel.org/git/
-        http://marc.info/?l=git
-        http://www.spinics.net/lists/git/
+	https://www.kernel.org/pub/software/scm/git/
 
-For those who prefer to read it over NNTP:
+--------------------------------------------------
+[Graduated to 'master']
 
-	nntp://nntp.lore.kernel.org/org.kernel.vger.git
-        nntp://news.public-inbox.org/inbox.comp.version-control.git
+* dl/checkout-p-merge-base (2020-12-21) 1 commit
+  (merged to 'next' on 2020-12-21 at 595dd32b56)
+ + checkout -p: handle tree arguments correctly again
 
-are available.
+ Fix to a regression introduced during this cycle.
 
-When you point at a message in a mailing list archive, using its
-message ID is often the most robust (if not very friendly) way to do
-so, like this:
 
-	http://lore.kernel.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org
+* js/no-more-prepare-for-main-in-test (2020-12-16) 11 commits
+  (merged to 'next' on 2020-12-18 at d15a382d4d)
+ + tests: drop the `PREPARE_FOR_MAIN_BRANCH` prereq
+ + t9902: use `main` as initial branch name
+ + t6302: use `main` as initial branch name
+ + t5703: use `main` as initial branch name
+ + t5510: use `main` as initial branch name
+ + t5505: finalize transitioning to using the branch name `main`
+ + t3205: finalize transitioning to using the branch name `main`
+ + t3203: complete the transition to using the branch name `main`
+ + t3201: finalize transitioning to using the branch name `main`
+ + t3200: finish transitioning to the initial branch name `main`
+ + t1400: use `main` as initial branch name
 
-Often these web interfaces accept the message ID with enclosing <>
-stripped (like the above example to point at one of the most important
-message in the Git list).
+ Test coverage fix.
 
-Some members of the development community can sometimes be found on
-the #git and #git-devel IRC channels on Freenode.  Their logs are
-available at:
 
-        http://colabti.org/irclogger/irclogger_log/git
-        http://colabti.org/irclogger/irclogger_log/git-devel
+* jx/pack-redundant-on-single-pack (2020-12-16) 1 commit
+  (merged to 'next' on 2020-12-18 at b819311529)
+ + pack-redundant: fix crash when one packfile in repo
 
-There is a volunteer-run newsletter to serve our community ("Git Rev
-News" http://git.github.io/rev_news/).
+ "git pack-redandant" when there is only one packfile used to crash,
+ which has been corrected.
 
-Git is a member project of software freedom conservancy, a non-profit
-organization (https://sfconservancy.org/).  To reach a committee of
-liaisons to the conservancy, contact them at <git@sfconservancy.org>.
 
-For our expectations on the behaviour of the community participants
-towards each other, see CODE_OF_CONDUCT.md at the top level of the source
-tree, or:
+* ma/maintenance-crontab-fix (2020-12-21) 3 commits
+  (merged to 'next' on 2020-12-21 at 8cd8cc04f9)
+ + t7900-maintenance: test for magic markers
+ + gc: fix handling of crontab magic markers
+ + git-maintenance.txt: add missing word
 
-    https://github.com/git/git/blob/master/CODE_OF_CONDUCT.md
+ Hotfix for a topic of this cycle.
 
 
-* Reporting bugs
+* nk/refspecs-negative-fix (2020-12-21) 2 commits
+  (merged to 'next' on 2020-12-21 at 7d88169236)
+ + negative-refspec: improve comment on query_matches_negative_refspec
+ + negative-refspec: fix segfault on : refspec
 
-When you think git does not behave as you expect, please do not stop
-your bug report with just "git does not work".  "I used git in this
-way, but it did not work" is not much better, neither is "I used git
-in this way, and X happend, which is broken".  It often is that git is
-correct to cause X happen in such a case, and it is your expectation
-that is broken. People would not know what other result Y you expected
-to see instead of X, if you left it unsaid.
+ Hotfix for recent regression.
 
-Please remember to always state
 
- - what you wanted to achieve;
+* pb/doc-git-linkit-fix (2020-12-22) 1 commit
+  (merged to 'next' on 2020-12-22 at 240a7a227c)
+ + git.txt: fix typos in 'linkgit' macro invocation
 
- - what you did (the version of git and the command sequence to reproduce
-   the behavior);
+ Docfix.
 
- - what you saw happen (X above);
+--------------------------------------------------
+[New Topics]
 
- - what you expected to see (Y above); and
+* es/perf-export-fix (2020-12-22) 1 commit
+  (merged to 'next' on 2020-12-22 at d06b0379d9)
+ + t/perf: avoid unnecessary test_export() recursion
 
- - how the last two are different.
+ Tweak unneeded recursion from a test framework helper function.
 
-See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
-hints.  Our `git bugreport` tool gives you a handy way you can use to
-make sure you do not forget these points when filing a bug report.
+ Will cook in 'next'.
 
-If you think you found a security-sensitive issue and want to disclose
-it to us without announcing it to wider public, please contact us at
-our security mailing list <git-security@googlegroups.com>.  This is
-a closed list that is limited to people who need to know early about
-vulnerabilities, including:
-
-  - people triaging and fixing reported vulnerabilities
-  - people operating major git hosting sites with many users
-  - people packaging and distributing git to large numbers of people
-
-where these issues are discussed without risk of the information
-leaking out before we're ready to make public announcements.
-
-
-* Repositories and documentation.
-
-My public git.git repositories are (mirrored) at:
-
-  https://git.kernel.org/pub/scm/git/git.git/
-  https://kernel.googlesource.com/pub/scm/git/git
-  https://repo.or.cz/alt-git.git/
-  https://github.com/git/git/
-  https://gitlab.com/git-vcs/git/
-
-This one shows not just the main integration branches, but also
-individual topics broken out:
-
-  https://github.com/gitster/git/
-
-A few web interfaces are found at:
-
-  http://git.kernel.org/pub/scm/git/git.git
-  https://kernel.googlesource.com/pub/scm/git/git
-  http://repo.or.cz/w/alt-git.git
-
-Preformatted documentation from the tip of the "master" branch can be
-found in:
-
-  https://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
-  https://repo.or.cz/git-{htmldocs,manpages}.git/
-  https://github.com/gitster/git-{htmldocs,manpages}.git/
-
-The manual pages formatted in HTML for the tip of 'master' can be
-viewed online at:
-
-  https://git.github.io/htmldocs/git.html
-
-
-* How various branches are used.
-
-There are four branches in git.git repository that track the source tree
-of git: "master", "maint", "next", and "seen".
 
-The "master" branch is meant to contain what are very well tested and
-ready to be used in a production setting.  Every now and then, a
-"feature release" is cut from the tip of this branch.  They used to be
-named with three dotted decimal digits (e.g. "1.8.5"), but we have
-switched the versioning scheme and "feature releases" are named with
-three-dotted decimal digits that ends with ".0" (e.g. "1.9.0").
+* dl/p4-encode-after-kw-expansion (2020-12-23) 1 commit
+ - git-p4: fix syncing file types with pattern
 
-The last such release was 2.30 done on Dec 28th, 2020.  You can expect
-that the tip of the "master" branch is always more stable than any of
-the released versions.
+ Text encoding fix for "git p4".
 
-Whenever a feature release is made, "maint" branch is forked off from
-"master" at that point.  Obvious and safe fixes after a feature
-release are applied to this branch and maintenance releases are cut
-from it.  Usually the fixes are merged to the "master" branch first,
-several days before merged to the "maint" branch, to reduce the chance
-of last-minute issues.  The maintenance releases used to be named with
-four dotted decimal, named after the feature release they are updates
-to (e.g. "1.8.5.1" was the first maintenance release for "1.8.5"
-feature release).  These days, maintenance releases are named by
-incrementing the last digit of three-dotted decimal name (e.g. "2.29.2"
-was the second maintenance release for the "2.29" series).
 
-New features never go to the 'maint' branch.  It is merged into "master"
-primarily to propagate the description in the release notes forward.
+* fc/mergetool-automerge (2020-12-22) 1 commit
+ - mergetool: add automerge configuration
 
-A new development does not usually happen on "master". When you send a
-series of patches, after review on the mailing list, a separate topic
-branch is forked from the tip of "master" (or somewhere older, especially
-when the topic is about fixing an earlier bug) and your patches are queued
-there, and kept out of "master" while people test it out. The quality of
-topic branches are judged primarily by the mailing list discussions.
+ "git mergetool" feeds three versions (base, local and remote) of
+ a conflicted path unmodified.  The command learned to optionally
+ prepare these files with unconflicted parts already resolved.
 
-Topic branches that are in good shape are merged to the "next" branch. In
-general, the "next" branch always contains the tip of "master".  It might
-not be quite rock-solid, but is expected to work more or less without major
-breakage. The "next" branch is where new and exciting things take place. A
-topic that is in "next" is expected to be polished to perfection before it
-is merged to "master".  Please help this process by building & using the
-"next" branch for your daily work, and reporting any new bugs you find to
-the mailing list, before the breakage is merged down to the "master".
+--------------------------------------------------
+[Stalled]
 
-The "seen" (formerly "pu", proposed updates) branch bundles all the
-remaining topic branches the maintainer happens to have seen.  There
-is no guarantee that the maintainer has enough bandwidth to pick up any
-and all topics that are remotely promising from the list traffic, so
-please do not read too much into a topic being on (or not on) the "seen"
-branch.  This branch is mainly to remind the maintainer that the topics
-in them may turn out to be interesting when they are polished, nothing
-more.  The topics on this branch aren't usually complete, well tested,
-or well documented and they often need further work.  When a topic that
-was in "seen" proves to be in a testable shape, it is merged to "next".
+* ss/submodule-add-in-c (2020-12-15) 3 commits
+ . t7400: add test to check 'submodule add' for tracked paths
+ . submodule: port submodule subcommand 'add' from shell to C
+ . dir: change the scope of function 'directory_exists_in_index()'
 
-You can run "git log --first-parent master..seen" to see what topics are
-currently in flight.  Sometimes, an idea that looked promising turns out
-to be not so good and the topic can be dropped from "seen" in such a case.
-The output of the above "git log" talks about a "jch" branch, which is an
-early part of the "seen" branch; that branch contains all topics that
-are in "next" and a bit more (but not all of "seen") and is used by the
-maintainer for his daily work.
+ "git submodule add" being rewritten in C.
 
-The two branches "master" and "maint" are never rewound, and "next"
-usually will not be either.  After a feature release is made from
-"master", however, "next" will be rebuilt from the tip of "master"
-using the topics that didn't make the cut in the feature release.
-Some topics that used to be in "next" during the previous cycle may
-get ejected from "next" when this happens.
+ Expecting a reroll.
+ The patches are split incorrectly; part of 1/3 belongs to 2/3
+ cf. <nycvar.QRO.7.76.6.2012190104140.56@tvgsbejvaqbjf.bet>
+ It seems to introduce a segfault on 'seen'.
+ cf. <xmqqft3xflw7.fsf@gitster.c.googlers.com>
 
-A natural consequence of how "next" and "seen" bundles topics together
-is that until a topic is merged to "next", updates to it is expected
-by replacing the patch(es) in the topic with an improved version,
-and once a topic is merged to "next", updates to it needs to come as
-incremental patches, pointing out what was wrong in the previous
-patches and how the problem was corrected.
 
-Note that being in "next" is not a guarantee to appear in the next
-release, nor even in any future release.  There were cases that topics
-needed reverting a few commits in them before graduating to "master",
-or a topic that already was in "next" was reverted from "next" because
-fatal flaws were found in it after it was merged to "next".
+* ak/corrected-commit-date (2020-10-08) 10 commits
+ - doc: add corrected commit date info
+ - commit-reach: use corrected commit dates in paint_down_to_common()
+ - commit-graph: use generation v2 only if entire chain does
+ - commit-graph: implement generation data chunk
+ - commit-graph: implement corrected commit date
+ - commit-graph: add a slab to store topological levels
+ - commit-graph: return 64-bit generation number
+ - commit-graph: consolidate fill_commit_graph_info
+ - revision: parse parent in indegree_walk_step()
+ - commit-graph: fix regression when computing Bloom filters
 
+ The commit-graph learned to use corrected commit dates instead of
+ the generation number to help topological revision traversal.
 
-* Other people's trees.
+ Getting there.
+ cf. <85y2jiqq3c.fsf@gmail.com>
+ cf. <685afed6-f01f-5d22-80d4-00fdc11caf0a@gmail.com>
+ cf. <20201103053629.GA13228@Abhishek-Arch>
 
-Documentation/SubmittingPatches outlines to whom your proposed changes
-should be sent.  As described in contrib/README, I would delegate fixes
-and enhancements in contrib/ area to the primary contributors of them.
 
-Although the following are included in git.git repository, they have their
-own authoritative repository and maintainers:
+* mt/grep-sparse-checkout (2020-12-06) 10 commits
+ - t7817: do not depend on any specific default branch name
+ - config: add setting to ignore sparsity patterns in some cmds
+ - grep: honor sparse checkout patterns
+ - config: correctly read worktree configs in submodules
+ - config: make do_git_config_sequence receive a 'struct repository'
+ - t/helper/test-config: unify exit labels
+ - t/helper/test-config: diagnose missing arguments
+ - t/helper/test-config: be consistent with exit codes
+ - t1308-config-set: avoid false positives when using test-config
+ - doc: grep: unify info on configuration variables
+ (this branch is used by mt/rm-sparse-checkout.)
 
- - git-gui/ comes from git-gui project, maintained by Pratyush Yadav:
+ "git grep" has been tweaked to be limited to the sparse checkout
+ paths.
 
-        https://github.com/prati0100/git-gui.git
 
- - gitk-git/ comes from Paul Mackerras's gitk project:
+* mt/rm-sparse-checkout (2020-12-08) 1 commit
+ - rm: honor sparse checkout patterns
+ (this branch uses mt/grep-sparse-checkout.)
 
-        git://ozlabs.org/~paulus/gitk
+ "git rm" follows suit to "git grep" to ignore paths outside the
+ sparsity pattern when the sparse checkout feature is in use.
 
- - po/ comes from the localization coordinator, Jiang Xin:
+ Need to wait for how these fit in larger picture.
+ cf. <CABPp-BGMX3wb7LiS1HkJpGveoW3J1oR0vVHbKTF5+qYLRF+59g@mail.gmail.com>
 
-	https://github.com/git-l10n/git-po/
 
-When sending proposed updates and fixes to these parts of the system,
-please base your patches on these trees, not git.git (the former two
-even have different directory structures).
+* jk/symlinked-dotgitx-files (2020-10-23) 9 commits
+  (merged to 'next' on 2020-10-26 at c1dd37b024)
+ + docs: document symlink restrictions for .git* files
+ + fsck: complain when .gitattributes or .gitignore is a symlink
+ + verify_path(): disallow symlinks in .gitattributes and .gitignore
+ + t0060: test obscured .gitattributes and .gitignore matching
+ + t7450: test .gitmodules symlink matching against obscured names
+ + t7450: test verify_path() handling of gitmodules
+ + t7415: rename to expand scope
+ + fsck_tree(): wrap some long lines
+ + fsck_tree(): fix shadowed variable
+
+ Originally merged to 'next' on 2020-10-23
+
+ "git fsck" and the corresponding check done during the transport
+ learned to ensure that in-tree files like `.gitignore` and
+ `.gitattributes` are not symbolic links.
+
+ It seems that there are real projects with .gitignore recorded as
+ symlinks, which may need to loosen the fsck setting.  Do we need to
+ introduce a class that is separate from symlinked .gitmodules that
+ probably is with potential consequences that is more/less grave?
+
+
+* sm/curl-retry (2020-10-13) 3 commits
+ - http: automatically retry some requests
+ - replace CURLOPT_FILE With CURLOPT_WRITEDATA
+ - remote-curl: add testing for intelligent retry for HTTP
+
+ The http transport has been taught to retry a failed request that
+ may reasonably be retried.
+
+ Expecting a reroll.
+ cf. <20201015000410.GB328643@google.com>
+ cf. <CAM4o00eefXK2CJ_FxwwVPpBKL01JsJANf+SdjCtw_0NVV82L+Q@mail.gmail.com>
+
+
+* sv/t7001-modernize (2020-09-25) 11 commits
+ - t7001: move cleanup code from outside the tests into them
+ - t7001: use `test` rather than `[`
+ - t7001: use here-docs instead of echo
+ - t7001: put each command on a separate line
+ - t7001: use ': >' rather than 'touch'
+ - t7001: change (cd <path> && git foo) to (git -C <path> foo)
+ - t7001: remove whitespace after redirect operators
+ - t7001: change the style for cd according to subshell
+ - t7001: remove unnecessary blank lines
+ - t7001: use TAB instead of spaces
+ - t7001: convert tests from the old style to the current style
+
+ Test script modernization.
+
+ Expecting a reroll.
+ cf. <20200925170256.11490-1-shubhunic@gmail.com>
+
+
+* ar/fetch-transfer-ipversion (2020-09-16) 1 commit
+ - config: option transfer.ipversion to set transport protocol version for network fetches
+
+ Adds transfer.ipversion configuration variable.
+
+ Needs more work.
+
+
+* vv/send-email-with-less-secure-apps-access (2020-08-29) 1 commit
+ - Documentation/git-send-email.txt: Mention less secure app access might need to enable.
+
+ Doc update.
+
+ Expecting a reroll.
+ cf. <xmqqwo1hi9nv.fsf@gitster.c.googlers.com>
+ cf. <xmqqft85i72s.fsf@gitster.c.googlers.com>
+
+
+* jc/war-on-dashed-git (2020-12-21) 2 commits
+ - fixup??? git: catch an attempt to run "git-foo"
+ - git: catch an attempt to run "git-foo"
+
+ The first step to remove on-disk binaries for built-in subcommands
+ by soliciting objections.
+
+ On hold for now.
+
+
+* mk/use-size-t-in-zlib (2018-10-15) 1 commit
+ - zlib.c: use size_t for size
+
+ The wrapper to call into zlib followed our long tradition to use
+ "unsigned long" for sizes of regions in memory, which have been
+ updated to use "size_t".
+
+--------------------------------------------------
+[Needs Review]
+
+* ag/merge-strategies-in-c (2020-11-24) 13 commits
+ - sequencer: use the "octopus" merge strategy without forking
+ - sequencer: use the "resolve" strategy without forking
+ - merge: use the "octopus" strategy without forking
+ - merge: use the "resolve" strategy without forking
+ - merge-octopus: rewrite in C
+ - merge-recursive: move better_branch_name() to merge.c
+ - merge-resolve: rewrite in C
+ - merge-index: don't fork if the requested program is `git-merge-one-file'
+ - merge-index: libify merge_one_path() and merge_all()
+ - merge-one-file: rewrite in C
+ - update-index: move add_cacheinfo() to read-cache.c
+ - t6060: modify multiple files to expose a possible issue with merge-index
+ - t6407: modernise tests
+
+ The resolve and octopus merge strategy backends have been rewritten
+ in C.
+
+ Needs review.
+
+--------------------------------------------------
+[Cooking]
+
+* ew/decline-core-abbrev (2020-12-23) 1 commit
+ - core.abbrev=no disables abbreviations
+
+ Allow the configuration to specify no abbreviation regardless of
+ the hash algorithm.
+
+ Will merge to 'next'.
+
+
+* es/worktree-repair-both-moved (2020-12-21) 1 commit
+  (merged to 'next' on 2020-12-22 at 9eaae4f5c0)
+ + worktree: teach `repair` to fix multi-directional breakage
+
+ "git worktree repair" learned to deal with the case where both the
+ repository and the worktree moved.
+
+ Will cook in 'next'.
+
+
+* fc/t6030-bisect-reset-removes-auxiliary-files (2020-12-21) 1 commit
+  (merged to 'next' on 2020-12-22 at 2ab78ef1e1)
+ + test: bisect-porcelain: fix location of files
+
+ A 3-year old test that was not testing anything useful has been
+ corrected.
+
+ Will cook in 'next'.
+
+
+* mr/bisect-in-c-4 (2020-12-21) 7 commits
+ - bisect--helper: retire `--check-and-set-terms` subcommand
+ - bisect--helper: reimplement `bisect_skip` shell function in C
+ - bisect--helper: retire `--bisect-auto-next` subcommand
+ - bisect--helper: use `res` instead of return in BISECT_RESET case option
+ - bisect--helper: retire `--bisect-write` subcommand
+ - bisect--helper: reimplement `bisect_replay` shell function in C
+ - bisect--helper: reimplement `bisect_log` shell function in C
+
+ Piecemeal of rewrite of "git bisect" in C continues.
+
+
+* jt/clone-unborn-head (2020-12-22) 3 commits
+ - clone: respect remote unborn HEAD
+ - connect, transport: add no-op arg for future patch
+ - ls-refs: report unborn targets of symrefs
+
+ "git clone" tries to locally check out the branch pointed at by
+ HEAD of the remote repository after it is done, but the protocol
+ did not convey the information necessary to do so when copying an
+ empty repository.  The protocol v2 learned how to do so.
+
+
+* fc/bash-completion-post-2.29 (2020-12-23) 4 commits
+ . completion: bash: add correct suffix in variables
+ . completion: bash: fix for multiple dash commands
+ . completion: bash: fix for suboptions with value
+ . completion: bash: fix prefix detection in branch.*
+
+ Seems to break tests on Windows
+ cf. https://github.com/git/git/runs/1597682180#step:5:35614
+
+
+* jc/config-pretend-gitdir (2020-12-15) 1 commit
+ - config: --pretend-git-dir for includeIf:gitdir
+
+ WIP
+
+
+* jc/deprecate-pack-redundant (2020-12-15) 1 commit
+ - pack-redundant: gauge the usage before proposing its removal
+
+ Warn loudly when the "pack-redundant" command, which has been left
+ stale with almost unusable performance issues, gets used, as we no
+ longer want to recommend its use (instead just "repack -d" instead).
+
+
+* en/merge-ort-recursive (2020-12-16) 4 commits
+  (merged to 'next' on 2020-12-22 at 0dbf60011f)
+ + merge-ort: implement merge_incore_recursive()
+ + merge-ort: make clear_internal_opts() aware of partial clearing
+ + merge-ort: copy a few small helper functions from merge-recursive.c
+ + commit: move reverse_commit_list() from merge-recursive
+ (this branch uses en/merge-ort-2 and en/merge-ort-impl; is tangled with en/merge-ort-3.)
+
+ The ORT merge strategy learned to synthesize virtual ancestor tree
+ by recursively merging multiple merge bases together, just like the
+ recursive backend has done for years.
+
+ Will cook in 'next'.
+
+
+* mt/parallel-checkout-part-1 (2020-12-16) 9 commits
+ - entry: add checkout_entry_ca() taking preloaded conv_attrs
+ - entry: move conv_attrs lookup up to checkout_entry()
+ - entry: extract update_ce_after_write() from write_entry()
+ - entry: make fstat_output() and read_blob_entry() public
+ - entry: extract a header file for entry.c functions
+ - convert: add classification for conv_attrs struct
+ - convert: add get_stream_filter_ca() variant
+ - convert: add [async_]convert_to_working_tree_ca() variants
+ - convert: make convert_attrs() and convert structs public
+
+ Parallel checkout.
+
+ Looking good.
+
+
+* en/merge-ort-3 (2020-12-15) 11 commits
+ - merge-ort: add implementation of type-changed rename handling
+ - merge-ort: add implementation of normal rename handling
+ - merge-ort: add implementation of rename collisions
+ - merge-ort: add implementation of rename/delete conflicts
+ - merge-ort: add implementation of both sides renaming differently
+ - merge-ort: add implementation of both sides renaming identically
+ - merge-ort: add basic outline for process_renames()
+ - merge-ort: implement compare_pairs() and collect_renames()
+ - merge-ort: implement detect_regular_renames()
+ - merge-ort: add initial outline for basic rename detection
+ - merge-ort: add basic data structures for handling renames
+ (this branch uses en/merge-ort-2 and en/merge-ort-impl; is tangled with en/merge-ort-recursive.)
+
+ Rename detection is added to the "ORT" merge strategy.
+
+
+* ps/config-env-pairs (2020-12-23) 9 commits
+ - SQUASH???
+ - config: allow specifying config entries via envvar pairs
+ - environment: make `getenv_safe()` a public function
+ - config: parse more robust format in GIT_CONFIG_PARAMETERS
+ - config: store "git -c" variables using more robust format
+ - config: extract function to parse config pairs
+ - quote: make sq_dequote_step() a public function
+ - config: add new way to pass config via `--config-env`
+ - git: add `--super-prefix` to usage string
+
+ Introduce two new ways to feed configuration variable-value pairs
+ via environment variables, and tweak the way GIT_CONFIG_PARAMETERS
+ encodes variable/value pairs to make it more robust.
+
+
+* bc/hashed-mailmap (2020-12-12) 1 commit
+ - mailmap: support hashed entries in mailmaps
+
+ The mailmap database learned to take hashed value as the original
+ side of mapping.
+
+ Expecting a reroll.
+
+
+* so/log-diff-merge (2020-12-21) 32 commits
+ - t4013: add tests for --diff-merges=first-parent
+ - doc/git-show: include --diff-merges description
+ - doc/rev-list-options: document --first-parent changes merges format
+ - doc/diff-generate-patch: mention new --diff-merges option
+ - doc/git-log: describe new --diff-merges options
+ - diff-merges: add '--diff-merges=1' as synonym for 'first-parent'
+ - diff-merges: add old mnemonic counterparts to --diff-merges
+ - diff-merges: let new options enable diff without -p
+ - diff-merges: do not imply -p for new options
+ - diff-merges: implement new values for --diff-merges
+ - diff-merges: make -m/-c/--cc explicitly mutually exclusive
+ - diff-merges: refactor opt settings into separate functions
+ - diff-merges: get rid of now empty diff_merges_init_revs()
+ - diff-merges: group diff-merge flags next to each other inside 'rev_info'
+ - diff-merges: split 'ignore_merges' field
+ - diff-merges: fix -m to properly override -c/--cc
+ - t4013: add tests for -m failing to override -c/--cc
+ - t4013: support test_expect_failure through ':failure' magic
+ - diff-merges: revise revs->diff flag handling
+ - diff-merges: handle imply -p on -c/--cc logic for log.c
+ - diff-merges: introduce revs->first_parent_merges flag
+ - diff-merges: new function diff_merges_set_dense_combined_if_unset()
+ - diff-merges: new function diff_merges_suppress()
+ - diff-merges: re-arrange functions to match the order they are called in
+ - diff-merges: rename diff_merges_default_to_enable() to match semantics
+ - diff-merges: move checks for first_parent_only out of the module
+ - diff-merges: rename all functions to have common prefix
+ - revision: move diff merges functions to its own diff-merges.c
+ - revision: provide implementation for diff merges tweaks
+ - revision: factor out initialization of diff-merge related settings
+ - revision: factor out setup of diff-merge related settings
+ - revision: factor out parsing of diff-merge related options
+
+ "git log" learned a new "--diff-merges=<how>" option.
+
+ Rerolled.
+
+
+* bc/rev-parse-path-format (2020-12-12) 2 commits
+ - rev-parse: add option for absolute or relative path formatting
+ - abspath: add a function to resolve paths with missing components
+
+ "git rev-parse" can be explicitly told to give output as absolute
+ or relative path.
+
+ Will merge to 'next'.
+
+
+* en/merge-ort-impl (2020-12-13) 21 commits
+  (merged to 'next' on 2020-12-21 at c551d7bda9)
+ + merge-ort: free data structures in merge_finalize()
+ + merge-ort: add implementation of record_conflicted_index_entries()
+ + tree: enable cmp_cache_name_compare() to be used elsewhere
+ + merge-ort: add implementation of checkout()
+ + merge-ort: basic outline for merge_switch_to_result()
+ + merge-ort: step 3 of tree writing -- handling subdirectories as we go
+ + merge-ort: step 2 of tree writing -- function to create tree object
+ + merge-ort: step 1 of tree writing -- record basenames, modes, and oids
+ + merge-ort: have process_entries operate in a defined order
+ + merge-ort: add a preliminary simple process_entries() implementation
+ + merge-ort: avoid recursing into identical trees
+ + merge-ort: record stage and auxiliary info for every path
+ + merge-ort: compute a few more useful fields for collect_merge_info
+ + merge-ort: avoid repeating fill_tree_descriptor() on the same tree
+ + merge-ort: implement a very basic collect_merge_info()
+ + merge-ort: add an err() function similar to one from merge-recursive
+ + merge-ort: use histogram diff
+ + merge-ort: port merge_start() from merge-recursive
+ + merge-ort: add some high-level algorithm structure
+ + merge-ort: setup basic internal data structures
+ + Merge branch 'en/strmap' into en/merge-ort-impl
+ (this branch is used by en/merge-ort-2, en/merge-ort-3 and en/merge-ort-recursive.)
+
+ The merge backend "done right" starts to emerge.
+
+ Will cook in 'next'.
+
+
+* es/config-hooks (2020-12-21) 34 commits
+ - run-command: stop thinking about hooks
+ - receive-pack: convert receive hooks to hook.h
+ - post-update: use hook.h library
+ - proc-receive: acquire hook list from hook.h
+ - receive-pack: convert 'update' hook to hook.h
+ - reference-transaction: look for hooks in config
+ - transport: convert pre-push hook to use config
+ - hook: convert 'post-rewrite' hook to config
+ - hooks: convert 'post-checkout' hook to hook library
+ - git-p4: use 'git hook' to run hooks
+ - receive-pack: convert push-to-checkout hook to hook.h
+ - read-cache: convert post-index-change hook to use config
+ - rebase: teach pre-rebase to use hook.h
+ - gc: use hook library for pre-auto-gc hook
+ - merge: use config-based hooks for post-merge hook
+ - am: convert applypatch hooks to use config
+ - commit: use config-based hooks
+ - hooks: allow callers to capture output
+ - run-command: allow capturing of collated output
+ - hook: provide stdin by string_list or callback
+ - run-command: add stdin callback for parallelization
+ - hook: allow specifying working directory for hooks
+ - hook: allow parallel hook execution
+ - run-command: allow stdin for run_processes_parallel
+ - hook: support passing stdin to hooks
+ - hook: replace find_hook() with hook_exists()
+ - hook: add 'run' subcommand
+ - parse-options: parse into strvec
+ - hook: implement hookcmd.<name>.skip
+ - hook: respect hook.runHookDir
+ - hook: include hookdir hook in list
+ - hook: add list command
+ - hook: scaffolding for git-hook subcommand
+ - doc: propose hooks managed by the config
+
+ The "hooks defined in config" topic.
+
+ Expecting doc updates, but otherwise seems to be progressing nicely.
+
+
+* hn/reftable (2020-12-21) 16 commits
+ - SQUASH??? allow t0031 to run with any default branch name
+ - Add "test-tool dump-reftable" command.
+ - git-prompt: prepare for reftable refs backend
+ - Reftable support for git-core
+ - reftable: rest of library
+ - reftable: reftable file level tests
+ - reftable: read reftable files
+ - reftable: write reftable files
+ - reftable: a generic binary tree implementation
+ - reftable: reading/writing blocks
+ - reftable: (de)serialization for the polymorphic record type.
+ - reftable: add blocksource, an abstraction for random access reads
+ - reftable: utility functions
+ - reftable: add error related functionality
+ - reftable: add LICENSE
+ - init-db: set the_repository->hash_algo early on
+
+ The "reftable" backend for the refs API.
+
+
+* ab/mktag (2020-12-22) 20 commits
+ - mktag: add a --no-strict option
+ - mktag: mark strings for translation
+ - mktag: convert to parse-options
+ - mktag: allow omitting the header/body \n separator
+ - mktag: allow turning off fsck.extraHeaderEntry
+ - fsck: make fsck_config() re-usable
+ - mktag: use fsck instead of custom verify_tag()
+ - mktag: use puts(str) instead of printf("%s\n", str)
+ - mktag: remove redundant braces in one-line body "if"
+ - mktag: use default strbuf_read() hint
+ - mktag tests: test "hash-object" compatibility
+ - mktag tests: stress test whitespace handling
+ - mktag tests: don't create "mytag" twice
+ - mktag tests: don't pipe to stderr needlessly
+ - mktag tests: improve verify_object() test coverage
+ - mktag tests: remove needless SHA-1 hardcoding
+ - mktag tests: don't needlessly use a subshell
+ - mktag doc: update to explain why to use this
+ - mktag doc: grammar fix, when exists -> when it exists
+ - mktag doc: say <hash> not <sha1>
+
+ "git mktag" validates its input using its own rules before writing
+ a tag object---it has been updated to share the logic with "git
+ fsck".
+
+ cf. <20201223013606.7972-1-avarab@gmail.com>
+
+
+* ab/trailers-extra-format (2020-12-09) 5 commits
+  (merged to 'next' on 2020-12-14 at 9fc731944e)
+ + pretty format %(trailers): add a "key_value_separator"
+ + pretty format %(trailers): add a "keyonly"
+ + pretty-format %(trailers): fix broken standalone "valueonly"
+ + pretty format %(trailers) doc: avoid repetition
+ + pretty format %(trailers) test: split a long line
+
+ The "--format=%(trailers)" mechanism gets enhanced to make it
+ easier to design output for machine consumption.
+
+ Will cook in 'next'.
+
+
+* en/diffcore-rename (2020-12-14) 9 commits
+ - diffcore-rename: remove unneccessary duplicate entry checks
+ - diffcore-rename: accelerate rename_dst setup
+ - diffcore-rename: simplify and accelerate register_rename_src()
+ - t4058: explore duplicate tree entry handling in a bit more detail
+ - t4058: add more tests and documentation for duplicate tree entry handling
+ - diffcore-rename: reduce jumpiness in progress counters
+ - diffcore-rename: simplify limit check
+ - diffcore-rename: avoid usage of global in too_many_rename_candidates()
+ - diffcore-rename: rename num_create to num_destinations
+
+ File-level rename detection updates.
+
+
+* en/merge-ort-2 (2020-12-13) 7 commits
+  (merged to 'next' on 2020-12-21 at ef5b184349)
+ + merge-ort: add modify/delete handling and delayed output processing
+ + merge-ort: add die-not-implemented stub handle_content_merge() function
+ + merge-ort: add function grouping comments
+ + merge-ort: add a paths_to_free field to merge_options_internal
+ + merge-ort: add a path_conflict field to merge_options_internal
+ + merge-ort: add a clear_internal_opts helper
+ + merge-ort: add a few includes
+ (this branch is used by en/merge-ort-3 and en/merge-ort-recursive; uses en/merge-ort-impl.)
+
+ More "ORT" merge strategy.
+
+ Will cook in 'next'.
+
+
+* fc/pull-merge-rebase (2020-12-15) 5 commits
+  (merged to 'next' on 2020-12-21 at acce13e5c4)
+ + pull: display default warning only when non-ff
+ + pull: correct condition to trigger non-ff advice
+ + pull: get rid of unnecessary global variable
+ + pull: give the advice for choosing rebase/merge much later
+ + pull: refactor fast-forward check
+
+ When a user does not tell "git pull" to use rebase or merge, the
+ command gives a loud message telling a user to choose between
+ rebase or merge but creates a merge anyway, forcing users who would
+ want to rebase to redo the operation.  Fix an early part of this
+ problem by tightening the condition to give the message---there is
+ no reason to stop or force the user to choose between rebase or
+ merge if the history fast-forwards.
+
+ Will cook in 'next'.
+
+
+* pk/subsub-fetch-fix-take-2 (2020-12-09) 1 commit
+  (merged to 'next' on 2020-12-14 at ccc01a5f66)
+ + submodules: fix of regression on fetching of non-init subsub-repo
+
+ "git fetch --recurse-submodules" fix (second attempt).
+
+ Will cook in 'next'.
+
+
+* en/stash-apply-sparse-checkout (2020-12-01) 3 commits
+ - stash: fix stash application in sparse-checkouts
+ - stash: remove unnecessary process forking
+ - t7012: add a testcase demonstrating stash apply bugs in sparse checkouts
+
+ "git stash" did not work well in a sparsely checked out working
+ tree.
+
+ Will merge to 'next'.
+
+
+* tb/pack-bitmap (2020-12-08) 24 commits
+  (merged to 'next' on 2020-12-15 at 773268c2fb)
+ + pack-bitmap-write: better reuse bitmaps
+ + pack-bitmap-write: relax unique revwalk condition
+ + pack-bitmap-write: use existing bitmaps
+ + pack-bitmap: factor out 'add_commit_to_bitmap()'
+ + pack-bitmap: factor out 'bitmap_for_commit()'
+ + pack-bitmap-write: ignore BITMAP_FLAG_REUSE
+ + pack-bitmap-write: build fewer intermediate bitmaps
+ + pack-bitmap.c: check reads more aggressively when loading
+ + pack-bitmap-write: rename children to reverse_edges
+ + t5310: add branch-based checks
+ + commit: implement commit_list_contains()
+ + bitmap: implement bitmap_is_subset()
+ + pack-bitmap-write: fill bitmap with commit history
+ + pack-bitmap-write: pass ownership of intermediate bitmaps
+ + pack-bitmap-write: reimplement bitmap writing
+ + ewah: add bitmap_dup() function
+ + ewah: implement bitmap_or()
+ + ewah: make bitmap growth less aggressive
+ + ewah: factor out bitmap growth
+ + rev-list: die when --test-bitmap detects a mismatch
+ + t5310: drop size of truncated ewah bitmap
+ + pack-bitmap: bounds-check size of cache extension
+ + pack-bitmap: fix header size check
+ + ewah/ewah_bitmap.c: avoid open-coding ALLOC_GROW()
+
+ Various improvements to the codepath that writes out pack bitmaps.
+
+ Will cook in 'next'.
+
+
+* js/default-branch-name-tests-final-stretch (2020-11-19) 29 commits
+ - tests: drop prereq `PREPARE_FOR_MAIN_BRANCH` where no longer needed
+ - t99*: adjust the references to the default branch name "main"
+ - tests(git-p4): transition to the default branch name `main`
+ - t9[5-7]*: adjust the references to the default branch name "main"
+ - t9[0-4]*: adjust the references to the default branch name "main"
+ - t8*: adjust the references to the default branch name "main"
+ - t7[5-9]*: adjust the references to the default branch name "main"
+ - t7[0-4]*: adjust the references to the default branch name "main"
+ - t6[4-9]*: adjust the references to the default branch name "main"
+ - t64*: preemptively adjust alignment to prepare for `master` -> `main`
+ - t6[0-3]*: adjust the references to the default branch name "main"
+ - t5[6-9]*: adjust the references to the default branch name "main"
+ - t55[4-9]*: adjust the references to the default branch name "main"
+ - t55[23]*: adjust the references to the default branch name "main"
+ - t551*: adjust the references to the default branch name "main"
+ - t550*: adjust the references to the default branch name "main"
+ - t5503: prepare aligned comment for replacing `master` with `main`
+ - t5[0-4]*: adjust the references to the default branch name "main"
+ - t5323: prepare centered comment for `master` -> `main`
+ - t4*: adjust the references to the default branch name "main"
+ - t3[5-9]*: adjust the references to the default branch name "main"
+ - t34*: adjust the references to the default branch name "main"
+ - t3416: preemptively adjust alignment in a comment
+ - t3[0-3]*: adjust the references to the default branch name "main"
+ - t2*: adjust the references to the default branch name "main"
+ - t[01]*: adjust the references to the default branch name "main"
+ - t0060: preemptively adjust alignment
+ - tests: mark tests relying on the current default for `init.defaultBranch`
+ - Merge 'jk/diff-release-filespec-fix' into js/default-branch-name-tests-final-stretch
+
+ Prepare tests not to be affected by the name of the default branch
+ "git init" creates.
+
+
+* ds/maintenance-part-4 (2020-12-09) 6 commits
+ - t7900: make macOS-specific test work on Windows
+ - t7900: fix test failures when invoked individually via --run
+ - maintenance: use Windows scheduled tasks
+ - maintenance: use launchctl on macOS
+ - maintenance: include 'cron' details in docs
+ - maintenance: extract platform-specific scheduling
+
+ Follow-up on the "maintenance part-3" which introduced scheduled
+ maintenance tasks to support platforms whose native scheduling
+ methods are not 'cron'.
+
+
+* sj/untracked-files-in-submodule-directory-is-not-dirty (2020-12-08) 1 commit
+ - diff: do not show submodule with untracked files as "-dirty"
+
+ "git diff" showed a submodule working tree with untracked cruft as
+ "Submodule commit <objectname>-dirty", but a natural expectation is
+ that the "-dirty" indicator would align with "git describe --dirty",
+ which does not consider having untracked files in the working tree
+ as source of dirtiness.  The inconsistency has been fixed.
+
+--------------------------------------------------
+[Discarded]
+
+* dr/push-remoteref-fix (2020-04-23) 1 commit
+ . remote.c: fix handling of %(push:remoteref)
+
+ The "%(push:remoteref)" placeholder in the "--format=" argument of
+ "git format-patch" (and friends) only showed what got explicitly
+ configured, not what ref at the receiving end would be updated when
+ "git push" was used, as it ignored the default behaviour (e.g. update
+ the same ref as the source).
+
+ Discard for now.
+ cf. <xmqqv9gu7c61.fsf@gitster.c.googlers.com>
+ cf. <20200911214358.acl3hy2e763begoo@feanor>
+
+
+* jk/disambiguate-equal-in-config-param (2020-12-09) 3 commits
+ . config: store "git -c" variables using more robust format
+ . config: parse more robust format in GIT_CONFIG_PARAMETERS
+ . quote: make sq_dequote_step() a public function
+
+ Absorbed by the ps/config-env-pairs topic.
