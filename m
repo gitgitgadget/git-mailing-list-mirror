@@ -2,99 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B85D4C4332D
-	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 23:23:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 384E7C43331
+	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 23:23:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 93083222F9
+	by mail.kernel.org (Postfix) with ESMTP id 0092222B48
 	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 23:23:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729892AbgL1Wzi (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1729875AbgL1Wzi (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 28 Dec 2020 17:55:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57236 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729352AbgL1T7y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Dec 2020 14:59:54 -0500
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01E0CC0613D6
-        for <git@vger.kernel.org>; Mon, 28 Dec 2020 11:59:14 -0800 (PST)
-Received: by mail-pl1-x634.google.com with SMTP id 4so6106238plk.5
-        for <git@vger.kernel.org>; Mon, 28 Dec 2020 11:59:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=hc5eiVRLW4TcpHVr9lGupsl9xgYsje9dSgLKqauLEJE=;
-        b=e9NKraalm0PVb9WcM1JgdXGMg3rdrIrJL7cJvM0oXYNquVT8LragVf9QmzU75j2WV6
-         yoAziGJLGtqtZJBXOlzfyBWEA80JTr7Thmh3QyeTyof8rvwR3Zqg6Eo9kytMLt2mgynt
-         5t9/pDfbXYiVLgMI/He4Uz1vzwqBQudhISWEiNJeR/taxFm4Qfs1XnyfE0JzkC28h468
-         Qov4WALEZf+uUXPNCqNmexbNJDrcVgD8KQdAzXKGV9zjisz5eLZX+JbAvTKaacq7+x4Z
-         +96Kx12QDkDH+lBtCB1J89w6X+4pDCw+/3/1706i8wj4zzmNASGVfYtkJnbtUf4iGL+t
-         sENQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=hc5eiVRLW4TcpHVr9lGupsl9xgYsje9dSgLKqauLEJE=;
-        b=AdNewlii8BkVUJx1KlYMGfC4tNkruXdaL9fZfru9gO6+2HB2/yge8vPQQOke3VD5jr
-         tdyDGZO0Morh7HMmiLm1GoShxRgwKYbXWZZz+5EuBFaMaVSNhZEcSV6Wq0DjaPf8sQWU
-         3Y3aIbtP94dTuYyrSCzJM7D22AQt39I5a/zkAocdpxNVjp0ovGfMPcLflr8Vh6047pKb
-         ArzIIbFvfYVe0l/9B1gU+DbR0x9gsPfQ7POuwuvIel+DLbqXnBjqDWV74GwT7E0nKzLw
-         +41E15/j6+ajLQBHu2E4TBko4zz9osltiEXBb55cqAezN6B71KSzDKireuQQSsA+M2fD
-         ltEA==
-X-Gm-Message-State: AOAM530LpQf48Dq9ndtDwUg8jHUrJHZb3Q6zvOtRgI7I9Cw2xK5LLk+q
-        olplj6MLOyArbQenK75R7q99WbFSLOl2bQ==
-X-Google-Smtp-Source: ABdhPJyHQGbEci9qbfWBXtY9eV50h2KmX/wRVTE/5as63Y3OHvLrScUz4WlyfraatTDGbRfuGvBzuA==
-X-Received: by 2002:a17:90a:b110:: with SMTP id z16mr473014pjq.167.1609185553090;
-        Mon, 28 Dec 2020 11:59:13 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:1ea0:b8ff:fe77:f690])
-        by smtp.gmail.com with ESMTPSA id h17sm35295542pfo.220.2020.12.28.11.59.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Dec 2020 11:59:12 -0800 (PST)
-Date:   Mon, 28 Dec 2020 11:59:07 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        James Ramsay <james@jramsay.com.au>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 00/17] use config-based hooks (config-based hooks part
- II)
-Message-ID: <X+o5C78dAYWZhwhI@google.com>
-References: <20201205014945.1502660-1-emilyshaffer@google.com>
- <20201222000435.1529768-1-emilyshaffer@google.com>
+Received: from mout.gmx.net ([212.227.17.22]:38613 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729316AbgL1Tn4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Dec 2020 14:43:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1609184543;
+        bh=tdYJCClMVVdOMl7KOIiNljSQsIjcpq5Y964COvSW88o=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=Ydw8Nrmtmq4cOMM+bTe1W6RMmynGcuTofP8NnwYeRmzcERAbdrljQc2SEpzeF54W0
+         Lv3PGK17eJQTYp6Auo4CPeM7MeT1NYWnrCSH8BlC+z3yBoB9XRCHozMvniNgop7AQT
+         SU0xN3LekqgClNjCpD2mj0xQyUoc+gFzbhjLvyYM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from
+ fv-az773-375.h4twa5wwla0u5nzfhsp3ljudpe.bx.internal.cloudapp.net
+ ([137.135.127.85]) by mail.gmx.com (mrgmx105 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 1MDQic-1klggT1TVu-00AUrP; Mon, 28 Dec 2020 20:42:23 +0100
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.30.0
+Date:   Mon, 28 Dec 2020 19:42:21 +0000
+Message-Id: <20201228194221.6050-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.29.2
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201222000435.1529768-1-emilyshaffer@google.com>
+Fcc:    Sent
+X-Provags-ID: V03:K1:vNzVeYMwLNB0C723B8dy3owQKDXqYgultz4nmt7bnabCtMpCXi/
+ 9LGn64u8tiWwh99/w04jqCUXVI1QndFx8FV7KcwUYPy+jVJUud3qKq4TfSuUcINZIYKFsfm
+ CqVoCQCMYvCOvx4dxZuOPX9RlU/zRMGefx29nvWpIJdzoHAGxp1Swan9x0CrBoMK3aqaIey
+ Lboym4tqefr2IMVrKQoIg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:JHcNIrJV4Bk=:cy3EDkWrvr+c7mtH6yVYD8
+ c4X2kWDMp5mKNcXX/lx/5SG/NzlmA6jDdcO/dmnWy664whV8OCpLQdqpod0a24YIepRUzAzGT
+ J68SqZ5JoRRfAC7sTuVR8eEf6Kjrgv4qrDUM1jLG0WhMxDkpAf8KYvRM8XOdgV5PIs1mZA1H9
+ CwfX1z6/KgV5m5atgvQJiU/N70Bwnm2kK2c25gPgflewPyppzOPCCMSUASD/gD418NFumWzWK
+ XGHFC1m1brIZfKEerAyGv8XDIgOUCwsefc0gJL/GNw7vfvpkfPUNj49yd4SyUKYM1+cDUKyxD
+ m81TYNHylVNEWf06hs1VR0GKQqgjO1m6d/l/oKLSUuuWP5RNJBu9gt4SmuWcmN+K5VdxYEyTM
+ D14TUtbQ5Q3W+v8ifqb7UekPhAtqPgJEM7alpicz4F0FW3DhzQ02vIovETty0iPYTP2fKG2JY
+ NwawFyviOgOMQL8ZsWLilgYwtA8I62YqNOHcMC2HHiqnBSJ5s5p1+Uk9vWDMgPN00lxz7UaQe
+ rPFetcsLQZYBRp2vePUS4MOZ8tZ++IpHd8gHLU99JroZiYvbEtQBhdnOXc3SXkRgZgVQPmdGE
+ FlvegZjvt8cZMhphrca3iq/Vzgyql/CamUWhIPhGeKDkrVWUUPCzCAg29uFa71TB1aOsLhk52
+ z+UsurI2//BVqB0NeMcR2oqH+LbADquWQp/ptwhXAA3chFspk4WJlxCV0Hn4KCkEgWauCvKVJ
+ CESK7lUoHSOaNT+NQMYs5smv23SPhECquSIJkLrhPdZ4Aj/LnTDZhzeydDt1Ijd0/Lbl8VFFP
+ CYu4Yixur331fihnNch91ORmB9ziux9L//bCBEFEWLFhs/t2yg6gkOcKWMkjyqp6mM6qDOeYV
+ 88AkH09XVkjRiC4HAdmSDUb0mpGl+7/6VN2SMyFe8=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 21, 2020 at 04:04:18PM -0800, Emily Shaffer wrote:
-> 
-> Another thing I wanted to do in this series but ended up not having time
-> for before the holidays was to figure out a way to consolidate
-> Documentation/githooks.txt and Documentation/git-hook.txt. My personal
-> preference would be to remove githooks.txt's contents, move the "Hooks"
-> header from there into git-hook.txt, and have 'git help githooks'/'git
-> help hooks' redirect to git-hook.txt; I don't have a patch to share here
-> because I ran out of time before vacation :) What do others envision the
-> documentation looking like?
+Dear Git users,
 
-I could use some tips on this, actually. I don't see anywhere that we
-make one document redirect to another, or else I don't know what to look
-for. If I replace the contents of `githooks.txt` with
-`include::git-hook.txt[]`, `generate-cmdlist.sh` chokes because there is
-no name to grep for in `githooks.txt`. Is there a documented example of
-a manpage redirecting to a different manpage?
+I hereby announce that Git for Windows 2.30.0 is available from:
 
- - Emily
+    https://gitforwindows.org/
+
+Changes since Git for Windows v2.29.2(3) (December 8th 2020)
+
+New Features
+
+  * Comes with Git v2.30.0.
+  * Comes with OpenSSL v1.1.1i.
+  * Comes with cURL v7.74.0.
+  * Comes with Git LFS v2.13.1.
+
+Bug Fixes
+
+  * The auto-updater now shows the progress while installing.
+  * The credential-helper selector (which is the default credential
+    helper in the Portable version of Git for Windows) now handles
+    paths with spaces correctly.
+
+Git-2.30.0-64-bit.exe | 1f38fd19d5f36f1e3dffdf5b233c883cea4fb418a44cc1d980c9f14d284385c9
+Git-2.30.0-32-bit.exe | e41b7d0e1c88a023ecd42a1e7339c39a8e906cd51ea9ae9aefdb42c513103f57
+PortableGit-2.30.0-64-bit.7z.exe | 6497e30fc6141e3c27af6cc3a081861043a7666dd54f395d47184e8eb75f5d61
+PortableGit-2.30.0-32-bit.7z.exe | b3768c64b6afa082043659c56acb4c3483df6b6e884fdc7e3c769f7e7e99a3a8
+MinGit-2.30.0-64-bit.zip | 3f1f5e04ac0207a4a0ff3004a221d2122ab495ad0757256c635462d4177b51a7
+MinGit-2.30.0-32-bit.zip | ab5342db45a2d1570dd17af330fb830da5cf8304fa83fe0dbbf191cf2e5e2bc9
+MinGit-2.30.0-busybox-64-bit.zip | 8c670275422c79789cdc81ae460da532dd7e69c6c9048420a74a38892deeb880
+MinGit-2.30.0-busybox-32-bit.zip | baf1d930d0116e66bc367a2cd14a3aacfab1584da4092efc95f39c45e785cd7a
+Git-2.30.0-64-bit.tar.bz2 | 52a3a976c01df2f1d9b3bb6d8b9637fce6a30975bf968312dab3febacc3192e5
+Git-2.30.0-32-bit.tar.bz2 | 9e59e6fc2f6a5ddb25d170bc52684fde03139fb52fd83271861b36356a6cd31e
+
+Ciao,
+Johannes
