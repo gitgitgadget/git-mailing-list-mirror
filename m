@@ -2,162 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFCD3C00454
-	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 23:23:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C81ADC43381
+	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 23:23:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C9CB6229C6
-	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 23:23:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A287A224D4
+	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 23:23:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729303AbgL1Wzh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Dec 2020 17:55:37 -0500
-Received: from out03.mta.xmission.com ([166.70.13.233]:59430 "EHLO
-        out03.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729269AbgL1Taj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Dec 2020 14:30:39 -0500
-Received: from in02.mta.xmission.com ([166.70.13.52])
-        by out03.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <seth@eseth.com>)
-        id 1ktyDN-006PnB-ND
-        for git@vger.kernel.org; Mon, 28 Dec 2020 12:29:57 -0700
-Received: from mta5.zcs.xmission.com ([166.70.13.69])
-        by in02.mta.xmission.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <seth@eseth.com>)
-        id 1ktyDM-001lpe-Pj
-        for git@vger.kernel.org; Mon, 28 Dec 2020 12:29:57 -0700
-Received: from localhost (localhost [127.0.0.1])
-        by mta5.zcs.xmission.com (Postfix) with ESMTP id 9F9D5128038B;
-        Mon, 28 Dec 2020 12:29:56 -0700 (MST)
-X-Amavis-Modified: Mail body modified (using disclaimer) -
-        mta5.zcs.xmission.com
-Received: from mta5.zcs.xmission.com ([127.0.0.1])
-        by localhost (mta5.zcs.xmission.com [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id 0IggPWT0sABy; Mon, 28 Dec 2020 12:29:56 -0700 (MST)
-Received: from localhost.localdomain (unknown [139.60.10.209])
-        by mta5.zcs.xmission.com (Postfix) with ESMTPSA id 50D5412806BB;
-        Mon, 28 Dec 2020 12:29:56 -0700 (MST)
-From:   Seth House <seth@eseth.com>
-To:     git@vger.kernel.org
-Cc:     Seth House <seth@eseth.com>
-Date:   Mon, 28 Dec 2020 12:29:18 -0700
-Message-Id: <20201228192919.1195211-5-seth@eseth.com>
-X-Mailer: git-send-email 2.30.0.rc2.4.g8f3eabcc0e
-In-Reply-To: <20201228192919.1195211-1-seth@eseth.com>
-References: <20201228045427.1166911-1-seth@eseth.com>
- <20201228192919.1195211-1-seth@eseth.com>
+        id S1729973AbgL1Wzk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Dec 2020 17:55:40 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62824 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729662AbgL1WoX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Dec 2020 17:44:23 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EC1E311304E;
+        Mon, 28 Dec 2020 17:43:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=2KIg1YVy2pdQ
+        VxYxYFAakBSHqdA=; b=u3iciJgRhSZ6A6r1xhTB1GjcIi9DPruC4FDYJGW4IPbB
+        p3ilEmbrZzL9dgXrNXqYQnSfCzuWpySuQLuSnf2ZuuAuh3Zz5hAyJi6x1fvABlJ+
+        oAGZN6ZmlNcfB5kXRKQQzJStLYoXuXZ6wLnWg4zY3Q6DjpcbGJOPO3+nwCDPWTU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=dtXLkU
+        DzUXbBeQr+Y1uJiENuSRkI5VzdtM2O//ApCiVb1/ugrj7cHrdNIh12JEnY3SMsDY
+        avTguSjDBJ511BKUmAcNHrxAFVHn8FQz6lhONxz8FQFucIcpTJn9/83DTvQn/l2w
+        b9wUqtdTiZxwi4rc/rs0eLOz7JEDaYe5B3Spw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E4CC911304D;
+        Mon, 28 Dec 2020 17:43:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2FD0111304C;
+        Mon, 28 Dec 2020 17:43:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] CoC: update to 2.0
+References: <xmqq5z4mjdbq.fsf@gitster.c.googlers.com>
+        <87lfdhvnto.fsf@evledraar.gmail.com>
+Date:   Mon, 28 Dec 2020 14:43:36 -0800
+In-Reply-To: <87lfdhvnto.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Mon, 28 Dec 2020 18:32:19 +0100")
+Message-ID: <xmqqv9cleelj.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-XM-SPF: eid=1ktyDM-001lpe-Pj;;;mid=<20201228192919.1195211-5-seth@eseth.com>;;;hst=in02.mta.xmission.com;;;ip=166.70.13.69;;;frm=seth@eseth.com;;;spf=none
-X-SA-Exim-Connect-IP: 166.70.13.69
-X-SA-Exim-Mail-From: seth@eseth.com
-Subject: [PATCH v9 4/5] mergetool: break setup_tool out into separate initialization function
-X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
-X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 20451640-495E-11EB-A3A8-E43E2BB96649-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is preparation for the following commit where we need to source the
-mergetool shell script to look for overrides before `run_merge_tool` is
-called. Previously `run_merge_tool` both sourced that script and invoked
-the mergetool.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-In the case of the following commit, we need the result of the
-`automerge_enabled` override, if it exists, well before we actually run
-`run_merge_tool`.
+> I think the update to 2.0 makes sense. But would in general prefer less
+> divergence with upstream for code or documents we copy/paste.
+>
+> So I submitted a v2 in
+> https://lore.kernel.org/git/20201228171734.30038-1-avarab@gmail.com/
+> whose diff to upstream is half the size of yours. Perhaps you like it
+> better, or not.
 
-A new function `initialize_merge_tool` was chosen for consistency with
-`run_merge_tool` since `setup_tool` and `setup_user_tool` are not
-exposed or called directly.
+I _think_ most of the divergence comes from the fact that I copied
+from a wrong variant.  I somehow picked asciidoc variant and
+manually adjusted the section leaders, and I wouldn't be surprised
+if it wraps lines differently from their markdown variant.
 
-Signed-off-by: Seth House <seth@eseth.com>
----
- Documentation/git-mergetool--lib.txt | 4 ++++
- git-difftool--helper.sh              | 2 ++
- git-mergetool--lib.sh                | 7 ++++---
- git-mergetool.sh                     | 2 ++
- 4 files changed, 12 insertions(+), 3 deletions(-)
+As I expect to be mostly offline this week, I'll let your series sit
+on the list while it collects Acks just like we did for the version
+1.4, but in any case, let's go with your variant that is based on
+the official markdown version supplied by the upstream.
 
-diff --git a/Documentation/git-mergetool--lib.txt b/Documentation/git-mergetool--lib.txt
-index 4da9d24096..3e8f59ac0e 100644
---- a/Documentation/git-mergetool--lib.txt
-+++ b/Documentation/git-mergetool--lib.txt
-@@ -38,6 +38,10 @@ get_merge_tool_cmd::
- get_merge_tool_path::
- 	returns the custom path for a merge tool.
- 
-+initialize_merge_tool::
-+	bring merge tool specific functions into scope so they can be used or
-+	overridden.
-+
- run_merge_tool::
- 	launches a merge tool given the tool name and a true/false
- 	flag to indicate whether a merge base is present.
-diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
-index 46af3e60b7..234dd6944e 100755
---- a/git-difftool--helper.sh
-+++ b/git-difftool--helper.sh
-@@ -61,6 +61,7 @@ launch_merge_tool () {
- 		export BASE
- 		eval $GIT_DIFFTOOL_EXTCMD '"$LOCAL"' '"$REMOTE"'
- 	else
-+		initialize_merge_tool "$merge_tool" &&
- 		run_merge_tool "$merge_tool"
- 	fi
- }
-@@ -79,6 +80,7 @@ if test -n "$GIT_DIFFTOOL_DIRDIFF"
- then
- 	LOCAL="$1"
- 	REMOTE="$2"
-+	initialize_merge_tool "$merge_tool" &&
- 	run_merge_tool "$merge_tool" false
- else
- 	# Launch the merge tool on each path provided by 'git diff'
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index 7225abd811..e059b3559e 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -248,6 +248,10 @@ trust_exit_code () {
- 	fi
- }
- 
-+initialize_merge_tool () {
-+	# Bring tool-specific functions into scope
-+	setup_tool "$1" || return 1
-+}
- 
- # Entry point for running tools
- run_merge_tool () {
-@@ -259,9 +263,6 @@ run_merge_tool () {
- 	merge_tool_path=$(get_merge_tool_path "$1") || exit
- 	base_present="$2"
- 
--	# Bring tool-specific functions into scope
--	setup_tool "$1" || return 1
--
- 	if merge_mode
- 	then
- 		run_merge_cmd "$1"
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index e3c7d78d1d..929192d0f8 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -334,6 +334,8 @@ merge_file () {
- 	checkout_staged_file 2 "$MERGED" "$LOCAL"
- 	checkout_staged_file 3 "$MERGED" "$REMOTE"
- 
-+	initialize_merge_tool "$merge_tool"
-+
- 	if test "$(
- 		git config --get --bool "mergetool.$merge_tool.automerge" ||
- 		git config --get --bool "mergetool.automerge" ||
--- 
-2.29.2
-
-
+Thanks.
