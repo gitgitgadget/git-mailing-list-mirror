@@ -2,127 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-17.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5575BC433DB
-	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 17:33:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 954E5C433E9
+	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 18:23:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 259C8229C5
-	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 17:33:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6839122AAD
+	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 18:23:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728445AbgL1RdD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Dec 2020 12:33:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34734 "EHLO
+        id S1728748AbgL1SXS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Dec 2020 13:23:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728439AbgL1RdC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Dec 2020 12:33:02 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92F3FC0613D6
-        for <git@vger.kernel.org>; Mon, 28 Dec 2020 09:32:22 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id b73so10369302edf.13
-        for <git@vger.kernel.org>; Mon, 28 Dec 2020 09:32:22 -0800 (PST)
+        with ESMTP id S1728620AbgL1SXP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Dec 2020 13:23:15 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8787EC061796
+        for <git@vger.kernel.org>; Mon, 28 Dec 2020 10:22:34 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id 3so153433wmg.4
+        for <git@vger.kernel.org>; Mon, 28 Dec 2020 10:22:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=E1QUu5x9OxVhzeh5NJODVyQdlO2/iQ2hHUYljRFbHxk=;
-        b=oTiJorGJffUzRi1tVVMD3MkaGOy3jsMQtMk4Edx+kcb59LhuRYjl0ZuamFNi+4KZR5
-         HSjNG8BjFPIbQaxvFp2FTFIseQJGZEes/o8SP2C0FYFDOiaHV+C6PybxhfRyKOvCgP8P
-         2/TuuIWsZhPYU6EYbf1yJuO2YZM+6SLSfGNkcrtGMfiSVYrdc7TvRTZywRxv39Hl3H0u
-         uCefLp3aFF2NOviroAKB49aK3IXefacmTrKPYmgBBfy65Lp2iG6Pew4poFBtQDtvrhjp
-         bfZi2cpEjd5dXus4vVpV24Im2MxuBZfATBlrFMH3gYQqGHeljcrhM+ebX81m5CpudZRj
-         zW+Q==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=C3S63rIO5V5tFVqPOTawAdPG2ZYv5/c33jVcstMaICI=;
+        b=Ad0XNIjvC6lYth0WrlyI4G/sablYJl/mctbzSxCU6HkFdRB+gllhaH4RmB4MPH9e2Z
+         e9JOC6cwjJtHHlPjGVzSu+Yo4LJEjLMa2VcWyuIi0gLf/m+xQVAYb0ZNwSbOyDWJXDtU
+         xc4Zht5WnYIHA5wwhrLnCtJFBXlqE5SsEyxihtN7uXj6PDEzJabOuwE0wotAWd7kffCr
+         Mfz5osEuzo6XJIv+3YVyQKiOY41A0bknpU4Ayu1ce8Ra1sAuu91cofgsJPtEVFTqa7Ve
+         LEVdwPotlwQMJ8a80vhTOxgHvkgqnDhbKykkrhu0BQHP+khu9ch/HaJyGPULaZgIjMLd
+         u70Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=E1QUu5x9OxVhzeh5NJODVyQdlO2/iQ2hHUYljRFbHxk=;
-        b=RGx20h7i2GilMjul67vM3+myGVv8vYHCKEPXCl/qpCmaQ9gVP1Xmsu8X6f7S/ze7GU
-         Nda2IPrjhUjNHL3+w4o61iDuevdisw/5l4KxbjWQ6AoWiEj2H1P3ACu2G4DNuMY+bcuq
-         KZUDwFrubiYVYJyj804qgNLcilSXedMl96Ygnb/HqXBuxVHAMxN3OFyDZ8znj1wVFMjq
-         8o+bhhMdfvXBLVc+GIUY3TIIJB9Q8s4yu47vhx5V7FtxT2pxgENe7PoQgBRdR+ScIzay
-         hDXQPFLFZX45qXI3ln9rxNfEkjUBaEeiIV/E+ChL5nEdncNbz0B0Dh9TmWUbFzWr0mlB
-         yv+Q==
-X-Gm-Message-State: AOAM533iu3n0BkKdNr38ykJ8vjFSZvjZo7I+J8CMBT6xBADPcEYKYNQD
-        HsqevsknEmB/PMZnGqA+l2chlpOXm6ffAg==
-X-Google-Smtp-Source: ABdhPJzDGrrHjR4sVI4U779a2zRJGw1EyaMyW6J7e2pCLNP/f44M1rSpM9fyqkCid+wiWoyM1DV+Fg==
-X-Received: by 2002:aa7:d919:: with SMTP id a25mr41921106edr.81.1609176741291;
-        Mon, 28 Dec 2020 09:32:21 -0800 (PST)
-Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id ga26sm6225675ejc.61.2020.12.28.09.32.20
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=C3S63rIO5V5tFVqPOTawAdPG2ZYv5/c33jVcstMaICI=;
+        b=HZJ/WPzDrtwLh2NJvqeSavgeFbRQWu7aL7+BOG/oi2jWgH5sx96U78zSg8P+fHL2iq
+         KBDCm9rcq9waNSqTJB4cnt4Baf8y0B6hBmqILqsdwMt/XZxqoP5H3hzXfFJvi+c02BiD
+         DGiCps6H+GXpt0iDIMmRmmo4BEw8yWvYoU1Y9jZTB6LPXoTpZsoiUeiGAXaflwqNGMBA
+         V3Y4pXBT25fUmtS7/cbA8KLUjLUlW+QnWnc5+6Qy3RRwSZYyAfMGdXlAMl9pxmewXU8N
+         Dqu5CITUVDxe0GiL/HoPfIpOM3cSaM9vVJirOd292wR9DXu7smva4z6y22zNe93Kofew
+         u50g==
+X-Gm-Message-State: AOAM533AGmpAUnQlKhXuBbR4ONXdJl/q1qz2ge4AWAN7nUo+XjpL3uQf
+        bTRuMZPdP1blXBcOJpLpBMasw8EEdl8=
+X-Google-Smtp-Source: ABdhPJxMzgw/ON3GJ46WesuGilTa68qAU2t0VXs8gpaEq+p7xMYa14Ck6Y7AqZ3z0JG4T4B8DvbEmg==
+X-Received: by 2002:a1c:4483:: with SMTP id r125mr145704wma.80.1609179753055;
+        Mon, 28 Dec 2020 10:22:33 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w8sm56271530wrl.91.2020.12.28.10.22.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Dec 2020 09:32:20 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] CoC: update to 2.0
-References: <xmqq5z4mjdbq.fsf@gitster.c.googlers.com>
-User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.13
-In-reply-to: <xmqq5z4mjdbq.fsf@gitster.c.googlers.com>
-Date:   Mon, 28 Dec 2020 18:32:19 +0100
-Message-ID: <87lfdhvnto.fsf@evledraar.gmail.com>
+        Mon, 28 Dec 2020 10:22:32 -0800 (PST)
+Message-Id: <pull.825.git.1609179751864.gitgitgadget@gmail.com>
+From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 28 Dec 2020 18:22:31 +0000
+Subject: [PATCH] mergetool--lib: fix '--tool-help' to correctly show available
+ tools
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        pudinha <rogi@skylittlesystem.org>,
+        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Philippe Blain <philippe.blain@canada.ca>,
+        Philippe Blain <philippe.blain@canada.ca>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Philippe Blain <philippe.blain@canada.ca>
 
-On Mon, Dec 28 2020, Junio C Hamano wrote:
+Commit 83bbf9b92e (mergetool--lib: improve support for vimdiff-style tool
+variants, 2020-07-29) introduced a regression in the output of `git mergetool
+--tool-help` and `git difftool --tool-help` [1].
 
-> At 5cdf2301 (add a Code of Conduct document, 2019-09-24) we adopted
-> a Code of Conduct from www.contributor-covenant.org; back then the
-> version adopted, 1.4, was the latest one.
->
-> Version 2.0 tightens language in examples of unacceptable behaviour,
-> generalizes the audience from "contributors and maintainers" to
-> "community", and enhances the enforcement section.
->
-> The preamble we added to the beginning of the document has been
-> kept, but the rest of the test has been replaced in full from the
-> "upstream" and then the same customization for our community
-> (i.e. the way to contact community leadership teams) has been
-> applied.
+In function 'show_tool_names' in git-mergetool--lib.sh, we loop over the
+supported mergetools and their variants and accumulate them in the variable
+'variants', separating them with a literal '\n'.
 
-I think the update to 2.0 makes sense. But would in general prefer less
-divergence with upstream for code or documents we copy/paste.
+The code then uses 'echo $variants' to turn these '\n' into newlines, but this
+behaviour is not portable, it just happens to work in some shells, like
+dash(1)'s 'echo' builtin.
 
-So I submitted a v2 in
-https://lore.kernel.org/git/20201228171734.30038-1-avarab@gmail.com/
-whose diff to upstream is half the size of yours. Perhaps you like it
-better, or not.
+For shells in which 'echo' does not turn '\n' into newlines, the end result is
+that the only tools that are shown are those that are found and have variants,
+since the variants are separated by actual newlines in '$variants' because of
+the several 'echo' calls in mergetools/{bc,vimdiff}::list_tool_variants.
 
-In any case: Acked-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail=
-.com>
+Fix this bug by embedding an actual line feed into `variants` in
+show_tool_names(). While at it, replace `sort | uniq` by `sort -u`.
 
-The thing I'm most on the fence about in 2.0 is the addition of very
-specific enforcement guidelines.
+To prevent future regressions, add a simple test that counts the number
+of tools shown by 'git mergetool --tool-help', irrespective of their
+installed status, by making use of the fact that mergetools are listed
+by 'git mergetool --tool-help' on lines starting with tabs. Prefix the
+`git config` commands used at the beginning of the test to remove the
+fake tools used by the previous test with 'test_might_fail' so that the
+test can be run independantly of the previous test without failing.
 
-They're still guidelines, so they're not a promise that we'll do things
-exactly like that. I still think the sentence from Jeff's addition of
-1.4 makes more sense for us as a project:
+[1] https://lore.kernel.org/git/CADtb9DyozjgAsdFYL8fFBEWmq7iz4=prZYVUdH9W-J5CKVS4OA@mail.gmail.com/
 
-    It probably make sense _not_ to get too specific at this point, and
-    deal with specifics as they come up.
+Reported-by: Philippe Blain <levraiphilippeblain@gmail.com>
+Based-on-patch-by: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+---
+    Fix regression in 'git {diff,merge}tool --tool-help'
+    
+    I went with Johannes' suggestion finally because upon further
+    inspection, René's patch for some reason (I did not debug further)
+    caused to code to never reach 'any_shown=yes' in show_tool_help,
+    therefore changing the output of the command.
+    
+    I guess it's too late for inclusion in 2.30...
 
-E.g. the phrasing in the new "Temporary Ban" which seems to suggest that
-if we were to take action based on the CoC that it's up to us to police
-interaction between the parties involved on third-party social media
-platforms.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-825%2Fphil-blain%2Fmergetool-tool-help-fix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-825/phil-blain/mergetool-tool-help-fix-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/825
 
-I don't think it's going to be much of a practical concern. It just
-seems to me the upstream 2.0 CoC makes a lot of assumptions about
-projects being run in a way where they manage most of their
-communications infrastructure directly in a silo'd manner.
+ git-mergetool--lib.sh |  6 ++++--
+ t/t7610-mergetool.sh  | 10 ++++++++++
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
-We don't even manage the Git ML directly, and surely the main point the
-CoC is to communicate to existing and new project participants what's
-expected of them when it comes to interacting with the community.
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index 7225abd8112..78f3647ed97 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -46,9 +46,11 @@ show_tool_names () {
+ 		while read scriptname
+ 		do
+ 			setup_tool "$scriptname" 2>/dev/null
+-			variants="$variants$(list_tool_variants)\n"
++			# We need an actual line feed here
++			variants="$variants
++$(list_tool_variants)"
+ 		done
+-		variants="$(echo "$variants" | sort | uniq)"
++		variants="$(echo "$variants" | sort -u)"
+ 
+ 		for toolname in $variants
+ 		do
+diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+index 70afdd06fa7..ebd3af139e5 100755
+--- a/t/t7610-mergetool.sh
++++ b/t/t7610-mergetool.sh
+@@ -828,4 +828,14 @@ test_expect_success 'mergetool -Oorder-file is honored' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'mergetool --tool-help shows all recognized tools' '
++	# Remove fake tools added in previous tests
++	test_might_fail git config --unset merge.tool &&
++	test_might_fail git config --remove-section mergetool.mytool &&
++	test_might_fail git config --remove-section mergetool.mybase &&
++	git mergetool --tool-help >output &&
++	grep "$(printf "\t")" output >mergetools &&
++	test_line_count = 30 mergetools
++'
++
+ test_done
 
-If the enforcment guidelines promise something that's unlikely to be
-practical in our case perhaps we'd be better off by leaving that entire
-section out of the CoC update.
+base-commit: 4a0de43f4923993377dbbc42cfc0a1054b6c5ccf
+-- 
+gitgitgadget
