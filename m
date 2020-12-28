@@ -2,161 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-20.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E8E1C433DB
-	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 17:18:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5575BC433DB
+	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 17:33:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3F73A229C5
-	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 17:18:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 259C8229C5
+	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 17:33:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727125AbgL1RS0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Dec 2020 12:18:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60728 "EHLO
+        id S1728445AbgL1RdD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Dec 2020 12:33:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726314AbgL1RSZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Dec 2020 12:18:25 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A77CFC061793
-        for <git@vger.kernel.org>; Mon, 28 Dec 2020 09:17:44 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id c133so10852263wme.4
-        for <git@vger.kernel.org>; Mon, 28 Dec 2020 09:17:44 -0800 (PST)
+        with ESMTP id S1728439AbgL1RdC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Dec 2020 12:33:02 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92F3FC0613D6
+        for <git@vger.kernel.org>; Mon, 28 Dec 2020 09:32:22 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id b73so10369302edf.13
+        for <git@vger.kernel.org>; Mon, 28 Dec 2020 09:32:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=qdwt0Eb/bIxSob2yya6PS+x9baR6ZaGdGi48GtJn83U=;
-        b=bapgFhiY6BMKlGhWdsIsQW7NBETh2L4kx/t59fWBoy8uebizjzhqGzCufDlaPiymL1
-         NUR5T9YLjaff/3SjfI4sY9x7A+gi504PVKOH28dIvj5g2+5EdLXxru+uY8Dhe2m8ttT4
-         hqpyf+Px668y0CsRe1ZVxZ9ruvTRdgAxOc6cSs1l22NHz6TPnNZfzLqkCBtHmCHsAlp6
-         zSnxltvaxHUgEieUvGK5sNSQSJFQzy5ajUdMPy833nlOgBaO5IJHZfoirq0ZKybj3xNq
-         Z6pl6WEGy1yZzshqdOOA572iVueSDMmC4cFGNbyjvb5jrl1t2keHqcWIS0JWo5IQHpAH
-         in/Q==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=E1QUu5x9OxVhzeh5NJODVyQdlO2/iQ2hHUYljRFbHxk=;
+        b=oTiJorGJffUzRi1tVVMD3MkaGOy3jsMQtMk4Edx+kcb59LhuRYjl0ZuamFNi+4KZR5
+         HSjNG8BjFPIbQaxvFp2FTFIseQJGZEes/o8SP2C0FYFDOiaHV+C6PybxhfRyKOvCgP8P
+         2/TuuIWsZhPYU6EYbf1yJuO2YZM+6SLSfGNkcrtGMfiSVYrdc7TvRTZywRxv39Hl3H0u
+         uCefLp3aFF2NOviroAKB49aK3IXefacmTrKPYmgBBfy65Lp2iG6Pew4poFBtQDtvrhjp
+         bfZi2cpEjd5dXus4vVpV24Im2MxuBZfATBlrFMH3gYQqGHeljcrhM+ebX81m5CpudZRj
+         zW+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=qdwt0Eb/bIxSob2yya6PS+x9baR6ZaGdGi48GtJn83U=;
-        b=IaF7HuhZuA98f6cL2Nb11TwkYBNPCdXn5C8wf4j/lJIGd+Y5WO8yL6tR4vDx3g+FqJ
-         gs24hBKYJOlGzAMQX72KV+guSdwrDzrDqg1Eu4J2cDvz7JfgmrvrovUxYexCQf2PxThG
-         grUtSQ90Wiph+vEH8AlNqo5sgvIwm+qBLPUKe5wEf6Vd+FxO40EZkMsT/FNN/Zh41WWb
-         9vucqYSf/ZJsF2KJvwHe3Qq59w/ufw6t1bDextTNccwihUKenWaf6YtUHR6E68da65YP
-         pytDp3M24qjHayZazkt6aplOqNG+HakVseoOcBELswUiwVPR1+nu67+jOT6pCTO5k7pm
-         /oRg==
-X-Gm-Message-State: AOAM53232aG/fHfsNR/PL46gGWmfz9P5wncCif7qh/QpTPrVgSLYhjlS
-        E78MjsPtme1A3drk01RiO1U+Q3FSTXXsEQ==
-X-Google-Smtp-Source: ABdhPJz8f0NOERPjDSr5JlqIi1bQ8lfZ3hTwoZC0jcOrDxAIuoe8UTtqeSAp3KWuwGX22J/t7neq/A==
-X-Received: by 2002:a1c:6a10:: with SMTP id f16mr21183563wmc.106.1609175863083;
-        Mon, 28 Dec 2020 09:17:43 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id s13sm20072834wmj.28.2020.12.28.09.17.42
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=E1QUu5x9OxVhzeh5NJODVyQdlO2/iQ2hHUYljRFbHxk=;
+        b=RGx20h7i2GilMjul67vM3+myGVv8vYHCKEPXCl/qpCmaQ9gVP1Xmsu8X6f7S/ze7GU
+         Nda2IPrjhUjNHL3+w4o61iDuevdisw/5l4KxbjWQ6AoWiEj2H1P3ACu2G4DNuMY+bcuq
+         KZUDwFrubiYVYJyj804qgNLcilSXedMl96Ygnb/HqXBuxVHAMxN3OFyDZ8znj1wVFMjq
+         8o+bhhMdfvXBLVc+GIUY3TIIJB9Q8s4yu47vhx5V7FtxT2pxgENe7PoQgBRdR+ScIzay
+         hDXQPFLFZX45qXI3ln9rxNfEkjUBaEeiIV/E+ChL5nEdncNbz0B0Dh9TmWUbFzWr0mlB
+         yv+Q==
+X-Gm-Message-State: AOAM533iu3n0BkKdNr38ykJ8vjFSZvjZo7I+J8CMBT6xBADPcEYKYNQD
+        HsqevsknEmB/PMZnGqA+l2chlpOXm6ffAg==
+X-Google-Smtp-Source: ABdhPJzDGrrHjR4sVI4U779a2zRJGw1EyaMyW6J7e2pCLNP/f44M1rSpM9fyqkCid+wiWoyM1DV+Fg==
+X-Received: by 2002:aa7:d919:: with SMTP id a25mr41921106edr.81.1609176741291;
+        Mon, 28 Dec 2020 09:32:21 -0800 (PST)
+Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
+        by smtp.gmail.com with ESMTPSA id ga26sm6225675ejc.61.2020.12.28.09.32.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Dec 2020 09:17:42 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 1/2] CoC: Update word-wrapping to match upstream
-Date:   Mon, 28 Dec 2020 18:17:33 +0100
-Message-Id: <20201228171734.30038-2-avarab@gmail.com>
-X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
-In-Reply-To: <xmqq5z4mjdbq.fsf@gitster.c.googlers.com>
+        Mon, 28 Dec 2020 09:32:20 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] CoC: update to 2.0
 References: <xmqq5z4mjdbq.fsf@gitster.c.googlers.com>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.13
+In-reply-to: <xmqq5z4mjdbq.fsf@gitster.c.googlers.com>
+Date:   Mon, 28 Dec 2020 18:32:19 +0100
+Message-ID: <87lfdhvnto.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the CoC document was added in 5cdf2301d4a (add a Code of Conduct
-document, 2019-09-24) it was added from some 1.4 version of the
-document whose word wrapping doesn't match what's currently at [1],
-which matches content/version/1/4/code-of-conduct.md in the CoC
-repository[2].
 
-Let's update our version to match that, to make reading subsequent
-diffs easier. There are no non-whitespace changes here.
+On Mon, Dec 28 2020, Junio C Hamano wrote:
 
-1. https://www.contributor-covenant.org/version/1/4/code-of-conduct/
-2. https://github.com/ContributorCovenant/contributor_covenant
+> At 5cdf2301 (add a Code of Conduct document, 2019-09-24) we adopted
+> a Code of Conduct from www.contributor-covenant.org; back then the
+> version adopted, 1.4, was the latest one.
+>
+> Version 2.0 tightens language in examples of unacceptable behaviour,
+> generalizes the audience from "contributors and maintainers" to
+> "community", and enhances the enforcement section.
+>
+> The preamble we added to the beginning of the document has been
+> kept, but the rest of the test has been replaced in full from the
+> "upstream" and then the same customization for our community
+> (i.e. the way to contact community leadership teams) has been
+> applied.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- CODE_OF_CONDUCT.md | 35 ++++++++++++++++-------------------
- 1 file changed, 16 insertions(+), 19 deletions(-)
+I think the update to 2.0 makes sense. But would in general prefer less
+divergence with upstream for code or documents we copy/paste.
 
-diff --git a/CODE_OF_CONDUCT.md b/CODE_OF_CONDUCT.md
-index fc4645d5c08..083bd872c53 100644
---- a/CODE_OF_CONDUCT.md
-+++ b/CODE_OF_CONDUCT.md
-@@ -10,11 +10,10 @@ this code of conduct may be banned from the community.
- 
- In the interest of fostering an open and welcoming environment, we as
- contributors and maintainers pledge to make participation in our project and
--our community a harassment-free experience for everyone, regardless of age,
--body size, disability, ethnicity, sex characteristics, gender identity and
--expression, level of experience, education, socio-economic status,
--nationality, personal appearance, race, religion, or sexual identity and
--orientation.
-+our community a harassment-free experience for everyone, regardless of age, body
-+size, disability, ethnicity, sex characteristics, gender identity and expression,
-+level of experience, education, socio-economic status, nationality, personal
-+appearance, race, religion, or sexual identity and orientation.
- 
- ## Our Standards
- 
-@@ -52,23 +51,21 @@ threatening, offensive, or harmful.
- 
- ## Scope
- 
--This Code of Conduct applies within all project spaces, and it also applies
--when an individual is representing the project or its community in public
--spaces. Examples of representing a project or community include using an
--official project e-mail address, posting via an official social media account,
--or acting as an appointed representative at an online or offline event.
--Representation of a project may be further defined and clarified by project
--maintainers.
-+This Code of Conduct applies within all project spaces, and it also applies when
-+an individual is representing the project or its community in public spaces.
-+Examples of representing a project or community include using an official
-+project e-mail address, posting via an official social media account, or acting
-+as an appointed representative at an online or offline event. Representation of
-+a project may be further defined and clarified by project maintainers.
- 
- ## Enforcement
- 
- Instances of abusive, harassing, or otherwise unacceptable behavior may be
- reported by contacting the project team at git@sfconservancy.org. All
--complaints will be reviewed and investigated and will result in a response
--that is deemed necessary and appropriate to the circumstances. The project
--team is obligated to maintain confidentiality with regard to the reporter of
--an incident. Further details of specific enforcement policies may be posted
--separately.
-+complaints will be reviewed and investigated and will result in a response that
-+is deemed necessary and appropriate to the circumstances. The project team is
-+obligated to maintain confidentiality with regard to the reporter of an incident.
-+Further details of specific enforcement policies may be posted separately.
- 
- Project maintainers who do not follow or enforce the Code of Conduct in good
- faith may face temporary or permanent repercussions as determined by other
-@@ -84,8 +81,8 @@ git@sfconservancy.org, or individually:
- 
- ## Attribution
- 
--This Code of Conduct is adapted from the [Contributor Covenant][homepage],
--version 1.4, available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
-+This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4,
-+available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
- 
- [homepage]: https://www.contributor-covenant.org
- 
--- 
-2.29.2.222.g5d2a92d10f8
+So I submitted a v2 in
+https://lore.kernel.org/git/20201228171734.30038-1-avarab@gmail.com/
+whose diff to upstream is half the size of yours. Perhaps you like it
+better, or not.
 
+In any case: Acked-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail=
+.com>
+
+The thing I'm most on the fence about in 2.0 is the addition of very
+specific enforcement guidelines.
+
+They're still guidelines, so they're not a promise that we'll do things
+exactly like that. I still think the sentence from Jeff's addition of
+1.4 makes more sense for us as a project:
+
+    It probably make sense _not_ to get too specific at this point, and
+    deal with specifics as they come up.
+
+E.g. the phrasing in the new "Temporary Ban" which seems to suggest that
+if we were to take action based on the CoC that it's up to us to police
+interaction between the parties involved on third-party social media
+platforms.
+
+I don't think it's going to be much of a practical concern. It just
+seems to me the upstream 2.0 CoC makes a lot of assumptions about
+projects being run in a way where they manage most of their
+communications infrastructure directly in a silo'd manner.
+
+We don't even manage the Git ML directly, and surely the main point the
+CoC is to communicate to existing and new project participants what's
+expected of them when it comes to interacting with the community.
+
+If the enforcment guidelines promise something that's unlikely to be
+practical in our case perhaps we'd be better off by leaving that entire
+section out of the CoC update.
