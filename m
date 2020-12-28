@@ -2,152 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 017CEC433DB
-	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 04:56:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CA5AC433E0
+	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 10:31:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BA70A22AB0
-	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 04:55:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D14B207C9
+	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 10:31:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727724AbgL1Ezq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Dec 2020 23:55:46 -0500
-Received: from out01.mta.xmission.com ([166.70.13.231]:56000 "EHLO
-        out01.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727707AbgL1Ezq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Dec 2020 23:55:46 -0500
-Received: from in02.mta.xmission.com ([166.70.13.52])
-        by out01.mta.xmission.com with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <seth@eseth.com>)
-        id 1ktkYi-008i59-SI
-        for git@vger.kernel.org; Sun, 27 Dec 2020 21:55:04 -0700
-Received: from mta4.zcs.xmission.com ([166.70.13.68])
-        by in02.mta.xmission.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.93)
-        (envelope-from <seth@eseth.com>)
-        id 1ktkYi-00GtzU-2T
-        for git@vger.kernel.org; Sun, 27 Dec 2020 21:55:04 -0700
-Received: from localhost (localhost [127.0.0.1])
-        by mta4.zcs.xmission.com (Postfix) with ESMTP id 9814C500550;
-        Sun, 27 Dec 2020 21:55:03 -0700 (MST)
-X-Amavis-Modified: Mail body modified (using disclaimer) -
-        mta4.zcs.xmission.com
-Received: from mta4.zcs.xmission.com ([127.0.0.1])
-        by localhost (mta4.zcs.xmission.com [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id pQh3STKm-mec; Sun, 27 Dec 2020 21:55:03 -0700 (MST)
-Received: from localhost.localdomain (unknown [139.60.10.209])
-        by mta4.zcs.xmission.com (Postfix) with ESMTPSA id 711C25004F7;
-        Sun, 27 Dec 2020 21:55:02 -0700 (MST)
-From:   Seth House <seth@eseth.com>
-To:     git@vger.kernel.org
-Cc:     Seth House <seth@eseth.com>
-Date:   Sun, 27 Dec 2020 21:54:26 -0700
-Message-Id: <20201228045427.1166911-4-seth@eseth.com>
-X-Mailer: git-send-email 2.30.0.rc2.4.g8f3eabcc0e
-In-Reply-To: <20201228045427.1166911-1-seth@eseth.com>
-References: <20201228004152.522421-1-seth@eseth.com>
- <20201228045427.1166911-1-seth@eseth.com>
+        id S1727165AbgL1Kaj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Dec 2020 05:30:39 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61036 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727018AbgL1Kai (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Dec 2020 05:30:38 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D7B169BACF;
+        Mon, 28 Dec 2020 05:29:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=rJ/3LXvW9SfL6p0wFe4FGVXxgXI=; b=reVTpe/3pe18k9SUglZv
+        xkG7f7+9EGnzYBntAs8BNiGkK0JF0Lrst/iFh1mBMqw4c2cpllOeCqG6SGilApVL
+        9d3OdF7umPwmeGI/9Uv5fXeUAW3BHVZ6VVGmQb8VL+kX6JHT/QCFCwPfU9LbSgc3
+        +vMPUpzx58Po6DFptlQshVc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=sVQzT7gUluSq8cLxXHyOXSe5053v3y1yBTktGyu0K5QJx7
+        wLjy7TXT+FXwJqPKdZXRMuByrZHe+U7fkl80+6HQgCcw/7nqpNuKL0bBZk6GuYp1
+        l9rBK69wFrX8t1s4qIPZQ8PaT5AzHCN4vd9rmlSI37Jd4u+KidmrZdWPy+BGQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BBAC89BACE;
+        Mon, 28 Dec 2020 05:29:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 392699BACD;
+        Mon, 28 Dec 2020 05:29:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Seth House <seth@eseth.com>
+Cc:     git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v7 0/2] mergetool: add automerge configuration
+References: <20201227205835.502556-1-seth@eseth.com>
+        <20201228004152.522421-1-seth@eseth.com>
+Date:   Mon, 28 Dec 2020 02:29:53 -0800
+Message-ID: <xmqqsg7qjk9q.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-XM-SPF: eid=1ktkYi-00GtzU-2T;;;mid=<20201228045427.1166911-4-seth@eseth.com>;;;hst=in02.mta.xmission.com;;;ip=166.70.13.68;;;frm=seth@eseth.com;;;spf=none
-X-SA-Exim-Connect-IP: 166.70.13.68
-X-SA-Exim-Mail-From: seth@eseth.com
-Subject: [PATCH v8 3/4] mergetool: Break setup_tool out into separate initialization function
-X-SA-Exim-Version: 4.2.1 (built Sat, 08 Feb 2020 21:53:50 +0000)
-X-SA-Exim-Scanned: Yes (on in02.mta.xmission.com)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9FF21EAE-48F7-11EB-A140-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The tool-specific functions are sometimes needed in scope earlier than
-when run_merge_tool is called.
+Seth House <seth@eseth.com> writes:
 
-Signed-off-by: Seth House <seth@eseth.com>
----
- Documentation/git-mergetool--lib.txt | 4 ++++
- git-difftool--helper.sh              | 2 ++
- git-mergetool--lib.sh                | 7 ++++---
- git-mergetool.sh                     | 2 ++
- 4 files changed, 12 insertions(+), 3 deletions(-)
+>    * Signed off on Felipe's commit. (Although I have minor qualms with
+>      Felipe's various wording and even the name of the flag it is
+>      decidedly not worth burdening the list with bike-shedding.)
 
-diff --git a/Documentation/git-mergetool--lib.txt b/Documentation/git-mergetool--lib.txt
-index 4da9d24096..3e8f59ac0e 100644
---- a/Documentation/git-mergetool--lib.txt
-+++ b/Documentation/git-mergetool--lib.txt
-@@ -38,6 +38,10 @@ get_merge_tool_cmd::
- get_merge_tool_path::
- 	returns the custom path for a merge tool.
- 
-+initialize_merge_tool::
-+	bring merge tool specific functions into scope so they can be used or
-+	overridden.
-+
- run_merge_tool::
- 	launches a merge tool given the tool name and a true/false
- 	flag to indicate whether a merge base is present.
-diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
-index 46af3e60b7..c47a6d4253 100755
---- a/git-difftool--helper.sh
-+++ b/git-difftool--helper.sh
-@@ -61,6 +61,7 @@ launch_merge_tool () {
- 		export BASE
- 		eval $GIT_DIFFTOOL_EXTCMD '"$LOCAL"' '"$REMOTE"'
- 	else
-+		initialize_merge_tool "$merge_tool"
- 		run_merge_tool "$merge_tool"
- 	fi
- }
-@@ -79,6 +80,7 @@ if test -n "$GIT_DIFFTOOL_DIRDIFF"
- then
- 	LOCAL="$1"
- 	REMOTE="$2"
-+	initialize_merge_tool "$merge_tool"
- 	run_merge_tool "$merge_tool" false
- else
- 	# Launch the merge tool on each path provided by 'git diff'
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index 7225abd811..e059b3559e 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -248,6 +248,10 @@ trust_exit_code () {
- 	fi
- }
- 
-+initialize_merge_tool () {
-+	# Bring tool-specific functions into scope
-+	setup_tool "$1" || return 1
-+}
- 
- # Entry point for running tools
- run_merge_tool () {
-@@ -259,9 +263,6 @@ run_merge_tool () {
- 	merge_tool_path=$(get_merge_tool_path "$1") || exit
- 	base_present="$2"
- 
--	# Bring tool-specific functions into scope
--	setup_tool "$1" || return 1
--
- 	if merge_mode
- 	then
- 		run_merge_cmd "$1"
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index e3c7d78d1d..929192d0f8 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -334,6 +334,8 @@ merge_file () {
- 	checkout_staged_file 2 "$MERGED" "$LOCAL"
- 	checkout_staged_file 3 "$MERGED" "$REMOTE"
- 
-+	initialize_merge_tool "$merge_tool"
-+
- 	if test "$(
- 		git config --get --bool "mergetool.$merge_tool.automerge" ||
- 		git config --get --bool "mergetool.automerge" ||
--- 
-2.29.2
+Even when the original is a horrible patch in your opinion that is
+laden with bugs, as long as the original author signed it off
+(which means that the original author certifies that it can be
+included in and distributed by the project under our licensing
+terms, and agrees to the fact that the original author did so will
+be recorded in perpetuity), you can relay such a patch as-is, and
+you are required (i.e. SubmittingPatches is pretty clear that
+without your sign-off we cannot accept) to sign it off to record
+the provenance of the code.
+
+The other side of the above coin is that you are not endorsing or
+vounching for the patch when you sign it off, so your name is not
+smudged by wording and flag name chosen in a way that you may
+consider poor.  So "Although..." part is not a good objection
+against signing it off.
+
+In other words, sign-off is not about assuring quality.
+
+Also, instead of relaying as-is, you can relay a patch with your
+improvements rolled into the same patch (i.e. not as follow-up
+fixes).  Some (or major) parts of the original patch may still
+remain in the edited result and you'd need to keep original author's
+sign-off as-is [*1*].
+
+In this topic's case, 2/2 would be a feature enhancement on top of
+1/2, so relaying 1/2 as-is would be OK, but in a case where an
+promising patch was sent with sign-off and bugs, then gets abandoned
+by the original author, fixing the bug in the patch you relay in
+place (i.e. not as follow-up patches) may even be necessary to keep
+bisectability.  When you do so, you'd typically do:
+
+	Subject: [PATCH] title of the patch
+
+	... original author's log message, possibly copyedited
+	... by you
+
++	<Comment on what you did on top of the original can come here>
+
+	Signed-off-by: Original Author <ori@ginal.au.thor>
++	[or brief comment here]
++	Signed-off-by: Your Name <you@your.do.main>
+
+ (1) add your sign-off at the end
+ (2) explain what you changed relative to the original, either
+     inside [] on the line before your sign-off, or at the end
+     of the log message proper.
+
+to indicate that it is not relayed as-is; this allows you to take
+responsibility of an unintended breakage your "fixes" might have
+caused.
 
 
+[Footnote]
+
+*1* The result may become something that no longer aligns the
+original author's opinion, but that is OK.  The sign-off by the
+original author just says that the original author has the right to
+contribute (the remaining part of) the patch and the original author
+agrees that the record of author's involvement in the patch
+(including sign-off) will be kept.  
+
+It is not about assuring quality of the final work by the original
+author, either.
