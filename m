@@ -8,62 +8,61 @@ X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5FE9C433DB
-	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 11:17:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69342C43381
+	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 11:17:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A18C4229C4
-	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 11:17:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 38A59229C5
+	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 11:17:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727307AbgL1LQy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Dec 2020 06:16:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59942 "EHLO
+        id S1727310AbgL1LQz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Dec 2020 06:16:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727019AbgL1LQy (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1727303AbgL1LQy (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 28 Dec 2020 06:16:54 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5C58C061794
-        for <git@vger.kernel.org>; Mon, 28 Dec 2020 03:16:13 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id d13so10983207wrc.13
-        for <git@vger.kernel.org>; Mon, 28 Dec 2020 03:16:13 -0800 (PST)
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C9C0C061796
+        for <git@vger.kernel.org>; Mon, 28 Dec 2020 03:16:14 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id r4so9528309wmh.5
+        for <git@vger.kernel.org>; Mon, 28 Dec 2020 03:16:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=/BNtyX8PkcS7Xyds8I9R8qvbFAHFtzF4geBA1+bG1i4=;
-        b=PplEAYQNRj3R5TOmlrnfGyP8Xsem9qQfc0L+Cg6MnhTyEJZjcPg0HpgPSYR6gLzLLM
-         LBC4L2p1HxpjsvQaTOn2uKySndUws2Lowax2HZAmhiuvizq719eOEvnR/uvcIQweo55p
-         SrnE1DxVA4bZMXsi6TaUyek3yA248EdmMUFbhhKwTIr8XEXXl2nW/qtWdVyOwVWRia4w
-         Ipm0VdIFicu3ZPjqN8MgnI3ijcBM0v4vzBszyKuKlHALZ1dxNaEp7bXpiBk+4rxKPo5J
-         nPkvmGILmW4pkj9N3Dy8GmjNARejPOBElGkRc3KdFwOySGJKaKhZP5SRYaTPtD6u/Hcp
-         gjOA==
+        bh=LgKUK8hJbbqtv2edclen7bw3MGngHPyxn35OHpHBvhQ=;
+        b=QU5pBdQbUx0DH+kq7o7s/HPPvAoAERPY+F/mG8EYWC09oZL647Qv98+gwxqslP+EjD
+         5EW6+Rhwf8/DE8V8aHJWsc15vkzkyEbEDWH9V/QMNFhBOa4tRddybXNZ1zTUVEovE+BA
+         R4Ms6ZRBUnYzPfLcutbmwgzuM5b7XV8TEaM1gI8oe7vjT2iEkWoj9KlSAXBYXHpQrfbl
+         SMgkDl47/z12yOWsd/lVIHV3DWdYcIaOu+XcsVr0ZdAna0WgNnWiNDcRS9DqmYvjlrva
+         pLZlIGbuuWISyiDPkehC2YgclO/wAqqzxysiCvvZ6nM262NkxhHIqohqZCrff4j9iWXi
+         ChqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/BNtyX8PkcS7Xyds8I9R8qvbFAHFtzF4geBA1+bG1i4=;
-        b=YTEWH5uKZFqPVziSGZZ60vLaEo/VHvIj6Ns2P61CRtpx7l0WiRhdNEn1GMyJS700aA
-         9ql/IFHhK+w4dANJEukLvC3IfMB3ssn3881t1JboBYYgNAdFkKWI+cR1qHidsKChjzC8
-         E38RTAt8baldn2NDAoOLF2zkbkpJs1Ix5k225lcmkoTxIj1tzeZp+9M+jS83yu+ctbKY
-         5nZnvffmeD9q1P1u3p2akTz9HVCKkiybXyib+vjR44zHaBMsIgHvHaSSKuDwAG9XprXY
-         FuJZtEevMUQdjn/Ix3dtEk1V0DIkSv/JVJSxXYvDsix0bS4L/udjwmfvqI/liAex5WFt
-         HM5Q==
-X-Gm-Message-State: AOAM533MRIN6e5lW56WjjbJHpYfEgVQcGZvY2NePbV8AUr7ux+Px8fbK
-        9xXQYilr5K95/j70Xu5q4finlqMcH78=
-X-Google-Smtp-Source: ABdhPJzXpiaJ07JYUffXYWyo0L1fGSjXIkZBFKvd7LY3cRN9HSQuS/660z7z+1xOTsm/2L89f5ZhoA==
-X-Received: by 2002:adf:fe05:: with SMTP id n5mr51414352wrr.9.1609154171717;
-        Mon, 28 Dec 2020 03:16:11 -0800 (PST)
+        bh=LgKUK8hJbbqtv2edclen7bw3MGngHPyxn35OHpHBvhQ=;
+        b=Ds8dcYp1y3oDMfyIBzb4WFYptVuStyoYR4BWxoUkzkJxVmIqfJ4k7PwmRl1uscGsEh
+         szsVwKnaq0NGhRZVRB1ygPLGArtaSGr9iThS9jp8jem2DZ4J5W3QwP8EkuEcT+NGgmrQ
+         fgBA5QjraS2uxrFCSj7ouht+R7E7zmCM/vqn5nHclrAhPzegkF/7y8ZpWyuZbjzzCIrN
+         wpQWsSMr7rUYZg081dH1u/3hNuR9X1hNyAGPNqWdkNFApxoVWhTan+aGadVaHwhXRoQA
+         Rihv33nm91LpJE2TX1P4fXtrLqDYc4SWFkiw1g13WkqphSTzskvDq3ytQNrptZUNDyd3
+         SxlA==
+X-Gm-Message-State: AOAM532C3sHzoO6e1BzLApSwgZ5UqgGL4uIiYG2RNdIurEcKeUjPQ6xc
+        XhvLdkIqBX8jSl23P+MCK1E7jOzhNWU=
+X-Google-Smtp-Source: ABdhPJxj0AJrkBUcfLOJRgfBNgmBmRtRVuQk3mjVXq9BW+lBKG0/sxqzuUMjLCMOgnuXrr6JXg3p8A==
+X-Received: by 2002:a1c:9692:: with SMTP id y140mr20293753wmd.128.1609154172754;
+        Mon, 28 Dec 2020 03:16:12 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x17sm55338130wro.40.2020.12.28.03.16.11
+        by smtp.gmail.com with ESMTPSA id z22sm18865407wml.1.2020.12.28.03.16.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Dec 2020 03:16:11 -0800 (PST)
-Message-Id: <c4e817abf7dbcd6c99da404507ea940305c521b6.1609154168.git.gitgitgadget@gmail.com>
+        Mon, 28 Dec 2020 03:16:12 -0800 (PST)
+Message-Id: <7645e0bcef08c8fd726148b3545c0ca3adeefdec.1609154168.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.676.v5.git.1609154168.gitgitgadget@gmail.com>
 References: <pull.676.v4.git.1602079785.gitgitgadget@gmail.com>
         <pull.676.v5.git.1609154168.gitgitgadget@gmail.com>
 From:   "Abhishek Kumar via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 28 Dec 2020 11:15:58 +0000
-Subject: [PATCH v5 01/11] commit-graph: fix regression when computing Bloom
- filters
+Date:   Mon, 28 Dec 2020 11:15:59 +0000
+Subject: [PATCH v5 02/11] revision: parse parent in indegree_walk_step()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,50 +80,30 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Abhishek Kumar <abhishekkumar8222@gmail.com>
 
-Before computing Bloom fitlers, the commit-graph machinery uses
-commit_gen_cmp to sort commits by generation order for improved diff
-performance. 3d11275505 (commit-graph: examine commits by generation
-number, 2020-03-30) claims that this sort can reduce the time spent to
-compute Bloom filters by nearly half.
-
-But since c49c82aa4c (commit: move members graph_pos, generation to a
-slab, 2020-06-17), this optimization is broken, since asking for a
-'commit_graph_generation()' directly returns GENERATION_NUMBER_INFINITY
-while writing.
-
-Not all hope is lost, though: 'commit_graph_generation()' falls back to
-comparing commits by their date when they have equal generation number,
-and so since c49c82aa4c is purely a date comparision function. This
-heuristic is good enough that we don't seem to loose appreciable
-performance while computing Bloom filters. Applying this patch (compared
-with v2.29.1) speeds up computing Bloom filters by around ~4
-seconds.
-
-So, avoid the useless 'commit_graph_generation()' while writing by
-instead accessing the slab directly. This returns the newly-computed
-generation numbers, and allows us to avoid the heuristic by directly
-comparing generation numbers.
+In indegree_walk_step(), we add unvisited parents to the indegree queue.
+However, parents are not guaranteed to be parsed. As the indegree queue
+sorts by generation number, let's parse parents before inserting them to
+ensure the correct priority order.
 
 Signed-off-by: Abhishek Kumar <abhishekkumar8222@gmail.com>
 ---
- commit-graph.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ revision.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 06f8dc1d896..caf823295f4 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -144,8 +144,8 @@ static int commit_gen_cmp(const void *va, const void *vb)
- 	const struct commit *a = *(const struct commit **)va;
- 	const struct commit *b = *(const struct commit **)vb;
+diff --git a/revision.c b/revision.c
+index 9dff845bed6..de8e45f462f 100644
+--- a/revision.c
++++ b/revision.c
+@@ -3373,6 +3373,9 @@ static void indegree_walk_step(struct rev_info *revs)
+ 		struct commit *parent = p->item;
+ 		int *pi = indegree_slab_at(&info->indegree, parent);
  
--	uint32_t generation_a = commit_graph_generation(a);
--	uint32_t generation_b = commit_graph_generation(b);
-+	uint32_t generation_a = commit_graph_data_at(a)->generation;
-+	uint32_t generation_b = commit_graph_data_at(b)->generation;
- 	/* lower generation commits first */
- 	if (generation_a < generation_b)
- 		return -1;
++		if (repo_parse_commit_gently(revs->repo, parent, 1) < 0)
++			return;
++
+ 		if (*pi)
+ 			(*pi)++;
+ 		else
 -- 
 gitgitgadget
 
