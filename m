@@ -2,108 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08056C43381
-	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 22:58:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FF83C433DB
+	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 22:59:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id DDDC9222BB
-	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 22:58:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5F83B222F9
+	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 22:59:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727686AbgL1W6X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Dec 2020 17:58:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56388 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726429AbgL1W6U (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Dec 2020 17:58:20 -0500
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30BDDC061793
-        for <git@vger.kernel.org>; Mon, 28 Dec 2020 14:57:40 -0800 (PST)
-Received: by mail-pg1-x531.google.com with SMTP id c22so8093804pgg.13
-        for <git@vger.kernel.org>; Mon, 28 Dec 2020 14:57:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=LZOKo/tY/u5toRIq9/2/3MHSsyC67s3S57IS7g8hcmY=;
-        b=D9oGeMDStvPTxa0xOxQGMH8iL+wxBiPrsEGzc7D+4q2uXRg1JE6/G08iEOsu+ssTvV
-         4JROjjtZyuzFVoIu1uxr5yNz2D/e4coebH6A0IQ44bS6hmgActYHUy9YHxJd82E4eN03
-         rTpYJ8oky0/fRcw528F2SX9qTsUDqWSe/lhSZDN2VHrGikk/ZbYahreC5t+4c97GZGYD
-         HeDXWZZ/cZPduPYsyp7PmO8W3U69H1VFl1zBGqq4sMz/uO6DlAa91VP+Fa1bhKT0+sFm
-         tcT/9cxrSwSFC82zSXx/9rgUYgJXpUeh9e5vr4eTcqqjw+UdZMcCYezjkQAAwTK37+4q
-         KAIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=LZOKo/tY/u5toRIq9/2/3MHSsyC67s3S57IS7g8hcmY=;
-        b=doudbOkdY8BzQzsx1/cgPqq2t2uKnaRq743XmES2VUphOfzq0LFUegLLr0Utq04t2T
-         jhQZBTsD1XH6aPucp4v/WLUdV3w+wUdZ+WCWR1h4If6OLiiXKjvAdh85TPCGDo9/3w8q
-         PQS6qHTB68P+56KBi5ekaXdMSluqFutyaCHxlco42ulo1ui7hzoyhcjuyaA3wutxOKhD
-         S2ddeRdD+rlVc3FEHxE9Fpp2/DJGHD0LLEX4ze6ngvYe/oPIvw8tNRDXIdUddyVBEy1h
-         PPWlJXecDOcLkUk0Fk0swf2o4XBuIxjeuH7kwFum9fdaOy+00W6+sAc2bsj93n9Ila3W
-         uaCA==
-X-Gm-Message-State: AOAM532CsQI6sdfWrmQv4njA1C/nEYtGyksTgok7fMr7NCGaNWPOH1Sz
-        QfnNJNvX7IflM1SpK7uHTHI=
-X-Google-Smtp-Source: ABdhPJxpmict34IPDZewxyjAgZj6fRbDMGm/U73swvzUCzZwKYopsSSXlKCdgcL4gGcwA+jspcXUsA==
-X-Received: by 2002:a63:4404:: with SMTP id r4mr30452780pga.149.1609196259670;
-        Mon, 28 Dec 2020 14:57:39 -0800 (PST)
-Received: from generichostname (c-67-188-114-10.hsd1.ca.comcast.net. [67.188.114.10])
-        by smtp.gmail.com with ESMTPSA id o193sm31859053pfg.27.2020.12.28.14.57.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Dec 2020 14:57:38 -0800 (PST)
-Date:   Mon, 28 Dec 2020 14:57:36 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/2] test: completion: add tests for __git_complete
-Message-ID: <X+pi4NoR116Js/XI@generichostname>
-References: <20201228192302.80467-1-felipe.contreras@gmail.com>
- <20201228192302.80467-2-felipe.contreras@gmail.com>
+        id S1728025AbgL1W7b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Dec 2020 17:59:31 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50545 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727861AbgL1W70 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Dec 2020 17:59:26 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CEA2C890CF;
+        Mon, 28 Dec 2020 17:58:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=G5t9TKrUpb30
+        Ubd42bosRCRiKek=; b=aQkzRBvCMMDV8ZsDhsPOJDslbA2J8n9WQlNYXl7MvHDP
+        fkR3X8uxYg3zTb2+npW4e0WY0Zb/7Q5Zf2ve7gmvHjcBmXtja76kW7/nv4IaTPs9
+        czQAqIXm3KIEKfeaWwNvj8WhgAoyy3BsGMX+HsXC1dINwLys/eCgYGbjqvC5Iv0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=aJrNY1
+        8MDuRt3Jc/x3Yo040bJfyImZVQk3Xb4VSSOLP04s2kJLNca70QqoE5UNqg+NlMQG
+        X0CAzgqJGsgB88wR1dkStKOi3R3LigVh6eRRodD69qrgmFVJ4Aw+1Ess0zINyFFe
+        jTaD6BCWHUTwpU2dat5ctDY7hoQ3EJhoU6ggM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C6D5C890CE;
+        Mon, 28 Dec 2020 17:58:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5080E890CD;
+        Mon, 28 Dec 2020 17:58:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] CoC: update to version 2.0 + local changes
+References: <xmqq5z4mjdbq.fsf@gitster.c.googlers.com>
+        <20201228171734.30038-3-avarab@gmail.com>
+Date:   Mon, 28 Dec 2020 14:58:42 -0800
+In-Reply-To: <20201228171734.30038-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Mon, 28 Dec 2020 18:17:34 +0100")
+Message-ID: <xmqqmtxxedwd.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201228192302.80467-2-felipe.contreras@gmail.com>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 3BC5DA24-4960-11EB-9195-D152C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Felipe,
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-On Mon, Dec 28, 2020 at 01:23:01PM -0600, Felipe Contreras wrote:
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  t/t9902-completion.sh | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-> index a1c4f1f6d4..2e59fe4de0 100755
-> --- a/t/t9902-completion.sh
-> +++ b/t/t9902-completion.sh
-> @@ -2380,4 +2380,11 @@ test_expect_success 'sourcing the completion script clears cached --options' '
->  	verbose test -z "$__gitcomp_builtin_notes_edit"
->  '
->  
-> +test_expect_success '__git_complete' '
-> +	__git_complete foo __git_main &&
-> +	test "$(type -t __git_wrap__git_main)" == function &&
+> This change intentionally preserves a warning emitted on "git diff
+> --check". It's better to make it easily diff-able with upstream than
+> to fix whitespace changes in our version while we're at it.
 
-s/==/=/ for this and the other patch.
+I think there are only two lines that needs to tolerate trailing
+whitespaces, and even if we strip them, it should be still easily
+diff-able with the upstream with --ignore-space-at-eol or whatever
+appropriate option, so I am not sure if it is worth try "keeping"
+these whitespace breakage.
 
--Denton
+If you still want to do so, we should tweak .gitattributes so that
+"git diff --check" would not trigger.
 
-> +	__git_complete gf _git_fetch &&
-> +	test "$(type -t __git_wrap_git_fetch)" == function
-> +'
-> +
->  test_done
-> -- 
-> 2.30.0.rc2
-> 
+> 1. https://www.contributor-covenant.org/version/2/0/code_of_conduct/cod=
+e_of_conduct.md
+
+Yes, thanks for the full URL.  In 5cdf2301 (add a Code of Conduct
+document, 2019-09-24) we pointed at the HTML version, but if we ship
+MD and they have MD, using theirs as the base makes perfect sense.
+
+Sign-off plus acks need to be collected here.
+
+Thanks.
