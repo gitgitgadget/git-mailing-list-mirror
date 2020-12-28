@@ -7,127 +7,137 @@ X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CA5AC433E0
-	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 10:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BC10C433DB
+	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 10:40:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 5D14B207C9
-	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 10:31:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 41CA52242A
+	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 10:40:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727165AbgL1Kaj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Dec 2020 05:30:39 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61036 "EHLO
+        id S1727030AbgL1Kki (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Dec 2020 05:40:38 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59592 "EHLO
         pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727018AbgL1Kai (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Dec 2020 05:30:38 -0500
+        with ESMTP id S1727019AbgL1Kki (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Dec 2020 05:40:38 -0500
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D7B169BACF;
-        Mon, 28 Dec 2020 05:29:54 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 787BD9BB15;
+        Mon, 28 Dec 2020 05:39:54 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=rJ/3LXvW9SfL6p0wFe4FGVXxgXI=; b=reVTpe/3pe18k9SUglZv
-        xkG7f7+9EGnzYBntAs8BNiGkK0JF0Lrst/iFh1mBMqw4c2cpllOeCqG6SGilApVL
-        9d3OdF7umPwmeGI/9Uv5fXeUAW3BHVZ6VVGmQb8VL+kX6JHT/QCFCwPfU9LbSgc3
-        +vMPUpzx58Po6DFptlQshVc=
+         s=sasl; bh=BOpZK9SWDCsqSdHIcz/+iSPBQyg=; b=EpACDNkMscPlHewDhLJL
+        1Ol3aJ+7i8nk77cZeLvGud2UJyCf5fml0twRIVRXGop1ZFrKf6KkC8LUkUiaufSX
+        TTzszkymWFMj3nv1zdcGoU1goXRzLvIUB2QUc5TYXVqNBLav+WVSMa4srds85rDK
+        ax2mX2siXr7rE6XUdrZN0xA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=sVQzT7gUluSq8cLxXHyOXSe5053v3y1yBTktGyu0K5QJx7
-        wLjy7TXT+FXwJqPKdZXRMuByrZHe+U7fkl80+6HQgCcw/7nqpNuKL0bBZk6GuYp1
-        l9rBK69wFrX8t1s4qIPZQ8PaT5AzHCN4vd9rmlSI37Jd4u+KidmrZdWPy+BGQ=
+         q=dns; s=sasl; b=V75CvUwMP93j6Tps160kdncSQrXFRb3gngbN37JDzNh22o
+        dBIUCH2CkU70X1bwSRJ1My7GwEv9G4us+oXUB0WUMMiK2cULLrx8OIAmHcn8Nmsl
+        kVbvrezgAxobp28K+/0UZjnlTgZViF4RAt1BZpPqbaa0sSrofBen9yslQKd7E=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BBAC89BACE;
-        Mon, 28 Dec 2020 05:29:54 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6D2339BB14;
+        Mon, 28 Dec 2020 05:39:54 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.196.173.25])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 392699BACD;
-        Mon, 28 Dec 2020 05:29:54 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EF4519BB13;
+        Mon, 28 Dec 2020 05:39:53 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Seth House <seth@eseth.com>
-Cc:     git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v7 0/2] mergetool: add automerge configuration
-References: <20201227205835.502556-1-seth@eseth.com>
-        <20201228004152.522421-1-seth@eseth.com>
-Date:   Mon, 28 Dec 2020 02:29:53 -0800
-Message-ID: <xmqqsg7qjk9q.fsf@gitster.c.googlers.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Pratyush Yadav <me@yadavpratyush.com>,
+        David Aguilar <davvid@gmail.com>, Seth House <seth@eseth.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        git@sfconservancy.org
+Subject: Re: Nobody is THE one making contribution
+References: <5fdc18a91c402_f2faf20837@natae.notmuch>
+        <xmqq1rfmqc8g.fsf@gitster.c.googlers.com>
+        <20201221042501.GA146725@ellen>
+        <5fe033e0ec278_96932089d@natae.notmuch>
+        <20201221073633.GA157132@ellen>
+        <CAJDDKr6LrBMyfdp5Tutp29W9OqhbW4ffcP5e6PD8ruyxk3rQxA@mail.gmail.com>
+        <5fe134eeaec71_11498208f9@natae.notmuch>
+        <20201222150124.mnfcyofm4qyvvj4n@yadavpratyush.com>
+        <5fe2c64bd3790_17f6720897@natae.notmuch>
+        <xmqq5z4tdsiz.fsf@gitster.c.googlers.com>
+        <5fe2d89c212e8_18dc12083e@natae.notmuch>
+        <xmqqzh248sy0.fsf@gitster.c.googlers.com>
+        <5fe36790793ae_2354120839@natae.notmuch>
+        <87r1ngufmf.fsf@evledraar.gmail.com>
+        <5fe424d0528a2_7855a208d3@natae.notmuch>
+        <87o8ijv124.fsf@evledraar.gmail.com>
+        <5fe4b33dbc028_19c920834@natae.notmuch>
+        <xmqqtusa24oa.fsf@gitster.c.googlers.com>
+        <5fe8c464bc190_e22d2086a@natae.notmuch>
+        <xmqq5z4nqey1.fsf@gitster.c.googlers.com>
+        <5fe8d6bf1a1a3_f1c220893@natae.notmuch>
+Date:   Mon, 28 Dec 2020 02:39:53 -0800
+Message-ID: <xmqqmtxyjjt2.fsf@gitster.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 9FF21EAE-48F7-11EB-A140-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 056CC896-48F9-11EB-AD4D-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Seth House <seth@eseth.com> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
->    * Signed off on Felipe's commit. (Although I have minor qualms with
->      Felipe's various wording and even the name of the flag it is
->      decidedly not worth burdening the list with bike-shedding.)
+> Junio C Hamano wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>> 
+>> >> But if you are arguing that when you write "Signed-off-by:" your
+>> >> sign-off can mean something other than what DCO says it means,
+>> >
+>> > The DCO has clause (d), which clearly states the developer must agree
+>> > that a record of his/her contribution is maintained indefinitely (and
+>> > that includes his/her sign off).
+>> 
+>> Yes.  Are you saying that you are OK with (a)-(c) but not (d)?
+>
+> I'm saying if the author of the patch states "I don't agree with a
+> record of my contribution being maintained indefinitely with my sign
+> off", then clause (d) isn't met.
 
-Even when the original is a horrible patch in your opinion that is
-laden with bugs, as long as the original author signed it off
-(which means that the original author certifies that it can be
-included in and distributed by the project under our licensing
-terms, and agrees to the fact that the original author did so will
-be recorded in perpetuity), you can relay such a patch as-is, and
-you are required (i.e. SubmittingPatches is pretty clear that
-without your sign-off we cannot accept) to sign it off to record
-the provenance of the code.
+Yeah, but then why does such an author add Signed-off-by: trailer to
+begin with?  Here is what Documentation/SubmittingPatches tells the
+authors:
 
-The other side of the above coin is that you are not endorsing or
-vounching for the patch when you sign it off, so your name is not
-smudged by wording and flag name chosen in a way that you may
-consider poor.  So "Although..." part is not a good objection
-against signing it off.
+    === Certify your work by adding your `Signed-off-by` trailer
 
-In other words, sign-off is not about assuring quality.
+    To improve tracking of who did what, we ask you to certify that you
+    wrote the patch or have the right to pass it on under the same license
+    as ours, by "signing off" your patch.  Without sign-off, we cannot
+    accept your patches.
 
-Also, instead of relaying as-is, you can relay a patch with your
-improvements rolled into the same patch (i.e. not as follow-up
-fixes).  Some (or major) parts of the original patch may still
-remain in the edited result and you'd need to keep original author's
-sign-off as-is [*1*].
+    If you can certify the below D-C-O:
 
-In this topic's case, 2/2 would be a feature enhancement on top of
-1/2, so relaying 1/2 as-is would be OK, but in a case where an
-promising patch was sent with sign-off and bugs, then gets abandoned
-by the original author, fixing the bug in the patch you relay in
-place (i.e. not as follow-up patches) may even be necessary to keep
-bisectability.  When you do so, you'd typically do:
+    [[dco]]
+    .Developer's Certificate of Origin 1.1
+    ____
+    By making a contribution to this project, I certify that:
 
-	Subject: [PATCH] title of the patch
+    a. ...; or
+    b. ...; or
+    c. The contribution was provided directly to me by some other
+       person who certified (a), (b) or (c) and I have not modified
+       it.
 
-	... original author's log message, possibly copyedited
-	... by you
+    d. I understand and agree that this project and the contribution
+       are public and that a record of the contribution (including all
+       personal information I submit with it, including my sign-off) is
+       maintained indefinitely and may be redistributed consistent with
+       this project or the open source license(s) involved.
+    ____
 
-+	<Comment on what you did on top of the original can come here>
+    you add a "Signed-off-by" trailer to your commit, that looks like
+    this:
 
-	Signed-off-by: Original Author <ori@ginal.au.thor>
-+	[or brief comment here]
-+	Signed-off-by: Your Name <you@your.do.main>
+So, "by making a contribution", the author who added a Signed-off-by
+trailer is certifying that (a|b|c)&d is true.
 
- (1) add your sign-off at the end
- (2) explain what you changed relative to the original, either
-     inside [] on the line before your sign-off, or at the end
-     of the log message proper.
-
-to indicate that it is not relayed as-is; this allows you to take
-responsibility of an unintended breakage your "fixes" might have
-caused.
-
-
-[Footnote]
-
-*1* The result may become something that no longer aligns the
-original author's opinion, but that is OK.  The sign-off by the
-original author just says that the original author has the right to
-contribute (the remaining part of) the patch and the original author
-agrees that the record of author's involvement in the patch
-(including sign-off) will be kept.  
-
-It is not about assuring quality of the final work by the original
-author, either.
+Perhaps we can tighten the language to say "If (and only if) you can
+certify" and that may reduce confusion?
