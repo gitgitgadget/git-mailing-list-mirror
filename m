@@ -8,61 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4325C433E9
-	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 20:06:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CBF5C43381
+	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 20:06:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 87A1022209
+	by mail.kernel.org (Postfix) with ESMTP id BFF9022209
 	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 20:06:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726285AbgL2UGZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Dec 2020 15:06:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53606 "EHLO
+        id S1726305AbgL2UG2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Dec 2020 15:06:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726185AbgL2UGX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Dec 2020 15:06:23 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2DFDC061793
-        for <git@vger.kernel.org>; Tue, 29 Dec 2020 12:05:32 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id i9so15620347wrc.4
-        for <git@vger.kernel.org>; Tue, 29 Dec 2020 12:05:32 -0800 (PST)
+        with ESMTP id S1726244AbgL2UGY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Dec 2020 15:06:24 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5B89C06179C
+        for <git@vger.kernel.org>; Tue, 29 Dec 2020 12:05:37 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id t30so15640778wrb.0
+        for <git@vger.kernel.org>; Tue, 29 Dec 2020 12:05:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=uKzxYlth5/h5Z+r4ojWksiqQ0jpLKXXnqR8B6eOh0po=;
-        b=OJ2U4+LeLOh+XJX2PdGRYR+GiT2HIQQCLZlMpvOHWfBORAE21PNSlVspMNHwBIdFg8
-         jDRZKYXqcue1s85S1aI14PK8mPN4yXk8FCh7rhtszCvHi7lrT5eC/MlvSBsWwjRTRCYb
-         8wVuj3iMsOvtShzoAfHPBMFpCosKlPduqnyibuL2BtiXulRSBYVrLNg6sePcGYzTMP3R
-         /VtkJc6jFIDdIIXMBdEzZkNaVyP61sxuYdWR/wTHzkUUgnZ9tupk42ejrF+sbX7LpFHn
-         ATGUMHNMu78r8B+w/W4mU+COhvFNTa7Zwqe0Z5lGeMIjLGWOkOWgkV5E1HNOzbnERUKr
-         nfCg==
+        bh=eRAhQFYeUrdX9pZ+F6hjVvCTkeVuTmB0eYXdB7dAjOA=;
+        b=eCGLmvZZaZvf94hDS84A9/DirkkQRi2sc7j0XYMemfGutZhAV5tqqgHTyBzUAT0s6a
+         8LRCkqxdLoWZQuGWRitY3LiI/a/vXccom7mzl8M+OCJo7kdBvRaIuyAJ+GI6A3lqcU1N
+         y5bJ3wIjVGcE2uKz4IMLQCeFl+QTko3o+4zG0MjD55zBQb6QtSS8jWrOn9a+vrsWunXc
+         hr7Y1ADwgZhrhdsBHiSjjgYTHGHdG5bxiiCNYEJ1jxF0Fwa9GEf6pebIr97t38coCPjZ
+         hWys5aC4MjzhpTtt0LnhDszDwxwoBM/JCc19YRGhLFk8Rjbz83NBpxpLsvCgdJJt8ymG
+         E8wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=uKzxYlth5/h5Z+r4ojWksiqQ0jpLKXXnqR8B6eOh0po=;
-        b=nIk+hkci08pbYCfdMHogHqZ90ZRMY15yKSkaS39mH95WyA4s+9KU5EO4OdTdfjSMVg
-         /yZaWD1nSrh8ldj4DRNcSZUlV5Rs+EZToiGkrEdcFkr+S1PSqalfJLxIolNdiTOkQ17/
-         ujLiP5uUv/Nch0YYLv7ymLRnE5CHNQS2bdKv5QADm9auZUpCJ0zyTLmZ6VZQUcolepC3
-         wTHvuNXSmU6LlrItfUb7WwaQh11hksXvCffAEhCCfXTWhLUqQ6CNpPB4pCvgSzm3g3Da
-         /5LP1pZitFoNsobhJ7T0nCu2Jsli8NfdAI8sxSRfow/qNaNjJJ7rvPVYCf24PNFzpI/u
-         x2SA==
-X-Gm-Message-State: AOAM5331dfTOTOKFG0/0tQqtO07SM3iQ+yaRB6U6dTp6cuXQJYPFG8KZ
-        gFiAY1y6P4g1ARFq+mGiuMTcFAFoJKw=
-X-Google-Smtp-Source: ABdhPJx9DvwNzmRfSnq6lyL/ZZ65Z5HdpNYTXQcEBCEE36fZ++hdKvvt3CBGcWtjLpDe/dUND/I/CQ==
-X-Received: by 2002:a5d:5385:: with SMTP id d5mr57015964wrv.384.1609272331138;
-        Tue, 29 Dec 2020 12:05:31 -0800 (PST)
+        bh=eRAhQFYeUrdX9pZ+F6hjVvCTkeVuTmB0eYXdB7dAjOA=;
+        b=aldfTgaacjUGFCwwIoIbs3rS9oh7n1Jqlj8xwZRmPrmbjkhpQea4vJgarABUvaQez0
+         nGe4Q8NM0NUI1hrL6Nd8I9CPjkjhftH3CW33YsgYlNK81THPJUUSN5PDbOybE/cW8A3C
+         Vo4BdydUoQ3mY2PEy7Nixd8yBdrNPHJIp6N9faYyJ7MlB0IpUELbWQhPcCoAI1kHzxru
+         lRYSgJQ8TtFOJrLoF0v/aW4oENQG+OxcN1egvPAolYF8U41kPUUOZCUUbRWGHYX98scc
+         3sTj2ktC7yMO64PVzr/sqIDnTH3d/15/wAYkpxpxbYkqIGo97nuyvmEEaXTlI/T4SFZq
+         x9NQ==
+X-Gm-Message-State: AOAM533bytXgDxOL5da9X6Oglz+0Amee/rPDweZmzaQQQUlofzgHiVxs
+        QoCSKlHKGtpKLJx3k9F9Cd3mzkno8Ak=
+X-Google-Smtp-Source: ABdhPJzFEwcxyJimhRRjLIc2rYJvAkmBhJLr5oW4w6YjVdaO8TG+bSYTl2fY4KsWOH/mKCPJcNbgRw==
+X-Received: by 2002:adf:c403:: with SMTP id v3mr55934656wrf.55.1609272336222;
+        Tue, 29 Dec 2020 12:05:36 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r1sm64211813wrl.95.2020.12.29.12.05.30
+        by smtp.gmail.com with ESMTPSA id y130sm5005845wmc.22.2020.12.29.12.05.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Dec 2020 12:05:30 -0800 (PST)
-Message-Id: <428d8204894f668e925c640b2f72dc597164e706.1609272328.git.gitgitgadget@gmail.com>
+        Tue, 29 Dec 2020 12:05:35 -0800 (PST)
+Message-Id: <a58639b2927fc9b51351d2d1da134a757c657723.1609272328.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.929.v3.git.git.1609272328.gitgitgadget@gmail.com>
 References: <pull.929.v2.git.git.1607677728.gitgitgadget@gmail.com>
         <pull.929.v3.git.git.1609272328.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 29 Dec 2020 20:05:20 +0000
-Subject: [PATCH v3 1/9] diffcore-rename: rename num_create to num_destinations
+Date:   Tue, 29 Dec 2020 20:05:26 +0000
+Subject: [PATCH v3 7/9] diffcore-rename: simplify and accelerate
+ register_rename_src()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,97 +79,81 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Our main data structures are rename_src and rename_dst.  For counters of
-these data structures, num_sources and num_destinations seem natural;
-definitely more so than using num_create for the latter.
+register_rename_src() took pains to create an array in rename_src which
+was sorted by pathname of the contained diff_filepair.  The sorting was
+entirely unnecessary since callers pass filepairs to us in sorted
+order.  We can simply append to the end of the rename_src array,
+speeding up diffcore_rename() setup time.
+
+Also, note that I dropped the return type on the function since it was
+unconditionally discarded anyway.
+
+This patch is being submitted in a different order than its original
+development, but in a large rebase of many commits with lots of renames
+and with several optimizations to inexact rename detection,
+diffcore_rename() setup time was a sizeable chunk of overall runtime.
+This patch dropped execution time of rebasing 35 commits with lots of
+renames by 2% overall.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- diffcore-rename.c | 25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ diffcore-rename.c | 39 +++++++++++++--------------------------
+ 1 file changed, 13 insertions(+), 26 deletions(-)
 
 diff --git a/diffcore-rename.c b/diffcore-rename.c
-index d367a6d2443..15a98f566e4 100644
+index 55a188abcc3..a215421a9cb 100644
 --- a/diffcore-rename.c
 +++ b/diffcore-rename.c
-@@ -434,7 +434,7 @@ static void record_if_better(struct diff_score m[], struct diff_score *o)
-  * 1 if we need to disable inexact rename detection;
-  * 2 if we would be under the limit if we were given -C instead of -C -C.
-  */
--static int too_many_rename_candidates(int num_create,
-+static int too_many_rename_candidates(int num_destinations,
- 				      struct diff_options *options)
+@@ -76,36 +76,23 @@ static struct diff_rename_src {
+ } *rename_src;
+ static int rename_src_nr, rename_src_alloc;
+ 
+-static struct diff_rename_src *register_rename_src(struct diff_filepair *p)
++static void register_rename_src(struct diff_filepair *p)
  {
- 	int rename_limit = options->rename_limit;
-@@ -447,17 +447,17 @@ static int too_many_rename_candidates(int num_create,
- 	 * This basically does a test for the rename matrix not
- 	 * growing larger than a "rename_limit" square matrix, ie:
- 	 *
--	 *    num_create * num_src > rename_limit * rename_limit
-+	 *    num_destinations * num_src > rename_limit * rename_limit
- 	 */
- 	if (rename_limit <= 0)
- 		rename_limit = 32767;
--	if ((num_create <= rename_limit || num_src <= rename_limit) &&
--	    ((uint64_t)num_create * (uint64_t)num_src
-+	if ((num_destinations <= rename_limit || num_src <= rename_limit) &&
-+	    ((uint64_t)num_destinations * (uint64_t)num_src
- 	     <= (uint64_t)rename_limit * (uint64_t)rename_limit))
- 		return 0;
+-	int first, last;
+-	struct diff_filespec *one = p->one;
+-	unsigned short score = p->score;
+-
+-	first = 0;
+-	last = rename_src_nr;
+-	while (last > first) {
+-		int next = first + ((last - first) >> 1);
+-		struct diff_rename_src *src = &(rename_src[next]);
+-		int cmp = strcmp(one->path, src->p->one->path);
+-		if (!cmp)
+-			return src;
+-		if (cmp < 0) {
+-			last = next;
+-			continue;
+-		}
+-		first = next+1;
+-	}
++	/*
++	 * If we have multiple entries at the same path in the source tree
++	 * (an invalid tree, to be sure), avoid using more more than one
++	 * such entry in rename detection.  Once upon a time, doing so
++	 * caused segfaults; see commit 25d5ea410f ("[PATCH] Redo
++	 * rename/copy detection logic.", 2005-05-24).
++	 */
++	if (rename_src_nr > 0 &&
++	    !strcmp(rename_src[rename_src_nr-1].p->one->path, p->one->path))
++		return;
  
- 	options->needed_rename_limit =
--		num_src > num_create ? num_src : num_create;
-+		num_src > num_destinations ? num_src : num_destinations;
+-	/* insert to make it at "first" */
+ 	ALLOC_GROW(rename_src, rename_src_nr + 1, rename_src_alloc);
++	rename_src[rename_src_nr].p = p;
++	rename_src[rename_src_nr].score = p->score;
+ 	rename_src_nr++;
+-	if (first < rename_src_nr)
+-		MOVE_ARRAY(rename_src + first + 1, rename_src + first,
+-			   rename_src_nr - first - 1);
+-	rename_src[first].p = p;
+-	rename_src[first].score = score;
+-	return &(rename_src[first]);
+ }
  
- 	/* Are we running under -C -C? */
- 	if (!options->flags.find_copies_harder)
-@@ -469,8 +469,8 @@ static int too_many_rename_candidates(int num_create,
- 			continue;
- 		num_src++;
- 	}
--	if ((num_create <= rename_limit || num_src <= rename_limit) &&
--	    ((uint64_t)num_create * (uint64_t)num_src
-+	if ((num_destinations <= rename_limit || num_src <= rename_limit) &&
-+	    ((uint64_t)num_destinations * (uint64_t)num_src
- 	     <= (uint64_t)rename_limit * (uint64_t)rename_limit))
- 		return 2;
- 	return 1;
-@@ -505,7 +505,7 @@ void diffcore_rename(struct diff_options *options)
- 	struct diff_queue_struct outq;
- 	struct diff_score *mx;
- 	int i, j, rename_count, skip_unmodified = 0;
--	int num_create, dst_cnt;
-+	int num_destinations, dst_cnt;
- 	struct progress *progress = NULL;
- 
- 	if (!minimum_score)
-@@ -570,13 +570,13 @@ void diffcore_rename(struct diff_options *options)
- 	 * Calculate how many renames are left (but all the source
- 	 * files still remain as options for rename/copies!)
- 	 */
--	num_create = (rename_dst_nr - rename_count);
-+	num_destinations = (rename_dst_nr - rename_count);
- 
- 	/* All done? */
--	if (!num_create)
-+	if (!num_destinations)
- 		goto cleanup;
- 
--	switch (too_many_rename_candidates(num_create, options)) {
-+	switch (too_many_rename_candidates(num_destinations, options)) {
- 	case 1:
- 		goto cleanup;
- 	case 2:
-@@ -593,7 +593,8 @@ void diffcore_rename(struct diff_options *options)
- 				(uint64_t)rename_dst_nr * (uint64_t)rename_src_nr);
- 	}
- 
--	mx = xcalloc(st_mult(NUM_CANDIDATE_PER_DST, num_create), sizeof(*mx));
-+	mx = xcalloc(st_mult(NUM_CANDIDATE_PER_DST, num_destinations),
-+		     sizeof(*mx));
- 	for (dst_cnt = i = 0; i < rename_dst_nr; i++) {
- 		struct diff_filespec *two = rename_dst[i].two;
- 		struct diff_score *m;
+ static int basename_same(struct diff_filespec *src, struct diff_filespec *dst)
 -- 
 gitgitgadget
 
