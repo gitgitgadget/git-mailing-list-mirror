@@ -2,182 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-16.8 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 308ABC04E84
-	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 23:23:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB9F0C433E0
+	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 00:13:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 105D4207A6
-	for <git@archiver.kernel.org>; Mon, 28 Dec 2020 23:23:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B2BF3207CF
+	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 00:13:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729573AbgL1Wze (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Dec 2020 17:55:34 -0500
-Received: from out02.mta.xmission.com ([166.70.13.232]:48902 "EHLO
-        out02.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729265AbgL1Tah (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Dec 2020 14:30:37 -0500
-Received: from in01.mta.xmission.com ([166.70.13.51])
-        by out02.mta.xmission.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.93)
-        (envelope-from <seth@eseth.com>)
-        id 1ktyDM-002gQL-EX; Mon, 28 Dec 2020 12:29:56 -0700
-Received: from mta5.zcs.xmission.com ([166.70.13.69])
-        by in01.mta.xmission.com with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.87)
-        (envelope-from <seth@eseth.com>)
-        id 1ktyDL-0002Gb-IM; Mon, 28 Dec 2020 12:29:56 -0700
-Received: from localhost (localhost [127.0.0.1])
-        by mta5.zcs.xmission.com (Postfix) with ESMTP id 7502B128038B;
-        Mon, 28 Dec 2020 12:29:55 -0700 (MST)
-X-Amavis-Modified: Mail body modified (using disclaimer) -
-        mta5.zcs.xmission.com
-Received: from mta5.zcs.xmission.com ([127.0.0.1])
-        by localhost (mta5.zcs.xmission.com [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id jMI0za8NrcmG; Mon, 28 Dec 2020 12:29:55 -0700 (MST)
-Received: from localhost.localdomain (unknown [139.60.10.209])
-        by mta5.zcs.xmission.com (Postfix) with ESMTPSA id 1D0A91280695;
-        Mon, 28 Dec 2020 12:29:55 -0700 (MST)
-From:   Seth House <seth@eseth.com>
-To:     git@vger.kernel.org
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Seth House <seth@eseth.com>
-Date:   Mon, 28 Dec 2020 12:29:15 -0700
-Message-Id: <20201228192919.1195211-2-seth@eseth.com>
-X-Mailer: git-send-email 2.30.0.rc2.4.g8f3eabcc0e
-In-Reply-To: <20201228192919.1195211-1-seth@eseth.com>
-References: <20201228045427.1166911-1-seth@eseth.com>
- <20201228192919.1195211-1-seth@eseth.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-XM-SPF: eid=1ktyDL-0002Gb-IM;;;mid=<20201228192919.1195211-2-seth@eseth.com>;;;hst=in01.mta.xmission.com;;;ip=166.70.13.69;;;frm=seth@eseth.com;;;spf=none
-X-SA-Exim-Connect-IP: 166.70.13.69
-X-SA-Exim-Mail-From: seth@eseth.com
-Subject: [PATCH v9 1/5] mergetool: add automerge configuration
-X-SA-Exim-Version: 4.2.1 (built Thu, 05 May 2016 13:38:54 -0600)
-X-SA-Exim-Scanned: Yes (on in01.mta.xmission.com)
+        id S1730306AbgL2ANM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Dec 2020 19:13:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39742 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730287AbgL2ANK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Dec 2020 19:13:10 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B41E8C0613D6
+        for <git@vger.kernel.org>; Mon, 28 Dec 2020 16:12:30 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id 15so13127488oix.8
+        for <git@vger.kernel.org>; Mon, 28 Dec 2020 16:12:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-transfer-encoding;
+        bh=GZ9EOrxGCEAR6etw4wcmXjdNokZPINgiobrj0kzjgms=;
+        b=rZ654/l34TkoE6VQRcZTNFs6aruOu8DTQHDVKSwNrRBoH8LGlAqgwZrH2uWACo37xs
+         KXZGK9QxoF0I5z27CegDWAwTblsdB+8xZbWQ4m9Or21QACtyewU4PpPlt61FEzbRQLmc
+         kUx33l08OevLmUaaNkGdSifdbPajvzCWLfXc2ZbUUSLUQUVIv6pCxYhACwpPPWHAz5Kr
+         bFyCUQrEnzLlP/uLPXR/4dWEYqNCrijJPKiD+Dw/L2D+l6NdauE0PDQTtq0nbpVShHPa
+         PctN3wlYrpX6RUHRrJMj5rXvaOeFl0XdchbJmbJqG9l3W+aR3sHfvYoZcmQNw6q7qFJ6
+         R7Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
+         :references:subject:mime-version:content-transfer-encoding;
+        bh=GZ9EOrxGCEAR6etw4wcmXjdNokZPINgiobrj0kzjgms=;
+        b=MUh5MvmxMp2LTLgAJA9xodT/OecufSVTOikKpuY5cFeZb80wS3cLHfbhB5vFrNmm2U
+         jic8fMUrLgIThxZu5P83jH0QjGngj/ogTWcwDXyROu419QAz5aKpsG3G06tJsMecgx47
+         gX7ZwsIk7WgDtwbg4/pL71oGJ2DqkJEtDHOyqNduyJIa/8VGB42myZ7K7M6sI+W9lMyg
+         JDJ+DHa7SuFoH6YWkIG+xnwc8BQHiZcyYNXTlakj1Ys7ULskPGtkoDuBBsCoV40/pSrx
+         LVwsPrUWaDexXE7lrh5k/crwmp1VupTTv8elizlVW1WRSQoLmQRzg96YOCPeP1+gI/wJ
+         gU7w==
+X-Gm-Message-State: AOAM533dYOV0kDChjApmweXYM+zFXQteVEesy5Gr4xRKEPiN7KCTKs/R
+        Lbnn/fEwxx5CIJcxXb65jKA=
+X-Google-Smtp-Source: ABdhPJwzaauR3S44ST1fX1lj0dGESIv5JggRrdISCC8GQ3Celn9hhlFXYdq09mrkgPD8Jyo8rurUcg==
+X-Received: by 2002:aca:5204:: with SMTP id g4mr898700oib.91.1609200750201;
+        Mon, 28 Dec 2020 16:12:30 -0800 (PST)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id a14sm5985267oie.12.2020.12.28.16.12.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Dec 2020 16:12:29 -0800 (PST)
+Date:   Mon, 28 Dec 2020 18:12:28 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Denton Liu <liu.denton@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Message-ID: <5fea746c536c0_22b892087a@natae.notmuch>
+In-Reply-To: <X+pi4NoR116Js/XI@generichostname>
+References: <20201228192302.80467-1-felipe.contreras@gmail.com>
+ <20201228192302.80467-2-felipe.contreras@gmail.com>
+ <X+pi4NoR116Js/XI@generichostname>
+Subject: Re: [PATCH 1/2] test: completion: add tests for __git_complete
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Felipe Contreras <felipe.contreras@gmail.com>
+Denton Liu wrote:
+> Hi Felipe,
+> 
+> On Mon, Dec 28, 2020 at 01:23:01PM -0600, Felipe Contreras wrote:
+> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+> > ---
+> >  t/t9902-completion.sh | 7 +++++++
+> >  1 file changed, 7 insertions(+)
+> > 
+> > diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> > index a1c4f1f6d4..2e59fe4de0 100755
+> > --- a/t/t9902-completion.sh
+> > +++ b/t/t9902-completion.sh
+> > @@ -2380,4 +2380,11 @@ test_expect_success 'sourcing the completion script clears cached --options' '
+> >  	verbose test -z "$__gitcomp_builtin_notes_edit"
+> >  '
+> >  
+> > +test_expect_success '__git_complete' '
+> > +	__git_complete foo __git_main &&
+> > +	test "$(type -t __git_wrap__git_main)" == function &&
+> 
+> s/==/=/ for this and the other patch.
 
-The purpose of mergetools is to resolve conflicts when git cannot
-automatically do so.
+Sure, I'll include that in the next version.
 
-In order to do that git has added markers in the specific areas that
-need resolving, which the user must manually fix. The tool is supposed
-to help with that.
+But I expect people will make further comments on the whole method to
+find out if a function exists.
 
-However, by passing the original BASE, LOCAL, and REMOTE files, many
-changes without conflict are presented to the user when in fact nothing
-needs to be done for those.
-
-We can fix that by propagating the final version of the file with the
-automatic merge to all the panes of the mergetool (BASE, LOCAL, and
-REMOTE), and only make them differ on the places where there are actual
-conflicts.
-
-As most people will want the new behavior, we enable it by default.
-Users that do not want the new behavior can set the new configuration
-mergetool.autoMerge to false.
-
-See Seth House's blog post [1] for the idea, and the rationale.
-
-[1] https://www.eseth.org/2020/mergetools.html
-
-Original-idea-by: Seth House <seth@eseth.com>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-Signed-off-by: Seth House <seth@eseth.com>
----
- Documentation/config/mergetool.txt |  3 +++
- git-mergetool.sh                   | 17 +++++++++++++++++
- t/t7610-mergetool.sh               | 18 ++++++++++++++++++
- 3 files changed, 38 insertions(+)
-
-diff --git a/Documentation/config/mergetool.txt b/Documentation/config/mergetool.txt
-index 16a27443a3..7ce6d0d3ac 100644
---- a/Documentation/config/mergetool.txt
-+++ b/Documentation/config/mergetool.txt
-@@ -61,3 +61,6 @@ mergetool.writeToTemp::
- 
- mergetool.prompt::
- 	Prompt before each invocation of the merge resolution program.
-+
-+mergetool.autoMerge::
-+	Remove lines without conflicts from all the files. Defaults to `true`.
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index e3f6d543fb..f4db0cac8d 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -239,6 +239,17 @@ checkout_staged_file () {
- 	fi
- }
- 
-+auto_merge () {
-+	git merge-file --diff3 --marker-size=7 -q -p "$LOCAL" "$BASE" "$REMOTE" >"$DIFF3"
-+	if test -s "$DIFF3"
-+	then
-+		sed -e '/^<<<<<<< /,/^||||||| /d' -e '/^=======\r\?$/,/^>>>>>>> /d' "$DIFF3" >"$BASE"
-+		sed -e '/^||||||| /,/^>>>>>>> /d' -e '/^<<<<<<< /d' "$DIFF3" >"$LOCAL"
-+		sed -e '/^<<<<<<< /,/^=======\r\?$/d' -e '/^>>>>>>> /d' "$DIFF3" >"$REMOTE"
-+	fi
-+	rm -- "$DIFF3"
-+}
-+
- merge_file () {
- 	MERGED="$1"
- 
-@@ -274,6 +285,7 @@ merge_file () {
- 		BASE=${BASE##*/}
- 	fi
- 
-+	DIFF3="$MERGETOOL_TMPDIR/${BASE}_DIFF3_$$$ext"
- 	BACKUP="$MERGETOOL_TMPDIR/${BASE}_BACKUP_$$$ext"
- 	LOCAL="$MERGETOOL_TMPDIR/${BASE}_LOCAL_$$$ext"
- 	REMOTE="$MERGETOOL_TMPDIR/${BASE}_REMOTE_$$$ext"
-@@ -322,6 +334,11 @@ merge_file () {
- 	checkout_staged_file 2 "$MERGED" "$LOCAL"
- 	checkout_staged_file 3 "$MERGED" "$REMOTE"
- 
-+	if test "$(git config --bool mergetool.autoMerge)" != "false"
-+	then
-+		auto_merge
-+	fi
-+
- 	if test -z "$local_mode" || test -z "$remote_mode"
- 	then
- 		echo "Deleted merge conflict for '$MERGED':"
-diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index 70afdd06fa..ccabd04823 100755
---- a/t/t7610-mergetool.sh
-+++ b/t/t7610-mergetool.sh
-@@ -828,4 +828,22 @@ test_expect_success 'mergetool -Oorder-file is honored' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'mergetool automerge' '
-+	test_config mergetool.automerge true &&
-+	test_when_finished "git reset --hard" &&
-+	git checkout -b test${test_count}_b master &&
-+	test_write_lines >file1 base "" a &&
-+	git commit -a -m "base" &&
-+	test_write_lines >file1 base "" c &&
-+	git commit -a -m "remote update" &&
-+	git checkout -b test${test_count}_a HEAD~ &&
-+	test_write_lines >file1 local "" b &&
-+	git commit -a -m "local update" &&
-+	test_must_fail git merge test${test_count}_b &&
-+	yes "" | git mergetool file1 &&
-+	test_write_lines >expect local "" c &&
-+	test_cmp expect file1 &&
-+	git commit -m "test resolved with mergetool"
-+'
-+
- test_done
 -- 
-2.29.2
-
-
+Felipe Contreras
