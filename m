@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DAB28C43331
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEABAC43333
 	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 20:06:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A830021D1B
+	by mail.kernel.org (Postfix) with ESMTP id 882C0221F8
 	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 20:06:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726350AbgL2UGj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Dec 2020 15:06:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53602 "EHLO
+        id S1726313AbgL2UGa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Dec 2020 15:06:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726189AbgL2UGj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Dec 2020 15:06:39 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F3C5C06179F
-        for <git@vger.kernel.org>; Tue, 29 Dec 2020 12:05:39 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id r4so3039215wmh.5
-        for <git@vger.kernel.org>; Tue, 29 Dec 2020 12:05:39 -0800 (PST)
+        with ESMTP id S1726218AbgL2UGX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Dec 2020 15:06:23 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C133FC06179B
+        for <git@vger.kernel.org>; Tue, 29 Dec 2020 12:05:36 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id t16so15624984wra.3
+        for <git@vger.kernel.org>; Tue, 29 Dec 2020 12:05:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=f0/XtdIyw6iwQJQ5kZT23INEqlES4/JfjcvNloEQ/Fk=;
-        b=hr0BEsck5iBRkNmKF48zG/XaB7SMnB4vprjzei0cPvxMkpTcQaN1fCvsQ86G4/k/v9
-         0A2E0u/gKaQni1b7s1rirMVtH9rWoxkaRSl4ncifLbwx6058rta8BvI8Ns/6h6slbILS
-         5lW/OiYKmewbxujlC1N00xdD7BdjcqGQ4wmWpoVhHnWMXMU5FAHx3Kj8Q1OnCKIsmT+f
-         UvDvDt/G7Q/7qYqzm6hk4T45LbRZaLzs09ZBX0sTvrKnVBKvS9q6pWJ4hfbdoR4WY5dg
-         9tuPg2CtxDPhuYi7vYIqZRKA0G7A82oldTHrmvSskEJqri1mTUVqOb2Dn2mydbWKLo42
-         kA4w==
+        bh=n5Juu5PL0YoW+NlcBtXZ8308O94SMFa4fjKIyTcHubs=;
+        b=ZQwlLgJ7iN0MQaT3LEuTYwSmobwxaSor9wFSZhlbucMyI8de0JJkDlcCgBtN28ZMmf
+         vvWyxljCQO19Itbuj97D5wnqOSwKhli4JJRPTsaAwD6W4zc01geJyPDlo5eHW1UUr/Xr
+         IxfH1U+zgNGposfqNgzY6GUYqP59hP1mu2pFFoPIhKTADuUSe2kajqpCtY5bQdNzf87j
+         TN07xUzX+vrXFFI19TIAe8b9VqVbe6H0RsEWO37NVkYkV0aD4EVGAZc8FBKOpuf4e/VN
+         HbGZssIFK6psm/3aZFQkw0xasvYbRtkjDio0MWlRvrp/GNkR5neFy8b2ag+MLDzwx8RR
+         xsCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=f0/XtdIyw6iwQJQ5kZT23INEqlES4/JfjcvNloEQ/Fk=;
-        b=JswqKeH/tliIfbtqMcPSX5UveqCc4FYIU2rMh5AdTsl0HzVbAdzwfFpG7vSuDrduE5
-         /aCPspcwN07ymulJ5OYgc+xJXrPNzCRr5yLhIyulOqztzW+llhf8zVTRYPDJ451SWOE/
-         HySjrzwGEHeLbUHl19k5+3rkYe158ottGuN31nxlV9xagA2wjL8CRfXgaUWRzRCSydfB
-         kHTPLC5MwUisJEhXYXQ2nzVK25QK3z4/tvng2wi1YsAx6wJKAGDpnTCUqOT7rRhrUQjG
-         /sCsNqLUNuODkQ1U3RU+VqtdVqxv+bu3FgoZarjSibTRZVwpg1W9lMXfixeuzWGLAq8p
-         g0SQ==
-X-Gm-Message-State: AOAM530osmRzOz7T4kgOpPlhmiEBawSyVpfPsFDdeR01ZSDU197+D7nk
-        T12HcUaDSfSQCoN0a1rH2MLxbhGlfwg=
-X-Google-Smtp-Source: ABdhPJz6q6TPo+oyt+aFqXmd73iWGoX68klCVL3kWx/qe+jYEgLTFHOiP+cMTbFUILJ1AwQl8uHCkw==
-X-Received: by 2002:a1c:4604:: with SMTP id t4mr4555810wma.17.1609272337898;
-        Tue, 29 Dec 2020 12:05:37 -0800 (PST)
+        bh=n5Juu5PL0YoW+NlcBtXZ8308O94SMFa4fjKIyTcHubs=;
+        b=dbvRrydQ4O5uiVk1cH+j1laTYB04pZ/Q/X4oL3k5Y7HEPl6+qiRgLcqprYxfzIQXz8
+         sfdtab6n9tRh6cVOcCGTAeHpgy2/tgONk+3NqkexwHGdSgzqGwD2r/xvlsauR4/ZmT2B
+         /gNuBujTXpbkP8a5J1NvWoiBLk+ZI+hTKVGsmywmrdUmCtv1vQCIf3PufwJGiytVyL4T
+         qPjZKMUovWkYUWgkOjFbBlG7pm8Wl1SsInt0FRCpwb4Fk3njPZ4ZMYKYlHV6Hm1RFqrs
+         H3ywqAKOhPPcMJHsP/IVbyAgSZ55ICkX+xmsAXjfoZeK5wvvnosJR0n6H1zYzXI1TDqe
+         xcsw==
+X-Gm-Message-State: AOAM532h040FL4Dm1NSKiV6BTEFhn0cnTehdmZqNqfsyc7oMP7vQgJbs
+        wPdwJqZjyYhnnf28udZ+p+uGce81clo=
+X-Google-Smtp-Source: ABdhPJw86yDib4Rfne3QN/tBsmyDUDCc3sikukTFCKHqEt96ZhhhW4ANYsR6RVQnKSKARl1wj82BkQ==
+X-Received: by 2002:a5d:6607:: with SMTP id n7mr55303982wru.206.1609272335411;
+        Tue, 29 Dec 2020 12:05:35 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n11sm48041153wra.9.2020.12.29.12.05.37
+        by smtp.gmail.com with ESMTPSA id g192sm4788969wme.48.2020.12.29.12.05.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Dec 2020 12:05:37 -0800 (PST)
-Message-Id: <723b0e55e75d264f83407c3fb50f3ccc16d35062.1609272328.git.gitgitgadget@gmail.com>
+        Tue, 29 Dec 2020 12:05:34 -0800 (PST)
+Message-Id: <8db27892c598a3976c0742e23563f1d360b8dee1.1609272328.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.929.v3.git.git.1609272328.gitgitgadget@gmail.com>
 References: <pull.929.v2.git.git.1607677728.gitgitgadget@gmail.com>
         <pull.929.v3.git.git.1609272328.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 29 Dec 2020 20:05:28 +0000
-Subject: [PATCH v3 9/9] diffcore-rename: remove unnecessary duplicate entry
- checks
+Date:   Tue, 29 Dec 2020 20:05:25 +0000
+Subject: [PATCH v3 6/9] t4058: explore duplicate tree entry handling in a bit
+ more detail
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,97 +79,99 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Commit 25d5ea410f ("[PATCH] Redo rename/copy detection logic.",
-2005-05-24) added a duplicate entry check on rename_src in order to
-avoid segfaults; the code at the time was prone to double free()s and an
-easy way to avoid it was just to turn off rename detection for any
-duplicate entries.  Note that the form of the check was modified two
-commits ago in this series.
-
-Similarly, commit 4d6be03b95 ("diffcore-rename: avoid processing
-duplicate destinations", 2015-02-26) added a duplicate entry check
-on rename_dst for the exact same reason -- the code was prone to double
-free()s, and an easy way to avoid it was just to turn off rename
-detection entirely.  Note that the form of the check was modified in the
-commit just before this one.
-
-In the original code in both places, the code was dealing with
-individual diff_filespecs and trying to match things up, instead of just
-keeping the original diff_filepairs around as we do now.  The
-intervening change in structure has fixed the accounting problems and
-the associated double free()s that used to occur, and thus we already
-have a better fix.  As such, we can remove the band-aid checks for
-duplicate entries.
-
-Due to the last two patches, the diffcore_rename() setup is no longer a
-sizeable chunk of overall runtime.  Thus, in a large rebase of many
-commits with lots of renames and several optimizations to inexact rename
-detection, this patch only speeds up the overall code by about half a
-percent or so and is pretty close to the run-to-run variability making
-it hard to get an exact measurement.  However, with some trace2 regions
-around the setup code in diffcore_rename() so that I can focus on just
-it, I measure that this patch consistently saves almost a third of the
-remaining time spent in diffcore_rename() setup.
+While creating the last commit, I found a number of other cases where
+git would segfault when faced with trees that have duplicate entries.
+None of these segfaults are in the diffcore-rename code (they all occur
+in cache-tree and unpack-trees).  Further, to my knowledge, no one has
+ever been adversely affected by these bugs, and given that it has been
+15 years and folks have fixed a few other issues with historical
+duplicate entries (as noted in the last commit), I am not sure we will
+ever run into anyone having problems with these.  So I am not sure these
+are worth fixing, but it doesn't hurt to at least document these
+failures in the same test file that is concerned with duplicate tree
+entries.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- diffcore-rename.c          | 23 -----------------------
- t/t4058-diff-duplicates.sh |  2 +-
- 2 files changed, 1 insertion(+), 24 deletions(-)
+ t/t4058-diff-duplicates.sh | 67 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 67 insertions(+)
 
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 2a8fcd52928..90db9ebd6d0 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -34,18 +34,6 @@ static struct diff_rename_dst *locate_rename_dst(struct diff_filepair *p)
-  */
- static int add_rename_dst(struct diff_filepair *p)
- {
--	/*
--	 * If we have multiple entries at the same path in the destination
--	 * tree (an invalid tree, to be sure), turn off rename detection
--	 * entirely.  Once upon a time, diffcore-rename had double free()
--	 * issues due to such duplicate paths, resulting in segfaults.  See
--	 * commit 4d6be03b95 ("diffcore-rename: avoid processing duplicate
--	 * destinations", 2015-02-26).
--	 */
--	if (rename_dst_nr > 0 &&
--	    !strcmp(rename_dst[rename_dst_nr-1].p->two->path, p->two->path))
--		return -1;
--
- 	ALLOC_GROW(rename_dst, rename_dst_nr + 1, rename_dst_alloc);
- 	rename_dst[rename_dst_nr].p = p;
- 	rename_dst[rename_dst_nr].filespec_to_free = NULL;
-@@ -63,17 +51,6 @@ static int rename_src_nr, rename_src_alloc;
- 
- static void register_rename_src(struct diff_filepair *p)
- {
--	/*
--	 * If we have multiple entries at the same path in the source tree
--	 * (an invalid tree, to be sure), avoid using more more than one
--	 * such entry in rename detection.  Once upon a time, doing so
--	 * caused segfaults; see commit 25d5ea410f ("[PATCH] Redo
--	 * rename/copy detection logic.", 2005-05-24).
--	 */
--	if (rename_src_nr > 0 &&
--	    !strcmp(rename_src[rename_src_nr-1].p->one->path, p->one->path))
--		return;
--
- 	if (p->broken_pair) {
- 		if (!break_idx) {
- 			break_idx = xmalloc(sizeof(*break_idx));
 diff --git a/t/t4058-diff-duplicates.sh b/t/t4058-diff-duplicates.sh
-index ad3f37d388d..54614b814db 100755
+index bd685089561..ad3f37d388d 100755
 --- a/t/t4058-diff-duplicates.sh
 +++ b/t/t4058-diff-duplicates.sh
-@@ -91,7 +91,7 @@ test_expect_success 'diff-tree between duplicate trees' '
- test_expect_success 'diff-tree with renames' '
- 	# See NOTICE at top of file.
- 	git diff-tree -M -r --no-abbrev one two >actual &&
--	test_cmp expect actual
-+	test_must_be_empty actual
+@@ -119,4 +119,71 @@ test_expect_success 'diff-tree FROM duplicate tree, with renames' '
+ 	test_cmp expect actual
  '
  
- test_expect_success 'diff-tree FROM duplicate tree' '
++test_expect_success 'create a few commits' '
++	git commit-tree -m "Duplicate Entries" two^{tree} >commit_id &&
++	git branch base $(cat commit_id) &&
++
++	git commit-tree -p $(cat commit_id) -m "Just one" three^{tree} >up &&
++	git branch update $(cat up) &&
++
++	git commit-tree -p $(cat up) -m "Back to weird" two^{tree} >final &&
++	git branch final $(cat final) &&
++
++	rm commit_id up final
++'
++
++test_expect_failure 'git read-tree does not segfault' '
++	test_when_finished rm .git/index.lock &&
++	test_might_fail git read-tree --reset base
++'
++
++test_expect_failure 'reset --hard does not segfault' '
++	test_when_finished rm .git/index.lock &&
++	git checkout base &&
++	test_might_fail git reset --hard
++'
++
++test_expect_failure 'git diff HEAD does not segfault' '
++	git checkout base &&
++	GIT_TEST_CHECK_CACHE_TREE=false &&
++	git reset --hard &&
++	test_might_fail git diff HEAD
++'
++
++test_expect_failure 'can switch to another branch when status is empty' '
++	git clean -ffdqx &&
++	git status --porcelain -uno >actual &&
++	test_must_be_empty actual &&
++	git checkout update
++'
++
++test_expect_success 'forcibly switch to another branch, verify status empty' '
++	git checkout -f update &&
++	git status --porcelain -uno >actual &&
++	test_must_be_empty actual
++'
++
++test_expect_success 'fast-forward from non-duplicate entries to duplicate' '
++	git merge final
++'
++
++test_expect_failure 'clean status, switch branches, status still clean' '
++	git status --porcelain -uno >actual &&
++	test_must_be_empty actual &&
++	git checkout base &&
++	git status --porcelain -uno >actual &&
++	test_must_be_empty actual
++'
++
++test_expect_success 'switch to base branch and force status to be clean' '
++	git checkout base &&
++	GIT_TEST_CHECK_CACHE_TREE=false git reset --hard &&
++	git status --porcelain -uno >actual &&
++	test_must_be_empty actual
++'
++
++test_expect_failure 'fast-forward from duplicate entries to non-duplicate' '
++	git merge update
++'
++
+ test_done
 -- 
 gitgitgadget
+
