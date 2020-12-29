@@ -2,97 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03692C433E0
-	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 17:24:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 170F4C433E6
+	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 18:10:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C670022209
-	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 17:24:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D4DAB22225
+	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 18:10:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726156AbgL2RYe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Dec 2020 12:24:34 -0500
-Received: from out01.mta.xmission.com ([166.70.13.231]:37824 "EHLO
-        out01.mta.xmission.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726111AbgL2RYe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Dec 2020 12:24:34 -0500
-Received: from in01.mta.xmission.com ([166.70.13.51])
-        by out01.mta.xmission.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.93)
-        (envelope-from <seth@eseth.com>)
-        id 1kuIiu-00C0qs-AH; Tue, 29 Dec 2020 10:23:52 -0700
-Received: from mta4.zcs.xmission.com ([166.70.13.68])
-        by in01.mta.xmission.com with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.87)
-        (envelope-from <seth@eseth.com>)
-        id 1kuIit-00031H-IJ; Tue, 29 Dec 2020 10:23:52 -0700
-Received: from localhost (localhost [127.0.0.1])
-        by mta4.zcs.xmission.com (Postfix) with ESMTP id 34A34500C94;
-        Tue, 29 Dec 2020 10:23:51 -0700 (MST)
-X-Amavis-Modified: Mail body modified (using disclaimer) -
-        mta4.zcs.xmission.com
-Received: from mta4.zcs.xmission.com ([127.0.0.1])
-        by localhost (mta4.zcs.xmission.com [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id kqKESd4sN2BR; Tue, 29 Dec 2020 10:23:51 -0700 (MST)
-Received: from ellen (unknown [139.60.10.209])
-        by mta4.zcs.xmission.com (Postfix) with ESMTPSA id D7F03500484;
-        Tue, 29 Dec 2020 10:23:50 -0700 (MST)
-Date:   Tue, 29 Dec 2020 10:23:49 -0700
-From:   Seth House <seth@eseth.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org
-Message-ID: <20201229172349.GA17517@ellen>
-References: <20201228045427.1166911-1-seth@eseth.com>
- <20201228192919.1195211-1-seth@eseth.com>
- <20201228192919.1195211-5-seth@eseth.com>
- <3eb8c8d9-5b56-82ff-21d8-725a6c269f66@kdbg.org>
+        id S1726277AbgL2SKj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Dec 2020 13:10:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35944 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726111AbgL2SKj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Dec 2020 13:10:39 -0500
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30CB9C061793
+        for <git@vger.kernel.org>; Tue, 29 Dec 2020 10:09:59 -0800 (PST)
+Received: by mail-oi1-x22c.google.com with SMTP id q205so15358622oig.13
+        for <git@vger.kernel.org>; Tue, 29 Dec 2020 10:09:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=SqALjuSyjP7Gim43Em32hQI0OnBtvac8mbpxMT5gc6w=;
+        b=g15skxxf88LjyiuZriBKCq5UdmDVcik5/w8TzBhuvoVI0MCUVLp4njFXX17l1akoo/
+         +slMy1JH6Y/TSkYIWmd7QmfX9putHQWG4yKB0e5ZKpfK5xmfqaMTV7T+vjebKfK6tHYa
+         3uH8LfFDIdV7GoDm4yoY94/WcfAUra7gyEov2YhkygbtBlQ9wgFrB0sCsSfNylpT682D
+         eJTRX+t/lFM+BkWNAkfIoUnKBwqwyunMHuziZQv8WT0m2F8mAUyx/EmJlc7dk3di3kpP
+         TL46k6glDitbIDicCyjIsc9m1do3a75Rjckk9eMOmACk/fZwPosUSmdPCFECvy8kGVaQ
+         utzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=SqALjuSyjP7Gim43Em32hQI0OnBtvac8mbpxMT5gc6w=;
+        b=JRrt+Lpz9QdCKHiK99SrOW0aq967RntgUSRSAZ92nzTgb3Tyqx7wD1PjAqnYTKfA4/
+         6kUeRSM8r6oYmAEREncmemUu0bl3d9qcI5OINxtqgtYd6RBhlT1n2VKg/8jtgGuSjsO5
+         z7fHX3A24s/l5IzWZ8m+/NmERt3jMcrv+5UuYhfmROieCyb5NoA3RnH2GAbTSkGSYxFb
+         M14b65zT/3XoR3manTB6EBFRUHndG1Z16Bfja4lY7UpIdFOcxoFJk+XUjGLK8oIp2L7j
+         6HPOhiI96alc0wjlJ5zcTIB53k5Z5cZiCf/Jp7qoQ6104fvdDLM9paewaF12N5vIRsb9
+         wfGg==
+X-Gm-Message-State: AOAM531BK3aLltvTXCm163Z198kEIdKfsxn89l41INHHEdxgl4dUJCml
+        DlM2FFwoNATHtDZ1EmXPd6WuZke5ab7L4fLMsUY=
+X-Google-Smtp-Source: ABdhPJzxgaVGYuICrpOgRKg/Y7S1eDI20HWldfs+jWQp2psPuHSrfJhcMF8SYX0oYlXBZqwqQpeRripsOGPF77qJd9I=
+X-Received: by 2002:aca:3151:: with SMTP id x78mr3049391oix.39.1609265398572;
+ Tue, 29 Dec 2020 10:09:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <3eb8c8d9-5b56-82ff-21d8-725a6c269f66@kdbg.org>
-X-XM-SPF: eid=1kuIit-00031H-IJ;;;mid=<20201229172349.GA17517@ellen>;;;hst=in01.mta.xmission.com;;;ip=166.70.13.68;;;frm=seth@eseth.com;;;spf=none
-X-SA-Exim-Connect-IP: 166.70.13.68
-X-SA-Exim-Mail-From: seth@eseth.com
-Subject: Re: [PATCH v9 4/5] mergetool: break setup_tool out into separate
- initialization function
-X-SA-Exim-Version: 4.2.1 (built Thu, 05 May 2016 13:38:54 -0600)
-X-SA-Exim-Scanned: Yes (on in01.mta.xmission.com)
+References: <pull.929.git.git.1607223276.gitgitgadget@gmail.com>
+ <pull.929.v2.git.git.1607677728.gitgitgadget@gmail.com> <af256b1c534e3fe103bb01bd673ac3a2ec467de4.1607677728.git.gitgitgadget@gmail.com>
+ <CAP8UFD0r1RvbtOcHTbREcC4v33S-m_gS4e=fSq0OFEHr82K9nQ@mail.gmail.com>
+In-Reply-To: <CAP8UFD0r1RvbtOcHTbREcC4v33S-m_gS4e=fSq0OFEHr82K9nQ@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 29 Dec 2020 10:09:47 -0800
+Message-ID: <CABPp-BH4cShLMa_dOShmZxbJt4Y57ZsG6+uvqPkGCa_toYOZ8g@mail.gmail.com>
+Subject: Re: [PATCH v2 9/9] diffcore-rename: remove unneccessary duplicate
+ entry checks
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 29, 2020 at 09:50:44AM +0100, Johannes Sixt wrote:
-> Would it be possible to move the call above the
-> `mergetool_tmpdir_init` call, so that nothing has to be rewound?
+On Tue, Dec 29, 2020 at 12:31 AM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> About the subject:
+>
+> s/unneccessary/unnecessary/
 
-Ah, I see. Good suggestion. Yes, moving that call higher works just
-fine. E.g.:
-
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index a44afd3822..36c1920dd6 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -276,6 +276,8 @@ merge_file () {
- 		ext=
- 	esac
- 
-+	initialize_merge_tool "$merge_tool" || return
-+
- 	mergetool_tmpdir_init
- 
- 	if test "$MERGETOOL_TMPDIR" != "."
-@@ -334,8 +336,6 @@ merge_file () {
- 	checkout_staged_file 2 "$MERGED" "$LOCAL"
- 	checkout_staged_file 3 "$MERGED" "$REMOTE"
- 
--	initialize_merge_tool "$merge_tool"
--
- 	if automerge_enabled && test "$(
- 		git config --get --bool "mergetool.$merge_tool.automerge" ||
- 		git config --get --bool "mergetool.automerge" ||
-
-Thanks. I'll roll that change into a v10 patch series later today or
-tomorrow to give a little more time for any other feedback.
-
+Thanks, I'll remove the unnecessary double c.
