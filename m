@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97C64C433DB
-	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 17:09:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85F37C433DB
+	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 17:09:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4AEB921D94
-	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 17:09:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 570CF22209
+	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 17:09:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726158AbgL2RJV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Dec 2020 12:09:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54712 "EHLO
+        id S1726190AbgL2RJZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Dec 2020 12:09:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726111AbgL2RJV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Dec 2020 12:09:21 -0500
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBA99C061574
-        for <git@vger.kernel.org>; Tue, 29 Dec 2020 09:08:40 -0800 (PST)
-Received: by mail-ot1-x331.google.com with SMTP id j12so12339621ota.7
-        for <git@vger.kernel.org>; Tue, 29 Dec 2020 09:08:40 -0800 (PST)
+        with ESMTP id S1726111AbgL2RJY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Dec 2020 12:09:24 -0500
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50C10C061793
+        for <git@vger.kernel.org>; Tue, 29 Dec 2020 09:08:44 -0800 (PST)
+Received: by mail-ot1-x32b.google.com with SMTP id d20so12378121otl.3
+        for <git@vger.kernel.org>; Tue, 29 Dec 2020 09:08:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=2GLFdJTp6NeA6G5chqRIuL2DQZxXVuiNlE13uI9leYY=;
-        b=fUOF6VWTdayRj1ckkdAiKoH00wFe03lHEHuJPC/1KoHuNyXbcdmFZUyTNHOHiWhrLF
-         B6+dDip0Ze6ZgykIL3cA3JF33K3RpkgSYXQw9jRux7gLhLgV5yIeMo6krQeiZJ15CWaZ
-         OWHGU7mea1IRiRWWmP7sq8/tAqGXMOI56yMP44xanojeO4qSinKPvZolUVYNz4B229Zr
-         RL6AkyFktyDaydTzvyg5NWtnWH8T1RzfUhWiuhego4s4f/IjY9ZYnUe00dKvQC7Zf+NE
-         +QSLQIUr7XVUeJH98MniaFHYkqGdWlewMaVMcQr6kqQgwX0iEby27DJ9PmB0/dAVzQKu
-         vdig==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=BHfDTQko7xjogX2qIZ9vgKqkR01FLXLg1Z25DmZlx8U=;
+        b=BrPv6Y4ptUNwqT83A7Ny1c130RpQb8/NrbVlAoKANdMYnCRuR+aEBi8RwzY6l1ggrb
+         PvS3FFuuRs+sagpo1dsbhT8ZAnhDJhEZBT1MWwGIZmuIP+DLYZflOHJJd+W1zfe8SJkG
+         OjddNH/c3U+z75fuNwfAwX25d6YGCX64rFaJ001QXObQQ5otPVCPQzEEDuR7iRyGa+3F
+         NbOrYtXhAr5VK9XcqAEuO7lzHNfyOVMtxNJIBKGmyAfrxz2hE9IpSFylYTtjpORtEhC0
+         WkvpNa01ZLDusl3BCODavckNaiek0rYbFm+r8SvZD+6f6g1+SXAEc6GmtwXSBwHTDz43
+         5UYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=2GLFdJTp6NeA6G5chqRIuL2DQZxXVuiNlE13uI9leYY=;
-        b=I6yDVobVK3KrbuGjLLzC4fLjL8/jz/M6OhTclmBt6mVc9f25OjBXpLdwVtkrB3A2Kv
-         BbhO/HdQ8j31B3QUvOFP4TsRHUB76LXai3goZNuXDcT+QnB4ZmcfWcFORtz/piYbNU2U
-         ZHabLe4+l5Ro0shKj6q/zL3cmBUg8a83ChdjVFYfFFE/G/TM4qlQTQcUZKiYyhQRS/8D
-         PNDy3cJsTgJPdQvY1/PNgpV08fmUw/EAR08J9K/uEtiNGv8/BSU8IpaqHcguiMeNG4Aa
-         E8APIXXOKlcrdNoXGyGznFdJ8r/Lyujcdyf9tduwy1L8uT8l87XI6gNoqIqMHzFr80f+
-         rG3Q==
-X-Gm-Message-State: AOAM530GKtZe0hQfjliQj+iruMBp3MkYVQTwPE8/pEIIynDT8LUJRPBW
-        x12dDKEBG/Sui8uaAnU6IxzWr/jSE8MfTQ==
-X-Google-Smtp-Source: ABdhPJxsNiJarhgGSYThq5AZnYIPsjYv6NQkCp9XzUlwJynyxLH8EsSu/zl5MBOXBMUKCRoebIKQXA==
-X-Received: by 2002:a9d:745a:: with SMTP id p26mr37629133otk.206.1609261719898;
-        Tue, 29 Dec 2020 09:08:39 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=BHfDTQko7xjogX2qIZ9vgKqkR01FLXLg1Z25DmZlx8U=;
+        b=XvE10KEdrbUv+UbHre31FQ3ls8Yg/8Rh62vtx7X0GLQp5ZCAe/xagXB91sgpHp2z8d
+         kFlqNRG7k+J19tnDjOXcA6Pl1zNC+ggnZgBRXFHC3X1kpj0yu8j6gCgEdWA4jd7AutPV
+         Zf49cjfQ0Pk9+kf/TcfhN//z/xjmrasgSr3gn/yAuL1ezWqfHoxuUixFvKWG/urDYLaw
+         S3/rUvXssPSY9f/ytEL62WpMIYoJVRZxWV+m6j7Ul/fh9flVARwXOPIFdZIYgO8zDUw0
+         zzAgDuq/Pr9EwFdCaDg0EkNwbSfQOjrm66M64Q20MFRAcar7dlAzhD0reuJkp07XPLyC
+         EwIQ==
+X-Gm-Message-State: AOAM533bbRID289d6oSarcdL2VijnEaPja0+83CbbfbNjIQRhHrFpIvq
+        SkQ8nplDDs73TGgMeru117FRMg66c9Wgaw==
+X-Google-Smtp-Source: ABdhPJwzppEH3lJ7Mdl7QaF16g+oIsGymR4Gxg8uZNSc11DWJGWgAufNJLQYoFjkPvwfEhidcoj/YA==
+X-Received: by 2002:a05:6830:214c:: with SMTP id r12mr36698115otd.208.1609261723591;
+        Tue, 29 Dec 2020 09:08:43 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id j126sm9837538oib.13.2020.12.29.09.08.38
+        by smtp.gmail.com with ESMTPSA id z38sm9723824ooi.34.2020.12.29.09.08.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Dec 2020 09:08:39 -0800 (PST)
+        Tue, 29 Dec 2020 09:08:43 -0800 (PST)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
@@ -63,202 +63,45 @@ Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v2 0/3] completion: make __git_complete public
-Date:   Tue, 29 Dec 2020 11:08:34 -0600
-Message-Id: <20201229170837.297857-1-felipe.contreras@gmail.com>
+Subject: [PATCH v2 2/3] test: completion: add tests for __git_complete
+Date:   Tue, 29 Dec 2020 11:08:36 -0600
+Message-Id: <20201229170837.297857-3-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.30.0
+In-Reply-To: <20201229170837.297857-1-felipe.contreras@gmail.com>
+References: <20201229170837.297857-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Back in 2012 I argued [1] for the introduction of a helper that would
-allow users to specify aliases like:
+Even though the function was marked as not public, it's already used in
+the wild.
 
-  git_complete gf git_fetch
+We should at least test basic functionality.
 
-There was pushback because there was no clear guideline for public
-functions (git_complete vs. _git_complete vs. _GIT_complete), and some
-aliases didn't actually work.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ t/t9902-completion.sh | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-Fast-forward to 2020, and there's still no guideline for public
-functions, and those aliases still don't work (even though I sent the
-fixes).
-
-This has not prevented people from using this function that is clearly
-needed to setup custom aliases [2], and in fact that's the recommended
-way since there's no other.
-
-But it is cumbersome that the user must type:
-
-  __git_complete gf _git_fetch
-
-Or worse:
-
-  __git_complete gk __gitk_main
-
-8 years is more than enough time to stop waiting for the perfect to
-come; let's define a public function (with the same name) that is
-actually user-friendly:
-
-  __git_complete gf git_fetch
-  __git_complete gk gitk
-
-While also maintaining backwards compatibility.
-
-[1] https://lore.kernel.org/git/1334524814-13581-1-git-send-email-felipe.contreras@gmail.com/
-[2] https://stackoverflow.com/questions/342969/how-do-i-get-bash-completion-to-work-with-aliases
-
-Felipe Contreras (3):
-  completion: bash: add __git_have_func helper
-  test: completion: add tests for __git_complete
-  completion: add proper public __git_complete
-
- contrib/completion/git-completion.bash | 41 +++++++++++++++++++-------
- t/t9902-completion.sh                  | 20 +++++++++++++
- 2 files changed, 51 insertions(+), 10 deletions(-)
-
-Range-diff:
--:  ---------- > 1:  0993732142 completion: bash: add __git_have_func helper
-1:  ea77b1a140 ! 2:  7918c34d0e test: completion: add tests for __git_complete
-    @@ Metadata
-      ## Commit message ##
-         test: completion: add tests for __git_complete
-     
-    +    Even though the function was marked as not public, it's already used in
-    +    the wild.
-    +
-    +    We should at least test basic functionality.
-    +
-         Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-     
-      ## t/t9902-completion.sh ##
-    @@ t/t9902-completion.sh: test_expect_success 'sourcing the completion script clear
-      '
-      
-     +test_expect_success '__git_complete' '
-    ++	unset -f __git_wrap__git_main &&
-     +	__git_complete foo __git_main &&
-    -+	test "$(type -t __git_wrap__git_main)" == function &&
-    ++	__git_have_func __git_wrap__git_main &&
-     +	__git_complete gf _git_fetch &&
-    -+	test "$(type -t __git_wrap_git_fetch)" == function
-    ++	__git_have_func __git_wrap_git_fetch
-     +'
-     +
-      test_done
-2:  aec19e61ee ! 3:  8a6cc52063 completion: add proper public __git_complete
-    @@ Metadata
-      ## Commit message ##
-         completion: add proper public __git_complete
-     
-    -    Back in 2012 I argued [1] for the introduction of a helper that would
-    -    allow users to specify aliases like:
-    +    When __git_complete was introduced, it was meant to be temporarily, while
-    +    a proper guideline for public shell functions was established
-    +    (tentatively _GIT_complete), but since that never happened, people
-    +    in the wild started to use __git_complete, even though it was marked as
-    +    not public.
-     
-    -      git_complete gf git_fetch
-    +    Eight years is more than enough wait, let's mark this function as
-    +    public, and make it a bit more user-friendly.
-     
-    -    Back then there was pushback because there was no clear guideline for
-    -    public functions (git_complete vs _git_complete vs _GIT_complete), and
-    -    some aliases didn't actually work.
-    -
-    -    Fast-forward to 2020 and there's still no guideline for public
-    -    functions, and those aliases still don't work (even though I sent the
-    -    fixes).
-    -
-    -    This has not prevented people from using this function that is clearly
-    -    needed to setup custom aliases [2], and in fact it's the recommended
-    -    way. But it is cumbersome that the user must type:
-    -
-    -      __git_complete gf _git_fetch
-    -
-    -    Or worse:
-    +    So that instead of doing:
-     
-           __git_complete gk __gitk_main
-     
-    -    8 years is more than enough time to stop waiting for the perfect to
-    -    come; let's define a public function (with the same name) that is
-    -    actually user-friendly:
-    +    The user can do:
-     
-    -      __git_complete gf git_fetch
-           __git_complete gk gitk
-     
-    -    While also maintaining backwards compatibility.
-    +    And instead of:
-     
-    -    The logic is:
-    +      __git_complete gf _git_fetch
-    +
-    +    Do:
-     
-    -     1. If $2 exists, use it directly
-    -     2. If not, check if __$2_main exists
-    -     3. If not, check if _$2 exists
-    -     4. If not, fail
-    +      __git_complete gf git_fetch
-     
-    -    [1] https://lore.kernel.org/git/1334524814-13581-1-git-send-email-felipe.contreras@gmail.com/
-    -    [2] https://stackoverflow.com/questions/342969/how-do-i-get-bash-completion-to-work-with-aliases
-    +    Backwards compatibility is maintained.
-     
-         Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-     
-    @@ contrib/completion/git-completion.bash: __git_complete ()
-     +{
-     +	local func
-     +
-    -+	if [[ "$(type -t $2)" == function ]]; then
-    ++	if __git_have_func $2; then
-     +		func=$2
-    -+	elif [[ "$(type -t __$2_main)" == function ]]; then
-    ++	elif __git_have_func __$2_main; then
-     +		func=__$2_main
-    -+	elif [[ "$(type -t _$2)" == function ]]; then
-    ++	elif __git_have_func _$2; then
-     +		func=_$2
-     +	else
-     +		echo "ERROR: could not find function '$2'" 1>&2
-    @@ contrib/completion/git-completion.bash: __git_complete ()
-     
-      ## t/t9902-completion.sh ##
-     @@ t/t9902-completion.sh: test_expect_success 'sourcing the completion script clears cached --options' '
-    - '
-      
-      test_expect_success '__git_complete' '
-    -+	unset -f __git_wrap__git_main &&
-    + 	unset -f __git_wrap__git_main &&
-     +
-      	__git_complete foo __git_main &&
-    - 	test "$(type -t __git_wrap__git_main)" == function &&
-    + 	__git_have_func __git_wrap__git_main &&
-     +	unset -f __git_wrap__git_main &&
-     +
-      	__git_complete gf _git_fetch &&
-    --	test "$(type -t __git_wrap_git_fetch)" == function
-    -+	test "$(type -t __git_wrap_git_fetch)" == function &&
-    +-	__git_have_func __git_wrap_git_fetch
-    ++	__git_have_func __git_wrap_git_fetch &&
-     +
-     +	__git_complete foo git &&
-    -+	test "$(type -t __git_wrap__git_main)" == function &&
-    ++	__git_have_func __git_wrap__git_main &&
-     +	unset -f __git_wrap__git_main &&
-     +
-     +	__git_complete gd git_diff &&
-    -+	test "$(type -t __git_wrap_git_diff)" == function &&
-    ++	__git_have_func __git_wrap_git_diff &&
-     +
-     +	test_must_fail __git_complete ga missing
-      '
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index a1c4f1f6d4..c0b4380eae 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -2380,4 +2380,12 @@ test_expect_success 'sourcing the completion script clears cached --options' '
+ 	verbose test -z "$__gitcomp_builtin_notes_edit"
+ '
+ 
++test_expect_success '__git_complete' '
++	unset -f __git_wrap__git_main &&
++	__git_complete foo __git_main &&
++	__git_have_func __git_wrap__git_main &&
++	__git_complete gf _git_fetch &&
++	__git_have_func __git_wrap_git_fetch
++'
++
+ test_done
 -- 
 2.30.0
 
