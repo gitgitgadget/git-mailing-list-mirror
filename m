@@ -2,109 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07912C433DB
-	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 03:18:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F27FC433DB
+	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 08:32:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D18C3207B6
-	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 03:18:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 63AA621D94
+	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 08:32:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727209AbgL2DSC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Dec 2020 22:18:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39906 "EHLO
+        id S1726021AbgL2IcX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Dec 2020 03:32:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726015AbgL2DSB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Dec 2020 22:18:01 -0500
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7F31C061793
-        for <git@vger.kernel.org>; Mon, 28 Dec 2020 19:17:21 -0800 (PST)
-Received: by mail-pf1-x42f.google.com with SMTP id f9so7292670pfc.11
-        for <git@vger.kernel.org>; Mon, 28 Dec 2020 19:17:21 -0800 (PST)
+        with ESMTP id S1725866AbgL2IcW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Dec 2020 03:32:22 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55290C0613D6
+        for <git@vger.kernel.org>; Tue, 29 Dec 2020 00:31:42 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id h16so11891149edt.7
+        for <git@vger.kernel.org>; Tue, 29 Dec 2020 00:31:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=KBNvGNAtYdSTUWd9i4KNVole4vueysTeAgeIPZbvJUk=;
-        b=gS6VOpupXjjRQxanVYFpdeKHCYGoH962+Z5NsyLLMbkTmEsk6p2IYdLe0GRe/lbDlp
-         fOWC3E73x+AbSF5P5+GgIx4CkkZl0f0ijVGhdS25Eq6KghqJWlsukqgdYV1Jcibzeic2
-         TPwMuyjQJWYwgDajp+NZcQdA6ldHPJxheUN2iA2lhz9RoloxVu9nfBIIW+lyejJORgAs
-         VoXHVYLjV3AaSrJmwZNShq+LXx/ZtOFvMy/P6xXSXyZNosAmdEnZSfDHbsILTLHXVfVh
-         LVrun2Fkn2lh8q8YaREBcFSWF1wGemBhyeQk2K7qXgJtN51hOVsV2xgTD5iprZ1uy2xw
-         cWPg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=76bG+/vHwjp7tkcIPEDB0m0YU3AeYe86231D+1kqV1U=;
+        b=QKHUrAWPBuZE/dS43wbUWu09phxJWJY1qvefp52b/JwISGdd4tqWmIWHB5RVs6UQLY
+         e4mNcyQKPtJGo35AL4a/440RE4IvnzrLeo/X/sM0mFYeQ6ANJE+S6WgHvg+YoG1fokUh
+         JsDrwoVaxwHq2emLerZaNtTum6BEvx0xJ5E803c4zf9SqWb/v2NXyGvvnn6a8PnpYJNY
+         w0e282w4/AQU+vfGLFWGBOUGDG9Fj+k3ZuHLkglYMYwvoIhm7MDhDAgMNDb5x89E+X4w
+         cHmcRKxd+bJwYnr9XkWYtJV1+6qrreG4yOLY3A1PRspb746oS408JHpgxjSz5nw+i3b9
+         lprg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=KBNvGNAtYdSTUWd9i4KNVole4vueysTeAgeIPZbvJUk=;
-        b=cCiwzxlp9B8GLQl+B/M/f4wI124K/JepzNaWm3Dx6p43lMM+jKi4DBy25w6hHV9sKh
-         PEM6VyprqKi3LlYdOBhBRI8M0Bakp6eSBujj6iCxDruExnAESAbeLYBwkYGJZsdYQWXA
-         Y3AD03H58/b/qtjcn8rtpQaeKh30GfPd3onv92UzpzV8y4bIg2oZx4p8OH7GcsW8tuNP
-         TMl3eE7c/aKcmamiVUwsBVCczKukDpr/ACKLdxD19E3Te2ojO0X3ud9MdQhMPPIhBtFG
-         XYB6QIgGB7ARK24uGLMSV2xTPYoAnIU4QTJvKLTBo7H8iSjCwjFPFE1GWOWr4RLlZhvV
-         EqXw==
-X-Gm-Message-State: AOAM533pWb1QJ1pishwXbsvw3ZkiScJSzqqahgYOkxn4KL/HYtLf8o1B
-        Ek9tjkXlVMVo4CU6Rtx3SoC6ESHkrxQ=
-X-Google-Smtp-Source: ABdhPJwiH12bdDtaxSfisRruIhWiRs5YkihLhVH3Nd5a5+eKTe4bwYW2SOXr/ZKkqc4mmuNAGvKbcQ==
-X-Received: by 2002:aa7:8209:0:b029:19f:3002:513 with SMTP id k9-20020aa782090000b029019f30020513mr23016113pfi.49.1609211841322;
-        Mon, 28 Dec 2020 19:17:21 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:a28c:fdff:fee1:cedb])
-        by smtp.gmail.com with ESMTPSA id 5sm37322208pff.125.2020.12.28.19.17.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Dec 2020 19:17:20 -0800 (PST)
-Date:   Mon, 28 Dec 2020 19:17:18 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] CoC: update to version 2.0 + local changes
-Message-ID: <X+qfvtcA9SiRjsvB@google.com>
-References: <xmqq5z4mjdbq.fsf@gitster.c.googlers.com>
- <20201228171734.30038-3-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=76bG+/vHwjp7tkcIPEDB0m0YU3AeYe86231D+1kqV1U=;
+        b=RWyG3ycQW4ERKz0zw0zZwVa3X66R4Peub4rRpqGEKtiBWIkmVrAr6Fhg9jrzAS9Jz+
+         2QCuwK59meGp/KGqve3JvGtusDHpPJQIxUI74I7uh1UmPxdXiMIa2VsWAwpHZy8zlXwH
+         KY+Qrxmlg0uGoTYxwI9XbdQJudQ5OhcEi8UItQY2l6iBDDDN4ATvDqPd86tL6I8lZq+M
+         D8Dchy6Sy26tXA/aViId/fGgboaVIQvV6H2NLsqRjz3heg0P8flAiRczvsRwicjSOYb9
+         IoJEcE36tmlY2+0x+gWzmD4FVb+ZlAzNky4VcwdgXPAKPSfWb7Rtrwq7iJS5SF9nqT1l
+         989Q==
+X-Gm-Message-State: AOAM531fFttlhfz0alpkOzZTsQTQxwrNHKFdqOuvcu4ylYXEe6O7UiLr
+        4rO7AH6DxM2pw9NsWxpYDz+09tBC068cINE6Zq0=
+X-Google-Smtp-Source: ABdhPJw7/Jt5/nCctRqJRZpvKC/f14i49DqmxaZDeMjNlTdkF500BYq0b/XdF7t0EBR02cqiUMdoVec0Qlt2r2Fgb64=
+X-Received: by 2002:aa7:ca03:: with SMTP id y3mr46013501eds.87.1609230701009;
+ Tue, 29 Dec 2020 00:31:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20201228171734.30038-3-avarab@gmail.com>
+References: <pull.929.git.git.1607223276.gitgitgadget@gmail.com>
+ <pull.929.v2.git.git.1607677728.gitgitgadget@gmail.com> <af256b1c534e3fe103bb01bd673ac3a2ec467de4.1607677728.git.gitgitgadget@gmail.com>
+In-Reply-To: <af256b1c534e3fe103bb01bd673ac3a2ec467de4.1607677728.git.gitgitgadget@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 29 Dec 2020 09:31:29 +0100
+Message-ID: <CAP8UFD0r1RvbtOcHTbREcC4v33S-m_gS4e=fSq0OFEHr82K9nQ@mail.gmail.com>
+Subject: Re: [PATCH v2 9/9] diffcore-rename: remove unneccessary duplicate
+ entry checks
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason wrote:
+About the subject:
 
-> Update the CoC added in 5cdf2301 (add a Code of Conduct document,
-> 2019-09-24 from version 1.4 to version 2.0. This is the version found
-> at [1] with the following minor changes:
->
->  - We preserve the change to the CoC in 3f9ef874a73 (CODE_OF_CONDUCT:
->    mention individual project-leader emails, 2019-09-26)
->
->  - We preserve the custom into added in 5cdf2301d4a (add a Code of
-
-nit: s/into/intro/
-
->    Conduct document, 2019-09-24)
->
-> This change intentionally preserves a warning emitted on "git diff
-> --check". It's better to make it easily diff-able with upstream than
-> to fix whitespace changes in our version while we're at it.
->
-> 1. https://www.contributor-covenant.org/version/2/0/code_of_conduct/code_of_conduct.md
-
-Missing sign-off.
-
-> ---
->  CODE_OF_CONDUCT.md | 153 ++++++++++++++++++++++++++++++---------------
->  1 file changed, 104 insertions(+), 49 deletions(-)
-
-In https://code.googlesource.com/git/summit/2020/+/main/index.md, we
-found this version of the contributor covenant helpful because it
-provides a vocabulary for describing different ways to respond to
-issues.  I think it's helpful for readers to have an understanding of
-the range of ways the project leadership team might respond.
-
-Acked-by: Jonathan Nieder <jrnieder@gmail.com>
+s/unneccessary/unnecessary/
