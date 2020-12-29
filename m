@@ -2,141 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49131C433E0
-	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 20:04:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6155C433DB
+	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 20:06:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 079EE21D1B
-	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 20:04:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6C22B21D94
+	for <git@archiver.kernel.org>; Tue, 29 Dec 2020 20:06:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726158AbgL2UEi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Dec 2020 15:04:38 -0500
-Received: from mail-eopbgr700120.outbound.protection.outlook.com ([40.107.70.120]:9172
-        "EHLO NAM04-SN1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726111AbgL2UEh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Dec 2020 15:04:37 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=E8tF6dbxz8FLEUwUvdaGaqIVinvq/tAa579X9T+HjRvTeeir22te8Di1uf564Z9H5fXoXREBhrQax84W2domHfhD7x3bugP7Q0q37fB4MUnkTv89/IM3DttCo6LhhO/KC8tILaIn+zbVICRtJD1Ye/WVqOjmd0E+y5dQ4l9HOJAH3255/PNi0+2V/yflIYQgK9zo6UvX24dPu7B9sKFgvwUDPx+OesB4BuE0i3HnR4qGzYtEwZA5RuGlqT0qEKLGP1HxnE0iFW9EJUW6Gm+y1eK+1y69SwIw05WyaGG4Sjs4qMIn6fn1r5DZmILkD9dVbrVePnPD9uxGW5mVDJLMhA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KQ/xyG7kn/FTZqxEMyE+QayiEVDCv7mFIb51uNeKsfM=;
- b=A59vR/L6dJu8Uj3AqUKPjujS8AecMF/txH/tS4OlJEgEJg57GGMAeqQx3keL0C44ZDMapB+3RLQWvB3eh0WCnuVufiAPOxZcsqW9EQCSnPeGRDEPSuNsOTO8gwKCHzkrz8plEiCPwrdWcGg6wc6j3nwQVXDe2MdX5IX2puCXecaF+SQFGz9f4mhxQpmjv6CvNNYzZpBIbFnmxG06z5ExanIQq2dMfyuGe7NwfL/ygEMH1s4z6bNQ6al9sSQb5mV8yKcWg91y3rHIsq4GrqubKJYeB+FFesAQ9fdbJcSpaR5bCPlU5E3xpl166okx2ajoAxHbt/3fkx8EkosfInUkCQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KQ/xyG7kn/FTZqxEMyE+QayiEVDCv7mFIb51uNeKsfM=;
- b=PJ2yywX1ah4i+1y/0Tw4N7wrJA/u5mjv074HcNY2S7PsdaFhmuzdC5TRYlqEqMJANW35TahGDUS7r1DC+BOZNKFs6fxAg3NuF/GV4b1P09HvCwuGsgOWBa6NKHHxWt8jnTPpl61Xip0UN7IfkQrBeLk+rkGhay4+6rZkSGKhDNs=
-Received: from (2603:10b6:300:78::18) by
- MWHPR21MB0783.namprd21.prod.outlook.com (2603:10b6:300:77::21) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3742.2; Tue, 29 Dec 2020 20:03:55 +0000
-Received: from MWHPR21MB0160.namprd21.prod.outlook.com
- ([fe80::9068:882d:ce8:9391]) by MWHPR21MB0160.namprd21.prod.outlook.com
- ([fe80::9068:882d:ce8:9391%9]) with mapi id 15.20.3742.002; Tue, 29 Dec 2020
- 20:03:55 +0000
-From:   "Christohper Boorman (Protiviti Inc)" <v-cboorman@microsoft.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: Repo in strange state
-Thread-Topic: Repo in strange state
-Thread-Index: AdbeGOV349olP1gaQGCug1bAdKMO2wABG+Og
-Date:   Tue, 29 Dec 2020 20:03:54 +0000
-Message-ID: <MWHPR21MB0160BA0EDE4DCDDDA96FC79F8BD89@MWHPR21MB0160.namprd21.prod.outlook.com>
-References: <MWHPR21MB0160A79296BD2875F99B5C1B8BD89@MWHPR21MB0160.namprd21.prod.outlook.com>
-In-Reply-To: <MWHPR21MB0160A79296BD2875F99B5C1B8BD89@MWHPR21MB0160.namprd21.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=442d70c0-c382-4f80-b91e-6e6eb30d8932;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2020-12-29T19:28:33Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
-authentication-results: vger.kernel.org; dkim=none (message not signed)
- header.d=none;vger.kernel.org; dmarc=none action=none
- header.from=microsoft.com;
-x-originating-ip: [2601:600:9780:1650:b1b3:7ffc:c3c1:92e5]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-ht: Tenant
-x-ms-office365-filtering-correlation-id: ea395c57-3925-4490-1abc-08d8ac34dee6
-x-ms-traffictypediagnostic: MWHPR21MB0783:
-x-microsoft-antispam-prvs: <MWHPR21MB0783D0E9B72ED975EF67BFD08BD89@MWHPR21MB0783.namprd21.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:3044;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: M87tS+CCzkb61hGaQU1t0md8OMrYBadnhY6OFV5hPx9I2mIVHZ5UZmM8x6F/uzBYtFN+vZ2t8PMeh4mKWTDRGvqm1eZB5WtCDHMsZvMux7sh7XkxOlQ3p1nQwrsCdsIzhxaUe4VFJaYiIsYvfhm30ka+cNblagGEqT6sIrCWIagmJZgaaELrvliHf8nObgCBfzM9YNje1Wv8PPhMoE5l+J4f8BiBVzhKRatsBf7m9eM280NlhoDcXmDHVvjGu1aVVclxZIxi2QWOIL+Ygtl1i85lCjmgwDwO4YEVxpnImikto9G1mTJYlqBOnwrZc6PRQoz9wArPTtwxHd1KmiYQdH9Ff0fDEdrrC2xTyvQwzCVvsEya1JkW1+Qo/fQhgqyNhYL9pxd7J0fbhbKExpIIvQ==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MWHPR21MB0160.namprd21.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(376002)(366004)(346002)(39860400002)(396003)(136003)(82960400001)(2940100002)(316002)(82950400001)(83380400001)(2906002)(8990500004)(9686003)(66446008)(5660300002)(66476007)(478600001)(7696005)(8936002)(186003)(4744005)(10290500003)(71200400001)(66946007)(76116006)(86362001)(3480700007)(52536014)(6916009)(55016002)(64756008)(6506007)(66556008)(8676002)(33656002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata: =?iso-8859-1?Q?K324koj7UqLOXzjkVvIL6imyUu6PGJXDXl+TbuW7o3nO1dF0SrR2W02FjJ?=
- =?iso-8859-1?Q?4eHrE6rkgytPVRrB4Ic0z+QhCbpF5pdtiSX8RDmu6MGnyneMpNY5wXwRO7?=
- =?iso-8859-1?Q?zzBhImVGu8aiItETCOE8HokZ7FWKrk9xOHDQeCM2DLajtUsEKtIPkJhWKR?=
- =?iso-8859-1?Q?suTrVFZF6AxL65Dhr1tVA1E+k32HIgoOot3OsdQvpe7AMF8T+dp9bL7XJK?=
- =?iso-8859-1?Q?pdRYfT2YlreLZ24kzIDCrtUGtm9Y4I44M1Nd/Y78LrpD+XBacOa+1YWORT?=
- =?iso-8859-1?Q?QCJHz7ACY0esE3YtFVTHN1NzJ1JnbAa7Hc4Xmq0Lnfb/Noip6ZrpJUBaCo?=
- =?iso-8859-1?Q?MmvltrHDwy4B9QavtTgIRGmJuNz11Z6VDeiz204vLpg3iGtHfcUkYjz2OD?=
- =?iso-8859-1?Q?M7vp+x8fpKmhP4DHZyp/VAC9XKIXAvLhKrhQXeP+/WhB1/zM/aZazW+6U6?=
- =?iso-8859-1?Q?klkgrnhKctXkRUE+vxKVUAxeDEP4fYn4UZ8s2xsIYXtHGr872DYjd59bZ+?=
- =?iso-8859-1?Q?H6iwbGnDExn79Jz95uJQHv+89/EvrCCVSP0nfqx88JgYJLI1NABd6QAL3Q?=
- =?iso-8859-1?Q?GTGxjJm4RC170VK/Rkn4eq9ph7ae1Y3zZXWxtNr/ApdbA0em3368Xy5+Gu?=
- =?iso-8859-1?Q?dRGYXEeC5ZQUpEGR9Gyd8drFtvdb5eVsG3+c76VjIZEa8FpE5vFECYEyxR?=
- =?iso-8859-1?Q?HRuQyeEkntB2/28NMuUeYVjloGj99hlyWXByjPwwTEM3LihVU/J1Y/Ro4r?=
- =?iso-8859-1?Q?3eY3pRm3sPnQsGWZB+MhlHshJGwmJoGBOyMvGix6Ua/GjLheGMxIScRxLm?=
- =?iso-8859-1?Q?ZCl780mvFV72wVFVivsMWB8Ect1+yDb5nO0Xk3jb6DVT/fFdFTIxfmKtUb?=
- =?iso-8859-1?Q?4HyUibwRakcCTiRLI/6f5bzwYHFBLcIEsme7O/XkZTLZNiHLQ71C75Fx7E?=
- =?iso-8859-1?Q?9KVrHVUxPYoZH8pkNv7gRJQvTRhSui2Zwsi7t975b4KPmln9B3W4Zfoq2q?=
- =?iso-8859-1?Q?nFDVKwaLMQUXAum44=3D?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        id S1726278AbgL2UGY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Dec 2020 15:06:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53604 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726178AbgL2UGX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Dec 2020 15:06:23 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A19E8C0613D6
+        for <git@vger.kernel.org>; Tue, 29 Dec 2020 12:05:31 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id w5so15589452wrm.11
+        for <git@vger.kernel.org>; Tue, 29 Dec 2020 12:05:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=F5SVzOSa7YooSgoAyJ3jPz/gt2LMOCI8T0RucTS9g7Y=;
+        b=F895IuxxOctSY7EPhVCmXFeMn4SFZdtGXaUO++ACoZLpF3T3t1LCobEU0pPVhDmuwk
+         7CJV78lv/Su6LI50xQ09xDrHGOHyUxZ7W+V0J0NHNjROobpKfv98vfCcdHlD0yNbu8me
+         wg9RNr0rb5LiW8ix1b8PMQvL95b7hb2G8BaBtWqfbvKXWjRAuWlV9eq49Fo66goQ5hkL
+         iPjjZgiyund5h43xUc2g1C9bsmwdbcoNl+p0UoMrfMtmaTquJHW6bjSO3N/qgCZ6+JSY
+         jjchiH1ioYPyiLYQgKFWmW9bIfryCVKob1pH2lXrvURoB5FFGp8eXBiofVUfL46G8ibe
+         e67g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=F5SVzOSa7YooSgoAyJ3jPz/gt2LMOCI8T0RucTS9g7Y=;
+        b=REEIR5fUhwjVu0T0N/uwAizFArgBWwaCL3BNPLA24s1EV0kOhhPH8oTWAKQaEwG9lZ
+         EvkDm26XXp1xMfKcFF7MEI+3tUgMB/WNMpUJeM5gHBobr8d7xAiRLX74NYvd5/IliZU7
+         WFlbNEMtAcHBcUo2zuhx+WT0XLtFebwUBOcnWS20WvxPE9w7kckZjdiPKHw/rsfSLQa9
+         RNN1oS+d7gpMj2KhAfuQI45ynrvVTYfOGeO8Z8uo50Qas3plkzo4EEh2q/qpEZb0IZAn
+         5GjtWNrHpxdlgbDYTCj7uTyE/s7AsXETeFgnMKRojqQA4NR5mxRLJNBv2VxIL9wfdpsU
+         pGKQ==
+X-Gm-Message-State: AOAM533gjw+R1jIq7OetRAKm8Lu8oIKjUL1L43L0eIgl9zEClWQw2pbL
+        FSdFDytd6da/GKhKXt9TB6Bl64LujEs=
+X-Google-Smtp-Source: ABdhPJwZPh/Ld9Y1T0E6IHVE9/q0dBH1y1lvplaBdFt80GHrslh5XTcf9GJYdad0xYx43Zn8J318Pg==
+X-Received: by 2002:a5d:61c4:: with SMTP id q4mr57548425wrv.304.1609272330246;
+        Tue, 29 Dec 2020 12:05:30 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u66sm4609147wmg.30.2020.12.29.12.05.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Dec 2020 12:05:29 -0800 (PST)
+Message-Id: <pull.929.v3.git.git.1609272328.gitgitgadget@gmail.com>
+In-Reply-To: <pull.929.v2.git.git.1607677728.gitgitgadget@gmail.com>
+References: <pull.929.v2.git.git.1607677728.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 29 Dec 2020 20:05:19 +0000
+Subject: [PATCH v3 0/9] diffcore-rename improvements
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MWHPR21MB0160.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ea395c57-3925-4490-1abc-08d8ac34dee6
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Dec 2020 20:03:55.0084
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: erui4KN1enJ1JDDUlDJ/VTB8WlOl7LU9/s+Ce2p1ymOTvIaj6WXYO6UYvPEV81cBRUl2iGU1IilWOxcUQ/lSBSrT3/sLpiI3904f6Wp5778=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR21MB0783
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+This patch series includes 3 small code cleanups, 1 small bug fix (or
+perhaps just a UI improvement -- it's a very minor issue either way), more
+testcases, and 3 performance improvements. The first 7 patches are
+relatively easy to review, while the second to last one...is a bit more
+involved (but provided the biggest performance boost).
 
-I attempted to paste a command into the git bash, but accidentally selected=
- "Select All". The next thing I knew, the bash scrolled like crazy, as it t=
-ried to execute dozens of commands. I couldn't get it to stop scrolling, so=
- I closed the bash window.
+Changes since v2:
 
-Now I'm in a strange situation:=20
+ * Fixed spelling error: remove unnecessary double c in 'unneccessary'
+   (thanks to Christian for spotting)
 
+Elijah Newren (9):
+  diffcore-rename: rename num_create to num_destinations
+  diffcore-rename: avoid usage of global in too_many_rename_candidates()
+  diffcore-rename: simplify limit check
+  diffcore-rename: reduce jumpiness in progress counters
+  t4058: add more tests and documentation for duplicate tree entry
+    handling
+  t4058: explore duplicate tree entry handling in a bit more detail
+  diffcore-rename: simplify and accelerate register_rename_src()
+  diffcore-rename: accelerate rename_dst setup
+  diffcore-rename: remove unnecessary duplicate entry checks
 
-$ git status
-On branch master
-Your branch is up to date with 'origin/master'.
-
-Untracked files:
-=A0 (use "git add <file>..." to include in what will be committed)
-=A0=A0=A0=A0=A0=A0=A0 FETCH_HEAD
-
-nothing added to commit but untracked files present (use "git add" to track=
-)
-
-
-
-I attempted to use git restore FETCH_HEAD, but I got an error (git said it'=
-s not a file).
-
-So how do I fix this situation? Any help would be appreciated.
+ diffcore-rename.c          | 209 ++++++++++++++-----------------------
+ t/t4058-diff-duplicates.sh | 114 +++++++++++++++++++-
+ 2 files changed, 192 insertions(+), 131 deletions(-)
 
 
-Thanks,
+base-commit: 3a0b884caba2752da0af626fb2de7d597c844e8b
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-929%2Fnewren%2Fdiffcore-rename-improvements-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-929/newren/diffcore-rename-improvements-v3
+Pull-Request: https://github.com/git/git/pull/929
 
-Christopher Boorman
+Range-diff vs v2:
+
+  1:  428d8204894 =  1:  428d8204894 diffcore-rename: rename num_create to num_destinations
+  2:  fc62f4c4f89 =  2:  fc62f4c4f89 diffcore-rename: avoid usage of global in too_many_rename_candidates()
+  3:  7214fa73fdd =  3:  7214fa73fdd diffcore-rename: simplify limit check
+  4:  bf3581b1ac1 =  4:  bf3581b1ac1 diffcore-rename: reduce jumpiness in progress counters
+  5:  9a4a3159acf =  5:  9a4a3159acf t4058: add more tests and documentation for duplicate tree entry handling
+  6:  8db27892c59 =  6:  8db27892c59 t4058: explore duplicate tree entry handling in a bit more detail
+  7:  a58639b2927 =  7:  a58639b2927 diffcore-rename: simplify and accelerate register_rename_src()
+  8:  85714e1583d =  8:  85714e1583d diffcore-rename: accelerate rename_dst setup
+  9:  af256b1c534 !  9:  723b0e55e75 diffcore-rename: remove unneccessary duplicate entry checks
+     @@ Metadata
+      Author: Elijah Newren <newren@gmail.com>
+      
+       ## Commit message ##
+     -    diffcore-rename: remove unneccessary duplicate entry checks
+     +    diffcore-rename: remove unnecessary duplicate entry checks
+      
+          Commit 25d5ea410f ("[PATCH] Redo rename/copy detection logic.",
+          2005-05-24) added a duplicate entry check on rename_src in order to
+
+-- 
+gitgitgadget
