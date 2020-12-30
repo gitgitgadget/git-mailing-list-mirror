@@ -2,124 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56A7AC433DB
-	for <git@archiver.kernel.org>; Wed, 30 Dec 2020 14:17:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BA01C433E0
+	for <git@archiver.kernel.org>; Wed, 30 Dec 2020 14:53:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1C20F221F8
-	for <git@archiver.kernel.org>; Wed, 30 Dec 2020 14:17:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E27B21919
+	for <git@archiver.kernel.org>; Wed, 30 Dec 2020 14:53:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726230AbgL3ORL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Dec 2020 09:17:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51460 "EHLO
+        id S1726247AbgL3OxT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Dec 2020 09:53:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725814AbgL3ORK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Dec 2020 09:17:10 -0500
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 680E8C061799
-        for <git@vger.kernel.org>; Wed, 30 Dec 2020 06:16:30 -0800 (PST)
-Received: by mail-oi1-x229.google.com with SMTP id d203so18801050oia.0
-        for <git@vger.kernel.org>; Wed, 30 Dec 2020 06:16:30 -0800 (PST)
+        with ESMTP id S1726203AbgL3OxS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Dec 2020 09:53:18 -0500
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DDE3C061799
+        for <git@vger.kernel.org>; Wed, 30 Dec 2020 06:52:37 -0800 (PST)
+Received: by mail-qk1-x730.google.com with SMTP id h4so14081868qkk.4
+        for <git@vger.kernel.org>; Wed, 30 Dec 2020 06:52:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/hTjYGsceApIE4O1Zzb7At6uLtVsWkl9DbFzE/SJntg=;
-        b=azk2taUmISTzkyp9rWJVYkEezOmHJ1cPwm3jPVpYy/5vdqXmzhTeVdijjNgyRpXCY+
-         RI6rtODWBK6Rnxls82WauMc7oFaXWJbdHIj3FUNygqCF5sj6afCZuRiOePc2fRqQ591o
-         5Hg3A//htiGLHTmQP+ASpGXVgoBGr1zYkpDw+I5RK+klzMB3WiO+NpzVeFh4uYRWZmfA
-         RW8KcvtfBMIdeaFEQejRs9f4bh2afGKf9s+sWbpDPhqaBLgve/CvaDn4qKm66MI09kfo
-         JGABX+A6Vw5aLmPh5fRbiz4RqA19YfUMAlGk8jsZfWtO0sGBcWtHQOa49xfcJyJpReVd
-         dHjA==
+        d=usp.br; s=usp-google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=5D4H9/vwxrMJB3tXEYvNEkCh6/wz0nULkuKqlAVxNfQ=;
+        b=v5ciF/CwM2J+4NtefZkT+K71uYqjbr5mOgaG0JoLIxJmXPGsM3neXz0Yum9aEnF6TD
+         L3y9wV5F2BWE1F39Z4CaqiIPwOtRVl6B0cJk878KKCM7bUI9ZmexCtQxuE5pSPCcNPuy
+         fWU7QLILOXt1FK24hbMFWxN7tSROKpYMs5vj1sY0b2BtAWB01p3z1laUXC6b+bghCHLX
+         v0S2E4CEdcgD6lKmhVFJjk8MEdyeQLni/ldcHKNuDcVIxVDtVo4GtYqjsHHzdPkHfUl4
+         Qbhe2RM0vtxdS92x8wXd+b59VIW5TBSNs5woYAddrXY/WH44Az9LpmfFTTWOBFd4v74H
+         2Hiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=/hTjYGsceApIE4O1Zzb7At6uLtVsWkl9DbFzE/SJntg=;
-        b=pPMxB3gd9ShJr+gSm/A0lIUFYp6RNdNus+tZxDBG/Km6CrhPtMIHduO07tX99lEWrt
-         pqzDNEnlPZgD7QrAqhGKRZ/3c7wIaY0fXGOZNq4mmLZirpJaoe4V9uT/Bme0yYD+05Ma
-         hnVbiYRh5cSAZczYsEpiul+iUkR6oM38ZD9nDGveBd8yb6lHk71PV4ki8UGUTympgHPQ
-         RWQTYPN90WItZYxFg0qIyxEo7XHLrqkQCPQe4Ijpb9C+hrhxHxGQ2FAn6nBsS9P82upB
-         pD8Rb/npH6EWQnJOiSF8QajAUmzSo0awtHhbbP5R5GN3VWgFjIVvV22Vh7peIu7MqzQv
-         2LIQ==
-X-Gm-Message-State: AOAM530Hc8wbsNXKK3UbahRmwLSz+8Gi8TsuwiJ4rjYXc2e3afFxVv+2
-        101VfhG1hK3DUF0AWgm8uKM=
-X-Google-Smtp-Source: ABdhPJxWuALRzBwSkb21W/JS7Yl2Rku8ekKxo/tQx6aqx3s4SxnAGVKtbfWby4d8+Mf3OE5RUw7t0w==
-X-Received: by 2002:aca:53d2:: with SMTP id h201mr5328541oib.168.1609337789590;
-        Wed, 30 Dec 2020 06:16:29 -0800 (PST)
-Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
-        by smtp.gmail.com with UTF8SMTPSA id q18sm10430718ood.35.2020.12.30.06.16.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Dec 2020 06:16:28 -0800 (PST)
-Subject: Re: [PATCH 03/10] merge-ort: implement unique_path() helper
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-References: <pull.815.git.1608270687.gitgitgadget@gmail.com>
- <6ac555b3c0fe605fbbe6e304482c2e3aef321865.1608270687.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <3a07f700-18fc-9f4e-3117-41e534d737b0@gmail.com>
-Date:   Wed, 30 Dec 2020 09:16:28 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
- Thunderbird/85.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=5D4H9/vwxrMJB3tXEYvNEkCh6/wz0nULkuKqlAVxNfQ=;
+        b=qRBBSxaY5AJJV3RQzp88IOg/xsGMrZ08jO0FRY5A9aV/6kbCV9oEY7JeM0wPUm5kIc
+         dsQ07uH6/Tx//4FPfmsJ/AyQ4LklryxsrApphhcjgAcvZVPWSKUQQCNPCheYhPDAGOru
+         gAlt06tCPjnR9Wqh30b9HOtFhPICzEDBxrRpZGtyPBxCZcwG1sAigTZejiEJ2pTWcQJD
+         xFBWBwXNuCWfKeh28/2mXGupAV5jafJcyWdlvrJvgU+MWF7pqZ7l9ijZARGZTWFmyc/0
+         4bHW7gEwo/lbPuJvc1LVO6VpQ3f6sueP9l2bzy4jjro/uvfFtZBYNdtD+fH3JZnvwtWQ
+         3D/g==
+X-Gm-Message-State: AOAM533mykTh7BGsFuUDSdy/Ljyc+TfD0oMBzDh5BpById1dO528F/uX
+        N502Wu9eB8WVabk9M7aU2mLXZaoU6rn6sw==
+X-Google-Smtp-Source: ABdhPJwhiMu96+3iQqUaeql6R+g/UNVTdoNmESAu67Fv9Y7RSLH0n9dCm8eTmhrQ2dbOJ509O9gk8w==
+X-Received: by 2002:a37:a312:: with SMTP id m18mr54006204qke.268.1609339956431;
+        Wed, 30 Dec 2020 06:52:36 -0800 (PST)
+Received: from mango.meuintelbras.local ([177.32.118.149])
+        by smtp.gmail.com with ESMTPSA id t68sm28712388qkd.35.2020.12.30.06.52.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Dec 2020 06:52:35 -0800 (PST)
+From:   Matheus Tavares <matheus.bernardino@usp.br>
+To:     git@vger.kernel.org
+Cc:     me@ikke.info
+Subject: [PATCH] t4129: don't fail if setgid is set in the parent directory
+Date:   Wed, 30 Dec 2020 11:52:25 -0300
+Message-Id: <88398ff952a68e8d134dcd50ef0772bb6fc3b456.1609339792.git.matheus.bernardino@usp.br>
+X-Mailer: git-send-email 2.29.2
+In-Reply-To: <X+xtAR87vWuNiLoE@alpha>
+References: <X+xtAR87vWuNiLoE@alpha>
 MIME-Version: 1.0
-In-Reply-To: <6ac555b3c0fe605fbbe6e304482c2e3aef321865.1608270687.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/18/2020 12:51 AM, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
-> 
-> Implement unique_path(), based on the one from merge-recursive.c.  It is
-> simplified, however, due to: (1) using strmaps, and (2) the fact that
-> merge-ort lets the checkout codepath handle possible collisions with the
-> working tree means that other code locations don't have to.
-> 
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  merge-ort.c | 25 ++++++++++++++++++++++++-
->  1 file changed, 24 insertions(+), 1 deletion(-)
-> 
-> diff --git a/merge-ort.c b/merge-ort.c
-> index d300a02810e..1adc27a11bc 100644
-> --- a/merge-ort.c
-> +++ b/merge-ort.c
-> @@ -343,11 +343,34 @@ static void path_msg(struct merge_options *opt,
->  	strbuf_addch(sb, '\n');
->  }
->  
-> +/* add a string to a strbuf, but converting "/" to "_" */
-> +static void add_flattened_path(struct strbuf *out, const char *s)
-> +{
-> +	size_t i = out->len;
-> +	strbuf_addstr(out, s);
-> +	for (; i < out->len; i++)
-> +		if (out->buf[i] == '/')
-> +			out->buf[i] = '_';
-> +}
-> +
+The last test of t4129 creates a directory and expects its setgid bit
+(g+s) to be off. But this makes the test fail when the parent directory
+has the bit set, as setgid's state is inherited by newly created
+subdirectories. Make the test more robust by accepting the presence of
+the setgid bit on the created directory. We only allow 'S' (setgid on
+but no executable permission) and not 's' (setgid on with executable
+permission) because the previous 'umask 0077' shouldn't allow the second
+scenario to happen.
 
-Thank you for pointing out that you based your code on merge-recursive.c.
-I see that this implementation is identical to the one there. I question
-whether this causes collisions in a problematic way, when "a/b/c" and
-"a_b_c" both exist in a tree.
+Note that only subdirectories inherit this bit, so we don't have to make
+the same change for the regular file that is also created by this test.
+But checking the permissions using grep instead of test_cmp makes the
+test a little simpler, so let's use it for the regular file as well.
 
-To avoid such a problem, we'd likely need to also expand "_" to "__" or
-similar. This might never actually affect any users because of the
-strange filename matches _and_ we need to be in a directory/file conflict.
+Also note that the sticky bit (+t) and the setuid bit (u+s) are not
+inherited, so we don't have to worry about those.
 
-And maybe it's not a hole at all? If it is, we can consider patching or
-at least documenting the problem.
+Reported-by: Kevin Daudt <me@ikke.info>
+Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+---
+ t/t4129-apply-samemode.sh | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-Thanks,
--Stolee
+diff --git a/t/t4129-apply-samemode.sh b/t/t4129-apply-samemode.sh
+index 41818d8315..3818398ca9 100755
+--- a/t/t4129-apply-samemode.sh
++++ b/t/t4129-apply-samemode.sh
+@@ -90,12 +90,10 @@ test_expect_success POSIXPERM 'do not use core.sharedRepository for working tree
+ 		rm -rf d f1 &&
+ 		git apply patch-f1-and-f2.txt &&
+ 
+-		echo "-rw-------" >f1_mode.expected &&
+-		echo "drwx------" >d_mode.expected &&
+-		test_modebits f1 >f1_mode.actual &&
+-		test_modebits d >d_mode.actual &&
+-		test_cmp f1_mode.expected f1_mode.actual &&
+-		test_cmp d_mode.expected d_mode.actual
++		test_modebits f1 >f1_mode &&
++		test_modebits d >d_mode &&
++		grep "^-rw-------$" f1_mode &&
++		grep "^drwx--[-S]---$" d_mode
+ 	)
+ '
+ 
+-- 
+2.29.2
+
