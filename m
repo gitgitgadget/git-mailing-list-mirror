@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC62DC433E9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A44CCC433DB
 	for <git@archiver.kernel.org>; Wed, 30 Dec 2020 19:27:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 93BD922242
+	by mail.kernel.org (Postfix) with ESMTP id 7821A22287
 	for <git@archiver.kernel.org>; Wed, 30 Dec 2020 19:27:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726470AbgL3T1k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Dec 2020 14:27:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42608 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726305AbgL3T1j (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726352AbgL3T1j (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 30 Dec 2020 14:27:39 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA564C06179B
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42604 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726185AbgL3T1i (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Dec 2020 14:27:38 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B167C061799
         for <git@vger.kernel.org>; Wed, 30 Dec 2020 11:26:58 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id c5so18306136wrp.6
-        for <git@vger.kernel.org>; Wed, 30 Dec 2020 11:26:58 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id v14so5710717wml.1
+        for <git@vger.kernel.org>; Wed, 30 Dec 2020 11:26:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Beof6wirizOKpfsWwTbU2ekekdWsETRnVpYiQCmgFkc=;
-        b=dx5VnawPa40bkTwI0hHSR1eG+CDDbLolOvomy079v93b6qMSQwDkVCpzIOWb81oUIB
-         qOwmeYftmr3RLqxmO92REzzJCEsH7rT3JLD/oTuv1C9hzsMFZJx86knOt/rbuMF4LAtJ
-         FA3pceIO3eO1mx0YVBXlTaVHDMxMsw8VjNhNPLJakPVJ7kHbR458H0CwrNEma7OW0A8F
-         sKVQAkbcT0UiWClVkU1IP2xHq565kqn1k1gT8qKeG6S7qMFFgUfLQ72Y3zPd55QQcEJb
-         NUicAwFKJMxpbTd/dad6RAJEt03LWYXkUKfxVagLd1dUcF2V7JyF6vv1ldSeordSGtMZ
-         jtWA==
+        bh=lZsgzqKL9emT4W9BIj6rxRLXy2CmPoK6OWnPMIFpeTg=;
+        b=dcPPu2SYbOU1Q8h4ZTgsMTBdsH5b26pWTRBN4CDHICzVikNM6mYHU2LzlJ2fnQXAGv
+         21OokX6639SiJQzE8jWwaiRAas4OEKkHWqNnUZZYzaCiUsRjf8uqLX9VDgIa+HpLNv4A
+         YrnwN4IUXhY5Af6MgLGUhzGPss/yhzGeYJQPgdjEmAES8FClexa41Syku+T90j2GKBr0
+         7jSZBtFa14dD0pxirwCYfbZ6qPxwdE7LYstHvO3KiYFkOt3nwSNzx7aO8efyFD1arw6i
+         ToX3/A+v2f5aI3MFpsu6u18VNU1R9ho9PFhrJnknVLjlzv2mOT5BwmPWfSjSNRFZbHaQ
+         bhGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Beof6wirizOKpfsWwTbU2ekekdWsETRnVpYiQCmgFkc=;
-        b=Y1op2blK0hXqEPxsz6C3yK9ZTScuugqrDEHI3SUXYl99/PcFoG8mczH1rjE0Th5DnS
-         wT0YWi64HxVLp6NdVSMMeF/UqzNAuq20HAuWpWvdo0OXnmcViKm3zmsJfEPLlXSg80FK
-         4EDlrEX6KDdMncGCGb6u/4a+DkqwiGKG9X2RHdgLxxxktMjcSKoP8FkzAh3304hmQltr
-         rHZGnW9B91l9mM2ryz1jZS5cPvrFa2XDEJY1Ps1a3yf/hZlX5i46Y+To9w0c0nq7OiM0
-         NRJLfVPGwja0V4jiu/evEdOy9k8Sl/ra00iQikZFDO58ADii5ZeaoV813RccXb75SYxM
-         7AKg==
-X-Gm-Message-State: AOAM531spnGtqZS1gc3XDTQt4bsZaX9hS/gimR0+VpQGQgBMvs8HXxNp
-        VaSxlrXRECTr5aEADT8VLZ+BHqhflIA=
-X-Google-Smtp-Source: ABdhPJyveQqxoxxvqF6J+5IsC6eDEDh2t15dd/PVbJuQhn0hH0xgr/7c8elFlKmf/dPoYgT/U084sg==
-X-Received: by 2002:adf:db43:: with SMTP id f3mr63663598wrj.70.1609356417360;
-        Wed, 30 Dec 2020 11:26:57 -0800 (PST)
+        bh=lZsgzqKL9emT4W9BIj6rxRLXy2CmPoK6OWnPMIFpeTg=;
+        b=s0olrqxERjzA78AVLPWgCrQRS/Me2tK0vnbdiHph+akcFUe9PSfynQf9uOk4kQhyUq
+         HIApcrcRITxG+27NyEKPAd0hRhrH6QMaxbSRjhvAi1ZDO7EPoRgUV2EnrZzbbBme9VTP
+         oxJkpf6JrDTowa4PWW4fEMXY5hlJf6ND0aAFGTkhpgFXrs6+s3YDqX3opAqfND16I5i3
+         8AQb1S3I/mlToVglDcO8EgZND9xamIYIuK7CPISiGhElFR3k7HfZbIA2uKHR8zZERoNl
+         /sHPinghT2I+MosBSbcSVYcS/tjgIFe/8eamvuzSXsWF85V6aTejfF25s6LRneqIDOav
+         UrJg==
+X-Gm-Message-State: AOAM530NuWl+gtZCkG/zlN2kXdH4V6kiYdlL4rmcXSh87NE17oLRk6tu
+        CTmt9910EjZ9AnOe7RkWRS27b6fV5eg=
+X-Google-Smtp-Source: ABdhPJzCJhcxctG871rVurm1CJrT6LiSOZoUHyOBRn9bRsfuaFeQ6kS/MTqcD6h/1Am3QL/j4mJ6nw==
+X-Received: by 2002:a1c:4107:: with SMTP id o7mr8900117wma.69.1609356416585;
+        Wed, 30 Dec 2020 11:26:56 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c10sm69476329wrb.92.2020.12.30.11.26.56
+        by smtp.gmail.com with ESMTPSA id y2sm8517793wma.6.2020.12.30.11.26.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 30 Dec 2020 11:26:56 -0800 (PST)
-Message-Id: <802718084a7266429ddf0f5b836bd3fecd55400c.1609356413.git.gitgitgadget@gmail.com>
+Message-Id: <6923e6211aaa9e1e144db747c971c6fe35fb4d41.1609356413.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.829.git.1609356413.gitgitgadget@gmail.com>
 References: <pull.829.git.1609356413.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 30 Dec 2020 19:26:48 +0000
-Subject: [PATCH 3/8] cache-tree: use trace2 in cache_tree_update()
+Date:   Wed, 30 Dec 2020 19:26:47 +0000
+Subject: [PATCH 2/8] unpack-trees: add trace2 regions
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,28 +75,50 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-This matches a trace_performance_enter()/trace_performance_leave() pair
-added by 0d1ed59 (unpack-trees: add performance tracing, 2018-08-18).
+The unpack_trees() method is quite complicated and its performance can
+change dramatically depending on how it is used. We already have some
+performance tracing regions, but they have not been updated to the
+trace2 API. Do so now.
+
+We already have trace2 regions in unpack_trees.c:clear_ce_flags(), which
+uses a linear scan through the index without recursing into trees.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- cache-tree.c | 2 ++
- 1 file changed, 2 insertions(+)
+ unpack-trees.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/cache-tree.c b/cache-tree.c
-index a537a806c16..9efb6748662 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -442,7 +442,9 @@ int cache_tree_update(struct index_state *istate, int flags)
- 	if (i)
- 		return i;
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 02f484604ac..7dbd006ac56 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1579,6 +1579,8 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 		die("unpack_trees takes at most %d trees", MAX_UNPACK_TREES);
+ 
  	trace_performance_enter();
-+	trace2_region_enter("cache_tree", "update", the_repository);
- 	i = update_one(it, cache, entries, "", 0, &skip, flags);
-+	trace2_region_leave("cache_tree", "update", the_repository);
- 	trace_performance_leave("cache_tree_update");
- 	if (i < 0)
- 		return i;
++	trace2_region_enter("unpack_trees", "unpack_trees", the_repository);
++
+ 	if (!core_apply_sparse_checkout || !o->update)
+ 		o->skip_sparse_checkout = 1;
+ 	if (!o->skip_sparse_checkout && !o->pl) {
+@@ -1652,7 +1654,9 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 		}
+ 
+ 		trace_performance_enter();
++		trace2_region_enter("unpack_trees", "traverse_trees", the_repository);
+ 		ret = traverse_trees(o->src_index, len, t, &info);
++		trace2_region_leave("unpack_trees", "traverse_trees", the_repository);
+ 		trace_performance_leave("traverse_trees");
+ 		if (ret < 0)
+ 			goto return_failed;
+@@ -1740,6 +1744,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ done:
+ 	if (free_pattern_list)
+ 		clear_pattern_list(&pl);
++	trace2_region_leave("unpack_trees", "unpack_trees", the_repository);
+ 	trace_performance_leave("unpack_trees");
+ 	return ret;
+ 
 -- 
 gitgitgadget
 
