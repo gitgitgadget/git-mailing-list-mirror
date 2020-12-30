@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5694C433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2087C433E6
 	for <git@archiver.kernel.org>; Wed, 30 Dec 2020 19:28:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 7C4C122242
+	by mail.kernel.org (Postfix) with ESMTP id 99FB522262
 	for <git@archiver.kernel.org>; Wed, 30 Dec 2020 19:28:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726564AbgL3T2S (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726539AbgL3T2S (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 30 Dec 2020 14:28:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42710 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726305AbgL3T2R (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726485AbgL3T2R (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 30 Dec 2020 14:28:17 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93E8AC0617A1
-        for <git@vger.kernel.org>; Wed, 30 Dec 2020 11:27:02 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id d13so18281497wrc.13
-        for <git@vger.kernel.org>; Wed, 30 Dec 2020 11:27:02 -0800 (PST)
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BB2BC06179E
+        for <git@vger.kernel.org>; Wed, 30 Dec 2020 11:27:00 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id m5so18282119wrx.9
+        for <git@vger.kernel.org>; Wed, 30 Dec 2020 11:27:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=yzUvAlkC6AezbURrZeXlgW53aCmu8K4Q6nyWEKnDQMs=;
-        b=P+JxTJO4XolcNI4ee8WAIFKCg2NoZpXDdf9b5fVj6eWO/2KRT17L3uEnJCPfym6zNn
-         790M7fTD0e1aUiCnNEz85sovpfJFCID43QT8WrMUKsOv54fySmVk7gWc2a2oM+B+eQD9
-         QPfDZ/1B/uRBaxdLq4KBKNTDIZ84msAULB7G4EnOvoFT6PJWnB2xOFVKA0/hO7RvyXvo
-         WywoX7wOsT2/0S3NRh6lfTT4FudGzU6dNwN14APB+RUdl/kC90O90I2L3ygNRE9IHIZw
-         6kgZBvuuXr+g2nfGsQCaboCpdpZRoA0Q0MwZ37NDPn0Emm+S+OY8biqg+BuBgL9fjlrv
-         LRPg==
+        bh=fOGirnYlDnavvqoIa4Qn+d+wr7AfycoofAGcA7YjpCQ=;
+        b=AnHsFSnh28VwI2avpubV5Lt5Wui0KPSC4rPAol7+UgUwZfIlVt8tj5UssY/h2tsL0B
+         lBLHVghL2QITWxwwabSg+/BVa2Zqr7IL23YkdOOXUybnqyjmgJjtxsEeIIl8sxlI82Nj
+         irs1j6ttpyj8h9LaceTpi0af4ScFYgnmNdLG/C4jI333RxLSbCl9N3JmP/x8lqgCflO8
+         kNiNs8vmRN3R60Kp8p9+C7VUSdVVo2e5kftcXiTmYOtmXCOsX+bVli4kGxc4V9pgDeZK
+         XE1LtVrhW2iKBRO0krqGJzdiF8Se3tCnZRiI7vYcyV0/BRyvNoeQgs4jZUM0f51Tb16D
+         0dLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=yzUvAlkC6AezbURrZeXlgW53aCmu8K4Q6nyWEKnDQMs=;
-        b=mdH4EeE2Zyxy95N5UkRF7sgYUznIm40VIuFMsRvHjQmNfM/0x5RkVFAKnQzNByomax
-         74kl+qNpnQJB5ddKFtSzBV6gEEfbqv2giWuuNoYkOZ00uDeNIm1A1qNbqEJ2ZvhJeTNM
-         Fe0Gz/2SyoAFI3Z0DDBJnoom5SqmMh08VECMDhSDvoQaaYjpO/iJp7mZlwfaew0BjcrY
-         yL2tkhzVduhEU9olKIpg33ZVWQldlNgR0zUdJsfb4WHbH8pONisRSiU7LEbCS0q4VlLY
-         0ssbPEwiPx0H/kh23LaEmypaberKm3Cf8dthyhWoSoJ8ckEcVTDe57xjFNlXuN5oXKYg
-         mrSA==
-X-Gm-Message-State: AOAM533W2OIHCZQVKu52tUov6VUkx+uzTqNQkwSQlCqrqqbUxrpleKNp
-        c+Z45lTwOZsfflPuovA4SW77KbziKEY=
-X-Google-Smtp-Source: ABdhPJzF+qMjYr6F+w6S9n4Dlht+W13Z6mTA+xknub8wi62pMCZS4E4zQDLcyGVS0udHnGWBr6V9wg==
-X-Received: by 2002:adf:df08:: with SMTP id y8mr60183574wrl.278.1609356421245;
-        Wed, 30 Dec 2020 11:27:01 -0800 (PST)
+        bh=fOGirnYlDnavvqoIa4Qn+d+wr7AfycoofAGcA7YjpCQ=;
+        b=TdKlcZrO/dHFUL2Nb4BE3JBjcQZ4RhnIEV/fDmKEqlDY4QxcKBbi/vnSpMqosYFwvF
+         +oBSYTbq5/F1Fb3r4+rciHZwO1igk/XeUHedzO1bXly5PS24q5h3CNwjFd9bwP94+b25
+         2gM2PVkQJtHiPLjVtcT8CSbGzV/5rpID/b/+2hBFoLUEXKzBYNJOdOO8/FkS1MOmuevm
+         1VBQE+vnk++IYGB+RW6TlXsm0TPfXgQJ6QtJaUQzqrheJ/5PbehxoM865s64Jyu/dzTz
+         EQh0wif6xjCqNNbMZEnWYseOlLKN7KMhBK8F1Eo+mAQo8x9LMX5jap/7dX2nBMrnUn33
+         lXEA==
+X-Gm-Message-State: AOAM530ujV+RSuW30eBmNrLpXXNYsAIg6xZ4IOR6Hh4tRMp2gVEXHFeg
+        gogOGTXBnyQzl/UyL3LeSXrjjhb5TS0=
+X-Google-Smtp-Source: ABdhPJzS7A5gJsZayzNGoCXwJNXdZ1oA9Djzxw06Ucmwd2pzNpP3RVK8KuJGDUHScRXoVZgoNtcyHQ==
+X-Received: by 2002:a5d:4682:: with SMTP id u2mr61704873wrq.265.1609356418842;
+        Wed, 30 Dec 2020 11:26:58 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y11sm8425685wmi.0.2020.12.30.11.27.00
+        by smtp.gmail.com with ESMTPSA id r15sm64346374wrq.1.2020.12.30.11.26.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Dec 2020 11:27:00 -0800 (PST)
-Message-Id: <20ea7050324cdd78b0966f54366b26224dfc7814.1609356414.git.gitgitgadget@gmail.com>
+        Wed, 30 Dec 2020 11:26:58 -0800 (PST)
+Message-Id: <5d1c9c8a356b9003be21059c7ed6232732fd26c0.1609356414.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.829.git.1609356413.gitgitgadget@gmail.com>
 References: <pull.829.git.1609356413.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 30 Dec 2020 19:26:53 +0000
-Subject: [PATCH 8/8] cache-tree: avoid path comparison loop when silent
+Date:   Wed, 30 Dec 2020 19:26:50 +0000
+Subject: [PATCH 5/8] cache-tree: trace regions for prime_cache_tree
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,57 +75,33 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The verify_cache() method is used both for debugging issues with the
-cached tree extension but also to avoid using the extension when there
-are unmerged entries. It also checks for cache entries out of order with
-respect to file-versus-directory sorting.
-
-In 996277c (Refactor cache_tree_update idiom from commit, 2011-12-06),
-the silent option was added to remove the progress indicators from the
-initial loop looking for unmerged entries. This was changed to be a flag
-in e859c69 (cache-tree: update API to take abitrary flags, 2012-01-16).
-
-In both cases, the silent option is ignored for the second loop that
-checks for file-versus-directory sorting. It must be that this loop is
-intended only for debugging purposes and is not actually helpful in
-practice.
-
-Since verify_cache() is called in cache_tree_update(), which is run
-during 'git commit', we could speed up 'git commit' operations by not
-iterating through this loop another time. Of course, noticing this loop
-requires an incredibly large index.
-
-To get a measurable difference, I needed to run this test on the
-Microsoft Office monorepo, which has over three million entries in its
-index. I used 'git commit --amend --no-edit' as my command and saw the
-performance go from 752ms to 739ms with this change.
+Commands such as "git reset --hard" rebuild the in-memory representation
+of the cached tree index extension by parsing tree objects starting at a
+known root tree. The performance of this operation can vary widely
+depending on the width and depth of the repository's working directory
+structure. Measure the time in this operation using trace2 regions in
+prime_cache_tree().
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- cache-tree.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ cache-tree.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/cache-tree.c b/cache-tree.c
-index f135bb77af5..c6c084463bd 100644
+index 45fb57b17f3..f135bb77af5 100644
 --- a/cache-tree.c
 +++ b/cache-tree.c
-@@ -175,10 +175,15 @@ static int verify_cache(struct cache_entry **cache,
- 	if (funny)
- 		return -1;
+@@ -746,7 +746,10 @@ void prime_cache_tree(struct repository *r,
+ {
+ 	cache_tree_free(&istate->cache_tree);
+ 	istate->cache_tree = cache_tree();
++
++	trace2_region_enter("cache-tree", "prime_cache_tree", the_repository);
+ 	prime_cache_tree_rec(r, istate->cache_tree, tree);
++	trace2_region_leave("cache-tree", "prime_cache_tree", the_repository);
+ 	istate->cache_changed |= CACHE_TREE_CHANGED;
+ }
  
--	/* Also verify that the cache does not have path and path/file
-+	/*
-+	 * Also verify that the cache does not have path and path/file
- 	 * at the same time.  At this point we know the cache has only
--	 * stage 0 entries.
-+	 * stage 0 entries. In silent mode, we do not want these messages,
-+	 * and they should not exist unless a bug was introduced along
-+	 * the way.
- 	 */
-+	if (silent)
-+		return 0;
- 	funny = 0;
- 	for (i = 0; i < entries - 1; i++) {
- 		/* path/file always comes after path because of the way
 -- 
 gitgitgadget
+
