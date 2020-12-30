@@ -2,92 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-0.7 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCAC7C433E0
-	for <git@archiver.kernel.org>; Wed, 30 Dec 2020 21:06:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 069DDC433E0
+	for <git@archiver.kernel.org>; Wed, 30 Dec 2020 21:43:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 9F0C020795
-	for <git@archiver.kernel.org>; Wed, 30 Dec 2020 21:06:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CBE0720756
+	for <git@archiver.kernel.org>; Wed, 30 Dec 2020 21:43:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726305AbgL3VGe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Dec 2020 16:06:34 -0500
-Received: from ikke.info ([178.21.113.177]:47122 "EHLO vps892.directvps.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726197AbgL3VGd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Dec 2020 16:06:33 -0500
-X-Greylist: delayed 32428 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 Dec 2020 16:06:33 EST
-Received: by vps892.directvps.nl (Postfix, from userid 1008)
-        id A4F6F44012C; Wed, 30 Dec 2020 22:05:51 +0100 (CET)
-Date:   Wed, 30 Dec 2020 22:05:51 +0100
-From:   Kevin Daudt <me@ikke.info>
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] t4129: don't fail if setgid is set in the parent
- directory
-Message-ID: <X+zrryp6ndOa5rOM@alpha>
-Mail-Followup-To: Kevin Daudt <me@ikke.info>,
-        Matheus Tavares <matheus.bernardino@usp.br>, git@vger.kernel.org
-References: <X+xtAR87vWuNiLoE@alpha>
- <88398ff952a68e8d134dcd50ef0772bb6fc3b456.1609339792.git.matheus.bernardino@usp.br>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <88398ff952a68e8d134dcd50ef0772bb6fc3b456.1609339792.git.matheus.bernardino@usp.br>
+        id S1726547AbgL3Vnc convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 30 Dec 2020 16:43:32 -0500
+Received: from smtp09.smtpout.orange.fr ([80.12.242.131]:25098 "EHLO
+        smtp.smtpout.orange.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726247AbgL3Vnb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Dec 2020 16:43:31 -0500
+Received: from mbpdemarianne2.home ([90.8.188.225])
+        by mwinf5d69 with ME
+        id Alhn240014sDK1m03lhq1M; Wed, 30 Dec 2020 22:41:50 +0100
+X-ME-Helo: mbpdemarianne2.home
+X-ME-Auth: bGVvLmxhbnRlcml0QG9yYW5nZS5mcg==
+X-ME-Date: Wed, 30 Dec 2020 22:41:50 +0100
+X-ME-IP: 90.8.188.225
+From:   LeSeulArtichaut <leseulartichaut@gmail.com>
+Content-Type: text/plain;
+        charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
+Subject: [Bug report] Git gets stuck in rebase mode
+Message-Id: <ECF77241-0631-45D6-8B79-4250EE777A5D@gmail.com>
+Date:   Wed, 30 Dec 2020 22:41:44 +0100
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3608.120.23.2.4)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 30, 2020 at 11:52:25AM -0300, Matheus Tavares wrote:
-> The last test of t4129 creates a directory and expects its setgid bit
-> (g+s) to be off. But this makes the test fail when the parent directory
-> has the bit set, as setgid's state is inherited by newly created
-> subdirectories. Make the test more robust by accepting the presence of
-> the setgid bit on the created directory. We only allow 'S' (setgid on
-> but no executable permission) and not 's' (setgid on with executable
-> permission) because the previous 'umask 0077' shouldn't allow the second
-> scenario to happen.
-> 
-> Note that only subdirectories inherit this bit, so we don't have to make
-> the same change for the regular file that is also created by this test.
-> But checking the permissions using grep instead of test_cmp makes the
-> test a little simpler, so let's use it for the regular file as well.
-> 
-> Also note that the sticky bit (+t) and the setuid bit (u+s) are not
-> inherited, so we don't have to worry about those.
-> 
-> Reported-by: Kevin Daudt <me@ikke.info>
-> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
-> ---
->  t/t4129-apply-samemode.sh | 10 ++++------
->  1 file changed, 4 insertions(+), 6 deletions(-)
-> 
-> diff --git a/t/t4129-apply-samemode.sh b/t/t4129-apply-samemode.sh
-> index 41818d8315..3818398ca9 100755
-> --- a/t/t4129-apply-samemode.sh
-> +++ b/t/t4129-apply-samemode.sh
-> @@ -90,12 +90,10 @@ test_expect_success POSIXPERM 'do not use core.sharedRepository for working tree
->  		rm -rf d f1 &&
->  		git apply patch-f1-and-f2.txt &&
->  
-> -		echo "-rw-------" >f1_mode.expected &&
-> -		echo "drwx------" >d_mode.expected &&
-> -		test_modebits f1 >f1_mode.actual &&
-> -		test_modebits d >d_mode.actual &&
-> -		test_cmp f1_mode.expected f1_mode.actual &&
-> -		test_cmp d_mode.expected d_mode.actual
-> +		test_modebits f1 >f1_mode &&
-> +		test_modebits d >d_mode &&
-> +		grep "^-rw-------$" f1_mode &&
-> +		grep "^drwx--[-S]---$" d_mode
->  	)
->  '
->  
-> -- 
-> 2.29.2
-> 
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-Tested-by: Kevin Daudt <me@ikke.info>
+I tried to rebase a branch, say `master`, onto a commit that does not exist in my local repository, say `37b52f3b750b11b9ef60db118f737a66af3bf242`:
+`git rebase master 37b52f3b750b11b9ef60db118f737a66af3bf242`
+
+- The branch has to be valid (e.g. `git rebase foo 37b52f3b750b11b9ef60db118f737a66af3bf242` doesn’t reproduce the bug)
+- The commit SHA has to be a full SHA (e.g. `git rebase master 37b52f3b750b11b9ef60db118f737a66af3bf2 #42` doesn’t reproduce the bug)
+
+Repro "from scratch":
+```zsh
+mkdir git-bug
+cd git-bug
+git init
+touch foo.txt
+git add foo.txt
+git commit -m 'Initial commit'
+git rebase master 37b52f3b750b11b9ef60db118f737a66af3bf242
+```
+
+What did you expect to happen? (Expected behavior)
+Git either successfully applies the rebase or gives an error.
+
+What happened instead? (Actual behavior)
+```
+error: Could not read 37b52f3b750b11b9ef60db118f737a66af3bf242
+fatal: Invalid symmetric difference expression b91ebd8a08983ed5c27a3946821be02a39f99b3c…37b52f3b750b11b9ef60db118f737a66af3bf242
+```
+
+Git then instead gets « stuck » in rebase mode (i.e. a `.git/rebase-merge` directory exists), with the following visible effects:
+ - `git status` kind of gets confused:
+```bash
+$ git status
+On branch master
+git-rebase-todo is missing.
+No commands done.
+No commands remaining.
+You are currently editing a commit during a rebase.
+  (use "git commit --amend" to amend the current commit)
+  (use "git rebase --continue" once you are satisfied with your changes)
+
+nothing to commit, working tree clean
+```
+ - powerlevel10k displays a `rebase-i` state
+ - `git rebase --continue` and `git rebase --abort` fail:
+```bash
+$ git rebase --continue
+error: could not open '.git/rebase-merge/git-rebase-todo': No such file or directory
+$ git rebase --abort
+fatal: unable to read tree 37b52f3b750b11b9ef60db118f737a66af3bf242
+```
+
+This disappears by deleting the `.git/rebase-merge` directory.
+
+What's different between what you expected and what actually happened?
+I didn’t expect Git to stay stuck in rebase. After the failure in the `rebase` command, the `.git/rebase-merge` directory should be deleted.
+
+
+[System Info]
+git version:
+git version 2.30.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64 x86_64
+compiler info: clang: 12.0.0 (clang-1200.0.32.28)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /bin/zsh
+
+
+[Enabled Hooks]
