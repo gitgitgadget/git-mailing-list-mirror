@@ -2,212 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-10.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66751C433E9
-	for <git@archiver.kernel.org>; Wed, 30 Dec 2020 23:30:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD9EBC433E0
+	for <git@archiver.kernel.org>; Thu, 31 Dec 2020 03:56:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 3D3B1207A9
-	for <git@archiver.kernel.org>; Wed, 30 Dec 2020 23:30:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 78ECB221FA
+	for <git@archiver.kernel.org>; Thu, 31 Dec 2020 03:56:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726462AbgL3Xak (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Dec 2020 18:30:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51644 "EHLO
+        id S1726604AbgLaDzl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Dec 2020 22:55:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726356AbgL3Xak (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Dec 2020 18:30:40 -0500
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3843BC06179C
-        for <git@vger.kernel.org>; Wed, 30 Dec 2020 15:30:00 -0800 (PST)
-Received: by mail-ot1-x331.google.com with SMTP id n42so16768400ota.12
-        for <git@vger.kernel.org>; Wed, 30 Dec 2020 15:30:00 -0800 (PST)
+        with ESMTP id S1726599AbgLaDzl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Dec 2020 22:55:41 -0500
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 022D7C061573
+        for <git@vger.kernel.org>; Wed, 30 Dec 2020 19:55:00 -0800 (PST)
+Received: by mail-pj1-x102c.google.com with SMTP id j13so4758218pjz.3
+        for <git@vger.kernel.org>; Wed, 30 Dec 2020 19:55:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=smZocRqMF3CWtA6vOntnj7QESILxz+VTtrQ1xn/eGzc=;
-        b=rRQMFHjNQ8/UivvPNbfbwgS8belHyb3JURuPFH/pdqBbt3muh3s/jmfjo3sd+iHIsW
-         oLXFtLUm1IE/WES3qO4AbaErdt/EoRCh/aD1osk2htLFmpBWWySdJYoV44UuqKr5xsu0
-         MvcKOOYucaKJCBslHwNrAPr0cfP/ZQTJxGhV4xBFyXrHTWpmEn9PYDuqrwQBvX78fllF
-         YLdgmK+XXmGJFHOkK7KZXNJQyQ86CxZOKl5/yG4Qgp4SdfkoxwGy05LY0PAqixwFrFDo
-         URVa874qxwtG8uFSEwofpnISJG6UIqeyJslXc0Hv1bFXcaPfnlNmh2peDLaBT3yZmOk5
-         TxrA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BgV7R1sm4JQsIHPlKGKJooer4WgQZbM7zqtmlkeXllY=;
+        b=sAbF5Wv1tyLATm6RPGY5b/yo7JEgza3xi+AZIgVEjmKWTYtAnkf5SoiZiSPpLvoBNj
+         2476TN3IYcT0BS5ykEEQ9WZdsbRElx5liGH2bM97owhrhcuRqAHcyd8NoWHtqZUHIU76
+         g+zl7gTu9JwQLn8M6hZrl4568rrilbNe5uj/aYwH5Zp6sIrjsL3BIUv54ev7UkUZDzfD
+         20gixEVsJzFC+eudyqD3YxU0muE4T2UQ4tA0xfIY8+UiKGM4HGQNZGyJYn2PRd7r74cq
+         QW6kJoKIDiQGeqnaPI0u2UwrRykEwosQsiwwhDk6BSu9fGBFQwmK0PZFEI1B811Hloz8
+         uHwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=smZocRqMF3CWtA6vOntnj7QESILxz+VTtrQ1xn/eGzc=;
-        b=p96qFCguiYjUidG2nn8sCOnFPSkdC2n4w8DE5NkNvdKi3De2vACvcTUr2xK+w01OmB
-         19z16UO/nQqyHnPsuLvM0x0q7z4cs00fsWb++F9/YBghRH1DcdcbEvQB5DAZSiHmY76S
-         8aZwhowABOMM9co9Sva66syOyVlz7lCRbLJuK5heiNMuYWySoGDx+8XhqyLgI2eaCxer
-         pYGQBal4VSmNMBuvVAEZGOFXHkkHiFdg+ik92MJHVEmxyjR3TVCrwE9nfArk8bklsq9r
-         OOEAo7fXG++sDNiYpJJER656i3ecsh+1r2qu8PrQFTmhhsGyMSI9DOVXFVj7QxvoLIfs
-         U+Og==
-X-Gm-Message-State: AOAM530D/WiU8xSTYYqLwRs15pe+lP3UN0Mj6LGuv4HZlwuz0HPsVXXr
-        tvAgHOTRmLC/SGPaSFgKHRJ6+0VM82rsaQ==
-X-Google-Smtp-Source: ABdhPJy6ehxs0034w7ABpSx/zpRt3or3WDTPkpMVE4wt8fiY5Pif33clIT+uMjQOdPmV3jkR3JGmcw==
-X-Received: by 2002:a9d:19aa:: with SMTP id k39mr21442231otk.28.1609370999311;
-        Wed, 30 Dec 2020 15:29:59 -0800 (PST)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id t24sm10674156oou.4.2020.12.30.15.29.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Dec 2020 15:29:58 -0800 (PST)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BgV7R1sm4JQsIHPlKGKJooer4WgQZbM7zqtmlkeXllY=;
+        b=s5bPp9YEiL7XMGjyR/qIM2anKwxOiOhz40N7tVJs1Fw1SpsEtXkb8+/TkK+XwTjC/Y
+         io1lgwJx0pplQbbkRUpC3KI/kGPA6YfRlQZqLpPsnum/Eg8+fa6ebohBpY1oJLuD+B4h
+         LzuGBmpnKL8ae4goIA47TdM1obutYIcCis3LguqFby+KV28N/BqqdvC5UExKajQw5AlG
+         lNyq7/biEtHYS7bKQeO3sjB+VXFFES1NyT3l2LdxLU5ndVeYxK/c0QNaUdV5RXp5C5Q4
+         +2KoW/hmvg28EIiEQfInh+u68gIreeejEyqKAUDxHBk4EhqdPfuXSHIfcwDVeJdGxr7A
+         WL3w==
+X-Gm-Message-State: AOAM531DP6PnrX38aFb20CQnMAD/7H3Lg658tJJw9z19rByV/hVNR/0R
+        782wYLaijA5laIXXIlAJJnjQjCdpcHtFLg==
+X-Google-Smtp-Source: ABdhPJzFB+5T6DfJU/gW5vZwgCyXRjTEjew6BwTHW4ZIAaN7o+jxO6b/KQlg/KO9MqW5PIR7r+JisA==
+X-Received: by 2002:a17:90a:f68c:: with SMTP id cl12mr11635123pjb.213.1609386900312;
+        Wed, 30 Dec 2020 19:55:00 -0800 (PST)
+Received: from athena.localdomain ([2402:800:63a8:983e:ea74:656b:d810:41f8])
+        by smtp.gmail.com with ESMTPSA id t23sm44432968pfc.0.2020.12.30.19.54.58
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 30 Dec 2020 19:54:59 -0800 (PST)
+From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Denton Liu <liu.denton@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v3 4/4] completion: add proper public __git_complete
-Date:   Wed, 30 Dec 2020 17:29:50 -0600
-Message-Id: <20201230232950.582152-5-felipe.contreras@gmail.com>
+Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+Subject: test-tool: bloom: generate_filter for multiple string?
+Date:   Thu, 31 Dec 2020 10:54:38 +0700
+Message-Id: <20201231035438.22533-1-congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.30.0
-In-Reply-To: <20201230232950.582152-1-felipe.contreras@gmail.com>
-References: <20201230232950.582152-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When __git_complete was introduced, it was meant to be temporarily, while
-a proper guideline for public shell functions was established
-(tentatively _GIT_complete), but since that never happened, people
-in the wild started to use __git_complete, even though it was marked as
-not public.
 
-Eight years is more than enough wait, let's mark this function as
-public, and make it a bit more user-friendly.
+Hello,
 
-So that instead of doing:
+I'm reading the code for Bloom Filter to see if arXiv:2012.00472
+could be an improvement.
 
-  __git_complete gk __gitk_main
+I'm not sure if I'm missing something or it's our test-bloom generate_filter
+doesn't really support testing for multiple inputs.
 
-The user can do:
+If I understand correctly, we should either:
+* allocate more entry for inputs; or
+* abort if argc != 3
 
-  __git_complete gk gitk
-
-And instead of:
-
-  __git_complete gf _git_fetch
-
-Do:
-
-  __git_complete gf git_fetch
-
-Backwards compatibility is maintained.
-
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/completion/git-completion.bash | 40 +++++++++++++++++++++-----
- t/t9902-completion.sh                  | 14 ++++++++-
- 2 files changed, 46 insertions(+), 8 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 1150d4bf44..4b1f4264a6 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -29,6 +29,15 @@
- # tell the completion to use commit completion.  This also works with aliases
- # of form "!sh -c '...'".  For example, "!sh -c ': git commit ; ... '".
- #
-+# If you have a command that is not part of git, but you would still
-+# like completion, you can use __git_complete:
-+#
-+#   __git_complete gl git_log
-+#
-+# Or if it's a main command (i.e. git or gitk):
-+#
-+#   __git_complete gk gitk
-+#
- # Compatible with bash 3.2.57.
- #
- # You can set the following environment variables to influence the behavior of
-@@ -3497,10 +3506,7 @@ __git_func_wrap ()
- 	$1
- }
+diff --git a/t/helper/test-bloom.c b/t/helper/test-bloom.c
+index 46e97b04eb..1026facc59 100644
+--- a/t/helper/test-bloom.c
++++ b/t/helper/test-bloom.c
+@@ -68,12 +68,14 @@ int cmd__bloom(int argc, const char **argv)
+ 	if (!strcmp(argv[1], "generate_filter")) {
+ 		struct bloom_filter filter;
+ 		int i = 2;
+-		filter.len =  (settings.bits_per_entry + BITS_PER_WORD - 1) / BITS_PER_WORD;
+-		filter.data = xcalloc(filter.len, sizeof(unsigned char));
  
--# Setup completion for certain functions defined above by setting common
--# variables and workarounds.
--# This is NOT a public function; use at your own risk.
--__git_complete ()
-+___git_complete ()
- {
- 	local wrapper="__git_wrap${2}"
- 	eval "$wrapper () { __git_func_wrap $2 ; }"
-@@ -3508,13 +3514,33 @@ __git_complete ()
- 		|| complete -o default -o nospace -F $wrapper $1
- }
+ 		if (argc - 1 < i)
+ 			usage(bloom_usage);
  
--__git_complete git __git_main
--__git_complete gitk __gitk_main
-+# Setup the completion for git commands
-+# 1: command or alias
-+# 2: function to call (e.g. `git`, `gitk`, `git_fetch`)
-+__git_complete ()
-+{
-+	local func
++		filter.len = (settings.bits_per_entry * (argc - 2) + BITS_PER_WORD - 1)
++			/ BITS_PER_WORD;
++		filter.data = xcalloc(filter.len, sizeof(unsigned char));
 +
-+	if __git_have_func $2; then
-+		func=$2
-+	elif __git_have_func __$2_main; then
-+		func=__$2_main
-+	elif __git_have_func _$2; then
-+		func=_$2
-+	else
-+		echo "ERROR: could not find function '$2'" 1>&2
-+		return 1
-+	fi
-+	___git_complete $1 $func
-+}
-+
-+___git_complete git __git_main
-+___git_complete gitk __gitk_main
- 
- # The following are necessary only for Cygwin, and only are needed
- # when the user has tab-completed the executable name and consequently
- # included the '.exe' suffix.
- #
- if [ "$OSTYPE" = cygwin ]; then
--	__git_complete git.exe __git_main
-+	___git_complete git.exe __git_main
- fi
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index c0b4380eae..c4a7758409 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -2382,10 +2382,22 @@ test_expect_success 'sourcing the completion script clears cached --options' '
- 
- test_expect_success '__git_complete' '
- 	unset -f __git_wrap__git_main &&
-+
- 	__git_complete foo __git_main &&
- 	__git_have_func __git_wrap__git_main &&
-+	unset -f __git_wrap__git_main &&
-+
- 	__git_complete gf _git_fetch &&
--	__git_have_func __git_wrap_git_fetch
-+	__git_have_func __git_wrap_git_fetch &&
-+
-+	__git_complete foo git &&
-+	__git_have_func __git_wrap__git_main &&
-+	unset -f __git_wrap__git_main &&
-+
-+	__git_complete gd git_diff &&
-+	__git_have_func __git_wrap_git_diff &&
-+
-+	test_must_fail __git_complete ga missing
+ 		while (argv[i]) {
+ 			add_string_to_filter(argv[i], &filter);
+ 			i++;
+diff --git a/t/t0095-bloom.sh b/t/t0095-bloom.sh
+index 7e4ab1795f..6d83927c86 100755
+--- a/t/t0095-bloom.sh
++++ b/t/t0095-bloom.sh
+@@ -67,6 +67,17 @@ test_expect_success 'compute bloom key for test string 2' '
+ 	test_cmp expect actual
  '
  
- test_done
++test_expect_success 'compute bloom key for multiple string' '
++	cat >expect <<-\EOF &&
++	Hashes:0xb270de9b|0x1bb6f26e|0x84fd0641|0xee431a14|0x57892de7|0xc0cf41ba|0x2a15558d|
++	Hashes:0x20ab385b|0xf5237fe2|0xc99bc769|0x9e140ef0|0x728c5677|0x47049dfe|0x1b7ce585|
++	Filter_Length:3
++	Filter_Data:45|ba|ac|
++	EOF
++	test-tool bloom generate_filter "Hello world!" file.txt >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'get bloom filters for commit with no changes' '
+ 	git init &&
+ 	git commit --allow-empty -m "c0" &&
 -- 
-2.30.0
-
+Danh
