@@ -2,67 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C97CDC433DB
-	for <git@archiver.kernel.org>; Thu, 31 Dec 2020 11:57:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13336C433E9
+	for <git@archiver.kernel.org>; Thu, 31 Dec 2020 11:57:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 98A772246B
+	by mail.kernel.org (Postfix) with ESMTP id D3BBB2242A
 	for <git@archiver.kernel.org>; Thu, 31 Dec 2020 11:57:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726491AbgLaL5U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Dec 2020 06:57:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52794 "EHLO
+        id S1726539AbgLaL52 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Dec 2020 06:57:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726155AbgLaL5U (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Dec 2020 06:57:20 -0500
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84029C061575
-        for <git@vger.kernel.org>; Thu, 31 Dec 2020 03:56:39 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id s26so43576115lfc.8
-        for <git@vger.kernel.org>; Thu, 31 Dec 2020 03:56:39 -0800 (PST)
+        with ESMTP id S1726071AbgLaL51 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Dec 2020 06:57:27 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AD3BC06179B
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 03:56:46 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id a12so43640896lfl.6
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 03:56:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=z8Kkov9m3OPmk5g7kCEf4JlRj4Zv4yENYlR417N8Up8=;
-        b=C1+I7eHvwcIHXMfqPHXBSlSMjkI+1+mPeakLI0d/GtBoy9pujU8UdLDjQUMBTAMGZH
-         n/sB0gdDzghwzF52NmxRFBRFnx6/oKvhsQKU31m3Z9UdvgXHIq8edq37Uqm9lkgAiJAD
-         iDUAMCb2CGJ7u3EbvyeWcVD+BGDzUb+2/sJZhvD5J8dI6vGYRdYiw9Mj87NsbtXm5ucO
-         y0Mz9JwPw8X/Ox+HnLQvhYw3A2cMnwBAagPTEUwHO26C4B6idEHSSUAyKWaJcb/slaB7
-         +7tD/rCUCw63bz8WpdlTIqT4yaTD/svV3BjXxWNWxneSgrsJSN5t21UxgniULOF9VfYW
-         q2cg==
+        bh=+5zVxCKNU0XKxztAJfIs6Z3+5g0jvrMJaBGwrXuObjo=;
+        b=n0QnejDtU2UqyOkhCnvdxS2rukqTu//gnvjft1Fvhbb0dk4NF+DOkG+PZ+p+V2ZJvk
+         +RdjgSBfoSRcPHnsb+avEA9a71jUWgQqoHGV7jQ2QH8vjHGPuki/jimxAHjocnxLMlkW
+         D58oIg2mY3p5EhP6IXqt06KBdBkXqqsr3HD7fStO2Jpiv09ojwE0dEv7EMOcWZm3gasq
+         vG39z4aulLRrSOwgc7XTOZ7yrH3IwSiGa4p0Cf2m+fzdyDaKnoyQrS2RtzXoSnZqBR2q
+         pO4ww9w0YzMjV1SYymlb7QdyjNP07VDXYklPXGgB1ki/Io4aaPs3ds8sgfWbPkM9Q8sv
+         TSOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=z8Kkov9m3OPmk5g7kCEf4JlRj4Zv4yENYlR417N8Up8=;
-        b=YEYqyJkGtpCUscJGsij9xAx/JE56376khxOizwU/f+MelOOXGrz1iOeUVDOQcipcRY
-         lzeGw3mpPl2k3O2pmKeUzkM7hcV1pLhojZ26InDGBfZaTkJq4whlAAiX35T7r3pJyhpI
-         lEiKDp0IZHcGfKlxb4ksqfg+ENUADhBaPSp7fsDBdMlHbrXHyP5h+OqfFu44vB/1MJfH
-         ftQbK584D8B3FdLAAUrgaJPVxkg6NvZCVLyxcgb5sDt8jgo9RXiaI6ppVZcops/vxNX0
-         hiR8dz7AdfJ5fxYcx3+sdwnVhgc4+0D60KUMQmqvv8H9EXmqZo1K5iyRPscRhLe6FPxI
-         LyLg==
-X-Gm-Message-State: AOAM532bM7zDj9R2t8lT8/SZd0IkMqPA/qPF918iIctnSXIw1VDnWk9j
-        EGpkpc1B3CH4pEg+rvARUK3BOzNQjXE=
-X-Google-Smtp-Source: ABdhPJwWPO/0nYzhEFSnKsl05xco6fqKI2y5x8gT9ZwrwnxyX8LaW7TdNbIMV376cdvXzd5/MgYm1A==
-X-Received: by 2002:a05:6512:308c:: with SMTP id z12mr26561645lfd.138.1609415797656;
-        Thu, 31 Dec 2020 03:56:37 -0800 (PST)
+        bh=+5zVxCKNU0XKxztAJfIs6Z3+5g0jvrMJaBGwrXuObjo=;
+        b=aF3NpDcXFH/7oYgoQuu5pRLurdbV7HSbTaQHA31Kvjo+zh6RXrqLIc97rfIE3m7flx
+         4xlbPfa3gjmM6t3kP+6ydNRiiNbseXGZC7t6ZlhcFzPJa143feg8ny81GDGRhzjdWLOR
+         db9ezWyZme6lXjl/WWCgs+Lg5gtG38g3GRF+NwmXvGgE/oAZJLNVnyh3S6pT0BuUY0gG
+         IjhjNuYh4H4ExUwOYF0HeQ9mo0SbtDjRpOD5uJb4p3H3i+2hjYh3PKYmQoCudUi9vK4j
+         f+8JsmNJD3eOaXwDP54IOkPIOnK6WLvT/l3jQGdfYkiwCsAAR+H2HiXr/kLmW9Lj5v4n
+         8DPQ==
+X-Gm-Message-State: AOAM530K/wIFxkohOEZHROua+pd7XTxtAwhyp8AUlrgyM3v97qVb70JL
+        cYMsg8xQMMk/dHZT0w9Y/Yf/n2ewmNU=
+X-Google-Smtp-Source: ABdhPJxQbAZNRHYv/K3aY2XUJS4tP4RIGVD7wwuQu/Eo1VhE6oarV3e2STQ2Fdr65fchD0NyQIpoNg==
+X-Received: by 2002:a19:4841:: with SMTP id v62mr21592386lfa.607.1609415804600;
+        Thu, 31 Dec 2020 03:56:44 -0800 (PST)
 Received: from localhost.localdomain (host-189-203-5.junet.se. [207.189.203.5])
-        by smtp.gmail.com with ESMTPSA id m11sm7505329ljp.12.2020.12.31.03.56.36
+        by smtp.gmail.com with ESMTPSA id m11sm7505329ljp.12.2020.12.31.03.56.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Dec 2020 03:56:37 -0800 (PST)
+        Thu, 31 Dec 2020 03:56:44 -0800 (PST)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     "brian m . carlson" <sandals@crustytoothpaste.net>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v2 1/4] object-name.c: rename from sha1-name.c
-Date:   Thu, 31 Dec 2020 12:56:20 +0100
-Message-Id: <4d69d448a3057dfc1a1dcbbd0e4468060e4fde0d.1609415114.git.martin.agren@gmail.com>
+Subject: [PATCH v2 3/4] sha1-lookup: rename `sha1_pos()` as `hash_pos()`
+Date:   Thu, 31 Dec 2020 12:56:22 +0100
+Message-Id: <91617de0acfca8d944d5ed75c84b5cd3597f776f.1609415114.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.30.0
 In-Reply-To: <cover.1609415114.git.martin.agren@gmail.com>
 References: <cover.1609282997.git.martin.agren@gmail.com> <cover.1609415114.git.martin.agren@gmail.com>
@@ -73,144 +73,166 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Generalize the last remnants of "sha" and "sha1" in this file and rename
-it to reflect that we're not just able to handle SHA-1 these days.
-
-We need to update one test to check for an updated error string.
+Rename this function to reflect that we're not just able to handle SHA-1
+these days. There are a few instances of "sha1" left in sha1-lookup.[ch]
+after this, but those will be addressed in the next commit.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- t/t1512-rev-parse-disambiguation.sh |  2 +-
- list-objects-filter.c               |  2 +-
- sha1-name.c => object-name.c        | 16 ++++++++--------
- Makefile                            |  2 +-
- 4 files changed, 11 insertions(+), 11 deletions(-)
- rename sha1-name.c => object-name.c (98%)
+ sha1-lookup.h       | 6 +++---
+ builtin/name-rev.c  | 2 +-
+ commit-graph.c      | 6 +++---
+ commit.c            | 2 +-
+ oid-array.c         | 2 +-
+ pack-bitmap-write.c | 2 +-
+ rerere.c            | 2 +-
+ sha1-lookup.c       | 8 ++++----
+ 8 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
-index 18fa6cf40d..cc889d7a84 100755
---- a/t/t1512-rev-parse-disambiguation.sh
-+++ b/t/t1512-rev-parse-disambiguation.sh
-@@ -48,7 +48,7 @@ test_expect_success 'blob and tree' '
+diff --git a/sha1-lookup.h b/sha1-lookup.h
+index 5afcd011c6..79973d4785 100644
+--- a/sha1-lookup.h
++++ b/sha1-lookup.h
+@@ -1,12 +1,12 @@
+ #ifndef SHA1_LOOKUP_H
+ #define SHA1_LOOKUP_H
  
- test_expect_success 'warn ambiguity when no candidate matches type hint' '
- 	test_must_fail git rev-parse --verify 000000000^{commit} 2>actual &&
--	test_i18ngrep "short SHA1 000000000 is ambiguous" actual
-+	test_i18ngrep "short object ID 000000000 is ambiguous" actual
- '
+-typedef const unsigned char *sha1_access_fn(size_t index, void *table);
++typedef const unsigned char *hash_access_fn(size_t index, void *table);
  
- test_expect_success 'disambiguate tree-ish' '
-diff --git a/list-objects-filter.c b/list-objects-filter.c
-index 0a3ef3cab3..4ec0041cfb 100644
---- a/list-objects-filter.c
-+++ b/list-objects-filter.c
-@@ -21,7 +21,7 @@
-  * in the traversal (until we mark it SEEN).  This is a way to
-  * let us silently de-dup calls to show() in the caller.  This
-  * is subtly different from the "revision.h:SHOWN" and the
-- * "sha1-name.c:ONELINE_SEEN" bits.  And also different from
-+ * "object-name.c:ONELINE_SEEN" bits.  And also different from
-  * the non-de-dup usage in pack-bitmap.c
+-int sha1_pos(const unsigned char *sha1,
++int hash_pos(const unsigned char *hash,
+ 	     void *table,
+ 	     size_t nr,
+-	     sha1_access_fn fn);
++	     hash_access_fn fn);
+ 
+ /*
+  * Searches for sha1 in table, using the given fanout table to determine the
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index 725dd04519..4939ceb2e5 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -408,7 +408,7 @@ static const char *get_exact_ref_match(const struct object *o)
+ 		tip_table.sorted = 1;
+ 	}
+ 
+-	found = sha1_pos(o->oid.hash, tip_table.table, tip_table.nr,
++	found = hash_pos(o->oid.hash, tip_table.table, tip_table.nr,
+ 			 nth_tip_table_ent);
+ 	if (0 <= found)
+ 		return tip_table.table[found].refname;
+diff --git a/commit-graph.c b/commit-graph.c
+index 06f8dc1d89..c672feee91 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1043,7 +1043,7 @@ static int write_graph_chunk_data(struct hashfile *f,
+ 		if (!parent)
+ 			edge_value = GRAPH_PARENT_NONE;
+ 		else {
+-			edge_value = sha1_pos(parent->item->object.oid.hash,
++			edge_value = hash_pos(parent->item->object.oid.hash,
+ 					      ctx->commits.list,
+ 					      ctx->commits.nr,
+ 					      commit_to_sha1);
+@@ -1074,7 +1074,7 @@ static int write_graph_chunk_data(struct hashfile *f,
+ 		else if (parent->next)
+ 			edge_value = GRAPH_EXTRA_EDGES_NEEDED | num_extra_edges;
+ 		else {
+-			edge_value = sha1_pos(parent->item->object.oid.hash,
++			edge_value = hash_pos(parent->item->object.oid.hash,
+ 					      ctx->commits.list,
+ 					      ctx->commits.nr,
+ 					      commit_to_sha1);
+@@ -1143,7 +1143,7 @@ static int write_graph_chunk_extra_edges(struct hashfile *f,
+ 
+ 		/* Since num_parents > 2, this initializer is safe. */
+ 		for (parent = (*list)->parents->next; parent; parent = parent->next) {
+-			int edge_value = sha1_pos(parent->item->object.oid.hash,
++			int edge_value = hash_pos(parent->item->object.oid.hash,
+ 						  ctx->commits.list,
+ 						  ctx->commits.nr,
+ 						  commit_to_sha1);
+diff --git a/commit.c b/commit.c
+index fe1fa3dc41..0b7bace022 100644
+--- a/commit.c
++++ b/commit.c
+@@ -113,7 +113,7 @@ static const unsigned char *commit_graft_sha1_access(size_t index, void *table)
+ 
+ int commit_graft_pos(struct repository *r, const unsigned char *sha1)
+ {
+-	return sha1_pos(sha1, r->parsed_objects->grafts,
++	return hash_pos(sha1, r->parsed_objects->grafts,
+ 			r->parsed_objects->grafts_nr,
+ 			commit_graft_sha1_access);
+ }
+diff --git a/oid-array.c b/oid-array.c
+index 8e1bcedc0c..fb4c3dd795 100644
+--- a/oid-array.c
++++ b/oid-array.c
+@@ -31,7 +31,7 @@ static const unsigned char *sha1_access(size_t index, void *table)
+ int oid_array_lookup(struct oid_array *array, const struct object_id *oid)
+ {
+ 	oid_array_sort(array);
+-	return sha1_pos(oid->hash, array->oid, array->nr, sha1_access);
++	return hash_pos(oid->hash, array->oid, array->nr, sha1_access);
+ }
+ 
+ void oid_array_clear(struct oid_array *array)
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 5e998bdaa7..27ece05ec7 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -482,7 +482,7 @@ static void write_selected_commits_v1(struct hashfile *f,
+ 		struct bitmapped_commit *stored = &writer.selected[i];
+ 
+ 		int commit_pos =
+-			sha1_pos(stored->commit->object.oid.hash, index, index_nr, sha1_access);
++			hash_pos(stored->commit->object.oid.hash, index, index_nr, sha1_access);
+ 
+ 		if (commit_pos < 0)
+ 			BUG("trying to write commit not in index");
+diff --git a/rerere.c b/rerere.c
+index 9281131a9f..9fc76eb756 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -147,7 +147,7 @@ static struct rerere_dir *find_rerere_dir(const char *hex)
+ 
+ 	if (get_sha1_hex(hex, hash))
+ 		return NULL; /* BUG */
+-	pos = sha1_pos(hash, rerere_dir, rerere_dir_nr, rerere_dir_hash);
++	pos = hash_pos(hash, rerere_dir, rerere_dir_nr, rerere_dir_hash);
+ 	if (pos < 0) {
+ 		rr_dir = xmalloc(sizeof(*rr_dir));
+ 		hashcpy(rr_dir->hash, hash);
+diff --git a/sha1-lookup.c b/sha1-lookup.c
+index 29185844ec..45489edfe8 100644
+--- a/sha1-lookup.c
++++ b/sha1-lookup.c
+@@ -47,11 +47,11 @@ static uint32_t take2(const unsigned char *sha1)
   */
- #define FILTER_SHOWN_BUT_REVISIT (1<<21)
-diff --git a/sha1-name.c b/object-name.c
-similarity index 98%
-rename from sha1-name.c
-rename to object-name.c
-index 0b23b86ceb..64202de60b 100644
---- a/sha1-name.c
-+++ b/object-name.c
-@@ -85,7 +85,7 @@ static void update_candidates(struct disambiguate_state *ds, const struct object
- 	/* otherwise, current can be discarded and candidate is still good */
- }
- 
--static int match_sha(unsigned, const unsigned char *, const unsigned char *);
-+static int match_hash(unsigned, const unsigned char *, const unsigned char *);
- 
- static void find_short_object_filename(struct disambiguate_state *ds)
+ /*
+  * The table should contain "nr" elements.
+- * The sha1 of element i (between 0 and nr - 1) should be returned
++ * The hash of element i (between 0 and nr - 1) should be returned
+  * by "fn(i, table)".
+  */
+-int sha1_pos(const unsigned char *hash, void *table, size_t nr,
+-	     sha1_access_fn fn)
++int hash_pos(const unsigned char *hash, void *table, size_t nr,
++	     hash_access_fn fn)
  {
-@@ -102,7 +102,7 @@ static void find_short_object_filename(struct disambiguate_state *ds)
- 		while (!ds->ambiguous && pos < loose_objects->nr) {
- 			const struct object_id *oid;
- 			oid = loose_objects->oid + pos;
--			if (!match_sha(ds->len, ds->bin_pfx.hash, oid->hash))
-+			if (!match_hash(ds->len, ds->bin_pfx.hash, oid->hash))
- 				break;
- 			update_candidates(ds, oid);
- 			pos++;
-@@ -110,7 +110,7 @@ static void find_short_object_filename(struct disambiguate_state *ds)
- 	}
- }
- 
--static int match_sha(unsigned len, const unsigned char *a, const unsigned char *b)
-+static int match_hash(unsigned len, const unsigned char *a, const unsigned char *b)
- {
- 	do {
- 		if (*a != *b)
-@@ -145,7 +145,7 @@ static void unique_in_midx(struct multi_pack_index *m,
- 	for (i = first; i < num && !ds->ambiguous; i++) {
- 		struct object_id oid;
- 		current = nth_midxed_object_oid(&oid, m, i);
--		if (!match_sha(ds->len, ds->bin_pfx.hash, current->hash))
-+		if (!match_hash(ds->len, ds->bin_pfx.hash, current->hash))
- 			break;
- 		update_candidates(ds, current);
- 	}
-@@ -173,7 +173,7 @@ static void unique_in_pack(struct packed_git *p,
- 	for (i = first; i < num && !ds->ambiguous; i++) {
- 		struct object_id oid;
- 		nth_packed_object_id(&oid, p, i);
--		if (!match_sha(ds->len, ds->bin_pfx.hash, oid.hash))
-+		if (!match_hash(ds->len, ds->bin_pfx.hash, oid.hash))
- 			break;
- 		update_candidates(ds, &oid);
- 	}
-@@ -483,7 +483,7 @@ static enum get_oid_result get_short_oid(struct repository *r,
- 	if (!quietly && (status == SHORT_NAME_AMBIGUOUS)) {
- 		struct oid_array collect = OID_ARRAY_INIT;
- 
--		error(_("short SHA1 %s is ambiguous"), ds.hex_pfx);
-+		error(_("short object ID %s is ambiguous"), ds.hex_pfx);
- 
- 		/*
- 		 * We may still have ambiguity if we simply saw a series of
-@@ -1811,7 +1811,7 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
- 	if (!ret)
- 		return ret;
- 	/*
--	 * sha1:path --> object name of path in ent sha1
-+	 * tree:path --> object name of path in tree
- 	 * :path -> object name of absolute path in index
- 	 * :./path -> object name of path relative to cwd in index
- 	 * :[0-3]:path -> object name of path in index at stage
-@@ -1949,6 +1949,6 @@ enum get_oid_result get_oid_with_context(struct repository *repo,
- 					 struct object_context *oc)
- {
- 	if (flags & GET_OID_FOLLOW_SYMLINKS && flags & GET_OID_ONLY_TO_DIE)
--		BUG("incompatible flags for get_sha1_with_context");
-+		BUG("incompatible flags for get_oid_with_context");
- 	return get_oid_with_context_1(repo, str, flags, NULL, oid, oc);
- }
-diff --git a/Makefile b/Makefile
-index 7b64106930..8bb1163f70 100644
---- a/Makefile
-+++ b/Makefile
-@@ -937,6 +937,7 @@ LIB_OBJS += notes-cache.o
- LIB_OBJS += notes-merge.o
- LIB_OBJS += notes-utils.o
- LIB_OBJS += notes.o
-+LIB_OBJS += object-name.o
- LIB_OBJS += object.o
- LIB_OBJS += oid-array.o
- LIB_OBJS += oidmap.o
-@@ -995,7 +996,6 @@ LIB_OBJS += server-info.o
- LIB_OBJS += setup.o
- LIB_OBJS += sha1-file.o
- LIB_OBJS += sha1-lookup.o
--LIB_OBJS += sha1-name.o
- LIB_OBJS += shallow.o
- LIB_OBJS += sideband.o
- LIB_OBJS += sigchain.o
+ 	size_t hi = nr;
+ 	size_t lo = 0;
+@@ -74,7 +74,7 @@ int sha1_pos(const unsigned char *hash, void *table, size_t nr,
+ 			if (lov != hiv) {
+ 				/*
+ 				 * At this point miv could be equal
+-				 * to hiv (but sha1 could still be higher);
++				 * to hiv (but hash could still be higher);
+ 				 * the invariant of (mi < hi) should be
+ 				 * kept.
+ 				 */
 -- 
 2.30.0
 
