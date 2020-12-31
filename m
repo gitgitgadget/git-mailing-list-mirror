@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED230C433E6
-	for <git@archiver.kernel.org>; Thu, 31 Dec 2020 11:57:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19965C4332B
+	for <git@archiver.kernel.org>; Thu, 31 Dec 2020 11:57:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B044322473
+	by mail.kernel.org (Postfix) with ESMTP id EE6142247F
 	for <git@archiver.kernel.org>; Thu, 31 Dec 2020 11:57:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726520AbgLaL51 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Dec 2020 06:57:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52814 "EHLO
+        id S1726555AbgLaL53 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Dec 2020 06:57:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726071AbgLaL50 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Dec 2020 06:57:26 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C41DC061799
-        for <git@vger.kernel.org>; Thu, 31 Dec 2020 03:56:45 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id h205so43612933lfd.5
-        for <git@vger.kernel.org>; Thu, 31 Dec 2020 03:56:45 -0800 (PST)
+        with ESMTP id S1726071AbgLaL52 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Dec 2020 06:57:28 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB5FCC06179C
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 03:56:47 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id m12so43604271lfo.7
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 03:56:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=2aGz4dIQ4moGrCSgvd3CKn2aam6rHNUkjzCDwMuPOWY=;
-        b=UhX/s3qZgRDGK2mhKio8H7IA+qvaZSvzecpXM2yRJKEAN+W4X8zu7XOnsnLQqkrY3A
-         xN1scrPtlfb339RuXst+gyBhtRuf2sbZE0YJRSl1Ab9ZniSa4pkWWUtbwtuO4csxXvmw
-         PVJxmNr7nx0le0Ks43fGZyUEUXf426/SdzZ087o/9o2497j8br/y1oqPujHJaW/eR1vh
-         JrHJWzfE9Vaj0vvD6H42Y+LrrFK2RNKSQAPG255ze2neT1y/yldADQ9viwGHeUh4PtGG
-         sovRDUTkcaoYnFJ0Ps5FmWxHFsArP6Kgxk5lt6IYfU+v+dHdzuajlKMn5GA4UGVd3Tye
-         gIXQ==
+        bh=tkvHtO+h1DEcIhtrJ/BtUTKPCLHlKkFY51LIHpAur3M=;
+        b=Zo6gvX3cTHn03dgDkkI0bG6mcKiShQoR6jzReAKrGWprFTtsQluj9PXFtcXPobPH97
+         k24f5DyT+Hqca6ZWj/yYGEbAuainMCc1OiMBr9RYDjhfqagTnUfAlM8jbIp0joYAKgjd
+         ocmS910afwXtxL22lecNFSXBU9ON1J8XIZF1b1jciNCiQSL2xawQeY0FbUXh3uDHDIMs
+         yqEviwA08J3QY7VZgVe5eqPFVSrQXLzKQbW0huEs7RXwH++hZzKrIbwuyoI5KaS6vzUI
+         Tiv7M6TuvaKlY5GjXeXKaSmgT07XIMMqx2Hp5JEAf2XqrnDaaF1eSKyCEsL2HfRCEkkU
+         hWYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2aGz4dIQ4moGrCSgvd3CKn2aam6rHNUkjzCDwMuPOWY=;
-        b=HG22fASwXOjHSxOtMTEX7BbIx10l5zZrLoO6DXz4wfDd5fWSogIIFipBuJyTfZsPvV
-         T4NVB4Va8JyRk8A6xzXmfuFtXojQFXtiFkPkez0xx6+QregQqFXCk18sTPQx4+q82GSh
-         WVeI9O7BplhBfxLT42mfO2GEIv988+NhSk8FFBuZ9k2dAu7YCTb/qK9rSwj9aiYnCUgg
-         jSj4DoT/cg9sRdyXnVkTVXemHvZDAUbkHZ/rEwu8HOk85Sutvi321qtV6WsNrVweDLEa
-         VcrWkrbWcbL6k7j4rCxj7g/uiO51laSGfczRqsWozCaNAaq/2IXqkIu6PgChb8U4YQna
-         ZYIA==
-X-Gm-Message-State: AOAM533Rh3Pjwvze4E2p+aZkoJ4X9NKN86vqusOJpXMbdJFlBkFBf57S
-        /ke7b7fXuQTD1xFNNiIWC3zZcn+Mzf4=
-X-Google-Smtp-Source: ABdhPJzyxPlTQz0I5+n72aS+5jX7is0+TjRRgloGG5T10LQzTR0vBGnbHQkkJXon8FiFbdIKpD83+A==
-X-Received: by 2002:a05:6512:22cd:: with SMTP id g13mr16064482lfu.368.1609415803696;
-        Thu, 31 Dec 2020 03:56:43 -0800 (PST)
+        bh=tkvHtO+h1DEcIhtrJ/BtUTKPCLHlKkFY51LIHpAur3M=;
+        b=WwuQxQq4Y7ogy4knUbtNkqYiNcCxNCUQJXRmVTvYXfACu17eoqfhOIfqN2wr0ruQqj
+         9DOTG4XjvKuLWLqzruqZ91QWiBO+9+1sIre1FOdmocjy1JYBGJslsCJOC7frFLYWcz8J
+         +SIivlc8cPKncjKzHPEW9m+DFGWmSeBxK1ppl9FM09s8tnLP3RNIdcjelg8RS2DI6xt1
+         Oi56PkozJmrQ2pvyXq8uCOMpsXs0DLh6RmIuG2gJAMHV3Lt/pcqhwm82MY+99jFauLEQ
+         wQXku7fXsnxSXUZGEPc+KJIihnl3G0o7Dh4iNOtq4yEsXsGCkLvjLjJwQFtXXLq3z1bX
+         KdAg==
+X-Gm-Message-State: AOAM533YfZh/5YQJEcWhY9JfLxMuR1+rAvCC843DLJqoi+0srKQRV2cd
+        eYi7hrVmFecDTxW+7/vHlcWZaaYZdTQ=
+X-Google-Smtp-Source: ABdhPJzY9DYLfKBXC17erqnXfoVaz4DKUeMediLhrZkKW9pCl7tT5XxTnY//AfaphW8fWNPQZtXTwQ==
+X-Received: by 2002:a05:651c:542:: with SMTP id q2mr29380962ljp.19.1609415805873;
+        Thu, 31 Dec 2020 03:56:45 -0800 (PST)
 Received: from localhost.localdomain (host-189-203-5.junet.se. [207.189.203.5])
-        by smtp.gmail.com with ESMTPSA id m11sm7505329ljp.12.2020.12.31.03.56.42
+        by smtp.gmail.com with ESMTPSA id m11sm7505329ljp.12.2020.12.31.03.56.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Dec 2020 03:56:43 -0800 (PST)
+        Thu, 31 Dec 2020 03:56:45 -0800 (PST)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     "brian m . carlson" <sandals@crustytoothpaste.net>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v2 2/4] object-file.c: rename from sha1-file.c
-Date:   Thu, 31 Dec 2020 12:56:21 +0100
-Message-Id: <7ab29b868f3980d1bf20fe21db5213b43e06c00b.1609415114.git.martin.agren@gmail.com>
+Subject: [PATCH v2 4/4] hash-lookup: rename from sha1-lookup
+Date:   Thu, 31 Dec 2020 12:56:23 +0100
+Message-Id: <9df53353dc455e6d776bea9a468207ddb44d5a0f.1609415114.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.30.0
 In-Reply-To: <cover.1609415114.git.martin.agren@gmail.com>
 References: <cover.1609282997.git.martin.agren@gmail.com> <cover.1609415114.git.martin.agren@gmail.com>
@@ -73,93 +73,276 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Drop the last remnant of "sha1" in this file and rename it to reflect
-that we're not just able to handle SHA-1 these days.
+Change all remnants of "sha1" in hash-lookup.c and .h and rename them to
+reflect that we're not just able to handle SHA-1 these days.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- t/oid-info/README            | 2 +-
- builtin/index-pack.c         | 2 +-
- sha1-file.c => object-file.c | 8 ++++----
- Makefile                     | 2 +-
- 4 files changed, 7 insertions(+), 7 deletions(-)
- rename sha1-file.c => object-file.c (99%)
+ sha1-lookup.h => hash-lookup.h | 12 ++++++------
+ bisect.c                       |  2 +-
+ builtin/name-rev.c             |  2 +-
+ commit-graph.c                 |  2 +-
+ commit.c                       |  2 +-
+ sha1-lookup.c => hash-lookup.c | 14 +++++++-------
+ midx.c                         |  2 +-
+ object-file.c                  |  2 +-
+ oid-array.c                    |  2 +-
+ pack-bitmap-write.c            |  2 +-
+ packfile.c                     |  2 +-
+ patch-ids.c                    |  2 +-
+ rerere.c                       |  2 +-
+ Makefile                       |  2 +-
+ 14 files changed, 25 insertions(+), 25 deletions(-)
+ rename sha1-lookup.h => hash-lookup.h (78%)
+ rename sha1-lookup.c => hash-lookup.c (90%)
 
-diff --git a/t/oid-info/README b/t/oid-info/README
-index 27f843fc00..ca56a74b1e 100644
---- a/t/oid-info/README
-+++ b/t/oid-info/README
-@@ -5,7 +5,7 @@ starting with `#` are ignored.  The key and value are separated by whitespace
- (specifically, those whitespace in the default `$IFS`).  The key consists only
- of shell identifier characters, and the value consists of a hash algorithm,
- colon, and value.  The hash algorithm also consists only of shell identifier
--characters; it should match the value in sha1-file.c.
-+characters; it should match the value in object-file.c.
+diff --git a/sha1-lookup.h b/hash-lookup.h
+similarity index 78%
+rename from sha1-lookup.h
+rename to hash-lookup.h
+index 79973d4785..5d476dec72 100644
+--- a/sha1-lookup.h
++++ b/hash-lookup.h
+@@ -1,5 +1,5 @@
+-#ifndef SHA1_LOOKUP_H
+-#define SHA1_LOOKUP_H
++#ifndef HASH_LOOKUP_H
++#define HASH_LOOKUP_H
  
- For example, the following lines map the key "rawsz" to "20" if SHA-1 is in use
- and to "32" if SHA-256 is in use:
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 4b8d86e0ad..557bd2f348 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1641,7 +1641,7 @@ static void read_idx_option(struct pack_idx_option *opts, const char *pack_name)
- 	/*
- 	 * Get rid of the idx file as we do not need it anymore.
- 	 * NEEDSWORK: extract this bit from free_pack_by_name() in
--	 * sha1-file.c, perhaps?  It shouldn't matter very much as we
-+	 * object-file.c, perhaps?  It shouldn't matter very much as we
- 	 * know we haven't installed this pack (hence we never have
- 	 * read anything from it).
- 	 */
-diff --git a/sha1-file.c b/object-file.c
-similarity index 99%
-rename from sha1-file.c
-rename to object-file.c
-index c3c49d2fa5..3508598d97 100644
---- a/sha1-file.c
-+++ b/object-file.c
-@@ -3,7 +3,7 @@
+ typedef const unsigned char *hash_access_fn(size_t index, void *table);
+ 
+@@ -9,12 +9,12 @@ int hash_pos(const unsigned char *hash,
+ 	     hash_access_fn fn);
+ 
+ /*
+- * Searches for sha1 in table, using the given fanout table to determine the
++ * Searches for hash in table, using the given fanout table to determine the
+  * interval to search, then using binary search. Returns 1 if found, 0 if not.
   *
-  * Copyright (C) Linus Torvalds, 2005
+  * Takes the following parameters:
   *
-- * This handles basic git sha1 object files - packing, unpacking,
-+ * This handles basic git object files - packing, unpacking,
-  * creation etc.
+- *  - sha1: the hash to search for
++ *  - hash: the hash to search for
+  *  - fanout_nbo: a 256-element array of NETWORK-order 32-bit integers; the
+  *    integer at position i represents the number of elements in table whose
+  *    first byte is less than or equal to i
+@@ -23,10 +23,10 @@ int hash_pos(const unsigned char *hash,
+  *    GIT_MAX_RAWSZ or greater)
+  *  - result: if not NULL, this function stores the element index of the
+  *    position found (if the search is successful) or the index of the least
+- *    element that is greater than sha1 (if the search is not successful)
++ *    element that is greater than hash (if the search is not successful)
+  *
+  * This function does not verify the validity of the fanout table.
   */
+-int bsearch_hash(const unsigned char *sha1, const uint32_t *fanout_nbo,
++int bsearch_hash(const unsigned char *hash, const uint32_t *fanout_nbo,
+ 		 const unsigned char *table, size_t stride, uint32_t *result);
+ #endif
+diff --git a/bisect.c b/bisect.c
+index d8c2c8f7a7..75ea0eb57f 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -6,7 +6,7 @@
+ #include "refs.h"
+ #include "list-objects.h"
+ #include "quote.h"
+-#include "sha1-lookup.h"
++#include "hash-lookup.h"
+ #include "run-command.h"
+ #include "log-tree.h"
+ #include "bisect.h"
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index 4939ceb2e5..3fe71a8c01 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -7,7 +7,7 @@
+ #include "refs.h"
+ #include "parse-options.h"
+ #include "prio-queue.h"
+-#include "sha1-lookup.h"
++#include "hash-lookup.h"
+ #include "commit-slab.h"
+ 
+ /*
+diff --git a/commit-graph.c b/commit-graph.c
+index c672feee91..e9124d4a41 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -7,7 +7,7 @@
+ #include "object.h"
+ #include "refs.h"
+ #include "revision.h"
+-#include "sha1-lookup.h"
++#include "hash-lookup.h"
+ #include "commit-graph.h"
+ #include "object-store.h"
+ #include "alloc.h"
+diff --git a/commit.c b/commit.c
+index 0b7bace022..cb119ebdf2 100644
+--- a/commit.c
++++ b/commit.c
+@@ -14,7 +14,7 @@
+ #include "mergesort.h"
+ #include "commit-slab.h"
+ #include "prio-queue.h"
+-#include "sha1-lookup.h"
++#include "hash-lookup.h"
+ #include "wt-status.h"
+ #include "advice.h"
+ #include "refs.h"
+diff --git a/sha1-lookup.c b/hash-lookup.c
+similarity index 90%
+rename from sha1-lookup.c
+rename to hash-lookup.c
+index 45489edfe8..1191856a32 100644
+--- a/sha1-lookup.c
++++ b/hash-lookup.c
+@@ -1,9 +1,9 @@
  #include "cache.h"
-@@ -508,9 +508,9 @@ static int alt_odb_usable(struct raw_object_store *o,
-  * LF separated.  Its base points at a statically allocated buffer that
-  * contains "/the/directory/corresponding/to/.git/objects/...", while
-  * its name points just after the slash at the end of ".git/objects/"
-- * in the example above, and has enough space to hold 40-byte hex
-- * SHA1, an extra slash for the first level indirection, and the
-- * terminating NUL.
-+ * in the example above, and has enough space to hold all hex characters
-+ * of the object ID, an extra slash for the first level indirection, and
-+ * the terminating NUL.
-  */
- static void read_info_alternates(struct repository *r,
- 				 const char *relative_base,
+-#include "sha1-lookup.h"
++#include "hash-lookup.h"
+ 
+-static uint32_t take2(const unsigned char *sha1)
++static uint32_t take2(const unsigned char *hash)
+ {
+-	return ((sha1[0] << 8) | sha1[1]);
++	return ((hash[0] << 8) | hash[1]);
+ }
+ 
+ /*
+@@ -100,17 +100,17 @@ int hash_pos(const unsigned char *hash, void *table, size_t nr,
+ 	return index_pos_to_insert_pos(lo);
+ }
+ 
+-int bsearch_hash(const unsigned char *sha1, const uint32_t *fanout_nbo,
++int bsearch_hash(const unsigned char *hash, const uint32_t *fanout_nbo,
+ 		 const unsigned char *table, size_t stride, uint32_t *result)
+ {
+ 	uint32_t hi, lo;
+ 
+-	hi = ntohl(fanout_nbo[*sha1]);
+-	lo = ((*sha1 == 0x0) ? 0 : ntohl(fanout_nbo[*sha1 - 1]));
++	hi = ntohl(fanout_nbo[*hash]);
++	lo = ((*hash == 0x0) ? 0 : ntohl(fanout_nbo[*hash - 1]));
+ 
+ 	while (lo < hi) {
+ 		unsigned mi = lo + (hi - lo) / 2;
+-		int cmp = hashcmp(table + mi * stride, sha1);
++		int cmp = hashcmp(table + mi * stride, hash);
+ 
+ 		if (!cmp) {
+ 			if (result)
+diff --git a/midx.c b/midx.c
+index 79c282b070..f9d9b832bb 100644
+--- a/midx.c
++++ b/midx.c
+@@ -5,7 +5,7 @@
+ #include "lockfile.h"
+ #include "packfile.h"
+ #include "object-store.h"
+-#include "sha1-lookup.h"
++#include "hash-lookup.h"
+ #include "midx.h"
+ #include "progress.h"
+ #include "trace2.h"
+diff --git a/object-file.c b/object-file.c
+index 3508598d97..5bcfde8471 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -20,7 +20,7 @@
+ #include "tree-walk.h"
+ #include "refs.h"
+ #include "pack-revindex.h"
+-#include "sha1-lookup.h"
++#include "hash-lookup.h"
+ #include "bulk-checkin.h"
+ #include "repository.h"
+ #include "replace-object.h"
+diff --git a/oid-array.c b/oid-array.c
+index fb4c3dd795..889b311f22 100644
+--- a/oid-array.c
++++ b/oid-array.c
+@@ -1,6 +1,6 @@
+ #include "cache.h"
+ #include "oid-array.h"
+-#include "sha1-lookup.h"
++#include "hash-lookup.h"
+ 
+ void oid_array_append(struct oid_array *array, const struct object_id *oid)
+ {
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 27ece05ec7..ae6d1475f9 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -9,7 +9,7 @@
+ #include "pack-revindex.h"
+ #include "pack.h"
+ #include "pack-bitmap.h"
+-#include "sha1-lookup.h"
++#include "hash-lookup.h"
+ #include "pack-objects.h"
+ #include "commit-reach.h"
+ 
+diff --git a/packfile.c b/packfile.c
+index 86f5c8dbf6..62d92e0c7c 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -7,7 +7,7 @@
+ #include "packfile.h"
+ #include "delta.h"
+ #include "streaming.h"
+-#include "sha1-lookup.h"
++#include "hash-lookup.h"
+ #include "commit.h"
+ #include "object.h"
+ #include "tag.h"
+diff --git a/patch-ids.c b/patch-ids.c
+index 21973e4933..cf5e8045b7 100644
+--- a/patch-ids.c
++++ b/patch-ids.c
+@@ -1,7 +1,7 @@
+ #include "cache.h"
+ #include "diff.h"
+ #include "commit.h"
+-#include "sha1-lookup.h"
++#include "hash-lookup.h"
+ #include "patch-ids.h"
+ 
+ static int patch_id_defined(struct commit *commit)
+diff --git a/rerere.c b/rerere.c
+index 9fc76eb756..d6928c1b5c 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -10,7 +10,7 @@
+ #include "attr.h"
+ #include "pathspec.h"
+ #include "object-store.h"
+-#include "sha1-lookup.h"
++#include "hash-lookup.h"
+ 
+ #define RESOLVED 0
+ #define PUNTED 1
 diff --git a/Makefile b/Makefile
-index 8bb1163f70..224a1c6940 100644
+index 224a1c6940..7a141facc7 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -937,6 +937,7 @@ LIB_OBJS += notes-cache.o
- LIB_OBJS += notes-merge.o
- LIB_OBJS += notes-utils.o
- LIB_OBJS += notes.o
-+LIB_OBJS += object-file.o
- LIB_OBJS += object-name.o
- LIB_OBJS += object.o
- LIB_OBJS += oid-array.o
-@@ -994,7 +995,6 @@ LIB_OBJS += sequencer.o
+@@ -901,6 +901,7 @@ LIB_OBJS += gettext.o
+ LIB_OBJS += gpg-interface.o
+ LIB_OBJS += graph.o
+ LIB_OBJS += grep.o
++LIB_OBJS += hash-lookup.o
+ LIB_OBJS += hashmap.o
+ LIB_OBJS += help.o
+ LIB_OBJS += hex.o
+@@ -995,7 +996,6 @@ LIB_OBJS += sequencer.o
  LIB_OBJS += serve.o
  LIB_OBJS += server-info.o
  LIB_OBJS += setup.o
--LIB_OBJS += sha1-file.o
- LIB_OBJS += sha1-lookup.o
+-LIB_OBJS += sha1-lookup.o
  LIB_OBJS += shallow.o
  LIB_OBJS += sideband.o
+ LIB_OBJS += sigchain.o
 -- 
 2.30.0
 
