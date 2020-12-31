@@ -4,132 +4,171 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D81DAC433DB
-	for <git@archiver.kernel.org>; Thu, 31 Dec 2020 12:38:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2740DC433DB
+	for <git@archiver.kernel.org>; Thu, 31 Dec 2020 12:48:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 97075223E0
-	for <git@archiver.kernel.org>; Thu, 31 Dec 2020 12:38:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E09AF2222D
+	for <git@archiver.kernel.org>; Thu, 31 Dec 2020 12:48:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726558AbgLaMgf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Dec 2020 07:36:35 -0500
-Received: from mout.web.de ([212.227.15.14]:55771 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726261AbgLaMge (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Dec 2020 07:36:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1609418079;
-        bh=84XRkbq2dA1PIc6vRhE+FJsNNCYJsFUBZ4CfLpuNkDI=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=V95AbYsft+P0oVsdEy9yUKejN5UcEtSclmcjK9vLdjiPyE23sAScOqxYQBC7CEVOj
-         Oaf/KuoI3JvfqjCaANE5GMHPwPoU3Gm8rWDfOW9DV5DlD+IUGzVJG2J6abEZa/Pory
-         Wf1vrfh+qEoetfZL7nj5QlZUXY9YIQmfHNGwEnNE=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.17.45]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1Md6xz-1kLtWe2Kwt-00Zslz; Thu, 31
- Dec 2020 13:34:39 +0100
-Subject: Re: [PATCH 8/8] cache-tree: avoid path comparison loop when silent
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        id S1726569AbgLaMsm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Dec 2020 07:48:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60650 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726219AbgLaMsl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Dec 2020 07:48:41 -0500
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85D64C061573
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 04:48:01 -0800 (PST)
+Received: by mail-qt1-x833.google.com with SMTP id y15so12734859qtv.5
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 04:48:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=YsDw8Qyj9IoXbSWK0L5ZISZ9NK+ohbF+dX5aZSxrVFA=;
+        b=LnzxXfqi+CcHBFf1OyAEkopiHTztTTHywX37k3X1CwXXBPuDOPv8VulBR64/odtzpo
+         MFT5jelQEeFOUD4QCX+3pxC+Wfecr9wBA2QJ5DrzalfbYbM2nuI9KeWml1Dh5npEMgm9
+         3a+hmXFCVe41bjJ5Dlmf2lRzcRO0pJrlYnxnVO5h8h3Nf1ehz4HICX4UnyUJ6V0lQFKX
+         GHKS+azuAjlTVkr41wFH3UZnYPQCAOeYkeJdjwJZW+FHNxr+Bz0c9jqyIyD9WxuozuIr
+         VSmXKrBa2J+LPUVmRZsu440vef/cNVMJh0+W/GPV0NtXfTKjCbLvwEk0c1O/7T54wixv
+         QYzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=YsDw8Qyj9IoXbSWK0L5ZISZ9NK+ohbF+dX5aZSxrVFA=;
+        b=HYe0S+Ejj/iOPdy3mGisblNNkdmKyXsrd968vK47B/tgIdQHh3D1g7LhTOjBmym9mg
+         DwNo70UMy8cQO2mT1qIpIvl22/WmzBTXAdcviWF9P/tG9beoqBxaljT6/s01Z13v/ikT
+         fhtHLXj/IDXIVQbZPhNcW8pxa30HDHpOTQ1QgIMosFakrg/3rVQC45TzYXHoC4vfTBq0
+         kU1aK9jg4hqSi/CTM009xFPsrxJuBhX8Aiaue4idp1BODfJmu/dtQgIjaAh+I4AIeQ4S
+         Z6Gt21ov8qTFSMEeuji64ob3YOt+Mc8rYFgvwKySpfJcaLoc+xGsH4IOOJD4E0hqehCu
+         0B+g==
+X-Gm-Message-State: AOAM532lFBg5UVwFvBDYUJwEbvFAeGLrB4+DYaOQQQ9WE+3tY9VYew+G
+        7ouEUfRT0G3NMp7apCUD2bc=
+X-Google-Smtp-Source: ABdhPJzohaz/SJVvRgwR0S/WWzN0x0UeByDrv+U0YBVENx8Mgeq9o81kBOwXDPs/Kv4kkP/Zu4bzaA==
+X-Received: by 2002:ac8:44d8:: with SMTP id b24mr56166262qto.339.1609418880541;
+        Thu, 31 Dec 2020 04:48:00 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
+        by smtp.gmail.com with UTF8SMTPSA id n188sm30314541qke.17.2020.12.31.04.47.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 31 Dec 2020 04:47:59 -0800 (PST)
+Subject: Re: [PATCH v2 0/4] rename "sha1-foo" files
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
         git@vger.kernel.org
-Cc:     newren@gmail.com, Derrick Stolee <derrickstolee@github.com>,
+Cc:     "brian m . carlson" <sandals@crustytoothpaste.net>,
         Derrick Stolee <dstolee@microsoft.com>
-References: <pull.829.git.1609356413.gitgitgadget@gmail.com>
- <20ea7050324cdd78b0966f54366b26224dfc7814.1609356414.git.gitgitgadget@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <daeb59ee-861d-9c8d-3601-6aef1ac3fc94@web.de>
-Date:   Thu, 31 Dec 2020 13:34:22 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.5.1
+References: <cover.1609282997.git.martin.agren@gmail.com>
+ <cover.1609415114.git.martin.agren@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <0223aa36-7071-a37c-a188-c45a43d76b4f@gmail.com>
+Date:   Thu, 31 Dec 2020 07:47:59 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
+ Thunderbird/85.0
 MIME-Version: 1.0
-In-Reply-To: <20ea7050324cdd78b0966f54366b26224dfc7814.1609356414.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <cover.1609415114.git.martin.agren@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:0TKm+LGNHuLQODY2PgNqk+CpBF+L101CYKWayfcioV3pVgZ0zTt
- 3U/u4ZbLS/RClmT9hCAWiQlRtA/vY0LYcK6V4ssJ+EMICM8SJwViaphqG02Zdr3DCqgwV2c
- 2T8Ur0VvM6qNGj8eo6vMj5M6wufBu/U3Idaj5NhJU1EXCuhlv7BC8cJjRLT7GC+yVvNbkCw
- riOkZjFk+/lJ/JRgBAUPg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:h6i+ViTa/yo=:nwxMEs7dTU3ezc3/uWV9cc
- W4ozWNhT0aVdDQ0cAZq2++EH5lbDj741I15maZEUcQ9RboQuuvFHO0Tf7c83cPLYhPjcCf2j2
- KDXSV9Z+aphbt5Q1WzYxfRNkrpT8zRlEN37Q7f0aB0c7haPCA3gyqogy0wPqzTYQqEAzZ0wSx
- e0mZphSBy37/0SYaw4hJOBkjf9OvTZ4wng5PAITXv/nFFgT0n5n1LXVLAqQSqNPDyWP//A5gi
- 1fb64KpLMQU4Q6lGlig3fDotYnYLLvuGnMF8iNbDn/IyM25YDLIHaWZwE19zM1GPO9FenktVZ
- uuzAusCLEXIxJ1BRsoguMwgRoY1388hYR6XAVk7pgCEORA0NnXw11BTTdYiJD14oR5z/dERKM
- HcJMveEz0wZibDXsiQy9FaOn7H4G8oApNGsW6otPSqOu8zncwuVWNPjp3bO6Q0O5uCh7+y1V3
- uJTHuahUgZ7gGh4gQC3x/wqYCYzScc9nJ3UTEtgSfD/zp560wDzlolqtC1mLAogrGLfBR7rOp
- aL8b6VloqKshjtwq7QciMgBm4A7I28FcFIv0AJFI0c4AFLl70uNpmEVIdWCCSl4UwXXLduWo1
- cBVHc2Ppf9lxUom/kYixV0dYHI4c50yLm3aVFF8xD05ZWXFc4m+7xpfyr4mXR0KWKy0vgAfdE
- Ob/fg1mWGk0iNq6gWI0WUgEknYKRf3BfcartB8hC3FlWJOw6vHST0oPstzAUECyb3GqSZSwv4
- /I/la3kwRBIh+uI13fMOQ0LngtZEka9jAeaVGtptkoZTCdl8/fwQqbR5XQmFiwWGTjT3hcDYh
- u7qa8xOEnUAJhYMxtco6omSQyWCHKswuv3B0GGvfNb0SJDx7rkJBfYDAPfwGGOGeOyjYglRVG
- SZEeI820EP+DZYSZoUQg==
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 30.12.20 um 20:26 schrieb Derrick Stolee via GitGitGadget:
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> The verify_cache() method is used both for debugging issues with the
-> cached tree extension but also to avoid using the extension when there
-> are unmerged entries. It also checks for cache entries out of order with
-> respect to file-versus-directory sorting.
->
-> In 996277c (Refactor cache_tree_update idiom from commit, 2011-12-06),
-> the silent option was added to remove the progress indicators from the
-> initial loop looking for unmerged entries. This was changed to be a flag
-> in e859c69 (cache-tree: update API to take abitrary flags, 2012-01-16).
->
-> In both cases, the silent option is ignored for the second loop that
-> checks for file-versus-directory sorting. It must be that this loop is
-> intended only for debugging purposes and is not actually helpful in
-> practice.
+On 12/31/2020 6:56 AM, Martin Ågren wrote:
+> Thanks to Derrick and brian for commenting on v1 [1] of my series for
+> renaming sha1-foo files and generalizing "sha", "sha1" and so on in
+> them. I realized I hadn't renamed the header guard in hash-lookup.h as I
+> renamed the file. That made me realize that I had failed to look for
+> "SHA-1" (capital letters). So this v2 is a bit bigger than v1, but not
+> by too much, I think. The range-diff is below.
 
-So you're saying that the directory/file conflict check not honoring the
-WRITE_TREE_SILENT flag would have been noticed as a bug and therefore
-doesn't happen?
+Makes sense. Thanks for being diligent!
 
-I'm not sure I can follow that logic.  I don't know how important that
-check is, how often it found a conflict and how likely such a find is
-overlooked or ignored, but disabling a check in silent mode that
-affects the return code instead of only suppressing its messages seems
-risky.
+> Range-diff against v1:
+> 1:  aac3a3c3e2 ! 1:  4d69d448a3 object-name.c: rename from sha1-name.c
+>     @@ Commit message
+>          Generalize the last remnants of "sha" and "sha1" in this file and rename
+>          it to reflect that we're not just able to handle SHA-1 these days.
+>      
+>     +    We need to update one test to check for an updated error string.
+>     +
+>          Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+>      
+>     + ## t/t1512-rev-parse-disambiguation.sh ##
+>     +@@ t/t1512-rev-parse-disambiguation.sh: test_expect_success 'blob and tree' '
+>     + 
+>     + test_expect_success 'warn ambiguity when no candidate matches type hint' '
+>     + 	test_must_fail git rev-parse --verify 000000000^{commit} 2>actual &&
+>     +-	test_i18ngrep "short SHA1 000000000 is ambiguous" actual
+>     ++	test_i18ngrep "short object ID 000000000 is ambiguous" actual
+>     + '
+>     + 
+>     + test_expect_success 'disambiguate tree-ish' '
+>     +
+>       ## list-objects-filter.c ##
+>      @@
+>        * in the traversal (until we mark it SEEN).  This is a way to
+>     @@ object-name.c: static void unique_in_pack(struct packed_git *p,
+>       			break;
+>       		update_candidates(ds, &oid);
+>       	}
+>     +@@ object-name.c: static enum get_oid_result get_short_oid(struct repository *r,
+>     + 	if (!quietly && (status == SHORT_NAME_AMBIGUOUS)) {
+>     + 		struct oid_array collect = OID_ARRAY_INIT;
+>     + 
+>     +-		error(_("short SHA1 %s is ambiguous"), ds.hex_pfx);
+>     ++		error(_("short object ID %s is ambiguous"), ds.hex_pfx);
+>     + 
+>     + 		/*
+>     + 		 * We may still have ambiguity if we simply saw a series of
+>      @@ object-name.c: static enum get_oid_result get_oid_with_context_1(struct repository *repo,
+>       	if (!ret)
+>       		return ret;
+> 2:  4243886d8a ! 2:  7ab29b868f object-file.c: rename from sha1-file.c
+>     @@ sha1-file.c => object-file.c
+>        * creation etc.
+>        */
+>       #include "cache.h"
+>     +@@ object-file.c: static int alt_odb_usable(struct raw_object_store *o,
+>     +  * LF separated.  Its base points at a statically allocated buffer that
+>     +  * contains "/the/directory/corresponding/to/.git/objects/...", while
+>     +  * its name points just after the slash at the end of ".git/objects/"
+>     +- * in the example above, and has enough space to hold 40-byte hex
+>     +- * SHA1, an extra slash for the first level indirection, and the
+>     +- * terminating NUL.
+>     ++ * in the example above, and has enough space to hold all hex characters
+>     ++ * of the object ID, an extra slash for the first level indirection, and
+>     ++ * the terminating NUL.
+>     +  */
+>     + static void read_info_alternates(struct repository *r,
+>     + 				 const char *relative_base,
+>      
+>       ## Makefile ##
+>      @@ Makefile: LIB_OBJS += notes-cache.o
+> 3:  8d3b123633 = 3:  91617de0ac sha1-lookup: rename `sha1_pos()` as `hash_pos()`
+> 4:  afee010474 ! 4:  9df53353dc hash-lookup: rename from sha1-lookup
+>     @@ Commit message
+>          Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+>      
+>       ## sha1-lookup.h => hash-lookup.h ##
+>     +@@
+>     +-#ifndef SHA1_LOOKUP_H
+>     +-#define SHA1_LOOKUP_H
+>     ++#ifndef HASH_LOOKUP_H
+>     ++#define HASH_LOOKUP_H
+>     + 
+>     + typedef const unsigned char *hash_access_fn(size_t index, void *table);
+>     + 
+>      @@ hash-lookup.h: int hash_pos(const unsigned char *hash,
+>       	     hash_access_fn fn);
 
-If we are sure that the check cannot trigger then we should remove it.
-If we are not so sure, but a conflict would be Git's fault (and not the
-user's) then we should always do the check and BUG out.  And otherwise
-we should keep it.
+This range-diff looks sensible. I approve v2.
 
-> Since verify_cache() is called in cache_tree_update(), which is run
-> during 'git commit', we could speed up 'git commit' operations by not
-> iterating through this loop another time. Of course, noticing this loop
-> requires an incredibly large index.
->
-> To get a measurable difference, I needed to run this test on the
-> Microsoft Office monorepo, which has over three million entries in its
-> index. I used 'git commit --amend --no-edit' as my command and saw the
-> performance go from 752ms to 739ms with this change.
+Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
 
-Could you please check the performance impact of the following code
-simplification?
-
-diff --git a/cache-tree.c b/cache-tree.c
-index a537a806c1..1105cfe6b7 100644
-=2D-- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -187,10 +187,8 @@ static int verify_cache(struct cache_entry **cache,
- 		 */
- 		const char *this_name =3D cache[i]->name;
- 		const char *next_name =3D cache[i+1]->name;
--		int this_len =3D strlen(this_name);
--		if (this_len < strlen(next_name) &&
--		    strncmp(this_name, next_name, this_len) =3D=3D 0 &&
--		    next_name[this_len] =3D=3D '/') {
-+		const char *p;
-+		if (skip_prefix(next_name, this_name, &p) && *p =3D=3D '/') {
- 			if (10 < ++funny) {
- 				fprintf(stderr, "...\n");
- 				break;
+Thanks,
+-Stolee
