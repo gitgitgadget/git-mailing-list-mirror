@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFF0DC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B93F2C433E6
 	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:36:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6BF8B207A5
+	by mail.kernel.org (Postfix) with ESMTP id 896412080C
 	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:36:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727088AbhAACgN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Dec 2020 21:36:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45912 "EHLO
+        id S1727138AbhAACgO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Dec 2020 21:36:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727032AbhAACgN (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1727042AbhAACgN (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 31 Dec 2020 21:36:13 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BE25C06179C
-        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:34:57 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id a12so21250532wrv.8
-        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:34:57 -0800 (PST)
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 284B8C06179F
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:34:58 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id m5so21235595wrx.9
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:34:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=VUY37MnFlwBe6Um2ozB7acPDc0llZSH/yK3nPGAp9yw=;
-        b=r0Xs6A9zzVIBBJGh5XNMa349g22fMdTnACZ7RCPy6FbzZfX7I9sqIhu1nQiNc6gYaH
-         KOYYW5m+SQ1kWKMUiYDiuTMXcUJrfaJdY6pkxn1mfoNcc8mE4K9ZZS3DOufe8m1ok6DT
-         spo12/FDEIB4+XSSShh9QeVUqQ4KmhAio7GLVDQG/73Af0oKD9TjkRA/4pjfsBM7eYvo
-         2PysOSxORN9WMoBs/U6XLr8LuKsiHRr9IsRaXNl9e8W/em28xiXOEmHupcj8RiTDM2Gp
-         KKGCZRdPVhBzsa2+vhwlCfBXgxUaitPb+DlgSiY+RRnhD4+1/whLPknexy9c1UuY4PH5
-         Dsww==
+        bh=uvSz/zkpiSWnb/05VUXkSbjX8lrKZvPzFtwPt0EFQEE=;
+        b=XfZX+37p2ikCz8Z81ZKabMNeZVsUJ6qKhu2egGXOBDPBEBf4cK1BvWrPwdlDCQC+uJ
+         cM//Ej42yiyVhpoz4tEwJsLEKAhhUkHI/QV5qSEiMhBgyZrBd4KeBgRxoVbIgG23MCiM
+         a6NPsHJkm1VZQpPsH9TdlD86B6ae6QgifsRn6NLjHHc7q8352IB6/PMkDl3v6DEvSj46
+         K6PSLbp/8wIv2ZIPuU+N7MZfsYArbDGfakvo1iPWtrkEwjrLbDINMw+bp/NZufEw8Db+
+         ovVxmrzwfSiSeEDzys4KCMbbPhSCIHSPzFGWaMZ76yw0OnHWmd9NbPjfIpdeBej7oWNl
+         PPvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=VUY37MnFlwBe6Um2ozB7acPDc0llZSH/yK3nPGAp9yw=;
-        b=DPsDa8ywt54dbWahdnrMUKhplBWkBECIbi86WbUZ0a0O9zDCpcoWlg43gmYS+YYnXZ
-         kFWVNI4iVdLru9wt5vojknqUgQbtpE9DPCzI6IoqARZAQUURnjeyNe8Ak+9AKiHxrhPQ
-         HaKHNT8NWFmPVUN/IoQRT6kHwXIMzzc6ukLtU1rxQu/SOasycVr+b0rNUxzc/4DxBF3r
-         GvdmeY3rl48782MOjyFI5vuzOm4JcPbPQrTCK0mGT/rEoMhAu81XUg1jm4r2Hm/wbKE0
-         tw+zpBjQrqo4PyEe0lRGSyKwM9Gy+pHtY7aZ3lYmMG0JU8sKC5HG7Mkq1L3h4UOwZUt4
-         6hrw==
-X-Gm-Message-State: AOAM530LuYzw/KfbJc4Flrf7v9/xn2T+p9ZoGyq3TQKzoLAo9sWBwyte
-        PT/0OXILbKCpKYooDGDo9tiM6DQwfx4=
-X-Google-Smtp-Source: ABdhPJzJyTG4mfBqFt4tgimGJEF9dubDkfGLSnn76ZhB+6fUUVdSjoFVyzfSW7Kf/eez2reLdTyhMA==
-X-Received: by 2002:adf:ca0c:: with SMTP id o12mr67497125wrh.154.1609468495565;
-        Thu, 31 Dec 2020 18:34:55 -0800 (PST)
+        bh=uvSz/zkpiSWnb/05VUXkSbjX8lrKZvPzFtwPt0EFQEE=;
+        b=PE4ehLGeiorNAnY8de7JU4rAZzugaYtWQGhgWt0lAeNnCQCGT+ci3VkSDI53gq3YpT
+         HNvnHRxROWnjgWintoCD09hdBVXqk5WFYlI/h8luu4sRyI53h1gBqUZHFhxWXMQpYTUZ
+         c/c/Yi1uwUiPH/psTIfs73t47tPykPzKI4wF6cXVtJqfTocY6Gc0wM3pcexpKq9fzw0v
+         pegZCKmtLkrjOMBZs4N8YO65GThqp9OOxJqVK+RDsdCG2RewcQxqTa8RTmw9YosIHmya
+         0fvei+7n/G+4Z5TX9WmDCUC+UOFhv8+3p+NxggntQdw2NeBUjQwYo54nHVsSx6b2lu0O
+         uSpw==
+X-Gm-Message-State: AOAM532GI/ipBqYTSjOieBMKBQvRnKZT7Azs4uYVAjb2OIt9FKivpcb+
+        XfFpWBlXpP6xkQtnb/3oR27B4P4qyOk=
+X-Google-Smtp-Source: ABdhPJxk6U7ONZfRQoOxikcBrW44TyCg/69iNlgc3yS4APDoAxizYXQQ9RJS+roF+8qKfsanExLJQA==
+X-Received: by 2002:adf:e511:: with SMTP id j17mr65920222wrm.416.1609468491718;
+        Thu, 31 Dec 2020 18:34:51 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o125sm15788008wmo.30.2020.12.31.18.34.55
+        by smtp.gmail.com with ESMTPSA id m17sm78658197wrn.0.2020.12.31.18.34.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Dec 2020 18:34:55 -0800 (PST)
-Message-Id: <2ddf6ece9d0e3ec4d98d33f56e168466439ae421.1609468488.git.gitgitgadget@gmail.com>
+        Thu, 31 Dec 2020 18:34:51 -0800 (PST)
+Message-Id: <54f9be41a8a053985533247325013fe45c5c2635.1609468488.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.815.v2.git.1609468488.gitgitgadget@gmail.com>
 References: <pull.815.git.1608270687.gitgitgadget@gmail.com>
         <pull.815.v2.git.1609468488.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 01 Jan 2021 02:34:45 +0000
-Subject: [PATCH v2 07/10] merge-ort: copy and adapt merge_submodule() from
- merge-recursive.c
+Date:   Fri, 01 Jan 2021 02:34:40 +0000
+Subject: [PATCH v2 02/10] merge-ort: handle directory/file conflicts that
+ remain
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,178 +79,137 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Take merge_submodule() from merge-recursive.c and make slight
-adjustments, predominantly around deferring output using path_msg()
-instead of using merge-recursive's output() and show() functions.
-There's also a fix for recursive cases (when call_depth > 0) and a
-slight change to argument order for find_first_merges().
+When a directory/file conflict remains, we can leave the directory where
+it is, but need to move the information about the file to a different
+pathname.  After moving the file to a different pathname, we allow
+subsequent process_entry() logic to handle any additional details that
+might be relevant.
 
-find_first_merges() and format_commit() are left unimplemented for
-now, but will be added by subsequent commits.
+This depends on a new helper function, unique_path(), that dies with an
+unimplemented error currently but will be implemented in a subsequent
+commit.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 126 +++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 125 insertions(+), 1 deletion(-)
+ merge-ort.c | 86 +++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 84 insertions(+), 2 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index a59adb42aa6..2dfab1858fc 100644
+index dd90987ae3d..d300a02810e 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -26,6 +26,7 @@
- #include "ll-merge.h"
- #include "object-store.h"
- #include "strmap.h"
-+#include "submodule.h"
- #include "tree.h"
- #include "unpack-trees.h"
- #include "xdiff-interface.h"
-@@ -323,6 +324,13 @@ static int err(struct merge_options *opt, const char *err, ...)
- 	return -1;
+@@ -343,6 +343,13 @@ static void path_msg(struct merge_options *opt,
+ 	strbuf_addch(sb, '\n');
  }
  
-+static void format_commit(struct strbuf *sb,
-+			  int indent,
-+			  struct commit *commit)
++static char *unique_path(struct strmap *existing_paths,
++			 const char *path,
++			 const char *branch)
 +{
 +	die("Not yet implemented.");
 +}
 +
- __attribute__((format (printf, 4, 5)))
- static void path_msg(struct merge_options *opt,
- 		     const char *path,
-@@ -632,6 +640,15 @@ static int collect_merge_info(struct merge_options *opt,
+ /*** Function Grouping: functions related to collect_merge_info() ***/
  
- /*** Function Grouping: functions related to threeway content merges ***/
- 
-+static int find_first_merges(struct repository *repo,
-+			     const char *path,
-+			     struct commit *a,
-+			     struct commit *b,
-+			     struct object_array *result)
-+{
-+	die("Not yet implemented.");
-+}
-+
- static int merge_submodule(struct merge_options *opt,
- 			   const char *path,
- 			   const struct object_id *o,
-@@ -639,7 +656,114 @@ static int merge_submodule(struct merge_options *opt,
- 			   const struct object_id *b,
- 			   struct object_id *result)
+ static void setup_path_info(struct merge_options *opt,
+@@ -962,6 +969,8 @@ static void process_entry(struct merge_options *opt,
+ 			  struct conflict_info *ci,
+ 			  struct directory_versions *dir_metadata)
  {
--	die("Not yet implemented.");
-+	struct commit *commit_o, *commit_a, *commit_b;
-+	int parent_count;
-+	struct object_array merges;
-+	struct strbuf sb = STRBUF_INIT;
++	int df_file_index = 0;
 +
-+	int i;
-+	int search = !opt->priv->call_depth;
+ 	VERIFY_CI(ci);
+ 	assert(ci->filemask >= 0 && ci->filemask <= 7);
+ 	/* ci->match_mask == 7 was handled in collect_merge_info_callback() */
+@@ -998,13 +1007,86 @@ static void process_entry(struct merge_options *opt,
+ 			oidcpy(&ci->stages[i].oid, &null_oid);
+ 		}
+ 	} else if (ci->df_conflict && ci->merged.result.mode != 0) {
+-		die("Not yet implemented.");
++		/*
++		 * This started out as a D/F conflict, and the entries in
++		 * the competing directory were not removed by the merge as
++		 * evidenced by write_completed_directory() writing a value
++		 * to ci->merged.result.mode.
++		 */
++		struct conflict_info *new_ci;
++		const char *branch;
++		const char *old_path = path;
++		int i;
 +
-+	/* store fallback answer in result in case we fail */
-+	oidcpy(result, opt->priv->call_depth ? o : a);
++		assert(ci->merged.result.mode == S_IFDIR);
 +
-+	/* we can not handle deletion conflicts */
-+	if (is_null_oid(o))
-+		return 0;
-+	if (is_null_oid(a))
-+		return 0;
-+	if (is_null_oid(b))
-+		return 0;
++		/*
++		 * If filemask is 1, we can just ignore the file as having
++		 * been deleted on both sides.  We do not want to overwrite
++		 * ci->merged.result, since it stores the tree for all the
++		 * files under it.
++		 */
++		if (ci->filemask == 1) {
++			ci->filemask = 0;
++			return;
++		}
 +
-+	if (add_submodule_odb(path)) {
++		/*
++		 * This file still exists on at least one side, and we want
++		 * the directory to remain here, so we need to move this
++		 * path to some new location.
++		 */
++		new_ci = xcalloc(1, sizeof(*new_ci));
++		/* We don't really want new_ci->merged.result copied, but it'll
++		 * be overwritten below so it doesn't matter.  We also don't
++		 * want any directory mode/oid values copied, but we'll zero
++		 * those out immediately.  We do want the rest of ci copied.
++		 */
++		memcpy(new_ci, ci, sizeof(*ci));
++		new_ci->match_mask = (new_ci->match_mask & ~new_ci->dirmask);
++		new_ci->dirmask = 0;
++		for (i = MERGE_BASE; i <= MERGE_SIDE2; i++) {
++			if (new_ci->filemask & (1 << i))
++				continue;
++			/* zero out any entries related to directories */
++			new_ci->stages[i].mode = 0;
++			oidcpy(&new_ci->stages[i].oid, &null_oid);
++		}
++
++		/*
++		 * Find out which side this file came from; note that we
++		 * cannot just use ci->filemask, because renames could cause
++		 * the filemask to go back to 7.  So we use dirmask, then
++		 * pick the opposite side's index.
++		 */
++		df_file_index = (ci->dirmask & (1 << 1)) ? 2 : 1;
++		branch = (df_file_index == 1) ? opt->branch1 : opt->branch2;
++		path = unique_path(&opt->priv->paths, path, branch);
++		strmap_put(&opt->priv->paths, path, new_ci);
++
 +		path_msg(opt, path, 0,
-+			 _("Failed to merge submodule %s (not checked out)"),
-+			 path);
-+		return 0;
-+	}
++			 _("CONFLICT (file/directory): directory in the way "
++			   "of %s from %s; moving it to %s instead."),
++			 old_path, branch, path);
 +
-+	if (!(commit_o = lookup_commit_reference(opt->repo, o)) ||
-+	    !(commit_a = lookup_commit_reference(opt->repo, a)) ||
-+	    !(commit_b = lookup_commit_reference(opt->repo, b))) {
-+		path_msg(opt, path, 0,
-+			 _("Failed to merge submodule %s (commits not present)"),
-+			 path);
-+		return 0;
-+	}
++		/*
++		 * Zero out the filemask for the old ci.  At this point, ci
++		 * was just an entry for a directory, so we don't need to
++		 * do anything more with it.
++		 */
++		ci->filemask = 0;
 +
-+	/* check whether both changes are forward */
-+	if (!in_merge_bases(commit_o, commit_a) ||
-+	    !in_merge_bases(commit_o, commit_b)) {
-+		path_msg(opt, path, 0,
-+			 _("Failed to merge submodule %s "
-+			   "(commits don't follow merge-base)"),
-+			 path);
-+		return 0;
-+	}
-+
-+	/* Case #1: a is contained in b or vice versa */
-+	if (in_merge_bases(commit_a, commit_b)) {
-+		oidcpy(result, b);
-+		path_msg(opt, path, 1,
-+			 _("Note: Fast-forwarding submodule %s to %s"),
-+			 path, oid_to_hex(b));
-+		return 1;
-+	}
-+	if (in_merge_bases(commit_b, commit_a)) {
-+		oidcpy(result, a);
-+		path_msg(opt, path, 1,
-+			 _("Note: Fast-forwarding submodule %s to %s"),
-+			 path, oid_to_hex(a));
-+		return 1;
-+	}
-+
-+	/*
-+	 * Case #2: There are one or more merges that contain a and b in
-+	 * the submodule. If there is only one, then present it as a
-+	 * suggestion to the user, but leave it marked unmerged so the
-+	 * user needs to confirm the resolution.
-+	 */
-+
-+	/* Skip the search if makes no sense to the calling context.  */
-+	if (!search)
-+		return 0;
-+
-+	/* find commit which merges them */
-+	parent_count = find_first_merges(opt->repo, path, commit_a, commit_b,
-+					 &merges);
-+	switch (parent_count) {
-+	case 0:
-+		path_msg(opt, path, 0, _("Failed to merge submodule %s"), path);
-+		break;
-+
-+	case 1:
-+		format_commit(&sb, 4,
-+			      (struct commit *)merges.objects[0].item);
-+		path_msg(opt, path, 0,
-+			 _("Failed to merge submodule %s, but a possible merge "
-+			   "resolution exists:\n%s\n"),
-+			 path, sb.buf);
-+		path_msg(opt, path, 1,
-+			 _("If this is correct simply add it to the index "
-+			   "for example\n"
-+			   "by using:\n\n"
-+			   "  git update-index --cacheinfo 160000 %s \"%s\"\n\n"
-+			   "which will accept this suggestion.\n"),
-+			 oid_to_hex(&merges.objects[0].item->oid), path);
-+		strbuf_release(&sb);
-+		break;
-+	default:
-+		for (i = 0; i < merges.nr; i++)
-+			format_commit(&sb, 4,
-+				      (struct commit *)merges.objects[i].item);
-+		path_msg(opt, path, 0,
-+			 _("Failed to merge submodule %s, but multiple "
-+			   "possible merges exist:\n%s"), path, sb.buf);
-+		strbuf_release(&sb);
-+	}
-+
-+	object_array_clear(&merges);
-+	return 0;
- }
++		/*
++		 * Now note that we're working on the new entry (path was
++		 * updated above.
++		 */
++		ci = new_ci;
+ 	}
  
- static int merge_3way(struct merge_options *opt,
+ 	/*
+ 	 * NOTE: Below there is a long switch-like if-elseif-elseif... block
+ 	 *       which the code goes through even for the df_conflict cases
+-	 *       above.  Well, it will once we don't die-not-implemented above.
++	 *       above.
+ 	 */
+ 	if (ci->match_mask) {
+ 		ci->merged.clean = 1;
 -- 
 gitgitgadget
 
