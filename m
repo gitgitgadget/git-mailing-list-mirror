@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99B5AC433E0
-	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:18:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE123C433E0
+	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:18:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 6CC5C20729
-	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:18:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CCF4520729
+	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:18:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727477AbhAACSA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Dec 2020 21:18:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42968 "EHLO
+        id S1727486AbhAACSL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Dec 2020 21:18:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727352AbhAACRg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Dec 2020 21:17:36 -0500
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A787C06179E
-        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:17:19 -0800 (PST)
-Received: by mail-oi1-x22d.google.com with SMTP id d203so23464680oia.0
-        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:17:19 -0800 (PST)
+        with ESMTP id S1727483AbhAACSK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Dec 2020 21:18:10 -0500
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2A51C0617A2
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:17:29 -0800 (PST)
+Received: by mail-ot1-x32d.google.com with SMTP id i6so19330093otr.2
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:17:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Ds3FVR3Eyu+inUKpchuszJWOeWm2MDrOLxPtdK7+jSU=;
-        b=ihXHOVyymsuevEZsiw0s5F3wcgj3uwAiAPb4mpWDWUUgHYM1iChkg0FSCJNZLOKTdZ
-         ATlvjiqwdVpXZzxBORfqKbNvsvbNKJSAbNV32hFlqW6+fmk/pLtPDQNQwqIZGCeQBeX2
-         EhFTc1qGH7xELry2wfRUGAHnl4Vve3y2ckY+2g9FTNPLO2VUA+6yIPqUqmvtoQ5LCLBh
-         Kdjsu4ElemzbzDAwxY/bgk+F+6txBpBLhUlCAND2vpzsIU8IDKVeuVVqY4X9oyxo84Ed
-         wGm27lTFN/5hIR+ZQHlUa/lNnf55LEZOLhKxLrQ5vOWrxrcBWTsWDiGi7DB26/DEY7Cf
-         Cqkg==
+        bh=2OjcEM8uVVjQA/LEQX66U+RCjhS9bdxcoTqP4lyMrAM=;
+        b=PsQDRJnNQHa95rUH9NiCZoOqCMC5zVGlV2tukazo+ItRvjEcxgUQoF8tRWyn/LtBmP
+         uEza3fuidCa+5Wj6VAP3p+zHisAK0c6pPXQxkwCaRrb8XJV3gCWREeV6NjKNI/+9PP3M
+         lNlAG8DJH1oz/E/6tHbnSIcdWeQA0e1g5iDW/KFbLMxKtnXf1GKGY0FduN3ElVKBKvEl
+         cZPTN22mvYsBK+mpZFmuYaxky9vK2W67P77fqdzLWFx/VtSxKwfIeJvX4Q+tSj54Lc4U
+         NCW0jILuHsB3ttMQtgZW1FgqDZUxelUfe+cvc0/xiEBRBezGsmpQ8Kg7C5HFdFI2iRDd
+         nN5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Ds3FVR3Eyu+inUKpchuszJWOeWm2MDrOLxPtdK7+jSU=;
-        b=IgBv9bJvY4NuQW+uuTHsaMRjF7KatjU1aarMtfDV/kCURnfLDSVIcIOIFeeMWTcG0h
-         NQER/Nzr6W4BjVh8WPTPVRn/lUMKLQRTnPo1NkWipus7qYC+3k2EZoNKWJCCzQHWtBZs
-         oealh4fu5ItaehsvDpgBOhky3EFStCi0Nsux9RO9KmGG7pogf0inyqyfmIP4Fb9oOZw4
-         raknHDf2PVzaSLqRO7y6sO3luXS8IB++XhWRRoIDpduFyTdcuXbpVKdk4ICtB6VmGpRj
-         r5BZyteWjk0SKyZhxhp8P7c92xHJS2QzPXkHhCktAK6HciKuqzitJJUK9QQ8YEUL1sTr
-         WEbg==
-X-Gm-Message-State: AOAM530giXvJjgOQTyaAbeluOP3wpPJlPzYyTuckJl7PrHhEgU8DLvgf
-        TgXoPcxR9rpIffjbPvea5QS5Ix5UmFSS+w==
-X-Google-Smtp-Source: ABdhPJwjCttQmQ7tk+8UZKMkfHx4aQ16I3FFOJZHvj+J3sFOycnUuWq+OzTsGGDRvwOlHAH9c2Aw5A==
-X-Received: by 2002:aca:3083:: with SMTP id w125mr9653784oiw.130.1609467438421;
-        Thu, 31 Dec 2020 18:17:18 -0800 (PST)
+        bh=2OjcEM8uVVjQA/LEQX66U+RCjhS9bdxcoTqP4lyMrAM=;
+        b=gCDtIBoIfT3j+EfFz7RmAqEOF88SGCVe1tnxDHNyZIzLiw/o8dxnS+uaXS76pz8GsH
+         GiSx14/QGTGLsxHdarv16bE2QH6opvj4ZSc32GH0yHr7SZ5kkcq+8TS8/9hmiaaScn8/
+         78mpmlqKoVOzzjmGdCBCecZBOcJ3b52ts8EK/CAAnrOdRh8WgWvP1dZlazALd3dUqI5s
+         aIR7TNzYT3a/s7O9ncD8DElYPCqsz6ONVKlEy6m42Lg408ylE5D951Ge21OvbcUWNBwF
+         S5yt7JJCMMwdy9glaywfVQV2CSG23iOC9iPBV/ZhfimlJB2qk0vujTUho37wL/pbJ2TJ
+         v9eA==
+X-Gm-Message-State: AOAM5301YBJiBYZbcv7f10gFroRrcOEg73qwginxkyQqrmdyCXuAU0cS
+        Ma4/7LscgClBa+eCvTZiwCqrRxyfbqYwmA==
+X-Google-Smtp-Source: ABdhPJz/pISqFceGwjahb1uXoHP19KZjxVu+wwjSxWTQxlZ02xf2se14J2hL9byJ1xLX6bnFjTO8FA==
+X-Received: by 2002:a05:6830:1308:: with SMTP id p8mr42220530otq.330.1609467449107;
+        Thu, 31 Dec 2020 18:17:29 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id s66sm10098017ooa.37.2020.12.31.18.17.17
+        by smtp.gmail.com with ESMTPSA id u141sm11285307oie.46.2020.12.31.18.17.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Dec 2020 18:17:17 -0800 (PST)
+        Thu, 31 Dec 2020 18:17:28 -0800 (PST)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 34/47] completion: zsh: fix direct quoting
-Date:   Thu, 31 Dec 2020 20:16:09 -0600
-Message-Id: <20210101021622.798041-35-felipe.contreras@gmail.com>
+Subject: [PATCH 41/47] completion: bash: trivial cleanup
+Date:   Thu, 31 Dec 2020 20:16:16 -0600
+Message-Id: <20210101021622.798041-42-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.30.0
 In-Reply-To: <20210101021622.798041-1-felipe.contreras@gmail.com>
 References: <20210101021622.798041-1-felipe.contreras@gmail.com>
@@ -73,56 +73,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Apparently using "compadd -Q" is almost always wrong, we want zsh to add
-quoting when necessary. However, if we remove the -Q option, that would
-make zsh add an extra "\ " at the end of some completions.
-
-We can manually remove the spaces from the completions that have them,
-and then add the suffix with the -S option, thus there's no more need
-for the -Q option.
-
-This makes completions like "stash@{0}" complete correctly:
-
-  git stash show <tab>
+The most typical case first (COMP_WORDBREAKS contains our wanted words).
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.zsh | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ contrib/completion/git-completion.bash | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index 3665167b3f..2faf435087 100644
---- a/contrib/completion/git-completion.zsh
-+++ b/contrib/completion/git-completion.zsh
-@@ -54,7 +54,7 @@ __gitcomp ()
- 	emulate -L zsh
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 9918998848..d481824a7f 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -346,9 +346,7 @@ _get_comp_words_by_ref ()
+ 	# Which word separators to exclude?
+ 	exclude="${COMP_WORDBREAKS//[^=:]}"
+ 	cword=$COMP_CWORD
+-	if [ -z "$exclude" ]; then
+-		words=("${COMP_WORDS[@]}")
+-	else
++	if [ -n "$exclude" ]; then
+ 		# List of word completion separators has shrunk;
+ 		# re-assemble words to complete.
+ 		for ((i=0, j=0; i < ${#COMP_WORDS[@]}; i++, j++)); do
+@@ -383,6 +381,8 @@ _get_comp_words_by_ref ()
+ 				cword=$j
+ 			fi
+ 		done
++	else
++		words=("${COMP_WORDS[@]}")
+ 	fi
  
- 	local IFS=$' \t\n'
--	compadd -Q -S "${4- }" -p "${2-}" -- ${=1} && _ret=0
-+	compadd -S "${4- }" -p "${2-}" -- ${=1} && _ret=0
- }
- 
- __gitcomp_opts ()
-@@ -84,14 +84,17 @@ __gitcomp_opts ()
- 		fi
- 		array+=("$c$sfx")
- 	done
--	compadd -Q -S '' -p "${2-}" -a -- array && _ret=0
-+	compadd -S '' -p "${2-}" -a -- array && _ret=0
- }
- 
- __gitcomp_nl ()
- {
- 	emulate -L zsh
- 
--	compadd -Q -S "${4- }" -p "${2-}" -- ${(f)1} && _ret=0
-+	# words that don't end up in space
-+	compadd -p "${2-}" -S "${4- }" -q -- ${${(f)1}:#*\ } && _ret=0
-+	# words that end in space
-+	compadd -p "${2-}" -S " ${4- }" -q -- ${${(M)${(f)1}:#*\ }% } && _ret=0
- }
- 
- __gitcomp_file ()
+ 	cur=${words[cword]}
 -- 
 2.30.0
 
