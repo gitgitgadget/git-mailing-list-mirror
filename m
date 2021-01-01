@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87E65C433E6
-	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:17:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C24EC433E9
+	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:17:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 66FF4207A3
-	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:17:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 171C6207A3
+	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:17:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727376AbhAACRh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Dec 2020 21:17:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42870 "EHLO
+        id S1727382AbhAACRi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Dec 2020 21:17:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727351AbhAACRg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Dec 2020 21:17:36 -0500
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9838FC0617BB
-        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:17:17 -0800 (PST)
-Received: by mail-ot1-x332.google.com with SMTP id d20so19318067otl.3
-        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:17:17 -0800 (PST)
+        with ESMTP id S1727372AbhAACRh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Dec 2020 21:17:37 -0500
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5C6EC06179C
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:17:20 -0800 (PST)
+Received: by mail-oi1-x22c.google.com with SMTP id 9so23451005oiq.3
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:17:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=05GNxgnWZWBtdtcgke7oqysPjgqm00JWeAXOgfuL1kU=;
-        b=DwZyGsUslSOzqgPbuMRcmhJ67ugKNU9yp7A06lA4Ena9XNngp0L9TdI4HIl8Plqmry
-         NvSClt5v6abo2L3lYwILkenOplJkuysU0xUVpozrnbCbqKhbru/fpBWOpSmLGlJ8Ng6h
-         o1OMqnoKCaA3EekhJ9CpBYDDE9oCJwmbvSbqzg31S9WNcm+6USQ51/JZn282Ay9AmneU
-         c6R9eVrFuXZ3zTrahk9EMaSecC20InrUZOHnQg4mqJXRHvbh/KhJyDOm5iSnWuuhkbZ3
-         0+DNTjBiIcnGkZN9W/ODot4+aGncu0p40F94XYCN3A0xVu9PngQ88BzEF/CYaN1gHDFe
-         5mIA==
+        bh=PVa2xBXsmRsHcHO+fZlPnEN5EtqBm6Pdub27IIeBiiU=;
+        b=cbN0aiWc+NCf7jStrmeBetOSY0DhS4LZ4+7xtzd/FtDfQxrJZHFjhG6I3wyBmEoaVs
+         uyA+V9BhDOpIIvY781vniMMdTi6rNVorG5H/nQQ9Ary6poax0zgMxxCGzqMYIZxRywSP
+         bMKIt4UgdizbF6FHGmk+dHmOAlTaqgIQ4ZLYqsOvtsQwVKln3FpX9aIgnEDDX2pdTCsL
+         s3umQ6W/ixXsyM9u+3cenUutqEZpiuXyUI8LmmMFinDazP1FfVl07U6R9hAsjhgWXR2D
+         liehxuUXkuqe10Rv6FDK4Sba/uCZCs+AmxiPg04fY9L3sso0O05mx04KGqkPDg7VLDm6
+         1IAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=05GNxgnWZWBtdtcgke7oqysPjgqm00JWeAXOgfuL1kU=;
-        b=HNCyCrD2uSY8m8HvAgYTL1nskvcHJ0gSHE3CqxmlLDSnSXhQTl/fQ2rQ2Ufn+0q8eL
-         sBsnuy5+yDxaOyK2o5URQ3dXktSPPP5GDIj1p70d+TTrkGjv6XPMcorynt/ka/+a1PYc
-         bXEEkgva3/fKTucCeD13Iz9pjzZOzRwPRIW9oH+XU1GisPW0lAUaSUy/LQ5UsXaT/F05
-         jyP+TU5Xr7ozWcKNQ0joMvr9HPtdFiF0ldTx+jcvQl1kxk6cDvnoAL9yg7lwk2lkYxOX
-         rSccd3SfVZusJYNF7C9yJOCg4z2JDzKqk9OOE/Ovk7wRP25BSZXxQuC4x8HiOjz3SohN
-         S/OQ==
-X-Gm-Message-State: AOAM5314EDl7bmibF2lrDh/NY3R3S9HD9CEP6VCVt24fA/ChYCtT2L3P
-        5Van9vLnN080Cbkl9LpQlYLTE3asHP1h9Q==
-X-Google-Smtp-Source: ABdhPJwLNoCSOt+KieCSephdN7BqimcdlAZLviK5sM3RRD4I74V2d7SqDTGKE0OfWPNhLcM0d8F9Gg==
-X-Received: by 2002:a9d:63c6:: with SMTP id e6mr43059229otl.326.1609467436887;
-        Thu, 31 Dec 2020 18:17:16 -0800 (PST)
+        bh=PVa2xBXsmRsHcHO+fZlPnEN5EtqBm6Pdub27IIeBiiU=;
+        b=XuxjG2ejJ+dVUfM5t4s0gjTGVMIYOXw2wPpsqdVLRqGybZSW2WlrQf+HkcgUaL0V3y
+         ts9g2YQ0nbUwefD0kPrfuXoRPfU3NSHhRAHySegXACrfuJfJ6/a9izU5Md3d4xckFMtm
+         RhEr5Zbdjx1YzfF5arBp8mghyweDs6aFW6VVwkUTHe5slnaULAgoujNweWX14FiFQDPD
+         xem5ylF7ivbkwAWw8tKATYFCpsRyXgypDo6dNMAoy7hAKAXBYZDLrum/vNON671NqyVp
+         rNDlVXaWfy9Mj5A5ZVJx6KGn+MMhantP95uK9fjomeVWq1GnvO1ydxiMiFbFP2QDbjk/
+         RWPA==
+X-Gm-Message-State: AOAM532B8ZvWoGwv/4L3RLAK5OAjwncx0F7vu6FTEVhCMfBu8Qa9J4RQ
+        zefmC+Reb/8fh4TralSs7o5HAlO65drDRA==
+X-Google-Smtp-Source: ABdhPJxINE73uQj00UzbfcgLztRGFwuITId8+c1nHAgF6Y2JCUC4Nx7t5YSpgC7+WT+7ejZ6N83iXA==
+X-Received: by 2002:aca:4b0d:: with SMTP id y13mr9325770oia.7.1609467440046;
+        Thu, 31 Dec 2020 18:17:20 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id m7sm8199925ool.29.2020.12.31.18.17.16
+        by smtp.gmail.com with ESMTPSA id m7sm11341537oou.11.2020.12.31.18.17.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Dec 2020 18:17:16 -0800 (PST)
+        Thu, 31 Dec 2020 18:17:19 -0800 (PST)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 33/47] completion: zsh: shuffle __gitcomp* functions
-Date:   Thu, 31 Dec 2020 20:16:08 -0600
-Message-Id: <20210101021622.798041-34-felipe.contreras@gmail.com>
+Subject: [PATCH 35/47] completion: zsh: add elements individually in __gitcomp_opts
+Date:   Thu, 31 Dec 2020 20:16:10 -0600
+Message-Id: <20210101021622.798041-36-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.30.0
 In-Reply-To: <20210101021622.798041-1-felipe.contreras@gmail.com>
 References: <20210101021622.798041-1-felipe.contreras@gmail.com>
@@ -73,39 +73,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+It's useful to specify specific suffixes for specific words.
+
+This will be useful later on.
+
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.zsh | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ contrib/completion/git-completion.zsh | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index 6afcf1810b..3665167b3f 100644
+index 2faf435087..82a4d6f470 100644
 --- a/contrib/completion/git-completion.zsh
 +++ b/contrib/completion/git-completion.zsh
-@@ -87,11 +87,6 @@ __gitcomp_opts ()
- 	compadd -Q -S '' -p "${2-}" -a -- array && _ret=0
+@@ -66,11 +66,10 @@ __gitcomp_opts ()
+ 	[[ "$cur_" == *= ]] && return
+ 
+ 	local c IFS=$' \t\n' sfx
+-	local -a array
+ 	for c in ${=1}; do
+ 		if [[ $c == "--" ]]; then
+ 			[[ "$cur_" == --no-* ]] && continue
+-			array+=("--no-... ")
++			compadd -S " " -- "--no-..." && _ret=0
+ 			break
+ 		fi
+ 
+@@ -82,9 +81,8 @@ __gitcomp_opts ()
+ 		else
+ 			sfx="$4"
+ 		fi
+-		array+=("$c$sfx")
++		compadd -S "$sfx" -p "${2-}" -- "$c" && _ret=0
+ 	done
+-	compadd -S '' -p "${2-}" -a -- array && _ret=0
  }
  
--__gitcomp_direct ()
--{
--	__gitcomp_nl "$1" "" "" ""
--}
--
  __gitcomp_nl ()
- {
- 	emulate -L zsh
-@@ -106,6 +101,11 @@ __gitcomp_file ()
- 	compadd -f -p "${2-}" -- ${(f)1} && _ret=0
- }
- 
-+__gitcomp_direct ()
-+{
-+	__gitcomp_nl "$1" "" "" ""
-+}
-+
- __gitcomp_file_direct ()
- {
- 	__gitcomp_file "$1" ""
 -- 
 2.30.0
 
