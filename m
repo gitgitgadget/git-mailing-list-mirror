@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CF08C4332D
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB353C43331
 	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 13:08:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 781B42223E
+	by mail.kernel.org (Postfix) with ESMTP id 970D322210
 	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 13:08:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727186AbhAANIk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Jan 2021 08:08:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57448 "EHLO
+        id S1727171AbhAANIj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Jan 2021 08:08:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726795AbhAANId (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jan 2021 08:08:33 -0500
+        with ESMTP id S1727142AbhAANIf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jan 2021 08:08:35 -0500
 Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA4DAC0613ED
-        for <git@vger.kernel.org>; Fri,  1 Jan 2021 05:07:15 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id d26so21922601wrb.12
-        for <git@vger.kernel.org>; Fri, 01 Jan 2021 05:07:15 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 626E8C0617A0
+        for <git@vger.kernel.org>; Fri,  1 Jan 2021 05:07:21 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id q18so22009624wrn.1
+        for <git@vger.kernel.org>; Fri, 01 Jan 2021 05:07:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=9pGFETYdqulowBLIqdiA0ZUCZfR86+rle0TskkGe5u8=;
-        b=KzrYRFY8Ahdn21M45JdHPzyfzLbg/YJwJFao+ULjuvuuoWhyO3N6rNb4plN4Dznh8V
-         t389wHrrWurR+hGPj6imjk6MEz/w9ahweP0wewQDK1jQEEkzEr+eorCdlIiXcKpzyyV5
-         whZE9PluWzULR/QLVktvyEuuiyVhSPYrQIJynChGY9Mjlc1DWt/pk+fCRIagDFkiIE1i
-         aq0V7l/NphOiX5RJVYx58hDBLB7G5YMAVwtqzAmPpI68chPFd6u6KSqONZC0gWmVT1re
-         A0BtQxplfEh9bApki5GezyzIJaycgcOSUm9O5mY6AUrKQ7BKshrNvX1PeuJIU+pkmDBd
-         M3Ww==
+        bh=tfFlqYDYIPEygmGKvGhRH28V9rbc3TaFh6cEhIiC+bY=;
+        b=AKvSkq2VKHjbunWG9y2sS2V2U8rtHHXm6UR8TUNSqTOFwHW8Ml5OeUuw5nxaqEfRs6
+         Bw8jmvB+OicqC90jMN5ZUfOptcCqJ8IcyxaqsUu3Q40i61XJcKvOSoItOqQrU7fX8nSP
+         0cjDcXhRIpzg+wxdhUW5bCPhlM1lOQgf+lV4XeAVJBE4MrZBBv75TKqwueo9sRYuN7uc
+         upnkHo6k/paIVC9myP4ilEStx5LBg0fysO8vU0Lu3rLAKLQb2snlaJBg3jjEDkCdHGMq
+         ADJom0u3MlIyVDTT6WrjKrgTjX38A5wI6MlBK63Y4hnDqJsAzebyswOwreFCbGUfrcXx
+         SKMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=9pGFETYdqulowBLIqdiA0ZUCZfR86+rle0TskkGe5u8=;
-        b=mCe8tXMtmXYqisSmhKUzKpeaSlQf63STKMf1r/ZsbMuYF+VK3ETISbtRwG6A/TSgy5
-         e1qeaF7/6aJRUqnCb9I+RchOBvQ7Sf5MFgOd+3m9+OYtoU2zohM8KP2ERpUihbQA1j66
-         7GKxj8fY/MGaDyZB0MpKN0Y8o+Bt2mw0cSYPrHvFWdpQXhJQG3utnW2hwDdjsjKxm2HJ
-         NlKhJLqWl/dEl1FKpVurbYcsDqJxnP81O6T4z5OavlRtICqGUaiN1VxNvkGK6qFDJipg
-         5JNJT48sS7ouaFtXEx2U5XJAU+U8DJ3lHNXV2+iU/CHVtJljaTMTrVQFwtkqXd+uAIYf
-         Vkzw==
-X-Gm-Message-State: AOAM530ZSGsObxGHHMw2n1b+qnFCt9a3TOugFna9iZqwshc/P4ZK7oHL
-        YsS+deuudc0BLhmrpAldhPaZZxLa798=
-X-Google-Smtp-Source: ABdhPJykBbDI6bDgqKhhXjF8/PokwuEwEeDX536mrYnp7c8P6NjTC6yTj4Pj/j5sOKVfORmuV6kmIg==
-X-Received: by 2002:a5d:4241:: with SMTP id s1mr68773377wrr.269.1609506434566;
-        Fri, 01 Jan 2021 05:07:14 -0800 (PST)
+        bh=tfFlqYDYIPEygmGKvGhRH28V9rbc3TaFh6cEhIiC+bY=;
+        b=Vc1Un1nAXbWD6bavFWSg+8TBa+W4T9K1bGHgN5h4O1tyNyN65TfDaVzf+eY5gdJ2mK
+         KAT3EUhmSk1rRfMtLletIZJ/trWEZwEmiFL9UBkajsrVLlqb8+TZSG2Z0J9IOyXm6HzD
+         PbzUgGceKuqvJDJ9zZpdSYkN5wf9WygFoRb/TAa4V4/e9bqy0HVsn3gs6UObS4ivjHj0
+         X/Ox3rwk9g9SZ+UNU1EuMLwnP+2EKBwuAQ9DCltX2hsMARRPPTlsKG/m483+6+DADOdk
+         Bl6QDQsMf1UlatcA6AKeuHwtacwAZXQaCchM0YJtuLEKmntE5eIpdL0p1gHMqfqUxM7+
+         XIqQ==
+X-Gm-Message-State: AOAM530Dgin+PgEuBXSBXQjlcrKYOP2Ux8T/34ScJEOD5/0nfmKLVvly
+        mLFWDxTZKy3MHI9FN9MqDMWNSdLBpr8=
+X-Google-Smtp-Source: ABdhPJzgozJHhLxe8XPjiLKSXxoUryYF8YMu0wcgQSjn+C8x3yevdnBnGnEGkCvhq2iGrcLKarYi8A==
+X-Received: by 2002:adf:fdce:: with SMTP id i14mr69173310wrs.58.1609506440007;
+        Fri, 01 Jan 2021 05:07:20 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r13sm74632892wrt.10.2021.01.01.05.07.13
+        by smtp.gmail.com with ESMTPSA id 125sm16717775wmc.27.2021.01.01.05.07.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Jan 2021 05:07:14 -0800 (PST)
-Message-Id: <cc5df3566dfa015b57582fe76f3f6e940d549017.1609506428.git.gitgitgadget@gmail.com>
+        Fri, 01 Jan 2021 05:07:19 -0800 (PST)
+Message-Id: <8fb307c3bee9a33ad408bba6c422e992fb1e2656.1609506428.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.830.git.1609506428.gitgitgadget@gmail.com>
 References: <pull.830.git.1609506428.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 01 Jan 2021 13:07:01 +0000
-Subject: [PATCH 05/12] update-index: use istate->cache over active_cache
+Date:   Fri, 01 Jan 2021 13:07:08 +0000
+Subject: [PATCH 12/12] update-index: remove ce_match_stat(), all macros
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,95 +76,83 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
+The final index compatibility macro to remove from the update-index
+builtin is ce_match_state(). Further, this is the last use of that macro
+anywhere, so it should be removed.
+
+There are some remaining references in the racy-git.txt technical
+document that are updated to ie_match_stat().
+
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/update-index.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ Documentation/technical/racy-git.txt | 6 +++---
+ builtin/update-index.c               | 3 +--
+ cache.h                              | 1 -
+ 3 files changed, 4 insertions(+), 6 deletions(-)
 
+diff --git a/Documentation/technical/racy-git.txt b/Documentation/technical/racy-git.txt
+index ceda4bbfda4..65188e04559 100644
+--- a/Documentation/technical/racy-git.txt
++++ b/Documentation/technical/racy-git.txt
+@@ -26,7 +26,7 @@ information obtained from the filesystem via `lstat(2)` system
+ call when they were last updated.  When checking if they differ,
+ Git first runs `lstat(2)` on the files and compares the result
+ with this information (this is what was originally done by the
+-`ce_match_stat()` function, but the current code does it in
++`ie_match_stat()` function, but the current code does it in
+ `ce_match_stat_basic()` function).  If some of these "cached
+ stat information" fields do not match, Git can tell that the
+ files are modified without even looking at their contents.
+@@ -102,7 +102,7 @@ timestamp as the index file itself.
+ 
+ The callers that want to check if an index entry matches the
+ corresponding file in the working tree continue to call
+-`ce_match_stat()`, but with this change, `ce_match_stat()` uses
++`ie_match_stat()`, but with this change, `ie_match_stat()` uses
+ `ce_modified_check_fs()` to see if racily clean ones are
+ actually clean after comparing the cached stat information using
+ `ce_match_stat_basic()`.
+@@ -128,7 +128,7 @@ Runtime penalty
+ ---------------
+ 
+ The runtime penalty of falling back to `ce_modified_check_fs()`
+-from `ce_match_stat()` can be very expensive when there are many
++from `ie_match_stat()` can be very expensive when there are many
+ racily clean entries.  An obvious way to artificially create
+ this situation is to give the same timestamp to all the files in
+ the working tree in a large project, run `git update-index` on
 diff --git a/builtin/update-index.c b/builtin/update-index.c
-index c9a6cde97da..0616c786410 100644
+index 4da0c169dc7..256df43ecbd 100644
 --- a/builtin/update-index.c
 +++ b/builtin/update-index.c
-@@ -235,12 +235,12 @@ static int mark_ce_flags(const char *path, int flag, int mark)
- 	int namelen = strlen(path);
- 	int pos = cache_name_pos(path, namelen);
- 	if (0 <= pos) {
--		mark_fsmonitor_invalid(istate, active_cache[pos]);
-+		mark_fsmonitor_invalid(istate, istate->cache[pos]);
- 		if (mark)
--			active_cache[pos]->ce_flags |= flag;
-+			istate->cache[pos]->ce_flags |= flag;
- 		else
--			active_cache[pos]->ce_flags &= ~flag;
--		active_cache[pos]->ce_flags |= CE_UPDATE_IN_BASE;
-+			istate->cache[pos]->ce_flags &= ~flag;
-+		istate->cache[pos]->ce_flags |= CE_UPDATE_IN_BASE;
- 		cache_tree_invalidate_path(istate, path);
- 		active_cache_changed |= CE_ENTRY_CHANGED;
+@@ -3,7 +3,6 @@
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  */
+-#define USE_THE_INDEX_COMPATIBILITY_MACROS
+ #include "cache.h"
+ #include "config.h"
+ #include "lockfile.h"
+@@ -277,7 +276,7 @@ static int add_one_path(const struct cache_entry *old, const char *path, int len
+ 	struct cache_entry *ce;
+ 
+ 	/* Was the old index entry already up-to-date? */
+-	if (old && !ce_stage(old) && !ce_match_stat(old, st, 0))
++	if (old && !ce_stage(old) && !ie_match_stat(istate, old, st, 0))
  		return 0;
-@@ -331,7 +331,7 @@ static int process_directory(const char *path, int len, struct stat *st)
  
- 	/* Exact match: file or existing gitlink */
- 	if (pos >= 0) {
--		const struct cache_entry *ce = active_cache[pos];
-+		const struct cache_entry *ce = istate->cache[pos];
- 		if (S_ISGITLINK(ce->ce_mode)) {
- 
- 			/* Do nothing to the index if there is no HEAD! */
-@@ -347,7 +347,7 @@ static int process_directory(const char *path, int len, struct stat *st)
- 	/* Inexact match: is there perhaps a subdirectory match? */
- 	pos = -pos-1;
- 	while (pos < active_nr) {
--		const struct cache_entry *ce = active_cache[pos++];
-+		const struct cache_entry *ce = istate->cache[pos++];
- 
- 		if (strncmp(ce->name, path, len))
- 			break;
-@@ -378,7 +378,7 @@ static int process_path(const char *path, struct stat *st, int stat_errno)
- 		return error("'%s' is beyond a symbolic link", path);
- 
- 	pos = cache_name_pos(path, len);
--	ce = pos < 0 ? NULL : active_cache[pos];
-+	ce = pos < 0 ? NULL : istate->cache[pos];
- 	if (ce && ce_skip_worktree(ce)) {
- 		/*
- 		 * working directory version is assumed "good"
-@@ -440,7 +440,7 @@ static void chmod_path(char flip, const char *path)
- 	pos = cache_name_pos(path, strlen(path));
- 	if (pos < 0)
- 		goto fail;
--	ce = active_cache[pos];
-+	ce = istate->cache[pos];
- 	if (chmod_cache_entry(ce, flip) < 0)
- 		goto fail;
- 
-@@ -639,7 +639,7 @@ static int unresolve_one(const char *path)
- 		/* already merged */
- 		pos = unmerge_cache_entry_at(pos);
- 		if (pos < active_nr) {
--			const struct cache_entry *ce = active_cache[pos];
-+			const struct cache_entry *ce = istate->cache[pos];
- 			if (ce_stage(ce) &&
- 			    ce_namelen(ce) == namelen &&
- 			    !memcmp(ce->name, path, namelen))
-@@ -653,7 +653,7 @@ static int unresolve_one(const char *path)
- 		 */
- 		pos = -pos-1;
- 		if (pos < active_nr) {
--			const struct cache_entry *ce = active_cache[pos];
-+			const struct cache_entry *ce = istate->cache[pos];
- 			if (ce_namelen(ce) == namelen &&
- 			    !memcmp(ce->name, path, namelen)) {
- 				fprintf(stderr,
-@@ -749,7 +749,7 @@ static int do_reupdate(int ac, const char **av,
- 		has_head = 0;
-  redo:
- 	for (pos = 0; pos < active_nr; pos++) {
--		const struct cache_entry *ce = active_cache[pos];
-+		const struct cache_entry *ce = istate->cache[pos];
- 		struct cache_entry *old = NULL;
- 		int save_nr;
- 		char *path;
+ 	ce = make_empty_cache_entry(istate, len);
+diff --git a/cache.h b/cache.h
+index dfcbc4923e2..2925bf050b8 100644
+--- a/cache.h
++++ b/cache.h
+@@ -416,7 +416,6 @@ extern struct index_state the_index;
+ #define chmod_cache_entry(ce, flip) chmod_index_entry(&the_index, (ce), (flip))
+ #define refresh_cache(flags) refresh_index(&the_index, (flags), NULL, NULL, NULL)
+ #define refresh_and_write_cache(refresh_flags, write_flags, gentle) repo_refresh_and_write_index(the_repository, (refresh_flags), (write_flags), (gentle), NULL, NULL, NULL)
+-#define ce_match_stat(ce, st, options) ie_match_stat(&the_index, (ce), (st), (options))
+ #define ce_modified(ce, st, options) ie_modified(&the_index, (ce), (st), (options))
+ #define cache_dir_exists(name, namelen) index_dir_exists(&the_index, (name), (namelen))
+ #define cache_name_is_other(name, namelen) index_name_is_other(&the_index, (name), (namelen))
 -- 
 gitgitgadget
-
