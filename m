@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C6F9C433DB
-	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:17:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EDA4C433E9
+	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:17:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 36F9420798
-	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:17:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA60D207A3
+	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:17:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727296AbhAACR0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Dec 2020 21:17:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42988 "EHLO
+        id S1727301AbhAACR1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Dec 2020 21:17:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727261AbhAACR0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Dec 2020 21:17:26 -0500
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38D15C061575
-        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:17:08 -0800 (PST)
-Received: by mail-oi1-x232.google.com with SMTP id 15so23456301oix.8
-        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:17:08 -0800 (PST)
+        with ESMTP id S1727213AbhAACRY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Dec 2020 21:17:24 -0500
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2B69C0617BA
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:17:04 -0800 (PST)
+Received: by mail-ot1-x331.google.com with SMTP id d20so19317777otl.3
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:17:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=DP6Hw0ZFTejgrZ0RAT8bzZYTx3HwKAFRcJ2Z3OOezik=;
-        b=uafKxJpkRaj7HQ17ez7AmOi4NkV2onMqueI6Aj3O0FkDCIa1lnJ3TWE439Aa3xIDjk
-         URVlObLQMJnGU6p9fby1XPki/2Q13hH/wWoH5sbBOUoGr6EA9Cb8Gi8wgshJ+S40Z4ac
-         N6liSgQcVo8j3nMwxzdM/YlStTGvIfOQVfKOCv53fc+6b5vMoMmWE1RNMlPT6lJZNndq
-         1ar1v5AdtiVMa+Z7GtPjKXpIRC6zbkkXrEZl3il9GhwqykXpkGy4blPFyicplBpwQeqY
-         v4ojoDQcVcQxknd8d9EH/pttogvV1E61SpFXtXQxCxL277JIpiBYPJLed0fx3VKd+TJS
-         7+Fg==
+        bh=MARhEVFanEP+cKNIyheJe3uUGCPBuNTq9SFyR+/EZ6o=;
+        b=dKzg40GN21CXYOo9MSUjU6/mJMJG5omnNRHr3xmTvyCjsDUfS0VFeTG2KH8t8P1uzn
+         gqe4kEVlilmffv7b0DisGohca/XoUS+i6r6ConX+SPG8/1d+KLXwaOIfEs8LAm//Xpr3
+         uvOnT4yzz767Bkdi8U0Cl9DimYancM+912W9GJhri0yCEb+9sNNHLbKDrGnbdrRjhv0w
+         GMV+y/5FfB5fxDkmP1rC77McPiRHIjncbe6PqWNWKdHOz0pyp87cHlQaIi6tyt99lNLe
+         6Ym0I6oUtmt0fu4s9E/iN/5rmfNeOlOqTewOyrkHI0u/c14SZjcR91V8fwYvzpuDDu6H
+         33pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=DP6Hw0ZFTejgrZ0RAT8bzZYTx3HwKAFRcJ2Z3OOezik=;
-        b=TqNIYz8JnLxbXR0aduz3r0W6ym7gamQ8YvQItnJpePwY4OICyWpne83i9jO9DZCB2/
-         l4OWlwShIkKWAQUXz2zpkX8/urluxUiiHnIbilgCJr5Mw81D54xgQekTmlia5MD+mx5F
-         sD1YJ3IQimayH1nqs5wKRZMf9NhpbZposdqaE+aCTwwuyZ9IHBL6ckRMQ87xNjJAQi1J
-         KyxoRixrYNYHq+PIdiC4qZiAaIuqKr4/LsAJjbBtqvLjsqb+2RIogoM60pEIgYc0MTA9
-         7OnFLb3+bnfrEKjV2NMzFYrIh5iFzcZARPGjA25/tYdi9MBomFkeOYfslb0/b/GxONnl
-         oOlQ==
-X-Gm-Message-State: AOAM5323zcFdhPu/+NyVgesCakIaKpeRK5jGmjTVKGGenatqzB3LnDQS
-        sT04zbQYegQvjkWVBPl4WhicpUzye9mSjA==
-X-Google-Smtp-Source: ABdhPJyTwaGlTdRoUTBgHZ0xiWCFvnMSiLH039r70zCIdHraAUi/3+XTIX76ldvzwZY9J64+nGvDcw==
-X-Received: by 2002:a05:6808:8e7:: with SMTP id d7mr9576810oic.127.1609467427485;
-        Thu, 31 Dec 2020 18:17:07 -0800 (PST)
+        bh=MARhEVFanEP+cKNIyheJe3uUGCPBuNTq9SFyR+/EZ6o=;
+        b=jiaFKyMPUrBISO7IWrkBRJBphPFBRQigMPe904zXSxIxwTLa9mRLqQ+iFhyK6CP8+z
+         WZkQt1XZ9CoR3kQX3hyV7E8ydBsaDpi985+ywtvONxOgEISagQy0sWNr+hP6l6JY24Mf
+         y2kbAY+eXixrTI1DTt5NE4lSz9WtnAW2k4yWn9Cz2UmN/CVDVMIh30zJU43OioK4aKpo
+         S4Ewvw4iKyN+xUwPzOtQ573dPmpeiUaKiBCRwn9yXT3Q/pGjk60lAXeMIHJ41W4lCtP1
+         ouOnQPlOFSFbom1WpZ53OcOK0FDMK38dGjKk7Tt2d7eCaB9dkmzF69CZHk0cXGXYZdff
+         ZXBQ==
+X-Gm-Message-State: AOAM532gcsx9z6P+gDtyRTAzDwKbRIVWykRE5iYie/fCrFChXCg/fWyd
+        rt8cr0r8QjfjsJv11j1CgAEdS/z4aKMhlA==
+X-Google-Smtp-Source: ABdhPJw5YqGKHjvyZhDKgn5yZcOTqVdhT6xsyjFGjwCZtt9uyqPyNR6/dfAKMO9cPkvDmsubI5KVig==
+X-Received: by 2002:a9d:2a86:: with SMTP id e6mr43636572otb.313.1609467424099;
+        Thu, 31 Dec 2020 18:17:04 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id g5sm11829874otq.43.2020.12.31.18.17.06
+        by smtp.gmail.com with ESMTPSA id e1sm11446771oib.11.2020.12.31.18.17.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Dec 2020 18:17:06 -0800 (PST)
+        Thu, 31 Dec 2020 18:17:03 -0800 (PST)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 27/47] test: completion: add missing test
-Date:   Thu, 31 Dec 2020 20:16:02 -0600
-Message-Id: <20210101021622.798041-28-felipe.contreras@gmail.com>
+Subject: [PATCH 25/47] completion: improve __gitcomp suffix code
+Date:   Thu, 31 Dec 2020 20:16:00 -0600
+Message-Id: <20210101021622.798041-26-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.30.0
 In-Reply-To: <20210101021622.798041-1-felipe.contreras@gmail.com>
 References: <20210101021622.798041-1-felipe.contreras@gmail.com>
@@ -73,32 +73,92 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Once the correct suffix in __git_complete_config_variable_name() is set,
-we can add the test again.
+There's no point in adding a suffix after a suffix.
+
+If a suffix is provided, we add it, if not, then the default heuristic
+is used.
+
+There's no functional change since most callers don't specify a suffix,
+and the ones that do use an =, which by default doesn't add an
+additional suffix.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- t/t9902-completion.sh | 7 +++++++
- 1 file changed, 7 insertions(+)
+ contrib/completion/git-completion.bash | 17 ++++++++++-------
+ contrib/completion/git-completion.zsh  | 18 +++++++++++-------
+ 2 files changed, 21 insertions(+), 14 deletions(-)
 
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index f6c60c609a..e1a9e9483c 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -2312,6 +2312,13 @@ test_expect_success 'git config - value' '
- 	EOF
- '
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 1f0728ae52..4eea322366 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -325,7 +325,7 @@ __gitcomp ()
+ 		return
+ 	fi
  
-+test_expect_success 'git config - direct completions' '
-+	test_completion "git config branch.autoSetup" <<-\EOF
-+	branch.autoSetupMerge Z
-+	branch.autoSetupRebase Z
-+	EOF
-+'
+-	local c i=0 IFS=$' \t\n'
++	local c i=0 IFS=$' \t\n' sfx
+ 	for c in $1; do
+ 		if [[ $c == "--" ]]; then
+ 			if [[ "$cur_" == --no-* ]]; then
+@@ -338,12 +338,15 @@ __gitcomp ()
+ 			break
+ 		fi
+ 		if [[ $c == "$cur_"* ]]; then
+-			c="$c${4-}"
+-			case $c in
+-			*=|*.) ;;
+-			*) c="$c " ;;
+-			esac
+-			COMPREPLY[i++]="${2-}$c"
++			if [[ -z "${4+set}" ]]; then
++				case $c in
++				*=|*.) sfx="" ;;
++				*) sfx=" " ;;
++				esac
++			else
++				sfx="$4"
++			fi
++			COMPREPLY[i++]="${2-}$c$sfx"
+ 		fi
+ 	done
+ }
+diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
+index 4eef9c5199..0ef15ff643 100644
+--- a/contrib/completion/git-completion.zsh
++++ b/contrib/completion/git-completion.zsh
+@@ -57,7 +57,7 @@ __gitcomp ()
+ 
+ 	[[ "$cur_" == *= ]] && return
+ 
+-	local c IFS=$' \t\n'
++	local c IFS=$' \t\n' sfx
+ 	local -a array
+ 	for c in ${=1}; do
+ 		if [[ $c == "--" ]]; then
+@@ -65,12 +65,16 @@ __gitcomp ()
+ 			array+=("--no-... ")
+ 			break
+ 		fi
+-		c="$c${4-}"
+-		case $c in
+-		*=|*.) ;;
+-		*) c="$c " ;;
+-		esac
+-		array+=("$c")
 +
- test_expect_success 'git -c - section' '
- 	test_completion "git -c br" <<-\EOF
- 	branch.Z
++		if [[ -z "${4+set}" ]]; then
++			case $c in
++			*=|*.) sfx="" ;;
++			*) sfx=" " ;;
++			esac
++		else
++			sfx="$4"
++		fi
++		array+=("$c$sfx")
+ 	done
+ 	compadd -Q -S '' -p "${2-}" -a -- array && _ret=0
+ }
 -- 
 2.30.0
 
