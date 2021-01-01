@@ -2,157 +2,185 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB353C43331
-	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 13:08:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35DD9C433DB
+	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 13:32:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 970D322210
-	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 13:08:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E9653207AA
+	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 13:32:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727171AbhAANIj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Jan 2021 08:08:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57468 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727142AbhAANIf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jan 2021 08:08:35 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 626E8C0617A0
-        for <git@vger.kernel.org>; Fri,  1 Jan 2021 05:07:21 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id q18so22009624wrn.1
-        for <git@vger.kernel.org>; Fri, 01 Jan 2021 05:07:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=tfFlqYDYIPEygmGKvGhRH28V9rbc3TaFh6cEhIiC+bY=;
-        b=AKvSkq2VKHjbunWG9y2sS2V2U8rtHHXm6UR8TUNSqTOFwHW8Ml5OeUuw5nxaqEfRs6
-         Bw8jmvB+OicqC90jMN5ZUfOptcCqJ8IcyxaqsUu3Q40i61XJcKvOSoItOqQrU7fX8nSP
-         0cjDcXhRIpzg+wxdhUW5bCPhlM1lOQgf+lV4XeAVJBE4MrZBBv75TKqwueo9sRYuN7uc
-         upnkHo6k/paIVC9myP4ilEStx5LBg0fysO8vU0Lu3rLAKLQb2snlaJBg3jjEDkCdHGMq
-         ADJom0u3MlIyVDTT6WrjKrgTjX38A5wI6MlBK63Y4hnDqJsAzebyswOwreFCbGUfrcXx
-         SKMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=tfFlqYDYIPEygmGKvGhRH28V9rbc3TaFh6cEhIiC+bY=;
-        b=Vc1Un1nAXbWD6bavFWSg+8TBa+W4T9K1bGHgN5h4O1tyNyN65TfDaVzf+eY5gdJ2mK
-         KAT3EUhmSk1rRfMtLletIZJ/trWEZwEmiFL9UBkajsrVLlqb8+TZSG2Z0J9IOyXm6HzD
-         PbzUgGceKuqvJDJ9zZpdSYkN5wf9WygFoRb/TAa4V4/e9bqy0HVsn3gs6UObS4ivjHj0
-         X/Ox3rwk9g9SZ+UNU1EuMLwnP+2EKBwuAQ9DCltX2hsMARRPPTlsKG/m483+6+DADOdk
-         Bl6QDQsMf1UlatcA6AKeuHwtacwAZXQaCchM0YJtuLEKmntE5eIpdL0p1gHMqfqUxM7+
-         XIqQ==
-X-Gm-Message-State: AOAM530Dgin+PgEuBXSBXQjlcrKYOP2Ux8T/34ScJEOD5/0nfmKLVvly
-        mLFWDxTZKy3MHI9FN9MqDMWNSdLBpr8=
-X-Google-Smtp-Source: ABdhPJzgozJHhLxe8XPjiLKSXxoUryYF8YMu0wcgQSjn+C8x3yevdnBnGnEGkCvhq2iGrcLKarYi8A==
-X-Received: by 2002:adf:fdce:: with SMTP id i14mr69173310wrs.58.1609506440007;
-        Fri, 01 Jan 2021 05:07:20 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 125sm16717775wmc.27.2021.01.01.05.07.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Jan 2021 05:07:19 -0800 (PST)
-Message-Id: <8fb307c3bee9a33ad408bba6c422e992fb1e2656.1609506428.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.830.git.1609506428.gitgitgadget@gmail.com>
-References: <pull.830.git.1609506428.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 01 Jan 2021 13:07:08 +0000
-Subject: [PATCH 12/12] update-index: remove ce_match_stat(), all macros
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     pclouds@gmail.com, gitster@pobox.com,
-        Derrick Stolee <derrickstolee@github.com>,
+        id S1726829AbhAANcP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Jan 2021 08:32:15 -0500
+Received: from mout.web.de ([212.227.17.12]:41595 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726604AbhAANcO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jan 2021 08:32:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1609507818;
+        bh=LdjlXp/D395+pZtXO3KglC+h59Ttr5gE9Tc/i76o97Q=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=S8iQg/E4pn0uYO53KeXbmJirZv4TILdhGYlz8a6w3l0BkMiB7Gw1sNrtTm3ql+BwR
+         j1YFzX9+iTAl7E7/cuELPiwVwExeg7mmBMfw+WfY6zRlMwLyKEECNjoHgun+yBtLwk
+         ZI4GlG08LRV3XPp3uhvqJ6d+TBB+9Vy4/tuS9wC0=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([79.203.17.45]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MN6Bb-1kcQZz2GGr-00J5ml; Fri, 01
+ Jan 2021 14:30:18 +0100
+Subject: Re: [PATCH 8/8] cache-tree: avoid path comparison loop when silent
+To:     Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     newren@gmail.com, Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <dstolee@microsoft.com>
+References: <pull.829.git.1609356413.gitgitgadget@gmail.com>
+ <20ea7050324cdd78b0966f54366b26224dfc7814.1609356414.git.gitgitgadget@gmail.com>
+ <daeb59ee-861d-9c8d-3601-6aef1ac3fc94@web.de>
+ <3ed37ae6-1f09-bd6b-c9d9-c8089da1af92@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <c9427a35-b2e0-0142-e5c2-4d1baf97315a@web.de>
+Date:   Fri, 1 Jan 2021 14:30:02 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.1
+MIME-Version: 1.0
+In-Reply-To: <3ed37ae6-1f09-bd6b-c9d9-c8089da1af92@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:EyUyZhzu2kFjAkIxpnzOOhIxkZZK8QcCM8Fjj/WN8n/72DZWVSd
+ 9oGnf6RYq6uwdZy56cYhdesMOLTaSNfqhqyJoFT4dOrSPUKphmqbLC//J/DX+hS3uGr9y+I
+ h4p1/oR4+YIDXnDgDQVfG/l/9Ryoe0zbmYBS2xn0Z4iG6ZIda1W9WROZUWneEMLNndFIGcT
+ njr/0wG+tv9DiWkddzMww==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:OzEvHoKgnA4=:9o6sz/7yblNrquKP0qCwAX
+ Bi2IKs+/tUqMwwCqcDnsusB0C3tHEl2uXuoGOj6Azg3K/0k5MEN3Dgo0Y5eOSxKMzwDfw5uFN
+ FHBNFoklYZORY3/uzlmG/1pMPgRqXprYZP2yYBMZOHfkSDqmcyy5sfNz+nDXbURzgo7o2fB3W
+ wLnVjKivZVk5XzvFvFMpgXehKCdWfmGSEVioYAo1Ig0/13BiEsx/xfPceWMvGvkZO0+j9np2f
+ fifBV7/V85oqhJ+qNubV66rYiBbtrUAfYuCBVF83SPIkPatplIgNl/7Uua72OHIlL53jt3YQh
+ bm01FXM8wH2WxzToIezahlKChYhTWakmZqy9JCx+Kt4WXSeQZSD7HHFq1W46RXT6Wzm6v+QZE
+ PunBCXhWq6fiozX79hQVUlnVKVFfehJ6yZ9UODfIDpNb8Gq0XlS2kpMFu7fGCe4Zmhfq+2cvC
+ CHf6iCaesf0QYvtvLJkzDNObdOy+mG3GyE4o9yTGEqGq/uoG2ga82wqmhqC8HlAchdyOx1ONO
+ lqDSygMTLVMoA61kQkzc/H8CkoOsHRm8zOYeUR1n61YU2ff0nSb5P/N4IHswiBR4EV5tjo0RN
+ 3aagw+jZxEX0UNGzDsawTTg99HmD+mcy/ARytxa6eAUuTAO0KWN5ZNe7hmXQvw2Cj/JC1+wqv
+ dnAeTgXJVL9BenQej8VlLOOyUVdZn/4qdxk8mmsKvZ+E7U8p4AoWfa7VPg20trR8nvdJSNy90
+ xxGjt26DZ/jsBHQY/05QOEVIUwqgrBU6/mPOYxhtfjXO+slBtUf3w38K7hqRy/s6BFp+26zFj
+ yLASGde/00TtReATAXP7jHW66CV9jFTJjs/2udX6EqcVP92u8+Rtezkg/Oh9ovtxudTyWGxtE
+ 6pMIDBgoE8iU81vifh3Q==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Am 31.12.20 um 17:46 schrieb Derrick Stolee:
+> On 12/31/2020 7:34 AM, Ren=C3=A9 Scharfe wrote:
+>> diff --git a/cache-tree.c b/cache-tree.c
+>> index a537a806c1..1105cfe6b7 100644
+>> --- a/cache-tree.c
+>> +++ b/cache-tree.c
+>> @@ -187,10 +187,8 @@ static int verify_cache(struct cache_entry **cache=
+,
+>>  		 */
+>>  		const char *this_name =3D cache[i]->name;
+>>  		const char *next_name =3D cache[i+1]->name;
+>> -		int this_len =3D strlen(this_name);
+>> -		if (this_len < strlen(next_name) &&
+>> -		    strncmp(this_name, next_name, this_len) =3D=3D 0 &&
+>> -		    next_name[this_len] =3D=3D '/') {
+>> +		const char *p;
+>> +		if (skip_prefix(next_name, this_name, &p) && *p =3D=3D '/') {
+>>  			if (10 < ++funny) {
+>>  				fprintf(stderr, "...\n");
+>>  				break;
+>
+> This performs consistently worse than both cases (see performance test
+> later in this message). I think the strlen is saving us some time here.
+Thanks for checking!  I was expecting skip_prefix to be faster, because
+it stops as soon as it reaches a non-matching character, while strlen
+has to always walk to the end.  But consecutive entries of a sorted list
+of paths can share long prefixes, in particular if there are long
+directory names and directories contain lots of files.
 
-The final index compatibility macro to remove from the update-index
-builtin is ce_match_state(). Further, this is the last use of that macro
-anywhere, so it should be removed.
+> In fact, I think the compiler is doing some magic to save our strlen
+> results, as I get identical performance results when doing this:
+>
+> diff --git a/cache-tree.c b/cache-tree.c
+> index c6c084463b..a076e7cec5 100644
+> --- a/cache-tree.c
+> +++ b/cache-tree.c
+> @@ -156,6 +156,8 @@ static int verify_cache(struct cache_entry **cache,
+>  {
+>         int i, funny;
+>         int silent =3D flags & WRITE_TREE_SILENT;
+> +       const char *this_name;
+> +       size_t this_len;
+>
+>         /* Verify that the tree is merged */
+>         funny =3D 0;
+> @@ -182,18 +184,21 @@ static int verify_cache(struct cache_entry **cache=
+,
+>          * and they should not exist unless a bug was introduced along
+>          * the way.
+>          */
+> -       if (silent)
+> -               return 0;
+>         funny =3D 0;
+> -       for (i =3D 0; i < entries - 1; i++) {
+> +
+> +       if (!entries)
+> +               return 0;
+> +       this_name =3D cache[0]->name;
+> +       this_len =3D strlen(this_name);
+> +
+> +       for (i =3D 1; i < entries; i++) {
+>                 /* path/file always comes after path because of the way
+>                  * the cache is sorted.  Also path can appear only once,
+>                  * which means conflicting one would immediately follow.
+>                  */
+> -               const char *this_name =3D cache[i]->name;
+> -               const char *next_name =3D cache[i+1]->name;
+> -               int this_len =3D strlen(this_name);
+> -               if (this_len < strlen(next_name) &&
+> +               const char *next_name =3D cache[i]->name;
+> +               size_t next_len =3D strlen(next_name);
+> +               if (this_len < next_len &&
+>                     strncmp(this_name, next_name, this_len) =3D=3D 0 &&
+>                     next_name[this_len] =3D=3D '/') {
+>                         if (10 < ++funny) {
+> @@ -203,6 +208,8 @@ static int verify_cache(struct cache_entry **cache,
+>                         fprintf(stderr, "You have both %s and %s\n",
+>                                 this_name, next_name);
+>                 }
+> +               this_name =3D next_name;
+> +               this_len =3D next_len;
+>         }
+>         if (funny)
+>                 return -1;
+>
 
-There are some remaining references in the racy-git.txt technical
-document that are updated to ie_match_stat().
+The compiler can do that because strlen() is a pure function; glibc
+declares it like this:
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- Documentation/technical/racy-git.txt | 6 +++---
- builtin/update-index.c               | 3 +--
- cache.h                              | 1 -
- 3 files changed, 4 insertions(+), 6 deletions(-)
+   extern size_t strlen (const char *__s)
+        __THROW __attribute_pure__ __nonnull ((1));
 
-diff --git a/Documentation/technical/racy-git.txt b/Documentation/technical/racy-git.txt
-index ceda4bbfda4..65188e04559 100644
---- a/Documentation/technical/racy-git.txt
-+++ b/Documentation/technical/racy-git.txt
-@@ -26,7 +26,7 @@ information obtained from the filesystem via `lstat(2)` system
- call when they were last updated.  When checking if they differ,
- Git first runs `lstat(2)` on the files and compares the result
- with this information (this is what was originally done by the
--`ce_match_stat()` function, but the current code does it in
-+`ie_match_stat()` function, but the current code does it in
- `ce_match_stat_basic()` function).  If some of these "cached
- stat information" fields do not match, Git can tell that the
- files are modified without even looking at their contents.
-@@ -102,7 +102,7 @@ timestamp as the index file itself.
- 
- The callers that want to check if an index entry matches the
- corresponding file in the working tree continue to call
--`ce_match_stat()`, but with this change, `ce_match_stat()` uses
-+`ie_match_stat()`, but with this change, `ie_match_stat()` uses
- `ce_modified_check_fs()` to see if racily clean ones are
- actually clean after comparing the cached stat information using
- `ce_match_stat_basic()`.
-@@ -128,7 +128,7 @@ Runtime penalty
- ---------------
- 
- The runtime penalty of falling back to `ce_modified_check_fs()`
--from `ce_match_stat()` can be very expensive when there are many
-+from `ie_match_stat()` can be very expensive when there are many
- racily clean entries.  An obvious way to artificially create
- this situation is to give the same timestamp to all the files in
- the working tree in a large project, run `git update-index` on
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 4da0c169dc7..256df43ecbd 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -3,7 +3,6 @@
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  */
--#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "lockfile.h"
-@@ -277,7 +276,7 @@ static int add_one_path(const struct cache_entry *old, const char *path, int len
- 	struct cache_entry *ce;
- 
- 	/* Was the old index entry already up-to-date? */
--	if (old && !ce_stage(old) && !ce_match_stat(old, st, 0))
-+	if (old && !ce_stage(old) && !ie_match_stat(istate, old, st, 0))
- 		return 0;
- 
- 	ce = make_empty_cache_entry(istate, len);
-diff --git a/cache.h b/cache.h
-index dfcbc4923e2..2925bf050b8 100644
---- a/cache.h
-+++ b/cache.h
-@@ -416,7 +416,6 @@ extern struct index_state the_index;
- #define chmod_cache_entry(ce, flip) chmod_index_entry(&the_index, (ce), (flip))
- #define refresh_cache(flags) refresh_index(&the_index, (flags), NULL, NULL, NULL)
- #define refresh_and_write_cache(refresh_flags, write_flags, gentle) repo_refresh_and_write_index(the_repository, (refresh_flags), (write_flags), (gentle), NULL, NULL, NULL)
--#define ce_match_stat(ce, st, options) ie_match_stat(&the_index, (ce), (st), (options))
- #define ce_modified(ce, st, options) ie_modified(&the_index, (ce), (st), (options))
- #define cache_dir_exists(name, namelen) index_dir_exists(&the_index, (name), (namelen))
- #define cache_name_is_other(name, namelen) index_name_is_other(&the_index, (name), (namelen))
--- 
-gitgitgadget
+> HOWEVER, if we swap the order of the conditionals to be
+>
+> 		if (this_len < next_len &&
+> 		    strncmp(this_name, next_name, this_len) =3D=3D 0 &&
+> 		    next_name[this_len] =3D=3D '/') {
+>
+> then we _do_ get a measurable, consistent speedup.
+
+That's the original order there, but I get it.  The trailing slash has
+only a low probability of being present, so in the common case the
+strncmp call can be skipped.  And I guess that check is easier to
+handle for the branch predictor as well.
+
+Since we know the length of both strings we can use memcmp instead of
+strncmp.  It can compare words instead of bytes, so I'd expect it to
+be faster.  Checking the slash first should make that difference moot,
+though, as it probably eliminates most of the strncmp calls anyway.
+
+Ren=C3=A9
