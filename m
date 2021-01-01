@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E82F8C433E9
-	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:36:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1189FC43381
+	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:36:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B9CA6207A5
+	by mail.kernel.org (Postfix) with ESMTP id DB187221EC
 	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:36:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727173AbhAACgP (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727186AbhAACgP (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 31 Dec 2020 21:36:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45920 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727042AbhAACgO (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1727146AbhAACgO (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 31 Dec 2020 21:36:14 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D64BC0617A0
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D394DC0617A1
         for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:34:59 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id g185so8374659wmf.3
-        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:34:58 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id q18so21318543wrn.1
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:34:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=3VWdFNzHStrIFPMTrcpUhepqI3KmHCI8z1cXv60VA8M=;
-        b=X8lIEF9ato6VvSmjUquXv56t6tCfoz9hGBbzVdRZRaXksBL9SoFTyZEvv8iVgg3s9d
-         q54AP+9nz92QVRvWqc8gwFQ57YA4eG3Dx3arKg7PSfIiO+XZy9mA1jyAol/k3K/D+fvV
-         ZMG9UNEdPaJw/WqsAUoGQ/qVvz/gj7mJ1/Ipz+l1aZ/nafwPuv2BjPoKaYO3uYT+1iqL
-         7aB3tUfzlym3xooAoxegBqWxjJXxUNddi6aR8GuJHSqNhwcmWk6B3zRjnoflkcsHZDj4
-         JAZPucEE4Xtf9tAQNdAU+99MiYEmEfOJZq2SyHQcWZ9Cya+o3HTPDCXx/7UaolNhlxfS
-         RJUA==
+        bh=OhtQzFMI2wfrUKk4Dudo41Vcv3rpe9NHzEcS9zY8l0c=;
+        b=t3/7DvnV7PxAgwwcNbzBXilBQ8U+BHopV2OEAY6UcvxTPKNr9r/RnBhMUciEPs1Qyq
+         Rvala1zX9C4UVLDVmCc3EjEw33B3TGybduaCA3F8usHDxzot3YBE/tADRMFCiTF91fou
+         RbopoVVRgwYSxLopQtnBq/mYVCkz8K4TS7+IocR7Q/r7m+KqZ7+DbBs1yjZgfuPStuix
+         /NXjF2H8XdRahtlhdDDZQvuD8ECPaZ7kGt/E3jC4VyzVpyU6J5Tp6NdhxPrW5vBDGEXT
+         GNxQ8ltCcaYkNOagFE66mZItuxvf3tdV4ZWI7Mq9fBQXcmxVObdQ/vcvSgtS9ZDHW+46
+         wZUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=3VWdFNzHStrIFPMTrcpUhepqI3KmHCI8z1cXv60VA8M=;
-        b=db8hktBIFnLpg5ASSLfxX0IFyE4TvvN8wRgXPRz0CF6QFEE1MF0lfOBm9j2jwU9jz9
-         uQltF0m5YC4MYaR3SQnmT5uamTbHnJDX3n0STeEnJHN2BN07F/CKGOngj3KCmOkx6mmT
-         ObxZFsPtZo7DuV4e7UsRmR/OxApw8FDUB/DcaobSNH9TYDxV4b147JG//vikOIslh0bl
-         TYqKJZnCrD8oq/kdcIhe0bedFLRxsScnG6RuZZJYoNSo9isR/mZFmXmnHk0nc2TvhRuZ
-         mz5KnsHG0+8Ieh8XTiFLfo3EtMc9H+hyKN0v5pcme/FYm4dMQ/5tndA8xYJbKcj6jLIj
-         2H2g==
-X-Gm-Message-State: AOAM5312lsEch4IyQemfcmXQpQM9JXIeHb0R89AqBFlNcNlhN9mlSniY
-        X4aieBSrvYjhsv3/itX3tscE1uehXW4=
-X-Google-Smtp-Source: ABdhPJww7+XtnAVnk0NOpeRstsaJQNvUyZz5QXAnAcW8iy4JvwYZd+dA9vjE7VpyNi7y6nPl7/qc8Q==
-X-Received: by 2002:a1c:5447:: with SMTP id p7mr13945036wmi.116.1609468497654;
-        Thu, 31 Dec 2020 18:34:57 -0800 (PST)
+        bh=OhtQzFMI2wfrUKk4Dudo41Vcv3rpe9NHzEcS9zY8l0c=;
+        b=H0fo0y8FIP1srBO8C2YquF/eAtB6yB03OG0KhJMLGlOXpX5jUeVGLLVV7IyXnbpQbg
+         NaXq7FvBhjO5i6t0Ls9criH9eQVyCpyQjjGMuwlxnbGOwI95gowbGxzlSo1MUQiCg8es
+         1ZmOKPzsZajqeVfSX46hD/kcGm1+o8xoPKKXlg1Vl6VFlZfK38kiciAlVbcUBq4VQhtY
+         2RjyLbA4lUPUwS0HePDWdqd5N6DrwwKf/hXTR4SrG/YSb2AcluUo7HC6NmAlVHhmhy2A
+         U9MPisbzD2ydDGEwTpeJAHmskCg2su31hashQ/fdHAGsZWr6S3XNDJC43um5RwI0gMyu
+         RiAA==
+X-Gm-Message-State: AOAM533gwGbe2kck9dv58G46WMFStZE5cMNWDsu3RMzVyG3btbjty/Bf
+        2TSH7r04PWK0DXaCvn+XMgLb8SRpPtE=
+X-Google-Smtp-Source: ABdhPJwst+Ee8rn77FTMeBjGhixAFOeqxG6GAclujO8ujKadfpqjn4/PdOAI3/mxx3MGldz5L2lG4g==
+X-Received: by 2002:adf:c40e:: with SMTP id v14mr66592727wrf.163.1609468498450;
+        Thu, 31 Dec 2020 18:34:58 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o8sm71096095wrm.17.2020.12.31.18.34.56
+        by smtp.gmail.com with ESMTPSA id j2sm38837171wrh.78.2020.12.31.18.34.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Dec 2020 18:34:56 -0800 (PST)
-Message-Id: <334cc7c65a60fa45b2c0e418d6b22d4dd53d3e71.1609468488.git.gitgitgadget@gmail.com>
+        Thu, 31 Dec 2020 18:34:58 -0800 (PST)
+Message-Id: <34eb647df40aa61ac961753118112ca2695eab4c.1609468488.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.815.v2.git.1609468488.gitgitgadget@gmail.com>
 References: <pull.815.git.1608270687.gitgitgadget@gmail.com>
         <pull.815.v2.git.1609468488.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 01 Jan 2021 02:34:47 +0000
-Subject: [PATCH v2 09/10] merge-ort: copy find_first_merges() implementation
- from merge-recursive.c
+Date:   Fri, 01 Jan 2021 02:34:48 +0000
+Subject: [PATCH v2 10/10] merge-ort: add handling for different types of files
+ at same path
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,90 +79,142 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Code is identical for the function body in the two files, the call
-signature is just slightly different in merge-ort than merge-recursive
-as noted a couple commits ago.
+Add some handling that explicitly considers collisions of the following
+types:
+  * file/submodule
+  * file/symlink
+  * submodule/symlink
+Leaving them as conflicts at the same path are hard for users to
+resolve, so move one or both of them aside so that they each get their
+own path.
+
+Note that in the case of recursive handling (i.e. call_depth > 0), we
+can just use the merge base of the two merge bases as the merge result
+much like we do with modify/delete conflicts, binary files, conflicting
+submodule values, and so on.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 57 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 56 insertions(+), 1 deletion(-)
+ merge-ort.c | 107 ++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 103 insertions(+), 4 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index bf704bcd34d..203fa987e43 100644
+index 203fa987e43..afe721182e2 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -25,6 +25,7 @@
- #include "dir.h"
- #include "ll-merge.h"
- #include "object-store.h"
-+#include "revision.h"
- #include "strmap.h"
- #include "submodule.h"
- #include "tree.h"
-@@ -658,7 +659,61 @@ static int find_first_merges(struct repository *repo,
- 			     struct commit *b,
- 			     struct object_array *result)
- {
--	die("Not yet implemented.");
-+	int i, j;
-+	struct object_array merges = OBJECT_ARRAY_INIT;
-+	struct commit *commit;
-+	int contains_another;
+@@ -1521,10 +1521,109 @@ static void process_entry(struct merge_options *opt,
+ 	} else if (ci->filemask >= 6 &&
+ 		   (S_IFMT & ci->stages[1].mode) !=
+ 		   (S_IFMT & ci->stages[2].mode)) {
+-		/*
+-		 * Two different items from (file/submodule/symlink)
+-		 */
+-		die("Not yet implemented.");
++		/* Two different items from (file/submodule/symlink) */
++		if (opt->priv->call_depth) {
++			/* Just use the version from the merge base */
++			ci->merged.clean = 0;
++			oidcpy(&ci->merged.result.oid, &ci->stages[0].oid);
++			ci->merged.result.mode = ci->stages[0].mode;
++			ci->merged.is_null = (ci->merged.result.mode == 0);
++		} else {
++			/* Handle by renaming one or both to separate paths. */
++			unsigned o_mode = ci->stages[0].mode;
++			unsigned a_mode = ci->stages[1].mode;
++			unsigned b_mode = ci->stages[2].mode;
++			struct conflict_info *new_ci;
++			const char *a_path = NULL, *b_path = NULL;
++			int rename_a = 0, rename_b = 0;
 +
-+	char merged_revision[GIT_MAX_HEXSZ + 2];
-+	const char *rev_args[] = { "rev-list", "--merges", "--ancestry-path",
-+				   "--all", merged_revision, NULL };
-+	struct rev_info revs;
-+	struct setup_revision_opt rev_opts;
++			new_ci = xmalloc(sizeof(*new_ci));
 +
-+	memset(result, 0, sizeof(struct object_array));
-+	memset(&rev_opts, 0, sizeof(rev_opts));
-+
-+	/* get all revisions that merge commit a */
-+	xsnprintf(merged_revision, sizeof(merged_revision), "^%s",
-+		  oid_to_hex(&a->object.oid));
-+	repo_init_revisions(repo, &revs, NULL);
-+	rev_opts.submodule = path;
-+	/* FIXME: can't handle linked worktrees in submodules yet */
-+	revs.single_worktree = path != NULL;
-+	setup_revisions(ARRAY_SIZE(rev_args)-1, rev_args, &revs, &rev_opts);
-+
-+	/* save all revisions from the above list that contain b */
-+	if (prepare_revision_walk(&revs))
-+		die("revision walk setup failed");
-+	while ((commit = get_revision(&revs)) != NULL) {
-+		struct object *o = &(commit->object);
-+		if (in_merge_bases(b, commit))
-+			add_object_array(o, NULL, &merges);
-+	}
-+	reset_revision_walk();
-+
-+	/* Now we've got all merges that contain a and b. Prune all
-+	 * merges that contain another found merge and save them in
-+	 * result.
-+	 */
-+	for (i = 0; i < merges.nr; i++) {
-+		struct commit *m1 = (struct commit *) merges.objects[i].item;
-+
-+		contains_another = 0;
-+		for (j = 0; j < merges.nr; j++) {
-+			struct commit *m2 = (struct commit *) merges.objects[j].item;
-+			if (i != j && in_merge_bases(m2, m1)) {
-+				contains_another = 1;
-+				break;
++			if (S_ISREG(a_mode))
++				rename_a = 1;
++			else if (S_ISREG(b_mode))
++				rename_b = 1;
++			else {
++				rename_a = 1;
++				rename_b = 1;
 +			}
++
++			path_msg(opt, path, 0,
++				 _("CONFLICT (distinct types): %s had different "
++				   "types on each side; renamed %s of them so "
++				   "each can be recorded somewhere."),
++				 path,
++				 (rename_a && rename_b) ? _("both") : _("one"));
++
++			ci->merged.clean = 0;
++			memcpy(new_ci, ci, sizeof(*new_ci));
++
++			/* Put b into new_ci, removing a from stages */
++			new_ci->merged.result.mode = ci->stages[2].mode;
++			oidcpy(&new_ci->merged.result.oid, &ci->stages[2].oid);
++			new_ci->stages[1].mode = 0;
++			oidcpy(&new_ci->stages[1].oid, &null_oid);
++			new_ci->filemask = 5;
++			if ((S_IFMT & b_mode) != (S_IFMT & o_mode)) {
++				new_ci->stages[0].mode = 0;
++				oidcpy(&new_ci->stages[0].oid, &null_oid);
++				new_ci->filemask = 4;
++			}
++
++			/* Leave only a in ci, fixing stages. */
++			ci->merged.result.mode = ci->stages[1].mode;
++			oidcpy(&ci->merged.result.oid, &ci->stages[1].oid);
++			ci->stages[2].mode = 0;
++			oidcpy(&ci->stages[2].oid, &null_oid);
++			ci->filemask = 3;
++			if ((S_IFMT & a_mode) != (S_IFMT & o_mode)) {
++				ci->stages[0].mode = 0;
++				oidcpy(&ci->stages[0].oid, &null_oid);
++				ci->filemask = 2;
++			}
++
++			/* Insert entries into opt->priv_paths */
++			assert(rename_a || rename_b);
++			if (rename_a) {
++				a_path = unique_path(&opt->priv->paths,
++						     path, opt->branch1);
++				strmap_put(&opt->priv->paths, a_path, ci);
++			}
++
++			if (rename_b)
++				b_path = unique_path(&opt->priv->paths,
++						     path, opt->branch2);
++			else
++				b_path = path;
++			strmap_put(&opt->priv->paths, b_path, new_ci);
++
++			if (rename_a && rename_b) {
++				strmap_remove(&opt->priv->paths, path, 0);
++				/*
++				 * We removed path from opt->priv->paths.  path
++				 * will also eventually need to be freed, but
++				 * it may still be used by e.g.  ci->pathnames.
++				 * So, store it in another string-list for now.
++				 */
++				string_list_append(&opt->priv->paths_to_free,
++						   path);
++			}
++
++			/*
++			 * Do special handling for b_path since process_entry()
++			 * won't be called on it specially.
++			 */
++			strmap_put(&opt->priv->conflicted, b_path, new_ci);
++			record_entry_for_tree(dir_metadata, b_path,
++					      &new_ci->merged);
++
++			/*
++			 * Remaining code for processing this entry should
++			 * think in terms of processing a_path.
++			 */
++			if (a_path)
++				path = a_path;
 +		}
-+
-+		if (!contains_another)
-+			add_object_array(merges.objects[i].item, NULL, result);
-+	}
-+
-+	object_array_clear(&merges);
-+	return result->nr;
- }
- 
- static int merge_submodule(struct merge_options *opt,
+ 	} else if (ci->filemask >= 6) {
+ 		/* Need a two-way or three-way content merge */
+ 		struct version_info merged_file;
 -- 
 gitgitgadget
-
