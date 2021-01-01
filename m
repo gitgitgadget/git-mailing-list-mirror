@@ -2,207 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39D2EC433DB
-	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:18:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41527C433DB
+	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:35:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 0568C2076C
-	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:18:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0262C207A3
+	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:35:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727483AbhAACSV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Dec 2020 21:18:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43196 "EHLO
+        id S1726779AbhAACfd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Dec 2020 21:35:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727489AbhAACSS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Dec 2020 21:18:18 -0500
-Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0A58C06179E
-        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:17:37 -0800 (PST)
-Received: by mail-oo1-xc36.google.com with SMTP id 9so4624323ooy.7
-        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:17:37 -0800 (PST)
+        with ESMTP id S1726583AbhAACfc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Dec 2020 21:35:32 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DBC2C061575
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:34:52 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id v14so8358310wml.1
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:34:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=dqlNEyQgXBAg8UxAKJt7ZDBk3cjQ/Mu8YTHw7lZzjIU=;
-        b=A3ARsU0fM6JqImZDgJFsLyKu0uq6bVM3dd8/WCTnXjLfZAHYI1Ed6I0RBKBwsq9zrN
-         NLKKfGDgJSyK4qKyvUyMmUSlNqm1hiAWa7R4+TNYhKErsP26csYhNrb7sbmp0/dGi8vc
-         SLDwz78OCS4bUUZcuNBCfJhP/mnuBGBx8mgZDX0bE9Gsm5dl9QEgzsycS1SxoAP8cui9
-         tEstMlw2FQSDUR4F6JY2BvzttiRXWeU981O7q1HCShUD/YGNEAf2qRqEKprtqpO8pgEd
-         sHu0zvI9CFqMpK08NQgEtikfUcbYn0W7BF7ReRURB1rW7Q/lqTNM+dl+5MZa1HfHZuHp
-         GJIA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=LKxPoRve9hCdPWDxuTSZnGvESSVhojxu0AsY1j4NEN0=;
+        b=u5viq6CueMvrMf51oCegNf/UcZsfqbK0LNJlO/0EIfN+mcp/mirfGB/7xWR7/tJdsb
+         kMZQ+39280DE+wRAd7kJTROjw7hNMKoYZw8BV8pBLwjqlepDzwaCgMtp3v8btuRybEfT
+         bwUazi8X55c7vD50Cj99N4W46fuZIa3u/bC7OilmKjcrqtHADTreu/ewX/ir0na/YBVH
+         gh7lNpvFVkX0QwY4hSvuT5acqVZ/aD6DwjZle/PBYqj5AoKs9PFmKZ38Vx56UTHyayTe
+         rswLIB13nf9mWougvDRUXYOnwI7DG7jrmeTsnQJ81ntQGHylA/1iauy2t1dPw99s66dX
+         LhwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=dqlNEyQgXBAg8UxAKJt7ZDBk3cjQ/Mu8YTHw7lZzjIU=;
-        b=tz2vRiTOvba7PkzagAlGuw+960Ewov5LVF75v5bg15VBz/hQmtW5eeozbadxmkkWYi
-         wre9YTYDePnFNi3ChghQ2IOnkmGG7Ks5G6+YM/EQ+P0lVDoPfSV/o06OUNeBaDTHgfnp
-         V/LG22cedW9cYjirzGUFdr9IvEv6pDFca01i2XizKWSDujK00JkBojuZPAWNRkDb42w7
-         5/ZGi4EZG/PAo/2FkLGzyLoGP6s5ZJJ6KmlYTJW67fLuJooHczOVwb6REpz/4LWTvcbW
-         /1LGnwAvnTaovUxJCZs/y4LuhkKs1zRMs5yAx671tqSCeklWiEAEbfnvCDx/YJFPka+t
-         dddA==
-X-Gm-Message-State: AOAM533EPJrMxtontqRe+A5dl9xNER34RsNETOnYn+vCekyjbOv/Ma7n
-        +99wwyZVAHsOg1Ol1Oc5XlgtNtHCy5IUuQ==
-X-Google-Smtp-Source: ABdhPJyVvxv9ftoe3OUd5pvQO13j6OkeSgRAG9eVZJ+Cv9vwM9h5T+3bqNDd/LRYfkFmyf04N1YQQg==
-X-Received: by 2002:a4a:751a:: with SMTP id j26mr40846115ooc.68.1609467457071;
-        Thu, 31 Dec 2020 18:17:37 -0800 (PST)
-Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id o49sm11461121ota.51.2020.12.31.18.17.36
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=LKxPoRve9hCdPWDxuTSZnGvESSVhojxu0AsY1j4NEN0=;
+        b=Uix/2ngg190zQDs2Qeq9m6iJP2Gh3l/FMHljGsm5TUcs4jpbM0OrC5UbX8VHivR9bm
+         rzRTnKgt4oHtDiX1zR73oG4Bc0qGY/4TeB+oCpWX/wf9IHNEk9oWoaKPkfkUC3C+O9f1
+         n/sTHRa9vp8e2W5nlEGdO5T8qIHP6TN4Bi1NjyjLenokEv/wYsbK0Y/KykkUyqM7Bcqo
+         FtRQqqdMHJ/618UFqDCNPD0R8s+o9pIiywP73vRs7iEhTeKMLdVpYMyLZql6+/1reSsX
+         edRu548mcSWXunoWZKEezQMGnT3e2lWeg+x/Flf6k/G9GIMfyCo/zdMaP3UPcDap+npF
+         05TA==
+X-Gm-Message-State: AOAM533XXKVxnDAzqg5lmDVTqSrLQl2NCNwbB26DhEMlkVDjtboCvmBd
+        6u2UHTbVQWFxPqMZRz0fukACH8McTL8=
+X-Google-Smtp-Source: ABdhPJwPmu1hNNN3GrShB+Ghjul7gK3jUe/S/TYeOm/1CxnreDj7sLTUa0v1Xnkh0s6Ur0uDFvAdKg==
+X-Received: by 2002:a1c:e10b:: with SMTP id y11mr14232723wmg.65.1609468489943;
+        Thu, 31 Dec 2020 18:34:49 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g192sm15362200wme.48.2020.12.31.18.34.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Dec 2020 18:17:36 -0800 (PST)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 46/47] completion: add proper public __git_complete
-Date:   Thu, 31 Dec 2020 20:16:21 -0600
-Message-Id: <20210101021622.798041-47-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.30.0
-In-Reply-To: <20210101021622.798041-1-felipe.contreras@gmail.com>
-References: <20210101021622.798041-1-felipe.contreras@gmail.com>
-MIME-Version: 1.0
+        Thu, 31 Dec 2020 18:34:49 -0800 (PST)
+Message-Id: <pull.815.v2.git.1609468488.gitgitgadget@gmail.com>
+In-Reply-To: <pull.815.git.1608270687.gitgitgadget@gmail.com>
+References: <pull.815.git.1608270687.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 01 Jan 2021 02:34:38 +0000
+Subject: [PATCH v2 00/10] merge-ort: add more handling of basic conflict types
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When __git_complete was introduced, it was meant to be temporarily, while
-a proper guideline for public shell functions was established
-(tentatively _GIT_complete), but since that never happened, people
-in the wild started to use __git_complete, even though it was marked as
-not public.
+This series depends on en/merge-ort-2 (it does not depend on en/merge-ort-3
+or en/merge-ort-recursive).
 
-Eight years is more than enough wait, let's mark this function as
-public, and make it a bit more user-friendly.
+This series adds handling of additional basic conflict types (directory/file
+conflicts, three-way content merging, very basic submodule divergence
+reconciliation, and different filetypes). This series drops the number of
+test failures under GIT_TEST_MERGE_ALGORITHM=ort by 211 (from 1448 to 1237).
 
-So that instead of doing:
+Further, if en/merge-tests, en/merge-ort-3, en/merge-ort-recursive, and this
+series are all merged down (in any order), then collectively they drop the
+number of test failure under GIT_TEST_MERGE_ALGORITHM=ort from 1448 down to
+60.
 
-  __git_complete gk __gitk_main
+Changes since v1:
 
-The user can do:
+ * Wait to remove comment about a die-not-implemented code block until the
+   commit where we actually remove it (spotted by Stollee)
 
-  __git_complete gk gitk
+Elijah Newren (10):
+  merge-ort: handle D/F conflict where directory disappears due to merge
+  merge-ort: handle directory/file conflicts that remain
+  merge-ort: implement unique_path() helper
+  merge-ort: handle book-keeping around two- and three-way content merge
+  merge-ort: flesh out implementation of handle_content_merge()
+  merge-ort: copy and adapt merge_3way() from merge-recursive.c
+  merge-ort: copy and adapt merge_submodule() from merge-recursive.c
+  merge-ort: implement format_commit()
+  merge-ort: copy find_first_merges() implementation from
+    merge-recursive.c
+  merge-ort: add handling for different types of files at same path
 
-And instead of:
+ merge-ort.c | 671 ++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 653 insertions(+), 18 deletions(-)
 
-  __git_complete gf _git_fetch
 
-Do:
+base-commit: c5a6f65527aa3b6f5d7cf25437a88d8727ab0646
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-815%2Fnewren%2Fort-conflict-handling-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-815/newren/ort-conflict-handling-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/815
 
-  __git_complete gf git_fetch
+Range-diff vs v1:
 
-Backwards compatibility is maintained.
+  1:  382a009c18e !  1:  1869e497482 merge-ort: handle D/F conflict where directory disappears due to merge
+     @@ merge-ort.c: static void process_entry(struct merge_options *opt,
+       		die("Not yet implemented.");
+       	}
+       
+     - 	/*
+     - 	 * NOTE: Below there is a long switch-like if-elseif-elseif... block
+     - 	 *       which the code goes through even for the df_conflict cases
+     --	 *       above.  Well, it will once we don't die-not-implemented above.
+     -+	 *       above.
+     - 	 */
+     - 	if (ci->match_mask) {
+     - 		ci->merged.clean = 1;
+  2:  46953226ba8 !  2:  54f9be41a8a merge-ort: handle directory/file conflicts that remain
+     @@ merge-ort.c: static void process_entry(struct merge_options *opt,
+       	}
+       
+       	/*
+     + 	 * NOTE: Below there is a long switch-like if-elseif-elseif... block
+     + 	 *       which the code goes through even for the df_conflict cases
+     +-	 *       above.  Well, it will once we don't die-not-implemented above.
+     ++	 *       above.
+     + 	 */
+     + 	if (ci->match_mask) {
+     + 		ci->merged.clean = 1;
+  3:  6ac555b3c0f =  3:  63fed5e49a7 merge-ort: implement unique_path() helper
+  4:  4c641ec19d5 =  4:  d0fab13c78a merge-ort: handle book-keeping around two- and three-way content merge
+  5:  0e7321e67f8 =  5:  69129a20edc merge-ort: flesh out implementation of handle_content_merge()
+  6:  611141f24af =  6:  d1cc76ac620 merge-ort: copy and adapt merge_3way() from merge-recursive.c
+  7:  4696f6c2d95 =  7:  2ddf6ece9d0 merge-ort: copy and adapt merge_submodule() from merge-recursive.c
+  8:  a640cc0effc =  8:  b0bfada5d81 merge-ort: implement format_commit()
+  9:  b898876b119 =  9:  334cc7c65a6 merge-ort: copy find_first_merges() implementation from merge-recursive.c
+ 10:  0a5778df253 = 10:  34eb647df40 merge-ort: add handling for different types of files at same path
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- contrib/completion/git-completion.bash | 40 +++++++++++++++++++++-----
- t/t9902-completion.sh                  | 14 ++++++++-
- 2 files changed, 46 insertions(+), 8 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 11a9433363..a0e5752217 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -29,6 +29,15 @@
- # tell the completion to use commit completion.  This also works with aliases
- # of form "!sh -c '...'".  For example, "!sh -c ': git commit ; ... '".
- #
-+# If you have a command that is not part of git, but you would still
-+# like completion, you can use __git_complete:
-+#
-+#   __git_complete gl git_log
-+#
-+# Or if it's a main command (i.e. git or gitk):
-+#
-+#   __git_complete gk gitk
-+#
- # Compatible with bash 3.2.57.
- #
- # You can set the following environment variables to influence the behavior of
-@@ -3429,10 +3438,7 @@ __git_func_wrap ()
- 	$1
- }
- 
--# Setup completion for certain functions defined above by setting common
--# variables and workarounds.
--# This is NOT a public function; use at your own risk.
--__git_complete ()
-+___git_complete ()
- {
- 	local wrapper="__git_wrap${2}"
- 	eval "$wrapper () { __git_func_wrap $2 ; }"
-@@ -3440,13 +3446,33 @@ __git_complete ()
- 		|| complete -o default -o nospace -F $wrapper $1
- }
- 
--__git_complete git __git_main
--__git_complete gitk __gitk_main
-+# Setup the completion for git commands
-+# 1: command or alias
-+# 2: function to call (e.g. `git`, `gitk`, `git_fetch`)
-+__git_complete ()
-+{
-+	local func
-+
-+	if __git_have_func $2; then
-+		func=$2
-+	elif __git_have_func __$2_main; then
-+		func=__$2_main
-+	elif __git_have_func _$2; then
-+		func=_$2
-+	else
-+		echo "ERROR: could not find function '$2'" 1>&2
-+		return 1
-+	fi
-+	___git_complete $1 $func
-+}
-+
-+___git_complete git __git_main
-+___git_complete gitk __gitk_main
- 
- # The following are necessary only for Cygwin, and only are needed
- # when the user has tab-completed the executable name and consequently
- # included the '.exe' suffix.
- #
- if [ "$OSTYPE" = cygwin ]; then
--	__git_complete git.exe __git_main
-+	___git_complete git.exe __git_main
- fi
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 01984692bb..b9490637f9 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -2381,10 +2381,22 @@ test_expect_success 'sourcing the completion script clears cached --options' '
- 
- test_expect_success '__git_complete' '
- 	unset -f __git_wrap__git_main &&
-+
- 	__git_complete foo __git_main &&
- 	__git_have_func __git_wrap__git_main &&
-+	unset -f __git_wrap__git_main &&
-+
- 	__git_complete gf _git_fetch &&
--	__git_have_func __git_wrap_git_fetch
-+	__git_have_func __git_wrap_git_fetch &&
-+
-+	__git_complete foo git &&
-+	__git_have_func __git_wrap__git_main &&
-+	unset -f __git_wrap__git_main &&
-+
-+	__git_complete gd git_diff &&
-+	__git_have_func __git_wrap_git_diff &&
-+
-+	test_must_fail __git_complete ga missing
- '
- 
- test_done
 -- 
-2.30.0
-
+gitgitgadget
