@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 135FEC433E0
-	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 21:06:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20D68C433DB
+	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 21:16:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B733A22203
-	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 21:06:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CF7E022203
+	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 21:16:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727309AbhAAVGJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Jan 2021 16:06:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45856 "EHLO
+        id S1727373AbhAAVNS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Jan 2021 16:13:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727199AbhAAVGI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jan 2021 16:06:08 -0500
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79623C061573
-        for <git@vger.kernel.org>; Fri,  1 Jan 2021 13:05:28 -0800 (PST)
-Received: by mail-ot1-x32a.google.com with SMTP id n42so20740190ota.12
-        for <git@vger.kernel.org>; Fri, 01 Jan 2021 13:05:28 -0800 (PST)
+        with ESMTP id S1727290AbhAAVNS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jan 2021 16:13:18 -0500
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF667C0613CF
+        for <git@vger.kernel.org>; Fri,  1 Jan 2021 13:12:37 -0800 (PST)
+Received: by mail-oi1-x231.google.com with SMTP id d189so25336547oig.11
+        for <git@vger.kernel.org>; Fri, 01 Jan 2021 13:12:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=b0CyX0NSnAq5OOXai7ifUEonR9YPykXFOBIEFgZ6FrY=;
-        b=MRNgqkASTZeTQNfjYIon5LifbNnCvyzSzQPxQPqVR2y24GpnWcnkozjNAj43r3XfGD
-         +x3+JhCsXr9jp9ZGhk69E/vKa6VIPKnOgkLa5/kUcnLtmr1lytRNmuPUpz75e+bHpGqT
-         hKy7h5YB2dChLiW0KL0BlO4qD9YVm3WHNvz5q7ggqQV7FVUY5XWmmPPf1i9wUe4JzVWk
-         NgiL4KPnx03xRCDhxjsBNOnMoCf0VPbp4cS4Jfg2dCRuKr7bHhZQVE4w2mmPFbo5ZIor
-         iqhV6d1Mn6urWYWT0lRf0CgnNZZGCaIvEXk8beOvNZa8NLilLpkdK/HeM9izDUKelHCn
-         73LQ==
+        bh=UsVXreIPdrpgERSLzBQBb6H8WF3p5MB4uikvnUjBTxQ=;
+        b=BHlI8PA5jfshU6lCu26L2Y+iU8NChbgzRYe56zElKR7Ur0wU8AR/+yt264mQBS15T+
+         Hpz0UFEb9pUjBw6jAP0aES1Z4+WaMBpuRZlCOkm0IAcf1HVbgAD1d9I4l8R3MBRe/rk/
+         59Hxodf8SOiT3SVx/rnIKUOFWVFcxB6WCF1YRvqtoxlXsDDZ3lIVcw6Onowg1VmjEdO9
+         nuSfT3a1akoS171fi194EFyrdURcpcIYyVRn8o5ivfi6pP9hiDOzHliq1uVAOqe4gxDU
+         BFwtEiVp4AUcLropYgqjse4+W7I6bEe2ivuKiN68J61mc/PljoZ85G+Igx8pZSp87UUj
+         25fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=b0CyX0NSnAq5OOXai7ifUEonR9YPykXFOBIEFgZ6FrY=;
-        b=MASmAe4MZ+QU9RHr+SZy80dOi+NjpVL4hO3hhNImDAOzjGujWf1O7pkkOwDM9tBMvO
-         cNmU6d2HrfhtZ+7gb82oC+kt663Ju5t+Xai9h1WIdr+ig/J6unB1Y+D5fAmBtTFR2SUB
-         Z3Bf6aGHuxyq2e++dTPjLoABB5oZa6E+39c6bevxXo9wRpJTJ+W3wWJI0bc2oF5H1OMB
-         RWO/9KqUFbp4Wzz0lcUvLU5iT7+ogPATlnAewusW2Wmia2r3dvB53+MjIaDKQpsfBZcJ
-         EMjAePrj3UF1qib72krTthhJJ9XjTnoUIjCrTU3JD3KXCZt/anVehceGN7cPKczzaI7b
-         ucFw==
-X-Gm-Message-State: AOAM531fXnQyHRAEC8LPMkZqmvJS31R0AyktKW+v1fRKJUyypZufXBbQ
-        r+jPnYPWkTAiRYh/wNLSQ9vmM1cdVgFCAJXISD0=
-X-Google-Smtp-Source: ABdhPJxD9o3mPT55lAT8dF3hg5PAKHnKHWkwqXMgAwVp8Zx1pZpHu3gLRSfHPFH7N12eEFXxrdDgNVNiADnR2e9xM+M=
-X-Received: by 2002:a05:6830:10:: with SMTP id c16mr44548940otp.162.1609535127151;
- Fri, 01 Jan 2021 13:05:27 -0800 (PST)
+        bh=UsVXreIPdrpgERSLzBQBb6H8WF3p5MB4uikvnUjBTxQ=;
+        b=Fbzjkd2LoRUCifZAnccKqdE20zPbbS8OzOI1nt0LnBfhl3uY+jc8J9UJ1ce5eNbfgg
+         GZRx2zoySuzO0SwI7sNOarR0t5BII8AMwZoM9MDVF94BE9B8wZYrmQpGWtCWnDi4KfWa
+         uJ/KnrY8yKe53dJxZhSKiY6IQ6xzn+sI7bJZV8SfPmZFZXnlTWyPXitWZdQprJKHCi1D
+         4gJArafqRpDZGn5EvU5GPUOZd+vm6fqE9CtOpUW60bkRvyDAEVgkPRRVrqp0KL7ZTRlv
+         CblVpfEoTMv19tsJrch3TQpuuJhvkt2aN0AZ/+/q4xMbzH3aPTaI3kTW4138V5GyvWxJ
+         g6XA==
+X-Gm-Message-State: AOAM533kVl/fbiaIDJycZDGsePGpKYvgtwNc2iahdzhOMjbwxrcxx/se
+        AUIzfPwaSlG9L/5cTbcHZ5E/wN8rAc0KRy099Yw=
+X-Google-Smtp-Source: ABdhPJyPwf7vCqXGhtwjstxJ1U7epBTuIZwOs1U1OSbtHqrmZXy2yl5D3N6r8plZlXBZ42CAC1zqnJQqWWZ78ZttZ74=
+X-Received: by 2002:a54:4185:: with SMTP id 5mr11747103oiy.31.1609535556762;
+ Fri, 01 Jan 2021 13:12:36 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.830.git.1609506428.gitgitgadget@gmail.com> <77f6510bb680aaf119526f75daadf8c40d22793e.1609506428.git.gitgitgadget@gmail.com>
-In-Reply-To: <77f6510bb680aaf119526f75daadf8c40d22793e.1609506428.git.gitgitgadget@gmail.com>
+References: <pull.830.git.1609506428.gitgitgadget@gmail.com> <8fb307c3bee9a33ad408bba6c422e992fb1e2656.1609506428.git.gitgitgadget@gmail.com>
+In-Reply-To: <8fb307c3bee9a33ad408bba6c422e992fb1e2656.1609506428.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 1 Jan 2021 13:05:16 -0800
-Message-ID: <CABPp-BEboS3OG0dMi6kzaXkJ3vELKgpV1Km0m3ZjACA2nGa5QA@mail.gmail.com>
-Subject: Re: [PATCH 04/12] update-index: drop the_index, the_repository
+Date:   Fri, 1 Jan 2021 13:12:25 -0800
+Message-ID: <CABPp-BEPDpagENsmx=8gJ9SqUFrD+mh87WbLnV1mpgtFz56qVg@mail.gmail.com>
+Subject: Re: [PATCH 12/12] update-index: remove ce_match_stat(), all macros
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
@@ -70,238 +70,98 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 1, 2021 at 5:10 AM Derrick Stolee via GitGitGadget
+On Fri, Jan 1, 2021 at 5:12 AM Derrick Stolee via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
 >
 > From: Derrick Stolee <dstolee@microsoft.com>
 >
-> To reduce the need for the index compatibility macros, we will replace
-> their uses in update-index mechanically. This is the most interesting
-> change, which creates global "repo" and "istate" pointers. The macros
-> can then be mechanically replaced by instances that use the istate
-> pointer instead of the version that autocompletes to use the_index.
+> The final index compatibility macro to remove from the update-index
+> builtin is ce_match_state(). Further, this is the last use of that macro
 
-autocompletes seems a bit weird to me here.  Perhaps s/autocompletes
-to use/implicitly uses/ ?
+I think you mean ce_match_stat(); no trailing 'e'.
 
-Also, it seems like in the last few patches you just used
-the_repository whereas here you're trying to avoid it.  Is that
-because there are more uses here and only one in the other patches?
-
-Otherwise, all the changes in this patch (and the other ones I've read
-so far; going through them in order) seem like the obvious mechanical
-changes necessary to update to avoid the index compatibility macros.
-So, looking good so far.
-
+> anywhere, so it should be removed.
+>
+> There are some remaining references in the racy-git.txt technical
+> document that are updated to ie_match_stat().
 >
 > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > ---
->  builtin/update-index.c | 59 +++++++++++++++++++++++-------------------
->  1 file changed, 32 insertions(+), 27 deletions(-)
+>  Documentation/technical/racy-git.txt | 6 +++---
+>  builtin/update-index.c               | 3 +--
+>  cache.h                              | 1 -
+>  3 files changed, 4 insertions(+), 6 deletions(-)
 >
+> diff --git a/Documentation/technical/racy-git.txt b/Documentation/technical/racy-git.txt
+> index ceda4bbfda4..65188e04559 100644
+> --- a/Documentation/technical/racy-git.txt
+> +++ b/Documentation/technical/racy-git.txt
+> @@ -26,7 +26,7 @@ information obtained from the filesystem via `lstat(2)` system
+>  call when they were last updated.  When checking if they differ,
+>  Git first runs `lstat(2)` on the files and compares the result
+>  with this information (this is what was originally done by the
+> -`ce_match_stat()` function, but the current code does it in
+> +`ie_match_stat()` function, but the current code does it in
+
+Even updating the documentation... :-)
+
+Arguably, this change should have been done years ago when
+ce_match_stat was turned into a macro, but certainly becomes more
+important with your patch that removes the macro.
+
+>  `ce_match_stat_basic()` function).  If some of these "cached
+>  stat information" fields do not match, Git can tell that the
+>  files are modified without even looking at their contents.
+> @@ -102,7 +102,7 @@ timestamp as the index file itself.
+>
+>  The callers that want to check if an index entry matches the
+>  corresponding file in the working tree continue to call
+> -`ce_match_stat()`, but with this change, `ce_match_stat()` uses
+> +`ie_match_stat()`, but with this change, `ie_match_stat()` uses
+>  `ce_modified_check_fs()` to see if racily clean ones are
+>  actually clean after comparing the cached stat information using
+>  `ce_match_stat_basic()`.
+> @@ -128,7 +128,7 @@ Runtime penalty
+>  ---------------
+>
+>  The runtime penalty of falling back to `ce_modified_check_fs()`
+> -from `ce_match_stat()` can be very expensive when there are many
+> +from `ie_match_stat()` can be very expensive when there are many
+>  racily clean entries.  An obvious way to artificially create
+>  this situation is to give the same timestamp to all the files in
+>  the working tree in a large project, run `git update-index` on
 > diff --git a/builtin/update-index.c b/builtin/update-index.c
-> index 79087bccea4..c9a6cde97da 100644
+> index 4da0c169dc7..256df43ecbd 100644
 > --- a/builtin/update-index.c
 > +++ b/builtin/update-index.c
-> @@ -40,6 +40,9 @@ static int ignore_skip_worktree_entries;
->  #define UNMARK_FLAG 2
->  static struct strbuf mtime_dir = STRBUF_INIT;
->
-> +static struct repository *repo;
-> +static struct index_state *istate;
-> +
->  /* Untracked cache mode */
->  enum uc_mode {
->         UC_UNSPECIFIED = -1,
-> @@ -232,13 +235,13 @@ static int mark_ce_flags(const char *path, int flag, int mark)
->         int namelen = strlen(path);
->         int pos = cache_name_pos(path, namelen);
->         if (0 <= pos) {
-> -               mark_fsmonitor_invalid(&the_index, active_cache[pos]);
-> +               mark_fsmonitor_invalid(istate, active_cache[pos]);
->                 if (mark)
->                         active_cache[pos]->ce_flags |= flag;
->                 else
->                         active_cache[pos]->ce_flags &= ~flag;
->                 active_cache[pos]->ce_flags |= CE_UPDATE_IN_BASE;
-> -               cache_tree_invalidate_path(&the_index, path);
-> +               cache_tree_invalidate_path(istate, path);
->                 active_cache_changed |= CE_ENTRY_CHANGED;
->                 return 0;
->         }
-> @@ -277,14 +280,14 @@ static int add_one_path(const struct cache_entry *old, const char *path, int len
->         if (old && !ce_stage(old) && !ce_match_stat(old, st, 0))
->                 return 0;
->
-> -       ce = make_empty_cache_entry(&the_index, len);
-> +       ce = make_empty_cache_entry(istate, len);
->         memcpy(ce->name, path, len);
->         ce->ce_flags = create_ce_flags(0);
->         ce->ce_namelen = len;
-> -       fill_stat_cache_info(&the_index, ce, st);
-> +       fill_stat_cache_info(istate, ce, st);
->         ce->ce_mode = ce_mode_from_stat(old, st->st_mode);
->
-> -       if (index_path(&the_index, &ce->oid, path, st,
-> +       if (index_path(istate, &ce->oid, path, st,
->                        info_only ? 0 : HASH_WRITE_OBJECT)) {
->                 discard_cache_entry(ce);
->                 return -1;
-> @@ -411,7 +414,7 @@ static int add_cacheinfo(unsigned int mode, const struct object_id *oid,
->                 return error("Invalid path '%s'", path);
->
->         len = strlen(path);
-> -       ce = make_empty_cache_entry(&the_index, len);
-> +       ce = make_empty_cache_entry(istate, len);
->
->         oidcpy(&ce->oid, oid);
->         memcpy(ce->name, path, len);
-> @@ -603,7 +606,7 @@ static struct cache_entry *read_one_ent(const char *which,
->         struct object_id oid;
+> @@ -3,7 +3,6 @@
+>   *
+>   * Copyright (C) Linus Torvalds, 2005
+>   */
+> -#define USE_THE_INDEX_COMPATIBILITY_MACROS
+>  #include "cache.h"
+>  #include "config.h"
+>  #include "lockfile.h"
+> @@ -277,7 +276,7 @@ static int add_one_path(const struct cache_entry *old, const char *path, int len
 >         struct cache_entry *ce;
 >
-> -       if (get_tree_entry(the_repository, ent, path, &oid, &mode)) {
-> +       if (get_tree_entry(repo, ent, path, &oid, &mode)) {
->                 if (which)
->                         error("%s: not in %s branch.", path, which);
->                 return NULL;
-> @@ -613,7 +616,7 @@ static struct cache_entry *read_one_ent(const char *which,
->                         error("%s: not a blob in %s branch.", path, which);
->                 return NULL;
->         }
-> -       ce = make_empty_cache_entry(&the_index, namelen);
-> +       ce = make_empty_cache_entry(istate, namelen);
+>         /* Was the old index entry already up-to-date? */
+> -       if (old && !ce_stage(old) && !ce_match_stat(old, st, 0))
+> +       if (old && !ce_stage(old) && !ie_match_stat(istate, old, st, 0))
+>                 return 0;
 >
->         oidcpy(&ce->oid, &oid);
->         memcpy(ce->name, path, namelen);
-> @@ -751,7 +754,7 @@ static int do_reupdate(int ac, const char **av,
->                 int save_nr;
->                 char *path;
->
-> -               if (ce_stage(ce) || !ce_path_match(&the_index, ce, &pathspec, NULL))
-> +               if (ce_stage(ce) || !ce_path_match(istate, ce, &pathspec, NULL))
->                         continue;
->                 if (has_head)
->                         old = read_one_ent(NULL, &head_oid,
-> @@ -968,7 +971,6 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
->         struct parse_opt_ctx_t ctx;
->         strbuf_getline_fn getline_fn;
->         int parseopt_state = PARSE_OPT_UNKNOWN;
-> -       struct repository *r = the_repository;
->         struct option options[] = {
->                 OPT_BIT('q', NULL, &refresh_args.flags,
->                         N_("continue refresh even when index needs update"),
-> @@ -1077,16 +1079,19 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
->
->         git_config(git_default_config, NULL);
->
-> +       repo = the_repository;
-> +
->         /* we will diagnose later if it turns out that we need to update it */
-> -       newfd = hold_locked_index(&lock_file, 0);
-> +       newfd = repo_hold_locked_index(repo, &lock_file, 0);
->         if (newfd < 0)
->                 lock_error = errno;
->
-> -       entries = read_cache();
-> +       entries = repo_read_index(repo);
->         if (entries < 0)
->                 die("cache corrupted");
->
-> -       the_index.updated_skipworktree = 1;
-> +       istate = repo->index;
-> +       istate->updated_skipworktree = 1;
->
->         /*
->          * Custom copy of parse_options() because we want to handle
-> @@ -1140,9 +1145,9 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
->                             preferred_index_format,
->                             INDEX_FORMAT_LB, INDEX_FORMAT_UB);
->
-> -               if (the_index.version != preferred_index_format)
-> +               if (istate->version != preferred_index_format)
->                         active_cache_changed |= SOMETHING_CHANGED;
-> -               the_index.version = preferred_index_format;
-> +               istate->version = preferred_index_format;
->         }
->
->         if (read_from_stdin) {
-> @@ -1173,28 +1178,28 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
->                         warning(_("core.splitIndex is set to false; "
->                                   "remove or change it, if you really want to "
->                                   "enable split index"));
-> -               if (the_index.split_index)
-> -                       the_index.cache_changed |= SPLIT_INDEX_ORDERED;
-> +               if (istate->split_index)
-> +                       istate->cache_changed |= SPLIT_INDEX_ORDERED;
->                 else
-> -                       add_split_index(&the_index);
-> +                       add_split_index(istate);
->         } else if (!split_index) {
->                 if (git_config_get_split_index() == 1)
->                         warning(_("core.splitIndex is set to true; "
->                                   "remove or change it, if you really want to "
->                                   "disable split index"));
-> -               remove_split_index(&the_index);
-> +               remove_split_index(istate);
->         }
->
-> -       prepare_repo_settings(r);
-> +       prepare_repo_settings(repo);
->         switch (untracked_cache) {
->         case UC_UNSPECIFIED:
->                 break;
->         case UC_DISABLE:
-> -               if (r->settings.core_untracked_cache == UNTRACKED_CACHE_WRITE)
-> +               if (repo->settings.core_untracked_cache == UNTRACKED_CACHE_WRITE)
->                         warning(_("core.untrackedCache is set to true; "
->                                   "remove or change it, if you really want to "
->                                   "disable the untracked cache"));
-> -               remove_untracked_cache(&the_index);
-> +               remove_untracked_cache(istate);
->                 report(_("Untracked cache disabled"));
->                 break;
->         case UC_TEST:
-> @@ -1202,11 +1207,11 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
->                 return !test_if_untracked_cache_is_supported();
->         case UC_ENABLE:
->         case UC_FORCE:
-> -               if (r->settings.core_untracked_cache == UNTRACKED_CACHE_REMOVE)
-> +               if (repo->settings.core_untracked_cache == UNTRACKED_CACHE_REMOVE)
->                         warning(_("core.untrackedCache is set to false; "
->                                   "remove or change it, if you really want to "
->                                   "enable the untracked cache"));
-> -               add_untracked_cache(&the_index);
-> +               add_untracked_cache(istate);
->                 report(_("Untracked cache enabled for '%s'"), get_git_work_tree());
->                 break;
->         default:
-> @@ -1218,14 +1223,14 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
->                         warning(_("core.fsmonitor is unset; "
->                                 "set it if you really want to "
->                                 "enable fsmonitor"));
-> -               add_fsmonitor(&the_index);
-> +               add_fsmonitor(istate);
->                 report(_("fsmonitor enabled"));
->         } else if (!fsmonitor) {
->                 if (git_config_get_fsmonitor() == 1)
->                         warning(_("core.fsmonitor is set; "
->                                 "remove it if you really want to "
->                                 "disable fsmonitor"));
-> -               remove_fsmonitor(&the_index);
-> +               remove_fsmonitor(istate);
->                 report(_("fsmonitor disabled"));
->         }
->
-> @@ -1235,7 +1240,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
->                                 exit(128);
->                         unable_to_lock_die(get_index_file(), lock_error);
->                 }
-> -               if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
-> +               if (write_locked_index(istate, &lock_file, COMMIT_LOCK))
->                         die("Unable to write new index file");
->         }
->
-> --
-> gitgitgadget
->
+>         ce = make_empty_cache_entry(istate, len);
+> diff --git a/cache.h b/cache.h
+> index dfcbc4923e2..2925bf050b8 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -416,7 +416,6 @@ extern struct index_state the_index;
+>  #define chmod_cache_entry(ce, flip) chmod_index_entry(&the_index, (ce), (flip))
+>  #define refresh_cache(flags) refresh_index(&the_index, (flags), NULL, NULL, NULL)
+>  #define refresh_and_write_cache(refresh_flags, write_flags, gentle) repo_refresh_and_write_index(the_repository, (refresh_flags), (write_flags), (gentle), NULL, NULL, NULL)
+> -#define ce_match_stat(ce, st, options) ie_match_stat(&the_index, (ce), (st), (options))
+>  #define ce_modified(ce, st, options) ie_modified(&the_index, (ce), (st), (options))
+>  #define cache_dir_exists(name, namelen) index_dir_exists(&the_index, (name), (namelen))
+>  #define cache_name_is_other(name, namelen) index_name_is_other(&the_index, (name), (namelen))
+
+The rest looks good.
