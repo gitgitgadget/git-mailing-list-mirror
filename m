@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E49CC433E6
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3722BC43381
 	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 13:08:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D850E20799
+	by mail.kernel.org (Postfix) with ESMTP id 05F5020888
 	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 13:08:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727085AbhAANH5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 1 Jan 2021 08:07:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57340 "EHLO
+        id S1727094AbhAANH7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 1 Jan 2021 08:07:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727038AbhAANHy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jan 2021 08:07:54 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4974CC0613C1
-        for <git@vger.kernel.org>; Fri,  1 Jan 2021 05:07:14 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id 91so21949652wrj.7
-        for <git@vger.kernel.org>; Fri, 01 Jan 2021 05:07:14 -0800 (PST)
+        with ESMTP id S1726897AbhAANHz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jan 2021 08:07:55 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23089C0613CF
+        for <git@vger.kernel.org>; Fri,  1 Jan 2021 05:07:15 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id g185so9011565wmf.3
+        for <git@vger.kernel.org>; Fri, 01 Jan 2021 05:07:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=0TeogiNJ7ipGmFDWNnuJH30APRPsqSsAei8/MLisySQ=;
-        b=DiIZdUhYsfJikPnf3CQNG+G/Fbvz6HRkg5gbKe/ExctAItVvWFGkTy06YzieSTgHsm
-         iO+IeLvXzY5sq5aeCFw10pMS1J9dcazoYEPBLJNXpPwbBj7IFnbKgvBUElV9MYXaudCa
-         9sLedB8okhdbD0TjN7n2oK95tMAzzPd1pqJ4WdsUn0c5U84s/HsaPoTwlB4kU1SCiD4/
-         Xpj5fomVsj/3H2EmS3jpzVXqeSY0DWwJJV5dWSn4CNrdx/Oa6mKsJB2z3g0wzENYvENo
-         J5LInKRc+HIMIQCwMCU7zv1iclbjkAOgYzx4kq7LlbBpLjKF5KyLlOv85V8AZkYOmLWy
-         i2CQ==
+        bh=KHykIfsh0Vb8IWAINw3GY8cLRHHZg/Ilzg6BOGQHP74=;
+        b=oRqJiIszrR0pHYBCeZOyTtqdWRfa2VqpAkVtKgb9ceOpASAGd0ubZ3EmDiPZIms6WJ
+         cyOv/TNAdQQq6dCyXCa9auUekvctZ8bj2/K4XqNVDk2ysPLIsaFCDCGD4Eyf2DbEsRED
+         IBShLgZtP3jt2AsCk4qEOlII50AFTJdYBEhJEum9wckAH4ctztr4vFyBLRcZikzGZ3iu
+         QXc+ULO/ypiLi2hcmc0g4JRepjwYttKqGCYFV2eWif5lUQ98XNuP1ogRcw8lwKtvhoWw
+         P4SfXW5tyy8uPTwBFY05Se9OHLQyLAA+dBaopkPMzg55PSFljglUkqtFMTSe413jiKic
+         lnNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0TeogiNJ7ipGmFDWNnuJH30APRPsqSsAei8/MLisySQ=;
-        b=P2B7Fzs2bVlHggRI//BQRgFc5fIF7TTXixHFHBUu8vVtsn3+CeTW2T8WBACVa4v/aO
-         /qH8R7q9S9SygdfE6Wg9UYAsqD+KrRQqLDjMDWdPyewyzMXJFAFSVoqeC/dwpFnlKjYf
-         BskG0209CvCdUN+lTTwBOg8/hXLNveGMmZq1np3xyxpu1xFb4Oj4PL62ZoLfiaOSe/zf
-         wd/4ORZ+ftvblGMSO3+jLUH0O5bfAZz5vyDH6bHYidrdp2+1iSpV51ydFC2cbH+vrOJ4
-         fGZGAWrnTq1GmgPIYJDgG0YtIDJ/b1o2GvHJKMiQ0cZeHgeLFlfpHJo9/ki8uJEzlPed
-         uN1A==
-X-Gm-Message-State: AOAM532HYVwZEJ9nuWwd/BBtez3bZOC3BXpEtGLtMWhEZRU26vB1vdGu
-        kk1S4HSrC1fA5sdnyZZAQt/B+lHQLaM=
-X-Google-Smtp-Source: ABdhPJzWSVKSA0BdiY7y6EHOAQXcZEoFKrJPQof4nwqTLVaVjFbOZAWb8/5GRQuhkcygCxGSQqSxMg==
-X-Received: by 2002:a5d:4fc4:: with SMTP id h4mr66473738wrw.129.1609506432669;
-        Fri, 01 Jan 2021 05:07:12 -0800 (PST)
+        bh=KHykIfsh0Vb8IWAINw3GY8cLRHHZg/Ilzg6BOGQHP74=;
+        b=GKk7ydk5jC+PYAxA19XC35El6HAY2D7w/9tiZBSNYLEytOE/SF4mXhK7fd1555zQbd
+         GDblpzhMXH79Jp+RwnHGqVVNbHBendZYE3zbZVYanhydCerKNdnrvA5iEDS2W7uJz8Gh
+         K9kQVEx9Pxqodserbc9oKE4JwqSpx5V/dxH2Y7sVaAHsLIjwHn21CvsYJ9nvrf/jEHRh
+         ceAg2e//Az1gSmHZQBqWRQVP+c95OtecFYwL1YacWt1H9t/VZ3cCPkCQ4XqPlsSyDLU8
+         dcSbnf/l0Ns0I5ukRrZXyWTm2xdSzTL6GtdftXn2Wqjiy5uO1WAVRs4bgdbljfzC2do7
+         FwKA==
+X-Gm-Message-State: AOAM530iYHkaQJT0wMqXgUov3ZmJZAlIqIbDb7jDAcX9HT/BbCbrdJ4x
+        Jzwo9+HsPJBEP6XhucVWAf5tNPKdeDM=
+X-Google-Smtp-Source: ABdhPJxeCg2XMridIJLsRyOt91QyQ5ExhJOJrFiFvNgXEzn1WYGEAkFwWRIbDM+937QFF+HoGxTG0g==
+X-Received: by 2002:a1c:e246:: with SMTP id z67mr15666991wmg.166.1609506433682;
+        Fri, 01 Jan 2021 05:07:13 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l7sm16537472wme.4.2021.01.01.05.07.12
+        by smtp.gmail.com with ESMTPSA id s3sm15460568wmc.44.2021.01.01.05.07.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Jan 2021 05:07:12 -0800 (PST)
-Message-Id: <54e167d587260f79d3ce532e26de27ca5a440fd1.1609506428.git.gitgitgadget@gmail.com>
+        Fri, 01 Jan 2021 05:07:13 -0800 (PST)
+Message-Id: <77f6510bb680aaf119526f75daadf8c40d22793e.1609506428.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.830.git.1609506428.gitgitgadget@gmail.com>
 References: <pull.830.git.1609506428.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 01 Jan 2021 13:06:59 +0000
-Subject: [PATCH 03/12] rm: remove compatilibity macros
+Date:   Fri, 01 Jan 2021 13:07:00 +0000
+Subject: [PATCH 04/12] update-index: drop the_index, the_repository
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,196 +76,219 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The rm builtin still uses the antiquated compatibility macros for
-interacting with the index. Update these to the more modern uses by
-passing around a 'struct index_state' pointer.
+To reduce the need for the index compatibility macros, we will replace
+their uses in update-index mechanically. This is the most interesting
+change, which creates global "repo" and "istate" pointers. The macros
+can then be mechanically replaced by instances that use the istate
+pointer instead of the version that autocompletes to use the_index.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/rm.c | 56 ++++++++++++++++++++++++++++------------------------
- 1 file changed, 30 insertions(+), 26 deletions(-)
+ builtin/update-index.c | 59 +++++++++++++++++++++++-------------------
+ 1 file changed, 32 insertions(+), 27 deletions(-)
 
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 4858631e0f0..767df8d6b25 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -3,7 +3,6 @@
-  *
-  * Copyright (C) Linus Torvalds 2006
-  */
--#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "builtin.h"
- #include "config.h"
- #include "lockfile.h"
-@@ -28,12 +27,14 @@ static struct {
- 	} *entry;
- } list;
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 79087bccea4..c9a6cde97da 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -40,6 +40,9 @@ static int ignore_skip_worktree_entries;
+ #define UNMARK_FLAG 2
+ static struct strbuf mtime_dir = STRBUF_INIT;
  
--static int get_ours_cache_pos(const char *path, int pos)
-+static int get_ours_cache_pos(struct index_state *istate,
-+			      const char *path, int pos)
- {
- 	int i = -pos - 1;
- 
--	while ((i < active_nr) && !strcmp(active_cache[i]->name, path)) {
--		if (ce_stage(active_cache[i]) == 2)
-+	while ((i < istate->cache_nr) &&
-+	       !strcmp(istate->cache[i]->name, path)) {
-+		if (ce_stage(istate->cache[i]) == 2)
- 			return i;
- 		i++;
++static struct repository *repo;
++static struct index_state *istate;
++
+ /* Untracked cache mode */
+ enum uc_mode {
+ 	UC_UNSPECIFIED = -1,
+@@ -232,13 +235,13 @@ static int mark_ce_flags(const char *path, int flag, int mark)
+ 	int namelen = strlen(path);
+ 	int pos = cache_name_pos(path, namelen);
+ 	if (0 <= pos) {
+-		mark_fsmonitor_invalid(&the_index, active_cache[pos]);
++		mark_fsmonitor_invalid(istate, active_cache[pos]);
+ 		if (mark)
+ 			active_cache[pos]->ce_flags |= flag;
+ 		else
+ 			active_cache[pos]->ce_flags &= ~flag;
+ 		active_cache[pos]->ce_flags |= CE_UPDATE_IN_BASE;
+-		cache_tree_invalidate_path(&the_index, path);
++		cache_tree_invalidate_path(istate, path);
+ 		active_cache_changed |= CE_ENTRY_CHANGED;
+ 		return 0;
  	}
-@@ -61,7 +62,7 @@ static void print_error_files(struct string_list *files_list,
+@@ -277,14 +280,14 @@ static int add_one_path(const struct cache_entry *old, const char *path, int len
+ 	if (old && !ce_stage(old) && !ce_match_stat(old, st, 0))
+ 		return 0;
+ 
+-	ce = make_empty_cache_entry(&the_index, len);
++	ce = make_empty_cache_entry(istate, len);
+ 	memcpy(ce->name, path, len);
+ 	ce->ce_flags = create_ce_flags(0);
+ 	ce->ce_namelen = len;
+-	fill_stat_cache_info(&the_index, ce, st);
++	fill_stat_cache_info(istate, ce, st);
+ 	ce->ce_mode = ce_mode_from_stat(old, st->st_mode);
+ 
+-	if (index_path(&the_index, &ce->oid, path, st,
++	if (index_path(istate, &ce->oid, path, st,
+ 		       info_only ? 0 : HASH_WRITE_OBJECT)) {
+ 		discard_cache_entry(ce);
+ 		return -1;
+@@ -411,7 +414,7 @@ static int add_cacheinfo(unsigned int mode, const struct object_id *oid,
+ 		return error("Invalid path '%s'", path);
+ 
+ 	len = strlen(path);
+-	ce = make_empty_cache_entry(&the_index, len);
++	ce = make_empty_cache_entry(istate, len);
+ 
+ 	oidcpy(&ce->oid, oid);
+ 	memcpy(ce->name, path, len);
+@@ -603,7 +606,7 @@ static struct cache_entry *read_one_ent(const char *which,
+ 	struct object_id oid;
+ 	struct cache_entry *ce;
+ 
+-	if (get_tree_entry(the_repository, ent, path, &oid, &mode)) {
++	if (get_tree_entry(repo, ent, path, &oid, &mode)) {
+ 		if (which)
+ 			error("%s: not in %s branch.", path, which);
+ 		return NULL;
+@@ -613,7 +616,7 @@ static struct cache_entry *read_one_ent(const char *which,
+ 			error("%s: not a blob in %s branch.", path, which);
+ 		return NULL;
  	}
- }
+-	ce = make_empty_cache_entry(&the_index, namelen);
++	ce = make_empty_cache_entry(istate, namelen);
  
--static void submodules_absorb_gitdir_if_needed(void)
-+static void submodules_absorb_gitdir_if_needed(struct index_state *istate)
- {
- 	int i;
- 	for (i = 0; i < list.nr; i++) {
-@@ -69,13 +70,13 @@ static void submodules_absorb_gitdir_if_needed(void)
- 		int pos;
- 		const struct cache_entry *ce;
+ 	oidcpy(&ce->oid, &oid);
+ 	memcpy(ce->name, path, namelen);
+@@ -751,7 +754,7 @@ static int do_reupdate(int ac, const char **av,
+ 		int save_nr;
+ 		char *path;
  
--		pos = cache_name_pos(name, strlen(name));
-+		pos = index_name_pos(istate, name, strlen(name));
- 		if (pos < 0) {
--			pos = get_ours_cache_pos(name, pos);
-+			pos = get_ours_cache_pos(istate, name, pos);
- 			if (pos < 0)
- 				continue;
- 		}
--		ce = active_cache[pos];
-+		ce = istate->cache[pos];
- 
- 		if (!S_ISGITLINK(ce->ce_mode) ||
- 		    !file_exists(ce->name) ||
-@@ -88,7 +89,8 @@ static void submodules_absorb_gitdir_if_needed(void)
- 	}
- }
- 
--static int check_local_mod(struct object_id *head, int index_only)
-+static int check_local_mod(struct index_state *istate,
-+			   struct object_id *head, int index_only)
- {
- 	/*
- 	 * Items in list are already sorted in the cache order,
-@@ -114,21 +116,21 @@ static int check_local_mod(struct object_id *head, int index_only)
- 		int local_changes = 0;
- 		int staged_changes = 0;
- 
--		pos = cache_name_pos(name, strlen(name));
-+		pos = index_name_pos(istate, name, strlen(name));
- 		if (pos < 0) {
- 			/*
- 			 * Skip unmerged entries except for populated submodules
- 			 * that could lose history when removed.
- 			 */
--			pos = get_ours_cache_pos(name, pos);
-+			pos = get_ours_cache_pos(istate, name, pos);
- 			if (pos < 0)
- 				continue;
- 
--			if (!S_ISGITLINK(active_cache[pos]->ce_mode) ||
-+			if (!S_ISGITLINK(istate->cache[pos]->ce_mode) ||
- 			    is_empty_dir(name))
- 				continue;
- 		}
--		ce = active_cache[pos];
-+		ce = istate->cache[pos];
- 
- 		if (lstat(ce->name, &st) < 0) {
- 			if (!is_missing_file_error(errno))
-@@ -165,7 +167,7 @@ static int check_local_mod(struct object_id *head, int index_only)
- 		 * Is the index different from the file in the work tree?
- 		 * If it's a submodule, is its work tree modified?
- 		 */
--		if (ce_match_stat(ce, &st, 0) ||
-+		if (ie_match_stat(istate, ce, &st, 0) ||
- 		    (S_ISGITLINK(ce->ce_mode) &&
- 		     bad_to_remove_submodule(ce->name,
- 				SUBMODULE_REMOVAL_DIE_ON_ERROR |
-@@ -257,6 +259,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	int i;
- 	struct pathspec pathspec;
- 	char *seen;
-+	struct index_state *istate;
+-		if (ce_stage(ce) || !ce_path_match(&the_index, ce, &pathspec, NULL))
++		if (ce_stage(ce) || !ce_path_match(istate, ce, &pathspec, NULL))
+ 			continue;
+ 		if (has_head)
+ 			old = read_one_ent(NULL, &head_oid,
+@@ -968,7 +971,6 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 	struct parse_opt_ctx_t ctx;
+ 	strbuf_getline_fn getline_fn;
+ 	int parseopt_state = PARSE_OPT_UNKNOWN;
+-	struct repository *r = the_repository;
+ 	struct option options[] = {
+ 		OPT_BIT('q', NULL, &refresh_args.flags,
+ 			N_("continue refresh even when index needs update"),
+@@ -1077,16 +1079,19 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
  
  	git_config(git_default_config, NULL);
  
-@@ -284,24 +287,25 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	if (!index_only)
- 		setup_work_tree();
++	repo = the_repository;
++
+ 	/* we will diagnose later if it turns out that we need to update it */
+-	newfd = hold_locked_index(&lock_file, 0);
++	newfd = repo_hold_locked_index(repo, &lock_file, 0);
+ 	if (newfd < 0)
+ 		lock_error = errno;
  
--	hold_locked_index(&lock_file, LOCK_DIE_ON_ERROR);
-+	repo_hold_locked_index(the_repository, &lock_file, LOCK_DIE_ON_ERROR);
+-	entries = read_cache();
++	entries = repo_read_index(repo);
+ 	if (entries < 0)
+ 		die("cache corrupted");
  
--	if (read_cache() < 0)
-+	if (repo_read_index(the_repository) < 0)
- 		die(_("index file corrupt"));
- 
--	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, &pathspec, NULL, NULL);
-+	istate = the_repository->index;
-+	refresh_index(istate, REFRESH_QUIET|REFRESH_UNMERGED, &pathspec, NULL, NULL);
- 
- 	seen = xcalloc(pathspec.nr, 1);
- 
--	for (i = 0; i < active_nr; i++) {
--		const struct cache_entry *ce = active_cache[i];
--		if (!ce_path_match(&the_index, ce, &pathspec, seen))
-+	for (i = 0; i < istate->cache_nr; i++) {
-+		const struct cache_entry *ce = istate->cache[i];
-+		if (!ce_path_match(istate, ce, &pathspec, seen))
- 			continue;
- 		ALLOC_GROW(list.entry, list.nr + 1, list.alloc);
- 		list.entry[list.nr].name = xstrdup(ce->name);
- 		list.entry[list.nr].is_submodule = S_ISGITLINK(ce->ce_mode);
- 		if (list.entry[list.nr++].is_submodule &&
--		    !is_staging_gitmodules_ok(&the_index))
-+		    !is_staging_gitmodules_ok(istate))
- 			die(_("please stage your changes to .gitmodules or stash them to proceed"));
- 	}
- 
-@@ -329,7 +333,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (!index_only)
--		submodules_absorb_gitdir_if_needed();
-+		submodules_absorb_gitdir_if_needed(istate);
+-	the_index.updated_skipworktree = 1;
++	istate = repo->index;
++	istate->updated_skipworktree = 1;
  
  	/*
- 	 * If not forced, the file, the index and the HEAD (if exists)
-@@ -345,7 +349,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 		struct object_id oid;
- 		if (get_oid("HEAD", &oid))
- 			oidclr(&oid);
--		if (check_local_mod(&oid, index_only))
-+		if (check_local_mod(istate, &oid, index_only))
- 			exit(1);
+ 	 * Custom copy of parse_options() because we want to handle
+@@ -1140,9 +1145,9 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 			    preferred_index_format,
+ 			    INDEX_FORMAT_LB, INDEX_FORMAT_UB);
+ 
+-		if (the_index.version != preferred_index_format)
++		if (istate->version != preferred_index_format)
+ 			active_cache_changed |= SOMETHING_CHANGED;
+-		the_index.version = preferred_index_format;
++		istate->version = preferred_index_format;
  	}
  
-@@ -358,7 +362,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 		if (!quiet)
- 			printf("rm '%s'\n", path);
- 
--		if (remove_file_from_cache(path))
-+		if (remove_file_from_index(istate, path))
- 			die(_("git rm: unable to remove %s"), path);
+ 	if (read_from_stdin) {
+@@ -1173,28 +1178,28 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 			warning(_("core.splitIndex is set to false; "
+ 				  "remove or change it, if you really want to "
+ 				  "enable split index"));
+-		if (the_index.split_index)
+-			the_index.cache_changed |= SPLIT_INDEX_ORDERED;
++		if (istate->split_index)
++			istate->cache_changed |= SPLIT_INDEX_ORDERED;
+ 		else
+-			add_split_index(&the_index);
++			add_split_index(istate);
+ 	} else if (!split_index) {
+ 		if (git_config_get_split_index() == 1)
+ 			warning(_("core.splitIndex is set to true; "
+ 				  "remove or change it, if you really want to "
+ 				  "disable split index"));
+-		remove_split_index(&the_index);
++		remove_split_index(istate);
  	}
  
-@@ -398,10 +402,10 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+-	prepare_repo_settings(r);
++	prepare_repo_settings(repo);
+ 	switch (untracked_cache) {
+ 	case UC_UNSPECIFIED:
+ 		break;
+ 	case UC_DISABLE:
+-		if (r->settings.core_untracked_cache == UNTRACKED_CACHE_WRITE)
++		if (repo->settings.core_untracked_cache == UNTRACKED_CACHE_WRITE)
+ 			warning(_("core.untrackedCache is set to true; "
+ 				  "remove or change it, if you really want to "
+ 				  "disable the untracked cache"));
+-		remove_untracked_cache(&the_index);
++		remove_untracked_cache(istate);
+ 		report(_("Untracked cache disabled"));
+ 		break;
+ 	case UC_TEST:
+@@ -1202,11 +1207,11 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 		return !test_if_untracked_cache_is_supported();
+ 	case UC_ENABLE:
+ 	case UC_FORCE:
+-		if (r->settings.core_untracked_cache == UNTRACKED_CACHE_REMOVE)
++		if (repo->settings.core_untracked_cache == UNTRACKED_CACHE_REMOVE)
+ 			warning(_("core.untrackedCache is set to false; "
+ 				  "remove or change it, if you really want to "
+ 				  "enable the untracked cache"));
+-		add_untracked_cache(&the_index);
++		add_untracked_cache(istate);
+ 		report(_("Untracked cache enabled for '%s'"), get_git_work_tree());
+ 		break;
+ 	default:
+@@ -1218,14 +1223,14 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 			warning(_("core.fsmonitor is unset; "
+ 				"set it if you really want to "
+ 				"enable fsmonitor"));
+-		add_fsmonitor(&the_index);
++		add_fsmonitor(istate);
+ 		report(_("fsmonitor enabled"));
+ 	} else if (!fsmonitor) {
+ 		if (git_config_get_fsmonitor() == 1)
+ 			warning(_("core.fsmonitor is set; "
+ 				"remove it if you really want to "
+ 				"disable fsmonitor"));
+-		remove_fsmonitor(&the_index);
++		remove_fsmonitor(istate);
+ 		report(_("fsmonitor disabled"));
+ 	}
+ 
+@@ -1235,7 +1240,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 				exit(128);
+ 			unable_to_lock_die(get_index_file(), lock_error);
  		}
- 		strbuf_release(&buf);
- 		if (gitmodules_modified)
--			stage_updated_gitmodules(&the_index);
-+			stage_updated_gitmodules(istate);
+-		if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
++		if (write_locked_index(istate, &lock_file, COMMIT_LOCK))
+ 			die("Unable to write new index file");
  	}
- 
--	if (write_locked_index(&the_index, &lock_file,
-+	if (write_locked_index(istate, &lock_file,
- 			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
- 		die(_("Unable to write new index file"));
  
 -- 
 gitgitgadget
