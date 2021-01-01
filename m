@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5A3CC433DB
-	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ACD92C433E9
+	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:17:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A35FC207A3
-	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:17:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 86B1D207A3
+	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:17:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727417AbhAACRp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Dec 2020 21:17:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42994 "EHLO
+        id S1727425AbhAACRq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Dec 2020 21:17:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727374AbhAACRn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Dec 2020 21:17:43 -0500
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64988C061757
-        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:17:28 -0800 (PST)
-Received: by mail-oi1-x22e.google.com with SMTP id f132so23397406oib.12
-        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:17:28 -0800 (PST)
+        with ESMTP id S1727374AbhAACRp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Dec 2020 21:17:45 -0500
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62C85C0617A7
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:16:54 -0800 (PST)
+Received: by mail-ot1-x32d.google.com with SMTP id j12so19272007ota.7
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:16:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=BfoJlJLdcALi0L8dTmfuSBOstRpoEMOE2md1G9Q8nyA=;
-        b=qhEXGzklA4b9Izzjj5uPD86w3hA3YeQw45IFHIPxb/1TrDf+49U2hWcSR5j9mUdWuZ
-         VwAtKJZpILD/LZMrQszQe2WKuzJd+Fm0/DihR9yd3UuDdbn5aqjF1+OGM8YeGy/SNTYn
-         bCpJNbvHF5FYnd7qTIknj8C12oyBaxEZD2agCmRQ+7LtU8cvOaPgEOc/xjVE0Cgn7YGb
-         kT3Q+0tK9iNlvm0Q1q6pKauXlntt8wTrKcdbo8RH/dMe9duMeiVaWHeJgp49F+LeD5HV
-         hvvzAolE2ojxrDbTEVigieNgogkoF/KSbYERetIoj9iC6Cd60vxdpcin1uHwkjJai0Kq
-         dFcw==
+        bh=KyxN+RW1RnJVcXTmv5htWUBU+dr5L46ejIUUoMzdMTw=;
+        b=GmtwyN6afYh7t839dWdVEm9SOuGrfIgVT4dKQoBa1nuCvw9F6MjhxdJ3CwujKPResu
+         HTyMtA0aRX1VAqWE7LqbgdxtaUk8hHLAzBgCTJUr32RDYB9JODDkvN2gi6eWXATT8JCF
+         NXbyXnDK0tiy0YW3h8OIcFoSQbW12x3ZBCKCDOnD40RrOxkBwjOLkxlpm1M75ojuHW3P
+         BLeT4cHDh6k+yy3bDbfklkfGMwQhgJc9HicW5hmJu8ZSCWtPbdq4AH2i8BAImuv565+N
+         LA1pKFsY5YqdkOSkbDFcu5Pezd66G8Ve8DtC3uqBY8Vv9Bq/71qK0Eka+qepoMk1rMlj
+         uOcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BfoJlJLdcALi0L8dTmfuSBOstRpoEMOE2md1G9Q8nyA=;
-        b=CBvaJ9I67Hv/eh7mB13aJOPXtWaZb5IInOpJ1Kwvv/40Ovi8CCn28E8/iH5MdzV4la
-         0ufEZB2OIGCJrD4IJq9jWGBHkIOTqrjmEtaGiIGNkLf+Iy7gudo/eg0wu7e4JFQQarWu
-         lrMD03oe0PFioYY1+TevV+gQ6Lo2sYKBlGa3FukSgRRnM2zGnHHcokAKzLqbDFrH7hmB
-         tQSLx7Gi5aNo08CjrzRxdokJPnAB74dbOO/t0tbUr0BW+PAjzXh5PU1BN4DarvEGDXL9
-         IUstPJd2HiZVdhEHjwUurZ65EVhj9bIuNplbTKL9L9vZMStTfQv8cnvy55zqrDuRuNTM
-         bqiQ==
-X-Gm-Message-State: AOAM531GmV2ZIwcYfCCR9MppIDnDf2vu3i4f6SqHau4xtLDgtYzcHcdR
-        r/g4BaNHN0M219lQwhmlVrZndn0Or5ahIA==
-X-Google-Smtp-Source: ABdhPJyl4PDNBM1p1IaxfxW77ycJIKzp1I/JneCH4h2Mqa5Xy+9MUdORJD1nBU9FsB2KBSCYwNxQDw==
-X-Received: by 2002:aca:4307:: with SMTP id q7mr9325797oia.122.1609467447650;
-        Thu, 31 Dec 2020 18:17:27 -0800 (PST)
+        bh=KyxN+RW1RnJVcXTmv5htWUBU+dr5L46ejIUUoMzdMTw=;
+        b=jN4uNJFNg5/I81bUwCXngT1zndTtS6wcM3XwcbOoes2uFKsxLFzVC8T0coSjQoQLen
+         TM5X+DjytqaY9MkZqU9wnWCbdlasCX1/T3zXyGP0moCdXrX5TM/Ku6DLam2UtuU8GF5g
+         e3G7W7D6prl2QECoqT5jQGv4bmnkSN5Lvc/hkAgBR2+9jtsVib4d+lDnXikEXh3ahC85
+         DT9gfove6acicJTdET85kRF5TuGG58s46ibQUGmTRoucJ0m706SIv+ubsHhe8T33GsaA
+         hnI6bUcK8sPZYuWoDjOiIoFfJj2ipB037gEjXH+rBHFH8L2TfzjRXmAp77Fh0gAKLRji
+         TeXg==
+X-Gm-Message-State: AOAM531DhIOtqdXoPu3+oQJ3Ec9WvXlFJuQgbmrhdgkhWWWiZw2Lbqj7
+        9iMPsf5Esh3C7e2XpjxI72xrMXe5BdH2mg==
+X-Google-Smtp-Source: ABdhPJyz1rZ1Zkdv4sdmiNWTv21FCaNwRNwUy9Rgh2g1MjnrICSGpQp2HzjJJ9zousVbwUUrmhXXTA==
+X-Received: by 2002:a9d:1d05:: with SMTP id m5mr44022594otm.324.1609467413623;
+        Thu, 31 Dec 2020 18:16:53 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id s23sm11562879otr.59.2020.12.31.18.17.26
+        by smtp.gmail.com with ESMTPSA id a15sm11443054oii.50.2020.12.31.18.16.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Dec 2020 18:17:27 -0800 (PST)
+        Thu, 31 Dec 2020 18:16:53 -0800 (PST)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 40/47] completion: bash: cleanup _get_comp_words_by_ref()
-Date:   Thu, 31 Dec 2020 20:16:15 -0600
-Message-Id: <20210101021622.798041-41-felipe.contreras@gmail.com>
+Subject: [PATCH 18/47] completion: zsh: add excluded options
+Date:   Thu, 31 Dec 2020 20:15:53 -0600
+Message-Id: <20210101021622.798041-19-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.30.0
 In-Reply-To: <20210101021622.798041-1-felipe.contreras@gmail.com>
 References: <20210101021622.798041-1-felipe.contreras@gmail.com>
@@ -73,68 +73,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove temporary variables.
+Add more excluded options, for example: --bare excludes --git-dir.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.bash | 19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+ contrib/completion/git-completion.zsh | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 040391f881..9918998848 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -341,14 +341,13 @@ __git_dequote ()
- if ! type _get_comp_words_by_ref >/dev/null 2>&1; then
- _get_comp_words_by_ref ()
- {
--	local words_ cword_
- 	local exclude i j first
+diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
+index 073f7d91d8..7cb0f33209 100644
+--- a/contrib/completion/git-completion.zsh
++++ b/contrib/completion/git-completion.zsh
+@@ -218,15 +218,16 @@ __git_zsh_main ()
+ 	orig_words=( ${words[@]} )
  
- 	# Which word separators to exclude?
- 	exclude="${COMP_WORDBREAKS//[^=:]}"
--	cword_=$COMP_CWORD
-+	cword=$COMP_CWORD
- 	if [ -z "$exclude" ]; then
--		words_=("${COMP_WORDS[@]}")
-+		words=("${COMP_WORDS[@]}")
- 	else
- 		# List of word completion separators has shrunk;
- 		# re-assemble words to complete.
-@@ -368,9 +367,9 @@ _get_comp_words_by_ref ()
- 					((j--))
- 				fi
- 				first=
--				words_[$j]=${words_[j]}${COMP_WORDS[i]}
-+				words[$j]=${words[j]}${COMP_WORDS[i]}
- 				if [ $i = $COMP_CWORD ]; then
--					cword_=$j
-+					cword=$j
- 				fi
- 				if (($i < ${#COMP_WORDS[@]} - 1)); then
- 					((i++))
-@@ -379,17 +378,15 @@ _get_comp_words_by_ref ()
- 					break 2
- 				fi
- 			done
--			words_[$j]=${words_[j]}${COMP_WORDS[i]}
-+			words[$j]=${words[j]}${COMP_WORDS[i]}
- 			if [ $i = $COMP_CWORD ]; then
--				cword_=$j
-+				cword=$j
- 			fi
- 		done
- 	fi
- 
--	cword=$cword_
--	cur=${words_[cword]}
--	prev=${words_[cword-1]}
--	words=("${words_[@]}")
-+	cur=${words[cword]}
-+	prev=${words[cword-1]}
- }
- fi
- 
+ 	_arguments -C \
+-		'(-p --paginate --no-pager)'{-p,--paginate}'[pipe all output into ''less'']' \
+-		'(-p --paginate)--no-pager[do not pipe git output into a pager]' \
+-		'--git-dir=[set the path to the repository]: :_directories' \
+-		'--bare[treat the repository as a bare repository]' \
++		'(-p --paginate -P --no-pager)'{-p,--paginate}'[pipe all output into ''less'']' \
++		'(-p --paginate -P --no-pager)'{-P,--no-pager}'[do not pipe git output into a pager]' \
++		'(--bare)--git-dir=[set the path to the repository]: :_directories' \
++		'(--git-dir)--bare[treat the repository as a bare repository]' \
+ 		'(- :)--version[prints the git suite version]' \
+-		'--exec-path=[path to where your core git programs are installed]:: :_directories' \
+-		'--html-path[print the path where git''s HTML documentation is installed]' \
+-		'--info-path[print the path where the Info files are installed]' \
+-		'--man-path[print the manpath (see `man(1)`) for the man pages]' \
++		'--exec-path=[path to where your core git programs are installed]: :_directories' \
++		'(- :)--exec-path[print the path where your core git programs are installed]' \
++		'(- :)--html-path[print the path where git''s HTML documentation is installed]' \
++		'(- :)--info-path[print the path where the Info files are installed]' \
++		'(- :)--man-path[print the manpath (see `man(1)`) for the man pages]' \
+ 		'--work-tree=[set the path to the working tree]: :_directories' \
+ 		'--namespace=[set the git namespace]:' \
+ 		'--no-replace-objects[do not use replacement refs to replace git objects]' \
 -- 
 2.30.0
 
