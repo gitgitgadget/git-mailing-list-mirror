@@ -4,124 +4,195 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6880C433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C74B7C433E0
 	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 13:08:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A49E020798
+	by mail.kernel.org (Postfix) with ESMTP id 8F0F220799
 	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 13:08:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726991AbhAANHx (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727032AbhAANHx (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 1 Jan 2021 08:07:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57328 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726747AbhAANHw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 1 Jan 2021 08:07:52 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F454C061573
+        with ESMTP id S1726897AbhAANHx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 1 Jan 2021 08:07:53 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EA29C061575
         for <git@vger.kernel.org>; Fri,  1 Jan 2021 05:07:12 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id n16so4772107wmc.0
+Received: by mail-wr1-x42e.google.com with SMTP id y17so21948877wrr.10
         for <git@vger.kernel.org>; Fri, 01 Jan 2021 05:07:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=XQJGkDglyIDocI3qCkqMavMVocksB1OIOF46/ad401g=;
-        b=kiZ5AEA8JmGuNqMEdy4aa1Bjc8aBkUwDtMhX9Q758ZCW6gnPNO/PinADaMvw5tHnYS
-         3RzlVxy9enMUCKrEU95ii5S0vLZxRw1v1eVP1BJMqRyFkSAHfOzIAZVRDwCHG4vS/XnV
-         SkektPkdNPQ2Zsm18M/g2FlXmvYGek8cvU9dyh/HY9C57c1ORV8YxNVL686beQDo5J+b
-         9ArkmRaKAYnL80iPHwd2v3z8jOtUIcAUoClGaj64CVsP1izieHmZwkux1VA1V+vCGEIJ
-         p1Gkoqdxu85MevbNVFcClAuBp6agQs8R+ssvkRtNq1qLkit3hHWs1OnyBLt0EKEA152Q
-         +Yvg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=hEvygSnZL6ttE2KBbl6h90vJppdhYj3k6Qfru0A/68c=;
+        b=Qz7jC94nUZCVPSo6QJbwsLW8LalpWkNCZ54Ea1PyBmYQA9dMgEOfraz3LMUj/1Xkek
+         Hk0vApmaxM0PUdrInoELWBOOsqX6tgws/Ou664Rvf9fsg3nDLU5byQThZuYOR4Ymnhc8
+         EgAGRk7hU8LYCuVGQyLyMZJNEJCSGv2o0CGZBfoEDaxqXakHn10uDiZhxZuoc7uXb+Da
+         7AcRZFUakOr86yyDuU9cQCPk87dIK5Ea3ihHrOOMiXW95jqIUJYx6FKlT6xG80ZnN752
+         3hoTw4O30SKu4iPnlt9qzhK8BOU3EcOd8K94yAL4a03h9L+kOkAtaQRLMS2I2cIIiYYJ
+         G8pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=XQJGkDglyIDocI3qCkqMavMVocksB1OIOF46/ad401g=;
-        b=Atek+4A9D6lAaOlCvq95cwxp5MbMG4IvkuSVCvO7nHnWP+c10/DN+fPPf4jJ6cr3qU
-         Qynxf8+1wwDDFfxneQkCbmF4NRT9mA5G6I0ZA8qtwmNk9Xek3H4EcypSD6YcV8TLZ2yK
-         Vt2wmMC1pIa1IrlPrq1STFVEsAyxbiYP3xVOauOBjZVi35ClaEepiai0zuAvS52B4y5M
-         CKOU7zLd3wVDtqi16LiThGe1HfjrENAe9yljvx0cldEzM+X3twWMbXBQvVVZ9L/rO5zs
-         aUFCQOV+zJr1varIYjqFb5nG4EUPT1Ux22wuwS9MWTo/JR0EO4vhHaMuZX1ka0fZuWro
-         qM1g==
-X-Gm-Message-State: AOAM530J2scmIW6gq3oqKJU2tBRq+GQsvpmrZUatvj7slcaxySo+lcME
-        BgpclnLvzBrypLIERURjgFk7Zr/noqU=
-X-Google-Smtp-Source: ABdhPJyOGDBnlHM7RJIUy+0a2WETiwZ/oopmYMZ0KIiZqo9k0Dz5tYiwY44lWqj6ofxEF1HVO4pRTg==
-X-Received: by 2002:a1c:b742:: with SMTP id h63mr15484912wmf.122.1609506430135;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=hEvygSnZL6ttE2KBbl6h90vJppdhYj3k6Qfru0A/68c=;
+        b=cofAeOjE+Fb5SldYTBaHeL95Eje0081O8ceUlGLnpBIPyUjUSBq+9FHmc0gIVJQQGt
+         ZBP1xcMkHUkHcjR+vACoZIG+YKOkF8g0D3oJhaKgkUYMcNMwpjuY7i8j6M4NpNa3yqny
+         L7mRdtyX1H+WKtGZ+TA/2AHIMuvqc5SwGAgVF4g2tR7P4yJT14LXAvoFo9cExfL0Kp6f
+         HRIHR6qDLrkZNXYaYXbzofO5RnYqcT/R8RQlHIOkuj+86TRYEkTUr8POz6H5RlGlohPh
+         n5+x8eokB4eqFlOBwqKa48DaJZVsl3ZwdZK0kkVXBASseC7uZQSivvzTRmooMbXSZNtJ
+         v24A==
+X-Gm-Message-State: AOAM533arZGpwCcKvsLf5P52Maq7hSh88yEzAdiGGXAPI2uMhSOFXifc
+        bWWZ8C/E1C1yVThlcXlRewqe6nm9EJI=
+X-Google-Smtp-Source: ABdhPJxoX8eH/WuwX6vjG0SP8teIg9F67iudrsPpC55AtsJRAFQDvxeOpbSOZ5asLJFd8/Qp7+EqHQ==
+X-Received: by 2002:a5d:4712:: with SMTP id y18mr69172975wrq.229.1609506430962;
         Fri, 01 Jan 2021 05:07:10 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f9sm81872376wrw.81.2021.01.01.05.07.08
+        by smtp.gmail.com with ESMTPSA id y13sm71664477wrl.63.2021.01.01.05.07.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Jan 2021 05:07:09 -0800 (PST)
-Message-Id: <pull.830.git.1609506428.gitgitgadget@gmail.com>
+        Fri, 01 Jan 2021 05:07:10 -0800 (PST)
+Message-Id: <68d88b651c74659eb171e88d701b89d11e7f5f24.1609506428.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.830.git.1609506428.gitgitgadget@gmail.com>
+References: <pull.830.git.1609506428.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 01 Jan 2021 13:06:56 +0000
-Subject: [PATCH 00/12] Remove more index compatibility macros
+Date:   Fri, 01 Jan 2021 13:06:57 +0000
+Subject: [PATCH 01/12] merge-index: drop index compatibility macros
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     pclouds@gmail.com, gitster@pobox.com,
-        Derrick Stolee <derrickstolee@github.com>
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I noticed that Duy's project around USE_THE_INDEX_COMPATIBILITY_MACROS has
-been on pause for a while. Here is my attempt to continue that project a
-little.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-I started going through the builtins that still use cache_name_pos() and the
-first few were easy: merge-inex, mv, rm.
+Replace uses of the old macros for the_index and instead pass around a
+'struct index_state' pointer. This allows dropping the compatibility
+flag.
 
-Then I hit update-index and it was a bit bigger. It's included here as well.
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ builtin/merge-index.c | 33 ++++++++++++++++++---------------
+ 1 file changed, 18 insertions(+), 15 deletions(-)
 
-My strategy for update-index was to create static globals "repo" and
-"istate" that point to the_repository and the_index, respectively. Then, I
-was able to remove macros one-by-one without changing method prototypes
-within the file.
-
-I had started trying to keep everything local to the method signatures, but
-I hit a snag when reaching the command-line parsing callbacks, which I could
-not modify their call signature. At that point, I had something that was
-already much more complicated than what I present now. Outside of the first
-update-index commit, everything was a mechanical find/replace.
-
-In total, this allows us to remove four of the compatibility macros because
-they are no longer used.
-
-Thanks, -Stolee
-
-Derrick Stolee (12):
-  merge-index: drop index compatibility macros
-  mv: remove index compatibility macros
-  rm: remove compatilibity macros
-  update-index: drop the_index, the_repository
-  update-index: use istate->cache over active_cache
-  update-index: use index->cache_nr over active_nr
-  update-index: use istate->cache_changed
-  update-index: use index_name_pos() over cache_name_pos()
-  update-index: use remove_file_from_index()
-  update-index: use add_index_entry()
-  update-index: replace several compatibility macros
-  update-index: remove ce_match_stat(), all macros
-
- Documentation/technical/racy-git.txt |   6 +-
- builtin/merge-index.c                |  33 +++---
- builtin/mv.c                         |  42 ++++----
- builtin/rm.c                         |  56 ++++++-----
- builtin/update-index.c               | 145 ++++++++++++++-------------
- cache.h                              |   4 -
- 6 files changed, 149 insertions(+), 137 deletions(-)
-
-
-base-commit: 71ca53e8125e36efbda17293c50027d31681a41f
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-830%2Fderrickstolee%2Findex-compatibility-1-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-830/derrickstolee/index-compatibility-1-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/830
+diff --git a/builtin/merge-index.c b/builtin/merge-index.c
+index 38ea6ad6ca2..8c7e6b0e6a2 100644
+--- a/builtin/merge-index.c
++++ b/builtin/merge-index.c
+@@ -1,4 +1,3 @@
+-#define USE_THE_INDEX_COMPATIBILITY_MACROS
+ #include "builtin.h"
+ #include "run-command.h"
+ 
+@@ -6,18 +5,19 @@ static const char *pgm;
+ static int one_shot, quiet;
+ static int err;
+ 
+-static int merge_entry(int pos, const char *path)
++static int merge_entry(struct index_state *istate,
++		       int pos, const char *path)
+ {
+ 	int found;
+ 	const char *arguments[] = { pgm, "", "", "", path, "", "", "", NULL };
+ 	char hexbuf[4][GIT_MAX_HEXSZ + 1];
+ 	char ownbuf[4][60];
+ 
+-	if (pos >= active_nr)
++	if (pos >= istate->cache_nr)
+ 		die("git merge-index: %s not in the cache", path);
+ 	found = 0;
+ 	do {
+-		const struct cache_entry *ce = active_cache[pos];
++		const struct cache_entry *ce = istate->cache[pos];
+ 		int stage = ce_stage(ce);
+ 
+ 		if (strcmp(ce->name, path))
+@@ -27,7 +27,7 @@ static int merge_entry(int pos, const char *path)
+ 		xsnprintf(ownbuf[stage], sizeof(ownbuf[stage]), "%o", ce->ce_mode);
+ 		arguments[stage] = hexbuf[stage];
+ 		arguments[stage + 4] = ownbuf[stage];
+-	} while (++pos < active_nr);
++	} while (++pos < istate->cache_nr);
+ 	if (!found)
+ 		die("git merge-index: %s not in the cache", path);
+ 
+@@ -43,32 +43,34 @@ static int merge_entry(int pos, const char *path)
+ 	return found;
+ }
+ 
+-static void merge_one_path(const char *path)
++static void merge_one_path(struct index_state *istate,
++			   const char *path)
+ {
+-	int pos = cache_name_pos(path, strlen(path));
++	int pos = index_name_pos(istate, path, strlen(path));
+ 
+ 	/*
+ 	 * If it already exists in the cache as stage0, it's
+ 	 * already merged and there is nothing to do.
+ 	 */
+ 	if (pos < 0)
+-		merge_entry(-pos-1, path);
++		merge_entry(istate, -pos - 1, path);
+ }
+ 
+-static void merge_all(void)
++static void merge_all(struct index_state *istate)
+ {
+ 	int i;
+-	for (i = 0; i < active_nr; i++) {
+-		const struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < istate->cache_nr; i++) {
++		const struct cache_entry *ce = istate->cache[i];
+ 		if (!ce_stage(ce))
+ 			continue;
+-		i += merge_entry(i, ce->name)-1;
++		i += merge_entry(istate, i, ce->name)-1;
+ 	}
+ }
+ 
+ int cmd_merge_index(int argc, const char **argv, const char *prefix)
+ {
+ 	int i, force_file = 0;
++	struct index_state *istate;
+ 
+ 	/* Without this we cannot rely on waitpid() to tell
+ 	 * what happened to our children.
+@@ -78,7 +80,8 @@ int cmd_merge_index(int argc, const char **argv, const char *prefix)
+ 	if (argc < 3)
+ 		usage("git merge-index [-o] [-q] <merge-program> (-a | [--] [<filename>...])");
+ 
+-	read_cache();
++	repo_read_index(the_repository);
++	istate = the_repository->index;
+ 
+ 	i = 1;
+ 	if (!strcmp(argv[i], "-o")) {
+@@ -98,12 +101,12 @@ int cmd_merge_index(int argc, const char **argv, const char *prefix)
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "-a")) {
+-				merge_all();
++				merge_all(istate);
+ 				continue;
+ 			}
+ 			die("git merge-index: unknown option %s", arg);
+ 		}
+-		merge_one_path(arg);
++		merge_one_path(istate, arg);
+ 	}
+ 	if (err && !quiet)
+ 		die("merge program failed");
 -- 
 gitgitgadget
+
