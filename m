@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE123C433E0
-	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:18:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50DF5C433DB
+	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:18:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CCF4520729
-	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:18:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2C93D2076C
+	for <git@archiver.kernel.org>; Fri,  1 Jan 2021 02:18:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727486AbhAACSL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 31 Dec 2020 21:18:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43172 "EHLO
+        id S1727487AbhAACSO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 31 Dec 2020 21:18:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727483AbhAACSK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 31 Dec 2020 21:18:10 -0500
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2A51C0617A2
-        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:17:29 -0800 (PST)
-Received: by mail-ot1-x32d.google.com with SMTP id i6so19330093otr.2
-        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:17:29 -0800 (PST)
+        with ESMTP id S1727494AbhAACSN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 31 Dec 2020 21:18:13 -0500
+Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1AADC0613C1
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:17:32 -0800 (PST)
+Received: by mail-oo1-xc32.google.com with SMTP id y14so4615631oom.10
+        for <git@vger.kernel.org>; Thu, 31 Dec 2020 18:17:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=2OjcEM8uVVjQA/LEQX66U+RCjhS9bdxcoTqP4lyMrAM=;
-        b=PsQDRJnNQHa95rUH9NiCZoOqCMC5zVGlV2tukazo+ItRvjEcxgUQoF8tRWyn/LtBmP
-         uEza3fuidCa+5Wj6VAP3p+zHisAK0c6pPXQxkwCaRrb8XJV3gCWREeV6NjKNI/+9PP3M
-         lNlAG8DJH1oz/E/6tHbnSIcdWeQA0e1g5iDW/KFbLMxKtnXf1GKGY0FduN3ElVKBKvEl
-         cZPTN22mvYsBK+mpZFmuYaxky9vK2W67P77fqdzLWFx/VtSxKwfIeJvX4Q+tSj54Lc4U
-         NCW0jILuHsB3ttMQtgZW1FgqDZUxelUfe+cvc0/xiEBRBezGsmpQ8Kg7C5HFdFI2iRDd
-         nN5A==
+        bh=DinOPoSsBoZWlpglEib5h2wjiPtcrmaywJJsThhl87E=;
+        b=KWTSiX1KXpKZ5hGtwkN/MqsZCFQqVawt/TCdKeyPlZ6I8+C5goq9l0LySC3sCdOpqz
+         DJ6VDK3dW3NVGQhATygV2g9gP8CpuzuKHIuUSZpCm5vbFAYZl/1r7jVhn/Qa9G+F3rcy
+         4WP9xOhn4u3eDXXhb7Id5asQlG4jKSR5EqxNs1SHx+7xBuCfcD0jzz6id3lo+zII/V6E
+         FV3NkTU/6kIgWcYNizyC4st6LTRQkA6yaOqzMWeCAkyIILhdBFsgI3dVwkSuZVNgyH3g
+         rxEGaxyzRyCxr6n84DdsVMRUfm1hVMQl9Zbh+dHESZCUmfqKEXE/hSRESATz8g3WvDO3
+         hsfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2OjcEM8uVVjQA/LEQX66U+RCjhS9bdxcoTqP4lyMrAM=;
-        b=gCDtIBoIfT3j+EfFz7RmAqEOF88SGCVe1tnxDHNyZIzLiw/o8dxnS+uaXS76pz8GsH
-         GiSx14/QGTGLsxHdarv16bE2QH6opvj4ZSc32GH0yHr7SZ5kkcq+8TS8/9hmiaaScn8/
-         78mpmlqKoVOzzjmGdCBCecZBOcJ3b52ts8EK/CAAnrOdRh8WgWvP1dZlazALd3dUqI5s
-         aIR7TNzYT3a/s7O9ncD8DElYPCqsz6ONVKlEy6m42Lg408ylE5D951Ge21OvbcUWNBwF
-         S5yt7JJCMMwdy9glaywfVQV2CSG23iOC9iPBV/ZhfimlJB2qk0vujTUho37wL/pbJ2TJ
-         v9eA==
-X-Gm-Message-State: AOAM5301YBJiBYZbcv7f10gFroRrcOEg73qwginxkyQqrmdyCXuAU0cS
-        Ma4/7LscgClBa+eCvTZiwCqrRxyfbqYwmA==
-X-Google-Smtp-Source: ABdhPJz/pISqFceGwjahb1uXoHP19KZjxVu+wwjSxWTQxlZ02xf2se14J2hL9byJ1xLX6bnFjTO8FA==
-X-Received: by 2002:a05:6830:1308:: with SMTP id p8mr42220530otq.330.1609467449107;
-        Thu, 31 Dec 2020 18:17:29 -0800 (PST)
+        bh=DinOPoSsBoZWlpglEib5h2wjiPtcrmaywJJsThhl87E=;
+        b=Er5ubDWXMInZNVdClemoB7Yii4KXwQKgbDTH6UirbvAzZmmjyyA4PYznr54bU/eBu6
+         F5MasTJ7lNN9CXjz+MsBjdhJNaVipkEvjm/pl+APp8S8LQAT6KclGLTWmnqDIo3t8JRE
+         O1hYvhkxABQdD9yZNKGIMd7VOmNP0Opu04u7QAtqfGy/2UzCEfiUvXWSSBgxyfLSkunl
+         ZvwqFCxjjxbJalxSTp/WTkFzCiZGr/Ik/6RjU8A4OmCbSsr1YGnFPrc1+VhBIBrryUuW
+         OcE+GHpTQDrjfzUlqdB3iXULuhfIjCL0jHUxYRMbGgotZpAtQBBv/gO88XVDbz1Wv5zm
+         uycw==
+X-Gm-Message-State: AOAM531SedEs6opBLv0T9nUxm5FJPAfyrNxRJKUBRQLpytAZhDikgsXT
+        xsofTNUcrS8XJmFU6W2w0fh9+Vyw4Y8U+w==
+X-Google-Smtp-Source: ABdhPJyI1JK1q6lteK26atufW5BoYsI5PTOLA0v8p8Iu7HPjWiAdVPhEbrxCUMVjox/HMtbPVL7fAQ==
+X-Received: by 2002:a4a:4988:: with SMTP id z130mr40807121ooa.34.1609467452045;
+        Thu, 31 Dec 2020 18:17:32 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id u141sm11285307oie.46.2020.12.31.18.17.28
+        by smtp.gmail.com with ESMTPSA id e1sm11447011oib.11.2020.12.31.18.17.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Dec 2020 18:17:28 -0800 (PST)
+        Thu, 31 Dec 2020 18:17:31 -0800 (PST)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 41/47] completion: bash: trivial cleanup
-Date:   Thu, 31 Dec 2020 20:16:16 -0600
-Message-Id: <20210101021622.798041-42-felipe.contreras@gmail.com>
+Subject: [PATCH 43/47] completion: bash: add __git_have_func helper
+Date:   Thu, 31 Dec 2020 20:16:18 -0600
+Message-Id: <20210101021622.798041-44-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.30.0
 In-Reply-To: <20210101021622.798041-1-felipe.contreras@gmail.com>
 References: <20210101021622.798041-1-felipe.contreras@gmail.com>
@@ -73,37 +73,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The most typical case first (COMP_WORDBREAKS contains our wanted words).
+This makes the code more readable, and also will help when new code
+wants to do similar checks.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.bash | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ contrib/completion/git-completion.bash | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 9918998848..d481824a7f 100644
+index 59f1563674..4bd3e706ac 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -346,9 +346,7 @@ _get_comp_words_by_ref ()
- 	# Which word separators to exclude?
- 	exclude="${COMP_WORDBREAKS//[^=:]}"
- 	cword=$COMP_CWORD
--	if [ -z "$exclude" ]; then
--		words=("${COMP_WORDS[@]}")
--	else
-+	if [ -n "$exclude" ]; then
- 		# List of word completion separators has shrunk;
- 		# re-assemble words to complete.
- 		for ((i=0, j=0; i < ${#COMP_WORDS[@]}; i++, j++)); do
-@@ -383,6 +381,8 @@ _get_comp_words_by_ref ()
- 				cword=$j
- 			fi
- 		done
-+	else
-+		words=("${COMP_WORDS[@]}")
- 	fi
+@@ -3200,15 +3200,19 @@ __git_support_parseopt_helper () {
+ 	esac
+ }
  
- 	cur=${words[cword]}
++__git_have_func () {
++	declare -f $1 >/dev/null 2>/dev/null
++}
++
+ __git_complete_command () {
+ 	local command="$1"
+ 	local completion_func="_git_${command//-/_}"
+-	if ! declare -f $completion_func >/dev/null 2>/dev/null &&
+-		declare -f _completion_loader >/dev/null 2>/dev/null
++	if ! __git_have_func $completion_func &&
++		__git_have_func _completion_loader
+ 	then
+ 		_completion_loader "git-$command"
+ 	fi
+-	if declare -f $completion_func >/dev/null 2>/dev/null
++	if __git_have_func $completion_func
+ 	then
+ 		$completion_func
+ 		return 0
 -- 
 2.30.0
 
