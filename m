@@ -7,125 +7,103 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BA3FC433E6
-	for <git@archiver.kernel.org>; Sat,  2 Jan 2021 22:03:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C56CC433E0
+	for <git@archiver.kernel.org>; Sat,  2 Jan 2021 22:10:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CEF8720798
-	for <git@archiver.kernel.org>; Sat,  2 Jan 2021 22:03:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E6512207A5
+	for <git@archiver.kernel.org>; Sat,  2 Jan 2021 22:10:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726847AbhABWCp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Jan 2021 17:02:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54628 "EHLO
+        id S1727121AbhABWKG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Jan 2021 17:10:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726678AbhABWCo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Jan 2021 17:02:44 -0500
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE2AEC061573
-        for <git@vger.kernel.org>; Sat,  2 Jan 2021 14:02:03 -0800 (PST)
-Received: by mail-ot1-x32a.google.com with SMTP id a109so22664616otc.1
-        for <git@vger.kernel.org>; Sat, 02 Jan 2021 14:02:03 -0800 (PST)
+        with ESMTP id S1727040AbhABWKF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Jan 2021 17:10:05 -0500
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57F95C061573
+        for <git@vger.kernel.org>; Sat,  2 Jan 2021 14:09:25 -0800 (PST)
+Received: by mail-ot1-x32b.google.com with SMTP id a109so22673119otc.1
+        for <git@vger.kernel.org>; Sat, 02 Jan 2021 14:09:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:message-id:in-reply-to:references:subject
          :mime-version:content-transfer-encoding;
-        bh=dPY3phGHoIHCTZIggA8gFba1ukM/mCOPd3rygYsDeb0=;
-        b=bBypEbwozg6bg39fNHKuNh/GRWa4WDsB3eKtvTW6qM0GGN69AEAbm9wYy2R+BnkWsS
-         /WuMoxnk05p5JEHZ2oZLyeRUq+QffhA+CBnSH1Wse8i+O+Z8vtJSP4aZTHXgjtgXCaD2
-         MDnMj+w2cFp4nxui8NWrjSpTiz5DCbD3OGqEdmM0QPMau4JUNoO6Ic+UjVoOw+ObJ/KR
-         QFxn1wICICJuVS0kmLvPDsodWJ6caNOZ3dcyppNOe2J12ute1sw2Pgta44ddui6oOCCN
-         CtOh3eREIIlBM2En2ighL2DGsuYdTrrlvHFlbBzS4IVU6f3m4G6Nq6AKxMqrP3ohsw6M
-         H11A==
+        bh=DJK6zSXkPyDw86KxIhd+mtT9blNdcY4EuZrGAuA9iwc=;
+        b=LOOZhDG0Xm2RKULg35sh0UXTaZOFY+aO2lFxZLk0M2Qw3P0P7Em4H+NYKtXkDZZv1d
+         Roto4YldSwCVjjyAE0vDNrJRKnbm4cOx+SigcFJX/nkEPCs4UyKbzTAaZdTBSOsGefGP
+         bcIbbrJr6UueYaq9qEzGUN8tDN5J25FoGVt9Ekperzk4Jrm3tQS/KgPWS/yhJCgsq9yZ
+         hjEN9m1mxACJPuifTVnUOXOCfzkFLegAgVwLLpPjdN5i0a868m57SbTIA7YsYj58Viwq
+         p7xX9QlYyFMnRJk7u9Y4Q9i706cfQrzzQqKZx8QTYpJnhjhM884+p3CvrR2UUr0EoRel
+         Xwig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:message-id:in-reply-to
          :references:subject:mime-version:content-transfer-encoding;
-        bh=dPY3phGHoIHCTZIggA8gFba1ukM/mCOPd3rygYsDeb0=;
-        b=EBjQOmejW2rnYwu0gxmi/mw87/k/vBLVVwBlF9mYuTRxGwBAUP2lOCjgHGYnU+iISP
-         DOYdVZhjM/JGFyIfp/Q0D/yyvfwH7RGc7JhoAjedz2KKMHpyNjVUctQtk6QpOK7vP94y
-         RufQsTzc5gRaSylecJXj7Kl+v3xMonFOimtPG9y1I/ACThm5Vtswn8TBip6/NQWTg3t0
-         IHy2aQStmfIPLx6wtoeXBevka0tmgOkwx6yvwEo1EzJ+VSXaCp7CccrhNwrQgh4SLCdg
-         awgP4J5qrdHwXNNVPXLhFtxqyfTjpcqjOKk+K6LX9tlz7JokkPGEPcWIsbCZCNR2QDHs
-         hgMg==
-X-Gm-Message-State: AOAM533U2YpOnmJnYwujeqefeHOWWXex7eWh5LNr9M2pd9l3PuyRZGWg
-        OehUZ2smtmZE0Le//LD9dAholYcyLYz/bQ==
-X-Google-Smtp-Source: ABdhPJys8bXnGsJ6vuke2bCn87HrmnqOMrdUYfUXiiHk524EHSTqQrZZKWcza2MEknFKGYW43omyVQ==
-X-Received: by 2002:a9d:1d41:: with SMTP id m59mr48216203otm.100.1609624923189;
-        Sat, 02 Jan 2021 14:02:03 -0800 (PST)
+        bh=DJK6zSXkPyDw86KxIhd+mtT9blNdcY4EuZrGAuA9iwc=;
+        b=QRS+5gMnixkolJZ8yY4gLRNFzNbUrUoAi4aEYZGoxhw7feNqLIo3Wl3w0BdQx2pq2H
+         IPbeZBQfKolB2JPSpnlr7xmPWALKBfaj/1XLa0jlaHHp9WPSyCjv6w2TFr6bLsWsv6Hq
+         QnOMpkKfJOocXi+sec6AX8sts4XdeHtEoiSZcKtJR3EZ+TQ7B7Ey0NQ27ghxPU1WTGdB
+         QgKGwhMUnKYV7JffmaCtkIIW0m9zhzxJJDnhNq4t32kTUjrzGj+WzHQgLrFmbCOPcEnd
+         P6pyPgduqj+feoYl5q9wcXKaFLTu6Qj0SmPlmzfaJn4cWiJGkuCNrKZ/8iGLL6VwjvYx
+         hDzw==
+X-Gm-Message-State: AOAM530XcVmWOo16okusN5FcEuFvhPKFUBBtroXuQYiqVz7Ju3gUgfCe
+        SZJV6OUbCIcs/8+MWye6sbc=
+X-Google-Smtp-Source: ABdhPJy0L8/AN8cqWmYnS+1KxsU3XaViv/2Ii7WgfYo3iCeDMO/OIjL6csdYFZ3uCUUStBR6AULIXA==
+X-Received: by 2002:a05:6830:403a:: with SMTP id i26mr47645857ots.111.1609625364801;
+        Sat, 02 Jan 2021 14:09:24 -0800 (PST)
 Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
-        by smtp.gmail.com with ESMTPSA id f25sm12379984oou.39.2021.01.02.14.02.02
+        by smtp.gmail.com with ESMTPSA id w129sm8269199oig.23.2021.01.02.14.09.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Jan 2021 14:02:02 -0800 (PST)
-Date:   Sat, 02 Jan 2021 16:02:01 -0600
+        Sat, 02 Jan 2021 14:09:24 -0800 (PST)
+Date:   Sat, 02 Jan 2021 16:09:23 -0600
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Yaroslav Nikitenko <metst13@gmail.com>
-Cc:     git@vger.kernel.org
-Message-ID: <5ff0ed59489bd_a76d2082f@natae.notmuch>
-In-Reply-To: <CA+RLzGArUrxC-Kbng3qGpRZUrZXKZj3zD3Hcut=XrUY-i-eYAw@mail.gmail.com>
-References: <CA+RLzGCtp2T=8DG74geBs67X5vUvhwRP4FMZ6MJv+E+Pj=YbWw@mail.gmail.com>
- <5ff0c58422038_90dc208ea@natae.notmuch>
- <CA+RLzGArUrxC-Kbng3qGpRZUrZXKZj3zD3Hcut=XrUY-i-eYAw@mail.gmail.com>
-Subject: Re: git-dir requires work-tree; documentation improvements for
- working directory
+To:     =?UTF-8?B?TWFydGluIMOFZ3Jlbg==?= <martin.agren@gmail.com>,
+        Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Gustaf Hendeby <hendeby@isy.liu.se>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <5ff0ef1332a66_a76d2086d@natae.notmuch>
+In-Reply-To: <CAN0heSqC3K6pJOr2ztz56+ZpKaMomA28rc4W5x8n0cC3K-rVgQ@mail.gmail.com>
+References: <pull.942.git.git.1609616245412.gitgitgadget@gmail.com>
+ <CAN0heSqC3K6pJOr2ztz56+ZpKaMomA28rc4W5x8n0cC3K-rVgQ@mail.gmail.com>
+Subject: Re: [PATCH] gitmodules.txt: fix 'GIT_WORK_TREE' variable name
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Yaroslav Nikitenko wrote:
-> 2021-01-02 22:12 GMT+03:00, Felipe Contreras <felipe.contreras@gmail.com>:
-> > Yaroslav Nikitenko wrote:
-> >> I use git to manage my dotfiles with this command:
-> >>
-> >>     git --git-dir=/home/yaroslav/.cfg/ --work-tree=/home/yaroslav
+Martin =C3=85gren wrote:
+> On Sat, 2 Jan 2021 at 20:39, Philippe Blain via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
 > >
-> > I do precisely the same thing.
+> > From: Philippe Blain <levraiphilippeblain@gmail.com>
 > >
-> >> When reading documentation, I noticed two issues.
-> >>
-> >> 1) The command doesn't work without --work-tree (even from the top
-> >> level directory, which is my home directory).
-> >>
-> >>     [~]$ git --git-dir=/home/yaroslav/.cfg/ status
-> >>     fatal: this operation must be run in a work tree
+> > 'gitmodules.txt' is a guide about the '.gitmodules' file that describ=
+es
+> > submodules properties, and that file must exist at the root of the
+> > repository. This was clarified in e5b5c1d2cf (Document clarification:=
+
+> > gitmodules, gitattributes, 2008-08-31).
 > >
-> > That's weird. It works fine here (although I don't see why I would want
-> > that).
-> 
-> BTW, how do you do that in your case?
+> > However, that commit mistakenly uses the non-existing environment
+> > variable 'GIT_WORK_DIR' to refer to the root of the repository.
+> =
 
-I have an alias:
+> Good catch! I wonder what we should conclude from this having gone
+> unreported for so long.
 
-  alias config='git --git-dir=$HOME/.config/dotfiles/.git/ --work-tree=$HOME'
+That perhaps not that many people actually read the official
+documentation?
 
-So, when I'm in my $HOME, I can do:
-
-  config status
-
-> > If you remove all your configuration does it still fail?
-> 
-> It starts to work when I remove my .cfg/config. I've no idea why it
-> happens. Here is its contents:
-> 
-> $ more .cfg/config
-> [core]
-> 	repositoryformatversion = 0
-> 	filemode = true
-> 	bare = true
-
-That's the difference: my core.bare is false.
-
-I do have a checked out work-tree because that's the only way I could
-get some commands to work, for example `git rebase`, even though I don't
-use that work-tree.
-
-I'm not sure if it makes sense to not assume '.' is the work-tree when
-'core.bare=true', but I think it does make sense, so maybe just turn
-that off.
+I've noticed the common response RTFM is not that common anymore. A lot
+of people seem to rely on Stack Overflow, blogs, and some semi-official
+documentation (GitHub, Atlassian, etc.).
 
 Cheers.
 
--- 
-Felipe Contreras
+-- =
+
+Felipe Contreras=
