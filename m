@@ -7,124 +7,100 @@ X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A453C433DB
-	for <git@archiver.kernel.org>; Sat,  2 Jan 2021 21:35:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77EFAC433E0
+	for <git@archiver.kernel.org>; Sat,  2 Jan 2021 21:54:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1042120799
-	for <git@archiver.kernel.org>; Sat,  2 Jan 2021 21:35:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 37F4920798
+	for <git@archiver.kernel.org>; Sat,  2 Jan 2021 21:54:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726687AbhABVfH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Jan 2021 16:35:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50404 "EHLO
+        id S1726686AbhABVyD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Jan 2021 16:54:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726667AbhABVfF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Jan 2021 16:35:05 -0500
-Received: from mail-vs1-xe31.google.com (mail-vs1-xe31.google.com [IPv6:2607:f8b0:4864:20::e31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83F09C061573
-        for <git@vger.kernel.org>; Sat,  2 Jan 2021 13:34:25 -0800 (PST)
-Received: by mail-vs1-xe31.google.com with SMTP id u7so12499254vsg.11
-        for <git@vger.kernel.org>; Sat, 02 Jan 2021 13:34:25 -0800 (PST)
+        with ESMTP id S1726667AbhABVyC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Jan 2021 16:54:02 -0500
+Received: from mail-ua1-x934.google.com (mail-ua1-x934.google.com [IPv6:2607:f8b0:4864:20::934])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EDE9C061573
+        for <git@vger.kernel.org>; Sat,  2 Jan 2021 13:53:22 -0800 (PST)
+Received: by mail-ua1-x934.google.com with SMTP id y25so7858674uaq.7
+        for <git@vger.kernel.org>; Sat, 02 Jan 2021 13:53:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=zF+7JmJslQyn7e0NP5dNieo3E7FT9YEyyJP+VwFNWvQ=;
-        b=ChRLkWedbEF8F2rVYbPTUQOqXDH0m8hBGBqtvdZ8LrpN08G0gI9qT32SrThS+aktqE
-         2Ll97D6XnsnMR+KkLWRVre7cBn8ve765M1JtsMkH3o82Dpg3TCPHanpHK3jqLBulfDcR
-         XQgV2aK4/d3kcCjUCDYSt3dir6mOG9NRwImyR6I4RP3Ss6TDQwUUsdZ/Cs6dnwPm2IWt
-         yTqZ0RBeXDJXkmHSqJ0VZPWqEDm5TrK0NMSumzHnp8m4/qMkiOgXIbYaKsK+3HBIIScV
-         nhnTelX1oF/3sLkANzSyJ8D4CbBIBFLIurUHTTv6pusAAiQsh9nCAbWi6+NBG9+0gmFP
-         v4iA==
+        bh=rqzeC3o0gYpPO4V0sTBqbQ+ARENAA1RAtEce27ekQGE=;
+        b=UDdhaHmlYXXUxwYYTqhAAPa+bci1QKfVnZ5rntm46RCqTthqCxaK7hGK9xxxsIotta
+         Zy7zlJNNbCvS1WhtDZvTNXxnEWCHlw8J/rJ2NRQ6YD7NB2Qdj9Xki3N1vkOZNdI72asF
+         r+TBf3asvnQfVKHrSg9EEkgs/9n9ZYexrleRronYzxHpL/3EcQcKZLU131tpG+mzyA7H
+         KcEhc8s2pdGBku59lNF4Gb15eAKID6Ze8q15jpiI3D37Bhq4TxocRwSkBu8kqSh1tWNO
+         DI4aYAYHMIqtYJiLVwOGZiv2D++SYfO68w09U0I1hQMQ9dSpBkw6q9UNar+l0ELTptlg
+         ykBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=zF+7JmJslQyn7e0NP5dNieo3E7FT9YEyyJP+VwFNWvQ=;
-        b=Xm+4UOtZEZR3kXAilBSNLyAwOsh0Z+oNboeFO1PhVwpXBD2fUhC9Yaw8hVA7hMxoSq
-         WHaGBIHG0WD2jY/o5UsyCBCg1lWtgSoljTMPX9yWj0pe/WawFFIGaTrG1NKHDvBMMiSt
-         li58QCdj6sG1QLD/47qBfK/Nfz/+rH4y4wR1LQJnnhFOeFGH+nb6XyxB7Om+lVoXJQhQ
-         UyTGF2BvhpYeGOkNrvbFe8+xS44XuHD4E2sPvTtUPmt7WBC6joilQ5NMFYZ7Yc/3Es/T
-         /jOybOYX6kmn3SXW+mFwx7PrAUCbER237O16GtaXqD2F4c01OGuJWjurFBDD2bzjRK0v
-         tTwg==
-X-Gm-Message-State: AOAM531PXCNuh+qFKkzv5qm2uBrk8x7MePZqVjG1jd51mIjImHt5hTNJ
-        27ty3tcOWKO/dXBWbDJJfMOCNonyrfmZvkqLjCs=
-X-Google-Smtp-Source: ABdhPJzXKZHGBmWtpEpYsive/riytlYtPzaGth4l6QFRUrtuQ0c1J5HRnYMT5TiNSn3BNGNQn3jDZxmemipdpIhOpvI=
-X-Received: by 2002:a67:2d84:: with SMTP id t126mr38794944vst.49.1609623264533;
- Sat, 02 Jan 2021 13:34:24 -0800 (PST)
+        bh=rqzeC3o0gYpPO4V0sTBqbQ+ARENAA1RAtEce27ekQGE=;
+        b=pz5rlHJeqaUFxr3krplmv/6fhGSUKUqqsN1lBcYw+NX1XoGmtIdq/u02pqVGO0ZRYb
+         GzCGCEos8xdvh06PaB16ss2YpjkqstOJe4XAn2VBVJ+x8mC+WoPV+hETdxvS5LTNIceQ
+         d6VaTkBq6OfwLW5L2l9DtFJqUNB2r9aXbQKsyX8faKOzB2BG4VyTj7+UXkmwYW6sr6Zp
+         Qk0NPDrdMDJoqME9JN5yR1+aEhWDsa92Ni7qa522Gf4RE+yZty3aGIm2x4YaJDogpYGq
+         Xx4rX67yAcBaU0sCsZZgllewhg4nq4DDBtdrm23EmrRrdyqgT1QhGA5nKmCjmV48Jzdv
+         gLdg==
+X-Gm-Message-State: AOAM533Z9t9YdGyRy9XxLN1R9TXKezfIsuBL5LjsSP7gxPzNK/XgauqB
+        PGGzeJo1uS/EObfBFoEapMV5VaLZVITYwK/r+AU=
+X-Google-Smtp-Source: ABdhPJwrohr4/+RFPXtkgWNqtvB7dVY1gA/Y3EOSjIwacQkb6fGF2IeiFtx2RUYsPnxkOjw0FKcHe5j55dJDurpiL/I=
+X-Received: by 2002:ab0:7504:: with SMTP id m4mr40543025uap.34.1609624401220;
+ Sat, 02 Jan 2021 13:53:21 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.942.git.git.1609616245412.gitgitgadget@gmail.com>
-In-Reply-To: <pull.942.git.git.1609616245412.gitgitgadget@gmail.com>
+References: <pull.831.git.1609609214040.gitgitgadget@gmail.com>
+In-Reply-To: <pull.831.git.1609609214040.gitgitgadget@gmail.com>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 2 Jan 2021 22:34:09 +0100
-Message-ID: <CAN0heSqC3K6pJOr2ztz56+ZpKaMomA28rc4W5x8n0cC3K-rVgQ@mail.gmail.com>
-Subject: Re: [PATCH] gitmodules.txt: fix 'GIT_WORK_TREE' variable name
-To:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
+Date:   Sat, 2 Jan 2021 22:53:09 +0100
+Message-ID: <CAN0heSojPyr=g5PBVmT4VTfxxKxzYcFXJ1jynM1tGuZSyQMykg@mail.gmail.com>
+Subject: Re: [PATCH] doc: fix some typos
+To:     Thomas Ackermann via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Gustaf Hendeby <hendeby@isy.liu.se>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Thomas Ackermann <th.acker@arcor.de>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 2 Jan 2021 at 20:39, Philippe Blain via GitGitGadget
+On Sat, 2 Jan 2021 at 18:43, Thomas Ackermann via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
->
-> From: Philippe Blain <levraiphilippeblain@gmail.com>
->
-> 'gitmodules.txt' is a guide about the '.gitmodules' file that describes
-> submodules properties, and that file must exist at the root of the
-> repository. This was clarified in e5b5c1d2cf (Document clarification:
-> gitmodules, gitattributes, 2008-08-31).
->
-> However, that commit mistakenly uses the non-existing environment
-> variable 'GIT_WORK_DIR' to refer to the root of the repository.
 
-Good catch! I wonder what we should conclude from this having gone
-unreported for so long.
+[Snip several typo fixes in Documentation/, all of which I agree with.]
 
-> Fix that by using the correct variable, 'GIT_WORK_TREE'. Take the
-> opportunity to modernize and improve the formatting of that guide.
+> diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+> index c151dd7257f..8f77baa678f 100644
+> --- a/contrib/buildsystems/CMakeLists.txt
+> +++ b/contrib/buildsystems/CMakeLists.txt
 
-It's a small correctness fix and some prettifying while at it. While I
-read the diff and realized that it was more than just one or two
-asciidoc tweaks in the immediate vicinity, I started wondering if this
-should be presented the other way round: "Let's update the formatting
-and fix s/DIR/TREE/ while at it." Or to split it up. But I don't think
-it's worth thinking too much about -- what you have looks good to me.
+Hmm... This does not match the "doc:" prefix of the patch.
 
-> @@ -32,14 +32,14 @@ submodule.<name>.path::
+> @@ -442,7 +442,7 @@ endif()
+>  check_c_source_compiles("
+>  #include <regex.h>
+>  #ifndef REG_STARTEND
+> -#error oops we dont have it
+> +#error oops we don't have it
+>  #endif
 
-Just above this point, you have another s/\.gitmodules/`&`/ waiting to
-be fixed.
+I don't think this is correct. This omission of the single quote somehow
+looks like it's done on purpose. I don't build using this system, but I
+tried making some silly code like this in another file, which I actually
+do use:
 
->  submodule.<name>.url::
->         Defines a URL from which the submodule repository can be cloned.
->         This may be either an absolute URL ready to be passed to
+#if 0
+#error might or mightn't work
+#endif
 
->         dirty;; All changes to the submodule's work tree will be ignored, only
-> -           committed differences between the HEAD of the submodule and its
-> +           committed differences between the 'HEAD' of the submodule and its
->             recorded state in the superproject are taken into account.
+My compiler refused to compile: "error: missing terminating ' character
+[-Werror]". So I fear this change to CMakeLists.txt would make us
+needlessly fail to autodetect whatever it is we're looking for here.
 
-`git grep -B10 HEAD CodingGuidelines` suggests this should be `HEAD`,
-not 'HEAD'. Maybe you followed style -- there's an instance of 'HEAD'
-earlier. I think both should be `HEAD`.
-
-> -If this option is also present in the submodules entry in .git/config
-> +If this option is also present in the submodules entry in `.git/config`
->  of the superproject, the setting there will override the one found in
-> -.gitmodules.
-> +`.gitmodules`.
-
-Should "submodules entry" be "submodule's entry"? I've never worked with
-submodules, but that reading somehow seems more natural. (There are two
-hits for "submodules entry" in this document -- both might be worth
-looking at.)
-
-This patch looks good to me. It might be worthwhile to reroll
-to address the naked .gitmodules around line 30 and the two 'HEAD' while
-you're in the area. As for the last comment above, it could well be
-that the proper response is "no, you're wrong".
+If this change to CMakeLists.txt is dropped, this patch looks good
+to me.
 
 Martin
