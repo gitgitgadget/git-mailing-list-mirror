@@ -7,77 +7,104 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13E88C433DB
-	for <git@archiver.kernel.org>; Sat,  2 Jan 2021 17:47:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEBCBC433DB
+	for <git@archiver.kernel.org>; Sat,  2 Jan 2021 19:13:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id CA848207C8
-	for <git@archiver.kernel.org>; Sat,  2 Jan 2021 17:47:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 77AC0207AA
+	for <git@archiver.kernel.org>; Sat,  2 Jan 2021 19:13:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726625AbhABRqs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Jan 2021 12:46:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42608 "EHLO
+        id S1726662AbhABTMu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Jan 2021 14:12:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726567AbhABRqr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Jan 2021 12:46:47 -0500
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B008DC061573
-        for <git@vger.kernel.org>; Sat,  2 Jan 2021 09:46:06 -0800 (PST)
-Received: by mail-pf1-x42d.google.com with SMTP id c12so13827428pfo.10
-        for <git@vger.kernel.org>; Sat, 02 Jan 2021 09:46:06 -0800 (PST)
+        with ESMTP id S1726642AbhABTMs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Jan 2021 14:12:48 -0500
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13FC0C061573
+        for <git@vger.kernel.org>; Sat,  2 Jan 2021 11:12:08 -0800 (PST)
+Received: by mail-oi1-x22a.google.com with SMTP id q205so27425747oig.13
+        for <git@vger.kernel.org>; Sat, 02 Jan 2021 11:12:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=kq12hlCXZTb7vf/xEApkZkFpnHbNPvcUfs2PURLULKs=;
-        b=bcDbHAwKeVp9CediRi39Sa7tPxWHjTo6mBl/mMElip57gTOL+AHnfxilLkuTGPw0S3
-         +jbWxcSvyL5B1UMATl+ibOkIyWzCiFBuoAn2Ivj6GGFDrwQ3LCiiCBb1/bG5RnzgOAT2
-         Ei4/L67vkbHYyoO5aOK9gKR5OUVeqexvxqlwuZ1CvxR4ieeLl3u4GD+YK5gtmkbmFu6d
-         qpiGxN7EygT++fA9JIbF1Vy4Zilr2HMGGklmMud72Q4Dx4pncfzL+g1aWYOoFGK3w7jp
-         OHkohEW83cOVIajTNaRnnJHToM9vKm/jecug4mbxP+uQcl5KHZkD2EBlpMX/gFquQkjY
-         H0lA==
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-transfer-encoding;
+        bh=gQ42t399/O3sQ7M7+IgpK4jVEsA+ZFEI5Dz+aK9mo8c=;
+        b=cErE5mwC6jMy+4CVgNO1CaYSikhFr8d6ciOJtpnJVJjrxUNTha8/bMidrNjEsjNXFu
+         HNVC2+guD3d/DiHlzaqN23NaAKY33WzqAjh8gPfFWjfNXzCZPrSTgHq++9yCKT+GS7Q0
+         xIA4/xUMTJnGxQGpDi3d6gbghhYOLAI+JnMlOg469E1K0/gHFQJH+gcj0YmbVWZaOIxB
+         R15eSsolsZkJBP3EsQuczKV9lXXDJ1ktY+naxjx+/PY9gSkFRWpk4LhNEHImdl/A+j7E
+         4WjbMz0EzKUEZ3QDtecAW5Z1oIEXw/EJWTavgHJQUTt0s0r3DrhQ0JDoJcmhUBbYLv6S
+         Bfyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=kq12hlCXZTb7vf/xEApkZkFpnHbNPvcUfs2PURLULKs=;
-        b=KyDVLMQz1vLoIOHe0F/6NTgO6BRC6DJ9wH7rg/h0NfDFRUbHZudFOsfE0ScMWuVODh
-         yWOAxeBsvrkLppuWyP6Qoa5nePH3rfDBT2Wn+CmGTNHX3TgLB8xuHeFS658I1iFG7AMg
-         SullF7ZOAjbSzKP5DhhddsrRZa2RJO8kPeFnWi3qZmVCRS/rxFbxAA1Q+83AbKHvxUSv
-         pBdp2tqCUAh8xdVFA/vHSzaUbjBeBNJ9P5uvF/smd4EPNms4Mg9LJ/3eJCvMFlUsEbi1
-         LMa6eXlXB0EQKQI+E8Wf3Se2GW9f0qN0eoP+ZTTQ12JE1RRpKHxj/ut0zSUg6ZyXvDO4
-         ThfQ==
-X-Gm-Message-State: AOAM533vxg1kIk5M+uNGHfsSUiE1FenQHH52MfYE03KrM+lFq88xQDlS
-        egwyU/cj/RMZ+5veeaWUFYSJJv9Ln8ldsVtSEN9yUpmL6aBhpQ==
-X-Google-Smtp-Source: ABdhPJwICbo+9PN0uH2nwb+vrjwy+mso4p1HFe4Ylbqs7+eJwM8DzkiKwZZnpTe0rzun1Vsq0qhfhRG1oT9jq7TCsxE=
-X-Received: by 2002:a65:6782:: with SMTP id e2mr64161016pgr.424.1609609566102;
- Sat, 02 Jan 2021 09:46:06 -0800 (PST)
-MIME-Version: 1.0
-From:   Andy Wharton <awharton1976@gmail.com>
-Date:   Sat, 2 Jan 2021 17:45:55 +0000
-Message-ID: <CANUvzQ12V1ptr9uEpXFnJQWcWgjs4+vTjgaXTMrsJ6foAMpv2Q@mail.gmail.com>
-Subject: Expected behaviour of 'git submodule update --remote --recursive'?
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
+         :subject:mime-version:content-transfer-encoding;
+        bh=gQ42t399/O3sQ7M7+IgpK4jVEsA+ZFEI5Dz+aK9mo8c=;
+        b=DFcKBgJEHSrZ7rtJOoXisWBRjEIs6k+hifM2R7eDKTmo36tFkdLuMwbPwzjqMEM6Mw
+         4CrbAXxJTnKSTlmuD6ngY2BHndSQn6j5pMxfs4bUEiuvk3A1/M0v/hIgeM6WDOJcTWMy
+         TCwGgssnp2yHGbGOTuIyRvgbscm/bWtnqxVWMd27dq3tYFvF3/DyzLOHVJqv5/EX/atm
+         /pfXAaobgC51hx3g80kJ9m0goo1fEZMRIs2Q7pqovvHllUJYJ49CZp8KBdQigpNnzTPr
+         m8AIjq/m/nqYS5EQt+0jOtgMvEWcB55n5axiwOzO9dVg1M7Z0rDtzRRTYIUhZos+QVHc
+         LMng==
+X-Gm-Message-State: AOAM531Icqx4mUft2Ae8XrWMyBr6PBaO0BfbXjfnVI5/SsKo2jRe+Kwf
+        TJdpo3k1685juOQiLYz+p/Y=
+X-Google-Smtp-Source: ABdhPJxBm6t4wjqIT+gWoAcPCnJZYFun1ADkhaR7OEo7ujv+tD9AimpbewgoeySo6nEge8m0jXm8xQ==
+X-Received: by 2002:aca:5792:: with SMTP id l140mr13866339oib.175.1609614726213;
+        Sat, 02 Jan 2021 11:12:06 -0800 (PST)
+Received: from localhost (189-209-26-110.static.axtel.net. [189.209.26.110])
+        by smtp.gmail.com with ESMTPSA id h26sm13471063ots.9.2021.01.02.11.12.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 Jan 2021 11:12:05 -0800 (PST)
+Date:   Sat, 02 Jan 2021 13:12:04 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Yaroslav Nikitenko <metst13@gmail.com>, git@vger.kernel.org
+Message-ID: <5ff0c58422038_90dc208ea@natae.notmuch>
+In-Reply-To: <CA+RLzGCtp2T=8DG74geBs67X5vUvhwRP4FMZ6MJv+E+Pj=YbWw@mail.gmail.com>
+References: <CA+RLzGCtp2T=8DG74geBs67X5vUvhwRP4FMZ6MJv+E+Pj=YbWw@mail.gmail.com>
+Subject: RE: git-dir requires work-tree; documentation improvements for
+ working directory
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+Yaroslav Nikitenko wrote:
+> I use git to manage my dotfiles with this command:
+> 
+>     git --git-dir=/home/yaroslav/.cfg/ --work-tree=/home/yaroslav
 
-I have three git repo's:
-    A imports B as a submodule, and has "branch = ." set for B in .gitmodules
-    B imports C as a submodule, and has "branch = ." set for C in .gitmodules
+I do precisely the same thing.
 
-I had hoped that checking out a branch in A, and then running 'git
-submodule update --remote --recursive' in A would checkout the latest
-commit from that branch in the two submodules.
+> When reading documentation, I noticed two issues.
+> 
+> 1) The command doesn't work without --work-tree (even from the top
+> level directory, which is my home directory).
+> 
+>     [~]$ git --git-dir=/home/yaroslav/.cfg/ status
+>     fatal: this operation must be run in a work tree
 
-This works as expected for B (checks out the right SHA as a deteched
-head), but because I'm left on a detached head the update fails for C
-with a "branch configured to inherit branch from superproject"
-message.
+That's weird. It works fine here (although I don't see why I would want
+that).
 
-While I'm guessing this is the expected behaviour, is it possible to
-make the "branch = ." option use the branch name from the parent
-transitively? Or is there another mechanism I should be using to
-achieve what I'm trying to do?
+If you remove all your configuration does it still fail?
 
-Andy.
+> 2) In the man documentation for git > git-dir it's written
+> "It can be an absolute path or relative path to current working directory."
+> I think this can be confused with work-tree. I suggest removing the
+> word 'working' (and probably add an article 'the' before the
+> 'current', but I'm not a native speaker).
+
+Yes, the article is missing, as for the rest I have no opinion.
+
+> I don't subscribe to the mailing list but hope that I'll receive the replies.
+
+Don't worry. The git mailing list doesn't munge the Reply-To header, so
+any decent MUA will keep you in Cc.
+
+Cheers.
+
+-- 
+Felipe Contreras
