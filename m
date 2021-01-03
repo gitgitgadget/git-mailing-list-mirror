@@ -2,81 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D1D3C433E0
-	for <git@archiver.kernel.org>; Sun,  3 Jan 2021 20:16:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DA0BC43381
+	for <git@archiver.kernel.org>; Sun,  3 Jan 2021 21:19:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E3B9520754
-	for <git@archiver.kernel.org>; Sun,  3 Jan 2021 20:16:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6442720784
+	for <git@archiver.kernel.org>; Sun,  3 Jan 2021 21:19:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726734AbhACUQf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 3 Jan 2021 15:16:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60570 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726239AbhACUQe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jan 2021 15:16:34 -0500
-Received: from mail-ua1-x92a.google.com (mail-ua1-x92a.google.com [IPv6:2607:f8b0:4864:20::92a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C8B8C061573
-        for <git@vger.kernel.org>; Sun,  3 Jan 2021 12:15:54 -0800 (PST)
-Received: by mail-ua1-x92a.google.com with SMTP id n18so8446613ual.9
-        for <git@vger.kernel.org>; Sun, 03 Jan 2021 12:15:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rjn4d6wu1LTPt7z6dn4zJd0GEoJAimhnFwNMPBozycw=;
-        b=B/tzafhWxGihGi4cn1hvfr90xZMPyiYC3U1eD9N5bSEzsHMyzdlMOeOeHHqqAsznAO
-         e5CJOWft0MCWzGDf7nwMeGjk3zkThkBHqd/NTTbtN8kdhsn1rRixDHAlwOQ6s1FOj3EQ
-         pWXoSDkZgYR+6lxvzI6B7ssLDfDH3+U26CxvurCwsWA7LphF91AT49WNsJyz/My2OlAi
-         P19UCbhTL8BGQ9pUkSLLFMQug4Bp+5X4fxxnOfA6c+/sFbRY01FU45eHMh+GdnfLL5dR
-         uyMawIxLy0hkhrwQlnqFszkDLgLcnHBA3Bsny1spUIAjrYl0UVPosaUBFFYeitTgB4re
-         5Mtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rjn4d6wu1LTPt7z6dn4zJd0GEoJAimhnFwNMPBozycw=;
-        b=l5JrCbXbaBzjlQrzb2/0ryYZC4+x2dcJd8vRmfQ5Rt8pPkXEBgVbZuIK4tz+sm7teJ
-         3m4V45O+GI/KVWXnu8ppbybXBMoDJYPnz0NedyfMP1m3vKH3SiD6j2x6dlPoFEqAyCOB
-         xJrgIndOUXbUq3iQRohxQ5YgXXNjNuWrsvaGKPgVvaZvAK5PdVMm8bvFua3MHy43IiRS
-         a8Wo3+HW4bJRcGhawL6avRB+8wM9sBIyz7n4PdQ/VOSP4zLI7bHpP85QO64Ayyd3ujGm
-         BBSS2Ff9w/Mst0kaWAgcRW/iwSPvDfqeMr5HMed7j9caTPK7oK/mEF5+QJhDl8ROa8jc
-         r4/g==
-X-Gm-Message-State: AOAM533xH0ZNc9quXkjSFvrDhMBLV8KJGQ+i15fXyA1UG/wensBaiKFx
-        4TOtDa1/Rkhv76owLiXqBvrEGphUyongD/wYJIk=
-X-Google-Smtp-Source: ABdhPJzn3VrA+Nn4mnN+wddVCCaShaI/B4YKzSOkgT1v7t70kmz1K0xxmAS6RI3hvZwpHE5Z22iYCF7lgfNMCpZXnrM=
-X-Received: by 2002:ab0:3b59:: with SMTP id o25mr44553798uaw.62.1609704953573;
- Sun, 03 Jan 2021 12:15:53 -0800 (PST)
+        id S1727529AbhACVTr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 3 Jan 2021 16:19:47 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:45746 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727452AbhACVTr (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 3 Jan 2021 16:19:47 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D53CC60811;
+        Sun,  3 Jan 2021 21:19:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1609708746;
+        bh=rM8C4HlERsqv2L9g1AnnG9PExC+oyzdpcH4GaE2iv6I=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=z1qjCJBtfYsc4wariN6x7qksrkTP2zPsPS8ZdD74SvFM4uGF/KjSKoi0oVQn1jV21
+         B6fQBxF2Izw80kJgbBlCCSlmvG4KUYBZLtYiSRwmd8zAxExt8iloD5TMqd/0DkmF57
+         WVWSqzq6zXBimBJ+gC3jSRU7uM2Ns2eyyf3RMRaAyq8acwvkeDcrBN9V5UWx8LCEYc
+         /HhvO57KcE7hw9tJCwj9gtc4IQBenYhclgH/gaaEWk1Occgwanj+7X3Cp6NLvZmNBE
+         Mr65kye8Lyf2k2YCseSKsSpRlzXvAo/NgJ45mQTvc3Drw+RFJG3CV/mdVldwP6oi6T
+         S4aNzNEiwlGmiTQUo7FNE6j3bFwrxZM8N96xRhwNc92Yw5bd47Q+l5ySjkd96Autg1
+         Roi+t6z1Ru7b2+ROnuyzQE8BAxo81fCcjxDdbTwOWgK709vBr8uxWhc8NOETSGc7p8
+         TN9SNQhvvRHpZK/9ERxQ3abnIzZ2UCF7UPwXTmT/trC1DND/Sye
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH v2 1/5] mailmap: add a function to inspect the number of entries
+Date:   Sun,  3 Jan 2021 21:18:45 +0000
+Message-Id: <20210103211849.2691287-2-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.30.0.284.gd98b1dd5eaa7
+In-Reply-To: <20210103211849.2691287-1-sandals@crustytoothpaste.net>
+References: <20210103211849.2691287-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-References: <pull.942.git.git.1609616245412.gitgitgadget@gmail.com> <pull.942.v2.git.git.1609695736001.gitgitgadget@gmail.com>
-In-Reply-To: <pull.942.v2.git.git.1609695736001.gitgitgadget@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sun, 3 Jan 2021 21:15:42 +0100
-Message-ID: <CAN0heSpGyHKkiod6TE5jvVc_Y2MTWVY6DLS1Dg4FvS_m71Gs4A@mail.gmail.com>
-Subject: Re: [PATCH v2] gitmodules.txt: fix 'GIT_WORK_TREE' variable name
-To:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Gustaf Hendeby <hendeby@isy.liu.se>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philippe,
+We're soon going to change the type of our mailmap into an opaque struct
+so we can add features and improve performance.  When we do so, it won't
+be possible for users to inspect its internals to determine how many
+items are present, so let's introduce a function that lets users inquire
+how many objects are in the mailmap and use it where we want this
+information.
 
-On Sun, 3 Jan 2021 at 18:42, Philippe Blain via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
->     Changes since v1:
->
->      * added Martin's suggestions
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ mailmap.c | 5 +++++
+ mailmap.h | 1 +
+ pretty.c  | 2 +-
+ 3 files changed, 7 insertions(+), 1 deletion(-)
 
-Yup, this looks good to me.
-
-Martin
+diff --git a/mailmap.c b/mailmap.c
+index 962fd86d6d..c9a538f4e2 100644
+--- a/mailmap.c
++++ b/mailmap.c
+@@ -361,3 +361,8 @@ int map_user(struct string_list *map,
+ 	debug_mm("map_user:  --\n");
+ 	return 0;
+ }
++
++int mailmap_entries(struct string_list *map)
++{
++	return map->nr;
++}
+diff --git a/mailmap.h b/mailmap.h
+index d0e65646cb..ff57b05a15 100644
+--- a/mailmap.h
++++ b/mailmap.h
+@@ -5,6 +5,7 @@ struct string_list;
+ 
+ int read_mailmap(struct string_list *map, char **repo_abbrev);
+ void clear_mailmap(struct string_list *map);
++int mailmap_entries(struct string_list *map);
+ 
+ int map_user(struct string_list *map,
+ 			 const char **email, size_t *emaillen, const char **name, size_t *namelen);
+diff --git a/pretty.c b/pretty.c
+index 7a7708a0ea..43a0039870 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -681,7 +681,7 @@ static int mailmap_name(const char **email, size_t *email_len,
+ 		mail_map = xcalloc(1, sizeof(*mail_map));
+ 		read_mailmap(mail_map, NULL);
+ 	}
+-	return mail_map->nr && map_user(mail_map, email, email_len, name, name_len);
++	return mailmap_entries(mail_map) && map_user(mail_map, email, email_len, name, name_len);
+ }
+ 
+ static size_t format_person_part(struct strbuf *sb, char part,
