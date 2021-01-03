@@ -2,149 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-7.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,NICE_REPLY_A,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0497DC433E0
-	for <git@archiver.kernel.org>; Sun,  3 Jan 2021 00:37:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F528C433DB
+	for <git@archiver.kernel.org>; Sun,  3 Jan 2021 01:25:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id AE4E420798
-	for <git@archiver.kernel.org>; Sun,  3 Jan 2021 00:37:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB60A20798
+	for <git@archiver.kernel.org>; Sun,  3 Jan 2021 01:25:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726963AbhACAdw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 2 Jan 2021 19:33:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49498 "EHLO
+        id S1726904AbhACBYx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 2 Jan 2021 20:24:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726952AbhACAdw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 2 Jan 2021 19:33:52 -0500
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0541AC061573
-        for <git@vger.kernel.org>; Sat,  2 Jan 2021 16:33:11 -0800 (PST)
-Received: by mail-qv1-xf2e.google.com with SMTP id l7so11398849qvt.4
-        for <git@vger.kernel.org>; Sat, 02 Jan 2021 16:33:11 -0800 (PST)
+        with ESMTP id S1726864AbhACBYx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 2 Jan 2021 20:24:53 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB5F2C061573
+        for <git@vger.kernel.org>; Sat,  2 Jan 2021 17:24:12 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id z12so7743258pjn.1
+        for <git@vger.kernel.org>; Sat, 02 Jan 2021 17:24:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=5/aHrfmlBPFXHIyaS5C9VpLVaLLRDFaN2e9pb/2298o=;
-        b=PGVpn3dKNkzZPhsEMIz6ZQGRY573m2Q7UWTIfY/+kLtOBH4vJSfJd9Xl6QG3G6HDfz
-         GzynDKT5p42MpGJM0fLMwEiXG4l5siTcgfvKEPpbci19WHdEJCtcToVBpYQ1pXIoVUU2
-         /cRvnum1VVpCoVyj79RjQWFkE1geXJpEsO7r3FH8CzVKXhqW58waoNQAg0AsMoQgkLW3
-         jCQgAz2gBIShI6YHnvNuGvkya1yKsanE4tSzYonkqbNu+jCGkja+tSn66WCVWz4TPNNV
-         BJZzCO16QBAwXLUkHtpNf6QHodL+wMwj4fQNualQ75AoHXLdQfAtGRtK/mY2352c4s3M
-         pyyw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=MheNd1iAc8V5DZo95P3icfD7Qs8CRgOMiW4NvP62Bz4=;
+        b=kKC5zIAn/RIdZa4f5LGLH/qakizoFCumE8yDAxNYaTBUy0Dhmtxtr2+JFUNbTl7ge2
+         ORYlxllx8gvVMlkOJWJjlRJWh4WnIzICOHAhbt3rIwMZzUIR4+gsyFViYUj7vZp68fz2
+         hiu0L71pyX7/Gqbl7bB/fpE2y1wAtN47FB9yS0TADGpLdlsYGwTl6LCcSApAJ6t/dPde
+         QRndO1ZZhN1O42tnedYT8pYvm8goKysVFQZOezj9jXUY1Xi/m7InYoruSQ8hNtQaJXrK
+         eSkpDyLrk7piKnJ0nnUKx9/38nfkCv+lGp7vwU5NBVrBx51bgh3YNrgkcJ42BKRFr89q
+         1V1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=5/aHrfmlBPFXHIyaS5C9VpLVaLLRDFaN2e9pb/2298o=;
-        b=NuocMxcoJtyhOgMpZz2WSqcFWVW/FIDFTTGhJ/dWJG0ZHkKyGNZD09TwhSXwWVlIqi
-         HPAyOQ8QNMT/x0uSWTQn5Lght5SI76jOOlRvB3DmzySvbI9Jd21lY8SGSsqNSMv1sHiq
-         w8OY3bVY6WynKotkZcC0hvh9ApOo1g+B2iuG1ZYYctyRQ4hhFYmkgelJzdi2lF8utMnF
-         rZeC/9JddZz+QPftVaqdCjtw95QED8AwKtHXKV29O+3L74IyQbqzI3HCmiWMBYViFjHn
-         rxA62kKuTixOIo21NxLUuLPjcy9ZKB7GzsUPN7VY/BefE/zN11yA5Xsc5CeWthsoUKKa
-         tgdA==
-X-Gm-Message-State: AOAM533UbEaYCPK6Rqr+YyKaqebW60xMVBk5kccRCfn0Tg2jS4dqvEqa
-        grmg/u+XY5H50ALWhbDd0kg=
-X-Google-Smtp-Source: ABdhPJxJvE3Tn+wgp6SQRjn12GetXClJobjKntqx7u+gHR3OBL89lAq+4l8qPwsSNOxl7o+22yJWKw==
-X-Received: by 2002:ad4:46e7:: with SMTP id h7mr70904724qvw.44.1609633990618;
-        Sat, 02 Jan 2021 16:33:10 -0800 (PST)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id f10sm35004296qtg.27.2021.01.02.16.33.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 02 Jan 2021 16:33:10 -0800 (PST)
-Subject: Re: [PATCH] gitmodules.txt: fix 'GIT_WORK_TREE' variable name
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Gustaf Hendeby <hendeby@isy.liu.se>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-References: <pull.942.git.git.1609616245412.gitgitgadget@gmail.com>
- <CAN0heSqC3K6pJOr2ztz56+ZpKaMomA28rc4W5x8n0cC3K-rVgQ@mail.gmail.com>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <2411086f-b6d6-98c3-bbb4-53ea8956c765@gmail.com>
-Date:   Sat, 2 Jan 2021 19:33:08 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.6.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=MheNd1iAc8V5DZo95P3icfD7Qs8CRgOMiW4NvP62Bz4=;
+        b=M0f1qSaubKcD88r+wkJyTaz9jY8+5sn9bVETdumEiUMqTOTPnGQn2YJDxpTGp6Ap30
+         cYy9xWCL1OQuZHuxCKIpDTIl9JnIuseOy77dDpcw+qTNfKKD+wN7qJuVZFH+j0yrTqRR
+         ITxhgoDCofXg2RB9ikla0rHcYniq92QeuEOcowpJilLzHXxHWpUTEPClfpzDF1Ir0Izb
+         X/rYL2rofpeBEOt0yMtuULeNTsS8L5HIRSQ4eLb7Sw9mJ6+/2VLkF9v7YtK8M624SNOu
+         IC7EoORj0u2TPRrNdffpGhFD/poKmF+wPmPe1LR3U5dN07ml4PNilPJioYkEP2ScZKeM
+         t3iA==
+X-Gm-Message-State: AOAM530eW/Wd6D1g6KFYyMRqJ4sdSqHxuH+FQLdmIjjSZd0wxyK5v6vT
+        WLAQ+/0JjYsg0T44uCMiRLaigvENAYU=
+X-Google-Smtp-Source: ABdhPJyonYfvnUzACnZZ3cTqbpKjmg1925uHpBvCj5NiKwinkN9GFY+T25LFGQDoTYvcZRFPBLQjZw==
+X-Received: by 2002:a17:90a:398d:: with SMTP id z13mr23788272pjb.1.1609637051887;
+        Sat, 02 Jan 2021 17:24:11 -0800 (PST)
+Received: from generichostname (c-67-188-114-10.hsd1.ca.comcast.net. [67.188.114.10])
+        by smtp.gmail.com with ESMTPSA id 184sm42074511pgi.92.2021.01.02.17.24.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 Jan 2021 17:24:11 -0800 (PST)
+Date:   Sat, 2 Jan 2021 17:24:09 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] refs: allow @{n} to work with n-sized reflog
+Message-ID: <X/EcucyFs3Ecuc2K@generichostname>
+References: <0c6885f15f5ce0be28142d9c69724362e72481a9.1609551262.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAN0heSqC3K6pJOr2ztz56+ZpKaMomA28rc4W5x8n0cC3K-rVgQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0c6885f15f5ce0be28142d9c69724362e72481a9.1609551262.git.liu.denton@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Martin,
+On Fri, Jan 01, 2021 at 05:36:06PM -0800, Denton Liu wrote:
+> This sequence works
+> 
+> 	$ git checkout -b newbranch
+> 	$ git commit --allow-empty -m one
+> 	$ git show -s newbranch@{1}
+> 
+> and shows the state that was immediately after the newbranch was
+> created.
+> 
+> But then if you do
+> 
+> 	$ git reflog expire --expire=now refs/heads/newbranch
+> 	$ git commit --allow=empty -m two
+> 	$ git show -s newbranch@{1}
+> 
+> you'd be scolded with
+> 
+> 	fatal: log for 'newbranch' only has 1 entries
+> 
+> While it is true that it has only 1 entry, we have enough
+> information in that single entry that records the transition between
+> the state in which the tip of the branch was pointing at commit
+> 'one' to the new commit 'two' built on it, so we should be able to
+> answer "what object newbranch was pointing at?". But we refuse to
+> do so.
+> 
+> Make @{0} the special case where we use the new side to look up that
+> entry. Otherwise, look up @{n} using the old side of the (n-1)th entry
+> of the reflog.
+> 
+> Suggested-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
 
-Le 2021-01-02 à 16:34, Martin Ågren a écrit :
-> On Sat, 2 Jan 2021 at 20:39, Philippe Blain via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> From: Philippe Blain <levraiphilippeblain@gmail.com>
->>
->> 'gitmodules.txt' is a guide about the '.gitmodules' file that describes
->> submodules properties, and that file must exist at the root of the
->> repository. This was clarified in e5b5c1d2cf (Document clarification:
->> gitmodules, gitattributes, 2008-08-31).
->>
->> However, that commit mistakenly uses the non-existing environment
->> variable 'GIT_WORK_DIR' to refer to the root of the repository.
-> 
-> Good catch! I wonder what we should conclude from this having gone
-> unreported for so long.
-> 
->> Fix that by using the correct variable, 'GIT_WORK_TREE'. Take the
->> opportunity to modernize and improve the formatting of that guide.
-> 
-> It's a small correctness fix and some prettifying while at it. While I
-> read the diff and realized that it was more than just one or two
-> asciidoc tweaks in the immediate vicinity, I started wondering if this
-> should be presented the other way round: "Let's update the formatting
-> and fix s/DIR/TREE/ while at it." Or to split it up. But I don't think
-> it's worth thinking too much about -- what you have looks good to me.
-> 
->> @@ -32,14 +32,14 @@ submodule.<name>.path::
-> 
-> Just above this point, you have another s/\.gitmodules/`&`/ waiting to
-> be fixed.
+I forgot to mention that the original thread that spawned this idea is
+here:
 
-Thanks, I added that.
-
-> 
->>   submodule.<name>.url::
->>          Defines a URL from which the submodule repository can be cloned.
->>          This may be either an absolute URL ready to be passed to
-> 
->>          dirty;; All changes to the submodule's work tree will be ignored, only
->> -           committed differences between the HEAD of the submodule and its
->> +           committed differences between the 'HEAD' of the submodule and its
->>              recorded state in the superproject are taken into account.
-> 
-> `git grep -B10 HEAD CodingGuidelines` suggests this should be `HEAD`,
-> not 'HEAD'. Maybe you followed style -- there's an instance of 'HEAD'
-> earlier. I think both should be `HEAD`.
-
-Yes, `HEAD` has indeed more hits than 'HEAD'.
-
-> 
->> -If this option is also present in the submodules entry in .git/config
->> +If this option is also present in the submodules entry in `.git/config`
->>   of the superproject, the setting there will override the one found in
->> -.gitmodules.
->> +`.gitmodules`.
-> 
-> Should "submodules entry" be "submodule's entry"? I've never worked with
-> submodules, but that reading somehow seems more natural. (There are two
-> hits for "submodules entry" in this document -- both might be worth
-> looking at.)
-
-I agree, I also added that.
-
-Thanks,
-
-Philippe.
+	https://lore.kernel.org/git/xmqqzh8zgcfp.fsf@gitster.c.googlers.com/
