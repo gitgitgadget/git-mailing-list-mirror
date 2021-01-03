@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21399C433E6
-	for <git@archiver.kernel.org>; Sun,  3 Jan 2021 09:38:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4473C433E0
+	for <git@archiver.kernel.org>; Sun,  3 Jan 2021 09:39:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id E17F220829
-	for <git@archiver.kernel.org>; Sun,  3 Jan 2021 09:38:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7EF4C207D0
+	for <git@archiver.kernel.org>; Sun,  3 Jan 2021 09:39:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726487AbhACJih (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 3 Jan 2021 04:38:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47790 "EHLO
+        id S1726502AbhACJio (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 3 Jan 2021 04:38:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726345AbhACJig (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jan 2021 04:38:36 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2536C0613CF
-        for <git@vger.kernel.org>; Sun,  3 Jan 2021 01:37:55 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id y19so57531672lfa.13
-        for <git@vger.kernel.org>; Sun, 03 Jan 2021 01:37:55 -0800 (PST)
+        with ESMTP id S1726492AbhACJin (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Jan 2021 04:38:43 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA317C0613D3
+        for <git@vger.kernel.org>; Sun,  3 Jan 2021 01:38:02 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id 23so57647794lfg.10
+        for <git@vger.kernel.org>; Sun, 03 Jan 2021 01:38:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=XClaAPDqPKJ2pjsDU3Q20hVdUOKIsnRj6sZJs89IMJk=;
-        b=BWUVu7qrnrpuIsmD4+tGqyT/8RBlDXYAgM1jy7UuJCt6iBJzrC7owF6FNoXoRsFCXB
-         J+/g3bazd4Dg2ZBXojl5sSzLktu35fC3wPCnMXZOcEx4KTGQzLqB2edZC4ND/eLB7c0y
-         z2Jr3nupw9CXHbV5z10D/pKbmAe8yfcDX0O8392P9ZE1rQOk55FY5kBoYboXEGoz/TOM
-         rAsglswan3ja2MJ+CxcoN8HhKxUeFX3Wk6MFcxFeNYXKZ6uvhhqgtWtWqPCMCZk79pen
-         3X+cs280zwQqvLztHgWoGGTEylNTI/90VpfIdEpx+swYZRmEjS5c7opwvh/R5MaKE91E
-         Ym9g==
+        bh=XTsPTBuSCgGq6w0FtryVXQm3qWN5d7A8LdtMbVglqxM=;
+        b=WpFVz/N8YBGOravPMYf0ynL9W7zV6R1yMvKjIDGXnQMNROztL+LyZhjkBBWaa11KXK
+         obtn399Rj+8X81/xFYwJ9wNkBdIpLOtgm+GTvCE1Jo7EYBvxWJ3rluK9RoapgUOGKknO
+         AU9zUSLTc9bcancj0J9iTy4W0Iw18UtMBGX71drAi1uHFo8CRDt/9BcFJmgGSAlEME2E
+         a0UswGvbkZeSvDUvYZU0+crQyBDf5rNxiEV/nSyrBT4rZfrNWgIH+ucNUg7q1vJsvqcB
+         ZmfNXFe2a5fLMAfvWNqDPxIcVHPsVS0ZcXPNULPXviCjH4pZHmXJl4d6C0bNzmjfbrYk
+         XoVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=XClaAPDqPKJ2pjsDU3Q20hVdUOKIsnRj6sZJs89IMJk=;
-        b=PCcHhyVhLmodXrrkFjVtleoAyoDaVK65vco9/M7Ef2bOG7UkK6Sf33ygcYqTjoDm0O
-         cF/pqPrYRePsv0bZPfzy7UrqNlSng8gXvbWLgK7eqykpybnh0TmLkVrB83E8jvrJIIAx
-         gpfQ36Y4iUqLogAFEqmsjO60f1MrQFjypQv3u4MvyOBGZvTN45CduLUFfwmhu+PLG8YC
-         bmV0K3yH7BucnYNH2ndiOMzvVHooli+dqTgemoRLlRtS8qQKe0k8/PO1YQaBN9HNLhk6
-         OBegpjbtN6wQFISSD7BIRS1WDDK/WjQLzMoq4lF5Go66+G2Zlltxging0j7oXTuMujiC
-         BGrw==
-X-Gm-Message-State: AOAM531hLvrcg1ga/feqsgmGCIU7LMb30q2hdBWflsyd2Da0yBoxFuj0
-        /Pyero1IZwl0Tf4WD8JFPmm6YeC+yg0=
-X-Google-Smtp-Source: ABdhPJyftoMrm4kwiAIO1vw9i6/UGwc2641nUoUmOlwfi3zK8/z3GMECPwmHDs0q31/Q0bspA4mc/A==
-X-Received: by 2002:ac2:5333:: with SMTP id f19mr32129928lfh.344.1609666674118;
-        Sun, 03 Jan 2021 01:37:54 -0800 (PST)
+        bh=XTsPTBuSCgGq6w0FtryVXQm3qWN5d7A8LdtMbVglqxM=;
+        b=lQUPVwBIg5QRHFs3Fsjgl0YB13JgnCVmoUqAe2tITZJx/3iIpL+1Yybb9pd560NhGS
+         9XeXVET4lVcibluEfm5WxAzzYvCaK9rSh/tFBtRPjN9bW5R+X0b3pGoLIoiDOPv0fQLg
+         tz50h6wgKxxFhQdCeS57wE6Aw0UHonnr2vkG3rHnC577MhaRo2CdS1QsaNY6mxuWb2j4
+         m/viwiWNVmZBSt4Pp4QBSFf7Hlt9QnWZOeu809HoCdJ2WWms4r4OVosWCpFj8GA9Eq5a
+         VYPsph9dRaCS9zlD6tFNMQZSCrI+LFeqvOlGSKD/ShQqLu/YLLlkxJ8cLaF74ggGvbEx
+         N+zA==
+X-Gm-Message-State: AOAM532lSVi228eQRbvMhH73hgK3qE3pmYQDc9shNkRohywyUcEEKwzA
+        gg0uWcU2mgJRWDXipo9/r5x6jWLbocw=
+X-Google-Smtp-Source: ABdhPJwZKx4D7kzrspklHAF8lxEzQ+kshIU/F3nuenjwlxH5rXy4UcnweF6e+p34dDBD1gflHWhE7A==
+X-Received: by 2002:a2e:91d9:: with SMTP id u25mr32214089ljg.79.1609666681043;
+        Sun, 03 Jan 2021 01:38:01 -0800 (PST)
 Received: from localhost.localdomain (host-189-203-5.junet.se. [207.189.203.5])
-        by smtp.gmail.com with ESMTPSA id h13sm7025202lfj.110.2021.01.03.01.37.53
+        by smtp.gmail.com with ESMTPSA id h13sm7025202lfj.110.2021.01.03.01.38.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Jan 2021 01:37:53 -0800 (PST)
+        Sun, 03 Jan 2021 01:38:00 -0800 (PST)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH 2/3] t1300: remove duplicate test for `--file no-such-file`
-Date:   Sun,  3 Jan 2021 10:36:47 +0100
-Message-Id: <20210103093649.2221-3-martin.agren@gmail.com>
+Subject: [PATCH 3/3] t1300: don't needlessly work with `core.foo` configs
+Date:   Sun,  3 Jan 2021 10:36:48 +0100
+Message-Id: <20210103093649.2221-4-martin.agren@gmail.com>
 X-Mailer: git-send-email 2.30.0
 In-Reply-To: <20210103093649.2221-1-martin.agren@gmail.com>
 References: <20210103093649.2221-1-martin.agren@gmail.com>
@@ -72,48 +72,206 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We test that we can handle `git config --file symlink` and the error
-case of `git config --file symlink-to-missing-file`. For good measure,
-we also throw in a test to check that we correctly handle referencing a
-missing regular file. But we have such a test earlier in this script.
-They both check that we fail to use `--file no-such-file --list`.
+We use various made-up config keys in the "core" section for no real
+reason. Change them to work in the "section" section instead and be
+careful to also change "cores" to "sections". Make sure to also catch
+"Core", "CoReS" and similar.
 
-Drop the latter of these and keep the one that is in the general area
-where we test `--file` and `GIT_CONFIG`. The one we're dropping also
-checks that we can't even get a specific key from the missing file --
-let's make sure we check that in the test we keep.
+There are a few instances that actually want to work with a real "core"
+config such as `core.bare` or `core.editor`. After this, it's clearer
+that they work with "core" for a reason.
 
+Reported-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- t/t1300-config.sh | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ t/t1300-config.sh | 60 +++++++++++++++++++++++------------------------
+ 1 file changed, 30 insertions(+), 30 deletions(-)
 
 diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index 302821fb02..1439d870d6 100755
+index 1439d870d6..1a4156c704 100755
 --- a/t/t1300-config.sh
 +++ b/t/t1300-config.sh
-@@ -469,7 +469,8 @@ test_expect_success 'new variable inserts into proper section' '
+@@ -12,75 +12,75 @@ test_expect_success 'clear default config' '
  '
  
- test_expect_success 'alternative --file (non-existing file should fail)' '
--	test_must_fail git config --file non-existing-config -l
-+	test_must_fail git config --file non-existing-config -l &&
-+	test_must_fail git config --file non-existing-config test.xyzzy
+ cat > expect << EOF
+-[core]
++[section]
+ 	penguin = little blue
+ EOF
+ test_expect_success 'initial' '
+-	git config core.penguin "little blue" &&
++	git config section.penguin "little blue" &&
+ 	test_cmp expect .git/config
  '
  
- cat > other-config << EOF
-@@ -1032,11 +1033,6 @@ test_expect_success SYMLINKS 'symlinked configuration' '
+ cat > expect << EOF
+-[core]
++[section]
+ 	penguin = little blue
+ 	Movie = BadPhysics
+ EOF
+ test_expect_success 'mixed case' '
+-	git config Core.Movie BadPhysics &&
++	git config Section.Movie BadPhysics &&
+ 	test_cmp expect .git/config
+ '
+ 
+ cat > expect << EOF
+-[core]
++[section]
+ 	penguin = little blue
+ 	Movie = BadPhysics
+-[Cores]
++[Sections]
+ 	WhatEver = Second
+ EOF
+ test_expect_success 'similar section' '
+-	git config Cores.WhatEver Second &&
++	git config Sections.WhatEver Second &&
+ 	test_cmp expect .git/config
+ '
+ 
+ cat > expect << EOF
+-[core]
++[section]
+ 	penguin = little blue
+ 	Movie = BadPhysics
+ 	UPPERCASE = true
+-[Cores]
++[Sections]
+ 	WhatEver = Second
+ EOF
+ test_expect_success 'uppercase section' '
+-	git config CORE.UPPERCASE true &&
++	git config SECTION.UPPERCASE true &&
+ 	test_cmp expect .git/config
+ '
+ 
+ test_expect_success 'replace with non-match' '
+-	git config core.penguin kingpin !blue
++	git config section.penguin kingpin !blue
+ '
+ 
+ test_expect_success 'replace with non-match (actually matching)' '
+-	git config core.penguin "very blue" !kingpin
++	git config section.penguin "very blue" !kingpin
+ '
+ 
+ cat > expect << EOF
+-[core]
++[section]
+ 	penguin = very blue
+ 	Movie = BadPhysics
+ 	UPPERCASE = true
+ 	penguin = kingpin
+-[Cores]
++[Sections]
+ 	WhatEver = Second
+ EOF
+ 
+ test_expect_success 'non-match result' 'test_cmp expect .git/config'
+ 
+ test_expect_success 'find mixed-case key by canonical name' '
+-	test_cmp_config Second cores.whatever
++	test_cmp_config Second sections.whatever
+ '
+ 
+ test_expect_success 'find mixed-case key by non-canonical name' '
+-	test_cmp_config Second CoReS.WhAtEvEr
++	test_cmp_config Second SeCtIoNs.WhAtEvEr
+ '
+ 
+ test_expect_success 'subsections are not canonicalized by git-config' '
+@@ -1057,12 +1057,12 @@ test_expect_success 'git -c "key=value" support' '
+ 	true
+ 	EOF
+ 	{
+-		git -c core.name=value config core.name &&
++		git -c section.name=value config section.name &&
+ 		git -c foo.CamelCase=value config foo.camelcase &&
+ 		git -c foo.flag config --bool foo.flag
+ 	} >actual &&
+ 	test_cmp expect actual &&
+-	test_must_fail git -c name=value config core.name
++	test_must_fail git -c name=value config section.name
+ '
+ 
+ # We just need a type-specifier here that cares about the
+@@ -1107,7 +1107,7 @@ test_expect_success 'aliases can be CamelCased' '
+ 
+ test_expect_success 'git -c does not split values on equals' '
+ 	echo "value with = in it" >expect &&
+-	git -c core.foo="value with = in it" config core.foo >actual &&
++	git -c section.foo="value with = in it" config section.foo >actual &&
  	test_cmp expect actual
  '
  
--test_expect_success 'nonexistent configuration' '
--	test_must_fail git config --file=doesnotexist --list &&
--	test_must_fail git config --file=doesnotexist test.xyzzy
--'
--
- test_expect_success SYMLINKS 'symlink to nonexistent configuration' '
- 	ln -s doesnotexist linktonada &&
- 	ln -s linktonada linktolinktonada &&
+@@ -1838,53 +1838,53 @@ do
+ done
+ 
+ cat >.git/config <<-\EOF &&
+-[core]
++[section]
+ foo = true
+ number = 10
+ big = 1M
+ EOF
+ 
+ test_expect_success 'identical modern --type specifiers are allowed' '
+-	test_cmp_config 1048576 --type=int --type=int core.big
++	test_cmp_config 1048576 --type=int --type=int section.big
+ '
+ 
+ test_expect_success 'identical legacy --type specifiers are allowed' '
+-	test_cmp_config 1048576 --int --int core.big
++	test_cmp_config 1048576 --int --int section.big
+ '
+ 
+ test_expect_success 'identical mixed --type specifiers are allowed' '
+-	test_cmp_config 1048576 --int --type=int core.big
++	test_cmp_config 1048576 --int --type=int section.big
+ '
+ 
+ test_expect_success 'non-identical modern --type specifiers are not allowed' '
+-	test_must_fail git config --type=int --type=bool core.big 2>error &&
++	test_must_fail git config --type=int --type=bool section.big 2>error &&
+ 	test_i18ngrep "only one type at a time" error
+ '
+ 
+ test_expect_success 'non-identical legacy --type specifiers are not allowed' '
+-	test_must_fail git config --int --bool core.big 2>error &&
++	test_must_fail git config --int --bool section.big 2>error &&
+ 	test_i18ngrep "only one type at a time" error
+ '
+ 
+ test_expect_success 'non-identical mixed --type specifiers are not allowed' '
+-	test_must_fail git config --type=int --bool core.big 2>error &&
++	test_must_fail git config --type=int --bool section.big 2>error &&
+ 	test_i18ngrep "only one type at a time" error
+ '
+ 
+ test_expect_success '--type allows valid type specifiers' '
+-	test_cmp_config true  --type=bool core.foo
++	test_cmp_config true  --type=bool section.foo
+ '
+ 
+ test_expect_success '--no-type unsets type specifiers' '
+-	test_cmp_config 10 --type=bool --no-type core.number
++	test_cmp_config 10 --type=bool --no-type section.number
+ '
+ 
+ test_expect_success 'unset type specifiers may be reset to conflicting ones' '
+-	test_cmp_config 1048576 --type=bool --no-type --type=int core.big
++	test_cmp_config 1048576 --type=bool --no-type --type=int section.big
+ '
+ 
+ test_expect_success '--type rejects unknown specifiers' '
+-	test_must_fail git config --type=nonsense core.foo 2>error &&
++	test_must_fail git config --type=nonsense section.foo 2>error &&
+ 	test_i18ngrep "unrecognized --type argument" error
+ '
+ 
 -- 
 2.30.0
 
