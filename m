@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D98EC433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61A66C433E9
 	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 23:51:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 02CC22253D
-	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 23:51:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3864E2253D
+	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 23:51:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727878AbhADXvQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Jan 2021 18:51:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33648 "EHLO
+        id S1727890AbhADXvT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Jan 2021 18:51:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727826AbhADXvQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Jan 2021 18:51:16 -0500
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BDBCC06179A
-        for <git@vger.kernel.org>; Mon,  4 Jan 2021 15:50:36 -0800 (PST)
-Received: by mail-ot1-x32b.google.com with SMTP id j20so27739443otq.5
-        for <git@vger.kernel.org>; Mon, 04 Jan 2021 15:50:36 -0800 (PST)
+        with ESMTP id S1727826AbhADXvR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Jan 2021 18:51:17 -0500
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78E20C0617A6
+        for <git@vger.kernel.org>; Mon,  4 Jan 2021 15:50:44 -0800 (PST)
+Received: by mail-ot1-x334.google.com with SMTP id r9so27681280otk.11
+        for <git@vger.kernel.org>; Mon, 04 Jan 2021 15:50:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=D3/K76RpxK95m/dgFzqFg6bo0ITTMqrb4v0r2gO+Kok=;
-        b=fkYeQI6Cd+3tCaGuu5vsBvLgA6HX2A8fJBNIuW4kHAqefrw0ZOXiR22IEcmC/WZ9Va
-         ZVAHZr0XM/7iurzVjWQgZ+2vD894GZV0xtOO0kU1CJsnot7VGPjn3o2LNxiVSwBqWkYO
-         77ddt0aK5yYpvLcmh6qt0Zr9cQiuOFelsn2ubooMYxJCen5iXUtU19zB9a5Iotp58p4Z
-         bB9ITIHdbX7pYsjn9KVVSSxaGYEbRLhV3cgvUlGX8UkmRAzEvuBek9CCpA1JIMyiww/W
-         U/8lqq237K3o0kQ73mYGZhespsrP15IsCPEtJ8cNJ9TIqTneTpKSgrF9YQAjPwb6i6V1
-         tWkQ==
+        bh=aHVe7bKOa7rO3CZHK14AowessT5lSzkarRPSP2gmUMc=;
+        b=Ls0jDlIJKxaAkasjgTZ5sXd/j1q0ge+4OMujNH98cwfFwVcEBklQ5z/vviLpmvlyXB
+         3FmU88a19q68pCQDB2VrjamwSx9w/JZ7LvRGqVSlmbM3oXCswxfLHiucol/s1LDt2+l1
+         dFP8t0eFIHPB5br+RBzawCSy0bXXm5y97qJYpcJ/2gCfmyLmPnEpdpo7QW3TyjT9endK
+         sZ6+uagFvrlkHFBOP96RqCdkg/enWNN6MSa5yGDDyn6ugTUpf2voklue6D1t7XKA3l+e
+         wMqfrzDfXpnGKgMq13JcbHzByMUaMfVt6PkghUToPtIqpQPg5A3w6YVzjJOf/6UDZF65
+         w9LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=D3/K76RpxK95m/dgFzqFg6bo0ITTMqrb4v0r2gO+Kok=;
-        b=SZ+pcLN/VaQ/o9zMXP8AE/26lyyzZTM3FNtLvWxHppxPqNKtWeAmgxn2qdYCliZSWT
-         VfbmZ3Cumsn00pVWsBSma9tjn/88M5yH3JNwNTsl9d2/3JBJcYaeOgBHnH/wtpKCsNxF
-         lSygVnLL3tS2niRCnRNKkJJrZspYZICYDcoPbzVEon2Okrv37rDpBYqKZ1Unzydm622J
-         2k2R51b1w6b5yXwMqLz+gtzYGYWILTCREmv6x4XGybgq83O6usbs7RBkJnCkjzJBEYve
-         +Pc506mAwmjX3VfjknscbtLdCjgpDxVHWaVeuD6l9yU2XIJ/d7koYDcvBQvBx8o51Aj/
-         8voA==
-X-Gm-Message-State: AOAM532PA27op5HvrNozRDRcduFUpY0P36POiksiv7ztSqGYVbo+KAwm
-        zALpOilj5wLommonCIr7lpb6fmxP/zs=
-X-Google-Smtp-Source: ABdhPJxTMeoyxnKPAX2NQ2M0bSBFZ+qnVG0UpjQGff7tlTlMVU8n33huBt5oxVxtgd3duEVS/cdXcg==
-X-Received: by 2002:a9d:508:: with SMTP id 8mr54538827otw.338.1609804235419;
-        Mon, 04 Jan 2021 15:50:35 -0800 (PST)
+        bh=aHVe7bKOa7rO3CZHK14AowessT5lSzkarRPSP2gmUMc=;
+        b=MKIn0JVrIR7qeNRbxbjGIkb49P/F9kkWSwA3zUZMgf6olvDIs2o+8Xp+O2LuR07nd/
+         cIagfts99AZs92DUufDr90ovvOj3yOJKb/oLVf0rBJY3dISp2SB8gJjzQmu6sdnUq2EF
+         YS4u1Uw+EdGnvfVpNAZYsChd4nPPTcwfFcY+HJfjMrkaJUYTnDb+rgw//yWrHVkGWFLW
+         UOsbXT6S38FrF9iEm/8+f1ksHKDsAeD/RykF/QqeeegxWHZlni7xTLeZcgmIlhEoh6oC
+         wblW1PDl4RlS3aPk2LXghrDI3NM/RmRTua5mgDs/Xq57lMP5d2cpGENXl0KZMOMoCGQU
+         Bxrw==
+X-Gm-Message-State: AOAM531cRVNok1zrPiNn7O1n0nMtYkmzH/LoGT+xlcAM0Usoz1Qggzih
+        Kx3c/HeN1gHCVAizSbORBzhE9ZdjPPQ=
+X-Google-Smtp-Source: ABdhPJyHusW8VxnQWLJuyREKhoaSF9sLuyGsPb1pjU8F8+QO5SGB19j4gFTLei2ka1eTmHyIVNOpNg==
+X-Received: by 2002:a05:6830:916:: with SMTP id v22mr55765770ott.257.1609804243777;
+        Mon, 04 Jan 2021 15:50:43 -0800 (PST)
 Received: from tiger.attlocal.net ([2600:1700:bae0:2de0::26])
-        by smtp.gmail.com with ESMTPSA id o135sm13359600ooo.38.2021.01.04.15.50.34
+        by smtp.gmail.com with ESMTPSA id o135sm13359600ooo.38.2021.01.04.15.50.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Jan 2021 15:50:35 -0800 (PST)
+        Mon, 04 Jan 2021 15:50:43 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Elijah Newren <newren@gmail.com>
-Subject: [PATCH 06/17] merge-ort: copy get_renamed_dir_portion() from merge-recursive.c
-Date:   Mon,  4 Jan 2021 15:49:55 -0800
-Message-Id: <20210104235006.2867404-7-newren@gmail.com>
+Subject: [PATCH 14/17] merge-ort: add a new toplevel_dir field
+Date:   Mon,  4 Jan 2021 15:50:03 -0800
+Message-Id: <20210104235006.2867404-15-newren@gmail.com>
 X-Mailer: git-send-email 2.29.1.106.g3ff750dc32.dirty
 In-Reply-To: <20210104235006.2867404-1-newren@gmail.com>
 References: <20210104235006.2867404-1-newren@gmail.com>
@@ -71,126 +71,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Due to the string-equality-iff-pointer-equality requirements placed on
+merged_info.directory_name, apply_directory_rename_modifications() will
+need to have access to the exact toplevel directory name string pointer
+and can't just use a new empty string.  Store it in a field that we can
+use.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 104 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 104 insertions(+)
+ merge-ort.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 6ccc7a1a45..19c3f8d41d 100644
+index d0fb8f4282..230224e680 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -1139,6 +1139,110 @@ static int handle_content_merge(struct merge_options *opt,
+@@ -171,12 +171,15 @@ struct merge_options_internal {
+ 	struct rename_info renames;
  
- /*** Function Grouping: functions related to directory rename detection ***/
+ 	/*
+-	 * current_dir_name: temporary var used in collect_merge_info_callback()
++	 * current_dir_name, toplevel_dir: temporary vars
+ 	 *
+-	 * Used to set merged_info.directory_name; see documentation for that
+-	 * variable and the requirements placed on that field.
++	 * These are used in collect_merge_info_callback(), and will set the
++	 * various merged_info.directory_name for the various paths we get;
++	 * see documentation for that variable and the requirements placed on
++	 * that field.
+ 	 */
+ 	const char *current_dir_name;
++	const char *toplevel_dir;
  
-+MAYBE_UNUSED
-+static void get_renamed_dir_portion(const char *old_path, const char *new_path,
-+				    char **old_dir, char **new_dir)
-+{
-+	char *end_of_old, *end_of_new;
-+
-+	/* Default return values: NULL, meaning no rename */
-+	*old_dir = NULL;
-+	*new_dir = NULL;
-+
-+	/*
-+	 * For
-+	 *    "a/b/c/d/e/foo.c" -> "a/b/some/thing/else/e/foo.c"
-+	 * the "e/foo.c" part is the same, we just want to know that
-+	 *    "a/b/c/d" was renamed to "a/b/some/thing/else"
-+	 * so, for this example, this function returns "a/b/c/d" in
-+	 * *old_dir and "a/b/some/thing/else" in *new_dir.
-+	 */
-+
-+	/*
-+	 * If the basename of the file changed, we don't care.  We want
-+	 * to know which portion of the directory, if any, changed.
-+	 */
-+	end_of_old = strrchr(old_path, '/');
-+	end_of_new = strrchr(new_path, '/');
-+
-+	/*
-+	 * If end_of_old is NULL, old_path wasn't in a directory, so there
-+	 * could not be a directory rename (our rule elsewhere that a
-+	 * directory which still exists is not considered to have been
-+	 * renamed means the root directory can never be renamed -- because
-+	 * the root directory always exists).
-+	 */
-+	if (end_of_old == NULL)
-+		return; /* Note: *old_dir and *new_dir are still NULL */
-+
-+	/*
-+	 * If new_path contains no directory (end_of_new is NULL), then we
-+	 * have a rename of old_path's directory to the root directory.
-+	 */
-+	if (end_of_new == NULL) {
-+		*old_dir = xstrndup(old_path, end_of_old - old_path);
-+		*new_dir = xstrdup("");
-+		return;
-+	}
-+
-+	/* Find the first non-matching character traversing backwards */
-+	while (*--end_of_new == *--end_of_old &&
-+	       end_of_old != old_path &&
-+	       end_of_new != new_path)
-+		; /* Do nothing; all in the while loop */
-+
-+	/*
-+	 * If both got back to the beginning of their strings, then the
-+	 * directory didn't change at all, only the basename did.
-+	 */
-+	if (end_of_old == old_path && end_of_new == new_path &&
-+	    *end_of_old == *end_of_new)
-+		return; /* Note: *old_dir and *new_dir are still NULL */
-+
-+	/*
-+	 * If end_of_new got back to the beginning of its string, and
-+	 * end_of_old got back to the beginning of some subdirectory, then
-+	 * we have a rename/merge of a subdirectory into the root, which
-+	 * needs slightly special handling.
-+	 *
-+	 * Note: There is no need to consider the opposite case, with a
-+	 * rename/merge of the root directory into some subdirectory
-+	 * because as noted above the root directory always exists so it
-+	 * cannot be considered to be renamed.
-+	 */
-+	if (end_of_new == new_path &&
-+	    end_of_old != old_path && end_of_old[-1] == '/') {
-+		*old_dir = xstrndup(old_path, --end_of_old - old_path);
-+		*new_dir = xstrdup("");
-+		return;
-+	}
-+
-+	/*
-+	 * We've found the first non-matching character in the directory
-+	 * paths.  That means the current characters we were looking at
-+	 * were part of the first non-matching subdir name going back from
-+	 * the end of the strings.  Get the whole name by advancing both
-+	 * end_of_old and end_of_new to the NEXT '/' character.  That will
-+	 * represent the entire directory rename.
-+	 *
-+	 * The reason for the increment is cases like
-+	 *    a/b/star/foo/whatever.c -> a/b/tar/foo/random.c
-+	 * After dropping the basename and going back to the first
-+	 * non-matching character, we're now comparing:
-+	 *    a/b/s          and         a/b/
-+	 * and we want to be comparing:
-+	 *    a/b/star/      and         a/b/tar/
-+	 * but without the pre-increment, the one on the right would stay
-+	 * a/b/.
-+	 */
-+	end_of_old = strchr(++end_of_old, '/');
-+	end_of_new = strchr(++end_of_new, '/');
-+
-+	/* Copy the old and new directories into *old_dir and *new_dir. */
-+	*old_dir = xstrndup(old_path, end_of_old - old_path);
-+	*new_dir = xstrndup(new_path, end_of_new - new_path);
-+}
-+
- static void compute_rename_counts(struct diff_queue_struct *pairs,
- 				  struct strmap *dir_rename_count,
- 				  struct strset *dirs_removed)
+ 	/* call_depth: recursion level counter for merging merge bases */
+ 	int call_depth;
+@@ -734,10 +737,10 @@ static int collect_merge_info(struct merge_options *opt,
+ 	int ret;
+ 	struct tree_desc t[3];
+ 	struct traverse_info info;
+-	const char *toplevel_dir_placeholder = "";
+ 
+-	opt->priv->current_dir_name = toplevel_dir_placeholder;
+-	setup_traverse_info(&info, toplevel_dir_placeholder);
++	opt->priv->toplevel_dir = "";
++	opt->priv->current_dir_name = opt->priv->toplevel_dir;
++	setup_traverse_info(&info, opt->priv->toplevel_dir);
+ 	info.fn = collect_merge_info_callback;
+ 	info.data = opt;
+ 	info.show_all_errors = 1;
 -- 
 2.29.1.106.g3ff750dc32.dirty
 
