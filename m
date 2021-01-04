@@ -2,121 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0644DC433DB
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30DB2C433E6
 	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 23:48:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BC67F22519
+	by mail.kernel.org (Postfix) with ESMTP id EF6052255F
 	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 23:48:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727599AbhADXrp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Jan 2021 18:47:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33074 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727497AbhADXrp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Jan 2021 18:47:45 -0500
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11583C061794
-        for <git@vger.kernel.org>; Mon,  4 Jan 2021 15:47:05 -0800 (PST)
-Received: by mail-pf1-x429.google.com with SMTP id x126so17321391pfc.7
-        for <git@vger.kernel.org>; Mon, 04 Jan 2021 15:47:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=D3XIIQgY1pK6XYSYRHfVIwrsB6AeeI8Y3zcaqTNG+vo=;
-        b=Qz33iSIe6hnVroYMpASx6fp+3g+828pXAcM/tpUEPlqcEJj70yfBU5ZK2OIzVy6Xu2
-         0gkX1FRcKXx1Pf7Hqg1wTiYsornEzl4Q7pi8xDK+3hEgjY6b4fcCew7jqz59Ky1ol+Gf
-         HVcO8ohBWWkymGnuJeBxWzKA4Oin07DufIe4M=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=D3XIIQgY1pK6XYSYRHfVIwrsB6AeeI8Y3zcaqTNG+vo=;
-        b=tX+Yj89JRVk+arhzJ+Tes4GuEHRKLUF8jRN8EWS1lNwaYWrU2rwEl0v4jjMGfXpkXo
-         l2IxPGTKpHqsQu+Uz3Xi3YGRXJS4BFT416r/o94sIRj2qHLeqNFr5NuIAL9WDrQ6wo5p
-         Vany5YwfpIYW8UFINi+AYAD1UwXzKhJVxofrjsY1849I9yUXPr+0HxOsncRksUbC1iA1
-         VjgqKhM3nl7MGmYv/66UKvZf3tBFq165zhDixOuj8pVHVHPjbudEJuvuheMMv5F2TmRH
-         nvNkRFayH/efYG536/q3RnqTkthfte9l705dlW9RF4ZfoOZdiYbZzOkknDIxKlEQsyhY
-         IRtQ==
-X-Gm-Message-State: AOAM532JADmN8wEs6K/YoX0usAQDfESyQZiW4nne5xLnscGDE3ovHmGT
-        XhutN/mAJ9xQncBSKcrgoGB2EixkcfiV0dGh
-X-Google-Smtp-Source: ABdhPJw7CBiwsIyWafQIAmuaU5xxOlSfPNYLM56yF75PW76z7rCO/jMU0NVlYhUnHoZUFA4fxPy0Lw==
-X-Received: by 2002:a0c:a789:: with SMTP id v9mr77444353qva.41.1609795223615;
-        Mon, 04 Jan 2021 13:20:23 -0800 (PST)
-Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id t184sm38683667qkd.100.2021.01.04.13.20.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Jan 2021 13:20:22 -0800 (PST)
-Date:   Mon, 4 Jan 2021 16:20:20 -0500
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Stefan Monnier <monnier@iro.umontreal.ca>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] Destructive access to an "objects/info/alternates"
- repository
-Message-ID: <20210104212020.qnokgnpvsoxlm77j@chatter.i7.local>
-Mail-Followup-To: Stefan Monnier <monnier@iro.umontreal.ca>,
-        git@vger.kernel.org
-References: <jwvpn2tdb0r.fsf-monnier+gmane.comp.version-control.git@gnu.org>
- <20201228190036.vnkgeu6puxmvgt5s@chatter.i7.local>
- <jwv8s9hd9cg.fsf-monnier+Inbox@gnu.org>
- <jwvlfdhbsbs.fsf-monnier+gmane.comp.version-control.git@gnu.org>
- <20201229154403.xutnk2aoawdrjfwx@chatter.i7.local>
- <jwv1rf26k9n.fsf-monnier+gmane.comp.version-control.git@gnu.org>
- <20210104135410.myjaygaulqnxcnsc@chatter.i7.local>
- <jwvlfd81le8.fsf-monnier+gmane.comp.version-control.git@gnu.org>
+        id S1727673AbhADXrz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Jan 2021 18:47:55 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58341 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726365AbhADXry (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Jan 2021 18:47:54 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 21B0C1014F1;
+        Mon,  4 Jan 2021 18:47:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=7TtY4Zu6p5q6UBOsQD84qm5BP7o=; b=YlBAC/bSX4kCgUM49fom
+        ZdcUYjfrhCkymjpLNwxJiOgsnrR3BZBy9lKZSW1mlmFo9yltn1anSepMioywapju
+        nfBKtpiRSBbyUrRR9uFRNfWU4Q+RTF8/wDhxqqvA6bwq8ku3ayV+5fhydQZfdl3p
+        bPaBMUlrp02qUngkMlOCTJA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=pWIWJu/7R2FFqUmMkSx9QIvlwG/Ud6CdNh4Ltco8capgxx
+        dFPtgKAm2ldmD0yRIu6LT3mb9eIZI/PWM4oDMnB6B/F5WW47YVzkfXcUhM40BCOB
+        44/SZ7Uf6O1Clug0eQsWnWKgXiFAiN6ZHx4W0Gk6SsJG/eaxGk+AXjGz1QrTw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 199F51014EF;
+        Mon,  4 Jan 2021 18:47:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.196.173.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 46CC21014EE;
+        Mon,  4 Jan 2021 18:47:08 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Yaroslav Nikitenko <metst13@gmail.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+Subject: Re: git-dir requires work-tree; documentation improvements for
+ working directory
+References: <CA+RLzGCtp2T=8DG74geBs67X5vUvhwRP4FMZ6MJv+E+Pj=YbWw@mail.gmail.com>
+        <5ff0c58422038_90dc208ea@natae.notmuch>
+        <CA+RLzGArUrxC-Kbng3qGpRZUrZXKZj3zD3Hcut=XrUY-i-eYAw@mail.gmail.com>
+Date:   Mon, 04 Jan 2021 15:47:06 -0800
+Message-ID: <xmqqmtxo464l.fsf@gitster.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <jwvlfd81le8.fsf-monnier+gmane.comp.version-control.git@gnu.org>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 28292DEA-4EE7-11EB-B710-D609E328BF65-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 04, 2021 at 03:47:53PM -0500, Stefan Monnier wrote:
-> > I agree with Stefan that this is undesired behaviour, even when it only
-> > happens when attempting to clean up garbage -- git-gc (and git-count-objects)
-> > should distinguish between garbage in the parent repository and its own
-> > repository and not attempt any modification of the parent repository during
-> > gc or any other operation.
-> 
-> Great, so IIUC:
-> - this is a harmless warning
+Yaroslav Nikitenko <metst13@gmail.com> writes:
 
-Well, this is a benign situation in general, since git only tries to delete
-files that it determined to be garbage. Even if it succeeded in your case, it
-wouldn't really modify the actual shared repository state/contents.
+> It starts to work when I remove my .cfg/config. I've no idea why it
+> happens. Here is its contents:
+>
+> $ more .cfg/config
+> [core]
+> 	repositoryformatversion = 0
+> 	filemode = true
+> 	bare = true
 
-> - it's considered as a bug
+As Felipe notes downthread, with "core.bare=true", the repository is
+telling Git that it does not have a worktree.  The "assume that $CWD
+is the top of the worktree" default would have no room to kick in.
 
-I'm not really someone who decides if it's a bug or not. :) I *think* it's a
-bug, since git modifies the repository from which it should be merely
-borrowing objects (a read-only operation). Even if the results are benign,
-it's not something that should be happening, in my opinion.
+With --worktree=<there> option or GIT_WORK_TREE environment
+variable, you can tell Git to pretend that there is a worktree there
+at the specified location.  Or perhaps "git -c core.bare=false", you
+may be able to force the "assume that $CWD is the top of the worktree"
+default to kick in.
 
-> - so my use case should work fine in practice and is not considered as
->   "too weird to be supported"
+"git help git" has this in --git-dir=<path>
 
-It's easy to replicate, if someone feels like fixing it:
+    Specifying the location of the ".git" directory using this
+    option (or `GIT_DIR` environment variable) turns off the
+    repository discovery that tries to find a directory with
+    ".git" subdirectory (which is how the repository and the
+    top-level of the working tree are discovered), and tells Git
+    that you are at the top level of the working tree.  If you
+    are not at the top-level directory of the working tree, you
+    should tell Git where the top-level of the working tree is,
+    with the `--work-tree=<path>` option (or `GIT_WORK_TREE`
+    environment variable)
 
-mkdir repo1
-cd repo1
-git init
-echo test > test
-git add test
-git commit -am test
-touch .git/objects/pack/pack-abcd.idx
-cd ..
-git clone -s repo1 repo2
-cd repo2
-git gc
-ls -al ../repo1/.git/objects/pack/pack-abcd.idx
-/bin/ls: cannot access '../repo1/.git/objects/pack/pack-abcd.idx': No such file or directory
+but apparently the description forgets that there are repositories
+with core.bare explicitly set to true.  There is a room for doc
+improvement here.
 
-Hope this helps.
+Perhaps something like this?
 
--K
+ Documentation/git.txt | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
+
+diff --git c/Documentation/git.txt w/Documentation/git.txt
+index c463b937a8..6f8225e3ef 100644
+--- c/Documentation/git.txt
++++ w/Documentation/git.txt
+@@ -118,12 +118,15 @@ Specifying the location of the ".git" directory using this
+ option (or `GIT_DIR` environment variable) turns off the
+ repository discovery that tries to find a directory with
+ ".git" subdirectory (which is how the repository and the
+-top-level of the working tree are discovered), and tells Git
+-that you are at the top level of the working tree.  If you
+-are not at the top-level directory of the working tree, you
+-should tell Git where the top-level of the working tree is,
++top-level of the working tree are discovered), and if the
++repository has a working tree, i.e. `core.bare` is `false`,
++tells Git that you are at the top level of the working tree. If you
++are not at the top-level directory of the working tree, or
++if `core.bare` is set to `true` and you are trying to pretend
++there is a working tree associated with the repository, you
++can tell Git where the top-level of the working tree is,
+ with the `--work-tree=<path>` option (or `GIT_WORK_TREE`
+-environment variable)
++environment variable).
+ +
+ If you just want to run git as if it was started in `<path>` then use
+ `git -C <path>`.
