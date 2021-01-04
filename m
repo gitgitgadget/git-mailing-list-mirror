@@ -4,88 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1AB3C433E0
-	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 23:44:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0644DC433DB
+	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 23:48:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 65C2D2253D
-	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 23:44:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC67F22519
+	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 23:48:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727200AbhADXoj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Jan 2021 18:44:39 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51607 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726163AbhADXoj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Jan 2021 18:44:39 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 30D23A40F3;
-        Mon,  4 Jan 2021 18:43:57 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=NG/LMkPDGYIlF+ZWYqzD3OHIt
-        6w=; b=BfLvxs1cMoLwbnLhlxce1b0otokvWuPt76Y/Vkk47D8YT3UQKQ0Somkxs
-        8/WHGst8hmIVsn+wp/lngqQsu7AYBkNmS6m6D3GkKUC5m1znVnQTQnSJDZAGIcWm
-        xdkm/zBc7u4LfHDeb0QVr5o9tj5EB+7T2zDCpuyNnE+BqW70Vg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=jtT1wzZgvO/z8VSyd4X
-        1bBI09hya2MPYSZ/qmxaotiCryAFPeGC3zYKDXw64tnKc727KYcz72LnhSHHpFfI
-        jTFETIo8Ag9hKWHIgFmdDhfSB6UBmMpJ0p9appIwi8lFhKd9SPvHlFxihBGSrmC3
-        NCr2coq38+8y5vesdE37oHqQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 29184A40F2;
-        Mon,  4 Jan 2021 18:43:57 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AD37EA40F1;
-        Mon,  4 Jan 2021 18:43:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        id S1727599AbhADXrp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Jan 2021 18:47:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33074 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727497AbhADXrp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Jan 2021 18:47:45 -0500
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11583C061794
+        for <git@vger.kernel.org>; Mon,  4 Jan 2021 15:47:05 -0800 (PST)
+Received: by mail-pf1-x429.google.com with SMTP id x126so17321391pfc.7
+        for <git@vger.kernel.org>; Mon, 04 Jan 2021 15:47:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=D3XIIQgY1pK6XYSYRHfVIwrsB6AeeI8Y3zcaqTNG+vo=;
+        b=Qz33iSIe6hnVroYMpASx6fp+3g+828pXAcM/tpUEPlqcEJj70yfBU5ZK2OIzVy6Xu2
+         0gkX1FRcKXx1Pf7Hqg1wTiYsornEzl4Q7pi8xDK+3hEgjY6b4fcCew7jqz59Ky1ol+Gf
+         HVcO8ohBWWkymGnuJeBxWzKA4Oin07DufIe4M=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=D3XIIQgY1pK6XYSYRHfVIwrsB6AeeI8Y3zcaqTNG+vo=;
+        b=tX+Yj89JRVk+arhzJ+Tes4GuEHRKLUF8jRN8EWS1lNwaYWrU2rwEl0v4jjMGfXpkXo
+         l2IxPGTKpHqsQu+Uz3Xi3YGRXJS4BFT416r/o94sIRj2qHLeqNFr5NuIAL9WDrQ6wo5p
+         Vany5YwfpIYW8UFINi+AYAD1UwXzKhJVxofrjsY1849I9yUXPr+0HxOsncRksUbC1iA1
+         VjgqKhM3nl7MGmYv/66UKvZf3tBFq165zhDixOuj8pVHVHPjbudEJuvuheMMv5F2TmRH
+         nvNkRFayH/efYG536/q3RnqTkthfte9l705dlW9RF4ZfoOZdiYbZzOkknDIxKlEQsyhY
+         IRtQ==
+X-Gm-Message-State: AOAM532JADmN8wEs6K/YoX0usAQDfESyQZiW4nne5xLnscGDE3ovHmGT
+        XhutN/mAJ9xQncBSKcrgoGB2EixkcfiV0dGh
+X-Google-Smtp-Source: ABdhPJw7CBiwsIyWafQIAmuaU5xxOlSfPNYLM56yF75PW76z7rCO/jMU0NVlYhUnHoZUFA4fxPy0Lw==
+X-Received: by 2002:a0c:a789:: with SMTP id v9mr77444353qva.41.1609795223615;
+        Mon, 04 Jan 2021 13:20:23 -0800 (PST)
+Received: from chatter.i7.local ([89.36.78.230])
+        by smtp.gmail.com with ESMTPSA id t184sm38683667qkd.100.2021.01.04.13.20.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Jan 2021 13:20:22 -0800 (PST)
+Date:   Mon, 4 Jan 2021 16:20:20 -0500
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     Stefan Monnier <monnier@iro.umontreal.ca>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] CoC: Update word-wrapping to match upstream
-References: <xmqq5z4mjdbq.fsf@gitster.c.googlers.com>
-        <20201228171734.30038-2-avarab@gmail.com>
-Date:   Mon, 04 Jan 2021 15:43:56 -0800
-Message-ID: <xmqqzh1o5kub.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+Subject: Re: [BUG] Destructive access to an "objects/info/alternates"
+ repository
+Message-ID: <20210104212020.qnokgnpvsoxlm77j@chatter.i7.local>
+Mail-Followup-To: Stefan Monnier <monnier@iro.umontreal.ca>,
+        git@vger.kernel.org
+References: <jwvpn2tdb0r.fsf-monnier+gmane.comp.version-control.git@gnu.org>
+ <20201228190036.vnkgeu6puxmvgt5s@chatter.i7.local>
+ <jwv8s9hd9cg.fsf-monnier+Inbox@gnu.org>
+ <jwvlfdhbsbs.fsf-monnier+gmane.comp.version-control.git@gnu.org>
+ <20201229154403.xutnk2aoawdrjfwx@chatter.i7.local>
+ <jwv1rf26k9n.fsf-monnier+gmane.comp.version-control.git@gnu.org>
+ <20210104135410.myjaygaulqnxcnsc@chatter.i7.local>
+ <jwvlfd81le8.fsf-monnier+gmane.comp.version-control.git@gnu.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: B5F70E0E-4EE6-11EB-8D33-D152C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <jwvlfd81le8.fsf-monnier+gmane.comp.version-control.git@gnu.org>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+On Mon, Jan 04, 2021 at 03:47:53PM -0500, Stefan Monnier wrote:
+> > I agree with Stefan that this is undesired behaviour, even when it only
+> > happens when attempting to clean up garbage -- git-gc (and git-count-objects)
+> > should distinguish between garbage in the parent repository and its own
+> > repository and not attempt any modification of the parent repository during
+> > gc or any other operation.
+> 
+> Great, so IIUC:
+> - this is a harmless warning
 
-> When the CoC document was added in 5cdf2301d4a (add a Code of Conduct
-> document, 2019-09-24) it was added from some 1.4 version of the
-> document whose word wrapping doesn't match what's currently at [1],
-> which matches content/version/1/4/code-of-conduct.md in the CoC
-> repository[2].
->
-> Let's update our version to match that, to make reading subsequent
-> diffs easier.
+Well, this is a benign situation in general, since git only tries to delete
+files that it determined to be garbage. Even if it succeeded in your case, it
+wouldn't really modify the actual shared repository state/contents.
 
-... because a patch going straight to upstream's 2.0 would have to
-include the three hunks we see here, that would be a noise because
-the diff between upstream's 1.4 and 2.0 does not touch these places?
+> - it's considered as a bug
 
-If so, then this step makes sense to me.
+I'm not really someone who decides if it's a bug or not. :) I *think* it's a
+bug, since git modifies the repository from which it should be merely
+borrowing objects (a read-only operation). Even if the results are benign,
+it's not something that should be happening, in my opinion.
 
-> There are no non-whitespace changes here.
+> - so my use case should work fine in practice and is not considered as
+>   "too weird to be supported"
 
-Not a comment about this patch, but "git show --word-diff" would
-still show three hunks with no change highlighted as expected.
+It's easy to replicate, if someone feels like fixing it:
 
-I wonder if the word-diff (or color-words) logic should be further
-taught to squelch out the hunks that do not change anything other
-than line wrapping and whitespace fuzz.
+mkdir repo1
+cd repo1
+git init
+echo test > test
+git add test
+git commit -am test
+touch .git/objects/pack/pack-abcd.idx
+cd ..
+git clone -s repo1 repo2
+cd repo2
+git gc
+ls -al ../repo1/.git/objects/pack/pack-abcd.idx
+/bin/ls: cannot access '../repo1/.git/objects/pack/pack-abcd.idx': No such file or directory
 
-Thanks.
+Hope this helps.
+
+-K
