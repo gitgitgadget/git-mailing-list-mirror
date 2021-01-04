@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D79DC433E0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D98EC433DB
 	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 23:51:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D498822519
+	by mail.kernel.org (Postfix) with ESMTP id 02CC22253D
 	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 23:51:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727867AbhADXvQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727878AbhADXvQ (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 4 Jan 2021 18:51:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33644 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727826AbhADXvP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Jan 2021 18:51:15 -0500
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35180C061796
-        for <git@vger.kernel.org>; Mon,  4 Jan 2021 15:50:34 -0800 (PST)
-Received: by mail-ot1-x331.google.com with SMTP id j12so27703338ota.7
-        for <git@vger.kernel.org>; Mon, 04 Jan 2021 15:50:34 -0800 (PST)
+        with ESMTP id S1727826AbhADXvQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Jan 2021 18:51:16 -0500
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BDBCC06179A
+        for <git@vger.kernel.org>; Mon,  4 Jan 2021 15:50:36 -0800 (PST)
+Received: by mail-ot1-x32b.google.com with SMTP id j20so27739443otq.5
+        for <git@vger.kernel.org>; Mon, 04 Jan 2021 15:50:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=NY/QvUSxgLx3VRAo5824Vs664wHz4pGpKBxjHUNrye4=;
-        b=iECkFFnE/dO7Y2RgFY9Vw9Icgf4g+qOvWEkoa+X6eeUY2PbQePx0kxXF605j6IZdkK
-         aqumTsb0QzeTv0C/IMbP0Yw0+QQBr0GGCwiWqueZfRCE+cYF/FZtblIzQfzhZaYHbYaN
-         UL0n6IXveef+unE+7/3nyviFR3ylnPwRYz2pweAZM7MbTLh7TN0+yAi2HQf2lT/iaXU3
-         byfRXHamEhME3+wmghUxNgVndHVHW/DkEbw1Iowp4fNreYrMPEJz5iSWqZkrRNcL1gIx
-         APugOcVsLMcuL4+BzeJVJoZz1rvAr0l0LKlGrxqbpI1c3KCu+nJGJY2rvWOYJoxLGE8M
-         yWtA==
+        bh=D3/K76RpxK95m/dgFzqFg6bo0ITTMqrb4v0r2gO+Kok=;
+        b=fkYeQI6Cd+3tCaGuu5vsBvLgA6HX2A8fJBNIuW4kHAqefrw0ZOXiR22IEcmC/WZ9Va
+         ZVAHZr0XM/7iurzVjWQgZ+2vD894GZV0xtOO0kU1CJsnot7VGPjn3o2LNxiVSwBqWkYO
+         77ddt0aK5yYpvLcmh6qt0Zr9cQiuOFelsn2ubooMYxJCen5iXUtU19zB9a5Iotp58p4Z
+         bB9ITIHdbX7pYsjn9KVVSSxaGYEbRLhV3cgvUlGX8UkmRAzEvuBek9CCpA1JIMyiww/W
+         U/8lqq237K3o0kQ73mYGZhespsrP15IsCPEtJ8cNJ9TIqTneTpKSgrF9YQAjPwb6i6V1
+         tWkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=NY/QvUSxgLx3VRAo5824Vs664wHz4pGpKBxjHUNrye4=;
-        b=iwOhO7XHNeqI/sJeYb3wDmRrUYeo4q08dm9kxY52ElkBXlwksGCmLrGg66NFBTLEdr
-         BUIrYw8W7hvSCyyrRg5NatcXhJK41JF11x07x7P+0wAsad/+8CZdX/7opN0qaAxQghaq
-         lbjO5GQvxInTbLaax5GOdAD9GHevNZU6aVo7Bff18hwMlPUlWd02TgAA/AfV3DS0ayPL
-         cXI2l67ndzeg1dZSFX9QVrAw8mQWkKpQ1b50K5RoDgA++1Lsh5nxxLSw1eg+GapJl1ab
-         TBSlN3Ws+mvetszgoI9xMfax6FfgT+KpKWZ9f+QqOTmCng5cAj4XEdgzhikICnOg5OjT
-         0ddg==
-X-Gm-Message-State: AOAM531uTvnXZXurotJ68/OBawd3q3u2HgXyBIg8stbXlVOifJYL7lnA
-        QcxGoXGAgX2j7PRZHo+JIBr1+ZtPGkM=
-X-Google-Smtp-Source: ABdhPJza6IHyswiTMA83ZWwjWX5hxt5zohP8IaJSgD2NPJhvEpaz09SDDTrmW47/Yb/cjkS1CXaZdA==
-X-Received: by 2002:a9d:4e84:: with SMTP id v4mr55344353otk.45.1609804233497;
-        Mon, 04 Jan 2021 15:50:33 -0800 (PST)
+        bh=D3/K76RpxK95m/dgFzqFg6bo0ITTMqrb4v0r2gO+Kok=;
+        b=SZ+pcLN/VaQ/o9zMXP8AE/26lyyzZTM3FNtLvWxHppxPqNKtWeAmgxn2qdYCliZSWT
+         VfbmZ3Cumsn00pVWsBSma9tjn/88M5yH3JNwNTsl9d2/3JBJcYaeOgBHnH/wtpKCsNxF
+         lSygVnLL3tS2niRCnRNKkJJrZspYZICYDcoPbzVEon2Okrv37rDpBYqKZ1Unzydm622J
+         2k2R51b1w6b5yXwMqLz+gtzYGYWILTCREmv6x4XGybgq83O6usbs7RBkJnCkjzJBEYve
+         +Pc506mAwmjX3VfjknscbtLdCjgpDxVHWaVeuD6l9yU2XIJ/d7koYDcvBQvBx8o51Aj/
+         8voA==
+X-Gm-Message-State: AOAM532PA27op5HvrNozRDRcduFUpY0P36POiksiv7ztSqGYVbo+KAwm
+        zALpOilj5wLommonCIr7lpb6fmxP/zs=
+X-Google-Smtp-Source: ABdhPJxTMeoyxnKPAX2NQ2M0bSBFZ+qnVG0UpjQGff7tlTlMVU8n33huBt5oxVxtgd3duEVS/cdXcg==
+X-Received: by 2002:a9d:508:: with SMTP id 8mr54538827otw.338.1609804235419;
+        Mon, 04 Jan 2021 15:50:35 -0800 (PST)
 Received: from tiger.attlocal.net ([2600:1700:bae0:2de0::26])
-        by smtp.gmail.com with ESMTPSA id o135sm13359600ooo.38.2021.01.04.15.50.32
+        by smtp.gmail.com with ESMTPSA id o135sm13359600ooo.38.2021.01.04.15.50.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Jan 2021 15:50:33 -0800 (PST)
+        Mon, 04 Jan 2021 15:50:35 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Elijah Newren <newren@gmail.com>
-Subject: [PATCH 04/17] merge-ort: add outline for computing directory renames
-Date:   Mon,  4 Jan 2021 15:49:53 -0800
-Message-Id: <20210104235006.2867404-5-newren@gmail.com>
+Subject: [PATCH 06/17] merge-ort: copy get_renamed_dir_portion() from merge-recursive.c
+Date:   Mon,  4 Jan 2021 15:49:55 -0800
+Message-Id: <20210104235006.2867404-7-newren@gmail.com>
 X-Mailer: git-send-email 2.29.1.106.g3ff750dc32.dirty
 In-Reply-To: <20210104235006.2867404-1-newren@gmail.com>
 References: <20210104235006.2867404-1-newren@gmail.com>
@@ -71,66 +71,126 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Port some directory rename handling changes from merge-recursive.c's
-detect_and_process_renames() to the same-named function of merge-ort.c.
-This does not yet add any use or handling of directory renames, just the
-outline for where we start to compute them.  Thus, a future patch will
-add port additional changes to merge-ort's detect_and_process_renames().
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ merge-ort.c | 104 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 104 insertions(+)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index f67ecdd171..0bd0ab1e8b 100644
+index 6ccc7a1a45..19c3f8d41d 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -1139,6 +1139,18 @@ static int handle_content_merge(struct merge_options *opt,
+@@ -1139,6 +1139,110 @@ static int handle_content_merge(struct merge_options *opt,
  
  /*** Function Grouping: functions related to directory rename detection ***/
  
-+static void get_provisional_directory_renames(struct merge_options *opt,
-+					      unsigned side,
-+					      int *clean)
++MAYBE_UNUSED
++static void get_renamed_dir_portion(const char *old_path, const char *new_path,
++				    char **old_dir, char **new_dir)
 +{
-+	die("Not yet implemented!");
-+}
++	char *end_of_old, *end_of_new;
 +
-+static void handle_directory_level_conflicts(struct merge_options *opt)
-+{
-+	die("Not yet implemented!");
-+}
++	/* Default return values: NULL, meaning no rename */
++	*old_dir = NULL;
++	*new_dir = NULL;
 +
- /*** Function Grouping: functions related to regular rename detection ***/
- 
- static int process_renames(struct merge_options *opt,
-@@ -1504,13 +1516,24 @@ static int detect_and_process_renames(struct merge_options *opt,
- {
- 	struct diff_queue_struct combined;
- 	struct rename_info *renames = &opt->priv->renames;
--	int s, clean = 1;
-+	int need_dir_renames, s, clean = 1;
- 
- 	memset(&combined, 0, sizeof(combined));
- 
- 	detect_regular_renames(opt, merge_base, side1, MERGE_SIDE1);
- 	detect_regular_renames(opt, merge_base, side2, MERGE_SIDE2);
- 
-+	need_dir_renames =
-+	  !opt->priv->call_depth &&
-+	  (opt->detect_directory_renames == MERGE_DIRECTORY_RENAMES_TRUE ||
-+	   opt->detect_directory_renames == MERGE_DIRECTORY_RENAMES_CONFLICT);
++	/*
++	 * For
++	 *    "a/b/c/d/e/foo.c" -> "a/b/some/thing/else/e/foo.c"
++	 * the "e/foo.c" part is the same, we just want to know that
++	 *    "a/b/c/d" was renamed to "a/b/some/thing/else"
++	 * so, for this example, this function returns "a/b/c/d" in
++	 * *old_dir and "a/b/some/thing/else" in *new_dir.
++	 */
 +
-+	if (need_dir_renames) {
-+		for (s = MERGE_SIDE1; s <= MERGE_SIDE2; s++)
-+			get_provisional_directory_renames(opt, s, &clean);
-+		handle_directory_level_conflicts(opt);
++	/*
++	 * If the basename of the file changed, we don't care.  We want
++	 * to know which portion of the directory, if any, changed.
++	 */
++	end_of_old = strrchr(old_path, '/');
++	end_of_new = strrchr(new_path, '/');
++
++	/*
++	 * If end_of_old is NULL, old_path wasn't in a directory, so there
++	 * could not be a directory rename (our rule elsewhere that a
++	 * directory which still exists is not considered to have been
++	 * renamed means the root directory can never be renamed -- because
++	 * the root directory always exists).
++	 */
++	if (end_of_old == NULL)
++		return; /* Note: *old_dir and *new_dir are still NULL */
++
++	/*
++	 * If new_path contains no directory (end_of_new is NULL), then we
++	 * have a rename of old_path's directory to the root directory.
++	 */
++	if (end_of_new == NULL) {
++		*old_dir = xstrndup(old_path, end_of_old - old_path);
++		*new_dir = xstrdup("");
++		return;
 +	}
 +
- 	ALLOC_GROW(combined.queue,
- 		   renames->pairs[1].nr + renames->pairs[2].nr,
- 		   combined.alloc);
++	/* Find the first non-matching character traversing backwards */
++	while (*--end_of_new == *--end_of_old &&
++	       end_of_old != old_path &&
++	       end_of_new != new_path)
++		; /* Do nothing; all in the while loop */
++
++	/*
++	 * If both got back to the beginning of their strings, then the
++	 * directory didn't change at all, only the basename did.
++	 */
++	if (end_of_old == old_path && end_of_new == new_path &&
++	    *end_of_old == *end_of_new)
++		return; /* Note: *old_dir and *new_dir are still NULL */
++
++	/*
++	 * If end_of_new got back to the beginning of its string, and
++	 * end_of_old got back to the beginning of some subdirectory, then
++	 * we have a rename/merge of a subdirectory into the root, which
++	 * needs slightly special handling.
++	 *
++	 * Note: There is no need to consider the opposite case, with a
++	 * rename/merge of the root directory into some subdirectory
++	 * because as noted above the root directory always exists so it
++	 * cannot be considered to be renamed.
++	 */
++	if (end_of_new == new_path &&
++	    end_of_old != old_path && end_of_old[-1] == '/') {
++		*old_dir = xstrndup(old_path, --end_of_old - old_path);
++		*new_dir = xstrdup("");
++		return;
++	}
++
++	/*
++	 * We've found the first non-matching character in the directory
++	 * paths.  That means the current characters we were looking at
++	 * were part of the first non-matching subdir name going back from
++	 * the end of the strings.  Get the whole name by advancing both
++	 * end_of_old and end_of_new to the NEXT '/' character.  That will
++	 * represent the entire directory rename.
++	 *
++	 * The reason for the increment is cases like
++	 *    a/b/star/foo/whatever.c -> a/b/tar/foo/random.c
++	 * After dropping the basename and going back to the first
++	 * non-matching character, we're now comparing:
++	 *    a/b/s          and         a/b/
++	 * and we want to be comparing:
++	 *    a/b/star/      and         a/b/tar/
++	 * but without the pre-increment, the one on the right would stay
++	 * a/b/.
++	 */
++	end_of_old = strchr(++end_of_old, '/');
++	end_of_new = strchr(++end_of_new, '/');
++
++	/* Copy the old and new directories into *old_dir and *new_dir. */
++	*old_dir = xstrndup(old_path, end_of_old - old_path);
++	*new_dir = xstrndup(new_path, end_of_new - new_path);
++}
++
+ static void compute_rename_counts(struct diff_queue_struct *pairs,
+ 				  struct strmap *dir_rename_count,
+ 				  struct strset *dirs_removed)
 -- 
 2.29.1.106.g3ff750dc32.dirty
 
