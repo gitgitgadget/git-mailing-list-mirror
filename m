@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68E48C433E9
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A597C433E6
 	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 03:11:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4538220DD4
+	by mail.kernel.org (Postfix) with ESMTP id 25B7E21D79
 	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 03:11:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728026AbhADDKG (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1728019AbhADDKG (ORCPT <rfc822;git@archiver.kernel.org>);
         Sun, 3 Jan 2021 22:10:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39078 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728010AbhADDKF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 3 Jan 2021 22:10:05 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A388C061796
-        for <git@vger.kernel.org>; Sun,  3 Jan 2021 19:09:25 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id k10so17228951wmi.3
+        with ESMTP id S1728008AbhADDKE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 3 Jan 2021 22:10:04 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B94EC061794
+        for <git@vger.kernel.org>; Sun,  3 Jan 2021 19:09:24 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id r3so30802417wrt.2
         for <git@vger.kernel.org>; Sun, 03 Jan 2021 19:09:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=F5mr/fFvRdXYRRCHVaEtFFWbeGwbu/OPMWpaJOKG0T0=;
-        b=osDl8CwNuTo3u2SVbVa+6BDdhz8Mgz+ATIaqyahALjt8UTcuOEinKN4KbDZMqi/Kc8
-         T42okljt8b6w6nF//BpsxIheQU6RajXHGQvhKPlPo8PbbI1eZ07xVAL0456thgUJZfnX
-         ChfM5ln4YmGz2P7MpypUdxBH/NbdSBjEOgyp0SRvUEE4nOSMhUM2U8wJfFDShbLApFB/
-         IW5fDkVqidZPSAABgpPoSRyuspnpS2JP8L4V9ZT0s1UMMFNTFctQQvuK3tkDt0juP5fz
-         I0kbwji0YwERCO+AjidUwo5sOxDo7FWo4VG3tPaVjqhhbUsrvbgjnhbdi/gOz4QRPl9v
-         rEiw==
+        bh=Dkys2TZsvFsYLc4Nzw+wTJ/OAwTXIQdwI+QSCleLVFI=;
+        b=AIDyyjehKyUFz49rbRybNkA85pZQLtfkZT8QpiRURqVDsMe9TUcbgGdbRmJ+BjRxXU
+         56buZ9bJm2IrPGPEVCa/oUEGlVf20WL63FXP0lL5Y0FEUQ0isv/HLBCkqWAimQ42nFop
+         zZu/Js/1TanBL1R+/zerYkcjsQA7fEDlLXXVYRb2M7sGCK5gv1O4KjxsAu4W1nkmk6mk
+         B0it24XPhvcrPoWpFkSQsKwomi6dk3+HWVx0l4UoEMAbdkfiXznvXTuHlxGnGYX4/djM
+         2Ncbped0fwS446V3Dlu2kKr53lb2g90ynlzPIkzZGe9C3jbXXxH23pVk1/3eACQ62WCX
+         DH7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=F5mr/fFvRdXYRRCHVaEtFFWbeGwbu/OPMWpaJOKG0T0=;
-        b=D6ahSR8u+ORw/2FvQXK3VXAoxlqycfythbYA24t3x2g+jTYe5hIoOQJLXTiY1RGqMT
-         kE+qorXBYR7MR9oAJl/3pXudYuXvUVi6+HEQVySjt+1TrlRKdFQJ3phhh3AFqicS0VBy
-         3xIV++npmgBbjUuwTCQmMy9pgYt2Vk3YK10Hgr3dDlwJ1fI5NEItH19l6Vs7BJU50Vq8
-         ryYV3X6+VIDBVO0UTUySRQLUP2iS9gnGm+JOAWkhMooCsfUftmfbPsOSJUrVRHcqBaOq
-         4030eUgFYzI+OrMetE+ClGAJdwhIgeq0AlYtTSWs2W8IrTI0kL2fA6I+AQyuku3phWR/
-         Ll4Q==
-X-Gm-Message-State: AOAM5325j6IHswAN4x1tLWF4paNIj9wOiuSzCwBP9/9MxkFKdqHdqeeG
-        zBn/EWFQIaq+OyTWryd6ltS3tJwzVLk=
-X-Google-Smtp-Source: ABdhPJymsQRs6PFxGTwS3LjkH8NjstVV6PUEV979mHnuOODyFnAjzku0Bk2AEyjdH8Cm11WqKw1z6Q==
-X-Received: by 2002:a1c:2394:: with SMTP id j142mr25224843wmj.42.1609729763653;
-        Sun, 03 Jan 2021 19:09:23 -0800 (PST)
+        bh=Dkys2TZsvFsYLc4Nzw+wTJ/OAwTXIQdwI+QSCleLVFI=;
+        b=RSyAti2Ap8giBkRozbweEdupWTMJ0JaVY0jW6e7fi9jB93E79fRey0GzEaUsBLhKqd
+         RASNz3sSwVm5gmM3CqaMiW6/wqPAatK+85C4WyBthJmFPfQ/kJz+TobcmdhHQOTz/69f
+         NGtsqlPRUA7yK6Yw9x3yt7wha/PgDi5caQigml4dtN76nuD1Hle6C4HcpDSeVdwyiPiu
+         E1Eskx/It+UyVFaYtAJEOLVPwtZSOLZUjLxwxZ3iiiM9OvIdFq+qFdVq/fnA5noennsq
+         krgPohgDK28IiWm3/7k3Fic4cgkT9MDOHTvSCKF2hSlYoPGJY+uxlV19jcGQn6tjvswH
+         VuNg==
+X-Gm-Message-State: AOAM533QJ0QkHLP8iNRz0G3brl+jHPkC9VtlNmAWzofWZ0CzE+FM0nJg
+        Olm/BT8Nz4q3BEgtZzd+18TT8nFTnyg=
+X-Google-Smtp-Source: ABdhPJyTphoVVvGeBPM57vfQ5/fvUTJCpR02AaKhjLY0WNvcfLwW8WJDjQ8dDiMua5X19Kh3MHTWKQ==
+X-Received: by 2002:a05:6000:10c4:: with SMTP id b4mr79351701wrx.170.1609729761259;
+        Sun, 03 Jan 2021 19:09:21 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z21sm30511451wmk.20.2021.01.03.19.09.23
+        by smtp.gmail.com with ESMTPSA id 67sm33107739wmb.47.2021.01.03.19.09.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Jan 2021 19:09:23 -0800 (PST)
-Message-Id: <1d8a797ee2650e8c815281b0c672301c7f24a724.1609729758.git.gitgitgadget@gmail.com>
+        Sun, 03 Jan 2021 19:09:20 -0800 (PST)
+Message-Id: <0e500c86f397987c4d03beac52b1e91f683e4d11.1609729758.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.829.v2.git.1609729758.gitgitgadget@gmail.com>
 References: <pull.829.git.1609356413.gitgitgadget@gmail.com>
         <pull.829.v2.git.1609729758.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 04 Jan 2021 03:09:13 +0000
-Subject: [PATCH v2 4/9] cache-tree: trace regions for I/O
+Date:   Mon, 04 Jan 2021 03:09:10 +0000
+Subject: [PATCH v2 1/9] tree-walk: report recursion counts
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,49 +79,96 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-As we write or read the cached tree index extension, it can be good to
-isolate how much of the file I/O time is spent constructing this
-in-memory tree from the existing index or writing it out again to the
-new index file. Use trace2 regions to indicate that we are spending time
-on this operation.
+The traverse_trees() method recursively walks through trees, but also
+prunes the tree-walk based on a callback. Some callers, such as
+unpack_trees(), are quite complicated and can have wildly different
+performance between two different commands.
+
+Create constants that count these values and then report the results at
+the end of a process. These counts are cumulative across multiple "root"
+instances of traverse_trees(), but they provide reproducible values for
+demonstrating improvements to the pruning algorithm when possible.
+
+This change is modeled after a similar statistics reporting in 42e50e78
+(revision.c: add trace2 stats around Bloom filter usage, 2020-04-06).
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- cache-tree.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ tree-walk.c | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
-diff --git a/cache-tree.c b/cache-tree.c
-index 9efb6748662..45fb57b17f3 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -494,7 +494,9 @@ static void write_one(struct strbuf *buffer, struct cache_tree *it,
+diff --git a/tree-walk.c b/tree-walk.c
+index 0160294712b..2d6226d5f18 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -4,6 +4,7 @@
+ #include "object-store.h"
+ #include "tree.h"
+ #include "pathspec.h"
++#include "json-writer.h"
  
- void cache_tree_write(struct strbuf *sb, struct cache_tree *root)
+ static const char *get_mode(const char *str, unsigned int *modep)
  {
-+	trace2_region_enter("cache_tree", "write", the_repository);
- 	write_one(sb, root, "", 0);
-+	trace2_region_leave("cache_tree", "write", the_repository);
+@@ -167,6 +168,25 @@ int tree_entry_gently(struct tree_desc *desc, struct name_entry *entry)
+ 	return 1;
  }
  
- static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
-@@ -583,9 +585,16 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
- 
- struct cache_tree *cache_tree_read(const char *buffer, unsigned long size)
++static int traverse_trees_atexit_registered;
++static int traverse_trees_count;
++static int traverse_trees_cur_depth;
++static int traverse_trees_max_depth;
++
++static void trace2_traverse_trees_statistics_atexit(void)
++{
++	struct json_writer jw = JSON_WRITER_INIT;
++
++	jw_object_begin(&jw, 0);
++	jw_object_intmax(&jw, "traverse_trees_count", traverse_trees_count);
++	jw_object_intmax(&jw, "traverse_trees_max_depth", traverse_trees_max_depth);
++	jw_end(&jw);
++
++	trace2_data_json("traverse_trees", the_repository, "statistics", &jw);
++
++	jw_release(&jw);
++}
++
+ void setup_traverse_info(struct traverse_info *info, const char *base)
  {
-+	struct cache_tree *result;
+ 	size_t pathlen = strlen(base);
+@@ -180,6 +200,11 @@ void setup_traverse_info(struct traverse_info *info, const char *base)
+ 	info->namelen = pathlen;
+ 	if (pathlen)
+ 		info->prev = &dummy;
 +
- 	if (buffer[0])
- 		return NULL; /* not the whole tree */
--	return read_one(&buffer, &size);
-+
-+	trace2_region_enter("cache_tree", "read", the_repository);
-+	result = read_one(&buffer, &size);
-+	trace2_region_leave("cache_tree", "read", the_repository);
-+
-+	return result;
++	if (trace2_is_enabled() && !traverse_trees_atexit_registered) {
++		atexit(trace2_traverse_trees_statistics_atexit);
++		traverse_trees_atexit_registered = 1;
++	}
  }
  
- static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *path)
+ char *make_traverse_path(char *path, size_t pathlen,
+@@ -416,6 +441,12 @@ int traverse_trees(struct index_state *istate,
+ 	int interesting = 1;
+ 	char *traverse_path;
+ 
++	traverse_trees_count++;
++	traverse_trees_cur_depth++;
++
++	if (traverse_trees_cur_depth > traverse_trees_max_depth)
++		traverse_trees_max_depth = traverse_trees_cur_depth;
++
+ 	if (n >= ARRAY_SIZE(entry))
+ 		BUG("traverse_trees() called with too many trees (%d)", n);
+ 
+@@ -515,6 +546,8 @@ int traverse_trees(struct index_state *istate,
+ 	free(traverse_path);
+ 	info->traverse_path = NULL;
+ 	strbuf_release(&base);
++
++	traverse_trees_cur_depth--;
+ 	return error;
+ }
+ 
 -- 
 gitgitgadget
 
