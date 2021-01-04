@@ -2,138 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+X-Spam-Status: No, score=-12.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00E8EC433E0
-	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 13:54:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBE9AC43381
+	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 15:15:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C2B87207B1
-	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 13:54:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D2700207BC
+	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 15:15:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726300AbhADNyy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Jan 2021 08:54:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54346 "EHLO
+        id S1727308AbhADPPE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Jan 2021 10:15:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725889AbhADNyx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Jan 2021 08:54:53 -0500
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6839DC061574
-        for <git@vger.kernel.org>; Mon,  4 Jan 2021 05:54:13 -0800 (PST)
-Received: by mail-qt1-x832.google.com with SMTP id z9so18446730qtn.4
-        for <git@vger.kernel.org>; Mon, 04 Jan 2021 05:54:13 -0800 (PST)
+        with ESMTP id S1726779AbhADPPE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Jan 2021 10:15:04 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A7E1C061794
+        for <git@vger.kernel.org>; Mon,  4 Jan 2021 07:14:23 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id t16so7662102ejf.13
+        for <git@vger.kernel.org>; Mon, 04 Jan 2021 07:14:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=5A/N97ovv2q/DkgZzTTVW2q4oE6xJdeo0pBkVOyhsRQ=;
-        b=aokqnuVLeBf8bqKaUr6bATxCoh1uXTYVSu4x3jcYMlRRIAZhSHcn5uUipJEkTOckmj
-         xBYrOn11LnBT/EvESUsad8SgPYNZJ1NE9Jy6uCPFuxPlws4/UPwunHHU4qath73V4Mjm
-         g/EzTKAoUx0e4ungyVHufNgNOziJKp+jc2M2A=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=gBZLt1jMIEqSK8Fcrqk/pgC+aD79Z2y3FC6V4fQ0Lg4=;
+        b=SS0zN6KZlk9UzPMJ84zYZ5jLtXzkM70enuR6xMKYzjSS/OsyVYMHOUKN/i2KJfX4a2
+         epuDPojMq1GXmq5lV1A3qqzcMrotoJLX5pk93Or+AuvlrkDOnrZrRXqItsN4WhKvRML5
+         0uEk4RlVyl2iUN0JvOadT+baMyoRvTkMRkR86wB4LuT6nwnpM5hSIloC/BblpmLB3+cQ
+         pBr5rfZ8Pmu78Cjrv1H6nAuqRl5AOiVm9zvIQ67GZMXYNu78V1ipPMIhIiFcWYI0BPME
+         4O8hYl+vX9A8hL/a1dcCW9h/+n2ClXuiELepFbdLag10hEY3GebYh+mrxEBeOIAcFYEm
+         t+Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=5A/N97ovv2q/DkgZzTTVW2q4oE6xJdeo0pBkVOyhsRQ=;
-        b=HaE12qu7tnTYcFvhsXiNU3Qfvwhar8nW/mvYw1DgLs8QBjk3Mu/3ZrzVDV4mkzceXL
-         8dWvigRfApb1IRYtYrhRWCdBDuMwsucurnJOtwBwAl8EGBO395kSScDjRnfBDjdSSWde
-         npVWl5b7YySw/qyRx17dj8I2SNkZl5P6n/Pp5g56CgNnAoJEE71qUtH85t0uL+HWwYpu
-         Bk4M5N6qOk3yUhR1KQOXCXSGniU9rO1cS9rBZ9wXFhnklNAK8M74wv2hf3c2ODIeB2C1
-         gee54mycfH4+SSvsryfsirWatsNdVeqKBTB+Vhq64LDW0GzEimrWfBRywDHus2nOkwv5
-         2hcg==
-X-Gm-Message-State: AOAM533iNhbg6N5NxhWuqgyyZDWna5f76x6hloL5xwj6MOT94Vu6n5yI
-        L3h7ZgDe5Tpq9lK7wfps7edGWntmLY1U4rfg
-X-Google-Smtp-Source: ABdhPJw+rB7Ozmw0cjI72UG6UfiY3NL7KvE54dz6xLTLm8pxZgKbvM7/72pFHbs12I4dYquf/WjOTw==
-X-Received: by 2002:ac8:7b33:: with SMTP id l19mr72911677qtu.251.1609768452354;
-        Mon, 04 Jan 2021 05:54:12 -0800 (PST)
-Received: from chatter.i7.local ([89.36.78.230])
-        by smtp.gmail.com with ESMTPSA id f134sm36755778qke.23.2021.01.04.05.54.11
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=gBZLt1jMIEqSK8Fcrqk/pgC+aD79Z2y3FC6V4fQ0Lg4=;
+        b=gOr02D8J5baVUpkqnBNboN19RIT5Fy6qsFayWOKdeTfjS3Ig7gr/IOXY1PB3Ib9D/y
+         aY6KBboBEAHdO66kPw91Uhzw6nssafCBLeJXcaQu3FLn/WJkvgtE5iAeuDMH29BS4C05
+         YPcdBIASVjzuSYevoCgeuROB0y+Ge15+yG4EVFknMOXJEwObWzkVbaZQiZIyukVBjdfy
+         QqbbAXYLhZiGHps26ZuAVfG0wKBpof5VjzIN5xuIfbFfkStN6lNUhN18rSweMDk2fPfe
+         E8TbWPvFhEC8lklj1YTPCJI1xh1vCgTJ48bHbTOjMLSPkrH5g29otboOaw0jAvCYf4Bl
+         24IA==
+X-Gm-Message-State: AOAM532jyGUqy256nDlQ+7Tg5WWmHdNPKL0+jO470UdG1t744+vsVjBo
+        98cl+MRE9iulxa6Hl0HNBcI=
+X-Google-Smtp-Source: ABdhPJyGMlmaYg2jNl+svRw6r8xBYAqO3KnTvdgqL4sJgX1jtbNDPWFJX5wigqSqusic2ZjdPjjFLg==
+X-Received: by 2002:a17:906:4a4f:: with SMTP id a15mr69118394ejv.541.1609773262182;
+        Mon, 04 Jan 2021 07:14:22 -0800 (PST)
+Received: from evledraar (i116144.upc-i.chello.nl. [62.195.116.144])
+        by smtp.gmail.com with ESMTPSA id p3sm11748384edh.50.2021.01.04.07.14.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Jan 2021 05:54:11 -0800 (PST)
-Date:   Mon, 4 Jan 2021 08:54:10 -0500
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Stefan Monnier <monnier@iro.umontreal.ca>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] Destructive access to an "objects/info/alternates"
- repository
-Message-ID: <20210104135410.myjaygaulqnxcnsc@chatter.i7.local>
-Mail-Followup-To: Stefan Monnier <monnier@iro.umontreal.ca>,
-        git@vger.kernel.org
-References: <jwvpn2tdb0r.fsf-monnier+gmane.comp.version-control.git@gnu.org>
- <20201228190036.vnkgeu6puxmvgt5s@chatter.i7.local>
- <jwv8s9hd9cg.fsf-monnier+Inbox@gnu.org>
- <jwvlfdhbsbs.fsf-monnier+gmane.comp.version-control.git@gnu.org>
- <20201229154403.xutnk2aoawdrjfwx@chatter.i7.local>
- <jwv1rf26k9n.fsf-monnier+gmane.comp.version-control.git@gnu.org>
+        Mon, 04 Jan 2021 07:14:21 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 1/5] mailmap: add a function to inspect the number of
+ entries
+References: <20210103211849.2691287-1-sandals@crustytoothpaste.net>
+ <20210103211849.2691287-2-sandals@crustytoothpaste.net>
+User-agent: Debian GNU/Linux bullseye/sid; Emacs 27.1; mu4e 1.4.13
+In-reply-to: <20210103211849.2691287-2-sandals@crustytoothpaste.net>
+Date:   Mon, 04 Jan 2021 16:14:20 +0100
+Message-ID: <87im8cvinn.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <jwv1rf26k9n.fsf-monnier+gmane.comp.version-control.git@gnu.org>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 03, 2021 at 11:50:35AM -0500, Stefan Monnier wrote:
-> >> FWIW, I just tried it with
-> >> 
-> >>     git clone --shared ~otheruser/nongnu
-> >> 
-> >> and got the same result.
-> >> I also tried with another repository, still with the same result (tho
-> >> different pack.idx names, of course).
-> >
-> > I've tried several times to reproduce this, but I am unable to do so. You may
-> > need to provide the tarball with ~otheruser/nongnu contents for someone to be
-> > able to properly debug this.
-> 
-> OK, you can try with the following tarball:
-> 
->     https://www.iro.umontreal.ca/~monnier/nongnu.tar.gz
 
-Great, thank you for providing that. At this point, I can verify the behaviour
-you are seeing:
+On Sun, Jan 03 2021, brian m. carlson wrote:
 
-$ cat .git/objects/info/alternates
-/tmp/test/nongnu/.git/objects
-$ git gc
-Enumerating objects: 119, done.
-Nothing new to pack.
-warning: unable to unlink '/tmp/test/nongnu/.git/objects/pack/pack-0d85e74ac2f7e51ce26f281e64eb738e8182fa95.idx': Permission denied
-warning: unable to unlink '/tmp/test/nongnu/.git/objects/pack/pack-5fe14feff49ccdee5469af9dc94f6784e8464a6b.idx': Permission denied
+> We're soon going to change the type of our mailmap into an opaque struct
+> so we can add features and improve performance.  When we do so, it won't
+> be possible for users to inspect its internals to determine how many
+> items are present, so let's introduce a function that lets users inquire
+> how many objects are in the mailmap and use it where we want this
+> information.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  mailmap.c | 5 +++++
+>  mailmap.h | 1 +
+>  pretty.c  | 2 +-
+>  3 files changed, 7 insertions(+), 1 deletion(-)
+>
+> diff --git a/mailmap.c b/mailmap.c
+> index 962fd86d6d..c9a538f4e2 100644
+> --- a/mailmap.c
+> +++ b/mailmap.c
+> @@ -361,3 +361,8 @@ int map_user(struct string_list *map,
+>  	debug_mm("map_user:  --\n");
+>  	return 0;
+>  }
+> +
+> +int mailmap_entries(struct string_list *map)
 
-Notably, if I run repack/prune by themselves, this does not happen:
+We're returning ->nr here from string_list, whose "nr" is unsigned
+int. Wouldn't it make more sense to do the same here?...
 
-$ git repack -Adln
-Enumerating objects: 119, done.
-Nothing new to pack.
-$ git prune --expire=now
-$
+> +{
+> +	return map->nr;
+> +}
+> diff --git a/mailmap.h b/mailmap.h
+> index d0e65646cb..ff57b05a15 100644
+> --- a/mailmap.h
+> +++ b/mailmap.h
+> @@ -5,6 +5,7 @@ struct string_list;
+>  
+>  int read_mailmap(struct string_list *map, char **repo_abbrev);
+>  void clear_mailmap(struct string_list *map);
+> +int mailmap_entries(struct string_list *map);
+>  
+>  int map_user(struct string_list *map,
+>  			 const char **email, size_t *emaillen, const char **name, size_t *namelen);
+> diff --git a/pretty.c b/pretty.c
+> index 7a7708a0ea..43a0039870 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -681,7 +681,7 @@ static int mailmap_name(const char **email, size_t *email_len,
+>  		mail_map = xcalloc(1, sizeof(*mail_map));
+>  		read_mailmap(mail_map, NULL);
+>  	}
+> -	return mail_map->nr && map_user(mail_map, email, email_len, name, name_len);
+> +	return mailmap_entries(mail_map) && map_user(mail_map, email, email_len, name, name_len);
 
-I would guess that this is happening in builtin/gc.c#686 [1], where it calls
-clean_pack_garbage(). Running "git count-objects -v" shows:
+...and isn't this introducing a bug where the number of entries is
+beyond "signed int" but not "unsigned int" by overflowing?
 
-$ git count-objects -v
-warning: no corresponding .pack: /tmp/test/nongnu/.git/objects/pack/pack-0d85e74ac2f7e51ce26f281e64eb738e8182fa95.idx
-warning: no corresponding .pack: /tmp/test/nongnu/.git/objects/pack/pack-5fe14feff49ccdee5469af9dc94f6784e8464a6b.idx
-count: 0
-size: 0
-in-pack: 0
-packs: 0
-size-pack: 0
-prune-packable: 0
-garbage: 2
-size-garbage: 6573
-alternate: /tmp/test/nongnu/.git/objects
+Bikeshedding: For both hashmap and strmap we have a
+{hashmap,strmap}_get_size() function. I think a "static inline unsigned
+int mailmap_get_size()" here would be more consistent & obvious.
 
-I agree with Stefan that this is undesired behaviour, even when it only
-happens when attempting to clean up garbage -- git-gc (and git-count-objects)
-should distinguish between garbage in the parent repository and its own
-repository and not attempt any modification of the parent repository during
-gc or any other operation.
+>  }
+>  
+>  static size_t format_person_part(struct strbuf *sb, char part,
 
-[1] https://git.kernel.org/pub/scm/git/git.git/tree/builtin/gc.c#n686
-
--K
