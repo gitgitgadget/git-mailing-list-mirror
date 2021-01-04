@@ -3,112 +3,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0291FC433E0
-	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 23:48:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81988C433DB
+	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 23:51:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id C3A952253D
-	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 23:48:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 532442253D
+	for <git@archiver.kernel.org>; Mon,  4 Jan 2021 23:51:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727700AbhADXsO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 4 Jan 2021 18:48:14 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61597 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727693AbhADXsN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 4 Jan 2021 18:48:13 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7143E90E95;
-        Mon,  4 Jan 2021 18:47:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=Xba4EEoiYSm3ayj6MNaUnmRPH
-        A8=; b=vVjZNPHy/f88ICDav2tlz1pCgWmI2S/EQX+nKXUUQagSlN0CSKtVvuVnM
-        h2p5YKI2Y3c7WgBEYeFtn82gXT5ka/X5ZsSvtDBlCefPbUNCrpdqexDCkZfZoPBX
-        srpgv5MHjh5rtfjuYsMAHMTm88y2rgOOAQpIkHTlCM/ANUxKdU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=dVTdj7p3Xdx90O+nTub
-        auuo4FA5GS8VxvEJE5QXV3yaR2dOxJQQlpnmkkWTTs6iXaQ4kQmov7VAl/GktvAf
-        ENVzfYIcr6NAmL4fCCnBCw5AzSy8WDA9P1MI7lN07UfBqXJFgpIR26BCoIG2kI3c
-        Vq872FsTQ+UVa63+r+Tzmw1Q=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6962190E94;
-        Mon,  4 Jan 2021 18:47:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E9EE390E93;
-        Mon,  4 Jan 2021 18:47:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re* [PATCH v2 2/2] CoC: update to version 2.0 + local changes
-References: <xmqq5z4mjdbq.fsf@gitster.c.googlers.com>
-        <20201228171734.30038-3-avarab@gmail.com>
-        <xmqqmtxxedwd.fsf@gitster.c.googlers.com>
-Date:   Mon, 04 Jan 2021 15:47:30 -0800
-Message-ID: <xmqqft3g463x.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727811AbhADXuz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 4 Jan 2021 18:50:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33546 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726749AbhADXuy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 4 Jan 2021 18:50:54 -0500
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2703BC0617A0
+        for <git@vger.kernel.org>; Mon,  4 Jan 2021 15:50:38 -0800 (PST)
+Received: by mail-ot1-x334.google.com with SMTP id 11so27690835oty.9
+        for <git@vger.kernel.org>; Mon, 04 Jan 2021 15:50:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=+ZIxZE7OXOiV/nMspJY3IPbpEz60W3Z7PXDTFbpft1U=;
+        b=nhTQ5/m5qBxNJk9u9vjJhtoJ7e19iSgNjhu6arAfWxq6fmolZVNWrfWj3ZtlZTNeY2
+         MSHPB9CJgCwaZSQ4Qb48dgKcLBB8gdK5l2x15MVZlN9U7oN84BiIVEtwX9GE9RoJpHXu
+         kdR7jZFQnL4G9f/KcZwIDdgWZRla3moABIvrQhn6lorb7DrrLIdBfJLMtE7t0AqJbt85
+         vLquXFGeGLFgv0zkrsX78ctg+pf99E/mfJFCr54u9Wq87pyewKjIKj6+RcEtENIeZqUm
+         oWE5/Qif1nTaP2QN5ua5YGsPdmAz5gq3bDVZKuO6zsqTKsCPi9zrDx6g6ZLEk0p/Hytv
+         KsNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=+ZIxZE7OXOiV/nMspJY3IPbpEz60W3Z7PXDTFbpft1U=;
+        b=OfVIfAQFImV2FMPb8f2o0t7fIX4NW4YojIObyrDiYeyMx5Djnram8GJH214SlAoa6j
+         FdKQMN6MyOZtALO0VzgE4OmupEUEnt4+T81/Lo/uNXlUPJKYBtqMdYVeT/E/9kjtQ7ZG
+         15FxxL6wmcuDYgZ6SbOZz1TJTc10rRGxefCq2AM+X9x5w6xebdhyvZUvGGxnOJOvBl06
+         Xg37qtHroMSFUFFzUWQEjdLNnwYz8Pc2b3fTuvJp3UTNjqJxp1JR/AhAI1jndEe7tsoB
+         oXRD3s/kfevigquQWVkwV+d30DIq6EmcY4vilgTyHXzDk3u459kNuG/DXVbrJwhXSyFp
+         S9tw==
+X-Gm-Message-State: AOAM533evVLRgE43gHOdmA52oBEA/pvKNsPN2dNr3hYOECAytCS55SP7
+        iVkfWbFhHLQl1ZpYp6Fpdq8d5pcGB/o=
+X-Google-Smtp-Source: ABdhPJy4V2t8gZdvcDgzVew/xM4h5rw/9eVh5hMwFlkiNlu7qZ1Q0jeE4WUai2GBd9/Ely6xYCfb2Q==
+X-Received: by 2002:a05:6830:114a:: with SMTP id x10mr54517091otq.350.1609804237452;
+        Mon, 04 Jan 2021 15:50:37 -0800 (PST)
+Received: from tiger.attlocal.net ([2600:1700:bae0:2de0::26])
+        by smtp.gmail.com with ESMTPSA id o135sm13359600ooo.38.2021.01.04.15.50.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Jan 2021 15:50:37 -0800 (PST)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Elijah Newren <newren@gmail.com>
+Subject: [PATCH 08/17] merge-ort: implement handle_directory_level_conflicts()
+Date:   Mon,  4 Jan 2021 15:49:57 -0800
+Message-Id: <20210104235006.2867404-9-newren@gmail.com>
+X-Mailer: git-send-email 2.29.1.106.g3ff750dc32.dirty
+In-Reply-To: <20210104235006.2867404-1-newren@gmail.com>
+References: <20210104235006.2867404-1-newren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 35AABEB6-4EE7-11EB-933D-74DE23BA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+This is modelled on the version of handle_directory_level_conflicts()
+from merge-recursive.c, but is massively simplified due to the following
+factors:
+  * strmap API provides simplifications over using direct hashamp
+  * we have a dirs_removed field in struct rename_info that we have an
+    easy way to populate from collect_merge_info(); this was already
+    used in compute_rename_counts() and thus we do not need to check
+    for condition #2.
+  * The removal of condition #2 by handling it earlier in the code also
+    obviates the need to check for condition #3 -- if both sides renamed
+    a directory, meaning that the directory no longer exists on either
+    side, then neither side could have added any new files to that
+    directory, and thus there are no files whose locations we need to
+    move due to such a directory rename.
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->
->> This change intentionally preserves a warning emitted on "git diff
->> --check". It's better to make it easily diff-able with upstream than
->> to fix whitespace changes in our version while we're at it.
->
-> I think there are only two lines that needs to tolerate trailing
-> whitespaces, and even if we strip them, it should be still easily
-> diff-able with the upstream with --ignore-space-at-eol or whatever
-> appropriate option, so I am not sure if it is worth try "keeping"
-> these whitespace breakage.
+In fact, the same logic that makes condition #3 irrelevant means
+condition #1 is also irrelevant so we could drop this function.
+However, it is cheap to check if both sides rename the same directory,
+and doing so can save future computation.  So, simply remove any
+directories that both sides renamed from the list of directory renames.
 
-In the meantime, I'll insert this as step [1.5/2] while queuing.
-
-In any case, your [2/2] lacks your sign-off, which we eventually
-need to have before applying these patches.  In the meantime, we
-also need to collect Acks on the move to 2.0 from folks.
-
-Thanks.
-
----- >8 -------- >8 -------- >8 -------- >8 -------- >8 ----
-Subject: [PATCH] CoC: explicitly take any whitespace breakage
-
-We'll keep this document mostly in sync with the upstream; let's
-help "git am" and "git show" by telling them that they may introduce
-what we may consider whitespace errors.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- .gitattributes | 1 +
- 1 file changed, 1 insertion(+)
+ merge-ort.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/.gitattributes b/.gitattributes
-index b08a1416d8..b0044cf272 100644
---- a/.gitattributes
-+++ b/.gitattributes
-@@ -6,6 +6,7 @@
- *.pm eol=3Dlf diff=3Dperl
- *.py eol=3Dlf diff=3Dpython
- *.bat eol=3Dcrlf
-+CODE_OF_CONDUCT.md -whitespace
- /Documentation/**/*.txt eol=3Dlf
- /command-list.txt eol=3Dlf
- /GIT-VERSION-GEN eol=3Dlf
---=20
-2.30.0-170-g148fa4353e
+diff --git a/merge-ort.c b/merge-ort.c
+index 05bac9c5bd..c4f437d4c0 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -1359,7 +1359,23 @@ static void get_provisional_directory_renames(struct merge_options *opt,
+ 
+ static void handle_directory_level_conflicts(struct merge_options *opt)
+ {
+-	die("Not yet implemented!");
++	struct hashmap_iter iter;
++	struct strmap_entry *entry;
++	struct string_list duplicated = STRING_LIST_INIT_NODUP;
++	struct strmap *side1_dir_renames = &opt->priv->renames.dir_renames[1];
++	struct strmap *side2_dir_renames = &opt->priv->renames.dir_renames[2];
++	int i;
++
++	strmap_for_each_entry(side1_dir_renames, &iter, entry) {
++		if (strmap_contains(side2_dir_renames, entry->key))
++			string_list_append(&duplicated, entry->key);
++	}
++
++	for (i=0; i<duplicated.nr; ++i) {
++		strmap_remove(side1_dir_renames, duplicated.items[i].string, 0);
++		strmap_remove(side2_dir_renames, duplicated.items[i].string, 0);
++	}
++	string_list_clear(&duplicated, 0);
+ }
+ 
+ /*** Function Grouping: functions related to regular rename detection ***/
+-- 
+2.29.1.106.g3ff750dc32.dirty
 
