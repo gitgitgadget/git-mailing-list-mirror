@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90B07C433E0
-	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 16:31:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5D01C433DB
+	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 16:31:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 4F8B222CA2
-	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 16:31:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90F7922CAE
+	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 16:31:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728094AbhAEQbj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Jan 2021 11:31:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47402 "EHLO
+        id S1728602AbhAEQbk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Jan 2021 11:31:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726132AbhAEQbj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jan 2021 11:31:39 -0500
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11494C061793
+        with ESMTP id S1728127AbhAEQbk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jan 2021 11:31:40 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED518C061795
         for <git@vger.kernel.org>; Tue,  5 Jan 2021 08:30:59 -0800 (PST)
-Received: by mail-pf1-x430.google.com with SMTP id t8so40342pfg.8
+Received: by mail-pj1-x1030.google.com with SMTP id j13so1992979pjz.3
         for <git@vger.kernel.org>; Tue, 05 Jan 2021 08:30:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=BW5YW7jWgnpBzfiHeoJ9ugXv46fnhIiFmPBc1rv3fM0=;
-        b=OmUQn90n2fm/zqx6MBbcUwcjbOSfmz9kh0UBxHgZqHyYljlbShdCLtC05SwNnUZQNC
-         JACnGwmqsxByH9Vmy5375XVg6WSNQ19yuQ1Sf5fe8Pl6D8KJWiXEziTuJWTiDkV0IZj8
-         e2xkRvx7XZh3OTROiuwIwerh3i5NqATdyF/bCq8LOw52rdAyx/36gUiimVGqZw4Qr3tF
-         AkYU6rEy+0rKQJPm6mUwAa6fsYAEVnBsr27tjeVVfwezqbR8xXuiwLGHZhFYQJlShwdm
-         2g/8br1WFudTwu8apE6Kc0sa/rT63Th/DqEb/obBVtcxbYHrehkT9sfCrpODLPkGESv4
-         50RQ==
+        bh=+r8iqethFkxRb7a71FoQ731XaQleoA3U7GpRU/M0gXw=;
+        b=md3SQR6NxzyTe5iwj49C5w1iUOUkfpmG6BOJNzbxCVk+FmT0Ugp2nXjZ338j/T0gwf
+         /efNh5/tzskh9kK4hLfZu356EXOheQobefsnfaB99pwC0wbzOPKX2OZpCy3doq8Ud2O0
+         7ze3UyQrbD8UusL0GijISK7/ajeRzKHou188q1FfKJWxZRI1f6Z+85/ETIOixxTvCDz4
+         j3CnOX0SMu7OcoOjDoPamq3PHwnNc/QMxXgkWAnj/g8NPJ1epr7y1//GeY9sCZGltTLL
+         L1/ghM1zswIZX5hWXKuPUFg7KteUIVOidPnnMpU8IYZgi+ifvKdioEtxC/SGEmqzyXlV
+         QTUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BW5YW7jWgnpBzfiHeoJ9ugXv46fnhIiFmPBc1rv3fM0=;
-        b=KVJ0yDr4bZUyKLvIKjaIBf+xVOP1FmY+CD7Ff/vIlav5JiY++S/HxFyHq+A2PxHM8z
-         nxxtonwc391g17dOY06hgHcQkj5M8k52CopZAseniIT75648PCaAPPANpCq7bQqpLF6+
-         8e/ic2XL1G689wq/z1h+LD1/n3ahpuw9t09X2+LsA+5bqHuEV0mol3G0C6Bsap7nXGmf
-         hFmhhIo+WYu8e+KwH4M76c8uj6vZF1S0Me1ZqMLXlkIN41b0JgPsxpjB9pcvJdjbaeoT
-         Q1VUH++lQ09ipbYUD+HJ3Y7NnZiWc78xBtmb5+MIrmaL9hyD2xgAjUclvt21lcTFlKEW
-         QXAg==
-X-Gm-Message-State: AOAM531Bg+eCPFHzyV4VnGzsZSBzcWjt8OoT8s/yvHmEm93g5TSfMR1q
-        FFGGGUeKKIiVU5nIavRaLOw=
-X-Google-Smtp-Source: ABdhPJxtu0pMFc56nZOF/2boNa68JLSa3QjkuQ1Mr72hfo1VJPahcvJmxN+N15DggHvQUWtcywBE6g==
-X-Received: by 2002:a62:fc86:0:b029:19d:9943:c843 with SMTP id e128-20020a62fc860000b029019d9943c843mr266531pfh.71.1609864258528;
-        Tue, 05 Jan 2021 08:30:58 -0800 (PST)
+        bh=+r8iqethFkxRb7a71FoQ731XaQleoA3U7GpRU/M0gXw=;
+        b=OxlKkjW+OZ8AhIXhu+pVZJGw+erwRpEMRpR2UWifBYYjLuyTSClG4GUrvDxRGiiqU0
+         a6F3+slheAr92p4W3ZNouQg01Dqaaq4EIp1j/n+dbENCmkrRkH/D++s1zYmpC2lCVjMT
+         QcjG85tNrNDExBXo9lYU9qahatSTcIMhkDQ2vlwwGtft5l4AYdnYkWM0JOF1EoKk7JL8
+         UxKZWwVFJl7WaccMjq4ftJNqzINXDsPwu+4Q0LUgU0APkoIbX6OyQnFN4wNFHXUOnbVa
+         3BzLnJpLPtICsNzjisfmk6u+4ALWHurUHGFIo8/Gf/2ueaiYKRSvpUEhzBhtIvDp4EZP
+         p3XQ==
+X-Gm-Message-State: AOAM533Px3MHBUgRJskIUhq4CtD41fLiNQm+bfCyrxVB6isCYeLMlmqy
+        ZBBL1V7TRrgsbyyGdnEg0nWyYsCeqX9RrQ==
+X-Google-Smtp-Source: ABdhPJwt8bcZTiQbCNnhySriUfmSTmIQoQv0JWrQghaTqeBMW4tbNLTl99kku1FUx6EdW3AA/Vl3hA==
+X-Received: by 2002:a17:90a:db48:: with SMTP id u8mr71983pjx.81.1609864259546;
+        Tue, 05 Jan 2021 08:30:59 -0800 (PST)
 Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id y15sm70303pju.13.2021.01.05.08.30.57
+        by smtp.gmail.com with ESMTPSA id y15sm70303pju.13.2021.01.05.08.30.58
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 05 Jan 2021 08:30:57 -0800 (PST)
+        Tue, 05 Jan 2021 08:30:58 -0800 (PST)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v2 1/2] bundle: lost objects when removing duplicate pendings
-Date:   Tue,  5 Jan 2021 11:30:53 -0500
-Message-Id: <20210105163054.25358-1-worldhello.net@gmail.com>
+Subject: [PATCH v2 2/2] bundle: arguments can be read from stdin
+Date:   Tue,  5 Jan 2021 11:30:54 -0500
+Message-Id: <20210105163054.25358-2-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.26.0.rc0
 In-Reply-To: <xmqqft3g6ziz.fsf@gitster.c.googlers.com>
 References: <xmqqft3g6ziz.fsf@gitster.c.googlers.com>
@@ -73,501 +73,374 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-`git rev-list` will list one commit for the following command:
+In order to create an incremental bundle, we need to pass many arguments
+to let git-bundle ignore some already packed commits.  It will be more
+convenient to pass args via stdin.  But the current implementation does
+not allow us to do this.
 
-    $ git rev-list 'main^!'
-    <tip-commit-of-main-branch>
+This is because args are parsed twice when creating bundle.  The first
+time for parsing args is in `compute_and_write_prerequisites()` by
+running `git-rev-list` command to write prerequisites in bundle file,
+and stdin is consumed in this step if "--stdin" option is provided for
+`git-bundle`.  Later nothing can be read from stdin when running
+`setup_revisions()` in `create_bundle()`.
 
-But providing the same rev-list args to `git bundle`, fail to create
-a bundle file.
+Remove the entire `compute_and_write_prerequisites()` function, and
+parse the args once by `setup_revisions()`.  The first step for creating
+a bundle is to write prerequisites ("-" obj-id SP comment LF), but after
+calling `prepare_revision_walk()`, the `revs.pending` is left empty.
+Following steps could not work properly without data in `revs.pending`.
+Therefore, before calling `prepare_revision_walk()` function, make a
+copy `revs_copy` from `revs` for later use.  Even though `revs_copy` and
+`revs` share the same objects, but changes on these objects will not
+change the behavior of function `write_bundle_refs()` and
+`write_pack_data()`.
 
-    $ git bundle create - 'main^!'
-    # v2 git bundle
-    -<OID> <one-line-message>
-
-    fatal: Refusing to create empty bundle.
-
-This is because when removing duplicate objects in function
-`object_array_remove_duplicates()`, one unique pending object which has
-the same name is deleted by mistake.  The revision arg 'main^!' in the
-above example is parsed by `handle_revision_arg()`, and at lease two
-different objects will be appended to `revs.pending`, one points to the
-parent commit of the "main" branch, and the other points to the tip
-commit of the "main" branch.  These two objects have the same name
-"main".  Only one object is left with the name "main" after calling the
-function `object_array_remove_duplicates()`.
-
-And what's worse, when adding boundary commits into pending list, we use
-one-line commit message as names, and the arbitory names may surprise
-git-bundle.
-
-Only comparing objects themselves (".item") is also not good enough,
-because user may want to create a bundle with two identical objects but
-with different reference names, such as: "HEAD" and "refs/heads/main".
-
-Add new function `contains_object()` which compare both the address and
-the name of the object.
+Also add testcases for git bundle in t6020, which read args from stdin.
 
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- object.c               |  10 +-
- t/t6020-bundle-misc.sh | 413 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 419 insertions(+), 4 deletions(-)
- create mode 100755 t/t6020-bundle-misc.sh
+ bundle.c                | 109 ++++++++++++++++++++++------------------
+ t/t5607-clone-bundle.sh |   4 +-
+ t/t6020-bundle-misc.sh  |  85 +++++++++++++++++++++++++++++--
+ 3 files changed, 142 insertions(+), 56 deletions(-)
 
-diff --git a/object.c b/object.c
-index 68f80b0b3d..98017bed8e 100644
---- a/object.c
-+++ b/object.c
-@@ -412,15 +412,16 @@ void object_array_clear(struct object_array *array)
- }
- 
- /*
-- * Return true iff array already contains an entry with name.
-+ * Return true if array already contains an entry.
-  */
--static int contains_name(struct object_array *array, const char *name)
-+static int contains_object(struct object_array *array,
-+			   const struct object *item, const char *name)
- {
- 	unsigned nr = array->nr, i;
- 	struct object_array_entry *object = array->objects;
- 
- 	for (i = 0; i < nr; i++, object++)
--		if (!strcmp(object->name, name))
-+		if (item == object->item && !strcmp(object->name, name))
- 			return 1;
+diff --git a/bundle.c b/bundle.c
+index cb0e5931ac..693d619551 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -338,48 +338,6 @@ static int write_pack_data(int bundle_fd, struct rev_info *revs, struct strvec *
  	return 0;
  }
-@@ -432,7 +433,8 @@ void object_array_remove_duplicates(struct object_array *array)
  
- 	array->nr = 0;
- 	for (src = 0; src < nr; src++) {
--		if (!contains_name(array, objects[src].name)) {
-+		if (!contains_object(array, objects[src].item,
-+				     objects[src].name)) {
- 			if (src != array->nr)
- 				objects[array->nr] = objects[src];
- 			array->nr++;
+-static int compute_and_write_prerequisites(int bundle_fd,
+-					   struct rev_info *revs,
+-					   int argc, const char **argv)
+-{
+-	struct child_process rls = CHILD_PROCESS_INIT;
+-	struct strbuf buf = STRBUF_INIT;
+-	FILE *rls_fout;
+-	int i;
+-
+-	strvec_pushl(&rls.args,
+-		     "rev-list", "--boundary", "--pretty=oneline",
+-		     NULL);
+-	for (i = 1; i < argc; i++)
+-		strvec_push(&rls.args, argv[i]);
+-	rls.out = -1;
+-	rls.git_cmd = 1;
+-	if (start_command(&rls))
+-		return -1;
+-	rls_fout = xfdopen(rls.out, "r");
+-	while (strbuf_getwholeline(&buf, rls_fout, '\n') != EOF) {
+-		struct object_id oid;
+-		if (buf.len > 0 && buf.buf[0] == '-') {
+-			write_or_die(bundle_fd, buf.buf, buf.len);
+-			if (!get_oid_hex(buf.buf + 1, &oid)) {
+-				struct object *object = parse_object_or_die(&oid,
+-									    buf.buf);
+-				object->flags |= UNINTERESTING;
+-				add_pending_object(revs, object, buf.buf);
+-			}
+-		} else if (!get_oid_hex(buf.buf, &oid)) {
+-			struct object *object = parse_object_or_die(&oid,
+-								    buf.buf);
+-			object->flags |= SHOWN;
+-		}
+-	}
+-	strbuf_release(&buf);
+-	fclose(rls_fout);
+-	if (finish_command(&rls))
+-		return error(_("rev-list died"));
+-	return 0;
+-}
+-
+ /*
+  * Write out bundle refs based on the tips already
+  * parsed into revs.pending. As a side effect, may
+@@ -474,6 +432,38 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
+ 	return ref_count;
+ }
+ 
++struct bundle_prerequisites_info {
++	struct object_array *pending;
++	int fd;
++};
++
++static void write_bundle_prerequisites(struct commit *commit, void *data)
++{
++	struct bundle_prerequisites_info *bpi = data;
++	struct object *object;
++	struct pretty_print_context ctx = { 0 };
++	struct strbuf buf = STRBUF_INIT;
++
++	if (!(commit->object.flags & BOUNDARY))
++		return;
++	strbuf_addf(&buf, "-%s ", oid_to_hex(&commit->object.oid));
++	write_or_die(bpi->fd, buf.buf, buf.len);
++
++	ctx.fmt = CMIT_FMT_ONELINE;
++	ctx.output_encoding = get_log_output_encoding();
++	strbuf_reset(&buf);
++	pretty_print_commit(&ctx, commit, &buf);
++	strbuf_trim(&buf);
++
++	object = (struct object *)commit;
++	object->flags |= UNINTERESTING;
++	add_object_array_with_path(object, buf.buf, bpi->pending, S_IFINVALID,
++				   NULL);
++	strbuf_addch(&buf, '\n');
++	write_or_die(bpi->fd, buf.buf, buf.len);
++	strbuf_release(&buf);
++}
++
+ int create_bundle(struct repository *r, const char *path,
+ 		  int argc, const char **argv, struct strvec *pack_options, int version)
+ {
+@@ -481,8 +471,10 @@ int create_bundle(struct repository *r, const char *path,
+ 	int bundle_fd = -1;
+ 	int bundle_to_stdout;
+ 	int ref_count = 0;
+-	struct rev_info revs;
++	struct rev_info revs, revs_copy;
+ 	int min_version = the_hash_algo == &hash_algos[GIT_HASH_SHA1] ? 2 : 3;
++	struct bundle_prerequisites_info bpi;
++	int i;
+ 
+ 	bundle_to_stdout = !strcmp(path, "-");
+ 	if (bundle_to_stdout)
+@@ -512,10 +504,6 @@ int create_bundle(struct repository *r, const char *path,
+ 	save_commit_buffer = 0;
+ 	repo_init_revisions(r, &revs, NULL);
+ 
+-	/* write prerequisites */
+-	if (compute_and_write_prerequisites(bundle_fd, &revs, argc, argv))
+-		goto err;
+-
+ 	argc = setup_revisions(argc, argv, &revs, NULL);
+ 
+ 	if (argc > 1) {
+@@ -523,16 +511,37 @@ int create_bundle(struct repository *r, const char *path,
+ 		goto err;
+ 	}
+ 
+-	object_array_remove_duplicates(&revs.pending);
++	/* save revs.pending in revs_copy for later use */
++	memcpy(&revs_copy, &revs, sizeof(revs));
++	revs_copy.pending.nr = 0;
++	revs_copy.pending.alloc = 0;
++	revs_copy.pending.objects = NULL;
++	for (i = 0; i < revs.pending.nr; i++) {
++		struct object_array_entry *e = revs.pending.objects + i;
++		if (e)
++			add_object_array_with_path(e->item, e->name,
++						   &revs_copy.pending,
++						   e->mode, e->path);
++	}
+ 
+-	ref_count = write_bundle_refs(bundle_fd, &revs);
++	/* write prerequisites */
++	revs.boundary = 1;
++	if (prepare_revision_walk(&revs))
++		die("revision walk setup failed");
++	bpi.fd = bundle_fd;
++	bpi.pending = &revs_copy.pending;
++	traverse_commit_list(&revs, write_bundle_prerequisites, NULL, &bpi);
++	object_array_remove_duplicates(&revs_copy.pending);
++
++	/* write bundle refs */
++	ref_count = write_bundle_refs(bundle_fd, &revs_copy);
+ 	if (!ref_count)
+ 		die(_("Refusing to create empty bundle."));
+ 	else if (ref_count < 0)
+ 		goto err;
+ 
+ 	/* write pack */
+-	if (write_pack_data(bundle_fd, &revs, pack_options))
++	if (write_pack_data(bundle_fd, &revs_copy, pack_options))
+ 		goto err;
+ 
+ 	if (!bundle_to_stdout) {
+diff --git a/t/t5607-clone-bundle.sh b/t/t5607-clone-bundle.sh
+index 26985f4b44..425258767d 100755
+--- a/t/t5607-clone-bundle.sh
++++ b/t/t5607-clone-bundle.sh
+@@ -38,13 +38,13 @@ test_expect_success 'die if bundle file cannot be created' '
+ 	test_must_fail git bundle create adir --all
+ '
+ 
+-test_expect_failure 'bundle --stdin' '
++test_expect_success 'bundle --stdin' '
+ 	echo master | git bundle create stdin-bundle.bdl --stdin &&
+ 	git ls-remote stdin-bundle.bdl >output &&
+ 	grep master output
+ '
+ 
+-test_expect_failure 'bundle --stdin <rev-list options>' '
++test_expect_success 'bundle --stdin <rev-list options>' '
+ 	echo master | git bundle create hybrid-bundle.bdl --stdin tag &&
+ 	git ls-remote hybrid-bundle.bdl >output &&
+ 	grep master output
 diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
-new file mode 100755
-index 0000000000..c6613a4162
---- /dev/null
+index c6613a4162..780a66dcc5 100755
+--- a/t/t6020-bundle-misc.sh
 +++ b/t/t6020-bundle-misc.sh
-@@ -0,0 +1,413 @@
-+test_description='Test git-bundle'
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+test_bundle_object_count () {
-+	git verify-pack -v "$1" >verify.out &&
-+	count=$(grep "^$OID_REGEX " verify.out | wc -l) &&
-+	test $2 = $count && return 0
-+	echo object count is $count, not $2
-+	return 1
-+}
-+
-+convert_bundle_to_pack () {
-+	while read x && test -n "$x"
-+	do
-+		:;
-+	done
-+	cat
-+}
-+
-+# Format the output of git commands to make a user-friendly and stable
-+# text.  We can easily prepare the expect text without having to worry
-+# about future changes of the commit ID and spaces of the output.
-+make_user_friendly_and_stable_output () {
-+	sed \
-+		-e "s/ *\$//" \
-+		-e "s/$A/<COMMIT-A>/g" \
-+		-e "s/$B/<COMMIT-B>/g" \
-+		-e "s/$C/<COMMIT-C>/g" \
-+		-e "s/$D/<COMMIT-D>/g" \
-+		-e "s/$E/<COMMIT-E>/g" \
-+		-e "s/$F/<COMMIT-F>/g" \
-+		-e "s/$G/<COMMIT-G>/g" \
-+		-e "s/$H/<COMMIT-H>/g" \
-+		-e "s/$I/<COMMIT-I>/g" \
-+		-e "s/$J/<COMMIT-J>/g" \
-+		-e "s/$K/<COMMIT-K>/g" \
-+		-e "s/$L/<COMMIT-L>/g" \
-+		-e "s/$M/<COMMIT-M>/g" \
-+		-e "s/$N/<COMMIT-N>/g" \
-+		-e "s/$O/<COMMIT-O>/g" \
-+		-e "s/$P/<COMMIT-P>/g" \
-+		-e "s/$(echo $A | cut -c1-7)[0-9a-f]*/<OID-A>/g" \
-+		-e "s/$(echo $B | cut -c1-7)[0-9a-f]*/<OID-B>/g" \
-+		-e "s/$(echo $C | cut -c1-7)[0-9a-f]*/<OID-C>/g" \
-+		-e "s/$(echo $D | cut -c1-7)[0-9a-f]*/<OID-D>/g" \
-+		-e "s/$(echo $E | cut -c1-7)[0-9a-f]*/<OID-E>/g" \
-+		-e "s/$(echo $F | cut -c1-7)[0-9a-f]*/<OID-F>/g" \
-+		-e "s/$(echo $G | cut -c1-7)[0-9a-f]*/<OID-G>/g" \
-+		-e "s/$(echo $H | cut -c1-7)[0-9a-f]*/<OID-H>/g" \
-+		-e "s/$(echo $I | cut -c1-7)[0-9a-f]*/<OID-I>/g" \
-+		-e "s/$(echo $J | cut -c1-7)[0-9a-f]*/<OID-J>/g" \
-+		-e "s/$(echo $K | cut -c1-7)[0-9a-f]*/<OID-K>/g" \
-+		-e "s/$(echo $L | cut -c1-7)[0-9a-f]*/<OID-L>/g" \
-+		-e "s/$(echo $M | cut -c1-7)[0-9a-f]*/<OID-M>/g" \
-+		-e "s/$(echo $N | cut -c1-7)[0-9a-f]*/<OID-N>/g" \
-+		-e "s/$(echo $O | cut -c1-7)[0-9a-f]*/<OID-O>/g" \
-+		-e "s/$(echo $P | cut -c1-7)[0-9a-f]*/<OID-P>/g" \
-+		-e "s/$TAG1/<TAG-1>/g" \
-+		-e "s/$TAG2/<TAG-2>/g" \
-+		-e "s/$TAG3/<TAG-3>/g" \
-+		-e "s/$(echo $TAG1 | cut -c1-7)[0-9a-f]*/<OID-TAG-1>/g" \
-+		-e "s/$(echo $TAG2 | cut -c1-7)[0-9a-f]*/<OID-TAG-2>/g" \
-+		-e "s/$(echo $TAG3 | cut -c1-7)[0-9a-f]*/<OID-TAG-3>/g" \
-+		-e "s/$ZERO_OID/<ZERO-OID>/g"
-+}
-+
-+#            (C)   (D, pull/1/head, topic/1)
-+#             o --- o
-+#            /       \                              (L, tags/v1)
-+#           /         \        o (H, topic/2)             (M, tags/v2)
-+#          /    (F)    \      /                                 (N, tags/v3)
-+#         /      o --------- o (G, pull/2/head)      o --- o --- o (release)
-+#        /      /        \    \                      /       \
-+#  o --- o --- o -------- o -- o ------------------ o ------- o --- o (main)
-+# (A)   (B)   (E)        (I)  (J)                  (K)       (O)   (P)
-+#
-+test_expect_success 'setup' '
-+	# commit A & B
-+	cat >main.txt <<-EOF &&
-+		Commit A
+@@ -252,6 +252,13 @@ test_expect_success 'create bundle 1 - no prerequisites' '
+ 	# create bundle from args
+ 	git bundle create 1.bdl topic/1 topic/2 &&
+ 
++	# create bundle from stdin
++	cat >input <<-EOF &&
++		topic/1
++		topic/2
 +		EOF
-+	git add main.txt &&
-+	test_tick &&
-+	git commit -m "Commit A" &&
++	git bundle create stdin-1.bdl --stdin <input &&
 +
-+	cat >main.txt <<-EOF &&
-+		Commit B
-+		EOF
-+	git add main.txt &&
-+	test_tick &&
-+	git commit -m "Commit B" &&
-+	A=$(git rev-parse HEAD~) &&
-+	B=$(git rev-parse HEAD) &&
-+
-+	# branch topic/1
-+	git checkout -b topic/1 &&
-+	cat >topic-1.txt <<-EOF &&
-+		Commit C
-+		EOF
-+	git add topic-1.txt &&
-+	test_tick &&
-+	git commit -m "Commit C" &&
-+
-+	cat >topic-1.txt <<-EOF &&
-+		Commit D
-+		EOF
-+	git add -u &&
-+	test_tick &&
-+	git commit -m "Commit D" &&
-+	git update-ref refs/pull/1/head HEAD &&
-+	C=$(git rev-parse topic/1~) &&
-+	D=$(git rev-parse topic/1) &&
-+
-+	# commit E
-+	git checkout main &&
-+	cat >main.txt <<-EOF &&
-+		Commit E
-+		EOF
-+	git add main.txt &&
-+	test_tick &&
-+	git commit -m "Commit E" &&
-+	E=$(git rev-parse HEAD) &&
-+
-+	# branch topic/2
-+	git checkout -b topic/2 &&
-+	cat >topic-2.txt <<-EOF &&
-+		Commit F
-+		EOF
-+	git add topic-2.txt &&
-+	test_tick &&
-+	git commit -m "Commit F" &&
-+
-+	cat >topic-2.txt <<-EOF &&
-+		Commit G
-+		EOF
-+	git add -u &&
-+	test_tick &&
-+	git commit -m "Commit G" &&
-+	git update-ref refs/pull/2/head HEAD &&
-+
-+	cat >topic-2.txt <<-EOF &&
-+		Commit H
-+		EOF
-+	git add -u &&
-+	test_tick &&
-+	git commit -m "Commit H" &&
-+	F=$(git rev-parse topic/2~2) &&
-+	G=$(git rev-parse topic/2~) &&
-+	H=$(git rev-parse topic/2) &&
-+
-+	# merge commit I & J
-+	git checkout main &&
-+	test_tick &&
-+	git merge --no-ff --no-edit topic/1 &&
-+	test_tick &&
-+	git merge --no-ff --no-edit refs/pull/2/head &&
-+	I=$(git rev-parse HEAD~) &&
-+	J=$(git rev-parse HEAD) &&
-+
-+	# commit K
-+	git checkout main &&
-+	cat >main.txt <<-EOF &&
-+		Commit K
-+		EOF
-+	git add main.txt &&
-+	test_tick &&
-+	git commit -m "Commit K" &&
-+	K=$(git rev-parse HEAD) &&
-+
-+	# branch release
-+	git checkout -b release &&
-+	cat >release.txt <<-EOF &&
-+		Commit L
-+		EOF
-+	git add release.txt &&
-+	test_tick &&
-+	git commit -m "Commit L" &&
-+	test_tick &&
-+	git tag -m "v1" v1 HEAD &&
-+
-+	cat >release.txt <<-EOF &&
-+		Commit M
-+		EOF
-+	git add -u &&
-+	test_tick &&
-+	git commit -m "Commit M" &&
-+	test_tick &&
-+	git tag -m "v2" v2 HEAD &&
-+
-+	cat >release.txt <<-EOF &&
-+		Commit N
-+		EOF
-+	git add -u &&
-+	test_tick &&
-+	git commit -m "Commit N" &&
-+	test_tick &&
-+	git tag -m "v3" v3 HEAD &&
-+	L=$(git rev-parse HEAD~2) &&
-+	M=$(git rev-parse HEAD~) &&
-+	N=$(git rev-parse HEAD) &&
-+	TAG1=$(git rev-parse refs/tags/v1) &&
-+	TAG2=$(git rev-parse refs/tags/v2) &&
-+	TAG3=$(git rev-parse refs/tags/v3) &&
-+
-+	# merge commit O
-+	git checkout main &&
-+	test_tick &&
-+	git merge --no-ff --no-edit tags/v2 &&
-+	O=$(git rev-parse HEAD) &&
-+
-+	# commit P
-+	git checkout main &&
-+	cat >main.txt <<-EOF &&
-+		Commit P
-+		EOF
-+	git add main.txt &&
-+	test_tick &&
-+	git commit -m "Commit P" &&
-+	P=$(git rev-parse HEAD)
-+'
-+
-+test_expect_success 'create bundle from special rev: main^!' '
-+	git bundle create special-rev.bdl "main^!" &&
-+
-+	git bundle list-heads special-rev.bdl |
-+		make_user_friendly_and_stable_output >actual &&
-+	cat >expect <<-EOF &&
-+		<COMMIT-P> refs/heads/main
-+		EOF
-+	test_i18ncmp expect actual &&
-+
-+	git bundle verify special-rev.bdl |
-+		make_user_friendly_and_stable_output >actual &&
-+	cat >expect <<-EOF &&
-+		The bundle contains this ref:
-+		<COMMIT-P> refs/heads/main
-+		The bundle requires this ref:
-+		<COMMIT-O>
-+		EOF
-+	test_i18ncmp expect actual &&
-+
-+	convert_bundle_to_pack <special-rev.bdl >special-rev.pack &&
-+	git index-pack special-rev.pack &&
-+	test_bundle_object_count special-rev.pack 3
-+'
-+
-+test_expect_success 'create bundle 1 - no prerequisites' '
-+	# create bundle from args
-+	git bundle create 1.bdl topic/1 topic/2 &&
-+
-+	cat >expect <<-EOF &&
-+		The bundle contains these 2 refs:
-+		<COMMIT-D> refs/heads/topic/1
-+		<COMMIT-H> refs/heads/topic/2
-+		The bundle records a complete history.
-+		EOF
-+
-+	# verify bundle, which has no prerequisites
-+	git bundle verify 1.bdl |
+ 	cat >expect <<-EOF &&
+ 		The bundle contains these 2 refs:
+ 		<COMMIT-D> refs/heads/topic/1
+@@ -264,9 +271,17 @@ test_expect_success 'create bundle 1 - no prerequisites' '
+ 		make_user_friendly_and_stable_output >actual &&
+ 	test_i18ncmp expect actual &&
+ 
++	git bundle verify stdin-1.bdl |
 +		make_user_friendly_and_stable_output >actual &&
 +	test_i18ncmp expect actual &&
 +
-+	convert_bundle_to_pack <1.bdl >1.pack &&
-+	git index-pack 1.pack &&
-+	test_bundle_object_count 1.pack 24
-+'
+ 	convert_bundle_to_pack <1.bdl >1.pack &&
+ 	git index-pack 1.pack &&
+-	test_bundle_object_count 1.pack 24
++	test_bundle_object_count 1.pack 24 &&
 +
-+test_expect_success 'create bundle 2 - has prerequisites' '
-+	# create bundle from args
-+	git bundle create 2.bdl \
++	convert_bundle_to_pack <stdin-1.bdl >stdin-1.pack &&
++	git index-pack stdin-1.pack &&
++	test_bundle_object_count stdin-1.pack 24
+ '
+ 
+ test_expect_success 'create bundle 2 - has prerequisites' '
+@@ -278,6 +293,18 @@ test_expect_success 'create bundle 2 - has prerequisites' '
+ 		^topic/2 \
+ 		release &&
+ 
++	# create bundle from stdin
++	# input has a non-exist reference: "topic/deleted"
++	cat >input <<-EOF &&
++		^topic/deleted
++		^$D
++		^topic/2
++		EOF
++	git bundle create stdin-2.bdl \
 +		--ignore-missing \
-+		^topic/deleted \
-+		^$D \
-+		^topic/2 \
-+		release &&
++		--stdin \
++		release <input &&
 +
-+	cat >expect <<-EOF &&
-+		The bundle contains this ref:
-+		<COMMIT-N> refs/heads/release
-+		The bundle requires these 3 refs:
-+		<COMMIT-D>
-+		<COMMIT-E>
-+		<COMMIT-G>
-+		EOF
-+
-+	git bundle verify 2.bdl |
+ 	cat >expect <<-EOF &&
+ 		The bundle contains this ref:
+ 		<COMMIT-N> refs/heads/release
+@@ -291,9 +318,17 @@ test_expect_success 'create bundle 2 - has prerequisites' '
+ 		make_user_friendly_and_stable_output >actual &&
+ 	test_i18ncmp expect actual &&
+ 
++	git bundle verify stdin-2.bdl |
 +		make_user_friendly_and_stable_output >actual &&
 +	test_i18ncmp expect actual &&
 +
-+	convert_bundle_to_pack <2.bdl >2.pack &&
-+	git index-pack 2.pack &&
-+	test_bundle_object_count 2.pack 16
-+'
+ 	convert_bundle_to_pack <2.bdl >2.pack &&
+ 	git index-pack 2.pack &&
+-	test_bundle_object_count 2.pack 16
++	test_bundle_object_count 2.pack 16 &&
 +
-+test_expect_success 'fail to verify bundle without prerequisites' '
-+	git init --bare test1.git &&
++	convert_bundle_to_pack <stdin-2.bdl >stdin-2.pack &&
++	git index-pack stdin-2.pack &&
++	test_bundle_object_count stdin-2.pack 16
+ '
+ 
+ test_expect_success 'fail to verify bundle without prerequisites' '
+@@ -308,6 +343,10 @@ test_expect_success 'fail to verify bundle without prerequisites' '
+ 
+ 	test_must_fail git -C test1.git bundle verify ../2.bdl 2>&1 |
+ 		make_user_friendly_and_stable_output >actual &&
++	test_i18ncmp expect actual &&
 +
-+	cat >expect <<-EOF &&
-+		error: Repository lacks these prerequisite commits:
-+		error: <COMMIT-D>
-+		error: <COMMIT-E>
-+		error: <COMMIT-G>
-+		EOF
-+
-+	test_must_fail git -C test1.git bundle verify ../2.bdl 2>&1 |
++	test_must_fail git -C test1.git bundle verify ../stdin-2.bdl 2>&1 |
 +		make_user_friendly_and_stable_output >actual &&
-+	test_i18ncmp expect actual
-+'
-+
-+test_expect_success 'create bundle 3 - two refs, same object' '
-+	# create bundle from args
-+	git bundle create --version=3 3.bdl \
-+		^release \
-+		^topic/1 \
-+		^topic/2 \
-+		main \
-+		HEAD &&
-+
-+	cat >expect <<-EOF &&
-+		The bundle contains these 2 refs:
-+		<COMMIT-P> refs/heads/main
-+		<COMMIT-P> HEAD
-+		The bundle requires these 2 refs:
-+		<COMMIT-M>
-+		<COMMIT-K>
+ 	test_i18ncmp expect actual
+ '
+ 
+@@ -320,6 +359,16 @@ test_expect_success 'create bundle 3 - two refs, same object' '
+ 		main \
+ 		HEAD &&
+ 
++	# create bundle from stdin
++	cat >input <<-EOF &&
++		^release
++		^topic/1
++		^topic/2
 +		EOF
++	git bundle create --version=3 stdin-3.bdl \
++		--stdin \
++		main HEAD <input &&
 +
-+	git bundle verify 3.bdl |
+ 	cat >expect <<-EOF &&
+ 		The bundle contains these 2 refs:
+ 		<COMMIT-P> refs/heads/main
+@@ -333,9 +382,17 @@ test_expect_success 'create bundle 3 - two refs, same object' '
+ 		make_user_friendly_and_stable_output >actual &&
+ 	test_i18ncmp expect actual &&
+ 
++	git bundle verify stdin-3.bdl |
 +		make_user_friendly_and_stable_output >actual &&
 +	test_i18ncmp expect actual &&
 +
-+	convert_bundle_to_pack <3.bdl >3.pack &&
-+	git index-pack 3.pack &&
-+	test_bundle_object_count 3.pack 4
-+'
+ 	convert_bundle_to_pack <3.bdl >3.pack &&
+ 	git index-pack 3.pack &&
+-	test_bundle_object_count 3.pack 4
++	test_bundle_object_count 3.pack 4 &&
 +
-+test_expect_success 'create bundle 4 - with tags' '
-+	# create bundle from args
-+	git bundle create 4.bdl \
-+		^main \
-+		^release \
-+		^topic/1 \
-+		^topic/2 \
-+		--all &&
-+
-+	cat >expect <<-EOF &&
-+		The bundle contains these 3 refs:
-+		<TAG-1> refs/tags/v1
-+		<TAG-2> refs/tags/v2
-+		<TAG-3> refs/tags/v3
-+		The bundle records a complete history.
++	convert_bundle_to_pack <stdin-3.bdl >stdin-3.pack &&
++	git index-pack stdin-3.pack &&
++	test_bundle_object_count stdin-3.pack 4
+ '
+ 
+ test_expect_success 'create bundle 4 - with tags' '
+@@ -347,6 +404,18 @@ test_expect_success 'create bundle 4 - with tags' '
+ 		^topic/2 \
+ 		--all &&
+ 
++	# create bundle from stdin
++	cat >input <<-EOF &&
++		^main
++		^release
++		^topic/1
++		^topic/2
 +		EOF
++	git bundle create stdin-4.bdl \
++		--ignore-missing \
++		--stdin \
++		--all <input &&
 +
-+	git bundle verify 4.bdl |
+ 	cat >expect <<-EOF &&
+ 		The bundle contains these 3 refs:
+ 		<TAG-1> refs/tags/v1
+@@ -359,9 +428,17 @@ test_expect_success 'create bundle 4 - with tags' '
+ 		make_user_friendly_and_stable_output >actual &&
+ 	test_i18ncmp expect actual &&
+ 
++	git bundle verify stdin-4.bdl |
 +		make_user_friendly_and_stable_output >actual &&
 +	test_i18ncmp expect actual &&
 +
-+	convert_bundle_to_pack <4.bdl >4.pack &&
-+	git index-pack 4.pack &&
-+	test_bundle_object_count 4.pack 3
-+'
+ 	convert_bundle_to_pack <4.bdl >4.pack &&
+ 	git index-pack 4.pack &&
+-	test_bundle_object_count 4.pack 3
++	test_bundle_object_count 4.pack 3 &&
 +
-+test_expect_success 'clone from bundle' '
-+	git clone --mirror 1.bdl mirror.git &&
-+	git -C mirror.git show-ref |
-+		make_user_friendly_and_stable_output >actual &&
-+	cat >expect <<-EOF &&
-+		<COMMIT-D> refs/heads/topic/1
-+		<COMMIT-H> refs/heads/topic/2
-+		EOF
-+	test_cmp expect actual &&
-+
-+	git -C mirror.git fetch ../2.bdl "+refs/*:refs/*" &&
-+	git -C mirror.git show-ref |
-+		make_user_friendly_and_stable_output >actual &&
-+	cat >expect <<-EOF &&
-+		<COMMIT-N> refs/heads/release
-+		<COMMIT-D> refs/heads/topic/1
-+		<COMMIT-H> refs/heads/topic/2
-+		EOF
-+	test_cmp expect actual &&
-+
-+	git -C mirror.git fetch ../3.bdl "+refs/*:refs/*" &&
-+	git -C mirror.git show-ref |
-+		make_user_friendly_and_stable_output >actual &&
-+	cat >expect <<-EOF &&
-+		<COMMIT-P> refs/heads/main
-+		<COMMIT-N> refs/heads/release
-+		<COMMIT-D> refs/heads/topic/1
-+		<COMMIT-H> refs/heads/topic/2
-+		EOF
-+	test_cmp expect actual &&
-+
-+	git -C mirror.git fetch ../4.bdl "+refs/*:refs/*" &&
-+	git -C mirror.git show-ref |
-+		make_user_friendly_and_stable_output >actual &&
-+	cat >expect <<-EOF &&
-+		<COMMIT-P> refs/heads/main
-+		<COMMIT-N> refs/heads/release
-+		<COMMIT-D> refs/heads/topic/1
-+		<COMMIT-H> refs/heads/topic/2
-+		<TAG-1> refs/tags/v1
-+		<TAG-2> refs/tags/v2
-+		<TAG-3> refs/tags/v3
-+		EOF
-+	test_cmp expect actual
-+'
-+
-+test_done
++	convert_bundle_to_pack <stdin-4.bdl >stdin-4.pack &&
++	git index-pack stdin-4.pack &&
++	test_bundle_object_count stdin-4.pack 3
+ '
+ 
+ test_expect_success 'clone from bundle' '
 -- 
 2.30.0.4.g09ee524cd5
 
