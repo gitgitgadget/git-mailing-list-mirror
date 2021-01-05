@@ -2,94 +2,333 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-14.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B89DC433DB
-	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 23:07:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E8B8C433E6
+	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 23:21:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id D0F8E22E00
-	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 23:07:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4A48822E00
+	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 23:21:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728498AbhAEXH2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Jan 2021 18:07:28 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63421 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727360AbhAEXH1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jan 2021 18:07:27 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C9BD910A455;
-        Tue,  5 Jan 2021 18:06:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=fieXXVF/c+Jj5LYKRXbcR4ASx
-        jU=; b=j+UOzyS4aQ5UTRC1Hs3SgHT/cChg3uykw2I56QJuMGsXO6QO0VKj9FBdy
-        ZD9s7Ohn247nJb93T1Vq93w0kvm4idKHa51jf/HTMk7pTXGnun5RSZV/OB02sICh
-        cLvBOTBLis29IbGYUklMhcgR68hyLVUCCzL2V678FzpTNWlr3c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=acPcSS7GZ//LbBnKtae
-        RxKfeic7blK2s2ID8B3v952xImL6tBQ76WGZ90iUB222roHZKHjVcwEuB6GBshYW
-        4ESQZITQ+fkk9iV1IbFYQWmQzF4Fj+RBbPZ0Hc7m9CUdQak95V7CHJa6RF6jazau
-        9LkIYXD5n+23XwULvGi3Sufc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C2B4110A454;
-        Tue,  5 Jan 2021 18:06:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.196.173.25])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 11B5910A453;
-        Tue,  5 Jan 2021 18:06:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] shortlog: remove unused(?) "repo-abbrev" feature
-References: <7vejrs54kp.fsf@assigned-by-dhcp.cox.net>
-        <20210105130359.21139-1-avarab@gmail.com>
-Date:   Tue, 05 Jan 2021 15:06:40 -0800
-Message-ID: <xmqqlfd7x9tr.fsf@gitster.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        id S1727246AbhAEXVB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Jan 2021 18:21:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55712 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726610AbhAEXVB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jan 2021 18:21:01 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF2C7C061793
+        for <git@vger.kernel.org>; Tue,  5 Jan 2021 15:20:20 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id d13so745044wrc.13
+        for <git@vger.kernel.org>; Tue, 05 Jan 2021 15:20:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=BRyA/sFugVkkOajQNFWH81Xzn0am29kKiQ1ozD37pu8=;
+        b=Hy+4HCsd2X+aHBY1ZQLIe2Clg3bBn/SKdvKpIy9ZWHmoHsWp2V+m9AOvkXlR/bP0JD
+         3J7TsjsfNpXZebiR+cZrnSa5KeAj784gJ40xdrJlJk7suV2lsH/DVz4R1qtvwOP3MAmr
+         fusXxVf8lsGy1pNMMxjHu2ujPlFngIGJ7f4iouYckRKkh5841LxCv09B0h/M5BoCNDiB
+         bsJUWTHeR1Isw75E74Zfzj/AsM/vhL+IrJxJdf8FlfTPpJtyK/YLb+2nnVH+8bp5XeZ7
+         cqXR6CPbEOlVuioJUClwxZIrnymc4dWo+pepapjytCOYZD4LJ1rRYf4sA1edHtHhC1PB
+         Cj5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=BRyA/sFugVkkOajQNFWH81Xzn0am29kKiQ1ozD37pu8=;
+        b=mSJcAC+2betmVCTTmhxOHnkq4Eu9jUifaarYozxCiZWHYEqGM2dMaCTnx+OObzYUx4
+         nxVveYx12qrtmgqzb0FIq98Q53o8DI8Pzbfv1qDsmhAB43gGHoirDBuVKFevHagyBV/D
+         DYq/Qy5p6LJwOzea/By5yMhjrklkaJH1DezxRygGu37Jrha5W5lygdWU53ed+DESPk1r
+         fZqgBAzYHYFg2pbR3Ab0CdWDFFKhrYIrY1VMTz+tO8f4hu+16VgV5/guc5qcmRTCKvf/
+         ohVyLxmlSeiixzANtxRarVU4XeopivQVsr7R4N7EF4Hyr5LjSKQWKBzBY0L6lJfTouZy
+         zoIw==
+X-Gm-Message-State: AOAM531ENiP0mglSt1z6JxAORfCSvdSEjU2VRGPizrul/bhQ2aiR6TIO
+        WV0KfIr5qQjTrc/S1xALrzIFydZZYX0=
+X-Google-Smtp-Source: ABdhPJwDfLcngPdIB7GU5gQ2+NIrsglNUvM6q/nN0aTYyWOcUWCz9l/1k5kw3QqRLj0kkCjG7SmNlA==
+X-Received: by 2002:a05:6000:108b:: with SMTP id y11mr1568508wrw.379.1609888819620;
+        Tue, 05 Jan 2021 15:20:19 -0800 (PST)
+Received: from [192.168.0.104] (atoulouse-654-1-420-166.w2-6.abo.wanadoo.fr. [2.6.83.166])
+        by smtp.gmail.com with ESMTPSA id u26sm745780wmm.24.2021.01.05.15.20.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Jan 2021 15:20:19 -0800 (PST)
+Subject: Re: [PATCH v6 05/13] merge-index: libify merge_one_path() and
+ merge_all()
+To:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+References: <20201116102158.8365-1-alban.gruin@gmail.com>
+ <20201124115315.13311-1-alban.gruin@gmail.com>
+ <20201124115315.13311-6-alban.gruin@gmail.com>
+ <2ff7cebf-0084-aef8-bf82-d76a82be23e7@gmail.com>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Message-ID: <83da1bc1-d178-ee19-cb34-5bf023477905@gmail.com>
+Date:   Wed, 6 Jan 2021 00:20:06 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
+In-Reply-To: <2ff7cebf-0084-aef8-bf82-d76a82be23e7@gmail.com>
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: AC6E47AC-4FAA-11EB-9BE0-D609E328BF65-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Language: fr-FR
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Hi Derrick,
 
-> Remove support for the magical "repo-abbrev" comment in .mailmap
-> files. This was added to .mailmap parsing in [1], as a generalized
-> feature of the git-shortlog Perl script added earlier in [2].
-> ...
-> I wondered what this repo-abbrev thing was while reading thorugh
-> recent mailmap.c traffic. I was a bit on the fence about this being a
-> RFC/PATCH, but I guess if people hate this & want to keep it that's
-> fine, but if not this should be ready for inclusion.
->
-> Surely has some conflicts with brian's recent submission, but I wanted
-> to get it out of my queue sooner than later.
+Le 05/01/2021 à 16:59, Derrick Stolee a écrit :
+> On 11/24/2020 6:53 AM, Alban Gruin wrote:
+>> The "resolve" and "octopus" merge strategies do not call directly `git
+>> merge-one-file', they delegate the work to another git command, `git
+>> merge-index', that will loop over files in the index and call the
+>> specified command.  Unfortunately, these functions are not part of
+>> libgit.a, which means that once rewritten, the strategies would still
+>> have to invoke `merge-one-file' by spawning a new process first.
+> 
+> This is a good thing to do.
+>  
+>> To avoid this, this moves and renames merge_one_path(), merge_all(), and
+>> their helpers to merge-strategies.c.  They also take a callback to
+>> dictate what they should do for each file.  For now, to preserve the
+>> behaviour of `merge-index', only one callback, launching a new process,
+>> is defined.
+> 
+> I don't think the callback should be in libgit.a, though. The callback
+> itself should be a static method inside builtin/merge-index.c.
+> 
 
-I'd expect that nobody would say anything until this change hits a
-released version, and then after another release or two when it hits a
-binary-packaged distro release, we may hear a regression report. =20
+Right.  Modern code should not use this callback -- or the merge-index
+builtin once this gets merged.
 
-Or perhaps not.
+>> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+>> ---
+>>  builtin/merge-index.c |  77 +++----------------------------
+>>  merge-strategies.c    | 104 ++++++++++++++++++++++++++++++++++++++++++
+>>  merge-strategies.h    |  19 ++++++++
+>>  3 files changed, 130 insertions(+), 70 deletions(-)
+>>
+>> diff --git a/builtin/merge-index.c b/builtin/merge-index.c
+>> index 38ea6ad6ca..d5e5713b25 100644
+>> --- a/builtin/merge-index.c
+>> +++ b/builtin/merge-index.c
+>> @@ -1,74 +1,11 @@
+>>  #define USE_THE_INDEX_COMPATIBILITY_MACROS
+>>  #include "builtin.h"
+>> -#include "run-command.h"
+>> -
+>> -static const char *pgm;
+>> -static int one_shot, quiet;
+>> -static int err;
+>> -
+>> -static int merge_entry(int pos, const char *path)
+>> -{
+>> -	int found;
+>> -	const char *arguments[] = { pgm, "", "", "", path, "", "", "", NULL };
+>> -	char hexbuf[4][GIT_MAX_HEXSZ + 1];
+>> -	char ownbuf[4][60];
+>> -
+>> -	if (pos >= active_nr)
+>> -		die("git merge-index: %s not in the cache", path);
+>> -	found = 0;
+>> -	do {
+>> -		const struct cache_entry *ce = active_cache[pos];
+>> -		int stage = ce_stage(ce);
+>> -
+>> -		if (strcmp(ce->name, path))
+>> -			break;
+>> -		found++;
+>> -		oid_to_hex_r(hexbuf[stage], &ce->oid);
+>> -		xsnprintf(ownbuf[stage], sizeof(ownbuf[stage]), "%o", ce->ce_mode);
+>> -		arguments[stage] = hexbuf[stage];
+>> -		arguments[stage + 4] = ownbuf[stage];
+>> -	} while (++pos < active_nr);
+>> -	if (!found)
+>> -		die("git merge-index: %s not in the cache", path);
+>> -
+>> -	if (run_command_v_opt(arguments, 0)) {
+>> -		if (one_shot)
+>> -			err++;
+>> -		else {
+>> -			if (!quiet)
+>> -				die("merge program failed");
+>> -			exit(1);
+>> -		}
+>> -	}
+>> -	return found;
+>> -}
+>> -
+>> -static void merge_one_path(const char *path)
+>> -{
+>> -	int pos = cache_name_pos(path, strlen(path));
+>> -
+>> -	/*
+>> -	 * If it already exists in the cache as stage0, it's
+>> -	 * already merged and there is nothing to do.
+>> -	 */
+>> -	if (pos < 0)
+>> -		merge_entry(-pos-1, path);
+>> -}
+>> -
+>> -static void merge_all(void)
+>> -{
+>> -	int i;
+>> -	for (i = 0; i < active_nr; i++) {
+>> -		const struct cache_entry *ce = active_cache[i];
+>> -		if (!ce_stage(ce))
+>> -			continue;
+>> -		i += merge_entry(i, ce->name)-1;
+>> -	}
+>> -}
+>> +#include "merge-strategies.h"
+>>  
+>>  int cmd_merge_index(int argc, const char **argv, const char *prefix)
+>>  {
+>> -	int i, force_file = 0;
+>> +	int i, force_file = 0, err = 0, one_shot = 0, quiet = 0;
+>> +	const char *pgm;
+>>  
+>>  	/* Without this we cannot rely on waitpid() to tell
+>>  	 * what happened to our children.
+>> @@ -98,14 +35,14 @@ int cmd_merge_index(int argc, const char **argv, const char *prefix)
+>>  				continue;
+>>  			}
+>>  			if (!strcmp(arg, "-a")) {
+>> -				merge_all();
+>> +				err |= merge_all_index(the_repository, one_shot, quiet,
+>> +						       merge_one_file_spawn, (void *)pgm);
+> 
+> This hunk makes it look like pgm is uninitialized, but it is set earlier
+> in cmd_merge_index() (previously referring to the global instance). Good.
+> 
+>> +int merge_one_file_spawn(struct repository *r,
+>> +			 const struct object_id *orig_blob,
+>> +			 const struct object_id *our_blob,
+>> +			 const struct object_id *their_blob, const char *path,
+>> +			 unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode,
+>> +			 void *data)
+>> +{
+>> +	char oids[3][GIT_MAX_HEXSZ + 1] = {{0}};
+>> +	char modes[3][10] = {{0}};
+>> +	const char *arguments[] = { (char *)data, oids[0], oids[1], oids[2],
+>> +				    path, modes[0], modes[1], modes[2], NULL };
+>> +
+>> +	if (orig_blob) {
+>> +		oid_to_hex_r(oids[0], orig_blob);
+>> +		xsnprintf(modes[0], sizeof(modes[0]), "%06o", orig_mode);
+>> +	}
+>> +
+>> +	if (our_blob) {
+>> +		oid_to_hex_r(oids[1], our_blob);
+>> +		xsnprintf(modes[1], sizeof(modes[1]), "%06o", our_mode);
+>> +	}
+>> +
+>> +	if (their_blob) {
+>> +		oid_to_hex_r(oids[2], their_blob);
+>> +		xsnprintf(modes[2], sizeof(modes[2]), "%06o", their_mode);
+>> +	}
+>> +
+>> +	return run_command_v_opt(arguments, 0);
+>> +}
+> 
+> Yes, this would be better in the builtin code. Better to keep the meaning
+> of 'data' clear in the context of that file.
+> 
+>> +static int merge_entry(struct repository *r, int quiet, unsigned int pos,
+>> +		       const char *path, int *err, merge_fn fn, void *data)
+>> +{
+>> +	int found = 0;
+>> +	const struct object_id *oids[3] = {NULL};
+>> +	unsigned int modes[3] = {0};
+>> +
+>> +	do {
+>> +		const struct cache_entry *ce = r->index->cache[pos];
+>> +		int stage = ce_stage(ce);
+>> +
+>> +		if (strcmp(ce->name, path))
+>> +			break;
+>> +		found++;
+>> +		oids[stage - 1] = &ce->oid;
+>> +		modes[stage - 1] = ce->ce_mode;
+>> +	} while (++pos < r->index->cache_nr);
+>> +	if (!found)
+>> +		return error(_("%s is not in the cache"), path);
+>> +
+>> +	if (fn(r, oids[0], oids[1], oids[2], path,
+>> +	       modes[0], modes[1], modes[2], data)) {
+>> +		if (!quiet)
+>> +			error(_("Merge program failed"));
+>> +		(*err)++;
+>> +	}
+>> +
+>> +	return found;
+>> +}
+>> +
+>> +int merge_index_path(struct repository *r, int oneshot, int quiet,
+>> +		     const char *path, merge_fn fn, void *data)
+>> +{
+>> +	int pos = index_name_pos(r->index, path, strlen(path)), ret, err = 0;
+>> +
+>> +	/*
+>> +	 * If it already exists in the cache as stage0, it's
+>> +	 * already merged and there is nothing to do.
+>> +	 */
+>> +	if (pos < 0) {
+>> +		ret = merge_entry(r, quiet || oneshot, -pos - 1, path, &err, fn, data);
+>> +		if (ret == -1)
+>> +			return -1;
+>> +		else if (err)
+>> +			return 1;
+>> +	}
+>> +	return 0;
+>> +}
+>> +
+>> +int merge_all_index(struct repository *r, int oneshot, int quiet,
+>> +		    merge_fn fn, void *data)
+>> +{
+>> +	int err = 0, ret;
+>> +	unsigned int i;
+>> +
+>> +	for (i = 0; i < r->index->cache_nr; i++) {
+>> +		const struct cache_entry *ce = r->index->cache[i];
+>> +		if (!ce_stage(ce))
+>> +			continue;
+>> +
+>> +		ret = merge_entry(r, quiet || oneshot, i, ce->name, &err, fn, data);
+>> +		if (ret > 0)
+>> +			i += ret - 1;
+>> +		else if (ret == -1)
+>> +			return -1;
+>> +
+>> +		if (err && !oneshot)
+>> +			return 1;
+>> +	}
+>> +
+>> +	return err;
+>> +}
+> 
+> I notice that these methods don't actually use the repository pointer
+> more than they just use 'r->index'. Should they instead take a
+> 'struct index_state *istate' directly? (I see that the repository is
+> used later by merge_strategies_resolve(), but not in these.)
+> 
+> If you think it likely that we will need a repository for these methods,
+> then feel free to ignore me and keep your 'r' pointer.
+> 
 
-In other words, we won't see a complaint (other than any obvious ones
-we'd notice during review, like "shouldn't we be skipping comments?")
-by cooking this in 'next', so I'd prefer to fast-track a topic like this
-quickly to 'master' but make sure we can revert it anytime.  Which in
-turn means that it would be nice to see it while the codepaths involved
-is expected to be quiet for a while.  So, let's ignore this topic while
-the other mailmap topic is in flight and then revisit it after it
-graduates to 'master'.
+Ouch, you're right.  I thought this was necessary because
+merge_three_way() wanted a `struct repository *', without noticing that
+it was in fact unnecessary, even in my follow-up patch.  I change that.
 
-Thanks.
+> Thanks,
+> -Stolee
+> 
+
+Cheers,
+Alban
+
