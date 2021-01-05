@@ -2,88 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF120C433DB
-	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 17:55:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCEC0C43217
+	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 18:13:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B12D220449
-	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 17:55:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B117322D6F
+	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 18:13:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730586AbhAERz6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Jan 2021 12:55:58 -0500
-Received: from mail-ej1-f47.google.com ([209.85.218.47]:42209 "EHLO
-        mail-ej1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728897AbhAERz5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jan 2021 12:55:57 -0500
-Received: by mail-ej1-f47.google.com with SMTP id d17so1361045ejy.9
-        for <git@vger.kernel.org>; Tue, 05 Jan 2021 09:55:41 -0800 (PST)
+        id S1729925AbhAESM7 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 5 Jan 2021 13:12:59 -0500
+Received: from mail-ej1-f42.google.com ([209.85.218.42]:41051 "EHLO
+        mail-ej1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728981AbhAESM6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jan 2021 13:12:58 -0500
+Received: by mail-ej1-f42.google.com with SMTP id ce23so1495268ejb.8
+        for <git@vger.kernel.org>; Tue, 05 Jan 2021 10:12:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xP/ai+aD9oBNgZ6hUyeciRL26hoBfs7KZYTGeaBQ0pQ=;
-        b=aU7fjDm3wsVsm1MSCQGDdKnw1v0fSiqIRASVaO/CX9G1lhPVrPyo3rWXuPbPUvPaZM
-         Rvb7gvFAMRknRoIb3tQtkLxto2MlOYVqsbx7YthI4XlnYgDqr0JxRCQeVd81i1PnF4KI
-         0E//E/ajPUFmnzgRozHUdvWLQsFU9ZGdLaXb6SLkcGwm3SY+QLLaadinCzrBONjfPqZI
-         wLu64ZP2uGeRKUJ+NS7Bm8Ps0TBjHOZVxjjVHofLHw626rVQr+YC+WDAYTVVUEqqbQpG
-         bFhE8gyf+NJ+Ug84HarW2UD6wHKI0KiOwF/BQ4Nc0SWKmdYwy8CutUSeAMuIgHex3f8P
-         kdGg==
-X-Gm-Message-State: AOAM533ZsqTrNGs6UKIiqqMXTxe63Ll+p/TklrylqSNIvH05u+TqZdLR
-        bd/mlS6FDxSkYlwPrhUM849LM5NVqgq4b3TJ7Xw=
-X-Google-Smtp-Source: ABdhPJyl4tDYd5erxvMArSqY/68I9buovuGjTY4pSvexLPTd/uZ8+uf3C5uk7vfP1O7oI7AoRFDhvt7gNy/zNOhbpjM=
-X-Received: by 2002:a17:906:4348:: with SMTP id z8mr241968ejm.371.1609869315672;
- Tue, 05 Jan 2021 09:55:15 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ywf4+xpImmzxb+4teIVQD02mZ0yiS1+D6/AkIhLvYc0=;
+        b=T+RMRicxfGKCwbEnuuTTtZvcwKSvQpgbBShpI0ykOOL3Yt2en86f6XR/DY0Uv8tskb
+         75gfYnmerCM3nlGIkT7QM5A7xksyN6zf4U7WsBBbszBKvtWTkegR9il69t9ZJZaLKjtl
+         WytBfRilvdloP5f4K2UQyXomgxXVrqPVsyvHwkLxg6cI64b/I6oyw7inXdAHDddp04AD
+         V6j+wLU1fkeNIfH6PHuoKTwLijzJzW6RGp9x7lI7Ku2pBfBgFYA9VVCOq4Eehh3xlq+R
+         cU/JLEJdwVguXLRnyF3o86a/hCl45mwsrZgu7jmdzQs1HK8YCCUaJiyjCRRaJQQZ90qN
+         FdwA==
+X-Gm-Message-State: AOAM532DJfQYd0R4fzSKzPbcpJeHmpPGdnZBhB7RK07grPYFm7nFsYM7
+        uSwVg0cqTGxAN20XA1vH0lSweLG+hgXRq0lksiM=
+X-Google-Smtp-Source: ABdhPJzWxLHNR4kDxyIGbfapwfBRxsNcOv9Noj8PmIY646mZuX4uBdVwBENvbL8gECjjUhB+Vlvp1kyqsXp2bih2nQk=
+X-Received: by 2002:a17:906:6b88:: with SMTP id l8mr335316ejr.482.1609870337051;
+ Tue, 05 Jan 2021 10:12:17 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.834.git.1609857770445.gitgitgadget@gmail.com>
-In-Reply-To: <pull.834.git.1609857770445.gitgitgadget@gmail.com>
+References: <c22ba034-6d7d-866a-c6fb-d769d117eec4@daenzer.net> <34b425b5-0237-fb46-5613-e90346bd7114@daenzer.net>
+In-Reply-To: <34b425b5-0237-fb46-5613-e90346bd7114@daenzer.net>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 5 Jan 2021 12:55:04 -0500
-Message-ID: <CAPig+cQ4B6s7RzGH=1QhSc_2kKy-Mbp9fyK4VoTntdAfCT4d9A@mail.gmail.com>
-Subject: Re: [PATCH] for-each-repo: do nothing on empty config
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Date:   Tue, 5 Jan 2021 13:12:06 -0500
+Message-ID: <CAPig+cSe267W7hO8a38ifCw_r4eabUA6WB9MDhS=GttTxELpVg@mail.gmail.com>
+Subject: Re: Bug report: git rebase ignores different context, resulting in
+ subtle breakage
+To:     =?UTF-8?Q?Michel_D=C3=A4nzer?= <michel@daenzer.net>
+Cc:     Git List <git@vger.kernel.org>,
+        Daniel Stone <daniel@fooishbar.org>,
+        Elijah Newren <newren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 5, 2021 at 9:44 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> 'git for-each-repo --config=X' should return success without calling any
-> subcommands when the config key 'X' has no value. The current
-> implementation instead segfaults.
-> [...]
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
-> diff --git a/builtin/for-each-repo.c b/builtin/for-each-repo.c
-> @@ -51,6 +51,9 @@ int cmd_for_each_repo(int argc, const char **argv, const char *prefix)
->         values = repo_config_get_value_multi(the_repository,
->                                              config_key);
-> +       if (!values)
-> +               return result;
+On Tue, Jan 5, 2021 at 4:34 AM Michel Dänzer <michel@daenzer.net> wrote:
+> On 2020-12-14 3:37 p.m., Michel Dänzer wrote:
+> > (Originally reported as a GitLab issue:
+> > https://gitlab.com/gitlab-org/gitlab/-/issues/292754)
+>
+> Does the lack of response mean this is considered not a bug?
 
-Probably not worth a re-roll, but the above has higher cognitive load than:
-
-    if (!value)
-        return 0;
-
-which indicates clearly that the command succeeded, whereas `return
-result` makes the reader scan all the code above the conditional to
-figure out what values `result` could possibly hold.
-
-> diff --git a/t/t0068-for-each-repo.sh b/t/t0068-for-each-repo.sh
-> @@ -27,4 +27,8 @@ test_expect_success 'run based on configured value' '
-> +test_expect_success 'do nothing on empty config' '
-> +       git for-each-repo --config=bogus.config -- these args would fail
-> +'
-
-The `these args would fail` arguments add mystery to the test,
-prompting the reader to wonder what exactly is going on: "Fail how?",
-"Is it supposed to fail?". It might be less confusing to use something
-more direct like `nonexistent` or `does not exist`.
+Perhaps the original slipped under the radar of the area experts.
+Adding Elijah to the Cc: list...
