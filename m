@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1F7BC433E6
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2BF9C43381
 	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:44:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 84AB622D72
+	by mail.kernel.org (Postfix) with ESMTP id BFEFF22D6F
 	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:44:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730892AbhAEToO (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1730887AbhAEToO (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 5 Jan 2021 14:44:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49916 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730880AbhAEToL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jan 2021 14:44:11 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6709DC061796
-        for <git@vger.kernel.org>; Tue,  5 Jan 2021 11:43:31 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id g185so623333wmf.3
-        for <git@vger.kernel.org>; Tue, 05 Jan 2021 11:43:31 -0800 (PST)
+        with ESMTP id S1730882AbhAEToN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jan 2021 14:44:13 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BD82C061798
+        for <git@vger.kernel.org>; Tue,  5 Jan 2021 11:43:32 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id r3so364243wrt.2
+        for <git@vger.kernel.org>; Tue, 05 Jan 2021 11:43:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=V1YEaCkjPz0KNEeXzNPgbWhGO2r4fyI1mxyNllWJhA8=;
-        b=aPxFgKc4fjiEoPXV5csHpGeTgivawbc2yomYmAS0kWpuvzlQnSfKhnOswBesLB0cHK
-         LkgVrdFCrGB4EZsRBIddrYLP4svY1iafo31PGS3MlV4b0C/qPZe4HwYb+mslmK/ismRN
-         4xlfpmPtHC+2hcYciojSmlyDDIj98o6PbDBLy0eInmBuGXWNJmnwWQ/PiLmtUPofMRJI
-         DqkAnMtiQH1OfmOlUteFlVkc1sitYk05AQutQw2e5X2gZMAFt7LXar8/FhgVzKH8tIe4
-         ua0xwKUO12bsLufK8v1U8EFNfH71ffXYFFY4saiQwwW4Hb5VRv7uFT5nMM6wQmO3KvVg
-         6BiQ==
+        bh=LMaLfHsrFtR5TbYrAS2TUcw4yJ/c8dS9VHRIf5BDh/o=;
+        b=Te9611pfANkc1f34KVNPH28Lx0cG/O8b+YKepg+qVygHXJ3/BQcTEUvTiIYjgqSa3n
+         mnwR17gZneg+cTq9L9c3Alzf8ClkDpO3sjLxoMn1PUDBkIic77xKycVmzo6YZM/vqz64
+         vvGElvz/bt8F0D7vJ4AaaZgrKIY30MSMl1UeudhZWMxYxab99K/M7Wuu/VfgRBXwGoww
+         TY0Gczqzw6aTnUtG3RWIEQ/uZaMO8TLFvR3qOcu2+29R3WtmNxpqqHOL3TvamybYEiA+
+         0EQYFT4hYMkL3ckMUpHv6eOqTIfwKTVBoNL47dJ+eb7v8UglcEjVx7UnxMJhRa1oAZZg
+         C1yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=V1YEaCkjPz0KNEeXzNPgbWhGO2r4fyI1mxyNllWJhA8=;
-        b=dnrwMSRN99MdY5f6q4gWdddv55yT8P+Rl7106TWdnuYdzfsZ8NjahCd+oZWVQ4+tpl
-         igiaEt4AFiv2ltPR0a8i17/kL+jwubQNfoSNvdDU/wZ9RfiB808yOD+g6o3UvTVJ5o/R
-         GUP6JGfirOvv0M+3JSD9/VfTfcw8yvnmvLZyEwf/ocza0Ag9M+I13l+mvvL0LDUBYpTR
-         3j4089Eg9o/GqCwwRuc1YFeTt2PwCCz2GIqr3oPw/j6EFRx1c0AK/RkSkhAcXdTjM3B5
-         ufh2Be4xorAfDxyohzDs0gw8n25nOpshqF1ftgFvb7lH3pEuwVk8xCzmZO6pNKfFlWpr
-         /FqQ==
-X-Gm-Message-State: AOAM53138uLyk01xwbHNGA6XyefksGYrhEm6iRA4Sv9/MyysMRYjS4EW
-        JlEKL8xcvesj0+exBqO6c86qDE80Uq8KUw==
-X-Google-Smtp-Source: ABdhPJytFWrp2ac0KlICs50k30yYbKY6VhOXP5wSGb+AI0PfY4FrxX+9lH9E5VVaroWnGw1WCzGZNg==
-X-Received: by 2002:a7b:c773:: with SMTP id x19mr581563wmk.127.1609875809957;
-        Tue, 05 Jan 2021 11:43:29 -0800 (PST)
+        bh=LMaLfHsrFtR5TbYrAS2TUcw4yJ/c8dS9VHRIf5BDh/o=;
+        b=b1/1Yy3GplMqv2uJpmG7Cf+5emTr613M68u+2vtgjspU2i+Pq/5lhSEjTJfpTX+4sm
+         VpnPQszfINcmvVzCFFQrXVkw8QVpKeP61EC0uQJIBOl7g929Eqb1Jy3yXZheOUZ3/lmx
+         08gsFyZ0iRbb8aHJ8PeLTzd/hJLWETUQtpaJ273vFMKfSCS7C3ROY1oCPMkZMqvofdVZ
+         hW2O2D6ovIJIq/VlEx/RRMB9fkhaZKjji+6+ulpZ0Vg1fRzUv/HOQNtupf0WTRYpLuUU
+         ozPX2M56zkZuI+n5/4E3Z6v8khrFNVGgzMZIoqJ/K7nKu/oz+PmDJV0Fbic4SzofrPMO
+         NR4g==
+X-Gm-Message-State: AOAM531leTwiLY/r1C+gJr+jNKZiQyyzVe0GMosBQLaJw0frSXQlQa8G
+        2103FHSyRAhJIFACAVe5TZrHrxp2Hzk3bg==
+X-Google-Smtp-Source: ABdhPJypCWNBEGztuhL+hyrioV7BILff5YkFQYaNQMdFKX+T58LoqD7kswimkNDfvi85XNsWHJrt4g==
+X-Received: by 2002:a05:6000:1d0:: with SMTP id t16mr1051286wrx.203.1609875811149;
+        Tue, 05 Jan 2021 11:43:31 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id s6sm151113wro.79.2021.01.05.11.43.29
+        by smtp.gmail.com with ESMTPSA id s6sm151113wro.79.2021.01.05.11.43.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jan 2021 11:43:29 -0800 (PST)
+        Tue, 05 Jan 2021 11:43:30 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 03/23] mktag doc: update to explain why to use this
-Date:   Tue,  5 Jan 2021 20:42:32 +0100
-Message-Id: <20210105194252.627-4-avarab@gmail.com>
+Subject: [PATCH v5 04/23] mktag tests: don't needlessly use a subshell
+Date:   Tue,  5 Jan 2021 20:42:33 +0100
+Message-Id: <20210105194252.627-5-avarab@gmail.com>
 X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
 In-Reply-To: <20201223013606.7972-1-avarab@gmail.com>
 References: <20201223013606.7972-1-avarab@gmail.com>
@@ -79,57 +79,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the mktag documentation to compare itself to the similar
-"hash-object -t tag" command. Before this someone reading the
-documentation wouldn't have much of an idea what the difference
-was.
-
-Let's allude to our own validation logic, and cross-link the "mktag"
-and "hash-object" documentation to aid discover-ability. A follow-up
-change to migrate "mktag" to use "fsck" validation will make the part
-about validation logic clearer.
+The use of a subshell dates back to e9b20943b77 (t/t3800: do not use a
+temporary file to hold expected result., 2008-01-04). It's not needed
+anymore, if it ever was.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-mktag.txt | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ t/t3800-mktag.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/git-mktag.txt b/Documentation/git-mktag.txt
-index 1b0667e372a..20af1915e9e 100644
---- a/Documentation/git-mktag.txt
-+++ b/Documentation/git-mktag.txt
-@@ -3,7 +3,7 @@ git-mktag(1)
- 
- NAME
- ----
--git-mktag - Creates a tag object
-+git-mktag - Creates a tag object with extra validation
- 
- 
- SYNOPSIS
-@@ -13,10 +13,19 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--Reads a tag contents on standard input and creates a tag object
--that can also be used to sign other objects.
- 
--The output is the new tag's <object> identifier.
-+Reads a tag contents on standard input and creates a tag object. The
-+output is the new tag's <object> identifier.
-+
-+This command is mostly equivalent to linkgit:git-hash-object[1]
-+invoked with `-t tag -w --stdin`. I.e. both of these will create and
-+write a tag found in `my-tag`:
-+
-+    git mktag <my-tag
-+    git hash-object -t tag -w --stdin <my-tag
-+
-+The difference is that mktag will die before writing the tag if the
-+tag doesn't pass a sanity check.
- 
- Tag Format
- ----------
+diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
+index d696aa4e52e..0e411e3c45f 100755
+--- a/t/t3800-mktag.sh
++++ b/t/t3800-mktag.sh
+@@ -14,7 +14,7 @@ test_description='git mktag: tag object verify test'
+ check_verify_failure () {
+ 	expect="$2"
+ 	test_expect_success "$1" '
+-		( test_must_fail git mktag <tag.sig 2>message ) &&
++		test_must_fail git mktag <tag.sig 2>message &&
+ 		grep "$expect" message
+ 	'
+ }
 -- 
 2.29.2.222.g5d2a92d10f8
 
