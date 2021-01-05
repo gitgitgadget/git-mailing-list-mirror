@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC39AC433E9
-	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:26:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FB83C433DB
+	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:26:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A1C9922CF8
-	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:26:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 184B322D5B
+	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:26:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728655AbhAET0C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Jan 2021 14:26:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47074 "EHLO
+        id S1730723AbhAET0m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Jan 2021 14:26:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726663AbhAET0B (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jan 2021 14:26:01 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D97BC061795
-        for <git@vger.kernel.org>; Tue,  5 Jan 2021 11:24:39 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id o19so1140846lfo.1
-        for <git@vger.kernel.org>; Tue, 05 Jan 2021 11:24:39 -0800 (PST)
+        with ESMTP id S1728466AbhAET0l (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jan 2021 14:26:41 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26F77C06179E
+        for <git@vger.kernel.org>; Tue,  5 Jan 2021 11:24:50 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id o19so1142119lfo.1
+        for <git@vger.kernel.org>; Tue, 05 Jan 2021 11:24:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ayM9kLV7lJvZ+kQc7BAf+3o6iyHcSb3H+W8asukRojQ=;
-        b=sPT8hKUYnFyAqlfSrAjHfThpaAEE8DfusaBwvX5hbZvmzE6VmBKzdX/lIG7o9Z+Gjo
-         6oaq7uCs953YiGsR+4hYOB4U967ADcNVNu9navUIz3XmAjPllcxT+mLL2S/2T9LmZet3
-         s2wGCCL5dofrmhpLBW5XxtlCUBNEOXq68TbFDPXdAiUq4M4ztojHh4XvR5hAZbvPwXGv
-         UvPjQr3IPH2LhVUlJsZ2KEozn2yG672F0qHkx+gW6xreQFNIRTJ7DljsffwbpKOYZbdT
-         pLojGgIGGFxL0T3mzie2reaUr7qkGhzht5mXDkaQats7KdumVBxY0v8DcJ2pQRZwpz9+
-         IE7Q==
+        bh=yNQ63wqyU19asx04oRrhU7bk1AWqHAd66DS/wbSJuF0=;
+        b=ErnpkDEPWqSjL6itGnpvxINFGfaNf6U/Z8I8ASJMZvc/1gN1Ii7usrLDDo2dw7ok66
+         S5BO2FuFoiwQgfXVt4djXC5Q8Fg0XuI3Ipt7KU0AgzS2mXqGehreKi/Pgi4p0UPVw1jh
+         k1l1diIqbxNanqINDTf4T4gpHTCRSI67u/emmr75Zq73p2+o9FcWqGPP5P/25+f/EUBP
+         pyeFrMvKT7ruhVpGuT0CAPPY+nyl4z6uSpjd2iXLBXiMJsj4MEBacjke/d+ylhrk9gAH
+         tCzQ0lBKR8FE7MsOa1fwkizVYdtSnptoL1W7xbzB3XAKjvOwVFqSNHMtCfuJJlwfQ/mL
+         TbyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ayM9kLV7lJvZ+kQc7BAf+3o6iyHcSb3H+W8asukRojQ=;
-        b=EvgJ5pqRLGHvs5KAHKgtft6gx4IlJCs/CsxR47/mRdBRV0XNpF0uIOjv34NbHR1K3C
-         I5/H00U8hbcjqs1EvEwmgsEBEB74b3o6LND11QI1To5do0Vv8+KQAmlz0+QS5txGy1VV
-         /nFGHpc0n6Tb07PTyw/VSAY5ZDL5vu9gCJN6RZ3N61jVjC6+av76qkCNk4pSLrfI+qRl
-         3s5cjpl+/x/4N12zpfFbEUc8+8v6iUmo+DJwSYnYkXDEEClYnn0cw/C3vjPvlvtKnSjh
-         VQf5S6vOtSMCa/LCzf7IWqYP/TOlWgQZkh4vpBhfdlvfc9SLQdGkjuctbvAGW4M/yaJi
-         muVw==
-X-Gm-Message-State: AOAM530xqmbBSl7cnXgwl+Lb2EJbFbxmC8wg/xisfgtz8M2TSJtkaRBk
-        iZfj8fXCDuEPOQpoVKK0HwWxPBGE9Go=
-X-Google-Smtp-Source: ABdhPJxgKryPv6w0ljhYvCm1H6u8Qk5R8TsgjCwG7xrZG3ogXGIawofbSC4cR1GqNPVK/oKXgflfKQ==
-X-Received: by 2002:ac2:446d:: with SMTP id y13mr294357lfl.615.1609874677563;
-        Tue, 05 Jan 2021 11:24:37 -0800 (PST)
+        bh=yNQ63wqyU19asx04oRrhU7bk1AWqHAd66DS/wbSJuF0=;
+        b=spqDvFGekiJWLmPT/7K2jSzkGNoU/S7jHRE8efSx8/NGOcKCZ1FTw6XK3ymExZC+tR
+         JbvRbiZyu5k/2JE9NjTFhgh5G2jg/w7Xm21SStNE+F+fi5CbS0EAxxqmVNYPgEAV8Wq5
+         jtBQEB8mljrcXgYJTDDYZltGy+DXkBlLlEEGsoI5DUZMI9Je9uu/oJszJZzzFnwGDVIV
+         s2xAcSNMW/ymyWdAPid/AXhVQJt2cB0dG3zQfu+F89auzKMswgm3Tm3bn8U5Nw2SORc+
+         fTCyesS9QnzWj9Rt39g6D7Bvj1QHF6U6kNDCiEsWKfSYWVGksPGdMaxLSmkLVZwyCq8H
+         Ofhg==
+X-Gm-Message-State: AOAM5338TdTQOn2TdQXRkkNpU2zYtawbn8HsA3GdFRA7+qQTsrmXXZpA
+        pxs48C15cuxg+4fPOMQGsEV3RmQGM5U=
+X-Google-Smtp-Source: ABdhPJz9hCC2Qkz4fBlGI49w7oiC1mj4fK2OuqTuk/F5gPqgBxPitAWk/w/FJY0PQ7o77LRcTmcZow==
+X-Received: by 2002:a19:5041:: with SMTP id z1mr370478lfj.77.1609874688395;
+        Tue, 05 Jan 2021 11:24:48 -0800 (PST)
 Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id h1sm9116lfc.121.2021.01.05.11.24.36
+        by smtp.gmail.com with ESMTPSA id h1sm9116lfc.121.2021.01.05.11.24.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jan 2021 11:24:37 -0800 (PST)
+        Tue, 05 Jan 2021 11:24:47 -0800 (PST)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Alban Gruin <alban.gruin@gmail.com>,
         Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH 1/5] builtin/gc: don't peek into `struct lock_file`
-Date:   Tue,  5 Jan 2021 20:23:46 +0100
-Message-Id: <bbf24f7677eed41b80562d153b35be314cfb2750.1609874026.git.martin.agren@gmail.com>
+Subject: [PATCH 5/5] read-cache: try not to peek into `struct {lock_,temp}file`
+Date:   Tue,  5 Jan 2021 20:23:50 +0100
+Message-Id: <bb2327c7dca20fa563b18a9ec74180d7c595ca24.1609874026.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.30.0
 In-Reply-To: <cover.1609874026.git.martin.agren@gmail.com>
 References: <cover.1609874026.git.martin.agren@gmail.com>
@@ -73,47 +73,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A `struct lock_file` is pretty much just a wrapper around a tempfile.
-But it's easy enough to avoid relying on this. Use the wrappers that the
-lock file API provides rather than peeking at the temp file or even into
-*its* internals.
+Similar to the previous commits, try to avoid peeking into the `struct
+lock_file`. We also have some `struct tempfile`s -- let's avoid looking
+into those as well.
+
+Note that `do_write_index()` takes a tempfile and that when we call it,
+we either have a tempfile which we can easily hand down, or we have a
+lock file, from which we need to somehow obtain the internal tempfile.
+So we need to leave that one instance of peeking-into. Nevertheless,
+this commit leaves us not relying on exactly how the path of the
+tempfile / lock file is stored internally.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- builtin/gc.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ read-cache.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 4c24f41852..64f2b52d6e 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -92,7 +92,7 @@ static void process_log_file(void)
- 		 */
- 		int saved_errno = errno;
- 		fprintf(stderr, _("Failed to fstat %s: %s"),
--			get_tempfile_path(log_lock.tempfile),
-+			get_lock_file_path(&log_lock),
- 			strerror(saved_errno));
- 		fflush(stderr);
- 		commit_lock_file(&log_lock);
-@@ -1518,7 +1518,7 @@ static int update_background_schedule(int run_maintenance)
- 	strvec_split(&crontab_list.args, crontab_name);
- 	strvec_push(&crontab_list.args, "-l");
- 	crontab_list.in = -1;
--	crontab_list.out = dup(lk.tempfile->fd);
-+	crontab_list.out = dup(get_lock_file_fd(&lk));
- 	crontab_list.git_cmd = 0;
- 
- 	if (start_command(&crontab_list)) {
-@@ -1533,7 +1533,7 @@ static int update_background_schedule(int run_maintenance)
- 	 * Read from the .lock file, filtering out the old
- 	 * schedule while appending the new schedule.
+diff --git a/read-cache.c b/read-cache.c
+index ecf6f68994..29144cf879 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -3014,10 +3014,10 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
+ 	if (ce_flush(&c, newfd, istate->oid.hash))
+ 		return -1;
+ 	if (close_tempfile_gently(tempfile)) {
+-		error(_("could not close '%s'"), tempfile->filename.buf);
++		error(_("could not close '%s'"), get_tempfile_path(tempfile));
+ 		return -1;
+ 	}
+-	if (stat(tempfile->filename.buf, &st))
++	if (stat(get_tempfile_path(tempfile), &st))
+ 		return -1;
+ 	istate->timestamp.sec = (unsigned int)st.st_mtime;
+ 	istate->timestamp.nsec = ST_MTIME_NSEC(st);
+@@ -3058,10 +3058,10 @@ static int do_write_locked_index(struct index_state *istate, struct lock_file *l
+ 	 * that is associated with the given "istate".
  	 */
--	cron_list = fdopen(lk.tempfile->fd, "r");
-+	cron_list = fdopen(get_lock_file_fd(&lk), "r");
- 	rewind(cron_list);
+ 	trace2_region_enter_printf("index", "do_write_index", the_repository,
+-				   "%s", lock->tempfile->filename.buf);
++				   "%s", get_lock_file_path(lock));
+ 	ret = do_write_index(istate, lock->tempfile, 0);
+ 	trace2_region_leave_printf("index", "do_write_index", the_repository,
+-				   "%s", lock->tempfile->filename.buf);
++				   "%s", get_lock_file_path(lock));
  
- 	strvec_split(&crontab_edit.args, crontab_name);
+ 	if (ret)
+ 		return ret;
+@@ -3158,10 +3158,10 @@ static int write_shared_index(struct index_state *istate,
+ 	move_cache_to_base_index(istate);
+ 
+ 	trace2_region_enter_printf("index", "shared/do_write_index",
+-				   the_repository, "%s", (*temp)->filename.buf);
++				   the_repository, "%s", get_tempfile_path(*temp));
+ 	ret = do_write_index(si->base, *temp, 1);
+ 	trace2_region_leave_printf("index", "shared/do_write_index",
+-				   the_repository, "%s", (*temp)->filename.buf);
++				   the_repository, "%s", get_tempfile_path(*temp));
+ 
+ 	if (ret)
+ 		return ret;
 -- 
 2.30.0
 
