@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56971C433E0
-	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:44:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 906F6C433E0
+	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:44:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id 1E05D22D6F
-	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:44:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 64CD322D6F
+	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:44:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730916AbhAETov (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Jan 2021 14:44:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50020 "EHLO
+        id S1730934AbhAEToz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Jan 2021 14:44:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730906AbhAETou (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jan 2021 14:44:50 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2143C0617A0
-        for <git@vger.kernel.org>; Tue,  5 Jan 2021 11:43:36 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id c5so343276wrp.6
-        for <git@vger.kernel.org>; Tue, 05 Jan 2021 11:43:36 -0800 (PST)
+        with ESMTP id S1730921AbhAETox (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jan 2021 14:44:53 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40010C0617A4
+        for <git@vger.kernel.org>; Tue,  5 Jan 2021 11:43:40 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id d26so308537wrb.12
+        for <git@vger.kernel.org>; Tue, 05 Jan 2021 11:43:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=y73RTM2CzwNsFUtuH4bVhFDjnUQf4pKzMQOA0TBPuWk=;
-        b=izjpqdasRE8TTyrorcSLS2ntshcnoHojR6rSvEmZ5tFA3TismxDho4FiMIzau1IQ+A
-         lCw6QF9N4IMhT92sYZhiU2LPHdJSnFXt7TeCWcyFsA6ULPlAiODbHaGcGhNZWaikoMFR
-         MLrUZQZGh9uPDEk/Gd6m8iTJb5QDOEwWjXcWfW/+34ml9FOyCl+nuzYX/PdoD+xTsRBJ
-         8anXlDrJOAnfmWfMHarRQtr+GmbMipMA1ec0MHZWz+oQRoa1KeK8q7PBLbWtGz6FGjwx
-         szlLrCe4mikBRK6+tqOJB+9qiZx/HCFUPIIUANYviI0eLDs9xTtyJO/JTrJZY1kYIEsi
-         ym2w==
+        bh=Lm7xPXJUT0TSQKgC++uSxgFf2YALDhEz263zAZuMUA4=;
+        b=k1vnx4Yi5VUHuGfxjIO+GM26z86J/1nPE1FMKlyiP95qhHjtIymzqUseRtXeCciIjb
+         TaUa9/6a75oBaE5ZNu3+9ciYO/6pXFxTEN9yiDQL27caE6aaJ5Jjl7JnzTehi626waDq
+         enn+3P1JE//9Jc37x3L18sh5AWs+gW3Xl8sivB7qhCd5dU+gHpw37R/iKNtJG9qz+6Ce
+         9Ua32V8ZX7eS72CIMmQ1IdG5E3D5c+BLPNAbNL5G5d6Wuy01qBYTuyjw275kyY4yUnbq
+         hnFVbCztlEziSKqDhJFQt2OUkR75YqWzm+qzP1sZQWGSfOginU+mkypGbzX/QxZgtLFD
+         8AkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=y73RTM2CzwNsFUtuH4bVhFDjnUQf4pKzMQOA0TBPuWk=;
-        b=EMylk6+OP/Rhn5KWi0k9j2YS9mH4prYA9IzcMiAud4jJXd9IsHgxjrjJP1RQVPOiJh
-         5CvWk1ZzdSe+g6R4eCOZ9hEqr6itlZyGDuDZGayF1OQndZb4WLGLqSvkGdfLH64W9QQn
-         Q8/6YrXnnQTKhKIct8a6zmPVpxXLZsdOjGQaZJv3ARHlCgecOxg2mxk6HiUTx4gxdBiB
-         /zGUkTsY38+UfVzMQdoJoj9Pr5TbFYCMeXdk/y+JuKnbPkyL6h+yitrqfoJy2eF8plkj
-         8lqOI7379nnH9Hitib8hCJy7oRy+tyePgxjXrUGEfUObZ+TbjdiZqMN/MfgJHN4z3mHQ
-         8EBQ==
-X-Gm-Message-State: AOAM5303pHzlEOXm2mrySjPjzLHS/E/NnOTLIKgQYTgJ7muXCfOQUYBm
-        B42M6bDcGeSDYXFa4Gs8Mpq39x1vHQFctA==
-X-Google-Smtp-Source: ABdhPJy81iT+IhvPGK760JIWtXbkYe6hU50FGfcm3WMCByJqZ65d/SWeFsgRFkqg5+LVSiF0FXnOMg==
-X-Received: by 2002:adf:fbd2:: with SMTP id d18mr1103958wrs.222.1609875815476;
-        Tue, 05 Jan 2021 11:43:35 -0800 (PST)
+        bh=Lm7xPXJUT0TSQKgC++uSxgFf2YALDhEz263zAZuMUA4=;
+        b=emWeyeivEolNYjkMlL4inusgz9wvisSSmZw8fS+EDRs5G0AAfJqb5v0gOtTNJJ0fha
+         RgVTSPiAOAcZAzn7cHmxsY4ScAKBIEf+8kTRZocxgMgyIbo8czVFRKtLNjIdRqIOWwUU
+         IA2jYbk8/QE9rDXqSCE0C+2tmUBt2kR9KU8368ceV4rjjAWg4H0Kq2Dm2qOue0qdp3Qz
+         TtQSoVkut78gz9kzZt7pVsrkpIn4B7igC4Iwk/Dw9ozOpBu5JMsTwacn8f3CcP02dX9t
+         3JWpnKVrmL32TTZdu+lEfIIMej/9vF4nTpRvi2xFiD2yOyMqtzMa0C+unvy+1ZOZrywx
+         j2hA==
+X-Gm-Message-State: AOAM531QDsXDIj8JnjT6Hng66UWZdTd3ss1plOhiWhzEYic2A+zEmj9H
+        T0r/PmHLec8TePUC65tffTiSgypLBASmbA==
+X-Google-Smtp-Source: ABdhPJy9p2GxHhB01YpLVdxTfxo/9sFpth8PR+muchp7SCGng18t3lXlQuj4aLNdqmxHBzz0poQ6iQ==
+X-Received: by 2002:adf:f3c8:: with SMTP id g8mr1018722wrp.405.1609875818718;
+        Tue, 05 Jan 2021 11:43:38 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id s6sm151113wro.79.2021.01.05.11.43.34
+        by smtp.gmail.com with ESMTPSA id s6sm151113wro.79.2021.01.05.11.43.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jan 2021 11:43:34 -0800 (PST)
+        Tue, 05 Jan 2021 11:43:37 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 08/23] mktag tests: don't create "mytag" twice
-Date:   Tue,  5 Jan 2021 20:42:37 +0100
-Message-Id: <20210105194252.627-9-avarab@gmail.com>
+Subject: [PATCH v5 11/23] mktag tests: test "hash-object" compatibility
+Date:   Tue,  5 Jan 2021 20:42:40 +0100
+Message-Id: <20210105194252.627-12-avarab@gmail.com>
 X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
 In-Reply-To: <20201223013606.7972-1-avarab@gmail.com>
 References: <20201223013606.7972-1-avarab@gmail.com>
@@ -79,57 +79,89 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change a test added in e0aaf781f6 (mktag.c: improve verification of
-tagger field and tests, 2008-03-27) to not create "mytag", which
-should only be created and verified at the end in an earlier test
-added in 446c6faec6 (New tests and en-passant modifications to mktag.,
-2006-07-29).
+Change all the successful "mktag" tests to test that "hash-object"
+produces the same hash for the input, and that fsck passes for
+both.
 
-While we're at it let's prevent a similar logic error from creeping
-into the test by asserting that "mytag" doesn't exist before we create
-it. Let's do this by moving the test to use "update-ref", instead of
-our own homebrew ad-hoc refstore update.
+This tests e.g. that "mktag" doesn't trim its input or otherwise munge
+it in a way that "hash-object" doesn't.
 
-We're not really testing for anything yet by creating the tag at the
-end here. A subsequent commit will change that.
+Since we're doing an "fsck --strict" here at the end let's incorporate
+the creation of the "mytag" name into this test, removing the
+special-case at the end of the file.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t3800-mktag.sh | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ t/t3800-mktag.sh | 31 +++++++++++++++++--------------
+ 1 file changed, 17 insertions(+), 14 deletions(-)
 
 diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
-index c542c3e1a8e..bb300d567db 100755
+index 661b62f0912..47380292223 100755
 --- a/t/t3800-mktag.sh
 +++ b/t/t3800-mktag.sh
-@@ -222,7 +222,7 @@ EOF
+@@ -19,6 +19,19 @@ check_verify_failure () {
+ 	'
+ }
  
- test_expect_success \
-     'allow empty tag email' \
--    'git mktag <tag.sig >.git/refs/tags/mytag'
-+    'git mktag <tag.sig'
- 
- ############################################################
- # 16. disallow spaces in tag email
-@@ -348,16 +348,9 @@ tagger T A Gger <tagger@example.com> 1206478233 -0500
++test_expect_mktag_success() {
++	test_expect_success "$1" '
++		git hash-object -t tag -w --stdin <tag.sig >expected &&
++		git fsck --strict &&
++
++		git mktag <tag.sig >hash &&
++		test_cmp expected hash &&
++		test_when_finished "git update-ref -d refs/tags/mytag $(cat hash)" &&
++		git update-ref refs/tags/mytag $(cat hash) $(test_oid zero) &&
++		git fsck --strict	
++	'
++}
++
+ ###########################################################
+ # first create a commit, so we have a valid object/type
+ # for the tag.
+@@ -220,9 +233,7 @@ tagger T A Gger <> 0 +0000
  
  EOF
  
 -test_expect_success \
--    'create valid tag' \
--    'git mktag <tag.sig >.git/refs/tags/mytag'
--
--############################################################
--# 25. check mytag
--
--test_expect_success \
--    'check mytag' \
--    'git tag -l | grep mytag'
--
-+test_expect_success 'create valid tag' '
-+	git mktag <tag.sig >hash &&
-+	git update-ref refs/tags/mytag $(cat hash) $(test_oid zero)
-+'
+-    'allow empty tag email' \
+-    'git mktag <tag.sig'
++test_expect_mktag_success 'allow empty tag email'
+ 
+ ############################################################
+ # 16. disallow spaces in tag email
+@@ -347,9 +358,7 @@ tagger T A Gger <tagger@example.com> 1206478233 -0500
+ this line comes after an extra newline
+ EOF
+ 
+-test_expect_success 'allow extra newlines at start of body' '
+-	git mktag <tag.sig
+-'
++test_expect_mktag_success 'allow extra newlines at start of body'
+ 
+ cat >tag.sig <<EOF
+ object $head
+@@ -359,9 +368,7 @@ tagger T A Gger <tagger@example.com> 1206478233 -0500
+ 
+ EOF
+ 
+-test_expect_success 'require a blank line before an empty body (1)' '
+-	git mktag <tag.sig
+-'
++test_expect_mktag_success 'require a blank line before an empty body (1)'
+ 
+ cat >tag.sig <<EOF
+ object $head
+@@ -384,10 +391,6 @@ tagger T A Gger <tagger@example.com> 1206478233 -0500
+ 
+ EOF
+ 
+-test_expect_success 'create valid tag' '
+-	git mktag <tag.sig >hash &&
+-	git update-ref refs/tags/mytag $(cat hash) $(test_oid zero) &&
+-	git fsck --strict
+-'
++test_expect_mktag_success 'create valid tag object'
  
  test_done
 -- 
