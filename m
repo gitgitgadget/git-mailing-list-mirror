@@ -2,64 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCEC0C43217
-	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 18:13:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 230F1C433DB
+	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 18:16:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B117322D6F
-	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 18:13:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DDBFC22D57
+	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 18:16:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729925AbhAESM7 convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 5 Jan 2021 13:12:59 -0500
-Received: from mail-ej1-f42.google.com ([209.85.218.42]:41051 "EHLO
-        mail-ej1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728981AbhAESM6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jan 2021 13:12:58 -0500
-Received: by mail-ej1-f42.google.com with SMTP id ce23so1495268ejb.8
-        for <git@vger.kernel.org>; Tue, 05 Jan 2021 10:12:42 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ywf4+xpImmzxb+4teIVQD02mZ0yiS1+D6/AkIhLvYc0=;
-        b=T+RMRicxfGKCwbEnuuTTtZvcwKSvQpgbBShpI0ykOOL3Yt2en86f6XR/DY0Uv8tskb
-         75gfYnmerCM3nlGIkT7QM5A7xksyN6zf4U7WsBBbszBKvtWTkegR9il69t9ZJZaLKjtl
-         WytBfRilvdloP5f4K2UQyXomgxXVrqPVsyvHwkLxg6cI64b/I6oyw7inXdAHDddp04AD
-         V6j+wLU1fkeNIfH6PHuoKTwLijzJzW6RGp9x7lI7Ku2pBfBgFYA9VVCOq4Eehh3xlq+R
-         cU/JLEJdwVguXLRnyF3o86a/hCl45mwsrZgu7jmdzQs1HK8YCCUaJiyjCRRaJQQZ90qN
-         FdwA==
-X-Gm-Message-State: AOAM532DJfQYd0R4fzSKzPbcpJeHmpPGdnZBhB7RK07grPYFm7nFsYM7
-        uSwVg0cqTGxAN20XA1vH0lSweLG+hgXRq0lksiM=
-X-Google-Smtp-Source: ABdhPJzWxLHNR4kDxyIGbfapwfBRxsNcOv9Noj8PmIY646mZuX4uBdVwBENvbL8gECjjUhB+Vlvp1kyqsXp2bih2nQk=
-X-Received: by 2002:a17:906:6b88:: with SMTP id l8mr335316ejr.482.1609870337051;
- Tue, 05 Jan 2021 10:12:17 -0800 (PST)
+        id S1727788AbhAESQX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Jan 2021 13:16:23 -0500
+Received: from thunix.net ([188.40.73.235]:41712 "EHLO thunix.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726258AbhAESQX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jan 2021 13:16:23 -0500
+X-Greylist: delayed 491 seconds by postgrey-1.27 at vger.kernel.org; Tue, 05 Jan 2021 13:16:22 EST
+Received: by thunix.net (Postfix, from userid 1080)
+        id EAAA6334005B; Tue,  5 Jan 2021 13:07:27 -0500 (EST)
+Date:   Tue, 5 Jan 2021 13:07:27 -0500
+From:   southerntofu@thunix.net
+To:     git@vger.kernel.org
+Subject: Bug: permissions problem when recursively cloning from a suid program
+Message-ID: <X/Sq38YKmLjY4KmD@thunix.net>
 MIME-Version: 1.0
-References: <c22ba034-6d7d-866a-c6fb-d769d117eec4@daenzer.net> <34b425b5-0237-fb46-5613-e90346bd7114@daenzer.net>
-In-Reply-To: <34b425b5-0237-fb46-5613-e90346bd7114@daenzer.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 5 Jan 2021 13:12:06 -0500
-Message-ID: <CAPig+cSe267W7hO8a38ifCw_r4eabUA6WB9MDhS=GttTxELpVg@mail.gmail.com>
-Subject: Re: Bug report: git rebase ignores different context, resulting in
- subtle breakage
-To:     =?UTF-8?Q?Michel_D=C3=A4nzer?= <michel@daenzer.net>
-Cc:     Git List <git@vger.kernel.org>,
-        Daniel Stone <daniel@fooishbar.org>,
-        Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 5, 2021 at 4:34 AM Michel Dänzer <michel@daenzer.net> wrote:
-> On 2020-12-14 3:37 p.m., Michel Dänzer wrote:
-> > (Originally reported as a GitLab issue:
-> > https://gitlab.com/gitlab-org/gitlab/-/issues/292754)
->
-> Does the lack of response mean this is considered not a bug?
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-Perhaps the original slipped under the radar of the area experts.
-Adding Elijah to the Cc: list...
+Hi, i tried to clone a repository with submodules from a program running with the suid/guid bit set.
+
+What did you expect to happen? (Expected behavior)
+
+It should clone the repository, with the submodules, with permissions from the owner of the suid program.
+
+What happened instead? (Actual behavior)
+
+git fails with a permissions error:
+
+```
+error: could not lock config file /path/to/.git/config: Permission denied
+fatal: Failed to register url for submodule path
+```
+
+What's different between what you expected and what actually happened?
+
+Cloning failed when fetching submodules (--recursive). However, it only works without submodules.
+
+Anything else you want to add:
+
+I could reproduce the bug on the next branch. I have a small reproduction case. It's a rust program, but the code is a bit more convoluted so it works without any dependency (just the standard library). Reproduction instructions in the repository:
+
+https://tildegit.org/southerntofu/testsuid
+
+[System Info]
+git version:
+git version 2.30.0.284.gd98b1dd5ea
+cpu: x86_64
+built from commit: d98b1dd5eaa7327399716162c746c9bd3cac3866
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+[REDACTED]
+$SHELL (typically, interactive shell): /bin/bash
