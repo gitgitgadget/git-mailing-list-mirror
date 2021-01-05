@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4B7AC433E6
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC39AC433E9
 	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:26:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B9AC222D6F
+	by mail.kernel.org (Postfix) with ESMTP id A1C9922CF8
 	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:26:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727451AbhAET0C (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1728655AbhAET0C (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 5 Jan 2021 14:26:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47076 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726545AbhAET0B (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726663AbhAET0B (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 5 Jan 2021 14:26:01 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14816C061796
-        for <git@vger.kernel.org>; Tue,  5 Jan 2021 11:24:43 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id o19so1141320lfo.1
-        for <git@vger.kernel.org>; Tue, 05 Jan 2021 11:24:42 -0800 (PST)
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D97BC061795
+        for <git@vger.kernel.org>; Tue,  5 Jan 2021 11:24:39 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id o19so1140846lfo.1
+        for <git@vger.kernel.org>; Tue, 05 Jan 2021 11:24:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=h160zvyTCWIHZC4E07QPWvDkUCT/B3ZZvGD+ofHAQ9c=;
-        b=W+6tlkpt+BqhW7vA63S06btRXdZ1PvJHj4ZCpYP6V9LrYnlb/NRE5sgIDzENQ1d4/C
-         +quJomAQN5kcIKBI6q4omv6PBU8dbtLlmkV7uy0HuR0ezy4+r8/r8odGzhwxUYreGHjl
-         Y2AZcklneGdlpxbRrDP/qt9jhYFOcjHt+t/EpafoQNDNy0JuiOrvVi+cmLSLX2+rY+IV
-         hAO51pZAM3ltN6cJ9h+lK9AHVMNQogy1Ifgp6JJhIy8wIlya2XcNmlJX5ooKTnSQiGqz
-         LCzaj8q8KOteHuzIiIpGqQwHeiqvks2C58GN7UXTvt4QsCnqVWLkpeIJ2bC/rlHkg/7e
-         iTPA==
+        bh=ayM9kLV7lJvZ+kQc7BAf+3o6iyHcSb3H+W8asukRojQ=;
+        b=sPT8hKUYnFyAqlfSrAjHfThpaAEE8DfusaBwvX5hbZvmzE6VmBKzdX/lIG7o9Z+Gjo
+         6oaq7uCs953YiGsR+4hYOB4U967ADcNVNu9navUIz3XmAjPllcxT+mLL2S/2T9LmZet3
+         s2wGCCL5dofrmhpLBW5XxtlCUBNEOXq68TbFDPXdAiUq4M4ztojHh4XvR5hAZbvPwXGv
+         UvPjQr3IPH2LhVUlJsZ2KEozn2yG672F0qHkx+gW6xreQFNIRTJ7DljsffwbpKOYZbdT
+         pLojGgIGGFxL0T3mzie2reaUr7qkGhzht5mXDkaQats7KdumVBxY0v8DcJ2pQRZwpz9+
+         IE7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=h160zvyTCWIHZC4E07QPWvDkUCT/B3ZZvGD+ofHAQ9c=;
-        b=ryUCmxT9S3sOPObrgDetHZXaX7TF1apQaLXcjSMfcOLyG04bgHWc6IommX+YcuwkJ1
-         LkCMleeqIWqcjnpZbJggr/HrF5XK/yVLtnh4ZNH5y0D6Btpyd5xOXz8xZeFqQ5BtdILu
-         H1beNSvn0f1oS0UbFCGlMkpB9QxbB/4p5ptEPJn1a708sc0klY+tKTiUNkdDUfjGXAI0
-         mLWPMdhtbbrKSrcLrWBEbbYGyBVZRa7k9kcVzul83Ot9sUpsBXzrStb1EXND6lTLnKXd
-         MNq2dfLTgYYT7kG16SB51aBaN8BWxaVF/hwZ6cgR7CRfPgJNXRQ/6DUlb2f5gNuC4iOo
-         pqDQ==
-X-Gm-Message-State: AOAM531tq/0LvXIrrJ6XDygax1yfHDfNSKLq3Y4CwSIAmPHQRknbPFwL
-        AZSbMRnQhUn14+2h5CYzDeCVD3+SbxI=
-X-Google-Smtp-Source: ABdhPJxRIiwtDqhw0flvOLpSPLw+RayFVkUEaFa4W75IoYQTQIRyfE7QcVQD+WtizG2jh2fPxJi5Iw==
-X-Received: by 2002:a05:6512:63:: with SMTP id i3mr347419lfo.170.1609874681402;
-        Tue, 05 Jan 2021 11:24:41 -0800 (PST)
+        bh=ayM9kLV7lJvZ+kQc7BAf+3o6iyHcSb3H+W8asukRojQ=;
+        b=EvgJ5pqRLGHvs5KAHKgtft6gx4IlJCs/CsxR47/mRdBRV0XNpF0uIOjv34NbHR1K3C
+         I5/H00U8hbcjqs1EvEwmgsEBEB74b3o6LND11QI1To5do0Vv8+KQAmlz0+QS5txGy1VV
+         /nFGHpc0n6Tb07PTyw/VSAY5ZDL5vu9gCJN6RZ3N61jVjC6+av76qkCNk4pSLrfI+qRl
+         3s5cjpl+/x/4N12zpfFbEUc8+8v6iUmo+DJwSYnYkXDEEClYnn0cw/C3vjPvlvtKnSjh
+         VQf5S6vOtSMCa/LCzf7IWqYP/TOlWgQZkh4vpBhfdlvfc9SLQdGkjuctbvAGW4M/yaJi
+         muVw==
+X-Gm-Message-State: AOAM530xqmbBSl7cnXgwl+Lb2EJbFbxmC8wg/xisfgtz8M2TSJtkaRBk
+        iZfj8fXCDuEPOQpoVKK0HwWxPBGE9Go=
+X-Google-Smtp-Source: ABdhPJxgKryPv6w0ljhYvCm1H6u8Qk5R8TsgjCwG7xrZG3ogXGIawofbSC4cR1GqNPVK/oKXgflfKQ==
+X-Received: by 2002:ac2:446d:: with SMTP id y13mr294357lfl.615.1609874677563;
+        Tue, 05 Jan 2021 11:24:37 -0800 (PST)
 Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id h1sm9116lfc.121.2021.01.05.11.24.40
+        by smtp.gmail.com with ESMTPSA id h1sm9116lfc.121.2021.01.05.11.24.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jan 2021 11:24:40 -0800 (PST)
+        Tue, 05 Jan 2021 11:24:37 -0800 (PST)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Alban Gruin <alban.gruin@gmail.com>,
         Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH 2/5] commit-graph: don't peek into `struct lock_file`
-Date:   Tue,  5 Jan 2021 20:23:47 +0100
-Message-Id: <7a91469c7c791d5faeabc601775a3b535cbfc26e.1609874026.git.martin.agren@gmail.com>
+Subject: [PATCH 1/5] builtin/gc: don't peek into `struct lock_file`
+Date:   Tue,  5 Jan 2021 20:23:46 +0100
+Message-Id: <bbf24f7677eed41b80562d153b35be314cfb2750.1609874026.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.30.0
 In-Reply-To: <cover.1609874026.git.martin.agren@gmail.com>
 References: <cover.1609874026.git.martin.agren@gmail.com>
@@ -73,38 +73,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Similar to the previous commit, avoid peeking into the `struct
-lock_file`. Use the lock file API instead.
+A `struct lock_file` is pretty much just a wrapper around a tempfile.
+But it's easy enough to avoid relying on this. Use the wrappers that the
+lock file API provides rather than peeking at the temp file or even into
+*its* internals.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- commit-graph.c | 6 +++---
+ builtin/gc.c | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 06f8dc1d89..031641014f 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1694,8 +1694,8 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 	} else {
- 		hold_lock_file_for_update_mode(&lk, ctx->graph_name,
- 					       LOCK_DIE_ON_ERROR, 0444);
--		fd = lk.tempfile->fd;
--		f = hashfd(lk.tempfile->fd, lk.tempfile->filename.buf);
-+		fd = get_lock_file_fd(&lk);
-+		f = hashfd(fd, get_lock_file_path(&lk));
- 	}
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 4c24f41852..64f2b52d6e 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -92,7 +92,7 @@ static void process_log_file(void)
+ 		 */
+ 		int saved_errno = errno;
+ 		fprintf(stderr, _("Failed to fstat %s: %s"),
+-			get_tempfile_path(log_lock.tempfile),
++			get_lock_file_path(&log_lock),
+ 			strerror(saved_errno));
+ 		fflush(stderr);
+ 		commit_lock_file(&log_lock);
+@@ -1518,7 +1518,7 @@ static int update_background_schedule(int run_maintenance)
+ 	strvec_split(&crontab_list.args, crontab_name);
+ 	strvec_push(&crontab_list.args, "-l");
+ 	crontab_list.in = -1;
+-	crontab_list.out = dup(lk.tempfile->fd);
++	crontab_list.out = dup(get_lock_file_fd(&lk));
+ 	crontab_list.git_cmd = 0;
  
- 	chunks[0].id = GRAPH_CHUNKID_OIDFANOUT;
-@@ -1833,7 +1833,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 		result = rename(ctx->graph_name, final_graph_name);
+ 	if (start_command(&crontab_list)) {
+@@ -1533,7 +1533,7 @@ static int update_background_schedule(int run_maintenance)
+ 	 * Read from the .lock file, filtering out the old
+ 	 * schedule while appending the new schedule.
+ 	 */
+-	cron_list = fdopen(lk.tempfile->fd, "r");
++	cron_list = fdopen(get_lock_file_fd(&lk), "r");
+ 	rewind(cron_list);
  
- 		for (i = 0; i < ctx->num_commit_graphs_after; i++)
--			fprintf(lk.tempfile->fp, "%s\n", ctx->commit_graph_hash_after[i]);
-+			fprintf(get_lock_file_fp(&lk), "%s\n", ctx->commit_graph_hash_after[i]);
- 
- 		if (result) {
- 			error(_("failed to rename temporary commit-graph file"));
+ 	strvec_split(&crontab_edit.args, crontab_name);
 -- 
 2.30.0
 
