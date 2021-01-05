@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2BF9C43381
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF78CC433E9
 	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:44:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id BFEFF22D6F
+	by mail.kernel.org (Postfix) with ESMTP id A4B2422D74
 	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:44:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730887AbhAEToO (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1730896AbhAEToO (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 5 Jan 2021 14:44:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49918 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730882AbhAEToN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jan 2021 14:44:13 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BD82C061798
-        for <git@vger.kernel.org>; Tue,  5 Jan 2021 11:43:32 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id r3so364243wrt.2
-        for <git@vger.kernel.org>; Tue, 05 Jan 2021 11:43:32 -0800 (PST)
+        with ESMTP id S1730878AbhAEToL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jan 2021 14:44:11 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62E02C061795
+        for <git@vger.kernel.org>; Tue,  5 Jan 2021 11:43:30 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id m5so327485wrx.9
+        for <git@vger.kernel.org>; Tue, 05 Jan 2021 11:43:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=LMaLfHsrFtR5TbYrAS2TUcw4yJ/c8dS9VHRIf5BDh/o=;
-        b=Te9611pfANkc1f34KVNPH28Lx0cG/O8b+YKepg+qVygHXJ3/BQcTEUvTiIYjgqSa3n
-         mnwR17gZneg+cTq9L9c3Alzf8ClkDpO3sjLxoMn1PUDBkIic77xKycVmzo6YZM/vqz64
-         vvGElvz/bt8F0D7vJ4AaaZgrKIY30MSMl1UeudhZWMxYxab99K/M7Wuu/VfgRBXwGoww
-         TY0Gczqzw6aTnUtG3RWIEQ/uZaMO8TLFvR3qOcu2+29R3WtmNxpqqHOL3TvamybYEiA+
-         0EQYFT4hYMkL3ckMUpHv6eOqTIfwKTVBoNL47dJ+eb7v8UglcEjVx7UnxMJhRa1oAZZg
-         C1yQ==
+        bh=wwUGvVur+FvIq4/QiGKaq0bgr2Q0NO9gp1We0037vu0=;
+        b=JrkiuciiZ4sLW0HSjMGfTjdBrHx9U6wZGggXw1jlY/e1jdG6L4xFccObC8FUXazMzm
+         QtmeBsYwakKnuYAVWk9usAUeC0Zqs6XA4HzT3o8MCvTC0XM2jZXHlu7hoZUi+mfTcTTF
+         0TBodYjf8mAR5bAglxvV20vQbhJFVYhifert4DPKU8M+bia6y8k6s92GAvJSXe/4ndNz
+         qagFB063y94IKcqfqV+rK+NcWKXlZSelP8PeiUq04KQ3I7KqhfItbwcP5mOphaAlfYT6
+         tgoBfoNPJLqEyPsgLSdVBHCmFF05OaeNLR+X7h9evVYsXaxl45H+u8nB3GdgVNdZZCwO
+         CJCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=LMaLfHsrFtR5TbYrAS2TUcw4yJ/c8dS9VHRIf5BDh/o=;
-        b=b1/1Yy3GplMqv2uJpmG7Cf+5emTr613M68u+2vtgjspU2i+Pq/5lhSEjTJfpTX+4sm
-         VpnPQszfINcmvVzCFFQrXVkw8QVpKeP61EC0uQJIBOl7g929Eqb1Jy3yXZheOUZ3/lmx
-         08gsFyZ0iRbb8aHJ8PeLTzd/hJLWETUQtpaJ273vFMKfSCS7C3ROY1oCPMkZMqvofdVZ
-         hW2O2D6ovIJIq/VlEx/RRMB9fkhaZKjji+6+ulpZ0Vg1fRzUv/HOQNtupf0WTRYpLuUU
-         ozPX2M56zkZuI+n5/4E3Z6v8khrFNVGgzMZIoqJ/K7nKu/oz+PmDJV0Fbic4SzofrPMO
-         NR4g==
-X-Gm-Message-State: AOAM531leTwiLY/r1C+gJr+jNKZiQyyzVe0GMosBQLaJw0frSXQlQa8G
-        2103FHSyRAhJIFACAVe5TZrHrxp2Hzk3bg==
-X-Google-Smtp-Source: ABdhPJypCWNBEGztuhL+hyrioV7BILff5YkFQYaNQMdFKX+T58LoqD7kswimkNDfvi85XNsWHJrt4g==
-X-Received: by 2002:a05:6000:1d0:: with SMTP id t16mr1051286wrx.203.1609875811149;
-        Tue, 05 Jan 2021 11:43:31 -0800 (PST)
+        bh=wwUGvVur+FvIq4/QiGKaq0bgr2Q0NO9gp1We0037vu0=;
+        b=kp+DOQpQffVe0POFcI2tJZcov9NUIlnNARLUAwG5L+qGzPNTDOchLTSBaGpYHDeU7A
+         e531WWZce1bQLsimPefRLXtG9vlyit7huNl24abfOq0huVfIbx+lO+0xQBld2T8nn8xQ
+         7JCGexcl9Wa9JTRbkjbANPfRU9Q0w8XVLoAC3NBWOuBAZFhIgFiAyVFb/qKMgiWVvdQm
+         8OAbuNIv6UrjyS/czROtAXbUJ0kBwJGMKEhRP8TmghwuqlJMyWtw76V+30o31eRXG2v8
+         3+1nar0XtMfpyJ0E/UFgeo+r85MxIzEvzbD6i0TPKomHJleDL9k5ef87ATczOWTh+M9S
+         K9Yw==
+X-Gm-Message-State: AOAM531UIXmS8jrlcAtIsFAGCoBWFYG3vG3pdxWb8/+6+eiaDz96auym
+        sfaCEUt2TPqHKzynrYwO5iaGqa6tZB+faA==
+X-Google-Smtp-Source: ABdhPJxb0ARPyZVM2A0cw885rYZlQ4c8C1rxOs3Cz7gXgwZ3/xeMXT0LpoQ1y8YZqFf7OS2NHicXrg==
+X-Received: by 2002:adf:ba49:: with SMTP id t9mr1067185wrg.183.1609875808903;
+        Tue, 05 Jan 2021 11:43:28 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id s6sm151113wro.79.2021.01.05.11.43.30
+        by smtp.gmail.com with ESMTPSA id s6sm151113wro.79.2021.01.05.11.43.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jan 2021 11:43:30 -0800 (PST)
+        Tue, 05 Jan 2021 11:43:28 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 04/23] mktag tests: don't needlessly use a subshell
-Date:   Tue,  5 Jan 2021 20:42:33 +0100
-Message-Id: <20210105194252.627-5-avarab@gmail.com>
+Subject: [PATCH v5 02/23] mktag doc: grammar fix, when exists -> when it exists
+Date:   Tue,  5 Jan 2021 20:42:31 +0100
+Message-Id: <20210105194252.627-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
 In-Reply-To: <20201223013606.7972-1-avarab@gmail.com>
 References: <20201223013606.7972-1-avarab@gmail.com>
@@ -79,28 +79,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The use of a subshell dates back to e9b20943b77 (t/t3800: do not use a
-temporary file to hold expected result., 2008-01-04). It's not needed
-anymore, if it ever was.
+Amend the wording of documentation added in 6cfec03680 (mktag:
+minimally update the description., 2007-06-10). It makes more sense to
+say "when it exists" here, as we're referring to "the message".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t3800-mktag.sh | 2 +-
+ Documentation/git-mktag.txt | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
-index d696aa4e52e..0e411e3c45f 100755
---- a/t/t3800-mktag.sh
-+++ b/t/t3800-mktag.sh
-@@ -14,7 +14,7 @@ test_description='git mktag: tag object verify test'
- check_verify_failure () {
- 	expect="$2"
- 	test_expect_success "$1" '
--		( test_must_fail git mktag <tag.sig 2>message ) &&
-+		test_must_fail git mktag <tag.sig 2>message &&
- 		grep "$expect" message
- 	'
- }
+diff --git a/Documentation/git-mktag.txt b/Documentation/git-mktag.txt
+index a158428eb9f..1b0667e372a 100644
+--- a/Documentation/git-mktag.txt
++++ b/Documentation/git-mktag.txt
+@@ -29,7 +29,7 @@ has a very simple fixed format: four lines of
+   tagger <tagger>
+ 
+ followed by some 'optional' free-form message (some tags created
+-by older Git may not have `tagger` line).  The message, when
++by older Git may not have `tagger` line).  The message, when it
+ exists, is separated by a blank line from the header.  The
+ message part may contain a signature that Git itself doesn't
+ care about, but that can be verified with gpg.
 -- 
 2.29.2.222.g5d2a92d10f8
 
