@@ -2,119 +2,315 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-18.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+X-Spam-Status: No, score=-14.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_CR_TRAILER,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,NICE_REPLY_A,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D024CC433DB
-	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 15:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A5E7C433E0
+	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 15:59:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id A8FAF22CA0
-	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 15:48:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4A64422C9D
+	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 15:59:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728008AbhAEPsf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Jan 2021 10:48:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40726 "EHLO
+        id S1726132AbhAEP7u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Jan 2021 10:59:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728287AbhAEPsc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jan 2021 10:48:32 -0500
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7872CC061574
-        for <git@vger.kernel.org>; Tue,  5 Jan 2021 07:47:51 -0800 (PST)
-Received: by mail-qk1-x72d.google.com with SMTP id 19so26807919qkm.8
-        for <git@vger.kernel.org>; Tue, 05 Jan 2021 07:47:51 -0800 (PST)
+        with ESMTP id S1725792AbhAEP7u (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jan 2021 10:59:50 -0500
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5BC7C061574
+        for <git@vger.kernel.org>; Tue,  5 Jan 2021 07:59:09 -0800 (PST)
+Received: by mail-qv1-xf29.google.com with SMTP id l14so14859103qvh.2
+        for <git@vger.kernel.org>; Tue, 05 Jan 2021 07:59:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=WyDAhi9T6mZgIDSz+iUf104x7RzXBj3ZEWycSenTtVE=;
-        b=ikBO719j7Q+nUpAkrXVASAWQKYWJSFaxlB4U45tyJVDqJB7pqGkhknSdc7uBr8tf/n
-         VH5wyUoIaBDeZYNL6t0epLFZCU1lcQ26XTOMZkh3RWIPSQIl8sWbX/EcMs0CVsS+4Mde
-         cNH+Yp/axTRkcgL780ES72G8NlSq/2r5UK4bIUDsjt1PoRCb4nFMiLj/VK16zu35hWZL
-         lZXoBipaq7UUaeAycpsbVWFwrvsprpQiSLwb6Jb7TqbJ9fssQh5N4Y4RQmIse2QssxcW
-         xNqk+1fbhlv6+lNtzP8moPX79pjsIKzEjz8aZ04QvhAmya2AYAOUVYb1YqDkOV1QAd7H
-         DAwg==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=nDasrqqB80YdZaxTZAPdTOE+xEJY7j+gX6pk4ILV7YE=;
+        b=tEjbg6q8leRgZIEBPryDLh2GagCyYqWxfFfsA8iFAmu22/xTYo7e6dWOZR0JXXbZ4O
+         q2qJSRL6G+kl1W7YxOTOyOU4xXz0zBFSiXqPTWcViXFl8borcNvsyX7HfeBHoNfRMfmb
+         wnczK8LptqMe9IqgXnuzU7s9wV7YaUG/mO55ZrXUzlWy5PIuaHmES5p7nevKB1aYwesX
+         prK0666dtbG2yomOaTdeS6PgYDmM+fOsd5OnacgkCPqrdmcMyCvsHzXtfipz5sRLTQUX
+         nDEitSPWSEkNVNjp/yiMMcK261CkYLYhDhppGnTn67JaP6OdeWvx+OL6DyHZ2Koroi3k
+         hG3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=WyDAhi9T6mZgIDSz+iUf104x7RzXBj3ZEWycSenTtVE=;
-        b=o3G4k58xLDkOGb2A9ffCuHh1YnZHdAl5jy2uLCmzjwtgyPuXAHiVSOh7QEZFd/mAfa
-         W9kfcV+lFVLMW6uhvJJ6szY9yp0pWnNH9mPmNXsc41wjsgxqPlM2d31wDIzqvj39t8pD
-         Q9cZ+dhoGPK0LNRHer69UuGDxe6IPKEolghBq/1sgI+BcbJ1pYzKOg18f8ePgf/evSTJ
-         rJqwLxRvt/sLp6eI+H7elVgPupzPM+8FuglQVjJ/KrK/fYGwJ+++15hTXFYFG4cxzER7
-         TeSVqyqRB6EizBAiEgqO35udWjk9AewxCGBfunpcJ6eltjP2NTs+wb5E+YJ3ESsgacwy
-         A4AA==
-X-Gm-Message-State: AOAM530UvCfJp01Qx243YFHGA1eh4cFrPuGuF8CZ6xGod3EbzjYmLkXk
-        9sIEnusEN9YX0mmbrfsVB6uB1Jnq7YmXJg==
-X-Google-Smtp-Source: ABdhPJwOWaX/t4L+0AxU2QlmaY3ab/BdcF1p7yCvkSqOpV+K7coTlacbzS1Jl8igGEZXJKtAVWfTlw==
-X-Received: by 2002:a37:9a84:: with SMTP id c126mr92377qke.155.1609861670640;
-        Tue, 05 Jan 2021 07:47:50 -0800 (PST)
-Received: from mango.meuintelbras.local ([177.32.118.149])
-        by smtp.gmail.com with ESMTPSA id y10sm163484qkb.115.2021.01.05.07.47.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jan 2021 07:47:49 -0800 (PST)
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-To:     gitster@pobox.com
-Cc:     me@ikke.info, git@vger.kernel.org
-Subject: [PATCH v2] t4129: don't fail if setgid is set in the test directory
-Date:   Tue,  5 Jan 2021 12:47:39 -0300
-Message-Id: <b734425e3235651e738e6eac47eae0db7db92e7e.1609861567.git.matheus.bernardino@usp.br>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <88398ff952a68e8d134dcd50ef0772bb6fc3b456.1609339792.git.matheus.bernardino@usp.br>
-References: <88398ff952a68e8d134dcd50ef0772bb6fc3b456.1609339792.git.matheus.bernardino@usp.br>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=nDasrqqB80YdZaxTZAPdTOE+xEJY7j+gX6pk4ILV7YE=;
+        b=YQuZPatQI0zaqrhZWnaE0OwLacOOzy3/JLE2axq3B7KuT6Lun1FiZla+usse5mqkUi
+         X62VNw0lf59jLqX0bcIlpmOUu/CBRn5nIfV4WvElg4lNUg5NIjnF2jnpGhzWTyMcyssg
+         +p3zv2quT69ihv24ITP7OQUWvKJs/rhUet/JPey1TJsrhbfDDajLVkDcJ+Sho88WXDv2
+         XVX7O6iH3TZfShjChUq6LoiY/cdhhW5CutZvwl4EohlkCtVTU4RMnQv0iuyno06Pge0o
+         KB7SjW6NN9tuez1/cxyM9ona8IwexB057uZSlXpOCGakN7V/rdWOXp4ZXjGbHJraiJp+
+         QNSg==
+X-Gm-Message-State: AOAM531A8uG7DioW568GLyp6g7tiMRdKpOrujKkDVeGKDFP7F3TSPSJk
+        Wq1s7gtP4eQ2RqC2yhuHDlE=
+X-Google-Smtp-Source: ABdhPJyC4B2yzDlBXVn+BwM224mu819/Y2b3tiA4u5SndwKcndXqPV9G/3VEK+YlZZPDuJC9qAO3Bg==
+X-Received: by 2002:a05:6214:c4a:: with SMTP id r10mr41756qvj.60.1609862348860;
+        Tue, 05 Jan 2021 07:59:08 -0800 (PST)
+Received: from ?IPv6:2600:1700:e72:80a0:605d:243e:92dd:9289? ([2600:1700:e72:80a0:605d:243e:92dd:9289])
+        by smtp.gmail.com with UTF8SMTPSA id g18sm73429qtv.79.2021.01.05.07.59.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Jan 2021 07:59:08 -0800 (PST)
+Subject: Re: [PATCH v6 05/13] merge-index: libify merge_one_path() and
+ merge_all()
+To:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+References: <20201116102158.8365-1-alban.gruin@gmail.com>
+ <20201124115315.13311-1-alban.gruin@gmail.com>
+ <20201124115315.13311-6-alban.gruin@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <2ff7cebf-0084-aef8-bf82-d76a82be23e7@gmail.com>
+Date:   Tue, 5 Jan 2021 10:59:07 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:85.0) Gecko/20100101
+ Thunderbird/85.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20201124115315.13311-6-alban.gruin@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The last test of t4129 creates a directory and expects its setgid bit
-(g+s) to be off. But this makes the test fail when the parent directory
-has the bit set, as setgid's state is inherited by newly created
-subdirectories.
+On 11/24/2020 6:53 AM, Alban Gruin wrote:
+> The "resolve" and "octopus" merge strategies do not call directly `git
+> merge-one-file', they delegate the work to another git command, `git
+> merge-index', that will loop over files in the index and call the
+> specified command.  Unfortunately, these functions are not part of
+> libgit.a, which means that once rewritten, the strategies would still
+> have to invoke `merge-one-file' by spawning a new process first.
 
-One way to solve this problem is to allow the presence of this bit when
-comparing the return of `test_modebits` with the expected value. But
-then we may have the same problem in the future when other tests start
-using `test_modebits` on directories (currently t4129 is the only one)
-and forget about setgid. Instead, let's make the helper function more
-robust with respect to the state of the setgid bit in the test directory
-by removing this bit from the returning value. There should be no
-problem with existing callers as no one currently expects this bit to be
-on.
-
-Note that the sticky bit (+t) and the setuid bit (u+s) are not
-inherited, so we don't have to worry about those.
-
-Reported-by: Kevin Daudt <me@ikke.info>
-Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
----
- t/test-lib-functions.sh | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 999982fe4a..2f08ce7cba 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -367,9 +367,14 @@ test_chmod () {
- 	git update-index --add "--chmod=$@"
- }
+This is a good thing to do.
  
--# Get the modebits from a file or directory.
-+# Get the modebits from a file or directory, ignoring the setgid bit (g+s).
-+# This bit is inherited by subdirectories at their creation. So we remove it
-+# from the returning string to prevent callers from having to worry about the
-+# state of the bit in the test directory.
-+#
- test_modebits () {
--	ls -ld "$1" | sed -e 's|^\(..........\).*|\1|'
-+	ls -ld "$1" | sed -e 's|^\(..........\).*|\1|' \
-+			  -e 's|^\(......\)S|\1-|' -e 's|^\(......\)s|\1x|'
- }
- 
- # Unset a configuration variable, but don't fail if it doesn't exist.
--- 
-2.29.2
+> To avoid this, this moves and renames merge_one_path(), merge_all(), and
+> their helpers to merge-strategies.c.  They also take a callback to
+> dictate what they should do for each file.  For now, to preserve the
+> behaviour of `merge-index', only one callback, launching a new process,
+> is defined.
 
+I don't think the callback should be in libgit.a, though. The callback
+itself should be a static method inside builtin/merge-index.c.
+
+> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+> ---
+>  builtin/merge-index.c |  77 +++----------------------------
+>  merge-strategies.c    | 104 ++++++++++++++++++++++++++++++++++++++++++
+>  merge-strategies.h    |  19 ++++++++
+>  3 files changed, 130 insertions(+), 70 deletions(-)
+> 
+> diff --git a/builtin/merge-index.c b/builtin/merge-index.c
+> index 38ea6ad6ca..d5e5713b25 100644
+> --- a/builtin/merge-index.c
+> +++ b/builtin/merge-index.c
+> @@ -1,74 +1,11 @@
+>  #define USE_THE_INDEX_COMPATIBILITY_MACROS
+>  #include "builtin.h"
+> -#include "run-command.h"
+> -
+> -static const char *pgm;
+> -static int one_shot, quiet;
+> -static int err;
+> -
+> -static int merge_entry(int pos, const char *path)
+> -{
+> -	int found;
+> -	const char *arguments[] = { pgm, "", "", "", path, "", "", "", NULL };
+> -	char hexbuf[4][GIT_MAX_HEXSZ + 1];
+> -	char ownbuf[4][60];
+> -
+> -	if (pos >= active_nr)
+> -		die("git merge-index: %s not in the cache", path);
+> -	found = 0;
+> -	do {
+> -		const struct cache_entry *ce = active_cache[pos];
+> -		int stage = ce_stage(ce);
+> -
+> -		if (strcmp(ce->name, path))
+> -			break;
+> -		found++;
+> -		oid_to_hex_r(hexbuf[stage], &ce->oid);
+> -		xsnprintf(ownbuf[stage], sizeof(ownbuf[stage]), "%o", ce->ce_mode);
+> -		arguments[stage] = hexbuf[stage];
+> -		arguments[stage + 4] = ownbuf[stage];
+> -	} while (++pos < active_nr);
+> -	if (!found)
+> -		die("git merge-index: %s not in the cache", path);
+> -
+> -	if (run_command_v_opt(arguments, 0)) {
+> -		if (one_shot)
+> -			err++;
+> -		else {
+> -			if (!quiet)
+> -				die("merge program failed");
+> -			exit(1);
+> -		}
+> -	}
+> -	return found;
+> -}
+> -
+> -static void merge_one_path(const char *path)
+> -{
+> -	int pos = cache_name_pos(path, strlen(path));
+> -
+> -	/*
+> -	 * If it already exists in the cache as stage0, it's
+> -	 * already merged and there is nothing to do.
+> -	 */
+> -	if (pos < 0)
+> -		merge_entry(-pos-1, path);
+> -}
+> -
+> -static void merge_all(void)
+> -{
+> -	int i;
+> -	for (i = 0; i < active_nr; i++) {
+> -		const struct cache_entry *ce = active_cache[i];
+> -		if (!ce_stage(ce))
+> -			continue;
+> -		i += merge_entry(i, ce->name)-1;
+> -	}
+> -}
+> +#include "merge-strategies.h"
+>  
+>  int cmd_merge_index(int argc, const char **argv, const char *prefix)
+>  {
+> -	int i, force_file = 0;
+> +	int i, force_file = 0, err = 0, one_shot = 0, quiet = 0;
+> +	const char *pgm;
+>  
+>  	/* Without this we cannot rely on waitpid() to tell
+>  	 * what happened to our children.
+> @@ -98,14 +35,14 @@ int cmd_merge_index(int argc, const char **argv, const char *prefix)
+>  				continue;
+>  			}
+>  			if (!strcmp(arg, "-a")) {
+> -				merge_all();
+> +				err |= merge_all_index(the_repository, one_shot, quiet,
+> +						       merge_one_file_spawn, (void *)pgm);
+
+This hunk makes it look like pgm is uninitialized, but it is set earlier
+in cmd_merge_index() (previously referring to the global instance). Good.
+
+> +int merge_one_file_spawn(struct repository *r,
+> +			 const struct object_id *orig_blob,
+> +			 const struct object_id *our_blob,
+> +			 const struct object_id *their_blob, const char *path,
+> +			 unsigned int orig_mode, unsigned int our_mode, unsigned int their_mode,
+> +			 void *data)
+> +{
+> +	char oids[3][GIT_MAX_HEXSZ + 1] = {{0}};
+> +	char modes[3][10] = {{0}};
+> +	const char *arguments[] = { (char *)data, oids[0], oids[1], oids[2],
+> +				    path, modes[0], modes[1], modes[2], NULL };
+> +
+> +	if (orig_blob) {
+> +		oid_to_hex_r(oids[0], orig_blob);
+> +		xsnprintf(modes[0], sizeof(modes[0]), "%06o", orig_mode);
+> +	}
+> +
+> +	if (our_blob) {
+> +		oid_to_hex_r(oids[1], our_blob);
+> +		xsnprintf(modes[1], sizeof(modes[1]), "%06o", our_mode);
+> +	}
+> +
+> +	if (their_blob) {
+> +		oid_to_hex_r(oids[2], their_blob);
+> +		xsnprintf(modes[2], sizeof(modes[2]), "%06o", their_mode);
+> +	}
+> +
+> +	return run_command_v_opt(arguments, 0);
+> +}
+
+Yes, this would be better in the builtin code. Better to keep the meaning
+of 'data' clear in the context of that file.
+
+> +static int merge_entry(struct repository *r, int quiet, unsigned int pos,
+> +		       const char *path, int *err, merge_fn fn, void *data)
+> +{
+> +	int found = 0;
+> +	const struct object_id *oids[3] = {NULL};
+> +	unsigned int modes[3] = {0};
+> +
+> +	do {
+> +		const struct cache_entry *ce = r->index->cache[pos];
+> +		int stage = ce_stage(ce);
+> +
+> +		if (strcmp(ce->name, path))
+> +			break;
+> +		found++;
+> +		oids[stage - 1] = &ce->oid;
+> +		modes[stage - 1] = ce->ce_mode;
+> +	} while (++pos < r->index->cache_nr);
+> +	if (!found)
+> +		return error(_("%s is not in the cache"), path);
+> +
+> +	if (fn(r, oids[0], oids[1], oids[2], path,
+> +	       modes[0], modes[1], modes[2], data)) {
+> +		if (!quiet)
+> +			error(_("Merge program failed"));
+> +		(*err)++;
+> +	}
+> +
+> +	return found;
+> +}
+> +
+> +int merge_index_path(struct repository *r, int oneshot, int quiet,
+> +		     const char *path, merge_fn fn, void *data)
+> +{
+> +	int pos = index_name_pos(r->index, path, strlen(path)), ret, err = 0;
+> +
+> +	/*
+> +	 * If it already exists in the cache as stage0, it's
+> +	 * already merged and there is nothing to do.
+> +	 */
+> +	if (pos < 0) {
+> +		ret = merge_entry(r, quiet || oneshot, -pos - 1, path, &err, fn, data);
+> +		if (ret == -1)
+> +			return -1;
+> +		else if (err)
+> +			return 1;
+> +	}
+> +	return 0;
+> +}
+> +
+> +int merge_all_index(struct repository *r, int oneshot, int quiet,
+> +		    merge_fn fn, void *data)
+> +{
+> +	int err = 0, ret;
+> +	unsigned int i;
+> +
+> +	for (i = 0; i < r->index->cache_nr; i++) {
+> +		const struct cache_entry *ce = r->index->cache[i];
+> +		if (!ce_stage(ce))
+> +			continue;
+> +
+> +		ret = merge_entry(r, quiet || oneshot, i, ce->name, &err, fn, data);
+> +		if (ret > 0)
+> +			i += ret - 1;
+> +		else if (ret == -1)
+> +			return -1;
+> +
+> +		if (err && !oneshot)
+> +			return 1;
+> +	}
+> +
+> +	return err;
+> +}
+
+I notice that these methods don't actually use the repository pointer
+more than they just use 'r->index'. Should they instead take a
+'struct index_state *istate' directly? (I see that the repository is
+used later by merge_strategies_resolve(), but not in these.)
+
+If you think it likely that we will need a repository for these methods,
+then feel free to ignore me and keep your 'r' pointer.
+
+Thanks,
+-Stolee
