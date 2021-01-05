@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-15.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD31DC433E6
-	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:44:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23AA4C433E0
+	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:45:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.kernel.org (Postfix) with ESMTP id B746222D6F
-	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:44:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EDB7B22D5A
+	for <git@archiver.kernel.org>; Tue,  5 Jan 2021 19:45:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730942AbhAETo7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 5 Jan 2021 14:44:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50042 "EHLO
+        id S1730964AbhAETpE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 5 Jan 2021 14:45:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730927AbhAEToy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 5 Jan 2021 14:44:54 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F853C0617A7
-        for <git@vger.kernel.org>; Tue,  5 Jan 2021 11:43:43 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id g185so623759wmf.3
-        for <git@vger.kernel.org>; Tue, 05 Jan 2021 11:43:43 -0800 (PST)
+        with ESMTP id S1730957AbhAETpD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 5 Jan 2021 14:45:03 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A637C0617A9
+        for <git@vger.kernel.org>; Tue,  5 Jan 2021 11:43:44 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id r3so364686wrt.2
+        for <git@vger.kernel.org>; Tue, 05 Jan 2021 11:43:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lCKf2NBbDpDsTMTjqpZ3kMR5PrX6KPli2kTefNDk+II=;
-        b=G0skBFnSUxbHBDSDKAOjkM9L4FgLqlP8usTaJqxyxIbDcFOgy0jSP0WqUmY10Z28rD
-         Kv+wLZCsprmDZnDpLEjfVb6eXHeenlkqOhzUlrBaxkTqkzxUaHKjAlCYAuTJHZtfSCKS
-         GpcNaUN8X50hQ9pgV9Ja9Vyem778phuaaHG/r/GirvaVZbO7H5Z5ypJdqg7cT3AQB/tM
-         QKsTA3hd53I8Qf6yV7n0eMhNZVcYqlb/V/GN6U8JEY61YXdinHw7yfSmzVJpRD6RlbLX
-         1EzHfXy0OFDYZPxZ1XSEbGhkIzt/WzZqjMqe612/oIDo0n2etqW4T/bxdYLtzt7mLWmi
-         Thrw==
+        bh=g0UJ+359V/LQdHfLW7yM0GtnBSIOEuMSuU1g6/NH5NI=;
+        b=iuoi4WgnxQdKYbcZBPBqIR4e/0gAxulFdszI6Htp+B87TeLEz0VvflcOqMDhT2Hhq9
+         UqPvqDT/5sfpIom7xQYetBmumdiRcQEfJa/u5HoNg2jDtX5RFONEdhPcF1m4Bbq5e1Q/
+         FJ556asps3U7aGwXBn3JS2vfmaGhrzMjSyFonMKv5lasOwZn79KWhd2yi2uyZqa4uqDR
+         BPYYOyGzfegQYy9OsGWCDt28ZdhsC0rgA7eF4zeYqnuXxg+9j5iq3+76NlAYnMN37LXd
+         GwA/sl/L8GnAeZikOL1mwtol0HwPyoJD/vHxzqy2Ci62p+BhJjQkLNgct7AhLHd4CiFJ
+         02vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lCKf2NBbDpDsTMTjqpZ3kMR5PrX6KPli2kTefNDk+II=;
-        b=V9UyixFyD19RGaGigZ+IMkCDVUloi+iapqHiGTBJE/g3bfA+CVY8nV73ftIB2fivjb
-         MHVsjuyPDxn9UsAs60RRkeMZ5zidT72WkKZ0aLHG3Zg+lkeooP5CcW2vwzvYrXsg4k2g
-         o8RgM3KdMaY/fvQKZUKD3ltyyP9xW8ecA5gWXu7KuSvdWJGsDpEDHSKUa/CZ4Gmnscag
-         lKGVwvNMIuhVOQ7NfYa7AlGe6sw+sUfPskhnSjcgit5Mr3yWu0xYvL9EbjwReyavBr8X
-         ZdJBJr9cdgDwmBISfW6C0/r9VbMObEXtgZobOTMrwBOZXfpSbre9k2POn6p65gKW4KK1
-         zzwQ==
-X-Gm-Message-State: AOAM531StDggnwnHgkWjc2kbFgI6hmrWUESWXE2az5fT8AxLeLOHwpVi
-        d7v8/4DTN7xKSh6rxy7rOX6LwaJ7UUElWg==
-X-Google-Smtp-Source: ABdhPJxsbC4jz7sms1poKgYLUzVDrnkpZFTfpeyrrySj862JLwZE2qWs3FY/brCKkCAY6orET2VuWg==
-X-Received: by 2002:a7b:c389:: with SMTP id s9mr576911wmj.159.1609875822011;
+        bh=g0UJ+359V/LQdHfLW7yM0GtnBSIOEuMSuU1g6/NH5NI=;
+        b=B8r+4UhwEre6CZmLZaGUnpPWb10ocRWTScZfhUpci6vdRAMGAG9RbZ9tMlBMB0YGBM
+         KYeb7i8IphXAZ5qQDXk0F6M6PY5bwZihzDrZn7EdPew5EQ2PfaokKBZLlbJxUxUDdh2h
+         G8jlZrbce/bcKiXA9qw+8+WWkDKz726JFSRhDHHhoOt4gr4YCaNSJLVhI+SIUDBoUL2e
+         L6sQQIEurlFXqGa1LaD1Z98aVQY6IAIA0pmEU08qbEDqbH20JmyFcdnNzNRTj4C/sgLH
+         hBPQp8MxsW2jQYJtX8HYC6U2kdSw3PynwVaTH291+dbOw9ion/lce2HaKShyk1GXw9GY
+         xGsA==
+X-Gm-Message-State: AOAM533Dbgoh+e1LHUY2pPK1gHX9M8LoB0dbLYzYEfJbZaPr7U+cK6oE
+        G0/E/vOdUG0l6PTKNZgmXLpdGV9qoit8Vw==
+X-Google-Smtp-Source: ABdhPJwJfC7g8CuYA8oCUV/n/LCuvTle6brQeFLEUY935ACyKrIXOYikG1tcMK0EST6vFS31ravSwA==
+X-Received: by 2002:adf:f401:: with SMTP id g1mr1078046wro.258.1609875822992;
         Tue, 05 Jan 2021 11:43:42 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id s6sm151113wro.79.2021.01.05.11.43.41
+        by smtp.gmail.com with ESMTPSA id s6sm151113wro.79.2021.01.05.11.43.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Jan 2021 11:43:41 -0800 (PST)
+        Tue, 05 Jan 2021 11:43:42 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 14/23] mktag: use default strbuf_read() hint
-Date:   Tue,  5 Jan 2021 20:42:43 +0100
-Message-Id: <20210105194252.627-15-avarab@gmail.com>
+Subject: [PATCH v5 15/23] mktag: remove redundant braces in one-line body "if"
+Date:   Tue,  5 Jan 2021 20:42:44 +0100
+Message-Id: <20210105194252.627-16-avarab@gmail.com>
 X-Mailer: git-send-email 2.29.2.222.g5d2a92d10f8
 In-Reply-To: <20201223013606.7972-1-avarab@gmail.com>
 References: <20201223013606.7972-1-avarab@gmail.com>
@@ -79,31 +79,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the hardcoded hint of 2^12 to 0. The default strbuf hint is
-perfectly fine here, and the only reason we were hardcoding it is
-because it survived migration from a pre-strbuf fixed-sized buffer.
-
-See fd17f5b5f77 (Replace all read_fd use with strbuf_read, and get rid
-of it., 2007-09-10) for that migration.
+This minor stylistic churn is usually something we'd avoid, but if we
+don't do this then the file after changes in subsequent commits will
+only have this minor style inconsistency, so let's change this while
+we're at it.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/mktag.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/mktag.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/builtin/mktag.c b/builtin/mktag.c
-index 4982d3a93ef..ff7ac8e0e5d 100644
+index ff7ac8e0e5d..97ca5f28b1b 100644
 --- a/builtin/mktag.c
 +++ b/builtin/mktag.c
-@@ -161,7 +161,7 @@ int cmd_mktag(int argc, const char **argv, const char *prefix)
+@@ -161,9 +161,8 @@ int cmd_mktag(int argc, const char **argv, const char *prefix)
  	if (argc != 1)
  		usage("git mktag");
  
--	if (strbuf_read(&buf, 0, 4096) < 0) {
-+	if (strbuf_read(&buf, 0, 0) < 0) {
+-	if (strbuf_read(&buf, 0, 0) < 0) {
++	if (strbuf_read(&buf, 0, 0) < 0)
  		die_errno("could not read from stdin");
- 	}
+-	}
  
+ 	/* Verify it for some basic sanity: it needs to start with
+ 	   "object <sha1>\ntype\ntagger " */
 -- 
 2.29.2.222.g5d2a92d10f8
 
